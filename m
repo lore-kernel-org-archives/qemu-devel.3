@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFB96CD11DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E79C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpmtz-0003N6-97; Thu, 28 Mar 2024 06:22:31 -0400
+	id 1rpmtt-0002ak-7o; Thu, 28 Mar 2024 06:22:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmty-0003I3-9m
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:22:30 -0400
+ id 1rpmtg-0001tv-9c
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:22:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmtw-0007lD-U0
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:22:30 -0400
+ id 1rpmte-0007jn-IZ
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:22:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711621348;
+ s=mimecast20190719; t=1711621330;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=brNznkesgm5sM6cu00vVLhBhhfdPMXzqKQMxNztlRXs=;
- b=g+3tbAEE1eQXlUgKyfL/aaQ4AcqKEy7xuB49uRwLhJs8U7PIUcn/zmgJyzdlc4MFBf6W/k
- ju3bEpEsr8Wb+tUpLxfse0Ovib68IWKWTbb2eNiupmOyXm78DjobkzJvsPDzS87cgXNTen
- sdpXYuW49QhEU/x7dTovFttVSPWVQTU=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-LfCy9EUyP5i1D_F6jCjsCg-1; Thu,
- 28 Mar 2024 06:22:23 -0400
-X-MC-Unique: LfCy9EUyP5i1D_F6jCjsCg-1
+ bh=GrnGE29PSFeL3UMwDPbWkEIoIwZ6RbhGysI0U5zHMB4=;
+ b=HRgxVIBy0d6zQ1nDZHyTKAM/yel5Sqbb8TJ6naNaKB93iYMklvetEdBi4ZslJa+vYgWcs0
+ upQMoPBMHkqd/mIEJy6rNNmpKYfDW/ifW8+YbTYG6CpY+ONcO3VpbaKzcPsnQZhQQNSMBp
+ faDqDNNt7ARQGjg+hzHTfLJZbG7dh8o=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-240-LuFJJhqGP4uod3fv4SWGcQ-1; Thu, 28 Mar 2024 06:22:06 -0400
+X-MC-Unique: LuFJJhqGP4uod3fv4SWGcQ-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8021E29AC032;
- Thu, 28 Mar 2024 10:22:22 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 33945803FC4;
+ Thu, 28 Mar 2024 10:22:05 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.34])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A0CAC492BD0;
- Thu, 28 Mar 2024 10:22:20 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 44679492BD0;
+ Thu, 28 Mar 2024 10:22:03 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hyman Huang <yong.huang@smartx.com>,
@@ -67,9 +67,10 @@ Cc: Hyman Huang <yong.huang@smartx.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 08/19] hw/vhost-scsi: fix -Werror=maybe-uninitialized
-Date: Thu, 28 Mar 2024 14:20:41 +0400
-Message-ID: <20240328102052.3499331-9-marcandre.lureau@redhat.com>
+Subject: [PATCH 06/19] block/stream: fix -Werror=maybe-uninitialized
+ false-positives
+Date: Thu, 28 Mar 2024 14:20:39 +0400
+Message-ID: <20240328102052.3499331-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -103,31 +104,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/scsi/vhost-scsi.c:173:12: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
-
-It can be reached when num_queues=0. It probably doesn't make much sense
-to instantiate a vhost-scsi with 0 IO queues though. For now, make
-vhost_scsi_set_workers() return success/0 anyway, when no workers have
-been setup.
+../block/stream.c:193:19: error: ‘unfiltered_bs’ may be used uninitialized [-Werror=maybe-uninitialized]
+../block/stream.c:176:5: error: ‘len’ may be used uninitialized [-Werror=maybe-uninitialized]
+trace/trace-block.h:906:9: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/scsi/vhost-scsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/stream.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index ae26bc19a4..5b066df4f7 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -170,7 +170,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
-     struct vhost_dev *dev = &vsc->dev;
-     struct vhost_vring_worker vq_worker;
-     struct vhost_worker_state worker;
--    int i, ret;
-+    int i, ret = 0;
+diff --git a/block/stream.c b/block/stream.c
+index 7031eef12b..9076203193 100644
+--- a/block/stream.c
++++ b/block/stream.c
+@@ -155,8 +155,8 @@ static void stream_clean(Job *job)
+ static int coroutine_fn stream_run(Job *job, Error **errp)
+ {
+     StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
+-    BlockDriverState *unfiltered_bs;
+-    int64_t len;
++    BlockDriverState *unfiltered_bs = NULL;
++    int64_t len = -1;
+     int64_t offset = 0;
+     int error = 0;
+     int64_t n = 0; /* bytes */
+@@ -177,7 +177,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
  
-     /* Use default worker */
-     if (!per_virtqueue || dev->nvqs == VHOST_SCSI_VQ_NUM_FIXED + 1) {
+     for ( ; offset < len; offset += n) {
+         bool copy;
+-        int ret;
++        int ret = -1;
+ 
+         /* Note that even when no rate limit is applied we need to yield
+          * with no pending I/O here so that bdrv_drain_all() returns.
 -- 
 2.44.0
 
