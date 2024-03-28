@@ -4,85 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EFA8C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 13:20:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED7A5C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 13:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rppg4-00083O-Gh; Thu, 28 Mar 2024 09:20:20 -0400
+	id 1rpq11-0003Aa-TX; Thu, 28 Mar 2024 09:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppg2-00081N-87
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 09:20:18 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppg0-0003Dl-Jq
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 09:20:17 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-56c1364ff79so1120707a12.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 06:20:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711632015; x=1712236815; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=puu8VyzDLKwHhThbmkafeK4qzBVEG9kdut4ENHl8flg=;
- b=RbHSQmkEDP0ocDhfi6Vlz0XDozBcWkPAsPI4dBQe6mHuQg/+ApszVmHPNGXqbhT3ma
- /OS1vIurJ7heZYL2GRsRwUTge0Dvre9/MlPcJ5K1HRcyH2K50XaE+NMGqUddjGRAsxR5
- f/98nTzjoqmg6bkw6E9b8LZ8iSfwImyZ/Twv2VgaCHNqKlPnDfApINqqeiId+3cicG5j
- 4A0AkhWc5rq7tA3BydvzE91/cCof6pyDGb1WKUl3QST4NhMHNp0JOcG8xQHwUQ8LCDa5
- 696nf6BttDrr2lzo6P0zetAwBSwTmXGnWFetvPohtK56b6SDSs1IvUk0WzK2x11pisds
- 2iFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711632015; x=1712236815;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=puu8VyzDLKwHhThbmkafeK4qzBVEG9kdut4ENHl8flg=;
- b=oXwemZokHR0O6hB11SaYyo/fo4+9ppTw5o/21POgIIEnCm0IYiSdJT6AwyOqHcy17p
- bZo64YCfgRMQRm4XTAcbsSYttdQNu7LtFNP6EVtEVwOnhAMg4mRTTf8pF41c8Ozxl26K
- e0G/lxgd2MomonWEvUpuDIJN0rMv9h0myJO4ySM4ezIgaFE2p/cxM02gIbB9MspsOYBr
- 1yK8+jqm+/d89HQXNuQ3eDAKJ2Y+k3AyILXv1soYib+AIRNlvV7orOWKBwVUUEHdBVXE
- 694xNqCo+CtvtB5Od6s+aFU7fkcMxyfQWNnMcp5CRemVpZgxNYb6FJKWAQzK1YUu7VK8
- YYVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXO+6I+4fRXBqAPtsg+EfVClWcFtlETYpbsCPLYTDKZ7Eo7Svu3kU2q4qxRO0MPg46un+Ws/1ERsm5FPUg6i7dVysP/Fk4=
-X-Gm-Message-State: AOJu0YzjdDxTpzMIJ5qenGbhz0R/QnSjXxCpoSLu/18VSk5ThwgWQUM6
- yJ6ouuyN2t51rwibb/tnGwh3BR5iuUN6iBm7z9gUnSB30/HHbgKlGM4CORPgPgA=
-X-Google-Smtp-Source: AGHT+IGqNBMgqRE7be7Nh5XXUNzB0Z3KrJbimGHOJfbtzVe8baOWYcc93Yp/DyAl125tmgHMqJ9s8Q==
-X-Received: by 2002:a17:906:380f:b0:a47:4b3e:a966 with SMTP id
- v15-20020a170906380f00b00a474b3ea966mr1933363ejc.75.1711632014939; 
- Thu, 28 Mar 2024 06:20:14 -0700 (PDT)
-Received: from [192.168.69.100] (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
- [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
- r1-20020a170906364100b00a4628cacad4sm744180ejb.195.2024.03.28.06.20.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 06:20:14 -0700 (PDT)
-Message-ID: <51e36448-5212-40cb-8135-078a3c1b96c8@linaro.org>
-Date: Thu, 28 Mar 2024 14:20:12 +0100
+ (Exim 4.90_1) (envelope-from <schwab@linux-m68k.org>)
+ id 1rpq10-00033e-C8; Thu, 28 Mar 2024 09:41:58 -0400
+Received: from mail-out.m-online.net ([2001:a60:0:28:0:1:25:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <schwab@linux-m68k.org>)
+ id 1rpq0x-0007Fz-4Y; Thu, 28 Mar 2024 09:41:57 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+ by mail-out.m-online.net (Postfix) with ESMTP id 4V54TC0Xrsz1sB8C;
+ Thu, 28 Mar 2024 14:41:51 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+ by mail.m-online.net (Postfix) with ESMTP id 4V54TB6Gp6z1qqlS;
+ Thu, 28 Mar 2024 14:41:50 +0100 (CET)
+X-Virus-Scanned: amavis at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+ by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
+ with ESMTP id s7kMP7KkyLqn; Thu, 28 Mar 2024 14:41:48 +0100 (CET)
+X-Auth-Info: jmFaiXUYkic2QaHYgZczOKIVhMEHHpBDJ+mG8VT3pkCG3aW/QHGf/PFXGDO8x00n
+Received: from hawking (unknown [81.95.8.245])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.mnet-online.de (Postfix) with ESMTPSA;
+ Thu, 28 Mar 2024 14:41:47 +0100 (CET)
+From: Andreas Schwab <schwab@linux-m68k.org>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,  qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  Vineet Gupta <vineetg@rivosinc.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alistair
+ Francis <alistair.francis@wdc.com>
+Subject: Re: [Stable-8.2.1 61/71] linux-user/riscv: Adjust vdso signal frame
+ cfa offsets
+In-Reply-To: <CAKmqyKMGODCT3BetDRL_1MLuEKcBhQjUBgZ99eMQvN-Aeo+CAg@mail.gmail.com>
+ (Alistair Francis's message of "Wed, 6 Mar 2024 14:27:28 +1000")
+References: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
+ <20240128175035.812352-7-mjt@tls.msk.ru>
+ <87ttlnehb1.fsf@linux-m68k.org>
+ <CAKmqyKMGODCT3BetDRL_1MLuEKcBhQjUBgZ99eMQvN-Aeo+CAg@mail.gmail.com>
+X-Yow: I feel real SOPHISTICATED being in FRANCE!
+Date: Thu, 28 Mar 2024 14:41:46 +0100
+Message-ID: <mvmbk6yfp7p.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] target/ppc: fix tlb flushing race
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240328053131.2604454-1-npiggin@gmail.com>
- <D058D0G7Z2DX.L8OBHHBGWGU4@wheely> <D05AZMB7725S.27E3ZJNW7GJAF@wheely>
- <D05BGFTTYF1C.1PG514RTVTZTD@wheely>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <D05BGFTTYF1C.1PG514RTVTZTD@wheely>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2001:a60:0:28:0:1:25:1;
+ envelope-from=schwab@linux-m68k.org; helo=mail-out.m-online.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,47 +79,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/24 11:37, Nicholas Piggin wrote:
-> On Thu Mar 28, 2024 at 8:15 PM AEST, Nicholas Piggin wrote:
->> On Thu Mar 28, 2024 at 6:12 PM AEST, Nicholas Piggin wrote:
->>> On Thu Mar 28, 2024 at 3:31 PM AEST, Nicholas Piggin wrote:
->>>> ppc broadcast tlb flushes should be synchronised with other vCPUs,
->>>> like all other architectures that support such operations seem to
->>>> be doing.
->>>>
->>>> Fixing ppc removes the last caller of the non-synced TLB flush
->>>> variants, we can remove some dead code. I'd like to merge patch 1
->>>> for 9.0, and hold patches 2 and 3 until 9.1 to avoid churn (unless
->>>> someone prefers to remove the dead code asap).
->>>
->>> Hmm, turns out to not be so simple, this in parts reverts
->>> the fix in commit 4ddc104689b.
+On Mär 06 2024, Alistair Francis wrote:
 
-Please mention that in the patch.
-
-> Do other architectures
->>> that use the _synced TLB flush variants have that same problem
->>> with the TLB flush not actually flushing until the TB ends,
->>> I wonder?
+> On Sun, Mar 3, 2024 at 8:34 PM Andreas Schwab <schwab@linux-m68k.org> wrote:
 >>
->> Huh, I can reproduce that original problem with a little test
->> case (which I will upstream into kvm-unit-tests).
+>> On Jan 28 2024, Michael Tokarev wrote:
 >>
->> async_run_on_cpu(this_cpu) seems to flush before the next TB, but
->> async_safe_run_on_cpu(this_cpu) does not? How does it execute it
->> without exiting from the TB?
-> 
-> Duh, it's because the non-_synced tlb flush variants don't use
-> that for running on this CPU, they just call it directly.
-> 
-> Okay that all makes sense now. I think this series plus the
-> below are good then. Also it's possible some other archs that
-> use _all_cpus_synced() (arm, riscv, s390x) _may_ be racy. I
-> had a quick look at sfence.vma and ipte, and AFAIKS they're
-> supposed to take immediate effect after they execute.
-> 
-> Thanks,
-> Nick
-> 
+>> > From: Richard Henderson <richard.henderson@linaro.org>
+>> >
+>> > A typo in sizeof_reg put the registers at the wrong offset.
+>> >
+>> > Simplify the expressions to use positive addresses from the
+>> > start of uc_mcontext instead of negative addresses from the
+>> > end of uc_mcontext.
+>>
+>> This breaks the testsuite of libunwind.  The test Gtest-resume-sig and
+>> all dependent tests hang.  Reverting this commit fixes them.
+>
+> Do you have any more details? It seems strange that this commit is
+> breaking something as it looks to be correct
 
+It also breaks the Ltest-init-local-signal test, and it is still broken
+in 9.0.0-rc1, and reverting this commit still fixes it.
+
+$ LD_LIBRARY_PATH=../src/.libs /tmp/qemu-riscv64.bad -strace .libs/Ltest-init-local-signal
+24864 brk(NULL) = 0x0000555555559000
+24864 faccessat(AT_FDCWD,"/etc/ld.so.preload",R_OK,AT_EACCESS|0x55557c08) = -1 errno=2 (No such file or directory)
+24864 openat(AT_FDCWD,"../src/.libs/libunwind-riscv.so.8",O_RDONLY|O_CLOEXEC) = 3
+24864 read(3,0x601ff3e0,832) = 832
+24864 fstat(3,0x00007fab601ff260) = 0
+24864 mmap(NULL,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007fab68c0a000
+24864 getcwd(0x7fab68c0a4c0,128) = 50
+24864 mmap(NULL,156800,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007fab603d9000
+24864 mmap(0x00007fab603e6000,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0xd000) = 0x00007fab603e6000
+24864 mmap(0x00007fab603e8000,95360,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x00007fab603e8000
+24864 close(3) = 0
+24864 openat(AT_FDCWD,"../src/.libs/libunwind.so.8",O_RDONLY|O_CLOEXEC) = 3
+24864 read(3,0x601ff3c0,832) = 832
+24864 fstat(3,0x00007fab601ff240) = 0
+24864 getcwd(0x7fab68c0aa40,128) = 50
+24864 mmap(NULL,156848,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007fab603b2000
+24864 mmap(0x00007fab603bf000,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0xd000) = 0x00007fab603bf000
+24864 mmap(0x00007fab603c1000,95408,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x00007fab603c1000
+24864 close(3) = 0
+24864 openat(AT_FDCWD,"../src/.libs/libc.so.6",O_RDONLY|O_CLOEXEC) = -1 errno=2 (No such file or directory)
+24864 openat(AT_FDCWD,"/etc/ld.so.cache",O_RDONLY|O_CLOEXEC) = 3
+24864 fstat(3,0x00007fab601ff230) = 0
+24864 mmap(NULL,7935,PROT_READ,MAP_PRIVATE,3,0) = 0x00007fab68c08000
+24864 close(3) = 0
+24864 openat(AT_FDCWD,"/lib64/lp64d/libc.so.6",O_RDONLY|O_CLOEXEC) = 3
+24864 read(3,0x601ff3a0,832) = 832
+24864 fstat(3,0x00007fab601ff220) = 0
+24864 mmap(NULL,1473984,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007fab6024a000
+24864 mmap(0x00007fab603a1000,20480,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0x157000) = 0x00007fab603a1000
+24864 mmap(0x00007fab603a6000,48576,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x00007fab603a6000
+24864 close(3) = 0
+24864 openat(AT_FDCWD,"../src/.libs/liblzma.so.5",O_RDONLY|O_CLOEXEC) = -1 errno=2 (No such file or directory)
+24864 openat(AT_FDCWD,"/home/abuild/rpmbuild/BUILD/libunwind-1.8.1/src/.libs/liblzma.so.5",O_RDONLY|O_CLOEXEC) = -1 errno=2 (No such file or directory)
+24864 newfstatat(AT_FDCWD,"/home/abuild/rpmbuild/BUILD/libunwind-1.8.1/src/.libs/",0x00007fab601ff1e0,0) = 0
+24864 openat(AT_FDCWD,"/lib64/lp64d/liblzma.so.5",O_RDONLY|O_CLOEXEC) = 3
+24864 read(3,0x601ff360,832) = 832
+24864 fstat(3,0x00007fab601ff1e0) = 0
+24864 mmap(NULL,200720,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007fab60218000
+24864 mmap(0x00007fab60248000,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0x30000) = 0x00007fab60248000
+24864 close(3) = 0
+24864 mmap(NULL,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007fab68c06000
+24864 set_tid_address(0x7fab68c064f0) = 24864
+24864 set_robust_list(0x7fab68c06500,24) = -1 errno=38 (Function not implemented)
+24864 mprotect(0x00007fab603a1000,12288,PROT_READ) = 0
+24864 mprotect(0x00007fab60248000,4096,PROT_READ) = 0
+24864 mprotect(0x00007fab603bf000,4096,PROT_READ) = 0
+24864 mprotect(0x00007fab603e6000,4096,PROT_READ) = 0
+24864 mprotect(0x0000555555557000,4096,PROT_READ) = 0
+24864 mprotect(0x00007fab68c2d000,8192,PROT_READ) = 0
+24864 prlimit64(0,RLIMIT_STACK,NULL,0x00007fab601ffe68) = 0 ({rlim_cur=8388608,rlim_max=-1})
+24864 munmap(0x00007fab68c08000,7935) = 0
+24864 rt_sigaction(SIGSEGV,0x00007fab601fff18,NULL) = 0
+--- SIGSEGV {si_signo=SIGSEGV, si_code=1, si_pid=0, si_uid=0} ---
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7858,8) = 0
+24864 mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007fab68c09000
+24864 mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007fab68c08000
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7858,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 pipe2(0x7fab603e7000,526336) = 0
+24864 read(3,0x601f6e57,1) = -1 errno=11 (Resource temporarily unavailable)
+24864 write(4,0x55556000,1) = 1
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f6e98,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f6e98,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7278,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7278,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 read(3,0x601f6d97,1) = 1
+24864 write(4,0x60200000,1) = 1
+24864 read(3,0x601f7827,1) = 1
+24864 write(4,0x60275000,1) = 1
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 read(3,0x601f6e57,1) = 1
+24864 write(4,0x60372000,1) = 1
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f6e98,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f6e98,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7278,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7278,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f6e98,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f6e98,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7278,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7278,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 read(3,0x601f6e57,1) = 1
+24864 write(4,0x55556000,1) = 1
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f6e98,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f6e98,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7278,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7278,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f6e98,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f6e98,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7278,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7278,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 read(3,0x601f6d97,1) = 1
+24864 write(4,0x601ff000,1) = 1
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 read(3,0x601f6e57,1) = 1
+24864 write(4,0x68c0c000,1) = 1
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f6e98,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f6e98,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7278,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7278,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 read(3,0x601f7827,1) = 1
+24864 write(4,0x60200000,1) = 1
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7338,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab603e7050,0x00007fab601f7238,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7238,NULL,8) = 0
+24864 rt_sigprocmask(SIG_SETMASK,0x00007fab601f7338,NULL,8) = 0
+24864 fstat(1,0x00007fab601f7658) = 0
+24864 getrandom(0x7fab603aa5c8,8,1) = 8
+24864 brk(NULL) = 0x0000555555559000
+24864 brk(0x000055555557a000) = 0x000055555557a000
+24864 write(1,0x555592a0,62)unw_getcontext steps was 4, ucontext steps was 3, should be 2
+ = 62
+24864 exit_group(-1)
+$ LD_LIBRARY_PATH=../src/.libs /tmp/qemu-riscv64.good -strace .libs/Ltest-init-local-signal
+24875 brk(NULL) = 0x0000555555559000
+24875 faccessat(AT_FDCWD,"/etc/ld.so.preload",R_OK,AT_EACCESS|0x55557c08) = -1 errno=2 (No such file or directory)
+24875 openat(AT_FDCWD,"../src/.libs/libunwind-riscv.so.8",O_RDONLY|O_CLOEXEC) = 3
+24875 read(3,0x3cfff3d0,832) = 832
+24875 fstat(3,0x00007f213cfff250) = 0
+24875 mmap(NULL,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007f2145a81000
+24875 getcwd(0x7f2145a814c0,128) = 50
+24875 mmap(NULL,156800,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007f2145a5a000
+24875 mmap(0x00007f2145a67000,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0xd000) = 0x00007f2145a67000
+24875 mmap(0x00007f2145a69000,95360,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x00007f2145a69000
+24875 close(3) = 0
+24875 openat(AT_FDCWD,"../src/.libs/libunwind.so.8",O_RDONLY|O_CLOEXEC) = 3
+24875 read(3,0x3cfff3b0,832) = 832
+24875 fstat(3,0x00007f213cfff230) = 0
+24875 getcwd(0x7f2145a81a40,128) = 50
+24875 mmap(NULL,156848,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007f2145a33000
+24875 mmap(0x00007f2145a40000,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0xd000) = 0x00007f2145a40000
+24875 mmap(0x00007f2145a42000,95408,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x00007f2145a42000
+24875 close(3) = 0
+24875 openat(AT_FDCWD,"../src/.libs/libc.so.6",O_RDONLY|O_CLOEXEC) = -1 errno=2 (No such file or directory)
+24875 openat(AT_FDCWD,"/etc/ld.so.cache",O_RDONLY|O_CLOEXEC) = 3
+24875 fstat(3,0x00007f213cfff220) = 0
+24875 mmap(NULL,7935,PROT_READ,MAP_PRIVATE,3,0) = 0x00007f2145a31000
+24875 close(3) = 0
+24875 openat(AT_FDCWD,"/lib64/lp64d/libc.so.6",O_RDONLY|O_CLOEXEC) = 3
+24875 read(3,0x3cfff390,832) = 832
+24875 fstat(3,0x00007f213cfff210) = 0
+24875 mmap(NULL,1473984,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007f213d098000
+24875 mmap(0x00007f213d1ef000,20480,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0x157000) = 0x00007f213d1ef000
+24875 mmap(0x00007f213d1f4000,48576,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED,-1,0) = 0x00007f213d1f4000
+24875 close(3) = 0
+24875 openat(AT_FDCWD,"../src/.libs/liblzma.so.5",O_RDONLY|O_CLOEXEC) = -1 errno=2 (No such file or directory)
+24875 openat(AT_FDCWD,"/home/abuild/rpmbuild/BUILD/libunwind-1.8.1/src/.libs/liblzma.so.5",O_RDONLY|O_CLOEXEC) = -1 errno=2 (No such file or directory)
+24875 newfstatat(AT_FDCWD,"/home/abuild/rpmbuild/BUILD/libunwind-1.8.1/src/.libs/",0x00007f213cfff1d0,0) = 0
+24875 openat(AT_FDCWD,"/lib64/lp64d/liblzma.so.5",O_RDONLY|O_CLOEXEC) = 3
+24875 read(3,0x3cfff350,832) = 832
+24875 fstat(3,0x00007f213cfff1d0) = 0
+24875 mmap(NULL,200720,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE,3,0) = 0x00007f213d066000
+24875 mmap(0x00007f213d096000,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE|MAP_FIXED,3,0x30000) = 0x00007f213d096000
+24875 close(3) = 0
+24875 mmap(NULL,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007f2145a2f000
+24875 set_tid_address(0x7f2145a2f4f0) = 24875
+24875 set_robust_list(0x7f2145a2f500,24) = -1 errno=38 (Function not implemented)
+24875 mprotect(0x00007f213d1ef000,12288,PROT_READ) = 0
+24875 mprotect(0x00007f213d096000,4096,PROT_READ) = 0
+24875 mprotect(0x00007f2145a40000,4096,PROT_READ) = 0
+24875 mprotect(0x00007f2145a67000,4096,PROT_READ) = 0
+24875 mprotect(0x0000555555557000,4096,PROT_READ) = 0
+24875 mprotect(0x00007f2145aa4000,8192,PROT_READ) = 0
+24875 prlimit64(0,RLIMIT_STACK,NULL,0x00007f213cfffe58) = 0 ({rlim_cur=8388608,rlim_max=-1})
+24875 munmap(0x00007f2145a31000,7935) = 0
+24875 rt_sigaction(SIGSEGV,0x00007f213cffff08,NULL) = 0
+--- SIGSEGV {si_signo=SIGSEGV, si_code=1, si_pid=0, si_uid=0} ---
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7848,8) = 0
+24875 mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007f2145a32000
+24875 mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00007f2145a31000
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7848,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7228,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7228,NULL,8) = 0
+24875 pipe2(0x7f2145a68000,526336) = 0
+24875 read(3,0x3cff6e47,1) = -1 errno=11 (Resource temporarily unavailable)
+24875 write(4,0x55556000,1) = 1
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff6e88,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff6e88,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7268,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7268,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 read(3,0x3cff6d87,1) = 1
+24875 write(4,0x3d000000,1) = 1
+24875 read(3,0x3cff7817,1) = 1
+24875 write(4,0x3d0c3000,1) = 1
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7228,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7228,NULL,8) = 0
+24875 read(3,0x3cff6e47,1) = 1
+24875 write(4,0x3d1c0000,1) = 1
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff6e88,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff6e88,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7268,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7268,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7228,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7228,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff6e88,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff6e88,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7268,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7268,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7228,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7228,NULL,8) = 0
+24875 read(3,0x3cff6e47,1) = 1
+24875 write(4,0x55556000,1) = 1
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff6e88,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff6e88,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7268,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7268,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7228,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7228,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff6e88,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff6e88,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7268,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7268,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 read(3,0x3cff6d87,1) = 1
+24875 write(4,0x3cfff000,1) = 1
+24875 read(3,0x3cff7817,1) = 1
+24875 write(4,0x45a83000,1) = 1
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 read(3,0x3cff6d87,1) = 1
+24875 write(4,0x3d000000,1) = 1
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f2145a68050,0x00007f213cff7328,8) = 0
+24875 rt_sigprocmask(SIG_SETMASK,0x00007f213cff7328,NULL,8) = 0
+24875 exit_group(0)
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
 
