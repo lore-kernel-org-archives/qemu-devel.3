@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82397C54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281C2CD1284
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpr9s-00071s-MZ; Thu, 28 Mar 2024 10:55:12 -0400
+	id 1rpr9m-00070c-2b; Thu, 28 Mar 2024 10:55:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rpr9r-00071a-W6
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:55:12 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rpr9p-000755-G8
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:55:11 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-56c0d1bddc1so1257924a12.3
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 07:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711637707; x=1712242507; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=uoX910Z6hg0RstS8SMFU3Ch1UUOwdBuEYj1I/OsSdqA=;
- b=co2htj+/IJ2GZDlNOYx6wQ9qcHPHIIvQ8/oWEe9/AtBxDgTas4mnHAjdij4AvIL66w
- yw22RI6NOWeSngUr2fCcjxlAs4q7+dI3v/z7qDZxo+e0Kgoe1F170Hp31rB6vBtDkHoC
- 2Y51knPQzZ6Wj1bLKuqC13wYs6GJA+LpKl2fiG7FJK/wckGgqgzyW84e7bNb6njFBjAW
- iTJEcecFbCeCK+LXrHruTulf7wEluRcY2I6v+6Gfq8WGSW7l1j/E5Ht7+UrsU6o2zZl7
- RJJLYwxCYpiYnlU6jdKH/7R4qqjlHM1HF3wySYgHCkREU54iZQHUYXRBxlJcce7SgqUD
- 5OSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711637707; x=1712242507;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uoX910Z6hg0RstS8SMFU3Ch1UUOwdBuEYj1I/OsSdqA=;
- b=ScbGrtJIEwDqXZHVlOfOsTscPNZmfV2BV6WjMMiSIW3I+vBd3r+uOu76hM8hKvTM26
- 55/qNbt69wwCr9C9X6EyKRH0U5I1g3gZfS+KuaoqBDs5X5KKrObc7fMoZWjCBsitDZMd
- yhDaUDoxKk3xIhCxF+HckMOH9kmwwFGfZ1CMdbxo27VopqCCTlFZmbEOYk44QwPcighG
- ocPEyyVONwvyCA0WGrrhSxfQBxeQtO8Ft8hMchqLKqFRRA5hhwhwvKQylYgATFDre1pL
- gXMifZWtFCiZQu6/s5gXQ6zzcLHsqR/Ovd8IVdzCn3ZNtLFlEWZ9p+Idc4xTR229bdmX
- Kv4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5U3D51ldCFhyD79NmQdMjkzR3eoR3/4FMoow1dcttjkNlT0vZxK01YfwXiZQFY7x02xqlv9V5K6vqyNZfdSkA/BAGuN8=
-X-Gm-Message-State: AOJu0Yxu1BhvwVKxWrNz4CgFeET4RL7rIGT3Y17SaaqgqfE2jw45CFBn
- 7G01CtOMhAhDSIRsZxSlalnthBo3fOpicYQ8dcvRRkPAKlv3d1yF32rcPY5r00UrsuhXhypd18F
- pwwmr/EJo0md5oD5aQVhoqoAZp7k1OZPPu91P6g==
-X-Google-Smtp-Source: AGHT+IERNecHxlCrBizKrJy/SOswhGb+HYZTEe09s62ljKz7rs7Ahz0y/Cy/ZDkYwi3XWvYZgdBhoz53lW8Xbztblxs=
-X-Received: by 2002:a50:c34d:0:b0:567:a318:ac0b with SMTP id
- q13-20020a50c34d000000b00567a318ac0bmr2453429edb.16.1711637707263; Thu, 28
- Mar 2024 07:55:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rpr9k-00070O-Dz
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:55:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rpr9i-0006sA-Gw
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:55:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711637701;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jRMhNMqOPc1tie1NOrKJ0posFxA/reBMxJjV0VlyOo8=;
+ b=Tsrl+i4oMTb48pOxMfBGvIwnF06JDfWo7A41CwNr+Pa8Vt60FjgJBDXYHpDR/iVAAxwW7g
+ Qvis29BF/bzO0xFjGk5JcX3FmVcZ/XqjoQgL1ugcNqZ8juy3bGPctuUhu6V93MnyElaLWj
+ JT2p8GDUMmQfQOo2Vx3KRCDZRFigx1I=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-458-EUphBQEDMqqUPg7DNG6X3w-1; Thu, 28 Mar 2024 10:54:57 -0400
+X-MC-Unique: EUphBQEDMqqUPg7DNG6X3w-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C9DF588FA23;
+ Thu, 28 Mar 2024 14:54:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.33])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1AE482166B36;
+ Thu, 28 Mar 2024 14:54:55 +0000 (UTC)
+Date: Thu, 28 Mar 2024 09:54:49 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
+ qemu-devel@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
+Message-ID: <sv4rp7w2cnjy5xykp4t3w5gf3zwnohe5eso422whl2ux2ofixa@xwjphousol77>
+References: <20240328140607.2433889-1-thuth@redhat.com>
+ <20240328140607.2433889-7-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20240325084854.3010562-1-ruanjinjie@huawei.com>
- <20240325084854.3010562-15-ruanjinjie@huawei.com>
-In-Reply-To: <20240325084854.3010562-15-ruanjinjie@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Mar 2024 14:54:56 +0000
-Message-ID: <CAFEAcA9go1xe+UOBjH64nsRx-n6Tz3sp71qjb0Je=9r8nHBbuA@mail.gmail.com>
-Subject: Re: [PATCH v10 14/23] hw/intc/arm_gicv3: Add irq non-maskable property
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240328140607.2433889-7-thuth@redhat.com>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,159 +88,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 25 Mar 2024 at 08:52, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
->
-> A SPI, PPI or SGI interrupt can have non-maskable property. So maintain
-> non-maskable property in PendingIrq and GICR/GICD. Since add new device
-> state, it also needs to be migrated, so also save NMI info in
-> vmstate_gicv3_cpu and vmstate_gicv3.
->
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
+> Since version 2.66, glib has useful URI parsing functions, too.
+> Use those instead of the QEMU-internal ones to be finally able
+> to get rid of the latter. The g_uri_get_host() also takes care
+> of removing the square brackets from IPv6 addresses, so we can
+> drop that part of the QEMU code now, too.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
-> v10:
-> - superprio -> nmi, gicr_isuperprio -> gicr_inmir0.
-> - Save NMI state in vmstate_gicv3_cpu and vmstate_gicv3.
-> - Update the commit message.
-> v3:
-> - Place this ahead of implement GICR_INMIR.
-> - Add Acked-by.
-> ---
->  hw/intc/arm_gicv3_common.c         | 44 ++++++++++++++++++++++++++++++
->  include/hw/intc/arm_gicv3_common.h |  4 +++
->  2 files changed, 48 insertions(+)
->
-> diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-> index 2d2cea6858..be76ae0be6 100644
-> --- a/hw/intc/arm_gicv3_common.c
-> +++ b/hw/intc/arm_gicv3_common.c
-> @@ -164,6 +164,24 @@ const VMStateDescription vmstate_gicv3_gicv4 = {
+>  block/nbd.c | 66 ++++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 38 insertions(+), 28 deletions(-)
+> 
+> diff --git a/block/nbd.c b/block/nbd.c
+> index ef05f7cdfd..95b507f872 100644
+> --- a/block/nbd.c
+> +++ b/block/nbd.c
+> @@ -31,7 +31,6 @@
+>  #include "qemu/osdep.h"
+>  
+>  #include "trace.h"
+> -#include "qemu/uri.h"
+>  #include "qemu/option.h"
+>  #include "qemu/cutils.h"
+>  #include "qemu/main-loop.h"
+> @@ -1514,30 +1513,34 @@ static void nbd_client_close(BlockDriverState *bs)
+>  
+>  static int nbd_parse_uri(const char *filename, QDict *options)
+>  {
+> -    URI *uri;
+> +    GUri *uri;
+
+Is it worth using 'g_autoptr(GUri) uri = NULL;' here, to simplify cleanup later?
+
+>      const char *p;
+> -    QueryParams *qp = NULL;
+> +    GHashTable *qp = NULL;
+
+Presumably would be easier if qp is also auto-free.
+
+> +    int qp_n;
+>      int ret = 0;
+>      bool is_unix;
+> +    const char *uri_scheme, *uri_query, *uri_server;
+> +    int uri_port;
+>  
+> -    uri = uri_parse(filename);
+> +    uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
+
+The glib API is fairly close to what we have in qemu, making this a
+nice switchover.
+
+>          /* nbd[+tcp]://host[:port]/export */
+> -        if (!uri->server) {
+> +        if (!uri_server) {
+>              ret = -EINVAL;
+>              goto out;
+>          }
+>  
+> -        /* strip braces from literal IPv6 address */
+> -        if (uri->server[0] == '[') {
+> -            host = qstring_from_substr(uri->server, 1,
+> -                                       strlen(uri->server) - 1);
+> -        } else {
+> -            host = qstring_from_str(uri->server);
+> -        }
+> -
+>          qdict_put_str(options, "server.type", "inet");
+> -        qdict_put(options, "server.host", host);
+> +        qdict_put_str(options, "server.host", uri_server);
+>  
+> -        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
+> +        port_str = g_strdup_printf("%d", uri_port != -1 ? uri_port
+> +                                                        : NBD_DEFAULT_PORT);
+>          qdict_put_str(options, "server.port", port_str);
+
+If a user requests nbd://hostname:0/export, this now sets server.port
+to "0" instead of "10809".  Is that an intentional change?  No one
+actually passes an explicit ":0" port on purpose, but we do have to
+worry about malicious URIs.
+
+>          g_free(port_str);
 >      }
->  };
->
-> +static bool nmi_needed(void *opaque)
-> +{
-> +    GICv3CPUState *cs = opaque;
-> +
-> +    return cs->gic->nmi_support != 0;
-
-nmi_support is already a bool, so you can
-       return cs->gic_nmi_support;
-
-
-> +}
-> +
-> +static const VMStateDescription vmstate_gicv3_cpu_nmi = {
-> +    .name = "arm_gicv3_cpu/nmi",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = nmi_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT32(gicr_inmir0, GICv3CPUState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_gicv3_cpu = {
->      .name = "arm_gicv3_cpu",
->      .version_id = 1,
-> @@ -197,6 +215,10 @@ static const VMStateDescription vmstate_gicv3_cpu = {
->          &vmstate_gicv3_cpu_sre_el1,
->          &vmstate_gicv3_gicv4,
->          NULL
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_gicv3_cpu_nmi,
-> +        NULL
-
-You add your subsection to the existing .subsections[] list.
-Otherwise this field initializer overwrites the previous one.
-
+>  
+>  out:
+>      if (qp) {
+> -        query_params_free(qp);
+> +        g_hash_table_destroy(qp);
 >      }
->  };
->
-> @@ -238,6 +260,24 @@ const VMStateDescription vmstate_gicv3_gicd_no_migration_shift_bug = {
->      }
->  };
->
-> +static bool needed_nmi(void *opaque)
-> +{
-> +    GICv3State *cs = opaque;
-> +
-> +    return cs->nmi_support != 0;
-> +}
+> -    uri_free(uri);
+> +    g_uri_unref(uri);
+>      return ret;
 
-You already have nmi_needed() above, so you can use it
-as the .needed function for both vmstate struct definitions.
+It may be possible to eliminate the out label altogether, if
+GHashTable has the appropriate auto-free magic.
 
-> +
-> +const VMStateDescription vmstate_gicv3_gicd_nmi = {
-> +    .name = "arm_gicv3/gicd_nmi",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = needed_nmi,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT32_ARRAY(nmi, GICv3State, GICV3_BMP_SIZE),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_gicv3 = {
->      .name = "arm_gicv3",
->      .version_id = 1,
-> @@ -267,6 +307,10 @@ static const VMStateDescription vmstate_gicv3 = {
->      .subsections = (const VMStateDescription * const []) {
->          &vmstate_gicv3_gicd_no_migration_shift_bug,
->          NULL
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_gicv3_gicd_nmi,
-> +        NULL
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
-Similarly here this must be added to the existing list.
-
->      }
->  };
->
-> diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-> index 4358c5319c..88533749eb 100644
-> --- a/include/hw/intc/arm_gicv3_common.h
-> +++ b/include/hw/intc/arm_gicv3_common.h
-> @@ -146,6 +146,7 @@ typedef struct {
->      int irq;
->      uint8_t prio;
->      int grp;
-> +    bool nmi;
->  } PendingIrq;
->
->  struct GICv3CPUState {
-> @@ -172,6 +173,7 @@ struct GICv3CPUState {
->      uint32_t gicr_ienabler0;
->      uint32_t gicr_ipendr0;
->      uint32_t gicr_iactiver0;
-> +    uint32_t gicr_inmir0;
->      uint32_t edge_trigger; /* ICFGR0 and ICFGR1 even bits */
->      uint32_t gicr_igrpmodr0;
->      uint32_t gicr_nsacr;
-> @@ -275,6 +277,7 @@ struct GICv3State {
->      GIC_DECLARE_BITMAP(active);       /* GICD_ISACTIVER */
->      GIC_DECLARE_BITMAP(level);        /* Current level */
->      GIC_DECLARE_BITMAP(edge_trigger); /* GICD_ICFGR even bits */
-> +    GIC_DECLARE_BITMAP(nmi);          /* GICD_INMIR */
->      uint8_t gicd_ipriority[GICV3_MAXIRQ];
->      uint64_t gicd_irouter[GICV3_MAXIRQ];
->      /* Cached information: pointer to the cpu i/f for the CPUs specified
-> @@ -314,6 +317,7 @@ GICV3_BITMAP_ACCESSORS(pending)
->  GICV3_BITMAP_ACCESSORS(active)
->  GICV3_BITMAP_ACCESSORS(level)
->  GICV3_BITMAP_ACCESSORS(edge_trigger)
-> +GICV3_BITMAP_ACCESSORS(nmi)
->
->  #define TYPE_ARM_GICV3_COMMON "arm-gicv3-common"
->  typedef struct ARMGICv3CommonClass ARMGICv3CommonClass;
-> --
-> 2.34.1
-
-thanks
--- PMM
 
