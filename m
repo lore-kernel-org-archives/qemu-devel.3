@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE7DC54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D41C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpmve-0001K3-Nf; Thu, 28 Mar 2024 06:24:15 -0400
+	id 1rpmvo-0001qc-2C; Thu, 28 Mar 2024 06:24:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmvP-00018B-2s
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:02 -0400
+ id 1rpmvm-0001ft-SO
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmvM-000818-Ei
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:23:58 -0400
+ id 1rpmve-00081z-Ib
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711621432;
+ s=mimecast20190719; t=1711621454;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XNL8vvRnydn7jCDetNfo6f12bNGtxUMZ0TRYkoRAnyo=;
- b=Ik1Fp5jXEBohFkJOM4ODCyL14gdICiJx5FWhWNG0n1DYheZlxeN0hDQLpG8k23/ZegjQqL
- vVTOJRF51M7cCLs7i5WA/4fSyYFLRfEqQRfW2yW9ahQ9MmvOd9eeKw5bD5U3XLSCAv9IvL
- ZVMAJbUpzIeFGUFGa65V9jURrUKoi2M=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-iPBfTMEtO4mDpBsoSw7A0Q-1; Thu,
- 28 Mar 2024 06:23:48 -0400
-X-MC-Unique: iPBfTMEtO4mDpBsoSw7A0Q-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=Yq8tTYx/XLUB4Gx0moxVhK0EJnB47ElooeGni6U2KHU=;
+ b=Muu9yLsCTY52Cl8uY5wFx4raKN2Zd5ttyp0m2w0ITaVBFtseRCFOgWb5mEfXt18Gqwh/1Y
+ p5n/pMpYH5GON8rQjuBN7VJZT9jQF5YdvO8XwvJF9c+C8s2O/sTwR4LuqoztGKr7pM06px
+ WajW3VfgEnuq6vmgZSL9Jtus4D3gXxs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668--SLuRppQOwuCV8NX8L6XsQ-1; Thu, 28 Mar 2024 06:24:11 -0400
+X-MC-Unique: -SLuRppQOwuCV8NX8L6XsQ-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7660E29AC032;
- Thu, 28 Mar 2024 10:23:47 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3EBF6811E81;
+ Thu, 28 Mar 2024 10:24:10 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.34])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 92DF6492BC8;
- Thu, 28 Mar 2024 10:23:45 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 45E373C20;
+ Thu, 28 Mar 2024 10:24:08 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hyman Huang <yong.huang@smartx.com>,
@@ -67,15 +67,15 @@ Cc: Hyman Huang <yong.huang@smartx.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 16/19] tests: fix -Werror=maybe-uninitialized
-Date: Thu, 28 Mar 2024 14:20:49 +0400
-Message-ID: <20240328102052.3499331-17-marcandre.lureau@redhat.com>
+Subject: [PATCH 17/19] hw/nvme: fix -Werror=maybe-uninitialized
+Date: Thu, 28 Mar 2024 14:20:50 +0400
+Message-ID: <20240328102052.3499331-18-marcandre.lureau@redhat.com>
 In-Reply-To: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,41 +103,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../tests/unit/test-block-iothread.c:773:17: error: ‘job’ may be used uninitialized [-Werror=maybe-uninitialized]
-/usr/include/glib-2.0/glib/gtestutils.h:73:53: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+../hw/nvme/ctrl.c:6081:21: error: ‘result’ may be used uninitialized [-Werror=maybe-uninitialized]
+
+It's not obvious that 'result' is set in all code paths. When &result is
+a returned argument, it's even less clear.
+
+Looking at various assignments, 0 seems to be a suitable default value.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/unit/test-bdrv-drain.c     | 2 +-
- tests/unit/test-block-iothread.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index 666880472b..c112d5b189 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -722,7 +722,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
-     BlockJob *job;
-     TestBlockJob *tjob;
-     IOThread *iothread = NULL;
--    int ret;
-+    int ret = -1;
- 
-     src = bdrv_new_open_driver(&bdrv_test, "source", BDRV_O_RDWR,
-                                &error_abort);
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index 3766d5de6b..20ed54f570 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -745,7 +745,7 @@ static void test_propagate_mirror(void)
-     AioContext *main_ctx = qemu_get_aio_context();
-     BlockDriverState *src, *target, *filter;
-     BlockBackend *blk;
--    Job *job;
-+    Job *job = NULL;
-     Error *local_err = NULL;
- 
-     /* Create src and target*/
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index c2b17de987..127c3d2383 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -5894,7 +5894,7 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
+     uint32_t dw10 = le32_to_cpu(cmd->cdw10);
+     uint32_t dw11 = le32_to_cpu(cmd->cdw11);
+     uint32_t nsid = le32_to_cpu(cmd->nsid);
+-    uint32_t result;
++    uint32_t result = 0;
+     uint8_t fid = NVME_GETSETFEAT_FID(dw10);
+     NvmeGetFeatureSelect sel = NVME_GETFEAT_SELECT(dw10);
+     uint16_t iv;
 -- 
 2.44.0
 
