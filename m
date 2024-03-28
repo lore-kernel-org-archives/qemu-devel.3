@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93FBAC54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 05:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F2FCD1283
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 05:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpiMi-0000rj-DX; Thu, 28 Mar 2024 01:31:52 -0400
+	id 1rpiMd-0000qc-J5; Thu, 28 Mar 2024 01:31:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rpiMf-0000rC-MG; Thu, 28 Mar 2024 01:31:49 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1rpiMb-0000pq-IZ; Thu, 28 Mar 2024 01:31:45 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rpiMd-0008U6-6g; Thu, 28 Mar 2024 01:31:49 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5e4f79007ffso341872a12.2; 
- Wed, 27 Mar 2024 22:31:46 -0700 (PDT)
+ id 1rpiMa-0008S3-1p; Thu, 28 Mar 2024 01:31:45 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-53fbf2c42bfso366256a12.3; 
+ Wed, 27 Mar 2024 22:31:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711603905; x=1712208705; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711603902; x=1712208702; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZLe7MoYc/51z8mNQf8kAXAmjjbRb31oNJF+RZzZQ1zM=;
- b=WQdriyA7bAiN+qpWKJ9TkQmZXm2Y5ak2DDWJiYkxWdpvBmiU41goI7sZXDOilYb+5s
- 8Ttdn/31cpodHEcwJk8UFFFfEZtP9QZDdqhhB2z2oTNoJo+iorE9zKWRRyxmfmcsBVw0
- W/Y1dQly86n50gvI7Q3a1HW3Qsehf7LXujwUkRiuE1QeVwcOo05x9uGk/DGvn3n3Iz8C
- k8MBI7FZkqtUy0flNNgPbXuj1vR30/AQc0b1zF9RcFg3z0DYffs3t2ET2o+tZWXCd1M5
- mbIeh53pR6JXUXxYVUBQdlMSg8LTcxhoR5uQPHJdOB0VOsX6Gzn9HQhnvmI31+3pGDCa
- nPGQ==
+ bh=T0C6uoCntyN/0GokSPADPgOAyPjNhHghNpUBgAoFP4U=;
+ b=bQ+y+lyN0RuwuANq17zvhbj5eV42Zu51bnQuW8RYwPmImt+ibkwYvq7HkkMA/MwS+U
+ BJm1xwfcAYBqQdyy7oCJwyi8s2UAPPC7h0sOGVGfDVMOTxGRVUAILvKheYNpHZ0XOLLU
+ 9vpKcL0CaodqTe1nBvrXMbO34f8bIUwqJTQP7U+H2pcriq5TUvGexjNfCtrG7tPaRwDy
+ hZboxuSfvcsXVTLES5JHXfRQ5h9EbrXm26LuPic9psYJsyKlKm/JPqA4/Juukob0VvIi
+ rZm9aquWwEW7PHYN4DntHz4E+FU4aovHHSQhJTYUceB9xHEyEsNfh4iU1Rf7NEIKyLRv
+ 4JhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711603905; x=1712208705;
+ d=1e100.net; s=20230601; t=1711603902; x=1712208702;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZLe7MoYc/51z8mNQf8kAXAmjjbRb31oNJF+RZzZQ1zM=;
- b=cCX8AcvRTVim3z8Lboe2CtfWWQXmRdCRiCUI2t+Vp7IxsVoRkiCtkSui+nedbls3cZ
- AEJoYaV5UjyCu5t7YavtVdgP6r5HmFWnS8o2FRa8cU9sbl+XytLGsktQzi3ireVczxO5
- ZbOnuqTPs96Y8qBrf6aqWAPfF0/V9o6muX75Jx3Vb5mFf8KSw8NTXHMDhyDC/vcuuIsX
- R8BCt414XZyJSm8zFViLZyqSnCmXB1QLfCKrxT2bOBgdiK5C79kNssfI1ILHhek2FnBK
- cfRWO+suGd+EE0vBOE2aD/fPIW3PCD83ybasutYfR+UNCkneAE0ceOZD9Ljm2jLTQzbM
- XIJA==
+ bh=T0C6uoCntyN/0GokSPADPgOAyPjNhHghNpUBgAoFP4U=;
+ b=ITzEKMhSxYYKb7eztouXvuDTKzEf2SWtxt2Z7siEqMT3N37az2Wn4fVSD0JGvwWEuX
+ 7JWJ4NH1H2dvhYxGrhSuvizWazll+WlkUioENLe3aTh9a+hWbN0atn+IxCuUaTuSdPTU
+ 1EOEFl9gN28P2YCzvuDb1BKvjI6PzI7V+Tig5Yn2zJkDXySYW48BIJjXCzXEdfx6SmzN
+ 6sZhgXfwyMSCYgKmy+07qNWw6euBbzeZFfoO0z02S5jtvyNCHqhrE/PYOTcGgoFSy4AB
+ 98L30cdvRZLro8pe/LGc2ZkAD/AjwKQqXf9MAx0DWgh0DWqa4dvr+q8360CtInHzQs9a
+ SPjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+KIGtV+S67+X0REcq3qTKcl8Mqad7v2Bxws8FBmXw5yoAY6RmW1pgU3J1NHpxLcKjWHwjgofP6+LiI+DJpGZpZmA0Ymg=
-X-Gm-Message-State: AOJu0Yyew9Ynkq3AippBkSGYCtMxFOEpZ73VRskBsEe6syM65XvqMGSe
- SVjU4PMczwTGv9MitIwT3yS3ij8MXkX2IPYSsQ9j14anOfH1EJzkB9mSVJ39G3U=
-X-Google-Smtp-Source: AGHT+IGABe57sLDM47Kk6bBspIS9HKK3Pr3gbAtTj8hqghXshy5wiDcy/f+YlLQzxMkHSaOSwOmksg==
-X-Received: by 2002:a17:902:ea09:b0:1db:8fd6:915e with SMTP id
- s9-20020a170902ea0900b001db8fd6915emr1979836plg.33.1711603905170; 
- Wed, 27 Mar 2024 22:31:45 -0700 (PDT)
+ AJvYcCVsMbIEH6PZewuItUWP5Z0jsMGR5jgi1P3tSr074epoPA9wjbv1cWMbaXhLETjYrAK/HZ7369NjB1421GXgcO9Q91cYU+A=
+X-Gm-Message-State: AOJu0YyiMgNwmltTyaQCQkQ6eKDIFJq76j2tu+cfp0gUwnTgfRRTkLfU
+ Jj9CMVBK/ZRQajO0BKdRMtkCM51qpOux86n5BVqpCR9poYuTjscojyI5eXenKfM=
+X-Google-Smtp-Source: AGHT+IFZV6dYx36Jc/qGdv0whH7h/uJ2rH08JcyqgQzfaLOlXKIL1xk0en7E0dpiUK3djCKSLgJkUw==
+X-Received: by 2002:a17:902:6807:b0:1e0:2f59:524c with SMTP id
+ h7-20020a170902680700b001e02f59524cmr1663244plk.37.1711603901926; 
+ Wed, 27 Mar 2024 22:31:41 -0700 (PDT)
 Received: from wheely.local0.net ([118.210.97.62])
  by smtp.gmail.com with ESMTPSA id
- d13-20020a170902654d00b001e211a290efsm535018pln.132.2024.03.27.22.31.42
+ d13-20020a170902654d00b001e211a290efsm535018pln.132.2024.03.27.22.31.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 22:31:45 -0700 (PDT)
+ Wed, 27 Mar 2024 22:31:41 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH 2/3] tcg/cputlb: Remove non-synced variants of global TLB
- flushes
-Date: Thu, 28 Mar 2024 15:31:30 +1000
-Message-ID: <20240328053131.2604454-3-npiggin@gmail.com>
+Subject: [PATCH 1/3] target/ppc: Fix broadcast tlbie synchronisation
+Date: Thu, 28 Mar 2024 15:31:29 +1000
+Message-ID: <20240328053131.2604454-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240328053131.2604454-1-npiggin@gmail.com>
 References: <20240328053131.2604454-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,370 +95,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are no longer used.
+With mttcg, broadcast tlbie instructions do not wait until other vCPUs
+have been kicked out of TCG execution before they complete (including
+necessary subsequent tlbsync, etc., instructions). This is contrary to
+the ISA, and it permits other vCPUs to use translations after the TLB
+flush. For example:
+
+   CPU0
+   // *memP is initially 0, memV maps to memP with *pte
+   *pte = 0;
+   ptesync ; tlbie ; eieio ; tlbsync ; ptesync
+   *memP = 1;
+
+   CPU1
+   assert(*memV == 0);
+
+It is possible for the assertion to fail because CPU1 translates memV
+using the TLB after CPU0 has stored 1 to the underlying memory. This
+race was observed with a careful test case where CPU1 checks run in a
+very large expensive TB so it can run for the entire CPU0 period between
+clearing the pte and storing the memory. It's normally very difficult to
+hit, but preemption of host vCPU threads could trigger the race
+anywhere.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- docs/devel/multi-thread-tcg.rst |  13 ++--
- include/exec/exec-all.h         |  97 +++++-------------------------
- accel/tcg/cputlb.c              | 103 --------------------------------
- 3 files changed, 19 insertions(+), 194 deletions(-)
+ target/ppc/helper_regs.c | 2 +-
+ target/ppc/mmu_helper.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tcg.rst
-index 1420789fff..d706c27ea7 100644
---- a/docs/devel/multi-thread-tcg.rst
-+++ b/docs/devel/multi-thread-tcg.rst
-@@ -205,15 +205,10 @@ DESIGN REQUIREMENTS:
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 25258986e3..9094ae5004 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -334,7 +334,7 @@ void check_tlb_flush(CPUPPCState *env, bool global)
+     if (global && (env->tlb_need_flush & TLB_NEED_GLOBAL_FLUSH)) {
+         env->tlb_need_flush &= ~TLB_NEED_GLOBAL_FLUSH;
+         env->tlb_need_flush &= ~TLB_NEED_LOCAL_FLUSH;
+-        tlb_flush_all_cpus(cs);
++        tlb_flush_all_cpus_synced(cs);
+         return;
+     }
  
- (Current solution)
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index c071b4d5e2..aaa5bfc62a 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -533,7 +533,7 @@ void helper_tlbie_isa300(CPUPPCState *env, target_ulong rb, target_ulong rs,
+     if (local) {
+         tlb_flush_page(env_cpu(env), addr);
+     } else {
+-        tlb_flush_page_all_cpus(env_cpu(env), addr);
++        tlb_flush_page_all_cpus_synced(env_cpu(env), addr);
+     }
+     return;
  
--We have updated cputlb.c to defer operations when a cross-vCPU
--operation with async_run_on_cpu() which ensures each vCPU sees a
--coherent state when it next runs its work (in a few instructions
--time).
--
--A new set up operations (tlb_flush_*_all_cpus) take an additional flag
--which when set will force synchronisation by setting the source vCPUs
--work as "safe work" and exiting the cpu run loop. This ensure by the
--time execution restarts all flush operations have completed.
-+A new set of tlb flush operations (tlb_flush_*_all_cpus_synced) force
-+synchronisation by setting the source vCPUs work as "safe work" and
-+exiting the cpu run loop. This ensures that by the time execution
-+restarts all flush operations have completed.
- 
- TLB flag updates are all done atomically and are also protected by the
- corresponding page lock.
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index 3e53501691..7cf9faa63f 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -66,24 +66,15 @@ void tlb_destroy(CPUState *cpu);
-  */
- void tlb_flush_page(CPUState *cpu, vaddr addr);
- /**
-- * tlb_flush_page_all_cpus:
-+ * tlb_flush_page_all_cpus_synced:
-  * @cpu: src CPU of the flush
-  * @addr: virtual address of page to be flushed
-  *
-- * Flush one page from the TLB of the specified CPU, for all
-+ * Flush one page from the TLB of all CPUs, for all
-  * MMU indexes.
-- */
--void tlb_flush_page_all_cpus(CPUState *src, vaddr addr);
--/**
-- * tlb_flush_page_all_cpus_synced:
-- * @cpu: src CPU of the flush
-- * @addr: virtual address of page to be flushed
-  *
-- * Flush one page from the TLB of the specified CPU, for all MMU
-- * indexes like tlb_flush_page_all_cpus except the source vCPUs work
-- * is scheduled as safe work meaning all flushes will be complete once
-- * the source vCPUs safe work is complete. This will depend on when
-- * the guests translation ends the TB.
-+ * When this function returns, no CPUs will subsequently perform
-+ * translations using the flushed TLBs.
-  */
- void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr);
- /**
-@@ -96,19 +87,14 @@ void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr);
-  * use one of the other functions for efficiency.
-  */
- void tlb_flush(CPUState *cpu);
--/**
-- * tlb_flush_all_cpus:
-- * @cpu: src CPU of the flush
-- */
--void tlb_flush_all_cpus(CPUState *src_cpu);
- /**
-  * tlb_flush_all_cpus_synced:
-  * @cpu: src CPU of the flush
-  *
-- * Like tlb_flush_all_cpus except this except the source vCPUs work is
-- * scheduled as safe work meaning all flushes will be complete once
-- * the source vCPUs safe work is complete. This will depend on when
-- * the guests translation ends the TB.
-+ * Flush the entire TLB for all CPUs, for all MMU indexes.
-+ *
-+ * When this function returns, no CPUs will subsequently perform
-+ * translations using the flushed TLBs.
-  */
- void tlb_flush_all_cpus_synced(CPUState *src_cpu);
- /**
-@@ -123,27 +109,16 @@ void tlb_flush_all_cpus_synced(CPUState *src_cpu);
- void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr,
-                               uint16_t idxmap);
- /**
-- * tlb_flush_page_by_mmuidx_all_cpus:
-+ * tlb_flush_page_by_mmuidx_all_cpus_synced:
-  * @cpu: Originating CPU of the flush
-  * @addr: virtual address of page to be flushed
-  * @idxmap: bitmap of MMU indexes to flush
-  *
-  * Flush one page from the TLB of all CPUs, for the specified
-  * MMU indexes.
-- */
--void tlb_flush_page_by_mmuidx_all_cpus(CPUState *cpu, vaddr addr,
--                                       uint16_t idxmap);
--/**
-- * tlb_flush_page_by_mmuidx_all_cpus_synced:
-- * @cpu: Originating CPU of the flush
-- * @addr: virtual address of page to be flushed
-- * @idxmap: bitmap of MMU indexes to flush
-  *
-- * Flush one page from the TLB of all CPUs, for the specified MMU
-- * indexes like tlb_flush_page_by_mmuidx_all_cpus except the source
-- * vCPUs work is scheduled as safe work meaning all flushes will be
-- * complete once  the source vCPUs safe work is complete. This will
-- * depend on when the guests translation ends the TB.
-+ * When this function returns, no CPUs will subsequently perform
-+ * translations using the flushed TLBs.
-  */
- void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
-                                               uint16_t idxmap);
-@@ -158,24 +133,15 @@ void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
-  */
- void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap);
- /**
-- * tlb_flush_by_mmuidx_all_cpus:
-+ * tlb_flush_by_mmuidx_all_cpus_synced:
-  * @cpu: Originating CPU of the flush
-  * @idxmap: bitmap of MMU indexes to flush
-  *
-- * Flush all entries from all TLBs of all CPUs, for the specified
-+ * Flush all entries from the TLB of all CPUs, for the specified
-  * MMU indexes.
-- */
--void tlb_flush_by_mmuidx_all_cpus(CPUState *cpu, uint16_t idxmap);
--/**
-- * tlb_flush_by_mmuidx_all_cpus_synced:
-- * @cpu: Originating CPU of the flush
-- * @idxmap: bitmap of MMU indexes to flush
-  *
-- * Flush all entries from all TLBs of all CPUs, for the specified
-- * MMU indexes like tlb_flush_by_mmuidx_all_cpus except except the source
-- * vCPUs work is scheduled as safe work meaning all flushes will be
-- * complete once  the source vCPUs safe work is complete. This will
-- * depend on when the guests translation ends the TB.
-+ * When this function returns, no CPUs will subsequently perform
-+ * translations using the flushed TLBs.
-  */
- void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu, uint16_t idxmap);
- 
-@@ -192,8 +158,6 @@ void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
-                                    uint16_t idxmap, unsigned bits);
- 
- /* Similarly, with broadcast and syncing. */
--void tlb_flush_page_bits_by_mmuidx_all_cpus(CPUState *cpu, vaddr addr,
--                                            uint16_t idxmap, unsigned bits);
- void tlb_flush_page_bits_by_mmuidx_all_cpus_synced
-     (CPUState *cpu, vaddr addr, uint16_t idxmap, unsigned bits);
- 
-@@ -213,9 +177,6 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
-                                unsigned bits);
- 
- /* Similarly, with broadcast and syncing. */
--void tlb_flush_range_by_mmuidx_all_cpus(CPUState *cpu, vaddr addr,
--                                        vaddr len, uint16_t idxmap,
--                                        unsigned bits);
- void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
-                                                vaddr addr,
-                                                vaddr len,
-@@ -288,18 +249,12 @@ static inline void tlb_destroy(CPUState *cpu)
- static inline void tlb_flush_page(CPUState *cpu, vaddr addr)
- {
- }
--static inline void tlb_flush_page_all_cpus(CPUState *src, vaddr addr)
--{
--}
- static inline void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr)
- {
- }
- static inline void tlb_flush(CPUState *cpu)
- {
- }
--static inline void tlb_flush_all_cpus(CPUState *src_cpu)
--{
--}
- static inline void tlb_flush_all_cpus_synced(CPUState *src_cpu)
- {
- }
-@@ -311,20 +266,11 @@ static inline void tlb_flush_page_by_mmuidx(CPUState *cpu,
- static inline void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
- {
- }
--static inline void tlb_flush_page_by_mmuidx_all_cpus(CPUState *cpu,
--                                                     vaddr addr,
--                                                     uint16_t idxmap)
--{
--}
- static inline void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu,
-                                                             vaddr addr,
-                                                             uint16_t idxmap)
- {
- }
--static inline void tlb_flush_by_mmuidx_all_cpus(CPUState *cpu, uint16_t idxmap)
--{
--}
--
- static inline void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu,
-                                                        uint16_t idxmap)
- {
-@@ -335,12 +281,6 @@ static inline void tlb_flush_page_bits_by_mmuidx(CPUState *cpu,
-                                                  unsigned bits)
- {
- }
--static inline void tlb_flush_page_bits_by_mmuidx_all_cpus(CPUState *cpu,
--                                                          vaddr addr,
--                                                          uint16_t idxmap,
--                                                          unsigned bits)
--{
--}
- static inline void
- tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
-                                               uint16_t idxmap, unsigned bits)
-@@ -351,13 +291,6 @@ static inline void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
-                                              unsigned bits)
- {
- }
--static inline void tlb_flush_range_by_mmuidx_all_cpus(CPUState *cpu,
--                                                      vaddr addr,
--                                                      vaddr len,
--                                                      uint16_t idxmap,
--                                                      unsigned bits)
--{
--}
- static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
-                                                              vaddr addr,
-                                                              vaddr len,
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 93b1ca810b..8ff3aa5e50 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -379,21 +379,6 @@ void tlb_flush(CPUState *cpu)
-     tlb_flush_by_mmuidx(cpu, ALL_MMUIDX_BITS);
- }
- 
--void tlb_flush_by_mmuidx_all_cpus(CPUState *src_cpu, uint16_t idxmap)
--{
--    const run_on_cpu_func fn = tlb_flush_by_mmuidx_async_work;
--
--    tlb_debug("mmu_idx: 0x%"PRIx16"\n", idxmap);
--
--    flush_all_helper(src_cpu, fn, RUN_ON_CPU_HOST_INT(idxmap));
--    fn(src_cpu, RUN_ON_CPU_HOST_INT(idxmap));
--}
--
--void tlb_flush_all_cpus(CPUState *src_cpu)
--{
--    tlb_flush_by_mmuidx_all_cpus(src_cpu, ALL_MMUIDX_BITS);
--}
--
- void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *src_cpu, uint16_t idxmap)
- {
-     const run_on_cpu_func fn = tlb_flush_by_mmuidx_async_work;
-@@ -604,46 +589,6 @@ void tlb_flush_page(CPUState *cpu, vaddr addr)
-     tlb_flush_page_by_mmuidx(cpu, addr, ALL_MMUIDX_BITS);
- }
- 
--void tlb_flush_page_by_mmuidx_all_cpus(CPUState *src_cpu, vaddr addr,
--                                       uint16_t idxmap)
--{
--    tlb_debug("addr: %016" VADDR_PRIx " mmu_idx:%"PRIx16"\n", addr, idxmap);
--
--    /* This should already be page aligned */
--    addr &= TARGET_PAGE_MASK;
--
--    /*
--     * Allocate memory to hold addr+idxmap only when needed.
--     * See tlb_flush_page_by_mmuidx for details.
--     */
--    if (idxmap < TARGET_PAGE_SIZE) {
--        flush_all_helper(src_cpu, tlb_flush_page_by_mmuidx_async_1,
--                         RUN_ON_CPU_TARGET_PTR(addr | idxmap));
--    } else {
--        CPUState *dst_cpu;
--
--        /* Allocate a separate data block for each destination cpu.  */
--        CPU_FOREACH(dst_cpu) {
--            if (dst_cpu != src_cpu) {
--                TLBFlushPageByMMUIdxData *d
--                    = g_new(TLBFlushPageByMMUIdxData, 1);
--
--                d->addr = addr;
--                d->idxmap = idxmap;
--                async_run_on_cpu(dst_cpu, tlb_flush_page_by_mmuidx_async_2,
--                                 RUN_ON_CPU_HOST_PTR(d));
--            }
--        }
--    }
--
--    tlb_flush_page_by_mmuidx_async_0(src_cpu, addr, idxmap);
--}
--
--void tlb_flush_page_all_cpus(CPUState *src, vaddr addr)
--{
--    tlb_flush_page_by_mmuidx_all_cpus(src, addr, ALL_MMUIDX_BITS);
--}
--
- void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-                                               vaddr addr,
-                                               uint16_t idxmap)
-@@ -835,54 +780,6 @@ void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
-     tlb_flush_range_by_mmuidx(cpu, addr, TARGET_PAGE_SIZE, idxmap, bits);
- }
- 
--void tlb_flush_range_by_mmuidx_all_cpus(CPUState *src_cpu,
--                                        vaddr addr, vaddr len,
--                                        uint16_t idxmap, unsigned bits)
--{
--    TLBFlushRangeData d;
--    CPUState *dst_cpu;
--
--    /*
--     * If all bits are significant, and len is small,
--     * this devolves to tlb_flush_page.
--     */
--    if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
--        tlb_flush_page_by_mmuidx_all_cpus(src_cpu, addr, idxmap);
--        return;
--    }
--    /* If no page bits are significant, this devolves to tlb_flush. */
--    if (bits < TARGET_PAGE_BITS) {
--        tlb_flush_by_mmuidx_all_cpus(src_cpu, idxmap);
--        return;
--    }
--
--    /* This should already be page aligned */
--    d.addr = addr & TARGET_PAGE_MASK;
--    d.len = len;
--    d.idxmap = idxmap;
--    d.bits = bits;
--
--    /* Allocate a separate data block for each destination cpu.  */
--    CPU_FOREACH(dst_cpu) {
--        if (dst_cpu != src_cpu) {
--            TLBFlushRangeData *p = g_memdup(&d, sizeof(d));
--            async_run_on_cpu(dst_cpu,
--                             tlb_flush_range_by_mmuidx_async_1,
--                             RUN_ON_CPU_HOST_PTR(p));
--        }
--    }
--
--    tlb_flush_range_by_mmuidx_async_0(src_cpu, d);
--}
--
--void tlb_flush_page_bits_by_mmuidx_all_cpus(CPUState *src_cpu,
--                                            vaddr addr, uint16_t idxmap,
--                                            unsigned bits)
--{
--    tlb_flush_range_by_mmuidx_all_cpus(src_cpu, addr, TARGET_PAGE_SIZE,
--                                       idxmap, bits);
--}
--
- void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-                                                vaddr addr,
-                                                vaddr len,
 -- 
 2.42.0
 
