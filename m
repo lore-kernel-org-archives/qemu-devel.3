@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0041C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D3AC54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpmw1-000394-2j; Thu, 28 Mar 2024 06:24:37 -0400
+	id 1rpmzM-0006Mx-2Q; Thu, 28 Mar 2024 06:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmvz-00037s-FI
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rpmzK-0006Mn-LD
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:28:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmvx-00084U-Rb
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:35 -0400
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rpmzI-0000Jr-VA
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:28:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711621473;
+ s=mimecast20190719; t=1711621679;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oHRMzYEm8O07qCC1WuSIUkd0l/2v6McOwpmBcpQ2w5Q=;
- b=h4c5joO1H2Shi4UFKFcfYYkQf6wcKvSIb2twiMAozBgtVwt8vtNZ9QxFjkim1dZR4yq71a
- Kx6MMrFIg3TU2GqRY5IK5QMvzOQgDdenCLMx3YKJERUxWquMclEDLYU4I4J/JfPIYYlltD
- gVQ66RQXvCFmAusNaE5X4qDfsfCvHcY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0x2mVVEtILP+AOEXkJlL41uasi6rXYEHqOzFs+8sqyg=;
+ b=IpJeW5cS2mMFU6ProevO+ffTPHIN8y4eIO/gWhCruh1eXdZ4W+g04X2I8ntHdPtDG71MhS
+ v1pHHxS3enW/V5kbR3lwSr0pBvOrXqD//8uIlMTt2MmXngW8N5YnMA9pNd2v/ol9mmqHhN
+ QowzUi0uSBZPJxkEfM+G6O2aIamjdhk=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-R184r4QNOt6w4r65TNpR3Q-1; Thu, 28 Mar 2024 06:24:29 -0400
-X-MC-Unique: R184r4QNOt6w4r65TNpR3Q-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 20E8A801901;
- Thu, 28 Mar 2024 10:24:28 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.34])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4B065492BD7;
- Thu, 28 Mar 2024 10:24:26 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Hyman Huang <yong.huang@smartx.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- John Snow <jsnow@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
- Fam Zheng <fam@euphon.net>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Bin Meng <bin.meng@windriver.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jesper Devantier <foss@defmacro.it>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Keith Busch <kbusch@kernel.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 19/19] RFC: hw/virtio: a potential leak fix
-Date: Thu, 28 Mar 2024 14:20:52 +0400
-Message-ID: <20240328102052.3499331-20-marcandre.lureau@redhat.com>
-In-Reply-To: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
-References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
+ us-mta-662-7HKTihoaOm-gFi5ggwaraA-1; Thu, 28 Mar 2024 06:27:58 -0400
+X-MC-Unique: 7HKTihoaOm-gFi5ggwaraA-1
+Received: by mail-oo1-f72.google.com with SMTP id
+ 006d021491bc7-5a1d14ca2abso657625eaf.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 03:27:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711621677; x=1712226477;
+ h=in-reply-to:references:user-agent:subject:cc:to:from:message-id
+ :date:content-transfer-encoding:mime-version:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0x2mVVEtILP+AOEXkJlL41uasi6rXYEHqOzFs+8sqyg=;
+ b=KzUW7D8kP3JkM0Kd7IviWWTooTqFBbl7RE3Qyt7BHGgHoRDENoMbJYpu8EW6b+gcBt
+ oqSmg51leJjDpDKwSt8Or6gXhTk05DkB3WSyzkJeTLpkeP0vgnQRmixBEU54dnpyHCx1
+ X8Lg5CaiO1sB2nc17KsodgHsuMVlLg3TwOdR0or4Kh+HW6fCtyggCnzdJkjfH0MyAuw8
+ V7KxnVCxj/5DGXqTDO+7PgNab5D9ReQ15HrcYdwH23SL70g0x4ZOd9iM4cAR5YarOxD6
+ 6+rgcdupcKn/f+hrqHJSd5gvZWbV89Z1wVXjFnbSHz9ea3WNT4Vc1u9h36M69hs+xLkC
+ MdnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+apde99joEhFba2wyj3MaxbRcc3BeOoMMldwz0PJXOhYyiS2dmZDD6jft6GmiaB6k0i58IQdatMYajL6yWywowXPjFGE=
+X-Gm-Message-State: AOJu0YxjSZaoLfH5klvr+577BFl37wSn69SibAg39znneF7IrZKCkpr2
+ 2bJXn5M/YKdTCNTW7lJ+dqhwUvE9HcYp/xxOSgz6Xn0y/qbAUGuOtaLVxCMYCTkMXN2mRK4106a
+ 80h2cO0jlWnQE4Rl/W4dmK2OgOpJNrMgjxSKGJP6CAy0XCcnRkmcD
+X-Received: by 2002:a05:6358:63aa:b0:17e:a9b7:2636 with SMTP id
+ k42-20020a05635863aa00b0017ea9b72636mr2304345rwh.22.1711621677314; 
+ Thu, 28 Mar 2024 03:27:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnj+dD5C32e73KyVYA2p4fjU2S1DJjOpFUQk92emH97b+JrbNUC0OQM6hXcQ1VZJYAxrNFvQ==
+X-Received: by 2002:a05:6358:63aa:b0:17e:a9b7:2636 with SMTP id
+ k42-20020a05635863aa00b0017ea9b72636mr2304329rwh.22.1711621676963; 
+ Thu, 28 Mar 2024 03:27:56 -0700 (PDT)
+Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
+ by smtp.gmail.com with ESMTPSA id
+ q20-20020a635054000000b005dc120fa3b2sm975747pgl.18.2024.03.28.03.27.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Mar 2024 03:27:56 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+Date: Thu, 28 Mar 2024 11:27:50 +0100
+Message-Id: <D05B8SENZ5MO.52MU1G4SOBY0@fedora>
+From: "Anthony Harivel" <aharivel@redhat.com>
+To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
+ <vchundur@redhat.com>, <rjarry@redhat.com>
+Subject: Re: [PATCH v4 2/3] tools: build qemu-vmsr-helper
+User-Agent: aerc/0.15.2-111-g39195000e213
+References: <20240318151216.32833-1-aharivel@redhat.com>
+ <20240318151216.32833-3-aharivel@redhat.com> <ZfwbIywC504XWxkl@redhat.com>
+In-Reply-To: <ZfwbIywC504XWxkl@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aharivel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,7 +89,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,47 +105,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hi Daniel,=20
 
-vhost_svq_get_buf() may return a VirtQueueElement that should be freed.
+My apologies for all the missed feedback in v2.=20
+I'll be more organized for my next iteration.=20
 
-It's unclear to me if the vhost_svq_get_buf() call should always return NULL.
+For this specific comment below, I would like to make sure I'm testing=20
+the right way.=20
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/virtio/vhost-shadow-virtqueue.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> > diff --git a/meson.build b/meson.build
+> > index b375248a7614..376da49b60ab 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -4052,6 +4052,11 @@ if have_tools
+> >                 dependencies: [authz, crypto, io, qom, qemuutil,
+> >                                libcap_ng, mpathpersist],
+> >                 install: true)
+> > +
+> > +    executable('qemu-vmsr-helper', files('tools/i386/qemu-vmsr-helper.=
+c'),
+> > +               dependencies: [authz, crypto, io, qom, qemuutil,
+> > +                              libcap_ng, mpathpersist],
+> > +               install: true)
+> >    endif
+>
+> Missed feedback from v2 saying this must /only/ be built
+> on x86 architectures. It fails to build on others due
+> to the ASM usage eg
+>
+> https://gitlab.com/berrange/qemu/-/jobs/6445384073
+>
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index cd29cc795b..93742d9ddc 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -414,6 +414,7 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
-     return i;
- }
- 
-+G_GNUC_WARN_UNUSED_RESULT
- static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
-                                            uint32_t *len)
- {
-@@ -529,6 +530,7 @@ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
-     uint32_t r = 0;
- 
-     while (num--) {
-+        g_autofree VirtQueueElement *elem = NULL;
-         int64_t start_us = g_get_monotonic_time();
- 
-         do {
-@@ -541,7 +543,7 @@ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
-             }
-         } while (true);
- 
--        vhost_svq_get_buf(svq, &r);
-+        elem = vhost_svq_get_buf(svq, &r);
-         len += r;
-     }
- 
--- 
-2.44.0
+To recreate your build system, I need to, for example, compile with the=20
+following configuration for arm64 (aarch64):
+
+../configure --enable-werror --disable-docs --enable-fdt=3Dsystem=20
+--disable-user --cross-prefix=3Daarch64-linux-gnu-=20
+--target-list-exclude=3D"arm-softmmu cris-softmmu i386-softmmu=20
+microblaze-softmmu mips-softmmu mipsel-softmmu mips64-softmmu=20
+ppc-softmmu riscv32-softmmu sh4-softmmu sparc-softmmu xtensa-softmmu"
+
+This is cross-compiling on x86 right?
+Because on my laptop I've got the following error:=20
+
+WARNING: unrecognized host CPU, proceeding with 'uname -m' output 'x86_64'
+python determined to be '/usr/bin/python3'
+python version: Python 3.12.2
+mkvenv: Creating non-isolated virtual environment at 'pyvenv'
+mkvenv: checking for meson>=3D0.63.0
+
+ERROR: Unrecognized host OS (uname -s reports 'Linux')
+
+It looks like it wants to build natively on aarch64.
+Maybe I need to create a VM with aarch64 Debian and compile natively?
+Might take a long time but I'm not sure this is the best way.
+
+Regards,
+Anthony
 
 
