@@ -4,133 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07062C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 06:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3349C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 06:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpjB8-0004bS-4G; Thu, 28 Mar 2024 02:23:58 -0400
+	id 1rpjBm-0004kZ-3q; Thu, 28 Mar 2024 02:24:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpjB5-0004b4-Ve
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 02:23:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1rpjBj-0004kI-W9
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 02:24:36 -0400
+Received: from esa1.fujitsucc.c3s2.iphmx.com ([68.232.152.245])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpjB4-0001Jy-5l
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 02:23:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711607032;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NPon+G7gwfV1a0ZGzyw3Lv/cN5zfew6FaSAilW3rrUI=;
- b=ge6sJAF7nXwuJ+S8iz2th+1E+A9JXv97g+wBuMxvh1GEp0YGfpLnYflZ4CAO9FbJFvusJJ
- Vj/YpuRH3ZwLhteU4apJz4xUnlMLyWhDMAZo7cEAcerS+8DmUotHMMOGMGr5RAIu8ar9S8
- hK6j/F5MU2SiYossBWTXzuOU8HJtxtE=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-iE2kerLNPeqr7KqO0whJeQ-1; Thu, 28 Mar 2024 02:23:50 -0400
-X-MC-Unique: iE2kerLNPeqr7KqO0whJeQ-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2d298d601adso3686941fa.2
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 23:23:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711607029; x=1712211829;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NPon+G7gwfV1a0ZGzyw3Lv/cN5zfew6FaSAilW3rrUI=;
- b=G4ICGENaq/tAsmQnnU+0CFX4IrZEY5xjk2Dj/I+Cyw0KfiKgsGbE5AhkwaMpBcwVEs
- QwgX6y4Pq+FcrwK6B3je4fB68J/vi5Jqw3YFrDX4e5092XNfFrb2woE/ez7ehwM5OHMs
- Xhdp6wD2Cn+FNbXIWld0OJKZG3FAfWDK6JMJ8hILuuqwYAOcKB5glwHXCcnOy6sAbGoU
- QUd5IH9dcos3lsmmoOzmHWjOzWwksi8bk8GtrCgMe7+g+L2XR3Ti3Vbur2U8rvwXnV8b
- nl3tbB5EXgE/2EzBpCNwaj3MkG1Zm28EvR/sLK5gxX18wfoeMhRt1LZV3MYLfLK01Ian
- RihQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVezPNBS4Su+VZnaBCAfH7hVdVtqAgkumQBeWw30UZxddJ4HmMeYb0MgHCRd7+axd9vBQ4aYrMhTD0MOw3OfsBOrQQL8ZY=
-X-Gm-Message-State: AOJu0YwaLWytzxF+TwnMqwqh6lrFaTagwc06bMH0i+sEPpMFB/byA5v/
- SF9DQcDKKN5J5JOnawU3ohZIcR8yO7PHSWjZSAilRrJMeR3ZJ5FeMO9oX/mOj+PeUw2W9+4/d0E
- 9KeOtrEVYHSdFz1KKZVtmbrpTPYWljGkl234HuvvT68XmVStssmrA
-X-Received: by 2002:a2e:7815:0:b0:2d6:c14d:1530 with SMTP id
- t21-20020a2e7815000000b002d6c14d1530mr1369509ljc.37.1711607028961; 
- Wed, 27 Mar 2024 23:23:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXgWldm95E6CXBJ88U4RtCGURj/qUo5VONfvhRhi3//ld/rauvNZXxZCCL9OqThFxYHtgSCw==
-X-Received: by 2002:a2e:7815:0:b0:2d6:c14d:1530 with SMTP id
- t21-20020a2e7815000000b002d6c14d1530mr1369502ljc.37.1711607028632; 
- Wed, 27 Mar 2024 23:23:48 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
- [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
- dd12-20020a0560001e8c00b00341b749ab8bsm821185wrb.69.2024.03.27.23.23.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 23:23:48 -0700 (PDT)
-Message-ID: <a38b17a3-4bcf-43c2-a72e-57e1ef6ea390@redhat.com>
-Date: Thu, 28 Mar 2024 07:23:46 +0100
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1rpjBh-0001Lr-Ju
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 02:24:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1711607074; x=1743143074;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=L6Zde+7j5fkueqRV4rKCRNZTEcIuabRaoV4+hFjTi9A=;
+ b=S4me5Firg/l8IcSgOk2L1hA2V+KlNGLFIp2g1qRaEsQ6E9KQG35OSlwb
+ M7KAqycpaQd+bj+hoBLj0aNx62HzQYUWhI1x7Yuw9Wj2M1jSdCjX9yUWr
+ WyK+KdDgczbY9GLTmt/e0Uh159Y2tP9jIuxVlSiPU/6NNzuBLUEo2Yjv/
+ L7XZKWZT3QQaV1B6HYkYlB4SARIn5cbAp1s33Ar46DmZXFxAbYAyznlAK
+ Zit7MYKvec9RpKtPj9NA16HsLw7akfVDDVstoDVTifmBOhSgTPIakXEkA
+ SO4iD5r+S8LhDLWrXRdYyZvpt+QG4QKioi3H2mrik3SqMZhcnqjEWc1n8 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="26357739"
+X-IronPort-AV: E=Sophos;i="6.07,161,1708354800"; d="scan'208";a="26357739"
+Received: from mail-japanwestazlp17010000.outbound.protection.outlook.com
+ (HELO OS0P286CU010.outbound.protection.outlook.com) ([40.93.130.0])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Mar 2024 15:24:28 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OVoG3h2iSUuMEly1rWkJdZGYBAQPgPiPucYzulNyvs6bnnLwdc50vp7+/0lAZH9mYx9UiK+nHWUa3yIDfuk9zjHrH3/Kb1qkih182ZSu8ov9Nyc53x/t2cqt05VoFLKZKF050OjdLNllFQVcxMnIgxRDQjzdnx8ZSXyMKGvh0v88XSZVddkqNMqE3hB+UGITNULbOgLS53nPuFKmOqPV7XDCvPkgj3/BQ0ki2pAcTz1wirbMbFucGbGNnOEodvfxMYpsW2yM8177MHEfvX4lJxYs4YD9rltTE3jSVgOkzrrW6wsctvzaplbemy/ktcrQ3HULb+ALYdFgXfl7i4BHCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uuVdIPds0IkU8I1/mKTbxss+8+r2KAVPMObMk19I17o=;
+ b=KYhdAfVzgVO8jFw0OFtJOHSMcjUyn2M8k4XL5lo0aoRHXwzh60RW1fxOkjTfOh+wCwVPvMiQaFt0an3tr4pWyTUwL6qp33g6fWqbnZqsMsQqeuM8dW0rkjfsOyVpXtjO/NRfErugyp7Bx6T8YY+SyCgI4oElBuK/H5xS8b8iRPneOrioyQR+O+dyhgckMq8jLSOuRHmT0uxMzFVJYLih6oliv9qk47zUHdwQDj+a+lBc3GDQ9AwFzV4bt7G405ax0S0k66YYAeAOwW/SlnojcpcHBagZdH4kqyTOMDPsZYgm/4oFmw5mhuAG0Bh+PzOraCZif3heQqDKEqWkW89HEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com (2603:1096:604:ed::14)
+ by TY1PR01MB10787.jpnprd01.prod.outlook.com (2603:1096:400:325::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.32; Thu, 28 Mar
+ 2024 06:24:24 +0000
+Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com
+ ([fe80::3a1c:a3fe:854f:2e1d]) by OSZPR01MB6453.jpnprd01.prod.outlook.com
+ ([fe80::3a1c:a3fe:854f:2e1d%5]) with mapi id 15.20.7409.031; Thu, 28 Mar 2024
+ 06:24:24 +0000
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+CC: "fan.ni@samsung.com" <fan.ni@samsung.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "Quanquan Cao (Fujitsu)" <caoqq@fujitsu.com>
+Subject: RE: [PATCH] mem/cxl_type3: fix hpa to dpa logic
+Thread-Topic: [PATCH] mem/cxl_type3: fix hpa to dpa logic
+Thread-Index: AQHaf+jv8Of5xYfdY0OlS5LMTSu6ObFLlWsAgAEVArA=
+Date: Thu, 28 Mar 2024 06:24:24 +0000
+Message-ID: <OSZPR01MB64531A2AA07AF4C7C8C800F68D3B2@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+References: <20240327014653.26623-1-yaoxt.fnst@fujitsu.com>
+ <20240327132814.000057c7@Huawei.com>
+In-Reply-To: <20240327132814.000057c7@Huawei.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_ActionId=f63a06ab-6f7e-40c3-9f75-7325dbeade0a;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_ContentBits=0;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_Enabled=true;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_Method=Privileged;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_Name=FUJITSU-PUBLIC?;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_SetDate=2024-03-28T05:59:47Z;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_SiteId=a19f121d-81e1-4858-a9d8-736e267fd4c7;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: OSZPR01MB6453:EE_|TY1PR01MB10787:EE_
+x-ms-office365-filtering-correlation-id: 03f91128-923e-4d99-145a-08dc4eefb695
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: QdWeZ5KT2lHtCFBMz8NB6PhBHhN/GJzMM9gsGIXNmiSK2qSrvTypZwSQMWBteQmCCY6CZQLRVL2+/D0TFtftiL8w2cyIMnINIvn4Er/tKVYZwdU4ZrfZqQ4WnB0kRPttKwyGYkb5V6cCj6bB3zoTaPU00oq/MnNIAY5fzgEKWlujgd2flv8XrCMj7YShl+arXGZPy9pVlrMA5+LL5iiQjJingVzllZsqyzMqWZFjYDnFFXow84wIoXOW7mkJt9/lm3jzrhQ/00faFFDLL/bx/MLKf60m5dqtqYzziyvp1UYSw1+zNKdxozNAmw/hafRSORkWU3v0tP8ALYs5jPPHHh8U+umTAOkSdODqsxqpEwDSlLa4/y90Sw6KFIIzfEVc+bjxvSDP0DCYlaDHkkN4pzlganu0vi5+qBP+3LiqaUdeRMV755Mv9DWX9csJMf7X/u4LW5A07XSTD8GQG+y7UaEv0n5YN+4OZqwjBO2cXGWLN+wbfYDC+lUBVD0mFIqrCepSOJOoN87bFPVw1LcP3QylJ+5r/5D3F2c7FWxHMhdKXqKUrVL/Mbx21a5cOQh9WVnI/WlrGEQ4mzask24PMS0xQTmvOBizjX3Uddy0DnDdBcRIMyVS9cqTcEtrdx7Gxr2IyfpCx53hDIBGZEsoR2CtqWD7PZvtdeYgoDmSCa6yHQIMF6m34yrKlTDHZnha
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-cn; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:OSZPR01MB6453.jpnprd01.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230031)(366007)(376005)(1800799015)(38070700009)(1580799018);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-2022-jp?B?NmNCdkhWdk5kaFNvM3lVdWZPUGdEY2NLa2luLy9XWGNocXNBL0NVK3NG?=
+ =?iso-2022-jp?B?dUFHS1d1bVkxUktRQ0lPT0E5Z09xbkh2NjhmRTBZOXVVT2RrRVNHbWs1?=
+ =?iso-2022-jp?B?TmpvMnVaaHh5KzlOVS9YY09WdVZLNUlwN09jSU5FRGpnLzN5UllDcG81?=
+ =?iso-2022-jp?B?U1RwWDNJZ0dGdDV0d0dWaUpHU3dZSXBxbENoSGJheGNxeEQxSDlwYkVS?=
+ =?iso-2022-jp?B?ZkhicytXSTNydG5BV1VwVjlYR01EbVFIUlZucVlvRnhBWHA3ODRBUFZ0?=
+ =?iso-2022-jp?B?N3VRMkJqK2xxeWN5OXV2aXUzSHhkODFLMGxsc05aUko5NVhGem50Z2dW?=
+ =?iso-2022-jp?B?NFRqQ3lXbXI1S2V0WkJJRzRwOEYrS0RYcjhLcWtsRTYyOWJyU29nNi9s?=
+ =?iso-2022-jp?B?NzZILy9aMTViRGtFSkRTOWxleHJNVFNsWjRIWUxMUGhnbGppaVZPaTNn?=
+ =?iso-2022-jp?B?U3R6OUt5NnFGbzVlenp6WUl0cS9wb3R1ZENPVzVkTW5OWjVrNEs0cnph?=
+ =?iso-2022-jp?B?a3pjRDlPNWdyMExRdG80ajF2YUlTQ3hYQ0dScGorc2wwcEovempYVXk2?=
+ =?iso-2022-jp?B?RHhxZlZkNXBsQ2QvVnBsay9IaGM5U0VPQUJyc0drVHBOa3dvS1JPL2g4?=
+ =?iso-2022-jp?B?VXdObVY0NEhXUDhTT2NtVzJQUlp5RVBrd2RvaEFXamJwUFRKSE5iaG53?=
+ =?iso-2022-jp?B?MDhPY1Y4a016V29wRTlHcW1DNm5KOHROUUdpZGkxeUh4b0k4VDQwL2xC?=
+ =?iso-2022-jp?B?MzE2WEhOUU5pc3BoWk02a3JQRlpZcWp4Nlk5bWN3Z2NRRnIrTDk0WkJG?=
+ =?iso-2022-jp?B?UG9tRVZONnZwMDQ0dVlmODJVdjZXenlUZWRjcGNTQlJJUjZWWEZlUXda?=
+ =?iso-2022-jp?B?WUhIS2JUa1AydXNJOHJrT0lTZ1EwQjlGTEdhWGk2YWNVejRPTXRsMExj?=
+ =?iso-2022-jp?B?QTFkK3ZiYm5xUlJFQW9EY2ErWnVLZkdObS9QZnhHalNIbDhmZkxlMU1W?=
+ =?iso-2022-jp?B?RGZ4SUV3a3lYRXYrcncyUXFBNlk1Mno2TUtpRFlURVU1NFN6NFBWMkF6?=
+ =?iso-2022-jp?B?TnUrUS9yQTdrQStyRDM4WHZoS25JTHVwQ1lRZ0V3WHBJZEhqZmM5K0Ny?=
+ =?iso-2022-jp?B?Rk5ZKzNBQTNScWZNcmpYVGxoZFlGRkk1Unk0eDBLUnBTSS9tNzRua3dN?=
+ =?iso-2022-jp?B?bHVrM0Zsb2VJMWJWL3FSV3orelJBMFAweGJaTlAzeno1ZDk1eThMNVNM?=
+ =?iso-2022-jp?B?TDVyOUppeXRQeUVlc29LTEhmQVpDVkg3a0NHZ1ZHYVJzOWxzY045eU9F?=
+ =?iso-2022-jp?B?THM2S2RVUjFnb2l1N0dFRUprSU1WYmlLcERtUlhOUUtJQk0zd0pndlQx?=
+ =?iso-2022-jp?B?dmxCaXNYMnc3UUNablVZd2RXaDBCY081Ui9uMVBHUkpSTVQ0WTFEcTdO?=
+ =?iso-2022-jp?B?L24xeUVoRE5JcEFVNXo3azBwZUdPNUZIYlBid2krNmNQUnJ4c2VqMTNL?=
+ =?iso-2022-jp?B?d1NMNWtCdENCdk9YUGUvQTRjcUZKYWZkQ1hBeTh4ZStkRGtDZzhhTDhn?=
+ =?iso-2022-jp?B?Y3Z4MEIxRGhBcDVhWW51UHl2ZVVWVnUramFqY2JsYlRnY01xZzBZa3E2?=
+ =?iso-2022-jp?B?Znhha2xHRjRpQmNQLytVcExja3RRVEhCb1ZoUmlOWitwWW1jS0Q3QzVY?=
+ =?iso-2022-jp?B?WkV1L0d4WndTUXBnK21Vb3dvUEd0bUcxaFNhWlYveDF3NjhGd0VWL00z?=
+ =?iso-2022-jp?B?ZXJ4SEFSV3NQV1gwN1ZTOWtqemFMaUZIZUFCbGJ6VUZkQkp6ZFJRQlBQ?=
+ =?iso-2022-jp?B?SXRERkZUU0VmSFJqaWtFVnBJcGlKLzFxbDhkTXVqaWwzcXBJT1dTc3JF?=
+ =?iso-2022-jp?B?K2RKOU4yTzhLd3ZlL1BKd3YzR1kyMlZnaW9Zbm9yREhyWnVWY1ZrWUdP?=
+ =?iso-2022-jp?B?SHhydUpIR3BmSkY5cFhncWFlRUw5bnBkWjcwaDlWTUo5TWwrZ1JSYjVE?=
+ =?iso-2022-jp?B?SUlCZ0QvcWZHK3hQN2NSNzQxOGVOQWpNNStCajNYMk53Z0JMSEgxakFN?=
+ =?iso-2022-jp?B?KzJvdXBsR1d0bnZFVW9xejMweHNDcHBjQ1FMTmhTQ3Z1a1FlY0Mxckhz?=
+ =?iso-2022-jp?B?WTY3WEQ4dzBPNlByUHR5aTErczQ1YWhaRjdhMTg4QXZjMGtLcGdoUE04?=
+ =?iso-2022-jp?B?THJGb2NvQlE1Q1Y0R0JOTUdPTVVkemEvZzdIOHFJZ3FQbHJWdzEvQXc3?=
+ =?iso-2022-jp?B?VE5rVTBtOG93Q2wzOG5ZVnJXakhLVGg1bU1DeFk0L3lqWWh1Zjd3anNF?=
+ =?iso-2022-jp?B?UElaWg==?=
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 v3 0/2] qtest/virtio-9p-test.c: fix slow tests
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, groug@kaod.org, peter.maydell@linaro.org,
- qemu_oss@crudebyte.com
-References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240327142011.805728-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Nsu0ppCHBmkwoefGp+fXL4i8LcEhdQSKjRsXPQdU0ccHbAduyag6GNe3Sq2SnsD99lDnWi1V+7b4E+PPa+9DLupdOeSfznRHjwxRfwMmL4ZlStena+p39vCIXQ7Ns9b0Ji3dbNocLHeK6M2SBuXwhVcLFl3W1RTK4kjkfR6zohGbVU1/TILvEuHE0NbsUE5t3aDM8sxhAiXnNiBYtgKDxJv/ix0+rocHD5mcmS81CeZtPEyNEv9ZBlh2Kg3puAZP7rxXtAbi7wQXcnF40aID0KE+UA2eOUOinciqdRWNnffn7ob3n6V3wokFHdKuP4HDDY3ZockTBvGR/f/BcHc5xDXdnhXwGon9K2FGePaW0aZlMWVDhZnFD6tGyX7sOAXW85YdrQicQ29fYES9EuuemKyGoIuO+5eOxGv02xqbMlbKyU+LkhkYd59jXRBsTCJM3z2fFxP6ct91NVLv4mQD0hpY/lGnNFls/gFL28mdcZpiokP5DAF0PJv5TCtwtEnpkxM1xHIs/42D9tP/5BzE9ySfEIVB7iuFoC5EqSdNwAGy2VtJkjHKe6e2XlCtU0W2jCtUC1dxQdylefvOM5XEstjC/WkbvbwEUdGt8eBJBS9hCyWrNcNQmpn81Ai9GIkN
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: OSZPR01MB6453.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 03f91128-923e-4d99-145a-08dc4eefb695
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Mar 2024 06:24:24.6575 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: HKVwuXpvYR3jM8XHSBlnMH5uB93kWGNr6OZg5sh2/jNR3reyVpcjFRmWEzI12tBvHy7LaRFu1brFb6cPS1jHZw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PR01MB10787
+Received-SPF: pass client-ip=68.232.152.245;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa1.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,54 +168,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>
+From:  "Xingtao Yao (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/03/2024 15.20, Daniel Henrique Barboza wrote:
-> Hi,
-> 
-> In this new version we took a different approach after the discussions
-> we had in [1]. The tests are now untouched, and we're addressing the root
-> cause directly: the fact that we have a single temp dir for all the test
-> execution in qos-test.
-> 
-> We're now creating and cleaning temp dirs for each individual test by
-> calling virtio_9p_create_local_test_dir() in the .before callback for
-> the local 9p tests (assign_9p_local_driver()). In this same callback we
-> queue the cleanup function that will erase the created temp dir. The
-> cleanup will run after the test ran successfully.
-> 
-> This approach is similar to what other qtests do (in fact this design was
-> taken from vhost-user-test.c) so it's not like we're doing something
-> novel.
-> 
-> I kept the revert of the slow test gate because Gitlab seems to approve
-> it:
-> 
-> https://gitlab.com/danielhb/qemu/-/pipelines/1229836634
-> 
-> Feel free to take just patch 1 if we're not sure about re-enabling these
-> tests in Gitlab.
-> 
-> 
-> Changes from v3:
-> - patches 1 to 6: dropped
-> - patch 1 (new):
->    - create and remove temporary dirs on each test
-> - v2 link: https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06335.html
-> 
-> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06400.html
-> 
-> Daniel Henrique Barboza (2):
->    qtest/virtio-9p-test.c: create/remove temp dirs after each test
->    qtest/virtio-9p-test.c: remove g_test_slow() gate
-> 
->   tests/qtest/virtio-9p-test.c | 32 +++++++++++---------------------
->   1 file changed, 11 insertions(+), 21 deletions(-)
+Jonathan
 
+thanks for your reply!
 
-Works for me, too!
+> -----Original Message-----
+> From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+> Sent: Wednesday, March 27, 2024 9:28 PM
+> To: Yao, Xingtao/=1B$BU-=1B(B =1B$B9,Es=1B(B <yaoxt.fnst@fujitsu.com>
+> Cc: fan.ni@samsung.com; qemu-devel@nongnu.org; Cao, Quanquan/=1B$BAb=1B(B=
+ =1B$BA4A4=1B(B
+> <caoqq@fujitsu.com>
+> Subject: Re: [PATCH] mem/cxl_type3: fix hpa to dpa logic
+>=20
+> On Tue, 26 Mar 2024 21:46:53 -0400
+> Yao Xingtao <yaoxt.fnst@fujitsu.com> wrote:
+>=20
+> > In 3, 6, 12 interleave ways, we could not access cxl memory properly,
+> > and when the process is running on it, a 'segmentation fault' error wil=
+l
+> > occur.
+> >
+> > According to the CXL specification '8.2.4.20.13 Decoder Protection',
+> > there are two branches to convert HPA to DPA:
+> > b1: Decoder[m].IW < 8 (for 1, 2, 4, 8, 16 interleave ways)
+> > b2: Decoder[m].IW >=3D 8 (for 3, 6, 12 interleave ways)
+> >
+> > but only b1 has been implemented.
+> >
+> > To solve this issue, we should implement b2:
+> >   DPAOffset[51:IG+8]=3DHPAOffset[51:IG+IW] / 3
+> >   DPAOffset[IG+7:0]=3DHPAOffset[IG+7:0]
+> >   DPA=3DDPAOffset + Decoder[n].DPABase
+> >
+> > Links:
+> https://lore.kernel.org/linux-cxl/3e84b919-7631-d1db-3e1d-33000f3f3868@fu=
+jits
+> u.com/
+> > Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+>=20
+> Not implementing this was intentional (shouldn't seg fault obviously) but
+> I thought we were not advertising EP support for 3, 6, 12?  The HDM Decod=
+er
+> configuration checking is currently terrible so we don't prevent
+> the bits being set (adding device side sanity checks for those decoders
+> has been on the todo list for a long time).  There are a lot of ways of
+> programming those that will blow up.
+>=20
+> Can you confirm that the emulation reports they are supported.
+> https://elixir.bootlin.com/qemu/v9.0.0-rc1/source/hw/cxl/cxl-component-ut=
+ils.c
+> #L246
+> implies it shouldn't and so any software using them is broken.
+yes, the feature is not supported by QEMU, but I can still create a 6-inter=
+leave-ways region on kernel layer.
 
-Tested-by: Thomas Huth <thuth@redhat.com>
+I checked the source code of kernel, and found that the kernel did not chec=
+k this bit when committing decoder.
+we may add some check on kernel side.
+
+>=20
+> The non power of 2 decodes always made me nervous as the maths is more
+> complex and any changes to that decode will need careful checking.
+> For the power of 2 cases it was a bunch of writes to edge conditions etc
+> and checking the right data landed in the backing stores.
+after applying this modification, I tested some command by using these memo=
+ry, like 'ls', 'top'..
+and they can be executed normally, maybe there are some other problems I ha=
+ven't met yet.
+
+>=20
+> Joanthan
+>=20
+>=20
+> > ---
+> >  hw/mem/cxl_type3.c | 15 +++++++++++----
+> >  1 file changed, 11 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > index b0a7e9f11b..2c1218fb12 100644
+> > --- a/hw/mem/cxl_type3.c
+> > +++ b/hw/mem/cxl_type3.c
+> > @@ -805,10 +805,17 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwad=
+dr
+> host_addr, uint64_t *dpa)
+> >              continue;
+> >          }
+> >
+> > -        *dpa =3D dpa_base +
+> > -            ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
+> > -             ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_of=
+fset)
+> > -              >> iw));
+> > +        if (iw < 8) {
+> > +            *dpa =3D dpa_base +
+> > +                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
+> > +                 ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) &
+> hpa_offset)
+> > +                  >> iw));
+> > +        } else {
+> > +            *dpa =3D dpa_base +
+> > +                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
+> > +                 ((((MAKE_64BIT_MASK(ig + iw, 64 - ig - iw) & hpa_offs=
+et)
+> > +                   >> (ig + iw)) / 3) << (ig + 8)));
+> > +        }
+> >
+> >          return true;
+> >      }
 
 
