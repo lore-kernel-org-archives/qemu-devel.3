@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD4EBCD1283
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDD1CD1283
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rps7R-0004aU-Qd; Thu, 28 Mar 2024 11:56:47 -0400
+	id 1rps7d-0005BG-IN; Thu, 28 Mar 2024 11:56:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rps6v-0003vD-6y
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:15 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7X-0004rr-OX
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:52 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rps6t-0002M6-Bp
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:12 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-56c4ca65dc6so1405222a12.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:56:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7V-0002ZL-Ta
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:51 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a47385a4379so400335866b.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711641370; x=1712246170; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1711641408; x=1712246208; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PiRqlA5GcAD1q2/Pos+ij4Tpv0vslRdxK+QP0+B9dzE=;
- b=nlE/0mal19eabfskNB5Jj8fc9P7LVtR0vCjK7N4q84Q4/aIjyZRMIku9Ard1wbqsVK
- rFoZNdp7/PolnwuCoMzQBdbrZrFyQuByES5FY+jtNY3BwXC0oIoTvxwNm/Hn9Zx7D5iQ
- 2McaUop0zioSVYf9DLLPjfNQ5+z5lvGNgv0vo4Esm64jIM6cO1FAx8gwvHdIbbxyhNoq
- 2tFxalLns/noLV7RMrvBcc7t0mI0yHwIbTvbnJvm/4r3yT62SIW7Iw1+lpkrPorkCFnw
- OuOnJu4Q2YX+5w78lW8OA42/OxKrX+EXpUY7BZwtRBaA6owce4kB94Gr4RNh7ryww/Gf
- HlCg==
+ bh=3Aa27ZqAQEFmCBsiqy9XwiiPf6EIjcNyjahGDi9IpJg=;
+ b=wmdnFLj8N4MTTkR7GiUS/vACf4UOgkQnipJ9uaXGwtqukwJjWxXXHCpTdrIfMmaC9O
+ vAypE0B0AyVCEO4LDMYLsR5ktjQUbduAPOUKkwgTeP1dmGemNlFXL6EgWk0yypiHpjP4
+ 0CEe6VRJA2xvnxEtRM4RCH/WzVBdHHGEChi9ZcnQet88RxX4yS0m7M8FPyiLRct61ujf
+ gJT1FBUa9UhqIn47HAdOSGJ8SZWQlmncRI9nHiC/oiBHJQkH4q9tZsrK0sQqGgf2tLY+
+ SPQ8Ov0ceOY0g2oqMNGevizgKfLCrYHFykaHasXTXJkyRK31ObzD1hDYYGn6a3eESre2
+ WZ1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711641370; x=1712246170;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711641408; x=1712246208;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PiRqlA5GcAD1q2/Pos+ij4Tpv0vslRdxK+QP0+B9dzE=;
- b=gqOJ8zslGiR3szoE6PaADZNMTvwueGDGtGbmKuaVkDBzyke6kXApmSRYReWJNFpB2c
- 2zGHOgosmiqpxejT4dAUzLxf/Y6N60ILgT87OHQxyWw411y28gIyzsKBAC/277fn1OMs
- 5GSuw+ySUQg6vdyU7S/sLWmvi1ayS2hGBV+CvkHYd2hbbHyG7p6nWf5GW5cUMwQLnBK5
- QAvTTj+r3Aqy6jZLklkSGZ/87QaG7qVX6yafCDIRbpwYZDCrCpEvLohfquUXspQP//bI
- M0w0j14x4s5IU07qlWRke36uYgVXpDLPG6/iRNBljzLESOytOIb3c2yn3jpBzh1Jt6zg
- 4Fwg==
-X-Gm-Message-State: AOJu0YxDLgcqyoFxq5ewYs6ILx5YldrTAB8zN/GSma3hVUFxRhHnVVRT
- D53kbT755CIWgrvLJSso8O7FfqYS2t3EXPXyE+SXy98g/v8IcfRhcVvcQWC4nNi0z157vLK9kcD
- 9SMVx8Dksr+Quk1I2+YXiUZElkZfddQtkOpjmEw==
-X-Google-Smtp-Source: AGHT+IECfFH6/i9aDaqo9Y4pIBJD6rIPgpg4RBubEUZiVQM9qxCKpEkOMr2fTkjHBK7Lw289gvDaNpWFO7vLm2Fo8is=
-X-Received: by 2002:a50:870b:0:b0:56c:36e3:b74d with SMTP id
- i11-20020a50870b000000b0056c36e3b74dmr2254450edb.25.1711641370017; Thu, 28
- Mar 2024 08:56:10 -0700 (PDT)
+ bh=3Aa27ZqAQEFmCBsiqy9XwiiPf6EIjcNyjahGDi9IpJg=;
+ b=Po2+yTlOWTJL6gSRXdkHm0NeTJCbbBXoqYQVIRV/16DPm2qoGho3W5/VlH3AAr8lKe
+ FOHwjVBMFC3kGX9cUEBkxWXrfU7NOm8/hkiZ5/VJBs5m+T2eTWly3GYHmp5NAUKhG3cE
+ EQT2tb4y4IQjX6AmNq6fqbJ73hU3sNWT8vGV4eFg79Npo54YNjJVB1CEO3bL9WgOXrPs
+ TOdB4B0jzAkjhygU4pqBa9sn6yxLKOwwnVsVMAU37Of1TmNkEuEqYYEfo34m/JO3ABrl
+ qKRYxMxyVi1U8ScM/q/eR5/6MwhP8rdOd5SesRI66KXgqQ7xCwn4fpE7OQzkjZYdtNcy
+ DeSg==
+X-Gm-Message-State: AOJu0YxDFLwz1FoW26Neci2HmR1+l1uTKYa291+fJu90vW4yFizRyJUf
+ UTfPGVbrjZNSxH1cUgf9l293XpgpqKz7SpluRcd7iORvVY6hwj1fG5E8XbZZ5YfVIdQNg1VFlWr
+ L
+X-Google-Smtp-Source: AGHT+IGf+dMAnCAltiuzPzgchc+sbbW407Sj1dQczYyJgyomDKws4CVNCOW6jzbL55k6+JJbXoaF8w==
+X-Received: by 2002:a17:906:ccc3:b0:a47:1f61:4d02 with SMTP id
+ ot3-20020a170906ccc300b00a471f614d02mr2207346ejb.36.1711641408058; 
+ Thu, 28 Mar 2024 08:56:48 -0700 (PDT)
+Received: from m1x-phil.lan (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
+ [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
+ u23-20020a170906125700b00a47522c193asm892212eja.196.2024.03.28.08.56.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 28 Mar 2024 08:56:47 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ xen-devel@lists.xenproject.org, Bernhard Beschow <shentey@gmail.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Anthony Perard <anthony.perard@citrix.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1 20/29] hw/i386/pc: Pass PcPciMachineState argument
+ to pc_pci_hole64_start()
+Date: Thu, 28 Mar 2024 16:54:28 +0100
+Message-ID: <20240328155439.58719-21-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240328155439.58719-1-philmd@linaro.org>
+References: <20240328155439.58719-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20240324165545.201908-1-arnaud.minier@telecom-paris.fr>
- <20240324165545.201908-3-arnaud.minier@telecom-paris.fr>
-In-Reply-To: <20240324165545.201908-3-arnaud.minier@telecom-paris.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Mar 2024 15:55:59 +0000
-Message-ID: <CAFEAcA9SCD3EZFXN7O2+X9sSFXRJ7UiRSwwQHir8a8MneT75Qg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] hw/char: Implement STM32L4x5 USART skeleton
-To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,153 +104,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 24 Mar 2024 at 16:56, Arnaud Minier
-<arnaud.minier@telecom-paris.fr> wrote:
->
-> Add the basic infrastructure (register read/write, type...)
-> to implement the STM32L4x5 USART.
->
-> Also create different types for the USART, UART and LPUART
-> of the STM32L4x5 to deduplicate code and enable the
-> implementation of different behaviors depending on the type.
->
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> ---
->  MAINTAINERS                       |   1 +
->  hw/char/Kconfig                   |   3 +
->  hw/char/meson.build               |   1 +
->  hw/char/stm32l4x5_usart.c         | 395 ++++++++++++++++++++++++++++++
->  hw/char/trace-events              |   4 +
->  include/hw/char/stm32l4x5_usart.h |  66 +++++
->  6 files changed, 470 insertions(+)
->  create mode 100644 hw/char/stm32l4x5_usart.c
->  create mode 100644 include/hw/char/stm32l4x5_usart.h
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 409d7db4d4..deba4a54ce 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1128,6 +1128,7 @@ M: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
->  L: qemu-arm@nongnu.org
->  S: Maintained
->  F: hw/arm/stm32l4x5_soc.c
-> +F: hw/char/stm32l4x5_usart.c
->  F: hw/misc/stm32l4x5_exti.c
->  F: hw/misc/stm32l4x5_syscfg.c
->  F: hw/misc/stm32l4x5_rcc.c
-> diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-> index 6b6cf2fc1d..4fd74ea878 100644
-> --- a/hw/char/Kconfig
-> +++ b/hw/char/Kconfig
-> @@ -41,6 +41,9 @@ config VIRTIO_SERIAL
->  config STM32F2XX_USART
->      bool
->
-> +config STM32L4X5_USART
-> +    bool
-> +
->  config CMSDK_APB_UART
->      bool
->
-> diff --git a/hw/char/meson.build b/hw/char/meson.build
-> index 006d20f1e2..e5b13b6958 100644
-> --- a/hw/char/meson.build
-> +++ b/hw/char/meson.build
-> @@ -31,6 +31,7 @@ system_ss.add(when: 'CONFIG_RENESAS_SCI', if_true: file=
-s('renesas_sci.c'))
->  system_ss.add(when: 'CONFIG_SIFIVE_UART', if_true: files('sifive_uart.c'=
-))
->  system_ss.add(when: 'CONFIG_SH_SCI', if_true: files('sh_serial.c'))
->  system_ss.add(when: 'CONFIG_STM32F2XX_USART', if_true: files('stm32f2xx_=
-usart.c'))
-> +system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_=
-usart.c'))
->  system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfs=
-oc_mmuart.c'))
->  system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
->  system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.=
-c'))
-> diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-> new file mode 100644
-> index 0000000000..46e69bb096
-> --- /dev/null
-> +++ b/hw/char/stm32l4x5_usart.c
-> @@ -0,0 +1,395 @@
-> +/*
-> + * STM32L4X5 USART (Universal Synchronous Asynchronous Receiver Transmit=
-ter)
-> + *
-> + * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-> + * See the COPYING file in the top-level directory.
-> + *
-> + * The STM32L4X5 USART is heavily inspired by the stm32f2xx_usart
-> + * by Alistair Francis.
-> + * The reference used is the STMicroElectronics RM0351 Reference manual
-> + * for STM32L4x5 and STM32L4x6 advanced Arm =C2=AE -based 32-bit MCUs.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "qapi/error.h"
-> +#include "chardev/char-fe.h"
-> +#include "chardev/char-serial.h"
-> +#include "migration/vmstate.h"
-> +#include "hw/char/stm32l4x5_usart.h"
-> +#include "hw/clock.h"
-> +#include "hw/irq.h"
-> +#include "hw/qdev-clock.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/qdev-properties-system.h"
-> +#include "hw/registerfields.h"
-> +#include "trace.h"
-> +
-> +
-> +REG32(CR1, 0x00)
-> +    FIELD(CR1, M1, 28, 1)    /* Word length (part 2, see M0)*/
+pc_pci_hole64_start() is only used by PCI-based
+machines.  Pass it a PcPciMachineState argument,
+removing a qdev_get_machine() call.
 
-Missing space before "*/"
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/i386/pc.h | 2 +-
+ hw/i386/pc.c         | 8 ++++----
+ hw/pci-host/i440fx.c | 2 +-
+ hw/pci-host/q35.c    | 2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-> +static const TypeInfo stm32l4x5_usart_types[] =3D {
-> +    {
-> +        .name           =3D TYPE_STM32L4X5_USART_BASE,
-> +        .parent         =3D TYPE_SYS_BUS_DEVICE,
-> +        .instance_size  =3D sizeof(Stm32l4x5UsartBaseState),
-> +        .instance_init  =3D stm32l4x5_usart_base_init,
-> +        .class_init     =3D stm32l4x5_usart_base_class_init,
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index df4c813854..7da0bc8aa4 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -157,7 +157,7 @@ void pc_memory_init(PCMachineState *pcms,
+                     MemoryRegion *system_memory,
+                     MemoryRegion *rom_memory,
+                     uint64_t pci_hole64_size);
+-uint64_t pc_pci_hole64_start(void);
++uint64_t pc_pci_hole64_start(PcPciMachineState *ppms);
+ DeviceState *pc_vga_init(ISABus *isa_bus, PCIBus *pci_bus);
+ void pc_basic_device_init(struct PCMachineState *pcms,
+                           ISABus *isa_bus, qemu_irq *gsi,
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index d8e91d18b8..b83abee8e9 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -747,7 +747,8 @@ static hwaddr pc_max_used_gpa(PCMachineState *pcms, uint64_t pci_hole64_size)
+ 
+     if (cpu->env.features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+         /* 64-bit systems */
+-        return pc_pci_hole64_start() + pci_hole64_size - 1;
++        PcPciMachineState *ppms = PC_PCI_MACHINE(pcms);
++        return pc_pci_hole64_start(ppms) + pci_hole64_size - 1;
+     }
+ 
+     /* 32-bit systems */
+@@ -1016,11 +1017,10 @@ void pc_memory_init(PCMachineState *pcms,
+  * The 64bit pci hole starts after "above 4G RAM" and
+  * potentially the space reserved for memory hotplug.
+  */
+-uint64_t pc_pci_hole64_start(void)
++uint64_t pc_pci_hole64_start(PcPciMachineState *ppms)
+ {
+-    PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
++    PCMachineState *pcms = PC_MACHINE(ppms);
+     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+-    PcPciMachineState *ppms = PC_PCI_MACHINE(pcms);
+     MachineState *ms = MACHINE(pcms);
+     uint64_t hole64_start = 0;
+     ram_addr_t size = 0;
+diff --git a/hw/pci-host/i440fx.c b/hw/pci-host/i440fx.c
+index 4f0a0438d7..add99e4f76 100644
+--- a/hw/pci-host/i440fx.c
++++ b/hw/pci-host/i440fx.c
+@@ -180,7 +180,7 @@ static uint64_t i440fx_pcihost_get_pci_hole64_start_value(Object *obj)
+     pci_bus_get_w64_range(h->bus, &w64);
+     value = range_is_empty(&w64) ? 0 : range_lob(&w64);
+     if (!value && s->pci_hole64_fix) {
+-        value = pc_pci_hole64_start();
++        value = pc_pci_hole64_start(PC_PCI_MACHINE(qdev_get_machine()));
+     }
+     return value;
+ }
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 0d7d4e3f08..baf55897b2 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -123,7 +123,7 @@ static uint64_t q35_host_get_pci_hole64_start_value(Object *obj)
+     pci_bus_get_w64_range(h->bus, &w64);
+     value = range_is_empty(&w64) ? 0 : range_lob(&w64);
+     if (!value && s->pci_hole64_fix) {
+-        value = pc_pci_hole64_start();
++        value = pc_pci_hole64_start(PC_PCI_MACHINE(qdev_get_machine()));
+     }
+     return value;
+ }
+-- 
+2.41.0
 
-This should also have
-    .abstract =3D true,
-
-so you can't create an instance of this class, only of
-the specific subclasses.
-
-> +    }, {
-> +        .name           =3D TYPE_STM32L4X5_USART,
-> +        .parent         =3D TYPE_STM32L4X5_USART_BASE,
-> +        .class_init     =3D stm32l4x5_usart_class_init,
-> +    }, {
-> +        .name           =3D TYPE_STM32L4X5_UART,
-> +        .parent         =3D TYPE_STM32L4X5_USART_BASE,
-> +        .class_init     =3D stm32l4x5_uart_class_init,
-> +    }, {
-> +        .name           =3D TYPE_STM32L4X5_LPUART,
-> +        .parent         =3D TYPE_STM32L4X5_USART_BASE,
-> +        .class_init     =3D stm32l4x5_lpuart_class_init,
-> +    }
-> +};
-> +
-
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
