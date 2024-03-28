@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49B11CD1283
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18889CD11DD
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:30:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpsWl-00077N-0P; Thu, 28 Mar 2024 12:22:56 -0400
+	id 1rpsd8-0003zr-MO; Thu, 28 Mar 2024 12:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rpsWX-00071H-Lh; Thu, 28 Mar 2024 12:22:41 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rpsd4-0003z8-H3
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:29:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rpsWT-000874-FD; Thu, 28 Mar 2024 12:22:41 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42SFOjHv000733; Thu, 28 Mar 2024 16:22:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2023-11-20;
- bh=NCxxLo4RlxRydMdSCKc3FePLGo3S5WU5DOyvQHDa3kg=;
- b=O5+rkGoeZLNWH313Xt8I/2mBLzm1oYLP8ygLT7xJDWIIw+nEI3zXcR7t9DuJilF2lx/G
- MB5LoY/DxU6HalxTGOYlAsKvTBQ0AYRZVkFdX87MiH2rLTYp+mkjBALjCnHQY5MZiS61
- DoHCjF+MH5GgAMuHZJNMaxtM+PicALZ+DYOjvIj6Uko9LjXoQzesRPLS79F08HEopaiq
- WttlTo1Xg9gXTijLw4pVPpjLqwiNXbytH1o/wpmC+9QIJriavkKCkefwxMgyjW9lsq6x
- 8D+CNesuVx7kWdJ+H+/xHYyNJq/bkPOTHkLd3Z2APuricSXQna87t2ugde1zh/rgvrY5 vQ== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3x4cxy3jc6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 Mar 2024 16:22:11 +0000
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42SG6uJk015089; Thu, 28 Mar 2024 16:22:11 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3x1nhgfgkp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 Mar 2024 16:22:11 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42SGM5a3010492;
- Thu, 28 Mar 2024 16:22:10 GMT
-Received: from jonah-ol8.us.oracle.com (dhcp-10-39-220-183.vpn.oracle.com
- [10.39.220.183])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 3x1nhgfgcy-5; Thu, 28 Mar 2024 16:22:10 +0000
-From: Jonah Palmer <jonah.palmer@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
- jasowang@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- eperezma@redhat.com, stefanha@redhat.com, qemu-block@nongnu.org,
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev,
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC v2 4/5] vhost,
- vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
-Date: Thu, 28 Mar 2024 12:22:02 -0400
-Message-Id: <20240328162203.3775114-5-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240328162203.3775114-1-jonah.palmer@oracle.com>
-References: <20240328162203.3775114-1-jonah.palmer@oracle.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rpsd2-0000rV-2T
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:29:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711643362;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KDlPG5b3qO5EZUIxe9xnoUT3X+FKkpEADHsdsGrCU3Q=;
+ b=IgHcng/N/EwvEJByMakwlI0h5VtOND9M6jXm929OlJ8m0GJj5NbQ5zZalFbKRa+aN5koQw
+ iLihMyEa23yN1ZLUXS9S6CbfgKUc2U4hibUNbF5aZZByD18KALOAC3F9P2r8wuieT9rVGP
+ bOz/M6jA/F0vyVuIn5lZsfhlqiqIAtg=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-327-OrIwlUEyOQuavGQXcVJQ0w-1; Thu, 28 Mar 2024 12:29:19 -0400
+X-MC-Unique: OrIwlUEyOQuavGQXcVJQ0w-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-430b7d8b428so10962141cf.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 09:29:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711643358; x=1712248158;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KDlPG5b3qO5EZUIxe9xnoUT3X+FKkpEADHsdsGrCU3Q=;
+ b=gGZ1W94Lx8Wrs1gLNJnCc4EOIdwIaZ7AHbXL8vAXHzSmO6XkQTOfrCJDqpJn1gR7X8
+ m8e9oQzl1Y/fv+qzyN0vvsRLGUNk7xoXKSZwBGmpJoriQkS9/gX21Nt39cJKBlMHFIsk
+ UBqoU+TM5U7oFa53ieD+Evg2iJ0D2MQY7W2dPVSXVYC8B6mr2BjZ95Q9HKlaMxoNRBtZ
+ iBlAcm5cqFqm1UDpXV0fF2u0vih0WhM9guzFCkEhO22JqLUcEvl7uCiB8TjiZqd7D4rR
+ 523lI6xCtc9up6ShavPNuAY/qw5UgRNd85XciHtRQRQIXUapocS0D/pyMjiGWnmj7mY5
+ aoDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVE4ZkSVZR57NoKN+W6Q1Xk6wH8/we5OJRhazUSaCMRPsBbW5lQ6KHOoCknbbXWRLV8WslMQXcM87VfVWqpVvPXMDjZyeE=
+X-Gm-Message-State: AOJu0Yx4PstXBnK2Hx4uvYTSwTTx8CiI51kgVNyWbsDjw9YVdCkjkvoy
+ BXTMYz18RmfAXZufGGSClqrX7x4/+klTLv/mmxVJwjX1ZXoSNKDqakC0i8tPRSNIDLKSuMZ7IrE
+ s1F06YbeEpylT/Buk4kIB1GaEGfgYqep3tP5C1MDUYBMys9MdVw3q
+X-Received: by 2002:ac8:588c:0:b0:430:b6e6:1c20 with SMTP id
+ t12-20020ac8588c000000b00430b6e61c20mr3302790qta.60.1711643358422; 
+ Thu, 28 Mar 2024 09:29:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGXoKRQyOMvaVRY//d2G+x7Uw4KVh4yIdTw7zKwnvsVLA/fjrTrsm0YiZYeVIO/f7BRKXMvhQ==
+X-Received: by 2002:ac8:588c:0:b0:430:b6e6:1c20 with SMTP id
+ t12-20020ac8588c000000b00430b6e61c20mr3302770qta.60.1711643358116; 
+ Thu, 28 Mar 2024 09:29:18 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ v26-20020ac8749a000000b00430afbb6b50sm744458qtq.51.2024.03.28.09.29.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Mar 2024 09:29:17 -0700 (PDT)
+Message-ID: <ca670136-b362-42b0-9a93-3b28ff4b3397@redhat.com>
+Date: Thu, 28 Mar 2024 17:29:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0 1/2] migration: Set migration error in
+ migration_completion()
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20240328140252.16756-1-avihaih@nvidia.com>
+ <20240328140252.16756-2-avihaih@nvidia.com>
+ <9aea916e-ea64-424b-bb48-4d1ad75e85ac@redhat.com>
+ <9d3a476d-9e99-4ed8-8320-8bf86269dbf3@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <9d3a476d-9e99-4ed8-8320-8bf86269dbf3@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-28_15,2024-03-28_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- phishscore=0 suspectscore=0
- mlxlogscore=999 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2403210000
- definitions=main-2403280111
-X-Proofpoint-ORIG-GUID: GBAbzjABFBmkmS9YtKLnshBMZm8A-t79
-X-Proofpoint-GUID: GBAbzjABFBmkmS9YtKLnshBMZm8A-t79
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,119 +107,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the VIRTIO_F_IN_ORDER feature across a variety of vhost
-devices.
+On 3/28/24 16:50, Avihai Horon wrote:
+> 
+> On 28/03/2024 17:21, Cédric Le Goater wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> Hello Avihai,
+>>
+>> On 3/28/24 15:02, Avihai Horon wrote:
+>>> After commit 9425ef3f990a ("migration: Use migrate_has_error() in
+>>> close_return_path_on_source()"), close_return_path_on_source() assumes
+>>> that migration error is set if an error occurs during migration.
+>>>
+>>> This may not be true if migration errors in migration_completion(). For
+>>> example, if qemu_savevm_state_complete_precopy() errors, migration error
+>>> will not be set
+>>
+>> Out of curiosity, could you describe a bit more the context ? Did
+>> vfio_save_complete_precopy() fail ? why ?
+> 
+> Yep, vfio_save_complete_precopy() failed (but it failed while I was experimenting with an unofficial debug FW).
+> 
+>>
+>> We should propagate errors of .save_live_complete_precopy() handlers as
+>> it was done .save_setup handlers(). For 9.1.
+> 
+> Agreed.
+> 
+>>
+>>> This in turn, will cause a migration hang bug, similar to the bug that
+>>> was fixed by commit 22b04245f0d5 ("migration: Join the return path
+>>> thread before releasing to_dst_file"), as shutdown() will not be issued
+>>> for the return-path channel.
+>>
+>> yes, but this test :
+>>
+>>     if (ret < 0) {
+>>         goto fail;
+>>     }
+>>
+>> will skip the close_return_path_on_source() call. Won't it ? So I don't
+>> understand how it can be an issue. Am I missing something ?
+> 
+> It will skip the close_return_path_on_source() call in migration_completion(), but there is another close_return_path_on_source() call in migrate_fd_cleanup().
 
-The inclusion of VIRTIO_F_IN_ORDER in the feature bits arrays for these
-devices ensures that the backend is capable of offering and providing
-support for this feature, and that it can be disabled if the backend
-does not support it.
+OK. Found it. This is a code path I hadn't explored yet.
 
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
----
- hw/block/vhost-user-blk.c    | 1 +
- hw/net/vhost_net.c           | 2 ++
- hw/scsi/vhost-scsi.c         | 1 +
- hw/scsi/vhost-user-scsi.c    | 1 +
- hw/virtio/vhost-user-fs.c    | 1 +
- hw/virtio/vhost-user-vsock.c | 1 +
- net/vhost-vdpa.c             | 1 +
- 7 files changed, 8 insertions(+)
+Acked-by: Cédric Le Goater <clg@redhat.com>
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 6a856ad51a..d176ed857e 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -51,6 +51,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index fd1a93701a..eb0b1c06e5 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -48,6 +48,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_HASH_REPORT,
-     VHOST_INVALID_FEATURE_BIT
- };
-@@ -76,6 +77,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_RSS,
-     VIRTIO_NET_F_HASH_REPORT,
-     VIRTIO_NET_F_GUEST_USO4,
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index ae26bc19a4..40e7630191 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -38,6 +38,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_SCSI_F_HOTPLUG,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index a63b1f4948..1d59951ab7 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -36,6 +36,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_SCSI_F_HOTPLUG,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-index cca2cd41be..9243dbb128 100644
---- a/hw/virtio/vhost-user-fs.c
-+++ b/hw/virtio/vhost-user-fs.c
-@@ -33,6 +33,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
- 
-     VHOST_INVALID_FEATURE_BIT
- };
-diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
-index 9431b9792c..cc7e4e47b4 100644
---- a/hw/virtio/vhost-user-vsock.c
-+++ b/hw/virtio/vhost-user-vsock.c
-@@ -21,6 +21,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_RING_F_INDIRECT_DESC,
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_F_NOTIFY_ON_EMPTY,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 85e73dd6a7..ed3185acfa 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -62,6 +62,7 @@ const int vdpa_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-     VIRTIO_F_VERSION_1,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_CSUM,
-     VIRTIO_NET_F_CTRL_GUEST_OFFLOADS,
-     VIRTIO_NET_F_CTRL_MAC_ADDR,
--- 
-2.39.3
+Thanks,
+
+C.
+
+
+> 
+>>
+>>> Fix it by ensuring migration error is set in case of error in
+>>> migration_completion().
+>>
+>> Why didn't you add a reference to commit 9425ef3f990a ?
+> 
+> I thought this commit didn't introduce this bug, but looking again in the mailing list [1], it kinda did:
+> The hang bug was fully fixed by commit 22b04245f0d ("migration: Join the return path thread before releasing to_dst_file") and then 9425ef3f990a re-introduced the bug, but only for migration_completion() case.
+> So, you are right, a fixes line with 9425ef3f990a should be added.
+> 
+> Thanks.
+> 
+> [1] https://lore.kernel.org/all/20240226203122.22894-1-farosas@suse.de/
+> 
+>>
+>>
+>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>>> ---
+>>>   migration/migration.c | 10 ++++++++++
+>>>   1 file changed, 10 insertions(+)
+>>>
+>>> diff --git a/migration/migration.c b/migration/migration.c
+>>> index 9fe8fd2afd7..b73ae3a72c4 100644
+>>> --- a/migration/migration.c
+>>> +++ b/migration/migration.c
+>>> @@ -2799,6 +2799,7 @@ static void migration_completion(MigrationState *s)
+>>>   {
+>>>       int ret = 0;
+>>>       int current_active_state = s->state;
+>>> +    Error *local_err = NULL;
+>>>
+>>>       if (s->state == MIGRATION_STATUS_ACTIVE) {
+>>>           ret = migration_completion_precopy(s, &current_active_state);
+>>> @@ -2832,6 +2833,15 @@ static void migration_completion(MigrationState *s)
+>>>       return;
+>>>
+>>>   fail:
+>>> +    if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
+>>> +        migrate_set_error(s, local_err);
+>>> +        error_free(local_err);
+>>> +    } else if (ret) {
+>>> +        error_setg_errno(&local_err, -ret, "Error in migration completion");
+>>
+>> The 'ret = -1' case could be improved with error_setg(). As a followup.
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>
+>>
+>>> +        migrate_set_error(s, local_err);
+>>> +        error_free(local_err);
+>>> +    }
+>>> +
+>>>       migration_completion_failed(s, current_active_state);
+>>>   }
+>>>
+>>
+> 
 
 
