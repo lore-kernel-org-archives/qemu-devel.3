@@ -4,97 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A73BAC54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 09:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A16C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 09:32:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpm5v-0002he-MM; Thu, 28 Mar 2024 05:30:47 -0400
+	id 1rpm6q-00031s-7n; Thu, 28 Mar 2024 05:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rpm5u-0002hQ-Ls
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 05:30:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1rpm6j-0002wB-UH; Thu, 28 Mar 2024 05:31:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rpm5s-0006Du-IQ
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 05:30:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711618242;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FQWW+mOh8BdxtFe8eYzFiv5O4mZSp01nIMopDnGEp1o=;
- b=X+qqEwcW7Cl7Yb46Cs+IS0nT/OKBP8w/m8XZM9oLk49uQTWqE7XbJVssoojXYB3d/qN4NX
- jKI3JEtZ4Ll9QyOroyc42srzh2KoSwqt07eC7QfhkWLusbvnBHyVgj8P745iAUXacQ6iET
- asOLPacAya8ZkVBuUs4sTD5FoDreUQc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-GtvYzNbaNJOSx1YFEtmeVA-1; Thu, 28 Mar 2024 05:30:41 -0400
-X-MC-Unique: GtvYzNbaNJOSx1YFEtmeVA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4140bf38378so5550745e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 02:30:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711618240; x=1712223040;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FQWW+mOh8BdxtFe8eYzFiv5O4mZSp01nIMopDnGEp1o=;
- b=Q8oA/OoKEsetsd4niivnm3FOqmxABMvo/He8EsrfJOAd3ZDIXytLkZYBkpyyV8zzUp
- VwFm1ghcI1nrrFCch///lLgpm5artnS6zx0OET5mT1n7aG/jJlegQqu4EIF+G3gehs7W
- 7a0dfmN4L7xOGjtNF8qF21LlHInWF/RwH8/FTNu7svhfyY9DMGk8hr4NebqcEnwSLwUO
- 8U2z8WhKUmMMX9ddooUjPEXcX1aDII+/G8S9UKgDyG2PlIsgN92Gg5a/ZIktITmb/IFZ
- 6SYpUNOgMBPIuMVNU6R43oJreHFoF+XtccGyBy8g6WkiQ16RmTw/K+CcPyavjUL2tV3b
- c1Nw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqJ+NfMWb4ZEIHDa3pz3zqksZaC4DEU/eBE5zmmy6y3IdsIlwmAwsEt2fXxenspnovrUmoIe0wnABLlBkKYxpS+c2eC+A=
-X-Gm-Message-State: AOJu0Yzm0X1mUuMTwBR3ZhM+ihiUxhWM+7eTXNdAFxMwG+7fbOHwPEUm
- O+zju4Sn2tQb8k7yXCrWDEYY1ooHxQ7sxrnemQ6NYkb/rhO6vwsd2KxrTUWI1ZxdArKL2seOWu5
- JY8ytpeCe1mCALy3K1lLTxhG93bC7AnuhGNskQMMIaR9E7L6MHVQM
-X-Received: by 2002:a05:600c:358f:b0:414:24d:7f9 with SMTP id
- p15-20020a05600c358f00b00414024d07f9mr2664766wmq.1.1711618239991; 
- Thu, 28 Mar 2024 02:30:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFpu+DyqKl6BrfNbknLdN+rGX9ya+Or7yIy0/p5SlBuhvdl00XViqNUUgkjmq8A58c7+ptXgA==
-X-Received: by 2002:a05:600c:358f:b0:414:24d:7f9 with SMTP id
- p15-20020a05600c358f00b00414024d07f9mr2664744wmq.1.1711618239610; 
- Thu, 28 Mar 2024 02:30:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- f8-20020a05600c4e8800b0041489e97565sm4821139wmq.10.2024.03.28.02.30.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 02:30:39 -0700 (PDT)
-Message-ID: <10a42156-067e-4dc1-8467-b840595b38fa@redhat.com>
-Date: Thu, 28 Mar 2024 10:30:37 +0100
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1rpm6i-0006Kf-0i; Thu, 28 Mar 2024 05:31:37 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42S9Sehn017052; Thu, 28 Mar 2024 09:31:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=jvubQiXmeYKchE0Kuuc7ZbzpHYAVCfELKU0XblzVAmc=;
+ b=ajcy6et/9tliNh0QurYGMB+UoeGQQOYePUhdmpjNOuRiH0ya2jdAK64x4rP3mLO9nIUW
+ USR4MGEMhU+3iMFmmxHxGy5USkJPiVQvV6Q+WSCXBkyIv5nW1wqcQ2Wt/D7cEdoNy9u0
+ kbFRaBna2nyZpZBJfUh7sRdIbcjgxWP5HH3hDUhA7W7x2gThxRtFmWUA/Wc2cXWdtPOE
+ 2dP7JITz7d3Hj5eaABL5wjm24U2kKETFVHGp0DvNmS9X1wNoQc2A88s4ZF/RQsnMqTRV
+ dvxYfwfYybKz5YvdA+QEngNW9D9TGtoCV5XLKGAv167L6zQJYp7ir/X2NHVtG/ucv/qf vw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x55xp80au-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Mar 2024 09:31:25 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42S9VOJU021235;
+ Thu, 28 Mar 2024 09:31:24 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x55xp80aq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Mar 2024 09:31:24 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42S7AO4U016410; Thu, 28 Mar 2024 09:31:23 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3x29ducx7v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Mar 2024 09:31:23 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42S9VLWG35258898
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 28 Mar 2024 09:31:23 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 24F8158056;
+ Thu, 28 Mar 2024 09:31:21 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 16C8458052;
+ Thu, 28 Mar 2024 09:31:17 +0000 (GMT)
+Received: from [9.113.190.195] (unknown [9.113.190.195])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 28 Mar 2024 09:31:16 +0000 (GMT)
+Message-ID: <8617ad5b-40e9-4fad-a251-2cf9eb48e3e7@linux.vnet.ibm.com>
+Date: Thu, 28 Mar 2024 15:01:14 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] vfio/pci: migration: Skip config space check for
- Vendor Specific Information in VSC during restore/load
-To: Alex Williamson <alex.williamson@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Vinayak Kale <vkale@nvidia.com>, qemu-devel@nongnu.org,
- marcel.apfelbaum@gmail.com, avihaih@nvidia.com, acurrid@nvidia.com,
- cjia@nvidia.com, zhiw@nvidia.com, targupta@nvidia.com, kvm@vger.kernel.org
-References: <20240322064210.1520394-1-vkale@nvidia.com>
- <20240327113915.19f6256c.alex.williamson@redhat.com>
- <20240327161108-mutt-send-email-mst@kernel.org>
- <20240327145235.47338c2b.alex.williamson@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240327145235.47338c2b.alex.williamson@redhat.com>
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Subject: Re: [PATCH 10/10] pnv/phb4: Mask off LSI Source-ID based on number of
+ interrupts
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com
+References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
+ <20240321100422.5347-11-saif.abrar@linux.vnet.ibm.com>
+ <26c7a63d-78fe-4378-b950-0673f0c96114@kaod.org>
+Content-Language: en-US
+In-Reply-To: <26c7a63d-78fe-4378-b950-0673f0c96114@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: WM_IjU6sEMNjgCWMpSb9w3EZNL6Md-65
+X-Proofpoint-GUID: iG6jd34818AQmMQ_8BFnPL_N4jkHpi9z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-28_09,2024-03-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxscore=0
+ suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015 adultscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403210000 definitions=main-2403280063
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,70 +120,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/24 21:52, Alex Williamson wrote:
-> On Wed, 27 Mar 2024 16:11:37 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> 
->> On Wed, Mar 27, 2024 at 11:39:15AM -0600, Alex Williamson wrote:
->>> On Fri, 22 Mar 2024 12:12:10 +0530
->>> Vinayak Kale <vkale@nvidia.com> wrote:
->>>    
->>>> In case of migration, during restore operation, qemu checks config space of the
->>>> pci device with the config space in the migration stream captured during save
->>>> operation. In case of config space data mismatch, restore operation is failed.
->>>>
->>>> config space check is done in function get_pci_config_device(). By default VSC
->>>> (vendor-specific-capability) in config space is checked.
->>>>
->>>> Due to qemu's config space check for VSC, live migration is broken across NVIDIA
->>>> vGPU devices in situation where source and destination host driver is different.
->>>> In this situation, Vendor Specific Information in VSC varies on the destination
->>>> to ensure vGPU feature capabilities exposed to the guest driver are compatible
->>>> with destination host.
->>>>
->>>> If a vfio-pci device is migration capable and vfio-pci vendor driver is OK with
->>>> volatile Vendor Specific Info in VSC then qemu should exempt config space check
->>>> for Vendor Specific Info. It is vendor driver's responsibility to ensure that
->>>> VSC is consistent across migration. Here consistency could mean that VSC format
->>>> should be same on source and destination, however actual Vendor Specific Info
->>>> may not be byte-to-byte identical.
->>>>
->>>> This patch skips the check for Vendor Specific Information in VSC for VFIO-PCI
->>>> device by clearing pdev->cmask[] offsets. Config space check is still enforced
->>>> for 3 byte VSC header. If cmask[] is not set for an offset, then qemu skips
->>>> config space check for that offset.
->>>>
->>>> Signed-off-by: Vinayak Kale <vkale@nvidia.com>
->>>> ---
->>>> Version History
->>>> v2->v3:
->>>>      - Config space check skipped only for Vendor Specific Info in VSC, check is
->>>>        still enforced for 3 byte VSC header.
->>>>      - Updated commit description with live migration failure scenario.
->>>> v1->v2:
->>>>      - Limited scope of change to vfio-pci devices instead of all pci devices.
->>>>
->>>>   hw/vfio/pci.c | 24 ++++++++++++++++++++++++
->>>>   1 file changed, 24 insertions(+)
->>>
->>>
->>> Acked-by: Alex Williamson <alex.williamson@redhat.com>
+Hello Cedric,
+
+>   }
+>   +static void pnv_phb4_fund_A_reset(PnvPHB4 *phb)
+>
+> What is fund_A ?
+
+I used 'fund_A' as an abbreviation to "Fundamental Register Set A".
+
+Please let know if you suggest another abbreviation to name this method.
+
+
+>> +{
+>> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
+>
+> Is this mask the default value for HW ?
+Yes, the spec defines the bits[04:12] of LSI Source ID having reset 
+value: 0x1FF
+
+
+Regards,
+
+Saif
+
+
+On 25-03-2024 07:04 pm, Cédric Le Goater wrote:
+> On 3/21/24 11:04, Saif Abrar wrote:
+>> Add a method to reset the value of LSI Source-ID.
+>> Mask off LSI source-id based on number of interrupts in the big/small 
+>> PHB.
+>
+> Looks ok.
+>
+>
+>> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+>> ---
+>>   hw/pci-host/pnv_phb4.c | 10 ++++++++--
+>>   1 file changed, 8 insertions(+), 2 deletions(-)
 >>
->>
->> A very reasonable way to do it.
->>
->> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->>
->> Merge through the VFIO tree I presume?
-> 
-> Yep, Cédric said he´d grab it for 9.1.  Thanks,
-
-
-Applied to vfio-next.
-
-Thanks,
-
-C.
-
-
+>> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+>> index f48750ee54..8fbaf6512e 100644
+>> --- a/hw/pci-host/pnv_phb4.c
+>> +++ b/hw/pci-host/pnv_phb4.c
+>> @@ -489,6 +489,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+>>         lsi_base = GETFIELD(PHB_LSI_SRC_ID, 
+>> phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+>>       lsi_base <<= 3;
+>> +    lsi_base &= (xsrc->nr_irqs - 1);
+>>         /* TODO: handle reset values of PHB_LSI_SRC_ID */
+>>       if (!lsi_base) {
+>> @@ -1966,6 +1967,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+>>       /* TODO: Add more RO-masks as regs are implemented in the model */
+>>   }
+>>   +static void pnv_phb4_fund_A_reset(PnvPHB4 *phb)
+>
+> What is fund_A ?
+>
+>> +{
+>> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
+>
+> Is this mask the default value for HW ?
+>
+>
+> Thanks,
+>
+> C.
+>
+>
+>> +    pnv_phb4_update_xsrc(phb);
+>> +}
+>> +
+>>   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+>>   {
+>>       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+>> @@ -2023,6 +2030,7 @@ static void pnv_phb4_reset(void *dev)
+>>       pnv_phb4_cfg_core_reset(phb);
+>>       pnv_phb4_pbl_core_reset(phb);
+>>   +    pnv_phb4_fund_A_reset(phb);
+>>       pnv_phb4_err_reg_reset(phb);
+>>       pnv_phb4_pcie_stack_reg_reset(phb);
+>>       pnv_phb4_regb_err_reg_reset(phb);
+>> @@ -2102,8 +2110,6 @@ static void pnv_phb4_realize(DeviceState *dev, 
+>> Error **errp)
+>>           return;
+>>       }
+>>   -    pnv_phb4_update_xsrc(phb);
+>> -
+>>       phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, 
+>> xsrc->nr_irqs);
+>>         pnv_phb4_xscom_realize(phb);
+>
 
