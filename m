@@ -4,81 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC457C54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 08:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAC2C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 08:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpksE-0002Xg-2c; Thu, 28 Mar 2024 04:12:34 -0400
+	id 1rplXL-0001D9-RQ; Thu, 28 Mar 2024 04:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rpks6-0002UJ-Mb; Thu, 28 Mar 2024 04:12:27 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rpks5-0000i0-7X; Thu, 28 Mar 2024 04:12:26 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1def89f0cfdso14043065ad.0; 
- Thu, 28 Mar 2024 01:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711613543; x=1712218343; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ikyYGg0csAy2M48ddfYE3urQ2G5N3RaTgz0jBFpor28=;
- b=dtPv7mWDlsdSlCI2l4RR6iC5oxBfM37wuknLIvfCXVMeMPkNlc3u1M1fqaM4xXrEZQ
- 7B5K+xNsOnlbmt+cpdlCXhFk1DFP6X+D4IEI8CdT8Adn1uKuu4Y67uyiQeXppKaAPWYA
- nDCxbf6/a0ALPnMsno7Kucngl3Hf6aDu+JsmgMrI+flXygAqJg2sPdl7I/zFRC0F5tg4
- BIfEF2FvMv0Zl4wzWkZD3J7SfGdap7+Z8CUA9yiqyXCOdhpKugBjB2mw4NtSyYw6eQSG
- lBUsWQpcCcdp54ZR3HemgGcsop6vcfgBMhxz7gklJ88hLQaOw1+jFw1BFVqFiFPVDPhK
- 6alg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711613543; x=1712218343;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ikyYGg0csAy2M48ddfYE3urQ2G5N3RaTgz0jBFpor28=;
- b=D3tvJ3jOvUG0eT/21aqjxfQZuGOvKRKVQou8PGhb8lrtWT3pmN0IKUbZGf81Z/osNQ
- 3F4NVOFRsU4LAGuHL4wYA21EUXlotHkRAmHq5Dkc1raN5h/VZf0Om3atl2vNPUioaEPg
- ysfebfIFvSFCJNFmwV3qYD3H1vat6owWfoj82L7gcawgR7vAF/bC5u8FEXTJJr9zt/1U
- /YlMEaMH/Uj1NTovp1EXvRxXfAIjRfDr2oJ2WO66JFzRgzEw2ut0o9C/ti1T0Gbs6eNa
- lLxdIJFkrPBmtHz6OFZpvoyzPmkI/hwMLXdCQseKYtK9kicJ0vH4pZ4dbGvpbvBb8mac
- IzPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcU0xN/xz3QDyaukZLdAQuXX8U/g67d2QISv4Z5iG5JVuzPhBPsivxGPTffqa9AGJhEcoB7XFtYOe6/7fLxkPEDa0/25lUmlK4f2UPrwOSNdW8Lj7LFWSVhiQ=
-X-Gm-Message-State: AOJu0YxVLjuSSba4WijeFK3s/72hLdlsnNXrVDtI4etsta8F4tUCOoMT
- q3qxV8sfO3EUZ1mp/n7LGxo4XqkfopBEaaGLmcBC3mllquunf5VP
-X-Google-Smtp-Source: AGHT+IEXySBSVnY/x2iGa9qafj+lfgJp61lvEmYSrfAs6um41+2lQ39zwOqzRFm3cL+ndLvHuKTPgw==
-X-Received: by 2002:a17:903:22d1:b0:1e0:185d:a73 with SMTP id
- y17-20020a17090322d100b001e0185d0a73mr2541002plg.9.1711613543077; 
- Thu, 28 Mar 2024 01:12:23 -0700 (PDT)
-Received: from localhost ([118.210.97.62]) by smtp.gmail.com with ESMTPSA id
- kv7-20020a17090328c700b001e0d8fd208fsm901233plb.291.2024.03.28.01.12.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 01:12:22 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 28 Mar 2024 18:12:18 +1000
-Message-Id: <D058D0G7Z2DX.L8OBHHBGWGU4@wheely>
-Subject: Re: [PATCH 0/3] target/ppc: fix tlb flushing race
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Nicholas Piggin" <npiggin@gmail.com>, <qemu-ppc@nongnu.org>
-Cc: "Richard Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
- <pbonzini@redhat.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20240328053131.2604454-1-npiggin@gmail.com>
-In-Reply-To: <20240328053131.2604454-1-npiggin@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rplXJ-0001CF-Bb
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 04:55:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rplXH-0008Gw-L0
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 04:55:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711616098;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ea+V2R4QPLGiWoEtzklhax8Wy2PbJTs/5/I96ARgc38=;
+ b=aHOQ6FgJf4rrnSw3DDU4y3A2dvgSKr7R/6N4PI5UC3PrG5jTC0PS6WQoBss1aq4B59TyHa
+ 74y6UCia79J9GFxzzi9CS37pzfDO2BqDZAFyNy+L8MgjqvgFg1Q2jv2j7rQxVnpYhZuO9x
+ QHBIMu4oMnX5IIcokMp76PYdzDDgys0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-x5gNBdgGPUOO-JEqr5Saag-1; Thu, 28 Mar 2024 04:54:54 -0400
+X-MC-Unique: x5gNBdgGPUOO-JEqr5Saag-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9C5358007AB;
+ Thu, 28 Mar 2024 08:54:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.153])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8725B17AA0;
+ Thu, 28 Mar 2024 08:54:51 +0000 (UTC)
+Date: Thu, 28 Mar 2024 09:54:46 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ zhuyangyang <zhuyangyang14@huawei.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, luolongmin@huawei.com,
+ suxiaodong1@huawei.com, chenxiaoyu48@huawei.com,
+ wangyan122@huawei.com, yebiaoxiang@huawei.com
+Subject: Re: [PATCH v1] coroutine: avoid inserting duplicate coroutine to
+ co_queue_wakeup
+Message-ID: <ZgUwVjz_yKgFT7o5@redhat.com>
+References: <20240325091850.1087235-1-zhuyangyang14@huawei.com>
+ <20240325155041.GA1898401@fedora>
+ <dio6iqptfp7hvptuwreadxknpvptprmrcprfjsso52di4osxic@z4dwt43okhax>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dio6iqptfp7hvptuwreadxknpvptprmrcprfjsso52di4osxic@z4dwt43okhax>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,29 +86,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu Mar 28, 2024 at 3:31 PM AEST, Nicholas Piggin wrote:
-> ppc broadcast tlb flushes should be synchronised with other vCPUs,
-> like all other architectures that support such operations seem to
-> be doing.
->
-> Fixing ppc removes the last caller of the non-synced TLB flush
-> variants, we can remove some dead code. I'd like to merge patch 1
-> for 9.0, and hold patches 2 and 3 until 9.1 to avoid churn (unless
-> someone prefers to remove the dead code asap).
+Am 27.03.2024 um 23:13 hat Eric Blake geschrieben:
+> On Mon, Mar 25, 2024 at 11:50:41AM -0400, Stefan Hajnoczi wrote:
+> > On Mon, Mar 25, 2024 at 05:18:50PM +0800, zhuyangyang wrote:
+> > > If g_main_loop_run()/aio_poll() is called in the coroutine context,
+> > > the pending coroutine may be woken up repeatedly, and the co_queue_wakeup
+> > > may be disordered.
+> > 
+> > aio_poll() must not be called from coroutine context:
+> > 
+> >   bool no_coroutine_fn aio_poll(AioContext *ctx, bool blocking);
+> >        ^^^^^^^^^^^^^^^
+> > 
+> > Coroutines are not supposed to block. Instead, they should yield.
+> > 
+> > > When the poll() syscall exited in g_main_loop_run()/aio_poll(), it means
+> > > some listened events is completed. Therefore, the completion callback
+> > > function is dispatched.
+> > > 
+> > > If this callback function needs to invoke aio_co_enter(), it will only
+> > > wake up the coroutine (because we are already in coroutine context),
+> > > which may cause that the data on this listening event_fd/socket_fd
+> > > is not read/cleared. When the next poll () exits, it will be woken up again
+> > > and inserted into the wakeup queue again.
+> > > 
+> > > For example, if TLS is enabled in NBD, the server will call g_main_loop_run()
+> > > in the coroutine, and repeatedly wake up the io_read event on a socket.
+> > > The call stack is as follows:
+> > > 
+> > > aio_co_enter()
+> > > aio_co_wake()
+> > > qio_channel_restart_read()
+> > > aio_dispatch_handler()
+> > > aio_dispatch_handlers()
+> > > aio_dispatch()
+> > > aio_ctx_dispatch()
+> > > g_main_context_dispatch()
+> > > g_main_loop_run()
+> > > nbd_negotiate_handle_starttls()
+> > 
+> > This code does not look like it was designed to run in coroutine
+> > context. Two options:
+> > 
+> > 1. Don't run it in coroutine context (e.g. use a BH instead). This
+> >    avoids blocking the coroutine but calling g_main_loop_run() is still
+> >    ugly, in my opinion.
+> > 
+> > 2. Get rid of data.loop and use coroutine APIs instead:
+> > 
+> >    while (!data.complete) {
+> >        qemu_coroutine_yield();
+> >    }
+> > 
+> >    and update nbd_tls_handshake() to call aio_co_wake(data->co) instead
+> >    of g_main_loop_quit(data->loop).
+> > 
+> >    This requires auditing the code to check whether the event loop might
+> >    invoke something that interferes with
+> >    nbd_negotiate_handle_starttls(). Typically this means monitor
+> >    commands or fd activity that could change the state of this
+> >    connection while it is yielded. This is where the real work is but
+> >    hopefully it will not be that hard to figure out.
+> 
+> I agree that 1) is ugly.  So far, I've added some temporary
+> assertions, to see when qio_channel_tls_handshake is reached; it looks
+> like nbd/server.c is calling it from within coroutine context, but
+> nbd/client.c is calling it from the main loop.  The qio code handles
+> either, but now I'm stuck in trying to get client.c into having the
+> right coroutine context; the TLS handshake is done before the usual
+> BlockDriverState *bs object is available, so I'm not even sure what
+> aio context, if any, I should be using.  But on my first try, I'm
+> hitting:
+> 
+> qemu-img: ../util/async.c:707: aio_co_enter: Assertion `self != co' failed.
+> 
+> so I obviously got something wrong.
 
-Hmm, turns out to not be so simple, this in parts reverts
-the fix in commit 4ddc104689b. Do other architectures
-that use the _synced TLB flush variants have that same problem
-with the TLB flush not actually flushing until the TB ends,
-I wonder?
+Hard to tell without seeing the code, but it looks like you're trying to
+wake up the coroutine while you're still executing in the context of the
+same coroutine.
 
-AFAIKS it seems like the right fix would be to use _synced, but
-force a new TB at the end of the TLB flush instruction so the
-flush will take effect on all CPUs before the next instruction?
+It looks like the documentation of qio_channel_tls_handshake() is wrong
+and the function can return and call the callback immediately without
+dropping out of coroutine context.
 
-In any case this is tricky enough and I only hit it with a
-test program, so I'll leave it out of 9.0.
+A rather heavy-handed, but obvious approach would be moving the
+qio_channel_tls_handshake() into a BH, then you know you'll always be
+outside of coroutine context in the callback.
 
-Thanks,
-Nick
+But maybe it would be enough to just check if the coroutine isn't
+already active:
+
+    if (!qemu_coroutine_entered(co)) {
+        aio_wake_co(co);
+    }
+
+> It may be possible to use block_gen_c to turn nbd_receive_negotiate
+> and nbd_receive_export_list into co_wrapper functions, if I can audit
+> that all of their code goes through qio (and is therefore
+> coroutine-safe), but that work is still ongoing.
+
+If it's possible, I think that would be nicer in the code and would also
+reduce the time the guest is blocked while we're creating a new NBD
+connection.
+
+*reads code*
+
+Hm... Actually, one thing I was completely unaware of is that all of
+this is running in a separate thread, so maybe the existing synchronous
+code already doesn't block the guest. nbd_co_establish_connection()
+starts this thread. The thread doesn't have an AioContext, so anything
+that involves scheduling something in an AioContext (including BHs and
+waking up coroutines) will result in code running in a different thread.
+
+I'm not sure why a thread is used in the first place (does it do
+something that coroutines can't do?) and if running parts of the code in
+a different thread would be a problem, but we should probably have a
+look at this first. Mixing threads and coroutines feels strange.
+
+Kevin
+
 
