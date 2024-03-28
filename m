@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43553C54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A55BFC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpqX9-0004St-P8; Thu, 28 Mar 2024 10:15:11 -0400
+	id 1rpqXD-0004Tx-OY; Thu, 28 Mar 2024 10:15:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpqX5-0004SE-SX
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:15:07 -0400
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpqXC-0004TF-10
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:15:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpqX3-0006N6-NB
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:15:07 -0400
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpqXA-0006bV-50
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:15:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711635301;
+ s=mimecast20190719; t=1711635311;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ssMdxe1PH6J45QRdAFkqR8C00tEds9hxP4uhOvnXS0s=;
- b=IbaRZqDbXPSprHuD1uzA3OHmkcELJDsszYXZS0m4Wn28dMVvn8SmiLcL3vF7UyAXyP6ufc
- m0JOLokVyRqs8neLPYf5UHDAehm8tTKj3dNc+LL644DK5XJxGB1TA+Fi65ZRldDOQ1N2E3
- PBW/Na2CbZkOkEKKXzXKUQnjUWs0ehE=
+ bh=E7xgjmBepeGrdIT7bUu2r3sXn+Q8uxkiryuqlev9UPc=;
+ b=PORPtF05AP1ohVIqDwZlUPNJBqymCKrR+N6NJ2JagO8Cg0ubvD60o24ZdDgK/PFl3LCMMi
+ BKg9gZaJb3WYSWNHLRuWR0j/I0lhIeBq4beMOb04Ly63TyZmjlVdPbAWCEBZsIlYDpUxCE
+ B2iSYv+mWRBN9TrJgeevziturJLwnOI=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-sl0YDYT5PvaDna4dnvfsKg-1; Thu, 28 Mar 2024 10:13:47 -0400
-X-MC-Unique: sl0YDYT5PvaDna4dnvfsKg-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ us-mta-647-D64XcC7AOOOj6-uQ7DKcrg-1; Thu, 28 Mar 2024 10:15:06 -0400
+X-MC-Unique: D64XcC7AOOOj6-uQ7DKcrg-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0B853101A586;
- Thu, 28 Mar 2024 14:13:47 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 37F1A101A526;
+ Thu, 28 Mar 2024 14:15:06 +0000 (UTC)
 Received: from localhost (unknown [10.42.28.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A74E52166B36;
- Thu, 28 Mar 2024 14:13:46 +0000 (UTC)
-Date: Thu, 28 Mar 2024 14:13:42 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 027402024517;
+ Thu, 28 Mar 2024 14:15:05 +0000 (UTC)
+Date: Thu, 28 Mar 2024 14:15:01 +0000
 From: "Richard W.M. Jones" <rjones@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
@@ -54,16 +54,16 @@ Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
-Message-ID: <20240328141342.GK7636@redhat.com>
+Subject: Re: [PATCH for-9.1 8/9] block/ssh: Use URI parsing code from glib
+Message-ID: <20240328141501.GL7636@redhat.com>
 References: <20240328140607.2433889-1-thuth@redhat.com>
- <20240328140607.2433889-7-thuth@redhat.com>
+ <20240328140607.2433889-9-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240328140607.2433889-7-thuth@redhat.com>
+In-Reply-To: <20240328140607.2433889-9-thuth@redhat.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -72,7 +72,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,44 +88,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
+On Thu, Mar 28, 2024 at 03:06:05PM +0100, Thomas Huth wrote:
 > Since version 2.66, glib has useful URI parsing functions, too.
 > Use those instead of the QEMU-internal ones to be finally able
-> to get rid of the latter. The g_uri_get_host() also takes care
-> of removing the square brackets from IPv6 addresses, so we can
-> drop that part of the QEMU code now, too.
+> to get rid of the latter.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  block/nbd.c | 66 ++++++++++++++++++++++++++++++-----------------------
->  1 file changed, 38 insertions(+), 28 deletions(-)
+>  block/ssh.c | 69 +++++++++++++++++++++++++++++++----------------------
+>  1 file changed, 40 insertions(+), 29 deletions(-)
 > 
-> diff --git a/block/nbd.c b/block/nbd.c
-> index ef05f7cdfd..95b507f872 100644
-> --- a/block/nbd.c
-> +++ b/block/nbd.c
-> @@ -31,7 +31,6 @@
->  #include "qemu/osdep.h"
->  
->  #include "trace.h"
-> -#include "qemu/uri.h"
->  #include "qemu/option.h"
+> diff --git a/block/ssh.c b/block/ssh.c
+> index 2748253d4a..c0caf59793 100644
+> --- a/block/ssh.c
+> +++ b/block/ssh.c
+> @@ -37,7 +37,6 @@
+>  #include "qemu/ctype.h"
 >  #include "qemu/cutils.h"
->  #include "qemu/main-loop.h"
-> @@ -1514,30 +1513,34 @@ static void nbd_client_close(BlockDriverState *bs)
+>  #include "qemu/sockets.h"
+> -#include "qemu/uri.h"
+>  #include "qapi/qapi-visit-sockets.h"
+>  #include "qapi/qapi-visit-block-core.h"
+>  #include "qapi/qmp/qdict.h"
+> @@ -181,64 +180,76 @@ static void sftp_error_trace(BDRVSSHState *s, const char *op)
 >  
->  static int nbd_parse_uri(const char *filename, QDict *options)
+>  static int parse_uri(const char *filename, QDict *options, Error **errp)
 >  {
-> -    URI *uri;
+> -    URI *uri = NULL;
+> -    QueryParams *qp;
 > +    GUri *uri;
->      const char *p;
-> -    QueryParams *qp = NULL;
-> +    GHashTable *qp = NULL;
-> +    int qp_n;
->      int ret = 0;
->      bool is_unix;
-> +    const char *uri_scheme, *uri_query, *uri_server;
-> +    int uri_port;
+> +    const char *uri_host, *uri_path, *uri_user, *uri_query;
+>      char *port_str;
+> -    int i;
+> +    int port;
+> +    g_autoptr(GError) gerror = NULL;
+> +    char *qp_name, *qp_value;
+> +    GUriParamsIter qp;
 >  
 > -    uri = uri_parse(filename);
 > +    uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
@@ -133,114 +131,100 @@ On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
 >          return -EINVAL;
 >      }
 >  
->      /* transport */
-> -    if (!g_strcmp0(uri->scheme, "nbd")) {
-> +    uri_scheme = g_uri_get_scheme(uri);
-> +    if (!g_strcmp0(uri_scheme, "nbd")) {
->          is_unix = false;
-> -    } else if (!g_strcmp0(uri->scheme, "nbd+tcp")) {
-> +    } else if (!g_strcmp0(uri_scheme, "nbd+tcp")) {
->          is_unix = false;
-> -    } else if (!g_strcmp0(uri->scheme, "nbd+unix")) {
-> +    } else if (!g_strcmp0(uri_scheme, "nbd+unix")) {
->          is_unix = true;
->      } else {
->          ret = -EINVAL;
->          goto out;
+> -    if (g_strcmp0(uri->scheme, "ssh") != 0) {
+> +    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
+>          error_setg(errp, "URI scheme must be 'ssh'");
+>          goto err;
 >      }
 >  
-> -    p = uri->path ? uri->path : "";
-> +    p = g_uri_get_path(uri) ?: "";
->      if (p[0] == '/') {
->          p++;
+> -    if (!uri->server || strcmp(uri->server, "") == 0) {
+> +    uri_host = g_uri_get_host(uri);
+> +    if (!uri_host || g_str_equal(uri_host, "")) {
+>          error_setg(errp, "missing hostname in URI");
+>          goto err;
 >      }
-> @@ -1545,51 +1548,58 @@ static int nbd_parse_uri(const char *filename, QDict *options)
->          qdict_put_str(options, "export", p);
+>  
+> -    if (!uri->path || strcmp(uri->path, "") == 0) {
+> +    uri_path = g_uri_get_path(uri);
+> +    if (!uri_path || g_str_equal(uri_path, "")) {
+>          error_setg(errp, "missing remote path in URI");
+>          goto err;
 >      }
 >  
 > -    qp = query_params_parse(uri->query);
-> -    if (qp->n > 1 || (is_unix && !qp->n) || (!is_unix && qp->n)) {
-> -        ret = -EINVAL;
-> -        goto out;
+> -    if (!qp) {
+> -        error_setg(errp, "could not parse query parameters");
+> -        goto err;
+> -    }
+> -
+> -    if(uri->user && strcmp(uri->user, "") != 0) {
+> -        qdict_put_str(options, "user", uri->user);
+> +    uri_user = g_uri_get_user(uri);
+> +    if (uri_user && !g_str_equal(uri_user, "")) {
+> +        qdict_put_str(options, "user", uri_user);
+>      }
+>  
+> -    qdict_put_str(options, "server.host", uri->server);
+> +    qdict_put_str(options, "server.host", uri_host);
+>  
+> -    port_str = g_strdup_printf("%d", uri->port ?: 22);
+> +    port = g_uri_get_port(uri);
+> +    port_str = g_strdup_printf("%d", port != -1 ? port : 22);
+>      qdict_put_str(options, "server.port", port_str);
+>      g_free(port_str);
+>  
+> -    qdict_put_str(options, "path", uri->path);
+> -
+> -    /* Pick out any query parameters that we understand, and ignore
+> -     * the rest.
+> -     */
+> -    for (i = 0; i < qp->n; ++i) {
+> -        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
+> -            qdict_put_str(options, "host_key_check", qp->p[i].value);
+> +    qdict_put_str(options, "path", uri_path);
+> +
 > +    uri_query = g_uri_get_query(uri);
 > +    if (uri_query) {
-> +        qp = g_uri_parse_params(uri_query, -1, "&", G_URI_PARAMS_NONE, NULL);
-> +        if (!qp) {
-> +            ret = -EINVAL;
-> +            goto out;
-> +        }
-> +        qp_n = g_hash_table_size(qp);
-> +        if (qp_n > 1 || (is_unix && !qp_n) || (!is_unix && qp_n)) {
-> +            ret = -EINVAL;
-> +            goto out;
-> +        }
-> +     }
-> +
-> +    uri_server = g_uri_get_host(uri);
-> +    if (uri_server && !uri_server[0]) {
-> +        uri_server = NULL;
->      }
-> +    uri_port = g_uri_get_port(uri);
->  
->      if (is_unix) {
->          /* nbd+unix:///export?socket=path */
-> -        if (uri->server || uri->port || strcmp(qp->p[0].name, "socket")) {
-> +        const char *uri_socket = g_hash_table_lookup(qp, "socket");
-> +        if (uri_server || uri_port != -1 || !uri_socket) {
->              ret = -EINVAL;
->              goto out;
+> +        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
+> +        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
+> +            if (!qp_name || !qp_value || gerror) {
+> +                warn_report("Failed to parse SSH URI parameters '%s'.",
+> +                            uri_query);
+> +                break;
+> +            }
+> +            /*
+> +             * Pick out the query parameters that we understand, and ignore
+> +             * (or rather warn about) the rest.
+> +             */
+> +            if (g_str_equal(qp_name, "host_key_check")) {
+> +                qdict_put_str(options, "host_key_check", qp_value);
+> +            } else {
+> +                warn_report("Unsupported parameter '%s' in URI.", qp_name);
+> +            }
 >          }
->          qdict_put_str(options, "server.type", "unix");
-> -        qdict_put_str(options, "server.path", qp->p[0].value);
-> +        qdict_put_str(options, "server.path", uri_socket);
->      } else {
-> -        QString *host;
->          char *port_str;
->  
->          /* nbd[+tcp]://host[:port]/export */
-> -        if (!uri->server) {
-> +        if (!uri_server) {
->              ret = -EINVAL;
->              goto out;
->          }
->  
-> -        /* strip braces from literal IPv6 address */
-> -        if (uri->server[0] == '[') {
-> -            host = qstring_from_substr(uri->server, 1,
-> -                                       strlen(uri->server) - 1);
-> -        } else {
-> -            host = qstring_from_str(uri->server);
-> -        }
-> -
->          qdict_put_str(options, "server.type", "inet");
-> -        qdict_put(options, "server.host", host);
-> +        qdict_put_str(options, "server.host", uri_server);
->  
-> -        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
-> +        port_str = g_strdup_printf("%d", uri_port != -1 ? uri_port
-> +                                                        : NBD_DEFAULT_PORT);
->          qdict_put_str(options, "server.port", port_str);
->          g_free(port_str);
 >      }
 >  
->  out:
->      if (qp) {
-> -        query_params_free(qp);
-> +        g_hash_table_destroy(qp);
->      }
+> -    query_params_free(qp);
 > -    uri_free(uri);
 > +    g_uri_unref(uri);
->      return ret;
+>      return 0;
+>  
+>   err:
+> -    uri_free(uri);
+> +    g_uri_unref(uri);
+>      return -EINVAL;
 >  }
 
-Looks ok,
+Seems reasonable too,
 
 Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
+
 
 -- 
 Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
 Read my programming and virtualization blog: http://rwmj.wordpress.com
-libguestfs lets you edit virtual machines.  Supports shell scripting,
-bindings from many languages.  http://libguestfs.org
+virt-p2v converts physical machines to virtual machines.  Boot with a
+live CD or over the network (PXE) and turn machines into KVM guests.
+http://libguestfs.org/virt-v2v
 
 
