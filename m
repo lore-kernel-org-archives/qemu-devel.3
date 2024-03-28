@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0C5CD1283
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496D1CD1283
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpsKy-0002wR-AH; Thu, 28 Mar 2024 12:10:44 -0400
+	id 1rpsPF-0004ku-CY; Thu, 28 Mar 2024 12:15:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rpsKv-0002vp-9t
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:10:41 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1rpsPD-0004it-4n
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:15:07 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rpsKt-0005mA-Lm
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:10:41 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-56bc8cfc19fso1349932a12.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 09:10:36 -0700 (PDT)
+ id 1rpsPB-0006g2-9i
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:15:06 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-56899d9bf52so1545835a12.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 09:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711642236; x=1712247036; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711642503; x=1712247303; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zXbJUC+4/ewayfZwdMBa0QM6amBki2z9IDumPrJGiQo=;
- b=UFGb7CxLe1jJv1njapIF6i7dpYouFAfS+MXKyN37JH4GhELuet5K0zJ7bZNFQFCJjJ
- pIvKvJLpOkuXxodvKDsML2+8ObwCwdH+qSu92QgGOm9dUquKx+vNcsVoNUqkZqRGNLdH
- Z07NXJN6Zzj6OX6xn3LUnDfuW2qGnLuWhHSk+LmQLKgzqwxSxioEZFBTIxhZnOVA6zXy
- jt4x+gBwlY0CBbk47tNEHDuKyWxcNfLWWmVWJ7O16/bd3hZvg429zf6YaXyZmhYdcuoW
- 3LC+feXiJpSlhVDw/yc7Ify1EGuA70SmhIOkZzZMZbZir9ekSoHc3S7PBuVx1Aa1rtvK
- 5DnQ==
+ bh=fjVpOpA5Iq00oSecG01Q6+gTpD1AUnFdn7uVkFV+S7E=;
+ b=qPGM8hbXMNgwurXo3u0Bshl1ZFVnYhtZYuXXIUk9Jrseh58ytYWSJi+jGMKePkOW5j
+ S5NY871P56HWh42RkyvURpZ5DgtZKF+3lRqnY+7sWLJQo/5WUojbrfamCH3N9a+7ZdDz
+ 4dNpujoHLlP2KA8qcKn6+W6PjCONVKTNJfKX0BfT2R/tWUc+DqDcGx22FjU/XjyDxHoO
+ EWpSiJzFaIMjilFYSIrbwz/+M7F5SfnjY+5aMvGX252WVZ8Ik7BXjJIUkA4MsZnqinK/
+ JK+ipaGeFW6zdynt1B/Bn7Yx+uxPazY5eO4WxV9GmsOmI+vi3DCtnpMrHsP9b7xXmT+h
+ grlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711642236; x=1712247036;
+ d=1e100.net; s=20230601; t=1711642503; x=1712247303;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zXbJUC+4/ewayfZwdMBa0QM6amBki2z9IDumPrJGiQo=;
- b=GYfV3oaaWgMC3V+O+D5r3wTzOT5p0JaPzk1Loc+QyF/wG2RPLHSFOq9YbIJ3ZV7yEQ
- CXnKLUr5O0kT8fv5UqvByOydMqdTjnt9xqR38HJxe9+PwrlquVOixTfz4WY/f+0e84ao
- k2dfWQL8LOTfBICymxBQr5zHR//jyQ0iJVuidzQyZL5AhjW2hLWfyK54lHzAklb3Kr22
- yeAMP949SGeZqlMEalrSu1TsiDjqb0ncPzbUbPlb31ir6blnsKxqNBPiBodZetHsFIHT
- zk3TqEir/uQGvyOWIhSZMQiLNlUO+cywhDGJdFDZZO8SOuH6KnfSmmU92vq9SiYvWAF/
- 5OSg==
-X-Gm-Message-State: AOJu0YwnqpspRD9jNJuuFCJ793Z4ORbC0jMpIk8If1TLimQyY7NmdSJ1
- WOuUHXJhGu7LO9Hqcdi2oiJEiGA5V+QLqyh0zdM+KJagOqViSdvQqXFCKvKuoIpfcWy9wHuvn/E
- P7INGBTeFShTMV+o5vYubR+TFFynnQTK+a57hcflcJjVO5KpW
-X-Google-Smtp-Source: AGHT+IH8ZSmN26v+UnLAuF68hlfRanF72peANGY/Wq4T5gvwzMJQO4K2uFvR4TMRmBParskxNsTRrzVUst1XnXiNlI8=
-X-Received: by 2002:a50:d71a:0:b0:56a:ae8a:acc0 with SMTP id
- t26-20020a50d71a000000b0056aae8aacc0mr2458150edi.21.1711642235679; Thu, 28
- Mar 2024 09:10:35 -0700 (PDT)
+ bh=fjVpOpA5Iq00oSecG01Q6+gTpD1AUnFdn7uVkFV+S7E=;
+ b=hv9IpLwk66Cycr0OD0bU/RIw3/9QDVZsQytZ56E0qqzTVA+lv22rt+7kB1kCGoihvO
+ FS5Zx0NzW9Yf+7HK9+WogIG2VEqkn12wm1WRQ4sk6D/RaGc28QnQw7XxM70G4Stmhl+N
+ C1/xCYa/CoDOb2BmQTv580Dl4J/g9jagrQR41spUYawZiN2pox/zzfUIbKTi0EvKrfI7
+ OSG40qI09RSPjFe0GpGSzkB643TB4s1ICL7t5yMSwkZku7SG5lse8OpvdwLSMmefaKFT
+ ZutMawGf7fQUCCu5eVKTaVmrTKtV7krjj5vaK/e4fUdkhWnt2Y4+704he0nfNBcCVNry
+ nJ7Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTmvQc7x2qs0/00TB3rXWdAjN2CWQwVWLQ/GAoC0L5qtIbvpB+6XUQRM/7pTIcVPBY5rtzaXgrEzerXH++J9TvxG81uio=
+X-Gm-Message-State: AOJu0YzDpss+KUW0gkHGNU9YKvvwaoTCobojwCj+/zh7C7lVQZ4nEVGU
+ 5ep2SHP2qfg2vRuXsEycghVN6sP+6Elcw4ko9ZbGHg0Ohbri6PoeRxWJKOMxHK5ON9G+dgvR82Z
+ 5qfhXq/LOmUvED5Q88s88cyQNV014w9Ea9FyYV5jeP24ekir6
+X-Google-Smtp-Source: AGHT+IHEDxbaCck+EXlRRexpvg9IFpKVSfPgWlbXRi1A8uhWh1Xa5aVtrIY/JRk++ElQqCm8nvhimd/Xjs3gtP+6QbA=
+X-Received: by 2002:a05:6402:2552:b0:56c:5a72:176a with SMTP id
+ l18-20020a056402255200b0056c5a72176amr348883edb.3.1711642503467; Thu, 28 Mar
+ 2024 09:15:03 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240324165545.201908-1-arnaud.minier@telecom-paris.fr>
-In-Reply-To: <20240324165545.201908-1-arnaud.minier@telecom-paris.fr>
+ <20240324165545.201908-7-arnaud.minier@telecom-paris.fr>
+ <9e6142e9-83b1-465d-b29a-01f60f9cbc49@redhat.com>
+In-Reply-To: <9e6142e9-83b1-465d-b29a-01f60f9cbc49@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Mar 2024 16:10:24 +0000
-Message-ID: <CAFEAcA-h-ddfyNXaa_swFJVc61cDbR9tg34AC88nqZLgfbzCsw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] hw/char: Implement the STM32L4x5 USART,
- UART and LPUART
-To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+Date: Thu, 28 Mar 2024 16:14:52 +0000
+Message-ID: <CAFEAcA8ERinbcx9+2mtRMvJqDRxFhMZxzTiHXD_aLRA0zrsSfg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] tests/qtest: Add tests for the STM32L4x5 USART
+To: Thomas Huth <thuth@redhat.com>
+Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-devel@nongnu.org, 
+ Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>,
  =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
  Samuel Tardieu <samuel.tardieu@telecom-paris.fr>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,42 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 24 Mar 2024 at 16:56, Arnaud Minier
-<arnaud.minier@telecom-paris.fr> wrote:
->
-> This patch adds the STM32L4x5 USART
-> (Universal Synchronous/Asynchronous Receiver/Transmitter)
-> device and is part of a series implementing the
-> STM32L4x5 with a few peripherals.
->
-> It implements the necessary functionalities to receive/send
-> characters over the serial port, which are useful to
-> communicate with the program currently running.
->
-> Many thanks Peter for your review, I think I addressed almost
-> everything.
-> I'm just unsure about how to handle the waiting time in the tests.
-> I understand your concerns about the unreliability of using the wallclock
-> time but I don't understand how using clock_step() would make it
-> more reliable. We will always be waiting on something
-> that is out of our control (i.e. the OS).
-> I increased the delay from 5s to 10min to match the microbit test
-> and added a comment (I paraphrased your comment, is that okay ?).
+On Mon, 25 Mar 2024 at 06:19, Thomas Huth <thuth@redhat.com> wrote:
+> We are now using timeouts from the meson test harneess in meson.build, too,
+> see the slow_qtests[] at the beginning of that file.
+> You seem to be using a 10 minutes timeout in your test below
+> (usart_wait_for_flag() function), but you didn't adjust the meson timeout
+> setting in meson.build, so this does not quite match...
+> How long does your test take on a very loaded machine (with --enable-debug
+> used)? If it could take more than 30 seconds, you need to adjust the timeout
+> in meson.build, too. If it is running very fast, you should likely adjust
+> the 10 minutes timeout in usart_wait_for_flag() to < 30 seconds instead to
+> match the meson timeout setting.
 
-I think I was slightly confused between two things. For
-a lot of qtests we do want to use clock_step() and not
-have wallclock-based delays, but we can only do that where
-the thing we're waiting for is purely simulation time
-(i.e. where we triggered a change via a qtest write and
-then want to look for the result via a qtest read).
-Where we're triggering something via a different OS
-pathway (e.g. here where we write to the socket that's
-backing the chardev connected to the UART and then look
-at the UART registers) we do need a wallclock delay.
+I'd forgotten about the meson harness timeout.
 
-I recommend you follow Thomas's suggestions about timeouts
-in his comments on patch 6; I'd forgotten we have a
-meson timeout now too.
+tests/qtest/microbit-test.c also has a 10 minute timeout but
+isn't listed as a "slow qtest" (that's the pattern I suggested
+Arnaud follow for this test).
+
+If the meson test harness now handles timeouts, should we write
+this kind of test to not have a timeout at all, so it simply
+waits indefinitely for the UART to become ready after writing
+data to the socket connected to the chardev? Or are there
+scenarios where the test gets run but not via the meson harness
+and where we would want to still have a timeout?
+(For running the test executable by hand for debugging I think
+hanging indefinitely is fine and arguably more helpful than
+timing out and stopping.)
 
 thanks
 -- PMM
