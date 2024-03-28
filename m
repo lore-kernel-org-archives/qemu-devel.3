@@ -4,50 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D20CD1283
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5ECCD1283
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpsmT-0006aw-Kx; Thu, 28 Mar 2024 12:39:09 -0400
+	id 1rpsne-0007P3-Ou; Thu, 28 Mar 2024 12:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rpsmR-0006aR-U2; Thu, 28 Mar 2024 12:39:07 -0400
-Received: from muminek.juszkiewicz.com.pl ([213.251.184.221])
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpsnc-0007Nl-Ok
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:40:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rpsmQ-0003JZ-1E; Thu, 28 Mar 2024 12:39:07 -0400
-Received: from localhost (localhost [127.0.0.1])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id F30CB260836;
- Thu, 28 Mar 2024 17:39:01 +0100 (CET)
-X-Virus-Scanned: Debian amavis at juszkiewicz.com.pl
-Received: from muminek.juszkiewicz.com.pl ([127.0.0.1])
- by localhost (muminek.juszkiewicz.com.pl [127.0.0.1]) (amavis, port 10024)
- with ESMTP id TWqNmQbt-Rtw; Thu, 28 Mar 2024 17:38:59 +0100 (CET)
-Received: from applejack.lan (83.11.22.169.ipv4.supernova.orange.pl
- [83.11.22.169])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id 60F1A2600D1;
- Thu, 28 Mar 2024 17:38:59 +0100 (CET)
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Subject: [PATCH v2 1/1] docs: sbsa: update specs, add dt note
-Date: Thu, 28 Mar 2024 17:38:51 +0100
-Message-ID: <20240328163851.1386176-1-marcin.juszkiewicz@linaro.org>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpsna-0003ar-Og
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 12:40:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711644018;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=u7R9aNfsLS42W4V3aKdUp16BUTlvgWZay1823VO9zp8=;
+ b=EaZ3I+ZKMqDacrMTplOth0OdpaOFVftCpMQCVHUShAUdUOOFzRcLr+X/gbeYPhLCnZjEBD
+ P7wkbz2R5o/XDXYlrCR8wtIiYGt6FvD93fKeU1KYfeMYVHwg/2L404M6FII4862P17/sN5
+ d0rI83KvZsfAS9CDN7irQKEA39ZjKzM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-423-IAZewuelOnS3NnRTd4wmvg-1; Thu, 28 Mar 2024 12:40:15 -0400
+X-MC-Unique: IAZewuelOnS3NnRTd4wmvg-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 42631101A58D;
+ Thu, 28 Mar 2024 16:40:15 +0000 (UTC)
+Received: from localhost (unknown [10.42.28.11])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E8AF7492BCA;
+ Thu, 28 Mar 2024 16:40:14 +0000 (UTC)
+Date: Thu, 28 Mar 2024 16:40:10 +0000
+From: "Richard W.M. Jones" <rjones@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-block@nongnu.org, nbd@other.debian.org
+Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
+Message-ID: <20240328164010.GM7636@redhat.com>
+References: <20240328140607.2433889-1-thuth@redhat.com>
+ <20240328140607.2433889-7-thuth@redhat.com>
+ <20240328141342.GK7636@redhat.com>
+ <jhweyusyjhha5hvffrtkwvuce35fajiy73dymgjre3jkjcjk7v@lrgdiintwb6i>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=213.251.184.221;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=muminek.juszkiewicz.com.pl
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <jhweyusyjhha5hvffrtkwvuce35fajiy73dymgjre3jkjcjk7v@lrgdiintwb6i>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,85 +86,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hardware of sbsa-ref board is nowadays defined by both BSA and SBSA
-specifications. Then BBR defines firmware interface.
+On Thu, Mar 28, 2024 at 10:06:01AM -0500, Eric Blake wrote:
+> Adjusting cc list to add upstream NBD and drop developers unrelated to
+> this part of the qemu series...
+> 
+> On Thu, Mar 28, 2024 at 02:13:42PM +0000, Richard W.M. Jones wrote:
+> > On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
+> > > Since version 2.66, glib has useful URI parsing functions, too.
+> > > Use those instead of the QEMU-internal ones to be finally able
+> > > to get rid of the latter. The g_uri_get_host() also takes care
+> > > of removing the square brackets from IPv6 addresses, so we can
+> > > drop that part of the QEMU code now, too.
+> > > 
+> 
+> > >  
+> > >      if (is_unix) {
+> > >          /* nbd+unix:///export?socket=path */
+> > > -        if (uri->server || uri->port || strcmp(qp->p[0].name, "socket")) {
+> > > +        const char *uri_socket = g_hash_table_lookup(qp, "socket");
+> > > +        if (uri_server || uri_port != -1 || !uri_socket) {
+> > >              ret = -EINVAL;
+> > >              goto out;
+> > >          }
+> 
+> The spec for NBD URIs is at:
+> 
+> https://github.com/NetworkBlockDevice/nbd/blob/master/doc/uri.md
+> 
+> Should any of this spec mention case-insensitive concerns, such as
+> whether 'NBD://' may be equivalent to 'nbd://', and whether
+> 'nbd+unix:///?socket=x' is equivalent to 'nbd+unix:///?Socket=x'?
+> Right now, I think that most implementations of NBD servers and
+> clients happen to use case-sensitive parsing; but glib provides the
+> option to do case-insensitive query parsing.
 
-Added note about DeviceTree data passed from QEMU to firmware. It is
-very minimal and provides only data we use in firmware.
+I haven't thought about this before, but do note that the NBD URI spec
+defers to "IETF standards describing URIs" for all unanswered
+questions.  RFC3986 does talk about this incidentally.  About the
+scheme field it says (section 3.1):
 
-Added NUMA information to list of things reported by DeviceTree.
+   Although schemes are case-
+   insensitive, the canonical form is lowercase and documents that
+   specify schemes must do so with lowercase letters.  An implementation
+   should accept uppercase letters as equivalent to lowercase in scheme
+   names (e.g., allow "HTTP" as well as "http") for the sake of
+   robustness but should only produce lowercase scheme names for
+   consistency.
 
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
----
- docs/system/arm/sbsa.rst | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+Hostname is also (obviously) case insensitive.  There's also a section
+(6.2.3) which talks about normalization of URIs.
 
-diff --git a/docs/system/arm/sbsa.rst b/docs/system/arm/sbsa.rst
-index bca61608ff..2bf22a1d0b 100644
---- a/docs/system/arm/sbsa.rst
-+++ b/docs/system/arm/sbsa.rst
-@@ -1,12 +1,16 @@
- Arm Server Base System Architecture Reference board (``sbsa-ref``)
- ==================================================================
- 
--While the ``virt`` board is a generic board platform that doesn't match
--any real hardware the ``sbsa-ref`` board intends to look like real
--hardware. The `Server Base System Architecture
--<https://developer.arm.com/documentation/den0029/latest>`_ defines a
--minimum base line of hardware support and importantly how the firmware
--reports that to any operating system.
-+The ``sbsa-ref`` board intends to look like real hardware (while the ``virt``
-+board is a generic board platform that doesn't match any real hardware).
-+
-+The hardware part is defined by two specifications:
-+
-+  - `Base System Architecture <https://developer.arm.com/documentation/den0094/>`__ (BSA)
-+  - `Server Base System Architecture <https://developer.arm.com/documentation/den0029/>`__ (SBSA)
-+
-+The `Arm Base Boot Requirements <https://developer.arm.com/documentation/den0044/>`__ (BBR)
-+specification defines how the firmware reports that to any operating system.
- 
- It is intended to be a machine for developing firmware and testing
- standards compliance with operating systems.
-@@ -35,16 +39,29 @@ includes both internal hardware and parts affected by the qemu command line
- (i.e. CPUs and memory). As a result it must have a firmware specifically built
- to expect a certain hardware layout (as you would in a real machine).
- 
-+Note
-+''''
-+
-+QEMU provides the guest EL3 firmware with minimal information about hardware
-+platform using minimalistic devicetree. This is not a Linux devicetree. It is
-+not even a firmware devicetree.
-+
-+It is information passed from QEMU to describe the information a hardware
-+platform would have other mechanisms to discover at runtime, that are affected
-+by the QEMU command line.
-+
-+Ultimately this devicetree may be replaced by IPC calls to an emulated SCP.
-+
- DeviceTree information
- ''''''''''''''''''''''
- 
--The devicetree provided by the board model to the firmware is not intended
--to be a complete compliant DT. It currently reports:
-+The devicetree reports:
- 
-    - CPUs
-    - memory
-    - platform version
-    - GIC addresses
-+   - NUMA node id for CPUs and memory
- 
- Platform version
- ''''''''''''''''
-@@ -70,4 +87,4 @@ Platform version changes:
-   GIC ITS information is present in devicetree.
- 
- 0.3
--  The USB controller is an XHCI device, not EHCI
-+  The USB controller is an XHCI device, not EHCI.
+Overall it seems the intention of the RFC writer is that parsers
+should handle any case; but when generating URIs (and for examples,
+documentation etc) we should only generate lowercase.
+
+libnbd absolutely does *not* get this right, eg:
+
+  $ nbdinfo NBD://localhost
+  nbdinfo: nbd_connect_uri: unknown NBD URI scheme: NBD: Invalid argument
+
+so that's a bug too.
+
+> If I read https://docs.gtk.org/glib/type_func.Uri.parse_params.html
+> correctly, passing G_URI_PARAMS_CASE_INSENSITIVE (which you did not
+> do) would mean that 'nbd+unix:///?socket=ignore&Socket=/for/real'
+> would result in this g_hash_table_lookup finding only "Socket", not
+> "socket".  Maybe it is worth an explicit addition to the NBD URI spec
+> to mention that we intend to be case-sensitive (in the parts where it
+> can be; I'm not sure if the schema part must be handled
+> case-insensitively without re-reading the RFCs), and therefore that
+> 'Socket=' does NOT have the same meaning as 'socket='.
+
+We could mention this in the spec for clarity, but the current meaning
+(as above) would be that case-insensitive parsing is recommended.
+
+Rich.
+
 -- 
-2.44.0
+Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
+Read my programming and virtualization blog: http://rwmj.wordpress.com
+libguestfs lets you edit virtual machines.  Supports shell scripting,
+bindings from many languages.  http://libguestfs.org
 
 
