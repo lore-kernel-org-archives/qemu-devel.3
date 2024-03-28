@@ -4,84 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A24BC54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49534C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rprIx-0004hF-6r; Thu, 28 Mar 2024 11:04:35 -0400
+	id 1rprKp-0005Yv-3u; Thu, 28 Mar 2024 11:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rprIl-0004eB-0P
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:04:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rprKc-0005Y5-NP
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:06:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rprIh-0000v7-2i
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:04:22 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rprKW-0001Tu-3p
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:06:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711638257;
+ s=mimecast20190719; t=1711638370;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OkTxu8WLRukFBVnw6I9e9SS6TT60ybYmMFqebNomrVc=;
- b=UMin2+BHBgAHPjSUdlkLuCOmKrb6eSZ6iiOohOMU9Rz7hD9VAn6gxqA4IfgT7VB9O5mUwn
- df6ALbS2+CMtkymPLNHVz9K6vUFkz8w5v3Mgve9YAirnXMfvsZMA8Q3oifBfKHk48qKBhj
- d/adScceUmjE9qPGXG88Ap/bTgEmsPc=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H3yn9yhhlu2WBjLcHy+XH1SgMqK60qAwKpD2k/Zdlek=;
+ b=K6KMAOL2ksSWEVfadlTQqym2PTCIQiFNFAVirOfqtG2brXLlJ4g4ZKvA+iPt2qq0wtP5mq
+ Wt2K9q/Pb8CeQeuRMhFcQa/VRuNxktItdl+AjycpOFnm3x9rXwEzOQyglwrS/nec5Uui8R
+ oYTWb7xpmAEu1tOyw8jf+huNgJ7t3iY=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10--iN-ePktPKCoNTrWveu3hw-1; Thu, 28 Mar 2024 11:04:14 -0400
-X-MC-Unique: -iN-ePktPKCoNTrWveu3hw-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2d48e62e525so8163651fa.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:04:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711638251; x=1712243051;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OkTxu8WLRukFBVnw6I9e9SS6TT60ybYmMFqebNomrVc=;
- b=q7QIwufg1IXAkmiKZHvphS42F7LYJy9DNHnCfnm7cjgA/ULX01jp5F0uba0OhVpfCo
- p3d78er9SS5NfYTott1h06znLJAfRYfISeR3KxeD3hNiIxWboNfPDsaGzvFCZ1jft3GG
- 0gRbp1RANuXKmZuKPbdR22Mf4jyjhluHqmgvlJJs1leN6K1yOdH1slTcDU4CCAi8WuFO
- hX2RKI9VOkrmNKx8+IL2h4F58MPql6Iu8lry72v0kBhAL+xujnfDnPOun7d2EKFCSUEG
- CbxQaEahXxhEO/jqFZv6xU4GijBUD/PW2zafH1B4Xjt58xTZ7d+ppAD271eCC4hLYGxM
- efAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRIBIQ+N86ytvLvmmGAgSJn/pJbvNtNWzSClSYOrmHhq8FIqsW9oCImA1IBCRIMcdaBSzoCCV0S9qtQ5hQJADC3VJ6HfI=
-X-Gm-Message-State: AOJu0YyjbJrflATdfmmeIEPqCZRyxTSD6VQckMU30rXV6DExAYQPebhA
- 0vS+uY6gO3UaUxP36BtHttz7r6I8HwCpRdMeYSCUIlcsDnboej/OWb9xxVH2SVcx4pcPIInqFQS
- +/F02mXgOB/wkD+mGnznN395OD1oo111quDT5UZsWex4nZR1uaAzhdo/GMLYd
-X-Received: by 2002:a2e:7411:0:b0:2d6:af80:bc7c with SMTP id
- p17-20020a2e7411000000b002d6af80bc7cmr2179694ljc.7.1711638251157; 
- Thu, 28 Mar 2024 08:04:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE64eAiXEXuCdvu5krT2MU1J/Q6oIlPhurvqASsySEgIXTbBxoAuGQ8+dtmxrDhFQTBDiqcVw==
-X-Received: by 2002:a2e:7411:0:b0:2d6:af80:bc7c with SMTP id
- p17-20020a2e7411000000b002d6af80bc7cmr2179665ljc.7.1711638250684; 
- Thu, 28 Mar 2024 08:04:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- e10-20020a05600c4e4a00b00414112a6159sm2566611wmq.44.2024.03.28.08.04.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 08:04:10 -0700 (PDT)
-Message-ID: <88d0bdcb-6a98-4419-96f8-c8eb47949c2e@redhat.com>
-Date: Thu, 28 Mar 2024 16:04:09 +0100
+ us-mta-117-Wi_ZRyd7Mm2rAzFYt6QL7Q-1; Thu, 28 Mar 2024 11:06:08 -0400
+X-MC-Unique: Wi_ZRyd7Mm2rAzFYt6QL7Q-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 79A34101A523;
+ Thu, 28 Mar 2024 15:06:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.33])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 32F2B17AA0;
+ Thu, 28 Mar 2024 15:06:07 +0000 (UTC)
+Date: Thu, 28 Mar 2024 10:06:01 -0500
+From: Eric Blake <eblake@redhat.com>
+To: "Richard W.M. Jones" <rjones@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, qemu-devel@nongnu.org,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-block@nongnu.org, nbd@other.debian.org
+Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
+Message-ID: <jhweyusyjhha5hvffrtkwvuce35fajiy73dymgjre3jkjcjk7v@lrgdiintwb6i>
+References: <20240328140607.2433889-1-thuth@redhat.com>
+ <20240328140607.2433889-7-thuth@redhat.com>
+ <20240328141342.GK7636@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 2/2] migration/postcopy: Ensure postcopy_start()
- sets errp if it fails
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20240328140252.16756-1-avihaih@nvidia.com>
- <20240328140252.16756-3-avihaih@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240328140252.16756-3-avihaih@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240328141342.GK7636@redhat.com>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -105,71 +84,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/28/24 15:02, Avihai Horon wrote:
-> There are several places where postcopy_start() fails without setting
-> errp. This can cause a null pointer de-reference, as in case of error,
-> the caller of postcopy_start() copies/prints the error set in errp.
-> 
-> Fix it by setting errp in all of postcopy_start() error paths.
-> 
-> Fixes: 908927db28ea ("migration: Update error description whenever migration fails")
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Adjusting cc list to add upstream NBD and drop developers unrelated to
+this part of the qemu series...
 
+On Thu, Mar 28, 2024 at 02:13:42PM +0000, Richard W.M. Jones wrote:
+> On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
+> > Since version 2.66, glib has useful URI parsing functions, too.
+> > Use those instead of the QEMU-internal ones to be finally able
+> > to get rid of the latter. The g_uri_get_host() also takes care
+> > of removing the square brackets from IPv6 addresses, so we can
+> > drop that part of the QEMU code now, too.
+> > 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> >  
+> >      if (is_unix) {
+> >          /* nbd+unix:///export?socket=path */
+> > -        if (uri->server || uri->port || strcmp(qp->p[0].name, "socket")) {
+> > +        const char *uri_socket = g_hash_table_lookup(qp, "socket");
+> > +        if (uri_server || uri_port != -1 || !uri_socket) {
+> >              ret = -EINVAL;
+> >              goto out;
+> >          }
 
-Thanks,
+The spec for NBD URIs is at:
 
-C.
+https://github.com/NetworkBlockDevice/nbd/blob/master/doc/uri.md
 
+Should any of this spec mention case-insensitive concerns, such as
+whether 'NBD://' may be equivalent to 'nbd://', and whether
+'nbd+unix:///?socket=x' is equivalent to 'nbd+unix:///?Socket=x'?
+Right now, I think that most implementations of NBD servers and
+clients happen to use case-sensitive parsing; but glib provides the
+option to do case-insensitive query parsing.
 
-> ---
->   migration/migration.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index b73ae3a72c4..86bf76e9258 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2510,6 +2510,8 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->           migration_wait_main_channel(ms);
->           if (postcopy_preempt_establish_channel(ms)) {
->               migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
-> +            error_setg(errp, "%s: Failed to establish preempt channel",
-> +                       __func__);
->               return -1;
->           }
->       }
-> @@ -2525,17 +2527,22 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->   
->       ret = migration_stop_vm(ms, RUN_STATE_FINISH_MIGRATE);
->       if (ret < 0) {
-> +        error_setg_errno(errp, -ret, "%s: Failed to stop the VM", __func__);
->           goto fail;
->       }
->   
->       ret = migration_maybe_pause(ms, &cur_state,
->                                   MIGRATION_STATUS_POSTCOPY_ACTIVE);
->       if (ret < 0) {
-> +        error_setg_errno(errp, -ret, "%s: Failed in migration_maybe_pause()",
-> +                         __func__);
->           goto fail;
->       }
->   
->       ret = bdrv_inactivate_all();
->       if (ret < 0) {
-> +        error_setg_errno(errp, -ret, "%s: Failed in bdrv_inactivate_all()",
-> +                         __func__);
->           goto fail;
->       }
->       restart_block = true;
-> @@ -2612,6 +2619,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->   
->       /* Now send that blob */
->       if (qemu_savevm_send_packaged(ms->to_dst_file, bioc->data, bioc->usage)) {
-> +        error_setg(errp, "%s: Failed to send packaged data", __func__);
->           goto fail_closefb;
->       }
->       qemu_fclose(fb);
+If I read https://docs.gtk.org/glib/type_func.Uri.parse_params.html
+correctly, passing G_URI_PARAMS_CASE_INSENSITIVE (which you did not
+do) would mean that 'nbd+unix:///?socket=ignore&Socket=/for/real'
+would result in this g_hash_table_lookup finding only "Socket", not
+"socket".  Maybe it is worth an explicit addition to the NBD URI spec
+to mention that we intend to be case-sensitive (in the parts where it
+can be; I'm not sure if the schema part must be handled
+case-insensitively without re-reading the RFCs), and therefore that
+'Socket=' does NOT have the same meaning as 'socket='.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
