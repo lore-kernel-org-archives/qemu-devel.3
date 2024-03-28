@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698BEC54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0041C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpmvv-0002yt-EI; Thu, 28 Mar 2024 06:24:31 -0400
+	id 1rpmw1-000394-2j; Thu, 28 Mar 2024 06:24:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmvu-0002s4-DO
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:30 -0400
+ id 1rpmvz-00037s-FI
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmvs-00083l-Cb
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:30 -0400
+ id 1rpmvx-00084U-Rb
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711621467;
+ s=mimecast20190719; t=1711621473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZaMpwY19pcCqO5xFBKSdLJ7yo1YyaKqcLtzVGkXev9w=;
- b=Fj+r45tcqU2At9iaZWj8H9QjL1LzEA5MMsG6OcFwSqWU/ReqHIYi3bqrpUL6mttTOPdXU/
- jnsJQas4D8UBhJ4TYdtdp8lWLkE7wMjdmn474Rz5y7ir574bQjHiRTBdNBc7c53+6F3BZg
- RolLOc9uxY1j1EMWw5nIx4rCO1OOcfU=
+ bh=oHRMzYEm8O07qCC1WuSIUkd0l/2v6McOwpmBcpQ2w5Q=;
+ b=h4c5joO1H2Shi4UFKFcfYYkQf6wcKvSIb2twiMAozBgtVwt8vtNZ9QxFjkim1dZR4yq71a
+ Kx6MMrFIg3TU2GqRY5IK5QMvzOQgDdenCLMx3YKJERUxWquMclEDLYU4I4J/JfPIYYlltD
+ gVQ66RQXvCFmAusNaE5X4qDfsfCvHcY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-gyoeTz-gOLi9TDKS68wy6g-1; Thu, 28 Mar 2024 06:24:20 -0400
-X-MC-Unique: gyoeTz-gOLi9TDKS68wy6g-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
+ us-mta-557-R184r4QNOt6w4r65TNpR3Q-1; Thu, 28 Mar 2024 06:24:29 -0400
+X-MC-Unique: R184r4QNOt6w4r65TNpR3Q-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4091A800264;
- Thu, 28 Mar 2024 10:24:19 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 20E8A801901;
+ Thu, 28 Mar 2024 10:24:28 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.34])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6E5681C060DC;
- Thu, 28 Mar 2024 10:24:17 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4B065492BD7;
+ Thu, 28 Mar 2024 10:24:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hyman Huang <yong.huang@smartx.com>,
@@ -67,15 +67,15 @@ Cc: Hyman Huang <yong.huang@smartx.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 18/19] hw/virtio: fix -Werror=maybe-uninitialized
-Date: Thu, 28 Mar 2024 14:20:51 +0400
-Message-ID: <20240328102052.3499331-19-marcandre.lureau@redhat.com>
+Subject: [PATCH 19/19] RFC: hw/virtio: a potential leak fix
+Date: Thu, 28 Mar 2024 14:20:52 +0400
+Message-ID: <20240328102052.3499331-20-marcandre.lureau@redhat.com>
 In-Reply-To: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,28 +103,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/virtio/vhost-shadow-virtqueue.c:545:13: error: ‘r’ may be used uninitialized [-Werror=maybe-uninitialized]
+vhost_svq_get_buf() may return a VirtQueueElement that should be freed.
 
-'&r' is not guaranteed to be assigned when calling -Werror=maybe-uninitialized.
+It's unclear to me if the vhost_svq_get_buf() call should always return NULL.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost-shadow-virtqueue.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index fc5f408f77..cd29cc795b 100644
+index cd29cc795b..93742d9ddc 100644
 --- a/hw/virtio/vhost-shadow-virtqueue.c
 +++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -526,7 +526,7 @@ static void vhost_svq_flush(VhostShadowVirtqueue *svq,
- size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
+@@ -414,6 +414,7 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
+     return i;
+ }
+ 
++G_GNUC_WARN_UNUSED_RESULT
+ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
+                                            uint32_t *len)
  {
-     size_t len = 0;
--    uint32_t r;
-+    uint32_t r = 0;
+@@ -529,6 +530,7 @@ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
+     uint32_t r = 0;
  
      while (num--) {
++        g_autofree VirtQueueElement *elem = NULL;
          int64_t start_us = g_get_monotonic_time();
+ 
+         do {
+@@ -541,7 +543,7 @@ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
+             }
+         } while (true);
+ 
+-        vhost_svq_get_buf(svq, &r);
++        elem = vhost_svq_get_buf(svq, &r);
+         len += r;
+     }
+ 
 -- 
 2.44.0
 
