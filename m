@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA829CD11DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C522CD1284
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rps7a-00050d-5G; Thu, 28 Mar 2024 11:56:54 -0400
+	id 1rps61-0001GL-03; Thu, 28 Mar 2024 11:55:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7F-0004Yw-QL
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:37 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps5i-000179-WA
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:55:01 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7D-0002Tc-NN
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:33 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a46a7208eedso167670066b.0
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:56:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps5h-0001pu-7P
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:54:58 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-56bc5a3aeb9so1463066a12.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:54:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711641389; x=1712246189; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711641295; x=1712246095; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yelmGOzPahdn50NTFTioUrFj9NGQyALSAi158EJljHU=;
- b=krvbD78ORnBdXZmJ3OmYQFXUSF7dNlymbl08eDUGLTjroCPPWdUAqYsv540u7Dd9hy
- S3zp5u2sAbn1rK6MxiEwGyfbx/4MLf1rPGKoO2QHs8VfTmNE1G33Q54DH5pcr08ViTX1
- NLrXAL3xlvddf0otKio5moqPtjXJ6eO+Pf8D9oee4cBZHRwvhkwSL2KGvLl1o3o8V+jr
- OrN/Nd4vnB62IMuGE+IlE/jNX1mhHSVOlz0f2wfmZc8OHSQUZt4sbOQgiCj0VwtuyOWu
- 1xyUM3QgMO8ccL7saSfLVKdaIubAtgfBs7q4nC0U4Y0vmTDwL6itkG7gfjDPPHJ4LDsZ
- xmVA==
+ bh=djs4Th+kjoxzBDQIObaEvmf5VGdYfcKG9Is4pj2rcJA=;
+ b=Tz2/lS2gh+gTzG10G/+ARrz8nNZ9sW6JENFRXc0N++KHYnRln5cXL4aBMULEkid4ot
+ 9SsC/TDxS2GIdQJNBp6+R42IokgwmoEF6+w0Wih7qfQoNYZucRjKSEepzglhUZG0wvby
+ fiPhzoTWxSGvg1dbkgwRywZyRPuOLjhZDMfJrLVWAqUr2ypGqVX2rluTPp8ai4O3YTtY
+ NYbKhnDfO4BaAkbcMbwFWPUZ9y61JUza0QiuEeUqv2p7mkp7wMVyToZS3PFd+auXxqQC
+ L+gh1xdqGMPawuJKcpsUk8BhIgnf5881sX7ZdbSMylC6eM34gzRI83tFR4zuy7DApruZ
+ ZqeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711641389; x=1712246189;
+ d=1e100.net; s=20230601; t=1711641295; x=1712246095;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yelmGOzPahdn50NTFTioUrFj9NGQyALSAi158EJljHU=;
- b=PDs3kENHk62nCRY+EWjBqGWtIgiR5QTqUd8lm1kx0s1kOFr0K/qVE3g7Jq8NPinEDq
- Mb5t3UlUR+L12W+xMcMy2J5PZlOhOwZKHS1rz+0ycxdrYShO4XpUxOWRk+PbYFwroA00
- yxIOeV+wFlhCaU5U7o0Qy3roueZ6qTvaK+3CPzNtdS0J1+QyI2v3Gr0BnaFS7OctJV+u
- YOoeo54OcEOS8oIOsi4aqncE5XiuD0PVSBhJ6UWiLqPG8YOou8b8PJmabMS6pK9BHYZC
- 9eY0s6/dmu1HhH3n7DQyJrYObxMlDbxQkp+0DW/5N9cFAhl04oxBD68y3R9maqzRAEC1
- myPA==
-X-Gm-Message-State: AOJu0YwKCyFoU0y7miYmWZVlxS0dlhMuWtd8yWGf4oPbH5HOM6+Lf/Z2
- TU26R+5VDJOJqD1qjEKlUw1V8fH7f+YEACY2Y59OePphVQxTq8ay9gMNya8I2/3aJewv+crRbEJ
- i
-X-Google-Smtp-Source: AGHT+IGcQH5U/UKgHXGMsAIRXVS3RWDUx0CNeskq1nCdFHfYMz7G0o34lBWrByXcqIlMAc9p2yI9yQ==
-X-Received: by 2002:a17:906:e24e:b0:a4d:fc83:70e1 with SMTP id
- gq14-20020a170906e24e00b00a4dfc8370e1mr2038052ejb.56.1711641389600; 
- Thu, 28 Mar 2024 08:56:29 -0700 (PDT)
+ bh=djs4Th+kjoxzBDQIObaEvmf5VGdYfcKG9Is4pj2rcJA=;
+ b=Zl9KITNdXXqHdtH58fbChjNtWNR3whSl/fYnskSicw3/XyvlamiBeb7WGCA+ezy/8y
+ Y2Sft6KAWW9LMlUVvPWCtqhWydk1bZU3HV56BmezplJt5ADATK4u85TbnsuiyeO3d6Q8
+ fc/zQpM9rF6zYaKMYG9MJNP2aUb4yt/1CQRwjMDWo3viouszl8glbspvC9LSMq3KCnv3
+ h8kjUFDqDyicvhdjskHnsrLcBH+gL32mnkUbO1g8GBVexe0AQTB5yAwOiX8xl6XWJxuN
+ qI2gudvPyL3+siYxClXEwH4sugQGztmrjOA8ZUOF+eX1jWYswtvFAEdgHk+NLs5suC5q
+ EHkQ==
+X-Gm-Message-State: AOJu0Yx/6GJP04snQJhoZcXBoOSpsy13SmlyEgfWciHF9cqTdVbaNy0H
+ fAboW3Jf3YbME77qZ7spi5t+d+c432tpRFxqvtRO6yUGhSA3wmGxsyEtNam32QHrzNT3uTQp2RE
+ W
+X-Google-Smtp-Source: AGHT+IEDfKWv0Uve3VOXzzLi06hxTo6fvyAau83kjSqRi6VaUabzP1VqK7SGL6r5ov939b9QS2ny5A==
+X-Received: by 2002:a50:d6d8:0:b0:568:ae7:bc0 with SMTP id
+ l24-20020a50d6d8000000b005680ae70bc0mr2299951edj.34.1711641295199; 
+ Thu, 28 Mar 2024 08:54:55 -0700 (PDT)
 Received: from m1x-phil.lan (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
  [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
- c12-20020a170906170c00b00a47464a6ee4sm907178eje.173.2024.03.28.08.56.27
+ q4-20020aa7d444000000b00568d6a20717sm991251edr.52.2024.03.28.08.54.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 Mar 2024 08:56:29 -0700 (PDT)
+ Thu, 28 Mar 2024 08:54:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,17 +70,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1 17/29] hw/i386/pc: Inline gigabyte_align()
-Date: Thu, 28 Mar 2024 16:54:25 +0100
-Message-ID: <20240328155439.58719-18-philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1 02/29] hw/i386/pc: Extract
+ pc_machine_is_pci_enabled() helper
+Date: Thu, 28 Mar 2024 16:54:10 +0100
+Message-ID: <20240328155439.58719-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240328155439.58719-1-philmd@linaro.org>
 References: <20240328155439.58719-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,104 +104,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All PCI-based machines have the gigabyte_align field
-set to %true. Simplify by using an inlined helper
-checking whether the machine is PCI-based or not.
+Introduce the pc_machine_is_pci_enabled() helper to be
+able to alter PCMachineClass fields later.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h |  9 ---------
- hw/i386/pc.c         |  1 -
- hw/i386/pc_piix.c    | 16 +++++++++++++---
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ include/hw/i386/pc.h |  2 ++
+ hw/i386/pc.c         | 11 +++++++++--
+ hw/i386/pc_piix.c    | 11 ++++++-----
+ hw/i386/pc_q35.c     |  2 +-
+ hw/i386/pc_sysfw.c   | 11 ++++-------
+ 5 files changed, 22 insertions(+), 15 deletions(-)
 
 diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 2db2aa03d3..758dd5f29b 100644
+index 0ad971782c..6b885424bb 100644
 --- a/include/hw/i386/pc.h
 +++ b/include/hw/i386/pc.h
-@@ -76,14 +76,6 @@ typedef struct PcPciMachineState {
+@@ -129,6 +129,8 @@ struct PCMachineClass {
+ #define TYPE_PC_MACHINE "generic-pc-machine"
+ OBJECT_DECLARE_TYPE(PCMachineState, PCMachineClass, PC_MACHINE)
  
- /**
-  * PCMachineClass:
-- *
-- * Compat fields:
-- *
-- * @gigabyte_align: Make sure that guest addresses aligned at
-- *                  1Gbyte boundaries get mapped to host
-- *                  addresses aligned at 1Gbyte boundaries. This
-- *                  way we can use 1GByte pages in the host.
-- *
-  */
- typedef struct PCMachineClass {
-     X86MachineClass parent_class;
-@@ -99,7 +91,6 @@ typedef struct PCMachineClass {
-     SmbiosEntryPointType default_smbios_ep_type;
++bool pc_machine_is_pci_enabled(PCMachineState *pcms);
++
+ /* ioapic.c */
  
-     /* RAM / address space compat: */
--    bool gigabyte_align;
-     bool has_reserved_memory;
-     bool broken_reserved_end;
-     bool enforce_amd_1tb_hole;
+ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
 diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index dd44df0470..093a7c35f7 100644
+index 2c41b08478..7065f11e97 100644
 --- a/hw/i386/pc.c
 +++ b/hw/i386/pc.c
-@@ -1752,7 +1752,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
+@@ -814,6 +814,7 @@ void pc_memory_init(PCMachineState *pcms,
+     hwaddr maxphysaddr, maxusedaddr;
+     hwaddr cxl_base, cxl_resv_end = 0;
+     X86CPU *cpu = X86_CPU(first_cpu);
++    bool pci_enabled = pc_machine_is_pci_enabled(pcms);
  
-     pcmc->smbios_defaults = true;
--    pcmc->gigabyte_align = true;
-     pcmc->has_reserved_memory = true;
-     pcmc->enforce_amd_1tb_hole = true;
-     pcmc->pvh_enabled = true;
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 2043a7022a..0bc14da768 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -99,6 +99,17 @@ static void piix_intx_routing_notifier_xen(PCIDevice *dev)
+     assert(machine->ram_size == x86ms->below_4g_mem_size +
+                                 x86ms->above_4g_mem_size);
+@@ -949,7 +950,7 @@ void pc_memory_init(PCMachineState *pcms,
+     option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+     memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+                            &error_fatal);
+-    if (pcmc->pci_enabled) {
++    if (pci_enabled) {
+         memory_region_set_readonly(option_rom_mr, true);
      }
+     memory_region_add_subregion_overlap(rom_memory,
+@@ -1642,6 +1643,7 @@ static void pc_machine_initfn(Object *obj)
+ {
+     PCMachineState *pcms = PC_MACHINE(obj);
+     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++    bool pci_enabled = pc_machine_is_pci_enabled(pcms);
+ 
+ #ifdef CONFIG_VMPORT
+     pcms->vmport = ON_OFF_AUTO_AUTO;
+@@ -1668,7 +1670,7 @@ static void pc_machine_initfn(Object *obj)
+     pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
+     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
+                               OBJECT(pcms->pcspk), "audiodev");
+-    if (pcmc->pci_enabled) {
++    if (pci_enabled) {
+         cxl_machine_init(obj, &pcms->cxl_devices_state);
+     }
+ 
+@@ -1810,6 +1812,11 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+         pc_machine_set_fd_bootchk);
  }
  
-+/*
-+ * gigabyte_align: Make sure that guest addresses aligned at
-+ *                 1Gbyte boundaries get mapped to host
-+ *                 addresses aligned at 1Gbyte boundaries.
-+ *                 This way we can use 1GByte pages in the host.
-+ */
-+static bool gigabyte_align(PCMachineState *pcms)
++bool pc_machine_is_pci_enabled(PCMachineState *pcms)
 +{
-+    return pc_machine_is_pci_enabled(pcms);
++    return PC_MACHINE_GET_CLASS(pcms)->pci_enabled;
 +}
 +
- /* PC hardware initialisation */
- static void pc_init1(MachineState *machine, const char *pci_type)
- {
-@@ -130,7 +141,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
-      *  - Then, to gigabyte align the memory, we move the split to 3G
-      *    (lowmem = 0xc0000000).  But only in case we have to split in
-      *    the first place, i.e. ram_size is larger than (traditional)
--     *    lowmem.  And for new machine types (gigabyte_align = true)
-+     *    lowmem.  And for new machine types (gigabyte_align() = true)
-      *    only, for live migration compatibility reasons.
-      *
-      *  - Next the max-ram-below-4g option was added, which allowed to
-@@ -160,7 +171,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+ static const TypeInfo pc_machine_types[] = {
+     {
+         .name           = TYPE_PC_MACHINE,
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index c00d2a66a6..1be1e050c7 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -117,6 +117,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     MemoryRegion *rom_memory = system_memory;
+     ram_addr_t lowmem;
+     uint64_t hole64_size = 0;
++    bool pci_enabled = pc_machine_is_pci_enabled(pcms);
+ 
+     /*
+      * Calculate ram split, for memory below and above 4G.  It's a bit
+@@ -187,7 +188,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         kvmclock_create(pcmc->kvmclock_create_always);
+     }
+ 
+-    if (pcmc->pci_enabled) {
++    if (pci_enabled) {
+         pci_memory = g_new(MemoryRegion, 1);
+         memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
+         rom_memory = pci_memory;
+@@ -234,9 +235,9 @@ static void pc_init1(MachineState *machine, const char *pci_type)
          }
-         lowmem = pcms->max_ram_below_4g;
-         if (machine->ram_size >= pcms->max_ram_below_4g) {
--            if (pcmc->gigabyte_align) {
-+            if (gigabyte_align(pcms)) {
-                 if (lowmem > 0xc0000000) {
-                     lowmem = 0xc0000000;
-                 }
-@@ -818,7 +829,6 @@ static void isapc_machine_options(MachineClass *m)
-     m->option_rom_has_mr = true;
-     m->rom_file_has_mr = false;
-     pcmc->smbios_defaults = false;
--    pcmc->gigabyte_align = false;
-     pcmc->smbios_legacy_mode = true;
-     pcmc->has_reserved_memory = false;
-     m->default_nic = "ne2k_isa";
+     }
+ 
+-    gsi_state = pc_gsi_create(&x86ms->gsi, pcmc->pci_enabled);
++    gsi_state = pc_gsi_create(&x86ms->gsi, pci_enabled);
+ 
+-    if (pcmc->pci_enabled) {
++    if (pci_enabled) {
+         PCIDevice *pci_dev;
+         DeviceState *dev;
+         size_t i;
+@@ -308,7 +309,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         x86_register_ferr_irq(x86ms->gsi[13]);
+     }
+ 
+-    pc_vga_init(isa_bus, pcmc->pci_enabled ? pcms->pcibus : NULL);
++    pc_vga_init(isa_bus, pci_enabled ? pcms->pcibus : NULL);
+ 
+     assert(pcms->vmport != ON_OFF_AUTO__MAX);
+     if (pcms->vmport == ON_OFF_AUTO_AUTO) {
+@@ -322,7 +323,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     pc_nic_init(pcmc, isa_bus, pcms->pcibus);
+ 
+ #ifdef CONFIG_IDE_ISA
+-    if (!pcmc->pci_enabled) {
++    if (!pci_enabled) {
+         DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+         int i;
+ 
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index b5922b44af..43ee1e595c 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -145,7 +145,7 @@ static void pc_q35_init(MachineState *machine)
+     bool keep_pci_slot_hpc;
+     uint64_t pci_hole64_size = 0;
+ 
+-    assert(pcmc->pci_enabled);
++    assert(pc_machine_is_pci_enabled(pcms));
+ 
+     /* Check whether RAM fits below 4G (leaving 1/2 GByte for IO memory
+      * and 256 Mbytes for PCI Express Enhanced Configuration Access Mapping
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 3efabbbab2..862a082b0a 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -93,9 +93,7 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
+ 
+ void pc_system_flash_create(PCMachineState *pcms)
+ {
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+-
+-    if (pcmc->pci_enabled) {
++    if (pc_machine_is_pci_enabled(pcms)) {
+         pcms->flash[0] = pc_pflash_create(pcms, "system.flash0",
+                                           "pflash0");
+         pcms->flash[1] = pc_pflash_create(pcms, "system.flash1",
+@@ -108,7 +106,7 @@ void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+     char *prop_name;
+     int i;
+ 
+-    assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
++    assert(pc_machine_is_pci_enabled(pcms));
+ 
+     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
+         if (!qdev_is_realized(DEVICE(pcms->flash[i]))) {
+@@ -146,7 +144,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+     void *flash_ptr;
+     int flash_size;
+ 
+-    assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
++    assert(pc_machine_is_pci_enabled(pcms));
+ 
+     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
+         system_flash = pcms->flash[i];
+@@ -201,11 +199,10 @@ static void pc_system_flash_map(PCMachineState *pcms,
+ void pc_system_firmware_init(PCMachineState *pcms,
+                              MemoryRegion *rom_memory)
+ {
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     int i;
+     BlockBackend *pflash_blk[ARRAY_SIZE(pcms->flash)];
+ 
+-    if (!pcmc->pci_enabled) {
++    if (!pc_machine_is_pci_enabled(pcms)) {
+         x86_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory, true);
+         return;
+     }
 -- 
 2.41.0
 
