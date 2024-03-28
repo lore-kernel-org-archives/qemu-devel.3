@@ -4,75 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A55BFC54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF2DBC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpqXD-0004Tx-OY; Thu, 28 Mar 2024 10:15:15 -0400
+	id 1rpqaJ-0006MD-AF; Thu, 28 Mar 2024 10:18:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpqXC-0004TF-10
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:15:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rpqXA-0006bV-50
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:15:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711635311;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E7xgjmBepeGrdIT7bUu2r3sXn+Q8uxkiryuqlev9UPc=;
- b=PORPtF05AP1ohVIqDwZlUPNJBqymCKrR+N6NJ2JagO8Cg0ubvD60o24ZdDgK/PFl3LCMMi
- BKg9gZaJb3WYSWNHLRuWR0j/I0lhIeBq4beMOb04Ly63TyZmjlVdPbAWCEBZsIlYDpUxCE
- B2iSYv+mWRBN9TrJgeevziturJLwnOI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-D64XcC7AOOOj6-uQ7DKcrg-1; Thu, 28 Mar 2024 10:15:06 -0400
-X-MC-Unique: D64XcC7AOOOj6-uQ7DKcrg-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1rpqaE-0006KA-L1; Thu, 28 Mar 2024 10:18:23 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1rpqa6-0006za-IY; Thu, 28 Mar 2024 10:18:16 -0400
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:98])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 37F1A101A526;
- Thu, 28 Mar 2024 14:15:06 +0000 (UTC)
-Received: from localhost (unknown [10.42.28.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 027402024517;
- Thu, 28 Mar 2024 14:15:05 +0000 (UTC)
-Date: Thu, 28 Mar 2024 14:15:01 +0000
-From: "Richard W.M. Jones" <rjones@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Lieven <pl@kamp.de>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH for-9.1 8/9] block/ssh: Use URI parsing code from glib
-Message-ID: <20240328141501.GL7636@redhat.com>
-References: <20240328140607.2433889-1-thuth@redhat.com>
- <20240328140607.2433889-9-thuth@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 92D19209D6;
+ Thu, 28 Mar 2024 14:18:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1711635487; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FvHuDNFQTPHbtJ7ZXU9uEBnCilxz3vcM1ASGZEhCA0g=;
+ b=nhTuJPSvtrJsOo56hv/FnV1quvwPnTTJH9Gut151EXq2o2mNkbhZydtdnzMuwKODJMvWE4
+ IXrnRFd4VFCm3TkNRLyz8jVDJRCJ6A4Hks/UgwqcxQBYyejo3ogWDdeiE85z5jJT2yJh9d
+ wRJu50rVHGyadftebHYJUXpURF95hm4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1711635487;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FvHuDNFQTPHbtJ7ZXU9uEBnCilxz3vcM1ASGZEhCA0g=;
+ b=DSpwdYtfO9ed/HBJ0X8e0+VScjkDGLcor5deElUAsOIeiWU7ixaqpID+vaR7rd1jnTTrEf
+ 7Lgf2FQdJvEzHMCw==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=none
+Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id D59AC13A92;
+ Thu, 28 Mar 2024 14:18:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap2.dmz-prg2.suse.org with ESMTPSA id rn/RMx58BWY1TwAAn2gu4w
+ (envelope-from <farosas@suse.de>); Thu, 28 Mar 2024 14:18:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>, Li Zhijian
+ <lizhijian@fujitsu.com>, Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ Peter Xu <peterx@redhat.com>, integration@gluster.org, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-block@nongnu.org, =?utf-8?Q?Daniel_P=2E_Berra?=
+ =?utf-8?Q?ng=C3=A9?=
+ <berrange@redhat.com>, devel@lists.libvirt.org, Hanna Reitz
+ <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, Eric Blake <eblake@redhat.com>, Philippe =?utf-8?Q?Ma?=
+ =?utf-8?Q?thieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Song Gao <gaosong@loongson.cn>, =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, Markus Armbruster <armbru@redhat.com>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Wainer dos Santos
+ Moschetta
+ <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+In-Reply-To: <20240328130255.52257-3-philmd@linaro.org>
+References: <20240328130255.52257-1-philmd@linaro.org>
+ <20240328130255.52257-3-philmd@linaro.org>
+Date: Thu, 28 Mar 2024 11:18:04 -0300
+Message-ID: <87frwatp7n.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240328140607.2433889-9-thuth@redhat.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 92D19209D6
+X-Spamd-Result: default: False [-1.61 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TAGGED_RCPT(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[27]; MIME_TRACE(0.00)[0:+];
+ R_DKIM_NA(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[gmail.com,redhat.com,amd.com,fujitsu.com,gluster.org,nongnu.org,lists.libvirt.org,linaro.org,loongson.cn];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:98:from];
+ RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, imap2.dmz-prg2.suse.org:rdns,
+ imap2.dmz-prg2.suse.org:helo, suse.de:email, fujitsu.com:email]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,143 +127,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 03:06:05PM +0100, Thomas Huth wrote:
-> Since version 2.66, glib has useful URI parsing functions, too.
-> Use those instead of the QEMU-internal ones to be finally able
-> to get rid of the latter.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  block/ssh.c | 69 +++++++++++++++++++++++++++++++----------------------
->  1 file changed, 40 insertions(+), 29 deletions(-)
-> 
-> diff --git a/block/ssh.c b/block/ssh.c
-> index 2748253d4a..c0caf59793 100644
-> --- a/block/ssh.c
-> +++ b/block/ssh.c
-> @@ -37,7 +37,6 @@
->  #include "qemu/ctype.h"
->  #include "qemu/cutils.h"
->  #include "qemu/sockets.h"
-> -#include "qemu/uri.h"
->  #include "qapi/qapi-visit-sockets.h"
->  #include "qapi/qapi-visit-block-core.h"
->  #include "qapi/qmp/qdict.h"
-> @@ -181,64 +180,76 @@ static void sftp_error_trace(BDRVSSHState *s, const char *op)
->  
->  static int parse_uri(const char *filename, QDict *options, Error **errp)
->  {
-> -    URI *uri = NULL;
-> -    QueryParams *qp;
-> +    GUri *uri;
-> +    const char *uri_host, *uri_path, *uri_user, *uri_query;
->      char *port_str;
-> -    int i;
-> +    int port;
-> +    g_autoptr(GError) gerror = NULL;
-> +    char *qp_name, *qp_value;
-> +    GUriParamsIter qp;
->  
-> -    uri = uri_parse(filename);
-> +    uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
->      if (!uri) {
->          return -EINVAL;
->      }
->  
-> -    if (g_strcmp0(uri->scheme, "ssh") != 0) {
-> +    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
->          error_setg(errp, "URI scheme must be 'ssh'");
->          goto err;
->      }
->  
-> -    if (!uri->server || strcmp(uri->server, "") == 0) {
-> +    uri_host = g_uri_get_host(uri);
-> +    if (!uri_host || g_str_equal(uri_host, "")) {
->          error_setg(errp, "missing hostname in URI");
->          goto err;
->      }
->  
-> -    if (!uri->path || strcmp(uri->path, "") == 0) {
-> +    uri_path = g_uri_get_path(uri);
-> +    if (!uri_path || g_str_equal(uri_path, "")) {
->          error_setg(errp, "missing remote path in URI");
->          goto err;
->      }
->  
-> -    qp = query_params_parse(uri->query);
-> -    if (!qp) {
-> -        error_setg(errp, "could not parse query parameters");
-> -        goto err;
-> -    }
-> -
-> -    if(uri->user && strcmp(uri->user, "") != 0) {
-> -        qdict_put_str(options, "user", uri->user);
-> +    uri_user = g_uri_get_user(uri);
-> +    if (uri_user && !g_str_equal(uri_user, "")) {
-> +        qdict_put_str(options, "user", uri_user);
->      }
->  
-> -    qdict_put_str(options, "server.host", uri->server);
-> +    qdict_put_str(options, "server.host", uri_host);
->  
-> -    port_str = g_strdup_printf("%d", uri->port ?: 22);
-> +    port = g_uri_get_port(uri);
-> +    port_str = g_strdup_printf("%d", port != -1 ? port : 22);
->      qdict_put_str(options, "server.port", port_str);
->      g_free(port_str);
->  
-> -    qdict_put_str(options, "path", uri->path);
-> -
-> -    /* Pick out any query parameters that we understand, and ignore
-> -     * the rest.
-> -     */
-> -    for (i = 0; i < qp->n; ++i) {
-> -        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
-> -            qdict_put_str(options, "host_key_check", qp->p[i].value);
-> +    qdict_put_str(options, "path", uri_path);
-> +
-> +    uri_query = g_uri_get_query(uri);
-> +    if (uri_query) {
-> +        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
-> +        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
-> +            if (!qp_name || !qp_value || gerror) {
-> +                warn_report("Failed to parse SSH URI parameters '%s'.",
-> +                            uri_query);
-> +                break;
-> +            }
-> +            /*
-> +             * Pick out the query parameters that we understand, and ignore
-> +             * (or rather warn about) the rest.
-> +             */
-> +            if (g_str_equal(qp_name, "host_key_check")) {
-> +                qdict_put_str(options, "host_key_check", qp_value);
-> +            } else {
-> +                warn_report("Unsupported parameter '%s' in URI.", qp_name);
-> +            }
->          }
->      }
->  
-> -    query_params_free(qp);
-> -    uri_free(uri);
-> +    g_uri_unref(uri);
->      return 0;
->  
->   err:
-> -    uri_free(uri);
-> +    g_uri_unref(uri);
->      return -EINVAL;
->  }
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Seems reasonable too,
+> The whole RDMA subsystem was deprecated in commit e9a54265f5
+> ("hw/rdma: Deprecate the pvrdma device and the rdma subsystem")
+> released in v8.2.
+>
+> Remove:
+>  - RDMA handling from migration
+>  - dependencies on libibumad, libibverbs and librdmacm
+>
+> Keep the RAM_SAVE_FLAG_HOOK definition since it might appears
+> in old migration streams.
+>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Li Zhijian <lizhijian@fujitsu.com>
+> Acked-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
+Just to be clear, because people raised the point in the last version,
+the first link in the deprecation commit links to a thread comprising
+entirely of rdma migration patches. I don't see any ambiguity on whether
+the deprecation was intended to include migration. There's even an ack
+from Juan.
 
+So on the basis of not reverting the previous maintainer's decision, my
+Ack stands here.
 
--- 
-Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
-Read my programming and virtualization blog: http://rwmj.wordpress.com
-virt-p2v converts physical machines to virtual machines.  Boot with a
-live CD or over the network (PXE) and turn machines into KVM guests.
-http://libguestfs.org/virt-v2v
+We also had pretty obvious bugs ([1], [2]) in the past that would have
+been caught if we had any kind of testing for the feature, so I can't
+even say this thing works currently.
+
+@Peter Xu, @Li Zhijian, what are your thoughts on this?
+
+1- https://lore.kernel.org/r/20230920090412.726725-1-lizhijian@fujitsu.com
+2- https://lore.kernel.org/r/CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxB=
+Pp1hQ@mail.gmail.com
 
 
