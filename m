@@ -4,81 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EBB0C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42190C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rprl7-0008Pr-Ll; Thu, 28 Mar 2024 11:33:41 -0400
+	id 1rprmS-0000k6-50; Thu, 28 Mar 2024 11:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rprl5-0008Ov-Cl
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:33:39 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rprl2-0006IU-Rl
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:33:39 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-34175878e30so767910f8f.3
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711640015; x=1712244815; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HoXcWIswnaiYn+YGfxoqs8bfwHg7SCgsOteFXjUUrDI=;
- b=lrPq1BXStVueusSFfHC1HToxaenBcx4LtMGLV9TidOCdtHYBLjtDSt3tb29WngSAoC
- NeLSh7tRkAOSWCCuONOA+gByvIB/WXOkP7yPVcj61ZTLxijaCwaVfCzyjSSlkGgFHM/B
- hgZEwl1HyEQHibBhwfcQQ9qRHGaR0cGk7JGcnpSXyYB6LjIM7LMAQJ7TlC0j06MNE4hf
- uVkMNYbx0gu8pV3C+jciXZECTny49b9nY9Tr4L6P5fFXH23hYxNUkoK//zX1OOH4btFb
- 4zpZZ2Bxu+BXbxkW9+AZWwgE1xyDU/eHyMjitF4Ijs/eg3ZZWolcxKb3/LZY3vKyBknv
- qrZw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rprmQ-0000jj-9p
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:35:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rprmO-0006OQ-Ec
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:35:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711640099;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=VNGXWTEhGqisd0ZboKqyd1sWzEt2AtmxkVV4hAHD6S8=;
+ b=DQyNx9IjDfTIrhAkj4gV4OJ9gaSVSNMy1cJKA/xCbDspNGs7G9NfxI+aRzUoUjyAkIF2im
+ et2WsrmwMa5cPjN3CClH3s7cUWrZ1dXv5CTVX6Qy4zd+bd4FqqDw5cS/JYDzNCJlOveT1G
+ tuGKefwfjzlbOLAJIymn2YlEWqy1q8A=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-179-cLEYsHI6MFaZ7jlonsCBfQ-1; Thu, 28 Mar 2024 11:34:57 -0400
+X-MC-Unique: cLEYsHI6MFaZ7jlonsCBfQ-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-414908c5403so5337585e9.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:34:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711640015; x=1712244815;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1711640096; x=1712244896;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HoXcWIswnaiYn+YGfxoqs8bfwHg7SCgsOteFXjUUrDI=;
- b=i0iE6aefeCMxfOAHxKvrgaIIV8cP2ai/AIBxnXuB/nDa/CP+03e2UPcSU7xu2zeFZ4
- tkVpz+odQ3nsaH7hte7GJofCBKIKE0eWnUKcdIyalmsUs024ZQZ1Mj43cSBZNeT0IwZG
- zRj8mQ+zqOxuL3rHi1RNfXVjtLhEr468M1YzemZ1tIc425tf1+uVawuc7NXwhCtTJGWU
- 5+CSMAScCsa63fjkZ+QTVMMH6lC+u/c8g1mpfCCHIMsN0C2Qbm3USqcaVPOk1nLmQe7g
- 3sVAhi1ucyrd9iRz7kEt4NCZrSPIKhdkl/WWSdV8lDAGdD2Wgz/cRCjMXSy6CHaT/iik
- Bl3A==
+ bh=VNGXWTEhGqisd0ZboKqyd1sWzEt2AtmxkVV4hAHD6S8=;
+ b=UgsoHAvqPj7b9E9kRYQrptSSC9v/BIUj1sE3QTvuYzIatFrxqvIl/SHqw0FNGE6AYL
+ Ow+KYt0EwQGki1bBXjQzcrwWh9N6ca6+YAuFrTxRpvqXMVmabzQ109gFCNrAtc7s+YsR
+ qwbAzBOjduOTiJU5IrU2OC//I+jqIseXFJu8kBh2zhz5h+WMh1bhdkAiLGyP8HmvPUnd
+ ku+SJm/g1A4+mo/rmTGfPrtZK5D+rPfRWHjXEbgK3OtZIzCuJhI0FCvhPzR7MkGgfloC
+ +NEA5KP7jhfRtnTVmu8/A6uprGdPKZKVe85AEHSXv2uPrz7FYbTlQqtozZxDLcpoq3D5
+ 8hBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsrsp5/TtW3W2blFzzVdUargIu2MUNQ7xPhsQA/SHXnOtm7sQYkl6WzlD0pZfQasFJl8UdgDR5luN10S7k7XnpsSyLFTk=
-X-Gm-Message-State: AOJu0YxOFBQvKI9hkPoxsEYu3zTkV48yVMo6nyFwxjygYBsh9GFgcL19
- PGtN0xktQUoWyb/0bNsKW1bQtlFSPrGO9/p0wedjsbCYzbTy7qcyAKUz/nQEMoI=
-X-Google-Smtp-Source: AGHT+IEJQrbm8joYzk/e6QuZrkxTUptRMqeUoXjYFQtfyn+KXmfNHVxZTB4Bid6M1w70nAMAkaKobg==
-X-Received: by 2002:a5d:6586:0:b0:33e:34aa:d78a with SMTP id
- q6-20020a5d6586000000b0033e34aad78amr3033455wru.8.1711640014748; 
- Thu, 28 Mar 2024 08:33:34 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- bt30-20020a056000081e00b00341b9e11b11sm2067039wrb.24.2024.03.28.08.33.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Mar 2024 08:33:34 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group is
- disabled
-Date: Thu, 28 Mar 2024 15:33:33 +0000
-Message-Id: <20240328153333.2522667-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ AJvYcCWjU9Gs5KmPlzB94hsd681sYWhc8R14WweufHSU1RuR3GiFqjhsF368iQSU4iRdIw/Qk397v8p2meOHMc11MmTE2OxQoAU=
+X-Gm-Message-State: AOJu0Yxz9qOir5D61xifSnbG2useUIBiMahvyXfGdHWaU6RX5Bi0LkMA
+ gJissL+b4P7vtt47Nnm9SkzpJPOZlUe2EN8mZwIMIBz5bRiXXXar5xglKtPMOkdoDRbKCxztZSZ
+ 342ADQ0XbKppvYXsbltmej9GtExe/AgDcT84m3YD2KrBkIaxGEVlG
+X-Received: by 2002:a05:600c:499a:b0:414:8e39:72f9 with SMTP id
+ h26-20020a05600c499a00b004148e3972f9mr2569824wmp.23.1711640096495; 
+ Thu, 28 Mar 2024 08:34:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEZw+xvPm9EccvKsePkisOH2gL0+N0hEKH0agSgUeycfCA3jNvErQOS+fLhNY3aMzmAVXi1dQ==
+X-Received: by 2002:a05:600c:499a:b0:414:8e39:72f9 with SMTP id
+ h26-20020a05600c499a00b004148e3972f9mr2569804wmp.23.1711640096154; 
+ Thu, 28 Mar 2024 08:34:56 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
+ [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
+ m28-20020a05600c3b1c00b00414688af147sm5775239wms.20.2024.03.28.08.34.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Mar 2024 08:34:55 -0700 (PDT)
+Message-ID: <ab594429-b2da-4274-b498-4a05a2e49d5a@redhat.com>
+Date: Thu, 28 Mar 2024 16:34:54 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
+ qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
+References: <20240328140607.2433889-1-thuth@redhat.com>
+ <20240328140607.2433889-7-thuth@redhat.com>
+ <sv4rp7w2cnjy5xykp4t3w5gf3zwnohe5eso422whl2ux2ofixa@xwjphousol77>
+ <ZgWF7MGNAlMb_WvY@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <ZgWF7MGNAlMb_WvY@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,50 +155,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the group of the highest priority pending interrupt is disabled
-via ICC_IGRPEN*, the ICC_HPPIR* registers should return
-INTID_SPURIOUS, not the interrupt ID.  (See the GIC architecture
-specification pseudocode functions ICC_HPPIR1_EL1[] and
-HighestPriorityPendingInterrupt().)
+On 28/03/2024 15.59, Daniel P. Berrangé wrote:
+> On Thu, Mar 28, 2024 at 09:54:49AM -0500, Eric Blake wrote:
+>> On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
+>>> Since version 2.66, glib has useful URI parsing functions, too.
+>>> Use those instead of the QEMU-internal ones to be finally able
+>>> to get rid of the latter. The g_uri_get_host() also takes care
+>>> of removing the square brackets from IPv6 addresses, so we can
+>>> drop that part of the QEMU code now, too.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   block/nbd.c | 66 ++++++++++++++++++++++++++++++-----------------------
+>>>   1 file changed, 38 insertions(+), 28 deletions(-)
+>>>
+>>> diff --git a/block/nbd.c b/block/nbd.c
+>>> index ef05f7cdfd..95b507f872 100644
+>>> --- a/block/nbd.c
+>>> +++ b/block/nbd.c
+>>> @@ -31,7 +31,6 @@
+>>>   #include "qemu/osdep.h"
+>>>   
+>>>   #include "trace.h"
+>>> -#include "qemu/uri.h"
+>>>   #include "qemu/option.h"
+>>>   #include "qemu/cutils.h"
+>>>   #include "qemu/main-loop.h"
+>>> @@ -1514,30 +1513,34 @@ static void nbd_client_close(BlockDriverState *bs)
+>>>   
+>>>   static int nbd_parse_uri(const char *filename, QDict *options)
+>>>   {
+>>> -    URI *uri;
+>>> +    GUri *uri;
+>>
+>> Is it worth using 'g_autoptr(GUri) uri = NULL;' here, to simplify cleanup later?
 
-Make HPPIR reads honour the group disable, the way we already do
-when determining whether to preempt in icc_hppi_can_preempt().
+Sounds like a good idea, I'll give it a try!
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Pre-existing bug which I happened to notice while working
-on review of the FEAT_NMI patches. I don't suppose real world
-code disables interrupt groups which it's actually using, which
-is why nobody's noticed it. Still, it's a safe bugfix so might
-as well go to stable too.
----
- hw/intc/arm_gicv3_cpuif.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>>>       const char *p;
+>>> -    QueryParams *qp = NULL;
+>>> +    GHashTable *qp = NULL;
+>>
+>> Presumably would be easier if qp is also auto-free.
+>>
+>>> +    int qp_n;
+>>>       int ret = 0;
+>>>       bool is_unix;
+>>> +    const char *uri_scheme, *uri_query, *uri_server;
+>>> +    int uri_port;
+>>>   
+>>> -    uri = uri_parse(filename);
+>>> +    uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
+>>
+>> The glib API is fairly close to what we have in qemu, making this a
+>> nice switchover.
+>>
+>>>           /* nbd[+tcp]://host[:port]/export */
+>>> -        if (!uri->server) {
+>>> +        if (!uri_server) {
+>>>               ret = -EINVAL;
+>>>               goto out;
+>>>           }
+>>>   
+>>> -        /* strip braces from literal IPv6 address */
+>>> -        if (uri->server[0] == '[') {
+>>> -            host = qstring_from_substr(uri->server, 1,
+>>> -                                       strlen(uri->server) - 1);
+>>> -        } else {
+>>> -            host = qstring_from_str(uri->server);
+>>> -        }
+>>> -
+>>>           qdict_put_str(options, "server.type", "inet");
+>>> -        qdict_put(options, "server.host", host);
+>>> +        qdict_put_str(options, "server.host", uri_server);
+>>>   
+>>> -        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
+>>> +        port_str = g_strdup_printf("%d", uri_port != -1 ? uri_port
+>>> +                                                        : NBD_DEFAULT_PORT);
+>>>           qdict_put_str(options, "server.port", port_str);
+>>
+>> If a user requests nbd://hostname:0/export, this now sets server.port
+>> to "0" instead of "10809".  Is that an intentional change?  No one
+>> actually passes an explicit ":0" port on purpose, but we do have to
+>> worry about malicious URIs.
+> 
+> Passing '0' will cause the kernel to allocate a random free
+> port, so that is potentially introducing new semantics ?
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index e1a60d8c15b..67d8fd07b7f 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1067,7 +1067,7 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
-      */
-     bool irq_is_secure;
- 
--    if (cs->hppi.prio == 0xff) {
-+    if (icc_no_enabled_hppi(cs)) {
-         return INTID_SPURIOUS;
-     }
- 
-@@ -1104,7 +1104,7 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
-      */
-     bool irq_is_secure;
- 
--    if (cs->hppi.prio == 0xff) {
-+    if (icc_no_enabled_hppi(cs)) {
-         return INTID_SPURIOUS;
-     }
- 
--- 
-2.34.1
+Ok, so passing a 0 does not really make sense, since QEMU needs to know the 
+exact port. I'll change the check from "uri_port != -1" to "uri_port > 0" in 
+the next version.
+
+  Thomas
+
 
 
