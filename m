@@ -4,85 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 588B9CD11DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 17:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3565ACD11DD
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 17:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rptn3-0000GJ-E7; Thu, 28 Mar 2024 13:43:49 -0400
+	id 1rptv1-0002Lx-PH; Thu, 28 Mar 2024 13:52:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rptn2-0000G7-9S
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:43:48 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rptn0-0006oG-Hi
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:43:47 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-55a179f5fa1so1567444a12.0
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 10:43:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711647824; x=1712252624; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eL+BpJbM7TyKVXuF3CQSlpesCBcXfQWuheeHVx8/v2I=;
- b=x+raPeaotiR/FBWn7WfS3E1EpX3C1Qf20XeFA2Hutoc6av8/5sfcyYwolGjUsZoz37
- CxeRoKeVHoRyBiPhr7Y84kISJrCc1sWjwXJuSg2/qkowaacBLM6WcxfSML3+T9goDQoA
- nFvledYoql22A+U3hGvuOWZCLkUIESY4HSS0S7rovnfkFX19egV/b1BUFHXl3FmHmmVo
- XiABwdzmnhHvhTAHWX2N4hynmFLz8xMAjASgFvCjEEiACiyAgWQrMRJ40pumflg01VVj
- tG+q7oAgNobKrtKRa6vNOFIFa5G9X6p8Z12KCfd9PasLoULTTZaPSf88FK4Twa4h1FGP
- jKgA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rptuz-0002LQ-Fd
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:52:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rptux-0008Si-EC
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:52:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711648318;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sn1JboDEISozjw1oqFhS+yNfkml9xWlcrKpuqpaEQXw=;
+ b=NvvbTT0rS6mNoUeDFramlTZJXwqpDJIGLeO0/7keOMNAzBxpWgfs3uczz/csuva4YhZcZn
+ rzv/8bdTB7oD1vCNOzX0Yf3rIQ50r81YfRH3HErJxtquQZfNA+Jz10YV6faFWzyobCF9Yc
+ qZNn/xq/Qd5SB/CcFD4IqvfjhLj+cSY=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-457-3r_TtDxDOgazdgaeW-ZX3g-1; Thu, 28 Mar 2024 13:51:55 -0400
+X-MC-Unique: 3r_TtDxDOgazdgaeW-ZX3g-1
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3c3bb17fe53so1118385b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 10:51:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711647824; x=1712252624;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eL+BpJbM7TyKVXuF3CQSlpesCBcXfQWuheeHVx8/v2I=;
- b=ogG8GhHpkRK+EiSYnRUbKLh3glw+2jMxr0+AdTFfzrsh22zH2fSDa9UXM0TPW+aCS9
- f/fc+ANMaQN7xY89swrDI3nVYKPK3N4M6tg15lJVsra6CQ6eUqx5AeeI+pPfV1fETaIc
- iTRD44fseng8MBWP1+MT/pZD/tAdYQxN8vyGw6h0VuNDt+n4P2O14l+ELH8o2JuFQFs9
- +IBjSEVCnmOwhZy+TdOiz/VtT2YPKRyRhSUhTZHUEMGMcEov+8SLYgFpd5V5MRyBxi9S
- qrrAZkIFvbO1TTKE7ae8gN6Te7z5jlD6O7fXnmsXc2PL8bi4AxBElkOweb2vW4ayhVzS
- BrNA==
+ d=1e100.net; s=20230601; t=1711648315; x=1712253115;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sn1JboDEISozjw1oqFhS+yNfkml9xWlcrKpuqpaEQXw=;
+ b=xFfxyPBNWWenL6GbBnf6qqatUP1vD6IlCw73d6nLgFpwE7W6CBe4W+CQYCAuF0sWhj
+ sMeHgEvTNTnp8VjXPCSuiSmV37M0C6Tbtm/6IH0OU2ejtyZRkMlpsI8ZNG0N54K7FQJO
+ XFgxLJL1hnXz41yCBa1k368epIY8a/hBRLYn2L2XY9NNTIlRI4ZoAg3NsnT+TcKXbb9D
+ I2GG4mY4NdDfiO5YvyRJC+IUrWERA9qsubI3LEgvzIhaA+PXPkisJZ6Gq+pYWFdiSr0S
+ UXPFNAoAcU+d7nmpQmcu21p9uv58YFjPIHGzGJxEB1599gPnQfXqHu48CVssalAPnfqc
+ CD/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUR/5yxCNIwUx3EcLPJCbogCbKjrQsZN5eAe3RemiON0Xd8dmoqyW681hB7s07LXma0OHyKoYWgucXCEMixg2XX54Ubzmk=
-X-Gm-Message-State: AOJu0YyVPo8zwRcfXOe4ErxhPTcVS/0IExYaPOZXECJ0h+LENaAweb9h
- gI3QVeqvEJRu0aBSZzot0jknmEdX3uOofWOzVtKFgZc0DW/lMWjI16JjKwyrj8SrRt9vdxkLv1v
- o
-X-Google-Smtp-Source: AGHT+IFESRNLzu8IDYFjvIEYTIaO4EwtqDWlWKbPrzYqY6jXetU4d2vauycem/hIzzk0NGO1YMx+2Q==
-X-Received: by 2002:a50:d51c:0:b0:56b:ff72:e6bb with SMTP id
- u28-20020a50d51c000000b0056bff72e6bbmr2054407edi.40.1711647824607; 
- Thu, 28 Mar 2024 10:43:44 -0700 (PDT)
-Received: from [192.168.69.100] (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
- [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
- el11-20020a056402360b00b0056c249798absm1057393edb.71.2024.03.28.10.43.43
+ AJvYcCWh+ck8zWSLoZ/BEs8XuH8jIZ19S+h29vah37zjZmGMnavieDfmeUTGvbl8lGELJmY7hNF905eINBf35+9RV1xsN4oHWl0=
+X-Gm-Message-State: AOJu0YxrCBGyoqzFJ1Ljf4eu24nPsHVKPbbj/i+zQ51sJhAvsvkwB9Vu
+ 77R+dL97h6yI6UVke81IS/qJ0EOfUwpFK/n4rZCQB6Fka4gWi6+wz6+sfWXmjGbT0+kWvDucKxG
+ pPfYaluI/0K5jEWNEzHiMg1TU1D5JO1RcwFgynKh97DUbMazsYWEn
+X-Received: by 2002:a05:6808:1995:b0:3c3:cb74:62c1 with SMTP id
+ bj21-20020a056808199500b003c3cb7462c1mr4523562oib.36.1711648314881; 
+ Thu, 28 Mar 2024 10:51:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFn3PCTsbW0X/qrMIgrk7R8CpxUifO0jmrfIp3UEtoxVzzEFpazyCKI9UoAfV65QC6P+daW8w==
+X-Received: by 2002:a05:6808:1995:b0:3c3:cb74:62c1 with SMTP id
+ bj21-20020a056808199500b003c3cb7462c1mr4523515oib.36.1711648314467; 
+ Thu, 28 Mar 2024 10:51:54 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
+ [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
+ t12-20020ac8738c000000b004316281d2d6sm809155qtp.53.2024.03.28.10.51.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 10:43:43 -0700 (PDT)
-Message-ID: <63600417-9187-4d0b-8bcc-db7e965ff008@linaro.org>
-Date: Thu, 28 Mar 2024 18:43:41 +0100
+ Thu, 28 Mar 2024 10:51:54 -0700 (PDT)
+Message-ID: <a380dca2-ba48-46ef-943d-601cb89d5fe2@redhat.com>
+Date: Thu, 28 Mar 2024 18:51:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] Refactor common functions between POSIX and
- Windows implementation
-To: aidan_leuck@selinc.com, qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com
-References: <20240328154049.3090753-1-aidan_leuck@selinc.com>
- <20240328154049.3090753-2-aidan_leuck@selinc.com>
+Subject: Re: [PATCH-for-9.1 v2 1/3] hw/rdma: Remove pvrdma device and
+ rdmacm-mux helper
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>, Peter Xu
+ <peterx@redhat.com>, integration@gluster.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
+ <gaosong@loongson.cn>, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+References: <20240328130255.52257-1-philmd@linaro.org>
+ <20240328130255.52257-2-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240328154049.3090753-2-aidan_leuck@selinc.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240328130255.52257-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,43 +165,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/24 16:40, aidan_leuck@selinc.com wrote:
-> From: aidaleuc <aidan_leuck@selinc.com>
+On 28/03/2024 14.02, Philippe Mathieu-Daudé wrote:
+> The whole RDMA subsystem was deprecated in commit e9a54265f5
+> ("hw/rdma: Deprecate the pvrdma device and the rdma subsystem")
+> released in v8.2.
 > 
-> Signed-off-by: aidaleuc <aidan_leuck@selinc.com>
+> Remove:
+>   - PVRDMA device
+>   - generated vmw_pvrdma/ directory from linux-headers
+>   - rdmacm-mux tool from contrib/
+> 
+> Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>
+> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   qga/commands-common-ssh.c | 50 ++++++++++++++++++++++++++++++++++++++
->   qga/commands-common-ssh.h | 10 ++++++++
->   qga/commands-posix-ssh.c  | 51 +++------------------------------------
->   qga/meson.build           |  1 +
->   4 files changed, 64 insertions(+), 48 deletions(-)
->   create mode 100644 qga/commands-common-ssh.c
->   create mode 100644 qga/commands-common-ssh.h
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-> diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
-> index 236f80de44..c82ccfe629 100644
-> --- a/qga/commands-posix-ssh.c
-> +++ b/qga/commands-posix-ssh.c
-> @@ -9,12 +9,13 @@
->   #include <locale.h>
->   #include <pwd.h>
->   
-> +#include "commands-common-ssh.h"
->   #include "qapi/error.h"
->   #include "qga-qapi-commands.h"
->   
->   #ifdef QGA_BUILD_UNIT_TEST
-> -static struct passwd *
-> -test_get_passwd_entry(const gchar *user_name, GError **error)
-> + static struct passwd *
-> + test_get_passwd_entry(const gchar *user_name, GError **error)
-
-Modulo this spurious change,
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Thank you for your various iterations,
-
-Phil.
 
