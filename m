@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D41C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698BEC54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpmvo-0001qc-2C; Thu, 28 Mar 2024 06:24:24 -0400
+	id 1rpmvv-0002yt-EI; Thu, 28 Mar 2024 06:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmvm-0001ft-SO
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rpmvu-0002s4-DO
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rpmve-00081z-Ib
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:15 -0400
+ id 1rpmvs-00083l-Cb
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:24:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711621454;
+ s=mimecast20190719; t=1711621467;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yq8tTYx/XLUB4Gx0moxVhK0EJnB47ElooeGni6U2KHU=;
- b=Muu9yLsCTY52Cl8uY5wFx4raKN2Zd5ttyp0m2w0ITaVBFtseRCFOgWb5mEfXt18Gqwh/1Y
- p5n/pMpYH5GON8rQjuBN7VJZT9jQF5YdvO8XwvJF9c+C8s2O/sTwR4LuqoztGKr7pM06px
- WajW3VfgEnuq6vmgZSL9Jtus4D3gXxs=
+ bh=ZaMpwY19pcCqO5xFBKSdLJ7yo1YyaKqcLtzVGkXev9w=;
+ b=Fj+r45tcqU2At9iaZWj8H9QjL1LzEA5MMsG6OcFwSqWU/ReqHIYi3bqrpUL6mttTOPdXU/
+ jnsJQas4D8UBhJ4TYdtdp8lWLkE7wMjdmn474Rz5y7ir574bQjHiRTBdNBc7c53+6F3BZg
+ RolLOc9uxY1j1EMWw5nIx4rCO1OOcfU=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668--SLuRppQOwuCV8NX8L6XsQ-1; Thu, 28 Mar 2024 06:24:11 -0400
-X-MC-Unique: -SLuRppQOwuCV8NX8L6XsQ-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
+ us-mta-439-gyoeTz-gOLi9TDKS68wy6g-1; Thu, 28 Mar 2024 06:24:20 -0400
+X-MC-Unique: gyoeTz-gOLi9TDKS68wy6g-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3EBF6811E81;
- Thu, 28 Mar 2024 10:24:10 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4091A800264;
+ Thu, 28 Mar 2024 10:24:19 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.34])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 45E373C20;
- Thu, 28 Mar 2024 10:24:08 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 6E5681C060DC;
+ Thu, 28 Mar 2024 10:24:17 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hyman Huang <yong.huang@smartx.com>,
@@ -67,16 +67,16 @@ Cc: Hyman Huang <yong.huang@smartx.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 17/19] hw/nvme: fix -Werror=maybe-uninitialized
-Date: Thu, 28 Mar 2024 14:20:50 +0400
-Message-ID: <20240328102052.3499331-18-marcandre.lureau@redhat.com>
+Subject: [PATCH 18/19] hw/virtio: fix -Werror=maybe-uninitialized
+Date: Thu, 28 Mar 2024 14:20:51 +0400
+Message-ID: <20240328102052.3499331-19-marcandre.lureau@redhat.com>
 In-Reply-To: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -85,7 +85,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,31 +103,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-../hw/nvme/ctrl.c:6081:21: error: ‘result’ may be used uninitialized [-Werror=maybe-uninitialized]
+../hw/virtio/vhost-shadow-virtqueue.c:545:13: error: ‘r’ may be used uninitialized [-Werror=maybe-uninitialized]
 
-It's not obvious that 'result' is set in all code paths. When &result is
-a returned argument, it's even less clear.
-
-Looking at various assignments, 0 seems to be a suitable default value.
+'&r' is not guaranteed to be assigned when calling -Werror=maybe-uninitialized.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/nvme/ctrl.c | 2 +-
+ hw/virtio/vhost-shadow-virtqueue.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index c2b17de987..127c3d2383 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -5894,7 +5894,7 @@ static uint16_t nvme_get_feature(NvmeCtrl *n, NvmeRequest *req)
-     uint32_t dw10 = le32_to_cpu(cmd->cdw10);
-     uint32_t dw11 = le32_to_cpu(cmd->cdw11);
-     uint32_t nsid = le32_to_cpu(cmd->nsid);
--    uint32_t result;
-+    uint32_t result = 0;
-     uint8_t fid = NVME_GETSETFEAT_FID(dw10);
-     NvmeGetFeatureSelect sel = NVME_GETFEAT_SELECT(dw10);
-     uint16_t iv;
+diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+index fc5f408f77..cd29cc795b 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.c
++++ b/hw/virtio/vhost-shadow-virtqueue.c
+@@ -526,7 +526,7 @@ static void vhost_svq_flush(VhostShadowVirtqueue *svq,
+ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, size_t num)
+ {
+     size_t len = 0;
+-    uint32_t r;
++    uint32_t r = 0;
+ 
+     while (num--) {
+         int64_t start_us = g_get_monotonic_time();
 -- 
 2.44.0
 
