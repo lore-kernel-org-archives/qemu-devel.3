@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A8ECD11DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 19:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CE7CD11DD
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 19:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpvc6-0000C7-8i; Thu, 28 Mar 2024 15:40:38 -0400
+	id 1rpvcN-0000Mf-16; Thu, 28 Mar 2024 15:40:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpvc4-0000Bp-LA
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 15:40:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpvcL-0000ME-CG
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 15:40:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpvc3-0005b8-6E
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 15:40:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpvcK-0005cT-1m
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 15:40:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711654833;
+ s=mimecast20190719; t=1711654851;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BKHy/hFyW/uaPiS5nXJ0gnjNOogWRf7+ypbKTiXK2oM=;
- b=L7Id7qZUMQgZoIANjuD0rIafNJMTaqulzaSviBXscKCvjS+Fsp3fK15SRc/W5SZWZh03/E
- UmuFsyZqg62uWpZysrOQJNDbtO7sWcck1KDhmVzGzZZ11c3VF6KldylTrctpet3KxG4yzM
- zyJqGytbGX6kTIWIsOhtN+94mK0sjIc=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=80z4mjXoqEv2wjelgK9GkjtZn+baQQtzB/o/f+u7mgw=;
+ b=LO8/hj64mslFprVJL2S258btArCyS6WrSWQRyeNiiOZ/TeyLsr0jUxlDM3zGxzMILhmk0R
+ +Ek2HzMF0bwyzYNWeTK5W9C4BASUtl+bBGGnIGeKJ0D8u8uOSpNGBlEDcqGJnZFRVJWDo9
+ TIlCXx+lzkfMcjkZwVZp6G85x794yiY=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-uodSYltlMQ2OUd7oYGfcBQ-1; Thu, 28 Mar 2024 15:40:31 -0400
-X-MC-Unique: uodSYltlMQ2OUd7oYGfcBQ-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-610eec93d4cso4838087b3.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 12:40:31 -0700 (PDT)
+ us-mta-14-YfM3NBklOAa2b2OCJxNBqA-1; Thu, 28 Mar 2024 15:40:50 -0400
+X-MC-Unique: YfM3NBklOAa2b2OCJxNBqA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4311d908f3cso5872681cf.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 12:40:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711654831; x=1712259631;
+ d=1e100.net; s=20230601; t=1711654849; x=1712259649;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BKHy/hFyW/uaPiS5nXJ0gnjNOogWRf7+ypbKTiXK2oM=;
- b=cDf1wJ/Q/5dP7ZNBVQCGTD6WcPsoyfpsMjEYotF7xvp6X/ga+UWsgnvszogVvJ7nd3
- hDq4HsZMDXyUYbKv64/0yfIKQB4SILHV8mSGZLdn2KD9k9lhS4RdSZ89uqO6/HqBWuSo
- i02RMT0rUR6yXKTB5bCizxAam62fA46jMZ99NHWpUUE9cNuedDvbVEcJOSUsNnRIL/2S
- 7HgB5gM7xjIprUeRYUo3TQBt5DSwcmYNCUc3BsH5XAMGU0hOPjvngJnI5qTI8XWphgyj
- aukYinaCV1GR7V5Gmj4zwP19KwbYb6FvUjFFlzurVPvH15qgnG6+8WfoiKspzQaXudgk
- Zlgg==
-X-Gm-Message-State: AOJu0YxDfrwjkJ57pQfm9RqnOAjcq1IJUgJrzCFMF4uG1jTV9uu/Ol9B
- mg7N6JfgzUwUTsWbKgl7FnuXMVEnbVRxRLks7cvmhxqZ4Xi9n2wGln3NWgl2Cn9qSTuplfPX7x/
- 7WFp1/plmoArpUeSYy1xUblKjbxpmDU2+oYMNEJKRucwtcJ7FsTy1
-X-Received: by 2002:a05:690c:1d:b0:611:280f:5eaf with SMTP id
- bc29-20020a05690c001d00b00611280f5eafmr432260ywb.4.1711654831024; 
- Thu, 28 Mar 2024 12:40:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGX4GPZiJ2Hto0oNfZRrX/DOpy7fuSedaGzGUGjb/vuADVA3Pf1rLrvnjxH0SBO3RIM5mXyMQ==
-X-Received: by 2002:a05:690c:1d:b0:611:280f:5eaf with SMTP id
- bc29-20020a05690c001d00b00611280f5eafmr432250ywb.4.1711654830548; 
- Thu, 28 Mar 2024 12:40:30 -0700 (PDT)
+ bh=80z4mjXoqEv2wjelgK9GkjtZn+baQQtzB/o/f+u7mgw=;
+ b=wpnziHkctO+EpKMXeRF4DQdz8jX+QWVqan49bRhnxtKhwYYtD6C3pZm205xGGyiY/Z
+ ib0bbSjvSvZYPlE8IBzqzA1XW8wrjaGolz5G8zgSmNcnKcFQ6zb36Ixf8ObIDAasACo/
+ RoR2QiaYmIzHomRtdaLXy+vMv3VQBPg01eq344tkAyQx6PuIaItpurobNU9jRHG+nSdi
+ yYAfThXJevbY4qOZAGjFdMsgbjPIKfkVAXgSjsq0TkPz2v4qBGtpm/IDhCUuBMoCaiZQ
+ iJ/4qNmLdOxrmK8fqMDMHaUx75ebFtbXEru3rfYUCq4EYstRSVAY2GVfmBTycJg0nHKI
+ wlNw==
+X-Gm-Message-State: AOJu0YydgkBgE2yjycaiM5mfDVKihM6fHaWvIjyTsSUXEuO20EsM3/p3
+ un969tERU5PTFVuKB2NHZQZjXyshUFTyw5KUYlQU0VbP+dSbAqVDzGIGdWfow0rjPtWUBBJcHou
+ 70MnhbUsNT/oHI5XDVL3xbTNTWYYfODEh1XvaDW4v1Us7FTjLat9P
+X-Received: by 2002:a0c:fad0:0:b0:696:9892:fe29 with SMTP id
+ p16-20020a0cfad0000000b006969892fe29mr191830qvo.5.1711654848690; 
+ Thu, 28 Mar 2024 12:40:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRZL2FmUdrGEmnEjQHd5lYfsrhGPNYicuYys+mCM7UFU9t1JBFNBUxQQXfULYWKSxWrgaSXg==
+X-Received: by 2002:a0c:fad0:0:b0:696:9892:fe29 with SMTP id
+ p16-20020a0cfad0000000b006969892fe29mr191802qvo.5.1711654848154; 
+ Thu, 28 Mar 2024 12:40:48 -0700 (PDT)
 Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- u29-20020a05620a085d00b00789ed16d039sm772658qku.54.2024.03.28.12.40.28
+ jr12-20020a0562142a8c00b006986fd6c92bsm735284qvb.119.2024.03.28.12.40.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Mar 2024 12:40:30 -0700 (PDT)
-Date: Thu, 28 Mar 2024 15:40:27 -0400
+ Thu, 28 Mar 2024 12:40:47 -0700 (PDT)
+Date: Thu, 28 Mar 2024 15:40:45 -0400
 From: Peter Xu <peterx@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>,
@@ -85,25 +85,26 @@ Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>,
  Keith Busch <kbusch@kernel.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: Re: [PATCH 11/19] migration/block: fix -Werror=maybe-uninitialized
+Subject: Re: [PATCH 15/19] migration: fix -Werror=maybe-uninitialized
  false-positive
-Message-ID: <ZgXHq9lUKTFmSdd2@x1n>
+Message-ID: <ZgXHvTQ6HIonyVrn@x1n>
 References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
- <20240328102052.3499331-12-marcandre.lureau@redhat.com>
+ <20240328102052.3499331-16-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240328102052.3499331-12-marcandre.lureau@redhat.com>
+In-Reply-To: <20240328102052.3499331-16-marcandre.lureau@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,13 +120,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 02:20:44PM +0400, marcandre.lureau@redhat.com wrote:
+On Thu, Mar 28, 2024 at 02:20:48PM +0400, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> ../migration/block.c:966:16: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
+> ../migration/ram.c:1873:23: error: ‘dirty’ may be used uninitialized [-Werror=maybe-uninitialized]
 > 
-> Given that "cluster_size" must be <= BLK_MIG_BLOCK_SIZE, the previous
-> loop is entered at least once, so 'ret' is assigned a value in all conditions.
+> When 'block' != NULL, 'dirty' is initialized.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
