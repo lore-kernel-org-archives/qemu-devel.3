@@ -4,42 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D7DC54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C47C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:38:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpn7A-0000ot-Hc; Thu, 28 Mar 2024 06:36:08 -0400
+	id 1rpn8z-0002sB-PO; Thu, 28 Mar 2024 06:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1rpn78-0000kT-Dy; Thu, 28 Mar 2024 06:36:06 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1rpn6z-0001vh-Nf; Thu, 28 Mar 2024 06:35:59 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 1EECC428DD;
- Thu, 28 Mar 2024 11:35:47 +0100 (CET)
-Message-ID: <0c460971-f47e-4eb4-a73e-ab1d5dd2529a@proxmox.com>
-Date: Thu, 28 Mar 2024 11:35:45 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: Remove unnecessary NULL check in bdrv_pad_request()
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20240327192750.204197-1-kwolf@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20240327192750.204197-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rpn8x-0002ry-Jw; Thu, 28 Mar 2024 06:38:00 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rpn8v-00029O-43; Thu, 28 Mar 2024 06:37:58 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1e0ae065d24so7165705ad.1; 
+ Thu, 28 Mar 2024 03:37:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1711622275; x=1712227075; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sjtZ79gSoctoBt2DkkO45/cX6CE2CYNEeZPbmGuzzXk=;
+ b=nQfS6KUYV6FsCDRHps/+lqP/HVmPzrQGTXdtUXJeM3uSvJs87hYyniuSBIljv0/GSB
+ R6rodLcuBnXqNel9sqMhfNcMY0WeBTGwz+7cXuIRfUm7EeEOc8o5W8nGgNH+NDAURt9d
+ JTgJ11lgpqtZaOYZqGsKoF/O+uH61diewrMt1F2V/bfPftmzF0eG3GhWKtaX6ubIU0hg
+ ko1CduI7x5G6xe4ceI6yr48gbq8GqzBKx+9rlfJVedi4IwX1CPn8ix8aSDKBSVI/Jrdu
+ GE1dbMlOtftuCyIRrAKtolPzqmHa3vhnxQPJ7CCugMfarQZRL5/L1jvQ76f6TkaRHIrI
+ 76Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711622275; x=1712227075;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=sjtZ79gSoctoBt2DkkO45/cX6CE2CYNEeZPbmGuzzXk=;
+ b=hj1tQo1BU5lGHbmAlKGoZTSBkTWxCCMeataCO9PRwaa/i5QX80N0muBXBnBAHO68aQ
+ vR55fSo5I73iI8RZR2eMChCdVr3abg+/HNGFmD5kFPTsP+DKE/GvLWRActy6tfdGnppK
+ bIX/tZnf1N2lc7w+/8Z8n+NU17aaR6BUarTL23MdMawkIFpBEb1CS0X2UyEmNiQxuuzl
+ Un2SjOPWBjMxYicUEYYTcfIesCW99XDFsiyws+Jgnwfm61ILgsNegkzEx9O+LVEbsLi+
+ 3VYJAXjeODt15t6ytxSLEJHt4B+s88awLUxR6M8txn2/3e3ubbk5xByxKiTwDzZfyko5
+ 6zlg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWta0V0pv+j94CROtUV62LI3Yh05FCHkieT0eJk9IG+u3cg8FFwRphdMrD5AH+jKneCHzlwRO1nwA17PITjufvndVWT3EPutO2Mcge/AiNaHjbNp3tgvzr/8hA=
+X-Gm-Message-State: AOJu0YzanKYq8yR136FhGrW/bQg4ygI0Qtsk4PWcCs73gvjmToormFlt
+ lqYXsC4J+LZI5U/cTX0yha56aRKkLQLLxurxnPK6HCOoVk3yreiP
+X-Google-Smtp-Source: AGHT+IH7+apmRZ9kZmvyikampRJbrl2bulGBufhZOrMK9EqHCPJmydYtzuc8LFbimuXJfksh2pJulg==
+X-Received: by 2002:a17:90a:b293:b0:29d:d7a5:91f9 with SMTP id
+ c19-20020a17090ab29300b0029dd7a591f9mr1993222pjr.48.1711622275195; 
+ Thu, 28 Mar 2024 03:37:55 -0700 (PDT)
+Received: from localhost ([118.210.97.62]) by smtp.gmail.com with ESMTPSA id
+ q12-20020a17090a178c00b002a017e2c24fsm3454034pja.37.2024.03.28.03.37.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Mar 2024 03:37:54 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Date: Thu, 28 Mar 2024 20:37:50 +1000
+Message-Id: <D05BGFTTYF1C.1PG514RTVTZTD@wheely>
+Cc: "Richard Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 0/3] target/ppc: fix tlb flushing race
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Nicholas Piggin" <npiggin@gmail.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240328053131.2604454-1-npiggin@gmail.com>
+ <D058D0G7Z2DX.L8OBHHBGWGU4@wheely> <D05AZMB7725S.27E3ZJNW7GJAF@wheely>
+In-Reply-To: <D05AZMB7725S.27E3ZJNW7GJAF@wheely>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -56,18 +95,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.03.24 um 20:27 schrieb Kevin Wolf:
-> Coverity complains that the check introduced in commit 3f934817 suggests
-> that qiov could be NULL and we dereference it before reaching the check.
-> In fact, all of the callers pass a non-NULL pointer, so just remove the
-> misleading check.
-> 
-> Resolves: Coverity CID 1542668
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+On Thu Mar 28, 2024 at 8:15 PM AEST, Nicholas Piggin wrote:
+> On Thu Mar 28, 2024 at 6:12 PM AEST, Nicholas Piggin wrote:
+> > On Thu Mar 28, 2024 at 3:31 PM AEST, Nicholas Piggin wrote:
+> > > ppc broadcast tlb flushes should be synchronised with other vCPUs,
+> > > like all other architectures that support such operations seem to
+> > > be doing.
+> > >
+> > > Fixing ppc removes the last caller of the non-synced TLB flush
+> > > variants, we can remove some dead code. I'd like to merge patch 1
+> > > for 9.0, and hold patches 2 and 3 until 9.1 to avoid churn (unless
+> > > someone prefers to remove the dead code asap).
+> >
+> > Hmm, turns out to not be so simple, this in parts reverts
+> > the fix in commit 4ddc104689b. Do other architectures
+> > that use the _synced TLB flush variants have that same problem
+> > with the TLB flush not actually flushing until the TB ends,
+> > I wonder?
+>
+> Huh, I can reproduce that original problem with a little test
+> case (which I will upstream into kvm-unit-tests).
+>
+> async_run_on_cpu(this_cpu) seems to flush before the next TB, but
+> async_safe_run_on_cpu(this_cpu) does not? How does it execute it
+> without exiting from the TB?
 
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Duh, it's because the non-_synced tlb flush variants don't use
+that for running on this CPU, they just call it directly.
 
-Thank you for the fix,
-Fiona
+Okay that all makes sense now. I think this series plus the
+below are good then. Also it's possible some other archs that
+use _all_cpus_synced() (arm, riscv, s390x) _may_ be racy. I
+had a quick look at sfence.vma and ipte, and AFAIKS they're
+supposed to take immediate effect after they execute.
 
+Thanks,
+Nick
 
