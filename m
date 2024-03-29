@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3635C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F433C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqKl7-0002Zu-OO; Fri, 29 Mar 2024 18:31:37 -0400
+	id 1rqKmx-00084B-I0; Fri, 29 Mar 2024 18:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKl3-0002YE-NT
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:36 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1rqKmv-0007mp-N9; Fri, 29 Mar 2024 18:33:29 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKl1-0003Wt-O1
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:33 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e0fa980d55so20854865ad.3
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:31:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1rqKmt-0003kw-SB; Fri, 29 Mar 2024 18:33:29 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-5dca1efad59so1688195a12.2; 
+ Fri, 29 Mar 2024 15:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711751489; x=1712356289; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aRxvFx4jyf1OvdOEJQeIUF5yPpRtSfNlC9jIwIYW+p0=;
- b=u8FrQ0L8gJMnm/vauE6RRBniAX3ldTibOnBhmOO9eNcNUGKfp9A/RQBNtgDLON+aPt
- 6Td9A75W5vS2MmZpOrOq9CKtyEj++TGnp8k5TYKE7P+NhGSCm4IDM6MWD6y1FQT6cSrs
- iRRQyJ/F75OS7vGDQ890eBD80cnPWLvSCCkcQKzPZKvIbqxWiL5agFLaCIYxeNHP6+6d
- g9Nu641OKosef6iiXF7vROyUpBiF+miuipiKTs+TgaEOMEphmbVLLJiOpZwh7wFd9W2t
- aMLEbyflQbX7uZz3jxR1RnYVpcc2ofoaESx4upeb+TCnC6k3yfSGc73e+YfF3WrcxuWr
- Zaog==
+ d=gmail.com; s=20230601; t=1711751605; x=1712356405; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UiT87QcdTydktqQoQiYKrqblOP7f9I+ZW7v1tQ7uTyQ=;
+ b=c7a9YGdcHxNB4trFkMDWuavaUpPBjkX4NzTSZrfyr4g6VzraVOrIqn5roc9P/31dP4
+ 6e8d9WW7KG0PqVi6UzuFUcOXDoIt+PZ09bHN/KO6WEesJurCojVsZnrWUxBW6kIULV1b
+ PJ0t0Em1HLPoX7Rhq3rIEMjSik6Ibs6HYHI4fzWayC3v+oVYDQ2u5D0HdCMyoQFwchRG
+ 8M1A1otEJpRp6BZATs2pgUWdTthdoA/TpdjOvIoWIZcm5cer9jFBCzXc88xqi4Qyl+oh
+ m7ulmK/kOqxjjWsdinOzbRwRI8BD5UbiSZ4uowUo+DMiRXFU9chrJ24qPDi0quM0viFi
+ Q0qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711751489; x=1712356289;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aRxvFx4jyf1OvdOEJQeIUF5yPpRtSfNlC9jIwIYW+p0=;
- b=hhxrHS355SD5nNnVOpDMQAX40soRJfoEwnSJaB5Lft18VsyjyV0gJsJT4DieUuuJlF
- 00ufYPyIN69HiSlgJNE8bfyzf8RKEnVeZz0/OGaDokPrfDqLjYwzox4ba3y2HB+2S3WE
- emyGT+FaoDPqU0L0bZrjlubSbMFPLPToG9taABYQNtxpHyyoHyNGDJYYnl5gvN/44K7k
- obiMGK8oaDt6UzRiZaFEAVw/P9y3Ue2uPmaihTCXSjpT1jrTO7HdWc5wMYOKJpsKfOjM
- 8sW/Q5Xs45e22GNLo5AfupRMa9Cbb5JI1B62zKEvP+3s5eDU1e7B9CyBMSMTA3BYI6U5
- nzHg==
-X-Gm-Message-State: AOJu0YzENm5mC+Naba+h4jblTI/pDHZN/mES48/cUY08cd1XAx2Wuojc
- IAgJguh2FaY3MvNVTjUZrNRr+HCl/4ZET/rJBLfmBeva6QeWjYEr9ILcks4Crxx8X02dBed4DUK
- o
-X-Google-Smtp-Source: AGHT+IHq4pR0RmeXBMUV2UpHEn4HSjcr8+uVaZJr2yghEZZziW8z9K4vR6fI6vxy8220rrD0MA0t2A==
-X-Received: by 2002:a17:903:2cb:b0:1e0:b2d5:5f46 with SMTP id
- s11-20020a17090302cb00b001e0b2d55f46mr4164789plk.46.1711751489593; 
- Fri, 29 Mar 2024 15:31:29 -0700 (PDT)
-Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ d=1e100.net; s=20230601; t=1711751605; x=1712356405;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UiT87QcdTydktqQoQiYKrqblOP7f9I+ZW7v1tQ7uTyQ=;
+ b=Sm1dBkXszdXCHlenN4dVvehswM972dTQr5hwZHHzIqOj8uoeNQk1JSIMv+SNWB6WUG
+ tKQ8EzwV7qWGtZxAfXA/mpQb7QLOV/+/uJnaJO9vC9VyPncxwi74qFzMjLJTlFSBw1Es
+ 12tVKbofZSKQUcGQqM4y0RxA4sJNUrupRWIra34E5+P3OecWQdmoiUadsMFEUM6TRWQ1
+ oLhD4cufk4umWZ8Pfrh15R5OqUxW4QVdM26sxUVdrBUFASHF/A6KbFJCLQ74Nmsd6EXl
+ xBaz0XopvbCNCaUue4eVf80HT1FnW3hNRdbz+rBRQ4yMTFYktf/wQO70lBv+vpfJJ9dG
+ ep1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUm9+RckRtxh8bfSjPJouf5EohOp9W+zP5WOa0kNDs25f+Oakf7p/9WJKxhBFfs8FmD57AzOfhHntnMY+yGVT5q31sqsPlk
+X-Gm-Message-State: AOJu0Yyp6di7fjgPOullBdCRhiinhn4Yj6IhfuI9ea1qhkaaKzzy6FMS
+ nRNRZT7XKyhqj/DT1Tm8audSxBtk2lsuVY3uIBKMM6nSjxtzl1InB0jy8njr
+X-Google-Smtp-Source: AGHT+IHiY+gHwn2CuqIFjfAOshpwFWaMRRhDCnnfDEs1DmoTOLgPzfeOU05mA02w9G+KHWbdl2/pgQ==
+X-Received: by 2002:a05:6a20:9184:b0:1a3:8904:1fc9 with SMTP id
+ v4-20020a056a20918400b001a389041fc9mr3425460pzd.41.1711751605269; 
+ Fri, 29 Mar 2024 15:33:25 -0700 (PDT)
+Received: from octofox.hsd1.ca.comcast.net
+ ([2601:646:a200:bbd0:2399:5e4a:95e8:172f])
  by smtp.gmail.com with ESMTPSA id
- f8-20020a170902684800b001e09b636cafsm4000955pln.287.2024.03.29.15.31.28
+ u25-20020aa78499000000b006e6c856c0f3sm3479490pfn.188.2024.03.29.15.33.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 15:31:29 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Fri, 29 Mar 2024 15:33:24 -0700 (PDT)
+From: Max Filippov <jcmvbkbc@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PULL 11/18] target/hppa: Fix unit carry conditions
-Date: Fri, 29 Mar 2024 12:31:04 -1000
-Message-Id: <20240329223111.1735826-12-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240329223111.1735826-1-richard.henderson@linaro.org>
-References: <20240329223111.1735826-1-richard.henderson@linaro.org>
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-stable@nongnu.org
+Subject: [PATCH v2] linux-user/syscall: xtensa: fix ipc_perm conversion
+Date: Fri, 29 Mar 2024 15:33:18 -0700
+Message-Id: <20240329223318.155572-1-jcmvbkbc@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,306 +94,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split do_unit_cond to do_unit_zero_cond to only handle conditions
-versus zero.  These are the only ones that are legal for UXOR.
-Simplify trans_uxor accordingly.
+target_ipc_perm::mode and target_ipc_perm::__seq fields are 32-bit wide
+on xtensa and thus need to use tswap32.
+The issue is spotted by the libc-test http://nsz.repo.hu/git/?p=libc-test
+on big-endian xtensa core.
 
-Rename do_unit to do_unit_addsub, since xor has been split.
-Properly compute carry-out bits for add and subtract, mirroring
-the code in do_add and do_sub.
-
-Tested-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Fixes: b2167459ae4 ("target-hppa: Implement basic arithmetic")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: a3da8be5126b ("target/xtensa: linux-user: fix sysv IPC structures")
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 ---
- target/hppa/translate.c | 218 +++++++++++++++++++++-------------------
- 1 file changed, 113 insertions(+), 105 deletions(-)
+Changes v1->v2:
+- split into a separate patch
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 3fc3e7754c..99c5c4cbca 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -936,98 +936,44 @@ static DisasCond do_sed_cond(DisasContext *ctx, unsigned orig, bool d,
-     return do_log_cond(ctx, c * 2 + f, d, res);
- }
- 
--/* Similar, but for unit conditions.  */
--
--static DisasCond do_unit_cond(unsigned cf, bool d, TCGv_i64 res,
--                              TCGv_i64 in1, TCGv_i64 in2)
-+/* Similar, but for unit zero conditions.  */
-+static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
- {
--    DisasCond cond;
--    TCGv_i64 tmp, cb = NULL;
-+    TCGv_i64 tmp;
-     uint64_t d_repl = d ? 0x0000000100000001ull : 1;
--
--    if (cf & 8) {
--        /* Since we want to test lots of carry-out bits all at once, do not
--         * do our normal thing and compute carry-in of bit B+1 since that
--         * leaves us with carry bits spread across two words.
--         */
--        cb = tcg_temp_new_i64();
--        tmp = tcg_temp_new_i64();
--        tcg_gen_or_i64(cb, in1, in2);
--        tcg_gen_and_i64(tmp, in1, in2);
--        tcg_gen_andc_i64(cb, cb, res);
--        tcg_gen_or_i64(cb, cb, tmp);
--    }
-+    uint64_t ones = 0, sgns = 0;
- 
-     switch (cf >> 1) {
--    case 0: /* never / TR */
--        cond = cond_make_f();
--        break;
--
-     case 1: /* SBW / NBW */
-         if (d) {
--            tmp = tcg_temp_new_i64();
--            tcg_gen_subi_i64(tmp, res, d_repl * 0x00000001u);
--            tcg_gen_andc_i64(tmp, tmp, res);
--            tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80000000u);
--            cond = cond_make_0(TCG_COND_NE, tmp);
--        } else {
--            /* undefined */
--            cond = cond_make_f();
-+            ones = d_repl;
-+            sgns = d_repl << 31;
-         }
-         break;
--
-     case 2: /* SBZ / NBZ */
--        /* See hasless(v,1) from
--         * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
--         */
--        tmp = tcg_temp_new_i64();
--        tcg_gen_subi_i64(tmp, res, d_repl * 0x01010101u);
--        tcg_gen_andc_i64(tmp, tmp, res);
--        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80808080u);
--        cond = cond_make_0(TCG_COND_NE, tmp);
-+        ones = d_repl * 0x01010101u;
-+        sgns = ones << 7;
-         break;
--
-     case 3: /* SHZ / NHZ */
--        tmp = tcg_temp_new_i64();
--        tcg_gen_subi_i64(tmp, res, d_repl * 0x00010001u);
--        tcg_gen_andc_i64(tmp, tmp, res);
--        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80008000u);
--        cond = cond_make_0(TCG_COND_NE, tmp);
-+        ones = d_repl * 0x00010001u;
-+        sgns = ones << 15;
-         break;
--
--    case 4: /* SDC / NDC */
--        tcg_gen_andi_i64(cb, cb, d_repl * 0x88888888u);
--        cond = cond_make_0(TCG_COND_NE, cb);
--        break;
--
--    case 5: /* SWC / NWC */
--        if (d) {
--            tcg_gen_andi_i64(cb, cb, d_repl * 0x80000000u);
--            cond = cond_make_0(TCG_COND_NE, cb);
--        } else {
--            /* undefined */
--            cond = cond_make_f();
--        }
--        break;
--
--    case 6: /* SBC / NBC */
--        tcg_gen_andi_i64(cb, cb, d_repl * 0x80808080u);
--        cond = cond_make_0(TCG_COND_NE, cb);
--        break;
--
--    case 7: /* SHC / NHC */
--        tcg_gen_andi_i64(cb, cb, d_repl * 0x80008000u);
--        cond = cond_make_0(TCG_COND_NE, cb);
--        break;
--
--    default:
--        g_assert_not_reached();
-     }
--    if (cf & 1) {
--        cond.c = tcg_invert_cond(cond.c);
-+    if (ones == 0) {
-+        /* Undefined, or 0/1 (never/always). */
-+        return cf & 1 ? cond_make_t() : cond_make_f();
-     }
- 
--    return cond;
-+    /*
-+     * See hasless(v,1) from
-+     * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
-+     */
-+    tmp = tcg_temp_new_i64();
-+    tcg_gen_subi_i64(tmp, res, ones);
-+    tcg_gen_andc_i64(tmp, tmp, res);
-+    tcg_gen_andi_i64(tmp, tmp, sgns);
-+
-+    return cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp);
- }
- 
- static TCGv_i64 get_carry(DisasContext *ctx, bool d,
-@@ -1330,34 +1276,86 @@ static bool do_log_reg(DisasContext *ctx, arg_rrr_cf_d *a,
-     return nullify_end(ctx);
- }
- 
--static void do_unit(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
--                    TCGv_i64 in2, unsigned cf, bool d, bool is_tc,
--                    void (*fn)(TCGv_i64, TCGv_i64, TCGv_i64))
-+static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-+                           TCGv_i64 in2, unsigned cf, bool d,
-+                           bool is_tc, bool is_add)
- {
--    TCGv_i64 dest;
-+    TCGv_i64 dest = tcg_temp_new_i64();
-+    uint64_t test_cb = 0;
-     DisasCond cond;
- 
--    if (cf == 0) {
--        dest = dest_gpr(ctx, rt);
--        fn(dest, in1, in2);
--        save_gpr(ctx, rt, dest);
--        cond_free(&ctx->null_cond);
--    } else {
--        dest = tcg_temp_new_i64();
--        fn(dest, in1, in2);
--
--        cond = do_unit_cond(cf, d, dest, in1, in2);
--
--        if (is_tc) {
--            TCGv_i64 tmp = tcg_temp_new_i64();
--            tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
--            gen_helper_tcond(tcg_env, tmp);
-+    /* Select which carry-out bits to test. */
-+    switch (cf >> 1) {
-+    case 4: /* NDC / SDC -- 4-bit carries */
-+        test_cb = dup_const(MO_8, 0x88);
-+        break;
-+    case 5: /* NWC / SWC -- 32-bit carries */
-+        if (d) {
-+            test_cb = dup_const(MO_32, INT32_MIN);
-+        } else {
-+            cf &= 1; /* undefined -- map to never/always */
-         }
--        save_gpr(ctx, rt, dest);
--
--        cond_free(&ctx->null_cond);
--        ctx->null_cond = cond;
-+        break;
-+    case 6: /* NBC / SBC -- 8-bit carries */
-+        test_cb = dup_const(MO_8, INT8_MIN);
-+        break;
-+    case 7: /* NHC / SHC -- 16-bit carries */
-+        test_cb = dup_const(MO_16, INT16_MIN);
-+        break;
-     }
-+    if (!d) {
-+        test_cb = (uint32_t)test_cb;
-+    }
-+
-+    if (!test_cb) {
-+        /* No need to compute carries if we don't need to test them. */
-+        if (is_add) {
-+            tcg_gen_add_i64(dest, in1, in2);
-+        } else {
-+            tcg_gen_sub_i64(dest, in1, in2);
-+        }
-+        cond = do_unit_zero_cond(cf, d, dest);
-+    } else {
-+        TCGv_i64 cb = tcg_temp_new_i64();
-+
-+        if (d) {
-+            TCGv_i64 cb_msb = tcg_temp_new_i64();
-+            if (is_add) {
-+                tcg_gen_add2_i64(dest, cb_msb, in1, ctx->zero, in2, ctx->zero);
-+                tcg_gen_xor_i64(cb, in1, in2);
-+            } else {
-+                /* See do_sub, !is_b. */
-+                TCGv_i64 one = tcg_constant_i64(1);
-+                tcg_gen_sub2_i64(dest, cb_msb, in1, one, in2, ctx->zero);
-+                tcg_gen_eqv_i64(cb, in1, in2);
-+            }
-+            tcg_gen_xor_i64(cb, cb, dest);
-+            tcg_gen_extract2_i64(cb, cb, cb_msb, 1);
-+        } else {
-+            if (is_add) {
-+                tcg_gen_add_i64(dest, in1, in2);
-+                tcg_gen_xor_i64(cb, in1, in2);
-+            } else {
-+                tcg_gen_sub_i64(dest, in1, in2);
-+                tcg_gen_eqv_i64(cb, in1, in2);
-+            }
-+            tcg_gen_xor_i64(cb, cb, dest);
-+            tcg_gen_shri_i64(cb, cb, 1);
-+        }
-+
-+        tcg_gen_andi_i64(cb, cb, test_cb);
-+        cond = cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb);
-+    }
-+
-+    if (is_tc) {
-+        TCGv_i64 tmp = tcg_temp_new_i64();
-+        tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
-+        gen_helper_tcond(tcg_env, tmp);
-+    }
-+    save_gpr(ctx, rt, dest);
-+
-+    cond_free(&ctx->null_cond);
-+    ctx->null_cond = cond;
- }
- 
- #ifndef CONFIG_USER_ONLY
-@@ -2748,14 +2746,24 @@ static bool trans_cmpclr(DisasContext *ctx, arg_rrr_cf_d *a)
- 
- static bool trans_uxor(DisasContext *ctx, arg_rrr_cf_d *a)
- {
--    TCGv_i64 tcg_r1, tcg_r2;
-+    TCGv_i64 tcg_r1, tcg_r2, dest;
- 
-     if (a->cf) {
-         nullify_over(ctx);
-     }
-+
-     tcg_r1 = load_gpr(ctx, a->r1);
-     tcg_r2 = load_gpr(ctx, a->r2);
--    do_unit(ctx, a->t, tcg_r1, tcg_r2, a->cf, a->d, false, tcg_gen_xor_i64);
-+    dest = dest_gpr(ctx, a->t);
-+
-+    tcg_gen_xor_i64(dest, tcg_r1, tcg_r2);
-+    save_gpr(ctx, a->t, dest);
-+
-+    cond_free(&ctx->null_cond);
-+    if (a->cf) {
-+        ctx->null_cond = do_unit_zero_cond(a->cf, a->d, dest);
-+    }
-+
-     return nullify_end(ctx);
- }
- 
-@@ -2790,7 +2798,7 @@ static bool do_uaddcm(DisasContext *ctx, arg_rrr_cf_d *a, bool is_tc)
-     tcg_r2 = load_gpr(ctx, a->r2);
-     tmp = tcg_temp_new_i64();
-     tcg_gen_not_i64(tmp, tcg_r2);
--    do_unit(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, tcg_gen_add_i64);
-+    do_unit_addsub(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, true);
-     return nullify_end(ctx);
- }
- 
-@@ -2817,8 +2825,8 @@ static bool do_dcor(DisasContext *ctx, arg_rr_cf_d *a, bool is_i)
-     }
-     tcg_gen_andi_i64(tmp, tmp, (uint64_t)0x1111111111111111ull);
-     tcg_gen_muli_i64(tmp, tmp, 6);
--    do_unit(ctx, a->t, load_gpr(ctx, a->r), tmp, a->cf, a->d, false,
--            is_i ? tcg_gen_add_i64 : tcg_gen_sub_i64);
-+    do_unit_addsub(ctx, a->t, load_gpr(ctx, a->r), tmp,
-+                   a->cf, a->d, false, is_i);
-     return nullify_end(ctx);
- }
- 
+ linux-user/syscall.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e384e1424890..d9bfd31c1cad 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -3758,12 +3758,13 @@ static inline abi_long target_to_host_ipc_perm(struct ipc_perm *host_ip,
+     host_ip->gid = tswap32(target_ip->gid);
+     host_ip->cuid = tswap32(target_ip->cuid);
+     host_ip->cgid = tswap32(target_ip->cgid);
+-#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
++#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
++    defined(TARGET_XTENSA)
+     host_ip->mode = tswap32(target_ip->mode);
+ #else
+     host_ip->mode = tswap16(target_ip->mode);
+ #endif
+-#if defined(TARGET_PPC)
++#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
+     host_ip->__seq = tswap32(target_ip->__seq);
+ #else
+     host_ip->__seq = tswap16(target_ip->__seq);
+@@ -3786,12 +3787,13 @@ static inline abi_long host_to_target_ipc_perm(abi_ulong target_addr,
+     target_ip->gid = tswap32(host_ip->gid);
+     target_ip->cuid = tswap32(host_ip->cuid);
+     target_ip->cgid = tswap32(host_ip->cgid);
+-#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
++#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
++    defined(TARGET_XTENSA)
+     target_ip->mode = tswap32(host_ip->mode);
+ #else
+     target_ip->mode = tswap16(host_ip->mode);
+ #endif
+-#if defined(TARGET_PPC)
++#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
+     target_ip->__seq = tswap32(host_ip->__seq);
+ #else
+     target_ip->__seq = tswap16(host_ip->__seq);
 -- 
-2.34.1
+2.39.2
 
 
