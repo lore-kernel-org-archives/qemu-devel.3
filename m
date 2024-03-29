@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B374C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 09:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C59CD1288
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq8bW-0001gn-NK; Fri, 29 Mar 2024 05:32:54 -0400
+	id 1rq98A-00029V-Oa; Fri, 29 Mar 2024 06:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rq8bU-0001fR-57; Fri, 29 Mar 2024 05:32:52 -0400
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rq982-00028e-JA
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:32 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rq8bQ-0001Af-Gu; Fri, 29 Mar 2024 05:32:51 -0400
-Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:5428:0:640:7351:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id A37D760C61;
- Fri, 29 Mar 2024 12:32:41 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:6509::1:4] (unknown
- [2a02:6b8:b081:6509::1:4])
- by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id cWKUJ24Ifa60-jcavf3yU; Fri, 29 Mar 2024 12:32:41 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1711704761;
- bh=TN9HzSIkkQz7APZOHcikhI5RzYc+R2szHrbpkRHkeGs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=aZqjarI2IkxQhPyVFfpHWOoarymfyQDZcA5Yi19q57p+gCUrNLqabIJTbfzS8DAYP
- DEXCw4KNuSCh+cPAXZ3MgHMlnDM6V1m+MNUL75AlD8GHoLXTDK7mf1kHbibHMPlJ44
- kPKXPk+Z9IFZTXJweVSLrz2lv3lrLW2jIW7iW3qg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <9bae5618-2ebc-453a-8b10-32474422c66f@yandex-team.ru>
-Date: Fri, 29 Mar 2024 12:32:38 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v5 07/14] migration: Add Error** argument to
- .save_setup() handler
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rq97z-00017E-Qp
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711706788; x=1743242788;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=EAlsIr9gV/OWidz8nIWqoCkuvpdnZz9VytfSWf5d/ic=;
+ b=Dpotuzxdo6Vyu2HEjqBd3RpQCqHBZRSarfiC/GRaHdyHPBtPvAGT5/Jl
+ ML7JRaWnQffkjOEjJBASMeUBMFd5bANeTSkN1j0QAndLZmtWcHU96toC1
+ OtZV5y2Gic6wX/4pcXl4ODh3N790B74t2jNSZ+Mu75gXVxQspmaY2PNYE
+ to6KiEuX1RdXaLmYoHUmobzGUQtG/mKjNgugrwZxvBdGls1wB7Q1br6BP
+ 2lNgJX3F8DCHwj0fHnEV0J4G1k0KL9uq23BjagzhFYBoxDqMJDZEtbo74
+ 6SHEnE/KOt4cmTSRD/LNlrdoGZTs7+Bpx+zX909LiroUBEgQ100hhPN6x Q==;
+X-CSE-ConnectionGUID: 9put4kvVTDSLMrXDPPBjqw==
+X-CSE-MsgGUID: y01UVaM6TgWc0uP3Y2p0Ew==
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="17519246"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="17519246"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 03:06:27 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="21441989"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 29 Mar 2024 03:06:24 -0700
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fam Zheng <fam@euphon.net>, Eric Blake <eblake@redhat.com>,
- John Snow <jsnow@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Prasad Pandit
- <pjp@fedoraproject.org>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-block@nongnu.org
-References: <20240320064911.545001-1-clg@redhat.com>
- <20240320064911.545001-8-clg@redhat.com>
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240320064911.545001-8-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tim Wiederhake <twiederh@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH for-9.1 7/7] target/i386/kvm: Update comment in
+ kvm_cpu_realizefn()
+Date: Fri, 29 Mar 2024 18:19:54 +0800
+Message-Id: <20240329101954.3954987-8-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: none client-ip=192.198.163.11;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,48 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.03.24 09:49, Cédric Le Goater wrote:
-> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-> index 2708abf3d762de774ed294d3fdb8e56690d2974c..542a8c297b329abc30d1b3a205d29340fa59a961 100644
-> --- a/migration/block-dirty-bitmap.c
-> +++ b/migration/block-dirty-bitmap.c
-> @@ -1213,12 +1213,14 @@ fail:
->       return ret;
->   }
->   
-> -static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque)
-> +static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
->   {
->       DBMSaveState *s = &((DBMState *)opaque)->save;
->       SaveBitmapState *dbms = NULL;
->   
->       if (init_dirty_bitmap_migration(s) < 0) {
-> +        error_setg(errp,
-> +                   "Failed to initialize dirty tracking bitmap for blocks");
+From: Zhao Liu <zhao1.liu@intel.com>
 
-No, that's not about initializing a bitmap. This all is about migration of block-dirty-bitmaps themselves.
+With the guest_phys_bits and legacy_kvmclock change, update the comment
+about function call flow.
 
-So correct would be say "Failed to initialize migration of block dirty bitmaps".
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/kvm/kvm-cpu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-with this, for block dirty bitmap migration:
-Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-
-Still, a lot better is add errp to init_dirty_bitmap_migration() and to add_bitmaps_to_list() too: look,
-
-init_dirty_bitmap_migration() fails only if add_bitmaps_to_list() fails
-
-in turn,
-
-add_bitmaps_to_list() have several clear failure points, where it always does error_report (or error_report_err), which would be better to pass-through to the user.
-
->           return -1;
->       }
->   
-> diff --git a/migrat
-
+diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+index 753f90c18bd6..5b48b023c33b 100644
+--- a/target/i386/kvm/kvm-cpu.c
++++ b/target/i386/kvm/kvm-cpu.c
+@@ -60,7 +60,10 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+      *  -> x86_cpu_expand_features()
+      *  -> cpu_exec_realizefn():
+      *            -> accel_cpu_common_realize()
+-     *               kvm_cpu_realizefn() -> host_cpu_realizefn()
++     *               kvm_cpu_realizefn()
++     *                       -> update cpu_pm, ucode_rev, kvmclock
++     *                          host_cpu_realizefn()
++     *                          update guest_phys_bits on Host support
+      *  -> cpu_common_realizefn()
+      *  -> check/update ucode_rev, phys_bits, mwait
+      */
 -- 
-Best regards,
-Vladimir
+2.34.1
 
 
