@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BCDAC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 17:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAA2CD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqGJE-0001BK-UI; Fri, 29 Mar 2024 13:46:32 -0400
+	id 1rqGW6-0003fH-IK; Fri, 29 Mar 2024 13:59:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqGJC-0001Ao-8s
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:46:30 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqGJA-0007vw-QN
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:46:30 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e228c12468so8126965ad.1
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 10:46:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711734387; x=1712339187; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Tx9sPfLzUllwKuaJ6ZjHHdJA3myL7EJw/yx5Rm8D4q4=;
- b=CZmA85/0tlBl0SsTPUpuxLDNDTR/xtBSwnYCZ3rg6QGXLupEdq6ioppcuz3rMKfMM8
- 8r2uBj0E+h2TZF4dyr+NeO0oOutT0uEp/YamEM6Vt2phixHtJNQXE8X4vk7NmkAMI02c
- U21+1JpRMKsX7/wZQ3K5FTcaOpAyi/xSebO87j0bGDU4+Xx59CDkL4mq+fvBqVS5weMO
- U9mNGTMRkx4b1ZKSEmSe8iIrNctyEhNBQmoHNupqXEBvxr0pPN6C0pf28eQCVLlhhjm3
- Q4ddPVDPUBgyqVJDjL028KWhR6DGxI71gebpUmCp8tiXURNtpj1Iz+9xZbgfkHgLzolG
- NXlA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rqGW4-0003eu-Ox
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:59:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rqGW2-0001Hz-I6
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:59:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711735185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=SJaDB/NJB0ZbzRfojWS4a16AgoWzZWpCIT+kL89N738=;
+ b=BL3Grkk+IMVc2J9KKVxU9e/FKIRxgaS6W7eIhXqGHU0kCJGHxbMp5CmV/LJFSn2tBHeRaW
+ j1GOurmIS7cZ9UkIN0WF0DR0EBwE8Hc+vA+M0spXeDZHI7g+Eghm/8t5/bltZFPuNguz5a
+ 10j6SfiBQ+P9hWnqiC7HDksG0SdcxkQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-sm_cjqv7PPqEeLKDmyDlcg-1; Fri, 29 Mar 2024 13:59:43 -0400
+X-MC-Unique: sm_cjqv7PPqEeLKDmyDlcg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3416632aeffso1037984f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 10:59:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711734387; x=1712339187;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tx9sPfLzUllwKuaJ6ZjHHdJA3myL7EJw/yx5Rm8D4q4=;
- b=eHnvDZqG1PKmpvCblCFf4YiT5yn4B943PRerJEpZHLYF0y9sT6cZxEnlmrkZqtPnpD
- 23husyIBdPYhqGxHk3AXqZVCHGNf3inew4y7cstggIlQYvMsRCwsBTgmIjT3DDv/ZKTY
- ejJkYIErIDkt2qLFW1/z22UEDznVWfeyVYpXgNPHgluioGQOml0s3B09aUGq6e7z+vk6
- JL5Bdm2R51jFgm0Ged1FSbqkLjurj4EsaCewD49TIV+sK6Li4Gr7CpLAsJkDsX3DrPKp
- A8eV0QMHNQOZb0q19iI1MnlzB3gtvuuwewfrxw4npv28//RLCyl1jQ19thLasyaijJ6U
- X3cQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZkRJ9MdRlBZSjWr+i73+HwTFEnk//VXPp/avAodth2FOiK9HjoQr/fzojY3GRvqDU+2zgPg03meleqJ9lSgaCDnuP2ek=
-X-Gm-Message-State: AOJu0Yz5ON80hjT5k8YciPZrJNhK0cMTmdyHDjpnM+BGXypS2Zaq/HoB
- NIV5eGGMLnRdxHlQfwYzI2LucOUVIBVCgq8pcuNkl5h2T+W/NTkfY0ixYcJV18c=
-X-Google-Smtp-Source: AGHT+IEVHJ/q7IK07Sp4jm6/hY5jM/WCYfVjk2tQYDCDVGGvqIfGHz6asQXvNXP9my4WDBfcnRJh7Q==
-X-Received: by 2002:a17:902:e5d0:b0:1e0:c88f:654f with SMTP id
- u16-20020a170902e5d000b001e0c88f654fmr8941420plf.33.1711734386858; 
- Fri, 29 Mar 2024 10:46:26 -0700 (PDT)
-Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
- by smtp.gmail.com with ESMTPSA id
- m2-20020a170902f20200b001dce6c481c1sm3709224plc.301.2024.03.29.10.46.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Mar 2024 10:46:26 -0700 (PDT)
-Message-ID: <7e66f00d-cc69-458d-be56-266689757f68@linaro.org>
-Date: Fri, 29 Mar 2024 07:46:22 -1000
+ d=1e100.net; s=20230601; t=1711735182; x=1712339982;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SJaDB/NJB0ZbzRfojWS4a16AgoWzZWpCIT+kL89N738=;
+ b=uVXrbNlCfPMNzA00AgvVQj0/U2R5k0SM6gMoDSNTjbsKAp0bf8VVLYYWGnUWQsytKC
+ 3WUWknGV0phNPfB+RaSuZsa0x25D7iEi3BVbZ96MlgZTg69IUSFDvXxl/odXE/2VDSnj
+ 3khJy6aiqC7KD4Fyv41a3OUBNdeaHC0uhmm2cxo3W06X3ri18Puxh48qC+aY8xlxWB6/
+ lugQscbjblMmkbUY1oJENukbtsb3hOjHdqGiY8VEoyyCa77/y9ssiW0mG/QwfkXORlll
+ +aSTSxyg2V2fU8omiOlMBf1+KLKpVSozByg5EzxQuhz3S1SxljiBvK5GRRGe/wGhvFd8
+ wsAw==
+X-Gm-Message-State: AOJu0YzRH+gq+Z+e3AvGM3uyljGT7XSX4Wh3GeUcucfX+J6zelX454u7
+ qwlgLRlkirHXxY+vc2vSft0i4zS9b4Nwc0K0N7aeEw7oiRgesE7KmvInKBPIacD5VhO1dFU5r0Y
+ BXn4PXadNNhlhkFdX/C+9frw4QMD1S3OMAknXid2Z3T4Cv6p36Qz3Nej0BtauYumP/B9kY/17Ln
+ TPk5BxVQsfMRaS1T3INgXplXKXaB+oigTM3rs=
+X-Received: by 2002:a5d:590f:0:b0:33d:c657:6ae3 with SMTP id
+ v15-20020a5d590f000000b0033dc6576ae3mr2007025wrd.7.1711735182012; 
+ Fri, 29 Mar 2024 10:59:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEy6pZdmM1rkbbt53a0ifciGKtNhXeV7KjCz/Ml4Okf7nzOrkp50JdSEZ6i6iqzvLQgDki0azcwIcPvXwrqaCk=
+X-Received: by 2002:a5d:590f:0:b0:33d:c657:6ae3 with SMTP id
+ v15-20020a5d590f000000b0033dc6576ae3mr2007017wrd.7.1711735181665; Fri, 29 Mar
+ 2024 10:59:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] e1000: Get debug flags from an environment variable
-To: Don Porter <porter@cs.unc.edu>, qemu-devel@nongnu.org
-Cc: Austin Clements <aclements@csail.mit.edu>,
- Geoffrey Thomas <geofft@ldpreload.com>
-References: <20240329150450.2843758-1-porter@cs.unc.edu>
- <20240329150450.2843758-2-porter@cs.unc.edu>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240329150450.2843758-2-porter@cs.unc.edu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 29 Mar 2024 18:59:30 +0100
+Message-ID: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
+Subject: Backdoor in xz, should we switch compression format for tarballs?
+To: qemu-devel <qemu-devel@nongnu.org>, Michael Roth <michael.roth@amd.com>, 
+ "Maydell, Peter" <peter.maydell@linaro.org>, "P. Berrange,
+ Daniel" <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000007400b80614d06764"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,41 +92,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/29/24 05:04, Don Porter wrote:
-> From: Austin Clements <aclements@csail.mit.edu>
-> 
-> The E1000 debug messages are very useful for developing drivers, so
-> this introduces an E1000_DEBUG environment variable that lets the
-> debug flags be set without recompiling QEMU.
-> 
-> Signed-off-by: Austin Clements <aclements@csail.mit.edu>
-> [geofft@ldpreload.com: Rebased on top of 2.9.0]
-> Signed-off-by: Geoffrey Thomas <geofft@ldpreload.com>
-> Signed-off-by: Don Porter <porter@cs.unc.edu>
-...
-> -/* #define E1000_DEBUG */
-> -
-> -#ifdef E1000_DEBUG
->   enum {
->       DEBUG_GENERAL,      DEBUG_IO,       DEBUG_MMIO,     DEBUG_INTERRUPT,
->       DEBUG_RX,           DEBUG_TX,       DEBUG_MDIC,     DEBUG_EEPROM,
->       DEBUG_UNKNOWN,      DEBUG_TXSUM,    DEBUG_TXERR,    DEBUG_RXERR,
->       DEBUG_RXFILTER,     DEBUG_PHY,      DEBUG_NOTYET,
->   };
-> +
-> +static const char *debugnames[] = {
-> +    "GENERAL",      "IO",       "MMIO",     "INTERRUPT",
-> +    "RX",           "TX",       "MDIC",     "EEPROM",
-> +    "UNKNOWN",      "TXSUM",    "TXERR",    "RXERR",
-> +    "RXFILTER",     "PHY",      "NOTYET",   NULL
-> +};
->   #define DBGBIT(x)    (1<<DEBUG_##x)
->   static int debugflags = DBGBIT(TXERR) | DBGBIT(GENERAL);
+--0000000000007400b80614d06764
+Content-Type: text/plain; charset="UTF-8"
 
-These should be converted to tracepoints.
-See docs/devel/tracing.rst.
+For more info, see
+https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/
+but, essentially, xz was backdoored and it seems like upstream was directly
+responsible for this.
 
+Based on this, should we switch our distribution from bz2+xz to bz2+zstd or
+bz2+lzip?
 
-r~
+Thanks,
+
+Paolo
+
+--0000000000007400b80614d06764
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">For more info, see=C2=A0<a href=3D"https://lwn.net/ml/oss=
+-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/">https://lwn.=
+net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/</a>=
+ but, essentially, xz was backdoored and it seems like upstream was directl=
+y responsible for this.<div dir=3D"auto"><br></div><div dir=3D"auto">Based =
+on this, should we switch our distribution from bz2+xz to bz2+zstd or bz2+l=
+zip?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks,</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
+
+--0000000000007400b80614d06764--
 
 
