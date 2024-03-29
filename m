@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAA2CD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3EF2CD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:14:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqGW6-0003fH-IK; Fri, 29 Mar 2024 13:59:50 -0400
+	id 1rqGk1-00063h-2r; Fri, 29 Mar 2024 14:14:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rqGW4-0003eu-Ox
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:59:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
+ id 1rqGjv-00062i-I3
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 14:14:07 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rqGW2-0001Hz-I6
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:59:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711735185;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=SJaDB/NJB0ZbzRfojWS4a16AgoWzZWpCIT+kL89N738=;
- b=BL3Grkk+IMVc2J9KKVxU9e/FKIRxgaS6W7eIhXqGHU0kCJGHxbMp5CmV/LJFSn2tBHeRaW
- j1GOurmIS7cZ9UkIN0WF0DR0EBwE8Hc+vA+M0spXeDZHI7g+Eghm/8t5/bltZFPuNguz5a
- 10j6SfiBQ+P9hWnqiC7HDksG0SdcxkQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-345-sm_cjqv7PPqEeLKDmyDlcg-1; Fri, 29 Mar 2024 13:59:43 -0400
-X-MC-Unique: sm_cjqv7PPqEeLKDmyDlcg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3416632aeffso1037984f8f.1
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 10:59:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711735182; x=1712339982;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SJaDB/NJB0ZbzRfojWS4a16AgoWzZWpCIT+kL89N738=;
- b=uVXrbNlCfPMNzA00AgvVQj0/U2R5k0SM6gMoDSNTjbsKAp0bf8VVLYYWGnUWQsytKC
- 3WUWknGV0phNPfB+RaSuZsa0x25D7iEi3BVbZ96MlgZTg69IUSFDvXxl/odXE/2VDSnj
- 3khJy6aiqC7KD4Fyv41a3OUBNdeaHC0uhmm2cxo3W06X3ri18Puxh48qC+aY8xlxWB6/
- lugQscbjblMmkbUY1oJENukbtsb3hOjHdqGiY8VEoyyCa77/y9ssiW0mG/QwfkXORlll
- +aSTSxyg2V2fU8omiOlMBf1+KLKpVSozByg5EzxQuhz3S1SxljiBvK5GRRGe/wGhvFd8
- wsAw==
-X-Gm-Message-State: AOJu0YzRH+gq+Z+e3AvGM3uyljGT7XSX4Wh3GeUcucfX+J6zelX454u7
- qwlgLRlkirHXxY+vc2vSft0i4zS9b4Nwc0K0N7aeEw7oiRgesE7KmvInKBPIacD5VhO1dFU5r0Y
- BXn4PXadNNhlhkFdX/C+9frw4QMD1S3OMAknXid2Z3T4Cv6p36Qz3Nej0BtauYumP/B9kY/17Ln
- TPk5BxVQsfMRaS1T3INgXplXKXaB+oigTM3rs=
-X-Received: by 2002:a5d:590f:0:b0:33d:c657:6ae3 with SMTP id
- v15-20020a5d590f000000b0033dc6576ae3mr2007025wrd.7.1711735182012; 
- Fri, 29 Mar 2024 10:59:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEy6pZdmM1rkbbt53a0ifciGKtNhXeV7KjCz/Ml4Okf7nzOrkp50JdSEZ6i6iqzvLQgDki0azcwIcPvXwrqaCk=
-X-Received: by 2002:a5d:590f:0:b0:33d:c657:6ae3 with SMTP id
- v15-20020a5d590f000000b0033dc6576ae3mr2007017wrd.7.1711735181665; Fri, 29 Mar
- 2024 10:59:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
+ id 1rqGjs-0003c7-8s
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 14:14:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711736044; x=1743272044;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=spDdkp5at93t5uLpTXXyW7vLLkVTjvAI4OLZ+91XLjg=;
+ b=Qr2M3s/h4XUAutvlAUj2jQzSADExoAEUiA+Kvz36RQPlFzxt1k3IoKh7
+ NpDZLb4HRwoIz+ofyiyuRVLsegDMlv3+Yx+qgFP/EDdEIShby/E6U/0ws
+ Xja2rqhLVzv3I4gRa4JRI4pigwa16WlwpbBnQjmCrSwVBXLdll5Y7JHyz
+ 526JCJDSbOcM+KWS7RwnpqVReeHfjVp9/i3s9mc2l14wVNNqy/H6GWLmv
+ DKDU092kv4mC52xg/h+nh2sUk8LS25IT2cM5+no5FU51VIAHaJVxPCyyI
+ jCBVOajk84hnxkOPqyaffMvVAxf5sXlGfn/OfpkneSLlvK3fzZ15vtJ5u w==;
+X-CSE-ConnectionGUID: 1kYG4XQKRD2qAcQ8LNEpkQ==
+X-CSE-MsgGUID: /AEHg2sPQIq9FPQBFDQb2Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11028"; a="7151663"
+X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; 
+   d="scan'208";a="7151663"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 11:13:17 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="48245285"
+Received: from aschofie-mobl2.amr.corp.intel.com (HELO aschofie-mobl2)
+ ([10.209.86.126])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 11:13:17 -0700
+Date: Fri, 29 Mar 2024 11:13:15 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ Jonathan.Cameron@huawei.com, dan.j.williams@intel.com,
+ dave@stgolabs.net, ira.weiny@intel.com
+Subject: Re: [RFC PATCH v2 4/6] cxl/core: report poison when injecting from
+ debugfs
+Message-ID: <ZgcEu9q/k+jjojOj@aschofie-mobl2>
+References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
+ <20240329063614.362763-5-ruansy.fnst@fujitsu.com>
 MIME-Version: 1.0
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 29 Mar 2024 18:59:30 +0100
-Message-ID: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
-Subject: Backdoor in xz, should we switch compression format for tarballs?
-To: qemu-devel <qemu-devel@nongnu.org>, Michael Roth <michael.roth@amd.com>, 
- "Maydell, Peter" <peter.maydell@linaro.org>, "P. Berrange,
- Daniel" <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000007400b80614d06764"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240329063614.362763-5-ruansy.fnst@fujitsu.com>
+Received-SPF: pass client-ip=192.198.163.14;
+ envelope-from=alison.schofield@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,34 +85,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007400b80614d06764
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Mar 29, 2024 at 02:36:12PM +0800, Shiyang Ruan wrote:
+> Poison injection from debugfs is silent too.  Add calling
+> cxl_mem_report_poison() to make it able to do memory_failure().
 
-For more info, see
-https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/
-but, essentially, xz was backdoored and it seems like upstream was directly
-responsible for this.
+Curious as to why it is silent? Will a GMER poison event occur
+and trigger the path to report it via memory_failure?
 
-Based on this, should we switch our distribution from bz2+xz to bz2+zstd or
-bz2+lzip?
-
-Thanks,
-
-Paolo
-
---0000000000007400b80614d06764
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">For more info, see=C2=A0<a href=3D"https://lwn.net/ml/oss=
--security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/">https://lwn.=
-net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/</a>=
- but, essentially, xz was backdoored and it seems like upstream was directl=
-y responsible for this.<div dir=3D"auto"><br></div><div dir=3D"auto">Based =
-on this, should we switch our distribution from bz2+xz to bz2+zstd or bz2+l=
-zip?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks,</div><div d=
-ir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
-
---0000000000007400b80614d06764--
-
+> 
+> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+> ---
+>  drivers/cxl/core/memdev.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+> index e976141ca4a9..b0dcbe6f1004 100644
+> --- a/drivers/cxl/core/memdev.c
+> +++ b/drivers/cxl/core/memdev.c
+> @@ -366,6 +366,7 @@ int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa)
+>  		.length = cpu_to_le32(1),
+>  	};
+>  	trace_cxl_poison(cxlmd, cxlr, &record, 0, 0, CXL_POISON_TRACE_INJECT);
+> +	cxl_mem_report_poison(cxlmd, cxlr, &record);
+>  out:
+>  	up_read(&cxl_dpa_rwsem);
+>  	up_read(&cxl_region_rwsem);
+> -- 
+> 2.34.1
+> 
+> 
 
