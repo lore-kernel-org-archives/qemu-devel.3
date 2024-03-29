@@ -4,139 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49B6CD11DD
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 15:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A21FCD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 16:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqEDZ-0007hx-AM; Fri, 29 Mar 2024 11:32:33 -0400
+	id 1rqF2T-0001x7-Ba; Fri, 29 Mar 2024 12:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=88182a685f=aidan_leuck@selinc.com>)
- id 1rqEDP-0007hM-7h
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 11:32:23 -0400
-Received: from mx0b-000e8d01.pphosted.com ([148.163.143.141])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=88182a685f=aidan_leuck@selinc.com>)
- id 1rqEDM-0000at-MN
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 11:32:22 -0400
-Received: from pps.filterd (m0136174.ppops.net [127.0.0.1])
- by mx0b-000e8d01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 42TDmD7I021554; Fri, 29 Mar 2024 08:32:17 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=selinc.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding:content-type; s=sel1;
- bh=L/Dz3oqML6XdI4O1NjXIvAMq8sYNt88Fqs6/DXIpJ9k=; b=HvrwzrjbErL1
- a2LyvOWtHK9B7RgesqmiJO1OkokLzOk8wmSb7arpj/OAd6/V/uukW9b+GzOzT5zL
- AwcO566PnFCxqUrbqzYrZtqve29Wd397skOi6jVxCwcyJH8XUtWYimjLI0PW3lIA
- iADRJOYb34RS2lsOT0LZZ0u1JRzMBW8YXRi4FRfYmGaGP9lW4UA3BxP2Gm4BbqcK
- NWrZHtPkfEtH8naKf6jx6WrW26GVYHADQQa8A0XAOoTU+tYVggQSOK+zI2zT/w4X
- MJ8ZeUsGybK7Gq1H9YUyVel1fyDG1i9U5/FOQOjE/cdmvBNTo6+bPxpfsaJYbJkk
- Z6YnQ5h3vg==
-Received: from nam11-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam11lp2168.outbound.protection.outlook.com [104.47.57.168])
- by mx0b-000e8d01.pphosted.com (PPS) with ESMTPS id 3x5g1ygfaa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 29 Mar 2024 08:32:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=l4Nbl1kJjrCobAyQ9PZyQqa7PtihS8J64d6Mi0plj02OylxG1taLWjKHxwnfVJ9AnbGHAC8rHcQFI/rrMY7wW077NlY1aoIdWAAXnlSMEwx3YCga49pe8xgUMe0eyfk0z49IEn39wq1/dheMbeBKD+7YC1eO2RfM4j4C7AclSok/los3W2oiEd89fdotLpuDWunz1MsbdTl9cm1SiJZmnoBKKGIKyea68a44LLTVRzV6Wzz55V40XgRWzWWi9C8bP0/GLruHxb1r6hFauHGnp0JGW+a38fJggNzIupUeqZHdNLXC7IMELVgKfeAhOu2x2KKu6d5d7091evkgxy/B2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L/Dz3oqML6XdI4O1NjXIvAMq8sYNt88Fqs6/DXIpJ9k=;
- b=NndpcIY1wuM8IAr4FSrZ2HqnVPJfyaQ11FmduruZ0B6J65Y+SGTmDtmKGN+yTnuszyqCaPztAuNSHhNi9nLABvlF4XYwDD7sMaI9Lb1tRF0R1H6BRTl4Nlzcqws5hJkbVfPdm8EClPjfJF8h4J/Ezd/LPupP51I1sgeV/n4GIk9vOsTFuOl8fxeXStWDQC20PpMp9vZiIbmk6jRFeupO2fUE7nolk73DkdMA/tkRlk1MEGuTofW1rI4lAbibJDHuy/DdYYmtNZQzKhLDnW0+6Z1CN22YXf/EdiIPvuraOFaT/Osngi3UvHXc5y2nAOSOSRV70r0uJLvzzwn5DL3rbg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 74.117.212.83) smtp.rcpttodomain=nongnu.org smtp.mailfrom=selinc.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=selinc.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=selinc.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L/Dz3oqML6XdI4O1NjXIvAMq8sYNt88Fqs6/DXIpJ9k=;
- b=J6I5sL4qh35xoAgPTw+LUNw3pysZG5YN8yLVeMRC5avSR8pk7i3lkoMhPg6nJAtOTIpA4/6gCoPpwrmI2BR7FWYlNCHXlGvGbEWLWWv5/P8L0GsxGvY/S0IK0FXyTVDq5xIf4sUb+Ygm3m/HplAi/f6yczGbVYZsrwG8kn8osxO/eYAug/6ZeSPhdMLQGJq8TGtQXp/nt5JQMjvLfrNQEopeGokWkvGbg7cJ1bNTL2My1xPmbLoGOoKyB+6BP9+scE9yctpUDnojEOf9PmkDYY5rg/oNcpwOLg0zMQzn1uaiVlEMBVofUIrKmCKSLvMWMJETmUFC2xeXo77Gjb3zYQ==
-Received: from CH0PR03CA0229.namprd03.prod.outlook.com (2603:10b6:610:e7::24)
- by PH7PR22MB4447.namprd22.prod.outlook.com (2603:10b6:510:2f6::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.41; Fri, 29 Mar
- 2024 15:32:13 +0000
-Received: from CH3PEPF00000014.namprd21.prod.outlook.com
- (2603:10b6:610:e7:cafe::ff) by CH0PR03CA0229.outlook.office365.com
- (2603:10b6:610:e7::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.41 via Frontend
- Transport; Fri, 29 Mar 2024 15:32:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 74.117.212.83)
- smtp.mailfrom=selinc.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=selinc.com;
-Received-SPF: Pass (protection.outlook.com: domain of selinc.com designates
- 74.117.212.83 as permitted sender) receiver=protection.outlook.com;
- client-ip=74.117.212.83; helo=email.selinc.com; pr=C
-Received: from email.selinc.com (74.117.212.83) by
- CH3PEPF00000014.mail.protection.outlook.com (10.167.244.119) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7472.0 via Frontend Transport; Fri, 29 Mar 2024 15:32:13 +0000
-Received: from AIDALEUCPC3.ad.selinc.com (10.100.90.200) by
- wpul-exchange1.ad.selinc.com (10.53.14.22) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 29 Mar 2024 08:32:10 -0700
-From: <aidan_leuck@selinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <kkostiuk@redhat.com>, <philmd@linaro.org>, aidaleuc
- <aidan_leuck@selinc.com>
-Subject: [PATCH v6 1/2] Refactor common functions between POSIX and Windows
- implementation
-Date: Fri, 29 Mar 2024 09:31:54 -0600
-Message-ID: <20240329153155.17840-2-aidan_leuck@selinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240329153155.17840-1-aidan_leuck@selinc.com>
-References: <20240329153155.17840-1-aidan_leuck@selinc.com>
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1rqDn2-0001kP-DY
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 11:05:08 -0400
+Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1rqDn0-0003Gq-BO
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 11:05:08 -0400
+Received: by mail-qv1-xf35.google.com with SMTP id
+ 6a1803df08f44-690cf6ecd3cso10636746d6.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 08:05:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cs.unc.edu; s=google; t=1711724704; x=1712329504; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yzaR2tfkkvfJNYn7QAkCGmS8gAFONRxGzcSvNxNyFFc=;
+ b=juX9a6QbBXXlGf4/6TJrfK9yuFLJjvlQuvC1Wwms2xtoE+crjh9qrR7tZkrqyao3rf
+ +jSKsXJUmSLtGnai9/+WyqRfcgQn98a6S5/yP0zQrV32j1B/9f0Q4UcOcWqqS7gY80Mn
+ VxEZRvAuTtSJBlQtkkXQ5aZEvntNPv2cxT7mCRTK5xOVjvq/3sMQkE5foISxz2i+VdMa
+ sAxaGxNWqF8reAHSi68earoVS32v9TbkF3EfKkaAmInWESckNGfE2W0zJH39RdhZiEdl
+ +iHIwXSQu4tdDLU7Pgiv0AuFmG7T5ZZyM3sjMIH39Z+b4Ts/nYCsidT0BGD/ZS/tZAp4
+ t/xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711724704; x=1712329504;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yzaR2tfkkvfJNYn7QAkCGmS8gAFONRxGzcSvNxNyFFc=;
+ b=cRN5CsTyT0flq4x9c8hju7lB+JgfrxehkQ5QFfPWfSEU0sKCNo/aBnbqAQON/cRrBo
+ 3H4xpndZ5TNYT5/4ajgKsKn8U9E276XCWROWPdl/NL1kWAOWQ2dC7In8PYnMEg3MpGiX
+ hsnHf5MRGK0JGaz9pXQR5x4h4CVM0XV0+gurmkB9yBYgCLkWBcKVWwWoquKQhiCa115g
+ PbaUSa8mdYBM/hAFvyDAkacQTIOZmKnd/CdWSlgMcsGIre17A7NzIdBdKTfgLh0+CUcj
+ iAqGlmFG2GKtYFGWmDM9hOzZMIUAre64X7AvacTCTg9FXAzuWZzeWKus0NCOrMuQEwFP
+ hbwA==
+X-Gm-Message-State: AOJu0Ywt7YE9/1RSAzGTPDr8DHyicksiqOC3DH6clyrIYRClfJNy6GkH
+ wGZgSYVbztoJwkjUJX7U++D5kEyj4y7DLezwu12b83NvAygmBYGxj83XbA2Act8S93XPWPK24NE
+ 5JnpHRumJFyDLWQlzEYx0gtGxova+07q+9mObRI4Z2SLYN9OOVCtOSEnruF1xBiC/s/LTTcOIZ8
+ /zChUDGfnSYVfNodGJxRBGuzJlLBBh
+X-Google-Smtp-Source: AGHT+IGD/ZMKtmWZNdTN9necnoN6PK4lMJEQtaBCs+gmngiizWN3p6Fe48dIjZTqUyojZT3ahOuQww==
+X-Received: by 2002:a05:6214:5809:b0:696:9224:140e with SMTP id
+ mk9-20020a056214580900b006969224140emr2749028qvb.39.1711724704303; 
+ Fri, 29 Mar 2024 08:05:04 -0700 (PDT)
+Received: from kermit.cs.unc.edu (kermit.cs.unc.edu. [152.2.133.133])
+ by smtp.gmail.com with ESMTPSA id
+ t5-20020a0562140c6500b006986c65f3d2sm1704418qvj.137.2024.03.29.08.05.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Mar 2024 08:05:03 -0700 (PDT)
+From: Don Porter <porter@cs.unc.edu>
+To: qemu-devel@nongnu.org
+Cc: Austin Clements <aclements@csail.mit.edu>,
+ Geoffrey Thomas <geofft@ldpreload.com>, Don Porter <porter@cs.unc.edu>
+Subject: [PATCH 1/1] e1000: Get debug flags from an environment variable
+Date: Fri, 29 Mar 2024 11:04:50 -0400
+Message-Id: <20240329150450.2843758-2-porter@cs.unc.edu>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240329150450.2843758-1-porter@cs.unc.edu>
+References: <20240329150450.2843758-1-porter@cs.unc.edu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.100.90.200]
-X-ClientProxiedBy: wpul-exchange1.ad.selinc.com (10.53.14.22) To
- wpul-exchange1.ad.selinc.com (10.53.14.22)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000014:EE_|PH7PR22MB4447:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9b9f2c3-2473-4eff-5df5-08dc50056839
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: D8JFqaLSdyvnVx8kI15sYJCWyyHmcM5JFjqCY8fRRRJQ4THVaLfNflG0r7o5BMwXTzXGXUgnXmK4qbyZ3qV9de+p5OcQDmoc93jkQb2CEhXr/doZPSdugx8KU8cVL2qYIdKni0em8KKKHx+V9qcFapBKwkGhSQIt71Nnhz7G10XnsBopexl2B11gogaoiloUYWbasyFzUtFhtk1mxgeBIGwakaUSWw/YupOyFSwnQfn73X1zphLNTG3nA/1g460qcYM41cvWS+0Nts+C3++rmzktDLupRqVdMwCWIC5aga/dS3wQqim5xETMN4askUSCaWo7/yLmgaYQcfsFCDigPMoeQGBXsCts03ot5KRZw5Pgvz73+mRR8/lpdxW2Qe38y1htNR4Wy5F3Y69iY3AXzQc8bJH8jIEVlklYwhFMzZKLhm7NCCS5AfUq5XIkfxG0Eqj8Bs62yNsJ8UR0c+CJVRJFgpZYiUU5zXP8HenDcCQcRTxIEJlLs+UxpgWcdcUxJ8txXolW8C4Hhpt9Dtgsi9ejhh8z/qwMU5QrrK0ZJXfNnyW1d3hAabrQvcfGM6NluTYPflzVqUruTB5eAVLjtluQrxOm/fD65jFEV56561U2aRlktrn+eotc1Sl5RTRcX68LA29klGfMcroNru2k40lo7aZIooNO2k1adf6ess9y8WEmVixqiIf6BlgqDd6R15OGa0F9UsWQ0NihdaD0AA==
-X-Forefront-Antispam-Report: CIP:74.117.212.83; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:email.selinc.com; PTR:wpul-exchange1.selinc.com; CAT:NONE;
- SFS:(13230031)(36860700004)(82310400014)(376005)(1800799015); DIR:OUT;
- SFP:1102; 
-X-OriginatorOrg: selinc.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Mar 2024 15:32:13.2010 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9b9f2c3-2473-4eff-5df5-08dc50056839
-X-MS-Exchange-CrossTenant-Id: 12381f30-10fe-4e2c-aa3a-5e03ebeb59ec
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=12381f30-10fe-4e2c-aa3a-5e03ebeb59ec; Ip=[74.117.212.83];
- Helo=[email.selinc.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF00000014.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR22MB4447
-X-Proofpoint-GUID: I27AaSJ79f4xH2JKfLEElpNoIs8IQhWg
-X-Proofpoint-ORIG-GUID: I27AaSJ79f4xH2JKfLEElpNoIs8IQhWg
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0
- priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 bulkscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403210001 definitions=main-2403290136
-Received-SPF: pass client-ip=148.163.143.141;
- envelope-from=prvs=88182a685f=aidan_leuck@selinc.com;
- helo=mx0b-000e8d01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
+ envelope-from=porter@cs.unc.edu; helo=mail-qv1-xf35.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 29 Mar 2024 12:25:08 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -151,175 +94,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: aidaleuc <aidan_leuck@selinc.com>
+From: Austin Clements <aclements@csail.mit.edu>
 
-Signed-off-by: aidaleuc <aidan_leuck@selinc.com>
+The E1000 debug messages are very useful for developing drivers, so
+this introduces an E1000_DEBUG environment variable that lets the
+debug flags be set without recompiling QEMU.
+
+Signed-off-by: Austin Clements <aclements@csail.mit.edu>
+[geofft@ldpreload.com: Rebased on top of 2.9.0]
+Signed-off-by: Geoffrey Thomas <geofft@ldpreload.com>
+Signed-off-by: Don Porter <porter@cs.unc.edu>
 ---
- qga/commands-common-ssh.c | 50 +++++++++++++++++++++++++++++++++++++++
- qga/commands-common-ssh.h | 10 ++++++++
- qga/commands-posix-ssh.c  | 47 +-----------------------------------
- qga/meson.build           |  1 +
- 4 files changed, 62 insertions(+), 46 deletions(-)
- create mode 100644 qga/commands-common-ssh.c
- create mode 100644 qga/commands-common-ssh.h
+ hw/net/e1000.c | 65 +++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 59 insertions(+), 6 deletions(-)
 
-diff --git a/qga/commands-common-ssh.c b/qga/commands-common-ssh.c
-new file mode 100644
-index 0000000000..537869fb98
---- /dev/null
-+++ b/qga/commands-common-ssh.c
-@@ -0,0 +1,50 @@
-+/*
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
+diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+index 43f3a4a701..8d46225944 100644
+--- a/hw/net/e1000.c
++++ b/hw/net/e1000.c
+@@ -30,11 +30,14 @@
+ #include "hw/pci/pci_device.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
++#include "monitor/monitor.h"
+ #include "net/eth.h"
+ #include "net/net.h"
+ #include "net/checksum.h"
+ #include "sysemu/sysemu.h"
+ #include "sysemu/dma.h"
++#include "qapi/qmp/qerror.h"
++#include "qemu/error-report.h"
+ #include "qemu/iov.h"
+ #include "qemu/module.h"
+ #include "qemu/range.h"
+@@ -44,15 +47,19 @@
+ #include "trace.h"
+ #include "qom/object.h"
+ 
+-/* #define E1000_DEBUG */
+-
+-#ifdef E1000_DEBUG
+ enum {
+     DEBUG_GENERAL,      DEBUG_IO,       DEBUG_MMIO,     DEBUG_INTERRUPT,
+     DEBUG_RX,           DEBUG_TX,       DEBUG_MDIC,     DEBUG_EEPROM,
+     DEBUG_UNKNOWN,      DEBUG_TXSUM,    DEBUG_TXERR,    DEBUG_RXERR,
+     DEBUG_RXFILTER,     DEBUG_PHY,      DEBUG_NOTYET,
+ };
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "commands-common-ssh.h"
++static const char *debugnames[] = {
++    "GENERAL",      "IO",       "MMIO",     "INTERRUPT",
++    "RX",           "TX",       "MDIC",     "EEPROM",
++    "UNKNOWN",      "TXSUM",    "TXERR",    "RXERR",
++    "RXFILTER",     "PHY",      "NOTYET",   NULL
++};
+ #define DBGBIT(x)    (1<<DEBUG_##x)
+ static int debugflags = DBGBIT(TXERR) | DBGBIT(GENERAL);
+ 
+@@ -60,9 +67,6 @@ static int debugflags = DBGBIT(TXERR) | DBGBIT(GENERAL);
+     if (debugflags & DBGBIT(what)) \
+         fprintf(stderr, "e1000: " fmt, ## __VA_ARGS__); \
+     } while (0)
+-#else
+-#define DBGOUT(what, fmt, ...) do {} while (0)
+-#endif
+ 
+ #define IOPORT_SIZE       0x40
+ #define PNPMMIO_SIZE      0x20000
+@@ -1779,3 +1783,52 @@ static void e1000_register_types(void)
+ }
+ 
+ type_init(e1000_register_types)
 +
-+GStrv read_authkeys(const char *path, Error **errp)
++static void e1000_init_debug(void)
 +{
-+    g_autoptr(GError) err = NULL;
-+    g_autofree char *contents = NULL;
++    const char *e1000_debug;
++    const char *p, *p1;
++    const char **debugname;
++    int i;
 +
-+    if (!g_file_get_contents(path, &contents, NULL, &err)) {
-+        error_setg(errp, "failed to read '%s': %s", path, err->message);
-+        return NULL;
++    e1000_debug = getenv("E1000_DEBUG");
++    if (!e1000_debug || !*e1000_debug) {
++        return;
 +    }
 +
-+    return g_strsplit(contents, "\n", -1);
-+}
-+
-+bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
-+{
-+    size_t n = 0;
-+    strList *k;
-+
-+    for (k = keys; k != NULL; k = k->next) {
-+        if (!check_openssh_pub_key(k->value, errp)) {
-+            return false;
++    if (strcmp(e1000_debug, "?") == 0) {
++        error_printf("E1000_DEBUG flags:\n");
++        for (debugname = debugnames; *debugname; debugname++) {
++            error_printf("%s\n", *debugname);
 +        }
-+        n++;
++        exit(0);
 +    }
 +
-+    if (nkeys) {
-+        *nkeys = n;
++    p = e1000_debug;
++    debugflags = 0;
++    for (p = e1000_debug; ; p = p1 + 1) {
++        p1 = strchr(p, ',');
++        if (!p1) {
++            p1 = p + strlen(p);
++        }
++        for (i = 0, debugname = debugnames; *debugname; i++, debugname++) {
++            if (strlen(*debugname) == p1 - p &&
++                strncasecmp(p, *debugname, p1 - p) == 0) {
++                debugflags |= 1 << i;
++                break;
++            }
++        }
++        if (!*debugname) {
++            error_report(QERR_INVALID_PARAMETER_VALUE, "E1000_DEBUG",
++                         "a comma-separated list of E1000 debug flags");
++            error_printf_unless_qmp(
++                "Try with argument '?' for a list.\n");
++            exit(1);
++        }
++        if (*p1 != ',') {
++            break;
++        }
 +    }
-+    return true;
 +}
 +
-+bool check_openssh_pub_key(const char *key, Error **errp)
-+{
-+    /* simple sanity-check, we may want more? */
-+    if (!key || key[0] == '#' || strchr(key, '\n')) {
-+        error_setg(errp, "invalid OpenSSH public key: '%s'", key);
-+        return false;
-+    }
-+
-+    return true;
-+}
-diff --git a/qga/commands-common-ssh.h b/qga/commands-common-ssh.h
-new file mode 100644
-index 0000000000..14d955fa84
---- /dev/null
-+++ b/qga/commands-common-ssh.h
-@@ -0,0 +1,10 @@
-+/*
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qapi/qapi-builtin-types.h"
-+
-+GStrv read_authkeys(const char *path, Error **errp);
-+bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp);
-+bool check_openssh_pub_key(const char *key, Error **errp);
-diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
-index 236f80de44..dd2ecb453a 100644
---- a/qga/commands-posix-ssh.c
-+++ b/qga/commands-posix-ssh.c
-@@ -9,6 +9,7 @@
- #include <locale.h>
- #include <pwd.h>
- 
-+#include "commands-common-ssh.h"
- #include "qapi/error.h"
- #include "qga-qapi-commands.h"
- 
-@@ -80,37 +81,6 @@ mkdir_for_user(const char *path, const struct passwd *p,
-     return true;
- }
- 
--static bool
--check_openssh_pub_key(const char *key, Error **errp)
--{
--    /* simple sanity-check, we may want more? */
--    if (!key || key[0] == '#' || strchr(key, '\n')) {
--        error_setg(errp, "invalid OpenSSH public key: '%s'", key);
--        return false;
--    }
--
--    return true;
--}
--
--static bool
--check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
--{
--    size_t n = 0;
--    strList *k;
--
--    for (k = keys; k != NULL; k = k->next) {
--        if (!check_openssh_pub_key(k->value, errp)) {
--            return false;
--        }
--        n++;
--    }
--
--    if (nkeys) {
--        *nkeys = n;
--    }
--    return true;
--}
--
- static bool
- write_authkeys(const char *path, const GStrv keys,
-                const struct passwd *p, Error **errp)
-@@ -139,21 +109,6 @@ write_authkeys(const char *path, const GStrv keys,
-     return true;
- }
- 
--static GStrv
--read_authkeys(const char *path, Error **errp)
--{
--    g_autoptr(GError) err = NULL;
--    g_autofree char *contents = NULL;
--
--    if (!g_file_get_contents(path, &contents, NULL, &err)) {
--        error_setg(errp, "failed to read '%s': %s", path, err->message);
--        return NULL;
--    }
--
--    return g_strsplit(contents, "\n", -1);
--
--}
--
- void
- qmp_guest_ssh_add_authorized_keys(const char *username, strList *keys,
-                                   bool has_reset, bool reset,
-diff --git a/qga/meson.build b/qga/meson.build
-index 1c3d2a3d1b..4c3899751b 100644
---- a/qga/meson.build
-+++ b/qga/meson.build
-@@ -66,6 +66,7 @@ qga_ss.add(files(
-   'guest-agent-command-state.c',
-   'main.c',
-   'cutils.c',
-+  'commands-common-ssh.c'
- ))
- if host_os == 'windows'
-   qga_ss.add(files(
++type_init(e1000_init_debug)
 -- 
-2.34.1
+2.25.1
 
 
