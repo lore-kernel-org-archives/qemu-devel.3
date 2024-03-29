@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7C2C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:07:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF62CD11DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq98A-000296-3h; Fri, 29 Mar 2024 06:06:38 -0400
+	id 1rq97r-00025T-Ss; Fri, 29 Mar 2024 06:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rq97z-00026W-2A
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:28 -0400
+ id 1rq97q-00024v-Ik
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:18 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rq97x-00017E-82
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:26 -0400
+ id 1rq97o-00016H-Rt
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711706785; x=1743242785;
+ t=1711706777; x=1743242777;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=5YnpqPAXnQgSLnwyieSH2PQh+ZNUxgYyQ1OBV3sT/yg=;
- b=Ka4xH/kX4X2LeMFlVTPn+SbJM/A4y8rjnNtiknOGmvk69t+r7JBpVF4u
- PLAlxl3wM47rlQwsA+FA7ClsNTMCIe1vVGxr4Akv8+cqBSLPM2oGwfZNQ
- BKElJtTg0HH4DsqiscZdlBM82f//7/gcnilfomIsPDUtpGM9YbwXDMU3j
- xMC+NJF0REL+dq9Gqk/EhZXdIgAdEgoToejqXjvVkvIlvBy8O6/x1fKxx
- WSwnnl0RfRZDBiMWzj3fSj3hHwn57smk8umTcpwq45QwlEnROf+aETYYB
- tm6HAfew4s7ap0cQvSCdQKdQO1mGgtK5Tznlla55rL9B0iK6+gmHfDm6a Q==;
-X-CSE-ConnectionGUID: vbpDncvrSDy7HeD5LYWovA==
-X-CSE-MsgGUID: p5+2ZrGCQICvTxR76/Cpcw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="17519239"
-X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="17519239"
+ bh=YsoWb/M4LNq8Md17vTgsxsQeQ69Hei3aqAO+226S55Q=;
+ b=Vk7+KaYRFJ7aht//dKbFUdsw5DyVOBHpyLQnHDo6x1IRJw4QNFj9qJ4c
+ 6kGnxlGa7FWraAHyUdGWJRdW+jYkOk/sulfpOnyIM5/oo2OiO6yUwdR3L
+ MysdJwv9TTlJG7WXa0n42Tsgzqd4l+wS/IjEaH4qqWSCWBy3/lm8uuSZn
+ W6AJhCaB1l2N4YEGNNZR5McL0cBcXhfY8PUt3XEB2N5/rMSV4i/Dj3xW7
+ H8FuKMJP3SatNmbjUDVMjCgKDpGRVmQiq8fmIFTudMIeAPN79FEwk9AGl
+ lBYpYCIv5p+XigJHhMBUxS1ASU9bsX0Gfv5hFzMN/wDEMvJYwq0boaCGT g==;
+X-CSE-ConnectionGUID: pUie6QQIT1uMO/LNV9Vl+w==
+X-CSE-MsgGUID: fJ9Kz+epRWu/j7LpVg+jZw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="17519219"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="17519219"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 03:06:24 -0700
+ 29 Mar 2024 03:06:16 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="21441985"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="21441971"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 29 Mar 2024 03:06:21 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 29 Mar 2024 03:06:13 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -52,10 +52,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Tim Wiederhake <twiederh@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH for-9.1 6/7] target/i386: Fix duplicated kvmclock name in
- FEAT_KVM
-Date: Fri, 29 Mar 2024 18:19:53 +0800
-Message-Id: <20240329101954.3954987-7-zhao1.liu@linux.intel.com>
+Subject: [PATCH for-9.1 3/7] target/i386/kvm: Only Save/load kvmclock MSRs
+ when kvmclock enabled
+Date: Fri, 29 Mar 2024 18:19:50 +0800
+Message-Id: <20240329101954.3954987-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
 References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
@@ -84,90 +84,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tim Wiederhake <twiederh@redhat.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-The commit 642258c6c7 ("kvm: add kvmclock to its second bit") gave the
-old and new kvmclocks with the same name "kvmclock", to facilitate user
-to set/unset the feature bits for both 2 kvmclock features together.
+MSR_KVM_SYSTEM_TIME and MSR_KVM_WALL_CLOCK are attached with the (old)
+kvmclock feature (KVM_FEATURE_CLOCKSOURCE).
 
-This could work because:
-* QEMU side:
-  - x86_cpu_register_bit_prop() supports "the same property name can be
-    registered multiple times to make it affect multiple bits in the
-    same FeatureWord".
-* KVM side:
-  - The only difference between 2 version kvmclocks is their MSRs have
-    different addresses.
-  - When 2 kvmclocks are both enabled, KVM will prioritize the use of
-    new kvmclock's MSRs.
+So, just save/load them only when kvmclock (KVM_FEATURE_CLOCKSOURCE) is
+enabled.
 
-However, there're reasons we need give the second kvmclock a new name:
-* Based on the KVM mechanism, it doesn't make sense to bind two
-  kvmclocks together. Since kvmclock is enabled by default in most cases
-  as a KVM PV feature, the benefit of the same naming is reflected in
-  the fact that -kvmclock can disable both. But, following the KVM
-  interface style (i.e., separating the two kvmclocks) is clearly
-  clearer to the user.
-* For developers, identical names have been creating confusion along
-  with persistent doubts about the naming.
-* FeatureWordInfo should define names based on hardware/Host CPUID bit,
-  and the name is used to distinguish the bit.
-* User actions based on +/- feature names should only work on
-  independent feature bits. The common effect of multiple features
-  should be controlled by an additional CPU property or additional code
-  logic to show the association between different feature bits.
-* The old kvmclock will eventually be removed. Different naming can ease
-  the burden of future cleanups.
-
-Therefore, rename the new kvmclock feature as "kvmclock2".
-
-Additionally, add "kvmclock2" entry in kvm_default_props[] since the
-oldest kernel supported by QEMU (v4.5) has supported the new kvm clock.
-
-Signed-off-by: Tim Wiederhake <twiederh@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Based on Tim's original patch, rewrote the commit message and added the
-tiny fix for compatibility.
----
- target/i386/cpu.c         | 2 +-
- target/i386/kvm/kvm-cpu.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ target/i386/kvm/kvm.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1b6caf071a6d..0a1dac60f5de 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -855,7 +855,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-     [FEAT_KVM] = {
-         .type = CPUID_FEATURE_WORD,
-         .feat_names = {
--            "kvmclock", "kvm-nopiodelay", "kvm-mmu", "kvmclock",
-+            "kvmclock", "kvm-nopiodelay", "kvm-mmu", "kvmclock2",
-             "kvm-asyncpf", "kvm-steal-time", "kvm-pv-eoi", "kvm-pv-unhalt",
-             NULL, "kvm-pv-tlb-flush", "kvm-asyncpf-vmexit", "kvm-pv-ipi",
-             "kvm-poll-control", "kvm-pv-sched-yield", "kvm-asyncpf-int", "kvm-msi-ext-dest-id",
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index ae3cb27c8aa8..753f90c18bd6 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -77,7 +77,7 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
- 
-     if (cpu->legacy_kvmclock) {
-         /*
--         * The old and new kvmclock are both set by default from the
-+         * The kvmclock and kvmclock2 are both set by default from the
-          * oldest KVM supported (v4.5, see "OS requirements" section at
-          * docs/system/target-i386.rst). So when one of them is missing,
-          * it is only possible that the user is actively masking it.
-@@ -179,6 +179,7 @@ static void kvm_cpu_xsave_init(void)
-  */
- static PropValue kvm_default_props[] = {
-     { "kvmclock", "on" },
-+    { "kvmclock2", "on" },
-     { "kvm-nopiodelay", "on" },
-     { "kvm-asyncpf", "on" },
-     { "kvm-steal-time", "on" },
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index be88339fb8bd..498580d60c3b 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3319,8 +3319,10 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+      */
+     if (level >= KVM_PUT_RESET_STATE) {
+         kvm_msr_entry_add(cpu, MSR_IA32_TSC, env->tsc);
+-        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
+-        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
++        if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_CLOCK) {
++            kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
++            kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
++        }
+         if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_ASYNCPF_INT) {
+             kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
+         }
+@@ -3784,8 +3786,10 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_LSTAR, 0);
+     }
+ #endif
+-    kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
+-    kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
++    if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_CLOCK) {
++        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
++        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
++    }
+     if (env->features[FEAT_KVM] & CPUID_FEAT_KVM_ASYNCPF_INT) {
+         kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
+     }
 -- 
 2.34.1
 
