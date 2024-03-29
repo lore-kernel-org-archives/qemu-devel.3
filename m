@@ -4,158 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF04C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 08:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733BFCD11DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 09:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq80O-0002S6-Qf; Fri, 29 Mar 2024 04:54:32 -0400
+	id 1rq8Mt-0005zr-JH; Fri, 29 Mar 2024 05:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.w.wang@intel.com>)
- id 1rq80M-0002Ri-26
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 04:54:30 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rq8Ms-0005zG-6V
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 05:17:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.w.wang@intel.com>)
- id 1rq80J-0001bA-BB
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 04:54:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711702467; x=1743238467;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=7DxA88E0jFOaBFmYPd8edxO2axD1KXp7GDx+6deIByo=;
- b=OfSfSGO6pr/b0nF5s6md37XfI5qqCeEFepjqQjfbCUgapESAGGi7iciq
- 6n4Y3+N2GcOGV2cIY+uDXWvq1hRwbdVw0BpRHu4VdYhAZNmiLIs3YnK3i
- HeEIBwKWUjl2J0Gnc22GLXNCpSpsTV+8que0UfeRUwhoZXqPNoOd2ttzH
- AqvXUMnI3KiQAeRjDGoUHuBSZH2Gm0ONpv8JjiekpnlMpaxHhvWTzLL/o
- VoBk/Umccg6Bt4dZZ6yHfnw91LfL3+cMZoGrEEUa1gyWj5bjhEF3nT3vb
- e1vA0+v09TvXyjfBh+zj6ris6waf69IF50izcDuSYheaLJFXBNmx3e3Gq Q==;
-X-CSE-ConnectionGUID: SQGs2Bf/QE6fCzYtUqfDaA==
-X-CSE-MsgGUID: JY49TgYlRySF546QZI2eog==
-X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="24381253"
-X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="24381253"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 01:54:10 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="48127742"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
- by fmviesa001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 29 Mar 2024 01:54:10 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 29 Mar 2024 01:54:10 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 29 Mar 2024 01:54:10 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Fri, 29 Mar 2024 01:54:10 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.168)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Fri, 29 Mar 2024 01:54:09 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FHbGN0/X/4RJ2AGB2DQgfgMUqKaTT1UcW9ECx4TzBaoVJc5Gy8u801MKxKYIlC4BA+3xaS7ZKHWwy+w5HMXER3Jer5vJNDi1IQ4G+pJShAfJA3s4D0RePa9kn7Nn9DKcp/rLs1maTgnMNkToka59r48jNTWfRrk/8U96aA4UUDO8HC8Qtg0ZXwe0lzgunR3st5jGqSZnNxmVQRiwwuId2wGzdH7lvCsLtjiGLGJIGDRh8xdhU4Mo0qOVvr7R+nGOc8fmvTRDOUHTjmvPW5vGqrKjECM98/9OVaeU3VA277vfyJBHGaDmFDQ0yXbfmNx2jrip8YHsLfROfJHEmN/bVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5Msp8kZXKO8HlQy4hV2pHBy4sRcUv+fZd92UHpDRfR0=;
- b=InaJhlVjvhDIIwQFJahW/DXzgjPA9NwGEv/hYUFADQdlOleOwrdaBZfFaKiVtRRXfhOINKyG+xEpLgvswX0zq9sQ9ab+A1TMyG9TDExv0SD0GkHe3sSunqgZWrsQ8Sp6SVFLYHnQiLq81nkcUpwSMGEkw0BzIaS/HxilvtLrxRus7he5Q+H3lQ/Kyfo15mjxMVgcBh4iEXFBVQc4qr/g3lFqt7XzZbMH8es4yHZjArqcu64Yw/lgUOGdFAap6tWC0MiqSGJGD06+MPrzMJqo/kT4mZosl3ogLNQaS0+dwqAGULOdvGAEbmZfFsgwGdPhoEcqz2iPCyZtB5cyyqiluA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from DS0PR11MB6373.namprd11.prod.outlook.com (2603:10b6:8:cb::20) by
- MW4PR11MB8289.namprd11.prod.outlook.com (2603:10b6:303:1e8::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7409.24; Fri, 29 Mar 2024 08:54:07 +0000
-Received: from DS0PR11MB6373.namprd11.prod.outlook.com
- ([fe80::55de:b95:2c83:7e6c]) by DS0PR11MB6373.namprd11.prod.outlook.com
- ([fe80::55de:b95:2c83:7e6c%7]) with mapi id 15.20.7409.031; Fri, 29 Mar 2024
- 08:54:07 +0000
-From: "Wang, Wei W" <wei.w.wang@intel.com>
-To: "Wang, Lei4" <lei4.wang@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "peterx@redhat.com" <peterx@redhat.com>, "farosas@suse.de"
- <farosas@suse.de>
-Subject: RE: [PATCH] migration: Yield coroutine when receiving
- MIG_CMD_POSTCOPY_LISTEN
-Thread-Topic: [PATCH] migration: Yield coroutine when receiving
- MIG_CMD_POSTCOPY_LISTEN
-Thread-Index: AQHagYmyxUL+r+eN+kO1eb/5c5VPirFOUHtQ
-Date: Fri, 29 Mar 2024 08:54:07 +0000
-Message-ID: <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
-References: <20240329033205.26087-1-lei4.wang@intel.com>
-In-Reply-To: <20240329033205.26087-1-lei4.wang@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS0PR11MB6373:EE_|MW4PR11MB8289:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: a2XcApa12MPLWGxRSzE3I0Jl675LdUJxwySIgtzg1eDCSHldRIO/z6C/JzJ+G5ueYSHOTsCv1dZDS9gEPwXxEq0Q9hGQxL66ueMuoep+60Z3RSkXzhvn6lnSgII+XWQDcEnkcQ+2Ibr0LU2juxoqJqEwjC+eVKUnoPyumzI3mmYWRPy5a3DzyiZRx3njw3kDh+DMEW8HlEkRMKVLaHg6G2WkM44sfa85aVP04n02n7i1QzjqIBNbLT8qanCbylLbG2HYdQOx/G7VyAQv0zyiZNQ+byNL7Z6hgxzTEKe8+8oOlE3v7rpYnXPvB6XyS/l/PgGLdvftB2hXjPMz4+IQQ4kIguFFtCBHXQOsIBZ/vc51tRprEoiZ+WjFw3FUQLYrzxWbrWdHeHQrSDBEC08j+DbGH+xKv0QDsF8NNq3tbQsHT1tJCg7WVGGYdautCjB4dyGa3l/s3r3Ncimj9GFyT/e2yJ+jQ0Tr90A4C8G+YYQRQ4PJRuAYOtNfSBkeUqLCiBFRHt9yf8N2DEx9DH+hopLb+5YAxbDIXXTRKkqtF5b1VwvmATMaucmNbkFTMfbSJZfwY5YHeSIJTrAYE0oM/KCSdc92Z4HF//WpKYP/z2f4zVr4co3C0vSWavv3b86D41ptgdFTz1sA4WTeXHN2/R/3Xhg+6ra/ArirT7QLBhw=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS0PR11MB6373.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(366007); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?SCCNt6eGf9Jc4Dp+CXK6fIZUP+h+VFVziqETw9ZlGUh7xwQm0ZBqPHwl0ko5?=
- =?us-ascii?Q?b+bGWquTeE590HSNE1VW99mXxhmWGQa+WORXSwV9KMUnQ5gOyHJk/prv0dbR?=
- =?us-ascii?Q?19iDX/mRMxPWL3kvAs4sBAwVX+tjqWFRKY+Szp3CV+booxXNmckzMgLBOM+Y?=
- =?us-ascii?Q?UDQb95BvcJskPQ1gbLjwTtNP2vDCAmoItj2Y+Wdy7SvLoLju43FLjSLg8CU7?=
- =?us-ascii?Q?tRF/IYK33xWv2uHJwdaZ6r+glHRADJ98x1IMBqbs8sm8tVqmPo9KMmozqUWm?=
- =?us-ascii?Q?dIe6HXKBHg0d6FAmg7tGlXm4jCw3rnKuKJJj5PT+YguoVxJDLEtuH0IZml/x?=
- =?us-ascii?Q?lkIctz8kbFwoZ3SK8uCLlZ1fwjaxWcLbNz15oS24BBFXHXhrGKEsZYgfRd7d?=
- =?us-ascii?Q?Seqx+ssgt0zE/ZGDNftzcMfvDsghF4nutH4a57rfQekkhH5giOyhBzKINOVv?=
- =?us-ascii?Q?KNSMQ3ywtEuc+HcRNBh7NKzFohyKHfUvJp/djl/ppCx6+mRmO7paMfsXReu0?=
- =?us-ascii?Q?Y90MuIcbht19J2q/BcT8vR7xCCkYIjQgc+yr/aBOL3UTrDyYJXlbQVK6Al2T?=
- =?us-ascii?Q?qcmceRFTYeQk7lUt8aSH5l66kA42CuRF+Srf3aZSPgxcf1ye4IJSTAPi4gDa?=
- =?us-ascii?Q?cOTsh1SoV8voLB6AReCOBk7JZTUjOlm36W6SV44dojZthIT4En/Lu/ICGm+e?=
- =?us-ascii?Q?X57nnOkp6NiRooTL5zJ4nx+6smF3ASpkUzv674vhSh2gZzhyZwSHDKNJzmez?=
- =?us-ascii?Q?sH25bdx4kddFiDgYBx/SiYwGIFPeGfbDiIdOBUQRZgeFVpp+lX2NQj2+AJXc?=
- =?us-ascii?Q?rtieF2PuyLpCC8Ks5K8ewb6QCCCYozCZG94hf1vZaTZhY+9kxXMUknwiKV/t?=
- =?us-ascii?Q?TeUGXdEMxxqSQW0+R5Zoh/yQ1j3jJC3UQUORP6EEea0iG6sCE7g00n4oFRrf?=
- =?us-ascii?Q?rTy0SAMUrIsjQyQ47SrQBiAW0HL6PpeKeq59QpgO6FKgwCj9mG8sKb8aml9l?=
- =?us-ascii?Q?EYzzLnGXRmMWkHwPzsw5AMBBYxcI76Ug3xW3SaCjyCIN2xiAAcxAxCCYJaiZ?=
- =?us-ascii?Q?CJutotzUl7V+OpQxRD32SG89r7KNdZMTYpC5PIs5rJi119rT+ogfOGnggoux?=
- =?us-ascii?Q?OzlOODEqNuhRmMeA0c2jJ0Ox0QLLtnERnY8RNNAilwnNGDlcX6fIS/+7Qjzb?=
- =?us-ascii?Q?Jon7dOga6k7jo6dzSWN74Fq90lv0IT0zFN/VYQlB2Vh2gDVju0Mj3cyrZom1?=
- =?us-ascii?Q?SD7uyDXgBBGKnyRzKq2VNYtKEn/mKUvz+zoyGtKmGkMzx+p7ZyLUIX09k52w?=
- =?us-ascii?Q?shSeZI3iyvgJJ42pHnAx7InH3dn0z4KdPFmrVmPPjS6PHMotJ0cn+vL8qUVk?=
- =?us-ascii?Q?VqYN6LLiBO8qVkzNWRVT7KQEQvRHAaUNf64kYDrh1yafXiIiWWpjAObCwmeC?=
- =?us-ascii?Q?dkmaMSX61Kz7yNmpXJQBmauQtPz/uhdFOTimi9/+TWRRrgAlDKVGJkxeZKID?=
- =?us-ascii?Q?IOZV4wLE+jPkWXSvR3R+7aNNFSdCcjNPzsuhFlrlJ8cjX7idNUzyh+TwifdM?=
- =?us-ascii?Q?iXiJL2ZLSpiDxVrGdeaIGMxBXI2gZc4K+YpDyxMt?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rq8Mq-0006HF-2z
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 05:17:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711703861;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zLlTag7zAekgbagmIw8mbm18yzUY9EFJ0TfikZDTNPw=;
+ b=cwqDAzhu2ac9dEZA+b6MeFNtTcYm0pptqadhhG0Hkm8389N0oXFMS17Yxrq6qnlwwAQsai
+ YakQIZwODJPPF3dr4T6IUzRvx2b/5w+59DpM1D2j+SC4K/Gpkitw2OGoI+nWI6lexwuQmS
+ +U8/iGxDB3o5mSpQNMhPcfx2AwjN2Yk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640--MPWjVFgNgKjucJcIO6ZgA-1; Fri, 29 Mar 2024 05:17:39 -0400
+X-MC-Unique: -MPWjVFgNgKjucJcIO6ZgA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3419f517aceso804704f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 02:17:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711703858; x=1712308658;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zLlTag7zAekgbagmIw8mbm18yzUY9EFJ0TfikZDTNPw=;
+ b=AagMg0UTeM9n0GQyP3Yrp2YEyUr/uDmPi1H8OnGNQTfj8qrO+IkffAu8hNXSEbNPfT
+ Kqc45K5YhLaOoZNAyad7Y2JP4X5eE81DX7oB9Nrm3a9Punwf/XJadwgWOLjflHF07rR2
+ VsLSScAjcu1aZpl+BsRmwXTYDJ0v/O34XdxMzEVFWL5XCwk31JQJ+81HZObkk32gXJax
+ tq5dliwKuoFcgFr98zmOdC9sukJvjr+0vLWzBoHRUHvaFho3ALWy/iKqQ/0mwcOyEwZt
+ Y1uj6LUO+HFPUeNE6O5aCYIZzCdTj1RUlVir5ACAIWfYneL6wzFXH3xxFBuZeUajOowu
+ QQWw==
+X-Gm-Message-State: AOJu0Yw5jOo2ToSXQTUkUhtNowU5Okdv9+ZKQ9ElVWnsj9hhr7pgIhzo
+ trox9JHmRWGm7Cs7qKfaSX/+6SPC8eYzWzG/cmmqgGUiDGHanH3uyyYdgImXuednMwbBrMWmBzG
+ MSVNgAlk540+OHsHgToGYa9snaxQhqvZ3PYECsqQ9i7A3UtHj4aQU
+X-Received: by 2002:a05:6000:366:b0:33e:c389:69ff with SMTP id
+ f6-20020a056000036600b0033ec38969ffmr864974wrf.68.1711703858264; 
+ Fri, 29 Mar 2024 02:17:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGTyhRGICXbOTjkDKJhe8gKToavRFoY4b0C0k4aX0IC1e/LJzugAgbLdlTF3D9d+f35ASogIQ==
+X-Received: by 2002:a05:6000:366:b0:33e:c389:69ff with SMTP id
+ f6-20020a056000036600b0033ec38969ffmr864942wrf.68.1711703857708; 
+ Fri, 29 Mar 2024 02:17:37 -0700 (PDT)
+Received: from redhat.com ([2.52.20.36]) by smtp.gmail.com with ESMTPSA id
+ by7-20020a056000098700b0033ec94c6277sm3738954wrb.115.2024.03.29.02.17.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Mar 2024 02:17:37 -0700 (PDT)
+Date: Fri, 29 Mar 2024 05:17:32 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ Peter Xu <peterx@redhat.com>, integration@gluster.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org, Hanna Reitz <hreitz@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH-for-9.1 v2 0/3] rdma: Remove RDMA subsystem and pvrdma
+ device
+Message-ID: <20240329051727-mutt-send-email-mst@kernel.org>
+References: <20240328130255.52257-1-philmd@linaro.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB6373.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8dce7f15-ebe7-4578-3b03-08dc4fcdcb40
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Mar 2024 08:54:07.6318 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: L+wzIsYwAsr1qlRmBLmv5UsHt6ZL3tUR77OzOLAJf9liQhEUuMph3WZZlsEdlDS6B0FKZ6v6ToyDAN6nBYq0Nw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB8289
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=wei.w.wang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240328130255.52257-1-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,95 +109,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, March 29, 2024 11:32 AM, Wang, Lei4 wrote:
-> When using the post-copy preemption feature to perform post-copy live
-> migration, the below scenario could lead to a deadlock and the migration =
-will
-> never finish:
->=20
->  - Source connect() the preemption channel in postcopy_start().
->  - Source and the destination side TCP stack finished the 3-way handshake
->    thus the connection is successful.
->  - The destination side main thread is handling the loading of the bulk R=
-AM
->    pages thus it doesn't start to handle the pending connection event in =
-the
->    event loop. and doesn't post the semaphore postcopy_qemufile_dst_done =
-for
->    the preemption thread.
->  - The source side sends non-iterative device states, such as the virtio
->    states.
->  - The destination main thread starts to receive the virtio states, this
->    process may lead to a page fault (e.g., virtio_load()->vring_avail_idx=
-()
->    may trigger a page fault since the avail ring page may not be received
->    yet).
->  - The page request is sent back to the source side. Source sends the pag=
-e
->    content to the destination side preemption thread.
->  - Since the event is not arrived and the semaphore
->    postcopy_qemufile_dst_done is not posted, the preemption thread in
->    destination side is blocked, and cannot handle receiving the page.
->  - The QEMU main load thread on the destination side is stuck at the page
->    fault, and cannot yield and handle the connect() event for the
->    preemption channel to unblock the preemption thread.
->  - The postcopy will stuck there forever since this is a deadlock.
->=20
-> The key point to reproduce this bug is that the source side is sending pa=
-ges at a
-> rate faster than the destination handling, otherwise, the qemu_get_be64()=
- in
-> ram_load_precopy() will have a chance to yield since at that time there a=
-re no
-> pending data in the buffer to get. This will make this bug harder to be
-> reproduced.
->=20
-> Fix this by yielding the load coroutine when receiving
-> MIG_CMD_POSTCOPY_LISTEN so the main event loop can handle the
-> connection event before loading the non-iterative devices state to avoid =
-the
-> deadlock condition.
->=20
-> Signed-off-by: Lei Wang <lei4.wang@intel.com>
+On Thu, Mar 28, 2024 at 02:02:52PM +0100, Philippe Mathieu-Daudé wrote:
+> Since v1:
+> - split in 3 (Thomas)
+> - justify gluster removal
 
-This seems to be a regression issue caused by this commit:
-737840e2c6ea (migration: Use the number of transferred bytes directly)
 
-Adding qemu_fflush back to migration_rate_exceeded() or ram_save_iterate
-seems to work (might not be a good fix though).
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-> ---
->  migration/savevm.c | 5 +++++
->  1 file changed, 5 insertions(+)
->=20
-> diff --git a/migration/savevm.c b/migration/savevm.c index
-> e386c5267f..8fd4dc92f2 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2445,6 +2445,11 @@ static int loadvm_process_command(QEMUFile *f)
->          return loadvm_postcopy_handle_advise(mis, len);
->=20
->      case MIG_CMD_POSTCOPY_LISTEN:
-> +        if (migrate_postcopy_preempt() && qemu_in_coroutine()) {
-> +            aio_co_schedule(qemu_get_current_aio_context(),
-> +                            qemu_coroutine_self());
-> +            qemu_coroutine_yield();
-> +        }
-
-The above could be moved to loadvm_postcopy_handle_listen().
-
-Another option is to follow the old way (i.e. pre_7_2) to do postcopy_preem=
-pt_setup
-in migrate_fd_connect. This can save the above overhead of switching to the
-main thread during the downtime. Seems Peter's previous patch already solve=
-d the
-channel disordering issue. Let's see Peter and others' opinions.
-
->          return loadvm_postcopy_handle_listen(mis);
->=20
-
->      case MIG_CMD_POSTCOPY_RUN:
-> --
-> 2.39.3
+> Philippe Mathieu-Daudé (3):
+>   hw/rdma: Remove pvrdma device and rdmacm-mux helper
+>   migration: Remove RDMA protocol handling
+>   block/gluster: Remove RDMA protocol handling
+> 
+>  MAINTAINERS                                   |   17 -
+>  docs/about/deprecated.rst                     |    9 -
+>  docs/about/removed-features.rst               |    4 +
+>  docs/devel/migration/main.rst                 |    6 -
+>  docs/pvrdma.txt                               |  345 --
+>  docs/rdma.txt                                 |  420 --
+>  docs/system/device-url-syntax.rst.inc         |    4 +-
+>  docs/system/loongarch/virt.rst                |    2 +-
+>  docs/system/qemu-block-drivers.rst.inc        |    1 -
+>  meson.build                                   |   59 -
+>  qapi/machine.json                             |   17 -
+>  qapi/migration.json                           |   31 +-
+>  qapi/qapi-schema.json                         |    1 -
+>  qapi/rdma.json                                |   38 -
+>  contrib/rdmacm-mux/rdmacm-mux.h               |   61 -
+>  hw/rdma/rdma_backend.h                        |  129 -
+>  hw/rdma/rdma_backend_defs.h                   |   76 -
+>  hw/rdma/rdma_rm.h                             |   97 -
+>  hw/rdma/rdma_rm_defs.h                        |  146 -
+>  hw/rdma/rdma_utils.h                          |   63 -
+>  hw/rdma/trace.h                               |    1 -
+>  hw/rdma/vmw/pvrdma.h                          |  144 -
+>  hw/rdma/vmw/pvrdma_dev_ring.h                 |   46 -
+>  hw/rdma/vmw/pvrdma_qp_ops.h                   |   28 -
+>  hw/rdma/vmw/trace.h                           |    1 -
+>  include/hw/rdma/rdma.h                        |   37 -
+>  include/monitor/hmp.h                         |    1 -
+>  .../infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h |  685 ---
+>  .../infiniband/hw/vmw_pvrdma/pvrdma_verbs.h   |  348 --
+>  .../standard-headers/rdma/vmw_pvrdma-abi.h    |  310 --
+>  migration/migration-stats.h                   |    6 +-
+>  migration/migration.h                         |    9 -
+>  migration/options.h                           |    2 -
+>  migration/rdma.h                              |   69 -
+>  block/gluster.c                               |   39 -
+>  contrib/rdmacm-mux/main.c                     |  831 ----
+>  hw/core/machine-qmp-cmds.c                    |   32 -
+>  hw/rdma/rdma.c                                |   30 -
+>  hw/rdma/rdma_backend.c                        | 1401 ------
+>  hw/rdma/rdma_rm.c                             |  812 ----
+>  hw/rdma/rdma_utils.c                          |  126 -
+>  hw/rdma/vmw/pvrdma_cmd.c                      |  815 ----
+>  hw/rdma/vmw/pvrdma_dev_ring.c                 |  141 -
+>  hw/rdma/vmw/pvrdma_main.c                     |  735 ---
+>  hw/rdma/vmw/pvrdma_qp_ops.c                   |  298 --
+>  migration/migration-stats.c                   |    5 +-
+>  migration/migration.c                         |   31 -
+>  migration/options.c                           |   16 -
+>  migration/qemu-file.c                         |    1 -
+>  migration/ram.c                               |   86 +-
+>  migration/rdma.c                              | 4184 -----------------
+>  migration/savevm.c                            |    2 +-
+>  monitor/qmp-cmds.c                            |    1 -
+>  Kconfig.host                                  |    3 -
+>  contrib/rdmacm-mux/meson.build                |    7 -
+>  hmp-commands-info.hx                          |   13 -
+>  hw/Kconfig                                    |    1 -
+>  hw/meson.build                                |    1 -
+>  hw/rdma/Kconfig                               |    3 -
+>  hw/rdma/meson.build                           |   12 -
+>  hw/rdma/trace-events                          |   31 -
+>  hw/rdma/vmw/trace-events                      |   17 -
+>  meson_options.txt                             |    4 -
+>  migration/meson.build                         |    1 -
+>  migration/trace-events                        |   68 +-
+>  qapi/meson.build                              |    1 -
+>  qemu-options.hx                               |    6 -
+>  .../org.centos/stream/8/build-environment.yml |    1 -
+>  .../ci/org.centos/stream/8/x86_64/configure   |    3 -
+>  scripts/ci/setup/build-environment.yml        |    4 -
+>  scripts/coverity-scan/run-coverity-scan       |    2 +-
+>  scripts/meson-buildoptions.sh                 |    6 -
+>  scripts/update-linux-headers.sh               |   27 -
+>  tests/lcitool/projects/qemu.yml               |    3 -
+>  tests/migration/guestperf/engine.py           |    4 +-
+>  75 files changed, 20 insertions(+), 12997 deletions(-)
+>  delete mode 100644 docs/pvrdma.txt
+>  delete mode 100644 docs/rdma.txt
+>  delete mode 100644 qapi/rdma.json
+>  delete mode 100644 contrib/rdmacm-mux/rdmacm-mux.h
+>  delete mode 100644 hw/rdma/rdma_backend.h
+>  delete mode 100644 hw/rdma/rdma_backend_defs.h
+>  delete mode 100644 hw/rdma/rdma_rm.h
+>  delete mode 100644 hw/rdma/rdma_rm_defs.h
+>  delete mode 100644 hw/rdma/rdma_utils.h
+>  delete mode 100644 hw/rdma/trace.h
+>  delete mode 100644 hw/rdma/vmw/pvrdma.h
+>  delete mode 100644 hw/rdma/vmw/pvrdma_dev_ring.h
+>  delete mode 100644 hw/rdma/vmw/pvrdma_qp_ops.h
+>  delete mode 100644 hw/rdma/vmw/trace.h
+>  delete mode 100644 include/hw/rdma/rdma.h
+>  delete mode 100644 include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h
+>  delete mode 100644 include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.h
+>  delete mode 100644 include/standard-headers/rdma/vmw_pvrdma-abi.h
+>  delete mode 100644 migration/rdma.h
+>  delete mode 100644 contrib/rdmacm-mux/main.c
+>  delete mode 100644 hw/rdma/rdma.c
+>  delete mode 100644 hw/rdma/rdma_backend.c
+>  delete mode 100644 hw/rdma/rdma_rm.c
+>  delete mode 100644 hw/rdma/rdma_utils.c
+>  delete mode 100644 hw/rdma/vmw/pvrdma_cmd.c
+>  delete mode 100644 hw/rdma/vmw/pvrdma_dev_ring.c
+>  delete mode 100644 hw/rdma/vmw/pvrdma_main.c
+>  delete mode 100644 hw/rdma/vmw/pvrdma_qp_ops.c
+>  delete mode 100644 migration/rdma.c
+>  delete mode 100644 contrib/rdmacm-mux/meson.build
+>  delete mode 100644 hw/rdma/Kconfig
+>  delete mode 100644 hw/rdma/meson.build
+>  delete mode 100644 hw/rdma/trace-events
+>  delete mode 100644 hw/rdma/vmw/trace-events
+> 
+> -- 
+> 2.41.0
 
 
