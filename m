@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AD8AC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE41C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqH7c-0002mg-MO; Fri, 29 Mar 2024 14:38:36 -0400
+	id 1rqH7e-0002o6-RM; Fri, 29 Mar 2024 14:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rqH7a-0002l4-J6; Fri, 29 Mar 2024 14:38:34 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1rqH7b-0002lk-Sw; Fri, 29 Mar 2024 14:38:35 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rqH7Y-0007Wm-I7; Fri, 29 Mar 2024 14:38:34 -0400
+ id 1rqH7Y-0007X0-Nz; Fri, 29 Mar 2024 14:38:35 -0400
 Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
  [IPv6:2a02:6b8:c12:5428:0:640:7351:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 7880C60BDA;
- Fri, 29 Mar 2024 21:38:26 +0300 (MSK)
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 53B3660A20;
+ Fri, 29 Mar 2024 21:38:29 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:6509::1:4])
  by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2cTaY94Id8c0-nXyM4rtK; Fri, 29 Mar 2024 21:38:25 +0300
+ ESMTPSA id 2cTaY94Id8c0-ERZcZxeb; Fri, 29 Mar 2024 21:38:28 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1711737505;
- bh=8P7NZEw9jcUgqc87Uhn1vKvB7YOes+3Qto/gE7vV5n4=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=ch2tC4p0lRhVmTEg4JeP0AYb0lQQ6Lq/p/Iy1LuaF3zAXZTUZdtKcZFdObROu7CDm
- 6eJtcBFg1ZIJnuPJGSZzlSPM+YLTVVf024T1y/wtNqaaw+KTGg5fv6W1U7/+Q6xsPD
- ftQPMiMGV+rvkRzRp55EhIcUHGtWGnEgsdwtQYdE=
+ s=default; t=1711737508;
+ bh=dkAh7R9NLEfQKIK4Kt7lmSuiosgYWtpMTO9GN4dgGG4=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=NrEY8Gxgkk0QbJvVurYFvbe4Y44JvcPbTmVfNwAMWe/3eUZJARODPIQuX836vATKd
+ RTk7JvAuDJypnnc/NW3YIN1NvxYohisWfYxN4QCAOH0sOOMdAahYMajbYq1DjKUbx5
+ VrMSpAsHf64Ufm+0yHI4/o5lPDsgIZq8+oVF56vk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,14 +45,17 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com, eduardo@habkost.net, armbru@redhat.com,
  dave@treblig.org, eblake@redhat.com, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru
-Subject: [PATCH v3 0/5] vhost-user-blk: live resize additional APIs
-Date: Fri, 29 Mar 2024 21:37:53 +0300
-Message-Id: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
+Subject: [PATCH v3 3/5] qdev-monitor: add option to report GenericError from
+ find_device_state
+Date: Fri, 29 Mar 2024 21:37:56 +0300
+Message-Id: <20240329183758.3360733-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
+References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -74,32 +77,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3:
-02: add r-b by Markus
-03: improve commit message
-04: improve documentation, merge race-fix here (which was v2:05),
-    rebase on master (migration_is_running() now without arguments)
-05: improve documentation
+Here we just prepare for the following patch, making possible to report
+GenericError as recommended.
 
-Vladimir Sementsov-Ogievskiy (5):
-  vhost-user-blk: simplify and fix vhost_user_blk_handle_config_change
-  qdev-monitor: fix error message in find_device_state()
-  qdev-monitor: add option to report GenericError from find_device_state
-  qapi: introduce device-sync-config
-  qapi: introduce CONFIG_READ event
+This patch doesn't aim to prevent further use of DeviceNotFound by
+future interfaces:
 
- hw/block/vhost-user-blk.c | 32 +++++++++++-------
- hw/virtio/virtio-pci.c    | 18 ++++++++++
- include/hw/qdev-core.h    |  3 ++
- include/monitor/qdev.h    |  2 ++
- include/sysemu/runstate.h |  1 +
- monitor/monitor.c         |  1 +
- qapi/qdev.json            | 54 ++++++++++++++++++++++++++++++
- stubs/qdev.c              |  6 ++++
- system/qdev-monitor.c     | 70 ++++++++++++++++++++++++++++++++++++---
- system/runstate.c         |  5 +++
- 10 files changed, 175 insertions(+), 17 deletions(-)
+ - find_device_state() is used in blk_by_qdev_id() and qmp_get_blk()
+   functions, which may lead to spread of DeviceNotFound anyway
+ - also, nothing prevent simply copy-pasting find_device_state() calls
+   with false argument
 
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ system/qdev-monitor.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 840177d19f..7e075d91c1 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -878,13 +878,20 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
+     object_unref(OBJECT(dev));
+ }
+ 
+-static DeviceState *find_device_state(const char *id, Error **errp)
++/*
++ * Note that creating new APIs using error classes other than GenericError is
++ * not recommended. Set use_generic_error=true for new interfaces.
++ */
++static DeviceState *find_device_state(const char *id, bool use_generic_error,
++                                      Error **errp)
+ {
+     Object *obj = object_resolve_path_at(qdev_get_peripheral(), id);
+     DeviceState *dev;
+ 
+     if (!obj) {
+-        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
++        error_set(errp,
++                  (use_generic_error ?
++                   ERROR_CLASS_GENERIC_ERROR : ERROR_CLASS_DEVICE_NOT_FOUND),
+                   "Device '%s' not found", id);
+         return NULL;
+     }
+@@ -948,7 +955,7 @@ void qdev_unplug(DeviceState *dev, Error **errp)
+ 
+ void qmp_device_del(const char *id, Error **errp)
+ {
+-    DeviceState *dev = find_device_state(id, errp);
++    DeviceState *dev = find_device_state(id, false, errp);
+     if (dev != NULL) {
+         if (dev->pending_deleted_event &&
+             (dev->pending_deleted_expires_ms == 0 ||
+@@ -1068,7 +1075,7 @@ BlockBackend *blk_by_qdev_id(const char *id, Error **errp)
+ 
+     GLOBAL_STATE_CODE();
+ 
+-    dev = find_device_state(id, errp);
++    dev = find_device_state(id, false, errp);
+     if (dev == NULL) {
+         return NULL;
+     }
 -- 
 2.34.1
 
