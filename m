@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71765CD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 17:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BCDAC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 17:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqGIL-0007ar-2F; Fri, 29 Mar 2024 13:45:37 -0400
+	id 1rqGJE-0001BK-UI; Fri, 29 Mar 2024 13:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rqGII-0007aH-TO; Fri, 29 Mar 2024 13:45:34 -0400
-Received: from zproxy4.enst.fr ([137.194.2.223])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rqGIH-0007rY-1Z; Fri, 29 Mar 2024 13:45:34 -0400
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id CF42C207CB;
- Fri, 29 Mar 2024 18:45:30 +0100 (CET)
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id vtGv8H6CP1av; Fri, 29 Mar 2024 18:45:29 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 85C06207DE;
- Fri, 29 Mar 2024 18:45:29 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 85C06207DE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1711734329;
- bh=VHBafg/gnuufeOsZilZdutHluX7p++PX8OqXqO4Hjt4=;
- h=From:To:Date:Message-Id:MIME-Version;
- b=kmpbs3yG1/5KLA9Lv0rmA3JHNPXYRfENOG5OcRNO4+enH1rqIwmkriF9t6VKFxvFX
- SJASVa1VqqoCHeLZRmGQiQYkri1fsqgQy6eeHVBGy2AVpkmkmpBRMuxmuB196ollTf
- 04aZoN0EyMpOp94ItzF1tRE6ORbf3AHSvCgfbvwE=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id KPhMYghEQoKA; Fri, 29 Mar 2024 18:45:29 +0100 (CET)
-Received: from AM-Inspiron-3585.. (unknown [78.209.135.136])
- by zproxy4.enst.fr (Postfix) with ESMTPSA id BD467207A9;
- Fri, 29 Mar 2024 18:45:27 +0100 (CET)
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
- Alistair Francis <alistair@alistair23.me>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 3/5] hw/char/stm32l4x5_usart: Add options for serial
- parameters setting
-Date: Fri, 29 Mar 2024 18:44:00 +0100
-Message-Id: <20240329174402.60382-4-arnaud.minier@telecom-paris.fr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240329174402.60382-1-arnaud.minier@telecom-paris.fr>
-References: <20240329174402.60382-1-arnaud.minier@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqGJC-0001Ao-8s
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:46:30 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqGJA-0007vw-QN
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:46:30 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1e228c12468so8126965ad.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 10:46:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711734387; x=1712339187; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Tx9sPfLzUllwKuaJ6ZjHHdJA3myL7EJw/yx5Rm8D4q4=;
+ b=CZmA85/0tlBl0SsTPUpuxLDNDTR/xtBSwnYCZ3rg6QGXLupEdq6ioppcuz3rMKfMM8
+ 8r2uBj0E+h2TZF4dyr+NeO0oOutT0uEp/YamEM6Vt2phixHtJNQXE8X4vk7NmkAMI02c
+ U21+1JpRMKsX7/wZQ3K5FTcaOpAyi/xSebO87j0bGDU4+Xx59CDkL4mq+fvBqVS5weMO
+ U9mNGTMRkx4b1ZKSEmSe8iIrNctyEhNBQmoHNupqXEBvxr0pPN6C0pf28eQCVLlhhjm3
+ Q4ddPVDPUBgyqVJDjL028KWhR6DGxI71gebpUmCp8tiXURNtpj1Iz+9xZbgfkHgLzolG
+ NXlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711734387; x=1712339187;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tx9sPfLzUllwKuaJ6ZjHHdJA3myL7EJw/yx5Rm8D4q4=;
+ b=eHnvDZqG1PKmpvCblCFf4YiT5yn4B943PRerJEpZHLYF0y9sT6cZxEnlmrkZqtPnpD
+ 23husyIBdPYhqGxHk3AXqZVCHGNf3inew4y7cstggIlQYvMsRCwsBTgmIjT3DDv/ZKTY
+ ejJkYIErIDkt2qLFW1/z22UEDznVWfeyVYpXgNPHgluioGQOml0s3B09aUGq6e7z+vk6
+ JL5Bdm2R51jFgm0Ged1FSbqkLjurj4EsaCewD49TIV+sK6Li4Gr7CpLAsJkDsX3DrPKp
+ A8eV0QMHNQOZb0q19iI1MnlzB3gtvuuwewfrxw4npv28//RLCyl1jQ19thLasyaijJ6U
+ X3cQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZkRJ9MdRlBZSjWr+i73+HwTFEnk//VXPp/avAodth2FOiK9HjoQr/fzojY3GRvqDU+2zgPg03meleqJ9lSgaCDnuP2ek=
+X-Gm-Message-State: AOJu0Yz5ON80hjT5k8YciPZrJNhK0cMTmdyHDjpnM+BGXypS2Zaq/HoB
+ NIV5eGGMLnRdxHlQfwYzI2LucOUVIBVCgq8pcuNkl5h2T+W/NTkfY0ixYcJV18c=
+X-Google-Smtp-Source: AGHT+IEVHJ/q7IK07Sp4jm6/hY5jM/WCYfVjk2tQYDCDVGGvqIfGHz6asQXvNXP9my4WDBfcnRJh7Q==
+X-Received: by 2002:a17:902:e5d0:b0:1e0:c88f:654f with SMTP id
+ u16-20020a170902e5d000b001e0c88f654fmr8941420plf.33.1711734386858; 
+ Fri, 29 Mar 2024 10:46:26 -0700 (PDT)
+Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ m2-20020a170902f20200b001dce6c481c1sm3709224plc.301.2024.03.29.10.46.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Mar 2024 10:46:26 -0700 (PDT)
+Message-ID: <7e66f00d-cc69-458d-be56-266689757f68@linaro.org>
+Date: Fri, 29 Mar 2024 07:46:22 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.223;
- envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy4.enst.fr
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] e1000: Get debug flags from an environment variable
+To: Don Porter <porter@cs.unc.edu>, qemu-devel@nongnu.org
+Cc: Austin Clements <aclements@csail.mit.edu>,
+ Geoffrey Thomas <geofft@ldpreload.com>
+References: <20240329150450.2843758-1-porter@cs.unc.edu>
+ <20240329150450.2843758-2-porter@cs.unc.edu>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240329150450.2843758-2-porter@cs.unc.edu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,176 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a function to change the settings of the
-serial connection.
+On 3/29/24 05:04, Don Porter wrote:
+> From: Austin Clements <aclements@csail.mit.edu>
+> 
+> The E1000 debug messages are very useful for developing drivers, so
+> this introduces an E1000_DEBUG environment variable that lets the
+> debug flags be set without recompiling QEMU.
+> 
+> Signed-off-by: Austin Clements <aclements@csail.mit.edu>
+> [geofft@ldpreload.com: Rebased on top of 2.9.0]
+> Signed-off-by: Geoffrey Thomas <geofft@ldpreload.com>
+> Signed-off-by: Don Porter <porter@cs.unc.edu>
+...
+> -/* #define E1000_DEBUG */
+> -
+> -#ifdef E1000_DEBUG
+>   enum {
+>       DEBUG_GENERAL,      DEBUG_IO,       DEBUG_MMIO,     DEBUG_INTERRUPT,
+>       DEBUG_RX,           DEBUG_TX,       DEBUG_MDIC,     DEBUG_EEPROM,
+>       DEBUG_UNKNOWN,      DEBUG_TXSUM,    DEBUG_TXERR,    DEBUG_RXERR,
+>       DEBUG_RXFILTER,     DEBUG_PHY,      DEBUG_NOTYET,
+>   };
+> +
+> +static const char *debugnames[] = {
+> +    "GENERAL",      "IO",       "MMIO",     "INTERRUPT",
+> +    "RX",           "TX",       "MDIC",     "EEPROM",
+> +    "UNKNOWN",      "TXSUM",    "TXERR",    "RXERR",
+> +    "RXFILTER",     "PHY",      "NOTYET",   NULL
+> +};
+>   #define DBGBIT(x)    (1<<DEBUG_##x)
+>   static int debugflags = DBGBIT(TXERR) | DBGBIT(GENERAL);
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/char/stm32l4x5_usart.c | 98 +++++++++++++++++++++++++++++++++++++++
- hw/char/trace-events      |  1 +
- 2 files changed, 99 insertions(+)
+These should be converted to tracepoints.
+See docs/devel/tracing.rst.
 
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index b948a89c13..0f5ab7e0cb 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -268,6 +268,92 @@ static void usart_cancel_transmit(Stm32l4x5UsartBase=
-State *s)
-     }
- }
-=20
-+static void stm32l4x5_update_params(Stm32l4x5UsartBaseState *s)
-+{
-+    int speed, parity, data_bits, stop_bits;
-+    uint32_t value, usart_div;
-+    QEMUSerialSetParams ssp;
-+
-+    /* Select the parity type */
-+    if (s->cr1 & R_CR1_PCE_MASK) {
-+        if (s->cr1 & R_CR1_PS_MASK) {
-+            parity =3D 'O';
-+        } else {
-+            parity =3D 'E';
-+        }
-+    } else {
-+        parity =3D 'N';
-+    }
-+
-+    /* Select the number of stop bits */
-+    switch (FIELD_EX32(s->cr2, CR2, STOP)) {
-+    case 0:
-+        stop_bits =3D 1;
-+        break;
-+    case 2:
-+        stop_bits =3D 2;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+            "UNIMPLEMENTED: fractionnal stop bits; CR2[13:12] =3D %u",
-+            FIELD_EX32(s->cr2, CR2, STOP));
-+        return;
-+    }
-+
-+    /* Select the length of the word */
-+    switch ((FIELD_EX32(s->cr1, CR1, M1) << 1) | FIELD_EX32(s->cr1, CR1,=
- M0)) {
-+    case 0:
-+        data_bits =3D 8;
-+        break;
-+    case 1:
-+        data_bits =3D 9;
-+        break;
-+    case 2:
-+        data_bits =3D 7;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "UNDEFINED: invalid word length, CR1.M =3D 0b11");
-+        return;
-+    }
-+
-+    /* Select the baud rate */
-+    value =3D FIELD_EX32(s->brr, BRR, BRR);
-+    if (value < 16) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "UNDEFINED: BRR less than 16: %u", value);
-+        return;
-+    }
-+
-+    if (FIELD_EX32(s->cr1, CR1, OVER8) =3D=3D 0) {
-+        /*
-+         * Oversampling by 16
-+         * BRR =3D USARTDIV
-+         */
-+        usart_div =3D value;
-+    } else {
-+        /*
-+         * Oversampling by 8
-+         * - BRR[2:0] =3D USARTDIV[3:0] shifted 1 bit to the right.
-+         * - BRR[3] must be kept cleared.
-+         * - BRR[15:4] =3D USARTDIV[15:4]
-+         * - The frequency is multiplied by 2
-+         */
-+        usart_div =3D ((value & 0xFFF0) | ((value & 0x0007) << 1)) / 2;
-+    }
-+
-+    speed =3D clock_get_hz(s->clk) / usart_div;
-+
-+    ssp.speed     =3D speed;
-+    ssp.parity    =3D parity;
-+    ssp.data_bits =3D data_bits;
-+    ssp.stop_bits =3D stop_bits;
-+
-+    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_PARAMS, &ssp);
-+
-+    trace_stm32l4x5_usart_update_params(speed, parity, data_bits, stop_b=
-its);
-+}
-+
- static void stm32l4x5_usart_base_reset_hold(Object *obj)
- {
-     Stm32l4x5UsartBaseState *s =3D STM32L4X5_USART_BASE(obj);
-@@ -366,16 +452,19 @@ static void stm32l4x5_usart_base_write(void *opaque=
-, hwaddr addr,
-     switch (addr) {
-     case A_CR1:
-         s->cr1 =3D value;
-+        stm32l4x5_update_params(s);
-         stm32l4x5_update_irq(s);
-         return;
-     case A_CR2:
-         s->cr2 =3D value;
-+        stm32l4x5_update_params(s);
-         return;
-     case A_CR3:
-         s->cr3 =3D value;
-         return;
-     case A_BRR:
-         s->brr =3D value;
-+        stm32l4x5_update_params(s);
-         return;
-     case A_GTPR:
-         s->gtpr =3D value;
-@@ -444,10 +533,19 @@ static void stm32l4x5_usart_base_init(Object *obj)
-     s->clk =3D qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
- }
-=20
-+static int stm32l4x5_usart_base_post_load(void *opaque, int version_id)
-+{
-+    Stm32l4x5UsartBaseState *s =3D (Stm32l4x5UsartBaseState *)opaque;
-+
-+    stm32l4x5_update_params(s);
-+    return 0;
-+}
-+
- static const VMStateDescription vmstate_stm32l4x5_usart_base =3D {
-     .name =3D TYPE_STM32L4X5_USART_BASE,
-     .version_id =3D 1,
-     .minimum_version_id =3D 1,
-+    .post_load =3D stm32l4x5_usart_base_post_load,
-     .fields =3D (VMStateField[]) {
-         VMSTATE_UINT32(cr1, Stm32l4x5UsartBaseState),
-         VMSTATE_UINT32(cr2, Stm32l4x5UsartBaseState),
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index f22f0ee2bc..8875758076 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -116,6 +116,7 @@ stm32l4x5_usart_irq_raised(uint32_t reg) "USART: IRQ =
-raised: 0x%08"PRIx32
- stm32l4x5_usart_irq_lowered(void) "USART: IRQ lowered"
- stm32l4x5_usart_overrun_detected(uint8_t current, uint8_t received) "USA=
-RT: Overrun detected, RDR=3D'0x%x', received 0x%x"
- stm32l4x5_usart_receiver_not_enabled(uint8_t ue_bit, uint8_t re_bit) "US=
-ART: Receiver not enabled, UE=3D0x%x, RE=3D0x%x"
-+stm32l4x5_usart_update_params(int speed, uint8_t parity, int data, int s=
-top) "USART: speed: %d, parity: %c, data bits: %d, stop bits: %d"
-=20
- # xen_console.c
- xen_console_connect(unsigned int idx, unsigned int ring_ref, unsigned in=
-t port, unsigned int limit) "idx %u ring_ref %u port %u limit %u"
---=20
-2.34.1
+
+r~
 
 
