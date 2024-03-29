@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497B4CD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 21:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA68CC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqK0I-0007Qf-U5; Fri, 29 Mar 2024 17:43:14 -0400
+	id 1rqKai-00057e-Hj; Fri, 29 Mar 2024 18:20:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rqK06-0007Mq-Px; Fri, 29 Mar 2024 17:43:04 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqKah-000578-6B
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:51 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rqK05-00025V-69; Fri, 29 Mar 2024 17:43:02 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1e0d82d441bso21775285ad.3; 
- Fri, 29 Mar 2024 14:43:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqKaf-0001pg-BU
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:50 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e6b3dc3564so1993113b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711748579; x=1712353379; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1711750848; x=1712355648; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pArEAfcBoWRoLTw+9rpQkn+sA7AYtKP30pTkmab58vU=;
- b=PKfqINoKt1W6SFL62/PzjoHfbHPFQvpbsfTxlWVhhcGIoqyfhTfZOvlCT8Y4O2bBqQ
- 1xsMHfQjM7R8bPh6JZ6i0YI8bcojuWsd2MuESie/GjCLqfMAtbQlhl/yOc7Wkh18L1FL
- /qRnS/bUi/DmMNXi1c45YbQPExZCyJZ0P8vbDw6gmrCGnyxGg512Rc13mxqD4xfHsfT+
- lspCv+Y0mv5F8blYnl+dF1tNqeb5xciVEhzP16cSa5P3vzIW8CL7icLSnCnZ+CCLum4r
- 6zTe+6ZN0rS69+vMdBELnPHLbRYrideHRsYaTRSerAP3AtoZjla4v5VIldfMDGOY31tT
- C0Zg==
+ bh=3dondGlVn7Nspk+b15ZO4C68ipaZNt0/1iWHRvOdtfQ=;
+ b=OI4rJQbdxIVAbSx4eeo2MEJTvpoQR3eUpSVzIO3au2bpnntTqCb9ra1X0iyT3ossu1
+ IFSQF+jXkUTUV0JdlwDLVaY6Dod/hnYZZBFJOehUccd+rbE1wDc2uc3tkcXDWBWS8Vo9
+ Y76TVb/cvWsX3tCpVt2GSgG7DPdp2Y+V1ofT+9r824CU/85oAu292AW5u01O5HIrCOKQ
+ zxH7Jn5e1g+OsOR2JX7OMLv8MPeeHOksHt2EENdD3u0XhtLgyRAt7BMwcvccP7xtvLTc
+ eyNq4p+kDUxmWTm9YITQugMmslJRWOJXd677kH7HN6QMbig8pqn0w1v5UJ56Qf6GTosY
+ YN9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711748579; x=1712353379;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711750848; x=1712355648;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pArEAfcBoWRoLTw+9rpQkn+sA7AYtKP30pTkmab58vU=;
- b=nxPKuJWSu0cEywF+uaxR/o6NmAVSHVsZJqzGj7YFeAjdA89kzE+w+bMtsVK3CPzA6S
- jd4Duo6w75FTkn6U7Gr+vixwBrTlxHtGi6dXO6l4nSkCzgP7ncjLEuA/d6HpAwViM7Rj
- RU2K6pPkAhgCPhnsto3DrAO0TmrayMFIQ1W81rX5tQJbsWquWcoJ81Xp0EvedhCu7PQY
- awUwRO+o5PydWHrfFT1q5vfLoTwAcvpgiIUDHSUCDlUONAiAe9Huck/CTBukCXBQe+zF
- 4zCJ3RMYRlDHH97WlrvnIiFPnRWAsA8I/Nu2qebJfU3r2UwE3q+DwAiH4XEr50ardwpt
- Ky4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXysJ8oPoFAxAqt9gPazXXFYB3aQi8KiJO7NBx7o2CodohmwfXBYlsQsCswcuslTTx745gaOuG9iArb6zgqW/QlzpsnS5QA
-X-Gm-Message-State: AOJu0Yy+dJzcEPDVvc03nXgwLpNteqseYlWvw2o5ZR/+99/p59n3h8xa
- YxPt9hEBjTHRx3eWlQt82I+Yz0rC9FZlBIMTFokrNQDLFkcJSZnHpcofJfQiAuiqS8s8x5KecuS
- zPPr4H17mDrJuynPzLf9dXOqgd8k=
-X-Google-Smtp-Source: AGHT+IEbDyjwes8qcx+v+mou5qJZ1yJFj9Z6vgQMu66nUO76TGhDerbg0BU4qtIh9sJd+ThZGGO4z4/7rATIrhV2IBE=
-X-Received: by 2002:a17:902:e5c1:b0:1e0:c37d:cfcb with SMTP id
- u1-20020a170902e5c100b001e0c37dcfcbmr4616939plf.49.1711748579027; Fri, 29 Mar
- 2024 14:42:59 -0700 (PDT)
+ bh=3dondGlVn7Nspk+b15ZO4C68ipaZNt0/1iWHRvOdtfQ=;
+ b=csePmz6DPygQPAUHSB2NM5EFc44f6sEN8rRARGZ1iNciry6lAIHKBjdE8OKOsQ8CkM
+ nU9YfZvScmXFnemQBpb4oCKAP+DFWZm2yrp4KaoVw77x41NgGZQvpP9951UqxybywAqw
+ 5Gcc5aV6nNLym1uSGA9ymY5JUUCuawWF/ixSw+fu6wlo145mX0ZrUwG+VoebscQimk6T
+ H+JtxSZ2T50iwexAb3EdWR4Qm7KqoA3Pxn/iPsjuu5pwFZ+p9FITvyUmkW/eDJ7r73GC
+ LNBg/HFJl9l9DorGdTLX7dHngGgqLNTUV+TkaO+KgLSTaCJyvWu3jRGQV4T/pmzMzeyU
+ wzXg==
+X-Gm-Message-State: AOJu0YyXWW8QDkW81xIwS3++rnf1M5V7NDYwQdlJfu8uxyg0B+KPSAuj
+ pFcn09/z4v3cp11hUx8M/Jcmvc88SXCwR4UszIy4dhSM2EB5qB2gaYdrysfl4KqBVMeVWUcTJNw
+ Y
+X-Google-Smtp-Source: AGHT+IGeX5GRebwui29cyYkcdUNHVjR1I4j0jmsgX5pZdTMA6305JtVxbijAhRVWLgdURj9ED3v/Qg==
+X-Received: by 2002:a05:6a00:4fc6:b0:6ea:ab48:5dd9 with SMTP id
+ le6-20020a056a004fc600b006eaab485dd9mr3564600pfb.6.1711750847953; 
+ Fri, 29 Mar 2024 15:20:47 -0700 (PDT)
+Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ lc24-20020a056a004f5800b006eaacc63435sm3579811pfb.173.2024.03.29.15.20.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Mar 2024 15:20:47 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 5/7] tcg/optimize: Fix sign_mask for logical right-shift
+Date: Fri, 29 Mar 2024 12:20:35 -1000
+Message-Id: <20240329222037.1735350-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329222037.1735350-1-richard.henderson@linaro.org>
+References: <20240329222037.1735350-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20240329063148.129343-1-jcmvbkbc@gmail.com>
- <dc81005e-f216-4a39-9900-8598b61d48f3@linaro.org>
-In-Reply-To: <dc81005e-f216-4a39-9900-8598b61d48f3@linaro.org>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Fri, 29 Mar 2024 14:42:47 -0700
-Message-ID: <CAMo8Bf+CYB3Nt+p3DJsa+_+=WL_Ym0W1UDz-rp6RsvMuO1p2-Q@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/syscall: xtensa: fix target_msqid_ds and
- ipc_perm conversion
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,42 +96,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 29, 2024 at 5:48=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Hi Max,
->
-> On 29/3/24 07:31, Max Filippov wrote:
-> > - target_ipc_perm::mode and target_ipc_perm::__seq fields are 32-bit wi=
-de
-> >    on xtensa and thus need to use tswap32
-> > - target_msqid_ds::msg_*time field pairs are reversed on big-endian
-> >    xtensa
->
-> Please split in 2 distinct patches.
+The 'sign' computation is attempting to locate the sign bit that has
+been repeated, so that we can test if that bit is known zero.  That
+computation can be zero if there are no known sign repetitions.
 
-Ok.
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2248
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tcg/optimize.c                    |  2 +-
+ tests/tcg/aarch64/test-2248.c     | 28 ++++++++++++++++++++++++++++
+ tests/tcg/aarch64/Makefile.target |  1 +
+ 3 files changed, 30 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/aarch64/test-2248.c
 
-> >   struct target_msqid_ds
-> >   {
-> >       struct target_ipc_perm msg_perm;
-> > +#if defined(TARGET_XTENSA) && TARGET_BIG_ENDIAN
->
-> Why restrict to only Xtensa here?
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 752cc5c56b..275db77b42 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2376,7 +2376,7 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+          * will not reduced the number of input sign repetitions.
+          */
+         sign = (s_mask & -s_mask) >> 1;
+-        if (!(z_mask & sign)) {
++        if (sign && !(z_mask & sign)) {
+             ctx->s_mask = s_mask;
+         }
+         break;
+diff --git a/tests/tcg/aarch64/test-2248.c b/tests/tcg/aarch64/test-2248.c
+new file mode 100644
+index 0000000000..aac2e17836
+--- /dev/null
++++ b/tests/tcg/aarch64/test-2248.c
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* See https://gitlab.com/qemu-project/qemu/-/issues/2248 */
++
++#include <assert.h>
++
++__attribute__((noinline))
++long test(long x, long y, long sh)
++{
++    long r;
++    asm("cmp   %1, %2\n\t"
++        "cset  x12, lt\n\t"
++        "and   w11, w12, #0xff\n\t"
++        "cmp   w11, #0\n\t"
++        "csetm x14, ne\n\t"
++        "lsr   x13, x14, %3\n\t"
++        "sxtb  %0, w13"
++        : "=r"(r)
++        : "r"(x), "r"(y), "r"(sh)
++        : "x11", "x12", "x13", "x14");
++    return r;
++}
++
++int main()
++{
++    long r = test(0, 1, 2);
++    assert(r == -1);
++    return 0;
++}
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index ea3e232e65..0efd565f05 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -10,6 +10,7 @@ VPATH 		+= $(AARCH64_SRC)
+ 
+ # Base architecture tests
+ AARCH64_TESTS=fcvt pcalign-a64 lse2-fault
++AARCH64_TESTS += test-2248
+ 
+ fcvt: LDFLAGS+=-lm
+ 
+-- 
+2.34.1
 
-I have detected and tested it on xtensa.
-I see other architectures (mips, parisc, ppc, sparc) that may need
-that, but AFAICS it's not that it's applicable for all big endians.
-
-> > +    abi_ulong __unused1;
-> > +    abi_ulong msg_stime;
-> > +    abi_ulong __unused2;
-> > +    abi_ulong msg_rtime;
-> > +    abi_ulong __unused3;
-> > +    abi_ulong msg_ctime;
-> > +#else
-
---=20
-Thanks.
--- Max
 
