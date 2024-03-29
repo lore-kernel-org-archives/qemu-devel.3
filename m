@@ -4,78 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD14C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 20:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55576CD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 20:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqIwM-0005IH-Og; Fri, 29 Mar 2024 16:35:06 -0400
+	id 1rqJH3-0001SW-4v; Fri, 29 Mar 2024 16:56:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rqIwK-0005Ht-HQ
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 16:35:04 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rqIwI-0005Xu-Cm
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 16:35:04 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a46f0da1b4fso294300066b.2
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 13:35:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711744500; x=1712349300; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4Fb6LY4JLqrh9VM0IcjxF2V7xw7ZePKpShbW8PNsR9U=;
- b=Q/87EWbOYczLxmNeQL3wPRGdvgGMaZC+AZBG/gJI9Kl+XCbk2LxaxB6hSySe3dk8ok
- cC+O+1N2m83iuGNwMmRCuh4chvumqOQMN1i3bAQfBGgiMgzhHjHcxwck/u689Emlf3Bd
- ZuuoXelq2aNJiSP/EBJXGMwUPz39sowwARU+WAtTz+GMuO0taVK4+JhIk+f6U0Hx4GAE
- G2JHw4v+/UQvO4Q2Lt6rdX0oMAyoI93hl1OMphqQFvOTkwggfuupnM2dYLjh6D2wf4hm
- W0MMjp+G38lx9wuRbMmrtwvCifbSB7bxMJ4FTcOckaCmBEv3Len3F95z380sFdeng41d
- QHIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711744500; x=1712349300;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4Fb6LY4JLqrh9VM0IcjxF2V7xw7ZePKpShbW8PNsR9U=;
- b=p7VWnlswJc1dJMjAFK6f1gKqUXg3fLp8MZRL+ebsCl/MzXj2uM/T1GItLzlb3C5n8H
- QRWGxuOzybY6ALExw8hU4H//sFTD/eb78HMKwNfhVRailH0OCeK+IdpkBcQFiUdjj1U7
- z5a3NrXT2gEFTeF1djkUr6kM+aLp1aQn00J1mbRdLHX4ZggzijcQEQj/ATOJu1a9gm7L
- W/9Syf8WwKvi5DhTKN9QKw892PfxOJKn846mVycQAXM05wWXWT6X2OTXcBf5GtfO1PF+
- D6oB/jo6mmFLA1RMWg3yg2FImj0CZBT7WXr50aX/AMiw6CLyC+BFZeMVvgwmxgOfsvg9
- JjPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/IwEOmh8KCMf0Tuo8HhNCVVrAROjtTXRTiV6aEvyoC7oUGO9zqLulemt6QgtkN7N3PSt8h7+DEpBkzmJ5hZdFudIXloE=
-X-Gm-Message-State: AOJu0YwyjnaF2SOLHCIe8tJ3Khly6voQgzquGPoIaSVyU/McqDc0o1Vq
- 7Mfscuts4M2DllcKK7rh4IzC4wea0ts/wJxXhd5faPC1+S4YVroqFzbCSInYmQOPuif0a8aeC+t
- dNb96Spnnta1yk/Vow1mZeS7+VR1gjBeHaUF3ZQlVYLqH3lpmwEo=
-X-Google-Smtp-Source: AGHT+IHZZ242cFResEM4c/CEfmvlGxgcc5/xgqDFxlALV+o3mOwJpGRdPgPWzneK0MOMdvS2qRSBuFZX6k7OgnO/oLc=
-X-Received: by 2002:a17:906:2793:b0:a46:a8ba:60b3 with SMTP id
- j19-20020a170906279300b00a46a8ba60b3mr2161933ejc.37.1711744500442; Fri, 29
- Mar 2024 13:35:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
+ id 1rqJH1-0001SE-RC
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 16:56:27 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
+ id 1rqJGz-0001RA-MR
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 16:56:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711745785; x=1743281785;
+ h=date:from:to:cc:subject:message-id:references:
+ in-reply-to:mime-version;
+ bh=lAK6ZCx8xZO0ndSTke0f6cGKkSIbgmKdfkgilMpfl7A=;
+ b=YD3NpETY4epWkdhUi5cU1Z/Y9632iQGwpCY+4otafnejkp7GGqJpxzBW
+ P1wODME6oI5iy0AQwcM8LmRQzDCfvrpALFD9DElMNwqV32SUwjSKyfNNI
+ 5eD6eBFIPpb6wKRk/k5l3gU/7Eg8Nle2jtL1OunewfAwTS8MLno5xLziM
+ BfE9d4pzbhP6eh2vlsofo2Iw6LDCcQEAswyzf5DDzgAFz73dHja8CzZgJ
+ N8k1xLnmxbeR7Iq87KySW55jtRSsLYIdS4t+xsr+ZfiX1KL8VOAhxBnUQ
+ 5mhHJm1Hgcot0QJZTwUs3CLa85+P7ZFztCdTZ0OHttLUjqYAdG1Mwipli g==;
+X-CSE-ConnectionGUID: 08aFm7FdSbe9IzY7pztGMA==
+X-CSE-MsgGUID: qjjJlCUtR2m1o0nvVRuCfw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11028"; a="10730279"
+X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="10730279"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 13:56:22 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="48050225"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 29 Mar 2024 13:56:22 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Fri, 29 Mar 2024 13:56:21 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Fri, 29 Mar 2024 13:56:21 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Fri, 29 Mar 2024 13:56:21 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Fri, 29 Mar 2024 13:56:20 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NPeni4khJTHGM2Qg42SKxsIoItKJplYPutE+IxW+qnZEJZOMr6crOjCaU/mFkUWKOBLPvLPe1TUyrNVjD19PmmPWG1kAXRj+N40UnTNuz+R+BUtxPnaxu1PBV7Z0XpUjuv+GLswsO8YBXu48r0ZGkHevm0HH7RwVhp4hu+1vaVi1twplVy+eXsdJIVOUXfIKkvlgVaI1JK2tIdS+ZUy/aXGsaPgs2/tFvXcJr1Xq/UXNDSnPSBpvmkDjRk6aQMuwoOIZ6yjgQd+exa9EE+Ox9xpS5dg6Inq2yv1KEwryw91hDPW4n575A38q2RNFxzllP4HzRADhvgzztFo/u7/vSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9pOZwajKgZxV2pzGJ0RdIV/O9bbwyNzmkLez4mHXFXw=;
+ b=PgrDih5mxt+a/rsWJUzCRDwO1UYbfHugxYt4dQtV3yt4q1D93Hj1iNPnIdT+AFgQ7H4bBmdkMfWeV1vr9ZopaUYWcEfr5jnV1L8EpJ/SG8xzAMz6CqFclnQE3pz5Luwocu0ID0BPSzRJedHQnOoRcph9oKvxEh+J07QVkY51PrQuoujaBuTCpVmna1UzSXd+VPaC7sJVPFgl5+YjCfCjST41ceTfwuX7wnf6LHhkeFtjufLwspjWEOoSQ9r2VeuSPdTHPAj5r343UyB6XBi9G3GPvlq0fJy1akJWnLwkyfCtpuce/o4Ig7RKg0VABPgu1DY6eGmJIHFmrYzI6AwhxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
+ by IA0PR11MB8353.namprd11.prod.outlook.com (2603:10b6:208:489::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.33; Fri, 29 Mar
+ 2024 20:56:19 +0000
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::82fd:75df:40d7:ed71]) by PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::82fd:75df:40d7:ed71%4]) with mapi id 15.20.7409.031; Fri, 29 Mar 2024
+ 20:56:19 +0000
+Date: Fri, 29 Mar 2024 13:56:16 -0700
+From: Dan Williams <dan.j.williams@intel.com>
+To: Alison Schofield <alison.schofield@intel.com>, Dan Williams
+ <dan.j.williams@intel.com>
+CC: Shiyang Ruan <ruansy.fnst@fujitsu.com>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>, <Jonathan.Cameron@huawei.com>,
+ <dave@stgolabs.net>, <ira.weiny@intel.com>
+Subject: Re: [RFC PATCH v2 0/6] cxl: add poison event handler
+Message-ID: <66072af05b76c_4a98a29472@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
+ <Zgb9wjTIu1CE4S5r@aschofie-mobl2>
+ <660706e8a66c_4a98a294e@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+ <ZgcYnCr19aVhCO93@aschofie-mobl2>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZgcYnCr19aVhCO93@aschofie-mobl2>
+X-ClientProxiedBy: MW4PR03CA0031.namprd03.prod.outlook.com
+ (2603:10b6:303:8e::6) To PH8PR11MB8107.namprd11.prod.outlook.com
+ (2603:10b6:510:256::6)
 MIME-Version: 1.0
-References: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
- <Zgcd48BX078i0A-n@redhat.com>
-In-Reply-To: <Zgcd48BX078i0A-n@redhat.com>
-From: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Date: Sat, 30 Mar 2024 07:34:50 +1100
-Message-ID: <CAHDbmO3ZsZE_Sf8mr6duBtKKGqBfh+F_zynokvFQHoRbAVKA1Q@mail.gmail.com>
-Subject: Re: Backdoor in xz, should we switch compression format for tarballs?
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Michael Roth <michael.roth@amd.com>, "Maydell,
- Peter" <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000e543700614d29205"
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|IA0PR11MB8353:EE_
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: V2ZmG56MLOfvp9zLB/5PHlwafxjcb3DQL86ZlbIY8Tm5tiertFLfqlcc6vzqXHUfAlTqxtIqEyJjNBZZo+CnfsZdoIQZQklHM7uILPZg/b4JlPFapBxzhwrYCkBbmN5giJO9eoy/cmSQQubDRdtNrm3uYdllRdiczNDaf5OjUx3Of6M5wH16JrEYUbCRfKXE2nJhcu7Gt+uMs8I2aC6kNUI543GtAp92BHOy4zObVVqK5AVryFe3cdUqYynol+nTKhLCipNmL0BLQM5HqY5elNqXrFbsVpt8DjDgqv4ccUBSlpMpxuMGbDOAtBxFe9dfL+rMCDy0jyxNqYbgc83NlW2aFaS4X+i8aRP96/mDBhcjfBCg7+AArqbLGdGzmQlm4wq8B9OJHZfquI3VQM6w9rlCLLiCYsUHm3CQJw1rA9PNKGXKPRGHJZhuxhivwgbedyOzwv8hEt0N0diACQaePTsP5zU1qEGtMOuK6p5fDOXwsyNlWtkxVAQYkzC54mGMBWctnBns2YenfwO6JtOCZzxPA5YQ6WwJFc7Qbp+2RRU7/mR26vU9T3GsKSnXqwhHeN+dINHZnFNu+IqoCvX3Tvl1RAjGm8c0dPSBMRh/aKwX7sf1M2yr7FKdNCca5yQwOLwYjM73D3uiv68NjKvdcd3VTJk6g8FFofMpLmFUYaU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH8PR11MB8107.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(366007)(376005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Kq/y5lHmCtDKNqa+8W0V2Y/3YdjkNbE88DsXVBi11laz6kAfkw2YyFpY8GbD?=
+ =?us-ascii?Q?9JPcqLHxf0xnpqZgS4k81MJj5l+eGKK0cD4HfKg5vOwE+UgX9uA2aA2ttddN?=
+ =?us-ascii?Q?l0ScrEkDF9U4E+e4kQfu7sWE5pxWYSvqzdG6vJBqTc3CsAdaZWR9yWlFlrOh?=
+ =?us-ascii?Q?g/oaH+XfC/Da00GbbKyfZjE0QrdGM1gdEfVd3JeK3ayXIVrH76o2q1GP44yw?=
+ =?us-ascii?Q?zcPmwKz3icn53ZVEN4iMcWzKwhxTXbspEVhcCEDOn29SiF9TbWeitrxRjZK+?=
+ =?us-ascii?Q?ju4qpAnvuDsXjQ9JVNouaJgWeZoCXiKG6N3Zgyw2jgm9ksjl0CWQ41rWhcq+?=
+ =?us-ascii?Q?g9qoAkr8w39OJywlEk1L6tCFQWnGushyJ98jhKu1mHqZka/nAzGjzme/C3av?=
+ =?us-ascii?Q?FVOU67ogHvPzm00KQe0QUKnhJ38zknK/VVwFM9numWqwk2uJmXCloEEE061B?=
+ =?us-ascii?Q?UPBKOnmCO01+/WGZM8MNA3KduqlSsnd4p5pGkW8MAoR/v4BJ/taw14HKZBts?=
+ =?us-ascii?Q?7jkZASPm4SLwl9ENGGbZJx1jlP7iUF22X3GZwHI2SmGQGjrWMOr3zGhry4uA?=
+ =?us-ascii?Q?OAgrv5ZlcnxbsRbTAkWXPLBFQh1It1T68nUDup0bQRbSQvj165QPTT+vMuJe?=
+ =?us-ascii?Q?BpnjdxsEZqjG+RQ96/6YmX4IAQ8r5m9iUFzTTDvlp2rlC3PFET1iqKEq/Ljs?=
+ =?us-ascii?Q?aBJKQ7+KEx35Lm5XDBIr7D/jcF+E4PgWqx6IaWdbd7VrOSK7OaRCWoaIaHh9?=
+ =?us-ascii?Q?LBrNn0L9tAwYPFJgwOPORJgvXxged2uf9qMOj/mQn0q7qE3Axm3GKVj5xkQW?=
+ =?us-ascii?Q?R4m1265nYlXGdz4fzcPzPOwVLcYqi4u91UgSSBqcNRYo4/HgPtCYvuSft7Pi?=
+ =?us-ascii?Q?oTkXm0VfvhHSE2Nbcql4F7+Z6WETJK/lj6OYR1Xj5waG8hnKQNAiZ2+rknW0?=
+ =?us-ascii?Q?LPooVjLo2GeaoTnaHHC6jR47KS/f0r1PR4+KqIcf5yz1GdeBzekEJjcrgCe5?=
+ =?us-ascii?Q?c/L34inYsVchF3srD15fYs9HuOS9X4lPJwTGmV4XrSXBwyFTHSlJfJZzpE4o?=
+ =?us-ascii?Q?KcUp4zOfmnFEAPu8uSA4B/ZJzN7ynXivLmiAqCsJ1zgMZf6Yr+jmx8E9Oez2?=
+ =?us-ascii?Q?dFrOlRS63078DEN9gSjw3akpa5xnLZiJd9XBNBDhFcpySFiGHnWwSpA2/QfC?=
+ =?us-ascii?Q?GLG6myyYLsLL7m4KcrZKmDkJF/K87GljiP/mHEi4wWaDobDMnsM23UFoavs1?=
+ =?us-ascii?Q?OCEBb262lMIx0YZwHgAZoIJS2QlV8lZEwXJyIey5PHmQMGFK2PQVMpRduDWx?=
+ =?us-ascii?Q?j+qNv2aNLW4AQTdnpkDhboHrcmCteUwVuZ2unkWU3uTqHILnUK95NZ/aOqVS?=
+ =?us-ascii?Q?KQwEktFU+uYwiN/mlI8Ak1crHItv7RJAiuNm6j4SP/TsrYjZ0OFPOxJCi+Xp?=
+ =?us-ascii?Q?4v2Ee7ETSKKn5Ocy2wEmdhY5reJBQ7wOotESR+heljglEaGiIyNJgyY7LscW?=
+ =?us-ascii?Q?K8NhvT176fTxFrGv5YSrrp9DPF3hPXO9RC0CGAMJEPEhXWSfLOikvBR3rKgS?=
+ =?us-ascii?Q?msNU/GxUXH/lqKjEvkwjzdOYLajbYatldGW3XKqZrDpeVJTirmTPNBnXjlcj?=
+ =?us-ascii?Q?0g=3D=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01863d94-ef21-4462-27db-08dc5032aebe
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Mar 2024 20:56:19.1600 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: etuHTn8bd2IN0OYteu8kC5+u6DGvjRcoekdO7hBeTEYzD4ohysBtS8ejd4B3GiOID7CCy1yTeN/1YCXQCjJhCbcDQNw0TuhZUon4DZIuvVg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB8353
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.12;
+ envelope-from=dan.j.williams@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,133 +172,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e543700614d29205
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Alison Schofield wrote:
+> On Fri, Mar 29, 2024 at 11:22:32AM -0700, Dan Williams wrote:
+> > Alison Schofield wrote:
+> > [..]
+> > > Upon receipt of that new poison list, call memory_failture_queue()
+> > > on *any* poison in a mapped space. Is that OK?  Can we call
+> > > memory_failure_queue() on any and every poison report that is in
+> > > HPA space regardless of whether it first came to us through a GMER?
+> > > I'm actually wondering if that is going to be the next ask anyway -
+> > > ie report all poison.
+> > 
+> > memory_failure_queue() should be called on poison creation events. Leave
+> > the MF_ACTION_REQUIRED flag not set so that memory_failure() performs
+> > "action optional" handling.  So I would expect memory_failure_queue()
+> > notification for GMER events, but not on poison list events.
+> 
+> Seems I totally missed the point of this patch set.
+> Is it's only purpose to make sure that poison that is injected gets
+> reported to memory_failure?
 
-Also does qemu link to libarchive? The original analysis wasn't a full
-reverse engineer of the payload so we don't know if it only affects sshd.
+Clarify terms, "poison injection" to me is a debug-only event to test
+that poison handling is working, "poison creation" is an event where new
+poison was encountered by CPU consumption, deposited by a
+DMA-with-poison transaction, or discovered by a background scrub
+operation.
 
-On Sat, 30 Mar 2024, 07:01 Daniel P. Berrang=C3=A9, <berrange@redhat.com> w=
-rote:
+> 
+> So this single patch only:
+> 1. Poison inject leads to this GMER/CXL_EVENT_TRANSACTION_INJECT_POISON 
 
-> On Fri, Mar 29, 2024 at 06:59:30PM +0100, Paolo Bonzini wrote:
-> > For more info, see
-> >
-> https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.an=
-arazel.de/
-> > but, essentially, xz was backdoored and it seems like upstream was
-> directly
-> > responsible for this.
-> >
-> > Based on this, should we switch our distribution from bz2+xz to bz2+zst=
-d
-> or
-> > bz2+lzip?
->
-> Based on the attack vector of pre-loading git with an exploit, but then
-> modifying the tarball to activate it, there's a bigger question of whethe=
-r
-> users should really trust manually created tarballs at all ? You don't
-> anything about either the tarball creator, or the state of creators'
-> machine,
-> even if it is signed. How can you trust that its contents is a faithful
-> representation of the tagged release from git it claims to be?
->
-> This issue could prompt a push towards distros only handling tarballs
-> directly auto-generated from a git tag, in a reliably reproducible manner=
-.
->
-> Obviously you couldn't actually trust the upstream maintainer in this
-> case, but at least if you're using a reproducible git tarball you can
-> verify every link in the chain right through each git commit, and don't
-> have this manual tarball whose contents need to be to picked apart.
->
-> TL;DR; I think we should consider our tarball distribution options, but
-> lets wait for the dust to settle and not rush into decisions.
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
->
+Inject is a special case. Likely this should copy the PMEM legacy where
+notifying memory_failure() on injected poison is optional:
 
---000000000000e543700614d29205
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+"ndctl inject-error --no-notify"
 
-<div dir=3D"auto">Also does qemu link to libarchive? The original analysis =
-wasn&#39;t a full reverse engineer of the payload so we don&#39;t know if i=
-t only affects sshd.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
-lass=3D"gmail_attr">On Sat, 30 Mar 2024, 07:01 Daniel P. Berrang=C3=A9, &lt=
-;<a href=3D"mailto:berrange@redhat.com">berrange@redhat.com</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;borde=
-r-left:1px #ccc solid;padding-left:1ex">On Fri, Mar 29, 2024 at 06:59:30PM =
-+0100, Paolo Bonzini wrote:<br>
-&gt; For more info, see<br>
-&gt; <a href=3D"https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrl=
-xgzm@awork3.anarazel.de/" rel=3D"noreferrer noreferrer" target=3D"_blank">h=
-ttps://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anara=
-zel.de/</a><br>
-&gt; but, essentially, xz was backdoored and it seems like upstream was dir=
-ectly<br>
-&gt; responsible for this.<br>
-&gt; <br>
-&gt; Based on this, should we switch our distribution from bz2+xz to bz2+zs=
-td or<br>
-&gt; bz2+lzip?<br>
-<br>
-Based on the attack vector of pre-loading git with an exploit, but then<br>
-modifying the tarball to activate it, there&#39;s a bigger question of whet=
-her<br>
-users should really trust manually created tarballs at all ? You don&#39;t<=
-br>
-anything about either the tarball creator, or the state of creators&#39; ma=
-chine,<br>
-even if it is signed. How can you trust that its contents is a faithful<br>
-representation of the tagged release from git it claims to be?<br>
-<br>
-This issue could prompt a push towards distros only handling tarballs<br>
-directly auto-generated from a git tag, in a reliably reproducible manner.<=
-br>
-<br>
-Obviously you couldn&#39;t actually trust the upstream maintainer in this<b=
-r>
-case, but at least if you&#39;re using a reproducible git tarball you can<b=
-r>
-verify every link in the chain right through each git commit, and don&#39;t=
-<br>
-have this manual tarball whose contents need to be to picked apart.<br>
-<br>
-TL;DR; I think we should consider our tarball distribution options, but<br>
-lets wait for the dust to settle and not rush into decisions.<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
-"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a h=
-ref=3D"https://www.flickr.com/photos/dberrange" rel=3D"noreferrer noreferre=
-r" target=3D"_blank">https://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
-_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com=
-" rel=3D"noreferrer noreferrer" target=3D"_blank">https://fstop138.berrange=
-.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer noreferrer" tar=
-get=3D"_blank">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0=
- <a href=3D"https://www.instagram.com/dberrange" rel=3D"noreferrer noreferr=
-er" target=3D"_blank">https://www.instagram.com/dberrange</a> :|<br>
-<br>
-<br>
-</blockquote></div>
+> 2. Driver sees GMER/CXL_EVENT_TRANSACTION_INJECT_POISON and reads poison
+> list to get accurate length.
 
---000000000000e543700614d29205--
+Again, inject is the least interesting for the common case, production
+kernels care about "Media ECC Error" and "Scrub Media ECC Error"
+regardless of transaction type.
+
+> 3. Driver reports that to memory_failure_queue()
+> 
+> Still expect there's some code sharing opportunities and I still wonder
+> about what is next in this area.
+
+One area this needs to be careful is in unifying the OS-first and
+FW-first paths. In the FW-first case the platform can trigger
+memory_failure() along with the GMER by just posting a memory failure
+CPER record. So there is a risk that things get doubly reported if the
+GMER handling code blindly triggers memory_failure(). Might be benign,
+but probably best avoided.
 
