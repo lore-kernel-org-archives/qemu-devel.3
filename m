@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80191C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50450CD11DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq9jK-0000vA-Rq; Fri, 29 Mar 2024 06:45:02 -0400
+	id 1rq9rt-0004au-VA; Fri, 29 Mar 2024 06:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rq9jI-0000uI-R5
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:45:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rq9rs-0004a0-2U
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:53:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rq9jH-0000sU-5B
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:45:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rq9rp-0002sy-EI
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:53:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711709097;
+ s=mimecast20190719; t=1711709626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l+QonRjId6HaDu0WZf2b2eQJeKZ6u+4nYkIOvf5CgEc=;
- b=dKoME7MXzTRS/37GvY+AKCpw3d/EZP1KZE7VqtytGrOMSDOI1aWybn5TwsUtSQMauSgM9V
- 3nByLAvygasJHo+9MU0OCsFJsQSTGAdlD5wSjDeTwR9h3+O3G8NAmiIObBVID8mGcjYx9F
- GESXQTN8edaCOJ0zhSmD8oXjA6eO/a4=
+ bh=UBS9n1MgA3SGDDtxREsSjADRnQKe4wIE5sFaCbLfsLI=;
+ b=YFlu9dwJCQXKcWt2yMpY6i9EEm3W8HDRsramly2VH7Y0H4kLi8p/KyAZeWvouuKXGKx+c9
+ j1T/Wh5Y4gv7fu2+UVB1vAOASr6Sx/wgozym9EdUJNO0i6UbCDRVFt6JuDDpgsHkUJsEc5
+ YDybSFKZCEg9o7ZLxGNJG52e0LmWuE4=
 Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
  [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-xjXOWwpPNMWMQDA4cl-p8w-1; Fri, 29 Mar 2024 06:44:56 -0400
-X-MC-Unique: xjXOWwpPNMWMQDA4cl-p8w-1
+ us-mta-223-2uARZlx-NOWmBrlI0AhJoQ-1; Fri, 29 Mar 2024 06:53:45 -0400
+X-MC-Unique: 2uARZlx-NOWmBrlI0AhJoQ-1
 Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-56c53b37630so576085a12.1
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 03:44:56 -0700 (PDT)
+ 4fb4d7f45d1cf-56beb0ad4c0so913100a12.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 03:53:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711709094; x=1712313894;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1711709624; x=1712314424;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l+QonRjId6HaDu0WZf2b2eQJeKZ6u+4nYkIOvf5CgEc=;
- b=h5b6A7KUPab3iJBZ5NGuvfGhsChmxf8rMV4t3L9UBCfyuFUg2AXMs+JxnPHyIMeUYV
- 4KbNNjV7VIVmDZiSWbyo5K/5IhNbMWhiop7bEEGG1IvjG/4b5cjCTT3vlBu29gLe+FA+
- lOL2eYzE9w2Y09YvQfSkOe91GUVgmiBi8twdzOS0ApqBMIghvOYbngawDbnlJF/I3fPs
- PNixG41eswsNSFq+Q3/VWvdYKLZXbmgr6s4okpQDqAdy9UQHuqR6xJEslzr5lBNfX+Np
- 8B1UpBn0M4X1tp4JHNC2hmmLvzD/cxsvYk5UJKgGQ6iXNw1d+I67SXQkepqZYdFCr8na
- 9Rnw==
+ bh=UBS9n1MgA3SGDDtxREsSjADRnQKe4wIE5sFaCbLfsLI=;
+ b=SqX76mURQRzWBLh8hBgJK/5MTzkw+zcpAtfu9kmG9uXxliVQnQMyyhEFnOWzdaIPQG
+ fyzOEzzZeePrRSGxphbRcuvyV9HPy5bbGPd8zkIyVPKlfd7AauzDlna3u0k+1S3/4qCo
+ YSAjdMty/v0bUDpumxwwaxS4r2w3rM3wuOpfwHCP4Jo1S0NS/wsDonoFQCYn7Twj9Wx4
+ t/0qss17pbq4kouusINANEoy9InhoFH8vuBCwynBWPLWZ2OvJ5dAhh3yKalItoQbmsCE
+ MyBQfqUhtlgaD7QVpyxjcxYjuLB+RVxzCKw1HDhe/cm7F2cv9Fw39JcgFYanKTQUIL57
+ YXHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWepcffakH+yQvdfClh4jl/93bjsr7h+Y7ZdjhY3BJ64RRvrt4AKEsysqvwDgr2oW5c/OKIq7WndNss4ogQtxxl/5PajL0=
-X-Gm-Message-State: AOJu0YyOXXyJ/8nSsVcQvaPwJyk6LuNjElCm2svClkvDqkPZCG02hPvn
- 5/BMdg7EnoYPk0uhB2VW/plD2mJ0nsjJeE/6BTwzvA4W+5LlYszEPzz0jreOAm9SyBOM6mr7mHB
- PFBPZ7drtJEcrfadliQXuB9lCzfOIis06eAgj/5tNNS+kTTAbQfs94rkP/s4q
-X-Received: by 2002:a50:d6c5:0:b0:56b:829a:38e3 with SMTP id
- l5-20020a50d6c5000000b0056b829a38e3mr1368204edj.16.1711709094079; 
- Fri, 29 Mar 2024 03:44:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGoD+Nazb1kqZQktF1VF+3V+NcdFr2Ozr/lu5mo4EjMzFwTgzG2vD8mkjRklyMjal3Vc+MGQ==
-X-Received: by 2002:a50:d6c5:0:b0:56b:829a:38e3 with SMTP id
- l5-20020a50d6c5000000b0056b829a38e3mr1368184edj.16.1711709093577; 
- Fri, 29 Mar 2024 03:44:53 -0700 (PDT)
-Received: from redhat.com ([2.52.20.36]) by smtp.gmail.com with ESMTPSA id
- g28-20020a056402321c00b0056c1c2b851esm1887056eda.0.2024.03.29.03.44.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 03:44:53 -0700 (PDT)
-Date: Fri, 29 Mar 2024 06:44:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: "Chen, Jiqian" <Jiqian.Chen@amd.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Huang, Ray" <Ray.Huang@amd.com>
-Subject: Re: [RFC QEMU PATCH v8 2/2] virtio-pci: implement No_Soft_Reset bit
-Message-ID: <20240329064431-mutt-send-email-mst@kernel.org>
-References: <20240328103903.408290-1-Jiqian.Chen@amd.com>
- <20240328103903.408290-3-Jiqian.Chen@amd.com>
- <20240328065606-mutt-send-email-mst@kernel.org>
- <BL1PR12MB5849ACCD6602EAB88BE2FED9E73B2@BL1PR12MB5849.namprd12.prod.outlook.com>
- <20240328083503-mutt-send-email-mst@kernel.org>
- <BL1PR12MB5849C37A0B0E1AF02644C203E73A2@BL1PR12MB5849.namprd12.prod.outlook.com>
- <CACGkMEt=V4V4JgT08o5_f7tj-eNZDi2GB4=H_Qp7xALrRxBWhQ@mail.gmail.com>
+ AJvYcCX0BGC6pybJ3dHOYQW91UPP/gAGgewn8gcocQQ8pdTw99jT+8LwPajtT36Zbw2BBVOTwVBTDup33pBUiGD6sm2/zMS2HCs=
+X-Gm-Message-State: AOJu0Yz20lYWSiDfPTI/NsGjD18lEJ3Y5gnVrMQrKPnKNepEiCzjQl5H
+ afhh09cFF9w+osC/3PFNSM7WGPWrobOzw20wIV89YhCxJ2C4Ww4JaexSours6l1TVuyRXGGxJaL
+ t7sWXBAUfMCTMLuH9RzH7iVBTXryK1nwrn3yeWS70Xat/DPWKTpw2
+X-Received: by 2002:a05:6402:2806:b0:566:4a85:ceba with SMTP id
+ h6-20020a056402280600b005664a85cebamr1355150ede.1.1711709624048; 
+ Fri, 29 Mar 2024 03:53:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEOpbj8Dz9qfG0J//5mbnbzGz7EWF7OMexwZxeghRlP2pM+7RRpkJDj3e4OfnNt66rir3kW8w==
+X-Received: by 2002:a05:6402:2806:b0:566:4a85:ceba with SMTP id
+ h6-20020a056402280600b005664a85cebamr1355117ede.1.1711709623582; 
+ Fri, 29 Mar 2024 03:53:43 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ q14-20020a056402248e00b0056c5515c183sm1570594eda.13.2024.03.29.03.53.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Mar 2024 03:53:42 -0700 (PDT)
+Message-ID: <47139c9f-b447-4378-8a8d-a0f21e24b964@redhat.com>
+Date: Fri, 29 Mar 2024 11:53:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.1 v5 07/14] migration: Add Error** argument to
+ .save_setup() handler
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Eric Blake <eblake@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Cc: Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Prasad Pandit
+ <pjp@fedoraproject.org>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ qemu-block@nongnu.org
+References: <20240320064911.545001-1-clg@redhat.com>
+ <20240320064911.545001-8-clg@redhat.com>
+ <9bae5618-2ebc-453a-8b10-32474422c66f@yandex-team.ru>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <9bae5618-2ebc-453a-8b10-32474422c66f@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACGkMEt=V4V4JgT08o5_f7tj-eNZDi2GB4=H_Qp7xALrRxBWhQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -92,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,73 +122,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 29, 2024 at 03:20:59PM +0800, Jason Wang wrote:
-> On Fri, Mar 29, 2024 at 3:07 PM Chen, Jiqian <Jiqian.Chen@amd.com> wrote:
-> >
-> > On 2024/3/28 20:36, Michael S. Tsirkin wrote:
-> > >>>> +}
-> > >>>> +
-> > >>>>  static void virtio_pci_bus_reset_hold(Object *obj)
-> > >>>>  {
-> > >>>>      PCIDevice *dev = PCI_DEVICE(obj);
-> > >>>>      DeviceState *qdev = DEVICE(obj);
-> > >>>>
-> > >>>> +    if (virtio_pci_no_soft_reset(dev)) {
-> > >>>> +        return;
-> > >>>> +    }
-> > >>>> +
-> > >>>>      virtio_pci_reset(qdev);
-> > >>>>
-> > >>>>      if (pci_is_express(dev)) {
-> > >>>> @@ -2484,6 +2511,8 @@ static Property virtio_pci_properties[] = {
-> > >>>>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
-> > >>>>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
-> > >>>>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
-> > >>>> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
-> > >>>> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
-> 
-> Why does it come with an x prefix?
-> 
-> > >>>>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
-> > >>>>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
-> > >>>>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
-> > >>>
-> > >>> I am a bit confused about this part.
-> > >>> Do you want to make this software controllable?
-> > >> Yes, because even the real hardware, this bit is not always set.
-> 
-> We are talking about emulated devices here.
-> 
-> > >
-> > > So which virtio devices should and which should not set this bit?
-> > This depends on the scenario the virtio-device is used, if we want to trigger an internal soft reset for the virtio-device during S3, this bit shouldn't be set.
-> 
-> If the device doesn't need reset, why bother the driver for this?
-> 
-> Btw, no_soft_reset is insufficient for some cases, there's a proposal
-> for the virtio-spec. I think we need to wait until it is done.
+Hello Vladimir,
 
-That seems orthogonal or did I miss something?
+On 3/29/24 10:32, Vladimir Sementsov-Ogievskiy wrote:
+> On 20.03.24 09:49, Cédric Le Goater wrote:
+>> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+>> index 2708abf3d762de774ed294d3fdb8e56690d2974c..542a8c297b329abc30d1b3a205d29340fa59a961 100644
+>> --- a/migration/block-dirty-bitmap.c
+>> +++ b/migration/block-dirty-bitmap.c
+>> @@ -1213,12 +1213,14 @@ fail:
+>>       return ret;
+>>   }
+>> -static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque)
+>> +static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       DBMSaveState *s = &((DBMState *)opaque)->save;
+>>       SaveBitmapState *dbms = NULL;
+>>       if (init_dirty_bitmap_migration(s) < 0) {
+>> +        error_setg(errp,
+>> +                   "Failed to initialize dirty tracking bitmap for blocks");
+> 
+> No, that's not about initializing a bitmap. This all is about migration of block-dirty-bitmaps themselves.
+> 
+> So correct would be say "Failed to initialize migration of block dirty bitmaps".
+> 
+> with this, for block dirty bitmap migration:
+> Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-> > In my use case on my environment, I don't want to reset virtio-gpu during S3,
-> > because once the display resources are destroyed, there are not enough information to re-create them, so this bit should be set.
-> > Making this bit software controllable is convenient for users to take their own choices.
+I had kept your previous R-b.
+
+Should we remove it ? or is it ok if I address your comments below in a
+followup patch, in which case the error message above would be removed.
+
+> Still, a lot better is add errp to init_dirty_bitmap_migration() and to add_bitmaps_to_list() too: look,
 > 
-> Thanks
+> init_dirty_bitmap_migration() fails only if add_bitmaps_to_list() fails
 > 
-> >
-> > >
-> > >>> Or should this be set to true by default and then
-> > >>> changed to false for old machine types?
-> > >> How can I do so?
-> > >> Do you mean set this to true by default, and if old machine types don't need this bit, they can pass false config to qemu when running qemu?
-> > >
-> > > No, you would use compat machinery. See how is x-pcie-flr-init handled.
-> > >
-> > >
-> >
-> > --
-> > Best regards,
-> > Jiqian Chen.
+> in turn,
+> 
+> add_bitmaps_to_list() have several clear failure points, where it always does error_report (or error_report_err), which would be better to pass-through to the user.
+
+Good idea. Will do.
+
+Thanks,
+
+C.
+
 
 
