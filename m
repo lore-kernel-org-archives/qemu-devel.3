@@ -4,69 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FAEBC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D58FCCD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqGx0-0000TQ-Qp; Fri, 29 Mar 2024 14:27:38 -0400
+	id 1rqH3G-0001mr-Lq; Fri, 29 Mar 2024 14:34:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
- id 1rqGwy-0000TA-Ug
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 14:27:36 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
- id 1rqGwx-0005ge-1P
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 14:27:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711736856; x=1743272856;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=S2qdv+SnNoKHxZRT086jR4m8AN6i21k7r1PVt7j7Duw=;
- b=n1f1DmjV3QShAtlk099uz3cC485OU7FJdOqcFHkN1D6H9zZw2dTL1yi5
- 3G2urnT9jsEGPr4CSSqkTGHPBVZ1XiuENMMCq43SdunF50mk+DZOBM311
- K9x4vnVvrEn3Q7k6wQyV13h6G3VkPKZjKer0sYu7j9THsUehgzo2SPeM/
- N5zslHOFlJbMC4mJLHpO98viRq2gtLF6IpFl+C3AuviueAJE1YSnh2UHA
- x9HwPkKLp219AZFKHsLFDnIlgMQsaOLzpvdDJsOEfjmT2lESgqFCL4sOQ
- FAHVl/oaIZsTDNR2eEot8O0p1pKiAs4OW/hg593DZfY48JCoU89X/iu2C w==;
-X-CSE-ConnectionGUID: FIOF2S3GSo6XHaEhFF53Kw==
-X-CSE-MsgGUID: wTaP/EtgTBKlNT5VuhMJLA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11028"; a="17489276"
-X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="17489276"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 11:27:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="40195361"
-Received: from aschofie-mobl2.amr.corp.intel.com (HELO aschofie-mobl2)
- ([10.209.86.126])
- by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 11:27:31 -0700
-Date: Fri, 29 Mar 2024 11:27:29 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- Jonathan.Cameron@huawei.com, dan.j.williams@intel.com,
- dave@stgolabs.net, ira.weiny@intel.com
-Subject: Re: [RFC PATCH v2 6/6] cxl/core: add poison injection event handler
-Message-ID: <ZgcIEVajbf9tV5ZQ@aschofie-mobl2>
-References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
- <20240329063614.362763-7-ruansy.fnst@fujitsu.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rqH3D-0001jd-Vk
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 14:34:04 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rqH3B-0006x3-Ac
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 14:34:03 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-563cb3ba9daso2279191a12.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 11:34:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711737239; x=1712342039; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=P9IeUwOTxA9l2JQjq5zY/8CfNiqhRZdCm+W1m44HM9I=;
+ b=cvaW7sLcI14Ie/QAQkt+3oc/33HY0S4aiXiS7n01DF0ROq/rLOQ65NU8hG9VYmHH9F
+ mduYmlMjRBzHUbeqp0pGu/5LmkKwxxZ1j71gJh6VUsi7GTyLaK/TFkMhMAOQs7ofGwy7
+ o9ZyQxnVxrclltevV5tviJgJCx49L9rUsSuJ2upJSVV507Es4ohYi5WVJhfsb/MylEWp
+ V+oDYIHk33O6zrPq84O1gRnyqi8UqhGpNTq3Kg/S9RUZ5gbWWiyPW9c80vxxjZQUopRa
+ P57PU6t/A2KqzByYQcYwLwBZf3cBsdVTXBDeJneT6HijODX6nzKIIMQNOegjx8wwaQvc
+ 0p5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711737239; x=1712342039;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=P9IeUwOTxA9l2JQjq5zY/8CfNiqhRZdCm+W1m44HM9I=;
+ b=kzGqn3pvz+NirLgUOijTGHJbS1Y4JPVylKFEPuswEs30NgM4KRWzqC6PUYAKP9qiys
+ TGaYThOUtLwPMamPev2yIabHQH2AeejSkPN9VdQXm+nb2/Q4czSVrPPb4tLqdG/DlAJo
+ bckzcHRTcyfaMeqTaePGLl1/tKEg7RcD9l4R9fHE62rVZY/5HD12STtCLGH+zJQGS5uz
+ 0SOJ0kpX2qwFPAlMgPayGETS5bcaWMR/FS2y4b192BamAMj2OxY4TTYj5O7yK6epYOLc
+ OGsT4BYBGu7DoFidncsRQTwi0RksI4D0YSObOzUw5ZeKrQycAtWSMy/Nd1zwyc+iGW2M
+ H9Hg==
+X-Gm-Message-State: AOJu0Yxoknp93J0JL/CqrYxUBh581lb7dUrPEizHvMw95kXTCU+Vk3uQ
+ 7Fd6pGq7P88Du+2UY2jFCLZeq5vHo0231dlRQqego3zd/7g4/vXDo051xtaFslbR76Ixse5EVRF
+ c4VxIDZ0i0eg9LPsD7BX2JR1rhQ+slGnzX9dNLg==
+X-Google-Smtp-Source: AGHT+IGv18lR7CkDiGidnOOVS29xLoXEYZv9l8hs8pXQpjecZXP3Xvf/UrmWE0FrcjV7PktLF2p4YX1J+n05S353XkE=
+X-Received: by 2002:a17:906:aa4c:b0:a4a:3d08:bd7b with SMTP id
+ kn12-20020a170906aa4c00b00a4a3d08bd7bmr2266248ejb.26.1711737238650; Fri, 29
+ Mar 2024 11:33:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240329063614.362763-7-ruansy.fnst@fujitsu.com>
-Received-SPF: pass client-ip=198.175.65.11;
- envelope-from=alison.schofield@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+References: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
+In-Reply-To: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
+From: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Date: Sat, 30 Mar 2024 05:33:48 +1100
+Message-ID: <CAHDbmO1n2EdLD4Ns7sCnGum4_xF90qRw=--KywdbH6KgRehKiw@mail.gmail.com>
+Subject: Re: Backdoor in xz, should we switch compression format for tarballs?
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Michael Roth <michael.roth@amd.com>, 
+ "Maydell, Peter" <peter.maydell@linaro.org>, "P. Berrange,
+ Daniel" <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000000f18600614d0e208"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,207 +89,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 29, 2024 at 02:36:14PM +0800, Shiyang Ruan wrote:
-> Currently driver only traces cxl events, poison injection (for both vmem
-> and pmem type) on cxl memdev is silent.  OS needs to be notified then it
-> could handle poison range in time.  Per CXL spec, the device error event
-> could be signaled through FW-First and OS-First methods.
-> 
-> So, add poison event handler in OS-First method:
->   - qemu:
->     - CXL device report POISON event to OS by MSI by sending GMER after
->       injecting a poison record
->   - CXL driver
->     a. parse the POISON event from GMER;        <-- this patch
->     b. retrieve POISON list from memdev;
->     c. translate poisoned DPA to HPA;
->     d. enqueue poisoned PFN to memory_failure's work queue;
-> 
-> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
-> ---
-> 
-> the reply to Jonathan's comment in last version:
-> > I'm not 100% convinced this is necessary poison causing.  Also
-> > the text tells us we should see 'an appropriate event'.
-> > DRAM one seems likely to be chosen by some vendors.
-> I think it's right to use DRAM Event Record for volatile-memdev, but 
-> should poison on a persistent-memdev also use DRAM Event Record too? 
-> Though its 'Physical Address' feild has the 'Volatile' bit too, which is 
-> same as General Media Event Record.  I am a bit confused about this.
+--0000000000000f18600614d0e208
+Content-Type: text/plain; charset="UTF-8"
 
+Um maybe?
 
-Similar thought as shared in cover letter -
-Can the driver trigger new poison list read on any events of interest,
-and implement a policy to report mem failures on all poison list reads
-that hit mapped addresses?
+From what I've read so far it doesn't seem the format is compromised but it
+certainly seems like a concerted attempt to subvert an upstream. However a
+knee-jerk jump to another format might be premature without carefully
+considering if other upstreams have been targeted.
 
-I guess if the answer to that question is NO - we only report memory
-failures on GMER/poison, can we find more synergy and not repeat so 
-much work.
+I guess zstd is overseen by Facebook but it's still a mostly single
+contributor repo. Lzip's history directly ties to the original author of xz
+and we haven't heard from them yet.
 
---Alison
+We should certainly keep an eye on the situation but let's not be too hasty.
 
-> 
-> ---
->  drivers/cxl/core/mbox.c | 100 ++++++++++++++++++++++++++++++++++------
->  drivers/cxl/cxlmem.h    |   8 ++--
->  2 files changed, 91 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-> index 19b46fb06ed6..97ef45d808b8 100644
-> --- a/drivers/cxl/core/mbox.c
-> +++ b/drivers/cxl/core/mbox.c
-> @@ -837,25 +837,99 @@ int cxl_enumerate_cmds(struct cxl_memdev_state *mds)
->  }
->  EXPORT_SYMBOL_NS_GPL(cxl_enumerate_cmds, CXL);
->  
-> -void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
-> -			    enum cxl_event_log_type type,
-> -			    enum cxl_event_type event_type,
-> -			    const uuid_t *uuid, union cxl_event *evt)
-> +struct cxl_event_poison_context {
-> +	u64 dpa;
-> +	u64 length;
-> +};
-> +
-> +static int __cxl_report_poison(struct device *dev, void *arg)
-> +{
-> +	struct cxl_event_poison_context *ctx = arg;
-> +	struct cxl_endpoint_decoder *cxled;
-> +	struct cxl_memdev *cxlmd;
-> +
-> +	cxled = to_cxl_endpoint_decoder(dev);
-> +	if (!cxled || !cxled->dpa_res || !resource_size(cxled->dpa_res))
-> +		return 0;
-> +
-> +	if (cxled->mode == CXL_DECODER_MIXED) {
-> +		dev_dbg(dev, "poison list read unsupported in mixed mode\n");
-> +		return 0;
-> +	}
-> +
-> +	if (ctx->dpa > cxled->dpa_res->end || ctx->dpa < cxled->dpa_res->start)
-> +		return 0;
-> +
-> +	cxlmd = cxled_to_memdev(cxled);
-> +	cxl_mem_get_poison(cxlmd, ctx->dpa, ctx->length, cxled->cxld.region,
-> +			   true);
-> +
-> +	return 1;
-> +}
-> +
-> +static void cxl_event_handle_poison(struct cxl_memdev *cxlmd,
-> +				    struct cxl_event_gen_media *rec)
-> +{
-> +	struct cxl_port *port = cxlmd->endpoint;
-> +	u64 phys_addr = le64_to_cpu(rec->phys_addr);
-> +	struct cxl_event_poison_context ctx = {
-> +		.dpa = phys_addr & CXL_DPA_MASK,
-> +	};
-> +
-> +	/* No regions mapped to this memdev, that is to say no HPA is mapped */
-> +	if (!port || !is_cxl_endpoint(port) ||
-> +	    cxl_num_decoders_committed(port) == 0)
-> +		return;
-> +
-> +	/*
-> +	 * Host Inject Poison may have a range of DPA, but the GMER only has
-> +	 * "Physical Address" field, no such one indicates length.  So it's
-> +	 * better to call cxl_mem_get_poison() to find this poison record.
-> +	 */
-> +	ctx.length = phys_addr & CXL_DPA_VOLATILE ?
-> +			resource_size(&cxlmd->cxlds->ram_res) :
-> +			resource_size(&cxlmd->cxlds->pmem_res) - ctx.dpa;
-> +
-> +	device_for_each_child(&port->dev, &ctx, __cxl_report_poison);
-> +}
-> +
-> +static void cxl_event_handle_general_media(struct cxl_memdev *cxlmd,
-> +					   enum cxl_event_log_type type,
-> +					   struct cxl_event_gen_media *rec)
-> +{
-> +	if (type == CXL_EVENT_TYPE_FAIL) {
-> +		switch (rec->transaction_type) {
-> +		case CXL_EVENT_TRANSACTION_READ:
-> +		case CXL_EVENT_TRANSACTION_WRITE:
-> +		case CXL_EVENT_TRANSACTION_INJECT_POISON:
-> +			cxl_event_handle_poison(cxlmd, rec);
-> +			break;
-> +		default:
-> +			break;
-> +		}
-> +	}
-> +}
-> +
-> +void cxl_event_handle_record(struct cxl_memdev *cxlmd,
-> +			     enum cxl_event_log_type type,
-> +			     enum cxl_event_type event_type,
-> +			     const uuid_t *uuid, union cxl_event *evt)
->  {
-> -	if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
-> +	if (event_type == CXL_CPER_EVENT_GEN_MEDIA) {
->  		trace_cxl_general_media(cxlmd, type, &evt->gen_media);
-> -	else if (event_type == CXL_CPER_EVENT_DRAM)
-> +		cxl_event_handle_general_media(cxlmd, type, &evt->gen_media);
-> +	} else if (event_type == CXL_CPER_EVENT_DRAM)
->  		trace_cxl_dram(cxlmd, type, &evt->dram);
->  	else if (event_type == CXL_CPER_EVENT_MEM_MODULE)
->  		trace_cxl_memory_module(cxlmd, type, &evt->mem_module);
->  	else
->  		trace_cxl_generic_event(cxlmd, type, uuid, &evt->generic);
->  }
-> -EXPORT_SYMBOL_NS_GPL(cxl_event_trace_record, CXL);
-> +EXPORT_SYMBOL_NS_GPL(cxl_event_handle_record, CXL);
->  
-> -static void __cxl_event_trace_record(const struct cxl_memdev *cxlmd,
-> -				     enum cxl_event_log_type type,
-> -				     struct cxl_event_record_raw *record)
-> +static void __cxl_event_handle_record(struct cxl_memdev *cxlmd,
-> +				      enum cxl_event_log_type type,
-> +				      struct cxl_event_record_raw *record)
->  {
->  	enum cxl_event_type ev_type = CXL_CPER_EVENT_GENERIC;
->  	const uuid_t *uuid = &record->id;
-> @@ -867,7 +941,7 @@ static void __cxl_event_trace_record(const struct cxl_memdev *cxlmd,
->  	else if (uuid_equal(uuid, &CXL_EVENT_MEM_MODULE_UUID))
->  		ev_type = CXL_CPER_EVENT_MEM_MODULE;
->  
-> -	cxl_event_trace_record(cxlmd, type, ev_type, uuid, &record->event);
-> +	cxl_event_handle_record(cxlmd, type, ev_type, uuid, &record->event);
->  }
->  
->  static int cxl_clear_event_record(struct cxl_memdev_state *mds,
-> @@ -978,8 +1052,8 @@ static void cxl_mem_get_records_log(struct cxl_memdev_state *mds,
->  			break;
->  
->  		for (i = 0; i < nr_rec; i++)
-> -			__cxl_event_trace_record(cxlmd, type,
-> -						 &payload->records[i]);
-> +			__cxl_event_handle_record(cxlmd, type,
-> +						  &payload->records[i]);
->  
->  		if (payload->flags & CXL_GET_EVENT_FLAG_OVERFLOW)
->  			trace_cxl_overflow(cxlmd, type, payload);
-> diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-> index 1f03130b9d6a..dfd7bdd0d66a 100644
-> --- a/drivers/cxl/cxlmem.h
-> +++ b/drivers/cxl/cxlmem.h
-> @@ -822,10 +822,10 @@ void set_exclusive_cxl_commands(struct cxl_memdev_state *mds,
->  void clear_exclusive_cxl_commands(struct cxl_memdev_state *mds,
->  				  unsigned long *cmds);
->  void cxl_mem_get_event_records(struct cxl_memdev_state *mds, u32 status);
-> -void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
-> -			    enum cxl_event_log_type type,
-> -			    enum cxl_event_type event_type,
-> -			    const uuid_t *uuid, union cxl_event *evt);
-> +void cxl_event_handle_record(struct cxl_memdev *cxlmd,
-> +			     enum cxl_event_log_type type,
-> +			     enum cxl_event_type event_type,
-> +			     const uuid_t *uuid, union cxl_event *evt);
->  int cxl_set_timestamp(struct cxl_memdev_state *mds);
->  int cxl_poison_state_init(struct cxl_memdev_state *mds);
->  void cxl_mem_report_poison(struct cxl_memdev *cxlmd,
-> -- 
-> 2.34.1
-> 
-> 
+On Sat, 30 Mar 2024, 05:00 Paolo Bonzini, <pbonzini@redhat.com> wrote:
+
+> For more info, see
+> https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/
+> but, essentially, xz was backdoored and it seems like upstream was directly
+> responsible for this.
+>
+> Based on this, should we switch our distribution from bz2+xz to bz2+zstd
+> or bz2+lzip?
+>
+> Thanks,
+>
+> Paolo
+>
+
+--0000000000000f18600614d0e208
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div>Um maybe?<div dir=3D"auto"><br></div><div dir=3D"aut=
+o">From what I&#39;ve read so far it doesn&#39;t seem the format is comprom=
+ised but it certainly seems like a concerted attempt to subvert an upstream=
+. However a knee-jerk jump to another format might be premature without car=
+efully considering if other upstreams have been targeted.</div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">I guess zstd is overseen by Facebook but =
+it&#39;s still a mostly single contributor repo. Lzip&#39;s history directl=
+y ties to the original author of xz and we haven&#39;t heard from them yet.=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">We should certainly kee=
+p an eye on the situation but let&#39;s not be too hasty.</div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, 30 Mar 202=
+4, 05:00 Paolo Bonzini, &lt;<a href=3D"mailto:pbonzini@redhat.com" target=
+=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; wrote:<br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><div dir=3D"auto">For more info, see=C2=A0<a=
+ href=3D"https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@aw=
+ork3.anarazel.de/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://=
+lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/=
+</a> but, essentially, xz was backdoored and it seems like upstream was dir=
+ectly responsible for this.<div dir=3D"auto"><br></div><div dir=3D"auto">Ba=
+sed on this, should we switch our distribution from bz2+xz to bz2+zstd or b=
+z2+lzip?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks,</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
+</blockquote></div>
+</div></div>
+
+--0000000000000f18600614d0e208--
 
