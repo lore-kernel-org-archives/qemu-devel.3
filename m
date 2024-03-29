@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66AF2C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46688CD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqKae-00055n-Ss; Fri, 29 Mar 2024 18:20:48 -0400
+	id 1rqKam-00058o-J8; Fri, 29 Mar 2024 18:20:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKad-00055U-PG
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:47 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1rqKai-00057f-Kt
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:53 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKac-0001p9-9T
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:47 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6e74bd85f26so2032981b3a.1
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:20:45 -0700 (PDT)
+ id 1rqKah-0001q2-5R
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:52 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e740fff1d8so2012850b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711750845; x=1712355645; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711750849; x=1712355649; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HtUHg09UOjxxYBJJEpdXT1anxY6jjxQxzEq5yXQbAXE=;
- b=yBJGaOdrjxNQNBorSTQqmPpBX4T4sd3LXvM2cI1rJX+8fCHqOMYiRWupAHDFL1+lJB
- vYukkFzzMz/qP2Ht9Rn6HF0LD1zg29tyoNxlVmyk27bQgAbV7w116SyLpiCs4qICIkru
- a//h8CKsi+/oZRk/6JKFTw7LSrqnN2PvvFXRBGSG+ibN6YVr5yyqVpDDQ3Z9Km6i0Esr
- zsnvevkFBoRegLZV2qOFw16vgIsTBHhKajHR7AjrT4J9SWXhPitXDU6bmxc9fJ8pfxIF
- 2Ph2e/9RCeSBSaWIr9drZo06fv15xcXn6/F9N0pg8bTGXRxnp6lOvSQX22+QwtHWPWPF
- feyw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=1pFViSSelBLDC7jQWPNWKQ58HUVyc3Kf8+NgXdrfBUc=;
+ b=Tva+OfnKh9KR7OktjPfOxSJAsP6pAvXCA2q9RtdmrT2s+KqhHQkmxCcLMLAI9hcM8k
+ mZxmy02efutIBEecJ6Cr1EEmsLd1Ul6jdRZnfDrF0O8Dw+1Obuy173nGJMoNIPTugwxj
+ uA3b3uxmpivHUSy1q8NsiM3UJBYRIUkNLsA/RxmyciOn3zU//qZWun0ABEDQdTkv9g3z
+ Axx7fkJbEsmeG1ARCjsfihBjPdnFM0FvNPkq4ERP3xygoMLqaMx5jT0TL6P44y14tdQb
+ d/OBoENRTIGytuyhfeExy8WdGkzwZZAWdh21ju5GT5Jk9US4SiRPYL8w2Yr/d8QI+LKm
+ DKdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711750845; x=1712355645;
+ d=1e100.net; s=20230601; t=1711750849; x=1712355649;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HtUHg09UOjxxYBJJEpdXT1anxY6jjxQxzEq5yXQbAXE=;
- b=uy+aVsv8+5hMTe6B3KLjT5T1xAp7D4W8XNxY2E3sCf57xjTngGI9QUroVDv/lLIo3P
- smL7uxHtYh+ucJb1Qb9npY8vaWOp8ops/ImqaYz2THsdX+bGdMo1XNzHiPXspWGwhT+Q
- vmDiZ0G1uy0ecRx5IGTxzUQfBZy5TURWSHd+l5iQlRoqnxxfQn9azIuPNnuJSkHvjC6c
- TJ1/ZXgXEzcazpPENqL4/PBiGPKAbHpLlxnfuGznJ5+HCO+CbqkbLXqzyTQr88HBaYqb
- 5GnSPHcmfjlhIvdVPjelu4zZ7MT4hnB6YP3BdLMNGHCKzMOMktDAWfVblthkIWX9o9oB
- XLMA==
-X-Gm-Message-State: AOJu0YxAI7oilD/G6bru9aP7lD3sfvM0LdL3dClBVRBKr6lfVM7Amd5v
- PmTDnwRj7I0Bz/i3V+EbA+2uIqEtOMpM9qnJLp5TWOMXTnRTDnr8dYUOhRBvwoL2RHvEuIXI4co
- o
-X-Google-Smtp-Source: AGHT+IEjgiztimZl+umzBvIB4PXvgwmlAsCEtEh0MwE+tdRYfYwCpG08/cOs52K0LU9o9F18Mh8m3Q==
-X-Received: by 2002:a05:6a00:1910:b0:6ea:ca90:3459 with SMTP id
- y16-20020a056a00191000b006eaca903459mr3588812pfi.32.1711750844955; 
- Fri, 29 Mar 2024 15:20:44 -0700 (PDT)
+ bh=1pFViSSelBLDC7jQWPNWKQ58HUVyc3Kf8+NgXdrfBUc=;
+ b=XVJzL2Th15il8bP5W8J32SoUpN51LaTB73r/t+vdr5PKekn9eUEjKAp3ADhnuoqVNE
+ 8h2tX5GcZBoKG3bmAzBu99HxnGMpYfQZt+URWE+usPADggD7CEBvmRtCRUkrK0/RxtCw
+ dRGfLAVwHRIaw6FyJ9o5aPsr2CgJiPZ5bD0YZFJqPnWrRNAWT2p5+e8HhUuxzr3lWvpk
+ Y6njmOyyzt7D30ZnzHj87sazD3h6PSoXCv8LO99dng2c9lSlvJ73z/Le2siULzlKLicr
+ 9mG88hphtLlp2br5f7KuRXXRH5ZVGO0+1G2RGlDUoB0cw7uupnR3q4Ff9Nx19Y2fQ9pI
+ FGug==
+X-Gm-Message-State: AOJu0YwhZtcslby7Lb5Oc13Y96IUTahY0obaiYz6oijScYXBEl1I3hox
+ 809ZVByMNttu1vxdbJv+SOxuSdMPTArm+x3lEKfeUS0wWfd0fhvnC1pj35HJjcPNI6us/GChVqL
+ S
+X-Google-Smtp-Source: AGHT+IGIIGOGD3pPzUhhIIkKoxv0HYorUl//Y/yg7POhEYJ2TNpwl+bNLGaX81FxBFQiZPQ1BZEz9g==
+X-Received: by 2002:a05:6a00:4b50:b0:6e7:6a7d:5a58 with SMTP id
+ kr16-20020a056a004b5000b006e76a7d5a58mr3560406pfb.25.1711750849554; 
+ Fri, 29 Mar 2024 15:20:49 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- lc24-20020a056a004f5800b006eaacc63435sm3579811pfb.173.2024.03.29.15.20.43
+ lc24-20020a056a004f5800b006eaacc63435sm3579811pfb.173.2024.03.29.15.20.48
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 15:20:44 -0700 (PDT)
+ Fri, 29 Mar 2024 15:20:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 3/7] linux-user: Fix shmat(NULL) for h != g
-Date: Fri, 29 Mar 2024 12:20:33 -1000
-Message-Id: <20240329222037.1735350-4-richard.henderson@linaro.org>
+Subject: [PULL 6/7] disas: Show opcodes for target_disas and monitor_disas
+Date: Fri, 29 Mar 2024 12:20:36 -1000
+Message-Id: <20240329222037.1735350-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240329222037.1735350-1-richard.henderson@linaro.org>
 References: <20240329222037.1735350-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ PDS_OTHER_BAD_TLD=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,38 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-
-In the h != g && shmaddr == NULL && !reserved_va case, target_shmat()
-incorrectly mmap()s the initial anonymous range with
-MAP_FIXED_NOREPLACE, even though the earlier mmap_find_vma() has
-already reserved the respective address range.
-
-Fix by using MAP_FIXED when "mapped", which is set after
-mmap_find_vma(), is true.
-
-Fixes: 78bc8ed9a8f0 ("linux-user: Rewrite target_shmat")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240325192436.561154-4-iii@linux.ibm.com>
+Fixes: 83b4613ba83 ("disas: introduce show_opcodes")
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ disas/disas-mon.c | 1 +
+ disas/disas.c     | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 4505fd7376..be3b9a68eb 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1354,7 +1354,7 @@ abi_ulong target_shmat(CPUArchState *cpu_env, int shmid,
-         if (h_len != t_len) {
-             int mmap_p = PROT_READ | (shmflg & SHM_RDONLY ? 0 : PROT_WRITE);
-             int mmap_f = MAP_PRIVATE | MAP_ANONYMOUS
--                       | (reserved_va || (shmflg & SHM_REMAP)
-+                       | (reserved_va || mapped || (shmflg & SHM_REMAP)
-                           ? MAP_FIXED : MAP_FIXED_NOREPLACE);
+diff --git a/disas/disas-mon.c b/disas/disas-mon.c
+index 48ac492c6c..5d6d9aa02d 100644
+--- a/disas/disas-mon.c
++++ b/disas/disas-mon.c
+@@ -34,6 +34,7 @@ void monitor_disas(Monitor *mon, CPUState *cpu, uint64_t pc,
+     disas_initialize_debug_target(&s, cpu);
+     s.info.fprintf_func = disas_gstring_printf;
+     s.info.stream = (FILE *)ds;  /* abuse this slot */
++    s.info.show_opcodes = true;
  
-             test = mmap(want, m_len, mmap_p, mmap_f, -1, 0);
+     if (is_physical) {
+         s.info.read_memory_func = physical_read_memory;
+diff --git a/disas/disas.c b/disas/disas.c
+index 17170d291e..7e3b0bb46c 100644
+--- a/disas/disas.c
++++ b/disas/disas.c
+@@ -211,6 +211,7 @@ void target_disas(FILE *out, CPUState *cpu, uint64_t code, size_t size)
+     s.info.stream = out;
+     s.info.buffer_vma = code;
+     s.info.buffer_length = size;
++    s.info.show_opcodes = true;
+ 
+     if (s.info.cap_arch >= 0 && cap_disas_target(&s.info, code, size)) {
+         return;
 -- 
 2.34.1
 
