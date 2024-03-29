@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D437C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 06:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD44CD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 06:36:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq5qp-0004XK-Rp; Fri, 29 Mar 2024 02:36:31 -0400
+	id 1rq5ql-0004Vs-Kt; Fri, 29 Mar 2024 02:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1rq5qj-0004VI-F8
+ id 1rq5qj-0004VG-BJ
  for qemu-devel@nongnu.org; Fri, 29 Mar 2024 02:36:25 -0400
-Received: from esa11.hc1455-7.c3s2.iphmx.com ([207.54.90.137])
+Received: from esa7.hc1455-7.c3s2.iphmx.com ([139.138.61.252])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1rq5qh-0002VK-IR
+ id 1rq5qh-0002V9-GO
  for qemu-devel@nongnu.org; Fri, 29 Mar 2024 02:36:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1711694184; x=1743230184;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Om0rTA9WbsSAo7t6tlUEm6jtC04fsfKD+Idi78A3PwY=;
- b=qVkeJmGDqC4AGU51faOF30bODFPUqTCERvkm3Rh/n6r7MkROd8rmQq9M
- OCzz50EfejF0D0rpYKCXt3JEUStbmaW2zyUbmar8DVcrYEgRuP69AkMFN
- Z7p753tIEusvtkKPMWNeYnZbMHKDTYxUYyora/1qD2nzXn0419R0xyCKx
- WI1zVg5vY8bkfLWrNKIejegig9FTvnFI303YEGQYVOGYQB790r6IrsVBS
- ALYMQisbA2+pSsSrzXFXkkB/NFWuTHm2lkxzXxGlK7Q8LwRUKSZS5pgHS
- 44KLnTMVdmlDFxD0VznYREs5W4WyCN5yAgMcwAqS9WQpwC2sulGQpD0JR g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="133107776"
-X-IronPort-AV: E=Sophos;i="6.07,164,1708354800"; d="scan'208";a="133107776"
-Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
- by esa11.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 15:36:20 +0900
-Received: from oym-m3.gw.nic.fujitsu.com (oym-nat-oym-m3.gw.nic.fujitsu.com
- [192.168.87.60])
- by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id B8D6FDCC08
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:17 +0900 (JST)
-Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
- [192.51.206.21])
- by oym-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id E30E715620
+ t=1711694183; x=1743230183;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=OV3u9PFPBxcZetPCHjdd1JxSRP+skqDSB/QGdHY7BKc=;
+ b=pea5sSWBeKb6G5qeZXR5Lm8+5nu/mRS9Omge2zoLrwHMUKcfRamgUiCT
+ 8NnZLi2zZzFv+o/hdh+6VtYYixrXryZfAXnbS7AxQaFz/7Qsf6frAhMdU
+ qUxaDsNGOVMq+reNHbPYz2zrtdI5UL2d+G4UMicKNk2qCKMzr6bL6zIeR
+ YbbFHodCcG+ks9GY7t2M3re43Zh9r2Ca15zLuAQk0jHs5nSxgqx+duZ9m
+ OCdJK0+dQH1nfJ1fwe1vE1xqxUE+zCQI8U38bqV//EOLtTO8+MCbPeQfi
+ S1oCR62OqJrLD/zbyesMBRP+My5XkC0p3X4aZ5zO5fAx4eqHmhke2yytJ Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="132533100"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708354800"; d="scan'208";a="132533100"
+Received: from unknown (HELO oym-r1.gw.nic.fujitsu.com) ([210.162.30.89])
+ by esa7.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 15:36:18 +0900
+Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
+ [192.168.87.59])
+ by oym-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id B60CCD4803
  for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:16 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id D625E20538E
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:15 +0900 (JST)
 Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 7EC08200A7F0B
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:16 +0900 (JST)
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 6AAE022496C
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:15 +0900 (JST)
 Received: from irides.g08.fujitsu.local (unknown [10.167.226.114])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 24B0C1A006D;
- Fri, 29 Mar 2024 14:36:16 +0800 (CST)
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 966DE1A006A;
+ Fri, 29 Mar 2024 14:36:14 +0800 (CST)
 To: qemu-devel@nongnu.org,
 	linux-cxl@vger.kernel.org
 Cc: Jonathan.Cameron@huawei.com, dan.j.williams@intel.com, dave@stgolabs.net,
  ira.weiny@intel.com
-Subject: [RFC PATCH v2 4/6] cxl/core: report poison when injecting from debugfs
-Date: Fri, 29 Mar 2024 14:36:12 +0800
-Message-Id: <20240329063614.362763-5-ruansy.fnst@fujitsu.com>
+Subject: [RFC PATCH v2 0/6] cxl: add poison event handler
+Date: Fri, 29 Mar 2024 14:36:08 +0800
+Message-Id: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
-References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28282.003
 X-TM-AS-User-Approved-Sender: Yes
 X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28282.003
-X-TMASE-Result: 10--1.096700-10.000000
-X-TMASE-MatchedRID: It5tpevY7hTR6RKL7TRTbhF4zyLyne+ATJDl9FKHbrnLBiiIoKf6r6PF
- jJEFr+olKE0Je8DR/D4NXwNUB3oA790H8LFZNFG76sBnwpOylLOGGOXsAst2EY71S6fa2jIEbbi
- ume7ndEjAl7InEAdrZfsQLJr4C1gANHYsYoI80lgKm9Bb+04k3Mw0hF8jARVgyLf0xPiHr9ghya
- dlGFXHKsTgfCdKUS4cicSkmYsAV+kLUU1zqiphVX7cGd19dSFd
+X-TMASE-Result: 10--8.993200-10.000000
+X-TMASE-MatchedRID: JUGAxiLh1cMkinkyECdW8xlxrtI3TxRk1QQ6Jx/fflb+Aw16GgqpO0+j
+ bx0gEqGpOQhWysfkZ0EbNNo/4MUKcPGCAvUPDMAJqhcdnP91eXGlLADMASK8x0+z00/C4DjDQiM
+ ingSlKoK4W6HEaP3gfW9yZj3aufb5HxPMjOKY7A8LbigRnpKlKSPzRlrdFGDwTpZBKtCN9kSuD0
+ NYznv/PLajWsk6DUHUm+9cshTl/b5FHiGvOIOu1w==
 X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=207.54.90.137;
- envelope-from=ruansy.fnst@fujitsu.com; helo=esa11.hc1455-7.c3s2.iphmx.com
+Received-SPF: pass client-ip=139.138.61.252;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa7.hc1455-7.c3s2.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -99,26 +97,49 @@ From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Poison injection from debugfs is silent too.  Add calling
-cxl_mem_report_poison() to make it able to do memory_failure().
+Changes:
+RFCv1 -> RFCv2:
+1. update commit message of PATCH 1
+2. use memory_failure_queue() instead of MCE
+3. also report poison in debugfs when injecting poison
+4. correct DPA->HPA logic:
+     find memdev's endpoint decoder to find the region it belongs to
+5. distinguish transaction_type of GMER, only handle POISON related
+     event for now
 
-Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
----
- drivers/cxl/core/memdev.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index e976141ca4a9..b0dcbe6f1004 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -366,6 +366,7 @@ int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa)
- 		.length = cpu_to_le32(1),
- 	};
- 	trace_cxl_poison(cxlmd, cxlr, &record, 0, 0, CXL_POISON_TRACE_INJECT);
-+	cxl_mem_report_poison(cxlmd, cxlr, &record);
- out:
- 	up_read(&cxl_dpa_rwsem);
- 	up_read(&cxl_region_rwsem);
+Currently driver only traces cxl events, poison injection (for both vmem
+and pmem type) on cxl memdev is silent.  OS needs to be notified then it
+could handle poison range in time.  Per CXL spec, the device error event
+could be signaled through FW-First and OS-First methods.
+
+So, add poison event handler in OS-First method:
+  - qemu:
+    - CXL device report POISON event to OS by MSI by sending GMER after
+      injecting a poison record
+  - CXL driver                                  <-- this patchset
+    a. parse the POISON event from GMER;
+    b. retrieve POISON list from memdev;
+    c. translate poisoned DPA to HPA;
+    d. enqueue poisoned PFN to memory_failure's work queue;
+
+
+Shiyang Ruan (6):
+  cxl/core: correct length of DPA field masks
+  cxl/core: introduce cxl_mem_report_poison()
+  cxl/core: add report option for cxl_mem_get_poison()
+  cxl/core: report poison when injecting from debugfs
+  cxl: add definition for transaction_type
+  cxl/core: add poison injection event handler
+
+ drivers/cxl/core/mbox.c   | 126 +++++++++++++++++++++++++++++++++-----
+ drivers/cxl/core/memdev.c |   5 +-
+ drivers/cxl/core/region.c |   8 +--
+ drivers/cxl/core/trace.h  |   6 +-
+ drivers/cxl/cxlmem.h      |  13 ++--
+ include/linux/cxl-event.h |  17 ++++-
+ 6 files changed, 144 insertions(+), 31 deletions(-)
+
 -- 
 2.34.1
 
