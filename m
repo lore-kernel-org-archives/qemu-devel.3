@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606ECCD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA626CD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 18:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqH7f-0002oW-Fz; Fri, 29 Mar 2024 14:38:39 -0400
+	id 1rqH7f-0002oj-KD; Fri, 29 Mar 2024 14:38:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rqH7c-0002mB-43; Fri, 29 Mar 2024 14:38:36 -0400
-Received: from forwardcorp1c.mail.yandex.net
- ([2a02:6b8:c03:500:1:45:d181:df01])
+ id 1rqH7d-0002nM-Eq; Fri, 29 Mar 2024 14:38:37 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rqH7Z-0007XQ-44; Fri, 29 Mar 2024 14:38:35 -0400
+ id 1rqH7Z-0007XL-Aj; Fri, 29 Mar 2024 14:38:37 -0400
 Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
  [IPv6:2a02:6b8:c12:5428:0:640:7351:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 858D760A0A;
- Fri, 29 Mar 2024 21:38:31 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 9742E608F2;
+ Fri, 29 Mar 2024 21:38:30 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:6509::1:4])
  by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2cTaY94Id8c0-N12gIxfX; Fri, 29 Mar 2024 21:38:30 +0300
+ ESMTPSA id 2cTaY94Id8c0-2BqLNsDV; Fri, 29 Mar 2024 21:38:29 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1711737510;
- bh=rodd4cQDXNKTVi2PJTr9ctB4hME9Du9Rm9xT/9Dmhc8=;
+ s=default; t=1711737509;
+ bh=YrCNM/esx2ItwVi57BFApSXbvJb7UknYXWMFwczrP7Q=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=H9zqhEeeukl+8mM0lSHxakJzRp67Hd2Ln9KE9ivlqqY1ftA9UCMTnc6WrvSrNR08o
- EQpOSq0dZOJthH8jbzTL86Wf3co5ttp8g1WdFmEaSFsmy0EP40tA8LiZEiWTWJVGnC
- Ely50HS2jC9C751XU1fdxY9ssJ9BgADKEb8hJdSo=
+ b=p0epRlRHnCIAi0nuXYEdOuirOaw49nYHLoT+RPIndEjpPZBr88JPQliRYmpEw2Qyl
+ HevxrZMnPYjXtoywguWX8WVdze3ePfsCvhgj+HesPOorfHOboDURU1IAmpbF5w+UrY
+ YafUmI7di/fKWg8BHn3zlVc2rs8qP1BQH20uRf/w=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,21 +46,22 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com, eduardo@habkost.net, armbru@redhat.com,
  dave@treblig.org, eblake@redhat.com, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru
-Subject: [PATCH v3 5/5] qapi: introduce CONFIG_READ event
-Date: Fri, 29 Mar 2024 21:37:58 +0300
-Message-Id: <20240329183758.3360733-6-vsementsov@yandex-team.ru>
+Subject: [PATCH v3 4/5] qapi: introduce device-sync-config
+Date: Fri, 29 Mar 2024 21:37:57 +0300
+Message-Id: <20240329183758.3360733-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
 References: <20240329183758.3360733-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,155 +77,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Send a new event when guest reads virtio-pci config after
-virtio_notify_config() call.
+Add command to sync config from vhost-user backend to the device. It
+may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+triggered interrupt to the guest or just not available (not supported
+by vhost-user server).
 
-That's useful to check that guest fetched modified config, for example
-after resizing disk backend.
+Command result is racy if allow it during migration. Let's allow the
+sync only in RUNNING state.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio-pci.c |  9 +++++++++
- include/monitor/qdev.h |  2 ++
- monitor/monitor.c      |  1 +
- qapi/qdev.json         | 33 +++++++++++++++++++++++++++++++++
- stubs/qdev.c           |  6 ++++++
- system/qdev-monitor.c  |  6 ++++++
- 6 files changed, 57 insertions(+)
+ hw/block/vhost-user-blk.c | 27 ++++++++++++++++------
+ hw/virtio/virtio-pci.c    |  9 ++++++++
+ include/hw/qdev-core.h    |  3 +++
+ include/sysemu/runstate.h |  1 +
+ qapi/qdev.json            | 21 +++++++++++++++++
+ system/qdev-monitor.c     | 47 +++++++++++++++++++++++++++++++++++++++
+ system/runstate.c         |  5 +++++
+ 7 files changed, 106 insertions(+), 7 deletions(-)
 
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 9e6bbc6950..2f301f380c 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -88,27 +88,39 @@ static void vhost_user_blk_set_config(VirtIODevice *vdev, const uint8_t *config)
+     s->blkcfg.wce = blkcfg->wce;
+ }
+ 
++static int vhost_user_blk_sync_config(DeviceState *dev, Error **errp)
++{
++    int ret;
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    VHostUserBlk *s = VHOST_USER_BLK(vdev);
++
++    ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
++                               vdev->config_len, errp);
++    if (ret < 0) {
++        return ret;
++    }
++
++    memcpy(vdev->config, &s->blkcfg, vdev->config_len);
++    virtio_notify_config(vdev);
++
++    return 0;
++}
++
+ static int vhost_user_blk_handle_config_change(struct vhost_dev *dev)
+ {
+     int ret;
+-    VirtIODevice *vdev = dev->vdev;
+-    VHostUserBlk *s = VHOST_USER_BLK(dev->vdev);
+     Error *local_err = NULL;
+ 
+     if (!dev->started) {
+         return 0;
+     }
+ 
+-    ret = vhost_dev_get_config(dev, (uint8_t *)&s->blkcfg,
+-                               vdev->config_len, &local_err);
++    ret = vhost_user_blk_sync_config(DEVICE(dev->vdev), &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
+         return ret;
+     }
+ 
+-    memcpy(dev->vdev->config, &s->blkcfg, vdev->config_len);
+-    virtio_notify_config(dev->vdev);
+-
+     return 0;
+ }
+ 
+@@ -576,6 +588,7 @@ static void vhost_user_blk_class_init(ObjectClass *klass, void *data)
+ 
+     device_class_set_props(dc, vhost_user_blk_properties);
+     dc->vmsd = &vmstate_vhost_user_blk;
++    dc->sync_config = vhost_user_blk_sync_config;
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+     vdc->realize = vhost_user_blk_device_realize;
+     vdc->unrealize = vhost_user_blk_device_unrealize;
 diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 92afbae71c..c0c158dae2 100644
+index eaaf86402c..92afbae71c 100644
 --- a/hw/virtio/virtio-pci.c
 +++ b/hw/virtio/virtio-pci.c
-@@ -23,6 +23,7 @@
- #include "hw/boards.h"
- #include "hw/virtio/virtio.h"
- #include "migration/qemu-file-types.h"
-+#include "monitor/qdev.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/qdev-properties.h"
-@@ -530,6 +531,10 @@ static uint64_t virtio_pci_config_read(void *opaque, hwaddr addr,
-     }
-     addr -= config;
+@@ -2501,6 +2501,14 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
+     vpciklass->parent_dc_realize(qdev, errp);
+ }
  
-+    if (vdev->generation > 0) {
-+        qdev_virtio_config_read_event(DEVICE(proxy));
-+    }
++static int virtio_pci_sync_config(DeviceState *dev, Error **errp)
++{
++    VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
++    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
 +
-     switch (size) {
-     case 1:
-         val = virtio_config_readb(vdev, addr);
-@@ -1884,6 +1889,10 @@ static uint64_t virtio_pci_device_read(void *opaque, hwaddr addr,
-         return UINT64_MAX;
-     }
++    return qdev_sync_config(DEVICE(vdev), errp);
++}
++
+ static void virtio_pci_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2517,6 +2525,7 @@ static void virtio_pci_class_init(ObjectClass *klass, void *data)
+     device_class_set_parent_realize(dc, virtio_pci_dc_realize,
+                                     &vpciklass->parent_dc_realize);
+     rc->phases.hold = virtio_pci_bus_reset_hold;
++    dc->sync_config = virtio_pci_sync_config;
+ }
  
-+    if (vdev->generation > 0) {
-+        qdev_virtio_config_read_event(DEVICE(proxy));
-+    }
-+
-     switch (size) {
-     case 1:
-         val = virtio_config_modern_readb(vdev, addr);
-diff --git a/include/monitor/qdev.h b/include/monitor/qdev.h
-index 1d57bf6577..fc9a834dca 100644
---- a/include/monitor/qdev.h
-+++ b/include/monitor/qdev.h
-@@ -36,4 +36,6 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+ static const TypeInfo virtio_pci_info = {
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 9228e96c87..87135bdcdf 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -95,6 +95,7 @@ typedef void (*DeviceUnrealize)(DeviceState *dev);
+ typedef void (*DeviceReset)(DeviceState *dev);
+ typedef void (*BusRealize)(BusState *bus, Error **errp);
+ typedef void (*BusUnrealize)(BusState *bus);
++typedef int (*DeviceSyncConfig)(DeviceState *dev, Error **errp);
+ 
+ /**
+  * struct DeviceClass - The base class for all devices.
+@@ -162,6 +163,7 @@ struct DeviceClass {
+     DeviceReset reset;
+     DeviceRealize realize;
+     DeviceUnrealize unrealize;
++    DeviceSyncConfig sync_config;
+ 
+     /**
+      * @vmsd: device state serialisation description for
+@@ -546,6 +548,7 @@ bool qdev_hotplug_allowed(DeviceState *dev, Error **errp);
   */
- const char *qdev_set_id(DeviceState *dev, char *id, Error **errp);
+ HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
+ void qdev_unplug(DeviceState *dev, Error **errp);
++int qdev_sync_config(DeviceState *dev, Error **errp);
+ void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
+                                   DeviceState *dev, Error **errp);
+ void qdev_machine_creation_done(void);
+diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+index 0117d243c4..296af52322 100644
+--- a/include/sysemu/runstate.h
++++ b/include/sysemu/runstate.h
+@@ -5,6 +5,7 @@
+ #include "qemu/notify.h"
  
-+void qdev_virtio_config_read_event(DeviceState *dev);
-+
- #endif
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 01ede1babd..5b06146503 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -316,6 +316,7 @@ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
-     [QAPI_EVENT_VSERPORT_CHANGE]   = { 1000 * SCALE_MS },
-     [QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE] = { 1000 * SCALE_MS },
-     [QAPI_EVENT_HV_BALLOON_STATUS_REPORT] = { 1000 * SCALE_MS },
-+    [QAPI_EVENT_VIRTIO_CONFIG_READ] = { 300 * SCALE_MS },
- };
- 
- /*
+ bool runstate_check(RunState state);
++const char *current_run_state_str(void);
+ void runstate_set(RunState new_state);
+ RunState runstate_get(void);
+ bool runstate_is_running(void);
 diff --git a/qapi/qdev.json b/qapi/qdev.json
-index e8be79c3d5..29a4f47360 100644
+index facaa0bc6a..e8be79c3d5 100644
 --- a/qapi/qdev.json
 +++ b/qapi/qdev.json
-@@ -182,3 +182,36 @@
- { 'command': 'device-sync-config',
-   'features': [ 'unstable' ],
-   'data': {'id': 'str'} }
+@@ -161,3 +161,24 @@
+ ##
+ { 'event': 'DEVICE_UNPLUG_GUEST_ERROR',
+   'data': { '*device': 'str', 'path': 'str' } }
 +
 +##
-+# @VIRTIO_CONFIG_READ:
++# @device-sync-config:
 +#
-+# Emitted whenever guest reads virtio device configuration after
-+# configuration change.
++# Synchronize config from backend to the guest. The command notifies
++# re-read the device config from the backend and notifies the guest
++# to re-read the config. The command may be used to notify the guest
++# about block device capcity change. Currently only vhost-user-blk
++# device supports this.
 +#
-+# The event may be used in pair with device-sync-config. It shows
-+# that guest has re-read updated configuration. It doesn't
-+# guarantee that guest successfully handled it and updated the
-+# view of the device for the user, but still it's a kind of
-+# success indicator.
-+#
-+# @device: device name
-+#
-+# @path: device path
++# @id: the device's ID or QOM path
 +#
 +# Features:
 +#
-+# @unstable: The event is experimental.
++# @unstable: The command is experimental.
 +#
 +# Since: 9.1
-+#
-+# Example:
-+#
-+#     <- { "event": "VIRTIO_CONFIG_READ",
-+#          "data": { "device": "virtio-net-pci-0",
-+#                    "path": "/machine/peripheral/virtio-net-pci-0" },
-+#          "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
 +##
-+{ 'event': 'VIRTIO_CONFIG_READ',
++{ 'command': 'device-sync-config',
 +  'features': [ 'unstable' ],
-+  'data': { '*device': 'str', 'path': 'str' } }
-diff --git a/stubs/qdev.c b/stubs/qdev.c
-index 6869f6f90a..ab6c4afe0b 100644
---- a/stubs/qdev.c
-+++ b/stubs/qdev.c
-@@ -26,3 +26,9 @@ void qapi_event_send_device_unplug_guest_error(const char *device,
- {
-     /* Nothing to do. */
- }
-+
-+void qapi_event_send_virtio_config_read(const char *device,
-+                                        const char *path)
-+{
-+    /* Nothing to do. */
-+}
++  'data': {'id': 'str'} }
 diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index cb35ea0b86..8a2ca77fde 100644
+index 7e075d91c1..cb35ea0b86 100644
 --- a/system/qdev-monitor.c
 +++ b/system/qdev-monitor.c
-@@ -26,6 +26,7 @@
- #include "sysemu/runstate.h"
+@@ -23,6 +23,7 @@
+ #include "monitor/monitor.h"
+ #include "monitor/qdev.h"
+ #include "sysemu/arch_init.h"
++#include "sysemu/runstate.h"
  #include "qapi/error.h"
  #include "qapi/qapi-commands-qdev.h"
-+#include "qapi/qapi-events-qdev.h"
  #include "qapi/qmp/dispatch.h"
- #include "qapi/qmp/qdict.h"
- #include "qapi/qmp/qerror.h"
-@@ -1206,3 +1207,8 @@ bool qmp_command_available(const QmpCommand *cmd, Error **errp)
+@@ -969,6 +970,52 @@ void qmp_device_del(const char *id, Error **errp)
      }
-     return true;
  }
-+
-+void qdev_virtio_config_read_event(DeviceState *dev)
+ 
++int qdev_sync_config(DeviceState *dev, Error **errp)
 +{
-+    qapi_event_send_virtio_config_read(dev->id, dev->canonical_path);
++    DeviceClass *dc = DEVICE_GET_CLASS(dev);
++
++    if (!dc->sync_config) {
++        error_setg(errp, "device-sync-config is not supported for '%s'",
++                   object_get_typename(OBJECT(dev)));
++        return -ENOTSUP;
++    }
++
++    return dc->sync_config(dev, errp);
 +}
++
++void qmp_device_sync_config(const char *id, Error **errp)
++{
++    DeviceState *dev;
++
++    /*
++     * During migration there is a race between syncing`config and
++     * migrating it, so let's just not allow it.
++     *
++     * Moreover, let's not rely on setting up interrupts in paused
++     * state, which may be a part of migration process.
++     */
++
++    if (migration_is_running()) {
++        error_setg(errp, "Config synchronization is not allowed "
++                   "during migration.");
++        return;
++    }
++
++    if (!runstate_is_running()) {
++        error_setg(errp, "Config synchronization allowed only in '%s' state, "
++                   "current state is '%s'", RunState_str(RUN_STATE_RUNNING),
++                   current_run_state_str());
++        return;
++    }
++
++    dev = find_device_state(id, true, errp);
++    if (!dev) {
++        return;
++    }
++
++    qdev_sync_config(dev, errp);
++}
++
+ void hmp_device_add(Monitor *mon, const QDict *qdict)
+ {
+     Error *err = NULL;
+diff --git a/system/runstate.c b/system/runstate.c
+index d6ab860eca..8fd89172ae 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -189,6 +189,11 @@ bool runstate_check(RunState state)
+     return current_run_state == state;
+ }
+ 
++const char *current_run_state_str(void)
++{
++    return RunState_str(current_run_state);
++}
++
+ static void runstate_init(void)
+ {
+     const RunStateTransition *p;
 -- 
 2.34.1
 
