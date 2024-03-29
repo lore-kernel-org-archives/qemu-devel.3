@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEF1CD128A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 12:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD99CD11DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 12:50:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqBfI-0008DO-1V; Fri, 29 Mar 2024 08:49:00 -0400
+	id 1rqBgU-0001E8-7P; Fri, 29 Mar 2024 08:50:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rqBet-00080t-T6
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:48:36 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rqBgS-0001Di-ML
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:50:12 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rqBer-0001fO-EW
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:48:35 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2d718efedb2so8025681fa.0
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 05:48:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rqBgQ-0002Gw-RA
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:50:12 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-341b01dbebbso1671444f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 05:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711716511; x=1712321311; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711716609; x=1712321409; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sjChalOR1lFOhwTJ0rAJId3zAj7IGSvTyiEYYFTqnYc=;
- b=ozFhfapZEVFdRbF8lZBlP1N7dxpXl9S78lyRCrBvK8fefy9e9FicH2ezdtZMyVNT4K
- Ef+wZFEXPnoXuFH+xIPFlW/RZeFN+sSCLuw2xP2kz+jetL7G4ki423Z6ZhIdnDTFHD/c
- HaiFznqiiY5jhtcf47RzrV9c8OyiZceTSzrHk9KKP0Fh7Y34H/BSC69IA2eXz3kKKu8R
- NlzdM5xGVluOs7M7PRSq37MPyA0Vj7a+hCF6XlYn1EKPC5UFGwSeIYoA9aVhCNVJ/y3H
- PkBHLEpMDQoUqChXWZ/NzWAhbBJcqNrVchnXC2umyHFteu+wtJ5wpOCMZHCFSIJfWkaA
- 25hw==
+ bh=fLJZI85SobsK3W2KBK/10ilOKIiM63d9NpdfIrfNLEA=;
+ b=sWorGE9FiKdlHbrxdBmJOQ1dUGQad5PRgrRWHwkEV4n5Uu/aVWEfL6tP7HZCTgMegZ
+ Ce08yV8Mcnqh0+x4Wt3dXRMk9cultwOCY1k7SEZOHdkXAjO/1SKBjmfbySNlnW6xImAe
+ vGll0ulrjVt61693Ydak+QYEtNvDpnv+3Tu5/UT5Du2zl0wZz3CckvNTv71oz49PwG6q
+ ZYiXy5HfYWOLU1OdacxWLMd80cM3rjJykFLo/ZBSCXTexLhjEvYB0iuP+jmheOgLFQAM
+ WnAW/M/I4PJs6bJLp3Kw2/8Vyh/3h4an42/d6B71iFofsbyf04AFyP3Y4sPOyHxVdCK/
+ EsWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711716511; x=1712321311;
+ d=1e100.net; s=20230601; t=1711716609; x=1712321409;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sjChalOR1lFOhwTJ0rAJId3zAj7IGSvTyiEYYFTqnYc=;
- b=GkLA77BJr2BovG1OtaDmd6biT8BY7FEQtJzk996DaXijNUTCo9dgSNDDVcBqcImsg4
- kQNgcJi6pCN+ZdJwMsX4aHAwal4AcH1UaBGy+g7e+EkE9Fhh+5MnTU2SHXEqYr2w5KhZ
- S8q671DbNDVMRSt+0d+DVcZl7Vxexa9rBh2FprNLz8IsS8ngL/qePGnfP7E9p6bW0vn9
- luU93Q1a4ftUU1atr5aZbaShsvoYMXv6NHi+BUG1ELrCwPtq0rCKBN5f9+ywg3ISbYdt
- r7dQTsDJRBc26qI+WKIh1pqzWmfcO6vQB4OoECkVVJ8fW/hF/67Sq+BSU94pSf2EB2R2
- 0bEQ==
+ bh=fLJZI85SobsK3W2KBK/10ilOKIiM63d9NpdfIrfNLEA=;
+ b=PgC+TtOuHRQ/asC8rP6O25dRXwDaQnWulcnh3xA39q6ZVYkDijGgUt9gpzE+655zB+
+ 6xL/+Dtbzdbgr4kDk24x1NaYi2rTKQ7lgEXSmMKZr0u7tTRr7cwYdpoHDiDKUVXjQUKR
+ O8aFxsv25/bq7tYu+WL059pmw+Dx3CNtB0MeDw6YwzFj1WwUdN2uMs2aOVr0XU/1q/xA
+ 4F4dDyvCZeZNUSVl1X/e97OkPhotG/JGvQ1G8gYDxnx+LOy7LW+3c7fcHCm52Il9huFV
+ 5eeBzKydCBNDZbwb5gMx9Ykv6S+gyouzeD1tr6bnZn+gjTMtgH/wFnbXcOlqqcqUmkRE
+ UFnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHfG/WyugJch4Skc4hK+xSIrGTT+tgLV48Ee3ndOirnqLJdVEchdvav9CL3S+rIn+G322uqNK/fh00URZ3yJs3EzASEdk=
-X-Gm-Message-State: AOJu0YyOPfW78N4hAuykGh2MrCmtpxtlgYVBRdlfXGDMK6NuJUyXjIAj
- 6SwsUxs1yMe5RKc1BKNY4Kt5aCTC8SdRFWRnLqVj+QTzXzSctSSGioO9FW4aznE=
-X-Google-Smtp-Source: AGHT+IHLHyc5TeXlB4D6uTvOCxqA2Qc1NVI0gTLOGBg8iIHS4GBX9u03pp4TbjsjA3QttxFMBlzhzQ==
-X-Received: by 2002:a05:651c:a0c:b0:2d7:1e2b:6284 with SMTP id
- k12-20020a05651c0a0c00b002d71e2b6284mr257483ljq.27.1711716510911; 
- Fri, 29 Mar 2024 05:48:30 -0700 (PDT)
+ AJvYcCX7xRAQYMBN79Bc3ZtpSq2SXIMrAal+sCoP7jgW8zUAdL6SEuafiCukM+cvo0W5ipTIKY1kBPnA+DiEqJWCvJ66ZTgouAU=
+X-Gm-Message-State: AOJu0Yx4vk9rD9EmHsXAyyCW83kvF9DXkG1daurc0tDDXiUI5zjo2lw4
+ JJ75vF6t7oRmw7RDvI8za8zoaQpxX9vBmJQVGAcf0V+rNYP/dS+VhTCdEwnhFIQ=
+X-Google-Smtp-Source: AGHT+IHy3etOLf5E5+223nd3XCfIUTyZlwYOvw3Z0NmtLpxl8fmiy4vcfxbL9RaRhDqEQ+7RCQGS4g==
+X-Received: by 2002:a05:6000:362:b0:33e:ca3a:1bba with SMTP id
+ f2-20020a056000036200b0033eca3a1bbamr1665668wrf.20.1711716609168; 
+ Fri, 29 Mar 2024 05:50:09 -0700 (PDT)
 Received: from [192.168.69.100] (uni14-h01-176-184-39-242.dsl.sta.abo.bbox.fr.
  [176.184.39.242]) by smtp.gmail.com with ESMTPSA id
- bn25-20020a170906c0d900b00a4e23400982sm1756131ejb.95.2024.03.29.05.48.29
+ a19-20020a1709066d5300b00a4707ec7c34sm1884547ejt.166.2024.03.29.05.50.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Mar 2024 05:48:30 -0700 (PDT)
-Message-ID: <dc81005e-f216-4a39-9900-8598b61d48f3@linaro.org>
-Date: Fri, 29 Mar 2024 13:48:28 +0100
+ Fri, 29 Mar 2024 05:50:08 -0700 (PDT)
+Message-ID: <063e567d-2b88-4e4c-b293-5225d4084ded@linaro.org>
+Date: Fri, 29 Mar 2024 13:50:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/syscall: xtensa: fix target_msqid_ds and
- ipc_perm conversion
-To: Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240329063148.129343-1-jcmvbkbc@gmail.com>
+Subject: Re: [PATCH for-9.0] tests/qtest: Fix STM32L4x5 GPIO test on 32-bit
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+References: <20240329092747.298259-1-clg@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240329063148.129343-1-jcmvbkbc@gmail.com>
+In-Reply-To: <20240329092747.298259-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,87 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Max,
+Hi Cédric, Thomas,
 
-On 29/3/24 07:31, Max Filippov wrote:
-> - target_ipc_perm::mode and target_ipc_perm::__seq fields are 32-bit wide
->    on xtensa and thus need to use tswap32
-> - target_msqid_ds::msg_*time field pairs are reversed on big-endian
->    xtensa
-
-Please split in 2 distinct patches.
-
-> Both issues result in incorrect conversion results on big-endian xtensa
-> targets, spotted by the libc-test http://nsz.repo.hu/git/?p=libc-test
+On 29/3/24 10:27, Cédric Le Goater wrote:
+> The test mangles the GPIO address and the pin number in the
+> qtest_add_data_func data parameter. Doing so, it assumes that the host
+> pointer size is always 64-bit, which breaks on 32-bit :
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: a3da8be5126b ("target/xtensa: linux-user: fix sysv IPC structures")
-> Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+> ../tests/qtest/stm32l4x5_gpio-test.c: In function ‘test_gpio_output_mode’:
+> ../tests/qtest/stm32l4x5_gpio-test.c:272:25: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+>    272 |     unsigned int pin = ((uint64_t)data) & 0xF;
+>        |                         ^
+> ../tests/qtest/stm32l4x5_gpio-test.c:273:22: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+>    273 |     uint32_t gpio = ((uint64_t)data) >> 32;
+>        |                      ^
+
+Any clue why this isn't this covered by CI?
+
+> 
+> To fix, improve the mangling of the GPIO address and pin number fields
+> by using GPIO_SIZE so that the resulting value fits in a 32-bit pointer.
+> While at it, include some helpers to hide the details.
+> 
+> Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Cc: Inès Varhol <ines.varhol@telecom-paris.fr>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   linux-user/syscall.c | 19 +++++++++++++++----
->   1 file changed, 15 insertions(+), 4 deletions(-)
-> 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index e384e1424890..cb334e90d6f0 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -3758,12 +3758,13 @@ static inline abi_long target_to_host_ipc_perm(struct ipc_perm *host_ip,
->       host_ip->gid = tswap32(target_ip->gid);
->       host_ip->cuid = tswap32(target_ip->cuid);
->       host_ip->cgid = tswap32(target_ip->cgid);
-> -#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
-> +#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
-> +    defined(TARGET_XTENSA)
->       host_ip->mode = tswap32(target_ip->mode);
->   #else
->       host_ip->mode = tswap16(target_ip->mode);
->   #endif
-> -#if defined(TARGET_PPC)
-> +#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
->       host_ip->__seq = tswap32(target_ip->__seq);
->   #else
->       host_ip->__seq = tswap16(target_ip->__seq);
-> @@ -3786,12 +3787,13 @@ static inline abi_long host_to_target_ipc_perm(abi_ulong target_addr,
->       target_ip->gid = tswap32(host_ip->gid);
->       target_ip->cuid = tswap32(host_ip->cuid);
->       target_ip->cgid = tswap32(host_ip->cgid);
-> -#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
-> +#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
-> +    defined(TARGET_XTENSA)
->       target_ip->mode = tswap32(host_ip->mode);
->   #else
->       target_ip->mode = tswap16(host_ip->mode);
->   #endif
-> -#if defined(TARGET_PPC)
-> +#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
->       target_ip->__seq = tswap32(host_ip->__seq);
->   #else
->       target_ip->__seq = tswap16(host_ip->__seq);
-> @@ -4111,6 +4113,14 @@ static inline abi_long do_semtimedop(int semid,
->   struct target_msqid_ds
->   {
->       struct target_ipc_perm msg_perm;
-> +#if defined(TARGET_XTENSA) && TARGET_BIG_ENDIAN
-
-Why restrict to only Xtensa here?
-
-> +    abi_ulong __unused1;
-> +    abi_ulong msg_stime;
-> +    abi_ulong __unused2;
-> +    abi_ulong msg_rtime;
-> +    abi_ulong __unused3;
-> +    abi_ulong msg_ctime;
-> +#else
->       abi_ulong msg_stime;
->   #if TARGET_ABI_BITS == 32
->       abi_ulong __unused1;
-> @@ -4122,6 +4132,7 @@ struct target_msqid_ds
->       abi_ulong msg_ctime;
->   #if TARGET_ABI_BITS == 32
->       abi_ulong __unused3;
-> +#endif
->   #endif
->       abi_ulong __msg_cbytes;
->       abi_ulong msg_qnum;
+>   tests/qtest/stm32l4x5_gpio-test.c | 59 ++++++++++++++++++-------------
+>   1 file changed, 35 insertions(+), 24 deletions(-)
 
 
