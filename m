@@ -4,100 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50450CD11DD
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E084CD11DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq9rt-0004au-VA; Fri, 29 Mar 2024 06:53:53 -0400
+	id 1rq9uw-00067w-QI; Fri, 29 Mar 2024 06:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rq9rs-0004a0-2U
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:53:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rq9uu-00067g-Mh
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:57:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rq9rp-0002sy-EI
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:53:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rq9us-0003be-Uh
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:57:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711709626;
+ s=mimecast20190719; t=1711709818;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UBS9n1MgA3SGDDtxREsSjADRnQKe4wIE5sFaCbLfsLI=;
- b=YFlu9dwJCQXKcWt2yMpY6i9EEm3W8HDRsramly2VH7Y0H4kLi8p/KyAZeWvouuKXGKx+c9
- j1T/Wh5Y4gv7fu2+UVB1vAOASr6Sx/wgozym9EdUJNO0i6UbCDRVFt6JuDDpgsHkUJsEc5
- YDybSFKZCEg9o7ZLxGNJG52e0LmWuE4=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZYIAOBsQkX7kNMyCajWSK7qclNBeZ6tqd40Neilx0oU=;
+ b=ep1NtgeXiI5TXo+wNeijEn8ovUlEU1BvRVCg6QVc5yARpZ3wlLjNu38sjKdYd8cRd027T0
+ +ekYmoRSSw7TD96scuQuv9tThjUhJAk902eoJ7gIx9bZzBFJFixlN8kHK+tjGP68cwNqUD
+ /bku0GcW8MfpKBbwTZacomNMd8Wqc+c=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-223-2uARZlx-NOWmBrlI0AhJoQ-1; Fri, 29 Mar 2024 06:53:45 -0400
-X-MC-Unique: 2uARZlx-NOWmBrlI0AhJoQ-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-56beb0ad4c0so913100a12.2
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 03:53:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711709624; x=1712314424;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UBS9n1MgA3SGDDtxREsSjADRnQKe4wIE5sFaCbLfsLI=;
- b=SqX76mURQRzWBLh8hBgJK/5MTzkw+zcpAtfu9kmG9uXxliVQnQMyyhEFnOWzdaIPQG
- fyzOEzzZeePrRSGxphbRcuvyV9HPy5bbGPd8zkIyVPKlfd7AauzDlna3u0k+1S3/4qCo
- YSAjdMty/v0bUDpumxwwaxS4r2w3rM3wuOpfwHCP4Jo1S0NS/wsDonoFQCYn7Twj9Wx4
- t/0qss17pbq4kouusINANEoy9InhoFH8vuBCwynBWPLWZ2OvJ5dAhh3yKalItoQbmsCE
- MyBQfqUhtlgaD7QVpyxjcxYjuLB+RVxzCKw1HDhe/cm7F2cv9Fw39JcgFYanKTQUIL57
- YXHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX0BGC6pybJ3dHOYQW91UPP/gAGgewn8gcocQQ8pdTw99jT+8LwPajtT36Zbw2BBVOTwVBTDup33pBUiGD6sm2/zMS2HCs=
-X-Gm-Message-State: AOJu0Yz20lYWSiDfPTI/NsGjD18lEJ3Y5gnVrMQrKPnKNepEiCzjQl5H
- afhh09cFF9w+osC/3PFNSM7WGPWrobOzw20wIV89YhCxJ2C4Ww4JaexSours6l1TVuyRXGGxJaL
- t7sWXBAUfMCTMLuH9RzH7iVBTXryK1nwrn3yeWS70Xat/DPWKTpw2
-X-Received: by 2002:a05:6402:2806:b0:566:4a85:ceba with SMTP id
- h6-20020a056402280600b005664a85cebamr1355150ede.1.1711709624048; 
- Fri, 29 Mar 2024 03:53:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOpbj8Dz9qfG0J//5mbnbzGz7EWF7OMexwZxeghRlP2pM+7RRpkJDj3e4OfnNt66rir3kW8w==
-X-Received: by 2002:a05:6402:2806:b0:566:4a85:ceba with SMTP id
- h6-20020a056402280600b005664a85cebamr1355117ede.1.1711709623582; 
- Fri, 29 Mar 2024 03:53:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- q14-20020a056402248e00b0056c5515c183sm1570594eda.13.2024.03.29.03.53.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Mar 2024 03:53:42 -0700 (PDT)
-Message-ID: <47139c9f-b447-4378-8a8d-a0f21e24b964@redhat.com>
-Date: Fri, 29 Mar 2024 11:53:38 +0100
+ us-mta-347-2nYWGSnGNTaVy8UIT-N91A-1; Fri, 29 Mar 2024 06:56:55 -0400
+X-MC-Unique: 2nYWGSnGNTaVy8UIT-N91A-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8BBB6800266;
+ Fri, 29 Mar 2024 10:56:54 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.78])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 2CADC111E3F3;
+ Fri, 29 Mar 2024 10:56:50 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH for-9.1] migration: Add Error** argument to
+ add_bitmaps_to_list()
+Date: Fri, 29 Mar 2024 11:56:27 +0100
+Message-ID: <20240329105627.311227-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v5 07/14] migration: Add Error** argument to
- .save_setup() handler
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fam Zheng <fam@euphon.net>, Eric Blake <eblake@redhat.com>,
- John Snow <jsnow@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Prasad Pandit
- <pjp@fedoraproject.org>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-block@nongnu.org
-References: <20240320064911.545001-1-clg@redhat.com>
- <20240320064911.545001-8-clg@redhat.com>
- <9bae5618-2ebc-453a-8b10-32474422c66f@yandex-team.ru>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <9bae5618-2ebc-453a-8b10-32474422c66f@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -122,51 +82,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Vladimir,
+This allows to report more precise errors in the migration handler
+dirty_bitmap_save_setup().
 
-On 3/29/24 10:32, Vladimir Sementsov-Ogievskiy wrote:
-> On 20.03.24 09:49, Cédric Le Goater wrote:
->> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
->> index 2708abf3d762de774ed294d3fdb8e56690d2974c..542a8c297b329abc30d1b3a205d29340fa59a961 100644
->> --- a/migration/block-dirty-bitmap.c
->> +++ b/migration/block-dirty-bitmap.c
->> @@ -1213,12 +1213,14 @@ fail:
->>       return ret;
->>   }
->> -static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque)
->> +static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>   {
->>       DBMSaveState *s = &((DBMState *)opaque)->save;
->>       SaveBitmapState *dbms = NULL;
->>       if (init_dirty_bitmap_migration(s) < 0) {
->> +        error_setg(errp,
->> +                   "Failed to initialize dirty tracking bitmap for blocks");
-> 
-> No, that's not about initializing a bitmap. This all is about migration of block-dirty-bitmaps themselves.
-> 
-> So correct would be say "Failed to initialize migration of block dirty bitmaps".
-> 
-> with this, for block dirty bitmap migration:
-> Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Suggested-by Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> 
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
 
-I had kept your previous R-b.
+ To apply on top of : 
+ https://lore.kernel.org/qemu-devel/20240320064911.545001-1-clg@redhat.com/
+ 
+ migration/block-dirty-bitmap.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-Should we remove it ? or is it ok if I address your comments below in a
-followup patch, in which case the error message above would be removed.
-
-> Still, a lot better is add errp to init_dirty_bitmap_migration() and to add_bitmaps_to_list() too: look,
-> 
-> init_dirty_bitmap_migration() fails only if add_bitmaps_to_list() fails
-> 
-> in turn,
-> 
-> add_bitmaps_to_list() have several clear failure points, where it always does error_report (or error_report_err), which would be better to pass-through to the user.
-
-Good idea. Will do.
-
-Thanks,
-
-C.
-
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index 542a8c297b329abc30d1b3a205d29340fa59a961..a7d55048c23505fde565ca784cec3c917dca37e5 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -481,13 +481,13 @@ static void dirty_bitmap_do_save_cleanup(DBMSaveState *s)
+ 
+ /* Called with the BQL taken. */
+ static int add_bitmaps_to_list(DBMSaveState *s, BlockDriverState *bs,
+-                               const char *bs_name, GHashTable *alias_map)
++                               const char *bs_name, GHashTable *alias_map,
++                               Error **errp)
+ {
+     BdrvDirtyBitmap *bitmap;
+     SaveBitmapState *dbms;
+     GHashTable *bitmap_aliases;
+     const char *node_alias, *bitmap_name, *bitmap_alias;
+-    Error *local_err = NULL;
+ 
+     /* When an alias map is given, @bs_name must be @bs's node name */
+     assert(!alias_map || !strcmp(bs_name, bdrv_get_node_name(bs)));
+@@ -504,8 +504,8 @@ static int add_bitmaps_to_list(DBMSaveState *s, BlockDriverState *bs,
+     bitmap_name = bdrv_dirty_bitmap_name(bitmap);
+ 
+     if (!bs_name || strcmp(bs_name, "") == 0) {
+-        error_report("Bitmap '%s' in unnamed node can't be migrated",
+-                     bitmap_name);
++        error_setg(errp, "Bitmap '%s' in unnamed node can't be migrated",
++                   bitmap_name);
+         return -1;
+     }
+ 
+@@ -525,9 +525,9 @@ static int add_bitmaps_to_list(DBMSaveState *s, BlockDriverState *bs,
+     }
+ 
+     if (node_alias[0] == '#') {
+-        error_report("Bitmap '%s' in a node with auto-generated "
+-                     "name '%s' can't be migrated",
+-                     bitmap_name, node_alias);
++        error_setg(errp, "Bitmap '%s' in a node with auto-generated "
++                   "name '%s' can't be migrated",
++                   bitmap_name, node_alias);
+         return -1;
+     }
+ 
+@@ -538,8 +538,7 @@ static int add_bitmaps_to_list(DBMSaveState *s, BlockDriverState *bs,
+             continue;
+         }
+ 
+-        if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_DEFAULT, &local_err)) {
+-            error_report_err(local_err);
++        if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_DEFAULT, errp)) {
+             return -1;
+         }
+ 
+@@ -558,9 +557,9 @@ static int add_bitmaps_to_list(DBMSaveState *s, BlockDriverState *bs,
+             }
+         } else {
+             if (strlen(bitmap_name) > UINT8_MAX) {
+-                error_report("Cannot migrate bitmap '%s' on node '%s': "
+-                             "Name is longer than %u bytes",
+-                             bitmap_name, bs_name, UINT8_MAX);
++                error_setg(errp, "Cannot migrate bitmap '%s' on node '%s': "
++                           "Name is longer than %u bytes",
++                           bitmap_name, bs_name, UINT8_MAX);
+                 return -1;
+             }
+             bitmap_alias = bitmap_name;
+@@ -599,7 +598,7 @@ static int add_bitmaps_to_list(DBMSaveState *s, BlockDriverState *bs,
+ }
+ 
+ /* Called with the BQL taken. */
+-static int init_dirty_bitmap_migration(DBMSaveState *s)
++static int init_dirty_bitmap_migration(DBMSaveState *s, Error **errp)
+ {
+     BlockDriverState *bs;
+     SaveBitmapState *dbms;
+@@ -643,7 +642,7 @@ static int init_dirty_bitmap_migration(DBMSaveState *s)
+             }
+ 
+             if (bs && bs->drv && !bs->drv->is_filter) {
+-                if (add_bitmaps_to_list(s, bs, name, NULL)) {
++                if (add_bitmaps_to_list(s, bs, name, NULL, errp)) {
+                     goto fail;
+                 }
+                 g_hash_table_add(handled_by_blk, bs);
+@@ -656,7 +655,8 @@ static int init_dirty_bitmap_migration(DBMSaveState *s)
+             continue;
+         }
+ 
+-        if (add_bitmaps_to_list(s, bs, bdrv_get_node_name(bs), alias_map)) {
++        if (add_bitmaps_to_list(s, bs, bdrv_get_node_name(bs), alias_map,
++                                errp)) {
+             goto fail;
+         }
+     }
+@@ -1218,9 +1218,7 @@ static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
+     DBMSaveState *s = &((DBMState *)opaque)->save;
+     SaveBitmapState *dbms = NULL;
+ 
+-    if (init_dirty_bitmap_migration(s) < 0) {
+-        error_setg(errp,
+-                   "Failed to initialize dirty tracking bitmap for blocks");
++    if (init_dirty_bitmap_migration(s, errp) < 0) {
+         return -1;
+     }
+ 
+-- 
+2.44.0
 
 
