@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 526D7C6FD1F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B131CD1283
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqKkv-0002Vu-Kx; Fri, 29 Mar 2024 18:31:25 -0400
+	id 1rqKkz-0002XI-UT; Fri, 29 Mar 2024 18:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKkq-0002VN-42
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:20 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1rqKkr-0002Va-8I
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:21 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKkn-0003UY-5f
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:19 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1df01161b39so20864175ad.3
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:31:16 -0700 (PDT)
+ id 1rqKko-0003Ug-1J
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:21 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1e00d1e13acso17037965ad.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711751475; x=1712356275; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=j7zaeXkIZWEmPyNLu5W9bXadTAjJptrRhq+TMb6bXGY=;
- b=a2ugDSX0J3OpLP7b38MGjoWs3IoW4TAcd1HLPKICQ64ZuVssrbtjVlzu8hcp6b30m6
- CafJTjSRVFxzdF5h3mMK/XovFSfcDE1/YaKLRL0SuimErQnRNm4DCHt77ZGRErplh1it
- fPUQzR7MnAH7GV0qIELRVmvWh80VA6tpfvZ3VLDDfc5nDHsciaSnKQLwft0SGGRIj5PP
- ZvAxVPW5s+dJamB9l+mrpKkE7Qx1LCSKAkQF9Uk3Dx2CkJexYIP6A4jkWj/90OosYbSz
- FVXRou9YAH+ivri1oSmREp5P+fBs4KCmiBfaH/yoQ3JbKfC5RnuKscimeMzXiJIcmIeL
- 8nkA==
+ d=linaro.org; s=google; t=1711751476; x=1712356276; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3kIU3JSkECGRrhdZz70XwC7c17Krm7Zw1Xd8qBgKizs=;
+ b=hIedfRjeT+5TI3n4efkyBI4fnygGBLhxUxepwd/3tf4eqgigko1aStEgsu7LHZV1Xz
+ kxaryZFGKatWFR+bGiBjBKHd0R9tCKNNmqeLlt+YFeFswEYS9db1bCSvVUgh4VYIldaX
+ UiErhFXh/bseotkxcim4V7WhIQxsjaXyptgagcLxgevyrHUoKGKWuq2Yj8N2h4nONxVE
+ /624cNa1GWs1pBf3JXZPtSNN5S/7OC3jI9QOlLtaeDwBhgOvPpckuqXfReX6U6SKz+SI
+ n0BZz07mZkzoAUABP8ndj7C5rzdAc8gJM3yA64zKR0HK6XeQriY7pCYngdgUosYd4URb
+ cyjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711751475; x=1712356275;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j7zaeXkIZWEmPyNLu5W9bXadTAjJptrRhq+TMb6bXGY=;
- b=wesADCDCaYVmDrhCj8nWGSka4kbG1/5UPT3bLlcw7wT5xL71eQmkRiiwE0lwJwpxXv
- hltGNkMg9GrIIs0l0K0soO79KrqnuwmCTYQlXg4DII2s7imgntvpQkFbgQdpKwDDR8rc
- 4rQq3BK5FHyu1Ut16NK+5sz6LJM1xG2OiMFI/2+/F93hjAl8V+s+0u+4KpuG+p5f/RNo
- jfszNZ05kgg2xDkJGkgRa6WO0MaM+mj48gS0Y4egLnHrN+paWUCYvdsoQqEyADA2M/zW
- ya0Y8jrKEvqHaUJyspLPzYYrOQSdqQ2yckwa/YFNGy5P7LDT4RSA7OMhZ/NYdIiAiaWX
- v17Q==
-X-Gm-Message-State: AOJu0Yy+mG6T1bZORKojrd6deHVIvsT4kiJVRYs2kSd8H59y5tbK5mGV
- Zqd48Br36riUmrWnJJRy1hxCNoNf45IJZtzcOqQQY04ipap0x1hWDz4YqPyqgQ7IjYJNRiS4rMw
- W
-X-Google-Smtp-Source: AGHT+IFN/3JuTCnYBeknl54HD48IzZOAqyIS2AlyLV9wPkUvRZbH2nmiVr8uiCwvt6bEmKxUxSBkxw==
-X-Received: by 2002:a17:902:fc8f:b0:1e0:a7ed:750c with SMTP id
- mf15-20020a170902fc8f00b001e0a7ed750cmr4212160plb.1.1711751475153; 
- Fri, 29 Mar 2024 15:31:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711751476; x=1712356276;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3kIU3JSkECGRrhdZz70XwC7c17Krm7Zw1Xd8qBgKizs=;
+ b=V/UVuTBNntisEdTnIy8ujd6Nraio2inRLvPHfVq1A2fXU1VERMNvxKgvS4QgtDmBoa
+ hb4xBU6pYLwm0XNfYX+5mss7PX2R2DNn8soPB48XI1+bAq3JNxG6Y/ttgatdAlcILxjl
+ 7+pWpYYvuU5bEj4IizqiHb3+oJhLCpJM2Nbe2Wtni5v17x8KBOMu6OevCYAUuo+8Eoyc
+ A7vEYYQ77LynGLj2I42p2CU/iOEcLp2xyTp353887EFW5hLC9SzbasVd0FNKGhFr6BMM
+ vAe0u5LbEOaCVVUObukoZQJZoAQe9lyIj0G1C69VQEAI06MiuEiUOH11AEqm5PrGGxmW
+ m7qA==
+X-Gm-Message-State: AOJu0YxldacCD6GjGpZM4+2inSZQL4g13XLknetsPHXAAoqvGhVHlNqT
+ wPdAkcm2Ci9OJa7MttMzGOuWeyxpQ04q7XDamFWXYurXNdh3TCqI99KY6CMjpPOU6aYkFqh3mpe
+ k
+X-Google-Smtp-Source: AGHT+IEPSMBaFLftXti90DEYSinR1KWyC41wq9D8uOkg8MDpdgXWaiEy1RDUtFKQABa8QDbdR4oiCQ==
+X-Received: by 2002:a17:903:444:b0:1e0:b04c:ec60 with SMTP id
+ iw4-20020a170903044400b001e0b04cec60mr3514278plb.51.1711751476527; 
+ Fri, 29 Mar 2024 15:31:16 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- f8-20020a170902684800b001e09b636cafsm4000955pln.287.2024.03.29.15.31.14
- for <qemu-devel@nongnu.org>
+ f8-20020a170902684800b001e09b636cafsm4000955pln.287.2024.03.29.15.31.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 15:31:14 -0700 (PDT)
+ Fri, 29 Mar 2024 15:31:16 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/18] target/hppa patch queue
-Date: Fri, 29 Mar 2024 12:30:53 -1000
-Message-Id: <20240329223111.1735826-1-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>
+Subject: [PULL 01/18] target/hppa: Fix BE,L set of sr0
+Date: Fri, 29 Mar 2024 12:30:54 -1000
+Message-Id: <20240329223111.1735826-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329223111.1735826-1-richard.henderson@linaro.org>
+References: <20240329223111.1735826-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,59 +94,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5012e522aca161be5c141596c66e5cc6082538a9:
+The return address comes from IA*Q_Next, and IASQ_Next
+is always equal to IASQ_Back, not IASQ_Front.
 
-  Update version for v9.0.0-rc1 release (2024-03-26 19:46:55 +0000)
+Tested-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/hppa/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-are available in the Git repository at:
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 19594f917e..1766a63001 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -3817,7 +3817,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+     load_spr(ctx, new_spc, a->sp);
+     if (a->l) {
+         copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var);
+-        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_f);
++        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
+     }
+     if (a->n && use_nullify_skip(ctx)) {
+         copy_iaoq_entry(ctx, cpu_iaoq_f, -1, tmp);
+-- 
+2.34.1
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-pa-20240329
-
-for you to fetch changes up to 4a3aa11e1fb25c28c24a43fd2835c429b00a463d:
-
-  target/hppa: Clear psw_n for BE on use_nullify_skip path (2024-03-29 08:15:01 -1000)
-
-----------------------------------------------------------------
-target/hppa: Fix BE,L set of sr0
-target/hppa: Fix B,GATE for wide mode
-target/hppa: Mark interval timer write as io
-target/hppa: Fix EIRR, EIEM versus icount
-target/hppa: Fix DCOR reconstruction of carry bits
-target/hppa: Fix unit carry conditions
-target/hppa: Fix overflow computation for shladd
-target/hppa: Add diag instructions to set/restore shadow registers
-target/hppa: Clear psw_n for BE on use_nullify_skip path
-
-----------------------------------------------------------------
-Helge Deller (1):
-      target/hppa: Add diag instructions to set/restore shadow registers
-
-Richard Henderson (14):
-      target/hppa: Fix BE,L set of sr0
-      target/hppa: Fix B,GATE for wide mode
-      target/hppa: Mark interval timer write as io
-      target/hppa: Tidy read of interval timer
-      target/hppa: Fix EIRR, EIEM versus icount
-      target/hppa: Fix DCOR reconstruction of carry bits
-      target/hppa: Optimize UADDCM with no condition
-      target/hppa: Fix unit carry conditions
-      target/hppa: Squash d for pa1.x during decode
-      target/hppa: Replace c with uv in do_cond
-      target/hppa: Fix overflow computation for shladd
-      target/hppa: Generate getshadowregs inline
-      target/hppa: Move diag argument handling to decodetree
-      target/hppa: Clear psw_n for BE on use_nullify_skip path
-
-Sven Schnelle (3):
-      target/hppa: Handle unit conditions for wide mode
-      target/hppa: Fix ADD/SUB trap on overflow for narrow mode
-      target/hppa: Use gva_offset_mask() everywhere
-
- target/hppa/cpu.h        |  10 +-
- target/hppa/helper.h     |   2 -
- target/hppa/insns.decode |  38 +++-
- target/hppa/int_helper.c |  14 +-
- target/hppa/sys_helper.c |   4 +-
- target/hppa/translate.c  | 488 +++++++++++++++++++++++++++++++----------------
- 6 files changed, 364 insertions(+), 192 deletions(-)
 
