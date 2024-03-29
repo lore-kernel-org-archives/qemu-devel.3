@@ -4,61 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FFAFCD1288
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 07:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D3EACD1288
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 07:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq6Oi-0007HJ-5d; Fri, 29 Mar 2024 03:11:32 -0400
+	id 1rq6YF-0003ht-6c; Fri, 29 Mar 2024 03:21:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rq6Od-0007G0-DG
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:11:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rq6YA-0003fz-K0
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:21:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rq6Ob-0001Ah-NH
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:11:27 -0400
+ id 1rq6Y8-0002Si-Im
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:21:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711696284;
+ s=mimecast20190719; t=1711696875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LZQ9+jiRyU6U7jrvemCH0jWxbZPxQAANcYjVF7tsoZs=;
- b=XG6adyaFUmATChc1FizgLVT9kj8MFrkaIYiBzGOq3Rqf3iwzjosGA9UtGv5kWzjtxLsjqj
- J+Q18mP1KlpiKjQaXonvtLgEery35OjE4CI7cy9/YgadDtmPdcWuQ7t5NAg2wtQgyZQRVc
- k/rYLVkfZ0mycF1TPlNIQlKlyJ8L/18=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QB9J8xbbQHTrqr5D4B2K0iqpiL61PDs7BwWglpfUP1s=;
+ b=XoLnRgEZHMYbV/RUpi9XcEserZVO+P8th+Oxk1IlSEeSBKSwrBVx+twrtnfYvzOsINla5R
+ rWQz4uKChmaN5iur8WONrVrISAYcoShYgjMOlQW3eS39lAwVIoFpNR5sVTBTpl62cXBxEa
+ hDjRfgjYxQBZULBuBva4pnbT7BmCmnk=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-92-TIzE-rz9MiGPjq8Wj6gbnw-1; Fri, 29 Mar 2024 03:11:22 -0400
-X-MC-Unique: TIzE-rz9MiGPjq8Wj6gbnw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E439B80F7E4;
- Fri, 29 Mar 2024 07:11:21 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.72.112.159])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 0746CC423E0;
- Fri, 29 Mar 2024 07:11:19 +0000 (UTC)
-From: Jason Wang <jasowang@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PULL 4/5] tap-win32: Remove unnecessary stubs
-Date: Fri, 29 Mar 2024 15:10:59 +0800
-Message-ID: <20240329071100.31376-5-jasowang@redhat.com>
-In-Reply-To: <20240329071100.31376-1-jasowang@redhat.com>
-References: <20240329071100.31376-1-jasowang@redhat.com>
+ us-mta-117-AYasxoCHOFebRz0YUoEKBQ-1; Fri, 29 Mar 2024 03:21:12 -0400
+X-MC-Unique: AYasxoCHOFebRz0YUoEKBQ-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2a0862ca1b3so1498452a91.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 00:21:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711696871; x=1712301671;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QB9J8xbbQHTrqr5D4B2K0iqpiL61PDs7BwWglpfUP1s=;
+ b=rT4ZhD22lX8zd9Rn/yNdvFBK+bfNyGqjjPwaIWObhZSxsav73ikgxASuxIBuxyzD5i
+ SKEMu0pAKcTQO1YmjQhJbhV5pnmA5eadu9ngxyE+ut+BtkjHAej93gIevKNP0M7/rinb
+ 1va97sFsIKzN55iYDORKiSdqXXW5texruDigYtHFvyA/7TO3ABTvfKPP00dJpOVBuREA
+ cvLndxXzQG00+ClWg6VfMzW7Zb668poVxmdlQOtAwP9GVq/m85vypiy1B+kD4s7t1yWv
+ AoVczO4jcNSndjlDKZpq5bqdptgzTSEI2ZjRb5V0F0ITwBJmysq9sBnUrKLMB+tvRcOc
+ s78g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUu6vLO+jwSCPZtHvm7A21vS1jAZy2M621ksq/5/ZzZRupzY8XmkJKSGc6NAhuBHM+/Uuj86am6jvXncmJjJr6asA6GYCY=
+X-Gm-Message-State: AOJu0Yx3tZ/VV3timrG4zw3LDBAHZPKfUO4DuARwGZ1b2Xo9dPiwGD9I
+ bSe2G5bv7EX8eWClN/33UVlXVfLuG0Gw7csIEBVlgWcHlALpwY7Mj1If39L8TsotHXWF9bnuD8N
+ UXwzKx53sF+En0wBpWPbq7Qmnsl5VJUSrjizGPdjZdOI5wKhcYLymbOhlxm0SaCUqh8uPxP6wCs
+ 8xqc1uTniRNhogA0upUfQnfuoTrNw=
+X-Received: by 2002:a17:90a:2f42:b0:2a2:18fa:38fb with SMTP id
+ s60-20020a17090a2f4200b002a218fa38fbmr312620pjd.0.1711696871200; 
+ Fri, 29 Mar 2024 00:21:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqQaNEqjEQHwJ3r+MKL04BCPUf+YpQ3mICw06gR+++oIZEMooAOMpB6c0dwGT8vbAqjB3doWCQeNHrr1FcjFQ=
+X-Received: by 2002:a17:90a:2f42:b0:2a2:18fa:38fb with SMTP id
+ s60-20020a17090a2f4200b002a218fa38fbmr312608pjd.0.1711696870848; Fri, 29 Mar
+ 2024 00:21:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+References: <20240328103903.408290-1-Jiqian.Chen@amd.com>
+ <20240328103903.408290-3-Jiqian.Chen@amd.com>
+ <20240328065606-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849ACCD6602EAB88BE2FED9E73B2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <20240328083503-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849C37A0B0E1AF02644C203E73A2@BL1PR12MB5849.namprd12.prod.outlook.com>
+In-Reply-To: <BL1PR12MB5849C37A0B0E1AF02644C203E73A2@BL1PR12MB5849.namprd12.prod.outlook.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 29 Mar 2024 15:20:59 +0800
+Message-ID: <CACGkMEt=V4V4JgT08o5_f7tj-eNZDi2GB4=H_Qp7xALrRxBWhQ@mail.gmail.com>
+Subject: Re: [RFC QEMU PATCH v8 2/2] virtio-pci: implement No_Soft_Reset bit
+To: "Chen, Jiqian" <Jiqian.Chen@amd.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "Huang, Ray" <Ray.Huang@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -82,94 +105,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+On Fri, Mar 29, 2024 at 3:07=E2=80=AFPM Chen, Jiqian <Jiqian.Chen@amd.com> =
+wrote:
+>
+> On 2024/3/28 20:36, Michael S. Tsirkin wrote:
+> >>>> +}
+> >>>> +
+> >>>>  static void virtio_pci_bus_reset_hold(Object *obj)
+> >>>>  {
+> >>>>      PCIDevice *dev =3D PCI_DEVICE(obj);
+> >>>>      DeviceState *qdev =3D DEVICE(obj);
+> >>>>
+> >>>> +    if (virtio_pci_no_soft_reset(dev)) {
+> >>>> +        return;
+> >>>> +    }
+> >>>> +
+> >>>>      virtio_pci_reset(qdev);
+> >>>>
+> >>>>      if (pci_is_express(dev)) {
+> >>>> @@ -2484,6 +2511,8 @@ static Property virtio_pci_properties[] =3D {
+> >>>>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+> >>>>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+> >>>>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
+> >>>> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flag=
+s,
+> >>>> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
 
-Some of them are only necessary for POSIX systems. The others are
-assigned to function pointers in NetClientInfo that can actually be
-NULL.
+Why does it come with an x prefix?
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
----
- net/tap-win32.c | 54 -------------------------------------------------
- 1 file changed, 54 deletions(-)
+> >>>>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+> >>>>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+> >>>>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+> >>>
+> >>> I am a bit confused about this part.
+> >>> Do you want to make this software controllable?
+> >> Yes, because even the real hardware, this bit is not always set.
 
-diff --git a/net/tap-win32.c b/net/tap-win32.c
-index 7b8b4be02c..7edbd71633 100644
---- a/net/tap-win32.c
-+++ b/net/tap-win32.c
-@@ -707,70 +707,16 @@ static void tap_win32_send(void *opaque)
-     }
- }
- 
--static bool tap_has_ufo(NetClientState *nc)
--{
--    return false;
--}
--
--static bool tap_has_vnet_hdr(NetClientState *nc)
--{
--    return false;
--}
--
--int tap_probe_vnet_hdr_len(int fd, int len)
--{
--    return 0;
--}
--
--void tap_fd_set_vnet_hdr_len(int fd, int len)
--{
--}
--
--int tap_fd_set_vnet_le(int fd, int is_le)
--{
--    return -EINVAL;
--}
--
--int tap_fd_set_vnet_be(int fd, int is_be)
--{
--    return -EINVAL;
--}
--
--static void tap_using_vnet_hdr(NetClientState *nc, bool using_vnet_hdr)
--{
--}
--
--static void tap_set_offload(NetClientState *nc, int csum, int tso4,
--                     int tso6, int ecn, int ufo, int uso4, int uso6)
--{
--}
--
- struct vhost_net *tap_get_vhost_net(NetClientState *nc)
- {
-     return NULL;
- }
- 
--static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
--{
--    return false;
--}
--
--static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
--{
--    abort();
--}
--
- static NetClientInfo net_tap_win32_info = {
-     .type = NET_CLIENT_DRIVER_TAP,
-     .size = sizeof(TAPState),
-     .receive = tap_receive,
-     .cleanup = tap_cleanup,
--    .has_ufo = tap_has_ufo,
--    .has_vnet_hdr = tap_has_vnet_hdr,
--    .has_vnet_hdr_len = tap_has_vnet_hdr_len,
--    .using_vnet_hdr = tap_using_vnet_hdr,
--    .set_offload = tap_set_offload,
--    .set_vnet_hdr_len = tap_set_vnet_hdr_len,
- };
- 
- static int tap_win32_init(NetClientState *peer, const char *model,
--- 
-2.42.0
+We are talking about emulated devices here.
+
+> >
+> > So which virtio devices should and which should not set this bit?
+> This depends on the scenario the virtio-device is used, if we want to tri=
+gger an internal soft reset for the virtio-device during S3, this bit shoul=
+dn't be set.
+
+If the device doesn't need reset, why bother the driver for this?
+
+Btw, no_soft_reset is insufficient for some cases, there's a proposal
+for the virtio-spec. I think we need to wait until it is done.
+
+> In my use case on my environment, I don't want to reset virtio-gpu during=
+ S3,
+> because once the display resources are destroyed, there are not enough in=
+formation to re-create them, so this bit should be set.
+> Making this bit software controllable is convenient for users to take the=
+ir own choices.
+
+Thanks
+
+>
+> >
+> >>> Or should this be set to true by default and then
+> >>> changed to false for old machine types?
+> >> How can I do so?
+> >> Do you mean set this to true by default, and if old machine types don'=
+t need this bit, they can pass false config to qemu when running qemu?
+> >
+> > No, you would use compat machinery. See how is x-pcie-flr-init handled.
+> >
+> >
+>
+> --
+> Best regards,
+> Jiqian Chen.
 
 
