@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D94CD1290
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76458CD1292
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq97o-00024O-Tr; Fri, 29 Mar 2024 06:06:17 -0400
+	id 1rq97r-000255-5d; Fri, 29 Mar 2024 06:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rq97n-00023V-2M
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:15 -0400
+ id 1rq97o-000240-4n
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:16 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rq97k-00015d-9M
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:14 -0400
+ id 1rq97m-00016H-4U
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:06:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711706772; x=1743242772;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=USSSIVCjPSbOtnv4n93fr+Nx0gEISVP5OpWqSlGRleE=;
- b=ReJL7A1CHQjjQ/4ETxlC7YhJhgwWOLWmcs7hbIJLOOwE8hy10SGKsXGm
- WQ28cdW4yL8rUzVl5t682D9zV+6wVz0Y6ph+xNPKfuSMycc+l4z6cLaZ5
- V8CJNgEfeU1lU0pu0a5xSb0i2fSx7dDmKYPIjmFK/mAn7qIRSlEOlhPi6
- zwEY302QF5Qbbbn8M6mrP+j/e3Mp3jngyPaFRK1UyvGhZJxAqXHJ/hmVP
- kCB7k1sGRF2GuqhDLae2TWy4aRonl4b964ROflRYtEZIbymHIURx7iKaP
- LdYVMzHtxhAah+48Z4yepPO+TCb7c4X1r/fPP04pErLPD110h+Cm305fl g==;
-X-CSE-ConnectionGUID: c0XuI374SzivMrV2Ij1pag==
-X-CSE-MsgGUID: YDxi1VhhQsKkKYRpU+Ivjw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="17519173"
-X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="17519173"
+ t=1711706774; x=1743242774;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=nNPyld0ZVjtOrEm2t2CP+87Iy7y4IZ/jnSqhCZUWB2k=;
+ b=HwP8qpl6a5Fdwp0v5jko3KVbky6jamLcOuNb/o/KtZLeojzFIRVG/sy9
+ l6ilhkxC0ODdO2U/PaJpneOe/jxaJe2vsBXYIhFhklpNVY0hMK584Fxgn
+ nHzhivkLUWyXMYE/B2GcgyjYRgVtxQyQzzrw/zW0ftG2QutlvuAVHOY1s
+ ynPbD+IJZ9YGcGUfRjw1blUBzBEpz7nwjAbO3MnhK4mhHKn3DP6bfEBiA
+ /kpnF0A172XY6V2jsRyaNa1rjhhW9l4iaGQ+1b1rK/VC6jz1ubl6SR4vn
+ LPkHy35J0uzh1I0ZgZVVZpy3ou7dHV6//zdIXd9HzICBoKp3ReAXeEdub A==;
+X-CSE-ConnectionGUID: +ZgT7TmWS2yjTU4B8VJOIQ==
+X-CSE-MsgGUID: VxhRvCqtTtWei8qzY2Z9Gg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="17519213"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="17519213"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 03:06:07 -0700
+ 29 Mar 2024 03:06:13 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="21441940"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708416000"; d="scan'208";a="21441964"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 29 Mar 2024 03:06:04 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 29 Mar 2024 03:06:10 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -52,10 +52,13 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Tim Wiederhake <twiederh@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH for-9.1 0/7] target/i386/kvm: Cleanup the kvmclock feature name
-Date: Fri, 29 Mar 2024 18:19:47 +0800
-Message-Id: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+Subject: [PATCH for-9.1 2/7] target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK
+ and MSR_KVM_SYSTEM_TIME definitions
+Date: Fri, 29 Mar 2024 18:19:49 +0800
+Message-Id: <20240329101954.3954987-3-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
+References: <20240329101954.3954987-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=192.198.163.11;
@@ -83,71 +86,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Hi list,
+These 2 MSRs have been already defined in the kvm_para header
+(standard-headers/asm-x86/kvm_para.h).
 
-This series is based on Paolo's guest_phys_bits patchset [1].
+Remove QEMU local definitions to avoid duplication.
 
-Currently, the old and new kvmclocks have the same feature name
-"kvmclock" in FeatureWordInfo[FEAT_KVM].
-
-When I tried to dig into the history of this unusual naming and fix it,
-I realized that Tim was already trying to rename it, so I picked up his
-renaming patch [2] (with a new commit message and other minor changes).
-
-13 years age, the same name was introduced in [3], and its main purpose
-is to make it easy for users to enable/disable 2 kvmclocks. Then, in
-2012, Don tried to rename the new kvmclock, but the follow-up did not
-address Igor and Eduardo's comments about compatibility.
-
-Tim [2], not long ago, and I just now, were both puzzled by the naming
-one after the other.
-
-So, this series is to push for renaming the new kvmclock feature to
-"kvmclock2" and adding compatibility support for older machines (PC 9.0
-and older).
-
-Finally, let's put an end to decades of doubt about this name.
-
-
-Next Step
-=========
-
-This series just separates the two kvmclocks from the naming, and in
-subsequent patches I plan to stop setting kvmclock(old kcmclock) by
-default as long as KVM supports kvmclock2 (new kvmclock).
-
-Also, try to deprecate the old kvmclock in KVM side.
-
-[1]: https://lore.kernel.org/qemu-devel/20240325141422.1380087-1-pbonzini@redhat.com/
-[2]: https://lore.kernel.org/qemu-devel/20230908124534.25027-4-twiederh@redhat.com/
-[3]: https://lore.kernel.org/qemu-devel/1300401727-5235-3-git-send-email-glommer@redhat.com/
-[4]: https://lore.kernel.org/qemu-devel/1348171412-23669-3-git-send-email-Don@CloudSwitch.com/
-
-Thanks and Best Regards,
-Zhao
-
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Tim Wiederhake (1):
-  target/i386: Fix duplicated kvmclock name in FEAT_KVM
+ target/i386/kvm/kvm.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Zhao Liu (6):
-  target/i386/kvm: Add feature bit definitions for KVM CPUID
-  target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
-    MSR_KVM_SYSTEM_TIME definitions
-  target/i386/kvm: Only Save/load kvmclock MSRs when kvmclock enabled
-  target/i386/kvm: Save/load MSRs of new kvmclock
-    (KVM_FEATURE_CLOCKSOURCE2)
-  target/i386/kvm: Add legacy_kvmclock cpu property
-  target/i386/kvm: Update comment in kvm_cpu_realizefn()
-
- hw/i386/kvm/clock.c       |  5 ++--
- hw/i386/pc.c              |  1 +
- target/i386/cpu.c         |  3 +-
- target/i386/cpu.h         | 32 +++++++++++++++++++++
- target/i386/kvm/kvm-cpu.c | 25 ++++++++++++++++-
- target/i386/kvm/kvm.c     | 59 +++++++++++++++++++++++++--------------
- 6 files changed, 99 insertions(+), 26 deletions(-)
-
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 2f3c8bc3a4ed..be88339fb8bd 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -78,9 +78,6 @@
+ #define KVM_APIC_BUS_CYCLE_NS       1
+ #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
+ 
+-#define MSR_KVM_WALL_CLOCK  0x11
+-#define MSR_KVM_SYSTEM_TIME 0x12
+-
+ /* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
+  * 255 kvm_msr_entry structs */
+ #define MSR_BUF_SIZE 4096
 -- 
 2.34.1
 
