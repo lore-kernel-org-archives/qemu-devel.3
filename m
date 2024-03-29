@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584A0CD11DD
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05825CD11DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 10:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq9OO-0003Bi-3Y; Fri, 29 Mar 2024 06:23:24 -0400
+	id 1rq9Rq-0004Ps-4p; Fri, 29 Mar 2024 06:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rq9OM-00039W-EU
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:23:22 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rq9Ro-0004PN-Qp
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:26:56 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rq9OK-0005DS-P6
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:23:22 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a4734ae95b3so243771466b.0
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 03:23:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rq9Rm-00065p-Tb
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 06:26:56 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a4734ae95b3so244154766b.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 03:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711707799; x=1712312599; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711708013; x=1712312813; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QvRGWxIoYWPA4KC1nOtZccSOj22WfXQKUeWCwr9CcAM=;
- b=O2cybOdPdsYvXXHu4TyW157P12GzV5eFFKt4eeBAWOs8Em17UTra21hDNRErJByyMr
- ZL1Bp7ByWBVgKsKPHaWzwTaczWbQuKCrDEE7stovplgqY9bVJtZKwrvDSZdkkJIJ9GYg
- Yi1P0ZqVcIeuKqtCPK10gxM0NDbo/RisudSXb3dgHvJmEYW0CbBrRXZzVC9HiuC9y4zm
- h9icrM+JCtv/RNedjXh96hQQHRQ4FuQpPY6Zk5JNEyjRt6SeOBHKls/UQY3KFQhPyubv
- /IvEGMGME7Gqg/KRxO68/chwsR8DPOloAD6sIdbjDSgFyeZGovhMLTtAXfAD+Lp5a3xV
- EjUg==
+ bh=SWvpAlam4luUqn3JoPHuKWjbc+IN3rUBDH0KIlC9Q1k=;
+ b=CF9dHPCYqepVFgVhYE6OmS7RxtVdOqHj5gpPhK4m3D9/2dc8oMyC99wsi3zqcyxRYR
+ DQmIW3hQo7gDH5v6YWC8W3SU/Je52frpI+pJ7hvz8Rq+/8hWAwfJeUt8OjikJgcFWqDf
+ h7vo4YVoYlHO8N8O39wzJFjJuUMtI8mqUI/u74yC8WoMegsolTfVRtMH7BJvT069k8rJ
+ 8ODIy59HNJYNoryV07IL0CXylj69Ge5CR6MoVD64quTPmFlwEqY9zEHvrS99t/QVHcpc
+ PKTr9kznyHsLyHhquKwuRr0qO7a3rc2Ey7x161VZ6XjDziK99YmiGNI4woLHf7YbYMxr
+ ZgEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711707799; x=1712312599;
+ d=1e100.net; s=20230601; t=1711708013; x=1712312813;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QvRGWxIoYWPA4KC1nOtZccSOj22WfXQKUeWCwr9CcAM=;
- b=i+0qpFINvY3Q3aCUkdZYyz0xhX5QagnsL828dh30/HIkRN7sRClc5N7htQ49bMv3Nl
- MVDWsZtppi4rjMkH4Te0+27GiG8ZKrqYa2nJz+BXTWSKI7ix8k8TxGDiYgLERQd5Zpc7
- Ul0DKSU2TAXwRAWQoxbFeExpzKlqrcDTJBvavLcdfLDxCayhyVj30T2n2HM+6rRqiDkS
- ip2pqrEZaU69JH8NqKtKzBTIm92BwC5fMiladW8sXmYBhKXLMMvxPxeiqOWsDrCwYB12
- wKkIHnMxuxOUo1lJhu0MrYao8vl7sVGdYk1CnIkx5ZDQllOCBtfXJd8YpXE0KWVjOt98
- NVOw==
-X-Gm-Message-State: AOJu0YxBOsKcOlRaow5Q6/EQROi7m+I+QKDaisDZKGa1rJfzAxn/wUki
- r1HW8jb8SDJqnGODDByVlyPcEZWDaheyx5L4QDvVRQBQSAsjFekRCFdqPtdnA4Q=
-X-Google-Smtp-Source: AGHT+IEKykYMFB4yOfD5Bb+oTfKqzLhkwLQOT38cufTeCOj/ARkv/rLphGMkH+ejBZNcAvqU5uV/CA==
-X-Received: by 2002:a17:906:6981:b0:a4e:2570:ff56 with SMTP id
- i1-20020a170906698100b00a4e2570ff56mr1237049ejr.0.1711707798986; 
- Fri, 29 Mar 2024 03:23:18 -0700 (PDT)
+ bh=SWvpAlam4luUqn3JoPHuKWjbc+IN3rUBDH0KIlC9Q1k=;
+ b=hsng/v+xJFzxFSKFB38c7W9QMQ5j5/CwIN8hZ0PhX4Re5Dry7J76p6UjfvGi3J8y8r
+ +s5ZJBrzFmy/EBFfhp2AELj90Z35RluplTUh9v+uZ3NGFNn/dw0GT5YGHA2l7zWGt+bn
+ IchkOQRQHRftNr+xK+zFQl+Bund31Ts8aD86IC1JFMnj+pTUFu9VtV0xFngvnB9LyTG2
+ qObRw/zMqlI1MnKASpGWhvLWZQu+uNf/QoyT6jQ3OhRXpT6EH+W0Ke3CeFHPCywjO6OL
+ hlJBWPgkSLqlmyblIdphokeGGunyYG8AEhQHW3T4See9vAl9b+fjsc06GFJJQ+N7AwtV
+ sb5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNEmuqnfYKODMW9EsgnEgG0ohlV0fjLpkapEOBFbji0lAcc/zFoEscAbFdrTwSuxehqFLgkDFb1h4Zq/6Du8XtS0xi4Rw=
+X-Gm-Message-State: AOJu0YyR0uMbGe1sCzS1rl7AGrGlTHlxV4FPOBKgnC4Dfs+2njV0CQqL
+ VT2PhWJLk5dTTA1Dz3N49OIK6L+nQlgQKWCoMQVuKtut+FOY6OHdxMDNlVqotkA=
+X-Google-Smtp-Source: AGHT+IHwxRHyHTn6woayXuSj6kA7u7ML7M6gc04CgipjNklY10bb9/4z70j5IOaGyu8rQJjWtFy7tg==
+X-Received: by 2002:a17:906:57c2:b0:a47:3b6a:a29b with SMTP id
+ u2-20020a17090657c200b00a473b6aa29bmr1218984ejr.13.1711708012980; 
+ Fri, 29 Mar 2024 03:26:52 -0700 (PDT)
 Received: from [192.168.69.100] (uni14-h01-176-184-39-242.dsl.sta.abo.bbox.fr.
  [176.184.39.242]) by smtp.gmail.com with ESMTPSA id
- eb16-20020a170907281000b00a4e0df9e793sm1755345ejc.136.2024.03.29.03.23.16
+ n12-20020a1709061d0c00b00a4da28f42f1sm1787129ejh.177.2024.03.29.03.26.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Mar 2024 03:23:18 -0700 (PDT)
-Message-ID: <ba3a0226-4aae-4cbb-bf88-c45a5dbdbff7@linaro.org>
-Date: Fri, 29 Mar 2024 11:23:15 +0100
+ Fri, 29 Mar 2024 03:26:52 -0700 (PDT)
+Message-ID: <2b61ffd8-491b-4b45-891b-13d6d6494598@linaro.org>
+Date: Fri, 29 Mar 2024 11:26:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-9.1 09/29] hw/i386/pc: Pass PCMachineState
- argument to acpi_setup()
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org,
- Bernhard Beschow <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>,
+Subject: Re: [PATCH-for-9.0 v2] hw/i386/pc: Deprecate 64-bit CPUs on ISA-only
+ PC machine
+To: Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Anthony Perard <anthony.perard@citrix.com>, Ani Sinha <anisinha@redhat.com>
-References: <20240328155439.58719-1-philmd@linaro.org>
- <20240328155439.58719-10-philmd@linaro.org>
- <04b9fcde-31f1-dfa8-8c4e-a666d0d873d8@eik.bme.hu>
+ Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, devel@lists.libvirt.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240327165456.34716-1-philmd@linaro.org>
+ <70006b4e-b2ae-4d74-be22-4dabf46e0217@ilande.co.uk>
+ <179a8cbf-b645-4027-ad53-13c4beb4f099@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <04b9fcde-31f1-dfa8-8c4e-a666d0d873d8@eik.bme.hu>
+In-Reply-To: <179a8cbf-b645-4027-ad53-13c4beb4f099@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +105,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/24 19:45, BALATON Zoltan wrote:
-> On Thu, 28 Mar 2024, Philippe Mathieu-Daudé wrote:
->> acpi_setup() caller knows about the machine state, so pass
->> it as argument to avoid a qdev_get_machine() call.
+On 28/3/24 16:39, Thomas Huth wrote:
+> On 28/03/2024 16.12, Mark Cave-Ayland wrote:
+>> On 27/03/2024 16:54, Philippe Mathieu-Daudé wrote:
 >>
->> We already resolved X86_MACHINE(pcms) as 'x86ms' so use the
->> latter.
+>>> Per Daniel suggestion [*]:
+>>>
+>>>   > isapc could arguably be restricted to just 32-bit CPU models,
+>>>   > because we should not need it to support any feature that didn't
+>>>   > exist prior to circa 1995. eg refuse to start with isapc, if 'lm'
+>>>   > is present in the CPU model for example.
+>>>
+>>> Display a warning when such CPU is used:
+>>>
+>>>    $ qemu-system-x86_64 -monitor stdio -S -M isapc -cpu Westmere
+>>>    qemu-system-x86_64: warning: Use of 64-bit CPU 'Westmere' is 
+>>> deprecated on the ISA-only PC machine
+>>>    QEMU 8.2.91 monitor - type 'help' for more information
+>>>    (qemu) q
+>>>
+>>>    $ qemu-system-x86_64 -monitor stdio -S -M isapc -cpu athlon
+>>>    QEMU 8.2.91 monitor - type 'help' for more information
+>>>    (qemu) q
+>>>
+>>> [*] https://lore.kernel.org/qemu-devel/ZgQkS4RPmSt5Xa08@redhat.com/
+>>>
+>>> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   docs/about/deprecated.rst |  7 +++++++
+>>>   include/hw/i386/pc.h      |  1 +
+>>>   hw/i386/pc_piix.c         | 14 ++++++++++++++
+>>>   3 files changed, 22 insertions(+)
+>>>
+>>> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>>> index 7b548519b5..345c35507f 100644
+>>> --- a/docs/about/deprecated.rst
+>>> +++ b/docs/about/deprecated.rst
+>>> @@ -208,6 +208,13 @@ is no longer packaged in any distro making it 
+>>> harder to run the
+>>>   ``check-tcg`` tests. Unless we can improve the testing situation there
+>>>   is a chance the code will bitrot without anyone noticing.
+>>> +64-bit (x86_64) CPUs on the ``isapc`` machine (since 9.0)
+>>> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>>> +
+>>> +The ``isapc`` machine aims to emulate old PC machine without PCI was
+>>> +generalized, so hardware available around 1995, before 64-bit intel
+>>> +CPUs were produced.
+>>> +
+>>>   System emulator machines
+>>>   ------------------------
+>>> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+>>> index 27a68071d7..2d202b9549 100644
+>>> --- a/include/hw/i386/pc.h
+>>> +++ b/include/hw/i386/pc.h
+>>> @@ -96,6 +96,7 @@ struct PCMachineClass {
+>>>       const char *default_south_bridge;
+>>>       /* Compat options: */
+>>> +    bool deprecate_64bit_cpu; /* Specific to the 'isapc' machine */
+>>>       /* Default CPU model version.  See 
+>>> x86_cpu_set_default_version(). */
+>>>       int default_cpu_version;
+>>> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+>>> index 18ba076609..2e5b2efc33 100644
+>>> --- a/hw/i386/pc_piix.c
+>>> +++ b/hw/i386/pc_piix.c
+>>> @@ -182,7 +182,20 @@ static void pc_init1(MachineState *machine, 
+>>> const char *pci_type)
+>>>       }
+>>>       pc_machine_init_sgx_epc(pcms);
+>>> +
+>>>       x86_cpus_init(x86ms, pcmc->default_cpu_version);
+>>> +    if (pcmc->deprecate_64bit_cpu) {
+>>> +        X86CPU *cpu = X86_CPU(first_cpu);
+>>> +
+>>> +        if (cpu->env.features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+>>> +            const char *cpu_type = 
+>>> object_get_typename(OBJECT(first_cpu));
+>>> +            int cpu_len = strlen(cpu_type) - 
+>>> strlen(X86_CPU_TYPE_SUFFIX);
+>>> +
+>>> +            warn_report("Use of 64-bit CPU '%.*s' is deprecated"
+>>> +                        " on the ISA-only PC machine",
+>>> +                        cpu_len, cpu_type);
+>>> +        }
+>>> +    }
+>>>       if (kvm_enabled()) {
+>>>           kvmclock_create(pcmc->kvmclock_create_always);
+>>> @@ -918,6 +931,7 @@ static void isapc_machine_options(MachineClass *m)
+>>>       pcmc->gigabyte_align = false;
+>>>       pcmc->smbios_legacy_mode = true;
+>>>       pcmc->has_reserved_memory = false;
+>>> +    pcmc->deprecate_64bit_cpu = true;
+>>>       m->default_nic = "ne2k_isa";
+>>>       m->default_cpu_type = X86_CPU_TYPE_NAME("486");
+>>>       m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> hw/i386/acpi-build.h | 3 ++-
->> hw/i386/acpi-build.c | 5 ++---
->> hw/i386/pc.c         | 2 +-
->> 3 files changed, 5 insertions(+), 5 deletions(-)
->>
->> diff --git a/hw/i386/acpi-build.h b/hw/i386/acpi-build.h
->> index 0dce155c8c..31de5bddbd 100644
->> --- a/hw/i386/acpi-build.h
->> +++ b/hw/i386/acpi-build.h
->> @@ -2,6 +2,7 @@
->> #ifndef HW_I386_ACPI_BUILD_H
->> #define HW_I386_ACPI_BUILD_H
->> #include "hw/acpi/acpi-defs.h"
->> +#include "hw/i386/pc.h"
->>
->> extern const struct AcpiGenericAddress x86_nvdimm_acpi_dsmio;
->>
->> @@ -9,7 +10,7 @@ extern const struct AcpiGenericAddress 
->> x86_nvdimm_acpi_dsmio;
->> #define ACPI_PCIHP_SEJ_BASE 0x8
->> #define ACPI_PCIHP_BNMR_BASE 0x10
->>
->> -void acpi_setup(void);
->> +void acpi_setup(PCMachineState *pcms);
+>> The logic around checking CPUID_EXT2_LM looks good to me. Slightly 
+>> curious as to whether people feel updating PCMachineClass is 
+>> necessary, or you can simply do qdev_get_machine() and use 
+>> object_dynamic_cast() to see if the machine matches 
+>> MACHINE_NAME("isapc") and warn that way?
 > 
-> This is changed to PcPciMachineState * in a following patch so can't you 
-> already introduce it here to avoid some churn?
+> Why don't you simply pass it as a parameter from pc_init_isa() instead? 
+> Or do the whole check in pc_init_isa() instead?
 
-Unfortunately not, because we'd need to use:
-
-   PcPciMachineState *ppms = PC_PCI_MACHINE(pcms);
-
-which would trigger an assertion at this point.
-
-> 
-> Regards,
-> BALATON Zoltan
+Because the CPU isn't instantiated so we can't check the CPUID_EXT2_LM
+feature :/
 
 
