@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C75ACD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 17:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463CACD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 17:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqFqd-0001W6-UA; Fri, 29 Mar 2024 13:17:00 -0400
+	id 1rqGGT-0004vC-UY; Fri, 29 Mar 2024 13:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rqFqb-0001Vx-TS
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:16:57 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rqFqZ-0002yw-Fv
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:16:57 -0400
-Received: by mail-ed1-f50.google.com with SMTP id
- 4fb4d7f45d1cf-566e869f631so2372320a12.0
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 10:16:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711732613; x=1712337413;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hTKsJeBejVR4zYvKMWuByymkgZTrO1JGV3ZTFtbHxR4=;
- b=YGVjDn/rwvY2sOZOmC9tPXzxZ6CxPaeWcJ0EI02QUPTniIL6n5NKX1bon1TXmutxfn
- v4n7Y6YLLSi9rcvnw+XTohWJPqKZ9C5rmcxf+EdjrsynTxdZLmuz3TRd0ghcT3yschAy
- Opeovgr0cornZgvdi5MTJpMNvDY+M4iKgi541RKFnBcp+y/Pu7UK6t8VUGoTRuNpQTv2
- vwwOaheVVvkvCnQ9fEG67QA8bwR+MewllO95xEpiB0VrZ+uHpQrE7pGNChzvHeMOUbZH
- hQKg4eeZogNWiBpr1y4uvNGZcA6TmghkD2oSt+ERnwrrxOJ40DgSDlV7ULwAwf6Jqy+t
- H4AA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKpyDhthu1sHmdijv7w6LrwbwY3EnUXd4SftUoOvJIdNFgv7Q8JxguLyZhIFaQAbaIedmHrFMsdVFnM0vKzIX6KhXLkfk=
-X-Gm-Message-State: AOJu0YxF1uxck9Z5f8IeMLKRe3mz0aVd0p2/OdM1ql0Z+OhbVSYdbZum
- SfGr5XLz8wic0aSaqMHyW1Wbs2PD9UpqFCEns0ScAWHDPfzOHRBH
-X-Google-Smtp-Source: AGHT+IEOhTAJ2kk+k1zB7aww/76+35nhb1XyeU1rgxU55vXVijPYjJ5oUVM1Xv+Gs065gM9lKqmFxg==
-X-Received: by 2002:a05:6402:34d4:b0:56b:9b11:9594 with SMTP id
- w20-20020a05640234d400b0056b9b119594mr2715983edc.2.1711732613087; 
- Fri, 29 Mar 2024 10:16:53 -0700 (PDT)
-Received: from localhost (fwdproxy-lla-116.fbsv.net.
- [2a03:2880:30ff:74::face:b00c]) by smtp.gmail.com with ESMTPSA id
- u23-20020aa7d897000000b0056ba017ca7fsm2191542edq.87.2024.03.29.10.16.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 10:16:52 -0700 (PDT)
-From: Breno Leitao <leitao@debian.org>
-To: hengqi@linux.alibaba.com, xuanzhuo@linux.alibaba.com,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
-Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
- qemu-devel@nongnu.org,
- virtualization@lists.linux.dev (open list:VIRTIO CORE AND NET DRIVERS),
- netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
- linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH net v3] virtio_net: Do not send RSS key if it is not supported
-Date: Fri, 29 Mar 2024 10:16:41 -0700
-Message-ID: <20240329171641.366520-1-leitao@debian.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
+ id 1rqGGS-0004v3-1K
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:43:40 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
+ id 1rqGGQ-00077Q-5R
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 13:43:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711734219; x=1743270219;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=8+m0+9kTXHDmzApqownqXccYvxDRzk9RZtXpnSr/xMs=;
+ b=Qz6ACu6I+Rx4Cgg47IoL44Kdd9s2UAmFykxqfDM/ArnVuujHy2DiFx5I
+ wBbkfJSyNICxvMc682ZpMOad4cWu2z6a6xa4IrzfEBTYL1a0CDXJZSM8d
+ uclqntIYMP2vo2RGg3PPLw91qZmtonSISca6xoCP/4s3fJz/GcvSA8LZt
+ HDdHTtJk0sbW5bpViO1s9Zf3WfoSENxbrzR4G4jULx9huEQOvN/ghdQP0
+ eh0F/BnqeWi3iO9TiJ0zj1eWzVFdQET5H9nOJRWhZnbwiN993WbMKdQCY
+ qFnaGbiGyDSK3V/gfQOs2PRPMRkEq1ObJpfBcQQuXnAwgXEd/sv+SUyMv w==;
+X-CSE-ConnectionGUID: DHq2yWmTRr+PhFfU/vEhHA==
+X-CSE-MsgGUID: /SitHtWzTEGUv5nsqLKNoQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11028"; a="6824710"
+X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; 
+   d="scan'208";a="6824710"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 10:43:34 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="48239761"
+Received: from aschofie-mobl2.amr.corp.intel.com (HELO aschofie-mobl2)
+ ([10.209.86.126])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 10:43:32 -0700
+Date: Fri, 29 Mar 2024 10:43:30 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ Jonathan.Cameron@huawei.com, dan.j.williams@intel.com,
+ dave@stgolabs.net, ira.weiny@intel.com
+Subject: Re: [RFC PATCH v2 0/6] cxl: add poison event handler
+Message-ID: <Zgb9wjTIu1CE4S5r@aschofie-mobl2>
+References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.208.50;
- envelope-from=breno.debian@gmail.com; helo=mail-ed1-f50.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
+Received-SPF: pass client-ip=198.175.65.20;
+ envelope-from=alison.schofield@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,133 +83,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a bug when setting the RSS options in virtio_net that can break
-the whole machine, getting the kernel into an infinite loop.
+On Fri, Mar 29, 2024 at 02:36:08PM +0800, Shiyang Ruan wrote:
+> Changes:
+> RFCv1 -> RFCv2:
+> 1. update commit message of PATCH 1
+> 2. use memory_failure_queue() instead of MCE
+> 3. also report poison in debugfs when injecting poison
+> 4. correct DPA->HPA logic:
+>      find memdev's endpoint decoder to find the region it belongs to
+> 5. distinguish transaction_type of GMER, only handle POISON related
+>      event for now
+> 
+> 
+> Currently driver only traces cxl events, poison injection (for both vmem
+> and pmem type) on cxl memdev is silent.  OS needs to be notified then it
+> could handle poison range in time.  Per CXL spec, the device error event
+> could be signaled through FW-First and OS-First methods.
+> 
+> So, add poison event handler in OS-First method:
+>   - qemu:
+>     - CXL device report POISON event to OS by MSI by sending GMER after
+>       injecting a poison record
+>   - CXL driver                                  <-- this patchset
+>     a. parse the POISON event from GMER;
+>     b. retrieve POISON list from memdev;
+>     c. translate poisoned DPA to HPA;
+>     d. enqueue poisoned PFN to memory_failure's work queue;
 
-Running the following command in any QEMU virtual machine with virtionet
-will reproduce this problem:
+Hi,
 
-    # ethtool -X eth0  hfunc toeplitz
+Yesterday I posted code adding the HPAs to cxl_general_media & dram
+events[1], so as I review this patchset today it's fresh in my mind.
 
-This is how the problem happens:
+Can we integrate this into the trace_ path directly:
 
-1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+1) On any GMER/poison, trigger a new poison list read
 
-2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+BTW - I'm not sure where to trigger that because we want to keep all
+the locking in place and read by endpoints like is done now. It may
+not be safe to sneak in a direct call to cxl_mem_get_poison()
+as is done in this patch set.
 
-3) virtnet_commit_rss_command() populates 4 entries for the rss
-scatter-gather
+2) Teach the poison list read trace event handler to call
+memory_failure_queue().
 
-4) Since the command above does not have a key, then the last
-scatter-gatter entry will be zeroed, since rss_key_size == 0.
-sg_buf_size = vi->rss_key_size;
+Upon receipt of that new poison list, call memory_failture_queue()
+on *any* poison in a mapped space. Is that OK?  Can we call
+memory_failure_queue() on any and every poison report that is in
+HPA space regardless of whether it first came to us through a GMER?
+I'm actually wondering if that is going to be the next ask anyway -
+ie report all poison.
 
-5) This buffer is passed to qemu, but qemu is not happy with a buffer
-with zero length, and do the following in virtqueue_map_desc() (QEMU
-function):
+I'll comment a bit more on individual patches.
 
-  if (!sz) {
-      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+--Alison
 
-6) virtio_error() (also QEMU function) set the device as broken
+[1] https://lore.kernel.org/linux-cxl/cover.1711598777.git.alison.schofield@intel.com/
 
-    vdev->broken = true;
-
-7) Qemu bails out, and do not repond this crazy kernel.
-
-8) The kernel is waiting for the response to come back (function
-virtnet_send_command())
-
-9) The kernel is waiting doing the following :
-
-      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-	     !virtqueue_is_broken(vi->cvq))
-	      cpu_relax();
-
-10) None of the following functions above is true, thus, the kernel
-loops here forever. Keeping in mind that virtqueue_is_broken() does
-not look at the qemu `vdev->broken`, so, it never realizes that the
-vitio is broken at QEMU side.
-
-Fix it by not sending RSS commands if the feature is not available in
-the device.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Cc: stable@vger.kernel.org
-Cc: qemu-devel@nongnu.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
----
-Changelog:
-
-V2:
-  * Moved from creating a valid packet, by rejecting the request
-    completely
-V3:
-  * Got some good feedback from and Xuan Zhuo and Heng Qi, and reworked
-    the rejection path.
-
----
- drivers/net/virtio_net.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index c22d1118a133..c4a21ec51adf 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3807,6 +3807,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
- 			    struct netlink_ext_ack *extack)
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
-+	bool update = false;
- 	int i;
- 
- 	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
-@@ -3814,13 +3815,24 @@ static int virtnet_set_rxfh(struct net_device *dev,
- 		return -EOPNOTSUPP;
- 
- 	if (rxfh->indir) {
-+		if (!vi->has_rss)
-+			return -EOPNOTSUPP;
-+
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
- 			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
-+		update = true;
- 	}
--	if (rxfh->key)
-+
-+	if (rxfh->key) {
-+		if (!vi->has_rss && !vi->has_rss_hash_report)
-+			return -EOPNOTSUPP;
-+
- 		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
-+		update = true;
-+	}
- 
--	virtnet_commit_rss_command(vi);
-+	if (update)
-+		virtnet_commit_rss_command(vi);
- 
- 	return 0;
- }
-@@ -4729,13 +4741,15 @@ static int virtnet_probe(struct virtio_device *vdev)
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
- 		vi->has_rss_hash_report = true;
- 
--	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
-+	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
- 		vi->has_rss = true;
- 
--	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_indir_table_size =
- 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
- 				rss_max_indirection_table_length));
-+	}
-+
-+	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_key_size =
- 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
- 
--- 
-2.43.0
-
+> 
+> 
+> Shiyang Ruan (6):
+>   cxl/core: correct length of DPA field masks
+>   cxl/core: introduce cxl_mem_report_poison()
+>   cxl/core: add report option for cxl_mem_get_poison()
+>   cxl/core: report poison when injecting from debugfs
+>   cxl: add definition for transaction_type
+>   cxl/core: add poison injection event handler
+> 
+>  drivers/cxl/core/mbox.c   | 126 +++++++++++++++++++++++++++++++++-----
+>  drivers/cxl/core/memdev.c |   5 +-
+>  drivers/cxl/core/region.c |   8 +--
+>  drivers/cxl/core/trace.h  |   6 +-
+>  drivers/cxl/cxlmem.h      |  13 ++--
+>  include/linux/cxl-event.h |  17 ++++-
+>  6 files changed, 144 insertions(+), 31 deletions(-)
+> 
+> -- 
+> 2.34.1
+> > 
 
