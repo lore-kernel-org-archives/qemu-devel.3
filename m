@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75844CD1284
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 02:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41F5CD1284
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 03:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq1pP-0002tu-Ik; Thu, 28 Mar 2024 22:18:47 -0400
+	id 1rq2WD-0000oc-D8; Thu, 28 Mar 2024 23:03:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
- id 1rq1pN-0002tj-DM
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 22:18:45 -0400
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
- id 1rq1pK-0000sV-HH
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 22:18:45 -0400
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-ddaad2aeab1so1414573276.3
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 19:18:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1711678718; x=1712283518; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Zz+IFMsejvdgnBBQBI80K+Iq8dC3px8n5nwWBHE6dsg=;
- b=EgDEoKDciMzACWJ2KD4ScMk/F3+aNjQxQsolSreEP8wwdBjAjloJih4k69cR5GX4aL
- CM0C+KGgpaTBvS8oHYWgiC5Scmg/RkiHZkkfiDVuXZ7WSp9YplJ/bdNLnZMH73ulZS/V
- qQ83zRzXh+8qlwLTqudN2rn355Q3a17kOvX/4HErVRiJ7ajsm5YtA00WrZnqLy4zC9vN
- R7pXoO1gY2OdRBzoJEcvK8eWbjYXYWhX+SMcvHba7qU6EVaiY/l7mukQbVYB1P17Kigs
- jpO7P3BDqOhi5TqRL1sZG+kYnpUOzd8CFjoNFMMPnUlqD8zpfDerQUNJPymkfFYXNU6X
- QPZg==
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rq2WB-0000o8-My
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 23:02:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rq2W9-0007ik-Cg
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 23:02:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711681375;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XVWfaSawxoK1/O518ytKhBcgaLocJNaTw+uNsyjdRck=;
+ b=NM+nnFRRpUxEdvtBsE59S75/2Urt9WkqO804zBS02kG6DHCZRlinKQlymhZy5eAW6x+nsx
+ 1jM+xrxKaLeBSdmS3g6NIuFibrsq+R12is/ImlMUp+c/PvBfutXHm4EF3CRMdv56EsuyCf
+ GBrwh9DvqJILbkr5VuczTjTwXgb7G6g=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-664-jKJonhIPN32Csidnr94gnQ-1; Thu, 28 Mar 2024 23:02:48 -0400
+X-MC-Unique: jKJonhIPN32Csidnr94gnQ-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-515ab42c302so1255009e87.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 20:02:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711678718; x=1712283518;
+ d=1e100.net; s=20230601; t=1711681367; x=1712286167;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Zz+IFMsejvdgnBBQBI80K+Iq8dC3px8n5nwWBHE6dsg=;
- b=Q69krqT1S6rAEHFVCjs/ptVogP6UtLjUku1YwbyBPT5t+m1QVNqRaBd4HiCsJ/t2e+
- CLHnR74udWaLUn1ImdW0qDDu86IyhV2DvMFGCjCefNZlFyeNkI4ufin829Gwh850tcB9
- Vzi/vdpxgSFG5MjVrLkIpopeypSEBoHBRPTWFBB6ApKP5sMsTpyRZ049s6zyvhB1J1rq
- i2dbmoX9sPZwp3eoOM4Y39COAR2Rp32yOL0SXNqNiNn/sMIt3/Bs2QMGPmVEf4IwzTe1
- 9h9gY1jdKDSSlpbA4wyjIC9lazduADiS9MQsic9LqEOUI4J82srf4QKwUs819QlP72rs
- bJ0A==
+ bh=XVWfaSawxoK1/O518ytKhBcgaLocJNaTw+uNsyjdRck=;
+ b=ZnnLzHDnrzo6SAvvKCvPv9Rl/2OKIO+o0vbyPhD80WcL1vuEySeKsg58FcKDqOc7wv
+ 2sOd4jgYXfthVAi6s0axOaY3RsDQbVW1HzCyRW0cy6oDFxTdusfIHVjyjU7+SApbHeM1
+ JRokUGQ8xa3lcZYCeio/ky88KZ7qAVAtIPTXHICm5nc3fV53GgbsuTjoB4Hv3VCV5uAe
+ cy3T/5VEGXUaVh/TZo9VMIf8oe/94ZrvCI941Ht7WfOqMHBW06nzmCRMMVyjv+CirY9H
+ pN5ctBmfHXN3UJruUwdmUtD0zYSfXthtqMk0x+PCxezK2X8p7zoc4M4RXt3D8eM7V0t9
+ Sd+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBIg7utg6RycRiZ1Xcfn9OSRMyopWlZ7ki6Ri9YM59Iy6dsUs95OHicZWHGyaw9BU5f/Sg1H6qITGIUGN+bgXdnpkDwgo=
-X-Gm-Message-State: AOJu0YzcdUu7dWecZnZxxUIxyT9zJqfkxvB3cytKoQ51X1+iJmhRY78A
- ++cwIPJ9SaBmEzj3JbOqV7rYx5ts+wM6v+PWqIB5CpFsgmrCkOnxHTzdb1iv9av5sSPHNjnnYbt
- CYzItmrzi7xgxzuRfVMQ8W1idGHh4bnoVVZhROQ==
-X-Google-Smtp-Source: AGHT+IFYd8JxyWXHdbKnZHKq5kFPmf3FoQekqBFXakoWt1h4JqrJKVxHkVVGKjtXmHCUVmo4rQEvndpWqChKb7rs8bk=
-X-Received: by 2002:a25:9249:0:b0:dcf:66d4:1766 with SMTP id
- e9-20020a259249000000b00dcf66d41766mr1221293ybo.52.1711678717879; Thu, 28 Mar
- 2024 19:18:37 -0700 (PDT)
+ AJvYcCUO16SQg4O8l6I1PWO69HfPRbv2BmKhpWBwlD/W9VNEVPQqDsVmXL8N0edVenTB3FN4s45zhqS5vBRkuO0frg9z7HyHEJg=
+X-Gm-Message-State: AOJu0YwzmJDF1QMCQ7VgkkXDMdg/zPna1Z0rzW9M69Yp3GMKtZxvXSU2
+ Rw4pR7HJKk4xJ6WvaLjlUAe+BBEMD0LmOrB2S2bWVXnwrqiliknIpGv2xUrz9lEcdk6jRjv/2TQ
+ jjIKgRyBrQK2pZObUxENHbA7h8z48GUaF80TwsHMXxIElYWDejP6GzCfcXRLaweYbcBA3SK6H6X
+ nxNEnf74kj5kBLLgW1NVEHaI5j0Nc=
+X-Received: by 2002:ac2:483c:0:b0:513:c757:33d9 with SMTP id
+ 28-20020ac2483c000000b00513c75733d9mr721047lft.53.1711681367372; 
+ Thu, 28 Mar 2024 20:02:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGx9sciOl1xTCuv15zLCGM2uVbZVibg5Pr1a45ENqIKQZ0c/8WZGtV/t6mkWeMmHU73EGZWqD2fjyFqTTFRa6M=
+X-Received: by 2002:ac2:483c:0:b0:513:c757:33d9 with SMTP id
+ 28-20020ac2483c000000b00513c75733d9mr721036lft.53.1711681366908; Thu, 28 Mar
+ 2024 20:02:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240329004815.195476-1-horenchuang@bytedance.com>
- <20240329004815.195476-3-horenchuang@bytedance.com>
- <87a5mhlus5.fsf@yhuang6-desk2.ccr.corp.intel.com>
-In-Reply-To: <87a5mhlus5.fsf@yhuang6-desk2.ccr.corp.intel.com>
-From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Date: Thu, 28 Mar 2024 19:18:27 -0700
-Message-ID: <CAKPbEqp_4DnS_mYypFVNm39ApFd8YGWJonA6zbXayNLV+kqcLw@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v8 2/2] memory tier: create CPUless memory
- tiers after obtaining HMAT info
-To: "Huang, Ying" <ying.huang@intel.com>
-Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
- mhocko@suse.com, 
- tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
- Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
- Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
- Alistair Popple <apopple@nvidia.com>,
- Srinivasulu Thanneeru <sthanneeru@micron.com>, 
- Dan Williams <dan.j.williams@intel.com>,
- Vishal Verma <vishal.l.verma@intel.com>, 
- Dave Jiang <dave.jiang@intel.com>, Andrew Morton <akpm@linux-foundation.org>,
- nvdimm@lists.linux.dev, 
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
- "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
- "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org, 
- Hao Xiang <hao.xiang@bytedance.com>
+References: <20240327012905.70188-1-lulu@redhat.com>
+ <CACGkMEt5fTtwmeb18Yj0xDT_bCjsJQM2nB-u1GJDfFKnEtSSHA@mail.gmail.com>
+ <CACLfguVY-yNWDAETt6gpUF7Ce5wbmLVXbpocsm7GW2mKRKukqQ@mail.gmail.com>
+ <CACGkMEu67pZKApDkcBi4XSuS+ss001GKyapUkNNkwnSRcgPZqw@mail.gmail.com>
+ <CACLfguXFn9aNUwh_aBkNsLZ79EWPRnXRNws95t6ySgE7b+4HPQ@mail.gmail.com>
+ <CACGkMEuP71EWSC33gj2diABaDk4sYexBbskq9ZfpZMBoB1aBbQ@mail.gmail.com>
+ <CACLfguU8tTagz=gtYkY5B01-TSMBjb0R=z-hhaP9LoOSx1GVUw@mail.gmail.com>
+ <CACGkMEs5bJgp-tsn3hg6ECnOfm0UghPmbnZLv=vaGPJ2oaQuQg@mail.gmail.com>
+In-Reply-To: <CACGkMEs5bJgp-tsn3hg6ECnOfm0UghPmbnZLv=vaGPJ2oaQuQg@mail.gmail.com>
+From: Cindy Lu <lulu@redhat.com>
+Date: Fri, 29 Mar 2024 11:02:09 +0800
+Message-ID: <CACLfguUjXOQaGw-PNHvYO0s3MftPrJuO7zLA9WBzjo+gpXKDFQ@mail.gmail.com>
+Subject: Re: [RFC 0/2] disable the configuration interrupt for the unsupported
+ device
+To: Jason Wang <jasowang@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,294 +104,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 5:59=E2=80=AFPM Huang, Ying <ying.huang@intel.com> =
-wrote:
+On Thu, Mar 28, 2024 at 12:12=E2=80=AFPM Jason Wang <jasowang@redhat.com> w=
+rote:
 >
-> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
->
-> > The current implementation treats emulated memory devices, such as
-> > CXL1.1 type3 memory, as normal DRAM when they are emulated as normal me=
-mory
-> > (E820_TYPE_RAM). However, these emulated devices have different
-> > characteristics than traditional DRAM, making it important to
-> > distinguish them. Thus, we modify the tiered memory initialization proc=
-ess
-> > to introduce a delay specifically for CPUless NUMA nodes. This delay
-> > ensures that the memory tier initialization for these nodes is deferred
-> > until HMAT information is obtained during the boot process. Finally,
-> > demotion tables are recalculated at the end.
+> On Wed, Mar 27, 2024 at 5:33=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
 > >
-> > * late_initcall(memory_tier_late_init);
-> > Some device drivers may have initialized memory tiers between
-> > `memory_tier_init()` and `memory_tier_late_init()`, potentially bringin=
-g
-> > online memory nodes and configuring memory tiers. They should be exclud=
-ed
-> > in the late init.
-> >
-> > * Handle cases where there is no HMAT when creating memory tiers
-> > There is a scenario where a CPUless node does not provide HMAT informat=
+> > On Wed, Mar 27, 2024 at 5:12=E2=80=AFPM Jason Wang <jasowang@redhat.com=
+> wrote:
+> > >
+> > > On Wed, Mar 27, 2024 at 4:28=E2=80=AFPM Cindy Lu <lulu@redhat.com> wr=
+ote:
+> > > >
+> > > > On Wed, Mar 27, 2024 at 3:54=E2=80=AFPM Jason Wang <jasowang@redhat=
+.com> wrote:
+> > > > >
+> > > > > On Wed, Mar 27, 2024 at 2:03=E2=80=AFPM Cindy Lu <lulu@redhat.com=
+> wrote:
+> > > > > >
+> > > > > > On Wed, Mar 27, 2024 at 11:05=E2=80=AFAM Jason Wang <jasowang@r=
+edhat.com> wrote:
+> > > > > > >
+> > > > > > > Hi Cindy:
+> > > > > > >
+> > > > > > > On Wed, Mar 27, 2024 at 9:29=E2=80=AFAM Cindy Lu <lulu@redhat=
+.com> wrote:
+> > > > > > > >
+> > > > > > > > we need a crash in Non-standard image, here is the jira for=
+ this https://issues.redhat.com/browse/RHEL-28522
+> > > > > > > > The root cause of the issue is that an IRQFD was used witho=
+ut initialization..
+> > > > > > > >
+> > > > > > > > During the booting process of the Vyatta image, the behavio=
+r of the called function in qemu is as follows:
+> > > > > > > >
+> > > > > > > > 1. vhost_net_stop() was called, this will call the function
+> > > > > > > > virtio_pci_set_guest_notifiers() with assgin=3D false, and
+> > > > > > > > virtio_pci_set_guest_notifiers(=EF=BC=89 will release the i=
+rqfd for vector 0
+> > > > > > >
+> > > > > > > Before vhost_net_stop(), do we know which vector is used by w=
+hich queue?
+> > > > > > >
+> > > > > > before this stop, vdev->config_verctor is get from
+> > > > > > virtio_pci_common_read/virtio_pci_common_write
+> > > > > > it was set to vector 0
+> > > > >
+> > > > > I basically meant if vector 0 is shared with some virtqueues here=
+.
+> > > > >
+> > > > Really sorry for this, vq's vector is 1,2, and will not share with =
+the
+> > > > configure vector
+> > > > > > > >
+> > > > > > > > 2. virtio_reset() was called -->set configure vector to VIR=
+TIO_NO_VECTORt
+> > > > > > > >
+> > > > > > > > 3.vhost_net_start() was called (at this time the configure =
+vector is
+> > > > > > > > still VIRTIO_NO_VECTOR) and call virtio_pci_set_guest_notif=
+iers() with
+> > > > > > > > assgin=3D true, so the irqfd for vector 0 was not "init" du=
+ring this process
+> > > > > > >
+> > > > > > > How does the configure vector differ from the virtqueue vecto=
+r here?
+> > > > > > >
+> > > > > > All the vectors are VIRTIO_NO_VECTOR (including vq). any
+> > > > > > msix_fire_vector_notifier()
+> > > > > > been called will cause the crash at this time.
+> > > > >
+> > > > > Won't virtio_pci_set_guest_notifiers() will try to allocate irqfd=
+ when
+> > > > > the assignment is true?
+> > > > >
+> > > > It will allocate, but  the vector is VIRTIO_NO_VECTOR (0xffff)
+> > > >
+> > > > then it will called kvm_virtio_pci_vector_use_one()
+> > > >
+> > > > in this function, there is a check for
+> > > >
+> > > >     if (vector >=3D msix_nr_vectors_allocated(dev))
+> > > >
+> > > > {         return 0;     }
+> > > >
+> > > > So it will return.
+> > >
+> > > How about let's just fix this?
+> > >
+> > > Btw, it's better to explain in detail like the above in the next vers=
 ion.
-> > If no HMAT is specified, it falls back to using the default DRAM tier.
-> >
-> > * Introduce another new lock `default_dram_perf_lock` for adist calcula=
-tion
-> > In the current implementation, iterating through CPUlist nodes requires
-> > holding the `memory_tier_lock`. However, `mt_calc_adistance()` will end=
- up
-> > trying to acquire the same lock, leading to a potential deadlock.
-> > Therefore, we propose introducing a standalone `default_dram_perf_lock`=
- to
-> > protect `default_dram_perf_*`. This approach not only avoids deadlock
-> > but also prevents holding a large lock simultaneously.
-> >
-> > * Upgrade `set_node_memory_tier` to support additional cases, including
-> >   default DRAM, late CPUless, and hot-plugged initializations.
-> > To cover hot-plugged memory nodes, `mt_calc_adistance()` and
-> > `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()` t=
-o
-> > handle cases where memtype is not initialized and where HMAT informatio=
-n is
-> > available.
-> >
-> > * Introduce `default_memory_types` for those memory types that are not
-> >   initialized by device drivers.
-> > Because late initialized memory and default DRAM memory need to be mana=
-ged,
-> > a default memory type is created for storing all memory types that are
-> > not initialized by device drivers and as a fallback.
-> >
-> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
-> > ---
-> >  mm/memory-tiers.c | 94 +++++++++++++++++++++++++++++++++++++++--------
-> >  1 file changed, 78 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-> > index 974af10cfdd8..e24fc3bebae4 100644
-> > --- a/mm/memory-tiers.c
-> > +++ b/mm/memory-tiers.c
-> > @@ -36,6 +36,11 @@ struct node_memory_type_map {
-> >
-> >  static DEFINE_MUTEX(memory_tier_lock);
-> >  static LIST_HEAD(memory_tiers);
-> > +/*
-> > + * The list is used to store all memory types that are not created
-> > + * by a device driver.
-> > + */
-> > +static LIST_HEAD(default_memory_types);
-> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
-> >  struct memory_dev_type *default_dram_type;
-> >
-> > @@ -108,6 +113,8 @@ static struct demotion_nodes *node_demotion __read_=
-mostly;
-> >
-> >  static BLOCKING_NOTIFIER_HEAD(mt_adistance_algorithms);
-> >
-> > +/* The lock is used to protect `default_dram_perf*` info and nid. */
-> > +static DEFINE_MUTEX(default_dram_perf_lock);
-> >  static bool default_dram_perf_error;
-> >  static struct access_coordinate default_dram_perf;
-> >  static int default_dram_perf_ref_nid =3D NUMA_NO_NODE;
-> > @@ -505,7 +512,8 @@ static inline void __init_node_memory_type(int node=
-, struct memory_dev_type *mem
-> >  static struct memory_tier *set_node_memory_tier(int node)
-> >  {
-> >       struct memory_tier *memtier;
-> > -     struct memory_dev_type *memtype;
-> > +     struct memory_dev_type *mtype =3D default_dram_type;
-> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
-> >       pg_data_t *pgdat =3D NODE_DATA(node);
-> >
-> >
-> > @@ -514,11 +522,20 @@ static struct memory_tier *set_node_memory_tier(i=
-nt node)
-> >       if (!node_state(node, N_MEMORY))
-> >               return ERR_PTR(-EINVAL);
-> >
-> > -     __init_node_memory_type(node, default_dram_type);
-> > +     mt_calc_adistance(node, &adist);
-> > +     if (node_memory_types[node].memtype =3D=3D NULL) {
-> > +             mtype =3D mt_find_alloc_memory_type(adist, &default_memor=
-y_types);
-> > +             if (IS_ERR(mtype)) {
-> > +                     mtype =3D default_dram_type;
-> > +                     pr_info("Failed to allocate a memory type. Fall b=
-ack.\n");
-> > +             }
-> > +     }
-> > +
-> > +     __init_node_memory_type(node, mtype);
-> >
-> > -     memtype =3D node_memory_types[node].memtype;
-> > -     node_set(node, memtype->nodes);
-> > -     memtier =3D find_create_memory_tier(memtype);
-> > +     mtype =3D node_memory_types[node].memtype;
-> > +     node_set(node, mtype->nodes);
-> > +     memtier =3D find_create_memory_tier(mtype);
-> >       if (!IS_ERR(memtier))
-> >               rcu_assign_pointer(pgdat->memtier, memtier);
-> >       return memtier;
-> > @@ -655,6 +672,34 @@ void mt_put_memory_types(struct list_head *memory_=
-types)
-> >  }
-> >  EXPORT_SYMBOL_GPL(mt_put_memory_types);
-> >
-> > +/*
-> > + * This is invoked via `late_initcall()` to initialize memory tiers fo=
-r
-> > + * CPU-less memory nodes after driver initialization, which is
-> > + * expected to provide `adistance` algorithms.
-> > + */
-> > +static int __init memory_tier_late_init(void)
-> > +{
-> > +     int nid;
-> > +
-> > +     mutex_lock(&memory_tier_lock);
-> > +     for_each_node_state(nid, N_MEMORY)
-> > +             if (!node_state(nid, N_CPU) &&
+> > >
+> > > Thanks
+> > >
+> > The problem is I think the behavior here is correct, The vector here is
+> >  VIRTIO_NO_VECTOR and we should return,
 >
-> It appears that you didn't notice my comments about this...
+> So if I understand correctly, the configure vector is configured after
+> DRIVER_OK?
 >
-> https://lore.kernel.org/linux-mm/87v857kujp.fsf@yhuang6-desk2.ccr.corp.in=
-tel.com/
+sorry I didn't get your point, Do you mean set_guest_notifiers()?,
+this was called during the system boot
+ but for the value of vdev->config_vector/vq vector, this is changed
+by virtio_pci_common_read/virtio_pci_common_write
+and these function will not check the process  DRIVER_OK.
+> Spec doesn't forbid this, this is something we need to support.
 >
-Oops. I misunderstood your meaning.
-I will then replace
--- if (!node_state(nid, N_CPU) &&
---                node_memory_types[nid].memtype =3D=3D NULL)
-with
-++ if (node_memory_types[nid].memtype =3D=3D NULL)"
-
-> > +                     node_memory_types[nid].memtype =3D=3D NULL)
-> > +                     /*
-> > +                      * Some device drivers may have initialized memor=
-y tiers
-> > +                      * between `memory_tier_init()` and `memory_tier_=
-late_init()`,
-> > +                      * potentially bringing online memory nodes and
-> > +                      * configuring memory tiers. Exclude them here.
-> > +                      */
-> > +                     set_node_memory_tier(nid);
-> > +
-> > +     establish_demotion_targets();
-> > +     mutex_unlock(&memory_tier_lock);
-> > +
-> > +     return 0;
-> > +}
-> > +late_initcall(memory_tier_late_init);
-> > +
-> >  static void dump_hmem_attrs(struct access_coordinate *coord, const cha=
-r *prefix)
-> >  {
-> >       pr_info(
-> > @@ -668,7 +713,7 @@ int mt_set_default_dram_perf(int nid, struct access=
-_coordinate *perf,
-> >  {
-> >       int rc =3D 0;
-> >
-> > -     mutex_lock(&memory_tier_lock);
-> > +     mutex_lock(&default_dram_perf_lock);
-> >       if (default_dram_perf_error) {
-> >               rc =3D -EIO;
-> >               goto out;
-> > @@ -716,23 +761,30 @@ int mt_set_default_dram_perf(int nid, struct acce=
-ss_coordinate *perf,
-> >       }
-> >
-> >  out:
-> > -     mutex_unlock(&memory_tier_lock);
-> > +     mutex_unlock(&default_dram_perf_lock);
-> >       return rc;
-> >  }
-> >
-> >  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
-> >  {
-> > -     if (default_dram_perf_error)
-> > -             return -EIO;
-> > +     int rc =3D 0;
-> >
-> > -     if (default_dram_perf_ref_nid =3D=3D NUMA_NO_NODE)
-> > -             return -ENOENT;
-> > +     mutex_lock(&default_dram_perf_lock);
-> > +     if (default_dram_perf_error) {
-> > +             rc =3D -EIO;
-> > +             goto out;
-> > +     }
-> >
-> >       if (perf->read_latency + perf->write_latency =3D=3D 0 ||
-> > -         perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
-> > -             return -EINVAL;
-> > +         perf->read_bandwidth + perf->write_bandwidth =3D=3D 0) {
-> > +             rc =3D -EINVAL;
-> > +             goto out;
-> > +     }
-> >
-> > -     mutex_lock(&memory_tier_lock);
-> > +     if (default_dram_perf_ref_nid =3D=3D NUMA_NO_NODE) {
-> > +             rc =3D -ENOENT;
-> > +             goto out;
-> > +     }
-> >       /*
-> >        * The abstract distance of a memory node is in direct proportion=
- to
-> >        * its memory latency (read + write) and inversely proportional t=
-o its
-> > @@ -745,8 +797,9 @@ int mt_perf_to_adistance(struct access_coordinate *=
-perf, int *adist)
-> >               (default_dram_perf.read_latency + default_dram_perf.write=
-_latency) *
-> >               (default_dram_perf.read_bandwidth + default_dram_perf.wri=
-te_bandwidth) /
-> >               (perf->read_bandwidth + perf->write_bandwidth);
-> > -     mutex_unlock(&memory_tier_lock);
-> >
-> > +out:
-> > +     mutex_unlock(&default_dram_perf_lock);
-> >       return 0;
-> >  }
-> >  EXPORT_SYMBOL_GPL(mt_perf_to_adistance);
-> > @@ -858,7 +911,8 @@ static int __init memory_tier_init(void)
-> >        * For now we can have 4 faster memory tiers with smaller adistan=
-ce
-> >        * than default DRAM tier.
-> >        */
-> > -     default_dram_type =3D alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
-> > +     default_dram_type =3D mt_find_alloc_memory_type(MEMTIER_ADISTANCE=
-_DRAM,
-> > +                                                                     &=
-default_memory_types);
-> >       if (IS_ERR(default_dram_type))
-> >               panic("%s() failed to allocate default DRAM tier\n", __fu=
-nc__);
-> >
-> > @@ -868,6 +922,14 @@ static int __init memory_tier_init(void)
-> >        * types assigned.
-> >        */
-> >       for_each_node_state(node, N_MEMORY) {
-> > +             if (!node_state(node, N_CPU))
-> > +                     /*
-> > +                      * Defer memory tier initialization on CPUless nu=
-ma nodes.
-> > +                      * These will be initialized after firmware and d=
-evices are
-> > +                      * initialized.
-> > +                      */
-> > +                     continue;
-> > +
-> >               memtier =3D set_node_memory_tier(node);
-> >               if (IS_ERR(memtier))
-> >                       /*
+> It looks to me the correct fix is to kvm_virtio_pci_vector_use_one()
+> when guest is writing to msix_vector after DRIVER_OK?
 >
-> --
-> Best Regards,
-> Huang, Ying
+if I understand correctly. do you mean
+when  function   virtio_pci_common_read/virtio_pci_common_write was called
+we need to check the number of  vdev->config_vector/vq vector, if this
+was changed and also DRIVER_OK was set
+then we need to call virtio_pci_set_guest_notifiers() to re-init the irqfd?
+Thanks
+cindy
+> Thanks
+>
+> > the fix could work maybe is we try get to know if this was changed
+> > from another value
+> > and use that one? this seems strange.
+> > Thanks
+> > cindy
+> > > >
+> > > > > > So I think this should
+> > > > > > be a bug in this guest image
+> > > > >
+> > > > > The point is Qemu should not crash even if the guest driver is bu=
+ggy.
+> > > > >
+> > > > > It would be nice if we can have a qtest for this on top.
+> > > > >
+> > > > > Thanks
+> > > > >
+> > > > sure, got it, I have done the Qtest, and it passed
+> > > > here is the result
+> > > >
+> > > > Ok:                 794
+> > > > Expected Fail:      0
+> > > > Fail:               0
+> > > > Unexpected Pass:    0
+> > > > Skipped:            32
+> > > > Timeout:            0
+> > > >
+> > > > > > > >
+> > > > > > > > 4. The system continues to boot and msix_fire_vector_notifi=
+er() was
+> > > > > > > > called unmask the vector 0 and then met the crash
+> > > > > > > > [msix_fire_vector_notifier] 112 called vector 0 is_masked 1
+> > > > > > > > [msix_fire_vector_notifier] 112 called vector 0 is_masked 0
+> > > > > > > >
+> > > > > > > > The reason for not reproducing in RHEL/fedora guest image i=
+s because
+> > > > > > > > REHL/Fedora doesn't have the behavior of calling vhost_net_=
+stop and then virtio_reset, and also won't call msix_fire_vector_notifier f=
+or vector 0 during system boot.
+> > > > > > > >
+> > > > > > > > The reason for not reproducing before configure interrupt s=
+upport is because
+> > > > > > > > vector 0 is for configure interrupt,  before the support fo=
+r configure interrupts, the notifier process will not handle vector 0.
+> > > > > > > >
+> > > > > > > > For the device Vyatta using, it doesn't support configure i=
+nterrupts at all, So we plan to disable the configure interrupts in unsuppo=
+rted device
+> > > > > > >
+> > > > > > > Btw, let's tweak the changelog, it's a little bit hard to und=
+erstand.
+> > > > > > >
+> > > > > > sure will do
+> > > > > > thanks
+> > > > > > Cindy
+> > > > > > > Thanks
+> > > > > > >
+> > > > > > > >
+> > > > > > > > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > > > > > > >
+> > > > > > > > Cindy Lu (2):
+> > > > > > > >   virtio-net: disable the configure interrupt for not suppo=
+rt device
+> > > > > > > >   virtio-pci: check if the configure interrupt enable
+> > > > > > > >
+> > > > > > > >  hw/net/virtio-net.c        |  5 ++++-
+> > > > > > > >  hw/virtio/virtio-pci.c     | 41 +++++++++++++++++++++-----=
+------------
+> > > > > > > >  hw/virtio/virtio.c         |  1 +
+> > > > > > > >  include/hw/virtio/virtio.h |  1 +
+> > > > > > > >  4 files changed, 29 insertions(+), 19 deletions(-)
+> > > > > > > >
+> > > > > > > > --
+> > > > > > > > 2.43.0
+> > > > > > > >
+> > > > > > >
+> > > > > >
+> > > > >
+> > > >
+> > >
+> >
+>
 
-
-
---=20
-Best regards,
-Ho-Ren (Jack) Chuang
-=E8=8E=8A=E8=B3=80=E4=BB=BB
 
