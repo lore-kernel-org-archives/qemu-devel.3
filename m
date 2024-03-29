@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB02CCD128E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1166CD1288
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 07:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq6Og-0007GR-En; Fri, 29 Mar 2024 03:11:31 -0400
+	id 1rq6Ok-0007I4-Gq; Fri, 29 Mar 2024 03:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rq6Oc-0007FU-13
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:11:26 -0400
+ id 1rq6Of-0007Gg-UH
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:11:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rq6OY-0001AK-VF
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:11:25 -0400
+ id 1rq6Od-0001BR-Nq
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 03:11:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711696281;
+ s=mimecast20190719; t=1711696286;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1WyJLX8ea9OjJ6HHxYKsQuwbKPPt4phmo4Lf1pOTsRA=;
- b=O7qE6tcfEcd8Tn/GuAsSn0xo4IZ2jvk3R75mnnhQJAeFwnZLxgB3xaP2ca17/v3i854VtY
- 70HZyLVUaak89zWuaT2HI4/nkTqtdQVMcIgMdAjfakmIOUFxruSdktG/yoFBAcSRE0Kjsn
- mwT7nTszBf4YgJ63mW0jzeY6zNp4xN4=
+ bh=P56QHNzwrxOcRr68lM03Rk+oU19INbJ4X5uupxFJH4g=;
+ b=it/+OS5ykUEhg8STTxL12B8w2aoD006rHr+ftPc6Bd0PfdGuECDNfTzFFDRBm+sbLrZzcC
+ rJuj6/PXhC/YxUNXgmHe9y4AUzOEVosEVtOJTa5A6Ny9nrhLugduejVnN5lXhdipBlxJQG
+ Abd0us1CkEKGAtVl/PSlqXfbI8haYC0=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-601-OAP52hVTMg2hd6dpAgVeFQ-1; Fri, 29 Mar 2024 03:11:17 -0400
-X-MC-Unique: OAP52hVTMg2hd6dpAgVeFQ-1
+ us-mta-367-qaqyV4L9OgizZuWLimZDDA-1; Fri, 29 Mar 2024 03:11:24 -0400
+X-MC-Unique: qaqyV4L9OgizZuWLimZDDA-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DD4DB8007A1;
- Fri, 29 Mar 2024 07:11:16 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6F9D28007A1;
+ Fri, 29 Mar 2024 07:11:24 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.159])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A21ABC423E0;
- Fri, 29 Mar 2024 07:11:14 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 86107C423E0;
+ Fri, 29 Mar 2024 07:11:22 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Andrew Melnychenko <andrew@daynix.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 2/5] ebpf: Fix indirections table setting
-Date: Fri, 29 Mar 2024 15:10:57 +0800
-Message-ID: <20240329071100.31376-3-jasowang@redhat.com>
+ Jason Wang <jasowang@redhat.com>
+Subject: [PULL 5/5] Revert "tap: setting error appropriately when calling
+ net_init_tap_one()"
+Date: Fri, 29 Mar 2024 15:11:00 +0800
+Message-ID: <20240329071100.31376-6-jasowang@redhat.com>
 In-Reply-To: <20240329071100.31376-1-jasowang@redhat.com>
 References: <20240329071100.31376-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -84,44 +85,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The kernel documentation says:
-> The value stored can be of any size, however, all array elements are
-> aligned to 8 bytes.
-https://www.kernel.org/doc/html/v6.8/bpf/map_array.html
+This reverts commit 46d4d36d0bf2b24b205f2f604f0905db80264eef.
 
-Fixes: 333b3e5fab75 ("ebpf: Added eBPF map update through mmap.")
+The reverted commit changed to emit warnings instead of errors when
+vhost is requested but vhost initialization fails if vhostforce option
+is not set.
+
+However, vhostforce is not meant to ignore vhost errors. It was once
+introduced as an option to commit 5430a28fe4 ("vhost: force vhost off
+for non-MSI guests") to force enabling vhost for non-MSI guests, which
+will have worse performance with vhost. The option was deprecated with
+commit 1e7398a140 ("vhost: enable vhost without without MSI-X") and
+changed to behave identical with the vhost option for compatibility.
+
+Worse, commit bf769f742c ("virtio: del net client if net_init_tap_one
+failed") changed to delete the client when vhost fails even when the
+failure only results in a warning. The leads to an assertion failure
+for the -netdev command line option.
+
+The reverted commit was intended to avoid that the vhost initialization
+failure won't result in a corrupted netdev. This problem should have
+been fixed by deleting netdev when the initialization fails instead of
+ignoring the failure with an arbitrary option. Fortunately, commit
+bf769f742c ("virtio: del net client if net_init_tap_one failed"),
+mentioned earlier, implements this behavior.
+
+Restore the correct semantics and fix the assertion failure for the
+-netdev command line option by reverting the problematic commit.
+
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Andrew Melnychenko <andrew@daynix.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- ebpf/ebpf_rss.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/net/vhost_net.h |  3 ---
+ net/tap.c               | 22 +++++-----------------
+ 2 files changed, 5 insertions(+), 20 deletions(-)
 
-diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
-index 2e506f9743..d102f3dd09 100644
---- a/ebpf/ebpf_rss.c
-+++ b/ebpf/ebpf_rss.c
-@@ -185,13 +185,18 @@ static bool ebpf_rss_set_indirections_table(struct EBPFRSSContext *ctx,
-                                             uint16_t *indirections_table,
-                                             size_t len)
- {
-+    char *cursor = ctx->mmap_indirections_table;
-+
-     if (!ebpf_rss_is_loaded(ctx) || indirections_table == NULL ||
-        len > VIRTIO_NET_RSS_MAX_TABLE_LEN) {
-         return false;
-     }
+diff --git a/include/net/vhost_net.h b/include/net/vhost_net.h
+index c37aba35e6..c6a5361a2a 100644
+--- a/include/net/vhost_net.h
++++ b/include/net/vhost_net.h
+@@ -4,9 +4,6 @@
+ #include "net/net.h"
+ #include "hw/virtio/vhost-backend.h"
  
--    memcpy(ctx->mmap_indirections_table, indirections_table,
--            sizeof(*indirections_table) * len);
-+    for (size_t i = 0; i < len; i++) {
-+        *(uint16_t *)cursor = indirections_table[i];
-+        cursor += 8;
-+    }
-+
-     return true;
- }
+-#define VHOST_NET_INIT_FAILED \
+-    "vhost-net requested but could not be initialized"
+-
+ struct vhost_net;
+ typedef struct vhost_net VHostNetState;
  
+diff --git a/net/tap.c b/net/tap.c
+index c698b70475..baaa2f7a9a 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -743,11 +743,7 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         if (vhostfdname) {
+             vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, &err);
+             if (vhostfd == -1) {
+-                if (tap->has_vhostforce && tap->vhostforce) {
+-                    error_propagate(errp, err);
+-                } else {
+-                    warn_report_err(err);
+-                }
++                error_propagate(errp, err);
+                 goto failed;
+             }
+             if (!g_unix_set_fd_nonblocking(vhostfd, true, NULL)) {
+@@ -758,13 +754,8 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         } else {
+             vhostfd = open("/dev/vhost-net", O_RDWR);
+             if (vhostfd < 0) {
+-                if (tap->has_vhostforce && tap->vhostforce) {
+-                    error_setg_errno(errp, errno,
+-                                     "tap: open vhost char device failed");
+-                } else {
+-                    warn_report("tap: open vhost char device failed: %s",
+-                                strerror(errno));
+-                }
++                error_setg_errno(errp, errno,
++                                 "tap: open vhost char device failed");
+                 goto failed;
+             }
+             if (!g_unix_set_fd_nonblocking(vhostfd, true, NULL)) {
+@@ -777,11 +768,8 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+ 
+         s->vhost_net = vhost_net_init(&options);
+         if (!s->vhost_net) {
+-            if (tap->has_vhostforce && tap->vhostforce) {
+-                error_setg(errp, VHOST_NET_INIT_FAILED);
+-            } else {
+-                warn_report(VHOST_NET_INIT_FAILED);
+-            }
++            error_setg(errp,
++                       "vhost-net requested but could not be initialized");
+             goto failed;
+         }
+     } else if (vhostfdname) {
 -- 
 2.42.0
 
