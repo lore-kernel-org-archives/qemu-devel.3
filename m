@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA338CD128D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3635C6FD1F
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqKlP-0002eT-DK; Fri, 29 Mar 2024 18:31:55 -0400
+	id 1rqKl7-0002Zu-OO; Fri, 29 Mar 2024 18:31:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKlC-0002aw-NI
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:43 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1rqKl3-0002YE-NT
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:36 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKlA-0003YS-DQ
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:41 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1e0b213efa3so21816085ad.0
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:31:39 -0700 (PDT)
+ id 1rqKl1-0003Wt-O1
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:33 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1e0fa980d55so20854865ad.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:31:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711751499; x=1712356299; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711751489; x=1712356289; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uX24NXcgU6IiX12Wm/xfyInlmTJOdDVKWFpfbbYjENA=;
- b=OQvZuSeZldBeu0fXHKc0jzrY1CZCImKC7H362h3/nW4fwZXdOB60dfjft2Fwz84/sx
- pPUQH9kuRxV3POaudSdEZsECApdKOBRkFRJoDUKxaq20QuEk3wdU+i+CcDk/0kwn3HT5
- l/K3y28ErVDBkHYCEk2rpEjE7sTy1/pX0RD6RiwamJGRDqNBDqwJ+CXmF6KgqSRUw2Lu
- 5oklnatBHCGW88t9zBKRhLwb5LRQ0bAe7DTiXshW8klbsuTeW020OTsa70lYMX+xTUlg
- e5LXPwv72T1h26KXylG8Oss5bYc4uyya9dGzpGzZzJtd6BcTTGlY1B5c6DtjNdIaI/P/
- nwJg==
+ bh=aRxvFx4jyf1OvdOEJQeIUF5yPpRtSfNlC9jIwIYW+p0=;
+ b=u8FrQ0L8gJMnm/vauE6RRBniAX3ldTibOnBhmOO9eNcNUGKfp9A/RQBNtgDLON+aPt
+ 6Td9A75W5vS2MmZpOrOq9CKtyEj++TGnp8k5TYKE7P+NhGSCm4IDM6MWD6y1FQT6cSrs
+ iRRQyJ/F75OS7vGDQ890eBD80cnPWLvSCCkcQKzPZKvIbqxWiL5agFLaCIYxeNHP6+6d
+ g9Nu641OKosef6iiXF7vROyUpBiF+miuipiKTs+TgaEOMEphmbVLLJiOpZwh7wFd9W2t
+ aMLEbyflQbX7uZz3jxR1RnYVpcc2ofoaESx4upeb+TCnC6k3yfSGc73e+YfF3WrcxuWr
+ Zaog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711751499; x=1712356299;
+ d=1e100.net; s=20230601; t=1711751489; x=1712356289;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uX24NXcgU6IiX12Wm/xfyInlmTJOdDVKWFpfbbYjENA=;
- b=fuyNCAd/UG+KnmVAHlRo2TYqhUpbmARPdbzDB8JxwkW92EwGAMtmtl7S9hzrz5R1ay
- LX2FD/d7/wIvrlYg4pwsMF8KGOGTFZsjlNOtYh/3wsL1WTxh8kLRgXtru0V6DbQ/1zjn
- cmGYIhoTefVrBOflH+uq5v9U02k6dD35b5+M8ZTiG3HTStHfZngUJYkxE1OFBSLtb3mW
- Cx+yXqRD/c55yESTeUnswlh3XtpK4ojiEwhlqO+nESO1/xssTly0p843mz1Kt6cN8qph
- 7AMKmGea8ZRe9w0zkJfQoKgKXuZZ9evAi6my+WRoWpyinxBMBLD9P4AfQYyRF6Oq3peP
- /kRQ==
-X-Gm-Message-State: AOJu0YxnIvHlj2xiNonkD9D6evnD38+cUDncHnBx93vns6BKyq2d3XZB
- G5W3QhtVk2FOmKcKkUEsbx+JMCr1fLDD14FxNoR6bKHVmoOXpfXZEo/ow8tOGp9KSOtOw15YnhV
- 7
-X-Google-Smtp-Source: AGHT+IFIaEFtTKTy5ZwLtF0iKJhwCoFiYYugC5+haZecyj+LzGPxPkvBDJDcqpo6UkyPNDwojcXH0w==
-X-Received: by 2002:a17:902:d508:b0:1e0:cdbf:24c2 with SMTP id
- b8-20020a170902d50800b001e0cdbf24c2mr4464153plg.29.1711751499093; 
- Fri, 29 Mar 2024 15:31:39 -0700 (PDT)
+ bh=aRxvFx4jyf1OvdOEJQeIUF5yPpRtSfNlC9jIwIYW+p0=;
+ b=hhxrHS355SD5nNnVOpDMQAX40soRJfoEwnSJaB5Lft18VsyjyV0gJsJT4DieUuuJlF
+ 00ufYPyIN69HiSlgJNE8bfyzf8RKEnVeZz0/OGaDokPrfDqLjYwzox4ba3y2HB+2S3WE
+ emyGT+FaoDPqU0L0bZrjlubSbMFPLPToG9taABYQNtxpHyyoHyNGDJYYnl5gvN/44K7k
+ obiMGK8oaDt6UzRiZaFEAVw/P9y3Ue2uPmaihTCXSjpT1jrTO7HdWc5wMYOKJpsKfOjM
+ 8sW/Q5Xs45e22GNLo5AfupRMa9Cbb5JI1B62zKEvP+3s5eDU1e7B9CyBMSMTA3BYI6U5
+ nzHg==
+X-Gm-Message-State: AOJu0YzENm5mC+Naba+h4jblTI/pDHZN/mES48/cUY08cd1XAx2Wuojc
+ IAgJguh2FaY3MvNVTjUZrNRr+HCl/4ZET/rJBLfmBeva6QeWjYEr9ILcks4Crxx8X02dBed4DUK
+ o
+X-Google-Smtp-Source: AGHT+IHq4pR0RmeXBMUV2UpHEn4HSjcr8+uVaZJr2yghEZZziW8z9K4vR6fI6vxy8220rrD0MA0t2A==
+X-Received: by 2002:a17:903:2cb:b0:1e0:b2d5:5f46 with SMTP id
+ s11-20020a17090302cb00b001e0b2d55f46mr4164789plk.46.1711751489593; 
+ Fri, 29 Mar 2024 15:31:29 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- f8-20020a170902684800b001e09b636cafsm4000955pln.287.2024.03.29.15.31.37
+ f8-20020a170902684800b001e09b636cafsm4000955pln.287.2024.03.29.15.31.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 15:31:38 -0700 (PDT)
+ Fri, 29 Mar 2024 15:31:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@kernel.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PULL 17/18] target/hppa: Add diag instructions to set/restore shadow
- registers
-Date: Fri, 29 Mar 2024 12:31:10 -1000
-Message-Id: <20240329223111.1735826-18-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>
+Subject: [PULL 11/18] target/hppa: Fix unit carry conditions
+Date: Fri, 29 Mar 2024 12:31:04 -1000
+Message-Id: <20240329223111.1735826-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240329223111.1735826-1-richard.henderson@linaro.org>
 References: <20240329223111.1735826-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,106 +94,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@kernel.org>
+Split do_unit_cond to do_unit_zero_cond to only handle conditions
+versus zero.  These are the only ones that are legal for UXOR.
+Simplify trans_uxor accordingly.
 
-The 32-bit PA-7300LC (PCX-L2) CPU and the 64-bit PA8700 (PCX-W2) CPU
-use different diag instructions to save or restore the CPU registers
-to/from the shadow registers.
+Rename do_unit to do_unit_addsub, since xor has been split.
+Properly compute carry-out bits for add and subtract, mirroring
+the code in do_add and do_sub.
 
-Implement those per-CPU architecture diag instructions to fix those
-parts of the HP ODE testcases (L2DIAG and WDIAG, section 1) which test
-the shadow registers.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-[rth: Use decodetree to distinguish cases]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
 Tested-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Fixes: b2167459ae4 ("target-hppa: Implement basic arithmetic")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/insns.decode | 10 ++++++++++
- target/hppa/translate.c  | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+)
+ target/hppa/translate.c | 218 +++++++++++++++++++++-------------------
+ 1 file changed, 113 insertions(+), 105 deletions(-)
 
-diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-index 9f6ffd8e2c..71074a64c1 100644
---- a/target/hppa/insns.decode
-+++ b/target/hppa/insns.decode
-@@ -65,6 +65,8 @@
- # Argument set definitions
- ####
- 
-+&empty
-+
- # All insns that need to form a virtual address should use this set.
- &ldst           t b x disp sp m scale size
- 
-@@ -638,6 +640,14 @@ xmpyu           001110 ..... ..... 010 .0111 .00 t:5    r1=%ra64 r2=%rb64
-   [
-     diag_btlb               000101 00 0000 0000 0000 0001 0000 0000
-     diag_cout               000101 00 0000 0000 0000 0001 0000 0001
-+
-+    # For 32-bit PA-7300LC (PCX-L2)
-+    diag_getshadowregs_pa1  000101 00 0000 0000 0001 1010 0000 0000
-+    diag_putshadowregs_pa1  000101 00 0000 0000 0001 1010 0100 0000
-+
-+    # For 64-bit PA8700 (PCX-W2)
-+    diag_getshadowregs_pa2  000101 00 0111 1000 0001 1000 0100 0000
-+    diag_putshadowregs_pa2  000101 00 0111 0000 0001 1000 0100 0000
-   ]
-   diag_unimp                000101 i:26
- }
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 42dd3f2c8d..143818c2d9 100644
+index 3fc3e7754c..99c5c4cbca 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -2399,6 +2399,20 @@ static bool do_getshadowregs(DisasContext *ctx)
+@@ -936,98 +936,44 @@ static DisasCond do_sed_cond(DisasContext *ctx, unsigned orig, bool d,
+     return do_log_cond(ctx, c * 2 + f, d, res);
+ }
+ 
+-/* Similar, but for unit conditions.  */
+-
+-static DisasCond do_unit_cond(unsigned cf, bool d, TCGv_i64 res,
+-                              TCGv_i64 in1, TCGv_i64 in2)
++/* Similar, but for unit zero conditions.  */
++static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
+ {
+-    DisasCond cond;
+-    TCGv_i64 tmp, cb = NULL;
++    TCGv_i64 tmp;
+     uint64_t d_repl = d ? 0x0000000100000001ull : 1;
+-
+-    if (cf & 8) {
+-        /* Since we want to test lots of carry-out bits all at once, do not
+-         * do our normal thing and compute carry-in of bit B+1 since that
+-         * leaves us with carry bits spread across two words.
+-         */
+-        cb = tcg_temp_new_i64();
+-        tmp = tcg_temp_new_i64();
+-        tcg_gen_or_i64(cb, in1, in2);
+-        tcg_gen_and_i64(tmp, in1, in2);
+-        tcg_gen_andc_i64(cb, cb, res);
+-        tcg_gen_or_i64(cb, cb, tmp);
+-    }
++    uint64_t ones = 0, sgns = 0;
+ 
+     switch (cf >> 1) {
+-    case 0: /* never / TR */
+-        cond = cond_make_f();
+-        break;
+-
+     case 1: /* SBW / NBW */
+         if (d) {
+-            tmp = tcg_temp_new_i64();
+-            tcg_gen_subi_i64(tmp, res, d_repl * 0x00000001u);
+-            tcg_gen_andc_i64(tmp, tmp, res);
+-            tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80000000u);
+-            cond = cond_make_0(TCG_COND_NE, tmp);
+-        } else {
+-            /* undefined */
+-            cond = cond_make_f();
++            ones = d_repl;
++            sgns = d_repl << 31;
+         }
+         break;
+-
+     case 2: /* SBZ / NBZ */
+-        /* See hasless(v,1) from
+-         * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
+-         */
+-        tmp = tcg_temp_new_i64();
+-        tcg_gen_subi_i64(tmp, res, d_repl * 0x01010101u);
+-        tcg_gen_andc_i64(tmp, tmp, res);
+-        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80808080u);
+-        cond = cond_make_0(TCG_COND_NE, tmp);
++        ones = d_repl * 0x01010101u;
++        sgns = ones << 7;
+         break;
+-
+     case 3: /* SHZ / NHZ */
+-        tmp = tcg_temp_new_i64();
+-        tcg_gen_subi_i64(tmp, res, d_repl * 0x00010001u);
+-        tcg_gen_andc_i64(tmp, tmp, res);
+-        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80008000u);
+-        cond = cond_make_0(TCG_COND_NE, tmp);
++        ones = d_repl * 0x00010001u;
++        sgns = ones << 15;
+         break;
+-
+-    case 4: /* SDC / NDC */
+-        tcg_gen_andi_i64(cb, cb, d_repl * 0x88888888u);
+-        cond = cond_make_0(TCG_COND_NE, cb);
+-        break;
+-
+-    case 5: /* SWC / NWC */
+-        if (d) {
+-            tcg_gen_andi_i64(cb, cb, d_repl * 0x80000000u);
+-            cond = cond_make_0(TCG_COND_NE, cb);
+-        } else {
+-            /* undefined */
+-            cond = cond_make_f();
+-        }
+-        break;
+-
+-    case 6: /* SBC / NBC */
+-        tcg_gen_andi_i64(cb, cb, d_repl * 0x80808080u);
+-        cond = cond_make_0(TCG_COND_NE, cb);
+-        break;
+-
+-    case 7: /* SHC / NHC */
+-        tcg_gen_andi_i64(cb, cb, d_repl * 0x80008000u);
+-        cond = cond_make_0(TCG_COND_NE, cb);
+-        break;
+-
+-    default:
+-        g_assert_not_reached();
+     }
+-    if (cf & 1) {
+-        cond.c = tcg_invert_cond(cond.c);
++    if (ones == 0) {
++        /* Undefined, or 0/1 (never/always). */
++        return cf & 1 ? cond_make_t() : cond_make_f();
+     }
+ 
+-    return cond;
++    /*
++     * See hasless(v,1) from
++     * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
++     */
++    tmp = tcg_temp_new_i64();
++    tcg_gen_subi_i64(tmp, res, ones);
++    tcg_gen_andc_i64(tmp, tmp, res);
++    tcg_gen_andi_i64(tmp, tmp, sgns);
++
++    return cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp);
+ }
+ 
+ static TCGv_i64 get_carry(DisasContext *ctx, bool d,
+@@ -1330,34 +1276,86 @@ static bool do_log_reg(DisasContext *ctx, arg_rrr_cf_d *a,
      return nullify_end(ctx);
  }
  
-+static bool do_putshadowregs(DisasContext *ctx)
-+{
-+    CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
-+    nullify_over(ctx);
-+    tcg_gen_st_i64(cpu_gr[1], tcg_env, offsetof(CPUHPPAState, shadow[0]));
-+    tcg_gen_st_i64(cpu_gr[8], tcg_env, offsetof(CPUHPPAState, shadow[1]));
-+    tcg_gen_st_i64(cpu_gr[9], tcg_env, offsetof(CPUHPPAState, shadow[2]));
-+    tcg_gen_st_i64(cpu_gr[16], tcg_env, offsetof(CPUHPPAState, shadow[3]));
-+    tcg_gen_st_i64(cpu_gr[17], tcg_env, offsetof(CPUHPPAState, shadow[4]));
-+    tcg_gen_st_i64(cpu_gr[24], tcg_env, offsetof(CPUHPPAState, shadow[5]));
-+    tcg_gen_st_i64(cpu_gr[25], tcg_env, offsetof(CPUHPPAState, shadow[6]));
-+    return nullify_end(ctx);
-+}
-+
- static bool trans_getshadowregs(DisasContext *ctx, arg_getshadowregs *a)
+-static void do_unit(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+-                    TCGv_i64 in2, unsigned cf, bool d, bool is_tc,
+-                    void (*fn)(TCGv_i64, TCGv_i64, TCGv_i64))
++static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
++                           TCGv_i64 in2, unsigned cf, bool d,
++                           bool is_tc, bool is_add)
  {
-     return do_getshadowregs(ctx);
-@@ -4594,6 +4608,26 @@ static bool trans_diag_cout(DisasContext *ctx, arg_diag_cout *a)
- #endif
+-    TCGv_i64 dest;
++    TCGv_i64 dest = tcg_temp_new_i64();
++    uint64_t test_cb = 0;
+     DisasCond cond;
+ 
+-    if (cf == 0) {
+-        dest = dest_gpr(ctx, rt);
+-        fn(dest, in1, in2);
+-        save_gpr(ctx, rt, dest);
+-        cond_free(&ctx->null_cond);
+-    } else {
+-        dest = tcg_temp_new_i64();
+-        fn(dest, in1, in2);
+-
+-        cond = do_unit_cond(cf, d, dest, in1, in2);
+-
+-        if (is_tc) {
+-            TCGv_i64 tmp = tcg_temp_new_i64();
+-            tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
+-            gen_helper_tcond(tcg_env, tmp);
++    /* Select which carry-out bits to test. */
++    switch (cf >> 1) {
++    case 4: /* NDC / SDC -- 4-bit carries */
++        test_cb = dup_const(MO_8, 0x88);
++        break;
++    case 5: /* NWC / SWC -- 32-bit carries */
++        if (d) {
++            test_cb = dup_const(MO_32, INT32_MIN);
++        } else {
++            cf &= 1; /* undefined -- map to never/always */
+         }
+-        save_gpr(ctx, rt, dest);
+-
+-        cond_free(&ctx->null_cond);
+-        ctx->null_cond = cond;
++        break;
++    case 6: /* NBC / SBC -- 8-bit carries */
++        test_cb = dup_const(MO_8, INT8_MIN);
++        break;
++    case 7: /* NHC / SHC -- 16-bit carries */
++        test_cb = dup_const(MO_16, INT16_MIN);
++        break;
+     }
++    if (!d) {
++        test_cb = (uint32_t)test_cb;
++    }
++
++    if (!test_cb) {
++        /* No need to compute carries if we don't need to test them. */
++        if (is_add) {
++            tcg_gen_add_i64(dest, in1, in2);
++        } else {
++            tcg_gen_sub_i64(dest, in1, in2);
++        }
++        cond = do_unit_zero_cond(cf, d, dest);
++    } else {
++        TCGv_i64 cb = tcg_temp_new_i64();
++
++        if (d) {
++            TCGv_i64 cb_msb = tcg_temp_new_i64();
++            if (is_add) {
++                tcg_gen_add2_i64(dest, cb_msb, in1, ctx->zero, in2, ctx->zero);
++                tcg_gen_xor_i64(cb, in1, in2);
++            } else {
++                /* See do_sub, !is_b. */
++                TCGv_i64 one = tcg_constant_i64(1);
++                tcg_gen_sub2_i64(dest, cb_msb, in1, one, in2, ctx->zero);
++                tcg_gen_eqv_i64(cb, in1, in2);
++            }
++            tcg_gen_xor_i64(cb, cb, dest);
++            tcg_gen_extract2_i64(cb, cb, cb_msb, 1);
++        } else {
++            if (is_add) {
++                tcg_gen_add_i64(dest, in1, in2);
++                tcg_gen_xor_i64(cb, in1, in2);
++            } else {
++                tcg_gen_sub_i64(dest, in1, in2);
++                tcg_gen_eqv_i64(cb, in1, in2);
++            }
++            tcg_gen_xor_i64(cb, cb, dest);
++            tcg_gen_shri_i64(cb, cb, 1);
++        }
++
++        tcg_gen_andi_i64(cb, cb, test_cb);
++        cond = cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb);
++    }
++
++    if (is_tc) {
++        TCGv_i64 tmp = tcg_temp_new_i64();
++        tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
++        gen_helper_tcond(tcg_env, tmp);
++    }
++    save_gpr(ctx, rt, dest);
++
++    cond_free(&ctx->null_cond);
++    ctx->null_cond = cond;
  }
  
-+static bool trans_diag_getshadowregs_pa1(DisasContext *ctx, arg_empty *a)
-+{
-+    return !ctx->is_pa20 && do_getshadowregs(ctx);
-+}
-+
-+static bool trans_diag_getshadowregs_pa2(DisasContext *ctx, arg_empty *a)
-+{
-+    return ctx->is_pa20 && do_getshadowregs(ctx);
-+}
-+
-+static bool trans_diag_putshadowregs_pa1(DisasContext *ctx, arg_empty *a)
-+{
-+    return !ctx->is_pa20 && do_putshadowregs(ctx);
-+}
-+
-+static bool trans_diag_putshadowregs_pa2(DisasContext *ctx, arg_empty *a)
-+{
-+    return ctx->is_pa20 && do_putshadowregs(ctx);
-+}
-+
- static bool trans_diag_unimp(DisasContext *ctx, arg_diag_unimp *a)
+ #ifndef CONFIG_USER_ONLY
+@@ -2748,14 +2746,24 @@ static bool trans_cmpclr(DisasContext *ctx, arg_rrr_cf_d *a)
+ 
+ static bool trans_uxor(DisasContext *ctx, arg_rrr_cf_d *a)
  {
-     CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
+-    TCGv_i64 tcg_r1, tcg_r2;
++    TCGv_i64 tcg_r1, tcg_r2, dest;
+ 
+     if (a->cf) {
+         nullify_over(ctx);
+     }
++
+     tcg_r1 = load_gpr(ctx, a->r1);
+     tcg_r2 = load_gpr(ctx, a->r2);
+-    do_unit(ctx, a->t, tcg_r1, tcg_r2, a->cf, a->d, false, tcg_gen_xor_i64);
++    dest = dest_gpr(ctx, a->t);
++
++    tcg_gen_xor_i64(dest, tcg_r1, tcg_r2);
++    save_gpr(ctx, a->t, dest);
++
++    cond_free(&ctx->null_cond);
++    if (a->cf) {
++        ctx->null_cond = do_unit_zero_cond(a->cf, a->d, dest);
++    }
++
+     return nullify_end(ctx);
+ }
+ 
+@@ -2790,7 +2798,7 @@ static bool do_uaddcm(DisasContext *ctx, arg_rrr_cf_d *a, bool is_tc)
+     tcg_r2 = load_gpr(ctx, a->r2);
+     tmp = tcg_temp_new_i64();
+     tcg_gen_not_i64(tmp, tcg_r2);
+-    do_unit(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, tcg_gen_add_i64);
++    do_unit_addsub(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, true);
+     return nullify_end(ctx);
+ }
+ 
+@@ -2817,8 +2825,8 @@ static bool do_dcor(DisasContext *ctx, arg_rr_cf_d *a, bool is_i)
+     }
+     tcg_gen_andi_i64(tmp, tmp, (uint64_t)0x1111111111111111ull);
+     tcg_gen_muli_i64(tmp, tmp, 6);
+-    do_unit(ctx, a->t, load_gpr(ctx, a->r), tmp, a->cf, a->d, false,
+-            is_i ? tcg_gen_add_i64 : tcg_gen_sub_i64);
++    do_unit_addsub(ctx, a->t, load_gpr(ctx, a->r), tmp,
++                   a->cf, a->d, false, is_i);
+     return nullify_end(ctx);
+ }
+ 
 -- 
 2.34.1
 
