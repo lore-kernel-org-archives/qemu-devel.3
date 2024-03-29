@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F433C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 556EDC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqKmx-00084B-I0; Fri, 29 Mar 2024 18:33:31 -0400
+	id 1rqKlR-0002gE-Jm; Fri, 29 Mar 2024 18:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rqKmv-0007mp-N9; Fri, 29 Mar 2024 18:33:29 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqKl9-0002aO-0D
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:41 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rqKmt-0003kw-SB; Fri, 29 Mar 2024 18:33:29 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-5dca1efad59so1688195a12.2; 
- Fri, 29 Mar 2024 15:33:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqKl7-0003Xv-FA
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:31:38 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-5d8b70b39efso1864554a12.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:31:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711751605; x=1712356405; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UiT87QcdTydktqQoQiYKrqblOP7f9I+ZW7v1tQ7uTyQ=;
- b=c7a9YGdcHxNB4trFkMDWuavaUpPBjkX4NzTSZrfyr4g6VzraVOrIqn5roc9P/31dP4
- 6e8d9WW7KG0PqVi6UzuFUcOXDoIt+PZ09bHN/KO6WEesJurCojVsZnrWUxBW6kIULV1b
- PJ0t0Em1HLPoX7Rhq3rIEMjSik6Ibs6HYHI4fzWayC3v+oVYDQ2u5D0HdCMyoQFwchRG
- 8M1A1otEJpRp6BZATs2pgUWdTthdoA/TpdjOvIoWIZcm5cer9jFBCzXc88xqi4Qyl+oh
- m7ulmK/kOqxjjWsdinOzbRwRI8BD5UbiSZ4uowUo+DMiRXFU9chrJ24qPDi0quM0viFi
- Q0qw==
+ d=linaro.org; s=google; t=1711751496; x=1712356296; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zvYdGosSJzx/q33wx/CPl4VQF18FxpEZiKeNYnXcRT0=;
+ b=uW0yAgHdKw3RL8yHmHUuVMeIb2CnAfgQLKTUWz3/Lk8NT0kc2u7170bwQOVT4UPDAO
+ 0EIHiQ55XPN5MZnCXiqWeDBOMlvKIVCIg4KFnegpxKGzM/rdgLaSTvgbxK++LC2xB0sO
+ 9p5nZtm3bQ7+C2I55nuSB+3mjb8w9fUPvEv6CMhKGnGQJDDYyeICTuZAYTHnhaDqHoM5
+ 7F4OSBuasxx5oZz4hn0nV9ejrzQwBwM7Y0+3qcRQWJkUZQIDwkiys3Ns3VnVXt/IeTSq
+ C7O/jiiJrupnyORjsEu0ZRk63LmfQgtdqwicq6I78nUUFGVF7Bq7xNzp263r4TX/cSBY
+ H6VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711751605; x=1712356405;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UiT87QcdTydktqQoQiYKrqblOP7f9I+ZW7v1tQ7uTyQ=;
- b=Sm1dBkXszdXCHlenN4dVvehswM972dTQr5hwZHHzIqOj8uoeNQk1JSIMv+SNWB6WUG
- tKQ8EzwV7qWGtZxAfXA/mpQb7QLOV/+/uJnaJO9vC9VyPncxwi74qFzMjLJTlFSBw1Es
- 12tVKbofZSKQUcGQqM4y0RxA4sJNUrupRWIra34E5+P3OecWQdmoiUadsMFEUM6TRWQ1
- oLhD4cufk4umWZ8Pfrh15R5OqUxW4QVdM26sxUVdrBUFASHF/A6KbFJCLQ74Nmsd6EXl
- xBaz0XopvbCNCaUue4eVf80HT1FnW3hNRdbz+rBRQ4yMTFYktf/wQO70lBv+vpfJJ9dG
- ep1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUm9+RckRtxh8bfSjPJouf5EohOp9W+zP5WOa0kNDs25f+Oakf7p/9WJKxhBFfs8FmD57AzOfhHntnMY+yGVT5q31sqsPlk
-X-Gm-Message-State: AOJu0Yyp6di7fjgPOullBdCRhiinhn4Yj6IhfuI9ea1qhkaaKzzy6FMS
- nRNRZT7XKyhqj/DT1Tm8audSxBtk2lsuVY3uIBKMM6nSjxtzl1InB0jy8njr
-X-Google-Smtp-Source: AGHT+IHiY+gHwn2CuqIFjfAOshpwFWaMRRhDCnnfDEs1DmoTOLgPzfeOU05mA02w9G+KHWbdl2/pgQ==
-X-Received: by 2002:a05:6a20:9184:b0:1a3:8904:1fc9 with SMTP id
- v4-20020a056a20918400b001a389041fc9mr3425460pzd.41.1711751605269; 
- Fri, 29 Mar 2024 15:33:25 -0700 (PDT)
-Received: from octofox.hsd1.ca.comcast.net
- ([2601:646:a200:bbd0:2399:5e4a:95e8:172f])
+ d=1e100.net; s=20230601; t=1711751496; x=1712356296;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zvYdGosSJzx/q33wx/CPl4VQF18FxpEZiKeNYnXcRT0=;
+ b=ps6e/Fa/syplU72dBjAkEWL45n0wDibo0sMdgPfG8mrADPbIJYBYbFG9CPgCv7e0Db
+ SCumxjeje+/RSIMs0ntjwEDN1m6zqjqNkRiX5pVIjh/zUu2HMIQe5yr5mvUhKVuAWJsB
+ e5Pj3VjFeVOiHXldJG3x0qBb0UQXP/PCFoUHLuB59gHCHmFRj0jZe3huueXi64NzuQmZ
+ fyMqyPkrGyVw1r6SWRaTVX2BNQySlzSwA0fhcPrseF5I4fBQR+dBdDW/jTpZ+R0/XfRA
+ C16XetZ9N7id5z+CqqkCSHGphUiBZ4WeYWoJnavs5NCd1p+D7LY8Y21HZzz59PIdY4Lg
+ J5xQ==
+X-Gm-Message-State: AOJu0Yzno7sK/sIizEeIxPI/1KPSxAxcxWKShxHAreW3GaEVZarVhN5+
+ fZ8VrqAWu5Joy2739CN0rNaiL3xRmvlJP0DWAi/7XhQNgW1S3qEt7GrSms6FgQpCX5dAoRXBPmb
+ E
+X-Google-Smtp-Source: AGHT+IEzx0eKXkUhJxxXgts34Av8eqk1BrGIv1lJ9gLiwDIf9yI6p5a14UoAffntv3qNGDRQJfoo6Q==
+X-Received: by 2002:a17:902:db0e:b0:1e0:fdc6:e4d3 with SMTP id
+ m14-20020a170902db0e00b001e0fdc6e4d3mr4170025plx.49.1711751495975; 
+ Fri, 29 Mar 2024 15:31:35 -0700 (PDT)
+Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- u25-20020aa78499000000b006e6c856c0f3sm3479490pfn.188.2024.03.29.15.33.24
+ f8-20020a170902684800b001e09b636cafsm4000955pln.287.2024.03.29.15.31.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 15:33:24 -0700 (PDT)
-From: Max Filippov <jcmvbkbc@gmail.com>
+ Fri, 29 Mar 2024 15:31:35 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2] linux-user/syscall: xtensa: fix ipc_perm conversion
-Date: Fri, 29 Mar 2024 15:33:18 -0700
-Message-Id: <20240329223318.155572-1-jcmvbkbc@gmail.com>
-X-Mailer: git-send-email 2.39.2
+Cc: Helge Deller <deller@gmx.de>
+Subject: [PULL 15/18] target/hppa: Generate getshadowregs inline
+Date: Fri, 29 Mar 2024 12:31:08 -1000
+Message-Id: <20240329223111.1735826-16-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329223111.1735826-1-richard.henderson@linaro.org>
+References: <20240329223111.1735826-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,58 +94,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_ipc_perm::mode and target_ipc_perm::__seq fields are 32-bit wide
-on xtensa and thus need to use tswap32.
-The issue is spotted by the libc-test http://nsz.repo.hu/git/?p=libc-test
-on big-endian xtensa core.
+This operation is trivial and does not require a helper.
 
-Cc: qemu-stable@nongnu.org
-Fixes: a3da8be5126b ("target/xtensa: linux-user: fix sysv IPC structures")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-Changes v1->v2:
-- split into a separate patch
+ target/hppa/helper.h     |  1 -
+ target/hppa/sys_helper.c |  4 ++--
+ target/hppa/translate.c  | 17 +++++++++++++----
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
- linux-user/syscall.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e384e1424890..d9bfd31c1cad 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -3758,12 +3758,13 @@ static inline abi_long target_to_host_ipc_perm(struct ipc_perm *host_ip,
-     host_ip->gid = tswap32(target_ip->gid);
-     host_ip->cuid = tswap32(target_ip->cuid);
-     host_ip->cgid = tswap32(target_ip->cgid);
--#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
-+#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
-+    defined(TARGET_XTENSA)
-     host_ip->mode = tswap32(target_ip->mode);
- #else
-     host_ip->mode = tswap16(target_ip->mode);
+diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+index 8fd7ba65d8..5900fd70bc 100644
+--- a/target/hppa/helper.h
++++ b/target/hppa/helper.h
+@@ -86,7 +86,6 @@ DEF_HELPER_FLAGS_0(read_interval_timer, TCG_CALL_NO_RWG, tl)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(halt, noreturn, env)
+ DEF_HELPER_1(reset, noreturn, env)
+-DEF_HELPER_1(getshadowregs, void, env)
+ DEF_HELPER_1(rfi, void, env)
+ DEF_HELPER_1(rfi_r, void, env)
+ DEF_HELPER_FLAGS_2(write_interval_timer, TCG_CALL_NO_RWG, void, env, tl)
+diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
+index 4a31748342..208e51c086 100644
+--- a/target/hppa/sys_helper.c
++++ b/target/hppa/sys_helper.c
+@@ -95,7 +95,7 @@ void HELPER(rfi)(CPUHPPAState *env)
+     cpu_hppa_put_psw(env, env->cr[CR_IPSW]);
+ }
+ 
+-void HELPER(getshadowregs)(CPUHPPAState *env)
++static void getshadowregs(CPUHPPAState *env)
+ {
+     env->gr[1] = env->shadow[0];
+     env->gr[8] = env->shadow[1];
+@@ -108,7 +108,7 @@ void HELPER(getshadowregs)(CPUHPPAState *env)
+ 
+ void HELPER(rfi_r)(CPUHPPAState *env)
+ {
+-    helper_getshadowregs(env);
++    getshadowregs(env);
+     helper_rfi(env);
+ }
+ 
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 6da9503f33..29e4a64e40 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -2385,14 +2385,23 @@ static bool trans_reset(DisasContext *ctx, arg_reset *a)
  #endif
--#if defined(TARGET_PPC)
-+#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
-     host_ip->__seq = tswap32(target_ip->__seq);
- #else
-     host_ip->__seq = tswap16(target_ip->__seq);
-@@ -3786,12 +3787,13 @@ static inline abi_long host_to_target_ipc_perm(abi_ulong target_addr,
-     target_ip->gid = tswap32(host_ip->gid);
-     target_ip->cuid = tswap32(host_ip->cuid);
-     target_ip->cgid = tswap32(host_ip->cgid);
--#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
-+#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
-+    defined(TARGET_XTENSA)
-     target_ip->mode = tswap32(host_ip->mode);
- #else
-     target_ip->mode = tswap16(host_ip->mode);
- #endif
--#if defined(TARGET_PPC)
-+#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
-     target_ip->__seq = tswap32(host_ip->__seq);
- #else
-     target_ip->__seq = tswap16(host_ip->__seq);
+ }
+ 
+-static bool trans_getshadowregs(DisasContext *ctx, arg_getshadowregs *a)
++static bool do_getshadowregs(DisasContext *ctx)
+ {
+     CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
+-#ifndef CONFIG_USER_ONLY
+     nullify_over(ctx);
+-    gen_helper_getshadowregs(tcg_env);
++    tcg_gen_ld_i64(cpu_gr[1], tcg_env, offsetof(CPUHPPAState, shadow[0]));
++    tcg_gen_ld_i64(cpu_gr[8], tcg_env, offsetof(CPUHPPAState, shadow[1]));
++    tcg_gen_ld_i64(cpu_gr[9], tcg_env, offsetof(CPUHPPAState, shadow[2]));
++    tcg_gen_ld_i64(cpu_gr[16], tcg_env, offsetof(CPUHPPAState, shadow[3]));
++    tcg_gen_ld_i64(cpu_gr[17], tcg_env, offsetof(CPUHPPAState, shadow[4]));
++    tcg_gen_ld_i64(cpu_gr[24], tcg_env, offsetof(CPUHPPAState, shadow[5]));
++    tcg_gen_ld_i64(cpu_gr[25], tcg_env, offsetof(CPUHPPAState, shadow[6]));
+     return nullify_end(ctx);
+-#endif
++}
++
++static bool trans_getshadowregs(DisasContext *ctx, arg_getshadowregs *a)
++{
++    return do_getshadowregs(ctx);
+ }
+ 
+ static bool trans_nop_addrx(DisasContext *ctx, arg_ldst *a)
 -- 
-2.39.2
+2.34.1
 
 
