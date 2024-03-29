@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0977BCD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F8E6CD128A
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqKad-00055E-2s; Fri, 29 Mar 2024 18:20:47 -0400
+	id 1rqKag-00056k-LG; Fri, 29 Mar 2024 18:20:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKaa-00054k-JB
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:44 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1rqKaf-00056J-IG
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:49 -0400
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rqKaY-0001oq-PP
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:44 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6e6fb9a494aso2025075b3a.0
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:20:42 -0700 (PDT)
+ id 1rqKae-0001pR-0Y
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 18:20:49 -0400
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-229b7ada9e8so980647fac.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711750841; x=1712355641; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=qr/N/lqi8D0MtNgzf7ekyOoEdRFxQBJmydgqZvhBPbg=;
- b=tGZ2W9vBTRhEX5XSNMz2i66FW9Sk98wYicXh/c9btOdOwINvg72kgKpMtVlcU3n2m1
- 2w2/OrrVjFyeRcJph4g5xWKe/DX7ER36T7fUCAUj5cwHI3OBn1DTVL8pXkLrwxX4rNzN
- S2QXkksKXNbRmH/uVAHg4faVPgPRi8yakmZ6seyfh6kvJ3tZ0oYrupPg/5iVSoXU/iF5
- Thzw5b3VXWl5iTNhIArXkKblu1UrtYCkXJxTjTTA6FDHrigLXtMvugFJv2w5tdh7ie4a
- 60LbtHKMn2XxpKCZY7CAFjFadgTgyxTTiCjNvTlxiGJnNMETAnIvgsSQ/17kPKqsS0sw
- gXaA==
+ d=linaro.org; s=google; t=1711750846; x=1712355646; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mqnAymu0Pceh1YCimgMze24poYMrVWuaKl+QjHlACqk=;
+ b=c7dTs2JwE0gy2Q8yHxazYc7sPPaBgrCh2EDRtBJdHAwRz3zTnOi0N6yUzE3g8N4bm7
+ TBJE6tryTOBnknZyYihdFhq5k454FUefOst9YxtBQ991Q1yQaTT/x5vCr6j2esiFswo1
+ DAysLqzti4QsxFgewjO7m1lhGXubFHBU6+z/r0FOHV6y+CNNQyaEeWF+PCEBhVqRSjQ7
+ UJf6bnC2NArSZUJt+k5RBZZal6D0rY2s2zNdi9gViBc2xgGOX/0c7OydCfOFw3ZQDFSc
+ Uw7cKspc6L/A3XWEsVukN6EkVNLXrjIcZxnLxAhwgZK2y4aqXGvf83M1lgWKyXwkDrtj
+ yfxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711750841; x=1712355641;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qr/N/lqi8D0MtNgzf7ekyOoEdRFxQBJmydgqZvhBPbg=;
- b=MNjobMgjLZz0NAT9/PHu+f/9AC5VRvPbtqTu66Eu92Pk+kdzSmaKIIUOuxyDTJ2xnl
- ipDbgV+HnhIrhIP9OpNo71zIc2GEorJ6eu2NMcIslmZHB1I5XEEFHiHm4Oua/mY8y1gv
- nBFdWW+I5cc9cH0vtGzktSfYRK3Lq1UgzEVpV8pthBaDBnLdHx2z1Z8OjyfoiZZzWDCf
- K/vDWM2Ia6eo8sDV3xLtFnVn+YeoYEcIEk1oSvo3PYnYLuoMlx1KJ4Ael5JOf9Z/jFMY
- CMJXYin045HMkABkERZcxz/Z4ZHS3BKM2E6IY+J0Pl9fS9LEYgFwJ9cM9qoRCpp1osHe
- 8f3Q==
-X-Gm-Message-State: AOJu0YzJKX9tBx2ZHRdbqkPB4c/j2PhjH9FOxg9ovq4wD5vgJ+cEtvSv
- uGMPfIIvPI/a6+zHx/su3ATU5WaN0QBVc+ajU8herRcGcTwyCPNez/XbZfXqwK7Fwsq4pyCwllw
- 4
-X-Google-Smtp-Source: AGHT+IGFk8+vlggyJxWOX3H11ujAmoRwTrE9tZcmKUgu428eyLItnMFwAqKbC+1wOLXPkvzZgiiMMw==
-X-Received: by 2002:a05:6a00:3ccb:b0:6ea:ab45:6532 with SMTP id
- ln11-20020a056a003ccb00b006eaab456532mr3804293pfb.1.1711750840901; 
- Fri, 29 Mar 2024 15:20:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711750846; x=1712355646;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mqnAymu0Pceh1YCimgMze24poYMrVWuaKl+QjHlACqk=;
+ b=Is5hau9MXInH+WK40584xk9QpbV6y3/E5cGEsZv8g1NjJXGGVMUkJlH0+8d9T/Gudl
+ fDzw81Xh2flTCprDVAFcAGdQG5ETYUQst/qrFLGoEEFdHkSNTv5vjVWrRfU0RTVbTMoK
+ BwW6H2TsmJp8ylDwXD1AAVkfHr0XmRYFFVs8nCydcTjiCfIJlQ3Z0raCo8rCxcNhGokO
+ 2LLrwQ4kqTGWyKhhhpDYUxCXT4t6/xLz4ddBBz4ia/MmJ3dt4BTKTDOggrTrVcewqB+s
+ wbZ1XnZo/9/xUVxgt+uRPDF4m3NsH97j3xsS9RGBHT+OLbJ9ptQaGkn8aniGkElCDqBz
+ Xkeg==
+X-Gm-Message-State: AOJu0YzV/+i2nck+OS1Q+FmIDHMfH/jaStrCirfCHFuGqbac4wCGs8UZ
+ sl9lwBHPfKdN5dK71edNTC5RV8ljwoXo8l2D9PPXIJiZqpQuyl4fWoZTBtRkLLJXFAabl0bQSSV
+ G
+X-Google-Smtp-Source: AGHT+IFlXXXhM1VOpGgvpAkX18QsqI+8kcCxlj6jIUPjXxQJqrVMqthFhTV6DCMkhjgSuHjRcBdsOQ==
+X-Received: by 2002:a05:6871:340c:b0:22a:551c:3170 with SMTP id
+ nh12-20020a056871340c00b0022a551c3170mr3672097oac.23.1711750846598; 
+ Fri, 29 Mar 2024 15:20:46 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- lc24-20020a056a004f5800b006eaacc63435sm3579811pfb.173.2024.03.29.15.20.39
- for <qemu-devel@nongnu.org>
+ lc24-20020a056a004f5800b006eaacc63435sm3579811pfb.173.2024.03.29.15.20.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 15:20:40 -0700 (PDT)
+ Fri, 29 Mar 2024 15:20:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/7] tcg + linux-user patch queue
-Date: Fri, 29 Mar 2024 12:20:30 -1000
-Message-Id: <20240329222037.1735350-1-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 4/7] tests/tcg: Test shmat(NULL)
+Date: Fri, 29 Mar 2024 12:20:34 -1000
+Message-Id: <20240329222037.1735350-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329222037.1735350-1-richard.henderson@linaro.org>
+References: <20240329222037.1735350-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,46 +94,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5012e522aca161be5c141596c66e5cc6082538a9:
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-  Update version for v9.0.0-rc1 release (2024-03-26 19:46:55 +0000)
+Add a small test to prevent regressions.
 
-are available in the Git repository at:
-
-  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240329
-
-for you to fetch changes up to dafa0ecc97850c325fe85cd87dc0b536858d171a:
-
-  accel/tcg: Use CPUState.get_pc in cpu_io_recompile (2024-03-29 12:16:00 -1000)
-
-----------------------------------------------------------------
-linux-user: Fix shmat(NULL) for host != guest page size
-tcg/optimize: Fix sign_mask for logical right-shift
-accel/tcg: Use CPUState.get_pc in cpu_io_recompile
-disas: Show opcodes for target_disas and monitor_disas
-
-----------------------------------------------------------------
-Ilya Leoshkevich (4):
-      linux-user: Fix semctl() strace
-      linux-user: Fix shmat() strace
-      linux-user: Fix shmat(NULL) for h != g
-      tests/tcg: Test shmat(NULL)
-
-Richard Henderson (3):
-      tcg/optimize: Fix sign_mask for logical right-shift
-      disas: Show opcodes for target_disas and monitor_disas
-      accel/tcg: Use CPUState.get_pc in cpu_io_recompile
-
- accel/tcg/translate-all.c                    |  2 +-
- disas/disas-mon.c                            |  1 +
- disas/disas.c                                |  1 +
- linux-user/mmap.c                            |  2 +-
- linux-user/strace.c                          | 10 +++-----
- tcg/optimize.c                               |  2 +-
- tests/tcg/aarch64/test-2248.c                | 28 ++++++++++++++++++++
- tests/tcg/multiarch/linux/linux-shmat-null.c | 38 ++++++++++++++++++++++++++++
- tests/tcg/aarch64/Makefile.target            |  1 +
- 9 files changed, 75 insertions(+), 10 deletions(-)
- create mode 100644 tests/tcg/aarch64/test-2248.c
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20240325192436.561154-5-iii@linux.ibm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tests/tcg/multiarch/linux/linux-shmat-null.c | 38 ++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
  create mode 100644 tests/tcg/multiarch/linux/linux-shmat-null.c
+
+diff --git a/tests/tcg/multiarch/linux/linux-shmat-null.c b/tests/tcg/multiarch/linux/linux-shmat-null.c
+new file mode 100644
+index 0000000000..94eaaec371
+--- /dev/null
++++ b/tests/tcg/multiarch/linux/linux-shmat-null.c
+@@ -0,0 +1,38 @@
++/*
++ * Test shmat(NULL).
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <stdlib.h>
++#include <sys/ipc.h>
++#include <sys/shm.h>
++
++int main(void)
++{
++    int shmid;
++    char *p;
++    int err;
++
++    /* Create, attach and intialize shared memory. */
++    shmid = shmget(IPC_PRIVATE, 1, IPC_CREAT | 0600);
++    assert(shmid != -1);
++    p = shmat(shmid, NULL, 0);
++    assert(p != (void *)-1);
++    *p = 42;
++
++    /* Reattach, check that the value is still there. */
++    err = shmdt(p);
++    assert(err == 0);
++    p = shmat(shmid, NULL, 0);
++    assert(p != (void *)-1);
++    assert(*p == 42);
++
++    /* Detach. */
++    err = shmdt(p);
++    assert(err == 0);
++    err = shmctl(shmid, IPC_RMID, NULL);
++    assert(err == 0);
++
++    return EXIT_SUCCESS;
++}
+-- 
+2.34.1
+
 
