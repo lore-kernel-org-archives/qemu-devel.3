@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4220FC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 12:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E13D8C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 12:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqBif-0003Ke-9M; Fri, 29 Mar 2024 08:52:29 -0400
+	id 1rqBkv-0004J5-TO; Fri, 29 Mar 2024 08:54:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rqBid-0003KF-93
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:52:27 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rqBib-0002Zi-SM
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:52:27 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4155271cb59so2043445e9.2
- for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 05:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711716744; x=1712321544; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=a/uqncGmEK8RA22kICeG6fpJeudKfrpDpfSasZWFQjg=;
- b=ZSMbidqDl24fpaqvu1snYciZ3Z5VoASIze+OigNR5z8lXumZJlFvZFvHE2oJ+KWNgW
- BquuyO05wF8b6ykIB3SO3Y7eJwCJ0TKbRS3XahAlTVz5zVP2yXDyTIqe9HWAmVihssEI
- yQmwfaXJPgEVMT5J0N0RhPmWzayRQsOIL81UN96lY78+YNkKaFhwv3N9NwhMrjv97pOO
- C0eT6/yP3pKmaMaQieRBVaJXLf3WO/wTTjCchrqyAHjmN2mDRg1av9Q4SnazwSYlGcU0
- jDiK83axpT37WK95sNp2PhD9Q5Ary0RhTqhJVfz6jb/zO7Ta+wh1fmbP0logh7Ws1w3A
- sV8Q==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rqBkt-0004Is-ME
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:54:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rqBkr-0002rT-NY
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 08:54:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711716884;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tAj8S0vIOpczCGkf+n7t1iyF0rGdEiB23zLTJV99kJk=;
+ b=ddlKv2WekCnIZXSKnpoJonNfZaZaEs1oAv9hE4GPc2Q268mRnsMJ6lwQWUUG9BgFHxP5qb
+ pX1O3SABOrC7p5IeQ7xVmNOn/Y4ZkIxsnBNwqks2dZ++U5PXkEFt3zGDRhAT7heY3zGHl1
+ MiZ5pEvl7x3DZ3x7nxrSyfKMe0Sg9/U=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-584--BbRK-y-N5aKd352PuleWw-1; Fri, 29 Mar 2024 08:54:43 -0400
+X-MC-Unique: -BbRK-y-N5aKd352PuleWw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4147e733d20so9545425e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 05:54:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711716744; x=1712321544;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a/uqncGmEK8RA22kICeG6fpJeudKfrpDpfSasZWFQjg=;
- b=TxFIHR9LirE0q3xqCi82T0p+FypJ8bLuvCFcPwFzqgGOmB6XCZg8RlJASX1nMfgOno
- FJr0rlu8EMfVHtvuHNL5UvLDz8NUR5fCwhCCarUw2uNqoZM4IEFI4R0uPZS6OVQPrT7n
- iZNBTU958TLfSBTAo6q385dNt7lpGnEbScHGv+dTaEcsvbSlkiyNYRQHsyBajtppUagy
- 1fZ9xEihASi4dTpV+/xJImgQjfJIXtj5M0E1nI6woL0e1rdHrwKZXn/M72evnTASIZsN
- ggMvVsy+fah0/pHCtfhz9sS4kU9OY4Ll66ItS7R/nNptxr3GtidOEAUEVCvuQD5Eat0O
- Jvfg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnMEc6dlr8WVRss7sBSaIYvujplxSmQ/4q/4LAWVYsBjBF56FDe6YJn1aJykyoGTUM1onj8wf4DROz3Lvxv+KZIEGuZuw=
-X-Gm-Message-State: AOJu0Yz4Pf+ni+7LWNsQ6CeOjaNF8qpNCWKdV7wKCD5xykvxoXSEjiHn
- K3CDJFCWjR+rFBzTMPezN4Kh59e1r7HO27rIq3ZYVJ/ITAEvCnQxW/uex37c8fo=
-X-Google-Smtp-Source: AGHT+IHYhcUzOjFd8haIwKH/5W7ckJr8xzea6tuDdqIspoHfKV0IvTcIVtZlkCFSkS2TNmKUCIpZog==
-X-Received: by 2002:a05:600c:1913:b0:414:63da:a347 with SMTP id
- j19-20020a05600c191300b0041463daa347mr1356390wmq.19.1711716744265; 
- Fri, 29 Mar 2024 05:52:24 -0700 (PDT)
-Received: from [192.168.69.100] (uni14-h01-176-184-39-242.dsl.sta.abo.bbox.fr.
- [176.184.39.242]) by smtp.gmail.com with ESMTPSA id
- fc9-20020a05600c524900b004154399fbd9sm5459032wmb.45.2024.03.29.05.52.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Mar 2024 05:52:23 -0700 (PDT)
-Message-ID: <0c0c4838-4b64-47f4-b693-8cda95d837b4@linaro.org>
-Date: Fri, 29 Mar 2024 13:52:22 +0100
+ d=1e100.net; s=20230601; t=1711716882; x=1712321682;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tAj8S0vIOpczCGkf+n7t1iyF0rGdEiB23zLTJV99kJk=;
+ b=tIPZDheW23+fi1jZ+HcQJm/2iTcnb89cUcJbyP8yiNJiCtV8qhOEJo9arzflk5T4sd
+ PuNblCPQ5NqGcHr29fXKUqCwscMTKaqHFVXI1nAqhmIVMMDh3aYFZkbuaoYRpHqHIRGN
+ FyzVKRwwGpBwgjsVm/twYzNM4SQQmA/jf2Tivqc8tkmO51THix8RLp/Uj/NVaqK987tJ
+ dU3jjkfKOTIYrHQHE/iBMbHoArnoQvCNyj+qT8zkOrn3B3ARvkDZo8Zi4k8dojitsFN8
+ smjPgeJbufRts97wRgOh9nEo7bwJbC+wrhJa0pqlp52q/PN8XaykwkPNc0f7rLhnWzl0
+ VpZw==
+X-Gm-Message-State: AOJu0Yx2QYgr47sBKfmPH4AkuJ9oH6aVXaBZSbcJc0FIf/9rlrC4PFTh
+ uspkdiAmX97KSjwOqYsQId6eyxGzmyqqj9GDr3Rm+J3opmDFpO0gaoO/Gc8mDFAbYcGn5CJdF2v
+ GtvNiItnk397iFdb0HHN31cgnQBstidw4a5k2vPYp3MA9JNV99uw1NynkEfW/lXj+6hdBvRA850
+ gDutmtkLf3/lYn0BcxFXZy6Vl6ZXI=
+X-Received: by 2002:a05:600c:3b16:b0:414:95e0:388c with SMTP id
+ m22-20020a05600c3b1600b0041495e0388cmr2167715wms.8.1711716881911; 
+ Fri, 29 Mar 2024 05:54:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUygcvP2xNNok5BsdyJ0eVCreO1IulP08abHlrzced0lck40fiSq62hjGunJrEUqUC0P4Naqe1zyAnrgAAZg8=
+X-Received: by 2002:a05:600c:3b16:b0:414:95e0:388c with SMTP id
+ m22-20020a05600c3b1600b0041495e0388cmr2167697wms.8.1711716881511; Fri, 29 Mar
+ 2024 05:54:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/xen_evtchn: Initialize flush_kvm_routes
-To: Artem Chernyshev <artem.chernyshev@red-soft.ru>,
- David Woodhouse <dwmw2@infradead.org>
-Cc: Paul Durrant <paul@xen.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
- Oleg Sviridov <oleg.sviridov@red-soft.ru>
-References: <20240329113939.257033-1-artem.chernyshev@red-soft.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240329113939.257033-1-artem.chernyshev@red-soft.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240325141422.1380087-1-pbonzini@redhat.com>
+ <20240325141422.1380087-2-pbonzini@redhat.com>
+ <ZgVEpt7pOzNK2wrM@intel.com>
+In-Reply-To: <ZgVEpt7pOzNK2wrM@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 29 Mar 2024 13:54:28 +0100
+Message-ID: <CABgObfZrwTWMf3ag7TxDS6_6NO2rAGta_V93jnmEf11QAEURLQ@mail.gmail.com>
+Subject: Re: [PATCH for-9.1 v5 1/3] hw: Add compat machines for 9.1
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Xiaoyao Li <xiaoyao.li@intel.com>, Cornelia Huck <cohuck@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Gavin Shan <gshan@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,18 +101,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/3/24 12:39, Artem Chernyshev wrote:
-> In xen_evtchn_soft_reset() variable flush_kvm_routes can
-> be used before being initialized.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
-> Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-> ---
->   hw/i386/kvm/xen_evtchn.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Mar 28, 2024 at 11:07=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wro=
+te:
+>
+> Hi Paolo,
+>
+> Just meet typos when compiling ;-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thank you very much! Fixed both.
+
+Paolo
+
+> On Mon, Mar 25, 2024 at 03:14:20PM +0100, Paolo Bonzini wrote:
+> > Date: Mon, 25 Mar 2024 15:14:20 +0100
+> > From: Paolo Bonzini <pbonzini@redhat.com>
+> > Subject: [PATCH for-9.1 v5 1/3] hw: Add compat machines for 9.1
+> > X-Mailer: git-send-email 2.44.0
+>
+> [snip]
+>
+> > diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> > index b1dcb3857f0..67e8b0b05e8 100644
+> > --- a/hw/s390x/s390-virtio-ccw.c
+> > +++ b/hw/s390x/s390-virtio-ccw.c
+> > @@ -859,14 +859,26 @@ bool css_migration_enabled(void)
+> >      }                                                                 =
+        \
+> >      type_init(ccw_machine_register_##suffix)
+> >
+> > +static void ccw_machine_9_1_instance_options(MachineState *machine)
+> > +{
+> > +}
+> > +
+> > +static void ccw_machine_9_1_class_options(MachineClass *mc)
+> > +{
+> > +}
+> > +DEFINE_CCW_MACHINE(9_0, "9.1", true);
+>
+> Should be:
+>
+> DEFINE_CCW_MACHINE(9_1, "9.1", true);
+>
+> > +
+> >  static void ccw_machine_9_0_instance_options(MachineState *machine)
+> >  {
+> > +    ccw_machine_9_1_instance_options(machine);
+> >  }
+> >
+> >  static void ccw_machine_9_0_class_options(MachineClass *mc)
+> >  {
+> > +    ccw_machine_9_1_class_options(machine);
+>
+> s/machine/mc/
+>
+> Regards,
+> Zhao
+>
 
 
