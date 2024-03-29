@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DBECD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 19:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DACCD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 19:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqI3N-0005RX-2r; Fri, 29 Mar 2024 15:38:17 -0400
+	id 1rqI9i-0006fq-Rn; Fri, 29 Mar 2024 15:44:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
- id 1rqI3J-0005RJ-N3
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 15:38:15 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rqI9f-0006fD-5b
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 15:44:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alison.schofield@intel.com>)
- id 1rqI3G-0003lL-Ka
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 15:38:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711741090; x=1743277090;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=+vKbkzFZ4eZd1MQh5+5s+z854meqlngn22v4O+87I90=;
- b=QsLWq0bPOT9Ebb52sTS+O8YeRJKh7QHn3ZikCNlHH7KdDFhGIW+Xww0a
- 5F2x8x3F5hxUqYqWmdfJXsDmXQFLg4CfZ+LQ1qYEzoPZ1miPGVG1criLp
- UWA2vU6q3Kest4beigjHT49Wa7pN3h4rVT5vBTvEv1ezxalBEHCJKLN81
- 4k2BVaSQK3kp8XFRdwh9/5x19E9IYaTFrJzU+oxOs1NK6rxOaGFfAmBkI
- lTXo9Tl/kZFe6VcjjV1haGjNqnKWyz+WYl2lpNb8wHp9c2JiKclYiLCSz
- Vf69mdAPHi+yd6tfDbh3ljgP91lICgyIquR4sY2VcFfHfihWDQbhxyI6j w==;
-X-CSE-ConnectionGUID: ezZ9WmrXRNOAU96ZdqWK5g==
-X-CSE-MsgGUID: iAgHgGo4SnGTZRjh3siPpw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11028"; a="29422398"
-X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="29422398"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 12:38:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,165,1708416000"; d="scan'208";a="17042956"
-Received: from aschofie-mobl2.amr.corp.intel.com (HELO aschofie-mobl2)
- ([10.209.86.126])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 12:38:06 -0700
-Date: Fri, 29 Mar 2024 12:38:04 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: Dan Williams <dan.j.williams@intel.com>
-Cc: Shiyang Ruan <ruansy.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org, Jonathan.Cameron@huawei.com,
- dave@stgolabs.net, ira.weiny@intel.com
-Subject: Re: [RFC PATCH v2 0/6] cxl: add poison event handler
-Message-ID: <ZgcYnCr19aVhCO93@aschofie-mobl2>
-References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
- <Zgb9wjTIu1CE4S5r@aschofie-mobl2>
- <660706e8a66c_4a98a294e@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rqI9d-0004lL-9R
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 15:44:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711741483;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=V11yvYk7eJymAL7pJOm/k1LWAhKluBtXgiPc5016mLE=;
+ b=c++fu9KOipBvUEwuPGc/HdD/mEJlUT0wl3cp6z0+kh/kraWHVly6sRbb3wp3huoAMOXKyM
+ rVQvJTWOTpkoFZRJTT1aocYfJE20kIHBm51yAuTQr7hdCnmciphAk2IeKGQXMiNQ2vcPbm
+ CpcASU1MczSNvqvk1kIfhEWhnGF08tY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-tiHPQzpEPlKYd6LUZG7gvg-1; Fri,
+ 29 Mar 2024 15:44:39 -0400
+X-MC-Unique: tiHPQzpEPlKYd6LUZG7gvg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D2C041C07547;
+ Fri, 29 Mar 2024 19:44:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.9])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8A4D4111E3F3;
+ Fri, 29 Mar 2024 19:44:28 +0000 (UTC)
+Date: Fri, 29 Mar 2024 19:44:21 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Yu Zhang <yu.zhang@ionos.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Message-ID: <ZgcaB4hYv6E70QqH@redhat.com>
+References: <20240328130255.52257-1-philmd@linaro.org>
+ <20240328130255.52257-3-philmd@linaro.org> <87frwatp7n.fsf@suse.de>
+ <ZgWGMmUTq0jqSUvr@x1n>
+ <7a510fbe-1c27-4f67-93b8-0d9cf01c1c74@fujitsu.com>
+ <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <660706e8a66c_4a98a294e@dwillia2-mobl3.amr.corp.intel.com.notmuch>
-Received-SPF: pass client-ip=198.175.65.9;
- envelope-from=alison.schofield@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,37 +104,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 29, 2024 at 11:22:32AM -0700, Dan Williams wrote:
-> Alison Schofield wrote:
-> [..]
-> > Upon receipt of that new poison list, call memory_failture_queue()
-> > on *any* poison in a mapped space. Is that OK?  Can we call
-> > memory_failure_queue() on any and every poison report that is in
-> > HPA space regardless of whether it first came to us through a GMER?
-> > I'm actually wondering if that is going to be the next ask anyway -
-> > ie report all poison.
+On Fri, Mar 29, 2024 at 11:28:54AM +0100, Philippe Mathieu-Daudé wrote:
+> Hi Zhijian,
 > 
-> memory_failure_queue() should be called on poison creation events. Leave
-> the MF_ACTION_REQUIRED flag not set so that memory_failure() performs
-> "action optional" handling.  So I would expect memory_failure_queue()
-> notification for GMER events, but not on poison list events.
+> On 29/3/24 02:53, Zhijian Li (Fujitsu) wrote:
+> > 
+> > 
+> > On 28/03/2024 23:01, Peter Xu wrote:
+> > > On Thu, Mar 28, 2024 at 11:18:04AM -0300, Fabiano Rosas wrote:
+> > > > Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> > > > 
+> > > > > The whole RDMA subsystem was deprecated in commit e9a54265f5
+> > > > > ("hw/rdma: Deprecate the pvrdma device and the rdma subsystem")
+> > > > > released in v8.2.
+> > > > > 
+> > > > > Remove:
+> > > > >    - RDMA handling from migration
+> > > > >    - dependencies on libibumad, libibverbs and librdmacm
+> > > > > 
+> > > > > Keep the RAM_SAVE_FLAG_HOOK definition since it might appears
+> > > > > in old migration streams.
+> > > > > 
+> > > > > Cc: Peter Xu <peterx@redhat.com>
+> > > > > Cc: Li Zhijian <lizhijian@fujitsu.com>
+> > > > > Acked-by: Fabiano Rosas <farosas@suse.de>
+> > > > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > > 
+> > > > Just to be clear, because people raised the point in the last version,
+> > > > the first link in the deprecation commit links to a thread comprising
+> > > > entirely of rdma migration patches. I don't see any ambiguity on whether
+> > > > the deprecation was intended to include migration. There's even an ack
+> > > > from Juan.
+> > > 
+> > > Yes I remember that's the plan.
+> > > 
+> > > > 
+> > > > So on the basis of not reverting the previous maintainer's decision, my
+> > > > Ack stands here.
+> > > > 
+> > > > We also had pretty obvious bugs ([1], [2]) in the past that would have
+> > > > been caught if we had any kind of testing for the feature, so I can't
+> > > > even say this thing works currently.
+> > > > 
+> > > > @Peter Xu, @Li Zhijian, what are your thoughts on this?
+> > > 
+> > > Generally I definitely agree with such a removal sooner or later, as that's
+> > > how deprecation works, and even after Juan's left I'm not aware of any
+> > > other new RDMA users.  Personally, I'd slightly prefer postponing it one
+> > > more release which might help a bit of our downstream maintenance, however
+> > > I assume that's not a blocker either, as I think we can also manage it.
+> > > 
+> > > IMHO it's more important to know whether there are still users and whether
+> > > they would still like to see it around. That's also one thing I notice that
+> > > e9a54265f533f didn't yet get acks from RDMA users that we are aware, even
+> > > if they're rare. According to [2] it could be that such user may only rely
+> > > on the release versions of QEMU when it broke things.
+> > > 
+> > > So I'm copying Yu too (while Zhijian is already in the loop), just in case
+> > > someone would like to stand up and speak.
+> > 
+> > 
+> > I admit RDMA migration was lack of testing(unit/CI test), which led to the a few
+> > obvious bugs being noticed too late.
+> > However I was a bit surprised when I saw the removal of the RDMA migration. I wasn't
+> > aware that this feature has not been marked as deprecated(at least there is no
+> > prompt to end-user).
+> > 
+> > 
+> > > IMHO it's more important to know whether there are still users and whether
+> > > they would still like to see it around.
+> > 
+> > Agree.
+> > I didn't immediately express my opinion in V1 because I'm also consulting our
+> > customers for this feature in the future.
+> > 
+> > Personally, I agree with Perter's idea that "I'd slightly prefer postponing it one
+> > more release which might help a bit of our downstream maintenance"
+> 
+> Do you mind posting a deprecation patch to clarify the situation?
 
-Seems I totally missed the point of this patch set.
-Is it's only purpose to make sure that poison that is injected gets
-reported to memory_failure?
+The key thing the first deprecation patch missed was that it failed
+to issue a warning message when RDMA migration was actually used.
 
-So this single patch only:
-1. Poison inject leads to this GMER/CXL_EVENT_TRANSACTION_INJECT_POISON 
-2. Driver sees GMER/CXL_EVENT_TRANSACTION_INJECT_POISON and reads poison
-list to get accurate length.
-3. Driver reports that to memory_failure_queue()
-
-Still expect there's some code sharing opportunities and I still wonder
-about what is next in this area.
-
---Alison
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
