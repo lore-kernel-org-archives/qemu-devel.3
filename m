@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 817B7C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 06:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EFA6CD1283
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 06:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq5qq-0004YM-Sj; Fri, 29 Mar 2024 02:36:32 -0400
+	id 1rq5qq-0004Xb-2q; Fri, 29 Mar 2024 02:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1rq5ql-0004Vw-8h
+ id 1rq5qk-0004Vc-V8
  for qemu-devel@nongnu.org; Fri, 29 Mar 2024 02:36:27 -0400
-Received: from esa9.hc1455-7.c3s2.iphmx.com ([139.138.36.223])
+Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1rq5qh-0002VS-Gy
+ id 1rq5qh-0002VJ-Gm
  for qemu-devel@nongnu.org; Fri, 29 Mar 2024 02:36:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1711694183; x=1743230183;
+ t=1711694184; x=1743230184;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=wuhLrD6nDKASM1GZwEy/EhBT98EFm0ZU9lZPPyQH+DE=;
- b=OART/vJ4sCnGjeJ1ZZygNVoF7dHn7tA9ieCeCH7upvA2KlC8Ot4n0zMc
- zZ7T060WNL18+2lFluqs/7s4cecdtvyODkQi7wv44RgcuGENkhVY5FcV2
- e/zVKrhZwq/oKtyt9UvCdMER4kjCeDZsdVhDfL0Ehn02usm+jqa7zvxcW
- 57tlhbjU+z60dBFwN4piZSa5gc1mvtnGXc7/6rdZVNaiDNG0MLtt5MyzT
- ta+3h7mCu3x16OUwJa+e+DHS00ayvDiJ61rVOlr/g5y4fSxVoXG7zr9eH
- JRf19ECXIdyq+MXdzFCG7HXtoQuW/thtDg9gG1qo05vQqkfV8g6BLaAB1 Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="142199696"
-X-IronPort-AV: E=Sophos;i="6.07,164,1708354800"; d="scan'208";a="142199696"
-Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
- by esa9.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 15:36:19 +0900
-Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
- [192.168.87.59])
- by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 9753ADCC05
+ bh=WjXkq8DjQjakIlilkVzxIex2qly8t8WwbQWxANAhOWU=;
+ b=tHX7oZgN1+7oVrzCRscKpjA2FrqXWXPF8E4q47CiN5tk+SK9toFflZn4
+ 0Gxk6IJTwATM/Yh9gAgIy/k+sXntzn+Yuh/be3Keg64iEPzs3J0DJLbgJ
+ JjoKm91qwJPjsqnhj+XB9xAlz8Zjren50SpI09FIONpgxTy1oQz/O2C7t
+ tk0sGz/+usDPbPm3LyOqm5Kqc2XmpG8QIw+rPe7BkQw35b6QmSRgV7ZZX
+ /NNzsv3uKFa5J51ub4ew8u/Bs+totgIwpLbhM4MXqkOm1FJPR58M5yENl
+ BUJKy23TsZiiKdFxdRPtlx7jRYb58RpjUfWO4ywNLc/BRhsUeqirAuPUs g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="153723887"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708354800"; d="scan'208";a="153723887"
+Received: from unknown (HELO yto-r2.gw.nic.fujitsu.com) ([218.44.52.218])
+ by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 15:36:20 +0900
+Received: from yto-m4.gw.nic.fujitsu.com (yto-nat-yto-m4.gw.nic.fujitsu.com
+ [192.168.83.67])
+ by yto-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 4D806D6286
  for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:17 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id B26A715A16
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by yto-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id 6BE97D3F31
  for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:16 +0900 (JST)
 Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 4A13C224950
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 00566200A7F2A
  for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:16 +0900 (JST)
 Received: from irides.g08.fujitsu.local (unknown [10.167.226.114])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id D019B1A006A;
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 86FCE1A006E;
  Fri, 29 Mar 2024 14:36:15 +0800 (CST)
 To: qemu-devel@nongnu.org,
 	linux-cxl@vger.kernel.org
 Cc: Jonathan.Cameron@huawei.com, dan.j.williams@intel.com, dave@stgolabs.net,
  ira.weiny@intel.com
-Subject: [RFC PATCH v2 3/6] cxl/core: add report option for
- cxl_mem_get_poison()
-Date: Fri, 29 Mar 2024 14:36:11 +0800
-Message-Id: <20240329063614.362763-4-ruansy.fnst@fujitsu.com>
+Subject: [RFC PATCH v2 2/6] cxl/core: introduce cxl_mem_report_poison()
+Date: Fri, 29 Mar 2024 14:36:10 +0800
+Message-Id: <20240329063614.362763-3-ruansy.fnst@fujitsu.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
 References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
@@ -68,15 +67,15 @@ X-TM-AS-GCONF: 00
 X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28282.003
 X-TM-AS-User-Approved-Sender: Yes
 X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28282.003
-X-TMASE-Result: 10--9.462200-10.000000
-X-TMASE-MatchedRID: a3KJLn6RIiIJoDeiZ6YZhB1kSRHxj+Z5/OuUJVcMZhtdXeeZrNJbgiu5
- iQ9EM64EjZRdXn3Xp9M6uZyF2AGJsLVQ6XPWwtdyEXjPIvKd74BUENBIMyKD0cSiwizsgluQ9my
- Umu4fZeT7dV04rak8k5t7C5yK9FBjJBgtEIxUn4HfSQNpZkETVBgff28UuvITicvz9DxarMHQSo
- WMT37bqFIeZmiiCQMfIdXPCd0ceGWvvxILmKK/HBRFJJyf5BJe3QfwsVk0UbtuRXh7bFKB7qYgz
- NcfPy5s9/7GOwz/1iinIjtl5KwpMUvyE7CVOX4olExlQIQeRG0=
+X-TMASE-Result: 10--4.197900-10.000000
+X-TMASE-MatchedRID: 53aa+u+VJBkM5CG8CYBPxRhvfWx0TE/bQR7lWMXPA1uWGhlHXorXXRZa
+ DvoiUT/Mg1jj+Zp5wfm12HagvbwDji/7QU2czuUNA9lly13c/gEgltMEWVygJifJTn+dmnFQcHj
+ giTON9jJvu+EAUOCx01Q+BXcIki7EZEHJCRAt0NqeAiCmPx4NwBnUJ0Ek6yhjxEHRux+uk8hxKp
+ vEGAbTDo3PgYtyDuTWI3WPpm6ecjdp0YLTMI01adj70x37BoN8/h4BuZEnt4Io/4nN6pA2LIkSU
+ kMsH+K04A1LMJVhA4LWGNvCCott3luMG6V02+QySir3tZId0WN+6klq53W5kJ9Gzq4huQVX
 X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.36.223;
- envelope-from=ruansy.fnst@fujitsu.com; helo=esa9.hc1455-7.c3s2.iphmx.com
+Received-SPF: pass client-ip=207.54.90.49;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa3.hc1455-7.c3s2.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -101,123 +100,68 @@ From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GMER only has "Physical Address" field, no such one indicates length.
-So, when a poison event is received, we could use GET_POISON_LIST command
-to get the poison list.  Now driver has cxl_mem_get_poison(), so
-reuse it and add a parameter 'bool report', report poison record to MCE
-if set true.
+If poison is detected(reported from cxl memdev), OS should be notified to
+handle it. So, introduce this helper function for later use:
+  1. translate DPA to HPA;
+  2. enqueue records into memory_failure's work queue;
 
 Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
 ---
- drivers/cxl/core/mbox.c   | 8 ++++++--
- drivers/cxl/core/memdev.c | 4 ++--
- drivers/cxl/core/region.c | 8 ++++----
- drivers/cxl/cxlmem.h      | 2 +-
- 4 files changed, 13 insertions(+), 9 deletions(-)
+
+Currently poison injection from debugfs always create a 64-bytes-length
+record, which is fine.  But the injection from qemu's QMP API:
+qmp_cxl_inject_poison() could create a poison record contains big length,
+which may cause many many times of calling memory_failure_queue().
+Though the MEMORY_FAILURE_FIFO_SIZE is 1 << 4, it seems not enougth.
+
+---
+ drivers/cxl/core/mbox.c | 18 ++++++++++++++++++
+ drivers/cxl/cxlmem.h    |  3 +++
+ 2 files changed, 21 insertions(+)
 
 diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 31b1b8711256..19b46fb06ed6 100644
+index 9adda4795eb7..31b1b8711256 100644
 --- a/drivers/cxl/core/mbox.c
 +++ b/drivers/cxl/core/mbox.c
-@@ -1309,7 +1309,7 @@ void cxl_mem_report_poison(struct cxl_memdev *cxlmd,
- EXPORT_SYMBOL_NS_GPL(cxl_mem_report_poison, CXL);
- 
- int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
--		       struct cxl_region *cxlr)
-+		       struct cxl_region *cxlr, bool report)
- {
- 	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
- 	struct cxl_mbox_poison_out *po;
-@@ -1340,10 +1340,14 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
- 		if (rc)
- 			break;
- 
--		for (int i = 0; i < le16_to_cpu(po->count); i++)
-+		for (int i = 0; i < le16_to_cpu(po->count); i++) {
- 			trace_cxl_poison(cxlmd, cxlr, &po->record[i],
- 					 po->flags, po->overflow_ts,
- 					 CXL_POISON_TRACE_LIST);
-+			if (report)
-+				cxl_mem_report_poison(cxlmd, cxlr,
-+						      &po->record[i]);
-+		}
- 
- 		/* Protect against an uncleared _FLAG_MORE */
- 		nr_records = nr_records + le16_to_cpu(po->count);
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index d4e259f3a7e9..e976141ca4a9 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -200,14 +200,14 @@ static int cxl_get_poison_by_memdev(struct cxl_memdev *cxlmd)
- 	if (resource_size(&cxlds->pmem_res)) {
- 		offset = cxlds->pmem_res.start;
- 		length = resource_size(&cxlds->pmem_res);
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		if (rc)
- 			return rc;
- 	}
- 	if (resource_size(&cxlds->ram_res)) {
- 		offset = cxlds->ram_res.start;
- 		length = resource_size(&cxlds->ram_res);
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		/*
- 		 * Invalid Physical Address is not an error for
- 		 * volatile addresses. Device support is optional.
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 5c186e0a39b9..e83c46cb4dea 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -2585,7 +2585,7 @@ static int cxl_get_poison_unmapped(struct cxl_memdev *cxlmd,
- 	if (ctx->mode == CXL_DECODER_RAM) {
- 		offset = ctx->offset;
- 		length = resource_size(&cxlds->ram_res) - offset;
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		if (rc == -EFAULT)
- 			rc = 0;
- 		if (rc)
-@@ -2603,7 +2603,7 @@ static int cxl_get_poison_unmapped(struct cxl_memdev *cxlmd,
- 		return 0;
- 	}
- 
--	return cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+	return cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
+@@ -1290,6 +1290,24 @@ int cxl_set_timestamp(struct cxl_memdev_state *mds)
  }
+ EXPORT_SYMBOL_NS_GPL(cxl_set_timestamp, CXL);
  
- static int poison_by_decoder(struct device *dev, void *arg)
-@@ -2637,7 +2637,7 @@ static int poison_by_decoder(struct device *dev, void *arg)
- 	if (cxled->skip) {
- 		offset = cxled->dpa_res->start - cxled->skip;
- 		length = cxled->skip;
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		if (rc == -EFAULT && cxled->mode == CXL_DECODER_RAM)
- 			rc = 0;
- 		if (rc)
-@@ -2646,7 +2646,7 @@ static int poison_by_decoder(struct device *dev, void *arg)
- 
- 	offset = cxled->dpa_res->start;
- 	length = cxled->dpa_res->end - offset + 1;
--	rc = cxl_mem_get_poison(cxlmd, offset, length, cxled->cxld.region);
-+	rc = cxl_mem_get_poison(cxlmd, offset, length, cxled->cxld.region, false);
- 	if (rc == -EFAULT && cxled->mode == CXL_DECODER_RAM)
- 		rc = 0;
- 	if (rc)
++void cxl_mem_report_poison(struct cxl_memdev *cxlmd,
++			   struct cxl_region *cxlr,
++			   struct cxl_poison_record *poison)
++{
++	u64 dpa = le64_to_cpu(poison->address) & CXL_POISON_START_MASK;
++	u64 len = PAGE_ALIGN(le32_to_cpu(poison->length) * CXL_POISON_LEN_MULT);
++	u64 hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
++	unsigned long pfn = PHYS_PFN(hpa);
++	unsigned long pfn_end = pfn + len / PAGE_SIZE - 1;
++
++	if (!IS_ENABLED(CONFIG_MEMORY_FAILURE))
++		return;
++
++	for (; pfn <= pfn_end; pfn++)
++		memory_failure_queue(pfn, MF_ACTION_REQUIRED);
++}
++EXPORT_SYMBOL_NS_GPL(cxl_mem_report_poison, CXL);
++
+ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+ 		       struct cxl_region *cxlr)
+ {
 diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-index 82f80eb381fb..1f03130b9d6a 100644
+index 20fb3b35e89e..82f80eb381fb 100644
 --- a/drivers/cxl/cxlmem.h
 +++ b/drivers/cxl/cxlmem.h
-@@ -832,7 +832,7 @@ void cxl_mem_report_poison(struct cxl_memdev *cxlmd,
- 			   struct cxl_region *cxlr,
- 			   struct cxl_poison_record *poison);
+@@ -828,6 +828,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
+ 			    const uuid_t *uuid, union cxl_event *evt);
+ int cxl_set_timestamp(struct cxl_memdev_state *mds);
+ int cxl_poison_state_init(struct cxl_memdev_state *mds);
++void cxl_mem_report_poison(struct cxl_memdev *cxlmd,
++			   struct cxl_region *cxlr,
++			   struct cxl_poison_record *poison);
  int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
--		       struct cxl_region *cxlr);
-+		       struct cxl_region *cxlr, bool report);
+ 		       struct cxl_region *cxlr);
  int cxl_trigger_poison_list(struct cxl_memdev *cxlmd);
- int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa);
- int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa);
 -- 
 2.34.1
 
