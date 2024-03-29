@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25467CD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 06:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D437C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 06:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rq5mv-0002pV-RY; Fri, 29 Mar 2024 02:32:29 -0400
+	id 1rq5qp-0004XK-Rp; Fri, 29 Mar 2024 02:36:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rq5mt-0002mo-Tg; Fri, 29 Mar 2024 02:32:27 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rq5ms-0001x5-1N; Fri, 29 Mar 2024 02:32:27 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1def3340682so15595245ad.1; 
- Thu, 28 Mar 2024 23:32:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711693942; x=1712298742; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sAs3vTGnClbvNwXtqETLXylv1FnXYl3lh4mYErtNGAk=;
- b=iaAl4Wj3IT6FOEClpBudIemge8lN7FmLizl1r/rBCkmsZ4H/tvs4gwCDf99+itJM3S
- XxXQUyw4KvhO2MSHw5h09pGUnsBASig9lO62A+JT7sVfWu28oz8MdLe9UMGDRCu05HAF
- ZNTyVvSQcbOXmp48t7H1kV0IwcLM8PaFeBUiPcddAYHCqMKtmPkllhy+sMQJLZwKSG4p
- v4/gp824riW/ZkV1Ym+aqOdvzP5MGkCmiJBgTwiWR1ISqW6XG4wbsJeKzXJrGbym5e3N
- qD3dLSfg+yg+NcO0gxIayuEIYguLKPtEQg8zTliU9o7jjBXsMqF2iuT1Df113qg3BeDI
- dGZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711693942; x=1712298742;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sAs3vTGnClbvNwXtqETLXylv1FnXYl3lh4mYErtNGAk=;
- b=LAFZDFU7TRd6PS7MhHh1rHXYoJ5dfl2fMLHBbvubtniEFFgaEpq7oybeXAMqLIzbbB
- j+tLOV1SFQ0rQB381PNpAH/5jp8n1nX1T5uzBnoL7lFNKo4+BEG0b6GMYnyGmHgG8lIx
- ZlVZ58sdceuagmTJdo9UeLc66w3PdjXEWrv2OSxdExcsZKOL0+AfTzWxPluSE+V+IleV
- SnRnSSDcfdod8/r7zc5wW3UJ2tjUjCCsgfb5awx4einqKSeXejCdxvD8kwbVzix5bMPT
- NBbEX2HOQVRNBVaAKuIo0vajMh15AmvqRwMexiYH5n8b1CBYmSbU7uQ/9zLb1fnQ/xDI
- qvJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwgJ46jejFxRfQ45P5QWyV7nrVwBSSElW01o1ghNdi3S9+eD2sag/3dksLZQ0taiY5ZFIpWkgIpvj0DF8Mj0btkIJ67bb4
-X-Gm-Message-State: AOJu0Yyf6hleWDaobrGa12XXcukLw1or39MO6p32eYfJpgzpQcXCC4MB
- KnCssCwgRWeHqCuhBYe5KZLFOUiD2iWpYeIM91iTvv0WL/fXZy3Gnx6eAxHy
-X-Google-Smtp-Source: AGHT+IGYUcKGhxDOxzJgJLj0ZiEwdJ+L4AWU7Z7yu27iNP3Hn9v9lCTHEJfCPVGAnJoDue+5ZFyuxA==
-X-Received: by 2002:a17:903:40c7:b0:1e2:23b8:9880 with SMTP id
- t7-20020a17090340c700b001e223b89880mr2014447pld.35.1711693942459; 
- Thu, 28 Mar 2024 23:32:22 -0700 (PDT)
-Received: from octofox.hsd1.ca.comcast.net
- ([2601:646:a200:bbd0:3e59:66bc:8049:275e])
- by smtp.gmail.com with ESMTPSA id
- kt15-20020a170903088f00b001db616fa11dsm2717423plb.238.2024.03.28.23.32.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Mar 2024 23:32:22 -0700 (PDT)
-From: Max Filippov <jcmvbkbc@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Max Filippov <jcmvbkbc@gmail.com>,
-	qemu-stable@nongnu.org
-Subject: [PATCH] linux-user/syscall: xtensa: fix target_msqid_ds and ipc_perm
- conversion
-Date: Thu, 28 Mar 2024 23:31:48 -0700
-Message-Id: <20240329063148.129343-1-jcmvbkbc@gmail.com>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rq5qj-0004VI-F8
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 02:36:25 -0400
+Received: from esa11.hc1455-7.c3s2.iphmx.com ([207.54.90.137])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rq5qh-0002VK-IR
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 02:36:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1711694184; x=1743230184;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=Om0rTA9WbsSAo7t6tlUEm6jtC04fsfKD+Idi78A3PwY=;
+ b=qVkeJmGDqC4AGU51faOF30bODFPUqTCERvkm3Rh/n6r7MkROd8rmQq9M
+ OCzz50EfejF0D0rpYKCXt3JEUStbmaW2zyUbmar8DVcrYEgRuP69AkMFN
+ Z7p753tIEusvtkKPMWNeYnZbMHKDTYxUYyora/1qD2nzXn0419R0xyCKx
+ WI1zVg5vY8bkfLWrNKIejegig9FTvnFI303YEGQYVOGYQB790r6IrsVBS
+ ALYMQisbA2+pSsSrzXFXkkB/NFWuTHm2lkxzXxGlK7Q8LwRUKSZS5pgHS
+ 44KLnTMVdmlDFxD0VznYREs5W4WyCN5yAgMcwAqS9WQpwC2sulGQpD0JR g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11027"; a="133107776"
+X-IronPort-AV: E=Sophos;i="6.07,164,1708354800"; d="scan'208";a="133107776"
+Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
+ by esa11.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 15:36:20 +0900
+Received: from oym-m3.gw.nic.fujitsu.com (oym-nat-oym-m3.gw.nic.fujitsu.com
+ [192.168.87.60])
+ by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id B8D6FDCC08
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:17 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id E30E715620
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:16 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 7EC08200A7F0B
+ for <qemu-devel@nongnu.org>; Fri, 29 Mar 2024 15:36:16 +0900 (JST)
+Received: from irides.g08.fujitsu.local (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 24B0C1A006D;
+ Fri, 29 Mar 2024 14:36:16 +0800 (CST)
+To: qemu-devel@nongnu.org,
+	linux-cxl@vger.kernel.org
+Cc: Jonathan.Cameron@huawei.com, dan.j.williams@intel.com, dave@stgolabs.net,
+ ira.weiny@intel.com
+Subject: [RFC PATCH v2 4/6] cxl/core: report poison when injecting from debugfs
+Date: Fri, 29 Mar 2024 14:36:12 +0800
+Message-Id: <20240329063614.362763-5-ruansy.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
+References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28282.003
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28282.003
+X-TMASE-Result: 10--1.096700-10.000000
+X-TMASE-MatchedRID: It5tpevY7hTR6RKL7TRTbhF4zyLyne+ATJDl9FKHbrnLBiiIoKf6r6PF
+ jJEFr+olKE0Je8DR/D4NXwNUB3oA790H8LFZNFG76sBnwpOylLOGGOXsAst2EY71S6fa2jIEbbi
+ ume7ndEjAl7InEAdrZfsQLJr4C1gANHYsYoI80lgKm9Bb+04k3Mw0hF8jARVgyLf0xPiHr9ghya
+ dlGFXHKsTgfCdKUS4cicSkmYsAV+kLUU1zqiphVX7cGd19dSFd
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=207.54.90.137;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa11.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,83 +94,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- target_ipc_perm::mode and target_ipc_perm::__seq fields are 32-bit wide
-  on xtensa and thus need to use tswap32
-- target_msqid_ds::msg_*time field pairs are reversed on big-endian
-  xtensa
-Both issues result in incorrect conversion results on big-endian xtensa
-targets, spotted by the libc-test http://nsz.repo.hu/git/?p=libc-test
+Poison injection from debugfs is silent too.  Add calling
+cxl_mem_report_poison() to make it able to do memory_failure().
 
-Cc: qemu-stable@nongnu.org
-Fixes: a3da8be5126b ("target/xtensa: linux-user: fix sysv IPC structures")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
 ---
- linux-user/syscall.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/cxl/core/memdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e384e1424890..cb334e90d6f0 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -3758,12 +3758,13 @@ static inline abi_long target_to_host_ipc_perm(struct ipc_perm *host_ip,
-     host_ip->gid = tswap32(target_ip->gid);
-     host_ip->cuid = tswap32(target_ip->cuid);
-     host_ip->cgid = tswap32(target_ip->cgid);
--#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
-+#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
-+    defined(TARGET_XTENSA)
-     host_ip->mode = tswap32(target_ip->mode);
- #else
-     host_ip->mode = tswap16(target_ip->mode);
- #endif
--#if defined(TARGET_PPC)
-+#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
-     host_ip->__seq = tswap32(target_ip->__seq);
- #else
-     host_ip->__seq = tswap16(target_ip->__seq);
-@@ -3786,12 +3787,13 @@ static inline abi_long host_to_target_ipc_perm(abi_ulong target_addr,
-     target_ip->gid = tswap32(host_ip->gid);
-     target_ip->cuid = tswap32(host_ip->cuid);
-     target_ip->cgid = tswap32(host_ip->cgid);
--#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC)
-+#if defined(TARGET_ALPHA) || defined(TARGET_MIPS) || defined(TARGET_PPC) || \
-+    defined(TARGET_XTENSA)
-     target_ip->mode = tswap32(host_ip->mode);
- #else
-     target_ip->mode = tswap16(host_ip->mode);
- #endif
--#if defined(TARGET_PPC)
-+#if defined(TARGET_PPC) || defined(TARGET_XTENSA)
-     target_ip->__seq = tswap32(host_ip->__seq);
- #else
-     target_ip->__seq = tswap16(host_ip->__seq);
-@@ -4111,6 +4113,14 @@ static inline abi_long do_semtimedop(int semid,
- struct target_msqid_ds
- {
-     struct target_ipc_perm msg_perm;
-+#if defined(TARGET_XTENSA) && TARGET_BIG_ENDIAN
-+    abi_ulong __unused1;
-+    abi_ulong msg_stime;
-+    abi_ulong __unused2;
-+    abi_ulong msg_rtime;
-+    abi_ulong __unused3;
-+    abi_ulong msg_ctime;
-+#else
-     abi_ulong msg_stime;
- #if TARGET_ABI_BITS == 32
-     abi_ulong __unused1;
-@@ -4122,6 +4132,7 @@ struct target_msqid_ds
-     abi_ulong msg_ctime;
- #if TARGET_ABI_BITS == 32
-     abi_ulong __unused3;
-+#endif
- #endif
-     abi_ulong __msg_cbytes;
-     abi_ulong msg_qnum;
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index e976141ca4a9..b0dcbe6f1004 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -366,6 +366,7 @@ int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa)
+ 		.length = cpu_to_le32(1),
+ 	};
+ 	trace_cxl_poison(cxlmd, cxlr, &record, 0, 0, CXL_POISON_TRACE_INJECT);
++	cxl_mem_report_poison(cxlmd, cxlr, &record);
+ out:
+ 	up_read(&cxl_dpa_rwsem);
+ 	up_read(&cxl_region_rwsem);
 -- 
-2.39.2
+2.34.1
 
 
