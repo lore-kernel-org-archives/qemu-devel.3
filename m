@@ -4,75 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 997ACCD1288
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 10:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498BCCD1290
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 10:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqVZM-0004YB-Ab; Sat, 30 Mar 2024 06:04:12 -0400
+	id 1rqW1k-0000X3-HP; Sat, 30 Mar 2024 06:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rqVZK-0004Y3-Ft
- for qemu-devel@nongnu.org; Sat, 30 Mar 2024 06:04:10 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rqVZC-0006fu-J6
- for qemu-devel@nongnu.org; Sat, 30 Mar 2024 06:04:10 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-5a4817189c8so1726214eaf.1
- for <qemu-devel@nongnu.org>; Sat, 30 Mar 2024 03:04:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711793039; x=1712397839; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=msN+nS8Xbp08sd4JdDYxTlPnDXzBxxJEGgXLDAmpA0A=;
- b=H9+aMmNazTJT+E6CA1yVmYobaCKINpbzbW6aZKVTFrFkk3FzzLpCRo9dVSx7VUI5ZH
- bg0t8IWkfSpFSSxL9J1FDgKsDQoEhrTgA900HeBUJumU2fp9lt51w7tX3NzRWHT0vMw5
- HSerRl109ARZRtxWuV2Lh7d14B3tZfaDVLeB9mVpa7Va9GCUais0KKxeScUx5C9mXyRm
- /vR3p65cPIE1QUmKLEE5Jor/rmAkQDqtKnDlDsLQyW1qa9pv358v7fFbtKtPE41s+HDp
- Gcw5/Y3U3k0Bqk+J2csG+nQLjtOEnGmIVfD1aOzpg4Do9KJJ1I9E1g6RV8tfzebr+mvB
- cvVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711793039; x=1712397839;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=msN+nS8Xbp08sd4JdDYxTlPnDXzBxxJEGgXLDAmpA0A=;
- b=KUTs6H1E7LyDKGa8B9zsr2hwlTTOxQj4LDfd0ZXfjj+DEXmr9iEPQwWAVI9w450UJO
- 8mDZyHmHLVuysy5UQ9RK7igKG8uxJCEv97JLtAWly+Ns2lY++3nO3NsNyDiOx/jsoyNH
- +BRZOCRrVIuab3V0o4/7K9NX/TOsawpAo18sVvSE59YyTv2BgBFZXI9PnEoPhVBrZFdp
- WFAIjCfXLpOQhig8UTwtniW9uCM7aa+QnntrvREfzT8zXHDiVSpiAT0jsKjfcoUoMsH3
- n1lOOThe8xJduD4CFIIYTktZnYV0GwZgczPxirW6uqYotuxeZ1rxqEKJk+T8nMZLBzMO
- NaRA==
-X-Gm-Message-State: AOJu0YxmfJrurdFAdF9b5AsYG3jxsold5v1xQZ/zWirjVWuQVHKdcRJO
- a01Bd+VPLRQ3Oe7U7nKSNNy1vvFmTn2Xg63Hm10K5hKHf+HWFXQ515kEFAkXYdwA9y4ajOrkbzE
- W9TfcnxENSa40K2hpTGIkNG/ILZE=
-X-Google-Smtp-Source: AGHT+IFvsAZZ41HpHWpFaMzu/FiQJtmIXQV1Y4alAXpx4TO1KlbD6ZsKLV1Bq2t+84nzYBbEUjT5gnH8qxVtvsyMikA=
-X-Received: by 2002:a05:6820:1991:b0:5a5:3b23:8494 with SMTP id
- bp17-20020a056820199100b005a53b238494mr5272549oob.9.1711793039088; Sat, 30
- Mar 2024 03:03:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rqW1R-0000Om-99; Sat, 30 Mar 2024 06:33:14 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rqW1O-0000rz-5A; Sat, 30 Mar 2024 06:33:11 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.214])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4V6D9X75BPz1wp4n;
+ Sat, 30 Mar 2024 18:32:16 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 989691A016C;
+ Sat, 30 Mar 2024 18:33:07 +0800 (CST)
+Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Sat, 30 Mar
+ 2024 18:33:06 +0800
+To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [PATCH v11 21/23] hw/intc/arm_gicv3: Report the VINMI interrupt
+Date: Sat, 30 Mar 2024 10:31:26 +0000
+Message-ID: <20240330103128.3185962-22-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240330103128.3185962-1-ruanjinjie@huawei.com>
+References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-References: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
-In-Reply-To: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Sat, 30 Mar 2024 06:03:46 -0400
-Message-ID: <CAJSP0QVRjSkX-edmHKDxcpc8O0Jh2BifuahE1FAz9ODOv4=AJQ@mail.gmail.com>
-Subject: Re: Backdoor in xz, should we switch compression format for tarballs?
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Michael Roth <michael.roth@amd.com>, 
- "Maydell, Peter" <peter.maydell@linaro.org>, "P. Berrange,
- Daniel" <berrange@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=stefanha@gmail.com; helo=mail-oo1-xc34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.55]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
+ helo=szxga06-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,29 +65,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 Mar 2024 at 14:00, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> For more info, see https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/ but, essentially, xz was backdoored and it seems like upstream was directly responsible for this.
->
-> Based on this, should we switch our distribution from bz2+xz to bz2+zstd or bz2+lzip?
+In vCPU Interface, if the vIRQ has the non-maskable property, report
+vINMI to the corresponding vPE.
 
-I think it's reasonable to drop xz as a precaution due to the
-long-term control the attacker may have had over the code base. I
-haven't researched the alternatives though.
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+v10:
+- Update the commit message, superpriority -> non-maskable.
+v9:
+- Update the commit subject and message, vNMI -> vINMI.
+v6:
+- Add Reviewed-by.
+---
+ hw/intc/arm_gicv3_cpuif.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-I CCed Michael Tokarev because he looked at compression formats for
-distributing QEMU recently and may have thoughts on which alternative
-is suitable.
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index 6a2491b2a6..fb811b856d 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -485,6 +485,7 @@ void gicv3_cpuif_virt_irq_fiq_update(GICv3CPUState *cs)
+     int idx;
+     int irqlevel = 0;
+     int fiqlevel = 0;
++    int nmilevel = 0;
+ 
+     idx = hppvi_index(cs);
+     trace_gicv3_cpuif_virt_update(gicv3_redist_affid(cs), idx,
+@@ -502,9 +503,17 @@ void gicv3_cpuif_virt_irq_fiq_update(GICv3CPUState *cs)
+         uint64_t lr = cs->ich_lr_el2[idx];
+ 
+         if (icv_hppi_can_preempt(cs, lr)) {
+-            /* Virtual interrupts are simple: G0 are always FIQ, and G1 IRQ */
++            /*
++             * Virtual interrupts are simple: G0 are always FIQ, and G1 are
++             * IRQ or NMI which depends on the ICH_LR<n>_EL2.NMI to have
++             * non-maskable property.
++             */
+             if (lr & ICH_LR_EL2_GROUP) {
+-                irqlevel = 1;
++                if (cs->gic->nmi_support && (lr & ICH_LR_EL2_NMI)) {
++                    nmilevel = 1;
++                } else {
++                    irqlevel = 1;
++                }
+             } else {
+                 fiqlevel = 1;
+             }
+@@ -514,6 +523,7 @@ void gicv3_cpuif_virt_irq_fiq_update(GICv3CPUState *cs)
+     trace_gicv3_cpuif_virt_set_irqs(gicv3_redist_affid(cs), fiqlevel, irqlevel);
+     qemu_set_irq(cs->parent_vfiq, fiqlevel);
+     qemu_set_irq(cs->parent_virq, irqlevel);
++    qemu_set_irq(cs->parent_vnmi, nmilevel);
+ }
+ 
+ static void gicv3_cpuif_virt_update(GICv3CPUState *cs)
+-- 
+2.34.1
 
-For the record, I confirmed that the following QEMU servers do not
-have xz-utils 5.6.0 or 5.6.1 packages installed:
-- shell1.qemu.org
-- node1.qemu.org
-- ci1 at OSUOSL
-- qemu2.osuosl.org
-
-Stefan
 
