@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80938CD128E
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 14:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC105CD1288
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 14:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqZOM-0001qA-D5; Sat, 30 Mar 2024 10:09:06 -0400
+	id 1rqZOK-0001pf-8E; Sat, 30 Mar 2024 10:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <981eb1060336ee0e371369088c55f81f5a577ce8@kylie.crudebyte.com>)
- id 1rqZOL-0001pw-9D
- for qemu-devel@nongnu.org; Sat, 30 Mar 2024 10:09:05 -0400
+ (envelope-from <dcae75fba1084823d0fc87caa13f0ba6f32155f3@kylie.crudebyte.com>)
+ id 1rqZOI-0001pW-Qw
+ for qemu-devel@nongnu.org; Sat, 30 Mar 2024 10:09:02 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <981eb1060336ee0e371369088c55f81f5a577ce8@kylie.crudebyte.com>)
- id 1rqZOJ-0000KS-OZ
- for qemu-devel@nongnu.org; Sat, 30 Mar 2024 10:09:05 -0400
+ (envelope-from <dcae75fba1084823d0fc87caa13f0ba6f32155f3@kylie.crudebyte.com>)
+ id 1rqZOH-0000I8-25
+ for qemu-devel@nongnu.org; Sat, 30 Mar 2024 10:09:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=p4yWR2jE1drMam6OIg84j1pNMI843XpHqUbHzG+tZj4=; b=VnOry
- nrYHe8uS9xo4QczFv29vZTdhlhgxOnTtQdcJQTlc0Ck9MGf3g16O0pi9G+v3hYM4C0LOzhXqukK7l
- aKS7XJ89rTGb0P4cuglh00izgpjFLENmWLlZNYJr3uwB+kZe0NVr93fJp5Tvx9JN3Ey1S4+9mTw9p
- I+RTXuHypkFd0CA6Vgxr+mNLS9sup5g98w+JccfP4p0nM+NLTn6JTUU9yUmhsvLT40E4DppyCeqT/
- Qw4ts6KOOHtBqlkGeA8WgsmqftUtA0v/AEyh8fPxQh+/4/dwy4sSWiM9qJcTLn5p0pTPgc8OGQ86c
- ppGAj6XgHuopqJNUnigmpb0mtHAIy1oGChx69F9LablJ09hjRxKAbYU7Rh0kMKmeJQb04qbYKE8i9
- Gs0Lr3LMm/JRfWJlhKLo48zF3yq5EKy5cfOWv4GG+LxmuseHWc2Ug/dyxNsI5Y1nRC4sV6akwcJKY
- s2GMUuImmtBdMtdxQ+F/4PxXGDE9rb+59B2wwXaAkAcPWuVnRs25I971tYJ8cRhiTotkis0clCl0G
- 2Bz39nVNRj+Qz7TL8TLn5Rr0K7VLE9TkKr0HMh7NZ0lZGPhw7U3qehRBoOFzSKT42Y6V+K6AHvAtF
- 9viH+V2sMTov6xX4HK2C4j0BoyMtU8VrtXdSCCOmIt+mAdM3pvnM2jnAr5S4pY=;
-Message-Id: <981eb1060336ee0e371369088c55f81f5a577ce8.1711702001.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=CKxpSnGumg2HQUjOvfXHdXAFz/Bc3upBTPoFzaGQN2o=; b=UzMjv
+ 282AtLVtYGXwZ8hLrbuFEGN/Y2qooLBORSPfDO+7OvPI1pkK5yrioJrL52UWWB9IXBcuksCdGu66B
+ ye9OLMF3dYwZO2ErrBCSJG05qWmjiBcsYBSdTErpc7C8nblMkML5i4qTbhUspTsZVbs6CAsfFtAlA
+ JnEU1O8PZvsOOMf1Oy9shoLN8sktKASwzvBmTtKW6sDJB/ur94RpFmEyLU3Liq70hVeU2iIWBJ2Tp
+ Qo+FPN/DUI1TMZ9B4OAGn0hbsJMTNjIWT8umY/9TX/d658Y5QRMlmLfzLUjcTgX+8hwRsrBawCn4r
+ /FZCNWz2SxidxdMZHDfvZpsRh2NsBLNHLPR68IB7dyXQfFLjMB+Q5kvV+6ZyUX90ZT7iBYQFCG0aK
+ DIEU+mYrr3MxfCuE0IRl+7cj3Tc2oX5AiadCk4YpQ3sBJV5ORl5DEObAJa1iXzO0832LClLQGhKyL
+ zdpQUrhnWKhs2jEFpAAPDP9aegG49f3KynoUXbdTP3q51/Gq4fmwSQcB18/IB/WRBHPHCuuRGGa5w
+ DDIpajuq+kRplGRm9MTpx1gVQ1qAIk467P/InmPp89nuP9K7xSP7QKLb0yQdlGJnFW+NqJ7FYsI7m
+ VrU0iyR/vAtCKnRxAi4dY8UHlZ0a54wHR6r0Grx+ou31a+FnuLgYtPlc4OwiV0=;
+Message-Id: <dcae75fba1084823d0fc87caa13f0ba6f32155f3.1711702001.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1711702001.git.qemu_oss@crudebyte.com>
 References: <cover.1711702001.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sat, 30 Mar 2024 14:33:03 +0100
-Subject: [PULL for-9.0 1/2] qtest/virtio-9p-test.c: create/remove temp dirs
- after each test
+Subject: [PULL for-9.0 2/2] qtest/virtio-9p-test.c: remove g_test_slow() gate
 To: qemu-devel@nongnu.org,
     Peter Maydell <peter.maydell@linaro.org>
 Cc: Greg Kurz <groug@kaod.org>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Thomas Huth <thuth@redhat.com>
 Received-SPF: none client-ip=5.189.157.229;
- envelope-from=981eb1060336ee0e371369088c55f81f5a577ce8@kylie.crudebyte.com;
+ envelope-from=dcae75fba1084823d0fc87caa13f0ba6f32155f3@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -73,95 +72,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The local 9p driver in virtio-9p-test.c its temporary dir right at the
-start of qos-test (via virtio_9p_create_local_test_dir()) and only
-deletes it after qos-test is finished (via
-virtio_9p_remove_local_test_dir()).
+Commit 558f5c42ef gated the local tests with g_test_slow() to skip them
+in 'make check'. The reported issue back then was this following CI
+problem:
 
-This means that any qos-test machine that ends up running virtio-9p-test
-local tests more than once will end up re-using the same temp dir. This
-is what's happening in [1] after we introduced the riscv machine nodes:
-if we enable slow tests with the '-m slow' flag using
-qemu-system-riscv64, this is what happens:
+https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
 
-- a temp dir is created;
+This problem ended up being fixed after it was detected with the
+recently added risc-v machine nodes [1]. virtio-9p-test.c is now
+creating and removing temporary dirs for each test run, instead of
+creating a single dir for the entire qos-test scope.
 
-- virtio-9p-device tests will run virtio-9p-test successfully;
+We're now able to run these tests with 'make check' in the CI, so let's
+go ahead and re-enable them.
 
-- virtio-9p-pci tests will run virtio-9p-test, and fail right at the
-  first slow test at fs_create_dir() because the "01" file was already
-created by fs_create_dir() test when running with the virtio-9p-device.
-
-The root cause is that we're creating a single temporary dir, via the
-construct/destruct callbacks, and this temp dir is kept for the entire
-qos-test run.
-
-We can change each test to clean after themselves. This approach would
-make the 'create' tests obsolete since we would need to create and
-delete dirs/files/symlinks for the cleanup, turning them into the
-'unlinkat' tests that comes right after.
-
-We chose a different approach that handles the root cause: do not use
-constructor/destructor to create the temp dir. Create one temp dir for
-each test, and remove it after the test is complete. This is the
-approach taken for other qtests like vhost-user-test.c where each test
-requires a setup() and a subsequent cleanup(), all of those instantiated
-in the .before callback.
+This reverts commit 558f5c42efded3e0d0b20a90bce2a9a14580d824.
 
 [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
 
-Reported-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-Id: <20240327142011.805728-2-dbarboza@ventanamicro.com>
+Message-Id: <20240327142011.805728-3-dbarboza@ventanamicro.com>
 Reviewed-by: Greg Kurz <groug@kaod.org>
 Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Tested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/virtio-9p-test.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ tests/qtest/virtio-9p-test.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 65e69491e5..0179b3a394 100644
+index 0179b3a394..3c8cd235cf 100644
 --- a/tests/qtest/virtio-9p-test.c
 +++ b/tests/qtest/virtio-9p-test.c
-@@ -693,9 +693,20 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
-     g_assert(stat(real_file, &st_real) == 0);
- }
+@@ -746,15 +746,6 @@ static void register_virtio_9p_test(void)
  
-+static void cleanup_9p_local_driver(void *data)
-+{
-+    /* remove previously created test dir when test is completed */
-+    virtio_9p_remove_local_test_dir();
-+}
-+
- static void *assign_9p_local_driver(GString *cmd_line, void *arg)
- {
-+    /* make sure test dir for the 'local' tests exists */
-+    virtio_9p_create_local_test_dir();
-+
-     virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
-+
-+    g_test_queue_destroy(cleanup_9p_local_driver, NULL);
-     return arg;
- }
  
-@@ -759,15 +770,3 @@ static void register_virtio_9p_test(void)
- }
- 
- libqos_init(register_virtio_9p_test);
+     /* 9pfs test cases using the 'local' filesystem driver */
 -
--static void __attribute__((constructor)) construct_9p_test(void)
--{
--    /* make sure test dir for the 'local' tests exists */
--    virtio_9p_create_local_test_dir();
--}
+-    /*
+-     * XXX: Until we are sure that these tests can run everywhere,
+-     * keep them as "slow" so that they aren't run with "make check".
+-     */
+-    if (!g_test_slow()) {
+-        return;
+-    }
 -
--static void __attribute__((destructor)) destruct_9p_test(void)
--{
--    /* remove previously created test dir when test suite completed */
--    virtio_9p_remove_local_test_dir();
--}
+     opts.before = assign_9p_local_driver;
+     qos_add_test("local/config", "virtio-9p", pci_config,  &opts);
+     qos_add_test("local/create_dir", "virtio-9p", fs_create_dir, &opts);
 -- 
 2.30.2
 
