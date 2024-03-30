@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D70CD128E
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 10:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE68C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 14:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqW1n-0000cP-FQ; Sat, 30 Mar 2024 06:33:35 -0400
+	id 1rqZOO-0001qc-Ss; Sat, 30 Mar 2024 10:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rqW1U-0000PY-B7; Sat, 30 Mar 2024 06:33:18 -0400
-Received: from szxga01-in.huawei.com ([45.249.212.187])
+ (Exim 4.90_1)
+ (envelope-from <dcae75fba1084823d0fc87caa13f0ba6f32155f3@kylie.crudebyte.com>)
+ id 1rqZON-0001qQ-SR
+ for qemu-devel@nongnu.org; Sat, 30 Mar 2024 10:09:07 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rqW1R-0000sW-CA; Sat, 30 Mar 2024 06:33:16 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4V6D7g29LxztQxW;
- Sat, 30 Mar 2024 18:30:39 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 6D24914037D;
- Sat, 30 Mar 2024 18:33:08 +0800 (CST)
-Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Sat, 30 Mar
- 2024 18:33:07 +0800
-To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
- <qemu-arm@nongnu.org>
-CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v11 22/23] target/arm: Add FEAT_NMI to max
-Date: Sat, 30 Mar 2024 10:31:27 +0000
-Message-ID: <20240330103128.3185962-23-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240330103128.3185962-1-ruanjinjie@huawei.com>
-References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.67.174.55]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.187;
- envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <dcae75fba1084823d0fc87caa13f0ba6f32155f3@kylie.crudebyte.com>)
+ id 1rqZOM-0000Ld-Af
+ for qemu-devel@nongnu.org; Sat, 30 Mar 2024 10:09:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-Id:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=WGt1ZNrBrusq3t16iYFw0Y+qYctBiIeHDqDGAlae6KM=; b=fwUlS
+ q65VDWXuQKfJJ6HNso2gzapctiV4W0+V1U86dVKnN6a6xSdeIlNfqMEsDMoCYVsX+X4l6eY4xr/ne
+ jZyhoeWW8fiAdlHq9SGBhB61pnHfpolzrJXYre181t7lMyrfecus93AzKp3XCyTAqf4AE+3w8Dwmu
+ cSuc023oWVz3dx7ZTIXM3aah07PKiEuZ3y+l0Anhj2Zr7dGONVix6DV4dKSS8+iw7N+sqKpZXjKiB
+ 1q6OlKj/czWOBRhVzEGE3cB64OPh6T/AimvH6+2Nv76CK/ilI4MENpazyaSpZFhNGUBUvWO5nThW+
+ Jx2uPJK9eEW6yLP3hMwozT1a/1BWp3B5UYqa+Y2CTo907SLeNEUQR+2ibPXGpl16cNoAzZEOleCUU
+ JFp6mhmKYtOLfcdhfxF/kcwT4RbTwoHmCaN5aFNy+GHgmTD0iFhYfi4PecRoAIMX7G92mqz5MrxYR
+ B4pBI91gARjYp0S9FGEnNn1fGAR8Em7BW0eXKjpGMDZam99ryGFEWnzNTQQg21ToOUujo+ks7mnDr
+ pKK9sBxx2l3g+cmjz4nFcroDB9dQ0JxR75YLI0CBxc58s9Y+QyS6aUgxt5zEZmVoJUJHzzSDnIQWN
+ j37HStMpRvCU5nKw/h3nmYn/yPX5lfcYl0s5X4pmti+DMVM+gnfw7bhjv1GgTM=;
+Message-Id: <cover.1711702001.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Sat, 30 Mar 2024 14:33:03 +0100
+Subject: [PULL for-9.0 0/2] 9p queue 2024-03-29
+To: qemu-devel@nongnu.org,
+    Peter Maydell <peter.maydell@linaro.org>
+Cc: Greg Kurz <groug@kaod.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>
+Received-SPF: none client-ip=5.189.157.229;
+ envelope-from=dcae75fba1084823d0fc87caa13f0ba6f32155f3@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,49 +65,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable FEAT_NMI on the 'max' CPU.
+The following changes since commit 5012e522aca161be5c141596c66e5cc6082538a9:
 
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
-v3:
-- Add Reviewed-by.
-- Sorted to last.
----
- docs/system/arm/emulation.rst | 1 +
- target/arm/tcg/cpu64.c        | 1 +
- 2 files changed, 2 insertions(+)
+  Update version for v9.0.0-rc1 release (2024-03-26 19:46:55 +0000)
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 2a7bbb82dc..a9ae7ede9f 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -64,6 +64,7 @@ the following architecture extensions:
- - FEAT_MTE (Memory Tagging Extension)
- - FEAT_MTE2 (Memory Tagging Extension)
- - FEAT_MTE3 (MTE Asymmetric Fault Handling)
-+- FEAT_NMI (Non-maskable Interrupt)
- - FEAT_NV (Nested Virtualization)
- - FEAT_NV2 (Enhanced nested virtualization support)
- - FEAT_PACIMP (Pointer authentication - IMPLEMENTATION DEFINED algorithm)
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 9f7a9f3d2c..62c4663512 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1175,6 +1175,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64PFR1, RAS_FRAC, 0);  /* FEAT_RASv1p1 + FEAT_DoubleFault */
-     t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
-     t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_2 */
-+    t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
-     cpu->isar.id_aa64pfr1 = t;
- 
-     t = cpu->isar.id_aa64mmfr0;
--- 
-2.34.1
+are available in the Git repository at:
 
+  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20240329
+
+for you to fetch changes up to dcae75fba1084823d0fc87caa13f0ba6f32155f3:
+
+  qtest/virtio-9p-test.c: remove g_test_slow() gate (2024-03-28 09:54:47 +0100)
+
+----------------------------------------------------------------
+Changes for 9p tests only:
+
+* Fix 9p tests for riscv.
+
+* Re-enable 9p 'local' tests for running in CI pipelines.
+
+----------------------------------------------------------------
+Daniel Henrique Barboza (2):
+      qtest/virtio-9p-test.c: create/remove temp dirs after each test
+      qtest/virtio-9p-test.c: remove g_test_slow() gate
+
+ tests/qtest/virtio-9p-test.c | 32 +++++++++++---------------------
+ 1 file changed, 11 insertions(+), 21 deletions(-)
 
