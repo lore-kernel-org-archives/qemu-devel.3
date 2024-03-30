@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4FBECD1288
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 10:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CB0CD128E
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 10:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqW1J-0000Hl-31; Sat, 30 Mar 2024 06:33:05 -0400
+	id 1rqW1K-0000IX-El; Sat, 30 Mar 2024 06:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rqW1F-0000CW-9R; Sat, 30 Mar 2024 06:33:01 -0400
-Received: from szxga07-in.huawei.com ([45.249.212.35])
+ id 1rqW1G-0000E4-LM; Sat, 30 Mar 2024 06:33:02 -0400
+Received: from szxga03-in.huawei.com ([45.249.212.189])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rqW1C-0000jG-9C; Sat, 30 Mar 2024 06:33:00 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4V6D763gJsz1R96V;
- Sat, 30 Mar 2024 18:30:10 +0800 (CST)
+ id 1rqW1D-0000jk-5S; Sat, 30 Mar 2024 06:33:02 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+ by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4V6D7t0t7zzNmlC;
+ Sat, 30 Mar 2024 18:30:50 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 00696140412;
- Sat, 30 Mar 2024 18:32:53 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 4248A14037D;
+ Sat, 30 Mar 2024 18:32:54 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Sat, 30 Mar
- 2024 18:32:51 +0800
+ 2024 18:32:53 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v11 02/23] target/arm: Add PSTATE.ALLINT
-Date: Sat, 30 Mar 2024 10:31:07 +0000
-Message-ID: <20240330103128.3185962-3-ruanjinjie@huawei.com>
+Subject: [PATCH v11 05/23] target/arm: Support MSR access to ALLINT
+Date: Sat, 30 Mar 2024 10:31:10 +0000
+Message-ID: <20240330103128.3185962-6-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240330103128.3185962-1-ruanjinjie@huawei.com>
 References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
@@ -45,14 +45,13 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.35; envelope-from=ruanjinjie@huawei.com;
- helo=szxga07-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.189;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga03-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,42 +69,85 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When PSTATE.ALLINT is set, an IRQ or FIQ interrupt that is targeted to
-ELx, with or without superpriority is masked.
-
-As Richard suggested, place ALLINT bit in PSTATE in env->pstate.
-
-With the change to pstate_read/write, exception entry
-and return are automatically handled.
+Support ALLINT msr access as follow:
+	mrs <xt>, ALLINT	// read allint
+	msr ALLINT, <xt>	// write allint with imm
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
+v9:
+- Move nmi_reginfo and related functions inside an existing ifdef
+  TARGET_AARCH64 to solve the --target-list=aarch64-softmmu,arm-softmmu
+  compilation problem.
+- Check 'isread' when writing to ALLINT.
 v5:
-- Remove the ALLINT comment, as it is covered by "all other bits".
 - Add Reviewed-by.
 v4:
-- Keep PSTATE.ALLINT in env->pstate but not env->allint.
-- Update the commit message.
+- Remove arm_is_el2_enabled() check in allint_check().
+- Change to env->pstate instead of env->allint.
 v3:
-- Remove ALLINT dump in aarch64_cpu_dump_state().
-- Update the commit message.
+- Remove EL0 check in aa64_allint_access() which alreay checks in .access
+  PL1_RW.
+- Use arm_hcrx_el2_eff() in aa64_allint_access() instead of env->cp15.hcrx_el2.
+- Make ALLINT msr access function controlled by aa64_nmi.
 ---
- target/arm/cpu.h | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/helper.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index bc0c84873f..de740d223f 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1430,6 +1430,7 @@ void pmu_init(ARMCPU *cpu);
- #define PSTATE_D (1U << 9)
- #define PSTATE_BTYPE (3U << 10)
- #define PSTATE_SSBS (1U << 12)
-+#define PSTATE_ALLINT (1U << 13)
- #define PSTATE_IL (1U << 20)
- #define PSTATE_SS (1U << 21)
- #define PSTATE_PAN (1U << 22)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 7d6c6e9878..a65729af66 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7497,6 +7497,37 @@ static const ARMCPRegInfo rme_mte_reginfo[] = {
+       .opc0 = 1, .opc1 = 6, .crn = 7, .crm = 14, .opc2 = 5,
+       .access = PL3_W, .type = ARM_CP_NOP },
+ };
++
++static void aa64_allint_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    env->pstate = (env->pstate & ~PSTATE_ALLINT) | (value & PSTATE_ALLINT);
++}
++
++static uint64_t aa64_allint_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    return env->pstate & PSTATE_ALLINT;
++}
++
++static CPAccessResult aa64_allint_access(CPUARMState *env,
++                                         const ARMCPRegInfo *ri, bool isread)
++{
++    if (!isread && arm_current_el(env) == 1 &&
++        (arm_hcrx_el2_eff(env) & HCRX_TALLINT)) {
++        return CP_ACCESS_TRAP_EL2;
++    }
++    return CP_ACCESS_OK;
++}
++
++static const ARMCPRegInfo nmi_reginfo[] = {
++    { .name = "ALLINT", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 0, .opc2 = 0, .crn = 4, .crm = 3,
++      .type = ARM_CP_NO_RAW,
++      .access = PL1_RW, .accessfn = aa64_allint_access,
++      .fieldoffset = offsetof(CPUARMState, pstate),
++      .writefn = aa64_allint_write, .readfn = aa64_allint_read,
++      .resetfn = arm_cp_reset_ignore },
++};
+ #endif /* TARGET_AARCH64 */
+ 
+ static void define_pmu_regs(ARMCPU *cpu)
+@@ -9891,6 +9922,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+     if (cpu_isar_feature(aa64_nv2, cpu)) {
+         define_arm_cp_regs(cpu, nv2_reginfo);
+     }
++
++    if (cpu_isar_feature(aa64_nmi, cpu)) {
++        define_arm_cp_regs(cpu, nmi_reginfo);
++    }
+ #endif
+ 
+     if (cpu_isar_feature(any_predinv, cpu)) {
 -- 
 2.34.1
 
