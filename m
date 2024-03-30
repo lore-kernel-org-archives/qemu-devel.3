@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBFDCD1288
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 10:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3962ECD1288
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 10:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqW1c-0000Rk-UI; Sat, 30 Mar 2024 06:33:24 -0400
+	id 1rqW1N-0000LE-0n; Sat, 30 Mar 2024 06:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rqW1M-0000LD-QC; Sat, 30 Mar 2024 06:33:08 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32])
+ id 1rqW1L-0000JW-BU; Sat, 30 Mar 2024 06:33:07 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rqW1L-0000q1-2V; Sat, 30 Mar 2024 06:33:08 -0400
+ id 1rqW1J-0000ok-Fo; Sat, 30 Mar 2024 06:33:07 -0400
 Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4V6D9T2NJ4z1wp4h;
- Sat, 30 Mar 2024 18:32:13 +0800 (CST)
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4V6D7H71Bvz1h4Zv;
+ Sat, 30 Mar 2024 18:30:19 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 45DD41403D1;
- Sat, 30 Mar 2024 18:33:03 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id E6F491403D1;
+ Sat, 30 Mar 2024 18:33:01 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Sat, 30 Mar
- 2024 18:33:01 +0800
+ 2024 18:33:00 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v11 15/23] hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
-Date: Sat, 30 Mar 2024 10:31:20 +0000
-Message-ID: <20240330103128.3185962-16-ruanjinjie@huawei.com>
+Subject: [PATCH v11 13/23] hw/intc: Enable FEAT_GICv3_NMI Feature
+Date: Sat, 30 Mar 2024 10:31:18 +0000
+Message-ID: <20240330103128.3185962-14-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240330103128.3185962-1-ruanjinjie@huawei.com>
 References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
@@ -45,8 +45,8 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
- helo=szxga06-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.191;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -70,81 +70,79 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GICR_INMIR0 register and support access GICR_INMIR0.
+Added properties to enable FEAT_GICv3_NMI feature, setup distributor
+and redistributor registers to indicate NMI support.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-v11:
-- Add new Reviewed-by.
 v10:
-- gicr_isuperprio -> gicr_inmir0.
-v6:
-- Add Reviewed-by.
+- Adjust to before add irq non-maskable property.
 v4:
-- Make the GICR_INMIR0 implementation more clearer.
+- Add Reviewed-by.
 ---
- hw/intc/arm_gicv3_redist.c | 19 +++++++++++++++++++
- hw/intc/gicv3_internal.h   |  1 +
- 2 files changed, 20 insertions(+)
+ hw/intc/arm_gicv3_common.c         | 1 +
+ hw/intc/arm_gicv3_dist.c           | 2 ++
+ hw/intc/gicv3_internal.h           | 1 +
+ include/hw/intc/arm_gicv3_common.h | 1 +
+ 4 files changed, 5 insertions(+)
 
-diff --git a/hw/intc/arm_gicv3_redist.c b/hw/intc/arm_gicv3_redist.c
-index 8153525849..ed1f9d1e44 100644
---- a/hw/intc/arm_gicv3_redist.c
-+++ b/hw/intc/arm_gicv3_redist.c
-@@ -35,6 +35,15 @@ static int gicr_ns_access(GICv3CPUState *cs, int irq)
-     return extract32(cs->gicr_nsacr, irq * 2, 2);
- }
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index c52f060026..2d2cea6858 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -569,6 +569,7 @@ static Property arm_gicv3_common_properties[] = {
+     DEFINE_PROP_UINT32("num-irq", GICv3State, num_irq, 32),
+     DEFINE_PROP_UINT32("revision", GICv3State, revision, 3),
+     DEFINE_PROP_BOOL("has-lpi", GICv3State, lpi_enable, 0),
++    DEFINE_PROP_BOOL("has-nmi", GICv3State, nmi_support, 0),
+     DEFINE_PROP_BOOL("has-security-extensions", GICv3State, security_extn, 0),
+     /*
+      * Compatibility property: force 8 bits of physical priority, even
+diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
+index 35e850685c..22ddc0d666 100644
+--- a/hw/intc/arm_gicv3_dist.c
++++ b/hw/intc/arm_gicv3_dist.c
+@@ -389,6 +389,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+          *                      by GICD_TYPER.IDbits)
+          * MBIS == 0 (message-based SPIs not supported)
+          * SecurityExtn == 1 if security extns supported
++         * NMI = 1 if Non-maskable interrupt property is supported
+          * CPUNumber == 0 since for us ARE is always 1
+          * ITLinesNumber == (((max SPI IntID + 1) / 32) - 1)
+          */
+@@ -402,6 +403,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+         bool dvis = s->revision >= 4;
  
-+static void gicr_write_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-+                                  uint32_t *reg, uint32_t val)
-+{
-+    /* Helper routine to implement writing to a "set" register */
-+    val &= mask_group(cs, attrs);
-+    *reg = val;
-+    gicv3_redist_update(cs);
-+}
-+
- static void gicr_write_set_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-                                       uint32_t *reg, uint32_t val)
- {
-@@ -406,6 +415,10 @@ static MemTxResult gicr_readl(GICv3CPUState *cs, hwaddr offset,
-         *data = value;
-         return MEMTX_OK;
-     }
-+    case GICR_INMIR0:
-+        *data = cs->gic->nmi_support ?
-+                gicr_read_bitmap_reg(cs, attrs, cs->gicr_inmir0) : 0;
-+        return MEMTX_OK;
-     case GICR_ICFGR0:
-     case GICR_ICFGR1:
-     {
-@@ -555,6 +568,12 @@ static MemTxResult gicr_writel(GICv3CPUState *cs, hwaddr offset,
-         gicv3_redist_update(cs);
-         return MEMTX_OK;
-     }
-+    case GICR_INMIR0:
-+        if (cs->gic->nmi_support) {
-+            gicr_write_bitmap_reg(cs, attrs, &cs->gicr_inmir0, value);
-+        }
-+        return MEMTX_OK;
-+
-     case GICR_ICFGR0:
-         /* Register is all RAZ/WI or RAO/WI bits */
-         return MEMTX_OK;
+         *data = (1 << 25) | (1 << 24) | (dvis << 18) | (sec_extn << 10) |
++            (s->nmi_support << GICD_TYPER_NMI_SHIFT) |
+             (s->lpi_enable << GICD_TYPER_LPIS_SHIFT) |
+             (0xf << 19) | itlinesnumber;
+         return true;
 diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index 8f4ebed2f4..21697ecf39 100644
+index 29d5cdc1b6..8f4ebed2f4 100644
 --- a/hw/intc/gicv3_internal.h
 +++ b/hw/intc/gicv3_internal.h
-@@ -110,6 +110,7 @@
- #define GICR_ICFGR1           (GICR_SGI_OFFSET + 0x0C04)
- #define GICR_IGRPMODR0        (GICR_SGI_OFFSET + 0x0D00)
- #define GICR_NSACR            (GICR_SGI_OFFSET + 0x0E00)
-+#define GICR_INMIR0           (GICR_SGI_OFFSET + 0x0F80)
+@@ -68,6 +68,7 @@
+ #define GICD_CTLR_E1NWF             (1U << 7)
+ #define GICD_CTLR_RWP               (1U << 31)
  
- /* VLPI redistributor registers, offsets from VLPI_base */
- #define GICR_VPROPBASER       (GICR_VLPI_OFFSET + 0x70)
++#define GICD_TYPER_NMI_SHIFT           9
+ #define GICD_TYPER_LPIS_SHIFT          17
+ 
+ /* 16 bits EventId */
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index 7324c7d983..4358c5319c 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -249,6 +249,7 @@ struct GICv3State {
+     uint32_t num_irq;
+     uint32_t revision;
+     bool lpi_enable;
++    bool nmi_support;
+     bool security_extn;
+     bool force_8bit_prio;
+     bool irq_reset_nonsecure;
 -- 
 2.34.1
 
