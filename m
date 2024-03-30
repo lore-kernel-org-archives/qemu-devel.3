@@ -4,155 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C08CD1283
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 01:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB3BDC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 02:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqNue-0007PL-Sk; Fri, 29 Mar 2024 21:53:40 -0400
+	id 1rqOhi-00058s-MV; Fri, 29 Mar 2024 22:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
- id 1rqNud-0007Oq-5z
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 21:53:39 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rqOhf-000584-Gh; Fri, 29 Mar 2024 22:44:19 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
- id 1rqNub-0000gJ-In
- for qemu-devel@nongnu.org; Fri, 29 Mar 2024 21:53:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711763617; x=1743299617;
- h=date:from:to:cc:subject:message-id:references:
- in-reply-to:mime-version;
- bh=wNdbC0mo8TWYh6F3oD6M3nZYNZPs+5ayWBfwX6oreEU=;
- b=ij6BaWFJzBJ0SiVgAcAAOYNhdl0zKlMXizhfndIbyja2SHfdkFiwP7wb
- c+Ao3hly5Zg/OIRQj/k1ErGJ1iXiN+E6/eKacZNvVOnlscK0QGKK6fEwD
- xngFMVfJAygKOtZ83JZmi5hWvAz19WSh7TJVVSsEjBqY+win58/IHIEXT
- YVa5gqd7KOLiDAFJumXpgBlI9+JGBtFc/ioh/2jlMLEzEWav8GaGro2La
- kRaLPlbE/XXXvcofEOqkjkJgpI74ih9+DoYj3+LftKPE8BMntJPYXwADv
- tK2V/o4XCgJ5RvNVs/dfI/CFTUSNVi/CLjMtIoyHuNmTbTKcQM2Ktjupt w==;
-X-CSE-ConnectionGUID: qmWWHcL/QdCRzYgZmO1nIQ==
-X-CSE-MsgGUID: I3OBethMQl2lQYEg/a0LUg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11028"; a="10745669"
-X-IronPort-AV: E=Sophos;i="6.07,166,1708416000"; d="scan'208";a="10745669"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Mar 2024 18:53:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,166,1708416000"; d="scan'208";a="17022821"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 29 Mar 2024 18:53:35 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 29 Mar 2024 18:53:34 -0700
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 29 Mar 2024 18:53:34 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Fri, 29 Mar 2024 18:53:34 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.169)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rqOhb-0000cr-OJ; Fri, 29 Mar 2024 22:44:19 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.163])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4V61kz6ZWTz1xtRn;
+ Sat, 30 Mar 2024 10:42:03 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4064818005F;
+ Sat, 30 Mar 2024 10:44:07 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Fri, 29 Mar 2024 18:53:34 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iUTHzvC59kl1bkOjJCvXK2YBaPUmuPcvMTb1QwfDuI5IsQwYegLPiJrIw2rFNuvYdBWZzQWTeJO8wAEIOXizeVaCpKhEmFQPazx78ilhsik96AnIr7JjedZoKChYw7Ww5dXojGUKpZ6y4uhwglFO9fm9hwqxdeZiyZ29dWnk+MF8P90nTzr7ApiLtLtbFPhbIsZiCMoNk66mj5+mWSZcIH/+dMVvbJii3eli7IQi1lSxi/hVNBVhNXPrs/Rkyf9hiEBfoG+lIoVFsMDsQ5RkDvwxDNjKMwYvWZUWzqqD64DXrHh95iettBtGkdsMnjSyT8Sjtq0ZmGWRMgYAKSGnYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dAg95+08y7UTaxVIrTBe7HPixpPsTjbqnVszORqbazg=;
- b=SniaavQ3fyHupmbR02WaZX5Hd1eTcQfjGs3zrlDuutO7O9DBVzvt5Hopky96svyJGEONksNZqz22cJInzXr64Vo1JtM5nJD/CEA5k8UQld86cpD3xYA30ngY7Kr2Q2dzixRqn8EHBJANSst+iWWwfOxnh2gVTbld8gt8eJ5G5CQqmqivogXhATswp69TM7/A1+kHk3L+9uH1VJMMCMzhBMrQESTMC2ZRYswaHCyUBwdBC/zUYv13wC3pCplKRlvTlJs2FvJBhH0Qq1RO2GeLOq3T2EhMulb7etVrzwdp8e6QzHkz9JlbzLmx+FYGWqKcsVg8jjR37zDsxgaeSmqhnQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
- by MN0PR11MB6109.namprd11.prod.outlook.com (2603:10b6:208:3cf::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.32; Sat, 30 Mar
- 2024 01:53:25 +0000
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::82fd:75df:40d7:ed71]) by PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::82fd:75df:40d7:ed71%4]) with mapi id 15.20.7409.031; Sat, 30 Mar 2024
- 01:53:25 +0000
-Date: Fri, 29 Mar 2024 18:53:22 -0700
-From: Dan Williams <dan.j.williams@intel.com>
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>
-CC: <Jonathan.Cameron@huawei.com>, <dan.j.williams@intel.com>,
- <dave@stgolabs.net>, <ira.weiny@intel.com>
-Subject: Re: [RFC PATCH v2 5/6] cxl: add definition for transaction types
-Message-ID: <6607709266053_19e029471@dwillia2-mobl3.amr.corp.intel.com.notmuch>
-References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
- <20240329063614.362763-6-ruansy.fnst@fujitsu.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240329063614.362763-6-ruansy.fnst@fujitsu.com>
-X-ClientProxiedBy: MW4PR03CA0128.namprd03.prod.outlook.com
- (2603:10b6:303:8c::13) To PH8PR11MB8107.namprd11.prod.outlook.com
- (2603:10b6:510:256::6)
+ 15.1.2507.35; Sat, 30 Mar 2024 10:44:06 +0800
+Message-ID: <8263a597-298d-158e-524a-21ac906363b4@huawei.com>
+Date: Sat, 30 Mar 2024 10:44:05 +0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|MN0PR11MB6109:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 5sfQ4geWE2d4D5+hL3I8wlrC2ScSKcxi+tCaUM1q+ahUJAyUqkZH0UzIXu9yZ4sRAf7sxVnt8k90EYWk8O5J55YIDi8ddLpCjQwnT4Ma2xKPanrJmvJgbPGImFp/1SkFodFX9qMjoheyXouc3bDNAKJbCa0A4cC7WWOP/m0jQSE4NWyCzOcyvbh1ACuPZjLsTuzuig6os4xlepkOaKAdLcGoYLz8Py9zhDfyMyuLDMnWnewSbGLlemhspeKV3opU00P5BN9vKV1sAGST4R3RfOpmv9xJ2BrNOGnaFydYcwAf/7niWoiMGoi8V8HkGGRsfsPHGMGWbzQOO90MQx3rIdj9bTQ3BiLWrvCn/syttNArZyjC8dHDh0UkkL553OkkykWegrnzDiJoe5pDAboT82K9TujeERr8cxNJpr0zev6En7wan6YmV7v5iEOqCYoywf0fl8B3gQZehB4i9xHz9zWvvI+2drtkeZy4yOhRcYKJIeTpgfOGZSCL0lXbUvhaQVt4j1FGihvJYPyfAR/ZDm/pWyY4iBwEu/FhYFO9xW3GuMCq8PRkN+HuxNuaxdacgIduuYnCVCiC23e4lWMnenTIjBZ+77S9HS0R5QjBOjxcabIb0KZLBIS9gJzzh3jv5jLIVE2hUZOkx6UZORVUc5YcfqNfGaA8mJR6xvk6etU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH8PR11MB8107.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(366007); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?MqS6qpLyhDGKXOuYEWIvHmWxhM2gibvO+o9HHoAlGawIy1rFnowhf3/4K5kH?=
- =?us-ascii?Q?vXuG3tzvSG8A3trT8jLchv1bvQbIqRXuF5gWD634tdgiGrIdoysQxahAn8WL?=
- =?us-ascii?Q?UMa7DNoGRexYZMf6Q+Tr/Sv9A/6f7ZlYxyFh3dTzesMv2gcEl1Bqkuu47ddx?=
- =?us-ascii?Q?LqA3rb4ppV35JNrcOpoM8UUVX6MhQM9GyKAdIq1xsmUv4rqgy2VrzckC+6Fv?=
- =?us-ascii?Q?z14BxJW8ExgCvTR5qYrnk1GXF0lYj8EQFlGL86MTBeL1GCjGMDuqqrOWI+6e?=
- =?us-ascii?Q?FwTamb1LkqxrkV7LxPct3JHqicmzYdl4d7L3ixSEfFVlta38hRxWYoXYEWFf?=
- =?us-ascii?Q?XbwfMiZxsUtwNGZkh5Y/zJzWKgp+x1x82g9P5TkfKSh7NVTLOgxj4TNpKrah?=
- =?us-ascii?Q?YJpAa2j1Z16pmRORUFsGk/8hFqHEmRKkW/07XxXeKlm/O0L+FRXYnFrQOCRO?=
- =?us-ascii?Q?0XsnFeoXN7cN9YHJGLkdso6148hKNPBKoUBEXw7NV3vzm9pbceegVPsyH2Ao?=
- =?us-ascii?Q?Xdr5b1QBjf1zlF5tVw0MmY8vLztxPLxQ9204c2PPdfzQt9MtJLZdhL+aP6NN?=
- =?us-ascii?Q?llJ58I6vcUJJ0qzlkbNM2pK5vFDaQ1YmEiShGj+6my704BzYVEKfu+Sidcy1?=
- =?us-ascii?Q?DRAi4u4qmHiiunmbrT33B+FJXy9Wh4ODWJFx5E7M5Q7joLQxkcVjooOYOWm7?=
- =?us-ascii?Q?YeX+BmlqeSy4vnbwHvCdfbxZpcOIhYzavURENv818WDLwyD/dNX/XCZsq7lm?=
- =?us-ascii?Q?Y0wKlpnuq9A9sd2i/L87u0/1+DVGKXSe3Hp4boRYzMaISlxjJgOAs5mTWEnk?=
- =?us-ascii?Q?hUFwkFlYthjSHfZSoHmlPN8nuFMl2mUypNOBPwetd/yEU8nHyxc1pWLKw6oF?=
- =?us-ascii?Q?PJkrddX/QLkNfjoid+qFTfzECstgkzd6yPMsSBFnGQl55civAuaie1qz5Rkz?=
- =?us-ascii?Q?jb4XjOhGBd355FU8soMP/MYm4IB2YmJbINKksCCOGXGY783oIgdoD0wmpDmc?=
- =?us-ascii?Q?ngWZYkISiucmuj8Fr7XWHqEeoZE8AWcDcUPkxHU9gq3pfbVA1XTxT40T/lpo?=
- =?us-ascii?Q?4Pu+jOIM9bZCs+O2fwtq9EByRaiTm4gSLgb41E08G4sBg8r2Vh3ERhIGyO90?=
- =?us-ascii?Q?+H+wQMY3BCxw0Fn0liE/yIhIATUC6fS+GH31MED9rMnHzBO6QHK2gF+5TAmz?=
- =?us-ascii?Q?K2okzTbOKgPwAbiIO1OE5G6Lw6CBCl9CyQ2262mRr+PzC/viNrwn9QholVds?=
- =?us-ascii?Q?kJlSxhcNMcYq/TmbuaD4I7xi1EPC74l4F1SYRp4Mv98XpjBcwZAUaihwcbzd?=
- =?us-ascii?Q?T/rX83H0L8uqKtxJ6iFn/gy85R5xFKYKdF9a1D1NKccqyT0gmjerYRuNpf9t?=
- =?us-ascii?Q?ins1TK+2ZEHO7rT9bc4BGQTQjqmVBUGZt2FIfJOh6keSpsiiIoIBB44+ePfs?=
- =?us-ascii?Q?y1lPgoic3G73ViE+m1Kzz9SV0R2KuA49nznyfqO9KwsxS8ORnYtQCXwEvz/V?=
- =?us-ascii?Q?czN+NNnw7+1D/n0yqiz7Kncx8O8uc6tZgP6ExX1BRR21L5FVEVqHmNI4V0Tw?=
- =?us-ascii?Q?ZCEOPoSRyNgEoO0fswrF4VfSUjgE9G/lQkWLa9gsgnoUoBNeB64RYVXZsE3n?=
- =?us-ascii?Q?Nw=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7254f7d9-5223-43a1-1a73-08dc505c2fe1
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2024 01:53:25.1227 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: l/opD6q2xhaEZHI3hbJmEwVmYnXYgJld3wsEygG4pGkJzFYIECTSpKWoyvT+HbjaDOKqasJes9AC5y3KJjYZvnqwO1wpH4P17rUWzm1XKo0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB6109
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.12;
- envelope-from=dan.j.williams@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v10 17/23] hw/intc/arm_gicv3: Add NMI handling CPU
+ interface registers
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <eduardo@habkost.net>, <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, 
+ <wangyanan55@huawei.com>, <richard.henderson@linaro.org>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+References: <20240325084854.3010562-1-ruanjinjie@huawei.com>
+ <20240325084854.3010562-18-ruanjinjie@huawei.com>
+ <CAFEAcA_p6i5KNcQW3NLZY=kwUXuUPXM+8ncC8T-gPNVUWJ6CHA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_p6i5KNcQW3NLZY=kwUXuUPXM+8ncC8T-gPNVUWJ6CHA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.109.254]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+X-Spam_score_int: -70
+X-Spam_score: -7.1
+X-Spam_bar: -------
+X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.913,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,14 +69,427 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shiyang Ruan wrote:
-> The transaction types are defined in General Media Event Record/DRAM Event
-> per CXL rev 3.0 Section 8.2.9.2.1.1; Table 8-43 and
-> Section 8.2.9.2.1.2; Table 8-44.  Add them for Event Record handler use.
 
-Combine this patch with the one that uses them so that the use case can
-be reviewed together with the implementation.
+
+On 2024/3/28 22:50, Peter Maydell wrote:
+> On Mon, 25 Mar 2024 at 08:53, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>
+>> Add the NMIAR CPU interface registers which deal with acknowledging NMI.
+>>
+>> When introduce NMI interrupt, there are some updates to the semantics for the
+>> register ICC_IAR1_EL1 and ICC_HPPIR1_EL1. For ICC_IAR1_EL1 register, it
+>> should return 1022 if the intid has non-maskable property. And for
+>> ICC_NMIAR1_EL1 register, it should return 1023 if the intid do not have
+>> non-maskable property. Howerever, these are not necessary for ICC_HPPIR1_EL1
+>> register.
+>>
+>> And the APR and RPR has NMI bits which should be handled correctly.
+>>
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>> v10:
+>> - is_nmi -> nmi.
+>> - is_hppi -> hppi.
+>> - Exchange the order of nmi and hppi parameters.
+>> - superprio -> nmi.
+>> - Handle APR and RPR NMI bits.
+>> - Update the commit message, super priority -> non-maskable property.
+>> v7:
+>> - Add Reviewed-by.
+>> v4:
+>> - Define ICC_NMIAR1_EL1 only if FEAT_GICv3_NMI is implemented.
+>> - Check sctrl_elx.SCTLR_NMI to return 1022 for icc_iar1_read().
+>> - Add gicv3_icc_nmiar1_read() trace event.
+>> - Do not check icc_hppi_can_preempt() for icc_nmiar1_read().
+>> - Add icv_nmiar1_read() and call it when EL2Enabled() and HCR_EL2.IMO == '1'
+>> ---
+>>  hw/intc/arm_gicv3_cpuif.c | 115 ++++++++++++++++++++++++++++++++++----
+>>  hw/intc/gicv3_internal.h  |   5 ++
+>>  hw/intc/trace-events      |   1 +
+>>  3 files changed, 110 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+>> index e1a60d8c15..76e2286e70 100644
+>> --- a/hw/intc/arm_gicv3_cpuif.c
+>> +++ b/hw/intc/arm_gicv3_cpuif.c
+>> @@ -795,6 +795,13 @@ static uint64_t icv_iar_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>>      return intid;
+>>  }
+>>
+>> +static uint64_t icv_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>> +{
+>> +    /* todo */
+>> +    uint64_t intid = INTID_SPURIOUS;
+>> +    return intid;
+>> +}
+>> +
+>>  static uint32_t icc_fullprio_mask(GICv3CPUState *cs)
+>>  {
+>>      /*
+>> @@ -825,11 +832,15 @@ static inline int icc_num_aprs(GICv3CPUState *cs)
+>>      return aprmax;
+>>  }
+>>
+>> -static int icc_highest_active_prio(GICv3CPUState *cs)
+>> +static uint64_t icc_highest_active_prio(GICv3CPUState *cs)
+>>  {
+>>      /* Calculate the current running priority based on the set bits
+>>       * in the Active Priority Registers.
+>>       */
+>> +    ARMCPU *cpu = ARM_CPU(cs->cpu);
+>> +    CPUARMState *env = &cpu->env;
+>> +
+>> +    uint64_t prio;
+>>      int i;
+>>
+>>      for (i = 0; i < icc_num_aprs(cs); i++) {
+>> @@ -839,7 +850,32 @@ static int icc_highest_active_prio(GICv3CPUState *cs)
+>>          if (!apr) {
+>>              continue;
+>>          }
+>> -        return (i * 32 + ctz32(apr)) << (icc_min_bpr(cs) + 1);
+>> +        prio = (i * 32 + ctz32(apr)) << (icc_min_bpr(cs) + 1);
+>> +
+>> +        if (cs->gic->nmi_support) {
+>> +            if (cs->gic->gicd_ctlr & GICD_CTLR_DS) {
+>> +                if ((cs->icc_apr[GICV3_G0][i] & ICC_AP1R_EL1_NMI) ||
+>> +                    (cs->icc_apr[GICV3_G1][i] & ICC_AP1R_EL1_NMI) ||
+>> +                    (cs->icc_apr[GICV3_G1NS][i] & ICC_AP1R_EL1_NMI)) {
+>> +                    prio |= ICC_RPR_EL1_NMI;
+>> +                }
+>> +            } else if (!arm_is_secure(env)) {
+>> +                if (cs->icc_apr[GICV3_G1NS][i] & ICC_AP1R_EL1_NMI) {
+>> +                    prio |= ICC_RPR_EL1_NMI;
+>> +                }
+>> +            } else {
+>> +                if (cs->icc_apr[GICV3_G1][i] & ICC_AP1R_EL1_NMI) {
+>> +                    prio |= ICC_RPR_EL1_NMI;
+>> +                }
+>> +            }
+>> +
+>> +            if (arm_feature(env, ARM_FEATURE_EL3) &&
+>> +                cs->icc_apr[GICV3_G1NS][i] & ICC_AP1R_EL1_NMI) {
+>> +                prio |= ICC_RPR_EL1_NSNMI;
+>> +            }
+>> +        }
+>> +
+>> +        return prio;
+> 
+> This function is used both for getting the ICC_RPR value,
+> and also in icc_hppi_can_preempt(). So we can't put the
+> special RPR NMI bits in here. Also doing that will not work well
+> with the way the code in icc_rpr_read() adjusts the priority
+> for non-secure accesses. I think we should follow the structure
+> of the pseudocode here, and do the setting of the RPR bits 62 and 63
+> in icc_rpr_read(). (In the pseudocode this is ICC_RPR_EL1 calling
+> GetHighestActivePriority() and then doing the NMI bits locally.)
+> 
+> The NMI bit also exists only in the AP1R0 bit, not in every AP
+> register. So you can check it before the for() loop, something like this:
+> 
+>     if (cs->gic->nmi_support) {
+>         /*
+>          * If an NMI is active this takes precedence over anything else
+>          * for priority purposes; the NMI bit is only in the AP1R0 bit.
+>          * We return here the effective priority of the NMI, which is
+>          * either 0x0 or 0x80. Callers will need to check NMI again for
+>          * purposes of either setting the RPR register bits or for
+>          * prioritization of NMI vs non-NMI.
+>          */
+>         prio = 0;
+>         if (cs->icc_apr[GICV3_G1][0] & ICC_AP1R_EL1_NMI) {
+>             return 0;
+>         }
+>         if (cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI) {
+>             return (cs->gic->gicd_ctlr & GICD_CTLR_DS) ? 0 : 0x80;
+>         }
+>     }
+> 
+> Then in icc_rpr_read() we can pretty much directly write the same
+> logic that the pseudocode uses to determine whether to set the RPR
+> NMI bits, after the point where we do the shifting of the prio for
+> the NS view:
+> 
+>     if (cs->gic->nmi_support) {
+>         /* NMI info is reported in the high bits of RPR */
+>         if (arm_feature(env, ARM_FEATURE_EL3) && !arm_is_secure(env)) {
+>             if (cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI) {
+>                 prio |= ICC_RPR_EL1_NMI;
+
+It seems ICC_RPR_EL1_NSNMI in pseudocode:
+
+// GICv3.3
+if HaveNMIExt() then
+    if HaveEL(EL3) && (IsNonSecure() || IsRealm()) then
+        pPriority<63> = ICC_AP1R_EL1NS<63>;
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+else
+    pPriority<63> = ICC_AP1R_EL1S<63>;
+    pPriority<62> = ICC_AP1R_EL1NS<63>;
+
+>             }
+>         } else {
+>             if (cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI) {
+>                 prio |= ICC_RPR_EL1_NSNMI;
+>             }
+>             if (cs->icc_apr[GICV3_G1][0] & ICC_AP1R_EL1_NMI) {
+>                 prio |= ICC_RPR_EL1_NMI;
+>             }
+>         }
+>     }
+> 
+>>      }
+>>      /* No current active interrupts: return idle priority */
+>>      return 0xff;
+>> @@ -896,7 +932,7 @@ static bool icc_hppi_can_preempt(GICv3CPUState *cs)
+>>      /* Return true if we have a pending interrupt of sufficient
+>>       * priority to preempt.
+>>       */
+>> -    int rprio;
+>> +    uint64_t rprio;
+> 
+> You won't need to change the type of this variable with the change above.
+> 
+>>      uint32_t mask;
+>>
+>>      if (icc_no_enabled_hppi(cs)) {
+> 
+> icc_hppi_can_preempt() needs more changes than this (check the
+> pseudocode in CanSignalInterrupt(), and the text in 4.8, particularly
+> 4.8.6):
+> 
+>  * the (cs->hppi.prio >= cs->icc_pmr_el1) check only applies
+>    if !cs->hppi.nmi
+>  * if this is an NMI and GICD_CTLR.DS is 0 and it's a G1NS
+>    interrupt, then we mask if the PMR is < 0x80, or if
+>    we're in Secure state and the PMR == 0x80
+>  * if this is an NMI and the (masked) hppi.prio is equal to the
+>    (masked) running priority, then we preempt if there's not
+>    already an active NMI, ie if the APR NMI bit is clear
+> 
+>> @@ -1034,7 +1070,7 @@ static void icc_pmr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>>      gicv3_cpuif_update(cs);
+>>  }
+>>
+>> -static void icc_activate_irq(GICv3CPUState *cs, int irq)
+>> +static void icc_activate_irq(GICv3CPUState *cs, int irq, bool nmi)
+>>  {
+> 
+> When activating an interrupt, we set the NMI bit in the
+> priority register based only on the interrupt's config,
+> not on what register was used to activate it. So we don't
+> want a 'bool nmi' argument, we want a local:
+>    bool nmi = cs->hppi.nmi;
+> 
+> (Compare the pseudocode in the spec: ICC_IAR0_EL1, ICC_IAR1_EL1,
+> and ICC_NMIAR1_EL1 all call AcknowledgeInterrupt(pendID)
+> to activate it.)
+> 
+>>      /* Move the interrupt from the Pending state to Active, and update
+>>       * the Active Priority Registers
+>> @@ -1047,6 +1083,10 @@ static void icc_activate_irq(GICv3CPUState *cs, int irq)
+>>
+>>      cs->icc_apr[cs->hppi.grp][regno] |= (1 << regbit);
+>>
+>> +    if (cs->gic->nmi_support) {
+>> +        cs->icc_apr[cs->hppi.grp][regno] |= (nmi ? ICC_AP1R_EL1_NMI : 0);
+>> +    }
+> 
+> In the APRs, we set only the NMI bit for an NMI and the ordinary priority
+> bit for a non-NMI; so this should be
+> 
+>      if (cs->gic->nmi_support && nmi) {
+>          cs->icc_apr[cs->hppi.grp][regno] |= ICC_AP1R_EL1_NMI;
+>      } else {
+>          cs->icc_apr[cs->hppi.grp][regno] |= (1 << regbit);
+>      }
+> 
+> (Otherwise if we had a non-NMI that was interrupted by an NMI
+> at the same priority we wouldn't be able to distinguish this
+> from the NMI interrupting when nothing else was active.)
+> 
+>> +
+>>      if (irq < GIC_INTERNAL) {
+>>          cs->gicr_iactiver0 = deposit32(cs->gicr_iactiver0, irq, 1, 1);
+>>          cs->gicr_ipendr0 = deposit32(cs->gicr_ipendr0, irq, 1, 0);
+>> @@ -1097,7 +1137,8 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
+>>      return cs->hppi.irq;
+>>  }
+>>
+>> -static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+>> +static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env, bool hppi,
+>> +                                 bool nmi)
+>>  {
+>>      /* Return the highest priority pending interrupt register value
+>>       * for group 1.
+>> @@ -1108,6 +1149,18 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+>>          return INTID_SPURIOUS;
+>>      }
+>>
+>> +    if (!hppi) {
+>> +        int el = arm_current_el(env);
+>> +
+>> +        if (nmi && (!cs->hppi.nmi)) {
+>> +            return INTID_SPURIOUS;
+>> +        }
+>> +
+>> +        if (!nmi && cs->hppi.nmi && env->cp15.sctlr_el[el] & SCTLR_NMI) {
+>> +            return INTID_NMI;
+>> +        }
+>> +    }
+>> +
+> 
+> Rather than passing two extra boolean arguments into this
+> function, I think it's better to follow the pseudocode's
+> structure, and have the "should we instead return a
+> special INTID_*" checks be done in the callers of this function.
+> They all end up different so they don't really share code
+> by pushing the checks into this function.
+> 
+>>      /* Check whether we can return the interrupt or if we should return
+>>       * a special identifier, as per the CheckGroup1ForSpecialIdentifiers
+>>       * pseudocode. (We can simplify a little because for us ICC_SRE_EL1.RM
+>> @@ -1149,7 +1202,7 @@ static uint64_t icc_iar0_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>>      }
+>>
+>>      if (!gicv3_intid_is_special(intid)) {
+>> -        icc_activate_irq(cs, intid);
+>> +        icc_activate_irq(cs, intid, false);
+>>      }
+>>
+>>      trace_gicv3_icc_iar0_read(gicv3_redist_affid(cs), intid);
+>> @@ -1168,17 +1221,36 @@ static uint64_t icc_iar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>>      if (!icc_hppi_can_preempt(cs)) {
+>>          intid = INTID_SPURIOUS;
+>>      } else {
+>> -        intid = icc_hppir1_value(cs, env);
+>> +        intid = icc_hppir1_value(cs, env, false, false);
+>>      }
+>>
+>>      if (!gicv3_intid_is_special(intid)) {
+>> -        icc_activate_irq(cs, intid);
+>> +        icc_activate_irq(cs, intid, false);
+>>      }
+>>
+>>      trace_gicv3_icc_iar1_read(gicv3_redist_affid(cs), intid);
+>>      return intid;
+>>  }
+>>
+>> +static uint64_t icc_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>> +{
+>> +    GICv3CPUState *cs = icc_cs_from_env(env);
+>> +    uint64_t intid;
+>> +
+>> +    if (icv_access(env, HCR_IMO)) {
+>> +        return icv_nmiar1_read(env, ri);
+>> +    }
+>> +
+>> +    intid = icc_hppir1_value(cs, env, false, true);
+>> +
+>> +    if (!gicv3_intid_is_special(intid)) {
+>> +        icc_activate_irq(cs, intid, true);
+>> +    }
+>> +
+>> +    trace_gicv3_icc_nmiar1_read(gicv3_redist_affid(cs), intid);
+>> +    return intid;
+>> +}
+>> +
+>>  static void icc_drop_prio(GICv3CPUState *cs, int grp)
+>>  {
+>>      /* Drop the priority of the currently active interrupt in
+>> @@ -1207,6 +1279,10 @@ static void icc_drop_prio(GICv3CPUState *cs, int grp)
+>>          }
+>>          /* Clear the lowest set bit */
+>>          *papr &= *papr - 1;
+>> +
+>> +        if (cs->gic->nmi_support && (*papr & ICC_AP1R_EL1_NMI)) {
+>> +            *papr &= (~ICC_AP1R_EL1_NMI);
+>> +        }
+> 
+> The NMI bit is only in the AP1R0 register, and if it is set then
+> we should clear only it and not any other AP bits. At the moment
+> this code clears the lowest set bit and also the NMI bit.
+> 
+>>          break;
+>>      }
+>>
+>> @@ -1555,7 +1631,7 @@ static uint64_t icc_hppir1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>>          return icv_hppir_read(env, ri);
+>>      }
+>>
+>> -    value = icc_hppir1_value(cs, env);
+>> +    value = icc_hppir1_value(cs, env, true, false);
+>>      trace_gicv3_icc_hppir1_read(gicv3_redist_affid(cs), value);
+>>      return value;
+>>  }
+>> @@ -1693,7 +1769,11 @@ static void icc_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>>          return;
+>>      }
+>>
+>> -    cs->icc_apr[grp][regno] = value & 0xFFFFFFFFU;
+>> +    if (cs->gic->nmi_support) {
+>> +        cs->icc_apr[grp][regno] = value & (0xFFFFFFFFU | ICC_AP1R_EL1_NMI);
+>> +    } else {
+>> +        cs->icc_apr[grp][regno] = value & 0xFFFFFFFFU;
+>> +    }
+>>      gicv3_cpuif_update(cs);
+>>  }
+>>
+>> @@ -1783,7 +1863,7 @@ static void icc_dir_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>>  static uint64_t icc_rpr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>>  {
+>>      GICv3CPUState *cs = icc_cs_from_env(env);
+>> -    int prio;
+>> +    uint64_t prio;
+>>
+>>      if (icv_access(env, HCR_FMO | HCR_IMO)) {
+>>          return icv_rpr_read(env, ri);
+>> @@ -2482,6 +2562,15 @@ static const ARMCPRegInfo gicv3_cpuif_icc_apxr23_reginfo[] = {
+>>      },
+>>  };
+>>
+>> +static const ARMCPRegInfo gicv3_cpuif_gicv3_nmi_reginfo[] = {
+>> +    { .name = "ICC_NMIAR1_EL1", .state = ARM_CP_STATE_BOTH,
+>> +      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 9, .opc2 = 5,
+>> +      .type = ARM_CP_IO | ARM_CP_NO_RAW,
+>> +      .access = PL1_R, .accessfn = gicv3_irq_access,
+>> +      .readfn = icc_nmiar1_read,
+>> +    },
+>> +};
+>> +
+>>  static uint64_t ich_ap_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>>  {
+>>      GICv3CPUState *cs = icc_cs_from_env(env);
+>> @@ -2838,6 +2927,10 @@ void gicv3_init_cpuif(GICv3State *s)
+>>           */
+>>          define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
+>>
+>> +        if (s->nmi_support) {
+>> +            define_arm_cp_regs(cpu, gicv3_cpuif_gicv3_nmi_reginfo);
+>> +        }
+>> +
+>>          /*
+>>           * The CPU implementation specifies the number of supported
+>>           * bits of physical priority. For backwards compatibility
+> 
+> icc_highest_active_group() also needs to be changed, because
+> if the NMI bit is set in an AP register that is what defines
+> the group of the highest priority active interrupt. Something
+> like this at the top of icc_highest_active_group() should do:
+> 
+> +    if (cs->icc_apr[GICV3_G1][0] & ICC_AP1R_EL1_NMI) {
+> +        return GICV3_G1;
+> +    }
+> +    if (cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI) {
+> +        return GICV3_G1NS;
+> +    }
+> 
+> thanks
+> -- PMM
 
