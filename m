@@ -4,81 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB7CCD1283
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 Mar 2024 22:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2803C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 01:39:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqKqR-0006LS-Oo; Fri, 29 Mar 2024 18:37:07 -0400
+	id 1rqNgV-0003DK-CM; Fri, 29 Mar 2024 21:39:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rqKqP-0006Kz-Ra; Fri, 29 Mar 2024 18:37:06 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1rqKqN-0004Oh-E5; Fri, 29 Mar 2024 18:37:05 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2a02c4dffd2so1969780a91.0; 
- Fri, 29 Mar 2024 15:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711751821; x=1712356621; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mj9v31gRDGM+nfN2TBCBiuzOlHFMKfoWTFJDJrU9N+w=;
- b=dGvJZogD2+H4rmBhUkTrye75zjFuTiNuqxzS0pvkEkTGAWoQU3bKXp728ojfrP/Ty5
- XtsISUGs1ahuuRdfvjf1OJjuDS850LJsOYwy7+UGS1cnLWJRCz2CEO8n+Jdd9dQxPVLD
- kWPUNfbVLV8OZTeeNNcGL28gZg41CW03iezvUcqkQIqm+cP44aPtQ6QxymCgHabTtOwF
- enV+UbqwpSWW7pT4rPEvbGpKiL3y53bXBtujukTNiOC9MeZJnv3CiQ0GKxx+lbJ8G0/I
- xl7C1fULZ4RwUoKaDjsU+lhEuJYYp5o52QeY/NZyooUhxKH4YLgEFhAU5Yc2S36Htpat
- 9TRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711751821; x=1712356621;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mj9v31gRDGM+nfN2TBCBiuzOlHFMKfoWTFJDJrU9N+w=;
- b=sggKJsNKz2UptRGvZw4RT7uS6/v+rdJ6jVp3/lM50SqhO6upd3Fr/1YGE+4jTOXg/m
- FqdIfmLB1p+MzdlLF9rnC5EtNC7hLp1cLcQcyAcALBr9aiXi1GOCib5LQFeDzQJq+xSs
- zFAg6Aoo9VKPhHcXehTIpXgtONSZUTRqShWvMTnPoMNguQLpO8qpspgtVyKP/PAxEcBZ
- EwVKJbqvY7Qbs+JczE89s7YkEvN/rBl60ReDYkXFBJEWcfdNymDs2eXmPEhBoxJIFnKE
- YdtZ0jzfl7KFyQIBk4IUk1Po/0BnxaG6EqgWIZv7+TJVgGNcTsawNRzJTRgQVj2e6VjX
- a7KQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrhybCn0/ZzDcL6q5yiWmxC3oTnjsMBCnFYfVCCtX3deSBziaEblvo+AvrtsMaOT9mEDy0bJabvA+w1Y4Q5KFX+9hpPxn+
-X-Gm-Message-State: AOJu0YwC7Z4gu2EiyDY2YLZy1ZY7znrSSaRsx0ArUcMFbbQg6IEzc6Eu
- JoW/4F1pdE4FwO+imhhuZEkubTnrnbTSG2dR3h8XwrAlQhYZ/RV/jVKa9f8o
-X-Google-Smtp-Source: AGHT+IFqPbf8j/I3DaldjiYDBFIhSv1bQ/SPb+Uo65E7vfEyh3NkCpO6GroNr/r7zEFCnk1i5l9uag==
-X-Received: by 2002:a17:90b:3842:b0:2a2:c16:d673 with SMTP id
- nl2-20020a17090b384200b002a20c16d673mr3483934pjb.36.1711751821095; 
- Fri, 29 Mar 2024 15:37:01 -0700 (PDT)
-Received: from octofox.hsd1.ca.comcast.net
- ([2601:646:a200:bbd0:2399:5e4a:95e8:172f])
- by smtp.gmail.com with ESMTPSA id
- c1-20020a17090a490100b002a04eef22c5sm3719439pjh.44.2024.03.29.15.37.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Mar 2024 15:37:00 -0700 (PDT)
-From: Max Filippov <jcmvbkbc@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2] linux-user/syscall: fix target_msqid_ds time fields order
-Date: Fri, 29 Mar 2024 15:36:53 -0700
-Message-Id: <20240329223653.155786-1-jcmvbkbc@gmail.com>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
+ id 1rqNgU-0003D3-0n
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 21:39:02 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
+ id 1rqNgR-0006U1-Q8
+ for qemu-devel@nongnu.org; Fri, 29 Mar 2024 21:39:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711762739; x=1743298739;
+ h=date:from:to:cc:subject:message-id:references:
+ in-reply-to:mime-version;
+ bh=MhvGiLtElwa7iSBNAzIydd4lHaEARYjcYHo2PkpZAkI=;
+ b=WbFpIIkVvouxBTwAyhbO8ioqfi/jXIyxEM3zBZbeRNjQ7Jw7MTu2M/bG
+ mpTU6DfgG4QSZH1JmddLkIffLNFi9FfKHecQijV7dPhyAOVos1Kmroy5S
+ LVJBt61pul19YIlB4zr/YI/893fhEvBX7bDrrGlQIil4LHWmHFgNo/8rW
+ V0ewrC5B+BV+kb6EKLYyNQ+9V6x1khQsIVslZ1lyuRg8iwI4ymnb1HOzg
+ OjDweblvabpYR7DGCTnPEJNDhcl4kaarYCLbwJij/fwrcwVTOO0uRr08/
+ oYWL67nNkv1o7yB5VpKBTLyRt06qmsCBXxQmT4H4SHVEipJm6Fh2uU6YI w==;
+X-CSE-ConnectionGUID: V1dg/m7MRmOCJSKd0xh+rA==
+X-CSE-MsgGUID: l0Wv8cQtSG6/QRtmuaS5Fw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11028"; a="24418646"
+X-IronPort-AV: E=Sophos;i="6.07,166,1708416000"; d="scan'208";a="24418646"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Mar 2024 18:38:56 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,166,1708416000"; d="scan'208";a="17191918"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by fmviesa009.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 29 Mar 2024 18:37:49 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Fri, 29 Mar 2024 18:37:48 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Fri, 29 Mar 2024 18:37:48 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Fri, 29 Mar 2024 18:37:48 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.168)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Fri, 29 Mar 2024 18:37:47 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=L6l2UaJyGYny9VSQjhdXYnqo2TF8AMk6R6YJj7/gZYx+KcFu34FPptLViSl7MJNAifeA+ti5R7bfqeCVsGLDKFtTCELf8OESaaLDkPu8SLIxKVrD63EBueIgMP9nUrS6UN3L+6E81LhPgxLYWcMdsREdDfCsEOj5cB7abquGQooN//iNjiqYIUroI7aT3m5Kp7GPeIDNcVrefYphY1/wFCQxzDZQDCuLZz7zuptZqjhajyLrbop/U+bwR3iXNjm+zesuMLNzBW8H/burT4jugN4Fjr1OJ8cnq1uDjHRi+Mto8ftGDqh2hfH6Q3CXyvVN65TZKEHCRtNt/B31bwxYhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2Rdupa3XdW3ys7iLaFqD4wgiOyuxSfOH1vZSJyjCOkU=;
+ b=PmZqmcyvIPSgi0lwLuAH6LX43h9xo8BoHF+gfMv7kUjF14TfBZo5cwSewPNlJbsu4oX7w242acCt/jn9AQhyJYBh2Nb8h9+yZjPB0S517ZOl9H4B5URNDJNPl6pQd44uwAND8s3oN6Ci92ne+6eBAwcq13ZhoiMQaJ5920rE2Gtrj0kNaRhrseCxq4eyIf3p3ADEaF4kmtMdT5V1puMFhfLcl2H/2W65MmAz4E/aobfK9cUr5SUgghWQlybcRyWH+tYQNZLnXGyBhWLwvI4n9v/TpiFAC3oH/UADqkwX2HNKxKPT5hmLjUGSYqsDMVr2SFCKaqYnnB0h/ABnSVOKhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
+ by MW3PR11MB4745.namprd11.prod.outlook.com (2603:10b6:303:5e::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.40; Sat, 30 Mar
+ 2024 01:37:41 +0000
+Received: from PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::82fd:75df:40d7:ed71]) by PH8PR11MB8107.namprd11.prod.outlook.com
+ ([fe80::82fd:75df:40d7:ed71%4]) with mapi id 15.20.7409.031; Sat, 30 Mar 2024
+ 01:37:41 +0000
+Date: Fri, 29 Mar 2024 18:37:38 -0700
+From: Dan Williams <dan.j.williams@intel.com>
+To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>
+CC: <Jonathan.Cameron@huawei.com>, <dan.j.williams@intel.com>,
+ <dave@stgolabs.net>, <ira.weiny@intel.com>, <stable@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 1/6] cxl/core: correct length of DPA field masks
+Message-ID: <66076ce2ddec7_19e02946d@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
+ <20240329063614.362763-2-ruansy.fnst@fujitsu.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240329063614.362763-2-ruansy.fnst@fujitsu.com>
+X-ClientProxiedBy: MW4PR04CA0276.namprd04.prod.outlook.com
+ (2603:10b6:303:89::11) To PH8PR11MB8107.namprd11.prod.outlook.com
+ (2603:10b6:510:256::6)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|MW3PR11MB4745:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: wRBnqLr9aJSTBdOEEdowFkuA4nbKL8Gm2r2NLbMx7wfFcIMnTz+fV8RJuziA1RmpnR8JJVEIK+Q4D42ixR6Un3G5sMtKhjfSMEz2RsdFbMqC7XmrdEANhyFLCIP65PQSQqxo9jdU2h204SoeA1e3Ay3PbWqf0bFFjU5xiPWY9M0p9pmKQm9PUfAQfPfot52LtklusLirm4iaqIjXgeOzwkO2QQOaZxsjUec6cbhkEOpvpV4IKaK4/8DNiUs2zjLyZrmZFkXW+aaYf9zAu1Gtjlj8hMqE/M2LxAUcpBLf3tBWw17jn/E+rs2djkZDM22tQOS/Cxb4hl6yzptDn8XqEYfxSxjgdP4dnODKwrls4938Xfx38JfjYzrrFUHi/WcVZ+1AsO38kfUYHCg05dNN5ncX0LxXIod/lgdBZWLKR/NyTH+qRtKjymYJ34ubUJ5puGOsvKEyUKuJ+i8c8iTnA0NRAokZfJ9zWJFDNU0ebdWFDoxz0ke0FXTAkqQzM7Vwtz3ysnw9506YEw71dJB5c6l01OiCedTvLUvKtASV8X4VkPIlJXX3xGJF90tyX/b9H1eYXHAz9fPsTyIYBVbJMhxY8ImMx0LNN1iK5a7aINn5yLU007MiDXJSsJljPCL0iBtFIgXSH9UxUDRBNqUea/AWpFA6xmA+cdiHIjeHlIk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH8PR11MB8107.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(1800799015)(376005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?TQnlW7MlLmh1GVEpjCwzqX2x59KhxKKxUxNXYPEK+kttCo63mDhooNqFF/AL?=
+ =?us-ascii?Q?04QEZwx2Ba2dQfdkl+p52nFen537V2JC2bKzgqEnxS/NoneguiC3Q9lZKbjn?=
+ =?us-ascii?Q?NNkEyOWNA5YX1XhN53RGU9OEl8p4DFE4zqr9eGnUt17jtps6Gf5iR87uaadR?=
+ =?us-ascii?Q?5O+dHtQc0cZjVUDC9HeKaoL3ZSVmanaeCT+QcEzj+hFoIvwj1aohOnc5jOBX?=
+ =?us-ascii?Q?lSxSqGA0cfpeUiZV/CxZxSX1pdtX2xQCSqNfXuKpOae6JT9eOSkEz6THoHCK?=
+ =?us-ascii?Q?q/Xp5p71KtI2mgN+bvxd824Aq0whsWVGcwTQQIgzTHWtlmGSYLC187wQxkoZ?=
+ =?us-ascii?Q?D3OfkQkdpsnICb7yk8SBzJQmSxoxrlmFNigwU5o9eo4Px/Vehr82NGCEPx1X?=
+ =?us-ascii?Q?PbWPPg7gJHya4vphVdO8qjKnDNlZeLqDKqzhH7/hhItS9TZdRIBlkftrTBNb?=
+ =?us-ascii?Q?XOCFtEXV6uf2Ww3tN0VAPDCQ2gXbMgVeWyvfjbqpjNsSvEeXJ77fwijlh7/R?=
+ =?us-ascii?Q?aLWM2fGD7ibgFaYohsZO7lPlLGRPe3UCvI1DC12bJKAZHTzbfOh9tZCz4uaO?=
+ =?us-ascii?Q?rG9WREddDsWVOILjmGhjsV+hf0FfJvTRhqvJtM4BdUFtp1twi0wVGuFQyVkM?=
+ =?us-ascii?Q?gCgf7SQyiQadpWXsBnL8wvLn/hXZ/IYc3klUGKWpy7PJvY/LVLrTk5xFuDc4?=
+ =?us-ascii?Q?ewnFnL6VhO76yPggr++szQcFTCn8Xm/ewxDO7kAGfP4te5CSgVBdd2ju7BjV?=
+ =?us-ascii?Q?LYmdxQrbtsvuEIEgeXsd+viAe9lplRentpHAXf6tqATXXAGiRwLUwktZqd+o?=
+ =?us-ascii?Q?Ub0qJciHKUp3onH2xNXQbxt4KlV3jA23FOY5Rpzxr+bw34+WXTddyuUKDs/p?=
+ =?us-ascii?Q?eRSDFSF1g62mxZFtIkVz7xxgz+XFfMzZUEYxICbhD2c27S7aqkwi73o8bHPP?=
+ =?us-ascii?Q?m3UvuS0eH5+mBUJd8lctHyoyyHty7IES6PUQnU8/Zfve6XT10MvLUmKYEmJj?=
+ =?us-ascii?Q?eXIlTsVrfPhsva5NZuQRVS/VqpZshiB7PP0aqHPkxymR3AbCVe12YxY8aR4g?=
+ =?us-ascii?Q?/BPCCXQAge0HuoQm8Oxslh3MMtaPkASUo75yImDxuqEFdn3M3hLRAoVZ5WlQ?=
+ =?us-ascii?Q?NhBasju7oTsJcT8GbgvxWIYH29WU8C+uHjjluHusbes6bQWyGaQohaDASpuz?=
+ =?us-ascii?Q?Bcccfe9ZKpdCW78eAgCt5/+W0eaSRMlHH/r5RI8Yl4AStDoaz/ORiddEoFuN?=
+ =?us-ascii?Q?w8ChcubJEk91kgKMtz6nBNj5qA+js86k8gXWBefjQEE83OEhlj9HqdCea7mo?=
+ =?us-ascii?Q?q3PE1mee/mvO1rTgTJXvOqNhHhdE2iqS6O0MjNXDc/RMTAY5MJdoqnWYhFqM?=
+ =?us-ascii?Q?2gUbP5slv0bIa6py7WJVKCpt2lESkrQnBogikcXSAsswF18Cg0BtmOCqtxmo?=
+ =?us-ascii?Q?dXedfEqgIFLpQC00j9XgmDjL3RuT1KpT3urYsNu34DRZxC5fYlX5tCoKwwcV?=
+ =?us-ascii?Q?nIEzTRBZYgQrTCjeDZhNl9c7gEZHdCdtVeAaiXfzuIwVka0vUgV8RQx/lew5?=
+ =?us-ascii?Q?ZnDKmhGW9q2O6epDVJWPncpFJXLADVOdNhkwoZ2p9V475bnV1R1z9ENiI+TJ?=
+ =?us-ascii?Q?qA=3D=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8cb65b7a-19da-4096-c9a0-08dc5059fd5e
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2024 01:37:41.4236 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OTNRxFN1dEHLxH2uQdtRRneNJIf4osoAXi2KOo4U847fWqgPgkBHDqfjN+pxcXsEeA6VapboH+sQXKreI5ywoogTBmQH7vq4jRNwuQcIyi0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR11MB4745
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.10;
+ envelope-from=dan.j.williams@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,60 +168,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_msqid_ds::msg_*time field pairs are reversed on 32-bit TARGET_PPC
-and TARGET_SPARC and on big-endian TARGET_MIPS and TARGET_XTENSA.
-Fix the order to match the kernel definitions.
-The issue is spotted by the libc-test http://nsz.repo.hu/git/?p=libc-test
-on big-endian xtensa core.
+Shiyang Ruan wrote:
+> The length of Physical Address in General Media Event Record/DRAM Event
+> Record is 64-bit, so the field mask should be defined as such length.
+> Otherwise, this causes cxl_general_media and cxl_dram tracepoints to
+> mask off the upper-32-bits of DPA addresses. The cxl_poison event is
+> unaffected.
+> 
+> If userspace was doing its own DPA-to-HPA translation this could lead to
+> incorrect page retirement decisions, but there is no known consumer
+> (like rasdaemon) of this event today.
+> 
+> Fixes: d54a531a430b ("cxl/mem: Trace General Media Event Record")
+> Cc: <stable@vger.kernel.org>
+> Cc: Dan Williams <dan.j.williams@intel.com>
+> Cc: Davidlohr Bueso <dave@stgolabs.net>
+> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Cc: Ira Weiny <ira.weiny@intel.com>
+> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+> ---
+>  drivers/cxl/core/trace.h | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
+> index e5f13260fc52..e2d1f296df97 100644
+> --- a/drivers/cxl/core/trace.h
+> +++ b/drivers/cxl/core/trace.h
+> @@ -253,11 +253,11 @@ TRACE_EVENT(cxl_generic_event,
+>   * DRAM Event Record
+>   * CXL rev 3.0 section 8.2.9.2.1.2; Table 8-44
+>   */
+> -#define CXL_DPA_FLAGS_MASK			0x3F
+> +#define CXL_DPA_FLAGS_MASK			0x3FULL
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
----
-Changes v1->v2:
-- split into a separate patch
-- add PPC, SPARC and big-endian MIPS
+This change makes sense...
 
- linux-user/syscall.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+>  #define CXL_DPA_MASK				(~CXL_DPA_FLAGS_MASK)
+>  
+> -#define CXL_DPA_VOLATILE			BIT(0)
+> -#define CXL_DPA_NOT_REPAIRABLE			BIT(1)
+> +#define CXL_DPA_VOLATILE			BIT_ULL(0)
+> +#define CXL_DPA_NOT_REPAIRABLE			BIT_ULL(1)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d9bfd31c1cad..781ed14bc613 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -4113,17 +4113,27 @@ static inline abi_long do_semtimedop(int semid,
- struct target_msqid_ds
- {
-     struct target_ipc_perm msg_perm;
--    abi_ulong msg_stime;
- #if TARGET_ABI_BITS == 32
-+#if defined(TARGET_PPC) || defined(TARGET_SPARC) || \
-+    (TARGET_BIG_ENDIAN && (defined(TARGET_MIPS) || defined(TARGET_XTENSA)))
-+    abi_ulong __unused1;
-+    abi_ulong msg_stime;
-+    abi_ulong __unused2;
-+    abi_ulong msg_rtime;
-+    abi_ulong __unused3;
-+    abi_ulong msg_ctime;
-+#else
-+    abi_ulong msg_stime;
-     abi_ulong __unused1;
--#endif
-     abi_ulong msg_rtime;
--#if TARGET_ABI_BITS == 32
-     abi_ulong __unused2;
--#endif
-     abi_ulong msg_ctime;
--#if TARGET_ABI_BITS == 32
-     abi_ulong __unused3;
-+#endif
-+#else
-+    abi_ulong msg_stime;
-+    abi_ulong msg_rtime;
-+    abi_ulong msg_ctime;
- #endif
-     abi_ulong __msg_cbytes;
-     abi_ulong msg_qnum;
--- 
-2.39.2
-
+...these do not. The argument to __print_flags() is an unsigned long, so
+they will be cast down to (unsigned long), and they are never used as a
+mask so the generated code should not change.
 
