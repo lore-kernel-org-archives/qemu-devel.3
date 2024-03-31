@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA5DCD1284
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC33CD1288
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqphu-0002si-HF; Sun, 31 Mar 2024 03:34:22 -0400
+	id 1rqphx-0002tO-Kv; Sun, 31 Mar 2024 03:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqpht-0002sD-8Z; Sun, 31 Mar 2024 03:34:21 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1rqphv-0002t4-RJ; Sun, 31 Mar 2024 03:34:23 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphr-0002Ak-Q2; Sun, 31 Mar 2024 03:34:21 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e88e4c8500so2493971b3a.2; 
- Sun, 31 Mar 2024 00:34:19 -0700 (PDT)
+ id 1rqphu-0002CL-9H; Sun, 31 Mar 2024 03:34:23 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6e6ee9e3cffso2111904b3a.1; 
+ Sun, 31 Mar 2024 00:34:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711870458; x=1712475258; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711870460; x=1712475260; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=99NXL3dTZGdgRT6sIcLJ+0pMc+4T2LlgrASZ20/p80E=;
- b=SzidvXBqQALpRvt0chUbGDe6rq+vOCUvzn7GRW5O+PV+d8mifdSvtQzkb+AOa+9WW0
- mpskyK6wJh+izn3T/H8XhqVke/6DwJiFqunAFaQOtPjh5R8LX62zh+M3Bz8rIOqvrlVy
- z8k04dVCZvjrl+Qb0sYSnLbx0vmIiL64lyljbM1UPkHYDBEKrevbTF3rwnLeUjJbCyio
- KBplMpQxe3o2pHiBZj9E54VveL5TTpqU9XBW7Dq8mzdT1CgLRtMYjj9WNglabseetjp4
- aoFUczTUXOWhIZu9NmGoiuSXA4XWcoxRa6FqaJoVLtJ3N2dBri50sXNFm8HLA9+mv9Oi
- LKBQ==
+ bh=+9G/bE2e1fCaBb8no691midYL4f9HZ61fZW8qbGYtK4=;
+ b=FaUFHwUsXCUdW5cC/qli4Km1V+4JUxba0kqrybrOmPWc82pQTFYxudAexKz+eW+SLa
+ 7IvUAVvju/nxf3Gc+wlg4Iwr9C8CtwfFQRmKOGVwYOmT7SjcvkkZ1X5pTlpcvoSIIwan
+ 7GkgMFjN9hKzYiUoZJWUGZ3PM1BJeXFTy3+FUNFXFE/innKK+zSIGvwnBIumvArbkeAL
+ 8cm5gWcNnn2X+B+Sxv1o7JdArZxmHrkg7t3Rq2nDH8gfVQ+beXqqOk/pnPkagCkfkmDO
+ I8UoAQoB9ZN4vPviS5H34WOMOlQJV7ac35rxHqDNhYP0If5DYsc+PBJAaQDT4zUwsxdZ
+ xTSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711870458; x=1712475258;
+ d=1e100.net; s=20230601; t=1711870460; x=1712475260;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=99NXL3dTZGdgRT6sIcLJ+0pMc+4T2LlgrASZ20/p80E=;
- b=A45m+vTVCQsr5lnfBKI8JfObQocM2HGWwdQ+3F7/ntRIlNSDcP7DdsX1lKwQwAEuqd
- rq4DB0eMC38jokLtoZxf1qOrt9DObuWgsW1vAdVMeB89NR6vJ+hySxyLWLsZpQq6RfvG
- 8d5DTaFee3GohsSchRZYuvbxOdXcp3zpkQES/hMUlz15PnSWkDW1uti2qauXy8tGAKsG
- gUX3kyTn1R9kkAwFsg/7YwNJ1IgLHzmo8NHfUrW9i8rFdluT5A8cmetT6SknHbuxcxmz
- 8D9edTRVW83jVuvu9GgzFlNcUk+OhpuBby8Z+kzQVA7XvB7oZNE4dc3vyuYdx/qh4aLD
- SU9Q==
+ bh=+9G/bE2e1fCaBb8no691midYL4f9HZ61fZW8qbGYtK4=;
+ b=sDo7prh76pwuy8rQho0VN0aAqxwHT6B2kySFWGZWKmdwP78tUDbJ8qPsnMA1QlLwur
+ 5nC9DPbYq8+593tdXSQfc1G0jauhMJKKIDVh9mz4JGSMNYa8B6HAaJshBxUMH3Byn7e8
+ uP0iWYILMFXCmmHwaOlpfFjPMp5tjDdQSp3CJXBtj+ylFQLMlfWV40Vnb73ZpiQysd+G
+ ITCWpHmB/0UlhFXT+iHiaEZkK/gpYcYN/KeiaNMYn70jnslf55x82GePv63JT0SRoAoK
+ qrWgitEdg61Ve8E7SvrIj2Tbd7fv5rXRZBFDimgsrKvNZFlUXke2ECR9BPtEyIJad7JL
+ yhig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWtKUCr35eR6HGDDV1+XeSu29FU9xgIM74wb+gSRrbM9U/fL2bKRQuGAq0sFVwkdCty+9TxDlhvvowtBDxDVypP7XO
-X-Gm-Message-State: AOJu0YxfHUrNohFZ8CcYxHd7BPLmFu6InSSFQUHiw4SxEzosQhLQCOzR
- wPYVYAi2IzTQeftYvSeMrqTKsmyyEHlT0D2FB4Z+u/MrUpxjDTCIP2DTkhpHelY=
-X-Google-Smtp-Source: AGHT+IHecu38bkXj3ZPpQ1hXMU9MmuN2FuavIqbLNa7kNPrBpwUYI33Nn8b5jKp/FwNeA5fep/Qa7Q==
-X-Received: by 2002:a05:6a00:3cc4:b0:6ea:acbe:5188 with SMTP id
- ln4-20020a056a003cc400b006eaacbe5188mr6891189pfb.32.1711870457625; 
- Sun, 31 Mar 2024 00:34:17 -0700 (PDT)
+ AJvYcCV/BOvKOPb3J8XTkBPMrZxVeohHnUzXOHxF8aq5YpavBxKGZXltqVrB9sJqwzhlusLlEDC/EBtLLmtofRJeDVMVGnWm
+X-Gm-Message-State: AOJu0YztuN2ksgAMTXR3kRVMzJ5GfD2dVHbbXnJ+BQcYRd74B1H4oiqO
+ W75c/knJwnb0408qvMGoVpOGPMQBFOS8sOUS1wnpeUEmy6D6hM13xCsHJtLuNhA=
+X-Google-Smtp-Source: AGHT+IFyJwjEuW4V9nOwNF0ZLnKXHmEN0ZfPZ7rd6qV+3uFsNhjZy7mGxaijQGbuGtt3OKh/a5bYtg==
+X-Received: by 2002:a05:6a00:890:b0:6ea:f05c:5c16 with SMTP id
+ q16-20020a056a00089000b006eaf05c5c16mr6320969pfj.5.1711870460303; 
+ Sun, 31 Mar 2024 00:34:20 -0700 (PDT)
 Received: from wheely.local0.net ([118.210.97.62])
  by smtp.gmail.com with ESMTPSA id
- k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.15
+ k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 00:34:17 -0700 (PDT)
+ Sun, 31 Mar 2024 00:34:20 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Benjamin Gray <bgray@linux.ibm.com>
-Subject: [PULL 4/8] target/ppc: Restore [H]DEXCR to 64-bits
-Date: Sun, 31 Mar 2024 17:33:41 +1000
-Message-ID: <20240331073349.88324-5-npiggin@gmail.com>
+Subject: [PULL 5/8] target/ppc: Fix GDB register indexing on secondary CPUs
+Date: Sun, 31 Mar 2024 17:33:42 +1000
+Message-ID: <20240331073349.88324-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240331073349.88324-1-npiggin@gmail.com>
 References: <20240331073349.88324-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,40 +96,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Benjamin Gray <bgray@linux.ibm.com>
 
-The DEXCR emulation was recently changed to a 32-bit register, possibly
-because it does have a 32-bit read-only view. It is a full 64-bit
-SPR though, so use the corresponding 64-bit write functions.
+The GDB server protocol assigns an arbitrary numbering of the SPRs.
+We track this correspondence on each SPR with gdb_id, using it to
+resolve any SPR requests GDB makes.
 
-Fixes: fbda88f7abdee ("target/ppc: Fix width of some 32-bit SPRs")
+Early on we generate an XML representation of the SPRs to give GDB,
+including this numbering. However the XML is cached globally, and we
+skip setting the SPR gdb_id values on subsequent threads if we detect
+it is cached. This causes QEMU to fail to resolve SPR requests against
+secondary CPUs because it cannot find the matching gdb_id value on that
+thread's SPRs.
+
+This is a minimal fix to first assign the gdb_id values, then return
+early if the XML is cached. Otherwise we generate the XML using the
+now already initialised gdb_id values.
+
+Fixes: 1b53948ff8f7 ("target/ppc: Use GDBFeature for dynamic XML")
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu_init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/ppc/gdbstub.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 7e65f08147..22fdea093b 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5820,7 +5820,7 @@ static void register_power10_dexcr_sprs(CPUPPCState *env)
- {
-     spr_register(env, SPR_DEXCR, "DEXCR",
-             SPR_NOACCESS, SPR_NOACCESS,
--            &spr_read_generic, &spr_write_generic32,
-+            &spr_read_generic, &spr_write_generic,
-             0);
+diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
+index 3f1e61bdb7..3b28d4e21c 100644
+--- a/target/ppc/gdbstub.c
++++ b/target/ppc/gdbstub.c
+@@ -305,14 +305,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
+     unsigned int num_regs = 0;
+     int i;
  
-     spr_register(env, SPR_UDEXCR, "UDEXCR",
-@@ -5831,7 +5831,7 @@ static void register_power10_dexcr_sprs(CPUPPCState *env)
-     spr_register_hv(env, SPR_HDEXCR, "HDEXCR",
-             SPR_NOACCESS, SPR_NOACCESS,
-             SPR_NOACCESS, SPR_NOACCESS,
--            &spr_read_generic, &spr_write_generic32,
-+            &spr_read_generic, &spr_write_generic,
-             0);
+-    if (pcc->gdb_spr.xml) {
+-        return;
+-    }
+-
+-    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
+-                             "org.qemu.power.spr", "power-spr.xml",
+-                             cs->gdb_num_regs);
+-
+     for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
+         ppc_spr_t *spr = &env->spr_cb[i];
  
-     spr_register(env, SPR_UHDEXCR, "UHDEXCR",
+@@ -320,9 +312,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
+             continue;
+         }
+ 
+-        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
+-                                       TARGET_LONG_BITS, num_regs,
+-                                       "int", "spr");
+         /*
+          * GDB identifies registers based on the order they are
+          * presented in the XML. These ids will not match QEMU's
+@@ -335,6 +324,26 @@ static void gdb_gen_spr_feature(CPUState *cs)
+         num_regs++;
+     }
+ 
++    if (pcc->gdb_spr.xml) {
++        return;
++    }
++
++    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
++                             "org.qemu.power.spr", "power-spr.xml",
++                             cs->gdb_num_regs);
++
++    for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
++        ppc_spr_t *spr = &env->spr_cb[i];
++
++        if (!spr->name) {
++            continue;
++        }
++
++        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
++                                       TARGET_LONG_BITS, spr->gdb_id,
++                                       "int", "spr");
++    }
++
+     gdb_feature_builder_end(&builder);
+ }
+ #endif
 -- 
 2.43.0
 
