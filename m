@@ -4,48 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E244BCD1288
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 10:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF40CD128A
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 13:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqs6d-0005FN-Ks; Sun, 31 Mar 2024 06:08:05 -0400
+	id 1rqv9Z-00049e-U5; Sun, 31 Mar 2024 09:23:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqs6M-0005CO-Qk
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 06:07:47 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <hengqi@linux.alibaba.com>)
+ id 1rqv9X-00049V-Hl
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 09:23:15 -0400
+Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqs6K-0000y9-VK
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 06:07:46 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7DB1A5A830;
- Sun, 31 Mar 2024 13:09:19 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4C45DA7B15;
- Sun, 31 Mar 2024 13:07:40 +0300 (MSK)
-Received: (nullmailer pid 2724212 invoked by uid 1000);
- Sun, 31 Mar 2024 10:07:40 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Michael Tokarev <mjt@tls.msk.ru>,
- YunQiang Su <ysu@wavecomp.com>
-Subject: [PATCH v2 1/4] linux-user/syscall: do_setsockopt: fix
- SOL_ALG.ALG_SET_KEY
-Date: Sun, 31 Mar 2024 13:07:34 +0300
-Message-Id: <20240331100737.2724186-2-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240331100737.2724186-1-mjt@tls.msk.ru>
-References: <20240331100737.2724186-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <hengqi@linux.alibaba.com>)
+ id 1rqv9V-00039b-0n
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 09:23:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1711891380; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=DNVFJe7fzXJ46hFedS/yET7Jx+L9l6utZ/e9Xt9A6X8=;
+ b=ijLUeOmXJWtafdBDs4EqyF0IbtFOL0mn0TJnatcvO+KAVopVl2aRzloEFOTyNpU80GBU3eLiNYP/VnQnjxKOnkFIwq0ZMs7F9HN6rHFFBfY0SFgZHVQK2WwmjBmqmB5r9VyqoNZN2wbFei3IOcJ67SrGL/kXGmKpMFtQuS8/NWU=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045192;
+ MF=hengqi@linux.alibaba.com; NM=1; PH=DS; RN=16; SR=0;
+ TI=SMTPD_---0W3bgCBV_1711891376; 
+Received: from 30.121.31.164(mailfrom:hengqi@linux.alibaba.com
+ fp:SMTPD_---0W3bgCBV_1711891376) by smtp.aliyun-inc.com;
+ Sun, 31 Mar 2024 21:22:57 +0800
+Message-ID: <8b6f03a9-1afb-42ef-82aa-7eaf7517133c@linux.alibaba.com>
+Date: Sun, 31 Mar 2024 21:22:55 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net v3] virtio_net: Do not send RSS key if it is not
+ supported
+To: Breno Leitao <leitao@debian.org>
+Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
+ qemu-devel@nongnu.org,
+ "open list:VIRTIO CORE AND NET DRIVERS" <virtualization@lists.linux.dev>,
+ "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Andrew Melnychenko <andrew@daynix.com>
+References: <20240329171641.366520-1-leitao@debian.org>
+From: Heng Qi <hengqi@linux.alibaba.com>
+In-Reply-To: <20240329171641.366520-1-leitao@debian.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.101;
+ envelope-from=hengqi@linux.alibaba.com;
+ helo=out30-101.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,45 +80,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This setsockopt accepts zero-lengh optlen (current qemu implementation
-does not allow this).  Also, there's no need to make a copy of the key,
-it is enough to use lock_user() (which accepts zero length already).
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2197
-Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- linux-user/syscall.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
 
-v2: fix commit message wording
+在 2024/3/30 上午1:16, Breno Leitao 写道:
+> There is a bug when setting the RSS options in virtio_net that can break
+> the whole machine, getting the kernel into an infinite loop.
+>
+> Running the following command in any QEMU virtual machine with virtionet
+> will reproduce this problem:
+>
+>      # ethtool -X eth0  hfunc toeplitz
+>
+> This is how the problem happens:
+>
+> 1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+>
+> 2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+>
+> 3) virtnet_commit_rss_command() populates 4 entries for the rss
+> scatter-gather
+>
+> 4) Since the command above does not have a key, then the last
+> scatter-gatter entry will be zeroed, since rss_key_size == 0.
+> sg_buf_size = vi->rss_key_size;
+>
+> 5) This buffer is passed to qemu, but qemu is not happy with a buffer
+> with zero length, and do the following in virtqueue_map_desc() (QEMU
+> function):
+>
+>    if (!sz) {
+>        virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+>
+> 6) virtio_error() (also QEMU function) set the device as broken
+>
+>      vdev->broken = true;
+>
+> 7) Qemu bails out, and do not repond this crazy kernel.
+>
+> 8) The kernel is waiting for the response to come back (function
+> virtnet_send_command())
+>
+> 9) The kernel is waiting doing the following :
+>
+>        while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+> 	     !virtqueue_is_broken(vi->cvq))
+> 	      cpu_relax();
+>
+> 10) None of the following functions above is true, thus, the kernel
+> loops here forever. Keeping in mind that virtqueue_is_broken() does
+> not look at the qemu `vdev->broken`, so, it never realizes that the
+> vitio is broken at QEMU side.
+>
+> Fix it by not sending RSS commands if the feature is not available in
+> the device.
+>
+> Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+> Cc: stable@vger.kernel.org
+> Cc: qemu-devel@nongnu.org
+> Signed-off-by: Breno Leitao <leitao@debian.org>
+> ---
+> Changelog:
+>
+> V2:
+>    * Moved from creating a valid packet, by rejecting the request
+>      completely
+> V3:
+>    * Got some good feedback from and Xuan Zhuo and Heng Qi, and reworked
+>      the rejection path.
+>
+> ---
+>   drivers/net/virtio_net.c | 22 ++++++++++++++++++----
+>   1 file changed, 18 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+> index c22d1118a133..c4a21ec51adf 100644
+> --- a/drivers/net/virtio_net.c
+> +++ b/drivers/net/virtio_net.c
+> @@ -3807,6 +3807,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
+>   			    struct netlink_ext_ack *extack)
+>   {
+>   	struct virtnet_info *vi = netdev_priv(dev);
+> +	bool update = false;
+>   	int i;
+>   
+>   	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
+> @@ -3814,13 +3815,24 @@ static int virtnet_set_rxfh(struct net_device *dev,
+>   		return -EOPNOTSUPP;
+>   
+>   	if (rxfh->indir) {
+> +		if (!vi->has_rss)
+> +			return -EOPNOTSUPP;
+> +
+>   		for (i = 0; i < vi->rss_indir_table_size; ++i)
+>   			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
+> +		update = true;
+>   	}
+> -	if (rxfh->key)
+> +
+> +	if (rxfh->key) {
+> +		if (!vi->has_rss && !vi->has_rss_hash_report)
+> +			return -EOPNOTSUPP;
+> +
+>   		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
+> +		update = true;
+> +	}
+>   
+> -	virtnet_commit_rss_command(vi);
+> +	if (update)
+> +		virtnet_commit_rss_command(vi);
+>   
+>   	return 0;
+>   }
+> @@ -4729,13 +4741,15 @@ static int virtnet_probe(struct virtio_device *vdev)
+>   	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+>   		vi->has_rss_hash_report = true;
+>   
+> -	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
+> +	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+>   		vi->has_rss = true;
+>   
+> -	if (vi->has_rss || vi->has_rss_hash_report) {
+>   		vi->rss_indir_table_size =
+>   			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+>   				rss_max_indirection_table_length));
+> +	}
+> +
+> +	if (vi->has_rss || vi->has_rss_hash_report) {
+>   		vi->rss_key_size =
+>   			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+>   
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e12d969c2e..5c7728cfd4 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2277,18 +2277,13 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-         switch (optname) {
-         case ALG_SET_KEY:
-         {
--            char *alg_key = g_malloc(optlen);
--
-+            char *alg_key = lock_user(VERIFY_READ, optval_addr, optlen, 1);
-             if (!alg_key) {
--                return -TARGET_ENOMEM;
--            }
--            if (copy_from_user(alg_key, optval_addr, optlen)) {
--                g_free(alg_key);
-                 return -TARGET_EFAULT;
-             }
-             ret = get_errno(setsockopt(sockfd, level, optname,
-                                        alg_key, optlen));
--            g_free(alg_key);
-+            unlock_user(alg_key, optval_addr, optlen);
-             break;
-         }
-         case ALG_SET_AEAD_AUTHSIZE:
--- 
-2.39.2
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+
+Thanks.
+
+
 
 
