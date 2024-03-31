@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D37CD128A
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 15:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49FD6CD1284
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 15:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqxKZ-0000MJ-Hy; Sun, 31 Mar 2024 11:42:47 -0400
+	id 1rqxKM-0000GY-Ib; Sun, 31 Mar 2024 11:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rqxKY-0000M9-JX
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 11:42:46 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ id 1rqxKK-0000Dt-7c
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 11:42:32 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rqxKW-0003Cn-Ux
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 11:42:46 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2d687da75c4so32913021fa.0
- for <qemu-devel@nongnu.org>; Sun, 31 Mar 2024 08:42:44 -0700 (PDT)
+ id 1rqxKI-0003AF-52
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 11:42:31 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-56c197d042fso4012796a12.0
+ for <qemu-devel@nongnu.org>; Sun, 31 Mar 2024 08:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711899763; x=1712504563; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711899748; x=1712504548; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=c3SKwGw8bm5NQ9HgW/VEEFH7yGmpfqFYtDxinxGMWqQ=;
- b=WwCi1lsvJW5RfPyJiCFRGWKTBcbakSP5tiBGdfl/GmcQEEQEtMo5qe2qNX96uWhj5m
- HfSlzyFipdJx/ZIUC5/xrsBAhQIVm03UpD4Kz/ksM57tx7+Y5+BzjgQg6dTRG7lKsrz1
- E60G+CDo0LPtm2z+Kx2fBz67RxpcxRVfQWaJfdDLl/9kgWY4c7pc9w+OW56AVy8w6QQa
- ZCyqgpIxCnFRo8GlOB+XHUifkQtfeFPXREPYK7SMht0zcLxqX8XW3Bjz3YXBVEMlxMHu
- /G54pxUma9PjAX939d5UPN39MD7hWnY9GdgmzVNsemVZcdSHFWL6OBTrQHp7B5ZJ/XIH
- fRYw==
+ bh=jBSfoJgjUf1Vv0Pqinnb7SKY134AmnCk/qfPcavaNNM=;
+ b=RSe1oUyQf2Op9mM4nmge/Zmy3bqM6COfIUFTl6RNPU9tR6oIe5ooYEpsSU3Psy5g0i
+ X8F8Sp92v0WR1mOOncuR7jpLn10X6Wp3dj1RmecjnfHVxZdX8TM+XcA2N6bTqWm0fFe4
+ BGgQ/mbMkhLt9hDWmtfY5TeskH6cCS9VtKRzxCVqTxMfw1uLyC7LxI99EspPonjH7ZGT
+ 3x+z1u/5ka6MrynrG4REXFgxw/5VE/MoK6u6lroYli8luzWe3Ciz9+7jYrI4IzXchuU9
+ 2m2tD1X88zHrFc8rkZesiBVi9AAzrhi6a68saiRlCWIFlRVq0q2VOFF2V+XDnh4d+HHU
+ l3TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711899763; x=1712504563;
+ d=1e100.net; s=20230601; t=1711899748; x=1712504548;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=c3SKwGw8bm5NQ9HgW/VEEFH7yGmpfqFYtDxinxGMWqQ=;
- b=ZxNDPeb/Mne7wE3JevS5arnAplji5MxYSr+6rsfbzjGaTzeXnw5gZe/aLZzcAyDWdB
- vDTCGghx5mLqG91+WaiezLCH8G8GuwyM8at1BFsJrHQkhK+SDp8DLj+5XfRwfA5WVf9C
- yAiXoDKnANJXsE+YMTewpi6z/2aV+VJ0TnX29UAJHemnX+mgquRHQC/QxFYi9qi1r8mK
- F4VcN8x9yyksLRVQW4C3b4OqV/6SufrcQVxiJC3COFJ+nb4hxm2X1MGdqbTDodmzy5yu
- EmzGRcW/BNMlx2gnRCPzlt46Wto3lfqHU929rxhzaU44vdQA3IpUcC22h6c96UJ4+qQO
- zW8w==
-X-Gm-Message-State: AOJu0YzyV8/s/4wmRG7tSebTJd/mRGtG5XXJ1Dz10zsHsoEkzsh5YpcS
- QurtFOzA+98JERFLjna9G2KhOmIz5KwCfBPRc1GGykJqNV97yTXbV/g8ifhZOFJxKmSL9n0so2Z
- phMtgOehMSwYc/65NfchuAoI+xLE9rv5rDm+zfQ==
-X-Google-Smtp-Source: AGHT+IGL2FqiJZHcmCZ4xY5poxX426cUhz0/hlYFDZVD4+GkfAXK5QOfR8AhRyPJ3Xqx1NFcE7sF6SR+y5hKi37/JqA=
-X-Received: by 2002:a2e:a60c:0:b0:2d4:b061:da01 with SMTP id
- v12-20020a2ea60c000000b002d4b061da01mr3549026ljp.19.1711899763017; Sun, 31
- Mar 2024 08:42:43 -0700 (PDT)
+ bh=jBSfoJgjUf1Vv0Pqinnb7SKY134AmnCk/qfPcavaNNM=;
+ b=XbHEBMFFdqnx29RtIzjAOcAj85TZbc91zyhfmn2Qs76+TWc4+lud5uVqr7JT+bKPyo
+ regxfx+N7KDqbtJXS5u4sNJrNMj/C9Uc/qV7sRq6c6AsIiaSWLd760Pux5vlYkUvgk2N
+ +OAKCemwke69tuKpbx1BvRHAIRB4M4Iw42x2rQXkJswG6eWIL7x2A5MLYGY/4F+pWcJ2
+ xRPNK93eaEBoHZQC14pWDZIZ950GNkvLlfrjVuwNHLLGThFkBVvQ88n60mJI1ODvzhYx
+ bpajQWhCleCpT5ssQ/TTiKyOpXYOwPsEfLoVmO2WcKNIAxn+Y6oQ437pvRQEpQS+w2uq
+ e7wQ==
+X-Gm-Message-State: AOJu0Ywpw5+HFqwC3xoxDbrzbWGRekW+9rxhYiR+2JV2GHeC+fqTzqZu
+ rtRL4K+k7HMpMHmjg5rUm+jzXf9/wSy04lunwTNa0apsEWtD773g4Y/Y3qBY1qxfgNzgZ7BMCPi
+ 9635MbrY6nfTzBUd1pXtd5dj2JcWPyN5iOiEfHQ==
+X-Google-Smtp-Source: AGHT+IHqRRePpKqC4+QByc/o7dQDH8KATEmyMSDvVK2Z1sSd3XhTdhH4SWkTNvHLybPKhvGWas7hB25MQyj350Z6wtU=
+X-Received: by 2002:a05:6402:2695:b0:56c:5a49:736 with SMTP id
+ w21-20020a056402269500b0056c5a490736mr6095526edd.9.1711899747794; Sun, 31 Mar
+ 2024 08:42:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240329071100.31376-1-jasowang@redhat.com>
-In-Reply-To: <20240329071100.31376-1-jasowang@redhat.com>
+References: <20240329222037.1735350-1-richard.henderson@linaro.org>
+In-Reply-To: <20240329222037.1735350-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 31 Mar 2024 16:42:32 +0100
-Message-ID: <CAFEAcA_6bEAiGNO_txqNe6uR9NGdFQ8dsPd6g0U2PEiTkYHmVw@mail.gmail.com>
-Subject: Re: [PULL 0/5] Net patches
-To: Jason Wang <jasowang@redhat.com>
+Date: Sun, 31 Mar 2024 16:42:16 +0100
+Message-ID: <CAFEAcA8Z=_BfKgdvvk2xoicSt8jGBTp+hParNyqaa4UGbM1zfg@mail.gmail.com>
+Subject: Re: [PULL 0/7] tcg + linux-user patch queue
+To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,7 +87,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 Mar 2024 at 07:11, Jason Wang <jasowang@redhat.com> wrote:
+On Fri, 29 Mar 2024 at 22:21, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
 > The following changes since commit 5012e522aca161be5c141596c66e5cc6082538a9:
 >
@@ -95,12 +96,19 @@ On Fri, 29 Mar 2024 at 07:11, Jason Wang <jasowang@redhat.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://github.com/jasowang/qemu.git tags/net-pull-request
+>   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240329
 >
-> for you to fetch changes up to d9b33018a0da51eddceb48c42345cfb351065f3e:
+> for you to fetch changes up to dafa0ecc97850c325fe85cd87dc0b536858d171a:
 >
->   Revert "tap: setting error appropriately when calling net_init_tap_one()" (2024-03-29 14:59:07 +0800)
+>   accel/tcg: Use CPUState.get_pc in cpu_io_recompile (2024-03-29 12:16:00 -1000)
 >
+> ----------------------------------------------------------------
+> linux-user: Fix shmat(NULL) for host != guest page size
+> tcg/optimize: Fix sign_mask for logical right-shift
+> accel/tcg: Use CPUState.get_pc in cpu_io_recompile
+> disas: Show opcodes for target_disas and monitor_disas
+>
+
 
 Applied, thanks.
 
