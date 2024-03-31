@@ -4,71 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1950CD1284
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 19:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7D2CD128D
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 19:31:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rr0kH-0007Ih-M6; Sun, 31 Mar 2024 15:21:33 -0400
+	id 1rr0tP-0000LL-Nr; Sun, 31 Mar 2024 15:30:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rr0kG-0007IS-Bb; Sun, 31 Mar 2024 15:21:32 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rr0kE-0008GO-Pc; Sun, 31 Mar 2024 15:21:32 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA9E95A8D4;
- Sun, 31 Mar 2024 22:23:04 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D1AB1A7DA8;
- Sun, 31 Mar 2024 22:21:24 +0300 (MSK)
-Message-ID: <cf941815-b1e1-4a1b-8a36-ddbc04f43990@tls.msk.ru>
-Date: Sun, 31 Mar 2024 22:21:24 +0300
+ (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
+ id 1rr0tO-0000Ky-Ia; Sun, 31 Mar 2024 15:30:58 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
+ id 1rr0tM-0001R0-Vt; Sun, 31 Mar 2024 15:30:58 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-22a8df1df8fso2198229fac.2; 
+ Sun, 31 Mar 2024 12:30:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1711913455; x=1712518255; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wSDYsWlELwKSPvJjZM7xr4TTz+NGl+wsAw++yWtE5cM=;
+ b=lfoi8HWfWLwpVZCjf+VtwFyvgKWiB99MZBDAGtdKskPioE51KBhwUMxGZLiuuzj5q7
+ GbXI0WHScjTZJ2jFsDf/qv3Whiq2bPqRImUOzAHsTOz3yPuUWDXVscUbCNbtOKQFt+UX
+ Ok3Zvlzsc9Urvx+DcbJ/SAzTP4nvD8y2xbRgeckAsdto0d2ssVOhKtrTEVy3nVKRFgQM
+ LR/x7fu9aI57MkQntd9lbKnLnYXr8SHqnAZun6y8Ad947DhHfMm1zxsIvSDKvx4kTS/w
+ ai78hEYf3NsOcerXvSr0yZmokVO7zJPaDAMYqjKJZlaRWwzEY4meon+YirXa2jlV4Lfs
+ Fqrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711913455; x=1712518255;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wSDYsWlELwKSPvJjZM7xr4TTz+NGl+wsAw++yWtE5cM=;
+ b=rUAwfZPcE1V0AhIf3jzZo9yNuSR9NV36WU3ssWkiC6UPHtt/2J7bfo/huk1KhlkdsU
+ u1ZevSJods7OU5rv8bP1sMzAumG+6EIay4BE9WXtcpcgBLYMLuOq9em5btZWoOnMuzBA
+ Z+mkzbNBjdp4W52W1Ppe5/3/Eno9w8BUs8PzPB2uWdReQ4vqIw0ZrGRQx4kBtCUyuT9/
+ lFFKk8fCulR3GVo/AnHrIOkVjrmYFcyiRB4ahEQg8v2icKGZWKnH5dVLPbrXYtCx3PbD
+ oLZJgwNm5jcFmVpyvawFqQRrtEym1EmWFWVrQbLru6Y0txYHwdXdYRBdAn6xz3zOp63+
+ /OPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEcCiWtmyTuL571xpDde7gVbyVKFVXSu1X9hXm7JqTan8JnLMn0cfNJO4fYuDxoF9h3I3yMzZzrQ08dsMvPc5xMODA8H4=
+X-Gm-Message-State: AOJu0YzCN5W5kiEx2V/gaFQynDOyPOZZ+YLcTBxwZTvAd1crNOQBJJg9
+ xqzL0cADDHJOovwdBYs6QDyb5+1zrrl7uIVjjR+KQHTCVy+x1Mkw
+X-Google-Smtp-Source: AGHT+IFCIZUy1J7FasRzcv53Mh006SqS7TTWVq1M8gG6jSnZI9IRE2oGlQoyXzPGD6sklAQcCM4w4A==
+X-Received: by 2002:a05:6870:a548:b0:22a:55bd:a048 with SMTP id
+ p8-20020a056870a54800b0022a55bda048mr8794638oal.5.1711913454994; 
+ Sun, 31 Mar 2024 12:30:54 -0700 (PDT)
+Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
+ j5-20020aa783c5000000b006eac81fa1fbsm6452490pfn.66.2024.03.31.12.30.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 31 Mar 2024 12:30:54 -0700 (PDT)
+From: Minwoo Im <minwoo.im.dev@gmail.com>
+To: Klaus Jensen <its@irrelevant.dk>,
+	Keith Busch <kbusch@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
+Subject: [PATCH v2 4/4] hw/nvme: Expand VI/VQ resource to uint32
+Date: Mon,  1 Apr 2024 04:30:32 +0900
+Message-Id: <20240331193032.5186-5-minwoo.im.dev@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240331193032.5186-1-minwoo.im.dev@gmail.com>
+References: <20240331193032.5186-1-minwoo.im.dev@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] Net patches
-To: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20240329071100.31376-1-jasowang@redhat.com>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240329071100.31376-1-jasowang@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=minwoo.im.dev@gmail.com; helo=mail-oa1-x2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,30 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-29.03.2024 10:10, Jason Wang:
+From: Minwoo Im <minwoo.im@samsung.com>
 
-> Akihiko Odaki (5):
->        virtio-net: Fix vhost virtqueue notifiers for RSS
->        ebpf: Fix indirections table setting
->        hw/net/net_tx_pkt: Fix virtio header without checksum offloading
->        tap-win32: Remove unnecessary stubs
->        Revert "tap: setting error appropriately when calling net_init_tap_one()"
+VI and VQ resources cover queue resources in each VFs in SR-IOV.
+Current maximum I/O queue pair size is 0xffff, we can expand them to
+cover the full number of I/O queue pairs.
 
- From the above, I'm picking up
+This patch also fixed Identify Secondary Controller List overflow due to
+expand of number of secondary controllers.
 
-   virtio-net: Fix vhost virtqueue notifiers for RSS
-   hw/net/net_tx_pkt: Fix virtio header without checksum offloading
+Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 8 ++++----
+ hw/nvme/nvme.h | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-for stable.  Not yet sure about
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 893d4e96656b..893afae29336 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8429,10 +8429,10 @@ static Property nvme_props[] = {
+                        params.sriov_vq_flexible, 0),
+     DEFINE_PROP_UINT16("sriov_vi_flexible", NvmeCtrl,
+                        params.sriov_vi_flexible, 0),
+-    DEFINE_PROP_UINT8("sriov_max_vi_per_vf", NvmeCtrl,
+-                      params.sriov_max_vi_per_vf, 0),
+-    DEFINE_PROP_UINT8("sriov_max_vq_per_vf", NvmeCtrl,
+-                      params.sriov_max_vq_per_vf, 0),
++    DEFINE_PROP_UINT32("sriov_max_vi_per_vf", NvmeCtrl,
++                       params.sriov_max_vi_per_vf, 0),
++    DEFINE_PROP_UINT32("sriov_max_vq_per_vf", NvmeCtrl,
++                       params.sriov_max_vq_per_vf, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index ad928c28f2c5..492617f19515 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -521,8 +521,8 @@ typedef struct NvmeParams {
+     uint16_t  sriov_max_vfs;
+     uint16_t sriov_vq_flexible;
+     uint16_t sriov_vi_flexible;
+-    uint8_t  sriov_max_vq_per_vf;
+-    uint8_t  sriov_max_vi_per_vf;
++    uint32_t  sriov_max_vq_per_vf;
++    uint32_t  sriov_max_vi_per_vf;
+ } NvmeParams;
+ 
+ typedef struct NvmeCtrl {
+-- 
+2.34.1
 
-   Revert "tap: setting error appropriately when calling net_init_tap_one()"
-
-as it's been with us for a long time.
-
-Please Cc: qemu-stable@ for changes which should be picked for stable
-series.
-
-Thanks,
-
-/mjt
 
