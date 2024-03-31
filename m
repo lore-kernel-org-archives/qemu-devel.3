@@ -4,74 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C26CD1284
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 15:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D80CD128A
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 16:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqxYR-0005k4-0v; Sun, 31 Mar 2024 11:57:07 -0400
+	id 1rqxqx-0003el-Ov; Sun, 31 Mar 2024 12:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rqxYP-0005jv-Ky
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 11:57:05 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1rqxqu-0003eE-Ok; Sun, 31 Mar 2024 12:16:13 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rqxYM-0005hd-Bw
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 11:57:04 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a466a1f9ea0so193701566b.1
- for <qemu-devel@nongnu.org>; Sun, 31 Mar 2024 08:57:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711900620; x=1712505420; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Zof4UHYcJPPCzMCxseWYLpRg4dcWsvJk8SW3JmWhycg=;
- b=KeaDRKnSGBLQvWE0NPVYj2t+9eMk2tQeBYF1/FqFlyDURIVtnDOnsE9+EugCzUCFPO
- 8rwWbj18ebYdV/A4GfuCz43spzmatXdtIiTonWC6aYa5ZMi9U1byO/ocdLw6KkKKbaMM
- Uiwe8HPudBCXmSLDKOJaa3JcQcz0aVeHig6q5peOnoa6prR4hho9gMC3i6L9EqvCvEYI
- wc0IY+XE7XNS7ZL/92xo4u3BzlE/nciYkD7MeTkkuxIIgCyDpwyOYv3ivPh6Pyq6V173
- NlnsyZ7wctnIpsV649L5L1mISl7Pb2We0NDVhnO0sfi4/kB4CCkEKzx/5+UTzIeXWfCS
- 7YRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711900620; x=1712505420;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Zof4UHYcJPPCzMCxseWYLpRg4dcWsvJk8SW3JmWhycg=;
- b=gdBEeXzxlq/G/VY/gZaifQsZq7MscbmqPNMwPhbbVJ6iYo2mCMHmit73paFOBGK+CO
- Q1umFB+mYbpTJq8JlTcXM6BDtbFbLqBMugBfrFNR505n2MTlq6YXiblN5ERQrT2fAlAe
- +85SemXI4k7kMSDyMmrW4/Kz6iVAeh4qLMRBYrpS6ds+HYYyPjDl8/p/Jy+gOQiVb3mB
- FQVXb998K08xK9pzgCL2pPNQLuB6qOPdLjZjK9Dw3BYmJNGHM3GOf58du092kKA58FTH
- TIsEV70Zc8IKMCavbKYAiRy6HeFK11XA8r3Wh6XdxakwZDaOq9H0Kq3So4ssCSrqAONJ
- ZqZQ==
-X-Gm-Message-State: AOJu0Yz6XuzfjR472VVWuzl0BwZfrYabWiTy7wU+fUmSg95sIv9QzW+9
- 48Ly8SF0qg5EmGgGASWZ2ndKyvkAtowK6zBiLVQt8o5Kc7nIoVKhIIRwwdjgHTVFPEAaB0ufnYo
- Vp2y2G6lPPzAaHetmKEmFpS5dtq1s5bMK3+zPa1HzV1TPnkB2wns=
-X-Google-Smtp-Source: AGHT+IEPltyvKxXXBu0BSB4DlfMRcOjaElr8++UTpqAvbAvJ+ALLLP+GSQ0IKvFIVjnSMV53taUrHTT75DEKl3yUIRg=
-X-Received: by 2002:a50:a448:0:b0:56c:1735:57a2 with SMTP id
- v8-20020a50a448000000b0056c173557a2mr5945996edb.31.1711900620676; Sun, 31 Mar
- 2024 08:57:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1rqxqr-0001la-PF; Sun, 31 Mar 2024 12:16:12 -0400
+Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id 76012DA06D4;
+ Sun, 31 Mar 2024 18:16:03 +0200 (CEST)
+Received: by qemu.weilnetz.de (Postfix, from userid 1000)
+ id F073D460023; Sun, 31 Mar 2024 18:16:02 +0200 (CEST)
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Luc Michel <luc@lmichel.fr>,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH for-9.0] Fix some typos in documentation (found by codespell)
+Date: Sun, 31 Mar 2024 18:15:26 +0200
+Message-Id: <20240331161526.1746598-1-sw@weilnetz.de>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 31 Mar 2024 16:56:50 +0100
-Message-ID: <CAFEAcA_+196BzNONPjpfF5O5EOfw4FA7TkMWFNdby4XtsK+Jrg@mail.gmail.com>
-Subject: QEMU cirrus CI jobs failing to start
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,43 +55,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-https://gitlab.com/qemu-project/qemu/-/issues/2256
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+---
+ docs/devel/atomics.rst     | 2 +-
+ docs/devel/ci-jobs.rst.inc | 2 +-
+ docs/devel/clocks.rst      | 2 +-
+ docs/system/i386/sgx.rst   | 2 +-
+ qapi/qom.json              | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/docs/devel/atomics.rst b/docs/devel/atomics.rst
+index ff9b5ee30c..b77c6e13e1 100644
+--- a/docs/devel/atomics.rst
++++ b/docs/devel/atomics.rst
+@@ -119,7 +119,7 @@ The only guarantees that you can rely upon in this case are:
+   ordinary accesses instead cause data races if they are concurrent with
+   other accesses of which at least one is a write.  In order to ensure this,
+   the compiler will not optimize accesses out of existence, create unsolicited
+-  accesses, or perform other similar optimzations.
++  accesses, or perform other similar optimizations.
+ 
+ - acquire operations will appear to happen, with respect to the other
+   components of the system, before all the LOAD or STORE operations
+diff --git a/docs/devel/ci-jobs.rst.inc b/docs/devel/ci-jobs.rst.inc
+index ec33e6ee2b..be06322279 100644
+--- a/docs/devel/ci-jobs.rst.inc
++++ b/docs/devel/ci-jobs.rst.inc
+@@ -115,7 +115,7 @@ CI pipeline.
+ QEMU_JOB_SKIPPED
+ ~~~~~~~~~~~~~~~~
+ 
+-The job is not reliably successsful in general, so is not
++The job is not reliably successful in general, so is not
+ currently suitable to be run by default. Ideally this should
+ be a temporary marker until the problems can be addressed, or
+ the job permanently removed.
+diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
+index b2d1148cdb..177ee1c90d 100644
+--- a/docs/devel/clocks.rst
++++ b/docs/devel/clocks.rst
+@@ -279,7 +279,7 @@ You can change the multiplier and divider of a clock at runtime,
+ so you can use this to model clock controller devices which
+ have guest-programmable frequency multipliers or dividers.
+ 
+-Similary to ``clock_set()``, ``clock_set_mul_div()`` returns ``true`` if
++Similarly to ``clock_set()``, ``clock_set_mul_div()`` returns ``true`` if
+ the clock state was modified; that is, if the multiplier or the diviser
+ or both were changed by the call.
+ 
+diff --git a/docs/system/i386/sgx.rst b/docs/system/i386/sgx.rst
+index 0f0a73f758..c293f7f44e 100644
+--- a/docs/system/i386/sgx.rst
++++ b/docs/system/i386/sgx.rst
+@@ -6,7 +6,7 @@ Overview
+ 
+ Intel Software Guard eXtensions (SGX) is a set of instructions and mechanisms
+ for memory accesses in order to provide security accesses for sensitive
+-applications and data. SGX allows an application to use it's pariticular
++applications and data. SGX allows an application to use its particular
+ address space as an *enclave*, which is a protected area provides confidentiality
+ and integrity even in the presence of privileged malware. Accesses to the
+ enclave memory area from any software not resident in the enclave are prevented,
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 8d4ca8ed92..85e6b4f84a 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -802,7 +802,7 @@
+ #
+ # @fd: file descriptor name previously passed via 'getfd' command,
+ #     which represents a pre-opened /dev/iommu.  This allows the
+-#     iommufd object to be shared accross several subsystems (VFIO,
++#     iommufd object to be shared across several subsystems (VFIO,
+ #     VDPA, ...), and the file descriptor to be shared with other
+ #     process, e.g. DPDK.  (default: QEMU opens /dev/iommu by itself)
+ #
+-- 
+2.39.2
 
-The Cirrus CI jobs for macos and freebsd are failing to start:
-
-Unschedulable: "0/2 nodes are available: 1 node(s) didn't match Pod's
-node affinity/selector, 1 node(s) had untolerated taint
-{virtual-kubelet.io/provider: azure}. preemption: 0/2 nodes are
-available: 2 Preemption is not helpful for scheduling."
-Waiting for pod
-gitlab-runner/runner--bkh5w23-project-11167699-concurrent-1qldjp to be
-running, status is Pending
-ContainersNotInitialized: "containers with incomplete status:
-[init-permissions]"
-ContainersNotReady: "containers with unready status: [build helper]"
-ContainersNotReady: "containers with unready status: [build helper]"
-Waiting for pod
-gitlab-runner/runner--bkh5w23-project-11167699-concurrent-1qldjp to be
-running, status is Pending
-ContainersNotReady: "containers with unready status: [build helper]"
-ContainersNotReady: "containers with unready status: [build helper]"
-WARNING: Failed to pull image with policy "": image pull failed:
-Back-off pulling image
-"registry.gitlab.com/libvirt/libvirt-ci/cirrus-run:master"
-ERROR: Job failed: prepare environment: waiting for pod running:
-pulling image "registry.gitlab.com/libvirt/libvirt-ci/cirrus-run:master":
-image pull failed: Back-off pulling image
-"registry.gitlab.com/libvirt/libvirt-ci/cirrus-run:master". Check
-https://docs.gitlab.com/runner/shells/index.html#shell-profile-loading
-for more information
-
-
-Anybody know what's going on here?
-
-thanks
--- PMM
 
