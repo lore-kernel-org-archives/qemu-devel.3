@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5573CD1288
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F0CCD1288
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqphs-0002s9-W1; Sun, 31 Mar 2024 03:34:21 -0400
+	id 1rqpi0-0002yM-9B; Sun, 31 Mar 2024 03:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphq-0002qm-S0; Sun, 31 Mar 2024 03:34:18 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1rqphy-0002x0-Pq; Sun, 31 Mar 2024 03:34:26 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphp-00027g-FK; Sun, 31 Mar 2024 03:34:18 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-29df3333d30so2288529a91.1; 
- Sun, 31 Mar 2024 00:34:16 -0700 (PDT)
+ id 1rqphx-0002FK-0u; Sun, 31 Mar 2024 03:34:26 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e6b6f86975so2090779b3a.1; 
+ Sun, 31 Mar 2024 00:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711870455; x=1712475255; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711870463; x=1712475263; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sw/t58NlNMsiEYbm8tj58VRibhqWk2l7GIj5tEOLJ6o=;
- b=nbUSEDztFat5z78KChmuvB8bz3JwhM6fpZUAXAsWex7k1Ho7vkvEdt2sxWYvROfTaG
- 6YFVevXrpBd8AFvJjJzZPwy8VV+VjditGqySV1/ylEmU5CTUn3q+A8D9BqUYcOOmpGOy
- U4/J3ADpd5ua8NkrngmW+jHiUwwFhZ7NPIF40KRKJy3BClxPHtKasKErlF77tZZ7xE7t
- DjKLeRk9zPkjvtl3R174HgRdaE/Vis8YBljwbVsuE03wrdkqD+CUdiXRLpeUS/JwfB2f
- ASv910hBoDYCKGy6zFgEadqT0stOt/a/L27ghr1WMJCSkpknhuYZUEwfOBHjG6pTanB+
- EusQ==
+ bh=mYXhV2tdfrK37fGeW/EVruixzcxS6jD0MeBRq3dZyY0=;
+ b=V0yGoDh/L4RDA5hKBxpTZb/4Rwpb8nQZkP/2uOPjHJ8a0LkfPgk4eg7N38dX9j1rz8
+ LMPGi78tX+V/Si5OhsD4JHXtNYJ/YDD3vj5eV0J+/rAWCmbxzLu6+coHzLmvqDj2/rcs
+ Byu8WDoSaQdlERNfbqkARJ/O9xnLta3uKp2ObTmBiZEK02+sscH5iDoh4r5HyFl/TuA/
+ 9MT7FxhoMPgVkAwT+KlhW11jxehyed1rO3NzkBfsZdqbl/xglPmbuRRbhFQBnGooFe4J
+ KyqkWEe1HpEq0TMsAfRyQSgnuW/LmwuqDa/OKtBaRFjuHn9mZ3LEZut1kZi/ZLAdGWIp
+ P2tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711870455; x=1712475255;
+ d=1e100.net; s=20230601; t=1711870463; x=1712475263;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sw/t58NlNMsiEYbm8tj58VRibhqWk2l7GIj5tEOLJ6o=;
- b=S9dnux55j79xTO+KGmhG+y28O//FRHZqttkKUiBGJ/YO+F7z3vmvURP/IHFtal1g5H
- 2C14xWd2cmzDIQiwkhhOjE+B2ND000Vd4RasneHq9wJkQHO/VxkR0E8REkdRIHwLj5Qt
- 1a7mLsMF7XfxbQuu5OOQ7ySuXJpbj65c3stTYuvIT/IIynH/SlgZJ0Ebw68ES+musXln
- 6o49Ivy19gRKNJAOugGteQgjk/CM7H13xt46buz8CYPxF7oo9rQKgHBYqrPg1KX8FM0R
- r9e/k92KW/5duuWrTasbU1Cyvzms3i3t3mjkJ5T7z3Xac7agdZmv7L0u4KAfALmimZZr
- 1AFA==
+ bh=mYXhV2tdfrK37fGeW/EVruixzcxS6jD0MeBRq3dZyY0=;
+ b=BM8E7Ptg7diyy8K7EIgyQZsTzX+bRiqs1zNsxrg4v5F7Qxg30CK8DeeAFlGsD+ijN8
+ HkKg3yi3M4neAo7ACrAgyxneZUaRlaDMXt1buQ5NWOa6Kvw87pyGc594aeCLQiloXmIQ
+ wBbkSZ7HGc/ES/dQ1x83hZ8IBip8LcUXeg2qMLTYPRGSWyZsQuw0eZ3Febfkgk1Bk29t
+ BO2MP29ONkwTPHc4881sBbZajy0gO/LifDVs6+obJjKCjiK0NcaeRLcAjaDc6hwwtWx0
+ m07/qTZVOvkh1/gvazVi8VcD7VnDsaBiWYw1wXifqpTz+xoUa3gZADgPKPjpmR3qby3R
+ UfRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULoUfucdRJ4y8jijJ94Lpbtg5Kgcrr3bshZkPpXMJQ278uF9X12UUZpCcsZlE0s3hAOZM1fJNqBtZylbOW5oTx+8Ru
-X-Gm-Message-State: AOJu0YyG19Q+fX6HHDhD967crxakyrzcHZV0ToMSJ8vvqxLkHvD2LC//
- wFzT1cSAMMXZygBcHpVJdTUY64mtT3VZpeQ0nwgM7Naxq3TauxSEITy7vVBOnMY=
-X-Google-Smtp-Source: AGHT+IEVgDm9mZUTEpcLKMZ2d99YeKbCAA+ReIoPEOr6RDmphF39S2X/24uwv/15OPloSsyFU9HNqg==
-X-Received: by 2002:a05:6a00:2196:b0:6ea:f7e2:49b8 with SMTP id
- h22-20020a056a00219600b006eaf7e249b8mr2978098pfi.3.1711870454960; 
- Sun, 31 Mar 2024 00:34:14 -0700 (PDT)
+ AJvYcCWGnzIm5EXpa3go7gbaqtUPXKna9B2Y+h8zturvWsQDFjuDc/NVeuCmuigEPmWK0+DwFDc4oNpgpdlQr4opiIqFgT7X
+X-Gm-Message-State: AOJu0YwXV5tRCWtMmVfJRaZjzzidxXG/OyeE5F/6evHMXUnNQ8beS6Uw
+ fgx2lVnAyIaFOdU98zuHIBs4L8rH55flU/IkaGYbFPlTYwcHnJI2cbeGj7OA2tY=
+X-Google-Smtp-Source: AGHT+IGYCaa9jKETcIxs3FJpEFekUjX8IY1krLhvPXCEDvoTnXYxHb48Pw31nGlsAY6BNQiwHvNWOw==
+X-Received: by 2002:a05:6a00:234b:b0:6ea:f369:f20f with SMTP id
+ j11-20020a056a00234b00b006eaf369f20fmr5096673pfj.1.1711870462993; 
+ Sun, 31 Mar 2024 00:34:22 -0700 (PDT)
 Received: from wheely.local0.net ([118.210.97.62])
  by smtp.gmail.com with ESMTPSA id
- k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.12
+ k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 00:34:14 -0700 (PDT)
+ Sun, 31 Mar 2024 00:34:22 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 3/8] target/ppc/mmu-radix64: Use correct string format in
- walk_tree()
-Date: Sun, 31 Mar 2024 17:33:40 +1000
-Message-ID: <20240331073349.88324-4-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 6/8] target/ppc: Do not clear MSR[ME] on MCE interrupts to
+ supervisor
+Date: Sun, 31 Mar 2024 17:33:43 +1000
+Message-ID: <20240331073349.88324-7-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240331073349.88324-1-npiggin@gmail.com>
 References: <20240331073349.88324-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,44 +95,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hardware clears the MSR[ME] bit when delivering a machine check
+interrupt, so that is what QEMU does.
 
-'mask', 'nlb' and 'base_addr' are all uin64_t types.
-Use the corresponding PRIx64 format.
+The spapr environment runs in supervisor mode though, and receives
+machine check interrupts after they are processed by the hypervisor,
+and MSR[ME] must always be enabled in supervisor mode (otherwise it
+could checkstop the system). So MSR[ME] must not be cleared when
+delivering machine checks to the supervisor.
 
-Fixes: d2066bc50d ("target/ppc: Check page dir/table base alignment")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The fix to prevent supervisor mode from modifying MSR[ME] also
+prevented it from re-enabling the incorrectly cleared MSR[ME] bit
+when returning from handling the interrupt. Before that fix, the
+problem was not very noticable with well-behaved code. So the
+Fixes tag is not strictly correct, but practically they go together.
+
+Found by kvm-unit-tests machine check tests (not yet upstream).
+
+Fixes: 678b6f1af75ef ("target/ppc: Prevent supervisor from modifying MSR[ME]")
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu-radix64.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/ppc/excp_helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-index 5823e039e6..690dff7a49 100644
---- a/target/ppc/mmu-radix64.c
-+++ b/target/ppc/mmu-radix64.c
-@@ -300,8 +300,8 @@ static int ppc_radix64_next_level(AddressSpace *as, vaddr eaddr,
- 
-         if (nlb & mask) {
-             qemu_log_mask(LOG_GUEST_ERROR,
--                "%s: misaligned page dir/table base: 0x"TARGET_FMT_lx
--                " page dir size: 0x"TARGET_FMT_lx"\n",
-+                "%s: misaligned page dir/table base: 0x%" PRIx64
-+                " page dir size: 0x%" PRIx64 "\n",
-                 __func__, nlb, mask + 1);
-             nlb &= ~mask;
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 80f584f933..674c05a2ce 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -1345,9 +1345,10 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+              * clear (e.g., see FWNMI in PAPR).
+              */
+             new_msr |= (target_ulong)MSR_HVB;
++
++            /* HV machine check exceptions don't have ME set */
++            new_msr &= ~((target_ulong)1 << MSR_ME);
          }
-@@ -324,8 +324,8 @@ static int ppc_radix64_walk_tree(AddressSpace *as, vaddr eaddr,
+-        /* machine check exceptions don't have ME set */
+-        new_msr &= ~((target_ulong)1 << MSR_ME);
  
-     if (base_addr & mask) {
-         qemu_log_mask(LOG_GUEST_ERROR,
--            "%s: misaligned page dir base: 0x"TARGET_FMT_lx
--            " page dir size: 0x"TARGET_FMT_lx"\n",
-+            "%s: misaligned page dir base: 0x%" PRIx64
-+            " page dir size: 0x%" PRIx64 "\n",
-             __func__, base_addr, mask + 1);
-         base_addr &= ~mask;
-     }
+         msr |= env->error_code;
+         break;
 -- 
 2.43.0
 
