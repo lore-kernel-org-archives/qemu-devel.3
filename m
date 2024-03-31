@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7737BCD1284
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40470CD1288
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqphp-0002qP-Dm; Sun, 31 Mar 2024 03:34:17 -0400
+	id 1rqpi2-0002zW-5d; Sun, 31 Mar 2024 03:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphn-0002o2-OI; Sun, 31 Mar 2024 03:34:15 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rqpi1-0002z7-07; Sun, 31 Mar 2024 03:34:29 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphm-00026v-8H; Sun, 31 Mar 2024 03:34:15 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e74aa08d15so2535956b3a.1; 
- Sun, 31 Mar 2024 00:34:13 -0700 (PDT)
+ id 1rqphz-0002GP-Ey; Sun, 31 Mar 2024 03:34:28 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-6e8918d29deso361401a34.1; 
+ Sun, 31 Mar 2024 00:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711870452; x=1712475252; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711870465; x=1712475265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xF5OBXNYP6ZI81AmsCFRz0Xuc8TKtQnpsKPSIbYJa3o=;
- b=Ao5r3aEuc4c3pgVdMww6B6LEzLVBuNlWIafyzQdnzKZj1P6exgpy9a0CJoApROUfTt
- GiUoDMfR73M+SeXuu06R4jYBYDp3eMbYldWDaRi2fkDZnlw3xWYm5IMIsLf/XvsOguf7
- ObBmLn3er7UA+aV5uZy3aWMT4IJjCQRsLv3Us4vMC1lkUi3wi4I5BCWmu6l5iinST/ro
- nUA0MXGwq1QDkFw1J8bf/npUByM8HTLGwYd+UhoaCrSFF1r3Ok5d4KVDdLe0zWv/JBL1
- wY6zUYhqDC2zTD8d+y0XP4blt57bPz9xAVX8qImGKELvFwKUpXtl7Xlv+RN5jWUIApzK
- 98SQ==
+ bh=dZL1L08WWNCihv0YHYd8rN2H0Y3QSivHfttFd+0jXus=;
+ b=O2oGMQCjyVjOmywvLKhprfpxfVzYyjUuKHOjw8RAwtT5a7CAYTgsqmAZdDfMpB9sKk
+ 0UscWs5PeOKfnSoZfoFl1yXLaEnToFoWHD9G8c3/Ry0dpDGGVRSGWqb9gxlr67Ys1WMn
+ XDdT7xzQltPqEgSS+plvtNSGfkgitVR+AkwwmEDI3CJB/ZZjq+SGM4AYw5nNK7qJVXUD
+ UB4e1Guhhatc7bES6GqX12tkkSHGlWFuJ1713RjaVu4uSOoPbPBim/axu3sO5pU01HTI
+ IGZjZDxQnxHBhmfEDaweG5rWUaBTIxu36R+1KqZcAD6117jlyFOibz12a62IJKYSymUb
+ xYmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711870452; x=1712475252;
+ d=1e100.net; s=20230601; t=1711870465; x=1712475265;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xF5OBXNYP6ZI81AmsCFRz0Xuc8TKtQnpsKPSIbYJa3o=;
- b=O5DsBTM/4q8Xmo8uI2rOs+UKHZAa/o/chmQAu3uwFzIuTehJa4FtcsEEMivn3oH7ak
- pUq0Vs2+sdZ52R6UM3B/Tp7Xb33/oZJ15PIVwIrJx+uWLOFjF2RVfZPsnM+KHfkk50rM
- 0c2Ij0+WOqXK+cI7Zxw86skGfba5sgmd7GK3YZ+e4vIGZL3rta4W6fE3TtJYjbI95NJp
- 8K16/8+fCTNiPqaNOUaBLpmVMq0h5aCxxYrBpY8KHEZXS0c6zXjapB4Hw0VSb0wI8ksU
- pD0ryNUctJ+4kq7tW+HCXW4Ed9qeXeayR8itxomkeMXQy8bHv11QypW9P7ZpiX4QDeHO
- TT2A==
+ bh=dZL1L08WWNCihv0YHYd8rN2H0Y3QSivHfttFd+0jXus=;
+ b=jse2mZNvJPrm+DD+aosZCMYSbW9SxILE3MVO2CNX+010fcKENRIaVY05gkZdM+1z7X
+ D3gczjGcOUR+qIOIknC4PMl0FtgbwI3tr221MekpNb7Ft7AMLdNX/4OEQV0aDm0cK4WM
+ AZbbPkUG7ZKpQlLVuMGPKA2SULYkiV1MqdCK2D982cVx0wxMwrk+A+sq8Xu49eZ+wD1/
+ 3rlL+9FIjTq/51OGl3t9MTXrBLU5HN3yCofAGBvexVf7YwEAlbu8SagJ/ThQsXRQ3qsH
+ neMUwl+R/tVCzYbdCEsdsKyFOHYTiJ0PgNQJLL6y9A+iP27qp2zJ+iI3B2sbTPC1s3AG
+ tGhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUi/300MKPTqUM3U0yesNk5IUvzBhQ1lSWE9mlSKO1VJqxEzALhOdBskpIT7SeTZpAHqDmuczeLZsb99KPjs28PhYSI
-X-Gm-Message-State: AOJu0Yw/wxe0+jPL1E6eH69/ZUe0QAESmromL9S/7U0LsRXqn0G0Y5xW
- dLAwwkZlIQxitjaDhU9mqWT9sybojtOOGHiJ+CgW3fllOIXNTWb9B3gv0Ldny3k=
-X-Google-Smtp-Source: AGHT+IETTOw2Vn+VyN+Rls/DoBmIk8j2yt9iBvJ3c/qB/ud1ToNEatvTOz5tmvmpoU2miRCkh3J+Bw==
-X-Received: by 2002:a05:6a00:1992:b0:6ea:e2ec:9622 with SMTP id
- d18-20020a056a00199200b006eae2ec9622mr8610538pfl.20.1711870452321; 
- Sun, 31 Mar 2024 00:34:12 -0700 (PDT)
+ AJvYcCVhdpsIEvqk23bUQhuBXPDmvJJUWzXjIhhS5/AH2gRrwqeRzdziBSvamyjGO7yB4T53gOByNIOYDgaR5WP9v+LK/5KV
+X-Gm-Message-State: AOJu0YxDrcmKuYIbG6W6Bqpq+KRvX973cBGNA+oRD8/Ooykh0sg3KYkE
+ wR9B+4iMKHKJkAdvMCrhZeLF5nF+1lwXr54Lycy8Fs9cqb4ly38DICRq3ZXK4o4=
+X-Google-Smtp-Source: AGHT+IGzoaWFh2ho0wfRfk3HYKSBF0hywllvqkOhnNHdoufUN2O4R1MUuKPYdcZVaUJwZkIcQOz68A==
+X-Received: by 2002:a05:6870:8093:b0:222:63e2:aba3 with SMTP id
+ q19-20020a056870809300b0022263e2aba3mr7125090oab.8.1711870465336; 
+ Sun, 31 Mar 2024 00:34:25 -0700 (PDT)
 Received: from wheely.local0.net ([118.210.97.62])
  by smtp.gmail.com with ESMTPSA id
- k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.09
+ k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 00:34:12 -0700 (PDT)
+ Sun, 31 Mar 2024 00:34:25 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 2/8] hw/ppc/spapr: Include missing 'sysemu/tcg.h' header
-Date: Sun, 31 Mar 2024 17:33:39 +1000
-Message-ID: <20240331073349.88324-3-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 7/8] tests/avocado: Fix ppc_hv_tests.py xorriso dependency guard
+Date: Sun, 31 Mar 2024 17:33:44 +1000
+Message-ID: <20240331073349.88324-8-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240331073349.88324-1-npiggin@gmail.com>
 References: <20240331073349.88324-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=npiggin@gmail.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,35 +94,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+For some reason the skipIf missing_deps() check fails to skip the test
+if it comes after the skipUnless lines, causing an error running on
+systems without xorriso.
 
-"sysemu/tcg.h" declares tcg_enabled(), and is implicitly included.
-Include it explicitly to avoid the following error when refactoring
-headers:
+Avocado implements skipUnless is just an inverted skipIf, so it's not
+clear what the bug is or why this fixes it. For now it's enough to
+get things working.
 
-  hw/ppc/spapr.c:2612:9: error: call to undeclared function 'tcg_enabled'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    if (tcg_enabled()) {
-        ^
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2246
+Fixes: c9cb496710758 ("tests/avocado: ppc add hypervisor tests")
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/avocado/ppc_hv_tests.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index c417f9dd52..e9bc97fee0 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -35,6 +35,7 @@
- #include "sysemu/sysemu.h"
- #include "sysemu/hostmem.h"
- #include "sysemu/numa.h"
-+#include "sysemu/tcg.h"
- #include "sysemu/qtest.h"
- #include "sysemu/reset.h"
- #include "sysemu/runstate.h"
+diff --git a/tests/avocado/ppc_hv_tests.py b/tests/avocado/ppc_hv_tests.py
+index 5080358e25..2c8ddd9257 100644
+--- a/tests/avocado/ppc_hv_tests.py
++++ b/tests/avocado/ppc_hv_tests.py
+@@ -42,10 +42,11 @@ def missing_deps():
+ # QEMU packages are downloaded and installed on each test. That's not a
+ # large download, but it may be more polite to create qcow2 image with
+ # QEMU already installed and use that.
++# XXX: The order of these tests seems to matter, see git blame.
++@skipIf(missing_deps(), 'dependencies (%s) not installed' % ','.join(deps))
+ @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test sometimes gets stuck due to console handling problem')
+ @skipUnless(os.getenv('AVOCADO_ALLOW_LARGE_STORAGE'), 'storage limited')
+ @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
+-@skipIf(missing_deps(), 'dependencies (%s) not installed' % ','.join(deps))
+ class HypervisorTest(QemuSystemTest):
+ 
+     timeout = 1000
 -- 
 2.43.0
 
