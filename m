@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7D2CD128D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED687CD128A
 	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 19:31:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rr0tP-0000LL-Nr; Sun, 31 Mar 2024 15:30:59 -0400
+	id 1rr0tF-0000Hm-Hm; Sun, 31 Mar 2024 15:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1rr0tO-0000Ky-Ia; Sun, 31 Mar 2024 15:30:58 -0400
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ id 1rr0tD-0000HD-Cm; Sun, 31 Mar 2024 15:30:47 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1rr0tM-0001R0-Vt; Sun, 31 Mar 2024 15:30:58 -0400
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-22a8df1df8fso2198229fac.2; 
- Sun, 31 Mar 2024 12:30:56 -0700 (PDT)
+ id 1rr0tB-0001Pm-Uh; Sun, 31 Mar 2024 15:30:47 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6eaf7c97738so891601b3a.2; 
+ Sun, 31 Mar 2024 12:30:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711913455; x=1712518255; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wSDYsWlELwKSPvJjZM7xr4TTz+NGl+wsAw++yWtE5cM=;
- b=lfoi8HWfWLwpVZCjf+VtwFyvgKWiB99MZBDAGtdKskPioE51KBhwUMxGZLiuuzj5q7
- GbXI0WHScjTZJ2jFsDf/qv3Whiq2bPqRImUOzAHsTOz3yPuUWDXVscUbCNbtOKQFt+UX
- Ok3Zvlzsc9Urvx+DcbJ/SAzTP4nvD8y2xbRgeckAsdto0d2ssVOhKtrTEVy3nVKRFgQM
- LR/x7fu9aI57MkQntd9lbKnLnYXr8SHqnAZun6y8Ad947DhHfMm1zxsIvSDKvx4kTS/w
- ai78hEYf3NsOcerXvSr0yZmokVO7zJPaDAMYqjKJZlaRWwzEY4meon+YirXa2jlV4Lfs
- Fqrw==
+ d=gmail.com; s=20230601; t=1711913443; x=1712518243; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TQmslNM5GGtrjWB8pIsj9VTguLDdJeZ7U/2WF+E8W10=;
+ b=DaTfA8b/O7tAhTIOg07x5p/Y9/LbkCcze1zAbtudzjIUXMS5x/tnAIHUHNRyDH3LsO
+ Pf/ici8dIgR9lQHty/Sv6QiktbmOsYOaOiT56vhuwR9Qx76QX60AynFYoXw8ZVhWg0D9
+ XWiwcoK13xA+xfF8mbDThawK9kZAEEQWbR9SnTNRLGyXTj4EAkhTWZ0V2hoB1K7UGfiV
+ iJWcA8Mg+5gdZazisT2olcUIqnaXPFSRPwvOOsvBmbh0HU2Mh9V5pm0/VdQrVv7NfnT7
+ oBwCHtuTHBS7g8WBNEu7WM0gnOA+vB3NEcCA12m4VEvm753OGVuZQmGP5pyzjoRhneOd
+ 0ORw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711913455; x=1712518255;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wSDYsWlELwKSPvJjZM7xr4TTz+NGl+wsAw++yWtE5cM=;
- b=rUAwfZPcE1V0AhIf3jzZo9yNuSR9NV36WU3ssWkiC6UPHtt/2J7bfo/huk1KhlkdsU
- u1ZevSJods7OU5rv8bP1sMzAumG+6EIay4BE9WXtcpcgBLYMLuOq9em5btZWoOnMuzBA
- Z+mkzbNBjdp4W52W1Ppe5/3/Eno9w8BUs8PzPB2uWdReQ4vqIw0ZrGRQx4kBtCUyuT9/
- lFFKk8fCulR3GVo/AnHrIOkVjrmYFcyiRB4ahEQg8v2icKGZWKnH5dVLPbrXYtCx3PbD
- oLZJgwNm5jcFmVpyvawFqQRrtEym1EmWFWVrQbLru6Y0txYHwdXdYRBdAn6xz3zOp63+
- /OPg==
+ d=1e100.net; s=20230601; t=1711913443; x=1712518243;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TQmslNM5GGtrjWB8pIsj9VTguLDdJeZ7U/2WF+E8W10=;
+ b=J34SFVOS9CP39sF4+9NcpnSO8Edc9GCpc8ACIGj0kD3liJ4ughA85Gcq8dRtgzoAh4
+ qLjdxhcUYSdC5HtdNyrC3/R9gqGaBdKLSLwxkHKdloT/pYcG7c0HA23xn9ODQO2rVWkr
+ Wq6E4jESBlIbRnH78Uo+NOjekoPI7U8wd9OZi8d3Q5WJWUPOOXXfUGzyKlSKqNqHN1tE
+ jUV19Xxp+XiGXmy84Oekx3MWrJyEDBJ/uwW3rAHpKpds0ElZSSGDKNUS1nwBBywh0UMS
+ VTmgcw2SRCbRlG8D5uXCnBAo5NAcWv0n+DuGFiQNr8vJ6eyZrNn8jnLndXmNYNIEs8FT
+ pNpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEcCiWtmyTuL571xpDde7gVbyVKFVXSu1X9hXm7JqTan8JnLMn0cfNJO4fYuDxoF9h3I3yMzZzrQ08dsMvPc5xMODA8H4=
-X-Gm-Message-State: AOJu0YzCN5W5kiEx2V/gaFQynDOyPOZZ+YLcTBxwZTvAd1crNOQBJJg9
- xqzL0cADDHJOovwdBYs6QDyb5+1zrrl7uIVjjR+KQHTCVy+x1Mkw
-X-Google-Smtp-Source: AGHT+IFCIZUy1J7FasRzcv53Mh006SqS7TTWVq1M8gG6jSnZI9IRE2oGlQoyXzPGD6sklAQcCM4w4A==
-X-Received: by 2002:a05:6870:a548:b0:22a:55bd:a048 with SMTP id
- p8-20020a056870a54800b0022a55bda048mr8794638oal.5.1711913454994; 
- Sun, 31 Mar 2024 12:30:54 -0700 (PDT)
+ AJvYcCWSeQ5DVy1ojuRiDJYx7cVCwh6OqdSAyd/e9v7H7COoKdF70/dl0F2RVDOTjJe+ob2j+P9/io63jDmp5lo4d1rVFDLmiOU=
+X-Gm-Message-State: AOJu0YwsnlnYZrPlJ7tfcQPSVFuAuI8Ff7ppcLbp9fOSLT3erJPd1yUm
+ rW6RyCqH8FlBgKXxeXLOPLB0k/HmXnTREvCkCqXrisO/wslTBTYwY1L2Rddio6I=
+X-Google-Smtp-Source: AGHT+IGfkDBGEpTUuOx2CaMOKIU/zGLnpycwK9NJHrvDhKMb9fTuFInXIUfZdSd9FE462RvEOQ7C+w==
+X-Received: by 2002:a05:6a21:1693:b0:1a3:c3a9:53b7 with SMTP id
+ np19-20020a056a21169300b001a3c3a953b7mr6508064pzb.55.1711913443462; 
+ Sun, 31 Mar 2024 12:30:43 -0700 (PDT)
 Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
- j5-20020aa783c5000000b006eac81fa1fbsm6452490pfn.66.2024.03.31.12.30.54
+ j9-20020a170903024900b001e22e8a859asm5245525plh.108.2024.03.31.12.30.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 12:30:54 -0700 (PDT)
+ Sun, 31 Mar 2024 12:30:43 -0700 (PDT)
 From: Minwoo Im <minwoo.im.dev@gmail.com>
 To: Klaus Jensen <its@irrelevant.dk>,
 	Keith Busch <kbusch@kernel.org>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v2 4/4] hw/nvme: Expand VI/VQ resource to uint32
-Date: Mon,  1 Apr 2024 04:30:32 +0900
-Message-Id: <20240331193032.5186-5-minwoo.im.dev@gmail.com>
+ Minwoo Im <minwoo.im@samsung.com>, Minwoo Im <minwoo.im.dev@gmail.com>
+Subject: [PATCH v2 0/4] hw/nvme: FDP and SR-IOV enhancements
+Date: Mon,  1 Apr 2024 04:30:28 +0900
+Message-Id: <20240331193032.5186-1-minwoo.im.dev@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240331193032.5186-1-minwoo.im.dev@gmail.com>
-References: <20240331193032.5186-1-minwoo.im.dev@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=minwoo.im.dev@gmail.com; helo=mail-oa1-x2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=minwoo.im.dev@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,56 +91,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im@samsung.com>
+Hello,
 
-VI and VQ resources cover queue resources in each VFs in SR-IOV.
-Current maximum I/O queue pair size is 0xffff, we can expand them to
-cover the full number of I/O queue pairs.
+This patch set added support for Identify Endurance Group List only just
+for 'endgrpid=1' for FDP.  Along with this, the following three patches
+are to support more than 127 secondary controllers for SR-IOV with VI/VQ
+resources.  [2/4] separated Identify controller data structure for
+secondary controller list from the actual secondary controller list
+managed by the pf to support proper identify data based on the given
+cntlid which is a minimum controller id to retrieve.  [3/4] and [4/4]
+are actual patches increasing the number of resources of SR-IOV.
 
-This patch also fixed Identify Secondary Controller List overflow due to
-expand of number of secondary controllers.
+Thanks,
 
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 8 ++++----
- hw/nvme/nvme.h | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+v2:
+ - Added [2/4] commit to fix crash due to entry overflow
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 893d4e96656b..893afae29336 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8429,10 +8429,10 @@ static Property nvme_props[] = {
-                        params.sriov_vq_flexible, 0),
-     DEFINE_PROP_UINT16("sriov_vi_flexible", NvmeCtrl,
-                        params.sriov_vi_flexible, 0),
--    DEFINE_PROP_UINT8("sriov_max_vi_per_vf", NvmeCtrl,
--                      params.sriov_max_vi_per_vf, 0),
--    DEFINE_PROP_UINT8("sriov_max_vq_per_vf", NvmeCtrl,
--                      params.sriov_max_vq_per_vf, 0),
-+    DEFINE_PROP_UINT32("sriov_max_vi_per_vf", NvmeCtrl,
-+                       params.sriov_max_vi_per_vf, 0),
-+    DEFINE_PROP_UINT32("sriov_max_vq_per_vf", NvmeCtrl,
-+                       params.sriov_max_vq_per_vf, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index ad928c28f2c5..492617f19515 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -521,8 +521,8 @@ typedef struct NvmeParams {
-     uint16_t  sriov_max_vfs;
-     uint16_t sriov_vq_flexible;
-     uint16_t sriov_vi_flexible;
--    uint8_t  sriov_max_vq_per_vf;
--    uint8_t  sriov_max_vi_per_vf;
-+    uint32_t  sriov_max_vq_per_vf;
-+    uint32_t  sriov_max_vi_per_vf;
- } NvmeParams;
- 
- typedef struct NvmeCtrl {
+Minwoo Im (4):
+  hw/nvme: add Identify Endurance Group List
+  hw/nvme: separate identify data for sec. ctrl list
+  hw/nvme: Support SR-IOV VFs more than 127
+  hw/nvme: Expand VI/VQ resource to uint32
+
+ hw/nvme/ctrl.c       | 53 +++++++++++++++++++++++++++++++-------------
+ hw/nvme/nvme.h       | 20 +++++++++--------
+ hw/nvme/subsys.c     |  8 +++----
+ include/block/nvme.h |  1 +
+ 4 files changed, 53 insertions(+), 29 deletions(-)
+
 -- 
 2.34.1
 
