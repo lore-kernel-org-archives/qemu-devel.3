@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93865CD1288
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5573CD1288
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqphl-0002cy-9x; Sun, 31 Mar 2024 03:34:13 -0400
+	id 1rqphs-0002s9-W1; Sun, 31 Mar 2024 03:34:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphj-0002WY-Dx; Sun, 31 Mar 2024 03:34:11 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1rqphq-0002qm-S0; Sun, 31 Mar 2024 03:34:18 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphg-00025o-NL; Sun, 31 Mar 2024 03:34:11 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-5d8ddbac4fbso2348194a12.0; 
- Sun, 31 Mar 2024 00:34:07 -0700 (PDT)
+ id 1rqphp-00027g-FK; Sun, 31 Mar 2024 03:34:18 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-29df3333d30so2288529a91.1; 
+ Sun, 31 Mar 2024 00:34:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711870446; x=1712475246; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=D6wSsPZEcVSSUGBkwC/VmUENDZWLIRZujo9SWc2/D2w=;
- b=XT3o45pHoowKsDoy6EF6n4Rms+ih5scAV+LutBXKHldt9tgVfrUksTmMgF/egVPes6
- QV9su6iz0zxN8g7dXQV11/wJ60LoA4uLz4Jp3/fFIDE03hvGZ31O6jVLP3Guu/tx7iFp
- oz55EDt/vU9SvBiaa/cB6iPu0MeuzwHBzoP5nJaj5oU4EQhuumjar3bH6oL+vNEg/ORC
- OSACY1nhY4/6rUQYnZY4HD2kVEJjY+nllnmYkRNpAthU5zgpzlkZh/ZptDk2fqVq9Wp7
- v9ECsktUgyQVqqERsFnU5KLYQwoMuBDTAoL9MTDhgz9VvmHuPP1SxyXDshgM7K7HpPbK
- GM0g==
+ d=gmail.com; s=20230601; t=1711870455; x=1712475255; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sw/t58NlNMsiEYbm8tj58VRibhqWk2l7GIj5tEOLJ6o=;
+ b=nbUSEDztFat5z78KChmuvB8bz3JwhM6fpZUAXAsWex7k1Ho7vkvEdt2sxWYvROfTaG
+ 6YFVevXrpBd8AFvJjJzZPwy8VV+VjditGqySV1/ylEmU5CTUn3q+A8D9BqUYcOOmpGOy
+ U4/J3ADpd5ua8NkrngmW+jHiUwwFhZ7NPIF40KRKJy3BClxPHtKasKErlF77tZZ7xE7t
+ DjKLeRk9zPkjvtl3R174HgRdaE/Vis8YBljwbVsuE03wrdkqD+CUdiXRLpeUS/JwfB2f
+ ASv910hBoDYCKGy6zFgEadqT0stOt/a/L27ghr1WMJCSkpknhuYZUEwfOBHjG6pTanB+
+ EusQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711870446; x=1712475246;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D6wSsPZEcVSSUGBkwC/VmUENDZWLIRZujo9SWc2/D2w=;
- b=A03vIvpl3JgQ66e7AZyO9PWZeVtHG2HtvgiZl9+n2lQrXZI2ge85SlAg2xj81Ck71v
- 7KU5TFpwuqcgsgB15R8lGgVWTZds1QaTJuU5ju7bGQPjQahMe9+PGdquJm3qmLf8iT1V
- 1YT8pg40kuvznFlHt/9E8UGu0N3bJVf5I/g4E/2+HF/b3X7VbRAO1xTi/ScXAVM5CPnD
- aAti4vH8sOkQwLrlE/O4flgWemoXzOAfGca3pDae21ocBsYS5uib23rA6NCxkd8TQM2k
- AGQTfMLljCeCou7Kz3uIHvcXaogJX9BBERoD2rkcHmeuEFYEqRTz/ULy8IdW7wQMytuW
- Hs1g==
+ d=1e100.net; s=20230601; t=1711870455; x=1712475255;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sw/t58NlNMsiEYbm8tj58VRibhqWk2l7GIj5tEOLJ6o=;
+ b=S9dnux55j79xTO+KGmhG+y28O//FRHZqttkKUiBGJ/YO+F7z3vmvURP/IHFtal1g5H
+ 2C14xWd2cmzDIQiwkhhOjE+B2ND000Vd4RasneHq9wJkQHO/VxkR0E8REkdRIHwLj5Qt
+ 1a7mLsMF7XfxbQuu5OOQ7ySuXJpbj65c3stTYuvIT/IIynH/SlgZJ0Ebw68ES+musXln
+ 6o49Ivy19gRKNJAOugGteQgjk/CM7H13xt46buz8CYPxF7oo9rQKgHBYqrPg1KX8FM0R
+ r9e/k92KW/5duuWrTasbU1Cyvzms3i3t3mjkJ5T7z3Xac7agdZmv7L0u4KAfALmimZZr
+ 1AFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF34f+1ZTQS9ZC2lik4Cv0Y4lZT8/wwNTrvNzE02SYSmWrG3egtIeKjLZVWFXlQoF4y5yybZtjf9rMLQajR95aMmD7
-X-Gm-Message-State: AOJu0Yw8+geS8ASGi/y+UfPLXF2mFJBDpy83n0lDfRqec5Ck3bWuhC2O
- 0uKDBPCTe2RrXWOVB/22/x8r3+9lLXraZYtMlH3jmsXdJ6og9lMU1yk6HUadDcY=
-X-Google-Smtp-Source: AGHT+IG/aqwqcWwUkTXeHO1NTALU1O6kIsQEvrbt72G4fYCKmbAXq6TOKOkUyFttoJydPpY9cKcb4g==
-X-Received: by 2002:a05:6a20:430b:b0:1a3:c404:37fc with SMTP id
- h11-20020a056a20430b00b001a3c40437fcmr8426469pzk.13.1711870445985; 
- Sun, 31 Mar 2024 00:34:05 -0700 (PDT)
+ AJvYcCULoUfucdRJ4y8jijJ94Lpbtg5Kgcrr3bshZkPpXMJQ278uF9X12UUZpCcsZlE0s3hAOZM1fJNqBtZylbOW5oTx+8Ru
+X-Gm-Message-State: AOJu0YyG19Q+fX6HHDhD967crxakyrzcHZV0ToMSJ8vvqxLkHvD2LC//
+ wFzT1cSAMMXZygBcHpVJdTUY64mtT3VZpeQ0nwgM7Naxq3TauxSEITy7vVBOnMY=
+X-Google-Smtp-Source: AGHT+IEVgDm9mZUTEpcLKMZ2d99YeKbCAA+ReIoPEOr6RDmphF39S2X/24uwv/15OPloSsyFU9HNqg==
+X-Received: by 2002:a05:6a00:2196:b0:6ea:f7e2:49b8 with SMTP id
+ h22-20020a056a00219600b006eaf7e249b8mr2978098pfi.3.1711870454960; 
+ Sun, 31 Mar 2024 00:34:14 -0700 (PDT)
 Received: from wheely.local0.net ([118.210.97.62])
  by smtp.gmail.com with ESMTPSA id
- k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.03
+ k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 00:34:05 -0700 (PDT)
+ Sun, 31 Mar 2024 00:34:14 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	qemu-ppc@nongnu.org
-Subject: [PULL 0/8] ppc-for-9.0-3 queue
-Date: Sun, 31 Mar 2024 17:33:37 +1000
-Message-ID: <20240331073349.88324-1-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 3/8] target/ppc/mmu-radix64: Use correct string format in
+ walk_tree()
+Date: Sun, 31 Mar 2024 17:33:40 +1000
+Message-ID: <20240331073349.88324-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240331073349.88324-1-npiggin@gmail.com>
+References: <20240331073349.88324-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,44 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5012e522aca161be5c141596c66e5cc6082538a9:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  Update version for v9.0.0-rc1 release (2024-03-26 19:46:55 +0000)
+'mask', 'nlb' and 'base_addr' are all uin64_t types.
+Use the corresponding PRIx64 format.
 
-are available in the Git repository at:
+Fixes: d2066bc50d ("target/ppc: Check page dir/table base alignment")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/mmu-radix64.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-  https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.0-3-20240331
+diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+index 5823e039e6..690dff7a49 100644
+--- a/target/ppc/mmu-radix64.c
++++ b/target/ppc/mmu-radix64.c
+@@ -300,8 +300,8 @@ static int ppc_radix64_next_level(AddressSpace *as, vaddr eaddr,
+ 
+         if (nlb & mask) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+-                "%s: misaligned page dir/table base: 0x"TARGET_FMT_lx
+-                " page dir size: 0x"TARGET_FMT_lx"\n",
++                "%s: misaligned page dir/table base: 0x%" PRIx64
++                " page dir size: 0x%" PRIx64 "\n",
+                 __func__, nlb, mask + 1);
+             nlb &= ~mask;
+         }
+@@ -324,8 +324,8 @@ static int ppc_radix64_walk_tree(AddressSpace *as, vaddr eaddr,
+ 
+     if (base_addr & mask) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-            "%s: misaligned page dir base: 0x"TARGET_FMT_lx
+-            " page dir size: 0x"TARGET_FMT_lx"\n",
++            "%s: misaligned page dir base: 0x%" PRIx64
++            " page dir size: 0x%" PRIx64 "\n",
+             __func__, base_addr, mask + 1);
+         base_addr &= ~mask;
+     }
+-- 
+2.43.0
 
-for you to fetch changes up to b07a5bb736ca08d55cc3ada8ca309943b55d4b70:
-
-  tests/avocado: ppc_hv_tests.py set alpine time before setup-alpine (2024-03-30 18:50:26 +1000)
-
-----------------------------------------------------------------
-* Various fixes for recent regressions and new code.
-
-----------------------------------------------------------------
-Benjamin Gray (2):
-      target/ppc: Restore [H]DEXCR to 64-bits
-      target/ppc: Fix GDB register indexing on secondary CPUs
-
-Harsh Prateek Bora (1):
-      spapr: nested: use bitwise NOT operator for flags check
-
-Nicholas Piggin (3):
-      target/ppc: Do not clear MSR[ME] on MCE interrupts to supervisor
-      tests/avocado: Fix ppc_hv_tests.py xorriso dependency guard
-      tests/avocado: ppc_hv_tests.py set alpine time before setup-alpine
-
-Philippe Mathieu-Daudé (2):
-      hw/ppc/spapr: Include missing 'sysemu/tcg.h' header
-      target/ppc/mmu-radix64: Use correct string format in walk_tree()
-
- hw/ppc/spapr.c                |  1 +
- hw/ppc/spapr_nested.c         |  2 +-
- target/ppc/cpu_init.c         |  4 ++--
- target/ppc/excp_helper.c      |  5 +++--
- target/ppc/gdbstub.c          | 31 ++++++++++++++++++++-----------
- target/ppc/mmu-radix64.c      |  8 ++++----
- tests/avocado/ppc_hv_tests.py |  6 +++++-
- 7 files changed, 36 insertions(+), 21 deletions(-)
 
