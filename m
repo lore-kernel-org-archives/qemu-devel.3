@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7C49CD128E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4BD7CD1284
 	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 18:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqzkd-0004Bn-9a; Sun, 31 Mar 2024 14:17:51 -0400
+	id 1rqzkZ-0004BG-3d; Sun, 31 Mar 2024 14:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rqzkY-0004B9-4l
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 14:17:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rqzkT-0004Ar-Qi
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 14:17:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rqzkV-0004hs-M6
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 14:17:45 -0400
+ id 1rqzkS-0004gF-Ab
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 14:17:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711909061;
+ s=mimecast20190719; t=1711909059;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=+vqxdTO2VKLgQ7KsbDKTOHrw/FHBZ8UlPh38mHZ3HDs=;
- b=P7i5e7I8xylAVdNq5rQcjxtFQVJ9Z6KZNhzUlwq8x/uCXaJYRe9h1+h1TCIoO4d4Lr7b6E
- QWmQwQoOXZeHUkWtbwtZIvoPldbCat4iKAjXG59WvQ+EYd/0M/8HdJ6bDKKBx0Y9fas90e
- ACp7Lk0INXzbnrKXUBeHCCVcpO5P3hU=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jLpAUqBQzceTRAYU+8U7+iDE5tmAFXUptroQALqFoI0=;
+ b=E1Pl9azK3kWPzOfIpeev/WRhFzqnZX6bp/Wm2wiy+x3qZSwK+gdYlBLXgZT7iribkLmtR1
+ LtDnls8ayfOL6hZU3g0YV8Nbh/tKta6iJygbxebkN85Rz0spvn///5zPUXAi15ejHgaHCQ
+ qm6FWVTxmoXNQQ67NjwC1zwLNqIHjZQ=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-538-2JyiWm2LMqmRahGim5RZ-A-1; Sun, 31 Mar 2024 14:17:39 -0400
-X-MC-Unique: 2JyiWm2LMqmRahGim5RZ-A-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-515adcf2004so2850393e87.2
- for <qemu-devel@nongnu.org>; Sun, 31 Mar 2024 11:17:39 -0700 (PDT)
+ us-mta-187-p1iv4RsWNBaazD2H_E8_bg-1; Sun, 31 Mar 2024 14:17:36 -0400
+X-MC-Unique: p1iv4RsWNBaazD2H_E8_bg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a46cc88be5fso257075466b.2
+ for <qemu-devel@nongnu.org>; Sun, 31 Mar 2024 11:17:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711909057; x=1712513857;
+ d=1e100.net; s=20230601; t=1711909053; x=1712513853;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+vqxdTO2VKLgQ7KsbDKTOHrw/FHBZ8UlPh38mHZ3HDs=;
- b=cRxzdUSMy4jH5WHLXI0f7wyexp9nM2DywEG6ODMNqe6X3y2pw45E0ZMzbGvvzQoagD
- bua4wKslakYcHtUljN8+LCIU9QuoICRAVFnjjpvkbZkiLz/zrZ9sf3ffJnCiLif2gXoV
- jBkq41SY+ZrvQ/MCZiDHYPIvk0Wr3JMY9BRvQ7ebmwyuZh/oI9y4Q94m95SBC3AB33pJ
- 4Wo+gpzV/+97gY40FISlDl2aMJUY4FkcBmxqLGlSKlBcnGWfW00BXSf7fJu3+iRrjTPO
- Dx/TT/VdqGnK+p6GLFcXYMyHOEu8MEBQ7EKVP2jl5cIP3rabDXTTklk6KcAushjFbOVY
- TO8w==
-X-Gm-Message-State: AOJu0Yy6vLCfWPt8NgHYXc1HRw4YoXZiLJprWdcYs7CjINqwABbxRSZe
- +XNopM7lSYCUwZH0XBRorpahvysFvrRC/NiWl2wUzV+E9L1RgTRA2Vb9VGAL90GM+huCtxibBbK
- NbNuxQUtaxksT1U1NHrckiXgqZZfSR3Gis2ElT/TOGkpnIsJjwJZN5CtqVSLMIiq1mvZlOepy/E
- OgJ/uRUiJ0MeZ8vTVYXBMNbLJ2gztP3seXp27x
-X-Received: by 2002:ac2:5d70:0:b0:515:c7c9:b150 with SMTP id
- h16-20020ac25d70000000b00515c7c9b150mr5833018lft.0.1711909056866; 
- Sun, 31 Mar 2024 11:17:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGow2RWMLprZVVEV/0e5lBOOboRdfoRgvXrfWKdkBG7DiLIV+gAQNz1Wpyy41kcGnRdG/Ludg==
-X-Received: by 2002:ac2:5d70:0:b0:515:c7c9:b150 with SMTP id
- h16-20020ac25d70000000b00515c7c9b150mr5833010lft.0.1711909056433; 
- Sun, 31 Mar 2024 11:17:36 -0700 (PDT)
+ bh=jLpAUqBQzceTRAYU+8U7+iDE5tmAFXUptroQALqFoI0=;
+ b=fqrqc6u8smMwXhfzZopEuOUmXC9MAA5WoxkD82am/Y6eMsG2I9WfM1LEL0h/KK3L9b
+ xkQ7ZkfL2VX4xeGmzt3j3DogGt/ySogikTUqSBT18eDbjelPcbmcxyAG4f+nthq6jsSt
+ kC9Jv2pc847SCO92roYW6p4Y/qvT9WsJ+WXjFDx+mZKMbrS1yhMcFVFjwMot9T/uWiMz
+ IRTtOL/FX5dv56nHN7GfyMbZGl8T8LikA6nspAkS8+CUnil7I+IIObmy/cAFe9wntY0m
+ sV/jYX/tYG99coVTn33YvU9VISsr1noeNtIMX3LpUN12ipM5W0lfnuYsmvZBDAqgHyPn
+ XXRw==
+X-Gm-Message-State: AOJu0YwEOvX4DC/4Xnm7XLRS6tycwzpJ7grXckmSm/aIVWq8M5aCJCp7
+ OAH/Zu+dlkYx/4iRNz6OMA2g4RfVw+QY6IK/gk05mnwQpwSnwWGGvjplhfPoH1D3bm2UHD1dSKW
+ xVUO9iUJp27IhUmDpsVIEw3fqw5RgqSPMxM+ElxSU8H/KOc3aFjZy949zt6lV7N2jbZLIjd3PnZ
+ M/h0mTlEXZjQ5M5u8ixR3qjAOrdj3SMv5tv2Qg
+X-Received: by 2002:a17:906:3644:b0:a4e:d5d:8fd6 with SMTP id
+ r4-20020a170906364400b00a4e0d5d8fd6mr4472357ejb.60.1711909053454; 
+ Sun, 31 Mar 2024 11:17:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGSmdcmNZrnpAjHSPvT2GxerIusqPJdGGfeG6lBC0iONtOIm0wdvICKyfWkWayre/8CtDBMkA==
+X-Received: by 2002:a17:906:3644:b0:a4e:d5d:8fd6 with SMTP id
+ r4-20020a170906364400b00a4e0d5d8fd6mr4472348ejb.60.1711909053075; 
+ Sun, 31 Mar 2024 11:17:33 -0700 (PDT)
 Received: from avogadro.local ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- j15-20020a170906254f00b00a473362062fsm4404917ejb.220.2024.03.31.11.17.33
+ he18-20020a1709073d9200b00a4729f093ecsm4378532ejc.53.2024.03.31.11.17.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 11:17:33 -0700 (PDT)
+ Sun, 31 Mar 2024 11:17:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Chuhong Yuan <hslester96@gmail.com>
-Subject: [PATCH] lsi53c895a: detect invalid Block Move instruction
-Date: Sun, 31 Mar 2024 20:17:30 +0200
-Message-ID: <20240331181730.150860-2-pbonzini@redhat.com>
+Subject: [PATCH] lsi53c895a: avoid out of bounds access to s->msg[]
+Date: Sun, 31 Mar 2024 20:17:29 +0200
+Message-ID: <20240331181730.150860-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -99,40 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The spec for the lsi53c895a says: "If the instruction is a Block Move
-and a value of 0x000000 is loaded into the DBC register, an illegal
-instruction interrupt occurs if the LSI53C895A is not in target mode,
-Command phase".
-
-Because QEMU only operates in initiator mode, generate the interrupt
-unconditionally if the low 24 bits are 0x000000.
+If no bytes are there to process in the message in phase,
+the input data latch (s->sidl) is set to s->msg[-1].  Just
+do nothing since no DMA is performed.
 
 Reported-by: Chuhong Yuan <hslester96@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/lsi53c895a.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/scsi/lsi53c895a.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index eb9828dd5ef..1e18d88983b 100644
+index 71f759a59dd..eb9828dd5ef 100644
 --- a/hw/scsi/lsi53c895a.c
 +++ b/hw/scsi/lsi53c895a.c
-@@ -1205,6 +1205,15 @@ again:
-             break;
-         }
-         s->dbc = insn & 0xffffff;
-+        if (!s->dbc) {
-+            /*
-+             * If the instruction is a Block Move and a value of 0x000000 is
-+             * loaded into the DBC register, an illegal instruction interrupt
-+             * occurs if the LSI53C895A is not in target mode, Command phase.
-+             */
-+            lsi_script_dma_interrupt(s, LSI_DSTAT_IID);
-+            break;
+@@ -927,13 +927,18 @@ static void lsi_do_msgin(LSIState *s)
+     assert(len > 0 && len <= LSI_MAX_MSGIN_LEN);
+     if (len > s->dbc)
+         len = s->dbc;
+-    pci_dma_write(PCI_DEVICE(s), s->dnad, s->msg, len);
+-    /* Linux drivers rely on the last byte being in the SIDL.  */
+-    s->sidl = s->msg[len - 1];
+-    s->msg_len -= len;
+-    if (s->msg_len) {
+-        memmove(s->msg, s->msg + len, s->msg_len);
+-    } else {
++
++    if (len) {
++        pci_dma_write(PCI_DEVICE(s), s->dnad, s->msg, len);
++        /* Linux drivers rely on the last byte being in the SIDL.  */
++        s->sidl = s->msg[len - 1];
++        s->msg_len -= len;
++        if (s->msg_len) {
++            memmove(s->msg, s->msg + len, s->msg_len);
 +        }
-         s->rbc = s->dbc;
-         /* ??? Set ESA.  */
-         s->ia = s->dsp - 8;
++    }
++
++    if (!s->msg_len) {
+         /* ??? Check if ATN (not yet implemented) is asserted and maybe
+            switch to PHASE_MO.  */
+         switch (s->msg_action) {
 -- 
 2.44.0
 
