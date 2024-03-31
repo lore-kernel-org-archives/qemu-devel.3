@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3670FCD128A
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 19:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC14CD1284
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 19:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rr0tK-0000JO-UG; Sun, 31 Mar 2024 15:30:54 -0400
+	id 1rr0tH-0000IX-RE; Sun, 31 Mar 2024 15:30:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1rr0tJ-0000J3-1m; Sun, 31 Mar 2024 15:30:53 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1rr0tG-0000IG-AZ; Sun, 31 Mar 2024 15:30:50 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1rr0tH-0001QE-5J; Sun, 31 Mar 2024 15:30:52 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-5e42b4bbfa4so2024589a12.1; 
- Sun, 31 Mar 2024 12:30:50 -0700 (PDT)
+ id 1rr0tE-0001Pv-OP; Sun, 31 Mar 2024 15:30:50 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-5d42e7ab8a9so1813959a12.3; 
+ Sun, 31 Mar 2024 12:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711913449; x=1712518249; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711913446; x=1712518246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P/Oz4nAb4eNMYZyk5vmRGZoOtdjU0VylSe0dYHONRL4=;
- b=OqWl/1u2clk8ud8gIBINY6l1/ZzXPusrfirPe/LFGitR9/QzR31sdwsI9QiFNFxfJI
- PVY4DwpCzZLzwv6SebjEYWox5jdjpdO70hfeqR4AVNZrIq+d4+iMplZo/vQ7pHDB4FK/
- DVq4E7xIFH8g5iC2CE1CSMi9IqNnEfFnDb3c1tJ7XamAbWZjxuVwV6natnu1FiR5xqv4
- 5vdQoNVsNQuWCv4YNK7WgTqz9yNW/ZE/Nlv8X6m+u9IkE353FPFsYatot5gt3HnzMyhb
- /CEIuCtipwYO6C/lWyS0AuvKKIpzQasU3iYxoApEN90JuASWTOeblKvzdSGpuwZehLsB
- sCcQ==
+ bh=js9MPuxE6HDFGb/bm1Qi8CQe6wvYU0HraTNqQ6YK0o4=;
+ b=akEv1Ton/31SWx/CfmZwlLOCVrUGPWvM9I0/EGbR5N9gItN5XwLLSacCg3lqNVGpuK
+ 4j/MTpX4D05EwrnSBzQb+ZfPDn17C5fOADE0JoTJIEVO4H8+05YKpKNJ3wFpMuU/M/+G
+ FNNXm2aPQTav24E2QGytH87QgJgd7pTKUIs1Qpq4vX6a48QFEkQhEm5z19oPcAU1B8eq
+ hH2+PT3YVFpjC78Rd0AtLhUaGry2nTMb8SiY8D6wY5/xWtzd4dvdDTQgqLlyLT/olK0Z
+ F8xnRxegrQ/rPPUJSZHRmIniDCDW0TSjtl57wlZ3V8BzJYM/3b2LIcnLfw8RrvX8QLfr
+ nXhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711913449; x=1712518249;
+ d=1e100.net; s=20230601; t=1711913446; x=1712518246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=P/Oz4nAb4eNMYZyk5vmRGZoOtdjU0VylSe0dYHONRL4=;
- b=oz2WUUvD4eGEET45lKkjCIBovETopvS2Otl1Zf/I8PRLb71YNjY6/Xs7G25Awy4HDi
- bzciKOFWZxLNlgQWOXNHP4OlNOC14gm66ruoKspII6JntSef93Zpp1mAgNkzVZZ/ZKTA
- wqc/bxYhCQOEjog/NTBDBIauK+AJGQqoBxnnVNB0oOUVJK8NKcTvM9LtNeQpRfUONwzS
- lWmUADXmQ5EFxlUHGyMNL0eax3KHKmjYfP0ErKDsnPlqtHNotxLLjh9WiXHmiC37lZnn
- 4hTOtSiDt00nOF0f+wrAQIOuaVJWZGqhinuHub4Vsj0fV6lfcT8V4fanViIKap3BMaKQ
- 8VHw==
+ bh=js9MPuxE6HDFGb/bm1Qi8CQe6wvYU0HraTNqQ6YK0o4=;
+ b=ouLSxUM86S5lt3UwqKyNGZKlO5b+vbHEnuIy20CjMzPSujiFbly6B86z/8tQdLrioo
+ FmviPjEVT5ewTduSUn0SoCuvod+w/eeOIZGnltTCNlxb3m60FEAkqJZVW5yfT/ps74hO
+ w0juXFgjfNkg6IMbJHq/0qDl/k4xanOUtRQL5BB6aFsDad/AzK5flakLZ3xUauhEsNJZ
+ aJFNhBKZY+AXFQLuxy9fVKMr2O0+gDof3DqTILuDurFvgRdDAT1E0qecIq820LcCVuhR
+ 4g/lBKoI+6hhFjS//EhLKqhS6D6cMwGK53jTDkxSP1AnNAt9mKd43cT+yjesp6ZFi6Ya
+ lsrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyAB6yS+MEMMAjg6tbigVGE+rPvh+hpell8D6pJQ1Phk3e1O/BWF+IDRMqOzqKjiEy8ImZEMv4P/Lfq4usmq0+ecGuwIw=
-X-Gm-Message-State: AOJu0Yy4jDjRGxfeDD1GfoSykdwZ3GalICsVqKSfL4rYUpm85+gRUIyJ
- 7BzZHTSdTBxrvYsOzGSt7qarYTMNi557LCe1UqoBjVHcY2vVg+YP
-X-Google-Smtp-Source: AGHT+IG2j1TIVw0Vgmf4x6RolE+0PsvCpr3ZNbaC/aL/IT5s+NDmMlzdmpUnJl10HcLJLa0QppRY5g==
-X-Received: by 2002:a17:903:32cb:b0:1e0:7bbf:bef4 with SMTP id
- i11-20020a17090332cb00b001e07bbfbef4mr9192272plr.41.1711913449363; 
- Sun, 31 Mar 2024 12:30:49 -0700 (PDT)
+ AJvYcCU9+Hmwqx6FknrMeew7z2IdFrYf8O35sBfFWaHmDqyjF4B/2D0OxPCIc5eo6VAa0hE6HFRg7MvUuDl8q47pmEQItDWZ9GU=
+X-Gm-Message-State: AOJu0YwPRQwPsOz4m2/1lZ0sbbw8RFp920LV1yhTHaCYB9tshJvxuecO
+ e2nu+El4Ifvm+GqNiy2OqEKFjz2CybUcwWZ6oTHXRcabxuObE9Hu
+X-Google-Smtp-Source: AGHT+IFhf0fx9aXtbewMkV+ijIhcG6WT5qJeTWTELqHJyNpgSsNuDN1yJYSdtKa8UdQqlZ/bANbIqA==
+X-Received: by 2002:a05:6a20:6a1b:b0:1a5:6f67:3f63 with SMTP id
+ p27-20020a056a206a1b00b001a56f673f63mr7724117pzk.0.1711913446195; 
+ Sun, 31 Mar 2024 12:30:46 -0700 (PDT)
 Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
- h15-20020a170902680f00b001dd6f305a81sm7339566plk.293.2024.03.31.12.30.48
+ s16-20020a170902ea1000b001e0afbb6d99sm7232394plg.47.2024.03.31.12.30.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 12:30:49 -0700 (PDT)
+ Sun, 31 Mar 2024 12:30:45 -0700 (PDT)
 From: Minwoo Im <minwoo.im.dev@gmail.com>
 To: Klaus Jensen <its@irrelevant.dk>,
 	Keith Busch <kbusch@kernel.org>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Minwoo Im <minwoo.im@samsung.com>
-Subject: [PATCH v2 2/4] hw/nvme: separate identify data for sec. ctrl list
-Date: Mon,  1 Apr 2024 04:30:30 +0900
-Message-Id: <20240331193032.5186-3-minwoo.im.dev@gmail.com>
+ Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
+Subject: [PATCH v2 1/4] hw/nvme: add Identify Endurance Group List
+Date: Mon,  1 Apr 2024 04:30:29 +0900
+Message-Id: <20240331193032.5186-2-minwoo.im.dev@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240331193032.5186-1-minwoo.im.dev@gmail.com>
 References: <20240331193032.5186-1-minwoo.im.dev@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=minwoo.im.dev@gmail.com; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=minwoo.im.dev@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,180 +96,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Minwoo Im <minwoo.im@samsung.com>
 
-Secondary controller list for virtualization has been managed by
-Identify Secondary Controller List data structure with NvmeSecCtrlList
-where up to 127 secondary controller entries can be managed.  The
-problem hasn't arisen so far because NVME_MAX_VFS has been 127.
-
-This patch separated identify data itself from the actual secondary
-controller list managed by controller to support more than 127 secondary
-controllers with the following patch.  This patch reused
-NvmeSecCtrlEntry structure to manage all the possible secondary
-controllers, and copy entries to identify data structure when the
-command comes in.
+Commit 73064edfb864 ("hw/nvme: flexible data placement emulation")
+intorudced NVMe FDP feature to nvme-subsys and nvme-ctrl with a
+single endurance group #1 supported.  This means that controller should
+return proper identify data to host with Identify Endurance Group List
+(CNS 19h).  But, yes, only just for the endurance group #1.  This patch
+allows host applications to ask for which endurance group is available
+and utilize FDP through that endurance group.
 
 Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c   | 21 ++++++++++-----------
- hw/nvme/nvme.h   | 14 ++++++++------
- hw/nvme/subsys.c |  8 ++++----
- 3 files changed, 22 insertions(+), 21 deletions(-)
+ hw/nvme/ctrl.c       | 22 ++++++++++++++++++++++
+ include/block/nvme.h |  1 +
+ 2 files changed, 23 insertions(+)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index cfe53a358871..7e60bc9f2075 100644
+index f026245d1e9e..cfe53a358871 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -219,7 +219,6 @@
- #define NVME_TEMPERATURE_CRITICAL 0x175
- #define NVME_NUM_FW_SLOTS 1
- #define NVME_DEFAULT_MAX_ZA_SIZE (128 * KiB)
--#define NVME_MAX_VFS 127
- #define NVME_VF_RES_GRANULARITY 1
- #define NVME_VF_OFFSET 0x1
- #define NVME_VF_STRIDE 1
-@@ -5480,14 +5479,14 @@ static uint16_t nvme_identify_sec_ctrl_list(NvmeCtrl *n, NvmeRequest *req)
-     NvmeIdentify *c = (NvmeIdentify *)&req->cmd;
-     uint16_t pri_ctrl_id = le16_to_cpu(n->pri_ctrl_cap.cntlid);
-     uint16_t min_id = le16_to_cpu(c->ctrlid);
--    uint8_t num_sec_ctrl = n->sec_ctrl_list.numcntl;
-+    uint8_t num_sec_ctrl = n->nr_sec_ctrls;
-     NvmeSecCtrlList list = {0};
-     uint8_t i;
+@@ -5629,6 +5629,26 @@ static uint16_t nvme_identify_nslist_csi(NvmeCtrl *n, NvmeRequest *req,
+     return nvme_c2h(n, list, data_len, req);
+ }
  
-     for (i = 0; i < num_sec_ctrl; i++) {
--        if (n->sec_ctrl_list.sec[i].scid >= min_id) {
--            list.numcntl = num_sec_ctrl - i;
--            memcpy(&list.sec, n->sec_ctrl_list.sec + i,
-+        if (n->sec_ctrl_list[i].scid >= min_id) {
-+            list.numcntl = MIN(num_sec_ctrl - i, 127);
-+            memcpy(&list.sec, n->sec_ctrl_list + i,
-                    list.numcntl * sizeof(NvmeSecCtrlEntry));
-             break;
-         }
-@@ -7132,8 +7131,8 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
- 
-     if (n->params.sriov_max_vfs) {
-         if (!pci_is_vf(pci_dev)) {
--            for (i = 0; i < n->sec_ctrl_list.numcntl; i++) {
--                sctrl = &n->sec_ctrl_list.sec[i];
-+            for (i = 0; i < n->nr_sec_ctrls; i++) {
-+                sctrl = &n->sec_ctrl_list[i];
-                 nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
-             }
- 
-@@ -7921,7 +7920,7 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
- static void nvme_init_state(NvmeCtrl *n)
++static uint16_t nvme_endurance_group_list(NvmeCtrl *n, NvmeRequest *req)
++{
++    uint16_t list[NVME_CONTROLLER_LIST_SIZE] = {};
++    uint16_t *nr_ids = &list[0];
++    uint16_t *ids = &list[1];
++    uint16_t endgid = le32_to_cpu(req->cmd.cdw11) & 0xffff;
++
++    /*
++     * The current nvme-subsys only supports Endurance Group #1.
++     */
++    if (!endgid) {
++        *nr_ids = 1;
++        ids[0] = 1;
++    } else {
++        *nr_ids = 0;
++    }
++
++    return nvme_c2h(n, list, sizeof(list), req);
++}
++
+ static uint16_t nvme_identify_ns_descr_list(NvmeCtrl *n, NvmeRequest *req)
  {
-     NvmePriCtrlCap *cap = &n->pri_ctrl_cap;
--    NvmeSecCtrlList *list = &n->sec_ctrl_list;
-+    NvmeSecCtrlEntry *list = n->sec_ctrl_list;
-     NvmeSecCtrlEntry *sctrl;
-     PCIDevice *pci = PCI_DEVICE(n);
-     uint8_t max_vfs;
-@@ -7946,9 +7945,9 @@ static void nvme_init_state(NvmeCtrl *n)
-     n->aer_reqs = g_new0(NvmeRequest *, n->params.aerl + 1);
-     QTAILQ_INIT(&n->aer_queue);
- 
--    list->numcntl = cpu_to_le16(max_vfs);
-+    n->nr_sec_ctrls = max_vfs;
-     for (i = 0; i < max_vfs; i++) {
--        sctrl = &list->sec[i];
-+        sctrl = &list[i];
-         sctrl->pcid = cpu_to_le16(n->cntlid);
-         sctrl->vfn = cpu_to_le16(i + 1);
-     }
-@@ -8505,7 +8504,7 @@ static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
-         if (!(val & PCI_SRIOV_CTRL_VFE)) {
-             num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-             for (i = 0; i < num_vfs; i++) {
--                sctrl = &n->sec_ctrl_list.sec[i];
-+                sctrl = &n->sec_ctrl_list[i];
-                 nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
-             }
-         }
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 5f2ae7b28b9c..02c11d909cd1 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -26,6 +26,7 @@
- 
- #define NVME_MAX_CONTROLLERS 256
- #define NVME_MAX_NAMESPACES  256
-+#define NVME_MAX_VFS 127
- #define NVME_EUI64_DEFAULT ((uint64_t)0x5254000000000000)
- #define NVME_FDP_MAX_EVENTS 63
- #define NVME_FDP_MAXPIDS 128
-@@ -597,7 +598,8 @@ typedef struct NvmeCtrl {
-     } features;
- 
-     NvmePriCtrlCap  pri_ctrl_cap;
--    NvmeSecCtrlList sec_ctrl_list;
-+    uint32_t nr_sec_ctrls;
-+    NvmeSecCtrlEntry sec_ctrl_list[NVME_MAX_VFS];
-     struct {
-         uint16_t    vqrfap;
-         uint16_t    virfap;
-@@ -647,7 +649,7 @@ static inline NvmeSecCtrlEntry *nvme_sctrl(NvmeCtrl *n)
-     NvmeCtrl *pf = NVME(pcie_sriov_get_pf(pci_dev));
- 
-     if (pci_is_vf(pci_dev)) {
--        return &pf->sec_ctrl_list.sec[pcie_sriov_vf_number(pci_dev)];
-+        return &pf->sec_ctrl_list[pcie_sriov_vf_number(pci_dev)];
-     }
- 
-     return NULL;
-@@ -656,12 +658,12 @@ static inline NvmeSecCtrlEntry *nvme_sctrl(NvmeCtrl *n)
- static inline NvmeSecCtrlEntry *nvme_sctrl_for_cntlid(NvmeCtrl *n,
-                                                       uint16_t cntlid)
- {
--    NvmeSecCtrlList *list = &n->sec_ctrl_list;
-+    NvmeSecCtrlEntry *list = n->sec_ctrl_list;
-     uint8_t i;
- 
--    for (i = 0; i < list->numcntl; i++) {
--        if (le16_to_cpu(list->sec[i].scid) == cntlid) {
--            return &list->sec[i];
-+    for (i = 0; i < n->nr_sec_ctrls; i++) {
-+        if (le16_to_cpu(list[i].scid) == cntlid) {
-+            return &list[i];
-         }
-     }
- 
-diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
-index d30bb8bfd5b4..561ed04a5317 100644
---- a/hw/nvme/subsys.c
-+++ b/hw/nvme/subsys.c
-@@ -17,13 +17,13 @@
- static int nvme_subsys_reserve_cntlids(NvmeCtrl *n, int start, int num)
- {
-     NvmeSubsystem *subsys = n->subsys;
--    NvmeSecCtrlList *list = &n->sec_ctrl_list;
-+    NvmeSecCtrlEntry *list = n->sec_ctrl_list;
-     NvmeSecCtrlEntry *sctrl;
-     int i, cnt = 0;
- 
-     for (i = start; i < ARRAY_SIZE(subsys->ctrls) && cnt < num; i++) {
-         if (!subsys->ctrls[i]) {
--            sctrl = &list->sec[cnt];
-+            sctrl = &list[cnt];
-             sctrl->scid = cpu_to_le16(i);
-             subsys->ctrls[i] = SUBSYS_SLOT_RSVD;
-             cnt++;
-@@ -36,12 +36,12 @@ static int nvme_subsys_reserve_cntlids(NvmeCtrl *n, int start, int num)
- static void nvme_subsys_unreserve_cntlids(NvmeCtrl *n)
- {
-     NvmeSubsystem *subsys = n->subsys;
--    NvmeSecCtrlList *list = &n->sec_ctrl_list;
-+    NvmeSecCtrlEntry *list = n->sec_ctrl_list;
-     NvmeSecCtrlEntry *sctrl;
-     int i, cntlid;
- 
-     for (i = 0; i < n->params.sriov_max_vfs; i++) {
--        sctrl = &list->sec[i];
-+        sctrl = &list[i];
-         cntlid = le16_to_cpu(sctrl->scid);
- 
-         if (cntlid) {
+     NvmeNamespace *ns;
+@@ -5732,6 +5752,8 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
+         return nvme_identify_nslist(n, req, false);
+     case NVME_ID_CNS_CS_NS_ACTIVE_LIST:
+         return nvme_identify_nslist_csi(n, req, true);
++    case NVME_ID_CNS_ENDURANCE_GROUP_LIST:
++        return nvme_endurance_group_list(n, req);
+     case NVME_ID_CNS_CS_NS_PRESENT_LIST:
+         return nvme_identify_nslist_csi(n, req, false);
+     case NVME_ID_CNS_NS_DESCR_LIST:
+diff --git a/include/block/nvme.h b/include/block/nvme.h
+index bb231d0b9ad0..7c77d38174a7 100644
+--- a/include/block/nvme.h
++++ b/include/block/nvme.h
+@@ -1074,6 +1074,7 @@ enum NvmeIdCns {
+     NVME_ID_CNS_CTRL_LIST             = 0x13,
+     NVME_ID_CNS_PRIMARY_CTRL_CAP      = 0x14,
+     NVME_ID_CNS_SECONDARY_CTRL_LIST   = 0x15,
++    NVME_ID_CNS_ENDURANCE_GROUP_LIST  = 0x19,
+     NVME_ID_CNS_CS_NS_PRESENT_LIST    = 0x1a,
+     NVME_ID_CNS_CS_NS_PRESENT         = 0x1b,
+     NVME_ID_CNS_IO_COMMAND_SET        = 0x1c,
 -- 
 2.34.1
 
