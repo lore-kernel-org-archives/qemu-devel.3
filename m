@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 410BFC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Mar 2024 21:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93865CD1288
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqfxK-0007fu-1c; Sat, 30 Mar 2024 17:09:38 -0400
+	id 1rqphl-0002cy-9x; Sun, 31 Mar 2024 03:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <giacomo.parmeggiani@gmail.com>)
- id 1rqfRM-0003p2-01; Sat, 30 Mar 2024 16:36:36 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rqphj-0002WY-Dx; Sun, 31 Mar 2024 03:34:11 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <giacomo.parmeggiani@gmail.com>)
- id 1rqfRK-0001Fs-BE; Sat, 30 Mar 2024 16:36:35 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4155f5b8cefso595605e9.1; 
- Sat, 30 Mar 2024 13:36:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rqphg-00025o-NL; Sun, 31 Mar 2024 03:34:11 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-5d8ddbac4fbso2348194a12.0; 
+ Sun, 31 Mar 2024 00:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711830992; x=1712435792; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711870446; x=1712475246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sRjnZ3gjx+ZJ/Nyk8hURqzpR3uHQ4jTEOFkYyRAgiBw=;
- b=cbH/gkXWWoBLpv6xPPJD5IYmkeo77Xr2x1Nz3wcG1vQaiXNH2NAhYdUDmW3BfjZf7Q
- yCSMHKwNrL4qenDRkP9IGCW82UvACcoMqm1lKH8j8I3CN0dGX7O8z84g3DngNnvjAuGR
- naHiDvbUU2fRjAmp8655sdWReQPpyPAAlcSHi/tTp4P/Wu61c8J+O9AMAEr/1k1ZHwfW
- J5lZfu/X75SRaflRmey+Woij3vOWyl0Ghtdp83ZjUpQTooprkQ3Av69v6MWIGNi8b5PE
- XKBBlWFdS296X4rwhDZuTrqM012q7uFpt5uOyCJn5BAKBATM5lPcFZTvV9PRYxNv7e3S
- TZ+Q==
+ bh=D6wSsPZEcVSSUGBkwC/VmUENDZWLIRZujo9SWc2/D2w=;
+ b=XT3o45pHoowKsDoy6EF6n4Rms+ih5scAV+LutBXKHldt9tgVfrUksTmMgF/egVPes6
+ QV9su6iz0zxN8g7dXQV11/wJ60LoA4uLz4Jp3/fFIDE03hvGZ31O6jVLP3Guu/tx7iFp
+ oz55EDt/vU9SvBiaa/cB6iPu0MeuzwHBzoP5nJaj5oU4EQhuumjar3bH6oL+vNEg/ORC
+ OSACY1nhY4/6rUQYnZY4HD2kVEJjY+nllnmYkRNpAthU5zgpzlkZh/ZptDk2fqVq9Wp7
+ v9ECsktUgyQVqqERsFnU5KLYQwoMuBDTAoL9MTDhgz9VvmHuPP1SxyXDshgM7K7HpPbK
+ GM0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711830992; x=1712435792;
+ d=1e100.net; s=20230601; t=1711870446; x=1712475246;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sRjnZ3gjx+ZJ/Nyk8hURqzpR3uHQ4jTEOFkYyRAgiBw=;
- b=oAqimd+PBivRvrcgG5R2My4RUP00AxpVjIom6BjipOEmahdrRPC5K5nvd57wfSQEnZ
- k4xwFzb+NRIXPVnhM+n+W7Iqh6nwxMBHR3sitgvHwQ1n/rLmpt6ogy89CM0nJw7n22Rq
- R1AeJEP/bivSeUjg33qShQfF51MvL9amR1PwlEkyjhozgCFP5O7lUt4ui2O9BE46UhzU
- 3fYlAgMXZ85k3Xe3+Tv0eVZhh8vjCOWJPe4p7wJGTdJSGlkXlzl8BxlNmHV2pfBx6iYx
- o73A5aU0YZUD2vYxwLwxO8zX0prqyuNUfIDXfc0TmJaGMnYs4pWDaFExt3LaaoX07OvN
- QrQg==
+ bh=D6wSsPZEcVSSUGBkwC/VmUENDZWLIRZujo9SWc2/D2w=;
+ b=A03vIvpl3JgQ66e7AZyO9PWZeVtHG2HtvgiZl9+n2lQrXZI2ge85SlAg2xj81Ck71v
+ 7KU5TFpwuqcgsgB15R8lGgVWTZds1QaTJuU5ju7bGQPjQahMe9+PGdquJm3qmLf8iT1V
+ 1YT8pg40kuvznFlHt/9E8UGu0N3bJVf5I/g4E/2+HF/b3X7VbRAO1xTi/ScXAVM5CPnD
+ aAti4vH8sOkQwLrlE/O4flgWemoXzOAfGca3pDae21ocBsYS5uib23rA6NCxkd8TQM2k
+ AGQTfMLljCeCou7Kz3uIHvcXaogJX9BBERoD2rkcHmeuEFYEqRTz/ULy8IdW7wQMytuW
+ Hs1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxtqGZXKGZSLaq7MoB3ylhDYffGDsKLhvg9FobqQcBQGy8zMEoFPPz52PNEIJ9unuxs0/fVhQ/qzTy5A7DKadP2wNjob8=
-X-Gm-Message-State: AOJu0YwJNNivoP/0m4w2h9q+qEuDNf2blhWVaTQYCdijhROKZRGTvKbg
- E0Kh9jCPL9RS3NKy8UPAe2A/XLRfOFizkybMQ2Cl+WEMvD4dPH1JhiGgGlUfG/JxOA==
-X-Google-Smtp-Source: AGHT+IHHjcDK+9BrJNKbjgL12XSbA5AXzP1hUEqqHQosoSZcvccRCv9kwvZxz3Dz0vEs3gfXMv9YQQ==
-X-Received: by 2002:a05:600c:4fd5:b0:414:4d82:ec01 with SMTP id
- o21-20020a05600c4fd500b004144d82ec01mr4107743wmq.21.1711830991492; 
- Sat, 30 Mar 2024 13:36:31 -0700 (PDT)
-Received: from localhost.localdomain ([213.55.241.93])
+ AJvYcCVF34f+1ZTQS9ZC2lik4Cv0Y4lZT8/wwNTrvNzE02SYSmWrG3egtIeKjLZVWFXlQoF4y5yybZtjf9rMLQajR95aMmD7
+X-Gm-Message-State: AOJu0Yw8+geS8ASGi/y+UfPLXF2mFJBDpy83n0lDfRqec5Ck3bWuhC2O
+ 0uKDBPCTe2RrXWOVB/22/x8r3+9lLXraZYtMlH3jmsXdJ6og9lMU1yk6HUadDcY=
+X-Google-Smtp-Source: AGHT+IG/aqwqcWwUkTXeHO1NTALU1O6kIsQEvrbt72G4fYCKmbAXq6TOKOkUyFttoJydPpY9cKcb4g==
+X-Received: by 2002:a05:6a20:430b:b0:1a3:c404:37fc with SMTP id
+ h11-20020a056a20430b00b001a3c40437fcmr8426469pzk.13.1711870445985; 
+ Sun, 31 Mar 2024 00:34:05 -0700 (PDT)
+Received: from wheely.local0.net ([118.210.97.62])
  by smtp.gmail.com with ESMTPSA id
- o15-20020a05600c4fcf00b0041488895a37sm12624948wmq.33.2024.03.30.13.36.30
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 30 Mar 2024 13:36:31 -0700 (PDT)
-From: Giacomo Parmeggiani <giacomo.parmeggiani@gmail.com>
+ k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 31 Mar 2024 00:34:05 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Giacomo Parmeggiani <giacomo.parmeggiani@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH] m25p80: Add support for the GD25WQ32E flash
-Date: Sat, 30 Mar 2024 21:35:20 +0100
-Message-Id: <20240330203520.64892-1-giacomo.parmeggiani@gmail.com>
-X-Mailer: git-send-email 2.32.1 (Apple Git-133)
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 0/8] ppc-for-9.0-3 queue
+Date: Sun, 31 Mar 2024 17:33:37 +1000
+Message-ID: <20240331073349.88324-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=giacomo.parmeggiani@gmail.com; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -79,7 +78,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 30 Mar 2024 17:09:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,88 +92,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This introduces the GigaDevice GD25WQ32E flash, including the SFDP table
+The following changes since commit 5012e522aca161be5c141596c66e5cc6082538a9:
 
-Signed-off-by: Giacomo Parmeggiani <giacomo.parmeggiani@gmail.com>
----
- hw/block/m25p80.c      |  2 ++
- hw/block/m25p80_sfdp.c | 40 ++++++++++++++++++++++++++++++++++++++++
- hw/block/m25p80_sfdp.h |  2 ++
- 3 files changed, 44 insertions(+)
+  Update version for v9.0.0-rc1 release (2024-03-26 19:46:55 +0000)
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index 8dec134832..6cc05b63e5 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -205,6 +205,8 @@ static const FlashPartInfo known_devices[] = {
-     /* GigaDevice */
-     { INFO("gd25q32",     0xc84016,      0,  64 << 10,  64, ER_4K) },
-     { INFO("gd25q64",     0xc84017,      0,  64 << 10, 128, ER_4K) },
-+    { INFO("gd25wq32e",   0xc86516,      0,  64 << 10,  64, ER_4K),
-+      .sfdp_read = m25p80_sfdp_gd25wq32e },
- 
-     /* Intel/Numonyx -- xxxs33b */
-     { INFO("160s33b",     0x898911,      0,  64 << 10,  32, 0) },
-diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
-index 6ee2cfaf11..cb0963328d 100644
---- a/hw/block/m25p80_sfdp.c
-+++ b/hw/block/m25p80_sfdp.c
-@@ -406,3 +406,43 @@ static const uint8_t sfdp_is25wp256[] = {
-     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
- };
- define_sfdp_read(is25wp256);
-+
-+/*
-+ * GigaDevice
-+ */
-+
-+static const uint8_t sfdp_gd25wq32e[] = {
-+    0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
-+    0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
-+    0xc8, 0x00, 0x01, 0x03, 0x90, 0x00, 0x00, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xe5, 0x20, 0xf1, 0xff, 0xff, 0xff, 0xff, 0x01,
-+    0x44, 0xeb, 0x08, 0x6b, 0x08, 0x3b, 0x42, 0xbb,
-+    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0xff,
-+    0xff, 0xff, 0x00, 0xff, 0x0c, 0x20, 0x0f, 0x52,
-+    0x10, 0xd8, 0x00, 0xff, 0x63, 0x92, 0xfd, 0xfe,
-+    0x83, 0x2f, 0x26, 0x46, 0xec, 0x82, 0x18, 0x44,
-+    0x7a, 0x75, 0x7a, 0x75, 0x04, 0xbd, 0xd5, 0x5c,
-+    0x00, 0x06, 0x64, 0x00, 0x08, 0x10, 0x00, 0x00,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0x00, 0x36, 0x50, 0x16, 0x9e, 0xf9, 0x77, 0x64,
-+    0xfc, 0xcb, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-+};
-+define_sfdp_read(gd25wq32e);
-diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
-index 1733b56950..7d1f60f2ee 100644
---- a/hw/block/m25p80_sfdp.h
-+++ b/hw/block/m25p80_sfdp.h
-@@ -29,4 +29,6 @@ uint8_t m25p80_sfdp_w25q01jvq(uint32_t addr);
- 
- uint8_t m25p80_sfdp_is25wp256(uint32_t addr);
- 
-+uint8_t m25p80_sfdp_gd25wq32e(uint32_t addr);
-+
- #endif
--- 
-2.32.1 (Apple Git-133)
+are available in the Git repository at:
 
+  https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.0-3-20240331
+
+for you to fetch changes up to b07a5bb736ca08d55cc3ada8ca309943b55d4b70:
+
+  tests/avocado: ppc_hv_tests.py set alpine time before setup-alpine (2024-03-30 18:50:26 +1000)
+
+----------------------------------------------------------------
+* Various fixes for recent regressions and new code.
+
+----------------------------------------------------------------
+Benjamin Gray (2):
+      target/ppc: Restore [H]DEXCR to 64-bits
+      target/ppc: Fix GDB register indexing on secondary CPUs
+
+Harsh Prateek Bora (1):
+      spapr: nested: use bitwise NOT operator for flags check
+
+Nicholas Piggin (3):
+      target/ppc: Do not clear MSR[ME] on MCE interrupts to supervisor
+      tests/avocado: Fix ppc_hv_tests.py xorriso dependency guard
+      tests/avocado: ppc_hv_tests.py set alpine time before setup-alpine
+
+Philippe Mathieu-Daudé (2):
+      hw/ppc/spapr: Include missing 'sysemu/tcg.h' header
+      target/ppc/mmu-radix64: Use correct string format in walk_tree()
+
+ hw/ppc/spapr.c                |  1 +
+ hw/ppc/spapr_nested.c         |  2 +-
+ target/ppc/cpu_init.c         |  4 ++--
+ target/ppc/excp_helper.c      |  5 +++--
+ target/ppc/gdbstub.c          | 31 ++++++++++++++++++++-----------
+ target/ppc/mmu-radix64.c      |  8 ++++----
+ tests/avocado/ppc_hv_tests.py |  6 +++++-
+ 7 files changed, 36 insertions(+), 21 deletions(-)
 
