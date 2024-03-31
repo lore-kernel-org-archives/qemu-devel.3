@@ -4,75 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD50CD128A
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 17:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12910CD128A
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 17:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqz1O-0005zs-7y; Sun, 31 Mar 2024 13:31:06 -0400
+	id 1rqzN6-0000vS-Qc; Sun, 31 Mar 2024 13:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rqz1M-0005zN-DD; Sun, 31 Mar 2024 13:31:04 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rqz1K-0005ju-Gx; Sun, 31 Mar 2024 13:31:04 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6579C5A89A;
- Sun, 31 Mar 2024 20:32:36 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7FF88A7D18;
- Sun, 31 Mar 2024 20:30:54 +0300 (MSK)
-Message-ID: <edf754eb-ddbd-449f-be9b-730d9f584107@tls.msk.ru>
-Date: Sun, 31 Mar 2024 20:30:53 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqzN2-0000vG-9d
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 13:53:28 -0400
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rqzN0-0000tn-LH
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 13:53:27 -0400
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5a4817189c8so2311505eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 31 Mar 2024 10:53:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711907604; x=1712512404; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8vOJ5ZUCfx+GpTRAAjB8Up7qBhtHwL4LVJZ7yE0rZYQ=;
+ b=ce+YFubhgge/xmESsmo9cBlHcc2BZGlqJvjK8ub96wkZJ9ybWlyMc7k8N7e5GOPwVt
+ ZssNQquuy4N02jMAPrjAK+kXKgXbdfDmP5oG1DT8cCAx6AIN972IW2MYAANfcXOJefgz
+ WBt0oRtn4Rk5uVszqu1D3JuSY3sAeP67rFMpPhI1wRe4l7ByEeMPha9rE2Q+m0FtpjsW
+ cLeVCAxDYOyYBysSE7x6LsxQ/lVEfVGXVmwaLuostv0FjbJNIsFCTlIjR1dh5CFtN/wK
+ w3HwLTbXGYztxdt7yGrc4PfN6Yokr8TYg/EE6DruTNNd7V8ntPIAmh9rSBjvYKcyGoSM
+ 6a+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711907604; x=1712512404;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8vOJ5ZUCfx+GpTRAAjB8Up7qBhtHwL4LVJZ7yE0rZYQ=;
+ b=AOaa4n1Kj3qml/W+Y3IVZYspuz/3IIzA/lDKy+hI3KPi1xd3RoviDHWVVs7xdkIV/U
+ xjZ69sfD+xbgftALyIaMt9b4TNfafKr+3MJlHo4c5NyAeElcT+oJYCU7Q+vjJau1pqY8
+ UIcE+z/RizAzB/iHYltJn/cXLYWgsv+JhKCxwh/4ZlU6MVeP8BM/G5tiWCXaj4Gm3Iyg
+ ZLvGSXAQc/F46GGyhosyGTcN9tN+KE/JkzAu8izs3hOi7eWsVBlNZR6+MFc6ge1wRHST
+ G1nrpUF2T6tFWPREcPVz4UsQkO84uuFGW1Tw1dIO7lekYY8zuDXLVow0mzN9EBT/7fym
+ o3wg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlt4nKVHxjQjJgitOKkH9hzJrT77IzgAx7ZhrIf0L20pxghRMdkjWzzBhURf5cqgD1WZliZRUOvalnuXNoFbXKJYh+Dcg=
+X-Gm-Message-State: AOJu0Yz9UudDy/EbKYy9ZrGRsRqWw5sG7YAQKNIn1mF31DgBoh/sEdEX
+ kImHegXSLbszt3h91jlovYPvnJPh+gUwzRWb7p1zx5OY3PLreMRKd9PZeESPoTBSQGQ1dmxCGsd
+ 1
+X-Google-Smtp-Source: AGHT+IFHkkxyv54yQedC63qE+FuYs2DjNfTc3ISmnxqQ8ROpcp50DR/U94HlsNrdriHJ45wA7dT0TQ==
+X-Received: by 2002:a05:6358:2905:b0:183:3f8f:5eb5 with SMTP id
+ y5-20020a056358290500b001833f8f5eb5mr9740157rwb.4.1711907603882; 
+ Sun, 31 Mar 2024 10:53:23 -0700 (PDT)
+Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ ot6-20020a17090b3b4600b002a23209024fsm1552850pjb.3.2024.03.31.10.53.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 31 Mar 2024 10:53:23 -0700 (PDT)
+Message-ID: <467864a1-e3fe-4f92-aa80-c4da3a5484fd@linaro.org>
+Date: Sun, 31 Mar 2024 07:53:11 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] Fix some typos in documentation (found by
- codespell)
-To: Stefan Weil <sw@weilnetz.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Luc Michel <luc@lmichel.fr>, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20240331161526.1746598-1-sw@weilnetz.de>
+Subject: Re: [PATCH] linux-user/syscall.c: fix setsockopt(SOL_ALG, ALG_SET_KEY)
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: YunQiang Su <ysu@wavecomp.com>, Laurent Vivier <laurent@vivier.eu>
+References: <20240331084825.2716833-1-mjt@tls.msk.ru>
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240331161526.1746598-1-sw@weilnetz.de>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240331084825.2716833-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,13 +98,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-31.03.2024 19:15, Stefan Weil via wrote:
-> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+On 3/30/24 22:48, Michael Tokarev wrote:
+> This setsockopt accepts zero-lengh optlen (current qemu implementation
+> does not allow this).  Also, there's no need to make a copy of the key,
+> it is enough to use lock_user() (which accepts zero-length length already).
+> 
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2197
+> Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
+> Signed-off-by: Michael Tokarev<mjt@tls.msk.ru>
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Wonder if I should review qemu-trivial queue for 9.0, - I think there's nothing
-in there by now..
-
-/mjt
+r~
 
