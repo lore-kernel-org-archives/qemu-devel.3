@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F0CCD1288
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7737BCD1284
 	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqpi0-0002yM-9B; Sun, 31 Mar 2024 03:34:28 -0400
+	id 1rqphp-0002qP-Dm; Sun, 31 Mar 2024 03:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphy-0002x0-Pq; Sun, 31 Mar 2024 03:34:26 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1rqphn-0002o2-OI; Sun, 31 Mar 2024 03:34:15 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphx-0002FK-0u; Sun, 31 Mar 2024 03:34:26 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e6b6f86975so2090779b3a.1; 
- Sun, 31 Mar 2024 00:34:24 -0700 (PDT)
+ id 1rqphm-00026v-8H; Sun, 31 Mar 2024 03:34:15 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e74aa08d15so2535956b3a.1; 
+ Sun, 31 Mar 2024 00:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711870463; x=1712475263; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711870452; x=1712475252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mYXhV2tdfrK37fGeW/EVruixzcxS6jD0MeBRq3dZyY0=;
- b=V0yGoDh/L4RDA5hKBxpTZb/4Rwpb8nQZkP/2uOPjHJ8a0LkfPgk4eg7N38dX9j1rz8
- LMPGi78tX+V/Si5OhsD4JHXtNYJ/YDD3vj5eV0J+/rAWCmbxzLu6+coHzLmvqDj2/rcs
- Byu8WDoSaQdlERNfbqkARJ/O9xnLta3uKp2ObTmBiZEK02+sscH5iDoh4r5HyFl/TuA/
- 9MT7FxhoMPgVkAwT+KlhW11jxehyed1rO3NzkBfsZdqbl/xglPmbuRRbhFQBnGooFe4J
- KyqkWEe1HpEq0TMsAfRyQSgnuW/LmwuqDa/OKtBaRFjuHn9mZ3LEZut1kZi/ZLAdGWIp
- P2tg==
+ bh=xF5OBXNYP6ZI81AmsCFRz0Xuc8TKtQnpsKPSIbYJa3o=;
+ b=Ao5r3aEuc4c3pgVdMww6B6LEzLVBuNlWIafyzQdnzKZj1P6exgpy9a0CJoApROUfTt
+ GiUoDMfR73M+SeXuu06R4jYBYDp3eMbYldWDaRi2fkDZnlw3xWYm5IMIsLf/XvsOguf7
+ ObBmLn3er7UA+aV5uZy3aWMT4IJjCQRsLv3Us4vMC1lkUi3wi4I5BCWmu6l5iinST/ro
+ nUA0MXGwq1QDkFw1J8bf/npUByM8HTLGwYd+UhoaCrSFF1r3Ok5d4KVDdLe0zWv/JBL1
+ wY6zUYhqDC2zTD8d+y0XP4blt57bPz9xAVX8qImGKELvFwKUpXtl7Xlv+RN5jWUIApzK
+ 98SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711870463; x=1712475263;
+ d=1e100.net; s=20230601; t=1711870452; x=1712475252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mYXhV2tdfrK37fGeW/EVruixzcxS6jD0MeBRq3dZyY0=;
- b=BM8E7Ptg7diyy8K7EIgyQZsTzX+bRiqs1zNsxrg4v5F7Qxg30CK8DeeAFlGsD+ijN8
- HkKg3yi3M4neAo7ACrAgyxneZUaRlaDMXt1buQ5NWOa6Kvw87pyGc594aeCLQiloXmIQ
- wBbkSZ7HGc/ES/dQ1x83hZ8IBip8LcUXeg2qMLTYPRGSWyZsQuw0eZ3Febfkgk1Bk29t
- BO2MP29ONkwTPHc4881sBbZajy0gO/LifDVs6+obJjKCjiK0NcaeRLcAjaDc6hwwtWx0
- m07/qTZVOvkh1/gvazVi8VcD7VnDsaBiWYw1wXifqpTz+xoUa3gZADgPKPjpmR3qby3R
- UfRg==
+ bh=xF5OBXNYP6ZI81AmsCFRz0Xuc8TKtQnpsKPSIbYJa3o=;
+ b=O5DsBTM/4q8Xmo8uI2rOs+UKHZAa/o/chmQAu3uwFzIuTehJa4FtcsEEMivn3oH7ak
+ pUq0Vs2+sdZ52R6UM3B/Tp7Xb33/oZJ15PIVwIrJx+uWLOFjF2RVfZPsnM+KHfkk50rM
+ 0c2Ij0+WOqXK+cI7Zxw86skGfba5sgmd7GK3YZ+e4vIGZL3rta4W6fE3TtJYjbI95NJp
+ 8K16/8+fCTNiPqaNOUaBLpmVMq0h5aCxxYrBpY8KHEZXS0c6zXjapB4Hw0VSb0wI8ksU
+ pD0ryNUctJ+4kq7tW+HCXW4Ed9qeXeayR8itxomkeMXQy8bHv11QypW9P7ZpiX4QDeHO
+ TT2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGnzIm5EXpa3go7gbaqtUPXKna9B2Y+h8zturvWsQDFjuDc/NVeuCmuigEPmWK0+DwFDc4oNpgpdlQr4opiIqFgT7X
-X-Gm-Message-State: AOJu0YwXV5tRCWtMmVfJRaZjzzidxXG/OyeE5F/6evHMXUnNQ8beS6Uw
- fgx2lVnAyIaFOdU98zuHIBs4L8rH55flU/IkaGYbFPlTYwcHnJI2cbeGj7OA2tY=
-X-Google-Smtp-Source: AGHT+IGYCaa9jKETcIxs3FJpEFekUjX8IY1krLhvPXCEDvoTnXYxHb48Pw31nGlsAY6BNQiwHvNWOw==
-X-Received: by 2002:a05:6a00:234b:b0:6ea:f369:f20f with SMTP id
- j11-20020a056a00234b00b006eaf369f20fmr5096673pfj.1.1711870462993; 
- Sun, 31 Mar 2024 00:34:22 -0700 (PDT)
+ AJvYcCUi/300MKPTqUM3U0yesNk5IUvzBhQ1lSWE9mlSKO1VJqxEzALhOdBskpIT7SeTZpAHqDmuczeLZsb99KPjs28PhYSI
+X-Gm-Message-State: AOJu0Yw/wxe0+jPL1E6eH69/ZUe0QAESmromL9S/7U0LsRXqn0G0Y5xW
+ dLAwwkZlIQxitjaDhU9mqWT9sybojtOOGHiJ+CgW3fllOIXNTWb9B3gv0Ldny3k=
+X-Google-Smtp-Source: AGHT+IETTOw2Vn+VyN+Rls/DoBmIk8j2yt9iBvJ3c/qB/ud1ToNEatvTOz5tmvmpoU2miRCkh3J+Bw==
+X-Received: by 2002:a05:6a00:1992:b0:6ea:e2ec:9622 with SMTP id
+ d18-20020a056a00199200b006eae2ec9622mr8610538pfl.20.1711870452321; 
+ Sun, 31 Mar 2024 00:34:12 -0700 (PDT)
 Received: from wheely.local0.net ([118.210.97.62])
  by smtp.gmail.com with ESMTPSA id
- k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.20
+ k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 00:34:22 -0700 (PDT)
+ Sun, 31 Mar 2024 00:34:12 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 6/8] target/ppc: Do not clear MSR[ME] on MCE interrupts to
- supervisor
-Date: Sun, 31 Mar 2024 17:33:43 +1000
-Message-ID: <20240331073349.88324-7-npiggin@gmail.com>
+Subject: [PULL 2/8] hw/ppc/spapr: Include missing 'sysemu/tcg.h' header
+Date: Sun, 31 Mar 2024 17:33:39 +1000
+Message-ID: <20240331073349.88324-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240331073349.88324-1-npiggin@gmail.com>
 References: <20240331073349.88324-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,47 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hardware clears the MSR[ME] bit when delivering a machine check
-interrupt, so that is what QEMU does.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The spapr environment runs in supervisor mode though, and receives
-machine check interrupts after they are processed by the hypervisor,
-and MSR[ME] must always be enabled in supervisor mode (otherwise it
-could checkstop the system). So MSR[ME] must not be cleared when
-delivering machine checks to the supervisor.
+"sysemu/tcg.h" declares tcg_enabled(), and is implicitly included.
+Include it explicitly to avoid the following error when refactoring
+headers:
 
-The fix to prevent supervisor mode from modifying MSR[ME] also
-prevented it from re-enabling the incorrectly cleared MSR[ME] bit
-when returning from handling the interrupt. Before that fix, the
-problem was not very noticable with well-behaved code. So the
-Fixes tag is not strictly correct, but practically they go together.
+  hw/ppc/spapr.c:2612:9: error: call to undeclared function 'tcg_enabled'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    if (tcg_enabled()) {
+        ^
 
-Found by kvm-unit-tests machine check tests (not yet upstream).
-
-Fixes: 678b6f1af75ef ("target/ppc: Prevent supervisor from modifying MSR[ME]")
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/excp_helper.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/ppc/spapr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 80f584f933..674c05a2ce 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1345,9 +1345,10 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-              * clear (e.g., see FWNMI in PAPR).
-              */
-             new_msr |= (target_ulong)MSR_HVB;
-+
-+            /* HV machine check exceptions don't have ME set */
-+            new_msr &= ~((target_ulong)1 << MSR_ME);
-         }
--        /* machine check exceptions don't have ME set */
--        new_msr &= ~((target_ulong)1 << MSR_ME);
- 
-         msr |= env->error_code;
-         break;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index c417f9dd52..e9bc97fee0 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -35,6 +35,7 @@
+ #include "sysemu/sysemu.h"
+ #include "sysemu/hostmem.h"
+ #include "sysemu/numa.h"
++#include "sysemu/tcg.h"
+ #include "sysemu/qtest.h"
+ #include "sysemu/reset.h"
+ #include "sysemu/runstate.h"
 -- 
 2.43.0
 
