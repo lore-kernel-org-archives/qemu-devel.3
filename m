@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4F7CD1284
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 08:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97254CD1284
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 10:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqqrj-0003eg-6Q; Sun, 31 Mar 2024 04:48:35 -0400
+	id 1rqs6o-0005HY-JM; Sun, 31 Mar 2024 06:08:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqqrh-0003eO-1w
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 04:48:33 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqs6S-0005Cu-AU
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 06:07:52 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqqrf-0007kB-00
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 04:48:32 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqs6Q-00010D-MT
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 06:07:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D93A65A7F3;
- Sun, 31 Mar 2024 11:50:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E15815A833;
+ Sun, 31 Mar 2024 13:09:19 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C3DD3A7ABD;
- Sun, 31 Mar 2024 11:48:26 +0300 (MSK)
-Received: (nullmailer pid 2716847 invoked by uid 1000);
- Sun, 31 Mar 2024 08:48:26 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id B8919A7B18;
+ Sun, 31 Mar 2024 13:07:40 +0300 (MSK)
+Received: (nullmailer pid 2724221 invoked by uid 1000);
+ Sun, 31 Mar 2024 10:07:40 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: YunQiang Su <ysu@wavecomp.com>, Laurent Vivier <laurent@vivier.eu>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH] linux-user/syscall.c: fix setsockopt(SOL_ALG, ALG_SET_KEY)
-Date: Sun, 31 Mar 2024 11:48:25 +0300
-Message-Id: <20240331084825.2716833-1-mjt@tls.msk.ru>
+Cc: Laurent Vivier <laurent@vivier.eu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 4/4] linux-user/syscall: do_setsockopt(): eliminate goto in
+ switch for SO_SNDTIMEO
+Date: Sun, 31 Mar 2024 13:07:37 +0300
+Message-Id: <20240331100737.2724186-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240331100737.2724186-1-mjt@tls.msk.ru>
+References: <20240331100737.2724186-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -58,39 +60,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This setsockopt accepts zero-lengh optlen (current qemu implementation
-does not allow this).  Also, there's no need to make a copy of the key,
-it is enough to use lock_user() (which accepts zero-length length already).
+There's identical code for SO_SNDTIMEO and SO_RCVTIMEO, currently
+implemented using an ugly goto into another switch case.  Eliminate
+that using arithmetic if, making code flow more natural.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2197
-Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ linux-user/syscall.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e12d969c2e..5c7728cfd4 100644
+index 988b6422fb..cdf26c43ba 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -2277,18 +2277,13 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+@@ -2294,12 +2294,10 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+     case TARGET_SOL_SOCKET:
          switch (optname) {
-         case ALG_SET_KEY:
+         case TARGET_SO_RCVTIMEO:
++        case TARGET_SO_SNDTIMEO:
          {
--            char *alg_key = g_malloc(optlen);
+                 struct timeval tv;
+ 
+-                optname = SO_RCVTIMEO;
 -
-+            char *alg_key = lock_user(VERIFY_READ, optval_addr, optlen, 1);
-             if (!alg_key) {
--                return -TARGET_ENOMEM;
--            }
--            if (copy_from_user(alg_key, optval_addr, optlen)) {
--                g_free(alg_key);
-                 return -TARGET_EFAULT;
-             }
-             ret = get_errno(setsockopt(sockfd, level, optname,
-                                        alg_key, optlen));
--            g_free(alg_key);
-+            unlock_user(alg_key, optval_addr, optlen);
-             break;
+-set_timeout:
+                 if (optlen != sizeof(struct target_timeval)) {
+                     return -TARGET_EINVAL;
+                 }
+@@ -2308,13 +2306,12 @@ set_timeout:
+                     return -TARGET_EFAULT;
+                 }
+ 
+-                ret = get_errno(setsockopt(sockfd, SOL_SOCKET, optname,
++                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
++                                optname == TARGET_SO_RCVTIMEO ?
++                                    SO_RCVTIMEO : SO_SNDTIMEO,
+                                 &tv, sizeof(tv)));
+                 return ret;
          }
-         case ALG_SET_AEAD_AUTHSIZE:
+-        case TARGET_SO_SNDTIMEO:
+-                optname = SO_SNDTIMEO;
+-                goto set_timeout;
+         case TARGET_SO_ATTACH_FILTER:
+         {
+                 struct target_sock_fprog *tfprog;
 -- 
 2.39.2
 
