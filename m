@@ -4,81 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC33CD1288
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 07:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A120CD1288
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 08:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rqphx-0002tO-Kv; Sun, 31 Mar 2024 03:34:25 -0400
+	id 1rqqEZ-0003R5-Ly; Sun, 31 Mar 2024 04:08:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphv-0002t4-RJ; Sun, 31 Mar 2024 03:34:23 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rqphu-0002CL-9H; Sun, 31 Mar 2024 03:34:23 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e6ee9e3cffso2111904b3a.1; 
- Sun, 31 Mar 2024 00:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711870460; x=1712475260; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+9G/bE2e1fCaBb8no691midYL4f9HZ61fZW8qbGYtK4=;
- b=FaUFHwUsXCUdW5cC/qli4Km1V+4JUxba0kqrybrOmPWc82pQTFYxudAexKz+eW+SLa
- 7IvUAVvju/nxf3Gc+wlg4Iwr9C8CtwfFQRmKOGVwYOmT7SjcvkkZ1X5pTlpcvoSIIwan
- 7GkgMFjN9hKzYiUoZJWUGZ3PM1BJeXFTy3+FUNFXFE/innKK+zSIGvwnBIumvArbkeAL
- 8cm5gWcNnn2X+B+Sxv1o7JdArZxmHrkg7t3Rq2nDH8gfVQ+beXqqOk/pnPkagCkfkmDO
- I8UoAQoB9ZN4vPviS5H34WOMOlQJV7ac35rxHqDNhYP0If5DYsc+PBJAaQDT4zUwsxdZ
- xTSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711870460; x=1712475260;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+9G/bE2e1fCaBb8no691midYL4f9HZ61fZW8qbGYtK4=;
- b=sDo7prh76pwuy8rQho0VN0aAqxwHT6B2kySFWGZWKmdwP78tUDbJ8qPsnMA1QlLwur
- 5nC9DPbYq8+593tdXSQfc1G0jauhMJKKIDVh9mz4JGSMNYa8B6HAaJshBxUMH3Byn7e8
- uP0iWYILMFXCmmHwaOlpfFjPMp5tjDdQSp3CJXBtj+ylFQLMlfWV40Vnb73ZpiQysd+G
- ITCWpHmB/0UlhFXT+iHiaEZkK/gpYcYN/KeiaNMYn70jnslf55x82GePv63JT0SRoAoK
- qrWgitEdg61Ve8E7SvrIj2Tbd7fv5rXRZBFDimgsrKvNZFlUXke2ECR9BPtEyIJad7JL
- yhig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/BOvKOPb3J8XTkBPMrZxVeohHnUzXOHxF8aq5YpavBxKGZXltqVrB9sJqwzhlusLlEDC/EBtLLmtofRJeDVMVGnWm
-X-Gm-Message-State: AOJu0YztuN2ksgAMTXR3kRVMzJ5GfD2dVHbbXnJ+BQcYRd74B1H4oiqO
- W75c/knJwnb0408qvMGoVpOGPMQBFOS8sOUS1wnpeUEmy6D6hM13xCsHJtLuNhA=
-X-Google-Smtp-Source: AGHT+IFyJwjEuW4V9nOwNF0ZLnKXHmEN0ZfPZ7rd6qV+3uFsNhjZy7mGxaijQGbuGtt3OKh/a5bYtg==
-X-Received: by 2002:a05:6a00:890:b0:6ea:f05c:5c16 with SMTP id
- q16-20020a056a00089000b006eaf05c5c16mr6320969pfj.5.1711870460303; 
- Sun, 31 Mar 2024 00:34:20 -0700 (PDT)
-Received: from wheely.local0.net ([118.210.97.62])
- by smtp.gmail.com with ESMTPSA id
- k9-20020aa78209000000b006eabe72ce84sm5822411pfi.16.2024.03.31.00.34.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 00:34:20 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Benjamin Gray <bgray@linux.ibm.com>
-Subject: [PULL 5/8] target/ppc: Fix GDB register indexing on secondary CPUs
-Date: Sun, 31 Mar 2024 17:33:42 +1000
-Message-ID: <20240331073349.88324-6-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240331073349.88324-1-npiggin@gmail.com>
-References: <20240331073349.88324-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqqEW-0003Qc-Ay
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 04:08:04 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rqqEU-0007vD-Ad
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 04:08:04 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 88D9E5A7EB;
+ Sun, 31 Mar 2024 11:09:28 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7961AA7A94;
+ Sun, 31 Mar 2024 11:07:49 +0300 (MSK)
+Message-ID: <fddfea9e-cea0-4ff1-b4d5-a6f672a317bb@tls.msk.ru>
+Date: Sun, 31 Mar 2024 11:07:49 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Backdoor in xz, should we switch compression format for tarballs?
+To: Stefan Hajnoczi <stefanha@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Michael Roth <michael.roth@amd.com>,
+ "Maydell, Peter" <peter.maydell@linaro.org>,
+ "P. Berrange, Daniel" <berrange@redhat.com>
+References: <CABgObfbBSer0p3OnS7LKt53oWbWw-i=UponFGq5hQnb2rBE71w@mail.gmail.com>
+ <CAJSP0QVRjSkX-edmHKDxcpc8O0Jh2BifuahE1FAz9ODOv4=AJQ@mail.gmail.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CAJSP0QVRjSkX-edmHKDxcpc8O0Jh2BifuahE1FAz9ODOv4=AJQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,88 +86,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+30.03.2024 13:03, Stefan Hajnoczi :
+> On Fri, 29 Mar 2024 at 14:00, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> For more info, see https://lwn.net/ml/oss-security/20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de/ but, essentially, xz was backdoored and it seems like upstream was directly responsible for this.
+>>
+>> Based on this, should we switch our distribution from bz2+xz to bz2+zstd or bz2+lzip?
+> 
+> I think it's reasonable to drop xz as a precaution due to the
+> long-term control the attacker may have had over the code base. I
+> haven't researched the alternatives though.
 
-The GDB server protocol assigns an arbitrary numbering of the SPRs.
-We track this correspondence on each SPR with gdb_id, using it to
-resolve any SPR requests GDB makes.
+I agree with Daniel here, - lets' not rush into conclusions so far.
 
-Early on we generate an XML representation of the SPRs to give GDB,
-including this numbering. However the XML is cached globally, and we
-skip setting the SPR gdb_id values on subsequent threads if we detect
-it is cached. This causes QEMU to fail to resolve SPR requests against
-secondary CPUs because it cannot find the matching gdb_id value on that
-thread's SPRs.
+Even with this long-term control, so far it does not look like .xz
+format itself is somehow bad (but it can be improved for sure), or
+it poses a treat.
 
-This is a minimal fix to first assign the gdb_id values, then return
-early if the XML is cached. Otherwise we generate the XML using the
-now already initialised gdb_id values.
+> I CCed Michael Tokarev because he looked at compression formats for
+> distributing QEMU recently and may have thoughts on which alternative
+> is suitable.
 
-Fixes: 1b53948ff8f7 ("target/ppc: Use GDBFeature for dynamic XML")
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/gdbstub.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+The only my intention at the time was to avoid keeping things in *two*
+forms, - as it looked like there's no reason for that.   My reasons was
+that .xz is used for quite some time as default download link on qemu.org
+website so it should be safe to assume everyone has .xz support by now
+and there's no need to keep .bz2.  Now with this incident in mind, maybe
+that wasn't a good idea and some other format should be kept still.
 
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index 3f1e61bdb7..3b28d4e21c 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -305,14 +305,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
-     unsigned int num_regs = 0;
-     int i;
- 
--    if (pcc->gdb_spr.xml) {
--        return;
--    }
--
--    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
--                             "org.qemu.power.spr", "power-spr.xml",
--                             cs->gdb_num_regs);
--
-     for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
-         ppc_spr_t *spr = &env->spr_cb[i];
- 
-@@ -320,9 +312,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
-             continue;
-         }
- 
--        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
--                                       TARGET_LONG_BITS, num_regs,
--                                       "int", "spr");
-         /*
-          * GDB identifies registers based on the order they are
-          * presented in the XML. These ids will not match QEMU's
-@@ -335,6 +324,26 @@ static void gdb_gen_spr_feature(CPUState *cs)
-         num_regs++;
-     }
- 
-+    if (pcc->gdb_spr.xml) {
-+        return;
-+    }
-+
-+    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
-+                             "org.qemu.power.spr", "power-spr.xml",
-+                             cs->gdb_num_regs);
-+
-+    for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
-+        ppc_spr_t *spr = &env->spr_cb[i];
-+
-+        if (!spr->name) {
-+            continue;
-+        }
-+
-+        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
-+                                       TARGET_LONG_BITS, spr->gdb_id,
-+                                       "int", "spr");
-+    }
-+
-     gdb_feature_builder_end(&builder);
- }
- #endif
--- 
-2.43.0
+But once again, - I think it's a bit preliminary to make decisions while
+the dust still not settled.
 
+/mjt
 
