@@ -4,178 +4,167 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998FACD128D
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 04:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2DCCD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 05:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rr8qf-0002f6-G7; Mon, 01 Apr 2024 00:00:43 -0400
+	id 1rr9rL-0001rU-31; Mon, 01 Apr 2024 01:05:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rr8q1-0002ck-7V
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 00:00:01 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1rr9rI-0001qv-Ns
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 01:05:24 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rr8py-0007a8-VS
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 00:00:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711943999; x=1743479999;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=YCz8XftVAlhv5wxifmzKTQwO9rfOjw1FkiVb2U4YGwk=;
- b=fU68fJJkCmzA7fyRrABYbnqlVLOSV4Wg7uQ81iXGp8eFrvaT43BUoLl3
- XuLPG/Jpbt/Gd6ZCtuvGwfuOhWMYQVwpGvl6hJFW6KVFxQODM3SqVxcLh
- x163LUC3r3m2eASRy3Qs1jfVcse0oOQnFy79uqW1SPdq8pdvCtX10vK72
- 5pIw25jpdn6ncSgVu4TmWLwS2K6KemUziU7L1WYZPBZOEjiPjUpztnkD9
- PyxMea2JQmf5UaIg2nKd+vgtAC8Bcx5dSv9zNRdCbdFT1fP2fGLy/SDKR
- 78Yvwq4Q9gXRlQJMSk5+WI9821nPD+wJblntTlJSFMMIFuEdgaJroIHeq Q==;
-X-CSE-ConnectionGUID: 4ZDyq8XtRsyDvGwsnQTuIw==
-X-CSE-MsgGUID: unRSIJa+QmyI7a3/px+zLg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11030"; a="18209445"
-X-IronPort-AV: E=Sophos;i="6.07,171,1708416000"; d="scan'208";a="18209445"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Mar 2024 20:59:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,171,1708416000"; d="scan'208";a="17662888"
-Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
- by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 31 Mar 2024 20:59:53 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Sun, 31 Mar 2024 20:59:53 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Sun, 31 Mar 2024 20:59:52 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Sun, 31 Mar 2024 20:59:52 -0700
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.40) by
- edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Sun, 31 Mar 2024 20:59:48 -0700
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1rr9rG-0002vk-5B
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 01:05:24 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42VNYCoV024857; Mon, 1 Apr 2024 05:05:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=xrxTZHLMmx52YgrySTYWTD3YTO5y4vVoKeVwUW7j4Lo=;
+ b=i00Fh2nq0lsffzuBVrQXL3klTf9B11g+YPvVQ8XDPa+hPa3MroA/y6yJNRQ7pds56HB+
+ oe1OG0pjzlgKHLJ0a7auptIIZlKfIJivvlSYtSFSkNPy+20AQXzUCe6SQF2F2vFquEns
+ f/turLUkn2D6RhQ6ixo/C5CvRBNnlwmCSs5L9HuG+fK3O6QaozJFGW/S0/lF+esua94d
+ dqs9Ja6v4PjncoDqW8j9o5rZMIiDsiPcaG6mDW1m5dGoDgpxxZfsO+duSNT2iLFIBczR
+ oJqi/sXWSfb/t4JIN6fA426dkc0t754EktPkAJc5aaTUQcdmN7CCfuv4qPO67UK0q3aN 3Q== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3x6b9v9kkk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 01 Apr 2024 05:05:14 +0000
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 43120IkN021462; Mon, 1 Apr 2024 05:05:13 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10lp2101.outbound.protection.outlook.com [104.47.55.101])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3x696558ex-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 01 Apr 2024 05:05:13 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=i40dpLr+Ou+FJvnXg6Hr2so7/bnqF5QftkNjXaJlFB4GV5njR9KAMPDwxY9K4yIx6pEXqU6OPOKdkBnVLJ+oyLr3od/BCOX7ngereLhdsO6yOaJk7gI9So3s2MHNI1J9j6CezWlzPRbsZIQ/f1OsY0EVRVAwzfxUonp3lOYwf9b22XbJsIEqakw5h+DpRGrt6Sy/qEJySrHbLsKBspVvzLaJJTPfQXCJ1K+gpCFzqivxpq24wdwkxltumevI/OELh4qnORaGtTqpkiYm8UfGD8uOmSgnvtclO2h1hAVTWA2/x00DckqW76wbGVESwR6QlCJMFWbXhU6cLWxlVqYp6A==
+ b=chXP+PMkSnMpWvZ2vLEohw849oS3F4//bBAF3OZzGCrttk5tVgJqf0kKn7KIo+o59SCqDiTXpW7xTU2RoBQPJnGt6f1cZGQEjICzImzuelWfv/nt8qJcCXyFAbGro+Bgzwzb71laBRT+fKiebSpdCCZta5cGxr9u6DmXp7G7uH0X31UjqG9i1KsIet8pG/rjhiwCvinHOLyL6NI+x8+4RgdtwU5KJaKqW+eU8aIPlrpmqsQQPypp9cHeruDsK/NK368fKN/fWUS4PDHex1bmdRfnpenWjcNZLh/5Bjko65XldTTvNJXqvlpwpoHUVVUnpwnWtcdf5qu6gzVdtOvh1Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YCz8XftVAlhv5wxifmzKTQwO9rfOjw1FkiVb2U4YGwk=;
- b=NKgdXEDC5jCur/Qh5kz+WQuSz3sp8+t682Eci7M9l7RzlhX+ggGw8C+0mA5L5culPaXkF7i6bCnc9uMLicKPK+q4WJrzGRzxGELfAHOBqe0q4nfdrjeRnDOcsQ5HkObUu4xzxZ7Ysd1OShUryoR5tpn+y4c24/kMhiGBUOxY+LsKU1ClUbMMsoJQRYtcnmXE0eUIzzLKlL5F11KNINy28/MHhxd0DJGY2RLuWokjNSfJiiJq5BzVIWXPLuk2IaxCDm3MBSQGWWvFDpklR2Tmt7gU8/NLXuI30Qo1DlDiBYQ/fCYRbwJl1a07yf9znMwtNW9JhU8KAIkLoSq+hP9LQA==
+ bh=xrxTZHLMmx52YgrySTYWTD3YTO5y4vVoKeVwUW7j4Lo=;
+ b=Hi1UgMwgjtgqTlVQ/X6YWcucwTVtc8PIAhEtQe+v1Ia9ODaramv9k90iEqmJq3/OtyVSF6cvZmNGIQSV1uq5/PyrxdFZdVIRC+WR7f2AKSkryC2ULNDGLvEwDNmpCvcqcUZgdynyiOxU/S2Rsw/pFkQIhIp7okR+Gm+sPkaHQskzRF/dey7TPOYJmzYGMYa97LC+No8OgTNXdqgE8SfIOJb7IcBpjnIJ1yVpVkoJrB3zXoU/fIDNnFKy9FPh+9ur5kt0eAsRT9Xb0vvp3J7l9glbMmDrIfGioYcCItTNFFR1JRXtddaT0JBNR1KygXhTKB4Le30Tgk/3CwvnNXG5tg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by DM4PR11MB6192.namprd11.prod.outlook.com (2603:10b6:8:a9::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.22; Mon, 1 Apr
- 2024 03:59:42 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129%7]) with mapi id 15.20.7452.019; Mon, 1 Apr 2024
- 03:59:41 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
- L" <yi.l.liu@intel.com>, "Sun, Yi Y" <yi.y.sun@intel.com>, "Peng, Chao P"
- <chao.p.peng@intel.com>
-Subject: RE: [PATCH v1 01/11] Introduce a common abstract struct
- HostIOMMUDevice
-Thread-Topic: [PATCH v1 01/11] Introduce a common abstract struct
- HostIOMMUDevice
-Thread-Index: AQHaafrJT1f15ksRNUCyLoL+rga0E7E+15OAgAAJFUCADK2tgIABCXpggAJwN4CAA/XfkA==
-Date: Mon, 1 Apr 2024 03:59:41 +0000
-Message-ID: <SJ0PR11MB6744D2A5094CA90DB493FC92923F2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
- <20240228035900.1085727-2-zhenzhong.duan@intel.com>
- <e6af68f4-f38d-413f-a63c-d1ae7254d802@redhat.com>
- <SJ0PR11MB674439E1DDE3DDE285571AEE922C2@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <41d50645-9f81-40b1-9ca5-7bb2e73d90de@redhat.com>
- <SJ0PR11MB6744F798CF55CC8FF230CE7B923B2@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <f23012d9-5b63-43c2-9530-31cddf484fcb@redhat.com>
-In-Reply-To: <f23012d9-5b63-43c2-9530-31cddf484fcb@redhat.com>
-Accept-Language: en-US
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xrxTZHLMmx52YgrySTYWTD3YTO5y4vVoKeVwUW7j4Lo=;
+ b=nUNb67t7J7Rsfh0fs7rQ9AgoSEWUT4GN94MVLmq5FfwaJkI4YmfIv5m4Rq0/MpK2nEipmol1w+C1N3T/7Fsc6SfEDS5xkoidsUPk9dbMRHItI8vcCbESJ0a68mM8mcIVQYe5Z4HL/eUbf1cr4XmnOkxtEjRUlyy8wyeZuj1qiBw=
+Received: from SA0PR10MB6425.namprd10.prod.outlook.com (2603:10b6:806:2c0::8)
+ by CH0PR10MB5147.namprd10.prod.outlook.com (2603:10b6:610:c2::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Mon, 1 Apr
+ 2024 05:05:11 +0000
+Received: from SA0PR10MB6425.namprd10.prod.outlook.com
+ ([fe80::894:70b7:573e:da46]) by SA0PR10MB6425.namprd10.prod.outlook.com
+ ([fe80::894:70b7:573e:da46%5]) with mapi id 15.20.7409.042; Mon, 1 Apr 2024
+ 05:05:11 +0000
+Message-ID: <53699224-f6d1-affe-1e99-2ed4812e9164@oracle.com>
+Date: Sun, 31 Mar 2024 22:05:09 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: qemu process consumes 100% host CPU after reverting snapshot
+To: Chun Feng Wu <wucf@linux.vnet.ibm.com>, qemu-devel@nongnu.org
+References: <c2bad656-0231-4113-af5b-75e4247d2ee2@linux.vnet.ibm.com>
+ <3352e507-528e-4666-8d14-ff6522d06d76@linux.vnet.ibm.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DM4PR11MB6192:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: NGRJJSQLb0qqAFkZq86mYjGEyu0IDT63kNB2PL524H7Wf+3Lle0XHALIUL/pv14OvqXbdHy6wvFqo+8aDvlg5QcvzNp7BAqpcEY6eKcFVqgBiXwI3rgqet75HwJ9I2QYT7ZkT/OtJo53zzlzfzx4ESZ+f4C7878St6p3HyaOo6CzmEbyQOwbDRpaQ2XaQWYop3Z7GABRs/vlP2KICGeEErKGy02ck3BM2htxHL3NqiZsueqnQ3HnQGhR8GBk5tOziaQvG9iiUYUXdCAb7o+ALMMA/cqAPPlr/+LOb1kDLNgmwyctByra10FVZllcELVQYPd65GpF8srp3y2VKpAa1jwfDkyOxzw/dm7oA0/j5eVGUnNrP9VtpXqrg/nl+6ds5R2D21BWeXFVdNqk527UVMJiQhrf3ZkmKU4JVDR7LfplV6DlFscWXK3ERFVh0xfi+wjLGfbG62OilbPkY6NkmhSCwXq/2XVF8AWSInAri+sMu7s/cAhxX0ll3HvFp+ItqbVYBQ+8mca/f4LuMw8JhoItPZ0J4/hHpM3sWD+k796XHPXr0dScUglGAO7qjLFyjHIo6gKL2t36knzzoH0O3I0xXWBoKV6tBEYtYj3QJWw=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(7416005)(1800799015)(366007); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?a1VPZWowSXRYd2w0cTBNa2VEQ0s4SDg5MHh5U3hyV3BpdjFHWWlnYmozOXg0?=
- =?utf-8?B?bVFBOEdLS0haOWpycmd0ZkFlSHUxNG5WOGM0VTA0TjhHUWs3cXliVmRpWUFa?=
- =?utf-8?B?QUpnN3VzRkVTTjNrcEVZOEhDR1RCUythNmIvTEQwYVFFbW9QdUNtbkUxdUp5?=
- =?utf-8?B?VHZITitNSXorQWFQcDY5eFh0VEZJeXdKMHN4TGFLK01vZzljcEZ3RXlYdXdj?=
- =?utf-8?B?ZU5UR2lFRklvQUYwM0lTTGVRb0JwaHEzbGtYN1luaUFCWlMyTnkrQTZQeXcy?=
- =?utf-8?B?SjNFL01TdmhKV0lYL29pMVpIdGlEQ2NOdVkvUFVQMEhlOGN6WFFoTTM0MEFz?=
- =?utf-8?B?cXFjRkV6UDJCYlRlc1BybklMTDJ0dlZkYkZVZVhWUmh0OTI2V2t4TFlOZDRi?=
- =?utf-8?B?b2RjTGVqSFFFaENQbGVQMndkQ3V5aEJ6bHIvQWIreVNvOWNXN29XdVpkQUZs?=
- =?utf-8?B?YXdlYVpma1lhNkE1NUFjNlFabDRXaVBHYzVoeWRUVjhYR2RnVGxTR24yMXNk?=
- =?utf-8?B?M2t2Ym9yaFZjK3J6TlFkaG5ZK3ZaaWVRU2hJQWpwRmVQY293NnY5QkxacWJR?=
- =?utf-8?B?UHBKcXBrck5BWGZpWDdndGZMNURsREU4ODhLRFRtZEFKelB4V1lRejlKQ05N?=
- =?utf-8?B?d2xwKzNHcFVMV3RRbThYOFc1M1krRTVlZ1pyVGJNOUk2RTkza0J6Skk5ZXdG?=
- =?utf-8?B?K3QrSlQwOW5ocCsrTmNRSldoYmVSQm5FWDByM0VDWDlOS1E0bFQvTGUyaFBJ?=
- =?utf-8?B?bnp4TzBzZDBaNllxSzJPMHlBZGJnTm5ZcktGNVM1L3kwYitUT25OSEZJY2l1?=
- =?utf-8?B?a3ZiSmNQWktQTEt1WXFBWXFwblVjS2swanlYNXBjcy9ReDQwT1ZscTFSektJ?=
- =?utf-8?B?b3o1VGwyb09CUk02VHVxOUxDaEcxOTR2UTg5aDN3dCs1N1dPbUd6eHhmVnRO?=
- =?utf-8?B?K0JaR2U0YWRTWThiQkRWV2FCNHkwWkkzOWlWY0srMWduYXJiaGNaRDg5aFhk?=
- =?utf-8?B?cFZFRjJaMG8vOU93Mk5pdmRhK25uMTVWK25XdWNrUzBBTDZGNGdGNzJ6clNm?=
- =?utf-8?B?WW5pVEJHZXZmd1haUzkxTVh5UEF6bXhieDUrZGtzTmNIRm9kR25DQXpxK1NC?=
- =?utf-8?B?R0xUZStLN3JRbEwzL1ByWVlQTmwvd2liZ04vZi84amlCdE1xaDdZM0VlT3pu?=
- =?utf-8?B?RHI2djRCZkhOR1JyaWNVV0NVOTRrZnFSUmtqQ0djQmdCT0lhWitMNGlMVjJy?=
- =?utf-8?B?clNLTnhSTnh3ZXd6WVRhQ1dkQXQ4Z0tyYm5CRUZpaVBnR1FCSzRSdW5iL0VZ?=
- =?utf-8?B?TkkvR3FzRHY0QzE4cnhWT2tqWE95UENhSEFXOG42biswMFloaGc2QkhPazFU?=
- =?utf-8?B?aXQ3V29QcXVxS0Y2S0NsdHRIc0QrdmQ0VFVCSUtKbkYrNXFMcEI2UEwxWWZT?=
- =?utf-8?B?a0tnRXBmYnd5cE4zSjZJcWJNVHBVS3NOV3hMa21MeGVKaUc3bjhkaHJUeGRt?=
- =?utf-8?B?cHg3MnYydnlNdWJuRFJaekNneTh2VzVxdVAyeWxUOU5GeWJGSmd0SmZCemZV?=
- =?utf-8?B?RmNndEZPRUNwdHNaL2pha2Zic0lzcWZOVE0rYUVYRXUrR1BYOUoweitGbUhP?=
- =?utf-8?B?RGtvNG81L0xqOU1sTDk1ck1KcmdsOWVvb1dPQjdIaFFmWEFoaUlDSzJVOGlj?=
- =?utf-8?B?bTVXOWJGOHlkSFl3VlJ3YmxCeGVkenBjYktqU2x0RUJHTjAva29IRXA3L0N1?=
- =?utf-8?B?bDREL29jSXhNT1BZUUQyRkFuSytIZnZ6ekVhYzFwNUliNTNGYUZpTzA2ZVNY?=
- =?utf-8?B?UCtmencwQ1RCdjRhZDBTQ2ZUK2tDMkJndmpMVS9wclpNYU9SQ2VaNzBpK05u?=
- =?utf-8?B?ZnZhallFK1diaEZwcmExc2Vya1dNMENJQ1ZQZitPMGRsTmZVeTI3eDdBNnUr?=
- =?utf-8?B?K3JCOUkwRk1vVEJKRkI0ZmZlYnc2dDErSVJ4OUdBVWJNMm5WbnhBUGtIeGNZ?=
- =?utf-8?B?RUZDTTlBd2FEQUZ3RnE5YTFmWVpGUlcyczd3ZHRWYklWamZMYmZXOXZHSFow?=
- =?utf-8?B?aGZQejF3Q3JPZVFzY2pqeGFLQy90R21pVlllb1BabHlIRFViRGJVdWFkbVZo?=
- =?utf-8?Q?IPrAMU+m+5RK6QPtwkwUOb96p?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+From: Dongli Zhang <dongli.zhang@oracle.com>
+In-Reply-To: <3352e507-528e-4666-8d14-ff6522d06d76@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PH8PR07CA0044.namprd07.prod.outlook.com
+ (2603:10b6:510:2cf::12) To SA0PR10MB6425.namprd10.prod.outlook.com
+ (2603:10b6:806:2c0::8)
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA0PR10MB6425:EE_|CH0PR10MB5147:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: c/CcpoD8EdJ8NWt8rem3qzG0ZVRgAunrjZBls9fTfO0FedvqUyP7+vBq24ya1y1L99ipC4/XbbDdGBUKRejlMwPbECcbyTI4TfgL1AbX3CxilFXBjjCQn4kSbQnvhdvEE/vrFtkfHFt4NNt+V8z1g0h/QaX1CGCP3pINcx4eGQMNDL3r23d+H4zFw+tQw78BLW9Ia+r8cbWzY4Z9l8ZUDL3uMuzbDLrTirx7/TJsD7XkO0cPNTgxtO49P5/QPHWzRk/mwO+WlltBCwoXOY0G+jWOjGuR74u7UhhRDSWJ9fG2bx3vCujoPwnHulAzadC4GY6hmNhN6vF3kFu9fx/qAt84jY9V2/ArJOxsB0SSkM5wnZnaaOoi1jxOL3i3G2Nst7mv2dFKiyEZA60LnnWgrCaIUHylM+0WrTlHpxGdfPTte+XSDxYm+Jrl+Z/kyi7Kpn2mawYjZL6EDvNo5rQqVDA/pI8nJLlYNyXZdhbj8+ImPWxpZLuDIonhMktC4X27AF3e3XUsDjbLRKnJxI1rutKtHgnw9csb3NhdZCJNp+It13QrR/pyNuHLwhFqyOzUIQ+KklLfGqLOHT33Ih3uhvbWmTW4LVM8IXDOahaeYmY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA0PR10MB6425.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(376005)(366007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QmF3cEc2bHpCZGpIKzdCOEc5OFoyVjVrZnhIVGRXYmhmY3EyTDJLS2Q0V2xF?=
+ =?utf-8?B?emtNcUw4WnBvd1hxYzBUYmdic24yNXJGWFJXTk1iMzA4aGJ1SDU2dXgrVFU3?=
+ =?utf-8?B?bjBvUWJKTjF1VmVKb0RXYlorQlBhWkJHZjNKYXJYMDRUS0ZoZ0tVcEE1OHlS?=
+ =?utf-8?B?VTZvVVRZeE5MNE9JNG80Tk1vbXFIL3BCeUYyRDhRcDNPVFJBL0g0dmJlZVEz?=
+ =?utf-8?B?b2VDUnNVU093TkdpeFIyaWppYXpHNFIxeUYzVS9nOWRCcGN3U0dwWStmYzdP?=
+ =?utf-8?B?c1g2R1R4TW1RNmFiZTZEeDZjbnFLQkhoUERVZGtuMllCbG1FQ3hod29GZGp4?=
+ =?utf-8?B?SzR2NEgxWFZ2TllsZmJROWNKbnY0Q2V6b1VCNC9NN2JWcitZUCszK1ZWdmpw?=
+ =?utf-8?B?b2o3VHJ4TVBHMERjbXpjcjVUQkNOWnZKdk1nZ01OZS9iZHhTdXcwS3Z2aGxP?=
+ =?utf-8?B?TWZsL2J2TXVhcE5SUm8vV015RjdmSy96MzNzVGdZMXc3UHpXWTZHMFRNZDN3?=
+ =?utf-8?B?SVBRaFJIK2VqRkFka1h2UjVpNG1RcGZoZUUvdnprRk9ONFN2S0p5Y3cwUm9z?=
+ =?utf-8?B?ajlmR1pjcWVES0ZTK0ZGTDFxSHhQOU1ob2xha3IyQUtIUzBNSlNlNmdiczJB?=
+ =?utf-8?B?V1NtamRWaTYwdUV4ZTQwSHhHSXpLLzArdnFMYUs5enE0Q05lZjc3WjB4MklO?=
+ =?utf-8?B?SFZJcERMais4OWFYY2NpRGpYdllBbFVMTmgrWjdIMFZyQWNmQlpZcjNNR1FD?=
+ =?utf-8?B?V2pMaVNCQ09ZN01ITElnYmZYUFhaZEJtSHVkRmlnRmptaTFSTHdhYTBUWnBG?=
+ =?utf-8?B?QUkxZDIvSFJIbm16T0dKWkdNM1hOa1pXR0NEcXJ3VlZmdlllV3BxeGdZU21L?=
+ =?utf-8?B?blNINjlaTTRyemw4UHBmWlU1Q1pCMXBzVkRIL0lKVktJZkRHZG4vdkNia0o1?=
+ =?utf-8?B?Q0s4ZVN6c3M2MllHQzQ1Q1FoWm1tSFVLUTAyN3p5VU8yV2lWdTdGNlVOVk4y?=
+ =?utf-8?B?SFZ1NmdEMkIyaTVoSG9BUXNUSENyQUgrRWN1emlLdG5ZUWRiU2VDZUtmL1dW?=
+ =?utf-8?B?ZG42UHUrNkNJY0JOODJ6TlNYSVFjalYyY1M3L2V5cGJCL1Aza2lWTmRtUGVN?=
+ =?utf-8?B?Y0hvVjFpd05sS2pjbk96c1FjbXdWR2lIVStmMkUvZDl4cVRiWElzdk1YYWNo?=
+ =?utf-8?B?TFYvdnFDUk5sWDFOL1Q3UTQ3Tk9URjJsTyt4NFU0MjR4YWc0VU9IeWhrNEU5?=
+ =?utf-8?B?OE81NGcvUTlkbkljTjB2YWNJeGpheXZ1VUpPOG41Y2FGWUhibFlnQU5tSlBx?=
+ =?utf-8?B?R0VZN3QrZmZFd1gvNlVKRkpvWnMwMWxSVFlQb0g0Q2F3TUVRQVpJV2M4MnpV?=
+ =?utf-8?B?eVRjVWY5TkRUekVOdEYzOC90a2VMd3J3eWgwcnZ5K3ZEcEwrbHYzOEhlVGtB?=
+ =?utf-8?B?U3N2ek8wVGZZanBOMjBKWXIvbW5pL0JtN1JJVmVVaWZ1VjBJM3hJNUN5Ykpt?=
+ =?utf-8?B?N3p4ME91eVVhbVNmV3FCaTYvejEzUXJ1Zzd1dE9qZGREM2NwcFNyQjhoZ3dW?=
+ =?utf-8?B?Mng2NUFIc0dmVE1uTTBPalgzc2k5T0IwMmRBV3I2d2x4dW1nRG43ZjBZTEhW?=
+ =?utf-8?B?dnlkZ3FDbDNodWZQSG5rbW0wMjloVEFPZEM5UndJNS9ianVtS3QxRllnV1Bo?=
+ =?utf-8?B?c251MVp6bGF5R28rOHNkcFpDTDU5T2NZRzBBOTJqWTVXSXFVVDJmcHlJUG10?=
+ =?utf-8?B?YkdnKzVEMkdIUndUZnpYb2pxc1M0a0NBZ0t5RlgvVWhuRWViSUY0amFaNTlU?=
+ =?utf-8?B?VE5saS9yM2RCU3VMZ0VCdks1dzN1NmdoaFVidEd4VHhxQ1p6YUFuNFdkY2FY?=
+ =?utf-8?B?eXRPQjdCcTl3SFlWdnRXeGNuRGo1MUNUZ3ExTkRGZm9ETTc3MEY4MjlGMGJ0?=
+ =?utf-8?B?R2ZMN1dla0w5b0pvWjQ1bTNNYWt1dTZERmExWEZPNzNicGtOSWpoSEFFU3Js?=
+ =?utf-8?B?bHRWVVlJTStDTWRDNjJhY1BiYXl5Q0RQaTliTU03TzNyTkphRDlsNFNJWDlU?=
+ =?utf-8?B?TWZLMTI1UmlENUVWZk5TMndVNzVrVHp0a0RockZOWkdaaXVGRVdVSWU2aW8x?=
+ =?utf-8?Q?KZhAikxU4sa8+mxULf8JTTWWg?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ctY5VQGP2dd56H8MjnJ8ZK4vIfqEflfYeJzowR2/yfQiD1tDg8be22r3m9mspQvZbIrrIGn2CB+6CVyvXTeiAN9RyaYyfywAU3l5Wvb/cgCQ7q78pgeAZ/1gf/SE8Qlbmcp6tIXFKWrC7VDBULFKJvaiFofFOP/pcMkP47rjqozVM/hkcEkmwg/mTGMi5mqDyDaP05JUEC8qa7VRqWu3kOOwLo5y/Qdx+ArDw1cgFBZ/+A31JlHGpmdS4iGAUvSHx2+C9mZ2QUcs9/CNmObcTjKyDwyoQpDfFACuVssfTsaH0ij5qzcQVdd5QbY59PPB6TvGE/Za83sdfmsC1v144C/Trd/8V+P4s6wQ+uswZzVOowY3IGDeGNizZEbLZqfhWtfvjm3h1DlsMnWhPoLFCNjzpsgmiyuGa/FsGCk1hYHOQbdRLAduF5yj5UPN6yA3lDqAv0glGf4MnrmSRbyrmtWrOvNONM6AFeDOT99mYKxLec6kF7YvbEKPXG6yFCffCR2RrAm/EqXmM4Tfc/uyUVGuHi+NPzcFc4/hn8sVihlXiRlQnuwk1D2VMB/2qMwmhFcrNZkAJ02a0Y01fwcjIIuiWNNaXXnERyd6ZbX64U4=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bba55a88-151b-4bf8-72b6-08dc52094ed7
+X-MS-Exchange-CrossTenant-AuthSource: SA0PR10MB6425.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c67c3a7-75e6-4255-1175-08dc52002888
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2024 03:59:41.2783 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +JoyQ5N0lm4M1GoaouIoeOMxfaaO8oVYHKEcl1LLK7QY2mWVNZx4caoFcs2oFt7rVyhpoAH9JWcbFyUJhyDCu8eznU/quDajHTLFXOaUhYU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6192
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Apr 2024 05:05:11.2040 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZZAnTpKSxC3K9ifJq6rXly+MCPE48DKcSsFVHeuYqv+G/YmH0knLylO7bIuyZNubpYAZ1ET2Np+78JzMjok5Ww==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR10MB5147
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-01_02,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0
+ mlxlogscore=999 adultscore=0 malwarescore=0 spamscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403210000 definitions=main-2404010034
+X-Proofpoint-ORIG-GUID: RiLBtAvRxrhbY_ZKRWcL5zfQWfTrRElU
+X-Proofpoint-GUID: RiLBtAvRxrhbY_ZKRWcL5zfQWfTrRElU
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -64
+X-Spam_score: -6.5
+X-Spam_bar: ------
+X-Spam_report: (-6.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-4.33,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -192,90 +181,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEPDqWRyaWMgTGUgR29hdGVy
-IDxjbGdAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIHYxIDAxLzExXSBJbnRyb2R1
-Y2UgYSBjb21tb24gYWJzdHJhY3Qgc3RydWN0DQo+SG9zdElPTU1VRGV2aWNlDQo+DQo+SGVsbG8g
-Wmhlbnpob25nLA0KPg0KPk9uIDMvMjgvMjQgMDQ6MDYsIER1YW4sIFpoZW56aG9uZyB3cm90ZToN
-Cj4+IEhpIEPDqWRyaWMsDQo+Pg0KPj4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+Pj4g
-RnJvbTogQ8OpZHJpYyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPj4+IFN1YmplY3Q6IFJl
-OiBbUEFUQ0ggdjEgMDEvMTFdIEludHJvZHVjZSBhIGNvbW1vbiBhYnN0cmFjdCBzdHJ1Y3QNCj4+
-PiBIb3N0SU9NTVVEZXZpY2UNCj4+Pg0KPj4+IEhlbGxvIFpoZW56aG9uZywNCj4+Pg0KPj4+IE9u
-IDMvMTkvMjQgMTI6NTgsIER1YW4sIFpoZW56aG9uZyB3cm90ZToNCj4+Pj4gSGkgQ8OpZHJpYywN
-Cj4+Pj4NCj4+Pj4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+Pj4+PiBGcm9tOiBDw6lk
-cmljIExlIEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+DQo+Pj4+PiBTZW50OiBUdWVzZGF5LCBNYXJj
-aCAxOSwgMjAyNCA0OjE3IFBNDQo+Pj4+PiBUbzogRHVhbiwgWmhlbnpob25nIDx6aGVuemhvbmcu
-ZHVhbkBpbnRlbC5jb20+OyBxZW11LQ0KPj4+Pj4gZGV2ZWxAbm9uZ251Lm9yZw0KPj4+Pj4gQ2M6
-IGFsZXgud2lsbGlhbXNvbkByZWRoYXQuY29tOyBlcmljLmF1Z2VyQHJlZGhhdC5jb207DQo+Pj4+
-PiBwZXRlcnhAcmVkaGF0LmNvbTsgamFzb3dhbmdAcmVkaGF0LmNvbTsgbXN0QHJlZGhhdC5jb207
-DQo+Pj4+PiBqZ2dAbnZpZGlhLmNvbTsgbmljb2xpbmNAbnZpZGlhLmNvbTsgam9hby5tLm1hcnRp
-bnNAb3JhY2xlLmNvbTsNCj5UaWFuLA0KPj4+Pj4gS2V2aW4gPGtldmluLnRpYW5AaW50ZWwuY29t
-PjsgTGl1LCBZaSBMIDx5aS5sLmxpdUBpbnRlbC5jb20+OyBTdW4sIFlpIFkNCj4+Pj4+IDx5aS55
-LnN1bkBpbnRlbC5jb20+OyBQZW5nLCBDaGFvIFAgPGNoYW8ucC5wZW5nQGludGVsLmNvbT4NCj4+
-Pj4+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjEgMDEvMTFdIEludHJvZHVjZSBhIGNvbW1vbiBhYnN0
-cmFjdCBzdHJ1Y3QNCj4+Pj4+IEhvc3RJT01NVURldmljZQ0KPj4+Pj4NCj4+Pj4+IEhlbGxvIFpo
-ZW56aG9uZywNCj4+Pj4+DQo+Pj4+PiBPbiAyLzI4LzI0IDA0OjU4LCBaaGVuemhvbmcgRHVhbiB3
-cm90ZToNCj4+Pj4+PiBIb3N0SU9NTVVEZXZpY2Ugd2lsbCBiZSBpbmhlcml0ZWQgYnkgdHdvIHN1
-YiBjbGFzc2VzLA0KPj4+Pj4+IGxlZ2FjeSBhbmQgaW9tbXVmZCBjdXJyZW50bHkuDQo+Pj4+Pj4N
-Cj4+Pj4+PiBJbnRyb2R1Y2UgYSBoZWxwZXIgZnVuY3Rpb24gaG9zdF9pb21tdV9iYXNlX2Rldmlj
-ZV9pbml0IHRvDQo+aW5pdGlhbGl6ZSBpdC4NCj4+Pj4+Pg0KPj4+Pj4+IFN1Z2dlc3RlZC1ieTog
-RXJpYyBBdWdlciA8ZXJpYy5hdWdlckByZWRoYXQuY29tPg0KPj4+Pj4+IFNpZ25lZC1vZmYtYnk6
-IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQo+Pj4+Pj4gLS0tDQo+
-Pj4+Pj4gICAgIGluY2x1ZGUvc3lzZW11L2hvc3RfaW9tbXVfZGV2aWNlLmggfCAyMg0KPj4+ICsr
-KysrKysrKysrKysrKysrKysrKysNCj4+Pj4+PiAgICAgMSBmaWxlIGNoYW5nZWQsIDIyIGluc2Vy
-dGlvbnMoKykNCj4+Pj4+PiAgICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1ZGUvc3lzZW11L2hv
-c3RfaW9tbXVfZGV2aWNlLmgNCj4+Pj4+Pg0KPj4+Pj4+IGRpZmYgLS1naXQgYS9pbmNsdWRlL3N5
-c2VtdS9ob3N0X2lvbW11X2RldmljZS5oDQo+Pj4+PiBiL2luY2x1ZGUvc3lzZW11L2hvc3RfaW9t
-bXVfZGV2aWNlLmgNCj4+Pj4+PiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPj4+Pj4+IGluZGV4IDAw
-MDAwMDAwMDAuLmZlODBhYjI1ZmINCj4+Pj4+PiAtLS0gL2Rldi9udWxsDQo+Pj4+Pj4gKysrIGIv
-aW5jbHVkZS9zeXNlbXUvaG9zdF9pb21tdV9kZXZpY2UuaA0KPj4+Pj4+IEBAIC0wLDAgKzEsMjIg
-QEANCj4+Pj4+PiArI2lmbmRlZiBIT1NUX0lPTU1VX0RFVklDRV9IDQo+Pj4+Pj4gKyNkZWZpbmUg
-SE9TVF9JT01NVV9ERVZJQ0VfSA0KPj4+Pj4+ICsNCj4+Pj4+PiArdHlwZWRlZiBlbnVtIEhvc3RJ
-T01NVURldmljZV9UeXBlIHsNCj4+Pj4+PiArICAgIEhJRF9MRUdBQ1ksDQo+Pj4+Pj4gKyAgICBI
-SURfSU9NTVVGRCwNCj4+Pj4+PiArICAgIEhJRF9NQVgsDQo+Pj4+Pj4gK30gSG9zdElPTU1VRGV2
-aWNlX1R5cGU7DQo+Pj4+Pj4gKw0KPj4+Pj4+ICt0eXBlZGVmIHN0cnVjdCBIb3N0SU9NTVVEZXZp
-Y2Ugew0KPj4+Pj4+ICsgICAgSG9zdElPTU1VRGV2aWNlX1R5cGUgdHlwZTsNCj4+Pj4+DQo+Pj4+
-PiBBIHR5cGUgZmllbGQgaXMgbm90IGEgZ29vZCBzaWduIGFuZCB0aGF0J3Mgd2hlcmUgUU9NIGlz
-IHVzZWZ1bC4NCj4+Pj4NCj4+Pj4gWWVzLCBhZ3JlZS4NCj4+Pj4gSSBkaWRuJ3QgY2hvb3NlIFFP
-TSBiZWNhdXNlIGluIGlvbW11ZmQtY2RldiBzZXJpZXMsIFZGSU9Db250YWluZXINCj4+PiBjaG9v
-c2VzIG5vdCB1c2luZyBRT00gbW9kZWwuDQo+Pj4+IFNlZSB0aGUgZGlzY3Vzc2lvbjoNCj4+PiBo
-dHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvWW11RnYyczVUUHV3N0slMkZ1QHlla2tvLw0KPj4+
-PiBJIHRob3VnaHQgSG9zdElPTU1VRGV2aWNlIG5lZWQgdG8gZm9sbG93IHNhbWUgcnVsZS4NCj4+
-Pj4NCj4+Pj4gQnV0IGFmdGVyIGZ1cnRoZXIgZGlnZ2luZyBpbnRvIHRoaXMsIEkgdGhpbmsgaXQg
-bWF5IGJlIG9rIHRvIHVzZSBRT00NCj5tb2RlbA0KPj4+IGFzIGxvbmcgYXMgd2UgZG9uJ3QgZXhw
-b3NlDQo+Pj4+IEhvc3RJT01NVURldmljZSBpbiBxYXBpL3FvbS5qc29uIGFuZCBub3QgdXNlIFVT
-RVJfQ1JFQVRBQkxFDQo+Pj4gaW50ZXJmYWNlLiBZb3VyIHRob3VnaHRzPw0KPj4+DQo+Pj4geWVz
-LiBDYW4gd2UgY2hhbmdlIGEgYml0IHRoaXMgc2VyaWVzIHRvIHVzZSBRT00gPyBzb21ldGhpbmcg
-bGlrZSA6DQo+Pj4NCj4+PiAgICAgIHR5cGVkZWYgc3RydWN0IEhvc3RJT01NVURldmljZSB7DQo+
-Pj4gICAgICAgICAgT2JqZWN0IHBhcmVudDsNCj4+PiAgICAgIH0gSG9zdElPTU1VRGV2aWNlOw0K
-Pj4+DQo+Pj4gICAgICAjZGVmaW5lIFRZUEVfSE9TVF9JT01NVSAiaG9zdC5pb21tdSINCj4+PiAg
-ICAgIE9CSkVDVF9ERUNMQVJFX1RZUEUoSG9zdElPTU1VRGV2aWNlLCBIb3N0SU9NTVVDbGFzcywN
-Cj4+PiBIT1NUX0lPTU1VKQ0KPj4+DQo+Pj4gICAgICBzdHJ1Y3QgSG9zdElPTU1VQ2xhc3Mgew0K
-Pj4+ICAgICAgICAgIE9iamVjdENsYXNzIHBhcmVudF9jbGFzczsNCj4+Pg0KPj4+ICAgICAgICAg
-IGludCAoKmdldF90eXBlKShIb3N0SU9NTVVEZXZpY2UgKmhpb2QsIHVpbnQ2NF90ICp0eXBlLCBF
-cnJvcg0KPioqZXJycCk7DQo+Pj4gICAgICAgICAgaW50ICgqZ2V0X2NhcCkoSG9zdElPTU1VRGV2
-aWNlICpoaW9kLCB1aW50NjRfdCAqY2FwLCBFcnJvcg0KPioqZXJycCk7DQo+Pj4gICAgICB9Ow0K
-Pj4+DQo+Pj4gSW5oZXJpdGVkIG9iamVjdHMgd291bGQgYmUgVFlQRV9IT1NUX0lPTU1VX0lPTU1V
-RkQgYW5kDQo+Pj4gVFlQRV9IT1NUX0lPTU1VX0xFR0FDWS4NCj4+PiBFYWNoIGNsYXNzIGltcGxl
-bWVudGluZyB0aGUgaGFuZGxlcnMgb3Igbm90IChsZWdhY3kgbW9kZSkuDQo+Pg0KPj4gVW5kZXJz
-dG9vZCwgdGhhbmtzIGZvciB5b3VyIGd1aWRlLg0KPj4NCj4+Pg0KPj4+IFRoZSBjbGFzcyBoYW5k
-bGVycyBhcmUgaW50cm9kdWNlZCBmb3IgdGhlIGludGVsLWlvbW11IGhlbHBlcg0KPj4+IHZ0ZF9j
-aGVja19oZGV2KCkNCj4+PiBpbiBvcmRlciB0byBhdm9pZCB1c2luZyBpb21tdWZkIHJvdXRpbmVz
-IGRpcmVjdGx5LiBIb3N0SU9NTVVEZXZpY2UgaXMNCj4+PiBzdXBwb3NlZA0KPj4+IHRvIGFic3Ry
-YWN0IHRoZSBIb3N0IElPTU1VIGRldmljZSwgc28gd2UgbmVlZCB0byBhYnN0cmFjdCBhbHNvIGFs
-bCB0aGUNCj4+PiBpbnRlcmZhY2VzIHRvIHRoaXMgb2JqZWN0Lg0KPj4NCj4+IEknZCBsaWtlIHRv
-IGhhdmUgYSBtaW5pbWFsIGFkanVzdG1lbnQgdG8gY2xhc3MgaGFuZGVycy4gSnVzdCBsZXQgbWUg
-a25vdyBpZg0KPnlvdSBoYXZlIHN0cm9uZw0KPj4gcHJlZmVyZW5jZS4NCj4+DQo+PiBDYXAvZWNh
-cCBpcyBpbnRlbF9pb21tdSBzcGVjaWZpYywgSSdkIGxpa2UgdG8gbWFrZSBpdCBhIGJpdCBnZW5l
-cmljIGFsc28gZm9yDQo+YXJtIHNtbXUgdXNhZ2UsDQo+PiBhbmQgbWVyZ2UgZ2V0X3R5cGUgYW5k
-IGdldF9jYXAgaW50byBvbmUgZnVuY3Rpb24gYXMgdGhleSBib3RoIGNhbGxzDQo+aW9jdGwoSU9N
-TVVfR0VUX0hXX0lORk8pLA0KPj4gc29tZXRoaW5nIGxpa2U6DQo+PiBnZXRfaW5mbyhIb3N0SU9N
-TVVEZXZpY2UgKmhpb2QsIGVudW0gaW9tbXVfaHdfaW5mb190eXBlICp0eXBlLA0KPnZvaWQgKipk
-YXRhLCB2b2lkICoqbGVuLCAgRXJyb3IgKiplcnJwKTsNCj4NCj5PSy4gTGV0J3Mgc2VlIGhvdyBp
-dCBnb2VzLiBIYXZpbmcgbW9yZSB1c2VycyBvZiB0aGlzIG5ldyBvYmplY3QgSG9zdA0KPklPTU1V
-IGRldmljZSBpcyBpbXBvcnRhbnQgdG8gZ2V0IGEgYmV0dGVyIGZlZWxpbmcgb2YgdGhlIGludGVy
-ZmFjZS4NCj5BcyBvZiB0b2RheSwgaXQgZG9lc24ndCBoYXZlIG5vdCBtdWNoIHZhbHVlLiBUaGUg
-aW9tbXVmZCBvYmplY3QgY291bGQNCj5iZSBRT00gbGlua2VkIHRvIHRoZSB2SU9NTVUgd2hlbiBh
-dmFpbGFibGUgYW5kIHdlIGNvdWxkIGdldCB0aGUgYmluZA0KPmRldmlkIGluIHNvbWUgb3RoZXIg
-d2F5cyBJIHN1cHBvc2UuIEFueWhvdywgcGxlYXNlIGtlZXAgaXQgc2ltcGxlIGFuZA0KPmxldCdz
-IGV4cGxvcmUuDQoNCkdvdCBpdCwgdGhhbmtzIEPDqWRyaWMhDQoNCkJScy4NClpoZW56aG9uZw0K
+To share my test result, I do NOT reproduce the issue with the below command
+line and QEMU-8.2.
+
+However, I can reproduce with QEMU-6.2. The mainloop consumes 100% CPU usage.
+
+qemu-system-x86_64 \
+--enable-kvm -cpu host -smp 2 -m 8G \
+-object
+throttle-group,id=limit0,x-iops-total=200,x-iops-total-max=200,x-bps-total-max-length=1,x-bps-read-max-length=1,x-bps-write-max-length=1,x-iops-total-max-length=1,x-iops-read-max-length=1,x-iops-write-max-length=1
+\
+-object
+throttle-group,id=limit1,x-iops-total=250,x-iops-total-max=250,x-bps-total-max-length=1,x-bps-read-max-length=1,x-bps-write-max-length=1,x-iops-total-max-length=1,x-iops-read-max-length=1,x-iops-write-max-length=1
+\
+-object
+throttle-group,id=limit2,x-iops-total=300,x-iops-total-max=300,x-bps-total-max-length=1,x-bps-read-max-length=1,x-bps-write-max-length=1,x-iops-total-max-length=1,x-iops-read-max-length=1,x-iops-write-max-length=1
+\
+-object
+throttle-group,id=limit012,x-iops-total=400,x-iops-total-max=400,x-bps-total-max-length=1,x-bps-read-max-length=1,x-bps-write-max-length=1,x-iops-total-max-length=1,x-iops-read-max-length=1,x-iops-write-max-length=1
+\
+-device
+virtio-blk-pci,bus=pci.0,addr=0x4,drive=libvirt-4-format,id=virtio-disk0,bootindex=1
+\
+-blockdev
+driver=file,filename=image.qcow2,node-name=libvirt-4-storage,discard=unmap \
+-blockdev node-name=libvirt-4-format,driver=qcow2,file=libvirt-4-storage \
+-device virtio-blk-pci,bus=pci.0,addr=0x5,drive=libvirt-6-filter,id=virtio-disk1 \
+-blockdev
+driver=file,filename=test01.qcow2,node-name=libvirt-3-storage,discard=unmap \
+-blockdev node-name=libvirt-3-format,driver=qcow2,file=libvirt-3-storage \
+-blockdev
+driver=throttle,node-name=libvirt-5-filter,throttle-group=limit0,file=libvirt-3-format
+\
+-blockdev
+driver=throttle,node-name=libvirt-6-filter,throttle-group=limit012,file=libvirt-5-filter
+\
+-device virtio-blk-pci,bus=pci.0,addr=0x6,drive=libvirt-4-filter,id=virtio-disk2 \
+-blockdev
+driver=file,filename=test02.qcow2,node-name=libvirt-2-storage,discard=unmap \
+-blockdev node-name=libvirt-2-format,driver=qcow2,file=libvirt-2-storage \
+-blockdev
+driver=throttle,node-name=libvirt-3-filter,throttle-group=limit1,file=libvirt-2-format
+\
+-blockdev
+driver=throttle,node-name=libvirt-4-filter,throttle-group=limit012,file=libvirt-3-filter
+\
+-device virtio-blk-pci,bus=pci.0,addr=0x7,drive=libvirt-2-filter,id=virtio-disk3 \
+-blockdev
+driver=file,filename=test03.qcow2,node-name=libvirt-1-storage,discard=unmap \
+-blockdev node-name=libvirt-1-format,driver=qcow2,file=libvirt-1-storage \
+-blockdev
+driver=throttle,node-name=libvirt-1-filter,throttle-group=limit2,file=libvirt-1-format
+\
+-blockdev
+driver=throttle,node-name=libvirt-2-filter,throttle-group=limit012,file=libvirt-1-filter
+\
+-netdev user,id=user0,hostfwd=tcp::5028-:22 \
+-device
+virtio-net-pci,netdev=user0,id=net0,mac=52:54:00:12:34:56,bus=pci.0,addr=0x3 \
+-monitor stdio
+
+(qemu) info status
+(qemu) savevm snapshot1
+(qemu) loadvm snapshot1
+
+Dongli Zhang
+
+On 3/28/24 03:50, Chun Feng Wu wrote:
+> BTW, if I download
+> qemu8.0(https://urldefense.com/v3/__https://download.qemu.org/qemu-8.0.0.tar.xz__;!!ACWV5N9M2RV99hQ!ObhT3ZYGr8GQFt4p7dWc-t-CFeKff1UzyRPc9WQrAuhz1B7jDC1-VTqjoCUDcrhXsffyBQuRtnoZhfZhS8FVig$ ), compile and install it in my ubuntu22.04, launch vm with the same command(just update --machine to be "pc"), the host cpu usage is not high, it seems to be a bug in QEMU6
+> 
+> Also, I have another question, for disk iotune or throttle group, after
+> reverting snapshot, if I login vm, and run fio, I/O performance drops a lot in
+> both QEMU6 and QEMU8, do anyone know the reason? Any explanation would be
+> appreciated!
+> 
+> 
+> 
+> On 2024/3/28 07:32, Chun Feng Wu wrote:
+>>
+>> Hi,
+>>
+>> I am testing throttle filter chain(multiple throttle-groups on disk) with the
+>> following steps:
+>> 1. start guest vm(chained throttle filters applied on disk per
+>> https://urldefense.com/v3/__https://github.com/qemu/qemu/blob/master/docs/throttle.txt__;!!ACWV5N9M2RV99hQ!ObhT3ZYGr8GQFt4p7dWc-t-CFeKff1UzyRPc9WQrAuhz1B7jDC1-VTqjoCUDcrhXsffyBQuRtnoZhfaQOXc8pg$ )
+>> 2. take snapshot
+>> 3. revert snapshot
+>>
+>> after step3, I noticed qemu process in host consumes 100% cpu, and after I
+>> login guest vm, vm cannot(or slowly) response my cmd (it works well before
+>> reverting).
+>>
+>> /    PID     USER      PR  NI    VIRT    RES         SHR S  %CPU  %MEM    
+>> TIME+ COMMAND
+>>    65455 root      20   0 9659924 891328  20132 R 100.3 5.4    29:39.93
+>> qemu-system-x86/
+>>
+>> /
+>> /
+>>
+>> Does anybody know why such issue happens?  is it a bug or I misunderstand
+>> something?
+>>
+>> my cmd:
+>>
+>> /qemu-system-x86_64 \
+>>   -name ubuntu-20.04-vm,debug-threads=on \
+>>   -machine pc-i440fx-jammy,usb=off,dump-guest-core=off \
+>>   -accel kvm \
+>>   -cpu
+>> Broadwell-IBRS,vme=on,ss=on,vmx=on,f16c=on,rdrand=on,hypervisor=on,arat=on,tsc-adjust=on,md-clear=on,stibp=on,ssbd=on,xsaveopt=on,pdpe1gb=on,abm=on,tsx-ctrl=off,hle=off,rtm=off \
+>>   -m 8192 \
+>>   -overcommit mem-lock=off \
+>>   -smp 2,sockets=1,dies=1,cores=1,threads=2 \
+>>   -numa node,nodeid=0,cpus=0-1,memdev=ram \
+>>   -object memory-backend-ram,id=ram,size=8192M \
+>>   -uuid d2d68f5d-bff0-4167-bbc3-643e3566b8fb \
+>>   -display none \
+>>   -nodefaults \
+>>   -monitor stdio \
+>>   -rtc base=utc,driftfix=slew \
+>>   -no-shutdown \
+>>   -boot strict=on \
+>>   -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 \
+>>   -object
+>> '{"qom-type":"throttle-group","id":"limit0","limits":{"bps-total":0,"bps-read":0,"bps-write":0,"iops-total":200,"iops-read":0,"iops-write":0,"bps-total-max":0,"bps-read-max":0,"bps-write-max":0,"iops-total-max":200,"iops-read-max":0,"iops-write-max":0,"iops-size":0,"bps-total-max-length":1,"bps-read-max-length":1,"bps-write-max-length":1,"iops-total-max-length":1,"iops-read-max-length":1,"iops-write-max-length":1}}' \
+>>     -object
+>> '{"qom-type":"throttle-group","id":"limit1","limits":{"bps-total":0,"bps-read":0,"bps-write":0,"iops-total":250,"iops-read":0,"iops-write":0,"bps-total-max":0,"bps-read-max":0,"bps-write-max":0,"iops-total-max":250,"iops-read-max":0,"iops-write-max":0,"iops-size":0,"bps-total-max-length":1,"bps-read-max-length":1,"bps-write-max-length":1,"iops-total-max-length":1,"iops-read-max-length":1,"iops-write-max-length":1}}' \
+>>     -object
+>> '{"qom-type":"throttle-group","id":"limit2","limits":{"bps-total":0,"bps-read":0,"bps-write":0,"iops-total":300,"iops-read":0,"iops-write":0,"bps-total-max":0,"bps-read-max":0,"bps-write-max":0,"iops-total-max":300,"iops-read-max":0,"iops-write-max":0,"iops-size":0,"bps-total-max-length":1,"bps-read-max-length":1,"bps-write-max-length":1,"iops-total-max-length":1,"iops-read-max-length":1,"iops-write-max-length":1}}' \
+>>     -object
+>> '{"qom-type":"throttle-group","id":"limit012","limits":{"bps-total":0,"bps-read":0,"bps-write":0,"iops-total":400,"iops-read":0,"iops-write":0,"bps-total-max":0,"bps-read-max":0,"bps-write-max":0,"iops-total-max":400,"iops-read-max":0,"iops-write-max":0,"iops-size":0,"bps-total-max-length":1,"bps-read-max-length":1,"bps-write-max-length":1,"iops-total-max-length":1,"iops-read-max-length":1,"iops-write-max-length":1}}' \
+>>   -blockdev
+>> '{"driver":"file","filename":"/virt/images/focal-server-cloudimg-amd64.img","node-name":"libvirt-4-storage","auto-read-only":true,"discard":"unmap"}' \
+>>   -blockdev
+>> '{"node-name":"libvirt-4-format","read-only":false,"driver":"qcow2","file":"libvirt-4-storage","backing":null}' \
+>>   -device
+>> virtio-blk-pci,bus=pci.0,addr=0x4,drive=libvirt-4-format,id=virtio-disk0,bootindex=1 \
+>>   -blockdev
+>> '{"driver":"file","filename":"/virt/disks/vm1_disk_1.qcow2","node-name":"libvirt-3-storage","auto-read-only":true,"discard":"unmap"}' \
+>>   -blockdev
+>> '{"node-name":"libvirt-3-format","read-only":false,"driver":"qcow2","file":"libvirt-3-storage","backing":null}' \
+>>   -blockdev
+>> '{"driver":"throttle","node-name":"libvirt-5-filter","throttle-group":"limit0","file":"libvirt-3-format"}' \
+>>   -blockdev
+>> '{"driver":"throttle","node-name":"libvirt-6-filter","throttle-group":"limit012","file":"libvirt-5-filter"}' \
+>>   -device
+>> virtio-blk-pci,bus=pci.0,addr=0x5,drive=libvirt-6-filter,id=virtio-disk1 \
+>>   -blockdev
+>> '{"driver":"file","filename":"/virt/disks/vm1_disk_2.qcow2","node-name":"libvirt-2-storage","auto-read-only":true,"discard":"unmap"}' \
+>>   -blockdev
+>> '{"node-name":"libvirt-2-format","read-only":false,"driver":"qcow2","file":"libvirt-2-storage","backing":null}' \
+>>   -blockdev
+>> '{"driver":"throttle","node-name":"libvirt-3-filter","throttle-group":"limit1","file":"libvirt-2-format"}' \
+>>   -blockdev
+>> '{"driver":"throttle","node-name":"libvirt-4-filter","throttle-group":"limit012","file":"libvirt-3-filter"}' \
+>>   -device
+>> virtio-blk-pci,bus=pci.0,addr=0x6,drive=libvirt-4-filter,id=virtio-disk2 \
+>>   -blockdev
+>> '{"driver":"file","filename":"/virt/disks/vm1_disk_3.qcow2","node-name":"libvirt-1-storage","auto-read-only":true,"discard":"unmap"}' \
+>>   -blockdev
+>> '{"node-name":"libvirt-1-format","read-only":false,"driver":"qcow2","file":"libvirt-1-storage","backing":null}' \
+>>   -blockdev
+>> '{"driver":"throttle","node-name":"libvirt-1-filter","throttle-group":"limit2","file":"libvirt-1-format"}' \
+>>   -blockdev
+>> '{"driver":"throttle","node-name":"libvirt-2-filter","throttle-group":"limit012","file":"libvirt-1-filter"}' \
+>>   -device
+>> virtio-blk-pci,bus=pci.0,addr=0x7,drive=libvirt-2-filter,id=virtio-disk3 \
+>>   -netdev user,id=user0,hostfwd=tcp::2222-:22 \
+>>   -device
+>> virtio-net-pci,netdev=user0,id=net0,mac=52:54:00:12:34:56,bus=pci.0,addr=0x3 \
+>>   -chardev pty,id=charserial0 \
+>>   -device isa-serial,chardev=charserial0,id=serial0,index=0 \
+>>   -device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x2 \
+>>   -sandbox
+>> on,obsolete=deny,elevateprivileges=deny,spawn=deny,resourcecontrol=deny \
+>>   -msg timestamp=on/
+>>
+>>
+>> snapshot and reverting:
+>>
+>> /(qemu) info status
+>> VM status: running
+>> (qemu) savevm snapshot1
+>> (qemu) loadvm snapshot1/
+>>
+>>
+>> my env:
+>> /:~# qemu-system-x86_64 --version
+>> QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.17)
+>> Copyright (c) 2003-2021 Fabrice Bellard and the QEMU Project developers
+>>
+>> :~# lsb_release -a
+>> No LSB modules are available.
+>> Distributor ID:    Ubuntu
+>> Description:    Ubuntu 22.04.4 LTS
+>> Release:    22.04
+>> Codename:    jammy/
+>>
+>> -- 
+>> Thanks and Regards,
+>>
+>> Wu
+> 
 
