@@ -4,92 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE00CD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 14:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7EDCD1288
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 14:31:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrIJS-0008OG-9z; Mon, 01 Apr 2024 10:07:02 -0400
+	id 1rrIg2-0004Cm-K6; Mon, 01 Apr 2024 10:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rrIJR-0008Nl-72
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:07:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rrIJP-0004X8-Cw
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:07:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711980418;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SZZHqP2dXWcjJ9Xguxj80QmPlHq9USBKyq4q8uaYKUs=;
- b=YhNJv7fuQogJjGwHc4KiXBepUqspPshqtLWk2ZTygGIthy8yKtEE4+7SUA3yfWQm9uAwBA
- qyoR5stIovCtBiwHlV1M+0QonQ0UGPdIhSvocFrIWcvEzJwlpGULZRlGcNupT61KqpqjuV
- nPsJXJUWFI6WfsVX1+ltEM2nhqTFgTU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-402-h8VlwKJONBCUFBSQWFh3Mw-1; Mon, 01 Apr 2024 10:06:54 -0400
-X-MC-Unique: h8VlwKJONBCUFBSQWFh3Mw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-69627b26a51so1881166d6.1
- for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 07:06:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rrIg0-0004CM-Fv
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:30:20 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rrIfy-0000t2-1D
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:30:20 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-56bc5a3aeb9so5149223a12.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 07:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711981816; x=1712586616; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=j3vzcP8Bfb696MzRqxQtVcIPGQfMopEnS6ySKVo2Sq4=;
+ b=IDGGCSLz/QOahhDUiK5Ju3ffDxVDemg+88cFNgAcYGl+pj5jLJXg5g6hZBX3dw8aK4
+ 3bgap25m9cTyJd25S1JjajhrIG7xaVul4K4jWxUfTeNmfPCYjLzjsL52gHGe92ViEdXv
+ 1UhvYcDlyOxslrlTkT3OyYesO7AZ37POMljX/c6zMuoN5vHBIgxQs+IivEGSNv9QPr9Z
+ /53D4f0f6Z7JEviCuVYo6RE+z/mwe8kdYW55Cxb1qIsxdD9DWsr2HGrOF8A4tZn01r0L
+ T+cK72csc9w6awVW05EWEElCzgwmXFXnbZs/TYVynyosOlpX1jVW/Xex/SZbUHXRtcQt
+ gAcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711980414; x=1712585214;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SZZHqP2dXWcjJ9Xguxj80QmPlHq9USBKyq4q8uaYKUs=;
- b=bxEf7qpWkzONEVeSFYxfjpeayCMqEEcw+09eXsZ2LORPYWlE+bOAzbtMw0YY8kw/Rq
- mEpwLDpvKkfGvLuN7OvJ5V6NQA39GcusHSzwfWVVIMJlPwl9C7pWIEjeE8wlY8wvSdmh
- +iQuzzmRQovYMdiPit1Mt3d4tBRHjlg4C7Uwm65qecBcz/n0Hf2HSmfGTsy7ewPJBFtk
- AnNFiq7BzPCiSr7pS77xPRhSsjE7AbozCS5oi4Aha4wh5Zg5DaF0bOU9EwTNsL4tIgOS
- dlJxPmK+dRgst34nDtYYvnAiEfSqMwUWq56WP57N5LzYRmsLEK8QKKHu7gbD6YBpaibX
- YueA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVKUcoOTwrcuEn/68gUcPTmcK6OEXxdWdgJK4scFx1p06Fu66zot8flcBWGm3XzWs2QHKLGhUd455UeM4LyQNA23f1Kj70=
-X-Gm-Message-State: AOJu0YwnCq6UxTlUxehVO/BTkQtxyzemVh/G+q3c6bWpAkTu3I70tMM4
- asnqbwS6QVf6movT8Oes29HcKmaCgg+FQ88tGg4RQ7m8/WuY9o7ttUyrWCQ4QUSpgFO8td9kCEd
- +w52+sOETIKceBQ03owHm3ywd1zRN8VUzRqrUqDtms5VYqdIQUNN7
-X-Received: by 2002:a0c:9c82:0:b0:699:4a1:e12d with SMTP id
- i2-20020a0c9c82000000b0069904a1e12dmr3355086qvf.0.1711980413922; 
- Mon, 01 Apr 2024 07:06:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGf9W+zz/G+4UpRUOlfNRtSTdtEJ2sGBdeSqdS5Lt28JN7m0WPLYf4W224agNxVLbsOrX3Few==
-X-Received: by 2002:a0c:9c82:0:b0:699:4a1:e12d with SMTP id
- i2-20020a0c9c82000000b0069904a1e12dmr3355050qvf.0.1711980413412; 
- Mon, 01 Apr 2024 07:06:53 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- kc21-20020a056214411500b00698fccd2e02sm2338917qvb.43.2024.04.01.07.06.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Apr 2024 07:06:53 -0700 (PDT)
-Date: Mon, 1 Apr 2024 10:06:51 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fam Zheng <fam@euphon.net>, Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH for-9.1] migration: Add Error** argument to
- add_bitmaps_to_list()
-Message-ID: <Zgq_e_9POf4AjCLC@x1n>
-References: <20240329105627.311227-1-clg@redhat.com>
+ d=1e100.net; s=20230601; t=1711981816; x=1712586616;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j3vzcP8Bfb696MzRqxQtVcIPGQfMopEnS6ySKVo2Sq4=;
+ b=uEKdh3Wf9obk5Y2w+6gMuHpZxM92ZPt38kFQzE+eVqp0k+hJI02tk0nPUzZIQjI9eJ
+ BPaTENeHqIJu4ljoNlF0LeSJgKPHqn+HWZKhfao9U4Nyd4f2OyV0Lly/di5JxseKuBwZ
+ +EA2aKhsRtBm+FlFioYcsMg1YwxkVU9inLHV+cBSC4grWOixbfHmYqa/UxbSLw6lRxq6
+ sVFjM7QYNDA/iSegAwqXZskEq1zxDQR6evul+uy0CwUPRSsi3WMwd8OimQXQor0njBAu
+ TMFrVW05QfY5kTZsjZ+xeFJGPF/vdSRVivGT48z5GqdcD0ZVwtswY+vu+l2rY9545A/O
+ kzWg==
+X-Gm-Message-State: AOJu0Yws29xti7m1b5BwtH7hDw4XcK+1mI+npjUB/hZA6EiJ1juTio7Q
+ y63OFiu/ELdp+me/SJpWf94yC+oocw6HGVflvOthbJ26dFVl4Pi3GNZsedoRNm6cpPP+cEv1rbh
+ IdEDyVkt2PbSLnnz9ggBO4G1aQzliw9BT22bmTQ==
+X-Google-Smtp-Source: AGHT+IGBYcsMFksRdkzLhh2Z0jvIXbM0lUn6gXCslsiL8QSVWpgjppialNCJvhGGwHACu05OnlewgyLVigunrnwnF0I=
+X-Received: by 2002:a05:6402:5114:b0:566:f81:41a1 with SMTP id
+ m20-20020a056402511400b005660f8141a1mr7003764edd.22.1711981816029; Mon, 01
+ Apr 2024 07:30:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240329105627.311227-1-clg@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240331183251.1045817-1-peterx@redhat.com>
+In-Reply-To: <20240331183251.1045817-1-peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 1 Apr 2024 15:30:04 +0100
+Message-ID: <CAFEAcA91xPipCybp1GQo2mdTt3_ZVE-ify90Bv=6LxrjWrC9nQ@mail.gmail.com>
+Subject: Re: [PULL 0/2] Migration 20240331 patches
+To: peterx@redhat.com
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,20 +88,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 29, 2024 at 11:56:27AM +0100, Cédric Le Goater wrote:
-> This allows to report more precise errors in the migration handler
-> dirty_bitmap_save_setup().
-> 
-> Suggested-by Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
-> 
->  To apply on top of : 
->  https://lore.kernel.org/qemu-devel/20240320064911.545001-1-clg@redhat.com/
+On Sun, 31 Mar 2024 at 19:32, <peterx@redhat.com> wrote:
+>
+> From: Peter Xu <peterx@redhat.com>
+>
+> The following changes since commit b9dbf6f9bf533564f6a4277d03906fcd32bb0245:
+>
+>   Merge tag 'pull-tcg-20240329' of https://gitlab.com/rth7680/qemu into staging (2024-03-30 14:54:57 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/peterx/qemu.git tags/migration-20240331-pull-request
+>
+> for you to fetch changes up to d0ad271a7613459bd0a3397c8071a4ad06f3f7eb:
+>
+>   migration/postcopy: Ensure postcopy_start() sets errp if it fails (2024-03-31 14:30:03 -0400)
+>
+> ----------------------------------------------------------------
+> Migration pull for 9.0-rc2
+>
+> - Avihai's two fixes on error paths
 
-queued, thanks.
 
--- 
-Peter Xu
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
+-- PMM
 
