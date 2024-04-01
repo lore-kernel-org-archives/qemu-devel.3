@@ -4,95 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B6ADCD1284
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Mar 2024 20:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6BACD1284
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 02:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rr1fg-0001dM-9I; Sun, 31 Mar 2024 16:20:52 -0400
+	id 1rr7Az-0004eP-JL; Sun, 31 Mar 2024 22:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rr1fZ-0001d6-Gt
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 16:20:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yajunw@nvidia.com>) id 1rr7Ax-0004e9-V8
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 22:13:32 -0400
+Received: from mail-co1nam11on2115.outbound.protection.outlook.com
+ ([40.107.220.115] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rr1fX-00020J-SD
- for qemu-devel@nongnu.org; Sun, 31 Mar 2024 16:20:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711916441;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FRRVj/JjKizxzXFDRSo3l/T54pHZqeXumE93BFWpnkg=;
- b=dwEQXYEGH0YB+fDeXVH7gGwKA45ulahfDCZOP+GVq4aXoIU5LRKQjIbpWK9hOlcuVe/7K6
- +Z37tFSU8ZviF/ivDUMyT7f8BkENemiKi6ER5lE2fIOWq+SrVBcFIE/7doOkAmZjVTvIMW
- AJ7uHenA7DeA/NRGcLTcCXQR20z5nVo=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-qi3prPipOlyDhvlyOXFLWQ-1; Sun, 31 Mar 2024 16:20:39 -0400
-X-MC-Unique: qi3prPipOlyDhvlyOXFLWQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a4df17773a5so276001566b.1
- for <qemu-devel@nongnu.org>; Sun, 31 Mar 2024 13:20:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711916438; x=1712521238;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FRRVj/JjKizxzXFDRSo3l/T54pHZqeXumE93BFWpnkg=;
- b=F1Mtd05T074+8fqnGDDEPu5imiZZm5NXMaHnb8UQUHy0xhbs9F6qsXW0XvRii6ynkK
- ez6WzZjsFZskUxzFyAw7/GTQ6K59oeU4YlXIC3AF7rsvKNzw7nNhVzm2hJCayrgx658f
- /F91Uyv+vOSY2lXi2kmxJcnOVfgZm4VsJHY9rWBsQ7jKlErVWXdKC0HDky7eYq+ezqUr
- /FLNHiH57xkwjQV11LvA9znN4HbK8ZS8QbisNcbpVO24X9jWXoackGt//pHPBATYBWNQ
- Y7XDrVA5nAJmyK9rdH/yw+uacMAs9vAYYLzArmbwo+sdC4MDFKBMxzAs3w47QTaBRzE2
- EGEQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlNz+MJUj77YOZyNO+9qRMEiPEpRYIMeBncDui09+Iv7ZkYt7cvmMUFYjq9WxbS7svyRGJLIRG7G3i4C17egFXqv4i+Hg=
-X-Gm-Message-State: AOJu0YxPj65cF7wi7DWjG1C846P6l05dp9eA6fzOv+HMyGQsrQ/j77b4
- iLDZeLhmE/8iQq2r0IKg5YWRInp8IhXRs3NSq1o8OVIDM0WrIdGQynmwRD8I76PneVJTsuNDLOb
- kZ9KV+aSuIirtN1BD9m0LFXQcxx9Pt1E++FAbJZkQM0qjNrWYgREJ
-X-Received: by 2002:a17:907:3181:b0:a4e:663a:3cf4 with SMTP id
- xe1-20020a170907318100b00a4e663a3cf4mr1328720ejb.6.1711916438437; 
- Sun, 31 Mar 2024 13:20:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpknzv8VBlqoGJZhO+j/gEtYVNu8noUyOMoh3rGDewOFPJPPTVRdkL5QIIU1wPMo3a8degxA==
-X-Received: by 2002:a17:907:3181:b0:a4e:663a:3cf4 with SMTP id
- xe1-20020a170907318100b00a4e663a3cf4mr1328694ejb.6.1711916437852; 
- Sun, 31 Mar 2024 13:20:37 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:172:9c27:9486:684f:de6:8ab8])
- by smtp.gmail.com with ESMTPSA id
- q2-20020a170906b28200b00a4655976025sm4495364ejz.82.2024.03.31.13.20.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 Mar 2024 13:20:37 -0700 (PDT)
-Date: Sun, 31 Mar 2024 16:20:30 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Breno Leitao <leitao@debian.org>
-Cc: hengqi@linux.alibaba.com, xuanzhuo@linux.alibaba.com,
- Jason Wang <jasowang@redhat.com>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Melnychenko <andrew@daynix.com>, rbc@meta.com,
- riel@surriel.com, stable@vger.kernel.org, qemu-devel@nongnu.org,
- "open list:VIRTIO CORE AND NET DRIVERS" <virtualization@lists.linux.dev>,
- "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH net v3] virtio_net: Do not send RSS key if it is not
- supported
-Message-ID: <20240331160618-mutt-send-email-mst@kernel.org>
-References: <20240329171641.366520-1-leitao@debian.org>
+ (Exim 4.90_1) (envelope-from <yajunw@nvidia.com>) id 1rr7Au-0001XF-Kj
+ for qemu-devel@nongnu.org; Sun, 31 Mar 2024 22:13:30 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=H9D7FprIId+HuQfllFPHA72ei+hD4EnPPlvM56PObXP9tz1kb95OzSEjCVy7XZ05HruZzG4qPjeTbiI25btfb5zpHqBIf8bJfoKMvW34/4Q4RwxutECcy+PVYkhlKUmobktLLceVDGeoi0VtBV4jHnnX69yWPAuu/KGgbGT+kJDYqlwgHVuCKu9vBUhHJ3kRXrJuAurHOfDai8HJU1Nr8eNoT+rtfhgWfFhRBwuqTpe/WbQmKAGfC5phYYeBd4+nu/DL5onECuH/GpXm6DVDePSrZdwxplLKdvF+yY+znk38/fF4rOgoXoQV4/F9u/76/CWee/SMbA23oIlKBipgDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dMiGEeTw2GfeX7zBSRV3bKMeAxJZPpLYgDa4SBJcQIc=;
+ b=WSIs4zOV6XYnVQztLdZckXWUA9+q9NnwuM+zx0+YChiRmVbvTET5yGdIxR7soYyCMjSyMRPcN/1hmB+CDYBoTgmLEiahROwJvVny3J7/gNx88A+Zx+VuSAqnWKs5bwTl0jMBmYt2z0GVW4xC08nGjV0B23If4q4KBq9O+o6Xl+QdJImX0OP2kwvMJcWrUlgl/MA608a0fD3jpBmYoeJhjPK+TTqXa/eQRCQqMv2kHMQtE1es56VSRvfDz1tT8MaZgj5VbqLCrzKmvB1FAu2nB/VrWIdvVCYvOtheren8AFWql2saRk5aLKZhasZcEoULvX5NMsnzl7DhnDL1Kxf2uQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dMiGEeTw2GfeX7zBSRV3bKMeAxJZPpLYgDa4SBJcQIc=;
+ b=rUwP3YnBL3dNZeVyo285HBXhLs7yYyHPg2ZQJ8nu7WpgnA51/neGsxzhCA/oNPVA2bi1K1lc5pXSbqdCzFvenBFwLNXd5hHzdNPP4BVvGBMnAIyjcxEwwdgFmdH2twZruVkJ2/PEaGT5nCqUAOzroQ4fgOlApuL9g0jl+Q9f7XxqYHvTvvWJCZYSkzyDmrFTFh2hVkLJbT7DHwV1/tQ2eI+dsEBUH41/FHV6iopaURcXhw1bJQIg6gITYs6JPIdGz142hQ1AsEiJABYvlQy7NBVYuP6HHAyCpXqBnHdlBYJ0OETR3WBhvw+pNSxWs0H4gNCAX/uoMAsOziXdh3hBXQ==
+Received: from DM4PR12MB5168.namprd12.prod.outlook.com (2603:10b6:5:397::8) by
+ MN2PR12MB4160.namprd12.prod.outlook.com (2603:10b6:208:19a::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Mon, 1 Apr
+ 2024 02:08:20 +0000
+Received: from DM4PR12MB5168.namprd12.prod.outlook.com
+ ([fe80::449b:329d:c9cd:5824]) by DM4PR12MB5168.namprd12.prod.outlook.com
+ ([fe80::449b:329d:c9cd:5824%5]) with mapi id 15.20.7409.042; Mon, 1 Apr 2024
+ 02:08:19 +0000
+Message-ID: <add17160-7b47-4af0-908c-9c0617720cc2@nvidia.com>
+Date: Mon, 1 Apr 2024 10:08:10 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: vhost-user-blk reconnect issue
+To: Stefano Garzarella <sgarzare@redhat.com>, ",alex.bennee"@linaro.org
+Cc: "fengli@smartx.com" <fengli@smartx.com>,
+ "raphael.norwitz@nutanix.com" <raphael.norwitz@nutanix.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>, Parav Pandit <parav@nvidia.com>
+References: <DM4PR12MB5168C0DB5E4B8F30B47738F6B6362@DM4PR12MB5168.namprd12.prod.outlook.com>
+ <vzwqswsxtiios4mzwab4br2utyrclkfsluwyvyw6r7gqnx55fv@z3rsaj4hs6cz>
+Content-Language: en-US
+From: Yajun Wu <yajunw@nvidia.com>
+In-Reply-To: <vzwqswsxtiios4mzwab4br2utyrclkfsluwyvyw6r7gqnx55fv@z3rsaj4hs6cz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SG2PR03CA0125.apcprd03.prod.outlook.com
+ (2603:1096:4:91::29) To DM4PR12MB5168.namprd12.prod.outlook.com
+ (2603:10b6:5:397::8)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240329171641.366520-1-leitao@debian.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5168:EE_|MN2PR12MB4160:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: ySNuPZhQ5PmwMTTSKn0dF+seJ2K14hwbtDLVdYWEF4ayX/5g95z/znMkkPhW7CeLQhBiiMNkfd6yuX2a5w5U8KkliPV0NvUYlAyw/ojDVH5Q51cGCOa7nDrQykEsaDctKvZIpe10n798zZJXUT+5sPsHgX31ZxnooL2p5z6M88xuhKj6gPD3IZeSmHqNiWkP/HWHmNTlUu2/++6GyoB73ME7npwfmNLsd+P/4rFkD+Hgxw7mfyr0MHUImU3U/iR5Ws9XuuaTCBsWXPOLBd3iWXDpKDpk25MQxWjyAqtjq2EF6vQUJaCL2nwNS4F5ujpM9jUMKpDO8aYRean5ypVlho4+YOz4PqfTuBM6SnK5UKZn2uwmN2qJULIoL7H8HYJd9uNA2areNppJMBhSu3Mv5qnw1FKvrrm4SWX/2KFVc78OmDdKB7sbk4IbNOiZgHN3stP6yn+CffcUNTpsA3n6z7YfaJ5yj7rh0cNz3TVHn9rZXYYZwffw7iVYNm6iNR9fvS2IHtW0jjsZ7VhE/UtRkdT/JbsQIeMOcqE8wN1vMNwk7dp0AjY+/gPqcKUY0NLSgIYAXtRjOHtwMjLzbSV01rYYKCRY+cSarFrcuLLFdYZO5GO4LgxFlaDme7pCfZrAkdrbdottCbjOe5spLuwEhJ+zkef3M+VbC00vboRs0R8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB5168.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(366007)(1800799015); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?akN4NDIvSkp3Yk9KU0tOMkxVT0lGNnM0MmJOZ3VIM1ZPUFQwWkRvTXJ4dmxh?=
+ =?utf-8?B?YUd5a0ozRlRDbmorTkI5ZE56akFZR0ZwUmMvNHpVYmozb1BXRzluZmwwYU03?=
+ =?utf-8?B?YW1hYnJ5d3l3Nnp6UDNKdW84Tm9aZjJpdjRQSS9ZQkdNd1Q5VTlESUM1KzRO?=
+ =?utf-8?B?MlNCdHl4cTJXREo4R1lKcWN3a1BQSThvKzJDdU9IMHFWNkl1UDRTT29vbE1L?=
+ =?utf-8?B?MHltd0lqVUVLa2hwQk5GeVVzNjNOYkJFQ0QxV1NmSit4K0Vjc2haUHYvelM4?=
+ =?utf-8?B?VjBIa1NxWFV3UDlwU2FzV3VmdUdaYThWSmp4UkN2MkZEdmpndDdtS0d1RFBo?=
+ =?utf-8?B?M1hXRkY1Zk5xcnN3bXlYMWZEUysvcSt4VG5DNlp5aG02WHJnOXFHV3Y3MnY2?=
+ =?utf-8?B?Q2ZjZ0FYb3J1MFk3OUpGcmtidXdCeXpnaDB1YTZYdXduM1lwTW00SlVpekVn?=
+ =?utf-8?B?NnZVQjh3M3hKelp6aWZFemdiV2FIa1pCRkpkUVgvRGp2a3BSNUQrS0hyYzNw?=
+ =?utf-8?B?eEFzZnZiRy85MEdaSXRwUk1Qa0ZHZWhpZTZmcGRGQjB3SWQ5SEMzNTFpQnRY?=
+ =?utf-8?B?SkYzakJpR1A1K2l2Z2ZHQzJZeU01YUZOSWNKRm9mcVpNdWJCVFYwSWhKOUo2?=
+ =?utf-8?B?NGNHSG45NnRJUnU5eWc1SnllVmpTUGFlZWhYcjM1YVgrQUZEMXk2M0hlcGxY?=
+ =?utf-8?B?NjhWL3Y1RjBMSENSOW9DOXlpZVNscEZJSTNZVEZwa1dIRHlxb055bG1SQlRy?=
+ =?utf-8?B?WUtMazZRQnZITzUwUVNzOUpmTWZtYm1RYlhkWmg4Qy9kaWE2bThrbU12UkV5?=
+ =?utf-8?B?emRKM3BvM00rWFo1RFpFQUljdXA3WmR0V3IwWFNDUzY5elI4UEdkVzRnUDRK?=
+ =?utf-8?B?VWFaSlFRQkpkazVoY0lzL1RzT3Nla0taaXZHYUxkdEZoKzh3a08zcDdaaGVE?=
+ =?utf-8?B?M3JNdUJ5bU1PVzR1Tm02VUZRckg0SElPaklyWDJtWVZHdHN1bmpEY3VOOWtV?=
+ =?utf-8?B?dWRqM0tRajlTVWRnc005TnhyMURFV2hMdGlTSXpmeXJnQXgzSGtDeDdPTHdq?=
+ =?utf-8?B?QldyRW1ub25MRWhQb3hORjd0OTVDNDJQOHJsTHdiS0NZdFRZTVRTeVRGRkRt?=
+ =?utf-8?B?Y08rSGh5V0pGdVd5clV2UFJDZEViazRwMFhodFMwaStjeGtNUTdWMVZxMXdi?=
+ =?utf-8?B?Q1JuQVRRdzlaZ0huUG9DL01rbUtYWDBDVC9KSDRoMFZuOWtzdmIrNDZmalFo?=
+ =?utf-8?B?MDBUNWtZZGxtS2F0dXJYd21tWGp5MDF4SEZxckFPQ1lEeGk5YjRhSGJyc0V3?=
+ =?utf-8?B?ZEpUaC9rc3BoRVZJM21Na01HRmo3RDkweWMxRXR5OC9iUDk1Z3RBRTdIZFdj?=
+ =?utf-8?B?V3YzU0pYSXNmTWxhQkZWUWZlSXc4Y3VaK3VmVE02bGREL0FTYTV5VmRheXV2?=
+ =?utf-8?B?bWZneXlMaEZEbndvNWZ6TndDMlp2UEZCQVVIWjM5QlZwRHllWllraVJ2bEc1?=
+ =?utf-8?B?YUpIMkRMd3pvYnFPY1RINkd2d0NZVHpMM0RoMGhzSXFZTmJQTmtlbjR2bjJn?=
+ =?utf-8?B?aWtQNVF1b0NLeVY2SytpYWZiV0FXME9ZVnk3cFVleFcyZ0hIaHlpRUNsN1FP?=
+ =?utf-8?B?TnVpMzlEa2lEbnFsYnltUlN3bC9JTHZSU3I3N2prQ0hRd2h1cTloL1phYUZ1?=
+ =?utf-8?B?UXFMeWp6OS9LLzdqK0w5cjV5aHV3ZldIRFRoa3p5Zyt4QjdsdEhuTk0yVitr?=
+ =?utf-8?B?SiszTFd6djVvdkd1ckg3ZlpKYktwclRBdmhLSytMVUpSZnpweGFvdFFkK2Uw?=
+ =?utf-8?B?aVVqcVpTUElVSVZaOFlXWmI1SC91MVFubSsyYmlKcnA5Y1loem4zZk95VjZl?=
+ =?utf-8?B?SHJYRUdJUXpCWUhCa1hYOVdYTXJWaTI0NHJPeEQwN2RtRERSekNrMWthWSsx?=
+ =?utf-8?B?TFdHS0JaTHhOb2tsK01tU2g1Y3E2dm12d1FnQ2lXeDBhTm5IamlYQ0lLMDh3?=
+ =?utf-8?B?aTdDaG54QmNXVkZpNnhNOUtsWHB6OXVHSWNjenQwOC9JZzNEd011TGt0eEN1?=
+ =?utf-8?B?eml3R0JIRGlRT09telNOWU1MdW0wTUJHdnpXNEk3V0VQMDBLZ0lGNUFjNmo0?=
+ =?utf-8?Q?UfnNlZS7l91iimxFTW84mdKVi?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0af45837-55ba-4d01-8048-08dc51f099c9
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5168.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Apr 2024 02:08:19.7305 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IdYnIS9o3V7rXu0sTTSKfoDwQGw2VvIQrYkQtCvSvU5Iuzs9tY40BUqpyUSTosO6NzV2c/Hopj/sz5N2zvJLkw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4160
+Received-SPF: softfail client-ip=40.107.220.115;
+ envelope-from=yajunw@nvidia.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,142 +144,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 29, 2024 at 10:16:41AM -0700, Breno Leitao wrote:
-> There is a bug when setting the RSS options in virtio_net that can break
-> the whole machine, getting the kernel into an infinite loop.
-> 
-> Running the following command in any QEMU virtual machine with virtionet
-> will reproduce this problem:
-> 
->     # ethtool -X eth0  hfunc toeplitz
-> 
-> This is how the problem happens:
-> 
-> 1) ethtool_set_rxfh() calls virtnet_set_rxfh()
-> 
-> 2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
-> 
-> 3) virtnet_commit_rss_command() populates 4 entries for the rss
-> scatter-gather
-> 
-> 4) Since the command above does not have a key, then the last
-> scatter-gatter entry will be zeroed, since rss_key_size == 0.
-> sg_buf_size = vi->rss_key_size;
-> 
-> 5) This buffer is passed to qemu, but qemu is not happy with a buffer
-> with zero length, and do the following in virtqueue_map_desc() (QEMU
-> function):
-> 
->   if (!sz) {
->       virtio_error(vdev, "virtio: zero sized buffers are not allowed");
-> 
-> 6) virtio_error() (also QEMU function) set the device as broken
-> 
->     vdev->broken = true;
-> 
-> 7) Qemu bails out, and do not repond this crazy kernel.
-> 
-> 8) The kernel is waiting for the response to come back (function
-> virtnet_send_command())
-> 
-> 9) The kernel is waiting doing the following :
-> 
->       while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-> 	     !virtqueue_is_broken(vi->cvq))
-> 	      cpu_relax();
-> 
-> 10) None of the following functions above is true, thus, the kernel
-> loops here forever. Keeping in mind that virtqueue_is_broken() does
-> not look at the qemu `vdev->broken`, so, it never realizes that the
-> vitio is broken at QEMU side.
-> 
-> Fix it by not sending RSS commands if the feature is not available in
-> the device.
-> 
-> Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-> Cc: stable@vger.kernel.org
 
-net has its own stable process, don't CC stable on net patches.
+On 3/27/2024 6:47 PM, Stefano Garzarella wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> Hi Yajun,
+>
+> On Mon, Mar 25, 2024 at 10:54:13AM +0000, Yajun Wu wrote:
+>> Hi experts,
+>>
+>> With latest QEMU (8.2.90), we find two vhost-user-blk backend reconnect
+>> failure scenarios:
+> Do you know if has it ever worked and so it's a regression, or have we
+> always had this problem?
 
+I am afraid this commit: "71e076a07d (2022-12-01 02:30:13 -0500) 
+hw/virtio: generalise CHR_EVENT_CLOSED handling"  caused both failures. 
+Previous hash is good.
 
-> Cc: qemu-devel@nongnu.org
-> Signed-off-by: Breno Leitao <leitao@debian.org>
-> ---
-> Changelog:
-> 
-> V2:
->   * Moved from creating a valid packet, by rejecting the request
->     completely
-> V3:
->   * Got some good feedback from and Xuan Zhuo and Heng Qi, and reworked
->     the rejection path.
-> 
-> ---
->  drivers/net/virtio_net.c | 22 ++++++++++++++++++----
->  1 file changed, 18 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-> index c22d1118a133..c4a21ec51adf 100644
-> --- a/drivers/net/virtio_net.c
-> +++ b/drivers/net/virtio_net.c
-> @@ -3807,6 +3807,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
->  			    struct netlink_ext_ack *extack)
->  {
->  	struct virtnet_info *vi = netdev_priv(dev);
-> +	bool update = false;
->  	int i;
->  
->  	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
-> @@ -3814,13 +3815,24 @@ static int virtnet_set_rxfh(struct net_device *dev,
->  		return -EOPNOTSUPP;
->  
->  	if (rxfh->indir) {
-> +		if (!vi->has_rss)
-> +			return -EOPNOTSUPP;
-> +
->  		for (i = 0; i < vi->rss_indir_table_size; ++i)
->  			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
-> +		update = true;
->  	}
-> -	if (rxfh->key)
-> +
-> +	if (rxfh->key) {
-> +		if (!vi->has_rss && !vi->has_rss_hash_report)
-> +			return -EOPNOTSUPP;
+I suspect the "if (vhost->vdev)" in vhost_user_async_close_bh is the 
+cause, previous code doesn't have this check?
 
-
-What's the logic here? Is it || or &&? A comment can't hurt.
-
-> +
->  		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
-> +		update = true;
-> +	}
->  
-> -	virtnet_commit_rss_command(vi);
-> +	if (update)
-> +		virtnet_commit_rss_command(vi);
->  
->  	return 0;
->  }
-> @@ -4729,13 +4741,15 @@ static int virtnet_probe(struct virtio_device *vdev)
->  	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
->  		vi->has_rss_hash_report = true;
->  
-> -	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
-> +	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
->  		vi->has_rss = true;
->  
-> -	if (vi->has_rss || vi->has_rss_hash_report) {
->  		vi->rss_indir_table_size =
->  			virtio_cread16(vdev, offsetof(struct virtio_net_config,
->  				rss_max_indirection_table_length));
-> +	}
-> +
-> +	if (vi->has_rss || vi->has_rss_hash_report) {
->  		vi->rss_key_size =
->  			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
->  
-> -- 
-> 2.43.0
-
+>
+> Thanks,
+> Stefano
+>
+>> 1. Disconnect vhost-user-blk backend before guest driver probe vblk device, then reconnect backend after guest driver probe device. QEMU won't send out any vhost messages to restore backend.
+>> This is because vhost->vdev is NULL before guest driver probe vblk device, so vhost_user_blk_disconnect won't be called, s->connected is still true. Next vhost_user_blk_connect will simply return without doing anything.
+>>
+>> 2. modprobe -r virtio-blk inside VM, then disconnect backend, then reconnect backend, then modprobe virtio-blk. QEMU won't send messages in vhost_dev_init.
+>> This is because rmmod will let qemu call vhost_user_blk_stop, vhost->vdev also become NULL(in vhost_dev_stop), vhost_user_blk_disconnect won't be called. Again s->connected is still true, even chr connect is closed.
+>>
+>> I think even vhost->vdev is NULL, vhost_user_blk_disconnect should be called when chr connect close?
+>> Hope we can have a fix soon.
+>>
+>>
+>> Thanks,
+>> Yajun
+>>
 
