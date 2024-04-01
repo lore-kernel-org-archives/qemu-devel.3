@@ -4,151 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A7C0CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 20:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699B6CD1288
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 21:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrOi2-0006r2-U2; Mon, 01 Apr 2024 16:56:50 -0400
+	id 1rrP1w-0001fa-Hz; Mon, 01 Apr 2024 17:17:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rrOi0-0006qd-P5
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 16:56:48 -0400
-Received: from catfish.pear.relay.mailchannels.net ([23.83.216.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rrOhy-0004uY-Nu
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 16:56:48 -0400
-X-Sender-Id: _forwarded-from|134.3.94.10
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 836136C398A
- for <qemu-devel@nongnu.org>; Mon,  1 Apr 2024 20:56:44 +0000 (UTC)
-Received: from outbound5h.eu.mailhop.org (unknown [127.0.0.6])
- (Authenticated sender: duocircle)
- by relay.mailchannels.net (Postfix) with ESMTPA id B57966C3F41
- for <qemu-devel@nongnu.org>; Mon,  1 Apr 2024 20:56:43 +0000 (UTC)
-ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1712005004; a=rsa-sha256;
- cv=pass;
- b=8HFzyvD/LewdmMTqNUlfqD1XRl8kxqJRlTpKCy8PfI3EImxXNfV1Izu1mRMVTioS+fB97a
- PV1C2JJunQ5ZieZp6uMCv6RW4vCCn6fqFuXcqTCilROwQLNSB5fiSeIeKWUw5cjvm3f+hS
- nbv2oDJqzbg2N+EplzTexvDkecUvKcuJvzw9Fph0dJwXK+uuebHOOBztouD9eMsDAx6paM
- SqZ317OobnpKrD8vM5GMNvSUfCF4UVGFenINnf8pg2bN/UIuozPGURx69lhxEQBYQCldFL
- rB2Z6V08NvdmzzADf1NojDycq+gykfJo+YrGxR3/BknqlQQdCYF1+6OB6mSWmg==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1712005004;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=cwxzOLguIUzbtGnK4x6zm0ZlvjSGeG2RJI/9m9KY9AA=;
- b=O93khtdiGMcL9oPXdd0XtCXw4DbMj3t0Y4dchLrOtc6hT4C3HMMhsHLbPPMcffKFqXE/vp
- oTl5rRna76xWw39CbQlnf+HEc3EaFgAvLIXNLzyuwyVPnDXtGbdvsse7VKTlcxtosWDmBT
- r+Hk+qvijChMj7+vssYjJ54RHP0KbF4z2evRZU6zxf39DVyEZimCR2LOoGWI2P9xvjGZ69
- D80T7UW2+vQ2cA9xapNh3bQddt40xVfGKawLP+76m2o6+ISqPdlvDs5pgJo9USnfPg6PPF
- lkHWo2IP+gINHqXLJpoFNYvB9DhbP2ruq3+6n2Y11PWOlHoDhO+QGJWpCOSc/g==
-ARC-Authentication-Results: i=2; rspamd-5ffc56d49c-wk9jg;
- arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
- auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
-X-Sender-Id: _forwarded-from|134.3.94.10
-X-MC-Relay: Forwarding
-X-MailChannels-SenderId: _forwarded-from|134.3.94.10
-X-MailChannels-Auth-Id: duocircle
-X-Reign-Share: 018f49033c0d1543_1712005004227_2889533070
-X-MC-Loop-Signature: 1712005004227:2739861608
-X-MC-Ingress-Time: 1712005004227
-Received: from outbound5h.eu.mailhop.org (outbound5h.eu.mailhop.org
- [18.156.94.234]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.113.47.137 (trex/6.9.2); Mon, 01 Apr 2024 20:56:44 +0000
-ARC-Seal: i=1; a=rsa-sha256; t=1712004875; cv=none;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- b=ox0wQR9jGjYzOZ0JRNQfL3x2WS2n1VpMQ/RlMXt9t9I9Kdsi/bBJIa8R49fg0xpLkN3/MYBrnRqad
- FKB4oRefKnPazoP7wZnt9ziGhjUgmzx216wWkhDutYRseH/FBOSy4bkcRmd/TI/FilwzKJOzeanmV/
- frlsKMRc2RfeOzR3WsiNyZjQ3E/Q/HjiajhOO5dm52BW3DwenbbLPI9IIE17XB1fyUe1QE+nbIBSOX
- U0QwFAxEWTJzyGHQu4hlSxRx0dtxWOHybQqvWvGW91eB8kc8N08AwojIHOH1inbUASOvJIBv4Pbu0I
- Sdy4H/Auga08f23sGmk6mUIqUwLSqkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:dkim-signature:dkim-signature:dkim-signature:from;
- bh=cwxzOLguIUzbtGnK4x6zm0ZlvjSGeG2RJI/9m9KY9AA=;
- b=hxm3s9VyMRb0ZNhrNss3lTwaaY1LECDU5ef6Al29mCfDZVb1mTIfb7bUHZnUudDwrrbdvBdQStAt5
- GneR9EXTMMh3M9e+/yveXhZyLdub3TVWXPc1NbOI4T/mZvRblINswzGXU0oMzy1eHRfpJ40x7g5agb
- PDcoDT4waHtjFDNaYAqdXt2i61LOW7oWuzBt6eozkC0aWUHWBc0+gipXVudown5Ql2ls6drt7TOL4p
- JkCvrbzBchLrxDmzflMaVCxmmWkxihD1b9u2tneAuiVeYPx9Im2UD8p14+cHvJEk/YQjInr1Rek5q9
- CrH7vu0mos/RSqhDpVAektT6RuAL7zA==
-ARC-Authentication-Results: i=1; outbound2.eu.mailhop.org;
- spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
- dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
- header.b=V/F73HAT; 
- dmarc=none header.from=stackframe.org;
- arc=none header.oldest-pass=0;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rrP1u-0001fN-F0
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:17:22 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rrP1r-0008Tg-Os
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:17:22 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-5d8b70b39efso3060537a12.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 14:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:from; bh=cwxzOLguIUzbtGnK4x6zm0ZlvjSGeG2RJI/9m9KY9AA=;
- b=Q2X53VZeimDi9Uc9a0EBnzLxJdaBPxfsAMywVhypIgs6qBDXyL8oxR8OP2H4FIK+pYsxcT1RFwT1H
- 3xRxOQ+1e0FHM8fGSiU5WGY6YCU3qbpFLYi+EEbSy+WJzI+UAdaet32mtS2c3DbAAv5T03t+8QvQtn
- 3GHFVVNYDBVsHgjw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:from; bh=cwxzOLguIUzbtGnK4x6zm0ZlvjSGeG2RJI/9m9KY9AA=;
- b=uvJ+u1FyEOEx7H1cqZZNciJqWXzsMalBef7ExARVqiobt8MiBXIg6uuynewBH6KN55sZzUsX1wdAz
- RlXRKpMhi3TjPdIeoUBxbmnVVKlDmmAPQpJbPJfqI3I/hYOjtCRxtL6wfK0Cx6iF9tgU4mSiHgbjTm
- qS8BFGrxKsjRdNyRxvmnNLkCdPDTM6DCgdLsdrij0c/q22jl7wp7PAmBbTUu/XsC/XGMZPCZKLbvkq
- PHeFTbmbKo2xymCQ7RfPT2y+RgWhsJC4QN8nmwECnLvfiJuyVv+2sm8FY7QndnAz7y0Eyip/Trhjfl
- d49nlSI38h+zWpyMwvkhZUmToGzslog==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: 0a37e64e-f06a-11ee-b8f0-9b9d9be6ef2c
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound2.eu.mailhop.org (Halon) with ESMTPSA
- id 0a37e64e-f06a-11ee-b8f0-9b9d9be6ef2c;
- Mon, 01 Apr 2024 20:54:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Type:MIME-Version:Message-ID:Date:
- References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=cwxzOLguIUzbtGnK4x6zm0ZlvjSGeG2RJI/9m9KY9AA=; b=V/F73HATxJd6v+TvQo1UqF3Q2L
- /jD3MqVImpcAi/i2BAS4stH4uV7OxW/AzNe/NUMGunnkgqQ4Yo7grcBWSz5OnQ87UP/u94mt7B3ok
- IwEhIG8htGsu73Du6CpoShz6i2AHKoFKU0uUnjbQEgxn6OxPownfioDZW1cJt2KIcju+vgskb20tV
- Kv36EuPegn9V67z9LvcNImcxmYWeAuSZxNcb/x+vpjVH1f4palGg/bTM549fpsSUaW9j0C55/bG+Z
- XtTP95YAQYBlYK4Rkjn1XHEqyNXV300EIR5GZeh2v4LBY5Jt7+Rc7BkSqTiffPeZaHm5PqPKXM7i/
- SE2v+9mA==;
-Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
- helo=t14.stackframe.org.stackframe.org)
- by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <svens@stackframe.org>) id 1rrOhr-0076Ga-1T;
- Mon, 01 Apr 2024 22:56:39 +0200
-From: Sven Schnelle <svens@stackframe.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  Helge Deller <deller@gmx.de>
+ d=linaro.org; s=google; t=1712006238; x=1712611038; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MHhXEnd0MbjMJ/Qb1+pGLb+PF3UomWpHlTfOh2cQ6Pw=;
+ b=VwvkBbU4XJw9Apmvhgy1tbJbIGO7VUMdiKpZ+Q6Fcpwok9Br2YSAc2X5lPV+NuJVfA
+ /2NuQn7HMJyirEFPmnhZf/6wY1FnquKlwxU61VGtrRvaww0LAqNqkfts7P3WOfbzCIBh
+ ZnTufECsTMdqmTVx+H84QDDD0EsUQgpxJUoN7M5xUuUXKIG90iBB/EWQhjVsni/EzkPz
+ k6MaROFXRs67LeWzX2J0cv9+401hyIqfb/roxhNx5ac0JrG1GIppKpVTaPVdW8/dUeNv
+ kg/Ctc80QwkEx6id2tFaOEI5Y6WxQ2uXVLbztIPVhYCQS85BWTMmFH/mctCoLxyrCb5m
+ wFqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712006238; x=1712611038;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MHhXEnd0MbjMJ/Qb1+pGLb+PF3UomWpHlTfOh2cQ6Pw=;
+ b=GPF75uFxVnwpXnLX3QiqZA1yR1HtFflEXWjctxOuqlSQoIgTIwel5VdF3j7EzTkfE8
+ hBESym3R17Gy4p4BbSfIndLT5ryN5OGAWxTK1hToP1CyWi+OPlbZcEShyw+9W+zC408w
+ sfj9eYr0RU9lpTm4b/mgKI2vFUBC4Y6NGStE9Jz5HZGnCdo1lvHWvYFYd2rU15e44XKa
+ wXvpWoIate1itr0YyF7lY/lvQij5ls4i+4cfYFyHCCUMCrceNOEDJgAZ4ftig5X3UdK8
+ 23GIu0inIXc6rMSiKe2E/nFOsYeuzsPBR6quOkzu7ZkuLINrx8IR32UZn6JbVN0/Qeph
+ zHzw==
+X-Gm-Message-State: AOJu0YyQ3ckudT6U/7l4pVze0ba71QVhp3MQyULzFlgthbHJTjWODQw9
+ BGkSQO1XySrWL9eh9dOx87FYr2cLoJJj9tLOxbZBoO09NbJKGwYcZKY5I7X0/pY=
+X-Google-Smtp-Source: AGHT+IH36ZdesYZ4mjg2CM2QJD+Fs/EiDyuZKdey2vddknjaiac5IOdaemCgQsUSqjYCsoxDNA/iqQ==
+X-Received: by 2002:a17:902:d491:b0:1e2:15ac:1c09 with SMTP id
+ c17-20020a170902d49100b001e215ac1c09mr10183354plg.29.1712006237999; 
+ Mon, 01 Apr 2024 14:17:17 -0700 (PDT)
+Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ d5-20020a170902c18500b001dddce2291esm9447832pld.31.2024.04.01.14.17.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Apr 2024 14:17:17 -0700 (PDT)
+Message-ID: <069d1894-0c91-43f2-a33b-904cb89ac16e@linaro.org>
+Date: Mon, 1 Apr 2024 11:17:13 -1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] target/hppa: mask upper iaoq bits when returning to
  narrow mode
-In-Reply-To: <87il10zu46.fsf@t14.stackframe.org> (Sven Schnelle's message of
- "Mon, 01 Apr 2024 22:49:13 +0200")
+To: Sven Schnelle <svens@stackframe.org>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
 References: <20240401145201.2175873-1-svens@stackframe.org>
  <0f5697e6-da79-424b-866d-40d11b4db0bb@linaro.org>
- <87msqczujz.fsf@t14.stackframe.org>
- <87il10zu46.fsf@t14.stackframe.org>
-Date: Mon, 01 Apr 2024 22:56:38 +0200
-Message-ID: <87edboztrt.fsf@t14.stackframe.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=23.83.216.32; envelope-from=svens@stackframe.org;
- helo=catfish.pear.relay.mailchannels.net
+ <87msqczujz.fsf@t14.stackframe.org> <87il10zu46.fsf@t14.stackframe.org>
+ <87edboztrt.fsf@t14.stackframe.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <87edboztrt.fsf@t14.stackframe.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,63 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sven Schnelle <svens@stackframe.org> writes:
-
-> Sven Schnelle <svens@stackframe.org> writes:
->
->> Richard Henderson <richard.henderson@linaro.org> writes:
+On 4/1/24 10:56, Sven Schnelle wrote:
+>> This seems to be caused by IIAOQ's containing the upper bits. With the
+>> patch below i'm able to boot. Not sure whether it's correct though.
 >>
->>> On 4/1/24 04:52, Sven Schnelle wrote:
->>>> For unknown reasons, Java 1.5 on 64-bit HP-UX 11.11 does signed
->>>> computation of the new IAOQ value in the signal handler. In the
->>>> current code these bits are not masked when returning to narrow
->>>> mode, causing java to crash.
->>>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
->>>> ---
->>>>   target/hppa/sys_helper.c | 4 ++++
->>>>   1 file changed, 4 insertions(+)
->>>> diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
->>>> index 208e51c086..3bbc2da71b 100644
->>>> --- a/target/hppa/sys_helper.c
->>>> +++ b/target/hppa/sys_helper.c
->>>> @@ -83,6 +83,10 @@ void HELPER(rfi)(CPUHPPAState *env)
->>>>       env->iaoq_f = env->cr[CR_IIAOQ];
->>>>       env->iaoq_b = env->cr_back[1];
->>>>   +    if (!(env->cr[CR_IPSW] & PSW_W)) {
->>>> +        env->iaoq_f &= 0xffffffff;
->>>> +        env->iaoq_b &= 0xffffffff;
->>>> +    }
->>>
->>> This shouldn't be needed, because we are already masking these bits
->>> later, in cpu_get_tb_cpu_state.  But I do have some cleanups in this
->>> area, and perhaps one of them matters.
->> Any thoughts? Otherwise i need to investigate and make a wrong patch
->> again :-)
->
-> This seems to be caused by IIAOQ's containing the upper bits. With the
-> patch below i'm able to boot. Not sure whether it's correct though.
->
-> diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-> index 58c13d3e61..f7c4cca8f1 100644
-> --- a/target/hppa/int_helper.c
-> +++ b/target/hppa/int_helper.c
-> @@ -123,8 +123,14 @@ void hppa_cpu_do_interrupt(CPUState *cs)
->          env->cr[CR_IIASQ] = 0;
->          env->cr_back[0] = 0;
->      }
-> -    env->cr[CR_IIAOQ] = env->iaoq_f;
-> -    env->cr_back[1] = env->iaoq_b;
-> +    if (old_psw & PSW_W) {
-> +        env->cr[CR_IIAOQ] = env->iaoq_f;
-> +        env->cr_back[1] = env->iaoq_b;
-> +    } else {
-> +        env->cr[CR_IIAOQ] = (env->iaoq_f & 0xffffffff);
-> +        env->cr_back[1] = env->iaoq_b & 0xffffffff;
-> +    }
-> +
+>> diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+>> index 58c13d3e61..f7c4cca8f1 100644
+>> --- a/target/hppa/int_helper.c
+>> +++ b/target/hppa/int_helper.c
+>> @@ -123,8 +123,14 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+>>           env->cr[CR_IIASQ] = 0;
+>>           env->cr_back[0] = 0;
+>>       }
+>> -    env->cr[CR_IIAOQ] = env->iaoq_f;
+>> -    env->cr_back[1] = env->iaoq_b;
+>> +    if (old_psw & PSW_W) {
+>> +        env->cr[CR_IIAOQ] = env->iaoq_f;
+>> +        env->cr_back[1] = env->iaoq_b;
+>> +    } else {
+>> +        env->cr[CR_IIAOQ] = (env->iaoq_f & 0xffffffff);
+>> +        env->cr_back[1] = env->iaoq_b & 0xffffffff;
+>> +    }
+>> +
+> 
+> I guess the interesting question where should these bits get masked out
+> - i would assume that this place is to late, and it should happen
+> earlier in trans_be/when the iaoq value is copied. On the other hand
+> you had one commit that removed the masking in copy_iaoq_entry()...
 
-I guess the interesting question where should these bits get masked out
-- i would assume that this place is to late, and it should happen
-earlier in trans_be/when the iaoq value is copied. On the other hand
-you had one commit that removed the masking in copy_iaoq_entry()...
+I would have said this masking should not happen at all.
+
+
+r~
 
