@@ -4,42 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE7CCD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 16:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7180FCD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 16:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrK79-00027u-ML; Mon, 01 Apr 2024 12:02:27 -0400
+	id 1rrKAa-00051u-98; Mon, 01 Apr 2024 12:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rrK6r-0001um-3h
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 12:02:10 -0400
+ id 1rrKAZ-00051l-23
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 12:05:59 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rrK6o-00013O-CG
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 12:02:08 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V7bMh4plcz6JBHc;
- Tue,  2 Apr 2024 00:00:48 +0800 (CST)
+ id 1rrKAX-0001ZX-Mi
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 12:05:58 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V7bNH6t7Jz6K7JS;
+ Tue,  2 Apr 2024 00:01:19 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id B6BB71400D1;
- Tue,  2 Apr 2024 00:02:02 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id EB0981400D9;
+ Tue,  2 Apr 2024 00:05:54 +0800 (CST)
 Received: from localhost (10.48.156.172) by lhrpeml500005.china.huawei.com
  (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 1 Apr
- 2024 17:02:02 +0100
-Date: Mon, 1 Apr 2024 17:02:01 +0100
+ 2024 17:05:54 +0100
+Date: Mon, 1 Apr 2024 17:05:53 +0100
 To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-CC: <qemu-devel@nongnu.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Fan Ni <fan.ni@samsung.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH-for-9.0] hw/i386/pc: Restrict CXL to PCI-based machines
-Message-ID: <20240401170201.000072d4@Huawei.com>
-In-Reply-To: <20240327161642.33574-1-philmd@linaro.org>
-References: <20240327161642.33574-1-philmd@linaro.org>
+CC: <qemu-devel@nongnu.org>, Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, Stefano Stabellini
+ <sstabellini@kernel.org>, <xen-devel@lists.xenproject.org>, Bernhard Beschow
+ <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, "Anthony
+ Perard" <anthony.perard@citrix.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [RFC PATCH-for-9.1 08/29] hw/i386/pc: Move CXLState to
+ PcPciMachineState
+Message-ID: <20240401170553.00000ba3@Huawei.com>
+In-Reply-To: <20240328155439.58719-9-philmd@linaro.org>
+References: <20240328155439.58719-1-philmd@linaro.org>
+ <20240328155439.58719-9-philmd@linaro.org>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -73,37 +78,20 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 27 Mar 2024 17:16:42 +0100
+On Thu, 28 Mar 2024 16:54:16 +0100
 Philippe Mathieu-Daud=E9 <philmd@linaro.org> wrote:
 
-> CXL is based on PCIe. In is pointless to initialize
-> its context on non-PCI machines.
+> CXL depends on PCIe, which isn't available on non-PCI
+> machines such the ISA-only PC one.
+> Move CXLState to PcPciMachineState, and move the CXL
+> specific calls to pc_pci_machine_initfn() and
+> pc_pci_machine_done().
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
-Seems a reasonable restriction.
+
+LGTM as a change on it's own - I've not reviewed the series
+in general though, hence just an ack as an rb feels too strong.
 
 Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-Jonathan
-
-> ---
->  hw/i386/pc.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index e80f02bef4..5c21b0c4db 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1738,7 +1738,9 @@ static void pc_machine_initfn(Object *obj)
->      pcms->pcspk =3D isa_new(TYPE_PC_SPEAKER);
->      object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
->                                OBJECT(pcms->pcspk), "audiodev");
-> -    cxl_machine_init(obj, &pcms->cxl_devices_state);
-> +    if (pcmc->pci_enabled) {
-> +        cxl_machine_init(obj, &pcms->cxl_devices_state);
-> +    }
-> =20
->      pcms->machine_done.notify =3D pc_machine_done;
->      qemu_add_machine_init_done_notifier(&pcms->machine_done);
 
 
