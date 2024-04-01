@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8A9CD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 12:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0B3CD1288
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 12:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrGTk-0001w2-K7; Mon, 01 Apr 2024 08:09:32 -0400
+	id 1rrGTv-0001xw-Ld; Mon, 01 Apr 2024 08:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrGTi-0001u6-AM
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 08:09:30 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1rrGTu-0001xe-Oj
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 08:09:42 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrGTe-0003n4-PJ
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 08:09:28 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-56d7a0cf96cso2720861a12.2
- for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 05:09:25 -0700 (PDT)
+ id 1rrGTt-0003pt-6C
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 08:09:42 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56b0af675deso4418461a12.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 05:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711973364; x=1712578164; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711973379; x=1712578179; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BXF1duU1OKGXKLnQOSqCFJnQM4bRh0O575WQTsd1kOA=;
- b=ddDPYtqVLF8sV9HgZgPSVMc+UbF+jZ6tgKhXdzokUve6awo1URhiQED13HjCC+RfYA
- 2psq6KJQZfIMjVXHGTcwBBCuXAScc+le1VZg07oAtZT0H1FkDMjmjUG3uQgRu8kXlvoI
- NHjDVemVWGzx8AVzptElOyCsqGcVoHVUbcc/tdpz3isiGeFNYBqUqQIcNNZunTjGhAIk
- sBX5HnWsk0PcXWmsX/bg2zZHgSJTn65sybvGjWgqAkBP8XHaiBOtdpH0zpgg2ZYU0nqE
- VhkCW0MITtDFZDRcq4xsf9mIiB+OfyU2ZVP+stcKYtuCo9CgNlTNyy9soQ9rv0aCRnYa
- b6dw==
+ bh=fHaOjMpLVLU4NQizzkEQS34+RNCTThnP9KUqozNByGY=;
+ b=CVlB5IJa+m++BkoYBykLZyh330GdN29YJvxtrERYnSi6YqBUzI6aSLADl9doWNNh1k
+ 7riNPHEahDJmdAU2kBY3i2iI6HtxG3ca/VKEGHu1pofz4r8pfPu7xvXdQiVoOFu7d6hX
+ TLhjwI1ymsarOkGy7dYZNHB4j5qiisgQnyVh7yxtZqE0+gOJhq0uqJLp+qFW/0DbwNYs
+ k8rtTZ+4qo//92dbhmzuCgRO08dLTHRroblKc0FKxlGpDjp37Bttr63dYoLrxH8wWtyB
+ izLkVD8Qr/I+njADPHSKroyYksB7Lmje9YdBxwyOPRaaECpSNOnW4gHU7jDyFfztMtU9
+ iQFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711973364; x=1712578164;
+ d=1e100.net; s=20230601; t=1711973379; x=1712578179;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BXF1duU1OKGXKLnQOSqCFJnQM4bRh0O575WQTsd1kOA=;
- b=dIfq3iuho6L80TZG8IaXzjOmDxjew2XtvwW+JTvODNNp5qdkXx7Imd8ju2bRn9Ys/x
- IprtjjLD7Z51ozCsPwd1gS8/uPAVUnf8C27uVP1K7MXUcgZJNtUcK+/C7wCXGzgI5FIE
- VFKuf5f7jxet1CA9gcn/8+n2fwKCwTJtPHIgG7hExupAzO/xS3XVCyBECBmz4mYlpZSb
- RtylIFpWiuqkBG+8cSmMJ9XlFcmBK5EvFsDolAYAB0HYVpbN00/V1SLB5BwZEaqiDLiZ
- 2HpsVYP8Q7CrM+VeFJz/ACTNq80J6BNR6atD1OCMexkTPHHQ/xON00IbUnGRoO7mXU0l
- pfYQ==
-X-Gm-Message-State: AOJu0Yyy/ph4sqmigLDvH/mhWm3+gxjHY9ktykp+WYcNspMmq0C6XNHi
- 2raWUR4fITqKWxi1KrlIgT7PYMsnoe9gRnG0kPZM/CeIVG/QvjmpdGu4VwE6DBpJMaSwiIzCXXz
- n8nyvCzuintUrzpdTOgmdLYQwRSjdq2LV696QgA==
-X-Google-Smtp-Source: AGHT+IFLaWV5lJWrO1t5fF7deF5wbrdLkgrQgE9Gf79xJRAXnIl+i0Nh08nKyCXoWtUecJIDuVszKd2sy3c/LogNs58=
-X-Received: by 2002:a05:6402:5112:b0:56b:a03c:4eb with SMTP id
- m18-20020a056402511200b0056ba03c04ebmr8582274edd.31.1711973363959; Mon, 01
- Apr 2024 05:09:23 -0700 (PDT)
+ bh=fHaOjMpLVLU4NQizzkEQS34+RNCTThnP9KUqozNByGY=;
+ b=pbPe4ceRssOi9Bcq7hBVYbtrySDtfj23aHL+EPfQeIo05Hmt9vx3ceB5PKHQ1uVbxF
+ 9ECZL9xih/MEbY3w8gbM94LosGdI+2KxWbXf0f9jaAkpqRsCPEgzZIEfnpduJJgB6n/4
+ vdDvCBmSgrbyNfcGvJq2Q1uz7UlDRUcW9LKvCi1SEHR+R6wRBGPFcwszywe254emGiOr
+ gaaY163+vmm2qG0dM3lgZ1RJ96YJdUa9oAI4cUAJACnU/AVW6xNRm7NQXjJVjMr3/fRS
+ 647bDH22ROKwbV6UgJ+KNAj+PwzGP/w572+VybmDRUdsX7UAsLkPyjSYxMoQwofympsx
+ 46tw==
+X-Gm-Message-State: AOJu0YwZZoXGWHhNje57eN5yvy2+Z1mdBvpM/L8/gyO7fBON8QM/zq8g
+ Vh4SxGKW5QMWEF8/jucGdgUY1kOi7X2P27Kj9brXajh61uuOhhB+gDMsoZYlEUHmTUKZzMG5YIo
+ QJr8cs127mJHmBt0KMcTFO0/jYeoiBHWKmd30JQ==
+X-Google-Smtp-Source: AGHT+IHs4gGPaamj87RmSHjFxc1/E2bAw/5b3lH9IoowTFvipXfZBju0B7J7+s1wxjv2Y1IF7boDVbs6+Dps0AFWZCQ=
+X-Received: by 2002:a05:6402:50ca:b0:56c:3644:9945 with SMTP id
+ h10-20020a05640250ca00b0056c36449945mr8486257edb.7.1711973379241; Mon, 01 Apr
+ 2024 05:09:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240329223111.1735826-1-richard.henderson@linaro.org>
-In-Reply-To: <20240329223111.1735826-1-richard.henderson@linaro.org>
+References: <cover.1711702001.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1711702001.git.qemu_oss@crudebyte.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Apr 2024 13:09:12 +0100
-Message-ID: <CAFEAcA8m8nGfqbZDe7TgHT9uYSR=aQBaDOB+ocNBMWr9bt=3ow@mail.gmail.com>
-Subject: Re: [PULL 00/18] target/hppa patch queue
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Mon, 1 Apr 2024 13:09:28 +0100
+Message-ID: <CAFEAcA-NDp=Zm84i4SVj91XmkSBTXo279dQj6+OmqeCifTLw+w@mail.gmail.com>
+Subject: Re: [PULL for-9.0 0/2] 9p queue 2024-03-29
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,8 +89,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 Mar 2024 at 22:32, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Sat, 30 Mar 2024 at 13:39, Christian Schoenebeck
+<qemu_oss@crudebyte.com> wrote:
 >
 > The following changes since commit 5012e522aca161be5c141596c66e5cc6082538a9:
 >
@@ -96,22 +98,18 @@ On Fri, 29 Mar 2024 at 22:32, Richard Henderson
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/rth7680/qemu.git tags/pull-pa-20240329
+>   https://github.com/cschoenebeck/qemu.git tags/pull-9p-20240329
 >
-> for you to fetch changes up to 4a3aa11e1fb25c28c24a43fd2835c429b00a463d:
+> for you to fetch changes up to dcae75fba1084823d0fc87caa13f0ba6f32155f3:
 >
->   target/hppa: Clear psw_n for BE on use_nullify_skip path (2024-03-29 08:15:01 -1000)
+>   qtest/virtio-9p-test.c: remove g_test_slow() gate (2024-03-28 09:54:47 +0100)
 >
 > ----------------------------------------------------------------
-> target/hppa: Fix BE,L set of sr0
-> target/hppa: Fix B,GATE for wide mode
-> target/hppa: Mark interval timer write as io
-> target/hppa: Fix EIRR, EIEM versus icount
-> target/hppa: Fix DCOR reconstruction of carry bits
-> target/hppa: Fix unit carry conditions
-> target/hppa: Fix overflow computation for shladd
-> target/hppa: Add diag instructions to set/restore shadow registers
-> target/hppa: Clear psw_n for BE on use_nullify_skip path
+> Changes for 9p tests only:
+>
+> * Fix 9p tests for riscv.
+>
+> * Re-enable 9p 'local' tests for running in CI pipelines.
 >
 > ----------------------------------------------------------------
 
