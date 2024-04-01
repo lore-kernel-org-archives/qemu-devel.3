@@ -4,68 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7EDCD1288
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 14:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6161CCD1288
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 14:31:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrIg2-0004Cm-K6; Mon, 01 Apr 2024 10:30:22 -0400
+	id 1rrIgL-0004KE-Ah; Mon, 01 Apr 2024 10:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrIg0-0004CM-Fv
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:30:20 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1rrIgJ-0004J7-PX
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:30:39 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrIfy-0000t2-1D
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:30:20 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-56bc5a3aeb9so5149223a12.3
- for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 07:30:17 -0700 (PDT)
+ id 1rrIgH-0000w3-Gq
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 10:30:39 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5684db9147dso4458541a12.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 07:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711981816; x=1712586616; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711981836; x=1712586636; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=j3vzcP8Bfb696MzRqxQtVcIPGQfMopEnS6ySKVo2Sq4=;
- b=IDGGCSLz/QOahhDUiK5Ju3ffDxVDemg+88cFNgAcYGl+pj5jLJXg5g6hZBX3dw8aK4
- 3bgap25m9cTyJd25S1JjajhrIG7xaVul4K4jWxUfTeNmfPCYjLzjsL52gHGe92ViEdXv
- 1UhvYcDlyOxslrlTkT3OyYesO7AZ37POMljX/c6zMuoN5vHBIgxQs+IivEGSNv9QPr9Z
- /53D4f0f6Z7JEviCuVYo6RE+z/mwe8kdYW55Cxb1qIsxdD9DWsr2HGrOF8A4tZn01r0L
- T+cK72csc9w6awVW05EWEElCzgwmXFXnbZs/TYVynyosOlpX1jVW/Xex/SZbUHXRtcQt
- gAcg==
+ bh=GVN+lwHSohgXkQHEdJl/aOZt0jUvDhHv1XunQuVsDZc=;
+ b=dvyXplyrFpLhkKvibCMIXNrkJbKQK88Fbtqd+v6mUQ7pfemLabrG3BXMBxGCKaNKKh
+ vxP+zup/lyOEH9i/JA2PI7CSVXUFWRV3LSgMzAjnMCiJEOMA/24Fty8P8xYMkCA79FXG
+ aplyTg1znifH3rhSOskeUA11C5akj58qXiDaPAWnyFw0tEIakRuCU1xfKgN3N/bajyDF
+ MOum/337ZTkBiqytusZSGpED9XDW/59fxPgMMlONHOE8mv8mQdxdlZeg81bTiuaxQ2lR
+ ZcDSgJHxasKVDk7ZpSSpK99st/OS5I9TLSzphN+5Bo+j1SSj21hZkoHuRWjM1K/JIGlH
+ rAxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711981816; x=1712586616;
+ d=1e100.net; s=20230601; t=1711981836; x=1712586636;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=j3vzcP8Bfb696MzRqxQtVcIPGQfMopEnS6ySKVo2Sq4=;
- b=uEKdh3Wf9obk5Y2w+6gMuHpZxM92ZPt38kFQzE+eVqp0k+hJI02tk0nPUzZIQjI9eJ
- BPaTENeHqIJu4ljoNlF0LeSJgKPHqn+HWZKhfao9U4Nyd4f2OyV0Lly/di5JxseKuBwZ
- +EA2aKhsRtBm+FlFioYcsMg1YwxkVU9inLHV+cBSC4grWOixbfHmYqa/UxbSLw6lRxq6
- sVFjM7QYNDA/iSegAwqXZskEq1zxDQR6evul+uy0CwUPRSsi3WMwd8OimQXQor0njBAu
- TMFrVW05QfY5kTZsjZ+xeFJGPF/vdSRVivGT48z5GqdcD0ZVwtswY+vu+l2rY9545A/O
- kzWg==
-X-Gm-Message-State: AOJu0Yws29xti7m1b5BwtH7hDw4XcK+1mI+npjUB/hZA6EiJ1juTio7Q
- y63OFiu/ELdp+me/SJpWf94yC+oocw6HGVflvOthbJ26dFVl4Pi3GNZsedoRNm6cpPP+cEv1rbh
- IdEDyVkt2PbSLnnz9ggBO4G1aQzliw9BT22bmTQ==
-X-Google-Smtp-Source: AGHT+IGBYcsMFksRdkzLhh2Z0jvIXbM0lUn6gXCslsiL8QSVWpgjppialNCJvhGGwHACu05OnlewgyLVigunrnwnF0I=
-X-Received: by 2002:a05:6402:5114:b0:566:f81:41a1 with SMTP id
- m20-20020a056402511400b005660f8141a1mr7003764edd.22.1711981816029; Mon, 01
- Apr 2024 07:30:16 -0700 (PDT)
+ bh=GVN+lwHSohgXkQHEdJl/aOZt0jUvDhHv1XunQuVsDZc=;
+ b=LU/4iNI6ztY5ckFAoc5F9V+7dbjYBFUDuMzft71baLgzoK42v41auRcw9XtuP9Ro3+
+ APllZIZyWZXWN+6q0g85I65OJlTKpWatcR3JKVrBS3pJm/XJ+lwMeX/QItLKFjVHdUjF
+ 7fPkS6+jbfj+K0QFnjvyxc6a4CqEYAJvIkgxZ6jIKiloYXBrr1bZSP3myJlQuguYNs0S
+ Z7jNG4FlNPPw7+yuEpIo7pxuHABYABYomIq4kTm0+DIplY4t3Rch0UygjJh3+UPX2TSk
+ riXzlBogGJOZ6sPNr/RY5I93Y1IavIoU5ZzfzTvZO3FVatLlIjvTxhd5Pg0KVgGlg9ef
+ 2ucA==
+X-Gm-Message-State: AOJu0YzWTzkhNEM2EqeB/Vl4sfXa6zUYs2f7WdlxGrClWtbG2GHm1pAy
+ 2ujFTOkS0lXGgHLbu9d/bT2DDghcCmSdJEYP4zPcZc3dxoaZbH3q34D1MpbTbNN8lh6s+AleVRL
+ jlDjS2T3R44T6i3N5lqzecb3JS9WG9qpv6ieKYg==
+X-Google-Smtp-Source: AGHT+IEZmr66Fj6IJDW97Ke7zvJXTbMZ+18EWddgfGFJriGq5wvUdjTKE9RkuAL1d0VEholgePEmEKlbDWlINq7IO9Q=
+X-Received: by 2002:a05:6402:1ec9:b0:56d:c929:999b with SMTP id
+ g9-20020a0564021ec900b0056dc929999bmr2787498edg.41.1711981836255; Mon, 01 Apr
+ 2024 07:30:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240331183251.1045817-1-peterx@redhat.com>
-In-Reply-To: <20240331183251.1045817-1-peterx@redhat.com>
+References: <20240401051633.2780456-1-mjt@tls.msk.ru>
+In-Reply-To: <20240401051633.2780456-1-mjt@tls.msk.ru>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Apr 2024 15:30:04 +0100
-Message-ID: <CAFEAcA91xPipCybp1GQo2mdTt3_ZVE-ify90Bv=6LxrjWrC9nQ@mail.gmail.com>
-Subject: Re: [PULL 0/2] Migration 20240331 patches
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Date: Mon, 1 Apr 2024 15:30:25 +0100
+Message-ID: <CAFEAcA8MVD9CNOUs7m3XUx6efFWA7QhkhmVp+wgYW+L2RotVjA@mail.gmail.com>
+Subject: Re: [PATCH] gitlab-ci/cirrus: switch from 'master' to 'latest'
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,32 +93,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 31 Mar 2024 at 19:32, <peterx@redhat.com> wrote:
+On Mon, 1 Apr 2024 at 06:17, Michael Tokarev <mjt@tls.msk.ru> wrote:
 >
-> From: Peter Xu <peterx@redhat.com>
+> Commit ab72522797 "gitlab: switch from 'stable' to
+> 'latest' docker container tags" switched most tags
+> to 'latest' but missed cirrus image.  Fix this now.
 >
-> The following changes since commit b9dbf6f9bf533564f6a4277d03906fcd32bb0245:
->
->   Merge tag 'pull-tcg-20240329' of https://gitlab.com/rth7680/qemu into staging (2024-03-30 14:54:57 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/peterx/qemu.git tags/migration-20240331-pull-request
->
-> for you to fetch changes up to d0ad271a7613459bd0a3397c8071a4ad06f3f7eb:
->
->   migration/postcopy: Ensure postcopy_start() sets errp if it fails (2024-03-31 14:30:03 -0400)
->
-> ----------------------------------------------------------------
-> Migration pull for 9.0-rc2
->
-> - Avihai's two fixes on error paths
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2256
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+Thanks; applied to git to fix the CI jobs.
 
 -- PMM
 
