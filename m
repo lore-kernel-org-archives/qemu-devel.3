@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150A5CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 19:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B000CD1288
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 19:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrNgR-0000wt-8S; Mon, 01 Apr 2024 15:51:07 -0400
+	id 1rrNlL-0002IV-Ar; Mon, 01 Apr 2024 15:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mindentropy@gmail.com>)
- id 1rrNgP-0000wd-8i
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 15:51:05 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1rrNlH-0002IH-Pt
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 15:56:07 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mindentropy@gmail.com>)
- id 1rrNgN-0000lN-RW
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 15:51:05 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-6145a4c79cfso31183377b3.0
- for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 12:51:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1rrNlF-0001UT-1n
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 15:56:07 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-341b01dbebbso3973966f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 12:56:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712001062; x=1712605862; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Pd55Y+vARHrQxPhfwaPhmm6KoU+c237oNpdTSmmTlk0=;
- b=P/pFvmQvwqLMHMVmmFEnKliLh8/qR+MrUjwuwRqMP3t2+28CIezeHlBndc9VlhQ705
- ZVL5obL7wSt1YDFKTc9dmm6mRl/9vGrlazDdb/osKO6cQAs++KTccOi68K2vkdN2gJNy
- tBg3lsGZM9A5CJArE66YVrZFc0pJBL++Qj0+ZCT/HeYNwtvvqLYKoqg69SK8LOzKgcQs
- NogIgfolrE3ARkl6X44RNkOa/pYFGPbbJ4y3cS+/+06iY++JMRhUcW8IlxwoPZCIH787
- VqIRJBTrQ/ggI7OnuOYPIR52T5nV559r596VydGkG2SBOm2skIFWfhi+1dor1rUxQxcF
- olng==
+ d=livius-net.20230601.gappssmtp.com; s=20230601; t=1712001363; x=1712606163;
+ darn=nongnu.org; 
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=b67cjAq5fyonXOxWAmOu+89GTNYLT/hUev5pUAUcb8c=;
+ b=twcvxrj3Dd8W4DAFS9u0DFUv8FekDhc+4Jmm8n6uNoi6bCRmntLeMWfLEvXI/fVaq4
+ iypNCv8w2fwmB8vq9IbcAMMD2PDJrq1RRugryyfPQw/cUbCu6xPG8hjFxHvwOTKHsnc/
+ qkH5L6Uui/eK2+IPKW5V6mfgSk6kGp/1i6/8DblRZRsFRUaKvKLY35n2i3rmUYMZV7g1
+ WX6A8KjqKYbNUJgkP6SkKAX0v9yBHey0qXaJZQSLBvgo6SDkAjoEr5qcc9Nrx7ne2ph2
+ Wzbx+exxGX+KuUCgFFFD3254+40+KpdwkHcbKIcMAy3fY+MyhAlAEHMN8lddQgEacZlE
+ smsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712001062; x=1712605862;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Pd55Y+vARHrQxPhfwaPhmm6KoU+c237oNpdTSmmTlk0=;
- b=hQg3D5Zt0+JcUNYyICTSxteabLC8hEwPX9lTDnQ8BkidiQQkUnUPrA74gwXtGlhw/s
- ovlGniUAfFNFHvISL3GjjjhzIA+tW4kc9l2gRwAf4NE/7eOdtGb5hC9Ut5Z92xSOCLcj
- JQ/uVhcmpoGYX57mhado6dlDprM3wu+MZSrOlcVnq6YkZN7JqLlJaWVZ5WvRTOOdBNjb
- l1GijaYAaszsqPzxB+aNAKY8XmkyF/iPKjAtXFdSys2kp78GFVFJ4J80m17tJFpVDNni
- h6aHH3LcAUx0Vovh5LZPW6nTeC4SUtv+SHXI56GRpnwK5hQQ8OjG35jeN8HINshpA3Gw
- tcmA==
-X-Gm-Message-State: AOJu0YxJkj3K1jO7ogaggsY7jcgXYNRthDpzLV1EcVbGGqHim7P/uz+v
- 4U7cOa8IgAD6jZ+Q6wV2TuTLwenoZP/zsbfL8ApwJNEEpKDljOtI/YUfHEOzqG/Jy493dq/T3+x
- 4Cm5zkVAztWxJEFQKAIqvR8AdBfgJhFGLE7U=
-X-Google-Smtp-Source: AGHT+IHkGgY8zAjSIRS4HOa/PwT8aaYurhb8TGXcjLtgI7FfuxkKyEJj9CkjSp4W+AmNUQz8XQM30PWWVmgzcpG5SNc=
-X-Received: by 2002:a25:1454:0:b0:dc6:aed5:718a with SMTP id
- 81-20020a251454000000b00dc6aed5718amr9803753ybu.26.1712001061813; Mon, 01 Apr
- 2024 12:51:01 -0700 (PDT)
-MIME-Version: 1.0
-From: Gautam Bhat <mindentropy@gmail.com>
-Date: Tue, 2 Apr 2024 01:20:50 +0530
-Message-ID: <CAM2a4uwktAA=Uk9_GRnxusvHhfrZg+EUWjfxy95YgxGsQQntjA@mail.gmail.com>
-Subject: Point where target instructions are read
-To: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=mindentropy@gmail.com; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1712001363; x=1712606163;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b67cjAq5fyonXOxWAmOu+89GTNYLT/hUev5pUAUcb8c=;
+ b=Ihn1LUH22Ke/TZaRp1Vvnpb3g8d/kAijIfTqa/8mCoRQjoncQKr/5VzcNaUGlQNGMk
+ N2sAnocWlkCSVMn4k9AFRhIBXhko3vw3cMLOFETFWHlTQxJTHcLNAQvYcJtZb1VaInMs
+ RShUYJspYyqYrBL2zQixdHV4r5uuPJNFG77lz4+nfmqIX7O0zxRzME4zlXzkHoTeNqIi
+ Rrxg+DGr515GizuANDF85bJctLGp/A7qJBVD5gecNIpwcWQM0TwZozaySukA+JQgKtWz
+ Aj7ds9jVGCtAfdlRiw5KMIQCJh7y6B45G+e12OrIZ98aM7q0wCSVHaFI5nXK8n+eClKS
+ WHlw==
+X-Gm-Message-State: AOJu0YwjFRLjdE9YImGy+VV3CqO+aFnOGN/7+am3kxXUk26aaxtkJmpK
+ Ssd3LmcwZDH0vZNhiQCgD47zZ6XNk/PzypFjEm+A0aZIxZdUCDOIKURrZkx+mhJYpGzvSxax6Uj
+ Z
+X-Google-Smtp-Source: AGHT+IH5E1/ZhBHmz47Xa8RFf4LnEPnSq7hAh6uxNmioi0gOrDiBhh+7c9kQJkb7EAgxF9rlmrRV6A==
+X-Received: by 2002:a05:6000:1111:b0:343:42b6:532b with SMTP id
+ z17-20020a056000111100b0034342b6532bmr5235813wrw.46.1712001363464; 
+ Mon, 01 Apr 2024 12:56:03 -0700 (PDT)
+Received: from smtpclient.apple ([5.12.109.62])
+ by smtp.gmail.com with ESMTPSA id
+ f13-20020a1709062c4d00b00a4df82aa6a7sm5566576ejh.219.2024.04.01.12.56.02
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 01 Apr 2024 12:56:03 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Re: /util/cpuinfo-aarch64.c:58:22: error: 'HWCAP_USCAT' undeclared
+From: Liviu Ionescu <ilg@livius.net>
+In-Reply-To: <47998747-e990-4c4e-be4e-d0d38b43e9d8@linaro.org>
+Date: Mon, 1 Apr 2024 22:55:51 +0300
+Cc: QEMU Developers <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <63E7268F-D9EF-4F7C-BDA2-469F0BED2423@livius.net>
+References: <8386D452-771E-4E4D-ACD1-F871BA458691@livius.net>
+ <A2BE1ACE-3764-454F-99B4-53FCA9127F0B@livius.net>
+ <47998747-e990-4c4e-be4e-d0d38b43e9d8@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+X-Mailer: Apple Mail (2.3774.400.31)
+Received-SPF: none client-ip=2a00:1450:4864:20::42b;
+ envelope-from=ilg@livius.net; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,61 +96,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-Some background: I am trying to write a CPU emulator for MSP430 with
-Qemu. I am loading the MSP430 program as follows using the generic
-device loader:
 
-/qemu-system-msp430 -machine msp430-launchpad -device
-loader,file=simple_test -d in_asm,out_asm
+> On 1 Apr 2024, at 21:48, Richard Henderson =
+<richard.henderson@linaro.org> wrote:
+>=20
+> You were told back in September that Ubuntu 18.04 is no longer =
+supported.
 
-I have implemented somewhat the TranslatorOps callbacks and my sample
-output with some prints is as follows:
+Sorry, I missed that.
 
-===msp430_tr_disas_log:204===
+BTW, according to ubuntu.com: "With Ubuntu Pro, the 18.04 LTS will be =
+fully supported until 2028.".
 
-OUT: [size=51]
- -- guest addr 0x00000000000007fa + tb prologue
-0x7fff6403fe00:  8b 5d f0                 movl     -0x10(%rbp), %ebx
-0x7fff6403fe03:  85 db                    testl    %ebx, %ebx
-0x7fff6403fe05:  0f 8c 1c 00 00 00        jl       0x7fff6403fe27
-0x7fff6403fe0b:  c6 45 f4 01              movb     $1, -0xc(%rbp)
-0x7fff6403fe0f:  e9 00 00 00 00           jmp      0x7fff6403fe14
-0x7fff6403fe14:  c7 45 00 fc 07 00 00     movl     $0x7fc, (%rbp)
-0x7fff6403fe1b:  48 8d 05 1e ff ff ff     leaq     -0xe2(%rip), %rax
-0x7fff6403fe22:  e9 f1 01 fc ff           jmp      0x7fff64000018
-0x7fff6403fe27:  48 8d 05 15 ff ff ff     leaq     -0xeb(%rip), %rax
-0x7fff6403fe2e:  e9 e5 01 fc ff           jmp      0x7fff64000018
 
-===gen_intermediate_code:251===
-===msp430_tr_init_disas_context:84===
-===msp430_tr_tb_start:99===
-===msp430_tr_insn_start:107===
-===msp430_tr_translate_insn:122===
-CTX Dump State
-==============
-pc_first 2044
-pc_next 2044
-is_jmp 0
-max_insns 1
-num_insns 1
-TB flags: 1
-TB cflags: 4278190081
-TB CS base: 0
-TB PC: 2044
-==============
-Opcode: 0
-is_jmp: 1
-DISAS_TOO_MANY ===msp430_tr_tb_stop:170===
+Regards,
 
-I was trying to find out where exactly in the Qemu code does it read
-the target instructions from the file loaded (I could trace it to
-load_elf(...) loading the FW file) and call my TranslatorOps
-callbacks.  I get the above output continuously in a loop. Also when
-the device generic loader is used, should I set the program counter to
-a specific value?
+Liviu
 
-I am not able to understand how to proceed. Any help would be greatly
-appreciated.
 
