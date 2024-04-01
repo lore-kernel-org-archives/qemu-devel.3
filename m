@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4812BCD1288
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 21:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF85CD1288
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 21:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrP5Z-0002ep-W7; Mon, 01 Apr 2024 17:21:10 -0400
+	id 1rrP6j-0003Mt-8t; Mon, 01 Apr 2024 17:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rrP5Y-0002eh-VP
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:21:08 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rrP6g-0003Mk-HS
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:22:18 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rrP5X-0000lV-6M
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:21:08 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5cddc5455aeso2637978a12.1
- for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 14:21:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712006466; x=1712611266; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Rc0pprj1HIsimyTdJHBoSHEdTqF8XxM9/teRgIyElxk=;
- b=YNqLwUJdpvKXGh8MjxjVW6gKU0JnSP42qJ+FyFZR/wDV2y5ipHFDMGFH+8AbZyH8VZ
- cbnPOOb7DXF1rlLcNXf3jnN1oKVfJImDEQYf2u6heDfDy1i1UGr2N2fpYoJsyxuT7fxO
- fZCULY1YLX6koCXWx4PhX+USKdDvnxFscuPEe5HG1O1mluI0gmlFknMjS1Y2k6w+1/on
- K7pxFOlurkzDLKZaV/eeATsRnhQ36rMICz2VOj+gq4CDds0LeP5IS++xaS8dlHe2+c6g
- R/PQgMETe8gmGnpfc05ulWsuOn/YiB5BKxq2evA8uxAo2M1AbJ6yQXGWMGXOPKcQlaLa
- dPuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712006466; x=1712611266;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rc0pprj1HIsimyTdJHBoSHEdTqF8XxM9/teRgIyElxk=;
- b=KvjtnSuZf5gSlxPxQhIRV7gdJEwGOQ9lq90P6k1749lO3e6Yfj1VgXMYC1GNuti9tP
- wVQg07DtB9qz4AqtrWlYsZDaEImZ+mSEId0OWL2P7gyIsgyb2OVEDUwkAVWT8WNUITxY
- sI/X53gkiuGpD93lYt39ZXg2dT+KcHLiEPkCh9l6ltETJLli7VX1BSUCLa/b4cfIfm66
- MPmoMrUK0cou8enlzbJBg8bdL2BLDAmEVCSiFcT4DmHoJ1FyiiZn36hk7MJr1t+Rws4w
- z0jALMEKGgQNNGyBv+pTiBNF/1vkH3hg/kJfV4gF0pNLSWNyz3UM/F0IenTO5IqrVfwg
- yV3w==
-X-Gm-Message-State: AOJu0YxJd/6X+nzAd/VMa7rCr3tKFzZfhnkzCwTB7oW7ElyBQJEO1zxl
- Jyv5MmrGDqEzw+WfictyLMfqBgvDTcnR5wNzrkboLBFc4DobueE0Skel9pM49C4=
-X-Google-Smtp-Source: AGHT+IG5w/c9lbeXJygb0Os+U+FN/EzZ5ltGIVY6gclm+Q5KybcDxQY/ZFelwLmp9zicyebI1VMKEw==
-X-Received: by 2002:a17:90a:5286:b0:29f:f1f0:88c2 with SMTP id
- w6-20020a17090a528600b0029ff1f088c2mr7768145pjh.4.1712006465649; 
- Mon, 01 Apr 2024 14:21:05 -0700 (PDT)
-Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
- by smtp.gmail.com with ESMTPSA id
- x3-20020a17090ad68300b002a21b9805f8sm5752553pju.17.2024.04.01.14.21.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Apr 2024 14:21:05 -0700 (PDT)
-Message-ID: <f7e67270-5ff1-4d93-979c-3b501d8fca98@linaro.org>
-Date: Mon, 1 Apr 2024 11:21:02 -1000
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rrP6d-0000w6-KQ
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:22:18 -0400
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 570EE33E56;
+ Mon,  1 Apr 2024 21:22:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1712006533; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9s/95rSneT2O+VNFVSpmYbF+ijOAZIwgYIPtsDEfCk4=;
+ b=pv2cA85HWksObG9KvqkoLi2GTJ9G8PlkLOUbHL0Z0o6MPZyE1OfA89fzyXkEg1qI5xeWDf
+ VguGpr6YTAHtitmvOSJroQ5OS0XhbadJs4osK1kcQu7gUdEMcXNXvCuCwd0n7fOk56Vrfu
+ F7wbFB+bcEg03hVf0htdvuq45kheN0s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1712006533;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9s/95rSneT2O+VNFVSpmYbF+ijOAZIwgYIPtsDEfCk4=;
+ b=g/nuMKIn6tnQ2jNJPDyVYTI1sU+t0BNE8l1w9ed1jrtNaKdhStYQJRvI2Ql6Pe4zzd1RSN
+ t43W+m3VEo9//aBQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=none
+Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id CA23A1348C;
+ Mon,  1 Apr 2024 21:22:12 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap2.dmz-prg2.suse.org with ESMTPSA id wx31I4QlC2aaKwAAn2gu4w
+ (envelope-from <farosas@suse.de>); Mon, 01 Apr 2024 21:22:12 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: "Wang, Wei W" <wei.w.wang@intel.com>, "Wang, Lei4"
+ <lei4.wang@intel.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] migration: Yield coroutine when receiving
+ MIG_CMD_POSTCOPY_LISTEN
+In-Reply-To: <ZgsBMWjwhzlI9ENc@x1n>
+References: <20240329033205.26087-1-lei4.wang@intel.com>
+ <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <ZgrdIDGe3aNcRu7o@x1n> <87frw5roif.fsf@suse.de> <ZgsBMWjwhzlI9ENc@x1n>
+Date: Mon, 01 Apr 2024 18:22:10 -0300
+Message-ID: <877chgsrr1.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: mask upper iaoq bits when returning to
- narrow mode
-To: Sven Schnelle <svens@stackframe.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
-References: <20240401145201.2175873-1-svens@stackframe.org>
- <0f5697e6-da79-424b-866d-40d11b4db0bb@linaro.org>
- <87msqczujz.fsf@t14.stackframe.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <87msqczujz.fsf@t14.stackframe.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 570EE33E56
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_SHORT(-0.19)[-0.959]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_EQ_ADDR_SOME(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:98:from];
+ TO_DN_SOME(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:98:from]; 
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; R_DKIM_NA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap2.dmz-prg2.suse.org:rdns,
+ imap2.dmz-prg2.suse.org:helo]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,96 +110,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/1/24 10:39, Sven Schnelle wrote:
-> Richard Henderson <richard.henderson@linaro.org> writes:
-> 
->> On 4/1/24 04:52, Sven Schnelle wrote:
->>> For unknown reasons, Java 1.5 on 64-bit HP-UX 11.11 does signed
->>> computation of the new IAOQ value in the signal handler. In the
->>> current code these bits are not masked when returning to narrow
->>> mode, causing java to crash.
->>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
->>> ---
->>>    target/hppa/sys_helper.c | 4 ++++
->>>    1 file changed, 4 insertions(+)
->>> diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
->>> index 208e51c086..3bbc2da71b 100644
->>> --- a/target/hppa/sys_helper.c
->>> +++ b/target/hppa/sys_helper.c
->>> @@ -83,6 +83,10 @@ void HELPER(rfi)(CPUHPPAState *env)
->>>        env->iaoq_f = env->cr[CR_IIAOQ];
->>>        env->iaoq_b = env->cr_back[1];
->>>    +    if (!(env->cr[CR_IPSW] & PSW_W)) {
->>> +        env->iaoq_f &= 0xffffffff;
->>> +        env->iaoq_b &= 0xffffffff;
->>> +    }
->>
->> This shouldn't be needed, because we are already masking these bits
->> later, in cpu_get_tb_cpu_state.  But I do have some cleanups in this
->> area, and perhaps one of them matters.
-> 
-> Ouch. Appologies, i removed that masking to make 64 bit work, but forgot
-> about that. Sorry. I tried your branch, but i'm not able to boot 64 bit HP-UX
-> (it wasn't working before without additional changes, so your branch
-> doesn't break it). However, i would like to get your oppinion before
-> debugging. The code is:
-> 
-> IN:
-> 0xef4680000002c18:   20 20 08 01   ldil L%-40000000,r1
-> 0xef4680000002c1c:   e4 20 e0 08   be,l 4(sr7,r1),sr0,r31
-> 0xef4680000002c20:   34 16 00 72   ldi 39,r22
-> 
-> IA_F 0ef46800:0000000000002c23 (0ef4680000002c23)
-> IA_B 01e27c00:ffffffffc0000007 (01e27c00c0000007)
-> PSW  000000000004000f CB   0000000000000000 ---------C----QPDI
-> GR00 0000000000000000 GR01 ffffffffc0000000 GR02 0000000000002ac3 GR03 000000007a000000
-> GR04 0000000000000002 GR05 000000007a000034 GR06 000000007a000040 GR07 000000007a000050
-> GR08 000000007a0000e0 GR09 8000000040001000 GR10 0000000000000003 GR11 0000000000000006
-> GR12 00000000001ecee8 GR13 00000000ffffffff GR14 0000000000000801 GR15 0000000000000006
-> GR16 80000000400020c0 GR17 000000000001e720 GR18 0000000000000008 GR19 0000000000000000
-> GR20 000000000ef46800 GR21 000000007a000060 GR22 0000000000000000 GR23 000000007a000050
-> GR24 0000000000000000 GR25 0000000000000000 GR26 000000007a0020f0 GR27 0000000040008410
-> GR28 0000000000000002 GR29 0000000000000000 GR30 000000007a002160 GR31 0000000000002c27
-> RC   000000007fffffff CR1  0000000000000000 CR2  0000000000000000 CR3  0000000000000000
-> CR4  0000000000000000 CR5  0000000000000000 CR6  0000000000000002 CR7  fffffffffffb0000
-> PID1 000000000000256f PID2 0000000000007306 CCR  00000000000000c0 SAR  0000000000000004
-> PID3 0000000000000000 PID4 0000000000000000 IVA  000000000002a000 EIEM ffffffffffffffff
-> ITMR 00000005d637f804 ISQF 000000000ef46800 IOQF 0000000000002aab IIR  000000006bc23fd9
-> ISR  0000000004d0d000 IOR  400000007a0020cc IPSW 000000000004000f EIRR 0000000000000000
-> TR0  0000000000abfe68 TR1  000000000465d1d6 TR2  0000000000000002 TR3  0000000000000000
-> TR4  0000000000000000 TR5  00000001757973bb TR6  00000000000021eb TR7  000000007a0020e0
-> ISQB 000000000ef46800 IOQB 0000000000002aaf
-> SR00 0ef46800 SR01 00000000 SR02 00000000 SR03 00000000
-> SR04 0ef46800 SR05 04d0d000 SR06 01e27c00 SR07 01e27c00
-> 
-> INT   3529: instruction tlb miss fault @ 0000000001e27c00:ffffffffc0000007 for 0000000001e27c00:40000000c0000004
-> INT   3530: instruction tlb miss fault @ 0000000000000000:ffffffffc0000007 for 0000000000000000:40000000c0000004
-> INT   3531: external interrupt @ 0000000000000000:ffffffffc0000007 for 0000000000000000:40000000c0000004
-> INT   3532: instruction tlb miss fault @ 0000000000000000:ffffffffc0000007 for 0000000000000000:40000000c0000004
-> INT   3533: external interrupt @ 0000000000000000:ffffffffc0000007 for 0000000000000000:40000000c0000004
-> 
-> So the PSW indicates narrow mode, but IAOQ seems to contain all the
-> ffff... bits.
+Peter Xu <peterx@redhat.com> writes:
 
-I believe that the IAOQ *should* contain all of the bits.  The bits should only be 
-discarded when we form the GVA -- exactly like "ldb 0(r2)", where r2 contains all of the 
-offset bits.  In particular, I believe that "b,l .+8,r2" should copy all of those bits to 
-r2 from IAOQ_Back+4 and the fact that mainline crops those bits is a bug.
+> On Mon, Apr 01, 2024 at 02:17:28PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Fri, Mar 29, 2024 at 08:54:07AM +0000, Wang, Wei W wrote:
+>> >> On Friday, March 29, 2024 11:32 AM, Wang, Lei4 wrote:
+>> >> > When using the post-copy preemption feature to perform post-copy live
+>> >> > migration, the below scenario could lead to a deadlock and the migration will
+>> >> > never finish:
+>> >> > 
+>> >> >  - Source connect() the preemption channel in postcopy_start().
+>> >> >  - Source and the destination side TCP stack finished the 3-way handshake
+>> >> >    thus the connection is successful.
+>> >> >  - The destination side main thread is handling the loading of the bulk RAM
+>> >> >    pages thus it doesn't start to handle the pending connection event in the
+>> >> >    event loop. and doesn't post the semaphore postcopy_qemufile_dst_done for
+>> >> >    the preemption thread.
+>> >> >  - The source side sends non-iterative device states, such as the virtio
+>> >> >    states.
+>> >> >  - The destination main thread starts to receive the virtio states, this
+>> >> >    process may lead to a page fault (e.g., virtio_load()->vring_avail_idx()
+>> >> >    may trigger a page fault since the avail ring page may not be received
+>> >> >    yet).
+>> >
+>> > Ouch.  Yeah I think this part got overlooked when working on the preempt
+>> > channel.
+>> >
+>> >> >  - The page request is sent back to the source side. Source sends the page
+>> >> >    content to the destination side preemption thread.
+>> >> >  - Since the event is not arrived and the semaphore
+>> >> >    postcopy_qemufile_dst_done is not posted, the preemption thread in
+>> >> >    destination side is blocked, and cannot handle receiving the page.
+>> >> >  - The QEMU main load thread on the destination side is stuck at the page
+>> >> >    fault, and cannot yield and handle the connect() event for the
+>> >> >    preemption channel to unblock the preemption thread.
+>> >> >  - The postcopy will stuck there forever since this is a deadlock.
+>> >> > 
+>> >> > The key point to reproduce this bug is that the source side is sending pages at a
+>> >> > rate faster than the destination handling, otherwise, the qemu_get_be64() in
+>> >> > ram_load_precopy() will have a chance to yield since at that time there are no
+>> >> > pending data in the buffer to get. This will make this bug harder to be
+>> >> > reproduced.
+>> >
+>> > How hard would this reproduce?
+>> >
+>> > I'm thinking whether this should be 9.0 material or 9.1.  It's pretty late
+>> > for 9.0 though, but we can still discuss.
+>> >
+>> >> > 
+>> >> > Fix this by yielding the load coroutine when receiving
+>> >> > MIG_CMD_POSTCOPY_LISTEN so the main event loop can handle the
+>> >> > connection event before loading the non-iterative devices state to avoid the
+>> >> > deadlock condition.
+>> >> > 
+>> >> > Signed-off-by: Lei Wang <lei4.wang@intel.com>
+>> >> 
+>> >> This seems to be a regression issue caused by this commit:
+>> >> 737840e2c6ea (migration: Use the number of transferred bytes directly)
+>> >> 
+>> >> Adding qemu_fflush back to migration_rate_exceeded() or ram_save_iterate
+>> >> seems to work (might not be a good fix though).
+>> >> 
+>> >> > ---
+>> >> >  migration/savevm.c | 5 +++++
+>> >> >  1 file changed, 5 insertions(+)
+>> >> > 
+>> >> > diff --git a/migration/savevm.c b/migration/savevm.c index
+>> >> > e386c5267f..8fd4dc92f2 100644
+>> >> > --- a/migration/savevm.c
+>> >> > +++ b/migration/savevm.c
+>> >> > @@ -2445,6 +2445,11 @@ static int loadvm_process_command(QEMUFile *f)
+>> >> >          return loadvm_postcopy_handle_advise(mis, len);
+>> >> > 
+>> >> >      case MIG_CMD_POSTCOPY_LISTEN:
+>> >> > +        if (migrate_postcopy_preempt() && qemu_in_coroutine()) {
+>> >> > +            aio_co_schedule(qemu_get_current_aio_context(),
+>> >> > +                            qemu_coroutine_self());
+>> >> > +            qemu_coroutine_yield();
+>> >> > +        }
+>> >> 
+>> >> The above could be moved to loadvm_postcopy_handle_listen().
+>> >
+>> > I'm not 100% sure such thing (no matter here or moved into it, which does
+>> > look cleaner) would work for us.
+>> >
+>> > The problem is I still don't yet see an ordering restricted on top of (1)
+>> > accept() happens, and (2) receive LISTEN cmd here.  What happens if the
+>> > accept() request is not yet received when reaching LISTEN?  Or is it always
+>> > guaranteed the accept(fd) will always be polled here?
+>> >
+>> > For example, the source QEMU (no matter pre-7.2 or later) will always setup
+>> > the preempt channel asynchrounously, then IIUC it can connect() after
+>> > sending the whole chunk of packed data which should include this LISTEN.  I
+>> > think it means it's not guaranteed this will 100% work, but maybe further
+>> > reduce the possibility of the race.
+>> >
+>> > One right fix that I can think of is moving the sem_wait(&done) into the
+>> > main thread too, so we wait for the sem _before_ reading the packed data,
+>> > so there's no chance of fault.  However I don't think sem_wait() will be
+>> > smart enough to yield when in a coroutine..  In the long term run I think
+>> > we should really make migration loadvm to do work in the thread rather than
+>> > the main thread.  I think it means we have one more example to be listed in
+>> > this todo so that's preferred..
+>> >
+>> > https://wiki.qemu.org/ToDo/LiveMigration#Create_a_thread_for_migration_destination
+>> >
+>> > I attached such draft patch below, but I'm not sure it'll work.  Let me
+>> > know how both of you think about it.
+>> >
+>> >> 
+>> >> Another option is to follow the old way (i.e. pre_7_2) to do postcopy_preempt_setup
+>> >> in migrate_fd_connect. This can save the above overhead of switching to the
+>> >> main thread during the downtime. Seems Peter's previous patch already solved the
+>> >> channel disordering issue. Let's see Peter and others' opinions.
+>> >
+>> > IIUC we still need that pre_7_2 stuff and keep the postponed connect() to
+>> > make sure the ordering is done properly.  Wei, could you elaborate the
+>> > patch you mentioned?  Maybe I missed some spots.
+>> >
+>> > You raised a good point that this may introduce higher downtime.  Did you
+>> > or Lei tried to measure how large it is?  If that is too high, we may need
+>> > to think another solution, e.g., wait the channel connection before vm stop
+>> > happens.
+>> >
+>> > Thanks,
+>> >
+>> >> 
+>> >> >          return loadvm_postcopy_handle_listen(mis);
+>> >> > 
+>> >> 
+>> >> >      case MIG_CMD_POSTCOPY_RUN:
+>> >> > --
+>> >> > 2.39.3
+>> >> 
+>> >
+>> > ===8<===
+>> > diff --git a/migration/migration.c b/migration/migration.c
+>> > index 696762bc64..bacd1328cf 100644
+>> > --- a/migration/migration.c
+>> > +++ b/migration/migration.c
+>> > @@ -2593,6 +2593,12 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>> >      /*
+>> >       * Make sure the receiver can get incoming pages before we send the rest
+>> >       * of the state
+>> > +     *
+>> > +     * When preempt mode enabled, this must be done after we initiate the
+>> > +     * preempt channel, as destination QEMU will wait for the channel when
+>> > +     * processing the LISTEN request.  Currently it may not matter a huge
+>> > +     * deal if we always create the channel asynchrously with a qio task,
+>> > +     * but we need to keep this in mind.
+>> >       */
+>> >      qemu_savevm_send_postcopy_listen(fb);
+>> >  
+>> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+>> > index eccff499cb..4f26a89ac9 100644
+>> > --- a/migration/postcopy-ram.c
+>> > +++ b/migration/postcopy-ram.c
+>> > @@ -1254,6 +1254,26 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+>> >      }
+>> >  
+>> >      if (migrate_postcopy_preempt()) {
+>> > +        /*
+>> > +         * The preempt channel is established in asynchronous way.  Wait
+>> > +         * for its completion.
+>> > +         */
+>> > +        while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
+>> > +            /*
+>> > +             * Note that to make sure the main thread can still schedule an
+>> > +             * accept() request we need to proactively yield for the main
+>> > +             * loop to run for some duration (100ms in this case), which is
+>> > +             * pretty ugly.
+>> > +             *
+>> > +             * TODO: we should do this in a separate thread to load the VM
+>> > +             * rather than in the main thread, just like the source side.
+>> > +             */
+>> > +            if (qemu_in_coroutine()) {
+>> > +                aio_co_schedule(qemu_get_current_aio_context(),
+>> > +                                qemu_coroutine_self());
+>> > +                qemu_coroutine_yield();
+>> 
+>> I think the correct way to do this these days is
+>> aio_co_reschedule_self().
+>
+> The helper checks old v.s. new contexts, where here we want to pass in the
+> current context.  Would that be a no-op then?
+>
+>> 
+>> Anyway, what we are yielding to here? I see qemu_loadvm_state_main()
+>> called from a bunch of places, it's not clear to me where will the
+>> execution resume after yielding. Is that end up going to be
+>> migration_incoming_process()?
+>
+> In this specific case it should try to yield to the port listener that is
+> waiting for the preempt channel, aka, socket_accept_incoming_migration(),
+> and ultimately it'll kick off this sem, by:
+>
+>  socket_accept_incoming_migration ->
+>   migration_ioc_process_incoming  ->
+>     postcopy_preempt_new_channel
 
+Ok, I think I get it. So the issue is just a plain old "blocking the
+main loop" kind of bug. We have in ram_load_precopy:
 
-> Also interesting is that the second TLB miss (INT 3530)
-> misses the Space ID.
+        /*
+         * Yield periodically to let main loop run, but an iteration of
+         * the main loop is expensive, so do it each some iterations
+         */
+        if ((i & 32767) == 0 && qemu_in_coroutine()) {
+            aio_co_schedule(qemu_get_current_aio_context(),
+                            qemu_coroutine_self());
+            qemu_coroutine_yield();
+        }
 
-That is a bit curious, yes.
+That's similar to why I had to move multifd_send_setup() to the
+migration thread, we need to allow glib_pollfds_poll() to run so it
+dispatches the listener callbacks.
 
-> Any thoughts? Otherwise i need to investigate and make a wrong patch
-> again :-)
-> 
-> The only patch i have on top which touches target/hppa is the space id
-> hashing mask patch:
+>
+>> 
+>> I don't know much about the postcopy parts, excuse my ignorance.
+>
+> Not a problem at all, please shoot if there's any questions either here or
+> elsewhere. You're going to maintain it anyway as part of the migration code
+> base. :-D
 
-Ok.  I do have an hppa 11.11 iso -- for clarity, what is your command-line?
+/me runs
 
+But yeah, I didn't spend enough time looking at this code yet to form a
+good mental picture. I only looked at the super-specific recovery cases.
 
-r~
+>
+> Thanks,
 
