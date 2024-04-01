@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64844CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 07:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EBCCD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 07:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrYZw-0000to-Fc; Tue, 02 Apr 2024 03:29:08 -0400
+	id 1rrYZu-0000tL-Ug; Tue, 02 Apr 2024 03:29:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rrYZt-0000tA-Q1
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 03:29:05 -0400
+ id 1rrYZs-0000s2-JJ
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 03:29:04 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rrYZp-0004Eb-Pc
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 03:29:05 -0400
+ id 1rrYZf-0004E7-BX
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 03:28:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712042942; x=1743578942;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=EKRCfhH2Tdu0fKht1BCj/62GFmoHAFkgYa8nT4MMzlw=;
- b=mjXmZcSMvpoZRVkRNv9M5hUlJzhb24fj5k3ahtqhhFXf5vUuJGjyqIWY
- 6KaYeSjo3CgbUmKpBpfBXbVYpBfpfJyc74Af+6Qjv9qqreRg9VOVWX6Dg
- YhZ/jAgsM88QgtQN+Xf0Tz+qmb1nJhnfH0Ho0nZX8BXV6IAkr7K8JmGCn
- NLldqIXEOwh61q/9KZ3W1yuGLeWxNOUpMs7jTbvw79dVj6PFRUuVzy6+j
- WQfdaTXC+uz/2e1gmemRzkNBojHH0qFJ8dAk21Rxl9FC9EmBnvluD1ihy
- TYNFPL3J9MF1VM75CkGuiJK4htFbjaLJYlmhmPmuZLx3HFNoj33CWXaWV A==;
-X-CSE-ConnectionGUID: afBKY5+ESe62iSkPbXu8rg==
-X-CSE-MsgGUID: 9hAtjNQ0ShS0M/gdDjp48A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="7063840"
+ t=1712042931; x=1743578931;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=9dvp8iow08bQOjXQY2sFqws89NagzWZ3YmjimA13qtg=;
+ b=QRPJfpRl1yeVFkHIBxwWaLtknET6rn3GpXfnCcEdUpffqmniuLRy02HU
+ C5k8z7/Jk33+Y9hHghxaCnxx9E3CdociRIR5RcDc3NO2sPmaUdq8haEAt
+ JP33CysJZ5HW9wUSklQkJpUD8XFyck9nAnilXiCf3wXQe94vPW0fOPu3Z
+ QmNB6hGqCKgSsoZXzr5jprOIGVvb9fxaeDuxQA1aLfsTcUYFrELvizz0b
+ ut0r/SCkAlZuazSt4fl9ajI/J3ZZLIphuGBtg7ePvlMR4i/J0o6Ga4XCC
+ HnqwZnlHC6cT2Sb/ygLqUfRzDtOc/9sBZIXwak4xPmlDA33R3E8RCrEb3 A==;
+X-CSE-ConnectionGUID: XOXexr3kQVCBKwQmSQ11Lg==
+X-CSE-MsgGUID: VYpD7YKOQmKUTozU33qruw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="7063827"
 X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
-   d="scan'208";a="7063840"
+   d="scan'208";a="7063827"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2024 00:28:50 -0700
+ 02 Apr 2024 00:28:48 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; d="scan'208";a="18434395"
+X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; d="scan'208";a="18434379"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by orviesa006.jf.intel.com with ESMTP; 02 Apr 2024 00:28:49 -0700
+ by orviesa006.jf.intel.com with ESMTP; 02 Apr 2024 00:28:46 -0700
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com, bryan.zhang@bytedance.com,
  yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: [PATCH 1/1] migration/multifd: solve zero page causing multiple page
- faults
-Date: Mon,  1 Apr 2024 23:41:10 +0800
-Message-Id: <20240401154110.2028453-2-yuan1.liu@intel.com>
+Subject: [PATCH 0/1] Solve zero page causing multiple page faults
+Date: Mon,  1 Apr 2024 23:41:09 +0800
+Message-Id: <20240401154110.2028453-1-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240401154110.2028453-1-yuan1.liu@intel.com>
-References: <20240401154110.2028453-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.19; envelope-from=yuan1.liu@intel.com;
@@ -82,17 +79,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implemented recvbitmap tracking of received pages in multifd.
+1. Description of multiple page faults for received zero pages
+    a. -mem-prealloc feature and hugepage backend are not enabled on the
+       destination
+    b. After receiving the zero pages, the destination first determines if
+       the current page content is 0 via buffer_is_zero, this may cause a
+       read page fault
 
-If the zero page appears for the first time in the recvbitmap, this
-page is not checked and set.
+      perf record -e page-faults information below
+      13.75%  13.75%  multifdrecv_0 qemu-system-x86_64 [.] buffer_zero_avx512
+      11.85%  11.85%  multifdrecv_1 qemu-system-x86_64 [.] buffer_zero_avx512
+                      multifd_recv_thread
+                      nocomp_recv
+                      multifd_recv_zero_page_process
+                      buffer_is_zero
+                      select_accel_fn 
+                      buffer_zero_avx512
 
-If the zero page has already appeared in the recvbitmap, there is no
-need to check the data but directly set the data to 0, because it is
-unlikely that the zero page will be migrated multiple times.
+   c. Other page faults mainly come from writing operations to normal and
+      zero pages.
 
-Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
----
+2. Solution
+    a. During the multifd migration process, the received pages are tracked
+       through RAMBlock's receivedmap.
+
+    b. If received zero page is not set in recvbitmap, the destination will not
+       check whether the page content is 0, thus avoiding the occurrence of
+       read fault.
+
+    c. If the zero page has been set in receivedmap, set the page with 0
+       directly.
+
+    There are two reasons for this
+    1. It's unlikely a zero page if it's sent once or more.
+    2. For the 1st time destination received a zero page, it must be a zero
+       page, so no need to scan for the 1st round.
+
+3. Test Result 16 vCPUs and 64G memory VM,  multifd number is 2,
+   and 100G network bandwidth
+
+    3.1 Test case: 16 vCPUs are idle and only 2G memory are used
+    +-----------+--------+--------+----------+
+    |MultiFD    | total  |downtime|   Page   |
+    |Nocomp     | time   |        | Faults   |
+    |           | (ms)   | (ms)   |          |
+    +-----------+--------+--------+----------+
+    |with       |        |        |          |
+    |recvbitmap |    7335|     180|      2716|
+    +-----------+--------+--------+----------+
+    |without    |        |        |          |
+    |recvbitmap |    7771|     153|    121357|
+    +-----------+--------+--------+----------+
+                                                  
+    +-----------+--------+--------+--------+-------+--------+-------------+
+    |MultiFD    | total  |downtime| SVM    |SVM    | IOTLB  | IO PageFault|
+    |QPL        | time   |        | IO TLB |IO Page| MaxTime| MaxTime     |
+    |           | (ms)   | (ms)   | Flush  |Faults | (us)   | (us)        |
+    +-----------+--------+--------+--------+-------+--------+-------------+
+    |with       |        |        |        |       |        |             |
+    |recvbitmap |   10224|     175|     410|  27429|       1|          447|
+    +-----------+--------+--------+--------+-------+--------+-------------+
+    |without    |        |        |        |       |        |             |
+    |recvbitmap |   11253|     153|   80756|  38655|      25|        18349|
+    +-----------+--------+--------+--------+-------+--------+-------------+
+
+
+    3.2 Test case: 16 vCPUs are idle and 56G memory(not zero) are used
+    +-----------+--------+--------+----------+
+    |MultiFD    | total  |downtime|   Page   |
+    |Nocomp     | time   |        | Faults   |
+    |           | (ms)   | (ms)   |          |
+    +-----------+--------+--------+----------+
+    |with       |        |        |          |
+    |recvbitmap |   16825|     165|     52967|
+    +-----------+--------+--------+----------+
+    |without    |        |        |          |
+    |recvbitmap |   12987|     159|   2672677|
+    +-----------+--------+--------+----------+
+
+    +-----------+--------+--------+--------+-------+--------+-------------+
+    |MultiFD    | total  |downtime| SVM    |SVM    | IOTLB  | IO PageFault|
+    |QPL        | time   |        | IO TLB |IO Page| MaxTime| MaxTime     |
+    |           | (ms)   | (ms)   | Flush  |Faults | (us)   | (us)        |
+    +-----------+--------+--------+--------+-------+--------+-------------+
+    |with       |        |        |        |       |        |             |
+    |recvbitmap |  132315|      77|     890| 937105|      60|         9581|
+    +-----------+--------+--------+--------+-------+--------+-------------+
+    |without    |        |        |        |       |        |             |
+    |recvbitmap | >138333|     N/A| 1647701| 981899|      43|        21018|
+    +-----------+--------+--------+--------+-------+--------+-------------+
+
+
+From the test result, both of page faults and IOTLB Flush operations can
+be significantly reduced. The reason is that zero page processing does not
+trigger read faults, and a large number of zero pages do not even trigger
+write faults (Test 3.1), because it is considered that after the destination
+is started, the content of unaccessed pages is 0.
+
+I have a concern here, the RAM memory is allocated by mmap with anonymous
+flag, and if the first received zero page is not set to 0 explicitly, does
+this ensure that the received zero pages memory data is 0?
+
+In this case, the performance impact of live migration is not big
+because the destination is not the bottleneck.
+
+When using QPL (SVM-capable device), even if IOTLB is improved, the
+overall performance will still be seriously degraded because a large
+number of IO page faults are still generated.
+
+Previous discussion link:
+1. https://lore.kernel.org/all/CAAYibXib+TWnJpV22E=adncdBmwXJRqgRjJXK7X71J=bDfaxDg@mail.gmail.com/
+2. https://lore.kernel.org/all/PH7PR11MB594123F7EEFEBFCE219AF100A33A2@PH7PR11MB5941.namprd11.prod.outlook.com/
+
+Yuan Liu (1):
+  migration/multifd: solve zero page causing multiple page faults
+
  migration/multifd-zero-page.c | 4 +++-
  migration/multifd-zlib.c      | 1 +
  migration/multifd-zstd.c      | 1 +
@@ -101,85 +202,6 @@ Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
  migration/ram.h               | 1 +
  6 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-index 1ba38be636..e1b8370f88 100644
---- a/migration/multifd-zero-page.c
-+++ b/migration/multifd-zero-page.c
-@@ -80,8 +80,10 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
- {
-     for (int i = 0; i < p->zero_num; i++) {
-         void *page = p->host + p->zero[i];
--        if (!buffer_is_zero(page, p->page_size)) {
-+        if (ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
-             memset(page, 0, p->page_size);
-+        } else {
-+            ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
-         }
-     }
- }
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 8095ef8e28..6246ecca2b 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -288,6 +288,7 @@ static int zlib_recv(MultiFDRecvParams *p, Error **errp)
-         int flush = Z_NO_FLUSH;
-         unsigned long start = zs->total_out;
- 
-+        ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
-         if (i == p->normal_num - 1) {
-             flush = Z_SYNC_FLUSH;
-         }
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index 9c9217794e..989333b572 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -282,6 +282,7 @@ static int zstd_recv(MultiFDRecvParams *p, Error **errp)
-     z->in.pos = 0;
- 
-     for (i = 0; i < p->normal_num; i++) {
-+        ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
-         z->out.dst = p->host + p->normal[i];
-         z->out.size = p->page_size;
-         z->out.pos = 0;
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 72712fc31f..c9f544dba0 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -277,6 +277,7 @@ static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
-     for (int i = 0; i < p->normal_num; i++) {
-         p->iov[i].iov_base = p->host + p->normal[i];
-         p->iov[i].iov_len = p->page_size;
-+        ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
-     }
-     return qio_channel_readv_all(p->c, p->iov, p->normal_num, errp);
- }
-diff --git a/migration/ram.c b/migration/ram.c
-index 8deb84984f..3aa70794c1 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -275,6 +275,10 @@ void ramblock_recv_bitmap_set_range(RAMBlock *rb, void *host_addr,
-                       nr);
- }
- 
-+void ramblock_recv_bitmap_set_offset(RAMBlock *rb, uint64_t byte_offset)
-+{
-+    set_bit_atomic(byte_offset >> TARGET_PAGE_BITS, rb->receivedmap);
-+}
- #define  RAMBLOCK_RECV_BITMAP_ENDING  (0x0123456789abcdefULL)
- 
- /*
-diff --git a/migration/ram.h b/migration/ram.h
-index 08feecaf51..bc0318b834 100644
---- a/migration/ram.h
-+++ b/migration/ram.h
-@@ -69,6 +69,7 @@ int ramblock_recv_bitmap_test(RAMBlock *rb, void *host_addr);
- bool ramblock_recv_bitmap_test_byte_offset(RAMBlock *rb, uint64_t byte_offset);
- void ramblock_recv_bitmap_set(RAMBlock *rb, void *host_addr);
- void ramblock_recv_bitmap_set_range(RAMBlock *rb, void *host_addr, size_t nr);
-+void ramblock_recv_bitmap_set_offset(RAMBlock *rb, uint64_t byte_offset);
- int64_t ramblock_recv_bitmap_send(QEMUFile *file,
-                                   const char *block_name);
- bool ram_dirty_bitmap_reload(MigrationState *s, RAMBlock *rb, Error **errp);
 -- 
 2.39.3
 
