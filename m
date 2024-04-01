@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF85CD1288
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 21:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 580A7CD1288
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Apr 2024 21:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrP6j-0003Mt-8t; Mon, 01 Apr 2024 17:22:21 -0400
+	id 1rrPB1-0004FE-2a; Mon, 01 Apr 2024 17:26:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rrP6g-0003Mk-HS
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:22:18 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1rrPAw-0004Ez-H5
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:26:42 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rrP6d-0000w6-KQ
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:22:18 -0400
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 570EE33E56;
- Mon,  1 Apr 2024 21:22:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712006533; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9s/95rSneT2O+VNFVSpmYbF+ijOAZIwgYIPtsDEfCk4=;
- b=pv2cA85HWksObG9KvqkoLi2GTJ9G8PlkLOUbHL0Z0o6MPZyE1OfA89fzyXkEg1qI5xeWDf
- VguGpr6YTAHtitmvOSJroQ5OS0XhbadJs4osK1kcQu7gUdEMcXNXvCuCwd0n7fOk56Vrfu
- F7wbFB+bcEg03hVf0htdvuq45kheN0s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712006533;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9s/95rSneT2O+VNFVSpmYbF+ijOAZIwgYIPtsDEfCk4=;
- b=g/nuMKIn6tnQ2jNJPDyVYTI1sU+t0BNE8l1w9ed1jrtNaKdhStYQJRvI2Ql6Pe4zzd1RSN
- t43W+m3VEo9//aBQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=none
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id CA23A1348C;
- Mon,  1 Apr 2024 21:22:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap2.dmz-prg2.suse.org with ESMTPSA id wx31I4QlC2aaKwAAn2gu4w
- (envelope-from <farosas@suse.de>); Mon, 01 Apr 2024 21:22:12 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: "Wang, Wei W" <wei.w.wang@intel.com>, "Wang, Lei4"
- <lei4.wang@intel.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] migration: Yield coroutine when receiving
- MIG_CMD_POSTCOPY_LISTEN
-In-Reply-To: <ZgsBMWjwhzlI9ENc@x1n>
-References: <20240329033205.26087-1-lei4.wang@intel.com>
- <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
- <ZgrdIDGe3aNcRu7o@x1n> <87frw5roif.fsf@suse.de> <ZgsBMWjwhzlI9ENc@x1n>
-Date: Mon, 01 Apr 2024 18:22:10 -0300
-Message-ID: <877chgsrr1.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1rrPAt-00026p-OM
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 17:26:42 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a47385a4379so972178766b.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 14:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ionos.com; s=google; t=1712006796; x=1712611596; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Tq+u5OzCvV2OTLzw94sjtx6pNhPNziYZCiKmRN5/jV8=;
+ b=BO39I/xAWNqoPb986jbL69vTUAd0G+w2z0w6jw9V4aJVs4AJjVIC1ihyzjhclWwK4D
+ mO7eee3zR1XjOVe7vfU/RHSy+6SPPXcTFFQirg6zB4qun0Kx9kcXnqExfoFxNePQNwbW
+ yiVfdXzOICp9oSHquJrx5+oOe8bmhGQXxlY2J6+Q3z4CXx/TQqLbqf+WbR3VnHKk9ufK
+ qq2OSzux7Nh4ld+Yf3+N4bfJ1dfIWld44JFqxsp4Mg+7u5bT60+MvMFe1mCCgblzTr1M
+ CkJqhh7HhD5DFrY2ln7T890B+56AHaaSEg7N8YPGPpiN9CS4sNhjZrjwmh6b0b5WibTb
+ goCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712006796; x=1712611596;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Tq+u5OzCvV2OTLzw94sjtx6pNhPNziYZCiKmRN5/jV8=;
+ b=nk7f7T5lzdmzxLckYAvpvszZU52t80m76h5qpGvwDATPUIi5h9tq3U/+LuiPKbTcSu
+ EGbxv+0G8+yII0S+up8aHNLpiSqiPipQfKvGh1m0um9QATvcJrfREVpH8iTNBMowfvZe
+ WiNAj+phP8WLgcTbF9mOUhRleh+QwIa6ZaiR6YOCjyZCoPKa/8cmsBtByMi4IPg5/aj9
+ PkB09kZq1Q5VNqc6QK1sT0InVAnhArQQ7TVYyNh2gFP6RCVnW3GsQA4opCgmBsj31DJk
+ 5y1yAalJfY5bAAaJRL68ihP6FMcyu6fzhAGqEEIFSttDFtp1mYbuQsgoTDeFTV9zJSM/
+ zo4Q==
+X-Gm-Message-State: AOJu0YxCA+v6J7WTcLu6k8ad72SoNjarYGx+Q4q2fQE8VNMkw1tPIztA
+ qUS8hG4CEZ0KMEftZkAPszLJNg3IWl2SZ3PNBIL3JO4Y4bdjGt1GED+sAwW0SdzzKQ3NY6z6auL
+ WJUdBXjLPXdZjSTTEv/aZFQKjJtqZP5OtLtVHSA==
+X-Google-Smtp-Source: AGHT+IGgIZDrHLqI2Ng4kKxqZZh2VwsHyQQ/5JLbQD3lfN0X5cfFeNZDnyCnJ5xLWDM0KSqrpa2fXCaluF9ORVi5jfo=
+X-Received: by 2002:a17:906:f216:b0:a4e:86ff:5624 with SMTP id
+ gt22-20020a170906f21600b00a4e86ff5624mr161134ejb.5.1712006796212; Mon, 01 Apr
+ 2024 14:26:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 570EE33E56
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_SHORT(-0.19)[-0.959]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_EQ_ADDR_SOME(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:98:from];
- TO_DN_SOME(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:98:from]; 
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; R_DKIM_NA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap2.dmz-prg2.suse.org:rdns,
- imap2.dmz-prg2.suse.org:helo]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240328130255.52257-1-philmd@linaro.org>
+ <20240328130255.52257-3-philmd@linaro.org>
+ <87frwatp7n.fsf@suse.de> <ZgWGMmUTq0jqSUvr@x1n>
+ <7a510fbe-1c27-4f67-93b8-0d9cf01c1c74@fujitsu.com>
+ <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
+ <9d082daf-acf0-27c5-1758-5a3f2af7ee0f@fujitsu.com>
+In-Reply-To: <9d082daf-acf0-27c5-1758-5a3f2af7ee0f@fujitsu.com>
+From: Yu Zhang <yu.zhang@ionos.com>
+Date: Mon, 1 Apr 2024 23:26:25 +0200
+Message-ID: <CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+To: Peter Xu <peterx@redhat.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, 
+ Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>, 
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=2a00:1450:4864:20::62a;
+ envelope-from=yu.zhang@ionos.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,237 +113,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hello Peter und Zhjian,
 
-> On Mon, Apr 01, 2024 at 02:17:28PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Fri, Mar 29, 2024 at 08:54:07AM +0000, Wang, Wei W wrote:
->> >> On Friday, March 29, 2024 11:32 AM, Wang, Lei4 wrote:
->> >> > When using the post-copy preemption feature to perform post-copy live
->> >> > migration, the below scenario could lead to a deadlock and the migration will
->> >> > never finish:
->> >> > 
->> >> >  - Source connect() the preemption channel in postcopy_start().
->> >> >  - Source and the destination side TCP stack finished the 3-way handshake
->> >> >    thus the connection is successful.
->> >> >  - The destination side main thread is handling the loading of the bulk RAM
->> >> >    pages thus it doesn't start to handle the pending connection event in the
->> >> >    event loop. and doesn't post the semaphore postcopy_qemufile_dst_done for
->> >> >    the preemption thread.
->> >> >  - The source side sends non-iterative device states, such as the virtio
->> >> >    states.
->> >> >  - The destination main thread starts to receive the virtio states, this
->> >> >    process may lead to a page fault (e.g., virtio_load()->vring_avail_idx()
->> >> >    may trigger a page fault since the avail ring page may not be received
->> >> >    yet).
->> >
->> > Ouch.  Yeah I think this part got overlooked when working on the preempt
->> > channel.
->> >
->> >> >  - The page request is sent back to the source side. Source sends the page
->> >> >    content to the destination side preemption thread.
->> >> >  - Since the event is not arrived and the semaphore
->> >> >    postcopy_qemufile_dst_done is not posted, the preemption thread in
->> >> >    destination side is blocked, and cannot handle receiving the page.
->> >> >  - The QEMU main load thread on the destination side is stuck at the page
->> >> >    fault, and cannot yield and handle the connect() event for the
->> >> >    preemption channel to unblock the preemption thread.
->> >> >  - The postcopy will stuck there forever since this is a deadlock.
->> >> > 
->> >> > The key point to reproduce this bug is that the source side is sending pages at a
->> >> > rate faster than the destination handling, otherwise, the qemu_get_be64() in
->> >> > ram_load_precopy() will have a chance to yield since at that time there are no
->> >> > pending data in the buffer to get. This will make this bug harder to be
->> >> > reproduced.
->> >
->> > How hard would this reproduce?
->> >
->> > I'm thinking whether this should be 9.0 material or 9.1.  It's pretty late
->> > for 9.0 though, but we can still discuss.
->> >
->> >> > 
->> >> > Fix this by yielding the load coroutine when receiving
->> >> > MIG_CMD_POSTCOPY_LISTEN so the main event loop can handle the
->> >> > connection event before loading the non-iterative devices state to avoid the
->> >> > deadlock condition.
->> >> > 
->> >> > Signed-off-by: Lei Wang <lei4.wang@intel.com>
->> >> 
->> >> This seems to be a regression issue caused by this commit:
->> >> 737840e2c6ea (migration: Use the number of transferred bytes directly)
->> >> 
->> >> Adding qemu_fflush back to migration_rate_exceeded() or ram_save_iterate
->> >> seems to work (might not be a good fix though).
->> >> 
->> >> > ---
->> >> >  migration/savevm.c | 5 +++++
->> >> >  1 file changed, 5 insertions(+)
->> >> > 
->> >> > diff --git a/migration/savevm.c b/migration/savevm.c index
->> >> > e386c5267f..8fd4dc92f2 100644
->> >> > --- a/migration/savevm.c
->> >> > +++ b/migration/savevm.c
->> >> > @@ -2445,6 +2445,11 @@ static int loadvm_process_command(QEMUFile *f)
->> >> >          return loadvm_postcopy_handle_advise(mis, len);
->> >> > 
->> >> >      case MIG_CMD_POSTCOPY_LISTEN:
->> >> > +        if (migrate_postcopy_preempt() && qemu_in_coroutine()) {
->> >> > +            aio_co_schedule(qemu_get_current_aio_context(),
->> >> > +                            qemu_coroutine_self());
->> >> > +            qemu_coroutine_yield();
->> >> > +        }
->> >> 
->> >> The above could be moved to loadvm_postcopy_handle_listen().
->> >
->> > I'm not 100% sure such thing (no matter here or moved into it, which does
->> > look cleaner) would work for us.
->> >
->> > The problem is I still don't yet see an ordering restricted on top of (1)
->> > accept() happens, and (2) receive LISTEN cmd here.  What happens if the
->> > accept() request is not yet received when reaching LISTEN?  Or is it always
->> > guaranteed the accept(fd) will always be polled here?
->> >
->> > For example, the source QEMU (no matter pre-7.2 or later) will always setup
->> > the preempt channel asynchrounously, then IIUC it can connect() after
->> > sending the whole chunk of packed data which should include this LISTEN.  I
->> > think it means it's not guaranteed this will 100% work, but maybe further
->> > reduce the possibility of the race.
->> >
->> > One right fix that I can think of is moving the sem_wait(&done) into the
->> > main thread too, so we wait for the sem _before_ reading the packed data,
->> > so there's no chance of fault.  However I don't think sem_wait() will be
->> > smart enough to yield when in a coroutine..  In the long term run I think
->> > we should really make migration loadvm to do work in the thread rather than
->> > the main thread.  I think it means we have one more example to be listed in
->> > this todo so that's preferred..
->> >
->> > https://wiki.qemu.org/ToDo/LiveMigration#Create_a_thread_for_migration_destination
->> >
->> > I attached such draft patch below, but I'm not sure it'll work.  Let me
->> > know how both of you think about it.
->> >
->> >> 
->> >> Another option is to follow the old way (i.e. pre_7_2) to do postcopy_preempt_setup
->> >> in migrate_fd_connect. This can save the above overhead of switching to the
->> >> main thread during the downtime. Seems Peter's previous patch already solved the
->> >> channel disordering issue. Let's see Peter and others' opinions.
->> >
->> > IIUC we still need that pre_7_2 stuff and keep the postponed connect() to
->> > make sure the ordering is done properly.  Wei, could you elaborate the
->> > patch you mentioned?  Maybe I missed some spots.
->> >
->> > You raised a good point that this may introduce higher downtime.  Did you
->> > or Lei tried to measure how large it is?  If that is too high, we may need
->> > to think another solution, e.g., wait the channel connection before vm stop
->> > happens.
->> >
->> > Thanks,
->> >
->> >> 
->> >> >          return loadvm_postcopy_handle_listen(mis);
->> >> > 
->> >> 
->> >> >      case MIG_CMD_POSTCOPY_RUN:
->> >> > --
->> >> > 2.39.3
->> >> 
->> >
->> > ===8<===
->> > diff --git a/migration/migration.c b/migration/migration.c
->> > index 696762bc64..bacd1328cf 100644
->> > --- a/migration/migration.c
->> > +++ b/migration/migration.c
->> > @@ -2593,6 +2593,12 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->> >      /*
->> >       * Make sure the receiver can get incoming pages before we send the rest
->> >       * of the state
->> > +     *
->> > +     * When preempt mode enabled, this must be done after we initiate the
->> > +     * preempt channel, as destination QEMU will wait for the channel when
->> > +     * processing the LISTEN request.  Currently it may not matter a huge
->> > +     * deal if we always create the channel asynchrously with a qio task,
->> > +     * but we need to keep this in mind.
->> >       */
->> >      qemu_savevm_send_postcopy_listen(fb);
->> >  
->> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
->> > index eccff499cb..4f26a89ac9 100644
->> > --- a/migration/postcopy-ram.c
->> > +++ b/migration/postcopy-ram.c
->> > @@ -1254,6 +1254,26 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
->> >      }
->> >  
->> >      if (migrate_postcopy_preempt()) {
->> > +        /*
->> > +         * The preempt channel is established in asynchronous way.  Wait
->> > +         * for its completion.
->> > +         */
->> > +        while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
->> > +            /*
->> > +             * Note that to make sure the main thread can still schedule an
->> > +             * accept() request we need to proactively yield for the main
->> > +             * loop to run for some duration (100ms in this case), which is
->> > +             * pretty ugly.
->> > +             *
->> > +             * TODO: we should do this in a separate thread to load the VM
->> > +             * rather than in the main thread, just like the source side.
->> > +             */
->> > +            if (qemu_in_coroutine()) {
->> > +                aio_co_schedule(qemu_get_current_aio_context(),
->> > +                                qemu_coroutine_self());
->> > +                qemu_coroutine_yield();
->> 
->> I think the correct way to do this these days is
->> aio_co_reschedule_self().
+Thank you so much for letting me know about this. I'm also a bit surprised =
+at
+the plan for deprecating the RDMA migration subsystem.
+
+> IMHO it's more important to know whether there are still users and whethe=
+r
+> they would still like to see it around.
+
+> I admit RDMA migration was lack of testing(unit/CI test), which led to th=
+e a few
+> obvious bugs being noticed too late.
+
+Yes, we are a user of this subsystem. I was unaware of the lack of test cov=
+erage
+for this part. As soon as 8.2 was released, I saw that many of the
+migration test
+cases failed and came to realize that there might be a bug between 8.1
+and 8.2, but
+was unable to confirm and report it quickly to you.
+
+The maintenance of this part could be too costly or difficult from
+your point of view.
+
+My concern is, this plan will forces a few QEMU users (not sure how
+many) like us
+either to stick to the RDMA migration by using an increasingly older
+version of QEMU,
+or to abandon the currently used RDMA migration.
+
+Best regards,
+Yu Zhang
+
+On Mon, Apr 1, 2024 at 9:56=E2=80=AFAM Zhijian Li (Fujitsu)
+<lizhijian@fujitsu.com> wrote:
 >
-> The helper checks old v.s. new contexts, where here we want to pass in the
-> current context.  Would that be a no-op then?
+> Phil,
 >
->> 
->> Anyway, what we are yielding to here? I see qemu_loadvm_state_main()
->> called from a bunch of places, it's not clear to me where will the
->> execution resume after yielding. Is that end up going to be
->> migration_incoming_process()?
+> on 3/29/2024 6:28 PM, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>
+> >>
+> >>> IMHO it's more important to know whether there are still users and
+> >>> whether
+> >>> they would still like to see it around.
+> >>
+> >> Agree.
+> >> I didn't immediately express my opinion in V1 because I'm also
+> >> consulting our
+> >> customers for this feature in the future.
+> >>
+> >> Personally, I agree with Perter's idea that "I'd slightly prefer
+> >> postponing it one
+> >> more release which might help a bit of our downstream maintenance"
+> >
+> > Do you mind posting a deprecation patch to clarify the situation?
+> >
 >
-> In this specific case it should try to yield to the port listener that is
-> waiting for the preempt channel, aka, socket_accept_incoming_migration(),
-> and ultimately it'll kick off this sem, by:
+> No problem, i just posted a deprecation patch, please take a look.
+> https://lore.kernel.org/qemu-devel/20240401035947.3310834-1-lizhijian@fuj=
+itsu.com/T/#u
 >
->  socket_accept_incoming_migration ->
->   migration_ioc_process_incoming  ->
->     postcopy_preempt_new_channel
-
-Ok, I think I get it. So the issue is just a plain old "blocking the
-main loop" kind of bug. We have in ram_load_precopy:
-
-        /*
-         * Yield periodically to let main loop run, but an iteration of
-         * the main loop is expensive, so do it each some iterations
-         */
-        if ((i & 32767) == 0 && qemu_in_coroutine()) {
-            aio_co_schedule(qemu_get_current_aio_context(),
-                            qemu_coroutine_self());
-            qemu_coroutine_yield();
-        }
-
-That's similar to why I had to move multifd_send_setup() to the
-migration thread, we need to allow glib_pollfds_poll() to run so it
-dispatches the listener callbacks.
-
->
->> 
->> I don't know much about the postcopy parts, excuse my ignorance.
->
-> Not a problem at all, please shoot if there's any questions either here or
-> elsewhere. You're going to maintain it anyway as part of the migration code
-> base. :-D
-
-/me runs
-
-But yeah, I didn't spend enough time looking at this code yet to form a
-good mental picture. I only looked at the super-specific recovery cases.
-
->
-> Thanks,
+> Thanks
+> Zhijian
 
