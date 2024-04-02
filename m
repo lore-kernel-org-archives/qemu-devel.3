@@ -4,73 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DB6C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 06:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93E9C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 06:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrY3l-0001Qa-6V; Tue, 02 Apr 2024 02:55:53 -0400
+	id 1rrY4F-0001ay-6g; Tue, 02 Apr 2024 02:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
- id 1rrY3j-0001QM-M0
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:55:51 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <SRS0=rv+n=LH=kaod.org=clg@ozlabs.org>)
+ id 1rrY4D-0001ZY-26
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:56:21 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
- id 1rrY3e-0005NH-UW
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:55:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712040948; x=1743576948;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=5mRlXbrKEWn5Mn165sf5SI2gpYofQGMjT71UTd5NmvA=;
- b=K3cclfIYUn6EOCOoLKSSUdr+MYf+Q6XC/nZFnYUmZe1DIgc4TZauJMyV
- obdcPchpZ588FziCESahzxm9goOY9SoBBTIKB9TH2Cg9R8hjzkz5ef+x0
- g6y3vDjkTe8gpuCPTYsNLuf8XbYJUBRjt9TbtONMrPZkE6gJs0UIPKF3b
- af+nuqIVzIkcDK0qZG2/Rkxjlw8FWEEfn0TKVp6mA8bvaukmSAh3sVozg
- rrdbn4A0C7ymVpxIYsDtq6RnHbaUhoK3pBJssrTPRAZ/Nsq/ijv+aQN66
- vS7/+Mr5UwmK1ZvCFxgpHdMjLgLNOd5v66+j+P12seEK5MJumgrFX5Jue w==;
-X-CSE-ConnectionGUID: /eMsF5S1QnebiA4MUW9IMQ==
-X-CSE-MsgGUID: J7GXGuk4QS+52WRMWJKq2g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="18345339"
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; d="scan'208";a="18345339"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2024 23:55:39 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; d="scan'208";a="55408951"
-Received: from leiwang7-mobl.ccr.corp.intel.com (HELO [10.124.226.15])
- ([10.124.226.15])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2024 23:55:37 -0700
-Message-ID: <ce89cb04-65d0-4f43-ad87-ead6e69c1e09@intel.com>
-Date: Tue, 2 Apr 2024 14:55:34 +0800
+ (Exim 4.90_1) (envelope-from <SRS0=rv+n=LH=kaod.org=clg@ozlabs.org>)
+ id 1rrY4A-0005oi-Et
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:56:20 -0400
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4V7zDp3fNTz4x0t;
+ Tue,  2 Apr 2024 17:56:10 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4V7zDm3CwYz4x0q;
+ Tue,  2 Apr 2024 17:56:08 +1100 (AEDT)
+Message-ID: <c8a82773-04ff-44d4-9a75-1e1f9b4efa10@kaod.org>
+Date: Tue, 2 Apr 2024 08:56:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: Yield coroutine when receiving
- MIG_CMD_POSTCOPY_LISTEN
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>, "Wang, Wei W" <wei.w.wang@intel.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "farosas@suse.de" <farosas@suse.de>
-References: <20240329033205.26087-1-lei4.wang@intel.com>
- <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
- <ZgrdIDGe3aNcRu7o@x1n>
-From: "Wang, Lei" <lei4.wang@intel.com>
-In-Reply-To: <ZgrdIDGe3aNcRu7o@x1n>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=lei4.wang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Subject: Re: [PATCH 0/2] P11 support for QEMU
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+References: <20240401055503.1880587-1-adityag@linux.ibm.com>
+ <c671fb5a-18d7-4c3a-beec-ad3f28114986@kaod.org>
+ <7dpmvbcarr2lbbjih3n6d6kaj23dzrmtowqme4lnyhbjeexffw@u3agsb3prq7b>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <7dpmvbcarr2lbbjih3n6d6kaj23dzrmtowqme4lnyhbjeexffw@u3agsb3prq7b>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=rv+n=LH=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,248 +70,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/2024 0:13, Peter Xu wrote:> On Fri, Mar 29, 2024 at 08:54:07AM +0000,
-Wang, Wei W wrote:
->> On Friday, March 29, 2024 11:32 AM, Wang, Lei4 wrote:
->>> When using the post-copy preemption feature to perform post-copy live
->>> migration, the below scenario could lead to a deadlock and the migration will
->>> never finish:
->>>
->>>  - Source connect() the preemption channel in postcopy_start().
->>>  - Source and the destination side TCP stack finished the 3-way handshake
->>>    thus the connection is successful.
->>>  - The destination side main thread is handling the loading of the bulk RAM
->>>    pages thus it doesn't start to handle the pending connection event in the
->>>    event loop. and doesn't post the semaphore postcopy_qemufile_dst_done for
->>>    the preemption thread.
->>>  - The source side sends non-iterative device states, such as the virtio
->>>    states.
->>>  - The destination main thread starts to receive the virtio states, this
->>>    process may lead to a page fault (e.g., virtio_load()->vring_avail_idx()
->>>    may trigger a page fault since the avail ring page may not be received
->>>    yet).
-> 
-> Ouch.  Yeah I think this part got overlooked when working on the preempt
-> channel.
-> 
->>>  - The page request is sent back to the source side. Source sends the page
->>>    content to the destination side preemption thread.
->>>  - Since the event is not arrived and the semaphore
->>>    postcopy_qemufile_dst_done is not posted, the preemption thread in
->>>    destination side is blocked, and cannot handle receiving the page.
->>>  - The QEMU main load thread on the destination side is stuck at the page
->>>    fault, and cannot yield and handle the connect() event for the
->>>    preemption channel to unblock the preemption thread.
->>>  - The postcopy will stuck there forever since this is a deadlock.
->>>
->>> The key point to reproduce this bug is that the source side is sending pages at a
->>> rate faster than the destination handling, otherwise, the qemu_get_be64() in
->>> ram_load_precopy() will have a chance to yield since at that time there are no
->>> pending data in the buffer to get. This will make this bug harder to be
->>> reproduced.
-> 
-> How hard would this reproduce?
+Hello Aditya,
 
-We can manually make this easier to reproduce by adding the following code to
-make the destination busier to load the pages:
-
-diff --git a/migration/ram.c b/migration/ram.c
-index 0ad9fbba48..0b42877e1f 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4232,6 +4232,7 @@ static int ram_load_precopy(QEMUFile *f)
- {
-     MigrationIncomingState *mis = migration_incoming_get_current();
-     int flags = 0, ret = 0, invalid_flags = 0, len = 0, i = 0;
-+    volatile unsigned long long a;
-
-     if (!migrate_compress()) {
-         invalid_flags |= RAM_SAVE_FLAG_COMPRESS_PAGE;
-@@ -4347,6 +4348,7 @@ static int ram_load_precopy(QEMUFile *f)
-             break;
-
-         case RAM_SAVE_FLAG_PAGE:
-+            for (a = 0; a < 100000000; a++);
-             qemu_get_buffer(f, host, TARGET_PAGE_SIZE);
-             break;
-
+On 4/2/24 08:39, Aditya Gupta wrote:
+> Hello Cédric,
 > 
-> I'm thinking whether this should be 9.0 material or 9.1.  It's pretty late
-> for 9.0 though, but we can still discuss.
+> Thanks for reviewing this.
 > 
->>>
->>> Fix this by yielding the load coroutine when receiving
->>> MIG_CMD_POSTCOPY_LISTEN so the main event loop can handle the
->>> connection event before loading the non-iterative devices state to avoid the
->>> deadlock condition.
->>>
->>> Signed-off-by: Lei Wang <lei4.wang@intel.com>
+> On Mon, Apr 01, 2024 at 10:25:31AM +0200, Cédric Le Goater wrote:
+>> Hello Aditya,
 >>
->> This seems to be a regression issue caused by this commit:
->> 737840e2c6ea (migration: Use the number of transferred bytes directly)
->>
->> Adding qemu_fflush back to migration_rate_exceeded() or ram_save_iterate
->> seems to work (might not be a good fix though).
->>
->>> ---
->>>  migration/savevm.c | 5 +++++
->>>  1 file changed, 5 insertions(+)
->>>
->>> diff --git a/migration/savevm.c b/migration/savevm.c index
->>> e386c5267f..8fd4dc92f2 100644
->>> --- a/migration/savevm.c
->>> +++ b/migration/savevm.c
->>> @@ -2445,6 +2445,11 @@ static int loadvm_process_command(QEMUFile *f)
->>>          return loadvm_postcopy_handle_advise(mis, len);
->>>
->>>      case MIG_CMD_POSTCOPY_LISTEN:
->>> +        if (migrate_postcopy_preempt() && qemu_in_coroutine()) {
->>> +            aio_co_schedule(qemu_get_current_aio_context(),
->>> +                            qemu_coroutine_self());
->>> +            qemu_coroutine_yield();
->>> +        }
->>
->> The above could be moved to loadvm_postcopy_handle_listen().
+>> Please run ./scripts/get_maintainer.pl when sending a series. qemu-ppc should be
+>> in Cc:
 > 
-> I'm not 100% sure such thing (no matter here or moved into it, which does
-> look cleaner) would work for us.
+> Tried it now, For some reason, get_maintainer.pl shows no maintainers:
 > 
-> The problem is I still don't yet see an ordering restricted on top of (1)
-> accept() happens, and (2) receive LISTEN cmd here.  What happens if the
-> accept() request is not yet received when reaching LISTEN?  Or is it always
-> guaranteed the accept(fd) will always be polled here?
-> 
-> For example, the source QEMU (no matter pre-7.2 or later) will always setup
-> the preempt channel asynchrounously, then IIUC it can connect() after
-> sending the whole chunk of packed data which should include this LISTEN.  I
-> think it means it's not guaranteed this will 100% work, but maybe further
-> reduce the possibility of the race.
+>      $ ./scripts/get_maintainer.pl -f 0002-ppc-powernv11-add-base-support-for-P11-PowerNV.patch
+>      get_maintainer.pl: No maintainers found, printing recent contributors.
+>      get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
+>      
+>      qemu-devel@nongnu.org (open list:All patches CC here)
 
-I think the following code:
+Weird. I downloaded your series with b4 and ran the get_maintainer.pl script :
 
-postcopy_start() ->
-	postcopy_preempt_establish_channel() ->
-		qemu_sem_wait(&s->postcopy_qemufile_src_sem);
+$ ./scripts/get_maintainer.pl 20240401_adityag_p11_support_for_qemu.patches/0001_ppc_pseries_add_p11_cpu_type.patch 20240401_adityag_p11_support_for_qemu.patches/0002_ppc_powernv11_add_base_support_for_p11_powernv.patch
 
-can guarantee that the connect() syscall is successful so the destination side
-receives the connect() request before it loads the LISTEN command, otherwise it
-won't post the sem:
+Nicholas Piggin <npiggin@gmail.com> (odd fixer:sPAPR (pseries))
+Daniel Henrique Barboza <danielhb413@gmail.com> (reviewer:sPAPR (pseries))
+David Gibson <david@gibson.dropbear.id.au> (reviewer:sPAPR (pseries))
+Harsh Prateek Bora <harshpb@linux.ibm.com> (reviewer:sPAPR (pseries))
+"Cédric Le Goater" <clg@kaod.org> (odd fixer:PowerNV Non-Virt...)
+"Frédéric Barrat" <fbarrat@linux.ibm.com> (reviewer:PowerNV Non-Virt...)
+qemu-ppc@nongnu.org (open list:sPAPR (pseries))
+qemu-devel@nongnu.org (open list:All patches CC here)
 
-postcopy_preempt_send_channel_new() ->
-	postcopy_preempt_send_channel_done() ->
-    		qemu_sem_post(&s->postcopy_qemufile_src_sem);
-
-> 
-> One right fix that I can think of is moving the sem_wait(&done) into the
-> main thread too, so we wait for the sem _before_ reading the packed data,
-> so there's no chance of fault.  However I don't think sem_wait() will be
-> smart enough to yield when in a coroutine..  In the long term run I think
-> we should really make migration loadvm to do work in the thread rather than
-> the main thread.  I think it means we have one more example to be listed in
-> this todo so that's preferred..
-> 
-> https://wiki.qemu.org/ToDo/LiveMigration#Create_a_thread_for_migration_destination
-> 
-> I attached such draft patch below, but I'm not sure it'll work.  Let me
-> know how both of you think about it.
-
-Sadly it doesn't work, there is an unknown segfault.
-
+  
+> I checked the MAINTAINERS file, will add maintainers in Cc, thanks.
 > 
 >>
->> Another option is to follow the old way (i.e. pre_7_2) to do postcopy_preempt_setup
->> in migrate_fd_connect. This can save the above overhead of switching to the
->> main thread during the downtime. Seems Peter's previous patch already solved the
->> channel disordering issue. Let's see Peter and others' opinions.
+>> Briefly looking at this, please separate the changes using one patch per model,
+>> that is : first CPU (target), LPC, OCC, PSI, SBE, PnvCore, SpaprCore. Last the
+>> PnvChip and the machines, powernv11 and pseries. A minimum commit log describing
+>> the HW is required.
 > 
-> IIUC we still need that pre_7_2 stuff and keep the postponed connect() to
-> make sure the ordering is done properly.  Wei, could you elaborate the
-> patch you mentioned?  Maybe I missed some spots.
+> Sure, I will split the changes and improve my commit descriptions.
 > 
-> You raised a good point that this may introduce higher downtime.  Did you
-> or Lei tried to measure how large it is?  If that is too high, we may need
-> to think another solution, e.g., wait the channel connection before vm stop
-> happens.
+>> I don't see PHB6 or XIVE3. Why ?
+> 
+> Power11 core is same as Power10, so it supports till PHB5 and XIVE2,
+> same as P10. That's why I have not added any code for them.
 
-Per my very simple test, using post-copy preemption to live migrate an 8G VM:
+ok. That's typically the info the commit log should have.
 
-    w/o this patch: 121ms in avg in 5 tries
-    w/ this patch: 115ms in avg in 5 tries
+>> Also, you will need an OPAL update. The above changes are pointless without it.
+>> The minimum for now is a git commit from the opal repo, then you will need to
+>> update QEMU with a binary.
+> 
+> Agreed. I will consult when we push it to public. Will update this in
+> next series.
+> 
+> There might be some days delay in the next patch series.
 
-So it seems the overhead introduced is not too high (maybe ignorable?).
+We have entered the QEMU 9.1 cycle. There is time. I will comment more
+the next respin.
 
-> 
-> Thanks,
-> 
->>
->>>          return loadvm_postcopy_handle_listen(mis);
->>>
->>
->>>      case MIG_CMD_POSTCOPY_RUN:
->>> --
->>> 2.39.3
->>
-> 
-> ===8<===
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 696762bc64..bacd1328cf 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2593,6 +2593,12 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->      /*
->       * Make sure the receiver can get incoming pages before we send the rest
->       * of the state
-> +     *
-> +     * When preempt mode enabled, this must be done after we initiate the
-> +     * preempt channel, as destination QEMU will wait for the channel when
-> +     * processing the LISTEN request.  Currently it may not matter a huge
-> +     * deal if we always create the channel asynchrously with a qio task,
-> +     * but we need to keep this in mind.
->       */
->      qemu_savevm_send_postcopy_listen(fb);
->  
-> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> index eccff499cb..4f26a89ac9 100644
-> --- a/migration/postcopy-ram.c
-> +++ b/migration/postcopy-ram.c
-> @@ -1254,6 +1254,26 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
->      }
->  
->      if (migrate_postcopy_preempt()) {
-> +        /*
-> +         * The preempt channel is established in asynchronous way.  Wait
-> +         * for its completion.
-> +         */
-> +        while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
-> +            /*
-> +             * Note that to make sure the main thread can still schedule an
-> +             * accept() request we need to proactively yield for the main
-> +             * loop to run for some duration (100ms in this case), which is
-> +             * pretty ugly.
-> +             *
-> +             * TODO: we should do this in a separate thread to load the VM
-> +             * rather than in the main thread, just like the source side.
-> +             */
-> +            if (qemu_in_coroutine()) {
-> +                aio_co_schedule(qemu_get_current_aio_context(),
-> +                                qemu_coroutine_self());
-> +                qemu_coroutine_yield();
-> +            }
-> +        }
->          /*
->           * This thread needs to be created after the temp pages because
->           * it'll fetch RAM_CHANNEL_POSTCOPY PostcopyTmpPage immediately.
-> @@ -1743,12 +1763,6 @@ void *postcopy_preempt_thread(void *opaque)
->  
->      qemu_sem_post(&mis->thread_sync_sem);
->  
-> -    /*
-> -     * The preempt channel is established in asynchronous way.  Wait
-> -     * for its completion.
-> -     */
-> -    qemu_sem_wait(&mis->postcopy_qemufile_dst_done);
-> -
->      /* Sending RAM_SAVE_FLAG_EOS to terminate this thread */
->      qemu_mutex_lock(&mis->postcopy_prio_thread_mutex);
->      while (preempt_thread_should_run(mis)) {
+Thanks,
+
+C.
+
 
