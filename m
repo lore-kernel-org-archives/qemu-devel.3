@@ -4,84 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35736CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA1EC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rranW-0001Yu-7D; Tue, 02 Apr 2024 05:51:19 -0400
+	id 1rravv-0004ob-AI; Tue, 02 Apr 2024 05:59:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rranG-0001WG-CU
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:51:05 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rranA-0007MI-FQ
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:51:01 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-34339f01cd2so2936824f8f.2
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 02:50:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712051454; x=1712656254; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bcvOj38qscvdE13E2r65sAnB0s0YG0iJ6Y0PeuaNSUU=;
- b=FFG6pB4iMx/GVGqqGtAMcCY2sUDx4rO+DDP03erHRI3jyS0hza3fiSQGHd9yuuMX8J
- ZYrFojMY1zNatw1LYC+O1whvzBxj8p+jyCv+UQPzc/SbC0I18toOJa36JXNFob/E1467
- vNRM2GkbtGsjC7Jf7DiX3BMZ93U74wBuh6hFaISLt8FSGrMNtXPzK2zDzY1iAN21fNRq
- gZ75W5wW70PKhf9EMvUQ2q8YCOOCXSUBwfyc6EWv/g460TLeizZ/5tZEHJPxpZkQrEEI
- rZrhmSyu3ynCBzgKpAoRQCwhZvjJj2xRlDXu8Bj4w3iZ7kAJSLs8HvVR8rH8qZ51SIAm
- yY0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712051454; x=1712656254;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bcvOj38qscvdE13E2r65sAnB0s0YG0iJ6Y0PeuaNSUU=;
- b=ucWQ9MdfatS+uh2CuE5OScn/PVM10Ta0daUjcVeLwNFw2kWCgmGapBdIvni2Te5XsY
- wrfoKzKuvAzWnjaDFikVPdViWeY0AiIEstDLuZPkiAHb4xS5ub5VuNf+iDOu6N1c/0Ba
- CkZ2G9UUlz+DG8hiza5OtUgku9cm7raV5rpYh7rmBEcjQkTjOZCLfxwt24AHRYClqXsS
- U5J0yxyEOeod1l/SDnhVgEYdoMOGOx1cZ1xF9/bSb3/I2jVmv+qqKaSh6lYsuKIudBna
- Fp4Xl4ZxsEwEEbYVKwUV/841McHpNinwKTuzgrWdJbUhHiTfLtvjTS8/X3F0ToMOeULx
- j0PQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWgFNJxbduJMDQnL/TsuD5FYsXm0giH2qcqXzHUsqh+/Q8vbJ5s/zyByZl0u5N/sFVZqF05eJsPce5/C343DJKYdYXtuwk=
-X-Gm-Message-State: AOJu0Yzk7r2kz4NR+myY2acLkqvkPl2PtX3W9Y3z1wBBofTinS3QR9c9
- O59bxX6n0TM/sL/wMn/Rk0vYST78aLYiT6euGaOS9KiWPg7DH3+a5I1MQ3AHGcA=
-X-Google-Smtp-Source: AGHT+IHQ9bA3Kv4ofi8GPbYkWN6t7n5FtlO/T35QMJhd3WqrelEQOvj4c56CMf0MU9ebi/rvVy5rXA==
-X-Received: by 2002:a5d:6d49:0:b0:341:e4f4:4399 with SMTP id
- k9-20020a5d6d49000000b00341e4f44399mr7196055wri.68.1712051454448; 
- Tue, 02 Apr 2024 02:50:54 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.202.91])
- by smtp.gmail.com with ESMTPSA id
- n3-20020a5d67c3000000b00341ddb65b07sm13729198wrw.63.2024.04.02.02.50.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 02:50:53 -0700 (PDT)
-Message-ID: <d960f4d5-1570-4b07-a1fd-2bd1267d661b@linaro.org>
-Date: Tue, 2 Apr 2024 11:50:51 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rravm-0004mM-QQ; Tue, 02 Apr 2024 05:59:52 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rravk-0007cu-1N; Tue, 02 Apr 2024 05:59:50 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5C8C15B0B7;
+ Tue,  2 Apr 2024 13:00:56 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 38DF0A937D;
+ Tue,  2 Apr 2024 12:59:13 +0300 (MSK)
+Message-ID: <291032f7-de3f-4b21-9b2e-872274203e37@tls.msk.ru>
+Date: Tue, 2 Apr 2024 12:59:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Patch for qemu-project/qemu#2247 issue
-To: Michael Tokarev <mjt@tls.msk.ru>, liu.dayu@zte.com.cn,
- qemu-devel@nongnu.org
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ liu.dayu@zte.com.cn, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, jiang.xuexin@zte.com.cn
 References: <20240401174355899iU6IFrpOQSiGe36G4PToz@zte.com.cn>
  <298819da-145e-4478-901f-66241a23f03f@tls.msk.ru>
+ <d960f4d5-1570-4b07-a1fd-2bd1267d661b@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <298819da-145e-4478-901f-66241a23f03f@tls.msk.ru>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <d960f4d5-1570-4b07-a1fd-2bd1267d661b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,38 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/24 18:52, Michael Tokarev wrote:
-> 01.04.2024 12:43, liu.dayu@zte.com.cn wrote:
->> hmp: Add help information for watchdog action: inject-nmi
+02.04.2024 12:50, Philippe Mathieu-Daudé пишет:
+> On 1/4/24 18:52, Michael Tokarev wrote:
+>> 01.04.2024 12:43, liu.dayu@zte.com.cn wrote:
+>>> hmp: Add help information for watchdog action: inject-nmi
+>>>
+>>> virsh qemu-monitor-command --hmp help information of watchdog_action missing inject-nmi which already supported in Commit 795dc6e4
+>>>
+>>> Signed-off-by: Dayu Liu <liu.dayu@zte.com.cn>
 >>
->> virsh qemu-monitor-command --hmp help information of watchdog_action 
->> missing inject-nmi which already supported in Commit 795dc6e4
+>> Applied to trivial-patches tree, in the following form:
 >>
->> Signed-off-by: Dayu Liu <liu.dayu@zte.com.cn>
+>> Author: Dayu Liu <liu.dayu@zte.com.cn>
+>> Date:   Mon Apr 1 17:43:55 2024 +0800
+>>
+>>      hmp: Add help information for watchdog action: inject-nmi
+>>
+>>      virsh qemu-monitor-command --hmp help information of
+>>      watchdog_action missing inject-nmi which already supported
+>>      in Commit 795dc6e4
+>>
 > 
-> Applied to trivial-patches tree, in the following form:
-> 
-> Author: Dayu Liu <liu.dayu@zte.com.cn>
-> Date:   Mon Apr 1 17:43:55 2024 +0800
-> 
->      hmp: Add help information for watchdog action: inject-nmi
-> 
->      virsh qemu-monitor-command --hmp help information of
->      watchdog_action missing inject-nmi which already supported
->      in Commit 795dc6e4
-> 
+> Fixes: 795dc6e46d ("watchdog: Add new Virtual Watchdog action INJECT-NMI")
 
-Fixes: 795dc6e46d ("watchdog: Add new Virtual Watchdog action INJECT-NMI")
+I don't think that commit is broken and needs Fixing.
+I see your point though - to have more formal way to
+mark "related" commits, it isn't always fixing something.
 
->      Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2247
->      Signed-off-by: Dayu Liu <liu.dayu@zte.com.cn>
->      Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
->      Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->      [Mjt: decode and word-wrap commit message and add Resolves: tag]
-> 
-> Thanks,
-> 
-> /mjt
-> 
+I sent a pullreq for this a couple hours ago anyway.
 
+/mjt
 
