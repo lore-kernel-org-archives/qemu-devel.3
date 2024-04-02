@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62697CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 15:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD65DC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 15:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrg03-0000L9-CG; Tue, 02 Apr 2024 11:24:35 -0400
+	id 1rrgAa-0002uq-01; Tue, 02 Apr 2024 11:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrg02-0000KV-30
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:24:34 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrg00-0005bx-C1
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:24:33 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-56bdf81706aso6628712a12.2
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 08:24:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712071470; x=1712676270; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=W7usfDbTF8k8Atd/dvmfgTO/s/lXiH3RGJfcDBXIt4U=;
- b=NsXh7bMfbaHneFRi4W7w4CFyPqsFFnsGx9viBb7Ln/ViW8qZkz2g6qsnP8MtUgG+IG
- 1jr6SKQSy/01oAz02/WPMuoUG07/vyu7i94ljXzcYSnCtnsuoATQaTe86xcgXeJA69aN
- jcB7KEXi4b18zD5i+vmPcvMiou8JgUxcKZ/AnR5KkkyxLNFcDbanen4mUflrjalFm4hY
- moMxNSmKb9Ia2qeWshZWa7sdJPxBqA0uX6OzcX+mfJ9IsSBwazHUcNsWXdg/OqSNA7Xy
- 59rspVdz/FaLziXbrRqfdlizMfjwMMHfsCah8/8Y169LfMqEql+OKHD4tltnQXLaFGSm
- 1NMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712071470; x=1712676270;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W7usfDbTF8k8Atd/dvmfgTO/s/lXiH3RGJfcDBXIt4U=;
- b=X/iMl7wAN5DV8dKF2ZQSz39UEzUtW+sTEqvG/OJt/4oEqHo/EWwLQea0Qcrrut/3My
- FOCj8sEiUNXfsPPjoTlXOtQpxEobRTvLB/HmT8b0GQQBO4d2TPdm/0zTmEq44Q9CopyK
- 8UlZQWjAUYDvpOZFQxMG4dwmRmCdttSBooihKxAwVF2WK5p9np2bD2vXwtQ5SBYE+itm
- O+Bi8L49zTNltmvonJQn2Gyh/5sWmxIRFMeDz/IFDUyWEQv7nGQpT8sJUDi1vMFKAPqC
- 9giXCj2EFNM5bd7PMhGRcx473Nq6pdMEYhxzX+/6AL+fDZje1X4cf/GutS4GDBVrU2lT
- Gizg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVerEvyMQNbWJMMXLtUZBUoMm1tSPkv66uvuFqyLLU42p1vp4mZEo2SmxRxIDYoWZXfa6SegXf0P1nl4CPf7dll6wrFT6w=
-X-Gm-Message-State: AOJu0Yz3QD468D48tdUaaCahlsSaczkWeH796AaZga1SrgChS2tyHbvH
- axkrBb5KvDKtoz2UUzFwcQvtXM7l1uoFMIeHcl+3ikc6/TdWH7oVFmMpebI6ZEvb5LRz5qiX9dG
- hZunz/gaDx+zdeQsmSrda50SMsfIMSQNMDtqyUg==
-X-Google-Smtp-Source: AGHT+IH6h4xslpbOfqAPGKufamCm+fMYSjjB7/uf2mXTdHf8jfInZH8Hy6oKUyvDPPyEcj3A7ONEL3r/EaFKn3gZ0X0=
-X-Received: by 2002:a50:cc82:0:b0:56a:2b6b:42cd with SMTP id
- q2-20020a50cc82000000b0056a2b6b42cdmr116642edi.3.1712071468200; Tue, 02 Apr
- 2024 08:24:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rrgAW-0002uT-37
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:35:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rrgAQ-0007sU-5J
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:35:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712072114;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rXnqVeTdWqZMHcXg/qGPTlyVQ5F7MNfTUwS7cD73PK0=;
+ b=bmOQaeRoEbLVpTHNA+S0MfEIBgCdhOsmxEVCR4ohyMHUVkDRVydMXsnHfF4eKKr+5z8Hbc
+ CthcMgzjmpW18APjVc8itfoNARpviwNQKEsFPdNUM9yhPaoT2ayK/Vjn/xWTozeZLjAgg5
+ 5upiOwkSNvYRoAxi1F1mh0uvm9HlhZ0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-338-YqSE0SRDOoOZjBsbWEr1QQ-1; Tue, 02 Apr 2024 11:35:10 -0400
+X-MC-Unique: YqSE0SRDOoOZjBsbWEr1QQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5A38985A58E;
+ Tue,  2 Apr 2024 15:35:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.64])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6FBDE40C1409;
+ Tue,  2 Apr 2024 15:35:04 +0000 (UTC)
+Date: Tue, 2 Apr 2024 10:34:43 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>, 
+ qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
+ Klaus Jensen <its@irrelevant.dk>, 
+ Fam Zheng <fam@euphon.net>, Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Bin Meng <bin.meng@windriver.com>, Hanna Reitz <hreitz@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, 
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jesper Devantier <foss@defmacro.it>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Keith Busch <kbusch@kernel.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH 06/19] block/stream: fix -Werror=maybe-uninitialized
+ false-positives
+Message-ID: <mzls26xlctld3fd5fl3h5wdrbh6hb5i3xcakeslwzny5tva7ch@w6wnruxtefkl>
+References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
+ <20240328102052.3499331-7-marcandre.lureau@redhat.com>
+ <65d791e4-6c68-4b6d-b181-bc3886745ce3@yandex-team.ru>
+ <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
+ <0d7344c2-b146-44cf-a911-21fa5e556665@yandex-team.ru>
 MIME-Version: 1.0
-References: <20240402093157.2931117-1-mjt@tls.msk.ru>
- <CAFEAcA8UBewAHriNkbJNO9CFKgf5bBGRHntbb_y11JdfoNTvcQ@mail.gmail.com>
- <60faa39d-52e8-46f1-8bd9-9d9661794880@tls.msk.ru>
- <465cd941-4830-4adf-be76-011702bb71b3@vivier.eu>
-In-Reply-To: <465cd941-4830-4adf-be76-011702bb71b3@vivier.eu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 16:24:17 +0100
-Message-ID: <CAFEAcA-=_gBYN8Vb1Q0khmDy+nJJ-hzTvN6UaTBtrBPP9qE43Q@mail.gmail.com>
-Subject: Re: [PULL 0/4] Trivial patches for 2024-04-02
-To: Laurent Vivier <laurent@vivier.eu>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0d7344c2-b146-44cf-a911-21fa5e556665@yandex-team.ru>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,30 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Apr 2024 at 15:30, Laurent Vivier <laurent@vivier.eu> wrote:
-> To post PR I generally use git-publish and I have a hook that checks that.
->
-> $ cat .git/hooks/pre-publish-send-email
-> !/bin/bash
->
-> NAME=$(git config --get user.name)
-> EMAIL=$(git config --get user.email)
->
-> for PATCH in $1/*.patch; do
->      if [ $(basename $PATCH) = "0000-cover-letter.patch" ]; then
->          continue
->      fi
->      if ! grep -q "^Signed-off-by: $NAME <$EMAIL>" $PATCH; then
->          echo "Error: Missing sender S-o-B in $PATCH"
->          exit 1
->      fi
->      if grep "^From: " $PATCH | grep -q "<qemu-devel@nongnu.org>" ; then
->          echo "Error: Author email address is mangled by the mailing list in $PATCH"
->          exit 1
->      fi
+On Tue, Apr 02, 2024 at 12:58:43PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > Again, same false-positives, because of WITH_GRAPH_RDLOCK_GUARD()..
+> > > 
+> > > Didn't you try to change WITH_ macros somehow, so that compiler believe in our good intentions?
+> > > 
+> > 
+> > 
+> > #define WITH_QEMU_LOCK_GUARD_(x, var) \
+> >      for (g_autoptr(QemuLockable) var = \
+> >                  qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))); \
+> >           var; \
+> >           qemu_lockable_auto_unlock(var), var = NULL)
+> > 
+> > I can't think of a clever way to rewrite this. The compiler probably
+> > thinks the loop may not run, due to the "var" condition. But how to
+> > convince it otherwise? it's hard to introduce another variable too..
+> 
+> 
+> hmm. maybe like this?
+> 
+> #define WITH_QEMU_LOCK_GUARD_(x, var) \
+>     for (g_autoptr(QemuLockable) var = \
+>                 qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))), \
+>          var2 = (void *)(true); \
+>          var2; \
+>          qemu_lockable_auto_unlock(var), var2 = NULL)
+> 
+> 
+> probably, it would be simpler for compiler to understand the logic this way. Could you check?
 
-You should check for qemu-.*, not just qemu-devel...
+Wouldn't that attach __attribute__((cleanup(xxx))) to var2, at which
+point we could cause the compiler to call xxx((void*)(true)) if the
+user does an early return inside the lock guard, with disastrous
+consequences?  Or is the __attribute__ applied only to the first out
+of two declarations in a list?
 
-thanks
--- PMM
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
