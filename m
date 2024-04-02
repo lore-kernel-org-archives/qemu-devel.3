@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E8EACD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 12:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83520C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 12:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcq6-0008AH-2J; Tue, 02 Apr 2024 08:02:06 -0400
+	id 1rrcq9-0008Og-8o; Tue, 02 Apr 2024 08:02:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrcpA-0007UY-PF
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:01:12 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcpK-0007dp-6m
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:01:19 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrcoG-0003Jx-Bp
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:01:06 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-565c6cf4819so9711565a12.1
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 05:00:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcoL-0003O7-VV
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:01:16 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-41551639550so22453605e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 05:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712059209; x=1712664009; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1712059215; x=1712664015; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bgXm2nlfXFrP6jSWEzK73t/J4axegXUGk98VGIOpPgY=;
- b=EqZpSeg9M2WjxF9uC9sAUAV5OP3/aC5dttT345EIhcKPsElXX88XZeyhp9/PLjPy9Y
- UaoNU319TZf/DRcLQxz0RFoHIJSqxOg6kFKFZaef+L8boKTT66YCBbDvQsPY7XHI3ftN
- ipISVVpH1Mhv+yLgc0VRzftcyaoHIl6e8fyDejfqSerc6rr5rr8w8hYuPqaeqXuPfOp6
- nMNwLnZ5T4va+uzsX5Uf+8YufvNfdK5J9z9JkV7URbjj/kOyYMJb4YFtXNynQ11bGgIj
- zvER5jie8IyQfZ+oB3yJB0gomHf4409ix2s1R+MrTNUjpcCBvUz+CXO5eKMzPBnZN6aK
- IG0w==
+ bh=XLtSFJIR+pdlVJvy9cvj3GhXFmD3XkdoFwgLyOSTVnw=;
+ b=AZAvNpTe2jtmJ2Ayuu52EzK37dnF2svpTnT6M4s6/eDtaoWfTQNKp218Pr2lkF/7YG
+ KcVSi35JSMBsMGYIkoD92LK+GpViqjbXee4J0hpJAUSiTe0oBg+RyupTwAlxabnSHJe6
+ hAPpPx0sOq3o1czziVOFkigGT9xWjfR6gbS73KKiNwcXs9pQfOldeug4a+MXKsJdqwb8
+ YJMvh0wwC1+vkFLrf6jZcnAYf17Cx36lCESskpET7Cvd8I8XC5gInWLmO/BH3CzgwiJX
+ +IyWmmYnGUiKW52cehUfPVNcyYnsodVpO2eYXhxAGNDwSVVLcy2Dl4OmYP6yrnTV/VX8
+ 7Edg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712059209; x=1712664009;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1712059215; x=1712664015;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bgXm2nlfXFrP6jSWEzK73t/J4axegXUGk98VGIOpPgY=;
- b=LwfXE3N0ANEY3zzrrNoQs/Ai6QOmG8aeCZ59haEZQ58MntuawtWY5pCplNOuk6aNAk
- 1dxrv9k1dIgTs/mYPezAriKbkZl0AZ4LLhdvTNwSKnbQhq9Q8K4z2DY42foVKrmkAJuf
- P1Xvtk7BKQvPnQpyO6OKZlY0nOv9uNJtlYZJOQZY/kJ63LN7OGn/mpGhIyx5C/SGtp5s
- +IR56xxJA6CVkxWJzTSIjwQ2lgGpfFNuXddCNYpjLzCKv/y8ATEaztvT7ZyiWb3JRcV4
- Z9FSN3A4P/6OBstTOQZrQlCoJO4/R7huDblxmqqsZfoNfbSDX7LgwocGjtIrSGWQISpd
- s26A==
-X-Gm-Message-State: AOJu0Yw7+xF/G6otRIF0cc7CJirE51jFO8HHbOwpPcVbjabWI2u3tTmk
- iAQWkqpQAU65deTLQvUmTfeeumbzT/XgfwqRVdkfwIBcX5/ayCjRsMJWzG2t8/6ix/KYWpc5VV2
- a9AdHZuDFLCMfxcB1ZMpMALWgxA67J87dl5soue1qiap91c50
-X-Google-Smtp-Source: AGHT+IFQBknMkfhTSx90+r8jOPkCnuujbvEiZc4TPHWmqXlPenQP5n2pMInjrcrZm1c8NXSw6TwjxU+NqpGO1RFn9hg=
-X-Received: by 2002:a50:d6cb:0:b0:56d:c711:1538 with SMTP id
- l11-20020a50d6cb000000b0056dc7111538mr6863757edj.18.1712058756459; Tue, 02
- Apr 2024 04:52:36 -0700 (PDT)
+ bh=XLtSFJIR+pdlVJvy9cvj3GhXFmD3XkdoFwgLyOSTVnw=;
+ b=J48YbcMdZqEj9CI9uZrbnXuASO3nb/6e0Sd0ZdTBfiW2y+l8tW5c4ufgXoPWAQwmf5
+ CMK/dJYfu+FrdiAk+hnhnR/3nS8x70qEnWpjdLpXZoSwwtHUthYuQj73pne5M7M2Cw91
+ sU5V2aWNkepmbTNLJMAMiwg/2qn7W+CCBHn5A7wUFcLzoaJyyIct+69nqyiFCWslJbZR
+ DLuIaz8uCXhILDbJxyiwHXDi5A7bw1VeOpiI9iJs0jh914tUXqHqOgqaAmw6Wbf82WXs
+ v1wG0U07t+i+fcmqwSRnp6s+6SlUsRhbVknsd0HCkFrWy6PI7sOZa0MMcG98DSIcHaU3
+ tytA==
+X-Gm-Message-State: AOJu0Yz4mxW2QCms0wXjtkUPFh6pPOkc0IFaR/UaO2HlIK0Bp6h9Iauc
+ neWous28dTATMmpyz0RSY2haMcj8WX+s3DX+g/V33xP9bXD1Vj5AALZLUAEHX2SIMoRYTR9967Y
+ tpQg=
+X-Google-Smtp-Source: AGHT+IGdp3cLjKZrqYZS5LCwWv3bSsCGzZNkzl7KHVeZCKOh3YCpLvW0XOQ7+n6s2QyD5hondVse1A==
+X-Received: by 2002:a05:600c:a47:b0:414:cbd:1ee2 with SMTP id
+ c7-20020a05600c0a4700b004140cbd1ee2mr9128870wmq.35.1712059215639; 
+ Tue, 02 Apr 2024 05:00:15 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.202.91])
+ by smtp.gmail.com with ESMTPSA id
+ w7-20020a05600c474700b004156ca1df95sm3946167wmo.18.2024.04.02.05.00.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 02 Apr 2024 05:00:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 2/2] scripts/checkpatch: Do not use mailmap
+Date: Tue,  2 Apr 2024 13:59:58 +0200
+Message-ID: <20240402115958.67615-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240402115958.67615-1-philmd@linaro.org>
+References: <20240402115958.67615-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20240402113015.66280-1-philmd@linaro.org>
- <20240402113015.66280-2-philmd@linaro.org>
-In-Reply-To: <20240402113015.66280-2-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 12:52:25 +0100
-Message-ID: <CAFEAcA8iCdNOdnrqY+7yupUvxQQfCLh17WRHZ6zFhVQrB4CXgg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] scripts/checkpatch: Avoid author email mangled by
- qemu-trivial@
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Tokarev <mjt@tls.msk.ru>, Stefan Weil <sw@weilnetz.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,36 +97,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Apr 2024 at 12:30, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> Commit f5177798d8 ("scripts: report on author emails
-> that are mangled by the mailing list") added a check
-> for qemu-devel@ list, complete with qemu-trivial@.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  scripts/checkpatch.pl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 7026895074..4fe4cfd631 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -1573,7 +1573,7 @@ sub process {
->                         $is_patch =3D 1;
->                 }
->
-> -               if ($line =3D~ /^(Author|From): .* via .*<qemu-devel\@non=
-gnu.org>/) {
-> +               if ($line =3D~ /^(Author|From): .* via .*<qemu-(devel|tri=
-vial)\@nongnu\.org>/) {
+The .mailmap file fixes mistake we already did.
+Do not use it when running checkpatch.pl, otherwise
+we might commit the very same mistakes.
 
-I recommend checking against qemu-.* rather than trying
-to capture explicitly all the suffixes we have. (For instance
-there's a line in mailmap for a commit that was attributed
-to qemu-block@, which this change still wouldn't catch.)
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ scripts/checkpatch.pl | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-thanks
--- PMM
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 12e9028b10..76a0b79266 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -435,8 +435,8 @@ if ($chk_branch) {
+ 	my @patches;
+ 	my %git_commits = ();
+ 	my $HASH;
+-	open($HASH, "-|", "git", "log", "--reverse", "--no-merges", "--format=%H %s", $ARGV[0]) ||
+-		die "$P: git log --reverse --no-merges --format='%H %s' $ARGV[0] failed - $!\n";
++	open($HASH, "-|", "git", "log", "--reverse", "--no-merges", "--no-mailmap", "--format=%H %s", $ARGV[0]) ||
++		die "$P: git log --reverse --no-merges --no-mailmap --format='%H %s' $ARGV[0] failed - $!\n";
+ 
+ 	for my $line (<$HASH>) {
+ 		$line =~ /^([0-9a-fA-F]{40,40}) (.*)$/;
+@@ -460,7 +460,7 @@ if ($chk_branch) {
+                      "-c", "diff.renamelimit=0",
+                      "-c", "diff.renames=True",
+                      "-c", "diff.algorithm=histogram",
+-                     "show",
++                     "show", "--no-mailmap",
+                      "--patch-with-stat", $hash) ||
+ 			die "$P: git show $hash - $!\n";
+ 		while (<$FILE>) {
+-- 
+2.41.0
+
 
