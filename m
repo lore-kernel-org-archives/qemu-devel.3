@@ -4,110 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B37EEC6FD1F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3381CD1293
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 04:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrWDn-0005JJ-8w; Tue, 02 Apr 2024 00:58:07 -0400
+	id 1rrWEI-0005O5-IE; Tue, 02 Apr 2024 00:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yajunw@nvidia.com>) id 1rrWDl-0005J9-QX
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 00:58:05 -0400
-Received: from mail-co1nam11on2062.outbound.protection.outlook.com
- ([40.107.220.62] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yajunw@nvidia.com>) id 1rrWDj-0000HH-IQ
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 00:58:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SG66WaHZJvGgimn5sNXe44zfN1zmngeLWosPC6gxTiceV50Z3je7agU2S47bpuXv9yT22T7hsL2bTS1Sf5XykhLaOxh67/DE2CJM6O+RTg8792JNn2IDahDsa/7aTfe2+yYjhmjm55miA7WgFeC8sA1E4jneAiC+wtxTRrVDcrLJO3YuYOnEB8Z7Rts+zTy/uThoZO3NztOzigFVP+M8ddwZUSvlzEdUdO72/CI1tAngDdoGCVdpk5YfN3GrNFDj85l98H4HkLEp+WbYrIT55w10Th/usYEslCgMBVwaQtwr+LOS7JdSKvkiZ8IrPIxgif8fudaPCEhH4F4wBfgB9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+fzfaCxp/e6NyZKmkJCWgkSAgVRUD1zk8GTIICIvxD8=;
- b=WN1VNixiS6OG2+EYyEzTwNruA/q7LqA/XdwT3B9NkYJdDJ7H8e40QDtdGa52RA7OqJTWgPKbxpIkv1PsEuxFDiZkfeCdOXhp60w3Vupc9unoTYuk4tV6qPDS4iL1g4hVxivU16Mk//q5NHi51lTHCF9UuspPQ4lqqvsFan9/dtD8IC/yQ946pETjB1logmnrY4LSDhRuhVUCWkAyZpOI87o24Dew8KyReabwqLV4rzdRMqvWCnnbl5pZw5fzjuOk7YjNWGYrsugU03mi0FWv2Zh6n54Ng8rZmkG6LCyZphygs/zd146IWbfYZ3n7oOlx3+rD4W0CxEk7WScSja/gZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+fzfaCxp/e6NyZKmkJCWgkSAgVRUD1zk8GTIICIvxD8=;
- b=qVJAob7ayNOCET/sIQUuzgcv9ju8NSHnE8ShoW3yvT7bTqaNtJn+WHdqtnVIIVCPLtnt8dHP80dmlo3E+mtBn7L4i10G/84Qn6BYZeF5nEa8Jrvs+imxYIMjUCwg/o6p7ciwrpONYEhit87O64ozDvLRCx/ibBanoesMQLwZhuSMRGZ6Oov+LfV3ym1u41eZuDyt49oIEUpaLuBAAj3a5AVKZM5Tw7twaVuOi8TZCvhjSVyx+fJj/TfIMbGWFre8WLG+1H5UHeDXFW82sgu4gd44CsywupKER7jPYzo2qCsoW7WFoMHVNsDEf543BbrGWMwIH0R6mAdsfw7S4yniFQ==
-Received: from BL0PR03CA0001.namprd03.prod.outlook.com (2603:10b6:208:2d::14)
- by MW3PR12MB4457.namprd12.prod.outlook.com (2603:10b6:303:2e::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Tue, 2 Apr
- 2024 04:52:55 +0000
-Received: from BL6PEPF0001AB4D.namprd04.prod.outlook.com
- (2603:10b6:208:2d:cafe::e2) by BL0PR03CA0001.outlook.office365.com
- (2603:10b6:208:2d::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46 via Frontend
- Transport; Tue, 2 Apr 2024 04:52:54 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL6PEPF0001AB4D.mail.protection.outlook.com (10.167.242.71) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7452.22 via Frontend Transport; Tue, 2 Apr 2024 04:52:54 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 1 Apr 2024
- 21:52:44 -0700
-Received: from nvidia.com (10.126.230.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 1 Apr
- 2024 21:52:42 -0700
-From: Yajun Wu <yajunw@nvidia.com>
-To: <qemu-devel@nongnu.org>, <mst@redhat.com>, <jasowang@redhat.com>,
- <maxime.coquelin@redhat.com>
-CC: Jiri Pirko <jiri@nvidia.com>
-Subject: [PATCH] virtio-net: fix qemu set used ring flag even vhost started
-Date: Tue, 2 Apr 2024 12:51:09 +0800
-Message-ID: <20240402045109.97729-1-yajunw@nvidia.com>
-X-Mailer: git-send-email 2.27.0
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1rrWEG-0005Ni-Lg
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 00:58:36 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1rrWEE-0000SV-Qd
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 00:58:36 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1e0000cdf99so38069365ad.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 21:58:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712033913; x=1712638713; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wBxzpRtUuuR8/TWqMENyLtogYheP28+AYeh52Ro5lV8=;
+ b=WhI41cVVLC0cXoySKYMK78b4Yu9naWPmxuH79Yj9LyKcuRdmxi/1x54IjIRlKl+M+F
+ AlOvCDGhLSOhZQyluRmyLiClTd5jijCFlj62ty4MkeAYMFTBKyvAyMBLDRHzOE2FB3ov
+ LXvDtA4VJ8Jb9Ln+KUHKXCZcK3cOrOcuVWCIim84sznue707p7J7UlVdr/6s3WjMgdpR
+ Kv7+ytmqZu/3hLSMQH4JutJ8iLTocnqRFawdfGrnprjs1dS8R+irlHmhVqSQirCbtbHi
+ RDZ3hsLnUW86tOSXmOJYvOjNsWQrLsONCtzwpBuGyJwrEzClH845z3riqLRT+YAsnnvr
+ XbnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712033913; x=1712638713;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wBxzpRtUuuR8/TWqMENyLtogYheP28+AYeh52Ro5lV8=;
+ b=eoPI2zxl1FapXfeHD3W2XzsHocCWyj0+RXavP1i5Y9F7zZRnTUvuoYuKjHBnSYrboN
+ 7udzrVuMGWm+EVsVyaGi3IwAtkO342W55kfzIkQcYkoZF0Ydo6b4a0kYE1CZ+u8I6fYU
+ e1nSY5/RdwSxU7OeX2t7xMaiEhpdExC9K/QWh8RWHM+cuQ50ZuIbH92Rfd2omBu/VfiT
+ 0JhWsexM/nB9VHmo439LMAG4bZ0jjcK5nFj6fz7nTGRSnEwjZ9e7VMBNlZ0gGWsJwlVN
+ OuZvAjCo9n5fpNyos36M/Gi0VqVzF1Y3BU82PfAx7G550703Xnl2balBBIYNNwsNkxDE
+ ixog==
+X-Gm-Message-State: AOJu0YxlZUioYqX2rbD2DSXn/V8Qco1oZpOrgB3145f/I+VuVzVLFrcC
+ ipQ+nBP9L8/m8I7Mvxy5S/VaFn5euJpKZIj6wCNvMfYcELUNZ1kzMUrVFRW1D0s=
+X-Google-Smtp-Source: AGHT+IFvIv0r+OJaAQbE9rKep7oYypSqM8oC0VOgbkJV9b7xGDbOmeX3gUWbBYgzsAbOmTUYKlRQYw==
+X-Received: by 2002:a17:902:74c5:b0:1e2:6d58:c8d0 with SMTP id
+ f5-20020a17090274c500b001e26d58c8d0mr714029plt.50.1712033912734; 
+ Mon, 01 Apr 2024 21:58:32 -0700 (PDT)
+Received: from valdaarhun.localnet ([2409:4081:2d9b:3168:a289:f071:d2b7:600])
+ by smtp.gmail.com with ESMTPSA id
+ t1-20020a170902e84100b001e0da190a07sm9920754plg.167.2024.04.01.21.58.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Apr 2024 21:58:32 -0700 (PDT)
+From: Sahil <icegambit91@gmail.com>
+To: qemu-level <qemu-devel@nongnu.org>,
+ Eugenio Perez Martin <eperezma@redhat.com>, daleyoung4242@gmail.com
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: Intention to work on GSoC project
+Date: Tue, 02 Apr 2024 10:28:28 +0530
+Message-ID: <10440822.nUPlyArG6x@valdaarhun>
+In-Reply-To: <10693205.CDJkKcVGEf@arch>
+References: <13625712.uLZWGnKmhe@valdaarhun> <8390729.NyiUUSuA9g@valdaarhun>
+ <10693205.CDJkKcVGEf@arch>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.230.35]
-X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4D:EE_|MW3PR12MB4457:EE_
-X-MS-Office365-Filtering-Correlation-Id: d76c8940-a2bd-4cca-f7f0-08dc52d0c232
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: B+5MMuamyL/UQUmpkuETn0i+bChZuTHX1Q4CzxBkRnZdL0EAcN766meb5ygMcIziLsOI4g54DXa9v3VwZVxCaReDimdPDNu29ntX0U8PyhpEnSoBpCQdak/wNYw3PO+HclB9Q1f+tDDPxGMn105uAoX1mNfQyCXrWJPmtbslMGpI0fLfw3xG4uZlVuxw3iDnggeEHsWQ3LxKefbfqu0mwAUsEJoD2nYhWWxsyVyz5zmj5mr7gkUMj8V8CoRuaKhb4WI2Sik1Lf6nE1tIQEAIFWtAROhMmbKnsIL08FRph6Ntsj6CqxgtLpMuP+D6jCyiqWeHhsxWaTtRku41uned3jQBLQi0bDeI0kkw6Jn9vRdsViWfUtzwnRBsHHg7PnIEW3voG7zPpJsZDodzuZmDb5Hkgjni/2q17Kq++HDEvXYmVExf4NIW2o7HXOHfVzUKOlE1H1J2VKKrjEJmTPX8WU6HaE2NYSquavl5iOEw70tAkfrdpVoMt7dkiiH34UxOesHCPGwipQSwyuusL+SNGwSX4jqwbCIC//B6/5Ngz5qT6+gzoQlQ0TBSMrbsYxB3oHuPVuNRWUcRAMjC8PhYvwb/giOtuARt1ib+6MKZC/g/njjjITeUTN9KJYxFaQlEKBgeEHM2LRf7c1DTTQ0IxU8v7R7rUzYO5WJ9vOO9sb6Qh8shONsgijVMjkFtnoakR8kN0O4pBkwDzbdW/nKlu+MadCLdKad2o402ZQZLZV+EnG6Q7OuyVBjIftQ3InOA
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230031)(82310400014)(36860700004)(1800799015)(376005); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Apr 2024 04:52:54.2531 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d76c8940-a2bd-4cca-f7f0-08dc52d0c232
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4D.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4457
-Received-SPF: softfail client-ip=40.107.220.62; envelope-from=yajunw@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=icegambit91@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,61 +96,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When vhost-user or vhost-kernel is handling virtio net datapath, qemu
-should not touch used ring.
+Hi,
 
-But with vhost-user socket reconnect scenario, in a very rare case (has
-pending kick event). VRING_USED_F_NO_NOTIFY is set by qemu in
-following code path:
+On Monday, April 1, 2024 11:53:11 PM IST daleyoung4242@gmail.com wrote:
+> Hi,
+> 
+> On Monday, March 25, 2024 21:20:32 CST Sahil wrote:
+> > Q1.
+> > Section 2.7.4 of the virtio spec [3] states that in an available
+> > descriptor, the "Element Length" stores the length of the buffer element.
+> > In the next few lines, it also states that the "Element Length" is
+> > reserved for used descriptors and is ignored by drivers. This sounds a
+> > little contradictory given that drivers write available desciptors in the
+> > descriptor ring.
+> When VIRTQ_DESC_F_WRITE is set, the device will use "Element Length" to
+> specify the length it writes. When VIRTQ_DESC_F_WRITE is not set, which
+> means the buffer is read-only for the device, "Element Length" will not be
+> changed by the device, so drivers just ignore it.
 
-	#0  virtio_queue_split_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:511
-	#1  0x0000559d6dbf033b in virtio_queue_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:576
-	#2  0x0000559d6dbbbdbc in virtio_net_handle_tx_bh (vdev=0x559d703a6aa0, vq=0x7ff5f4c920a8) at ../hw/net/virtio-net.c:2801
-	#3  0x0000559d6dbf4791 in virtio_queue_notify_vq (vq=0x7ff5f4c920a8) at ../hw/virtio/virtio.c:2248
-	#4  0x0000559d6dbf79da in virtio_queue_host_notifier_read (n=0x7ff5f4c9211c) at ../hw/virtio/virtio.c:3525
-	#5  0x0000559d6d9a5814 in virtio_bus_cleanup_host_notifier (bus=0x559d703a6a20, n=1) at ../hw/virtio/virtio-bus.c:321
-	#6  0x0000559d6dbf83c9 in virtio_device_stop_ioeventfd_impl (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3774
-	#7  0x0000559d6d9a55c8 in virtio_bus_stop_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:259
-	#8  0x0000559d6d9a53e8 in virtio_bus_grab_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:199
-	#9  0x0000559d6dbf841c in virtio_device_grab_ioeventfd (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3783
-	#10 0x0000559d6d9bde18 in vhost_dev_enable_notifiers (hdev=0x559d707edd70, vdev=0x559d703a6aa0) at ../hw/virtio/vhost.c:1592
-	#11 0x0000559d6d89a0b8 in vhost_net_start_one (net=0x559d707edd70, dev=0x559d703a6aa0) at ../hw/net/vhost_net.c:266
-	#12 0x0000559d6d89a6df in vhost_net_start (dev=0x559d703a6aa0, ncs=0x559d7048d890, data_queue_pairs=31, cvq=0) at ../hw/net/vhost_net.c:412
-	#13 0x0000559d6dbb5b89 in virtio_net_vhost_status (n=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:311
-	#14 0x0000559d6dbb5e34 in virtio_net_set_status (vdev=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:392
-	#15 0x0000559d6dbb60d8 in virtio_net_set_link_status (nc=0x559d7048d890) at ../hw/net/virtio-net.c:455
-	#16 0x0000559d6da64863 in qmp_set_link (name=0x559d6f0b83d0 "hostnet1", up=true, errp=0x7ffdd76569f0) at ../net/net.c:1459
-	#17 0x0000559d6da7226e in net_vhost_user_event (opaque=0x559d6f0b83d0, event=CHR_EVENT_OPENED) at ../net/vhost-user.c:301
-	#18 0x0000559d6ddc7f63 in chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:62
-	#19 0x0000559d6ddc7fdc in qemu_chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:82
 
-This issue causes guest kernel stop kicking device and traffic stop.
+Thank you for the clarification. I think I misunderstood what I had read
+in the virtio spec. What I have understood now is that "Element Length"
+has different meanings for available and used descriptors.
 
-Add vhost_started check in virtio_net_handle_tx_bh to fix this wrong
-VRING_USED_F_NO_NOTIFY set.
+Correct me if I am wrong - for available descriptors, it represents the
+length of the buffer. For used descriptors, it represents the length of
+the buffer that is written to by the device if it's write-only, otherwise it
+has no meaning and hence can be ignored by drivers.
 
-Signed-off-by: Yajun Wu <yajunw@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
----
- hw/net/virtio-net.c | 4 ++++
- 1 file changed, 4 insertions(+)
+> > Q2.
+> > In the Red Hat article, just below the first listing ("Memory layout of a
+> > packed virtqueue descriptor"), there's the following line referring to the
+> > buffer id in
+> > 
+> > "virtq_desc":
+> > > This time, the id field is not an index for the device to look for the
+> > > buffer: it is an opaque value for it, only has meaning for the driver.
+> > 
+> > But the device returns the buffer id when it writes the used descriptor to
+> > the descriptor ring. The "only has meaning for the driver" part has got me
+> > a little confused. Which buffer id is this that the device returns? Is it
+> > related to the buffer id in the available descriptor?
+> 
+> In my understanding, buffer id is the element that avail descriptor marks to
+> identify when adding descriptors to table. Device will returns the buffer
+> id in the processed descriptor or the last descriptor in a chain, and write
+> it to the descriptor that used idx refers to (first one in the chain). Then
+> used idx increments.
+> 
+> The Packed Virtqueue blog [1] is helpful, but some details in the examples
+> are making me confused.
+> 
+> Q1.
+> In the last step of the two-entries descriptor table example, it says both
+> buffers #0 and #1 are available for the device. I understand descriptor[0]
+> is available and descriptor[1] is not, but there is no ID #0 now. So does
+> the device got buffer #0 by notification beforehand? If so, does it mean
+> buffer #0 will be lost when notifications are disabled?
+> 
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index a6ff000cd9..8035e01fdf 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2865,6 +2865,10 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
-     VirtIONet *n = VIRTIO_NET(vdev);
-     VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
- 
-+    if (n->vhost_started) {
-+        return;
-+    }
-+
-     if (unlikely((n->status & VIRTIO_NET_S_LINK_UP) == 0)) {
-         virtio_net_drop_tx_queue_data(vdev, vq);
-         return;
--- 
-2.27.0
+I too have a similar question and understanding the relation between buffer
+ids in the used and available descriptors might give more insight into this. For
+available descriptors, the buffer id is used to associate descriptors with a
+particular buffer. I am still not very sure about ids in used descriptors.
+
+Regarding Q1, both buffers #0 and #1 are available. In the mentioned figure,
+both descriptor[0] and descriptor[1] are available. This figure follows the figure
+with the caption "Using first buffer out of order". So in the first figure the device
+reads buffer #1 and writes the used descriptor but it still has buffer #0 to read.
+That still belongs to the device while buffer #1 can now be handled by the driver
+once again. So in the next figure, the driver makes buffer #1 available again. The
+device can still read buffer #0 from the previous batch of available descriptors.
+
+Based on what I have understood, the driver can't touch the descriptor
+corresponding to buffer #0 until the device acknowledges it. I did find the
+figure a little confusing as well. I think once the meaning of buffer id is clear
+from the driver's and device's perspective, it'll be easier to understand the
+figure.
+
+I am also not very sure about what happens when notifications are disabled.
+I'll have to read up on that again. But I believe the driver still won't be able to
+touch #0 until the device uses it.
+
+I think going through the source should better explain these concepts.
+
+Thanks,
+Sahil
+
+
 
 
