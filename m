@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B187C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4D1C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:41:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcTu-00051p-1C; Tue, 02 Apr 2024 07:39:10 -0400
+	id 1rrcVx-0006cZ-Aw; Tue, 02 Apr 2024 07:41:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rrcTr-00051U-Vy
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:39:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rrcTp-0001rY-5T
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:39:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712057943;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sdyL4Zo0mveb6MocZPEFcF58z4tmDaEDbphaAow61Ug=;
- b=FTBVimgNHtFKirMVxbL1H7Mwd+J0uzdFV8x9dNeEy+3JMmczcdqC31TTBPQD2AFEPLhoqR
- /vcj5arEonXj30kckcwZiuNtkenAP+mnYw8876Ye9Yk+5sVK+jJXVdkpAvUQREcZgmt1Mh
- 2ESXZIyBrcp4Np7Qml9B42hVg5abA1Y=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-5kAlzM-9MuumF-Q_gnBjKQ-1; Tue, 02 Apr 2024 07:39:01 -0400
-X-MC-Unique: 5kAlzM-9MuumF-Q_gnBjKQ-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-dc6b26845cdso7432102276.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:39:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcVo-0006Z1-SH
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:41:10 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcVl-0003aI-66
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:41:07 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-41551639550so22314275e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:41:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712058063; x=1712662863; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JVvFcxLkj8uqsss8uUOAepWIduuXZZ17RoMd7ZYlL10=;
+ b=AxCrgHeTCy7uemZ4fTw3Zw3hE9xK24J857gdN69Legl71tH/sIf5yiZSfFx9Vgfn//
+ akbGEwxtxFK8bwlVLgu1cQCpdvy2yOOrraz4PQA9PBpe6VTll0k0J8wbzvJra0gJk2wm
+ tJpH6B+8VGRZvwBwpF3S/vUQM76L3QlwZrCnFBZJxJ51TlMQTu5Z+F8FJ3LR5Gtq36O8
+ 8iKTHF0SPLglxIBCuwiqFIKPPy8t8jGfDdjYQmqFOMbxDjVG2rU8cydcRnJRNY3hB7oe
+ Bij+4jnif01mtSfcRoSu1IwnEgh9hA+3h7LuSZI1mcDzzbf7AYUp0UdCLI3r8E+sDIAq
+ 1SRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712057941; x=1712662741;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sdyL4Zo0mveb6MocZPEFcF58z4tmDaEDbphaAow61Ug=;
- b=J4JgtJdyJQvXjsoN8fCwXbEiT9JOz+LWLttoaSyhL+rApTF7+H2tTliMnlB4Ss9EHm
- V2NqvZ+NG1M06lvVBlCfr3LzQQlZBnG1Wu9F9pZq3kE0ECADIZk9QvncghURHpLoSoW3
- Cr5BvDXLSUToRp42E2zoP8v67yBsf8UoYUBVe2Mz5ktphdmQhiTT4spt4qui4lVIDLzr
- BFgR+ZyO4jike6e1MpcFUFeWJz41WlHW6at40FbLBSmArAkftnb1qLh5brz7/Q9sgTAy
- ETGpkQKS/ALjgvw+J4NvV543Y73JAIa5fxoLfQ831rChwmVbyRYCCSJnoo4Gzxz3Bcum
- gosg==
-X-Gm-Message-State: AOJu0YzLVEOGnAHRh3vLkG1yxGB6UyzJH5why50jCsJAsE7iTNAdocfw
- ovym44k+FYAj4GVzJe1nqQUU/6ZhzD5ctskOX//CyGTDuGkokqflSxh9i9uNJQ9VqtKX30yw5wO
- 193sIg+UUWv0wbDvu+nekAS6S7+4GRyQ4BTXVjyRM/feNcy1PyrZ48woEYbllgVOGrn+bXCBwOy
- 2f61aVAJEUqDuL2URQ9RZu4DfIlX4=
-X-Received: by 2002:a25:c789:0:b0:dcf:4793:9a25 with SMTP id
- w131-20020a25c789000000b00dcf47939a25mr11181449ybe.44.1712057941401; 
- Tue, 02 Apr 2024 04:39:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMXxVniompKqDWr0EO+1OsuP3fNAQh/QXkZxD9425iC44/k/yTfsGAiLJY40zUmauHIozrkVFTS7IOwOuw91I=
-X-Received: by 2002:a25:c789:0:b0:dcf:4793:9a25 with SMTP id
- w131-20020a25c789000000b00dcf47939a25mr11181436ybe.44.1712057941149; Tue, 02
- Apr 2024 04:39:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712058063; x=1712662863;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JVvFcxLkj8uqsss8uUOAepWIduuXZZ17RoMd7ZYlL10=;
+ b=r3d84WvNJRBZktMdk59CyDDxCOLEximigG2EH0aVhaR5aUU0dkJzZk5XWNJIEkUk2V
+ UV2gs9deQvuOW9M1qbZDGOawBZ9CnL/CQVYyrxBfmjGV+ZxugrPwd7Z93xVG3fbJSI1T
+ A1Foze4TjlHVKvvHtm5/xum43WmHvul04ePLOnvzNUqZdS74GMW0njmQD7nRZD906GTn
+ xhJFrpAVMDz9xN8BUfe5Hxj2khMaVO3H2RCr2MhSRTHQXwAGR9lnTmq9N9U4wsAl/onB
+ 3g3OO/mWhNCz8wotJWbDajTaYSevbfYUL1IRQiqn5+3SmuO/FN8AYyXLl4gXFTz0j2G0
+ Gmhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFMm+AFWH85F62qBTdtORuVGyJI5b1ByOS+xRe1ciNz6IPfOp/aUyw3/xWO5Ln8A0aOpPMlp8/HObbViWgHVhjMxb2wtY=
+X-Gm-Message-State: AOJu0Yw8Bksvr2swx5n62TXh77F+Heo9FFrIX3TxpgyC7EODwz08ChlZ
+ rr2SyUf68gJKvajQibOF1DF7ug+4yXCRN1VKM8wBSf2fpDccqUBcXclLa49gUYjAImkQABUD45H
+ 4DJM=
+X-Google-Smtp-Source: AGHT+IHlGMkh3C2xSO0DgVFjLHtnhCp8QC0U2r8GWFO6HR9we67d8twnizu1ERlx2pyd114NtvmSsA==
+X-Received: by 2002:adf:e008:0:b0:341:cfd6:42af with SMTP id
+ s8-20020adfe008000000b00341cfd642afmr9398865wrh.31.1712058062837; 
+ Tue, 02 Apr 2024 04:41:02 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.202.91])
+ by smtp.gmail.com with ESMTPSA id
+ bl37-20020adfe265000000b0033b87c2725csm13941613wrb.104.2024.04.02.04.41.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Apr 2024 04:41:01 -0700 (PDT)
+Message-ID: <51e5bed1-8c65-4145-a2fd-d69255c8e962@linaro.org>
+Date: Tue, 2 Apr 2024 13:40:59 +0200
 MIME-Version: 1.0
-References: <13625712.uLZWGnKmhe@valdaarhun> <8390729.NyiUUSuA9g@valdaarhun>
- <10693205.CDJkKcVGEf@arch> <10440822.nUPlyArG6x@valdaarhun>
-In-Reply-To: <10440822.nUPlyArG6x@valdaarhun>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 2 Apr 2024 13:38:24 +0200
-Message-ID: <CAJaqyWfeUHTEj6F-uBzA57gPLZhD70w1+FY2sDCTFBHEDkzzPA@mail.gmail.com>
-Subject: Re: Intention to work on GSoC project
-To: Sahil <icegambit91@gmail.com>, daleyoung4242@gmail.com
-Cc: qemu-level <qemu-devel@nongnu.org>,
- Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0 1/4] vga: merge conditionals on shift control
+ register
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Helge Konetzka <hk@zapateado.de>
+References: <20240402113408.18048-1-pbonzini@redhat.com>
+ <20240402113408.18048-2-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240402113408.18048-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,163 +98,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 2, 2024 at 6:58=E2=80=AFAM Sahil <icegambit91@gmail.com> wrote:
->
-> Hi,
->
-> On Monday, April 1, 2024 11:53:11 PM IST daleyoung4242@gmail.com wrote:
-> > Hi,
-> >
-> > On Monday, March 25, 2024 21:20:32 CST Sahil wrote:
-> > > Q1.
-> > > Section 2.7.4 of the virtio spec [3] states that in an available
-> > > descriptor, the "Element Length" stores the length of the buffer elem=
-ent.
-> > > In the next few lines, it also states that the "Element Length" is
-> > > reserved for used descriptors and is ignored by drivers. This sounds =
-a
-> > > little contradictory given that drivers write available desciptors in=
- the
-> > > descriptor ring.
-> > When VIRTQ_DESC_F_WRITE is set, the device will use "Element Length" to
-> > specify the length it writes. When VIRTQ_DESC_F_WRITE is not set, which
-> > means the buffer is read-only for the device, "Element Length" will not=
- be
-> > changed by the device, so drivers just ignore it.
->
->
-> Thank you for the clarification. I think I misunderstood what I had read
-> in the virtio spec. What I have understood now is that "Element Length"
-> has different meanings for available and used descriptors.
->
-> Correct me if I am wrong - for available descriptors, it represents the
-> length of the buffer. For used descriptors, it represents the length of
-> the buffer that is written to by the device if it's write-only, otherwise=
- it
-> has no meaning and hence can be ignored by drivers.
->
+On 2/4/24 13:34, Paolo Bonzini wrote:
+> There are two sets of conditionals using the shift control bits: one to
+> verify the palette and adjust disp_width, one to compute the "v" and
+> "bits" variables.  Merge them into one, with the extra benefit that
+> we now have the "bits" value available early and can use it to
+> compute region_end.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   hw/display/vga.c | 89 +++++++++++++++++++++++-------------------------
+>   1 file changed, 42 insertions(+), 47 deletions(-)
 
-Both answers are correct.
-
-> > > Q2.
-> > > In the Red Hat article, just below the first listing ("Memory layout =
-of a
-> > > packed virtqueue descriptor"), there's the following line referring t=
-o the
-> > > buffer id in
-> > >
-> > > "virtq_desc":
-> > > > This time, the id field is not an index for the device to look for =
-the
-> > > > buffer: it is an opaque value for it, only has meaning for the driv=
-er.
-> > >
-> > > But the device returns the buffer id when it writes the used descript=
-or to
-> > > the descriptor ring. The "only has meaning for the driver" part has g=
-ot me
-> > > a little confused. Which buffer id is this that the device returns? I=
-s it
-> > > related to the buffer id in the available descriptor?
-> >
-> > In my understanding, buffer id is the element that avail descriptor mar=
-ks to
-> > identify when adding descriptors to table. Device will returns the buff=
-er
-> > id in the processed descriptor or the last descriptor in a chain, and w=
-rite
-> > it to the descriptor that used idx refers to (first one in the chain). =
-Then
-> > used idx increments.
-> >
-> > The Packed Virtqueue blog [1] is helpful, but some details in the examp=
-les
-> > are making me confused.
-> >
-> > Q1.
-> > In the last step of the two-entries descriptor table example, it says b=
-oth
-> > buffers #0 and #1 are available for the device. I understand descriptor=
-[0]
-> > is available and descriptor[1] is not, but there is no ID #0 now. So do=
-es
-> > the device got buffer #0 by notification beforehand? If so, does it mea=
-n
-> > buffer #0 will be lost when notifications are disabled?
-> >
->
-
-I guess you mean the table labeled "Figure: Full two-entries descriptor tab=
-le".
-
-Take into account that the descriptor table is not the state of all
-the descriptors. That information must be maintained by the device and
-the driver internally.
-
-The descriptor table is used as a circular buffer, where one part is
-writable by the driver and the other part is writable by the device.
-For the device to override the descriptor table entry where descriptor
-id 0 used to be does not mean that the descriptor id 0 is used. It
-just means that the device communicates to the driver that descriptor
-1 is used, and both sides need to keep the descriptor state
-coherently.
-
-> I too have a similar question and understanding the relation between buff=
-er
-> ids in the used and available descriptors might give more insight into th=
-is. For
-> available descriptors, the buffer id is used to associate descriptors wit=
-h a
-> particular buffer. I am still not very sure about ids in used descriptors=
-.
->
-> Regarding Q1, both buffers #0 and #1 are available. In the mentioned figu=
-re,
-> both descriptor[0] and descriptor[1] are available. This figure follows t=
-he figure
-> with the caption "Using first buffer out of order". So in the first figur=
-e the device
-> reads buffer #1 and writes the used descriptor but it still has buffer #0=
- to read.
-> That still belongs to the device while buffer #1 can now be handled by th=
-e driver
-> once again. So in the next figure, the driver makes buffer #1 available a=
-gain. The
-> device can still read buffer #0 from the previous batch of available desc=
-riptors.
->
-> Based on what I have understood, the driver can't touch the descriptor
-> corresponding to buffer #0 until the device acknowledges it. I did find t=
-he
-> figure a little confusing as well. I think once the meaning of buffer id =
-is clear
-> from the driver's and device's perspective, it'll be easier to understand=
- the
-> figure.
->
-
-I think you got it right. Please let me know if you have further questions.
-
-> I am also not very sure about what happens when notifications are disable=
-d.
-> I'll have to read up on that again. But I believe the driver still won't =
-be able to
-> touch #0 until the device uses it.
->
-
-If one side disables notification it needs to check the indexes or the
-flags by its own means: Timers, read the memory in a busy loop, etc.
-
-Sorry for the late reply!
-
-Thanks!
-
-> I think going through the source should better explain these concepts.
->
-> Thanks,
-> Sahil
->
->
->
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
