@@ -4,85 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C22CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 14:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB6C4CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 15:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrfBl-00063J-Aw; Tue, 02 Apr 2024 10:32:39 -0400
+	id 1rrfew-0002rJ-Gu; Tue, 02 Apr 2024 11:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rrfBA-0005rZ-Tk
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 10:32:02 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rrfet-0002q7-Le
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:02:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rrfB6-0002uc-IY
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 10:32:00 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rrfer-0000a6-Mk
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:02:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712068315;
+ s=mimecast20190719; t=1712070158;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cHjXsr9iuN13xQYma9g7r9YW4RSFJDMbFI9io4PUd2s=;
- b=BXs/OyrpQS4IVLMpk31CAuJ0MX1E/35EXOboLzOPS9J8sTrhOPn5hNIILGtYaPqvKiJ5SE
- XzB736wNyUMhzo3utPaC+JgwhWDwZbi1cngqZV2R8yn1F3DHn/Xp20S5uncoy2sUzSKDuF
- GLOwmFNgLvG6nse71VvVotk78HpG3l8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pVdYP7lw33bCUp7E573yzbQERCgswbFMDLrv+gGeA78=;
+ b=AEd/lCemKnNAHz76DlmZB2dasvhknetjQ2VPAg68V/4Zvf3cczduVUkjSlIcLxvyFZGRdr
+ 1vufXNzl5HJznLGLkhhhaJTSRtI7UIthj36Rvvx3VVWR7PDvmaCfMtM4l/FnMAwL/HSI4R
+ nsThUizF6fOfUlNgAmwwzTFOosG3JaU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-529-u80UM1S3NHuo98OaGHQcRQ-1; Tue, 02 Apr 2024 10:31:50 -0400
-X-MC-Unique: u80UM1S3NHuo98OaGHQcRQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4155e2ed5d8so12138875e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 07:31:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712068309; x=1712673109;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cHjXsr9iuN13xQYma9g7r9YW4RSFJDMbFI9io4PUd2s=;
- b=sG7wT5slh29hiwLMANvICF0Rt1kZA0shc67/9Di7H7DmQcvHfTNoThXbkUyFsUVUfs
- d1LRgKB3LkMmdK5lU7h8RhWEr6rqpOOi94r/+ghGzARjN66VPPkLjZelOFYFmt+wRHyE
- QLW2OQQz2pz4EVTKnJtZkTLhK5WXrFHdmIUaP1Kkbm66A9OW3qc2945AfhtcJvhIW8sB
- SqRgJXzt/jtGLmpgynQz7VGPYrVV0Pb37gQcxjbySSd02xIuScM5Tgtxzc3g4IXIR71B
- UKrodwzGPcRU7CdNyX/QdnDaEHSk3+wcRKa1z83QZnkgLhos/uIVgbMOqWIC2K/OJ1yq
- 3YKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuQKwkbfV4lzugHn/VEAqP/TH+trfw4tbiuEeiL8KLPfLHWkix5+QqlLeYrw1ZcbQYGcUI2T0ByWpzIOXmghhU2UQnhfc=
-X-Gm-Message-State: AOJu0YyXnBrAXRJkdxbx6WZDbYxsP8qC3V0W2DjtzIgTESULguD1QGYG
- mKj0MX++QjYdoExOxxOVJgXEC5nkzNClhY4F0lKETUUcwZMcT9iyvfpXNFcxnQTi1CQN4/aGcRZ
- Hux3w8K+MsnJH6I23TvCwhqRIJRlsaa2rv3RDZRD5q5UkabozCqsm
-X-Received: by 2002:a5d:64a2:0:b0:33e:cbec:e98 with SMTP id
- m2-20020a5d64a2000000b0033ecbec0e98mr16119640wrp.13.1712068309476; 
- Tue, 02 Apr 2024 07:31:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgKOO5e98yZHsNGwrDbw60+QohY+2sKTUy/VeAiwmUNSkXduNbZr0sCvFbldP4UFf26LMcbg==
-X-Received: by 2002:a5d:64a2:0:b0:33e:cbec:e98 with SMTP id
- m2-20020a5d64a2000000b0033ecbec0e98mr16119607wrp.13.1712068308747; 
- Tue, 02 Apr 2024 07:31:48 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f4:2fbc:c1b6:60e7:b08c:a69d])
- by smtp.gmail.com with ESMTPSA id
- ay33-20020a05600c1e2100b004156a816048sm5287010wmb.35.2024.04.02.07.31.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Apr 2024 07:31:48 -0700 (PDT)
-Date: Tue, 2 Apr 2024 10:31:43 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- isaku.yamahata@intel.com
-Subject: Re: [PATCH] hw/i386/acpi: Set PCAT_COMPAT bit only when pic is not
- disabled
-Message-ID: <20240402103123-mutt-send-email-mst@kernel.org>
-References: <20240402082516.2921143-1-xiaoyao.li@intel.com>
- <20240402060109-mutt-send-email-mst@kernel.org>
- <d3a3c9bc-a783-4293-bd1b-b00135ec2685@intel.com>
+ us-mta-563-EhSoGetBOGyULeQ7WV0sBA-1; Tue, 02 Apr 2024 11:02:36 -0400
+X-MC-Unique: EhSoGetBOGyULeQ7WV0sBA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 76BA7101A523
+ for <qemu-devel@nongnu.org>; Tue,  2 Apr 2024 15:02:36 +0000 (UTC)
+Received: from server.redhat.com (unknown [10.72.112.166])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 61C65492BCD;
+ Tue,  2 Apr 2024 15:02:34 +0000 (UTC)
+From: Cindy Lu <lulu@redhat.com>
+To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH 1/1] virtio-pci: Fix the crash when the vector changes back
+ from VIRTIO_NO_VECTOR
+Date: Tue,  2 Apr 2024 23:00:10 +0800
+Message-ID: <20240402150218.270587-2-lulu@redhat.com>
+In-Reply-To: <20240402150218.270587-1-lulu@redhat.com>
+References: <20240402150218.270587-1-lulu@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d3a3c9bc-a783-4293-bd1b-b00135ec2685@intel.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,61 +78,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 02, 2024 at 09:18:44PM +0800, Xiaoyao Li wrote:
-> On 4/2/2024 6:02 PM, Michael S. Tsirkin wrote:
-> > On Tue, Apr 02, 2024 at 04:25:16AM -0400, Xiaoyao Li wrote:
-> > > Set MADT.FLAGS[bit 0].PCAT_COMPAT based on x86ms->pic.
-> > > 
-> > > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > 
-> > Please include more info in the commit log:
-> > what is the behaviour you observe, why it is wrong,
-> > how does the patch fix it, what is guest behaviour
-> > before and after.
-> 
-> Sorry, I thought it was straightforward.
-> 
-> A value 1 of PCAT_COMPAT (bit 0) of MADT.Flags indicates that the system
-> also has a PC-AT-compatible dual-8259 setup, i.e., the PIC.
-> 
-> When PIC is not enabled for x86 machine, the PCAT_COMPAT bit needs to be
-> cleared. Otherwise, the guest thinks there is a present PIC even it is
-> booted with pic=off on QEMU.
-> 
-> (I haven't seen real issue from Linux guest. The user of PIC inside guest
-> seems only the pit calibration. Whether pit calibration is triggered depends
-> on other things. But logically, current code is wrong, we need to fix it
-> anyway.
-> 
-> @Isaku, please share more info if you have)
-> 
+When the guest calls virtio_stop and then virtio_reset, the vector will change
+to VIRTIO_NO_VECTOR and the IRQFD for this vector will be released. After that
+If you want to change the vector back, it will cause a crash.
 
+To fix this, we need to call the function "kvm_virtio_pci_vector_use_one()"
+when the vector changes back from VIRTIO_NO_VECTOR
 
-That's sufficient, thanks! Pls put this in commit log and resubmit.
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+---
+ hw/virtio/virtio-pci.c | 31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
-> > The commit log and the subject should not repeat
-> > what the diff already states.
-> > 
-> > > ---
-> > >   hw/i386/acpi-common.c | 4 +++-
-> > >   1 file changed, 3 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
-> > > index 20f19269da40..0cc2919bb851 100644
-> > > --- a/hw/i386/acpi-common.c
-> > > +++ b/hw/i386/acpi-common.c
-> > > @@ -107,7 +107,9 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
-> > >       acpi_table_begin(&table, table_data);
-> > >       /* Local APIC Address */
-> > >       build_append_int_noprefix(table_data, APIC_DEFAULT_ADDRESS, 4);
-> > > -    build_append_int_noprefix(table_data, 1 /* PCAT_COMPAT */, 4); /* Flags */
-> > > +    /* Flags. bit 0: PCAT_COMPAT */
-> > > +    build_append_int_noprefix(table_data,
-> > > +                              x86ms->pic != ON_OFF_AUTO_OFF ? 1 : 0 , 4);
-> > >       for (i = 0; i < apic_ids->len; i++) {
-> > >           pc_madt_cpu_entry(i, apic_ids, table_data, false);
-> > > -- 
-> > > 2.34.1
-> > 
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index e433879542..45f3ab38c3 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -874,12 +874,14 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
+     return 0;
+ }
+ 
+-static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
++static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no,
++                                         bool recovery)
+ {
+     unsigned int vector;
+     int ret;
+     EventNotifier *n;
+     PCIDevice *dev = &proxy->pci_dev;
++    VirtIOIRQFD *irqfd;
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+ 
+@@ -890,10 +892,21 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
+     if (vector >= msix_nr_vectors_allocated(dev)) {
+         return 0;
+     }
++    /*
++     * if this is recovery and irqfd still in use, means the irqfd was not
++     * release before and don't need to set up again
++     */
++    if (recovery) {
++        irqfd = &proxy->vector_irqfd[vector];
++        if (irqfd->users != 0) {
++            return 0;
++        }
++    }
+     ret = kvm_virtio_pci_vq_vector_use(proxy, vector);
+     if (ret < 0) {
+         goto undo;
+     }
++
+     /*
+      * If guest supports masking, set up irqfd now.
+      * Otherwise, delay until unmasked in the frontend.
+@@ -932,14 +945,14 @@ static int kvm_virtio_pci_vector_vq_use(VirtIOPCIProxy *proxy, int nvqs)
+         if (!virtio_queue_get_num(vdev, queue_no)) {
+             return -1;
+         }
+-        ret = kvm_virtio_pci_vector_use_one(proxy, queue_no);
++        ret = kvm_virtio_pci_vector_use_one(proxy, queue_no, false);
+     }
+     return ret;
+ }
+ 
+ static int kvm_virtio_pci_vector_config_use(VirtIOPCIProxy *proxy)
+ {
+-    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX);
++    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX, false);
+ }
+ 
+ static void kvm_virtio_pci_vector_release_one(VirtIOPCIProxy *proxy,
+@@ -1570,7 +1583,13 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+         } else {
+             val = VIRTIO_NO_VECTOR;
+         }
++        vector = vdev->config_vector;
+         vdev->config_vector = val;
++        /*check if the vector need to recovery*/
++        if ((val != VIRTIO_NO_VECTOR) && (vector == VIRTIO_NO_VECTOR) &&
++            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
++            kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX, true);
++        }
+         break;
+     case VIRTIO_PCI_COMMON_STATUS:
+         if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+@@ -1611,6 +1630,12 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+             val = VIRTIO_NO_VECTOR;
+         }
+         virtio_queue_set_vector(vdev, vdev->queue_sel, val);
++
++        /*check if the vector need to recovery*/
++        if ((val != VIRTIO_NO_VECTOR) && (vector == VIRTIO_NO_VECTOR) &&
++            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
++            kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel, true);
++        }
+         break;
+     case VIRTIO_PCI_COMMON_Q_ENABLE:
+         if (val == 1) {
+-- 
+2.43.0
 
 
