@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022A7C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 16:21:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534B2C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 16:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrgsm-0008OG-Do; Tue, 02 Apr 2024 12:21:08 -0400
+	id 1rrgyG-0002sV-T2; Tue, 02 Apr 2024 12:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrgsk-0008Ng-8P
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:21:06 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1rrgxZ-0002Tm-HD
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:26:08 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrgsg-0001jB-ID
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:21:06 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-56df42c2773so923411a12.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 09:21:02 -0700 (PDT)
+ id 1rrgxX-0002ZA-5I
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:26:04 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-56c0bd07e7bso5655649a12.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 09:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712074861; x=1712679661; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712075161; x=1712679961; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=o1peXpmt2C+W5FT88tgPQZyqintO0tvvupH2V4zg3hM=;
- b=BcTXK0S2Q9R52F0ExKJKRnssi2P/k86HquenDANnYFDN4wNvJB3kFecW8Pd/XOZBw3
- Q35Mau7zsb7LXA95kuorxPDqlrLMHQ+G1ZDQXNVWNTgES+2r2CnmG4oF1zdEh2UhrUPA
- uRJJTzZH2kJKSoeX1c79idhGu6uRYxw8YFhUB+/F3WuQ0CcvqzGeSvXiUKiyNDPFVrNV
- 8M0x8fqfBycxNAg4tOwaQwzUiOJt2R/3lfKnP7ALxcMQocsU3z71NgDeXXtMSDVZJ+ou
- muMekk9vjthacURTTvNvj4j7PYFgWYTP2QBlNacolc0eo+TzhgQ/fSpmCh3fvJzszyV0
- UmuQ==
+ bh=KK9NTlpRrRxEgAvHn/mL2lF+E/6ZZ0CVXpnhGp027WI=;
+ b=Y1F3EIYxnsmoa+FnXChRdg69ABIcPjsm7A7ZLckJ66r8+A8ANv3nJ8wArOJxfG6Xtj
+ lZVcIN/56vsqS9DhCTZsOhQlHSuKtNKpC7VORvKF1hly3iKulVTtlxOGMtpXTArAOt0f
+ 4Twc970LKvFPF3c20KmhBnHcGDXwTtsaymLblz7FNkkV/M3Ps4/+ErzV/CuqCt006y8Y
+ /kdsMLwSkRcEj48AFciTt3RsQ0vt7e8z4GvJLipjiEfGzGo3lmPj9y+HnYy6+gkrWfp2
+ 3D6qDyvfsECyNS/uYi+w9db+Thor2I5EbzYeGNYJ2jgxu8tvineMkLmscX5IzT9mvPM/
+ XE1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712074861; x=1712679661;
+ d=1e100.net; s=20230601; t=1712075161; x=1712679961;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=o1peXpmt2C+W5FT88tgPQZyqintO0tvvupH2V4zg3hM=;
- b=TAEahYgWve36MJRqKNJPs4J2MUxuC89vJ7Bpn3jgKdc1uKARovTQ3VLtvWhH1AbATY
- D2FKyzmRb0jU8RhiHu1YBWJR32+f1D4mSBybxf9Vw/BKhs7ZFxlK4SgxIpMUnEdz3syK
- sWFxtv4G3yrLsOlGeXNS/yAR0QGG3vTR6LcBBJy9UREM8/LTjwzj99IgQGizyA6F9mBi
- vwGWVo33gICvLuZS9MtBRzMaFnYYJpi9QmOytEgk+ioirPccFB4SmikvM1BYzlOqA4fI
- rGzx6C80SmU7/JYeXDV8JyK+8Ei24hfU7+3/kl1ihjkyqlJAZwsqK5D09V/+deDFrogv
- 37Pw==
+ bh=KK9NTlpRrRxEgAvHn/mL2lF+E/6ZZ0CVXpnhGp027WI=;
+ b=XaugYODn3BQdorqyxn3ipHZNFtoItQHErHrJPGJQzNCfn9orFt27wDJ0uop2i53sOC
+ h9JR4XLE2KfE/CSFlHhCiR9s3QZDmASM0y9Xco99lsqkAoq1dhfH4WTA/0AiyfvQA+XW
+ L8720qwfvS9NI7e+u/7uJARZuRmIjG8j9/N1mxbAXQvnhPc5E6j6VBh13HyYFlJEnCC4
+ Hu8NWZOuOX8PQh+QsFyl1153oNaz6ajuztQgsICrGwRtX5XHSzpq63OkTwwlQjT5k6I3
+ P1hZj41aFT6lK10xTzI7iVfdXTD+NOKSh7uddkZxEOLQ0rUOiYqG39z4loE3Dtdfxvi7
+ 3LdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGbd0P7WbgYG/UbNyhnu/98yb0Y5f3t85IPZ55EQ+EwRwK0XOs507HNGg54XUGZUruEcTLYD3JYaRsC7nbmjOF/BUMBlI=
-X-Gm-Message-State: AOJu0YxrZhTTv4SwA8XJ1XqbvUx6adlMP4ELIEoZaTB/+zLEh/8zQ8xS
- F8ac/+Ecbr/rWfrJsqdfkPoFeMfhb24YnqJPQZUH3PlakGwtiKlOFIB1O4qIQJNMy03ZijZrD/r
- /EYOF+9YoBnbtH+wPmFHC2N3+xz+WVEvaJ7O+kg==
-X-Google-Smtp-Source: AGHT+IHb47danqkn7++32MbL0ip0fySSD+lZMVFnm78Deap6/GnJKGF3c4cPPb7IiQxgYeT44VHCZb4HBrPbG0j5s9Q=
-X-Received: by 2002:a50:a6d4:0:b0:56d:b6dc:c8fe with SMTP id
- f20-20020a50a6d4000000b0056db6dcc8femr295214edc.0.1712074860702; Tue, 02 Apr
- 2024 09:21:00 -0700 (PDT)
+ AJvYcCXa9MFDAYJv6nz4KGrm/ppsfvlYzf2CTElXKWTslbljt9ntq/G4vAEqgYcbnkwQAyhiI8xXjCeYyDDefP9n9fBYSGETy2U=
+X-Gm-Message-State: AOJu0Yzi/vL4n8XxxW0xZwdUIvCUkH/3xyHL3WrRV27kijjDGBYkN3HS
+ C4CXtu5Ai3j1qvYkNZ29eCuBGxpFlROBn0mucIgTCCeCvcdxi4vuaEOvDU1tP7CpzgqTRNaiywn
+ 38HDBAr6bURJAtuZ1GAjK5GfU4+cmgUj986V1yA8RGfvPQvQC
+X-Google-Smtp-Source: AGHT+IEuDrRkduukpPhbK4FbvpynltOX0R0MUA6cFmAYeHCX9kjK2055g4dQyM25oeRphz8/sQiB5+1c2Vs9Jp4UtOw=
+X-Received: by 2002:a50:a446:0:b0:568:b48e:bb2 with SMTP id
+ v6-20020a50a446000000b00568b48e0bb2mr7418405edb.25.1712075161354; Tue, 02 Apr
+ 2024 09:26:01 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
- <20240330103128.3185962-15-ruanjinjie@huawei.com>
-In-Reply-To: <20240330103128.3185962-15-ruanjinjie@huawei.com>
+ <20240330103128.3185962-14-ruanjinjie@huawei.com>
+In-Reply-To: <20240330103128.3185962-14-ruanjinjie@huawei.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 17:20:49 +0100
-Message-ID: <CAFEAcA-L6T61zSYKDEE22oUxpG6Cc6bTNWBn0Lkgx4xYmUfHhg@mail.gmail.com>
-Subject: Re: [PATCH v11 14/23] hw/intc/arm_gicv3: Add irq non-maskable property
+Date: Tue, 2 Apr 2024 17:25:50 +0100
+Message-ID: <CAFEAcA8kT4c-zhygwr=ifR7_nVk+fhNLBFvkTKa_Mb+UgVMddw@mail.gmail.com>
+Subject: Re: [PATCH v11 13/23] hw/intc: Enable FEAT_GICv3_NMI Feature
 To: Jinjie Ruan <ruanjinjie@huawei.com>
 Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
  wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,81 +94,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sat, 30 Mar 2024 at 10:33, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 >
-> A SPI, PPI or SGI interrupt can have non-maskable property. So maintain
-> non-maskable property in PendingIrq and GICR/GICD. Since add new device
-> state, it also needs to be migrated, so also save NMI info in
-> vmstate_gicv3_cpu and vmstate_gicv3.
->
+> Added properties to enable FEAT_GICv3_NMI feature, setup distributor
+> and redistributor registers to indicate NMI support.
+
+The subject line is misleading, since we don't actually
+enable the FEAT_GICv3_NMI feature here. I suggest:
+
+
+hw/intc/arm_gicv3: Add has-nmi property to GICv3 device
+
+Add a property has-nmi to the GICv3 device, and use this to set
+the NMI bit in the GICD_TYPER register. This isn't visible to
+guests yet because the property defaults to false and we won't
+set it in the board code until we've landed all of the changes
+needed to implement FEAT_GICV3_NMI.
+
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> v11:
-> - Put vmstate_gicv3_cpu_nmi and vmstate_gicv3_gicd_nmi into existing list.
-> - Remove the excess != 0.
-> v10:
-> - superprio -> nmi, gicr_isuperprio -> gicr_inmir0.
-> - Save NMI state in vmstate_gicv3_cpu and vmstate_gicv3.
-> - Update the commit message.
-> v3:
-> - Place this ahead of implement GICR_INMIR.
-> - Add Acked-by.
-> ---
->  hw/intc/arm_gicv3_common.c         | 38 ++++++++++++++++++++++++++++++
->  include/hw/intc/arm_gicv3_common.h |  4 ++++
->  2 files changed, 42 insertions(+)
->
-> diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-> index 2d2cea6858..189258e1ca 100644
-> --- a/hw/intc/arm_gicv3_common.c
-> +++ b/hw/intc/arm_gicv3_common.c
-> @@ -164,6 +164,24 @@ const VMStateDescription vmstate_gicv3_gicv4 = {
->      }
->  };
->
-> +static bool nmi_needed(void *opaque)
-> +{
-> +    GICv3CPUState *cs = opaque;
-> +
-> +    return cs->gic->nmi_support;
-> +}
-
-I think we should call this function gicv3_cpu_nmi_needed()...
-
-> +
-> +static const VMStateDescription vmstate_gicv3_cpu_nmi = {
-> +    .name = "arm_gicv3_cpu/nmi",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = nmi_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT32(gicr_inmir0, GICv3CPUState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_gicv3_cpu = {
->      .name = "arm_gicv3_cpu",
->      .version_id = 1,
-> @@ -196,6 +214,7 @@ static const VMStateDescription vmstate_gicv3_cpu = {
->          &vmstate_gicv3_cpu_virt,
->          &vmstate_gicv3_cpu_sre_el1,
->          &vmstate_gicv3_gicv4,
-> +        &vmstate_gicv3_cpu_nmi,
->          NULL
->      }
->  };
-> @@ -238,6 +257,24 @@ const VMStateDescription vmstate_gicv3_gicd_no_migration_shift_bug = {
->      }
->  };
->
-> +static bool needed_nmi(void *opaque)
-> +{
-> +    GICv3State *cs = opaque;
-> +
-> +    return cs->nmi_support;
-> +}
-
-...and this one gicv3_nmi_needed().
 
 Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
