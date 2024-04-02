@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1DBCD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0194CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rre9o-0007AJ-UZ; Tue, 02 Apr 2024 09:26:32 -0400
+	id 1rreDp-0000JW-41; Tue, 02 Apr 2024 09:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rre9n-0007A5-IB
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:26:31 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rreDm-0000IS-Ak
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:30:38 -0400
 Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rre9l-0005mk-Pt
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:26:31 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rreDi-0000SN-Uf
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:30:37 -0400
 Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-415584360c0so19323305e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:26:29 -0700 (PDT)
+ 5b1f17b1804b1-4161eb1aea7so1590445e9.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:30:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712064388; x=1712669188; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jvh3lFDKjxKup6KjSLf4pNYzpRZV6jHaU5FQzFg3rEA=;
- b=AQu408imQlT+VNZYFN+VhjN2rt6N4ZYqsTrHJZyN0rtZdJleW0FDXDC6vMyoBoAO7Q
- 5ugdn6LgcZFM1cuwtnxOCnSLoO3N921Z/RP0UfP+V0Kg1qhDhPg6XDgnBerXZbpJt4cN
- l3/pmFVQJ2tvLjodoPHq/kCmp0Q0i6H9/c1aXArmWZbiGC29d3H4AcT3gK0X5LG1ge1/
- fHyo8GoalAZmd2JoMI1M0icZhNEcf0m7MtirRqfsWq+z7jonMHecwfIZ0LGScpSgSPb6
- ZZLJW3z30lcL0cLNTj+i3538vqemUZuaTy1sh7FGUIxuheA33POUfpkdPhLPJNaXUwCJ
- XRAA==
+ d=linaro.org; s=google; t=1712064632; x=1712669432; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7yV5DhXp84F08Csgrgf5l9tQgfG+5zMqa1qugWdzDL0=;
+ b=rJm2n7DV9U0ODWzkdFoUUP7qtMfyeNFOOuHvzrPlPNWazIrhvt+AYkr1bvNiaK/HzL
+ r0EdF7l9bPtxVTAUPkMm5Kkd2kg4NB0ClO/Hp/0j80lcul4xCUEu/Z7fm4c7Qniblsa0
+ nxeDfz60EPwUrQ9JwOAqePrw/SObdRQymtN22N7GUzROJXyqw7/odii9kiqA/xGeRjLV
+ KNFEKE2cR/DClkERI1N2odWrOmhoanw7bw/ScVVYYRmeIVF+9nJANreC81+El7+dtkr3
+ resCMOhg3TSlfy+bu10OFuV19CB8oZlNNrHutE+9GR++PtbZwEF1mLcYA4fe/921Te78
+ FfOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712064388; x=1712669188;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712064632; x=1712669432;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jvh3lFDKjxKup6KjSLf4pNYzpRZV6jHaU5FQzFg3rEA=;
- b=KTZUZxR7UWLviPp4PKBdAFmtexDMFK/5eQqdmWZ44RFT83Tq7RlgLD5zsigAQzK0X4
- 1vjSYJQHa/DtbyUW5NXE368irzLMGiRx9pEoBeao63CSeMfZWCctRHwig1BIxYqGAJtI
- eo690fJN70/E1Z0TjujqvLnQvdBjdmE+tzwdvswS1miW2CRRxK67ThFB949B6w836gLf
- HvBtIZNGkvMOxMbAyFp0n+28K3AcUpK2yEob1JEjQxqK1lWZIklU4IhJpwd85qrabvRO
- OvW76hk2czzcFJS88JjZTp6RPUbXpyjvFI9ZapLqAyJhRKhz48GC1dy1qCejfF6kj2IS
- enHw==
+ bh=7yV5DhXp84F08Csgrgf5l9tQgfG+5zMqa1qugWdzDL0=;
+ b=JmiUUefaSHvtd3+mPzzllJthp/FQIe+Ycd46uhxtK1M06SbjYFOPmfNWa+uacKkVqK
+ ryQkPDhZU+6b2m/wNrbZxzOS28mKsJziPevRjquOudjm9Fy7+d5uL9fLiq2XUY/nMxWY
+ alOLconInmDRIKxz6DPBbJeig1fKnSi7rAVNECOqhOpm/Lbgt3Rn4fdKPqrMZty99GB/
+ DVSozu4sBSPvqHa5+dbdA98xK55qHLXuuVCgjzdUpn+9/q1BvUt7C5ls3DG4VCK+FWzI
+ wqSWF0O5ZGafs6uT8QTTL3Ql9ibJDnZNCVazsl31M1hiLOfC11F5z93FesDpghUVxFPR
+ 8Gng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTD7xSa/ebGaqy6EDy2JSqVe3qjZNHu6fKnNJhfiNXJSx60sIstHoh9WOBSJh5Xs2AR8QiDwFFK5hpH/ukkisx1qgX79E=
-X-Gm-Message-State: AOJu0YwCl/XNhYDx9ToG9oh1fDf1Ng+xjBxhHCHmRadSBQypmdwTYlYk
- vUkBarKxxCXcIJvgWUYJ2EtntWHNvKWtsva7JZNFmpBFYl0/Q14e9zlaEig3IyE=
-X-Google-Smtp-Source: AGHT+IGXxbjqPVjiuwK4eEgA4lgSW1wQ4KyqNyo3fsXU+gUGn9dV1sOM+Ca5lZxvfk15qD20cAG9yA==
-X-Received: by 2002:a05:600c:3d87:b0:415:6d52:5489 with SMTP id
- bi7-20020a05600c3d8700b004156d525489mr2444136wmb.13.1712064387965; 
- Tue, 02 Apr 2024 06:26:27 -0700 (PDT)
+ AJvYcCV9FnVaNllO4zPJRggvLJMdCvGzKrR9bYRcbAwFYWIX7J4YUNraL3IicdLTtIlw9iSbNw7UowmcO/iRTk65tFQNzv2Jo4E=
+X-Gm-Message-State: AOJu0YzrF/rGYZHkuvSYa/47XQCxjJ2HxXScqy7I7iFvm/wQvGC/IcS4
+ moYgtOusLczooDbjVzJArEgOb5YQEs1SujuQh79aqbPYvX5gcoxBPgxvn3ZCY1Nw+T+d3E7ieWh
+ mmjM=
+X-Google-Smtp-Source: AGHT+IEqXEFfetuczkoGQBa8L7Fc0uIIdMkhAHukdsYrGm6EfZd+FqNUlWRBhvqyQBziC9eTlEZAdg==
+X-Received: by 2002:a05:600c:3b02:b0:414:8abb:a96b with SMTP id
+ m2-20020a05600c3b0200b004148abba96bmr8116028wms.34.1712064632074; 
+ Tue, 02 Apr 2024 06:30:32 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.202.91])
  by smtp.gmail.com with ESMTPSA id
- i5-20020a05600c354500b00414924f307csm18014059wmq.26.2024.04.02.06.26.26
+ q17-20020a05600c46d100b0041409db0349sm17959110wmo.48.2024.04.02.06.30.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 06:26:27 -0700 (PDT)
-Message-ID: <16cb6ac0-818b-4393-8b27-20879a150a79@linaro.org>
-Date: Tue, 2 Apr 2024 15:26:25 +0200
+ Tue, 02 Apr 2024 06:30:31 -0700 (PDT)
+Message-ID: <9ec42b31-f169-4d7d-82a4-f0173bc75581@linaro.org>
+Date: Tue, 2 Apr 2024 15:30:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] sh4: mac.w: memory accesses are 16-bit words
-To: Zack Buhman <zack@buhman.org>, qemu-devel@nongnu.org
-References: <20240402093756.27466-1-zack@buhman.org>
+Subject: Re: Patch for qemu-project/qemu#2247 issue
+To: Michael Tokarev <mjt@tls.msk.ru>, liu.dayu@zte.com.cn,
+ qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, jiang.xuexin@zte.com.cn
+References: <20240401174355899iU6IFrpOQSiGe36G4PToz@zte.com.cn>
+ <298819da-145e-4478-901f-66241a23f03f@tls.msk.ru>
+ <d960f4d5-1570-4b07-a1fd-2bd1267d661b@linaro.org>
+ <291032f7-de3f-4b21-9b2e-872274203e37@tls.msk.ru>
 Content-Language: en-US
-Cc: Samuel Tardieu <sam@rfc1149.net>, Aurelien Jarno <aurelien@aurel32.net>,
- Yoshinori Sato <ysato@users.sourceforge.jp>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240402093756.27466-1-zack@buhman.org>
+In-Reply-To: <291032f7-de3f-4b21-9b2e-872274203e37@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::334;
@@ -96,68 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/24 11:37, Zack Buhman wrote:
-> Before this change, executing a code sequence such as:
+On 2/4/24 11:59, Michael Tokarev wrote:
+> 02.04.2024 12:50, Philippe Mathieu-Daudé пишет:
+>> On 1/4/24 18:52, Michael Tokarev wrote:
+>>> 01.04.2024 12:43, liu.dayu@zte.com.cn wrote:
+>>>> hmp: Add help information for watchdog action: inject-nmi
+>>>>
+>>>> virsh qemu-monitor-command --hmp help information of watchdog_action 
+>>>> missing inject-nmi which already supported in Commit 795dc6e4
+>>>>
+>>>> Signed-off-by: Dayu Liu <liu.dayu@zte.com.cn>
+>>>
+>>> Applied to trivial-patches tree, in the following form:
+>>>
+>>> Author: Dayu Liu <liu.dayu@zte.com.cn>
+>>> Date:   Mon Apr 1 17:43:55 2024 +0800
+>>>
+>>>      hmp: Add help information for watchdog action: inject-nmi
+>>>
+>>>      virsh qemu-monitor-command --hmp help information of
+>>>      watchdog_action missing inject-nmi which already supported
+>>>      in Commit 795dc6e4
+>>>
+>>
+>> Fixes: 795dc6e46d ("watchdog: Add new Virtual Watchdog action 
+>> INJECT-NMI")
 > 
->             mova   tblm,r0
->             mov    r0,r1
->             mova   tbln,r0
->             clrs
->             clrmac
->             mac.w  @r0+,@r1+
->             mac.w  @r0+,@r1+
+> I don't think that commit is broken and needs Fixing.
+> I see your point though - to have more formal way to
+> mark "related" commits, it isn't always fixing something.
 > 
->             .align 4
->    tblm:    .word  0x1234
->             .word  0x5678
->    tbln:    .word  0x9abc
->             .word  0xdefg
-> 
-> Does not result in correct behavior:
-> 
-> Expected behavior:
->    first macw : macl = 0x1234 * 0x9abc + 0x0
->                 mach = 0x0
-> 
->    second macw: macl = 0x5678 * 0xdefg + 0xb00a630
->                 mach = 0x0
-> 
-> Observed behavior (qemu-sh4eb, prior to this commit):
-> 
->    first macw : macl = 0x5678 * 0xdefg + 0x0
->                 mach = 0x0
-> 
->    second macw: (unaligned longword memory access, SIGBUS)
-> 
-> Various SH-4 ISA manuals also confirm that `mac.w` is a 16-bit word memory
-> access, not a 32-bit longword memory access.
-> 
-> Signed-off-by: Zack Buhman <zack@buhman.org>
-> ---
->   target/sh4/translate.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-> index a9b1bc7524..6643c14dde 100644
-> --- a/target/sh4/translate.c
-> +++ b/target/sh4/translate.c
-> @@ -816,10 +816,10 @@ static void _decode_opc(DisasContext * ctx)
->               TCGv arg0, arg1;
->               arg0 = tcg_temp_new();
->               tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
-> -                                MO_TESL | MO_ALIGN);
-> +                                MO_TESW | MO_ALIGN);
->               arg1 = tcg_temp_new();
->               tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx,
-> -                                MO_TESL | MO_ALIGN);
-> +                                MO_TESW | MO_ALIGN);
+> I sent a pullreq for this a couple hours ago anyway.
 
-Apparently invalid since its introduction in commit fdf9b3e831.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->               gen_helper_macw(tcg_env, arg0, arg1);
->               tcg_gen_addi_i32(REG(B11_8), REG(B11_8), 2);
->               tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 2);
-
+No worries ;)
 
