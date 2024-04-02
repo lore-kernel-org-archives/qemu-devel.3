@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429DDCD1292
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D15C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rravZ-0004gj-6U; Tue, 02 Apr 2024 05:59:37 -0400
+	id 1rrazg-0007Ar-L6; Tue, 02 Apr 2024 06:03:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rrav1-0004YB-5P; Tue, 02 Apr 2024 05:59:04 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rrayw-0006ex-2U
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:03:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rrauv-000722-FA; Tue, 02 Apr 2024 05:59:02 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c18:486:0:640:cf34:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5121D60DD0;
- Tue,  2 Apr 2024 12:58:47 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b507::1:2e] (unknown
- [2a02:6b8:b081:b507::1:2e])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id hwO5wlCOdGk0-zaozjiZ4; Tue, 02 Apr 2024 12:58:46 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1712051926;
- bh=Tadl6nHpLXTtcmMhglCPBLLQSFYs/OqI+6+n6Lcdz0U=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=E+oDMlpNc3eNZ5VyAzcznvMSKiiUvyVLYYya1O1BbC+H4lizz2PH+U1qgLmZaXdcD
- BnZR6SIITSZUfSH6YstHtJffbJyRg3pfts5u/Lmg7XxuIv6tSBMoImBLh+5EX9gBDD
- Pg9ZIGKA3r4eXDy4ZmXlkf3z7lPJOX9GT/4hDpzs=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0d7344c2-b146-44cf-a911-21fa5e556665@yandex-team.ru>
-Date: Tue, 2 Apr 2024 12:58:43 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rrays-0002IE-6d
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:03:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712052179;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+jt2f6hEUXWAc0F21N/nI3NazjW/SSDHRA3MxvTFR/4=;
+ b=TTlUWe/CaV82MuOu9ZjXdX+W+0d/E91j1oSFJb2IX70P/ODHTwdcSF7hApo1ZfrAK2RCKs
+ Ve8xdkTCQWjzBVGR58/fE2aG1XXaktCKn/sZIHr75A1cAqWxOeCJBTujin6sQZzVp9qSU1
+ FBk5TdidumYX3711OYDifgxgwq6kqUE=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-NMU7G0TwOF-8QaLXNvwTxw-1; Tue, 02 Apr 2024 06:02:58 -0400
+X-MC-Unique: NMU7G0TwOF-8QaLXNvwTxw-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2d45c064742so50757531fa.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:02:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712052176; x=1712656976;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+jt2f6hEUXWAc0F21N/nI3NazjW/SSDHRA3MxvTFR/4=;
+ b=BzkPQGdE0f7riHz5TJtd5c3dXeDBqDB51BVaKtRyWwk9tGJmUWku6cp3+6cyl2xszP
+ PKUDR1aDX2TEcbrMY8QGJg5xRXsbykhosRgBJDceC9MG4qDivr1DxZirL9vvnoEYNeGt
+ CIJIQgN5hkS1An12IXuSU8KAisxnOp2yzUIazlCnwlGs7BOBgwBYBhKI2xPaQDNnNzGy
+ oGoSZcfBV7rjR/sgOXdV8R5WBZ5yua6rpRGgD4LwWqzUafXa3bAgpmXV7l4kdl70Lwx4
+ JC05MG6q0c1fcN7+1bqMbTpU5o3nAx7gv8U0mwzRah1GiQ2uG6f7JZ6NjODQvOXWH5PI
+ CG/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWDpsrHjaePk88Ifh6/AgLQkWsaWjyB7Km0uycvOtac760+mtwPoLVcOsjPdLhiLHwZN6VtZwY5MO1+9DeCHw/VZ1yHwcw=
+X-Gm-Message-State: AOJu0Yxnjg6J/aJbCxt4grzm13H/cW+drHIBfdsNK+vmskRheJ+7I4Nb
+ 5mFxT8YxRPqpjp70LYjCpZNow5YH2Y08kSJazumJ//Ij5c4Oey4vsWeUKrCRQhP45EX3OIjDuFj
+ cDwzsaQMhr7Yq0S68+JPNzcnscFRPEcvk75FRJyEO5OMgqPgEPc7I8GFVZpn9kRM=
+X-Received: by 2002:a2e:9c82:0:b0:2d2:b840:1c78 with SMTP id
+ x2-20020a2e9c82000000b002d2b8401c78mr7450960lji.48.1712052176018; 
+ Tue, 02 Apr 2024 03:02:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvB0FoBIR31Y+Fb3awN2DD+lf/4knp9Fx+bfE38ziLOfnH9lcu+Bq8TXXCpB5zpf5qc+uMcg==
+X-Received: by 2002:a2e:9c82:0:b0:2d2:b840:1c78 with SMTP id
+ x2-20020a2e9c82000000b002d2b8401c78mr7450941lji.48.1712052175422; 
+ Tue, 02 Apr 2024 03:02:55 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f4:2fbc:c1b6:60e7:b08c:a69d])
+ by smtp.gmail.com with ESMTPSA id
+ r15-20020a05600c35cf00b004156c501e24sm3753051wmq.12.2024.04.02.03.02.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Apr 2024 03:02:55 -0700 (PDT)
+Date: Tue, 2 Apr 2024 06:02:51 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ isaku.yamahata@intel.com
+Subject: Re: [PATCH] hw/i386/acpi: Set PCAT_COMPAT bit only when pic is not
+ disabled
+Message-ID: <20240402060109-mutt-send-email-mst@kernel.org>
+References: <20240402082516.2921143-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/19] block/stream: fix -Werror=maybe-uninitialized
- false-positives
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- John Snow <jsnow@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
- Fam Zheng <fam@euphon.net>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, Bin Meng <bin.meng@windriver.com>,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jesper Devantier <foss@defmacro.it>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Keith Busch <kbusch@kernel.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>
-References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
- <20240328102052.3499331-7-marcandre.lureau@redhat.com>
- <65d791e4-6c68-4b6d-b181-bc3886745ce3@yandex-team.ru>
- <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240402082516.2921143-1-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,98 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.04.24 12:12, Marc-André Lureau wrote:
-> Hi
+On Tue, Apr 02, 2024 at 04:25:16AM -0400, Xiaoyao Li wrote:
+> Set MADT.FLAGS[bit 0].PCAT_COMPAT based on x86ms->pic.
 > 
-> On Fri, Mar 29, 2024 at 12:35 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> On 28.03.24 13:20, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> ../block/stream.c:193:19: error: ‘unfiltered_bs’ may be used uninitialized [-Werror=maybe-uninitialized]
->>> ../block/stream.c:176:5: error: ‘len’ may be used uninitialized [-Werror=maybe-uninitialized]
->>> trace/trace-block.h:906:9: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>
->> Again, same false-positives, because of WITH_GRAPH_RDLOCK_GUARD()..
->>
->> Didn't you try to change WITH_ macros somehow, so that compiler believe in our good intentions?
->>
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+Please include more info in the commit log:
+what is the behaviour you observe, why it is wrong,
+how does the patch fix it, what is guest behaviour
+before and after.
+
+The commit log and the subject should not repeat
+what the diff already states.
+
+> ---
+>  hw/i386/acpi-common.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> 
-> #define WITH_QEMU_LOCK_GUARD_(x, var) \
->      for (g_autoptr(QemuLockable) var = \
->                  qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))); \
->           var; \
->           qemu_lockable_auto_unlock(var), var = NULL)
-> 
-> I can't think of a clever way to rewrite this. The compiler probably
-> thinks the loop may not run, due to the "var" condition. But how to
-> convince it otherwise? it's hard to introduce another variable too..
-
-
-hmm. maybe like this?
-
-#define WITH_QEMU_LOCK_GUARD_(x, var) \
-     for (g_autoptr(QemuLockable) var = \
-                 qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))), \
-          var2 = (void *)(true); \
-          var2; \
-          qemu_lockable_auto_unlock(var), var2 = NULL)
-
-
-probably, it would be simpler for compiler to understand the logic this way. Could you check?
-
-
-(actually, will also need to construct var2 name same way as for var)
-
-> 
->> Actually, "unused variable initialization" is bad thing too.
->>
->> Anyway, if no better solution for now:
->> Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>
->>> ---
->>>    block/stream.c | 6 +++---
->>>    1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/block/stream.c b/block/stream.c
->>> index 7031eef12b..9076203193 100644
->>> --- a/block/stream.c
->>> +++ b/block/stream.c
->>> @@ -155,8 +155,8 @@ static void stream_clean(Job *job)
->>>    static int coroutine_fn stream_run(Job *job, Error **errp)
->>>    {
->>>        StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
->>> -    BlockDriverState *unfiltered_bs;
->>> -    int64_t len;
->>> +    BlockDriverState *unfiltered_bs = NULL;
->>> +    int64_t len = -1;
->>>        int64_t offset = 0;
->>>        int error = 0;
->>>        int64_t n = 0; /* bytes */
->>> @@ -177,7 +177,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
->>>
->>>        for ( ; offset < len; offset += n) {
->>>            bool copy;
->>> -        int ret;
->>> +        int ret = -1;
->>>
->>>            /* Note that even when no rate limit is applied we need to yield
->>>             * with no pending I/O here so that bdrv_drain_all() returns.
->>
->> --
->> Best regards,
->> Vladimir
->>
->>
-> 
-> 
-
--- 
-Best regards,
-Vladimir
+> diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
+> index 20f19269da40..0cc2919bb851 100644
+> --- a/hw/i386/acpi-common.c
+> +++ b/hw/i386/acpi-common.c
+> @@ -107,7 +107,9 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
+>      acpi_table_begin(&table, table_data);
+>      /* Local APIC Address */
+>      build_append_int_noprefix(table_data, APIC_DEFAULT_ADDRESS, 4);
+> -    build_append_int_noprefix(table_data, 1 /* PCAT_COMPAT */, 4); /* Flags */
+> +    /* Flags. bit 0: PCAT_COMPAT */
+> +    build_append_int_noprefix(table_data,
+> +                              x86ms->pic != ON_OFF_AUTO_OFF ? 1 : 0 , 4);
+>  
+>      for (i = 0; i < apic_ids->len; i++) {
+>          pc_madt_cpu_entry(i, apic_ids, table_data, false);
+> -- 
+> 2.34.1
 
 
