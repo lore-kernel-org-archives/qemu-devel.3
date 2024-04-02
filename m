@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4D1C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463DBC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcVx-0006cZ-Aw; Tue, 02 Apr 2024 07:41:17 -0400
+	id 1rrcWN-0006jv-O1; Tue, 02 Apr 2024 07:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcVo-0006Z1-SH
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:41:10 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rrcWG-0006iO-Ha
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:41:38 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcVl-0003aI-66
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:41:07 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-41551639550so22314275e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:41:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rrcWB-0003mP-S8
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:41:35 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-56df87057bbso162183a12.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712058063; x=1712662863; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JVvFcxLkj8uqsss8uUOAepWIduuXZZ17RoMd7ZYlL10=;
- b=AxCrgHeTCy7uemZ4fTw3Zw3hE9xK24J857gdN69Legl71tH/sIf5yiZSfFx9Vgfn//
- akbGEwxtxFK8bwlVLgu1cQCpdvy2yOOrraz4PQA9PBpe6VTll0k0J8wbzvJra0gJk2wm
- tJpH6B+8VGRZvwBwpF3S/vUQM76L3QlwZrCnFBZJxJ51TlMQTu5Z+F8FJ3LR5Gtq36O8
- 8iKTHF0SPLglxIBCuwiqFIKPPy8t8jGfDdjYQmqFOMbxDjVG2rU8cydcRnJRNY3hB7oe
- Bij+4jnif01mtSfcRoSu1IwnEgh9hA+3h7LuSZI1mcDzzbf7AYUp0UdCLI3r8E+sDIAq
- 1SRg==
+ d=linaro.org; s=google; t=1712058077; x=1712662877; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iXdhEj8D9AgaXWEHfz+JRhRCKc5icpIRdo3WoQFTrus=;
+ b=zSSswM0WBL6cW3Lu6bzS8/voW+lKdTdcZFnsadT5glUZbR3piXTBPR1ej9e0Bb7H5O
+ prQ4vJi/fN67lYPvPFBvhtfX6vs6xv9W4FupOKA/dOewMSVgQRl6mhsUc7PLBcQyEGF2
+ Kq6K4kXpdtM+0MaXOlecYA8pE6A5wjc6KCFtfvPfqVGupP5a3w1cblTZ7Pdf3y/mwlBQ
+ hg9bcMAgpcXGUV20XjxG/wq45SYe7ShSRtRg5LWkaEBliXW4Mh6biroNop73hri09jh+
+ J9Dktcywv62noRZpgV/nHF5S6EREt5cwa1bF+Xrc7tJrc2xE5LXsB6mSwQ68MJmYlDPS
+ J0NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712058063; x=1712662863;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JVvFcxLkj8uqsss8uUOAepWIduuXZZ17RoMd7ZYlL10=;
- b=r3d84WvNJRBZktMdk59CyDDxCOLEximigG2EH0aVhaR5aUU0dkJzZk5XWNJIEkUk2V
- UV2gs9deQvuOW9M1qbZDGOawBZ9CnL/CQVYyrxBfmjGV+ZxugrPwd7Z93xVG3fbJSI1T
- A1Foze4TjlHVKvvHtm5/xum43WmHvul04ePLOnvzNUqZdS74GMW0njmQD7nRZD906GTn
- xhJFrpAVMDz9xN8BUfe5Hxj2khMaVO3H2RCr2MhSRTHQXwAGR9lnTmq9N9U4wsAl/onB
- 3g3OO/mWhNCz8wotJWbDajTaYSevbfYUL1IRQiqn5+3SmuO/FN8AYyXLl4gXFTz0j2G0
- Gmhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFMm+AFWH85F62qBTdtORuVGyJI5b1ByOS+xRe1ciNz6IPfOp/aUyw3/xWO5Ln8A0aOpPMlp8/HObbViWgHVhjMxb2wtY=
-X-Gm-Message-State: AOJu0Yw8Bksvr2swx5n62TXh77F+Heo9FFrIX3TxpgyC7EODwz08ChlZ
- rr2SyUf68gJKvajQibOF1DF7ug+4yXCRN1VKM8wBSf2fpDccqUBcXclLa49gUYjAImkQABUD45H
- 4DJM=
-X-Google-Smtp-Source: AGHT+IHlGMkh3C2xSO0DgVFjLHtnhCp8QC0U2r8GWFO6HR9we67d8twnizu1ERlx2pyd114NtvmSsA==
-X-Received: by 2002:adf:e008:0:b0:341:cfd6:42af with SMTP id
- s8-20020adfe008000000b00341cfd642afmr9398865wrh.31.1712058062837; 
- Tue, 02 Apr 2024 04:41:02 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.202.91])
- by smtp.gmail.com with ESMTPSA id
- bl37-20020adfe265000000b0033b87c2725csm13941613wrb.104.2024.04.02.04.41.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 04:41:01 -0700 (PDT)
-Message-ID: <51e5bed1-8c65-4145-a2fd-d69255c8e962@linaro.org>
-Date: Tue, 2 Apr 2024 13:40:59 +0200
+ d=1e100.net; s=20230601; t=1712058077; x=1712662877;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iXdhEj8D9AgaXWEHfz+JRhRCKc5icpIRdo3WoQFTrus=;
+ b=h+9KhqtxYas+rbtCLMTFmz+eBnpMmC1wN6Sguf23lsvvDmy5Y9g0lgoyFmVwv+bqh6
+ 1CbeS7toQept+DqodFVAkLAsuNv1h6NSxzwyPKE3xuuKGY+VWE8t9nPZYurPAcZ4V1av
+ pEorA2U/Fy9QmlZj9AuKdSJhC4YFzYHTp3x84uCQar8sgWJW4H4wF3V0pszihJnNPouj
+ YaYMe/xQGRPSju/WAt9+d+Ljju69Jo0UrSIHJmVOdnpPIUzghAmjVV6m+0fCv5RkVnM6
+ DnTRf4gXXQzgnI/wqoqXew4hMTOoDObWdo4CtV+CWMRE7EfY16hq7e9xROBBZnI2AFJ9
+ lF3g==
+X-Gm-Message-State: AOJu0Yx61tZcBoHb96USeHNR1Wh3T+CKCimKTQ9E1HNOa/9kDcI1AvbZ
+ IZGRQ7yXOkExygR6WcjkAkhXkWtEKfcYEps1ZYqYgTCf0BVeo4Wm2AbJ9ks4EN5vZnPLuNfDxlG
+ +UL2H637dGA20d+Hvb9jtbAOGF3ta8UaZe9hB3w==
+X-Google-Smtp-Source: AGHT+IHtPeRVVZ3PuTPjmKdSEl44gpdmnFDh/FDVhYD+bG+DmcPDEeeNt/Ff6sSoiwd6n68sT4IOtFI+2d/1xA56gFc=
+X-Received: by 2002:a50:c04e:0:b0:568:bc48:5f27 with SMTP id
+ u14-20020a50c04e000000b00568bc485f27mr8309298edd.39.1712058077333; Tue, 02
+ Apr 2024 04:41:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 1/4] vga: merge conditionals on shift control
- register
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Helge Konetzka <hk@zapateado.de>
-References: <20240402113408.18048-1-pbonzini@redhat.com>
- <20240402113408.18048-2-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240402113408.18048-2-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+References: <20240402093157.2931117-1-mjt@tls.msk.ru>
+ <CAFEAcA8UBewAHriNkbJNO9CFKgf5bBGRHntbb_y11JdfoNTvcQ@mail.gmail.com>
+ <60faa39d-52e8-46f1-8bd9-9d9661794880@tls.msk.ru>
+In-Reply-To: <60faa39d-52e8-46f1-8bd9-9d9661794880@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 2 Apr 2024 12:41:05 +0100
+Message-ID: <CAFEAcA950hP1vb-aVSFOvAmG3n2cjTsU524AsYBDAseSZh+Q4A@mail.gmail.com>
+Subject: Re: [PULL 0/4] Trivial patches for 2024-04-02
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,18 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/24 13:34, Paolo Bonzini wrote:
-> There are two sets of conditionals using the shift control bits: one to
-> verify the palette and adjust disp_width, one to compute the "v" and
-> "bits" variables.  Merge them into one, with the extra benefit that
-> we now have the "bits" value available early and can use it to
-> compute region_end.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/display/vga.c | 89 +++++++++++++++++++++++-------------------------
->   1 file changed, 42 insertions(+), 47 deletions(-)
+On Tue, 2 Apr 2024 at 11:41, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+>
+> > Author: Stefan Weil via <qemu-trivial@nongnu.org>
+>
+> *SIGH*  This happened *again*.
+>
+> > (you'll need to tell git log "--no-mailmap" to not get confused
+> > by the mapping we have for the last time one of these slipped
+> > through...)
+>
+> Now this is interesting.  And this is exactly why I haven't noticed
+> it - I did pay attention to Author lines this time.  -- because
+> it is displayed with mailmap applied.  How very useful.
+>
+> I have to use `git show --no-mailmap' to see the original " via.."
+> version.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+FWIW my apply-pullreq script makes this check for this:
 
+if git shortlog --author='qemu-.*@nongnu\.org' master..staging | grep .; then
+    echo "ERROR: pull request includes commits attributed to list"
+    exit 1
+fi
+
+(This doesn't pass --no-mailmap, because git shortlog doesn't
+take that option, and the --author match is done on the "true"
+author, not the mapped one. This is the kind of orthogonality
+in command line UI that we have come to expect from git ;-))
+
+-- PMM
 
