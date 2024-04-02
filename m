@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7B6C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F300CD1292
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rraVD-0005ms-5F; Tue, 02 Apr 2024 05:32:23 -0400
+	id 1rraVF-0005nt-5U; Tue, 02 Apr 2024 05:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rraV9-0005lq-IE; Tue, 02 Apr 2024 05:32:19 -0400
+ id 1rraVD-0005mw-B9; Tue, 02 Apr 2024 05:32:23 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rraV3-0003sh-OI; Tue, 02 Apr 2024 05:32:17 -0400
+ id 1rraVB-0004Eq-BJ; Tue, 02 Apr 2024 05:32:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C62245B08A;
+ by isrv.corpit.ru (Postfix) with ESMTP id D418E5B08B;
  Tue,  2 Apr 2024 12:33:40 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C17A4A9346;
+ by tsrv.corpit.ru (Postfix) with SMTP id CF522A9347;
  Tue,  2 Apr 2024 12:31:57 +0300 (MSK)
-Received: (nullmailer pid 2931143 invoked by uid 1000);
+Received: (nullmailer pid 2931146 invoked by uid 1000);
  Tue, 02 Apr 2024 09:31:57 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Joonas Kankaala <joonas.a.kankaala@gmail.com>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 1/4] usb-audio: Fix invalid values in AudioControl descriptors
-Date: Tue,  2 Apr 2024 12:31:54 +0300
-Message-Id: <20240402093157.2931117-2-mjt@tls.msk.ru>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 2/4] fpu/softfloat: Remove mention of TILE-Gx target
+Date: Tue,  2 Apr 2024 12:31:55 +0300
+Message-Id: <20240402093157.2931117-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240402093157.2931117-1-mjt@tls.msk.ru>
 References: <20240402093157.2931117-1-mjt@tls.msk.ru>
@@ -61,60 +61,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joonas Kankaala <joonas.a.kankaala@gmail.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This fixes the invalid bInterfaceProtocol value 0x04 in the USB audio
-AudioControl descriptors. It should be zero. While Linux and Windows
-forgive this error, macOS 14 Sonoma does not. The usb-audio device does
-not appear in macOS sound settings even though the device is recognized
-and shows up in USB system information. According to the USB audio class
-specs 1.0-4.0, valid values are 0x00, 0x20, 0x30 and 0x40. (Note also
-that Linux prints the warning "unknown interface protocol 0x4, assuming
-v1", but then proceeds as if the value was zero.)
+TILE-Gx has been removed during the v6.0 release (see
+commit 2cc1a90166 "Remove deprecated target tilegx"),
+no need to mention it in the list of "supported targets".
 
-This also fixes the invalid wTotalLength value in the multi-channel
-setup AudioControl interface header descriptor (used when multi=on
-and out.mixing-engine off). The combined length of all the descriptors
-there add up to 0x37, not 0x38. In Linux, "lsusb -D ..." displays
-incomplete descriptor information when this length is incorrect.
-
-Signed-off-by: Joonas Kankaala <joonas.a.kankaala@gmail.com>
-Reviewed-by: Volker Rümelin <vr_qemu@t-online.de>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/usb/dev-audio.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fpu/softfloat-specialize.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/usb/dev-audio.c b/hw/usb/dev-audio.c
-index d5ac1f8962..1897fff9e6 100644
---- a/hw/usb/dev-audio.c
-+++ b/hw/usb/dev-audio.c
-@@ -124,7 +124,6 @@ static const USBDescIface desc_iface[] = {
-         .bNumEndpoints                 = 0,
-         .bInterfaceClass               = USB_CLASS_AUDIO,
-         .bInterfaceSubClass            = USB_SUBCLASS_AUDIO_CONTROL,
--        .bInterfaceProtocol            = 0x04,
-         .iInterface                    = STRING_USBAUDIO_CONTROL,
-         .ndesc                         = 4,
-         .descs = (USBDescOther[]) {
-@@ -282,7 +281,6 @@ static const USBDescIface desc_iface_multi[] = {
-         .bNumEndpoints                 = 0,
-         .bInterfaceClass               = USB_CLASS_AUDIO,
-         .bInterfaceSubClass            = USB_SUBCLASS_AUDIO_CONTROL,
--        .bInterfaceProtocol            = 0x04,
-         .iInterface                    = STRING_USBAUDIO_CONTROL,
-         .ndesc                         = 4,
-         .descs = (USBDescOther[]) {
-@@ -293,7 +291,7 @@ static const USBDescIface desc_iface_multi[] = {
-                     USB_DT_CS_INTERFACE,        /*  u8  bDescriptorType */
-                     DST_AC_HEADER,              /*  u8  bDescriptorSubtype */
-                     U16(0x0100),                /* u16  bcdADC */
--                    U16(0x38),                  /* u16  wTotalLength */
-+                    U16(0x37),                  /* u16  wTotalLength */
-                     0x01,                       /*  u8  bInCollection */
-                     0x01,                       /*  u8  baInterfaceNr */
-                 }
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 1610472cfc..1c85c48a73 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -152,7 +152,7 @@ static void parts64_default_nan(FloatParts64 *p, float_status *status)
+     /*
+      * This case is true for Alpha, ARM, MIPS, OpenRISC, PPC, RISC-V,
+      * S390, SH4, TriCore, and Xtensa.  Our other supported targets,
+-     * CRIS, Nios2, and Tile, do not have floating-point.
++     * CRIS and Nios2, do not have floating-point.
+      */
+     if (snan_bit_is_one(status)) {
+         /* set all bits other than msb */
 -- 
 2.39.2
 
