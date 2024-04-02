@@ -4,65 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167FDCD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 20:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5606C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 20:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrkWO-0000TF-Fs; Tue, 02 Apr 2024 16:14:16 -0400
+	id 1rrkZY-0001iU-Da; Tue, 02 Apr 2024 16:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rrkWK-0000Sb-Ur; Tue, 02 Apr 2024 16:14:15 -0400
-Received: from forwardcorp1c.mail.yandex.net
- ([2a02:6b8:c03:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rrkZX-0001iE-8q
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 16:17:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rrkWI-0003BS-35; Tue, 02 Apr 2024 16:14:12 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:7619:0:640:c0b:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id EDE9C608C4;
- Tue,  2 Apr 2024 23:14:03 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b507::1:2e] (unknown
- [2a02:6b8:b081:b507::1:2e])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 1EZ7TU40QeA0-vDgIhVFF; Tue, 02 Apr 2024 23:14:03 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1712088843;
- bh=9HZGcUl7SGuQfI8dT8CTEBKiqG/3mCbgTksDnoWzF4o=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=d7NfadhykqZZRnFNkU4mmXt90kLmQJLLF/6RCfBSy++fWwAcX02OVA/n7fGin5amU
- PWUKpyPwCAJ5054yEfN1lr5noyWtyeZm23GcygLPNG0yMYVP6MdKaAGjIalI9faVZh
- pZtV3CyvTEa9nCLZxxquqnY5A8Fjzskcxk2MwcvA=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3e338160-a172-42b8-946c-ae7f7d97a17c@yandex-team.ru>
-Date: Tue, 2 Apr 2024 23:14:01 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rrkZV-0003s9-TH
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 16:17:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712089046;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fjq4y1gcVXPvkVIwGEkxWTbrqjv5dT9MiGU76l0dI14=;
+ b=MfHgxZLzT3rr/DHq99ECJrtcpc1S8FwTQE5ltUPg5YXWA8Ahq2iJ6fRoIQ/z7Xsib0faSv
+ ZbfWM5DOJjE3YoH89rn26c+VMNDzE/yAWT5Cvij+aDIQMYSwqxHmvNXPTq0nUO37uIzzmK
+ nTaksDXLWdHYE4EmNNbE3i/EFg1Qrr8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-ctj6XztVMHmjK__GkuwFrw-1; Tue,
+ 02 Apr 2024 16:17:23 -0400
+X-MC-Unique: ctj6XztVMHmjK__GkuwFrw-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8EC9038107EB;
+ Tue,  2 Apr 2024 20:17:22 +0000 (UTC)
+Received: from localhost (unknown [10.39.193.21])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id A6B7E17ABA;
+ Tue,  2 Apr 2024 20:17:19 +0000 (UTC)
+Date: Tue, 2 Apr 2024 16:17:11 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ John Snow <jsnow@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
+ Fam Zheng <fam@euphon.net>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Bin Meng <bin.meng@windriver.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Jesper Devantier <foss@defmacro.it>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Keith Busch <kbusch@kernel.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH 01/19] util/coroutine: fix -Werror=maybe-uninitialized
+ false-positive
+Message-ID: <20240402201711.GA2507314@fedora>
+References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
+ <20240328102052.3499331-2-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] mirror: allow specifying working bitmap
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
- f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
- mahaocong@didichuxing.com, xiechanglong.d@gmail.com, wencongyang2@huawei.com
-References: <20240307134711.709816-1-f.ebner@proxmox.com>
- <20240307134711.709816-3-f.ebner@proxmox.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240307134711.709816-3-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Y9QhLN10GvpfTcSO"
+Content-Disposition: inline
+In-Reply-To: <20240328102052.3499331-2-marcandre.lureau@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,198 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.03.24 16:47, Fiona Ebner wrote:
-> From: John Snow <jsnow@redhat.com>
-> 
-> for the mirror job. The bitmap's granularity is used as the job's
-> granularity.
-> 
-> The new @bitmap parameter is marked unstable in the QAPI and can
-> currently only be used for @sync=full mode.
-> 
-> Clusters initially dirty in the bitmap as well as new writes are
-> copied to the target.
-> 
-> Using block-dirty-bitmap-clear and block-dirty-bitmap-merge API,
-> callers can simulate the three kinds of @BitmapSyncMode (which is used
-> by backup):
-> 1. always: default, just pass bitmap as working bitmap.
-> 2. never: copy bitmap and pass copy to the mirror job.
-> 3. on-success: copy bitmap and pass copy to the mirror job and if
->     successful, merge bitmap into original afterwards.
-> 
-> When the target image is a fresh "diff image", i.e. one that was not
-> used as the target of a previous mirror and the target image's cluster
-> size is larger than the bitmap's granularity, or when
-> @copy-mode=write-blocking is used, there is a pitfall, because the
-> cluster in the target image will be allocated, but not contain all the
-> data corresponding to the same region in the source image.
-> 
-> An idea to avoid the limitation would be to mark clusters which are
-> affected by unaligned writes and are not allocated in the target image
-> dirty, so they would be copied fully later. However, for migration,
-> the invariant that an actively synced mirror stays actively synced
-> (unless an error happens) is useful, because without that invariant,
-> migration might inactivate block devices when mirror still got work
-> to do and run into an assertion failure [0].
-> 
-> Another approach would be to read the missing data from the source
-> upon unaligned writes to be able to write the full target cluster
-> instead.
-> 
-> But certain targets like NBD do not allow querying the cluster size.
-> To avoid limiting/breaking the use case of syncing to an existing
-> target, which is arguably more common than the diff image use case,
-> document the limiation in QAPI.
-> 
-> This patch was originally based on one by Ma Haocong, but it has since
-> been modified pretty heavily, first by John and then again by Fiona.
-> 
-> [0]: https://lore.kernel.org/qemu-devel/1db7f571-cb7f-c293-04cc-cd856e060c3f@proxmox.com/
-> 
-> Suggested-by: Ma Haocong <mahaocong@didichuxing.com>
-> Signed-off-by: Ma Haocong <mahaocong@didichuxing.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> [FG: switch to bdrv_dirty_bitmap_merge_internal]
-> Signed-off-by: Fabian Grünbichler <f.gruenbichler@proxmox.com>
-> Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-> [FE: rebase for 9.0
->       get rid of bitmap mode parameter
->       use caller-provided bitmap as working bitmap
->       turn bitmap parameter experimental]
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+
+--Y9QhLN10GvpfTcSO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Mar 28, 2024 at 02:20:34PM +0400, marcandre.lureau@redhat.com wrote:
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>=20
+> ../util/qemu-coroutine.c:150:8: error: =E2=80=98batch=E2=80=99 may be use=
+d uninitialized [-Werror=3Dmaybe-uninitialized]
+>=20
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->   block/mirror.c                         | 95 ++++++++++++++++++++------
->   blockdev.c                             | 39 +++++++++--
->   include/block/block_int-global-state.h |  5 +-
->   qapi/block-core.json                   | 37 +++++++++-
->   tests/unit/test-block-iothread.c       |  2 +-
->   5 files changed, 146 insertions(+), 32 deletions(-)
-> 
-> diff --git a/block/mirror.c b/block/mirror.c
-> index 1609354db3..5c9a00b574 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -51,7 +51,7 @@ typedef struct MirrorBlockJob {
->       BlockDriverState *to_replace;
->       /* Used to block operations on the drive-mirror-replace target */
->       Error *replace_blocker;
-> -    bool is_none_mode;
-> +    MirrorSyncMode sync_mode;
+>  util/qemu-coroutine.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Could you please split this change to separate preparation patch?
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
->       BlockMirrorBackingMode backing_mode;
->       /* Whether the target image requires explicit zero-initialization */
->       bool zero_target;
-> @@ -73,6 +73,11 @@ typedef struct MirrorBlockJob {
->       size_t buf_size;
->       int64_t bdev_length;
->       unsigned long *cow_bitmap;
-> +    /*
-> +     * Whether the bitmap is created locally or provided by the caller (for
-> +     * incremental sync).
-> +     */
-> +    bool dirty_bitmap_is_local;
->       BdrvDirtyBitmap *dirty_bitmap;
->       BdrvDirtyBitmapIter *dbi;
+--Y9QhLN10GvpfTcSO
+Content-Type: application/pgp-signature; name="signature.asc"
 
-[..]
+-----BEGIN PGP SIGNATURE-----
 
-> +    if (bitmap_name) {
-> +        if (sync != MIRROR_SYNC_MODE_FULL) {
-> +            error_setg(errp, "Sync mode '%s' not supported with bitmap.",
-> +                       MirrorSyncMode_str(sync));
-> +            return;
-> +        }
-> +        if (granularity) {
-> +            error_setg(errp, "Granularity and bitmap cannot both be set");
-> +            return;
-> +        }
-> +
-> +        bitmap = bdrv_find_dirty_bitmap(bs, bitmap_name);
-> +        if (!bitmap) {
-> +            error_setg(errp, "Dirty bitmap '%s' not found", bitmap_name);
-> +            return;
-> +        }
-> +
-> +        if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_ALLOW_RO, errp)) {
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmYMZ8cACgkQnKSrs4Gr
+c8iU5Qf8COG410WgtLWBbJLvg5DQjrhgUBWRMt2TZyeRHQ7zA2MbW/dWCCUFe+U3
+XgYyT+3jAOO1JOTKqwyHZFAyFIL/6LG2VX9RhvVMrs8K+IXdVrEhZ3bCF59PcXcZ
+iPHfh6s8WGCwD/dy+4xWzOqRr71juBg3f6gdEJuZauDrkernFyTa1qy/T9IIC/0k
+O4pP9rRmH/8MyMC4H/x9UzR6/rALZiIG/B+VFFjQzuusHifxrulttZbxYq4x+pze
+CLXoFZShd1edvhR/0ws1XgYFF8mUZbtc+z+qUkbLZInn1/iVcIDw24lDv6tcGAW4
+RBhVwCHWdUhp+AYXhMHnBnYrYf2CTQ==
+=r/S+
+-----END PGP SIGNATURE-----
 
-Why allow read-only bitmaps?
-
-> +            return;
-> +        }
-> +    }
-> +
->       if (!bdrv_backing_chain_next(bs) && sync == MIRROR_SYNC_MODE_TOP) {
->           sync = MIRROR_SYNC_MODE_FULL;
->       }
-> @@ -2889,10 +2913,9 @@ static void blockdev_mirror_common(const char *job_id, BlockDriverState *bs,
-
-[..]
-
-> +# @unstable: Member @bitmap is experimental.
-> +#
->   # Since: 1.3
->   ##
->   { 'struct': 'DriveMirror',
->     'data': { '*job-id': 'str', 'device': 'str', 'target': 'str',
->               '*format': 'str', '*node-name': 'str', '*replaces': 'str',
-> -            'sync': 'MirrorSyncMode', '*mode': 'NewImageMode',
-> +            'sync': 'MirrorSyncMode',
-> +            '*bitmap': { 'type': 'str', 'features': [ 'unstable' ] },
-> +            '*mode': 'NewImageMode',
->               '*speed': 'int', '*granularity': 'uint32',
->               '*buf-size': 'int', '*on-source-error': 'BlockdevOnError',
->               '*on-target-error': 'BlockdevOnError',
-> @@ -2513,6 +2531,18 @@
->   #     destination (all the disk, only the sectors allocated in the
->   #     topmost image, or only new I/O).
->   #
-> +# @bitmap: The name of a bitmap to use as a working bitmap for
-> +#     sync=full mode.  This argument must be not be present for other
-> +#     sync modes and not at the same time as @granularity.  The
-> +#     bitmap's granularity is used as the job's granularity.  When
-> +#     the target is a diff image, i.e. one that should only contain
-> +#     the delta and was not synced to previously, the target's
-> +#     cluster size must not be larger than the bitmap's granularity.
-
-Could we check this? Like in block_copy_calculate_cluster_size(), we can check if target does COW, and if not, we can check that we are safe with granularity.
-
-> +#     For a diff image target, using copy-mode=write-blocking should
-> +#     not be used, because unaligned writes will lead to allocated
-> +#     clusters with partial data in the target image!
-
-Could this be checked?
-
->  The bitmap
-> +#     will be enabled after the job finishes.  (Since 9.0)
-
-Hmm. That looks correct. At least for the case, when bitmap is enabled at that start of job. Suggest to require this.
-
-> +#
->   # @granularity: granularity of the dirty bitmap, default is 64K if the
->   #     image format doesn't have clusters, 4K if the clusters are
->   #     smaller than that, else the cluster size.  Must be a power of 2
-> @@ -2548,6 +2578,10 @@
->   #     disappear from the query list without user intervention.
->   #     Defaults to true.  (Since 3.1)
->   #
-> +# Features:
-> +#
-> +# @unstable: Member @bitmap is experimental.
-> +#
->   # Since: 2.6
-
-Y_MODE_BACKGROUND,
->                    &error_abort);
-
-[..]
-
-Generally looks good to me.
-
--- 
-Best regards,
-Vladimir
+--Y9QhLN10GvpfTcSO--
 
 
