@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7446C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B3DCD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrba5-0007gf-MM; Tue, 02 Apr 2024 06:41:31 -0400
+	id 1rrbaH-0007l5-Ur; Tue, 02 Apr 2024 06:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rrba2-0007fx-Dv; Tue, 02 Apr 2024 06:41:26 -0400
+ id 1rrbaB-0007iy-De; Tue, 02 Apr 2024 06:41:36 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rrbZx-00085S-31; Tue, 02 Apr 2024 06:41:26 -0400
+ id 1rrba0-00085T-TU; Tue, 02 Apr 2024 06:41:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A46A65B0FC;
+ by isrv.corpit.ru (Postfix) with ESMTP id BDD0B5B0FD;
  Tue,  2 Apr 2024 13:42:49 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 89EF9A93E9;
+ by tsrv.corpit.ru (Postfix) with SMTP id 96AE7A93EA;
  Tue,  2 Apr 2024 13:41:06 +0300 (MSK)
-Received: (nullmailer pid 2933264 invoked by uid 1000);
+Received: (nullmailer pid 2933268 invoked by uid 1000);
  Tue, 02 Apr 2024 10:41:06 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org
-Subject: [PULL v2 0/4] Trivial patches for 2024-04-02
-Date: Tue,  2 Apr 2024 13:41:05 +0300
-Message-Id: <20240402104106.2933247-1-mjt@tls.msk.ru>
+Cc: Stefan Weil <sw@weilnetz.de>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 3/4] Fix some typos in documentation (found by codespell)
+Date: Tue,  2 Apr 2024 13:41:06 +0300
+Message-Id: <20240402104106.2933247-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240402104106.2933247-1-mjt@tls.msk.ru>
+References: <20240402104106.2933247-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -58,45 +60,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6af9d12c88b9720f209912f6e4b01fefe5906d59:
+From: Stefan Weil <sw@weilnetz.de>
 
-  Merge tag 'migration-20240331-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-04-01 13:12:40 +0100)
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ docs/devel/atomics.rst     | 2 +-
+ docs/devel/ci-jobs.rst.inc | 2 +-
+ docs/devel/clocks.rst      | 2 +-
+ docs/system/i386/sgx.rst   | 2 +-
+ qapi/qom.json              | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-are available in the Git repository at:
+diff --git a/docs/devel/atomics.rst b/docs/devel/atomics.rst
+index ff9b5ee30c..b77c6e13e1 100644
+--- a/docs/devel/atomics.rst
++++ b/docs/devel/atomics.rst
+@@ -119,7 +119,7 @@ The only guarantees that you can rely upon in this case are:
+   ordinary accesses instead cause data races if they are concurrent with
+   other accesses of which at least one is a write.  In order to ensure this,
+   the compiler will not optimize accesses out of existence, create unsolicited
+-  accesses, or perform other similar optimzations.
++  accesses, or perform other similar optimizations.
+ 
+ - acquire operations will appear to happen, with respect to the other
+   components of the system, before all the LOAD or STORE operations
+diff --git a/docs/devel/ci-jobs.rst.inc b/docs/devel/ci-jobs.rst.inc
+index ec33e6ee2b..be06322279 100644
+--- a/docs/devel/ci-jobs.rst.inc
++++ b/docs/devel/ci-jobs.rst.inc
+@@ -115,7 +115,7 @@ CI pipeline.
+ QEMU_JOB_SKIPPED
+ ~~~~~~~~~~~~~~~~
+ 
+-The job is not reliably successsful in general, so is not
++The job is not reliably successful in general, so is not
+ currently suitable to be run by default. Ideally this should
+ be a temporary marker until the problems can be addressed, or
+ the job permanently removed.
+diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
+index b2d1148cdb..177ee1c90d 100644
+--- a/docs/devel/clocks.rst
++++ b/docs/devel/clocks.rst
+@@ -279,7 +279,7 @@ You can change the multiplier and divider of a clock at runtime,
+ so you can use this to model clock controller devices which
+ have guest-programmable frequency multipliers or dividers.
+ 
+-Similary to ``clock_set()``, ``clock_set_mul_div()`` returns ``true`` if
++Similarly to ``clock_set()``, ``clock_set_mul_div()`` returns ``true`` if
+ the clock state was modified; that is, if the multiplier or the diviser
+ or both were changed by the call.
+ 
+diff --git a/docs/system/i386/sgx.rst b/docs/system/i386/sgx.rst
+index 0f0a73f758..ab58b29392 100644
+--- a/docs/system/i386/sgx.rst
++++ b/docs/system/i386/sgx.rst
+@@ -6,7 +6,7 @@ Overview
+ 
+ Intel Software Guard eXtensions (SGX) is a set of instructions and mechanisms
+ for memory accesses in order to provide security accesses for sensitive
+-applications and data. SGX allows an application to use it's pariticular
++applications and data. SGX allows an application to use its particular
+ address space as an *enclave*, which is a protected area provides confidentiality
+ and integrity even in the presence of privileged malware. Accesses to the
+ enclave memory area from any software not resident in the enclave are prevented,
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 8d4ca8ed92..85e6b4f84a 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -802,7 +802,7 @@
+ #
+ # @fd: file descriptor name previously passed via 'getfd' command,
+ #     which represents a pre-opened /dev/iommu.  This allows the
+-#     iommufd object to be shared accross several subsystems (VFIO,
++#     iommufd object to be shared across several subsystems (VFIO,
+ #     VDPA, ...), and the file descriptor to be shared with other
+ #     process, e.g. DPDK.  (default: QEMU opens /dev/iommu by itself)
+ #
+-- 
+2.39.2
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
-
-for you to fetch changes up to 7805132bc30b2619355b10bbfb67217ac838c677:
-
-  hmp: Add help information for watchdog action: inject-nmi (2024-04-02 13:38:51 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2024-04-02
-
-spelling fixes for the release, minor doc fixes and usb-audio fix.
-
-v2: fix Stefan Weil email
-
-----------------------------------------------------------------
-Dayu Liu (1):
-      hmp: Add help information for watchdog action: inject-nmi
-
-Joonas Kankaala (1):
-      usb-audio: Fix invalid values in AudioControl descriptors
-
-Philippe Mathieu-Daudé (1):
-      fpu/softfloat: Remove mention of TILE-Gx target
-
-Stefan Weil (1):
-      Fix some typos in documentation (found by codespell)
-
- docs/devel/atomics.rst         | 2 +-
- docs/devel/ci-jobs.rst.inc     | 2 +-
- docs/devel/clocks.rst          | 2 +-
- docs/system/i386/sgx.rst       | 2 +-
- fpu/softfloat-specialize.c.inc | 2 +-
- hmp-commands.hx                | 2 +-
- hw/usb/dev-audio.c             | 4 +---
- qapi/qom.json                  | 2 +-
- 8 files changed, 8 insertions(+), 10 deletions(-)
 
