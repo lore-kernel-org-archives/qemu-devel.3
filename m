@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA1EC6FD1F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429DDCD1292
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rravv-0004ob-AI; Tue, 02 Apr 2024 05:59:59 -0400
+	id 1rravZ-0004gj-6U; Tue, 02 Apr 2024 05:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rravm-0004mM-QQ; Tue, 02 Apr 2024 05:59:52 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rrav1-0004YB-5P; Tue, 02 Apr 2024 05:59:04 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rravk-0007cu-1N; Tue, 02 Apr 2024 05:59:50 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5C8C15B0B7;
- Tue,  2 Apr 2024 13:00:56 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 38DF0A937D;
- Tue,  2 Apr 2024 12:59:13 +0300 (MSK)
-Message-ID: <291032f7-de3f-4b21-9b2e-872274203e37@tls.msk.ru>
-Date: Tue, 2 Apr 2024 12:59:13 +0300
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rrauv-000722-FA; Tue, 02 Apr 2024 05:59:02 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c18:486:0:640:cf34:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5121D60DD0;
+ Tue,  2 Apr 2024 12:58:47 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b507::1:2e] (unknown
+ [2a02:6b8:b081:b507::1:2e])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id hwO5wlCOdGk0-zaozjiZ4; Tue, 02 Apr 2024 12:58:46 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1712051926;
+ bh=Tadl6nHpLXTtcmMhglCPBLLQSFYs/OqI+6+n6Lcdz0U=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=E+oDMlpNc3eNZ5VyAzcznvMSKiiUvyVLYYya1O1BbC+H4lizz2PH+U1qgLmZaXdcD
+ BnZR6SIITSZUfSH6YstHtJffbJyRg3pfts5u/Lmg7XxuIv6tSBMoImBLh+5EX9gBDD
+ Pg9ZIGKA3r4eXDy4ZmXlkf3z7lPJOX9GT/4hDpzs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <0d7344c2-b146-44cf-a911-21fa5e556665@yandex-team.ru>
+Date: Tue, 2 Apr 2024 12:58:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Patch for qemu-project/qemu#2247 issue
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- liu.dayu@zte.com.cn, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, jiang.xuexin@zte.com.cn
-References: <20240401174355899iU6IFrpOQSiGe36G4PToz@zte.com.cn>
- <298819da-145e-4478-901f-66241a23f03f@tls.msk.ru>
- <d960f4d5-1570-4b07-a1fd-2bd1267d661b@linaro.org>
+Subject: Re: [PATCH 06/19] block/stream: fix -Werror=maybe-uninitialized
+ false-positives
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ John Snow <jsnow@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
+ Fam Zheng <fam@euphon.net>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, Bin Meng <bin.meng@windriver.com>,
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
+ <stefanha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jesper Devantier <foss@defmacro.it>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Keith Busch <kbusch@kernel.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>
+References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
+ <20240328102052.3499331-7-marcandre.lureau@redhat.com>
+ <65d791e4-6c68-4b6d-b181-bc3886745ce3@yandex-team.ru>
+ <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <d960f4d5-1570-4b07-a1fd-2bd1267d661b@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,34 +94,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-02.04.2024 12:50, Philippe Mathieu-Daudé пишет:
-> On 1/4/24 18:52, Michael Tokarev wrote:
->> 01.04.2024 12:43, liu.dayu@zte.com.cn wrote:
->>> hmp: Add help information for watchdog action: inject-nmi
+On 02.04.24 12:12, Marc-André Lureau wrote:
+> Hi
+> 
+> On Fri, Mar 29, 2024 at 12:35 PM Vladimir Sementsov-Ogievskiy
+> <vsementsov@yandex-team.ru> wrote:
+>>
+>> On 28.03.24 13:20, marcandre.lureau@redhat.com wrote:
+>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 >>>
->>> virsh qemu-monitor-command --hmp help information of watchdog_action missing inject-nmi which already supported in Commit 795dc6e4
+>>> ../block/stream.c:193:19: error: ‘unfiltered_bs’ may be used uninitialized [-Werror=maybe-uninitialized]
+>>> ../block/stream.c:176:5: error: ‘len’ may be used uninitialized [-Werror=maybe-uninitialized]
+>>> trace/trace-block.h:906:9: error: ‘ret’ may be used uninitialized [-Werror=maybe-uninitialized]
 >>>
->>> Signed-off-by: Dayu Liu <liu.dayu@zte.com.cn>
+>>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 >>
->> Applied to trivial-patches tree, in the following form:
+>> Again, same false-positives, because of WITH_GRAPH_RDLOCK_GUARD()..
 >>
->> Author: Dayu Liu <liu.dayu@zte.com.cn>
->> Date:   Mon Apr 1 17:43:55 2024 +0800
->>
->>      hmp: Add help information for watchdog action: inject-nmi
->>
->>      virsh qemu-monitor-command --hmp help information of
->>      watchdog_action missing inject-nmi which already supported
->>      in Commit 795dc6e4
+>> Didn't you try to change WITH_ macros somehow, so that compiler believe in our good intentions?
 >>
 > 
-> Fixes: 795dc6e46d ("watchdog: Add new Virtual Watchdog action INJECT-NMI")
+> 
+> #define WITH_QEMU_LOCK_GUARD_(x, var) \
+>      for (g_autoptr(QemuLockable) var = \
+>                  qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))); \
+>           var; \
+>           qemu_lockable_auto_unlock(var), var = NULL)
+> 
+> I can't think of a clever way to rewrite this. The compiler probably
+> thinks the loop may not run, due to the "var" condition. But how to
+> convince it otherwise? it's hard to introduce another variable too..
 
-I don't think that commit is broken and needs Fixing.
-I see your point though - to have more formal way to
-mark "related" commits, it isn't always fixing something.
 
-I sent a pullreq for this a couple hours ago anyway.
+hmm. maybe like this?
 
-/mjt
+#define WITH_QEMU_LOCK_GUARD_(x, var) \
+     for (g_autoptr(QemuLockable) var = \
+                 qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))), \
+          var2 = (void *)(true); \
+          var2; \
+          qemu_lockable_auto_unlock(var), var2 = NULL)
+
+
+probably, it would be simpler for compiler to understand the logic this way. Could you check?
+
+
+(actually, will also need to construct var2 name same way as for var)
+
+> 
+>> Actually, "unused variable initialization" is bad thing too.
+>>
+>> Anyway, if no better solution for now:
+>> Acked-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>
+>>> ---
+>>>    block/stream.c | 6 +++---
+>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/block/stream.c b/block/stream.c
+>>> index 7031eef12b..9076203193 100644
+>>> --- a/block/stream.c
+>>> +++ b/block/stream.c
+>>> @@ -155,8 +155,8 @@ static void stream_clean(Job *job)
+>>>    static int coroutine_fn stream_run(Job *job, Error **errp)
+>>>    {
+>>>        StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
+>>> -    BlockDriverState *unfiltered_bs;
+>>> -    int64_t len;
+>>> +    BlockDriverState *unfiltered_bs = NULL;
+>>> +    int64_t len = -1;
+>>>        int64_t offset = 0;
+>>>        int error = 0;
+>>>        int64_t n = 0; /* bytes */
+>>> @@ -177,7 +177,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
+>>>
+>>>        for ( ; offset < len; offset += n) {
+>>>            bool copy;
+>>> -        int ret;
+>>> +        int ret = -1;
+>>>
+>>>            /* Note that even when no rate limit is applied we need to yield
+>>>             * with no pending I/O here so that bdrv_drain_all() returns.
+>>
+>> --
+>> Best regards,
+>> Vladimir
+>>
+>>
+> 
+> 
+
+-- 
+Best regards,
+Vladimir
+
 
