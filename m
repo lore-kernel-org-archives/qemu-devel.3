@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17502CD1292
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:31:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3246DC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrbP7-0008NE-7l; Tue, 02 Apr 2024 06:30:09 -0400
+	id 1rrbP5-0008ME-PZ; Tue, 02 Apr 2024 06:30:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrbP3-0008Kw-Lt
+ id 1rrbP2-0008KM-Uk
  for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:05 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrbOy-0003eR-Im
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:05 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41569865b2fso11091535e9.3
+ id 1rrbOy-0003er-F0
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:04 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-415446af364so24613455e9.0
  for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712053794; x=1712658594; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712053795; x=1712658595; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QuZfSUVScjt9n5vrw27PPdIk4irfQ7o3hh1IbZPVDZ4=;
- b=eUKuQhJyhlzuHQHnOz9ENoU8qCx2fi/cgIZ/9uTvRs6G4lauSJgT8Hp+uJV7+0BnXU
- FAzhfHaZ5YHIERwHns/7TuqcOpMrvb3lo6oRXgALPt4bymGxmBoa0h8SDrhDS5f9x7lU
- Nm/fFse7uO5iaah6uzEZAEg79lNUpTTy2/fVnzrpoSwjOlIn/O++LeykA5TjGL29Fv2h
- 6GyGNgubo4EA5WRb23Ktuapv/y6FFmO5QvYll8jDIHTxwRmNaE0JtW6qiuI/c1SjQChr
- 4X4vpNcZUqVZOgEus19GGbmb8xg2WHVhuSW5tlaZSOIdhQWz+SDWANeOq5o8z0lghtJf
- F3Zw==
+ :reply-to; bh=91BZ+bUW9V0rFrI3CQ5Xh/5sgpFgV/x/ACLid6y7DpM=;
+ b=hq6iGl0txrf58Hpo8/N+5s43bnhFAJ2xWkqiccWNH0Mzscb8olzmyuNiR8N4HMD4MF
+ vRYPbfFiAdV+s6DBgi8RlEuFFPK/taiSaxwEnsyk4M9PiS634ZQX+tNt5pt3UCUsUPZM
+ 0psG1XzSPpIpkjZLLp0o0yPmpseeEzCBHOllIGn7Kxed+zzJ6ubFMnyolHU79dO1ZO1T
+ C/Hi9bHiQaj2szIt/Msqy3nfQ1MM19g7pWzLPVARr6JWPiqKHnSzwuJYrv8wLfTdUwfr
+ rF0FPOiDh9cXtUEPGeGbUS6+viM7+DNdx04cqXKrFEaEWwCRr+orHRUnc2wVXppxKasE
+ LRhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712053794; x=1712658594;
+ d=1e100.net; s=20230601; t=1712053795; x=1712658595;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QuZfSUVScjt9n5vrw27PPdIk4irfQ7o3hh1IbZPVDZ4=;
- b=ie/5bHyKdovHHtPa6BIwwqk/N1TqS5L0aGTfjTcYoUQS8gLYgo7wDOAFSmg67U6YXz
- tC3VdrNZTnCk5R1Lqs425DPAtYtpd8z4dPJ7AFe+D5hN00QeSkXLFTNlClfF8RvNKVol
- jneE10kkF6mwH+bM6bNxuEgobcH9cPkxh4RQy4rktLY7GCoV6+45f6+/uslBrPs2mBAX
- z7BoFkY5N5mw9JUglwzjQWLFAt8XHJO9o7aZz+6s1g5ZUBN0gJ1p7Kq1Rh4jTMCXPRgu
- AabaWeK9dwVf46Lvdj1+IanyyUTVqxHPfvMIW/8qX3X44qVYHmn8qsSoB4/zKiPh7OCo
- 99HA==
-X-Gm-Message-State: AOJu0Yw9M7PspV6Jm1cWCOkwxiQhgZyeen6PXcKGCZ5xNW5w7REnC1pE
- NfwDwFDY3Me05UHb302OBcrEhSpCmEyE9S06UQA7diUEKs47914Pwx3wx5LiEZa7yKFXvt1M9pu
- t
-X-Google-Smtp-Source: AGHT+IF1WVMJqBX8wKcJrjD1tw6r0+MIztUnpOj0+YUY0EPDy6FWPV0smRK0y/FwEhhuv1V0fpIkQQ==
-X-Received: by 2002:a05:600c:a4b:b0:414:887f:617a with SMTP id
- c11-20020a05600c0a4b00b00414887f617amr9308484wmq.38.1712053794410; 
+ bh=91BZ+bUW9V0rFrI3CQ5Xh/5sgpFgV/x/ACLid6y7DpM=;
+ b=GM9GGpw/EvHmAVmG4V9NFq0Up2orBafzIAAoaVruyHkFKL62un3q/SXDITATZ7HqLV
+ RwINwPeckVWcG2YjxZbC3dlXoUUcHmgvOWVkDL0zfkMk2ZZL0sBIOyk4IhMKhYxqcTWf
+ +zxCYmrLliqPRw4aButzZxooDf1eVZ0uNDtWwiA4glg0TYD9LSw1a/PSMepxsCqhHZY2
+ Dndze+tuE2LsfuoK1VdrUxRv6BYL3S4jSdpEVV/1qznuyApjQHFr4mKD1DC45mpxSLei
+ CvHpFXJEQF0fjdlDQrv5ZAnprCNR+Hq/guL6yRiz4cPWFjeWT9zu+KwE8NEWORkuJcRw
+ hqyg==
+X-Gm-Message-State: AOJu0Yw2gBahO+1fmECC+P3/feCnkFeNy5nTXEF6MKd5l6FyLwh49dLA
+ s0jba8Gh6+lrU0D0kwowbrXy5lYH1g9zA2qZXDOEWoFUZSC7/xlYprFZH89ghFb3bKQivGH9IAD
+ Y
+X-Google-Smtp-Source: AGHT+IH3BfhMk5bty9oxx5kF1EE12S369V8AM6q2CsEupBNPmN4oL15EG6JqCTgCcwhBITBRwKAYqA==
+X-Received: by 2002:a05:600c:4f05:b0:416:1ad7:f1b9 with SMTP id
+ l5-20020a05600c4f0500b004161ad7f1b9mr1383866wmq.17.1712053794876; 
  Tue, 02 Apr 2024 03:29:54 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
@@ -61,16 +61,17 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  Tue, 02 Apr 2024 03:29:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/5] docs: sbsa: update specs, add dt note
-Date: Tue,  2 Apr 2024 11:29:48 +0100
-Message-Id: <20240402102951.3099078-3-peter.maydell@linaro.org>
+Subject: [PULL 3/5] hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group
+ is disabled
+Date: Tue,  2 Apr 2024 11:29:49 +0100
+Message-Id: <20240402102951.3099078-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240402102951.3099078-1-peter.maydell@linaro.org>
 References: <20240402102951.3099078-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,89 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+If the group of the highest priority pending interrupt is disabled
+via ICC_IGRPEN*, the ICC_HPPIR* registers should return
+INTID_SPURIOUS, not the interrupt ID.  (See the GIC architecture
+specification pseudocode functions ICC_HPPIR1_EL1[] and
+HighestPriorityPendingInterrupt().)
 
-Hardware of sbsa-ref board is nowadays defined by both BSA and SBSA
-specifications. Then BBR defines firmware interface.
+Make HPPIR reads honour the group disable, the way we already do
+when determining whether to preempt in icc_hppi_can_preempt().
 
-Added note about DeviceTree data passed from QEMU to firmware. It is
-very minimal and provides only data we use in firmware.
-
-Added NUMA information to list of things reported by DeviceTree.
-
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Message-id: 20240328163851.1386176-1-marcin.juszkiewicz@linaro.org
-Reviewed-by: Leif Lindholm <quic_llindhol@quicinc.com>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240328153333.2522667-1-peter.maydell@linaro.org
 ---
- docs/system/arm/sbsa.rst | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ hw/intc/arm_gicv3_cpuif.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/arm/sbsa.rst b/docs/system/arm/sbsa.rst
-index bca61608ff8..2bf22a1d0b0 100644
---- a/docs/system/arm/sbsa.rst
-+++ b/docs/system/arm/sbsa.rst
-@@ -1,12 +1,16 @@
- Arm Server Base System Architecture Reference board (``sbsa-ref``)
- ==================================================================
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index e1a60d8c15b..67d8fd07b7f 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1067,7 +1067,7 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
+      */
+     bool irq_is_secure;
  
--While the ``virt`` board is a generic board platform that doesn't match
--any real hardware the ``sbsa-ref`` board intends to look like real
--hardware. The `Server Base System Architecture
--<https://developer.arm.com/documentation/den0029/latest>`_ defines a
--minimum base line of hardware support and importantly how the firmware
--reports that to any operating system.
-+The ``sbsa-ref`` board intends to look like real hardware (while the ``virt``
-+board is a generic board platform that doesn't match any real hardware).
-+
-+The hardware part is defined by two specifications:
-+
-+  - `Base System Architecture <https://developer.arm.com/documentation/den0094/>`__ (BSA)
-+  - `Server Base System Architecture <https://developer.arm.com/documentation/den0029/>`__ (SBSA)
-+
-+The `Arm Base Boot Requirements <https://developer.arm.com/documentation/den0044/>`__ (BBR)
-+specification defines how the firmware reports that to any operating system.
+-    if (cs->hppi.prio == 0xff) {
++    if (icc_no_enabled_hppi(cs)) {
+         return INTID_SPURIOUS;
+     }
  
- It is intended to be a machine for developing firmware and testing
- standards compliance with operating systems.
-@@ -35,16 +39,29 @@ includes both internal hardware and parts affected by the qemu command line
- (i.e. CPUs and memory). As a result it must have a firmware specifically built
- to expect a certain hardware layout (as you would in a real machine).
+@@ -1104,7 +1104,7 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+      */
+     bool irq_is_secure;
  
-+Note
-+''''
-+
-+QEMU provides the guest EL3 firmware with minimal information about hardware
-+platform using minimalistic devicetree. This is not a Linux devicetree. It is
-+not even a firmware devicetree.
-+
-+It is information passed from QEMU to describe the information a hardware
-+platform would have other mechanisms to discover at runtime, that are affected
-+by the QEMU command line.
-+
-+Ultimately this devicetree may be replaced by IPC calls to an emulated SCP.
-+
- DeviceTree information
- ''''''''''''''''''''''
+-    if (cs->hppi.prio == 0xff) {
++    if (icc_no_enabled_hppi(cs)) {
+         return INTID_SPURIOUS;
+     }
  
--The devicetree provided by the board model to the firmware is not intended
--to be a complete compliant DT. It currently reports:
-+The devicetree reports:
- 
-    - CPUs
-    - memory
-    - platform version
-    - GIC addresses
-+   - NUMA node id for CPUs and memory
- 
- Platform version
- ''''''''''''''''
-@@ -70,4 +87,4 @@ Platform version changes:
-   GIC ITS information is present in devicetree.
- 
- 0.3
--  The USB controller is an XHCI device, not EHCI
-+  The USB controller is an XHCI device, not EHCI.
 -- 
 2.34.1
 
