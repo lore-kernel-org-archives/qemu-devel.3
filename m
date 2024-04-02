@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5D5CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC12DC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:20:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rre1A-0007Ib-S4; Tue, 02 Apr 2024 09:17:37 -0400
+	id 1rre0z-0006dg-MU; Tue, 02 Apr 2024 09:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rre0s-00061Z-9U
+ id 1rre0s-00061e-9n
  for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:17:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rre0h-0006Uu-IF
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:17:10 -0400
+ id 1rre0o-0006ZM-0i
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:17:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712063824;
+ s=mimecast20190719; t=1712063831;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kdytqU6zaqhwaFowWcTOUPdoULLFbHrB8YBUdpdDPOI=;
- b=OROfQ2dX3O9YLjW1tYmthHN2kiDFqZHaMZTc3zO9WhEa/IU2U/drFvxKxhL3ml16XNoNiO
- 5HekLr1MlTV6F9h7ktGcBFW5J1DIJhWG3zRkwFiD9NM2qakKQt5RL4B+8L9PFbIRqnnwyY
- Eu/gcxIidJi0bxhIdF6d2kLbV6HvrMA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CocnoBVJpn99epD+80lqAYY0uYOL6LyKI4I2LjGgdmg=;
+ b=YnOYL1RIXseivo4PsVe8deVsjaI+ZhG9pxWKyrUvEpY0txf3Zw54M+6P2KCXHryYdCMFCA
+ iqN6U3CPrr0w3DfTtnMm3mtRZ3eLooyVnbOY8kV9+eN+Aiqu4aC2p/gbGj9J7gINBajrHz
+ W3FuWcq+kGkjrn7iGCk3agLdotlOK+M=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-41-ESNTsR6GMjKNJG8AUFyBPQ-1; Tue, 02 Apr 2024 09:17:01 -0400
-X-MC-Unique: ESNTsR6GMjKNJG8AUFyBPQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-41493ba3fcbso22887095e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:17:00 -0700 (PDT)
+ us-mta-31-vBdr4LvBPvSB3LuLCSeW7g-1; Tue, 02 Apr 2024 09:17:10 -0400
+X-MC-Unique: vBdr4LvBPvSB3LuLCSeW7g-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-41481f2d826so24754905e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:17:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712063818; x=1712668618;
+ d=1e100.net; s=20230601; t=1712063828; x=1712668628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kdytqU6zaqhwaFowWcTOUPdoULLFbHrB8YBUdpdDPOI=;
- b=ka3W8eiDFVny9mZWxiVx9IrligJGI++b7vEIL1b4XbbEwVpiJnXPiM5cMgMsknJMhq
- ePOONb8VWU7im/8ixEreBGf3bjCaOgBis+YVkGProxRJXJ6C7TSXxouwLdrUKngxp3/U
- R9+B8d3+/WVOtKdQe6JCKiEzPEBdQHLy+3Kdp52qfrbsz2dNdV2DAWwxdfPhKjzsa+Q6
- dBP7/HEyvpzQzGluoqIneXqqG+638KRhnhU+ZtpE32ixbRiBnjXNQNYrz3CelI1ioq51
- rFvn1FZV2EdB96FejROfMCrHFynGMIBmtGeCFx7tTl0D3kw+U6Brtq1U3RvPRs3YoPBr
- 2IjQ==
-X-Gm-Message-State: AOJu0YxEPfM1sOsBQN8xUzF5RF+UjY1Q7ub6DMBYzqoQXKCduj+tjy+n
- uoy4H09J7UymY8SMHWw8JA2R0QABHP+5KbqZzqvWaqkq+0TfjaYMKBrI87Dnx6Aa05abGOmd/B1
- BXsM5H59tGp7I733reqhV6FXkc80DwFUhEo9lmQHIJYB6FCYhwp+abJmrlAimv+RZm/g5hC4bfZ
- M8r19Dvld0gDg48hkKquL084X6f0js4eY1wS53
-X-Received: by 2002:a05:600c:4f93:b0:414:3713:e9a2 with SMTP id
- n19-20020a05600c4f9300b004143713e9a2mr10130139wmq.3.1712063818469; 
- Tue, 02 Apr 2024 06:16:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEP572aIIdXD+0gq6K3dUh/Gk6SAXQqkws9txkkJjcN7Zuh6nymBQOlI/M3+ikOoXy6EPt1kA==
-X-Received: by 2002:a05:600c:4f93:b0:414:3713:e9a2 with SMTP id
- n19-20020a05600c4f9300b004143713e9a2mr10130123wmq.3.1712063818135; 
- Tue, 02 Apr 2024 06:16:58 -0700 (PDT)
+ bh=CocnoBVJpn99epD+80lqAYY0uYOL6LyKI4I2LjGgdmg=;
+ b=dDb6fPp8Kyl8VMJ1S5/tvEy1xoRzU2NKMHYEMhMTbWtsjlkAmZfMMIDBMCOV+tP5Uz
+ 3k1CmBJHgAQZeOYYe49ASQSN95Gx70qbA+vnyvUWMDeFoJW8re1xwgeTwEBwypocPx86
+ VFz3b0lwwKSzY/EhrON+4sp7FzsOVDv4Mf7u7uqtv4ZQTAjd6sZMS9rZbJNcZ3NTm+a8
+ wOP2GDZ4V4H4Gu26OT0OnrudLHBpAQRO4DKcNs+I1TEJY8HJqcavczIrh8VC8kUbtc8U
+ B8fyOnijzC3YTni8w/hIHZ9f81CmtMjGHkfQy+l2WmySoxf5GmssOVr1sPKsipTtRtXK
+ gBHw==
+X-Gm-Message-State: AOJu0YzkyRRLA4l2fM0j4mXSSLZT7KZHDklyLpbDxVjFIPFTe+mwjohf
+ HFLW3o+PLqfNJ+3r/5ipsFJyM9VU/YQ59+q7YswXmb0IX5wPaFm74h2uiFz+J4IoS7utBNbvySk
+ 8tvCYFaLpSot6YK27HFcrl5gYGpGOmKJ/0lz9bLKMCdPslAonUozsQ7T6+aQWdidSq5L9RYD9ek
+ IBglyIMN2dkFtViYmlKYp7O8hTmSliif4OUs32
+X-Received: by 2002:a05:600c:450a:b0:413:2852:2835 with SMTP id
+ t10-20020a05600c450a00b0041328522835mr8691595wmo.17.1712063828109; 
+ Tue, 02 Apr 2024 06:17:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE2tDd7NHWqiKtqOmtQidZta/7X3h5gH8gRGgR0tMWpUgCkfJRycGvUD5WS7euJ1fjvwqtEGQ==
+X-Received: by 2002:a05:600c:450a:b0:413:2852:2835 with SMTP id
+ t10-20020a05600c450a00b0041328522835mr8691573wmo.17.1712063827736; 
+ Tue, 02 Apr 2024 06:17:07 -0700 (PDT)
 Received: from avogadro.local ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- z2-20020a05600c0a0200b00415515263b4sm13855462wmp.7.2024.04.02.06.16.56
+ p2-20020a05600c1d8200b004156daeee90sm3712330wms.4.2024.04.02.06.17.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Apr 2024 06:16:56 -0700 (PDT)
+ Tue, 02 Apr 2024 06:17:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 2/7] vga: move computation of dirty memory region later
-Date: Tue,  2 Apr 2024 15:16:44 +0200
-Message-ID: <20240402131649.23225-3-pbonzini@redhat.com>
+Cc: Chuhong Yuan <hslester96@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 5/7] lsi53c895a: avoid out of bounds access to s->msg[]
+Date: Tue,  2 Apr 2024 15:16:47 +0200
+Message-ID: <20240402131649.23225-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240402131649.23225-1-pbonzini@redhat.com>
 References: <20240402131649.23225-1-pbonzini@redhat.com>
@@ -103,84 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the computation of region_start and region_end after the value of
-"bits" is known.  This makes it possible to distinguish modes that
-support horizontal pel panning from modes that do not.
+If no bytes are there to process in the message in phase,
+the input data latch (s->sidl) is set to s->msg[-1].  Just
+do nothing since no DMA is performed.
 
+Reported-by: Chuhong Yuan <hslester96@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/display/vga.c | 50 ++++++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ hw/scsi/lsi53c895a.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 4795a0012e2..b4ceff70eb8 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1501,31 +1501,6 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-     disp_width = width;
-     depth = s->get_bpp(s);
- 
--    region_start = (s->params.start_addr * 4);
--    region_end = region_start + (ram_addr_t)s->params.line_offset * height;
--    region_end += width * depth / 8; /* scanline length */
--    region_end -= s->params.line_offset;
--    if (region_end > s->vbe_size || depth == 0 || depth == 15) {
--        /*
--         * We land here on:
--         *  - wraps around (can happen with cirrus vbe modes)
--         *  - depth == 0 (256 color palette video mode)
--         *  - depth == 15
--         *
--         * Take the safe and slow route:
--         *   - create a dirty bitmap snapshot for all vga memory.
--         *   - force shadowing (so all vga memory access goes
--         *     through vga_read_*() helpers).
--         *
--         * Given this affects only vga features which are pretty much
--         * unused by modern guests there should be no performance
--         * impact.
--         */
--        region_start = 0;
--        region_end = s->vbe_size;
--        force_shadow = true;
--    }
--
-     /* bits 5-6: 0 = 16-color mode, 1 = 4-color mode, 2 = 256-color mode.  */
-     shift_control = (s->gr[VGA_GFX_MODE] >> 5) & 3;
-     double_scan = (s->cr[VGA_CRTC_MAX_SCAN] >> 7);
-@@ -1597,6 +1572,31 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-         }
-     }
- 
-+    region_start = (s->params.start_addr * 4);
-+    region_end = region_start + (ram_addr_t)s->params.line_offset * height;
-+    region_end += width * depth / 8; /* scanline length */
-+    region_end -= s->params.line_offset;
-+    if (region_end > s->vbe_size || depth == 0 || depth == 15) {
-+        /*
-+         * We land here on:
-+         *  - wraps around (can happen with cirrus vbe modes)
-+         *  - depth == 0 (256 color palette video mode)
-+         *  - depth == 15
-+         *
-+         * Take the safe and slow route:
-+         *   - create a dirty bitmap snapshot for all vga memory.
-+         *   - force shadowing (so all vga memory access goes
-+         *     through vga_read_*() helpers).
-+         *
-+         * Given this affects only vga features which are pretty much
-+         * unused by modern guests there should be no performance
-+         * impact.
-+         */
-+        region_start = 0;
-+        region_end = s->vbe_size;
-+        force_shadow = true;
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 71f759a59dd..eb9828dd5ef 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -927,13 +927,18 @@ static void lsi_do_msgin(LSIState *s)
+     assert(len > 0 && len <= LSI_MAX_MSGIN_LEN);
+     if (len > s->dbc)
+         len = s->dbc;
+-    pci_dma_write(PCI_DEVICE(s), s->dnad, s->msg, len);
+-    /* Linux drivers rely on the last byte being in the SIDL.  */
+-    s->sidl = s->msg[len - 1];
+-    s->msg_len -= len;
+-    if (s->msg_len) {
+-        memmove(s->msg, s->msg + len, s->msg_len);
+-    } else {
++
++    if (len) {
++        pci_dma_write(PCI_DEVICE(s), s->dnad, s->msg, len);
++        /* Linux drivers rely on the last byte being in the SIDL.  */
++        s->sidl = s->msg[len - 1];
++        s->msg_len -= len;
++        if (s->msg_len) {
++            memmove(s->msg, s->msg + len, s->msg_len);
++        }
 +    }
 +
-     /*
-      * Check whether we can share the surface with the backend
-      * or whether we need a shadow surface. We share native
++    if (!s->msg_len) {
+         /* ??? Check if ATN (not yet implemented) is asserted and maybe
+            switch to PHASE_MO.  */
+         switch (s->msg_action) {
 -- 
 2.44.0
 
