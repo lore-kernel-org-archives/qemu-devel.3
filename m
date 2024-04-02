@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81992CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 12:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45F67C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 12:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcnx-0006rG-Lh; Tue, 02 Apr 2024 07:59:53 -0400
+	id 1rrcpM-0007hY-3G; Tue, 02 Apr 2024 08:01:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrcno-0006os-9A
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:59:44 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcpB-0007Ua-G3
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:01:12 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrcmW-0001yD-PF
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:59:27 -0400
-Received: by mail-ed1-f51.google.com with SMTP id
- 4fb4d7f45d1cf-56c0d1bddc1so5914160a12.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:58:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcoG-00034h-D8
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:01:09 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4156dfa8a5cso8162565e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 05:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712059096; x=1712663896; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6xpEB5Lqky6CjRgyeYD/m/zuvp9yUQ+gxZBSsw9FK+o=;
- b=GjFSaEC3ejJyXlZ4IsSPx3YXnljMZY5de6I96loZbsFrCmwsL9XhEb/XBS1qy/NIlk
- TglFmO4xfP/WkhMUOYBGHclAITnX9gAr7GFS7WOkQe09+FXquOXAZXDoWNUGBAZXuWpK
- J5qXJQm8o3nGamk0hxv/Aqo7gYjSC7ooFAC52iYR6sY+xg4gKRTixVyjGDfn5jPkeGfp
- PPyIYzdRhrY8AB6OFqwl7ZtJqskZ4thi3uyu/vYj1Y3KvIKoE+EqWjlFvFEYFtH56CzJ
- J+hdEl7BhtlzZZmAP9RBSjtH7iWE2mllvjrVn4O+3yIYN2DRYjZa+Fqfjau+9kH+xrkm
- xs2g==
+ d=linaro.org; s=google; t=1712059202; x=1712664002; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Pf6iAlvC95lcmhl6PK/jcsdEbiggfdr3Doja1fwCupM=;
+ b=xcSG5IT6eExeSD+bgObGZCIvOPb+OgKuNwJTvSYHRkDcyt6RGB3klBVpPMv+XDoCWx
+ 3CfH8VGzoXzr4MI52db8MW2xyy4o3hvDSrInunNsureF87Ab5dfsYGQ82dFHcyaRweZZ
+ fas+ryo6nUXPIwTuE8ROTXMMq41JFkPsI7PjUZsnIgWYJRDz3Unoj1RlIZBPO0s3jasj
+ fqp5Bwf0LaAV1/Bnc5lTRQv/BPk/t+UTjTFaEpbjM5C/ASuVQiW3k6GKqobeZFSZcyCe
+ qTBvNkwoLbzmMQarBJIQUfw06bi2mqWBiyX97wvGRpBC9l+l9V5wbqRsTkf7EpaP/ttW
+ 9qFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712059096; x=1712663896;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6xpEB5Lqky6CjRgyeYD/m/zuvp9yUQ+gxZBSsw9FK+o=;
- b=SzGZ6pI6MDoiveUbKutiWnK4wIJVvpemakVfSUuyGWQzzfpW4QbhKCyeo2cfBv+is7
- DKSe6FvEVDx1A/9JGKNk8t+h1/xlVhFpf7K6+BHNWgIAgFQaH9oQCt0uOoK0Mx0bSqQ4
- dti3Uciz/NKJgcqzXRqAfvgAMKvFHgBlQYvM0iV4NYHO542G3gPoD/OFa/gkAm7aj9GB
- bqF7i7VEEe1LaTX8F7KVOJFqfSvRupCCJBuS1asGbC69n1ac0awCkv1wAe4KGgzXLjRO
- 056Wu0a9jk0wGESh/UsTDbOqIBcS176OWKOv3phlUWtpEunEvSV4dk5/Wxq0QdivT1M4
- A9pQ==
-X-Gm-Message-State: AOJu0Yz9OPR7lHg9ZsWr7nJYo8CleDNgVYLjOG8yy9Z+mpjvOAHbdLuR
- jMi3hHnmOf7eRoJ++nRB9O2ZZlmwUQUyJXQP0z+OJRXSjXWlcBv3FJGHjwVv2CXR83WO18VCmqM
- q6WPBSSTBpn3vMbrpc3eHgx5zjnL3SffJkZSIUsSP/b9tZuag
-X-Google-Smtp-Source: AGHT+IEb8yA4deglQmB70r7zjeTChOPr7ikTwzSyzVYnywstAVRKGXLcdrUkpB3XSuOLesnmIOAic/NDLehQZddT+7I=
-X-Received: by 2002:a05:6402:5112:b0:568:1882:651f with SMTP id
- m18-20020a056402511200b005681882651fmr10685384edd.25.1712059096483; Tue, 02
- Apr 2024 04:58:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240402102951.3099078-1-peter.maydell@linaro.org>
-In-Reply-To: <20240402102951.3099078-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 12:58:05 +0100
-Message-ID: <CAFEAcA-A9NDHyZ_A=Tsw7UdGTy366YK85Q4CGQiari2h97VCdw@mail.gmail.com>
-Subject: Re: [PULL 0/5] target-arm queue
+ d=1e100.net; s=20230601; t=1712059202; x=1712664002;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Pf6iAlvC95lcmhl6PK/jcsdEbiggfdr3Doja1fwCupM=;
+ b=KbuPuZr8rWaDixvs4M5M/BvvTjG/bNAQEGTMYgfzhCO8iU73ZDyiLevEDLEJkETlmg
+ F4WqGENozPIKtFqtPciKcplb+7FksQqunnKPzKNcJ41pn6IHvoBWTiFvp+kyVgT1zPfe
+ mLblzgmGQPC5Jf0sj5qSn6ZTEpqQ8QvVtNpmSW/ta65PqAMDuoSijCjXe09Hz+NFVRLM
+ /R+4fNry3NhJAafPBnUtRPaDgXDi71OD1KOCgRx3USpx7A1HYjWLrx/RRgAtf9Uq2fg3
+ 0rkwhuSQHXxAQIthXVqq7n7NoGUOD66oGieH3aXjUizaVeHpLlu4hPTG2VmFWKu7Jw/H
+ gONg==
+X-Gm-Message-State: AOJu0Yy1+YAML9Vmu2tEvkashWsnY0s0VA/Si3KvM6wsElzAfnFoYlm3
+ uaWlghaWtsz9Zfd4jFORKtEdS36K9Cg6/FnF5X7jvVgpVYZDAPnB+zyE9l7Q2VNvjxGecrmpYH0
+ 5+Go=
+X-Google-Smtp-Source: AGHT+IEg4VxtfFHoptXE7r87n9Ghvb4CiBIU28SZPBGwZVem9JGzPDqibtpAEYrHeLNEY3jfzGELVw==
+X-Received: by 2002:a05:600c:3b17:b0:414:1325:e8a8 with SMTP id
+ m23-20020a05600c3b1700b004141325e8a8mr8443095wms.39.1712059201954; 
+ Tue, 02 Apr 2024 05:00:01 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.202.91])
+ by smtp.gmail.com with ESMTPSA id
+ p2-20020a05600c1d8200b004156daeee90sm3482495wms.4.2024.04.02.05.00.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 02 Apr 2024 05:00:01 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=209.85.208.51;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-f51.google.com
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/2] scripts/checkpatch: Do not use mailmap and check
+ qemu-trivial@ author
+Date: Tue,  2 Apr 2024 13:59:56 +0200
+Message-ID: <20240402115958.67615-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,39 +95,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Apr 2024 at 11:29, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Nothing exciting here: two minor bug fixes, some fixes for
-> running on a 32-bit host, and a docs tweak.
->
-> thanks
-> -- PMM
->
-> The following changes since commit 6af9d12c88b9720f209912f6e4b01fefe5906d59:
->
->   Merge tag 'migration-20240331-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-04-01 13:12:40 +0100)
->
-> are available in the Git repository at:
->
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240402
->
-> for you to fetch changes up to 393770d7a02135e7468018f52da610712f151ec0:
->
->   raspi4b: Reduce RAM to 1Gb on 32-bit hosts (2024-04-02 10:13:48 +0100)
->
-> ----------------------------------------------------------------
-> target-arm queue:
->  * take HSTR traps of cp15 accesses to EL2, not EL1
->  * docs: sbsa: update specs, add dt note
->  * hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group is disabled
->  * tests/qtest: Fix STM32L4x5 GPIO test on 32-bit
->  * raspi4b: Reduce RAM to 1Gb on 32-bit hosts
+Since v1:
+- Extend regexp to cover all lists (Peter)
 
+* qemu-trivial@ is not checked
+* mailmap hides the mistakes we want to catch
 
-Applied, thanks.
+See https://lore.kernel.org/qemu-devel/60faa39d-52e8-46f1-8bd9-9d9661794880@tls.msk.ru/
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+Philippe Mathieu-Daudé (2):
+  scripts/checkpatch: Avoid author email mangled by qemu-*@nongnu.org
+  scripts/checkpatch: Do not use mailmap
 
--- PMM
+ scripts/checkpatch.pl | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+-- 
+2.41.0
+
 
