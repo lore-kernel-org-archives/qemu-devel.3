@@ -4,38 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F300CD1292
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C13BC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rraVF-0005nt-5U; Tue, 02 Apr 2024 05:32:25 -0400
+	id 1rraVH-0005pW-S6; Tue, 02 Apr 2024 05:32:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rraVD-0005mw-B9; Tue, 02 Apr 2024 05:32:23 -0400
+ id 1rraVF-0005nv-C7; Tue, 02 Apr 2024 05:32:25 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rraVB-0004Eq-BJ; Tue, 02 Apr 2024 05:32:23 -0400
+ id 1rraVC-0003sX-5b; Tue, 02 Apr 2024 05:32:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D418E5B08B;
+ by isrv.corpit.ru (Postfix) with ESMTP id BF6505B089;
  Tue,  2 Apr 2024 12:33:40 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CF522A9347;
+ by tsrv.corpit.ru (Postfix) with SMTP id B4282A9345;
  Tue,  2 Apr 2024 12:31:57 +0300 (MSK)
-Received: (nullmailer pid 2931146 invoked by uid 1000);
+Received: (nullmailer pid 2931139 invoked by uid 1000);
  Tue, 02 Apr 2024 09:31:57 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 2/4] fpu/softfloat: Remove mention of TILE-Gx target
-Date: Tue,  2 Apr 2024 12:31:55 +0300
-Message-Id: <20240402093157.2931117-3-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org
+Subject: [PULL 0/4] Trivial patches for 2024-04-02
+Date: Tue,  2 Apr 2024 12:31:53 +0300
+Message-Id: <20240402093157.2931117-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240402093157.2931117-1-mjt@tls.msk.ru>
-References: <20240402093157.2931117-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,35 +58,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The following changes since commit 6af9d12c88b9720f209912f6e4b01fefe5906d59:
 
-TILE-Gx has been removed during the v6.0 release (see
-commit 2cc1a90166 "Remove deprecated target tilegx"),
-no need to mention it in the list of "supported targets".
+  Merge tag 'migration-20240331-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-04-01 13:12:40 +0100)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
+are available in the Git repository at:
+
+  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+
+for you to fetch changes up to dd5b28de4ed04e0c750022f31b529e4fea7ab478:
+
+  hmp: Add help information for watchdog action: inject-nmi (2024-04-01 19:52:14 +0300)
+
+----------------------------------------------------------------
+trivial patches for 2024-04-02
+
+spelling fixes for the release, minor doc fixes and usb-audio fix.
+
+----------------------------------------------------------------
+Dayu Liu (1):
+      hmp: Add help information for watchdog action: inject-nmi
+
+Joonas Kankaala (1):
+      usb-audio: Fix invalid values in AudioControl descriptors
+
+Philippe Mathieu-Daudé (1):
+      fpu/softfloat: Remove mention of TILE-Gx target
+
+Stefan Weil (1):
+      Fix some typos in documentation (found by codespell)
+
+ docs/devel/atomics.rst         | 2 +-
+ docs/devel/ci-jobs.rst.inc     | 2 +-
+ docs/devel/clocks.rst          | 2 +-
+ docs/system/i386/sgx.rst       | 2 +-
  fpu/softfloat-specialize.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 1610472cfc..1c85c48a73 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -152,7 +152,7 @@ static void parts64_default_nan(FloatParts64 *p, float_status *status)
-     /*
-      * This case is true for Alpha, ARM, MIPS, OpenRISC, PPC, RISC-V,
-      * S390, SH4, TriCore, and Xtensa.  Our other supported targets,
--     * CRIS, Nios2, and Tile, do not have floating-point.
-+     * CRIS and Nios2, do not have floating-point.
-      */
-     if (snan_bit_is_one(status)) {
-         /* set all bits other than msb */
--- 
-2.39.2
-
+ hmp-commands.hx                | 2 +-
+ hw/usb/dev-audio.c             | 4 +---
+ qapi/qom.json                  | 2 +-
+ 8 files changed, 8 insertions(+), 10 deletions(-)
 
