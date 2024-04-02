@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C391CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 16:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B63CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 16:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrgeH-0001YH-10; Tue, 02 Apr 2024 12:06:10 -0400
+	id 1rrgkz-0002nf-Mp; Tue, 02 Apr 2024 12:13:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrge1-0001XA-BC
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:05:54 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1rrgks-0002Xz-Ez
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:13:00 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrgdx-0005bj-PI
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:05:53 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-56dc9955091so2562002a12.1
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 09:05:48 -0700 (PDT)
+ id 1rrgkq-00006f-Dl
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 12:12:58 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-56df87057bbso583249a12.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 09:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712073947; x=1712678747; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712074373; x=1712679173; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DvijPh6kNQvCoFSeIBmTJDUL1uXvuBvXdUna/OBo6/w=;
- b=hCUkoWWGi3EDh7SphVCo9YIEOxWUd+le7eB17nglpNmPkF+lhgD2wIvfRAJFprkDaG
- WEehK38VaEamUIE1F0Ozfmi7CUSkSeXSsXeki/xxLuOfeYLjHrrXbtfm1Sm8gddP21EN
- bBVgrhx9fOtXychm1h4CI+H88MHsZELIa9Bi27i16urH51oTXqPF4SUUT0CcW3zxlqTV
- ppsGCAQCd+ypos/mpORdDgomCKHbFOrIzZojfS7BCDcmSpl83t0qLtsnsQnCJbxTWsRb
- FLXlFmp8HaC4oqmddk4FgGHw2FxgFGFFHPNZ036VBGEGNvRud7N0sq6m15PWIiG+gsmX
- 1EPQ==
+ bh=mR1V0/zEsySgAaqO9ZlwAJcYsqYfWiHjKNHYQBPhS7I=;
+ b=HbH/mDQQD2Bj+e8fHO5NbosDzmpQiHkddsWoQnayiJtW3MsUrOPyUQG6RGJUDb3viG
+ MrHmyJUVocZT4Xd8IlkubBlnIjphHVJDjDzJe4ZsA2SwYRC2wAFoq9o+2Nh4gqaAKLsW
+ +CxK6KxCAAPls9aQ18JrFM6BUIsVGQ9rMrZPdmHdtJBzhKAXPTIZo8r8yTCYLNqKFOH2
+ 3uPJ91IRpcN7y/i3B3MV7GNuQm+Ucoz9FmBxI3oLkIc3CQghqNT3O23rL7vAEktud5UE
+ QhEtV30XiFiF2pfnNimR7pzp4ZMtMFLl4Lyw7MPZnO7HqsCeZVGYZCJwVU+UIftX+obG
+ k2ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712073947; x=1712678747;
+ d=1e100.net; s=20230601; t=1712074373; x=1712679173;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DvijPh6kNQvCoFSeIBmTJDUL1uXvuBvXdUna/OBo6/w=;
- b=HN44sGOQiJhZbuHvRUNFL+OL6xhQFZgT+lN16fvx0pUL8YC5+Vm9XHAXZlLOYSEeJw
- RXAP0b0hP7XYEhDV72Vy+R5N2thmGq/9qavZqgxw2XGuxMmfR2uYF0333bjiTC28C4js
- vTZYyqugEmtXE9hXXBQsgjGmX8qxB1tWxaVkGQbS12ecE8tIbAkot1jp/M6ISP8aRccW
- sSvvXUfSYlQ9oT4RJpsJqPOZ34nIId8Hd1qd2IImXriV37B5OvZDCzjVGGi7Mllmw/hf
- XFRpceXVUQx5RkJrq0muxfh72gFOcnqIJtM3iYKqFkpACuHluVMV8BCZ/OCK8hXD3SYA
- XiGg==
+ bh=mR1V0/zEsySgAaqO9ZlwAJcYsqYfWiHjKNHYQBPhS7I=;
+ b=jcjb3A+FX0DOQc77eiRRc4uuBiE0JQccD3QFNRM1kxbKXa2NM+ankHFMViRG9fK6mJ
+ y9lBsILyCMzLnAWta62lNCNroaiMZdc4ldu42E3YyZFdVLeQRwNMOI2NAnti5AWE1Qcf
+ okFe2tdoa3hygOiHDCWPcPf7Htv0YfVZOMKniJZChny7WEK3k+PDq2rPdh7UUWLzyeTA
+ 8f9+bApiHbyGM+M9exaShD3gnbUedyWfYLHRRBaoPIFFpTYiMMtWiBiq/3edYD/mLDu6
+ 7EgKwYmsFKNTd7plppL96Ut3g9Z6O953enBwWkOJt8bMW1DV8Ty3LSxk/VbyvOsLseun
+ pCpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNtT5b0l2kRsSdYYXbVBCHxfTMw5PP8bGAxDkaDVk1Aa5F0OgsLpPrrXp3euGeLvWxwM+8YjWOamn48MONDPiJEFmP+gY=
-X-Gm-Message-State: AOJu0YywLRY8opC2imCnSgPpiIAH7cHzcT7grdToyI+a84nI2FPLgMc/
- +cH3tecqubktbv2TxDHth1T8lk8BAeUsHUNsLvItvPLpMLN87Jt3OtX88cxkFWCZjTh0BIvA3hV
- 1XgeXlKqAAZhRKq3oo+qP/4P+ReLdZie7yLyGNQ==
-X-Google-Smtp-Source: AGHT+IHN79t6JyLpeepGsKuS1jhUezYg5iMyt9Pcjmils/Df2gCidCGBMX3DiC0QmqLfEYLnzU7vgi72iDp/PDcNXEk=
-X-Received: by 2002:a05:6402:350e:b0:56c:5ab5:5fb7 with SMTP id
- b14-20020a056402350e00b0056c5ab55fb7mr10150335edd.30.1712073947080; Tue, 02
- Apr 2024 09:05:47 -0700 (PDT)
+ AJvYcCVa5zSTg/JRyG/4mqG08Lsc6YoqkcgR91sxm/FI2lK4unxPpbGGK6QYa3r2tqQHiScscM8raREcHploVSNwmgZrDp2luOk=
+X-Gm-Message-State: AOJu0YwEiqq/HCS+WGubLrjk7TXc16iuZAUG9pKK8ml7odKgfNodGiLB
+ ddlf+s62SLUVATQI7ETLatr+Bm+UX8Ty4lgYdDWgDOe4PYEtjgmGWOWVikgYTuYvHYuQNWYND65
+ 5cJ5kiyyqqE0fXHS7B9YjAcDQmCSH+fO8ag2Xng==
+X-Google-Smtp-Source: AGHT+IH0eQCvlMg08Mm6thL+CMg72fpzh9iurmH5pQp2MvTexGN4pe/Lu2X5igT0bAjbSCqth3aEadvKKUQplzb+ybg=
+X-Received: by 2002:a50:9b1b:0:b0:56d:b7d6:d659 with SMTP id
+ o27-20020a509b1b000000b0056db7d6d659mr7128958edi.6.1712074373461; Tue, 02 Apr
+ 2024 09:12:53 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
- <20240330103128.3185962-18-ruanjinjie@huawei.com>
-In-Reply-To: <20240330103128.3185962-18-ruanjinjie@huawei.com>
+ <20240330103128.3185962-19-ruanjinjie@huawei.com>
+In-Reply-To: <20240330103128.3185962-19-ruanjinjie@huawei.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 17:05:35 +0100
-Message-ID: <CAFEAcA9=jEY9vj0bxrLBAtrYDJwwfQH=KK6BK3n7_9GvQnqygg@mail.gmail.com>
-Subject: Re: [PATCH v11 17/23] hw/intc/arm_gicv3: Add NMI handling CPU
- interface registers
+Date: Tue, 2 Apr 2024 17:12:42 +0100
+Message-ID: <CAFEAcA_WY04voee07n6Ph606xqy=QvTkYdMyqYf5LMHUS5GcDw@mail.gmail.com>
+Subject: Re: [PATCH v11 18/23] hw/intc/arm_gicv3: Handle icv_nmiar1_read() for
+ icc_nmiar1_read()
 To: Jinjie Ruan <ruanjinjie@huawei.com>
 Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
  wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,152 +93,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 30 Mar 2024 at 10:34, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+On Sat, 30 Mar 2024 at 10:33, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 >
-> Add the NMIAR CPU interface registers which deal with acknowledging NMI.
+> Implement icv_nmiar1_read() for icc_nmiar1_read(), so add definition for
+> ICH_LR_EL2.NMI and ICH_AP1R_EL2.NMI bit.
 >
-> When introduce NMI interrupt, there are some updates to the semantics for the
-> register ICC_IAR1_EL1 and ICC_HPPIR1_EL1. For ICC_IAR1_EL1 register, it
-> should return 1022 if the intid has non-maskable property. And for
-> ICC_NMIAR1_EL1 register, it should return 1023 if the intid do not have
-> non-maskable property. Howerever, these are not necessary for ICC_HPPIR1_EL1
-> register.
+> If FEAT_GICv3_NMI is supported, ich_ap_write() should consider ICV_AP1R_EL1.NMI
+> bit. In icv_activate_irq() and icv_eoir_write(), the ICV_AP1R_EL1.NMI bit
+> should be set or clear according to the Non-maskable property. And the RPR
+> priority should also update the NMI bit according to the APR priority NMI bit.
 >
-> And the APR and RPR has NMI bits which should be handled correctly.
+> By the way, add gicv3_icv_nmiar1_read trace event.
+>
+> If the hpp irq is a NMI, the icv iar read should return 1022 and trap for
+> NMI again
 >
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> v11:
+> - Deal with NMI in the callers instead of ich_highest_active_virt_prio().
+> - Set either NMI or a group-priority bit, not both.
+> - Only set AP NMI bits in the 0 reg.
+> - Handle NMI in hppvi_index(), icv_hppi_can_preempt() and icv_eoir_write().
+> v10:
+> - Rename ICH_AP1R_EL2_NMI to ICV_AP1R_EL1_NMI.
+> - Add ICV_RPR_EL1_NMI definition.
+> - Set ICV_RPR_EL1.NMI according to the ICV_AP1R<n>_EL1.NMI in
+>   ich_highest_active_virt_prio().
+> v9:
+> - Correct the INTID_NMI logic.
+> v8:
+> - Fix an unexpected interrupt bug when sending VNMI by running qemu VM.
+> v7:
+> - Add Reviewed-by.
+> v6:
+> - Implement icv_nmiar1_read().
+> ---
+>  hw/intc/arm_gicv3_cpuif.c | 97 ++++++++++++++++++++++++++++++++++-----
+>  hw/intc/gicv3_internal.h  |  4 ++
+>  hw/intc/trace-events      |  1 +
+>  3 files changed, 91 insertions(+), 11 deletions(-)
+>
+> diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+> index f99f2570a6..a7bc44b30c 100644
+> --- a/hw/intc/arm_gicv3_cpuif.c
+> +++ b/hw/intc/arm_gicv3_cpuif.c
+> @@ -157,6 +157,10 @@ static int ich_highest_active_virt_prio(GICv3CPUState *cs)
+>      int i;
+>      int aprmax = ich_num_aprs(cs);
+>
+> +    if (cs->gic->nmi_support && cs->ich_apr[GICV3_G1NS][0] & ICV_AP1R_EL1_NMI) {
+> +        return 0x80;
 
-I have a few more comments below but otherwise I think this
-patch is looking OK.
+This should be 0, not 0x80 -- see the register description for
+ICH_LR<n>_EL2 Priority field: when NMI is 1, the virtual interrupt's
+priority is treated as 0x0.
 
-
-> @@ -898,12 +922,24 @@ static bool icc_hppi_can_preempt(GICv3CPUState *cs)
+> +    }
+> +
+>      for (i = 0; i < aprmax; i++) {
+>          uint32_t apr = cs->ich_apr[GICV3_G0][i] |
+>              cs->ich_apr[GICV3_G1NS][i];
+> @@ -191,6 +195,7 @@ static int hppvi_index(GICv3CPUState *cs)
+>       * correct behaviour.
 >       */
->      int rprio;
->      uint32_t mask;
-> +    ARMCPU *cpu = ARM_CPU(cs->cpu);
-> +    CPUARMState *env = &cpu->env;
+>      int prio = 0xff;
+> +    bool nmi = false;
 >
->      if (icc_no_enabled_hppi(cs)) {
->          return false;
->      }
->
-> -    if (cs->hppi.prio >= cs->icc_pmr_el1) {
-> +    if (cs->gic->nmi_support && cs->hppi.nmi) {
-
-If cs->hppi.nmi is set then nmi_support must be true, as we won't
-ever set hppi.nmi if the GIC doesn't have NMI support (because the
-registers where the guest can set the NMI bit will not be writeable
-and so the nmi bits will always be zero). Elsewhere in the code
-we assume this (eg in icc_iar1_read() below), so I think we can
-also assume it here.
-
-> +        if (!(cs->gic->gicd_ctlr & GICD_CTLR_DS) &&
-> +            cs->hppi.grp == GICV3_G1NS) {
-> +            if (cs->icc_pmr_el1 < 0x80) {
-> +                return false;
-> +            }
-> +            if (arm_is_secure(env) && cs->icc_pmr_el1 == 0x80) {
-> +                return false;
-> +            }
+>      if (!(cs->ich_vmcr_el2 & (ICH_VMCR_EL2_VENG0 | ICH_VMCR_EL2_VENG1))) {
+>          /* Both groups disabled, definitely nothing to do */
+> @@ -200,6 +205,11 @@ static int hppvi_index(GICv3CPUState *cs)
+>      for (i = 0; i < cs->num_list_regs; i++) {
+>          uint64_t lr = cs->ich_lr_el2[i];
+>          int thisprio;
+> +        bool thisnmi = false;
+> +
+> +        if (cs->gic->nmi_support) {
+> +            thisnmi = lr & ICH_LR_EL2_NMI;
 > +        }
-> +    } else if (cs->hppi.prio >= cs->icc_pmr_el1) {
->          /* Priority mask masks this interrupt */
->          return false;
+
+You could write this a little more concisely as
+      bool thisnmi = cs->gic_nmi_support && (lr & ICH_LR_EL2_NMI);
+
+>          if (ich_lr_state(lr) != ICH_LR_EL2_STATE_PENDING) {
+>              /* Not Pending */
+> @@ -219,9 +229,13 @@ static int hppvi_index(GICv3CPUState *cs)
+>
+>          thisprio = ich_lr_prio(lr);
+>
+> -        if (thisprio < prio) {
+> +        if ((thisprio < prio) || ((thisprio == prio) && (thisnmi & (!nmi)))) {
+>              prio = thisprio;
+>              idx = i;
+> +
+> +            if (cs->gic->nmi_support) {
+> +                nmi = thisnmi;
+> +            }
+
+You don't need to check nmi_support here because if nmi_support
+is false then thisnmi will also be false, and so we will never
+set nmi to anything other than false.
+
+>          }
 >      }
-> @@ -923,6 +959,18 @@ static bool icc_hppi_can_preempt(GICv3CPUState *cs)
+>
+> @@ -326,6 +340,12 @@ static bool icv_hppi_can_preempt(GICv3CPUState *cs, uint64_t lr)
 >          return true;
 >      }
 >
-> +    if (cs->gic->nmi_support && cs->hppi.nmi &&
-> +        (cs->hppi.prio & mask) == (rprio & mask)) {
-> +        if ((cs->hppi.grp == GICV3_G1NS) &&
-> +            !(cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI)) {
-> +            return true;
-> +        }
-> +        if ((cs->hppi.grp == GICV3_G1) &&
-> +            !(cs->icc_apr[GICV3_G1][0] & ICC_AP1R_EL1_NMI)) {
-> +            return true;
-> +        }
-
-You can write this part a bit more concisely:
-
-           if (!(cs->icc_apr[cs->hppi.grp][0] & ICC_AP1R_EL1_NMI)) {
-               return true;
-           }
-
-rather than writing out the G1 and G1NS cases separately.
-
+> +    if ((prio & mask) == (rprio & mask) &&
+> +        cs->gic->nmi_support && (lr & ICH_LR_EL2_NMI) &&
+> +        (!(cs->ich_apr[GICV3_G1NS][0] & ICV_AP1R_EL1_NMI))) {
+> +        return true;
 > +    }
 > +
 >      return false;
 >  }
 
-> @@ -1159,13 +1212,16 @@ static uint64_t icc_iar0_read(CPUARMState *env, const ARMCPRegInfo *ri)
->  static uint64_t icc_iar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+This isn't the only change needed to icv_hppi_can_preempt():
+virtual NMIs are never masked by the MPR, so that check also
+must be changed. If we pull out a variable:
+
+    bool is_nmi = cs->gic->nmi_support && (lr & ICH_LR_EL2_NMI);
+
+we can use that both to gate the vpmr check:
+
+    if (!is_nmi && prio >= vpmr) {
+
+and also in the priority check you have here.
+
+> @@ -736,13 +765,19 @@ static void icv_activate_irq(GICv3CPUState *cs, int idx, int grp)
+>       */
+>      uint32_t mask = icv_gprio_mask(cs, grp);
+>      int prio = ich_lr_prio(cs->ich_lr_el2[idx]) & mask;
+> +    bool nmi = cs->ich_lr_el2[idx] & ICH_LR_EL2_NMI;
+>      int aprbit = prio >> (8 - cs->vprebits);
+>      int regno = aprbit / 32;
+>      int regbit = aprbit % 32;
+>
+>      cs->ich_lr_el2[idx] &= ~ICH_LR_EL2_STATE_PENDING_BIT;
+>      cs->ich_lr_el2[idx] |= ICH_LR_EL2_STATE_ACTIVE_BIT;
+> -    cs->ich_apr[grp][regno] |= (1 << regbit);
+> +
+> +    if (cs->gic->nmi_support && nmi) {
+> +        cs->ich_apr[grp][regno] |= ICV_AP1R_EL1_NMI;
+> +    } else {
+> +        cs->ich_apr[grp][regno] |= (1 << regbit);
+> +    }
+>  }
+>
+>  static void icv_activate_vlpi(GICv3CPUState *cs)
+> @@ -776,7 +811,11 @@ static uint64_t icv_iar_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>          if (thisgrp == grp && icv_hppi_can_preempt(cs, lr)) {
+>              intid = ich_lr_vintid(lr);
+>              if (!gicv3_intid_is_special(intid)) {
+> -                icv_activate_irq(cs, idx, grp);
+> +                if (!(lr & ICH_LR_EL2_NMI)) {
+
+This is missing checks on both whether the GIC has NMI support and
+on whether the SCTLR NMI bit is set (compare pseudocode
+VirtualReadIAR1()). I suggest defining a
+
+        bool nmi = cs->gic->nmi_support &&
+            (env->cp15.sctlr_el[arm_current_el(env)] & SCTLR_NMI) &&
+            (lr & ICH_LR_EL2_NMI);
+
+and then you can check "if (!nmi)" here.
+
+> +                    icv_activate_irq(cs, idx, grp);
+> +                } else {
+> +                    intid = INTID_NMI;
+> +                }
+>              } else {
+>                  /* Interrupt goes from Pending to Invalid */
+>                  cs->ich_lr_el2[idx] &= ~ICH_LR_EL2_STATE_PENDING_BIT;
+> @@ -797,8 +836,32 @@ static uint64_t icv_iar_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>
+>  static uint64_t icv_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
 >  {
->      GICv3CPUState *cs = icc_cs_from_env(env);
-> +    int el = arm_current_el(env);
->      uint64_t intid;
->
->      if (icv_access(env, HCR_IMO)) {
->          return icv_iar_read(env, ri);
->      }
->
-> -    if (!icc_hppi_can_preempt(cs)) {
-> +    if (cs->hppi.nmi && env->cp15.sctlr_el[el] & SCTLR_NMI) {
-> +        intid = INTID_NMI;
-> +    } else if (!icc_hppi_can_preempt(cs)) {
->          intid = INTID_SPURIOUS;
->      } else {
->          intid = icc_hppir1_value(cs, env);
+> -    /* todo */
+> +    GICv3CPUState *cs = icc_cs_from_env(env);
+> +    int idx = hppvi_index(cs);
+>      uint64_t intid = INTID_SPURIOUS;
+> +
+> +    if (idx >= 0 && idx != HPPVI_INDEX_VLPI) {
+> +        uint64_t lr = cs->ich_lr_el2[idx];
+> +        int thisgrp = (lr & ICH_LR_EL2_GROUP) ? GICV3_G1NS : GICV3_G0;
+> +
+> +        if ((thisgrp == GICV3_G1NS) && (lr & ICH_LR_EL2_NMI)) {
+> +            intid = ich_lr_vintid(lr);
+> +            if (!gicv3_intid_is_special(intid)) {
+> +                icv_activate_irq(cs, idx, GICV3_G1NS);
+> +            } else {
+> +                /* Interrupt goes from Pending to Invalid */
+> +                cs->ich_lr_el2[idx] &= ~ICH_LR_EL2_STATE_PENDING_BIT;
+> +                /* We will now return the (bogus) ID from the list register,
+> +                 * as per the pseudocode.
+> +                 */
 
-This is the wrong order -- the cases where icc_hppi_can_preempt()
-returns false need to take priority over the case where we return
-INTID_NMI. You can get that by structuring it similarly to the
-pseudocode:
+QEMU's coding style wants the /* on a line of its own for a
+multiline comment.
 
-    if (!icc_hppi_can_preempt(cs)) {
-        intid = INTID_SPURIOUS;
-    } else {
-        intid = icc_hppir1_value(cs, env);
-    }
-
-    if (!gicv3_intid_is_special(intid)) {
-        if (cs->hppi.nmi && env->cp15.sctlr_el[el] & SCTLR_NMI) {
-            intid = INTID_NMI;
-        } else {
-            icc_activate_irq(cs, intid);
-        }
-    }
-
-> @@ -1803,6 +1901,22 @@ static uint64_t icc_rpr_read(CPUARMState *env, const ARMCPRegInfo *ri)
->          }
->      }
->
-> +    if (cs->gic->nmi_support) {
-> +        /* NMI info is reported in the high bits of RPR */
-> +        if (arm_feature(env, ARM_FEATURE_EL3) && !arm_is_secure(env)) {
-> +            if (cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI) {
-> +                prio |= ICC_RPR_EL1_NSNMI;
-
-This should be ICC_RPR_EL1_NMI. Compare the pseudocode for ICC_RPR_EL1:
-in the EL3-nonsecure case we set pPriority<63>.
-
-> +            }
-> +        } else {
-> +            if (cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI) {
-> +                prio |= ICC_RPR_EL1_NSNMI;
-> +            }
-> +            if (cs->icc_apr[GICV3_G1][0] & ICC_AP1R_EL1_NMI) {
-> +                prio |= ICC_RPR_EL1_NMI;
 > +            }
 > +        }
 > +    }
 > +
->      trace_gicv3_icc_rpr_read(gicv3_redist_affid(cs), prio);
->      return prio;
+> +    trace_gicv3_icv_nmiar1_read(gicv3_redist_affid(cs), intid);
+> +
+> +    gicv3_cpuif_virt_update(cs);
+> +
+>      return intid;
+>  }
+
+> @@ -1504,6 +1573,7 @@ static void icv_eoir_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>      int irq = value & 0xffffff;
+>      int grp = ri->crm == 8 ? GICV3_G0 : GICV3_G1NS;
+>      int idx, dropprio;
+> +    bool nmi = false;
+>
+>      trace_gicv3_icv_eoir_write(ri->crm == 8 ? 0 : 1,
+>                                 gicv3_redist_affid(cs), value);
+> @@ -1516,8 +1586,8 @@ static void icv_eoir_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>       * error checks" (because that lets us avoid scanning the AP
+>       * registers twice).
+>       */
+> -    dropprio = icv_drop_prio(cs);
+> -    if (dropprio == 0xff) {
+> +    dropprio = icv_drop_prio(cs, &nmi);
+> +    if (dropprio == 0xff && !nmi) {
+>          /* No active interrupt. It is CONSTRAINED UNPREDICTABLE
+>           * whether the list registers are checked in this
+>           * situation; we choose not to.
+> @@ -1539,8 +1609,9 @@ static void icv_eoir_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>          uint64_t lr = cs->ich_lr_el2[idx];
+>          int thisgrp = (lr & ICH_LR_EL2_GROUP) ? GICV3_G1NS : GICV3_G0;
+>          int lr_gprio = ich_lr_prio(lr) & icv_gprio_mask(cs, grp);
+> +        int thisnmi = lr & ICH_LR_EL2_NMI;
+
+This variable should be "bool". An "int" is 32 bits, so because
+ICH_LR_EL2_NMI is bit 59, the value of "lr & ICH_LR_EL2_NMI" when
+cast to int is always zero. Using bool avoids this bug and also
+is consistent with the type we used for the 'nmi' variable we're
+about to compare it with.
+
+> -        if (thisgrp == grp && lr_gprio == dropprio) {
+> +        if (thisgrp == grp && (lr_gprio == dropprio || thisnmi == nmi)) {
+>              if (!icv_eoi_split(env, cs) || irq >= GICV3_LPI_INTID_START) {
+>                  /*
+>                   * Priority drop and deactivate not split: deactivate irq now.
+> @@ -2626,7 +2697,11 @@ static void ich_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>
+>      trace_gicv3_ich_ap_write(ri->crm & 1, regno, gicv3_redist_affid(cs), value);
+>
+> -    cs->ich_apr[grp][regno] = value & 0xFFFFFFFFU;
+> +    if (cs->gic->nmi_support) {
+> +        cs->ich_apr[grp][regno] = value & (0xFFFFFFFFU | ICV_AP1R_EL1_NMI);
+> +    } else {
+> +        cs->ich_apr[grp][regno] = value & 0xFFFFFFFFU;
+> +    }
+>      gicv3_cpuif_virt_irq_fiq_update(cs);
 >  }
 
 thanks
