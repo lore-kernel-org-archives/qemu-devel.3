@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19EBFCD1294
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB310C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:31:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrbP7-0008NY-Vb; Tue, 02 Apr 2024 06:30:10 -0400
+	id 1rrbP8-0008Np-LD; Tue, 02 Apr 2024 06:30:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrbP2-0008KA-He
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:04 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1rrbP4-0008L8-8M
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:06 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrbOy-0003e7-CN
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:03 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4161eb1a9fcso41475e9.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:29:55 -0700 (PDT)
+ id 1rrbOy-0003fL-KD
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:05 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-415584360c0so18040185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:29:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712053794; x=1712658594; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712053795; x=1712658595; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kF8DIXj6upaIDgYItyrCELeFAUmDbN8yJ98Yufsh5Fc=;
- b=flYTtX7Nt/Y7dAXF4qiSRbdWkB3CALX3wLR8eRsetcmx24jgE6KUGdk3caOnM0sgTG
- y6GlWapFRnsCYl0vyxZM4cj4Y4SZ4YNVolUVe+FvoHBcAgdkmRt0XETpGxUJqxk49OmH
- SD4afO4UmUYqOg5PZ4eNeec7jzMK5LgFhGSZZ/NeX2DZkAjmQdyxosW88lUp/8snYSLp
- XaDiARJqzVTrfGEpMudaTt9OVuKXHbWGmdnE4FrXFOa1MtMFDHS7SqvcKIEvDxXGKFUj
- rwgi3cfThG51m+LXaHCpR58Jg2qTFVJTKuXE2C4fxpS522Ys9mi/oREbJibnW8L5Nkwb
- fHhg==
+ :reply-to; bh=z0wrG3SHPfvp8oYYuwfJ6UUShS6yr2AWBhFDuw/bUJo=;
+ b=bIfQCa/60y/rKUTJWf/QY3qsnEvE1Nq7twIGYyuRhO3SX3WPbZmcH8uOsil8nqoafW
+ O7SywO37lNrbnU+Xeupk2hO/sC9ezWl/q+1/J5g6v4oVZTpTUeSG09PlDaoJWDOJpcQ4
+ TDQNxTvTyXzu4+FZ6TV4FYk4PPLZNOPrtS9BBUtpUDKHqhrp6q9nJ6PUE3qCKnsyLxDX
+ ACBAQwIlWsGj0WTcSxIG8kP7syzQTVal8ZBryfRp4RBmdq7qqYWxWxH6siHYCUnFhxxr
+ HKalVemX+dX+h67A7DGK8fXh2OyTg6vuHSqLiH8lA4wSqFiZAkJ1PqmZI8ToDrBW4g3b
+ /htw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712053794; x=1712658594;
+ d=1e100.net; s=20230601; t=1712053795; x=1712658595;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kF8DIXj6upaIDgYItyrCELeFAUmDbN8yJ98Yufsh5Fc=;
- b=i734Q81r3fVOD57OtojeWJZRormjylJZ5R9tU3N4hUWKlyQCstVSNHJT7h3+Gb8bPi
- t3ZRQEXVfnkd8Okp+HHYZWsevtmFcQyoIkjwD/tKoLC0EIYzTdr5fAIigyWx0eaj3zdG
- V/QDIIB3985015i6G0Zjj+Vy1w1dG/QUKlx294fJ2dsCG/UkzmnyUVKeYfC9R4WAbI3G
- FHAG0UbTfsTTa5zXhe/jOdkbR5AvosljgbVOKoL9ACH/FDi6ruShP90kauL6jRSuwf+O
- +zYpqmBXVeaeMSAutX41/rHn5VbbxS5OiAEw9dAaHLBSeuRBnZZgHkgTqqWtuJTG/CAA
- mo1A==
-X-Gm-Message-State: AOJu0Yym3NdqWVeh2YYMS83M+D+sjaNinaRyd2xErkTrJ/x+Vy+Kyfhx
- PHBAibcyWKsIFefkUf5m6GKwAipQx0XxdXNIIMS8uhuMkr5JyA68EhT2JnO++o9JUn8GqUYSWtM
- O
-X-Google-Smtp-Source: AGHT+IHYHlLqPCEATaXSkGcg8fXvF2071t3vB8QI5daX1CfAmXI295nfjMS/AE6mLULjKIpTmI9lsw==
-X-Received: by 2002:a05:600c:1c12:b0:415:66ac:614d with SMTP id
- j18-20020a05600c1c1200b0041566ac614dmr3631159wms.13.1712053793933; 
- Tue, 02 Apr 2024 03:29:53 -0700 (PDT)
+ bh=z0wrG3SHPfvp8oYYuwfJ6UUShS6yr2AWBhFDuw/bUJo=;
+ b=nEqbtIE11e53B85T+U+47cdcq57Xg4vwtLp/rC19HuhirerkRkjOp/KvyXsalQzukd
+ J7S6dOp1QmiNixjNsp4m7a0ubF5MD67y+8n6zEOyJneRPhUlF4ce6JXkEmMHrWxjyJcx
+ tKHJkvSEH0y6YmvA6ay7x0QsknMJhqGMbeBk5u8aK8IJysjqvwydzwLAgv+BilHtN7C1
+ GXNwi4f8ZFJPnwolJT7U/cRqu30y7Jc75SjWZGr+Zw8Bte9KiPJ5Y97H2dpt8GuaBk1a
+ GqQ64rkwStZOwZbT4N7Qe+LzyrA7FpmyeOozCowgzeLrDLZjGTEVc06+whYiho0RBYuM
+ 1lpg==
+X-Gm-Message-State: AOJu0YxlkaKq4WavPGT3pAB+wXWpgVm8zAjTWNLCMqhyeRf2OFmIdmy2
+ DI9EuA91Ki5hsZDqx+gwcsAtQsY5467NxWAAkld4KGcP+6VhvedvRij+tZIbWjQZrtGqDJVzzdo
+ n
+X-Google-Smtp-Source: AGHT+IGG3jziZXHaZrHtdEtPV3sg+dgHdBj7zdVKW7WJtJrhIUTHv9zkspxgoILz3jeuJo0ebHRFVA==
+X-Received: by 2002:a05:600c:3587:b0:414:ae9b:7d71 with SMTP id
+ p7-20020a05600c358700b00414ae9b7d71mr9190322wmq.27.1712053795400; 
+ Tue, 02 Apr 2024 03:29:55 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- o15-20020a05600c4fcf00b0041488895a37sm20586175wmq.33.2024.04.02.03.29.53
+ o15-20020a05600c4fcf00b0041488895a37sm20586175wmq.33.2024.04.02.03.29.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Apr 2024 03:29:53 -0700 (PDT)
+ Tue, 02 Apr 2024 03:29:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/5] target/arm: take HSTR traps of cp15 accesses to EL2,
- not EL1
-Date: Tue,  2 Apr 2024 11:29:47 +0100
-Message-Id: <20240402102951.3099078-2-peter.maydell@linaro.org>
+Subject: [PULL 4/5] tests/qtest: Fix STM32L4x5 GPIO test on 32-bit
+Date: Tue,  2 Apr 2024 11:29:50 +0100
+Message-Id: <20240402102951.3099078-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240402102951.3099078-1-peter.maydell@linaro.org>
 References: <20240402102951.3099078-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,37 +94,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HSTR_EL2 register allows the hypervisor to trap AArch32 EL1 and
-EL0 accesses to cp15 registers.  We incorrectly implemented this so
-they trap to EL1 when we detect the need for a HSTR trap at code
-generation time.  (The check in access_check_cp_reg() which we do at
-runtime to catch traps from EL0 is correctly routing them to EL2.)
+From: Cédric Le Goater <clg@redhat.com>
 
-Use the correct target EL when generating the code to take the trap.
+The test mangles the GPIO address and the pin number in the
+qtest_add_data_func data parameter. Doing so, it assumes that the host
+pointer size is always 64-bit, which breaks on 32-bit :
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2226
-Fixes: 049edada5e93df ("target/arm: Make HSTR_EL2 traps take priority over UNDEF-at-EL1")
+../tests/qtest/stm32l4x5_gpio-test.c: In function ‘test_gpio_output_mode’:
+../tests/qtest/stm32l4x5_gpio-test.c:272:25: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+  272 |     unsigned int pin = ((uint64_t)data) & 0xF;
+      |                         ^
+../tests/qtest/stm32l4x5_gpio-test.c:273:22: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+  273 |     uint32_t gpio = ((uint64_t)data) >> 32;
+      |                      ^
+
+To fix, improve the mangling of the GPIO address and pin number fields
+by using GPIO_SIZE so that the resulting value fits in a 32-bit pointer.
+While at it, include some helpers to hide the details.
+
+Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Cc: Inès Varhol <ines.varhol@telecom-paris.fr>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Message-id: 20240329092747.298259-1-clg@redhat.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240325133116.2075362-1-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/stm32l4x5_gpio-test.c | 59 ++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 24 deletions(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c8a24706750..69585e6003d 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -4585,7 +4585,7 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
-             tcg_gen_andi_i32(t, t, 1u << maskbit);
-             tcg_gen_brcondi_i32(TCG_COND_EQ, t, 0, over.label);
+diff --git a/tests/qtest/stm32l4x5_gpio-test.c b/tests/qtest/stm32l4x5_gpio-test.c
+index cc56be2031f..0f6bda54d3c 100644
+--- a/tests/qtest/stm32l4x5_gpio-test.c
++++ b/tests/qtest/stm32l4x5_gpio-test.c
+@@ -76,6 +76,17 @@ const uint32_t idr_reset[NUM_GPIOS] = {
+     0x00000000
+ };
  
--            gen_exception_insn(s, 0, EXCP_UDEF, syndrome);
-+            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, 2);
-             /*
-              * gen_exception_insn() will set is_jmp to DISAS_NORETURN,
-              * but since we're conditionally branching over it, we want
++#define PIN_MASK        0xF
++#define GPIO_ADDR_MASK  (~(GPIO_SIZE - 1))
++
++static inline void *test_data(uint32_t gpio_addr, uint8_t pin)
++{
++    return (void *)(uintptr_t)((gpio_addr & GPIO_ADDR_MASK) | (pin & PIN_MASK));
++}
++
++#define test_gpio_addr(data)      ((uintptr_t)(data) & GPIO_ADDR_MASK)
++#define test_pin(data)            ((uintptr_t)(data) & PIN_MASK)
++
+ static uint32_t gpio_readl(unsigned int gpio, unsigned int offset)
+ {
+     return readl(gpio + offset);
+@@ -269,8 +280,8 @@ static void test_gpio_output_mode(const void *data)
+      * Additionally, it checks that values written to ODR
+      * when not in output mode are stored and not discarded.
+      */
+-    unsigned int pin = ((uint64_t)data) & 0xF;
+-    uint32_t gpio = ((uint64_t)data) >> 32;
++    unsigned int pin = test_pin(data);
++    uint32_t gpio = test_gpio_addr(data);
+     unsigned int gpio_id = get_gpio_id(gpio);
+ 
+     qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
+@@ -304,8 +315,8 @@ static void test_gpio_input_mode(const void *data)
+      * corresponding GPIO line high/low : it should set the
+      * right bit in IDR and send an irq to syscfg.
+      */
+-    unsigned int pin = ((uint64_t)data) & 0xF;
+-    uint32_t gpio = ((uint64_t)data) >> 32;
++    unsigned int pin = test_pin(data);
++    uint32_t gpio = test_gpio_addr(data);
+     unsigned int gpio_id = get_gpio_id(gpio);
+ 
+     qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
+@@ -333,8 +344,8 @@ static void test_pull_up_pull_down(const void *data)
+      * Test that a floating pin with pull-up sets the pin
+      * high and vice-versa.
+      */
+-    unsigned int pin = ((uint64_t)data) & 0xF;
+-    uint32_t gpio = ((uint64_t)data) >> 32;
++    unsigned int pin = test_pin(data);
++    uint32_t gpio = test_gpio_addr(data);
+     unsigned int gpio_id = get_gpio_id(gpio);
+ 
+     qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
+@@ -363,8 +374,8 @@ static void test_push_pull(const void *data)
+      * disconnects the pin, that the pin can't be set or reset
+      * externally afterwards.
+      */
+-    unsigned int pin = ((uint64_t)data) & 0xF;
+-    uint32_t gpio = ((uint64_t)data) >> 32;
++    unsigned int pin = test_pin(data);
++    uint32_t gpio = test_gpio_addr(data);
+     uint32_t gpio2 = GPIO_BASE_ADDR + (GPIO_H - gpio);
+ 
+     qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
+@@ -410,8 +421,8 @@ static void test_open_drain(const void *data)
+      * However a pin set low externally shouldn't be disconnected,
+      * and it can be set low externally when in open-drain mode.
+      */
+-    unsigned int pin = ((uint64_t)data) & 0xF;
+-    uint32_t gpio = ((uint64_t)data) >> 32;
++    unsigned int pin = test_pin(data);
++    uint32_t gpio = test_gpio_addr(data);
+     uint32_t gpio2 = GPIO_BASE_ADDR + (GPIO_H - gpio);
+ 
+     qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
+@@ -466,8 +477,8 @@ static void test_bsrr_brr(const void *data)
+      * has the desired effect on ODR.
+      * In BSRR, BSx has priority over BRx.
+      */
+-    unsigned int pin = ((uint64_t)data) & 0xF;
+-    uint32_t gpio = ((uint64_t)data) >> 32;
++    unsigned int pin = test_pin(data);
++    uint32_t gpio = test_gpio_addr(data);
+ 
+     gpio_writel(gpio, BSRR, (1 << pin));
+     g_assert_cmphex(gpio_readl(gpio, ODR), ==, reset(gpio, ODR) | (1 << pin));
+@@ -507,40 +518,40 @@ int main(int argc, char **argv)
+      * is problematic since the pin was already high.
+      */
+     qtest_add_data_func("stm32l4x5/gpio/test_gpioc5_output_mode",
+-                        (void *)((uint64_t)GPIO_C << 32 | 5),
++                        test_data(GPIO_C, 5),
+                         test_gpio_output_mode);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpioh3_output_mode",
+-                        (void *)((uint64_t)GPIO_H << 32 | 3),
++                        test_data(GPIO_H, 3),
+                         test_gpio_output_mode);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_input_mode1",
+-                        (void *)((uint64_t)GPIO_D << 32 | 6),
++                        test_data(GPIO_D, 6),
+                         test_gpio_input_mode);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_input_mode2",
+-                        (void *)((uint64_t)GPIO_C << 32 | 10),
++                        test_data(GPIO_C, 10),
+                         test_gpio_input_mode);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_pull_up_pull_down1",
+-                        (void *)((uint64_t)GPIO_B << 32 | 5),
++                        test_data(GPIO_B, 5),
+                         test_pull_up_pull_down);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_pull_up_pull_down2",
+-                        (void *)((uint64_t)GPIO_F << 32 | 1),
++                        test_data(GPIO_F, 1),
+                         test_pull_up_pull_down);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_push_pull1",
+-                        (void *)((uint64_t)GPIO_G << 32 | 6),
++                        test_data(GPIO_G, 6),
+                         test_push_pull);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_push_pull2",
+-                        (void *)((uint64_t)GPIO_H << 32 | 3),
++                        test_data(GPIO_H, 3),
+                         test_push_pull);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_open_drain1",
+-                        (void *)((uint64_t)GPIO_C << 32 | 4),
++                        test_data(GPIO_C, 4),
+                         test_open_drain);
+     qtest_add_data_func("stm32l4x5/gpio/test_gpio_open_drain2",
+-                        (void *)((uint64_t)GPIO_E << 32 | 11),
++                        test_data(GPIO_E, 11),
+                         test_open_drain);
+     qtest_add_data_func("stm32l4x5/gpio/test_bsrr_brr1",
+-                        (void *)((uint64_t)GPIO_A << 32 | 12),
++                        test_data(GPIO_A, 12),
+                         test_bsrr_brr);
+     qtest_add_data_func("stm32l4x5/gpio/test_bsrr_brr2",
+-                        (void *)((uint64_t)GPIO_D << 32 | 0),
++                        test_data(GPIO_D, 0),
+                         test_bsrr_brr);
+ 
+     qtest_start("-machine b-l475e-iot01a");
 -- 
 2.34.1
 
