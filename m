@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD75CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:20:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1DBCD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:27:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rre0z-0006cS-BD; Tue, 02 Apr 2024 09:17:25 -0400
+	id 1rre9o-0007AJ-UZ; Tue, 02 Apr 2024 09:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rre0s-00061K-9S
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:17:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rre0X-0006P9-7a
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:17:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712063815;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=7agLjjzk8v9ujmcbZ2gvOtjaRd7wQXKN8qM36ZwHWGA=;
- b=CeAFLKEuj1qrXxOjo3i2nJL8C0No9SzgBPlbHCcNtcSRynTZmmYjaFb2aaathCp0sFTond
- FMrURY/3rgQn0jlIKAkjrKe6nHx/sVWU2IkIcB7KHxYeYMzDiMKFj2A71M3fn8oo5AzM+P
- DAU9ews18VpLrHg8e0YUCm/ovInqVY8=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-e9DuDHaNN4GxNhgs8vQnlA-1; Tue, 02 Apr 2024 09:16:54 -0400
-X-MC-Unique: e9DuDHaNN4GxNhgs8vQnlA-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d82715d3e2so8712101fa.2
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:16:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rre9n-0007A5-IB
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:26:31 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rre9l-0005mk-Pt
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:26:31 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-415584360c0so19323305e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:26:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712064388; x=1712669188; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jvh3lFDKjxKup6KjSLf4pNYzpRZV6jHaU5FQzFg3rEA=;
+ b=AQu408imQlT+VNZYFN+VhjN2rt6N4ZYqsTrHJZyN0rtZdJleW0FDXDC6vMyoBoAO7Q
+ 5ugdn6LgcZFM1cuwtnxOCnSLoO3N921Z/RP0UfP+V0Kg1qhDhPg6XDgnBerXZbpJt4cN
+ l3/pmFVQJ2tvLjodoPHq/kCmp0Q0i6H9/c1aXArmWZbiGC29d3H4AcT3gK0X5LG1ge1/
+ fHyo8GoalAZmd2JoMI1M0icZhNEcf0m7MtirRqfsWq+z7jonMHecwfIZ0LGScpSgSPb6
+ ZZLJW3z30lcL0cLNTj+i3538vqemUZuaTy1sh7FGUIxuheA33POUfpkdPhLPJNaXUwCJ
+ XRAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712063812; x=1712668612;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7agLjjzk8v9ujmcbZ2gvOtjaRd7wQXKN8qM36ZwHWGA=;
- b=iHtatK3gTR2jzUdtEIU9hnqXICN/+PwfKcAzvDpRDeuZboez715d8jOm7jRENZuZO2
- DD64+6wKUvYhAXX+BcRSqbQFnY0pX2ZHYcjgc2I3jiMK6KCRd9hbc2lCf23M0jzo4CzO
- lSHgBVOmcDYw/c09u6VD/H1d6DVHapArd9wyBEPbCgEM2nwr/I2gtQC94xmwroRLPuWZ
- J1ZDgV8sybh1SDXj9D6mlQPVfYZfcoxvJSA/K5IAEU28ADxrp+bymlfQKx2XYuIyqbvx
- ENTnPPGWXPydCzeScc02thnBgPmb9A4dlQGYnQT7XVsLePyTpZEquSc8VyPuqkR/13Op
- SsVw==
-X-Gm-Message-State: AOJu0Yx6hpiU221v8UV9v+kqPXpE9mtPe4OnVsGkmnRYwfHkpdyqJqVL
- VEFMhm+EUmR6pqrJ06P85OfziwaTJCaTzts+P9D6rw/dE+PuJva8ew44RmxVFmm3YHc/dEaUdzz
- j7004iZZg8lMHR/iC9gc58N+azVLBmOGqKQTaMqcsg6be3NdumQ+Z0LQ5igbUqF0YCkkAiHt4aq
- hEzh1siOZC/JGomtJo96E5YFjjxhB529CyP6JP
-X-Received: by 2002:a05:651c:c:b0:2d8:11cd:4223 with SMTP id
- n12-20020a05651c000c00b002d811cd4223mr4204165lja.2.1712063812378; 
- Tue, 02 Apr 2024 06:16:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExS4tS9bUBWtvHGlmOqrVuhQxXtjQEnKAHiHtNSa3HcTAm/F4oM/9zKxcBCMqzZu53u9qbZA==
-X-Received: by 2002:a05:651c:c:b0:2d8:11cd:4223 with SMTP id
- n12-20020a05651c000c00b002d811cd4223mr4204141lja.2.1712063811926; 
- Tue, 02 Apr 2024 06:16:51 -0700 (PDT)
-Received: from avogadro.local ([151.95.49.219])
+ d=1e100.net; s=20230601; t=1712064388; x=1712669188;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jvh3lFDKjxKup6KjSLf4pNYzpRZV6jHaU5FQzFg3rEA=;
+ b=KTZUZxR7UWLviPp4PKBdAFmtexDMFK/5eQqdmWZ44RFT83Tq7RlgLD5zsigAQzK0X4
+ 1vjSYJQHa/DtbyUW5NXE368irzLMGiRx9pEoBeao63CSeMfZWCctRHwig1BIxYqGAJtI
+ eo690fJN70/E1Z0TjujqvLnQvdBjdmE+tzwdvswS1miW2CRRxK67ThFB949B6w836gLf
+ HvBtIZNGkvMOxMbAyFp0n+28K3AcUpK2yEob1JEjQxqK1lWZIklU4IhJpwd85qrabvRO
+ OvW76hk2czzcFJS88JjZTp6RPUbXpyjvFI9ZapLqAyJhRKhz48GC1dy1qCejfF6kj2IS
+ enHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTD7xSa/ebGaqy6EDy2JSqVe3qjZNHu6fKnNJhfiNXJSx60sIstHoh9WOBSJh5Xs2AR8QiDwFFK5hpH/ukkisx1qgX79E=
+X-Gm-Message-State: AOJu0YwCl/XNhYDx9ToG9oh1fDf1Ng+xjBxhHCHmRadSBQypmdwTYlYk
+ vUkBarKxxCXcIJvgWUYJ2EtntWHNvKWtsva7JZNFmpBFYl0/Q14e9zlaEig3IyE=
+X-Google-Smtp-Source: AGHT+IGXxbjqPVjiuwK4eEgA4lgSW1wQ4KyqNyo3fsXU+gUGn9dV1sOM+Ca5lZxvfk15qD20cAG9yA==
+X-Received: by 2002:a05:600c:3d87:b0:415:6d52:5489 with SMTP id
+ bi7-20020a05600c3d8700b004156d525489mr2444136wmb.13.1712064387965; 
+ Tue, 02 Apr 2024 06:26:27 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.202.91])
  by smtp.gmail.com with ESMTPSA id
- f14-20020a05600c154e00b00414674a1a40sm17893359wmg.45.2024.04.02.06.16.51
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Apr 2024 06:16:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 0/7] lsi, vga fixes for 2024-04-02
-Date: Tue,  2 Apr 2024 15:16:42 +0200
-Message-ID: <20240402131649.23225-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ i5-20020a05600c354500b00414924f307csm18014059wmq.26.2024.04.02.06.26.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Apr 2024 06:26:27 -0700 (PDT)
+Message-ID: <16cb6ac0-818b-4393-8b27-20879a150a79@linaro.org>
+Date: Tue, 2 Apr 2024 15:26:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] sh4: mac.w: memory accesses are 16-bit words
+To: Zack Buhman <zack@buhman.org>, qemu-devel@nongnu.org
+References: <20240402093756.27466-1-zack@buhman.org>
+Content-Language: en-US
+Cc: Samuel Tardieu <sam@rfc1149.net>, Aurelien Jarno <aurelien@aurel32.net>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240402093756.27466-1-zack@buhman.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,38 +96,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b9dbf6f9bf533564f6a4277d03906fcd32bb0245:
+On 2/4/24 11:37, Zack Buhman wrote:
+> Before this change, executing a code sequence such as:
+> 
+>             mova   tblm,r0
+>             mov    r0,r1
+>             mova   tbln,r0
+>             clrs
+>             clrmac
+>             mac.w  @r0+,@r1+
+>             mac.w  @r0+,@r1+
+> 
+>             .align 4
+>    tblm:    .word  0x1234
+>             .word  0x5678
+>    tbln:    .word  0x9abc
+>             .word  0xdefg
+> 
+> Does not result in correct behavior:
+> 
+> Expected behavior:
+>    first macw : macl = 0x1234 * 0x9abc + 0x0
+>                 mach = 0x0
+> 
+>    second macw: macl = 0x5678 * 0xdefg + 0xb00a630
+>                 mach = 0x0
+> 
+> Observed behavior (qemu-sh4eb, prior to this commit):
+> 
+>    first macw : macl = 0x5678 * 0xdefg + 0x0
+>                 mach = 0x0
+> 
+>    second macw: (unaligned longword memory access, SIGBUS)
+> 
+> Various SH-4 ISA manuals also confirm that `mac.w` is a 16-bit word memory
+> access, not a 32-bit longword memory access.
+> 
+> Signed-off-by: Zack Buhman <zack@buhman.org>
+> ---
+>   target/sh4/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+> index a9b1bc7524..6643c14dde 100644
+> --- a/target/sh4/translate.c
+> +++ b/target/sh4/translate.c
+> @@ -816,10 +816,10 @@ static void _decode_opc(DisasContext * ctx)
+>               TCGv arg0, arg1;
+>               arg0 = tcg_temp_new();
+>               tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
+> -                                MO_TESL | MO_ALIGN);
+> +                                MO_TESW | MO_ALIGN);
+>               arg1 = tcg_temp_new();
+>               tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx,
+> -                                MO_TESL | MO_ALIGN);
+> +                                MO_TESW | MO_ALIGN);
 
-  Merge tag 'pull-tcg-20240329' of https://gitlab.com/rth7680/qemu into staging (2024-03-30 14:54:57 +0000)
+Apparently invalid since its introduction in commit fdf9b3e831.
 
-are available in the Git repository at:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to eac4af186f6db46fc90ec571a855bd6fa4cb7841:
-
-  pc_q35: remove unnecessary m->alias assignment (2024-04-02 15:14:02 +0200)
-
-----------------------------------------------------------------
-* lsi53c895a: fix assertion failure with invalid Block Move
-* vga: fix assertion failure with 4- and 16-color modes
-* remove unnecessary assignment
-
-----------------------------------------------------------------
-Paolo Bonzini (7):
-      vga: merge conditionals on shift control register
-      vga: move computation of dirty memory region later
-      vga: adjust dirty memory region if pel panning is active
-      vga: do not treat horiz pel panning value of 8 as "enabled"
-      lsi53c895a: avoid out of bounds access to s->msg[]
-      lsi53c895a: detect invalid Block Move instruction
-      pc_q35: remove unnecessary m->alias assignment
-
- hw/display/vga.c     | 146 +++++++++++++++++++++++++--------------------------
- hw/i386/pc_q35.c     |   1 -
- hw/scsi/lsi53c895a.c |  28 +++++++---
- 3 files changed, 94 insertions(+), 81 deletions(-)
--- 
-2.44.0
+>               gen_helper_macw(tcg_env, arg0, arg1);
+>               tcg_gen_addi_i32(REG(B11_8), REG(B11_8), 2);
+>               tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 2);
 
 
