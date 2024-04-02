@@ -4,106 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D14FCD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 21:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35E9CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 22:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrlvn-00057I-Lc; Tue, 02 Apr 2024 17:44:35 -0400
+	id 1rrmSf-0003hH-W2; Tue, 02 Apr 2024 18:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rrlvj-00056K-HD
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 17:44:32 -0400
-Received: from mail-co1nam11on2087.outbound.protection.outlook.com
- ([40.107.220.87] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rrmSe-0003fi-4O
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 18:18:32 -0400
+Received: from mout.gmx.net ([212.227.17.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rrlvg-0005b3-7w
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 17:44:31 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Bfcxn//rMZ6ZxE06nApGbWntwaYoSMGb8yOWmXh9Bit3X2qAJLcInoGNOZoK9bLyR3jbK8i2h0VadSobibAr4qNVVIsQsxKLMyMVey3i8ZdFDEo2OOcJwQM9OH3BfcJWJ8tO6JLsGWHkvSUSXpFBEZN0O+VHZqvrnozWRQbIbuoI8gvUh3uKVpkfcLCX3uiJFRyivx1RZo06eOjeaFsm5Jt9JIIHv6IxoO942i2L4s4HdtMbvddAvEdmCEWPK5NJYwCugvLiQSLpwj1ANfShdevtgoLnJWMoOTBAvbydQ4YzHSVXjKn+edkSVaJxUCngfXVmezuxefi1RC1Eyd7UOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/1qTOcz3CnzFlpC2VbOwpb36YyFcV2VZ3CFWkHbNUZc=;
- b=V4L9wyMDRB6GTas7QiBMHmWlzVzYmXFroKVUCQHPz/coz2rsz3JDhySpPNrMA0P7JZoqZECO181dhF2W5tN/BEuAFQ+1yRhmDvtdwCDvSNrXJ75bdOgbQp0qlFpp/ECqxmI3n9EA2Gj5k44Vd1fhkqqVXwgH9CUEuBSoZ2YRcaOzt/AyTqxj3iZQVn57S7pAnUqC3Y3f17szq0Q8Y4Crmwy1NyA7Wpfb8jTRNnizvT88hzlo718hi6Zbl+p3/JmD89HpfEAmj300XSSMiY1AvjOSXyeNVje7kX6m5vmsLAfjjq6pGPfBkhQm8HAmnCNMI4nGa9z7buweFclU7q+84Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/1qTOcz3CnzFlpC2VbOwpb36YyFcV2VZ3CFWkHbNUZc=;
- b=Imr7ZFYU4RpR5gTV0qufUwHcAX7cTsxbF6+9p1579XpVFJfmYvOrMWK++MdPLoUkSKXAWMSweRk5wA86x9PGq0lqm2Xm0wtxg3um6BbZmG1/ZEQekzLE/QUqPGoISC4yNcLsaFHjNR6KVZEiDNKNWGsbJ/OzgIR60+Nf+p+F0Xw=
-Received: from DM6PR03CA0026.namprd03.prod.outlook.com (2603:10b6:5:40::39) by
- IA1PR12MB6412.namprd12.prod.outlook.com (2603:10b6:208:3af::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Tue, 2 Apr
- 2024 21:39:14 +0000
-Received: from DS1PEPF00017091.namprd03.prod.outlook.com
- (2603:10b6:5:40:cafe::e2) by DM6PR03CA0026.outlook.office365.com
- (2603:10b6:5:40::39) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46 via Frontend
- Transport; Tue, 2 Apr 2024 21:39:14 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- DS1PEPF00017091.mail.protection.outlook.com (10.167.17.133) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7452.22 via Frontend Transport; Tue, 2 Apr 2024 21:39:13 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 2 Apr
- 2024 16:39:11 -0500
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rrmSZ-0003T2-BS
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 18:18:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1712096301; x=1712701101; i=deller@gmx.de;
+ bh=IAcOAzt4DGk0YqkzlvEZhVJ6erA+CKyRopjgbOvfDfI=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+ In-Reply-To;
+ b=Q0fBe/1slrNb60KbZu4SHRSFXf7++Oy8eIN4kURbKrtecPjPhjQv/WmE7tx+VYUq
+ TW7Rd7MIXx7pFzk1inpEzapnMgKLa5v3Cs6Q4iIEWx0HVAjdAtatzwB2AYADjJKFC
+ 2eJXBaGzs4cuYK6VwPqQmtCs8Bt/V6v/yy6kbe1qXa0Th7QHps4eO8eVl2aiXarbB
+ uyL0MmrUtmgq09z43MbVGk+VckQA2dpiC2MhSFEH6fcs4EpyTYF/QIiOO88QJXD6S
+ hUEltzKqxl0ngkapYkBN6Fldw07NaRbDiP/+gNZCmE9P6yAiIZ10D52Aasulyh+n2
+ qsnE8bd00yixpC9P1g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [10.8.0.6] ([78.94.87.245]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mf078-1sTcRy3BdK-00gYYz; Wed, 03
+ Apr 2024 00:18:21 +0200
+Message-ID: <757a3716-67ac-4305-b268-a5b053edecdb@gmx.de>
+Date: Wed, 3 Apr 2024 00:18:18 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] target/hppa: mask offset bits in gva
+To: Sven Schnelle <svens@stackframe.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240324080945.991100-1-svens@stackframe.org>
+ <20240324080945.991100-3-svens@stackframe.org>
+ <ec050630-a866-4a51-8878-d35844fb66a6@linaro.org>
+ <87jzlm1334.fsf@t14.stackframe.org> <87sf04xpzi.fsf@t14.stackframe.org>
+ <a8130b3e-c80b-481d-970c-880353d22e23@linaro.org>
+ <87o7asxooa.fsf@t14.stackframe.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <87o7asxooa.fsf@t14.stackframe.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 9.0.0-rc2 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 16:38:53 -0500
-Message-ID: <171209393394.615176.17758186871788881381@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF00017091:EE_|IA1PR12MB6412:EE_
-X-MS-Office365-Filtering-Correlation-Id: bb204d2a-aa90-4f5e-14f1-08dc535d5732
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 5fUXzLzIAa/Z2Lp3wOnGGIPONes49ZTMGIprO7u+w0lr2zMom/wFfVZPTMllTvvgtLrLGpSKpxSiMA6liXwImN9+8MdZoIzamtVgCGEdV4TttAyb9tJspDlfPjT4OK3zMBMJCuy+bMDGQw+2Ox25Ql6xVmMcl1GdMYZ5CoStXNnLIw+7djmL4w9DVcRGsjXfGvMFZwH4J8744rX6i4ruyLzBw0wMb/wc01RYHIuBuP54plBc95/H0dhzUHupHm/mcSQtz3z3wCf4oR4w6qqgCg7xiqNqj+h0nFfYKAZgZVUFRrkITTfWglTNF2RsKuZvmTg2UrTCbY49vC46ykLYLiqlEPVqaTyQTOZk7NDCgf722nSE4bwNt8wwlgDGsebe6CKE9h1bgENiqwD7T3ubWwvCwN5y8ERsOJJ2spv4IRAublQF55FUh56l4MOCbHRugVW26I042LmcAx057+UxfO4QZOx+RHXL1yOI/LgQxby7M9Js2FWuf6Q/a0VHSs0eR3HBy2BUXYzY1xxB49deCPL5cJG4zraml4Grj+vG1qasBSoa1J+wLYRr/oKdKjlTSwZdD2egvNEl3R89XSIgkQrQTna+Zfk7BheNOwoz4J31B72ZQYBqSm9hAWx2RhMA8AhRM5KYSBb7qbwdoGMIqV3LS8mWv74Nj1TxPWZDiIyoVGj4leeUGbrqJ3cJVLdf5b8LKAAO9qexdPl82fjScw==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(82310400014)(376005)(36860700004)(1800799015); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Apr 2024 21:39:13.8950 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb204d2a-aa90-4f5e-14f1-08dc535d5732
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017091.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6412
-Received-SPF: permerror client-ip=40.107.220.87;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Provags-ID: V03:K1:Bq7L25s57wg8DEjktk9EReZqbfIdaq+vAFD1F+D7fhBcXv3iQ6r
+ mxme/cHMDFOE0SbvxTeKvgVbt2P/KLCsKwuyz7fOfp1dLQfMma8/I2PaE9Om4V5C9G9g0+M
+ boOAhD6/eJr+pkEhS+B0zHUnFwgGQ01OeGMCgwILqUoVmtq2l37a96BsZn25r5F3bQCFCgA
+ Il8Vdt1tKS8oKlt2QKKjA==
+UI-OutboundReport: notjunk:1;M01:P0:Dd9M9ach+bw=;Uq/jDObnp4llRrcslaBYwwalF9/
+ O/ZPa3JR1EP5iTfwf7P9kheU7AzkxLsmpnpjwCSjAyWOqqm6qMvH0B9OYNPDgNeb/04XcEodr
+ FhVUZSfmxIkvY+Y6j7K1bc8WFz0HamhcPlikr1Zz/kKf6ITZ4E52RUraZ2CaU5ep3zkoCPlKd
+ ZpYIMDJ7Mg4zDEQ17fbuk/A70fFFGPCNXSRBlRGm/I4hAdlO6HidLrzU0gAtsn8lT/w/lQjFs
+ aZirnHtW595wfOmOQshgyjYRLw3haS+7F+iw95PCrxVfZIzNitR8LvH//AI/eIW1W0DjZ/AIH
+ /vsJ5c5+50OVBqZX/jLmV4kQrMNXG94oASoADQQduSWf9n3Ni9knbV1S1p+dhT1tStJU+RYtA
+ FCbQ1PzTHh5/5RO1Q/h02sU75jynl4oJ7Md9cTKZogBROf5vkKGiyZjQIgH4j91zy6ws1sOZm
+ wjzXCJBXQHV6uogzI0FLhX/5kzQPChRAXhhUMWrfoqn74FemjInBWpalsYeLng0X8tGKbFHJT
+ kvrVJeqXuozwPzi6TG6sfG/Tdvgx9YlPWlxTN76vQTX+3Kl8nO89Z3asVvtM0wWv4mzWLnCE8
+ Fk2KR275QFksN1cC8ZYkCb5NP/skUXa0YVhYml89G2iQcaUi7drCdT+JZsVm11rR7RSSL5YlJ
+ 0y7MDupUHB9tA4rWZVkejsLV7JpArnhtNEe75YT+KKRhnFrU0vJfPkjfqtAdPNmBwuiQkCpKN
+ aWtGmO+P3KqNnlx2ySPITutYcHnKB2TDPqMgTP22O2Xx6YbU1Jn/YEoF4QzFy2sQObMAnnuIu
+ 7OFAN+9idTjSjBG/PX0q0rLcIf9lylDnHoL/bHTzH4I2k=
+Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,149 +136,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 4/2/24 08:29, Sven Schnelle wrote:
+> Richard Henderson <richard.henderson@linaro.org> writes:
+>
+>> On 4/1/24 20:01, Sven Schnelle wrote:
+>>> Implement dr2 and the mfdiag/mtdiag instructions. dr2 contains a bit
+>>> which enables/disables space id hashing. Seabios would then set
+>>> this bit when booting. Linux would disable it again during boot (this
+>>> would be the same like on real hardware), while HP-UX would leave it
+>>> enabled.
 
-On behalf of the QEMU Team, I'd like to announce the availability of the
-third release candidate for the QEMU 9.0 release. This release is meant
-for testing purposes and should not be used in a production environment.
+This is how it works on real physical hardware, and since qemu should mimi=
+c
+real hardware as best as it can, IMHO we should implement it exactly like =
+this.
 
-  http://download.qemu.org/qemu-9.0.0-rc2.tar.xz
-  http://download.qemu.org/qemu-9.0.0-rc2.tar.xz.sig
+Helge
 
-  http://download.qemu.org/qemu-9.0.0-rc2.tar.bz2
-  http://download.qemu.org/qemu-9.0.0-rc2.tar.bz2.sig
+>> Pointer to documentation?
+>
+> There's no documentation about that in the public. There's this code sin=
+ce the
+> beginning of linux on hppa in the linux kernel (arch/parisc/kernel/pacac=
+he.S):
+>
+> /* Disable Space Register Hashing for PCXL */
+>
+> .word         0x141c0600      /* mfdiag %dr0, %r28 */
+> depwi           0,28,2, %r28  /* Clear DHASH_EN & IHASH_EN */
+> .word         0x141c0240      /* mtdiag %r28, %dr0 */
+> b,n           srdis_done
+>
+> srdis_pa20:
+>
+> /* Disable Space Register Hashing for PCXU,PCXU+,PCXW,PCXW+,PCXW2 */
+>
+> .word         0x144008bc            /* mfdiag %dr2, %r28 */
+> depdi         0, 54,1, %r28         /* clear DIAG_SPHASH_ENAB (bit 54) *=
+/
+> .word         0x145c1840            /* mtdiag %r28, %dr2 */
+>
+> So PCXL (32 bit) uses dr0, while 64 bit uses dr2. This still is the same
+> on my C8000 - i see firmware still contains code reading dr2 to figure
+> out whether space id hashing is enabled. The mfdiag/mtdiag instructions
+> are described in the PCXL/PCXL2 ERS.
+>
+> https://parisc.wiki.kernel.org/index.php/File:PCXL_ers.pdf
+> https://parisc.wiki.kernel.org/index.php/File:Pcxl2_ers.pdf
+>
+> There was a discussion mentioning disabling Space ID hashing in Linux:
+>
+> https://yhbt.net/lore/linux-parisc/199912161642.IAA11478@lucy.cup.hp.com=
+/
+>
 
-You can help improve the quality of the QEMU 9.0 release by testing this
-release and reporting bugs using our GitLab issue tracker:
-
-  https://gitlab.com/qemu-project/qemu/-/milestones/11
-
-The release plan, as well a documented known issues for release
-candidates, are available at:
-
-  http://wiki.qemu.org/Planning/9.0
-
-Please add entries to the ChangeLog for the 9.0 release below:
-
-  http://wiki.qemu.org/ChangeLog/9.0
-
-Thank you to everyone involved!
-
-Changes since rc1:
-
-e5c6528dce: Update version for v9.0.0-rc2 release (Peter Maydell)
-4c54f5bc8e: hw/net/virtio-net: fix qemu set used ring flag even vhost start=
-ed (Yajun Wu)
-95a3645527: hw/xen_evtchn: Initialize flush_kvm_routes (Artem Chernyshev)
-0fa5eefa16: gpio/pca955x: Update maintainer email address (Glenn Miles)
-8cdb368d19: hw/nvme: fix -Werror=3Dmaybe-uninitialized (Marc-Andr=C3=A9 Lur=
-eau)
-c65288de4d: plugins: fix -Werror=3Dmaybe-uninitialized false-positive (Marc=
--Andr=C3=A9 Lureau)
-e193d4bdb8: block: Remove unnecessary NULL check in bdrv_pad_request() (Kev=
-in Wolf)
-aab1b3eeb4: hw/i386/pc: Restrict CXL to PCI-based machines (Philippe Mathie=
-u-Daud=C3=A9)
-3325af5355: MAINTAINERS: Fix error-report.c entry (Zhao Liu)
-4fbb7687cf: qtest/libqos: Reduce size_to_prdtl() declaration scope (Philipp=
-e Mathieu-Daud=C3=A9)
-d6fd5d8346: accel/hvf: Un-inline hvf_arch_supports_guest_debug() (Philippe =
-Mathieu-Daud=C3=A9)
-0b796f3810: hw/arm/smmu: Avoid using inlined functions with external linkag=
-e again (Philippe Mathieu-Daud=C3=A9)
-870120b467: target/ppc: Rename init_excp_4xx_softmmu() -> init_excp_4xx() (=
-Philippe Mathieu-Daud=C3=A9)
-0eaf7fb9a8: gdbstub/system: Rename 'user_ctx' argument as 'ctx' (Philippe M=
-athieu-Daud=C3=A9)
-25f34eb708: gdbstub: Correct invalid mentions of 'softmmu' by 'system' (Phi=
-lippe Mathieu-Daud=C3=A9)
-93019696aa: accel/tcg/plugin: Remove CONFIG_SOFTMMU_GATE definition (Philip=
-pe Mathieu-Daud=C3=A9)
-7805132bc3: hmp: Add help information for watchdog action: inject-nmi (Dayu=
- Liu)
-f6822fee96: Fix some typos in documentation (found by codespell) (Stefan We=
-il)
-393770d7a0: raspi4b: Reduce RAM to 1Gb on 32-bit hosts (C=C3=A9dric Le Goat=
-er)
-27c335a464: tests/qtest: Fix STM32L4x5 GPIO test on 32-bit (C=C3=A9dric Le =
-Goater)
-44e25fbc19: hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group is d=
-isabled (Peter Maydell)
-aaaae12055: docs: sbsa: update specs, add dt note (Marcin Juszkiewicz)
-fbe5ac5671: target/arm: take HSTR traps of cp15 accesses to EL2, not EL1 (P=
-eter Maydell)
-9988c7b50e: fpu/softfloat: Remove mention of TILE-Gx target (Philippe Mathi=
-eu-Daud=C3=A9)
-8e0cd23f71: usb-audio: Fix invalid values in AudioControl descriptors (Joon=
-as Kankaala)
-1d2f2b35bc: gitlab-ci/cirrus: switch from 'master' to 'latest' (Michael Tok=
-arev)
-d0ad271a76: migration/postcopy: Ensure postcopy_start() sets errp if it fai=
-ls (Avihai Horon)
-30158d8850: migration: Set migration error in migration_completion() (Aviha=
-i Horon)
-b07a5bb736: tests/avocado: ppc_hv_tests.py set alpine time before setup-alp=
-ine (Nicholas Piggin)
-74eb04af18: tests/avocado: Fix ppc_hv_tests.py xorriso dependency guard (Ni=
-cholas Piggin)
-434531619f: target/ppc: Do not clear MSR[ME] on MCE interrupts to superviso=
-r (Nicholas Piggin)
-ed399ade3c: target/ppc: Fix GDB register indexing on secondary CPUs (Benjam=
-in Gray)
-978897a572: target/ppc: Restore [H]DEXCR to 64-bits (Benjamin Gray)
-d7d9c6071e: target/ppc/mmu-radix64: Use correct string format in walk_tree(=
-) (Philippe Mathieu-Daud=C3=A9)
-beb0b62c3e: hw/ppc/spapr: Include missing 'sysemu/tcg.h' header (Philippe M=
-athieu-Daud=C3=A9)
-58cb91b34d: spapr: nested: use bitwise NOT operator for flags check (Harsh =
-Prateek Bora)
-dafa0ecc97: accel/tcg: Use CPUState.get_pc in cpu_io_recompile (Richard Hen=
-derson)
-13af3af196: disas: Show opcodes for target_disas and monitor_disas (Richard=
- Henderson)
-2911e9b95f: tcg/optimize: Fix sign_mask for logical right-shift (Richard He=
-nderson)
-4a3aa11e1f: target/hppa: Clear psw_n for BE on use_nullify_skip path (Richa=
-rd Henderson)
-3bdf20819e: target/hppa: Add diag instructions to set/restore shadow regist=
-ers (Helge Deller)
-381931275a: target/hppa: Move diag argument handling to decodetree (Richard=
- Henderson)
-558c09bef8: target/hppa: Generate getshadowregs inline (Richard Henderson)
-d9b33018a0: Revert "tap: setting error appropriately when calling net_init_=
-tap_one()" (Akihiko Odaki)
-decfde6b0e: tap-win32: Remove unnecessary stubs (Akihiko Odaki)
-89a8de364b: hw/net/net_tx_pkt: Fix virtio header without checksum offloadin=
-g (Akihiko Odaki)
-ba6bb2ec95: ebpf: Fix indirections table setting (Akihiko Odaki)
-1c188fc8cb: virtio-net: Fix vhost virtqueue notifiers for RSS (Akihiko Odak=
-i)
-dcae75fba1: qtest/virtio-9p-test.c: remove g_test_slow() gate (Daniel Henri=
-que Barboza)
-981eb10603: qtest/virtio-9p-test.c: create/remove temp dirs after each test=
- (Daniel Henrique Barboza)
-f8f5986edc: target/hppa: Fix overflow computation for shladd (Richard Hende=
-rson)
-fe2d066a9e: target/hppa: Replace c with uv in do_cond (Richard Henderson)
-82d0c831ce: target/hppa: Squash d for pa1.x during decode (Richard Henderso=
-n)
-46bb3d467c: target/hppa: Fix unit carry conditions (Richard Henderson)
-ababac165b: target/hppa: Optimize UADDCM with no condition (Richard Henders=
-on)
-d0ae87a27c: target/hppa: Fix DCOR reconstruction of carry bits (Richard Hen=
-derson)
-7d50b69660: target/hppa: Use gva_offset_mask() everywhere (Sven Schnelle)
-6ebebea758: target/hppa: Fix EIRR, EIEM versus icount (Richard Henderson)
-0c58c1bc1c: target/hppa: Tidy read of interval timer (Richard Henderson)
-104281c10e: target/hppa: Mark interval timer write as io (Richard Henderson)
-bd1ad92ccf: target/hppa: Fix ADD/SUB trap on overflow for narrow mode (Sven=
- Schnelle)
-578b8132b2: target/hppa: Handle unit conditions for wide mode (Sven Schnell=
-e)
-2f48ba7b94: target/hppa: Fix B,GATE for wide mode (Richard Henderson)
-7fb7c9da34: target/hppa: Fix BE,L set of sr0 (Richard Henderson)
-889cd5a8e2: tests/tcg: Test shmat(NULL) (Ilya Leoshkevich)
-fa527b44c2: linux-user: Fix shmat(NULL) for h !=3D g (Ilya Leoshkevich)
-e6763d7dfc: linux-user: Fix shmat() strace (Ilya Leoshkevich)
-b9f38374ac: linux-user: Fix semctl() strace (Ilya Leoshkevich)
 
