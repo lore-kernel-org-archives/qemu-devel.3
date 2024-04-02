@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B2E2CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 06:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DB6C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 06:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrY1u-0000kG-T6; Tue, 02 Apr 2024 02:53:58 -0400
+	id 1rrY3l-0001Qa-6V; Tue, 02 Apr 2024 02:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rrY1s-0000jk-Fv
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:53:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rrY3j-0001QM-M0
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:55:51 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rrY1q-00053C-N4
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:53:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712040832;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mfLgYMXYib6ziqN0Bk7/PkGpEoPfFrTFtid+pAgHGX0=;
- b=CJb2xnPUlftkNi3bb5w/vwMnkYm/dp0EmdRXTUV+z+c4FVRU8DOLRCf6cReW4GfidP7RLA
- EXRE1I9LpGgU+5dmvv70Hghq/FFXLjhyLEvWyrs/HJOzlPzvv3vS6PuBhBpPEGmcNP1YsK
- EibNYrQHnawRQtPA6n5zSdIn1RA13b0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-SVpMS_K5NhymCZ7vktTfCA-1; Tue, 02 Apr 2024 02:53:51 -0400
-X-MC-Unique: SVpMS_K5NhymCZ7vktTfCA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-414aa7bd274so23063495e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 23:53:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712040830; x=1712645630;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mfLgYMXYib6ziqN0Bk7/PkGpEoPfFrTFtid+pAgHGX0=;
- b=LqHNgD53n9bmuSzBQiNUhzKmC5DzVLI1vIqqtsUum4G/3efhG06Juehv/xZRL24+pZ
- ehIcW8Gd0oleZni9CSZfIPAr81ROE/w2+0dLuj50MBaOlQxaSEMmddEdz4LAr7u0Qo61
- QkenNQpwgM/KvCy1jTUWt/CieAYtV3A/Mx1wb46upn61ULxHNxaVqYRjWG5FYivVZHJj
- IgCHudR6Rnqbq33T4ktD1JoRmhpAytb5HqHyf8FDZ9R9e+Qu/HdKodx9GVfbxeviDsgf
- mFfz8TopvKiS/oikxwgpnXXU467Ps81syQD4Z9N7F/JVy5DhgBirq7yi5DLqPs5aL5mw
- SlRw==
-X-Gm-Message-State: AOJu0Yz0PQ6/rTdlCRw3qtTv5k82THFM6x89Yd3q80aCE031ya58dMLt
- vjWTIbUv0M+WwgKjWtYzYpHx0wJwA2uUYhcAuvgGeh4r2ncQ/eseOI4EEiUwCT8zPrJqmQu0Efl
- IHiOYG9KKakvBhGoZJdG/GshOfEsMjQQJADn/UcL8fSXOKg7xApJh
-X-Received: by 2002:a05:600c:35c5:b0:413:f4d0:c233 with SMTP id
- r5-20020a05600c35c500b00413f4d0c233mr7173692wmq.35.1712040830315; 
- Mon, 01 Apr 2024 23:53:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSiJDCbtLv4ANgwEXKDK+NGDyPHHtiZ/nHdP5zmwqow62dne7vyPmblKezTO8tMP70vu8TJQ==
-X-Received: by 2002:a05:600c:35c5:b0:413:f4d0:c233 with SMTP id
- r5-20020a05600c35c500b00413f4d0c233mr7173676wmq.35.1712040829663; 
- Mon, 01 Apr 2024 23:53:49 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f4:2fbc:c1b6:60e7:b08c:a69d])
- by smtp.gmail.com with ESMTPSA id
- f14-20020a05600c154e00b00414674a1a40sm16800903wmg.45.2024.04.01.23.53.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Apr 2024 23:53:49 -0700 (PDT)
-Date: Tue, 2 Apr 2024 02:53:44 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Yajun Wu <yajunw@nvidia.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, maxime.coquelin@redhat.com,
- Jiri Pirko <jiri@nvidia.com>
-Subject: Re: [PATCH] virtio-net: fix qemu set used ring flag even vhost started
-Message-ID: <20240402025316-mutt-send-email-mst@kernel.org>
-References: <20240402045109.97729-1-yajunw@nvidia.com>
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rrY3e-0005NH-UW
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 02:55:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712040948; x=1743576948;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=5mRlXbrKEWn5Mn165sf5SI2gpYofQGMjT71UTd5NmvA=;
+ b=K3cclfIYUn6EOCOoLKSSUdr+MYf+Q6XC/nZFnYUmZe1DIgc4TZauJMyV
+ obdcPchpZ588FziCESahzxm9goOY9SoBBTIKB9TH2Cg9R8hjzkz5ef+x0
+ g6y3vDjkTe8gpuCPTYsNLuf8XbYJUBRjt9TbtONMrPZkE6gJs0UIPKF3b
+ af+nuqIVzIkcDK0qZG2/Rkxjlw8FWEEfn0TKVp6mA8bvaukmSAh3sVozg
+ rrdbn4A0C7ymVpxIYsDtq6RnHbaUhoK3pBJssrTPRAZ/Nsq/ijv+aQN66
+ vS7/+Mr5UwmK1ZvCFxgpHdMjLgLNOd5v66+j+P12seEK5MJumgrFX5Jue w==;
+X-CSE-ConnectionGUID: /eMsF5S1QnebiA4MUW9IMQ==
+X-CSE-MsgGUID: J7GXGuk4QS+52WRMWJKq2g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="18345339"
+X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; d="scan'208";a="18345339"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2024 23:55:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; d="scan'208";a="55408951"
+Received: from leiwang7-mobl.ccr.corp.intel.com (HELO [10.124.226.15])
+ ([10.124.226.15])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2024 23:55:37 -0700
+Message-ID: <ce89cb04-65d0-4f43-ad87-ead6e69c1e09@intel.com>
+Date: Tue, 2 Apr 2024 14:55:34 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240402045109.97729-1-yajunw@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] migration: Yield coroutine when receiving
+ MIG_CMD_POSTCOPY_LISTEN
+Content-Language: en-US
+To: Peter Xu <peterx@redhat.com>, "Wang, Wei W" <wei.w.wang@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "farosas@suse.de" <farosas@suse.de>
+References: <20240329033205.26087-1-lei4.wang@intel.com>
+ <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <ZgrdIDGe3aNcRu7o@x1n>
+From: "Wang, Lei" <lei4.wang@intel.com>
+In-Reply-To: <ZgrdIDGe3aNcRu7o@x1n>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=lei4.wang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,66 +86,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 02, 2024 at 12:51:09PM +0800, Yajun Wu wrote:
-> When vhost-user or vhost-kernel is handling virtio net datapath, qemu
-> should not touch used ring.
+On 4/2/2024 0:13, Peter Xu wrote:> On Fri, Mar 29, 2024 at 08:54:07AM +0000,
+Wang, Wei W wrote:
+>> On Friday, March 29, 2024 11:32 AM, Wang, Lei4 wrote:
+>>> When using the post-copy preemption feature to perform post-copy live
+>>> migration, the below scenario could lead to a deadlock and the migration will
+>>> never finish:
+>>>
+>>>  - Source connect() the preemption channel in postcopy_start().
+>>>  - Source and the destination side TCP stack finished the 3-way handshake
+>>>    thus the connection is successful.
+>>>  - The destination side main thread is handling the loading of the bulk RAM
+>>>    pages thus it doesn't start to handle the pending connection event in the
+>>>    event loop. and doesn't post the semaphore postcopy_qemufile_dst_done for
+>>>    the preemption thread.
+>>>  - The source side sends non-iterative device states, such as the virtio
+>>>    states.
+>>>  - The destination main thread starts to receive the virtio states, this
+>>>    process may lead to a page fault (e.g., virtio_load()->vring_avail_idx()
+>>>    may trigger a page fault since the avail ring page may not be received
+>>>    yet).
 > 
-> But with vhost-user socket reconnect scenario, in a very rare case (has
-> pending kick event). VRING_USED_F_NO_NOTIFY is set by qemu in
-> following code path:
+> Ouch.  Yeah I think this part got overlooked when working on the preempt
+> channel.
 > 
-> 	#0  virtio_queue_split_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:511
-> 	#1  0x0000559d6dbf033b in virtio_queue_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:576
-> 	#2  0x0000559d6dbbbdbc in virtio_net_handle_tx_bh (vdev=0x559d703a6aa0, vq=0x7ff5f4c920a8) at ../hw/net/virtio-net.c:2801
-> 	#3  0x0000559d6dbf4791 in virtio_queue_notify_vq (vq=0x7ff5f4c920a8) at ../hw/virtio/virtio.c:2248
-> 	#4  0x0000559d6dbf79da in virtio_queue_host_notifier_read (n=0x7ff5f4c9211c) at ../hw/virtio/virtio.c:3525
-> 	#5  0x0000559d6d9a5814 in virtio_bus_cleanup_host_notifier (bus=0x559d703a6a20, n=1) at ../hw/virtio/virtio-bus.c:321
-> 	#6  0x0000559d6dbf83c9 in virtio_device_stop_ioeventfd_impl (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3774
-> 	#7  0x0000559d6d9a55c8 in virtio_bus_stop_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:259
-> 	#8  0x0000559d6d9a53e8 in virtio_bus_grab_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:199
-> 	#9  0x0000559d6dbf841c in virtio_device_grab_ioeventfd (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3783
-> 	#10 0x0000559d6d9bde18 in vhost_dev_enable_notifiers (hdev=0x559d707edd70, vdev=0x559d703a6aa0) at ../hw/virtio/vhost.c:1592
-> 	#11 0x0000559d6d89a0b8 in vhost_net_start_one (net=0x559d707edd70, dev=0x559d703a6aa0) at ../hw/net/vhost_net.c:266
-> 	#12 0x0000559d6d89a6df in vhost_net_start (dev=0x559d703a6aa0, ncs=0x559d7048d890, data_queue_pairs=31, cvq=0) at ../hw/net/vhost_net.c:412
-> 	#13 0x0000559d6dbb5b89 in virtio_net_vhost_status (n=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:311
-> 	#14 0x0000559d6dbb5e34 in virtio_net_set_status (vdev=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:392
-> 	#15 0x0000559d6dbb60d8 in virtio_net_set_link_status (nc=0x559d7048d890) at ../hw/net/virtio-net.c:455
-> 	#16 0x0000559d6da64863 in qmp_set_link (name=0x559d6f0b83d0 "hostnet1", up=true, errp=0x7ffdd76569f0) at ../net/net.c:1459
-> 	#17 0x0000559d6da7226e in net_vhost_user_event (opaque=0x559d6f0b83d0, event=CHR_EVENT_OPENED) at ../net/vhost-user.c:301
-> 	#18 0x0000559d6ddc7f63 in chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:62
-> 	#19 0x0000559d6ddc7fdc in qemu_chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:82
+>>>  - The page request is sent back to the source side. Source sends the page
+>>>    content to the destination side preemption thread.
+>>>  - Since the event is not arrived and the semaphore
+>>>    postcopy_qemufile_dst_done is not posted, the preemption thread in
+>>>    destination side is blocked, and cannot handle receiving the page.
+>>>  - The QEMU main load thread on the destination side is stuck at the page
+>>>    fault, and cannot yield and handle the connect() event for the
+>>>    preemption channel to unblock the preemption thread.
+>>>  - The postcopy will stuck there forever since this is a deadlock.
+>>>
+>>> The key point to reproduce this bug is that the source side is sending pages at a
+>>> rate faster than the destination handling, otherwise, the qemu_get_be64() in
+>>> ram_load_precopy() will have a chance to yield since at that time there are no
+>>> pending data in the buffer to get. This will make this bug harder to be
+>>> reproduced.
 > 
-> This issue causes guest kernel stop kicking device and traffic stop.
-> 
-> Add vhost_started check in virtio_net_handle_tx_bh to fix this wrong
-> VRING_USED_F_NO_NOTIFY set.
-> 
-> Signed-off-by: Yajun Wu <yajunw@nvidia.com>
-> Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+> How hard would this reproduce?
 
+We can manually make this easier to reproduce by adding the following code to
+make the destination busier to load the pages:
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+diff --git a/migration/ram.c b/migration/ram.c
+index 0ad9fbba48..0b42877e1f 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4232,6 +4232,7 @@ static int ram_load_precopy(QEMUFile *f)
+ {
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     int flags = 0, ret = 0, invalid_flags = 0, len = 0, i = 0;
++    volatile unsigned long long a;
 
-> ---
->  hw/net/virtio-net.c | 4 ++++
->  1 file changed, 4 insertions(+)
+     if (!migrate_compress()) {
+         invalid_flags |= RAM_SAVE_FLAG_COMPRESS_PAGE;
+@@ -4347,6 +4348,7 @@ static int ram_load_precopy(QEMUFile *f)
+             break;
+
+         case RAM_SAVE_FLAG_PAGE:
++            for (a = 0; a < 100000000; a++);
+             qemu_get_buffer(f, host, TARGET_PAGE_SIZE);
+             break;
+
 > 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index a6ff000cd9..8035e01fdf 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -2865,6 +2865,10 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
->      VirtIONet *n = VIRTIO_NET(vdev);
->      VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
+> I'm thinking whether this should be 9.0 material or 9.1.  It's pretty late
+> for 9.0 though, but we can still discuss.
+> 
+>>>
+>>> Fix this by yielding the load coroutine when receiving
+>>> MIG_CMD_POSTCOPY_LISTEN so the main event loop can handle the
+>>> connection event before loading the non-iterative devices state to avoid the
+>>> deadlock condition.
+>>>
+>>> Signed-off-by: Lei Wang <lei4.wang@intel.com>
+>>
+>> This seems to be a regression issue caused by this commit:
+>> 737840e2c6ea (migration: Use the number of transferred bytes directly)
+>>
+>> Adding qemu_fflush back to migration_rate_exceeded() or ram_save_iterate
+>> seems to work (might not be a good fix though).
+>>
+>>> ---
+>>>  migration/savevm.c | 5 +++++
+>>>  1 file changed, 5 insertions(+)
+>>>
+>>> diff --git a/migration/savevm.c b/migration/savevm.c index
+>>> e386c5267f..8fd4dc92f2 100644
+>>> --- a/migration/savevm.c
+>>> +++ b/migration/savevm.c
+>>> @@ -2445,6 +2445,11 @@ static int loadvm_process_command(QEMUFile *f)
+>>>          return loadvm_postcopy_handle_advise(mis, len);
+>>>
+>>>      case MIG_CMD_POSTCOPY_LISTEN:
+>>> +        if (migrate_postcopy_preempt() && qemu_in_coroutine()) {
+>>> +            aio_co_schedule(qemu_get_current_aio_context(),
+>>> +                            qemu_coroutine_self());
+>>> +            qemu_coroutine_yield();
+>>> +        }
+>>
+>> The above could be moved to loadvm_postcopy_handle_listen().
+> 
+> I'm not 100% sure such thing (no matter here or moved into it, which does
+> look cleaner) would work for us.
+> 
+> The problem is I still don't yet see an ordering restricted on top of (1)
+> accept() happens, and (2) receive LISTEN cmd here.  What happens if the
+> accept() request is not yet received when reaching LISTEN?  Or is it always
+> guaranteed the accept(fd) will always be polled here?
+> 
+> For example, the source QEMU (no matter pre-7.2 or later) will always setup
+> the preempt channel asynchrounously, then IIUC it can connect() after
+> sending the whole chunk of packed data which should include this LISTEN.  I
+> think it means it's not guaranteed this will 100% work, but maybe further
+> reduce the possibility of the race.
+
+I think the following code:
+
+postcopy_start() ->
+	postcopy_preempt_establish_channel() ->
+		qemu_sem_wait(&s->postcopy_qemufile_src_sem);
+
+can guarantee that the connect() syscall is successful so the destination side
+receives the connect() request before it loads the LISTEN command, otherwise it
+won't post the sem:
+
+postcopy_preempt_send_channel_new() ->
+	postcopy_preempt_send_channel_done() ->
+    		qemu_sem_post(&s->postcopy_qemufile_src_sem);
+
+> 
+> One right fix that I can think of is moving the sem_wait(&done) into the
+> main thread too, so we wait for the sem _before_ reading the packed data,
+> so there's no chance of fault.  However I don't think sem_wait() will be
+> smart enough to yield when in a coroutine..  In the long term run I think
+> we should really make migration loadvm to do work in the thread rather than
+> the main thread.  I think it means we have one more example to be listed in
+> this todo so that's preferred..
+> 
+> https://wiki.qemu.org/ToDo/LiveMigration#Create_a_thread_for_migration_destination
+> 
+> I attached such draft patch below, but I'm not sure it'll work.  Let me
+> know how both of you think about it.
+
+Sadly it doesn't work, there is an unknown segfault.
+
+> 
+>>
+>> Another option is to follow the old way (i.e. pre_7_2) to do postcopy_preempt_setup
+>> in migrate_fd_connect. This can save the above overhead of switching to the
+>> main thread during the downtime. Seems Peter's previous patch already solved the
+>> channel disordering issue. Let's see Peter and others' opinions.
+> 
+> IIUC we still need that pre_7_2 stuff and keep the postponed connect() to
+> make sure the ordering is done properly.  Wei, could you elaborate the
+> patch you mentioned?  Maybe I missed some spots.
+> 
+> You raised a good point that this may introduce higher downtime.  Did you
+> or Lei tried to measure how large it is?  If that is too high, we may need
+> to think another solution, e.g., wait the channel connection before vm stop
+> happens.
+
+Per my very simple test, using post-copy preemption to live migrate an 8G VM:
+
+    w/o this patch: 121ms in avg in 5 tries
+    w/ this patch: 115ms in avg in 5 tries
+
+So it seems the overhead introduced is not too high (maybe ignorable?).
+
+> 
+> Thanks,
+> 
+>>
+>>>          return loadvm_postcopy_handle_listen(mis);
+>>>
+>>
+>>>      case MIG_CMD_POSTCOPY_RUN:
+>>> --
+>>> 2.39.3
+>>
+> 
+> ===8<===
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 696762bc64..bacd1328cf 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -2593,6 +2593,12 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>      /*
+>       * Make sure the receiver can get incoming pages before we send the rest
+>       * of the state
+> +     *
+> +     * When preempt mode enabled, this must be done after we initiate the
+> +     * preempt channel, as destination QEMU will wait for the channel when
+> +     * processing the LISTEN request.  Currently it may not matter a huge
+> +     * deal if we always create the channel asynchrously with a qio task,
+> +     * but we need to keep this in mind.
+>       */
+>      qemu_savevm_send_postcopy_listen(fb);
 >  
-> +    if (n->vhost_started) {
-> +        return;
-> +    }
-> +
->      if (unlikely((n->status & VIRTIO_NET_S_LINK_UP) == 0)) {
->          virtio_net_drop_tx_queue_data(vdev, vq);
->          return;
-> -- 
-> 2.27.0
-
+> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> index eccff499cb..4f26a89ac9 100644
+> --- a/migration/postcopy-ram.c
+> +++ b/migration/postcopy-ram.c
+> @@ -1254,6 +1254,26 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+>      }
+>  
+>      if (migrate_postcopy_preempt()) {
+> +        /*
+> +         * The preempt channel is established in asynchronous way.  Wait
+> +         * for its completion.
+> +         */
+> +        while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
+> +            /*
+> +             * Note that to make sure the main thread can still schedule an
+> +             * accept() request we need to proactively yield for the main
+> +             * loop to run for some duration (100ms in this case), which is
+> +             * pretty ugly.
+> +             *
+> +             * TODO: we should do this in a separate thread to load the VM
+> +             * rather than in the main thread, just like the source side.
+> +             */
+> +            if (qemu_in_coroutine()) {
+> +                aio_co_schedule(qemu_get_current_aio_context(),
+> +                                qemu_coroutine_self());
+> +                qemu_coroutine_yield();
+> +            }
+> +        }
+>          /*
+>           * This thread needs to be created after the temp pages because
+>           * it'll fetch RAM_CHANNEL_POSTCOPY PostcopyTmpPage immediately.
+> @@ -1743,12 +1763,6 @@ void *postcopy_preempt_thread(void *opaque)
+>  
+>      qemu_sem_post(&mis->thread_sync_sem);
+>  
+> -    /*
+> -     * The preempt channel is established in asynchronous way.  Wait
+> -     * for its completion.
+> -     */
+> -    qemu_sem_wait(&mis->postcopy_qemufile_dst_done);
+> -
+>      /* Sending RAM_SAVE_FLAG_EOS to terminate this thread */
+>      qemu_mutex_lock(&mis->postcopy_prio_thread_mutex);
+>      while (preempt_thread_should_run(mis)) {
 
