@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9E1CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CE2CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcPv-0007qD-LL; Tue, 02 Apr 2024 07:35:03 -0400
+	id 1rrcPZ-0007SA-Q7; Tue, 02 Apr 2024 07:34:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcPt-0007mW-KW
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:35:01 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcPr-0006yL-K2
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:35:01 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2d4360ab3daso65371511fa.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:34:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712057697; x=1712662497; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dRDMHjHHTdjzgClWbihqpXhkVvoi9wkovv+XHUglS84=;
- b=vORGRsHnNYiAkpZo4LFIVho/KbbMw2OWhvoMKSAou0p5o2fy7fQPDGA86WV8lDzKTx
- YIGgEISnFpPNRkzHbPRGCjsq+e+iTsWt1B4A9KQcCpq7U7tktqIc+3W0wvECvGf69Qbn
- sKRHQmdcAh0xCiah0eZiu15wESoPGlIxSrNl2TSYLVKCaV6pOYdn7dbeNDR9PaVuAX08
- mjdm+mYQs7c5bVVG6Cmhai/X3vkSKVHeC+FCbGdCodrtvlLv6sNv02yT8G5qNM0snaBZ
- 8I7z/7nSTO06nqa4wrld6sLT9OVLP+0bdlIZI4JRfltnNLPUI3LoCKVHLtpEJCD+rVSp
- 8z+A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rrcPT-0007R4-AE
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rrcPP-0006a1-In
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712057670;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ibQM6JbOztIOF6BAzKgIao5EgyqQZHeEw2BMtuP36D0=;
+ b=gTgrOQ321nwBTobmB9VZJTS//y/LPihJlVNNClgIxYVQvCAL9TUuVVTpwF5okungEBr1Xx
+ AJ5BNIau8qLLjRbKo6UKDPF27VnrU2WXqceqpsq1DNutseszPanodt0j3EBFUXiq62Lqz6
+ 9l7diW30w8+grhiDmC7VaKqXwo/Vi1Y=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-460-jgFMjfbhM0WQT5oOfo_zKA-1; Tue, 02 Apr 2024 07:34:29 -0400
+X-MC-Unique: jgFMjfbhM0WQT5oOfo_zKA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-341678a510bso3244564f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:34:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712057697; x=1712662497;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dRDMHjHHTdjzgClWbihqpXhkVvoi9wkovv+XHUglS84=;
- b=Heehj0IoO5zHUhfUwB5dB47pc/WwRcAr/yUju3IN871sp67gVi8M4kw5zfrh7RIwrN
- kKuUpFmk9vQvMg61/vntWcz1Vp4JK3daL5+l4R7XpP7Qv3CdjIqZWDsU7zWNlWiiKeVY
- lYkhG3z5G8JJCxS2yIci+Gc7uwIGOeDKYqaXmxt7owrmIuWPx4LStoW1exwdDe0yolNp
- uSfpUo705Uamw6YW384J/AVdxqj7Y/3LS9RSwn86uNR7rUqfdvoOYNJH8B1mYsQciCyg
- 5Tpe0FQMiAO++cb+4iR8vK9/wf0kocTJjtIC+mZung2Tqrq5Z/6JDujmnCvoj79KHlje
- P1zg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV3ModWODqEP6/FgZKazZIco/6RV6l3AKVNIztkOXRJXFa6cFm5s3laAxiSrDRC3AIJ4+VG7aEKTm6gEn6PMV6/ai1BpUs=
-X-Gm-Message-State: AOJu0YzTI48GpWy6A9S9He9tWyS6oG6DGeEvuocVXrAtex2dXo+yHu6Z
- eFTLuDN0KBKOW7C/FkBW1eBu+54gTNQQJBm3PiDn2EJt+KJ1wsCCi+aJRVXNTPPqNUv5U6esnLD
- ZFmM=
-X-Google-Smtp-Source: AGHT+IE1qVDdxsan8u0z9OTj+Gz08QAGTT4DAw3CLfCIlWPrb1PhkiA0Dl5L96Kzrkvyj4YtADJwyA==
-X-Received: by 2002:a2e:2a03:0:b0:2d8:2710:f7dc with SMTP id
- q3-20020a2e2a03000000b002d82710f7dcmr1812948ljq.17.1712057696992; 
- Tue, 02 Apr 2024 04:34:56 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.202.91])
+ d=1e100.net; s=20230601; t=1712057667; x=1712662467;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ibQM6JbOztIOF6BAzKgIao5EgyqQZHeEw2BMtuP36D0=;
+ b=uVT4wgDML7aDS0ugkEfxoj1lGTtm+lE+ggK28O2z9O2fVg5r6mdkfqI/GUpW6tYm0J
+ lbDz6RUgOQWDfTMxuZL3DrnVngH+Y/zjZh1+zEWLWfdyahGZB16/eGAJZZsuUERcx0Ln
+ OXDK1C9oCa5cYQt9velFb/wwroYVWgJB69S15Na23dFfzRuIdfu9sDggM0UxrJyzLfDd
+ 4LMfgfMV1D5E/3l2eBHTBrTiQIsJlP7mHeFR+T/PB4Ri98TJY1he6BCNluDGM+QDCcRo
+ XkQtnOla5nItGB60FMj0Q9/NxeSQkcTXqlb4aYq+zkhNCk7mrkCKFXZp7pM2MA9j7G97
+ TzzA==
+X-Gm-Message-State: AOJu0YwC/nMaQABobIApbXcGKKqVFtm1fg2QLDvJepEN8NoQzh2qp/P4
+ kEaFGTIBVLf3RXeSeQjiFgZ10QKyAqmJQHQvog8z7zD2eP6jSpJDsC+oCB/qqiXGNCPtMBCOKPd
+ QfAkt0Wu0gc/IzflwAPJ4sBmpVlQNxIvYjqzBw21p/eH9mzaO4v7uYEJj8JgjLSGYD7HjtDXP0h
+ /iGHtc2F3V44kNQGatUM7kKQk/g9okuzcZmSLb
+X-Received: by 2002:a05:6000:1a4f:b0:343:7a64:7c25 with SMTP id
+ t15-20020a0560001a4f00b003437a647c25mr261667wry.51.1712057667278; 
+ Tue, 02 Apr 2024 04:34:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6QpcH3mA9M+OmBGmACdHWGz21Q41aroEapwtjKXlT+nbepfct7gNfYRM4EzXbttNguGRIDg==
+X-Received: by 2002:a05:6000:1a4f:b0:343:7a64:7c25 with SMTP id
+ t15-20020a0560001a4f00b003437a647c25mr261649wry.51.1712057666658; 
+ Tue, 02 Apr 2024 04:34:26 -0700 (PDT)
+Received: from avogadro.local ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- n38-20020a05600c3ba600b00415509b11c3sm13826049wms.22.2024.04.02.04.34.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 04:34:56 -0700 (PDT)
-Message-ID: <df7525fc-1e0b-4e0a-86f0-c5cf8e2639b6@linaro.org>
-Date: Tue, 2 Apr 2024 13:34:54 +0200
+ ch9-20020a5d5d09000000b0034330c9eccasm13568608wrb.79.2024.04.02.04.34.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Apr 2024 04:34:26 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Helge Konetzka <hk@zapateado.de>
+Subject: [PATCH for-9.1 5/4] vga: optimize computation of dirty memory region
+Date: Tue,  2 Apr 2024 13:34:07 +0200
+Message-ID: <20240402113408.18048-6-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240402113408.18048-1-pbonzini@redhat.com>
+References: <20240402113408.18048-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/17] esp.c: don't assert() if FIFO empty when
- executing non-DMA SELATNS
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
- fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
-References: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
- <20240324191707.623175-11-mark.cave-ayland@ilande.co.uk>
- <5f8511b6-225d-4197-8785-7fb69a1b1c13@linaro.org>
- <9f6064d0-cb77-47eb-a4c0-25eaf0d184f5@ilande.co.uk>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9f6064d0-cb77-47eb-a4c0-25eaf0d184f5@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,60 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/24 13:57, Mark Cave-Ayland wrote:
-> On 25/03/2024 10:49, Philippe Mathieu-Daudé wrote:
-> 
->> On 24/3/24 20:16, Mark Cave-Ayland wrote:
->>> The current logic assumes that at least 1 byte is present in the FIFO 
->>> when
->>> executing a non-DMA SELATNS command, but this may not be the case if the
->>> guest executes an invalid ESP command sequence.
->>
->> What is real hardware behavior here?
-> 
-> I don't know for sure, but my guess is that if you ask to transfer a 
-> single byte from the FIFO to the SCSI bus and the FIFO is empty, you'll 
-> either end up with all zeros or a NOOP.
-> 
->>> Reported-by: Chuhong Yuan <hslester96@gmail.com>
->>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>> ---
->>>   hw/scsi/esp.c | 3 ++-
->>>   1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
->>> index 1aac8f5564..f3aa5364cf 100644
->>> --- a/hw/scsi/esp.c
->>> +++ b/hw/scsi/esp.c
->>> @@ -762,7 +762,8 @@ static void esp_do_nodma(ESPState *s)
->>>           case CMD_SELATNS:
->>
->> Alternatively logging the guest abuse:
->>
->>                len = fifo8_num_used(&s->fifo);
->>                if (len < 1) {
->>                    qemu_log_mask(LOG_GUEST_ERROR, ...
->>                    break;
->>                }
->>
->>>               /* Copy one byte from FIFO into cmdfifo */
->>> -            len = esp_fifo_pop_buf(s, buf, 1);
->>> +            len = esp_fifo_pop_buf(s, buf,
->>> +                                   MIN(fifo8_num_used(&s->fifo), 1));
-> 
-> This is similar to your previous comment in that it's an artifact of the 
-> implementation: when popping data using esp_fifo_pop_buf() I've always 
-> allowed the internal Fifo8 assert() if too much data is requested. This 
-> was a deliberate design choice that allowed me to catch several memory 
-> issues when working on the ESP emulation: it just so happened I missed a 
-> case in the last big ESP rework that was found by fuzzing.
-> 
-> It's also worth noting that it's a Fifo8 internal protective assert() 
-> that fires here which is different from the previous case whereby an 
-> overflow of the internal Fifo8 data buffer actually did occur.
+The depth == 0 and depth == 15 have to be special cased because
+width * depth / 8 does not provide the correct scanline length.
+However, thanks to the recent reorganization of vga_draw_graphic()
+the correct value of VRAM bits per pixel is available in "bits".
 
-Fine then.
+Use it (via the same "bwidth" computation that is used later in
+the function, and that already takes into account pel panning),
+so that the slow path is restricted to the wraparound case.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/display/vga.c | 24 +++++++-----------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
+
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index 77f59e8c113..77d709a3d69 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1574,22 +1574,16 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
+ 
+     /* Horizontal pel panning bit 3 is only used in text mode.  */
+     hpel = bits <= 8 ? s->params.hpel & 7 : 0;
++    bwidth = DIV_ROUND_UP(width * bits, 8); /* scanline length */
++    if (hpel) {
++        bwidth += 4;
++    }
+ 
+     region_start = (s->params.start_addr * 4);
+-    region_end = region_start + (ram_addr_t)s->params.line_offset * height;
+-    region_end += width * depth / 8; /* scanline length */
+-    region_end -= s->params.line_offset;
+-    if (hpel) {
+-        region_end += 4;
+-    }
+-    if (region_end > s->vbe_size || depth == 0 || depth == 15) {
++    region_end = region_start + (ram_addr_t)s->params.line_offset * (height - 1) + bwidth;
++    if (region_end > s->vbe_size) {
+         /*
+-         * We land here on:
+-         *  - wraps around (can happen with cirrus vbe modes)
+-         *  - depth == 0 (256 color palette video mode)
+-         *  - depth == 15
+-         *
+-         * Take the safe and slow route:
++         * On wrap around take the safe and slow route:
+          *   - create a dirty bitmap snapshot for all vga memory.
+          *   - force shadowing (so all vga memory access goes
+          *     through vga_read_*() helpers).
+@@ -1667,10 +1661,6 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
+            s->params.line_compare, sr(s, VGA_SEQ_CLOCK_MODE));
+ #endif
+     addr1 = (s->params.start_addr * 4);
+-    bwidth = DIV_ROUND_UP(width * bits, 8);
+-    if (hpel) {
+-        bwidth += 4;
+-    }
+     y_start = -1;
+     d = surface_data(surface);
+     linesize = surface_stride(surface);
+-- 
+2.44.0
 
 
