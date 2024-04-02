@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D021CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C7E1CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rraQM-0003Ek-QQ; Tue, 02 Apr 2024 05:27:22 -0400
+	id 1rraS0-0004Oi-8v; Tue, 02 Apr 2024 05:29:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rraQK-0003E2-NQ
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:27:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rraRv-0004MO-8l
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:28:59 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rraQ0-00075m-V6
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:27:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712050019;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/gnCUhixkIHzZcZ+u/7WnD86OdGTI43oJjXIdxKbIbg=;
- b=NxUxXZsV1QVeBESZna9v1QdgigOtT74KlHCkR+UIqH1IuGs3CuNWQYx6/F6W475mxL6PHW
- GbKjSUi6skI4J5ioVjVP9SXCiKlWn+OoqHOSZRuJfUcmvmgNIwPoT6835+y/NqYr9ttjM4
- NwGNgnUQBoHQP9S822/lUd22JCkjcgQ=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-Ot0MNA2qMJGGpPeMAGXvFw-1; Tue, 02 Apr 2024 05:26:57 -0400
-X-MC-Unique: Ot0MNA2qMJGGpPeMAGXvFw-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d4a0c99d66so33284441fa.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 02:26:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712050015; x=1712654815;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/gnCUhixkIHzZcZ+u/7WnD86OdGTI43oJjXIdxKbIbg=;
- b=AZ5/Gq8bx6ZVjRe4WFdx6N+LhScwkL4KS17PwjLG7Ssb0t9OXRy5O3UodlkZs2RNsx
- sbl1uuTybOeHI81mBlDKW29T6/M7WqIf/Plc0uiNpr/ihTEPq8avFu0c20hfjcUW3Ob4
- uCaDIrAnIdXoKRNNJ/aqJ3KAXFfNeGX9C6wYjduXWTgZWHbNsLBt7brzZ664AIz/U87S
- 7Y++BQX19qeNMNr99vvwh+L9NLLtBnN5ymQLL3E7wIesyJk0Bg5ruzfQcwsqNGK0ROzJ
- gZYkFZcMWgYdExU6yPoXBV9gb8kri5cjQh6oD34qBY8esxTrSTF7q+LSO9AZ5LuAxFId
- ly2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVkUJiheeONXUczr0OCXjtKlv9mPKEzolqpzURETx8J8v4VJofUEFNB7vY9JvWK6Dn2U9PngrIOrz3C+1IUB97YyOe8ts=
-X-Gm-Message-State: AOJu0YxAh5B/aJ+3hcUycFCEpF58IHkIhco4gDaOkLsEUgwT21W5FnVg
- RVIxJn1DwmdwRSoDprgSCv0jJQI+iXjFttY9Y2aaZiqD5jT+gdQFgwChtUVPhgtc/Aap/6HlMTo
- lbKdleMp+dxTatkNdzfKnOHcRLAsHPJsgOmb2+s7/2hMygsBBzTSHtSYQRJPL8srbI070Ifoupl
- kfsw0CVGrhD63aPfsJ+upk+T2iQ8s=
-X-Received: by 2002:a05:651c:168c:b0:2d6:ba96:b9a8 with SMTP id
- bd12-20020a05651c168c00b002d6ba96b9a8mr7047597ljb.27.1712050015676; 
- Tue, 02 Apr 2024 02:26:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHyhoy3b6z4cza/FDoimY2IsuXT5UAnpbivutt2HxGczD7APlIjv2EOEALIlf1BK8EAbdfHFHRBSJB4+thh0k=
-X-Received: by 2002:a05:651c:168c:b0:2d6:ba96:b9a8 with SMTP id
- bd12-20020a05651c168c00b002d6ba96b9a8mr7047588ljb.27.1712050015307; Tue, 02
- Apr 2024 02:26:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rraRg-0000QU-6e
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:28:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712050124; x=1743586124;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=D2wRgy1hf8ubBGm/OJ3N8thzEzZZ0XgLwRc0UyhalkY=;
+ b=Kpe+We0Vyc3SiEFMHjfBFhLypxbDPd5a8dXMWnzWCtqHoivBIASMH1b0
+ tN8u//UPgmyin6+K6EjT3qyGoOpUqKZzszn2SGORlz2Ja91BWbiDEkbyr
+ IN93ipqG642JXtAYXtSzebNJaP6IEKz8rjsVOY3VVd0RdcHVVMwI5Bh2Y
+ RDLnIGwRcK64Ocxz7IdrXlg+DRYNby/2PAM5S/nOqCRA4wWVsr5v6Pv4W
+ cnpKijuu6sqioIGfY0pc12Uk7EqMQUuBU8JqThVZ934+ODhjBpxS7TjM6
+ 6WpVX4sIYCwnalDkkqL/1SeLUZt+Hz2nLBQua2BaqqIxqiWn2G4dWPvIT g==;
+X-CSE-ConnectionGUID: ALhPzCD+SQCqOpQqXmO/6Q==
+X-CSE-MsgGUID: mQ3X9b4ZQbKpwH4HfxWLqw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="7143293"
+X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; 
+   d="scan'208";a="7143293"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Apr 2024 02:28:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,174,1708416000"; d="scan'208";a="18033687"
+Received: from leiwang7-mobl.ccr.corp.intel.com (HELO [10.124.226.15])
+ ([10.124.226.15])
+ by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Apr 2024 02:28:38 -0700
+Message-ID: <9aa5d1be-7801-40dd-83fd-f7e041ced249@intel.com>
+Date: Tue, 2 Apr 2024 17:28:36 +0800
 MIME-Version: 1.0
-References: <20240329153155.17840-1-aidan_leuck@selinc.com>
- <20240329153155.17840-2-aidan_leuck@selinc.com>
- <7eadc494-866f-4126-8f9d-5407a8003371@linaro.org>
-In-Reply-To: <7eadc494-866f-4126-8f9d-5407a8003371@linaro.org>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 2 Apr 2024 12:26:44 +0300
-Message-ID: <CAPMcbCpEhzN3+-nY=YKzMV31bTRUaU6cZTkk+Nzzud+uVM1J0Q@mail.gmail.com>
-Subject: Re: [PATCH v6 1/2] qga: Refactor common functions between POSIX and
- Windows implementation
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: aidan_leuck@selinc.com, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000000024f6061519b547"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] migration: Yield coroutine when receiving
+ MIG_CMD_POSTCOPY_LISTEN
+Content-Language: en-US
+To: "Wang, Wei W" <wei.w.wang@intel.com>, Peter Xu <peterx@redhat.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "farosas@suse.de" <farosas@suse.de>
+References: <20240329033205.26087-1-lei4.wang@intel.com>
+ <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <ZgrdIDGe3aNcRu7o@x1n> <ce89cb04-65d0-4f43-ad87-ead6e69c1e09@intel.com>
+ <DS0PR11MB6373AE29375A2910057CC313DC3E2@DS0PR11MB6373.namprd11.prod.outlook.com>
+From: "Wang, Lei" <lei4.wang@intel.com>
+In-Reply-To: <DS0PR11MB6373AE29375A2910057CC313DC3E2@DS0PR11MB6373.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=lei4.wang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,114 +88,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000024f6061519b547
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 4/2/2024 15:25, Wang, Wei W wrote:> On Tuesday, April 2, 2024 2:56 PM, Wang,
+Lei4 wrote:
+>> On 4/2/2024 0:13, Peter Xu wrote:> On Fri, Mar 29, 2024 at 08:54:07AM +0000,
+>> Wang, Wei W wrote:
+>>>> On Friday, March 29, 2024 11:32 AM, Wang, Lei4 wrote:
+>>>>> When using the post-copy preemption feature to perform post-copy
+>>>>> live migration, the below scenario could lead to a deadlock and the
+>>>>> migration will never finish:
+>>>>>
+>>>>>  - Source connect() the preemption channel in postcopy_start().
+>>>>>  - Source and the destination side TCP stack finished the 3-way handshake
+>>>>>    thus the connection is successful.
+>>>>>  - The destination side main thread is handling the loading of the bulk
+>> RAM
+>>>>>    pages thus it doesn't start to handle the pending connection event in the
+>>>>>    event loop. and doesn't post the semaphore
+>> postcopy_qemufile_dst_done for
+>>>>>    the preemption thread.
+>>>>>  - The source side sends non-iterative device states, such as the virtio
+>>>>>    states.
+>>>>>  - The destination main thread starts to receive the virtio states, this
+>>>>>    process may lead to a page fault (e.g., virtio_load()->vring_avail_idx()
+>>>>>    may trigger a page fault since the avail ring page may not be received
+>>>>>    yet).
+>>>
+>>> Ouch.  Yeah I think this part got overlooked when working on the
+>>> preempt channel.
+>>>
+>>>>>  - The page request is sent back to the source side. Source sends the page
+>>>>>    content to the destination side preemption thread.
+>>>>>  - Since the event is not arrived and the semaphore
+>>>>>    postcopy_qemufile_dst_done is not posted, the preemption thread in
+>>>>>    destination side is blocked, and cannot handle receiving the page.
+>>>>>  - The QEMU main load thread on the destination side is stuck at the page
+>>>>>    fault, and cannot yield and handle the connect() event for the
+>>>>>    preemption channel to unblock the preemption thread.
+>>>>>  - The postcopy will stuck there forever since this is a deadlock.
+>>>>>
+>>>>> The key point to reproduce this bug is that the source side is
+>>>>> sending pages at a rate faster than the destination handling,
+>>>>> otherwise, the qemu_get_be64() in
+>>>>> ram_load_precopy() will have a chance to yield since at that time
+>>>>> there are no pending data in the buffer to get. This will make this
+>>>>> bug harder to be reproduced.
+>>>
+>>> How hard would this reproduce?
+>>
+>> We can manually make this easier to reproduce by adding the following code
+>> to make the destination busier to load the pages:
+>>
+>> diff --git a/migration/ram.c b/migration/ram.c index 0ad9fbba48..0b42877e1f
+>> 100644
+>> --- a/migration/ram.c
+>> +++ b/migration/ram.c
+>> @@ -4232,6 +4232,7 @@ static int ram_load_precopy(QEMUFile *f)  {
+>>      MigrationIncomingState *mis = migration_incoming_get_current();
+>>      int flags = 0, ret = 0, invalid_flags = 0, len = 0, i = 0;
+>> +    volatile unsigned long long a;
+>>
+>>      if (!migrate_compress()) {
+>>          invalid_flags |= RAM_SAVE_FLAG_COMPRESS_PAGE; @@ -4347,6
+>> +4348,7 @@ static int ram_load_precopy(QEMUFile *f)
+>>              break;
+>>
+>>          case RAM_SAVE_FLAG_PAGE:
+>> +            for (a = 0; a < 100000000; a++);
+>>              qemu_get_buffer(f, host, TARGET_PAGE_SIZE);
+>>              break;
+>>
+> 
+> Which version of QEMU are you using?
+> I tried with the latest upstream QEMU (e.g. v8.2.0 release, 1600b9f46b1bd), it's
+> always reproducible without any changes (with local migration tests).
 
-On Tue, Apr 2, 2024 at 12:23=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
+I'm using the latest tip:
 
-> On 29/3/24 16:31, aidan_leuck@selinc.com wrote:
-> > From: aidaleuc <aidan_leuck@selinc.com>
-> >
->
-> "In preparation of a Windows implementation, move the
->   non-POSIX specific code to commands-common-ssh."
->
-> > Signed-off-by: aidaleuc <aidan_leuck@selinc.com>
->
-> As in v5
-> (
-> https://lore.kernel.org/qemu-devel/63600417-9187-4d0b-8bcc-db7e965ff008@l=
-inaro.org/
-> ):
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> > ---
-> >   qga/commands-common-ssh.c | 50 ++++++++++++++++++++++++++++++++++++++=
-+
-> >   qga/commands-common-ssh.h | 10 ++++++++
-> >   qga/commands-posix-ssh.c  | 47 +-----------------------------------
-> >   qga/meson.build           |  1 +
-> >   4 files changed, 62 insertions(+), 46 deletions(-)
-> >   create mode 100644 qga/commands-common-ssh.c
-> >   create mode 100644 qga/commands-common-ssh.h
->
-> Kostiantyn, if you take this patch, please amend the commit
-> description and prefix the subject with 'qga: ' :)
->
+	6af9d12c88b9720f209912f6e4b01fefe5906d59
 
-I will do this.
+and it cannot be reproduced without the modification.
 
-Best Regards,
-Konstantin Kostiuk.
+> 
+> 
+>>>
+>>> I'm thinking whether this should be 9.0 material or 9.1.  It's pretty
+>>> late for 9.0 though, but we can still discuss.
+>>>
+>>>>>
+>>>>> Fix this by yielding the load coroutine when receiving
+>>>>> MIG_CMD_POSTCOPY_LISTEN so the main event loop can handle the
+>>>>> connection event before loading the non-iterative devices state to
+>>>>> avoid the deadlock condition.
+>>>>>
+>>>>> Signed-off-by: Lei Wang <lei4.wang@intel.com>
+>>>>
+>>>> This seems to be a regression issue caused by this commit:
+>>>> 737840e2c6ea (migration: Use the number of transferred bytes
+>>>> directly)
+>>>>
+>>>> Adding qemu_fflush back to migration_rate_exceeded() or
+>>>> ram_save_iterate seems to work (might not be a good fix though).
+>>>>
+>>>>> ---
+>>>>>  migration/savevm.c | 5 +++++
+>>>>>  1 file changed, 5 insertions(+)
+>>>>>
+>>>>> diff --git a/migration/savevm.c b/migration/savevm.c index
+>>>>> e386c5267f..8fd4dc92f2 100644
+>>>>> --- a/migration/savevm.c
+>>>>> +++ b/migration/savevm.c
+>>>>> @@ -2445,6 +2445,11 @@ static int
+>> loadvm_process_command(QEMUFile *f)
+>>>>>          return loadvm_postcopy_handle_advise(mis, len);
+>>>>>
+>>>>>      case MIG_CMD_POSTCOPY_LISTEN:
+>>>>> +        if (migrate_postcopy_preempt() && qemu_in_coroutine()) {
+>>>>> +            aio_co_schedule(qemu_get_current_aio_context(),
+>>>>> +                            qemu_coroutine_self());
+>>>>> +            qemu_coroutine_yield();
+>>>>> +        }
+>>>>
+>>>> The above could be moved to loadvm_postcopy_handle_listen().
+>>>
+>>> I'm not 100% sure such thing (no matter here or moved into it, which
+>>> does look cleaner) would work for us.
+>>>
+>>> The problem is I still don't yet see an ordering restricted on top of
+>>> (1)
+>>> accept() happens, and (2) receive LISTEN cmd here.  What happens if
+>>> the
+>>> accept() request is not yet received when reaching LISTEN?  Or is it
+>>> always guaranteed the accept(fd) will always be polled here?
+>>>
+>>> For example, the source QEMU (no matter pre-7.2 or later) will always
+>>> setup the preempt channel asynchrounously, then IIUC it can connect()
+>>> after sending the whole chunk of packed data which should include this
+>>> LISTEN.  I think it means it's not guaranteed this will 100% work, but
+>>> maybe further reduce the possibility of the race.
+>>
+>> I think the following code:
+>>
+>> postcopy_start() ->
+>> 	postcopy_preempt_establish_channel() ->
+>> 		qemu_sem_wait(&s->postcopy_qemufile_src_sem);
+>>
+>> can guarantee that the connect() syscall is successful so the destination side
+>> receives the connect() request before it loads the LISTEN command, otherwise
+>> it won't post the sem:
+>>
+>> postcopy_preempt_send_channel_new() ->
+>> 	postcopy_preempt_send_channel_done() ->
+>>     		qemu_sem_post(&s->postcopy_qemufile_src_sem);
+>>
+> 
+> Yes. But as mentioned in another thread, connect() and accept() are async.
+> So in theory accept() could still come later after the LISTEN command.
 
+IIUC accept() is the callback and will be triggered by the connect() event.
 
+The reason accept() is not called in the destination is the main loop doesn't
+get a chance to handle other events (connect()), so if we can guarantee
+connect() is before LISTEN, then when handling the LISTEN cmd, we yield to the
+main loop and the connect() event is there, then we can handle it by calling the
+accept():
 
-> Thanks,
->
-> Phil.
->
->
+qio_net_listener_channel_func
+	qio_channel_socket_accept
+		qemu_accept
+			accept
 
---0000000000000024f6061519b547
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+so it seems the case accept() comes alter after LISTEN is in our expectation?
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Apr 2, 2024 at 12:23=E2=80=AF=
-PM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">phi=
-lmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">On 29/3/24 16:31, <a href=3D"mailto:aidan_leuck@selinc.com" t=
-arget=3D"_blank">aidan_leuck@selinc.com</a> wrote:<br>
-&gt; From: aidaleuc &lt;<a href=3D"mailto:aidan_leuck@selinc.com" target=3D=
-"_blank">aidan_leuck@selinc.com</a>&gt;<br>
-&gt; <br>
-<br>
-&quot;In preparation of a Windows implementation, move the<br>
-=C2=A0 non-POSIX specific code to commands-common-ssh.&quot;<br>
-<br>
-&gt; Signed-off-by: aidaleuc &lt;<a href=3D"mailto:aidan_leuck@selinc.com" =
-target=3D"_blank">aidan_leuck@selinc.com</a>&gt;<br>
-<br>
-As in v5 <br>
-(<a href=3D"https://lore.kernel.org/qemu-devel/63600417-9187-4d0b-8bcc-db7e=
-965ff008@linaro.org/" rel=3D"noreferrer" target=3D"_blank">https://lore.ker=
-nel.org/qemu-devel/63600417-9187-4d0b-8bcc-db7e965ff008@linaro.org/</a>):<b=
-r>
-<br>
-Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
-o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0qga/commands-common-ssh.c | 50 +++++++++++++++++++++++++++=
-++++++++++++<br>
-&gt;=C2=A0 =C2=A0qga/commands-common-ssh.h | 10 ++++++++<br>
-&gt;=C2=A0 =C2=A0qga/commands-posix-ssh.c=C2=A0 | 47 +---------------------=
---------------<br>
-&gt;=C2=A0 =C2=A0qga/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
-=C2=A0 1 +<br>
-&gt;=C2=A0 =C2=A04 files changed, 62 insertions(+), 46 deletions(-)<br>
-&gt;=C2=A0 =C2=A0create mode 100644 qga/commands-common-ssh.c<br>
-&gt;=C2=A0 =C2=A0create mode 100644 qga/commands-common-ssh.h<br>
-<br>
-Kostiantyn, if you take this patch, please amend the commit<br>
-description and prefix the subject with &#39;qga: &#39; :)<br></blockquote>=
-<div><br></div><div>I will do this.<br><br clear=3D"all"><div><div dir=3D"l=
-tr" class=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regards,</div><div=
->Konstantin Kostiuk.</div></div></div></div><br><br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-<br>
-Thanks,<br>
-<br>
-Phil.<br>
-<br>
-</blockquote></div></div>
+> 
+>>>
+>>> One right fix that I can think of is moving the sem_wait(&done) into
+>>> the main thread too, so we wait for the sem _before_ reading the
+>>> packed data, so there's no chance of fault.  However I don't think
+>>> sem_wait() will be smart enough to yield when in a coroutine..  In the
+>>> long term run I think we should really make migration loadvm to do
+>>> work in the thread rather than the main thread.  I think it means we
+>>> have one more example to be listed in this todo so that's preferred..
+>>>
+>>> https://wiki.qemu.org/ToDo/LiveMigration#Create_a_thread_for_migration
+>>> _destination
+>>>
+>>> I attached such draft patch below, but I'm not sure it'll work.  Let
+>>> me know how both of you think about it.
+>>
+>> Sadly it doesn't work, there is an unknown segfault.
+>>
+>>>
+>>>>
+>>>> Another option is to follow the old way (i.e. pre_7_2) to do
+>>>> postcopy_preempt_setup in migrate_fd_connect. This can save the above
+>>>> overhead of switching to the main thread during the downtime. Seems
+>>>> Peter's previous patch already solved the channel disordering issue. Let's
+>> see Peter and others' opinions.
+>>>
+>>> IIUC we still need that pre_7_2 stuff and keep the postponed connect()
+>>> to make sure the ordering is done properly.  Wei, could you elaborate
+>>> the patch you mentioned?  Maybe I missed some spots.
+>>>
+>>> You raised a good point that this may introduce higher downtime.  Did
+>>> you or Lei tried to measure how large it is?  If that is too high, we
+>>> may need to think another solution, e.g., wait the channel connection
+>>> before vm stop happens.
+>>
+>> Per my very simple test, using post-copy preemption to live migrate an 8G VM:
+>>
+>>     w/o this patch: 121ms in avg in 5 tries
+>>     w/ this patch: 115ms in avg in 5 tries
+>>
+>> So it seems the overhead introduced is not too high (maybe ignorable?).
+> 
+> You could just measure the time for the added qemu_coroutine_yield() part.
+> The time will depend on how many events happen to be there waiting for a dispatch.
 
---0000000000000024f6061519b547--
+Still less than 1ms (0.05ms).
 
+Indeed, that may depends on how many events needs to be handled.
 
