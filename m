@@ -4,77 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C74B7CD1292
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B80CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rraEc-00054o-7N; Tue, 02 Apr 2024 05:15:19 -0400
+	id 1rraHM-0007Cj-7x; Tue, 02 Apr 2024 05:18:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rraEZ-00053k-E9
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:15:11 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rraEO-0003OS-0I
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:15:11 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-56829f41f81so7132816a12.2
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 02:14:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712049298; x=1712654098; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4nO2HzaN0kDt/16pA7tNJlMUFkH3bORvVFVPgUTmBlU=;
- b=zWciNxR/VKe6N6fNNYTeVKOAUgta0AuMDRw8vb55AMI2haNSv8MwI0sHw2Dtg/fe4o
- aL8QQFDYYjvwmJ3iEXo6Jtou6VwHmL87neZ+0Wr0C5wAzEpKZGJ/4e20eO6BlfYXaFov
- tsFC7CzFRsfdRUB1ms/76M3L5l+gA5YLC2YwEvtj+svc6l3rtBlB0CfZogGJgtCmgvkt
- GJvlJ5iKCzDFn2TNCTq+xybrcEoDXBeeClIbskdZJFh2PZTNlK2ZBjwTabxu3ug8w32P
- DlV6RQCEwQz8T31QH6DZIDKCSlZF7BFK7yBz8X6mkAzzK+MiGEB8dWoesb8+jp+3UYDH
- TVdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712049298; x=1712654098;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4nO2HzaN0kDt/16pA7tNJlMUFkH3bORvVFVPgUTmBlU=;
- b=Rxof/R5qlJ3P79rbfMw4Qua9vWxe11Q0AzNA9olC/L1tsh8HOizvJApTDk+WQpGiR/
- JTCrohhwpd/5knL8EcGGvVuz26FPcQd6iuXg1ycbnW0BWg78TegpzPW65CViyqy2EcHt
- Upx0cSz/idRRH/tXiGBK0mEkqFJImygJe+aOYcCNMqbY5CaJyVxyfIHja6EwSDHmasBy
- TnluFJqis+uVIIW7AyuA1RfhvTCaI49Rrpg0r/OFtLeSQremszGa9zkaQBNTIpf1aPla
- kWhUBaQD6C07BLOVkRtIbe29nNYYWy48vh1KtV3ck9olVbp7SpV3FvI0Rb+SvoOxkUC2
- sAlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUe1R5fg0QD3txExyFVO1Wq86/9YUk63tVFJbT5GnmnOW4WunfiiB0FCM4IS9wZPduCVPblvrneFx8/CB8x9XtpOF9GRvY=
-X-Gm-Message-State: AOJu0Yzgg21zIacGkUE7QULiEPhrdMSVJqYEuXLx4/B3EOy9wYzfvWfg
- vXldeMLA53bStUIKsmkYPQ0FqknAM0iHX5o4n7RqW02Phoh83pX3jXaULxkfH8HQ2dgZVWsDoso
- 2n0DXMIy97/s8YzklCQNIDImtr7HoxvARAnpfdA==
-X-Google-Smtp-Source: AGHT+IHVbqXratlzJGCgSPbtBg4eHVIT7J8n8WUA0cFZxxIQgLF5nno128ww6xMi0ESa613raBZ3QgSqUSt+VRszmDM=
-X-Received: by 2002:a50:d698:0:b0:56b:cf40:f712 with SMTP id
- r24-20020a50d698000000b0056bcf40f712mr6719781edi.19.1712049298358; Tue, 02
- Apr 2024 02:14:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rraH9-00079f-Ba
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:17:53 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rraH1-0005lO-2l
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:17:49 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V82L61TJdz6GB07;
+ Tue,  2 Apr 2024 17:15:58 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id E5F84140CB9;
+ Tue,  2 Apr 2024 17:17:10 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 2 Apr
+ 2024 10:17:10 +0100
+Date: Tue, 2 Apr 2024 10:17:06 +0100
+To: Li Zhijian <lizhijian@fujitsu.com>
+CC: Fan Ni <fan.ni@samsung.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/2] CXL/cxl_type3: reset DVSEC CXL Control in ct3d_reset
+Message-ID: <20240402101706.000045b2@Huawei.com>
+In-Reply-To: <20240402014647.3733839-2-lizhijian@fujitsu.com>
+References: <20240402014647.3733839-1-lizhijian@fujitsu.com>
+ <20240402014647.3733839-2-lizhijian@fujitsu.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240329150155.357043-1-clg@redhat.com>
-In-Reply-To: <20240329150155.357043-1-clg@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 10:14:47 +0100
-Message-ID: <CAFEAcA-=DFR-eRLz9XK4=u=Aq0O=3dWZv+nLcDOgWyWAt3iMCQ@mail.gmail.com>
-Subject: Re: [PATCH] raspi4b: Reduce RAM to 1Gb on 32-bit hosts
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,43 +66,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 Mar 2024 at 15:02, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> Change the board revision number and RAM size to 1Gb on 32-bit hosts.
-> On these systems, RAM has a 2047 MB limit and this breaks the tests.
->
-> Fixes: 7785e8ea2204 ("hw/arm: Introduce Raspberry PI 4 machine")
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+On Tue,  2 Apr 2024 09:46:47 +0800
+Li Zhijian <lizhijian@fujitsu.com> wrote:
+
+> After the kernel commit
+> 0cab68720598 ("cxl/pci: Fix disabling memory if DVSEC CXL Range does not match a CFMWS window")
+
+Fixes tag seems appropriate.
+
+> CXL type3 devices cannot be enabled again after the reboot because this
+> flag was not reset.
+> 
+> This flag could be changed by the firmware or OS, let it have a
+> reset(default) value in reboot so that the OS can read its clean status.
+
+Good find.  I think we should aim for a fix that is less fragile to future
+code rearrangement etc.
+
+> 
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 > ---
->  hw/arm/raspi4b.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-> index cb1b1f2f147e8685a1dba6f137335ea0bc89bca5..85877880fc706d216de04ff1e=
-081d66e6080ebac 100644
-> --- a/hw/arm/raspi4b.c
-> +++ b/hw/arm/raspi4b.c
-> @@ -112,7 +112,11 @@ static void raspi4b_machine_class_init(ObjectClass *=
-oc, void *data)
->      MachineClass *mc =3D MACHINE_CLASS(oc);
->      RaspiBaseMachineClass *rmc =3D RASPI_BASE_MACHINE_CLASS(oc);
->
-> +#if HOST_LONG_BITS =3D=3D 32
-> +    rmc->board_rev =3D 0xa03111; /* Revision 1.1, 1 Gb RAM */
-> +#else
->      rmc->board_rev =3D 0xb03115; /* Revision 1.5, 2 Gb RAM */
-> +#endif
->      raspi_machine_class_common_init(mc, rmc->board_rev);
->      mc->init =3D raspi4b_machine_init;
+>  hw/mem/cxl_type3.c | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index ad2fe7d463fb..3fe136053390 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -305,7 +305,8 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+>  
+>      dvsec = (uint8_t *)&(CXLDVSECDevice){
+>          .cap = 0x1e,
+> -        .ctrl = 0x2,
+> +#define CT3D_DEVSEC_CXL_CTRL 0x2
+> +        .ctrl = CT3D_DEVSEC_CXL_CTRL,
+Naming doesn't make it clear the define is a reset value / default value.
+>          .status2 = 0x2,
+>          .range1_size_hi = range1_size_hi,
+>          .range1_size_lo = range1_size_lo,
+> @@ -906,6 +907,16 @@ MemTxResult cxl_type3_write(PCIDevice *d, hwaddr host_addr, uint64_t data,
+>      return address_space_write(as, dpa_offset, attrs, &data, size);
 >  }
+>  
+> +/* Reset DVSEC CXL Control */
+> +static void ct3d_dvsec_cxl_ctrl_reset(CXLType3Dev *ct3d)
+> +{
+> +    uint16_t offset = first_dvsec_offset(ct3d);
 
-Running "make check" on a 32-bit host has clearly fallen off
-our CI config...
+This relies to much on the current memory layout.  We should doing a search
+of config space to find the right entry, or we should cache a pointer to
+the relevant structure when we fill it in the first time.
 
-Applied to target-arm.next for 9.0, thanks.
+> +    CXLDVSECDevice *dvsec;
+> +
+> +    dvsec = (CXLDVSECDevice *)(ct3d->cxl_cstate.pdev->config + offset);
+> +    dvsec->ctrl = CT3D_DEVSEC_CXL_CTRL;
+> +}
+> +
+>  static void ct3d_reset(DeviceState *dev)
+>  {
+>      CXLType3Dev *ct3d = CXL_TYPE3(dev);
+> @@ -914,6 +925,7 @@ static void ct3d_reset(DeviceState *dev)
+>  
+>      cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
+>      cxl_device_register_init_t3(ct3d);
+> +    ct3d_dvsec_cxl_ctrl_reset(ct3d);
+>  
+>      /*
+>       * Bring up an endpoint to target with MCTP over VDM.
 
--- PMM
 
