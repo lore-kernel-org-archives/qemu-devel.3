@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A8EACD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 14:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4362FCD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 14:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrf4v-0001GO-5Z; Tue, 02 Apr 2024 10:25:33 -0400
+	id 1rrf6k-0005Sp-UH; Tue, 02 Apr 2024 10:27:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrf4j-00012l-N5
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 10:25:25 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrf60-0003KL-2u
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 10:26:44 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrf4g-00084b-0B
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 10:25:20 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3437d3db788so139206f8f.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 07:25:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrf5q-0000Sa-ML
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 10:26:33 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4156c4fe401so10376645e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 07:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712067915; x=1712672715; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712067968; x=1712672768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vawk+LSw2Z6p/aOFRJRkJdEE2smC/bsXUmQB9oTHxK0=;
- b=IKmcaPZOpO6Pf72rYlxUfVocw6OuKhGZKuUkn/srCt9qoyxKOZAAPdLLrlFUO5b8Sn
- ClF83dBPD/U3SPmQ+rHoN5Dgt8MQI6+tB/+wQCATCuIFHJUXpVnODJpeQGICO9okO682
- oRXRN1Mtcmp3daSg0LmskqmO/Qi68NDq32lmMa9wCFmxQhIw09qzUHyG3cfDrOWZo3bq
- c0H95ULCVo2TDvTJpTpTN+8I1meOuFmqMm9iyDr4GsX/lWhvqKxdDI8yjLvSLUxyZBm/
- 1bSVkhw8QQr9f7zSUP6rMYgx5gxqHYVPri3MnSNOh7ma9Dse4GbCsUmgIT2/lhB/fceh
- TGVA==
+ bh=LJR+J0sIff2Vu4D6kvT0n6WHFLydqkfqEpFRyA0c+dE=;
+ b=pTjwvD7joMHBtcGP5BstWpq5hNCUhEJAu7/qNNsKlOAshUYM0cEPMpxbEM6RAcovCa
+ TRg6E/xG6dpY1uNg1bdvgEWLZhcFvxBa+5NZ9AcilXqccbkIhH6fpo2lVJC111aD/PTT
+ RXQiVuoXALFg7iGbUwT3CHmtVkUsPky8zrX3RvNNQi83my6LrgKK5LfIzVET5VdHAP/v
+ n0vtG5Uso6Zw2/EqxUlmhNk79C9tR0Q/2eKxEOo+55dZYDJDW75X/YwzGJZaIi/vt8Mg
+ rs+pS067Lq9FUulYRekOBOG5hCAVjfb3AwaizL1mLi90wTortpeTTkEiCzu5r1SYKd3N
+ ntDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712067915; x=1712672715;
+ d=1e100.net; s=20230601; t=1712067968; x=1712672768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vawk+LSw2Z6p/aOFRJRkJdEE2smC/bsXUmQB9oTHxK0=;
- b=OvXiceU90Vq5MHGw0lyczexETI3jfpKzDT/prvZuFEEtl+cFG4DD6W32ULx2Xo2txC
- CaDbHJ+SsKlA154fPVgsrKoQJJdzj6T32S1wqdcMgs4qOoIEAs8/WzWoa180gfvW/I2J
- R+78v+DkLW92fcODSCKKZhfaUcM2bQYEIfhi6paFS8rzyD2MBXLsyba1W6wGpss3XIQe
- WrDkp4g+A2wAmQpKZCfJ4uYC0ZhLyG2mBdRvSJ3DdE7mLmjK+aZcsOmWQqMzZhVnqfVb
- mfhbe/OJiVF4Bqfy/8c1fZjd56yxwn0B0GaCzBUBtp+oO/tkmKlbV+pTonsQgjGhpiLi
- LWog==
-X-Gm-Message-State: AOJu0YzWDrNAOT89e3c1kfzoBpvmtZdVMzYK4dfOa1YYrKLNeaDTru63
- Rp8ezyl0D/wCD6XPQB+5vdzKasAWGP/z4XR68eOhaVGY/0243ECKHTFIHY+kk63xjenjPYs1BqX
- Wn6g=
-X-Google-Smtp-Source: AGHT+IFJHpszbjIqBF+yYRpgQYe5a7ZHUg4a7GJafo0cxhAwOkZcBvYmyclis5LF/Q+ckcpOj8ETmg==
-X-Received: by 2002:adf:eed1:0:b0:33e:7865:cf67 with SMTP id
- a17-20020adfeed1000000b0033e7865cf67mr7659653wrp.55.1712067915477; 
- Tue, 02 Apr 2024 07:25:15 -0700 (PDT)
+ bh=LJR+J0sIff2Vu4D6kvT0n6WHFLydqkfqEpFRyA0c+dE=;
+ b=o8ngBz3deOyu/gm58OkHLgU4haLqTwclD14b9BnLZcposBRaZP0CFPYhBv27gxdUCf
+ GRtptBIottt4mT12k9hbENOBqKfTabBYVkoG5KeHDMYLd3YPbrAFQtXPwphxGeJAGqhh
+ +MV87nPHjj73lj/3cFza3YRWRwPqKBZtKp1xD4LNcSjyU4//LXxAFsbzVefUTCfr3wnU
+ nD6ZovscXl+9iOoUyIj03mwtslV5KF1nRbldDOVafTfIygpjKcz1J4xTqmHW5NJjdxyW
+ TPD/xGIcGwERCuX+XatyJQejE8QcVxYz3d1a6dW0Kl5lkuwUYi/QODIW4i01a+5zLJyU
+ TpcQ==
+X-Gm-Message-State: AOJu0YwQ+3DSMRp56COqhsE3Th2FRbwBw5rFVzd6ha4EB0AOYKOzQSok
+ Wu/cIVdOHYDJc5CXIuE6HO3gdHfOaXWzr0jBRY0OYm+gceYHci8Q3nW0SlM6cK8P/thPzbbbfx7
+ ppWg=
+X-Google-Smtp-Source: AGHT+IG4zA6UOegYcEWoMux0JI6FAPHoRZzc1piBq7h3ig/Eh1YzJIg8mY+dO6cQ2T2ozzVJidRvZg==
+X-Received: by 2002:a05:600c:19c6:b0:414:132e:b485 with SMTP id
+ u6-20020a05600c19c600b00414132eb485mr10180645wmq.27.1712067968445; 
+ Tue, 02 Apr 2024 07:26:08 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.202.91])
  by smtp.gmail.com with ESMTPSA id
- l6-20020a05600c4f0600b0041469869d11sm21168544wmq.47.2024.04.02.07.25.13
+ p12-20020a05600c358c00b0041486a6f9fcsm21378049wmq.37.2024.04.02.07.26.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Apr 2024 07:25:15 -0700 (PDT)
+ Tue, 02 Apr 2024 07:26:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-arm@nongnu.org,
+ Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+ Oleg Sviridov <oleg.sviridov@red-soft.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
+ David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PULL 06/15] accel/hvf: Un-inline hvf_arch_supports_guest_debug()
-Date: Tue,  2 Apr 2024 16:24:21 +0200
-Message-ID: <20240402142431.70700-7-philmd@linaro.org>
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 14/15] hw/xen_evtchn: Initialize flush_kvm_routes
+Date: Tue,  2 Apr 2024 16:24:29 +0200
+Message-ID: <20240402142431.70700-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240402142431.70700-1-philmd@linaro.org>
 References: <20240402142431.70700-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,44 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-See previous commit and commit 9de9fa5cf2 ("Avoid using inlined
-functions with external linkage") for rationale.
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
+In xen_evtchn_soft_reset() variable flush_kvm_routes can
+be used before being initialized.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240329113939.257033-1-artem.chernyshev@red-soft.ru>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240313184954.42513-3-philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c  | 2 +-
- target/i386/hvf/hvf.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/i386/kvm/xen_evtchn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index e5f0f60093..65a5601804 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -2246,7 +2246,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
-     hvf_arch_set_traps();
- }
+diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+index a5052c0ea3..07bd0c9ab8 100644
+--- a/hw/i386/kvm/xen_evtchn.c
++++ b/hw/i386/kvm/xen_evtchn.c
+@@ -1097,7 +1097,7 @@ static int close_port(XenEvtchnState *s, evtchn_port_t port,
+ int xen_evtchn_soft_reset(void)
+ {
+     XenEvtchnState *s = xen_evtchn_singleton;
+-    bool flush_kvm_routes;
++    bool flush_kvm_routes = false;
+     int i;
  
--inline bool hvf_arch_supports_guest_debug(void)
-+bool hvf_arch_supports_guest_debug(void)
- {
-     return true;
- }
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 11ffdd4c69..1ed8ed5154 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -708,7 +708,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
- {
- }
- 
--inline bool hvf_arch_supports_guest_debug(void)
-+bool hvf_arch_supports_guest_debug(void)
- {
-     return false;
- }
+     if (!s) {
 -- 
 2.41.0
 
