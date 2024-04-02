@@ -4,108 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B97F7CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 07:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B841CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 07:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrY93-0003iC-BF; Tue, 02 Apr 2024 03:01:21 -0400
+	id 1rrY9d-0004HA-1s; Tue, 02 Apr 2024 03:01:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1rrY91-0003hl-Aq
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 03:01:19 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rrY9a-0004Fw-BS; Tue, 02 Apr 2024 03:01:54 -0400
+Received: from out30-111.freemail.mail.aliyun.com ([115.124.30.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1rrY8z-0006fw-2s
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 03:01:18 -0400
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4325hNlk024739; Tue, 2 Apr 2024 07:01:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=pp1;
- bh=eEUs0t/Pp7Kh1Kh+m3CjD6QD0EumwVtWNMCNdOHaVyA=;
- b=HljyMPAZc68thv8TUwan8IjTKTbPC3pgjznZ6fR9hxih1T/aG09rLRcRzBPZxxDZS/Qx
- 7CUhaAGhrV4YVwiu1oNB+D0JncyT3ProfEu/Y4Qof4Itbl2pmJkrzD46BArd8EcYR55e
- 45WP/0XwK9Wp42VEhfI07uJmbDXD45VmvWwERrYtYHu6g1s6V4sNI9mv3HLQSQovBoob
- FSPhyymZGm/R2HOUkSntdB4+GuVH8JooFkjcUiJhcKrWSWv6S9J/qq4MLhtql4gpd0vl
- lK0l1qCPPvl4JAQx14ghNmeXjOc5DAvN0bpWLmWFGQIIJ+24jwZaqoNC7ATFQGDwIb6F 4g== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x8c4104y9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Apr 2024 07:01:13 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43271D1m015405;
- Tue, 2 Apr 2024 07:01:13 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x8c4104x5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Apr 2024 07:01:13 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4323Jcj0027148; Tue, 2 Apr 2024 07:00:51 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3x6wf0549e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Apr 2024 07:00:51 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43270jpm52822286
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 2 Apr 2024 07:00:47 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B87BA2005A;
- Tue,  2 Apr 2024 07:00:45 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4DE3620043;
- Tue,  2 Apr 2024 07:00:44 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.109.199.72])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue,  2 Apr 2024 07:00:44 +0000 (GMT)
-Date: Tue, 2 Apr 2024 12:30:41 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: qemu-devel@nongnu.org, Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH 0/2] P11 support for QEMU
-Message-ID: <b4c2tbcn7qg5b4thxpyvwzddt43lfi5ylmwcrr3c6ikmwrhxq2@kmv54op37jnv>
-References: <20240401055503.1880587-1-adityag@linux.ibm.com>
- <c671fb5a-18d7-4c3a-beec-ad3f28114986@kaod.org>
- <7dpmvbcarr2lbbjih3n6d6kaj23dzrmtowqme4lnyhbjeexffw@u3agsb3prq7b>
- <c8a82773-04ff-44d4-9a75-1e1f9b4efa10@kaod.org>
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rrY9X-0006hi-83; Tue, 02 Apr 2024 03:01:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1712041306; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
+ bh=BHwh/deAZvnxN56/l+z1N1vpB38fM1rZx3fZq6hMk14=;
+ b=VEzZ25e68jZ1ihKfpipdHkUBV0KvP3xqS4fVuDYhgDNj/ztOgMfxb+a+DQ2rClbEQAdYiBKtg3z5eWgRD1pfc4huyXdGhRjES8ziXTtG0knyFu3z0pcEOSdKHpzQ7U9snLZiiKuP+IcS/IjZUpy5kYYckb9mW1CaX49kE/+ESMg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046051;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W3nUxi1_1712041304; 
+Received: from 30.21.185.194(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W3nUxi1_1712041304) by smtp.aliyun-inc.com;
+ Tue, 02 Apr 2024 15:01:45 +0800
+Content-Type: multipart/alternative;
+ boundary="------------nXL00O2eTBSflkMHoorP9OG2"
+Message-ID: <7ca1c941-8980-4ff7-b2aa-1aacfbba569a@linux.alibaba.com>
+Date: Tue, 2 Apr 2024 15:01:43 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c8a82773-04ff-44d4-9a75-1e1f9b4efa10@kaod.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: n7ZARgnfwD4_EN8wBkbycyZQ6xZOOOL0
-X-Proofpoint-GUID: f2atp_oAeooSDmP2CFYnL_mKM1DdTxrS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-02_02,2024-04-01_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0
- mlxscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403210000 definitions=main-2404020049
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/riscv: Fix the element agnostic function problem
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240325021654.6594-1-eric.huang@linux.alibaba.com>
+From: Huang Tao <eric.huang@linux.alibaba.com>
+In-Reply-To: <20240325021654.6594-1-eric.huang@linux.alibaba.com>
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,76 +72,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Cédric,
+This is a multi-part message in MIME format.
+--------------nXL00O2eTBSflkMHoorP9OG2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> > > <...snip...>
-> > > 
-> > > Please run ./scripts/get_maintainer.pl when sending a series. qemu-ppc should be
-> > > in Cc:
-> > 
-> > Tried it now, For some reason, get_maintainer.pl shows no maintainers:
-> > 
-> >      $ ./scripts/get_maintainer.pl -f 0002-ppc-powernv11-add-base-support-for-P11-PowerNV.patch
-> >      get_maintainer.pl: No maintainers found, printing recent contributors.
-> >      get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
-> >      qemu-devel@nongnu.org (open list:All patches CC here)
-> 
-> Weird. I downloaded your series with b4 and ran the get_maintainer.pl script :
-> 
-> $ ./scripts/get_maintainer.pl 20240401_adityag_p11_support_for_qemu.patches/0001_ppc_pseries_add_p11_cpu_type.patch 20240401_adityag_p11_support_for_qemu.patches/0002_ppc_powernv11_add_base_support_for_p11_powernv.patch
-> 
-> Nicholas Piggin <npiggin@gmail.com> (odd fixer:sPAPR (pseries))
-> Daniel Henrique Barboza <danielhb413@gmail.com> (reviewer:sPAPR (pseries))
-> David Gibson <david@gibson.dropbear.id.au> (reviewer:sPAPR (pseries))
-> Harsh Prateek Bora <harshpb@linux.ibm.com> (reviewer:sPAPR (pseries))
-> "Cédric Le Goater" <clg@kaod.org> (odd fixer:PowerNV Non-Virt...)
-> "Frédéric Barrat" <fbarrat@linux.ibm.com> (reviewer:PowerNV Non-Virt...)
-> qemu-ppc@nongnu.org (open list:sPAPR (pseries))
-> qemu-devel@nongnu.org (open list:All patches CC here)
+This is a ping to the patch below.
 
-So, it should have worked, I will check if I can get it to work.
-
-> 
-> > I checked the MAINTAINERS file, will add maintainers in Cc, thanks.
-> > 
-> > > 
-> > > Briefly looking at this, please separate the changes using one patch per model,
-> > > that is : first CPU (target), LPC, OCC, PSI, SBE, PnvCore, SpaprCore. Last the
-> > > PnvChip and the machines, powernv11 and pseries. A minimum commit log describing
-> > > the HW is required.
-> > 
-> > Sure, I will split the changes and improve my commit descriptions.
-> > 
-> > > I don't see PHB6 or XIVE3. Why ?
-> > 
-> > Power11 core is same as Power10, so it supports till PHB5 and XIVE2,
-> > same as P10. That's why I have not added any code for them.
-> 
-> ok. That's typically the info the commit log should have.
-
-Okay, I will add these details also.
-
-> 
-> > > Also, you will need an OPAL update. The above changes are pointless without it.
-> > > The minimum for now is a git commit from the opal repo, then you will need to
-> > > update QEMU with a binary.
-> > 
-> > Agreed. I will consult when we push it to public. Will update this in
-> > next series.
-> > 
-> > There might be some days delay in the next patch series.
-> 
-> We have entered the QEMU 9.1 cycle. There is time. I will comment more
-> the next respin.
-
-Thanks Cédric
-
-- Aditya Gupta
+https://patchew.org/QEMU/20240325021654.6594-1-eric.huang@linux.alibaba.com/ 
 
 
-> 
-> Thanks,
-> 
-> C.
-> 
+On 2024/3/25 10:16, Huang Tao wrote:
+> In RVV and vcrypto instructions, the masked and tail elements are set to 1s
+> using vext_set_elems_1s function if the vma/vta bit is set. It is the element
+> agnostic policy.
+>
+> However, this function can't deal the big endian situation. This patch fixes
+> the problem by adding handling of such case.
+>
+> Signed-off-by: Huang Tao<eric.huang@linux.alibaba.com>
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Reviewed-by: LIU Zhiwei<zhiwei_liu@linux.alibaba.com>
+> ---
+> Changes in v3:
+> - use "if (HOST_BIG_ENDIAN)" instead of "#if HOST_BIG_ENDIAN"
+>
+> Changes in v2:
+> - Keep the api of vext_set_elems_1s
+> - Reduce the number of patches.
+> ---
+>   target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
+>
+> diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
+> index 12f5964fbb..36635a1138 100644
+> --- a/target/riscv/vector_internals.c
+> +++ b/target/riscv/vector_internals.c
+> @@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
+>       if (tot - cnt == 0) {
+>           return ;
+>       }
+> +
+> +    if (HOST_BIG_ENDIAN) {
+> +        /*
+> +         * Deal the situation when the elements are insdie
+> +         * only one uint64 block including setting the
+> +         * masked-off element.
+> +         */
+> +        if (((tot - 1) ^ cnt) < 8) {
+> +            memset(base + H1(tot - 1), -1, tot - cnt);
+> +            return;
+> +        }
+> +        /*
+> +         * Otherwise, at least cross two uint64_t blocks.
+> +         * Set first unaligned block.
+> +         */
+> +        if (cnt % 8 != 0) {
+> +            uint32_t j = ROUND_UP(cnt, 8);
+> +            memset(base + H1(j - 1), -1, j - cnt);
+> +            cnt = j;
+> +        }
+> +        /* Set other 64bit aligend blocks */
+> +    }
+>       memset(base + cnt, -1, tot - cnt);
+>   }
+>   
+--------------nXL00O2eTBSflkMHoorP9OG2
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><span
+style="caret-color: rgb(33, 37, 41); color: rgb(33, 37, 41); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: pre; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration: none; display: inline !important; float: none;">This is a ping to the patch below.</span></p>
+    <p><span
+style="caret-color: rgb(33, 37, 41); color: rgb(33, 37, 41); font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: pre; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration: none; display: inline !important; float: none;"><a class="moz-txt-link-freetext" href="https://patchew.org/QEMU/20240325021654.6594-1-eric.huang@linux.alibaba.com/">https://patchew.org/QEMU/20240325021654.6594-1-eric.huang@linux.alibaba.com/</a>
+</span></p>
+    <div class="moz-cite-prefix">On 2024/3/25 10:16, Huang Tao wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20240325021654.6594-1-eric.huang@linux.alibaba.com">
+      <pre class="moz-quote-pre" wrap="">In RVV and vcrypto instructions, the masked and tail elements are set to 1s
+using vext_set_elems_1s function if the vma/vta bit is set. It is the element
+agnostic policy.
+
+However, this function can't deal the big endian situation. This patch fixes
+the problem by adding handling of such case.
+
+Signed-off-by: Huang Tao <a class="moz-txt-link-rfc2396E" href="mailto:eric.huang@linux.alibaba.com">&lt;eric.huang@linux.alibaba.com&gt;</a>
+Suggested-by: Richard Henderson <a class="moz-txt-link-rfc2396E" href="mailto:richard.henderson@linaro.org">&lt;richard.henderson@linaro.org&gt;</a>
+Reviewed-by: LIU Zhiwei <a class="moz-txt-link-rfc2396E" href="mailto:zhiwei_liu@linux.alibaba.com">&lt;zhiwei_liu@linux.alibaba.com&gt;</a>
+---
+Changes in v3:
+- use "if (HOST_BIG_ENDIAN)" instead of "#if HOST_BIG_ENDIAN"
+
+Changes in v2:
+- Keep the api of vext_set_elems_1s
+- Reduce the number of patches.
+---
+ target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
+index 12f5964fbb..36635a1138 100644
+--- a/target/riscv/vector_internals.c
++++ b/target/riscv/vector_internals.c
+@@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
+     if (tot - cnt == 0) {
+         return ;
+     }
++
++    if (HOST_BIG_ENDIAN) {
++        /*
++         * Deal the situation when the elements are insdie
++         * only one uint64 block including setting the
++         * masked-off element.
++         */
++        if (((tot - 1) ^ cnt) &lt; 8) {
++            memset(base + H1(tot - 1), -1, tot - cnt);
++            return;
++        }
++        /*
++         * Otherwise, at least cross two uint64_t blocks.
++         * Set first unaligned block.
++         */
++        if (cnt % 8 != 0) {
++            uint32_t j = ROUND_UP(cnt, 8);
++            memset(base + H1(j - 1), -1, j - cnt);
++            cnt = j;
++        }
++        /* Set other 64bit aligend blocks */
++    }
+     memset(base + cnt, -1, tot - cnt);
+ }
+ 
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------nXL00O2eTBSflkMHoorP9OG2--
 
