@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0194CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA57C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 13:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rreDp-0000JW-41; Tue, 02 Apr 2024 09:30:41 -0400
+	id 1rreH4-0001op-4O; Tue, 02 Apr 2024 09:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rreDm-0000IS-Ak
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:30:38 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rreGq-0001hr-LB
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:33:51 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rreDi-0000SN-Uf
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:30:37 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4161eb1aea7so1590445e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:30:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rreGo-0003Je-6m
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 09:33:48 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56c0d1bddc1so6060609a12.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 06:33:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712064632; x=1712669432; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7yV5DhXp84F08Csgrgf5l9tQgfG+5zMqa1qugWdzDL0=;
- b=rJm2n7DV9U0ODWzkdFoUUP7qtMfyeNFOOuHvzrPlPNWazIrhvt+AYkr1bvNiaK/HzL
- r0EdF7l9bPtxVTAUPkMm5Kkd2kg4NB0ClO/Hp/0j80lcul4xCUEu/Z7fm4c7Qniblsa0
- nxeDfz60EPwUrQ9JwOAqePrw/SObdRQymtN22N7GUzROJXyqw7/odii9kiqA/xGeRjLV
- KNFEKE2cR/DClkERI1N2odWrOmhoanw7bw/ScVVYYRmeIVF+9nJANreC81+El7+dtkr3
- resCMOhg3TSlfy+bu10OFuV19CB8oZlNNrHutE+9GR++PtbZwEF1mLcYA4fe/921Te78
- FfOw==
+ d=linaro.org; s=google; t=1712064824; x=1712669624; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dZaM+0gpcer9rrkxwrVQDkyNdPl6hTnle0VkE5xixrE=;
+ b=UjsdDdTlPIgupIBkMwBvSwFB9lxBEI2CSqgbXfiry1tMRmdRKMrmD9Zbw2cjzRD9nh
+ SQv6FrMbRAAa/eTh9P7k4WZ3pUvs0VAljjNlKuseyptAvrc6Moh6VfPgkrxt51K4P9bo
+ s8ILbaEaGW2Ot3LBSx/8d3T+Y/rUX79Lgn+Pfq70e3U/gtZOcjiOCaUPhrxE9Otv+db3
+ 0kGeucGxQ3LfNrq3dNuTUBq8jovSbyjEaQrdFyJ2mnReWctEKvEMfkBSIBuBBzqAdf1M
+ 2WOlwGwOP0fBeIrl304kVpyWOX2uTX6+ZclpNCqXi6+trn2VExRLkpjQ52J8x8AthF5w
+ x8LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712064632; x=1712669432;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7yV5DhXp84F08Csgrgf5l9tQgfG+5zMqa1qugWdzDL0=;
- b=JmiUUefaSHvtd3+mPzzllJthp/FQIe+Ycd46uhxtK1M06SbjYFOPmfNWa+uacKkVqK
- ryQkPDhZU+6b2m/wNrbZxzOS28mKsJziPevRjquOudjm9Fy7+d5uL9fLiq2XUY/nMxWY
- alOLconInmDRIKxz6DPBbJeig1fKnSi7rAVNECOqhOpm/Lbgt3Rn4fdKPqrMZty99GB/
- DVSozu4sBSPvqHa5+dbdA98xK55qHLXuuVCgjzdUpn+9/q1BvUt7C5ls3DG4VCK+FWzI
- wqSWF0O5ZGafs6uT8QTTL3Ql9ibJDnZNCVazsl31M1hiLOfC11F5z93FesDpghUVxFPR
- 8Gng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV9FnVaNllO4zPJRggvLJMdCvGzKrR9bYRcbAwFYWIX7J4YUNraL3IicdLTtIlw9iSbNw7UowmcO/iRTk65tFQNzv2Jo4E=
-X-Gm-Message-State: AOJu0YzrF/rGYZHkuvSYa/47XQCxjJ2HxXScqy7I7iFvm/wQvGC/IcS4
- moYgtOusLczooDbjVzJArEgOb5YQEs1SujuQh79aqbPYvX5gcoxBPgxvn3ZCY1Nw+T+d3E7ieWh
- mmjM=
-X-Google-Smtp-Source: AGHT+IEqXEFfetuczkoGQBa8L7Fc0uIIdMkhAHukdsYrGm6EfZd+FqNUlWRBhvqyQBziC9eTlEZAdg==
-X-Received: by 2002:a05:600c:3b02:b0:414:8abb:a96b with SMTP id
- m2-20020a05600c3b0200b004148abba96bmr8116028wms.34.1712064632074; 
- Tue, 02 Apr 2024 06:30:32 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.202.91])
- by smtp.gmail.com with ESMTPSA id
- q17-20020a05600c46d100b0041409db0349sm17959110wmo.48.2024.04.02.06.30.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 06:30:31 -0700 (PDT)
-Message-ID: <9ec42b31-f169-4d7d-82a4-f0173bc75581@linaro.org>
-Date: Tue, 2 Apr 2024 15:30:29 +0200
+ d=1e100.net; s=20230601; t=1712064824; x=1712669624;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dZaM+0gpcer9rrkxwrVQDkyNdPl6hTnle0VkE5xixrE=;
+ b=oj+6IDK46owUgz0QX5kiXu+VijYaLAr5k4qxOcW96Bx4QgHAXdDGc+TG/7H6BQhWPr
+ LebxWiAzsR2n4rUzoOgmABVgLHqS+gCBfasGZX4fDrYFWEQU+QkM64FgM5VqWw1FiZYO
+ YP7emst+WEYCW9656/UVjDjzeDn809TsjFhqsvXw29dvVkleacaQHlonAmwmERbsppEy
+ HXFhtEOoeK8pEUes9UuDgHDQrNBkWzoKaAItNvD/t/0ym4NTNxHUQnwEgLfb7Wbhg4SL
+ gRRYNQbge6eRKcaLnpCyEXYetOmjjPCSsc/TvDclTuPvHO4fz7YltBSscuCcE1Ht+luj
+ xaiA==
+X-Gm-Message-State: AOJu0YxOTNRTLQHBuYNPKHdmyLMjianKxauhBUn0gbq0SYoQuto3eipN
+ KlAVLjNdOHKQ7QRsI+juJnt7l+54UI0128p7knoMp1weQ6P+L0AXXz9b44FIjjiSxAKaFc/AlFe
+ ReCQ0QtZma08gEzTPPwzIQWRA8QaYh9dZjqimLw==
+X-Google-Smtp-Source: AGHT+IEYgj6FPkVmklqwFq3/MlkfAHEfPJaaqQ8VTfOD7qP7hoCd+padMmFJL2UBrqcMny1/uriRQKBYZ3TiNp89NcI=
+X-Received: by 2002:a50:d65b:0:b0:568:3378:8fd4 with SMTP id
+ c27-20020a50d65b000000b0056833788fd4mr8710754edj.11.1712064824473; Tue, 02
+ Apr 2024 06:33:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Patch for qemu-project/qemu#2247 issue
-To: Michael Tokarev <mjt@tls.msk.ru>, liu.dayu@zte.com.cn,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, jiang.xuexin@zte.com.cn
-References: <20240401174355899iU6IFrpOQSiGe36G4PToz@zte.com.cn>
- <298819da-145e-4478-901f-66241a23f03f@tls.msk.ru>
- <d960f4d5-1570-4b07-a1fd-2bd1267d661b@linaro.org>
- <291032f7-de3f-4b21-9b2e-872274203e37@tls.msk.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <291032f7-de3f-4b21-9b2e-872274203e37@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+References: <20240402104106.2933247-1-mjt@tls.msk.ru>
+In-Reply-To: <20240402104106.2933247-1-mjt@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 2 Apr 2024 14:33:33 +0100
+Message-ID: <CAFEAcA8674ZQgWPWV_XD0EjJXdwPGbj9Py+2PEPgZ-3PFFatww@mail.gmail.com>
+Subject: Re: [PULL v2 0/4] Trivial patches for 2024-04-02
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +87,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/24 11:59, Michael Tokarev wrote:
-> 02.04.2024 12:50, Philippe Mathieu-Daudé пишет:
->> On 1/4/24 18:52, Michael Tokarev wrote:
->>> 01.04.2024 12:43, liu.dayu@zte.com.cn wrote:
->>>> hmp: Add help information for watchdog action: inject-nmi
->>>>
->>>> virsh qemu-monitor-command --hmp help information of watchdog_action 
->>>> missing inject-nmi which already supported in Commit 795dc6e4
->>>>
->>>> Signed-off-by: Dayu Liu <liu.dayu@zte.com.cn>
->>>
->>> Applied to trivial-patches tree, in the following form:
->>>
->>> Author: Dayu Liu <liu.dayu@zte.com.cn>
->>> Date:   Mon Apr 1 17:43:55 2024 +0800
->>>
->>>      hmp: Add help information for watchdog action: inject-nmi
->>>
->>>      virsh qemu-monitor-command --hmp help information of
->>>      watchdog_action missing inject-nmi which already supported
->>>      in Commit 795dc6e4
->>>
->>
->> Fixes: 795dc6e46d ("watchdog: Add new Virtual Watchdog action 
->> INJECT-NMI")
-> 
-> I don't think that commit is broken and needs Fixing.
-> I see your point though - to have more formal way to
-> mark "related" commits, it isn't always fixing something.
-> 
-> I sent a pullreq for this a couple hours ago anyway.
+On Tue, 2 Apr 2024 at 11:42, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> The following changes since commit 6af9d12c88b9720f209912f6e4b01fefe5906d59:
+>
+>   Merge tag 'migration-20240331-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-04-01 13:12:40 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+>
+> for you to fetch changes up to 7805132bc30b2619355b10bbfb67217ac838c677:
+>
+>   hmp: Add help information for watchdog action: inject-nmi (2024-04-02 13:38:51 +0300)
+>
+> ----------------------------------------------------------------
+> trivial patches for 2024-04-02
+>
+> spelling fixes for the release, minor doc fixes and usb-audio fix.
+>
+> v2: fix Stefan Weil email
+>
 
-No worries ;)
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
+-- PMM
 
