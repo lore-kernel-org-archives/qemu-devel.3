@@ -4,97 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F0FCD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 12:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB33ACD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 12:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcs6-0003Ex-4z; Tue, 02 Apr 2024 08:04:10 -0400
+	id 1rrd0W-00060n-P4; Tue, 02 Apr 2024 08:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rrcrT-0002mP-10
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:03:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rrcqI-0004rY-Dc
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:03:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712059332;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VfO4vz3iR2g5q8JUTZYd9OAxeGhEscsDuoayrqWPcc8=;
- b=JIpXg+U+nkcbxsG4N1urRhh9X+2MpmifhpdLM+4ZuwA1p4WxzU2NZEg/29Tph3E5NhgqRx
- l2qjiC0InDPi5TrHO/VTzn8qN6vjNkDX5QWhsWV6nHC/ueo3Ypn/DcUCv/BTok6LB6de8n
- 49cg6FIHi8xReYOILU63UZS1HEQPd6E=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-S4jt14XGMZ-3iW_OKIRa7g-1; Tue, 02 Apr 2024 08:02:08 -0400
-X-MC-Unique: S4jt14XGMZ-3iW_OKIRa7g-1
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-dd0ae66422fso9545606276.0
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 05:02:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrd0Q-000608-Ms
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:12:47 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrczJ-0003yl-O0
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 08:12:45 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-415523d9824so32262645e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 05:11:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712059893; x=1712664693; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BACjPm7ApmC8dr/jTxJ+BIAqI2Do8+8VBU/HRYfAs3A=;
+ b=Rd56v34+4UkgkfTJjUKeNrJGOmHuP4E7n+78xAbmVfRFiHcV6qD2qnQKAF2mEC2Adv
+ 0/rNbQFUI8mNwOl3WKLrXK1d7RALlthq0/cEU2q5CEBBQwrZM0yC+DdaTd9jLWZWLSmT
+ vC+btSF6KYITx8Czalo1nEL7GZIHKUljTfG7yqanZcG+JS6HZRkyUYUgU+lDa3YoxwLA
+ 7N/y9lmFZ8LAxdnOyXI73J4PwzQKrAOr1SQsY7gQFVT3D1V2IM+wNxoUov3oXU8jXJVE
+ 1tYXVDbASanmFG11GlgDt6bHdQ9/+aBZoXW/BGGPfWIT9+FmOUE56YnKSkKPUDhcZMHK
+ FJ9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712059328; x=1712664128;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VfO4vz3iR2g5q8JUTZYd9OAxeGhEscsDuoayrqWPcc8=;
- b=cghtC8mfAJ1B0xQ857uBFD/BcSeg9arCjj0DYa927h+C85GtlqZJcBo025fioKntQO
- 5yMNWg+NNj1JtXqdXAbSxHgdNl0QakBfbcgx9bFCPwdfYxIcE3ne7ZG9QOcPFz42cza4
- 6hckk81cic3/p8OM32zkXRXy/rKgBayULMWMuIB1Dx1UeMJhiLoCWagCdihKZ+yNZiVk
- SIo6OeJT1gYtgeiIRmJwqEZwFxBKN4jZab2uyheQiOF70kaIhpD9QLiY78DEsQBXSnTv
- 97lgx6n1FoLw6M3laPA54P7KBRw/G/K5JzXsT4s868nl+SHNWjmJ28HadRG5EP1Hv6lD
- P1zQ==
+ d=1e100.net; s=20230601; t=1712059893; x=1712664693;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BACjPm7ApmC8dr/jTxJ+BIAqI2Do8+8VBU/HRYfAs3A=;
+ b=OOLhLmfBWQVjSdRl6xih/py8aE0KvJjlaBdqSNMf8eD21SOoprY1l1AF2W9IglPscp
+ Sy2JbZ3K2o16azfcagFIU2jmFxv0Pb72Hwrzoa8Hsl+BwBElEES4LdGF/CDnO2URLvrx
+ ecA5qwRrEQq43d8O9g3n2Bpqbi+Pa9PYK5d/sBs0GBgWW7/6h/ywrBbXR5cpHQ2Cfd68
+ FbzLKsZZPVeHFvAU6208HdZ//cteSr7bKyV6A7nEZeAUIHDAGQTmWeCEEhe4tsSdwCyD
+ VYvlXozEEBjHfAWXs+IQbcLkZ9+jhnD3QSjure5YM2oRZOrW41EwKC0hADXLqgU6WHu8
+ vuFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsoZcJh6aCSdU2Va7xFjdE25fZTkhZJA+K11j1zz/8dMMeE70slFPIVS7CBhuHRpXH76/AKPkTM+GRVKidgyaFQ0YW3o0=
-X-Gm-Message-State: AOJu0YytXf/j5/C5KFcI06z7M+YU/YwqdecE93Yb3068s4ETqmehw/eK
- 5tCSFbMtbMGIMGFWgEVFw8r6udqwIGtEWOLOQFfk2defjbU2KnlZyimGW61uxLpNg3HB9qY7xuE
- 2e1OznDDkxU+a0UpR6Gq0yZbcS1vO3TYRwvdy14KGqJi607j/OARdJarMzkXHRN89hLcKcPUplY
- UKBrRk+X4vHTLVyzW6FMbengvAtvQ=
-X-Received: by 2002:a25:d688:0:b0:dc6:d1d7:c762 with SMTP id
- n130-20020a25d688000000b00dc6d1d7c762mr10170566ybg.11.1712059327883; 
- Tue, 02 Apr 2024 05:02:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrnMGISAvLreCKpVY+AqA4OYjqdfYcB6xkowtH8W1BVtyTy3pAtLaAiT+6GHU/xnHZYxb7obt63M4IS/+6Pac=
-X-Received: by 2002:a25:d688:0:b0:dc6:d1d7:c762 with SMTP id
- n130-20020a25d688000000b00dc6d1d7c762mr10170538ybg.11.1712059327564; Tue, 02
- Apr 2024 05:02:07 -0700 (PDT)
+ AJvYcCWRjVgpVzDWSrrfNri7mxwv5SoXCKEWFKh6SyCNI9e/vzUsRCYtxH5hdIJ/fooM8AtC96dtqFrb+bRx/kvZapQfULKvViI=
+X-Gm-Message-State: AOJu0YwAawmesndaOTtlh6Jvoj/XDhpUFH4hpBB+COyWpHNMLw1jJ5CJ
+ ocb8jZ0I59LQwQSmMH8uniFy5m8DA9qs6MZ3bQZ0lxoYCmbVcAP4jdomw7nK3Y0=
+X-Google-Smtp-Source: AGHT+IEsxPW+kkcOTrTbYZos52TpmDq3TWIXi+YKb8EGbR/OsdLD6LPh+muu3OGq7knD7tSHna0yOQ==
+X-Received: by 2002:adf:e904:0:b0:33e:7a1c:788e with SMTP id
+ f4-20020adfe904000000b0033e7a1c788emr1287321wrm.6.1712059893625; 
+ Tue, 02 Apr 2024 05:11:33 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.202.91])
+ by smtp.gmail.com with ESMTPSA id
+ u14-20020a056000038e00b003433e5cab4bsm10377681wrf.103.2024.04.02.05.11.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Apr 2024 05:11:33 -0700 (PDT)
+Message-ID: <059cb96a-ac0b-4266-bd6e-8911c387baeb@linaro.org>
+Date: Tue, 2 Apr 2024 14:11:30 +0200
 MIME-Version: 1.0
-References: <20240201180924.487579-1-eperezma@redhat.com>
- <20240201180924.487579-7-eperezma@redhat.com>
- <9a919f49-cf88-4c72-92ff-f0c18a5593f1@oracle.com>
- <20240213052102-mutt-send-email-mst@kernel.org>
- <c45af489-0f0a-4fc7-ad03-4a513f8b338d@oracle.com>
- <CAJaqyWdDRqMEwVh6ZcVdnEZoXy-_9B2qk25eYcoVmeeTxgGm8g@mail.gmail.com>
- <58cf082c-fa54-48a6-aa49-e8b6cba60f53@oracle.com>
-In-Reply-To: <58cf082c-fa54-48a6-aa49-e8b6cba60f53@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 2 Apr 2024 14:01:31 +0200
-Message-ID: <CAJaqyWc4aFOEQMu9iHTHOA-cMt9jRWeZteaaZk+8VPw8T9GV=w@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] vdpa: move iova_tree allocation to
- net_vhost_vdpa_init
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Dragos Tatulea <dtatulea@nvidia.com>, Lei Yang <leiyang@redhat.com>, 
- Parav Pandit <parav@mellanox.com>, Stefano Garzarella <sgarzare@redhat.com>, 
- Zhu Lingshan <lingshan.zhu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio-net: fix qemu set used ring flag even vhost started
+To: Yajun Wu <yajunw@nvidia.com>, qemu-devel@nongnu.org, mst@redhat.com,
+ jasowang@redhat.com, maxime.coquelin@redhat.com
+Cc: Jiri Pirko <jiri@nvidia.com>
+References: <20240402045109.97729-1-yajunw@nvidia.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240402045109.97729-1-yajunw@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,188 +96,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 2, 2024 at 8:19=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> w=
-rote:
->
->
->
-> On 2/14/2024 11:11 AM, Eugenio Perez Martin wrote:
-> > On Wed, Feb 14, 2024 at 7:29=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.c=
-om> wrote:
-> >> Hi Michael,
-> >>
-> >> On 2/13/2024 2:22 AM, Michael S. Tsirkin wrote:
-> >>> On Mon, Feb 05, 2024 at 05:10:36PM -0800, Si-Wei Liu wrote:
-> >>>> Hi Eugenio,
-> >>>>
-> >>>> I thought this new code looks good to me and the original issue I sa=
-w with
-> >>>> x-svq=3Don should be gone. However, after rebase my tree on top of t=
-his,
-> >>>> there's a new failure I found around setting up guest mappings at ea=
-rly
-> >>>> boot, please see attached the specific QEMU config and corresponding=
- event
-> >>>> traces. Haven't checked into the detail yet, thinking you would need=
- to be
-> >>>> aware of ahead.
-> >>>>
-> >>>> Regards,
-> >>>> -Siwei
-> >>> Eugenio were you able to reproduce? Siwei did you have time to
-> >>> look into this?
-> >> Didn't get a chance to look into the detail yet in the past week, but
-> >> thought it may have something to do with the (internals of) iova tree
-> >> range allocation and the lookup routine. It started to fall apart at t=
-he
-> >> first vhost_vdpa_dma_unmap call showing up in the trace events, where =
-it
-> >> should've gotten IOVA=3D0x2000001000,  but an incorrect IOVA address
-> >> 0x1000 was ended up returning from the iova tree lookup routine.
-> >>
-> >> HVA                    GPA                IOVA
-> >> ----------------------------------------------------------------------=
----------------------------------------------------
-> >> Map
-> >> [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [0x1000, 0x80000=
-000)
-> >> [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x2080000000)
-> >> [0x80001000, 0x2000001000)
-> >> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc0000)
-> >> [0x2000001000, 0x2000021000)
-> >>
-> >> Unmap
-> >> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc0000) [0x1000,
-> >> 0x20000) ???
-> >>                                       shouldn't it be [0x2000001000,
-> >> 0x2000021000) ???
-> >>
-> It looks the SVQ iova tree lookup routine vhost_iova_tree_find_iova(),
-> which is called from vhost_vdpa_listener_region_del(), can't properly
-> deal with overlapped region. Specifically, q35's mch_realize() has the
-> following:
->
-> 579     memory_region_init_alias(&mch->open_high_smram, OBJECT(mch),
-> "smram-open-high",
-> 580                              mch->ram_memory,
-> MCH_HOST_BRIDGE_SMRAM_C_BASE,
-> 581                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
-> 582     memory_region_add_subregion_overlap(mch->system_memory, 0xfeda000=
-0,
-> 583 &mch->open_high_smram, 1);
-> 584     memory_region_set_enabled(&mch->open_high_smram, false);
->
-> #0  0x0000564c30bf6980 in iova_tree_find_address_iterator
-> (key=3D0x564c331cf8e0, value=3D0x564c331cf8e0, data=3D0x7fffb6d749b0) at
-> ../util/iova-tree.c:96
-> #1  0x00007f5f66479654 in g_tree_foreach () at /lib64/libglib-2.0.so.0
-> #2  0x0000564c30bf6b53 in iova_tree_find_iova (tree=3D<optimized out>,
-> map=3Dmap@entry=3D0x7fffb6d74a00) at ../util/iova-tree.c:114
-> #3  0x0000564c309da0a9 in vhost_iova_tree_find_iova (tree=3D<optimized
-> out>, map=3Dmap@entry=3D0x7fffb6d74a00) at ../hw/virtio/vhost-iova-tree.c=
-:70
-> #4  0x0000564c3085e49d in vhost_vdpa_listener_region_del
-> (listener=3D0x564c331024c8, section=3D0x7fffb6d74aa0) at
-> ../hw/virtio/vhost-vdpa.c:444
-> #5  0x0000564c309f4931 in address_space_update_topology_pass
-> (as=3Das@entry=3D0x564c31ab1840 <address_space_memory>,
-> old_view=3Dold_view@entry=3D0x564c33364cc0,
-> new_view=3Dnew_view@entry=3D0x564c333640f0, adding=3Dadding@entry=3Dfalse=
-) at
-> ../system/memory.c:977
-> #6  0x0000564c309f4dcd in address_space_set_flatview (as=3D0x564c31ab1840
-> <address_space_memory>) at ../system/memory.c:1079
-> #7  0x0000564c309f86d0 in memory_region_transaction_commit () at
-> ../system/memory.c:1132
-> #8  0x0000564c309f86d0 in memory_region_transaction_commit () at
-> ../system/memory.c:1117
-> #9  0x0000564c307cce64 in mch_realize (d=3D<optimized out>,
-> errp=3D<optimized out>) at ../hw/pci-host/q35.c:584
->
-> However, it looks like iova_tree_find_address_iterator() only check if
-> the translated address (HVA) falls in to the range when trying to locate
-> the desired IOVA, causing the first DMAMap that happens to overlap in
-> the translated address (HVA) space to be returned prematurely:
->
->   89 static gboolean iova_tree_find_address_iterator(gpointer key,
-> gpointer value,
->   90                                                 gpointer data)
->   91 {
->   :
->   :
->   99     if (map->translated_addr + map->size < needle->translated_addr |=
-|
-> 100         needle->translated_addr + needle->size < map->translated_addr=
-) {
-> 101         return false;
-> 102     }
-> 103
-> 104     args->result =3D map;
-> 105     return true;
-> 106 }
->
-> In the QEMU trace file, it reveals that the first DMAMap as below gets
-> returned incorrectly instead the second, the latter of which is what the
-> actual IOVA corresponds to:
->
-> HVA                                                             GPA      =
-                                       IOVA
-> [0x7f7903e00000, 0x7f7983e00000)        [0x0, 0x80000000)                =
-       [0x1000, 0x80001000)
-> [0x7f7903ea0000, 0x7f7903ec0000)        [0xfeda0000, 0xfedc0000)        [=
-0x2000001000, 0x2000021000)
->
+Hi Yajun,
 
-I think the analysis is totally accurate as no code expects to unmap /
-map overlapping regions. In particular, vdpa kernel does not expect it
-either.
+On 2/4/24 06:51, Yajun Wu wrote:
+> When vhost-user or vhost-kernel is handling virtio net datapath, qemu
 
-Since it is issued at _realize, it should be ok to unmap all the
-region range and then map the right range again, even if that implies
-a lot of unpin / pin.
+"QEMU"
 
->
-> Maybe other than check the HVA range, we should also match GPA, or at
-> least the size should exactly match?
->
+> should not touch used ring.
+> 
+> But with vhost-user socket reconnect scenario, in a very rare case (has
+> pending kick event). VRING_USED_F_NO_NOTIFY is set by qemu in
 
-The safe actions here would be to unmap all the memory chunk and then
-map the overlap memory? Or am I missing something?
+"QEMU"
 
-Another thing I don't get, is this reproducible in previous versions?
-As far as I understand, this bug was never found before. I guess this
-path of q35's mch_realize is recent?
+> following code path:
+> 
+> 	#0  virtio_queue_split_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:511
+> 	#1  0x0000559d6dbf033b in virtio_queue_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:576
+> 	#2  0x0000559d6dbbbdbc in virtio_net_handle_tx_bh (vdev=0x559d703a6aa0, vq=0x7ff5f4c920a8) at ../hw/net/virtio-net.c:2801
+> 	#3  0x0000559d6dbf4791 in virtio_queue_notify_vq (vq=0x7ff5f4c920a8) at ../hw/virtio/virtio.c:2248
+> 	#4  0x0000559d6dbf79da in virtio_queue_host_notifier_read (n=0x7ff5f4c9211c) at ../hw/virtio/virtio.c:3525
+> 	#5  0x0000559d6d9a5814 in virtio_bus_cleanup_host_notifier (bus=0x559d703a6a20, n=1) at ../hw/virtio/virtio-bus.c:321
+> 	#6  0x0000559d6dbf83c9 in virtio_device_stop_ioeventfd_impl (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3774
+> 	#7  0x0000559d6d9a55c8 in virtio_bus_stop_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:259
+> 	#8  0x0000559d6d9a53e8 in virtio_bus_grab_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:199
+> 	#9  0x0000559d6dbf841c in virtio_device_grab_ioeventfd (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3783
+> 	#10 0x0000559d6d9bde18 in vhost_dev_enable_notifiers (hdev=0x559d707edd70, vdev=0x559d703a6aa0) at ../hw/virtio/vhost.c:1592
+> 	#11 0x0000559d6d89a0b8 in vhost_net_start_one (net=0x559d707edd70, dev=0x559d703a6aa0) at ../hw/net/vhost_net.c:266
+> 	#12 0x0000559d6d89a6df in vhost_net_start (dev=0x559d703a6aa0, ncs=0x559d7048d890, data_queue_pairs=31, cvq=0) at ../hw/net/vhost_net.c:412
+> 	#13 0x0000559d6dbb5b89 in virtio_net_vhost_status (n=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:311
+> 	#14 0x0000559d6dbb5e34 in virtio_net_set_status (vdev=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:392
+> 	#15 0x0000559d6dbb60d8 in virtio_net_set_link_status (nc=0x559d7048d890) at ../hw/net/virtio-net.c:455
+> 	#16 0x0000559d6da64863 in qmp_set_link (name=0x559d6f0b83d0 "hostnet1", up=true, errp=0x7ffdd76569f0) at ../net/net.c:1459
+> 	#17 0x0000559d6da7226e in net_vhost_user_event (opaque=0x559d6f0b83d0, event=CHR_EVENT_OPENED) at ../net/vhost-user.c:301
+> 	#18 0x0000559d6ddc7f63 in chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:62
+> 	#19 0x0000559d6ddc7fdc in qemu_chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:82
+> 
+> This issue causes guest kernel stop kicking device and traffic stop.
+> 
+> Add vhost_started check in virtio_net_handle_tx_bh to fix this wrong
+> VRING_USED_F_NO_NOTIFY set.
+> 
+> Signed-off-by: Yajun Wu <yajunw@nvidia.com>
+> Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+> ---
+>   hw/net/virtio-net.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index a6ff000cd9..8035e01fdf 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -2865,6 +2865,10 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
+>       VirtIONet *n = VIRTIO_NET(vdev);
+>       VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
+>   
+> +    if (n->vhost_started) {
 
-Thanks!
+Since you mentioned "in a very rare case", maybe use unlikely()?
 
-> > Yes, I'm still not able to reproduce. In particular, I don't know how
-> > how the memory listener adds a region and then release a region with a
-> > different size. I'm talking about these log entries:
-> >
-> > 1706854838.154394:vhost_vdpa_listener_region_add vdpa: 0x556d45c75140
-> > iova 0x0 llend 0x80000000 vaddr: 0x7f7903e00000 read-only: 0
-> > 452:vhost_vdpa_listener_region_del vdpa: 0x556d45c75140 iova 0x0 llend
-> > 0x7fffffff
-> Didn't see a different size here, though if you referred to the
-> discrepancy in the traces around llend, I thought the two between _add()
-> and _del() would have to be interpreted differently due to:
->
-> 3d1e4d34 "vhost_vdpa: fix the input in
-> trace_vhost_vdpa_listener_region_del()"
->
-> Regards,
-> -Siwei
-> > Is it possible for you to also trace the skipped regions? We should
-> > add a debug trace there too...
-> >
-> > Thanks!
-> >
-> >> PS, I will be taking off from today and for the next two weeks. Will t=
-ry
-> >> to help out looking more closely after I get back.
-> >>
-> >> -Siwei
-> >>>    Can't merge patches which are known to break things ...
->
+> +        return;
+> +    }
+> +
+>       if (unlikely((n->status & VIRTIO_NET_S_LINK_UP) == 0)) {
+>           virtio_net_drop_tx_queue_data(vdev, vq);
+>           return;
 
 
