@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E90CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD640C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcPU-0007RS-2Y; Tue, 02 Apr 2024 07:34:36 -0400
+	id 1rrcPO-0007P1-OE; Tue, 02 Apr 2024 07:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rrcPR-0007QY-Tn
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rrcPN-0007OI-5e
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rrcPN-0006TE-KU
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:33 -0400
+ id 1rrcPH-0006JI-6f
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712057665;
+ s=mimecast20190719; t=1712057654;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vsJ3Izd2XL5yiZE8pEzDjeLfRrrkDOazFmqaztclj+U=;
- b=D26CxW07D6oMqYA1xO5sff/pPK5HMahpiTn9CilFbRbjQ99NU/PtzPvYT2hmZtoS/UbI7+
- 0p5vBEzv8m6qlZSS1IZZ6QkbEYBObis1Ouf6AMOPPf0g/5SYHytDE6tpEYRCOAb7di+d96
- PichxmtTEtHIByE2TyWJOhEWdCtDXzA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CqXTgQBUdIvyYMJTBfhxcVv7+yEIfw3bh7QHrbI9K74=;
+ b=bSaR+0iElB11ZcthX5x9UaaokATN7IxzfDS88c0Xqo+5AZmnqzBFKJh+7Yp2OLXYSB5kD0
+ 8hmrreOtwCvlUBFmk270ZatkIAxWgiucSoz3h7xZY/ozb/oHjfZYYN1lxdCcjPspR/7nY4
+ BZftI4MCHxEzZVZP5ogf4lg4Tb9QMS0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-164-BmuwecU4PjWVqx6PYUJnyQ-1; Tue, 02 Apr 2024 07:34:23 -0400
-X-MC-Unique: BmuwecU4PjWVqx6PYUJnyQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41489c04f8cso26028625e9.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:34:23 -0700 (PDT)
+ us-mta-549-0Glsm8b_NWSWLzoKh7ifKg-1; Tue, 02 Apr 2024 07:34:13 -0400
+X-MC-Unique: 0Glsm8b_NWSWLzoKh7ifKg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-414aa7bd274so24733455e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:34:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712057661; x=1712662461;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vsJ3Izd2XL5yiZE8pEzDjeLfRrrkDOazFmqaztclj+U=;
- b=f26yoznk4takGKV8SEVmrF5VkMTlqEBYEpjdsLTSMSD0U0mSHrhmc5ZxmUsailtGxT
- w5m8PUH9m4dVXBHcw5G7S0C0oY0GQPAZAjK9mHKuUiZ00mLM1oyVbeyZUhyAjbIUl7O+
- 5Ox2DHetOor9a5/3eWKyjCF6JjdZWewSwYS/3DTVrdxWmQPkvn03hhlwCh04/GNqDles
- pAvuR5DhbfuX9FTSH4yRqEN5WBpwAfN4Zvs2YM1qf/CMcTRelKJNfhsjyCZLoc+njhIa
- a1eSkQIs8i1MB2qj4dNYrqZ8WiKaTAR7uGeECiRiqixTNQ9i0wrrCKPUf6sJYRgvbiA5
- P9Hw==
-X-Gm-Message-State: AOJu0YzenLz1IdEuUScmyOl3JxUizbe5pvWSnrNLuGeS8ho4BfuVNgrT
- 9wDO5lO97UMOfGIpnX1GxSireWOVK/CR+K9E8kP31VsIIgEYBgoLwH8Ns+i79fi1bpUobQYjXs4
- qhIhlWTNYvgnpCILSsVHFeWs8qgF4spBWCOH/RgspUniAx+m23Oneb+hCAm0OmYwcDWRVtHe3Dj
- dOPp1CuZL/03uHTGi0Y7CpZ5AClARKTo2p0VFC
-X-Received: by 2002:a05:600c:4e94:b0:414:7db2:8be5 with SMTP id
- f20-20020a05600c4e9400b004147db28be5mr10211597wmq.26.1712057661284; 
- Tue, 02 Apr 2024 04:34:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQNQfVeAWg0kXr4+d7MoVE+ld8ZJ8zGCtN4slAypldFB5T65yBmGYHa81i08e23i7SC3WotA==
-X-Received: by 2002:a05:600c:4e94:b0:414:7db2:8be5 with SMTP id
- f20-20020a05600c4e9400b004147db28be5mr10211583wmq.26.1712057660972; 
- Tue, 02 Apr 2024 04:34:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712057651; x=1712662451;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CqXTgQBUdIvyYMJTBfhxcVv7+yEIfw3bh7QHrbI9K74=;
+ b=R7GiofV/bLFrqMUm5dga/EBkotdBBwiQx1DsGWS9b6gfz7oep5/O75iFoKJ5Fay8W/
+ +/gYHQHxrUD1AUUsxUZov0NucAIJvyc3aoD048EBXewv0TTVvUHYccK9g01iXS9KQjjj
+ W/K8KiDkN1IxV5fzuLyTvzwjpY9cOz1YhWGurVLS2PyFbMUBcRXNaJ4/tcTMMjSwmg9u
+ E+i+Q6ZLfaTQkakqe+ej0eH8wfpdmTqrqoChHrOR6Q0dj1l/tvizbeg8/je1jzZhlYw4
+ tdNsH6HDifrLp0B7F9yfuXgvycDcF21MV2jXelNeMUvBM+oBPVXtdvyzG+M44Pfb5z/4
+ Vx1Q==
+X-Gm-Message-State: AOJu0YyNjUBiFlIEcUq48ZaNWxDvMZw7g8qMdpnQdMEGW7YAhEnHxPGG
+ Yf2EZiy3+r4WQT18siCC3HxgYXZC+5sA+W8Rle98JNULLKwdCmrqXNW7zckldVL/7HaZGtCT9/S
+ NYbS0/VIrkw80UQltPMvMReFCq2ZPGzxwKnkDz7+FY18OIjZy4HW5Uh9yjc97eMSlm66EirGGBF
+ ZVBwchkLKl43w4amcTywW6wLBbsd8HJvYUig8u
+X-Received: by 2002:a05:600c:a4c:b0:413:3941:d9ae with SMTP id
+ c12-20020a05600c0a4c00b004133941d9aemr8721992wmq.31.1712057651583; 
+ Tue, 02 Apr 2024 04:34:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFg4KTJ2Cl5ZEhr8e3VHfqQOXwHn4SnYRgo3OOUKsuZMGzpo5wCIYnCOthPNe9b1fGTQ3icdg==
+X-Received: by 2002:a05:600c:a4c:b0:413:3941:d9ae with SMTP id
+ c12-20020a05600c0a4c00b004133941d9aemr8721973wmq.31.1712057651141; 
+ Tue, 02 Apr 2024 04:34:11 -0700 (PDT)
 Received: from avogadro.local ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- v17-20020adfe291000000b0034174566ec4sm13919890wri.16.2024.04.02.04.34.18
+ b3-20020a05600c4e0300b004156da408b1sm3433873wmq.22.2024.04.02.04.34.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Apr 2024 04:34:18 -0700 (PDT)
+ Tue, 02 Apr 2024 04:34:09 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Konetzka <hk@zapateado.de>
-Subject: [PATCH for-9.0 3/4] vga: adjust dirty memory region if pel panning is
- active
-Date: Tue,  2 Apr 2024 13:34:05 +0200
-Message-ID: <20240402113408.18048-4-pbonzini@redhat.com>
+Subject: [PATCH for-9.0 0/4] vga: fix assertion failure with 4- and 16-color
+ modes
+Date: Tue,  2 Apr 2024 13:34:02 +0200
+Message-ID: <20240402113408.18048-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240402113408.18048-1-pbonzini@redhat.com>
-References: <20240402113408.18048-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,47 +100,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When pel panning is active, one more byte is read from each of the VGA
-memory planes.  This has to be accounted in the computation of region_end,
-otherwise vga_draw_graphic() fails an assertion:
+These patches (the first three especially) fix an assertion failure
+introduced by horizontal pel panning support in VGA.  The assertion
+triggers with legacy 4- and 16-color modes, due to a mismatch between
+the addresses visited by vga_draw_graphic() and the region that is
+passed to memory_region_snapshot_and_clear_dirty().
 
-qemu-system-i386: ../system/physmem.c:946: cpu_physical_memory_snapshot_get_dirty: Assertion `start + length <= snap->end' failed.
+Patches 1 and 2 reorganize the code so that the "bits" value
+(used in turn to check if horizontal pel panning is taken into
+account) is available where the dirty memory region is computed.
 
-Reported-by: Helge Konetzka <hk@zapateado.de>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2244
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/display/vga.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Patch 3 is the actual bug fix.
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index b4ceff70eb8..40acd19e72a 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1571,11 +1571,15 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-             break;
-         }
-     }
-+    hpel = bits <= 8 ? s->params.hpel : 0;
- 
-     region_start = (s->params.start_addr * 4);
-     region_end = region_start + (ram_addr_t)s->params.line_offset * height;
-     region_end += width * depth / 8; /* scanline length */
-     region_end -= s->params.line_offset;
-+    if (hpel) {
-+        region_end += 4;
-+    }
-     if (region_end > s->vbe_size || depth == 0 || depth == 15) {
-         /*
-          * We land here on:
-@@ -1660,7 +1664,6 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-            width, height, v, line_offset, s->cr[9], s->cr[VGA_CRTC_MODE],
-            s->params.line_compare, sr(s, VGA_SEQ_CLOCK_MODE));
- #endif
--    hpel = bits <= 8 ? s->params.hpel : 0;
-     addr1 = (s->params.start_addr * 4);
-     bwidth = DIV_ROUND_UP(width * bits, 8);
-     if (hpel) {
+Patch 4 is a small optimization that would also hide the bug, by
+treating pel panning as disabled in the common case where the
+register is set to 8 (bit 3 is ignored in graphics mode).
+This one could be suitable for QEMU 9.0 but is not necessary.
+
+Patches 5 and 6 are larger cleanups and optimizations in how the dirty
+memory region is computed.  This is enabled by the availability of "bits"
+where the dirty memory region is computed; it is now possible for 8-
+and 15-bit modes to skip the slow path and only read dirty bits for a
+small part of VRAM.
+
+Paolo Bonzini (6):
+  vga: merge conditionals on shift control register
+  vga: move computation of dirty memory region later
+  vga: adjust dirty memory region if pel panning is active
+  vga: do not treat horiz pel panning value of 8 as "enabled"
+  vga: optimize computation of dirty memory region
+  vga: move dirty memory region code together
+
+ hw/display/vga.c     | 152 ++++++++++++++++++++-----------------------
+ 1 file changed, 71 insertions(+), 81 deletions(-)
+
 -- 
 2.44.0
 
