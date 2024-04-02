@@ -4,54 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83899CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C74B7CD1292
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 09:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rraEF-0004ui-Vn; Tue, 02 Apr 2024 05:14:52 -0400
+	id 1rraEc-00054o-7N; Tue, 02 Apr 2024 05:15:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rraEE-0004u6-JR
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:14:50 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rraE4-0002xw-Ce
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:14:50 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V82C85wgGz6K6wd;
- Tue,  2 Apr 2024 17:09:56 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id CFB12140518;
- Tue,  2 Apr 2024 17:14:32 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 2 Apr
- 2024 10:14:32 +0100
-Date: Tue, 2 Apr 2024 10:14:31 +0100
-To: Li Zhijian <lizhijian@fujitsu.com>
-CC: Fan Ni <fan.ni@samsung.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 1/2] CXL/cxl_type3: add first_dvsec_offset() helper
-Message-ID: <20240402101431.00002494@Huawei.com>
-In-Reply-To: <20240402014647.3733839-1-lizhijian@fujitsu.com>
-References: <20240402014647.3733839-1-lizhijian@fujitsu.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rraEZ-00053k-E9
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:15:11 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rraEO-0003OS-0I
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 05:15:11 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-56829f41f81so7132816a12.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 02:14:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712049298; x=1712654098; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4nO2HzaN0kDt/16pA7tNJlMUFkH3bORvVFVPgUTmBlU=;
+ b=zWciNxR/VKe6N6fNNYTeVKOAUgta0AuMDRw8vb55AMI2haNSv8MwI0sHw2Dtg/fe4o
+ aL8QQFDYYjvwmJ3iEXo6Jtou6VwHmL87neZ+0Wr0C5wAzEpKZGJ/4e20eO6BlfYXaFov
+ tsFC7CzFRsfdRUB1ms/76M3L5l+gA5YLC2YwEvtj+svc6l3rtBlB0CfZogGJgtCmgvkt
+ GJvlJ5iKCzDFn2TNCTq+xybrcEoDXBeeClIbskdZJFh2PZTNlK2ZBjwTabxu3ug8w32P
+ DlV6RQCEwQz8T31QH6DZIDKCSlZF7BFK7yBz8X6mkAzzK+MiGEB8dWoesb8+jp+3UYDH
+ TVdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712049298; x=1712654098;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4nO2HzaN0kDt/16pA7tNJlMUFkH3bORvVFVPgUTmBlU=;
+ b=Rxof/R5qlJ3P79rbfMw4Qua9vWxe11Q0AzNA9olC/L1tsh8HOizvJApTDk+WQpGiR/
+ JTCrohhwpd/5knL8EcGGvVuz26FPcQd6iuXg1ycbnW0BWg78TegpzPW65CViyqy2EcHt
+ Upx0cSz/idRRH/tXiGBK0mEkqFJImygJe+aOYcCNMqbY5CaJyVxyfIHja6EwSDHmasBy
+ TnluFJqis+uVIIW7AyuA1RfhvTCaI49Rrpg0r/OFtLeSQremszGa9zkaQBNTIpf1aPla
+ kWhUBaQD6C07BLOVkRtIbe29nNYYWy48vh1KtV3ck9olVbp7SpV3FvI0Rb+SvoOxkUC2
+ sAlg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUe1R5fg0QD3txExyFVO1Wq86/9YUk63tVFJbT5GnmnOW4WunfiiB0FCM4IS9wZPduCVPblvrneFx8/CB8x9XtpOF9GRvY=
+X-Gm-Message-State: AOJu0Yzgg21zIacGkUE7QULiEPhrdMSVJqYEuXLx4/B3EOy9wYzfvWfg
+ vXldeMLA53bStUIKsmkYPQ0FqknAM0iHX5o4n7RqW02Phoh83pX3jXaULxkfH8HQ2dgZVWsDoso
+ 2n0DXMIy97/s8YzklCQNIDImtr7HoxvARAnpfdA==
+X-Google-Smtp-Source: AGHT+IHVbqXratlzJGCgSPbtBg4eHVIT7J8n8WUA0cFZxxIQgLF5nno128ww6xMi0ESa613raBZ3QgSqUSt+VRszmDM=
+X-Received: by 2002:a50:d698:0:b0:56b:cf40:f712 with SMTP id
+ r24-20020a50d698000000b0056bcf40f712mr6719781edi.19.1712049298358; Tue, 02
+ Apr 2024 02:14:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+References: <20240329150155.357043-1-clg@redhat.com>
+In-Reply-To: <20240329150155.357043-1-clg@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 2 Apr 2024 10:14:47 +0100
+Message-ID: <CAFEAcA-=DFR-eRLz9XK4=u=Aq0O=3dWZv+nLcDOgWyWAt3iMCQ@mail.gmail.com>
+Subject: Re: [PATCH] raspi4b: Reduce RAM to 1Gb on 32-bit hosts
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,69 +88,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  2 Apr 2024 09:46:46 +0800
-Li Zhijian <lizhijian@fujitsu.com> wrote:
-
-> It helps to figure out where the first dvsec register is located. In
-> addition, replace offset and size hardcore with existing macros.
-> 
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-
-I agree we should be using the macros.
-
-The offset calc is a bit specific to the the chosen memory layout,
-so not sure it makes sense to break it out to a separate function.
-
-I'll suggest alternative possible approaches in review of next patch.
-
-Jonathan
-
+On Fri, 29 Mar 2024 at 15:02, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+>
+> Change the board revision number and RAM size to 1Gb on 32-bit hosts.
+> On these systems, RAM has a 2047 MB limit and this breaks the tests.
+>
+> Fixes: 7785e8ea2204 ("hw/arm: Introduce Raspberry PI 4 machine")
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 > ---
->  hw/mem/cxl_type3.c | 19 +++++++++++++------
->  1 file changed, 13 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index b0a7e9f11b64..ad2fe7d463fb 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -643,6 +643,16 @@ static DOEProtocol doe_cdat_prot[] = {
->      { }
->  };
->  
-> +static uint16_t first_dvsec_offset(CXLType3Dev *ct3d)
-> +{
-> +    uint16_t offset = PCI_CONFIG_SPACE_SIZE;
-> +
-> +    if (ct3d->sn != UI64_NULL)
-> +        offset += PCI_EXT_CAP_DSN_SIZEOF;
-> +
-> +    return offset;
-> +}
-> +
->  static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->  {
->      ERRP_GUARD();
-> @@ -663,13 +673,10 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->      pci_config_set_prog_interface(pci_conf, 0x10);
->  
->      pcie_endpoint_cap_init(pci_dev, 0x80);
-> -    if (ct3d->sn != UI64_NULL) {
-> -        pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
-> -        cxl_cstate->dvsec_offset = 0x100 + 0x0c;
-> -    } else {
-> -        cxl_cstate->dvsec_offset = 0x100;
-> -    }
-> +    if (ct3d->sn != UI64_NULL)
-> +        pcie_dev_ser_num_init(pci_dev, PCI_CONFIG_SPACE_SIZE, ct3d->sn);
->  
-> +    cxl_cstate->dvsec_offset = first_dvsec_offset(ct3d);
->      ct3d->cxl_cstate.pdev = pci_dev;
->      build_dvsecs(ct3d);
->  
+>  hw/arm/raspi4b.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+> index cb1b1f2f147e8685a1dba6f137335ea0bc89bca5..85877880fc706d216de04ff1e=
+081d66e6080ebac 100644
+> --- a/hw/arm/raspi4b.c
+> +++ b/hw/arm/raspi4b.c
+> @@ -112,7 +112,11 @@ static void raspi4b_machine_class_init(ObjectClass *=
+oc, void *data)
+>      MachineClass *mc =3D MACHINE_CLASS(oc);
+>      RaspiBaseMachineClass *rmc =3D RASPI_BASE_MACHINE_CLASS(oc);
+>
+> +#if HOST_LONG_BITS =3D=3D 32
+> +    rmc->board_rev =3D 0xa03111; /* Revision 1.1, 1 Gb RAM */
+> +#else
+>      rmc->board_rev =3D 0xb03115; /* Revision 1.5, 2 Gb RAM */
+> +#endif
+>      raspi_machine_class_common_init(mc, rmc->board_rev);
+>      mc->init =3D raspi4b_machine_init;
+>  }
 
+Running "make check" on a 32-bit host has clearly fallen off
+our CI config...
+
+Applied to target-arm.next for 9.0, thanks.
+
+-- PMM
 
