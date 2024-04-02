@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3246DC6FD1F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19EBFCD1294
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrbP5-0008ME-PZ; Tue, 02 Apr 2024 06:30:07 -0400
+	id 1rrbP7-0008NY-Vb; Tue, 02 Apr 2024 06:30:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrbP2-0008KM-Uk
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:05 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1rrbP2-0008KA-He
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:04 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrbOy-0003er-F0
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:04 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-415446af364so24613455e9.0
+ id 1rrbOy-0003e7-CN
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:30:03 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4161eb1a9fcso41475e9.3
  for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712053795; x=1712658595; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712053794; x=1712658594; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=91BZ+bUW9V0rFrI3CQ5Xh/5sgpFgV/x/ACLid6y7DpM=;
- b=hq6iGl0txrf58Hpo8/N+5s43bnhFAJ2xWkqiccWNH0Mzscb8olzmyuNiR8N4HMD4MF
- vRYPbfFiAdV+s6DBgi8RlEuFFPK/taiSaxwEnsyk4M9PiS634ZQX+tNt5pt3UCUsUPZM
- 0psG1XzSPpIpkjZLLp0o0yPmpseeEzCBHOllIGn7Kxed+zzJ6ubFMnyolHU79dO1ZO1T
- C/Hi9bHiQaj2szIt/Msqy3nfQ1MM19g7pWzLPVARr6JWPiqKHnSzwuJYrv8wLfTdUwfr
- rF0FPOiDh9cXtUEPGeGbUS6+viM7+DNdx04cqXKrFEaEWwCRr+orHRUnc2wVXppxKasE
- LRhw==
+ :reply-to; bh=kF8DIXj6upaIDgYItyrCELeFAUmDbN8yJ98Yufsh5Fc=;
+ b=flYTtX7Nt/Y7dAXF4qiSRbdWkB3CALX3wLR8eRsetcmx24jgE6KUGdk3caOnM0sgTG
+ y6GlWapFRnsCYl0vyxZM4cj4Y4SZ4YNVolUVe+FvoHBcAgdkmRt0XETpGxUJqxk49OmH
+ SD4afO4UmUYqOg5PZ4eNeec7jzMK5LgFhGSZZ/NeX2DZkAjmQdyxosW88lUp/8snYSLp
+ XaDiARJqzVTrfGEpMudaTt9OVuKXHbWGmdnE4FrXFOa1MtMFDHS7SqvcKIEvDxXGKFUj
+ rwgi3cfThG51m+LXaHCpR58Jg2qTFVJTKuXE2C4fxpS522Ys9mi/oREbJibnW8L5Nkwb
+ fHhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712053795; x=1712658595;
+ d=1e100.net; s=20230601; t=1712053794; x=1712658594;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=91BZ+bUW9V0rFrI3CQ5Xh/5sgpFgV/x/ACLid6y7DpM=;
- b=GM9GGpw/EvHmAVmG4V9NFq0Up2orBafzIAAoaVruyHkFKL62un3q/SXDITATZ7HqLV
- RwINwPeckVWcG2YjxZbC3dlXoUUcHmgvOWVkDL0zfkMk2ZZL0sBIOyk4IhMKhYxqcTWf
- +zxCYmrLliqPRw4aButzZxooDf1eVZ0uNDtWwiA4glg0TYD9LSw1a/PSMepxsCqhHZY2
- Dndze+tuE2LsfuoK1VdrUxRv6BYL3S4jSdpEVV/1qznuyApjQHFr4mKD1DC45mpxSLei
- CvHpFXJEQF0fjdlDQrv5ZAnprCNR+Hq/guL6yRiz4cPWFjeWT9zu+KwE8NEWORkuJcRw
- hqyg==
-X-Gm-Message-State: AOJu0Yw2gBahO+1fmECC+P3/feCnkFeNy5nTXEF6MKd5l6FyLwh49dLA
- s0jba8Gh6+lrU0D0kwowbrXy5lYH1g9zA2qZXDOEWoFUZSC7/xlYprFZH89ghFb3bKQivGH9IAD
- Y
-X-Google-Smtp-Source: AGHT+IH3BfhMk5bty9oxx5kF1EE12S369V8AM6q2CsEupBNPmN4oL15EG6JqCTgCcwhBITBRwKAYqA==
-X-Received: by 2002:a05:600c:4f05:b0:416:1ad7:f1b9 with SMTP id
- l5-20020a05600c4f0500b004161ad7f1b9mr1383866wmq.17.1712053794876; 
- Tue, 02 Apr 2024 03:29:54 -0700 (PDT)
+ bh=kF8DIXj6upaIDgYItyrCELeFAUmDbN8yJ98Yufsh5Fc=;
+ b=i734Q81r3fVOD57OtojeWJZRormjylJZ5R9tU3N4hUWKlyQCstVSNHJT7h3+Gb8bPi
+ t3ZRQEXVfnkd8Okp+HHYZWsevtmFcQyoIkjwD/tKoLC0EIYzTdr5fAIigyWx0eaj3zdG
+ V/QDIIB3985015i6G0Zjj+Vy1w1dG/QUKlx294fJ2dsCG/UkzmnyUVKeYfC9R4WAbI3G
+ FHAG0UbTfsTTa5zXhe/jOdkbR5AvosljgbVOKoL9ACH/FDi6ruShP90kauL6jRSuwf+O
+ +zYpqmBXVeaeMSAutX41/rHn5VbbxS5OiAEw9dAaHLBSeuRBnZZgHkgTqqWtuJTG/CAA
+ mo1A==
+X-Gm-Message-State: AOJu0Yym3NdqWVeh2YYMS83M+D+sjaNinaRyd2xErkTrJ/x+Vy+Kyfhx
+ PHBAibcyWKsIFefkUf5m6GKwAipQx0XxdXNIIMS8uhuMkr5JyA68EhT2JnO++o9JUn8GqUYSWtM
+ O
+X-Google-Smtp-Source: AGHT+IHYHlLqPCEATaXSkGcg8fXvF2071t3vB8QI5daX1CfAmXI295nfjMS/AE6mLULjKIpTmI9lsw==
+X-Received: by 2002:a05:600c:1c12:b0:415:66ac:614d with SMTP id
+ j18-20020a05600c1c1200b0041566ac614dmr3631159wms.13.1712053793933; 
+ Tue, 02 Apr 2024 03:29:53 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- o15-20020a05600c4fcf00b0041488895a37sm20586175wmq.33.2024.04.02.03.29.54
+ o15-20020a05600c4fcf00b0041488895a37sm20586175wmq.33.2024.04.02.03.29.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Apr 2024 03:29:54 -0700 (PDT)
+ Tue, 02 Apr 2024 03:29:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 3/5] hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group
- is disabled
-Date: Tue,  2 Apr 2024 11:29:49 +0100
-Message-Id: <20240402102951.3099078-4-peter.maydell@linaro.org>
+Subject: [PULL 1/5] target/arm: take HSTR traps of cp15 accesses to EL2,
+ not EL1
+Date: Tue,  2 Apr 2024 11:29:47 +0100
+Message-Id: <20240402102951.3099078-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240402102951.3099078-1-peter.maydell@linaro.org>
 References: <20240402102951.3099078-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,45 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the group of the highest priority pending interrupt is disabled
-via ICC_IGRPEN*, the ICC_HPPIR* registers should return
-INTID_SPURIOUS, not the interrupt ID.  (See the GIC architecture
-specification pseudocode functions ICC_HPPIR1_EL1[] and
-HighestPriorityPendingInterrupt().)
+The HSTR_EL2 register allows the hypervisor to trap AArch32 EL1 and
+EL0 accesses to cp15 registers.  We incorrectly implemented this so
+they trap to EL1 when we detect the need for a HSTR trap at code
+generation time.  (The check in access_check_cp_reg() which we do at
+runtime to catch traps from EL0 is correctly routing them to EL2.)
 
-Make HPPIR reads honour the group disable, the way we already do
-when determining whether to preempt in icc_hppi_can_preempt().
+Use the correct target EL when generating the code to take the trap.
 
 Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2226
+Fixes: 049edada5e93df ("target/arm: Make HSTR_EL2 traps take priority over UNDEF-at-EL1")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240328153333.2522667-1-peter.maydell@linaro.org
+Message-id: 20240325133116.2075362-1-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv3_cpuif.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/arm/tcg/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index e1a60d8c15b..67d8fd07b7f 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1067,7 +1067,7 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
-      */
-     bool irq_is_secure;
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index c8a24706750..69585e6003d 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -4585,7 +4585,7 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
+             tcg_gen_andi_i32(t, t, 1u << maskbit);
+             tcg_gen_brcondi_i32(TCG_COND_EQ, t, 0, over.label);
  
--    if (cs->hppi.prio == 0xff) {
-+    if (icc_no_enabled_hppi(cs)) {
-         return INTID_SPURIOUS;
-     }
- 
-@@ -1104,7 +1104,7 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
-      */
-     bool irq_is_secure;
- 
--    if (cs->hppi.prio == 0xff) {
-+    if (icc_no_enabled_hppi(cs)) {
-         return INTID_SPURIOUS;
-     }
- 
+-            gen_exception_insn(s, 0, EXCP_UDEF, syndrome);
++            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, 2);
+             /*
+              * gen_exception_insn() will set is_jmp to DISAS_NORETURN,
+              * but since we're conditionally branching over it, we want
 -- 
 2.34.1
 
