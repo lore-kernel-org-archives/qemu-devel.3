@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12181CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C74C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrbjp-0005Ro-7B; Tue, 02 Apr 2024 06:51:34 -0400
+	id 1rrblk-0006f3-NT; Tue, 02 Apr 2024 06:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrbjR-0005KA-G1
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:51:09 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrblQ-0006YP-Aq
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:53:12 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrbjJ-0001Y9-NK
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:51:07 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4161eb1aeaaso183125e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:50:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrblO-0003Vl-JR
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:53:12 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4161d6b2582so1743545e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712055056; x=1712659856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712055189; x=1712659989; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ag8lQSrpfnmNFe7/fsUvQUM5//loG925OW+hb/sf4pg=;
- b=UI/1YKQi8nqMZY9aArNDbz2PwhhgXEdl4aNomviUz4otsqAws54SoFAXQoJZUJBxnq
- TfkaHKQjGV5UZecG3oajkymqjlIHzaQ04e0L8jva3Tg2zeqkvBjDVTedf5KMgLFHYBYd
- PJjr0QYhBCEzWfQCLihIDw7czLdPnP0smjZyDs2Jd3aYbtV1QK9iFWR9MP0qvz+n+Ubd
- hS86t4FUi4tIjlU8VpP2pGuVpS1iIt9DBzTD8aNjkMJmMaCkiSx81ZCkc1xWLVxWIU5J
- vZjiXU/S/wB6iybO73GPyP2VEA9HDmnMq00QmNZcJN7SoNUoq5ftO0fgNsC1ISvYHks7
- Z52w==
+ bh=4m8bzz7q3mJcqFrHAjo3WbDqJKoIcRhhjLii+tSZZ5c=;
+ b=gbXI+oiaDMC04OFSkeYkYmRxFmVBCIfbng+8jqdEC8wleutL+l2ylhzI1in/W1zBnS
+ //Ido8vaMd2uLHjFuxzNwgiLTO+IZqeVdBThhcj9EZEFxIBz0SwuZWuuowDqNnvyJZ6x
+ fKn0TgwrWt6wmaysL8S/SPArKJlj6zJO2mzNFYK6XMx4eqdnC6+xgYThDfHjta3M/XfA
+ UQ3U21Dlxe0oHvbcpT5hx/RKp5XaCZLWcwgn9XM8MU+CZFUZvWg4o+eJQ/DkDG5X7RrG
+ vwFDfsbXncxyEvx5O/rqaup5B72dqo1GDkkYTmELwHWSVVa9ikOEx8EIMIH+n2FirqzA
+ sqAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712055056; x=1712659856;
+ d=1e100.net; s=20230601; t=1712055189; x=1712659989;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ag8lQSrpfnmNFe7/fsUvQUM5//loG925OW+hb/sf4pg=;
- b=QyucGIrTbBnSqLVPw33e1hyTqhbZu1+xX5HaBqSkD5FFzZaleXiXF+YYEGbF+dtkrr
- qEQIQ8J5zDebUyHiAocFaGowk7FjWYQnsBMER3ep5oh7jdBH7xXm83D7in2RB45QCB+f
- JbGcV7PAMuLISw8IN2vK7hDAOnxqidMWvxa9ZOueMGEBlY8XuEAXuIpnafAxyF5yXs0W
- bsQx3152kKNF06Y4Fg5mEJRkeXQ0epgTeoT31IdiaZAowVm9RetkThycBUPqEdxMgicM
- xZiPSVUW8LtF5A9wLc3h13lL5QGLAsrYw/wqu93QMm8UZQdpmPLj6jW/dWs+Ayfpn+Jv
- GpsQ==
-X-Gm-Message-State: AOJu0YwUjbecPI11vK7BJlVCKzEHN5GcPaWWyzx4pTMBMSOuQcb2yIjF
- fgg2rqVXUvpPExAHmry5PEV4n6TqbEL9RNF+SfdISIBrGhbQH+JfDfjDap198w0=
-X-Google-Smtp-Source: AGHT+IGhz0ywr/Quw/0IYe13GpgLhURMYgBJrOsRlPCnzQp2nIY5bt12UNLCYRDe8TvpjmIwWci5gg==
-X-Received: by 2002:a05:600c:1f8e:b0:414:7597:c2dc with SMTP id
- je14-20020a05600c1f8e00b004147597c2dcmr8937990wmb.17.1712055056485; 
- Tue, 02 Apr 2024 03:50:56 -0700 (PDT)
+ bh=4m8bzz7q3mJcqFrHAjo3WbDqJKoIcRhhjLii+tSZZ5c=;
+ b=UqUl93SlLk4bnU6tWAv7zMSuzDBHP3rKaJfqGw/sRAl9zP1xxgt6wfEPjhczh9H8qf
+ GJCsy6SDhn5O7E5kONepWb5uBVPLjpvpE6Jxrvc0ap7822Dg8ZklMivVSoJRRteuNYMy
+ CpKR5c0Jc+q4VPZxn6+x0r8uwMC4zHy1/63OCzUWa7xtZOrqTKZtcys74vQAZ48/MWMj
+ VNGmOlgQnHL/+zGL0BU3Qv19BFS/Rv/s3gb66lMOjTB4+8ZRrf5024NH7Cp5Z5qxE+7z
+ ATrOCQNPSvd0DthLde2GVtlnjc2Nx/9KIKZD1Y757I5kdEGOPhywlDr1DhNr772LhuNH
+ MUbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrrorkN5/OEPVPRb92LPmao9bb2k0+VKewvRPMm+e06ACBFb296HOR8wsOXY2SkMVrMQxTLQ3dLf7JfAJsMFIDPV5Fi1s=
+X-Gm-Message-State: AOJu0YzQw2MethQRxrV1Z8NG8uM0ee4TXguBvmgCVpaiNivSkZyd1aT/
+ E/G0t2HiX8N9PKr2v1d/J/wahrEEZdT3gTyvV32Vx2Al1+f+IqSwQjChJMkX9fQye1JbX7NIjBi
+ jdGQ=
+X-Google-Smtp-Source: AGHT+IFfAJOysBM2bWqqrV2+HDpbyp9EJyaS23rXolMrUBEz6Kkmd/fU4uulM5s7hO2MYhIFIfZ2gA==
+X-Received: by 2002:a05:600c:5111:b0:414:71b2:c915 with SMTP id
+ o17-20020a05600c511100b0041471b2c915mr7825163wms.34.1712055188676; 
+ Tue, 02 Apr 2024 03:53:08 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.202.91])
  by smtp.gmail.com with ESMTPSA id
- l13-20020a05600c4f0d00b004161af729f4sm1673724wmq.31.2024.04.02.03.50.55
+ ch9-20020a5d5d09000000b0033e7b433498sm13913420wrb.111.2024.04.02.03.53.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 03:50:55 -0700 (PDT)
-Message-ID: <01cc169b-9e3e-4f42-ae9d-380007660e02@linaro.org>
-Date: Tue, 2 Apr 2024 12:50:54 +0200
+ Tue, 02 Apr 2024 03:53:08 -0700 (PDT)
+Message-ID: <25f0de51-6010-4c5b-922e-6d7fe9427cf3@linaro.org>
+Date: Tue, 2 Apr 2024 12:53:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Fix error-report.c entry
-To: Zhao Liu <zhao1.liu@linux.intel.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-References: <20240327115539.3860270-1-zhao1.liu@linux.intel.com>
+Subject: Re: [PATCH] block: Remove unnecessary NULL check in bdrv_pad_request()
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: f.ebner@proxmox.com, qemu-devel@nongnu.org
+References: <20240327192750.204197-1-kwolf@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240327115539.3860270-1-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240327192750.204197-1-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,21 +96,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/24 12:55, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
+On 27/3/24 20:27, Kevin Wolf wrote:
+> Coverity complains that the check introduced in commit 3f934817 suggests
+> that qiov could be NULL and we dereference it before reaching the check.
+> In fact, all of the callers pass a non-NULL pointer, so just remove the
+> misleading check.
 > 
-> The commit 15002f60f792 ("util: rename qemu-error.c to match its header
-> name") renamed util/qemu-error.c to util/error-report.c but missed to
-> change the corresponding entry.
-> 
-> To avoid get_maintainer.pl failing, update the error-report.c entry.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Resolves: Coverity CID 1542668
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->   MAINTAINERS | 2 +-
+>   block/io.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Since I'm not seeing other block related patch for 9.0 and
+I'm preparing a pull request, I'm queuing this one.
 
-And queued, thanks!
+Regards,
+
+Phil.
+
 
