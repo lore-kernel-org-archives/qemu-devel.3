@@ -4,74 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A43ECD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 15:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62697CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 15:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrfyV-0007xb-If; Tue, 02 Apr 2024 11:22:59 -0400
+	id 1rrg03-0000L9-CG; Tue, 02 Apr 2024 11:24:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrfyP-0007x8-08
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:22:53 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1rrg02-0000KV-30
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:24:34 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrfyN-0005OX-2D
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:22:52 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-56dcf805aa1so2223689a12.1
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 08:22:50 -0700 (PDT)
+ id 1rrg00-0005bx-C1
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 11:24:33 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-56bdf81706aso6628712a12.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 08:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712071368; x=1712676168; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712071470; x=1712676270; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=uKc2kHgqBSITJmcUtq3y+FN0in1CPzzN73XEFk4o7Pc=;
- b=FMsulomjZFeYTe18atiTXTsgEVjeSCtqRxpHLsBq+vsft5bvXPWAzpxbf7h7W215ml
- t+uujV3St7zfdb5ZWOjsLEvZ5n7O0aKVmQ2ivZGc33cFepLb3smiewcKgGAC2un16rcF
- JBqosxwXoAtItdkPzYDD+viEow1KOtwFP04RK5ED9rgYZIh6Uj+/y+7Q1X0rZwtNPBQA
- io5mRqrle8sJSgNH3p8rQ+bcBQd8eTZkiR/5z0TlzG6UdQInn5I04iXd5rz0biFnMsF/
- 6mlrPb3VgUGSt8ts5NEzCCQuIVFB3B94AbBba7RrClBf38FHtea4eZOEkvgMk1rbguFP
- WOqA==
+ bh=W7usfDbTF8k8Atd/dvmfgTO/s/lXiH3RGJfcDBXIt4U=;
+ b=NsXh7bMfbaHneFRi4W7w4CFyPqsFFnsGx9viBb7Ln/ViW8qZkz2g6qsnP8MtUgG+IG
+ 1jr6SKQSy/01oAz02/WPMuoUG07/vyu7i94ljXzcYSnCtnsuoATQaTe86xcgXeJA69aN
+ jcB7KEXi4b18zD5i+vmPcvMiou8JgUxcKZ/AnR5KkkyxLNFcDbanen4mUflrjalFm4hY
+ moMxNSmKb9Ia2qeWshZWa7sdJPxBqA0uX6OzcX+mfJ9IsSBwazHUcNsWXdg/OqSNA7Xy
+ 59rspVdz/FaLziXbrRqfdlizMfjwMMHfsCah8/8Y169LfMqEql+OKHD4tltnQXLaFGSm
+ 1NMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712071368; x=1712676168;
+ d=1e100.net; s=20230601; t=1712071470; x=1712676270;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uKc2kHgqBSITJmcUtq3y+FN0in1CPzzN73XEFk4o7Pc=;
- b=wGKvcl2NRkGdIH/nCSOQa2cbW+t0VqSr2swS+jCiRw88FJ6hwg5iaMS1fcouSp7DC6
- WQEU9OOIyRm7/6u6pVZOIdC5yOQ6zv+PCC4MJXkrP6uA5S7E4UbHncn/NUvKvTU9TG02
- izppOkxsreTGz5Q0m9LqSuvEJBAHXtzN2qXYdR1+NMwfVaSyYYyH3bTNP9Krxho+YTUj
- UNFTx04icdv1MuhQVdUCWnpaKGLTyDty4P9mG3/wIJGc7y4y3X2UPqcWHkg930lHmDI5
- HZYPxL8wL8GDO79WBP3BbhcGa3GWOwhGaA4Bz/goRTs7IzUvWBmnZL5sxUuFCe7qXlyN
- QSHw==
-X-Gm-Message-State: AOJu0YwEz+6Id/MgMWRRdhN5PLenegL5XiPHP0Dj1sGrlOU3snh126e4
- lDJcfuRNg6SlP38sE0WHiyRhkBUChzqBDHh7reQqm7wYBH7VGN/o+Fei2Xi98R89JSRD/uVWCPs
- c+duIBHIFHCNe3Pqr8ZFfEYcAVEcU+KBryQ5Pkg==
-X-Google-Smtp-Source: AGHT+IGcUDEoqUQKA2GZXuoHDS8p/i8AsWWbPWoKkSRk2U4rv4Um08RYCSeGamwRg65T1CwAvxKgGN+U4HWJ4JfU9yE=
-X-Received: by 2002:a05:6402:26cd:b0:56b:c1c7:63cd with SMTP id
- x13-20020a05640226cd00b0056bc1c763cdmr9344725edd.31.1712071368306; Tue, 02
- Apr 2024 08:22:48 -0700 (PDT)
+ bh=W7usfDbTF8k8Atd/dvmfgTO/s/lXiH3RGJfcDBXIt4U=;
+ b=X/iMl7wAN5DV8dKF2ZQSz39UEzUtW+sTEqvG/OJt/4oEqHo/EWwLQea0Qcrrut/3My
+ FOCj8sEiUNXfsPPjoTlXOtQpxEobRTvLB/HmT8b0GQQBO4d2TPdm/0zTmEq44Q9CopyK
+ 8UlZQWjAUYDvpOZFQxMG4dwmRmCdttSBooihKxAwVF2WK5p9np2bD2vXwtQ5SBYE+itm
+ O+Bi8L49zTNltmvonJQn2Gyh/5sWmxIRFMeDz/IFDUyWEQv7nGQpT8sJUDi1vMFKAPqC
+ 9giXCj2EFNM5bd7PMhGRcx473Nq6pdMEYhxzX+/6AL+fDZje1X4cf/GutS4GDBVrU2lT
+ Gizg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVerEvyMQNbWJMMXLtUZBUoMm1tSPkv66uvuFqyLLU42p1vp4mZEo2SmxRxIDYoWZXfa6SegXf0P1nl4CPf7dll6wrFT6w=
+X-Gm-Message-State: AOJu0Yz3QD468D48tdUaaCahlsSaczkWeH796AaZga1SrgChS2tyHbvH
+ axkrBb5KvDKtoz2UUzFwcQvtXM7l1uoFMIeHcl+3ikc6/TdWH7oVFmMpebI6ZEvb5LRz5qiX9dG
+ hZunz/gaDx+zdeQsmSrda50SMsfIMSQNMDtqyUg==
+X-Google-Smtp-Source: AGHT+IH6h4xslpbOfqAPGKufamCm+fMYSjjB7/uf2mXTdHf8jfInZH8Hy6oKUyvDPPyEcj3A7ONEL3r/EaFKn3gZ0X0=
+X-Received: by 2002:a50:cc82:0:b0:56a:2b6b:42cd with SMTP id
+ q2-20020a50cc82000000b0056a2b6b42cdmr116642edi.3.1712071468200; Tue, 02 Apr
+ 2024 08:24:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240402131649.23225-1-pbonzini@redhat.com>
-In-Reply-To: <20240402131649.23225-1-pbonzini@redhat.com>
+References: <20240402093157.2931117-1-mjt@tls.msk.ru>
+ <CAFEAcA8UBewAHriNkbJNO9CFKgf5bBGRHntbb_y11JdfoNTvcQ@mail.gmail.com>
+ <60faa39d-52e8-46f1-8bd9-9d9661794880@tls.msk.ru>
+ <465cd941-4830-4adf-be76-011702bb71b3@vivier.eu>
+In-Reply-To: <465cd941-4830-4adf-be76-011702bb71b3@vivier.eu>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Apr 2024 16:22:37 +0100
-Message-ID: <CAFEAcA-J=BVW43TxFVCbn8YUQTtTAoa7FoRiEknB=UH2_yMNPg@mail.gmail.com>
-Subject: Re: [PULL 0/7] lsi, vga fixes for 2024-04-02
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 2 Apr 2024 16:24:17 +0100
+Message-ID: <CAFEAcA-=_gBYN8Vb1Q0khmDy+nJJ-hzTvN6UaTBtrBPP9qE43Q@mail.gmail.com>
+Subject: Re: [PULL 0/4] Trivial patches for 2024-04-02
+To: Laurent Vivier <laurent@vivier.eu>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,94 +93,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Apr 2024 at 14:20, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Tue, 2 Apr 2024 at 15:30, Laurent Vivier <laurent@vivier.eu> wrote:
+> To post PR I generally use git-publish and I have a hook that checks that.
 >
-> The following changes since commit b9dbf6f9bf533564f6a4277d03906fcd32bb0245:
+> $ cat .git/hooks/pre-publish-send-email
+> !/bin/bash
 >
->   Merge tag 'pull-tcg-20240329' of https://gitlab.com/rth7680/qemu into staging (2024-03-30 14:54:57 +0000)
+> NAME=$(git config --get user.name)
+> EMAIL=$(git config --get user.email)
 >
-> are available in the Git repository at:
->
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->
-> for you to fetch changes up to eac4af186f6db46fc90ec571a855bd6fa4cb7841:
->
->   pc_q35: remove unnecessary m->alias assignment (2024-04-02 15:14:02 +0200)
->
-> ----------------------------------------------------------------
-> * lsi53c895a: fix assertion failure with invalid Block Move
-> * vga: fix assertion failure with 4- and 16-color modes
-> * remove unnecessary assignment
->
-> ----------------------------------------------------------------
-> Paolo Bonzini (7):
->       vga: merge conditionals on shift control register
->       vga: move computation of dirty memory region later
->       vga: adjust dirty memory region if pel panning is active
->       vga: do not treat horiz pel panning value of 8 as "enabled"
->       lsi53c895a: avoid out of bounds access to s->msg[]
->       lsi53c895a: detect invalid Block Move instruction
->       pc_q35: remove unnecessary m->alias assignment
+> for PATCH in $1/*.patch; do
+>      if [ $(basename $PATCH) = "0000-cover-letter.patch" ]; then
+>          continue
+>      fi
+>      if ! grep -q "^Signed-off-by: $NAME <$EMAIL>" $PATCH; then
+>          echo "Error: Missing sender S-o-B in $PATCH"
+>          exit 1
+>      fi
+>      if grep "^From: " $PATCH | grep -q "<qemu-devel@nongnu.org>" ; then
+>          echo "Error: Author email address is mangled by the mailing list in $PATCH"
+>          exit 1
+>      fi
 
-This seems to break the avocado test
-tests/avocado/ppc_prep_40p.py:IbmPrep40pMachine.test_openbios_and_netbsd
-
-and it's consistent even with retrying the job:
-https://gitlab.com/qemu-project/qemu/-/jobs/6529626987
-https://gitlab.com/qemu-project/qemu/-/jobs/6528696711
-https://gitlab.com/qemu-project/qemu/-/jobs/6529196532
-
-The debug log says:
-
-14:23:32 DEBUG| Transitioning from 'Runstate.CONNECTING' to 'Runstate.RUNNING'.
-14:23:32 DEBUG| Opening console file
-14:23:32 DEBUG| Opening console socket
-14:23:32 DEBUG| >> =============================================================
-14:23:32 DEBUG| >> OpenBIOS 1.1 [Mar 7 2023 22:21]
-14:23:32 DEBUG| >> Configuration device id QEMU version 1 machine id 0
-14:23:32 DEBUG| >> CPUs: 0
-14:23:32 DEBUG| >> Memory: 128M
-14:23:32 DEBUG| >> UUID: 00000000-0000-0000-0000-000000000000
-14:23:32 DEBUG| >> CPU type PowerPC,604
-14:23:32 DEBUG| milliseconds isn't unique.
-14:23:32 DEBUG| Output device screen not found.
-14:23:32 DEBUG| Output device screen not found.
-14:23:32 DEBUG| Trying cd:,\\:tbxi...
-14:23:32 DEBUG| Trying cd:,\ppc\bootinfo.txt...
-14:23:32 DEBUG| Trying cd:,%BOOT...
-14:23:32 DEBUG| No valid state has been set by load or init-program
-
-and then the test times out because it never sees the NetBSD
-console output it's waiting for.
-
-Successful job for a previous pullreq:
-https://gitlab.com/qemu-project/qemu/-/jobs/6527774374
-
-Here the debug log says:
-
-12:36:14 DEBUG| >> =============================================================
-12:36:14 DEBUG| >> OpenBIOS 1.1 [Mar 7 2023 22:21]
-12:36:14 DEBUG| >> Configuration device id QEMU version 1 machine id 0
-12:36:14 DEBUG| >> CPUs: 0
-12:36:14 DEBUG| >> Memory: 128M
-12:36:14 DEBUG| >> UUID: 00000000-0000-0000-0000-000000000000
-12:36:14 DEBUG| >> CPU type PowerPC,604
-12:36:14 DEBUG| milliseconds isn't unique.
-12:36:14 DEBUG| Output device screen not found.
-12:36:14 DEBUG| Output device screen not found.
-12:36:14 DEBUG| Trying cd:,\\:tbxi...
-12:36:14 DEBUG| >> Not a bootable ELF image
-12:36:15 DEBUG| >> switching to new context:
-12:36:15 DEBUG| >> NetBSD/prep BOOT, Revision 1.9
-12:36:15 DEBUG| Shutting down VM appliance; timeout=30
-12:36:15 DEBUG| Attempting graceful termination
-12:36:15 DEBUG| Closing console file
-12:36:15 DEBUG| Closing console socket
-12:36:15 DEBUG| Politely asking QEMU to terminate
-
-This machine uses the lsi53c810 SCSI controller, and
-it's failing to load from the CDROM, so my guess is the
-problem is in one of the two SCSI patches.
+You should check for qemu-.*, not just qemu-devel...
 
 thanks
 -- PMM
