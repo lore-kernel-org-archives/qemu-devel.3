@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A9BCD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 01:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C9FCD1288
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 01:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrStn-0002nX-Le; Mon, 01 Apr 2024 21:25:21 -0400
+	id 1rrTEs-0005IF-VP; Mon, 01 Apr 2024 21:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rrStj-0002nA-E9
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 21:25:11 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rrSth-0001gu-Nd
- for qemu-devel@nongnu.org; Mon, 01 Apr 2024 21:25:11 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-221816e3ab9so2495591fac.2
- for <qemu-devel@nongnu.org>; Mon, 01 Apr 2024 18:25:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712021108; x=1712625908; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fMQPVwvUw4sUP1QvoGPvpZ1QZdDecCQvtpJyk55QLw0=;
- b=k7CARvOyweFuFsqgaM2kpnV+kuX0hW0wiLfhRryrBPNkFp7yLvjc3sSvcJ6KKidW+f
- 4GrGtwtghBe7R7PuVpBzjYPOYa/paK1DMhAs0aUAHD2LUi41qH+6HIy/mS3T9jiaAhpL
- 0wL2fB25Q9+HKBksFumZ0ghRvjV25+Bhmn+5hwjjpJ/Y1uJT08N3LOzt8Noy43pry/WF
- OHh5T+Ti93jhwERkUo8R07tbcRt/6cLfnKKXdmg9j4y57GCFIFK6TaKHiAWyrShSQ0GM
- 9+DBEvQK8HK7xlv2hU11P4OCOuPT7OJsgbTxQ1rxAhENZLmXkFxDjOvIPsLaT9xFbU6P
- d9bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712021108; x=1712625908;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fMQPVwvUw4sUP1QvoGPvpZ1QZdDecCQvtpJyk55QLw0=;
- b=rB6q8p7X5KBOHlq+yfvO4NaRwz7Yey2ns9tUNN089oX4/fQke8araDrKlnw/qXwezX
- AQqhNalIlGcBG9jhLPbN9hwce/RGLWpg7R5gQ99L68M9nG/gIoyVe8rkntNgCcMEXM2O
- C8zr+srLKeFgpLe8QU8VBu2vAX2OsVHkV9+dIucvVzGqyUbHbnhToei+u1RGielScBtD
- 8KeBeVTXqX3sJs040JefEkPg41KOk+sR1MktO7NQKyuu2peh7pMbogVEhZEl/HHXV8eW
- IHc7VqUg07NLw8TmVld0jYbE2AhXQBpmgQygDKsSVIg0IgqFa9VOpUJ0pBicdYUQYo0Q
- ZJ/Q==
-X-Gm-Message-State: AOJu0YwzVHS77mmTsHEAZ11emarXpMAknybv8CGLxruDp2VRkznBkudh
- UJW7Au1fAyR3+gjgQUMfVeCGQs0eoZi0XW9mSxmm08pVredDip0+Numa1WHA7kMEcdZ/z6CAj+p
- D
-X-Google-Smtp-Source: AGHT+IFBjJmUnxztVJxtFbEQ2DNLR2wCs0c8uFf8jAfPYwcpmWxv5h5LdmHtN6MpNWkxZr7FhmWCGw==
-X-Received: by 2002:a05:6870:2309:b0:221:9227:e006 with SMTP id
- w9-20020a056870230900b002219227e006mr12856168oao.47.1712021107979; 
- Mon, 01 Apr 2024 18:25:07 -0700 (PDT)
-Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
- by smtp.gmail.com with ESMTPSA id
- k7-20020aa790c7000000b006ea916eac02sm8539501pfk.42.2024.04.01.18.25.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Apr 2024 18:25:07 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Sven Schnelle <svens@stackframe.org>
-Subject: [PATCH] target/hppa: Fix IIAOQ, IIASQ for pa2.0
-Date: Mon,  1 Apr 2024 15:25:04 -1000
-Message-Id: <20240402012504.177097-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1rrTEq-0005Hg-Kj
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 21:47:00 -0400
+Received: from esa6.hc1455-7.c3s2.iphmx.com ([68.232.139.139])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1rrTEo-00065p-Pz
+ for qemu-devel@nongnu.org; Mon, 01 Apr 2024 21:47:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1712022419; x=1743558419;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=DNNYcQcdHMiCbKTsvXixSeA8d386h61SexbhnWnXcVg=;
+ b=T/pdAalpUf0lhQIFK/CHesUPkNLt6TGH0+BD0Tktlg022WxSJn9l3KPI
+ VaQ90tb0rscJj3z7i1HQMV6Z8dXf++e9hNd+EBTH/YMLN22UTm0M7G7Jf
+ nj4Azjbeaoemaxn0weuPzS/qzamhwj/WBRsc0HUxjCLJyRHj7fb0/+2YJ
+ 7W0AWu2OFhFhsbRoFoc1J8sjgKFZp1q5vLJKs8KQGjU3HUYKl9BjNFvDf
+ l/HnGgH0DBhKsI8tvoRVp7T13vx7EL6qbxPq0wC2g2rQtLqvpiA/xK3rU
+ UbgfaDP59Q57Ta22wud8GIC607RC/p1cFQRWoR5vSfEmC/xneZb3oVpqw w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11031"; a="156200238"
+X-IronPort-AV: E=Sophos;i="6.07,173,1708354800"; d="scan'208";a="156200238"
+Received: from unknown (HELO oym-r1.gw.nic.fujitsu.com) ([210.162.30.89])
+ by esa6.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Apr 2024 10:46:54 +0900
+Received: from oym-m3.gw.nic.fujitsu.com (oym-nat-oym-m3.gw.nic.fujitsu.com
+ [192.168.87.60])
+ by oym-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id B47C2D4801
+ for <qemu-devel@nongnu.org>; Tue,  2 Apr 2024 10:46:51 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by oym-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id 91EE3D9498
+ for <qemu-devel@nongnu.org>; Tue,  2 Apr 2024 10:46:50 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 33305E4751
+ for <qemu-devel@nongnu.org>; Tue,  2 Apr 2024 10:46:50 +0900 (JST)
+Received: from FNSTPC.g08.fujitsu.local (unknown [10.167.226.45])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 92B041A0002;
+ Tue,  2 Apr 2024 09:46:49 +0800 (CST)
+To: Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Cc: qemu-devel@nongnu.org,
+	Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH 1/2] CXL/cxl_type3: add first_dvsec_offset() helper
+Date: Tue,  2 Apr 2024 09:46:46 +0800
+Message-ID: <20240402014647.3733839-1-lizhijian@fujitsu.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28292.004
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28292.004
+X-TMASE-Result: 10--5.367900-10.000000
+X-TMASE-MatchedRID: toN6SH028bWPo+6vQMop+oeAntdoMxBa8SkdpG2/n9fcRlVxRCnt1itT
+ H97dsk/Kf0UGUjPHyTvmn3xyPJAJoh2P280ZiGmRgjO1b6N9SrgFeeAjqMW+l7s3Yh2IOCYz18a
+ 7/fBfKbtwSFMaEckqJH41niV9KymzHxPMjOKY7A+u65UDD0aDgsRB0bsfrpPIfiAqrjYtFiSEQD
+ MuycsRUn+CifraaK2HwslpIthDaVPXrpL+7vYdnH7cGd19dSFd
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=68.232.139.139;
+ envelope-from=lizhijian@fujitsu.com; helo=esa6.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,104 +91,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
+From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The contents of IIAOQ depend on PSW_W.
-Follow the text in "Interruption Instruction Address Queues",
-pages 2-13 through 2-15.
+It helps to figure out where the first dvsec register is located. In
+addition, replace offset and size hardcore with existing macros.
 
-Reported-by: Sven Schnelle <svens@stackframe.org>
-Fixes: b10700d826c ("target/hppa: Update IIAOQ, IIASQ for pa2.0")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 ---
+ hw/mem/cxl_type3.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-Sven, I looked again through IIAOQ documentation and it does seem
-like some of the bits are wrong, both on interrupt delivery and RFI.
-
-
-r~
-
----
- target/hppa/int_helper.c | 20 +++++++++++---------
- target/hppa/sys_helper.c | 18 +++++++++---------
- 2 files changed, 20 insertions(+), 18 deletions(-)
-
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index 90437a92cd..a667ee380d 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -107,14 +107,10 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index b0a7e9f11b64..ad2fe7d463fb 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -643,6 +643,16 @@ static DOEProtocol doe_cdat_prot[] = {
+     { }
+ };
  
-     /* step 3 */
-     /*
--     * For pa1.x, IIASQ is simply a copy of IASQ.
--     * For pa2.0, IIASQ is the top bits of the virtual address,
--     *            or zero if translation is disabled.
-+     * IIASQ is the top bits of the virtual address, or zero if translation
-+     * is disabled -- with PSW_W == 0, this will reduce to the space.
-      */
--    if (!hppa_is_pa20(env)) {
--        env->cr[CR_IIASQ] = env->iasq_f >> 32;
--        env->cr_back[0] = env->iasq_b >> 32;
--    } else if (old_psw & PSW_C) {
-+    if (old_psw & PSW_C) {
-         env->cr[CR_IIASQ] =
-             hppa_form_gva_psw(old_psw, env->iasq_f, env->iaoq_f) >> 32;
-         env->cr_back[0] =
-@@ -123,8 +119,14 @@ void hppa_cpu_do_interrupt(CPUState *cs)
-         env->cr[CR_IIASQ] = 0;
-         env->cr_back[0] = 0;
-     }
--    env->cr[CR_IIAOQ] = env->iaoq_f;
--    env->cr_back[1] = env->iaoq_b;
-+    /* IIAOQ is the full offset for wide mode, or 32 bits for narrow mode. */
-+    if (old_psw & PSW_W) {
-+        env->cr[CR_IIAOQ] = env->iaoq_f;
-+        env->cr_back[1] = env->iaoq_b;
-+    } else {
-+        env->cr[CR_IIAOQ] = (uint32_t)env->iaoq_f;
-+        env->cr_back[1] = (uint32_t)env->iaoq_b;
-+    }
- 
-     if (old_psw & PSW_Q) {
-         /* step 5 */
-diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
-index 208e51c086..22d6c89964 100644
---- a/target/hppa/sys_helper.c
-+++ b/target/hppa/sys_helper.c
-@@ -78,21 +78,21 @@ target_ulong HELPER(swap_system_mask)(CPUHPPAState *env, target_ulong nsm)
- 
- void HELPER(rfi)(CPUHPPAState *env)
- {
--    env->iasq_f = (uint64_t)env->cr[CR_IIASQ] << 32;
--    env->iasq_b = (uint64_t)env->cr_back[0] << 32;
--    env->iaoq_f = env->cr[CR_IIAOQ];
--    env->iaoq_b = env->cr_back[1];
-+    uint64_t mask;
++static uint16_t first_dvsec_offset(CXLType3Dev *ct3d)
++{
++    uint16_t offset = PCI_CONFIG_SPACE_SIZE;
 +
-+    cpu_hppa_put_psw(env, env->cr[CR_IPSW]);
++    if (ct3d->sn != UI64_NULL)
++        offset += PCI_EXT_CAP_DSN_SIZEOF;
++
++    return offset;
++}
++
+ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -663,13 +673,10 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+     pci_config_set_prog_interface(pci_conf, 0x10);
  
-     /*
-      * For pa2.0, IIASQ is the top bits of the virtual address.
-      * To recreate the space identifier, remove the offset bits.
-+     * For pa1.x, the mask reduces to no change to space.
-      */
--    if (hppa_is_pa20(env)) {
--        env->iasq_f &= ~env->iaoq_f;
--        env->iasq_b &= ~env->iaoq_b;
+     pcie_endpoint_cap_init(pci_dev, 0x80);
+-    if (ct3d->sn != UI64_NULL) {
+-        pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
+-        cxl_cstate->dvsec_offset = 0x100 + 0x0c;
+-    } else {
+-        cxl_cstate->dvsec_offset = 0x100;
 -    }
-+    mask = gva_offset_mask(env->psw);
++    if (ct3d->sn != UI64_NULL)
++        pcie_dev_ser_num_init(pci_dev, PCI_CONFIG_SPACE_SIZE, ct3d->sn);
  
--    cpu_hppa_put_psw(env, env->cr[CR_IPSW]);
-+    env->iaoq_f = env->cr[CR_IIAOQ];
-+    env->iaoq_b = env->cr_back[1];
-+    env->iasq_f = (env->cr[CR_IIASQ] << 32) & ~(env->iaoq_f & mask);
-+    env->iasq_b = (env->cr_back[0] << 32) & ~(env->iaoq_b & mask);
- }
++    cxl_cstate->dvsec_offset = first_dvsec_offset(ct3d);
+     ct3d->cxl_cstate.pdev = pci_dev;
+     build_dvsecs(ct3d);
  
- static void getshadowregs(CPUHPPAState *env)
 -- 
-2.34.1
+2.29.2
 
 
