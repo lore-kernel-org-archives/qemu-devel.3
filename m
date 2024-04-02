@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 157B5C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0821CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcPP-0007Pa-C7; Tue, 02 Apr 2024 07:34:31 -0400
+	id 1rrcRQ-0003sO-E5; Tue, 02 Apr 2024 07:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rrcPN-0007OH-65
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rrcPH-0006Lv-80
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:34:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712057657;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jVfzihO5qwox85ndrhEpPEDkR5EZjIIkF6NFUMuvYM0=;
- b=A3Wc9R+5HqFn3vjovYInnIConglfpVBgon5IRTsK38oYn3BHeomhcOBiYA+JTL2x+KSxvg
- 1U8R4fJTRRwvWqASWOPf6aeb3EPRbaUtQoPs5msWaCzt62tG9/NdgRRqMDCvgJ8PIog55S
- 5SQTAYUQrmGQeqIN6XRxoYItLwv7ghs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-S2DhWb8wO9-ROwiKCirxeQ-1; Tue, 02 Apr 2024 07:34:16 -0400
-X-MC-Unique: S2DhWb8wO9-ROwiKCirxeQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-415591b1500so12337425e9.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:34:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcRM-0003r6-1a
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:36:32 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcRE-0008Ne-K6
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:36:31 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-343620589easo250457f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:36:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712057783; x=1712662583; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2eVMWygq8MoRCj1O4bukg5xnFNlPxmKB8kUJ1kXy9as=;
+ b=d4fvToAerVOTjKjIRbvP0Dqrg2IQVwzo6f9V0OeYDuJHslPqIAd07GbtUO6M4yRPUm
+ rXmIxtJ1V2X5CN4JUbc5qn8KZLqgBzh3BrPPPW3bYIiQKED3L0t55B885sBd3I7RSW5G
+ mEtFP2eEoyn04fou6XLhMwgJtgXhiTTRXFD6F0POYV6yGiVVj6stBS+vEwBMl4JKHqq0
+ YazqTt0dL1x7CY5bwaSeoZ/nnWs74An83MmNxtZt6xPVu9GDTBvmGuz6I2TZi/XDQCx1
+ cvw3vTiBbwSsxK7yEjwftGnv+iqclSSImf9gFPPZ7TSzzenENsYtXtmYPVCbD7PhqWiG
+ MmEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712057654; x=1712662454;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jVfzihO5qwox85ndrhEpPEDkR5EZjIIkF6NFUMuvYM0=;
- b=L1aRbPXC9LpLIG9XCQUGnlgMxic/8dZAxbbFXXfRKVgjTixYbPoVuKhcBViAkg3BHY
- CjydySL7oj+z65/7V1Ai/HWKsDHnp1GqB4HIAVyxAi1GTIznBsBv99ROPnG3fNAZQFXX
- 8M4NYpoWFFaQrD4yFezaf6xjvM3csk4kxS9DjBwJ2FIffrEnF4ombyOxttL2T/B/HlB9
- hgwBFKkVAJ98kJXJBOw0vlXSKRW17sjrgWr91VXwBKOOpXoIJvgn1bA8PdhEn9k+O/te
- 6M4SY7p2o7FHei3VxLAb4f4zzmajDsZJHIi7Is0yNSsBvJb2NiAD9cRAjhcvzIXRYiBP
- Ki0g==
-X-Gm-Message-State: AOJu0Yz4InTll4lckVybGdUW+5cXNRMUyDen2qXOtxOPo5m0WlYkXzBE
- o/DHqGXS5wSj7sfcl7g0q5isgbo/hr/27kiwuRc5Xuz2iz83Tmj14WdoSDJagM/Hdd50yIh7s3p
- QGHhnFyylnYSc7Q+aB8kz+12gJa2K3x3LLlZAG8iAoZRFL+BgAEJTya8A29/+AonOmaryimD0N2
- sP9gfu/8JlBK95x/CIkfedotRXh52oLb3n8wAo
-X-Received: by 2002:a7b:c34d:0:b0:416:1c9f:3a3f with SMTP id
- l13-20020a7bc34d000000b004161c9f3a3fmr822885wmj.9.1712057654345; 
- Tue, 02 Apr 2024 04:34:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPo7i3/AN+KKJkuYxtXmCTZweEY6sOXKmxVd6sSDivthDQCYjcueP78YrrZ7yYC3EoaK9B+Q==
-X-Received: by 2002:a7b:c34d:0:b0:416:1c9f:3a3f with SMTP id
- l13-20020a7bc34d000000b004161c9f3a3fmr822863wmj.9.1712057653859; 
- Tue, 02 Apr 2024 04:34:13 -0700 (PDT)
-Received: from avogadro.local ([151.95.49.219])
+ d=1e100.net; s=20230601; t=1712057783; x=1712662583;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2eVMWygq8MoRCj1O4bukg5xnFNlPxmKB8kUJ1kXy9as=;
+ b=Clcq5cD+7tiSpu/1piugpl3kmacAlAQQ2vutDniGWZODEhwGTUrSIZfx0YoO7RrIOq
+ b1tfxJ6bmwiqfGkuKV93cdLwH6S+0KMW+UumXOHgNLfaV5AB6l1Fe5fhgCZsnShcIwTw
+ Qps4tTPkww9M7AlQ4N5LVzHwDBysO7YazTDOF9bzkrRWASv9y/uUF6ptIecercobD20N
+ gRAuhRwn9dxOpxIwkwou9v1jd5391ZwUc5nKc7eU9Iadg9t/ALaY7sdwpLoUGUNinloL
+ TxfReOr/BfovKrbCKzMTC/v637ouSf0n4/RZsaGifmizghYYOKojwLwKNYjxG3wUV1tF
+ HoFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsmooi2qjAWozujBHi3rpGCFLlc65Vi0g/HGbav+P202V/pfWQMSh7FfwZqQbMdIkrHe76vo0G0iCulAXJHPKxP8gjBrI=
+X-Gm-Message-State: AOJu0YwJA9l+91phJQjHXqcDklhisD5OuciMnX0N5P3L8jivxMpO/lJ3
+ p0pRXOjsttnAFzH26CMgTj7X0iVOFgsQdZ6O+J5rpBb1vbJjzKDUOZMJ1LzNxNZB5dQl8sHsxac
+ KGgI=
+X-Google-Smtp-Source: AGHT+IEySA8xedcc3Rf/ISM3sWx5kIQuwjLf/MfQq+2fGmg/4JldiWlKDgiKBzD7OiLaDSq8UGjzsA==
+X-Received: by 2002:adf:fb06:0:b0:33e:d71b:cef0 with SMTP id
+ c6-20020adffb06000000b0033ed71bcef0mr6881579wrr.17.1712057782966; 
+ Tue, 02 Apr 2024 04:36:22 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.202.91])
  by smtp.gmail.com with ESMTPSA id
- f14-20020a05600c154e00b00414674a1a40sm17593545wmg.45.2024.04.02.04.34.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Apr 2024 04:34:12 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Helge Konetzka <hk@zapateado.de>
-Subject: [PATCH for-9.0 1/4] vga: merge conditionals on shift control register
-Date: Tue,  2 Apr 2024 13:34:03 +0200
-Message-ID: <20240402113408.18048-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240402113408.18048-1-pbonzini@redhat.com>
-References: <20240402113408.18048-1-pbonzini@redhat.com>
+ o18-20020adfca12000000b0033ec81ec4aesm14030978wrh.78.2024.04.02.04.36.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Apr 2024 04:36:22 -0700 (PDT)
+Message-ID: <2153d65c-9a33-4793-9c7c-0d8750f39040@linaro.org>
+Date: Tue, 2 Apr 2024 13:36:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 12/17] esp.c: prevent cmdfifo overflow in
+ esp_cdb_ready()
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
+ fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
+References: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
+ <20240324191707.623175-13-mark.cave-ayland@ilande.co.uk>
+ <aaaad221-9a88-4298-ac87-49d8a827ce9f@linaro.org>
+ <2fe371b5-07a3-4322-8543-76b15244dbe1@ilande.co.uk>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2fe371b5-07a3-4322-8543-76b15244dbe1@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,131 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are two sets of conditionals using the shift control bits: one to
-verify the palette and adjust disp_width, one to compute the "v" and
-"bits" variables.  Merge them into one, with the extra benefit that
-we now have the "bits" value available early and can use it to
-compute region_end.
+On 25/3/24 13:41, Mark Cave-Ayland wrote:
+> On 25/03/2024 10:26, Philippe Mathieu-Daudé wrote:
+> 
+>> On 24/3/24 20:17, Mark Cave-Ayland wrote:
+>>> During normal use the cmdfifo will never wrap internally and 
+>>> cmdfifo_cdb_offset
+>>> will always indicate the start of the SCSI CDB. However it is 
+>>> possible that a
+>>> malicious guest could issue an invalid ESP command sequence such that 
+>>> cmdfifo
+>>> wraps internally and cmdfifo_cdb_offset could point beyond the end of 
+>>> the FIFO
+>>> data buffer.
+>>>
+>>> Add an extra check to fifo8_peek_buf() to ensure that if the cmdfifo 
+>>> has wrapped
+>>> internally then esp_cdb_ready() will exit rather than allow 
+>>> scsi_cdb_length() to
+>>> access data outside the cmdfifo data buffer.
+>>>
+>>> Reported-by: Chuhong Yuan <hslester96@gmail.com>
+>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>> ---
+>>>   hw/scsi/esp.c | 12 +++++++++++-
+>>>   1 file changed, 11 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>>> index f47abc36d6..d8db33b921 100644
+>>> --- a/hw/scsi/esp.c
+>>> +++ b/hw/scsi/esp.c
+>>> @@ -429,13 +429,23 @@ static bool esp_cdb_ready(ESPState *s)
+>>>   {
+>>>       int len = fifo8_num_used(&s->cmdfifo) - s->cmdfifo_cdb_offset;
+>>>       const uint8_t *pbuf;
+>>> +    uint32_t n;
+>>>       int cdblen;
+>>>       if (len <= 0) {
+>>>           return false;
+>>>       }
+>>> -    pbuf = fifo8_peek_buf(&s->cmdfifo, len, NULL);
+>>> +    pbuf = fifo8_peek_buf(&s->cmdfifo, len, &n);
+>>> +    if (n < len) {
+>>> +        /*
+>>> +         * In normal use the cmdfifo should never wrap, but include 
+>>> this check
+>>> +         * to prevent a malicious guest from reading past the end of 
+>>> the
+>>> +         * cmdfifo data buffer below
+>>> +         */
+>>
+>> Can we qemu_log_mask(LOG_GUEST_ERROR) something here?
+> 
+> I'm not sure that this makes sense here? The cmdfifo wrapping is 
+> internal artifact of the Fifo8 implementation rather than being directly 
+> affected by writes to the ESP hardware FIFO (i.e. this is not the same 
+> as the ESP hardware FIFO overflow).
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/display/vga.c | 89 +++++++++++++++++++++++-------------------------
- 1 file changed, 42 insertions(+), 47 deletions(-)
+Still this check "prevent[s from] a malicious guest", but I don't
+mind, better be safe here.
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index bc5b83421bf..4795a0012e2 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1546,12 +1546,54 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-     }
- 
-     if (shift_control == 0) {
-+        full_update |= update_palette16(s);
-         if (sr(s, VGA_SEQ_CLOCK_MODE) & 8) {
-             disp_width <<= 1;
-+            v = VGA_DRAW_LINE4D2;
-+        } else {
-+            v = VGA_DRAW_LINE4;
-         }
-+        bits = 4;
-+
-     } else if (shift_control == 1) {
-+        full_update |= update_palette16(s);
-         if (sr(s, VGA_SEQ_CLOCK_MODE) & 8) {
-             disp_width <<= 1;
-+            v = VGA_DRAW_LINE2D2;
-+        } else {
-+            v = VGA_DRAW_LINE2;
-+        }
-+        bits = 4;
-+
-+    } else {
-+        switch (depth) {
-+        default:
-+        case 0:
-+            full_update |= update_palette256(s);
-+            v = VGA_DRAW_LINE8D2;
-+            bits = 4;
-+            break;
-+        case 8:
-+            full_update |= update_palette256(s);
-+            v = VGA_DRAW_LINE8;
-+            bits = 8;
-+            break;
-+        case 15:
-+            v = s->big_endian_fb ? VGA_DRAW_LINE15_BE : VGA_DRAW_LINE15_LE;
-+            bits = 16;
-+            break;
-+        case 16:
-+            v = s->big_endian_fb ? VGA_DRAW_LINE16_BE : VGA_DRAW_LINE16_LE;
-+            bits = 16;
-+            break;
-+        case 24:
-+            v = s->big_endian_fb ? VGA_DRAW_LINE24_BE : VGA_DRAW_LINE24_LE;
-+            bits = 24;
-+            break;
-+        case 32:
-+            v = s->big_endian_fb ? VGA_DRAW_LINE32_BE : VGA_DRAW_LINE32_LE;
-+            bits = 32;
-+            break;
-         }
-     }
- 
-@@ -1607,53 +1649,6 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-         }
-     }
- 
--    if (shift_control == 0) {
--        full_update |= update_palette16(s);
--        if (sr(s, VGA_SEQ_CLOCK_MODE) & 8) {
--            v = VGA_DRAW_LINE4D2;
--        } else {
--            v = VGA_DRAW_LINE4;
--        }
--        bits = 4;
--    } else if (shift_control == 1) {
--        full_update |= update_palette16(s);
--        if (sr(s, VGA_SEQ_CLOCK_MODE) & 8) {
--            v = VGA_DRAW_LINE2D2;
--        } else {
--            v = VGA_DRAW_LINE2;
--        }
--        bits = 4;
--    } else {
--        switch(s->get_bpp(s)) {
--        default:
--        case 0:
--            full_update |= update_palette256(s);
--            v = VGA_DRAW_LINE8D2;
--            bits = 4;
--            break;
--        case 8:
--            full_update |= update_palette256(s);
--            v = VGA_DRAW_LINE8;
--            bits = 8;
--            break;
--        case 15:
--            v = s->big_endian_fb ? VGA_DRAW_LINE15_BE : VGA_DRAW_LINE15_LE;
--            bits = 16;
--            break;
--        case 16:
--            v = s->big_endian_fb ? VGA_DRAW_LINE16_BE : VGA_DRAW_LINE16_LE;
--            bits = 16;
--            break;
--        case 24:
--            v = s->big_endian_fb ? VGA_DRAW_LINE24_BE : VGA_DRAW_LINE24_LE;
--            bits = 24;
--            break;
--        case 32:
--            v = s->big_endian_fb ? VGA_DRAW_LINE32_BE : VGA_DRAW_LINE32_LE;
--            bits = 32;
--            break;
--        }
--    }
-     vga_draw_line = vga_draw_line_table[v];
- 
-     if (!is_buffer_shared(surface) && s->cursor_invalidate) {
--- 
-2.44.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
