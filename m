@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC1ECD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24216C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 11:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrcYv-0000k8-VC; Tue, 02 Apr 2024 07:44:22 -0400
+	id 1rrcj9-00055x-7m; Tue, 02 Apr 2024 07:54:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcYc-0000av-8N
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:44:05 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrciB-0004bW-HA
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:53:55 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrcYZ-0005y5-Hf
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:44:01 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-415515178ceso24522995e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:43:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrche-00065b-BD
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 07:53:54 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4161d73d876so2138975e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 04:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712058218; x=1712663018; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712058800; x=1712663600; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D3sp7fW4wohPX0c2eRi7YBAVfGPS8rtp+XNRh/h3JFw=;
- b=nt3d04anSyIgWVl6LVGzVWSTz34vbKp+0Q9G4cmRCDeKdOirC5+OUDoa7vW7SP2Lhx
- 4lTOQSdaqlYhS42Yn87b7Lb7JYjIIt8QBhwbAuFlOvrmJIhVhlI75OqK4Lf0uMYy8F1+
- JVnVv0NbDum96ME6VIJ0TJf5e3ehKyUwX5/P83ezCDNRFVtd3aOp8jEMW9JmLcOuSrXp
- xc1Q8Rz2GHvUz+lNvCV9DYhD5Ibk3V7OXFDMsIMPXFb+OlVCN9gUVQ/8ssrEk4LgvRL1
- 1xlcblm1wduI2H+IWf4rYiWSrw2JCTdMwdiFxwutGwMiznN2meF4QdJAQA5IgXEz98JL
- 6GHg==
+ bh=s26WwhVTEazCwToak+Pg/fznLaGeZTPUdLmVmhcPpcE=;
+ b=xl7hALzttF6maGxU43Fvgj4drzi3UF2+fLlm7Msie4M264rotpgoJgW1t2mKlfY+al
+ bYl3gn8kBk9GmNMZb3FZTKZRvG+Cjbpjdq3QlvucBR8Jsi4ozqdKfJ/VetsvQF/QE11F
+ xALh/YIRsjFtR0DsWn0ierNA8PNpg4X5fCx8sYvuF5B9SxHkCEpAMYl1nF/TnU6GBHWq
+ cQfvy4rJriN4Jz9wBSnRCCjHRHFgc9gHQf7KC/WAgma1CEujGFC+x7Ei4bOFOjD2JPSh
+ CdztTOBtHntI9ns0ZNNdbt5zYXPow43klGyDzZCGUZTqn/Bj3qWj4NTzdlyLtihGCbor
+ 2S5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712058218; x=1712663018;
+ d=1e100.net; s=20230601; t=1712058800; x=1712663600;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D3sp7fW4wohPX0c2eRi7YBAVfGPS8rtp+XNRh/h3JFw=;
- b=NEPbjBh8asBF1z4oiUtcNYrFLMDEauN5oVwgRS6n7ZbfwJslU5jxg/Aslc4L7pV+4C
- lIxn5p+OxqEvsSJwGrzZSMy4G6AebsOXS5QOEh9e8/3fjqB19uR1VmT7yrZlPR3qz5YE
- ULoRtmPdQIEXgswODQ2SGj67bG1Mmv9CHveopHptyEr/Id0sppOW6VrUNqz7p7ERzXpU
- nyUK8Bun4K7p6/hdIIYoNP4jhd2Wxu6UZwSBJUadcPDOZ9ZztevwzysZoqjubNmXyepw
- LZWhpDgJXkJam6GYApiALlvonyeTnyI74xHA20lzs9Y03PwXQ/BUYM3jiDZTe72rHVlU
- UEtw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIpCyAC1dylUxEVGOs/aHAwztBH1ZXl5GCQ3nPVkhix9j1QvVZTFZVODkgYaL8O0A4Fsp69/WjPRpbYtKvdug8DjmvR5g=
-X-Gm-Message-State: AOJu0YywveTO9Wn2T6jJQLD/0T2Yjn+7ToZQHTnN7S6nY24vvyKKJGkX
- 7p+8ADrhwfZezNCnk8IgU9yBigbRfR3LKzaH7aFXqz7EX45MRDF0NBMhkzQ6INE=
-X-Google-Smtp-Source: AGHT+IEW0WRoHUFK/7G2oIoi8ZCzXbxH7wIUMcjzYG4mmhPvbwCwH30Dpc30e08EjlgdeM/sduLtkQ==
-X-Received: by 2002:a05:600c:570b:b0:415:5413:cecc with SMTP id
- jv11-20020a05600c570b00b004155413ceccmr7875934wmb.18.1712058218015; 
- Tue, 02 Apr 2024 04:43:38 -0700 (PDT)
+ bh=s26WwhVTEazCwToak+Pg/fznLaGeZTPUdLmVmhcPpcE=;
+ b=iDahxR8XAuxGwrwrVUn6bq49GzEsbvSDYcJIs9NHLEGtfHOn8rHu6k05j4+JcZobSl
+ hxTfaOMpc9Gjt6c68M4oF8fS8B0A5V5kBaHlEPgIR1b6CLfzTLnyjVh0ZThx5mRFFAQU
+ ftdjEYabjskQZanqTbNCMjRXternmYIx0vKOAi+ewOB6Szffk6BcCpv8zEplPibrtUvl
+ /kb4g69wnVcPJlzXs1GqKXPOR18yK+C0e2aqi+cF4tJjx3/uYjehHonbJDcs6f1MNe0T
+ HwE5VUeTf26v9rTQA4B3w7dKAznsxWsbtgRisZcbhqZE+yv9e3ldGQ2GhBp7m/BigclL
+ iCLg==
+X-Gm-Message-State: AOJu0YyecS1s9vrVtP/B9zQtPpG70TyMWvc10SEjGR0xCVIXOm09CEIt
+ orKy6aEh8zbvE0OltMUbODuYfVC8D1mfMzP3PBYsNc/+gY/dpgq3uKeqR39oXtI=
+X-Google-Smtp-Source: AGHT+IFAI2A/B0UdkUuRekQUj8df6RHWZIr2DaAAkidmBlT4n8DdYO7V8MycZuLWAVcagbyJ8bJvRA==
+X-Received: by 2002:a05:600c:3b29:b0:414:9141:1461 with SMTP id
+ m41-20020a05600c3b2900b0041491411461mr8151323wms.29.1712058799860; 
+ Tue, 02 Apr 2024 04:53:19 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.202.91])
  by smtp.gmail.com with ESMTPSA id
- p2-20020a05600c1d8200b004156daeee90sm3435183wms.4.2024.04.02.04.43.37
+ o15-20020a05600c4fcf00b0041488895a37sm20811487wmq.33.2024.04.02.04.53.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 04:43:37 -0700 (PDT)
-Message-ID: <9d64b14b-3c4e-41bb-b79d-1ee5d4df3eac@linaro.org>
-Date: Tue, 2 Apr 2024 13:43:36 +0200
+ Tue, 02 Apr 2024 04:53:19 -0700 (PDT)
+Message-ID: <8dd44a53-f16d-4fc1-bc08-fcd1af5e57a4@linaro.org>
+Date: Tue, 2 Apr 2024 13:53:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 3/4] vga: adjust dirty memory region if pel
- panning is active
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Helge Konetzka <hk@zapateado.de>
-References: <20240402113408.18048-1-pbonzini@redhat.com>
- <20240402113408.18048-4-pbonzini@redhat.com>
+Subject: Re: [PATCH 1/2] scripts/checkpatch: Avoid author email mangled by
+ qemu-trivial@
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Stefan Weil <sw@weilnetz.de>
+References: <20240402113015.66280-1-philmd@linaro.org>
+ <20240402113015.66280-2-philmd@linaro.org>
+ <CAFEAcA8iCdNOdnrqY+7yupUvxQQfCLh17WRHZ6zFhVQrB4CXgg@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240402113408.18048-4-pbonzini@redhat.com>
+In-Reply-To: <CAFEAcA8iCdNOdnrqY+7yupUvxQQfCLh17WRHZ6zFhVQrB4CXgg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,20 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/24 13:34, Paolo Bonzini wrote:
-> When pel panning is active, one more byte is read from each of the VGA
-> memory planes.  This has to be accounted in the computation of region_end,
-> otherwise vga_draw_graphic() fails an assertion:
+On 2/4/24 13:52, Peter Maydell wrote:
+> On Tue, 2 Apr 2024 at 12:30, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Commit f5177798d8 ("scripts: report on author emails
+>> that are mangled by the mailing list") added a check
+>> for qemu-devel@ list, complete with qemu-trivial@.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   scripts/checkpatch.pl | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+>> index 7026895074..4fe4cfd631 100755
+>> --- a/scripts/checkpatch.pl
+>> +++ b/scripts/checkpatch.pl
+>> @@ -1573,7 +1573,7 @@ sub process {
+>>                          $is_patch = 1;
+>>                  }
+>>
+>> -               if ($line =~ /^(Author|From): .* via .*<qemu-devel\@nongnu.org>/) {
+>> +               if ($line =~ /^(Author|From): .* via .*<qemu-(devel|trivial)\@nongnu\.org>/) {
 > 
-> qemu-system-i386: ../system/physmem.c:946: cpu_physical_memory_snapshot_get_dirty: Assertion `start + length <= snap->end' failed.
-> 
-> Reported-by: Helge Konetzka <hk@zapateado.de>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2244
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/display/vga.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+> I recommend checking against qemu-.* rather than trying
+> to capture explicitly all the suffixes we have. (For instance
+> there's a line in mailmap for a commit that was attributed
+> to qemu-block@, which this change still wouldn't catch.)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Oh, good point.
 
 
