@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0690C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65BA7CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Apr 2024 10:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrbmJ-00072S-Ae; Tue, 02 Apr 2024 06:54:07 -0400
+	id 1rrboG-0008NY-Sh; Tue, 02 Apr 2024 06:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrbmA-0006qZ-H9
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:53:58 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrbn5-0007xF-Ia
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:54:57 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrbm4-0004HO-LO
- for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:53:58 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-415a84ea9bbso7517685e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:53:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rrbn3-00053M-9z
+ for qemu-devel@nongnu.org; Tue, 02 Apr 2024 06:54:55 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3416a975840so3875151f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 03:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712055231; x=1712660031; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712055271; x=1712660071; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LMjebou22YePxG8vD1+pbKqTTKwxSEnlcF2+ICOziOY=;
- b=chv96NcqgXNAEIj7AVAOFaW5XUuz+MUuMb+Gmb1NVw7juUaeYab6WNLpBAnb++PgFE
- VSym5xP6n8EBfvSaPFOscQami0CQGEa1d3YG2SnB5KkfANNId7tIr7sD0eVcbzDwitfL
- 7bPS7SfEd+oVjIh6cS3L719WXMyOpcCLK9gF5kw0YeYzYtG5/Bw+qWG7mHLU+yzOgBsI
- 3swBjyyXfVPD0vKZc25vuIbZLUY3wJC72ulckkM11IWQQQtK6tVFc9PmleWAgEC+iI3s
- FBo2hCpGwtW0FtnAPeuwzN2azOZQkcgam931PRtI7/R/zN3Hh8eTS6emj3IRkg6Ic5R7
- 1tkA==
+ bh=TtquBNa20iIbJ1ooqXOGTdWsB56NN8KCENoj+bkWuh8=;
+ b=hYnhuGurBM72kB3puc1qObgknAIWVWy4GV6NiZm9y83fsarJVvCFz+sW3OPEh1tnP2
+ Gao4AOznfE2kSoIwlxPG5X3eIOeMnc+Nr5HN8TVbxNFVNyZoPoT5PnJudMcvS+quCNWv
+ al+beUeg1d8pwJCDDIbaa7ldn7bWfIqB+9XgD6OVAgBfqCDqU9+6UBVIKahznT4s6/Np
+ noZwZ4bv7PcSGTxm4sgaYncCNH59hlbWr29GA4WurFhNV99dm/TkNWwa6vfeOuPBk2wc
+ tlwQDATiOjACYnZXI//fd3/oVqoZvywG3IrRWemGb6IfKnn8S5WyFWyIuFqhSBsy1wxp
+ oqXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712055231; x=1712660031;
+ d=1e100.net; s=20230601; t=1712055271; x=1712660071;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LMjebou22YePxG8vD1+pbKqTTKwxSEnlcF2+ICOziOY=;
- b=TIArPYz1/zz7VKSH6ue7xMMfENQT5+8nJ5EPoSDM+z/hGT+R78G3NFYrYWODnCmzmv
- +bVwlktk0O7XUl2LJIiVebNUWSvxBS1z7dG6bh/8zHOP7PxAR72QO9G9XMH8jsktlcwl
- gzSVNMlPmyjOShVFsowRZtmKmsK9VXAnukNd3H0haGp8YnUTDn2Cc94BuH1ePVPHjvy+
- dtks+LvYigSHTh5EvVFV+oYQLVR4BLbwyTr9F1QP9PuzXDAm+yih/8mhqVbQeMCWsSV5
- AVwD8bHgRAOCSdkmLgqa5HWeQJHzeLizJW5pAvuUf3r03BAYOEuLV9QSGCGUYlz/AsBH
- mmag==
-X-Gm-Message-State: AOJu0YxYCDbhqDCj0SCW+GbRA9O4IqON2xUN7xgZ329nXfWC3PWYDWWO
- CggIvo2nySa0OVKdoSbKlGkin/7vMzJDK68/mIQEOSmb3DXiagnpxFo4wcbNPhE=
-X-Google-Smtp-Source: AGHT+IHJGohRtWeTkzi/16+ApMb4IByjRIOm3jSyZjSE+r3LY86LU+HJd9FBGm4Dt6edGu0CL54LFw==
-X-Received: by 2002:a7b:cc16:0:b0:415:c6e8:9206 with SMTP id
- f22-20020a7bcc16000000b00415c6e89206mr1112407wmh.34.1712055231350; 
- Tue, 02 Apr 2024 03:53:51 -0700 (PDT)
+ bh=TtquBNa20iIbJ1ooqXOGTdWsB56NN8KCENoj+bkWuh8=;
+ b=s7PTZPF6s2w9mU5yTbbNg+t59F0DfJcBT4bR5jWaDv+8foiqjCNUMf22vbzbkIgQnh
+ 0kXYGoVb89f0I6GDB2fJ/ElaWMNxtheFT9596deaFGbwK+xl0r54ULappbWiCh0ObSpT
+ 1JFdBfzVcXnTBKH7+WFotBkY0YrLfmqRGCHobpz2Vc9oLM+6OUE6YEeTLu3e5Kkjh5YG
+ EfzUseFohrRVR+d6nWA21Sc4BeLx0JJxUTD8Fb6FYtnXpaN1LMqleGVHFqIwe28M+oVe
+ LwluWxwy9D1Tyo6BR+yy2cjQIQiiuy2xQbSZl+ljAJo6tuBn0aimgCN/1kFmMsfZPIgi
+ EwQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5cb93wMubabfPN86tjN2CVS/J3vpBTdYILoKwqOT93vqrZ7xMEgqexPB2gRhKDDxynw3oEL4F+JpcrG7S6VKL5HujHzc=
+X-Gm-Message-State: AOJu0Yz6bTDur2CYFj5gcfJBFw5guI9UfmQQBjwNYzaRvMcGzslhRzM4
+ 1f1y3TLFLbSQhPtEdts8d/5Tw++EkTt9y5dl5QWaLQLTaq1t9FT/PtjeN/SR+eY=
+X-Google-Smtp-Source: AGHT+IGCrK/tKhi2oZZlzi/i6WfvRNNX7TZot2JT1f+vcNLEnWw12QM3zO7bAx6b14UhbQZj4W1ekg==
+X-Received: by 2002:a5d:4f8b:0:b0:341:d4db:abf5 with SMTP id
+ d11-20020a5d4f8b000000b00341d4dbabf5mr7829457wru.60.1712055270877; 
+ Tue, 02 Apr 2024 03:54:30 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.202.91])
  by smtp.gmail.com with ESMTPSA id
- w7-20020a05600c474700b004156cd7991bsm3658693wmo.11.2024.04.02.03.53.50
+ g1-20020adfa481000000b00341e7e52802sm13934950wrb.92.2024.04.02.03.54.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 03:53:50 -0700 (PDT)
-Message-ID: <99c02a9f-bd8d-40ee-b483-48f13028eae3@linaro.org>
-Date: Tue, 2 Apr 2024 12:53:49 +0200
+ Tue, 02 Apr 2024 03:54:30 -0700 (PDT)
+Message-ID: <dd1db83a-2059-41e3-8669-6c6bb56f9eea@linaro.org>
+Date: Tue, 2 Apr 2024 12:54:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gpio/pca955x: Update maintainer email address
-To: Glenn Miles <milesg@linux.vnet.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Glenn Miles <milesg@linux.ibm.com>
-References: <20240328194914.2145709-1-milesg@linux.vnet.ibm.com>
+Subject: Re: [PATCH] hw/xen_evtchn: Initialize flush_kvm_routes
+To: Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+ David Woodhouse <dwmw2@infradead.org>
+Cc: Paul Durrant <paul@xen.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ Oleg Sviridov <oleg.sviridov@red-soft.ru>
+References: <20240329113939.257033-1-artem.chernyshev@red-soft.ru>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240328194914.2145709-1-milesg@linux.vnet.ibm.com>
+In-Reply-To: <20240329113939.257033-1-artem.chernyshev@red-soft.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,13 +98,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/24 20:49, Glenn Miles wrote:
-> It was noticed that my linux.vnet.ibm.com address does not
-> always work so dropping the vnet to see if that works better.
+On 29/3/24 12:39, Artem Chernyshev wrote:
+> In xen_evtchn_soft_reset() variable flush_kvm_routes can
+> be used before being initialized.
 > 
-> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> 
+> Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+> Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 > ---
->   MAINTAINERS | 2 +-
+>   hw/i386/kvm/xen_evtchn.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Patch queued, thanks!
