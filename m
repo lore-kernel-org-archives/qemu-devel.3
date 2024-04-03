@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 935A6CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 05:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4636C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 05:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrsx4-0001FC-CP; Wed, 03 Apr 2024 01:14:22 -0400
+	id 1rrsy0-0001tO-Mb; Wed, 03 Apr 2024 01:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rrsx2-0001Ev-RI; Wed, 03 Apr 2024 01:14:20 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rrsx1-0004S9-Cs; Wed, 03 Apr 2024 01:14:20 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1BD8D5B487;
- Wed,  3 Apr 2024 08:16:01 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 74F77AA35C;
- Wed,  3 Apr 2024 08:14:16 +0300 (MSK)
-Message-ID: <f8622a76-7523-424e-88d5-cd6f251a625b@tls.msk.ru>
-Date: Wed, 3 Apr 2024 08:14:16 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Fix incorrect disassembly format for certain RISC-V
- instructions
-To: Simeon Krastnikov <Simeon.Krastnikov@imgtec.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- Shiva Chen <Shiva.Chen@imgtec.com>
-References: <LO4P265MB66669BD6FF7CAB642AE30316933E2@LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <LO4P265MB66669BD6FF7CAB642AE30316933E2@LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rrsxy-0001oE-FL; Wed, 03 Apr 2024 01:15:18 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rrsxw-0004m4-E4; Wed, 03 Apr 2024 01:15:18 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1e0ae065d24so50492355ad.1; 
+ Tue, 02 Apr 2024 22:15:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712121314; x=1712726114; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2qtWQHaJdJD2wKLpoVHsjrCHwsQKkDHt69WbaoeLbaE=;
+ b=cngy0Ma9KXInkr6NCGKB0GYm4RICcW+hQejzukgUt/9sjJCVOkyg2I+ke5ZEGSw9RQ
+ O0nst5nKZSsm21xw64NQ8h0aSZ4eiCqsbhs6AYHhpWMsVJ9KgkfMUWVQkX0sG0ZyUXqp
+ +CpLur2QLCCkQP+qzGp7tMBsm50mAAxG8weCMav2JbqOT0q7NpLRp7ES9cSwWxYDcem+
+ YZnGg2cEmCaGMCZffMtps/GOEGvuzi/eRsI/ZruKKKoVcpynJexlt/pRbUmhY6JL+BR2
+ y12k+rcWF1oBG9GsWAd/7ZDhFc33ly/uB2+tPlkALn6s7boCM+++g9BjbDZyxOBmRIlr
+ +2eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712121314; x=1712726114;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=2qtWQHaJdJD2wKLpoVHsjrCHwsQKkDHt69WbaoeLbaE=;
+ b=qMTW/a4qIOEn0rkCZM5E+vwPwBBWm0zszax1pxbvjTaMvult72t+2kpf8RSoIlx6pU
+ d6ee+DVyhBXHsCDsYuma+LPuJGIrESSXVDGd0/hSViRAggIpIklV3MqfKuxDH1oRgGsq
+ gnpWuycIXOvIkHvIHO7MT4GOgdFSRe5Ek9812J0ZnPxyMrOeLetKAEDYFZWoXU5luiLP
+ /0j0j46qlCYlhack1e0RcELFt1MIWXYgGcogYtkM6gQ+Coemp1alLUohB5Ap4gy1cdQH
+ hPX9Tupu50WM9KZ6GN6qco/m+2PahAJ/yLgYlv+fEmB3IHn07LSlZM3jL2ZoTtdG0fFW
+ S5RA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWdTxEwaPvQyuf3PD5b5oEqSErg2B1/uSL6hmCFIeDYJCGaIhIerGxcdeCyw0yemckaL88vu0y5YSUw1JWLWBXRq7/I4gM=
+X-Gm-Message-State: AOJu0Yz7WWYAc3DWfgD0171OWCwR9qimblYWQI44IfzcCyjjXdEXAeI+
+ KtNXVuF2fpJUEAiozCguAJYeySBCO90ji7ZLB/eZXOf13QVp9Ds+
+X-Google-Smtp-Source: AGHT+IFz92IRKHzWmM+MxK5UnzImjMhXaDIvPlbRGqkuc0UqwV2bga71Z0vSi4i9TFLslRzyvTI70Q==
+X-Received: by 2002:a17:902:b70b:b0:1dc:de65:623b with SMTP id
+ d11-20020a170902b70b00b001dcde65623bmr10509943pls.60.1712121314101; 
+ Tue, 02 Apr 2024 22:15:14 -0700 (PDT)
+Received: from localhost (220-245-239-107.tpgi.com.au. [220.245.239.107])
+ by smtp.gmail.com with ESMTPSA id
+ i15-20020a170902c94f00b001dd02f4c2casm12203979pla.164.2024.04.02.22.15.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Apr 2024 22:15:13 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 03 Apr 2024 15:15:09 +1000
+Message-Id: <D0A8CN9E4ZZG.3RV43XZWO6S5H@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, "Richard Henderson" <richard.henderson@linaro.org>
+Subject: Re: TCG change broke MorphOS boot on sam460ex
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <fe59ceb1-e8cd-f488-d6f0-6372923a8a33@eik.bme.hu>
+ <48e5e0b8-9b0a-4c9f-9f3e-c30e2fddc502@linaro.org>
+ <2a286d38-1fd7-d53a-d7db-e953e6aefbf2@eik.bme.hu>
+ <3386e6ec-9b87-fa01-9bf0-967a362bf90a@eik.bme.hu>
+In-Reply-To: <3386e6ec-9b87-fa01-9bf0-967a362bf90a@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,16 +97,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-02.04.2024 15:47, Simeon Krastnikov:
+On Tue Apr 2, 2024 at 9:32 PM AEST, BALATON Zoltan wrote:
+> On Thu, 21 Mar 2024, BALATON Zoltan wrote:
+> > On 27/2/24 17:47, BALATON Zoltan wrote:
+> >> Hello,
+> >>=20
+> >> Commit 18a536f1f8 (accel/tcg: Always require can_do_io) broke booting=
+=20
+> >> MorphOS on sam460ex (this was before 8.2.0 and I thought I've verified=
+ it=20
+> >> before that release but apparently missed it back then). It can be=20
+> >> reproduced with https://www.morphos-team.net/morphos-3.18.iso and foll=
+owing=20
+> >> command:
+> >>=20
+> >> qemu-system-ppc -M sam460ex -serial stdio -d unimp,guest_errors \
+> >>  =C2=A0 -drive if=3Dnone,id=3Dcd,format=3Draw,file=3Dmorphos-3.18.iso =
+\
+> >>  =C2=A0 -device ide-cd,drive=3Dcd,bus=3Dide.1
+>
+> Any idea on this one? While MorphOS boots on other machines and other OSe=
+s=20
+> seem to boot on this machine it may still suggest there's some problem=20
+> somewhere as this worked before. So it may worth investigating it to make=
+=20
+> sure there's no bug that could affect other OSes too even if they boot. I=
+=20
+> don't know how to debug this so some help would be needed.
 
-[Content-Type: text/html]
+In the bad case it crashes after running this TB:
 
-Your patch is html-damaged.  There's probably a way to extract the text/plain
-version of it but it's better if you re-send it without html.
+----------------
+IN:
+0x00c01354:  38c00040  li       r6, 0x40
+0x00c01358:  38e10204  addi     r7, r1, 0x204
+0x00c0135c:  39010104  addi     r8, r1, 0x104
+0x00c01360:  39410004  addi     r10, r1, 4
+0x00c01364:  39200000  li       r9, 0
+0x00c01368:  7cc903a6  mtctr    r6
+0x00c0136c:  84c70004  lwzu     r6, 4(r7)
+0x00c01370:  7cc907a4  tlbwehi  r6, r9
+0x00c01374:  84c80004  lwzu     r6, 4(r8)
+0x00c01378:  7cc90fa4  tlbwelo  r6, r9
+0x00c0137c:  84ca0004  lwzu     r6, 4(r10)
+0x00c01380:  7cc917a4  tlbwehi  r6, r9
+0x00c01384:  39290001  addi     r9, r9, 1
+0x00c01388:  4200ffe4  bdnz     0xc0136c
+----------------
+IN:
+0x00c01374: unable to read memory
+----------------
 
-Not saying anything about the changes though.
+"unable to read memory" is the tracer, it does actually translate
+the address, but it points to a wayward real address which returns
+0 to TCG, which is an invalid instruction.
+
+The good case instead doesn't exit the TB after 0x00c01370 but after
+the complete loop at the bdnz. That look like this after the same
+first TB:
+
+----------------
+IN:
+0x00c0136c:  84c70004  lwzu     r6, 4(r7)
+0x00c01370:  7cc907a4  tlbwehi  r6, r9
+0x00c01374:  84c80004  lwzu     r6, 4(r8)
+0x00c01378:  7cc90fa4  tlbwelo  r6, r9
+0x00c0137c:  84ca0004  lwzu     r6, 4(r10)
+0x00c01380:  7cc917a4  tlbwehi  r6, r9
+0x00c01384:  39290001  addi     r9, r9, 1
+0x00c01388:  4200ffe4  bdnz     0xc0136c
+----------------
+IN:
+0x00c0138c:  4c00012c  isync
+
+All the tlbwe are executed in the same TB. MMU tracing shows the
+first tlbwehi creates a new valid(!) TLB for 0x00000000-0x100000000
+that has a garbage RPN because the tlbwelo did not run yet.
+
+What's happening in the bad case is that the translator breaks
+and "re-fetches" instructions in the middle of that sequence, and
+that's where the bogus translation causes 0 to be returned. The
+good case the whole block is executed in the same fetch which
+creates correct translations.
+
+So it looks like a morphos bug, the can-do-io change just happens
+to cause it to re-fetch in that place, but that could happen for
+a number of reasons, so you can't rely on TLB *only* changing or
+ifetch *only* re-fetching at a sync point like isync.
+
+I would expect code like this to write an invalid entry with tlbwehi,
+then tlbwelo to set the correct RPN, then make the entry valid with
+the second tlbwehi. It would probably fix the bug if you just did the
+first tlbwehi with r6=3D0 (or at least without the 0x200 bit set).
 
 Thanks,
-
-/mjt
+Nick
 
