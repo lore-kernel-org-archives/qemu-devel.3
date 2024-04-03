@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E016CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C02A3CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 12:20:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrz7o-0001no-P0; Wed, 03 Apr 2024 07:49:52 -0400
+	id 1rrzb0-000238-Av; Wed, 03 Apr 2024 08:20:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrz7k-0001me-Ny
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:49:49 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rrz7j-0006GO-3o
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:49:48 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-516c11b6af9so120773e87.2
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:49:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712144984; x=1712749784; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Q04MB9sbtDquxr5tfECR0Pc+WkFOv2d45d7auHnPkmA=;
- b=rTiKymSVsIfF0jepYx6m/kQe83jNR5mGrtY54lYY4QrHbOhr3c9jNhm6pBd1cDsNu2
- kJTUnEH55fY0RTyjBqcZbEnPJ2Wsz6aEOZVRyJJMQ85SMoHiJG26jnGHq9CsG1hTDI9t
- jdpypGuPQZKcbzGT8BXrqlfvQuPafI8CaT86f0su1N2sEUVXRfNPT5u5se9lvTtMcGXN
- T9Igj/aH7Z479P6wwHYk0c7iaJ27zApJPsY0SQIRyc/b96grSXhwAz5rId2qjFRuI7TA
- Z3hBrLeyJ7E3pyryHvci3dAWz+V0SlT5QHPk5jxaRjAhDlm/ApfLXvEgT0Yngrv4oTni
- YoxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712144984; x=1712749784;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Q04MB9sbtDquxr5tfECR0Pc+WkFOv2d45d7auHnPkmA=;
- b=p1o5t6tzL/cCEpnLEl+ublgrgLLjVnvmUzgBg2h2Aq0bGj2qz7zHrHIXnS099UwBzk
- KCpHlm9fkC1+FDlMtPQHht+GBCjAWtkin0zCrm+2py2YojHsX2aP2j16/oXvZ65piFlz
- UAJhyaSNrGpVkg6idCsPptqC4dYmiGV5bRIAn49bNXA3n/vc0fAaEorJLxgQRwMuahOu
- e5eV1ZJ59uxDZoxfXm4V89/StOgDV7ef/8yP5um8GiibYRWPgNZCVE371aTBdefbxEri
- TlJYfcfMwRgheB6vPCtg8Ndtn3LrKuYZ6MlKLNLcbOWnclVzHoBshLMH7x74yPioEW6D
- 82AQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDpQmWczGVDDwgWyTuycyxDfwIThjdBrr/61gFEPa4Fq8/PYsqOBGRSJPKKjjHFRvG2Lr3/WPKaP+hzuY//M9jlfuQWQs=
-X-Gm-Message-State: AOJu0YzAcRCue6n2/RXM2GWnyPNeWtlNvBcx4s416b9bLNbkhC5D/1J5
- Y/WBgJfers/AzXx4zBib4YsIYakOwTracFTBQyLuj2qwBoCEgKOM3GCXtasmXSur0qD5jP9ooRj
- AGQSpqLkc0qViRgs/9XAjKKSpPI4YeY1FfYMAUg==
-X-Google-Smtp-Source: AGHT+IHETg+DW7wEI7VIwC7RZgtjWqUJ1WfHhbJqO41hWKlSkU9VDL75XLotl9HvCb3CcX5971nuZYoChWpujPSYYXU=
-X-Received: by 2002:ac2:5f49:0:b0:513:ba98:36a with SMTP id
- 9-20020ac25f49000000b00513ba98036amr10290422lfz.10.1712144984208; Wed, 03 Apr
- 2024 04:49:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rrzax-00022J-Jh
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:19:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rrzap-0002S5-Vw
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:19:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712146789;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xAQsJaYi83IqcOYBrJOA296+KbKH9Ogbqg6xRBFzX/Y=;
+ b=SSt3tBE8hsXaPfigkkujIz6keFtVqzvhfuPqeVnIzXscFZNtmiMkdxPyHvFWeB+WLmYuuS
+ Z0JzVsKMy11vDZxxFy+//VuS6Gwd3td+R12eFgOD+s/yf6G+H8YY2vLU1twjiWX6e34ZsT
+ hFnPvr722tMSQ/EmqzwI/SOkWgNh6rY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-0M3J0d8KM7-mwt50gr0TgA-1; Wed,
+ 03 Apr 2024 08:19:42 -0400
+X-MC-Unique: 0M3J0d8KM7-mwt50gr0TgA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 10B7F385DF2F;
+ Wed,  3 Apr 2024 12:19:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C58C5C01601;
+ Wed,  3 Apr 2024 12:19:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AFEE421E6811; Wed,  3 Apr 2024 14:19:36 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Justinien Bouron <justinien.bouron@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9?=
+ <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Eric Blake
+ <eblake@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  =?utf-8?Q?Marc-?=
+ =?utf-8?Q?Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] input-linux: Add option to not grab a device upon
+ guest startup
+In-Reply-To: <20240403055002.890760-1-justinien.bouron@gmail.com> (Justinien
+ Bouron's message of "Tue, 2 Apr 2024 22:50:02 -0700")
+References: <20240403055002.890760-1-justinien.bouron@gmail.com>
+Date: Wed, 03 Apr 2024 14:19:36 +0200
+Message-ID: <87edbmk59j.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
- <20240330103128.3185962-19-ruanjinjie@huawei.com>
- <CAFEAcA_WY04voee07n6Ph606xqy=QvTkYdMyqYf5LMHUS5GcDw@mail.gmail.com>
- <6ff19301-8791-384e-bd40-5f58058f4234@huawei.com>
-In-Reply-To: <6ff19301-8791-384e-bd40-5f58058f4234@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 3 Apr 2024 12:49:32 +0100
-Message-ID: <CAFEAcA_Y_0SSaX_mSAr5eZvuU2fxPUWMow-0=4Bb-+2ofY2pEA@mail.gmail.com>
-Subject: Re: [PATCH v11 18/23] hw/intc/arm_gicv3: Handle icv_nmiar1_read() for
- icc_nmiar1_read()
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x131.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,33 +87,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Apr 2024 at 04:16, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
-> On 2024/4/3 0:12, Peter Maydell wrote:
-> >> @@ -776,7 +811,11 @@ static uint64_t icv_iar_read(CPUARMState *env, const ARMCPRegInfo *ri)
-> >>          if (thisgrp == grp && icv_hppi_can_preempt(cs, lr)) {
-> >>              intid = ich_lr_vintid(lr);
-> >>              if (!gicv3_intid_is_special(intid)) {
-> >> -                icv_activate_irq(cs, idx, grp);
-> >> +                if (!(lr & ICH_LR_EL2_NMI)) {
-> >
-> > This is missing checks on both whether the GIC has NMI support and
-> > on whether the SCTLR NMI bit is set (compare pseudocode
-> > VirtualReadIAR1()). I suggest defining a
-> >
-> >         bool nmi = cs->gic->nmi_support &&
-> >             (env->cp15.sctlr_el[arm_current_el(env)] & SCTLR_NMI) &&
-> >             (lr & ICH_LR_EL2_NMI);
+Justinien Bouron <justinien.bouron@gmail.com> writes:
+
+> Depending on your use-case, it might be inconvenient to have qemu grab
+> the input device from the host immediately upon starting the guest.
 >
-> The nmi_support check is redundant, as if FEAT_GICv3_NMI is unsupported,
-> the ICH_LR_EL2.NMI is RES0, so if ICH_LR_EL2.NMI is 1, FEAT_GICv3_NMI
-> has been surely realized.
+> Added a new bool option to input-linux: grab-on-startup. If true, the
+> device is grabbed as soon as the guest is started, otherwise it is not
+> grabbed until the toggle combination is entered. To avoid breaking
+> existing setups, the default value of grab-on-startup is true, i.e. same
+> behaviour as before this change.
+>
+> Signed-off-by: Justinien Bouron <justinien.bouron@gmail.com>
 
-As far as I can see you haven't changed ich_lr_write() to enforce
-that, though, so the guest can write 1 to the NMI bit even if the
-GIC doesn't support FEAT_GICv3_NMI. If you want to skip checking
-nmi_support here you need to enforce that the NMI bit in the LR
-is 0 in ich_lr_write().
+Again, QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
-thanks
--- PMM
 
