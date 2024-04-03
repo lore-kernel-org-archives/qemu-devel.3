@@ -4,82 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9988C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 04:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C2E7C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 05:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrsCb-0002Vf-K0; Wed, 03 Apr 2024 00:26:21 -0400
+	id 1rrstP-0000Hg-RA; Wed, 03 Apr 2024 01:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rrsCZ-0002VP-3V
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 00:26:19 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rrsCX-0000BH-Cx
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 00:26:18 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e6b729669bso5070823b3a.3
- for <qemu-devel@nongnu.org>; Tue, 02 Apr 2024 21:26:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712118375; x=1712723175; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RyXxfuKLKWQwWMCsdFmuwlvd61I3gTDKkeA2dhHjJgI=;
- b=YKs3lJ63wQ1qmRV7eQxPvqHnPkSVbOCYAy6FT56COj4rXXwoT5r/GKsslegjvcdsa3
- gsJwXm+fCiHGfpiLbRuDYPRAt+t7Z62dLP3xSwSVFJU4PG4wnCFwchf3nlpNLIpuyw2o
- obXMhMiUYtJUO2lHRozsGbQ+0K48jxRXrf0uP855ZxynAUqvDywIHTOrhEIZ+cQevZy1
- 9WGGpZ5vpQMteiyG66QPXTZ1QkNW/Tp6yrsNSVK/Of8vCzBdyrYcmt7rsDa3MFdFUWh/
- kThaPD83FgMtr90MQuD2IlW0mAcq2Ko+R07I+LoYNZvr5lICptCT7ZeIP+vy/YyYls84
- px1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712118375; x=1712723175;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=RyXxfuKLKWQwWMCsdFmuwlvd61I3gTDKkeA2dhHjJgI=;
- b=c+eetJJbbOmIyIu8rheXhyFHpEH2YVCb1eQD/Pm3whVl0jcrfYCZmm/BCpG8HrvnR+
- xSXdCOIIiYbCKEYVuj+m15rd+NjVk/+WvgClFW/FGKtO8cCnh3af6A5Nnzmb08GcKH4g
- ft726GOgQgBalp4vIgR2wPM80P6Dzn+Bwx5goLFXYnOYshGAEsmPYKrukUEjt3e3Spqu
- 07trCTPFnVWHiOfkMTyyuTxKLNqeN7IUlgXzqbmy6KPgNDYLhQ+97Ccu2I34LBSXnc0l
- lhMx3jbkkylB+kO9EdUTjTPT437MNl5bfFBHncKciiOlWI+IgweDyKSYLnbVqRvsXjVm
- pNdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU+lIo3EXDkR8pvEVNBrzlqxM8QzQFONAMqV6lTLhi7o84ZuSbMUr4QRNKj0Ey+woQkNPO5Xfe1q3x2pv13Whsa7+5V5vw=
-X-Gm-Message-State: AOJu0Yxz2oH/BuJUeY5FDuT13pvnl0JQc2JqCwnbmRRixmVm5RDo/ZLs
- LcwrHGvH6/YGEiEEe6i3GAP9LVAFpVOqqCM3YT/M5q73FUFMBuYB
-X-Google-Smtp-Source: AGHT+IGRTIij21KL025AmjtilKTZR7FDSCBx36pBTvkrz3ZvOGtZyb6SRqEGACx4WP2R+J3C2uMxxg==
-X-Received: by 2002:a05:6a21:329b:b0:1a5:6e7a:a757 with SMTP id
- yt27-20020a056a21329b00b001a56e7aa757mr17426344pzb.4.1712118374804; 
- Tue, 02 Apr 2024 21:26:14 -0700 (PDT)
-Received: from localhost (220-245-239-107.tpgi.com.au. [220.245.239.107])
- by smtp.gmail.com with ESMTPSA id
- k17-20020a170902c41100b001def175bbbfsm12052700plk.251.2024.04.02.21.26.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Apr 2024 21:26:14 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 03 Apr 2024 14:26:09 +1000
-Message-Id: <D0A7B4JIC83S.11ZQB4F1M3TM3@gmail.com>
-Cc: "Mahesh J Salgaonkar" <mahesh@linux.ibm.com>, "Madhavan Srinivasan"
- <maddy@linux.ibm.com>
-Subject: Re: [PATCH 0/2] P11 support for QEMU
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Aditya Gupta" <adityag@linux.ibm.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240401055503.1880587-1-adityag@linux.ibm.com>
-In-Reply-To: <20240401055503.1880587-1-adityag@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rrstN-0000Gm-KB; Wed, 03 Apr 2024 01:10:33 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rrstJ-0003YV-UO; Wed, 03 Apr 2024 01:10:33 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 882435B482;
+ Wed,  3 Apr 2024 08:12:01 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E0DC4AA359;
+ Wed,  3 Apr 2024 08:10:16 +0300 (MSK)
+Message-ID: <a75271ae-57e0-4f59-9a96-1696bdcd3566@tls.msk.ru>
+Date: Wed, 3 Apr 2024 08:10:16 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio-net: fix qemu set used ring flag even vhost started
+To: Yajun Wu <yajunw@nvidia.com>, qemu-devel@nongnu.org, mst@redhat.com,
+ jasowang@redhat.com, maxime.coquelin@redhat.com
+Cc: Jiri Pirko <jiri@nvidia.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20240402045109.97729-1-yajunw@nvidia.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240402045109.97729-1-yajunw@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,37 +84,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon Apr 1, 2024 at 3:55 PM AEST, Aditya Gupta wrote:
-> This patch series adds support for Power11 pseries and powernv machine ta=
-rgets
-> to emulate VMs running on Power11.
->
-> Most of the P11 support code has been taken from P10 code in QEMU.
-> And has been tested in pseries, powernv, with and without compat mode.
+02.04.2024 07:51, Yajun Wu:
+> When vhost-user or vhost-kernel is handling virtio net datapath, qemu
+> should not touch used ring.
+> 
+> But with vhost-user socket reconnect scenario, in a very rare case (has
+> pending kick event). VRING_USED_F_NO_NOTIFY is set by qemu in
+> following code path:
+...
+> This issue causes guest kernel stop kicking device and traffic stop.
+> 
+> Add vhost_started check in virtio_net_handle_tx_bh to fix this wrong
+> VRING_USED_F_NO_NOTIFY set.
 
-Thanks for this.
-
-I wonder if we could try to get rid of some of the code / structure
-duplication for creating a new machine.
-
-I don't want to add a bunch of CPP generator macros or squash too much
-code together with lots of flags, but maybe there's something we can
-do. Since this is a very small change from P10, it might be a good time
-to work out some refactoring.
-
-Even a hw/ppc/pnv_powernv10.c and hw/ppc/pnv_powernv11.c, and
-target/ppc/cpu_init_power10.c and cpu_init_power11.c might be an
-improvement because you could easily diff them (hopefully we could
-do better than that, but just a thought).
+This seems to be qemu-stable material, even if the case when the issue
+happens is "very rare", -- is it not?
 
 Thanks,
-Nick
 
+/mjt
 
->
-> Git Tree for Testing: https://github.com/adi-g15-ibm/qemu/tree/p11
->
-> Aditya Gupta (2):
->   ppc: pseries: add P11 cpu type
->   ppc: powernv11: add base support for P11 PowerNV
+> Signed-off-by: Yajun Wu <yajunw@nvidia.com>
+> Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+> ---
+>   hw/net/virtio-net.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index a6ff000cd9..8035e01fdf 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -2865,6 +2865,10 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
+>       VirtIONet *n = VIRTIO_NET(vdev);
+>       VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
+>   
+> +    if (n->vhost_started) {
+> +        return;
+> +    }
+> +
+>       if (unlikely((n->status & VIRTIO_NET_S_LINK_UP) == 0)) {
+>           virtio_net_drop_tx_queue_data(vdev, vq);
+>           return;
+
 
