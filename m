@@ -4,69 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2CE1CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 17:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22202CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 17:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rs42S-00044g-5R; Wed, 03 Apr 2024 13:04:40 -0400
+	id 1rs4lR-0003iJ-Ki; Wed, 03 Apr 2024 13:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rs42P-00044A-EU
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 13:04:37 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rs4lP-0003hw-KW
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 13:51:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rs42L-0004mB-UB
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 13:04:37 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V8rfg1yVsz6D8Yh;
- Thu,  4 Apr 2024 01:03:07 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 1B8041400D7;
- Thu,  4 Apr 2024 01:04:27 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 3 Apr
- 2024 18:04:26 +0100
-Date: Wed, 3 Apr 2024 18:04:25 +0100
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-CC: "Huang, Ying" <ying.huang@intel.com>, Gregory Price
- <gourry.memverge@gmail.com>, <aneesh.kumar@linux.ibm.com>, <mhocko@suse.com>, 
- <tj@kernel.org>, <john@jagalactic.com>, Eishan Mirakhur
- <emirakhur@micron.com>, Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
- Ravis OpenSrc <Ravis.OpenSrc@micron.com>, Alistair Popple
- <apopple@nvidia.com>, Srinivasulu Thanneeru <sthanneeru@micron.com>, SeongJae
- Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Vishal Verma
- <vishal.l.verma@intel.com>, "Dave Jiang" <dave.jiang@intel.com>, Andrew
- Morton <akpm@linux-foundation.org>, <nvdimm@lists.linux.dev>,
- <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-mm@kvack.org>, "Ho-Ren (Jack) Chuang" <horenc@vt.edu>, "Ho-Ren (Jack)
- Chuang" <horenchuang@gmail.com>, <qemu-devel@nongnu.org>, Hao Xiang
- <hao.xiang@bytedance.com>
-Subject: Re: [PATCH v10 2/2] memory tier: create CPUless memory tiers after
- obtaining HMAT info
-Message-ID: <20240403180425.00003be0@Huawei.com>
-In-Reply-To: <20240402001739.2521623-3-horenchuang@bytedance.com>
-References: <20240402001739.2521623-1-horenchuang@bytedance.com>
- <20240402001739.2521623-3-horenchuang@bytedance.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rs4lL-0000EO-Bw
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 13:51:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712166662;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kNdYv6LHFMI0Ma9P6nUltSmR2ARa0gJCL1olN++mmLw=;
+ b=NfsMKjg/OuCYCJc3h2eoVZYel9GmeYJHoSTr+eAttMRnL15qyuANoIpeQBat+xZiwmNoeu
+ bVJK11GsAAWaaPTXaABBpC0+5lC3UClZPU9Fk0B3sE3aNqFVEDUBlicd0M4KspzNVg5xXh
+ /aBTKYuuEMZVTZlIsmu6Fs/MXJsoLZA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-O3GPhXzXMquXt5sbLzqoZQ-1; Wed,
+ 03 Apr 2024 13:50:58 -0400
+X-MC-Unique: O3GPhXzXMquXt5sbLzqoZQ-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5F0FD3821343;
+ Wed,  3 Apr 2024 17:50:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.181])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8753E492BCA;
+ Wed,  3 Apr 2024 17:50:51 +0000 (UTC)
+Date: Wed, 3 Apr 2024 12:50:45 -0500
+From: Eric Blake <eblake@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ qemu-devel@nongnu.org, Hyman Huang <yong.huang@smartx.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-block@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
+ Klaus Jensen <its@irrelevant.dk>, 
+ Fam Zheng <fam@euphon.net>, Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Bin Meng <bin.meng@windriver.com>, Hanna Reitz <hreitz@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, 
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jesper Devantier <foss@defmacro.it>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Keith Busch <kbusch@kernel.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH 06/19] block/stream: fix -Werror=maybe-uninitialized
+ false-positives
+Message-ID: <7qztxyz6yrjir6odtguvfxnzmvpqfevxd3lnhmjldlk4br6cqc@iens4se43kj5>
+References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
+ <20240328102052.3499331-7-marcandre.lureau@redhat.com>
+ <65d791e4-6c68-4b6d-b181-bc3886745ce3@yandex-team.ru>
+ <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
+ <0d7344c2-b146-44cf-a911-21fa5e556665@yandex-team.ru>
+ <mzls26xlctld3fd5fl3h5wdrbh6hb5i3xcakeslwzny5tva7ch@w6wnruxtefkl>
+ <3064bc69-3d8e-4d7c-b640-a7ab703f9575@yandex-team.ru>
+ <CAJ+F1CLG+7BT8wLFmmJ0t8NvMu2a2Vp1+p6gUuBTch9haYP8LQ@mail.gmail.com>
+ <ba76742d-4fa1-4120-98ad-944845a37ad6@yandex-team.ru>
+ <CAJ+F1CKAWpeOKe=8YM38_H6xP5cvDJ0RQXcSvm9LUMLpyo4ndw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1CKAWpeOKe=8YM38_H6xP5cvDJ0RQXcSvm9LUMLpyo4ndw@mail.gmail.com>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,256 +104,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few minor comments inline.
+On Wed, Apr 03, 2024 at 01:24:11PM +0400, Marc-André Lureau wrote:
+> > > Unfortunately, it doesn't work in all cases. It seems to have issues
+> > > with some guards:
+> > > ../block/stream.c: In function ‘stream_run’:
+> > > ../block/stream.c:216:12: error: ‘ret’ may be used uninitialized
+> > > [-Werror=maybe-uninitialized]
+> > >    216 |         if (ret < 0) {
+> > >
 
-> diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
-> index a44c03c2ba3a..16769552a338 100644
-> --- a/include/linux/memory-tiers.h
-> +++ b/include/linux/memory-tiers.h
-> @@ -140,12 +140,13 @@ static inline int mt_perf_to_adistance(struct access_coordinate *perf, int *adis
->  	return -EIO;
->  }
->  
-> -struct memory_dev_type *mt_find_alloc_memory_type(int adist, struct list_head *memory_types)
-> +static inline struct memory_dev_type *mt_find_alloc_memory_type(int adist,
-> +					struct list_head *memory_types)
->  {
->  	return NULL;
->  }
->  
-> -void mt_put_memory_types(struct list_head *memory_types)
-> +static inline void mt_put_memory_types(struct list_head *memory_types)
->  {
-Why in this patch and not previous one?
->  
->  }
-> diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-> index 974af10cfdd8..44fa10980d37 100644
-> --- a/mm/memory-tiers.c
-> +++ b/mm/memory-tiers.c
-> @@ -36,6 +36,11 @@ struct node_memory_type_map {
->  
->  static DEFINE_MUTEX(memory_tier_lock);
->  static LIST_HEAD(memory_tiers);
-> +/*
-> + * The list is used to store all memory types that are not created
-> + * by a device driver.
-> + */
-> +static LIST_HEAD(default_memory_types);
->  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
->  struct memory_dev_type *default_dram_type;
->  
-> @@ -108,6 +113,8 @@ static struct demotion_nodes *node_demotion __read_mostly;
->  
->  static BLOCKING_NOTIFIER_HEAD(mt_adistance_algorithms);
->  
-> +/* The lock is used to protect `default_dram_perf*` info and nid. */
-> +static DEFINE_MUTEX(default_dram_perf_lock);
->  static bool default_dram_perf_error;
->  static struct access_coordinate default_dram_perf;
->  static int default_dram_perf_ref_nid = NUMA_NO_NODE;
-> @@ -505,7 +512,8 @@ static inline void __init_node_memory_type(int node, struct memory_dev_type *mem
->  static struct memory_tier *set_node_memory_tier(int node)
->  {
->  	struct memory_tier *memtier;
-> -	struct memory_dev_type *memtype;
-> +	struct memory_dev_type *mtype = default_dram_type;
+That one looks like:
 
-Does the rename add anything major to the patch?
-If not I'd leave it alone to reduce the churn and give
-a more readable patch.  If it is worth doing perhaps
-a precursor patch?
+int ret;
+WITH_GRAPH_RDLOCK_GUARD() {
+  ret = ...;
+}
+if (copy) {
+  ret = ...;
+}
+if (ret < 0)
 
-> +	int adist = MEMTIER_ADISTANCE_DRAM;
->  	pg_data_t *pgdat = NODE_DATA(node);
->  
->  
-> @@ -514,11 +522,20 @@ static struct memory_tier *set_node_memory_tier(int node)
->  	if (!node_state(node, N_MEMORY))
->  		return ERR_PTR(-EINVAL);
->  
-> -	__init_node_memory_type(node, default_dram_type);
-> +	mt_calc_adistance(node, &adist);
-> +	if (node_memory_types[node].memtype == NULL) {
-> +		mtype = mt_find_alloc_memory_type(adist, &default_memory_types);
-> +		if (IS_ERR(mtype)) {
-> +			mtype = default_dram_type;
-> +			pr_info("Failed to allocate a memory type. Fall back.\n");
-> +		}
-> +	}
-> +
-> +	__init_node_memory_type(node, mtype);
->  
-> -	memtype = node_memory_types[node].memtype;
-> -	node_set(node, memtype->nodes);
-> -	memtier = find_create_memory_tier(memtype);
-> +	mtype = node_memory_types[node].memtype;
-> +	node_set(node, mtype->nodes);
-> +	memtier = find_create_memory_tier(mtype);
->  	if (!IS_ERR(memtier))
->  		rcu_assign_pointer(pgdat->memtier, memtier);
->  	return memtier;
-> @@ -655,6 +672,33 @@ void mt_put_memory_types(struct list_head *memory_types)
->  }
->  EXPORT_SYMBOL_GPL(mt_put_memory_types);
->  
-> +/*
-> + * This is invoked via `late_initcall()` to initialize memory tiers for
-> + * CPU-less memory nodes after driver initialization, which is
-> + * expected to provide `adistance` algorithms.
-> + */
-> +static int __init memory_tier_late_init(void)
-> +{
-> +	int nid;
-> +
-> +	mutex_lock(&memory_tier_lock);
-> +	for_each_node_state(nid, N_MEMORY)
-> +		if (node_memory_types[nid].memtype == NULL)
-> +			/*
-> +			 * Some device drivers may have initialized memory tiers
-> +			 * between `memory_tier_init()` and `memory_tier_late_init()`,
-> +			 * potentially bringing online memory nodes and
-> +			 * configuring memory tiers. Exclude them here.
-> +			 */
+I suspect the compiler is seeing the uncertainty possible from the
+second conditional, and letting it take priority over the certainty
+that the tweaked macro provided for the first conditional.
 
-Does the comment refer to this path, or to ones where memtype is set?
+> > >
+> >
+> > So, updated macro helps in some cases, but doesn't help here? Intersting, why.
+> >
+> > > What should we do? change the macros + cherry-pick the missing
+> > > false-positives, or keep this series as is?
 
-> +			set_node_memory_tier(nid);
-
-Given the large comment I would add {} to help with readability.
-You could flip the logic to reduce indent
-	for_each_node_state(nid, N_MEMORY) {
-		if (node_memory_types[nid].memtype)
-			continue;
-		/*
-		 * Some device drivers may have initialized memory tiers
-		 * between `memory_tier_init()` and `memory_tier_late_init()`,
-		 * potentially bringing online memory nodes and
-		 * configuring memory tiers. Exclude them here.
-		 */
-		set_node_memory_tier(nid);
+An uglier macro, with sufficient comments as to why it is ugly (in
+order to let us have fewer false positives where we have to add
+initializers) may be less churn in the code base, but I'm not
+necessarily sold on the ugly macro.  Let's see if anyone else
+expresses an opinion.
 
 
-> +
-> +	establish_demotion_targets();
-> +	mutex_unlock(&memory_tier_lock);
-> +
-> +	return 0;
-> +}
-> +late_initcall(memory_tier_late_init);
-> +
->  static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
->  {
->  	pr_info(
-> @@ -668,7 +712,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->  {
->  	int rc = 0;
->  
-> -	mutex_lock(&memory_tier_lock);
-> +	mutex_lock(&default_dram_perf_lock);
+> > >
+> > >
+> >
+> > I think marco + missing is better. No reason to add dead-initializations in cases where new macros helps.
+> 
+> Ok
+> 
+> > Still, would be good to understand, what's the difference, why it help on some cases and not help in another.
+> 
+> I don't know, it's like if the analyzer was lazy for this particular
+> case, although there is nothing much different from other usages.
+> 
+> If I replace:
+> for (... *var2 = (void *)true; var2;
+> with:
+> for (... *var2 = (void *)true; var2 || true;
+> 
+> then it doesn't warn..
 
-As below, this is a classic case where guard() will help readability.
-
->  	if (default_dram_perf_error) {
->  		rc = -EIO;
->  		goto out;
-> @@ -716,23 +760,30 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->  	}
->  
->  out:
-> -	mutex_unlock(&memory_tier_lock);
-> +	mutex_unlock(&default_dram_perf_lock);
->  	return rc;
->  }
->  
->  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
->  {
-> -	if (default_dram_perf_error)
-> -		return -EIO;
-> +	int rc = 0;
-
-Looks like rc is set in all paths that reach where it isused.
-
->  
-> -	if (default_dram_perf_ref_nid == NUMA_NO_NODE)
-> -		return -ENOENT;
-> +	mutex_lock(&default_dram_perf_lock);
-
-This would benefit quite a lot from
-guard(mutex)(&default_dram_perf_lock);
-and direct returns throughout.
+but it also doesn't work.  We want the body to execute exactly once,
+not infloop.
 
 
-> +	if (default_dram_perf_error) {
-> +		rc = -EIO;
-> +		goto out;
-> +	}
->  
->  	if (perf->read_latency + perf->write_latency == 0 ||
-> -	    perf->read_bandwidth + perf->write_bandwidth == 0)
-> -		return -EINVAL;
-> +	    perf->read_bandwidth + perf->write_bandwidth == 0) {
-> +		rc = -EINVAL;
-> +		goto out;
-> +	}
->  
-> -	mutex_lock(&memory_tier_lock);
-> +	if (default_dram_perf_ref_nid == NUMA_NO_NODE) {
-> +		rc = -ENOENT;
-> +		goto out;
-> +	}
->  	/*
->  	 * The abstract distance of a memory node is in direct proportion to
->  	 * its memory latency (read + write) and inversely proportional to its
-> @@ -745,9 +796,10 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
->  		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
->  		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
->  		(perf->read_bandwidth + perf->write_bandwidth);
-> -	mutex_unlock(&memory_tier_lock);
->  
-> -	return 0;
-> +out:
-> +	mutex_unlock(&default_dram_perf_lock);
-> +	return rc;
->  }
->  EXPORT_SYMBOL_GPL(mt_perf_to_adistance);
->  
-> @@ -858,7 +910,8 @@ static int __init memory_tier_init(void)
->  	 * For now we can have 4 faster memory tiers with smaller adistance
->  	 * than default DRAM tier.
->  	 */
-> -	default_dram_type = alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
-> +	default_dram_type = mt_find_alloc_memory_type(MEMTIER_ADISTANCE_DRAM,
-> +									&default_memory_types);
+> 
+> Interestingly as well, if I change:
+>     for (... *var2 = (void *)true; var2; var2 = NULL)
+> for:
+>     for (... *var2 = GML_OBJ_(); var2; var2 = NULL)
+> 
+> GML_OBJ_() simply being &(GraphLockable) { }), an empty compound
+> literal, then it doesn't work, in all usages.
 
-Unusual indenting.  Align with just after (
+So the compiler is not figuring out that the compound literal is
+sufficient for an unconditional one time through the for loop body.
 
->  	if (IS_ERR(default_dram_type))
->  		panic("%s() failed to allocate default DRAM tier\n", __func__);
->  
-> @@ -868,6 +921,14 @@ static int __init memory_tier_init(void)
->  	 * types assigned.
->  	 */
->  	for_each_node_state(node, N_MEMORY) {
-> +		if (!node_state(node, N_CPU))
-> +			/*
-> +			 * Defer memory tier initialization on CPUless numa nodes.
-> +			 * These will be initialized after firmware and devices are
+What's worse, different compiler versions will change behavior over
+time.  Making the code ugly to pacify a particular compiler, when that
+compiler might improve in the future, is a form of chasing windmills.
 
-I think this wraps at just over 80 chars.  Seems silly to wrap so tightly and not
-quite fit under 80. (this is about 83 chars.
+> 
+> All in all, I am not sure the trick of using var2 is really reliable either.
 
-> +			 * initialized.
-> +			 */
-> +			continue;
-> +
->  		memtier = set_node_memory_tier(node);
->  		if (IS_ERR(memtier))
->  			/*
+And that's my biggest argument for not making the macro not more
+complex than it already is.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
