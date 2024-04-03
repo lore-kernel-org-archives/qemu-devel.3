@@ -4,103 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F59CD128A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 033F6CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rryXs-0001s3-N4; Wed, 03 Apr 2024 07:12:44 -0400
+	id 1rryXc-0000UK-Fm; Wed, 03 Apr 2024 07:12:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rryXp-0001iJ-Mp
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:41 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rryXR-0008Q0-4W
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:20 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rryXd-0007Rf-Ng
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:41 -0400
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E52B65CB83;
- Wed,  3 Apr 2024 11:12:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1712142744; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iMCdxyin7kO1xmDr2rCFckdFmb9WrVUeNAx/zK7ScS8=;
- b=ilg/1hCT5O05/0LMwxsTIE6BUAgeCzbI58/heZElAGx3Ng58OhOPtoVy2bS+6D9vFsl7si
- KFbzOPU2CGfmSU9fCOd4N0uQYGH2KNXoXtdsX3ONqlU+WNKw12aATcmXypGh99weXaL1Uw
- GLqyiFYImv3xYuyV8BtfmnLPWfv6CvI=
-Authentication-Results: smtp-out2.suse.de;
-	dkim=none
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id EB8C413357;
- Wed,  3 Apr 2024 11:12:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap2.dmz-prg2.suse.org with ESMTPSA id mLzENpc5DWayHQAAn2gu4w
- (envelope-from <roy.hopkins@suse.com>); Wed, 03 Apr 2024 11:12:23 +0000
-From: Roy Hopkins <roy.hopkins@suse.com>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v2 02/10] backends/confidential-guest-support: Add IGVM file
- parameter
-Date: Wed,  3 Apr 2024 12:11:33 +0100
-Message-ID: <af70dfcfeddf36d860ff28765ee30bdde2b2c110.1712141833.git.roy.hopkins@suse.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1712141833.git.roy.hopkins@suse.com>
-References: <cover.1712141833.git.roy.hopkins@suse.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rryXP-0007Pw-Hd
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:16 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e740fff1d8so4787493b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:12:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142734; x=1712747534;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=nOqObjFvo/9oAC/9p+G1KW7r4O+qd7IGNrZnts75bB0=;
+ b=FMzqlDRjmkUMhhYesMDAApxfpfXcUzGBKu/g+ctD4GIoKO97ryvdetX+v0c5v5tkra
+ 20Nl2VQGRgPEuCyF0fZ/uHkoJuPVLYJiibkyq/nzUQvlehBXlbGpBJ1wo++2M7cx/SSL
+ 2BqTsEN0D+qAb/KBxCvyjS7zrjHyQWLfJ7/xKi4G6S1qovdRJ7HPxhge7ZVktiywKDtx
+ OpeYFvn5hF0V9+FBjBMcMXKhlGiZQCCLGhtvXTUSvvHLLdt4Ia1EQRiwwZOUJxntlkXw
+ uqfjweOUAMZxikrCkITOHq0bDM2McTwRKgkaSpm7vTZzmR9HtEsUDJHSP8RCAZQQ8SJc
+ 5MeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712142734; x=1712747534;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nOqObjFvo/9oAC/9p+G1KW7r4O+qd7IGNrZnts75bB0=;
+ b=xDS/ob8LkZx51+FX28WYeexZ6eKMnfeydVV+4XxIjc/ENoGGNiYg2sle18CS/eZ/nt
+ atltXU0QfQlWE+q1jETeWM03xQQwOtFwREBB4h66HkNICvQv1jp8rgFTm9hzqpVIjGaD
+ k7BiYCECT7nFtkbU1W7nA0xUrnl3vYeiSnOe5kjK+gPXPvNjBY+QhWH4IgI6f1lHN2tn
+ 0vFFhM4pCyP6GU5ZkfQFT+iE4X4nsxOof4YQJNWFsZIkdoUWt+twSH+Hx8L9NpPFsuNb
+ I2/7Nd1yNlzc8AqP7GjQ6Cu39ikp9WHfTP+/KaVzJVLGL7+Qc5+H8CttxhYwAhqgd7ZG
+ ye3Q==
+X-Gm-Message-State: AOJu0Yy8++PNem21vfJ4avITpcxcusn4nbCJb+hd5u3n7GPLu9kju3Yt
+ GrNGXIIEX7LDSMUhEux1fDEc61vChafJgHW2wqcP26I9RAMwZMjtnzvaPocCMFE=
+X-Google-Smtp-Source: AGHT+IG5zRHgw+6UH+XKv2HDkk9dkN/7eAFt7aPnG4OUy7YqIcOqfqNIAIoUqp/xbxmXvbMmXm6cDQ==
+X-Received: by 2002:a05:6a20:959b:b0:1a3:c2dd:f1cd with SMTP id
+ iu27-20020a056a20959b00b001a3c2ddf1cdmr15814183pzb.56.1712142733978; 
+ Wed, 03 Apr 2024 04:12:13 -0700 (PDT)
+Received: from localhost ([157.82.200.213])
+ by smtp.gmail.com with UTF8SMTPSA id
+ fi13-20020a056a00398d00b006ecca2f2a32sm2359481pfb.168.2024.04.03.04.12.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Apr 2024 04:12:13 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Wed, 03 Apr 2024 20:11:07 +0900
+Subject: [PATCH v9 19/20] ebpf: Refactor tun_rss_steering_prog()
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.31 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.993];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.com:s=susede1]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_TWELVE(0.00)[19]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:98:from]; 
- FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:98:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,imap2.dmz-prg2.suse.org:rdns,imap2.dmz-prg2.suse.org:helo];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- R_DKIM_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TAGGED_RCPT(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spamd-Bar: /
-X-Rspamd-Queue-Id: E52B65CB83
-Received-SPF: pass client-ip=195.135.223.131;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240403-rss-v9-19-c6d87e69d38b@daynix.com>
+References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
+In-Reply-To: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
+To: Jason Wang <jasowang@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev
+Received-SPF: none client-ip=2607:f8b0:4864:20::436;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,137 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to add support for parsing IGVM files for secure virtual
-machines, a the path to an IGVM file needs to be specified as
-part of the guest configuration. It makes sense to add this to
-the ConfidentialGuestSupport object as this is common to all secure
-virtual machines that potentially could support IGVM based
-configuration.
+This saves branches and makes later BPF program changes easier.
 
-This patch allows the filename to be configured via the QEMU
-object model in preparation for subsequent patches that will read and
-parse the IGVM file.
-
-Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- backends/confidential-guest-support.c     | 21 +++++++++++++++++++++
- include/exec/confidential-guest-support.h |  9 +++++++++
- qapi/qom.json                             | 13 +++++++++++++
- qemu-options.hx                           |  8 +++++++-
- 4 files changed, 50 insertions(+), 1 deletion(-)
+ tools/ebpf/rss.bpf.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
-index 052fde8db0..da436fb736 100644
---- a/backends/confidential-guest-support.c
-+++ b/backends/confidential-guest-support.c
-@@ -20,8 +20,29 @@ OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
-                             CONFIDENTIAL_GUEST_SUPPORT,
-                             OBJECT)
+diff --git a/tools/ebpf/rss.bpf.c b/tools/ebpf/rss.bpf.c
+index 77434435ac15..c989cb3cd82c 100644
+--- a/tools/ebpf/rss.bpf.c
++++ b/tools/ebpf/rss.bpf.c
+@@ -547,27 +547,23 @@ int tun_rss_steering_prog(struct __sk_buff *skb)
+     config = bpf_map_lookup_elem(&tap_rss_map_configurations, &key);
+     toe = bpf_map_lookup_elem(&tap_rss_map_toeplitz_key, &key);
  
-+#if defined(CONFIG_IGVM)
-+static char *get_igvm(Object *obj, Error **errp)
-+{
-+    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
-+    return g_strdup(cgs->igvm_filename);
-+}
-+
-+static void set_igvm(Object *obj, const char *value, Error **errp)
-+{
-+    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
-+    g_free(cgs->igvm_filename);
-+    cgs->igvm_filename = g_strdup(value);
-+}
-+#endif
-+
- static void confidential_guest_support_class_init(ObjectClass *oc, void *data)
- {
-+#if defined(CONFIG_IGVM)
-+    object_class_property_add_str(oc, "igvm-file",
-+        get_igvm, set_igvm);
-+    object_class_property_set_description(oc, "igvm-file",
-+        "Set the IGVM filename to use");
-+#endif
+-    if (config && toe) {
+-        if (!config->redirect) {
+-            return config->default_queue;
+-        }
++    if (!config || !toe) {
++        return 0;
++    }
+ 
+-        if (calculate_rss_hash(skb, config, toe, &hash)) {
+-            __u32 table_idx = hash % config->indirections_len;
+-            __u16 *queue = 0;
++    if (config->redirect && calculate_rss_hash(skb, config, toe, &hash)) {
++        __u32 table_idx = hash % config->indirections_len;
++        __u16 *queue = 0;
+ 
+-            queue = bpf_map_lookup_elem(&tap_rss_map_indirection_table,
+-                                        &table_idx);
++        queue = bpf_map_lookup_elem(&tap_rss_map_indirection_table,
++                                    &table_idx);
+ 
+-            if (queue) {
+-                return *queue;
+-            }
++        if (queue) {
++            return *queue;
+         }
+-
+-        return config->default_queue;
+     }
+ 
+-    return 0;
++    return config->default_queue;
  }
  
- static void confidential_guest_support_init(Object *obj)
-diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
-index ba2dd4b5df..ec74da8877 100644
---- a/include/exec/confidential-guest-support.h
-+++ b/include/exec/confidential-guest-support.h
-@@ -51,6 +51,15 @@ struct ConfidentialGuestSupport {
-      * so 'ready' is not set, we'll abort.
-      */
-     bool ready;
-+
-+#if defined(CONFIG_IGVM)
-+    /*
-+     * igvm_filename: Optional filename that specifies a file that contains
-+     *                the configuration of the guest in Independent Guest
-+     *                Virtual Machine (IGVM) format.
-+     */
-+    char *igvm_filename;
-+#endif
- };
- 
- typedef struct ConfidentialGuestSupportClass {
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 85e6b4f84a..5935e1b7a6 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -874,6 +874,18 @@
-   'base': 'RngProperties',
-   'data': { '*filename': 'str' } }
- 
-+##
-+# @ConfidentialGuestProperties:
-+#
-+# Properties common to objects that are derivatives of confidential-guest-support.
-+#
-+# @igvm-file: IGVM file to use to configure guest (default: none)
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'ConfidentialGuestProperties',
-+  'data': { '*igvm-file': 'str' } }
-+
- ##
- # @SevGuestProperties:
- #
-@@ -901,6 +913,7 @@
- # Since: 2.12
- ##
- { 'struct': 'SevGuestProperties',
-+  'base': 'ConfidentialGuestProperties',
-   'data': { '*sev-device': 'str',
-             '*dh-cert-file': 'str',
-             '*session-file': 'str',
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 7fd1713fa8..0466bb048b 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -5655,7 +5655,7 @@ SRST
-                  -object secret,id=sec0,keyid=secmaster0,format=base64,\\
-                      data=$SECRET,iv=$(<iv.b64)
- 
--    ``-object sev-guest,id=id,cbitpos=cbitpos,reduced-phys-bits=val,[sev-device=string,policy=policy,handle=handle,dh-cert-file=file,session-file=file,kernel-hashes=on|off]``
-+    ``-object sev-guest,id=id,cbitpos=cbitpos,reduced-phys-bits=val,[sev-device=string,policy=policy,handle=handle,dh-cert-file=file,session-file=file,kernel-hashes=on|off,igvm-file=file]``
-         Create a Secure Encrypted Virtualization (SEV) guest object,
-         which can be used to provide the guest memory encryption support
-         on AMD processors.
-@@ -5699,6 +5699,12 @@ SRST
-         cmdline to a designated guest firmware page for measured Linux
-         boot with -kernel. The default is off. (Since 6.2)
- 
-+        The ``igvm-file`` is an optional parameter that, when specified,
-+        allows an Independent Guest Virtual Machine (IGVM) file to be
-+        specified that configures the secure virtual machine and can
-+        include, for example, an SVSM module, system firmware, initial
-+        boot state, etc.
-+
-         e.g to launch a SEV guest
- 
-         .. parsed-literal::
+ char _license[] SEC("license") = "GPL v2";
+
 -- 
-2.43.0
+2.44.0
 
 
