@@ -4,102 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B55ACD1294
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E016CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:50:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rryY4-0002eS-KP; Wed, 03 Apr 2024 07:12:56 -0400
+	id 1rrz7o-0001no-P0; Wed, 03 Apr 2024 07:49:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rryY0-0002ED-5W
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:54 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rrz7k-0001me-Ny
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:49:49 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rryXf-0007SM-Jj
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:51 -0400
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 382AD35279;
- Wed,  3 Apr 2024 11:12:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1712142749; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fMevewl+CSCPj22oduhcL/59Ms7yxVzUBekS+BUnY4k=;
- b=NOudGm4bmbzlvztXj4/nx1e3ussEH2+/PaOpbeloHfudYgYdYucvShgloI/cPcEBLM3IxT
- u6keIGRhAgVxUhWXkRXGOYbxKF2HZBUM+Pk6XzH9+VqjoRKmywrcH2Pt/qtYOWnyR629hS
- F9t2vHgxxt233DlEy3uNbBgPd/Pzj6I=
-Authentication-Results: smtp-out1.suse.de;
-	dkim=none
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 3C1FD13357;
- Wed,  3 Apr 2024 11:12:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap2.dmz-prg2.suse.org with ESMTPSA id YNv5C5w5DWayHQAAn2gu4w
- (envelope-from <roy.hopkins@suse.com>); Wed, 03 Apr 2024 11:12:28 +0000
-From: Roy Hopkins <roy.hopkins@suse.com>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v2 06/10] i386/pc_sysfw: Ensure sysfw flash configuration does
- not conflict with IGVM
-Date: Wed,  3 Apr 2024 12:11:37 +0100
-Message-ID: <613c3dc97a29fa9b8baa8acf45cefe4fac24ea87.1712141833.git.roy.hopkins@suse.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1712141833.git.roy.hopkins@suse.com>
-References: <cover.1712141833.git.roy.hopkins@suse.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rrz7j-0006GO-3o
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:49:48 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-516c11b6af9so120773e87.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:49:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712144984; x=1712749784; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q04MB9sbtDquxr5tfECR0Pc+WkFOv2d45d7auHnPkmA=;
+ b=rTiKymSVsIfF0jepYx6m/kQe83jNR5mGrtY54lYY4QrHbOhr3c9jNhm6pBd1cDsNu2
+ kJTUnEH55fY0RTyjBqcZbEnPJ2Wsz6aEOZVRyJJMQ85SMoHiJG26jnGHq9CsG1hTDI9t
+ jdpypGuPQZKcbzGT8BXrqlfvQuPafI8CaT86f0su1N2sEUVXRfNPT5u5se9lvTtMcGXN
+ T9Igj/aH7Z479P6wwHYk0c7iaJ27zApJPsY0SQIRyc/b96grSXhwAz5rId2qjFRuI7TA
+ Z3hBrLeyJ7E3pyryHvci3dAWz+V0SlT5QHPk5jxaRjAhDlm/ApfLXvEgT0Yngrv4oTni
+ YoxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712144984; x=1712749784;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q04MB9sbtDquxr5tfECR0Pc+WkFOv2d45d7auHnPkmA=;
+ b=p1o5t6tzL/cCEpnLEl+ublgrgLLjVnvmUzgBg2h2Aq0bGj2qz7zHrHIXnS099UwBzk
+ KCpHlm9fkC1+FDlMtPQHht+GBCjAWtkin0zCrm+2py2YojHsX2aP2j16/oXvZ65piFlz
+ UAJhyaSNrGpVkg6idCsPptqC4dYmiGV5bRIAn49bNXA3n/vc0fAaEorJLxgQRwMuahOu
+ e5eV1ZJ59uxDZoxfXm4V89/StOgDV7ef/8yP5um8GiibYRWPgNZCVE371aTBdefbxEri
+ TlJYfcfMwRgheB6vPCtg8Ndtn3LrKuYZ6MlKLNLcbOWnclVzHoBshLMH7x74yPioEW6D
+ 82AQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDpQmWczGVDDwgWyTuycyxDfwIThjdBrr/61gFEPa4Fq8/PYsqOBGRSJPKKjjHFRvG2Lr3/WPKaP+hzuY//M9jlfuQWQs=
+X-Gm-Message-State: AOJu0YzAcRCue6n2/RXM2GWnyPNeWtlNvBcx4s416b9bLNbkhC5D/1J5
+ Y/WBgJfers/AzXx4zBib4YsIYakOwTracFTBQyLuj2qwBoCEgKOM3GCXtasmXSur0qD5jP9ooRj
+ AGQSpqLkc0qViRgs/9XAjKKSpPI4YeY1FfYMAUg==
+X-Google-Smtp-Source: AGHT+IHETg+DW7wEI7VIwC7RZgtjWqUJ1WfHhbJqO41hWKlSkU9VDL75XLotl9HvCb3CcX5971nuZYoChWpujPSYYXU=
+X-Received: by 2002:ac2:5f49:0:b0:513:ba98:36a with SMTP id
+ 9-20020ac25f49000000b00513ba98036amr10290422lfz.10.1712144984208; Wed, 03 Apr
+ 2024 04:49:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: ++++++
-X-Spamd-Result: default: False [6.73 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
- BROKEN_CONTENT_TYPE(1.50)[];
- R_RATELIMIT(0.00)[to_ip_from(RL1cdfboiju7js16zrknyuzw5d)];
- RCVD_COUNT_THREE(0.00)[3]; MX_GOOD(-0.01)[];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; FROM_EQ_ENVFROM(0.00)[];
- R_DKIM_NA(2.20)[]; MIME_TRACE(0.00)[0:+];
- BAYES_HAM(-0.66)[82.79%]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- DKIM_SIGNED(0.00)[suse.com:s=susede1];
- RCPT_COUNT_TWELVE(0.00)[19]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:98:from]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 382AD35279
-Received-SPF: pass client-ip=195.135.223.130;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240330103128.3185962-1-ruanjinjie@huawei.com>
+ <20240330103128.3185962-19-ruanjinjie@huawei.com>
+ <CAFEAcA_WY04voee07n6Ph606xqy=QvTkYdMyqYf5LMHUS5GcDw@mail.gmail.com>
+ <6ff19301-8791-384e-bd40-5f58058f4234@huawei.com>
+In-Reply-To: <6ff19301-8791-384e-bd40-5f58058f4234@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 3 Apr 2024 12:49:32 +0100
+Message-ID: <CAFEAcA_Y_0SSaX_mSAr5eZvuU2fxPUWMow-0=4Bb-+2ofY2pEA@mail.gmail.com>
+Subject: Re: [PATCH v11 18/23] hw/intc/arm_gicv3: Handle icv_nmiar1_read() for
+ icc_nmiar1_read()
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
+ wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,61 +95,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using an IGVM file the configuration of the system firmware is
-defined by IGVM directives contained in the file. In this case the user
-should not configure any pflash devices.
+On Wed, 3 Apr 2024 at 04:16, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+> On 2024/4/3 0:12, Peter Maydell wrote:
+> >> @@ -776,7 +811,11 @@ static uint64_t icv_iar_read(CPUARMState *env, const ARMCPRegInfo *ri)
+> >>          if (thisgrp == grp && icv_hppi_can_preempt(cs, lr)) {
+> >>              intid = ich_lr_vintid(lr);
+> >>              if (!gicv3_intid_is_special(intid)) {
+> >> -                icv_activate_irq(cs, idx, grp);
+> >> +                if (!(lr & ICH_LR_EL2_NMI)) {
+> >
+> > This is missing checks on both whether the GIC has NMI support and
+> > on whether the SCTLR NMI bit is set (compare pseudocode
+> > VirtualReadIAR1()). I suggest defining a
+> >
+> >         bool nmi = cs->gic->nmi_support &&
+> >             (env->cp15.sctlr_el[arm_current_el(env)] & SCTLR_NMI) &&
+> >             (lr & ICH_LR_EL2_NMI);
+>
+> The nmi_support check is redundant, as if FEAT_GICv3_NMI is unsupported,
+> the ICH_LR_EL2.NMI is RES0, so if ICH_LR_EL2.NMI is 1, FEAT_GICv3_NMI
+> has been surely realized.
 
-This commit skips initialization of the ROM mode when pflash0 is not set
-then checks to ensure no pflash devices have been configured when using
-IGVM, exiting with an error message if this is not the case.
+As far as I can see you haven't changed ich_lr_write() to enforce
+that, though, so the guest can write 1 to the NMI bit even if the
+GIC doesn't support FEAT_GICv3_NMI. If you want to skip checking
+nmi_support here you need to enforce that the NMI bit in the LR
+is 0 in ich_lr_write().
 
-Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
----
- hw/i386/pc_sysfw.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
-
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 3efabbbab2..2412f26225 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -226,8 +226,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     }
- 
-     if (!pflash_blk[0]) {
--        /* Machine property pflash0 not set, use ROM mode */
--        x86_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory, false);
-+        /*
-+         * Machine property pflash0 not set, use ROM mode unless using IGVM,
-+         * in which case the firmware must be provided by the IGVM file.
-+         */
-+        if (!cgs_is_igvm(MACHINE(pcms)->cgs)) {
-+            x86_bios_rom_init(MACHINE(pcms), "bios.bin", rom_memory, false);
-+        }
-     } else {
-         if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
-             /*
-@@ -243,6 +248,20 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     }
- 
-     pc_system_flash_cleanup_unused(pcms);
-+
-+    /*
-+     * The user should not have specified any pflash devices when using IGVM
-+     * to configure the guest.
-+     */
-+    if (cgs_is_igvm(MACHINE(pcms)->cgs)) {
-+        for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
-+            if (pcms->flash[i]) {
-+                error_report("pflash devices cannot be configured when "
-+                             "using IGVM");
-+                exit(1);
-+            }
-+        }
-+    }
- }
- 
- void x86_firmware_configure(void *ptr, int size)
--- 
-2.43.0
-
+thanks
+-- PMM
 
