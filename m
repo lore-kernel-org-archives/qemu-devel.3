@@ -4,86 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4FFCD128A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 10:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC7F1CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 10:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrxVm-0007FY-Ds; Wed, 03 Apr 2024 06:06:31 -0400
+	id 1rrxgy-0000sN-K0; Wed, 03 Apr 2024 06:18:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rrxVi-0007FM-MQ
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 06:06:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rrxgs-0000oV-BE; Wed, 03 Apr 2024 06:17:58 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rrxVf-0001If-W1
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 06:06:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712138781;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0jkAk9G8NDnIDWWyPdfdSzx1H+BSp6OwkxTdxfYtaTI=;
- b=fv8kMYa0EfH8K1mlygUPXrLuNhoGugbSv6I/jL7mFNytymS1WBZVv6/tTDflJSnN57zn82
- 0kD6nV+QW4Sxevr5PEIZra6NyZUYs9ZAIZP4esRz+4na7SZJKF440VQGixj0juI4YOZ2iG
- EJ/E8yHE23Xkc/HUEMVtKjDZdDsCWD8=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-jynomvQ1PtieW3M8xaN2zQ-1; Wed, 03 Apr 2024 06:06:20 -0400
-X-MC-Unique: jynomvQ1PtieW3M8xaN2zQ-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-516be090f87so583136e87.1
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 03:06:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712138778; x=1712743578;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0jkAk9G8NDnIDWWyPdfdSzx1H+BSp6OwkxTdxfYtaTI=;
- b=oSlrNsMjuCn96rp/xC96cmIjUiKkUij5pvXIdBF0wBkKT8mbc7Rd3ffToP3Hs65qJr
- FCs06uEWKFzGkuZwTy/7Om0RbLsIJeV5EEQQ0S5QgJy0kvaOgz1JyMcYsAz9HQodBJOA
- kVNBZDkAlgPENQ6UGQzsUVeJz4+x9BHt5Kwr4OFYI0Jr5lvN1MA0LgweUGP9mbWcSxIn
- bLnfYJ2sgT8AP99wN6WUKRb2t6+nXrMxGDRjtwVSIT1xQoDDJwmvKR5JUg+JdDyhI85+
- TCqTcRvn86pJa0S4+kiHCCVsWpZSTnehqPWfp/dkytDwrDPVIESKinUx6JsvpLNly8dj
- fhyw==
-X-Gm-Message-State: AOJu0Ywsi/r4HJ44R37mt4tCE4lAAAbnweIozoU2RrOSQs3rc82x3Jl3
- uEuE5j7r9pxYBCpgFzpJwhJnT/rPE1CjOzXXHQ5sNopEXQ+bwf+4lg0brWEYyQ1PzcvEIIQdP3F
- C87cDNBuNbmNxAB+tpSo7bWTPo5FUk94e0Y/n7lTzS2ZfYb+/MtQMMAWcxelAZ4XL3s7jcDuMoq
- ZtXTrprusx3LBROyJTRFMOyA87Be43VOmTUemy
-X-Received: by 2002:a05:6512:3092:b0:516:b8ff:91fd with SMTP id
- z18-20020a056512309200b00516b8ff91fdmr2729124lfd.15.1712138778046; 
- Wed, 03 Apr 2024 03:06:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGeHsh/HMQc4nzlCJfrFbt7Kfp4SrliWTRCdOmnGO82Z+uQc7+BMCApNkRYuCubuePTOGKZMw==
-X-Received: by 2002:a05:6512:3092:b0:516:b8ff:91fd with SMTP id
- z18-20020a056512309200b00516b8ff91fdmr2729096lfd.15.1712138777502; 
- Wed, 03 Apr 2024 03:06:17 -0700 (PDT)
-Received: from avogadro.local ([151.95.49.219])
- by smtp.gmail.com with ESMTPSA id
- b13-20020a19644d000000b00516c077a312sm79690lfj.308.2024.04.03.03.06.15
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Apr 2024 03:06:16 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 0/6] lsi, vga fixes for 2024-04-02
-Date: Wed,  3 Apr 2024 12:06:14 +0200
-Message-ID: <20240403100614.74983-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rrxgm-0006d0-V7; Wed, 03 Apr 2024 06:17:58 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4V8gbq3SK7z1h5G9;
+ Wed,  3 Apr 2024 18:15:03 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 057DF14010C;
+ Wed,  3 Apr 2024 18:17:49 +0800 (CST)
+Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 3 Apr
+ 2024 18:17:48 +0800
+To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [PATCH v12 11/23] hw/intc/arm_gicv3: Add external IRQ lines for NMI
+Date: Wed, 3 Apr 2024 10:15:59 +0000
+Message-ID: <20240403101611.3204086-12-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240403101611.3204086-1-ruanjinjie@huawei.com>
+References: <20240403101611.3204086-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.67.174.55]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.191;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,42 +65,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7fcf7575f3d201fc84ae168017ffdfd6c86257a6:
+Augment the GICv3's QOM device interface by adding one
+new set of sysbus IRQ line, to signal NMI to each CPU.
 
-  Merge tag 'pull-target-arm-20240402' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-04-02 11:34:49 +0100)
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+v11：
+- Add new Reviewed-by.
+v4:
+- Add Reviewed-by.
+v3:
+- Add support for VNMI.
+---
+ hw/intc/arm_gicv3_common.c         | 6 ++++++
+ include/hw/intc/arm_gic_common.h   | 2 ++
+ include/hw/intc/arm_gicv3_common.h | 2 ++
+ 3 files changed, 10 insertions(+)
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 8fc4bdc537d901c200e43122e32bcb40dc8fed37:
-
-  pc_q35: remove unnecessary m->alias assignment (2024-04-02 18:08:59 +0200)
-
-----------------------------------------------------------------
-* lsi53c895a: fix assertion failure with invalid Block Move
-* vga: fix assertion failure with 4- and 16-color modes
-* remove unnecessary assignment
-
-----------------------------------------------------------------
-v1->v2: dropped patch to reject invalid Block Move
-
-Paolo Bonzini (6):
-      vga: merge conditionals on shift control register
-      vga: move computation of dirty memory region later
-      vga: adjust dirty memory region if pel panning is active
-      vga: do not treat horiz pel panning value of 8 as "enabled"
-      lsi53c895a: avoid out of bounds access to s->msg[]
-      pc_q35: remove unnecessary m->alias assignment
-
- hw/display/vga.c     | 146 +++++++++++++++++++++++++--------------------------
- hw/i386/pc_q35.c     |   1 -
- hw/scsi/lsi53c895a.c |  19 ++++---
- 3 files changed, 85 insertions(+), 81 deletions(-)
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index cb55c72681..c52f060026 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -299,6 +299,12 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
+     for (i = 0; i < s->num_cpu; i++) {
+         sysbus_init_irq(sbd, &s->cpu[i].parent_vfiq);
+     }
++    for (i = 0; i < s->num_cpu; i++) {
++        sysbus_init_irq(sbd, &s->cpu[i].parent_nmi);
++    }
++    for (i = 0; i < s->num_cpu; i++) {
++        sysbus_init_irq(sbd, &s->cpu[i].parent_vnmi);
++    }
+ 
+     memory_region_init_io(&s->iomem_dist, OBJECT(s), ops, s,
+                           "gicv3_dist", 0x10000);
+diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
+index 7080375008..97fea4102d 100644
+--- a/include/hw/intc/arm_gic_common.h
++++ b/include/hw/intc/arm_gic_common.h
+@@ -71,6 +71,8 @@ struct GICState {
+     qemu_irq parent_fiq[GIC_NCPU];
+     qemu_irq parent_virq[GIC_NCPU];
+     qemu_irq parent_vfiq[GIC_NCPU];
++    qemu_irq parent_nmi[GIC_NCPU];
++    qemu_irq parent_vnmi[GIC_NCPU];
+     qemu_irq maintenance_irq[GIC_NCPU];
+ 
+     /* GICD_CTLR; for a GIC with the security extensions the NS banked version
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index 4e2fb518e7..7324c7d983 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -155,6 +155,8 @@ struct GICv3CPUState {
+     qemu_irq parent_fiq;
+     qemu_irq parent_virq;
+     qemu_irq parent_vfiq;
++    qemu_irq parent_nmi;
++    qemu_irq parent_vnmi;
+ 
+     /* Redistributor */
+     uint32_t level;                  /* Current IRQ level */
 -- 
-2.44.0
+2.34.1
 
 
