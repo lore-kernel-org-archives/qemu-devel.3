@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 842E3CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 09:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 846E1CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 09:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrwoa-0006c4-DW; Wed, 03 Apr 2024 05:21:52 -0400
+	id 1rrwr7-0007av-6T; Wed, 03 Apr 2024 05:24:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1rrwoU-0006b7-0S
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 05:21:47 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rrwr5-0007ab-F4; Wed, 03 Apr 2024 05:24:27 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <michael.vogt@gmail.com>)
- id 1rrwoS-0007Iv-IX
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 05:21:45 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-60a104601dcso62920767b3.2
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 02:21:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rrwr3-0001k2-Mc; Wed, 03 Apr 2024 05:24:27 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-3c4f23d23d9so1063172b6e.3; 
+ Wed, 03 Apr 2024 02:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712136100; x=1712740900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Tf73zga/dXfvQEEuZTXclXjva9tINeQWZCQ9rxo66ZM=;
- b=hz2OqKgDnqIJQCT2KVOomVmf+tyAKX72bx10J9QVciau+RwrVmIZRbnRBG85jDCrtZ
- yKGvox2KsnmZTV9ngff2IbkbEvF1aHORboJoV6zAc5cPRTkozWUnhMlL2R1vxUSo3wnJ
- 2I3Lnt0+XDIjkjeXxKA60zIn+n2+nWYEgEBiU+Ag9pcERWs0PFweZ+K85vQDr/bswb2m
- er9Ukn7rlEI0fZEbZ3YwqvJi/rCyG/HrMOPDQBe61y+jfQ4wAnepXsNINWQr0w6AH+8J
- d6IMt3f3ODQ3giQ4U7fstNhH9w2YkviyX0/JjyQM07hxdbVcuAyhpXv31jC41coBpgcC
- 0L2Q==
+ d=gmail.com; s=20230601; t=1712136264; x=1712741064; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FfvDl/wUq9YrTXMjg6ReoE+YL5Xyy0nNJVJn3ta9FnU=;
+ b=IRWhxqbQmhvTwAN/n2uTkl2GUIM1xVfhG+VYxEiLaTZwM2f6qUt2G5Ftgx6Gg/jFVo
+ WUwF8fL8I/w4QGDtTJjeu6aAYah+d9HKXN+ygEo3YlnX5x41UK+G8xSOgjgBB9zX7H+4
+ QpamIZH/CDQ96sXKLgZqFZMw32wv2eGz4K/jDhX1YCo33q9/eDWSr4PYDa1ZSLO/URBl
+ AdxHne1c00E65cbJezME2/K4xk4tKNI0vnkJ+RL4vqBoW3YzD/rgUmXavVp429BEz212
+ l5VmD5jhQJB2+0Yr9DL9hSdxvMNSbDLXZgPTahIdLOWomSvArChTG3MTw2AxV1MDfY2A
+ hsqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712136100; x=1712740900;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Tf73zga/dXfvQEEuZTXclXjva9tINeQWZCQ9rxo66ZM=;
- b=fNL/zUH0Z+owiPLylQKrINGzKCDc4CzeAiVFhgy+ZszWlT3CZw2tFqBkJYTc4NZgVP
- zTnsoNQppzQ34GNJtah7fuhk9eeL7cq7Zh56novd9o4qT0uvoeGzhCO0tRPz6iaSIzON
- XH1VH+U0cfBoSNEp9Zxy9xCp4Bn+uPgvCBu+fNsd6AAwvjW5cLmGZTnCYum54hopW8N5
- 9GqrCHGXRtpXBtLP+kNPkrHBR8gJ3QHRtKmKh0GtGJNfxsOiX+NG6A7c00xevjzVL4Lk
- x7/dRszz5bSSQuBuc6eZ09z+0dMjRmUzWnROgVeGTlmnfsQBOZ8/jFrCTYg4/0/5HVex
- LDOw==
-X-Gm-Message-State: AOJu0YxJuXxbbRuYPmkLd5IIRZelyHCxW7MWUEEL4H6TgWKo0sPsJJ0u
- cNV5c4i02PfVpVk3h3QVzEH7rlI2gyb9J/7NW9ouGEeNmV7mA5ntfQ3meNzh1KQ=
-X-Google-Smtp-Source: AGHT+IFlVzSCrErJRFgpvRvcNQ4iWL+oOUBEH4/9k9xWjA52BmdhuudobubQog3NLPdTzqRRBYR1OQ==
-X-Received: by 2002:a0d:db8c:0:b0:615:6873:c524 with SMTP id
- d134-20020a0ddb8c000000b006156873c524mr754260ywe.48.1712136100183; 
- Wed, 03 Apr 2024 02:21:40 -0700 (PDT)
-Received: from top.fritz.box (p5dd9421d.dip0.t-ipconnect.de. [93.217.66.29])
- by smtp.gmail.com with ESMTPSA id
- p13-20020a81e20d000000b0060cbd86ba1bsm3244468ywl.12.2024.04.03.02.21.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Apr 2024 02:21:39 -0700 (PDT)
-From: Michael Vogt <michael.vogt@gmail.com>
-To: qemu-devel@nongnu.org,
-	richard.henderson@linaro.org
-Cc: Michael Vogt <mvogt@redhat.com>
-Subject: [PATCH] linux-user: Add FITRIM ioctl
-Date: Wed,  3 Apr 2024 11:20:49 +0200
-Message-ID: <20240403092048.16023-2-michael.vogt@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1712136264; x=1712741064;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FfvDl/wUq9YrTXMjg6ReoE+YL5Xyy0nNJVJn3ta9FnU=;
+ b=c7k61sS4lkyYCwKnQG2iVPYO1JgSaoRc7PhBjANOuRy49E4Yyw3FGY5r3WbKbsawNq
+ G0N5IhhTG49yYvZEYHFwTtbvk6FWfYuy+KdS88YKSGiQFqsr9cIXyzzn9ldHu9O/iH0X
+ w/n7yFQ/1vnwODEjckAiL1hVuF+XlMlEYI7GVUKO86SYh5peqRnttDPFpfsPyZxQ7/B6
+ Gy7yNjDrqd/BzXIXNQ58ObSvP42jvQoshlOBP/TV3qg/Xb8W0aY7/xsmt5iKbCrVqPCs
+ TdDBpetwxiin9pRurmELa5iu4kuTxsLj/qQYwW3dLsO/KYIS2zm3P5uRC8Bzq5MSMtpX
+ 3MNw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV2RGf+5WEa4AcdVewo2uq+Vc6mYtJDWxifu069KtK0ViKqGWICszDrXLu7SsNGO7QTIliJoYhmJV/8fwcoCB3ko7rpkCbLGFs8TVAjQ4XmPWtlBXeNbdEwDrbUlw==
+X-Gm-Message-State: AOJu0Yxv1KBGMDr6Kvs1oLN2fEx6cOx8aiZbK4aUg62VxhpzzLfIpN9s
+ 5F9AkRm8/Uq/+wOU09z7aIaXacEiuubufQbPgH9PfOgGwprkKTl+ESoerYlDTMklga2HltsUTUK
+ MK1RyFaynW2iMuKMkLF77llY+Xss=
+X-Google-Smtp-Source: AGHT+IG0tlFbimNdmUBHcbrItV+nhHI5eJkKmJSeg18RVxZbBs4TwKx4D22Vu29I1lYit/o+5fZTtXDfe0rgEpbuPn4=
+X-Received: by 2002:a05:6808:11cc:b0:3c3:c0e5:8d47 with SMTP id
+ p12-20020a05680811cc00b003c3c0e58d47mr748087oiv.31.1712136263942; Wed, 03 Apr
+ 2024 02:24:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=michael.vogt@gmail.com; helo=mail-yw1-x1130.google.com
+References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
+ <20240328102052.3499331-7-marcandre.lureau@redhat.com>
+ <65d791e4-6c68-4b6d-b181-bc3886745ce3@yandex-team.ru>
+ <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
+ <0d7344c2-b146-44cf-a911-21fa5e556665@yandex-team.ru>
+ <mzls26xlctld3fd5fl3h5wdrbh6hb5i3xcakeslwzny5tva7ch@w6wnruxtefkl>
+ <3064bc69-3d8e-4d7c-b640-a7ab703f9575@yandex-team.ru>
+ <CAJ+F1CLG+7BT8wLFmmJ0t8NvMu2a2Vp1+p6gUuBTch9haYP8LQ@mail.gmail.com>
+ <ba76742d-4fa1-4120-98ad-944845a37ad6@yandex-team.ru>
+In-Reply-To: <ba76742d-4fa1-4120-98ad-944845a37ad6@yandex-team.ru>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 3 Apr 2024 13:24:11 +0400
+Message-ID: <CAJ+F1CKAWpeOKe=8YM38_H6xP5cvDJ0RQXcSvm9LUMLpyo4ndw@mail.gmail.com>
+Subject: Re: [PATCH 06/19] block/stream: fix -Werror=maybe-uninitialized
+ false-positives
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org, 
+ Hyman Huang <yong.huang@smartx.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ John Snow <jsnow@redhat.com>, 
+ Klaus Jensen <its@irrelevant.dk>, Fam Zheng <fam@euphon.net>, 
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Bin Meng <bin.meng@windriver.com>, Hanna Reitz <hreitz@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Jesper Devantier <foss@defmacro.it>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Keith Busch <kbusch@kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,60 +114,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Vogt <mvogt@redhat.com>
+Hi
 
-Tiny patch to add the missing FITRIM ioctl.
+On Wed, Apr 3, 2024 at 12:31=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 03.04.24 11:11, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi
+> >
+> > On Tue, Apr 2, 2024 at 11:24=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+> > <vsementsov@yandex-team.ru> wrote:
+> >>
+> >> On 02.04.24 18:34, Eric Blake wrote:
+> >>> On Tue, Apr 02, 2024 at 12:58:43PM +0300, Vladimir Sementsov-Ogievski=
+y wrote:
+> >>>>>> Again, same false-positives, because of WITH_GRAPH_RDLOCK_GUARD().=
+.
+> >>>>>>
+> >>>>>> Didn't you try to change WITH_ macros somehow, so that compiler be=
+lieve in our good intentions?
+> >>>>>>
+> >>>>>
+> >>>>>
+> >>>>> #define WITH_QEMU_LOCK_GUARD_(x, var) \
+> >>>>>        for (g_autoptr(QemuLockable) var =3D \
+> >>>>>                    qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNU=
+LL((x))); \
+> >>>>>             var; \
+> >>>>>             qemu_lockable_auto_unlock(var), var =3D NULL)
+> >>>>>
+> >>>>> I can't think of a clever way to rewrite this. The compiler probabl=
+y
+> >>>>> thinks the loop may not run, due to the "var" condition. But how to
+> >>>>> convince it otherwise? it's hard to introduce another variable too.=
+.
+> >>>>
+> >>>>
+> >>>> hmm. maybe like this?
+> >>>>
+> >>>> #define WITH_QEMU_LOCK_GUARD_(x, var) \
+> >>>>       for (g_autoptr(QemuLockable) var =3D \
+> >>>>                   qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL=
+((x))), \
+> >>>>            var2 =3D (void *)(true); \
+> >>>>            var2; \
+> >>>>            qemu_lockable_auto_unlock(var), var2 =3D NULL)
+> >>>>
+> >>>>
+> >>>> probably, it would be simpler for compiler to understand the logic t=
+his way. Could you check?
+> >>>
+> >>> Wouldn't that attach __attribute__((cleanup(xxx))) to var2, at which
+> >>> point we could cause the compiler to call xxx((void*)(true)) if the
+> >>> user does an early return inside the lock guard, with disastrous
+> >>> consequences?  Or is the __attribute__ applied only to the first out
+> >>> of two declarations in a list?
+> >>>
+> >>
+> >> Oh, most probably you are right, seems g_autoptr apply it to both vari=
+ables. Also, we don't need qemu_lockable_auto_unlock(var) separate call, if=
+ we zero-out another variable. So, me fixing:
+> >>
+> >> #define WITH_QEMU_LOCK_GUARD_(x, var) \
+> >>       for (QemuLockable *var __attribute__((cleanup(qemu_lockable_auto=
+_unlock))) =3D qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))), \
+> >>            *var2 =3D (void *)(true); \
+> >>            var2; \
+> >>            var2 =3D NULL)
+> >>
+> >> (and we'll need to modify qemu_lockable_auto_unlock() to take "QemuLoc=
+kable **x" argument)
+> >>
+> >
+> > That's almost good enough. I fixed a few things to generate var2.
+> >
+> > I applied a similar approach to WITH_GRAPH_RDLOCK_GUARD macro:
+> >
+> > --- a/include/block/graph-lock.h
+> > +++ b/include/block/graph-lock.h
+> > @@ -224,13 +224,22 @@ graph_lockable_auto_unlock(GraphLockable *x)
+> >
+> >   G_DEFINE_AUTOPTR_CLEANUP_FUNC(GraphLockable, graph_lockable_auto_unlo=
+ck)
+> >
+> > -#define WITH_GRAPH_RDLOCK_GUARD_(var)                                 =
+        \
+> > -    for (g_autoptr(GraphLockable) var =3D graph_lockable_auto_lock(GML=
+_OBJ_()); \
+> > -         var;                                                         =
+        \
+> > -         graph_lockable_auto_unlock(var), var =3D NULL)
+> > +static inline void TSA_NO_TSA coroutine_fn
+> > +graph_lockable_auto_cleanup(GraphLockable **x)
+> > +{
+> > +    graph_lockable_auto_unlock(*x);
+> > +}
+> > +
+> > +#define WITH_GRAPH_RDLOCK_GUARD__(var) \
+> > +    GraphLockable *var \
+> > +        __attribute__((cleanup(graph_lockable_auto_cleanup))) G_GNUC_U=
+NUSED =3D \
+> > +       graph_lockable_auto_lock(GML_OBJ_())
+> > +
+> > +#define WITH_GRAPH_RDLOCK_GUARD_(var, var2)                           =
+  \
+> > +    for (WITH_GRAPH_RDLOCK_GUARD__(var), *var2 =3D (void *)true; var2;
+> > var2 =3D NULL)
+> >
+> >   #define WITH_GRAPH_RDLOCK_GUARD() \
+> > -    WITH_GRAPH_RDLOCK_GUARD_(glue(graph_lockable_auto, __COUNTER__))
+> > +    WITH_GRAPH_RDLOCK_GUARD_(glue(graph_lockable_auto, __COUNTER__),
+> > glue(graph_lockable_auto, __COUNTER__))
+> >
+> > Unfortunately, it doesn't work in all cases. It seems to have issues
+> > with some guards:
+> > ../block/stream.c: In function =E2=80=98stream_run=E2=80=99:
+> > ../block/stream.c:216:12: error: =E2=80=98ret=E2=80=99 may be used unin=
+itialized
+> > [-Werror=3Dmaybe-uninitialized]
+> >    216 |         if (ret < 0) {
+> >
+> >
+>
+> So, updated macro helps in some cases, but doesn't help here? Intersting,=
+ why.
+>
+> > What should we do? change the macros + cherry-pick the missing
+> > false-positives, or keep this series as is?
+> >
+> >
+>
+> I think marco + missing is better. No reason to add dead-initializations =
+in cases where new macros helps.
 
-Signed-off-by: Michael Vogt <mvogt@redhat.com>
----
- linux-user/ioctls.h        | 3 +++
- linux-user/syscall_defs.h  | 1 +
- linux-user/syscall_types.h | 5 +++++
- 3 files changed, 9 insertions(+)
+Ok
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 1aec9d5836..d508d0c04a 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -140,6 +140,9 @@
- #ifdef FITHAW
-      IOCTL(FITHAW, IOC_W | IOC_R, TYPE_INT)
- #endif
-+#ifdef FITRIM
-+     IOCTL(FITRIM, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_fstrim_range)))
-+#endif
- 
-      IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
- #ifdef CONFIG_FIEMAP
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 744fda599e..ce0adb706e 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -945,6 +945,7 @@ struct target_rtc_pll_info {
- 
- #define TARGET_FIFREEZE    TARGET_IOWR('X', 119, abi_int)
- #define TARGET_FITHAW    TARGET_IOWR('X', 120, abi_int)
-+#define TARGET_FITRIM    TARGET_IOWR('X', 121, struct fstrim_range)
- 
- /*
-  * Note that the ioctl numbers for FS_IOC_<GET|SET><FLAGS|VERSION>
-diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
-index c3b43f8022..6dd7a80ce5 100644
---- a/linux-user/syscall_types.h
-+++ b/linux-user/syscall_types.h
-@@ -341,6 +341,11 @@ STRUCT(file_clone_range,
-        TYPE_ULONGLONG, /* src_length */
-        TYPE_ULONGLONG) /* dest_offset */
- 
-+STRUCT(fstrim_range,
-+       TYPE_ULONGLONG, /* start */
-+       TYPE_ULONGLONG, /* len */
-+       TYPE_ULONGLONG) /* minlen */
-+
- STRUCT(fiemap_extent,
-        TYPE_ULONGLONG, /* fe_logical */
-        TYPE_ULONGLONG, /* fe_physical */
--- 
-2.43.0
+> Still, would be good to understand, what's the difference, why it help on=
+ some cases and not help in another.
 
+I don't know, it's like if the analyzer was lazy for this particular
+case, although there is nothing much different from other usages.
+
+If I replace:
+for (... *var2 =3D (void *)true; var2;
+with:
+for (... *var2 =3D (void *)true; var2 || true;
+
+then it doesn't warn..
+
+Interestingly as well, if I change:
+    for (... *var2 =3D (void *)true; var2; var2 =3D NULL)
+for:
+    for (... *var2 =3D GML_OBJ_(); var2; var2 =3D NULL)
+
+GML_OBJ_() simply being &(GraphLockable) { }), an empty compound
+literal, then it doesn't work, in all usages.
+
+All in all, I am not sure the trick of using var2 is really reliable either=
+.
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
