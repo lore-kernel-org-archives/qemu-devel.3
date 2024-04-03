@@ -4,35 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C2E7C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 05:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 935A6CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 05:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrstP-0000Hg-RA; Wed, 03 Apr 2024 01:10:35 -0400
+	id 1rrsx4-0001FC-CP; Wed, 03 Apr 2024 01:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rrstN-0000Gm-KB; Wed, 03 Apr 2024 01:10:33 -0400
+ id 1rrsx2-0001Ev-RI; Wed, 03 Apr 2024 01:14:20 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rrstJ-0003YV-UO; Wed, 03 Apr 2024 01:10:33 -0400
+ id 1rrsx1-0004S9-Cs; Wed, 03 Apr 2024 01:14:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 882435B482;
- Wed,  3 Apr 2024 08:12:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1BD8D5B487;
+ Wed,  3 Apr 2024 08:16:01 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E0DC4AA359;
- Wed,  3 Apr 2024 08:10:16 +0300 (MSK)
-Message-ID: <a75271ae-57e0-4f59-9a96-1696bdcd3566@tls.msk.ru>
-Date: Wed, 3 Apr 2024 08:10:16 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74F77AA35C;
+ Wed,  3 Apr 2024 08:14:16 +0300 (MSK)
+Message-ID: <f8622a76-7523-424e-88d5-cd6f251a625b@tls.msk.ru>
+Date: Wed, 3 Apr 2024 08:14:16 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-net: fix qemu set used ring flag even vhost started
-To: Yajun Wu <yajunw@nvidia.com>, qemu-devel@nongnu.org, mst@redhat.com,
- jasowang@redhat.com, maxime.coquelin@redhat.com
-Cc: Jiri Pirko <jiri@nvidia.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20240402045109.97729-1-yajunw@nvidia.com>
+Subject: Re: [PATCH] Fix incorrect disassembly format for certain RISC-V
+ instructions
+To: Simeon Krastnikov <Simeon.Krastnikov@imgtec.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
+ Shiva Chen <Shiva.Chen@imgtec.com>
+References: <LO4P265MB66669BD6FF7CAB642AE30316933E2@LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM>
 Content-Language: en-US
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -59,7 +62,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240402045109.97729-1-yajunw@nvidia.com>
+In-Reply-To: <LO4P265MB66669BD6FF7CAB642AE30316933E2@LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -84,46 +87,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-02.04.2024 07:51, Yajun Wu:
-> When vhost-user or vhost-kernel is handling virtio net datapath, qemu
-> should not touch used ring.
-> 
-> But with vhost-user socket reconnect scenario, in a very rare case (has
-> pending kick event). VRING_USED_F_NO_NOTIFY is set by qemu in
-> following code path:
-...
-> This issue causes guest kernel stop kicking device and traffic stop.
-> 
-> Add vhost_started check in virtio_net_handle_tx_bh to fix this wrong
-> VRING_USED_F_NO_NOTIFY set.
+02.04.2024 15:47, Simeon Krastnikov:
 
-This seems to be qemu-stable material, even if the case when the issue
-happens is "very rare", -- is it not?
+[Content-Type: text/html]
+
+Your patch is html-damaged.  There's probably a way to extract the text/plain
+version of it but it's better if you re-send it without html.
+
+Not saying anything about the changes though.
 
 Thanks,
 
 /mjt
-
-> Signed-off-by: Yajun Wu <yajunw@nvidia.com>
-> Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-> ---
->   hw/net/virtio-net.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index a6ff000cd9..8035e01fdf 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -2865,6 +2865,10 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
->       VirtIONet *n = VIRTIO_NET(vdev);
->       VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
->   
-> +    if (n->vhost_started) {
-> +        return;
-> +    }
-> +
->       if (unlikely((n->status & VIRTIO_NET_S_LINK_UP) == 0)) {
->           virtio_net_drop_tx_queue_data(vdev, vq);
->           return;
-
 
