@@ -4,150 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B539CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 09:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBCECD1294
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 09:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrwhZ-0004Ec-OM; Wed, 03 Apr 2024 05:14:37 -0400
+	id 1rrwkI-0005Fm-35; Wed, 03 Apr 2024 05:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Simeon.Krastnikov@imgtec.com>)
- id 1rrwhT-0004DQ-Se; Wed, 03 Apr 2024 05:14:31 -0400
-Received: from mx08-00376f01.pphosted.com ([91.207.212.86])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1rrwkG-0005Fa-Bl
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 05:17:24 -0400
+Received: from esa20.fujitsucc.c3s2.iphmx.com ([216.71.158.65])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Simeon.Krastnikov@imgtec.com>)
- id 1rrwhQ-000559-Q5; Wed, 03 Apr 2024 05:14:31 -0400
-Received: from pps.filterd (m0168888.ppops.net [127.0.0.1])
- by mx08-00376f01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4337F2eF012653;
- Wed, 3 Apr 2024 10:14:24 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=imgtec.com; h=
- from:to:cc:subject:date:message-id:references:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- dk201812; bh=/ccU9R7v0g3dM8rxhooHYQq5XDpaFLHPR44ahRvZmhE=; b=vey
- YenWeTV1vEStMkP9j6opWsvhxhU79TbENY8rljrrDdn/GPbm4P2Xui40f2hCuLVY
- O2DEkl3kupG2/QPLIxrnBUmRzW3XCf02WTZDwcvOxN/8qaQMPYTUH2u2paYmi3R7
- ieDHqci0ZoN6+hkibkvEjK8LMgZr5//5GWru5bBj5Q+l9/8IQzPqEvKzGgFp9KdU
- w3HTE9L7HBmL+4muxpFi60plHWdWRIznF9dOxtFrCuq+689TAreIA/blXlFnMx5V
- EaHQCTUmEA7fXUuHEcwbFsmqYKge+1I3qnehPCxpihjkeLqwqCKh+Rt2THTG0q49
- kiIMWGdpAUnix9SrK4g==
-Received: from hhmail05.hh.imgtec.org ([217.156.249.195])
- by mx08-00376f01.pphosted.com (PPS) with ESMTPS id 3x69vsmnn0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Wed, 03 Apr 2024 10:14:24 +0100 (BST)
-Received: from HHMAIL04.hh.imgtec.org (10.100.10.119) by
- HHMAIL05.hh.imgtec.org (10.100.10.120) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.37; Wed, 3 Apr 2024 10:14:23 +0100
-Received: from LO3P265CU004.outbound.protection.outlook.com (40.93.67.5) by
- email.imgtec.com (10.100.10.121) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.37 via Frontend
- Transport; Wed, 3 Apr 2024 10:14:23 +0100
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1rrwkD-0005pv-5Z
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 05:17:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1712135841; x=1743671841;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=BzIRswGItT3lbQ5aIu07z/IIl3/KrtnTbbGySQ6BDIA=;
+ b=K4YWkRfbwsGjVd0ft0YjS019mvbEtfl03WWEAHCzRY4mkHb4Dj7dDu0M
+ o5vSTEbrI9xmuSLMQeiPSDUNPJwmmZ2n30419GcXpYa7IsdGp6DG/9WN8
+ 4m6WYsZ4+bKU28B/UPRq5bnMpnNzZ2rriESIZbEwPYdyen88lZWXvkllD
+ Vqc+p1QfjsHRi9OGMZYrSLYh4t/5dej97zefX1niclcacs3rCdEQGjopV
+ HsMe/GoSwTFxxjMqnuj8Z3PEBIB0GIWvVQKlMyH8hADq+++cIAkdhfFGZ
+ DSnSYWJhgnsKcwAdligT224pfLkLhzRX4xryGXmQNQKVaH/pze7gVdSVW Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11032"; a="115677259"
+X-IronPort-AV: E=Sophos;i="6.07,177,1708354800"; d="scan'208";a="115677259"
+Received: from mail-tycjpn01lp2168.outbound.protection.outlook.com (HELO
+ JPN01-TYC-obe.outbound.protection.outlook.com) ([104.47.23.168])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Apr 2024 18:17:14 +0900
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dHtIhlwUM9PjKISWLP0Oj1K6uUMC/pwuVHvinASOH7YG2/kv0ZH2sMzAGAGYXmYAzW+4Uie8WzxG2uMDwtLSJf5mZeffmzkFRK5aVSDlY5UpMNC8ZmHoZ3VsRQa4avd+T8nyLNAJEeDT/fRhL0c45ggOgzp85afZqHFSrlz978Q/0Bd7Ze55FksIeT81Vm34aCvQmRBKwLEDv08TQC+Tk/lYjM3T9uL+gEZwY7WavSTrk8Bh7FSMAXI2yndLE9wGyRXeLyKhCA2DtxLv4Z92td435P8vSXRiS6u9SqE4uvuKkqem7aCHugKV3/FAf21t8J5IvaLN+j13D3Zy3e0wzg==
+ b=UHcpdXNq7FmjrJIvypFYYsXOKX111CGWThq4fUP8K8bC16xT6ukZy4mV/YUxo33I/gdVFRwnum2A60kkKR0916oQxq2r4wGQ85UudkYRHax+DRCVSvWlfo4Wns8auf1ZFjln5MtPCJfnKCgbTcOayqPbOchyzUQIezxem09COqkrJXlt1zuf86NFYYHEARoywaGN6gfN37JuEnlwiAHdJkYcimWXNxenS4w2Lz4DzSXFEy9E+vjWOxS7D0v//O8CCAi9vIMxjb2CQC88X3R3cxmB9gDzXxKFyFWfmZIjW2R8+6LqGP4TkPU5aNJW9cpb8hSMSLGNd88asUq6NIjObw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/ccU9R7v0g3dM8rxhooHYQq5XDpaFLHPR44ahRvZmhE=;
- b=HsS+fZzd4N0iuKGY0H/dZLYqtbluCFBLORV4I1WKHfO1ijTdPoiHXP9OXB9/yrM8YFqGioK8UrG+PeOQaLXsNAEDL8E8MIVVSJGpCj/aQwFD0GAJLom86b4AeiIab0J4DZjM4i59SoeM6RsBd8GM8XDa/+n2XVkY69S0/SnWa22shu+D27CGliYUh4uCJGuKmQL3YnfkJl5XOO7dEQFix1FbsKN2u/y3AucwBa3Ny9n1DSglvoySYtZntFI59kNevnIxp+DpFtHNVFOwlMzgEd0UDfSNpAar1F8to35I6VxnskoNRjjEYxLwfBul+vPswHDKYloWHDDTD+Tpkijlpg==
+ bh=BzIRswGItT3lbQ5aIu07z/IIl3/KrtnTbbGySQ6BDIA=;
+ b=Pq0hewYOfAFfigEUH5sVrj+qWnYPBA+8U9LrPmh60k9ZJp+3LaaV3HfFfi/qlIboDiLNY8dv/zmlcwHnXLwPY0SYpPgx0s9VLQKprxnhOSZClDlf+F5pyGSCvJbU5y4DwzsBsIv0myCNbV/9RRutfa+al4I6XfNGHWSj3K1qc9u9Fv4wdEWhHmb40Q6rHi+D3t5wXCD6Dy+RB6Rrh9m6Gapx/uz0+7vW4pKDZtTVy8jhaHAP6mPWynVVdw/MWAtHGM2xHd/KW1rTzctxcLCWQsJfHwjXMaE063C1+sdXJXK7uf9clFc6kE3RZ73Fc7lBiQzUvbQouEOFFwQv5LoG+Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=imgtec.com; dmarc=pass action=none header.from=imgtec.com;
- dkim=pass header.d=imgtec.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=IMGTecCRM.onmicrosoft.com; s=selector2-IMGTecCRM-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/ccU9R7v0g3dM8rxhooHYQq5XDpaFLHPR44ahRvZmhE=;
- b=BC8W/rJbL3hx/cUCyX28FYq2hsoJ5p80EkBI1tODn3KgpDAmnzefY5ZdwUkGtLaE2/mFI8fRADoXHLYQv0FmZTIWnDhlO0hKnzNxSVYtMIiS2owC79XF+QlvXbl+5Kgos0/IGpL+MCVURu4vo9Qyzg2cusJnZ0EHRPcU4FZN0ZE=
-Received: from LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:2f0::11)
- by LO2P265MB3088.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:17e::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.27; Wed, 3 Apr
- 2024 09:14:20 +0000
-Received: from LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM
- ([fe80::c9e8:ad7a:f36e:a282]) by LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM
- ([fe80::c9e8:ad7a:f36e:a282%3]) with mapi id 15.20.7409.042; Wed, 3 Apr 2024
- 09:14:20 +0000
-From: Simeon Krastnikov <Simeon.Krastnikov@imgtec.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "qemu-trivial@nongnu.org"
- <qemu-trivial@nongnu.org>, Shiva Chen <Shiva.Chen@imgtec.com>
-Subject: [PATCH] Fix incorrect disassembly format for certain RISC-V
- instructions
-Thread-Topic: [PATCH] Fix incorrect disassembly format for certain RISC-V
- instructions
-Thread-Index: AdqE+4RJgAV1qFBhT8677tuQrfnSpwAq8pnw
-Date: Wed, 3 Apr 2024 09:14:19 +0000
-Message-ID: <LO4P265MB6666B4EBBD3BE5DC8822C85E933D2@LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM>
-References: <LO4P265MB66669BD6FF7CAB642AE30316933E2@LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM>
-In-Reply-To: <LO4P265MB66669BD6FF7CAB642AE30316933E2@LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from TYAPR01MB5818.jpnprd01.prod.outlook.com
+ (2603:1096:404:8059::10) by OSZPR01MB9411.jpnprd01.prod.outlook.com
+ (2603:1096:604:1d7::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Wed, 3 Apr
+ 2024 09:17:11 +0000
+Received: from TYAPR01MB5818.jpnprd01.prod.outlook.com
+ ([fe80::e69:40a6:944b:f974]) by TYAPR01MB5818.jpnprd01.prod.outlook.com
+ ([fe80::e69:40a6:944b:f974%5]) with mapi id 15.20.7409.042; Wed, 3 Apr 2024
+ 09:17:11 +0000
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+CC: Fan Ni <fan.ni@samsung.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/2] CXL/cxl_type3: reset DVSEC CXL Control in ct3d_reset
+Thread-Topic: [PATCH 2/2] CXL/cxl_type3: reset DVSEC CXL Control in ct3d_reset
+Thread-Index: AQHahJ+oqGnlriIGK0KUT8BDpxjpqbFUs9AAgAE004CAAF2EAA==
+Date: Wed, 3 Apr 2024 09:17:10 +0000
+Message-ID: <00f8b5dd-a1a6-460c-9e45-37f691c13af9@fujitsu.com>
+References: <20240402014647.3733839-1-lizhijian@fujitsu.com>
+ <20240402014647.3733839-2-lizhijian@fujitsu.com>
+ <20240402101706.000045b2@Huawei.com>
+ <4fab02af-5528-49e3-96ab-57cb2446dc05@fujitsu.com>
+In-Reply-To: <4fab02af-5528-49e3-96ab-57cb2446dc05@fujitsu.com>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LO4P265MB6666:EE_|LO2P265MB3088:EE_
+x-ms-traffictypediagnostic: TYAPR01MB5818:EE_|OSZPR01MB9411:EE_
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: /E0uQe5RFg9akOUXPzCuSiUGCknOA5hleb0TrF4BWKVXl43JdHlusEqRD3m9YgeuR9hdUJJyHhi4h7mpdViKBsmzJude5UAzgz7hxAyTjysnoIJci5hB4iIxcdHGbW7rOu8hoe8xuSjnpJ+kmi+P9ngihPXYxlnENGFUJL6JH8datCi4Mw5CIryC5+gLQNCfusCeVKGeMhSZhvntf8vjzBVU34OZYJ03YHbGZC/dt8BT7c7lJOC7Lc38v8gh9OFR1GE8EQkIjlBB4X8AeazqwYrBRta33By4DvVU8UMEo7WW7nx/8lrFba2RPm646v6+ISXl71VrIrrlXJc80XHc9k3Rc8iMG0sFIVdLkRj/x3GH1AaHwE9wzH67uZmstt2alfM1+wTYKAaXcoQIP0KMsME7SLHYreggzxsXcely9fXjW8mqGs2mOxxI6sBWDLSLCUG1WzcNkQpH/IQTEQUi9PKeS+jmT9aCNdOlSJ44Ork6OuqbyAdB9riqFdGj28rOD1UhmBID70irOjerAEPs8ROC/kPxPDA4NqWjGq1DJCG58yqjTJdDD6r19wVr8j/aaOb0qZArxQzp+AZK6XXYb8fmpLs3S2bs3VL0ojaG6C8Zm7BQY2Fqfm05aF0ungtkofUc5IdIOhroH51xXzJB5H9+QmZ+gz37vba+W1+doX0=
+x-microsoft-antispam-message-info: ITKBC5maUqXSnr7yotxPanp1wvghfqRLgTBhrCjfQ9dL9xqdruSsT5FsKQmZJWyJVUjSn9M47h7lrRkbX9ZDDK34/3QLGqqUPdGgOWHgTWm52CnRICa+v+nKLOfCqOh1zmkqLSp3rABNDac/vPzHoubnifU+AhascwVxaqlnzL5h+obSwRU+62wlqXalZFMBnXXmarNijvQOKWc6yYQixA+43Y3R2Npkp7AzGjahmTgYfUJiB0klKQu5KoM4qJdEwJkNlBNWC0bXUi7W2Uh/vA4irLqrN2UCO+YRzKGLy4Cz9JUmpHSqsu0aEmFiN1ozcXFdIHiC3Ya8amIO7NCznER7CNKoXB74n7tpIQA/n/3HuXHsiYbWPUMJLYuRl6JSZQrEUH5eqQUWKauYjDU/ZBniqrdioUh+ObBZbE5Zi9ncEb+Xfm2x2flQwMkWdxtPqKFsjSSydqYqte197PD7tca1rzHJ+hk2H1cqEFJfwxrTKDknRFv8SdhRc6dw0fr26hdTZjp0je88KFFhxvDdAiiyB/r7mZND2ZtVTlj+vdFrdEMh+nHRVsW81utFz14drrTzbO6L3NvSITnDmAS412TJfj1Qc20y5MrKgo4cVbMr1gn5khr/KNDyksQYAJyRe4ZKZUzcXKqn2DNtnBjH67LehhfKQe31nebtP/6/yPL013ArhNz7JSuz22f0AsO1i7o2r02p1Kzh8NkkVtLrEQ==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(1800799015); DIR:OUT; SFP:1102; 
+ IPV:NLI; SFV:NSPM; H:TYAPR01MB5818.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(366007)(1580799018); DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?h3Lia4HrYIoUVPLGI2kV4zp0jF6oWEldhGFb48FAJM9RIDl6QGar0hjRWk+I?=
- =?us-ascii?Q?kkxAFHADf6RMJkInIcJs26TJoBRql7DOlSYh2AfMK8ms/d48tul5PNAlNPp3?=
- =?us-ascii?Q?2j6q1M7QX4bJvTQRHAB5aff33vELpnTWj3lue+wRV6Fp8Y8mKFbVT/hXAjNz?=
- =?us-ascii?Q?FB94ddwXLqqRmlWtr2MDHQ8qqSPXxV8B107UfuqQWk/DtvJExDKOOAWFqXAa?=
- =?us-ascii?Q?AW8kzOdTKdEy4N/XEcGdaiveTdCh9ktq1dm71ZpIOoF20L2kUR7ntjBG2h2Y?=
- =?us-ascii?Q?gAsxYnqEJNgFKsGDvBAiW9WWn01j5kdcS/FoNPJLv+woz/pHkW9ooCYkep63?=
- =?us-ascii?Q?pYD26DyU821R5sxiDqHCa+YCOEyZh9S+tD+DOUNe/fwFVaSEmvcpGWs2WScH?=
- =?us-ascii?Q?oxjwUDRxrFQbjvVV6yvidTAiE3mTSiOCjafuvwFP1/Se5ymfZlZGCTXQqJXo?=
- =?us-ascii?Q?x1B6+EjZrt5yODWnD7SBAtgGqd72bIUJpVe7LVgL/g7SApDDycl8p9OuA9Rs?=
- =?us-ascii?Q?CpYoXtxoArFwfuJPQ01RQ5hUGGPXG/ie3JxXl4otKx4ABaLn6+1gA6DiQ2kj?=
- =?us-ascii?Q?tC788YAxfX8wPjylZUazbGVSDpnV0mXaTeHRriHs9KHrLpJGjacF3L0Qsfof?=
- =?us-ascii?Q?PSebt6bV7sv1VJDxKyuK+FPQe5nxOhIlAJ+mfoV128YSesktCehnhn6QmZuq?=
- =?us-ascii?Q?/eRavHPb7MvqB54v0Wootf3yj2ts9ejiL9g4bl4p9FG+oeeG4WE+PoS7DAkT?=
- =?us-ascii?Q?bn/gRHYJ55kM5/FgayPXso4pKDoNJoA8L8qnqqSJpLDpWpaUbdJa4Li8Cg2c?=
- =?us-ascii?Q?HxUOHNUgI/Y5WDdT6SayuMq9rSmUp6dihbbCJC9Exk8LGKoi/qhEemLO3FZ5?=
- =?us-ascii?Q?iWljhPfO1kMQwqriIXONWz40DtgZBFDAsmOt3vU1ahbJ6MzTerx7ldWlEHM9?=
- =?us-ascii?Q?mtpzx0o5SgpF0NJozTfLXU2Yl/pmBBWLie1xU3y9etXX7Df81hLOhTliOMG2?=
- =?us-ascii?Q?fC4Y6IdDIXgik7w4BmX9Hisy+1+uq9GpeVX427WvhH5GSYh76WFwegyIVofy?=
- =?us-ascii?Q?NyU/Ez2V+kSUjpEFvr4o8fEFObFjiTECv76xdqaEB3ozPBpjuGz7ZEXMkP5J?=
- =?us-ascii?Q?i0miqaz4wJ3NoQa5apjArdW3NjnyqpG6pCR2AX52LC5dK7k/YhzsfTXMp2kf?=
- =?us-ascii?Q?cnvr6AlXx1I+UjxLaIGhjVooUcnW9HnGAmgnLUYk8iNS/d4aImrjjs68Sg82?=
- =?us-ascii?Q?nTXS4mh+P8E76765k/pN/wDBkAVWWQuoeGT0sUUaYmkvcjru3sJ1SMenjjPz?=
- =?us-ascii?Q?N8LmHEX2PkcBFh64zR3l2MNcNiFZ5r99xaD3JUVPB10a+HjI5LvtYahepsuu?=
- =?us-ascii?Q?xxG3TPHjeBlEg9yxbHZPCIa84xh1mSLgO9XShyBcYAa3Md3NjCy3jirUPe5+?=
- =?us-ascii?Q?V4XtLVbqHuABtmvm0GR+ffszK+AfFloIZk3EwUJAXtnMJ0IBiKs2rlPrsGgo?=
- =?us-ascii?Q?fceBqeFPu2exe64xCfljIu8XMXRh6T+p8nqj4ZzAvr9HUM/qPRiONSkea26z?=
- =?us-ascii?Q?C41kxb4mYznVxplu9+Uqc0eItGWfYxYuywddlf9RmsyUsd5Qu4CrXW1fjNGx?=
- =?us-ascii?Q?eYMsuHJPXtmNo6xHAd4Q/VmEuxnBctDVYyeBScgBCilqo9II1WiVRumfcabs?=
- =?us-ascii?Q?LkYPFg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MWF3Z3RYMlpDV01ldmZnNXNWaVZQNjVKanFUTmxRWDkwMWZjVzROK01XcmQ2?=
+ =?utf-8?B?cGllWUpUSGNLWjYvNmtQbmxaU0MzZHQyU3lpY0x1NHRFL2w1eWNCTXIvU0sy?=
+ =?utf-8?B?Y2o5Yi9Vc2hUQUZYSXdrQ0ZaNUduQ3ZJMXlMSW0xVkVEeXp5MmxEMHp4WU95?=
+ =?utf-8?B?YzN1N3l4S0dtTm5WdStGNC9nUXRzdERwOU5uRVMvWUhRUjlGQzVOUVpHSW1x?=
+ =?utf-8?B?N0RoeFRRZUdLY3dtVkR6aE5zekZ1YjFSaWZaYmpWVzl3czZCNEd2aXVkUThE?=
+ =?utf-8?B?cDRCWTQ5Q2UrSFhCOGpZUDc4TThjbDN2UEJoUWlOdS95R0VDWVJOYW5UZFgw?=
+ =?utf-8?B?elppRm9ZMVoweVNOcTNOMEpmWHp0VTk1N1lZeGU5RWdQTFQ1TlBEcnBUeHFU?=
+ =?utf-8?B?SE12YVQyakVWZzlDZ0lMQjYyVmdmQVE4RXA4ZmlOWWt6blFlczcyTCtzdGZC?=
+ =?utf-8?B?WXduSWpabU0reVJGdVBINzZBUkd4ZzUyM091Vk1MeXFYQzl6elgxSW1EM3c4?=
+ =?utf-8?B?eTM1V0xZbmtPbmN3K044L051dHZKTktvOUVmTUtMekNMZUROSGFmckpHZnhQ?=
+ =?utf-8?B?TGhyYTljSVY0VUxCZVA4eGtwSm1LWUpyTkJWcWNFclRFZ2dvY1Vrc2w5OWZF?=
+ =?utf-8?B?a2JDTmxGOTlkYXFiUkRoS2JMNmVkN2kvMTh3aEZuQTJkbFhSUzdjR0pjQmZx?=
+ =?utf-8?B?RGxDZEhycnk0M0ovb1RDYTg1SkgxdHVmMkVkNU1vSlB6Mm50VWRoTVNwM2NU?=
+ =?utf-8?B?Z05ORjQyaEVBdWxKTDJZSS95R2lCbk9HRCtpS2U0Uzk1c1lRVTRjR0RTakJZ?=
+ =?utf-8?B?NjZyUy9Cd0VLSTQ1UGlCckl6TE5LNG5jQTVIVmVRWjhTTi92UDA0V0JLeEVr?=
+ =?utf-8?B?QUpsbmNEKzA5VStCOVdWSkZRSUdYL2N6NlA3M2pkTFh3a0VzY3BkVG1jNzNZ?=
+ =?utf-8?B?YnFwa0JDb0F2TVdubEhvMzU0VFhzeFU2U0RUbzFTZUhYRldKdTdWWm03ZmRP?=
+ =?utf-8?B?MnNRMG5uaWloZ08wU1JqYmNiSkk2cE51N0JZeFdsU2Vhd1diV2NaUXU3cmRr?=
+ =?utf-8?B?bU1DQTFPM0t2Uy96RVlIVjRkTEM4TnJBN1F6SzZXYVRnZ3RzNllMSjNBYVdY?=
+ =?utf-8?B?SDE4UUJWckRWTUtlV1RBOEpJQzBUSXNkM0crb1p0WmdKWGlqMnJIWlp0V25B?=
+ =?utf-8?B?MmxSdmFUeXZCVHhnWWd5Q2MyWVlUZUozdGdEMFI0Uy9mWUtZUzZ2ZkoxOTZV?=
+ =?utf-8?B?SlpqU0k1djZtbXNQOUxWczViQkpJWThWR1NHWmJnTTlOcDhnMzRKZWhqWTBH?=
+ =?utf-8?B?U1I3NzdEdDJMMjUrL0F4d1VLc25taTlFVGFaU1JPeXE0MFM1dlpBd09zN3lD?=
+ =?utf-8?B?OHJBWUNIOGFFb0gydlNLQjdSOTRiZG1jSm1WVEdJciswQXJIOUZsYkcvTzJw?=
+ =?utf-8?B?c1M2MVdkR3VhOEZzMldVRXFZTU0zOTNJZEVlKy9HMnBIMzRIN1ZzLzZKeXRS?=
+ =?utf-8?B?dUpxMkdldWppM2VDRENvSFFnNjZwdnBGb2FTVDlONCtIYVg0Mm9jdjUwWFkr?=
+ =?utf-8?B?RkdrZHBCa3B2MkV0akJ4aHRYeVV0bGpkYTJQRndaV1N1TmYvWGhRZ0ZwVnlP?=
+ =?utf-8?B?WFZIWGlwcVZ1L3lPUzY1eUhwY3RkT3VMTmljVURSN2I0OGg3cUxBZ2xzSVE2?=
+ =?utf-8?B?d2ZWSGxZVkxNMXJaTkphREYzOGphQnJXUVFtYzdNVVB2ZmgxeUN1a3hhNGNE?=
+ =?utf-8?B?VmJjcERKVFJTQTIzTkVkVFJVZSs5cWNmdnJuMTd2TVNWa1YxSjluZVZIUncz?=
+ =?utf-8?B?QTlaQlVzMGlnWk1jNTFVRjR0OHoyK2VpRHRjTjJXenZrbFJGemRWT1BnSjgv?=
+ =?utf-8?B?ZG1DL1liZUlqMWlzYzRMWGtTLy9CNFR1N3U2ZVcwbzlVYkpOYnVZc281NWF5?=
+ =?utf-8?B?OEFDZ05OenNNTnhQYTdkYUp0M1NNbjR3RmdOa0VvUVF4YUdUWU5ycXo2OGJ3?=
+ =?utf-8?B?TlBHM014RWsvTVZqODZJRzJ2Zzc0R04zOS9peU9iaVlRcDRORnpVVzFEeEt2?=
+ =?utf-8?B?Ylc2MDkyc1dGMXRIbU5EcE9NZ1F2TUMveXgweE5MWFVNSWtEcmZ5bU9aZXVL?=
+ =?utf-8?B?Q3J0WDl4SlQ1UHFRWUlheHRpbm1XM0NSSkw1OFJWajRjYzNoVjcrTFhyOGd6?=
+ =?utf-8?B?aVE9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5DCC88119722A442ABD1F4D40FA2D76E@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: B4TpYfM/qqEO5xmY0E+9GzZNfRKLRWQ+0l4zOYqE06dWXBYIG7NdR6DSclj+NO3n59pm4VtTqZIfx6wg6Dv2vpvthQ/Z3Le85HFTba29hXd9qCqFznQY/1qVgzWwvJBZjyVQq/CY+KErAHPViyErZS+IdvjVleFc3/Mx9NnKpOx+sHLUaXQjME+siWMqrzjlJfZL2eIuOSg1tqOaU2qHDraIv8lumlZg8+rfoydH61LBsNposG+jlcoH5NlZ8n4p/FPo5SByc1ZicfPSGgyhhRLHxvDpmbqmGFLd0WjfsfuKzujyE+3CBzLQeilFf2X4PEEjxN7MfPX88VZVA8yR2jhgAV1eThNTsJF2SEufGlokEI6mdf0s7A0d8gVrF8Zc1U8JI2eBqRt+6HOgO59iYJHZMb8zYWOsh4unOatq3KpNDVc3XZqYpV5hHEc7E/3XeoMGaNJ4p6saq06yj79ng05fy+PYW6CEWpwURFrMae6zqJhnSBJ0b8LGdsVziDRaRfbuuC84jqv6O5Tdq+I028zv2VMjApiYHk0r+XeL+dcUTonFr+IG+7LQ/SwZcGaSSe4CzS+WhneQPwmU39m+bLu9dnd3I7Z7pqzbLZuCd5KV3Q5RB2FLQ3bPtFYeZCTa
+X-OriginatorOrg: fujitsu.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LO4P265MB6666.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 10edafe6-5a85-499b-5932-08dc53be71e5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Apr 2024 09:14:19.8974 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: TYAPR01MB5818.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: def00751-87f6-47ea-7a6c-08dc53bed7df
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Apr 2024 09:17:10.9921 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 0d5fd8bb-e8c2-4e0a-8dd5-2c264f7140fe
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hjWWtdf8gM6qW/oaAkC/LM4+l4znecexIgKFIFo8gbE5RLV3gl78NoRnHrJQfqoM25qbKh6deEmwx4Az8BINTKhXrHvu2TI3KO9hZiFV+j0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO2P265MB3088
-X-OriginatorOrg: imgtec.com
-X-EXCLAIMER-MD-CONFIG: 15a78312-3e47-46eb-9010-2e54d84a9631
-X-Proofpoint-GUID: jQ0XXH0o3tplFYNHnR6elxmb5X8XvXF0
-X-Proofpoint-ORIG-GUID: jQ0XXH0o3tplFYNHnR6elxmb5X8XvXF0
-Received-SPF: pass client-ip=91.207.212.86;
- envelope-from=Simeon.Krastnikov@imgtec.com; helo=mx08-00376f01.pphosted.com
+X-MS-Exchange-CrossTenant-userprincipalname: ODJtWaIqWuF3EPDwVd3FaI3iKkNP2yJEU6twTcRSwpUpoRV1nvoPqqUxTmbV2SGAfMEoymXx7PCp0ZSzaiiN1g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSZPR01MB9411
+Received-SPF: pass client-ip=216.71.158.65; envelope-from=lizhijian@fujitsu.com;
+ helo=esa20.fujitsucc.c3s2.iphmx.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,304 +159,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* The immediate argument to lui/auipc should be an integer in the interval
- [0x0, 0xfffff]; e.g., 'auipc 0xfffff' and not 'auipc -1'
-* The floating-point rounding mode is the last operand to the function,
-  not the first; e.g., 'fcvt.w.s a0, fa0, rtz' and not 'fcvt.w.s rtz,
-a0, fa0'. Note that fcvt.d.w[u] and fcvt.w[u].d are unaffected by the
-rounding mode and hence it is omitted from their disassembly.
-* When aq and rl are both present, they are not separated by a '.';
-  e.g., 'lr.d.aqrl' and not 'lr.d.aq.rl'.
-
-Based on the following assembly reference:
-https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md
-
-Signed-off-by: Simeon Krastnikov <simeon.krastnikov@imgtec.com>
----
- disas/riscv.c | 144 ++++++++++++++++++++++++++------------------------
- disas/riscv.h |  10 ++--
- 2 files changed, 79 insertions(+), 75 deletions(-)
-
-diff --git a/disas/riscv.c b/disas/riscv.c
-index e236c8b5b7..71a3ab878f 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1311,98 +1311,98 @@ const rv_opcode_data rvi_opcode_data[] =3D {
-     { "csrrci", rv_codec_i_csr, rv_fmt_rd_csr_zimm, NULL, 0, 0, 0 },
-     { "flw", rv_codec_i, rv_fmt_frd_offset_rs1, NULL, 0, 0, 0 },
-     { "fsw", rv_codec_s, rv_fmt_frs2_offset_rs1, NULL, 0, 0, 0 },
--    { "fmadd.s", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0, =
-0 },
--    { "fmsub.s", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0, =
-0 },
--    { "fnmsub.s", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0,=
- 0 },
--    { "fnmadd.s", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0,=
- 0 },
--    { "fadd.s", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fsub.s", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fmul.s", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fdiv.s", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
-+    { "fmadd.s", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0, =
-0 },
-+    { "fmsub.s", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0, =
-0 },
-+    { "fnmsub.s", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0,=
- 0 },
-+    { "fnmadd.s", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0,=
- 0 },
-+    { "fadd.s", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fsub.s", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fmul.s", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fdiv.s", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-     { "fsgnj.s", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnj_s, 0, 0, 0 }=
-,
-     { "fsgnjn.s", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnjn_s, 0, 0, 0=
- },
-     { "fsgnjx.s", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnjx_s, 0, 0, 0=
- },
-     { "fmin.s", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
-     { "fmax.s", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fsqrt.s", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
-+    { "fsqrt.s", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-     { "fle.s", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
-     { "flt.s", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
-     { "feq.s", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fcvt.w.s", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.wu.s", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.s.w", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
--    { "fcvt.s.wu", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
-+    { "fcvt.w.s", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.wu.s", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.s.w", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.s.wu", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-     { "fmv.x.s", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
-     { "fclass.s", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
-     { "fmv.s.x", rv_codec_r, rv_fmt_frd_rs1, NULL, 0, 0, 0 },
--    { "fcvt.l.s", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.lu.s", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.s.l", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
--    { "fcvt.s.lu", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
-+    { "fcvt.l.s", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.lu.s", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.s.l", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.s.lu", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-     { "fld", rv_codec_i, rv_fmt_frd_offset_rs1, NULL, 0, 0, 0 },
-     { "fsd", rv_codec_s, rv_fmt_frs2_offset_rs1, NULL, 0, 0, 0 },
--    { "fmadd.d", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0, =
-0 },
--    { "fmsub.d", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0, =
-0 },
--    { "fnmsub.d", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0,=
- 0 },
--    { "fnmadd.d", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0,=
- 0 },
--    { "fadd.d", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fsub.d", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fmul.d", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fdiv.d", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
-+    { "fmadd.d", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0, =
-0 },
-+    { "fmsub.d", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0, =
-0 },
-+    { "fnmsub.d", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0,=
- 0 },
-+    { "fnmadd.d", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0,=
- 0 },
-+    { "fadd.d", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fsub.d", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fmul.d", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fdiv.d", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-     { "fsgnj.d", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnj_d, 0, 0, 0 }=
-,
-     { "fsgnjn.d", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnjn_d, 0, 0, 0=
- },
-     { "fsgnjx.d", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnjx_d, 0, 0, 0=
- },
-     { "fmin.d", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
-     { "fmax.d", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fcvt.s.d", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.d.s", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fsqrt.d", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
-+    { "fcvt.s.d", rv_codec_r_m, rv_fmt_frd_frs1, NULL, 0, 0, 0 },
-+    { "fcvt.d.s", rv_codec_r_m, rv_fmt_frd_frs1, NULL, 0, 0, 0 },
-+    { "fsqrt.d", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-     { "fle.d", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
-     { "flt.d", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
-     { "feq.d", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fcvt.w.d", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.wu.d", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.d.w", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
--    { "fcvt.d.wu", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
-+    { "fcvt.w.d", rv_codec_r_m, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
-+    { "fcvt.wu.d", rv_codec_r_m, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
-+    { "fcvt.d.w", rv_codec_r_m, rv_fmt_frd_rs1, NULL, 0, 0, 0 },
-+    { "fcvt.d.wu", rv_codec_r_m, rv_fmt_frd_rs1, NULL, 0, 0, 0 },
-     { "fclass.d", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.l.d", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.lu.d", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
-+    { "fcvt.l.d", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.lu.d", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-     { "fmv.x.d", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.d.l", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
--    { "fcvt.d.lu", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
-+    { "fcvt.d.l", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.d.lu", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-     { "fmv.d.x", rv_codec_r, rv_fmt_frd_rs1, NULL, 0, 0, 0 },
-     { "flq", rv_codec_i, rv_fmt_frd_offset_rs1, NULL, 0, 0, 0 },
-     { "fsq", rv_codec_s, rv_fmt_frs2_offset_rs1, NULL, 0, 0, 0 },
--    { "fmadd.q", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0, =
-0 },
--    { "fmsub.q", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0, =
-0 },
--    { "fnmsub.q", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0,=
- 0 },
--    { "fnmadd.q", rv_codec_r4_m, rv_fmt_rm_frd_frs1_frs2_frs3, NULL, 0, 0,=
- 0 },
--    { "fadd.q", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fsub.q", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fmul.q", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fdiv.q", rv_codec_r_m, rv_fmt_rm_frd_frs1_frs2, NULL, 0, 0, 0 },
-+    { "fmadd.q", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0, =
-0 },
-+    { "fmsub.q", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0, =
-0 },
-+    { "fnmsub.q", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0,=
- 0 },
-+    { "fnmadd.q", rv_codec_r4_m, rv_fmt_frd_frs1_frs2_frs3_rm, NULL, 0, 0,=
- 0 },
-+    { "fadd.q", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fsub.q", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fmul.q", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-+    { "fdiv.q", rv_codec_r_m, rv_fmt_frd_frs1_frs2_rm, NULL, 0, 0, 0 },
-     { "fsgnj.q", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnj_q, 0, 0, 0 }=
-,
-     { "fsgnjn.q", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnjn_q, 0, 0, 0=
- },
-     { "fsgnjx.q", rv_codec_r, rv_fmt_frd_frs1_frs2, rvcp_fsgnjx_q, 0, 0, 0=
- },
-     { "fmin.q", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
-     { "fmax.q", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fcvt.s.q", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.q.s", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.d.q", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.q.d", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fsqrt.q", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
-+    { "fcvt.s.q", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.q.s", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.d.q", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.q.d", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fsqrt.q", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-     { "fle.q", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
-     { "flt.q", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
-     { "feq.q", rv_codec_r, rv_fmt_rd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fcvt.w.q", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.wu.q", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.q.w", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
--    { "fcvt.q.wu", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
-+    { "fcvt.w.q", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.wu.q", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.q.w", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.q.wu", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-     { "fclass.q", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.l.q", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.lu.q", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.q.l", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
--    { "fcvt.q.lu", rv_codec_r_m, rv_fmt_rm_frd_rs1, NULL, 0, 0, 0 },
-+    { "fcvt.l.q", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.lu.q", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.q.l", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.q.lu", rv_codec_r_m, rv_fmt_frd_rs1_rm, NULL, 0, 0, 0 },
-     { "fmv.x.q", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
-     { "fmv.q.x", rv_codec_r, rv_fmt_frd_rs1, NULL, 0, 0, 0 },
-     { "c.addi4spn", rv_codec_ciw_4spn, rv_fmt_rd_rs1_imm, NULL, rv_op_addi=
-,
-@@ -2009,8 +2009,8 @@ const rv_opcode_data rvi_opcode_data[] =3D {
-     { "cm.jalt", rv_codec_zcmt_jt, rv_fmt_zcmt_index, NULL, 0 },
-     { "czero.eqz", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     { "czero.nez", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
--    { "fcvt.bf16.s", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fcvt.s.bf16", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
-+    { "fcvt.bf16.s", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvt.s.bf16", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-     { "vfncvtbf16.f.f.w", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-     { "vfwcvtbf16.f.f.v", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-     { "vfwmaccbf16.vv", rv_codec_v_r, rv_fmt_vd_vs1_vs2_vm, NULL, 0, 0, 0 =
-},
-@@ -2031,15 +2031,15 @@ const rv_opcode_data rvi_opcode_data[] =3D {
-     { "fmaxm.q", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
-     { "fminm.h", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
-     { "fmaxm.h", rv_codec_r, rv_fmt_frd_frs1_frs2, NULL, 0, 0, 0 },
--    { "fround.s", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "froundnx.s", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fround.d", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "froundnx.d", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fround.q", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "froundnx.q", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fround.h", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "froundnx.h", rv_codec_r_m, rv_fmt_rm_frd_frs1, NULL, 0, 0, 0 },
--    { "fcvtmod.w.d", rv_codec_r_m, rv_fmt_rm_rd_frs1, NULL, 0, 0, 0 },
-+    { "fround.s", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "froundnx.s", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fround.d", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "froundnx.d", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fround.q", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "froundnx.q", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fround.h", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "froundnx.h", rv_codec_r_m, rv_fmt_frd_frs1_rm, NULL, 0, 0, 0 },
-+    { "fcvtmod.w.d", rv_codec_r_m, rv_fmt_rd_frs1_rm, NULL, 0, 0, 0 },
-     { "fmvh.x.d", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
-     { "fmvp.d.x", rv_codec_r, rv_fmt_frd_rs1_rs2, NULL, 0, 0, 0 },
-     { "fmvh.x.q", rv_codec_r, rv_fmt_rd_frs1, NULL, 0, 0, 0 },
-@@ -4854,7 +4854,8 @@ static void format_inst(char *buf, size_t buflen, siz=
-e_t tab, rv_decode *dec)
-             break;
-         case 'U':
-             fmt++;
--            snprintf(tmp, sizeof(tmp), "%d", dec->imm >> 12);
-+            uint32_t uimm =3D dec->imm >=3D 0 ? dec->imm : ((1 << 20) + de=
-c->imm);
-+            snprintf(tmp, sizeof(tmp), "0x%" PRIx32, uimm >> 12);
-             append(buf, tmp, buflen);
-             if (*fmt =3D=3D 'o') {
-                 while (strlen(buf) < tab * 2) {
-@@ -4939,7 +4940,10 @@ static void format_inst(char *buf, size_t buflen, si=
-ze_t tab, rv_decode *dec)
-             }
-             break;
-         case 'R':
--            if (dec->rl) {
-+            if (dec->aq && dec->rl) {
-+                append(buf, "rl", buflen);
-+            }
-+            else if (dec->rl) {
-                 append(buf, ".rl", buflen);
-             }
-             break;
-diff --git a/disas/riscv.h b/disas/riscv.h
-index 16a08e4895..a7a2a49971 100644
---- a/disas/riscv.h
-+++ b/disas/riscv.h
-@@ -237,11 +237,11 @@ enum {
- #define rv_fmt_rd_frs1                "O\t0,4"
- #define rv_fmt_rd_frs1_frs2           "O\t0,4,5"
- #define rv_fmt_frd_frs1_frs2          "O\t3,4,5"
--#define rv_fmt_rm_frd_frs1            "O\tr,3,4"
--#define rv_fmt_rm_frd_rs1             "O\tr,3,1"
--#define rv_fmt_rm_rd_frs1             "O\tr,0,4"
--#define rv_fmt_rm_frd_frs1_frs2       "O\tr,3,4,5"
--#define rv_fmt_rm_frd_frs1_frs2_frs3  "O\tr,3,4,5,6"
-+#define rv_fmt_frd_frs1_rm            "O\t3,4,r"
-+#define rv_fmt_frd_rs1_rm             "O\t3,1,r"
-+#define rv_fmt_rd_frs1_rm             "O\t0,4,r"
-+#define rv_fmt_frd_frs1_frs2_rm       "O\t3,4,5,r"
-+#define rv_fmt_frd_frs1_frs2_frs3_rm  "O\t3,4,5,6,r"
- #define rv_fmt_rd_rs1_imm             "O\t0,1,i"
- #define rv_fmt_rd_rs1_offset          "O\t0,1,i"
- #define rv_fmt_rd_offset_rs1          "O\t0,i(1)"
---
-2.25.1
+DQoNCk9uIDAzLzA0LzIwMjQgMTE6NDIsIExpIFpoaWppYW4gd3JvdGU6DQo+IA0KPiANCj4gT24g
+MDIvMDQvMjAyNCAxNzoxNywgSm9uYXRoYW4gQ2FtZXJvbiB3cm90ZToNCj4+IE9uIFR1ZSzCoCAy
+IEFwciAyMDI0IDA5OjQ2OjQ3ICswODAwDQo+PiBMaSBaaGlqaWFuIDxsaXpoaWppYW5AZnVqaXRz
+dS5jb20+IHdyb3RlOg0KPj4NCj4+PiBBZnRlciB0aGUga2VybmVsIGNvbW1pdA0KPj4+IDBjYWI2
+ODcyMDU5OCAoImN4bC9wY2k6IEZpeCBkaXNhYmxpbmcgbWVtb3J5IGlmIERWU0VDIENYTCBSYW5n
+ZSBkb2VzIG5vdCBtYXRjaCBhIENGTVdTIHdpbmRvdyIpDQo+Pg0KPj4gRml4ZXMgdGFnIHNlZW1z
+IGFwcHJvcHJpYXRlLg0KPj4NCj4+PiBDWEwgdHlwZTMgZGV2aWNlcyBjYW5ub3QgYmUgZW5hYmxl
+ZCBhZ2FpbiBhZnRlciB0aGUgcmVib290IGJlY2F1c2UgdGhpcw0KPj4+IGZsYWcgd2FzIG5vdCBy
+ZXNldC4NCj4+Pg0KPj4+IFRoaXMgZmxhZyBjb3VsZCBiZSBjaGFuZ2VkIGJ5IHRoZSBmaXJtd2Fy
+ZSBvciBPUywgbGV0IGl0IGhhdmUgYQ0KPj4+IHJlc2V0KGRlZmF1bHQpIHZhbHVlIGluIHJlYm9v
+dCBzbyB0aGF0IHRoZSBPUyBjYW4gcmVhZCBpdHMgY2xlYW4gc3RhdHVzLg0KPj4NCj4+IEdvb2Qg
+ZmluZC7CoCBJIHRoaW5rIHdlIHNob3VsZCBhaW0gZm9yIGEgZml4IHRoYXQgaXMgbGVzcyBmcmFn
+aWxlIHRvIGZ1dHVyZQ0KPj4gY29kZSByZWFycmFuZ2VtZW50IGV0Yy4NCj4+DQo+Pj4NCj4+PiBT
+aWduZWQtb2ZmLWJ5OiBMaSBaaGlqaWFuIDxsaXpoaWppYW5AZnVqaXRzdS5jb20+DQo+Pj4gLS0t
+DQo+Pj4gwqAgaHcvbWVtL2N4bF90eXBlMy5jIHwgMTQgKysrKysrKysrKysrKy0NCj4+PiDCoCAx
+IGZpbGUgY2hhbmdlZCwgMTMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPj4+DQo+Pj4g
+ZGlmZiAtLWdpdCBhL2h3L21lbS9jeGxfdHlwZTMuYyBiL2h3L21lbS9jeGxfdHlwZTMuYw0KPj4+
+IGluZGV4IGFkMmZlN2Q0NjNmYi4uM2ZlMTM2MDUzMzkwIDEwMDY0NA0KPj4+IC0tLSBhL2h3L21l
+bS9jeGxfdHlwZTMuYw0KPj4+ICsrKyBiL2h3L21lbS9jeGxfdHlwZTMuYw0KPj4+IEBAIC0zMDUs
+NyArMzA1LDggQEAgc3RhdGljIHZvaWQgYnVpbGRfZHZzZWNzKENYTFR5cGUzRGV2ICpjdDNkKQ0K
+Pj4+IMKgwqDCoMKgwqAgZHZzZWMgPSAodWludDhfdCAqKSYoQ1hMRFZTRUNEZXZpY2Upew0KPj4+
+IMKgwqDCoMKgwqDCoMKgwqDCoCAuY2FwID0gMHgxZSwNCj4+PiAtwqDCoMKgwqDCoMKgwqAgLmN0
+cmwgPSAweDIsDQo+Pj4gKyNkZWZpbmUgQ1QzRF9ERVZTRUNfQ1hMX0NUUkwgMHgyDQo+Pj4gK8Kg
+wqDCoMKgwqDCoMKgIC5jdHJsID0gQ1QzRF9ERVZTRUNfQ1hMX0NUUkwsDQo+PiBOYW1pbmcgZG9l
+c24ndCBtYWtlIGl0IGNsZWFyIHRoZSBkZWZpbmUgaXMgYSByZXNldCB2YWx1ZSAvIGRlZmF1bHQg
+dmFsdWU+PsKgwqDCoMKgwqDCoMKgwqDCoMKgIC5zdGF0dXMyID0gMHgyLA0KPj4+IMKgwqDCoMKg
+wqDCoMKgwqDCoCAucmFuZ2UxX3NpemVfaGkgPSByYW5nZTFfc2l6ZV9oaSwNCj4+PiDCoMKgwqDC
+oMKgwqDCoMKgwqAgLnJhbmdlMV9zaXplX2xvID0gcmFuZ2UxX3NpemVfbG8sDQo+Pj4gQEAgLTkw
+Niw2ICs5MDcsMTYgQEAgTWVtVHhSZXN1bHQgY3hsX3R5cGUzX3dyaXRlKFBDSURldmljZSAqZCwg
+aHdhZGRyIGhvc3RfYWRkciwgdWludDY0X3QgZGF0YSwNCj4+PiDCoMKgwqDCoMKgIHJldHVybiBh
+ZGRyZXNzX3NwYWNlX3dyaXRlKGFzLCBkcGFfb2Zmc2V0LCBhdHRycywgJmRhdGEsIHNpemUpOw0K
+Pj4+IMKgIH0NCj4+PiArLyogUmVzZXQgRFZTRUMgQ1hMIENvbnRyb2wgKi8NCj4+PiArc3RhdGlj
+IHZvaWQgY3QzZF9kdnNlY19jeGxfY3RybF9yZXNldChDWExUeXBlM0RldiAqY3QzZCkNCj4+PiAr
+ew0KPj4+ICvCoMKgwqAgdWludDE2X3Qgb2Zmc2V0ID0gZmlyc3RfZHZzZWNfb2Zmc2V0KGN0M2Qp
+Ow0KPj4NCj4+IFRoaXMgcmVsaWVzIHRvIG11Y2ggb24gdGhlIGN1cnJlbnQgbWVtb3J5IGxheW91
+dC7CoCBXZSBzaG91bGQgZG9pbmcgYSBzZWFyY2gNCj4+IG9mIGNvbmZpZyBzcGFjZSB0byBmaW5k
+IHRoZSByaWdodCBlbnRyeSwNCj4gDQo+IE9mIGNvdXJzZSwgdGhpcyBvcHRpb24gaXMgcmVsaWFi
+bGUgYW5kIHBvcnRhYmxlLg0KPiANCj4gTXkgdGhvdWdodCB3YXMgdGhhdCBidWlsZF9kdnNlY3Mo
+KSBhbmQgdGhlIF9yZXNldCgpIGFyZSBzdGF0aWMoaW50ZXJuYWwgdXNlZCksDQo+IHRoZWlyIGNh
+bGxlcnMgc2hvdWxkIGhhdmUgdGhlIHJlc3BvbnNpYmlsaXR5IHRvIGtlZXAgdGhlIGNvbmZpZ3Vy
+ZSBzcGFjZS9EVlNFQ1MgbGF5b3V0IGNvbnNpc3RlbnQuDQo+IFNvIEknbSB3b25kZXJpbmcgaWYg
+aXMgaXQgdG9vIGhlYXZ5IHRvIGhhdmUgYSAqbmV3KiBfZmluZCgpIHN1YnJvdXRpbmUgZm9yIGl0
+Lg0KPiANCj4gDQo+IEFub3RoZXIgb3B0aW9uIGNvdWxkIGJlIHJlYnVpbGQgdGhlIGFsbCB0aGUg
+RFZTRUNzIHNpbXBseSBhZnRlciB1cGRhdGVkIHRoZSAqb2Zmc2V0KiwganVzdCBsaWtlOg0KPiAN
+Cg0KDQo+IHZvaWQgcmVzZXRfZGV2c2VzKCkNCj4gew0KPiAgwqDCoMKgwqAgY3hsLT5kdnNlY19v
+ZmZzZXQgPSBPRkZTRVRfVE9fRklSU1RfRFZTRUM7DQo+ICDCoMKgwqDCoCBidWlsZF9kdnNlY3Mo
+KTsNCj4gfQ0KDQpJbiB0aGlzIG9wdGlvbiwgaSBhbHNvIHByb3Bvc2UgdG8gbW92ZSAnY3hsLT5k
+dnNlY19vZmZzZXQgPSBPRkZTRVRfVE9fRklSU1RfRFZTRUMnIGluc2lkZSBidWlsZF9kdnNlY3Mo
+KQ0Kc28gdGhhdCBidWlsZF9kdnNlY3MoKSBjb3VsZCBtYWludGFpbiBpdHMgb2Zmc2V0IGNvbXBs
+ZXRlbHkuDQoNCitzdGF0aWMgdWludDE2X3QgZmlyc3RfZHZzZWNfb2Zmc2V0KENYTFR5cGUzRGV2
+ICpjdDNkKQ0KK3sNCisgICAgdWludDE2X3Qgb2Zmc2V0ID0gUENJX0NPTkZJR19TUEFDRV9TSVpF
+Ow0KKw0KKyAgICBpZiAoY3QzZC0+c24gIT0gVUk2NF9OVUxMKSB7DQorICAgICAgICBvZmZzZXQg
+Kz0gUENJX0VYVF9DQVBfRFNOX1NJWkVPRjsNCisgICAgfQ0KKw0KKyAgICByZXR1cm4gb2Zmc2V0
+Ow0KK30NCisNCiAgc3RhdGljIHZvaWQgYnVpbGRfZHZzZWNzKENYTFR5cGUzRGV2ICpjdDNkKQ0K
+ICB7DQogICAgICBDWExDb21wb25lbnRTdGF0ZSAqY3hsX2NzdGF0ZSA9ICZjdDNkLT5jeGxfY3N0
+YXRlOw0KQEAgLTI4NCw2ICsyOTUsOCBAQCBzdGF0aWMgdm9pZCBidWlsZF9kdnNlY3MoQ1hMVHlw
+ZTNEZXYgKmN0M2QpDQogICAgICAgICAgICAgICByYW5nZTJfc2l6ZV9oaSA9IDAsIHJhbmdlMl9z
+aXplX2xvID0gMCwNCiAgICAgICAgICAgICAgIHJhbmdlMl9iYXNlX2hpID0gMCwgcmFuZ2UyX2Jh
+c2VfbG8gPSAwOw0KICANCisgICAgLyogZHZzZWNfb2Zmc2V0IHNob3VsZCBwb2ludCB0byB0aGUg
+Zmlyc3QgZHZzZWMgKi8NCisgICAgY3hsX2NzdGF0ZS0+ZHZzZWNfb2Zmc2V0ID0gZmlyc3RfZHZz
+ZWNfb2Zmc2V0KGN0M2QpOw0KICAgICAgLyoNCiAgICAgICAqIFZvbGF0aWxlIG1lbW9yeSBpcyBt
+YXBwZWQgYXMgKDB4MCkNCiAgICAgICAqIFBlcnNpc3RlbnQgbWVtb3J5IGlzIG1hcHBlZCBhdCAo
+dm9sYXRpbGUtPnNpemUpDQpAQCAtNjY0LDEwICs2NzcsNyBAQCBzdGF0aWMgdm9pZCBjdDNfcmVh
+bGl6ZShQQ0lEZXZpY2UgKnBjaV9kZXYsIEVycm9yICoqZXJycCkNCiAgDQogICAgICBwY2llX2Vu
+ZHBvaW50X2NhcF9pbml0KHBjaV9kZXYsIDB4ODApOw0KICAgICAgaWYgKGN0M2QtPnNuICE9IFVJ
+NjRfTlVMTCkgew0KLSAgICAgICAgcGNpZV9kZXZfc2VyX251bV9pbml0KHBjaV9kZXYsIDB4MTAw
+LCBjdDNkLT5zbik7DQotICAgICAgICBjeGxfY3N0YXRlLT5kdnNlY19vZmZzZXQgPSAweDEwMCAr
+IDB4MGM7DQotICAgIH0gZWxzZSB7DQotICAgICAgICBjeGxfY3N0YXRlLT5kdnNlY19vZmZzZXQg
+PSAweDEwMDsNCisgICAgICAgIHBjaWVfZGV2X3Nlcl9udW1faW5pdChwY2lfZGV2LCBQQ0lfQ09O
+RklHX1NQQUNFX1NJWkUsIGN0M2QtPnNuKTsNCiAgICAgIH0NCiAgDQogICAgICBjdDNkLT5jeGxf
+Y3N0YXRlLnBkZXYgPSBwY2lfZGV2Ow0KQEAgLTg5OSw2ICs5MDksMTEgQEAgTWVtVHhSZXN1bHQg
+Y3hsX3R5cGUzX3dyaXRlKFBDSURldmljZSAqZCwgaHdhZGRyIGhvc3RfYWRkciwgdWludDY0X3Qg
+ZGF0YSwNCiAgICAgIHJldHVybiBhZGRyZXNzX3NwYWNlX3dyaXRlKGFzLCBkcGFfb2Zmc2V0LCBh
+dHRycywgJmRhdGEsIHNpemUpOw0KICB9DQogIA0KK3N0YXRpYyB2b2lkIGN0M2RfZHZzZWNzX3Jl
+c2V0KENYTFR5cGUzRGV2ICpjdDNkKQ0KK3sNCisgICAgYnVpbGRfZHZzZWNzKGN0M2QpOw0KK30N
+CisNCiAgc3RhdGljIHZvaWQgY3QzZF9yZXNldChEZXZpY2VTdGF0ZSAqZGV2KQ0KICB7DQogICAg
+ICBDWExUeXBlM0RldiAqY3QzZCA9IENYTF9UWVBFMyhkZXYpOw0KQEAgLTkwNyw2ICs5MjIsNyBA
+QCBzdGF0aWMgdm9pZCBjdDNkX3Jlc2V0KERldmljZVN0YXRlICpkZXYpDQogIA0KICAgICAgY3hs
+X2NvbXBvbmVudF9yZWdpc3Rlcl9pbml0X2NvbW1vbihyZWdfc3RhdGUsIHdyaXRlX21zaywgQ1hM
+Ml9UWVBFM19ERVZJQ0UpOw0KICAgICAgY3hsX2RldmljZV9yZWdpc3Rlcl9pbml0X3QzKGN0M2Qp
+Ow0KKyAgICBjdDNkX2R2c2Vjc19yZXNldChjdDNkKTsNCg0KDQoNCj4gDQo+IEl0J3MgcmVhc29u
+YWJsZSBiZWNhdXNlIHdlIG91Z2h0IHRvIGVuc3VyZSAqYWxsKiB0aGUgRFZTRUNzIGJlaW5nIHJl
+c2V0IGluIG5leHQgYm9vdC4NCj4gDQo+IExldCBtZSBrbm93IHlvdXIgdGhvdWdodC4NCj4gDQo+
+IFRoYW5rcw0KPiBaaGlqaWFuDQo+IA0KPiANCj4+IG9yIHdlIHNob3VsZCBjYWNoZSBhIHBvaW50
+ZXIgdG8NCj4+IHRoZSByZWxldmFudCBzdHJ1Y3R1cmUgd2hlbiB3ZSBmaWxsIGl0IGluIHRoZSBm
+aXJzdCB0aW1lLg0KPiANCj4gDQo+Pg0KPj4+ICvCoMKgwqAgQ1hMRFZTRUNEZXZpY2UgKmR2c2Vj
+Ow0KPj4+ICsNCj4+PiArwqDCoMKgIGR2c2VjID0gKENYTERWU0VDRGV2aWNlICopKGN0M2QtPmN4
+bF9jc3RhdGUucGRldi0+Y29uZmlnICsgb2Zmc2V0KTsNCj4+PiArwqDCoMKgIGR2c2VjLT5jdHJs
+ID0gQ1QzRF9ERVZTRUNfQ1hMX0NUUkw7DQo+Pj4gK30NCj4+PiArDQo+Pj4gwqAgc3RhdGljIHZv
+aWQgY3QzZF9yZXNldChEZXZpY2VTdGF0ZSAqZGV2KQ0KPj4+IMKgIHsNCj4+PiDCoMKgwqDCoMKg
+IENYTFR5cGUzRGV2ICpjdDNkID0gQ1hMX1RZUEUzKGRldik7DQo+Pj4gQEAgLTkxNCw2ICs5MjUs
+NyBAQCBzdGF0aWMgdm9pZCBjdDNkX3Jlc2V0KERldmljZVN0YXRlICpkZXYpDQo+Pj4gwqDCoMKg
+wqDCoCBjeGxfY29tcG9uZW50X3JlZ2lzdGVyX2luaXRfY29tbW9uKHJlZ19zdGF0ZSwgd3JpdGVf
+bXNrLCBDWEwyX1RZUEUzX0RFVklDRSk7DQo+Pj4gwqDCoMKgwqDCoCBjeGxfZGV2aWNlX3JlZ2lz
+dGVyX2luaXRfdDMoY3QzZCk7DQo+Pj4gK8KgwqDCoCBjdDNkX2R2c2VjX2N4bF9jdHJsX3Jlc2V0
+KGN0M2QpOw0KPj4+IMKgwqDCoMKgwqAgLyoNCj4+PiDCoMKgwqDCoMKgwqAgKiBCcmluZyB1cCBh
+biBlbmRwb2ludCB0byB0YXJnZXQgd2l0aCBNQ1RQIG92ZXIgVkRNLg0KPj4=
 
