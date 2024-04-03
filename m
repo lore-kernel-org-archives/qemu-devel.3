@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2655C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 02:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE95CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 03:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrqGQ-0000i4-6d; Tue, 02 Apr 2024 22:22:10 -0400
+	id 1rrr7O-00089s-A7; Tue, 02 Apr 2024 23:16:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rrqGL-0000hK-H4; Tue, 02 Apr 2024 22:22:06 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1rrr7J-00086b-Oh; Tue, 02 Apr 2024 23:16:49 -0400
+Received: from szxga01-in.huawei.com ([45.249.212.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rrqGI-0007Pi-2F; Tue, 02 Apr 2024 22:22:05 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.234])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4V8T2S6pCrz1h53y;
- Wed,  3 Apr 2024 10:18:56 +0800 (CST)
+ id 1rrr7F-0006iN-Sb; Tue, 02 Apr 2024 23:16:49 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.194])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4V8VFm2FxCzwR46;
+ Wed,  3 Apr 2024 11:13:48 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 2FC4214011A;
- Wed,  3 Apr 2024 10:21:42 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id CFC0B14010C;
+ Wed,  3 Apr 2024 11:16:35 +0800 (CST)
 Received: from [10.67.109.254] (10.67.109.254) by
  kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 3 Apr 2024 10:21:41 +0800
-Message-ID: <28ccee86-b6ca-8609-d528-10ec74bdc9db@huawei.com>
-Date: Wed, 3 Apr 2024 10:21:40 +0800
+ 15.1.2507.35; Wed, 3 Apr 2024 11:16:35 +0800
+Message-ID: <6ff19301-8791-384e-bd40-5f58058f4234@huawei.com>
+Date: Wed, 3 Apr 2024 11:16:34 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.0
@@ -47,16 +47,16 @@ In-Reply-To: <CAFEAcA_WY04voee07n6Ph606xqy=QvTkYdMyqYf5LMHUS5GcDw@mail.gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
 X-Spam_score_int: -45
 X-Spam_score: -4.6
 X-Spam_bar: ----
 X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.376,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,10 +159,6 @@ On 2024/4/3 0:12, Peter Maydell wrote:
 > 
 > You could write this a little more concisely as
 >       bool thisnmi = cs->gic_nmi_support && (lr & ICH_LR_EL2_NMI);
-
-If the following if check continues, the operations are unnecessary, so
-I think it's more appropriate to put it as thisprio operations do it.
-
 > 
 >>          if (ich_lr_state(lr) != ICH_LR_EL2_STATE_PENDING) {
 >>              /* Not Pending */
@@ -246,6 +242,11 @@ I think it's more appropriate to put it as thisprio operations do it.
 >         bool nmi = cs->gic->nmi_support &&
 >             (env->cp15.sctlr_el[arm_current_el(env)] & SCTLR_NMI) &&
 >             (lr & ICH_LR_EL2_NMI);
+
+The nmi_support check is redundant, as if FEAT_GICv3_NMI is unsupported,
+the ICH_LR_EL2.NMI is RES0, so if ICH_LR_EL2.NMI is 1, FEAT_GICv3_NMI
+has been surely realized.
+
 > 
 > and then you can check "if (!nmi)" here.
 > 
