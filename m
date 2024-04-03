@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4B0CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 12:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C26CD128A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 13:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rs07Q-00042n-Op; Wed, 03 Apr 2024 08:53:32 -0400
+	id 1rs0no-00057a-5u; Wed, 03 Apr 2024 09:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rs07O-00042V-CR
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:53:30 -0400
-Received: from mail-ej1-f52.google.com ([209.85.218.52])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rs07M-0002yy-Hl
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:53:30 -0400
-Received: by mail-ej1-f52.google.com with SMTP id
- a640c23a62f3a-a517a492055so22310366b.1
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 05:53:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712148803; x=1712753603;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q4cj6vg+PLMD3bnAnC/7BKVkE+A86qwqaG5PcVTOt18=;
- b=j3gFZbmAFeLouKcoZ48PyCad2L7cg8HV2twDaOeEDbvSnoa17JjKQPZBSZy1GQoJKP
- YlqNQ2SJIwGQZN0EdBB48C/vqFrt6LGxP5s1RwPNvZsNeJpMRo5NjiX4bi8tww1PEkxX
- mG2WfjVCp8EMPmg94+hY5s8bXyJBIPgq2hxFiFd69x3Am1RRPWznfzo+lEK9zwMU288w
- qTnzagOjVS57RoMY/GJxXYMGpdBdPn49eJb7R2OtDn9vRl6YbkAWP89YUlRuJgdsJ8UB
- RLy0RKDrtnzdiXR3jE/1D0iPhMhNmhVo9aV1a2LKNM0TKd4e5L1DEYlMFEyb91lLJfnG
- BitQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVEFcVN8wSd/ObnbPBu+wWiCYVpmSoF1igkSGEPSaJZP9GzIhzjWVMaJUtdVTXrY1AnKDzWF09Tk8Fz0/W4Sbx6Qtr3zQ4=
-X-Gm-Message-State: AOJu0YybE+T4R2hYzRUcA2XgxmFBLRf5tZne3e1DGSP5RTiF6A89STZf
- vPr7C3WVE+osVJJHTS0dK8ZvnUbzonqqQK2ZOM+/b2FGC1ye/irG
-X-Google-Smtp-Source: AGHT+IG/LZvkvkvKke8uVXcXbrYjZ9FSvr+Pm5+/tdlPUCoe15E1D9VDt24wooC2fGJfQa9Hdwxe2A==
-X-Received: by 2002:a17:906:2284:b0:a4e:39f1:6374 with SMTP id
- p4-20020a170906228400b00a4e39f16374mr1812470eja.24.1712148803105; 
- Wed, 03 Apr 2024 05:53:23 -0700 (PDT)
-Received: from gmail.com (fwdproxy-lla-007.fbsv.net.
- [2a03:2880:30ff:7::face:b00c]) by smtp.gmail.com with ESMTPSA id
- an3-20020a17090656c300b00a4e7c2b2070sm2694127ejc.8.2024.04.03.05.53.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Apr 2024 05:53:16 -0700 (PDT)
-Date: Wed, 3 Apr 2024 05:53:12 -0700
-From: Breno Leitao <leitao@debian.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: hengqi@linux.alibaba.com, xuanzhuo@linux.alibaba.com,
- Jason Wang <jasowang@redhat.com>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Melnychenko <andrew@daynix.com>, rbc@meta.com,
- riel@surriel.com, stable@vger.kernel.org, qemu-devel@nongnu.org,
- "open list:VIRTIO CORE AND NET DRIVERS" <virtualization@lists.linux.dev>,
- "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH net v3] virtio_net: Do not send RSS key if it is not
- supported
-Message-ID: <Zg1ROBmnY0jaKvsf@gmail.com>
-References: <20240329171641.366520-1-leitao@debian.org>
- <20240331160618-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <kirill.shutemov@linux.intel.com>)
+ id 1rs0nj-00057I-No
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 09:37:16 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kirill.shutemov@linux.intel.com>)
+ id 1rs0nh-0006AM-Ik
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 09:37:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712151432; x=1743687432;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=XEHj3c3nj2E1N1WGsIp8LhGRbiN0XyxURglFs1/jb1U=;
+ b=RJjM25F7WvVslKTcoTRpzMj1RI0pOaxPoMyo9vQWtpCsi3XbKkPLhRnG
+ xfOshP9lHL9vFhDIzwILqm5aIe8AlwebD5ZIPWRXF52MtI5QGOgtJq3Sf
+ 8KwarYwidfesIxGD+0GxgneSQ7FALb9THdFuubpW1Jo2U2hEfoAboezcu
+ doscx5pdr2e4gjE4imXTuokqKaTdhfxqr7r/Sde0/u/G+gGSDoC3LX10t
+ t/f9oF07zt3xB3ayZq/MIG2I9n08zPQ5zcqkusCEPfSHpxInLURMNYMjl
+ 6FL+Jy/m56gLGvT+YSvEqrIG3jgoHl9Zx++rUHb/olNq06SOM4eZ8lFuo A==;
+X-CSE-ConnectionGUID: 78pAdP8kSYWDdDdQFZtU5g==
+X-CSE-MsgGUID: LbeRPiA+RwGLeEAKVPDo8g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11033"; a="17954840"
+X-IronPort-AV: E=Sophos;i="6.07,177,1708416000"; d="scan'208";a="17954840"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Apr 2024 06:37:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11033"; a="937085050"
+X-IronPort-AV: E=Sophos;i="6.07,177,1708416000"; d="scan'208";a="937085050"
+Received: from black.fi.intel.com ([10.237.72.28])
+ by fmsmga001.fm.intel.com with ESMTP; 03 Apr 2024 06:37:06 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1000)
+ id E716657D; Wed,  3 Apr 2024 16:37:04 +0300 (EEST)
+Date: Wed, 3 Apr 2024 16:37:04 +0300
+From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org, 
+ isaku.yamahata@intel.com
+Subject: Re: [PATCH] hw/i386/acpi: Set PCAT_COMPAT bit only when pic is not
+ disabled
+Message-ID: <pludfku3el7l5qgilmxio56m5ld6nq2mn2icgic6i7kfn3p2je@bes2h4y7k2xz>
+References: <20240402082516.2921143-1-xiaoyao.li@intel.com>
+ <20240402060109-mutt-send-email-mst@kernel.org>
+ <d3a3c9bc-a783-4293-bd1b-b00135ec2685@intel.com>
+ <20240402103123-mutt-send-email-mst@kernel.org>
+ <f887c77a-bb8c-46cf-aedc-1637bd7ad08e@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240331160618-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=209.85.218.52;
- envelope-from=breno.debian@gmail.com; helo=mail-ej1-f52.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f887c77a-bb8c-46cf-aedc-1637bd7ad08e@intel.com>
+Received-SPF: none client-ip=198.175.65.11;
+ envelope-from=kirill.shutemov@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,33 +91,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 31, 2024 at 04:20:30PM -0400, Michael S. Tsirkin wrote:
-> On Fri, Mar 29, 2024 at 10:16:41AM -0700, Breno Leitao wrote:
-> > @@ -3814,13 +3815,24 @@ static int virtnet_set_rxfh(struct net_device *dev,
-> >  		return -EOPNOTSUPP;
-> >  
-> >  	if (rxfh->indir) {
-> > +		if (!vi->has_rss)
-> > +			return -EOPNOTSUPP;
-> > +
-> >  		for (i = 0; i < vi->rss_indir_table_size; ++i)
-> >  			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
-> > +		update = true;
-> >  	}
-> > -	if (rxfh->key)
-> > +
-> > +	if (rxfh->key) {
-> > +		if (!vi->has_rss && !vi->has_rss_hash_report)
-> > +			return -EOPNOTSUPP;
+On Wed, Apr 03, 2024 at 10:03:15AM +0800, Xiaoyao Li wrote:
+> On 4/2/2024 10:31 PM, Michael S. Tsirkin wrote:
+> > On Tue, Apr 02, 2024 at 09:18:44PM +0800, Xiaoyao Li wrote:
+> > > On 4/2/2024 6:02 PM, Michael S. Tsirkin wrote:
+> > > > On Tue, Apr 02, 2024 at 04:25:16AM -0400, Xiaoyao Li wrote:
+> > > > > Set MADT.FLAGS[bit 0].PCAT_COMPAT based on x86ms->pic.
+> > > > > 
+> > > > > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > > > 
+> > > > Please include more info in the commit log:
+> > > > what is the behaviour you observe, why it is wrong,
+> > > > how does the patch fix it, what is guest behaviour
+> > > > before and after.
+> > > 
+> > > Sorry, I thought it was straightforward.
+> > > 
+> > > A value 1 of PCAT_COMPAT (bit 0) of MADT.Flags indicates that the system
+> > > also has a PC-AT-compatible dual-8259 setup, i.e., the PIC.
+> > > 
+> > > When PIC is not enabled for x86 machine, the PCAT_COMPAT bit needs to be
+> > > cleared. Otherwise, the guest thinks there is a present PIC even it is
+> > > booted with pic=off on QEMU.
+> > > 
+> > > (I haven't seen real issue from Linux guest. The user of PIC inside guest
+> > > seems only the pit calibration. Whether pit calibration is triggered depends
+> > > on other things. But logically, current code is wrong, we need to fix it
+> > > anyway.
+> > > 
+> > > @Isaku, please share more info if you have)
+> > > 
 > 
+> + Kirill,
 > 
-> What's the logic here? Is it || or &&? A comment can't hurt.
+> It seems to have issue with legacy irqs with PCAT_COMPAT set 1 while no PIC
+> on QEMU side. Kirill, could you elaborate it?
 
-If txfh carries a key, then the device needs to has either has_rss or
-has_rss_hash_report "features".
+TDX guest cannot support PIC because the platform doesn't allow direct
+interrupt injection, only posted interrupts.
 
-These are basically virtio features VIRTIO_NET_F_HASH_REPORT and
-VIRTIO_NET_F_RSS that are set at virtio_probe.
+For TDX guest kernel we had a patch[1] that forces no-PIC, but it is not
+upstreamable as it is a hack.
 
-I will add the comment and respin the series.
+I looked around to find The Right Way™ to archive the same effect and
+discovered that we only have PIC ops hooked up because kernel bypasses[2]
+PIC enumeration because PCAT_COMPAT is set. Which is wrong for TDX guest
+or other platforms without PIC.
+
+I am not aware about any user-visible issues due to it, but maybe they are
+just not discovered yet.
+
+[1] https://lore.kernel.org/linux-kernel/b29f00c1eb5cff585ec2b999b69923c13418ecc4.1619458733.git.sathyanarayanan.kuppuswamy@linux.intel.com/
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/x86/kernel/i8259.c#n322
+
+-- 
+  Kiryl Shutsemau / Kirill A. Shutemov
 
