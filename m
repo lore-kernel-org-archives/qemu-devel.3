@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3B3C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 08:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4526BCD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 08:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrw24-0005Ig-ER; Wed, 03 Apr 2024 04:31:44 -0400
+	id 1rrw60-0006Nb-L4; Wed, 03 Apr 2024 04:35:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rrw1y-0005Hd-4r; Wed, 03 Apr 2024 04:31:39 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rrw5y-0006NF-Sc
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 04:35:46 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rrw1t-0000vP-4q; Wed, 03 Apr 2024 04:31:35 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B6F8C60C96;
- Wed,  3 Apr 2024 11:31:25 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:0:419:fa1c:23b:811e:f68a] (unknown
- [2a02:6b8:0:419:fa1c:23b:811e:f68a])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id MVOaKQ2IkKo0-xt4sloFc; Wed, 03 Apr 2024 11:31:25 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1712133085;
- bh=KYJyQIOEMwCoxa4vXAVCME7eBAgZRpeORCwXJCzZcXM=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=GIVmIq4252gF8Jr9FKlVSHFQqt1QHg8TplrqvWzHCRLn51zM2KW4YobQyLIH+DySc
- /ErTQbX2O65uSPhtK7aiBIWqiDkqwhfcL19zXo7fqfahws2igAijYrvqNph6rctY2r
- /wg5W7HWG8Sgbcvcu8Fn5GWCfQlK4OHwJRGS5eNU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <ba76742d-4fa1-4120-98ad-944845a37ad6@yandex-team.ru>
-Date: Wed, 3 Apr 2024 11:31:22 +0300
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rrw5w-00021a-C2
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 04:35:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712133344; x=1743669344;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=jvs5cxX2DsDzZqEWRNVh2OJJe8l2vy9a3h/YocpJfvQ=;
+ b=XmxFGg7JbmbIZO4tvahWW54PHWK6xXJypeTq3V3QeqqVqDHOv6ou0CMw
+ /Xlfj4/pKb1WT7ICtQfsIclKRtIyOXlst41FOfXIHFb4Gnmb7icqa9JBI
+ npMVjnsD4E+/LI2tRcBYh3vVpBq1MicJFL6RUSHksZ38ronZL5Umhl6hY
+ SHV21VAdEuWXN3vB4V0nu5DkD9lDr0cAs0XlE6L9xmlZOxCq5iTtydF4O
+ wjWEtJSU0QqqCWR5tkkmI64pc/1EHHmcLFH8Ouw+vjT0I12vJKQvkceNQ
+ aUjups4mFs2n9QNQmkRh9B/jExBCQqlkkFqooDD+UmmNFSSxCvjiaenbi Q==;
+X-CSE-ConnectionGUID: MLrei6LNT4u/TbCk8bXEsQ==
+X-CSE-MsgGUID: w5owivApQXeOU6IIDz2gUA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11032"; a="24847274"
+X-IronPort-AV: E=Sophos;i="6.07,177,1708416000"; d="scan'208";a="24847274"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Apr 2024 01:35:39 -0700
+X-CSE-ConnectionGUID: zm8GQOoZTIikKwYdECz/2Q==
+X-CSE-MsgGUID: Byyp6e7MSBeWJqu7pLSHAA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,177,1708416000"; d="scan'208";a="23064224"
+Received: from leiwang7-mobl.ccr.corp.intel.com (HELO [10.125.241.27])
+ ([10.125.241.27])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Apr 2024 01:35:37 -0700
+Message-ID: <c0607330-60af-4e0f-819e-4a22a38edd6d@intel.com>
+Date: Wed, 3 Apr 2024 16:35:35 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/19] block/stream: fix -Werror=maybe-uninitialized
- false-positives
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
- Hyman Huang <yong.huang@smartx.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
- Klaus Jensen <its@irrelevant.dk>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Bin Meng <bin.meng@windriver.com>, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Yuval Shaia <yuval.shaia.ml@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jesper Devantier <foss@defmacro.it>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Keith Busch <kbusch@kernel.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Xu <peterx@redhat.com>
-References: <20240328102052.3499331-1-marcandre.lureau@redhat.com>
- <20240328102052.3499331-7-marcandre.lureau@redhat.com>
- <65d791e4-6c68-4b6d-b181-bc3886745ce3@yandex-team.ru>
- <CAJ+F1CLbjZG24rMKwA20NFM=6sTE4CRAaGt4Vha+bP8i=+on-A@mail.gmail.com>
- <0d7344c2-b146-44cf-a911-21fa5e556665@yandex-team.ru>
- <mzls26xlctld3fd5fl3h5wdrbh6hb5i3xcakeslwzny5tva7ch@w6wnruxtefkl>
- <3064bc69-3d8e-4d7c-b640-a7ab703f9575@yandex-team.ru>
- <CAJ+F1CLG+7BT8wLFmmJ0t8NvMu2a2Vp1+p6gUuBTch9haYP8LQ@mail.gmail.com>
+Subject: Re: [PATCH] migration: Yield coroutine when receiving
+ MIG_CMD_POSTCOPY_LISTEN
+To: Peter Xu <peterx@redhat.com>
+Cc: "Wang, Wei W" <wei.w.wang@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "farosas@suse.de" <farosas@suse.de>
+References: <20240329033205.26087-1-lei4.wang@intel.com>
+ <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <ZgrdIDGe3aNcRu7o@x1n> <ce89cb04-65d0-4f43-ad87-ead6e69c1e09@intel.com>
+ <DS0PR11MB6373AE29375A2910057CC313DC3E2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <9aa5d1be-7801-40dd-83fd-f7e041ced249@intel.com> <Zgx7DI4LXYrR_dk-@x1n>
+From: "Wang, Lei" <lei4.wang@intel.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAJ+F1CLG+7BT8wLFmmJ0t8NvMu2a2Vp1+p6gUuBTch9haYP8LQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <Zgx7DI4LXYrR_dk-@x1n>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=lei4.wang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,117 +91,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.04.24 11:11, Marc-André Lureau wrote:
-> Hi
-> 
-> On Tue, Apr 2, 2024 at 11:24 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> On 02.04.24 18:34, Eric Blake wrote:
->>> On Tue, Apr 02, 2024 at 12:58:43PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>>>> Again, same false-positives, because of WITH_GRAPH_RDLOCK_GUARD()..
->>>>>>
->>>>>> Didn't you try to change WITH_ macros somehow, so that compiler believe in our good intentions?
->>>>>>
+On 4/3/2024 5:39, Peter Xu wrote:>>>>>
+>>>>> I'm not 100% sure such thing (no matter here or moved into it, which
+>>>>> does look cleaner) would work for us.
 >>>>>
+>>>>> The problem is I still don't yet see an ordering restricted on top of
+>>>>> (1)
+>>>>> accept() happens, and (2) receive LISTEN cmd here.  What happens if
+>>>>> the
+>>>>> accept() request is not yet received when reaching LISTEN?  Or is it
+>>>>> always guaranteed the accept(fd) will always be polled here?
 >>>>>
->>>>> #define WITH_QEMU_LOCK_GUARD_(x, var) \
->>>>>        for (g_autoptr(QemuLockable) var = \
->>>>>                    qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))); \
->>>>>             var; \
->>>>>             qemu_lockable_auto_unlock(var), var = NULL)
->>>>>
->>>>> I can't think of a clever way to rewrite this. The compiler probably
->>>>> thinks the loop may not run, due to the "var" condition. But how to
->>>>> convince it otherwise? it's hard to introduce another variable too..
+>>>>> For example, the source QEMU (no matter pre-7.2 or later) will always
+>>>>> setup the preempt channel asynchrounously, then IIUC it can connect()
+>>>>> after sending the whole chunk of packed data which should include this
+>>>>> LISTEN.  I think it means it's not guaranteed this will 100% work, but
+>>>>> maybe further reduce the possibility of the race.
 >>>>
+>>>> I think the following code:
 >>>>
->>>> hmm. maybe like this?
+>>>> postcopy_start() ->
+>>>> 	postcopy_preempt_establish_channel() ->
+>>>> 		qemu_sem_wait(&s->postcopy_qemufile_src_sem);
 >>>>
->>>> #define WITH_QEMU_LOCK_GUARD_(x, var) \
->>>>       for (g_autoptr(QemuLockable) var = \
->>>>                   qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))), \
->>>>            var2 = (void *)(true); \
->>>>            var2; \
->>>>            qemu_lockable_auto_unlock(var), var2 = NULL)
+>>>> can guarantee that the connect() syscall is successful so the destination side
+>>>> receives the connect() request before it loads the LISTEN command, otherwise
+>>>> it won't post the sem:
 >>>>
+>>>> postcopy_preempt_send_channel_new() ->
+>>>> 	postcopy_preempt_send_channel_done() ->
+>>>>     		qemu_sem_post(&s->postcopy_qemufile_src_sem);
 >>>>
->>>> probably, it would be simpler for compiler to understand the logic this way. Could you check?
 >>>
->>> Wouldn't that attach __attribute__((cleanup(xxx))) to var2, at which
->>> point we could cause the compiler to call xxx((void*)(true)) if the
->>> user does an early return inside the lock guard, with disastrous
->>> consequences?  Or is the __attribute__ applied only to the first out
->>> of two declarations in a list?
+>>> Yes. But as mentioned in another thread, connect() and accept() are async.
+>>> So in theory accept() could still come later after the LISTEN command.
+>>
+>> IIUC accept() is the callback and will be triggered by the connect() event.
+>>
+>> The reason accept() is not called in the destination is the main loop doesn't
+>> get a chance to handle other events (connect()), so if we can guarantee
+>> connect() is before LISTEN, then when handling the LISTEN cmd, we yield to the
+>> main loop and the connect() event is there, then we can handle it by calling the
+>> accept():
+>>
+>> qio_net_listener_channel_func
+>> 	qio_channel_socket_accept
+>> 		qemu_accept
+>> 			accept
+>>
+>> so it seems the case accept() comes alter after LISTEN is in our expectation?
+> 
+> The major thing uncertain to me is "accept() will return with a valid fd"
+> on dest host is not guaranteed to order against anything.
+> 
+> For example, I won't be surprised if a kernel implementation provides an
+> async model of "accept()" syscall, so that even if the other side returned
+> with "connect()", the "accept()" can still fetch nothing if the async model
+> will need a delay for the new channel to be finally delivered to the
+> "accept()" thread context.  It just sounds like tricky to rely on such
+> thing.
+> 
+> What I proposed below shouldn't rely on any kernel details on how accept()
+> could be implemented, it simply waits for the fd to be created before doing
+> anything else (including creating the preempt thread and process packed
+> data).
+
+Thanks for the detailed explanation!
+
+> 
+>>
 >>>
->>
->> Oh, most probably you are right, seems g_autoptr apply it to both variables. Also, we don't need qemu_lockable_auto_unlock(var) separate call, if we zero-out another variable. So, me fixing:
->>
->> #define WITH_QEMU_LOCK_GUARD_(x, var) \
->>       for (QemuLockable *var __attribute__((cleanup(qemu_lockable_auto_unlock))) = qemu_lockable_auto_lock(QEMU_MAKE_LOCKABLE_NONNULL((x))), \
->>            *var2 = (void *)(true); \
->>            var2; \
->>            var2 = NULL)
->>
->> (and we'll need to modify qemu_lockable_auto_unlock() to take "QemuLockable **x" argument)
->>
+>>>>>
+>>>>> One right fix that I can think of is moving the sem_wait(&done) into
+>>>>> the main thread too, so we wait for the sem _before_ reading the
+>>>>> packed data, so there's no chance of fault.  However I don't think
+>>>>> sem_wait() will be smart enough to yield when in a coroutine..  In the
+>>>>> long term run I think we should really make migration loadvm to do
+>>>>> work in the thread rather than the main thread.  I think it means we
+>>>>> have one more example to be listed in this todo so that's preferred..
+>>>>>
+>>>>> https://wiki.qemu.org/ToDo/LiveMigration#Create_a_thread_for_migration
+>>>>> _destination
+>>>>>
+>>>>> I attached such draft patch below, but I'm not sure it'll work.  Let
+>>>>> me know how both of you think about it.
+>>>>
+>>>> Sadly it doesn't work, there is an unknown segfault.
 > 
-> That's almost good enough. I fixed a few things to generate var2.
+> Could you paste the stack of the segfault ("(gdb) thread apply all bt")?
+> Or help to figure out what is wrong?
 > 
-> I applied a similar approach to WITH_GRAPH_RDLOCK_GUARD macro:
-> 
-> --- a/include/block/graph-lock.h
-> +++ b/include/block/graph-lock.h
-> @@ -224,13 +224,22 @@ graph_lockable_auto_unlock(GraphLockable *x)
-> 
->   G_DEFINE_AUTOPTR_CLEANUP_FUNC(GraphLockable, graph_lockable_auto_unlock)
-> 
-> -#define WITH_GRAPH_RDLOCK_GUARD_(var)                                         \
-> -    for (g_autoptr(GraphLockable) var = graph_lockable_auto_lock(GML_OBJ_()); \
-> -         var;                                                                 \
-> -         graph_lockable_auto_unlock(var), var = NULL)
-> +static inline void TSA_NO_TSA coroutine_fn
-> +graph_lockable_auto_cleanup(GraphLockable **x)
-> +{
-> +    graph_lockable_auto_unlock(*x);
-> +}
-> +
-> +#define WITH_GRAPH_RDLOCK_GUARD__(var) \
-> +    GraphLockable *var \
-> +        __attribute__((cleanup(graph_lockable_auto_cleanup))) G_GNUC_UNUSED = \
-> +       graph_lockable_auto_lock(GML_OBJ_())
-> +
-> +#define WITH_GRAPH_RDLOCK_GUARD_(var, var2)                             \
-> +    for (WITH_GRAPH_RDLOCK_GUARD__(var), *var2 = (void *)true; var2;
-> var2 = NULL)
-> 
->   #define WITH_GRAPH_RDLOCK_GUARD() \
-> -    WITH_GRAPH_RDLOCK_GUARD_(glue(graph_lockable_auto, __COUNTER__))
-> +    WITH_GRAPH_RDLOCK_GUARD_(glue(graph_lockable_auto, __COUNTER__),
-> glue(graph_lockable_auto, __COUNTER__))
-> 
-> Unfortunately, it doesn't work in all cases. It seems to have issues
-> with some guards:
-> ../block/stream.c: In function ‘stream_run’:
-> ../block/stream.c:216:12: error: ‘ret’ may be used uninitialized
-> [-Werror=maybe-uninitialized]
->    216 |         if (ret < 0) {
-> 
-> 
+> Since I cannot reproduce myself, I may need your help debugging this.  If
+> you agree with what I said above and agree on such fix, please also feel
+> free to go ahead and fix the segfault.
 
-So, updated macro helps in some cases, but doesn't help here? Intersting, why.
+We should change the following line from
 
-> What should we do? change the macros + cherry-pick the missing
-> false-positives, or keep this series as is?
-> 
-> 
+	while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
 
-I think marco + missing is better. No reason to add dead-initializations in cases where new macros helps.
-Still, would be good to understand, what's the difference, why it help on some cases and not help in another.
+to
 
+	while (qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
 
--- 
-Best regards,
-Vladimir
+After that fix, test passed and no segfault.
 
+Given that the test shows a yield to the main loop won't introduce much overhead
+(<1ms), how about first yield unconditionally, then we enter the while loop to
+wait for several ms and yield periodically?
 
