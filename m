@@ -4,97 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B006CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 16:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C89CD128A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 16:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rs3Yn-0005Ox-L4; Wed, 03 Apr 2024 12:34:02 -0400
+	id 1rs3kV-0007qX-Cm; Wed, 03 Apr 2024 12:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rs3Yj-0005Of-8j
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 12:33:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rs3Yd-0008DI-Gt
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 12:33:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712162029;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hhxyxsE5RoO4bNflS5HaasvIZOLW1z4CSIEBcKBiegk=;
- b=fIzHR8EStDauWvFYW9y1m7WxbSx3+VOdqmkE02SDu299TCsfFSpvDCvSM1SwxbPEzwjWny
- LoKB/R/9proR4yb2wteYar/OsgIoF4FIFPDb7mjdiEEZabr/FL70D6EMmxmzn3BvWCv4Ql
- vJKCz8jffFah9R6JTc+k42Og41FqHwY=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-PRWl29UqOq2SajSQ4T0PlQ-1; Wed, 03 Apr 2024 12:33:48 -0400
-X-MC-Unique: PRWl29UqOq2SajSQ4T0PlQ-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-78d346eeb02so47266885a.1
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 09:33:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rs3kT-0007p9-7w
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 12:46:05 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rs3kR-00058P-0J
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 12:46:04 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56c0d1bddc1so8431a12.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 09:46:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712162760; x=1712767560; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lhPZ2a59NPTIei2BqREjeJ8Vthr7QTIi9oyItXN/7/g=;
+ b=NcvwWstfrqd3NJHUtwbUq0mbCXQkoECo7aEtWqqycDRhv2EWhixSQaeThbcvarkZQ/
+ DMj323nzaz/5tX+wywRoqPC9nqubhjHHrUVfbPm6IudAp3qMPf7oOb+BNa9zQ8rlYeWT
+ Si3NuAgHyka622JqeS5FwVLWiRNNxYUZzrJ2RlD7+hSQGIOYgunxQYmMVzfnC5a6epPs
+ ck2jYMOJZitnvVQiNZTDHLtL+QUJwV/x5NDyWPtj47L/D6AQA8CKGtddxwu/Jr5EMBV4
+ wPalTIa5eZ1vAlrVQG3Np8wvwuFvjGeQAsq9hZasCIPzL6g+YPHNdJei1u4GFc7ZfREq
+ VGwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712162027; x=1712766827;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hhxyxsE5RoO4bNflS5HaasvIZOLW1z4CSIEBcKBiegk=;
- b=ptoRjhldA9hp5TrAfgJ89eVOwn2cFwIViHaYaC0bA9+3jw5A364FWUbEU4EAAl25Dg
- +wUqgRF102NuwElCQkcreu7YnPk6h7YcfkoLEn+KzX9Zp7+NDwKN2e5IAXnGy2Ejb8t6
- sUGK8zUB9SVo4+xGMqHvvQSK5ZiUICgxgPK5tNTOQQtf8E3/8svOKEpcN7yARdoGVPgy
- KHGeB73XAOCSyFV7+9EsSSQashRkwidSISRGYxU/bpA7z5WP/A76/FjAtcHRvogaDM8v
- 0z3JDwyeLs3jBucPXZKEfRIGnAueAYyb4/XID+sY9QiSHmkQzKx7NW2FkOvR9Z6hsbIY
- fsJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPbgmbY5W/iDcVQ1aNCPSIYIuSIzWp50yv4AkVLdfXCLJ+4DWfIuJ0x02LgJFrf4XA6CMfa1TK/RTF7WS2tKTJma6Nudc=
-X-Gm-Message-State: AOJu0YwRUApNgy5lec1MgiWxpPfEivy7x9qTBKPkOApzA0G24wJJwyFu
- jMqZCyxIOvAflvsa2J8Gjkv7aRbO32DASPtTkrZklmUBakq7yFm3lFKGYcIa1O7UXKcjKLIxK2h
- QnY7tO0gLPmGJLIlGa3Ai/RQh1Ecd/NfQaWO8thrI1pYXPWacD5WM
-X-Received: by 2002:a05:620a:5651:b0:78b:c3a2:26ce with SMTP id
- vw17-20020a05620a565100b0078bc3a226cemr16086056qkn.7.1712162027185; 
- Wed, 03 Apr 2024 09:33:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH//LpO1mJXqW4f7YvJEjhpX5yksfP2JGFVFCIVsGY16wiOuQTPKfL3szkC+dtaQQMiycTdEw==
-X-Received: by 2002:a05:620a:5651:b0:78b:c3a2:26ce with SMTP id
- vw17-20020a05620a565100b0078bc3a226cemr16086022qkn.7.1712162026451; 
- Wed, 03 Apr 2024 09:33:46 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- k10-20020a05620a07ea00b0078a517d9fd2sm5223497qkk.29.2024.04.03.09.33.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Apr 2024 09:33:46 -0700 (PDT)
-Date: Wed, 3 Apr 2024 12:33:44 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Wang, Wei W" <wei.w.wang@intel.com>
-Cc: "Wang, Lei4" <lei4.wang@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "farosas@suse.de" <farosas@suse.de>
-Subject: Re: [PATCH] migration: Yield coroutine when receiving
- MIG_CMD_POSTCOPY_LISTEN
-Message-ID: <Zg2E6MKQPaG3gA1k@x1n>
-References: <20240329033205.26087-1-lei4.wang@intel.com>
- <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
- <ZgrdIDGe3aNcRu7o@x1n>
- <ce89cb04-65d0-4f43-ad87-ead6e69c1e09@intel.com>
- <DS0PR11MB6373AE29375A2910057CC313DC3E2@DS0PR11MB6373.namprd11.prod.outlook.com>
- <9aa5d1be-7801-40dd-83fd-f7e041ced249@intel.com>
- <Zgx7DI4LXYrR_dk-@x1n>
- <c0607330-60af-4e0f-819e-4a22a38edd6d@intel.com>
- <Zg1qyEJZH8kScSng@x1n>
- <DS0PR11MB637346AE0C9777A6C25746CFDC3D2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ d=1e100.net; s=20230601; t=1712162760; x=1712767560;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lhPZ2a59NPTIei2BqREjeJ8Vthr7QTIi9oyItXN/7/g=;
+ b=qpQ1gG8XOAVtPZcauxJUCKhJJYtyJQgPmAyhL4lFPJ5r6uLfPMR+Qd+MClX96vR8tk
+ Bs1CVtuJg7JWy3+6lOta0fkFp06nWrS5/8Hb6+NNHoEOdzhd6T9FQEQpWowD1YXSQA5y
+ VcRKTCg2zGVZ3cu0jSlCcenrPfIDVsSBLA9NXxHqFYLp4KnEsD07DZrmpCs+PfLi1Tp/
+ e0nCrrpGVvQ+e4QPS4bS/z8kR27ZvRBn4PLFdspFney5t7ZyGzqVzx7z/kG9WnnPMy9P
+ Y8gHRHH4+/iKYRi24RvrTbWMYbNeDoLIkZBDiyG2t3aWtcz12gs0DUzVf6OPLv9LxUn7
+ T9ww==
+X-Gm-Message-State: AOJu0YzY0E27nU27EGeIJFmGOe5wjBRy4+cq1Zw+gJ/8oQERlG6LcynG
+ 2DU391I5N5JXEEeqfgRkPems4+vevC8wTqqpCM7LPvNPyLkHTMY16rJTRxDOJr9P8Fnqcy0ri3/
+ XdgEovldDad8tUrJHurgtzoTfmRGYgBGkYRnP1g==
+X-Google-Smtp-Source: AGHT+IFCxj5h6QqGauizF7offhy/fRs+azJXtcGZWoE12flNQmrSdiEWZom1n8cM/FFT85x/HKjVn+Tsna8RuqCo/Pk=
+X-Received: by 2002:a05:6402:2809:b0:56e:a5d:acc0 with SMTP id
+ h9-20020a056402280900b0056e0a5dacc0mr2162032ede.13.1712162757188; Wed, 03 Apr
+ 2024 09:45:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DS0PR11MB637346AE0C9777A6C25746CFDC3D2@DS0PR11MB6373.namprd11.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240403100614.74983-1-pbonzini@redhat.com>
+In-Reply-To: <20240403100614.74983-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 3 Apr 2024 17:45:45 +0100
+Message-ID: <CAFEAcA8FPSJauySMN=3rdk6-9L8RTTXTSOZ=80NQgoxHYNiN1w@mail.gmail.com>
+Subject: Re: [PULL v2 0/6] lsi, vga fixes for 2024-04-02
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,83 +87,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 03, 2024 at 04:04:21PM +0000, Wang, Wei W wrote:
-> On Wednesday, April 3, 2024 10:42 PM, Peter Xu wrote:
-> > On Wed, Apr 03, 2024 at 04:35:35PM +0800, Wang, Lei wrote:
-> > > We should change the following line from
-> > >
-> > > 	while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done,
-> > 100)) {
-> > >
-> > > to
-> > >
-> > > 	while (qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done,
-> > 100)) {
-> > 
-> > Stupid me.. :(  Thanks for figuring this out.
-> > 
-> > >
-> > > After that fix, test passed and no segfault.
-> > >
-> > > Given that the test shows a yield to the main loop won't introduce
-> > > much overhead (<1ms), how about first yield unconditionally, then we
-> > > enter the while loop to wait for several ms and yield periodically?
-> > 
-> > Shouldn't the expectation be that this should return immediately without a
-> > wait?  We're already processing LISTEN command, and on the source as you
-> > said it was much after the connect().  It won't guarantee the ordering but IIUC
-> > the majority should still have a direct hit?
-> > 
-> > What we can do though is reducing the 100ms timeout if you see that's
-> > perhaps a risk of having too large a downtime when by accident.  We can even
-> > do it in a tight loop here considering downtime is important, but to provide an
-> > intermediate ground: how about 100ms -> 1ms poll?
-> 
-> Would it be better to use busy wait here, instead of blocking for even 1ms here?
-> It's likely that the preempt channel is waiting for the main thread to dispatch for accept(),
-> but we are calling qemu_sem_timedwait here to block the main thread for 1 more ms.
+On Wed, 3 Apr 2024 at 11:07, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> The following changes since commit 7fcf7575f3d201fc84ae168017ffdfd6c86257a6:
+>
+>   Merge tag 'pull-target-arm-20240402' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-04-02 11:34:49 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to 8fc4bdc537d901c200e43122e32bcb40dc8fed37:
+>
+>   pc_q35: remove unnecessary m->alias assignment (2024-04-02 18:08:59 +0200)
+>
+> ----------------------------------------------------------------
+> * lsi53c895a: fix assertion failure with invalid Block Move
+> * vga: fix assertion failure with 4- and 16-color modes
+> * remove unnecessary assignment
+>
+> ----------------------------------------------------------------
 
-I think it's about the expectation of whether we should already received
-that sem post.  My understanding is in most cases we should directly return
-and avoid such wait.
 
-Per my previous experience, 1ms is not a major issue to be added on top of
-downtime in corner cases like this.
+Applied, thanks.
 
-We do have a lot of othre potential optimizations to reduce downtime, or I
-should say in the other way, that..  there can be a lot of cases where we
-can hit much larger downtime than expected. Consider when we don't even
-account downtime for device states for now, either load_state or
-save_state, we only count RAM but that's far from accurate.. and we do have
-more chances to optimize.  Some are listed here, but some may not:
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
-https://wiki.qemu.org/ToDo/LiveMigration#Optimizations
-
-If you agree with my above "expectation" statement, I'd say we should avoid
-using a busy loop whenever possible in QEMU unless extremely necessary.
-
-> 
-> 
-> > 
-> > If you agree (and also to Wei; please review this and comment if there's any!),
-> > would you write up the commit log, fully test it in whatever way you could,
-> > and resend as a formal patch (please do this before Friday if possible)?  You
-> > can keep a "Suggested-by:" for me.  I want to queue it for
-> > rc3 if it can catch it. It seems important if Wei can always reproduce it.
-> 
-> Not sure if Lei would be able to online as the following two days are Chinese holiday.
-> If not, I could help take over to send late tomorrow. Let's see.
-
-Oops, I forgot that even if I was aware..
-
-Please do so if you can do this.  Thank you, Wei!  (I hope you can switch
-some working hours later on!)
-
-Let me know if that doesn't work; it'll be all fine.
-
-Thanks,
-
--- 
-Peter Xu
-
+-- PMM
 
