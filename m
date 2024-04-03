@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E121CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 14:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD7C9CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 14:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rs1j4-0001Mn-To; Wed, 03 Apr 2024 10:36:30 -0400
+	id 1rs1ot-0002fA-5r; Wed, 03 Apr 2024 10:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rs1j2-0001MT-R3
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 10:36:28 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rs1j0-0005gT-JR
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 10:36:28 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dff837d674so51045425ad.3
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 07:36:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712154985; x=1712759785; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xSOuRBBtJS3Fa6a5Q+NqvLkZ2qG7jB+dmN1l6vRJfRA=;
- b=e0CqyrA7iNhxGotmJUaBKq6P/wQHf0xr3N1MgT6e4Ks9ITU+DtR6eveGfV1aU8jJ8C
- pNMdYNqkNXdLDBrOPvzVzThQ2749CRJTK/H0TXWsA+eNOUhZNqcc+agavqKw92GIuTLy
- sQ+nxPntMRPdb0zpkmGXLvlWewKfFYzAs2EKrtqeQJ/T8ou8iUUuwgmAw+thS/TgRHC4
- DV+tPDCYF3AItyY/jqijIKDcaOMrAncc0ilem4uo7Kn250gQRAutGkiFtnbdVGM8ogy6
- 0yFP8doRtq9yfqH+GDEfcZ6xkKfr4pLngq9V86qFwDDB2YwXn0CpAH5EoIGE4wuhnNR8
- GBqQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rs1oq-0002ey-F8
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 10:42:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rs1ol-0006oj-IR
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 10:42:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712155342;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lr2huBix4QmSlqCbVDfM4hIC7ZEHHKMrGGublh1TTwU=;
+ b=B4MSHa/G7GfJVM+7j6hYhJPSKnf5lqJ3V8ulhU86AOpr8oNxPsfwQkddCLsMdwsNVPeI24
+ I8FFIZIZUhobZGWW9uCzvkbNMCDkw9JMjj6XOqCWZ0XUcD4An0adfVaUJW863dIfJe3KSS
+ fVGGHBrorIx/EPJLe4E5tq9Xt44Qut0=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-408-aJ5DBI4sPR2f5WMsbKapWg-1; Wed, 03 Apr 2024 10:42:20 -0400
+X-MC-Unique: aJ5DBI4sPR2f5WMsbKapWg-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6992d40ea4aso518006d6.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 07:42:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712154985; x=1712759785;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xSOuRBBtJS3Fa6a5Q+NqvLkZ2qG7jB+dmN1l6vRJfRA=;
- b=l7cxXRsFRQijDLAoWm8G4de5GyRSHFo8vT0DvGVwQqaJgaFuqLSnJfSdpxWf/54Li+
- cmYT6DQW08q+765neP7s27OMFQroYRcdZqnY41VLLYynPdU3l9X+QW1HubQkQk56YQ8a
- psbz64jQ+aosxs/zdEmapAAtT0wueJy5zt2rotJV9hU0ghwe4uYviT6aMWHE0UcTpSN4
- LQ1HAzEL03ApVQ2X8w95gQp20SA3rJkqT3CTtg9hZOExaUwxYM+JmnoW0CgKfH5Bsq/q
- 22hrO5Z7KZjgx0WBK3nJ4opTZl4l869CVjCUjAgQleTcEsr9L3SZEF1so0wnTsL45TLn
- wqEw==
-X-Gm-Message-State: AOJu0Yw4e+fJ2kzFE3w9IYSKX5Jgn3V87F3CRAUiseJntp8CgJ/UD8ff
- fVneW0/mRN6vylr9qvBtOdl881KqmSma/+UcvfnZV+VSbcbm5h1aOS/MSm9C
-X-Google-Smtp-Source: AGHT+IG1ZGRYgtf1ve35UR+Mc3p+LKuar7ciSukiucKTa88jQ3LXYfcQHxnQ6orjtstL/8DCDlC8vg==
-X-Received: by 2002:a17:902:e548:b0:1e2:6724:cf39 with SMTP id
- n8-20020a170902e54800b001e26724cf39mr5879404plf.64.1712154984579; 
- Wed, 03 Apr 2024 07:36:24 -0700 (PDT)
-Received: from valdaarhun.localnet ([2409:4081:2d9b:3168:a289:f071:d2b7:600])
- by smtp.gmail.com with ESMTPSA id
- x10-20020a170902ec8a00b001e284b9b28asm2802012plg.129.2024.04.03.07.36.22
+ d=1e100.net; s=20230601; t=1712155340; x=1712760140;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lr2huBix4QmSlqCbVDfM4hIC7ZEHHKMrGGublh1TTwU=;
+ b=BpM7KftztECitdvfIYoWB3xVBza53YapUyuNdFKIeuBkisqJ+fv76hF6OoEINpY9I9
+ VKLYNPcH0GUDtzkCA0aJZmB5k79T+BvSFyCFbyuk7mYQVOSzjYRQ8C+JYQiRVAEVGaNj
+ nZS1Ccv85SpOWO/wvYuLZAlf1hXUBd/91rQvfokXV4OZY7U46BDXgYmyb/fZeR/GyYha
+ v6Xi8uvhA2DQvjHCQ4kiOEJcKGOf09Mp8QAYE+XnfdfSwWJvJWVq9AKAulIj1lOSs6ip
+ EAKj+vMCtS7ntEk88qFwWx8+JPJThIiQMTpIryujv+3OKrMauR+PptAZVOotC0DMtbve
+ DZYw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYbiQ0fpQbaNYJvfRlmWwOBpc5SmN+WM/oUDeMgk2kILcDRr01GD5fgJ3hCKe6wu1rhp+kOooBaerIMNO2qv5kQciqNdk=
+X-Gm-Message-State: AOJu0YzBY2qEv8/u/fxkSSf1qrixDRIuN8LHFF0O7AYi/GpmdIZuwUii
+ R2c4Hvfq5wdbtqB3Q0ldRXTacQxf+/R9VZSevE2VpKB9oc4OQQCljec2koaUQgRJsChVbyN3fxC
+ U5psi1uhY8dC7T4nluAXnJH0+TRqxX6AYfX7Kk3Rg/YT77A2/5YGI
+X-Received: by 2002:a0c:c792:0:b0:699:dfe:6015 with SMTP id
+ k18-20020a0cc792000000b006990dfe6015mr7281695qvj.5.1712155339762; 
+ Wed, 03 Apr 2024 07:42:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNf4d+SLf4psHDSOnie9MoCbAsM2FPjb3OkYDB6mW6GLwKHdGMlatSedXouYnMLzgaGSGEHg==
+X-Received: by 2002:a0c:c792:0:b0:699:dfe:6015 with SMTP id
+ k18-20020a0cc792000000b006990dfe6015mr7281663qvj.5.1712155339035; 
+ Wed, 03 Apr 2024 07:42:19 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ k2-20020ad45be2000000b006990a16eddfsm2977284qvc.28.2024.04.03.07.42.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Apr 2024 07:36:23 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: qemu-level <qemu-devel@nongnu.org>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: Intention to work on GSoC project
-Date: Wed, 03 Apr 2024 20:06:18 +0530
-Message-ID: <1934013.taCxCBeP46@valdaarhun>
-In-Reply-To: <CAJaqyWfeUHTEj6F-uBzA57gPLZhD70w1+FY2sDCTFBHEDkzzPA@mail.gmail.com>
-References: <13625712.uLZWGnKmhe@valdaarhun> <10440822.nUPlyArG6x@valdaarhun>
- <CAJaqyWfeUHTEj6F-uBzA57gPLZhD70w1+FY2sDCTFBHEDkzzPA@mail.gmail.com>
+ Wed, 03 Apr 2024 07:42:18 -0700 (PDT)
+Date: Wed, 3 Apr 2024 10:42:16 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Wang, Lei" <lei4.wang@intel.com>
+Cc: "Wang, Wei W" <wei.w.wang@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "farosas@suse.de" <farosas@suse.de>
+Subject: Re: [PATCH] migration: Yield coroutine when receiving
+ MIG_CMD_POSTCOPY_LISTEN
+Message-ID: <Zg1qyEJZH8kScSng@x1n>
+References: <20240329033205.26087-1-lei4.wang@intel.com>
+ <DS0PR11MB6373254218DDBF279B13FD79DC3A2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <ZgrdIDGe3aNcRu7o@x1n>
+ <ce89cb04-65d0-4f43-ad87-ead6e69c1e09@intel.com>
+ <DS0PR11MB6373AE29375A2910057CC313DC3E2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <9aa5d1be-7801-40dd-83fd-f7e041ced249@intel.com>
+ <Zgx7DI4LXYrR_dk-@x1n>
+ <c0607330-60af-4e0f-819e-4a22a38edd6d@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=icegambit91@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c0607330-60af-4e0f-819e-4a22a38edd6d@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,142 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-Thank you for the reply.
-
-On Tuesday, April 2, 2024 5:08:24 PM IST Eugenio Perez Martin wrote:
-> [...]
-> > > > Q2.
-> > > > In the Red Hat article, just below the first listing ("Memory layout of a
-> > > > packed virtqueue descriptor"), there's the following line referring to the 
-> > > > buffer id in "virtq_desc":
-> > > > > This time, the id field is not an index for the device to look for the
-> > > > > buffer: it is an opaque value for it, only has meaning for the driver.
-> > > > 
-> > > > But the device returns the buffer id when it writes the used descriptor to
-> > > > the descriptor ring. The "only has meaning for the driver" part has got me
-> > > > a little confused. Which buffer id is this that the device returns? Is it related
-> > > > to the buffer id in the available descriptor?
-> > > 
-> > > In my understanding, buffer id is the element that avail descriptor
-> > > marks to identify when adding descriptors to table. Device will returns
-> > > the buffer id in the processed descriptor or the last descriptor in a
-> > > chain, and write it to the descriptor that used idx refers to (first
-> > > one in the chain). Then used idx increments.
-> > > 
-> > > The Packed Virtqueue blog [1] is helpful, but some details in the
-> > > examples
-> > > are making me confused.
-> > > 
-> > > Q1.
-> > > In the last step of the two-entries descriptor table example, it says
-> > > both buffers #0 and #1 are available for the device. I understand
-> > > descriptor[0] is available and descriptor[1] is not, but there is no ID #0
-> > > now. So does the device got buffer #0 by notification beforehand? If so,
-> > > does it mean buffer #0 will be lost when notifications are disabled?
+On Wed, Apr 03, 2024 at 04:35:35PM +0800, Wang, Lei wrote:
+> We should change the following line from
 > 
-> I guess you mean the table labeled "Figure: Full two-entries descriptor
-> table".
+> 	while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
 > 
-> Take into account that the descriptor table is not the state of all
-> the descriptors. That information must be maintained by the device and
-> the driver internally.
+> to
 > 
-> The descriptor table is used as a circular buffer, where one part is
-> writable by the driver and the other part is writable by the device.
-> For the device to override the descriptor table entry where descriptor
-> id 0 used to be does not mean that the descriptor id 0 is used. It
-> just means that the device communicates to the driver that descriptor
-> 1 is used, and both sides need to keep the descriptor state
-> coherently.
+> 	while (qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 100)) {
+
+Stupid me.. :(  Thanks for figuring this out.
+
 > 
-> > I too have a similar question and understanding the relation between
-> > buffer
-> > ids in the used and available descriptors might give more insight into
-> > this. For available descriptors, the buffer id is used to associate
-> > descriptors with a particular buffer. I am still not very sure about ids
-> > in used descriptors.
-> > 
-> > Regarding Q1, both buffers #0 and #1 are available. In the mentioned
-> > figure, both descriptor[0] and descriptor[1] are available. This figure
-> > follows the figure with the caption "Using first buffer out of order". So
-> > in the first figure the device reads buffer #1 and writes the used
-> > descriptor but it still has buffer #0 to read. That still belongs to the
-> > device while buffer #1 can now be handled by the driver once again. So in
-> > the next figure, the driver makes buffer #1 available again. The device
-> > can still read buffer #0 from the previous batch of available
-> > descriptors.
-> > 
-> > Based on what I have understood, the driver can't touch the descriptor
-> > corresponding to buffer #0 until the device acknowledges it. I did find
-> > the
-> > figure a little confusing as well. I think once the meaning of buffer id
-> > is clear from the driver's and device's perspective, it'll be easier to
-> > understand the figure.
+> After that fix, test passed and no segfault.
 > 
-> I think you got it right. Please let me know if you have further questions.
+> Given that the test shows a yield to the main loop won't introduce much overhead
+> (<1ms), how about first yield unconditionally, then we enter the while loop to
+> wait for several ms and yield periodically?
 
-I would like to clarify one thing in the figure "Full two-entries descriptor
-table". The driver can only overwrite a used descriptor in the descriptor
-ring, right? And likewise for the device? So in the figure, the driver will
-have to wait until descriptor[1] is used before it can overwrite it?
+Shouldn't the expectation be that this should return immediately without a
+wait?  We're already processing LISTEN command, and on the source as you
+said it was much after the connect().  It won't guarantee the ordering but
+IIUC the majority should still have a direct hit?
 
-Suppose the device marks descriptor[0] as used. I think the driver will
-not be able to overwrite that descriptor entry because it has to go in
-order and is at descriptor[1]. Is that correct? Is it possible for the driver
-to go "backwards" in the descriptor ring?
+What we can do though is reducing the 100ms timeout if you see that's
+perhaps a risk of having too large a downtime when by accident.  We can
+even do it in a tight loop here considering downtime is important, but to
+provide an intermediate ground: how about 100ms -> 1ms poll?
 
-> > I am also not very sure about what happens when notifications are
-> > disabled.
-> > I'll have to read up on that again. But I believe the driver still won't
-> > be able to touch #0 until the device uses it.
-> 
-> If one side disables notification it needs to check the indexes or the
-> flags by its own means: Timers, read the memory in a busy loop, etc.
-
-Understood. Thank you for the clarification.
-
-I have some questions from the "Virtio live migration technical deep
-dive" article [1].
-
-Q1.
-In the paragraph just above Figure 6, there is the following line:
-> the vhost kernel thread and QEMU may run in different CPU threads,
-> so these writes must be synchronized with QEMU cleaning of the dirty
-> bitmap, and this write must be seen strictly after the modifications of
-> the guest memory by the QEMU thread.
-
-I am not clear on the last part of the statement. The modification of guest
-memory is being done by the vhost device and not by the QEMU thread, right?
-
-Q2.
-In the first point of the "Dynamic device state: virtqueue state" section:
->The guest makes available N descriptors at the source of the migration,
->so its avail idx member in the avail idx is N.
-
-I think there's a typo here: "...avail idx member in the avail ring is N"
-instead of "...avail idx is N".
-
-Regarding the implementation of this project, can the project be broken
-down into two parts:
-1. implementing packed virtqueues in QEMU, and
-2. providing mechanisms for (live) migration to work with packed
-    virtqueues.
-
-I am ready to start working on the implementation. In one of your
-previous emails you had talked about moving packed virtqueue
-related implementation from the kernel's drivers/virtio/virtio_ring.c
-into vhost_shadow_virtqueue.c.
-
-My plan is to also understand how split virtqueue has been implemented
-in QEMU. I think that'll be helpful when moving the kernel's implementation
-to QEMU.
-
-Please let me know if I should change my approach.
+If you agree (and also to Wei; please review this and comment if there's
+any!), would you write up the commit log, fully test it in whatever way you
+could, and resend as a formal patch (please do this before Friday if
+possible)?  You can keep a "Suggested-by:" for me.  I want to queue it for
+rc3 if it can catch it. It seems important if Wei can always reproduce it.
 
 Thanks,
-Sahil
 
+-- 
+Peter Xu
 
 
