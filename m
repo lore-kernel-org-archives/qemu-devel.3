@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DC3CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 10:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8B2CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 10:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrxgx-0000sD-1Z; Wed, 03 Apr 2024 06:18:04 -0400
+	id 1rrxhO-00015v-5j; Wed, 03 Apr 2024 06:18:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rrxgr-0000np-DD; Wed, 03 Apr 2024 06:17:57 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1rrxhA-00011F-FR; Wed, 03 Apr 2024 06:18:16 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rrxgm-0006cA-0h; Wed, 03 Apr 2024 06:17:57 -0400
+ id 1rrxgu-0006g7-27; Wed, 03 Apr 2024 06:18:16 -0400
 Received: from mail.maildlp.com (unknown [172.19.162.112])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4V8gbj65Kdz1h56X;
- Wed,  3 Apr 2024 18:14:57 +0800 (CST)
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4V8gch1vCJz1ylZ8;
+ Wed,  3 Apr 2024 18:15:48 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 5D29F140158;
- Wed,  3 Apr 2024 18:17:43 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 4F463140158;
+ Wed,  3 Apr 2024 18:17:56 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 3 Apr
- 2024 18:17:42 +0800
+ 2024 18:17:55 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v12 04/23] target/arm: Implement ALLINT MSR (immediate)
-Date: Wed, 3 Apr 2024 10:15:52 +0000
-Message-ID: <20240403101611.3204086-5-ruanjinjie@huawei.com>
+Subject: [PATCH v12 20/23] hw/intc/arm_gicv3: Report the NMI interrupt in
+ gicv3_cpuif_update()
+Date: Wed, 3 Apr 2024 10:16:08 +0000
+Message-ID: <20240403101611.3204086-21-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240403101611.3204086-1-ruanjinjie@huawei.com>
 References: <20240403101611.3204086-1-ruanjinjie@huawei.com>
@@ -45,13 +46,12 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,121 +70,57 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add ALLINT MSR (immediate) to decodetree, in which the CRm is 0b000x. The
-EL0 check is necessary to ALLINT, and the EL1 check is necessary when
-imm == 1. So implement it inline for EL2/3, or EL1 with imm==0. Avoid the
-unconditional write to pc and use raise_exception_ra to unwind.
+In CPU Interface, if the IRQ has the non-maskable property, report NMI to
+the corresponding PE.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-v10:
-- Correct the exception_target_el(env) to 2, since it is a hypervisor trap
-  from EL1 to EL2.
-v7:
+v12:
 - Add Reviewed-by.
+v10:
+- superprio -> nmi.
+- Update the commit message, superpriority -> non-maskable.
 v6:
-- Fix DISAS_TOO_MANY to DISAS_UPDATE_EXIT and add the comment.
-v5:
-- Drop the & 1 in trans_MSR_i_ALLINT().
-- Simplify and merge msr_i_allint() and allint_check().
-- Rename msr_i_allint() to msr_set_allint_el1().
+- Add Reviewed-by.
 v4:
-- Fix the ALLINT MSR (immediate) decodetree implementation.
-- Remove arm_is_el2_enabled() check in allint_check().
-- Update env->allint to env->pstate.
-- Only call allint_check() when imm == 1.
-- Simplify the allint_check() to not pass "op" and extract.
-- Implement it inline for EL2/3, or EL1 with imm==0.
-- Pass (a->imm & 1) * PSTATE_ALLINT (i64) to simplfy the ALLINT set/clear.
+- Swap the ordering of the IFs.
 v3:
-- Remove EL0 check in allint_check().
-- Add TALLINT check for EL1 in allint_check().
-- Remove unnecessarily arm_rebuild_hflags() in msr_i_allint helper.
+- Remove handling nmi_is_irq flag.
 ---
- target/arm/tcg/a64.decode      |  1 +
- target/arm/tcg/helper-a64.c    | 12 ++++++++++++
- target/arm/tcg/helper-a64.h    |  1 +
- target/arm/tcg/translate-a64.c | 19 +++++++++++++++++++
- 4 files changed, 33 insertions(+)
+ hw/intc/arm_gicv3_cpuif.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 8a20dce3c8..0e7656fd15 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -207,6 +207,7 @@ MSR_i_DIT       1101 0101 0000 0 011 0100 .... 010 11111 @msr_i
- MSR_i_TCO       1101 0101 0000 0 011 0100 .... 100 11111 @msr_i
- MSR_i_DAIFSET   1101 0101 0000 0 011 0100 .... 110 11111 @msr_i
- MSR_i_DAIFCLEAR 1101 0101 0000 0 011 0100 .... 111 11111 @msr_i
-+MSR_i_ALLINT    1101 0101 0000 0 001 0100 000 imm:1 000 11111
- MSR_i_SVCR      1101 0101 0000 0 011 0100 0 mask:2 imm:1 011 11111
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index 526740aa7e..93476f4744 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1037,6 +1037,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+     /* Tell the CPU about its highest priority pending interrupt */
+     int irqlevel = 0;
+     int fiqlevel = 0;
++    int nmilevel = 0;
+     ARMCPU *cpu = ARM_CPU(cs->cpu);
+     CPUARMState *env = &cpu->env;
  
- # MRS, MSR (register), SYS, SYSL. These are all essentially the
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index ebaa7f00df..673e949422 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -66,6 +66,18 @@ void HELPER(msr_i_spsel)(CPUARMState *env, uint32_t imm)
-     update_spsel(env, imm);
+@@ -1075,6 +1076,8 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+ 
+         if (isfiq) {
+             fiqlevel = 1;
++        } else if (cs->hppi.nmi) {
++            nmilevel = 1;
+         } else {
+             irqlevel = 1;
+         }
+@@ -1084,6 +1087,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+ 
+     qemu_set_irq(cs->parent_fiq, fiqlevel);
+     qemu_set_irq(cs->parent_irq, irqlevel);
++    qemu_set_irq(cs->parent_nmi, nmilevel);
  }
  
-+void HELPER(msr_set_allint_el1)(CPUARMState *env)
-+{
-+    /* ALLINT update to PSTATE. */
-+    if (arm_hcrx_el2_eff(env) & HCRX_TALLINT) {
-+        raise_exception_ra(env, EXCP_UDEF,
-+                           syn_aa64_sysregtrap(0, 1, 0, 4, 1, 0x1f, 0), 2,
-+                           GETPC());
-+    }
-+
-+    env->pstate |= PSTATE_ALLINT;
-+}
-+
- static void daif_check(CPUARMState *env, uint32_t op,
-                        uint32_t imm, uintptr_t ra)
- {
-diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
-index 575a5dab7d..0518165399 100644
---- a/target/arm/tcg/helper-a64.h
-+++ b/target/arm/tcg/helper-a64.h
-@@ -22,6 +22,7 @@ DEF_HELPER_FLAGS_1(rbit64, TCG_CALL_NO_RWG_SE, i64, i64)
- DEF_HELPER_2(msr_i_spsel, void, env, i32)
- DEF_HELPER_2(msr_i_daifset, void, env, i32)
- DEF_HELPER_2(msr_i_daifclear, void, env, i32)
-+DEF_HELPER_1(msr_set_allint_el1, void, env)
- DEF_HELPER_3(vfp_cmph_a64, i64, f16, f16, ptr)
- DEF_HELPER_3(vfp_cmpeh_a64, i64, f16, f16, ptr)
- DEF_HELPER_3(vfp_cmps_a64, i64, f32, f32, ptr)
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 340265beb0..21758b290d 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2036,6 +2036,25 @@ static bool trans_MSR_i_DAIFCLEAR(DisasContext *s, arg_i *a)
-     return true;
- }
- 
-+static bool trans_MSR_i_ALLINT(DisasContext *s, arg_i *a)
-+{
-+    if (!dc_isar_feature(aa64_nmi, s) || s->current_el == 0) {
-+        return false;
-+    }
-+
-+    if (a->imm == 0) {
-+        clear_pstate_bits(PSTATE_ALLINT);
-+    } else if (s->current_el > 1) {
-+        set_pstate_bits(PSTATE_ALLINT);
-+    } else {
-+        gen_helper_msr_set_allint_el1(tcg_env);
-+    }
-+
-+    /* Exit the cpu loop to re-evaluate pending IRQs. */
-+    s->base.is_jmp = DISAS_UPDATE_EXIT;
-+    return true;
-+}
-+
- static bool trans_MSR_i_SVCR(DisasContext *s, arg_MSR_i_SVCR *a)
- {
-     if (!dc_isar_feature(aa64_sme, s) || a->mask == 0) {
+ static uint64_t icc_pmr_read(CPUARMState *env, const ARMCPRegInfo *ri)
 -- 
 2.34.1
 
