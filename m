@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED92CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C3CCD1294
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rryY0-0002DK-51; Wed, 03 Apr 2024 07:12:54 -0400
+	id 1rryX8-0007hi-Fd; Wed, 03 Apr 2024 07:11:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rryXx-00021v-Bj
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:49 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rryX5-0007hQ-Ow
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:55 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rryXb-0007RD-5d
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:49 -0400
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [10.150.64.98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D753D34C92;
- Wed,  3 Apr 2024 11:12:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1712142743; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h8SidGSUs+HGPh1TD0DxAYry0+B0z8cvSFE4KvxG2Lk=;
- b=V0xnElpDP6FoooQel6cn4if5eb9cBB2ki4t+9lcX+QpVgdYWDMaXDhRjTSMCVorBkrgG+C
- 53M8nAX9rUid/2XoqyeQPAHy3ItnTa4YRX+JpDpkgvtGNsWIt9AfV8ufn3jTPh9mpTZnvz
- +DKLUFm0+7h6fhB2KPLmzsBnBh8cXXo=
-Authentication-Results: smtp-out1.suse.de;
-	none
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id D996913A8B;
- Wed,  3 Apr 2024 11:12:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap2.dmz-prg2.suse.org with ESMTPSA id aONFMpY5DWayHQAAn2gu4w
- (envelope-from <roy.hopkins@suse.com>); Wed, 03 Apr 2024 11:12:22 +0000
-From: Roy Hopkins <roy.hopkins@suse.com>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v2 01/10] meson: Add optional dependency on IGVM library
-Date: Wed,  3 Apr 2024 12:11:32 +0100
-Message-ID: <0da76c3956bf776a9bbb0e18a1813b8dc5e20bf8.1712141833.git.roy.hopkins@suse.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1712141833.git.roy.hopkins@suse.com>
-References: <cover.1712141833.git.roy.hopkins@suse.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rryX4-0007N5-5F
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:55 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1e0f0398553so55566915ad.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:11:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142713; x=1712747513;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=b1mEKoDGZ4GGrqc3/3B4HXNGq76T02i3zn74clINDmw=;
+ b=HefW53rNnJT0YkjKYpes9DpFcPr7NX7oYmUUzO7mugrcdAAef08rUcGuSygO/v9E0D
+ ABgx6/ryTqkwmnHFpo/WODBHQg/xPP2oMygYaiLfQ82Ln+71qU4hw1bSeED3cjTkSUBf
+ 07cPqW75wf35PnaRAQhLTcg6bDnuvPITo1ZgLszEuIJWF2464YWHOBUTu+IBWQjnc4fv
+ XKPgUnNlM96Jnm9wg/jodxNGgsp82v0TryrQxvf0FnJf1FB+gIwE0moUqmujIPxcYRbE
+ xN2vteAaLNpUYvb1Lrj4FcPWnCTrfKrY5zBCEldpJ27UaFP11S//RT2+7jXABqhAuCFs
+ bZOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712142713; x=1712747513;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b1mEKoDGZ4GGrqc3/3B4HXNGq76T02i3zn74clINDmw=;
+ b=v9ZI9+VzGwya8HzGLXuHWbUFWLUJoMhXnBmHnl3AJt2+7CDS89QyPFpCnZigSIF/LY
+ 39Ily2wkwVY5A5BnPAlYvMWQXFIrf4OKiTixwcifHd2SntXdW4MTjWGjFy4PpkHnor/V
+ +lT8/6PIfl6cJQT7EDoceL/JvuRy2kj/dfZZfpJ1033viVA0jkKZUTjXllTcMwpttGVs
+ N+G4QV4rNthJTi6pVMK4Z0yNPQCkTMHAwbOKUt0zoKicHyPIswWSsgcS/mCzZrd8oTyN
+ 3TMc9fzaCinuoeBPpOAkYoYlMF5IOhgw7Y8LjPgDuoB2F3yg9r70ej1FQs6ezRY7XL5n
+ ti4A==
+X-Gm-Message-State: AOJu0YwCtKkEu7SXXwQqrKm9NAmBgi3OuOdf2ArxXKGJ/A/CR7SQWU4U
+ 5+U2V4FlH5aLQYLXy8KponKMg0SoEQe5+96iNn28jOkKr2QjgT5Fp8sQtvjYC3o=
+X-Google-Smtp-Source: AGHT+IHvoC8xqgF91bDQlnBrnxzII7j07cUWafpRBktQBsVJhWwVjC6DwoPKCkl21CGTV//zpc6s8g==
+X-Received: by 2002:a17:903:1ca:b0:1e2:90c6:839a with SMTP id
+ e10-20020a17090301ca00b001e290c6839amr1831744plh.31.1712142713065; 
+ Wed, 03 Apr 2024 04:11:53 -0700 (PDT)
+Received: from localhost ([157.82.200.213])
+ by smtp.gmail.com with UTF8SMTPSA id
+ y20-20020a170902e19400b001e28ba8b4d9sm1777496pla.132.2024.04.03.04.11.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Apr 2024 04:11:52 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Wed, 03 Apr 2024 20:11:02 +0900
+Subject: [PATCH v9 14/20] virtio-net: Report RSS warning at device realization
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [2.20 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
- BROKEN_CONTENT_TYPE(1.50)[];
- R_RATELIMIT(0.00)[to_ip_from(RLy64u1trr5nq3nwidnuusmct1)];
- RCVD_COUNT_THREE(0.00)[3]; NEURAL_HAM_SHORT(-0.20)[-0.996];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- BAYES_HAM(-3.00)[100.00%]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- DKIM_SIGNED(0.00)[suse.com:s=susede1];
- RCPT_COUNT_TWELVE(0.00)[19]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240403-rss-v9-14-c6d87e69d38b@daynix.com>
+References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
+In-Reply-To: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
+To: Jason Wang <jasowang@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev
+Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,108 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IGVM library allows Independent Guest Virtual Machine files to be
-parsed and processed. IGVM files are used to configure guest memory
-layout, initial processor state and other configuration pertaining to
-secure virtual machines.
+Warning about RSS fallback at device realization allows the user to
+notice the configuration problem early.
 
-This adds the --enable-igvm configure option, enabled by default, which
-attempts to locate and link against the IGVM library via pkgconfig and
-sets CONFIG_IGVM if found.
-
-The library is added to the system_ss target in backends/meson.build
-where the IGVM parsing will be performed by the ConfidentialGuestSupport
-object.
-
-Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- backends/meson.build          | 3 +++
- meson.build                   | 8 ++++++++
- meson_options.txt             | 2 ++
- scripts/meson-buildoptions.sh | 3 +++
- 4 files changed, 16 insertions(+)
+ hw/net/virtio-net.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/backends/meson.build b/backends/meson.build
-index 8b2b111497..d550ac19f7 100644
---- a/backends/meson.build
-+++ b/backends/meson.build
-@@ -30,5 +30,8 @@ if have_vhost_user_crypto
- endif
- system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
- system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
-+if igvm.found()
-+  system_ss.add(igvm)
-+endif
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 3d53eba88cfc..86929c9e1fad 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1261,10 +1261,12 @@ static bool virtio_net_attach_epbf_rss(VirtIONet *n)
  
- subdir('tpm')
-diff --git a/meson.build b/meson.build
-index c9c3217ba4..f0b5a29ce7 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1232,6 +1232,12 @@ if host_os == 'linux' and (have_system or have_tools)
-                        method: 'pkg-config',
-                        required: get_option('libudev'))
- endif
-+igvm = not_found
-+if not get_option('igvm').auto() or have_system
-+  igvm = dependency('igvm',
-+                       method: 'pkg-config',
-+                       required: get_option('igvm'))
-+endif
+     if (!ebpf_rss_set_all(&n->ebpf_rss, &config,
+                           n->rss_data.indirections_table, n->rss_data.key)) {
++        error_report("Failed to configure eBPF RSS");
+         return false;
+     }
  
- mpathlibs = [libudev]
- mpathpersist = not_found
-@@ -2320,6 +2326,7 @@ config_host_data.set('CONFIG_CFI', get_option('cfi'))
- config_host_data.set('CONFIG_SELINUX', selinux.found())
- config_host_data.set('CONFIG_XEN_BACKEND', xen.found())
- config_host_data.set('CONFIG_LIBDW', libdw.found())
-+config_host_data.set('CONFIG_IGVM', igvm.found())
- if xen.found()
-   # protect from xen.version() having less than three components
-   xen_version = xen.version().split('.') + ['0', '0']
-@@ -4456,6 +4463,7 @@ summary_info += {'seccomp support':   seccomp}
- summary_info += {'GlusterFS support': glusterfs}
- summary_info += {'hv-balloon support': hv_balloon}
- summary_info += {'TPM support':       have_tpm}
-+summary_info += {'IGVM support':      igvm}
- summary_info += {'libssh support':    libssh}
- summary_info += {'lzo support':       lzo}
- summary_info += {'snappy support':    snappy}
-diff --git a/meson_options.txt b/meson_options.txt
-index 0a99a059ec..4eaba64f4b 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -109,6 +109,8 @@ option('dbus_display', type: 'feature', value: 'auto',
-        description: '-display dbus support')
- option('tpm', type : 'feature', value : 'auto',
-        description: 'TPM support')
-+option('igvm', type: 'feature', value: 'auto',
-+       description: 'Independent Guest Virtual Machine (IGVM) file support')
+     if (!virtio_net_attach_ebpf_to_backend(n->nic, n->ebpf_rss.program_fd)) {
++        error_report("Failed to attach eBPF to backend");
+         return false;
+     }
  
- # Do not enable it by default even for Mingw32, because it doesn't
- # work on Wine.
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 680fa3f581..38a8183625 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -126,6 +126,7 @@ meson_options_help() {
-   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
-   printf "%s\n" '  hvf             HVF acceleration support'
-   printf "%s\n" '  iconv           Font glyph conversion support'
-+  printf "%s\n" '  igvm            IGVM file support'
-   printf "%s\n" '  jack            JACK sound support'
-   printf "%s\n" '  keyring         Linux keyring support'
-   printf "%s\n" '  kvm             KVM acceleration support'
-@@ -342,6 +343,8 @@ _meson_option_parse() {
-     --iasl=*) quote_sh "-Diasl=$2" ;;
-     --enable-iconv) printf "%s" -Diconv=enabled ;;
-     --disable-iconv) printf "%s" -Diconv=disabled ;;
-+    --enable-igvm) printf "%s" -Digvm=enabled ;;
-+    --disable-igvm) printf "%s" -Digvm=disabled ;;
-     --includedir=*) quote_sh "-Dincludedir=$2" ;;
-     --enable-install-blobs) printf "%s" -Dinstall_blobs=true ;;
-     --disable-install-blobs) printf "%s" -Dinstall_blobs=false ;;
+@@ -1279,16 +1281,10 @@ static void virtio_net_detach_epbf_rss(VirtIONet *n)
+ static void virtio_net_commit_rss_config(VirtIONet *n)
+ {
+     if (n->rss_data.enabled) {
+-        n->rss_data.enabled_software_rss = n->rss_data.populate_hash;
++        n->rss_data.enabled_software_rss = n->rss_data.populate_hash ||
++                                           !virtio_net_attach_epbf_rss(n);
+         if (n->rss_data.populate_hash) {
+             virtio_net_detach_epbf_rss(n);
+-        } else if (!virtio_net_attach_epbf_rss(n)) {
+-            if (get_vhost_net(qemu_get_queue(n->nic)->peer)) {
+-                warn_report("Can't load eBPF RSS for vhost");
+-            } else {
+-                warn_report("Can't load eBPF RSS - fallback to software RSS");
+-                n->rss_data.enabled_software_rss = true;
+-            }
+         }
+ 
+         trace_virtio_net_rss_enable(n->rss_data.hash_types,
+@@ -3802,9 +3798,14 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     net_rx_pkt_init(&n->rx_pkt);
+ 
+     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS) &&
+-        !virtio_net_load_ebpf(n) && get_vhost_net(nc->peer)) {
+-        virtio_net_device_unrealize(dev);
+-        error_setg(errp, "Can't load eBPF RSS for vhost");
++        !virtio_net_load_ebpf(n)) {
++        if (get_vhost_net(nc->peer)) {
++            error_setg(errp, "Can't load eBPF RSS for vhost");
++            virtio_net_device_unrealize(dev);
++            return;
++        }
++
++        warn_report("Can't load eBPF RSS - fallback to software RSS");
+     }
+ }
+ 
+
 -- 
-2.43.0
+2.44.0
 
 
