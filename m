@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD605CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7441BCD128A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rryXF-0007ir-GD; Wed, 03 Apr 2024 07:12:05 -0400
+	id 1rryX4-0007gs-1A; Wed, 03 Apr 2024 07:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryXD-0007iV-TM
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:03 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1rryX2-0007gR-JW
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:52 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryXC-0007ON-6X
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:03 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6ecc9f0bdaaso1079827b3a.1
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:12:01 -0700 (PDT)
+ id 1rryX0-0007M9-QK
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:52 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6eaf1a3e917so3389944b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:11:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142721; x=1712747521;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142708; x=1712747508;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UYR4G1fw1oCsaQhJidNPTDBEVmpstu8Os5glpvIVhMo=;
- b=kqtJgPWgqhp9MpnOUDsAvfv63LsN5d6QQtgPfebpwuxPUNajMXdPw6o6gDClnNcdaX
- OYuaveM23tYYC1J7HPnfz9c3KGOlDKJ74hqRidAzsMk/Uk9wDVJADVeznMSHV1JsZwiS
- WDbIrq4wcjkqhH2+k7hhtss2RuUs9hxLRcRSe809lX7cvwn7gFn9RhuYrm9AxYDYPiI8
- JtwOEcqnb/p06Gnv1BXwJrK2ySK6j3x3RRcoHylOIEkqLMYw4aTv6BTUNI7SrakAdD6k
- GpaznqU8+HmCB/GW5VP11uNZoHUGAQ2+YkSrB74V/LIt89uCEpK/9B34j6LcEtLNZ/re
- v0JA==
+ :reply-to; bh=cuZ7qNeOoLzARiTc2qncpFYpm6OJUrbkrDsBu8qypTc=;
+ b=nCyARB33Rd4V9Rma6g+3h9Kgar8Z69oDXYEu18uVrDxpj6ibRaXOvnPeiszkHSzpR5
+ gRjLbB7tA/hPSR/8Ybac5Jwz3wFWzmvzpKExEKXz386OywnxWgIU++AKynjr7V105Xyl
+ FYZDDwalkDwQ7WHZP74GC4O27Jrz97YsbePLRd5TAOzoBQNIp7G6/EQqg6Zh01XPjYGu
+ Zawb4BW1w3O435uOR8yhOeor+gXGyvsRY6IxuNKmwwz+JocwfEIBmSIxuUV6iN299tIq
+ BvchHaJS9TKezJp2WfYhPFaQPg1tnIeAryWM5sbHDksgG03zP2yRM3hAIvnGRhAW8TrB
+ 7Huw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712142721; x=1712747521;
+ d=1e100.net; s=20230601; t=1712142708; x=1712747508;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UYR4G1fw1oCsaQhJidNPTDBEVmpstu8Os5glpvIVhMo=;
- b=t2gpN48Ihe2NfUxgj5tXzf93n4ewwcpZN17ik0IpCiF9JQ8l/ilH32OKyQ9js0Hc5W
- iDarjQkgNKedK8EO4LzV4GHHpzwNMaOJWCQwfcxFZE8NW4+ghxVP2BRAxn2iQmuBsmiZ
- FqLJwVQAJnUZDNYF+8pKOAKXdziq/0kvUzQLBx5UzBXIdCWLwYs0IsSoavtpFNcoQx5R
- DzGWBhBzoFa2iH9jhBctg7qLDokJyslr/2mIEDmL7XINRTiEYGJmNmPkfqqcjuPALLsU
- pI8LWW7AdbrsjNpX/AXmZXEiWre1ibgXoo8ViaKa7lfGAh7G4rWdXv8rXScxw3jwGH+e
- 9cGQ==
-X-Gm-Message-State: AOJu0YzF8fvE9LIfVEd3ihJMN9nbc2bNlrdys8zTvI5/6f6NwWuugl8W
- JKq7gCS1NWDPEgcXPgzh4r1aSM6yxfa9eljXkeomQ/DgKbgcEwUKtRYYf5QA9E8=
-X-Google-Smtp-Source: AGHT+IHZQ125jqYEO6SyRHtWvkmOEpehHra02eveikimZci8JUqRVIvvlBjLkEPGLn4vg3Iogk448g==
-X-Received: by 2002:a05:6a20:8429:b0:1a3:636d:642d with SMTP id
- c41-20020a056a20842900b001a3636d642dmr17184211pzd.45.1712142720745; 
- Wed, 03 Apr 2024 04:12:00 -0700 (PDT)
+ bh=cuZ7qNeOoLzARiTc2qncpFYpm6OJUrbkrDsBu8qypTc=;
+ b=sMCimXPMHfSDzyXn8Tlnr3srr3eDOZechqoZ17JXjybKtWJM8+SFK4RXUh9VR/G305
+ jG1Y+jcjQyxNoH+3jSgz4jWGolu8TO02A1jrqDcVknOHxh6nuBlRWVCrGjs2D/BTksOJ
+ KkMCJ2zxpRxdsS72d0sgJ/5mB5x5G1LsqwkBRNeSO4F7z1ilz1Nqk9wCO0RMKgyo6r7G
+ 9sn8/n+WvvhBFV8OJXqcVlW20g4ugvBhLuecOsEcKtOcKto7U3u6AJbVNS4jh61192dG
+ 3PMzv252bA4D5irfBWxj+O1Zyi3Ii3zdhSr3S0eEuTX2/7r0EgsQGA51qshOwL0i26xG
+ H6PQ==
+X-Gm-Message-State: AOJu0Yz0bdG0pTye58715emNbdwJVtHEH5W4jIKKuYXi9sPScKekrkLB
+ i00dTQUAttSVEwQWuefO5nPUc5AKYUx1Vd7ByDNlZb0MTxJpjU9AaKfID/kME2w=
+X-Google-Smtp-Source: AGHT+IE8ZgfZ1W686vfi+Z1aD2xDxZc+fHbZqeSLtK1E3m4MVsAhhzywX5YFmfBGl/LEQnLRHR9Ebw==
+X-Received: by 2002:a05:6a00:cc5:b0:6ea:d114:5f05 with SMTP id
+ b5-20020a056a000cc500b006ead1145f05mr16871195pfv.34.1712142708628; 
+ Wed, 03 Apr 2024 04:11:48 -0700 (PDT)
 Received: from localhost ([157.82.200.213])
  by smtp.gmail.com with UTF8SMTPSA id
- p16-20020a170902e75000b001dd7a97a266sm12947337plf.282.2024.04.03.04.11.58
+ k8-20020aa78208000000b006eaad01817esm11537200pfi.105.2024.04.03.04.11.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Apr 2024 04:12:00 -0700 (PDT)
+ Wed, 03 Apr 2024 04:11:48 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 03 Apr 2024 20:11:04 +0900
-Subject: [PATCH v9 16/20] virtio-net: Do not write hashes to peer buffer
+Date: Wed, 03 Apr 2024 20:11:01 +0900
+Subject: [PATCH v9 13/20] virtio-net: Return an error when vhost cannot
+ enable RSS
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240403-rss-v9-16-c6d87e69d38b@daynix.com>
+Message-Id: <20240403-rss-v9-13-c6d87e69d38b@daynix.com>
 References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
 In-Reply-To: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, 
@@ -77,8 +78,8 @@ To: Jason Wang <jasowang@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::42e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,112 +101,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The peer buffer is qualified with const and not meant to be modified.
-It also prevents enabling VIRTIO_NET_F_HASH_REPORT for peers without
-virtio-net header support.
+vhost requires eBPF for RSS. When eBPF is not available, virtio-net
+implicitly disables RSS even if the user explicitly requests it. Return
+an error instead of implicitly disabling RSS if RSS is requested but not
+available.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/net/virtio-net.c | 36 +++++++++++++++++-------------------
- 1 file changed, 17 insertions(+), 19 deletions(-)
+ hw/net/virtio-net.c | 97 ++++++++++++++++++++++++++---------------------------
+ 1 file changed, 48 insertions(+), 49 deletions(-)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2de073ce18fd..ff1884564d0d 100644
+index 61b49e335dea..3d53eba88cfc 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -1823,16 +1823,9 @@ static uint8_t virtio_net_get_hash_type(bool hasip4,
-     return 0xff;
+@@ -793,9 +793,6 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
+         return features;
+     }
+ 
+-    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
+-        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
+-    }
+     features = vhost_net_get_features(get_vhost_net(nc->peer), features);
+     vdev->backend_features = features;
+ 
+@@ -3591,6 +3588,50 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+     return qatomic_read(&n->failover_primary_hidden);
  }
  
--static void virtio_set_packet_hash(const uint8_t *buf, uint8_t report,
--                                   uint32_t hash)
--{
--    struct virtio_net_hdr_v1_hash *hdr = (void *)buf;
--    hdr->hash_value = hash;
--    hdr->hash_report = report;
++static void virtio_net_device_unrealize(DeviceState *dev)
++{
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    VirtIONet *n = VIRTIO_NET(dev);
++    int i, max_queue_pairs;
++
++    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
++        virtio_net_unload_ebpf(n);
++    }
++
++    /* This will stop vhost backend if appropriate. */
++    virtio_net_set_status(vdev, 0);
++
++    g_free(n->netclient_name);
++    n->netclient_name = NULL;
++    g_free(n->netclient_type);
++    n->netclient_type = NULL;
++
++    g_free(n->mac_table.macs);
++    g_free(n->vlans);
++
++    if (n->failover) {
++        qobject_unref(n->primary_opts);
++        device_listener_unregister(&n->primary_listener);
++        migration_remove_notifier(&n->migration_state);
++    } else {
++        assert(n->primary_opts == NULL);
++    }
++
++    max_queue_pairs = n->multiqueue ? n->max_queue_pairs : 1;
++    for (i = 0; i < max_queue_pairs; i++) {
++        virtio_net_del_queue(n, i);
++    }
++    /* delete also control vq */
++    virtio_del_queue(vdev, max_queue_pairs * 2);
++    qemu_announce_timer_del(&n->announce_timer, false);
++    g_free(n->vqs);
++    qemu_del_nic(n->nic);
++    virtio_net_rsc_cleanup(n);
++    g_free(n->rss_data.indirections_table);
++    net_rx_pkt_uninit(n->rx_pkt);
++    virtio_cleanup(vdev);
++}
++
+ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+@@ -3760,53 +3801,11 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ 
+     net_rx_pkt_init(&n->rx_pkt);
+ 
+-    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
+-        virtio_net_load_ebpf(n);
+-    }
 -}
 -
- static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
--                                  size_t size)
-+                                  size_t size,
-+                                  struct virtio_net_hdr_v1_hash *hdr)
- {
-     VirtIONet *n = qemu_get_nic_opaque(nc);
-     unsigned int index = nc->queue_index, new_index = index;
-@@ -1863,7 +1856,8 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
-                                              n->rss_data.hash_types);
-     if (net_hash_type > NetPktRssIpV6UdpEx) {
-         if (n->rss_data.populate_hash) {
--            virtio_set_packet_hash(buf, VIRTIO_NET_HASH_REPORT_NONE, 0);
-+            hdr->hash_value = VIRTIO_NET_HASH_REPORT_NONE;
-+            hdr->hash_report = 0;
-         }
-         return n->rss_data.redirect ? n->rss_data.default_queue : -1;
+-static void virtio_net_device_unrealize(DeviceState *dev)
+-{
+-    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+-    VirtIONet *n = VIRTIO_NET(dev);
+-    int i, max_queue_pairs;
+-
+-    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
+-        virtio_net_unload_ebpf(n);
++    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS) &&
++        !virtio_net_load_ebpf(n) && get_vhost_net(nc->peer)) {
++        virtio_net_device_unrealize(dev);
++        error_setg(errp, "Can't load eBPF RSS for vhost");
      }
-@@ -1871,7 +1865,8 @@ static int virtio_net_process_rss(NetClientState *nc, const uint8_t *buf,
-     hash = net_rx_pkt_calc_rss_hash(pkt, net_hash_type, n->rss_data.key);
+-
+-    /* This will stop vhost backend if appropriate. */
+-    virtio_net_set_status(vdev, 0);
+-
+-    g_free(n->netclient_name);
+-    n->netclient_name = NULL;
+-    g_free(n->netclient_type);
+-    n->netclient_type = NULL;
+-
+-    g_free(n->mac_table.macs);
+-    g_free(n->vlans);
+-
+-    if (n->failover) {
+-        qobject_unref(n->primary_opts);
+-        device_listener_unregister(&n->primary_listener);
+-        migration_remove_notifier(&n->migration_state);
+-    } else {
+-        assert(n->primary_opts == NULL);
+-    }
+-
+-    max_queue_pairs = n->multiqueue ? n->max_queue_pairs : 1;
+-    for (i = 0; i < max_queue_pairs; i++) {
+-        virtio_net_del_queue(n, i);
+-    }
+-    /* delete also control vq */
+-    virtio_del_queue(vdev, max_queue_pairs * 2);
+-    qemu_announce_timer_del(&n->announce_timer, false);
+-    g_free(n->vqs);
+-    qemu_del_nic(n->nic);
+-    virtio_net_rsc_cleanup(n);
+-    g_free(n->rss_data.indirections_table);
+-    net_rx_pkt_uninit(n->rx_pkt);
+-    virtio_cleanup(vdev);
+ }
  
-     if (n->rss_data.populate_hash) {
--        virtio_set_packet_hash(buf, reports[net_hash_type], hash);
-+        hdr->hash_value = hash;
-+        hdr->hash_report = reports[net_hash_type];
-     }
- 
-     if (n->rss_data.redirect) {
-@@ -1891,7 +1886,7 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-     VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
-     size_t lens[VIRTQUEUE_MAX_SIZE];
-     struct iovec mhdr_sg[VIRTQUEUE_MAX_SIZE];
--    struct virtio_net_hdr_mrg_rxbuf mhdr;
-+    struct virtio_net_hdr_v1_hash extra_hdr;
-     unsigned mhdr_cnt = 0;
-     size_t offset, i, guest_offset, j;
-     ssize_t err;
-@@ -1901,7 +1896,7 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-     }
- 
-     if (!no_rss && n->rss_data.enabled && n->rss_data.enabled_software_rss) {
--        int index = virtio_net_process_rss(nc, buf, size);
-+        int index = virtio_net_process_rss(nc, buf, size, &extra_hdr);
-         if (index >= 0) {
-             NetClientState *nc2 = qemu_get_subqueue(n->nic, index);
-             return virtio_net_receive_rcu(nc2, buf, size, true);
-@@ -1961,15 +1956,17 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-             if (n->mergeable_rx_bufs) {
-                 mhdr_cnt = iov_copy(mhdr_sg, ARRAY_SIZE(mhdr_sg),
-                                     sg, elem->in_num,
--                                    offsetof(typeof(mhdr), num_buffers),
--                                    sizeof(mhdr.num_buffers));
-+                                    offsetof(typeof(extra_hdr), hdr.num_buffers),
-+                                    sizeof(extra_hdr.hdr.num_buffers));
-             }
- 
-             receive_header(n, sg, elem->in_num, buf, size);
-             if (n->rss_data.populate_hash) {
--                offset = sizeof(mhdr);
-+                offset = offsetof(typeof(extra_hdr), hash_value);
-                 iov_from_buf(sg, elem->in_num, offset,
--                             buf + offset, n->host_hdr_len - sizeof(mhdr));
-+                             (char *)&extra_hdr + offset,
-+                             sizeof(extra_hdr.hash_value) +
-+                             sizeof(extra_hdr.hash_report));
-             }
-             offset = n->host_hdr_len;
-             total += n->guest_hdr_len;
-@@ -2015,10 +2012,11 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-     }
- 
-     if (mhdr_cnt) {
--        virtio_stw_p(vdev, &mhdr.num_buffers, i);
-+        virtio_stw_p(vdev, &extra_hdr.hdr.num_buffers, i);
-         iov_from_buf(mhdr_sg, mhdr_cnt,
-                      0,
--                     &mhdr.num_buffers, sizeof mhdr.num_buffers);
-+                     &extra_hdr.hdr.num_buffers,
-+                     sizeof extra_hdr.hdr.num_buffers);
-     }
- 
-     for (j = 0; j < i; j++) {
+ static void virtio_net_reset(VirtIODevice *vdev)
 
 -- 
 2.44.0
