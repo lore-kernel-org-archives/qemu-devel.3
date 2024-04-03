@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C02A3CD1288
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 12:20:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4B0CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 12:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rrzb0-000238-Av; Wed, 03 Apr 2024 08:20:02 -0400
+	id 1rs07Q-00042n-Op; Wed, 03 Apr 2024 08:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rrzax-00022J-Jh
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:19:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rrzap-0002S5-Vw
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:19:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712146789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xAQsJaYi83IqcOYBrJOA296+KbKH9Ogbqg6xRBFzX/Y=;
- b=SSt3tBE8hsXaPfigkkujIz6keFtVqzvhfuPqeVnIzXscFZNtmiMkdxPyHvFWeB+WLmYuuS
- Z0JzVsKMy11vDZxxFy+//VuS6Gwd3td+R12eFgOD+s/yf6G+H8YY2vLU1twjiWX6e34ZsT
- hFnPvr722tMSQ/EmqzwI/SOkWgNh6rY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-0M3J0d8KM7-mwt50gr0TgA-1; Wed,
- 03 Apr 2024 08:19:42 -0400
-X-MC-Unique: 0M3J0d8KM7-mwt50gr0TgA-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 10B7F385DF2F;
- Wed,  3 Apr 2024 12:19:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C58C5C01601;
- Wed,  3 Apr 2024 12:19:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AFEE421E6811; Wed,  3 Apr 2024 14:19:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Justinien Bouron <justinien.bouron@gmail.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9?=
- <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Eric Blake
- <eblake@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  =?utf-8?Q?Marc-?=
- =?utf-8?Q?Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v3] input-linux: Add option to not grab a device upon
- guest startup
-In-Reply-To: <20240403055002.890760-1-justinien.bouron@gmail.com> (Justinien
- Bouron's message of "Tue, 2 Apr 2024 22:50:02 -0700")
-References: <20240403055002.890760-1-justinien.bouron@gmail.com>
-Date: Wed, 03 Apr 2024 14:19:36 +0200
-Message-ID: <87edbmk59j.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
+ id 1rs07O-00042V-CR
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:53:30 -0400
+Received: from mail-ej1-f52.google.com ([209.85.218.52])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
+ id 1rs07M-0002yy-Hl
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 08:53:30 -0400
+Received: by mail-ej1-f52.google.com with SMTP id
+ a640c23a62f3a-a517a492055so22310366b.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 05:53:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712148803; x=1712753603;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q4cj6vg+PLMD3bnAnC/7BKVkE+A86qwqaG5PcVTOt18=;
+ b=j3gFZbmAFeLouKcoZ48PyCad2L7cg8HV2twDaOeEDbvSnoa17JjKQPZBSZy1GQoJKP
+ YlqNQ2SJIwGQZN0EdBB48C/vqFrt6LGxP5s1RwPNvZsNeJpMRo5NjiX4bi8tww1PEkxX
+ mG2WfjVCp8EMPmg94+hY5s8bXyJBIPgq2hxFiFd69x3Am1RRPWznfzo+lEK9zwMU288w
+ qTnzagOjVS57RoMY/GJxXYMGpdBdPn49eJb7R2OtDn9vRl6YbkAWP89YUlRuJgdsJ8UB
+ RLy0RKDrtnzdiXR3jE/1D0iPhMhNmhVo9aV1a2LKNM0TKd4e5L1DEYlMFEyb91lLJfnG
+ BitQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEFcVN8wSd/ObnbPBu+wWiCYVpmSoF1igkSGEPSaJZP9GzIhzjWVMaJUtdVTXrY1AnKDzWF09Tk8Fz0/W4Sbx6Qtr3zQ4=
+X-Gm-Message-State: AOJu0YybE+T4R2hYzRUcA2XgxmFBLRf5tZne3e1DGSP5RTiF6A89STZf
+ vPr7C3WVE+osVJJHTS0dK8ZvnUbzonqqQK2ZOM+/b2FGC1ye/irG
+X-Google-Smtp-Source: AGHT+IG/LZvkvkvKke8uVXcXbrYjZ9FSvr+Pm5+/tdlPUCoe15E1D9VDt24wooC2fGJfQa9Hdwxe2A==
+X-Received: by 2002:a17:906:2284:b0:a4e:39f1:6374 with SMTP id
+ p4-20020a170906228400b00a4e39f16374mr1812470eja.24.1712148803105; 
+ Wed, 03 Apr 2024 05:53:23 -0700 (PDT)
+Received: from gmail.com (fwdproxy-lla-007.fbsv.net.
+ [2a03:2880:30ff:7::face:b00c]) by smtp.gmail.com with ESMTPSA id
+ an3-20020a17090656c300b00a4e7c2b2070sm2694127ejc.8.2024.04.03.05.53.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Apr 2024 05:53:16 -0700 (PDT)
+Date: Wed, 3 Apr 2024 05:53:12 -0700
+From: Breno Leitao <leitao@debian.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: hengqi@linux.alibaba.com, xuanzhuo@linux.alibaba.com,
+ Jason Wang <jasowang@redhat.com>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Andrew Melnychenko <andrew@daynix.com>, rbc@meta.com,
+ riel@surriel.com, stable@vger.kernel.org, qemu-devel@nongnu.org,
+ "open list:VIRTIO CORE AND NET DRIVERS" <virtualization@lists.linux.dev>,
+ "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net v3] virtio_net: Do not send RSS key if it is not
+ supported
+Message-ID: <Zg1ROBmnY0jaKvsf@gmail.com>
+References: <20240329171641.366520-1-leitao@debian.org>
+ <20240331160618-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240331160618-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=209.85.218.52;
+ envelope-from=breno.debian@gmail.com; helo=mail-ej1-f52.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,20 +94,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Justinien Bouron <justinien.bouron@gmail.com> writes:
+On Sun, Mar 31, 2024 at 04:20:30PM -0400, Michael S. Tsirkin wrote:
+> On Fri, Mar 29, 2024 at 10:16:41AM -0700, Breno Leitao wrote:
+> > @@ -3814,13 +3815,24 @@ static int virtnet_set_rxfh(struct net_device *dev,
+> >  		return -EOPNOTSUPP;
+> >  
+> >  	if (rxfh->indir) {
+> > +		if (!vi->has_rss)
+> > +			return -EOPNOTSUPP;
+> > +
+> >  		for (i = 0; i < vi->rss_indir_table_size; ++i)
+> >  			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
+> > +		update = true;
+> >  	}
+> > -	if (rxfh->key)
+> > +
+> > +	if (rxfh->key) {
+> > +		if (!vi->has_rss && !vi->has_rss_hash_report)
+> > +			return -EOPNOTSUPP;
+> 
+> 
+> What's the logic here? Is it || or &&? A comment can't hurt.
 
-> Depending on your use-case, it might be inconvenient to have qemu grab
-> the input device from the host immediately upon starting the guest.
->
-> Added a new bool option to input-linux: grab-on-startup. If true, the
-> device is grabbed as soon as the guest is started, otherwise it is not
-> grabbed until the toggle combination is entered. To avoid breaking
-> existing setups, the default value of grab-on-startup is true, i.e. same
-> behaviour as before this change.
->
-> Signed-off-by: Justinien Bouron <justinien.bouron@gmail.com>
+If txfh carries a key, then the device needs to has either has_rss or
+has_rss_hash_report "features".
 
-Again, QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
+These are basically virtio features VIRTIO_NET_F_HASH_REPORT and
+VIRTIO_NET_F_RSS that are set at virtio_probe.
 
+I will add the comment and respin the series.
 
