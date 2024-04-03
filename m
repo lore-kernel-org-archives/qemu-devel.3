@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79418CD128A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 19:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB92CD128A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 19:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rs5rm-0004UJ-SD; Wed, 03 Apr 2024 15:01:46 -0400
+	id 1rs6Ud-0003lH-R9; Wed, 03 Apr 2024 15:41:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric_devolder@yahoo.com>)
- id 1rs5AQ-0000ci-2x
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 14:17:03 -0400
-Received: from sonic310-24.consmr.mail.ne1.yahoo.com ([66.163.186.205])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <eric_devolder@yahoo.com>)
- id 1rs5AJ-0005zJ-Vi
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 14:16:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1712168207; bh=g92yez4sSP8F6s1JfsJCe6SFMqyeuZxXQXgq9wq8Crc=;
- h=Date:From:To:Subject:References:From:Subject:Reply-To;
- b=kdM5rk2htUBlW+yQ4RVw2CsjIQyPpjeoiSoS0df6weQiEvbaiwKzqkncK/mBi0yKQ17NFSbOml/v50FPF3l11zz/9nqo4+V7hYpXQ3oxtZIHO/PLq0RPy4fN9NkunJSarluMajM6KVCP31QzPEyKzS+BOpkFVKKlmSdTUeQ/ogqYyOnRsJ2rn/uPMRS2rvjrBP8mFjKjK7RA8nXocsXcGwzuw49S8GWMYjW6vpbDAUaKEjV/7BCM5AYj+ATKmqnlGYf7P/FBzr+aCjqFX0aKDkq8tQUYDoOmC9bzpARGJAVmbBBCCxFfeATue7wckPs/2z1saOmWtp5kWGCj3K0bFg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1712168207; bh=1NxqxeI/RTivCDkVzEZZ9rHEKsDbgILyDsj3FH68a48=;
- h=X-Sonic-MF:Date:From:To:Subject:From:Subject;
- b=U7o7movnYDh1xuLTMrXxPaOMmECtRrNkLCo7T3rvJnEBSsTCZA20Ywc3Rubdr+x8bDDS/os4HIRvISZbeu7dzpNz3rWJzWTycj9XCqQdBx2CSi7bKo540TupB4PYkTdB3H9GEnA4504uBFVBu5sgkSHXhihsy1GbOzyfj6jDH0ihv7tPgY29jKGGBg0cNJ8aaZJPiY1LNL7Y8RY+eVmDjq1T3ceqM8LvIGN2dGjbzud/ildvi+aYcnloj7nWpi3a+c2VZogMUrQ4PiUQRG/iBc4LNmCmBwCWgGAfr4A5D9jFX5z2oyes6ebmNhukkTLEM/QTGP2WXXT5mRm8ejKUNg==
-X-YMail-OSG: wuwHcykVM1kyB7uipLZ7LdJtOexfOSFa7nX10FXpHyZa6joL2sRokUELVb4EmJI
- qsWZqO2c_dB51Lu5anCvTm37h3oJErpvrLtV3B7JnTK.3zrtdm7aSRiEJvBKxadDdqFWMRrpUH4i
- rB.Zx1u68Yohdy2zL3g9GnfL4L9wBS_2657KRgBefMJpbw9bZJsL61VjWl3HAYSK4o4XHyOPAGc4
- nFkxqNWdYlpYckiESDJmizPwM7FGyH.iQFnJCKL2eiOiXuYU6UMHydTECnTB.9cB2lp5VHb3e792
- EG6v6HoNklxLnuqGmFYnh7pSXZjAeLEvtwcGd3l64yRU3MLqFV9PVgb9Y8vk0Krm3l0u8jAN7GC8
- ODcaTev2BYdsARySpOSW7xEzV6i.17ebaJQlmmT7Qfc..cnJyPMP2T94NjdixHZkx3t4zj6QGYXo
- kMxNw.FZFlGPyBNNcNRPijsYAuJHWP6BLGJis4xE3Yi_HSs0yFF2M.C__5fZ3GkzAkDX7awuMbi1
- zQFh14fXeUha6QAJ8.g7bCg4LLekk16bCXjA7i3eGP519fPt1v6NXQ.oSUTZl1v6cWXBeU2rHCZo
- Dwess9MaomOSlBwS3_oZv70gJl_.jsIItbKsDZcB5hf0HqOfNDGF8XD9aGQIRu5mtHkwkBSWVsBm
- CO70oZQeJVT8ZL8ScfsuvUXsNYKqN26GWc0iGiVlSCW1U7TshnZIo7l2Hk8WCThIlFIBAGx4wJ6g
- BsAwEl5UqSu2SEegbc4d9JqqCIA4vE4dz11oD1e7a9xn0jXqZGJwv1S81YLNHQikpw01QvUyG5iP
- uHLbB5VF2aIMQICMAGYfS.2f50XZbfKkJdgw8h9D9_scDnVXJsX38__rP.9AOOBTA2ZjJgW5VxjE
- oa2rFhy5D3.ITsH23sg2OFHMIF6hAXhXy8eKNax1_KtqE4P.8afZc9A7dRZNFq3xkP99bMCcSESU
- O4Jif9UG37INbyrTPZ4bNKvNVjeAOVOxTIRwi45iMVzLlyosYzzdgTYVS0Jz70czPmr8K12isRCf
- d86zwLMZvLbdg12TNx9KxzuexihaopUCgnr1.139VEs64JydAcqJjdzoM8leC47L05_Onf5T7zo6
- tUFh6mNnm499JPOtMoZBthzFuTmU.yNyw2ELXfH0naQQwREWAZGPspFBxZDesge_zB9RX_vFS7SW
- FnMSZKHUJxC0uZPPJkGTDjaZYbwILGuNRDOlpq3nmQXqWRUdzjQ94TCtA_xpUz9Sf9FOfwRPyEDe
- g491f4gEqCtJckApXQBaX2YJgpfPz_UcMLda58GHcQDcd9aKT1yv9kmcF_NDR0VKgEKvwmZwoxb7
- XOGXTyidm_GK0Sy980ONX_CR0UpDAuDpYbhIsbim9p4BNFW7TK4dWWZwXhZDoKXz1wCdDh7RlyQq
- uULwAQS5OHOqWGY_hOvAEYUGYWT_cKKL_.hurB05RdrzEgrpP7auBUNeDFUUqwqhVVt19VvqlsNt
- aSzlT1_MFw6foms_GbValNc9.BrmDjtyafAawS.cOZBCzXXJmtM9lHmvuYOzOu9OdivIPpGLNJBc
- OR8p2rbVebPLrcV8u0K7BTsIH_3yCpEGmgmyZP0nedvGZCfrHTALMnA.cBS96pO6VSlsO6YZEt_x
- 4EpenZP.bT2RAcZ9Fpi3NnzC2deVnHneh0ZX6HcF6nMGLeYP0oP6fMHSNLA.2VekMrX0dXrLCmLf
- XmMFXO_Xhxj7t1_7d0XvapqdPoY_SAqn1HPBF5lrNUxRVMy2L6PHYlrSW_d.JQCY4a04BU_eCpNo
- fneB9O2VTeQwmqCd9sfpyo5R92Nahg4ctpfxjUBf0rZhzi4k5J5wJC2.41abMojub51VHKYIwDCl
- PHWmrJ2KcLTrM9GW2.bRVhAa6otRixJH4MUqOsh74EO4gMdEa7AEQ7aZ45kO.Rz_f5Wshu78mRQ7
- gCjYw9nTbY9YQjyJ_0yZydD73AXaRDU5Lu5ds6gVqVtuordcca.NDPRQXvbvqKFh_jFg6ESEGHuO
- k9rJ3u0DLB45qdTuLZ4UpHzxyZuA3kWusZH5l28YplQIK2In.2tfbC5I58fMaSX66W6DCJAtTNoP
- JFLk0g1xKKMs8CvfxWNbeGStAOO9ZO58r8QkM066BV2s84pt4YSLEzOdm96CzN2PO85pIfLPUD_a
- Tk4pLYoDth1Ickhe6Vz8dytC5fpjAEpUpEY4lMzOzfh2.aJWgi03z59pqOGkdoJFlQ7YUPWX7g8O
- HDFmSSMtrIA--
-X-Sonic-MF: <eric_devolder@yahoo.com>
-X-Sonic-ID: 4177442b-1257-4afb-9775-989bbb1cebb5
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic310.consmr.mail.ne1.yahoo.com with HTTP; Wed, 3 Apr 2024 18:16:47 +0000
-Date: Wed, 3 Apr 2024 18:16:46 +0000 (UTC)
-From: Eric DeVolder <eric_devolder@yahoo.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Message-ID: <183897139.5301881.1712168206289@mail.yahoo.com>
-Subject: riscv disassembler error with pmpcfg0
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rs6Uc-0003ku-8s
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 15:41:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rs6Ua-0006zY-Og
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 15:41:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712173310;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0vudUi/68xMtrQZBRWCWpa3fAlec3/3KhJ/rjBG2tcA=;
+ b=UOVV1JGySB66z8z8g6cYWkvGYjOYY0TXPCxkkmU1rYwh1XwGFCIEX+ay9Xd656isSmiexo
+ kirxVKRRdtq14QsdpAJAE9pnCgshnU8AINRrjk3wa3a9UsG3jFsVk3A/7LbUXIYVv2MgTk
+ ETXHzgwpx6Y9IcN6zVbWFn5PMILTxiU=
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-ghmYOvJzMwmVFbOO3Nl7UA-1; Wed, 03 Apr 2024 15:41:49 -0400
+X-MC-Unique: ghmYOvJzMwmVFbOO3Nl7UA-1
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-478222c7062so11674137.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 12:41:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712173309; x=1712778109;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0vudUi/68xMtrQZBRWCWpa3fAlec3/3KhJ/rjBG2tcA=;
+ b=XFU4XWEooBHb2/mlT8T8jNaycJl9sBmlnFPo1hBJdKJoA9BoYh2tvp3Q7gufXt5dMv
+ aIJpxYNh3Y8Uv3bugpRjji+M8s6At1fT33IMZufLbMFHgphmSPVTK5FUGOV3sJ7CQKGV
+ Z/M09ZHDAjB9JIb5xY35kIVIbfcum6FmGYojYyR4KK9Cok2tELD8DaRy2f+Z1vxWgv9O
+ woFM0g/Ed/sxag+EXcXgDOOG36XInj3788tLrNIQnnXuYJMpbdGgc6N22W96CzOfmGBJ
+ y/E/fAyrLR7ikWOb6T9/nyOxs2dhnlcIjVfiVrWvW8T2BtMfT054FZGPQMiEcVkmNZAj
+ WYBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUXJUKm22bDHNpyR4zPnZ28aERfkoEK10SSTZYCiz2XGJLuqnNrppxoRPjLbIn+hLLWY++XEYi11qzFqyOry+RQn0K4ZlI=
+X-Gm-Message-State: AOJu0Ywt8hYG81PrMfvNj8XRxhrOtPXf7LeagIi3RJldLWeMBQKKeA3T
+ /7nNlySNZvKpWNMV0VWm3azVE8tMvdPgPdrslDrKz895VjXxZs79THlG8zxAHLVQ8293NqAPK7H
+ iK/d3g3F3ITr6rzWKUQ7p5fc11coqZGaV9PEH9oRRFsFc6Zq3eYCr
+X-Received: by 2002:a05:6102:2273:b0:478:617e:fc12 with SMTP id
+ v19-20020a056102227300b00478617efc12mr356447vsd.0.1712173308507; 
+ Wed, 03 Apr 2024 12:41:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrNjmj1dL+ltFtzyPjH/axu/+hMPq8VF8IQFZBMdQdPkLsnaYD51ypyj+zMjLc19RRvmfQPQ==
+X-Received: by 2002:a05:6102:2273:b0:478:617e:fc12 with SMTP id
+ v19-20020a056102227300b00478617efc12mr356425vsd.0.1712173307948; 
+ Wed, 03 Apr 2024 12:41:47 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ c13-20020a056214224d00b006913aa64629sm6705135qvc.22.2024.04.03.12.41.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Apr 2024 12:41:47 -0700 (PDT)
+Date: Wed, 3 Apr 2024 15:41:45 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>, Yuan Liu <yuan1.liu@intel.com>
+Cc: Yuan Liu <yuan1.liu@intel.com>, qemu-devel@nongnu.org,
+ hao.xiang@bytedance.com, bryan.zhang@bytedance.com, nanhai.zou@intel.com
+Subject: Re: [PATCH 1/1] migration/multifd: solve zero page causing multiple
+ page faults
+Message-ID: <Zg2w-a0EQF_8yYHx@x1n>
+References: <20240401154110.2028453-1-yuan1.liu@intel.com>
+ <20240401154110.2028453-2-yuan1.liu@intel.com>
+ <874jcjdir6.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-References: <183897139.5301881.1712168206289.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.22205 YMailNorrin
-Received-SPF: pass client-ip=66.163.186.205;
- envelope-from=eric_devolder@yahoo.com;
- helo=sonic310-24.consmr.mail.ne1.yahoo.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <874jcjdir6.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 03 Apr 2024 15:01:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,33 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I've been using QEMU8 to collect instruction information on U-Boot + OpenSB=
-I.
+On Tue, Apr 02, 2024 at 09:57:49AM -0300, Fabiano Rosas wrote:
+> Yuan Liu <yuan1.liu@intel.com> writes:
+> 
+> > Implemented recvbitmap tracking of received pages in multifd.
+> >
+> > If the zero page appears for the first time in the recvbitmap, this
+> > page is not checked and set.
+> >
+> > If the zero page has already appeared in the recvbitmap, there is no
+> > need to check the data but directly set the data to 0, because it is
+> > unlikely that the zero page will be migrated multiple times.
+> >
+> > Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> 
 
-I'm running QEMU in this fashion to collect the information:
+I queued it with below squashed to update the comment. I hope it works for
+you.  Thanks,
 
-# qemu-system-riscv64 -plugin file=3Dqemu/build/contrib/plugins/libexeclog.=
-so -singlestep -d plugin,nochain -D execlog.txt ...
+===8<===
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 848915ea5b..7062da380b 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -57,7 +57,7 @@ struct RAMBlock {
+     off_t bitmap_offset;
+     uint64_t pages_offset;
+ 
+-    /* bitmap of already received pages in postcopy */
++    /* Bitmap of already received pages.  Only used on destination side. */
+     unsigned long *receivedmap;
+ 
+     /*
+===8<===
 
-When examining the instruction trace in execlog, I've noticed that the disa=
-ssembly for pmpcfg0 is erroneous, for example:
+-- 
+Peter Xu
 
-0, 0x5456, 0x3a002573, "csrrs=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a0,pmpcfg3,=
-zero"
-
-the CSR encoded in the instruction above is 0x3a0, which is pmpcfg0 (which =
-also matches the code I'm examining).
-
-For the Uboot+OpenSBI code I'm examining, pmpcfg0/3 is the only one that ap=
-pears to have a problem.
-
-I also checked QEMU9 and it behaves as described above as well.
-
-I'm willing to provide a fix if I can get some advice/pointers on how this =
-disassembly statement is generated...I did take a quick look but it didn't =
-appear obvious how...
-
-Thanks,
-eric
 
