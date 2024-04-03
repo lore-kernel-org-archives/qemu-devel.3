@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E14CD129A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B45CCD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:16:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rryX2-0007gA-BL; Wed, 03 Apr 2024 07:11:52 -0400
+	id 1rryY3-0002Vt-Lc; Wed, 03 Apr 2024 07:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryWs-0007Tg-SB
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:44 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rryXz-0002As-BU
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:51 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryWr-0007Kb-8R
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:42 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1e0f2798cd8so51648445ad.3
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142700; x=1712747500;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=C4LB9lF2MmoKxZle6uNJOUEsQ43ZTVig2zMCK8Mfd8I=;
- b=1g1NOvyD+QAdQFp+GOtyOMJHFhi9wZJI3sGdOAQFI4SM4S66n5roj4K3iqQGFfsnC0
- b5HfYD2NYEzgXLwFjCsn5glc94iUtLUIRC1wqwGfX0LK9f2DxKWHHzZs/EKFFCBtB+aN
- /g8LzekWGW+HTpBGjbtw8cqnZEX7+ZYkjU5kyRifvjaKiF1IWjJqtwoEsjn4vYABeLWV
- +4LpE/EkEK0wZ9Ys5g3J/iaLz4kHS1YS6a9I9GP0p0F2LFdf4bJPTGoMDc5N5WPwERfB
- L7aHNT5GdiQ42sBPoTUmgaiHC2wzvVMz9U3XxedNTrC1kzpn+owXPcygd1Vn6cnTq3fW
- ysRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712142700; x=1712747500;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=C4LB9lF2MmoKxZle6uNJOUEsQ43ZTVig2zMCK8Mfd8I=;
- b=cU8QbntR/WHp+c8MuCfZDbMv1FfawpL5166PYRTxd/5XLU3+tEChDelZq8X9tWwfo9
- CBHPfFAc/iWoLpTYsJ4JuNYZlj6Ud2vJ0Wx+gpXLRRDjzv3twqdcpGGnCodoETOK019o
- twMkqTHPMa0TRN+Tn5yZx1QuW4x+qa7YgX6d0DwV13XatL+ZExCWN8oTcgLXnJuQKHaB
- ++EOoJGtkgKsPGb+71EvaTIlWUkUZw/SXUlLZ3aCwyfn7T2C3Agbb3xUOeyyMj29dlDx
- 4jk6QauCjjmOTBj06o6vhrkKDk4cx2eO5CdANjNGUhsmd4s1ZVLtHRrTzTDqVq3WbD5O
- yt3A==
-X-Gm-Message-State: AOJu0YztQTPHCrSfAMktiowtNhum14nj8ySNyigcOXcxKzfUbRjWL9yK
- t1RxLaJTKte1/qURJ0T12zRecp/982nw9VYX3SLOom7IfAR2zT01izzzQvreahwc47cgHDKHGQh
- u84E=
-X-Google-Smtp-Source: AGHT+IErvTTdNA4t+0nGHsFYiIr1C6UTrC0ywi1OgQobwi8Lb8d55gfvsenqCgJrLfpkslJkpM7inQ==
-X-Received: by 2002:a17:903:32cb:b0:1dd:2eed:52a5 with SMTP id
- i11-20020a17090332cb00b001dd2eed52a5mr17026053plr.37.1712142699938; 
- Wed, 03 Apr 2024 04:11:39 -0700 (PDT)
-Received: from localhost ([157.82.200.213])
- by smtp.gmail.com with UTF8SMTPSA id
- z4-20020a170903018400b001dc6f7e794dsm13029830plg.16.2024.04.03.04.11.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Apr 2024 04:11:39 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 03 Apr 2024 20:10:59 +0900
-Subject: [PATCH v9 11/20] virtio-net: Disable RSS on reset
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rryXd-0007R7-Sh
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:51 -0400
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [10.150.64.98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C2C435CB82;
+ Wed,  3 Apr 2024 11:12:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1712142742; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=cVX+RztzCCxLOlQEqL+0mU3DLmOj6ka5S+6p6DO9tew=;
+ b=H5QIQQEVQhXfQTSh29bNltV4dXPrcUaFtoYV/2nk3VdNmNMrCRkVMFSXTFsSJfDpYCvZt5
+ 93rNz41PpilO0eIW5db1t3Fn91msAOIQVX+I2uw8PhIEal6/ZntGogcnRF21TU5jFyW3ak
+ VzKNfqn1UIY+qtHpqb6AZstpUUqneJw=
+Authentication-Results: smtp-out2.suse.de;
+	none
+Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id C722713357;
+ Wed,  3 Apr 2024 11:12:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap2.dmz-prg2.suse.org with ESMTPSA id Y4bdLZU5DWayHQAAn2gu4w
+ (envelope-from <roy.hopkins@suse.com>); Wed, 03 Apr 2024 11:12:21 +0000
+From: Roy Hopkins <roy.hopkins@suse.com>
+To: qemu-devel@nongnu.org
+Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
+Subject: [PATCH v2 00/10] Introduce support for IGVM files
+Date: Wed,  3 Apr 2024 12:11:31 +0100
+Message-ID: <cover.1712138654.git.roy.hopkins@suse.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240403-rss-v9-11-c6d87e69d38b@daynix.com>
-References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
-In-Reply-To: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
-To: Jason Wang <jasowang@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Andrew Melnychenko <andrew@daynix.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Michael Tokarev <mjt@tls.msk.ru>
-X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [2.20 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCVD_COUNT_THREE(0.00)[3];
+ NEURAL_HAM_SHORT(-0.20)[-0.989]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; BAYES_HAM(-3.00)[100.00%];
+ ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ RCPT_COUNT_TWELVE(0.00)[19]; MID_CONTAINS_FROM(1.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
+ RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,105 +102,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RSS is disabled by default.
+Here is v2 of the set of patches to add support for IGVM files to QEMU. These
+address all of the comments on v1 [1]. These patches are also available
+to view on github: [2].
 
-Fixes: 590790297c ("virtio-net: implement RSS configuration command")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
----
- hw/net/virtio-net.c | 70 +++++++++++++++++++++++++++--------------------------
- 1 file changed, 36 insertions(+), 34 deletions(-)
+Changes in v2:
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 5aa0527a1921..1ac9c06f6865 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -600,40 +600,6 @@ static void virtio_net_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
-     }
- }
- 
--static void virtio_net_reset(VirtIODevice *vdev)
--{
--    VirtIONet *n = VIRTIO_NET(vdev);
--    int i;
--
--    /* Reset back to compatibility mode */
--    n->promisc = 1;
--    n->allmulti = 0;
--    n->alluni = 0;
--    n->nomulti = 0;
--    n->nouni = 0;
--    n->nobcast = 0;
--    /* multiqueue is disabled by default */
--    n->curr_queue_pairs = 1;
--    timer_del(n->announce_timer.tm);
--    n->announce_timer.round = 0;
--    n->status &= ~VIRTIO_NET_S_ANNOUNCE;
--
--    /* Flush any MAC and VLAN filter table state */
--    n->mac_table.in_use = 0;
--    n->mac_table.first_multi = 0;
--    n->mac_table.multi_overflow = 0;
--    n->mac_table.uni_overflow = 0;
--    memset(n->mac_table.macs, 0, MAC_TABLE_ENTRIES * ETH_ALEN);
--    memcpy(&n->mac[0], &n->nic->conf->macaddr, sizeof(n->mac));
--    qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
--    memset(n->vlans, 0, MAX_VLAN >> 3);
--
--    /* Flush any async TX */
--    for (i = 0;  i < n->max_queue_pairs; i++) {
--        flush_or_purge_queued_packets(qemu_get_subqueue(n->nic, i));
--    }
--}
--
- static void peer_test_vnet_hdr(VirtIONet *n)
- {
-     NetClientState *nc = qemu_get_queue(n->nic);
-@@ -3861,6 +3827,42 @@ static void virtio_net_device_unrealize(DeviceState *dev)
-     virtio_cleanup(vdev);
- }
- 
-+static void virtio_net_reset(VirtIODevice *vdev)
-+{
-+    VirtIONet *n = VIRTIO_NET(vdev);
-+    int i;
-+
-+    /* Reset back to compatibility mode */
-+    n->promisc = 1;
-+    n->allmulti = 0;
-+    n->alluni = 0;
-+    n->nomulti = 0;
-+    n->nouni = 0;
-+    n->nobcast = 0;
-+    /* multiqueue is disabled by default */
-+    n->curr_queue_pairs = 1;
-+    timer_del(n->announce_timer.tm);
-+    n->announce_timer.round = 0;
-+    n->status &= ~VIRTIO_NET_S_ANNOUNCE;
-+
-+    /* Flush any MAC and VLAN filter table state */
-+    n->mac_table.in_use = 0;
-+    n->mac_table.first_multi = 0;
-+    n->mac_table.multi_overflow = 0;
-+    n->mac_table.uni_overflow = 0;
-+    memset(n->mac_table.macs, 0, MAC_TABLE_ENTRIES * ETH_ALEN);
-+    memcpy(&n->mac[0], &n->nic->conf->macaddr, sizeof(n->mac));
-+    qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
-+    memset(n->vlans, 0, MAX_VLAN >> 3);
-+
-+    /* Flush any async TX */
-+    for (i = 0;  i < n->max_queue_pairs; i++) {
-+        flush_or_purge_queued_packets(qemu_get_subqueue(n->nic, i));
-+    }
-+
-+    virtio_net_disable_rss(n);
-+}
-+
- static void virtio_net_instance_init(Object *obj)
- {
-     VirtIONet *n = VIRTIO_NET(obj);
+  * Fixed various spelling and documentation errors from Stefano.
+  * Addressed readability and other suggested code changes from Daniel.
+  * igvm.c: Fix issue in prepare_memory() which resulted in the wrong start index
+     being used at the start of a page range if the next or last directive did
+     not follow the previous one.
+  * igvmc: Fix usage of IGVM compatibility mask.
+  * igvm.c: Fix issue in page_attrs_equal() which treated zero and normal pages
+    as equal. This could affect the SEV measurement.
+  * Improve and clarify handling of IGVM to VMSA to KVM CPU state conversion.
+    The specific registers that are synchronized are now documented and a check
+    is performed during IGVM file parsing to determine if any registers outside
+    the supported set are non-zero making it easier to determine the cause of
+    any mismatch of launch measurement.
+  * Significant rework of error handling in ConfidentialGuestSupport and the
+    IGVM parser.
+  * confidential-guest-support: Remove TDX and other non-currently-supported
+    platforms.
+  * Exit with error if any unknown IGVM directives are encountered.
+  * Rework handling of firmware so if an IGVM file is provided in addition to
+    a firmware file then an error is generated.
+  * Update firmware.json to add an 'igvm' firmware device.
 
--- 
-2.44.0
+Thanks to Daniel, Stefano, Ani and everyone else that has taken time to review
+this so far.
+
+[1] Link to v1:
+https://lore.kernel.org/qemu-devel/cover.1709044754.git.roy.hopkins@suse.com/
+
+[2] v2 patches also available here:
+https://github.com/roy-hopkins/qemu/tree/igvm_master_v2
+
+Roy Hopkins (10):
+  meson: Add optional dependency on IGVM library
+  backends/confidential-guest-support: Add IGVM file parameter
+  backends/confidential-guest-support: Add functions to support IGVM
+  backends/igvm: Implement parsing and processing of IGVM files
+  i386/pc: Process IGVM file during PC initialization if present
+  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
+    IGVM
+  i386/sev: Refactor setting of reset vector and initial CPU state
+  i386/sev: Implement ConfidentialGuestSupport functions for SEV
+  docs/system: Add documentation on support for IGVM
+  docs/interop/firmware.json: Add igvm to FirmwareDevice
+
+ backends/confidential-guest-support.c      |  75 +++
+ backends/igvm.c                            | 744 +++++++++++++++++++++
+ backends/meson.build                       |   4 +
+ docs/interop/firmware.json                 |   9 +-
+ docs/system/i386/amd-memory-encryption.rst |   2 +
+ docs/system/igvm.rst                       | 129 ++++
+ docs/system/index.rst                      |   1 +
+ hw/i386/pc_piix.c                          |   4 +
+ hw/i386/pc_q35.c                           |   4 +
+ hw/i386/pc_sysfw.c                         |  22 +-
+ include/exec/confidential-guest-support.h  | 105 +++
+ include/exec/igvm.h                        |  36 +
+ meson.build                                |   8 +
+ meson_options.txt                          |   2 +
+ qapi/qom.json                              |  13 +
+ qemu-options.hx                            |   8 +-
+ scripts/meson-buildoptions.sh              |   3 +
+ target/i386/sev.c                          | 425 +++++++++++-
+ target/i386/sev.h                          | 110 +++
+ 19 files changed, 1671 insertions(+), 33 deletions(-)
+ create mode 100644 backends/igvm.c
+ create mode 100644 docs/system/igvm.rst
+ create mode 100644 include/exec/igvm.h
+
+--
+2.43.0
 
 
