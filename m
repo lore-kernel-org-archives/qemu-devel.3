@@ -4,87 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A8F7CD129A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61CF4CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rryX1-0007fj-LQ; Wed, 03 Apr 2024 07:11:51 -0400
+	id 1rryY3-0002Vu-Lc; Wed, 03 Apr 2024 07:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryWp-0007So-4k
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:40 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rryXy-00029f-Kg
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:51 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryWn-0007IT-FK
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:38 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5ce2aada130so4146830a12.1
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:11:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142696; x=1712747496;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oHDxHk/VRjGjn6edzP0hNyOsa7tsF+d8bBPi58uVTU8=;
- b=jSO4vaywEAwqgMwQcUtsl66WlLMRpvycxl+nPHciWZ1U3fSA9h2kF1HeyVzb0wydkX
- 4JvPN+h+kVCRzpn/cNzjuBMjHuM3Zi1Fgc+Pn3QC3+wjkRdw9Tt+I0BjOjQbzlG0Aunf
- CQW+h98fieT1Mk97L/jBqbgGiQ5X2nWhH8aw0CXYF2qTOMbIL//j/c5sSC5LNcsu6TeS
- 7qXTGgF7gbNyFifNL1UeC7jMXIFx+otpFh9Oxg9GsS2FJ/i+kQBUGZ7Z45cLD6onO41U
- /8vGtZH6/LEL6bGc0HMOU1DarYxNYAvohiePVd2VVCgErQpJU8SXOKrErjo/H8RGGvhZ
- WnAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712142696; x=1712747496;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oHDxHk/VRjGjn6edzP0hNyOsa7tsF+d8bBPi58uVTU8=;
- b=J+BUf/5UsHaT+x0voIyqhZUndcWpyBw4HAXUppLtBrg84VhBaam2Icvpng1/G7YEg0
- gla1pgPTAMTKFClF4hP8i+Rj1oCQHvOMkXSwpehYUVgnqYBiVsNnGIjX+oIlzTJZan3+
- 338Bl+F2WHl217RZKAqXZqAEIzhLhM3McuJ0oHtDaOC9a8c8Zczv9i42gjWc9WNA0t3X
- CFhNbepzaWwnNjmd41ST8c1PJsd1hz2wVvvwpJLBNVi5KKaWcb+vh3aQK+j+GBiDWCFj
- j5LZzFz1X2jkL+MXX6cV4HyB/8gwbnJOjksmBi2cpcCa67J/NSa8adQNm4BDp4/lb/pr
- uGkA==
-X-Gm-Message-State: AOJu0YwHvaNjQ8i98yyCoiE2qSpLHwz2F/E7zSeN77Dwc43t/1FMjCwZ
- YnVwa809Yjf2LBFcjVxrngTE/0tkSC5PTeBDH94/g9n3I7f1itfJHAnQOK7egVE=
-X-Google-Smtp-Source: AGHT+IFZey6Pi4h8CJZQtJqCdRgCrLPD9GsxeNbS36D5XYixl6TZQ4jRkYhaqdB3kPMA+Tuh0c0ZKg==
-X-Received: by 2002:a17:90a:12ce:b0:2a1:f697:7b3f with SMTP id
- b14-20020a17090a12ce00b002a1f6977b3fmr13298974pjg.5.1712142695860; 
- Wed, 03 Apr 2024 04:11:35 -0700 (PDT)
-Received: from localhost ([157.82.200.213])
- by smtp.gmail.com with UTF8SMTPSA id
- n20-20020a6563d4000000b005f05c88c149sm10025954pgv.71.2024.04.03.04.11.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Apr 2024 04:11:35 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 03 Apr 2024 20:10:58 +0900
-Subject: [PATCH v9 10/20] virtio-net: Shrink header byte swapping buffer
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rryXe-0007Ru-TT
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:50 -0400
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 02F7335277;
+ Wed,  3 Apr 2024 11:12:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1712142746; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WNld4HdUuOtxX+BFAuMZ9pxe13oxUHA2FVsu6Dn62R4=;
+ b=qYDE0MAIEsoxDGhAnPoGdCYksywnvrZiajOrTWMwvoSLcOB9kDR4mYxBQ4DPg9UshcwmBM
+ b2Bu2DGzp6vUiJdR5laNDy1MXjRHf5l44C/6tLIGYap7eL7EW2j8PY0r2+u59j6G0QAS9S
+ NKg0pMvc46a6xt3bY6QdIqxlXaE4t+8=
+Authentication-Results: smtp-out1.suse.de;
+	dkim=none
+Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 0831313A8B;
+ Wed,  3 Apr 2024 11:12:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap2.dmz-prg2.suse.org with ESMTPSA id SBvQOpg5DWayHQAAn2gu4w
+ (envelope-from <roy.hopkins@suse.com>); Wed, 03 Apr 2024 11:12:24 +0000
+From: Roy Hopkins <roy.hopkins@suse.com>
+To: qemu-devel@nongnu.org
+Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
+Subject: [PATCH v2 03/10] backends/confidential-guest-support: Add functions
+ to support IGVM
+Date: Wed,  3 Apr 2024 12:11:34 +0100
+Message-ID: <1dff8015f9f9cf735de21a16e5dba14371c39155.1712141833.git.roy.hopkins@suse.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1712141833.git.roy.hopkins@suse.com>
+References: <cover.1712141833.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240403-rss-v9-10-c6d87e69d38b@daynix.com>
-References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
-In-Reply-To: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
-To: Jason Wang <jasowang@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Andrew Melnychenko <andrew@daynix.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::534;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-0.31 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.993];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_TWELVE(0.00)[19]; ARC_NA(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:98:from]; 
+ FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
+ RCVD_TLS_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:98:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,imap2.dmz-prg2.suse.org:rdns,imap2.dmz-prg2.suse.org:helo];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ R_DKIM_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TAGGED_RCPT(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spamd-Bar: /
+X-Rspamd-Queue-Id: 02F7335277
+Received-SPF: pass client-ip=195.135.223.130;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,65 +116,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Byte swapping is only performed for the part of header shared with the
-legacy standard and the buffer only needs to cover it.
+In preparation for supporting the processing of IGVM files to configure
+guests, this adds a set of functions to ConfidentialGuestSupport
+allowing configuration of secure virtual machines that can be
+implemented for each supported isolation platform type such as Intel TDX
+or AMD SEV-SNP. These functions will be called by IGVM processing code
+in subsequent patches.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+This commit provides a default implementation of the functions that
+either perform no action or generate a warning or error when they are
+called. Targets that support ConfidentalGuestSupport should override
+these implementations.
+
+Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
 ---
- hw/net/virtio-net.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ backends/confidential-guest-support.c     | 32 ++++++++++
+ include/exec/confidential-guest-support.h | 74 +++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index ca0fbf7b7654..5aa0527a1921 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -676,11 +676,6 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
+index da436fb736..cb0bc543c0 100644
+--- a/backends/confidential-guest-support.c
++++ b/backends/confidential-guest-support.c
+@@ -14,6 +14,8 @@
+ #include "qemu/osdep.h"
  
-     n->mergeable_rx_bufs = mergeable_rx_bufs;
+ #include "exec/confidential-guest-support.h"
++#include "qemu/error-report.h"
++#include "qapi/error.h"
  
--    /*
--     * Note: when extending the vnet header, please make sure to
--     * change the vnet header copying logic in virtio_net_flush_tx()
--     * as well.
--     */
-     if (version_1) {
-         n->guest_hdr_len = hash_report ?
-             sizeof(struct virtio_net_hdr_v1_hash) :
-@@ -2752,7 +2747,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         ssize_t ret;
-         unsigned int out_num;
-         struct iovec sg[VIRTQUEUE_MAX_SIZE], sg2[VIRTQUEUE_MAX_SIZE + 1], *out_sg;
--        struct virtio_net_hdr_v1_hash vhdr;
-+        struct virtio_net_hdr vhdr;
+ OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
+                             confidential_guest_support,
+@@ -45,8 +47,38 @@ static void confidential_guest_support_class_init(ObjectClass *oc, void *data)
+ #endif
+ }
  
-         elem = virtqueue_pop(q->tx_vq, sizeof(VirtQueueElement));
-         if (!elem) {
-@@ -2769,18 +2764,18 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         }
++static int check_support(ConfidentialGuestPlatformType platform,
++                         uint16_t platform_version, uint8_t highest_vtl,
++                         uint64_t shared_gpa_boundary)
++{
++    /* Default: no support. */
++    return 0;
++}
++
++static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
++                           ConfidentialGuestPageType memory_type,
++                           uint16_t cpu_index, Error **errp)
++{
++    error_setg(errp,
++               "Setting confidential guest state is not supported for this platform");
++    return -1;
++}
++
++static int get_mem_map_entry(int index, ConfidentialGuestMemoryMapEntry *entry,
++                             Error **errp)
++{
++    error_setg(
++        errp,
++        "Obtaining the confidential guest memory map is not supported for this platform");
++    return -1;
++}
++
+ static void confidential_guest_support_init(Object *obj)
+ {
++    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
++    cgs->check_support = check_support;
++    cgs->set_guest_state = set_guest_state;
++    cgs->get_mem_map_entry = get_mem_map_entry;
+ }
  
-         if (n->needs_vnet_hdr_swap) {
--            if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
--                n->guest_hdr_len) {
-+            if (iov_to_buf(out_sg, out_num, 0, &vhdr, sizeof(vhdr)) <
-+                sizeof(vhdr)) {
-                 virtio_error(vdev, "virtio-net header incorrect");
-                 virtqueue_detach_element(q->tx_vq, elem, 0);
-                 g_free(elem);
-                 return -EINVAL;
-             }
--            virtio_net_hdr_swap(vdev, (void *) &vhdr);
-+            virtio_net_hdr_swap(vdev, &vhdr);
-             sg2[0].iov_base = &vhdr;
--            sg2[0].iov_len = n->guest_hdr_len;
-+            sg2[0].iov_len = sizeof(vhdr);
-             out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1, out_sg, out_num,
--                               n->guest_hdr_len, -1);
-+                               sizeof(vhdr), -1);
-             if (out_num == VIRTQUEUE_MAX_SIZE) {
-                 goto drop;
-             }
-
+ static void confidential_guest_support_finalize(Object *obj)
+diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
+index ec74da8877..a8ad84fa07 100644
+--- a/include/exec/confidential-guest-support.h
++++ b/include/exec/confidential-guest-support.h
+@@ -21,10 +21,44 @@
+ #ifndef CONFIG_USER_ONLY
+ 
+ #include "qom/object.h"
++#include "exec/hwaddr.h"
++
++#if defined(CONFIG_IGVM)
++#include "igvm/igvm.h"
++#endif
+ 
+ #define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-support"
+ OBJECT_DECLARE_SIMPLE_TYPE(ConfidentialGuestSupport, CONFIDENTIAL_GUEST_SUPPORT)
+ 
++typedef enum ConfidentialGuestPlatformType {
++    CGS_PLATFORM_SEV,
++    CGS_PLATFORM_SEV_ES,
++} ConfidentialGuestPlatformType;
++
++typedef enum ConfidentialGuestMemoryType {
++    CGS_MEM_RAM,
++    CGS_MEM_RESERVED,
++    CGS_MEM_ACPI,
++    CGS_MEM_NVS,
++    CGS_MEM_UNUSABLE,
++} ConfidentialGuestMemoryType;
++
++typedef struct ConfidentialGuestMemoryMapEntry {
++    uint64_t gpa;
++    uint64_t size;
++    ConfidentialGuestMemoryType type;
++} ConfidentialGuestMemoryMapEntry;
++
++typedef enum ConfidentialGuestPageType {
++    CGS_PAGE_TYPE_NORMAL,
++    CGS_PAGE_TYPE_VMSA,
++    CGS_PAGE_TYPE_ZERO,
++    CGS_PAGE_TYPE_UNMEASURED,
++    CGS_PAGE_TYPE_SECRETS,
++    CGS_PAGE_TYPE_CPUID,
++    CGS_PAGE_TYPE_REQUIRED_MEMORY,
++} ConfidentialGuestPageType;
++
+ struct ConfidentialGuestSupport {
+     Object parent;
+ 
+@@ -60,6 +94,46 @@ struct ConfidentialGuestSupport {
+      */
+     char *igvm_filename;
+ #endif
++
++    /*
++     * The following virtual methods need to be implemented by systems that
++     * support confidential guests that can be configured with IGVM and are
++     * used during processing of the IGVM file with process_igvm().
++     */
++
++    /*
++     * Check for to see if this confidential guest supports a particular
++     * platform or configuration
++     */
++    int (*check_support)(ConfidentialGuestPlatformType platform,
++                         uint16_t platform_version, uint8_t highest_vtl,
++                         uint64_t shared_gpa_boundary);
++
++    /*
++     * Configure part of the state of a guest for a particular set of data, page
++     * type and gpa. This can be used for example to pre-populate and measure
++     * guest memory contents, define private ranges or set the initial CPU state
++     * for one or more CPUs.
++     *
++     * If memory_type is CGS_PAGE_TYPE_VMSA then ptr points to the initial CPU
++     * context for a virtual CPU. The format of the data depends on the type of
++     * confidential virtual machine. For example, for SEV-ES ptr will point to a
++     * vmcb_save_area structure that should be copied into guest memory at the
++     * address specified in gpa. The cpu_index parameter contains the index of
++     * the CPU the VMSA applies to.
++     */
++    int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, uint64_t len,
++                           ConfidentialGuestPageType memory_type,
++                           uint16_t cpu_index, Error **errp);
++
++    /*
++     * Iterate the system memory map, getting the entry with the given index
++     * that can be populated into guest memory.
++     *
++     * Returns 0 for ok, 1 if the index is out of range and -1 on error.
++     */
++    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
++                             Error **errp);
+ };
+ 
+ typedef struct ConfidentialGuestSupportClass {
 -- 
-2.44.0
+2.43.0
 
 
