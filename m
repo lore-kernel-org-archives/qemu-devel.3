@@ -4,73 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C89CD128A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 16:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC1DCD128A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 16:52:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rs3kV-0007qX-Cm; Wed, 03 Apr 2024 12:46:07 -0400
+	id 1rs3pw-0000Wo-PI; Wed, 03 Apr 2024 12:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rs3kT-0007p9-7w
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 12:46:05 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rs3kR-00058P-0J
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 12:46:04 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-56c0d1bddc1so8431a12.3
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 09:46:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rs3pv-0000Wa-JW; Wed, 03 Apr 2024 12:51:43 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rs3pi-0006os-F9; Wed, 03 Apr 2024 12:51:43 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 433GPVEc003622; Wed, 3 Apr 2024 16:51:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=uQOXQBcYwVnTGIAwYPvAs91KAYUwQd1U8ee+k4GyI84=;
+ b=GS+GLchbCFU8wsucGFI2IziS9JFXKxh3E+0Tlw4XIUQK5GC91q2gJOJHsqWdIXoQwVno
+ TuP9Cio5PtnkTkiY4mm87pJsibDtOa9RV4gkTIjk5hxtFlfsK7zYml5yo7NaQ1seFsLf
+ HEw9O1LQSOtiakheMxKvZCGYbZ1A6VS+5C36oeHHxgg7bh4/hXol9QBo5Ez0xgX7Hlr8
+ Vp2GBtEvlqxyfXRvuE2qB9qOLFSfw5ssxAMYrvkMeuNwm+iljkgm4oYcb5/A3SYtIN8+
+ zRVMKCJQhffGjNSQIC1RpfTRtufz5clf+WVB9+RuWHYivgIG5Oa6MSPDYucBh0rPycu6 /w== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3x6ambfkhq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 03 Apr 2024 16:51:13 +0000
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 433FZ4JT009875; Wed, 3 Apr 2024 16:51:12 GMT
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12lp2169.outbound.protection.outlook.com [104.47.59.169])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3x6968vkfu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 03 Apr 2024 16:51:12 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Rq3ia5bNkhDv8/TSUHVyQgm1cAGFzqhMm/qgNTiSVLdTDucp9P4OMB8FT+R/GvimP7kdFnGRqBavS0NjNrAASGXifVlVoRQDIzkMwR8dtbX9eih3J5Md4hNaU2sLVq8bfB+jNGZgvDMiDNleyPJt6SilpVEWHP+OTYcJOHJDmUMzWwyvf8E0CDcMmytzh4JjnH02eWqRQknKMQIF5ITnz4Gh8LFpngnfqyYaPWNAh4fDH99z7HOJWg9dgFeFel4mNBMY2yfyadd3m4sWHZnto7GkSqeRa43t2xYjmxfnQlDjZX5MPv0m67pyiNPb8ysVCay8+BsENFcOUTIWVQkDuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uQOXQBcYwVnTGIAwYPvAs91KAYUwQd1U8ee+k4GyI84=;
+ b=XdufeAD5xVDsSyGL2NMSLWekZSQ+XaeLc1Z+mCEXj0lC/69s8iOv5itSG5JpsfJcNhjr+bOBguEnuMQXbUQhvGD0Eeqw5qHwtIQWypUBqOjc87J5sdQrRw6+adMuViPcnXDPpe8FabVTFIorjsr41+RWxkvxn+8+umk/2l7FfYxlNCen+SYoxde7Rh8SOUuBjqbMP6BXb9nHfGi9yrCKvGVEILDeBIMRTY2Ur3qXqmRvAEuTM68RJojkHbqGtPAvCB9zDyqyhFMGHsIc37JTACzQ7dZW1pmMga7xH7VDrfceBlCuvXKyrNs8A9iAi0G3lAEYYtjCbE8BGN90PTCARA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712162760; x=1712767560; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lhPZ2a59NPTIei2BqREjeJ8Vthr7QTIi9oyItXN/7/g=;
- b=NcvwWstfrqd3NJHUtwbUq0mbCXQkoECo7aEtWqqycDRhv2EWhixSQaeThbcvarkZQ/
- DMj323nzaz/5tX+wywRoqPC9nqubhjHHrUVfbPm6IudAp3qMPf7oOb+BNa9zQ8rlYeWT
- Si3NuAgHyka622JqeS5FwVLWiRNNxYUZzrJ2RlD7+hSQGIOYgunxQYmMVzfnC5a6epPs
- ck2jYMOJZitnvVQiNZTDHLtL+QUJwV/x5NDyWPtj47L/D6AQA8CKGtddxwu/Jr5EMBV4
- wPalTIa5eZ1vAlrVQG3Np8wvwuFvjGeQAsq9hZasCIPzL6g+YPHNdJei1u4GFc7ZfREq
- VGwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712162760; x=1712767560;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lhPZ2a59NPTIei2BqREjeJ8Vthr7QTIi9oyItXN/7/g=;
- b=qpQ1gG8XOAVtPZcauxJUCKhJJYtyJQgPmAyhL4lFPJ5r6uLfPMR+Qd+MClX96vR8tk
- Bs1CVtuJg7JWy3+6lOta0fkFp06nWrS5/8Hb6+NNHoEOdzhd6T9FQEQpWowD1YXSQA5y
- VcRKTCg2zGVZ3cu0jSlCcenrPfIDVsSBLA9NXxHqFYLp4KnEsD07DZrmpCs+PfLi1Tp/
- e0nCrrpGVvQ+e4QPS4bS/z8kR27ZvRBn4PLFdspFney5t7ZyGzqVzx7z/kG9WnnPMy9P
- Y8gHRHH4+/iKYRi24RvrTbWMYbNeDoLIkZBDiyG2t3aWtcz12gs0DUzVf6OPLv9LxUn7
- T9ww==
-X-Gm-Message-State: AOJu0YzY0E27nU27EGeIJFmGOe5wjBRy4+cq1Zw+gJ/8oQERlG6LcynG
- 2DU391I5N5JXEEeqfgRkPems4+vevC8wTqqpCM7LPvNPyLkHTMY16rJTRxDOJr9P8Fnqcy0ri3/
- XdgEovldDad8tUrJHurgtzoTfmRGYgBGkYRnP1g==
-X-Google-Smtp-Source: AGHT+IFCxj5h6QqGauizF7offhy/fRs+azJXtcGZWoE12flNQmrSdiEWZom1n8cM/FFT85x/HKjVn+Tsna8RuqCo/Pk=
-X-Received: by 2002:a05:6402:2809:b0:56e:a5d:acc0 with SMTP id
- h9-20020a056402280900b0056e0a5dacc0mr2162032ede.13.1712162757188; Wed, 03 Apr
- 2024 09:45:57 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uQOXQBcYwVnTGIAwYPvAs91KAYUwQd1U8ee+k4GyI84=;
+ b=b2A6vXlUSiMrzhs91VXJm9ByjyS48av/7Py9gLuJC9VyF1uyPHLy63/m8Fl4a1SEqMt4hZLHy1cfw4JxjANnPAcEpYNWShvLKzjFVloqCA7mHzgJ60mG/dB19zYr3FxNVuItDpbj88aFz3e7uX+TWwXBgYbYL9Q+C4PioKRckDg=
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
+ by IA0PR10MB7326.namprd10.prod.outlook.com (2603:10b6:208:40d::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Wed, 3 Apr
+ 2024 16:51:10 +0000
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::75a:a398:452a:90a9]) by PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::75a:a398:452a:90a9%6]) with mapi id 15.20.7409.042; Wed, 3 Apr 2024
+ 16:51:10 +0000
+Message-ID: <768ffc05-333a-4f00-9944-940bcaca59fd@oracle.com>
+Date: Wed, 3 Apr 2024 12:51:06 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 1/5] virtio: Initialize sequence variables
+Content-Language: en-US
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net,
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com,
+ pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
+ qemu-block@nongnu.org, schalla@marvell.com, leiyang@redhat.com,
+ virtio-fs@lists.linux.dev, si-wei.liu@oracle.com,
+ boris.ostrovsky@oracle.com
+References: <20240328162203.3775114-1-jonah.palmer@oracle.com>
+ <20240328162203.3775114-2-jonah.palmer@oracle.com>
+ <CAJaqyWdyZdu48+cZ2umafLRi9NTz3YHxSxmyq6SD9d4noTR2jQ@mail.gmail.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
+In-Reply-To: <CAJaqyWdyZdu48+cZ2umafLRi9NTz3YHxSxmyq6SD9d4noTR2jQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PH7PR13CA0019.namprd13.prod.outlook.com
+ (2603:10b6:510:174::16) To PH0PR10MB4664.namprd10.prod.outlook.com
+ (2603:10b6:510:41::11)
 MIME-Version: 1.0
-References: <20240403100614.74983-1-pbonzini@redhat.com>
-In-Reply-To: <20240403100614.74983-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 3 Apr 2024 17:45:45 +0100
-Message-ID: <CAFEAcA8FPSJauySMN=3rdk6-9L8RTTXTSOZ=80NQgoxHYNiN1w@mail.gmail.com>
-Subject: Re: [PULL v2 0/6] lsi, vga fixes for 2024-04-02
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|IA0PR10MB7326:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 8uuaLPts7Pof90clf8arOAU+EMkO+VQe4ltIgZkfnbD/aOUb2k/Fe69UvAhVdoSZZkFq4Gl78bicFiskToGLPVqselbrS7yeJpvR1Xk24S/H3gwj35dopFYe9tind2+xiOeNqRjdmAxVANPT5CJoA1V7fFNrQe1hROvPz75px+oY2HUzL+ZCoicvv98LEwGCe/Op64Yxr1HHioTiJBXY9kOpJmKTJV/g5X/kNqOcVzUZ6meN3yBrly5S85FAO7IgCiumKs3kpevirc6VFUAtn6hv67AW8IRgpLzyn+wkUnSYRI50otqmcEbtDqhrDXAn0FhM85J0KTErQfB00pXc8ulR4W4RimN4iNkL7/L1kJrU9d5ujV5BDPQM7fAJV6m0OcqjN9dG+7qJLeqRGS3s2wFIlKZWGTCyDj8JFY4i49VSP4NYEAkkv1QnABMGpjQZgXS9vPi5bz+kTAD6XuWRU/ijJX9GKPcgHmjxVNWLm+UUpOEZPuV9YUpElSg/2Or+ajgfwzeSNeYy1BNvkIPKFnwfF3re97uN5FptLN6eKsjqL/neTp/qK6ToNOiCeqXIR1b56YJHsEM8cjiZQ4N63+G454FEQLtjpe7z/scV+V3x3BbcDqnonoLnAHYyq6RkEzzHTQSAl9zBiSMeI4NVbInPgtbKdGNIBC+4DQo2ZUQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(7416005)(366007)(1800799015)(376005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WGQwZnF1WFNzbDJLZnR6cU9Ybi9YbVBlclc4d2plMXAzM2Z3eCthU1dIc2xO?=
+ =?utf-8?B?MHVJWCthZUEzQ0JiNkpEaGhVbTdERTZPc28zdk5GMVFXcHI5UkVaREtMVkNV?=
+ =?utf-8?B?WDUwaDJHd0phNTJQS2tEaHdLNlR3SWQ2UXp0OXNDTkI1Y1hWVVJaSDFjNkxH?=
+ =?utf-8?B?U1A2UVNVNnpGVStYM2kxTWVTZ1g4akZTZWpUMkhHSytxMXNYWThoUWJBeThT?=
+ =?utf-8?B?VWdXS2g3UWkrL2NxdTZpRjY4Ti9zbGpJRDZpRkZCR0pqdG15dzkxaDdSYVJU?=
+ =?utf-8?B?dVNEbDlYTTRHd0RxMEljaUIzZUpVMHcrbHl1K0dIM1FRNWtEekxMK1R4WXpi?=
+ =?utf-8?B?dFdqUlhiREdlQmhBRVlWcTBRNUtKTnVIVmdUekp0S2tkdlkvaUMxeFlXY01B?=
+ =?utf-8?B?bDd5b2pzZ2VlbDErY3FwSi9nNkt1UEdDNWY3aGlVL3NUNlE5TGxsd0tZcnpj?=
+ =?utf-8?B?ajRxY01HdWFrcmptSG1IS3VoeisxTGhOcnJMamh6L0Z5UFo2V2lReS9XUWI2?=
+ =?utf-8?B?Z3VTNytIYW5xakNzWlBSTURYMUl5ckxtTW9xelIrNkxDUFRMaVZ3Mk1Od0Nk?=
+ =?utf-8?B?RXhrc0hFdmFWdWxudHI5US9nUGlEOVJmYkRobk84ZFhMazd5TUdXbTVsbGlj?=
+ =?utf-8?B?dEF0YTJhWFRoWG5naDlmQllQOFc5NFNSd1dDQi9zczdQNnV3QWdvN2lJeDRD?=
+ =?utf-8?B?a3Fhd0NvUkNoMkNiQTJHUlVSZWovQjBoR0ViNE5RS2lzMXFMOU5aZStmOUxw?=
+ =?utf-8?B?WWxLWFdKV21jZWZXQVhmTlVjSUdyM3JpYWk4a0NXVUNJZFFaOC9UU3dFYmZa?=
+ =?utf-8?B?bkxzbm53dWNhbWo0OUcyUHlhbU0xSXJZeHAyeCtQS0dwNzJMTjhkOWVFSlZ0?=
+ =?utf-8?B?K24xSW9nYmJhNHdoTmdUS3dCUDFZU1B6VXRsemJlR2VDeEhyK2RNTVBCR1Bk?=
+ =?utf-8?B?LzdwZ1NiallKbVFSNjQwTlZKWTZ2N29lZk5YUlhuU2VKR0J1OW5GdEhoOE1C?=
+ =?utf-8?B?emVTSEwxaFZsL3ZjbEhITUlNZ3VNM2lXWGRydnYwRzdjNzRGYURBRWRCOHpr?=
+ =?utf-8?B?aEFKT1ZYT2NxYnl3TVd5MWVtNmlaRVNUbTUrMHdnaTRsT0FXejFvc1o5aDEr?=
+ =?utf-8?B?NndjZzBySWNVOHdNYVR3dmVBbHpIS05IM1Y3UERFRGVvcjdmS2VDc0xSRDc0?=
+ =?utf-8?B?ZE16N2JGTjliNFZxVVhwR2NYVXcwUWFPYzNTWm94enNEdkM2MktaQlR2RGJJ?=
+ =?utf-8?B?endtQUlueXBvOTdNNDFGekNxcjh2U2NsQVRXdEp1V0tDUk12cVJQUXlUbU9B?=
+ =?utf-8?B?bGhPWFdkN254bXFvbHU2bGJiWUhGWnVoSk9aWHZHZ0lFR1N1b3ZIZmUyOENn?=
+ =?utf-8?B?dldySDFVcGt3aUh6NllWMmxRRzlqcXljeW1MTlQ3NlFVRjBkalduZmFCV2Fi?=
+ =?utf-8?B?aTFwRXFVWnVvUGZYV1pPRU92bjZ3WllzTnl6dGpKclVRS0pqcy9KMFY5T0Fz?=
+ =?utf-8?B?aVpkVjFONmxLSXpsbHdhUHJHVi84dHREYVRGc3kxbjlTUFA2dExlNEpqaFN2?=
+ =?utf-8?B?Ti9LaFJuQk85K1pNNnd4Z1ZWVHFqUTJCQng5OHF2aEdRVGNUQjNwUDV4OTMr?=
+ =?utf-8?B?bkFvMnRsNnpiWGxtODdlbVZrdVRHTXVvL24wU2taOFpIbWFuTFE3d28wamFm?=
+ =?utf-8?B?L1Z3WE55Z1FTV2RONkxsS3R5ZkZQSDBsdnBNWmJ5bW1yRHFwMis3STVCMm5C?=
+ =?utf-8?B?d2VySzdhaXU3OEZVR2pBOURmdTU5ajVsSjA5VDdTSzV4bzFSNnVYaDFHQ0pD?=
+ =?utf-8?B?alRXSWFVbnJYRk90SWlkbjFQSDNBdlppU0U0N2grb09aalVVd1J4anFUbjZn?=
+ =?utf-8?B?RW1ZZVlabkhZeEp2TkhqWVpZSkd4amNaaWhubCtSWkU0RFVoUzV0c0ZqTktS?=
+ =?utf-8?B?OWx5QytnRFRDcEJtWElmK1F0emV5aDRwZWdjUFk4eERVQXNEZ1NHcU14bkhJ?=
+ =?utf-8?B?Tk1IQ05iREE2WUc1K3ZaQWY3dmo5MHFRbUhIN2Qzay9IK2dDVGZWRzYzSDE5?=
+ =?utf-8?B?YStGYm9hQ0IycnErZUJOc2JlbzVoMmw0SUtRRDZwME1UN3pzZCsyL1lOZjVt?=
+ =?utf-8?B?LzJPZkluRk1XUTJuUUJqVU5UUitOYTBuankydGp6TXU5OUNNSDNOckk1RzBw?=
+ =?utf-8?Q?V3TUp7iIMnUagX+T4RMAwW4=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: /O2C+FPhqPl9mswD60zMbNaM4wre7Re6x5aHoXZxyHvdb2cU4+zPB07yQ9I2q8jPKNBH9RCzxGhMkz/qbKj26m5BYrL7YGGXArm0gI/s2odAeQMOz+teYqWkXF//2bGs4vJhSS3oc8UF8koW4978d0uW/CtG1He+fqvbSYUqt5R53QgZNkHd1BOtwV8edPc2GzC56FHCCFMW4MM3YcI9bhaxQi1evTqhK300zZ2lSaCP2a44HiQdjvBDXZoZqcwHJFkjMXVZcOYRHOoBhXp6xAAJkDpxfTMmE3o2/q21Z7WWH5o2PUeHYUC6OpKEVBkw+oFSuKoZz8kxFyY/f0a0Q7XE3tpufp6WspUqTGXRZnTVxF+MlN4uymhz1ngQ2aoNjjfL+EDY7+QI9BcxruvQ0Lw5i4y/Bm5wjR8BvN3hMHiUFdPHbti03bMkdBKDFTN6/RWbULlgvnaR2q8srI6jOmqrMzXTwieGSDfZBcPyI9dXklj3Ua/0Z44QfaDUiVmBlm21AVj5QER7oHlddLeHn+id6cAJvmR3evFiEyCoBd3SQ4cwsGit2WY07HF3zSkcGwRgG61QkWCiRkDPVKxebgzhKdZ+ZcJw3HIVhhSU988=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e736bedb-fe11-455f-bb98-08dc53fe4348
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2024 16:51:10.0457 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: H/t9+2dAhxGBXHMz9Qwn3sczBwdaMhMSo0xDPAVBIach39Kc6UmlFevys42nfJ3ntPPbJIJI8fwLWNqsFnPaFg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB7326
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-03_18,2024-04-03_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0
+ mlxlogscore=999 adultscore=0 bulkscore=0 phishscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403210000 definitions=main-2404030113
+X-Proofpoint-ORIG-GUID: biclQDixV54bXOY0GcFzcQ-83AQ9oirg
+X-Proofpoint-GUID: biclQDixV54bXOY0GcFzcQ-83AQ9oirg
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,32 +186,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Apr 2024 at 11:07, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> The following changes since commit 7fcf7575f3d201fc84ae168017ffdfd6c86257a6:
->
->   Merge tag 'pull-target-arm-20240402' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-04-02 11:34:49 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->
-> for you to fetch changes up to 8fc4bdc537d901c200e43122e32bcb40dc8fed37:
->
->   pc_q35: remove unnecessary m->alias assignment (2024-04-02 18:08:59 +0200)
->
-> ----------------------------------------------------------------
-> * lsi53c895a: fix assertion failure with invalid Block Move
-> * vga: fix assertion failure with 4- and 16-color modes
-> * remove unnecessary assignment
->
-> ----------------------------------------------------------------
 
 
-Applied, thanks.
+On 4/3/24 6:18 AM, Eugenio Perez Martin wrote:
+> On Thu, Mar 28, 2024 at 5:22 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
+>>
+>> Initialize sequence variables for VirtQueue and VirtQueueElement
+>> structures. A VirtQueue's sequence variables are initialized when a
+>> VirtQueue is being created or reset. A VirtQueueElement's sequence
+>> variable is initialized when a VirtQueueElement is being initialized.
+>> These variables will be used to support the VIRTIO_F_IN_ORDER feature.
+>>
+>> A VirtQueue's used_seq_idx represents the next expected index in a
+>> sequence of VirtQueueElements to be processed (put on the used ring).
+>> The next VirtQueueElement added to the used ring must match this
+>> sequence number before additional elements can be safely added to the
+>> used ring. It's also particularly useful for helping find the number of
+>> new elements added to the used ring.
+>>
+>> A VirtQueue's current_seq_idx represents the current sequence index.
+>> This value is essentially a counter where the value is assigned to a new
+>> VirtQueueElement and then incremented. Given its uint16_t type, this
+>> sequence number can be between 0 and 65,535.
+>>
+>> A VirtQueueElement's seq_idx represents the sequence number assigned to
+>> the VirtQueueElement when it was created. This value must match with the
+>> VirtQueue's used_seq_idx before the element can be put on the used ring
+>> by the device.
+>>
+>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+>> ---
+>>   hw/virtio/virtio.c         | 18 ++++++++++++++++++
+>>   include/hw/virtio/virtio.h |  1 +
+>>   2 files changed, 19 insertions(+)
+>>
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index fb6b4ccd83..069d96df99 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -132,6 +132,10 @@ struct VirtQueue
+>>       uint16_t used_idx;
+>>       bool used_wrap_counter;
+>>
+>> +    /* In-Order sequence indices */
+>> +    uint16_t used_seq_idx;
+>> +    uint16_t current_seq_idx;
+>> +
+> 
+> I'm having a hard time understanding the difference between these and
+> last_avail_idx and used_idx. It seems to me if we replace them
+> everything will work? What am I missing?
+> 
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+For used_seq_idx, it does work like used_idx except the difference is 
+when their values get updated, specifically for the split VQ case.
 
--- PMM
+As you know, for the split VQ case, the used_idx is updated during 
+virtqueue_split_flush. However, imagine a batch of elements coming in 
+where virtqueue_split_fill is called multiple times before 
+virtqueue_split_flush. We want to make sure we write these elements to 
+the used ring in-order and we'll know its order based on used_seq_idx.
+
+Alternatively, I thought about replicating the logic for the packed VQ 
+case (where this used_seq_idx isn't used) where we start looking at 
+vq->used_elems[vq->used_idx] and iterate through until we find a used 
+element, but I wasn't sure how to handle the case where elements get 
+used (written to the used ring) and new elements get put in used_elems 
+before the used_idx is updated. Since this search would require us to 
+always start at index vq->used_idx.
+
+For example, say, of three elements getting filled (elem0 - elem2), 
+elem1 and elem0 come back first (vq->used_idx = 0):
+
+elem1 - not in-order
+elem0 - in-order, vq->used_elems[vq->used_idx + 1] (elem1) also now
+         in-order, write elem0 and elem1 to used ring, mark elements as
+         used
+
+Then elem2 comes back, but vq->used_idx is still 0, so how do we know to 
+ignore the used elements at vq->used_idx (elem0) and vq->used_idx + 1 
+(elem1) and iterate to vq->used_idx + 2 (elem2)?
+
+Hmm... now that I'm thinking about it, maybe for the split VQ case we 
+could continue looking through the vq->used_elems array until we find an 
+unused element... but then again how would we (1) know if the element is 
+in-order and (2) know when to stop searching?
+
+In any case, the use of this variable could be seen as an optimization 
+as its value will tell us where to start looking in vq->used_elems 
+instead of always starting at vq->used_idx.
+
+If this is like a one-shot scenario where one element gets written and 
+then flushed after, then yes in this case used_seq_idx == used_idx.
+
+------
+
+For current_seq_idx, this is pretty much just a counter. Every new 
+VirtQueueElement created from virtqueue_pop is given a number and the 
+counter is incremented. Like grabbing a ticket number and waiting for 
+your number to be called. The next person to grab a ticket number will 
+be your number + 1.
+
+Let me know if I'm making any sense. Thanks :)
+
+Jonah
+
+>>       /* Last used index value we have signalled on */
+>>       uint16_t signalled_used;
+>>
+>> @@ -1621,6 +1625,11 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+>>           elem->in_sg[i] = iov[out_num + i];
+>>       }
+>>
+>> +    /* Assign sequence index for in-order processing */
+>> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+>> +        elem->seq_idx = vq->current_seq_idx++;
+>> +    }
+>> +
+>>       vq->inuse++;
+>>
+>>       trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
+>> @@ -1760,6 +1769,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+>>       vq->shadow_avail_idx = vq->last_avail_idx;
+>>       vq->shadow_avail_wrap_counter = vq->last_avail_wrap_counter;
+>>
+>> +    /* Assign sequence index for in-order processing */
+>> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+>> +        elem->seq_idx = vq->current_seq_idx++;
+>> +    }
+>> +
+>>       trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
+>>   done:
+>>       address_space_cache_destroy(&indirect_desc_cache);
+>> @@ -2087,6 +2101,8 @@ static void __virtio_queue_reset(VirtIODevice *vdev, uint32_t i)
+>>       vdev->vq[i].notification = true;
+>>       vdev->vq[i].vring.num = vdev->vq[i].vring.num_default;
+>>       vdev->vq[i].inuse = 0;
+>> +    vdev->vq[i].used_seq_idx = 0;
+>> +    vdev->vq[i].current_seq_idx = 0;
+>>       virtio_virtqueue_reset_region_cache(&vdev->vq[i]);
+>>   }
+>>
+>> @@ -2334,6 +2350,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
+>>       vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
+>>       vdev->vq[i].handle_output = handle_output;
+>>       vdev->vq[i].used_elems = g_new0(VirtQueueElement, queue_size);
+>> +    vdev->vq[i].used_seq_idx = 0;
+>> +    vdev->vq[i].current_seq_idx = 0;
+>>
+>>       return &vdev->vq[i];
+>>   }
+>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>> index b3c74a1bca..910b2a3427 100644
+>> --- a/include/hw/virtio/virtio.h
+>> +++ b/include/hw/virtio/virtio.h
+>> @@ -75,6 +75,7 @@ typedef struct VirtQueueElement
+>>       hwaddr *out_addr;
+>>       struct iovec *in_sg;
+>>       struct iovec *out_sg;
+>> +    uint16_t seq_idx;
+>>   } VirtQueueElement;
+>>
+>>   #define VIRTIO_QUEUE_MAX 1024
+>> --
+>> 2.39.3
+>>
+> 
 
