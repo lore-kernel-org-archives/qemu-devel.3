@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C3CCD1294
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:18:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E16CD1288
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Apr 2024 11:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rryX8-0007hi-Fd; Wed, 03 Apr 2024 07:11:58 -0400
+	id 1rryXg-0000yD-Ta; Wed, 03 Apr 2024 07:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryX5-0007hQ-Ow
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:55 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1rryXV-0000Bs-KW
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:21 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rryX4-0007N5-5F
- for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:11:55 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1e0f0398553so55566915ad.3
- for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:11:53 -0700 (PDT)
+ id 1rryXU-0007Qi-42
+ for qemu-devel@nongnu.org; Wed, 03 Apr 2024 07:12:21 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5d8b887bb0cso4988472a12.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Apr 2024 04:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142713; x=1712747513;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712142739; x=1712747539;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=b1mEKoDGZ4GGrqc3/3B4HXNGq76T02i3zn74clINDmw=;
- b=HefW53rNnJT0YkjKYpes9DpFcPr7NX7oYmUUzO7mugrcdAAef08rUcGuSygO/v9E0D
- ABgx6/ryTqkwmnHFpo/WODBHQg/xPP2oMygYaiLfQ82Ln+71qU4hw1bSeED3cjTkSUBf
- 07cPqW75wf35PnaRAQhLTcg6bDnuvPITo1ZgLszEuIJWF2464YWHOBUTu+IBWQjnc4fv
- XKPgUnNlM96Jnm9wg/jodxNGgsp82v0TryrQxvf0FnJf1FB+gIwE0moUqmujIPxcYRbE
- xN2vteAaLNpUYvb1Lrj4FcPWnCTrfKrY5zBCEldpJ27UaFP11S//RT2+7jXABqhAuCFs
- bZOA==
+ :reply-to; bh=aSwN7T4THBSw8DVoEdw6sbR9jhN10SDsiob3Jp9LpFY=;
+ b=sLSOZb8Rk2/dsGDC6CxzC/J282TWhsvYM2gZ+aBMrd6Bx4xFYY3An3djVf95zLKvGF
+ ex8fcypW8fqflEcZeKQE6eOujbURLpQOpZoiwDBAPJZrEpwBrizl4t+t5HYqqMysC6dZ
+ pPRblRY1ktMlZt1Gs3fIHZlguXSUlHYVWSlRd+5OFMP/S5EvROvT8bFaDtfo+OZuW/AV
+ N9XJ0PkMnGpUKI6rK+QTIng9v/6OkXgK370GsVU2isEAq7lkLmNjc4YTlmZfrcg+fVga
+ 9QUV3E89Q5uO56ccAct9sF3hWbcgAIycLVYI3397j4qDimfuDNKNyfvwBJO+Ci8js4Z5
+ v1Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712142713; x=1712747513;
+ d=1e100.net; s=20230601; t=1712142739; x=1712747539;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b1mEKoDGZ4GGrqc3/3B4HXNGq76T02i3zn74clINDmw=;
- b=v9ZI9+VzGwya8HzGLXuHWbUFWLUJoMhXnBmHnl3AJt2+7CDS89QyPFpCnZigSIF/LY
- 39Ily2wkwVY5A5BnPAlYvMWQXFIrf4OKiTixwcifHd2SntXdW4MTjWGjFy4PpkHnor/V
- +lT8/6PIfl6cJQT7EDoceL/JvuRy2kj/dfZZfpJ1033viVA0jkKZUTjXllTcMwpttGVs
- N+G4QV4rNthJTi6pVMK4Z0yNPQCkTMHAwbOKUt0zoKicHyPIswWSsgcS/mCzZrd8oTyN
- 3TMc9fzaCinuoeBPpOAkYoYlMF5IOhgw7Y8LjPgDuoB2F3yg9r70ej1FQs6ezRY7XL5n
- ti4A==
-X-Gm-Message-State: AOJu0YwCtKkEu7SXXwQqrKm9NAmBgi3OuOdf2ArxXKGJ/A/CR7SQWU4U
- 5+U2V4FlH5aLQYLXy8KponKMg0SoEQe5+96iNn28jOkKr2QjgT5Fp8sQtvjYC3o=
-X-Google-Smtp-Source: AGHT+IHvoC8xqgF91bDQlnBrnxzII7j07cUWafpRBktQBsVJhWwVjC6DwoPKCkl21CGTV//zpc6s8g==
-X-Received: by 2002:a17:903:1ca:b0:1e2:90c6:839a with SMTP id
- e10-20020a17090301ca00b001e290c6839amr1831744plh.31.1712142713065; 
- Wed, 03 Apr 2024 04:11:53 -0700 (PDT)
+ bh=aSwN7T4THBSw8DVoEdw6sbR9jhN10SDsiob3Jp9LpFY=;
+ b=uw1PFWRYcZaZH8YZ0jyJJejMYtTM99S3ufDu3UqnMFPPWBlY+LNyqa8Nl1+xc7BWgV
+ x6PEL6XP+CsjcH1S+nx0nx81H4dO72oc9I4z+EgEXUyxnU0BZf8tczrPfX1AyCWmd5e3
+ hgpQFvdNUlVF8Y5o97LUc4b2ubnIX8rHh8NY9b9J8lnJgtku4fwaYEEV/N0048d3klPf
+ bSurraBeQnSSOyHYVPA7+mXBvNJMT86jk82koDj74sQ57Gg4ZvC53+MEBrWQmLuzcc5v
+ CRUey/e+v0WY1aZTNhNtLk3sfQ0/A8yDrCPHVoTeD5n2OT/fe/F7pJDs7xjDH1XaHSEy
+ YFbA==
+X-Gm-Message-State: AOJu0YwS+y7gSyr0gC80I2gETT2b6ZxSrnsyLinRXmyuq+Yy2VblgtSC
+ WN4blPji2k+V1LdfLYibKV/nB3IWtD2E5rbfa42RGkprMxvPuHw0k6Et7ECV3JQ=
+X-Google-Smtp-Source: AGHT+IHNwZK6NqT9RyUnNXsKCr8xJKuGN7PIAXmN8oTsUTew1xtf/8wdCF2sZ2D4GAdfapSja9IeLw==
+X-Received: by 2002:a17:90a:e7cd:b0:2a2:39ac:abf1 with SMTP id
+ kb13-20020a17090ae7cd00b002a239acabf1mr7680093pjb.49.1712142738847; 
+ Wed, 03 Apr 2024 04:12:18 -0700 (PDT)
 Received: from localhost ([157.82.200.213])
  by smtp.gmail.com with UTF8SMTPSA id
- y20-20020a170902e19400b001e28ba8b4d9sm1777496pla.132.2024.04.03.04.11.50
+ d6-20020a63ed06000000b005f3c84e12c9sm3913291pgi.48.2024.04.03.04.12.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Apr 2024 04:11:52 -0700 (PDT)
+ Wed, 03 Apr 2024 04:12:18 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 03 Apr 2024 20:11:02 +0900
-Subject: [PATCH v9 14/20] virtio-net: Report RSS warning at device realization
+Date: Wed, 03 Apr 2024 20:11:08 +0900
+Subject: [PATCH v9 20/20] ebpf: Add a separate target for skeleton
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240403-rss-v9-14-c6d87e69d38b@daynix.com>
+Message-Id: <20240403-rss-v9-20-c6d87e69d38b@daynix.com>
 References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
 In-Reply-To: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
 To: Jason Wang <jasowang@redhat.com>, 
@@ -77,8 +77,8 @@ To: Jason Wang <jasowang@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::532;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,68 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Warning about RSS fallback at device realization allows the user to
-notice the configuration problem early.
+This generalizes the rule to generate the skeleton and allows to add
+another.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/net/virtio-net.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ tools/ebpf/Makefile.ebpf | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 3d53eba88cfc..86929c9e1fad 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1261,10 +1261,12 @@ static bool virtio_net_attach_epbf_rss(VirtIONet *n)
+diff --git a/tools/ebpf/Makefile.ebpf b/tools/ebpf/Makefile.ebpf
+index 3391e7ce0898..572ca5987ae6 100755
+--- a/tools/ebpf/Makefile.ebpf
++++ b/tools/ebpf/Makefile.ebpf
+@@ -1,23 +1,24 @@
+-OBJS = rss.bpf.o
++SKELETONS = rss.bpf.skeleton.h
  
-     if (!ebpf_rss_set_all(&n->ebpf_rss, &config,
-                           n->rss_data.indirections_table, n->rss_data.key)) {
-+        error_report("Failed to configure eBPF RSS");
-         return false;
-     }
+ LLVM_STRIP ?= llvm-strip
+ CLANG ?= clang
+ INC_FLAGS = `$(CLANG) -print-file-name=include`
+ EXTRA_CFLAGS ?= -O2 -g -target bpf
  
-     if (!virtio_net_attach_ebpf_to_backend(n->nic, n->ebpf_rss.program_fd)) {
-+        error_report("Failed to attach eBPF to backend");
-         return false;
-     }
+-all: $(OBJS)
++all: $(SKELETONS)
  
-@@ -1279,16 +1281,10 @@ static void virtio_net_detach_epbf_rss(VirtIONet *n)
- static void virtio_net_commit_rss_config(VirtIONet *n)
- {
-     if (n->rss_data.enabled) {
--        n->rss_data.enabled_software_rss = n->rss_data.populate_hash;
-+        n->rss_data.enabled_software_rss = n->rss_data.populate_hash ||
-+                                           !virtio_net_attach_epbf_rss(n);
-         if (n->rss_data.populate_hash) {
-             virtio_net_detach_epbf_rss(n);
--        } else if (!virtio_net_attach_epbf_rss(n)) {
--            if (get_vhost_net(qemu_get_queue(n->nic)->peer)) {
--                warn_report("Can't load eBPF RSS for vhost");
--            } else {
--                warn_report("Can't load eBPF RSS - fallback to software RSS");
--                n->rss_data.enabled_software_rss = true;
--            }
-         }
+ .PHONY: clean
  
-         trace_virtio_net_rss_enable(n->rss_data.hash_types,
-@@ -3802,9 +3798,14 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     net_rx_pkt_init(&n->rx_pkt);
+ clean:
+-	rm -f $(OBJS)
+-	rm -f rss.bpf.skeleton.h
++	rm -f $(SKELETONS) $(SKELETONS:%.skeleton.h=%.o)
  
-     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS) &&
--        !virtio_net_load_ebpf(n) && get_vhost_net(nc->peer)) {
--        virtio_net_device_unrealize(dev);
--        error_setg(errp, "Can't load eBPF RSS for vhost");
-+        !virtio_net_load_ebpf(n)) {
-+        if (get_vhost_net(nc->peer)) {
-+            error_setg(errp, "Can't load eBPF RSS for vhost");
-+            virtio_net_device_unrealize(dev);
-+            return;
-+        }
+-$(OBJS):  %.o:%.c
++%.o: %.c
+ 	$(CLANG) $(INC_FLAGS) \
+                 -D__KERNEL__ -D__ASM_SYSREG_H \
+                 -I../include $(LINUXINCLUDE) \
+                 $(EXTRA_CFLAGS) -c $< -o $@
+ 	$(LLVM_STRIP) -g $@
+-	bpftool gen skeleton rss.bpf.o > rss.bpf.skeleton.h
+-	cp rss.bpf.skeleton.h ../../ebpf/
 +
-+        warn_report("Can't load eBPF RSS - fallback to software RSS");
-     }
- }
- 
++%.skeleton.h: %.o
++	bpftool gen skeleton $< > $@
++	cp $@ ../../ebpf/
 
 -- 
 2.44.0
