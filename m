@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DB2CD1292
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 11:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C86CD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 12:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsLOb-0007l8-Qt; Thu, 04 Apr 2024 07:36:41 -0400
+	id 1rsLmj-0004ow-BH; Thu, 04 Apr 2024 08:01:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rsLOa-0007jG-2i
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 07:36:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rsLOX-0007b5-UN
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 07:36:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712230596;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RNMoQEQsCVQ9u9TBUjJgMO33xcoOLuAj1qtb8Gwf8Uc=;
- b=Tdaet93wr060fPswxGBfSNHozGzFLoT6D65XKb6HINcRcA/EleUssNPzqL6Uivm2A3Edj/
- YMjNEMi8iXtvhKOOoR46vKLTGN+TJDcQbaF6X91Pp7Ju+fiZGs3LDHM8m9xG0Jv6OPttEi
- S9cje69OhLfoQhSHn1i4jvogNcItB6I=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-01g7zD7XM_GfMExqjM-D7w-1; Thu, 04 Apr 2024 07:36:35 -0400
-X-MC-Unique: 01g7zD7XM_GfMExqjM-D7w-1
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-dcc05887ee9so1332705276.1
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 04:36:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1rsLmd-0004kn-KF; Thu, 04 Apr 2024 08:01:32 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1rsLmb-00063z-J3; Thu, 04 Apr 2024 08:01:31 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-56dc9955091so966743a12.1; 
+ Thu, 04 Apr 2024 05:01:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712232084; x=1712836884; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GO0ls1hQiObcHd1DBdp8MP2QOtBJ7Bpa+kAIWvDYvC4=;
+ b=H/ngHO41KQmCVhGvGkzoFk7L4lk+f9SNxwZ26AecKYflRs1kCoXqLLG2CGogza1HCP
+ 4h9pcmbg1M9XLALiEsNTKf7NKTiuG+LT/9LhrLnjaUfrsd1ghir0Qhs4fBLGjBangvaa
+ jBMzebubTI2TSZ1G5A1ulOfdvfiXOX1aXD6j1mQuPCHA1Tj5SXLLGZ6V+XZ0OgBZ14+i
+ +gDbtyeeFj3isKz0u0bbEp21muX5B93NzXAh+4DP5xOt/VSI/fsgIzv0HrC/AIMRUSmr
+ oQBNy/KBLzbYLnz5MR0tJ7EjkvL+9gd15QxwS3m8pzBnRzj+q7RIUBmjqHy2/oDkBK72
+ bURQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712230594; x=1712835394;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RNMoQEQsCVQ9u9TBUjJgMO33xcoOLuAj1qtb8Gwf8Uc=;
- b=OyKx98UapbGXl1OPVADqDfyAcHnzU0JAq41x9oOs6/uXkenpRG9xJC642lnByGbdWA
- 0TGb/G0m64WFtAe+7LHuQ9l91ovAotE8T5cK948A/7TKQhUj/GEz3h89E/bD1Fai5+xi
- nuZFMdJamIiVaqhe89e6+gyZ8h7dpGFte4MtJzDdKeGvnmVtQaKQmkv4kGh/LAXTdQDy
- P4I6RDgh4/7QFx21KytMHvUsbK99eT+2glED+u3exn6YEZpTNyLqbuzn+6eKX+UD5WAO
- OAVRwZ0Ul28O1OAOB4jR+VnXypAiYrrkFG91cUgpm5Jn1NzpFw/WOPLfcKEhLzXwoWKw
- tDwg==
-X-Gm-Message-State: AOJu0YxMGctTJ0Rwnwiyy300xBfY2/GOusUJnhpbzN2qEvHGfnYsJrTd
- bRKRiK01cwcdGjfMXuXRDCFjFWHu0pvg+vhzZ28AK6/+qj/4X6NItF+EzPXgNpeCZ3O6ygCkzLF
- DR6mgXNKyCjAYrQT8IFV3iyuGDkaQP4POc2ABp49F9OGX/aQYr9maeOa6cVIqnle2JqcffvmRkk
- ACPIp5GSdhNJmKhRo6P+kO3+w6Rh4=
-X-Received: by 2002:a25:8f89:0:b0:dd1:48cf:5c8 with SMTP id
- u9-20020a258f89000000b00dd148cf05c8mr2199531ybl.2.1712230594531; 
- Thu, 04 Apr 2024 04:36:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfh0RuuGQrzpIEzwd0eFur/V5dVErXs+fFlCtdZBmyHK3U8/n+f+7xsZxheDWy/WdVW7oQfO4gbZgGUlvbhrg=
-X-Received: by 2002:a25:8f89:0:b0:dd1:48cf:5c8 with SMTP id
- u9-20020a258f89000000b00dd148cf05c8mr2199518ybl.2.1712230594190; Thu, 04 Apr
- 2024 04:36:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712232084; x=1712836884;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GO0ls1hQiObcHd1DBdp8MP2QOtBJ7Bpa+kAIWvDYvC4=;
+ b=F7n3hI0yBfEOzYU1cZl3I796GVgOlrnkpmjxMC3wxHq/b9TmYDn6WPdus+gcSOCe0A
+ SdIm6FV+N9f1qisVXvnKKMtwduITuC0YYVGFHNf7yS6U3KQWh9eFbXUeJIUjGhpfbTRq
+ w7AtldRNGcI6LtCmAe+1wDWHpfssQIJhdmJM+g7OBO1v8miGwhYPwhmAlncOtR0yHIrw
+ rzcZN/OLClrlG3NR3ovO4LxqPVOXpxQXPvFBPRxt+jAgpKobXjvDP19jLCOleTZMEpUT
+ Ag3gT7VmHo9NnQxqdfPrrzi0d2P1/2EMYspzpg0hWpd7WY03Qa9EXum3EQxNzbDvr2r/
+ W5UA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbKbmSdBwbNM8P08f7xG8Rr9jDEMaHxil7p1ZGfCQSOf7wsD4JPqu4JcazAxaKTsnYxAe2GSEMlWqH1cgscSdrIQR8vdwfZRscrMULR9OBV74tpO297YwREFxN7Q==
+X-Gm-Message-State: AOJu0YzSOdv/DFwP7/U7qYIey4VXRCf10zuQRbEB/vlj8AycP2Em1Rkm
+ UTi40sa0/Y6q+A+227skKrN566VjH3oh2eiFgDf/GkE7cKhgj4I=
+X-Google-Smtp-Source: AGHT+IH9qSK6veOtOWJPKIpSLCR7CLJytg6ApvMHK1xEf0NisgiLxIiqxyJHzZrA9bvXHHCd+UN7Fw==
+X-Received: by 2002:a50:a6d4:0:b0:567:45e2:c4db with SMTP id
+ f20-20020a50a6d4000000b0056745e2c4dbmr1761556edc.39.1712232083691; 
+ Thu, 04 Apr 2024 05:01:23 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ by smtp.gmail.com with ESMTPSA id
+ cf2-20020a0564020b8200b0056b0af78d80sm9268325edb.34.2024.04.04.05.01.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Apr 2024 05:01:23 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] block/virtio-blk: Fix memory leak from virtio_blk_zone_report
+Date: Thu,  4 Apr 2024 14:00:40 +0200
+Message-Id: <20240404120040.1951466-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240328162203.3775114-1-jonah.palmer@oracle.com>
- <20240328162203.3775114-2-jonah.palmer@oracle.com>
- <CAJaqyWdyZdu48+cZ2umafLRi9NTz3YHxSxmyq6SD9d4noTR2jQ@mail.gmail.com>
- <768ffc05-333a-4f00-9944-940bcaca59fd@oracle.com>
-In-Reply-To: <768ffc05-333a-4f00-9944-940bcaca59fd@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 4 Apr 2024 13:35:58 +0200
-Message-ID: <CAJaqyWe3bw6WML9MLEhnpNuWL0_HUQJ4WrSyr1jnGHs6Jwn0-Q@mail.gmail.com>
-Subject: Re: [RFC v2 1/5] virtio: Initialize sequence variables
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
- fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=zheyuma97@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,200 +94,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 3, 2024 at 6:51=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
->
->
-> On 4/3/24 6:18 AM, Eugenio Perez Martin wrote:
-> > On Thu, Mar 28, 2024 at 5:22=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
-le.com> wrote:
-> >>
-> >> Initialize sequence variables for VirtQueue and VirtQueueElement
-> >> structures. A VirtQueue's sequence variables are initialized when a
-> >> VirtQueue is being created or reset. A VirtQueueElement's sequence
-> >> variable is initialized when a VirtQueueElement is being initialized.
-> >> These variables will be used to support the VIRTIO_F_IN_ORDER feature.
-> >>
-> >> A VirtQueue's used_seq_idx represents the next expected index in a
-> >> sequence of VirtQueueElements to be processed (put on the used ring).
-> >> The next VirtQueueElement added to the used ring must match this
-> >> sequence number before additional elements can be safely added to the
-> >> used ring. It's also particularly useful for helping find the number o=
-f
-> >> new elements added to the used ring.
-> >>
-> >> A VirtQueue's current_seq_idx represents the current sequence index.
-> >> This value is essentially a counter where the value is assigned to a n=
-ew
-> >> VirtQueueElement and then incremented. Given its uint16_t type, this
-> >> sequence number can be between 0 and 65,535.
-> >>
-> >> A VirtQueueElement's seq_idx represents the sequence number assigned t=
-o
-> >> the VirtQueueElement when it was created. This value must match with t=
-he
-> >> VirtQueue's used_seq_idx before the element can be put on the used rin=
-g
-> >> by the device.
-> >>
-> >> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> >> ---
-> >>   hw/virtio/virtio.c         | 18 ++++++++++++++++++
-> >>   include/hw/virtio/virtio.h |  1 +
-> >>   2 files changed, 19 insertions(+)
-> >>
-> >> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> >> index fb6b4ccd83..069d96df99 100644
-> >> --- a/hw/virtio/virtio.c
-> >> +++ b/hw/virtio/virtio.c
-> >> @@ -132,6 +132,10 @@ struct VirtQueue
-> >>       uint16_t used_idx;
-> >>       bool used_wrap_counter;
-> >>
-> >> +    /* In-Order sequence indices */
-> >> +    uint16_t used_seq_idx;
-> >> +    uint16_t current_seq_idx;
-> >> +
-> >
-> > I'm having a hard time understanding the difference between these and
-> > last_avail_idx and used_idx. It seems to me if we replace them
-> > everything will work? What am I missing?
-> >
->
-> For used_seq_idx, it does work like used_idx except the difference is
-> when their values get updated, specifically for the split VQ case.
->
-> As you know, for the split VQ case, the used_idx is updated during
-> virtqueue_split_flush. However, imagine a batch of elements coming in
-> where virtqueue_split_fill is called multiple times before
-> virtqueue_split_flush. We want to make sure we write these elements to
-> the used ring in-order and we'll know its order based on used_seq_idx.
->
-> Alternatively, I thought about replicating the logic for the packed VQ
-> case (where this used_seq_idx isn't used) where we start looking at
-> vq->used_elems[vq->used_idx] and iterate through until we find a used
-> element, but I wasn't sure how to handle the case where elements get
-> used (written to the used ring) and new elements get put in used_elems
-> before the used_idx is updated. Since this search would require us to
-> always start at index vq->used_idx.
->
-> For example, say, of three elements getting filled (elem0 - elem2),
-> elem1 and elem0 come back first (vq->used_idx =3D 0):
->
-> elem1 - not in-order
-> elem0 - in-order, vq->used_elems[vq->used_idx + 1] (elem1) also now
->          in-order, write elem0 and elem1 to used ring, mark elements as
->          used
->
-> Then elem2 comes back, but vq->used_idx is still 0, so how do we know to
-> ignore the used elements at vq->used_idx (elem0) and vq->used_idx + 1
-> (elem1) and iterate to vq->used_idx + 2 (elem2)?
->
-> Hmm... now that I'm thinking about it, maybe for the split VQ case we
-> could continue looking through the vq->used_elems array until we find an
-> unused element... but then again how would we (1) know if the element is
-> in-order and (2) know when to stop searching?
->
+This modification ensures that in scenarios where the buffer size is
+insufficient for a zone report, the function will now properly set an
+error status and proceed to a cleanup label, instead of merely
+returning.
 
-Ok I think I understand the problem now. It is aggravated if we add
-chained descriptors to the mix.
+The following ASAN log reveals it:
 
-We know that the order of used descriptors must be the exact same as
-the order they were made available, leaving out in order batching.
-What if vq->used_elems at virtqueue_pop and then virtqueue_push just
-marks them as used somehow? Two booleans (or flag) would do for a
-first iteration.
+==1767400==ERROR: LeakSanitizer: detected memory leaks
+Direct leak of 312 byte(s) in 1 object(s) allocated from:
+    #0 0x64ac7b3280cd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
+    #1 0x735b02fb9738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
+    #2 0x64ac7d23be96 in virtqueue_split_pop hw/virtio/virtio.c:1612:12
+    #3 0x64ac7d23728a in virtqueue_pop hw/virtio/virtio.c:1783:16
+    #4 0x64ac7cfcaacd in virtio_blk_get_request hw/block/virtio-blk.c:228:27
+    #5 0x64ac7cfca7c7 in virtio_blk_handle_vq hw/block/virtio-blk.c:1123:23
+    #6 0x64ac7cfecb95 in virtio_blk_handle_output hw/block/virtio-blk.c:1157:5
 
-If we go with this approach I think used_elems should be renamed actually.
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/block/virtio-blk.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> In any case, the use of this variable could be seen as an optimization
-> as its value will tell us where to start looking in vq->used_elems
-> instead of always starting at vq->used_idx.
->
-> If this is like a one-shot scenario where one element gets written and
-> then flushed after, then yes in this case used_seq_idx =3D=3D used_idx.
->
-> ------
->
-> For current_seq_idx, this is pretty much just a counter. Every new
-> VirtQueueElement created from virtqueue_pop is given a number and the
-> counter is incremented. Like grabbing a ticket number and waiting for
-> your number to be called. The next person to grab a ticket number will
-> be your number + 1.
->
-
-So it's like last_avail_idx, isn't it?
-
-> Let me know if I'm making any sense. Thanks :)
->
-> Jonah
->
-> >>       /* Last used index value we have signalled on */
-> >>       uint16_t signalled_used;
-> >>
-> >> @@ -1621,6 +1625,11 @@ static void *virtqueue_split_pop(VirtQueue *vq,=
- size_t sz)
-> >>           elem->in_sg[i] =3D iov[out_num + i];
-> >>       }
-> >>
-> >> +    /* Assign sequence index for in-order processing */
-> >> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
-> >> +        elem->seq_idx =3D vq->current_seq_idx++;
-> >> +    }
-> >> +
-> >>       vq->inuse++;
-> >>
-> >>       trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
-> >> @@ -1760,6 +1769,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq=
-, size_t sz)
-> >>       vq->shadow_avail_idx =3D vq->last_avail_idx;
-> >>       vq->shadow_avail_wrap_counter =3D vq->last_avail_wrap_counter;
-> >>
-> >> +    /* Assign sequence index for in-order processing */
-> >> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
-> >> +        elem->seq_idx =3D vq->current_seq_idx++;
-> >> +    }
-> >> +
-> >>       trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
-> >>   done:
-> >>       address_space_cache_destroy(&indirect_desc_cache);
-> >> @@ -2087,6 +2101,8 @@ static void __virtio_queue_reset(VirtIODevice *v=
-dev, uint32_t i)
-> >>       vdev->vq[i].notification =3D true;
-> >>       vdev->vq[i].vring.num =3D vdev->vq[i].vring.num_default;
-> >>       vdev->vq[i].inuse =3D 0;
-> >> +    vdev->vq[i].used_seq_idx =3D 0;
-> >> +    vdev->vq[i].current_seq_idx =3D 0;
-> >>       virtio_virtqueue_reset_region_cache(&vdev->vq[i]);
-> >>   }
-> >>
-> >> @@ -2334,6 +2350,8 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, =
-int queue_size,
-> >>       vdev->vq[i].vring.align =3D VIRTIO_PCI_VRING_ALIGN;
-> >>       vdev->vq[i].handle_output =3D handle_output;
-> >>       vdev->vq[i].used_elems =3D g_new0(VirtQueueElement, queue_size);
-> >> +    vdev->vq[i].used_seq_idx =3D 0;
-> >> +    vdev->vq[i].current_seq_idx =3D 0;
-> >>
-> >>       return &vdev->vq[i];
-> >>   }
-> >> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> >> index b3c74a1bca..910b2a3427 100644
-> >> --- a/include/hw/virtio/virtio.h
-> >> +++ b/include/hw/virtio/virtio.h
-> >> @@ -75,6 +75,7 @@ typedef struct VirtQueueElement
-> >>       hwaddr *out_addr;
-> >>       struct iovec *in_sg;
-> >>       struct iovec *out_sg;
-> >> +    uint16_t seq_idx;
-> >>   } VirtQueueElement;
-> >>
-> >>   #define VIRTIO_QUEUE_MAX 1024
-> >> --
-> >> 2.39.3
-> >>
-> >
->
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 92de315f17..bb86e65f65 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -768,7 +768,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
+             sizeof(struct virtio_blk_zone_report) +
+             sizeof(struct virtio_blk_zone_descriptor)) {
+         virtio_error(vdev, "in buffer too small for zone report");
+-        return;
++        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
++        goto out;
+     }
+ 
+     /* start byte offset of the zone report */
+-- 
+2.34.1
 
 
