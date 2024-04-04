@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311EFCD1292
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 13:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A97DCD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 13:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsNFo-0003ps-MR; Thu, 04 Apr 2024 09:35:45 -0400
+	id 1rsNHr-0004fz-S5; Thu, 04 Apr 2024 09:37:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rsNFm-0003oo-MP
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:35:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rsNHq-0004fk-5h
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:37:50 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rsNFQ-0003nZ-Fw
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:35:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712237717;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MPwGQpO3CGWRuqj8ZK+pAJ0GpLa7bQLuOOgf5vUw+9E=;
- b=ePHIBpFBTeKxuBblyjN/+f3ROP0c99Lb1JEWNW3j2yPmeD4VYW2S/SnIMMZwyYhotdwlvP
- GJcVvNRJfeHysVHfYCtjFrbRdbl6jGsFtU2JEg4U5Ewag7FDKutkN79agla9FcsjYVvwCX
- mMAH9ks4AschzwVprKifPAqa0E5qQro=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-jzpw2lAoNqejXGdMDiSPSw-1; Thu,
- 04 Apr 2024 09:35:13 -0400
-X-MC-Unique: jzpw2lAoNqejXGdMDiSPSw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0F6C238143B4;
- Thu,  4 Apr 2024 13:35:13 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.73])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 510C02024517;
- Thu,  4 Apr 2024 13:35:12 +0000 (UTC)
-Date: Thu, 4 Apr 2024 09:35:06 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zheyu Ma <zheyuma97@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Sam Li <faithilikerun@gmail.com>
-Subject: Re: [PATCH] block/virtio-blk: Fix memory leak from
- virtio_blk_zone_report
-Message-ID: <20240404133506.GB2555172@fedora>
-References: <20240404120040.1951466-1-zheyuma97@gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rsNHn-0004Ec-5r
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:37:49 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V9Mxg3Zsyz6J7DR;
+ Thu,  4 Apr 2024 21:32:55 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id AFE8F1400DC;
+ Thu,  4 Apr 2024 21:37:34 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 4 Apr
+ 2024 14:37:33 +0100
+Date: Thu, 4 Apr 2024 14:37:33 +0100
+To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+CC: "Huang, Ying" <ying.huang@intel.com>, Gregory Price
+ <gourry.memverge@gmail.com>, <aneesh.kumar@linux.ibm.com>, <mhocko@suse.com>, 
+ <tj@kernel.org>, <john@jagalactic.com>, Eishan Mirakhur
+ <emirakhur@micron.com>, Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, Alistair Popple
+ <apopple@nvidia.com>, Srinivasulu Thanneeru <sthanneeru@micron.com>, SeongJae
+ Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Vishal Verma
+ <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, "Andrew
+ Morton" <akpm@linux-foundation.org>, <nvdimm@lists.linux.dev>,
+ <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Linux Memory
+ Management List" <linux-mm@kvack.org>, "Ho-Ren (Jack) Chuang"
+ <horenc@vt.edu>, "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
+ <qemu-devel@nongnu.org>, Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH v10 2/2] memory tier: create CPUless memory tiers after
+ obtaining HMAT info
+Message-ID: <20240404143733.00004594@Huawei.com>
+In-Reply-To: <CAKPbEqoJZe+HWHhCvBTVSHXffGY2ign3Htp4pfbFb4YVJS_Q2A@mail.gmail.com>
+References: <20240402001739.2521623-1-horenchuang@bytedance.com>
+ <20240402001739.2521623-3-horenchuang@bytedance.com>
+ <20240403180425.00003be0@Huawei.com>
+ <CAKPbEqoJZe+HWHhCvBTVSHXffGY2ign3Htp4pfbFb4YVJS_Q2A@mail.gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="LHI7FLq0z6sfUBpE"
-Content-Disposition: inline
-In-Reply-To: <20240404120040.1951466-1-zheyuma97@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,82 +81,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+<snip>
 
---LHI7FLq0z6sfUBpE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > > @@ -858,7 +910,8 @@ static int __init memory_tier_init(void)
+> > >        * For now we can have 4 faster memory tiers with smaller adistance
+> > >        * than default DRAM tier.
+> > >        */
+> > > -     default_dram_type = alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
+> > > +     default_dram_type = mt_find_alloc_memory_type(MEMTIER_ADISTANCE_DRAM,
+> > > +                                                                     &default_memory_types);  
+> >
+> > Unusual indenting.  Align with just after (
+> >  
+> 
+> Aligning with "(" will exceed 100 columns. Would that be acceptable?
+I think we are talking cross purposes.
 
-On Thu, Apr 04, 2024 at 02:00:40PM +0200, Zheyu Ma wrote:
-> This modification ensures that in scenarios where the buffer size is
-> insufficient for a zone report, the function will now properly set an
-> error status and proceed to a cleanup label, instead of merely
-> returning.
->=20
-> The following ASAN log reveals it:
->=20
-> =3D=3D1767400=3D=3DERROR: LeakSanitizer: detected memory leaks
-> Direct leak of 312 byte(s) in 1 object(s) allocated from:
->     #0 0x64ac7b3280cd in malloc llvm/compiler-rt/lib/asan/asan_malloc_lin=
-ux.cpp:129:3
->     #1 0x735b02fb9738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0=
-+0x5e738)
->     #2 0x64ac7d23be96 in virtqueue_split_pop hw/virtio/virtio.c:1612:12
->     #3 0x64ac7d23728a in virtqueue_pop hw/virtio/virtio.c:1783:16
->     #4 0x64ac7cfcaacd in virtio_blk_get_request hw/block/virtio-blk.c:228=
-:27
->     #5 0x64ac7cfca7c7 in virtio_blk_handle_vq hw/block/virtio-blk.c:1123:=
-23
->     #6 0x64ac7cfecb95 in virtio_blk_handle_output hw/block/virtio-blk.c:1=
-157:5
->=20
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> ---
->  hw/block/virtio-blk.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-> index 92de315f17..bb86e65f65 100644
-> --- a/hw/block/virtio-blk.c
-> +++ b/hw/block/virtio-blk.c
-> @@ -768,7 +768,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlock=
-Req *req,
->              sizeof(struct virtio_blk_zone_report) +
->              sizeof(struct virtio_blk_zone_descriptor)) {
->          virtio_error(vdev, "in buffer too small for zone report");
-> -        return;
-> +        err_status =3D VIRTIO_BLK_S_ZONE_INVALID_CMD;
-> +        goto out;
->      }
-> =20
->      /* start byte offset of the zone report */
-> --=20
-> 2.34.1
->=20
+	default_dram_type = mt_find_alloc_memory_type(MEMTIER_ADISTANCE_DRAM,
+						      &default_memory_types);  
 
-Thanks, applied to my block tree:
-https://gitlab.com/stefanha/qemu/commits/block
+Is what I was suggesting.
 
-Stefan
+> 
+> > >       if (IS_ERR(default_dram_type))
+> > >               panic("%s() failed to allocate default DRAM tier\n", __func__);
+> > >
+> > > @@ -868,6 +921,14 @@ static int __init memory_tier_init(void)
+> > >        * types assigned.
+> > >        */
+> > >       for_each_node_state(node, N_MEMORY) {
+> > > +             if (!node_state(node, N_CPU))
+> > > +                     /*
+> > > +                      * Defer memory tier initialization on CPUless numa nodes.
+> > > +                      * These will be initialized after firmware and devices are  
+> >
+> > I think this wraps at just over 80 chars.  Seems silly to wrap so tightly and not
+> > quite fit under 80. (this is about 83 chars.
+> >  
+> 
+> I can fix this.
+> I have a question. From my patch, this is <80 chars. However,
+> in an email, this is >80 chars. Does that mean we need to
+> count the number of chars in an email, not in a patch? Or if I
+> missed something? like vim configuration or?
 
---LHI7FLq0z6sfUBpE
-Content-Type: application/pgp-signature; name="signature.asc"
+3 tabs + 1 space + the text from * (58)
+= 24 + 1 + 58 = 83
 
------BEGIN PGP SIGNATURE-----
+Advantage of using claws email for kernel stuff is it has a nice per character
+ruler at the top of the window.
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmYOrIoACgkQnKSrs4Gr
-c8iacwf/dkK6mDTHCpRy4PWByjds0DS20/ku2c/vk09pCMMHS4VIMYDpxB4tYuuz
-R+IAFvRyfY7vd0bQ6PHTRGQJ/+vPR8Ylt7D+pcjZTB1l2Ik+j2xRM3hTJ6ysDWI8
-vA9WctMCyAWaLOL/hqTqukhWvJwQK8wMmwEhgEb9ftiR7AGb1S/UrzhponwLcJs0
-xkRN/MZjtVSwqUZtrykU6NVyWGd0Cn2CkpgWNVZ6FFlIBfoK4p6zWW4JmEt4gWwd
-84Z0DT2BJqa0c/PyAmqOBTQJSys3vIBU9SCJrbdcJJahFy7CUm703hbhJljsvK0M
-2DiGKBe1RyIjUmPPGDv4TN2UV06BtQ==
-=5BvL
------END PGP SIGNATURE-----
+I wonder if you have a different tab indent size?  The kernel uses 8
+characters.  It might explain the few other odd indents if perhaps
+you have it at 4 in your editor?
 
---LHI7FLq0z6sfUBpE--
+https://www.kernel.org/doc/html/v4.10/process/coding-style.html
+
+Jonathan
+
+> 
+> > > +                      * initialized.
+> > > +                      */
+> > > +                     continue;
+> > > +
+> > >               memtier = set_node_memory_tier(node);
+> > >               if (IS_ERR(memtier))
+> > >                       /*  
+> >  
+> 
+> 
 
 
