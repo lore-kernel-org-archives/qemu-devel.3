@@ -4,66 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DA5DCD1284
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 09:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4729BCD1284
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 10:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsJgw-0003ZR-UU; Thu, 04 Apr 2024 05:47:31 -0400
+	id 1rsJxu-0007GT-P6; Thu, 04 Apr 2024 06:05:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rsJgr-0003YS-UP
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 05:47:26 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rsJxq-0007Eu-Da
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 06:04:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rsJgp-0002E8-QK
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 05:47:25 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rsJxn-0000yP-VS
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 06:04:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712224040;
+ s=mimecast20190719; t=1712225093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cv5djRzxXwx1EVfzpRDVBs3r8GSWO1UiZliAxgQMe+A=;
- b=MJC846pvlVfmXAJU6a4SYSuqnSfDT3rttYGeWKYP8fUlHy0ldETP+KlJtZhniicK3z0cB2
- gsB1Y/MqmOmPo34/aIOX+gUY0XCLO6Y+OsPy532jHNqdcQGrOinqxfexboDcxs3ct+M2k0
- qQdExQQPPoqd5ulZDq3pe/6ImFyFJI8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Z263/9hSXsZRCkBqXvHRcW1KsKDTJJDM1gDP4mTwq14=;
+ b=I9k3EvTtl8S+lG4WT/oLduoScN8jXTEIojti7tr5F76SGu4qj6anFxFLHY+VD3z8WV4cnL
+ 3qsTbeYV2SkW90tGf3V8yLl+XTglOi/IZ80kVLswchpwToZRlj5vCUpDF9D3ELFJAnm2PL
+ N7w3NmorHLfLONjsLbmjxMAUumOWak8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-ph-s01UFOWq3Pgtfy4dBlw-1; Thu, 04 Apr 2024 05:47:16 -0400
-X-MC-Unique: ph-s01UFOWq3Pgtfy4dBlw-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 752BE101A520;
- Thu,  4 Apr 2024 09:47:16 +0000 (UTC)
-Received: from localhost (unknown [10.42.28.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 120952166B33;
- Thu,  4 Apr 2024 09:47:15 +0000 (UTC)
-Date: Thu, 4 Apr 2024 10:47:11 +0100
-From: "Richard W.M. Jones" <rjones@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-block@nongnu.org, nbd@other.debian.org
-Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
-Message-ID: <20240404094711.GJ7912@redhat.com>
-References: <20240328140607.2433889-1-thuth@redhat.com>
- <20240328140607.2433889-7-thuth@redhat.com>
- <20240328141342.GK7636@redhat.com>
- <jhweyusyjhha5hvffrtkwvuce35fajiy73dymgjre3jkjcjk7v@lrgdiintwb6i>
- <20240328164010.GM7636@redhat.com>
+ us-mta-343-_5Qmx8RAPDSQl6t3aUXnRw-1; Thu, 04 Apr 2024 06:04:52 -0400
+X-MC-Unique: _5Qmx8RAPDSQl6t3aUXnRw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-414ae9b8c04so5727635e9.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 03:04:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712225091; x=1712829891;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z263/9hSXsZRCkBqXvHRcW1KsKDTJJDM1gDP4mTwq14=;
+ b=WDdYDmeH53mUHJeTQphFnvUmXQEta4eqJD1yEzYd1GlrB28QNZ/GKpmSPIdNdMTmiq
+ 4QdIOmkfuB8fBZM9olX/D55ZEwcU+Wq+m8UCPBAOYXszqra8qtYLkRHULtYMJJIyvMXL
+ ZV+m3aW3zYCK6y7UGMjYBeeqel7f5HT2Bqui8jYlrnHgxq3LH9NvtfxpqjwGgYLekYrc
+ laYrSP1mfNp+O8q9V1zQ0rSTDidWTKoTSiDTjHnwE6C2iQpbY4m/v2VpA9m/fdz8ee/e
+ td/nBecr11PkY37sYI0Xs7gXSi43c2ugtsKI0zyJF+K3QI5H7Uq8nUDyF3GIuHRqqYbW
+ yvCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNz+vzZjdx7yzrbveEuD9WLVdoj+5DAuljnyMhIC//SDc3nlMlKFg1tBjucVvD1IykRYp4fWiO3GcDqYqBSnRMNOjjuk8=
+X-Gm-Message-State: AOJu0Yzv6Vw6gw2elxwxBOV94UNLXFoqZlpGluLnxwZ4S9cf8KB1IyYG
+ fqOGvEyvJ3+Q2lRO3yNJwp1Z74lDVVzLJwva+likLRWMfLUNuFc5IRABGPdKXtgG2mdDJPOFUir
+ eN8vrqTFYoXIvSxyKeGGskhjFi+sEFK6XWbu2VoA2vi9KeoV7yqNNuJF9UfY9v6aQ2dRHEOQLG9
+ o5iXLyXJH8IBdRwmKcRaVXwPwe1II=
+X-Received: by 2002:a5d:6950:0:b0:343:6216:1c6 with SMTP id
+ r16-20020a5d6950000000b00343621601c6mr1770096wrw.40.1712225091385; 
+ Thu, 04 Apr 2024 03:04:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhBJwhcr9HnoTwJv+viaUrr/RVUWbVS4C4N2AiKvW2sla1E0WaTlGYAX2pX5jYIEhl7aGrKubZ0XFfECq49JM=
+X-Received: by 2002:a5d:6950:0:b0:343:6216:1c6 with SMTP id
+ r16-20020a5d6950000000b00343621601c6mr1770073wrw.40.1712225090980; Thu, 04
+ Apr 2024 03:04:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240328164010.GM7636@redhat.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
+References: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 4 Apr 2024 12:04:39 +0200
+Message-ID: <CABgObfaXHZ-xFY+A6k7f+1evwGxcBTuw_su_WaCX5Tqfa8a48g@mail.gmail.com>
+Subject: Re: [PATCH v3 00/17] [for-9.0] esp: avoid explicit setting of DRQ
+ within ESP state machine
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,24 +99,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 04:40:10PM +0000, Richard W.M. Jones wrote:
-> libnbd absolutely does *not* get this right, eg:
-> 
->   $ nbdinfo NBD://localhost
->   nbdinfo: nbd_connect_uri: unknown NBD URI scheme: NBD: Invalid argument
-> 
-> so that's a bug too.
+On Sun, Mar 24, 2024 at 8:17=E2=80=AFPM Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
+> Patches 1-4 update existing users of esp_fifo_pop_buf() and esp_fifo_pop(=
+) with
+> the internal cmdfifo to use the underlying Fifo8 device directly. The aim=
+ is
+> to ensure that all the esp_fifo_*() functions only operate on the ESP's h=
+ardware
+> FIFO.
+>
+> Patches 5-6 update esp_fifo_push() and esp_fifo_pop() to take ESPState di=
+rectly
+> as a parameter to prevent any usage that doesn't reference the ESP hardwa=
+re
+> FIFO.
+>
+> Patch 7 ensures that any usage of fifo8_push() for the ESP hardware FIFO =
+is
+> updated to use esp_fifo_push() instead.
+>
+> Patch 8 updates esp_fifo_pop_buf() to take ESPState directly as a paramet=
+er
+> to prevent any usage that doesn't reference the ESP hardware FIFO.
+>
+> Patch 9 introduces the esp_fifo_push_buf() function for pushing multiple =
+bytes
+> to the ESP hardware FIFO, and updates callers to use it accordingly.
+>
+> Patches 10-12 incorporate additional protection to prevent FIFO assert()s=
+ and a
+> cmdfifo buffer overflow discovered via fuzzing.
+>
+> Patch 13 is just code movement which avoids the use of a forward declarat=
+ion whilst
+> also making it easier to locate the mapping between ESP SCSI phases and t=
+heir
+> names.
+>
+> Patches 14 introduce a new esp_update_drq() function that implements the =
+above
+> DRQ logic which is called by both esp_fifo_{push,pop}_buf().
+>
+> Patch 15 updates esp_fifo_push() and esp_fifo_pop() to use the new esp_up=
+date_drq()
+> function. At this point all reads/writes to the ESP FIFO use the esp_fifo=
+_*()
+> functions and will set DRQ correctly.
+>
+> Patch 16 is a small update to the logic in esp_pdma_write() to ensure tha=
+t
+> esp_fifo_push() is always called for PDMA writes to the FIFO, thereby ens=
+uring
+> that esp_update_drq() remains correct even in the case of FIFO overflow.
+>
+> Finally patch 17 removes all manual calls to esp_raise_drq() and esp_lowe=
+r_drq()
+> since the DRQ signal is now updated correctly upon each FIFO read/write a=
+ccess.
+>
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Proposed fix:
-https://gitlab.com/nbdkit/libnbd/-/merge_requests/6
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Rich.
-
--- 
-Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
-Read my programming and virtualization blog: http://rwmj.wordpress.com
-virt-top is 'top' for virtual machines.  Tiny program with many
-powerful monitoring features, net stats, disk stats, logging, etc.
-http://people.redhat.com/~rjones/virt-top
+> v3:
+> - Rebase onto master
+> - Add patch 1 to move the internals of esp_fifo_pop_buf() to a new
+>   esp_fifo8_pop_buf() function. This allows the FIFO wrap logic to still =
+be
+>   used for managing cmdfifo
+> - Rework esp_cdb_length() into esp_cdb_ready() as suggested by Paolo in p=
+atch
+>   11
+> - Update the logic in patch 12 to use the new esp_cdb_ready() function
+>
+> v2:
+> - Rebase onto master
+> - Add patches 9-12 to handle FIFO assert()s and cmdfifo overflow as repor=
+ted by
+>   Chuhong Yuan <hslester96@gmail.com>
+>
+>
+> Mark Cave-Ayland (17):
+>   esp.c: move esp_fifo_pop_buf() internals to new esp_fifo8_pop_buf()
+>     function
+>   esp.c: replace esp_fifo_pop_buf() with esp_fifo8_pop_buf() in
+>     do_command_phase()
+>   esp.c: replace esp_fifo_pop_buf() with esp_fifo8_pop_buf() in
+>     do_message_phase()
+>   esp.c: replace cmdfifo use of esp_fifo_pop() in do_message_phase()
+>   esp.c: change esp_fifo_push() to take ESPState
+>   esp.c: change esp_fifo_pop() to take ESPState
+>   esp.c: use esp_fifo_push() instead of fifo8_push()
+>   esp.c: change esp_fifo_pop_buf() to take ESPState
+>   esp.c: introduce esp_fifo_push_buf() function for pushing to the FIFO
+>   esp.c: don't assert() if FIFO empty when executing non-DMA SELATNS
+>   esp.c: rework esp_cdb_length() into esp_cdb_ready()
+>   esp.c: prevent cmdfifo overflow in esp_cdb_ready()
+>   esp.c: move esp_set_phase() and esp_get_phase() towards the beginning
+>     of the file
+>   esp.c: introduce esp_update_drq() and update esp_fifo_{push,pop}_buf()
+>     to use it
+>   esp.c: update esp_fifo_{push,pop}() to call esp_update_drq()
+>   esp.c: ensure esp_pdma_write() always calls esp_fifo_push()
+>   esp.c: remove explicit setting of DRQ within ESP state machine
+>
+>  hw/scsi/esp.c | 223 ++++++++++++++++++++++++++++++++------------------
+>  1 file changed, 142 insertions(+), 81 deletions(-)
+>
+> --
+> 2.39.2
+>
 
 
