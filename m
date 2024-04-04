@@ -4,81 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C86CD1292
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 12:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14A8CD1296
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 12:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsLmj-0004ow-BH; Thu, 04 Apr 2024 08:01:37 -0400
+	id 1rsM8D-0000V2-FU; Thu, 04 Apr 2024 08:23:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1rsLmd-0004kn-KF; Thu, 04 Apr 2024 08:01:32 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1rsLmb-00063z-J3; Thu, 04 Apr 2024 08:01:31 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56dc9955091so966743a12.1; 
- Thu, 04 Apr 2024 05:01:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712232084; x=1712836884; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GO0ls1hQiObcHd1DBdp8MP2QOtBJ7Bpa+kAIWvDYvC4=;
- b=H/ngHO41KQmCVhGvGkzoFk7L4lk+f9SNxwZ26AecKYflRs1kCoXqLLG2CGogza1HCP
- 4h9pcmbg1M9XLALiEsNTKf7NKTiuG+LT/9LhrLnjaUfrsd1ghir0Qhs4fBLGjBangvaa
- jBMzebubTI2TSZ1G5A1ulOfdvfiXOX1aXD6j1mQuPCHA1Tj5SXLLGZ6V+XZ0OgBZ14+i
- +gDbtyeeFj3isKz0u0bbEp21muX5B93NzXAh+4DP5xOt/VSI/fsgIzv0HrC/AIMRUSmr
- oQBNy/KBLzbYLnz5MR0tJ7EjkvL+9gd15QxwS3m8pzBnRzj+q7RIUBmjqHy2/oDkBK72
- bURQ==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rsM8B-0000TI-OS
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rsM8A-0000xP-Al
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712233425;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RduIHs0sVwVRJt/xTxYLax5k5ayyoz0yKuhL8Jrw+bY=;
+ b=evFcUZVNgqx0hxBn8PIECnztObQPsSEKytJw3IJxyOxghk0sYGkZ7cIB1qDFddWVSKrAZC
+ p+o1ZUScQVWHN+0Rl/7IqG2uyuwDNNZlzlIONnahjrPkUUlX87KxpQZmktLg8131tsB7xg
+ X1zmSoZYhsGiMV4M7SjIlmP0SXGbGdE=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-223-QnH-NVhMP52bAxXKjrpXkg-1; Thu, 04 Apr 2024 08:23:44 -0400
+X-MC-Unique: QnH-NVhMP52bAxXKjrpXkg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a46bae02169so183993566b.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 05:23:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712232084; x=1712836884;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GO0ls1hQiObcHd1DBdp8MP2QOtBJ7Bpa+kAIWvDYvC4=;
- b=F7n3hI0yBfEOzYU1cZl3I796GVgOlrnkpmjxMC3wxHq/b9TmYDn6WPdus+gcSOCe0A
- SdIm6FV+N9f1qisVXvnKKMtwduITuC0YYVGFHNf7yS6U3KQWh9eFbXUeJIUjGhpfbTRq
- w7AtldRNGcI6LtCmAe+1wDWHpfssQIJhdmJM+g7OBO1v8miGwhYPwhmAlncOtR0yHIrw
- rzcZN/OLClrlG3NR3ovO4LxqPVOXpxQXPvFBPRxt+jAgpKobXjvDP19jLCOleTZMEpUT
- Ag3gT7VmHo9NnQxqdfPrrzi0d2P1/2EMYspzpg0hWpd7WY03Qa9EXum3EQxNzbDvr2r/
- W5UA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbKbmSdBwbNM8P08f7xG8Rr9jDEMaHxil7p1ZGfCQSOf7wsD4JPqu4JcazAxaKTsnYxAe2GSEMlWqH1cgscSdrIQR8vdwfZRscrMULR9OBV74tpO297YwREFxN7Q==
-X-Gm-Message-State: AOJu0YzSOdv/DFwP7/U7qYIey4VXRCf10zuQRbEB/vlj8AycP2Em1Rkm
- UTi40sa0/Y6q+A+227skKrN566VjH3oh2eiFgDf/GkE7cKhgj4I=
-X-Google-Smtp-Source: AGHT+IH9qSK6veOtOWJPKIpSLCR7CLJytg6ApvMHK1xEf0NisgiLxIiqxyJHzZrA9bvXHHCd+UN7Fw==
-X-Received: by 2002:a50:a6d4:0:b0:567:45e2:c4db with SMTP id
- f20-20020a50a6d4000000b0056745e2c4dbmr1761556edc.39.1712232083691; 
- Thu, 04 Apr 2024 05:01:23 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ d=1e100.net; s=20230601; t=1712233422; x=1712838222;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RduIHs0sVwVRJt/xTxYLax5k5ayyoz0yKuhL8Jrw+bY=;
+ b=uv+9ZHqOJ0guSx+T+1KxTRMDJOi/+bnuBTmWfKjcNShzhUvRx1TE5BpKP7wWt810JW
+ OfcIIIkg8pG9DRZQrtPni++0nB+xWYJlbG/5n4noilt54gLWl4d3e3P8HLMRS2kdx0WW
+ TgAFqMAzol6zhjrTsuYqjrqQ6+WIYqDInUQhgDmUklJLYJrUPXGsaKNPLrPpGL/smqMR
+ yimLToLaQe1xAx1qD/TZ1NA7xOUO2hI7HGseVspXHQS3PeMgbwuVPK0KViucWwf4HcVm
+ uPazhzAFGP/xqql/2bOOjr33TtmpLg8r31bB7TBsyoazwiB5L280HpzkD9rjeyOhm7MJ
+ kSyg==
+X-Gm-Message-State: AOJu0YzzUymd1VXYzJZ6kzlKVkOq5JQQlKUgznZoM3PPYc9wfVptjChr
+ EbI+H4Po7Bdm+zt/n4doM5mQRy2jKHWvnULA462+3yp6JRB8MzBG4SzlhIEEkGUGLQIrFH/CUdO
+ dzVnWFA6/bowWFsEoaBQakQxh7w16fysPdyteqjeGYrxC3QzclqKB8Qj9wD89sONcd5lBEYnb61
+ rWYgBZjTBfL1G31QX6+cFlr9vGMp7bGkEXO0PP
+X-Received: by 2002:a17:906:e0d0:b0:a4e:4981:d3fb with SMTP id
+ gl16-20020a170906e0d000b00a4e4981d3fbmr4783167ejb.29.1712233422701; 
+ Thu, 04 Apr 2024 05:23:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGf4eCsIC+G13AWXm6UQZeHHIGvPgrDBYeQmRPOqAoJLpzfAsa9TtnvrYBAq3muulHzgRGjnQ==
+X-Received: by 2002:a17:906:e0d0:b0:a4e:4981:d3fb with SMTP id
+ gl16-20020a170906e0d000b00a4e4981d3fbmr4783126ejb.29.1712233422342; 
+ Thu, 04 Apr 2024 05:23:42 -0700 (PDT)
+Received: from localhost.localdomain
+ (host-87-12-25-33.business.telecomitalia.it. [87.12.25.33])
  by smtp.gmail.com with ESMTPSA id
- cf2-20020a0564020b8200b0056b0af78d80sm9268325edb.34.2024.04.04.05.01.23
+ p14-20020aa7cc8e000000b0056c4372c161sm9302566edt.55.2024.04.04.05.23.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Apr 2024 05:01:23 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH] block/virtio-blk: Fix memory leak from virtio_blk_zone_report
-Date: Thu,  4 Apr 2024 14:00:40 +0200
-Message-Id: <20240404120040.1951466-1-zheyuma97@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ Thu, 04 Apr 2024 05:23:41 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-block@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brad Smith <brad@comstyle.com>, stefanha@redhat.com,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, gmaglione@redhat.com,
+ Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH for-9.1 v3 01/11] libvhost-user: set msg.msg_control to NULL
+ when it is empty
+Date: Thu,  4 Apr 2024 14:23:20 +0200
+Message-ID: <20240404122330.92710-2-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240404122330.92710-1-sgarzare@redhat.com>
+References: <20240404122330.92710-1-sgarzare@redhat.com>
 MIME-Version: 1.0
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=zheyuma97@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +117,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This modification ensures that in scenarios where the buffer size is
-insufficient for a zone report, the function will now properly set an
-error status and proceed to a cleanup label, instead of merely
-returning.
+On some OS (e.g. macOS) sendmsg() returns -1 (errno EINVAL) if
+the `struct msghdr` has the field `msg_controllen` set to 0, but
+`msg_control` is not NULL.
 
-The following ASAN log reveals it:
-
-==1767400==ERROR: LeakSanitizer: detected memory leaks
-Direct leak of 312 byte(s) in 1 object(s) allocated from:
-    #0 0x64ac7b3280cd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
-    #1 0x735b02fb9738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
-    #2 0x64ac7d23be96 in virtqueue_split_pop hw/virtio/virtio.c:1612:12
-    #3 0x64ac7d23728a in virtqueue_pop hw/virtio/virtio.c:1783:16
-    #4 0x64ac7cfcaacd in virtio_blk_get_request hw/block/virtio-blk.c:228:27
-    #5 0x64ac7cfca7c7 in virtio_blk_handle_vq hw/block/virtio-blk.c:1123:23
-    #6 0x64ac7cfecb95 in virtio_blk_handle_output hw/block/virtio-blk.c:1157:5
-
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- hw/block/virtio-blk.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ subprojects/libvhost-user/libvhost-user.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 92de315f17..bb86e65f65 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -768,7 +768,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-             sizeof(struct virtio_blk_zone_report) +
-             sizeof(struct virtio_blk_zone_descriptor)) {
-         virtio_error(vdev, "in buffer too small for zone report");
--        return;
-+        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+        goto out;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index a879149fef..22bea0c775 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -632,6 +632,7 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
+         memcpy(CMSG_DATA(cmsg), vmsg->fds, fdsize);
+     } else {
+         msg.msg_controllen = 0;
++        msg.msg_control = NULL;
      }
  
-     /* start byte offset of the zone report */
+     do {
 -- 
-2.34.1
+2.44.0
 
 
