@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0659CD1297
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C46CD1292
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 19:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsSX9-00063Z-Lm; Thu, 04 Apr 2024 15:13:59 -0400
+	id 1rsSX6-00061C-3S; Thu, 04 Apr 2024 15:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsSX8-00063Q-8z
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:13:58 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsSX2-00060w-E6
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:13:52 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsSX0-0005Vd-BC
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:13:56 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a4e60a64abcso432933266b.1
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 12:13:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsSWv-0005Uh-4h
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:13:51 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-565c6cf4819so4417040a12.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 12:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712258028; x=1712862828; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bvdlQf7pHfui8YenaIyIB+vGNyHogH/cKFxc4FINeZE=;
- b=M0cAWhJTFpiVlffZ/nFFvGuzM/ygkEABDYooHYY0Jum7VIJ9TlF/TE8e+HuM9eG3F9
- 8q0YjPI1iQfFOHBum8MB/H5X066Jems9A/XGoCsOj9DGWHIYKB65scHuvV32hlxzEaBH
- mlc3amRoFprS3XB+mxmS3Hrcv7E3gLHL7/Usw7SGg/QwAE8Z3iKRRGL+egc4quEeIEdE
- iqNUxPZ1TUjoQ4cziIPUd43mEhQytP2nI33z4VtgWhE+oNxCjY5L7g+C0nSEtrT4OiFB
- AYCL0wByeql+1kU1CuXLHgOdwqZLnVQx1+vVko5PxjduF2N7SsOzx/RYjsdQf1qsigTL
- uHug==
+ d=linaro.org; s=google; t=1712258022; x=1712862822; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8WchDuPu1BDvGE3LRF7qlJXcb6p6bszd96Mxn2SBD+U=;
+ b=YmdncP4tiGr7nd6EZ/xksBZ2+Cy7vMexpNnH+CQuDkT9s/mQKlaaisgI1xhYBUT3tH
+ rQpoY3m5OUB9evom0U8vcjHJLVRK7Gz8iz2T5upQxboO5OttYRB6OW97NYqnSA5KB2KM
+ lYDKjhdEHnTK/nydq6optPk3PaXjOEPyzSqRrSP8Hno573A0nEoYjQEbOXJbCX/Qzzl7
+ eolmCFe21f9ZbSa6t/A8XDe9Q4br8e9au6Xem4j+MzyLf2dJVhhSSeLe9Tu2nxCAaHHD
+ 8SvcJp+3dhy4lfVOw/+34a39a+nQjSKxrKGJfeuW5sxVguhs4Qezg9EPraJ8LokFb6jo
+ W85Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712258028; x=1712862828;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bvdlQf7pHfui8YenaIyIB+vGNyHogH/cKFxc4FINeZE=;
- b=FW5cUj4X8Qc7VuJgC9iOJCE6Jgr6CMdSs0ihk5CRg1flrj73OR/Y2eC1/3NevI0udc
- DiTZHJ0SAmgJSPVV83QKCJTPgQ1UGdXJ1yV24nA4bolk8pLzmKxKpxmZ7LUB04VeMuQI
- 0k16DssEfgeio7KDmFyV0+NM0P8iG+Dna1+/4PqCjZG/rfZVdIihtchEF0pu6Ntmzhpu
- gDD2TMyp3aGO4vX+YhtmTa4ZgktAva0AHEt5XMVhOGZQWVKDkr34hWFq06OKqToSGo34
- 6s5AhLO35fmAR+yOGWbinvW96FQq6Dc6R9zjBsnBEnvytouX24SYhu0YuziGayENQLls
- XMdg==
-X-Gm-Message-State: AOJu0YyGJ5ZKaci4zZT2H1Ah2Ks3GRy/F8KLwOy0PwdPqJO2MsJa/F3g
- Q57ZC/teWNGEiLocc/qxI/+9EWkFQqvJpSLP8+mTB+EtKV2rl52La+DcskQCnfOchs0AIJP5UFl
- P
-X-Google-Smtp-Source: AGHT+IF9j3SKcg2Ny+e4pt79HnzSaY5+vwV7V8cQ3SuQKblL9sunzEpYk9wiW1rk/veHVSxmRHFgbg==
-X-Received: by 2002:a17:906:ae8e:b0:a51:931a:f82c with SMTP id
- md14-20020a170906ae8e00b00a51931af82cmr292258ejb.32.1712258028223; 
- Thu, 04 Apr 2024 12:13:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712258022; x=1712862822;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8WchDuPu1BDvGE3LRF7qlJXcb6p6bszd96Mxn2SBD+U=;
+ b=tVQNToj35srGbtbZRvcfaV48jHUcCFmkP9T7FJW5s1w58iyQe5k8+beVb/Z3dELPci
+ CvU2JRLuO4Jjhc2XGowu6FjtkjdXcTy/AjLijMgotW8/9YP6UH/xS5wKiDS0iBvR0L1B
+ W17x5qfv0FnK5uWRuh/4JL6HnJ4ABYeqIzPzF3gabCy+IEq8EizYhBLkQaH/ng9+tB3X
+ +qZaAuQ95HNyh+/kus9KCw5paF/g6SAE0dU84xQ6hFWuuBs4TjYOI9LuX/gAtU1VUHZm
+ 4oPMHcWnC4O4VRWahQQ3BdZGrPVw4T47EaECaWJF4/kRfJc7uXnCCVuC4NP5pmAxUn6k
+ 5cxQ==
+X-Gm-Message-State: AOJu0YwLvsa2LXi5wYvMszuWIfsMUKAZQrJ7GVS9tBZlj5urWAM15Ard
+ tdUsoRN2U4hi6/dK8xCP8FeVVaV42qrJv4AuYBPW9Tzzm3chxlJ+0KauiAq1tCHY+H+gHc0Qq+d
+ g
+X-Google-Smtp-Source: AGHT+IFJBMSRNHzMkIyuivVnlKIBQPulV92yzQnl0XnYzTZCGppzgIy4FZfhTr0JXq1tdZQQLdKmig==
+X-Received: by 2002:a17:906:fccc:b0:a4d:f8d7:8546 with SMTP id
+ qx12-20020a170906fccc00b00a4df8d78546mr317940ejb.7.1712258022459; 
+ Thu, 04 Apr 2024 12:13:42 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.216.111])
  by smtp.gmail.com with ESMTPSA id
- bu8-20020a170907930800b00a4e451724ffsm7302786ejc.166.2024.04.04.12.13.46
+ x11-20020a170906710b00b00a51973509afsm463533ejj.91.2024.04.04.12.13.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 04 Apr 2024 12:13:47 -0700 (PDT)
+ Thu, 04 Apr 2024 12:13:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, Amit Shah <amit@kernel.org>,
@@ -67,25 +66,21 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Amit Shah <amit@kernel.org>,
  Mauro Matteo Cascella <mcascell@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0 1/4] hw/virtio: Introduce virtio_bh_new_guarded()
- helper
-Date: Thu,  4 Apr 2024 21:13:36 +0200
-Message-ID: <20240404191339.5688-2-philmd@linaro.org>
+Subject: [PATCH-for-9.0 0/4] hw/virtio: Protect from more DMA re-entrancy bugs
+Date: Thu,  4 Apr 2024 21:13:35 +0200
+Message-ID: <20240404191339.5688-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240404191339.5688-1-philmd@linaro.org>
-References: <20240404191339.5688-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,58 +96,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce virtio_bh_new_guarded(), similar to qemu_bh_new_guarded()
-but using the transport memory guard, instead of the device one
-(there can only be one virtio device per virtio bus).
+Gerd suggested to use the transport guard to protect the
+device from DMA re-entrancy abuses.
 
-Inspired-by: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/virtio/virtio.h |  7 +++++++
- hw/virtio/virtio.c         | 10 ++++++++++
- 2 files changed, 17 insertions(+)
+Philippe Mathieu-Daudé (4):
+  hw/virtio: Introduce virtio_bh_new_guarded() helper
+  hw/display/virtio-gpu: Protect from DMA re-entrancy bugs
+  hw/char/virtio-serial-bus: Protect from DMA re-entrancy bugs
+  hw/virtio/virtio-crypto: Protect from DMA re-entrancy bugs
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index b3c74a1bca..12419d6355 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -22,6 +22,7 @@
- #include "standard-headers/linux/virtio_config.h"
- #include "standard-headers/linux/virtio_ring.h"
- #include "qom/object.h"
-+#include "block/aio.h"
- 
- /*
-  * A guest should never accept this. It implies negotiation is broken
-@@ -527,4 +528,10 @@ static inline bool virtio_device_disabled(VirtIODevice *vdev)
- bool virtio_legacy_allowed(VirtIODevice *vdev);
- bool virtio_legacy_check_disabled(VirtIODevice *vdev);
- 
-+QEMUBH *virtio_bh_new_guarded_full(VirtIODevice *vdev,
-+                                   QEMUBHFunc *cb, void *opaque,
-+                                   const char *name);
-+#define virtio_bh_new_guarded(vdev, cb, opaque) \
-+    virtio_bh_new_guarded_full((vdev), (cb), (opaque), (stringify(cb)))
-+
- #endif
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index fb6b4ccd83..e1735cf7fd 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -4176,3 +4176,13 @@ static void virtio_register_types(void)
- }
- 
- type_init(virtio_register_types)
-+
-+QEMUBH *virtio_bh_new_guarded_full(VirtIODevice *vdev,
-+                                   QEMUBHFunc *cb, void *opaque,
-+                                   const char *name)
-+{
-+    BusState *virtio_bus = qdev_get_parent_bus(DEVICE(vdev));
-+    DeviceState *transport = virtio_bus->parent;
-+
-+    return qemu_bh_new_full(cb, opaque, name, &transport->mem_reentrancy_guard);
-+}
+ include/hw/virtio/virtio.h  |  7 +++++++
+ hw/char/virtio-serial-bus.c |  3 +--
+ hw/display/virtio-gpu.c     |  6 ++----
+ hw/virtio/virtio-crypto.c   |  4 ++--
+ hw/virtio/virtio.c          | 10 ++++++++++
+ 5 files changed, 22 insertions(+), 8 deletions(-)
+
 -- 
 2.41.0
 
