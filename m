@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7372CD1284
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 14:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBFFACD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 14:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsNsO-0005Ko-T1; Thu, 04 Apr 2024 10:15:38 -0400
+	id 1rsNsv-0006nM-SG; Thu, 04 Apr 2024 10:16:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rsNsL-0005Es-84
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:15:33 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1rsNss-0006gC-R3
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:16:06 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rsNsH-0008Ej-UQ
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:15:32 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-56dc9955091so1155383a12.1
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 07:15:27 -0700 (PDT)
+ id 1rsNsm-0008Jv-IR
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:16:05 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1bbdb362so1157323a12.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 07:15:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712240126; x=1712844926; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712240159; x=1712844959; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=P90flCIXqUHtKs0vW1E9bDJJZ4uMb2sFup+Z/DHN1cc=;
- b=nKOGCR5ZyjT+R3jQAdGhGm4lrCuX8Cf1zpCripENtv1uL5ONeo2vAJ+G0yhYNsDVCe
- 3itiA1GaI7ESbGgWgnufFQSwWAonPjlVBx/Re7CwXvMwvxt+8rVlqxuHIFTtqZoDLl4r
- s9t9QYZxsvPYMpbEmHnz4wKWLjrETDGpdVQylEKVsq8IoMvbNCTsaWKeQluqJqinqrwn
- 5V9AXGauAo7Hmhf1ERvJvmCjKa3kKpxYdROED35dFabXwl/uDSaYaTuB2Thmzuc2uB1X
- 77zH7f5peNABJiwip89JnY5fjeskFBiKl1YAH4+IjAmfIUwNxNj22kN6nt4xhasJGQBU
- qYEQ==
+ bh=FOFYLuC+9bWDj0GanXiQ2N7HompSHdmbgm3PtoBl904=;
+ b=JPaChZy7bNXPdvfTsiGlybG1s6Fbp82gBaWNtU49wRC08B5+l/Aa/vg3QrmElDofx8
+ NwjXdCmUCl1BlKEJOod02GhCkZm6Z26hz0mb0pobCpXw0FYUAAYGoHI8qxzvgp8FLG9O
+ eTaTUJem+WrYBhBIAkirjjzxGN/Nma25+f4vM3L2wzq8bkYPdKAwzgudfEfHjC6xTTRt
+ vS8WKxB9xfNF1Rf8R+2umpicEUjW+NXOhwJ3nqsjfAqQwK5DOa+tORrQPY6zxbV5yiEI
+ KNbNunuyMl8mX2xwkaVxdZrNoFNglu7wDirQkUUAHhpe5zDOhErfjkPkd4j3xtg7WR1h
+ qPog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712240126; x=1712844926;
+ d=1e100.net; s=20230601; t=1712240159; x=1712844959;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=P90flCIXqUHtKs0vW1E9bDJJZ4uMb2sFup+Z/DHN1cc=;
- b=hev/Rr+vZLKfUG1c5MwweyRRP4B+E8CBx28B4ph7ZGz+5isuZKmVSfiWfgN4LiVFTV
- ClZbtg+vn1+h2fusgzEs89xrG2AoyiJaXHtPeiI9V/a7Bs6svvnyAfuveI4Dwfd3eHHk
- viY6NTAJi4J7AncRuHIHAVhrCLZK6CrcLKu6Is+wVVfXMosUDXiKJRrOd5vuTM+xQCv1
- qpctqM8P3NVlbkMxhlnzKsgLM6eYN+rxhBz5p49xhUIjyOrnUXYOOO+LdpMZMYB8xr6c
- rUvzYf9vDIw31gc9uR21FWK8X5ui/uQiqcT/4AD1MQ3gBhiuP3s301QDb6Hgkr1zJK+3
- 9xHQ==
+ bh=FOFYLuC+9bWDj0GanXiQ2N7HompSHdmbgm3PtoBl904=;
+ b=NnSJ23QOwHRrxNodG9dYk/paCbGWqv28jIke1xtH7CYtNHMqipzU2GdDaWLxvSmJ82
+ gEsutVPcV/oBlJHP3+nvrnmW0dYNTebge2HFdg/2s2uehUmk5PcGkoL+pwGd1IRT043y
+ r6fRXXnP+db/uPTVTG8hNhR8ok57dzRGMp8hyMPbeu42iUkvaXs4GBFgraNFJlCX1JsQ
+ Iu2Q0wM7jzirub00LoP6KRkJn32/1s/uYHy5sXcNkJ5Su8HJTwzuJJjE2PSviGR/tTpA
+ fCX2Sk3Le9offl3NfqRBZzL3+QWcygM0RV5QLo8q6HtwtPAcYLLQERwTI3ykqlXMlKJW
+ o5gg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEsxw7y+FReKzDYqusSaTAuIamSr+ZZly3xUn1Q3HAsb6q+CMhYZ4oZPogP7ApV2IXIo7BQc8YkeCx+6UkAz6435r7qNQ=
-X-Gm-Message-State: AOJu0Yz2A9XVK6jvhydtZcl249EdWPnhIvWL+iW/i5pegFlzRIScfy11
- c68pzN9s3PMy6UX81troBQS2JDbOjwW4upD8ndEGM2z7m40VgpRTDkaYRK5q7YhAIhT6VnEUyd9
- rouRzSXOKFYxO6LizHrq6YRTtPryPhrwbCA7fSg==
-X-Google-Smtp-Source: AGHT+IHop9T9h0KiPOeACcy9DIcR3OeB6aIu6gGNOr7S4Km++nMq37y6Cxq17nEJbCG7Om3G7rcgMN7aemOO1oTOmP4=
-X-Received: by 2002:a50:9b5a:0:b0:56e:603:9fc9 with SMTP id
- a26-20020a509b5a000000b0056e06039fc9mr1957815edj.3.1712240125191; Thu, 04 Apr
- 2024 07:15:25 -0700 (PDT)
+ AJvYcCXKdrBQTSY0AiZEBkBQ3VSFmmHMQ7FDAwN8oYUPz3NEwOcWl7rRtHIgIgSngQG79Ti3DsTboqEDQPanp/NQloR4i/PI0QM=
+X-Gm-Message-State: AOJu0YywVadbCs6grIYeOu6McmNa9022Ggup0be0y/XRHlx2zRXECcow
+ nG0oFnvoBLEfWCIGyr3nKsmKDTaio6UFeAq3v4+nHLSNhoNxqBFrMAquABsGlU5UoKZLjKxfUOd
+ aiHpvzGsFCYJSWR4SybXhYewlFNkolljGyRbbPQ==
+X-Google-Smtp-Source: AGHT+IG+mXTdF0C3Vig4Ey1nZrk2m1JPDOlk5PJrvqaLbJhYgOH/fTNt0sGIhRq9ZVC0NZxk5ayKuh2bVHK8stCxytc=
+X-Received: by 2002:a05:6402:22fb:b0:56b:900b:a2e with SMTP id
+ dn27-20020a05640222fb00b0056b900b0a2emr1755200edb.32.1712240159060; Thu, 04
+ Apr 2024 07:15:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240403101611.3204086-1-ruanjinjie@huawei.com>
- <20240403101611.3204086-4-ruanjinjie@huawei.com>
-In-Reply-To: <20240403101611.3204086-4-ruanjinjie@huawei.com>
+ <20240403101611.3204086-5-ruanjinjie@huawei.com>
+In-Reply-To: <20240403101611.3204086-5-ruanjinjie@huawei.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 4 Apr 2024 15:15:14 +0100
-Message-ID: <CAFEAcA9-TJJuDvf1TZO4QcPPgH6Ct6sCbYBUHkhb=c9wxK2fpA@mail.gmail.com>
-Subject: Re: [PATCH v12 03/23] target/arm: Add support for FEAT_NMI,
- Non-maskable Interrupt
+Date: Thu, 4 Apr 2024 15:15:48 +0100
+Message-ID: <CAFEAcA-J8wgX6sGP+qXzdv2moGFUpuqbEfPhycMir91Kh9PYXw@mail.gmail.com>
+Subject: Re: [PATCH v12 04/23] target/arm: Implement ALLINT MSR (immediate)
 To: Jinjie Ruan <ruanjinjie@huawei.com>
 Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
  wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,30 +94,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 3 Apr 2024 at 11:18, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 >
-> Add support for FEAT_NMI. NMI (FEAT_NMI) is an mandatory feature in
-> ARMv8.8-A and ARM v9.3-A.
+> Add ALLINT MSR (immediate) to decodetree, in which the CRm is 0b000x. The
+> EL0 check is necessary to ALLINT, and the EL1 check is necessary when
+> imm == 1. So implement it inline for EL2/3, or EL1 with imm==0. Avoid the
+> unconditional write to pc and use raise_exception_ra to unwind.
 >
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> v3:
-> - Add Reviewed-by.
-> - Adjust to before the MSR patches.
-> ---
->  target/arm/internals.h | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index dd3da211a3..516e0584bf 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -1229,6 +1229,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
->      if (isar_feature_aa64_mte(id)) {
->          valid |= PSTATE_TCO;
->      }
-> +    if (isar_feature_aa64_nmi(id)) {
-> +        valid |= PSTATE_ALLINT;
-> +    }
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
