@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EFC6CD1284
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03C4CD1292
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 12:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsM8W-0000nh-Tm; Thu, 04 Apr 2024 08:24:08 -0400
+	id 1rsM8H-0000i5-5Y; Thu, 04 Apr 2024 08:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rsM8W-0000nS-2S
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:24:08 -0400
+ id 1rsM8G-0000ed-Ep
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rsM8U-00011B-14
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:24:07 -0400
+ id 1rsM8E-0000xy-QX
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712233445;
+ s=mimecast20190719; t=1712233430;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QKw7wwOpcT5LAk2fX9NUDEtqgiO584+Et0vV37YJJRo=;
- b=Hke4Z/5VkHOPfYvjDhJIRQoNvAg4pXurmNlaj890Nzkg5p7CLNjYXu/P6JELutgUHocrAr
- NYOL8NBIBbL0uIZzcTk9XvfLVNALiFGWUO98pw/ojOLaW+qbRj8to+NJvAz0UQ1y/y+A35
- sqP7u/fe3+Gt+2Pc/IdwJipBBVX5od0=
+ bh=e0qQ06PVKFywP7ew4GM4yPpqWIJ6sbW+Ybg5PYCFH7A=;
+ b=h+16GMffgKUVrt9123vA2gx83dWFsFKFqGK4DPy+539rL+Z5Yzr3ndA9gl4pi+s5XfaIhG
+ fI3R+vxdKUePISVPbqwV2qFNBohbK/5bNDRMsLhErj0FbITLoR9c5ieXB8msdG+sqtbfc+
+ RrseK5m/SUwfOY+bgSnD5zc/Wrg8vvw=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-XpfEoJrEN2KAw9dAtJ_0_A-1; Thu, 04 Apr 2024 08:24:04 -0400
-X-MC-Unique: XpfEoJrEN2KAw9dAtJ_0_A-1
+ us-mta-584-M6ckj_pLMkO5D62Cs6cLFw-1; Thu, 04 Apr 2024 08:23:49 -0400
+X-MC-Unique: M6ckj_pLMkO5D62Cs6cLFw-1
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a4d8e5d6722so74891466b.0
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 05:24:04 -0700 (PDT)
+ a640c23a62f3a-a4e846f0acaso77062166b.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 05:23:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712233443; x=1712838243;
+ d=1e100.net; s=20230601; t=1712233427; x=1712838227;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QKw7wwOpcT5LAk2fX9NUDEtqgiO584+Et0vV37YJJRo=;
- b=P/VhoB6Jdipxuvy7d61MvKkFIg+1Yb+eoykcKEfHdoP/3CtlRUSBr0Mj3Caapy/CMg
- 7aI4ebY3NGXZyZzgYH4dOSr2w3TXzSqlXxTVrrInjS10RrCruxRAbhPbEIJA/U+8MYbV
- /cBBagpHmAB3916EQd13RchPF0SVm5DuVVrJFoDgR6BGM4g4yTWUb5w91OlT5wmSRfO3
- 51QU76zWlywakE+rLvrLUQR+poYxLhT1c7jwo7LIEVOXZIg43rvUaHOhgVHN9opXr9vw
- 8/g8+sPAAPtg609IkwoBnMybin9Wdssmz2neJIVbSRW0inJTm2Vv2LRModZ1rLfKlvo5
- 9VdA==
-X-Gm-Message-State: AOJu0YwIFIfdkpenmb+f5/A0c7jVSpoAW4Tlpf8t6QO03Lv7cHUgTXtQ
- TqBOqNfrT+HhLCyNewmnet7FRhmH4/V5nCUZxL9PB8vQtCsFGaSJV/A5HZlAeo9qKC5XviqXopw
- DkFmjGgBbY7KdNZpyeFu26SBuET+45zpT+YgoHj1MAXLmCewS+T7IwfCpbCQ+M+wS1bP6dPAyYx
- Tg3kpZwKDy51wgV5LBTMKhedzga2ar6A6qlWHi
-X-Received: by 2002:a17:907:7fa8:b0:a47:533f:2d0f with SMTP id
- qk40-20020a1709077fa800b00a47533f2d0fmr1870271ejc.66.1712233442810; 
- Thu, 04 Apr 2024 05:24:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUkMNDCbjmDXUBORv2+OjnxSPlQZHeZfj3puzvtjO4VS/SA9sf6x+sWV8YND+p4xcSVaYgrw==
-X-Received: by 2002:a17:907:7fa8:b0:a47:533f:2d0f with SMTP id
- qk40-20020a1709077fa800b00a47533f2d0fmr1870237ejc.66.1712233442542; 
- Thu, 04 Apr 2024 05:24:02 -0700 (PDT)
+ bh=e0qQ06PVKFywP7ew4GM4yPpqWIJ6sbW+Ybg5PYCFH7A=;
+ b=mHujCzMjbvMdxClJzbPQPjxw+pvMlgx+GwdhAh9SVi4q3DDzKj67YKiDoxMow9OvKc
+ RJUp7tZ88AMhlZXElFv5Z9LKlvNyWYGfyhdYMzb7UCEyizEfUTu/nMUoWk8yKwJH7A+P
+ zVIt/tVZht4Y4Ha6VEf5y//KR7jnNCshEYOKpb8UHjjivxYqSKsRaUD40IS2Xs4Q9PW1
+ Po9D4ypFYY2OH29RZXFzm+HLdBxTU1Ic/lr1p7LraenVGle3jp4kmhrwIbuyHEekSq7J
+ 0Ld9rZH+Q6eK46A1owNAyPQBU6NzrZJKnd2x2fA9goqpfFOribdp+5OdurlyFceC9dMJ
+ Rh0A==
+X-Gm-Message-State: AOJu0YxYi/PkV9sez9FZwAkjL5oZprS3w+7EYCvAyUkPk/UjV12HL3qQ
+ PTs5VX45azp4QSiil7v7hIxr47keEqW7NZbfe8g9pC/g0Sls631mcRp/1P3AoIedcbWDR4zN0N4
+ f1y+Jg+zKqVnAVqarUIbLVdjI9HD80PyPyDHPgJVUmUgg1SO3bLRezykXH2hZFmC7xV51am+Jdy
+ y60KMac6kUxUFQGSXrUM85G7HJs+3VKIjoY6cl
+X-Received: by 2002:a17:906:5fd4:b0:a4e:1154:fa46 with SMTP id
+ k20-20020a1709065fd400b00a4e1154fa46mr1475026ejv.70.1712233427424; 
+ Thu, 04 Apr 2024 05:23:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFpmnAKlRvQWA3fSspahWldcTefg82FZZxs3TBbeilAReIUd1d/B90RxGCv9v7iPwbbnI616w==
+X-Received: by 2002:a17:906:5fd4:b0:a4e:1154:fa46 with SMTP id
+ k20-20020a1709065fd400b00a4e1154fa46mr1474988ejv.70.1712233426951; 
+ Thu, 04 Apr 2024 05:23:46 -0700 (PDT)
 Received: from localhost.localdomain
  (host-87-12-25-33.business.telecomitalia.it. [87.12.25.33])
  by smtp.gmail.com with ESMTPSA id
- he18-20020a1709073d9200b00a4729f093ecsm8939234ejc.53.2024.04.04.05.23.59
+ g16-20020a170906539000b00a46dd1f7dc1sm8991860ejo.92.2024.04.04.05.23.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Apr 2024 05:24:01 -0700 (PDT)
+ Thu, 04 Apr 2024 05:23:45 -0700 (PDT)
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -83,15 +83,14 @@ Cc: Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, David Hildenbrand <david@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, gmaglione@redhat.com,
  Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH for-9.1 v3 05/11] contrib/vhost-user-blk: fix bind() using the
- right size of the address
-Date: Thu,  4 Apr 2024 14:23:24 +0200
-Message-ID: <20240404122330.92710-6-sgarzare@redhat.com>
+Subject: [PATCH for-9.1 v3 02/11] libvhost-user: fail vu_message_write() if
+ sendmsg() is failing
+Date: Thu,  4 Apr 2024 14:23:21 +0200
+Message-ID: <20240404122330.92710-3-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240404122330.92710-1-sgarzare@redhat.com>
 References: <20240404122330.92710-1-sgarzare@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
@@ -101,9 +100,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PP_MIME_FAKE_ASCII_TEXT=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,62 +117,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On macOS passing `-s /tmp/vhost.socket` parameter to the vhost-user-blk
-application, the bind was done on `/tmp/vhost.socke` pathname,
-missing the last character.
+In vu_message_write() we use sendmsg() to send the message header,
+then a write() to send the payload.
 
-This sounds like one of the portability problems described in the
-unix(7) manpage:
+If sendmsg() fails we should avoid sending the payload, since we
+were unable to send the header.
 
-   Pathname sockets
-       When  binding  a socket to a pathname, a few rules should
-       be observed for maximum portability and ease of coding:
-
-       •  The pathname in sun_path should be null-terminated.
-
-       •  The length of the pathname, including the  terminating
-          null byte, should not exceed the size of sun_path.
-
-       •  The  addrlen  argument  that  describes  the enclosing
-          sockaddr_un structure should have a value of at least:
-
-              offsetof(struct sockaddr_un, sun_path) +
-              strlen(addr.sun_path)+1
-
-          or,  more  simply,  addrlen  can   be   specified   as
-          sizeof(struct sockaddr_un).
-
-So let's follow the last advice and simplify the code as well.
+Discovered before fixing the issue with the previous patch, where
+sendmsg() failed on macOS due to wrong parameters, but the frontend
+still sent the payload which the backend incorrectly interpreted
+as a wrong header.
 
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- contrib/vhost-user-blk/vhost-user-blk.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
-index 89e5f11a64..a8ab9269a2 100644
---- a/contrib/vhost-user-blk/vhost-user-blk.c
-+++ b/contrib/vhost-user-blk/vhost-user-blk.c
-@@ -469,7 +469,6 @@ static int unix_sock_new(char *unix_fn)
- {
-     int sock;
-     struct sockaddr_un un;
--    size_t len;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 22bea0c775..a11afd1960 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -639,6 +639,11 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
+         rc = sendmsg(conn_fd, &msg, 0);
+     } while (rc < 0 && (errno == EINTR || errno == EAGAIN));
  
-     assert(unix_fn);
- 
-@@ -481,10 +480,9 @@ static int unix_sock_new(char *unix_fn)
- 
-     un.sun_family = AF_UNIX;
-     (void)snprintf(un.sun_path, sizeof(un.sun_path), "%s", unix_fn);
--    len = sizeof(un.sun_family) + strlen(un.sun_path);
- 
-     (void)unlink(unix_fn);
--    if (bind(sock, (struct sockaddr *)&un, len) < 0) {
-+    if (bind(sock, (struct sockaddr *)&un, sizeof(un)) < 0) {
-         perror("bind");
-         goto fail;
-     }
++    if (rc <= 0) {
++        vu_panic(dev, "Error while writing: %s", strerror(errno));
++        return false;
++    }
++
+     if (vmsg->size) {
+         do {
+             if (vmsg->data) {
 -- 
 2.44.0
 
