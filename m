@@ -4,119 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D02FFCD1292
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 09:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DA5DCD1284
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 09:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsJ8U-0006hf-Np; Thu, 04 Apr 2024 05:11:54 -0400
+	id 1rsJgw-0003ZR-UU; Thu, 04 Apr 2024 05:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1rsJ8S-0006hM-PJ; Thu, 04 Apr 2024 05:11:52 -0400
-Received: from mail-db3eur04on070f.outbound.protection.outlook.com
- ([2a01:111:f400:fe0c::70f]
- helo=EUR04-DB3-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rsJgr-0003YS-UP
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 05:47:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1rsJ8Q-0004M1-8A; Thu, 04 Apr 2024 05:11:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JiSukamaArkD/LUORLSdM/DEXtINXKwJeg90GRQU4vq7uTXUU3JLzevzAkrqHuT1FgKbZEeP9LEZUutXnEmFthx+5gxoxMkJ1NeHb6FLjCHp5M4222bA1vhs6OFW7yyyvTuavaGGuPTzdPHS96ZB6utqJ3C5CrZhdiNHegyeCFk2s3mktVXPGrjAWuG24/Llc6z0+QQwuUbLTyqFxd8pSc2H/cH2G8Xqi3OXjkvkq/QgXHougPimNoP30cSrBL9POjWceifWRWb+wcC7jn2F5gX5DswlfdL7RSTedr/kCH67T4LZB+sxtuEIKV0yffJJ6841DN10IzGSPmOdu9DxmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8XTC4zEQ7vurYWE205AA8K7dmT3VTlQObZN9Q8F5bGk=;
- b=kFHJe4VmT8d5nzy1lO12eR4mpRq9Nh3tyXmKhNfdG9qkHmYZAFMY+iX2vp1xnwPxzXhnYpR615lqQxJHHsrlynpPP8g3Lq9cvzL8C9yNxfxT7l5AONrxApvYLRWw2msSuBNGT+UGN6ByKvjY45bcVTpjtJXJQtEXQU/mjLVFgxCsgUg2QYn2zDwc3vSvQYYaqYEsmrnPp0qOJB0tDsCgGK5ZmG8AFeqEIqkuGK5suftDdR80P6wsOYt4wip2bNojEqc+4rce3aeiWYtbJY7NpVd//HZQmD0AMMiJ/rxCtLrYPRz48dbvUzGYfpbkLeBW+HzzokQfx5mAHgJhd1O3gQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8XTC4zEQ7vurYWE205AA8K7dmT3VTlQObZN9Q8F5bGk=;
- b=JPuORPQKkiqCzvIuEF/mI9uxdeWqR0tydVwcpncz33VOBPWIDUh/mZ5KHFOoLGfuHzj1QIF4tZht5T7qxvo2oB71g/bCiWRYOQWOZRyIrlkqhQ6UjkIR14DtPX2jgvr/ATAYuBMgqWFDssMXTMkO0HjZBTQ0st5QRh5XKHJzImMsDg7CqfaJ8o7VzdKT2SoFewVoiOoDQ1IzLwXUNvhqZCAstnmeDmX21xC2Y2ny9d61MXWtM5VLTHmPOjTW4Y52NiH0d5RgxfYoCocdwP5jRF5bT0ZXGPV/jQCuscn1OLuWSWAt85o7S1cwO+kzTufm11mxbpstCa20mY+hHTru4w==
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19) by AS8PR08MB8350.eurprd08.prod.outlook.com
- (2603:10a6:20b:56c::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.40; Thu, 4 Apr
- 2024 09:11:44 +0000
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::c946:79b5:94bf:e8c4]) by VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::c946:79b5:94bf:e8c4%4]) with mapi id 15.20.7409.042; Thu, 4 Apr 2024
- 09:11:43 +0000
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
- jsnow@redhat.com, vsementsov@yandex-team.ru, kwolf@redhat.com,
- hreitz@redhat.com
-Subject: [PATCH v5] blockcommit: Reopen base image as RO after abort
-Date: Thu,  4 Apr 2024 11:11:36 +0200
-Message-Id: <20240404091136.129811-1-alexander.ivanov@virtuozzo.com>
-X-Mailer: git-send-email 2.40.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VI1PR09CA0140.eurprd09.prod.outlook.com
- (2603:10a6:803:12c::24) To VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19)
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1rsJgp-0002E8-QK
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 05:47:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712224040;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cv5djRzxXwx1EVfzpRDVBs3r8GSWO1UiZliAxgQMe+A=;
+ b=MJC846pvlVfmXAJU6a4SYSuqnSfDT3rttYGeWKYP8fUlHy0ldETP+KlJtZhniicK3z0cB2
+ gsB1Y/MqmOmPo34/aIOX+gUY0XCLO6Y+OsPy532jHNqdcQGrOinqxfexboDcxs3ct+M2k0
+ qQdExQQPPoqd5ulZDq3pe/6ImFyFJI8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-ph-s01UFOWq3Pgtfy4dBlw-1; Thu, 04 Apr 2024 05:47:16 -0400
+X-MC-Unique: ph-s01UFOWq3Pgtfy4dBlw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 752BE101A520;
+ Thu,  4 Apr 2024 09:47:16 +0000 (UTC)
+Received: from localhost (unknown [10.42.28.11])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 120952166B33;
+ Thu,  4 Apr 2024 09:47:15 +0000 (UTC)
+Date: Thu, 4 Apr 2024 10:47:11 +0100
+From: "Richard W.M. Jones" <rjones@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-block@nongnu.org, nbd@other.debian.org
+Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
+Message-ID: <20240404094711.GJ7912@redhat.com>
+References: <20240328140607.2433889-1-thuth@redhat.com>
+ <20240328140607.2433889-7-thuth@redhat.com>
+ <20240328141342.GK7636@redhat.com>
+ <jhweyusyjhha5hvffrtkwvuce35fajiy73dymgjre3jkjcjk7v@lrgdiintwb6i>
+ <20240328164010.GM7636@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|AS8PR08MB8350:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: NsD9Ka7uICVCMye484C1tsPOQKbelhaCVFeU4EmivLdOGUzlVPSb2w3kyTPQZc2n+y8mKa8GrA6DY/K7GSY0qX63ro/v08oBiCMN8NrQT/rXO9/+fOJ91TPoh30diCzS17YT4aK/VTU2VM1hqr7ZaCugMMk9HxgbKfn3+3ZqbTSMO1mwN0/3J05nDGBOeX8SIi+8/6EBQeEtiJghMo4eztkbAlgTFjK5YXxy0ty2oft0XyfXSFYHnSVq0sJs7JOZYCGnqWGIwHO86DNc3VR8nj+sxOrsGuKUmIk2rKvT+XScnTibDM3sNLQMSEL8wWg1qm29lS6s38VEcLOvfLTfdgWPgw0vv++DOt4oX9sLlJfLYknYRDv0EhjbT7KHnxsVHZAmyM2Oy7FTTp4TKM5p4ScqwClvNLJ08E2Loxc7vNaXbCfuozB61S1EByGz/02a6GQWwjpkDsZxedotY9S4U4yxoEhw4PdAuXpTl5Lv97z5A6jAhSxRRThsszaEuLQQd6K4Xn1xx7KMOM8IR7lLIkDDrC7jAA/oaPHiyvFusQ8Cg4+3xNwQ/hndgUAxogywV51twu4knbrDl+GPo/EBgKvJJlkb6YeOu2SYrCSl+SSqtTh+obEzpXD7+e8ko7MF9nHJ6Y1mWZsAwD9f4m58ewofJS5zwlCuM4Y8JUQJmN4jjgooQ4f7AT1jIugFcUHm+vo1/Yz2wN3BzuuRp4U/TcygoXj0N8H9LG+wZVmc0+Q=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(52116005)(376005)(1800799015)(366007)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?twA1dPh7NeMqLK8EPnVwNKssjB6tFLWUGgqI7jQnsJ1E237pDTFcNISV7dLV?=
- =?us-ascii?Q?qUT6BqPVffilRwpVuHCRJ0bjNbwsoXpAnFBoUd41AllB8IHhr+EWEIscL4uu?=
- =?us-ascii?Q?KPu1uH2waBFeIm17QQTf0JnhJYB1SRkaC5B5/bHprpRMBRrTr5FTwvm3RIKJ?=
- =?us-ascii?Q?GizV8jVOEXYWcw26aaigAQt/0B5r87dYBGdTa4O+6An22UyOMyAfHLor9TOa?=
- =?us-ascii?Q?FKxvRoNwIHU59U7Bh34YBb/KFBJtGI7PlgTBl7pKoTW9JD5ZNvF+GMrDlf9i?=
- =?us-ascii?Q?UswbLezj+K9hpbFJKx0LLbNNVE/l55VOYjolTKk6KAfBW+fimUVH0hadlQvG?=
- =?us-ascii?Q?TfdVpP3+Vb3Iea/sCk1jiu37CCbycMV1sGNMQJHOcS2WuS4Y+TBUdZVJkraC?=
- =?us-ascii?Q?avMjxtRZsZLxKeATzuIpnOxqMoLZ+aldgPCgMG2xAfFwjgLnvyaU4OMKqQl7?=
- =?us-ascii?Q?X/EFPA8Dx3Cm3UNL+o8TvrflaEGmBdhW5l9QZJ2ud9gEHIVzD+FKJSXzkSgK?=
- =?us-ascii?Q?cT9AiMnp++LRhi5wiYvPhOkDVdnvH7w/LO/ScZpVmx5IIMllYkcy8yWiRUTS?=
- =?us-ascii?Q?QhQkopJxjWtwVglK6yEz6MWLEMnmBF4L75HEWVDauEOBT86UHCBJqvmsG403?=
- =?us-ascii?Q?68wQpM8fNnFQGGH8oP4BJDdhgozPGw7QFETl8ZSCpEkeGiSBCRssFeLWhaTx?=
- =?us-ascii?Q?eljUkt0ovqZZEJqUccBIJNta5eEVEQVqIq083of9tJcxCjwzU/eSwJs0VU3L?=
- =?us-ascii?Q?d5aSoSCZihPSk6bcqFnMO0wkw16v4R2DTG3BWmdzO2R4+PnItw+8YJAYVXI1?=
- =?us-ascii?Q?AxfBtLfToN4y59MImuGyzL0SBXKzsqUApUJcsPTn5WT7X8YbqzeNdJWL1dnE?=
- =?us-ascii?Q?Yd7XEBqGEOZzI3kkYRRUWdjrJvn69vjDVnp+ZFzjTYNLhNBd0tausKK/4JSV?=
- =?us-ascii?Q?F8v3exbxSDPpeIl8wv5HnUs8dmASKX8e+xMA7BCFmUG9lnMl3Wblk4NPiHQm?=
- =?us-ascii?Q?0ZhGArR7vyEco44iGkHYMQ9544R7wcb8R7zsDGZCOYQ62LBlNmmy28rLY/DI?=
- =?us-ascii?Q?9OBYLIKvDsb+eYmg4dFfyzWqfTY5HGSyEwnipGE0rfY/QnmnAgR9tnKzUt6S?=
- =?us-ascii?Q?eIdvHDXlZqlsVF8UOZuPZKYCmrdZzJhXOIrc7aSrh79/pvvE/MV28VhWpsrK?=
- =?us-ascii?Q?2zdTU+rziaHnXfODxR4rSEODTuFi/o1DeNkhI6RgsW0InRWqRcUTMLqLLjCM?=
- =?us-ascii?Q?L4AaucLZJd1cSdReQIdCakFSNE8NwkNL3HmqnotXV9PKBEsi4TqXUuykOuTw?=
- =?us-ascii?Q?uUutNutd7otA+POd3S/dK6WJPmlVvKTUikTpAGlkPA2PbmG3jRgd/kEJNWUg?=
- =?us-ascii?Q?3iU4u5ITEsniKpC7SBp2wIAtAOIZh5pZM+mM57SVtDdKOAMqBQv34XEoshRy?=
- =?us-ascii?Q?mcwR8anXElqbfExS15ecNhR4/YRU9ZE071BMjO2dyTrLzNEV4NQpQSTltNHL?=
- =?us-ascii?Q?Q8cOZL04/sd3wlVl+q6TOjSncyLbTkg+cX3NhiV4Wa9Qlppzx3aUYDPf+FJR?=
- =?us-ascii?Q?0KV+ruXOS4EbhxuqYyyazzCBRIYVKpPAA7ol42NDc3GIJQfb3xLzaMgVthcR?=
- =?us-ascii?Q?NLYX078XhVEhe5UKrFl+nsY=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 75277ace-64d5-4b7b-784e-08dc54873f25
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Apr 2024 09:11:43.8227 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /AqEctI33fuzmpz7I9fOd7UxhfPhPX6P0l+j5P8/GqFPQUATdY+l94NcFpEnltBQE5HTPR61oZKoWvbWbFaCmTUMWC43tg58PvGZdyh3d2k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB8350
-Received-SPF: pass client-ip=2a01:111:f400:fe0c::70f;
- envelope-from=alexander.ivanov@virtuozzo.com;
- helo=EUR04-DB3-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240328164010.GM7636@redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,89 +87,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a blockcommit is aborted the base image remains in RW mode, that leads
-to a fail of subsequent live migration.
+On Thu, Mar 28, 2024 at 04:40:10PM +0000, Richard W.M. Jones wrote:
+> libnbd absolutely does *not* get this right, eg:
+> 
+>   $ nbdinfo NBD://localhost
+>   nbdinfo: nbd_connect_uri: unknown NBD URI scheme: NBD: Invalid argument
+> 
+> so that's a bug too.
 
-How to reproduce:
-  $ virsh snapshot-create-as vm snp1 --disk-only
+Proposed fix:
+https://gitlab.com/nbdkit/libnbd/-/merge_requests/6
 
-  *** write something to the disk inside the guest ***
+Rich.
 
-  $ virsh blockcommit vm vda --active --shallow && virsh blockjob vm vda --abort
-  $ lsof /vzt/vm.qcow2
-  COMMAND      PID USER   FD   TYPE DEVICE   SIZE/OFF NODE NAME
-  qemu-syst 433203 root   45u   REG  253,0 1724776448  133 /vzt/vm.qcow2
-  $ cat /proc/433203/fdinfo/45
-  pos:    0
-  flags:  02140002 <==== The last 2 means RW mode
-
-If the base image is in RW mode at the end of blockcommit and was in RO
-mode before blockcommit, reopen the base BDS in RO.
-
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/mirror.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/block/mirror.c b/block/mirror.c
-index 1bdce3b657..61f0a717b7 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -93,6 +93,7 @@ typedef struct MirrorBlockJob {
-     int64_t active_write_bytes_in_flight;
-     bool prepared;
-     bool in_drain;
-+    bool base_ro;
- } MirrorBlockJob;
- 
- typedef struct MirrorBDSOpaque {
-@@ -794,6 +795,10 @@ static int mirror_exit_common(Job *job)
-     bdrv_replace_node(mirror_top_bs, mirror_top_bs->backing->bs, &error_abort);
-     bdrv_graph_wrunlock();
- 
-+    if (abort && s->base_ro && !bdrv_is_read_only(target_bs)) {
-+        bdrv_reopen_set_read_only(target_bs, true, NULL);
-+    }
-+
-     bdrv_drained_end(target_bs);
-     bdrv_unref(target_bs);
- 
-@@ -1717,6 +1722,7 @@ static BlockJob *mirror_start_job(
-                              bool is_none_mode, BlockDriverState *base,
-                              bool auto_complete, const char *filter_node_name,
-                              bool is_mirror, MirrorCopyMode copy_mode,
-+                             bool base_ro,
-                              Error **errp)
- {
-     MirrorBlockJob *s;
-@@ -1800,6 +1806,7 @@ static BlockJob *mirror_start_job(
-     bdrv_unref(mirror_top_bs);
- 
-     s->mirror_top_bs = mirror_top_bs;
-+    s->base_ro = base_ro;
- 
-     /* No resize for the target either; while the mirror is still running, a
-      * consistent read isn't necessarily possible. We could possibly allow
-@@ -2029,7 +2036,7 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-                      speed, granularity, buf_size, backing_mode, zero_target,
-                      on_source_error, on_target_error, unmap, NULL, NULL,
-                      &mirror_job_driver, is_none_mode, base, false,
--                     filter_node_name, true, copy_mode, errp);
-+                     filter_node_name, true, copy_mode, false, errp);
- }
- 
- BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
-@@ -2058,7 +2065,7 @@ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
-                      on_error, on_error, true, cb, opaque,
-                      &commit_active_job_driver, false, base, auto_complete,
-                      filter_node_name, false, MIRROR_COPY_MODE_BACKGROUND,
--                     errp);
-+                     base_read_only, errp);
-     if (!job) {
-         goto error_restore_flags;
-     }
 -- 
-2.40.1
+Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
+Read my programming and virtualization blog: http://rwmj.wordpress.com
+virt-top is 'top' for virtual machines.  Tiny program with many
+powerful monitoring features, net stats, disk stats, logging, etc.
+http://people.redhat.com/~rjones/virt-top
 
 
