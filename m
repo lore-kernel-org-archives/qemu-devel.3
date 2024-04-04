@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FAECD1284
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 14:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953F9CD1284
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 14:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsNqs-0003GX-SV; Thu, 04 Apr 2024 10:14:03 -0400
+	id 1rsNrH-0003Rd-Em; Thu, 04 Apr 2024 10:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rsNqh-0003EI-Tb
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:13:53 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1rsNrF-0003RF-8d
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:14:25 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rsNqe-0007jU-54
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:13:51 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5684db9147dso1257043a12.2
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 07:13:46 -0700 (PDT)
+ id 1rsNrD-0007ru-Mx
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:14:25 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-56bf6591865so1573913a12.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 07:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712240025; x=1712844825; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712240062; x=1712844862; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Lh6SM8nqZCY9MV4kGQNtUNP4KSdgoAYMzY3mL7jQHR0=;
- b=FK4U5ODKJK7CBotS2nbhL9FY72Cpo4Yb5E5kT2GchYl1scZitPIC/qIOGMJvUHt9na
- yDfR7ACN9PiZCTLi/sVKDSgVTNzpS1eW6V1DTTeDM7cwZjCsxRPBJx4aZclT8AVtB2/r
- fIcCsUnV8WIyIZncS6VUOZBWpMzZhL5tU+PlYF7AYtw409c5nWx/eR6g1fFcENIIbe1Y
- SxiAbhnKQhhDoQuhCmyboYkiYtPJy4rqGT4IxQ64yc5F6T5vYgndYrvHNnAcj7T6sDVA
- pfuqCtKGVmD2kf2KBU9e+uR7xEQo/4ebGi4IssrjdT5B2offlXQQ6Yc0NaPK+P3CW1bX
- 1RHQ==
+ bh=0z4FnaPcsOBQ+YX4GKSd1KH+I7KTyoZry6IxOeoJ6Wo=;
+ b=aHAbDuwmjm/1rCXnbR+SQTCG8nAlNGEUy7+9MRmDCRn9NzdMOSEZ8m1bAksnGSDQwK
+ M58qa1v3s3yfh9FXg61AU0iBAi60ORDcEj2Gc6s/NqpOmaFg4N+Jm41dAtz0aXa33yzs
+ ANKhfVrlWqgK9I5CUseBYfVElkG60poVdxCdebdx5SjtXf7gBJyM374kRaPTzP1hyIsE
+ MWQaeNf617rFTHR8ycNTfYz4rfxUJikB7E2A5H2jV6ht9596Bm2/98RmA2YW6FcdzK9d
+ rWiBuy8Bfk263H2uOS3/XFOnysdGroEYS60yevwuuyXTnOUnTOTXcT7AbfnbP5PyNnwu
+ Le6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712240025; x=1712844825;
+ d=1e100.net; s=20230601; t=1712240062; x=1712844862;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Lh6SM8nqZCY9MV4kGQNtUNP4KSdgoAYMzY3mL7jQHR0=;
- b=asN8Ozw1wiZrrrwVsQs5rTUzvLDDqhLBDH9XfF4QS2IpjMYLwKVNb6buoXynTMUhb3
- FgGDchKrXCAwM23Fsg974Um47bISLvJqqamAnlhzNsFw6B864MZ9Bzml7kMWjuKIFDAg
- GFiaBS8Bf2B4GppTXmtlTzholTYFIeRhzepgYGk+vZKaIWoZPiNJ/GiFfFJYwcEqwqHV
- ZOvCQITuu6uNCs0tErpIBW8xoM4SJRVcU74hBuhWUYXb33E+I4/rT08KioTAR++OIUS+
- SQOiC9EmUsjUsZsdxeWq7W934mMHAzTxFLTflPmJDhI2Xl7W7McAMznyIUMc9qq9GwMk
- B1iw==
+ bh=0z4FnaPcsOBQ+YX4GKSd1KH+I7KTyoZry6IxOeoJ6Wo=;
+ b=ZSdbBd2MhqBSdRJ58nK+T7f9kI6CMcM7TgK/3qgosaBL86jd3rw5oPZfo+bExogcus
+ w8pqEBgN6w1GNeSqtSUXltkhQkROUW7qDbFbZKUh+A2iXkECidx0YVz7WUkBuZtzSCc2
+ ebu+1xnHdc4c/z5qWCvCJ1j1a8xIY7A0VjhSf7kYqe0sdOmDSM5ygdmCb87LcoimQ0mm
+ BiJmlBcD/15J+T0ng7mdPTB1vaYc1qN4plB8h4y5fIrgbDSY5UNsrQ0AlBvW/UJMFBY7
+ eOjNKLSM3JK4emA3UBu8vhG3lU3NlAEdsxHojII7s3zgPADZLMoISx84zaxZgxQwUsVj
+ mtTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU80aP3ZZ3Zyl/oVqVhOfw00xGktKDjnqhStmFFzQ6QSUPjFHB7b6OVcvEx1Zrb4oONcOGRDztBhfnihlUYeh6auttVXVw=
-X-Gm-Message-State: AOJu0YyRheuVMUmBcB3IReZ1p4GKBkGJK8dkndPxYQ1Y12VOB4UZJbhs
- g7m57KsbEkwWyHjLdnfReQQXcak92gpE1yJbHcye2fUEFE19qbSo72gkGben93lo1d6ghFBNhIT
- 1Ym7f8UhfSBPKUvSQJsJxJjA+iPX5kmnBHGpncg==
-X-Google-Smtp-Source: AGHT+IF0L8dXXBT9/9/qlnEesXIkhY7F8Th+hM4PLff5EYD/HKkzz5wWt+4oY9dYEyBMxynBpZPs0JCPhJuSL2vxP5M=
-X-Received: by 2002:a50:cddd:0:b0:56b:8153:54f7 with SMTP id
- h29-20020a50cddd000000b0056b815354f7mr1990213edj.30.1712240024751; Thu, 04
- Apr 2024 07:13:44 -0700 (PDT)
+ AJvYcCXIyjXVAy8Tr2EwLgqarjtXjfeQq/cmfNI7EXK40wOBHMxfTNNDonIL+aqtTUDZ51e523t5K8VBOxRH3xNkejXA2inBTTU=
+X-Gm-Message-State: AOJu0Yxg6mOA0P4g78mWldeEB1fHSoWxu9ij7IdLqqpmPDdwQsHjwa2P
+ dAiR8sTM4M60YGHhDxJA9RwQc5IWUofhbMaEprBNOdoYUAEUIjwDrrTqoq2BZBuxYTrdTs+9LHn
+ PUT1AQoNk7rhkipE4EvjewQ3c8zjjtXvXThtzHg==
+X-Google-Smtp-Source: AGHT+IFmjhALIvdyCK1u0z7HPBNDiNQbc8DaG7rBbGGqLVxHToUPq6+kt95d4pMm9K5j14lONaTG13Ffx+nBgNiAmkI=
+X-Received: by 2002:a50:cc95:0:b0:568:b3bf:409c with SMTP id
+ q21-20020a50cc95000000b00568b3bf409cmr1817688edi.16.1712240062280; Thu, 04
+ Apr 2024 07:14:22 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240403101611.3204086-1-ruanjinjie@huawei.com>
- <20240403101611.3204086-2-ruanjinjie@huawei.com>
-In-Reply-To: <20240403101611.3204086-2-ruanjinjie@huawei.com>
+ <20240403101611.3204086-7-ruanjinjie@huawei.com>
+In-Reply-To: <20240403101611.3204086-7-ruanjinjie@huawei.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 4 Apr 2024 15:13:33 +0100
-Message-ID: <CAFEAcA9qhpvGmNKYGO6j2+j20mZo2P1ug86SFiN051m0dt9bDQ@mail.gmail.com>
-Subject: Re: [PATCH v12 01/23] target/arm: Handle HCR_EL2 accesses for bits
- introduced with FEAT_NMI
+Date: Thu, 4 Apr 2024 15:14:11 +0100
+Message-ID: <CAFEAcA8GJE9WGT=zzrK6y3DRz9zXPxoPELtbqA0djPSYQD3jig@mail.gmail.com>
+Subject: Re: [PATCH v12 06/23] target/arm: Add support for Non-maskable
+ Interrupt
 To: Jinjie Ruan <ruanjinjie@huawei.com>
 Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
  wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,13 +95,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 3 Apr 2024 at 11:17, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 >
-> FEAT_NMI defines another three new bits in HCRX_EL2: TALLINT, HCRX_VINMI and
-> HCRX_VFNMI. When the feature is enabled, allow these bits to be written in
-> HCRX_EL2.
+> This only implements the external delivery method via the GICv3.
 >
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
