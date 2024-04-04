@@ -4,59 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029CCCD1292
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 13:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CDBCD1284
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 13:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsNQt-000732-Fl; Thu, 04 Apr 2024 09:47:12 -0400
+	id 1rsNYg-0000pA-9K; Thu, 04 Apr 2024 09:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rsNQq-00072o-Pj
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:47:08 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rsNQo-0001fU-90
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:47:07 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V9NDK1n4nz6G9wD;
- Thu,  4 Apr 2024 21:45:37 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 4F64E140A77;
- Thu,  4 Apr 2024 21:46:57 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 4 Apr
- 2024 14:46:56 +0100
-Date: Thu, 4 Apr 2024 14:46:55 +0100
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>
-CC: Dan Williams <dan.j.williams@intel.com>, <dave@stgolabs.net>,
- <ira.weiny@intel.com>, <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
-Subject: Re: [RFC PATCH v2 3/6] cxl/core: add report option for
- cxl_mem_get_poison()
-Message-ID: <20240404144655.0000679c@Huawei.com>
-In-Reply-To: <7c8e36f1-4c16-43cd-a39b-fe02fa1756cd@fujitsu.com>
-References: <20240329063614.362763-1-ruansy.fnst@fujitsu.com>
- <20240329063614.362763-4-ruansy.fnst@fujitsu.com>
- <66076fd957c4b_19e0294c1@dwillia2-mobl3.amr.corp.intel.com.notmuch>
- <7c8e36f1-4c16-43cd-a39b-fe02fa1756cd@fujitsu.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsNYc-0000or-Sg
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:55:10 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsNYZ-0003br-Mq
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 09:55:10 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4162cb37516so848975e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 06:55:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712238905; x=1712843705; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UDo/l27kP1R8ksI+nzmyQ7nTod5P/GwGfNgGyOvLomc=;
+ b=RvlCHaQaMjZGzKr3VpOAe+TregT1P4dogxF4OKo6YSqaUrsJI1QPsLyJ4A1UAeipzE
+ /DjP+1rBZKiw0SPudbtH2rPy3crW/nNmigqbm/50vUEba1j7cKQyhojBcqE1y5xexv89
+ hGonCZ9bCqCoAtIa23qVPbBBOod7xD31+HtA9ilB02Kw8f+1X06i27zIASHp9FSWNC/Z
+ OjRwHgQrFqlaW04g6gBss/QfhdN70jL2MTKQK9kgbopxIROV5gNBs6oPGUuT6+0DOYV0
+ mGiYj9YMVqy4sYFRbBeVu7hScpQRI8juouJjcz7oB6SMPevlMM/yvM4AfbeJKYUvpGOF
+ 69pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712238905; x=1712843705;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UDo/l27kP1R8ksI+nzmyQ7nTod5P/GwGfNgGyOvLomc=;
+ b=jGqivTigplYLH7UBaNN/1jRpZthV9qtTI1GNPaLlsxJUOa0MwaijCCEryAhwNffc18
+ JqHs3bTnTKskPQdtXEn/l00Fwye7qslGNhLZ/qvha5O1SRR1gQ0jQ0J3aLcugRykCxjC
+ JaRlvWYOCMHna1ARKknOT9DXlwIK8KPHGeIccdX+KK4PrpRgy0DnSiOkgGaRLVX1dMZp
+ gjy52Wt5aEWbFpQzvfwvhrBUo5bxmtuZ25k+Xf8gMRTrZpnXOuPZLZNMOPS9oBpkSEAQ
+ n9pN8UkzKtBRKgsgr9buwfvV9qCeUkxsfBTiYwoMvJ3PVRNVnkhjA29GfzSQYvozwcsG
+ /omA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXs7rX+QkgM5e7UuHL1rpDXsxf78cVles6wAaaqKf8h+Hx7cURFe/KKSDufQh09OVzKcI4bWE6CaTI3UbznWC5OEN3jgnw=
+X-Gm-Message-State: AOJu0YwfRbCNW3YZFGoYwILr4C0u1Gwm+JkWRhcS01g39gdCz8BsY2T8
+ 2GNg4hI5WSZmmL7pYxlNjWUAy2f5yMkIgwxw5U9WV7HaVfGn4QZe9qfJAiGGjTQ=
+X-Google-Smtp-Source: AGHT+IFU4eK3F2e7eQj1AyiMq397RWKevGlCi81VI+RMBKeb4BMe1ItuKxadVTHdGou94Pbc72RtbA==
+X-Received: by 2002:adf:e4c8:0:b0:33e:72be:43ab with SMTP id
+ v8-20020adfe4c8000000b0033e72be43abmr2633225wrm.24.1712238905518; 
+ Thu, 04 Apr 2024 06:55:05 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.216.111])
+ by smtp.gmail.com with ESMTPSA id
+ h18-20020adff192000000b003433a379a51sm6308980wro.101.2024.04.04.06.55.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Apr 2024 06:55:04 -0700 (PDT)
+Message-ID: <d8e0c229-50b2-4278-b503-2133cc619827@linaro.org>
+Date: Thu, 4 Apr 2024 15:55:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.1 v3 01/11] libvhost-user: set msg.msg_control to
+ NULL when it is empty
+To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Cc: Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-block@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, slp@redhat.com, Eduardo Habkost
+ <eduardo@habkost.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>,
+ Brad Smith <brad@comstyle.com>, stefanha@redhat.com,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, gmaglione@redhat.com,
+ Jason Wang <jasowang@redhat.com>
+References: <20240404122330.92710-1-sgarzare@redhat.com>
+ <20240404122330.92710-2-sgarzare@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240404122330.92710-2-sgarzare@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,70 +105,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Apr 2024 22:56:58 +0800
-Shiyang Ruan <ruansy.fnst@fujitsu.com> wrote:
+On 4/4/24 14:23, Stefano Garzarella wrote:
+> On some OS (e.g. macOS) sendmsg() returns -1 (errno EINVAL) if
+> the `struct msghdr` has the field `msg_controllen` set to 0, but
+> `msg_control` is not NULL.
+> 
+> Reviewed-by: Eric Blake <eblake@redhat.com>
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+>   subprojects/libvhost-user/libvhost-user.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-> =E5=9C=A8 2024/3/30 9:50, Dan Williams =E5=86=99=E9=81=93:
-> > Shiyang Ruan wrote: =20
-> >> The GMER only has "Physical Address" field, no such one indicates leng=
-th.
-> >> So, when a poison event is received, we could use GET_POISON_LIST comm=
-and
-> >> to get the poison list.  Now driver has cxl_mem_get_poison(), so
-> >> reuse it and add a parameter 'bool report', report poison record to MCE
-> >> if set true. =20
-> >=20
-> > I am not sure I agree with the rationale here because there is no
-> > correlation between the event being signaled and the current state of
-> > the poison list. It also establishes race between multiple GMER events,
-> > i.e. imagine the hardware sends 4 GMER events to communicate a 256B
-> > poison discovery event. Does the driver need logic to support GMER event
-> > 2, 3, and 4 if it already say all 256B of poison after processing GMER
-> > event 1? =20
->=20
-> Yes, I didn't thought about that.
->=20
-> >=20
-> > I think the best the driver can do is assume at least 64B of poison
-> > per-event and depend on multiple notifications to handle larger poison
-> > lengths. =20
->=20
-> Agree.  This also makes things easier.
->=20
-> And for qemu, I'm thinking of making a patch to limit the length of a=20
-> poison record when injecting.  The length should between 64B to 4KiB per=
-=20
-> GMER. And emit many GMERs if length > 4KiB.
-
-I'm not keen on such a restriction in QEMU.
-QEMU is injecting lengths allowed by the specification.  That facility is
-useful for testing the kernel and the QEMU modeling should not be based
-on what the kernel supports.
-
-When you said this I wondered if we had a clever implementation that fused
-entries in the list, but we don't (I thought about doing so a long time
-ago but seems I never bothered :)  So if you are using QEMU for testing
-and you don't want to exceed the kernel supported poison lengths, don't
-inject poison that big.
-
-Jonathan
-
->=20
-> >=20
-> > Otherwise, the poison list is really only useful for pre-populating
-> > pages to offline after a reboot, i.e. to catch the kernel up with the
-> > state of poison pages after a reboot. =20
->=20
-> Got it.
->=20
->=20
-> --
-> Thanks,
-> Ruan.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
