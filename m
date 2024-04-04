@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B95CD1288
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 19:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 438F9CD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 19:49:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsT4h-0006a1-Hy; Thu, 04 Apr 2024 15:48:39 -0400
+	id 1rsT4U-0006YB-7s; Thu, 04 Apr 2024 15:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsT4f-0006Zg-L0
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:48:37 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsT4R-0006Xp-QG
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:48:24 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsT4e-0000O0-40
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:48:37 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3416df43cabso998634f8f.3
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 12:48:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsT4O-0000K9-PQ
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:48:22 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2d094bc2244so14731261fa.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 12:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712260114; x=1712864914; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712260098; x=1712864898; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pt+lDyUe0AWJLsfkvxKd5ARWznd8vhavQW0JVI/GeGA=;
- b=CcQOpiQRIS4vvdUsLTWZIMJGsSq3P4QxxCLZo6rtKtU/IcZ+2xaXQXs3ZUvIfjazBC
- SDthyt3f7OQ5/cj6eLqjjkn1kwDYemCUxGAEWgrncYDJAcidbodF1OA/81M6Hh3lG4up
- 8/oO0/GhlUpMBAp/rx2jWh/NepvxY6sQoOrzxG5PNFkgQoK0xTMQpAfsM9EtJ2TyLkhf
- 3Zgtxjk83QKrWhPuBgHT0Aj4afx10aY7pfoZgMR8eAMJOs53CBRGNfsMOltIbSTJMiF3
- 5QeALnYPuMbe2exl55Uyh5SQJQJ4kL6XKVLspO9iq8O49eZTZ6H9r9tC82+ZYQBGSv8S
- QSOw==
+ bh=KWGr/pVGop5k8ihIK6m+XFrYPybC/J9z+nBHWQ3TWxc=;
+ b=dyrASMkKpaNbnYIPK66FFfz4w0qE8KFVd4afCNaF5lxfPeHcsMJHIUodLXA8d147fD
+ w1e8Dlio/9oq+pfaR05NgSu0CuX4lPlcRKrjlgnVWDS7HevGUD+6sC3XGB0K/R9cTH2X
+ ewC4j5Rgebcsjs9YxTRLIBNxvxsyC1HT9TH+4OfS4F0xFeFcHKcOrQMcrrqlaQ4mfvqP
+ vwDBEWhTzZdYdMiyaMdfUo1Da1z71xrkcBGVM2KwIMGsacMmwkAPWyPm4dHgLOQRas6z
+ meb7qSzarjut9WKAixVeTtllW/+5olXUQnPxSgBtCEXjQeBBWSxVXiKJM7wbwGmbLIqu
+ VBLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712260114; x=1712864914;
+ d=1e100.net; s=20230601; t=1712260098; x=1712864898;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pt+lDyUe0AWJLsfkvxKd5ARWznd8vhavQW0JVI/GeGA=;
- b=rAX3KcCjiUsrofudJZ5yC8s5zpCw/jFBztWSTvyhhPJaVV/9SgvRvlg3G0q/onuD0Q
- sxdfDAbrPcRWMlQEc3ai7y2igy4Q0rLODkc+X1tZjxQRlGAtW+4s4wq2vjdz2LgvgBnZ
- 3v9lXseMrUW0H+h9xRWjVpv5HvsXPfIlEJE+W5/ZchoLbYqPjy4UdIgimUvsqwA0Xgs3
- n9IpQ9tUilpms6e2ASFXh0Bv59b0gkybLw28CL2zGACvmVDXtrUovSX+eU6sLe56awmg
- +9on6X4BecSnxdbC86B8+dgyFxJD2Qyh9P9FmwHxMxvNNwzXs1qGkHdSW3/0wFsTGOTO
- 9fwQ==
+ bh=KWGr/pVGop5k8ihIK6m+XFrYPybC/J9z+nBHWQ3TWxc=;
+ b=pwOyCjgvoN3bqNvcbQXns+iB3p07rmVTqgMqhg0Z7RYyoul5gfsrUrouaLPwR5Gc0D
+ sMG2NuPLediuHMzZUS/GP/u2DQsRKBoHxOFoy55NqZPK0LMpKcwt3YtZBdOi88RExk/U
+ XUsiikDhgJqUSO2EVOe0m9jIl405xeY+wNoyqiHj5a+s5HugFHGXCB8SuabU17iOn6ZU
+ SP2YDgjVTilWTLvPwTQnVg0ThViClDmVGsbF97m9gFr/9KqFLlhDO3dUZtn+yeQTNQFJ
+ d6W/prWOpcbJJF3vuW/xjfj3/eKBpO02PfZBA7v+qGQcvXfREamOgRVhG/rWcgr1H+j+
+ lQUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxME38OEzQv/gONsuAnbu5r+gif8+K2zW/9L1TJz3CT7MQ9VGRv9wr3DN7LfMCHn4hwQL1KGjusScXGCpN7eBtvgQkvJo=
-X-Gm-Message-State: AOJu0YzdpQYBuQfzdt3wHFr3135ToJYkrHGqh78bMuMs92RT5WuvIivW
- hRQ+NmhghNr/b/hfgqUAIyz9izbLi5DAHcrMajLqKfGXANuNIu8n5EYISwnn8Jo=
-X-Google-Smtp-Source: AGHT+IFeMVBn58Z1vU68gBocDbsnTAmL47smFNDjNs4IgBc4eoyD8sMZ44mCvBnEnKtMG2pouGqHyg==
-X-Received: by 2002:a5d:6803:0:b0:343:59bd:113d with SMTP id
- w3-20020a5d6803000000b0034359bd113dmr2406471wru.51.1712260114447; 
- Thu, 04 Apr 2024 12:48:34 -0700 (PDT)
+ AJvYcCW2nGpK/+Vbs2W0RSXOuoz6jD1TWJGvwGy9KM8plI0ZjR+70tWf+DuP2kzxLFdQ160PivJyXr96432OCErD9a9jitzBt+w=
+X-Gm-Message-State: AOJu0Yw1JlnN2nfMOtO/NZi2xX+Nh9uj2RbkZiPXiMrtUMThbKgCH83J
+ /biOBGmIOx4cSSF6e8p5Ra+6YKZueupZjhO1DwyLqGSvVFR1JIFX6XRqL+TJv6E=
+X-Google-Smtp-Source: AGHT+IHzMWMi1KznhGLPn6i21HeMbwPw3oZBDTNnM4bNZfJjp9kAgM+B0XU4NgGgLB2oPt5Vrnxzxg==
+X-Received: by 2002:a2e:9f44:0:b0:2d8:34ec:54e6 with SMTP id
+ v4-20020a2e9f44000000b002d834ec54e6mr218442ljk.33.1712260098101; 
+ Thu, 04 Apr 2024 12:48:18 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.216.111])
  by smtp.gmail.com with ESMTPSA id
- n7-20020a5d5887000000b00343d38ee4a2sm167521wrf.11.2024.04.04.12.48.33
+ fs20-20020a05600c3f9400b0041628f694dfsm240457wmb.23.2024.04.04.12.48.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 04 Apr 2024 12:48:34 -0700 (PDT)
+ Thu, 04 Apr 2024 12:48:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH-for-9.1 6/7] hw/core: Move reset.c to hwcore_ss[] source set
-Date: Thu,  4 Apr 2024 21:47:56 +0200
-Message-ID: <20240404194757.9343-7-philmd@linaro.org>
+Subject: [PATCH-for-9.1 3/7] monitor: Rework stubs to simplify user emulation
+ linking
+Date: Thu,  4 Apr 2024 21:47:53 +0200
+Message-ID: <20240404194757.9343-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240404194757.9343-1-philmd@linaro.org>
 References: <20240404194757.9343-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,35 +98,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-reset.c contains core code used by any CPU, required
-by user emulation. Move it to hwcore_ss[] where it
-belongs.
+Currently monitor stubs are scattered in 3 files.
+
+Merge these stubs in 2 files, a generic one (monitor-core)
+included in all builds (in particular user emulation), and
+a less generic one to be included by tools and system emulation.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ stubs/fdset.c        | 17 -----------------
+ stubs/monitor-core.c | 20 +++++++++++++++-----
+ stubs/monitor.c      |  8 ++++++--
+ stubs/meson.build    |  5 +++--
+ 4 files changed, 24 insertions(+), 26 deletions(-)
+ delete mode 100644 stubs/fdset.c
 
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index e26f2e088c..1389f1b339 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -3,7 +3,6 @@ hwcore_ss.add(files(
-   'bus.c',
-   'qdev-properties.c',
-   'qdev.c',
--  'reset.c',
-   'resetcontainer.c',
-   'resettable.c',
-   'vmstate-if.c',
-@@ -16,6 +15,7 @@ if have_system
-   hwcore_ss.add(files(
-     'hotplug.c',
-     'qdev-hotplug.c',
-+    'reset.c',
-   ))
- else
-   hwcore_ss.add(files(
+diff --git a/stubs/fdset.c b/stubs/fdset.c
+deleted file mode 100644
+index 56b3663d58..0000000000
+--- a/stubs/fdset.c
++++ /dev/null
+@@ -1,17 +0,0 @@
+-#include "qemu/osdep.h"
+-#include "monitor/monitor.h"
+-
+-int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+-{
+-    errno = ENOSYS;
+-    return -1;
+-}
+-
+-int64_t monitor_fdset_dup_fd_find(int dup_fd)
+-{
+-    return -1;
+-}
+-
+-void monitor_fdset_dup_fd_remove(int dupfd)
+-{
+-}
+diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+index afa477aae6..72e40bcc15 100644
+--- a/stubs/monitor-core.c
++++ b/stubs/monitor-core.c
+@@ -1,6 +1,7 @@
++/* Monitor stub required for user emulation */
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
+-#include "qapi/qapi-emit-events.h"
++#include "../monitor/monitor-internal.h"
+ 
+ Monitor *monitor_cur(void)
+ {
+@@ -12,11 +13,22 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
+     return NULL;
+ }
+ 
+-void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
++int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
++{
++    errno = ENOSYS;
++    return -1;
++}
++
++int64_t monitor_fdset_dup_fd_find(int dup_fd)
++{
++    return -1;
++}
++
++void monitor_fdset_dup_fd_remove(int dupfd)
+ {
+ }
+ 
+-void qapi_event_emit(QAPIEvent event, QDict *qdict)
++void monitor_fdsets_cleanup(void)
+ {
+ }
+ 
+@@ -24,5 +36,3 @@ int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+ {
+     abort();
+ }
+-
+-
+diff --git a/stubs/monitor.c b/stubs/monitor.c
+index 20786ac4ff..2fc4dc1493 100644
+--- a/stubs/monitor.c
++++ b/stubs/monitor.c
+@@ -1,7 +1,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-emit-events.h"
+ #include "monitor/monitor.h"
+-#include "../monitor/monitor-internal.h"
+ 
+ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
+ {
+@@ -13,6 +13,10 @@ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+ {
+ }
+ 
+-void monitor_fdsets_cleanup(void)
++void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
++{
++}
++
++void qapi_event_emit(QAPIEvent event, QDict *qdict)
+ {
+ }
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 0bf25e6ca5..ca1bc07d30 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -10,7 +10,6 @@ stub_ss.add(files('qemu-timer-notify-cb.c'))
+ stub_ss.add(files('icount.c'))
+ stub_ss.add(files('dump.c'))
+ stub_ss.add(files('error-printf.c'))
+-stub_ss.add(files('fdset.c'))
+ stub_ss.add(files('gdbstub.c'))
+ stub_ss.add(files('get-vm-name.c'))
+ stub_ss.add(files('graph-lock.c'))
+@@ -28,7 +27,9 @@ if libaio.found()
+ endif
+ stub_ss.add(files('migr-blocker.c'))
+ stub_ss.add(files('module-opts.c'))
+-stub_ss.add(files('monitor.c'))
++if have_system or have_tools
++  stub_ss.add(files('monitor.c'))
++endif
+ stub_ss.add(files('monitor-core.c'))
+ stub_ss.add(files('physmem.c'))
+ stub_ss.add(files('qemu-timer-notify-cb.c'))
 -- 
 2.41.0
 
