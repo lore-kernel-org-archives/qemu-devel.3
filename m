@@ -4,67 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E39CD1299
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 14:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C02CD1284
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 14:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsO2x-0004Rf-Oh; Thu, 04 Apr 2024 10:26:31 -0400
+	id 1rsOG8-0001HO-1Y; Thu, 04 Apr 2024 10:40:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rsO2t-0004QF-WF
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:26:29 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rsO2r-00065D-Qh
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:26:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=JgoLzrCKxttMq8OEGG5IEF692DfEG+OIXh1XO/IkFUM=; b=nKYDgLNfzShI4pcLQuELrya/Op
- 3acZfhWD0UQ5MYuIcOItVwLUm84C7df6f2+YydSKEeEv6yHyFHYMRo/V78cPzbLwPSW+KaBIDcQzC
- gOqjcvKcRwLOpTxnp494+PV6DG/5aJbY2WQtak2xW94ycHhR1UufXv+OBgdHbHpkyapv2gDRb46YK
- oOEts0gDnzJlZG3BwtbA2ZCkV2oRwwsBXt1yxZ5L+qN5QDpDx17H4R0W2Z8PCKY3gJYRlLLgCFcY9
- FP31OEo/ayJxHooJELr/8SODAlIU9PgGVWfYvufSY1UjqLrWPGj3o/vXfyyr9yHARfL/hRzLZXzpV
- tmmucnxQfottrD3eoKuAEQXf4st9jlUJNWc4uVhw8uMcw4x3jGFZ8eUiDtuhjKYDg1O6uzw1+84Yt
- Zz4iFIOaO+2zY5aJ/3D159oNDI4JEeXv50O5daoUhhsIfkPg9yciprzKw+HBRdSeGwyDiaZCOB4GW
- rjtDB26QY2XJh300wpKgMSPLBZFGoDXNVFJTrwC9ET8Az5zlYVNe7twse6aH8NE8FcsG49kRUwCYm
- kvPX4rQ9ABUtyC55/xRgqdAulnaCb8dZ8UlsG7ZU2X9VJqc1lMbB+79pmLc70cpeEh11uvHPFEWL1
- KItSl5DhpOFBL8cbWX6IWmQc4K9h3YQrq8LYoeS3g=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- (helo=cheesecake.fritz.box)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rsO1s-000Bmt-5s; Thu, 04 Apr 2024 15:25:28 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: peter.maydell@linaro.org,
-	qemu-devel@nongnu.org
-Date: Thu,  4 Apr 2024 15:25:29 +0100
-Message-Id: <20240404142539.711134-8-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240404142539.711134-1-mark.cave-ayland@ilande.co.uk>
-References: <20240404142539.711134-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rsOFx-0001Fx-7f
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:39:58 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rsOFu-0004Px-M1
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 10:39:56 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-56bf6591865so1624570a12.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 07:39:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712241592; x=1712846392; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GibgvPlEf6K6Ev5wyGbWbItBdY6+6NVY04HUHJy7dQ0=;
+ b=P23JsslgLA8OdHrwLwJQq1gWVsS3HOFMldB+/U+hV5WDL6QIaoZRAAOYoL+MCpnKX5
+ AfuCu6aJ8gznZojDNzAsIr+KEgMxk8wEtY6l/0p8n5LeBjJe98EZOdmdDSNVUzEktAmT
+ r/ctm+CsHTkwMkVCLtAkRO6kqFw8Bsd5XClaUc3AeKmx8RAuc3/VvNfzjLEyvPr31UtW
+ v3t0yLCJHizpWt3Dpt/6g20WUfy5Gh3b8VJYV/j0FkI0e2+U2DljRpA+uq2RmzEB8PO3
+ dc/P3nEZcH1DJVjOT100FrEF1N68PGW67KVGfWHVvjpYnrJNW8W39JITRWghUhgiUPlJ
+ HG4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712241592; x=1712846392;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GibgvPlEf6K6Ev5wyGbWbItBdY6+6NVY04HUHJy7dQ0=;
+ b=mJwgL/sbmb1Nz28/0VoTqN4cbj61llK83exLFJw5huJyCXd9ZitKnZLKjBxRAKVdKV
+ XsfKTCyD/Vmq/o7oPp4XmqRDOkpQ6W2HEunF7NJ+cJ3SB4Gd4rhUC8ym2tlGfZVPAWRj
+ Qjq+L+nwOElw8mhSSNB+mVQlJbrq5Vz9694T/sY9PWRyhEANFLI08Smr3Agf4GwA/pIg
+ PIZBWpRnoCh5IEv1GzW8IrmYMLfCji0DP5cFH5cylQd4ylazVaeR4tokmkCb02Lcx4I8
+ 6QxG2iTXEoboJrMDJ1epV2GGD++rZPjPbEOnuZDsyVe+g6mgsUzcdN+w4+dAHjurM+6u
+ MRUw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyqIJaz6HVWVZp1iqb/6LUVXKjFdzdfigqzXZM8ws5OBJ06byxyCNkVmE7Eqc081y27UmlLhlcW30b19h1Vrxwx1H72Cg=
+X-Gm-Message-State: AOJu0YyhPqrt2CCnmDW5g7x9bHKYhcafpbdcOc2/x+s/hBxwg5pIiiRq
+ 2e1+0PyGG3J6+RJNG5IbH9EdZW/kZqIy+aPYp2Y2Ro7N6MBOpf+tDG7ccSuhTN8KixMVi/Kb8Ze
+ z+9GcTtV5UY+ibhx96c+pSUbY3ee87d6lJCydaw==
+X-Google-Smtp-Source: AGHT+IG3X9lIianVEZ1H+9HJf4jqNbwejtjjr9PmW79Wj6tlrhzVDXF3RCKpjDiEyZY7HDKqIy0yoEZPhjrT3Zf40U4=
+X-Received: by 2002:a50:c315:0:b0:56b:9ef8:f656 with SMTP id
+ a21-20020a50c315000000b0056b9ef8f656mr1885953edb.7.1712241591805; Thu, 04 Apr
+ 2024 07:39:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 07/17] esp.c: use esp_fifo_push() instead of fifo8_push()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+References: <20240403101611.3204086-1-ruanjinjie@huawei.com>
+In-Reply-To: <20240403101611.3204086-1-ruanjinjie@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 4 Apr 2024 15:39:40 +0100
+Message-ID: <CAFEAcA9w6JUyjCU7uqiaiwrGG6w0V4G6DxjUC+DcvcKcoBtFKg@mail.gmail.com>
+Subject: Re: [PATCH v12 00/23] target/arm: Implement FEAT_NMI and
+ FEAT_GICv3_NMI
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
+ wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,51 +92,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are still a few places that use fifo8_push() instead of esp_fifo_push() in
-order to push a value into the FIFO. Update those places to use esp_fifo_push()
-instead.
+On Wed, 3 Apr 2024 at 11:18, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>
+> This patch set implements FEAT_NMI and FEAT_GICv3_NMI for ARMv8. These
+> introduce support for a new category of interrupts in the architecture
+> which we can use to provide NMI like functionality.
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-Id: <20240324191707.623175-8-mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/scsi/esp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Looking through the Arm ARM pseudocode at places where it
+handles NMI related features and bits, I noticed one corner
+case we don't handle in this patchseries: illegal exception return.
+In the pseudocode, AArch64.ExceptionReturn() calls
+SetPSTATEFromPSR(), which treats PSTATE.ALLINT as one of the
+bits which are reinstated from SPSR to PSTATE regardless of
+whether this is an illegal exception return or not. For
+QEMU that means we want to handle it the same way we do
+PSTATE_DAIF and PSTATE_NZCV in the illegal_return exit path of
+the exception_return helper:
 
-diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index d474268438..8d2d36d56c 100644
---- a/hw/scsi/esp.c
-+++ b/hw/scsi/esp.c
-@@ -858,7 +858,7 @@ static void esp_do_nodma(ESPState *s)
-             return;
-         }
-         if (fifo8_is_empty(&s->fifo)) {
--            fifo8_push(&s->fifo, s->async_buf[0]);
-+            esp_fifo_push(s, s->async_buf[0]);
-             s->async_buf++;
-             s->async_len--;
-             s->ti_size--;
-@@ -881,7 +881,7 @@ static void esp_do_nodma(ESPState *s)
-     case STAT_ST:
-         switch (s->rregs[ESP_CMD]) {
-         case CMD_ICCS:
--            fifo8_push(&s->fifo, s->status);
-+            esp_fifo_push(s, s->status);
-             esp_set_phase(s, STAT_MI);
- 
-             /* Process any message in phase data */
-@@ -893,7 +893,7 @@ static void esp_do_nodma(ESPState *s)
-     case STAT_MI:
-         switch (s->rregs[ESP_CMD]) {
-         case CMD_ICCS:
--            fifo8_push(&s->fifo, 0);
-+            esp_fifo_push(s, 0);
- 
-             /* Raise end of command interrupt */
-             s->rregs[ESP_RINTR] |= INTR_FC;
--- 
-2.39.2
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -904,8 +904,8 @@ illegal_return:
+      */
+     env->pstate |= PSTATE_IL;
+     env->pc = new_pc;
+-    spsr &= PSTATE_NZCV | PSTATE_DAIF;
+-    spsr |= pstate_read(env) & ~(PSTATE_NZCV | PSTATE_DAIF);
++    spsr &= PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT;
++    spsr |= pstate_read(env) & ~(PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT);
+     pstate_write(env, spsr);
+     if (!arm_singlestep_active(env)) {
+         env->pstate &= ~PSTATE_SS;
 
+(I haven't thought about whether this fits particularly into
+any existing patch or should be a patch of its own.)
+
+thanks
+-- PMM
 
