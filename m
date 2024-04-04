@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52007CD1288
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 19:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 073B7CD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 20:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsTBf-0003aH-PI; Thu, 04 Apr 2024 15:55:51 -0400
+	id 1rsU8g-0007tf-B4; Thu, 04 Apr 2024 16:56:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsTBe-0003a8-9v
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:55:50 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsTBc-00029A-L5
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 15:55:50 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-41627acfd03so9094605e9.3
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 12:55:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712260546; x=1712865346; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=s5hIihND0dsf9z9poWK5+DgIi8r9oQc5ysXPqjISFuw=;
- b=bllm8hjTUnqAECg6B8fjEGYv0DL9OEFOn/HlBSTYf4KUZXC21uvWrzh1Q7xg5uOnHA
- xINORvZo/6zUFTOR7LPxp+GD1alBCS8/l5gGConHQQiIyrcT2hvoPsqdAxcwSyCtfz9U
- ajl0iLCci5+rpgGbguApq410qjIfKt9eqJbkc5pVOkDb6Q/VJuHGAR1FXT2RiaWG+XjZ
- cBj9QJschFwImX8fAlzgQgkuMVO4cnK1d+7seQ6hAwZXF4gQiEGWUYTxnFo4xZ4TuymL
- DO0VPd0zkiQNdtvif3TAmlQJ/PISt4f202Vx20khXsudW1roZKcKsJ4tA8GVsCiOFd90
- ab7Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rsU8e-0007tS-Om
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 16:56:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rsU8c-00034G-MU
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 16:56:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712264205;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yvu0OY265NY1jxyaF6kineaC0TrX9+hJLcouQKuUNjY=;
+ b=FkBpzywyGFNWfa3XkYugp6iAb0wBYCKrRAFj8Rw361UzahqY2KeiU95UpcaDz5hYYs91lu
+ 8fgWLCi0GyRH4p+8qNPjeXVBCc8w29EN/YC7/gYVCIpc8lw+bXzeMcvBNvvrUNGTBuuXpZ
+ kl4rwfxYU3qcfWnJdXFRRmaycYoddLo=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-219-Umyrz1UHOV2tZ9xa1GwvWA-1; Thu, 04 Apr 2024 16:56:43 -0400
+X-MC-Unique: Umyrz1UHOV2tZ9xa1GwvWA-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6993e4680d7so112656d6.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 13:56:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712260546; x=1712865346;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s5hIihND0dsf9z9poWK5+DgIi8r9oQc5ysXPqjISFuw=;
- b=VTuxa9jmWttjtW+KzmPxI/Z3aljjVfX+6D2Jbq+5UCLFReE8slVHgM9M67iUsJFBh+
- DH1pSw/Gw5+LjWWYNvgNRfZ8DxzPptFdQq3wVDrXZuJdg876oerM4ENEyvT0YE+SKD2j
- 6BJ0RagA/ctKwipkGFd/tHebwMzyO7TrKrJSFf6IwKFJeY6ts8k9WHtg2homDWE4bzEa
- AZf5nangYMSO2PTbks41xAQPX02Nn0V2LIj1GtzY7DhabgMo20H50j7UGTPq/rn3Jn0F
- 8oHD5V29wrVNTslD6W1j4uevh/7azDPn2a4kIFmCVmpD8bhYsuhNvCywdQLlpDJlQVSe
- Ws6g==
-X-Gm-Message-State: AOJu0YykS1q9hsB7E9mMxm3Re+oVN2IqVbpOaKewcvhJeSsHt7YLJjXc
- 8Sw82sQpEA4nlV4Uxe9vt2tyd4adIrXNgHRxB0mc6yk2kHRrOJhnDqJdDgFVnc/f1PdGPo3pbp4
- 6
-X-Google-Smtp-Source: AGHT+IF/RmKNiYeV0DduMQPGbEHu3fvbRDreTJ24TbRRJCvir0Jy/Hg627XRVK9TdFZQIE5D2U0+BQ==
-X-Received: by 2002:a05:600c:5812:b0:416:2c78:5ecc with SMTP id
- jz18-20020a05600c581200b004162c785eccmr1013557wmb.36.1712260546249; 
- Thu, 04 Apr 2024 12:55:46 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.216.111])
- by smtp.gmail.com with ESMTPSA id
- r10-20020a05600c35ca00b0041622c88852sm3794115wmq.16.2024.04.04.12.55.45
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 04 Apr 2024 12:55:45 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1] qapi: Do not generate commands/events/introspect
- code for user emulation
-Date: Thu,  4 Apr 2024 21:55:43 +0200
-Message-ID: <20240404195543.9804-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ d=1e100.net; s=20230601; t=1712264202; x=1712869002;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yvu0OY265NY1jxyaF6kineaC0TrX9+hJLcouQKuUNjY=;
+ b=ACJOSm/axtFHatifyTZwB/LOWPBt/UqnWZeuQM92nF2IV4kyagEZjumHYb7J///BAS
+ oEi59m4F5yqXiDOSDyDBhnP684zvJlmexeL6qfpju2Mw5bmspoxnF8ECz4Gp4zBLMlc7
+ X0TMQ6BiJDBOxY3kJ6HIh898ebSVdmoBD5uio4RJm/r+ySN9+r7LR18SkzPKWm0iPPhC
+ w0RH1oLV9TX522DLZpu3yn/SCytlG1y64XGeG/pdjCX/3totWJCJ/Qmb2NZyHR7ZzOlc
+ SZTModwPaDjQZ65wPea4oIeDQX/C+slr36p8XFJilKhrdeZtIXFTqNV7JjeDvJRasvBG
+ XShg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9VAtvd0YjhpOpRZKehHZs4dcQF5Glw2S5rOP5YM1QL7S76GnibWGdVBDmy/6wPvzfK88ddFS4VASn0a5gLh9TJoPB6e4=
+X-Gm-Message-State: AOJu0YzjBeVQMvtLe6+2PDLw2EoqUNBur1b46GWz3rN9BieA1OveAxck
+ /Yu5+sZv7qWn5U9f+kovamu5APFzCYqKsVtvUqemkPiehBaMRLUs/onRlmxWDEvdN9udJGvacLH
+ McMSv0txOKRikWz25fnBMNGdPatYKpUWxefIQ+G6TTjsitTKqyeFi
+X-Received: by 2002:a05:620a:4006:b0:78b:ea64:e0fa with SMTP id
+ h6-20020a05620a400600b0078bea64e0famr3917148qko.4.1712264202317; 
+ Thu, 04 Apr 2024 13:56:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRkb28GXeEwl+fBLHkPheafZFDZHDQlGUrhOjFNKPLuLuYbsNI8O/B/4T7XelIByAojZUcrw==
+X-Received: by 2002:a05:620a:4006:b0:78b:ea64:e0fa with SMTP id
+ h6-20020a05620a400600b0078bea64e0famr3917124qko.4.1712264201635; 
+ Thu, 04 Apr 2024 13:56:41 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ da35-20020a05620a362300b00789e1c94cf4sm74868qkb.113.2024.04.04.13.56.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Apr 2024 13:56:41 -0700 (PDT)
+Date: Thu, 4 Apr 2024 16:56:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Wang, Lei" <lei4.wang@intel.com>
+Cc: "Wang, Wei W" <wei.w.wang@intel.com>, "farosas@suse.de" <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v1] migration/postcopy: ensure preempt channel is ready
+ before loading states
+Message-ID: <Zg8UB900V4NpTwNG@x1n>
+References: <20240404100550.17777-1-wei.w.wang@intel.com>
+ <Zg61FnuPPAYAJs45@x1n>
+ <DS0PR11MB6373FB3A707271E6E158258ADC3C2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ <757123c0-c4f9-4332-adb7-e6296ab8d54a@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <757123c0-c4f9-4332-adb7-e6296ab8d54a@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,90 +106,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User emulation requires the QAPI types. Due to the command
-line processing, some visitor code is also used. The rest
-is irrelevant (no QMP socket).
+On Fri, Apr 05, 2024 at 12:48:15AM +0800, Wang, Lei wrote:
+> On 4/5/2024 0:25, Wang, Wei W wrote:> On Thursday, April 4, 2024 10:12 PM, Peter
+> Xu wrote:
+> >> On Thu, Apr 04, 2024 at 06:05:50PM +0800, Wei Wang wrote:
+> >>> Before loading the guest states, ensure that the preempt channel has
+> >>> been ready to use, as some of the states (e.g. via virtio_load) might
+> >>> trigger page faults that will be handled through the preempt channel.
+> >>> So yield to the main thread in the case that the channel create event
+> >>> has been dispatched.
+> >>>
+> >>> Originally-by: Lei Wang <lei4.wang@intel.com>
+> >>> Link:
+> >>> https://lore.kernel.org/all/9aa5d1be-7801-40dd-83fd-f7e041ced249@intel
+> >>> .com/T/
+> >>> Suggested-by: Peter Xu <peterx@redhat.com>
+> >>> Signed-off-by: Lei Wang <lei4.wang@intel.com>
+> >>> Signed-off-by: Wei Wang <wei.w.wang@intel.com>
+> >>> ---
+> >>>  migration/savevm.c | 17 +++++++++++++++++
+> >>>  1 file changed, 17 insertions(+)
+> >>>
+> >>> diff --git a/migration/savevm.c b/migration/savevm.c index
+> >>> 388d7af7cd..fbc9f2bdd4 100644
+> >>> --- a/migration/savevm.c
+> >>> +++ b/migration/savevm.c
+> >>> @@ -2342,6 +2342,23 @@ static int
+> >>> loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
+> >>>
+> >>>      QEMUFile *packf = qemu_file_new_input(QIO_CHANNEL(bioc));
+> >>>
+> >>> +    /*
+> >>> +     * Before loading the guest states, ensure that the preempt channel has
+> >>> +     * been ready to use, as some of the states (e.g. via virtio_load) might
+> >>> +     * trigger page faults that will be handled through the preempt channel.
+> >>> +     * So yield to the main thread in the case that the channel create event
+> >>> +     * has been dispatched.
+> >>> +     */
+> >>> +    do {
+> >>> +        if (!migrate_postcopy_preempt() || !qemu_in_coroutine() ||
+> >>> +            mis->postcopy_qemufile_dst) {
+> >>> +            break;
+> >>> +        }
+> >>> +
+> >>> +        aio_co_schedule(qemu_get_current_aio_context(),
+> >> qemu_coroutine_self());
+> >>> +        qemu_coroutine_yield();
+> >>> +    } while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done,
+> >>> + 1));
+> >>
+> >> I think we need s/!// here, so the same mistake I made?  I think we need to
+> >> rework the retval of qemu_sem_timedwait() at some point later..
+> > 
+> > No. qemu_sem_timedwait returns false when timeout, which means sem isn’t posted yet.
+> > So it needs to go back to the loop. (the patch was tested)
+> 
+> When timeout, qemu_sem_timedwait() will return -1. I think the patch test passed
+> may because you will always have at least one yield (the first yield in the do
+> ...while ...) when loadvm_handle_cmd_packaged()?
 
-Add an option to the qapi-gen script to allow generating
-the minimum when only user emulation is being built.
+My guess is that here the kick will work and qemu_sem_timedwait() later
+will ETIMEOUT -> qemu_sem_timedwait() returns -1, then the loop just broke.
+That aio schedule should make sure anyway that the file is ready; the
+preempt thread must run before this to not hang that thread.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-RFC: Quick PoC for Markus. It is useful for user-only builds.
----
- qapi/meson.build     |  6 +++++-
- scripts/qapi/main.py | 16 +++++++++++-----
- 2 files changed, 16 insertions(+), 6 deletions(-)
+I think it more kind of justifies that the retval needs to be properly
+defined. :( It's confusion is on top of when I know libpthread returns
+positive error codes.
 
-diff --git a/qapi/meson.build b/qapi/meson.build
-index 375d564277..5e02621145 100644
---- a/qapi/meson.build
-+++ b/qapi/meson.build
-@@ -115,10 +115,14 @@ foreach module : qapi_all_modules
-   endif
- endforeach
- 
-+qapi_gen_cmd = [ qapi_gen, '-o', 'qapi', '-b', '@INPUT0@' ]
-+if not (have_system or have_tools)
-+  qapi_gen_cmd += [ '--types-only' ]
-+endif
- qapi_files = custom_target('shared QAPI source files',
-   output: qapi_util_outputs + qapi_specific_outputs + qapi_nonmodule_outputs,
-   input: [ files('qapi-schema.json') ],
--  command: [ qapi_gen, '-o', 'qapi', '-b', '@INPUT0@' ],
-+  command: qapi_gen_cmd,
-   depend_files: [ qapi_inputs, qapi_gen_depends ])
- 
- # Now go through all the outputs and add them to the right sourceset.
-diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-index 316736b6a2..925af5841b 100644
---- a/scripts/qapi/main.py
-+++ b/scripts/qapi/main.py
-@@ -33,7 +33,8 @@ def generate(schema_file: str,
-              prefix: str,
-              unmask: bool = False,
-              builtins: bool = False,
--             gen_tracing: bool = False) -> None:
-+             gen_tracing: bool = False,
-+             gen_types_only: bool = False) -> None:
-     """
-     Generate C code for the given schema into the target directory.
- 
-@@ -50,9 +51,10 @@ def generate(schema_file: str,
-     schema = QAPISchema(schema_file)
-     gen_types(schema, output_dir, prefix, builtins)
-     gen_visit(schema, output_dir, prefix, builtins)
--    gen_commands(schema, output_dir, prefix, gen_tracing)
--    gen_events(schema, output_dir, prefix)
--    gen_introspect(schema, output_dir, prefix, unmask)
-+    if not gen_types_only:
-+        gen_commands(schema, output_dir, prefix, gen_tracing)
-+        gen_events(schema, output_dir, prefix)
-+        gen_introspect(schema, output_dir, prefix, unmask)
- 
- 
- def main() -> int:
-@@ -75,6 +77,9 @@ def main() -> int:
-     parser.add_argument('-u', '--unmask-non-abi-names', action='store_true',
-                         dest='unmask',
-                         help="expose non-ABI names in introspection")
-+    parser.add_argument('-t', '--types-only', action='store_true',
-+                        dest='gen_types_only',
-+                        help="Only generate QAPI types")
- 
-     # Option --suppress-tracing exists so we can avoid solving build system
-     # problems.  TODO Drop it when we no longer need it.
-@@ -96,7 +101,8 @@ def main() -> int:
-                  prefix=args.prefix,
-                  unmask=args.unmask,
-                  builtins=args.builtins,
--                 gen_tracing=not args.suppress_tracing)
-+                 gen_tracing=not args.suppress_tracing,
-+                 gen_types_only=args.gen_types_only)
-     except QAPIError as err:
-         print(err, file=sys.stderr)
-         return 1
+Thans,
+
 -- 
-2.41.0
+Peter Xu
 
 
