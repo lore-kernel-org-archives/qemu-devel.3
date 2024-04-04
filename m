@@ -4,88 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB52DCD1284
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 08:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29968CD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 08:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsI1v-00059z-0U; Thu, 04 Apr 2024 04:01:03 -0400
+	id 1rsIrC-0003js-FD; Thu, 04 Apr 2024 04:54:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsI1s-00059d-Jo
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 04:01:00 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rsIrA-0003jg-NH
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 04:54:00 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsI1q-00051u-U7
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 04:01:00 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4162b016230so1706285e9.3
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 01:00:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rsIr9-0003Tt-2f
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 04:54:00 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-56df8e6a376so1352180a12.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 01:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712217657; x=1712822457; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aBLdQAB15l4WtLYubiaVu+Q89jsw2nCA70Bnr2h1mmQ=;
- b=nHzj1yLRp4I4Z+FyXCD/V/S+nRYjsneMXWmIZZxMcc8AiU2IspgL3N0VFxChDTzi3Q
- lKa/iQeBEPJbTruWzVLYMsq830v5tpajobYWUIondkhXnCAUeTcev3//bdNfa81xnhU/
- waHzgEfwdT3/JiWrKPN/WkTGM1WLZx573P3BrPgyFCiZ+/HN8jDX5SBYF+1jc/7ETDOF
- ApkWtdPTBc9lU0DlDPO3Ri4NEl+Wb3YwIHyB0jvmpbZ5Ef1f1AGr2cWz3K1sgeNVpUOK
- shoXqK/eQ7Wnf7XfV9ivGXRv9xFftk0tYjoud6Wi1qXdCCsbIQ2IMCANWyXFs2lARyk0
- CJDw==
+ d=linaro.org; s=google; t=1712220837; x=1712825637; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PPBiAvBdZaF2x4TE7b8DB+eIotNM/kjy68A+X501W2k=;
+ b=qS44+4Tr3z55Yyi5gIOLTKKh5U0skSiYYJj/tjQZJv8OVIqIxXkWp6k644Y3K5ZCN4
+ 0Uo6yhkaoThExa8mjfvmheRinQL/Z6FZUfEzd76mTmKjWw31kAIwuWPBQW3QLKtQgdfu
+ m6fjxoKGOePXN9D1MAJCKyy7znDof0UNa5aVsOVo2meJfcyiB5mRGMKfsTP/HmSrxyWv
+ TM7/FnIlYJT2OeYNeC6Y86w0oWVg7d7Svdjdp/7+kv97srMQ7t7HuNLewm6w2HWRXrnT
+ uSTJZWBg/GPGJahul5Te0Pqx/K/gdnAJbEJDd3tEuMMeh0asEc0FXrwgFua/i7mjmOqS
+ zpPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712217657; x=1712822457;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aBLdQAB15l4WtLYubiaVu+Q89jsw2nCA70Bnr2h1mmQ=;
- b=HGkMtyXDt2HShXxpLaIYi8s1gcr+JxhbK4SOhsx3i9jsbaFbc8PXVb3OcZapFj/8X0
- gkrOvSqAFO5d5UWo9a3fq3oZ3dL4lQ/YI1W4kykNmwUH9aQn2WLMQCqljyxTAMdwH6o6
- UyC5Lbicva5m4jC11BeCKvK0eLF3aHsfOZp6aGCQXkR6uza5HrUrvyN2tl3b06GpK4K4
- 6n2Tug7iNZx0myk1y0Kabp84r+f3X3WYyCBXm0nrem3ojs/QPkgkrEqdaZOK5ji1mPKj
- Q4PA9pByofIZR2n6IogKMIGlwK4GhlcC2a3R4CU8MVQlbhZbqMTSpVPL+KhtylpcbhsL
- Y3sQ==
+ d=1e100.net; s=20230601; t=1712220837; x=1712825637;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PPBiAvBdZaF2x4TE7b8DB+eIotNM/kjy68A+X501W2k=;
+ b=nVx7sCZBwynTbkwExh8va6frj0goYBBPV758aTFb3jBN6IDszhPcnOxEaF14LVHMQq
+ CL9IwQ30+ofvh7GVO6hxLQp2Q/7gRlrdE2OXxLiUfAkH9fIxkOFZw3uhtD7Epa4QnOmf
+ PysrrRMprtCyxp0c0AOzEA+2K4qdyKb2MTGy9rlbyOf0WUwi1Cqhcfc7GSkrS9lKKhdi
+ 9R74MJBKiUCg4W0PO393GSXkNLIvVaz1fChf9vPLlHYnKJeux9BeeKAgGXbl9YjQprWF
+ rHiJnnT3++K/BcV9xzXPTKD174okULzCBHttMVHEqgMM8lBuWja5nratCwfx4yCdEX5u
+ Z68w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURNROxXXLsF45rGa8K/nFrn0tg0jvZ7fNDWGLHYxh6/Cfud8btGMibXwGUjCBr4vgalHzT4v+vnNx5wdbMekc59lezmCQ=
-X-Gm-Message-State: AOJu0Yy1DXMEKkYPoc/eL0OZoVnSV+jjGOh4QWiPIaBrluKj314jIZPl
- yXoDD21BeLs9P5LJqjvxDs11pgiZ1vypll6qzfWt/D9VYCdetKB5SDgW1mEE/hU=
-X-Google-Smtp-Source: AGHT+IGb32FNmC+WTaY5TuRcykU5vf3D+uyOO9Y28MGHL/nyDi9VaPxEeJoAUVUYS5SkLEv31H5Avg==
-X-Received: by 2002:a7b:ce16:0:b0:415:54d2:15a7 with SMTP id
- m22-20020a7bce16000000b0041554d215a7mr1429993wmc.41.1712217657223; 
- Thu, 04 Apr 2024 01:00:57 -0700 (PDT)
-Received: from [192.168.200.175] ([81.185.165.143])
- by smtp.gmail.com with ESMTPSA id
- i18-20020a05600c355200b00412e5f32591sm1750924wmq.28.2024.04.04.01.00.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Apr 2024 01:00:56 -0700 (PDT)
-Message-ID: <c31dcace-92da-4de7-93e6-631120829a75@linaro.org>
-Date: Thu, 4 Apr 2024 10:00:53 +0200
+ AJvYcCUh8XoJYpWPwzttg8c0CTn4tSpnF7nAy/P7UbLI6aPMkdk3LokjcMj1NoTMUvdCfQk1LSKexenUyLxvB3CJTPisYfPfB8E=
+X-Gm-Message-State: AOJu0YwPtg75Ak3cTBCkg+DQo6OG2gDvT6hfBQrYjMkN1lmDs4Cyzo6v
+ AAsw2NhOr9CvJjIANMcqwUmGjZPapra0ce6jGcssF/nUe7JJtEL6JbdYirgWk17fFnxwkHSODwF
+ 3YaP82/fonB44bn5i76cmyKNZR28+KnDQAEfzGQ==
+X-Google-Smtp-Source: AGHT+IHdNz+ua219F5H8quJm4px5w917BK+HC22rVsr36ck7tnn7mXtRraOLbrJD4HzSEWOvIE7ge6ufjFWGE1Iz/Sk=
+X-Received: by 2002:a50:a6d7:0:b0:56c:292f:84da with SMTP id
+ f23-20020a50a6d7000000b0056c292f84damr4536535edc.17.1712220836853; Thu, 04
+ Apr 2024 01:53:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/10] backends/confidential-guest-support: Add
- functions to support IGVM
-To: Roy Hopkins <roy.hopkins@suse.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez
- <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?J=C3=B6rg_Roedel?=
- <jroedel@suse.com>
-References: <cover.1712141833.git.roy.hopkins@suse.com>
- <1dff8015f9f9cf735de21a16e5dba14371c39155.1712141833.git.roy.hopkins@suse.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1dff8015f9f9cf735de21a16e5dba14371c39155.1712141833.git.roy.hopkins@suse.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+References: <CAM2a4uwktAA=Uk9_GRnxusvHhfrZg+EUWjfxy95YgxGsQQntjA@mail.gmail.com>
+ <dd957513-1272-40cf-bda5-4d3f717f3c71@linaro.org>
+ <CAM2a4uxuY5PGrHLo72+i2p6Cj-1R37kiXOehrhRMKUn3Xaia=g@mail.gmail.com>
+ <074ed71f-6dca-4a55-9163-60a9305dd27a@linaro.org>
+In-Reply-To: <074ed71f-6dca-4a55-9163-60a9305dd27a@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 4 Apr 2024 09:53:45 +0100
+Message-ID: <CAFEAcA-fmCNgyczGZaE=otT1x=iVt_-oPwkS308CWkP3wLdhbg@mail.gmail.com>
+Subject: Re: Point where target instructions are read
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Gautam Bhat <mindentropy@gmail.com>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,83 +93,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Roy,
+On Wed, 3 Apr 2024 at 23:40, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 4/3/24 08:15, Gautam Bhat wrote:
+> > Here simple_test.bin is the raw binary file converted using objcopy.
+> > addr=0xFFFE is the vector location where the PC will load with the
+> > starting address.
+> >
+> > Now how do I load the address in that reset vector location and set my
+> > PC? Is there some example code that I can look at?
+>
+> Hmm.  I can't find an example.  I see a TODO for m68k which *should* be loading the pc
+> from the reset vector on reset.
 
-On 3/4/24 13:11, Roy Hopkins wrote:
-> In preparation for supporting the processing of IGVM files to configure
-> guests, this adds a set of functions to ConfidentialGuestSupport
-> allowing configuration of secure virtual machines that can be
-> implemented for each supported isolation platform type such as Intel TDX
-> or AMD SEV-SNP. These functions will be called by IGVM processing code
-> in subsequent patches.
-> 
-> This commit provides a default implementation of the functions that
-> either perform no action or generate a warning or error when they are
-> called. Targets that support ConfidentalGuestSupport should override
-> these implementations.
-> 
-> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> ---
->   backends/confidential-guest-support.c     | 32 ++++++++++
->   include/exec/confidential-guest-support.h | 74 +++++++++++++++++++++++
->   2 files changed, 106 insertions(+)
+Arm M profile does this.
 
+> The loader device populates ram during the reset hold phase, so I believe you need to wait
+> until after that is complete to perform the load, thus the reset_exit hook.
 
->   struct ConfidentialGuestSupport {
->       Object parent;
->   
-> @@ -60,6 +94,46 @@ struct ConfidentialGuestSupport {
->        */
->       char *igvm_filename;
->   #endif
-> +
-> +    /*
-> +     * The following virtual methods need to be implemented by systems that
-> +     * support confidential guests that can be configured with IGVM and are
-> +     * used during processing of the IGVM file with process_igvm().
-> +     */
-> +
-> +    /*
-> +     * Check for to see if this confidential guest supports a particular
-> +     * platform or configuration
-> +     */
-> +    int (*check_support)(ConfidentialGuestPlatformType platform,
-> +                         uint16_t platform_version, uint8_t highest_vtl,
-> +                         uint64_t shared_gpa_boundary);
-> +
-> +    /*
-> +     * Configure part of the state of a guest for a particular set of data, page
-> +     * type and gpa. This can be used for example to pre-populate and measure
-> +     * guest memory contents, define private ranges or set the initial CPU state
-> +     * for one or more CPUs.
-> +     *
-> +     * If memory_type is CGS_PAGE_TYPE_VMSA then ptr points to the initial CPU
-> +     * context for a virtual CPU. The format of the data depends on the type of
-> +     * confidential virtual machine. For example, for SEV-ES ptr will point to a
-> +     * vmcb_save_area structure that should be copied into guest memory at the
-> +     * address specified in gpa. The cpu_index parameter contains the index of
-> +     * the CPU the VMSA applies to.
-> +     */
-> +    int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, uint64_t len,
-> +                           ConfidentialGuestPageType memory_type,
-> +                           uint16_t cpu_index, Error **errp);
-> +
-> +    /*
-> +     * Iterate the system memory map, getting the entry with the given index
-> +     * that can be populated into guest memory.
-> +     *
-> +     * Returns 0 for ok, 1 if the index is out of range and -1 on error.
-> +     */
-> +    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-> +                             Error **errp);
->   };
->   
->   typedef struct ConfidentialGuestSupportClass {
+This will not work (yet) -- CPUs do not get reset as part of the
+whole-system three-phase-reset, so using the exit phase method
+is not sufficient to avoid the reset ordering problem here.
 
-Methods are usually a class field, not an instance one. Any
-reason to diverge from this norm?
+You need to use rom_ptr_for_as() to see if there's a ROM blob
+at the address you're trying to load the PC from, and if there
+is you use ldl_p() to get the PC from the blob; otherwise you
+use ldl_phys(). Searching for "initial_pc" in target/arm/cpu.c
+will find you the code that does this for M-profile.
 
-Regards,
-
-Phil.
+thanks
+-- PMM
 
