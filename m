@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09CC5CD1284
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 16:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C047CD1284
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 16:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsQ85-0007cW-Mj; Thu, 04 Apr 2024 12:39:57 -0400
+	id 1rsQGM-0001K8-Ni; Thu, 04 Apr 2024 12:48:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rsQ83-0007b9-Sb
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 12:39:55 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rsQ81-0000ni-RQ
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 12:39:55 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-56e22574eb3so1124112a12.3
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 09:39:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712248792; x=1712853592; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rpSNZ3/72N8WGXgt60s/omtMEtRgwTlNcwcpc56ND78=;
- b=QL7FvpGYLyr0pYfm1AT+mGFlhWYAFXrdEq84G3e1FyETUfN5abn+uBY26IeuKvCiRs
- Lu69Xz2dYDIcUH2FKNva93oHKXXllClwCeflHacPUvevdNqEijpsTApW83dOO/kT/77o
- 6pOCp0abEURwMterwsNCPGFwsQnnBxPXg0LttlvjFT+ulCBZq89YwQFc0ivbSkP9V2bv
- itMtsEWFXJqX3AcIRVgfScT1azuQMyV5ij3nFV4hvONlzJiBVWdbJSl1W96D+dC6Zpps
- 7Bw3qmVBRh6DTVOOd5NNTMPxx/NdoR/Upu4Mx+c27igz+w+O7/AKVe+q1gbH/l3H2+AL
- Qt9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712248792; x=1712853592;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rpSNZ3/72N8WGXgt60s/omtMEtRgwTlNcwcpc56ND78=;
- b=UwFZ0KZsNhi8rG0gHhQAiLyKLYFh2mKDdp9MeSynAinFKhVXxMGg7DVKMHzlwBt7Op
- 83WBYBNzadwIfLTiRf86PmR1+mFZYXDgMdgH3V+vfwrbONxmyt3qoakECL7O7Ho+e9Gd
- +PXMICQZk8+FfcO41y7Aa3DFEz0PN1avmz2vcVBPe4sgxO/IvnFSwX0AkXRjmjjx2yn5
- olUcFYoDA8TqcnnMcqkNNflkg605yDTo/acEVVrfUlBu8USLQKVx7n3RZYK4TVvPTonw
- xBN1RB4a/2ZV0QU2jTtyELEjCyT1Uf81Mswmw6xK0sTmiSg1eOEOxBKj1S2MpI470U7j
- Nb+Q==
-X-Gm-Message-State: AOJu0YxY6ohz+u6+9yaHudJr0MXNPZk+joaCzvWQWdFHcwfKwL1yOr7F
- LOr9qdILZlN4NfALuC3SV5gxkSrEojDCm6d0EhkRfQJC8wJnBm7gDFLQDPhs+FmpWZFr+lRlwEZ
- I7A2NnzWNk4F3EgZSDsz74NbIXNHVxujmVrC5XZcFI4/9Tm+R
-X-Google-Smtp-Source: AGHT+IFkShKXyzeeqLlF2uJVrFA+/9t6qlSNOXNpm8SY0R59Fv8yq4t/dNSF5MiYpVi93sIsZ3ioTALj0FvJbphF6V0=
-X-Received: by 2002:a50:d5d3:0:b0:56e:246b:2896 with SMTP id
- g19-20020a50d5d3000000b0056e246b2896mr660704edj.3.1712248791994; Thu, 04 Apr
- 2024 09:39:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rsQGI-0001Jq-Ct
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 12:48:26 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lei4.wang@intel.com>)
+ id 1rsQGF-0000UJ-8F
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 12:48:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712249303; x=1743785303;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=ejQ1LWaoikNWrt8KCG/4AU7Gv/XPZlMQkn3gGp+IGeM=;
+ b=CQLOK1dw+V0OMK6HhcHJhwxGjlU22CFcJSpE6M+9lMS5LDdmfRkX6hv2
+ j1TAe4QHy8rhEDXbg38UjTYmmeKckbql9hbtCVOy/cXfStmpLbcwDpULw
+ 9jR+YhXadfLdCNvt0T+KnKyzSfDvfb0/hlwp5A/AKk1CGNzpAz+xztaYv
+ EqdGVssv7HMEtEjZnNFuHAPwfhzOmKCuSWgEzcTNlNQF393b2idnTz9i9
+ qxR5hilZJSKuR1HnjSdxYw0q0T7h+IwY7azcaFSpoUwxwAz+9+J29UO2y
+ qbdg+Rsu+6YHlpq17t8JY7w82MWxYq1wjGtQAsbfYbOmjhfDxHWg7h+sC g==;
+X-CSE-ConnectionGUID: 3FB299IiRGa4W8ab0c1v1w==
+X-CSE-MsgGUID: 1ADSUaUTR3iHFFobJTIcWQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11034"; a="18109544"
+X-IronPort-AV: E=Sophos;i="6.07,179,1708416000"; d="scan'208";a="18109544"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Apr 2024 09:48:19 -0700
+X-CSE-ConnectionGUID: nZ5fpJRuSB2aTE+xNp3vFg==
+X-CSE-MsgGUID: 1ZNnwj+cR+use+BBQWUnEg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,179,1708416000"; d="scan'208";a="18945249"
+Received: from leiwang7-mobl.ccr.corp.intel.com (HELO [10.125.241.27])
+ ([10.125.241.27])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Apr 2024 09:48:17 -0700
+Message-ID: <757123c0-c4f9-4332-adb7-e6296ab8d54a@intel.com>
+Date: Fri, 5 Apr 2024 00:48:15 +0800
 MIME-Version: 1.0
-References: <CAFEAcA-VQ0yZMoFEuYWD2twe129OZHaer+-_49inW1exANKV2w@mail.gmail.com>
- <20240404162641.27528-2-zack@buhman.org>
-In-Reply-To: <20240404162641.27528-2-zack@buhman.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 4 Apr 2024 17:39:40 +0100
-Message-ID: <CAFEAcA_duQyCLGyu4f4KwOCEhnEeELDHGqCM9cQtC4d6rF4piQ@mail.gmail.com>
-Subject: Re: [PATCH v2] sh4: mac.l: implement saturation arithmetic logic
-To: Zack Buhman <zack@buhman.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] migration/postcopy: ensure preempt channel is ready
+ before loading states
+To: "Wang, Wei W" <wei.w.wang@intel.com>, Peter Xu <peterx@redhat.com>
+Cc: "farosas@suse.de" <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <20240404100550.17777-1-wei.w.wang@intel.com>
+ <Zg61FnuPPAYAJs45@x1n>
+ <DS0PR11MB6373FB3A707271E6E158258ADC3C2@DS0PR11MB6373.namprd11.prod.outlook.com>
+From: "Wang, Lei" <lei4.wang@intel.com>
+Content-Language: en-US
+In-Reply-To: <DS0PR11MB6373FB3A707271E6E158258ADC3C2@DS0PR11MB6373.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=lei4.wang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,142 +88,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 4 Apr 2024 at 17:26, Zack Buhman <zack@buhman.org> wrote:
->
-> The saturation arithmetic logic in helper_macl is not correct.
->
-> I tested and verified this behavior on a SH7091, the general pattern
-> is a code sequence such as:
->
->         sets
->
->         mov.l _mach,r2
->         lds r2,mach
->         mov.l _macl,r2
->         lds r2,macl
->
->         mova _n,r0
->         mov r0,r1
->         mova _m,r0
->         mac.l @r0+,@r1+
->
->     _mach: .long 0x00007fff
->     _macl: .long 0x12345678
->     _m:    .long 0x7fffffff
->     _n:    .long 0x7fffffff
->
-> Test case 0: (no int64_t overflow)
->   given; prior to saturation mac.l:
->     mach = 0x00007fff macl = 0x12345678
->     @r0  = 0x7fffffff @r1  = 0x7fffffff
->
->   expected saturation mac.l result:
->     mach = 0x00007fff macl = 0xffffffff
->
->   qemu saturation mac.l result (prior to this commit):
->     mach = 0x00007ffe macl = 0x12345678
->
-> Test case 1: (no int64_t overflow)
->   given; prior to saturation mac.l:
->     mach = 0xffff8000 macl = 0x00000000
->     @r0  = 0xffffffff @r1  = 0x00000001
->
->   expected saturation mac.l result:
->     mach = 0xffff8000 macl = 0x00000000
->
->   qemu saturation mac.l result (prior to this commit):
->     mach = 0xffff7fff macl = 0xffffffff
->
-> Test case 2: (int64_t addition overflow)
->   given; prior to saturation mac.l:
->     mach = 0x80000000 macl = 0x00000000
->     @r0  = 0xffffffff @r1  = 0x00000001
->
->   expected saturation mac.l result:
->     mach = 0xffff8000 macl = 0x00000000
->
->   qemu saturation mac.l result (prior to this commit):
->     mach = 0xffff7fff macl = 0xffffffff
->
-> Test case 3: (int64_t addition overflow)
->   given; prior to saturation mac.l:
->     mach = 0x7fffffff macl = 0x00000000
->     @r0 = 0x7fffffff @r1 = 0x7fffffff
->
->   expected saturation mac.l result:
->     mach = 0x00007fff macl = 0xffffffff
->
->   qemu saturation mac.l result (prior to this commit):
->     mach = 0xfffffffe macl = 0x00000001
->
-> All of the above also matches the description of MAC.L as documented
-> in cd00147165-sh-4-32-bit-cpu-core-architecture-stmicroelectronics.pdf
+On 4/5/2024 0:25, Wang, Wei W wrote:> On Thursday, April 4, 2024 10:12 PM, Peter
+Xu wrote:
+>> On Thu, Apr 04, 2024 at 06:05:50PM +0800, Wei Wang wrote:
+>>> Before loading the guest states, ensure that the preempt channel has
+>>> been ready to use, as some of the states (e.g. via virtio_load) might
+>>> trigger page faults that will be handled through the preempt channel.
+>>> So yield to the main thread in the case that the channel create event
+>>> has been dispatched.
+>>>
+>>> Originally-by: Lei Wang <lei4.wang@intel.com>
+>>> Link:
+>>> https://lore.kernel.org/all/9aa5d1be-7801-40dd-83fd-f7e041ced249@intel
+>>> .com/T/
+>>> Suggested-by: Peter Xu <peterx@redhat.com>
+>>> Signed-off-by: Lei Wang <lei4.wang@intel.com>
+>>> Signed-off-by: Wei Wang <wei.w.wang@intel.com>
+>>> ---
+>>>  migration/savevm.c | 17 +++++++++++++++++
+>>>  1 file changed, 17 insertions(+)
+>>>
+>>> diff --git a/migration/savevm.c b/migration/savevm.c index
+>>> 388d7af7cd..fbc9f2bdd4 100644
+>>> --- a/migration/savevm.c
+>>> +++ b/migration/savevm.c
+>>> @@ -2342,6 +2342,23 @@ static int
+>>> loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
+>>>
+>>>      QEMUFile *packf = qemu_file_new_input(QIO_CHANNEL(bioc));
+>>>
+>>> +    /*
+>>> +     * Before loading the guest states, ensure that the preempt channel has
+>>> +     * been ready to use, as some of the states (e.g. via virtio_load) might
+>>> +     * trigger page faults that will be handled through the preempt channel.
+>>> +     * So yield to the main thread in the case that the channel create event
+>>> +     * has been dispatched.
+>>> +     */
+>>> +    do {
+>>> +        if (!migrate_postcopy_preempt() || !qemu_in_coroutine() ||
+>>> +            mis->postcopy_qemufile_dst) {
+>>> +            break;
+>>> +        }
+>>> +
+>>> +        aio_co_schedule(qemu_get_current_aio_context(),
+>> qemu_coroutine_self());
+>>> +        qemu_coroutine_yield();
+>>> +    } while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done,
+>>> + 1));
+>>
+>> I think we need s/!// here, so the same mistake I made?  I think we need to
+>> rework the retval of qemu_sem_timedwait() at some point later..
+> 
+> No. qemu_sem_timedwait returns false when timeout, which means sem isn’t posted yet.
+> So it needs to go back to the loop. (the patch was tested)
 
-Hi. I just noticed that you didn't include a signed-off-by line
-in your commit message. We need these as they're how you say
-that you're legally OK to contribute this code to QEMU and
-you're happy for it to go into the project:
+When timeout, qemu_sem_timedwait() will return -1. I think the patch test passed
+may because you will always have at least one yield (the first yield in the do
+...while ...) when loadvm_handle_cmd_packaged()?
 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emails-must-include-a-signed-off-by-line
-has links to what exactly this means, but basically the
-requirement is that the last line of your commit message should be
-"Signed-off-by: Your Name <your@email>"
-
-In this case, if you just reply to this email with that, we
-can pick it up and fix up the commit message when we apply the
-patch.
-
-> ---
->  target/sh4/op_helper.c | 31 +++++++++++++++++++++----------
->  1 file changed, 21 insertions(+), 10 deletions(-)
->
-> diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
-> index 4559d0d376..ee16524083 100644
-> --- a/target/sh4/op_helper.c
-> +++ b/target/sh4/op_helper.c
-> @@ -160,18 +160,29 @@ void helper_ocbi(CPUSH4State *env, uint32_t address)
->
->  void helper_macl(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
->  {
-> -    int64_t res;
-> -
-> -    res = ((uint64_t) env->mach << 32) | env->macl;
-> -    res += (int64_t) (int32_t) arg0 *(int64_t) (int32_t) arg1;
-> -    env->mach = (res >> 32) & 0xffffffff;
-> -    env->macl = res & 0xffffffff;
-> +    int32_t value0 = (int32_t)arg0;
-> +    int32_t value1 = (int32_t)arg1;
-> +    int64_t mul = ((int64_t)value0) * ((int64_t)value1);
-> +    int64_t mac = (((uint64_t)env->mach) << 32) | env->macl;
-> +    int64_t result;
-> +    bool overflow = sadd64_overflow(mac, mul, &result);
-> +    /* Perform 48-bit saturation arithmetic if the S flag is set */
->      if (env->sr & (1u << SR_S)) {
-> -        if (res < 0)
-> -            env->mach |= 0xffff0000;
-> -        else
-> -            env->mach &= 0x00007fff;
-> +        /*
-> +         * The sign bit of `mac + mul` may overflow. The MAC unit on
-> +         * real SH-4 hardware has equivalent carry/saturation logic:
-> +         */
-> +        const int64_t upper_bound =  ((1ull << 47) - 1);
-> +        const int64_t lower_bound = -((1ull << 47) - 0);
-> +
-> +        if (overflow) {
-> +            result = (mac < 0) ? lower_bound : upper_bound;
-> +        } else {
-> +            result = MIN(MAX(result, lower_bound), upper_bound);
-> +        }
+> 
+>>
+>> Besides, this patch kept the sem_wait() in postcopy_preempt_thread() so it
+>> will wait() on this sem again.  If this qemu_sem_timedwait() accidentally
+>> consumed the sem count then I think the other thread can hang forever?
+> 
+> I can get the issue you mentioned, and seems better to be placed before the creation of
+> the preempt thread. Then we probably don’t need to wait_sem in the preempt thread, as the
+> channel is guaranteed to be ready when it runs?
+> 
+> Update will be:
+> 
+> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> index eccff499cb..5a70ce4f23 100644
+> --- a/migration/postcopy-ram.c
+> +++ b/migration/postcopy-ram.c
+> @@ -1254,6 +1254,15 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
 >      }
-> +    env->macl = result;
-> +    env->mach = result >> 32;
->  }
-
-I haven't checked the sh4 docs but the change looks right, so
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+> 
+>      if (migrate_postcopy_preempt()) {
+> +        do {
+> +            if (!migrate_postcopy_preempt() || !qemu_in_coroutine() ||
+> +                mis->postcopy_qemufile_dst) {
+> +                break;
+> +            }
+> +            aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
+> +            qemu_coroutine_yield();
+> +        } while (!qemu_sem_timedwait(&mis->postcopy_qemufile_dst_done, 1));
+> +
+>          /*
+>           * This thread needs to be created after the temp pages because
+>           * it'll fetch RAM_CHANNEL_POSTCOPY PostcopyTmpPage immediately.
+> @@ -1743,12 +1752,6 @@ void *postcopy_preempt_thread(void *opaque)
+> 
+>      qemu_sem_post(&mis->thread_sync_sem);
+> 
+> -    /*
+> -     * The preempt channel is established in asynchronous way.  Wait
+> -     * for its completion.
+> -     */
+> -    qemu_sem_wait(&mis->postcopy_qemufile_dst_done);
+> 
+> 
+> 
+> 
+> 
+> 
+> 
 
