@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14A8CD1296
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFF7CD1284
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 12:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsM8D-0000V2-FU; Thu, 04 Apr 2024 08:23:49 -0400
+	id 1rsM89-0000Rv-VO; Thu, 04 Apr 2024 08:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rsM8B-0000TI-OS
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rsM88-0000RD-Iv
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rsM8A-0000xP-Al
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:47 -0400
+ id 1rsM86-0000wp-LS
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:23:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712233425;
+ s=mimecast20190719; t=1712233421;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RduIHs0sVwVRJt/xTxYLax5k5ayyoz0yKuhL8Jrw+bY=;
- b=evFcUZVNgqx0hxBn8PIECnztObQPsSEKytJw3IJxyOxghk0sYGkZ7cIB1qDFddWVSKrAZC
- p+o1ZUScQVWHN+0Rl/7IqG2uyuwDNNZlzlIONnahjrPkUUlX87KxpQZmktLg8131tsB7xg
- X1zmSoZYhsGiMV4M7SjIlmP0SXGbGdE=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LNV1PCTN5GCJl2MvUD8nUfDJ3d0IVmd15bYC7q0NeUA=;
+ b=PcV1rmTuwfhvyd7P+LilxkgAV6KKNyQO71u2+io+GOj40TB8ON9OKLVYIlb41CrtKIArFk
+ V09U2DrFo8pSviJeQMoAidcX6qU32LihB8S8qdxhvWqxs/l2t4yd8QZ7Vom0yxjCMc0jR6
+ RI80zNi24dx/Pp5rM7NoqJq/SyE1PhY=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-223-QnH-NVhMP52bAxXKjrpXkg-1; Thu, 04 Apr 2024 08:23:44 -0400
-X-MC-Unique: QnH-NVhMP52bAxXKjrpXkg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a46bae02169so183993566b.1
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 05:23:44 -0700 (PDT)
+ us-mta-508-0y-eHu-8MZGWw8FsWqopIg-1; Thu, 04 Apr 2024 08:23:40 -0400
+X-MC-Unique: 0y-eHu-8MZGWw8FsWqopIg-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-56e214bc952so288336a12.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 05:23:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712233422; x=1712838222;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RduIHs0sVwVRJt/xTxYLax5k5ayyoz0yKuhL8Jrw+bY=;
- b=uv+9ZHqOJ0guSx+T+1KxTRMDJOi/+bnuBTmWfKjcNShzhUvRx1TE5BpKP7wWt810JW
- OfcIIIkg8pG9DRZQrtPni++0nB+xWYJlbG/5n4noilt54gLWl4d3e3P8HLMRS2kdx0WW
- TgAFqMAzol6zhjrTsuYqjrqQ6+WIYqDInUQhgDmUklJLYJrUPXGsaKNPLrPpGL/smqMR
- yimLToLaQe1xAx1qD/TZ1NA7xOUO2hI7HGseVspXHQS3PeMgbwuVPK0KViucWwf4HcVm
- uPazhzAFGP/xqql/2bOOjr33TtmpLg8r31bB7TBsyoazwiB5L280HpzkD9rjeyOhm7MJ
- kSyg==
-X-Gm-Message-State: AOJu0YzzUymd1VXYzJZ6kzlKVkOq5JQQlKUgznZoM3PPYc9wfVptjChr
- EbI+H4Po7Bdm+zt/n4doM5mQRy2jKHWvnULA462+3yp6JRB8MzBG4SzlhIEEkGUGLQIrFH/CUdO
- dzVnWFA6/bowWFsEoaBQakQxh7w16fysPdyteqjeGYrxC3QzclqKB8Qj9wD89sONcd5lBEYnb61
- rWYgBZjTBfL1G31QX6+cFlr9vGMp7bGkEXO0PP
-X-Received: by 2002:a17:906:e0d0:b0:a4e:4981:d3fb with SMTP id
- gl16-20020a170906e0d000b00a4e4981d3fbmr4783167ejb.29.1712233422701; 
- Thu, 04 Apr 2024 05:23:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGf4eCsIC+G13AWXm6UQZeHHIGvPgrDBYeQmRPOqAoJLpzfAsa9TtnvrYBAq3muulHzgRGjnQ==
-X-Received: by 2002:a17:906:e0d0:b0:a4e:4981:d3fb with SMTP id
- gl16-20020a170906e0d000b00a4e4981d3fbmr4783126ejb.29.1712233422342; 
- Thu, 04 Apr 2024 05:23:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712233418; x=1712838218;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LNV1PCTN5GCJl2MvUD8nUfDJ3d0IVmd15bYC7q0NeUA=;
+ b=H/u825GxdaxebDGU+PvXyjawbaFcG9GkXoxrfU+NrT6Qhtugw3hTFmfKyr1XNrzBhY
+ 9Ip+qZ9VjvbM4Ef+T9F8OvWrHzHTnbjEvi1uBQsiPgSPBJI2P9nq4bQ4lcnFm1HaZu6d
+ Qkrvwqa5fRU2GJeWhDzYKCumce/JylHRNKFqeO6TGkFE6Sl28qVvbFBOxS9+jyZ8GPq9
+ sVIOD8TenQ4/XOXheghH3OrAn30BdaUbtscdEL0s5TYTZTnj+EaUuLBvkm2J+HzoXvIA
+ 8+VjoX/BqbvxUCu8gW4alWcIACdk2sdQz38kcXFTXEi0Hu9wSdSqMUhcn4CR8MwIF4zX
+ aVjw==
+X-Gm-Message-State: AOJu0YwH0aMk62g3m2qKfUpQuXp7OmKetRJ3ry/bJs7czEVevn4R2bmP
+ IGKGdiWHsXfAV8LqEsy5ghXKBv5FhPLzNOIJ1cu2s8vVLLiuMCBPA4XjPia1SYG3DHUnnjz7dpr
+ 0x4YwCuFtDabZfaLcs035NwB+4w6owbVpMVt5q2NpAIFZLrqVJuvrtl2YsitjUohTblyZcWCTES
+ SsSHGjY24l8IuAnbzDbHVlvNSOB3zKgUXCQ84c
+X-Received: by 2002:a50:d7d8:0:b0:568:9cfe:1974 with SMTP id
+ m24-20020a50d7d8000000b005689cfe1974mr1529195edj.18.1712233418431; 
+ Thu, 04 Apr 2024 05:23:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+GPLxmU+alhrLlFhX1gX5RXUqwdWb1opMoFA88WNi1P64TUC7HvUhHqIavfDOzOZ3s8sbcg==
+X-Received: by 2002:a50:d7d8:0:b0:568:9cfe:1974 with SMTP id
+ m24-20020a50d7d8000000b005689cfe1974mr1529152edj.18.1712233417869; 
+ Thu, 04 Apr 2024 05:23:37 -0700 (PDT)
 Received: from localhost.localdomain
  (host-87-12-25-33.business.telecomitalia.it. [87.12.25.33])
  by smtp.gmail.com with ESMTPSA id
- p14-20020aa7cc8e000000b0056c4372c161sm9302566edt.55.2024.04.04.05.23.40
+ k7-20020aa7c047000000b0056c443ce781sm9163199edo.85.2024.04.04.05.23.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Apr 2024 05:23:41 -0700 (PDT)
+ Thu, 04 Apr 2024 05:23:36 -0700 (PDT)
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -83,17 +82,15 @@ Cc: Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, David Hildenbrand <david@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, gmaglione@redhat.com,
  Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH for-9.1 v3 01/11] libvhost-user: set msg.msg_control to NULL
- when it is empty
-Date: Thu,  4 Apr 2024 14:23:20 +0200
-Message-ID: <20240404122330.92710-2-sgarzare@redhat.com>
+Subject: [PATCH for-9.1 v3 00/11] vhost-user: support any POSIX system (tested
+ on macOS, FreeBSD, OpenBSD)
+Date: Thu,  4 Apr 2024 14:23:19 +0200
+Message-ID: <20240404122330.92710-1-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240404122330.92710-1-sgarzare@redhat.com>
-References: <20240404122330.92710-1-sgarzare@redhat.com>
 MIME-Version: 1.0
-Content-type: text/plain
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -117,29 +114,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On some OS (e.g. macOS) sendmsg() returns -1 (errno EINVAL) if
-the `struct msghdr` has the field `msg_controllen` set to 0, but
-`msg_control` is not NULL.
+v1: https://patchew.org/QEMU/20240228114759.44758-1-sgarzare@redhat.com/
+v2: https://patchew.org/QEMU/20240326133936.125332-1-sgarzare@redhat.com/
+v3:
+  - rebased on v9.0.0-rc2
+  - patch 4: avoiding setting fd non-blocking for messages where we
+    have memory fd (Eric)
+  - patch 9: enriched commit message and documentation to highlight that we
+    want to mimic memfd (David)
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
----
- subprojects/libvhost-user/libvhost-user.c | 1 +
- 1 file changed, 1 insertion(+)
+The vhost-user protocol is not really Linux-specific, so let's try support
+QEMU's frontends and backends (including libvhost-user) in any POSIX system
+with this series. The main use case is to be able to use virtio devices that
+we don't have built-in in QEMU (e.g. virtiofsd, vhost-user-vsock, etc.) even
+in non-Linux systems.
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a879149fef..22bea0c775 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -632,6 +632,7 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
-         memcpy(CMSG_DATA(cmsg), vmsg->fds, fdsize);
-     } else {
-         msg.msg_controllen = 0;
-+        msg.msg_control = NULL;
-     }
- 
-     do {
+The first 5 patches are more like fixes discovered at runtime on macOS or
+FreeBSD that could go even independently of this series.
+
+Patches 6, 7, and 8 enable building of frontends and backends (including
+libvhost-user) with associated code changes to succeed in compilation.
+
+Patch 9 adds `memory-backend-shm` that uses the POSIX shm_open() API to
+create shared memory which is identified by an fd that can be shared with
+vhost-user backends. This is useful on those systems (like macOS) where
+we don't have memfd_create() or special filesystems like "/dev/shm".
+
+Patches 10 and 11 use `memory-backend-shm` in some vhost-user tests.
+
+Maybe the first 5 patches can go separately, but I only discovered those
+problems after testing patches 6 - 9, so I have included them in this series
+for now. Please let me know if you prefer that I send them separately.
+
+I tested this series using vhost-user-blk and QSD on macOS Sonoma 14.4
+(aarch64), FreeBSD 14 (x86_64), OpenBSD 7.4 (x86_64), and Fedora 39 (x86_64)
+in this way:
+
+- Start vhost-user-blk or QSD (same commands for all systems)
+
+  vhost-user-blk -s /tmp/vhost.socket \
+    -b Fedora-Cloud-Base-39-1.5.x86_64.raw
+
+  qemu-storage-daemon \
+    --blockdev file,filename=Fedora-Cloud-Base-39-1.5.x86_64.qcow2,node-name=file \
+    --blockdev qcow2,file=file,node-name=qcow2 \
+    --export vhost-user-blk,addr.type=unix,addr.path=/tmp/vhost.socket,id=vub,num-queues=1,node-name=qcow2,writable=on
+
+- macOS (aarch64): start QEMU (using hvf accelerator)
+
+  qemu-system-aarch64 -smp 2 -cpu host -M virt,accel=hvf,memory-backend=mem \
+    -drive file=./build/pc-bios/edk2-aarch64-code.fd,if=pflash,format=raw,readonly=on \
+    -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+    -device ramfb -device usb-ehci -device usb-kbd \
+    -object memory-backend-shm,id=mem,size=512M \
+    -device vhost-user-blk-pci,num-queues=1,disable-legacy=on,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+- FreeBSD/OpenBSD (x86_64): start QEMU (no accelerators available)
+
+  qemu-system-x86_64 -smp 2 -M q35,memory-backend=mem \
+    -object memory-backend-shm,id=mem,size="512M" \
+    -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+- Fedora (x86_64): start QEMU (using kvm accelerator)
+
+  qemu-system-x86_64 -smp 2 -M q35,accel=kvm,memory-backend=mem \
+    -object memory-backend-shm,size="512M" \
+    -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+Branch pushed (and CI started) at https://gitlab.com/sgarzarella/qemu/-/tree/macos-vhost-user?ref_type=heads
+
+Thanks,
+Stefano
+
+Stefano Garzarella (11):
+  libvhost-user: set msg.msg_control to NULL when it is empty
+  libvhost-user: fail vu_message_write() if sendmsg() is failing
+  libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not supported
+  vhost-user-server: do not set memory fd non-blocking
+  contrib/vhost-user-blk: fix bind() using the right size of the address
+  vhost-user: enable frontends on any POSIX system
+  libvhost-user: enable it on any POSIX system
+  contrib/vhost-user-blk: enable it on any POSIX system
+  hostmem: add a new memory backend based on POSIX shm_open()
+  tests/qtest/vhost-user-blk-test: use memory-backend-shm
+  tests/qtest/vhost-user-test: add a test case for memory-backend-shm
+
+ docs/system/devices/vhost-user.rst        |   5 +-
+ meson.build                               |   5 +-
+ qapi/qom.json                             |  17 ++++
+ subprojects/libvhost-user/libvhost-user.h |   2 +-
+ backends/hostmem-shm.c                    | 118 ++++++++++++++++++++++
+ contrib/vhost-user-blk/vhost-user-blk.c   |  23 ++++-
+ hw/net/vhost_net.c                        |   5 +
+ subprojects/libvhost-user/libvhost-user.c |  76 +++++++++++++-
+ tests/qtest/vhost-user-blk-test.c         |   2 +-
+ tests/qtest/vhost-user-test.c             |  23 +++++
+ util/vhost-user-server.c                  |  12 +++
+ backends/meson.build                      |   1 +
+ hw/block/Kconfig                          |   2 +-
+ qemu-options.hx                           |  11 ++
+ util/meson.build                          |   4 +-
+ 15 files changed, 288 insertions(+), 18 deletions(-)
+ create mode 100644 backends/hostmem-shm.c
+
 -- 
 2.44.0
 
