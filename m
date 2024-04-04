@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 536E9CD1292
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 21:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B3FCD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 21:05:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsUD5-0000yA-Qj; Thu, 04 Apr 2024 17:01:23 -0400
+	id 1rsUGj-0003TJ-Hb; Thu, 04 Apr 2024 17:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsUCn-0000mw-BY
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 17:01:06 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rsUGh-0003Sl-1M
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 17:05:07 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsUCT-0007Qq-Jz
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 17:01:00 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5ce2aada130so1100788a12.1
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 14:00:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rsUGe-0000kI-9L
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 17:05:06 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-614b02f8ed6so22803747b3.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 14:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712264443; x=1712869243; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=0/ekaTyyBHEzg2gMKpvUq/mv6Nl9iOhi1rhUNF8qDbI=;
- b=untSB3DJz/zDZECL01+9KnzLhCyslTesEZkRzjuig2UlkzslfJ2UCFeEGUbQDGCL6B
- kN83m38dHT6P+CqQ5ywB+n9J1svjttXBlpg2oYODSdKmvGrAvF4pP+jnXGowjgssL4AO
- tjswg5DogZCwrBTE5yfNnRYpLuzI7bLy7LbuLcbb/7iavtioredGJePlWSFuQ7qIkKqB
- Nobrl81PLnjwmbK3NDduV1gFUJp1/s9f0+ueZ5HchmThJK3uOSzwlHl5DWbRjRzeNVD3
- gAbc3bkQJ38YyVkq6ooQURjTrKguHFQLdojXvBr9Wtl7joyPkWk16Gn/piajeap445GW
- CDkA==
+ d=bytedance.com; s=google; t=1712264702; x=1712869502; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3BEwoI7vaLN7STH+6B1HZ1H40SSE9uFhmcRIVexkA4A=;
+ b=GN1CdMq0lsETZiTKKubhh4+CdblUqmJtqgmok/UsHE0Vk7NukDUTWkY4YWLMlmHB3i
+ 6lAwy70tbomvy9a6NQsPZaJAiF35iT4M75gQjsngpq1LbtLa8STn3DW+mZziapxVQtaM
+ 94wPpV8Pee0ysF7GNJEcQYy5SGEPAhlEPdVoN/nKJpWQO1h26aHTuGPyiUKJmzgBvP6q
+ YmblsCWB9h3z9VfZHs9ba+MW29BRz8SfLf+ofNocY2ctWqCQC+w/TZBmb/RbNxd+lVBR
+ TfLclWEEdIFjsIc1K7sycr9o64Pzr8p3+JVsWVnz4is1q42D5GJDiH/BT2ap54W1kZK4
+ dmpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712264443; x=1712869243;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0/ekaTyyBHEzg2gMKpvUq/mv6Nl9iOhi1rhUNF8qDbI=;
- b=e6dwpYoptxB/78GOFfvmqCHoRoPhAkBQ2b+NVyaBSs3IKkQ4+Qckmjn1WXe85boSEJ
- yNOmKbTScExN8VcHtCx0mV7CmSICOS1GNUIQH7viIf1C/D1YZo+t2G8Qs5V+0xXzhxai
- ULUZcLxvutXPA7A+PyhdJiIRLtypsosWpR7ibE9l2188pt18osersk5RAwE/aBsfI4Pg
- v9smU9a84DoWjCDx5UK7/aUkFVrHv+a8EDECfhSycLs2GGDSBI13IJlAeOXsWot0+qhj
- cac9qHBckBkcgtYMUlgTKpdoGt3k4YFLcGwYYnym+uXaqC6sIyBz+ue1k2A7EwNXy7mK
- vOmA==
-X-Gm-Message-State: AOJu0YyeWjycjaBiErCUnV7q6qzOeXKzJQ39bp5A3fA0CVNPWWWllC4e
- i3HuSeia1/TfkfhnkCVoT6ggyTPhoosZ+KlxdqGoXKdQpCzMshkvgJnEnhzz1vMCrQxqFCwIFbC
- /
-X-Google-Smtp-Source: AGHT+IH9Na5/3d+Tnc8jhhTltzkBnJ8Wcq4AwtwWwhMloY50uV24QTTHUpnkyFJxU6dy6OMohmLaMQ==
-X-Received: by 2002:a17:90a:ce:b0:2a2:a88a:4324 with SMTP id
- v14-20020a17090a00ce00b002a2a88a4324mr3390254pjd.13.1712264443175; 
- Thu, 04 Apr 2024 14:00:43 -0700 (PDT)
-Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
- by smtp.gmail.com with ESMTPSA id
- fz7-20020a17090b024700b0029facfb3f25sm140418pjb.45.2024.04.04.14.00.42
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Apr 2024 14:00:42 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH for-9.0] tcg/optimize: Do not attempt to constant fold neg_vec
-Date: Thu,  4 Apr 2024 11:00:40 -1000
-Message-Id: <20240404210040.5150-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1712264702; x=1712869502;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3BEwoI7vaLN7STH+6B1HZ1H40SSE9uFhmcRIVexkA4A=;
+ b=DoIhWPebutPc2uB623bCnWtC+FZeLViqZifjUREE9hJLEGpzOpPJoo+JegsWdCdcLs
+ oeb4BH1EBfF9RNbAxANLYSaG0nhzdDJVptYXg59SodlcSNAr8C//HDF7e+AZ95cofciG
+ fAjoHKMoTtEAu2Fi9zM8sBgI5WW418YYgVcWCRzhamyhRn8pf1KKhHqV26IvQ6E8iea1
+ +CVIdcUMupquIwjL767YbcYT56lmDrEuvnfjiLM2yIKfX3SwqzftKuP4R6EmVqhbejJ7
+ 6epw7imvDJktmGkR7Lrczn9SVois1btmEU10wUq/Uw+0IhMaZxAzc2PjVq7XHymvDecM
+ B8KA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWw2oCEY/2ICaFnXW7EDpgCwBR2Dt3/gcxKB5JHtgorOEUQRlGJtSQiXUOVjl4oFwD7QAHv3OHCax0/JvNyWc5srEfoi0=
+X-Gm-Message-State: AOJu0YxSkOFWdMmftj/yJ+OLtrf6Qxd7khuBebro4m0wo3W7cTNk+A7p
+ mN0+Uz5VZ7q5MEhaP+Bp9A9i6Pnmf4kZQCbhdwaaMzVAbMOMrAq+wqIqXtAKtM6N9v7uXFgKeNq
+ HDfhesh8qqEYq9t2WDkwKHBxC76Al5OFXDqHJtw==
+X-Google-Smtp-Source: AGHT+IG6KpWakGj8bl6wl0XaCmeiykXs6HQkS3DMCudH9AT087DNiiXeU48IwUZnyWYEgunzOmtd5Z4JvSn2JDWo2cM=
+X-Received: by 2002:a25:bc50:0:b0:dcc:5b7e:ddfe with SMTP id
+ d16-20020a25bc50000000b00dcc5b7eddfemr549930ybk.4.1712264702360; Thu, 04 Apr
+ 2024 14:05:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+References: <20240402001739.2521623-1-horenchuang@bytedance.com>
+ <20240402001739.2521623-3-horenchuang@bytedance.com>
+ <20240403180425.00003be0@Huawei.com>
+ <CAKPbEqoJZe+HWHhCvBTVSHXffGY2ign3Htp4pfbFb4YVJS_Q2A@mail.gmail.com>
+ <20240404143733.00004594@Huawei.com>
+In-Reply-To: <20240404143733.00004594@Huawei.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Thu, 4 Apr 2024 14:04:51 -0700
+Message-ID: <CAKPbEqpp-mFv0bnOPtk0hFYVqA5y-e-T3QMWrS19g00Mob6D+g@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v10 2/2] memory tier: create CPUless memory
+ tiers after obtaining HMAT info
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>,
+ Gregory Price <gourry.memverge@gmail.com>, 
+ aneesh.kumar@linux.ibm.com, mhocko@suse.com, tj@kernel.org, 
+ john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>,
+ Srinivasulu Thanneeru <sthanneeru@micron.com>, 
+ SeongJae Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, 
+ Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, nvdimm@lists.linux.dev, 
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Linux Memory Management List <linux-mm@kvack.org>,
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>, 
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org, 
+ Hao Xiang <hao.xiang@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=horenchuang@bytedance.com; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,94 +111,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out the tail of fold_neg to fold_neg_no_const so that we
-can avoid attempting to constant fold vector negate.
+Hi Jonathan,
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2150
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c                    | 17 ++++++++---------
- tests/tcg/aarch64/test-2150.c     | 12 ++++++++++++
- tests/tcg/aarch64/Makefile.target |  2 +-
- 3 files changed, 21 insertions(+), 10 deletions(-)
- create mode 100644 tests/tcg/aarch64/test-2150.c
+Thank you! I will fix them and send a V11 soon.
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 275db77b42..2e9e5725a9 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1990,16 +1990,10 @@ static bool fold_nand(OptContext *ctx, TCGOp *op)
-     return false;
- }
- 
--static bool fold_neg(OptContext *ctx, TCGOp *op)
-+static bool fold_neg_no_const(OptContext *ctx, TCGOp *op)
- {
--    uint64_t z_mask;
--
--    if (fold_const1(ctx, op)) {
--        return true;
--    }
--
-     /* Set to 1 all bits to the left of the rightmost.  */
--    z_mask = arg_info(op->args[1])->z_mask;
-+    uint64_t z_mask = arg_info(op->args[1])->z_mask;
-     ctx->z_mask = -(z_mask & -z_mask);
- 
-     /*
-@@ -2010,6 +2004,11 @@ static bool fold_neg(OptContext *ctx, TCGOp *op)
-     return true;
- }
- 
-+static bool fold_neg(OptContext *ctx, TCGOp *op)
-+{
-+    return fold_const1(ctx, op) || fold_neg_no_const(ctx, op);
-+}
-+
- static bool fold_nor(OptContext *ctx, TCGOp *op)
- {
-     if (fold_const2_commutative(ctx, op) ||
-@@ -2418,7 +2417,7 @@ static bool fold_sub_to_neg(OptContext *ctx, TCGOp *op)
-     if (have_neg) {
-         op->opc = neg_op;
-         op->args[1] = op->args[2];
--        return fold_neg(ctx, op);
-+        return fold_neg_no_const(ctx, op);
-     }
-     return false;
- }
-diff --git a/tests/tcg/aarch64/test-2150.c b/tests/tcg/aarch64/test-2150.c
-new file mode 100644
-index 0000000000..fb86c11958
---- /dev/null
-+++ b/tests/tcg/aarch64/test-2150.c
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* See https://gitlab.com/qemu-project/qemu/-/issues/2150 */
-+
-+int main()
-+{
-+    asm volatile(
-+        "movi     v6.4s, #1\n"
-+        "movi     v7.4s, #0\n"
-+        "sub      v6.2d, v7.2d, v6.2d\n"
-+        : : : "v6", "v7");
-+    return 0;
-+}
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 0efd565f05..70d728ae9a 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -10,7 +10,7 @@ VPATH 		+= $(AARCH64_SRC)
- 
- # Base architecture tests
- AARCH64_TESTS=fcvt pcalign-a64 lse2-fault
--AARCH64_TESTS += test-2248
-+AARCH64_TESTS += test-2248 test-2150
- 
- fcvt: LDFLAGS+=-lm
- 
--- 
-2.34.1
+On Thu, Apr 4, 2024 at 6:37=E2=80=AFAM Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
+>
+> <snip>
+>
+> > > > @@ -858,7 +910,8 @@ static int __init memory_tier_init(void)
+> > > >        * For now we can have 4 faster memory tiers with smaller adi=
+stance
+> > > >        * than default DRAM tier.
+> > > >        */
+> > > > -     default_dram_type =3D alloc_memory_type(MEMTIER_ADISTANCE_DRA=
+M);
+> > > > +     default_dram_type =3D mt_find_alloc_memory_type(MEMTIER_ADIST=
+ANCE_DRAM,
+> > > > +                                                                  =
+   &default_memory_types);
+> > >
+> > > Unusual indenting.  Align with just after (
+> > >
+> >
+> > Aligning with "(" will exceed 100 columns. Would that be acceptable?
+> I think we are talking cross purposes.
+>
+>         default_dram_type =3D mt_find_alloc_memory_type(MEMTIER_ADISTANCE=
+_DRAM,
+>                                                       &default_memory_typ=
+es);
+>
+> Is what I was suggesting.
+>
 
+Oh, now I see. Thanks!
+
+> >
+> > > >       if (IS_ERR(default_dram_type))
+> > > >               panic("%s() failed to allocate default DRAM tier\n", =
+__func__);
+> > > >
+> > > > @@ -868,6 +921,14 @@ static int __init memory_tier_init(void)
+> > > >        * types assigned.
+> > > >        */
+> > > >       for_each_node_state(node, N_MEMORY) {
+> > > > +             if (!node_state(node, N_CPU))
+> > > > +                     /*
+> > > > +                      * Defer memory tier initialization on CPUles=
+s numa nodes.
+> > > > +                      * These will be initialized after firmware a=
+nd devices are
+> > >
+> > > I think this wraps at just over 80 chars.  Seems silly to wrap so tig=
+htly and not
+> > > quite fit under 80. (this is about 83 chars.
+> > >
+> >
+> > I can fix this.
+> > I have a question. From my patch, this is <80 chars. However,
+> > in an email, this is >80 chars. Does that mean we need to
+> > count the number of chars in an email, not in a patch? Or if I
+> > missed something? like vim configuration or?
+>
+> 3 tabs + 1 space + the text from * (58)
+> =3D 24 + 1 + 58 =3D 83
+>
+> Advantage of using claws email for kernel stuff is it has a nice per char=
+acter
+> ruler at the top of the window.
+>
+> I wonder if you have a different tab indent size?  The kernel uses 8
+> characters.  It might explain the few other odd indents if perhaps
+> you have it at 4 in your editor?
+>
+> https://www.kernel.org/doc/html/v4.10/process/coding-style.html
+>
+
+Got it. I was using tab=3D4. I will change to 8. Thanks!
+
+> Jonathan
+>
+> >
+> > > > +                      * initialized.
+> > > > +                      */
+> > > > +                     continue;
+> > > > +
+> > > >               memtier =3D set_node_memory_tier(node);
+> > > >               if (IS_ERR(memtier))
+> > > >                       /*
+> > >
+> >
+> >
+>
+
+
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
