@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 094A0CD1284
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 13:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE01CCD1292
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 13:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsMgl-0003QB-0T; Thu, 04 Apr 2024 08:59:31 -0400
+	id 1rsMYb-00077W-Vr; Thu, 04 Apr 2024 08:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rsMgU-0003KV-40; Thu, 04 Apr 2024 08:59:14 -0400
-Received: from wfout7-smtp.messagingengine.com ([64.147.123.150])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rsMYZ-00076U-A5
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:51:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rsMgS-00072S-5M; Thu, 04 Apr 2024 08:59:13 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailfout.west.internal (Postfix) with ESMTP id A03971C000A8;
- Thu,  4 Apr 2024 08:59:07 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute5.internal (MEProxy); Thu, 04 Apr 2024 08:59:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1712235547; x=
- 1712321947; bh=guoisUAPuCy5hMqnhsJmvLqBquBENjAxj/rNNCRRwco=; b=u
- r9As0bQaf7k6GDtTlylbWTN8PDp/U/HbdQLQR+9S9wUxaPwI3pV/3aSPTY9otWp4
- 6h06gy8O6BcRGi4xYNYSTTrT0nf1kpTK1RpSVRXrChHh44emdD1v8fpsO/pZamaf
- uynrlFDBXsmrCcELCXDJ8qEJbnLppgDsyevxVTjhzSN28PUBw/yX593M/uOxzCPb
- cOlotmoaBOqlEgvWNnNc0yY4EPSF+eyGmz3f2beXUlAGSjx0qufF+EiBFNMXfngC
- BVATPwym9CPqqiaHWb2W5Cm24beqA1JnhZrSFrKtjoFj0fAfuyyrNYiF9toEh+y0
- IA1z28LWFpti4rLKIKXCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1712235547; x=1712321947; bh=guoisUAPuCy5hMqnhsJmvLqBquBE
- NjAxj/rNNCRRwco=; b=P31z9SDNvB1FLem+cA3/vdFZ6HRo+Ug0ZiNJmx0QE/7E
- xbuugRnGGDMHcvVtbOKqk4sE40QSYMOHx/2vP+4bE8cLil5UDZpYXRSaSRFUveWw
- jlO8CTqlz/Bo3eYXfpzAp4RYjDDDk4zrmGU9DU8lLyrbz4dK9l3AU2sz9D3yHcDu
- cxrQJigCUxt3YPT2PPxeOJEkIJCq/4xdw3iiIPZc4uMpITp72pe3P4XYoXCsfcau
- ngYGpUnC97VK4ur5+6FTCV1bGpb75hBWf8VjI6OAlaBhbahz7Dgtuy5+Cxx8rlnA
- 229GdV+Hd1fSFhVM95i2/NUqNrFx1Xl5r6YlkjU+KA==
-X-ME-Sender: <xms:GqQOZhRbTRR0dniHue7afsAE_qjmDEWwn4jZ3XAWksSTV3ntSoOM3w>
- <xme:GqQOZqzbKbuKCgcAbM-cJT0wDk7jd5Bx2fUDDRAO4hncuru4ogUr6PSCJ-cLL5p3m
- BdoXt3YqJrHKYQ_UwE>
-X-ME-Received: <xmr:GqQOZm1oH-6-4RrwxnTJp377FzycTYDv94eoBdkHyVpwOijPeFntvuK2iQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudefkedgheelucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghu
- shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
- htvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffff
- jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
- htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:GqQOZpDQkKpRvVTxWTdsaD4z5cDXY3yAKpqzFVfd2u7AOkKuvhOmWg>
- <xmx:GqQOZqjxDRyBp92vTKLpKfPksqnfH6_xgDS8yb7yFRbuAiLwQIJuww>
- <xmx:GqQOZtpw03BGC5ghfIM9fPCga2c2q11XpoMw7JGMcDHTLZ0dcU2oJQ>
- <xmx:GqQOZlh6AImhE8DdSnnes-dnyBTuevFm5zOpUibKl9bCAIeiuFMhFQ>
- <xmx:G6QOZjVG3R3-jUo2f0D6BZzuJ6XJpuHkeRIiNHj90ndhvSIScrS-F36t>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Apr 2024 08:59:05 -0400 (EDT)
-Date: Thu, 4 Apr 2024 14:58:59 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: John Berg <jhnberg@amazon.co.uk>
-Cc: qemu-devel@nongnu.org, kbusch@kernel.org, foss@defmacro.it,
- qemu-block@nongnu.org, John Berg <jhnberg@amazon.com>
-Subject: Re: [PATCH] hw/nvme: Add support for setting the MQES for the NVMe
- emulation
-Message-ID: <Zg6kE0Hvt7KK99wc@cormorant.local>
-References: <20240404120418.1611513-1-jhnberg@amazon.co.uk>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rsMYX-0000q4-BZ
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 08:51:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712235059;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3HFsGqiytSwxQzVUwJvwuSIHXOEKYRI7LxSSzH5h9bU=;
+ b=T5IVQuQKTZsH6Y82BhJyLClGM1rMsguC9EBkSTbsSUai3C+6K5bapBlmYaqNPVcezE1JAe
+ CaersBNRjeLynpK8cSvgHXfaZ0oKGWC2m3YxsVMlF4Tr0XGoGj9HmqMUnOucVK1VXgVkoY
+ CiEM5rdbRdfMsWiO0TKre1meQ3orefg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-576-zdO3Jy9WP52Tq6AaY6RR0g-1; Thu, 04 Apr 2024 08:50:57 -0400
+X-MC-Unique: zdO3Jy9WP52Tq6AaY6RR0g-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-41489c04e3aso4997165e9.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 05:50:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712235056; x=1712839856;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3HFsGqiytSwxQzVUwJvwuSIHXOEKYRI7LxSSzH5h9bU=;
+ b=UI+dyQO7xghSGehu5NUvJCmHvUbXGV7VZlSKQHza9X5+hYo8CQ6Q4gS98+OJQApJhG
+ Tyy4w8aEvoACb/GasFfQRm0nJpBnZ/8DRWrOHhLIsRnZZF1VFAEnMf8bfqpRmfQ9PXSz
+ +SBLmfOBMm+b9OtynDkCftNM2FayBu3K2D/EZZDqooyK/GnZ1YWouVFxpEeQc/6mpq4j
+ y6UKnSckV33eWi9KKFogWJe+GQEMAU3gAfkipHQR/2oN/2nki3kby6XDKx/cqdHE1VBs
+ 2lShk0tjl/tBIHicpuw6szvH92CgvzKyvCca0xam6PUF8TvhIPEuoxj9xP/v5l4k5XFU
+ 6mpQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBwRw1lzYvXMHxFMWvR14VmvzQ0wTY/OTWUxpm3iBCBIDRhORaf+z73bNbOIMy2WnxawhYf4/rsKGBkvZvfcnSjHNAuBY=
+X-Gm-Message-State: AOJu0YwhOEM+Fwm/q8vNvoxuuk7nxmiqrn3Gefd9X5wtc8kO0W/UNiqS
+ hGbHpdlD6GsHYum5XQN8NeVTuKJ3FiPLZ1turB9q5YmO8/X/dA71ZNCrC1vrFgv+FjdHktIP1c8
+ EDH4VT8mKi0FvK3odtcQGNx4xjIKwRiXFRv3BjZFfbSp+PKSyI8D5
+X-Received: by 2002:a05:600c:3b08:b0:416:2b3c:2861 with SMTP id
+ m8-20020a05600c3b0800b004162b3c2861mr983501wms.30.1712235056271; 
+ Thu, 04 Apr 2024 05:50:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVWNLlKZvSJT3oSIONPdIkYMs/vSjaqlTfdieghahmPNOagSxs9VsKl0fk+nZEuYqgmt6vOQ==
+X-Received: by 2002:a05:600c:3b08:b0:416:2b3c:2861 with SMTP id
+ m8-20020a05600c3b0800b004162b3c2861mr983479wms.30.1712235055638; 
+ Thu, 04 Apr 2024 05:50:55 -0700 (PDT)
+Received: from redhat.com ([206.84.25.133]) by smtp.gmail.com with ESMTPSA id
+ bx6-20020a5d5b06000000b00341e67a7a90sm20402929wrb.19.2024.04.04.05.50.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Apr 2024 05:50:55 -0700 (PDT)
+Date: Thu, 4 Apr 2024 08:50:52 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Zheyu Ma <zheyuma97@gmail.com>
+Cc: Eric Auger <eric.auger@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] virtio-iommu: Do not process commands with bad size
+Message-ID: <20240404084840-mutt-send-email-mst@kernel.org>
+References: <20240404124505.2108743-1-zheyuma97@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Ps1feoi6pJQAgncx"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240404120418.1611513-1-jhnberg@amazon.co.uk>
-Received-SPF: pass client-ip=64.147.123.150; envelope-from=its@irrelevant.dk;
- helo=wfout7-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20240404124505.2108743-1-zheyuma97@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,57 +98,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Apr 04, 2024 at 02:45:05PM +0200, Zheyu Ma wrote:
+> The device should not handle the commands which have bad request/reply
+> size, it should just report the error instead of raising an assertation.
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 
---Ps1feoi6pJQAgncx
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I do not get what problem you are trying to solve here.
+Can guest trigger this assert? I do not see how.
 
-On Apr  4 13:04, John Berg wrote:
-> From: John Berg <jhnberg@amazon.com>
->=20
-> The MQES field in the CAP register describes the Maximum Queue Entries
-> Supported for the IO queues of an NVMe controller. Adding a +1 to the
-> value in this field results in the total queue size. A full queue is
-> when a queue of size N contains N - 1 entries, and the minimum queue
-> size is 2. Thus the lowest MQES value is 1.
->=20
-> This patch adds the new mqes property to the NVMe emulation which allows
-> a user to specify the maximum queue size by setting this property. This
-> is useful as it enables testing of NVMe controller where the MQES is
-> relatively small. The smallest NVMe queue size supported in NVMe is 2
-> submission and completion entries, which means that the smallest legal
-> mqes value is 1.
->=20
-> The following example shows how the mqes can be set for a the NVMe
-> emulation:
->=20
-> -drive id=3Dnvme0,if=3Dnone,file=3Dnvme.img,format=3Draw
-> -device nvme,drive=3Dnvme0,serial=3Dfoo,mqes=3D1
->=20
-> If the mqes property is not provided then the default mqes will still be
-> 0x7ff (the queue size is 2048 entries).
->=20
-> Signed-off-by: John Berg <jhnberg@amazon.co.uk>
 
-LGTM,
+> ---
+>  hw/virtio/virtio-iommu.c | 10 +++-------
+>  1 file changed, 3 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> index 1326c6ec41..3a7cdfe777 100644
+> --- a/hw/virtio/virtio-iommu.c
+> +++ b/hw/virtio/virtio-iommu.c
+> @@ -770,8 +770,8 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+>              return;
+>          }
+>  
+> -        if (iov_size(elem->in_sg, elem->in_num) < sizeof(tail) ||
+> -            iov_size(elem->out_sg, elem->out_num) < sizeof(head)) {
+> +        if (iov_size(elem->in_sg, elem->in_num) != sizeof(tail) ||
+> +            iov_size(elem->out_sg, elem->out_num) != sizeof(head)) {
+>              virtio_error(vdev, "virtio-iommu bad head/tail size");
+>              virtqueue_detach_element(vq, elem, 0);
+>              g_free(elem);
+> @@ -818,8 +818,6 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+>  out:
+>          sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
+>                            buf ? buf : &tail, output_size);
+> -        assert(sz == output_size);
+> -
+>          virtqueue_push(vq, elem, sz);
+>          virtio_notify(vdev, vq);
+>          g_free(elem);
+> @@ -852,7 +850,7 @@ static void virtio_iommu_report_fault(VirtIOIOMMU *viommu, uint8_t reason,
+>          return;
+>      }
+>  
+> -    if (iov_size(elem->in_sg, elem->in_num) < sizeof(fault)) {
+> +    if (iov_size(elem->in_sg, elem->in_num) != sizeof(fault)) {
+>          virtio_error(vdev, "error buffer of wrong size");
+>          virtqueue_detach_element(vq, elem, 0);
+>          g_free(elem);
+> @@ -861,8 +859,6 @@ static void virtio_iommu_report_fault(VirtIOIOMMU *viommu, uint8_t reason,
+>  
+>      sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
+>                        &fault, sizeof(fault));
+> -    assert(sz == sizeof(fault));
+> -
+>      trace_virtio_iommu_report_fault(reason, flags, endpoint, address);
+>      virtqueue_push(vq, elem, sz);
+>      virtio_notify(vdev, vq);
+> -- 
+> 2.34.1
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-
---Ps1feoi6pJQAgncx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmYOpBIACgkQTeGvMW1P
-DemZ3wgAofo5f9sBczlchnUb+g9Z1f/fh1umLgP8XQO6dI6n/M4GxTgdwaByqMwK
-vfMvFDecdI9vEWztBvNW5ZwfrMcNHYYleCQa3ZLjroCbMnDdqbbQBqDF4u/jgakf
-eVp7oENp6LzTztMwO2S5YgjwNZdUoFQ5FAts0LcAmuqF56S1m063ZBJchDcFbxvY
-dff1iDoi6F4SMj+QRno2Gbk7hY3+wxGCtYoOTqLppbGhC8Tq9cBusXrd7HXbZei2
-yJ31wBpqI6X3sqVSihbplNgBMYwCDmhlzFSXH29FW6ugxO+WtP4WKamqkkW7x5rP
-1K/GyjnwhEh5Lb88KbIDLbS7r8Ow6g==
-=0/tb
------END PGP SIGNATURE-----
-
---Ps1feoi6pJQAgncx--
 
