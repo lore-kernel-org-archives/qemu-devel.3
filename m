@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D05ACD11C2
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9216CD11C2
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsglH-00064b-Qg; Fri, 05 Apr 2024 06:25:31 -0400
+	id 1rsgl5-0005xn-C3; Fri, 05 Apr 2024 06:25:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglF-00062o-Bv
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:29 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1rsgl1-0005xB-Kt
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:15 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglD-0004mT-FK
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:29 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6ecf9898408so794574b3a.1
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:27 -0700 (PDT)
+ id 1rsgkw-0004YW-Dk
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:15 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6e6b22af648so2323833b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712312726; x=1712917526; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712312707; x=1712917507; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BSWmY5g0BLOjDo6Xjv7CB1e+gl5EQ0oR0a5drHt964Q=;
- b=GifGIhqnx9Nx8glcn0CrFMCXiKfr9hTJyJRtRzguVbq2/rtL3lO7WM/dCI3Tv/lMPH
- 3Hw0ehkvqUrTaqDf9lPz7T2IIoXIJaAR+ZtdtQqq02x6aD7H/x1jbHhTCGwOV4KeMzhP
- XfN6xI8vTkQUcZa/8yVN0XJU9vgII05hYB4mUkUjwYljeFATrq4Sww6oyHQhgPWiCYLB
- d026ySu3zLfD8n6CEm02xI5RrG2UPf7Vl+JreUDr5MVN+Myjsy6ZN9Kisp0WuZgmuMdv
- 2YlIcxO9oBO/z6/Mrxi8LnMj6Tb7H+ym4KtwPaAD5a07ViQ2yhwup9NyC8ffn/0t0HUo
- 6Yyg==
+ :reply-to; bh=5ibAm5kxv+pEhpJp4At58jRSN3sWMTqwF+92dVbLS0I=;
+ b=g1DnHM3P7VNGayCl/ZXw91UmCVD9Wliexr5u7AsbFqdfBMdZTFqIOjZFGgGWazftDz
+ GFbrnx6YBGFbMJX6Knq887HT2M4a9oGuKYEtjnUpXJfcNKBVBcNYIDnMMqMplKpdVQ4a
+ v+VPsJn45FvaftOdwKiqGrbkSOHMKTmuccJ4TbwtZsGe94x4Kgv0XgQNMc5O4ATnD6aN
+ 0qunkJ8gAVFV0WWqYGVPGiBmZohOz4VWY+rIl+CEQceoSe5+HsQDrXiVzRUtIwcrwksI
+ jyPco06FCviRmz2FTWrpTykVW4/XjivLPvyvxksDEFr6L1mOfGDgVpUgiJ+as+efalWV
+ T/5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712312726; x=1712917526;
+ d=1e100.net; s=20230601; t=1712312707; x=1712917507;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BSWmY5g0BLOjDo6Xjv7CB1e+gl5EQ0oR0a5drHt964Q=;
- b=s4vUM79Ng9hB6fYMT0ICa6G4+hw7O4aI2GdTKsyaxrNwUzntdb7+UtFXmqClLTCscK
- AweUC6ldoEZr5TEplBgD0IEdIggzoG39Up/VOS7R0luqZspgbIwzefc1tTEAZ8p9Z9hU
- B4aljDUrIr573vnGYuPc9b5VJwZxsjf5XkqYvIngbWQZsfmzGMZl6uALflHPwt2WU43S
- 5Q9MFgk3tj2W1IFGalAVR+K2am1AVoMjTzsPNoafMu0rBIHFQygYQcJzo3HAgftVVd/c
- tu/ast6oLtpEyqMHoboVZZS/lbi48CFCsyxm1aq/Upa8xCk4tIR8NuDeD4DutQ+KiXeQ
- 8+WQ==
-X-Gm-Message-State: AOJu0YywoKu0rt9N2f5MhXMtdlsDrDBgBXdnH34CpF2NnTA+hkxch9y1
- ///u9OVAbz3MtE4rqD1+5mg36JN2NbblJmvhZ/3cmdC3Snd327yUsldeRAOoDkuQm3xWjbNJZNt
- t
-X-Google-Smtp-Source: AGHT+IEH/MUO9xGrbe0Mor764rK0S5anHUAITXxzx1MM4CuVtE/OCrDD1sud+ov/GbLBB7Ohh0lSiQ==
-X-Received: by 2002:a05:6a20:7488:b0:1a5:69db:d92b with SMTP id
- p8-20020a056a20748800b001a569dbd92bmr2980850pzd.14.1712312726136; 
- Fri, 05 Apr 2024 03:25:26 -0700 (PDT)
+ bh=5ibAm5kxv+pEhpJp4At58jRSN3sWMTqwF+92dVbLS0I=;
+ b=nJZp3qiLo6U7c6jP1Gcppb5+G4PcE18BsuVzGnmV/GuG08TyBkLiNSnrpXx7exAGhX
+ FCB7vZBSpOfVEWlcAVoAI7Z+bE7uKGV19hDhYwmYMZi/F2g4ZDqHlK1liXu3Z6E1UT5f
+ JGCmU8F6asJ5A2ZQBMdUAEMRuxSBOP+nj9l0NyEUxRF3CnRGOP583woXZXd/Go4NCaOw
+ d/U597MDJHuDxD165zzjyK419VMDdyPxtxYFC/w0cEZWxCaQkJTcVuS2TdGJgTiNaJ/x
+ bRnQDSEK4UIyB1AEVvM2LkP/vo0Rqt3TYZkMwWuP34cB90kPihe1RqRAodta+lqLMQKD
+ HXKQ==
+X-Gm-Message-State: AOJu0YygkMidW+vq1NsA4gOIHl3B3QxbLrPdCtI29HwxhKw94EYF3D/E
+ kQjAG0BNNYIxYiz/glWf9I8iuBznyOS8TpB6ysDjejhCoYgs6aahhVY+AytnRAHN0I1Tf1GrIF5
+ g
+X-Google-Smtp-Source: AGHT+IHuVmbN6hyBgt70TxR7cVZdhjlw6v+/mHDZtVwVtvH8p9FPi41/bI+PiFRun4b6SRP1kJP3kQ==
+X-Received: by 2002:a05:6a20:2585:b0:1a5:6a94:7641 with SMTP id
+ k5-20020a056a20258500b001a56a947641mr2877957pzd.7.1712312706896; 
+ Fri, 05 Apr 2024 03:25:06 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.25
+ h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 03:25:25 -0700 (PDT)
+ Fri, 05 Apr 2024 03:25:06 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 19/32] disas: Use translator_st to get disassembly data
-Date: Fri,  5 Apr 2024 00:24:46 -1000
-Message-Id: <20240405102459.462551-20-richard.henderson@linaro.org>
+Subject: [PATCH 04/32] accel/tcg: Reorg translator_ld*
+Date: Fri,  5 Apr 2024 00:24:31 -1000
+Message-Id: <20240405102459.462551-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240405102459.462551-1-richard.henderson@linaro.org>
 References: <20240405102459.462551-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,226 +93,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Read from already translated pages, or saved mmio data.
+Reorg translator_access into translator_ld, with a more
+memcpy-ish interface.  If both pages are in ram, do not
+go through the caller's slow path.
+
+Assert that the access is within the two pages that we are
+prepared to protect, per TranslationBlock.  Allow access
+prior to pc_first, so long as it is within the first page.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/disas/disas.h     |  5 +++--
- include/exec/translator.h |  4 ++--
- include/qemu/typedefs.h   |  1 +
- accel/tcg/translator.c    |  2 +-
- disas/disas-common.c      | 14 --------------
- disas/disas-mon.c         | 15 +++++++++++++++
- disas/disas-target.c      | 19 +++++++++++++++++--
- plugins/api.c             |  4 ++--
- 8 files changed, 41 insertions(+), 23 deletions(-)
+ accel/tcg/translator.c | 189 ++++++++++++++++++++++-------------------
+ 1 file changed, 101 insertions(+), 88 deletions(-)
 
-diff --git a/include/disas/disas.h b/include/disas/disas.h
-index 54a5e68443..c702b1effc 100644
---- a/include/disas/disas.h
-+++ b/include/disas/disas.h
-@@ -4,14 +4,15 @@
- /* Disassemble this for me please... (debugging). */
- #ifdef CONFIG_TCG
- void disas(FILE *out, const void *code, size_t size);
--void target_disas(FILE *out, CPUState *cpu, uint64_t code, size_t size);
-+void target_disas(FILE *out, CPUState *cpu, const DisasContextBase *db);
- #endif
- 
- void monitor_disas(Monitor *mon, CPUState *cpu, uint64_t pc,
-                    int nb_insn, bool is_physical);
- 
- #ifdef CONFIG_PLUGIN
--char *plugin_disas(CPUState *cpu, uint64_t addr, size_t size);
-+char *plugin_disas(CPUState *cpu, const DisasContextBase *db,
-+                   uint64_t addr, size_t size);
- #endif
- 
- /* Look up symbol for debugging purpose.  Returns "" if unknown. */
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index 6ebe69d25c..777dee0ce2 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -78,7 +78,7 @@ typedef enum DisasJumpType {
-  *
-  * Architecture-agnostic disassembly context.
-  */
--typedef struct DisasContextBase {
-+struct DisasContextBase {
-     TranslationBlock *tb;
-     vaddr pc_first;
-     vaddr pc_next;
-@@ -102,7 +102,7 @@ typedef struct DisasContextBase {
-     int record_start;
-     int record_len;
-     uint8_t record[32];
--} DisasContextBase;
-+};
- 
- /**
-  * TranslatorOps:
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 50c277cf0b..0b3cf3f3ec 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -50,6 +50,7 @@ typedef struct CPUTLBEntryFull CPUTLBEntryFull;
- typedef struct DeviceListener DeviceListener;
- typedef struct DeviceState DeviceState;
- typedef struct DirtyBitmapSnapshot DirtyBitmapSnapshot;
-+typedef struct DisasContextBase DisasContextBase;
- typedef struct DisplayChangeListener DisplayChangeListener;
- typedef struct DriveInfo DriveInfo;
- typedef struct DumpState DumpState;
 diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index 712e0d5c7e..4c1dc57890 100644
+index 64cfa4e003..42beb1c9b7 100644
 --- a/accel/tcg/translator.c
 +++ b/accel/tcg/translator.c
-@@ -227,7 +227,7 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-             if (!ops->disas_log ||
-                 !ops->disas_log(db, cpu, logfile)) {
-                 fprintf(logfile, "IN: %s\n", lookup_symbol(db->pc_first));
--                target_disas(logfile, cpu, db->pc_first, db->tb->size);
-+                target_disas(logfile, cpu, db);
-             }
-             fprintf(logfile, "\n");
-             qemu_log_unlock(logfile);
-diff --git a/disas/disas-common.c b/disas/disas-common.c
-index e4118a381f..e4118e996b 100644
---- a/disas/disas-common.c
-+++ b/disas/disas-common.c
-@@ -7,25 +7,12 @@
- #include "disas/disas.h"
- #include "disas/capstone.h"
- #include "hw/core/cpu.h"
--#include "exec/memory.h"
- #include "disas-internal.h"
- 
- 
- /* Filled in by elfload.c.  Simplistic, but will do for now. */
- struct syminfo *syminfos = NULL;
- 
--/*
-- * Get LENGTH bytes from info's buffer, at target address memaddr.
-- * Transfer them to myaddr.
-- */
--static int target_read_memory(bfd_vma memaddr, bfd_byte *myaddr, int length,
--                              struct disassemble_info *info)
--{
--    CPUDebug *s = container_of(info, CPUDebug, info);
--    int r = cpu_memory_rw_debug(s->cpu, memaddr, myaddr, length, 0);
--    return r ? EIO : 0;
--}
--
- /*
-  * Print an error message.  We can assume that this is in response to
-  * an error return from {host,target}_read_memory.
-@@ -72,7 +59,6 @@ void disas_initialize_debug_target(CPUDebug *s, CPUState *cpu)
-     disas_initialize_debug(s);
- 
-     s->cpu = cpu;
--    s->info.read_memory_func = target_read_memory;
-     s->info.print_address_func = print_address;
-     if (target_words_bigendian()) {
-         s->info.endian = BFD_ENDIAN_BIG;
-diff --git a/disas/disas-mon.c b/disas/disas-mon.c
-index 5d6d9aa02d..37bf16ac79 100644
---- a/disas/disas-mon.c
-+++ b/disas/disas-mon.c
-@@ -11,6 +11,19 @@
- #include "hw/core/cpu.h"
- #include "monitor/monitor.h"
- 
-+/*
-+ * Get LENGTH bytes from info's buffer, at target address memaddr.
-+ * Transfer them to myaddr.
-+ */
-+static int
-+virtual_read_memory(bfd_vma memaddr, bfd_byte *myaddr, int length,
-+                    struct disassemble_info *info)
-+{
-+    CPUDebug *s = container_of(info, CPUDebug, info);
-+    int r = cpu_memory_rw_debug(s->cpu, memaddr, myaddr, length, 0);
-+    return r ? EIO : 0;
-+}
-+
- static int
- physical_read_memory(bfd_vma memaddr, bfd_byte *myaddr, int length,
-                      struct disassemble_info *info)
-@@ -38,6 +51,8 @@ void monitor_disas(Monitor *mon, CPUState *cpu, uint64_t pc,
- 
-     if (is_physical) {
-         s.info.read_memory_func = physical_read_memory;
-+    } else {
-+        s.info.read_memory_func = virtual_read_memory;
+@@ -226,69 +226,88 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
      }
-     s.info.buffer_vma = pc;
- 
-diff --git a/disas/disas-target.c b/disas/disas-target.c
-index 82313b2a67..48f3a365dc 100644
---- a/disas/disas-target.c
-+++ b/disas/disas-target.c
-@@ -6,16 +6,28 @@
- #include "qemu/osdep.h"
- #include "disas/disas.h"
- #include "disas/capstone.h"
-+#include "exec/translator.h"
- #include "disas-internal.h"
- 
- 
--void target_disas(FILE *out, CPUState *cpu, uint64_t code, size_t size)
-+static int translator_read_memory(bfd_vma memaddr, bfd_byte *myaddr,
-+                                  int length, struct disassemble_info *info)
- {
-+    const DisasContextBase *db = info->application_data;
-+    return translator_st(db, myaddr, memaddr, length) ? 0 : EIO;
-+}
-+
-+void target_disas(FILE *out, CPUState *cpu, const struct DisasContextBase *db)
-+{
-+    uint64_t code = db->pc_first;
-+    size_t size = translator_st_len(db);
-     uint64_t pc;
-     int count;
-     CPUDebug s;
- 
-     disas_initialize_debug_target(&s, cpu);
-+    s.info.read_memory_func = translator_read_memory;
-+    s.info.application_data = (void *)db;
-     s.info.fprintf_func = fprintf;
-     s.info.stream = out;
-     s.info.buffer_vma = code;
-@@ -58,12 +70,15 @@ static void plugin_print_address(bfd_vma addr, struct disassemble_info *info)
-  * there is left over it usually indicates the front end has read more
-  * bytes than it needed.
-  */
--char *plugin_disas(CPUState *cpu, uint64_t addr, size_t size)
-+char *plugin_disas(CPUState *cpu, const DisasContextBase *db,
-+                   uint64_t addr, size_t size)
- {
-     CPUDebug s;
-     GString *ds = g_string_new(NULL);
- 
-     disas_initialize_debug_target(&s, cpu);
-+    s.info.read_memory_func = translator_read_memory;
-+    s.info.application_data = (void *)db;
-     s.info.fprintf_func = disas_gstring_printf;
-     s.info.stream = (FILE *)ds;  /* abuse this slot */
-     s.info.buffer_vma = addr;
-diff --git a/plugins/api.c b/plugins/api.c
-index 36ab47cdae..c084f335dd 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -271,8 +271,8 @@ void *qemu_plugin_insn_haddr(const struct qemu_plugin_insn *insn)
- 
- char *qemu_plugin_insn_disas(const struct qemu_plugin_insn *insn)
- {
--    CPUState *cpu = current_cpu;
--    return plugin_disas(cpu, insn->vaddr, insn->len);
-+    return plugin_disas(tcg_ctx->cpu, tcg_ctx->plugin_db,
-+                        insn->vaddr, insn->len);
  }
  
- const char *qemu_plugin_insn_symbol(const struct qemu_plugin_insn *insn)
+-static void *translator_access(CPUArchState *env, DisasContextBase *db,
+-                               vaddr pc, size_t len)
++static bool translator_ld(CPUArchState *env, DisasContextBase *db,
++                          void *dest, vaddr pc, size_t len)
+ {
++    TranslationBlock *tb = db->tb;
++    vaddr last = pc + len - 1;
+     void *host;
+-    vaddr base, end;
+-    TranslationBlock *tb;
+-
+-    tb = db->tb;
++    vaddr base;
+ 
+     /* Use slow path if first page is MMIO. */
+     if (unlikely(tb_page_addr0(tb) == -1)) {
+-        return NULL;
++        return false;
+     }
+ 
+-    end = pc + len - 1;
+-    if (likely(is_same_page(db, end))) {
+-        host = db->host_addr[0];
+-        base = db->pc_first;
+-    } else {
++    host = db->host_addr[0];
++    base = db->pc_first;
++
++    if (likely(((base ^ last) & TARGET_PAGE_MASK) == 0)) {
++        /* Entire read is from the first page. */
++        memcpy(dest, host + (pc - base), len);
++        return true;
++    }
++
++    if (unlikely(((base ^ pc) & TARGET_PAGE_MASK) == 0)) {
++        /* Read begins on the first page and extends to the second. */
++        size_t len0 = -(pc | TARGET_PAGE_MASK);
++        memcpy(dest, host + (pc - base), len0);
++        pc += len0;
++        dest += len0;
++        len -= len0;
++    }
++
++    /*
++     * The read must conclude on the second page and not extend to a third.
++     *
++     * TODO: We could allow the two pages to be virtually discontiguous,
++     * since we already allow the two pages to be physically discontiguous.
++     * The only reasonable use case would be executing an insn at the end
++     * of the address space wrapping around to the beginning.  For that,
++     * we would need to know the current width of the address space.
++     * In the meantime, assert.
++     */
++    base = (base & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
++    assert(((base ^ pc) & TARGET_PAGE_MASK) == 0);
++    assert(((base ^ last) & TARGET_PAGE_MASK) == 0);
++    host = db->host_addr[1];
++
++    if (host == NULL) {
++        tb_page_addr_t page0, old_page1, new_page1;
++
++        new_page1 = get_page_addr_code_hostp(env, base, &db->host_addr[1]);
++
++        /*
++         * If the second page is MMIO, treat as if the first page
++         * was MMIO as well, so that we do not cache the TB.
++         */
++        if (unlikely(new_page1 == -1)) {
++            tb_unlock_pages(tb);
++            tb_set_page_addr0(tb, -1);
++            return false;
++        }
++
++        /*
++         * If this is not the first time around, and page1 matches,
++         * then we already have the page locked.  Alternately, we're
++         * not doing anything to prevent the PTE from changing, so
++         * we might wind up with a different page, requiring us to
++         * re-do the locking.
++         */
++        old_page1 = tb_page_addr1(tb);
++        if (likely(new_page1 != old_page1)) {
++            page0 = tb_page_addr0(tb);
++            if (unlikely(old_page1 != -1)) {
++                tb_unlock_page1(page0, old_page1);
++            }
++            tb_set_page_addr1(tb, new_page1);
++            tb_lock_page1(page0, new_page1);
++        }
+         host = db->host_addr[1];
+-        base = TARGET_PAGE_ALIGN(db->pc_first);
+-        if (host == NULL) {
+-            tb_page_addr_t page0, old_page1, new_page1;
+-
+-            new_page1 = get_page_addr_code_hostp(env, base, &db->host_addr[1]);
+-
+-            /*
+-             * If the second page is MMIO, treat as if the first page
+-             * was MMIO as well, so that we do not cache the TB.
+-             */
+-            if (unlikely(new_page1 == -1)) {
+-                tb_unlock_pages(tb);
+-                tb_set_page_addr0(tb, -1);
+-                return NULL;
+-            }
+-
+-            /*
+-             * If this is not the first time around, and page1 matches,
+-             * then we already have the page locked.  Alternately, we're
+-             * not doing anything to prevent the PTE from changing, so
+-             * we might wind up with a different page, requiring us to
+-             * re-do the locking.
+-             */
+-            old_page1 = tb_page_addr1(tb);
+-            if (likely(new_page1 != old_page1)) {
+-                page0 = tb_page_addr0(tb);
+-                if (unlikely(old_page1 != -1)) {
+-                    tb_unlock_page1(page0, old_page1);
+-                }
+-                tb_set_page_addr1(tb, new_page1);
+-                tb_lock_page1(page0, new_page1);
+-            }
+-            host = db->host_addr[1];
+-        }
+-
+-        /* Use slow path when crossing pages. */
+-        if (is_same_page(db, pc)) {
+-            return NULL;
+-        }
+     }
+ 
+-    tcg_debug_assert(pc >= base);
+-    return host + (pc - base);
++    memcpy(dest, host + (pc - base), len);
++    return true;
+ }
+ 
+ static void plugin_insn_append(vaddr pc, const void *from, size_t size)
+@@ -314,61 +333,55 @@ static void plugin_insn_append(vaddr pc, const void *from, size_t size)
+ 
+ uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc)
+ {
+-    uint8_t ret;
+-    void *p = translator_access(env, db, pc, sizeof(ret));
++    uint8_t raw;
+ 
+-    if (p) {
+-        plugin_insn_append(pc, p, sizeof(ret));
+-        return ldub_p(p);
++    if (!translator_ld(env, db, &raw, pc, sizeof(raw))) {
++        raw = cpu_ldub_code(env, pc);
+     }
+-    ret = cpu_ldub_code(env, pc);
+-    plugin_insn_append(pc, &ret, sizeof(ret));
+-    return ret;
++    plugin_insn_append(pc, &raw, sizeof(raw));
++    return raw;
+ }
+ 
+ uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
+ {
+-    uint16_t ret, plug;
+-    void *p = translator_access(env, db, pc, sizeof(ret));
++    uint16_t raw, tgt;
+ 
+-    if (p) {
+-        plugin_insn_append(pc, p, sizeof(ret));
+-        return lduw_p(p);
++    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
++        tgt = tswap16(raw);
++    } else {
++        tgt = cpu_lduw_code(env, pc);
++        raw = tswap16(tgt);
+     }
+-    ret = cpu_lduw_code(env, pc);
+-    plug = tswap16(ret);
+-    plugin_insn_append(pc, &plug, sizeof(ret));
+-    return ret;
++    plugin_insn_append(pc, &raw, sizeof(raw));
++    return tgt;
+ }
+ 
+ uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+ {
+-    uint32_t ret, plug;
+-    void *p = translator_access(env, db, pc, sizeof(ret));
++    uint32_t raw, tgt;
+ 
+-    if (p) {
+-        plugin_insn_append(pc, p, sizeof(ret));
+-        return ldl_p(p);
++    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
++        tgt = tswap32(raw);
++    } else {
++        tgt = cpu_ldl_code(env, pc);
++        raw = tswap32(tgt);
+     }
+-    ret = cpu_ldl_code(env, pc);
+-    plug = tswap32(ret);
+-    plugin_insn_append(pc, &plug, sizeof(ret));
+-    return ret;
++    plugin_insn_append(pc, &raw, sizeof(raw));
++    return tgt;
+ }
+ 
+ uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
+ {
+-    uint64_t ret, plug;
+-    void *p = translator_access(env, db, pc, sizeof(ret));
++    uint64_t raw, tgt;
+ 
+-    if (p) {
+-        plugin_insn_append(pc, p, sizeof(ret));
+-        return ldq_p(p);
++    if (translator_ld(env, db, &raw, pc, sizeof(raw))) {
++        tgt = tswap64(raw);
++    } else {
++        tgt = cpu_ldl_code(env, pc);
++        raw = tswap64(tgt);
+     }
+-    ret = cpu_ldq_code(env, pc);
+-    plug = tswap64(ret);
+-    plugin_insn_append(pc, &plug, sizeof(ret));
+-    return ret;
++    plugin_insn_append(pc, &raw, sizeof(raw));
++    return tgt;
+ }
+ 
+ void translator_fake_ldb(DisasContextBase *db, vaddr pc, uint8_t insn8)
 -- 
 2.34.1
 
