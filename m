@@ -4,70 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08DBC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 14:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74060C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 14:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rskTz-00046c-1x; Fri, 05 Apr 2024 10:23:55 -0400
+	id 1rskWR-0005YF-06; Fri, 05 Apr 2024 10:26:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rskTx-00041F-7t
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:23:53 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1rskWP-0005Xm-0J
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:26:25 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rskTv-0006BH-9h
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:23:52 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-56e2e09fc27so1443988a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 07:23:50 -0700 (PDT)
+ id 1rskWK-0006fI-5J
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:26:22 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-516d15d72c3so1975662e87.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 07:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712327029; x=1712931829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712327178; x=1712931978; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=leLUkpbDgWbW3ocN/hoowLLoCf31KDYVEwQ9wDkrUIk=;
- b=szSbM9qDLYY++vRjBmJzby0FqlphxCOraMpYYpVgryJkF7UtFGWebBdlXlXZU+Jj5I
- h1336oYdDAZ5oV+Z7xOGjDHKv5maSZqlDHeu3HPCJy9J9zr+PLtuLSsEjVQHywxy6t+8
- 9c99y6PGGfQse9UqnpYBpSe4RXSTP/6T8Z1eJEEZBvDw3ad/8/UXn56Bices+rWGwDr+
- ysTgIWSDkkYCRpw00hN2HZBYh1bK3OOX05hQHsSVOxi75OoOTWcj+5yXgtHK7k+uH0/5
- CuG7VUIckMZ/Ru9U6Z8dYrgAKIfLDpqEOzmZu8fKhciOeD0tK3gk/uK8wzbV0fp3sWsu
- 8G/g==
+ bh=9PMmZywclbaQRQPNoqGbY1UiA7EhTJ4HLYg86Zcitgk=;
+ b=pdGdyHS5805tQbGghB4zCJAj7Z3IGCd6WJ6uZoJIqFDP0FcNxLryKh3J6gwVWn2Lb5
+ 4RPU5BDcilndE+DZGDiAXxsxAnTgyZiKuDviCgj07rDstFb5JIE65GyAxmU1CrSQ4T4z
+ Z3blO5nJ+s6fY7u939zks7szWysX6qnRAh+CrvW6kOGEpk1YpiKzxCWObgB9xh7x8C/h
+ WLuq00uVIs/Ktiz3AaRZHGx76gvOeJ38cytFJ6ZbMZKw2KiNw0ao99rghv2OIiJ1Z0cw
+ KSRln4KXwFmdGORx7T6ebXGDtyvbbRlZ3XuAONhl26r8roqgP/6D5S7dpeNMS+0i88TO
+ lbnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712327029; x=1712931829;
+ d=1e100.net; s=20230601; t=1712327178; x=1712931978;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=leLUkpbDgWbW3ocN/hoowLLoCf31KDYVEwQ9wDkrUIk=;
- b=o4GX23rcLTzWTKRoofa4kJzEE0UceDjBsUiPeeF5wh6Hvh8aPgLJ9aWTTQbXnJHl2A
- QNinwwgqQKgWI/trgO3MEDzERZ9MM0HA/ZE2qwNlO5Raq3BD6/jgLJzCJnrGTMLUmr0H
- JKNV+MoYnk/jbqlwkNmOJyT7ox/4o3OG2bAGFhRnMP9MBJy15geDc12LPp8fOA4+E2Kw
- 6fNRjsHsyhu62OqqsB+LI2iJiz1DT9QhWfuLkpR7F+OrnQeSyHhK9uykfBen8u/7Xxas
- 3Ls5btlyY4Ldt+lk/8pyiiyy6Uhcfyz/ql4OLrriRbEedaLXIMMY6PoEEEVUT8Fix/IV
- egBg==
-X-Gm-Message-State: AOJu0Ywt9wqNzf5uKaG1EgARGdUf47Eaa60UyAZTHo93riYU/JUWrzHL
- uNNPg3B+jdhT4kO9a1XXmsm8rAuNceOKCblsKNpcD5bZNcztk2JnSz23N3uY0jk1KruUMWo7Qne
- i85UGFGg1eC2ml6ofoqkXma5W2wOh/LCLF5kR6A==
-X-Google-Smtp-Source: AGHT+IFEjKtcD0Xu5/j3/f3KDFYeCFVM8P8gkUV3K2kvjtkGIN3EB0M/NZ5FVckE15NugUi+no09PUdcFSUMDpca31A=
-X-Received: by 2002:a50:bb29:0:b0:56d:c85a:7893 with SMTP id
- y38-20020a50bb29000000b0056dc85a7893mr46547ede.8.1712327029265; Fri, 05 Apr
- 2024 07:23:49 -0700 (PDT)
+ bh=9PMmZywclbaQRQPNoqGbY1UiA7EhTJ4HLYg86Zcitgk=;
+ b=PdiSXu/RXSZ26R7n7d0NkUEVFXI/B+hCZnkd11exD41U/x9Rkwfn2KVZIKByBD5IPs
+ LdFVQLPes8OPFsoGshKo0CMsI6t0E30duOOGk9coSqFIUDPHvDOcDjdaOv7FE74zGBi2
+ 2bmhaYDwTIacBq20+Huwo8iHYCZafgbZ4w6t47NzRWxU0WLMkkIF9muZWkcpJGdXG/gK
+ MbiKSvAxYtOan2ZHe4fY+VNTxqWtHpc9cvllyPVt6G0hDRUOpybUEcgA0RwGFN7EzL4J
+ xxD2ZwBBXz3hqEsulZPt9YB6WtKqXVaDCX7ytGkhv/Rri1ZWKH8KAJXNlqmjwp6pEYg6
+ CZQA==
+X-Gm-Message-State: AOJu0Yx0TC1IxKeFXPGomsUBJRElsjMMLnamtq9HsGwqQG9wj4U05tMy
+ CFPl0wK6sDve8yLDpgkrfgjw6R2hFuFnSmVxBkFW/nBVe4mu92cU7opUvVzT6IWjYmGORzQoH6H
+ m57mK14xPAKJwOO1w4L5WbaBMQKEgoT4KVjMyWw==
+X-Google-Smtp-Source: AGHT+IHOvYtEMnVNZxykGtRT4LAXCND7GdvS/DYFTGXphzPW9wXhsKNEZwWbT8vXoSbjnComucgXmGQIqH21faIm1WU=
+X-Received: by 2002:a05:6512:3e17:b0:516:c764:b3e7 with SMTP id
+ i23-20020a0565123e1700b00516c764b3e7mr1483708lfv.9.1712327178219; Fri, 05 Apr
+ 2024 07:26:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <m3al6amhdkmsiy2f62w72ufth6dzn45xg5cz6xljceyibphnf4@ezmmpwk4tnhl>
-In-Reply-To: <m3al6amhdkmsiy2f62w72ufth6dzn45xg5cz6xljceyibphnf4@ezmmpwk4tnhl>
+References: <20240329174402.60382-1-arnaud.minier@telecom-paris.fr>
+ <20240329174402.60382-6-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240329174402.60382-6-arnaud.minier@telecom-paris.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 5 Apr 2024 15:23:37 +0100
-Message-ID: <CAFEAcA_nfWXKEkbqn3BKkq9Rh-hHN=xBV7XWFEBpOfbdP+SwtA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Fix CNTPOFF_EL2 trap to missing EL3
-To: =?UTF-8?Q?Pierre=2DCl=C3=A9ment_Tosi?= <ptosi@google.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- qemu-arm@nongnu.org
+Date: Fri, 5 Apr 2024 15:26:07 +0100
+Message-ID: <CAFEAcA8RhS_wMs-89YkKQq6Rc2FOX2VFZNG7Vcm7OKkbs2DgZQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] tests/qtest: Add tests for the STM32L4x5 USART
+To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ Laurent Vivier <lvivier@redhat.com>,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, 
+ Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,42 +96,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 4 Apr 2024 at 17:36, Pierre-Cl=C3=A9ment Tosi <ptosi@google.com> wr=
-ote:
+On Fri, 29 Mar 2024 at 17:45, Arnaud Minier
+<arnaud.minier@telecom-paris.fr> wrote:
 >
-> EL2 accesses to CNTPOFF_EL2 should only ever trap to EL3 if EL3 is
-> present, as described by the reference manual (for MRS):
+> Test:
+> - read/write from/to the usart registers
+> - send/receive a character/string over the serial port
 >
->   /* ... */
->   elsif PSTATE.EL =3D=3D EL2 then
->       if Halted() && HaveEL(EL3) && /*...*/ then
->           UNDEFINED;
->       elsif HaveEL(EL3) && SCR_EL3.ECVEn =3D=3D '0' then
->           /* ... */
->       else
->           X[t, 64] =3D CNTPOFF_EL2;
->
-> However, the existing implementation of gt_cntpoff_access() always
-> returns CP_ACCESS_TRAP_EL3 for EL2 accesses with SCR_EL3.ECVEn unset. In
-> pseudo-code terminology, this corresponds to assuming that HaveEL(EL3)
-> is always true, which is wrong. As a result, QEMU panics in
-> access_check_cp_reg() when started without EL3 and running EL2 code
-> accessing the register (e.g. any recent KVM booting a guest).
->
-> Therefore, add the HaveEL(EL3) check to gt_cntpoff_access().
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 2808d3b38a52 ("target/arm: Implement FEAT_ECV CNTPOFF_EL2 handling=
-")
-> Signed-off-by: Pierre-Cl=C3=A9ment Tosi <ptosi@google.com>
-
-Oops, thanks for the fix. I'll get this in for the 9.0
-release, so we won't need to backport it to stable branches
-(the commit breaking this only went in in this cycle).
+> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> ---
 
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Applied to target-arm.next, thanks.
-
+thanks
 -- PMM
 
