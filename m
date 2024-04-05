@@ -4,114 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA4AAC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 14:29:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A30DC67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 14:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rskYr-00073L-Qo; Fri, 05 Apr 2024 10:28:57 -0400
+	id 1rskyT-0004nJ-VX; Fri, 05 Apr 2024 10:55:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rskYp-00072x-Vn
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:28:56 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rskyR-0004n6-Sn
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:55:23 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rskYn-00073A-Vn
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:28:55 -0400
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3B67B1F7DA;
- Fri,  5 Apr 2024 14:28:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712327331; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=43qzFEdqzV8CwjSduoipTxQTf7ex2AgBgKROnVNshPI=;
- b=K+m/bkR7f11LT/dAtqj6WspISgP2l4uFOH4qAtW/nn4m5ekMItyytFKA4F2nOMdPEOH2V+
- WERJW+7GawOKcgmQWwAa0tE3aqrp1Zn/u+jDXsTcs8NhCdyeIlHQPkum8Uq4s5YkzaJ+Y/
- lclX2FxxCQqLZV2a5BO++iZhkII/Csw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712327331;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=43qzFEdqzV8CwjSduoipTxQTf7ex2AgBgKROnVNshPI=;
- b=ROa4+jnYal29RUa+wAcrlPaVvfnto15IsedoEWt+YAT6bbDUfoqQ0s6dqdG/PV1Q64njWJ
- k4auvKTigu+Q5/CA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="K+m/bkR7";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ROa4+jnY
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712327331; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=43qzFEdqzV8CwjSduoipTxQTf7ex2AgBgKROnVNshPI=;
- b=K+m/bkR7f11LT/dAtqj6WspISgP2l4uFOH4qAtW/nn4m5ekMItyytFKA4F2nOMdPEOH2V+
- WERJW+7GawOKcgmQWwAa0tE3aqrp1Zn/u+jDXsTcs8NhCdyeIlHQPkum8Uq4s5YkzaJ+Y/
- lclX2FxxCQqLZV2a5BO++iZhkII/Csw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712327331;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=43qzFEdqzV8CwjSduoipTxQTf7ex2AgBgKROnVNshPI=;
- b=ROa4+jnYal29RUa+wAcrlPaVvfnto15IsedoEWt+YAT6bbDUfoqQ0s6dqdG/PV1Q64njWJ
- k4auvKTigu+Q5/CA==
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id BBC0B139E8;
- Fri,  5 Apr 2024 14:28:50 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap2.dmz-prg2.suse.org with ESMTPSA id x/pZIKIKEGbwRAAAn2gu4w
- (envelope-from <farosas@suse.de>); Fri, 05 Apr 2024 14:28:50 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- peterx@redhat.com
-Subject: Re: [PATCH] tests/qtest: Standardize qtest function caller strings.
-In-Reply-To: <1f336795-5c5d-4320-8783-3cbe238f894c@nutanix.com>
-References: <20240326193843.8444-1-het.gala@nutanix.com>
- <87zfukvh0r.fsf@suse.de>
- <1f336795-5c5d-4320-8783-3cbe238f894c@nutanix.com>
-Date: Fri, 05 Apr 2024 11:28:48 -0300
-Message-ID: <87a5m7vq73.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rskyO-0004ZW-OO
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:55:22 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-56e2119cffeso2410180a12.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 07:55:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712328919; x=1712933719; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ijlyU4nDrmHoOKdgulA+74bZHVcBmxFPH9lhNWYKBF4=;
+ b=cd5zeZXUF42w/UNFyIF5m+OeAba7tQmizr1H6Pf+c4eW2FNMgNUn25SIYAZcHpgKmP
+ WkwgL+BuesTqj/xiD4kBzqRO4MchGxvvMae8NTcB7hjInCqeEnztnlJLtc1iEruiogFk
+ An2FzTAMcW6CBUUtmw7KyMlZM3S4MFZphk9k9xe4mkI5GOHwzerOyuuZufNxmIembRrZ
+ YkPCrTyPb6MyRnql13enVzfm4q6tM/1C2VBeuaYE46dL1jH7AAJuLSx+GHNEbPV4OdRO
+ RkkiKtF4EPNWkdW+rw7Lk8uS5Hecd2m35X6ewhTKPbEM0YUHtiHdRXlpCvS/rPrKaiXh
+ zlBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712328919; x=1712933719;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ijlyU4nDrmHoOKdgulA+74bZHVcBmxFPH9lhNWYKBF4=;
+ b=gVho4neXiMLJqbzgBuInPzqQ4VtY3KybwWJTBVK6WZPHOPEX5g9t/nzZwion4/GVrU
+ HJ4zyiT5lwaS0Zb/3tBRooqjs7i01edYALX0tE5y9JeOWz7jsuqEtvN52P9qPmpRtAkA
+ w9KZL7TmHDITvl83XPZNAxYBqxhcocsWxCL70lVqJf420w0MnRRBRCGFcuvOiLwOcIFE
+ G+AroKUXhrfydMOCYtBJnkN1SapSNKH2Z9Dp426yRyQMeJWzTvYBsS5SVkgjhAxTG79t
+ M3Z69ku+0NpSzYIujp0TPub0FhjZxWb3n9+F93DunPLP2a4ihbcxCio4Hndek+WxDbD9
+ fksQ==
+X-Gm-Message-State: AOJu0YzQPwdOwWi/MbIPAr9fZSf/stRXVr2C8dRm9uYojjYNvjceRhIC
+ rWw0Vw4esY8lt09oSu4V4xQZs4JkI7gLL9WDZa9M5z/ystu3iu9PpduHAcXi2eeBfuZPuScIuWD
+ AIQOSwh1LM3qGkHpPYGQFHkau+ttyotMnAgQfCQ==
+X-Google-Smtp-Source: AGHT+IFoRdmGROzubFKfjls+rqQMVSDFTAUBpq1ZtS+SyMwYwtE8+828FQ7vo8Wnx7t4cy+rSIog2g2fJmHrwmDV7zU=
+X-Received: by 2002:a50:8717:0:b0:566:2f24:b063 with SMTP id
+ i23-20020a508717000000b005662f24b063mr1218666edb.23.1712328918891; Fri, 05
+ Apr 2024 07:55:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 3B67B1F7DA
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap2.dmz-prg2.suse.org:helo,imap2.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240405075404.2122-2-zack@buhman.org>
+In-Reply-To: <20240405075404.2122-2-zack@buhman.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 5 Apr 2024 15:55:07 +0100
+Message-ID: <CAFEAcA93s+=sHFNU0duK8--3GhUg1tZ+n+UhiGeFErJoY5_+jQ@mail.gmail.com>
+Subject: Re: [PATCH] sh4: mac.w: implement saturation arithmetic logic
+To: Zack Buhman <zack@buhman.org>
+Cc: qemu-devel@nongnu.org, ysato@users.sourceforge.jp
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,112 +87,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Het Gala <het.gala@nutanix.com> writes:
-
-> On 27/03/24 2:37 am, Fabiano Rosas wrote:
->> Het Gala<het.gala@nutanix.com>  writes:
->>
->> Some comments, mostly just thinking out loud...
->>
->>> For <test-type> --> migrate
->>> /<test-type>/<migration-mode>/<method>/<transport>/<invocation>/
->>> <compression>/<encryption>/O:<others>/...
->>>
->>> For <test-type> --> validate
->>> /<test-type>/<validate-variable>/O:<transport>/O:<invocation>/
->>> <validate-test-result>/O:<test-reason>/O:<others>/...
->> Do we need an optional 'capability' element? I'm not sure how practical
->> is to leave that as 'others', because that puts it at the end of the
->> string. We'd want the element that's more important/with more variants
->> to be towards the start of the string so we can run all tests of the
->> same kind with the -r option.
-> While also looking at different functions for figuring out the transport
-> and invocation, my observation was that, there might be many capabilities
-> added to the same test, while it might not be important also.
-> Ex: /migrate/multifd/tcp/plain
-> 1. multifd is defined as a migration mode.
-> 2. It is also a capability, and comes in 2 parts [multifd, multifd-channe=
-ls]
->  =C2=A0=C2=A0 though one is a capability and another is parameter
-> Similarly in other examples of compression, there are many capabilities
-> and parameters added, but it might be not important to mention that ?
+On Fri, 5 Apr 2024 at 08:55, Zack Buhman <zack@buhman.org> wrote:
 >
-> Secondly, there are multiple migration capabilities IIRC (> 15). And a te=
-st
-> requiring multiple capabilities, the overall string would be too long, and
-> not that important also to mention all capabilities.
+> The saturation arithmetic logic in helper_macw is not correct.
 >
-> Just thinking out of mind - Can we have selective list of capabilities ?=
-=20
-> 1. multifd 2. compress (again, there might be confusion with multifd=20
-> compression methods like zstd, zlib and just 'compress') 3. zero-page=20
-> (This will have sub capabilities ?)
-
-I was thinking of keeping that part more open-ended. So not specifying
-capabilities one by one, but more like "if you're testing a capability,
-it comes here".
-
-About multifd, it's a bit special since it cannot be seen as just a
-"feature" anymore. It's a core part of the migration code. I wouldn't
-classify it as capability for the purposes of the tests.
-
+> I tested and verified this behavior on a SH7091, the general pattern
+> is a code sequence such as:
 >
->>> test-type            :: migrate | validate
->> We could alternatively drop migration|migrate|validate. They are kind of
->> superfluous.
-> I agree with the above comment. 'migrate' and 'validate' have a different
-> set of variables required, some necessary, while other optional. IMO this
-> will help is in streamlining the design further.
->>> migration-mode
->>>    a. migrate -->     :: precopy | postcopy | multifd
->>>    b. validate -->    :: (what to validate)
->>> methods              :: preempt | recovery | reboot | suspend | simple
-> I want some inputs here.
-> 1. is there a better variable name rather than 'methods'
+>         sets
+>
+>         mov.l _mach,r2
+>         lds r2,mach
+>         mov.l _macl,r2
+>         lds r2,macl
+>
+>         mova _n,r0
+>         mov r0,r1
+>         mova _m,r0
+>         mac.w @r0+,@r1+
+>
+>  _mach: .long 0xffffffff
+>  _macl: .long 0xfffffffe
+>  _m:    .word 0x0002
+>         .word 0
+>  _n:    .word 0x0003
+>         .word 0
+>
+> test 0:
+>   (mach should not be modified if an overflow did not occur)
+>
+>   given, prior to saturation mac.l:
+>     mach = 0xffffffff ; macl = 0xfffffffe
+>     @r0  = 0x0002     ; @r1  = 0x0003
+>
+>   expected saturation mac.w result:
+>     mach = 0xffffffff (unchanged)
+>     macl = 0x00000004
+>
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x80000000
+>
+>   In the context of the helper_macw implementation prior to this
+>   commit, initially this appears to be a surprising result. This is
+>   because (prior to unary negation) the C literal `0x80000000` (due to
+>   being outside the range of a `signed int`) is evaluated as an
+>   `unsigned int` whereas the literal `1` (due to being inside the
+>   range of `signed int`) is evaluated as `signed int`, as in:
+>
+>     static_assert(1 < -0x80000000 == 1);
+>     static_assert(1 < -1 == 0);
+>
+>   This is because the unary negation of an unsigned int is an
+>   unsigned int.
 
-Does this fall into the "mode" terminology that Steven introduced?
+So we could also fix this by getting the C literals right
+so that they are correctly the signed 64 bit values that
+the author intended, right?
 
-> 2. 'simple' does not fit perfect here IMO.
+>   In other words, if the `res < -0x80000000` comparison used
+>   infinite-precision literals, the saturation mac.w result would have
+>   been:
+>
+>     mach = 0x00000000
+>     macl = 0x00000004
+>
+>   Due to this (forgivable) misunderstanding of C literals, the
+>   following behavior also occurs:
+>
+> test 1:
+>   (`2 * 3 + 0` is not an overflow)
+>
+>   given, prior to saturation mac.l:
+>     mach = 0x00000000 ; macl = 0x00000000
+>     @r0  = 0x0002     ; @r1  = 0x0003
+>
+>   expected saturation mac.w result:
+>     mach = 0x00000000 (unchanged)
+>     macl = 0x00000006
+>
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x80000000
+>
+> test 2:
+>   (mach should not be accumulated in saturation mode)
+>   (16-bit operands are sign-extended)
+>
+>   given, prior to saturation mac.l:
+>     mach = 0x12345678 ; macl = 0x7ffffffe
+>     @r0  = 0x0002     ; @r1  = 0xfffd
+>
+>   expected saturation mac.w result:
+>     mach = 0x12345678 (unchanged)
+>     macl = 0x7ffffff8
+>
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x7fffffff
+>
+> test 3:
+>   (macl should have the correct saturation value)
+>
+>   given, prior to saturation mac.l:
+>     mach = 0xabcdef12 ; macl = 0x7ffffffa
+>     @r0  = 0x0002     ; @r1  = 0x0003
+>
+>   expected saturation mac.w result:
+>     mach = 0x00000001 (overwritten)
+>     macl = 0x7fffffff
+>
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x80000000
+>
+> All of the above also matches the description of MAC.W as documented
+> in cd00147165-sh-4-32-bit-cpu-core-architecture-stmicroelectronics.pdf
+>
+> Signed-off-by: Zack Buhman <zack@buhman.org>
+> ---
+>  target/sh4/op_helper.c | 41 +++++++++++++++++++++++++++++++----------
+>  1 file changed, 31 insertions(+), 10 deletions(-)
+>
+> diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+> index ee16524083..b3c1e69f53 100644
+> --- a/target/sh4/op_helper.c
+> +++ b/target/sh4/op_helper.c
+> @@ -187,20 +187,41 @@ void helper_macl(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
+>
+>  void helper_macw(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
+>  {
+> -    int64_t res;
+> +    int16_t value0 = (int16_t)arg0;
+> +    int16_t value1 = (int16_t)arg1;
+> +    int32_t mul = ((int32_t)value0) * ((int32_t)value1);
+>
+> -    res = ((uint64_t) env->mach << 32) | env->macl;
+> -    res += (int64_t) (int16_t) arg0 *(int64_t) (int16_t) arg1;
+> -    env->mach = (res >> 32) & 0xffffffff;
+> -    env->macl = res & 0xffffffff;
+> +    /* Perform 32-bit saturation arithmetic if the S flag is set */
+>      if (env->sr & (1u << SR_S)) {
+> -        if (res < -0x80000000) {
+> -            env->mach = 1;
+> -            env->macl = 0x80000000;
+> -        } else if (res > 0x000000007fffffff) {
+> +        const int64_t upper_bound =  ((1ul << 31) - 1);
+> +        const int64_t lower_bound = -((1ul << 31) - 0);
 
-Can we go without it?
+UL is usually the wrong suffix to use (and more generally,
+in QEMU the "long" type is rarely the right type, because
+it might be either 32 or 64 bits depending on the host).
+Either we know the value fits in 32 bits and we want a 32-bit
+type, in which case U is sufficient, or we want a 64-bit type,
+in which case we need ULL.
 
->>> transport            :: tcp | fd | unix | file
->>> invocation           :: uri | channels | both
->>> CompressionType      :: zlib | zstd | none
->> s/none/nocomp/ ? We're already familiar with that.
-> Ack. Will change that.
->>> encryptionType       :: tls | plain
->> s/plain/notls/ ?
-> What if there is another encryption technique in future ?
->> Or maybe we simply omit the noop options. It would make the string way
->> shorter in most cases.
-> This might be a better approach. Can have some keys/variables as optional
-> while some necessary. For ex: for 'migrate' - transport and invocation
-> might be necessary while it might not be necessary for 'validate' qtests
+> +
+> +        /*
+> +         * In saturation arithmetic mode, the accumulator is 32-bit
+> +         * with carry. MACH is not considered during the addition
+> +         * operation nor the 32-bit saturation logic.
+> +         */
+> +        int32_t mac = env->macl;
+> +        int32_t result;
+> +        bool overflow = sadd32_overflow(mac, mul, &result);
+> +        if (overflow) {
+> +            result = (mac < 0) ? lower_bound : upper_bound;
+> +            /* MACH is set to 1 to denote overflow */
+> +            env->macl = result;
+>              env->mach = 1;
+> -            env->macl = 0x7fffffff;
+> +        } else {
+> +            result = MIN(MAX(result, lower_bound), upper_bound);
 
-Yep
+Maybe I'm confused, but result is an int32_t, so when can it
+be lower than lower_bound or higher than upper_bound ?
 
->>> validate-test-result :: success | failure
->>> others               :: other comments/capability that needs to be
->>>                          addressed. Can be multiple
->>>
->>> (more than one applicable, separated by using '-' in between)
->>> O: optional
->>>
->>> Signed-off-by: Het Gala<het.gala@nutanix.com>
->>> Suggested-by: Fabiano Rosas<farosas@suse.de>
->>> ---
->>>   tests/qtest/migration-test.c | 143 ++++++++++++++++++-----------------
->>>   1 file changed, 72 insertions(+), 71 deletions(-)
->>>
->>> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->>> index bd9f4b9dbb..bf4d000b76 100644
->>> --- a/tests/qtest/migration-test.c
->>> +++ b/tests/qtest/migration-test.c
-> Regards,
-> Het Gala
+> +            /* If there was no overflow, MACH is unchanged */
+> +            env->macl = result;
+>          }
+> +    } else {
+> +        /* In non-saturation arithmetic mode, the accumulator is 64-bit */
+> +        int64_t mac = (((uint64_t)env->mach) << 32) | env->macl;
+> +
+> +        /* The carry bit of the 64-bit addition is discarded */
+> +        int64_t result = mac + (int64_t)mul;
+> +        env->macl = result;
+> +        env->mach = result >> 32;
+>      }
+>  }
+>
 
-I'm wondering whether we should leave the existing tests untouched and
-require the new format only for new tests. Going through a git bisection
-with a change in the middle that alters test names would be infuriating.
+thanks
+-- PMM
 
