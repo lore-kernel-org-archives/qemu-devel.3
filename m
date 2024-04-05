@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52511CD1296
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD983C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsglB-000608-Qk; Fri, 05 Apr 2024 06:25:25 -0400
+	id 1rsgl1-0005xA-KP; Fri, 05 Apr 2024 06:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsgl9-0005zc-B9
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:23 -0400
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ id 1rsgkz-0005wS-Rs
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:13 -0400
+Received: from mail-il1-x135.google.com ([2607:f8b0:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsgl7-0004k8-4r
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:22 -0400
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-22edec341c2so90064fac.0
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:20 -0700 (PDT)
+ id 1rsgku-0004VM-M3
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:13 -0400
+Received: by mail-il1-x135.google.com with SMTP id
+ e9e14a558f8ab-369eafe262fso10131785ab.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712312720; x=1712917520; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712312704; x=1712917504; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bO7B6oUNG3jW/PSuoPnzK0oY+ojFYCsg6W4mPRZ3c4k=;
- b=Q7V1F0+JGJD+pR/8/qfqzKpVF1C9sZmbWp6eMtJ+Y9buIo7/vL3XbNvWSm9Jb3Ic2w
- O2mteVmNKfLfb5FYDUj8H8kuy4zCRiTzgDy6dViYeRYgdz6ZC4jjlVm3OBPNobJOIhWN
- d85yyVazuIcvqCwDDbGW3xTILhiuhrUS5HP3C9tKN0IhOiLussUdqMCf5hqj42IEFRS+
- XGPPf1lpN6L3l/hLmP+5lpZ/JXHHp/FmXlPvAqZ4zPq5Nh4f6sWlRhTvnqulZgsQICx/
- t7Q+pEStV5TlFt7HQ9H5ji/UUu4+rYQKTTg/elz8ey5wsI7DGz/O472b327mj/Ipo8a3
- 4x7g==
+ :reply-to; bh=NdQqZjJgz9uVc1nB4iFIKIUfcykhgew+A5q2j0I98dY=;
+ b=bAoeXL4g6rWRI5sEnmBfmxYg2XalXWL6KxA3ZpCkvatuNKJy4xZZsQ6aDD+AWdd8QB
+ EuF9BYMeTi7TJgRINvX73PyXmfIx8yjsjL0527ZHCqyHigsBd4F1I5yzBjmkNXFChBNe
+ IUkZQude4BsUZ/DN8tFBtTHbXFFXNXrrC/onWecrReee+g3uCgUd7kAf7qiDp4iEZvVY
+ uvaSCUITXGWPvDrQkZ0nc/DD+dF0IVesKACMlmrGRStUvXDf8N2r7VmqN09nPiLKFKyF
+ q7XgBKOoNJNuqFQAw1K/9/FI//nlWYwx9p/yYOTR3Vj4JfJsfr26Rj5Fj5jZP8dt4a0E
+ BfCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712312720; x=1712917520;
+ d=1e100.net; s=20230601; t=1712312704; x=1712917504;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bO7B6oUNG3jW/PSuoPnzK0oY+ojFYCsg6W4mPRZ3c4k=;
- b=FJs7VYQ67PHA3hF4eg9BLThoDkjbZeVMVFTRkGF8ZNCWkZeXXdXXq4Zl7Emh/VjLtl
- st+NYOWCo1VKSoz71AiZunjQF2+GfT4SueHHilBtsC7XTJcQqQ5WbojZ5SbnS+dFKuji
- dl7zmN9Yep28o8O1V+txyqu407XJq/7oI9tH0J9kajvwjfG+I3h1dR/uhSZUpyeHkI6x
- XYUCTZnA8d4NXA61+B0aeOUTQYwHZZu8OoshOkPIOPe1d2sOYA/El8x/YcdtnbI55jhl
- liMDzEkNAWJikAB3TFQ3g7wJExS6F2Dz/hmLJrH4ZtyM2Cnr2USqNQfUIzP7gDP4/X08
- vJTg==
-X-Gm-Message-State: AOJu0Yzy3Wt5WFp3m/Ewe5ZTN0ZZzsSx6ATS9vkyZ2IIZ3EzYAjvA/98
- 9ZiWa13kgOqMWqNsptoy2TlUZ7XEqd6qpJnEWny5K+iF8bzP0VSXF3TifhC+KvM6ZYJBbij1swN
- u
-X-Google-Smtp-Source: AGHT+IEP+Z0idPpxfQT3hc8s2bSAJl1tpeflvOvaNx/uzIXEhZElPIfcMpgT3EJndCsA+daipxETlg==
-X-Received: by 2002:a05:6870:4d0a:b0:22e:a0f7:8c36 with SMTP id
- pn10-20020a0568704d0a00b0022ea0f78c36mr976278oab.16.1712312719818; 
- Fri, 05 Apr 2024 03:25:19 -0700 (PDT)
+ bh=NdQqZjJgz9uVc1nB4iFIKIUfcykhgew+A5q2j0I98dY=;
+ b=Y53FaqYwdABmAKVnabssI5PEADs71KrTHDy4IEuhby9PLH+Q1bIgXFTYT5dtexd/L5
+ 04OPr2uvFoz1DFwkzXSXCnVRu1rbV8B6tUAN5KRdvgAuieB6sWSQ9+cwQ1tHdVrtSGY/
+ akyeaz2FvQAGGYFa6IKlGEs4PMWl9jP07n/zvgA6/RSXEApUCGY8Bqx3Sd2RXLJ8NsjU
+ 2r6B/wWfBULyXHTP4Bi3vw8zvNneO86CujPACS4KjJRK9a7eCcaWUWVznQQNLVplHoax
+ DJaOZg2PZFuMEbCXuHBG2M2iHozaUm1HSKRHUse9yPj234BF4UoQd52S0PT63KZsgYjo
+ AJJw==
+X-Gm-Message-State: AOJu0Yz9t/NZZCwDVKLrWcMPGyKYms0FSauZ00COV7ATGuZcQus9ryGJ
+ 9BuCYRdze1r3nqAGw3YYSFGWp5R+ntlzQorohLJAtqAIxbrfx5q2bjlBRMbsCYxS65RxptPwmNa
+ S
+X-Google-Smtp-Source: AGHT+IHLvIprauC7x8CXV8h6TTZ8QMosq34+7Y1AlaS9iuwF7to4GcaVpxGSJg26zHIORpDwyA4/kw==
+X-Received: by 2002:a05:6e02:1a66:b0:366:9674:7084 with SMTP id
+ w6-20020a056e021a6600b0036696747084mr1053057ilv.12.1712312704361; 
+ Fri, 05 Apr 2024 03:25:04 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.18
+ h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 03:25:19 -0700 (PDT)
+ Fri, 05 Apr 2024 03:25:03 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 14/32] plugins: Use DisasContextBase for qemu_plugin_tb_vaddr
-Date: Fri,  5 Apr 2024 00:24:41 -1000
-Message-Id: <20240405102459.462551-15-richard.henderson@linaro.org>
+Subject: [PATCH 02/32] accel/tcg: Hide in_same_page outside of a
+ target-specific context
+Date: Fri,  5 Apr 2024 00:24:29 -1000
+Message-Id: <20240405102459.462551-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240405102459.462551-1-richard.henderson@linaro.org>
 References: <20240405102459.462551-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::135;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,62 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We do not need to separately record the start of the TB.
+While there are other methods that could be used to replace
+TARGET_PAGE_MASK, the function is not really required outside
+the context of target-specific translation.
+
+This makes the header usable by target independent code.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/plugin.h  | 1 -
- accel/tcg/plugin-gen.c | 3 +--
- plugins/api.c          | 3 ++-
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ include/exec/translator.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index 3db0e75d16..340e10ef12 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -117,7 +117,6 @@ struct qemu_plugin_scoreboard {
- struct qemu_plugin_tb {
-     GPtrArray *insns;
-     size_t n;
--    uint64_t vaddr;
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index 29804de92e..185ab5c374 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -230,6 +230,7 @@ translator_ldq_swap(CPUArchState *env, DisasContextBase *db,
+  */
+ void translator_fake_ldb(uint8_t insn8, vaddr pc);
  
-     /* if set, the TB calls helpers that might access guest memory */
-     bool mem_helper;
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index b036773d3c..2c52306f80 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -188,7 +188,7 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
-     int insn_idx = -1;
- 
-     if (unlikely(qemu_loglevel_mask(LOG_TB_OP_PLUGIN)
--                 && qemu_log_in_addr_range(plugin_tb->vaddr))) {
-+                 && qemu_log_in_addr_range(tcg_ctx->plugin_db->pc_first))) {
-         FILE *logfile = qemu_log_trylock();
-         if (logfile) {
-             fprintf(logfile, "OP before plugin injection:\n");
-@@ -318,7 +318,6 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db)
- 
-         ret = true;
- 
--        ptb->vaddr = db->pc_first;
-         ptb->mem_helper = false;
- 
-         tcg_gen_plugin_cb(PLUGIN_GEN_FROM_TB);
-diff --git a/plugins/api.c b/plugins/api.c
-index 4b6690c7d6..36ab47cdae 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -200,7 +200,8 @@ size_t qemu_plugin_tb_n_insns(const struct qemu_plugin_tb *tb)
- 
- uint64_t qemu_plugin_tb_vaddr(const struct qemu_plugin_tb *tb)
++#ifdef NEED_CPU_H
+ /*
+  * Return whether addr is on the same page as where disassembly started.
+  * Translators can use this to enforce the rule that only single-insn
+@@ -239,5 +240,6 @@ static inline bool is_same_page(const DisasContextBase *db, vaddr addr)
  {
--    return tb->vaddr;
-+    const DisasContextBase *db = tcg_ctx->plugin_db;
-+    return db->pc_first;
+     return ((addr ^ db->pc_first) & TARGET_PAGE_MASK) == 0;
  }
++#endif
  
- struct qemu_plugin_insn *
+ #endif /* EXEC__TRANSLATOR_H */
 -- 
 2.34.1
 
