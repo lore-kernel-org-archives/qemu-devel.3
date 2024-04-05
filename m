@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74060C67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 14:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0837C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 14:28:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rskWR-0005YF-06; Fri, 05 Apr 2024 10:26:27 -0400
+	id 1rskXg-0006HC-5L; Fri, 05 Apr 2024 10:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rskWP-0005Xm-0J
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:26:25 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ id 1rskXc-0006Gm-Ho
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:27:40 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rskWK-0006fI-5J
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:26:22 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-516d15d72c3so1975662e87.1
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 07:26:19 -0700 (PDT)
+ id 1rskXa-0006nO-VN
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 10:27:40 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55a179f5fa1so2751928a12.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 07:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712327178; x=1712931978; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9PMmZywclbaQRQPNoqGbY1UiA7EhTJ4HLYg86Zcitgk=;
- b=pdGdyHS5805tQbGghB4zCJAj7Z3IGCd6WJ6uZoJIqFDP0FcNxLryKh3J6gwVWn2Lb5
- 4RPU5BDcilndE+DZGDiAXxsxAnTgyZiKuDviCgj07rDstFb5JIE65GyAxmU1CrSQ4T4z
- Z3blO5nJ+s6fY7u939zks7szWysX6qnRAh+CrvW6kOGEpk1YpiKzxCWObgB9xh7x8C/h
- WLuq00uVIs/Ktiz3AaRZHGx76gvOeJ38cytFJ6ZbMZKw2KiNw0ao99rghv2OIiJ1Z0cw
- KSRln4KXwFmdGORx7T6ebXGDtyvbbRlZ3XuAONhl26r8roqgP/6D5S7dpeNMS+0i88TO
- lbnQ==
+ d=linaro.org; s=google; t=1712327257; x=1712932057; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Bun2vhsCleh/N6AH9rwv8hGRqgqda8eN6MGMI23yJY=;
+ b=O5CBriXvuZKu+YuUfE5Gws917kwOseB0eZfOCz2me1crSsa4VrN4ri1fqrvVHAIOxk
+ 72MFWxwC/ktDg7DJpeO9+cOb7YxRIgl8PLfv8AMNkOTerYoa1gkvBNKJbabbYwyitZSC
+ BSRNsl1fcRwhbeergf8cUINflRPy+8LWpHNFiC3lRrGRF84USJ2D0Nt3qkC8KXlrEzGw
+ lGhZG1cmFxIl4/xvyvosfNXmCElBVwToBq7+/InbsQWtPZB2pAKNV6IKqz66l1pExb+U
+ G4+EUPyM/1mIgXVBypnObTSMlglJWe7uGcNw5gzOqNg3k0+e3vN01zSQi49YfBLrI0qV
+ zkIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712327178; x=1712931978;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9PMmZywclbaQRQPNoqGbY1UiA7EhTJ4HLYg86Zcitgk=;
- b=PdiSXu/RXSZ26R7n7d0NkUEVFXI/B+hCZnkd11exD41U/x9Rkwfn2KVZIKByBD5IPs
- LdFVQLPes8OPFsoGshKo0CMsI6t0E30duOOGk9coSqFIUDPHvDOcDjdaOv7FE74zGBi2
- 2bmhaYDwTIacBq20+Huwo8iHYCZafgbZ4w6t47NzRWxU0WLMkkIF9muZWkcpJGdXG/gK
- MbiKSvAxYtOan2ZHe4fY+VNTxqWtHpc9cvllyPVt6G0hDRUOpybUEcgA0RwGFN7EzL4J
- xxD2ZwBBXz3hqEsulZPt9YB6WtKqXVaDCX7ytGkhv/Rri1ZWKH8KAJXNlqmjwp6pEYg6
- CZQA==
-X-Gm-Message-State: AOJu0Yx0TC1IxKeFXPGomsUBJRElsjMMLnamtq9HsGwqQG9wj4U05tMy
- CFPl0wK6sDve8yLDpgkrfgjw6R2hFuFnSmVxBkFW/nBVe4mu92cU7opUvVzT6IWjYmGORzQoH6H
- m57mK14xPAKJwOO1w4L5WbaBMQKEgoT4KVjMyWw==
-X-Google-Smtp-Source: AGHT+IHOvYtEMnVNZxykGtRT4LAXCND7GdvS/DYFTGXphzPW9wXhsKNEZwWbT8vXoSbjnComucgXmGQIqH21faIm1WU=
-X-Received: by 2002:a05:6512:3e17:b0:516:c764:b3e7 with SMTP id
- i23-20020a0565123e1700b00516c764b3e7mr1483708lfv.9.1712327178219; Fri, 05 Apr
- 2024 07:26:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712327257; x=1712932057;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7Bun2vhsCleh/N6AH9rwv8hGRqgqda8eN6MGMI23yJY=;
+ b=sd1T7H8w+6jLkdKrJWP7TtTo4OtqNopwk0hga19CL44doKIAJBBuZd+ca+WF4lht+2
+ N8R7dDk+Adtdo53COQBaK0oP+Uq6Vd+lOhcvu9oerFUe9GdePiQq8rCsFfO1z6dGX9N7
+ jtn8pUGzGP26gqzp6mIn3+BpQ4yvH0DBz/MhHrm2s474Hv5o89sGCa2XIAgmz7hRFPY+
+ Zux+yylP8zXz6QG2uRc6UWYhojkhQw6nh0CyP5uYC46nQKL65rjNd0LzRh5WSvfNVaaP
+ dVNzGGKcD/5ZzwD1Ob3p+ZcHGmEmJjoILC3/zvX+//hnp+IAB730mqmLksua0+896PxF
+ NZOw==
+X-Gm-Message-State: AOJu0YxMtvgtMGhb8OrAUm6rUzXcy/UMialvOc2cjCR30uG1oKv8xGGu
+ dwWQWRB8LtONOy7ndNzbYLassJMI7WA3+UGJVT3x1lAIj2kQ71bqP91Qtz9RKPuG5xShFN7quPv
+ 3NoImTQXMy+qtQST5tyEGqGs+yKptAVgC6X18Og==
+X-Google-Smtp-Source: AGHT+IG2s5jxrmXM1CxKj8o7sN46v6/s0ytWH+FiZ9INDtVAa5IvsgoYuUm59ve9OJZnLp9vy533XwlbOpzMqzx1edU=
+X-Received: by 2002:a50:8a81:0:b0:56d:fca8:d209 with SMTP id
+ j1-20020a508a81000000b0056dfca8d209mr1184729edj.10.1712327257354; Fri, 05 Apr
+ 2024 07:27:37 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240329174402.60382-1-arnaud.minier@telecom-paris.fr>
- <20240329174402.60382-6-arnaud.minier@telecom-paris.fr>
-In-Reply-To: <20240329174402.60382-6-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240329174402.60382-1-arnaud.minier@telecom-paris.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 5 Apr 2024 15:26:07 +0100
-Message-ID: <CAFEAcA8RhS_wMs-89YkKQq6Rc2FOX2VFZNG7Vcm7OKkbs2DgZQ@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] tests/qtest: Add tests for the STM32L4x5 USART
+Date: Fri, 5 Apr 2024 15:27:26 +0100
+Message-ID: <CAFEAcA_xuXMRnmFMs_GzfrDN_kpR+c4C04OcPjxtz+hSB_ga2w@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] hw/char: Implement the STM32L4x5 USART,
+ UART and LPUART
 To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org, 
@@ -71,9 +70,8 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, 
  Alistair Francis <alistair@alistair23.me>, Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,19 +94,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 Mar 2024 at 17:45, Arnaud Minier
+On Fri, 29 Mar 2024 at 17:44, Arnaud Minier
 <arnaud.minier@telecom-paris.fr> wrote:
 >
-> Test:
-> - read/write from/to the usart registers
-> - send/receive a character/string over the serial port
+> This patch adds the STM32L4x5 USART
+> (Universal Synchronous/Asynchronous Receiver/Transmitter)
+> device and is part of a series implementing the
+> STM32L4x5 with a few peripherals.
 >
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> ---
+> It implements the necessary functionalities to receive/send
+> characters over the serial port, which are useful to
+> communicate with the program currently running.
 
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+All the patches here are reviewed, so once we reopen
+for the 9.1 release (in another two or three weeks) it
+should be ready to go in. I'll keep it on my list to apply
+once I start collecting 9.1 patchsets.
 
 thanks
 -- PMM
