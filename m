@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD9CC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 12:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884F9C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 12:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsj53-0004Uy-Nh; Fri, 05 Apr 2024 08:54:05 -0400
+	id 1rsj54-0004Wo-7T; Fri, 05 Apr 2024 08:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rsj51-0004Q9-MC; Fri, 05 Apr 2024 08:54:03 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1rsj51-0004Qm-VC; Fri, 05 Apr 2024 08:54:03 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rsj4z-0000rw-Eb; Fri, 05 Apr 2024 08:54:03 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2a2d0ca3c92so1323269a91.0; 
- Fri, 05 Apr 2024 05:53:54 -0700 (PDT)
+ id 1rsj4z-0000tk-PR; Fri, 05 Apr 2024 08:54:03 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-5e152c757a5so1510416a12.2; 
+ Fri, 05 Apr 2024 05:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712321632; x=1712926432; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KW/JAdjkkx0AQWUZXkHf5lnnBtuRIMz2UCSnQC/OOKA=;
- b=ASkQoK4OA/tJlI3DkGsXMAum/DvT+aLei0rwu3YpMsMmI/Zv52zy30MTqqdkiRbr28
- uaBxBsYcgPb51Sqi8i8bCTOByu1BFTItLFh9P6J6lM38yGhCVB2o+iOaYmQo9x8vnQ5z
- z/8uPYDFYiey/ml5PgF7yAazuyeK/WJOhR3bOHUDKM76L0syIDMe1tGjimNvGdKHUqr7
- L1hJhG2pDzr7LC9Qkb0pcJnhNPLdQDamxKop6mF7as5H+uZM9gTD86icXsZRV+brYIfb
- UFBi/V8M8Aj2JXQZjPWox6yANW21Ci+zOSnbdDTICFMNigR4dcGypRkR41BmUwZdVK6S
- 5g0A==
+ d=gmail.com; s=20230601; t=1712321637; x=1712926437; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=useQ7jYU2MVSZLWPS4tiRLnS8UHaOQWjS/2uSUxE11M=;
+ b=LJRVGL/MhF4UuZY1VeVNZ7Izyznz4cQ8GdqolpnqxbYkqgj6zLdyB71TLqxo5doUpB
+ /KfZ79MDRXrVI0uUxLmIILaHEG97dww5R1TxnrGMzcPglz9k8Mq2rVJBwWf7wBIPN/Zo
+ AzSnKC8O/oKDdJ/DbER93x4wU4YnJUNyS0izpXh5BwN53a+ZMtm/imxGYzXnfBUMKdqm
+ AILDOuaxF5Js0zP69GDShPjj+fhKYTQu+jinuV+u4r79HwUOdwQPK6sB5uLcPMpAE9SN
+ lcMlSrS+cUgqGlk7YZwsir7TtfRA6+BqjOQ6hrMu4THn+lXtUMmkA7RG50Lf8vfGn9KZ
+ GuFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712321632; x=1712926432;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KW/JAdjkkx0AQWUZXkHf5lnnBtuRIMz2UCSnQC/OOKA=;
- b=qWGvYOlaLlwxLp3Ay5ynf/anDLRRyBw/v+oaDhUYiavgiVR+DS4q2JNyNt0xmgFLa4
- M0m3jvuZibhoZOwOr7oq79BjXUt3h+V646JuQVXHnT+xCOCiIrnIGg+o34WC+w/V18Rk
- lA0wWA/eGkHw+Po75Wu+trM8EE3GA+t8c1giSilUzqphY00AnbTEg9oeTS+eEHDd7ZH6
- fLALx098wd5uiozYsNK6wkhTUbL7AgdPPKDTqL+14vyz4NVlOSBmKfdH/BsWl8wVtXZi
- ICD112oupFGalw7G8Szi03uXee8WR0hLtzb+aMVFbmyoVbBupqwdOhhJT4iB1gHY9hhH
- 2+1g==
+ d=1e100.net; s=20230601; t=1712321637; x=1712926437;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=useQ7jYU2MVSZLWPS4tiRLnS8UHaOQWjS/2uSUxE11M=;
+ b=gREUHW6KbOyzsB9gbUEa6UK31JdHTn+zcKl5wmWyLaPdCPbWKRU64mCZs1J/vCNcKd
+ yEtqUOUco6llBIaN1pXm5Qwpt0JbApw+tUHXoeu2ZQwZj0F4JugR6mWsHGbLsPSxfrwS
+ JJnKRk4qye35rgKvdyHesULvw6viEpPD5xggSksKDaD2YkYobE3ilqO9YCQhdNoLQalX
+ C5F5GjSpUrYghWsxmdBGitINrt4V5OE6Vunuifz4ipPh7dw/lmBu2TtT9BmZDlTnU+9d
+ ya2gTLLxR4FjviKvqEInhf/Zb2zosL1HfNHqBAe82JUvXDz8SC6auapqwFgyOzr8DqNm
+ vmog==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/ofLuCRtOzYddaqpYl5fe67zpqguyVwLeOqH+jYdYS7uYXdAUDHMC1DyGh6eSMELXAaoi9Sq3ozpDIyqck31nSLFoxupf1JfEpD5oalcshVVx21+X5Sd+Wa+dqEdMSqrtu0D/GjUaeC8ZsAO7nuT2lzK0tCrgrvptuCJsE3WZrM3QQ2Y17VdK
-X-Gm-Message-State: AOJu0Yxni+ukjsQmLF4/TAVKgKXffN/kwSEUlTZj67s5rA7Of1lOsuod
- +m/NxFMPgEfdmWVirywG4LWODZbQKHOjtzyHo9dSPJUSKYQRj6kP+xHSGTy8
-X-Google-Smtp-Source: AGHT+IFFdgetPlOtv92JBgFBPLw8fZBrYIefywwFgfiOwmYhnRTUSJ539sd1E8L5KVxhh7vlkJo+Zw==
-X-Received: by 2002:a17:90b:110f:b0:2a2:2cbf:2144 with SMTP id
- gi15-20020a17090b110f00b002a22cbf2144mr2255243pjb.19.1712321632507; 
- Fri, 05 Apr 2024 05:53:52 -0700 (PDT)
+ AJvYcCV9syqTDXr2g2PoFLRo7O007ufQJFhCZQDfPR07VoMYr4REjM4vcru7LlrverkmN170a9fxwFu+ZBBQCNZ43EiBpiqAmnQeYkBnGtQfNirWVJ1lHgwovKpy4NNI9pzY9NsuMiujEuo+W0pyiVetBJ+2AjJjFJOOGjwfN7SW8MBHax5eo8fTT3DF
+X-Gm-Message-State: AOJu0YzM0mxHJuzQ9JqyCaXtv29wCyHVOSvThKcKsGZp8yZ9D5ae08Sv
+ 4vqRhCDcDKtvOnA4bAJaLNbHDvvsQLfWvSq54/s5F8mzKw1I+F0vOt8E+BX9
+X-Google-Smtp-Source: AGHT+IH4vrl7IB4mP5sojqjM0bhc9Ks/6XmoLXQ+79O5Isz+A4wLoaWzL4tI8yP2PQs+/25e06CAJw==
+X-Received: by 2002:a05:6a21:196:b0:1a7:1c7:69e6 with SMTP id
+ le22-20020a056a21019600b001a701c769e6mr1597667pzb.6.1712321637590; 
+ Fri, 05 Apr 2024 05:53:57 -0700 (PDT)
 Received: from wheely.local0.net (124-169-104-130.tpgi.com.au.
  [124.169.104.130]) by smtp.gmail.com with ESMTPSA id
- t19-20020a17090ae51300b002a2d8d34009sm2984414pjy.27.2024.04.05.05.53.47
+ t19-20020a17090ae51300b002a2d8d34009sm2984414pjy.27.2024.04.05.05.53.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 05:53:52 -0700 (PDT)
+ Fri, 05 Apr 2024 05:53:57 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -66,15 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH-for-9.1 v2 0/3] target/ppc: fix tlb flushing race (plus
-Date: Fri,  5 Apr 2024 22:53:35 +1000
-Message-ID: <20240405125340.380828-1-npiggin@gmail.com>
+Subject: [PATCH v2 1/3] target/ppc: Fix broadcast tlbie synchronisation
+Date: Fri,  5 Apr 2024 22:53:36 +1000
+Message-ID: <20240405125340.380828-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240405125340.380828-1-npiggin@gmail.com>
+References: <20240405125340.380828-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,58 +100,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ppc's broadcast tlb flushe must ensure all vCPUs have invalidated
-their TLBs when the tlbie sequence completes. This is not true in
-the current TCG implementation, due to async_run_on_cpu() returning
-before the remote CPU runs the job.
+With mttcg, broadcast tlbie instructions do not wait until other vCPUs
+have been kicked out of TCG execution before they complete (including
+necessary subsequent tlbsync, etc., instructions). This is contrary to
+the ISA, and it permits other vCPUs to use translations after the TLB
+flush. For example:
 
-Fixing ppc requires moving to async_safe_run_on_cpu(), however this
-API does not guarantee that either, and actually changing to the
-tlb_flush_*_all_cpus_synced() variants introduces another race
-which is that the flush is not even guaraneed to complete on the
-local CPU. To ensure that it is, the tlbie has to be made the last
-instruction in the TB.
+   // *memP is initially 0, memV maps to memP with *pte
 
-Fixing ppc removes the last caller of the non-synced TLB flush
-variants, we can remove some dead code too.
+   CPU0
+     *pte = 0;
+     ptesync ; tlbie ; eieio ; tlbsync ; ptesync
+     *memP = 1;
 
-For others - at least arm, riscv, and s390x all use the
-tlb_flush_*_all_cpus_synced() calls AFAIKS without ending the TB. But
-it's possible I've missed where they do, or they have other issues that
-mean it's not required for the flush to take effect until some later
-operation which does end the TB. Maybe there is no problem, but it might
-be worth looking at.
+   CPU1
+     assert(*memV == 0);
 
-To reproduce, I have a kvm-unit-tests case for ppc but should be quite
-easy to port to other archs. You just need to be careful for the local
-CPU test case that your tlbi instruction is in the same TB as the
-subsequent load/store that is to incorrectly use a stale translation.
+It is possible for the assertion to fail because CPU1 translates memV
+using the TLB after CPU0 has stored 1 to the underlying memory. The
+correct behaviour would be no assertion and possibly a page fault due
+to pte being cleared.
 
-https://gitlab.com/npiggin/kvm-unit-tests/-/tree/powerpc
+This race was observed with a careful test case where the CPU1 checks
+run in a large TB making multiple loads so it can run for the entire
+CPU0 period between clearing the pte and storing the memory, but host
+vCPU thread preemption could cause the race to hit anywhere.
 
-The test 'powerpc/mmu.elf tlbie:tlbi-other-cpu' breaks with upstream
-QEMU. If we use tlb_flush_*_all_cpus_synced() like other arch, then
-'powerpc/mmu.elf tlbie:tlbi-this-cpu' also breaks.
+As explained in commit 4ddc104689b ("target/ppc: Fix tlbie"), it is not
+enough to just use tlb_flush_all_cpus_synced(), because that does not
+execute until the calling CPU has finished its TB. It is also required
+that the TB is ended, which will guarantee all CPUs have run the work
+before the next instruction will be executed.
 
-Since v1 I understood the full problem and fix, and fixed the fix.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/helper_regs.c                     | 2 +-
+ target/ppc/mmu_helper.c                      | 2 +-
+ target/ppc/translate.c                       | 7 +++++++
+ target/ppc/translate/storage-ctrl-impl.c.inc | 7 +++++++
+ 4 files changed, 16 insertions(+), 2 deletions(-)
 
-Thanks,
-Nick
-
-Nicholas Piggin (3):
-  target/ppc: Fix broadcast tlbie synchronisation
-  tcg/cputlb: Remove non-synced variants of global TLB flushes
-  tcg/cputlb: remove other-cpu capability from TLB flushing
-
- docs/devel/multi-thread-tcg.rst              |  13 +-
- include/exec/exec-all.h                      |  97 ++-----------
- accel/tcg/cputlb.c                           | 145 ++-----------------
- target/ppc/helper_regs.c                     |   2 +-
- target/ppc/mmu_helper.c                      |   2 +-
- target/ppc/translate.c                       |   7 +
- target/ppc/translate/storage-ctrl-impl.c.inc |   7 +
- 7 files changed, 44 insertions(+), 229 deletions(-)
-
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 25258986e3..9094ae5004 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -334,7 +334,7 @@ void check_tlb_flush(CPUPPCState *env, bool global)
+     if (global && (env->tlb_need_flush & TLB_NEED_GLOBAL_FLUSH)) {
+         env->tlb_need_flush &= ~TLB_NEED_GLOBAL_FLUSH;
+         env->tlb_need_flush &= ~TLB_NEED_LOCAL_FLUSH;
+-        tlb_flush_all_cpus(cs);
++        tlb_flush_all_cpus_synced(cs);
+         return;
+     }
+ 
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index c071b4d5e2..aaa5bfc62a 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -533,7 +533,7 @@ void helper_tlbie_isa300(CPUPPCState *env, target_ulong rb, target_ulong rs,
+     if (local) {
+         tlb_flush_page(env_cpu(env), addr);
+     } else {
+-        tlb_flush_page_all_cpus(env_cpu(env), addr);
++        tlb_flush_page_all_cpus_synced(env_cpu(env), addr);
+     }
+     return;
+ 
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 93ffec787c..4ac8af2058 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -3495,6 +3495,13 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
+         gen_helper_check_tlb_flush_local(tcg_env);
+     }
+     gen_set_label(l);
++    if (global) {
++        /*
++         * Global TLB flush uses async-work which must run before the
++         * next instruction, so this must be the last in the TB.
++         */
++        ctx->base.is_jmp = DISAS_EXIT_UPDATE;
++    }
+ }
+ #else
+ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
+diff --git a/target/ppc/translate/storage-ctrl-impl.c.inc b/target/ppc/translate/storage-ctrl-impl.c.inc
+index 74c23a4191..b8b4454663 100644
+--- a/target/ppc/translate/storage-ctrl-impl.c.inc
++++ b/target/ppc/translate/storage-ctrl-impl.c.inc
+@@ -224,6 +224,13 @@ static bool do_tlbie(DisasContext *ctx, arg_X_tlbie *a, bool local)
+                                  a->prs << TLBIE_F_PRS_SHIFT |
+                                  a->r << TLBIE_F_R_SHIFT |
+                                  local << TLBIE_F_LOCAL_SHIFT));
++        if (!local) {
++            /*
++             * Global TLB flush uses async-work which must run before the
++             * next instruction, so this must be the last in the TB.
++             */
++            ctx->base.is_jmp = DISAS_EXIT_UPDATE;
++        }
+         return true;
+ #endif
+ 
 -- 
 2.43.0
 
