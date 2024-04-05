@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF9FC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 12:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E3D9C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 12:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsix4-00086M-Fr; Fri, 05 Apr 2024 08:45:50 -0400
+	id 1rsiz5-00012N-G0; Fri, 05 Apr 2024 08:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsix3-00081l-9w
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:45:49 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsiz2-000126-Bq
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:47:52 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsiwy-0004N7-D7
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:45:47 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-56e0c00e7fcso2416921a12.2
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 05:45:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsiz0-0007pA-RF
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:47:52 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-41631d7b172so2833305e9.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 05:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712321143; x=1712925943; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712321269; x=1712926069; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+B/HjFmF3KeZiJzQVaMYhibtWopLYFUvSqXCql6oXvQ=;
- b=uZV1xBssXFrlgPPq80hG2WgfJ82eAwFnXp1X4BJOzAMNa3R+cpeTOIBFylzcmpaIQu
- 3Eyj7jFgiPvXUOCHuqs6mc0Ly82mb4q54ebd1PH36rRwU45Fj6OeFHz8BkI3zpAdJqJ5
- 1SDbrYkbXXOg948irBTYxkO0Vwj2QLUln9/sftTzsQdJu0fK99AScf2Gpkn8ETfpXxXw
- ULXn8K72mUT5WAFGQ5SXv2ET+5E2lq01lA1U0g81Qthv8RXDZ5UTCpbT30AUl3+J8PgZ
- h9USv0wFGzMsshNW4fq7lXrjTyd4uc653xkhwV1qJLOc2d7FXL4EyfZd02ZBMTRKqCmL
- /GFA==
+ bh=wrUruDC6C4hD6QGp8o5r+hmX2cGPN22BVywJl8ams0E=;
+ b=HNeygffUPicuG1PoJQBwrCUgkoSv//2aDRHW8AvjburGnf6pYRyLSOeEeeVUhavSIc
+ ja1FsbgjLZTYoGRiVNLjeQn9YkL/Yqm7oPfNK8NdMdaChJtur+qmazTNdQBegrXwrQSu
+ mW7OVKIatYGO8nfIx0OA7w4OXarjF9Juoh2RGJWlcUP+mfykKAjxsvAdorhlCRGmjiWM
+ xfnqW68HUKK8Bjfjc1QmxOVERs9Va2AI/HdryFD4wzQWPXy9VpzsIQmkz0bjT+nmduP4
+ GBB51Bk9ubECMuQ9uv8m8wBm1vEyLOQrzOBEbmIxOJlZ6k22nZcn8R+uPe9DJwsGfaqh
+ VM/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712321143; x=1712925943;
+ d=1e100.net; s=20230601; t=1712321269; x=1712926069;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+B/HjFmF3KeZiJzQVaMYhibtWopLYFUvSqXCql6oXvQ=;
- b=W9d05zPe+PioylwVizw2VMfCs6ClAwyMrmm3rRCK3/VvKJ3pahnC3kk4z96uQ325fL
- z4x4sZyA7SPbhb0cjVvsSW9AtwIwAzaWjHbVa6hWPCasvB3119yWEh48qyDUMBKg06zL
- WDcQGaNcmjUEGcFvAB9p5hhclxQmy5/NGs+I85aOlxocTQUw7dX9ZXtdZpl7GA6iNI+R
- bTsoVFy3DrcHDsmPK5p547BNg4ykezL9mUYB2SK+5Af4mZAMtU9mI9SdeE4CH9i43GNM
- AD6hYf0br9SrmxI/zDpRMIOJH5rmOp0C7SF+bkNi3rhUHZNP8d7VPUJCFolEE0ZHYTYx
- BIaQ==
+ bh=wrUruDC6C4hD6QGp8o5r+hmX2cGPN22BVywJl8ams0E=;
+ b=cZWwhLVD8wkLQ3MrGiyCANPSmJZ0un3NHf9w3ORO2uv8wZRAgPud/o+iWUsEnXpTkJ
+ 8SsdPSp8+b3qbmd3PWpZivOEZOEKlTRuq7XLSgzsr6mAO2pX0NUdy1Vo3yD+HiiHeA3W
+ mT8tQKUWCZ+WaYR/gqauOkHb5RRE8gN/PNDDd+egLNnHoppfGNfm3+NXc1FBkKFJwMsY
+ e1dqs4SGxGys+GT9w5NgsKqJodDvh40ngdDraIbtDKs73VYGRv1onz/FelH8JGbiowuU
+ BPSpYVYURLQlif0qjiRMO2AJI5M2D+bVQuexdtGFD6D4Ys0hakW6uw7KeXj6iZgkaPuE
+ DG9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9tQCl4F4ug+BEVBnSpXBT1gp7mfx0G+MfB9YBVgCQ6ogSrm3H3a1ikflZXUVB443kt7YYzvrAYa4L5aRYzYqQ/2n5r7U=
-X-Gm-Message-State: AOJu0YyEaEuTeYzo08sycvLsIEVR0AdNx2F6DI4+1Z3fizutxJ0OvWur
- atk1Sg96aVL93ebwyLA9fLeAqME6VroOuOwire4OUJVbTCEAz1W/+lEAT9Jd9lOhtjJtQEo+z2T
- j
-X-Google-Smtp-Source: AGHT+IFCNFuHFnxaa9PZCYj7Tv8nSDW2RRz3UZHEIpMmTzfSzWFJCd9g4kBzv33nL2DoeHQzhaH2DQ==
-X-Received: by 2002:a50:8d0a:0:b0:56e:2bfa:c7e0 with SMTP id
- s10-20020a508d0a000000b0056e2bfac7e0mr1006778eds.13.1712321142780; 
- Fri, 05 Apr 2024 05:45:42 -0700 (PDT)
+ AJvYcCU+8NZvbEP+j2fs3HdNis/v3UqhWGnaCTCKdzWiLXELU6uby84M/909YCgiErRd37qZcvTqTdVlTNhRTFztI3fo/wCiHNc=
+X-Gm-Message-State: AOJu0YzTfOPiJFHXY+pdyTCiweepHpqAqRi71HbkSwAYeh8kIUHTbJt9
+ 93BMAKWC5nD9gGeFSrD9IFnlqvB6Kn2vai6zHgb5ZzZ94WOdY8FDl8y5eFzcL78=
+X-Google-Smtp-Source: AGHT+IGYQ0j3L5g5r2zQ8wLkXLNa4jrTwKFUEFHHNfKiDJJer+zQOAe7WxHozrmothnEMCtUrM8oxA==
+X-Received: by 2002:a5d:4003:0:b0:343:c35d:1406 with SMTP id
+ n3-20020a5d4003000000b00343c35d1406mr982457wrp.15.1712321269301; 
+ Fri, 05 Apr 2024 05:47:49 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.216.34])
  by smtp.gmail.com with ESMTPSA id
- ev10-20020a056402540a00b0056c249798absm755766edb.71.2024.04.05.05.45.41
+ q23-20020adfab17000000b003437799a373sm1968718wrc.83.2024.04.05.05.47.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Apr 2024 05:45:42 -0700 (PDT)
-Message-ID: <70ed70b2-f63e-4f82-ae4d-f8f0e8c93e50@linaro.org>
-Date: Fri, 5 Apr 2024 14:45:41 +0200
+ Fri, 05 Apr 2024 05:47:48 -0700 (PDT)
+Message-ID: <fa4af8b2-ed50-4f97-a636-2e72267bcd1a@linaro.org>
+Date: Fri, 5 Apr 2024 14:47:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/32] accel/tcg: Return bool from TranslatorOps.disas_log
+Subject: Re: [PATCH 20/32] accel/tcg: Introduce translator_fake_ld
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240405102459.462551-1-richard.henderson@linaro.org>
- <20240405102459.462551-18-richard.henderson@linaro.org>
+ <20240405102459.462551-21-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240405102459.462551-18-richard.henderson@linaro.org>
+In-Reply-To: <20240405102459.462551-21-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,17 +96,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/4/24 12:24, Richard Henderson wrote:
-> We have eliminated most uses of this hook.  Reduce
-> further by allowing the hook to handle only the
-> special cases, returning false for normal processing.
+> Replace translator_fake_ldb, which required multiple calls,
+> with translator_fake_ld, which can take all data at once.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/translator.h    |  2 +-
->   accel/tcg/translator.c       |  5 ++---
->   target/hppa/translate.c      | 15 ++++++---------
->   target/s390x/tcg/translate.c |  8 +++-----
->   4 files changed, 12 insertions(+), 18 deletions(-)
+>   include/exec/translator.h    | 8 ++++----
+>   accel/tcg/translator.c       | 5 ++---
+>   target/s390x/tcg/translate.c | 8 ++++----
+>   3 files changed, 10 insertions(+), 11 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
