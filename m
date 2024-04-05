@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0D6C67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A5C0CD11C2
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rshDN-0006du-5g; Fri, 05 Apr 2024 06:54:33 -0400
+	id 1rshEi-0007US-RK; Fri, 05 Apr 2024 06:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rshDK-0006cK-Fv
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:54:30 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1rshEf-0007Sm-Ky
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:55:54 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rshDI-0000qT-Sn
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:54:30 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-56c404da0ebso3053164a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:54:26 -0700 (PDT)
+ id 1rshEd-0001JJ-SD
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:55:53 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a519e1b0e2dso117106266b.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:55:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712314464; x=1712919264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712314550; x=1712919350; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=TBrlIqTRebU7cBT6Kdo/fxzyBa52MWs6t9oNTe37Jk4=;
- b=esV98N/5NtpRvAplncNwTWF8jyeo6wHiBTPcKPcMylVeOvSx64sz8XPkgiVJ9ZCZaT
- nzFM3gN3yIcfQ32jujdSLKppymTpZApqgZDVpiGm4fI+Oa3RW7ZzkZzgkGWtr2LAa8aJ
- fttYHMYvVxuIeG/czGacLmwNrK1MsJeWKcD0Ay57nc+anyr/5aZjt0m0gWGeaGQxpDzs
- UjQlGxfqwxnskBtalOIxGJyJEAkVrkLBssk3COWYZe3tbzHwg0UaDIbTwEhYTVnxI85j
- LiAlwqBy5wWWzbsEhWp4iCJqE6aUJar8FOZNyoWO1jVcpkPw2DGrhSjSzfZIUGz8NJmF
- +01w==
+ bh=CG/3LhoR0qkIj6cIiK9XCnRTJWYW3BFglM8ByuNXqC8=;
+ b=ZmzKGBa5Zhb9EreEu0SyqPprANvlW9D4UONKSWOPUt7OoB4u9kVuX6t3l3VD6zhi4L
+ xa8iRCuz/IVYV9MMp9xqZnFHKC34qkBjmYKS72SgKlZ3R0YCpWmF/8HbRWK5EMstkrKm
+ h3SqlsMxAxNVctBzvD01HEET8NlIYysQidRbtYK4orWsQGVNwfvpT4NkXwjVzl54FI7Q
+ 9v2pvLwREvHnGQs25jm3BZY0otj0uBONPTUkJ4XxY3GyOfwkGHLBBTzTsGrccRC30bVU
+ SlvpQT3FcO87mT6/Wms7qlaKf7xlWvrBuGUGG0uyTYQYNjqt0+gPxXXw8Bq6kZgEhdiN
+ 5iNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712314464; x=1712919264;
+ d=1e100.net; s=20230601; t=1712314550; x=1712919350;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TBrlIqTRebU7cBT6Kdo/fxzyBa52MWs6t9oNTe37Jk4=;
- b=QwOa38cD75bYd7QexrJee0kzaqPVo6wO/z5o2PxhxuWkNBcitXo3UiPN80TdRRKYVk
- F+VtpAz+SRcKVH5p1TFNjoVuIrfSiDnQ7UJ2kC/soGUnm3J2CGaYUB+zlv795yKtOBnR
- uAzYuyVHq0Os2+CIFBsLoDuqHe1J/91bxkNtjH3dR/rE9n1buz/oZPtouTS+TUnU6yqS
- WHJjrFWHCF9Y6/tx55FYOCqvyxRqWCwu28zH7tFe5vToxqZDEXLGkYTUDsYAKyUQxOGj
- Zo6mo/kw+syBAOTlIccs7W7PI2MbmvnQw55TPGub83VDhe8vfEFGI0dfFpoQly1OupdI
- 0cbg==
-X-Gm-Message-State: AOJu0YxYB5EiOXQhftSKufpRX944mqzGl4s9CJ/ehYz5TyMe7kPX9O/L
- Jsgzb/F9WD+Dcg4f4z71B9VTpPXAG2Rs6i6UoOMAm9kAS7WOtayU878yM08LyYU=
-X-Google-Smtp-Source: AGHT+IHljwDlpPoDzY1ZYbaCFOsC+XZJc5r6TWjF7+mkcWNsxv2QFAeQf+hS0eb/k2M8WcCiTNbrnw==
-X-Received: by 2002:a50:9f83:0:b0:56e:3034:1d49 with SMTP id
- c3-20020a509f83000000b0056e30341d49mr1027319edf.0.1712314464242; 
- Fri, 05 Apr 2024 03:54:24 -0700 (PDT)
+ bh=CG/3LhoR0qkIj6cIiK9XCnRTJWYW3BFglM8ByuNXqC8=;
+ b=niMlJkrrPiUV14oChVceIzd6Tcb4rg6VrtF6eNL2a6oavg7IB/03D4j2oL5UxLXxtS
+ mJAI85Pdv15/+gxGev3aH54O2o4sNkeCUC+6MwC2mnSU41fbRw/LGdlV4SB4ehIKvgOt
+ uuO9KjOqCd8f7VOd/bSmAF6cifoKeubK0soXNgXWIQkdUuYOov2RT49uiuhB7uFY9BgH
+ AzwP9vIo6ecb9jLyZebm3ZVyx4pZtfBlfoSVeQMQFh8r1aA+9XJP0GOE7CQ+DXr8cUC/
+ NynjAyZ85+zkHEeobbC4c1hvC5b9jbzcUkI7RP+H9oTWyYH6XmzZX0udQtKco06UTjHU
+ YGKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNNSVbYh7lPv6+7f3oTcdMA2EPliFXE0Gls70RCHqEnapxRUeP58mezM1iQbCvTJ5TBFKQ3DjR0pZfy3V274yUdHtwh9Q=
+X-Gm-Message-State: AOJu0YwgaMb1Syxxttq07gp8yU5qmd5FZysVtIEjFNvt/QKqtIKkw/6H
+ P26CytbNUSVWN7aKAAxa01lIm98xVgpPcSqw0qsEIvwYR+8WXsP6MlGZVDvP6f0=
+X-Google-Smtp-Source: AGHT+IEMJ5mEk0WeuU2qlp8e1ViZslBqIfQ6tugyZ4fst2+yxt4Vg8vic7ooTC1zMnU6TSyeQCw87g==
+X-Received: by 2002:a17:906:35cb:b0:a4e:2b75:e1de with SMTP id
+ p11-20020a17090635cb00b00a4e2b75e1demr672058ejb.22.1712314550107; 
+ Fri, 05 Apr 2024 03:55:50 -0700 (PDT)
 Received: from meli-email.org (adsl-197.37.6.0.tellas.gr. [37.6.0.197])
  by smtp.gmail.com with ESMTPSA id
- q22-20020a056402033600b0056c5d0c932bsm662947edw.53.2024.04.05.03.54.23
+ e3-20020a170906844300b00a4e5ab88803sm701875ejy.183.2024.04.05.03.55.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 03:54:24 -0700 (PDT)
-Date: Fri, 05 Apr 2024 13:52:46 +0300
+ Fri, 05 Apr 2024 03:55:49 -0700 (PDT)
+Date: Fri, 05 Apr 2024 13:54:46 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: kraxel@redhat.com, mst@redhat.com
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Zheyu Ma <zheyuma97@gmail.com>
-Subject: Re: [PATCH v2] virtio-snd: Enhance error handling for invalid
- transfers
+To: qemu-stable@nongnu.org, qemu-devel@nongnu.org,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Zheyu Ma <zheyuma97@gmail.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
+Subject: Re: [PATCH v1 0/1] virtio-snd: fix invalid tx/rx message handling
+ logic
 User-Agent: meli 0.8.5-rc.3
-References: <20240322110827.568412-1-zheyuma97@gmail.com>
-In-Reply-To: <20240322110827.568412-1-zheyuma97@gmail.com>
-Message-ID: <bgual.qrsgx92i9kxc@linaro.org>
+References: <cover.virtio-snd-rewrite-invalid-tx-rx-message-handling-v1.manos.pitsidianakis@linaro.org>
+In-Reply-To: <cover.virtio-snd-rewrite-invalid-tx-rx-message-handling-v1.manos.pitsidianakis@linaro.org>
+Message-ID: <bgucz.0f0amac25xfr@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,76 +101,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ping
 
-On Fri, 22 Mar 2024 13:08, Zheyu Ma <zheyuma97@gmail.com> wrote:
->This patch improves error handling in virtio_snd_handle_tx_xfer()
->and virtio_snd_handle_rx_xfer() in the VirtIO sound driver. Previously,
->'goto' statements were used for error paths, leading to unnecessary
->processing and potential null pointer dereferences. Now, 'continue' is
->used to skip the rest of the current loop iteration for errors such as
->message size discrepancies or null streams, reducing crash risks.
+On Sun, 24 Mar 2024 12:04, Manos Pitsidianakis <manos.pitsidianakis@linaro.org> wrote:
+>This is a logic fix for the error handling in the TX/RX virt queue 
+>handlers. A potential invalid address dereference was reported and fixed 
+>by Zheyu Ma in <20240322110827.568412-1-zheyuma97@gmail.com>. This patch 
+>moves the invalid message storage from the stream structs to the virtio 
+>device struct to
 >
->ASAN log illustrating the issue addressed:
+>1. make such bug impossible
+>2. reply to invalid messages again with VIRTIO_SND_S_BAD_MSG, which was 
+>not possible before.
 >
->ERROR: AddressSanitizer: SEGV on unknown address 0x0000000000b4
->    #0 0x57cea39967b8 in qemu_mutex_lock_impl qemu/util/qemu-thread-posix.c:92:5
->    #1 0x57cea128c462 in qemu_mutex_lock qemu/include/qemu/thread.h:122:5
->    #2 0x57cea128d72f in qemu_lockable_lock qemu/include/qemu/lockable.h:95:5
->    #3 0x57cea128c294 in qemu_lockable_auto_lock qemu/include/qemu/lockable.h:105:5
->    #4 0x57cea1285eb2 in virtio_snd_handle_rx_xfer qemu/hw/audio/virtio-snd.c:1026:9
->    #5 0x57cea2caebbc in virtio_queue_notify_vq qemu/hw/virtio/virtio.c:2268:9
->    #6 0x57cea2cae412 in virtio_queue_host_notifier_read qemu/hw/virtio/virtio.c:3671:9
->    #7 0x57cea39822f1 in aio_dispatch_handler qemu/util/aio-posix.c:372:9
->    #8 0x57cea3979385 in aio_dispatch_handlers qemu/util/aio-posix.c:414:20
->    #9 0x57cea3978eb1 in aio_dispatch qemu/util/aio-posix.c:424:5
->    #10 0x57cea3a1eede in aio_ctx_dispatch qemu/util/async.c:360:5
+>Patch based on master base-commit: 853546f8128476eefb701d4a55b2781bb3a46faa
+>with the following patch applied:
 >
->Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
->Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->---
->Changes in v2:
->    - Applied similar error handling logic to virtio_snd_handle_rx_xfer()
->for consistency.
->---
-> hw/audio/virtio-snd.c | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
+>  Subject: [PATCH v2] virtio-snd: Enhance error handling for invalid
+>   transfers
+>  From: Zheyu Ma <zheyuma97@gmail.com>
+>  Date: Fri, 22 Mar 2024 12:08:27 +0100
+>  Message-Id: <20240322110827.568412-1-zheyuma97@gmail.com>
 >
->diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
->index e604d8f30c..30493f06a8 100644
->--- a/hw/audio/virtio-snd.c
->+++ b/hw/audio/virtio-snd.c
->@@ -913,13 +913,13 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
->                             &hdr,
->                             sizeof(virtio_snd_pcm_xfer));
->         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
->-            goto tx_err;
->+            continue;
->         }
->         stream_id = le32_to_cpu(hdr.stream_id);
-> 
->         if (stream_id >= s->snd_conf.streams
->             || s->pcm->streams[stream_id] == NULL) {
->-            goto tx_err;
->+            continue;
->         }
-> 
->         stream = s->pcm->streams[stream_id];
->@@ -995,13 +995,13 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
->                             &hdr,
->                             sizeof(virtio_snd_pcm_xfer));
->         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
->-            goto rx_err;
->+            continue;
->         }
->         stream_id = le32_to_cpu(hdr.stream_id);
-> 
->         if (stream_id >= s->snd_conf.streams
->             || !s->pcm->streams[stream_id]) {
->-            goto rx_err;
->+            continue;
->         }
-> 
->         stream = s->pcm->streams[stream_id];
+>
+>Manos Pitsidianakis (1):
+>  virtio-snd: rewrite invalid tx/rx message handling
+>
+> include/hw/audio/virtio-snd.h |  16 +++-
+> hw/audio/virtio-snd.c         | 137 +++++++++++++++-------------------
+> 2 files changed, 77 insertions(+), 76 deletions(-)
+>
+>
+>base-commit: 853546f8128476eefb701d4a55b2781bb3a46faa
+>prerequisite-patch-id: 8209301569bd30ba806d06b3452a2f3156503a7a
 >-- 
->2.34.1
+>γαῖα πυρί μιχθήτω
 >
 
