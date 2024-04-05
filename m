@@ -4,74 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88055CD1292
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Apr 2024 23:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7DB8CD1284
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 00:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsWAV-00028E-Fk; Thu, 04 Apr 2024 19:06:51 -0400
+	id 1rsX79-0006Bq-64; Thu, 04 Apr 2024 20:07:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsWAG-00023i-OH
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 19:06:38 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rsX76-0006BO-Or
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 20:07:24 -0400
+Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsWAE-0007nB-6O
- for qemu-devel@nongnu.org; Thu, 04 Apr 2024 19:06:36 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-5bdbe2de25fso1232192a12.3
- for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 16:06:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rsX6y-000260-9v
+ for qemu-devel@nongnu.org; Thu, 04 Apr 2024 20:07:20 -0400
+Received: by mail-oa1-x2b.google.com with SMTP id
+ 586e51a60fabf-2228c4c5ac3so924557fac.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Apr 2024 17:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712271993; x=1712876793; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1712275631; x=1712880431; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QUzW5EpE6psTv3wNqcRJ2QohJfV0nsRef4r1zjcLMwE=;
- b=e8B9cHem6j0ZzFeE78hJvb147gfpw9lisYxfUmI/HS9IrbNqi0juzFHBaXRos7/Wr9
- 0yGYYTGgnW8jS/rQvyFcjjJ4sFhRsSZkM3UgEJQlIqg8m3OprLFoT9qIRhnh6jRf949S
- BtkOfEFTv/6CMmDvwyJdn9QKlWT+cCL6WVajnFArsay+RQaCdGpURSDUN8baus0Y4/oJ
- GU92plT8w3fqG+kM+iNcqAVLu4csybAJUyMCnvlZbkbrvBVr0FngPS4fcrkYWjk0WASw
- nDqZH7ULoM1JUNMM2hJCdxG1CGiJVRETtMSUjJfVLJohOyXf68W/fgFPfpVFzZFBLdmt
- LXIA==
+ bh=q6McIYZbsLclE8SOPWcjX3CynsQ0RAlONuKXKFdsbWI=;
+ b=OAfG6uaTum1iswV6AKvaj2SYALq/C35pOFdNzVTLsePKshBH4alkH/puwh7+r49W87
+ +YH+CElgUICGkJ57WBiO6VLP6O1i21twKjcrt9HBboGecqPwMYfUcU8PbaQQA5or7Ewy
+ BUpHdYwxjYsVRQJar9BHKOfJYiDRRAUwzc5/VxybHrDjZXH0XlMsiOC8lCFFGw/yYLDj
+ xHKe/C6gfgHzY6qfK/QPyLcOsTDH6WZpc4I9+9sWXLBJN1Jp/9/djD7r4IP8t69ZmTnZ
+ vFDEOyvlZIMJt0T3mrKyB1OtWap7/fB4p5UTkcwXyCRzGlAA2OnizZx40k1+b/e6RKX2
+ 4XzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712271993; x=1712876793;
+ d=1e100.net; s=20230601; t=1712275631; x=1712880431;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QUzW5EpE6psTv3wNqcRJ2QohJfV0nsRef4r1zjcLMwE=;
- b=T44Xi2GHSuAfcDRG87+V8t5RCZtE7fWDmiLpMSAUcJY+TIH+DWGCtXyXRzFSzIQY8d
- +/7EQFd+yO58xvyOBD22HZP1absIb1vpDN7bJWmggkG02CATeNTb2HGcN2yt3+TyxV3a
- j0e7oh2as24PWZVFyWQDhJovmHDXKJGP7nTZ7ED0lCH3gypZq84bR4r9OK2b2pSHUkum
- y7oBH47aP4/Y7ed6agWOMlt1le5u4/1ixRKRm4wWYPCOkHHmIvznDABHuMOy55Txp0EU
- ovKdqPk/fBWJBASPe7GPS7aRXm3tcfsA14d8YrDk768x0ElNk9RW8Oo2YglgRDKIPaMk
- ah+Q==
-X-Gm-Message-State: AOJu0YyR4fYl3OoiXxe61LfD3/YbLEwgX747HDwXWISWDqgZgQl2/8Pz
- ZgN7iFVhDcIcP8bDv5oGVO4igSWOoYvMz/FCDWrzSYa1O4R6Dyvd1OicCaBusuEiG1CU2iMK+FY
- 4
-X-Google-Smtp-Source: AGHT+IFwG0REnhUJ3sfYSyMlKB3tQf+lk78F56zM2n60gxmSEweVTSNj5y3OOnlxy8kkh/3/k6GODQ==
-X-Received: by 2002:a17:90b:78b:b0:2a2:8a0e:1b81 with SMTP id
- l11-20020a17090b078b00b002a28a0e1b81mr3803893pjz.30.1712271992859; 
- Thu, 04 Apr 2024 16:06:32 -0700 (PDT)
-Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ bh=q6McIYZbsLclE8SOPWcjX3CynsQ0RAlONuKXKFdsbWI=;
+ b=uL5EY5cvcR2pi+L/oAY5/yMDC6PWn76lRxWBKeE9+i01D++pBy3fRZDX6wR050sw/L
+ 46xBNF48bXeMmVq/P/VH/JtE7mNTTM7euCwk+B9mJIX5YfmUxqjbrq5LPLgDhcO6ZH2+
+ XP3n0JpSTC/g6bvCFToAdVmC5VfSGHeEB9ilavlUTaowcUtBYw1TgsAvV8Q7DvAZ7zBI
+ LHMHDhxFz/Is9wErc9do9vLaKQnqs06xXYHXwEMKEWI8wDC7P4Iaw0lIZOTcXdBoVg7E
+ 2q3nJfBIZqZIMVkrgh3sOlCL4dRI3kOXvBF9/a+bxo6XNxL34Phc/ovxeLa5N96IAXHq
+ E6yg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYYjtBiAb4bewnefbsci22lBnqRYv2ypJfOy5FGHDusHM6KFKpAX61Go3V/q2CUpaZ9vjPvSlYAzo3/+NwYiTRFMIiKs8=
+X-Gm-Message-State: AOJu0YwVX8v5mcqXdTXbNb5pBAzkwHTe2WkrxgWsBHktmEbUukFvi2r9
+ 4GcHcZVpIh/nhhLlwRG08U1gaVpj3Gi5RNOYPor4EYnEB2xtbuclAAzSVqtpS7U=
+X-Google-Smtp-Source: AGHT+IETdG/JDjD1LulGxhxX7zA4HNJ1/USqVA9s7rf27ac8j8DzM+mrGRQqRxmrtXI7tO369pGm5Q==
+X-Received: by 2002:a05:6870:80cc:b0:22e:8fe3:a9f3 with SMTP id
+ r12-20020a05687080cc00b0022e8fe3a9f3mr4500124oab.17.1712275631507; 
+ Thu, 04 Apr 2024 17:07:11 -0700 (PDT)
+Received: from n231-228-171.byted.org ([130.44.212.118])
  by smtp.gmail.com with ESMTPSA id
- q36-20020a17090a17a700b002a2f3cfc92asm1052592pja.16.2024.04.04.16.06.31
+ d4-20020a37c404000000b0078835bfddb8sm191433qki.84.2024.04.04.17.07.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Apr 2024 16:06:32 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 14/21] tcg: Remove INDEX_op_plugin_cb_{start,end}
-Date: Thu,  4 Apr 2024 13:06:04 -1000
-Message-Id: <20240404230611.21231-15-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240404230611.21231-1-richard.henderson@linaro.org>
-References: <20240404230611.21231-1-richard.henderson@linaro.org>
+ Thu, 04 Apr 2024 17:07:11 -0700 (PDT)
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+To: "Jonathan Cameron" <Jonathan.Cameron@Huawei.com>,
+ "Huang, Ying" <ying.huang@intel.com>,
+ "Gregory Price" <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, tj@kernel.org, john@jagalactic.com,
+ "Eishan Mirakhur" <emirakhur@micron.com>,
+ "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,
+ "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
+ "Alistair Popple" <apopple@nvidia.com>,
+ "Srinivasulu Thanneeru" <sthanneeru@micron.com>,
+ "SeongJae Park" <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>,
+ Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, nvdimm@lists.linux.dev,
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org
+Cc: "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org
+Subject: [PATCH v11 1/2] memory tier: dax/kmem: introduce an abstract layer
+ for finding, allocating, and putting memory types
+Date: Fri,  5 Apr 2024 00:07:05 +0000
+Message-Id: <20240405000707.2670063-2-horenchuang@bytedance.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240405000707.2670063-1-horenchuang@bytedance.com>
+References: <20240405000707.2670063-1-horenchuang@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2b;
+ envelope-from=horenchuang@bytedance.com; helo=mail-oa1-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,99 +110,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These opcodes are no longer used.
+Since different memory devices require finding, allocating, and putting
+memory types, these common steps are abstracted in this patch,
+enhancing the scalability and conciseness of the code.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
 ---
- include/tcg/tcg-op-common.h |  2 --
- include/tcg/tcg-opc.h       |  2 --
- accel/tcg/plugin-gen.c      | 18 ------------------
- tcg/tcg-op.c                | 10 ----------
- 4 files changed, 32 deletions(-)
+ drivers/dax/kmem.c           | 30 ++++--------------------------
+ include/linux/memory-tiers.h | 13 +++++++++++++
+ mm/memory-tiers.c            | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 46 insertions(+), 26 deletions(-)
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index 72b80b20d0..009e2778c5 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -76,8 +76,6 @@ void tcg_gen_lookup_and_goto_ptr(void);
+diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
+index 42ee360cf4e3..4fe9d040e375 100644
+--- a/drivers/dax/kmem.c
++++ b/drivers/dax/kmem.c
+@@ -55,36 +55,14 @@ static LIST_HEAD(kmem_memory_types);
  
- void tcg_gen_plugin_cb(unsigned from);
- void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
--void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr);
--void tcg_gen_plugin_cb_end(void);
- 
- /* 32 bit ops */
- 
-diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-index be9e36e386..546eb49c11 100644
---- a/include/tcg/tcg-opc.h
-+++ b/include/tcg/tcg-opc.h
-@@ -199,8 +199,6 @@ DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
- 
- DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
- DEF(plugin_mem_cb, 0, 1, 1, TCG_OPF_NOT_PRESENT)
--DEF(plugin_cb_start, 0, 0, 3, TCG_OPF_NOT_PRESENT)
--DEF(plugin_cb_end, 0, 0, 0, TCG_OPF_NOT_PRESENT)
- 
- /* Replicate ld/st ops for 32 and 64-bit guest addresses. */
- DEF(qemu_ld_a32_i32, 1, 1, 1,
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index fb77585ac0..d9ee9bb2ec 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -52,29 +52,11 @@
- #include "exec/plugin-gen.h"
- #include "exec/translator.h"
- 
--/*
-- * plugin_cb_start TCG op args[]:
-- * 0: enum plugin_gen_from
-- * 1: enum plugin_gen_cb
-- * 2: set to 1 for mem callback that is a write, 0 otherwise.
-- */
+ static struct memory_dev_type *kmem_find_alloc_memory_type(int adist)
+ {
+-	bool found = false;
+-	struct memory_dev_type *mtype;
 -
- enum plugin_gen_from {
-     PLUGIN_GEN_FROM_TB,
-     PLUGIN_GEN_FROM_INSN,
-     PLUGIN_GEN_AFTER_INSN,
-     PLUGIN_GEN_AFTER_TB,
--    PLUGIN_GEN_N_FROMS,
--};
+-	mutex_lock(&kmem_memory_type_lock);
+-	list_for_each_entry(mtype, &kmem_memory_types, list) {
+-		if (mtype->adistance == adist) {
+-			found = true;
+-			break;
+-		}
+-	}
+-	if (!found) {
+-		mtype = alloc_memory_type(adist);
+-		if (!IS_ERR(mtype))
+-			list_add(&mtype->list, &kmem_memory_types);
+-	}
+-	mutex_unlock(&kmem_memory_type_lock);
 -
--enum plugin_gen_cb {
--    PLUGIN_GEN_CB_UDATA,
--    PLUGIN_GEN_CB_UDATA_R,
--    PLUGIN_GEN_CB_INLINE,
--    PLUGIN_GEN_CB_MEM,
--    PLUGIN_GEN_ENABLE_MEM_HELPER,
--    PLUGIN_GEN_DISABLE_MEM_HELPER,
--    PLUGIN_GEN_N_CBS,
- };
- 
- static void plugin_gen_empty_callback(enum plugin_gen_from from)
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 0ae12fa49d..eff3728622 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -322,16 +322,6 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo)
-     tcg_gen_op2(INDEX_op_plugin_mem_cb, tcgv_i64_arg(addr), meminfo);
+-	return mtype;
++	guard(mutex)(&kmem_memory_type_lock);
++	return mt_find_alloc_memory_type(adist, &kmem_memory_types);
  }
  
--void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr)
--{
--    tcg_gen_op3(INDEX_op_plugin_cb_start, from, type, wr);
--}
+ static void kmem_put_memory_types(void)
+ {
+-	struct memory_dev_type *mtype, *mtn;
 -
--void tcg_gen_plugin_cb_end(void)
--{
--    tcg_emit_op(INDEX_op_plugin_cb_end, 0);
--}
--
- /* 32 bit ops */
+-	mutex_lock(&kmem_memory_type_lock);
+-	list_for_each_entry_safe(mtype, mtn, &kmem_memory_types, list) {
+-		list_del(&mtype->list);
+-		put_memory_type(mtype);
+-	}
+-	mutex_unlock(&kmem_memory_type_lock);
++	guard(mutex)(&kmem_memory_type_lock);
++	mt_put_memory_types(&kmem_memory_types);
+ }
  
- void tcg_gen_discard_i32(TCGv_i32 arg)
+ static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
+diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
+index 69e781900082..0d70788558f4 100644
+--- a/include/linux/memory-tiers.h
++++ b/include/linux/memory-tiers.h
+@@ -48,6 +48,9 @@ int mt_calc_adistance(int node, int *adist);
+ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+ 			     const char *source);
+ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
++struct memory_dev_type *mt_find_alloc_memory_type(int adist,
++						  struct list_head *memory_types);
++void mt_put_memory_types(struct list_head *memory_types);
+ #ifdef CONFIG_MIGRATION
+ int next_demotion_node(int node);
+ void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
+@@ -136,5 +139,15 @@ static inline int mt_perf_to_adistance(struct access_coordinate *perf, int *adis
+ {
+ 	return -EIO;
+ }
++
++static inline struct memory_dev_type *mt_find_alloc_memory_type(int adist,
++								struct list_head *memory_types)
++{
++	return NULL;
++}
++
++static inline void mt_put_memory_types(struct list_head *memory_types)
++{
++}
+ #endif	/* CONFIG_NUMA */
+ #endif  /* _LINUX_MEMORY_TIERS_H */
+diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+index 0537664620e5..516b144fd45a 100644
+--- a/mm/memory-tiers.c
++++ b/mm/memory-tiers.c
+@@ -623,6 +623,35 @@ void clear_node_memory_type(int node, struct memory_dev_type *memtype)
+ }
+ EXPORT_SYMBOL_GPL(clear_node_memory_type);
+ 
++struct memory_dev_type *mt_find_alloc_memory_type(int adist, struct list_head *memory_types)
++{
++	struct memory_dev_type *mtype;
++
++	list_for_each_entry(mtype, memory_types, list)
++		if (mtype->adistance == adist)
++			return mtype;
++
++	mtype = alloc_memory_type(adist);
++	if (IS_ERR(mtype))
++		return mtype;
++
++	list_add(&mtype->list, memory_types);
++
++	return mtype;
++}
++EXPORT_SYMBOL_GPL(mt_find_alloc_memory_type);
++
++void mt_put_memory_types(struct list_head *memory_types)
++{
++	struct memory_dev_type *mtype, *mtn;
++
++	list_for_each_entry_safe(mtype, mtn, memory_types, list) {
++		list_del(&mtype->list);
++		put_memory_type(mtype);
++	}
++}
++EXPORT_SYMBOL_GPL(mt_put_memory_types);
++
+ static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
+ {
+ 	pr_info(
 -- 
-2.34.1
+Ho-Ren (Jack) Chuang
 
 
