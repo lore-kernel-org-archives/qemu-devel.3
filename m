@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE45BCD11C2
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6E8C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsglJ-00065K-UI; Fri, 05 Apr 2024 06:25:33 -0400
+	id 1rsglX-0006CK-EQ; Fri, 05 Apr 2024 06:25:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglC-00060C-Cn
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:26 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ id 1rsglP-00068s-Lw
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:41 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglA-0004m2-N6
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:26 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-6e69a9c0eaeso1285945a34.3
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:24 -0700 (PDT)
+ id 1rsglO-0004p9-42
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:39 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1e0878b76f3so17015955ad.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712312723; x=1712917523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712312737; x=1712917537; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rExV436qASDL7Fg2YdiVxvwbh1gcXXC/kcp8pAfAu2E=;
- b=kOFE5F0PSHQdUmtDU4G6G7OmSGJgcR1a5YoFavYVBu0u2/JOyYahOyAZQJATAqyEHM
- NYfMcKyC4OCW7ZYoy3DSHWIUMqK0nJNKSQQSmt6baqXk39wcG8sYbeiy+A3cCcHc3Mbu
- zcjX573L56CWVRvh2FfgOc8g2RJ4SrcquSxllIUWn8pljeADvDmM3YNHaRxT9FxJoXjb
- ForoKA1+v/phTHhMQ6/9bJd7XrAc+hMXQUAx3iw9gHj1lf8LWjzPJC+w/lpZS7MDyHB9
- QYU+qEEDDOn4+TxHEysAVq8V8qev2aKGYn9vI18tater+oBjDzyx6r5d1wBTeSLlJK87
- bb0A==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+fs9+k40tx7u0ZrnNCGjYa07BmQdJ80BwtuGhh0yXh4=;
+ b=FEnvx95AgCnbF+lWRAS68tf76Bpo9uTrgrUyqP+S83Xm4AQ3lJCgevvZ/WRm8GjUDe
+ 4lf4XjxoKYo1HcnI3la+uBBrJ5z4LDYRqiUopLXZ6OJotsgkMjl1H/9hZAGLjD0iDUmv
+ McnM+1u2ej00HM7Q/qsbWy1suHgoiAxpgRxdwUcsWXbEvu/QjUHZdC+s5crgBLrRFPCY
+ Dv7tfiB02OExGkunS0zVJnuAOadUTBzP+LnqEM+M3h7QvGLYkadXR1cS6yemEJAUho3y
+ fbvJZja4j1mrY7/+EKSDvLzGLgq7m7rhkO0fvvwz5snG/hl5revXtMZ0A98/3spZ8R3L
+ y6/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712312723; x=1712917523;
+ d=1e100.net; s=20230601; t=1712312737; x=1712917537;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rExV436qASDL7Fg2YdiVxvwbh1gcXXC/kcp8pAfAu2E=;
- b=P5AqyztKByzMVSgYQOC0zv/9kij/L0CsV4DLbgN/IliOK9BNxUdSTZRR3yZ0W1Xh7C
- 4rgXFb3Hj4U1giGSHDz8fjVTb+pzBXDx2nDPf8Gt5em8YxyBeNFsFsgEpujc95/up1nq
- E1/uLfPzI3EvxIsdSGeO/65r/jq67tLtenJp+Ew3MGbjRIgypzNo/URpoeAUWooRuVJl
- IYtS4QonfT0WLx6RUy2w2/UpqCr4p+Ttux+w2Zv+RRhAzMg7eroFtWthsnN70betpf5a
- tO6LPXV+CdABRfphsL/dTBGQ8pP7iKmAzTZwshGj9xCCBH116DRHtxfToYmKUKLjaMoF
- vvNA==
-X-Gm-Message-State: AOJu0YzZF3uB64cG3D5+qXln9+M+kAghzvyyORFcTLxxFSCpdMG2p1XS
- nxZsDfn0S02rOAzrbEpZyR+qiC4AtgKZ3yw9XR9BOihdM43jfk2QTjeCcCWFiX2ogBWqNQuor9a
- r
-X-Google-Smtp-Source: AGHT+IF09xnWjOAsTFNVaZj5O4ae03Tv2d62LaZNqGNeu85iycEbek1FHkhc+a9ppOGI859GWhGeoA==
-X-Received: by 2002:a05:6870:f286:b0:22a:a40c:4bf2 with SMTP id
- u6-20020a056870f28600b0022aa40c4bf2mr1137462oap.14.1712312723440; 
- Fri, 05 Apr 2024 03:25:23 -0700 (PDT)
+ bh=+fs9+k40tx7u0ZrnNCGjYa07BmQdJ80BwtuGhh0yXh4=;
+ b=r+0S3hQDeoM01hBWgY334jRV1MlSbU+/nlNgI80i0E1pv+qD6nSVuG/Cj0eZnpJjV1
+ dqydB4cm69PvzJGzim/GSq8k6rbzBCU3W0UlhfqHyrCtmA513n85bwvEebJ6cjDHiDGx
+ VP/OBWT/SgKZObFBbjbMK7t/1paclUeHwsbFa1gdq2hPlbAmmPN+ppv7ivlKQLNTdBv0
+ EscR/xwWxX7YJRSO5NU7aNSeO8gAFORY7HLxziIxbDwUfdfAyfCBLsMKGpP/py38XDLp
+ 097ZfufDyj68OmhfLflFZSoHHVw/w9FBkI6e9X38hqaWTkWPvHio4CfRkJN+HewE2N8Y
+ t7KA==
+X-Gm-Message-State: AOJu0YzUdLbV+34qYb37HRdT7LaeASKgRIFgxu6eLfjUUqquYEE+m+0c
+ vDLOQXS+HNx+2gEJ1PCOt6yibCkN+Y2qjPBuJQUK8NO2NK/eNaz9dF4wAfvx9u3+m/Tkht2F60h
+ Y
+X-Google-Smtp-Source: AGHT+IHZI/XmTfUfpvsS0r4q/IS0d86tFk9MiJ635TY3Xb0B3el2+53xO+o2sWTFUrJT5ALCvde+9Q==
+X-Received: by 2002:a17:902:ce90:b0:1e3:c327:35e4 with SMTP id
+ f16-20020a170902ce9000b001e3c32735e4mr1696611plg.5.1712312736873; 
+ Fri, 05 Apr 2024 03:25:36 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.22
- for <qemu-devel@nongnu.org>
+ h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 03:25:22 -0700 (PDT)
+ Fri, 05 Apr 2024 03:25:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 17/32] accel/tcg: Return bool from TranslatorOps.disas_log
-Date: Fri,  5 Apr 2024 00:24:44 -1000
-Message-Id: <20240405102459.462551-18-richard.henderson@linaro.org>
+Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH 27/32] target/cris: Use translator_ld* in cris_fetch
+Date: Fri,  5 Apr 2024 00:24:54 -1000
+Message-Id: <20240405102459.462551-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240405102459.462551-1-richard.henderson@linaro.org>
 References: <20240405102459.462551-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,128 +94,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have eliminated most uses of this hook.  Reduce
-further by allowing the hook to handle only the
-special cases, returning false for normal processing.
-
+Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/translator.h    |  2 +-
- accel/tcg/translator.c       |  5 ++---
- target/hppa/translate.c      | 15 ++++++---------
- target/s390x/tcg/translate.c |  8 +++-----
- 4 files changed, 12 insertions(+), 18 deletions(-)
+ target/cris/translate.c | 25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index 97cdb7439e..6ebe69d25c 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -134,7 +134,7 @@ typedef struct TranslatorOps {
-     void (*insn_start)(DisasContextBase *db, CPUState *cpu);
-     void (*translate_insn)(DisasContextBase *db, CPUState *cpu);
-     void (*tb_stop)(DisasContextBase *db, CPUState *cpu);
--    void (*disas_log)(const DisasContextBase *db, CPUState *cpu, FILE *f);
-+    bool (*disas_log)(const DisasContextBase *db, CPUState *cpu, FILE *f);
- } TranslatorOps;
- 
- /**
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index 2a69916b9a..712e0d5c7e 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -224,9 +224,8 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-         if (logfile) {
-             fprintf(logfile, "----------------\n");
- 
--            if (ops->disas_log) {
--                ops->disas_log(db, cpu, logfile);
--            } else {
-+            if (!ops->disas_log ||
-+                !ops->disas_log(db, cpu, logfile)) {
-                 fprintf(logfile, "IN: %s\n", lookup_symbol(db->pc_first));
-                 target_disas(logfile, cpu, db->pc_first, db->tb->size);
-             }
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 7470795578..b1d3d6d415 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -19,7 +19,6 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "disas/disas.h"
- #include "qemu/host-utils.h"
- #include "exec/exec-all.h"
- #include "tcg/tcg-op.h"
-@@ -4816,7 +4815,7 @@ static void hppa_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/cris/translate.c b/target/cris/translate.c
+index b5410189d4..bb2d6612ba 100644
+--- a/target/cris/translate.c
++++ b/target/cris/translate.c
+@@ -222,37 +222,28 @@ static int sign_extend(unsigned int val, unsigned int width)
  }
  
- #ifdef CONFIG_USER_ONLY
--static void hppa_tr_disas_log(const DisasContextBase *dcbase,
-+static bool hppa_tr_disas_log(const DisasContextBase *dcbase,
-                               CPUState *cs, FILE *logfile)
+ static int cris_fetch(CPUCRISState *env, DisasContext *dc, uint32_t addr,
+-              unsigned int size, unsigned int sign)
++                      unsigned int size, bool sign)
  {
-     target_ulong pc = dcbase->pc_first;
-@@ -4824,20 +4823,18 @@ static void hppa_tr_disas_log(const DisasContextBase *dcbase,
-     switch (pc) {
-     case 0x00:
-         fprintf(logfile, "IN:\n0x00000000:  (null)\n");
--        return;
-+        return true;
-     case 0xb0:
-         fprintf(logfile, "IN:\n0x000000b0:  light-weight-syscall\n");
--        return;
-+        return true;
-     case 0xe0:
-         fprintf(logfile, "IN:\n0x000000e0:  set-thread-pointer-syscall\n");
--        return;
-+        return true;
-     case 0x100:
-         fprintf(logfile, "IN:\n0x00000100:  syscall\n");
--        return;
-+        return true;
-     }
--
--    fprintf(logfile, "IN: %s\n", lookup_symbol(pc));
--    target_disas(logfile, cs, pc, dcbase->tb->size);
-+    return false;
- }
- #endif
+     int r;
  
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 8282936559..d8c1ad042d 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -31,7 +31,6 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "s390x-internal.h"
--#include "disas/disas.h"
- #include "exec/exec-all.h"
- #include "tcg/tcg-op.h"
- #include "tcg/tcg-op-gvec.h"
-@@ -6522,7 +6521,7 @@ static void s390x_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+     switch (size) {
+     case 4:
+-    {
+-        r = cpu_ldl_code(env, addr);
++        r = translator_ldl(env, &dc->base, addr);
+         break;
+-    }
+     case 2:
+-    {
++        r = translator_lduw(env, &dc->base, addr);
+         if (sign) {
+-            r = cpu_ldsw_code(env, addr);
+-        } else {
+-            r = cpu_lduw_code(env, addr);
++            r = (int16_t)r;
+         }
+         break;
+-    }
+     case 1:
+-    {
++        r = translator_ldub(env, &dc->base, addr);
+         if (sign) {
+-            r = cpu_ldsb_code(env, addr);
+-        } else {
+-            r = cpu_ldub_code(env, addr);
++            r = (int8_t)r;
+         }
+         break;
+-    }
+     default:
+-        cpu_abort(CPU(dc->cpu), "Invalid fetch size %d\n", size);
+-        break;
++        g_assert_not_reached();
      }
+     return r;
  }
+@@ -2868,7 +2859,7 @@ static unsigned int crisv32_decoder(CPUCRISState *env, DisasContext *dc)
+     int i;
  
--static void s390x_tr_disas_log(const DisasContextBase *dcbase,
-+static bool s390x_tr_disas_log(const DisasContextBase *dcbase,
-                                CPUState *cs, FILE *logfile)
- {
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
-@@ -6530,10 +6529,9 @@ static void s390x_tr_disas_log(const DisasContextBase *dcbase,
-     if (unlikely(dc->ex_value)) {
-         /* ??? Unfortunately target_disas can't use host memory.  */
-         fprintf(logfile, "IN: EXECUTE %016" PRIx64, dc->ex_value);
--    } else {
--        fprintf(logfile, "IN: %s\n", lookup_symbol(dc->base.pc_first));
--        target_disas(logfile, cs, dc->base.pc_first, dc->base.tb->size);
-+        return true;
-     }
-+    return false;
- }
+     /* Load a halfword onto the instruction register.  */
+-        dc->ir = cris_fetch(env, dc, dc->pc, 2, 0);
++    dc->ir = cris_fetch(env, dc, dc->pc, 2, 0);
  
- static const TranslatorOps s390x_tr_ops = {
+     /* Now decode it.  */
+     dc->opcode   = EXTRACT_FIELD(dc->ir, 4, 11);
 -- 
 2.34.1
 
