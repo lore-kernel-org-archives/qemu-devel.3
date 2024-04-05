@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C88BEC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35A4C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsglR-0006B0-K1; Fri, 05 Apr 2024 06:25:41 -0400
+	id 1rsglB-000604-9n; Fri, 05 Apr 2024 06:25:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglO-00068I-Ns
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:38 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1rsgl4-0005xj-GD
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:18 -0400
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglN-0004oh-29
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:38 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e74bd85f26so1768847b3a.1
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:36 -0700 (PDT)
+ id 1rsgkx-0004bK-Ej
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:16 -0400
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-5a4f608432bso1257874eaf.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712312735; x=1712917535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712312710; x=1712917510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tA0b/fSj8XfUCrgQgUfiUA7OwpX6731DGB+eq9CuhnA=;
- b=TXzJT5mU1jTutnVstrqZgjKzyYKhxgeJKH1pQoOjGRst2PbiqcEYfIptSndSKHVYjb
- m/7YXp2qgsOx0PFm2i7P5/PHBnkgu/9ldRa2E9wW4VJfXPc0Z3853OH/Yq6gUWq6ZQhH
- npF+J/ucxhFa9hw3Jl4UKJDtmu1coKQ4P59ld+7OV7m6/Jij/unC09hq8ymY9QdkmANu
- Jm89VEG2XpVdKCeAUMAAVl3pk+xBk5hR/lb/Rwnh5i5vxlQEdjkBLgP2ou9GsZvPXXh4
- 9G3ZU0frR+pdhbne5SQPxutgE7PK2XtAEi+TjOEJRFfTxFovuEUj5wnupmnhkcbJG9i1
- OxZw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=u5+pVSAg9tQ0fLP/+FG5I9U0zGo5SwpUOOXoI7YuppI=;
+ b=CxrjXb8fwVzB6wQyBfRIB1gxiqlN/sPjvFY3QnrmnOpC+aAQd+kMjGR/92K8eFRV5D
+ JmVamEBwlAQGVwi2tYJJz83dV7t2mn9CAm0FWw+HqJZBFURGWDJ3DyasHBQ33fllK1JW
+ KX8tsqSc4tvfTOFcyRd/wzicXL/nRoUIlfvszMAdoul5k6g+OIafpl5SlSIArV2EqkIX
+ xp291+4QtpSU1mvGfSnlhYNy/2Da9/vrz3PcAK7OB11Nb3Syw/0krpktCtvV3OpSMJqc
+ vcgGLNFkmnvsMZm3bH87XpOzQM9cU5ySRSDYfIk5kE+b7mnTfOuSK/VaZijfro5xWdtX
+ jT8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712312735; x=1712917535;
+ d=1e100.net; s=20230601; t=1712312710; x=1712917510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tA0b/fSj8XfUCrgQgUfiUA7OwpX6731DGB+eq9CuhnA=;
- b=ldKfToy62ODbHapaO/2shP/vK2pYlgkh/sDfENB9rMKzCn6Etw9CbEM14XVMGXLgKS
- weqitIORj6qXbFMRmSVJ3icVaHRe5PZwBjh7FJIV01F7P3AW161YpRxJUg0SvJGSCNqc
- 7+HpKSdXnYMblYs/hKz8RNHzZM1adyrMP8BnN8ThG7sC5xXUhCPkApM49Km1mLerUQ6z
- fBwi8HjSHGS/u4i5TfqB8qFDqkOnyJIPbsjpc1n0Kl1JKNqVYC1DpxdtuNx4z5P3RbMi
- /YF8Gy9/8VvtD6SIDtygnV38/4OrPxBMSvmpwYUem2g99MJT85WmHTVwxP2l/2cNYCYF
- 93Aw==
-X-Gm-Message-State: AOJu0YzT++ETQjdLTZg5u0a9eC2Blhh57HA5xH0aoIod1o6R5Jus2EQ+
- wRlQtAtRYlz67wOMTpIQu1l+vbHf5Cz7dKImWUq/v/4aYuJgHHxHyY8HEtZAukDrCAlVMglDeFS
- 6
-X-Google-Smtp-Source: AGHT+IHV3F/mPK3Jmog3yvO/vV0r3VPNFqE9GaNxJB6E+snzY+yaPlBNX3+7vFauiO+9tQ+pZuE52g==
-X-Received: by 2002:a05:6a00:23d1:b0:6ea:8e89:7faf with SMTP id
- g17-20020a056a0023d100b006ea8e897fafmr1086111pfc.28.1712312735300; 
- Fri, 05 Apr 2024 03:25:35 -0700 (PDT)
+ bh=u5+pVSAg9tQ0fLP/+FG5I9U0zGo5SwpUOOXoI7YuppI=;
+ b=mw+dfFXjqw05of2LqXUevwbXi6uifSdKjnJhiOg+nwTBZkkFfiBeNkjALx6ur2mQSH
+ 35jpIWAyjOgzxaS22meoNg/xJlZ2xq9t7NQYfYWVtvPCbYOnGJg/MxY7XeBHoUMxOMEM
+ XW/CX/1f3lck26VtPzN3bNcpQJN1uQn9wMKxpqmTPfwqdRplDuW+04ix4DW0zdJxfGSW
+ CQaauPeUbhpzuP9HYcXXE1TvoZVbBCIVLVmZD6k2xZSg4HUbNb0Hwofzrl+DqTKNpnoO
+ YnzhT7uZMB/6A+irHOSoaVugvMlGkrSM5QcctuODUNUdNTAH8EOIOCEdc7xgegq/HwSJ
+ zo9w==
+X-Gm-Message-State: AOJu0Ywu+EdkQqoWzHwcuD5yU6ArwNA4LRpoxwUIGIQa2WJTJM9QjF90
+ lRFETAHl+62ywSPg2Y+635WhOgfHnu+OlcaDV7LSBEyclW9j3HMNtT1ykNJBNwQT+jvZ9w+dxti
+ K
+X-Google-Smtp-Source: AGHT+IF/NijoWoFXeiahVYcUihmEka2iZJJ707dvUeXpuHoHODBVzya7twY/sqSeayl7QO6/XakquA==
+X-Received: by 2002:a05:6358:c8e:b0:183:cfe0:8da8 with SMTP id
+ o14-20020a0563580c8e00b00183cfe08da8mr1058912rwj.23.1712312709912; 
+ Fri, 05 Apr 2024 03:25:09 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.34
+ h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.08
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 03:25:34 -0700 (PDT)
+ Fri, 05 Apr 2024 03:25:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Michael Rolnik <mrolnik@gmail.com>
-Subject: [PATCH 26/32] target/avr: Use translator_ldl
-Date: Fri,  5 Apr 2024 00:24:53 -1000
-Message-Id: <20240405102459.462551-27-richard.henderson@linaro.org>
+Subject: [PATCH 06/32] accel/tcg: Record mmio bytes during translation
+Date: Fri,  5 Apr 2024 00:24:33 -1000
+Message-Id: <20240405102459.462551-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240405102459.462551-1-richard.henderson@linaro.org>
 References: <20240405102459.462551-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,33 +93,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: Michael Rolnik <mrolnik@gmail.com>
+This will be able to replace plugin_insn_append, and will
+be usable for disassembly.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/avr/translate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/exec/translator.h | 12 ++++++++++++
+ accel/tcg/translator.c    | 41 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+)
 
-diff --git a/target/avr/translate.c b/target/avr/translate.c
-index 6df93d4c77..2d51892115 100644
---- a/target/avr/translate.c
-+++ b/target/avr/translate.c
-@@ -24,7 +24,6 @@
- #include "cpu.h"
- #include "exec/exec-all.h"
- #include "tcg/tcg-op.h"
--#include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
- #include "exec/helper-gen.h"
- #include "exec/log.h"
-@@ -173,7 +172,7 @@ static int to_regs_00_30_by_two(DisasContext *ctx, int indx)
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index 65d0c6489a..b341dfbf02 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -88,6 +88,18 @@ typedef struct DisasContextBase {
+     int8_t saved_can_do_io;
+     bool plugin_enabled;
+     void *host_addr[2];
++
++    /*
++     * Record insn data that we cannot read directly from host memory.
++     * There are only two reasons we cannot use host memory:
++     * (1) We are executing from I/O,
++     * (2) We are executing a synthetic instruction (s390x EX).
++     * In both cases we need record exactly one instruction,
++     * and thus the maximum amount of data we record is limited.
++     */
++    int record_start;
++    int record_len;
++    uint8_t record[32];
+ } DisasContextBase;
  
- static uint16_t next_word(DisasContext *ctx)
- {
--    return cpu_lduw_code(ctx->env, ctx->npc++ * 2);
-+    return translator_lduw(ctx->env, &ctx->base, ctx->npc++ * 2);
+ /**
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index 438b6d4cba..401c0ca30c 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -143,6 +143,8 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+     db->saved_can_do_io = -1;
+     db->host_addr[0] = host_pc;
+     db->host_addr[1] = NULL;
++    db->record_start = 0;
++    db->record_len = 0;
+ 
+     ops->init_disas_context(db, cpu);
+     tcg_debug_assert(db->is_jmp == DISAS_NEXT);  /* no early exit */
+@@ -314,6 +316,39 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
+     return true;
  }
  
- static int append_16(DisasContext *ctx, int x)
++static void record_save(DisasContextBase *db, vaddr pc,
++                        const void *from, int size)
++{
++    int offset;
++
++    /* Do not record probes before the start of TB. */
++    if (pc < db->pc_first) {
++        return;
++    }
++
++    /*
++     * In translator_access, we verified that pc is within 2 pages
++     * of pc_first, thus this will never overflow.
++     */
++    offset = pc - db->pc_first;
++
++    /*
++     * Either the first or second page may be I/O.  If it is the second,
++     * then the first byte we need to record will be at a non-zero offset.
++     * In either case, we should not need to record but a single insn.
++     */
++    if (db->record_len == 0) {
++        db->record_start = offset;
++        db->record_len = size;
++    } else {
++        assert(offset == db->record_start + db->record_len);
++        assert(db->record_len + size <= sizeof(db->record));
++        db->record_len += size;
++    }
++
++    memcpy(db->record + (offset - db->record_start), from, size);
++}
++
+ static void plugin_insn_append(vaddr pc, const void *from, size_t size)
+ {
+ #ifdef CONFIG_PLUGIN
+@@ -341,6 +376,7 @@ uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc)
+ 
+     if (!translator_ld(env, db, &raw, pc, sizeof(raw))) {
+         raw = cpu_ldub_code(env, pc);
++        record_save(db, pc, &raw, sizeof(raw));
+     }
+     plugin_insn_append(pc, &raw, sizeof(raw));
+     return raw;
+@@ -355,6 +391,7 @@ uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
+     } else {
+         tgt = cpu_lduw_code(env, pc);
+         raw = tswap16(tgt);
++        record_save(db, pc, &raw, sizeof(raw));
+     }
+     plugin_insn_append(pc, &raw, sizeof(raw));
+     return tgt;
+@@ -369,6 +406,7 @@ uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+     } else {
+         tgt = cpu_ldl_code(env, pc);
+         raw = tswap32(tgt);
++        record_save(db, pc, &raw, sizeof(raw));
+     }
+     plugin_insn_append(pc, &raw, sizeof(raw));
+     return tgt;
+@@ -383,6 +421,7 @@ uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
+     } else {
+         tgt = cpu_ldl_code(env, pc);
+         raw = tswap64(tgt);
++        record_save(db, pc, &raw, sizeof(raw));
+     }
+     plugin_insn_append(pc, &raw, sizeof(raw));
+     return tgt;
+@@ -390,5 +429,7 @@ uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
+ 
+ void translator_fake_ldb(DisasContextBase *db, vaddr pc, uint8_t insn8)
+ {
++    assert(pc >= db->pc_first);
++    record_save(db, pc, &insn8, sizeof(insn8));
+     plugin_insn_append(pc, &insn8, sizeof(insn8));
+ }
 -- 
 2.34.1
 
