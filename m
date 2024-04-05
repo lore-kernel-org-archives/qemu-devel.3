@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E091FC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 12:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247B0CD11C2
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 12:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsirk-00065l-08; Fri, 05 Apr 2024 08:40:20 -0400
+	id 1rsiwH-0007pD-5W; Fri, 05 Apr 2024 08:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsirh-00065T-PF
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:40:17 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsiwF-0007ow-D0
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:44:59 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsire-00039k-PH
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:40:17 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-516c403cc46so4011995e87.3
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 05:40:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsiwD-00043D-Ib
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 08:44:59 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a519ef3054bso109704066b.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 05:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712320811; x=1712925611; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712321096; x=1712925896; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XxbVoTGHsgqwtvKB4IWqMw54fDqFOZGHYlsV29m4KxQ=;
- b=ofEbkcBPJAwLft+bbC1ZDA3edPX+s0tpCiyHAfEutZaXbXyaen4XpM/lp5D7HkMLId
- kUMpGqvk74ssDibIaQqtv81FPbOM8wsWI0mR5t5FnyFhTStQv6McQMD2dEBOzF4IleT9
- b9XSafePJiUCD0ncJU+MsE96cQMWe53heOXfE/Hcxzvbabz6xm27cXy81IOAh8rWjkmX
- 84sx8THaHbLiR643YZ32Ny8/EenQIzUYLaCQ+xTCEAQjwDPKpVp6gyDJApDgumPheN0V
- TJjrXhCPolBAxKOVS2Ri3x7uKEkcA4yOOgv76+v2NfIzMcsWeVDNQ4hHmcYjpFK0yYm+
- Q7gA==
+ bh=MHvI03SEuODPRGUdMbkO9fSICy40FCR9p4fk+8lCqwo=;
+ b=vTarYN1JbOy9iL+GrfA3I/++cyZvrZgS5tkVpEYFHnOdU3qX0jizeT1SGRivZlB2ix
+ CbFMYyf+z4D4CXvMzuR9BL+iMyIUiVAlXy6DIdQi0dUOatBqQe/1/oUDArH1+9MD4Izt
+ nQeP8iDFfO1g+Cp4d0V1NdNfqJISF4cfd19CanFVTyW/zYwKn59O+htfHHQQ2X9qRgsY
+ JHPQZLlt6p0DdNHFWZq9Grh5zAkw0DhJGFZB1QHzJvnFjd7VOtmIbSTbO6tXZ57JAPMe
+ os+hFN2fm6M/Ya2FQsRe5AOixGLMFenRNmkLecbJo6NanM2Ahcyvdh5o4ZFiFT5EAt1S
+ xGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712320811; x=1712925611;
+ d=1e100.net; s=20230601; t=1712321096; x=1712925896;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XxbVoTGHsgqwtvKB4IWqMw54fDqFOZGHYlsV29m4KxQ=;
- b=eVTDPRDUhSWdpE4Xa7TxC2JvVrrmL4115SGUv4sfdwycIT1LmwHJAKx4W/AJCdX8q+
- 0CfxeX/vH7pQxR1EiptbItv38j9X+X6pHklNYsXfV0R0f1wJokCm3Dye9i3w25e6RfFv
- KuhXe/fNFuOPdaIw2t1Mx9joJzhCbXht6AhA4bCcyQwgDsZ4wUezTsAB6pCTUfroqQYc
- 6v9lzfTblM37C5//cmHaeDdibxuqKEdRcekCmNIiaZprxwN4n+2sZH5Zv4jQkDPpXb9Q
- XVUcCjh9eDHObyOETBFXUNKzLynlVVlnfsDnzQh0ppd6Nq68aJEGoO7bsXtnNMS2lgXw
- 3yJQ==
+ bh=MHvI03SEuODPRGUdMbkO9fSICy40FCR9p4fk+8lCqwo=;
+ b=cTV3tj7mr2+3a24KzkBJ36oYU1DFsLv++bwq0mhWKyp3w8xGR+gZid+UIsr5SAKPfv
+ JZaYCYgCsJl6p23QIsiupDUiU9T3qBORRhz9M71u3FNgART8k373uEcUXsZv0nKbkUP7
+ 3hDYymuUTKoKk2AmRby8/YLsiR0ciEVzGo5/1mV67b5Sxs7KKOAgxTAZwaQkgFAeJPqL
+ 3D46qZV/iKpND86i7Cfp1WVR11zGqh1R1hxZcnLH4o7ps8F+DHj5L+iswt1zaWogWxCv
+ hH8k2luzax/aL2Wa0RPbElMp4Rp2/VQt2oNvdXF1zVV4HaXiFfLcwy4Izy6bia99cLVs
+ 2Tog==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdtf3Zn1LgRDEXiDpJMCYhQXYzc4FmIniBE8NsttFEFd+naXpxoMb4Kc5Hj1QoG2Y49SJTCGcV1zk7hmOyOXLXrpLqPPA=
-X-Gm-Message-State: AOJu0Ywzqj9BPvqIiW+2z/viuP+FzYU1BK1p0kxbKzk/lRmu8APeLj0B
- x7gidf4rQdvxMlE9LUqdJeNA2fpzHKHaL1AWMRnjR7P3aTOH5A4E2/8VSybZA1U=
-X-Google-Smtp-Source: AGHT+IG1a3k3KgI5/4ipcsLjmhj1yMf7n/fdWmiUHHalNGwa2YlbFsfCU96NUi2vAluwHT7TZeK5JQ==
-X-Received: by 2002:a19:4343:0:b0:512:fe25:550b with SMTP id
- m3-20020a194343000000b00512fe25550bmr1299007lfj.47.1712320810962; 
- Fri, 05 Apr 2024 05:40:10 -0700 (PDT)
+ AJvYcCXB5sxhPkN3nAanogZlWAPfSxD6JVMJDXHU2WVktie0IR+D9ySjrfnzhMGx/EzEzEZR/KKK3NB8+fWRcpM3tGYM68Qi0IQ=
+X-Gm-Message-State: AOJu0Yyf0RoCssuiwjXaFOkoZPuSOPtcX/5DEnbFfp9yWhq6rEbzxYJL
+ huxg2QlllspmCKepYZyZ7DaKFNCgoxZE4VRAcYA3rlVkXufc8/0s72QPqIGkJaWsXfwr+YQd75G
+ s
+X-Google-Smtp-Source: AGHT+IHhWgUE0fZZza6a8zSxKlEDc+IT3inruKPwkUnWv+IvUfrbhAz7gvv/XRMEUFsS/aBSB16iPA==
+X-Received: by 2002:a17:906:5610:b0:a4e:e47:9ee7 with SMTP id
+ f16-20020a170906561000b00a4e0e479ee7mr974055ejq.49.1712321095662; 
+ Fri, 05 Apr 2024 05:44:55 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.216.34])
  by smtp.gmail.com with ESMTPSA id
- jy5-20020a170907762500b00a466af74ef2sm797881ejc.2.2024.04.05.05.40.09
+ w14-20020a170907270e00b00a4e29b7eb60sm809420ejk.3.2024.04.05.05.44.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Apr 2024 05:40:10 -0700 (PDT)
-Message-ID: <d24a8e8c-4e4a-4e95-9def-354a7b588dc6@linaro.org>
-Date: Fri, 5 Apr 2024 14:40:08 +0200
+ Fri, 05 Apr 2024 05:44:55 -0700 (PDT)
+Message-ID: <1121b161-541c-4dc8-bbff-2bc029b0a199@linaro.org>
+Date: Fri, 5 Apr 2024 14:44:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/32] plugins: Use DisasContextBase for
- qemu_plugin_tb_vaddr
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 16/32] accel/tcg: Provide default implementation of
+ disas_log
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu-riscv <qemu-riscv@nongnu.org>
 References: <20240405102459.462551-1-richard.henderson@linaro.org>
- <20240405102459.462551-15-richard.henderson@linaro.org>
+ <20240405102459.462551-17-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240405102459.462551-15-richard.henderson@linaro.org>
+In-Reply-To: <20240405102459.462551-17-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,14 +99,123 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/4/24 12:24, Richard Henderson wrote:
-> We do not need to separately record the start of the TB.
+> Almost all of the disas_log implementations are identical.
+> Unify them within translator_loop.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/qemu/plugin.h  | 1 -
->   accel/tcg/plugin-gen.c | 3 +--
->   plugins/api.c          | 3 ++-
->   3 files changed, 3 insertions(+), 4 deletions(-)
+>   accel/tcg/translator.c           |  9 ++++++++-
+>   target/alpha/translate.c         |  9 ---------
+>   target/arm/tcg/translate-a64.c   | 11 -----------
+>   target/arm/tcg/translate.c       | 12 ------------
+>   target/avr/translate.c           |  8 --------
+>   target/cris/translate.c          | 11 -----------
+>   target/hexagon/translate.c       |  9 ---------
+>   target/hppa/translate.c          |  6 ++++--
+>   target/i386/tcg/translate.c      | 11 -----------
+>   target/loongarch/tcg/translate.c |  8 --------
+>   target/m68k/translate.c          |  9 ---------
+>   target/microblaze/translate.c    |  9 ---------
+>   target/mips/tcg/translate.c      |  9 ---------
+>   target/nios2/translate.c         |  9 ---------
+>   target/openrisc/translate.c      | 11 -----------
+>   target/ppc/translate.c           |  9 ---------
+>   target/riscv/translate.c         | 18 ------------------
+>   target/rx/translate.c            |  8 --------
+>   target/sh4/translate.c           |  9 ---------
+>   target/sparc/translate.c         |  9 ---------
+>   target/tricore/translate.c       |  9 ---------
+>   target/xtensa/translate.c        |  9 ---------
+>   22 files changed, 12 insertions(+), 200 deletions(-)
+
+
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 8a1a8bc3aa..7470795578 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -4815,12 +4815,12 @@ static void hppa_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+>       }
+>   }
+>   
+> +#ifdef CONFIG_USER_ONLY
+>   static void hppa_tr_disas_log(const DisasContextBase *dcbase,
+>                                 CPUState *cs, FILE *logfile)
+>   {
+>       target_ulong pc = dcbase->pc_first;
+>   
+> -#ifdef CONFIG_USER_ONLY
+>       switch (pc) {
+>       case 0x00:
+>           fprintf(logfile, "IN:\n0x00000000:  (null)\n");
+> @@ -4835,11 +4835,11 @@ static void hppa_tr_disas_log(const DisasContextBase *dcbase,
+>           fprintf(logfile, "IN:\n0x00000100:  syscall\n");
+>           return;
+>       }
+> -#endif
+>   
+>       fprintf(logfile, "IN: %s\n", lookup_symbol(pc));
+>       target_disas(logfile, cs, pc, dcbase->tb->size);
+>   }
+> +#endif
+>   
+>   static const TranslatorOps hppa_tr_ops = {
+>       .init_disas_context = hppa_tr_init_disas_context,
+> @@ -4847,7 +4847,9 @@ static const TranslatorOps hppa_tr_ops = {
+>       .insn_start         = hppa_tr_insn_start,
+>       .translate_insn     = hppa_tr_translate_insn,
+>       .tb_stop            = hppa_tr_tb_stop,
+> +#ifdef CONFIG_USER_ONLY
+>       .disas_log          = hppa_tr_disas_log,
+
+Preferrably rename with '_user'.
+
+> +#endif
+>   };
+
+
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 9d57089fcc..9fd1ac1d60 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -20,7 +20,6 @@
+>   #include "qemu/log.h"
+>   #include "cpu.h"
+>   #include "tcg/tcg-op.h"
+> -#include "disas/disas.h"
+>   #include "exec/cpu_ldst.h"
+>   #include "exec/exec-all.h"
+>   #include "exec/helper-proto.h"
+> @@ -1271,29 +1270,12 @@ static void riscv_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+>       }
+>   }
+>   
+> -static void riscv_tr_disas_log(const DisasContextBase *dcbase,
+> -                               CPUState *cpu, FILE *logfile)
+> -{
+> -#ifndef CONFIG_USER_ONLY
+> -    RISCVCPU *rvcpu = RISCV_CPU(cpu);
+> -    CPURISCVState *env = &rvcpu->env;
+> -#endif
+> -
+> -    fprintf(logfile, "IN: %s\n", lookup_symbol(dcbase->pc_first));
+> -#ifndef CONFIG_USER_ONLY
+> -    fprintf(logfile, "Priv: "TARGET_FMT_ld"; Virt: %d\n",
+> -            env->priv, env->virt_enabled);
+
+Should we mention the removal of this fprintf() in sysemu?
+
+> -#endif
+> -    target_disas(logfile, cpu, dcbase->pc_first, dcbase->tb->size);
+> -}
+> -
+>   static const TranslatorOps riscv_tr_ops = {
+>       .init_disas_context = riscv_tr_init_disas_context,
+>       .tb_start           = riscv_tr_tb_start,
+>       .insn_start         = riscv_tr_insn_start,
+>       .translate_insn     = riscv_tr_translate_insn,
+>       .tb_stop            = riscv_tr_tb_stop,
+> -    .disas_log          = riscv_tr_disas_log,
+>   };
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
