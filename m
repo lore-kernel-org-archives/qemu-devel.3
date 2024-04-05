@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A780CC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 08:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66FDC67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 08:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsekm-0002oj-MM; Fri, 05 Apr 2024 04:16:52 -0400
+	id 1rsf12-0006MQ-1x; Fri, 05 Apr 2024 04:33:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rsekl-0002oY-3G
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:16:51 -0400
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rsf0y-0006LD-2i
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:33:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rsekj-0004NM-DX
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:16:50 -0400
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rsf0w-0007WU-FU
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:33:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712305007;
+ s=mimecast20190719; t=1712306012;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/53fXpDw1T+ksGA+fLR4I1vvWXyr+aIW1EoVSKjjn94=;
- b=A/2l8RLNf99ka2yWDcdymXjKiyjBTVzsd3F6egKgsc9twCVRq+snffisaQCDPoIF1xMRbq
- 2wkJoi4oAAxyS60PjWHoUY/rrduc62iiYqBX3lz2ARycFMMRNl523lrXFDtEWWsk4CPkqg
- uKetGO765TN/TuQcgMbyzwvGTsO/nLA=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YqJCxyWVA58yJs+bAujWgVvLr35iieqccc/qdOhZvIY=;
+ b=GF7SE6F5Vat7enLxDtcJ8qWUFdbyEnaL7tX5CYIc87Kn4dFOZGkOBk9iaaXYBBjQi8Lq5b
+ qmwc/dg1HpfftRFryTXnbstH0jIQQrEkVT+9uTXWQSya+sk3r/zJI6KffTmz4LyfLEKnm1
+ +w2y17rRkQS+8gsr/tLtQyq3aDQ0XNs=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-9uOMnrUYNEuCfR7hJBmDhA-1; Fri, 05 Apr 2024 04:16:46 -0400
-X-MC-Unique: 9uOMnrUYNEuCfR7hJBmDhA-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dcbfe1a42a4so3247287276.2
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 01:16:46 -0700 (PDT)
+ us-mta-119-M7fa_uC6MHa8PMObvcVLww-1; Fri, 05 Apr 2024 04:33:30 -0400
+X-MC-Unique: M7fa_uC6MHa8PMObvcVLww-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-516d2c322d5so669391e87.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 01:33:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712305005; x=1712909805;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/53fXpDw1T+ksGA+fLR4I1vvWXyr+aIW1EoVSKjjn94=;
- b=MsS8AtlBnbDE3bG+SEI4DYeBGobSwTSE5TEnqNWhY3yyH7hCIEHCSt7yej04BwMDAR
- EMScDXoqN8zaT/90IGpVyp4+DdbJXbn4GaMG9a67V0arurC5VJfN6TV65/NDVozteSXy
- owXHclkch8cdjzDv6bINWqyd34wh25+5rG3vYoWiqEfOa4blDfD7zP1qx4FYp4nNDOcV
- IQ/haqHIz3w65ekzHuTAqh4Qyj1r0vtPMlORQ6JrDEYb0OAha2EXgbc88jq6X3qu6TL5
- oiatfHP3yqi5/jQxt1JMR695yoHz88cgSAe8sgKqwa002YPRQl+fsHaiOm8KMnL8En7W
- VtQQ==
+ d=1e100.net; s=20230601; t=1712306009; x=1712910809;
+ h=in-reply-to:references:user-agent:to:from:subject:cc:message-id
+ :date:content-transfer-encoding:mime-version:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=YqJCxyWVA58yJs+bAujWgVvLr35iieqccc/qdOhZvIY=;
+ b=fi5K99tL0nCGqnfDWrmJOWwj+oVBoTlZaiXo1ufl7IRNmFvw2Q4BYlhwwbRcNALWui
+ 7Z+bFRljTBVPFdJsHwh1YRWHuDql/r6xC0D9yN3AlKXD0Jl3x1iMPUv7L5m68CEYq/8D
+ xmpnjtqURPkkUCIaiGTSNfNVEA6mW4YHsjoz+keLSZh0eOLk70ZUaNQkST1xItl7XhGX
+ fav9o3b30OS/jYNWBYdBy4AICqgibh1G4qBW3NcXKQpzrEchljzCgax4qSbX61MMZ81b
+ VzpEyY5tBYFi7GcZ8GCetJj6sqnUkc7EHY6EyKCcj+ptFjLzUiH5aTuj+E7naHdrQcF6
+ X0Mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpL4K78dA7XxaEsR2pMZ8zlnr2CRim/HNVUxNfQ6+WMqisryjvALB0SEYQpKLStKP5j/DOCE+Azpyp2zb0prP7AxuU2A0=
-X-Gm-Message-State: AOJu0YwShaCn5ab1N95CO/Zhuy/dC9oHL6TFocnArlC0LWmoPwrwGUNF
- WbNrFXskyDP8ol7l7e/dsGQHy2mfBA37q6Yw+Ptm3M/qhIA3Wk2PDp5rGuJZITRaCIft/4aPwHx
- uWH0efGprqY2mM37mv9pT8m3Qu+cTfpuJaFhlv80Zq0H5BN+e3mKRzzrKZlzHMKttOO+pnYCJI7
- ++LZQLmkR0QdRXXDa6c0FXA+u3EaM=
-X-Received: by 2002:a25:2fc4:0:b0:ddd:696a:8656 with SMTP id
- v187-20020a252fc4000000b00ddd696a8656mr519307ybv.41.1712305005703; 
- Fri, 05 Apr 2024 01:16:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVYbGOTvY5yF7TF0Ie6pCY1MJ/ejPKFlOIXM/Nb6f+TUG5BJH51QPnt9nl78ku1yi3asoDQRkdX8lD5oGEMZY=
-X-Received: by 2002:a25:2fc4:0:b0:ddd:696a:8656 with SMTP id
- v187-20020a252fc4000000b00ddd696a8656mr519295ybv.41.1712305005379; Fri, 05
- Apr 2024 01:16:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240404165706.23338-2-wafer@jaguarmicro.com>
-In-Reply-To: <20240404165706.23338-2-wafer@jaguarmicro.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 5 Apr 2024 10:16:09 +0200
-Message-ID: <CAJaqyWeVvCfamVpYK_Z76Wae1T3MsAcaFQ43QiteDTj5+CFvbg@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/virtio: Fix packed virtqueue flush used_idx
-To: Wafer <wafer@jaguarmicro.com>
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
- angus.chen@jaguarmicro.com, Jonah Palmer <jonah.palmer@oracle.com>, 
- Lei Yang <leiyang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCXOA7rxMcT72LkOwseij8+KadRD4KvMaBUIN2+/gwZz0lEeAsPqU95uOzo3rjF0C6TQtIKPStygzwH+VTEgJe8hW2grkPY=
+X-Gm-Message-State: AOJu0Yxw+zgEymmE1RQ26+2JSFh/2rNaX6pc5Dj3MBljP9+ugAw+W+y5
+ nUfRkEjf3Ork+cPRj4UUPa3Q+LbJCUG5uZGGdDQk4/U6Yb/yMx/amHTp8YJx/fyaQ0eFzI/j6cq
+ XT0NHFb3SszawTT+xzhSC5L2ISuXvnNx/dZxjCCtsvF355YMTFOJZ
+X-Received: by 2002:ac2:4ac8:0:b0:515:b69e:8ddf with SMTP id
+ m8-20020ac24ac8000000b00515b69e8ddfmr646982lfp.55.1712306008978; 
+ Fri, 05 Apr 2024 01:33:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHikh+ovheB3Q2rnWqNuaoWa+ENQSkBwSjycBTnHmazmFilb90kF3EHKpFkJ6c9V4vZ7anviQ==
+X-Received: by 2002:ac2:4ac8:0:b0:515:b69e:8ddf with SMTP id
+ m8-20020ac24ac8000000b00515b69e8ddfmr646971lfp.55.1712306008591; 
+ Fri, 05 Apr 2024 01:33:28 -0700 (PDT)
+Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
+ by smtp.gmail.com with ESMTPSA id
+ hi23-20020a05600c535700b004146a1bf590sm5440571wmb.32.2024.04.05.01.33.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Apr 2024 01:33:27 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 05 Apr 2024 10:33:27 +0200
+Message-Id: <D0C1TKCY2WD1.2JMXKVWGWGB8M@fedora>
+Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
+ <vchundur@redhat.com>, <rjarry@redhat.com>
+Subject: Re: [PATCH v4 3/3] Add support for RAPL MSRs in KVM/Qemu
+From: "Anthony Harivel" <aharivel@redhat.com>
+To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+User-Agent: aerc/0.15.2-111-g39195000e213
+References: <20240318151216.32833-1-aharivel@redhat.com>
+ <20240318151216.32833-4-aharivel@redhat.com> <Zfw3teeWGAGiUKq7@redhat.com>
+In-Reply-To: <Zfw3teeWGAGiUKq7@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -100,71 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 4, 2024 at 7:03=E2=80=AFPM Wafer <wafer@jaguarmicro.com> wrote:
+Hi Daniel,
+
+> > +    SocketAddress saddr =3D {
+> > +        .type =3D SOCKET_ADDRESS_TYPE_UNIX,
+> > +        .u.q_unix.path =3D socket_path
+> > +    };
+> > +    QIOChannelSocket *sioc =3D qio_channel_socket_new();
+> > +    Error *local_err =3D NULL;
+> > +
+> > +    int r;
+> > +
+> > +    qio_channel_set_name(QIO_CHANNEL(sioc), "vmsr-helper");
+> > +    qio_channel_socket_connect_sync(sioc,
+> > +                                    &saddr,
+> > +                                    &local_err);
+> > +    g_free(socket_path);
+> > +    if (local_err) {
+> > +        goto out_close;
+> > +    }
 >
-> If a virtio-net device has the VIRTIO_NET_F_MRG_RXBUF feature
-> but not the VIRTIO_RING_F_INDIRECT_DESC feature,
-> 'VirtIONetQueue->rx_vq' will use the merge feature
-> to store data in multiple 'elems'.
-> The 'num_buffers' in the virtio header indicates how many elements are me=
-rged.
-> If the value of 'num_buffers' is greater than 1,
-> all the merged elements will be filled into the descriptor ring.
-> The 'idx' of the elements should be the value of 'vq->used_idx' plus 'nde=
-scs'.
->
-> Signed-off-by: Wafer <wafer@jaguarmicro.com>
+> In the previous posting I suggested that connectiong to the
+> helper again & again for every individual MSR read is a
+> high overhead. Connect once, and then just keep the socket
+> open forever.
 >
 
-Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
-?
+Indeed, this would be way more efficient.=20
 
-> ---
-> Changes in v2:
->   - Clarify more in commit message;
-> ---
->  hw/virtio/virtio.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index fb6b4ccd83..cab5832cac 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -957,12 +957,20 @@ static void virtqueue_packed_flush(VirtQueue *vq, u=
-nsigned int count)
->          return;
->      }
->
-> +    /*
-> +     * For indirect element's 'ndescs' is 1.
-> +     * For all other elemment's 'ndescs' is the
-> +     * number of descriptors chained by NEXT (as set in virtqueue_packed=
-_pop).
-> +     * So When the 'elem' be filled into the descriptor ring,
-> +     * The 'idx' of this 'elem' shall be
-> +     * the value of 'vq->used_idx' plus the 'ndescs'.
-> +     */
-> +    ndescs +=3D vq->used_elems[0].ndescs;
->      for (i =3D 1; i < count; i++) {
-> -        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], i, false);
-> +        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false=
-);
+Does that means that I should create the socket during the=20
+initialisation of the main loop (kvm_msr_energy_thread_init) and keep=20
+track of the context variable and then just give the QIOChannelSocket=20
+pointer has a parameter to the vmsr_read_msr() function to send the=20
+data?
 
-This bugged me recently when I was reviewing it for in_order feature
-implementation, thanks for the patch!
-
-Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
->          ndescs +=3D vq->used_elems[i].ndescs;
->      }
->      virtqueue_packed_fill_desc(vq, &vq->used_elems[0], 0, true);
-> -    ndescs +=3D vq->used_elems[0].ndescs;
->
->      vq->inuse -=3D ndescs;
->      vq->used_idx +=3D ndescs;
-> --
-> 2.27.0
->
->
+Regards,
+Anthony
 
 
