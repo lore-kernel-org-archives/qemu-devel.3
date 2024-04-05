@@ -4,64 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D04DCD11C2
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 17:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEACC67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 17:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsndY-00013P-TK; Fri, 05 Apr 2024 13:46:01 -0400
+	id 1rsngA-0002Uj-4A; Fri, 05 Apr 2024 13:48:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rsndS-00010h-Lh
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 13:45:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rsndN-0005cD-L6
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 13:45:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712339147;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=wP8QwwtjVUlBP9tLGAX5MBpAv2s5IjeizLlNwmMNrUc=;
- b=bbvWaoMdCVpQjPGqC+qhElf67rOZOeFrA1CRw7GuyoJwLWK4QADJ7L3Q85Vj5LelFU2xHl
- +e0wxh6tV/94IKc3J38e9JeuJ1IjvTlDqjjb+1KLfwZWnPeD7JKZ4LLWgB37SGINFPxm0a
- wxnBpeDcbfb3exIxg5ung4pnd8AMZZo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504--KHFNKwfONOQgq2Rtoe_ow-1; Fri,
- 05 Apr 2024 13:45:45 -0400
-X-MC-Unique: -KHFNKwfONOQgq2Rtoe_ow-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6B7C13C1CC55;
- Fri,  5 Apr 2024 17:45:45 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.181])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CB6443C21;
- Fri,  5 Apr 2024 17:45:44 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Zhu Yangyang <zhuyangyang14@huawei.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v4] nbd/server: do not poll within a coroutine context
-Date: Fri,  5 Apr 2024 12:44:13 -0500
-Message-ID: <20240405174523.844181-2-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rsng2-0002UA-Kz
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 13:48:36 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rsng1-0007En-5N
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 13:48:34 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1e0bec01232so21435925ad.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 10:48:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712339311; x=1712944111; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IFdiynlVciqKce82I9/JolCgwwU4DOK2S2QSbBkyZHU=;
+ b=LRKUYtQYGEq/xWffB71sRc5B6EQSNPWZiWTQz3mNaKKDzMMXbFQmG//QExsEDH0Jp4
+ IID1BPpxEBw2nr6BIxESQHkrtHcnvgEBNXBV6FEdcpDKZn60jnWUe78PUWlV0CsQjaV0
+ 5K5NN0mGf9dCF/5oDF7fjPA0tTtHzg3TTTrsFwqK2Nn48KbnzB7MLDkICo6ieRivJ7IK
+ GL89xLN/I3Xe7PegWd1dbuRPpMausqRxKEMtvraLapHN4yyYRe1hlPjqqZptb6XRZhB/
+ sVBU8w11qSz/RPC/gAhKaXS0BTdmEI+uVtglXmUsYMuz3Y6aCR3uwux5OvbjPhx7bwqQ
+ OoTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712339311; x=1712944111;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IFdiynlVciqKce82I9/JolCgwwU4DOK2S2QSbBkyZHU=;
+ b=JJCztMvN+tFZtUTpq6+u1NJr9/oRTDnJIUoChznaQeVWXyx3B+0yC+SOV9iWhE1ug/
+ h74Mfx83RHbPqQV/paoo9H8klr2gcRkIzbO3mdzOW3eaQC4Q7WNdn8I9eO5IpUXgnzNB
+ Bis8rckkCDYzcWtpbzhfaY8+iaPrlItRfyW683l+4w7v+Iu75z5I2lnNZIn0v+uzXVPM
+ QrEQwmlTUJDL3T6rd1Zwe4P4j9rW3U9nCC5r+upzHGYrTX6hUR1fytwNk+K21yby0eg+
+ 43pbSqLOUpdID3ZXVmeycEdll/oxDiz7sp5NC/rtVyvD8UFmuawS6ERqTvd0r1d5hUg0
+ hsLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXg7ROmSSt10jMHd3Rhox98T38w7kFu/COTGs1GBrcH4iwUu226RoLxqmJrw3mdbD5BfSh6+xsgNCXrOLc9F3rlR8UPcvk=
+X-Gm-Message-State: AOJu0YzXfZt8UlT7FGDRR+1ihqJ2UKAYI2kirhA+TC0Sp5WqTM/fEh9f
+ rh2/FyzP1EqjS97crkvLQvN/sImzjo4ndGVaKZGR9ifTd8cxevY4/n3Y7sZdUoI=
+X-Google-Smtp-Source: AGHT+IEaaE5vcAqbDMHS74zA+eJ+aFw6tXseGVCr/geKqxG6+Kby9NgkHXaZtlhVmI16gek303N95A==
+X-Received: by 2002:a17:902:6f08:b0:1e2:7c72:767 with SMTP id
+ w8-20020a1709026f0800b001e27c720767mr1989412plk.30.1712339311606; 
+ Fri, 05 Apr 2024 10:48:31 -0700 (PDT)
+Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ kz13-20020a170902f9cd00b001e275521788sm1853030plb.184.2024.04.05.10.48.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Apr 2024 10:48:31 -0700 (PDT)
+Message-ID: <552eb484-c851-4a73-99e8-38a7011e6d2c@linaro.org>
+Date: Fri, 5 Apr 2024 07:48:28 -1000
 MIME-Version: 1.0
-Content-type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 33/32] accel/tcg: Remove cpu_ldsb_code / cpu_ldsw_code
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20240405102459.462551-1-richard.henderson@linaro.org>
+ <20240405131532.40913-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240405131532.40913-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,197 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhu Yangyang <zhuyangyang14@huawei.com>
+On 4/5/24 03:15, Philippe Mathieu-Daudé wrote:
+> Previous commits replaced them by translator_ld* calls.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/exec/cpu_ldst.h | 10 ----------
+>   1 file changed, 10 deletions(-)
 
-Coroutines are not supposed to block. Instead, they should yield.
-
-The client performs TLS upgrade outside of an AIOContext, during
-synchronous handshake; this still requires g_main_loop.  But the
-server responds to TLS upgrade inside a coroutine, so a nested
-g_main_loop is wrong.  Since the two callbacks no longer share more
-than the setting of data.complete and data.error, it's just as easy to
-use static helpers instead of trying to share a common code path.
-
-Fixes: f95910f ("nbd: implement TLS support in the protocol negotiation")
-Signed-off-by: Zhu Yangyang <zhuyangyang14@huawei.com>
-[eblake: move callbacks to their use point]
-Signed-off-by: Eric Blake <eblake@redhat.com>
----
-
-v3: https://lists.gnu.org/archive/html/qemu-devel/2024-04/msg00375.html
-
-in v4, factor even the struct to the .c files, avoiding a union [Vladimir]
-
- nbd/nbd-internal.h | 10 ----------
- nbd/client.c       | 27 +++++++++++++++++++++++----
- nbd/common.c       | 11 -----------
- nbd/server.c       | 29 +++++++++++++++++++++++------
- 4 files changed, 46 insertions(+), 31 deletions(-)
-
-diff --git a/nbd/nbd-internal.h b/nbd/nbd-internal.h
-index dfa02f77ee4..91895106a95 100644
---- a/nbd/nbd-internal.h
-+++ b/nbd/nbd-internal.h
-@@ -72,16 +72,6 @@ static inline int nbd_write(QIOChannel *ioc, const void *buffer, size_t size,
-     return qio_channel_write_all(ioc, buffer, size, errp) < 0 ? -EIO : 0;
- }
-
--struct NBDTLSHandshakeData {
--    GMainLoop *loop;
--    bool complete;
--    Error *error;
--};
--
--
--void nbd_tls_handshake(QIOTask *task,
--                       void *opaque);
--
- int nbd_drop(QIOChannel *ioc, size_t size, Error **errp);
-
- #endif
-diff --git a/nbd/client.c b/nbd/client.c
-index 29ffc609a4b..c7141d7a098 100644
---- a/nbd/client.c
-+++ b/nbd/client.c
-@@ -596,13 +596,31 @@ static int nbd_request_simple_option(QIOChannel *ioc, int opt, bool strict,
-     return 1;
- }
-
-+/* Callback to learn when QIO TLS upgrade is complete */
-+struct NBDTLSClientHandshakeData {
-+    bool complete;
-+    Error *error;
-+    GMainLoop *loop;
-+};
-+
-+static void nbd_client_tls_handshake(QIOTask *task, void *opaque)
-+{
-+    struct NBDTLSClientHandshakeData *data = opaque;
-+
-+    qio_task_propagate_error(task, &data->error);
-+    data->complete = true;
-+    if (data->loop) {
-+        g_main_loop_quit(data->loop);
-+    }
-+}
-+
- static QIOChannel *nbd_receive_starttls(QIOChannel *ioc,
-                                         QCryptoTLSCreds *tlscreds,
-                                         const char *hostname, Error **errp)
- {
-     int ret;
-     QIOChannelTLS *tioc;
--    struct NBDTLSHandshakeData data = { 0 };
-+    struct NBDTLSClientHandshakeData data = { 0 };
-
-     ret = nbd_request_simple_option(ioc, NBD_OPT_STARTTLS, true, errp);
-     if (ret <= 0) {
-@@ -619,18 +637,19 @@ static QIOChannel *nbd_receive_starttls(QIOChannel *ioc,
-         return NULL;
-     }
-     qio_channel_set_name(QIO_CHANNEL(tioc), "nbd-client-tls");
--    data.loop = g_main_loop_new(g_main_context_default(), FALSE);
-     trace_nbd_receive_starttls_tls_handshake();
-     qio_channel_tls_handshake(tioc,
--                              nbd_tls_handshake,
-+                              nbd_client_tls_handshake,
-                               &data,
-                               NULL,
-                               NULL);
-
-     if (!data.complete) {
-+        data.loop = g_main_loop_new(g_main_context_default(), FALSE);
-         g_main_loop_run(data.loop);
-+        g_main_loop_unref(data.loop);
-     }
--    g_main_loop_unref(data.loop);
-+
-     if (data.error) {
-         error_propagate(errp, data.error);
-         object_unref(OBJECT(tioc));
-diff --git a/nbd/common.c b/nbd/common.c
-index 3247c1d618a..589a748cfe6 100644
---- a/nbd/common.c
-+++ b/nbd/common.c
-@@ -47,17 +47,6 @@ int nbd_drop(QIOChannel *ioc, size_t size, Error **errp)
- }
+Thanks, queued.
 
 
--void nbd_tls_handshake(QIOTask *task,
--                       void *opaque)
--{
--    struct NBDTLSHandshakeData *data = opaque;
--
--    qio_task_propagate_error(task, &data->error);
--    data->complete = true;
--    g_main_loop_quit(data->loop);
--}
--
--
- const char *nbd_opt_lookup(uint32_t opt)
- {
-     switch (opt) {
-diff --git a/nbd/server.c b/nbd/server.c
-index c3484cc1ebc..ea13cf0e766 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -748,6 +748,23 @@ static int nbd_negotiate_handle_info(NBDClient *client, Error **errp)
-     return rc;
- }
+r~
 
-+/* Callback to learn when QIO TLS upgrade is complete */
-+struct NBDTLSServerHandshakeData {
-+    bool complete;
-+    Error *error;
-+    Coroutine *co;
-+};
-+
-+static void nbd_server_tls_handshake(QIOTask *task, void *opaque)
-+{
-+    struct NBDTLSServerHandshakeData *data = opaque;
-+
-+    qio_task_propagate_error(task, &data->error);
-+    data->complete = true;
-+    if (!qemu_coroutine_entered(data->co)) {
-+        aio_co_wake(data->co);
-+    }
-+}
-
- /* Handle NBD_OPT_STARTTLS. Return NULL to drop connection, or else the
-  * new channel for all further (now-encrypted) communication. */
-@@ -756,7 +773,7 @@ static QIOChannel *nbd_negotiate_handle_starttls(NBDClient *client,
- {
-     QIOChannel *ioc;
-     QIOChannelTLS *tioc;
--    struct NBDTLSHandshakeData data = { 0 };
-+    struct NBDTLSServerHandshakeData data = { 0 };
-
-     assert(client->opt == NBD_OPT_STARTTLS);
-
-@@ -777,17 +794,17 @@ static QIOChannel *nbd_negotiate_handle_starttls(NBDClient *client,
-
-     qio_channel_set_name(QIO_CHANNEL(tioc), "nbd-server-tls");
-     trace_nbd_negotiate_handle_starttls_handshake();
--    data.loop = g_main_loop_new(g_main_context_default(), FALSE);
-+    data.co = qemu_coroutine_self();
-     qio_channel_tls_handshake(tioc,
--                              nbd_tls_handshake,
-+                              nbd_server_tls_handshake,
-                               &data,
-                               NULL,
-                               NULL);
-
--    if (!data.complete) {
--        g_main_loop_run(data.loop);
-+    while (!data.complete) {
-+        qemu_coroutine_yield();
-     }
--    g_main_loop_unref(data.loop);
-+
-     if (data.error) {
-         object_unref(OBJECT(tioc));
-         error_propagate(errp, data.error);
--- 
-2.44.0
+> 
+> diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+> index eb8f3f0595..85ca104dc9 100644
+> --- a/include/exec/cpu_ldst.h
+> +++ b/include/exec/cpu_ldst.h
+> @@ -438,16 +438,6 @@ uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr);
+>   uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr);
+>   uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr);
+>   
+> -static inline int cpu_ldsb_code(CPUArchState *env, abi_ptr addr)
+> -{
+> -    return (int8_t)cpu_ldub_code(env, addr);
+> -}
+> -
+> -static inline int cpu_ldsw_code(CPUArchState *env, abi_ptr addr)
+> -{
+> -    return (int16_t)cpu_lduw_code(env, addr);
+> -}
+> -
+>   /**
+>    * tlb_vaddr_to_host:
+>    * @env: CPUArchState
 
 
