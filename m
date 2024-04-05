@@ -4,86 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D214C67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 21:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C30C3A59D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 22:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsrVQ-0003pd-Tp; Fri, 05 Apr 2024 17:53:52 -0400
+	id 1rsrcC-0005tP-7S; Fri, 05 Apr 2024 18:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rsrVP-0003pF-LG
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 17:53:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rsrVN-000094-Tz
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 17:53:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712354028;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IlfCfa9FZJKlO/dZuPyAMvYhh5siFNH9Zczt66uAGJI=;
- b=Re9ffoNdPKqO+tDI+AWbT4IQlDeDapNkRzF+qpMDmS9BAstr/NrNBDkHRxWzYcWaWs4w1u
- BLEOKKbsFoEiTbK7TUifiEGJW1PaDZOJRtsQbQCUVzgAZI+UpLtYZz5SPaqE1LLQJbaaiF
- 915hRd5i/F0xDIXPCotPLt8irWEylV0=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-rAbM8gg4Mjmih1TYXbynQA-1; Fri, 05 Apr 2024 17:53:46 -0400
-X-MC-Unique: rAbM8gg4Mjmih1TYXbynQA-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-78d3ea0d2faso40690585a.0
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 14:53:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rsrc3-0005rL-9j
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 18:00:43 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rsrc1-0002TN-Fq
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 18:00:43 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6ecf1bb7f38so1880814b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 15:00:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712354439; x=1712959239; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xtbJ/p7JEFHTppWK8T4w7KJEZi+x0bHxbuO/ApHynWI=;
+ b=RAKOM067L3kxKcc7Ohzh/tCl3s6ci/XN2B48a8w2MS0Kh1sLrPOUf4whBWFBerzCpI
+ e5qX/dq8u4FBz0v1wObZp6epnQ076yvUSNkte1jiWoBlccPu5RUL/MTX7OLKF6r8pPPt
+ F2xhMofBuJ+d5F/eJR/t8u6Vom3O48AQ4PoTxMIC5hQnCXmgBmjxNOP7NAZF+kbFeL1D
+ rwTrpHH43kfkv4Di528Eth8yIDY410jD2TXjoA5MxGDQSOywUpwB86DjzhdhV0/NCzwE
+ BPxak+Etmb4EUbVZp5mtuqPG8jt4fw7isAIxiR3rFvfcJRgyIi0C7Nnmr/7bziz3gN9j
+ DZGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712354026; x=1712958826;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IlfCfa9FZJKlO/dZuPyAMvYhh5siFNH9Zczt66uAGJI=;
- b=MIZv7Z9JH74GopfwUYDODm19iFZBYFIr/jMZpH4r8fS1rrkPK8Tu5llYjgo+VuYp8K
- wdiQgJM2ER19QUw5nTdpTHTgrhQrQlEpuw9c6qupg/RiM3bhDPk3pycdFv4U9cis7Tji
- NZlpexb808lntRJdKCJFkiiLiFU5pP+zrg/aYBcwqHpeadMfviom2fu7oD3nTLsawS3U
- 5Pr92QyCNUnSrpMUNUxzr1nOc+gqrf9zuy2B7m4qkM7OkJbZsO4VY3+ySFp/BBnvnAAM
- rwHgiGy5EG/BVQC/lTs52YEAtAT8LOZgo+Xu0HA+M5u5PWhYmkQCs8sVx71b2RNwohth
- HELQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWusdpjxECG4XFEKtxVNEbyk7YbgQ+zxjCeSjJ8549YIvocizprDBtlU0ajpDQabhLAI9WHRPY98dtJ8C6I1jL8T2zCeMM=
-X-Gm-Message-State: AOJu0YwHBG1lNSFTWArPm8y4S0zfLbG5ku3JUtds93CDj7JlsJJ35sh7
- oIyx/k7Eb9szPFFAqv8garj+LQaMtMdhQ3KE9f/6e9WsKCJHjf5ae8y5cfOOp6fo3RaDOe3ISJI
- UHTekpI2A/LW4Kr9Xo2QoDxvWe0qWcif31kADmNeuoAvvqGqrv23F
-X-Received: by 2002:a05:620a:370f:b0:78d:4404:20cb with SMTP id
- de15-20020a05620a370f00b0078d440420cbmr3187270qkb.3.1712354025733; 
- Fri, 05 Apr 2024 14:53:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHxmH40QAHK6IKkBJuIgeF6wtY5Q/FMS10EwqHNmsq/6rSpwlYlaX0cCuI3Jw12bEm7aY2ng==
-X-Received: by 2002:a05:620a:370f:b0:78d:4404:20cb with SMTP id
- de15-20020a05620a370f00b0078d440420cbmr3187243qkb.3.1712354025157; 
- Fri, 05 Apr 2024 14:53:45 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- sq18-20020a05620a4ad200b00788428c2a97sm974238qkn.64.2024.04.05.14.53.18
+ d=1e100.net; s=20230601; t=1712354439; x=1712959239;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xtbJ/p7JEFHTppWK8T4w7KJEZi+x0bHxbuO/ApHynWI=;
+ b=iyEtcbOKtXEHSFITay/kZ0fBb0lcFYBEPl8n/nhPQbZeIgGU6l0AAQRuQmftlWtNM3
+ RBzhd/at9celCVhjMg4HkYKKF40OktUBNE0DUd9qAcIysyev/GRMbvpus8i5NyQKODqx
+ V8Fsx+PeOW4s9ZzjKfQWKuM+uQfND0/n/j4P1xIxY+68rBv1tqN3GD7OtIXRMwxPiXY4
+ 6fVS+3Y6YYcFwpB2ccR3l6lrIY8NwtNEg5DGakPT/KV8LV2LEkq6WHYimPBHsINlhxBp
+ sbCzdrsy5NXbwCQPNHxI4LZ31l0EJjxVJ+FLZngedCgLPwqCfNlVfyhRjw90KwPVjaIX
+ HbFA==
+X-Gm-Message-State: AOJu0YyfoLzEgmjI12O+WEXDRyTb6P6ce9ZWQ5vyerlJuiXyO6gvtOKj
+ Q80/y1OmaEqp0swtTQuKiEfUZ1cBhgP5lO8W8gztXkdCNByeyDRxyMPiIGVeFv3a7Xi+KHHsICA
+ m
+X-Google-Smtp-Source: AGHT+IHZ7Br/xiCW0R56MksNzgZLX3aF6eXbLCBC9mEd748eDQ4Gxwb61xP0xogHx2zYLWq+zs5b9w==
+X-Received: by 2002:a05:6a21:4987:b0:1a3:c604:8486 with SMTP id
+ ax7-20020a056a21498700b001a3c6048486mr2435130pzc.34.1712354438811; 
+ Fri, 05 Apr 2024 15:00:38 -0700 (PDT)
+Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ z11-20020aa785cb000000b006ece85910edsm1988831pfn.152.2024.04.05.15.00.37
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 14:53:29 -0700 (PDT)
-Date: Fri, 5 Apr 2024 17:53:15 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Wei Wang <wei.w.wang@intel.com>
-Cc: lei4.wang@intel.com, farosas@suse.de, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] migration/postcopy: ensure preempt channel is ready
- before loading states
-Message-ID: <ZhByy4YvYl9xLmRP@x1n>
-References: <20240405034056.23933-1-wei.w.wang@intel.com>
+ Fri, 05 Apr 2024 15:00:38 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH for-9.0] linux-user: Fix waitid return of siginfo_t and rusage
+Date: Fri,  5 Apr 2024 12:00:34 -1000
+Message-Id: <20240405220034.5128-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240405034056.23933-1-wei.w.wang@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,69 +90,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 05, 2024 at 11:40:56AM +0800, Wei Wang wrote:
-> Before loading the guest states, ensure that the preempt channel has been
-> ready to use, as some of the states (e.g. via virtio_load) might trigger
-> page faults that will be handled through the preempt channel. So yield to
-> the main thread in the case that the channel create event hasn't been
-> dispatched.
-> 
-> Originally-by: Lei Wang <lei4.wang@intel.com>
-> Link: https://lore.kernel.org/all/9aa5d1be-7801-40dd-83fd-f7e041ced249@intel.com/T/
-> Suggested-by: Peter Xu <peterx@redhat.com>
+The copy back to siginfo_t should be conditional only on arg3,
+not the specific values that might have been written.
+The copy back to rusage was missing entirely.
 
-The current version doesn't have any of my credits. :) Thanks, but I'll
-just drop it to reflect reality, so we keep the credit to the right ones.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2262
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/syscall.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-> Signed-off-by: Lei Wang <lei4.wang@intel.com>
-> Signed-off-by: Wei Wang <wei.w.wang@intel.com>
-> ---
->  migration/savevm.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 388d7af7cd..63f9991a8a 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2342,6 +2342,23 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
->  
->      QEMUFile *packf = qemu_file_new_input(QIO_CHANNEL(bioc));
->  
-> +    /*
-> +     * Before loading the guest states, ensure that the preempt channel has
-> +     * been ready to use, as some of the states (e.g. via virtio_load) might
-> +     * trigger page faults that will be handled through the preempt channel.
-> +     * So yield to the main thread in the case that the channel create event
-> +     * hasn't been dispatched.
-
-I'll squash below into it.  If any of you disagree please shoot: valid
-until this Sunday.
-
-+     * TODO: if we can move migration loadvm out of main thread, then we
-+     * won't block main thread from polling the accept() fds.  We can drop
-+     * this as a whole when that is done.
-
-Huge thanks to both!
-
-> +     */
-> +    do {
-> +        if (!migrate_postcopy_preempt() || !qemu_in_coroutine() ||
-> +            mis->postcopy_qemufile_dst) {
-> +            break;
-> +        }
-> +
-> +        aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
-> +        qemu_coroutine_yield();
-> +    } while (1);
-> +
->      ret = qemu_loadvm_state_main(packf, mis);
->      trace_loadvm_handle_cmd_packaged_main(ret);
->      qemu_fclose(packf);
-> -- 
-> 2.27.0
-> 
-
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e12d969c2e..3df2b94d9a 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -9272,14 +9272,24 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+ #ifdef TARGET_NR_waitid
+     case TARGET_NR_waitid:
+         {
++            struct rusage ru;
+             siginfo_t info;
+-            info.si_pid = 0;
+-            ret = get_errno(safe_waitid(arg1, arg2, &info, arg4, NULL));
+-            if (!is_error(ret) && arg3 && info.si_pid != 0) {
+-                if (!(p = lock_user(VERIFY_WRITE, arg3, sizeof(target_siginfo_t), 0)))
++
++            ret = get_errno(safe_waitid(arg1, arg2, (arg3 ? &info : NULL),
++                                        arg4, (arg5 ? &ru : NULL)));
++            if (!is_error(ret)) {
++                if (arg3) {
++                    p = lock_user(VERIFY_WRITE, arg3,
++                                  sizeof(target_siginfo_t), 0);
++                    if (!p) {
++                        return -TARGET_EFAULT;
++                    }
++                    host_to_target_siginfo(p, &info);
++                    unlock_user(p, arg3, sizeof(target_siginfo_t));
++                }
++                if (arg5 && host_to_target_rusage(arg5, &ru)) {
+                     return -TARGET_EFAULT;
+-                host_to_target_siginfo(p, &info);
+-                unlock_user(p, arg3, sizeof(target_siginfo_t));
++                }
+             }
+         }
+         return ret;
 -- 
-Peter Xu
+2.34.1
 
 
