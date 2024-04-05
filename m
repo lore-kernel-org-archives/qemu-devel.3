@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66FDC67861
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 08:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E2DC67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 08:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsf12-0006MQ-1x; Fri, 05 Apr 2024 04:33:40 -0400
+	id 1rsfAH-0007vX-E6; Fri, 05 Apr 2024 04:43:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rsf0y-0006LD-2i
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:33:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rsf0w-0007WU-FU
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:33:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712306012;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YqJCxyWVA58yJs+bAujWgVvLr35iieqccc/qdOhZvIY=;
- b=GF7SE6F5Vat7enLxDtcJ8qWUFdbyEnaL7tX5CYIc87Kn4dFOZGkOBk9iaaXYBBjQi8Lq5b
- qmwc/dg1HpfftRFryTXnbstH0jIQQrEkVT+9uTXWQSya+sk3r/zJI6KffTmz4LyfLEKnm1
- +w2y17rRkQS+8gsr/tLtQyq3aDQ0XNs=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-119-M7fa_uC6MHa8PMObvcVLww-1; Fri, 05 Apr 2024 04:33:30 -0400
-X-MC-Unique: M7fa_uC6MHa8PMObvcVLww-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-516d2c322d5so669391e87.0
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 01:33:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsfAG-0007vA-EC
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:43:12 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rsfAD-0001Zv-Qp
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 04:43:12 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a450bedffdfso257908966b.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 01:43:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712306587; x=1712911387; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SZ/mIGU9FzqXnysqxASs2aJf7KpUaoBTPfVK6gw/Yxo=;
+ b=vbU1MJpdqPrOfHFxkFfMbVGw5hqkB8RNb6aNKZ9pD2MqBkdtYj7Hir6qplAa2kD4+r
+ 0dFobIFpvN9iflWAU3p/oWhdSAb14ThI2JJ5YZXX03JoEW2kXPnVqK2UKN9986YVTQUs
+ uXUpRAqadwwctmNbM8x6t9MBFficAz2cLbSCwjdQuC+27wGdl7cCK8dvX/Sz1fBSpiZ9
+ YzHWIic3ewOD3SutscC5qQ4cIltQzaOMXo9ELX/VuF2qjeshTs4rY+gb9ahyrECNHAAB
+ 488vT8ew4eXueLMUYZUs6f+GwOkNQbaNiGH9FvXUkFEmZCHEheGcNiYAO4BW9sY96EFC
+ 61WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712306009; x=1712910809;
- h=in-reply-to:references:user-agent:to:from:subject:cc:message-id
- :date:content-transfer-encoding:mime-version:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YqJCxyWVA58yJs+bAujWgVvLr35iieqccc/qdOhZvIY=;
- b=fi5K99tL0nCGqnfDWrmJOWwj+oVBoTlZaiXo1ufl7IRNmFvw2Q4BYlhwwbRcNALWui
- 7Z+bFRljTBVPFdJsHwh1YRWHuDql/r6xC0D9yN3AlKXD0Jl3x1iMPUv7L5m68CEYq/8D
- xmpnjtqURPkkUCIaiGTSNfNVEA6mW4YHsjoz+keLSZh0eOLk70ZUaNQkST1xItl7XhGX
- fav9o3b30OS/jYNWBYdBy4AICqgibh1G4qBW3NcXKQpzrEchljzCgax4qSbX61MMZ81b
- VzpEyY5tBYFi7GcZ8GCetJj6sqnUkc7EHY6EyKCcj+ptFjLzUiH5aTuj+E7naHdrQcF6
- X0Mw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOA7rxMcT72LkOwseij8+KadRD4KvMaBUIN2+/gwZz0lEeAsPqU95uOzo3rjF0C6TQtIKPStygzwH+VTEgJe8hW2grkPY=
-X-Gm-Message-State: AOJu0Yxw+zgEymmE1RQ26+2JSFh/2rNaX6pc5Dj3MBljP9+ugAw+W+y5
- nUfRkEjf3Ork+cPRj4UUPa3Q+LbJCUG5uZGGdDQk4/U6Yb/yMx/amHTp8YJx/fyaQ0eFzI/j6cq
- XT0NHFb3SszawTT+xzhSC5L2ISuXvnNx/dZxjCCtsvF355YMTFOJZ
-X-Received: by 2002:ac2:4ac8:0:b0:515:b69e:8ddf with SMTP id
- m8-20020ac24ac8000000b00515b69e8ddfmr646982lfp.55.1712306008978; 
- Fri, 05 Apr 2024 01:33:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHikh+ovheB3Q2rnWqNuaoWa+ENQSkBwSjycBTnHmazmFilb90kF3EHKpFkJ6c9V4vZ7anviQ==
-X-Received: by 2002:ac2:4ac8:0:b0:515:b69e:8ddf with SMTP id
- m8-20020ac24ac8000000b00515b69e8ddfmr646971lfp.55.1712306008591; 
- Fri, 05 Apr 2024 01:33:28 -0700 (PDT)
-Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
+ d=1e100.net; s=20230601; t=1712306587; x=1712911387;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SZ/mIGU9FzqXnysqxASs2aJf7KpUaoBTPfVK6gw/Yxo=;
+ b=un0fgqqY4GSuxwP+0/S5kvnj9fgmENRvpjzl/e/c+ULm7op6rjt6B5qK+XeXrVYLCz
+ vXOoP18T9znLdEdlDroH1S+0EER8e/fIH3LFkkwzDn+myaAwT6URnbL0mUBmzY793Y8T
+ 2J+hb/aRhpQuBrxUM9CQ1exn5s7vq5p5bqqENdF1KzQQ8zYAQHo3OKkBu6kQpNMceHRg
+ yxZcDf4DwbThywSBTiTLfXeJa6ndsVrqWHZG8JDl30jgJYc1DQZNxqHWMMZsxE+Zxksa
+ dw6B3n38uYVmcTpz4p+X/ISsSpUqjSbtSTxuR2Js45kDrFW3IxAC6bbkDa++VrPVS1jO
+ X2fg==
+X-Gm-Message-State: AOJu0YwFaiDHQmPzy/8m4TVom2gw+0DtDXL0qS1YgJtCgwTfvqDuqDo0
+ phm60v0Im2a/8n6GtOi4OWu/rXydsbkqRfHVh3RV9cR3mPoO4/Tq9dbm9AJxHxE=
+X-Google-Smtp-Source: AGHT+IFQr5GAzdAQonz9N46Yas4fPnRzOvnntu6OCbYTm8Ew1sv/mJwfrWNxYFahoWlE+4QcFzVu9Q==
+X-Received: by 2002:a17:906:4888:b0:a4e:b3f:1dda with SMTP id
+ v8-20020a170906488800b00a4e0b3f1ddamr482540ejq.74.1712306587078; 
+ Fri, 05 Apr 2024 01:43:07 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.216.34])
  by smtp.gmail.com with ESMTPSA id
- hi23-20020a05600c535700b004146a1bf590sm5440571wmb.32.2024.04.05.01.33.27
+ qb34-20020a1709077ea200b00a4df78425dbsm581104ejc.36.2024.04.05.01.43.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Apr 2024 01:33:27 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 05 Apr 2024 10:33:27 +0200
-Message-Id: <D0C1TKCY2WD1.2JMXKVWGWGB8M@fedora>
-Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
- <vchundur@redhat.com>, <rjarry@redhat.com>
-Subject: Re: [PATCH v4 3/3] Add support for RAPL MSRs in KVM/Qemu
-From: "Anthony Harivel" <aharivel@redhat.com>
-To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-User-Agent: aerc/0.15.2-111-g39195000e213
-References: <20240318151216.32833-1-aharivel@redhat.com>
- <20240318151216.32833-4-aharivel@redhat.com> <Zfw3teeWGAGiUKq7@redhat.com>
-In-Reply-To: <Zfw3teeWGAGiUKq7@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ Fri, 05 Apr 2024 01:43:06 -0700 (PDT)
+Message-ID: <90c54fc3-29e6-48d8-995b-0fa449498353@linaro.org>
+Date: Fri, 5 Apr 2024 10:43:04 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-9.1] qapi: Do not generate
+ commands/events/introspect code for user emulation
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Laurent Vivier <laurent@vivier.eu>, Michael Roth <michael.roth@amd.com>
+References: <20240404195543.9804-1-philmd@linaro.org>
+ <87il0w74oh.fsf@pond.sub.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87il0w74oh.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,41 +96,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+Hi Markus,
 
-> > +    SocketAddress saddr =3D {
-> > +        .type =3D SOCKET_ADDRESS_TYPE_UNIX,
-> > +        .u.q_unix.path =3D socket_path
-> > +    };
-> > +    QIOChannelSocket *sioc =3D qio_channel_socket_new();
-> > +    Error *local_err =3D NULL;
-> > +
-> > +    int r;
-> > +
-> > +    qio_channel_set_name(QIO_CHANNEL(sioc), "vmsr-helper");
-> > +    qio_channel_socket_connect_sync(sioc,
-> > +                                    &saddr,
-> > +                                    &local_err);
-> > +    g_free(socket_path);
-> > +    if (local_err) {
-> > +        goto out_close;
-> > +    }
->
-> In the previous posting I suggested that connectiong to the
-> helper again & again for every individual MSR read is a
-> high overhead. Connect once, and then just keep the socket
-> open forever.
->
+On 5/4/24 07:35, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> User emulation requires the QAPI types. Due to the command
+>> line processing, some visitor code is also used. The rest
+>> is irrelevant (no QMP socket).
+>>
+>> Add an option to the qapi-gen script to allow generating
+>> the minimum when only user emulation is being built.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> RFC: Quick PoC for Markus. It is useful for user-only builds.
+>> ---
+>>   qapi/meson.build     |  6 +++++-
+>>   scripts/qapi/main.py | 16 +++++++++++-----
+>>   2 files changed, 16 insertions(+), 6 deletions(-)
 
-Indeed, this would be way more efficient.=20
 
-Does that means that I should create the socket during the=20
-initialisation of the main loop (kvm_msr_energy_thread_init) and keep=20
-track of the context variable and then just give the QIOChannelSocket=20
-pointer has a parameter to the vmsr_read_msr() function to send the=20
-data?
+>> @@ -50,9 +51,10 @@ def generate(schema_file: str,
+>>       schema = QAPISchema(schema_file)
+>>       gen_types(schema, output_dir, prefix, builtins)
+>>       gen_visit(schema, output_dir, prefix, builtins)
+>> -    gen_commands(schema, output_dir, prefix, gen_tracing)
+>> -    gen_events(schema, output_dir, prefix)
+>> -    gen_introspect(schema, output_dir, prefix, unmask)
+>> +    if not gen_types_only:
+>> +        gen_commands(schema, output_dir, prefix, gen_tracing)
+>> +        gen_events(schema, output_dir, prefix)
+>> +        gen_introspect(schema, output_dir, prefix, unmask)
+> 
+> This is the behavior change, everything else is plumbing.  You suppress
+> generation of source code for commands, events, and introspection, i.e.
+> 
+>      qapi-commands*.[ch]
+>      qapi-init-commands.[ch]
+>      qapi-events*[ch]
+>      qapi-introspect.[ch]
+> 
+> and the associated .trace-events.
+> 
+> But none of these .c get compiled for a user-only build.
+> 
+> So, all we save is a bit of build time and disk space: less than 0.1s on
+> my machine, ~1.6MiB in ~220 files.  My linux-user-only build tree clocks
+> in at 317MiB in ~4900 files, a full build takes me around 30s (real
+> time, -j 14 with ccache), so we're talking about 0.5% in disk space and
+> 0.3% in build time.
+
+What I want to catch is invalid uses of these headers in user-only
+units.
+
+See for example:
+https://lore.kernel.org/qemu-devel/20240404194757.9343-5-philmd@linaro.org/
+
+(Actually I have this patch based on that series).
+
+> Moreover, the patch needs work:
+> 
+>      FAILED: tests/unit/test-qobject-input-visitor.p/test-qobject-input-visitor.c.o
+>      cc [...] -c ../tests/unit/test-qobject-input-visitor.c
+>      ../tests/unit/test-qobject-input-visitor.c:27:10: fatal error: qapi/qapi-introspect.h: No such file or directory
+>         27 | #include "qapi/qapi-introspect.h"
+>            |          ^~~~~~~~~~~~~~~~~~~~~~~~
+
+I'd simply skip these tests on user-only builds.
+
+>      FAILED: libqemuutil.a.p/stubs_monitor-core.c.o
+>      cc [...] -c ../stubs/monitor-core.c
+>      ../stubs/monitor-core.c:3:10: fatal error: qapi/qapi-emit-events.h: No such file or directory
+>          3 | #include "qapi/qapi-emit-events.h"
+>            |          ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+Doh, this is 
+https://lore.kernel.org/qemu-devel/20240404194757.9343-4-philmd@linaro.org/, 
+again I forgot:
+
+Based-on: <20240404194757.9343-1-philmd@linaro.org>
+
+> 
+> I don't think it's worth the bother.
+
+OK, I'll keep it locally until I finish my full exec/ rework then.
 
 Regards,
-Anthony
 
+Phil.
 
