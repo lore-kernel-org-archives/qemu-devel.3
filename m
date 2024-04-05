@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1052DCD1296
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0D6C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 10:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsgmA-0007Fm-6X; Fri, 05 Apr 2024 06:26:26 -0400
+	id 1rshDN-0006du-5g; Fri, 05 Apr 2024 06:54:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglR-0006Ak-0v
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:41 -0400
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rshDK-0006cK-Fv
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:54:30 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsglP-0004pO-CG
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:25:40 -0400
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-22eccfeee22so366406fac.2
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:25:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rshDI-0000qT-Sn
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 06:54:30 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56c404da0ebso3053164a12.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 03:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712312738; x=1712917538; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q4IwNemI6HQ9b33EE9N7v7S1E8PqRebn39PS5dqy4+w=;
- b=CUN+1If8puxEiRtWUI3UESzwVOu6NvggSPDX0cGRxtN/4pYq+W9C8Bdgpw5fn+O+Vf
- v2V/GCf7hKJJQ4MRYkVMTrkmpnKNdSCgjDnht3xrF+nRnypG8dyE5Smsw9DnAdxieZ0i
- 8F+BsaayO56sHN2hM9JwsLZa4OjlZ9k0MbldA7KkIi58PDALD+NnoR3NIN/5xOh/2jBC
- Obo5stbr8xq13QnAUQLp+kdr+ZEsFZbQVtE+Z3hOUG4KtJNXbXX21Irohj3UjxP52qb/
- ofFbzUhelEK4c4bkziU5zCl64KQtST+c2d3mb5YMuNG4EzyAdgv50PcupPIYmhM3mcPg
- YHbA==
+ d=linaro.org; s=google; t=1712314464; x=1712919264; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=TBrlIqTRebU7cBT6Kdo/fxzyBa52MWs6t9oNTe37Jk4=;
+ b=esV98N/5NtpRvAplncNwTWF8jyeo6wHiBTPcKPcMylVeOvSx64sz8XPkgiVJ9ZCZaT
+ nzFM3gN3yIcfQ32jujdSLKppymTpZApqgZDVpiGm4fI+Oa3RW7ZzkZzgkGWtr2LAa8aJ
+ fttYHMYvVxuIeG/czGacLmwNrK1MsJeWKcD0Ay57nc+anyr/5aZjt0m0gWGeaGQxpDzs
+ UjQlGxfqwxnskBtalOIxGJyJEAkVrkLBssk3COWYZe3tbzHwg0UaDIbTwEhYTVnxI85j
+ LiAlwqBy5wWWzbsEhWp4iCJqE6aUJar8FOZNyoWO1jVcpkPw2DGrhSjSzfZIUGz8NJmF
+ +01w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712312738; x=1712917538;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q4IwNemI6HQ9b33EE9N7v7S1E8PqRebn39PS5dqy4+w=;
- b=rwwpw8Lc9dCcNZcUtCT+kdB4zsw3X9SkOyovEwHkl+pVhr57rWqPStd8VVKxSz88zO
- /GgXrTdoHyaTobpQgd+EvnojUOq0tpgYDzBDbhm3k8U55uyDCL6Oy0aUKL+kWQH8Oti+
- fPRsVfuXnLEQ8TX/tBpOIxXuIHWFKvKia42Ndl86VbobXSVyJBuAe58vj/DNzvAcSREN
- Ivp/wO6pgK9KByrTc0nrQkKADDi60NOWPmpUhdtVZiiIAv6+dKSvn12e0+wLLmyfVr2i
- nMuGCKDLRhd9yFghrmv7el2P002LDStgGSbsFS2JK9PgdUeFaXVt7Uak8SR6I/wC/x9h
- 0zvg==
-X-Gm-Message-State: AOJu0YxNGLkGeNhbnmW0YOya5I9Vn6UdBDnZHUtydjqfIbqnr+m//Bph
- aClQb1TcwGpI8t/FXuVxHTx0AGwiupn+jQFjFdK1vFgk3gsJqujFV6eFsW0siaA+mmp5aJQXHcA
- E
-X-Google-Smtp-Source: AGHT+IGkWCRz3TtEv0zBQuzJvjRsQGC4J5flFwlV6CepGl19U8VBMBv+Rh4/BDP2j+bGivuiZK4KDQ==
-X-Received: by 2002:a05:6870:9613:b0:22e:cfee:320c with SMTP id
- d19-20020a056870961300b0022ecfee320cmr1044638oaq.57.1712312738271; 
- Fri, 05 Apr 2024 03:25:38 -0700 (PDT)
-Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ d=1e100.net; s=20230601; t=1712314464; x=1712919264;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TBrlIqTRebU7cBT6Kdo/fxzyBa52MWs6t9oNTe37Jk4=;
+ b=QwOa38cD75bYd7QexrJee0kzaqPVo6wO/z5o2PxhxuWkNBcitXo3UiPN80TdRRKYVk
+ F+VtpAz+SRcKVH5p1TFNjoVuIrfSiDnQ7UJ2kC/soGUnm3J2CGaYUB+zlv795yKtOBnR
+ uAzYuyVHq0Os2+CIFBsLoDuqHe1J/91bxkNtjH3dR/rE9n1buz/oZPtouTS+TUnU6yqS
+ WHJjrFWHCF9Y6/tx55FYOCqvyxRqWCwu28zH7tFe5vToxqZDEXLGkYTUDsYAKyUQxOGj
+ Zo6mo/kw+syBAOTlIccs7W7PI2MbmvnQw55TPGub83VDhe8vfEFGI0dfFpoQly1OupdI
+ 0cbg==
+X-Gm-Message-State: AOJu0YxYB5EiOXQhftSKufpRX944mqzGl4s9CJ/ehYz5TyMe7kPX9O/L
+ Jsgzb/F9WD+Dcg4f4z71B9VTpPXAG2Rs6i6UoOMAm9kAS7WOtayU878yM08LyYU=
+X-Google-Smtp-Source: AGHT+IHljwDlpPoDzY1ZYbaCFOsC+XZJc5r6TWjF7+mkcWNsxv2QFAeQf+hS0eb/k2M8WcCiTNbrnw==
+X-Received: by 2002:a50:9f83:0:b0:56e:3034:1d49 with SMTP id
+ c3-20020a509f83000000b0056e30341d49mr1027319edf.0.1712314464242; 
+ Fri, 05 Apr 2024 03:54:24 -0700 (PDT)
+Received: from meli-email.org (adsl-197.37.6.0.tellas.gr. [37.6.0.197])
  by smtp.gmail.com with ESMTPSA id
- h10-20020a63f90a000000b005e438fe702dsm1104304pgi.65.2024.04.05.03.25.37
+ q22-20020a056402033600b0056c5d0c932bsm662947edw.53.2024.04.05.03.54.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 03:25:37 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH 28/32] target/cris: Use cris_fetch in translate_v10.c.inc
-Date: Fri,  5 Apr 2024 00:24:55 -1000
-Message-Id: <20240405102459.462551-29-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240405102459.462551-1-richard.henderson@linaro.org>
-References: <20240405102459.462551-1-richard.henderson@linaro.org>
+ Fri, 05 Apr 2024 03:54:24 -0700 (PDT)
+Date: Fri, 05 Apr 2024 13:52:46 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: kraxel@redhat.com, mst@redhat.com
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Zheyu Ma <zheyuma97@gmail.com>
+Subject: Re: [PATCH v2] virtio-snd: Enhance error handling for invalid
+ transfers
+User-Agent: meli 0.8.5-rc.3
+References: <20240322110827.568412-1-zheyuma97@gmail.com>
+In-Reply-To: <20240322110827.568412-1-zheyuma97@gmail.com>
+Message-ID: <bgual.qrsgx92i9kxc@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,98 +96,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com> 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/cris/translate.c         |  1 -
- target/cris/translate_v10.c.inc | 30 +++++++++---------------------
- 2 files changed, 9 insertions(+), 22 deletions(-)
+ping
 
-diff --git a/target/cris/translate.c b/target/cris/translate.c
-index bb2d6612ba..a30c67eb07 100644
---- a/target/cris/translate.c
-+++ b/target/cris/translate.c
-@@ -29,7 +29,6 @@
- #include "tcg/tcg-op.h"
- #include "exec/helper-proto.h"
- #include "mmu.h"
--#include "exec/cpu_ldst.h"
- #include "exec/translator.h"
- #include "crisv32-decode.h"
- #include "qemu/qemu-print.h"
-diff --git a/target/cris/translate_v10.c.inc b/target/cris/translate_v10.c.inc
-index 73fc27c15d..c15ff47505 100644
---- a/target/cris/translate_v10.c.inc
-+++ b/target/cris/translate_v10.c.inc
-@@ -165,20 +165,7 @@ static int dec10_prep_move_m(CPUCRISState *env, DisasContext *dc,
- 
-     /* Load [$rs] onto T1.  */
-     if (is_imm) {
--        if (memsize != 4) {
--            if (s_ext) {
--                if (memsize == 1)
--                    imm = cpu_ldsb_code(env, dc->pc + 2);
--                else
--                    imm = cpu_ldsw_code(env, dc->pc + 2);
--            } else {
--                if (memsize == 1)
--                    imm = cpu_ldub_code(env, dc->pc + 2);
--                else
--                    imm = cpu_lduw_code(env, dc->pc + 2);
--            }
--        } else
--            imm = cpu_ldl_code(env, dc->pc + 2);
-+        imm = cris_fetch(env, dc, dc->pc + 2, memsize, s_ext);
- 
-         tcg_gen_movi_tl(dst, imm);
- 
-@@ -929,10 +916,11 @@ static int dec10_dip(CPUCRISState *env, DisasContext *dc)
-     LOG_DIS("dip pc=%x opcode=%d r%d r%d\n",
-               dc->pc, dc->opcode, dc->src, dc->dst);
-     if (dc->src == 15) {
--        imm = cpu_ldl_code(env, dc->pc + 2);
-+        imm = cris_fetch(env, dc, dc->pc + 2, 4, 0);
-         tcg_gen_movi_tl(cpu_PR[PR_PREFIX], imm);
--        if (dc->postinc)
-+        if (dc->postinc) {
-             insn_len += 4;
-+        }
-         tcg_gen_addi_tl(cpu_R[15], cpu_R[15], insn_len - 2);
-     } else {
-         gen_load(dc, cpu_PR[PR_PREFIX], cpu_R[dc->src], 4, 0);
-@@ -1095,10 +1083,10 @@ static unsigned int dec10_ind(CPUCRISState *env, DisasContext *dc)
-             if (dc->src == 15) {
-                 LOG_DIS("jump.%d %d r%d r%d direct\n", size,
-                          dc->opcode, dc->src, dc->dst);
--                imm = cpu_ldl_code(env, dc->pc + 2);
--                if (dc->mode == CRISV10_MODE_AUTOINC)
-+                imm = cris_fetch(env, dc, dc->pc + 2, size, 0);
-+                if (dc->mode == CRISV10_MODE_AUTOINC) {
-                     insn_len += size;
--
-+                }
-                 c = tcg_constant_tl(dc->pc + insn_len);
-                 t_gen_mov_preg_TN(dc, dc->dst, c);
-                 dc->jmp_pc = imm;
-@@ -1164,7 +1152,7 @@ static unsigned int dec10_ind(CPUCRISState *env, DisasContext *dc)
-         case CRISV10_IND_BCC_M:
- 
-             cris_cc_mask(dc, 0);
--            simm = cpu_ldsw_code(env, dc->pc + 2);
-+            simm = cris_fetch(env, dc, dc->pc + 2, 2, 1);
-             simm += 4;
- 
-             LOG_DIS("bcc_m: b%s %x\n", cc_name(dc->cond), dc->pc + simm);
-@@ -1185,7 +1173,7 @@ static unsigned int crisv10_decoder(CPUCRISState *env, DisasContext *dc)
-     unsigned int insn_len = 2;
- 
-     /* Load a halfword onto the instruction register.  */
--    dc->ir = cpu_lduw_code(env, dc->pc);
-+    dc->ir = cris_fetch(env, dc, dc->pc, 2, 0);
- 
-     /* Now decode it.  */
-     dc->opcode   = EXTRACT_FIELD(dc->ir, 6, 9);
--- 
-2.34.1
-
+On Fri, 22 Mar 2024 13:08, Zheyu Ma <zheyuma97@gmail.com> wrote:
+>This patch improves error handling in virtio_snd_handle_tx_xfer()
+>and virtio_snd_handle_rx_xfer() in the VirtIO sound driver. Previously,
+>'goto' statements were used for error paths, leading to unnecessary
+>processing and potential null pointer dereferences. Now, 'continue' is
+>used to skip the rest of the current loop iteration for errors such as
+>message size discrepancies or null streams, reducing crash risks.
+>
+>ASAN log illustrating the issue addressed:
+>
+>ERROR: AddressSanitizer: SEGV on unknown address 0x0000000000b4
+>    #0 0x57cea39967b8 in qemu_mutex_lock_impl qemu/util/qemu-thread-posix.c:92:5
+>    #1 0x57cea128c462 in qemu_mutex_lock qemu/include/qemu/thread.h:122:5
+>    #2 0x57cea128d72f in qemu_lockable_lock qemu/include/qemu/lockable.h:95:5
+>    #3 0x57cea128c294 in qemu_lockable_auto_lock qemu/include/qemu/lockable.h:105:5
+>    #4 0x57cea1285eb2 in virtio_snd_handle_rx_xfer qemu/hw/audio/virtio-snd.c:1026:9
+>    #5 0x57cea2caebbc in virtio_queue_notify_vq qemu/hw/virtio/virtio.c:2268:9
+>    #6 0x57cea2cae412 in virtio_queue_host_notifier_read qemu/hw/virtio/virtio.c:3671:9
+>    #7 0x57cea39822f1 in aio_dispatch_handler qemu/util/aio-posix.c:372:9
+>    #8 0x57cea3979385 in aio_dispatch_handlers qemu/util/aio-posix.c:414:20
+>    #9 0x57cea3978eb1 in aio_dispatch qemu/util/aio-posix.c:424:5
+>    #10 0x57cea3a1eede in aio_ctx_dispatch qemu/util/async.c:360:5
+>
+>Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+>Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>---
+>Changes in v2:
+>    - Applied similar error handling logic to virtio_snd_handle_rx_xfer()
+>for consistency.
+>---
+> hw/audio/virtio-snd.c | 8 ++++----
+> 1 file changed, 4 insertions(+), 4 deletions(-)
+>
+>diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+>index e604d8f30c..30493f06a8 100644
+>--- a/hw/audio/virtio-snd.c
+>+++ b/hw/audio/virtio-snd.c
+>@@ -913,13 +913,13 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+>                             &hdr,
+>                             sizeof(virtio_snd_pcm_xfer));
+>         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
+>-            goto tx_err;
+>+            continue;
+>         }
+>         stream_id = le32_to_cpu(hdr.stream_id);
+> 
+>         if (stream_id >= s->snd_conf.streams
+>             || s->pcm->streams[stream_id] == NULL) {
+>-            goto tx_err;
+>+            continue;
+>         }
+> 
+>         stream = s->pcm->streams[stream_id];
+>@@ -995,13 +995,13 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+>                             &hdr,
+>                             sizeof(virtio_snd_pcm_xfer));
+>         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
+>-            goto rx_err;
+>+            continue;
+>         }
+>         stream_id = le32_to_cpu(hdr.stream_id);
+> 
+>         if (stream_id >= s->snd_conf.streams
+>             || !s->pcm->streams[stream_id]) {
+>-            goto rx_err;
+>+            continue;
+>         }
+> 
+>         stream = s->pcm->streams[stream_id];
+>-- 
+>2.34.1
+>
 
