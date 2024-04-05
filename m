@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41307C3A59D
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 22:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B7BC67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 22:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rssIm-0006Zf-H1; Fri, 05 Apr 2024 18:44:52 -0400
+	id 1rssJM-00077O-2g; Fri, 05 Apr 2024 18:45:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rssIl-0006Z4-Em
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 18:44:51 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1rssJE-000758-Bs
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 18:45:22 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rssIj-0003GA-TF
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 18:44:51 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-5c66b093b86so2865806a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 15:44:49 -0700 (PDT)
+ id 1rssJ8-0003kO-TY
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 18:45:19 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6ead4093f85so2371700b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 15:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712357088; x=1712961888; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712357113; x=1712961913; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=N+cLcjZk5Z0LSrhbvokt17tdjVYsNa5J2dWKb579bww=;
- b=p7sR8k64mlrzd6MwU7zktdopSQey+VCm1GIBVdJ2Q28QXef/ZCjwxUQpPABldvHxge
- 42xYhDH7fBoRunbc3yamAf8rgKZJ0ipVaQJDtK8uK1BRaKxAf+WnYkgInYVjbOVrCx8J
- KYuCwpbEVvCKb7RcsUFIbKk/BNKahKPvHfUyZe/HTuVkje1dFr643q+vcAmyCnyHflZB
- EMOEquvCtruBFHY/q2W+fE3M4u9urkItBm5CJU+z09uE8qHObeK+AhDoLx0dOJYHBU3D
- kYqpXafv9ChOjMzLpg3U9RRoBm2ezfYsYp2yba6ulmAyndombnN973T/wb433GmhpqjP
- ahQw==
+ bh=5Nac1mkC9SF5lrbB+OCnIUPcKgmn1BFjaQ7HVMjBgZc=;
+ b=OPt/3aCf6XcD/+6TaFQR4wK7IPDPIZK9C9OKfQmR1jGIu4Q/5Te2xGfdhTTuw8g3p3
+ utWH+lx0yYBqwwb5//8dK0VJfIS22G0XzK/PoADrzfvOOd67cQV5o49dWFfVXa8/6QPN
+ VWytGuVL/znbrw2HZO3DmtTOG1Dl9NJysD5aC3CnwxVSGIp8WEbNDzVRRggNtRpJMi2C
+ uIc5Li2eRwX3BrN8KXBuuD6YjIXk5Lramlohu5BF1YKrP67W8R8tkCQghyT5EhdDeswL
+ GLvTuWrxFuaB9K63y7Czwv/ZcEEtHDXhK9aFodKy757hrxKlGD8KYpaTnyil2G+G7A+p
+ 58BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712357088; x=1712961888;
+ d=1e100.net; s=20230601; t=1712357113; x=1712961913;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N+cLcjZk5Z0LSrhbvokt17tdjVYsNa5J2dWKb579bww=;
- b=Eeqb0eKcWUwQ9uEicoz1HhQ4a8wneIwP1BplHr4NAbtl+zh0XSMmy1BaKQOTsTxv2w
- AAtxBRuOdgwBJWWZ+p9sIQ5voBi3wbVKiDdUhdabTKng/DVgOujErPmUZBBVDbOssjnT
- wFWcSvYdeKKsvMOzGaghBkIogT+0TK79NsK5TaO5O8UHTapXVtu7UqWf3PqximRO6uMq
- OxhvEerMFwMF+jZcYSNzA3PeqK7oxES2IYjiNlpG5C0wIYPAEkeJh4e6iKYTxIW+nFpK
- O0h4IaHjC89zDeeoKv463DwZy26q2zjT+O2BFGzA8rtdhpai0plvMdNS4KcMHQkEf3Er
- uIfA==
+ bh=5Nac1mkC9SF5lrbB+OCnIUPcKgmn1BFjaQ7HVMjBgZc=;
+ b=q8B6nLQiNp/Kr/H+7H3kDF106vFR1+3OIIl1zLeEDnRRSkNn5TX2qKr6bfuKFXzN7n
+ sYpZ18w+YrhDAExToJ+ZJzj+HpngS9OgZyAaEqaf4t32nDradRIBTFZlAC5Gepnc/KAK
+ 0OGYyLuK5UeWPVMayhv1knt3KnSAPdb7T6OYV9TCKZb5XEkX7qH0UjJAh7sReyFa/GFX
+ 3tIoyOIZXs5UuVN7o1AeCFI0asbwlUZ7+OCZnelHfPvgTGg96r/rER/3hG4LOpDniPaY
+ +5c7YX0mmHhl+OPrTjlR4JWQ5KTOweXjAGOoqvFHQbG15BdqzPcuFbs1Ce0tUT8JELLR
+ 2zyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0pRIpIspx0+r9e1/Fv9/YROxo+WlSRNHJI/R4zAVgDBgjSHPnGcnqg0NZeflZU4DbWUZedrX1SWO3uJPsNHNpa9gIfxg=
-X-Gm-Message-State: AOJu0YxYCmvmO8/EQ57f4emK8MKQGYrT/+31frXvlAWmHNg93iNP7tP9
- JiSd8fuW6daI359KXqJYSom2frfuxpk8YlZEpZrQhHBSx0eIK5P8cooWsY9yo5g=
-X-Google-Smtp-Source: AGHT+IHXzgJb6eGMQXRRsi8EWVFsr32MY5U+rg4Bu5j+Zo6ULxp0+ASK1E89aT52aSTUbC1dzwONHw==
-X-Received: by 2002:a17:90a:17ab:b0:2a2:f4f4:2c4a with SMTP id
- q40-20020a17090a17ab00b002a2f4f42c4amr5019722pja.21.1712357088451; 
- Fri, 05 Apr 2024 15:44:48 -0700 (PDT)
+ AJvYcCWPcCHDj5TgS5jcXWRVUvcGBvemMoiP4jRIQxQow70EONfJs89huOWBp/50MD3P4fp1ERyRPzlzc2luLLSbf4+tUSg0S6I=
+X-Gm-Message-State: AOJu0Yy6RpVlZA5QvEIWZxaHW9DCMkFBQGJ2NGCV7vF+oI7H30lNmx0g
+ fJkxZGhI3+4B9TzL/kKa8DAvO1KUa2cl0b2xUFteby8J7LpIY+T7lU/2+QHnK3E=
+X-Google-Smtp-Source: AGHT+IF2g9C9603a1cjf5Z6nS+5wvVUPfTSW8BL/FUP+KMkokPNE/OT69TUrwHfo8cL5wqfuiGLCgw==
+X-Received: by 2002:a05:6a20:ce4b:b0:1a7:175:2cac with SMTP id
+ id11-20020a056a20ce4b00b001a701752cacmr3636710pzb.13.1712357112965; 
+ Fri, 05 Apr 2024 15:45:12 -0700 (PDT)
 Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- o8-20020a17090aac0800b002a2f055e52csm2877989pjq.34.2024.04.05.15.44.47
+ m6-20020a6562c6000000b005bdbe9a597fsm1755090pgv.57.2024.04.05.15.45.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Apr 2024 15:44:48 -0700 (PDT)
-Message-ID: <f96cb1da-09ea-4708-9616-bc2560d63d5f@linaro.org>
-Date: Fri, 5 Apr 2024 12:44:45 -1000
+ Fri, 05 Apr 2024 15:45:12 -0700 (PDT)
+Message-ID: <6ff8c8cf-0009-4132-88fb-30ddf61b690c@linaro.org>
+Date: Fri, 5 Apr 2024 12:45:09 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 6/7] hw/core: Move reset.c to hwcore_ss[] source
- set
+Subject: Re: [PATCH-for-9.1 7/7] hw: Include minimal source set in user
+ emulation build
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20240404194757.9343-1-philmd@linaro.org>
- <20240404194757.9343-7-philmd@linaro.org>
+ <20240404194757.9343-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240404194757.9343-7-philmd@linaro.org>
+In-Reply-To: <20240404194757.9343-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,35 +104,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/4/24 09:47, Philippe Mathieu-Daudé wrote:
-> reset.c contains core code used by any CPU, required
-> by user emulation. Move it to hwcore_ss[] where it
-> belongs.
+> Only the files in hwcore_ss[] are required to link
+> a user emulation binary.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Have meson process the hw/ sub-directories if system
+> emulation is selected, otherwise directly process
+> hw/core/ to get hwcore_ss[], which is the only set
+> required by user emulation.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/core/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/core/meson.build b/hw/core/meson.build
-> index e26f2e088c..1389f1b339 100644
-> --- a/hw/core/meson.build
-> +++ b/hw/core/meson.build
-> @@ -3,7 +3,6 @@ hwcore_ss.add(files(
->     'bus.c',
->     'qdev-properties.c',
->     'qdev.c',
-> -  'reset.c',
->     'resetcontainer.c',
->     'resettable.c',
->     'vmstate-if.c',
-> @@ -16,6 +15,7 @@ if have_system
->     hwcore_ss.add(files(
->       'hotplug.c',
->       'qdev-hotplug.c',
-> +    'reset.c',
+>   meson.build | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
 
-This patch would seem to obviate the previous?
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
