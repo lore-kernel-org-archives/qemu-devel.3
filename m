@@ -4,129 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D878CD1296
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 18:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C88C67861
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Apr 2024 18:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rso0S-0006gz-85; Fri, 05 Apr 2024 14:09:40 -0400
+	id 1rso7h-0000Cm-6Z; Fri, 05 Apr 2024 14:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rso0R-0006gq-4f
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 14:09:39 -0400
-Received: from mail-bn7nam10on20701.outbound.protection.outlook.com
- ([2a01:111:f403:2009::701]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rso0P-0003DK-EY
- for qemu-devel@nongnu.org; Fri, 05 Apr 2024 14:09:38 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mIA9H90lXMY+IoDUdHJ7E4U9n0dN11G19mOTNKMvo5bm1nRy0dCca6Sb8AKlOvcO2hG3TLmZU0MHK25j7jJjximushL4AX0T5OgX/eOJvHYnEYVCk9Mdy5fTjJztoH5bAUtVPAEIPoOHpDZkpe0UOlkWddI2dba4sBvkzBVTEsyYaT/adTPB0hSemD6m28VDBf1QL9JZDUulF3I6UPNEQAentNt+K50ukASA7kFX9FsZbE6yJfm96nfCbcqq9NVaI+d5PM5tHW1hAvutmsXqlQdKk4FeIqvLwxqnv58Yk5cp8+NS8RFMA3GNlj2yWV2lZzuMJSQRCU/sMD34eBZGJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9BtMTm40+9iEB2oCsm+2oo+7rT2ofANm4JznVqfF0tY=;
- b=HkjE59kWj0pF7rgckggMnaxJKt2RZ3lceT6h7Wr5CyssFPSh7NeW9UVEHPctF+INA7s8stvQdyDBHDYMrf7W2vRvopgF9w+yzhaNpy3kHHejlszjl+Bd1Ij3ZrgQktgR5uCNZAAAijlDBIJZuVWBIp/BJqIYN4rMTALZoecV2NKD/321suuRpdJioAGLPX1tMyPj4AG/LRPl+a8KSBX7l7RGPcos3sxDb0BdJsyucrVCcTCGdV/QCY/ukwT3+kXXBgDj0c/7kyTPME7GwtPgzxGUNGeO1m1rTlmCqVoeplJGZkUvsQahSNJoEAEqsY68FcqC1S0URcHpRhxUe3e6Sg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
- dkim=pass header.d=memverge.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9BtMTm40+9iEB2oCsm+2oo+7rT2ofANm4JznVqfF0tY=;
- b=J7irVMUZ466TgeVpJfY7loLLPHu8UqZ8HjttRytiventMgxmM9LsPAe3JUdiA7XiWzRPaWtKdS7gBvE3c2iKO44h8pFyWSbDIW5VHOZC6C8wl/cbsxAiF9sDmTVqdvPXfmSWn95ee2x+pb62VpIakXxlTb+HwsBYkjbKNYp5VEs=
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
- by MN2PR17MB4045.namprd17.prod.outlook.com (2603:10b6:208:205::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Fri, 5 Apr
- 2024 18:09:31 +0000
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::6657:814f:5df0:bb5b]) by SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::6657:814f:5df0:bb5b%5]) with mapi id 15.20.7409.049; Fri, 5 Apr 2024
- 18:09:30 +0000
-Date: Fri, 5 Apr 2024 14:09:23 -0400
-From: Gregory Price <gregory.price@memverge.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net,
- nmtadam.samsung@gmail.com, jim.harris@samsung.com,
- Jorgen.Hansen@wdc.com, wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v6 09/12] hw/cxl/events: Add qmp interfaces to
- add/release dynamic capacity extents
-Message-ID: <ZhA+U9b/IVq1V6LT@memverge.com>
-References: <20240325190339.696686-1-nifan.cxl@gmail.com>
- <20240325190339.696686-10-nifan.cxl@gmail.com>
- <Zg2c+YauNGqhFfTW@memverge.com>
- <20240405132719.00005859@Huawei.com>
- <ZhAh0Qmv2/VTe1wT@memverge.com>
- <20240405184452.00007986@Huawei.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240405184452.00007986@Huawei.com>
-X-ClientProxiedBy: SJ0PR03CA0089.namprd03.prod.outlook.com
- (2603:10b6:a03:331::34) To SJ0PR17MB5512.namprd17.prod.outlook.com
- (2603:10b6:a03:394::19)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rso7g-0000CV-3R
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 14:17:08 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rso7e-0007i8-1w
+ for qemu-devel@nongnu.org; Fri, 05 Apr 2024 14:17:07 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1e0411c0a52so23312145ad.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 11:17:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712341023; x=1712945823; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RqTmXgfQHA1k4DXgzXGjZtdD4j+rxGlQUGOcJyq7yvY=;
+ b=YJ5MejBLs9rud/zASTVIYQcQod72daQ6PYVV7T2Kdqn6U93hD4Q0kPi2mzrGVgfb5J
+ MDrapjbE9J1PE/qy7QQ/GqZANc0eQ547+iqagKuRzd7k/5sl+hi2pNgUu/SiHPZURqRe
+ hf1BpKMpTYR2yiF3S8bYOVsIbSBkFy7LfWItjvDFNJsdUr9ocdtsiArbZFtOVnC1IqhR
+ kq4H5yxhKTo/zNgTos8e1+OYxF7AIpUILK+0M1xbBZXIsYW5U8qZ2HhmIRLPs728O94p
+ 0WbRki1O+100vIImHb0rJW9WDjxsKtnXBzuiJ2hBLaR7a/oTipK+sNEmYfMriZD8UO4W
+ aLnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712341023; x=1712945823;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RqTmXgfQHA1k4DXgzXGjZtdD4j+rxGlQUGOcJyq7yvY=;
+ b=CuuapqCE0I+jAYM23iMlpeLi8H3YzS76+eZFUNpxCELxLvomSdTMRlYp9ffwByJVTf
+ KcICKXXW9mnAFmbLrC5e/13hvIdjBZwfcs7dy6H4f8QZOrXwm5fXNk8yWL4I7HbdruvG
+ k6iROrAUCLWTkAGLtCkRUl319d74yMPurQPyE0iI6PmRGr0iwojeWFP+Mc1f7OVlqszF
+ rFEIFFABWpNpdXjd5NA9a6HiQiEX3dWI4hQz4oTWSMyl2xcsxz4CeLo2rjBunETOhr++
+ xaPlnRX2+1uNGrA4LYtxsp0HhPvIBJOvKKnWl4/oA3OSZKhqKq3TLq/kRY66fea6F+Ty
+ R+hQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1p1y+uJWzllCazu/LqaVBiGHB2erDkhR0e8blO2yN+1aozhOJxB+9KxVBvFo/The9nw5IevhAcW1WUqmYaJmw58RWI2M=
+X-Gm-Message-State: AOJu0YyhBvg9yTcMkLCDvWsLLoQk2VzHpw7IXcA6iOEl5pAJslmXru8h
+ OxFaMhy6ZZBNv+iQb06THmkap7NTvcPdBTW875ez00wVWqMzDqo1p0EgRTpIebg=
+X-Google-Smtp-Source: AGHT+IHYnmQmo4L+P79ImBf/AO43V2kF1IX1ME89B7/3TUlNdMmgNUHbaH6/ABOTYnCKxABt0/sQsw==
+X-Received: by 2002:a17:903:41c2:b0:1e0:89d8:ab2f with SMTP id
+ u2-20020a17090341c200b001e089d8ab2fmr2832952ple.66.1712341023421; 
+ Fri, 05 Apr 2024 11:17:03 -0700 (PDT)
+Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ lb4-20020a170902fa4400b001e0b3a87dbbsm1899548plb.177.2024.04.05.11.17.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Apr 2024 11:17:02 -0700 (PDT)
+Message-ID: <fbaa97be-c355-4a76-af10-fa64a7b1d31d@linaro.org>
+Date: Fri, 5 Apr 2024 08:16:59 -1000
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|MN2PR17MB4045:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: +0RGWRJ24f/0q50YUiDR0U2UDYtWKdbyOu92QAI8q0EF+SAV5c0Y3C/zgVpDRfQ2EUVPNbjSVK3CsmsFKkIDwS9DVpIlE51Sk/tiCT2rjhZFb7JmPO2ec0K/c2HPrO+tlGTbH9e0ea3fpH+ZCDnra7YWOaPjOCo+9nwRByJQrfDwJlYDLRUzBjkkRF8SJ8KXUwk9mO5VcsLQvJM4CO0nK5sCGRoxhp0kELhRJosA3yKSDkJHpRQpaSKP/hwAk0xpbTmSaGP//kiEki5tZz6Rnli/vJfCE3gKSQlnpr8rn3TllREg5J0uuBoWRp9/XTLQmlidvXV3PsHA/kNOhR/MZlGEelq6dB/RkABPJ5xrva9ZdOEUc6A5GFsMVTylx4To0jvAZ1scHDygDzBNzegDZ38f4ppr05a33YXsflq/lt7TjTiSYRrMo9BtkhGCb6P8+Uqiu8Og0aWyvuZYOx/z2IrAvfsgeCun6g1zm5VD/gMgcP2NPpK4qsccdY8mYlehWrH2dpLTBjSYS+GDavvec2tPXPX8XsHvUoHLwXzMLIHeU3RTS5JbKkATY+c2THh0dbTKAewMqf82dIGOlJHnnz77upbgeoyjSuxZYJD3krOv0dKRxurDIDQtSIn6YODb+K+nvbs7/lYb+Vc4wJ4A/DKH/jxbFOsl3uARy55GXjw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(7416005)(1800799015)(376005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?tA2/33Wzi5B4YrJs1kpminetOs6yX+JtaIaojrIsfFXX9oksXNb/HTRI6UhA?=
- =?us-ascii?Q?hON67O6woQgSlmvtVzaH71EPPKi8MLMYq6OUbZbaJsaQfeQv26iy1bUW2UxK?=
- =?us-ascii?Q?0l/MViTPUPEJbq+w4hSqOJMFoiHfhRM2SJYl2efeP/aKrVVhjIjfTlQ3T6P2?=
- =?us-ascii?Q?/sy07jesjzyL98VeHIKFnnml42Qp9XRc5c41G7IjwAF9rz2VXxk1inrdVCdi?=
- =?us-ascii?Q?T1hR3LnWE7QLxUBSNmKBBL39SQ4EiGuOAneNae5ZgXjrr3PKPIE5fp9DAQyY?=
- =?us-ascii?Q?v5lonnKoMN0WScehRqPI4opL7gOvJ08KvCXgYyadlKOBL1PE3vG5A4o8IQNE?=
- =?us-ascii?Q?SPnDetwItCTaw7wzUhDQvCWzz+EQh5kc3ffp0kPM2Z1R7m7echURjxSn3ssj?=
- =?us-ascii?Q?j2dK8gnx2jSKCE/Mpbr7taPHr4AFrx8mspCT6E+9G99ZesWIWl6LcFKppH1B?=
- =?us-ascii?Q?KxtZ3nuNreJAT3mTfXfIHo9WSe4c4QL7Yq4y91LYmYpN9NjBmjJUZZmqmQwW?=
- =?us-ascii?Q?VrdcLDGDkij9aResT+n5sV3mUtiihnjeDVB4p4FlJ7CmF6QmcfLzCfh4kxOz?=
- =?us-ascii?Q?aI7u2dRWCUL+/ueW4JbKec4b4SGzMgRNc18nNGeZZnYSRusQKyCu7lKzQPg4?=
- =?us-ascii?Q?XmKwtyeetSF8Tl1GGrBAmHCrzSnm5lCGqrRLRzH0tHAZrm5ms6HVpCZ79DGR?=
- =?us-ascii?Q?av0KPJWoms0ZKVlv61/ysC5ZMAtR2QaVZWlEreRRsfyzSihz5bKtUIXN15nx?=
- =?us-ascii?Q?TgKxl5nMUy6+79mHL752japWOBO7IHmrCak6WQEY5hUkKFsJ+IaKZZybxg7C?=
- =?us-ascii?Q?WfsEjS1WeWJBSFu5NQtv5dEw4y4S6GR65HC2F1fyFintSM1QO3AFI3MPCPao?=
- =?us-ascii?Q?GXJ9e2PHHCjo3G4Pw/u6QayvbekjOUmJUpTHkK5InznTBd1SdV09FWbXJqBY?=
- =?us-ascii?Q?tB5EJyFXb0lIssJIDeC0rP2kMcAfgihfvtqKrX/6q3AI9/l2aDSjw71N2icb?=
- =?us-ascii?Q?8buyCMg3LdLvf5zMgt2LMHFK6PbLsB5PbF4UqdkFWEu9biFcKrkhPilR8b8N?=
- =?us-ascii?Q?zpNiAPhJNxO3zY7+UHyCncLzr11Fb/fn1phZfB2RY277175GxrCnyGg68N+A?=
- =?us-ascii?Q?dtj7IcfnU/BegN6lrFqbb8OHAhp5mAQGYqsCErqtaPEXSZuIlW1N3CMmpVdY?=
- =?us-ascii?Q?BCVPbio+1PnfZo7KGPhph1V1qAI8DTCVtJ22Q2XLXQQpn4UStJ1bzguICqrv?=
- =?us-ascii?Q?G+qbeDnhPCXhiH+MXKFhc/72utFGv6exSRUbE50PcwojSigaZujY55H1VL73?=
- =?us-ascii?Q?g30opYjrAxiY3t4PwmrlOjSg/cLh7OQRVUZF8GyiMLH+3tmLD/wfMRbd5X3E?=
- =?us-ascii?Q?3YPvqre17Njf6I3wFUym4Zsb6nB0rQlX4sy2zVGraASVak6y7S+L6wV1Bp7z?=
- =?us-ascii?Q?7a65snkAqoXrulqU5OfBKx4j0TM83+CpEap4ltzeM09VX9rp5/qD5zgf0tQP?=
- =?us-ascii?Q?dwM0BLklANtPl3nB5YrANBiKOcBglDXsmpSSSyvkDTN19ncozxiHpp0esy99?=
- =?us-ascii?Q?Ppv7pEqCScOndnDJI7z6AZ9UjMGNfctDOleHNqLDM1JNjG21iBZ37CoNjyL1?=
- =?us-ascii?Q?ng=3D=3D?=
-X-OriginatorOrg: memverge.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6a049d7f-dd81-4d02-a70c-08dc559b8a26
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Apr 2024 18:09:30.7703 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R9mkNvhklQtbWlyyCRnC9MH+MlW/fgkmMA7dtegIMKgAHSv5b0qt+lykH+Mqs6hrGgtKss1Ls+86iomC/WL/yzcwPQT6VBy9l7UtgxsCRpg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR17MB4045
-Received-SPF: pass client-ip=2a01:111:f403:2009::701;
- envelope-from=gregory.price@memverge.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0] target/arm: Use correct SecuritySpace for AArch64
+ AT ops at EL3
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Jean-Philippe Brucker <jean-philippe@linaro.org>
+References: <20240405180232.3570066-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240405180232.3570066-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,53 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 05, 2024 at 06:44:52PM +0100, Jonathan Cameron wrote:
-> On Fri, 5 Apr 2024 12:07:45 -0400
-> Gregory Price <gregory.price@memverge.com> wrote:
+On 4/5/24 08:02, Peter Maydell wrote:
+> When we do an AT address translation operation, the page table walk
+> is supposed to be performed in the context of the EL we're doing the
+> walk for, so for instance an AT S1E2R walk is done for EL2.  In the
+> pseudocode an EL is passed to AArch64.AT(), which calls
+> SecurityStateAtEL() to find the security state that we should be
+> doing the walk with.
 > 
-> > 3. (C) Upon Device receiving Release Dynamic Capacity Request
-> >    a. check for a pending release request. If exists, error.
+> In ats_write64() we get this wrong, instead using the current
+> security space always.  This is fine for AT operations performed from
+> EL1 and EL2, because there the current security state and the
+> security state for the lower EL are the same.  But for AT operations
+> performed from EL3, the current security state is always either
+> Secure or Root, whereas we want to use the security state defined by
+> SCR_EL3.{NS,NSE} for the walk. This affects not just guests using
+> FEAT_RME but also ones where EL3 is Secure state and the EL3 code
+> is trying to do an AT for a NonSecure EL2 or EL1.
 > 
-> Not sure that's necessary - can queue as long as the head
-> can track if the bits are in a pending release state.
+> Use arm_security_space_below_el3() to get the SecuritySpace to
+> pass to do_ats_write() for all AT operations except the
+> AT S1E3* operations.
 > 
-
-Yeah probably it's fine to just queue the event and everything
-downstream just handles it.
-
-> >    b. check that the bits in the MHD bitmap are actually set
-> Good.
-> > 
-> >    function: qmp_cxl_process_dynamic_capacity
-> > 
-> > 4. (D) Upon Device receiving Release Dynamic Capacity Response
-> >    a. clear the bits in the mhd bitmap
-> >    b. remove the pending request from the pending list
-> > 
-> >    function: cmd_dcd_release_dyn_cap
-> > 
-> > Something to note: The MHD bitmap is essentially the same as the
-> > existing DCD extent bitmap - except that it is located in a shared
-> > region of memory (mmap file, shm, whatever - pick one).
+> Cc:qemu-stable@nongnu.org
+> Fixes: e1ee56ec2383 ("target/arm: Pass security space rather than flag for AT instructions")
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2250
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+> I guess most people don't run guest code at EL3 that does AT ops...
 > 
-> I think you will ideally also have a per head one to track head access
-> to the things offered by the mhd.
-> 
+>   target/arm/helper.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 
-Generally I try not to duplicate state, reduces consistency problems.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-You do still need a shared memory state and a per-head state to capture
-per-head data, but the allocation bitmap is really device-global state.
-
-Either way you have a race condition when checking the bitmap during a
-memory access in the process of adding/releasing capacity - but that's
-more an indication of bad host behavior than it is of a bug in the
-implementatio of the emulated device. Probably we don't need to
-read-lock the bitmap (for access validation), only write-lock.
-
-My preference, for what it's worth, would be to have a single bitmap
-and have it be anonymous-memory for Single-head and file-backed for
-for Multi-head.  I'll have to work out the locking mechanism.
-
-~Gregory
+r~
 
