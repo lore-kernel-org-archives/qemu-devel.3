@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E585CD128A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0995CD1292
 	for <qemu-devel@archiver.kernel.org>; Sat,  6 Apr 2024 05:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rsykI-0002q6-OA; Sat, 06 Apr 2024 01:37:42 -0400
+	id 1rsykK-0002qt-Hp; Sat, 06 Apr 2024 01:37:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsykG-0002pY-Rz
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 01:37:40 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rsykJ-0002qf-Jn
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 01:37:43 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rsykF-0006I4-A5
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 01:37:40 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6ecd957f949so2683446b3a.0
- for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 22:37:38 -0700 (PDT)
+ id 1rsykH-0006IY-Rj
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 01:37:43 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1e2b1cd446fso19519865ad.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Apr 2024 22:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712381857; x=1712986657; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712381860; x=1712986660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RcrZGxEnfZgrLqlhciK4hABUGUNHIg16hIoNjeHOda0=;
- b=U3EGEHfvNDT7eFspbsn90ONUSk29KRfcTAPYh5jfE/v1k6mgFSNqiKoCR2AsOOeZid
- 5LjaBlQsPOrgfFUfAEzJcIVa+g8OKPJyE0yWH1Nf30WUBR3oIOvRhIMz+gnrMrr186Gn
- uBKXQxLKnPn57rQYu9y71v7TsNc4KPtnv9GFZ4K+B/m08W6eJhKdodGu7G/kdFZV1pqV
- PEXWuAXzh2L7ZynaJmgSTzQsiAlnDyf4hr82QC4KrdEioTUUuSrp763BryTK373VMlmM
- 9sLQ7tYKqALWmtBtGjAgQp0XoDv9dGod3XaLHFyZf4UDOhEwBiU91pItA2yqSzMsLC0M
- acog==
+ bh=eNDwqVcutDiIERmHFyRHN/ZgN4CmsTKIxQUGe7pIcjw=;
+ b=yRlIYthNpN79MdYRCo2XKjSOzYr/8QIVeMD0zQuOWjiA0HKdcnzxcdej6vPA+q7idh
+ W/ple7ODrlrKxNFI5HCjU91A+s17s8XAQC+27AldXFSFuEQdeA4RZe1lfUGZQmB7JoQ1
+ s2AjoyPpkbZzUXPYGxxLd+LdhbHjE0RjmFAsMKHU494Aic0iw1nkwcmULvh+yK/i+aBh
+ MkbTm2anYyvolVOAp20Pg/XoYT9VUuBgTulXUpR5to4KFOmFKM6D+TRbwmB3QIlkjroW
+ Ee8YJEOZAOFwmMbk6GOKbBgt7fuRlXnz8Ot91r57oFuuID/nYxp/LMQ/+NpBP4qYJO/p
+ kCMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712381857; x=1712986657;
+ d=1e100.net; s=20230601; t=1712381860; x=1712986660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RcrZGxEnfZgrLqlhciK4hABUGUNHIg16hIoNjeHOda0=;
- b=GlYg46P1zjYAUx4QxjsX/dtSIaSkXduPqgd8UV1t1YG9cOT/Mfjzxy83aNSeoRlPP0
- vg/T+9pEWTc6j6HYiEKZiR17jbCyFsYnQ/JdrL/Uuv7DJ4gTrNvlUPibiOTtO7xquLsd
- Z9M97HaZdkEa17xrdQjmsPnXplMgZIYWR1d4X179Cb2VpjaDH8vZ9EWXvNGxEb4FlBNG
- ql0B2WyHNOBgR8KISH3j0dZR38chft+edmbovYjRwkXkcULjDTsFunHd2knN/kckF+i6
- 5Mr6Bj0tfBy6kIRWq0UXSJLHicZ0ZLcm1ANgX2jn33dMouhHL8uy91xgwr4ZVL8CV3u6
- fEtQ==
-X-Gm-Message-State: AOJu0YzClfgOmb8K8qoqtbTl/4CQg2wtu36CkKBnkmvTyOAm28h+kqxd
- /Jr5AtrD7k0X7pSINZA1pS+PxS9V+p5qedjeo1P8BGdGPtD7k1F3+WYJRr28SmjEKyfkHWKSzGJ
- M
-X-Google-Smtp-Source: AGHT+IGb9xtHYEpC8CnsVCqkvL5yaPk3nOZlWmBsZ3LQ3y0KFlF1WOQ6DOy0wGqxncnKbtfNcadbGQ==
-X-Received: by 2002:a05:6a20:6d94:b0:1a3:d60c:4889 with SMTP id
- gl20-20020a056a206d9400b001a3d60c4889mr2909796pzb.56.1712381857428; 
- Fri, 05 Apr 2024 22:37:37 -0700 (PDT)
+ bh=eNDwqVcutDiIERmHFyRHN/ZgN4CmsTKIxQUGe7pIcjw=;
+ b=YRjf8LInQxAlA/Kdc28Wb8tblrJtgc8hFcNdHKTcOJoERhoC06bHEP4NzM4iLVPkxf
+ xV0MFbs0PMZMTdkY8bp5ps49l9I8pOAOpZmlIrCTMDsk5BIpHfigQO1q4+X+HMHd8wUZ
+ iUFXP6UD2pQENon7OEvVdS4kXULHnY90kW+9CntVJ8DGLEn9q7cCqiQENu+bGfeML68z
+ 4UEM5EQC5IaT+YNV0lEuwanbRjnSI03+8Sb+0N30kH3I+XOS0CP888R4YL/GazKw7Ifr
+ rDOKUg0Qib/HSLBdF8p2B8exDMOq83nLNMRtJYfxaOchO1+M912+AiJqm1ameGCjayyG
+ Miuw==
+X-Gm-Message-State: AOJu0YwjRGkiXZ+TkSBit9pu3OFCUIWdcJfo+u9a1Ao1k3Ur8hv15gEo
+ hZSFR/3UkLt7r05QkWfUJ5T/oqxtXHDLftwj9l7zgF39PezN7lxEkmUrOHW/D+Lv6Qg9Gr6koBd
+ I
+X-Google-Smtp-Source: AGHT+IHnqjAFKupO/j+BXCydilO81rLvgIr5jftNW/sTUjjZ3H4JtseEja7Ji0dBrT9cYnuJ7MS1tQ==
+X-Received: by 2002:a17:902:a387:b0:1e0:d631:5563 with SMTP id
+ x7-20020a170902a38700b001e0d6315563mr3201583pla.66.1712381860408; 
+ Fri, 05 Apr 2024 22:37:40 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- u12-20020a170903124c00b001dc05535632sm2589378plh.170.2024.04.05.22.37.36
+ u12-20020a170903124c00b001dc05535632sm2589378plh.170.2024.04.05.22.37.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Apr 2024 22:37:37 -0700 (PDT)
+ Fri, 05 Apr 2024 22:37:39 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: zack@buhman.org, peter.maydell@linaro.org, ysato@users.sourceforge.jp,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 1/4] target/sh4: mac.w: memory accesses are 16-bit words
-Date: Fri,  5 Apr 2024 19:37:29 -1000
-Message-Id: <20240406053732.191398-2-richard.henderson@linaro.org>
+Cc: zack@buhman.org,
+	peter.maydell@linaro.org,
+	ysato@users.sourceforge.jp
+Subject: [PATCH v3 3/4] target/sh4: Fix mac.l with saturation enabled
+Date: Fri,  5 Apr 2024 19:37:31 -1000
+Message-Id: <20240406053732.191398-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240406053732.191398-1-richard.henderson@linaro.org>
 References: <20240406053732.191398-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,67 +98,158 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zack Buhman <zack@buhman.org>
 
-Before this change, executing a code sequence such as:
-
-           mova   tblm,r0
-           mov    r0,r1
-           mova   tbln,r0
-           clrs
-           clrmac
-           mac.w  @r0+,@r1+
-           mac.w  @r0+,@r1+
-
-           .align 4
-  tblm:    .word  0x1234
-           .word  0x5678
-  tbln:    .word  0x9abc
-           .word  0xdefg
-
-Does not result in correct behavior:
-
-Expected behavior:
-  first macw : macl = 0x1234 * 0x9abc + 0x0
-               mach = 0x0
-
-  second macw: macl = 0x5678 * 0xdefg + 0xb00a630
-               mach = 0x0
-
-Observed behavior (qemu-sh4eb, prior to this commit):
-
-  first macw : macl = 0x5678 * 0xdefg + 0x0
-               mach = 0x0
-
-  second macw: (unaligned longword memory access, SIGBUS)
-
-Various SH-4 ISA manuals also confirm that `mac.w` is a 16-bit word memory
-access, not a 32-bit longword memory access.
+The saturation arithmetic logic in helper_macl is not correct.
+I tested and verified this behavior on a SH7091.
 
 Signed-off-by: Zack Buhman <zack@buhman.org>
-Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240402093756.27466-1-zack@buhman.org>
+Message-Id: <20240404162641.27528-2-zack@buhman.org>
+[rth: Reformat helper_macl, add a test case.]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sh4/translate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/sh4/helper.h           |  2 +-
+ target/sh4/op_helper.c        | 23 ++++++------
+ tests/tcg/sh4/test-macl.c     | 67 +++++++++++++++++++++++++++++++++++
+ tests/tcg/sh4/Makefile.target |  5 +++
+ 4 files changed, 86 insertions(+), 11 deletions(-)
+ create mode 100644 tests/tcg/sh4/test-macl.c
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index a9b1bc7524..6643c14dde 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -816,10 +816,10 @@ static void _decode_opc(DisasContext * ctx)
-             TCGv arg0, arg1;
-             arg0 = tcg_temp_new();
-             tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
--                                MO_TESL | MO_ALIGN);
-+                                MO_TESW | MO_ALIGN);
-             arg1 = tcg_temp_new();
-             tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx,
--                                MO_TESL | MO_ALIGN);
-+                                MO_TESW | MO_ALIGN);
-             gen_helper_macw(tcg_env, arg0, arg1);
-             tcg_gen_addi_i32(REG(B11_8), REG(B11_8), 2);
-             tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 2);
+diff --git a/target/sh4/helper.h b/target/sh4/helper.h
+index 8d792f6b55..64056e4a39 100644
+--- a/target/sh4/helper.h
++++ b/target/sh4/helper.h
+@@ -11,7 +11,7 @@ DEF_HELPER_3(movcal, void, env, i32, i32)
+ DEF_HELPER_1(discard_movcal_backup, void, env)
+ DEF_HELPER_2(ocbi, void, env, i32)
+ 
+-DEF_HELPER_3(macl, void, env, i32, i32)
++DEF_HELPER_3(macl, void, env, s32, s32)
+ DEF_HELPER_3(macw, void, env, i32, i32)
+ 
+ DEF_HELPER_2(ld_fpscr, void, env, i32)
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 4559d0d376..d0bae0cc00 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -158,20 +158,23 @@ void helper_ocbi(CPUSH4State *env, uint32_t address)
+     }
+ }
+ 
+-void helper_macl(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
++void helper_macl(CPUSH4State *env, int32_t arg0, int32_t arg1)
+ {
++    const int64_t min = -(1ll << 47);
++    const int64_t max = (1ll << 47) - 1;
++    int64_t mul = (int64_t)arg0 * arg1;
++    int64_t mac = env->mac;
+     int64_t res;
+ 
+-    res = ((uint64_t) env->mach << 32) | env->macl;
+-    res += (int64_t) (int32_t) arg0 *(int64_t) (int32_t) arg1;
+-    env->mach = (res >> 32) & 0xffffffff;
+-    env->macl = res & 0xffffffff;
+-    if (env->sr & (1u << SR_S)) {
+-        if (res < 0)
+-            env->mach |= 0xffff0000;
+-        else
+-            env->mach &= 0x00007fff;
++    if (!(env->sr & (1u << SR_S))) {
++        res = mac + mul;
++    } else if (sadd64_overflow(mac, mul, &res)) {
++        res = mac < 0 ? min : max;
++    } else {
++        res = MIN(MAX(res, min), max);
+     }
++
++    env->mac = res;
+ }
+ 
+ void helper_macw(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
+diff --git a/tests/tcg/sh4/test-macl.c b/tests/tcg/sh4/test-macl.c
+new file mode 100644
+index 0000000000..b66c854365
+--- /dev/null
++++ b/tests/tcg/sh4/test-macl.c
+@@ -0,0 +1,67 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include <stdint.h>
++#include <stdlib.h>
++#include <stdio.h>
++
++#define MACL_S_MIN  (-(1ll << 47))
++#define MACL_S_MAX  ((1ll << 47) - 1)
++
++int64_t mac_l(int64_t mac, const int32_t *a, const int32_t *b)
++{
++    register uint32_t macl __asm__("macl") = mac;
++    register uint32_t mach __asm__("mach") = mac >> 32;
++
++    asm volatile("mac.l @%0+,@%1+"
++                 : "+r"(a), "+r"(b), "+x"(macl), "+x"(mach));
++
++    return ((uint64_t)mach << 32) | macl;
++}
++
++typedef struct {
++    int64_t mac;
++    int32_t a, b;
++    int64_t res[2];
++} Test;
++
++__attribute__((noinline))
++void test(const Test *t, int sat)
++{
++    int64_t res;
++
++    if (sat) {
++        asm volatile("sets");
++    } else {
++        asm volatile("clrs");
++    }
++    res = mac_l(t->mac, &t->a, &t->b);
++
++    if (res != t->res[sat]) {
++        fprintf(stderr, "%#llx + (%#x * %#x) = %#llx -- got %#llx\n",
++                t->mac, t->a, t->b, t->res[sat], res);
++        abort();
++    }
++}
++
++int main()
++{
++    static const Test tests[] = {
++        { 0x00007fff12345678ll, INT32_MAX, INT32_MAX,
++          { 0x40007ffe12345679ll, MACL_S_MAX } },
++        { MACL_S_MIN, -1, 1,
++          { 0xffff7fffffffffffll, MACL_S_MIN } },
++        { INT64_MIN, -1, 1,
++          { INT64_MAX, MACL_S_MIN } },
++        { 0x00007fff00000000ll, INT32_MAX, INT32_MAX,
++          { 0x40007ffe00000001ll, MACL_S_MAX } },
++        { 4, 1, 2, { 6, 6 } },
++        { -4, -1, -2, { -2, -2 } },
++    };
++
++    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); ++i) {
++        for (int j = 0; j < 2; ++j) {
++            test(&tests[i], j);
++        }
++    }
++    return 0;
++}
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 16eaa850a8..9a11c10924 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -9,3 +9,8 @@ run-signals: signals
+ 	$(call skip-test, $<, "BROKEN")
+ run-plugin-signals-with-%:
+ 	$(call skip-test, $<, "BROKEN")
++
++VPATH += $(SRC_PATH)/tests/tcg/sh4
++
++test-macl: CFLAGS += -O -g
++TESTS += test-macl
 -- 
 2.34.1
 
