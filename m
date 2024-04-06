@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCEFCD1296
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Apr 2024 22:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5B8CD1292
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Apr 2024 22:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtEaw-0003O6-4D; Sat, 06 Apr 2024 18:33:06 -0400
+	id 1rtEap-0003M2-HF; Sat, 06 Apr 2024 18:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtEau-0003Ni-TA
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:33:04 -0400
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ id 1rtEan-0003LQ-1U
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:32:57 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtEat-0006if-EA
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:33:04 -0400
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5aa27dba8a1so175023eaf.0
- for <qemu-devel@nongnu.org>; Sat, 06 Apr 2024 15:33:03 -0700 (PDT)
+ id 1rtEal-0006fI-Ft
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:32:56 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6ed2170d89fso88444b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 06 Apr 2024 15:32:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712442782; x=1713047582; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712442774; x=1713047574; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XUzNX9wVB6qbDLCwM/K8CjqXVmj1FUosoEHWX0Cy0rY=;
- b=NCF8Bx48+UG3ilgO8Mg6b7O/agyUyY+qQhQCL06Kay8OXyz4An29hzmk5ATbFgk0xp
- acO/um8hCDMJyvqWsX1ArTVHXqDC7gKOYD4Hj7m26+f4J1yGn+NaV4Gn8Dzq+4lXkhKo
- CFyQKaiPZnhAmZQOwbgyGkgpr9u6ZVmQF+DDtYL97Ectlbs6WQKDckICWIqseFauaMi5
- MzfDnGL0npXXyFJsk7kqDaXAGyARX/he2rH3/rnjD3FR+/7ktK442Yy5e5W/dsgPj5uK
- WxYU8UUPtVVm2ttcMZAGIPEWfHiE0hwQ0VfgWKA6Xm7D5Tkx7j9V2X75EHjnzO6FHc3u
- yJpQ==
+ bh=uK1v+EiguMoYRGbIEG8BvH+kU+PSbAC8gTglH1oJQN4=;
+ b=C4JMonpkumYVHLLy8PcAPHvlDkFbTuu4KReUjuHM2x06qsvQLQReyP2pHiBICV6V/w
+ RSx2WE+ys6JuTFmPSmtlSKkRD163f/lSRLXSlB4XiinVyc0Tmeea3VZhbeGNL8DYNty0
+ E+dOIQAq1Qx+w3mEa/i1MDPc//ebfMlDCKYrb7MDXmEwzpVYrJCVgozaPWHSKfocRqm0
+ l98y7VQeTkfsHq9s1h2UeWkho5QfRUl/wL8nrWzqo9om0YyNUuNSA6btyK2jSs2q2V28
+ EhTkyPcflkatkt6mElHp6rfTxj/6ql4THy3qKJ+rEHkyO6BUkPPZqyZyGvV1mqvFZ49I
+ A1OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712442782; x=1713047582;
+ d=1e100.net; s=20230601; t=1712442774; x=1713047574;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XUzNX9wVB6qbDLCwM/K8CjqXVmj1FUosoEHWX0Cy0rY=;
- b=EEnSNA5PKQqjc4WunT6zJqa5W/IhvaXkqZxvJ9E4bs2+JI8U/itsJ+srt49Amya/Yc
- 1lRakESqSFWRowFuiOxlzyvfPjuyYFGpXopvh0+AR5BrxM0P8sFekN+tlhWBrAi7hqcb
- uW3OPLYfj1CUaiCgCs3BtF3OOh+GdpEimaSc8K3ctu74IPx3e1Z7EodwAl2yyJS2tsyK
- uo0j0ObRe07FUOYXTd5Sfk7b1ZrGYpmooj0vM3aO5hvojNfSMTFplen2nFPzz2KhdG8W
- Tu8EIL6TNr2Pv92JYxaGbshU5trz96LEEb5GVgc2zDbj4UCc6uObJCHo7xSOWtK6gVyU
- 84MA==
-X-Gm-Message-State: AOJu0YyQjbDkRiupwNDQt3WyEKe8yCJdhdYE+o4bqBfoaWeikLSsdrr9
- rDo/8+p0DxlqwVMEfPPgxfbhHGPzp5PlkiXWY7QKN0n1WB/033ABcVtJAOTlsLHyxnWCXmmdeCJ
- R
-X-Google-Smtp-Source: AGHT+IHo2yLEETdAst9o5o1IGSNTCzGyLb/wyHFihxgL403DK8gVFtTMbMP8D6raA8o6AFRUJW/UPg==
-X-Received: by 2002:a05:6358:7a8e:b0:17c:263a:5b8e with SMTP id
- f14-20020a0563587a8e00b0017c263a5b8emr6804018rwg.14.1712442782138; 
- Sat, 06 Apr 2024 15:33:02 -0700 (PDT)
+ bh=uK1v+EiguMoYRGbIEG8BvH+kU+PSbAC8gTglH1oJQN4=;
+ b=KLMZu4XQkqXqWTyyIG3h6AChobt9GqVq35g/ovZNMwl4HU4FRDnz35PtWfQ4w7snGv
+ ZCbUPTf7w6Qk+TU0c+vkSKRF6ZKbNjPDj2irYJcHPTCoqOGI0wiIgGCj7xBmqn84YY4f
+ dfFPjKy5ouZUmyv5h3I+QpvnlDJjHzXyRKAwMyaegXQ5I58J7N5GcRUnhXVXMybc6TkQ
+ 7h0YkG7Y2hinDfqS17CiIXvrf518jYjrsUj9xLuXASJXEHyCm7JL1pRTyfOQbGjOE+kW
+ 0kYBO5Jz5n3OowMCk1iXyoi6lodo/x+hpPzVNuWWr5can6JMxUm6KsfJq/TZaJ603ccd
+ k10w==
+X-Gm-Message-State: AOJu0Yy7uAKwb8dsO9U8QMKSc25g55Q7msu0fG1nYQkXfmNxSkDodwPY
+ evobkhVFW75t6I+Wnh6MLTQOxjODaYaEriwZhZwsS8qPxFbbSaNKouAz+rV4RToN8UCrEofkK9O
+ 5
+X-Google-Smtp-Source: AGHT+IH4KHGnntIWZ+1epoLd26bxOo7aYk4QCzq7PsjdzeFlPnpZnPzhBgELI5mCBj3KEO86RynA+g==
+X-Received: by 2002:a17:90a:f683:b0:2a4:b04b:d204 with SMTP id
+ cl3-20020a17090af68300b002a4b04bd204mr2799489pjb.7.1712442773854; 
+ Sat, 06 Apr 2024 15:32:53 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- f23-20020a17090ace1700b002a20c0dcebbsm3643279pju.31.2024.04.06.15.33.00
+ f23-20020a17090ace1700b002a20c0dcebbsm3643279pju.31.2024.04.06.15.32.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 06 Apr 2024 15:33:01 -0700 (PDT)
+ Sat, 06 Apr 2024 15:32:53 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, Jorgen.Hansen@wdc.com,
- Jonathan.Cameron@huawei.com, linux-cxl@vger.kernel.org
-Subject: [PATCH 6/9] target/microblaze: Use insn_start from DisasContextBase
-Date: Sat,  6 Apr 2024 12:32:45 -1000
-Message-Id: <20240406223248.502699-7-richard.henderson@linaro.org>
+ Jonathan.Cameron@huawei.com, linux-cxl@vger.kernel.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 1/9] tcg: Add TCGContext.emit_before_op
+Date: Sat,  6 Apr 2024 12:32:40 -1000
+Message-Id: <20240406223248.502699-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240406223248.502699-1-richard.henderson@linaro.org>
 References: <20240406223248.502699-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,50 +96,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allow operations to be emitted via normal expanders
+into the middle of the opcode stream.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/microblaze/translate.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ include/tcg/tcg.h |  6 ++++++
+ tcg/tcg.c         | 14 ++++++++++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 4e52ef32db..fc451befae 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -62,9 +62,6 @@ typedef struct DisasContext {
-     DisasContextBase base;
-     const MicroBlazeCPUConfig *cfg;
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index 451f3fec41..05a1912f8a 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -553,6 +553,12 @@ struct TCGContext {
+     QTAILQ_HEAD(, TCGOp) ops, free_ops;
+     QSIMPLEQ_HEAD(, TCGLabel) labels;
  
--    /* TCG op of the current insn_start.  */
--    TCGOp *insn_start;
--
-     TCGv_i32 r0;
-     bool r0_set;
++    /*
++     * When clear, new ops are added to the tail of @ops.
++     * When set, new ops are added in front of @emit_before_op.
++     */
++    TCGOp *emit_before_op;
++
+     /* Tells which temporary holds a given register.
+        It does not take into account fixed registers */
+     TCGTemp *reg_to_temp[TCG_TARGET_NB_REGS];
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index d6670237fb..0c0bb9d169 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1521,6 +1521,7 @@ void tcg_func_start(TCGContext *s)
  
-@@ -699,14 +696,14 @@ static TCGv compute_ldst_addr_ea(DisasContext *dc, int ra, int rb)
- static void record_unaligned_ess(DisasContext *dc, int rd,
-                                  MemOp size, bool store)
+     QTAILQ_INIT(&s->ops);
+     QTAILQ_INIT(&s->free_ops);
++    s->emit_before_op = NULL;
+     QSIMPLEQ_INIT(&s->labels);
+ 
+     tcg_debug_assert(s->addr_type == TCG_TYPE_I32 ||
+@@ -2332,7 +2333,11 @@ static void tcg_gen_callN(TCGHelperInfo *info, TCGTemp *ret, TCGTemp **args)
+     op->args[pi++] = (uintptr_t)info;
+     tcg_debug_assert(pi == total_args);
+ 
+-    QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
++    if (tcg_ctx->emit_before_op) {
++        QTAILQ_INSERT_BEFORE(tcg_ctx->emit_before_op, op, link);
++    } else {
++        QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
++    }
+ 
+     tcg_debug_assert(n_extend < ARRAY_SIZE(extend_free));
+     for (i = 0; i < n_extend; ++i) {
+@@ -3215,7 +3220,12 @@ static TCGOp *tcg_op_alloc(TCGOpcode opc, unsigned nargs)
+ TCGOp *tcg_emit_op(TCGOpcode opc, unsigned nargs)
  {
--    uint32_t iflags = tcg_get_insn_start_param(dc->insn_start, 1);
-+    uint32_t iflags = tcg_get_insn_start_param(dc->base.insn_start, 1);
- 
-     iflags |= ESR_ESS_FLAG;
-     iflags |= rd << 5;
-     iflags |= store * ESR_S;
-     iflags |= (size == MO_32) * ESR_W;
- 
--    tcg_set_insn_start_param(dc->insn_start, 1, iflags);
-+    tcg_set_insn_start_param(dc->base.insn_start, 1, iflags);
- }
- #endif
- 
-@@ -1624,7 +1621,6 @@ static void mb_tr_insn_start(DisasContextBase *dcb, CPUState *cs)
-     DisasContext *dc = container_of(dcb, DisasContext, base);
- 
-     tcg_gen_insn_start(dc->base.pc_next, dc->tb_flags & ~MSR_TB_MASK);
--    dc->insn_start = tcg_last_op();
+     TCGOp *op = tcg_op_alloc(opc, nargs);
+-    QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
++
++    if (tcg_ctx->emit_before_op) {
++        QTAILQ_INSERT_BEFORE(tcg_ctx->emit_before_op, op, link);
++    } else {
++        QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
++    }
+     return op;
  }
  
- static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
 -- 
 2.34.1
 
