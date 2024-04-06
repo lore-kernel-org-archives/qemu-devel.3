@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A4CC67861
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Apr 2024 22:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCEFCD1296
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Apr 2024 22:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtEaq-0003M6-55; Sat, 06 Apr 2024 18:33:00 -0400
+	id 1rtEaw-0003O6-4D; Sat, 06 Apr 2024 18:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtEao-0003Lo-EE
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:32:58 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1rtEau-0003Ni-TA
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:33:04 -0400
+Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtEam-0006fN-Uv
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:32:58 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2a2f6da024eso1848124a91.3
- for <qemu-devel@nongnu.org>; Sat, 06 Apr 2024 15:32:56 -0700 (PDT)
+ id 1rtEat-0006if-EA
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 18:33:04 -0400
+Received: by mail-oo1-xc33.google.com with SMTP id
+ 006d021491bc7-5aa27dba8a1so175023eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 06 Apr 2024 15:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712442775; x=1713047575; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712442782; x=1713047582; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2L2/prB0ux2ctNxoqiiUKt6ospzwwfXyvGcwqxEj/VU=;
- b=TnslF/4kyHI0TtRj0726QWUwk3l01jJsj8h34GOmnf5CnnKzS2CMGc2MHA2FxhVDu6
- ZqVR3TQgpCv3S0yNXlcpm5QeBQRQGYLC484TVjkZ+ONuGdjPZUJP2AiWUYX1ZcPrvaFG
- D63qawqB+lxsUn/cXhqjqzwMjNRid1YOgCtu8RWvFInWAMA+UR0zlurzUvpvVv6N6B7W
- LmDgXQxlrkzynOin5kllDW+8bKqZ/kI7nTp9/NHyIRltHzbKw5ZaJJGcw8hJips3lPne
- GLYtUm+jv806kak7KML9a38iyVS2kQb5Z4IKOEOyGHiKgNfpiEPQnzxnunznouuC0ojH
- Q6jA==
+ bh=XUzNX9wVB6qbDLCwM/K8CjqXVmj1FUosoEHWX0Cy0rY=;
+ b=NCF8Bx48+UG3ilgO8Mg6b7O/agyUyY+qQhQCL06Kay8OXyz4An29hzmk5ATbFgk0xp
+ acO/um8hCDMJyvqWsX1ArTVHXqDC7gKOYD4Hj7m26+f4J1yGn+NaV4Gn8Dzq+4lXkhKo
+ CFyQKaiPZnhAmZQOwbgyGkgpr9u6ZVmQF+DDtYL97Ectlbs6WQKDckICWIqseFauaMi5
+ MzfDnGL0npXXyFJsk7kqDaXAGyARX/he2rH3/rnjD3FR+/7ktK442Yy5e5W/dsgPj5uK
+ WxYU8UUPtVVm2ttcMZAGIPEWfHiE0hwQ0VfgWKA6Xm7D5Tkx7j9V2X75EHjnzO6FHc3u
+ yJpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712442775; x=1713047575;
+ d=1e100.net; s=20230601; t=1712442782; x=1713047582;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2L2/prB0ux2ctNxoqiiUKt6ospzwwfXyvGcwqxEj/VU=;
- b=DCyuKlhxaKcC/yAL5VrLbKP0Rq0150R2uMR/dIC/eNFIIISw2cSrJgRCuFmFpUtkeb
- Lh8Kc7RDayNf5zzv4U5bU8OOskl79fF3gAgaYXjMknPw77eZf50KLon6UoKZZcnzhfcb
- 0Cz9WrAVAv2y2SC86qKu0rON8LpDtD4TrVVupE109Za0V45utsty/tpLR97ANBTuP/6K
- IFBB32XOflK6cEhq/jwTooQHwjt5u/3dye65f2MeqwwWQUR1Bsg/Pt3htecYAXLYtBAv
- e8SVk6MgHwUlXs93u4+msChvKSM7hzjHFpITUs2sBajUPuixSK5cakeZR1Apr6JAlUsf
- 2ldA==
-X-Gm-Message-State: AOJu0Yy0XC8aItKtlwdcdNKp6KAd4PERYGooj4cpr8ugzh2gYE7xbo50
- HGYHVFBiHtbhnhUMOHWveRc8r47MciTRHAkTEURIwI0cZZHmxw4dssTs3AriMJlYZyHMm7Gea0Y
- f
-X-Google-Smtp-Source: AGHT+IGDChcSyXOe/krl7Jt6OrrMbxdy1DnpqVL6nLsJh1dU/15hj84F26u8LD5cGAiYd07pEisvFA==
-X-Received: by 2002:a17:90a:df10:b0:2a2:9b12:da04 with SMTP id
- gp16-20020a17090adf1000b002a29b12da04mr3882477pjb.3.1712442775469; 
- Sat, 06 Apr 2024 15:32:55 -0700 (PDT)
+ bh=XUzNX9wVB6qbDLCwM/K8CjqXVmj1FUosoEHWX0Cy0rY=;
+ b=EEnSNA5PKQqjc4WunT6zJqa5W/IhvaXkqZxvJ9E4bs2+JI8U/itsJ+srt49Amya/Yc
+ 1lRakESqSFWRowFuiOxlzyvfPjuyYFGpXopvh0+AR5BrxM0P8sFekN+tlhWBrAi7hqcb
+ uW3OPLYfj1CUaiCgCs3BtF3OOh+GdpEimaSc8K3ctu74IPx3e1Z7EodwAl2yyJS2tsyK
+ uo0j0ObRe07FUOYXTd5Sfk7b1ZrGYpmooj0vM3aO5hvojNfSMTFplen2nFPzz2KhdG8W
+ Tu8EIL6TNr2Pv92JYxaGbshU5trz96LEEb5GVgc2zDbj4UCc6uObJCHo7xSOWtK6gVyU
+ 84MA==
+X-Gm-Message-State: AOJu0YyQjbDkRiupwNDQt3WyEKe8yCJdhdYE+o4bqBfoaWeikLSsdrr9
+ rDo/8+p0DxlqwVMEfPPgxfbhHGPzp5PlkiXWY7QKN0n1WB/033ABcVtJAOTlsLHyxnWCXmmdeCJ
+ R
+X-Google-Smtp-Source: AGHT+IHo2yLEETdAst9o5o1IGSNTCzGyLb/wyHFihxgL403DK8gVFtTMbMP8D6raA8o6AFRUJW/UPg==
+X-Received: by 2002:a05:6358:7a8e:b0:17c:263a:5b8e with SMTP id
+ f14-20020a0563587a8e00b0017c263a5b8emr6804018rwg.14.1712442782138; 
+ Sat, 06 Apr 2024 15:33:02 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- f23-20020a17090ace1700b002a20c0dcebbsm3643279pju.31.2024.04.06.15.32.54
+ f23-20020a17090ace1700b002a20c0dcebbsm3643279pju.31.2024.04.06.15.33.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 06 Apr 2024 15:32:55 -0700 (PDT)
+ Sat, 06 Apr 2024 15:33:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, Jorgen.Hansen@wdc.com,
  Jonathan.Cameron@huawei.com, linux-cxl@vger.kernel.org
-Subject: [PATCH 2/9] accel/tcg: Add insn_start to DisasContextBase
-Date: Sat,  6 Apr 2024 12:32:41 -1000
-Message-Id: <20240406223248.502699-3-richard.henderson@linaro.org>
+Subject: [PATCH 6/9] target/microblaze: Use insn_start from DisasContextBase
+Date: Sat,  6 Apr 2024 12:32:45 -1000
+Message-Id: <20240406223248.502699-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240406223248.502699-1-richard.henderson@linaro.org>
 References: <20240406223248.502699-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,56 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is currently target-specific for many; begin making it
-target independent.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/translator.h | 3 +++
- accel/tcg/translator.c    | 2 ++
- 2 files changed, 5 insertions(+)
+ target/microblaze/translate.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index 51624feb10..ceaeca8c91 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -74,6 +74,8 @@ typedef enum DisasJumpType {
-  * @singlestep_enabled: "Hardware" single stepping enabled.
-  * @saved_can_do_io: Known value of cpu->neg.can_do_io, or -1 for unknown.
-  * @plugin_enabled: TCG plugin enabled in this TB.
-+ * @insn_start: The last op emitted by the insn_start hook,
-+ *              which is expected to be INDEX_op_insn_start.
-  *
-  * Architecture-agnostic disassembly context.
-  */
-@@ -87,6 +89,7 @@ typedef struct DisasContextBase {
-     bool singlestep_enabled;
-     int8_t saved_can_do_io;
-     bool plugin_enabled;
-+    struct TCGOp *insn_start;
-     void *host_addr[2];
- } DisasContextBase;
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 4e52ef32db..fc451befae 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -62,9 +62,6 @@ typedef struct DisasContext {
+     DisasContextBase base;
+     const MicroBlazeCPUConfig *cfg;
  
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index 38c34009a5..ae61c154c2 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -140,6 +140,7 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-     db->max_insns = *max_insns;
-     db->singlestep_enabled = cflags & CF_SINGLE_STEP;
-     db->saved_can_do_io = -1;
-+    db->insn_start = NULL;
-     db->host_addr[0] = host_pc;
-     db->host_addr[1] = NULL;
+-    /* TCG op of the current insn_start.  */
+-    TCGOp *insn_start;
+-
+     TCGv_i32 r0;
+     bool r0_set;
  
-@@ -157,6 +158,7 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-     while (true) {
-         *max_insns = ++db->num_insns;
-         ops->insn_start(db, cpu);
-+        db->insn_start = tcg_last_op();
-         tcg_debug_assert(db->is_jmp == DISAS_NEXT);  /* no early exit */
+@@ -699,14 +696,14 @@ static TCGv compute_ldst_addr_ea(DisasContext *dc, int ra, int rb)
+ static void record_unaligned_ess(DisasContext *dc, int rd,
+                                  MemOp size, bool store)
+ {
+-    uint32_t iflags = tcg_get_insn_start_param(dc->insn_start, 1);
++    uint32_t iflags = tcg_get_insn_start_param(dc->base.insn_start, 1);
  
-         if (plugin_enabled) {
+     iflags |= ESR_ESS_FLAG;
+     iflags |= rd << 5;
+     iflags |= store * ESR_S;
+     iflags |= (size == MO_32) * ESR_W;
+ 
+-    tcg_set_insn_start_param(dc->insn_start, 1, iflags);
++    tcg_set_insn_start_param(dc->base.insn_start, 1, iflags);
+ }
+ #endif
+ 
+@@ -1624,7 +1621,6 @@ static void mb_tr_insn_start(DisasContextBase *dcb, CPUState *cs)
+     DisasContext *dc = container_of(dcb, DisasContext, base);
+ 
+     tcg_gen_insn_start(dc->base.pc_next, dc->tb_flags & ~MSR_TB_MASK);
+-    dc->insn_start = tcg_last_op();
+ }
+ 
+ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
 -- 
 2.34.1
 
