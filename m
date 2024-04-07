@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45D1CD128A
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A0FCD11C2
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtNlK-0004VG-DL; Sun, 07 Apr 2024 04:20:26 -0400
+	id 1rtNlN-0004aF-0N; Sun, 07 Apr 2024 04:20:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rtNl2-0004IH-GE; Sun, 07 Apr 2024 04:20:09 -0400
-Received: from szxga01-in.huawei.com ([45.249.212.187])
+ id 1rtNl7-0004KV-Rs; Sun, 07 Apr 2024 04:20:15 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rtNkz-000234-Jl; Sun, 07 Apr 2024 04:20:07 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.194])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4VC4p94QJgztRv1;
- Sun,  7 Apr 2024 16:17:21 +0800 (CST)
+ id 1rtNl1-0002CP-44; Sun, 07 Apr 2024 04:20:10 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4VC4pl02M1z1ymJm;
+ Sun,  7 Apr 2024 16:17:51 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 07DE91402C7;
- Sun,  7 Apr 2024 16:20:01 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 4C5EC1A0172;
+ Sun,  7 Apr 2024 16:20:03 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Sun, 7 Apr
- 2024 16:20:00 +0800
+ 2024 16:20:02 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v13 10/24] hw/intc/arm_gicv3: Add external IRQ lines for NMI
-Date: Sun, 7 Apr 2024 08:17:19 +0000
-Message-ID: <20240407081733.3231820-11-ruanjinjie@huawei.com>
+Subject: [PATCH v13 15/24] hw/intc/arm_gicv3: Add irq non-maskable property
+Date: Sun, 7 Apr 2024 08:17:24 +0000
+Message-ID: <20240407081733.3231820-16-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240407081733.3231820-1-ruanjinjie@huawei.com>
 References: <20240407081733.3231820-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.187;
- envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,68 +70,140 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Augment the GICv3's QOM device interface by adding one
-new set of sysbus IRQ line, to signal NMI to each CPU.
+A SPI, PPI or SGI interrupt can have non-maskable property. So maintain
+non-maskable property in PendingIrq and GICR/GICD. Since add new device
+state, it also needs to be migrated, so also save NMI info in
+vmstate_gicv3_cpu and vmstate_gicv3.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-v11：
-- Add new Reviewed-by.
-v4:
+v12:
+- nmi_needed -> gicv3_cpu_nmi_needed.
+- needed_nmi -> gicv3_nmi_needed.
 - Add Reviewed-by.
+v11:
+- Put vmstate_gicv3_cpu_nmi and vmstate_gicv3_gicd_nmi into existing list.
+- Remove the excess != 0.
+v10:
+- superprio -> nmi, gicr_isuperprio -> gicr_inmir0.
+- Save NMI state in vmstate_gicv3_cpu and vmstate_gicv3.
+- Update the commit message.
 v3:
-- Add support for VNMI.
+- Place this ahead of implement GICR_INMIR.
+- Add Acked-by.
 ---
- hw/intc/arm_gicv3_common.c         | 6 ++++++
- include/hw/intc/arm_gic_common.h   | 2 ++
- include/hw/intc/arm_gicv3_common.h | 2 ++
- 3 files changed, 10 insertions(+)
+ hw/intc/arm_gicv3_common.c         | 38 ++++++++++++++++++++++++++++++
+ include/hw/intc/arm_gicv3_common.h |  4 ++++
+ 2 files changed, 42 insertions(+)
 
 diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index cb55c72681..c52f060026 100644
+index 2d2cea6858..9810558b07 100644
 --- a/hw/intc/arm_gicv3_common.c
 +++ b/hw/intc/arm_gicv3_common.c
-@@ -299,6 +299,12 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
-     for (i = 0; i < s->num_cpu; i++) {
-         sysbus_init_irq(sbd, &s->cpu[i].parent_vfiq);
+@@ -164,6 +164,24 @@ const VMStateDescription vmstate_gicv3_gicv4 = {
      }
-+    for (i = 0; i < s->num_cpu; i++) {
-+        sysbus_init_irq(sbd, &s->cpu[i].parent_nmi);
-+    }
-+    for (i = 0; i < s->num_cpu; i++) {
-+        sysbus_init_irq(sbd, &s->cpu[i].parent_vnmi);
-+    }
+ };
  
-     memory_region_init_io(&s->iomem_dist, OBJECT(s), ops, s,
-                           "gicv3_dist", 0x10000);
-diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
-index 7080375008..97fea4102d 100644
---- a/include/hw/intc/arm_gic_common.h
-+++ b/include/hw/intc/arm_gic_common.h
-@@ -71,6 +71,8 @@ struct GICState {
-     qemu_irq parent_fiq[GIC_NCPU];
-     qemu_irq parent_virq[GIC_NCPU];
-     qemu_irq parent_vfiq[GIC_NCPU];
-+    qemu_irq parent_nmi[GIC_NCPU];
-+    qemu_irq parent_vnmi[GIC_NCPU];
-     qemu_irq maintenance_irq[GIC_NCPU];
++static bool gicv3_cpu_nmi_needed(void *opaque)
++{
++    GICv3CPUState *cs = opaque;
++
++    return cs->gic->nmi_support;
++}
++
++static const VMStateDescription vmstate_gicv3_cpu_nmi = {
++    .name = "arm_gicv3_cpu/nmi",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = gicv3_cpu_nmi_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(gicr_inmir0, GICv3CPUState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_gicv3_cpu = {
+     .name = "arm_gicv3_cpu",
+     .version_id = 1,
+@@ -196,6 +214,7 @@ static const VMStateDescription vmstate_gicv3_cpu = {
+         &vmstate_gicv3_cpu_virt,
+         &vmstate_gicv3_cpu_sre_el1,
+         &vmstate_gicv3_gicv4,
++        &vmstate_gicv3_cpu_nmi,
+         NULL
+     }
+ };
+@@ -238,6 +257,24 @@ const VMStateDescription vmstate_gicv3_gicd_no_migration_shift_bug = {
+     }
+ };
  
-     /* GICD_CTLR; for a GIC with the security extensions the NS banked version
++static bool gicv3_nmi_needed(void *opaque)
++{
++    GICv3State *cs = opaque;
++
++    return cs->nmi_support;
++}
++
++const VMStateDescription vmstate_gicv3_gicd_nmi = {
++    .name = "arm_gicv3/gicd_nmi",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = gicv3_nmi_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(nmi, GICv3State, GICV3_BMP_SIZE),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_gicv3 = {
+     .name = "arm_gicv3",
+     .version_id = 1,
+@@ -266,6 +303,7 @@ static const VMStateDescription vmstate_gicv3 = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_gicv3_gicd_no_migration_shift_bug,
++        &vmstate_gicv3_gicd_nmi,
+         NULL
+     }
+ };
 diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index 4e2fb518e7..7324c7d983 100644
+index 4358c5319c..88533749eb 100644
 --- a/include/hw/intc/arm_gicv3_common.h
 +++ b/include/hw/intc/arm_gicv3_common.h
-@@ -155,6 +155,8 @@ struct GICv3CPUState {
-     qemu_irq parent_fiq;
-     qemu_irq parent_virq;
-     qemu_irq parent_vfiq;
-+    qemu_irq parent_nmi;
-+    qemu_irq parent_vnmi;
+@@ -146,6 +146,7 @@ typedef struct {
+     int irq;
+     uint8_t prio;
+     int grp;
++    bool nmi;
+ } PendingIrq;
  
-     /* Redistributor */
-     uint32_t level;                  /* Current IRQ level */
+ struct GICv3CPUState {
+@@ -172,6 +173,7 @@ struct GICv3CPUState {
+     uint32_t gicr_ienabler0;
+     uint32_t gicr_ipendr0;
+     uint32_t gicr_iactiver0;
++    uint32_t gicr_inmir0;
+     uint32_t edge_trigger; /* ICFGR0 and ICFGR1 even bits */
+     uint32_t gicr_igrpmodr0;
+     uint32_t gicr_nsacr;
+@@ -275,6 +277,7 @@ struct GICv3State {
+     GIC_DECLARE_BITMAP(active);       /* GICD_ISACTIVER */
+     GIC_DECLARE_BITMAP(level);        /* Current level */
+     GIC_DECLARE_BITMAP(edge_trigger); /* GICD_ICFGR even bits */
++    GIC_DECLARE_BITMAP(nmi);          /* GICD_INMIR */
+     uint8_t gicd_ipriority[GICV3_MAXIRQ];
+     uint64_t gicd_irouter[GICV3_MAXIRQ];
+     /* Cached information: pointer to the cpu i/f for the CPUs specified
+@@ -314,6 +317,7 @@ GICV3_BITMAP_ACCESSORS(pending)
+ GICV3_BITMAP_ACCESSORS(active)
+ GICV3_BITMAP_ACCESSORS(level)
+ GICV3_BITMAP_ACCESSORS(edge_trigger)
++GICV3_BITMAP_ACCESSORS(nmi)
+ 
+ #define TYPE_ARM_GICV3_COMMON "arm-gicv3-common"
+ typedef struct ARMGICv3CommonClass ARMGICv3CommonClass;
 -- 
 2.34.1
 
