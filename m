@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65683CD128A
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F40CD128A
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtNlG-0004OR-6C; Sun, 07 Apr 2024 04:20:22 -0400
+	id 1rtNlP-0004gT-KH; Sun, 07 Apr 2024 04:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rtNl3-0004Iq-Id; Sun, 07 Apr 2024 04:20:09 -0400
-Received: from szxga02-in.huawei.com ([45.249.212.188])
+ id 1rtNl7-0004KX-Rk; Sun, 07 Apr 2024 04:20:15 -0400
+Received: from szxga01-in.huawei.com ([45.249.212.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rtNl0-00028j-TL; Sun, 07 Apr 2024 04:20:09 -0400
-Received: from mail.maildlp.com (unknown [172.19.162.254])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4VC4rB0qVDzbfPh;
- Sun,  7 Apr 2024 16:19:06 +0800 (CST)
+ id 1rtNl2-0002HA-Pe; Sun, 07 Apr 2024 04:20:10 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4VC4p15qpmzwRQc;
+ Sun,  7 Apr 2024 16:17:13 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id D2F5218001C;
- Sun,  7 Apr 2024 16:20:02 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id E39BD140154;
+ Sun,  7 Apr 2024 16:20:05 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Sun, 7 Apr
- 2024 16:20:02 +0800
+ 2024 16:20:05 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v13 14/24] hw/intc/arm_gicv3_kvm: Not set has-nmi=true for the
- KVM GICv3
-Date: Sun, 7 Apr 2024 08:17:23 +0000
-Message-ID: <20240407081733.3231820-15-ruanjinjie@huawei.com>
+Subject: [PATCH v13 21/24] hw/intc/arm_gicv3: Report the NMI interrupt in
+ gicv3_cpuif_update()
+Date: Sun, 7 Apr 2024 08:17:30 +0000
+Message-ID: <20240407081733.3231820-22-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240407081733.3231820-1-ruanjinjie@huawei.com>
 References: <20240407081733.3231820-1-ruanjinjie@huawei.com>
@@ -46,8 +46,8 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.188;
- envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -70,31 +70,57 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, there is no FEAT_GICv3_NMI support in the in-kernel GIC, so make it
-an error to try to set has-nmi=true for the KVM GICv3.
+In CPU Interface, if the IRQ has the non-maskable property, report NMI to
+the corresponding PE.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv3_kvm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+v12:
+- Add Reviewed-by.
+v10:
+- superprio -> nmi.
+- Update the commit message, superpriority -> non-maskable.
+v6:
+- Add Reviewed-by.
+v4:
+- Swap the ordering of the IFs.
+v3:
+- Remove handling nmi_is_irq flag.
+---
+ hw/intc/arm_gicv3_cpuif.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 77eb37e131..00a383079b 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -805,6 +805,11 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
-         return;
-     }
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index dff88c4283..60e2d9ec9c 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1037,6 +1037,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+     /* Tell the CPU about its highest priority pending interrupt */
+     int irqlevel = 0;
+     int fiqlevel = 0;
++    int nmilevel = 0;
+     ARMCPU *cpu = ARM_CPU(cs->cpu);
+     CPUARMState *env = &cpu->env;
  
-+    if (s->nmi_support) {
-+        error_setg(errp, "NMI is not supported with the in-kernel GIC");
-+        return;
-+    }
-+
-     gicv3_init_irqs_and_mmio(s, kvm_arm_gicv3_set_irq, NULL);
+@@ -1075,6 +1076,8 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
  
-     for (i = 0; i < s->num_cpu; i++) {
+         if (isfiq) {
+             fiqlevel = 1;
++        } else if (cs->hppi.nmi) {
++            nmilevel = 1;
+         } else {
+             irqlevel = 1;
+         }
+@@ -1084,6 +1087,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+ 
+     qemu_set_irq(cs->parent_fiq, fiqlevel);
+     qemu_set_irq(cs->parent_irq, irqlevel);
++    qemu_set_irq(cs->parent_nmi, nmilevel);
+ }
+ 
+ static uint64_t icc_pmr_read(CPUARMState *env, const ARMCPRegInfo *ri)
 -- 
 2.34.1
 
