@@ -4,62 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375DCCD128A
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A57CD11C2
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtNeU-0002KN-4T; Sun, 07 Apr 2024 04:13:22 -0400
+	id 1rtNhv-0003Av-I8; Sun, 07 Apr 2024 04:16:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
- id 1rtNeO-0002IZ-6E
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 04:13:16 -0400
-Received: from out30-113.freemail.mail.aliyun.com ([115.124.30.113])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rtNhu-0003Al-3M
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 04:16:54 -0400
+Received: from mail-dm6nam11on2070.outbound.protection.outlook.com
+ ([40.107.223.70] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
- id 1rtNeK-0001Dn-N3
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 04:13:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1712477578; h=Message-ID:Subject:Date:From:To;
- bh=Jyrgw+fdsx70sA5rZNTdVtftvjSvV7dvUm0DDwjdLJw=;
- b=FQfjlvnLyb9rS6Jf0JpTxFfCIl9PAdi0OpCW8/hNhAl/XzkjpfV6eHFjrsmntHnqkorBfrBj6N7Z9hfvFFId451b9EAJr0yGenfuy9yMUkrBC4MqAAq1j9aFe5jR/KFOsnZBR/mC3bFx6FwOusWePbCkflxkqcHaJZXEAPZF0vM=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R731e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045170;
- MF=xuanzhuo@linux.alibaba.com; NM=1; PH=DS; RN=16; SR=0;
- TI=SMTPD_---0W4.rUrS_1712477576; 
-Received: from localhost(mailfrom:xuanzhuo@linux.alibaba.com
- fp:SMTPD_---0W4.rUrS_1712477576) by smtp.aliyun-inc.com;
- Sun, 07 Apr 2024 16:12:57 +0800
-Message-ID: <1712477565.823871-1-xuanzhuo@linux.alibaba.com>
-Subject: Re: [PATCH net v4] virtio_net: Do not send RSS key if it is not
- supported
-Date: Sun, 7 Apr 2024 16:12:45 +0800
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-To: Breno Leitao <leitao@debian.org>
-Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
- qemu-devel@nongnu.org,
- virtualization@lists.linux.dev (open list:VIRTIO CORE AND NET DRIVERS),
- netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
- linux-kernel@vger.kernel.org (open list), hengqi@linux.alibaba.com,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
-References: <20240403154313.1331319-1-leitao@debian.org>
-In-Reply-To: <20240403154313.1331319-1-leitao@debian.org>
-Received-SPF: pass client-ip=115.124.30.113;
- envelope-from=xuanzhuo@linux.alibaba.com;
- helo=out30-113.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rtNhr-0001oD-Vd
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 04:16:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lnh0Gl2vbXS3bUvtkqkJgTbP0YJlcNdphl0Irx6gL7UY+Q88YH81yFT0qPt3iZJOqsaTRHGBRCx1kn16gBsCGdcq48dG9kiScHp4G0HI858W53KyoUDX/YQHytdUIyccl3tRpaXr2lBm7tIoXRxADQLE3PabRuE+oV53+e9CYh9T7TajSb+dH88t59voiNA0O3A6+Hrn4owivdFhi+JwPPgV5rSNffRWwldWUR/prNb2+fhg2kvExlSFA7sPVdBE0anjd0UhoEP4wILUoZDsEX87HCQghoISU30xjIz0pEA/odFNCh7DK2X4JrjemtDn19Sl1BnAAlgRZdfypoVmWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nmEPZhwuNCmI4peCR31SJUMPoqDJ4f5+XI8qIF4E5zE=;
+ b=KmYMVI/lLFgt7EZAudzxq7Kv1xLd02+xuzuIEm17NO+Yc2BSPZa4qBevUVsL+56CQLx9HUwKKYxaKFl8TYu3HAQFIUseRo4cVsx+rxwqYwIkU9arUP+wI2bTI2/TCpx1UiwYKFgU1UM6z4lSIqTdAHFWVBUaWoTSsvxj/F7DE9FcnepaZYryPV7AfvDx7Fj9HzLQSaVpiMgwolAL5mLm1iXUMpy57f+MTv7eFciWArj8jqXr4Fsg1+K35risIorj9TOtdoS+fzn2icdIjGCIoxFxzDAO49LBUWop0+LDQBurPGq+f08Gy2hViPALyi70bGSOGvMsallTdDL82csu9w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nmEPZhwuNCmI4peCR31SJUMPoqDJ4f5+XI8qIF4E5zE=;
+ b=h8cPtIIpeilC2cuq4sOnrxllBw2o+RKcfEJTiaFHc1pa5lUhHV2dbrLxRKQMIQBEsH4qvAKQYjGzh6gaPuankBLCMROKLnHB3rjD6RgDF18aBJPkUYS4T2SCMo11zdtSs+6C4oGUpuxLCUVwtUs8RVpKzdJbhMpTk9j98Guy9tWarsEGsVnu1QQNKKr2aHJK0Pz5xBWu2ZmKEKvYp7bFNKdV6XUsVLO/9BzjOzQ3Rlwelyp2T9idGgIY+NTHI9pfJ1ajo1IJXi9YjPajL2dGqcN4I50Svy5cUIirRoG4aGlM/Goqot9csJyNS6qyUJt60FhbEb7BMBAJpHt0SiB3qg==
+Received: from MW3PR06CA0028.namprd06.prod.outlook.com (2603:10b6:303:2a::33)
+ by MW4PR12MB6851.namprd12.prod.outlook.com (2603:10b6:303:20b::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Sun, 7 Apr
+ 2024 08:11:45 +0000
+Received: from MWH0EPF000A6731.namprd04.prod.outlook.com
+ (2603:10b6:303:2a:cafe::97) by MW3PR06CA0028.outlook.office365.com
+ (2603:10b6:303:2a::33) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.35 via Frontend
+ Transport; Sun, 7 Apr 2024 08:11:45 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ MWH0EPF000A6731.mail.protection.outlook.com (10.167.249.23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7452.22 via Frontend Transport; Sun, 7 Apr 2024 08:11:44 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Sun, 7 Apr 2024
+ 01:11:28 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Sun, 7 Apr
+ 2024 01:11:28 -0700
+Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.7)
+ with Microsoft SMTP Server id 15.2.1258.12 via Frontend Transport; Sun, 7 Apr
+ 2024 01:11:26 -0700
+From: Avihai Horon <avihaih@nvidia.com>
+To: <qemu-devel@nongnu.org>
+CC: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, "Alex
+ Williamson" <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Hyman Huang <yong.huang@smartx.com>, Avihai Horon
+ <avihaih@nvidia.com>
+Subject: [PATCH for-9.0] MAINTAINERS: Adjust migration documentation files
+Date: Sun, 7 Apr 2024 11:11:25 +0300
+Message-ID: <20240407081125.13951-1-avihaih@nvidia.com>
+X-Mailer: git-send-email 2.21.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A6731:EE_|MW4PR12MB6851:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2b18bb49-a2db-4b78-a3dd-08dc56da5d2e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: g7sohq8YsTMyvzvQnzWvkbpARLCnej9dhUAd6dj5drb9WpC6K6MSi/6MhyhcFcqi37VDWIyo+3uJfm/eOzt9qf4f6Mkk2EI0vPNuTxCnwrWSHzZWBxciCP+XtL0yU0d5tp2gpe9C8vf59t0PSs37jdkdgq0F3RCS5jcqK6RO/4zjc3I8ls6dzRdgKKE3HOr73WJXF+RQnuTtVf5LGGLzTvlH3qXlQ2fitcNGF1TF8wCqmB4IHrvMYGBFMgroM4gAXsbHe5+hWfwGyyPGwYE4+cuzClKr/0QO1mrLT8zeFB3qtNl07KYHZEiD1g4R0xYt0598pjqsTgYY/UFMa2hyNtAJBhG2enR2XPolLV7nUvJkB6osYjR/IaNXtZNwSYgE4YMp1r1Q65F3hzzWXudHKJJLzseWzTSTmZaMTHI59/K7DdEbGGA4fSTJjgYyk7PagMduxtDD8X8yJOtpzTKQAyC7UaLXE1rEgto+gwzhj0VgtG9N/Tnk7+WPwe5Vm9gFGA4vprHIy6FWzMw10slHE0cxmABUldiveEN/h8n/OyblSnyNUxsVnlNI3wAsn+vkjbfyGi4Il//UmvSE+cOlIYaMt+iniVoitMmegwACguW1Ab9wNff7D48rSHE33YPhH+RXQ2NPKv5A9s2EhH7xfeLa6RPg4iFA5jeUlca7tfq2xcuB3j4iU2GucmD6d7INhDIxPSKZQwxt+JRMnf4RnZamw6/VznVW8DGyznMJAC1HQqQDJyf1cu7dXwxPHO6q
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230031)(36860700004)(82310400014)(1800799015)(376005); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Apr 2024 08:11:44.5027 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b18bb49-a2db-4b78-a3dd-08dc56da5d2e
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6731.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6851
+Received-SPF: softfail client-ip=40.107.223.70;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,144 +131,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Apr 2024 08:43:12 -0700, Breno Leitao <leitao@debian.org> wrote:
-> There is a bug when setting the RSS options in virtio_net that can break
-> the whole machine, getting the kernel into an infinite loop.
->
-> Running the following command in any QEMU virtual machine with virtionet
-> will reproduce this problem:
->
->     # ethtool -X eth0  hfunc toeplitz
->
-> This is how the problem happens:
->
-> 1) ethtool_set_rxfh() calls virtnet_set_rxfh()
->
-> 2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
->
-> 3) virtnet_commit_rss_command() populates 4 entries for the rss
-> scatter-gather
->
-> 4) Since the command above does not have a key, then the last
-> scatter-gatter entry will be zeroed, since rss_key_size == 0.
-> sg_buf_size = vi->rss_key_size;
->
-> 5) This buffer is passed to qemu, but qemu is not happy with a buffer
-> with zero length, and do the following in virtqueue_map_desc() (QEMU
-> function):
->
->   if (!sz) {
->       virtio_error(vdev, "virtio: zero sized buffers are not allowed");
->
-> 6) virtio_error() (also QEMU function) set the device as broken
->
->     vdev->broken = true;
->
-> 7) Qemu bails out, and do not repond this crazy kernel.
->
-> 8) The kernel is waiting for the response to come back (function
-> virtnet_send_command())
->
-> 9) The kernel is waiting doing the following :
->
->       while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-> 	     !virtqueue_is_broken(vi->cvq))
-> 	      cpu_relax();
->
-> 10) None of the following functions above is true, thus, the kernel
-> loops here forever. Keeping in mind that virtqueue_is_broken() does
-> not look at the qemu `vdev->broken`, so, it never realizes that the
-> vitio is broken at QEMU side.
->
-> Fix it by not sending RSS commands if the feature is not available in
-> the device.
->
-> Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-> Cc: stable@vger.kernel.org
-> Cc: qemu-devel@nongnu.org
-> Signed-off-by: Breno Leitao <leitao@debian.org>
-> Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Commit 8cb2f8b172e7 ("docs/migration: Create migration/ directory")
+changed migration documentation file structure but forgot to update the
+entries in the MAINTAINERS file.
 
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Commit 4c6f8a79ae53 ("docs/migration: Split 'dirty limit'") extracted
+dirty limit documentation to a new file without updating dirty limit
+section in MAINTAINERS file.
 
-> ---
-> Changelog:
->
-> V2:
->   * Moved from creating a valid packet, by rejecting the request
->     completely.
-> V3:
->   * Got some good feedback from and Xuan Zhuo and Heng Qi, and reworked
->     the rejection path.
-> V4:
->   * Added a comment in an "if" clause, as suggested by Michael S. Tsirkin.
->
-> ---
->  drivers/net/virtio_net.c | 26 ++++++++++++++++++++++----
->  1 file changed, 22 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-> index c22d1118a133..115c3c5414f2 100644
-> --- a/drivers/net/virtio_net.c
-> +++ b/drivers/net/virtio_net.c
-> @@ -3807,6 +3807,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
->  			    struct netlink_ext_ack *extack)
->  {
->  	struct virtnet_info *vi = netdev_priv(dev);
-> +	bool update = false;
->  	int i;
->
->  	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
-> @@ -3814,13 +3815,28 @@ static int virtnet_set_rxfh(struct net_device *dev,
->  		return -EOPNOTSUPP;
->
->  	if (rxfh->indir) {
-> +		if (!vi->has_rss)
-> +			return -EOPNOTSUPP;
-> +
->  		for (i = 0; i < vi->rss_indir_table_size; ++i)
->  			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
-> +		update = true;
->  	}
-> -	if (rxfh->key)
-> +
-> +	if (rxfh->key) {
-> +		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
-> +		 * device provides hash calculation capabilities, that is,
-> +		 * hash_key is configured.
-> +		 */
-> +		if (!vi->has_rss && !vi->has_rss_hash_report)
-> +			return -EOPNOTSUPP;
-> +
->  		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
-> +		update = true;
-> +	}
->
-> -	virtnet_commit_rss_command(vi);
-> +	if (update)
-> +		virtnet_commit_rss_command(vi);
->
->  	return 0;
->  }
-> @@ -4729,13 +4745,15 @@ static int virtnet_probe(struct virtio_device *vdev)
->  	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
->  		vi->has_rss_hash_report = true;
->
-> -	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
-> +	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
->  		vi->has_rss = true;
->
-> -	if (vi->has_rss || vi->has_rss_hash_report) {
->  		vi->rss_indir_table_size =
->  			virtio_cread16(vdev, offsetof(struct virtio_net_config,
->  				rss_max_indirection_table_length));
-> +	}
-> +
-> +	if (vi->has_rss || vi->has_rss_hash_report) {
->  		vi->rss_key_size =
->  			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
->
-> --
-> 2.43.0
->
+Fix the above.
+
+Fixes: 8cb2f8b172e7 ("docs/migration: Create migration/ directory")
+Fixes: 4c6f8a79ae53 ("docs/migration: Split 'dirty limit'")
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+---
+ MAINTAINERS | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e71183eef9..d3fc2a06e3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2170,7 +2170,7 @@ S: Supported
+ F: hw/vfio/*
+ F: include/hw/vfio/
+ F: docs/igd-assign.txt
+-F: docs/devel/vfio-migration.rst
++F: docs/devel/migration/vfio.rst
+ 
+ vfio-ccw
+ M: Eric Farman <farman@linux.ibm.com>
+@@ -2231,6 +2231,7 @@ F: qapi/virtio.json
+ F: net/vhost-user.c
+ F: include/hw/virtio/
+ F: docs/devel/virtio*
++F: docs/devel/migration/virtio.rst
+ 
+ virtio-balloon
+ M: Michael S. Tsirkin <mst@redhat.com>
+@@ -3422,7 +3423,7 @@ F: migration/
+ F: scripts/vmstate-static-checker.py
+ F: tests/vmstate-static-checker-data/
+ F: tests/qtest/migration-test.c
+-F: docs/devel/migration.rst
++F: docs/devel/migration/
+ F: qapi/migration.json
+ F: tests/migration/
+ F: util/userfaultfd.c
+@@ -3442,6 +3443,7 @@ F: include/sysemu/dirtylimit.h
+ F: migration/dirtyrate.c
+ F: migration/dirtyrate.h
+ F: include/sysemu/dirtyrate.h
++F: docs/devel/migration/dirty-limit.rst
+ 
+ Detached LUKS header
+ M: Hyman Huang <yong.huang@smartx.com>
+-- 
+2.26.3
+
 
