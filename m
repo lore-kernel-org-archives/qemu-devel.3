@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50C6CD1284
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 03:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D305DC67861
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 03:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtIsp-0008NB-N4; Sat, 06 Apr 2024 23:07:51 -0400
+	id 1rtJ5m-0002Dn-AM; Sat, 06 Apr 2024 23:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1rtIsn-0008N0-9i
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 23:07:49 -0400
-Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rtJ5l-0002Dd-JB
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 23:21:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1rtIsk-0006Ev-LU
- for qemu-devel@nongnu.org; Sat, 06 Apr 2024 23:07:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1712459264; x=1743995264;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=TQOrXxVannumsVoHDhFB7VYp5NHkQwkKSHhgNKqzLNI=;
- b=UFHkjlnF/eXkMk3nSzRfUzP5DL3NKFYs4LCgksDnmhHbazu4Ow1DBhIj
- zGQkXiO37k4/Gf7Zttax1hwCKCBBvYQI3x2mFKZSR5247/liwXgAPlfzu
- la2GJX0MFrAz1u77WaNGABlbm5/SXnIR+MpfhE3cEQA+Tsht5Xq5rj30A
- 2mS+Zjkb1ldu10bof9Ry7ZzY/rzuEiHiokB2I1BJlHZQB15wDvQ8UdqFF
- 7uIOCkrkGbC+Mx+R+i0Ie7UbVJo0YUCT5WA4wurmNYZUL98Gx9Emed2eZ
- CbBivA04bgofyselUx79RNB+dcKV+qEBYmOHnWYsDg7fNToQjNtR9h7d2 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11036"; a="154790421"
-X-IronPort-AV: E=Sophos;i="6.07,184,1708354800"; d="scan'208";a="154790421"
-Received: from unknown (HELO yto-r2.gw.nic.fujitsu.com) ([218.44.52.218])
- by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2024 12:07:39 +0900
-Received: from yto-m1.gw.nic.fujitsu.com (yto-nat-yto-m1.gw.nic.fujitsu.com
- [192.168.83.64])
- by yto-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 099022A1C3B
- for <qemu-devel@nongnu.org>; Sun,  7 Apr 2024 12:07:39 +0900 (JST)
-Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
- [192.51.206.21])
- by yto-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 4E09ACFBB4
- for <qemu-devel@nongnu.org>; Sun,  7 Apr 2024 12:07:38 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id C3885200501B3
- for <qemu-devel@nongnu.org>; Sun,  7 Apr 2024 12:07:37 +0900 (JST)
-Received: from localhost.localdomain (unknown [10.167.225.88])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 274F41A000C;
- Sun,  7 Apr 2024 11:07:37 +0800 (CST)
-To: jonathan.cameron@huawei.com,
-	fan.ni@samsung.com
-Cc: qemu-devel@nongnu.org,
-	Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH v2] mem/cxl_type3: support 3, 6, 12 and 16 interleave ways
-Date: Sat,  6 Apr 2024 23:06:42 -0400
-Message-Id: <20240407030642.24861-1-yaoxt.fnst@fujitsu.com>
-X-Mailer: git-send-email 2.37.3
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rtJ5k-0000cQ-19
+ for qemu-devel@nongnu.org; Sat, 06 Apr 2024 23:21:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712460070;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6435RRoYgY8R7lSrI0z44+62BBFr+qSOVSb4wa/a6X0=;
+ b=jC9dlH6W4xjj7O+wLlSu4iK9dqxzDtZubj1ai5xwcTVIy8xPhUC/6h8+LCZZQEd8s95fT3
+ Ie3r+TRwkeC4iVkLryeXxcWalbYiIr+ZW5E5kEH5MGD0TnK5ro8K2dcmMRgXTbHVoYHK2B
+ /oCl6/Jb3GmUfMqDmV0QEk5/Ot1E44k=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-195-nBVbU3hrODGdmhrHvGmp0g-1; Sat, 06 Apr 2024 23:21:09 -0400
+X-MC-Unique: nBVbU3hrODGdmhrHvGmp0g-1
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-22ef443f520so716686fac.3
+ for <qemu-devel@nongnu.org>; Sat, 06 Apr 2024 20:21:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712460068; x=1713064868;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6435RRoYgY8R7lSrI0z44+62BBFr+qSOVSb4wa/a6X0=;
+ b=QFAIngnhdYTEAXXaEC2SCwyoZyqHj/aG69TvtW//A5yQn/qpPMF77nGId4+aSCpgbK
+ sl70LPEtCkqVTmgrAQj68sAd3HVCa2kpBPsqV+NHwMrR0lx/Vh34B/u9XkzBw7G+PBTG
+ nuUCUKaPmnb5Oj8P4vy5gmMXc0Hc0iXpV/vh6/1dFl8qR7i78IGq/HAF79kyUho485pW
+ L9zjueJLycXF+NyInTrpbSeQSmGlDwt8KFkFuavL//TZcM9Pb4DqTeVfWR1dvhW5XSIm
+ 0MDxYHgn2wYtD9WHEk2jjHaBdT1TOscYUc/vqibiaLlnS80UeV214juw7YPEYv30ILb7
+ qIcA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+nySrQ5q+Z0hz0plN+kYLJsvdniPGcYxEd/7+A6hzFp4ngnXzTjsgi95bpPMIpUEuAeSoeKDHrNWETFsLbFLtZQSzDmk=
+X-Gm-Message-State: AOJu0YzNlMr46e+2pLLCi07X7G/kLQ5SYOWOJTI2bvZr6GSyEXNCP3T8
+ GpDqeyCIZ/nnbtNAnIEGs7tG+qF5BCo7KR2waP7I6mulRTq8IBPXC2NurjjDJTu3EQbHP8EpWK1
+ bWfz8BmkqW2KfKPA3TWrPSKRyIApkUlWtKE4yQOiHVStOms7n+zCnP44DEhz6yLnCg3sulpR9WD
+ +6k7SeVMTG5ACdSJIYxqkeP1g2+S8=
+X-Received: by 2002:a05:6871:9ec1:b0:22e:8ba0:921f with SMTP id
+ kr1-20020a0568719ec100b0022e8ba0921fmr4365240oac.52.1712460068514; 
+ Sat, 06 Apr 2024 20:21:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCoIsFDcIN6OVXZPWDTK2Zab7L1YkUHcrRZ/IOoEf2Tz0F4ucRWwpv+D2FAoaYPuI6wPOua8wvus3mO5sGhCE=
+X-Received: by 2002:a05:6871:9ec1:b0:22e:8ba0:921f with SMTP id
+ kr1-20020a0568719ec100b0022e8ba0921fmr4365237oac.52.1712460068232; Sat, 06
+ Apr 2024 20:21:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28302.004
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28302.004
-X-TMASE-Result: 10-1.243000-10.000000
-X-TMASE-MatchedRID: 6atTV52QVSeROBVNmXUDuMIkzTqL3E/Wm0H2L3kjQgrn3ZLCt3rRSSNM
- v5a0AeBD77BjzUhRJQ6Ekl9vR6Agi4KeFxulmNWzCKFDk1kJexL4qCLIu0mtIMC5DTEMxpeQfiq
- 1gj2xET8qqtDuUtwyfGuaZ0FmNdhIehY/DCk+INEdahq+rGDn/1K6+0HOVoSoLEzDQUyQGVmDhN
- 38ME2RU7sWFv4pmSytnagtny7ZPcQfE8yM4pjsDwtuKBGekqUpnH7sbImOEBSc3i3mRmT5CmO6c
- nkZhdEeMhPmyJ78bM8iUTw6fgXIfuyxz+RSU6YXLwR4ex5wFyMy4qGi+Sd41OJEorgIJZ0Eod57
- 7dl+JEmbDRBqS2n66yzP5xAyz9Oenvkw4sh/+PcMX5CwH5DTUmgGZNLBHGNe
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=207.54.90.49; envelope-from=yaoxt.fnst@fujitsu.com;
- helo=esa3.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240328103903.408290-1-Jiqian.Chen@amd.com>
+ <20240328103903.408290-3-Jiqian.Chen@amd.com>
+ <20240328065606-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849ACCD6602EAB88BE2FED9E73B2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <20240328083503-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849C37A0B0E1AF02644C203E73A2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <CACGkMEt=V4V4JgT08o5_f7tj-eNZDi2GB4=H_Qp7xALrRxBWhQ@mail.gmail.com>
+ <20240329064431-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849AA89DC28465714590B56E73E2@BL1PR12MB5849.namprd12.prod.outlook.com>
+In-Reply-To: <BL1PR12MB5849AA89DC28465714590B56E73E2@BL1PR12MB5849.namprd12.prod.outlook.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Sun, 7 Apr 2024 11:20:57 +0800
+Message-ID: <CACGkMEu6uEF+4P3_3Q5tw4TNZ9dj3GwJh+h_BtWDfq3WeUhKJQ@mail.gmail.com>
+Subject: Re: [RFC QEMU PATCH v8 2/2] virtio-pci: implement No_Soft_Reset bit
+To: "Chen, Jiqian" <Jiqian.Chen@amd.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "Huang, Ray" <Ray.Huang@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,68 +106,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
-From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the kernel does not check the interleave capability, a
-3-way, 6-way, 12-way or 16-way region can be create normally.
+On Tue, Apr 2, 2024 at 11:03=E2=80=AFAM Chen, Jiqian <Jiqian.Chen@amd.com> =
+wrote:
+>
+> On 2024/3/29 18:44, Michael S. Tsirkin wrote:
+> > On Fri, Mar 29, 2024 at 03:20:59PM +0800, Jason Wang wrote:
+> >> On Fri, Mar 29, 2024 at 3:07=E2=80=AFPM Chen, Jiqian <Jiqian.Chen@amd.=
+com> wrote:
+> >>>
+> >>> On 2024/3/28 20:36, Michael S. Tsirkin wrote:
+> >>>>>>> +}
+> >>>>>>> +
+> >>>>>>>  static void virtio_pci_bus_reset_hold(Object *obj)
+> >>>>>>>  {
+> >>>>>>>      PCIDevice *dev =3D PCI_DEVICE(obj);
+> >>>>>>>      DeviceState *qdev =3D DEVICE(obj);
+> >>>>>>>
+> >>>>>>> +    if (virtio_pci_no_soft_reset(dev)) {
+> >>>>>>> +        return;
+> >>>>>>> +    }
+> >>>>>>> +
+> >>>>>>>      virtio_pci_reset(qdev);
+> >>>>>>>
+> >>>>>>>      if (pci_is_express(dev)) {
+> >>>>>>> @@ -2484,6 +2511,8 @@ static Property virtio_pci_properties[] =3D=
+ {
+> >>>>>>>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+> >>>>>>>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+> >>>>>>>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
+> >>>>>>> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, f=
+lags,
+> >>>>>>> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false)=
+,
+> >>
+> >> Why does it come with an x prefix?
+> >>
+> >>>>>>>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+> >>>>>>>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+> >>>>>>>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+> >>>>>>
+> >>>>>> I am a bit confused about this part.
+> >>>>>> Do you want to make this software controllable?
+> >>>>> Yes, because even the real hardware, this bit is not always set.
+> >>
+> >> We are talking about emulated devices here.
+> >>
+> >>>>
+> >>>> So which virtio devices should and which should not set this bit?
+> >>> This depends on the scenario the virtio-device is used, if we want to=
+ trigger an internal soft reset for the virtio-device during S3, this bit s=
+houldn't be set.
+> >>
+> >> If the device doesn't need reset, why bother the driver for this?
+> >>
+> >> Btw, no_soft_reset is insufficient for some cases, there's a proposal
+> >> for the virtio-spec. I think we need to wait until it is done.
+> >
+> > That seems orthogonal or did I miss something?
+> Yes, I looked the detail of the proposal, I also think they are unrelated=
+.
 
-Applications can access the memory of 16-way region normally because
-qemu can convert hpa to dpa correctly for the power of 2 interleave
-ways, after kernel implementing the check, this kind of region will
-not be created any more.
+The point is the proposal said
 
-For non power of 2 interleave ways, applications could not access the
-memory normally and may occur some unexpected behaviors, such as
-segmentation fault.
+"""
+Without a mechanism to
+suspend/resume virtio devices when the driver is suspended/resumed in
+the early phase of suspend/late phase of resume, there is a window where
+interrupts can be lost.
+"""
 
-So implements this feature is needed.
+It looks safe to enable it with the suspend bit. Or if you think it's
+wrong, please comment on the virtio spec patch.
 
-Link: https://lore.kernel.org/linux-cxl/3e84b919-7631-d1db-3e1d-33000f3f3868@fujitsu.com/
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
----
- hw/mem/cxl_type3.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+> I will set the default value of No_Soft_Reset bit to true in next version=
+ according to your opinion.
+> About the compatibility of old machine types, which types should I consid=
+er? Does the same as x-pcie-pm-init(hw_compat_2_8)?
+> Forgive me for not knowing much about compatibility.
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index b0a7e9f11b..d6ef784e96 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -805,10 +805,17 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-             continue;
-         }
- 
--        *dpa = dpa_base +
--            ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
--             ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
--              >> iw));
-+        if (iw < 8) {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
-+                  >> iw));
-+        } else {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((((MAKE_64BIT_MASK(ig + iw, 64 - ig - iw) & hpa_offset)
-+                   >> (ig + iw)) / 3) << (ig + 8)));
-+        }
- 
-         return true;
-     }
-@@ -906,6 +913,9 @@ static void ct3d_reset(DeviceState *dev)
-     uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
-     cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 1);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 1);
-+
-     cxl_device_register_init_t3(ct3d);
- 
-     /*
--- 
-2.37.3
+"x" means no compatibility at all, please drop the "x" prefix. And it
+looks more safe to start as "false" by default.
+
+Thanks
+
+> >
+> >>> In my use case on my environment, I don't want to reset virtio-gpu du=
+ring S3,
+> >>> because once the display resources are destroyed, there are not enoug=
+h information to re-create them, so this bit should be set.
+> >>> Making this bit software controllable is convenient for users to take=
+ their own choices.
+> >>
+> >> Thanks
+> >>
+> >>>
+> >>>>
+> >>>>>> Or should this be set to true by default and then
+> >>>>>> changed to false for old machine types?
+> >>>>> How can I do so?
+> >>>>> Do you mean set this to true by default, and if old machine types d=
+on't need this bit, they can pass false config to qemu when running qemu?
+> >>>>
+> >>>> No, you would use compat machinery. See how is x-pcie-flr-init handl=
+ed.
+> >>>>
+> >>>>
+> >>>
+> >>> --
+> >>> Best regards,
+> >>> Jiqian Chen.
+> >
+>
+> --
+> Best regards,
+> Jiqian Chen.
 
 
