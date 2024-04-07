@@ -4,86 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43C5CD11C2
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 07:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375DCCD128A
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtMVr-0000LY-1i; Sun, 07 Apr 2024 03:00:24 -0400
+	id 1rtNeU-0002KN-4T; Sun, 07 Apr 2024 04:13:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rtMVm-0000LG-Pg
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 03:00:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
+ id 1rtNeO-0002IZ-6E
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 04:13:16 -0400
+Received: from out30-113.freemail.mail.aliyun.com ([115.124.30.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rtMVj-0006xZ-9s
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 03:00:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712473213;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S/1y5tYWQ8AxUAeRWwutEnE3dvk2d2vvXNDg62Giz1I=;
- b=BBwxicbo2TSQbhREfZ+8xUSxXy8h3JYh8J0pEej9aiw9yaZ2sHDbbPPjIV/AbgmuqL2wKk
- uFvf7Jwieo8HPkfLyCCeYJ39qSlmresZt0LczEHORW0cvqZEYwucBXDxf7EwV+aFPcr50V
- meijqNlZWaMUFZcC6hLBGvLVcYKaf00=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-303-CUj6JemXM2STqNdXc1Mvtg-1; Sun, 07 Apr 2024 03:00:11 -0400
-X-MC-Unique: CUj6JemXM2STqNdXc1Mvtg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d871310b3aso13413601fa.0
- for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 00:00:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712473209; x=1713078009;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=S/1y5tYWQ8AxUAeRWwutEnE3dvk2d2vvXNDg62Giz1I=;
- b=KNWT0f+19DVDKXPzSgSIfZ7Kemk8XqBB9bUfzSkmXSqrN5JK7uTOTeXhsiRNUaDN6a
- Rt131RPHE3P77YVgnuiRzYnXJ3mo95FW4u92aXwDTlbetgNzItuekSSnEKUtf4kSR9CA
- yvyahRaofJ4nELqVChTAuK4O7sKphR0X9LexxIompyPa8BJuzERU6VZjaiyeQ1cAz0Q4
- uYKSPs96zUGnXKXIMiylsJS9R/VBfzUvTGHbrpNMToTkkvpd44q8QwT3CfNmruobPSfE
- N7jtCGCgCytf1OSYRD2CpPOQNN8xJ7z+NUEfGtFzgmFQiDkeGfzukNi9yxh1lPq6Cb7x
- uIXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPawaNJBDK6ntIPeD6ksLviZTEsw/5Ac9Ahxo+us/nnG5HHR9C5YPQdnSNjsZ9X7Gj9yRreokq6Dl39x0tegrJEsvhp6E=
-X-Gm-Message-State: AOJu0YyeiRc3V1VehIUjvIYXc2r7hQQbbFg/bZglNSTYfKe3yV3ev9ut
- 0bRXGQlQNFy3fR+buVnVD8tDUrag7qfHZ626uC277XT8dFen2cAmaijKk+NB725f2Pza6ArtMPg
- ZABGrZAdjhVjSJA1irxjWCNdrJ614pIM7+dD+Uhe/ijkAWNBetgEyRQt8CmvIWp4OWhS340u8Au
- 4WLDvSbnu+GpztPGVjsZakEkt+p8s=
-X-Received: by 2002:a2e:9c05:0:b0:2d7:11bf:1fc4 with SMTP id
- s5-20020a2e9c05000000b002d711bf1fc4mr3721627lji.42.1712473209648; 
- Sun, 07 Apr 2024 00:00:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQlPLMlUSgMr7dCd/x68deJzF4Rfr297Dzzo9mCiLeD3k3LOJJx8WpRbUsRQg5LiBIKlbI3DbEmgLLsx1rkug=
-X-Received: by 2002:a2e:9c05:0:b0:2d7:11bf:1fc4 with SMTP id
- s5-20020a2e9c05000000b002d711bf1fc4mr3721621lji.42.1712473209288; Sun, 07 Apr
- 2024 00:00:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240402150218.270587-1-lulu@redhat.com>
- <20240402150218.270587-2-lulu@redhat.com>
- <CACGkMEuQc+e+JOnScUdJckP1yb1Ushu9E0VEQKhwdn26W422bw@mail.gmail.com>
-In-Reply-To: <CACGkMEuQc+e+JOnScUdJckP1yb1Ushu9E0VEQKhwdn26W422bw@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Sun, 7 Apr 2024 14:59:26 +0800
-Message-ID: <CACLfguVs=sd+2knCn4hhCEa+qsQ84yiE6wxt+kDNz8pU=ceU=Q@mail.gmail.com>
-Subject: Re: [PATCH 1/1] virtio-pci: Fix the crash when the vector changes
- back from VIRTIO_NO_VECTOR
-To: Jason Wang <jasowang@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
+ id 1rtNeK-0001Dn-N3
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 04:13:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1712477578; h=Message-ID:Subject:Date:From:To;
+ bh=Jyrgw+fdsx70sA5rZNTdVtftvjSvV7dvUm0DDwjdLJw=;
+ b=FQfjlvnLyb9rS6Jf0JpTxFfCIl9PAdi0OpCW8/hNhAl/XzkjpfV6eHFjrsmntHnqkorBfrBj6N7Z9hfvFFId451b9EAJr0yGenfuy9yMUkrBC4MqAAq1j9aFe5jR/KFOsnZBR/mC3bFx6FwOusWePbCkflxkqcHaJZXEAPZF0vM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R731e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045170;
+ MF=xuanzhuo@linux.alibaba.com; NM=1; PH=DS; RN=16; SR=0;
+ TI=SMTPD_---0W4.rUrS_1712477576; 
+Received: from localhost(mailfrom:xuanzhuo@linux.alibaba.com
+ fp:SMTPD_---0W4.rUrS_1712477576) by smtp.aliyun-inc.com;
+ Sun, 07 Apr 2024 16:12:57 +0800
+Message-ID: <1712477565.823871-1-xuanzhuo@linux.alibaba.com>
+Subject: Re: [PATCH net v4] virtio_net: Do not send RSS key if it is not
+ supported
+Date: Sun, 7 Apr 2024 16:12:45 +0800
+From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+To: Breno Leitao <leitao@debian.org>
+Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
+ qemu-devel@nongnu.org,
+ virtualization@lists.linux.dev (open list:VIRTIO CORE AND NET DRIVERS),
+ netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
+ linux-kernel@vger.kernel.org (open list), hengqi@linux.alibaba.com,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
+References: <20240403154313.1331319-1-leitao@debian.org>
+In-Reply-To: <20240403154313.1331319-1-leitao@debian.org>
+Received-SPF: pass client-ip=115.124.30.113;
+ envelope-from=xuanzhuo@linux.alibaba.com;
+ helo=out30-113.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,172 +75,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 7, 2024 at 12:20=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
-ote:
+On Wed,  3 Apr 2024 08:43:12 -0700, Breno Leitao <leitao@debian.org> wrote:
+> There is a bug when setting the RSS options in virtio_net that can break
+> the whole machine, getting the kernel into an infinite loop.
 >
-> On Tue, Apr 2, 2024 at 11:02=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
-> >
-> > When the guest calls virtio_stop and then virtio_reset,
+> Running the following command in any QEMU virtual machine with virtionet
+> will reproduce this problem:
 >
-> Guests could not call those functions directly, it is triggered by for
-> example writing to some of the registers like reset or others.
+>     # ethtool -X eth0  hfunc toeplitz
 >
-sure , Will fix this
-> > the vector will change
-> > to VIRTIO_NO_VECTOR and the IRQFD for this vector will be released. Aft=
-er that
-> > If you want to change the vector back,
+> This is how the problem happens:
 >
-> What do you mean by "change the vector back"? Something like
+> 1) ethtool_set_rxfh() calls virtnet_set_rxfh()
 >
-> assign VIRTIO_MSI_NO_VECTOR to vector 0
-> assign X to vector 0
+> 2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
 >
-yes, the process is something  like
-....
-set config_vector =3D VIRTIO_MSI_NO_VECTOR
-...
-set config_vector =3D 0
-> And I guess what you meant is to configure the vector after DRIVER_OK.
+> 3) virtnet_commit_rss_command() populates 4 entries for the rss
+> scatter-gather
+>
+> 4) Since the command above does not have a key, then the last
+> scatter-gatter entry will be zeroed, since rss_key_size == 0.
+> sg_buf_size = vi->rss_key_size;
+>
+> 5) This buffer is passed to qemu, but qemu is not happy with a buffer
+> with zero length, and do the following in virtqueue_map_desc() (QEMU
+> function):
+>
+>   if (!sz) {
+>       virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+>
+> 6) virtio_error() (also QEMU function) set the device as broken
+>
+>     vdev->broken = true;
+>
+> 7) Qemu bails out, and do not repond this crazy kernel.
+>
+> 8) The kernel is waiting for the response to come back (function
+> virtnet_send_command())
+>
+> 9) The kernel is waiting doing the following :
+>
+>       while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+> 	     !virtqueue_is_broken(vi->cvq))
+> 	      cpu_relax();
+>
+> 10) None of the following functions above is true, thus, the kernel
+> loops here forever. Keeping in mind that virtqueue_is_broken() does
+> not look at the qemu `vdev->broken`, so, it never realizes that the
+> vitio is broken at QEMU side.
+>
+> Fix it by not sending RSS commands if the feature is not available in
+> the device.
+>
+> Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+> Cc: stable@vger.kernel.org
+> Cc: qemu-devel@nongnu.org
+> Signed-off-by: Breno Leitao <leitao@debian.org>
+> Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
 
->
->
-> > it will cause a crash.
-> >
-> > To fix this, we need to call the function "kvm_virtio_pci_vector_use_on=
-e()"
-> > when the vector changes back from VIRTIO_NO_VECTOR
-> >
-> > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > ---
-> >  hw/virtio/virtio-pci.c | 31 ++++++++++++++++++++++++++++---
-> >  1 file changed, 28 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index e433879542..45f3ab38c3 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -874,12 +874,14 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy=
- *proxy, int queue_no,
-> >      return 0;
-> >  }
-> >
-> > -static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int qu=
-eue_no)
-> > +static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int qu=
-eue_no,
-> > +                                         bool recovery)
-> >  {
-> >      unsigned int vector;
-> >      int ret;
-> >      EventNotifier *n;
-> >      PCIDevice *dev =3D &proxy->pci_dev;
-> > +    VirtIOIRQFD *irqfd;
-> >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> >      VirtioDeviceClass *k =3D VIRTIO_DEVICE_GET_CLASS(vdev);
-> >
-> > @@ -890,10 +892,21 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPC=
-IProxy *proxy, int queue_no)
-> >      if (vector >=3D msix_nr_vectors_allocated(dev)) {
-> >          return 0;
-> >      }
-> > +    /*
-> > +     * if this is recovery and irqfd still in use, means the irqfd was=
- not
-> > +     * release before and don't need to set up again
-> > +     */
-> > +    if (recovery) {
-> > +        irqfd =3D &proxy->vector_irqfd[vector];
-> > +        if (irqfd->users !=3D 0) {
-> > +            return 0;
-> > +        }
-> > +    }
-> >      ret =3D kvm_virtio_pci_vq_vector_use(proxy, vector);
-> >      if (ret < 0) {
-> >          goto undo;
-> >      }
-> > +
-> >      /*
-> >       * If guest supports masking, set up irqfd now.
-> >       * Otherwise, delay until unmasked in the frontend.
-> > @@ -932,14 +945,14 @@ static int kvm_virtio_pci_vector_vq_use(VirtIOPCI=
-Proxy *proxy, int nvqs)
-> >          if (!virtio_queue_get_num(vdev, queue_no)) {
-> >              return -1;
-> >          }
-> > -        ret =3D kvm_virtio_pci_vector_use_one(proxy, queue_no);
-> > +        ret =3D kvm_virtio_pci_vector_use_one(proxy, queue_no, false);
-> >      }
-> >      return ret;
-> >  }
-> >
-> >  static int kvm_virtio_pci_vector_config_use(VirtIOPCIProxy *proxy)
-> >  {
-> > -    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX)=
-;
-> > +    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX,=
- false);
-> >  }
-> >
-> >  static void kvm_virtio_pci_vector_release_one(VirtIOPCIProxy *proxy,
-> > @@ -1570,7 +1583,13 @@ static void virtio_pci_common_write(void *opaque=
-, hwaddr addr,
-> >          } else {
-> >              val =3D VIRTIO_NO_VECTOR;
-> >          }
-> > +        vector =3D vdev->config_vector;
-> >          vdev->config_vector =3D val;
-> > +        /*check if the vector need to recovery*/
-> > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_VE=
-CTOR) &&
-> > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> > +            kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX=
-, true);
-> > +        }
->
-> This looks too tricky.
->
-> Think hard of this. I think it's better to split this into two parts:
->
-> 1) a series that disables config irqfd for vhost-net, this series
-> needs to be backported to -stable which needs to be conservative. It
-> looks more like your V1, but let's add a boolean for pci proxy.
-sure, I wll try this
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 
-> 2) a series that deal with the msix vector configuration after
-> driver_ok, we probably need some refactoring to do per vq use instead
-> of the current loop in DRIVER_OK
+> ---
+> Changelog:
 >
-Sorry I didn't get what you mean , Do you mean we need to move the check
-to inside kvm_virtio_pci_vector_vq_use()=EF=BC=9F
-Thanks
-cindy
-> Does this make sense?
+> V2:
+>   * Moved from creating a valid packet, by rejecting the request
+>     completely.
+> V3:
+>   * Got some good feedback from and Xuan Zhuo and Heng Qi, and reworked
+>     the rejection path.
+> V4:
+>   * Added a comment in an "if" clause, as suggested by Michael S. Tsirkin.
 >
-> Thanks
+> ---
+>  drivers/net/virtio_net.c | 26 ++++++++++++++++++++++----
+>  1 file changed, 22 insertions(+), 4 deletions(-)
 >
-> >          break;
-> >      case VIRTIO_PCI_COMMON_STATUS:
-> >          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> > @@ -1611,6 +1630,12 @@ static void virtio_pci_common_write(void *opaque=
-, hwaddr addr,
-> >              val =3D VIRTIO_NO_VECTOR;
-> >          }
-> >          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
-> > +
-> > +        /*check if the vector need to recovery*/
-> > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_VE=
-CTOR) &&
-> > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> > +            kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel, true=
-);
-> > +        }
-> >          break;
-> >      case VIRTIO_PCI_COMMON_Q_ENABLE:
-> >          if (val =3D=3D 1) {
-> > --
-> > 2.43.0
-> >
+> diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+> index c22d1118a133..115c3c5414f2 100644
+> --- a/drivers/net/virtio_net.c
+> +++ b/drivers/net/virtio_net.c
+> @@ -3807,6 +3807,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
+>  			    struct netlink_ext_ack *extack)
+>  {
+>  	struct virtnet_info *vi = netdev_priv(dev);
+> +	bool update = false;
+>  	int i;
 >
-
+>  	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
+> @@ -3814,13 +3815,28 @@ static int virtnet_set_rxfh(struct net_device *dev,
+>  		return -EOPNOTSUPP;
+>
+>  	if (rxfh->indir) {
+> +		if (!vi->has_rss)
+> +			return -EOPNOTSUPP;
+> +
+>  		for (i = 0; i < vi->rss_indir_table_size; ++i)
+>  			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
+> +		update = true;
+>  	}
+> -	if (rxfh->key)
+> +
+> +	if (rxfh->key) {
+> +		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
+> +		 * device provides hash calculation capabilities, that is,
+> +		 * hash_key is configured.
+> +		 */
+> +		if (!vi->has_rss && !vi->has_rss_hash_report)
+> +			return -EOPNOTSUPP;
+> +
+>  		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
+> +		update = true;
+> +	}
+>
+> -	virtnet_commit_rss_command(vi);
+> +	if (update)
+> +		virtnet_commit_rss_command(vi);
+>
+>  	return 0;
+>  }
+> @@ -4729,13 +4745,15 @@ static int virtnet_probe(struct virtio_device *vdev)
+>  	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+>  		vi->has_rss_hash_report = true;
+>
+> -	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
+> +	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+>  		vi->has_rss = true;
+>
+> -	if (vi->has_rss || vi->has_rss_hash_report) {
+>  		vi->rss_indir_table_size =
+>  			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+>  				rss_max_indirection_table_length));
+> +	}
+> +
+> +	if (vi->has_rss || vi->has_rss_hash_report) {
+>  		vi->rss_key_size =
+>  			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+>
+> --
+> 2.43.0
+>
 
