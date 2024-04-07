@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3829CD128A
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65683CD128A
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 08:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtNlG-0004Q6-BO; Sun, 07 Apr 2024 04:20:23 -0400
+	id 1rtNlG-0004OR-6C; Sun, 07 Apr 2024 04:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rtNl2-0004IJ-Nz; Sun, 07 Apr 2024 04:20:09 -0400
+ id 1rtNl3-0004Iq-Id; Sun, 07 Apr 2024 04:20:09 -0400
 Received: from szxga02-in.huawei.com ([45.249.212.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rtNl0-0002Fl-A5; Sun, 07 Apr 2024 04:20:08 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4VC4rB6hzNzbfPW;
+ id 1rtNl0-00028j-TL; Sun, 07 Apr 2024 04:20:09 -0400
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+ by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4VC4rB0qVDzbfPh;
  Sun,  7 Apr 2024 16:19:06 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id AC9F9140154;
- Sun,  7 Apr 2024 16:20:03 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id D2F5218001C;
+ Sun,  7 Apr 2024 16:20:02 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Sun, 7 Apr
- 2024 16:20:03 +0800
+ 2024 16:20:02 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v13 16/24] hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
-Date: Sun, 7 Apr 2024 08:17:25 +0000
-Message-ID: <20240407081733.3231820-17-ruanjinjie@huawei.com>
+Subject: [PATCH v13 14/24] hw/intc/arm_gicv3_kvm: Not set has-nmi=true for the
+ KVM GICv3
+Date: Sun, 7 Apr 2024 08:17:23 +0000
+Message-ID: <20240407081733.3231820-15-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240407081733.3231820-1-ruanjinjie@huawei.com>
 References: <20240407081733.3231820-1-ruanjinjie@huawei.com>
@@ -69,81 +70,31 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GICR_INMIR0 register and support access GICR_INMIR0.
+So far, there is no FEAT_GICv3_NMI support in the in-kernel GIC, so make it
+an error to try to set has-nmi=true for the KVM GICv3.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-v11:
-- Add new Reviewed-by.
-v10:
-- gicr_isuperprio -> gicr_inmir0.
-v6:
-- Add Reviewed-by.
-v4:
-- Make the GICR_INMIR0 implementation more clearer.
----
- hw/intc/arm_gicv3_redist.c | 19 +++++++++++++++++++
- hw/intc/gicv3_internal.h   |  1 +
- 2 files changed, 20 insertions(+)
+ hw/intc/arm_gicv3_kvm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/intc/arm_gicv3_redist.c b/hw/intc/arm_gicv3_redist.c
-index 8153525849..ed1f9d1e44 100644
---- a/hw/intc/arm_gicv3_redist.c
-+++ b/hw/intc/arm_gicv3_redist.c
-@@ -35,6 +35,15 @@ static int gicr_ns_access(GICv3CPUState *cs, int irq)
-     return extract32(cs->gicr_nsacr, irq * 2, 2);
- }
- 
-+static void gicr_write_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-+                                  uint32_t *reg, uint32_t val)
-+{
-+    /* Helper routine to implement writing to a "set" register */
-+    val &= mask_group(cs, attrs);
-+    *reg = val;
-+    gicv3_redist_update(cs);
-+}
-+
- static void gicr_write_set_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-                                       uint32_t *reg, uint32_t val)
- {
-@@ -406,6 +415,10 @@ static MemTxResult gicr_readl(GICv3CPUState *cs, hwaddr offset,
-         *data = value;
-         return MEMTX_OK;
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index 77eb37e131..00a383079b 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -805,6 +805,11 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+         return;
      }
-+    case GICR_INMIR0:
-+        *data = cs->gic->nmi_support ?
-+                gicr_read_bitmap_reg(cs, attrs, cs->gicr_inmir0) : 0;
-+        return MEMTX_OK;
-     case GICR_ICFGR0:
-     case GICR_ICFGR1:
-     {
-@@ -555,6 +568,12 @@ static MemTxResult gicr_writel(GICv3CPUState *cs, hwaddr offset,
-         gicv3_redist_update(cs);
-         return MEMTX_OK;
-     }
-+    case GICR_INMIR0:
-+        if (cs->gic->nmi_support) {
-+            gicr_write_bitmap_reg(cs, attrs, &cs->gicr_inmir0, value);
-+        }
-+        return MEMTX_OK;
-+
-     case GICR_ICFGR0:
-         /* Register is all RAZ/WI or RAO/WI bits */
-         return MEMTX_OK;
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index 8f4ebed2f4..21697ecf39 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -110,6 +110,7 @@
- #define GICR_ICFGR1           (GICR_SGI_OFFSET + 0x0C04)
- #define GICR_IGRPMODR0        (GICR_SGI_OFFSET + 0x0D00)
- #define GICR_NSACR            (GICR_SGI_OFFSET + 0x0E00)
-+#define GICR_INMIR0           (GICR_SGI_OFFSET + 0x0F80)
  
- /* VLPI redistributor registers, offsets from VLPI_base */
- #define GICR_VPROPBASER       (GICR_VLPI_OFFSET + 0x70)
++    if (s->nmi_support) {
++        error_setg(errp, "NMI is not supported with the in-kernel GIC");
++        return;
++    }
++
+     gicv3_init_irqs_and_mmio(s, kvm_arm_gicv3_set_irq, NULL);
+ 
+     for (i = 0; i < s->num_cpu; i++) {
 -- 
 2.34.1
 
