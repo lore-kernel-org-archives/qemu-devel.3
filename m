@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C57CD11C2
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 11:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1AA1CD11C2
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 11:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtR2I-00045O-E8; Sun, 07 Apr 2024 07:50:10 -0400
+	id 1rtR5m-00059i-A7; Sun, 07 Apr 2024 07:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtR2F-00043z-EU
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 07:50:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtR5k-00059W-Rv
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 07:53:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtR2A-00017o-UM
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 07:50:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtR5i-0001hz-Ju
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 07:53:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712490601;
+ s=mimecast20190719; t=1712490821;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kG6MBEPPtrDFuBbhLu+9kRKwPNF3qHq/YjKr84HMvcs=;
- b=K4oB7MLg759YxWsBUpaGx04E1Y1L6SWrkwk52fdQedj0WTstUPFRMG0b4qudcsuN8f9D/e
- FfTKGxCG/bnaGce0mX+W9PDolkeKuXnffjfIsGF8ccpwOLEBr6aHVSZ59DCv+C/BFAqCqJ
- 23LD8VxrWiueuMKHXbariDZB9frOpSY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K1x7BtxEdrtH4mO31iDDjdEW069HcKRZNaEjhA2UXRU=;
+ b=LbN1v8nFMer4SIgaAQCLsC89mmeVj2ZYjwlMGosvhiryQPQHwADxfpx05wUI9jEswVRnnJ
+ pf5RO3YVlC2f9ho8vGCGVOMjiD72Rad/7255I1bLO1TIet5/NrNJTavYlb9j7HcRtXG4ix
+ mO7wtBdLVxrWwxElxPT+4vPDNLJ7ulg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-P4bAYWFKMzus_ANhBGEXkA-1; Sun, 07 Apr 2024 07:49:59 -0400
-X-MC-Unique: P4bAYWFKMzus_ANhBGEXkA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-343d3e1ff1eso1797981f8f.3
- for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 04:49:59 -0700 (PDT)
+ us-mta-691-lXsUKyxxN0uceBGA1Ghlmg-1; Sun, 07 Apr 2024 07:53:39 -0400
+X-MC-Unique: lXsUKyxxN0uceBGA1Ghlmg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-343e00c8979so1416510f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 04:53:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712490598; x=1713095398;
+ d=1e100.net; s=20230601; t=1712490818; x=1713095618;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kG6MBEPPtrDFuBbhLu+9kRKwPNF3qHq/YjKr84HMvcs=;
- b=WvlHklFZLP8OZxEi8qoNR8Va0o6ypRVaAvMI7UV3MEOYsyB8JbcnSJB3+E9YcTcGG9
- mcLha7NY5/JPbiv8Fb6pzevT/JJLCuMgjPKFBumtCq84ua1SndX0KIfYwt4lh/SrmhPw
- CHm4/oB4lMqjW7t9hXflYKAeURj9TmkUX+CDprzabcC9tqvpIIG+9oR1WNfpwXVZV+l2
- M4dGZRG9mXjAqIaGvfbyei2PcXbYBFcfZP1eK6KYGx87hhObto4ZUYjStp5ZE6mWRq9j
- GGyCeZ4dklxRhxzPqa2cGy5otbpQseF8Dtm7VQpfwyBrQH1ynbHMSKEa6JvQiHl27+wc
- hkdw==
+ bh=K1x7BtxEdrtH4mO31iDDjdEW069HcKRZNaEjhA2UXRU=;
+ b=W7dDGdFNcJa/tEsuE5hi9NjU5fDygp2gwKnqft2W3MMeDLlfe37SQvV7P0sAnmpz0e
+ c7OIETS9FF/c3/zCeIxCK0teCYTOoGtppbjKZxNjP2hM0NZ8A6RK05PDwIz8s1RZnBZ8
+ HxzXDvT00HgQFbbBFubk0yFmHaq02J8s7o4LVvPkOm5JEL+C27xSL7I/ECIgUFBvEoRg
+ aORulgsT5n97nHQJwHzlwPa66PclXLSaIwYveY/bt/jTREKLhDggG4MVaONRvhE2byqz
+ YXnHutQaFOL3dU5S2Kt9b5XeEIHHa+WHaML1CBlYK72EUZ5iYnx5/XVS8lEma3qwePSi
+ o+xw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHX6pJfaX3sElpaK3BJ/vCMVt2YZDASgUgEisNpvZabbxn4hhUeNLAiGIw8XyTHMpOdB5Q8/dBZ4SB3v60/9kwUcC5xAE=
-X-Gm-Message-State: AOJu0YzkcdtwYFmVecfIFY5ufWpYgBwZKhWzdTWqWnGabiYF9HbbQwuC
- 7uK7GNaaQ4WTo4gizHOkDYQX51iP6F7TTiYWPvXcqVnxQlF56H8xtB0YLcYTMZoLoibcmCkaxeC
- SpGT383WLtzHyaTkwBNFZOu86+AagwucKvMZTVgOMGicg1tOQlhFd
-X-Received: by 2002:adf:e481:0:b0:341:865b:65c9 with SMTP id
- i1-20020adfe481000000b00341865b65c9mr5396612wrm.22.1712490598095; 
- Sun, 07 Apr 2024 04:49:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2Z650aDdBd/f7Jxn2XIqVfUvMqiyynBxOdR+6oVAynA4ZuIZBbDfKsAKzZjHAWc9jGQdN2g==
-X-Received: by 2002:adf:e481:0:b0:341:865b:65c9 with SMTP id
- i1-20020adfe481000000b00341865b65c9mr5396604wrm.22.1712490597574; 
- Sun, 07 Apr 2024 04:49:57 -0700 (PDT)
+ AJvYcCVjgTfbWsYHpEhrA1Wah6bgU2L32Ush6R2CK4JZRDrssGEVn+0rQ33YBAFKpxW4NdliBzIBjpsVMUtLJt38qFUQO5rh76Q=
+X-Gm-Message-State: AOJu0YyDul0VZXvZ5D3VRHKvT3kOFU6xVoEMOP+UwjK68adGwV7r/551
+ BOxcz2Rk7jk1BH7zzcHqNzB7n/E/6x/3zL1MdX5S1/9f3vLLRfJvFRMZcqUaVqAMrJk6w79OD19
+ /P3zAViDQmQW69lCKiFcWRWP9Nba1Lu4OAuQtMzXhOYF4PlK3HmlH
+X-Received: by 2002:a05:600c:1f93:b0:416:2a95:6e8b with SMTP id
+ je19-20020a05600c1f9300b004162a956e8bmr4518189wmb.26.1712490818298; 
+ Sun, 07 Apr 2024 04:53:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJMASgX8hmC2zATfDLo/dE4wwg/jjRMp08PfSP1dwtZ5cfEXaCjzkRzsiGQVVLzaZfALerIA==
+X-Received: by 2002:a05:600c:1f93:b0:416:2a95:6e8b with SMTP id
+ je19-20020a05600c1f9300b004162a956e8bmr4518176wmb.26.1712490817469; 
+ Sun, 07 Apr 2024 04:53:37 -0700 (PDT)
 Received: from redhat.com ([2.52.152.188]) by smtp.gmail.com with ESMTPSA id
- n5-20020a5d5985000000b00345a5183f01sm582549wri.108.2024.04.07.04.49.56
+ u10-20020a05600c19ca00b0041632fcf272sm7169126wmq.22.2024.04.07.04.53.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Apr 2024 04:49:56 -0700 (PDT)
-Date: Sun, 7 Apr 2024 07:49:54 -0400
+ Sun, 07 Apr 2024 04:53:36 -0700 (PDT)
+Date: Sun, 7 Apr 2024 07:53:34 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Jason Wang <jasowang@redhat.com>
-Cc: "Chen, Jiqian" <Jiqian.Chen@amd.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Huang, Ray" <Ray.Huang@amd.com>
-Subject: Re: [RFC QEMU PATCH v8 2/2] virtio-pci: implement No_Soft_Reset bit
-Message-ID: <20240407074848-mutt-send-email-mst@kernel.org>
-References: <20240328103903.408290-1-Jiqian.Chen@amd.com>
- <20240328103903.408290-3-Jiqian.Chen@amd.com>
- <20240328065606-mutt-send-email-mst@kernel.org>
- <BL1PR12MB5849ACCD6602EAB88BE2FED9E73B2@BL1PR12MB5849.namprd12.prod.outlook.com>
- <20240328083503-mutt-send-email-mst@kernel.org>
- <BL1PR12MB5849C37A0B0E1AF02644C203E73A2@BL1PR12MB5849.namprd12.prod.outlook.com>
- <CACGkMEt=V4V4JgT08o5_f7tj-eNZDi2GB4=H_Qp7xALrRxBWhQ@mail.gmail.com>
- <20240329064431-mutt-send-email-mst@kernel.org>
- <BL1PR12MB5849AA89DC28465714590B56E73E2@BL1PR12MB5849.namprd12.prod.outlook.com>
- <CACGkMEu6uEF+4P3_3Q5tw4TNZ9dj3GwJh+h_BtWDfq3WeUhKJQ@mail.gmail.com>
+Cc: Cindy Lu <lulu@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/1] virtio-pci: Fix the crash when the vector changes
+ back from VIRTIO_NO_VECTOR
+Message-ID: <20240407075135-mutt-send-email-mst@kernel.org>
+References: <20240402150218.270587-1-lulu@redhat.com>
+ <20240402150218.270587-2-lulu@redhat.com>
+ <CACGkMEuQc+e+JOnScUdJckP1yb1Ushu9E0VEQKhwdn26W422bw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACGkMEu6uEF+4P3_3Q5tw4TNZ9dj3GwJh+h_BtWDfq3WeUhKJQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <CACGkMEuQc+e+JOnScUdJckP1yb1Ushu9E0VEQKhwdn26W422bw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -111,112 +103,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 07, 2024 at 11:20:57AM +0800, Jason Wang wrote:
-> On Tue, Apr 2, 2024 at 11:03 AM Chen, Jiqian <Jiqian.Chen@amd.com> wrote:
+On Sun, Apr 07, 2024 at 12:19:57PM +0800, Jason Wang wrote:
+> On Tue, Apr 2, 2024 at 11:02 PM Cindy Lu <lulu@redhat.com> wrote:
 > >
-> > On 2024/3/29 18:44, Michael S. Tsirkin wrote:
-> > > On Fri, Mar 29, 2024 at 03:20:59PM +0800, Jason Wang wrote:
-> > >> On Fri, Mar 29, 2024 at 3:07 PM Chen, Jiqian <Jiqian.Chen@amd.com> wrote:
-> > >>>
-> > >>> On 2024/3/28 20:36, Michael S. Tsirkin wrote:
-> > >>>>>>> +}
-> > >>>>>>> +
-> > >>>>>>>  static void virtio_pci_bus_reset_hold(Object *obj)
-> > >>>>>>>  {
-> > >>>>>>>      PCIDevice *dev = PCI_DEVICE(obj);
-> > >>>>>>>      DeviceState *qdev = DEVICE(obj);
-> > >>>>>>>
-> > >>>>>>> +    if (virtio_pci_no_soft_reset(dev)) {
-> > >>>>>>> +        return;
-> > >>>>>>> +    }
-> > >>>>>>> +
-> > >>>>>>>      virtio_pci_reset(qdev);
-> > >>>>>>>
-> > >>>>>>>      if (pci_is_express(dev)) {
-> > >>>>>>> @@ -2484,6 +2511,8 @@ static Property virtio_pci_properties[] = {
-> > >>>>>>>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
-> > >>>>>>>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
-> > >>>>>>>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
-> > >>>>>>> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
-> > >>>>>>> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
-> > >>
-> > >> Why does it come with an x prefix?
-> > >>
-> > >>>>>>>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
-> > >>>>>>>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
-> > >>>>>>>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
-> > >>>>>>
-> > >>>>>> I am a bit confused about this part.
-> > >>>>>> Do you want to make this software controllable?
-> > >>>>> Yes, because even the real hardware, this bit is not always set.
-> > >>
-> > >> We are talking about emulated devices here.
-> > >>
-> > >>>>
-> > >>>> So which virtio devices should and which should not set this bit?
-> > >>> This depends on the scenario the virtio-device is used, if we want to trigger an internal soft reset for the virtio-device during S3, this bit shouldn't be set.
-> > >>
-> > >> If the device doesn't need reset, why bother the driver for this?
-> > >>
-> > >> Btw, no_soft_reset is insufficient for some cases, there's a proposal
-> > >> for the virtio-spec. I think we need to wait until it is done.
-> > >
-> > > That seems orthogonal or did I miss something?
-> > Yes, I looked the detail of the proposal, I also think they are unrelated.
+> > When the guest calls virtio_stop and then virtio_reset,
 > 
-> The point is the proposal said
+> Guests could not call those functions directly, it is triggered by for
+> example writing to some of the registers like reset or others.
 > 
-> """
-> Without a mechanism to
-> suspend/resume virtio devices when the driver is suspended/resumed in
-> the early phase of suspend/late phase of resume, there is a window where
-> interrupts can be lost.
-> """
+> > the vector will change
+> > to VIRTIO_NO_VECTOR and the IRQFD for this vector will be released. After that
+> > If you want to change the vector back,
 > 
-> It looks safe to enable it with the suspend bit. Or if you think it's
-> wrong, please comment on the virtio spec patch.
+> What do you mean by "change the vector back"? Something like
 > 
-> > I will set the default value of No_Soft_Reset bit to true in next version according to your opinion.
-> > About the compatibility of old machine types, which types should I consider? Does the same as x-pcie-pm-init(hw_compat_2_8)?
-> > Forgive me for not knowing much about compatibility.
+> assign VIRTIO_MSI_NO_VECTOR to vector 0
+> assign X to vector 0
 > 
-> "x" means no compatibility at all, please drop the "x" prefix. And it
-> looks more safe to start as "false" by default.
+> And I guess what you meant is to configure the vector after DRIVER_OK.
+> 
+> 
+> > it will cause a crash.
+> >
+> > To fix this, we need to call the function "kvm_virtio_pci_vector_use_one()"
+> > when the vector changes back from VIRTIO_NO_VECTOR
+> >
+> > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > ---
+> >  hw/virtio/virtio-pci.c | 31 ++++++++++++++++++++++++++++---
+> >  1 file changed, 28 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > index e433879542..45f3ab38c3 100644
+> > --- a/hw/virtio/virtio-pci.c
+> > +++ b/hw/virtio/virtio-pci.c
+> > @@ -874,12 +874,14 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
+> >      return 0;
+> >  }
+> >
+> > -static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
+> > +static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no,
+> > +                                         bool recovery)
+> >  {
+> >      unsigned int vector;
+> >      int ret;
+> >      EventNotifier *n;
+> >      PCIDevice *dev = &proxy->pci_dev;
+> > +    VirtIOIRQFD *irqfd;
+> >      VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+> >      VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+> >
+> > @@ -890,10 +892,21 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
+> >      if (vector >= msix_nr_vectors_allocated(dev)) {
+> >          return 0;
+> >      }
+> > +    /*
+> > +     * if this is recovery and irqfd still in use, means the irqfd was not
+> > +     * release before and don't need to set up again
+> > +     */
+> > +    if (recovery) {
+> > +        irqfd = &proxy->vector_irqfd[vector];
+> > +        if (irqfd->users != 0) {
+> > +            return 0;
+> > +        }
+> > +    }
+> >      ret = kvm_virtio_pci_vq_vector_use(proxy, vector);
+> >      if (ret < 0) {
+> >          goto undo;
+> >      }
+> > +
+> >      /*
+> >       * If guest supports masking, set up irqfd now.
+> >       * Otherwise, delay until unmasked in the frontend.
+> > @@ -932,14 +945,14 @@ static int kvm_virtio_pci_vector_vq_use(VirtIOPCIProxy *proxy, int nvqs)
+> >          if (!virtio_queue_get_num(vdev, queue_no)) {
+> >              return -1;
+> >          }
+> > -        ret = kvm_virtio_pci_vector_use_one(proxy, queue_no);
+> > +        ret = kvm_virtio_pci_vector_use_one(proxy, queue_no, false);
+> >      }
+> >      return ret;
+> >  }
+> >
+> >  static int kvm_virtio_pci_vector_config_use(VirtIOPCIProxy *proxy)
+> >  {
+> > -    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX);
+> > +    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX, false);
+> >  }
+> >
+> >  static void kvm_virtio_pci_vector_release_one(VirtIOPCIProxy *proxy,
+> > @@ -1570,7 +1583,13 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+> >          } else {
+> >              val = VIRTIO_NO_VECTOR;
+> >          }
+> > +        vector = vdev->config_vector;
+> >          vdev->config_vector = val;
+> > +        /*check if the vector need to recovery*/
+> > +        if ((val != VIRTIO_NO_VECTOR) && (vector == VIRTIO_NO_VECTOR) &&
+> > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > +            kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_IDX, true);
+> > +        }
+> 
+> This looks too tricky.
+> 
+> Think hard of this. I think it's better to split this into two parts:
+> 
+> 1) a series that disables config irqfd for vhost-net, this series
+> needs to be backported to -stable which needs to be conservative. It
+> looks more like your V1, but let's add a boolean for pci proxy.
+
+I don't get it. Looks like a huge change to do in stable.
+All as a replacement to a small 20 line patch?
+
+Generally I think irqfd is best used everywhere.
+
+
+> 2) a series that deal with the msix vector configuration after
+> driver_ok, we probably need some refactoring to do per vq use instead
+> of the current loop in DRIVER_OK
+> 
+> Does this make sense?
 > 
 > Thanks
 
 
-Not sure I agree. External flags are for when users want to tweak them.
-When would users want it to be off?
-What is done here is I feel sane, just add machine compat machinery
-to change to off for old machine types.
+Not really let's fix the bug for starters, refactoring can be done later
+as appropriate.
 
-
-> > >
-> > >>> In my use case on my environment, I don't want to reset virtio-gpu during S3,
-> > >>> because once the display resources are destroyed, there are not enough information to re-create them, so this bit should be set.
-> > >>> Making this bit software controllable is convenient for users to take their own choices.
-> > >>
-> > >> Thanks
-> > >>
-> > >>>
-> > >>>>
-> > >>>>>> Or should this be set to true by default and then
-> > >>>>>> changed to false for old machine types?
-> > >>>>> How can I do so?
-> > >>>>> Do you mean set this to true by default, and if old machine types don't need this bit, they can pass false config to qemu when running qemu?
-> > >>>>
-> > >>>> No, you would use compat machinery. See how is x-pcie-flr-init handled.
-> > >>>>
-> > >>>>
-> > >>>
-> > >>> --
-> > >>> Best regards,
-> > >>> Jiqian Chen.
-> > >
-> >
+> >          break;
+> >      case VIRTIO_PCI_COMMON_STATUS:
+> >          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > @@ -1611,6 +1630,12 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+> >              val = VIRTIO_NO_VECTOR;
+> >          }
+> >          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> > +
+> > +        /*check if the vector need to recovery*/
+> > +        if ((val != VIRTIO_NO_VECTOR) && (vector == VIRTIO_NO_VECTOR) &&
+> > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > +            kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel, true);
+> > +        }
+> >          break;
+> >      case VIRTIO_PCI_COMMON_Q_ENABLE:
+> >          if (val == 1) {
 > > --
-> > Best regards,
-> > Jiqian Chen.
+> > 2.43.0
+> >
 
 
