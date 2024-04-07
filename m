@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCCECD1292
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 18:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6739DCD1292
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Apr 2024 18:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtXUp-0000Ot-EN; Sun, 07 Apr 2024 14:44:03 -0400
+	id 1rtXUr-0000Ps-Pb; Sun, 07 Apr 2024 14:44:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rtXUn-0000Ob-Ri
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 14:44:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rtXUp-0000Ou-IA
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 14:44:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rtXUm-0003C5-6E
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 14:44:01 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rtXUn-0003CK-Tt
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 14:44:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712515438;
+ s=mimecast20190719; t=1712515441;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=26pTu8EVj1KEbXWxmdKjhECkDGwyK4deuCMQ23PJ+9s=;
- b=E7j99PdW+N0m/310CJplG1wDKPf8I9iE7Hfz9HaT3T6WakgmdaYWD2pIbfUlHCajaMw/mO
- pq2mPSTMDbnW4wk8VLmjkPpgtNrdbGo0rKI3hWH8v0deOdmMbDtOer1x9vb39uOQ3wjb3q
- FwKYydfSk9qlY6dHuRagOvicksp/DN4=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UECy0ZeCjhynC/cceH+RtzQmZ3i8j2zm9Thkg5Ae3p8=;
+ b=DfOtU1RYw0oyt4Fvz9/MD2z4Mz2y6rUp/kCpfxeRribRx0WeJqEQDDTxQB4VxnXsIlkczG
+ RtIByPZn/xd0pTECpZCAu3umavY0pXQciQoKFttxHLShLSFx8QLqFbMrc6TCRomhr2MQ38
+ dLL1k5t1tNs5HysYO9BsIf3w/LbkQG4=
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-587-xkBV-j5pPc2_DLdFN5nsDg-1; Sun, 07 Apr 2024 14:43:57 -0400
-X-MC-Unique: xkBV-j5pPc2_DLdFN5nsDg-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-618047c2daeso983797b3.1
- for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 11:43:57 -0700 (PDT)
+ us-mta-12-fhAix1-CPGeO8F1OPjBXqA-1; Sun, 07 Apr 2024 14:43:58 -0400
+X-MC-Unique: fhAix1-CPGeO8F1OPjBXqA-1
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-479d74a7adeso317328137.0
+ for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 11:43:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712515437; x=1713120237;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=26pTu8EVj1KEbXWxmdKjhECkDGwyK4deuCMQ23PJ+9s=;
- b=alVIpxhri6C609gIrN9EiuM2t7BFFWyBerqSC3zYygYukGlUYVPRHspFoVQsUVHluz
- Gyos2lGuvNKPdrNP579J5KZW9hcyXnm767DXuRCvOUoSdKev4PrYBrEpcQVozo/dM73n
- qJT8I2vbRo0UAdyYgFYta0HfBqX72S1dDj3RFSJ519DBOOWVF3Q04gm/s34E0l90vlUI
- dE877/o66w2yWtI9r7ujO2Nw+VKEZ+jG6rslMRHbBV3NKEdmjOzUjQfwP9714E4qv4Up
- RscILuQUHG4tsmrkKpxDn54Fwa1h1FB2YjfUKdqhtafn2OiZIBklToHyj1DMc9ZMXxo9
- 8pAw==
+ d=1e100.net; s=20230601; t=1712515438; x=1713120238;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UECy0ZeCjhynC/cceH+RtzQmZ3i8j2zm9Thkg5Ae3p8=;
+ b=dOLBSL+74DMMONC7A579+Ih+PxeB/o34dD+h2m0PbhamkdkCrNr464f87Xua54EhZJ
+ gXKk+J0+uEnCG/+ZaTnLoDyjZs8DpCaUmBJ568wb2KIjoSeW+XyCsl/3/l69UJXaLm9d
+ muZAzfq71KPXUUDvLhxUhq9NsuX7YDKPGl8tnWA8LYvAXNJ/btO3de6fMg8FhulNEDRD
+ IokIEGCjmwsqjbm5SOW9FE3TeGA1meCL9MRBe2w3wjvRS9ZPMopwbAEmSPnnZo661q3y
+ V1kyu4vxB+m94gVcw0V5lGU7YlMNhyLJM5BGOe019w9L0+j2DPgNJseBHNL/5/3uqVJ9
+ Dh6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUWsAQKqMznpXiIBrrnj2WuDpo9VrVIaGiJ2WoInyTeMKRs95a4QH1ZQZ7G82dh1uj1UEo0HfZew/1mymFuFBiT6hoxlQ=
-X-Gm-Message-State: AOJu0YxWSVZQoqmZBnH3eSC6rZwyTGom8jwb9hxWHygjt2i4e7c8F0Ji
- ZdYDOiQI3ZPVS8128EmBMpAHNjyrbUAAAhc6/v3gCr0bRoXg5kYoqMdsU4f+FZ7A+IP/UDecKsy
- V/fE9D7YlHewUYOmVuVE69kPFlk2AtZGuJTME4aJpBbA/fImU9W9G
-X-Received: by 2002:a25:2904:0:b0:dc7:4aa8:865a with SMTP id
- p4-20020a252904000000b00dc74aa8865amr4205204ybp.3.1712515436995; 
- Sun, 07 Apr 2024 11:43:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6UyuGbYGBTc3Gl0OBEey8qXcrH2N1mu4b7kj8/5P+2e94CsJk8ml8yrkNHLG9lrNhjQ8ShA==
-X-Received: by 2002:a25:2904:0:b0:dc7:4aa8:865a with SMTP id
- p4-20020a252904000000b00dc74aa8865amr4205187ybp.3.1712515436045; 
- Sun, 07 Apr 2024 11:43:56 -0700 (PDT)
+ AJvYcCVw+vZT2qkxPyC8c0FCFAh2PR7GzrJ1R9ZAR9M8jsdVsJGHhBkzBeAV34/cXrXRFCdlYEm3dSOMKHd1T61wboSM7AYhOHs=
+X-Gm-Message-State: AOJu0YwvJMPPn7+Ka3xEvGD6pT06vk4LZxU/+cB3x+pQqtqVDCU5eR62
+ LdLjuljCA11wwPgIf8fjMpkq5x5TI+DxU6+3ERmaH2Hz/g/JmOrFAKmX4sLyNdMco+OQ8Oqi8P0
+ vDwzwuvMz1bbXrQbaBqbG0JRSWYmSmuXMisSyM0HbvS6g1XVBmyVI
+X-Received: by 2002:a05:6122:c8a:b0:4d8:74f7:a280 with SMTP id
+ ba10-20020a0561220c8a00b004d874f7a280mr3776761vkb.0.1712515438009; 
+ Sun, 07 Apr 2024 11:43:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEncrWTRL9OQYlHj/oiaC0poeP8koQiLR+IGsB9uk8F8xg5rxHrVe1NcUnA2Oo3BYcG/gsMaQ==
+X-Received: by 2002:a05:6122:c8a:b0:4d8:74f7:a280 with SMTP id
+ ba10-20020a0561220c8a00b004d874f7a280mr3776738vkb.0.1712515437471; 
+ Sun, 07 Apr 2024 11:43:57 -0700 (PDT)
 Received: from x1n.redhat.com ([99.254.121.117])
  by smtp.gmail.com with ESMTPSA id
- cw12-20020ad44dcc000000b0069905863252sm2416842qvb.84.2024.04.07.11.43.54
+ cw12-20020ad44dcc000000b0069905863252sm2416842qvb.84.2024.04.07.11.43.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Apr 2024 11:43:55 -0700 (PDT)
+ Sun, 07 Apr 2024 11:43:56 -0700 (PDT)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Wei Wang <wei.w.wang@intel.com>, Lei Wang <lei4.wang@intel.com>,
  Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>
-Subject: [PULL 0/2] Migration 20240407 patches
-Date: Sun,  7 Apr 2024 14:43:52 -0400
-Message-ID: <20240407184354.1839435-1-peterx@redhat.com>
+ peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PULL 1/2] migration/postcopy: ensure preempt channel is ready before
+ loading states
+Date: Sun,  7 Apr 2024 14:43:53 -0400
+Message-ID: <20240407184354.1839435-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240407184354.1839435-1-peterx@redhat.com>
+References: <20240407184354.1839435-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -85,7 +89,7 @@ X-Spam_bar: ----
 X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Wei Wang <wei.w.wang@intel.com>
 
-The following changes since commit ce64e6224affb8b4e4b019f76d2950270b391af5:
+Before loading the guest states, ensure that the preempt channel has been
+ready to use, as some of the states (e.g. via virtio_load) might trigger
+page faults that will be handled through the preempt channel. So yield to
+the main thread in the case that the channel create event hasn't been
+dispatched.
 
-  Merge tag 'qemu-sparc-20240404' of https://github.com/mcayland/qemu into staging (2024-04-04 15:28:06 +0100)
-
-are available in the Git repository at:
-
-  https://gitlab.com/peterx/qemu.git tags/migration-20240407-pull-request
-
-for you to fetch changes up to 8e0b21e375f0f6e6dbaeaecc1d52e2220f163e40:
-
-  MAINTAINERS: Adjust migration documentation files (2024-04-07 14:40:55 -0400)
-
-----------------------------------------------------------------
-Migration pull for 9.0-rc3
-
-- Wei/Lei's fix on a rare postcopy race that can hang the channel (since 8.0)
-- Avihai's fix on maintainers file, points to the right doc links
-
-----------------------------------------------------------------
-
-Avihai Horon (1):
-  MAINTAINERS: Adjust migration documentation files
-
-Wei Wang (1):
-  migration/postcopy: ensure preempt channel is ready before loading
-    states
-
- MAINTAINERS        |  6 ++++--
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Fixes: 9358982744 ("migration: Send requested page directly in rp-return thread")
+Originally-by: Lei Wang <lei4.wang@intel.com>
+Link: https://lore.kernel.org/all/9aa5d1be-7801-40dd-83fd-f7e041ced249@intel.com/T/
+Signed-off-by: Lei Wang <lei4.wang@intel.com>
+Signed-off-by: Wei Wang <wei.w.wang@intel.com>
+Link: https://lore.kernel.org/r/20240405034056.23933-1-wei.w.wang@intel.com
+[peterx: add a todo section, add Fixes and copy stable for 8.0+]
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
  migration/savevm.c | 21 +++++++++++++++++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ 1 file changed, 21 insertions(+)
 
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 388d7af7cd..e7c1215671 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2342,6 +2342,27 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
+ 
+     QEMUFile *packf = qemu_file_new_input(QIO_CHANNEL(bioc));
+ 
++    /*
++     * Before loading the guest states, ensure that the preempt channel has
++     * been ready to use, as some of the states (e.g. via virtio_load) might
++     * trigger page faults that will be handled through the preempt channel.
++     * So yield to the main thread in the case that the channel create event
++     * hasn't been dispatched.
++     *
++     * TODO: if we can move migration loadvm out of main thread, then we
++     * won't block main thread from polling the accept() fds.  We can drop
++     * this as a whole when that is done.
++     */
++    do {
++        if (!migrate_postcopy_preempt() || !qemu_in_coroutine() ||
++            mis->postcopy_qemufile_dst) {
++            break;
++        }
++
++        aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
++        qemu_coroutine_yield();
++    } while (1);
++
+     ret = qemu_loadvm_state_main(packf, mis);
+     trace_loadvm_handle_cmd_packaged_main(ret);
+     qemu_fclose(packf);
 -- 
 2.44.0
 
