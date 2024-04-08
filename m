@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BFCC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 423CACD1296
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtqqn-0004p9-67; Mon, 08 Apr 2024 11:24:01 -0400
+	id 1rtqqr-0004qT-9E; Mon, 08 Apr 2024 11:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rtqqd-0004os-Sw
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:23:52 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1rtqqf-0004p0-1S
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:23:53 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rtqqb-0005QL-Vp
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:23:51 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4168a5d75c4so5386015e9.0
+ id 1rtqqc-0005QQ-7f
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:23:52 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-34388753650so1965086f8f.3
  for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1712589828; x=1713194628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wg/VXaENoh/xfxcfdFul6goMk1e8WqSCaau2y85GsNA=;
- b=HbB5OpS4rZi82KetqCHc8xP1JFkLmZodT8oH+K/LTai3hRBUshriuceeZwqvD1PsyO
- X4XOStsfAF5gOJB6Jve+IYF5O9lWAHfIQAKbQ006nKH6sc3Lae2ooBjVSjx1onh5fgoG
- aQFvignH13MDMSKZsay9VLmKYrKoaZS2+sR3RwRMQcwVaZCIJ4VbS4zlrh0V6c1Kf18S
- SuqEEGIMoKF5kMturVWLI7wzRzWKRYV58PMBTM95H/MCasH7MzA61HyfnukkCcDf39Nq
- 1aM8JsI1IQtMbN2u3jfPgblgnDi4ImllqUUKJHEvBSQgFbtu1Mw1nExocTcVJ03SHell
- 2iJQ==
+ :reply-to; bh=uw8YHTNyC106MuzA62WIiauW6nzUr+KdLlKVTICYJPA=;
+ b=aAD4PAV5z+K5/L+dLwI5czMd4fU6QHZGH4OSqlvwU6pew5YDnvCIjserkcwszbvsvj
+ zUO2fZke3yyVVbjeZBXIUZCdZwa0/HjAn7vt2vgTfOVbGMRYq0rZn8Nu3c4bdgiVkB15
+ CKKpkqEI3WJKUWC0MZLyC/ZB3TZ2HypkyS5XuaIF7fccdiFNFVLEADH7+Czf1H1Tye0H
+ PcYryB/SA5LhetrVH9iTcgX5YhyfE9bEby0J5qEkTLljiOw18xpVWP/lroZLj5Z3ber5
+ Enwoc1emOT5a7yH9u2Lfiby4fe28PnfYaxoeZuDfFS/p4+dtFl4snPgvoYnD537LpFqN
+ 9MvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1712589828; x=1713194628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wg/VXaENoh/xfxcfdFul6goMk1e8WqSCaau2y85GsNA=;
- b=hhrUyYF3XmNM6Twof3pc1uy2QPxO8Q8s6N1VmbENG7Jf6iWpgrxRFe+P2RDZuvJLWP
- Y87NiVqmdbsd8W55fLfBXIqPtTkAhAE1x5QDmljmDJzZwNRKS7j6H0LiVZN3KJ1B/pvi
- cHaZ1BslbWS/AZuk++EAsJ+w6HYm9vIHpdlsFlxTNxQQDJdCLd6qABDWUAMXExoa3zXm
- E/NuSgRXJ5khvMJwl6dRbW2b+NgFdVKUzHGJa80oUBrHFEEXGTfK/Qu7JMdWla0IRFm1
- dRNOn41CKtTX0n/YSYY3fmhdGr85sPQ+Czx7KNAXxF78aaUs7IWmUVd26SsKpVT+pQRK
- KQDQ==
-X-Gm-Message-State: AOJu0Yw8R8eSEy2mfbeQMNXhQCwSCbGgHsrGSKCmBFZPpyUdnCGGbePR
- LrZR85XBzpRFKkEsthX1G6VT3KiSftWHff7/EsBds539leJjw+2Pyc5Fwd3gSrvrB8o+IJSmLcj
- p
-X-Google-Smtp-Source: AGHT+IEFduUKcuCiMpKboYo+K/H6Bd/8ibb3Ycway3X3s9vlEewxM9X2hv1soh2HBKhhAfNz/ycK6w==
-X-Received: by 2002:a05:600c:4451:b0:416:2441:eac6 with SMTP id
- v17-20020a05600c445100b004162441eac6mr8552268wmn.0.1712589828008; 
+ bh=uw8YHTNyC106MuzA62WIiauW6nzUr+KdLlKVTICYJPA=;
+ b=eXlQG4a2C7Y83WQ+bx2/D+3XKcnPAXjtVMt9AibFKBeRacwqGo4997ORUZTtN6z/KQ
+ /+2C3ImX4MucU45nt/qE5ynwRx0OEnjcT+3VbxoHzoFEc4p7VEMZJ6cQM3j0I52tQjDq
+ zT4giYpXGQ1aUSzmVYyEG01CWP9yU1A0hjZVs2Obo4qGYrqpupWcTAwgySdzmR02ggaO
+ NwaI6JPmAA1/tlvC4U+yPErxBzjVtoMMDjjPny1e0qgxtxlF6QDrX5DgcyrKXVwieWA6
+ 5uBmdq90q/VrB1TCR3is/+Np6uDVYSx5w2V2LYaQ1uX8m1IOJPWRb5+/8VQ4MAw6S4yP
+ vcfg==
+X-Gm-Message-State: AOJu0Yz5JlPYZoj9tvlAa+3VcAXtldM2tVxEA1xYuyFzTuTB+N78Y2lY
+ TuCKpE0p5t1HaV82NIE5Rg6ujfXol5U5Jx+ub9fO0No5WTtD0mHAHx/vb/SWQfHosaLjnZeEosg
+ g
+X-Google-Smtp-Source: AGHT+IFpIijWY+PUc/yHpz4z5tNsUHxYrQfxqLb7FL3jaqDvwFL8qztr3Ux6MLgSbOc3lXv611SUuw==
+X-Received: by 2002:a05:6000:b0f:b0:343:9af4:7a90 with SMTP id
+ dj15-20020a0560000b0f00b003439af47a90mr6169536wrb.69.1712589828517; 
  Mon, 08 Apr 2024 08:23:48 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- je6-20020a05600c1f8600b0041496734318sm17298667wmb.24.2024.04.08.08.23.47
+ je6-20020a05600c1f8600b0041496734318sm17298667wmb.24.2024.04.08.08.23.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 08:23:47 -0700 (PDT)
+ Mon, 08 Apr 2024 08:23:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/2] target/arm: Fix CNTPOFF_EL2 trap to missing EL3
-Date: Mon,  8 Apr 2024 16:23:45 +0100
-Message-Id: <20240408152346.3937318-2-peter.maydell@linaro.org>
+Subject: [PULL 2/2] target/arm: Use correct SecuritySpace for AArch64 AT ops
+ at EL3
+Date: Mon,  8 Apr 2024 16:23:46 +0100
+Message-Id: <20240408152346.3937318-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408152346.3937318-1-peter.maydell@linaro.org>
 References: <20240408152346.3937318-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,52 +94,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Clément Tosi <ptosi@google.com>
+When we do an AT address translation operation, the page table walk
+is supposed to be performed in the context of the EL we're doing the
+walk for, so for instance an AT S1E2R walk is done for EL2.  In the
+pseudocode an EL is passed to AArch64.AT(), which calls
+SecurityStateAtEL() to find the security state that we should be
+doing the walk with.
 
-EL2 accesses to CNTPOFF_EL2 should only ever trap to EL3 if EL3 is
-present, as described by the reference manual (for MRS):
+In ats_write64() we get this wrong, instead using the current
+security space always.  This is fine for AT operations performed from
+EL1 and EL2, because there the current security state and the
+security state for the lower EL are the same.  But for AT operations
+performed from EL3, the current security state is always either
+Secure or Root, whereas we want to use the security state defined by
+SCR_EL3.{NS,NSE} for the walk. This affects not just guests using
+FEAT_RME but also ones where EL3 is Secure state and the EL3 code
+is trying to do an AT for a NonSecure EL2 or EL1.
 
-  /* ... */
-  elsif PSTATE.EL == EL2 then
-      if Halted() && HaveEL(EL3) && /*...*/ then
-          UNDEFINED;
-      elsif HaveEL(EL3) && SCR_EL3.ECVEn == '0' then
-          /* ... */
-      else
-          X[t, 64] = CNTPOFF_EL2;
+Use arm_security_space_below_el3() to get the SecuritySpace to
+pass to do_ats_write() for all AT operations except the
+AT S1E3* operations.
 
-However, the existing implementation of gt_cntpoff_access() always
-returns CP_ACCESS_TRAP_EL3 for EL2 accesses with SCR_EL3.ECVEn unset. In
-pseudo-code terminology, this corresponds to assuming that HaveEL(EL3)
-is always true, which is wrong. As a result, QEMU panics in
-access_check_cp_reg() when started without EL3 and running EL2 code
-accessing the register (e.g. any recent KVM booting a guest).
-
-Therefore, add the HaveEL(EL3) check to gt_cntpoff_access().
-
-Fixes: 2808d3b38a52 ("target/arm: Implement FEAT_ECV CNTPOFF_EL2 handling")
-Signed-off-by: Pierre-Clément Tosi <ptosi@google.com>
-Message-id: m3al6amhdkmsiy2f62w72ufth6dzn45xg5cz6xljceyibphnf4@ezmmpwk4tnhl
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: e1ee56ec2383 ("target/arm: Pass security space rather than flag for AT instructions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2250
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240405180232.3570066-1-peter.maydell@linaro.org
 ---
- target/arm/helper.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/arm/helper.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3f3a5b55d4a..13ad90cac1e 100644
+index 13ad90cac1e..a620481d7cf 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -3452,7 +3452,8 @@ static CPAccessResult gt_cntpoff_access(CPUARMState *env,
-                                         const ARMCPRegInfo *ri,
-                                         bool isread)
- {
--    if (arm_current_el(env) == 2 && !(env->cp15.scr_el3 & SCR_ECVEN)) {
-+    if (arm_current_el(env) == 2 && arm_feature(env, ARM_FEATURE_EL3) &&
-+        !(env->cp15.scr_el3 & SCR_ECVEN)) {
-         return CP_ACCESS_TRAP_EL3;
+@@ -3879,6 +3879,8 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
+     ARMMMUIdx mmu_idx;
+     uint64_t hcr_el2 = arm_hcr_el2_eff(env);
+     bool regime_e20 = (hcr_el2 & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE);
++    bool for_el3 = false;
++    ARMSecuritySpace ss;
+ 
+     switch (ri->opc2 & 6) {
+     case 0:
+@@ -3896,6 +3898,7 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
+             break;
+         case 6: /* AT S1E3R, AT S1E3W */
+             mmu_idx = ARMMMUIdx_E3;
++            for_el3 = true;
+             break;
+         default:
+             g_assert_not_reached();
+@@ -3914,8 +3917,8 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
+         g_assert_not_reached();
      }
-     return CP_ACCESS_OK;
+ 
+-    env->cp15.par_el[1] = do_ats_write(env, value, access_type,
+-                                       mmu_idx, arm_security_space(env));
++    ss = for_el3 ? arm_security_space(env) : arm_security_space_below_el3(env);
++    env->cp15.par_el[1] = do_ats_write(env, value, access_type, mmu_idx, ss);
+ #else
+     /* Handled by hardware accelerator. */
+     g_assert_not_reached();
 -- 
 2.34.1
 
