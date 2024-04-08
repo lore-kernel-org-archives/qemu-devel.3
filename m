@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B265FCD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F4BCD1296
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt8M-000279-Ce; Mon, 08 Apr 2024 13:50:18 -0400
+	id 1rtt7y-00020W-Rz; Mon, 08 Apr 2024 13:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8K-00026q-Oo
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:16 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1rtt7v-0001yc-2U
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:51 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8G-0003jY-PH
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:16 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-29e0229d6b5so3889745a91.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:11 -0700 (PDT)
+ id 1rtt7t-0003dW-DX
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:50 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6ecee5c08e6so4365296b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598610; x=1713203410; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598588; x=1713203388; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pLzmDWgl8qUDWCq3D57/PwLyiFcPLxohH0NJBMBSEDg=;
- b=c9OolPn3B22rSeVbPk820E26xTJsb99TplPvozZx8Ca4oohmhh6dBr1HxfdEh99dv5
- 5zdBSYjKHPjy6HyHq5xAmNqJ3fcnW0iRt3XsiVpDVaz4+hDlFhU/i77t/l0STesBOoaK
- gyS+AV+bfcBXjz/jYQofTdDFZjt60/Cvzf2dD8kdlS7fabU6Spnc5QeONliSKsxlFtB/
- xXx80PJ0slpAPV+MHJ1AYqeuR/RptMV0hVfcFsqie6MeYJfdnGjJ0lDEJvfQUlFDAwBX
- N6fCnqk5Yfgs9V2q3UeIquSI6b7Wegy60FCHNd8Qno2jYD4EjuWqI/sR2gkjhnAcN3oV
- sF1g==
+ bh=RlIBc4Oj7n9g5uv4QxhhxdXhuzA6b3JMjencPErHv6I=;
+ b=E47VQeJXl4sKrC7f9Q4uB7mp8pi7Bsu6E7d5KVPy1einLWsbkB5tJVSW9IYtnHYKJV
+ wvlVcwd6iKHofNeXZGZ7r5Nq+nN/fOBU+PYHovit2ubt2iDnu52KKjxo62kkcPJ7Fs4z
+ PzA3os+WXdQoboHnlBI+w1cOlMVNagU0QdQHOizyqcMAoxUqL98nib5ra5BriPpPfOwp
+ jUy/+RTwkXC8Y9DbRvZGQ/G9hCdMJiJcQKw9YoxzwN7nlTPHq8m4vyps0vPePzxW7XgD
+ ZTkFDthPYpN6vEzfzf2yy4GUjkNWddX9uq1r+0VNzr5lcSANscJ4EMXkThQF04w045kX
+ hyFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598610; x=1713203410;
+ d=1e100.net; s=20230601; t=1712598588; x=1713203388;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pLzmDWgl8qUDWCq3D57/PwLyiFcPLxohH0NJBMBSEDg=;
- b=wg2pq+z2SuNskt35fegnSxQi6FifyAcjTm/8Vi6yupvu/OmfMQU3dpSn/XJUXIJlB9
- u/TLC8HokAxOP38wfBfaRSw2eLI1apOomgsFS5WJXItSSO+wGc1YzwKWIWbkLtCVoZ8T
- OqgXt3f9PSAza0/ep19i9fbu3fgnURC/9lAPTyvXkuNfYE0Y5KBd2a6CUMrzI8jpMrE8
- Jkq32lpEdN1qIBUDny+x20l5xf0po5dcQo9SeNSbdwlPfc2PjgsmHhxAcUEXBc63zxKz
- Xe8F+LdPRbsaC2Q8oZZ5CXhosX5MdXGaSmgLwvOWTRMP9+kC8SUML6smPx08mP8Etr4O
- se4w==
-X-Gm-Message-State: AOJu0YyKyugeJHGzuSwtRV8ky9/0JQ7UvwvUh+i9B5DzVfZCt1d/enS5
- gOLTKXetPFFbnZmJjVlN0pXC2AcvgZuXKGe/pBZKs29iieG55g+kZXMlKDqe8iQp8tUQhDpqY47
- B
-X-Google-Smtp-Source: AGHT+IElBetL066uhjs8ZPDx/ZpOcjL8/KI/mqZiWa6PQ8roRc/dU3J8AiP7xiUx6Yjukj/vyUL9GQ==
-X-Received: by 2002:a17:90b:3ecb:b0:29f:7672:7fee with SMTP id
- rm11-20020a17090b3ecb00b0029f76727feemr8845985pjb.31.1712598610243; 
- Mon, 08 Apr 2024 10:50:10 -0700 (PDT)
+ bh=RlIBc4Oj7n9g5uv4QxhhxdXhuzA6b3JMjencPErHv6I=;
+ b=e8b89/gL0RngVBrK6vc7lrRicZvzc+I+QdxXuLn8/vHvNz+f8VTBIfTAVQMD4Reenr
+ MtPChRoxB4b+O50CES+sLDZ8Q9kzDnUJ24wG75C0KfvBW1/LPT8nAVbEL/NLocxFHBBy
+ 2lGqP3KpGDaa7lcBGiIXDcg/yXpFDsOXQbXPTCLit4YQvh8d+tIeKvboXfdDeN22VotV
+ en6eUVjJU93y+xIijlYh9sGsIpGuZSDsPFV5JU5f0iagjz8zQWuxpKXZnqSpfn74XUFN
+ iF1q4uxuxlvqnyDLtJ1PnMOSlDI+Ufq2cmmu6Wao1J06MNVxjvEWg9E+JQ3D4864nPFe
+ fLhQ==
+X-Gm-Message-State: AOJu0Yw5ezQhqI6B1+2D/Z8gzJhJeptaeyUBD1rrlHCo0AuWurkuU/Hd
+ rwnH8GwSLvo2pudBjD71jiW0rEoAyvoDjrCdruTB2sJKZhGQCbjAni/nrPVzI3DSA8THJ/4zCIn
+ C
+X-Google-Smtp-Source: AGHT+IF81M8ycils9Js378ZIl1yOXofWx8f2e+ggyjSFB+43Ih1fShZmf1Nkj/1Nu0fe1Lu6UjSYyA==
+X-Received: by 2002:a05:6a21:2d88:b0:1a7:7358:f10d with SMTP id
+ ty8-20020a056a212d8800b001a77358f10dmr3677972pzb.16.1712598587836; 
+ Mon, 08 Apr 2024 10:49:47 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.09
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.49.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:50:09 -0700 (PDT)
+ Mon, 08 Apr 2024 10:49:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/35] target/s390x: Use insn_start from DisasContextBase
-Date: Mon,  8 Apr 2024 07:49:20 -1000
-Message-Id: <20240408174929.862917-27-richard.henderson@linaro.org>
+Subject: [PULL 11/35] target/sh4: Merge mach and macl into a union
+Date: Mon,  8 Apr 2024 07:49:05 -1000
+Message-Id: <20240408174929.862917-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,41 +95,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allow host access to the entire 64-bit accumulator.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/s390x/tcg/translate.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ target/sh4/cpu.h | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 57b7db1ee9..90a74ee795 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -141,7 +141,6 @@ struct DisasFields {
- struct DisasContext {
-     DisasContextBase base;
-     const DisasInsn *insn;
--    TCGOp *insn_start;
-     DisasFields fields;
-     uint64_t ex_value;
-     /*
-@@ -6314,7 +6313,7 @@ static DisasJumpType translate_one(CPUS390XState *env, DisasContext *s)
-     insn = extract_insn(env, s);
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index 9211da6bde..d928bcf006 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -155,12 +155,22 @@ typedef struct CPUArchState {
+     uint32_t pc;                /* program counter */
+     uint32_t delayed_pc;        /* target of delayed branch */
+     uint32_t delayed_cond;      /* condition of delayed branch */
+-    uint32_t mach;              /* multiply and accumulate high */
+-    uint32_t macl;              /* multiply and accumulate low */
+     uint32_t pr;                /* procedure register */
+     uint32_t fpscr;             /* floating point status/control register */
+     uint32_t fpul;              /* floating point communication register */
  
-     /* Update insn_start now that we know the ILEN.  */
--    tcg_set_insn_start_param(s->insn_start, 2, s->ilen);
-+    tcg_set_insn_start_param(s->base.insn_start, 2, s->ilen);
++    /* multiply and accumulate: high, low and combined. */
++    union {
++        uint64_t mac;
++        struct {
++#if HOST_BIG_ENDIAN
++            uint32_t mach, macl;
++#else
++            uint32_t macl, mach;
++#endif
++        };
++    };
++
+     /* float point status register */
+     float_status fp_status;
  
-     /* Not found means unimplemented/illegal opcode.  */
-     if (insn == NULL) {
-@@ -6468,7 +6467,6 @@ static void s390x_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
- 
-     /* Delay the set of ilen until we've read the insn. */
-     tcg_gen_insn_start(dc->base.pc_next, dc->cc_op, 0);
--    dc->insn_start = tcg_last_op();
- }
- 
- static target_ulong get_next_pc(CPUS390XState *env, DisasContext *s,
 -- 
 2.34.1
 
