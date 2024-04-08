@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF66C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 11:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0735BC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 12:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtnde-0003CO-JO; Mon, 08 Apr 2024 07:58:14 -0400
+	id 1rtnpd-00066S-5u; Mon, 08 Apr 2024 08:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rtnda-0003CF-Mx
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 07:58:10 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rtnpa-00065l-2E
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 08:10:35 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rtndY-0002JF-7u
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 07:58:10 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a51d05c50b2so142073966b.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 04:58:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rtnpY-0004oQ-3Q
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 08:10:33 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6ecec796323so4006608b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 05:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712577483; x=1713182283; darn=nongnu.org;
- h=content-transfer-encoding:organization:subject:cc:content-language
- :from:to:user-agent:mime-version:date:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=vMbT0kcmgiqM5RcncIEUHlVztzn60aCaRofW6pVPH04=;
- b=kwM44sB7zAbBA9WpqKo068qWzmPFb2dQBXu4NUh/XKzhRjZzaa/s1x4QaSYCcb3nOo
- cHwVckkag88hIvlL9/VpPRyN5bz4UGaEm3fRStsaY1LS0mQTjVTQL8B33FyGZof9sloX
- rojBw7fsc3PzLx/J/EYA/xEideA/LW8DhNv+/6uxvzSqA5N7nURpxrx3wUHab8TZyOF1
- NyJffTYP8IRs7Sn3LjRzX+hH5/AuX4l3kTI5t5aeDwgTYvcXjKerEvqLsWJ4S+6zYwwh
- GIY3KQCyzo8jJtA2fKZ4Y08vxtFIseLAeQLDqNVPtZmRpqr06ca48FgzStl/6x2DzksA
- /f5w==
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1712578110; x=1713182910;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=su3JXcVewNLndT6lYI2i/gAjWAva3xX2Ao5dVp2OUNc=;
+ b=vmmZAHbkdjbqMRVCd0egwIZUVrt3o2l3CqIEhRlcXCmPX6AVcXm597dJpQeEhEbwoE
+ pjjf1bDzOmEierHwT+tEnq6EYrWYiyXQ2Ycljg9DbGThd9Y26Jaja2bx+Ar0nVw0Z2RM
+ hvgUpzfCktOLot3nQg07/KufXaJCrbttRaGT/D4INXzMW99D4BIXVKV/k9QL05AKmRZk
+ FhF+Q1H4cyZPhCjamG452aPBHm/INLoeMAMQFJUWE1ge8XSTb5I7chAxkTMBnCgYMEdX
+ 4CBga0AlQOZT1oEU/i5PDr5BbnO6Jll89KfdubpSa5/8kmSv7UqvdUNa27444w+3ilxr
+ 518Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712577483; x=1713182283;
- h=content-transfer-encoding:organization:subject:cc:content-language
- :from:to:user-agent:mime-version:date:message-id:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vMbT0kcmgiqM5RcncIEUHlVztzn60aCaRofW6pVPH04=;
- b=eyeXVZB2XGnXHV0ib8HtJ/wGQuhu5Gc3HIvVOxEzMToYG5qoAKyJ2yEciC58GdPpA5
- xkHK4FvGSzyzvl0f9hmVK1DBJA0D3yRCpyJ0lgkCNFgPqyueMdbdc1WzdL2hTR1h5n3Z
- nxsuhrgroGf2VcWKgUZKQNAQsifMlgCWnwRQ+SvzxSd9GGLJ4Yf3JARnovJd/tI1uJiN
- bLxJm2CsvcFPzPuDhOGkDr8+V/AtDZSMpDps9+/56Pgjz0onvstHzVSTfGjcFDn5mS7R
- XnuGnysZdYE8L5NMU+GRNEm3rc63XZexu2RF0UKNy9v99PUMqpNJlOdG904TYBnPiuer
- 81iQ==
-X-Gm-Message-State: AOJu0YwkuVuwiS8SxnzMgaWoRy7MatRepkpQjUIlx78tslgMoIHlBQH1
- NoQ1+5W4SMAU4Xnk3q3XS+ipHXjYRb6Fb+R2r65op5+rrBvh783+fX4Tpryqb41NHwlfFzGfhDg
- xRC4dvw==
-X-Google-Smtp-Source: AGHT+IGAtZEuATnJIZ32Ml9zTs6Hh6g7ijaDCejaecsJWLb0jDI0bXnKBbbexk9Ztm8Lz9fPrAk7ug==
-X-Received: by 2002:a17:907:1b24:b0:a51:b463:6b41 with SMTP id
- mp36-20020a1709071b2400b00a51b4636b41mr5701408ejc.61.1712577482547; 
- Mon, 08 Apr 2024 04:58:02 -0700 (PDT)
-Received: from [192.168.200.139] (83.11.9.119.ipv4.supernova.orange.pl.
- [83.11.9.119]) by smtp.gmail.com with ESMTPSA id
- qs28-20020a170906459c00b00a51bed388a4sm2858713ejc.139.2024.04.08.04.58.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 04:58:02 -0700 (PDT)
-Message-ID: <8b9b96e1-faaa-4866-aeb9-c439d5f83139@linaro.org>
-Date: Mon, 8 Apr 2024 13:58:00 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ d=1e100.net; s=20230601; t=1712578110; x=1713182910;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=su3JXcVewNLndT6lYI2i/gAjWAva3xX2Ao5dVp2OUNc=;
+ b=m0UQYJvkpzgyMkjoNAJ1m9WFexIdpiISNUBVdXDfKCvAMpdJADVHAPoWptsNkKUi8s
+ cytNxrBz+HBdD0bFu/WPZi+hQO8i9fYXLXIi8lWvjF947LgyxEEeiYEsbhOe/sq8jsOm
+ 2GraSOPl57gil6IhUU/IDXYY0+uAp1cBIO5EjSvBNKKNFEnqBGrPwqo1IRQt66RAR3PT
+ a2wDJvFNVCILan0XkLGlb8Sr7HU1oCZai+x6cA8iSmIRBIOAmJl4In8tDyIgM+zxN652
+ 1wNnvAVN2aHPpfVF2/wOGcoxVfdPEYSiibYQOjvAXU0kDBjdmN4h4GZt5lamYBL3QP9a
+ 0uqw==
+X-Gm-Message-State: AOJu0Yz5r5jh28aBY95nnom1jfSTB7nfg0XKkDiUDfKsJF+qRy54rjTn
+ yb2ajk39Zx1kPps42LPEo/gS+H07an8vtPX6+KZbmNasl56vHfbofH03i65P/2eDMxuyLIrwDsT
+ 7mSV3LQ==
+X-Google-Smtp-Source: AGHT+IGitV7fTdyyCVM1mWpnbVu90J8PRZZyr6IqycFwcg4yS74RQFZvfvsrnY7jOww4okK8KB35mw==
+X-Received: by 2002:a05:6a20:9f0f:b0:1a7:96ae:b2d with SMTP id
+ mk15-20020a056a209f0f00b001a796ae0b2dmr273690pzb.50.1712578107575; 
+ Mon, 08 Apr 2024 05:08:27 -0700 (PDT)
+Received: from anolis-dev.zelin.local ([221.122.98.162])
+ by smtp.gmail.com with ESMTPSA id
+ x42-20020a056a000bea00b006e6b180d87asm6410478pfu.35.2024.04.08.05.08.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 05:08:27 -0700 (PDT)
+From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB, en-HK
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Ard Biesheuvel <ardb+tianocore@kernel.org>,
- Xiong Yining <xiongyining1480@phytium.com.cn>,
- Chen Baozi <chenbaozi@phytium.com.cn>
-Subject: How to use pxb-pcie in correct way?
-Organization: Linaro
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ yong.huang@smartx.com
+Subject: [PATCH RESEND 2/2] scsi-disk: Fix crash of VMs configured with the
+ CDROM device
+Date: Mon,  8 Apr 2024 20:08:18 +0800
+Message-Id: <2abb4613ef6834de76f1167ffb11c732cc826d2b.1712577715.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <cover.1712577715.git.yong.huang@smartx.com>
+References: <cover.1712577715.git.yong.huang@smartx.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::429;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,364 +96,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For quite a while I am experimenting with PCI Express setup on SBSA-Ref 
-system. And finally decided to write.
+When configuring VMs with the CDROM device using the USB bus
+in Libvirt, do as follows:
 
-We want to play with NUMA setup and "pxb-pcie" can be assigned to NUMA 
-node other than cpu0 one. But adding it makes other cards dissapear...
+<disk type='file' device='cdrom'>
+  <driver name='qemu' type='raw'/>
+  <source file='/path/to/share_fs/cdrom.iso'/>
+  <target dev='sda' bus='usb'/>
+  <readonly/>
+  <address type='usb' bus='0' port='2'/>
+</disk>
+<controller type='usb' index='0' model='piix3-uhci'/>
 
-When I boot sbsa-ref I have plain PCIe setup:
+The destination Qemu process crashed, causing the VM migration
+to fail; the backtrace reveals the following:
 
-(qemu) info pci
-   Bus  0, device   0, function 0:
-     Host bridge: PCI device 1b36:0008
-       PCI subsystem 1af4:1100
-       id ""
-   Bus  0, device   1, function 0:
-     Ethernet controller: PCI device 8086:10d3
-       PCI subsystem 8086:0000
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR2: I/O at 0xffffffffffffffff [0x001e].
-       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
-       id ""
-   Bus  0, device   2, function 0:
-     Display controller: PCI device 1234:1111
-       PCI subsystem 1af4:1100
-       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
-       BAR2: 32 bit memory at 0x81084000 [0x81084fff].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
-       id ""
+Program terminated with signal SIGSEGV, Segmentation fault.
+0  __memmove_sse2_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:312
+312        movq    -8(%rsi,%rdx), %rcx
+[Current thread is 1 (Thread 0x7f0a9025fc00 (LWP 3286206))]
+(gdb) bt
+0  __memmove_sse2_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:312
+1  memcpy (__len=8, __src=<optimized out>, __dest=<optimized out>) at /usr/include/bits/string_fortified.h:34
+2  iov_from_buf_full (iov=<optimized out>, iov_cnt=<optimized out>, offset=<optimized out>, buf=0x0, bytes=bytes@entry=8) at ../util/iov.c:33
+3  iov_from_buf (bytes=8, buf=<optimized out>, offset=<optimized out>, iov_cnt=<optimized out>, iov=<optimized out>)
+   at /usr/src/debug/qemu-6-6.2.0-75.7.oe1.smartx.git.40.x86_64/include/qemu/iov.h:49
+4  usb_packet_copy (p=p@entry=0x56066b2fb5a0, ptr=<optimized out>, bytes=bytes@entry=8) at ../hw/usb/core.c:636
+5  usb_msd_copy_data (s=s@entry=0x56066c62c770, p=p@entry=0x56066b2fb5a0) at ../hw/usb/dev-storage.c:186
+6  usb_msd_handle_data (dev=0x56066c62c770, p=0x56066b2fb5a0) at ../hw/usb/dev-storage.c:496
+7  usb_handle_packet (dev=0x56066c62c770, p=p@entry=0x56066b2fb5a0) at ../hw/usb/core.c:455
+8  uhci_handle_td (s=s@entry=0x56066bd5f210, q=0x56066bb7fbd0, q@entry=0x0, qh_addr=qh_addr@entry=902518530, td=td@entry=0x7fffe6e788f0, td_addr=<optimized out>,
+   int_mask=int_mask@entry=0x7fffe6e788e4) at ../hw/usb/hcd-uhci.c:885
+9  uhci_process_frame (s=s@entry=0x56066bd5f210) at ../hw/usb/hcd-uhci.c:1061
+10 uhci_frame_timer (opaque=opaque@entry=0x56066bd5f210) at ../hw/usb/hcd-uhci.c:1159
+11 timerlist_run_timers (timer_list=0x56066af26bd0) at ../util/qemu-timer.c:642
+12 qemu_clock_run_timers (type=QEMU_CLOCK_VIRTUAL) at ../util/qemu-timer.c:656
+13 qemu_clock_run_all_timers () at ../util/qemu-timer.c:738
+14 main_loop_wait (nonblocking=nonblocking@entry=0) at ../util/main-loop.c:542
+15 qemu_main_loop () at ../softmmu/runstate.c:739
+16 main (argc=<optimized out>, argv=<optimized out>, envp=<optimized out>) at ../softmmu/main.c:52
+(gdb) frame 5
+(gdb) p ((SCSIDiskReq *)s->req)->iov
+$1 = {iov_base = 0x0, iov_len = 0}
+(gdb) p/x s->req->tag
+$2 = 0x472
 
-Adding extra PCIe card works fine - both just "igb" and "igb" with 
-"pcie-root-port".
+The scsi commands that the CDROM issued are wrapped as the
+payload of the USB protocol in Qemu's implementation of a
+USB mass storage device, which is used to implement a
+CDROM device that uses a USB bus.
 
-But adding "pcie-root-port" + "igb" and then "pxb-pcie" makes "igb" 
-dissapear:
+In general, the USB controller processes SCSI commands in
+two phases. Sending the OUT USB package that encapsulates
+the SCSI command is the first stage; scsi-disk would handle
+this by emulating the SCSI operation. Receiving the IN USB
+package containing the SCSI operation's output is the second
+stage. Additionally, the SCSI request tag tracks the request
+during the procedure.
 
-../code/qemu/build/qemu-system-aarch64
--monitor telnet::45454,server,nowait
--serial stdio
--device pcie-root-port,id=ULyWl,slot=0,chassis=0
--device igb,bus=ULyWl
--device pxb-pcie,bus_nr=1
+Since QEMU did not migrate the flying SCSI request, the
+output of the SCSI may be lost if the live migration is
+initiated between the two previously mentioned steps.
 
-(qemu) info pci
-   Bus  0, device   0, function 0:
-     Host bridge: PCI device 1b36:0008
-       PCI subsystem 1af4:1100
-       id ""
-   Bus  0, device   1, function 0:
-     Ethernet controller: PCI device 8086:10d3
-       PCI subsystem 8086:0000
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR2: I/O at 0xffffffffffffffff [0x001e].
-       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
-       id ""
-   Bus  0, device   2, function 0:
-     Display controller: PCI device 1234:1111
-       PCI subsystem 1af4:1100
-       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
-       BAR2: 32 bit memory at 0x81085000 [0x81085fff].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
-       id ""
-   Bus  0, device   3, function 0:
-     PCI bridge: PCI device 1b36:000c
-       IRQ 255, pin A
-       BUS 0.
-       secondary bus 1.
-       subordinate bus 1.
-       IO range [0xf000, 0x0fff]
-       memory range [0xfff00000, 0x000fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 32 bit memory at 0x81084000 [0x81084fff].
-       id "ULyWl"
-   Bus  0, device   4, function 0:
-     Host bridge: PCI device 1b36:000b
-       PCI subsystem 1af4:1100
-       id ""
+In our scenario, the SCSI command is GET_EVENT_STATUS_NOTIFICATION,
+the QEMU log information below demonstrates how the SCSI command
+is being handled (first step) on the source:
 
+usb_packet_state_change bus 0, port 2, ep 2, packet 0x559f9ba14b00, state undef -> setup
+usb_msd_cmd_submit lun 0, tag 0x472, flags 0x00000080, len 10, data-len 8
 
-If I add "igb" directly (without root port) then it appears correctly:
+After migration, the VM crashed as soon as the destination's UHCI
+controller began processing the remaining portion of the SCSI
+request (second step)! Here is how the QEMU logged out:
 
-(qemu) info pci
-   Bus  0, device   0, function 0:
-     Host bridge: PCI device 1b36:0008
-       PCI subsystem 1af4:1100
-       id ""
-   Bus  0, device   1, function 0:
-     Ethernet controller: PCI device 8086:10d3
-       PCI subsystem 8086:0000
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR2: I/O at 0xffffffffffffffff [0x001e].
-       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
-       id ""
-   Bus  0, device   2, function 0:
-     Display controller: PCI device 1234:1111
-       PCI subsystem 1af4:1100
-       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
-       BAR2: 32 bit memory at 0x810c4000 [0x810c4fff].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
-       id ""
-   Bus  0, device   3, function 0:
-     Ethernet controller: PCI device 8086:10c9
-       PCI subsystem 1af4:1100
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR2: I/O at 0xffffffffffffffff [0x001e].
-       BAR3: 64 bit memory at 0xffffffffffffffff [0x00003ffe].
-       id ""
-   Bus  0, device   4, function 0:
-     Host bridge: PCI device 1b36:000b
-       PCI subsystem 1af4:1100
-       id ""
+usb_packet_state_change bus 0, port 2, ep 1, packet 0x56066b2fb5a0, state undef -> setup
+usb_msd_data_in 8/8 (scsi 8)
+shutting down, reason=crashed
 
+To summarize, the missing scsi request during a live migration
+may cause a VM configured with a CDROM to crash.
 
-When I add "pcie-root-port" with "igb" followed by "pcie-root-port" and 
-"pxb-pcie" then no IGB again:
+Migrating the SCSI request that the scsi-disk is handling is
+the simple approach, assuming that it actually exists.
 
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+---
+ hw/scsi/scsi-disk.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
--device pcie-root-port,id=RjKXs,slot=0,chassis=0
--device igb,bus=RjKXs
--device pcie-root-port,chassis=7
--device pxb-pcie,bus_nr=1
-
-
-(qemu) info pci
-   Bus  0, device   0, function 0:
-     Host bridge: PCI device 1b36:0008
-       PCI subsystem 1af4:1100
-       id ""
-   Bus  0, device   1, function 0:
-     Ethernet controller: PCI device 8086:10d3
-       PCI subsystem 8086:0000
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR2: I/O at 0xffffffffffffffff [0x001e].
-       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
-       id ""
-   Bus  0, device   2, function 0:
-     Display controller: PCI device 1234:1111
-       PCI subsystem 1af4:1100
-       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
-       BAR2: 32 bit memory at 0x81086000 [0x81086fff].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
-       id ""
-   Bus  0, device   3, function 0:
-     PCI bridge: PCI device 1b36:000c
-       IRQ 255, pin A
-       BUS 0.
-       secondary bus 1.
-       subordinate bus 1.
-       IO range [0xf000, 0x0fff]
-       memory range [0xfff00000, 0x000fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 32 bit memory at 0x81085000 [0x81085fff].
-       id "RjKXs"
-   Bus  0, device   4, function 0:
-     PCI bridge: PCI device 1b36:000c
-       IRQ 255, pin A
-       BUS 0.
-       secondary bus 2.
-       subordinate bus 2.
-       IO range [0xf000, 0x0fff]
-       memory range [0xfff00000, 0x000fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 32 bit memory at 0x81084000 [0x81084fff].
-       id ""
-   Bus  0, device   5, function 0:
-     Host bridge: PCI device 1b36:000b
-       PCI subsystem 1af4:1100
-       id ""
-
-
-Same (no "igb") with more complex structure behind "pxb-pcie" bridge:
-
-../code/qemu/build/qemu-system-aarch64 
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 0985676f73..d6e9d9e8d4 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -160,6 +160,16 @@ static void scsi_disk_save_request(QEMUFile *f, SCSIRequest *req)
+     }
+ }
  
-
--monitor telnet::45454,server,nowait 
++static void scsi_disk_emulate_save_request(QEMUFile *f, SCSIRequest *req)
++{
++    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
++
++    if (s->migrate_emulate_scsi_request) {
++        scsi_disk_save_request(f, req);
++    }
++}
++
+ static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
+ {
+     SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
+@@ -183,6 +193,16 @@ static void scsi_disk_load_request(QEMUFile *f, SCSIRequest *req)
+     qemu_iovec_init_external(&r->qiov, &r->iov, 1);
+ }
  
-
--serial stdio 
++static void scsi_disk_emulate_load_request(QEMUFile *f, SCSIRequest *req)
++{
++    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
++
++    if (s->migrate_emulate_scsi_request) {
++        scsi_disk_load_request(f, req);
++    }
++}
++
+ /*
+  * scsi_handle_rw_error has two return values.  False means that the error
+  * must be ignored, true means that the error has been processed and the
+@@ -2593,6 +2613,8 @@ static const SCSIReqOps scsi_disk_emulate_reqops = {
+     .read_data    = scsi_disk_emulate_read_data,
+     .write_data   = scsi_disk_emulate_write_data,
+     .get_buf      = scsi_get_buf,
++    .load_request = scsi_disk_emulate_load_request,
++    .save_request = scsi_disk_emulate_save_request,
+ };
  
-
--device pcie-root-port,id=PrZUz,slot=0,chassis=0 
+ static const SCSIReqOps scsi_disk_dma_reqops = {
+@@ -3137,7 +3159,7 @@ static Property scsi_hd_properties[] = {
+ static int scsi_disk_pre_save(void *opaque)
+ {
+     SCSIDiskState *dev = opaque;
+-    dev->migrate_emulate_scsi_request = false;
++    dev->migrate_emulate_scsi_request = true;
  
+     return 0;
+ }
+-- 
+2.39.3
 
--device igb,bus=PrZUz 
- 
-
--device pcie-root-port,chassis=7 
- 
-
--device pxb-pcie,id=pxb1,bus_nr=1 
- 
-
--device pcie-pci-bridge,id=pci,bus=pxb1 
- 
-
--device es1370,bus=pci,addr=9,id=es1370 
- 
-
--device e1000,bus=pci,addr=10,id=e1000 
- 
-
--device pcie-root-port,id=root_port_for_ahci,bus=pxb1,chassis=10,slot=0 
- 
-
--device ahci,bus=root_port_for_ahci,id=ahci 
- 
-
-
-   Bus  1, device   0, function 0:
-     PCI bridge: PCI device 1b36:000e
-       IRQ 255, pin A
-       BUS 1.
-       secondary bus 2.
-       subordinate bus 2.
-       IO range [0x1000, 0x1fff]
-       memory range [0x81100000, 0x811fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 64 bit memory at 0x81200000 [0x812000ff].
-       id "pci"
-   Bus  2, device   9, function 0:
-     Audio controller: PCI device 1274:5000
-       PCI subsystem 4942:4c4c
-       IRQ 255, pin A
-       BAR0: I/O at 0xffffffffffffffff [0x00fe].
-       id "es1370"
-   Bus  2, device  16, function 0:
-     Ethernet controller: PCI device 8086:100e
-       PCI subsystem 1af4:1100
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: I/O at 0xffffffffffffffff [0x003e].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
-       id "e1000"
-   Bus  1, device   1, function 0:
-     PCI bridge: PCI device 1b36:000c
-       IRQ 255, pin A
-       BUS 1.
-       secondary bus 3.
-       subordinate bus 3.
-       IO range [0x0000, 0x0fff]
-       memory range [0x81000000, 0x810fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 32 bit memory at 0x81201000 [0x81201fff].
-       id "root_port_for_ahci"
-   Bus  3, device   0, function 0:
-     SATA controller: PCI device 8086:2922
-       PCI subsystem 1af4:1100
-       IRQ 255, pin A
-       BAR4: I/O at 0xffffffffffffffff [0x001e].
-       BAR5: 32 bit memory at 0xffffffffffffffff [0x00000ffe].
-       id "ahci"
-   Bus  0, device   0, function 0:
-     Host bridge: PCI device 1b36:0008
-       PCI subsystem 1af4:1100
-       id ""
-   Bus  0, device   1, function 0:
-     Ethernet controller: PCI device 8086:10d3
-       PCI subsystem 8086:0000
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR2: I/O at 0xffffffffffffffff [0x001e].
-       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
-       id ""
-   Bus  0, device   2, function 0:
-     Display controller: PCI device 1234:1111
-       PCI subsystem 1af4:1100
-       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
-       BAR2: 32 bit memory at 0x81386000 [0x81386fff].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
-       id ""
-   Bus  0, device   3, function 0:
-     PCI bridge: PCI device 1b36:000c
-       IRQ 255, pin A
-       BUS 0.
-       secondary bus 1.
-       subordinate bus 3.
-       IO range [0x0000, 0x1fff]
-       memory range [0x81000000, 0x812fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 32 bit memory at 0x81385000 [0x81385fff].
-       id "PrZUz"
-   Bus  1, device   0, function 0:
-     PCI bridge: PCI device 1b36:000e
-       IRQ 255, pin A
-       BUS 1.
-       secondary bus 2.
-       subordinate bus 2.
-       IO range [0x1000, 0x1fff]
-       memory range [0x81100000, 0x811fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 64 bit memory at 0x81200000 [0x812000ff].
-       id "pci"
-   Bus  2, device   9, function 0:
-     Audio controller: PCI device 1274:5000
-       PCI subsystem 4942:4c4c
-       IRQ 255, pin A
-       BAR0: I/O at 0xffffffffffffffff [0x00fe].
-       id "es1370"
-   Bus  2, device  16, function 0:
-     Ethernet controller: PCI device 8086:100e
-       PCI subsystem 1af4:1100
-       IRQ 255, pin A
-       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
-       BAR1: I/O at 0xffffffffffffffff [0x003e].
-       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
-       id "e1000"
-   Bus  1, device   1, function 0:
-     PCI bridge: PCI device 1b36:000c
-       IRQ 255, pin A
-       BUS 1.
-       secondary bus 3.
-       subordinate bus 3.
-       IO range [0x0000, 0x0fff]
-       memory range [0x81000000, 0x810fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 32 bit memory at 0x81201000 [0x81201fff].
-       id "root_port_for_ahci"
-   Bus  3, device   0, function 0:
-     SATA controller: PCI device 8086:2922
-       PCI subsystem 1af4:1100
-       IRQ 255, pin A
-       BAR4: I/O at 0xffffffffffffffff [0x001e].
-       BAR5: 32 bit memory at 0xffffffffffffffff [0x00000ffe].
-       id "ahci"
-   Bus  0, device   4, function 0:
-     PCI bridge: PCI device 1b36:000c
-       IRQ 255, pin A
-       BUS 0.
-       secondary bus 4.
-       subordinate bus 4.
-       IO range [0xf000, 0x0fff]
-       memory range [0xfff00000, 0x000fffff]
-       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
-       BAR0: 32 bit memory at 0x81384000 [0x81384fff].
-       id ""
-   Bus  0, device   5, function 0:
-     Host bridge: PCI device 1b36:000b
-       PCI subsystem 1af4:1100
-       id "pxb1"
-
-What happens with missing card? It does not have to be "igb" - "ac97" 
-gets lost too.
-
-And only first added one dissapears. If I add two cards (with root-port 
-entries) before "pxb-pcie" then second one is present.
 
