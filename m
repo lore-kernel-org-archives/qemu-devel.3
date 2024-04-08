@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B92CC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58CA9CD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:53:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtlfz-0004Rt-HQ; Mon, 08 Apr 2024 05:52:31 -0400
+	id 1rtlfs-0004Nh-S1; Mon, 08 Apr 2024 05:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlfx-0004QZ-I4
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:52:29 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlfr-0004Lv-Jb
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:52:23 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlfw-0006MB-2x
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:52:29 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a4644bde1d4so592263766b.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:52:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlfp-0006Lv-WE
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:52:23 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56e69a51a33so258600a12.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712569945; x=1713174745; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R4JOGeyk5Il5mqTCfLsLzu8RX0JVQXq+A+QA9fciUu0=;
- b=TM52845524jWjlnRBakbvN0Hn9ZKgWByVTXME3aFau1ijlitIZsJ8qTFGGlf+zlAe9
- HNPYaaiqnxPz7OrTyCwouxXabidz0uSjh+zrIMUgpOTG9WOHv+8Q3BXW5hYnXN4lcxWW
- OOEUA+eCYcSMFZSVbcMA/qY6R38X99TskbYpm04izBbNf8cAorIUvPta3ox9aOYZxqrI
- 4KgC9AVsrl/Vu9NsrWwiGI6hit/zAwYKAYq49uT3i7r3jsKepmObwfHwLQKDYpxcSkoy
- GqRnfCz5rSfw1jVvrDn+64f0brgV0CSKIlIka+acYqvFJsNjM3n9NNn69odrt6xNzH0z
- ev4Q==
+ d=linaro.org; s=google; t=1712569940; x=1713174740; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xHsQHwdWozGmYntZG1DsswfJcaBGZtgyE5FZtk7H5pU=;
+ b=ZGc+9F/ZL3nqiezZ9N8ajsy5j6RMcyGKE1vvwqTVWQEZdYTeaTVyjI4Kve9m5gEUDa
+ og9ByjPxQXj2WHV2H03KZ+YoD2385ttCNygWBtprrHFmskeV+2+4yX5g1o/ftVfe633O
+ C9XOEqGYpAoE3zgRjHKt/n360lMJGJtGiN8To4i2I2UyJLvY+D1weGZ8YDZnpzN9RZNN
+ 2By1ghyHxz8cnOaRpawjPCaOST0BsyBs84614ukZD8A5Y1ha43k3eE0LmnkvB8pZYeGd
+ cnxQjpgDMOGopil6e33DHoB80JEbq5rOh+LZPZ11rWBw7+WbL4010ARTsqtnQBn0dHRi
+ QJ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712569945; x=1713174745;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R4JOGeyk5Il5mqTCfLsLzu8RX0JVQXq+A+QA9fciUu0=;
- b=UPz8cB0QBj9vaWaUhO9rIk+H8nTkAzka+OfK3oO5/XUDhWOMvzVAdeBlJ6xVjM3hkW
- t6Ad83CYMj5Tr5Y/aedJXI5e9LTTJwylW1rk2wjJ6zt81M4IvNpkBOpv54PQOEHe5kuD
- UZJEr7tH4T+7UnPXNM/RQCjj7UHMvCi63SoSXIxk3HBybD9izYklBILVsrho+Gtcdt+F
- GH4/ihzPNKRFewhZVGIL5QKjbLtp19Z9rApCeohREqNafoFNwtqMdTiiALv7RKkdWlR4
- +pEjN5bO6xqaqXIoUq8XRfBiYusPa0MsHL25ioh1g1FblKItnc9Fak97iWGMsu1+RwFW
- /yoA==
-X-Gm-Message-State: AOJu0YxCxFFRMPf7m41CYnTeKdE2Qa4yoc0gl+4LY3j9sh4gRlOtyAGk
- 1B8HWevoWGIAhTKou7Il3Skq65Quua1EQ7WjeL4QydWI+9He2CWcR3VwPm0ptBH6NKu6sbhsJo/
- x
-X-Google-Smtp-Source: AGHT+IG+f9Fn93QtWqqaJemFcWRSpxGYywb81KX3iIBxGkLMFKLTS9QJhI2w4/Im1sD3UNb14a31QQ==
-X-Received: by 2002:a17:906:c109:b0:a51:b36e:61c7 with SMTP id
- do9-20020a170906c10900b00a51b36e61c7mr5234689ejc.13.1712569945094; 
- Mon, 08 Apr 2024 02:52:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712569940; x=1713174740;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xHsQHwdWozGmYntZG1DsswfJcaBGZtgyE5FZtk7H5pU=;
+ b=mwZ+l3D18+S0YIvMmQj04tlXzPBjDBdqXOgWXbMjoH6V/XSTvzAST2Kphk/MBLU9Vf
+ fYldIHLIgspqS+JB68Xih068Noq/nZczM2AfAoAxpqZ7Nbx2Ac+ElITaHb8xBpYwjvrA
+ Ig+UVwPKUI/ZqbgXRMafnG1YzVbi2zs31izvusLKFADmcPKG+Wadwc7Wf/UPUiieODgQ
+ oaKpL+hKIbl+fi7pTmZvCBRv2jDBzN/bxRApG2Fj3N6JkhP9Hbjrxg+EddmBtadnc4fq
+ Gw+fnnE2s8EjQGhrv8tv6VuGjszXWlXz0Xpk1LSRCByZFW36vk7LNMXP+uebLA11p7VX
+ DqMQ==
+X-Gm-Message-State: AOJu0YwxmIlwsHIx5oyo4W1PM+bG9h2D1BBuwt5S/BuOdXH8G6Bs+wgU
+ GGw3ZWzYiECOYoFXyG44JfFDhPQlBmufQJ52tlhWC5cCSdbGT+PCNAj6bw9iIkNf0AyBwnvGqg3
+ t
+X-Google-Smtp-Source: AGHT+IEzyUYx3Z2hPfoetwIjrRn8Fw5GwLF4BI+LPsiVao8Cnun6MxDL1DxzELYMGZIfHa+zXYYi4Q==
+X-Received: by 2002:a17:906:4704:b0:a4e:2bd3:a060 with SMTP id
+ y4-20020a170906470400b00a4e2bd3a060mr5534297ejq.64.1712569939665; 
+ Mon, 08 Apr 2024 02:52:19 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- y15-20020a170906448f00b00a51d250a1a4sm1479813ejo.80.2024.04.08.02.52.24
+ q14-20020a170906a08e00b00a4e8353be19sm4244235ejy.224.2024.04.08.02.52.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Apr 2024 02:52:24 -0700 (PDT)
+ Mon, 08 Apr 2024 02:52:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, Zheyu Ma <zheyuma97@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0? 1/2] hw/misc/applesmc: Do not call DeviceReset() from
- DeviceRealize()
-Date: Mon,  8 Apr 2024 11:52:15 +0200
-Message-ID: <20240408095217.57239-2-philmd@linaro.org>
+Subject: [PATCH-for-9.0? 0/2] hw/misc/applesmc: Fix memory leak
+Date: Mon,  8 Apr 2024 11:52:14 +0200
+Message-ID: <20240408095217.57239-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240408095217.57239-1-philmd@linaro.org>
-References: <20240408095217.57239-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,26 +91,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QDev core layer always call DeviceReset() after DeviceRealize(),
-no need to do it manually. Remove the extra call.
+Fix for https://gitlab.com/qemu-project/qemu/-/issues/2272
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/misc/applesmc.c | 1 -
- 1 file changed, 1 deletion(-)
+Philippe Mathieu-Daudé (2):
+  hw/misc/applesmc: Do not call DeviceReset() from DeviceRealize()
+  hw/misc/applesmc: Fix memory leak in reset() handler
 
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index 72300d0cbc..8e65816da6 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -342,7 +342,6 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
-     }
- 
-     QLIST_INIT(&s->data_def);
--    qdev_applesmc_isa_reset(dev);
- }
- 
- static Property applesmc_isa_properties[] = {
+ hw/misc/applesmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 -- 
 2.41.0
 
