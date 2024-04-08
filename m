@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC19CD129A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6D7CD1292
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt8K-00026o-Iv; Mon, 08 Apr 2024 13:50:16 -0400
+	id 1rtt8X-0002B4-9m; Mon, 08 Apr 2024 13:50:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8H-00025x-SH
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:14 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1rtt8T-0002AS-Ah
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:25 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8C-0003jI-JS
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:13 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6ed32341906so962669b3a.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:08 -0700 (PDT)
+ id 1rtt8O-0003lO-GE
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:25 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5ce6b5e3c4eso2695080a12.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598607; x=1713203407; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598618; x=1713203418; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cP8jA9GFq1yR+e10bjvG/FkvD/Ggh4PQtWX+MXPzUjs=;
- b=lTJvob900ZquP5RvzbX+VFDZKvWJ8q6CoX1gKWJZsx91XuuHiH+0gM7241ThTwmT6J
- 1nnDW1IWf/RCCvUAGLPgs74yKNbb2JPjgVt0YlQh5sCTWhplqlkCfz87gyALWP6HjJRS
- hIoRjNhLv9JAciCEw0EieVf1GbPrPgW0/ARKaefL0RF/vQedJMjrOIyflfkMpDKGITSn
- a5pWcM4h7PHUENOEt3omvw0VzzyzBCzXndZ6Vpl8YnrkYFynLpg/uLrjhtV66MHPX9Yv
- BRUKbQ99t/l+hhCRVip98RMDY8YiFe8IiTJvSK8KFm4Xh29+/VFWGjg4e6efkCTBFX2G
- HHKg==
+ bh=RPMJ9Fq7Hagw2E+aglC+ITwqURcRV1FccXRLb5FLQFU=;
+ b=FynA4AtMkYEVC7OeZdGIHPP6PEz2FjFtX935cJlSWbiQudtdxsmgQCYLLcE7SQgF6A
+ GgGFr476Ji7NJDnJ14zLxDFupF5tuflymHSNDobTSGjOFa1JnnJ1jENsUT/0TJ65tJ/a
+ 9tkp5iHEsBSthLBE80BpSF5WD9B0TYUku/6F6bumqXFcWby/7Iu74qyaEqd99G8Rt+uY
+ yMz15/jpjwutUIh7GfD1tuo1UNV/usLpXMkGY1NfldA254gheuvcLTocCEN8gGbdBHTq
+ 7htTdHhIeUPDnYOFow7/Gv+kwkevQSc+3o2bAuR+FoC8tFyYUzd7hQfQQbcjl7K3VU0y
+ s4bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598607; x=1713203407;
+ d=1e100.net; s=20230601; t=1712598618; x=1713203418;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cP8jA9GFq1yR+e10bjvG/FkvD/Ggh4PQtWX+MXPzUjs=;
- b=a3FjeXFxb4EtKpdnGMKUTPRoxzJkio4Bi2lOCvSE6KkrC9+vIA/6vfBDJmioeWYLqS
- 76IVQMjvkdR8TPRj+4VEkTh8yXcKRsKT238VyMO/tJIVK1nq9fy4LJeSVe8yuRliXOEq
- VeIKq4qvN3rGGsRucARJkYjhjj9szumJpOnB3tI8+G5cTx9kCiqQrW+aN4y2C1MSuaH/
- 1MCgUpfiwj3WhyyZzOJI2eD1j0jj6aYsAHJB6CCuK5C5stm3kVFf0HfNsyP3o/583hb8
- Qtwi8p2tjEmYy6elE/kf2uv/woLFLvXvKDmk0M3vwCk48QXWZpDhM76nJ5ldZF1QRlf/
- EpDg==
-X-Gm-Message-State: AOJu0YxjRuhbQ3BVavYZxT6/TFF7q1YOLkpqm+77xhfUFehrhJhVxtvY
- jsjyedWfCEiZZSo+FF7zanvQ7huDtiMJ1p2XrLeK/6AAcAeHZHPCRr+FzQPvBl4Ee48L9I08N9A
- 4
-X-Google-Smtp-Source: AGHT+IElnT4gcdfTpp83OSg8Mhf7bmwOWkA/wEJsOw0Azbljcv8Nom3I+VGyTPCYkHR4dtXe1sUSHQ==
-X-Received: by 2002:a05:6a20:158c:b0:1a7:545d:d334 with SMTP id
- h12-20020a056a20158c00b001a7545dd334mr4763093pzj.47.1712598607383; 
- Mon, 08 Apr 2024 10:50:07 -0700 (PDT)
+ bh=RPMJ9Fq7Hagw2E+aglC+ITwqURcRV1FccXRLb5FLQFU=;
+ b=uTOl3rttEUp9Zp5Ord8VtFCESVcdhVjz0DD/mmp3dBGlUUg19eWflae6UVbkAQzkBC
+ vxEVyIhsSlTanvzU18qEt2gfkvtlvx9xAhbEnqyUK1T4ikrVUANN24MZLhyxShUsBwbw
+ Ni6Ud1lvt8nKRX1Are14Gg6egPaG2SUmDxCcooNtHviWsTTgIBSjCR6wiUa0umcUGK1u
+ FetBfTBEIhMD4/rl0EtNtd2sS7IZhSJgqgg0l1/ubI/9ECy9g7fmACJR7TMiNpMr2Vd7
+ HZIwjmW+UpLHVu7JSgv07N2QK+ilWiOjlRYtCRdaQudrhMm1pbp4l/OLcRKTnvZF1g6i
+ Nefg==
+X-Gm-Message-State: AOJu0Yxy0uVdLQf4wLQukwOnbGp7Ckyliso9U+dT6+3qBFkxIdqOW0yZ
+ ieOUdbN+TuMsia27bUsKl9ZoXmRHyTcoYTB1IU8cKT0t22t0rsF9qMT+ZTUyapkxGAPdoNY2WMo
+ V
+X-Google-Smtp-Source: AGHT+IE9QPMDe9/21wXGUioD4qlf/j3g0y5TvVs7pPUO7oCH1UmweM3nXFIXgtqHmo1PzhVkmeBACQ==
+X-Received: by 2002:a17:90a:7c01:b0:2a5:1fcf:efb7 with SMTP id
+ v1-20020a17090a7c0100b002a51fcfefb7mr2721307pjf.21.1712598617875; 
+ Mon, 08 Apr 2024 10:50:17 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.05
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:50:06 -0700 (PDT)
+ Mon, 08 Apr 2024 10:50:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 24/35] target/microblaze: Use insn_start from DisasContextBase
-Date: Mon,  8 Apr 2024 07:49:18 -1000
-Message-Id: <20240408174929.862917-25-richard.henderson@linaro.org>
+Cc: Alexander Monakov <amonakov@ispras.ru>,
+ Mikhail Romanov <mmromanov@ispras.ru>
+Subject: [PULL 31/35] util/bufferiszero: Remove useless prefetches
+Date: Mon,  8 Apr 2024 07:49:25 -1000
+Message-Id: <20240408174929.862917-32-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,51 +95,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/microblaze/translate.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+From: Alexander Monakov <amonakov@ispras.ru>
 
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 4e52ef32db..fc451befae 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -62,9 +62,6 @@ typedef struct DisasContext {
-     DisasContextBase base;
-     const MicroBlazeCPUConfig *cfg;
+Use of prefetching in bufferiszero.c is quite questionable:
+
+- prefetches are issued just a few CPU cycles before the corresponding
+  line would be hit by demand loads;
+
+- they are done for simple access patterns, i.e. where hardware
+  prefetchers can perform better;
+
+- they compete for load ports in loops that should be limited by load
+  port throughput rather than ALU throughput.
+
+Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
+Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240206204809.9859-5-amonakov@ispras.ru>
+---
+ util/bufferiszero.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index 972f394cbd..00118d649e 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -50,7 +50,6 @@ static bool buffer_is_zero_integer(const void *buf, size_t len)
+         const uint64_t *e = (uint64_t *)(((uintptr_t)buf + len) & -8);
  
--    /* TCG op of the current insn_start.  */
--    TCGOp *insn_start;
--
-     TCGv_i32 r0;
-     bool r0_set;
+         for (; p + 8 <= e; p += 8) {
+-            __builtin_prefetch(p + 8);
+             if (t) {
+                 return false;
+             }
+@@ -80,7 +79,6 @@ buffer_zero_sse2(const void *buf, size_t len)
  
-@@ -699,14 +696,14 @@ static TCGv compute_ldst_addr_ea(DisasContext *dc, int ra, int rb)
- static void record_unaligned_ess(DisasContext *dc, int rd,
-                                  MemOp size, bool store)
- {
--    uint32_t iflags = tcg_get_insn_start_param(dc->insn_start, 1);
-+    uint32_t iflags = tcg_get_insn_start_param(dc->base.insn_start, 1);
+     /* Loop over 16-byte aligned blocks of 64.  */
+     while (likely(p <= e)) {
+-        __builtin_prefetch(p);
+         t = _mm_cmpeq_epi8(t, zero);
+         if (unlikely(_mm_movemask_epi8(t) != 0xFFFF)) {
+             return false;
+@@ -111,7 +109,6 @@ buffer_zero_avx2(const void *buf, size_t len)
  
-     iflags |= ESR_ESS_FLAG;
-     iflags |= rd << 5;
-     iflags |= store * ESR_S;
-     iflags |= (size == MO_32) * ESR_W;
- 
--    tcg_set_insn_start_param(dc->insn_start, 1, iflags);
-+    tcg_set_insn_start_param(dc->base.insn_start, 1, iflags);
- }
- #endif
- 
-@@ -1624,7 +1621,6 @@ static void mb_tr_insn_start(DisasContextBase *dcb, CPUState *cs)
-     DisasContext *dc = container_of(dcb, DisasContext, base);
- 
-     tcg_gen_insn_start(dc->base.pc_next, dc->tb_flags & ~MSR_TB_MASK);
--    dc->insn_start = tcg_last_op();
- }
- 
- static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+     /* Loop over 32-byte aligned blocks of 128.  */
+     while (p <= e) {
+-        __builtin_prefetch(p);
+         if (unlikely(!_mm256_testz_si256(t, t))) {
+             return false;
+         }
 -- 
 2.34.1
 
