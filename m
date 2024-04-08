@@ -4,33 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E1B8CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1814DC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtklK-0000dK-A2; Mon, 08 Apr 2024 04:53:58 -0400
+	id 1rtkoe-0001hE-GE; Mon, 08 Apr 2024 04:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ysato@users.sourceforge.jp>)
- id 1rtklG-0000Zi-TP
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:54 -0400
+ id 1rtkod-0001fi-UV
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:57:23 -0400
 Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
  helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <ysato@users.sourceforge.jp>) id 1rtklF-0005Td-4d
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:54 -0400
+ (envelope-from <ysato@users.sourceforge.jp>) id 1rtkoc-0006JB-7n
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:57:23 -0400
 Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
- by sakura.ysato.name (Postfix) with ESMTPSA id DBDA21C102D;
- Mon,  8 Apr 2024 17:53:49 +0900 (JST)
-Date: Mon, 08 Apr 2024 17:53:49 +0900
-Message-ID: <877ch8ck0y.wl-ysato@users.sourceforge.jp>
+ by sakura.ysato.name (Postfix) with ESMTPSA id DD6331C102D;
+ Mon,  8 Apr 2024 17:57:20 +0900 (JST)
+Date: Mon, 08 Apr 2024 17:57:20 +0900
+Message-ID: <875xwscjv3.wl-ysato@users.sourceforge.jp>
 From: Yoshinori Sato <ysato@users.sourceforge.jp>
-To: Richard Henderson <richard.henderson@linaro.org>
+To: Zack Buhman <zack@buhman.org>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 30/32] target/rx: Use translator_ld*
-In-Reply-To: <20240405102459.462551-31-richard.henderson@linaro.org>
-References: <20240405102459.462551-1-richard.henderson@linaro.org>
- <20240405102459.462551-31-richard.henderson@linaro.org>
+Subject: Re: [PATCH] target/sh4: add missing CHECK_NOT_DELAY_SLOT
+In-Reply-To: <20240407150705.5965-1-zack@buhman.org>
+References: <20240407150705.5965-1-zack@buhman.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/28.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -58,101 +57,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 05 Apr 2024 19:24:57 +0900,
-Richard Henderson wrote:
+On Mon, 08 Apr 2024 00:07:05 +0900,
+Zack Buhman wrote:
 > 
-> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> CHECK_NOT_DELAY_SLOT is correctly applied to the branch-related
+> instructions, but not to the PC-relative mov* instructions.
+> 
+> I verified the existence of an illegal slot exception on a SH7091 when
+> any of these instructions are attempted inside a delay slot.
+> 
+> This also matches the behavior described in the SH-4 ISA manual.
+> 
+> Signed-off-by: Zack Buhman <zack@buhman.org>
 > ---
->  target/rx/translate.c | 27 ++++++++++++++-------------
->  1 file changed, 14 insertions(+), 13 deletions(-)
+>  target/sh4/translate.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/target/rx/translate.c b/target/rx/translate.c
-> index 92fb2b43ad..9b81cf20b3 100644
-> --- a/target/rx/translate.c
-> +++ b/target/rx/translate.c
-> @@ -22,7 +22,6 @@
->  #include "cpu.h"
->  #include "exec/exec-all.h"
->  #include "tcg/tcg-op.h"
-> -#include "exec/cpu_ldst.h"
->  #include "exec/helper-proto.h"
->  #include "exec/helper-gen.h"
->  #include "exec/translator.h"
-> @@ -75,10 +74,10 @@ static TCGv_i64 cpu_acc;
->  
->  /* decoder helper */
->  static uint32_t decode_load_bytes(DisasContext *ctx, uint32_t insn,
-> -                           int i, int n)
-> +                                  int i, int n)
->  {
->      while (++i <= n) {
-> -        uint8_t b = cpu_ldub_code(ctx->env, ctx->base.pc_next++);
-> +        uint8_t b = translator_ldub(ctx->env, &ctx->base, ctx->base.pc_next++);
->          insn |= b << (32 - i * 8);
->      }
->      return insn;
-> @@ -90,22 +89,24 @@ static uint32_t li(DisasContext *ctx, int sz)
->      CPURXState *env = ctx->env;
->      addr = ctx->base.pc_next;
->  
-> -    tcg_debug_assert(sz < 4);
->      switch (sz) {
->      case 1:
->          ctx->base.pc_next += 1;
-> -        return cpu_ldsb_code(env, addr);
-> +        return (int8_t)translator_ldub(env, &ctx->base, addr);
->      case 2:
->          ctx->base.pc_next += 2;
-> -        return cpu_ldsw_code(env, addr);
-> +        return (int16_t)translator_lduw(env, &ctx->base, addr);
->      case 3:
->          ctx->base.pc_next += 3;
-> -        tmp = cpu_ldsb_code(env, addr + 2) << 16;
-> -        tmp |= cpu_lduw_code(env, addr) & 0xffff;
-> +        tmp = (int8_t)translator_ldub(env, &ctx->base, addr + 2);
-> +        tmp <<= 16;
-> +        tmp |= translator_lduw(env, &ctx->base, addr);
->          return tmp;
->      case 0:
->          ctx->base.pc_next += 4;
-> -        return cpu_ldl_code(env, addr);
-> +        return translator_ldl(env, &ctx->base, addr);
-> +    default:
-> +        g_assert_not_reached();
->      }
->      return 0;
->  }
-> @@ -190,22 +191,22 @@ static inline TCGv rx_index_addr(DisasContext *ctx, TCGv mem,
->  {
->      uint32_t dsp;
->  
-> -    tcg_debug_assert(ld < 3);
->      switch (ld) {
->      case 0:
->          return cpu_regs[reg];
->      case 1:
-> -        dsp = cpu_ldub_code(ctx->env, ctx->base.pc_next) << size;
-> +        dsp = translator_ldub(ctx->env, &ctx->base, ctx->base.pc_next) << size;
->          tcg_gen_addi_i32(mem, cpu_regs[reg], dsp);
->          ctx->base.pc_next += 1;
->          return mem;
->      case 2:
-> -        dsp = cpu_lduw_code(ctx->env, ctx->base.pc_next) << size;
-> +        dsp = translator_lduw(ctx->env, &ctx->base, ctx->base.pc_next) << size;
->          tcg_gen_addi_i32(mem, cpu_regs[reg], dsp);
->          ctx->base.pc_next += 2;
->          return mem;
-> +    default:
-> +        g_assert_not_reached();
->      }
-> -    return NULL;
->  }
->  
->  static inline MemOp mi_to_mop(unsigned mi)
+> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+> index 6643c14dde..ebb6c901bf 100644
+> --- a/target/sh4/translate.c
+> +++ b/target/sh4/translate.c
+> @@ -523,6 +523,7 @@ static void _decode_opc(DisasContext * ctx)
+>          tcg_gen_movi_i32(REG(B11_8), B7_0s);
+>          return;
+>      case 0x9000: /* mov.w @(disp,PC),Rn */
+> +        CHECK_NOT_DELAY_SLOT
+>          {
+>              TCGv addr = tcg_constant_i32(ctx->base.pc_next + 4 + B7_0 * 2);
+>              tcg_gen_qemu_ld_i32(REG(B11_8), addr, ctx->memidx,
+> @@ -530,6 +531,7 @@ static void _decode_opc(DisasContext * ctx)
+>          }
+>          return;
+>      case 0xd000: /* mov.l @(disp,PC),Rn */
+> +        CHECK_NOT_DELAY_SLOT
+>          {
+>              TCGv addr = tcg_constant_i32((ctx->base.pc_next + 4 + B7_0 * 4) & ~3);
+>              tcg_gen_qemu_ld_i32(REG(B11_8), addr, ctx->memidx,
+> @@ -1236,6 +1238,7 @@ static void _decode_opc(DisasContext * ctx)
+>          }
+>          return;
+>      case 0xc700: /* mova @(disp,PC),R0 */
+> +        CHECK_NOT_DELAY_SLOT
+>          tcg_gen_movi_i32(REG(0), ((ctx->base.pc_next & 0xfffffffc) +
+>                                    4 + B7_0 * 4) & ~3);
+>          return;
 > -- 
-> 2.34.1
-> 
+> 2.41.0
+>
+
+That's what the documentation said.
+> If a PC-relative load instruction is executed in a delay slot,
+> an illegal slot instruction exception will be generated.
 
 Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 
