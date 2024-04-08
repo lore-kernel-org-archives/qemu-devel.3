@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 529B4C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082C0CD1296
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtrKl-0002MO-3C; Mon, 08 Apr 2024 11:54:59 -0400
+	id 1rtrK6-0001L2-OU; Mon, 08 Apr 2024 11:54:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtrKj-0002L3-HL
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:57 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtrKg-0001u1-Uz
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:57 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a51a80b190bso222074666b.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:54:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712591692; x=1713196492; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MozwskhIRuvTdoliWvz2Vl3+dmvsyC6Bfz7av78LLPg=;
- b=HPUrCKJGrX2p0no9lmBSQN6mwfyaah+QHHwOFBpmoUyU0o6fml7flg7ItMh4HM0C9I
- sgplOXsw87njerNwV9ZwUDqkD3wAzU42K+NN9ayRLwoo6EmWYw/6rxXm5wumV2/DB6Sg
- jEBjo0+mKSbylvCbkzQ1txKoZsGcTttb/buJl/FnytFVd6JXPUmnuUnOVVkm7pKDgNI5
- bThoDCGASbjEJ1cyshV+ssBPbPUkQ5h9ypYjASD3o+yBJKu/TFEKcgMy/cVrU8/SpbGx
- 7wYYHX+DSscT0+6nzsHX583Rt17PhKEJY9B+luKFOC2LW6sLPWoEJhJHccf7GozV+Z7x
- GwfQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rtrK5-0001Kr-CV
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rtrK3-0001ql-QF
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712591655;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OUsSvx4rS/JvSGux26uwYxv9XLnSYU17H3EwXSZxQ0w=;
+ b=gy79+6suawwLTSIT4PQOIfAWmYYVXRKE2BY6auKr2Qy9NthbePJLuXXyfpzyjHNs0R3dgP
+ h+zAG0ur7vG3uaRV6bTanpeD0UAq0HkRA/p5/zkt+qDn5SbtflhRrLuY9wnu+31rgnBfYK
+ 816Q8rr2RFA0R+MObHuaJLSFss8ame4=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-321--BzWSn6IOeuQMHI4E7u0SQ-1; Mon, 08 Apr 2024 11:54:14 -0400
+X-MC-Unique: -BzWSn6IOeuQMHI4E7u0SQ-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2d883dab079so15545861fa.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:54:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712591692; x=1713196492;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MozwskhIRuvTdoliWvz2Vl3+dmvsyC6Bfz7av78LLPg=;
- b=cup94YYHEVpUD6W2n6+Kk3oN1GnCUroxZ9reNVKF07gCLmF4i9BA5oafwJI1cCspFm
- 6/RpXOrNbeNqGORA3/kumr0d2qOk1yMJEgZ6JRkb5UnT6yFyvRI6EtQ7CpJuv7kQnvAW
- q4uVaqxACOnwVI+hEXoOiSOhF9lGOOS5OY280rstJqyFONiyKfpFA4IZ3aYKJc26rMeh
- rQYaKtkfiDHe2Te+PIZI+HZrtEk2B1dwGuW1MHEy1NjiQcod+0V749Drqyd8Zr3nOV1M
- yZn74Cldtawgj72h1Kv3acPqU+aYgkbdMRTOfydGJRLojDcSHh8UfnBS3mXrEV2VHlAD
- Nt5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1l2G+Lp2CNJEn7y0buV3I+I/g029usD0xzOedPY40U0ZMA/3gKolzORvIlt+gj1X1MBf0lHVAhsr+JuwduroIf6rINwc=
-X-Gm-Message-State: AOJu0YxzPF4HQIMZ1AduTWA+b0nEH2GokxXEd/RDb+0A80vYbm3/5J28
- IeAf3daCM7+Y7LaHspB8gfhNDk3jpnysr6t7uHm6tY1kcHRg6S/9vogkWZEpLSl22HLxhg6azxz
- 7
-X-Google-Smtp-Source: AGHT+IFRMHpchFluY03ZTJhNvUlkxn9E4odT7gny37sTu+wGzZUAF5U9bJzFU1hp7uWRPRXSlBB8cw==
-X-Received: by 2002:a50:8709:0:b0:56e:2a05:a0e3 with SMTP id
- i9-20020a508709000000b0056e2a05a0e3mr7718475edb.21.1712591692214; 
- Mon, 08 Apr 2024 08:54:52 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.144.67])
+ d=1e100.net; s=20230601; t=1712591651; x=1713196451;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OUsSvx4rS/JvSGux26uwYxv9XLnSYU17H3EwXSZxQ0w=;
+ b=ciEYuGUzLqfap69a1We4NrAvlRQYADOAj69xjZ0TLsHcbXCsidx98ii5b+tJGa3yrq
+ /Mqsqa1KuubVTpmiZoFVBaTDK36DEAFk3s1J+NT9UdkgqoAugEsnTfp5EGBhitQS65Mg
+ z3O0MS+/zT0Ki+mfckzp3q8r6tcyTh41ss6X+kcAnMXHtO/iVbWuxF81FINJuONwJ3JW
+ hjn9ooPgCVPsjk1z16jsrci1LY/VJQqTIdIcXtRhlkganjLUCUVsC1VzO1qSgo+knMU/
+ GiCQmyKag1Kc03YC1No/9aUsaH4ceuGLbW+n7Xv3/j/+WLJnIUPRCioMFSfR1tpQyQx9
+ 0PBA==
+X-Gm-Message-State: AOJu0YyLnXYveA+LBhZiVZkCt+Q3RaDI+xePvQlLvIx6Nldfa0q9mqXV
+ isY3mSY5433NFbbZxVwW8ujRC4jK8v0YSogxI12SMI11LYkuFB7mgsL6u+ccTwW9KT8VBle2Fji
+ s3kL7twKgcXgUhWF9NWkuHXavv7xe9Kzm8JMQNgiB2FscEl2WovKTWdAHt3TZg/ZfGWxz/BOpdl
+ lJNM0vO0Xl5PCaamRK6UQl24nGqkqvtIq3JYEz
+X-Received: by 2002:a2e:95d4:0:b0:2d6:e0a9:9981 with SMTP id
+ y20-20020a2e95d4000000b002d6e0a99981mr6868185ljh.9.1712591651334; 
+ Mon, 08 Apr 2024 08:54:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAlgKqvGt9x55z6ZFndNEXaNbZHVKmVcSb0sgjkM6ZyItdDQGtCMUMtuYoEPo3E8eNRfHvqw==
+X-Received: by 2002:a2e:95d4:0:b0:2d6:e0a9:9981 with SMTP id
+ y20-20020a2e95d4000000b002d6e0a99981mr6868172ljh.9.1712591650995; 
+ Mon, 08 Apr 2024 08:54:10 -0700 (PDT)
+Received: from avogadro.local ([151.95.152.232])
  by smtp.gmail.com with ESMTPSA id
- cn10-20020a0564020caa00b0056e68b14986sm672935edb.29.2024.04.08.08.54.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 08:54:51 -0700 (PDT)
-Message-ID: <27454ed8-e32d-4717-bda8-e0576b307494@linaro.org>
-Date: Mon, 8 Apr 2024 17:54:50 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/18] tests: only build plugins if TCG is enabled
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+ j22-20020a05600c1c1600b004165315d885sm6677512wms.11.2024.04.08.08.54.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 08:54:09 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH v2 13/18] ramfb: move stubs out of stubs/
+Date: Mon,  8 Apr 2024 17:53:25 +0200
+Message-ID: <20240408155330.522792-14-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240408155330.522792-1-pbonzini@redhat.com>
 References: <20240408155330.522792-1-pbonzini@redhat.com>
- <20240408155330.522792-3-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240408155330.522792-3-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,16 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/24 17:53, Paolo Bonzini wrote:
-> There is no way to use them for testing, if all the available
-> accelerators use hardware virtualization.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   tests/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Since the ramfb stubs are needed exactly when the Kconfig symbols are not
+needed, move them to hw/display/ and compile them when ramfb.c is absent.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ stubs/ramfb.c => hw/display/ramfb-stubs.c | 0
+ hw/display/meson.build                    | 2 +-
+ stubs/meson.build                         | 1 -
+ 3 files changed, 1 insertion(+), 2 deletions(-)
+ rename stubs/ramfb.c => hw/display/ramfb-stubs.c (100%)
 
+diff --git a/stubs/ramfb.c b/hw/display/ramfb-stubs.c
+similarity index 100%
+rename from stubs/ramfb.c
+rename to hw/display/ramfb-stubs.c
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index f93a69f70f4..4751aab3ba9 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -3,7 +3,7 @@ hw_display_modules = {}
+ system_ss.add(when: 'CONFIG_DDC', if_true: files('i2c-ddc.c'))
+ system_ss.add(when: 'CONFIG_EDID', if_true: files('edid-generate.c', 'edid-region.c'))
+ 
+-system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'))
++system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'), if_false: files('ramfb-stubs.c'))
+ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb-standalone.c'))
+ 
+ system_ss.add(when: 'CONFIG_VGA_CIRRUS', if_true: files('cirrus_vga.c'))
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 84ecaa4daa1..92887660e41 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -36,7 +36,6 @@ stub_ss.add(files('qmp-command-available.c'))
+ stub_ss.add(files('qmp-quit.c'))
+ stub_ss.add(files('qtest.c'))
+ stub_ss.add(files('ram-block.c'))
+-stub_ss.add(files('ramfb.c'))
+ stub_ss.add(files('replay.c'))
+ stub_ss.add(files('runstate-check.c'))
+ stub_ss.add(files('sysbus.c'))
+-- 
+2.44.0
 
 
