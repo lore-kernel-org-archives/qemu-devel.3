@@ -4,88 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B11CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C8BCC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:53:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtkil-0007OP-Ni; Mon, 08 Apr 2024 04:51:19 -0400
+	id 1rtkkX-0008Dc-Df; Mon, 08 Apr 2024 04:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtkik-0007Nv-Kz
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:51:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtkig-0005Dw-IP
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:51:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712566253;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2PXEM0yyDgWwJs/AZqmvBVrqZFxQlhfzzAwi3nCDzJc=;
- b=dkMPHwbcY64fRt/h3qzVi36ZJgo5d57k49MumkavP3l7EALdLfE31w/2pqZamM9oSfmlEe
- pF0QdR+HdiUjCRji9KGl6COmpv39GVdMsrenvKcaIJROdGmrMysrVH5D3CH3Fqd4kZzFip
- SYNKo39HpRp58bWtiPNXVFJd+4i6Jrg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-f3cD1r8QOtSmJn21JwJJWw-1; Mon, 08 Apr 2024 04:50:51 -0400
-X-MC-Unique: f3cD1r8QOtSmJn21JwJJWw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3418f237c0bso2836312f8f.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 01:50:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712566250; x=1713171050;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2PXEM0yyDgWwJs/AZqmvBVrqZFxQlhfzzAwi3nCDzJc=;
- b=kmh5MIej9vE2rpx3smdMzu+DXYXkqx3s2/6zcIPuuV8VI4vo+lOsIZAEX5NXvfuoCV
- HoMkj2mBI156guFShL4r4fEWGPDOQtRWYzOOtbkcSKVL68wwe7iaFvF8neQdYn1feU+S
- iz6TeN3bHfHCC7agxc8c9dinpAtL4/Ji5kKVALKFIWn51pwDGGPHELylSUVH2oZHbP08
- eDo9aRN9f8iWkY73QuAyHus3RhK13Q5VNkdqpm30YVfO73YzjdiQE0V5TexDF5tdn+xF
- UeVSLfEqOgY+GSekxPKeDuR0pXEVJYrQCsQCChUBRsAK+pHXpaWe8jSxAQN0t8ksHTtP
- 1E/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUHWqdg7+9hEDdPz/Fo6FlWkW51FvSjThy/NS9Rqor3hCZKd08zpRk+wE/PArLxyD2yWcEQnGAwK2gQfpmTyrrTY5J/N4=
-X-Gm-Message-State: AOJu0YyDxoeVeOHIKQ0yLhjgvzbqcNMhB99tXTlaiaRhAfqYruH0gObK
- JqVpQiPOfG35qUGSW7wFl9TRAEQX8uOeSUDs9TgMSMtXvYOmMCEZ7WLN644vJ2gMEcuJTThLp5J
- 5fIp2PksRryxond5sP4YRupT3tnSg5PCJanrZz/o+YPjnm5Is9wXfTm8wGhFKKlfwCJejUa+T9L
- BYOHrdnHzh6zw8bqozTkDDCjcq5kg=
-X-Received: by 2002:a5d:64e9:0:b0:341:bf1e:45a5 with SMTP id
- g9-20020a5d64e9000000b00341bf1e45a5mr6764626wri.46.1712566250337; 
- Mon, 08 Apr 2024 01:50:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKRBHpLU7HBgh6ib0hlEVusWqa+BQJWsTTjN7bQpMFgUhVDKJCFJD3LbSu41O6REyyEhQBZqt4NMEcYbLVrTA=
-X-Received: by 2002:a5d:64e9:0:b0:341:bf1e:45a5 with SMTP id
- g9-20020a5d64e9000000b00341bf1e45a5mr6764608wri.46.1712566249933; Mon, 08 Apr
- 2024 01:50:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240404194757.9343-1-philmd@linaro.org>
- <20240404194757.9343-5-philmd@linaro.org>
-In-Reply-To: <20240404194757.9343-5-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 8 Apr 2024 10:50:38 +0200
-Message-ID: <CABgObfbKjNe53MsYKPEK1QgMviTV9uGgkzGxv0K1JP3LwUyfsQ@mail.gmail.com>
-Subject: Re: [PATCH-for-9.1 4/7] util/qemu-config: Extract QMP commands to
- qemu-config-qmp.c
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ysato@users.sourceforge.jp>)
+ id 1rtkkV-0008DC-4y
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:07 -0400
+Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
+ helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <ysato@users.sourceforge.jp>) id 1rtkkS-0005P0-UZ
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:06 -0400
+Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
+ by sakura.ysato.name (Postfix) with ESMTPSA id 12E5D1C102D;
+ Mon,  8 Apr 2024 17:52:59 +0900 (JST)
+Date: Mon, 08 Apr 2024 17:52:55 +0900
+Message-ID: <878r1ock2g.wl-ysato@users.sourceforge.jp>
+From: Yoshinori Sato <ysato@users.sourceforge.jp>
+To: Zack Buhman <zack@buhman.org>
+Cc: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Subject: Re: [PATCH v2] sh4: mac.w: implement saturation arithmetic logic
+In-Reply-To: <20240405233802.29128-3-zack@buhman.org>
+References: <CAFEAcA93s+=sHFNU0duK8--3GhUg1tZ+n+UhiGeFErJoY5_+jQ@mail.gmail.com>
+ <20240405233802.29128-3-zack@buhman.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/28.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: softfail client-ip=153.127.30.23;
+ envelope-from=ysato@users.sourceforge.jp; helo=sakura.ysato.name
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.001,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,513 +59,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 4, 2024 at 9:48=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> QMP is irrelevant for user emulation. Extract the code
-> related to QMP in a different source file, which won't
-> be build for user emulation binaries. This avoid pulling
-> pointless code.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On Sat, 06 Apr 2024 08:38:04 +0900,
+Zack Buhman wrote:
+> 
+> The saturation arithmetic logic in helper_macw is not correct.
+> 
+> I tested and verified this behavior on a SH7091, the general pattern
+> is a code sequence such as:
+> 
+> 	sets
+> 
+> 	mov.l _mach,r2
+> 	lds r2,mach
+> 	mov.l _macl,r2
+> 	lds r2,macl
+> 
+> 	mova _n,r0
+> 	mov r0,r1
+> 	mova _m,r0
+> 	mac.w @r0+,@r1+
+> 
+>  _mach: .long 0xffffffff
+>  _macl: .long 0xfffffffe
+>  _m:    .word 0x0002
+>         .word 0
+>  _n:    .word 0x0003
+>         .word 0
+> 
+> test 0:
+>   (mach should not be modified if an overflow did not occur)
+> 
+>   given, prior to saturation mac.l:
+>     mach = 0xffffffff ; macl = 0xfffffffe
+>     @r0  = 0x0002     ; @r1  = 0x0003
+> 
+>   expected saturation mac.w result:
+>     mach = 0xffffffff (unchanged)
+>     macl = 0x00000004
+> 
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x80000000
+> 
+>   In the context of the helper_macw implementation prior to this
+>   commit, initially this appears to be a surprising result. This is
+>   because (prior to unary negation) the C literal `0x80000000` (due to
+>   being outside the range of a `signed int`) is evaluated as an
+>   `unsigned int` whereas the literal `1` (due to being inside the
+>   range of `signed int`) is evaluated as `signed int`, as in:
+> 
+>     static_assert(1 < -0x80000000 == 1);
+>     static_assert(1 < -1 == 0);
+> 
+>   This is because the unary negation of an unsigned int is an
+>   unsigned int.
+> 
+>   In other words, if the `res < -0x80000000` comparison used
+>   infinite-precision literals, the saturation mac.w result would have
+>   been:
+> 
+>     mach = 0x00000000
+>     macl = 0x00000004
+> 
+>   Due to this (forgivable) misunderstanding of C literals, the
+>   following behavior also occurs:
+> 
+> test 1:
+>   (`2 * 3 + 0` is not an overflow)
+> 
+>   given, prior to saturation mac.l:
+>     mach = 0x00000000 ; macl = 0x00000000
+>     @r0  = 0x0002     ; @r1  = 0x0003
+> 
+>   expected saturation mac.w result:
+>     mach = 0x00000000 (unchanged)
+>     macl = 0x00000006
+> 
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x80000000
+> 
+> test 2:
+>   (mach should not be accumulated in saturation mode)
+>   (16-bit operands are sign-extended)
+> 
+>   given, prior to saturation mac.l:
+>     mach = 0x12345678 ; macl = 0x7ffffffe
+>     @r0  = 0x0002     ; @r1  = 0xfffd
+> 
+>   expected saturation mac.w result:
+>     mach = 0x12345678 (unchanged)
+>     macl = 0x7ffffff8
+> 
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x7fffffff
+> 
+> test 3:
+>   (macl should have the correct saturation value)
+> 
+>   given, prior to saturation mac.l:
+>     mach = 0xabcdef12 ; macl = 0x7ffffffa
+>     @r0  = 0x0002     ; @r1  = 0x0003
+> 
+>   expected saturation mac.w result:
+>     mach = 0x00000001 (overwritten)
+>     macl = 0x7fffffff
+> 
+>   qemu saturation mac.w result (before this commit):
+>     mach = 0x00000001
+>     macl = 0x80000000
+> 
+> All of the above also matches the description of MAC.W as documented
+> in cd00147165-sh-4-32-bit-cpu-core-architecture-stmicroelectronics.pdf
+> 
+> Signed-off-by: Zack Buhman <zack@buhman.org>
 > ---
->  include/qemu/config-file.h |   3 +
->  util/qemu-config-qmp.c     | 206 +++++++++++++++++++++++++++++++++++++
-
-This should go under monitor/.
-
-Queued all except patch 2, please resubmit that and send it to
-qemu-block@nongnu.org.
-
->  util/qemu-config.c         | 204 +-----------------------------------
->  util/meson.build           |   1 +
->  4 files changed, 212 insertions(+), 202 deletions(-)
->  create mode 100644 util/qemu-config-qmp.c
->
-> diff --git a/include/qemu/config-file.h b/include/qemu/config-file.h
-> index b82a778123..8b9d6df173 100644
-> --- a/include/qemu/config-file.h
-> +++ b/include/qemu/config-file.h
-> @@ -8,6 +8,9 @@ QemuOptsList *qemu_find_opts(const char *group);
->  QemuOptsList *qemu_find_opts_err(const char *group, Error **errp);
->  QemuOpts *qemu_find_opts_singleton(const char *group);
->
-> +extern QemuOptsList *vm_config_groups[48];
-> +extern QemuOptsList *drive_config_groups[5];
-> +
->  void qemu_add_opts(QemuOptsList *list);
->  void qemu_add_drive_opts(QemuOptsList *list);
->  int qemu_global_option(const char *str);
-> diff --git a/util/qemu-config-qmp.c b/util/qemu-config-qmp.c
-> new file mode 100644
-> index 0000000000..24477a0e44
-> --- /dev/null
-> +++ b/util/qemu-config-qmp.c
-> @@ -0,0 +1,206 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qapi/qapi-commands-misc.h"
-> +#include "qapi/qmp/qlist.h"
-> +#include "qemu/option.h"
-> +#include "qemu/config-file.h"
-> +#include "hw/boards.h"
-> +
-> +static CommandLineParameterInfoList *query_option_descs(const QemuOptDes=
-c *desc)
-> +{
-> +    CommandLineParameterInfoList *param_list =3D NULL;
-> +    CommandLineParameterInfo *info;
-> +    int i;
-> +
-> +    for (i =3D 0; desc[i].name !=3D NULL; i++) {
-> +        info =3D g_malloc0(sizeof(*info));
-> +        info->name =3D g_strdup(desc[i].name);
-> +
-> +        switch (desc[i].type) {
-> +        case QEMU_OPT_STRING:
-> +            info->type =3D COMMAND_LINE_PARAMETER_TYPE_STRING;
-> +            break;
-> +        case QEMU_OPT_BOOL:
-> +            info->type =3D COMMAND_LINE_PARAMETER_TYPE_BOOLEAN;
-> +            break;
-> +        case QEMU_OPT_NUMBER:
-> +            info->type =3D COMMAND_LINE_PARAMETER_TYPE_NUMBER;
-> +            break;
-> +        case QEMU_OPT_SIZE:
-> +            info->type =3D COMMAND_LINE_PARAMETER_TYPE_SIZE;
-> +            break;
-> +        }
-> +
-> +        info->help =3D g_strdup(desc[i].help);
-> +        info->q_default =3D g_strdup(desc[i].def_value_str);
-> +
-> +        QAPI_LIST_PREPEND(param_list, info);
-> +    }
-> +
-> +    return param_list;
-> +}
-> +
-> +/* remove repeated entry from the info list */
-> +static void cleanup_infolist(CommandLineParameterInfoList *head)
-> +{
-> +    CommandLineParameterInfoList *pre_entry, *cur, *del_entry;
-> +
-> +    cur =3D head;
-> +    while (cur->next) {
-> +        pre_entry =3D head;
-> +        while (pre_entry !=3D cur->next) {
-> +            if (!strcmp(pre_entry->value->name, cur->next->value->name))=
- {
-> +                del_entry =3D cur->next;
-> +                cur->next =3D cur->next->next;
-> +                del_entry->next =3D NULL;
-> +                qapi_free_CommandLineParameterInfoList(del_entry);
-> +                break;
-> +            }
-> +            pre_entry =3D pre_entry->next;
-> +        }
-> +        cur =3D cur->next;
-> +    }
-> +}
-> +
-> +/* merge the description items of two parameter infolists */
-> +static void connect_infolist(CommandLineParameterInfoList *head,
-> +                             CommandLineParameterInfoList *new)
-> +{
-> +    CommandLineParameterInfoList *cur;
-> +
-> +    cur =3D head;
-> +    while (cur->next) {
-> +        cur =3D cur->next;
-> +    }
-> +    cur->next =3D new;
-> +}
-> +
-> +/* access all the local QemuOptsLists for drive option */
-> +static CommandLineParameterInfoList *get_drive_infolist(void)
-> +{
-> +    CommandLineParameterInfoList *head =3D NULL, *cur;
-> +    int i;
-> +
-> +    for (i =3D 0; drive_config_groups[i] !=3D NULL; i++) {
-> +        if (!head) {
-> +            head =3D query_option_descs(drive_config_groups[i]->desc);
-> +        } else {
-> +            cur =3D query_option_descs(drive_config_groups[i]->desc);
-> +            connect_infolist(head, cur);
-> +        }
-> +    }
-> +    cleanup_infolist(head);
-> +
-> +    return head;
-> +}
-> +
-> +static CommandLineParameterInfo *objprop_to_cmdline_prop(ObjectProperty =
-*prop)
-> +{
-> +    CommandLineParameterInfo *info;
-> +
-> +    info =3D g_malloc0(sizeof(*info));
-> +    info->name =3D g_strdup(prop->name);
-> +
-> +    if (g_str_equal(prop->type, "bool") || g_str_equal(prop->type, "OnOf=
-fAuto")) {
-> +        info->type =3D COMMAND_LINE_PARAMETER_TYPE_BOOLEAN;
-> +    } else if (g_str_equal(prop->type, "int")) {
-> +        info->type =3D COMMAND_LINE_PARAMETER_TYPE_NUMBER;
-> +    } else if (g_str_equal(prop->type, "size")) {
-> +        info->type =3D COMMAND_LINE_PARAMETER_TYPE_SIZE;
-> +    } else {
-> +        info->type =3D COMMAND_LINE_PARAMETER_TYPE_STRING;
-> +    }
-> +
-> +    if (prop->description) {
-> +        info->help =3D g_strdup(prop->description);
-> +    }
-> +
-> +    return info;
-> +}
-> +
-> +static CommandLineParameterInfoList *query_all_machine_properties(void)
-> +{
-> +    CommandLineParameterInfoList *params =3D NULL, *clpiter;
-> +    CommandLineParameterInfo *info;
-> +    GSList *machines, *curr_mach;
-> +    ObjectPropertyIterator op_iter;
-> +    ObjectProperty *prop;
-> +    bool is_new;
-> +
-> +    machines =3D object_class_get_list(TYPE_MACHINE, false);
-> +    assert(machines);
-> +
-> +    /* Loop over all machine classes */
-> +    for (curr_mach =3D machines; curr_mach; curr_mach =3D curr_mach->nex=
-t) {
-> +        object_class_property_iter_init(&op_iter, curr_mach->data);
-> +        /* ... and over the properties of each machine: */
-> +        while ((prop =3D object_property_iter_next(&op_iter))) {
-> +            if (!prop->set) {
-> +                continue;
-> +            }
-> +            /*
-> +             * Check whether the property has already been put into the =
-list
-> +             * (via another machine class)
-> +             */
-> +            is_new =3D true;
-> +            for (clpiter =3D params; clpiter !=3D NULL; clpiter =3D clpi=
-ter->next) {
-> +                if (g_str_equal(clpiter->value->name, prop->name)) {
-> +                    is_new =3D false;
-> +                    break;
-> +                }
-> +            }
-> +            /* If it hasn't been added before, add it now to the list */
-> +            if (is_new) {
-> +                info =3D objprop_to_cmdline_prop(prop);
-> +                QAPI_LIST_PREPEND(params, info);
-> +            }
-> +        }
-> +    }
-> +
-> +    g_slist_free(machines);
-> +
-> +    /* Add entry for the "type" parameter */
-> +    info =3D g_malloc0(sizeof(*info));
-> +    info->name =3D g_strdup("type");
-> +    info->type =3D COMMAND_LINE_PARAMETER_TYPE_STRING;
-> +    info->help =3D g_strdup("machine type");
-> +    QAPI_LIST_PREPEND(params, info);
-> +
-> +    return params;
-> +}
-> +
-> +CommandLineOptionInfoList *qmp_query_command_line_options(const char *op=
-tion,
-> +                                                          Error **errp)
-> +{
-> +    CommandLineOptionInfoList *conf_list =3D NULL;
-> +    CommandLineOptionInfo *info;
-> +    int i;
-> +
-> +    for (i =3D 0; vm_config_groups[i] !=3D NULL; i++) {
-> +        if (!option || !strcmp(option, vm_config_groups[i]->name)) {
-> +            info =3D g_malloc0(sizeof(*info));
-> +            info->option =3D g_strdup(vm_config_groups[i]->name);
-> +            if (!strcmp("drive", vm_config_groups[i]->name)) {
-> +                info->parameters =3D get_drive_infolist();
-> +            } else {
-> +                info->parameters =3D
-> +                    query_option_descs(vm_config_groups[i]->desc);
-> +            }
-> +            QAPI_LIST_PREPEND(conf_list, info);
-> +        }
-> +    }
-> +
-> +    if (!option || !strcmp(option, "machine")) {
-> +        info =3D g_malloc0(sizeof(*info));
-> +        info->option =3D g_strdup("machine");
-> +        info->parameters =3D query_all_machine_properties();
-> +        QAPI_LIST_PREPEND(conf_list, info);
-> +    }
-> +
-> +    if (conf_list =3D=3D NULL) {
-> +        error_setg(errp, "invalid option name: %s", option);
-> +    }
-> +
-> +    return conf_list;
-> +}
-> diff --git a/util/qemu-config.c b/util/qemu-config.c
-> index 42076efe1e..a90c18dad2 100644
-> --- a/util/qemu-config.c
-> +++ b/util/qemu-config.c
-> @@ -1,16 +1,14 @@
->  #include "qemu/osdep.h"
->  #include "block/qdict.h" /* for qdict_extract_subqdict() */
->  #include "qapi/error.h"
-> -#include "qapi/qapi-commands-misc.h"
->  #include "qapi/qmp/qdict.h"
->  #include "qapi/qmp/qlist.h"
->  #include "qemu/error-report.h"
->  #include "qemu/option.h"
->  #include "qemu/config-file.h"
-> -#include "hw/boards.h"
->
-> -static QemuOptsList *vm_config_groups[48];
-> -static QemuOptsList *drive_config_groups[5];
-> +QemuOptsList *vm_config_groups[48];
-> +QemuOptsList *drive_config_groups[5];
->
->  static QemuOptsList *find_list(QemuOptsList **lists, const char *group,
->                                 Error **errp)
-> @@ -55,204 +53,6 @@ QemuOpts *qemu_find_opts_singleton(const char *group)
->      return opts;
->  }
->
-> -static CommandLineParameterInfoList *query_option_descs(const QemuOptDes=
-c *desc)
-> -{
-> -    CommandLineParameterInfoList *param_list =3D NULL;
-> -    CommandLineParameterInfo *info;
-> -    int i;
-> -
-> -    for (i =3D 0; desc[i].name !=3D NULL; i++) {
-> -        info =3D g_malloc0(sizeof(*info));
-> -        info->name =3D g_strdup(desc[i].name);
-> -
-> -        switch (desc[i].type) {
-> -        case QEMU_OPT_STRING:
-> -            info->type =3D COMMAND_LINE_PARAMETER_TYPE_STRING;
-> -            break;
-> -        case QEMU_OPT_BOOL:
-> -            info->type =3D COMMAND_LINE_PARAMETER_TYPE_BOOLEAN;
-> -            break;
-> -        case QEMU_OPT_NUMBER:
-> -            info->type =3D COMMAND_LINE_PARAMETER_TYPE_NUMBER;
-> -            break;
-> -        case QEMU_OPT_SIZE:
-> -            info->type =3D COMMAND_LINE_PARAMETER_TYPE_SIZE;
-> -            break;
-> -        }
-> -
-> -        info->help =3D g_strdup(desc[i].help);
-> -        info->q_default =3D g_strdup(desc[i].def_value_str);
-> -
-> -        QAPI_LIST_PREPEND(param_list, info);
-> -    }
-> -
-> -    return param_list;
-> -}
-> -
-> -/* remove repeated entry from the info list */
-> -static void cleanup_infolist(CommandLineParameterInfoList *head)
-> -{
-> -    CommandLineParameterInfoList *pre_entry, *cur, *del_entry;
-> -
-> -    cur =3D head;
-> -    while (cur->next) {
-> -        pre_entry =3D head;
-> -        while (pre_entry !=3D cur->next) {
-> -            if (!strcmp(pre_entry->value->name, cur->next->value->name))=
- {
-> -                del_entry =3D cur->next;
-> -                cur->next =3D cur->next->next;
-> -                del_entry->next =3D NULL;
-> -                qapi_free_CommandLineParameterInfoList(del_entry);
-> -                break;
-> -            }
-> -            pre_entry =3D pre_entry->next;
-> -        }
-> -        cur =3D cur->next;
-> -    }
-> -}
-> -
-> -/* merge the description items of two parameter infolists */
-> -static void connect_infolist(CommandLineParameterInfoList *head,
-> -                             CommandLineParameterInfoList *new)
-> -{
-> -    CommandLineParameterInfoList *cur;
-> -
-> -    cur =3D head;
-> -    while (cur->next) {
-> -        cur =3D cur->next;
-> -    }
-> -    cur->next =3D new;
-> -}
-> -
-> -/* access all the local QemuOptsLists for drive option */
-> -static CommandLineParameterInfoList *get_drive_infolist(void)
-> -{
-> -    CommandLineParameterInfoList *head =3D NULL, *cur;
-> -    int i;
-> -
-> -    for (i =3D 0; drive_config_groups[i] !=3D NULL; i++) {
-> -        if (!head) {
-> -            head =3D query_option_descs(drive_config_groups[i]->desc);
-> -        } else {
-> -            cur =3D query_option_descs(drive_config_groups[i]->desc);
-> -            connect_infolist(head, cur);
-> -        }
-> -    }
-> -    cleanup_infolist(head);
-> -
-> -    return head;
-> -}
-> -
-> -static CommandLineParameterInfo *objprop_to_cmdline_prop(ObjectProperty =
-*prop)
-> -{
-> -    CommandLineParameterInfo *info;
-> -
-> -    info =3D g_malloc0(sizeof(*info));
-> -    info->name =3D g_strdup(prop->name);
-> -
-> -    if (g_str_equal(prop->type, "bool") || g_str_equal(prop->type, "OnOf=
-fAuto")) {
-> -        info->type =3D COMMAND_LINE_PARAMETER_TYPE_BOOLEAN;
-> -    } else if (g_str_equal(prop->type, "int")) {
-> -        info->type =3D COMMAND_LINE_PARAMETER_TYPE_NUMBER;
-> -    } else if (g_str_equal(prop->type, "size")) {
-> -        info->type =3D COMMAND_LINE_PARAMETER_TYPE_SIZE;
-> -    } else {
-> -        info->type =3D COMMAND_LINE_PARAMETER_TYPE_STRING;
-> -    }
-> -
-> -    if (prop->description) {
-> -        info->help =3D g_strdup(prop->description);
-> -    }
-> -
-> -    return info;
-> -}
-> -
-> -static CommandLineParameterInfoList *query_all_machine_properties(void)
-> -{
-> -    CommandLineParameterInfoList *params =3D NULL, *clpiter;
-> -    CommandLineParameterInfo *info;
-> -    GSList *machines, *curr_mach;
-> -    ObjectPropertyIterator op_iter;
-> -    ObjectProperty *prop;
-> -    bool is_new;
-> -
-> -    machines =3D object_class_get_list(TYPE_MACHINE, false);
-> -    assert(machines);
-> -
-> -    /* Loop over all machine classes */
-> -    for (curr_mach =3D machines; curr_mach; curr_mach =3D curr_mach->nex=
-t) {
-> -        object_class_property_iter_init(&op_iter, curr_mach->data);
-> -        /* ... and over the properties of each machine: */
-> -        while ((prop =3D object_property_iter_next(&op_iter))) {
-> -            if (!prop->set) {
-> -                continue;
-> -            }
-> -            /*
-> -             * Check whether the property has already been put into the =
-list
-> -             * (via another machine class)
-> -             */
-> -            is_new =3D true;
-> -            for (clpiter =3D params; clpiter !=3D NULL; clpiter =3D clpi=
-ter->next) {
-> -                if (g_str_equal(clpiter->value->name, prop->name)) {
-> -                    is_new =3D false;
-> -                    break;
-> -                }
-> -            }
-> -            /* If it hasn't been added before, add it now to the list */
-> -            if (is_new) {
-> -                info =3D objprop_to_cmdline_prop(prop);
-> -                QAPI_LIST_PREPEND(params, info);
-> -            }
-> -        }
-> -    }
-> -
-> -    g_slist_free(machines);
-> -
-> -    /* Add entry for the "type" parameter */
-> -    info =3D g_malloc0(sizeof(*info));
-> -    info->name =3D g_strdup("type");
-> -    info->type =3D COMMAND_LINE_PARAMETER_TYPE_STRING;
-> -    info->help =3D g_strdup("machine type");
-> -    QAPI_LIST_PREPEND(params, info);
-> -
-> -    return params;
-> -}
-> -
-> -CommandLineOptionInfoList *qmp_query_command_line_options(const char *op=
-tion,
-> -                                                          Error **errp)
-> -{
-> -    CommandLineOptionInfoList *conf_list =3D NULL;
-> -    CommandLineOptionInfo *info;
-> -    int i;
-> -
-> -    for (i =3D 0; vm_config_groups[i] !=3D NULL; i++) {
-> -        if (!option || !strcmp(option, vm_config_groups[i]->name)) {
-> -            info =3D g_malloc0(sizeof(*info));
-> -            info->option =3D g_strdup(vm_config_groups[i]->name);
-> -            if (!strcmp("drive", vm_config_groups[i]->name)) {
-> -                info->parameters =3D get_drive_infolist();
-> -            } else {
-> -                info->parameters =3D
-> -                    query_option_descs(vm_config_groups[i]->desc);
-> -            }
-> -            QAPI_LIST_PREPEND(conf_list, info);
-> -        }
-> -    }
-> -
-> -    if (!option || !strcmp(option, "machine")) {
-> -        info =3D g_malloc0(sizeof(*info));
-> -        info->option =3D g_strdup("machine");
-> -        info->parameters =3D query_all_machine_properties();
-> -        QAPI_LIST_PREPEND(conf_list, info);
-> -    }
-> -
-> -    if (conf_list =3D=3D NULL) {
-> -        error_setg(errp, "invalid option name: %s", option);
-> -    }
-> -
-> -    return conf_list;
-> -}
-> -
->  QemuOptsList *qemu_find_opts_err(const char *group, Error **errp)
+>  target/sh4/op_helper.c | 45 ++++++++++++++++++++++++++++++++----------
+>  1 file changed, 35 insertions(+), 10 deletions(-)
+> 
+> diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+> index ee16524083..07ff2cf53d 100644
+> --- a/target/sh4/op_helper.c
+> +++ b/target/sh4/op_helper.c
+> @@ -187,20 +187,45 @@ void helper_macl(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
+>  
+>  void helper_macw(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
 >  {
->      return find_list(vm_config_groups, group, errp);
-> diff --git a/util/meson.build b/util/meson.build
-> index 247f55a80d..636b17a414 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -75,6 +75,7 @@ if have_system
->    if host_os =3D=3D 'linux'
->      util_ss.add(files('userfaultfd.c'))
->    endif
-> +  util_ss.add(files('qemu-config-qmp.c'))
->    util_ss.add(files('yank.c'))
->  endif
->
-> --
+> -    int64_t res;
+> +    int16_t value0 = (int16_t)arg0;
+> +    int16_t value1 = (int16_t)arg1;
+> +    int32_t mul = ((int32_t)value0) * ((int32_t)value1);
+>  
+> -    res = ((uint64_t) env->mach << 32) | env->macl;
+> -    res += (int64_t) (int16_t) arg0 *(int64_t) (int16_t) arg1;
+> -    env->mach = (res >> 32) & 0xffffffff;
+> -    env->macl = res & 0xffffffff;
+> +    /* Perform 32-bit saturation arithmetic if the S flag is set */
+>      if (env->sr & (1u << SR_S)) {
+> -        if (res < -0x80000000) {
+> -            env->mach = 1;
+> -            env->macl = 0x80000000;
+> -        } else if (res > 0x000000007fffffff) {
+> +        const int32_t upper_bound =  ((1u << 31) - 1);
+> +        const int32_t lower_bound = -((1u << 31) - 0);
+> +
+> +        /*
+> +         * In saturation arithmetic mode, the accumulator is 32-bit
+> +         * with carry. MACH is not considered during the addition
+> +         * operation nor the 32-bit saturation logic.
+> +         */
+> +        int32_t mac = env->macl;
+> +        int32_t result;
+> +        bool overflow = sadd32_overflow(mac, mul, &result);
+> +        if (overflow) {
+> +            result = (mac < 0) ? lower_bound : upper_bound;
+> +            /* MACH is set to 1 to denote overflow */
+> +            env->macl = result;
+>              env->mach = 1;
+> -            env->macl = 0x7fffffff;
+> +        } else {
+> +            /*
+> +             * If there is no overflow, the result is already inside
+> +             * the saturation bounds.
+> +             *
+> +             * If there was no overflow, MACH is unchanged.
+> +             */
+> +            env->macl = result;
+>          }
+> +    } else {
+> +        /* In non-saturation arithmetic mode, the accumulator is 64-bit */
+> +        int64_t mac = (((uint64_t)env->mach) << 32) | env->macl;
+> +
+> +        /* The carry bit of the 64-bit addition is discarded */
+> +        int64_t result = mac + (int64_t)mul;
+> +        env->macl = result;
+> +        env->mach = result >> 32;
+>      }
+>  }
+>  
+> -- 
 > 2.41.0
->
+> 
 
+Reviewd-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+
+-- 
+Yosinori Sato
 
