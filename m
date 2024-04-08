@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42276CD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 21:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E866CC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 21:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtwcp-00053t-GL; Mon, 08 Apr 2024 17:33:59 -0400
+	id 1rtwdA-000560-Ju; Mon, 08 Apr 2024 17:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtwcm-00053f-UV
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 17:33:56 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtwd8-00055k-1Z
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 17:34:18 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtwck-0007RG-MF
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 17:33:56 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a51b008b3aeso321421166b.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 14:33:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtwcx-0007SP-GH
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 17:34:17 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2d82713f473so85329891fa.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 14:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712612033; x=1713216833; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712612045; x=1713216845; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tHLCK/YnntqXUfC6KOPJMzCxhjwRZbEvNRWEgpyELME=;
- b=VaLaBOZJbpp/zARIrsQUpVwmJnhNKEsElRxDpyYOpBmzaDpmfn8aCmQX8f9gub9RVu
- nDYIi/mjJUxF9ueOnYB+//bu11qHyBXihqtZutegcB8BSgfG2FKHUG0wln657J9ys5Uu
- tmzytPUyLGLmZ81+KYHKECJpQ6HqQxA0nwlYhyI2vtmtvPo9YAUFV85v6iiO1wtYOBrz
- bMxgazrihosIxlWrvQGglWasblJjeHHkIPwE3Bju2nZKYHipQnvWIXCRfghMUY3zSh+o
- Xzk4Tw1ge26iGbOyHmSad3WBJzVSa3PlU6UqPnb7OinTei8DHi7sjoDpiu9iF+KpCHFQ
- rdcQ==
+ bh=WfWENAfLLAnvYi1zd6uTHY+RjswkFjXZGx8wC+ulaF4=;
+ b=cKE4xIkCMLi/DUe2JRHxYvQ7fFmdEHhEw2WGYWgLMzuGqe34BH/OeOruAm7ctykWoE
+ T5QxDfuzN3dzEJuuolYqVgj2BHoo4n86rTxGrloTiUh2f+nHkHuTp4xPqBY+6Qxwkb0E
+ eKnny/0AMeRV1j27Or6jr95mFJo0tj+K5wJs0Qi/2ysDxfHKf8O+wMhBE5oTwAQyfioU
+ uRJMlTtFzc3cBfZvYmxCvRhHRLcdHpNib60UOcYrdNl2ZKemmKqeFuEl67yL5iAbOHKD
+ HU03G8FE8IbvdtaPrE4iZoI1RVuf+YTKM7RPD17+1VmNlwHZ4wiqhADrY75LCOPiEVYJ
+ Rs6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712612033; x=1713216833;
+ d=1e100.net; s=20230601; t=1712612045; x=1713216845;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tHLCK/YnntqXUfC6KOPJMzCxhjwRZbEvNRWEgpyELME=;
- b=c8fGQwPQGmd1SfQBPsZ7qT4keO1cqIthzs1VKgLihwPBMe4xGlUckh5COeReJWTNF6
- a7sF6Wu5uwPW8OUdTBUSa3KVcZGl2a53ldTPhmAljputYCxXOJfSCz81owdRNz0Vzv37
- 2Iy5dmQRwkmmfq7j4E6thUpyFSITaTbapkxDm41UpyyQUVZ495oLds93gw6WzpHxCFj7
- lXOD0Ao/1nNWnw/ODMlg6+G8vUmgMD9TW0AzC2D3UjVqjstYaXZhH5XDHG6aUPAlMoe8
- 0vSPgVPxw7WjB+oAri63K4yv/mW6IDZS8BZvo3dZmIcUNCSU555VZFXH2o7T1G97aBzu
- bhkQ==
-X-Gm-Message-State: AOJu0YwCYl24r+RwMpnQJwXR57xkJf+u6wDcHUibPo8IGDKZuRQVjX0r
- Mi/qfTstm2q/pWb+7s6n7z0LGlrmx5bAb2afXzGhSk+qElt5h6KsSaEYQErYmX6c0u0sgrCTzW4
- B
-X-Google-Smtp-Source: AGHT+IFV//6S83IpX1YFLppLMNqB/WfCLOGzit5051xhWRCULzGfpJuGGI/w/EH+2IL5zkTTu9WPGQ==
-X-Received: by 2002:a17:907:6d20:b0:a4e:2419:d51c with SMTP id
- sa32-20020a1709076d2000b00a4e2419d51cmr8742103ejc.51.1712612032859; 
- Mon, 08 Apr 2024 14:33:52 -0700 (PDT)
+ bh=WfWENAfLLAnvYi1zd6uTHY+RjswkFjXZGx8wC+ulaF4=;
+ b=etefRTR3wr/M6Uad038zN7DmF0l4fOLmru0d6Y200kv28PGk04TErzgzzwf9cNfMvD
+ 2w3+bHSsIdFN2sEFYYJQNMWdqDMY7sMzw54w5gEYO9GHY0G5nCKLaxTwjgly/H5+QIXy
+ Y0T+CWadDSo5k8VAwBF1EhWDvdK2rndalZPfQeRZmMhUPmQHStxCrjrXerJwRI7Dk/lU
+ K0YPnk7Sswz/HvPVHtkXPfjphjzvFAnK5H659kIKiZBtRoz4isenQxyxQsKT+qoyfcoW
+ cbOk7QuXDMkd4H5FswTJ4cy1Yo5KDQI6AKcvfa9ZtqG79Wh5hpO/hhm6d/ae+7AV9ouX
+ r20w==
+X-Gm-Message-State: AOJu0Yyu8mad8P/BSi2XwB8EJnUrBflF6Zs7tbhfEUR+JMKD3qGSzx6r
+ k641v4f6UCX1IsVQSKfhN0uUO0Z8SbUyNvI7wIBOLAgmy9veQxJvFHgXm8Ggr72GCqdChp2/0B4
+ 2
+X-Google-Smtp-Source: AGHT+IHHpfU6fle4vmN3TmX98Z3JFGqBZbKMy4nbGz2JB++MvNuUkVW+fago0MOIQrI45Ry+8UKEhw==
+X-Received: by 2002:a2e:918e:0:b0:2d6:87d7:601 with SMTP id
+ f14-20020a2e918e000000b002d687d70601mr8586212ljg.9.1712612044963; 
+ Mon, 08 Apr 2024 14:34:04 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- k12-20020a17090646cc00b00a4e3fda23f5sm4837837ejs.165.2024.04.08.14.33.51
+ ov7-20020a170906fc0700b00a4e44f724e8sm4844136ejb.186.2024.04.08.14.34.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Apr 2024 14:33:52 -0700 (PDT)
+ Mon, 08 Apr 2024 14:34:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Corey Minyard <cminyard@mvista.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1 2/4] hw/i2c: Fix checkpatch line over 80 chars
- warnings
-Date: Mon,  8 Apr 2024 23:33:36 +0200
-Message-ID: <20240408213339.83149-3-philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1 4/4] hw/i2c: Convert to spec v7 terminology
+ (manually)
+Date: Mon,  8 Apr 2024 23:33:38 +0200
+Message-ID: <20240408213339.83149-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240408213339.83149-1-philmd@linaro.org>
 References: <20240408213339.83149-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,320 +97,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to modify these lines, fix their style
-in order to avoid checkpatch.pl warnings:
-
-  WARNING: line over 80 characters
+See previous commit for rationale.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i2c/i2c.h            |  11 ++-
- include/hw/nvram/eeprom_at24c.h |   6 +-
- hw/arm/aspeed.c                 | 140 +++++++++++++++++++-------------
- hw/nvram/eeprom_at24c.c         |   6 +-
- 4 files changed, 98 insertions(+), 65 deletions(-)
+ include/hw/i2c/i2c.h | 52 ++++++++++++++++++++++----------------------
+ hw/i2c/core.c        |  2 +-
+ 2 files changed, 27 insertions(+), 27 deletions(-)
 
 diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-index c18a69e4b6..a1b3f4d179 100644
+index fa00098477..abefee78fd 100644
 --- a/include/hw/i2c/i2c.h
 +++ b/include/hw/i2c/i2c.h
-@@ -31,7 +31,10 @@ struct I2CSlaveClass {
-     /* Master to slave. Returns non-zero for a NAK, 0 for success. */
-     int (*send)(I2CSlave *s, uint8_t data);
+@@ -6,8 +6,8 @@
  
--    /* Master to slave (asynchronous). Receiving slave must call i2c_ack(). */
-+    /*
-+     * Master to slave (asynchronous).
-+     * Receiving slave must call i2c_ack().
-+     */
-     void (*send_async)(I2CSlave *s, uint8_t data);
+ /*
+  * The QEMU I2C implementation only supports simple transfers that complete
+- * immediately.  It does not support slave devices that need to be able to
+- * defer their response (eg. CPU slave interfaces where the data is supplied
++ * immediately.  It does not support target devices that need to be able to
++ * defer their response (eg. CPU target interfaces where the data is supplied
+  * by the device driver in response to an interrupt).
+  */
+ 
+@@ -28,23 +28,23 @@ OBJECT_DECLARE_TYPE(I2CTarget, I2CTargetClass,
+ struct I2CTargetClass {
+     DeviceClass parent_class;
+ 
+-    /* Master to slave. Returns non-zero for a NAK, 0 for success. */
++    /* Controller to target. Returns non-zero for a NAK, 0 for success. */
+     int (*send)(I2CTarget *s, uint8_t data);
  
      /*
-@@ -83,7 +86,8 @@ struct I2CPendingMaster {
+-     * Master to slave (asynchronous).
+-     * Receiving slave must call i2c_ack().
++     * Controller to target (asynchronous).
++     * Receiving target must call i2c_ack().
+      */
+     void (*send_async)(I2CTarget *s, uint8_t data);
+ 
+     /*
+-     * Slave to master.  This cannot fail, the device should always
++     * Target to controller.  This cannot fail, the device should always
+      * return something here.
+      */
+     uint8_t (*recv)(I2CTarget *s);
+ 
+     /*
+-     * Notify the slave of a bus state change.  For start event,
++     * Notify the target of a bus state change.  For start event,
+      * returns non-zero to NAK an operation.  For other events the
+      * return code is not used and should be zero.
+      */
+@@ -96,7 +96,7 @@ struct I2CBus {
+     uint8_t saved_address;
+     bool broadcast;
+ 
+-    /* Set from slave currently mastering the bus. */
++    /* Set from target currently controlling the bus. */
+     QEMUBH *bh;
  };
  
- typedef QLIST_HEAD(I2CNodeList, I2CNode) I2CNodeList;
--typedef QSIMPLEQ_HEAD(I2CPendingMasters, I2CPendingMaster) I2CPendingMasters;
-+typedef QSIMPLEQ_HEAD(I2CPendingMasters, I2CPendingMaster)
-+            I2CPendingMasters;
- 
- struct I2CBus {
-     BusState qbus;
-@@ -176,7 +180,8 @@ I2CSlave *i2c_slave_new(const char *name, uint8_t addr);
-  * Create the device state structure, initialize it, put it on the
-  * specified @bus, and drop the reference to it (the device is realized).
+@@ -107,7 +107,7 @@ int i2c_bus_busy(I2CBus *bus);
+  * i2c_start_transfer: start a transfer on an I2C bus.
+  *
+  * @bus: #I2CBus to be used
+- * @address: address of the slave
++ * @address: address of the target
+  * @is_recv: indicates the transfer direction
+  *
+  * When @is_recv is a known boolean constant, use the
+@@ -121,7 +121,7 @@ int i2c_start_transfer(I2CBus *bus, uint8_t address, bool is_recv);
+  * i2c_start_recv: start a 'receive' transfer on an I2C bus.
+  *
+  * @bus: #I2CBus to be used
+- * @address: address of the slave
++ * @address: address of the target
+  *
+  * Returns: 0 on success, -1 on error
   */
--I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr);
-+I2CSlave *i2c_slave_create_simple(I2CBus *bus,
-+                                  const char *name, uint8_t addr);
+@@ -131,7 +131,7 @@ int i2c_start_recv(I2CBus *bus, uint8_t address);
+  * i2c_start_send: start a 'send' transfer on an I2C bus.
+  *
+  * @bus: #I2CBus to be used
+- * @address: address of the slave
++ * @address: address of the target
+  *
+  * Returns: 0 on success, -1 on error
+  */
+@@ -141,7 +141,7 @@ int i2c_start_send(I2CBus *bus, uint8_t address);
+  * i2c_start_send_async: start an asynchronous 'send' transfer on an I2C bus.
+  *
+  * @bus: #I2CBus to be used
+- * @address: address of the slave
++ * @address: address of the target
+  *
+  * Return: 0 on success, -1 on error
+  */
+@@ -161,9 +161,9 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
+                   I2CNodeList *current_devs);
  
  /**
-  * Realize and drop a reference an I2C slave device
-diff --git a/include/hw/nvram/eeprom_at24c.h b/include/hw/nvram/eeprom_at24c.h
-index acb9857b2a..9d29f0a69a 100644
---- a/include/hw/nvram/eeprom_at24c.h
-+++ b/include/hw/nvram/eeprom_at24c.h
-@@ -33,7 +33,9 @@ I2CSlave *at24c_eeprom_init(I2CBus *bus, uint8_t address, uint32_t rom_size);
-  * @bus, and drop the reference to it (the device is realized). Copies the data
-  * from @init_rom to the beginning of the EEPROM memory buffer.
+- * Create an I2C slave device on the heap.
++ * Create an I2C target device on the heap.
+  * @name: a device type name
+- * @addr: I2C address of the slave when put on a bus
++ * @addr: I2C address of the target when put on a bus
+  *
+  * This only initializes the device state structure and allows
+  * properties to be set. Type @name must exist. The device still
+@@ -172,10 +172,10 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
+ I2CTarget *i2c_target_new(const char *name, uint8_t addr);
+ 
+ /**
+- * Create and realize an I2C slave device on the heap.
++ * Create and realize an I2C target device on the heap.
+  * @bus: I2C bus to put it on
+- * @name: I2C slave device type name
+- * @addr: I2C address of the slave when put on a bus
++ * @name: I2C target device type name
++ * @addr: I2C address of the target when put on a bus
+  *
+  * Create the device state structure, initialize it, put it on the
+  * specified @bus, and drop the reference to it (the device is realized).
+@@ -184,10 +184,10 @@ I2CTarget *i2c_target_create_simple(I2CBus *bus,
+                                     const char *name, uint8_t addr);
+ 
+ /**
+- * Realize and drop a reference an I2C slave device
+- * @dev: I2C slave device to realize
++ * Realize and drop a reference an I2C target device
++ * @dev: I2C target device to realize
+  * @bus: I2C bus to put it on
+- * @addr: I2C address of the slave on the bus
++ * @addr: I2C address of the target on the bus
+  * @errp: pointer to NULL initialized error object
+  *
+  * Returns: %true on success, %false on failure.
+@@ -196,27 +196,27 @@ I2CTarget *i2c_target_create_simple(I2CBus *bus,
+  * reference to it.
+  *
+  * This function is useful if you have created @dev via qdev_new(),
+- * i2c_target_new() or i2c_slave_try_new() (which take a reference to
++ * i2c_target_new() or i2c_target_try_new() (which take a reference to
+  * the device it returns to you), so that you can set properties on it
+  * before realizing it. If you don't need to set properties then
+  * i2c_target_create_simple() is probably better (as it does the create,
+  * init and realize in one step).
+  *
+- * If you are embedding the I2C slave into another QOM device and
++ * If you are embedding the I2C target into another QOM device and
+  * initialized it via some variant on object_initialize_child() then
+  * do not use this function, because that family of functions arrange
+  * for the only reference to the child device to be held by the parent
+  * via the child<> property, and so the reference-count-drop done here
+- * would be incorrect.  (Instead you would want i2c_slave_realize(),
++ * would be incorrect.  (Instead you would want i2c_target_realize(),
+  * which doesn't currently exist but would be trivial to create if we
+  * had any code that wanted it.)
   */
--I2CSlave *at24c_eeprom_init_rom(I2CBus *bus, uint8_t address, uint32_t rom_size,
--                                const uint8_t *init_rom, uint32_t init_rom_size);
-+I2CSlave *at24c_eeprom_init_rom(I2CBus *bus,
-+                                uint8_t address, uint32_t rom_size,
-+                                const uint8_t *init_rom,
-+                                uint32_t init_rom_size);
+ bool i2c_target_realize_and_unref(I2CTarget *dev, I2CBus *bus, Error **errp);
  
- #endif
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 93ca87fda2..8279ad748a 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -649,18 +649,23 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
-         qdev_connect_gpio_out(dev, pca1_leds[i].gpio_id,
-                               qdev_get_gpio_in(DEVICE(led), 0));
-     }
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "dps310", 0x76);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "max31785", 0x52);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "tmp423", 0x4c);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), "tmp423", 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
-+                            "dps310", 0x76);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
-+                            "max31785", 0x52);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
-+                            "tmp423", 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
-+                            "tmp423", 0x4c);
+ /**
+- * Set the I2C bus address of a slave device
+- * @dev: I2C slave device
+- * @address: I2C address of the slave when put on a bus
++ * Set the I2C bus address of a target device
++ * @dev: I2C target device
++ * @address: I2C address of the target when put on a bus
+  */
+ void i2c_target_set_address(I2CTarget *dev, uint8_t address);
  
-     /* The Witherspoon expects a TMP275 but a TMP105 is compatible */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
--                     0x4a);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            TYPE_TMP105, 0x4a);
- 
-     /* The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
-      * good enough */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11),
-+                            "ds1338", 0x32);
- 
-     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
-                           eeprom_buf);
-@@ -717,19 +722,20 @@ static void fp5280g2_bmc_i2c_init(AspeedMachineState *bmc)
-     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x50, 32768);
- 
-     /* The fp5280g2 expects a TMP112 but a TMP105 is compatible */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
--                     0x49);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
-+                            TYPE_TMP105, 0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
-+                            TYPE_TMP105, 0x49);
- 
-     i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
-                      "pca9546", 0x70);
-     /* It expects a TMP112 but a TMP105 is compatible */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0), TYPE_TMP105,
--                     0x4a);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-+                            TYPE_TMP105, 0x4a);
- 
-     /* It expects a ds3232 but a ds1338 is good enough */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "ds1338", 0x68);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
-+                            "ds1338", 0x68);
- 
-     /* It expects a pca9555 but a pca9552 is compatible */
-     create_pca9552(soc, 8, 0x30);
-@@ -745,12 +751,12 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-     create_pca9552(soc, 3, 0x61);
- 
-     /* The rainier expects a TMP275 but a TMP105 is compatible */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
--                     0x49);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
--                     0x4a);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
-+                            TYPE_TMP105, 0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
-+                            TYPE_TMP105, 0x49);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
-+                            TYPE_TMP105, 0x4a);
-     i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
-                                       "pca9546", 0x70);
-     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
-@@ -758,10 +764,10 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 2), 0x52, 64 * KiB);
-     create_pca9552(soc, 4, 0x60);
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
--                     0x49);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
-+                            TYPE_TMP105, 0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
-+                            TYPE_TMP105, 0x49);
-     create_pca9552(soc, 5, 0x60);
-     create_pca9552(soc, 5, 0x61);
-     i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
-@@ -769,12 +775,12 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
-     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
--                     0x4a);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
--                     0x4b);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6),
-+                            TYPE_TMP105, 0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6),
-+                            TYPE_TMP105, 0x4a);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6),
-+                            TYPE_TMP105, 0x4b);
-     i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6),
-                                       "pca9546", 0x70);
-     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
-@@ -788,18 +794,20 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-     create_pca9552(soc, 7, 0x33);
-     create_pca9552(soc, 7, 0x60);
-     create_pca9552(soc, 7, 0x61);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "dps310", 0x76);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
-+                            "dps310", 0x76);
-     /* Bus 7: TODO si7021-a20@20 */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "max31785", 0x52);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
-+                            TYPE_TMP105, 0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
-+                            "max31785", 0x52);
-     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 7), 0x50, 64 * KiB);
-     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 7), 0x51, 64 * KiB);
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), TYPE_TMP105,
--                     0x4a);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
-+                            TYPE_TMP105, 0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
-+                            TYPE_TMP105, 0x4a);
-     at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x50,
-                           64 * KiB, rainier_bb_fruid, rainier_bb_fruid_len);
-     at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51,
-@@ -810,18 +818,22 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
-     /* Bus 8: ucd90320@b */
-     /* Bus 8: ucd90320@c */
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4c);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4d);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            "tmp423", 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            "tmp423", 0x4d);
-     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 9), 0x50, 128 * KiB);
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4c);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4d);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10),
-+                            "tmp423", 0x4c);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10),
-+                            "tmp423", 0x4d);
-     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 10), 0x50, 128 * KiB);
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_TMP105,
--                     0x49);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11),
-+                            TYPE_TMP105, 0x48);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11),
-+                            TYPE_TMP105, 0x49);
-     i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11),
-                                       "pca9546", 0x70);
-     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
-@@ -1012,7 +1024,8 @@ static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     AspeedSoCState *soc = bmc->soc;
- 
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15),
-+                            "tmp105", 0x4d);
+diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+index fd34a6bc83..a8d12cae4e 100644
+--- a/hw/i2c/core.c
++++ b/hw/i2c/core.c
+@@ -103,7 +103,7 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
+     return broadcast;
  }
  
- static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
-@@ -1028,23 +1041,34 @@ static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
-     /* I2C7 CPUVR MUX */
-     cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
-                                         "pca9546", 0x70);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0),
-+                            "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1),
-+                            "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2),
-+                            "pca9548", 0x72);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3),
-+                            "pca9548", 0x72);
- 
-     /* I2C8 Thermal Diodes*/
-     therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
-                                         "pca9548", 0x70);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
--    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0),
-+                            TYPE_LM75, 0x4C);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1),
-+                            TYPE_LM75, 0x4C);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2),
-+                            TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3),
-+                            TYPE_LM75, 0x48);
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4),
-+                            TYPE_LM75, 0x48);
- 
-     /* I2C9 Fan Controller (MAX31785) */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            "max31785", 0x52);
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-+                            "max31785", 0x54);
- }
- 
- static bool aspeed_get_mmio_exec(Object *obj, Error **errp)
-diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
-index 3272068663..4db83d0dd6 100644
---- a/hw/nvram/eeprom_at24c.c
-+++ b/hw/nvram/eeprom_at24c.c
-@@ -148,8 +148,10 @@ I2CSlave *at24c_eeprom_init(I2CBus *bus, uint8_t address, uint32_t rom_size)
-     return at24c_eeprom_init_rom(bus, address, rom_size, NULL, 0);
- }
- 
--I2CSlave *at24c_eeprom_init_rom(I2CBus *bus, uint8_t address, uint32_t rom_size,
--                                const uint8_t *init_rom, uint32_t init_rom_size)
-+I2CSlave *at24c_eeprom_init_rom(I2CBus *bus,
-+                                uint8_t address, uint32_t rom_size,
-+                                const uint8_t *init_rom,
-+                                uint32_t init_rom_size)
- {
-     EEPROMState *s;
- 
+-/* TODO: Make this handle multiple masters.  */
++/* TODO: Make this handle multiple controllers.  */
+ /*
+  * Start or continue an i2c transaction.  When this is called for the
+  * first time or after an i2c_end_transfer(), if it returns an error
 -- 
 2.41.0
 
