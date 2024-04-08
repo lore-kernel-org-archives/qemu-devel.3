@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC648CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12675C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtkeC-0001YF-It; Mon, 08 Apr 2024 04:46:37 -0400
+	id 1rtkeJ-0001mi-L4; Mon, 08 Apr 2024 04:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rtkeA-0001Ux-Hj
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:46:34 -0400
+ id 1rtkeI-0001mO-AC
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:46:42 -0400
 Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rtke6-0004JO-VW
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:46:33 -0400
+ id 1rtkeG-0004Mu-Gp
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:46:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712565991; x=1744101991;
+ t=1712566000; x=1744102000;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=5xgnJm9GeM+nUMqUXu8Q/RHR1MMMYDPH0AFe49ankY0=;
- b=K/VAO1t0y1lJU2fnZPNFbhKoZycJH/Ka2xO4T9lPQSLhRlvOqRkkBn1t
- vf/CT6lICvTKQOhJqoUvqsx7xk6xNqtSa4QeCoiqkgbVuS+k1ArAzCBIr
- 1pnofmRiLEO6fuicXsLSroE+v1J3a5uMnFHwfD/dxw52jmOMBAmI27Le3
- Y8XKdu1ra7CKC5rHHp/zLqAvMZ5oCVavTB3DRi24MpzEDnuzehXf9nVa6
- B/PBLeSJR08huAtgDh2vRhlUaT2WgOImBlak8Yiva8kFw7b2AglejDkJf
- yb7xs1kA483svOeT7cnpaod4Me0/mltt0SG1vb/hKAPZIYpv0iDVfj8GS g==;
-X-CSE-ConnectionGUID: si6+Z393QtK2mTT0nc/D4Q==
-X-CSE-MsgGUID: lgKDYNVaSrKLvitE7C3JQw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11037"; a="19269448"
-X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="19269448"
+ bh=aw0GBkJphOyAFSOv9qlsnjCA08x/RejUduRb0dkrZGs=;
+ b=gSFlQh92f9lzL42e8lw7n8gWLj6kGtGjGf2gbGAABRs4rIZHCdIwafR8
+ NzPNEUi2JyHna0lFNmn+SV8n0rlTGbuuNZM02fMzKMSO+qLvgdwiQV+Sz
+ 4hAVKTV/dXwxYf03wgEFgl0Wa1YY3+O8dc2jYqtvAiJidkWeLSrgNq4Kw
+ R4J81C1+t1FEMFxCKkpe3/06qkTVw19a5TAIXb29AMdy/KnLDpOpMcJ1f
+ evsPk/TsWi55XJyQt7PfrBkX65d7qOaKYGv+QP1BZ55CbHb7ZEMr0rFaM
+ 08WZ5kloZzw8fZoRFtmmHVsdkKJgm6b4/AcJGrqwgjKEl3FFDlGpzzJm7 A==;
+X-CSE-ConnectionGUID: rLhl1475QCCnYnrWDoO3Zg==
+X-CSE-MsgGUID: uJskxyaLRReVvKKarkumpQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11037"; a="19269481"
+X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="19269481"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Apr 2024 01:46:26 -0700
-X-CSE-ConnectionGUID: QovPNbKbRmKFsUpCihZnCw==
-X-CSE-MsgGUID: yHv7+6XOSuuoAQTxXfV0Qw==
+ 08 Apr 2024 01:46:39 -0700
+X-CSE-ConnectionGUID: Qtls9I3LQyCPkvskx4I48A==
+X-CSE-MsgGUID: EVP2VpNIQ3mU7E3L7eGz9g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="42985885"
+X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="42985904"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Apr 2024 01:46:22 -0700
+ 08 Apr 2024 01:46:35 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, chao.p.peng@intel.com,
- Yi Sun <yi.y.sun@linux.intel.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 2/5] intel_iommu: Implement set/unset_iommu_device()
- callback
-Date: Mon,  8 Apr 2024 16:44:01 +0800
-Message-Id: <20240408084404.1111628-3-zhenzhong.duan@intel.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 5/5] intel_iommu: Check for compatibility with iommufd
+ backed device
+Date: Mon,  8 Apr 2024 16:44:04 +0800
+Message-Id: <20240408084404.1111628-6-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408084404.1111628-1-zhenzhong.duan@intel.com>
 References: <20240408084404.1111628-1-zhenzhong.duan@intel.com>
@@ -91,160 +91,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+Currently only stage-2 translation is supported which is backed by
+shadow page table on host side. So we don't need exact matching of
+each bit of cap/ecap between vIOMMU and host. However, we can still
+ensure compatibility of host and vIOMMU's address width at least,
+i.e., vIOMMU's aw-bits <= host IOMMU aw-bits, which is missed before.
 
-Implement set/unset_iommu_device() callback in Intel vIOMMU.
-In set call, a new structure VTDHostIOMMUDevice which holds
-a reference to HostIOMMUDevice is stored in hash table
-indexed by PCI BDF.
+When stage-1 translation is supported in future, a.k.a. scalable
+modern mode, this mechanism will be further extended to check more
+bits.
 
 Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  8 ++++
- include/hw/i386/intel_iommu.h  |  2 +
- hw/i386/intel_iommu.c          | 76 ++++++++++++++++++++++++++++++++++
- 3 files changed, 86 insertions(+)
+ include/hw/i386/intel_iommu.h |  1 +
+ hw/i386/intel_iommu.c         | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index f8cf99bddf..becafd03c1 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -537,4 +537,12 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_SL_IGN_COM              0xbff0000000000000ULL
- #define VTD_SL_TM                   (1ULL << 62)
- 
-+
-+typedef struct VTDHostIOMMUDevice {
-+    IntelIOMMUState *iommu_state;
-+    PCIBus *bus;
-+    uint8_t devfn;
-+    HostIOMMUDevice *dev;
-+    QLIST_ENTRY(VTDHostIOMMUDevice) next;
-+} VTDHostIOMMUDevice;
- #endif
 diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 7fa0a695c8..bbc7b96add 100644
+index bbc7b96add..2bbde41e45 100644
 --- a/include/hw/i386/intel_iommu.h
 +++ b/include/hw/i386/intel_iommu.h
-@@ -292,6 +292,8 @@ struct IntelIOMMUState {
-     /* list of registered notifiers */
-     QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
+@@ -47,6 +47,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
+ #define VTD_HOST_AW_48BIT           48
+ #define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_39BIT
+ #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
++#define VTD_MGAW_FROM_CAP(cap)      ((cap >> 16) & 0x3fULL)
  
-+    GHashTable *vtd_host_iommu_dev;             /* VTDHostIOMMUDevice */
-+
-     /* interrupt remapping */
-     bool intr_enabled;              /* Whether guest enabled IR */
-     dma_addr_t intr_root;           /* Interrupt remapping table pointer */
+ #define DMAR_REPORT_F_INTR          (1)
+ 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 519063c8f8..4f84e2e801 100644
+index d2cd186df0..d8fac9ef9f 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -237,6 +237,13 @@ static gboolean vtd_as_equal(gconstpointer v1, gconstpointer v2)
-            (key1->pasid == key2->pasid);
- }
- 
-+static gboolean vtd_as_idev_equal(gconstpointer v1, gconstpointer v2)
-+{
-+    const struct vtd_as_key *key1 = v1;
-+    const struct vtd_as_key *key2 = v2;
-+
-+    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
-+}
- /*
-  * Note that we use pointer to PCIBus as the key, so hashing/shifting
-  * based on the pointer value is intended. Note that we deal with
-@@ -3812,6 +3819,70 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
-     return vtd_dev_as;
- }
- 
-+static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-+                                    HostIOMMUDevice *hiod, Error **errp)
-+{
-+    IntelIOMMUState *s = opaque;
-+    VTDHostIOMMUDevice *vtd_hdev;
-+    struct vtd_as_key key = {
-+        .bus = bus,
-+        .devfn = devfn,
-+    };
-+    struct vtd_as_key *new_key;
-+
-+    assert(hiod);
-+
-+    vtd_iommu_lock(s);
-+
-+    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
-+
-+    if (vtd_hdev) {
-+        error_setg(errp, "IOMMUFD device already exist");
-+        vtd_iommu_unlock(s);
-+        return -EEXIST;
-+    }
-+
-+    vtd_hdev = g_malloc0(sizeof(VTDHostIOMMUDevice));
-+    vtd_hdev->bus = bus;
-+    vtd_hdev->devfn = (uint8_t)devfn;
-+    vtd_hdev->iommu_state = s;
-+    vtd_hdev->dev = hiod;
-+
-+    new_key = g_malloc(sizeof(*new_key));
-+    new_key->bus = bus;
-+    new_key->devfn = devfn;
-+
-+    object_ref(hiod);
-+    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, vtd_hdev);
-+
-+    vtd_iommu_unlock(s);
-+
-+    return 0;
-+}
-+
-+static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
-+{
-+    IntelIOMMUState *s = opaque;
-+    VTDHostIOMMUDevice *vtd_hdev;
-+    struct vtd_as_key key = {
-+        .bus = bus,
-+        .devfn = devfn,
-+    };
-+
-+    vtd_iommu_lock(s);
-+
-+    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
-+    if (!vtd_hdev) {
-+        vtd_iommu_unlock(s);
-+        return;
-+    }
-+
-+    g_hash_table_remove(s->vtd_host_iommu_dev, &key);
-+    object_unref(vtd_hdev->dev);
-+
-+    vtd_iommu_unlock(s);
-+}
-+
- /* Unmap the whole range in the notifier's scope. */
- static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+@@ -3846,6 +3846,29 @@ static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+                                   HostIOMMUDevice *hiod,
+                                   Error **errp)
  {
-@@ -4116,6 +4187,8 @@ static AddressSpace *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
++    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
++    struct iommu_hw_info_vtd *vtd;
++    HIOD_IOMMUFD_INFO info;
++    int host_aw_bits, ret;
++
++    ret = hiodc->get_host_iommu_info(hiod, &info, sizeof(info), errp);
++    if (ret) {
++        return ret;
++    }
++
++    if (info.type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
++        error_setg(errp, "IOMMU hardware is not compatible");
++        return -EINVAL;
++    }
++
++    vtd = &info.data.vtd;
++    host_aw_bits = VTD_MGAW_FROM_CAP(vtd->cap_reg) + 1;
++    if (s->aw_bits > host_aw_bits) {
++        error_setg(errp, "aw-bits %d > host aw-bits %d",
++                   s->aw_bits, host_aw_bits);
++        return -EINVAL;
++    }
++
+     return 0;
+ }
  
- static PCIIOMMUOps vtd_iommu_ops = {
-     .get_address_space = vtd_host_dma_iommu,
-+    .set_iommu_device = vtd_dev_set_iommu_device,
-+    .unset_iommu_device = vtd_dev_unset_iommu_device,
- };
- 
- static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-@@ -4235,6 +4308,9 @@ static void vtd_realize(DeviceState *dev, Error **errp)
-                                      g_free, g_free);
-     s->vtd_address_spaces = g_hash_table_new_full(vtd_as_hash, vtd_as_equal,
-                                       g_free, g_free);
-+    s->vtd_host_iommu_dev = g_hash_table_new_full(vtd_as_hash,
-+                                                  vtd_as_idev_equal,
-+                                                  g_free, g_free);
-     vtd_init(s);
-     pci_setup_iommu(bus, &vtd_iommu_ops, dev);
-     /* Pseudo address space under root PCI bus. */
 -- 
 2.34.1
 
