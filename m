@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FC3C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 19:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16900CD1292
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 19:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtubK-0002nk-3z; Mon, 08 Apr 2024 15:24:18 -0400
+	id 1rtubQ-0002ox-Vv; Mon, 08 Apr 2024 15:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtubI-0002nS-Pb
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 15:24:16 -0400
+ id 1rtubN-0002ob-KV
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 15:24:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtubH-0002ga-1s
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 15:24:16 -0400
+ id 1rtubM-0002h5-1g
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 15:24:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712604254;
+ s=mimecast20190719; t=1712604259;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zDbDDhsWKY0Wn63jDverbc2XQYZ04EYm+iDbg78hMFo=;
- b=Sb3UdLjXbKP7/RYaOxTT5kQk9AwuzVclesjP61n1BoetiJgDL+y0VeQ14EGENW41xgXxOI
- VIjXgE2yXpKXQpn89xWLqHkHQQUJdIkJgP/nMU3Rt5W56VfHPV70BmMQYpcEmjTAR5PDVW
- JKVEYPm1YJ+wTGPhJmkenPc60uSN9Sc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Hjo+SWrDeRFizEqN4vD72bf+/sx6nq47cFfphoqPEzc=;
+ b=OanLIl9b0GnIqxYyf9hesMAZDdC+bueipuLKsmwA8yPNNprTzTNGglQZUpMU4xkwiICaA6
+ W1rA7OdPRrHf/cgwlv7NeCJvX4WKeridDDLrXU+kTLGfIWr1fKEzmmrMsqAmXqH/p45ifm
+ OtT3czESAi2REDlZ9wYc3mOk/XMENaI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-342-ijpWR0zGMo2ba1hCshOFkA-1; Mon, 08 Apr 2024 15:24:12 -0400
-X-MC-Unique: ijpWR0zGMo2ba1hCshOFkA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4147f17da12so24030475e9.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 12:24:12 -0700 (PDT)
+ us-mta-194-L8y3KZ4UMrmH2FPLA_bcZg-1; Mon, 08 Apr 2024 15:24:17 -0400
+X-MC-Unique: L8y3KZ4UMrmH2FPLA_bcZg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-343e00c8979so2177804f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 12:24:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712604251; x=1713209051;
+ d=1e100.net; s=20230601; t=1712604256; x=1713209056;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zDbDDhsWKY0Wn63jDverbc2XQYZ04EYm+iDbg78hMFo=;
- b=GFaGvo74wYTFMIekWoGFOc8Sjf5kp37GJtJtIl57bvqIXpESqEg3E8rwJdwi8CiGNb
- cgRADwZ3cj0usHeAgQo289c9dx41HkDupKrf2U3RqasItVWeZ6zRJH8Eqg2LNnjj/VwS
- 83WWoiJNXbb84eM4Kr3xyQrs+wRCuRioooBo1mlTZpD2omC8iWM99hMNTb1e3VcdIcI+
- NBJXhNLVge2dWHIR7BbfjrbmxrXqWVaQvGVGCg4QhvEd6rtUbtud11yOyP9KxqZfhMdV
- bzlNHQJqspzWa0b07Jl6BFj9zYW5M0h6l9jfePCbIcrrS1t/NNv+IrZ6VwnFpKOwOjCr
- Yxcg==
-X-Gm-Message-State: AOJu0YxptUjScuHLleBK9064pNOuq4sUaOnChC+d5XCIqnNr1vPTQiDa
- 7KUccdZfgQ5f1OkWXW5OPbNcMqgQa+aAdCKSCiVZt9w91xGQI+nJOaPTX0ZjIQne4FjpKvkDXhr
- lMOkvM55Tkd6RG/e7WRJ5Dfp8Rb9INNGN3LDfhInKqcm0EPlY0YSz2zUaQcZAglE+5tgenJTIV/
- Cjzf9gKu4GV0eCAIC3hsiSznZ8fjzOWdP57KYP
-X-Received: by 2002:a05:600c:1d13:b0:416:644d:6dba with SMTP id
- l19-20020a05600c1d1300b00416644d6dbamr3047458wms.4.1712604250943; 
- Mon, 08 Apr 2024 12:24:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFREQDA6Zpt+kxW9lt/2alRaanY7mKBU+NXsDRvT7glxQ1sW+64s0aJQur6Iq/dRwbYcA9pg==
-X-Received: by 2002:a05:600c:1d13:b0:416:644d:6dba with SMTP id
- l19-20020a05600c1d1300b00416644d6dbamr3047448wms.4.1712604250593; 
- Mon, 08 Apr 2024 12:24:10 -0700 (PDT)
+ bh=Hjo+SWrDeRFizEqN4vD72bf+/sx6nq47cFfphoqPEzc=;
+ b=YpZ15QPqytLFzFIZS+MuK4U5PvDvPTanrwB1CYIBS44cQLlP9SYqddhGfVJoeNurWM
+ Y7kOut9t53UlYwEGXPSVyJ4Z4s9vwbIBhF1OBiuzna/FyrOUlE6HG5N54q5aTV/rzK8b
+ svQ/4WWmBnBbNrbn9LR6PJvwBUR9X9Sijr/Qn6m9uv27zDzYXN6CiXOSHdRON3zxTV79
+ h4A7yUF0UdKknGry4HbV0Wl0CTUYRMlS6dDERlUThaYaecOCLCNSsTmQ4sh8h/VCiE7J
+ hg1T/QcqxYCxMZa/9+8L6F8k2KUlfj10fls1Pr3oBy7MGUU58getKt9ReU7QIEt84c9s
+ yi2g==
+X-Gm-Message-State: AOJu0YxP3ZrsqQxJxpM80rgmuQrKqf3rmGs0TBy0qIXJv5S6nJ4apB0+
+ uLJOMVIrBvqOV/D9BXtxZ/6AIgZe2zIHysXV0V2NMMmYpSogQr7dRO85RAOPrgjZRdL6fdhT9QK
+ AYEvrri/wRJcdyO/ahlOeimd1tLxRHMpI9xalgRLUahW6+aCKqzmtfMYVBXXjErMCHs8MRonjop
+ BKIIdzfYpH7J8IL07shJEWOtRLKOkQ6ixj5K+G
+X-Received: by 2002:adf:e24e:0:b0:33e:9116:bef4 with SMTP id
+ bl14-20020adfe24e000000b0033e9116bef4mr6545889wrb.14.1712604255977; 
+ Mon, 08 Apr 2024 12:24:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG8BP0RNkpmrgEVrqUTnFcaRLX44cFDR/qm1jQFsb2U8U6o2jrmsLyP18HwbNx4Ad9fV+CROQ==
+X-Received: by 2002:adf:e24e:0:b0:33e:9116:bef4 with SMTP id
+ bl14-20020adfe24e000000b0033e9116bef4mr6545863wrb.14.1712604254629; 
+ Mon, 08 Apr 2024 12:24:14 -0700 (PDT)
 Received: from avogadro.local ([151.95.152.232])
  by smtp.gmail.com with ESMTPSA id
- iv9-20020a05600c548900b004162e3e5b9asm14170866wmb.44.2024.04.08.12.24.09
+ m6-20020adff386000000b00343300a4eb8sm9620299wro.49.2024.04.08.12.24.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 12:24:09 -0700 (PDT)
+ Mon, 08 Apr 2024 12:24:12 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 2/3] nanomips: fix warnings with GCC 14
-Date: Mon,  8 Apr 2024 21:24:03 +0200
-Message-ID: <20240408192404.542506-3-pbonzini@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 3/3] kvm: error out of kvm_irqchip_add_msi_route() in case of
+ full route table
+Date: Mon,  8 Apr 2024 21:24:04 +0200
+Message-ID: <20240408192404.542506-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408192404.542506-1-pbonzini@redhat.com>
 References: <20240408192404.542506-1-pbonzini@redhat.com>
@@ -102,250 +103,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GCC 14 shows -Wshadow=local warnings if an enum conflicts with a local
-variable (including a parameter).  To avoid this, move the problematic
-enum and all of its dependencies after the hundreds of functions that
-have a parameter named "instruction".
+From: Igor Mammedov <imammedo@redhat.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+subj is calling kvm_add_routing_entry() which simply extends
+  KVMState::irq_routes::entries[]
+but doesn't check if number of routes goes beyond limit the kernel
+is willing to accept. Which later leads toi the assert
+
+  qemu-kvm: ../accel/kvm/kvm-all.c:1833: kvm_irqchip_commit_routes: Assertion `ret == 0' failed
+
+typically it happens during guest boot for large enough guest
+
+Reproduced with:
+  ./qemu --enable-kvm -m 8G -smp 64 -machine pc \
+     `for b in {1..2}; do echo -n "-device pci-bridge,id=pci$b,chassis_nr=$b ";
+        for i in {0..31}; do touch /tmp/vblk$b$i;
+           echo -n "-drive file=/tmp/vblk$b$i,if=none,id=drive$b$i,format=raw
+                    -device virtio-blk-pci,drive=drive$b$i,bus=pci$b ";
+      done; done`
+
+While crash at boot time is bad, the same might happen at hotplug time
+which is unacceptable.
+So instead calling kvm_add_routing_entry() unconditionally, check first
+that number of routes won't exceed KVM_CAP_IRQ_ROUTING. This way virtio
+device insteads killin qemu, will gracefully fail to initialize device
+as expected with following warnings on console:
+    virtio-blk failed to set guest notifier (-28), ensure -accel kvm is set.
+    virtio_bus_start_ioeventfd: failed. Fallback to userspace (slower).
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Message-ID: <20240408110956.451558-1-imammedo@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- disas/nanomips.c | 194 +++++++++++++++++++++++------------------------
- 1 file changed, 97 insertions(+), 97 deletions(-)
+ accel/kvm/kvm-all.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/disas/nanomips.c b/disas/nanomips.c
-index a0253598dd6..db0c297b8dc 100644
---- a/disas/nanomips.c
-+++ b/disas/nanomips.c
-@@ -36,35 +36,6 @@ typedef uint32_t uint32;
- typedef uint16_t uint16;
- typedef uint64_t img_address;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index a8cecd040eb..931f74256e8 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -1999,12 +1999,17 @@ int kvm_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
+         return -EINVAL;
+     }
  
--typedef enum  {
--    instruction,
--    call_instruction,
--    branch_instruction,
--    return_instruction,
--    reserved_block,
--    pool,
--} TABLE_ENTRY_TYPE;
--
--typedef enum {
--    MIPS64_    = 0x00000001,
--    XNP_       = 0x00000002,
--    XMMS_      = 0x00000004,
--    EVA_       = 0x00000008,
--    DSP_       = 0x00000010,
--    MT_        = 0x00000020,
--    EJTAG_     = 0x00000040,
--    TLBINV_    = 0x00000080,
--    CP0_       = 0x00000100,
--    CP1_       = 0x00000200,
--    CP2_       = 0x00000400,
--    UDI_       = 0x00000800,
--    MCU_       = 0x00001000,
--    VZ_        = 0x00002000,
--    TLB_       = 0x00004000,
--    MVH_       = 0x00008000,
--    ALL_ATTRIBUTES = 0xffffffffull,
--} TABLE_ATTRIBUTE_TYPE;
--
- typedef struct Dis_info {
-   img_address m_pc;
-   fprintf_function fprintf_func;
-@@ -72,22 +43,6 @@ typedef struct Dis_info {
-   sigjmp_buf buf;
- } Dis_info;
+-    trace_kvm_irqchip_add_msi_route(dev ? dev->name : (char *)"N/A",
+-                                    vector, virq);
++    if (s->irq_routes->nr < s->gsi_count) {
++        trace_kvm_irqchip_add_msi_route(dev ? dev->name : (char *)"N/A",
++                                        vector, virq);
  
--typedef bool (*conditional_function)(uint64 instruction);
--typedef char * (*disassembly_function)(uint64 instruction,
--                                            Dis_info *info);
--
--typedef struct Pool {
--    TABLE_ENTRY_TYPE     type;
--    const struct Pool    *next_table;
--    int                  next_table_size;
--    int                  instructions_size;
--    uint64               mask;
--    uint64               value;
--    disassembly_function disassembly;
--    conditional_function condition;
--    uint64               attributes;
--} Pool;
--
- #define IMGASSERTONCE(test)
- 
- 
-@@ -544,58 +499,6 @@ static uint64 extract_op_code_value(const uint16 *data, int size)
- }
- 
- 
--/*
-- * Recurse through tables until the instruction is found then return
-- * the string and size
-- *
-- * inputs:
-- *      pointer to a word stream,
-- *      disassember table and size
-- * returns:
-- *      instruction size    - negative is error
-- *      disassembly string  - on error will constain error string
-- */
--static int Disassemble(const uint16 *data, char **dis,
--                     TABLE_ENTRY_TYPE *type, const Pool *table,
--                     int table_size, Dis_info *info)
--{
--    for (int i = 0; i < table_size; i++) {
--        uint64 op_code = extract_op_code_value(data,
--                             table[i].instructions_size);
--        if ((op_code & table[i].mask) == table[i].value) {
--            /* possible match */
--            conditional_function cond = table[i].condition;
--            if ((cond == NULL) || cond(op_code)) {
--                if (table[i].type == pool) {
--                    return Disassemble(data, dis, type,
--                                       table[i].next_table,
--                                       table[i].next_table_size,
--                                       info);
--                } else if ((table[i].type == instruction) ||
--                           (table[i].type == call_instruction) ||
--                           (table[i].type == branch_instruction) ||
--                           (table[i].type == return_instruction)) {
--                    disassembly_function dis_fn = table[i].disassembly;
--                    if (dis_fn == 0) {
--                        *dis = g_strdup(
--                            "disassembler failure - bad table entry");
--                        return -6;
--                    }
--                    *type = table[i].type;
--                    *dis = dis_fn(op_code, info);
--                    return table[i].instructions_size;
--                } else {
--                    *dis = g_strdup("reserved instruction");
--                    return -2;
--                }
--            }
--        }
--    }
--    *dis = g_strdup("failed to disassemble");
--    return -1;      /* failed to disassemble        */
--}
--
--
- static uint64 extract_code_18_to_0(uint64 instruction)
- {
-     uint64 value = 0;
-@@ -16213,6 +16116,51 @@ static char *YIELD(uint64 instruction, Dis_info *info)
-  *
-  */
- 
-+typedef enum  {
-+    instruction,
-+    call_instruction,
-+    branch_instruction,
-+    return_instruction,
-+    reserved_block,
-+    pool,
-+} TABLE_ENTRY_TYPE;
-+
-+typedef enum {
-+    MIPS64_    = 0x00000001,
-+    XNP_       = 0x00000002,
-+    XMMS_      = 0x00000004,
-+    EVA_       = 0x00000008,
-+    DSP_       = 0x00000010,
-+    MT_        = 0x00000020,
-+    EJTAG_     = 0x00000040,
-+    TLBINV_    = 0x00000080,
-+    CP0_       = 0x00000100,
-+    CP1_       = 0x00000200,
-+    CP2_       = 0x00000400,
-+    UDI_       = 0x00000800,
-+    MCU_       = 0x00001000,
-+    VZ_        = 0x00002000,
-+    TLB_       = 0x00004000,
-+    MVH_       = 0x00008000,
-+    ALL_ATTRIBUTES = 0xffffffffull,
-+} TABLE_ATTRIBUTE_TYPE;
-+
-+typedef bool (*conditional_function)(uint64 instruction);
-+typedef char * (*disassembly_function)(uint64 instruction,
-+                                            Dis_info *info);
-+
-+typedef struct Pool {
-+    TABLE_ENTRY_TYPE     type;
-+    const struct Pool    *next_table;
-+    int                  next_table_size;
-+    int                  instructions_size;
-+    uint64               mask;
-+    uint64               value;
-+    disassembly_function disassembly;
-+    conditional_function condition;
-+    uint64               attributes;
-+} Pool;
-+
- static const Pool P_SYSCALL[2] = {
-     { instruction         , 0                   , 0   , 32,
-        0xfffc0000, 0x00080000, &SYSCALL_32_      , 0,
-@@ -21907,6 +21855,58 @@ static const Pool MAJOR[2] = {
-        0x0                 },        /* P16 */
- };
- 
-+/*
-+ * Recurse through tables until the instruction is found then return
-+ * the string and size
-+ *
-+ * inputs:
-+ *      pointer to a word stream,
-+ *      disassember table and size
-+ * returns:
-+ *      instruction size    - negative is error
-+ *      disassembly string  - on error will constain error string
-+ */
-+static int Disassemble(const uint16 *data, char **dis,
-+                     TABLE_ENTRY_TYPE *type, const Pool *table,
-+                     int table_size, Dis_info *info)
-+{
-+    for (int i = 0; i < table_size; i++) {
-+        uint64 op_code = extract_op_code_value(data,
-+                             table[i].instructions_size);
-+        if ((op_code & table[i].mask) == table[i].value) {
-+            /* possible match */
-+            conditional_function cond = table[i].condition;
-+            if ((cond == NULL) || cond(op_code)) {
-+                if (table[i].type == pool) {
-+                    return Disassemble(data, dis, type,
-+                                       table[i].next_table,
-+                                       table[i].next_table_size,
-+                                       info);
-+                } else if ((table[i].type == instruction) ||
-+                           (table[i].type == call_instruction) ||
-+                           (table[i].type == branch_instruction) ||
-+                           (table[i].type == return_instruction)) {
-+                    disassembly_function dis_fn = table[i].disassembly;
-+                    if (dis_fn == 0) {
-+                        *dis = g_strdup(
-+                            "disassembler failure - bad table entry");
-+                        return -6;
-+                    }
-+                    *type = table[i].type;
-+                    *dis = dis_fn(op_code, info);
-+                    return table[i].instructions_size;
-+                } else {
-+                    *dis = g_strdup("reserved instruction");
-+                    return -2;
-+                }
-+            }
-+        }
+-    kvm_add_routing_entry(s, &kroute);
+-    kvm_arch_add_msi_route_post(&kroute, vector, dev);
+-    c->changes++;
++        kvm_add_routing_entry(s, &kroute);
++        kvm_arch_add_msi_route_post(&kroute, vector, dev);
++        c->changes++;
++    } else {
++        kvm_irqchip_release_virq(s, virq);
++        return -ENOSPC;
 +    }
-+    *dis = g_strdup("failed to disassemble");
-+    return -1;      /* failed to disassemble        */
-+}
-+
-+
- static bool nanomips_dis(const uint16_t *data, char **buf, Dis_info *info)
- {
-     TABLE_ENTRY_TYPE type;
+ 
+     return virq;
+ }
 -- 
 2.44.0
 
