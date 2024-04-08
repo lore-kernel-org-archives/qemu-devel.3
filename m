@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 989F7C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 11:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF66C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 11:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtn0Y-0002ps-OE; Mon, 08 Apr 2024 07:17:50 -0400
+	id 1rtnde-0003CO-JO; Mon, 08 Apr 2024 07:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtn0V-0002pb-Cc
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 07:17:47 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1rtnda-0003CF-Mx
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 07:58:10 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtn0T-0004Pe-8b
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 07:17:47 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a519eae91d1so378295666b.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 04:17:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1rtndY-0002JF-7u
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 07:58:10 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a51d05c50b2so142073966b.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 04:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712575063; x=1713179863; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IRfJYpfP7rS0TZ7yhUkWcxfGABZ0WpG9qgLSEdkcQGA=;
- b=oyWZ4TbDcAIHi9b4qTYf4WEzwYD4xfCL4J0vi1XpJqdjdpxQp1/QqlqC2cHJOpiw0A
- 1O9Qs2YrDDsLHscm4R9Le5oMePf5NjRORoZV0GIWgyWbccvSOFeNbSsCfKFKylbL4Iea
- VVelctynSw2shJxbF+Z+ZSASukbunatN/9mwsbV67TgDeJ++QzFEtzoLsZ3OP1HeVtCX
- tybwFCyj6JVLdXxnIFdSklbOeExS4S7Q6zHk9OLGLZonNdHzw0ku7yXlwhNgM7LKtxIe
- hiutGRIpcfR7x+bB/WbUkEbR5cukJDx5TSwGTyLTyiDl8PYmROtDyXXIA+EPXmmisqrE
- cDCw==
+ d=linaro.org; s=google; t=1712577483; x=1713182283; darn=nongnu.org;
+ h=content-transfer-encoding:organization:subject:cc:content-language
+ :from:to:user-agent:mime-version:date:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=vMbT0kcmgiqM5RcncIEUHlVztzn60aCaRofW6pVPH04=;
+ b=kwM44sB7zAbBA9WpqKo068qWzmPFb2dQBXu4NUh/XKzhRjZzaa/s1x4QaSYCcb3nOo
+ cHwVckkag88hIvlL9/VpPRyN5bz4UGaEm3fRStsaY1LS0mQTjVTQL8B33FyGZof9sloX
+ rojBw7fsc3PzLx/J/EYA/xEideA/LW8DhNv+/6uxvzSqA5N7nURpxrx3wUHab8TZyOF1
+ NyJffTYP8IRs7Sn3LjRzX+hH5/AuX4l3kTI5t5aeDwgTYvcXjKerEvqLsWJ4S+6zYwwh
+ GIY3KQCyzo8jJtA2fKZ4Y08vxtFIseLAeQLDqNVPtZmRpqr06ca48FgzStl/6x2DzksA
+ /f5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712575063; x=1713179863;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IRfJYpfP7rS0TZ7yhUkWcxfGABZ0WpG9qgLSEdkcQGA=;
- b=gsJAt/nhYaAa0AggV7bjK+0ZN6mQ0pqEiRViUsRSC28oPWMvRnWMitUTSn0CAFlm28
- P03qCkQV+66zJ/GdTCh3+E+LO53YBfyIW8OEGnkEPHnvp9mplIsSqYqvqt4oebt0lagq
- 1uK6JaMPGYf3NfnKNqBrMy32lPKifIUuSFc1k7yZ2Jrv7LABf5PwEcK3+5TzIzbB/x7j
- csxjiKjYhyw49QsJ8na0XlfVzVbb9JUm9fS5/f8UT1H1nGPJVCHU3ZwGP/x26ZK1l4Og
- iMdTF9CrN4xhFKiVNIPFv/ty39sfLkpZESv97dwaAV+Qo1zskBRzMMIFAMDEXBCFtzwC
- IghA==
-X-Gm-Message-State: AOJu0YzyH7EzcMIHBmPuLmhKjhP07UR5720FRL7MbKEBgiFRZylycInN
- Ddrot3+DaQmdSKsKFqSF9Pqgmy3XC7+C0d2GoNferi7eHCZWTNDPeS+jydNPzek=
-X-Google-Smtp-Source: AGHT+IHNB3gzgnpUvwmkoYHdoBmBPIglgM2UO6EQnYAcPStKUDZ5vJeW1Mp5B3bT3+eMQ9tYJU/TzA==
-X-Received: by 2002:a17:907:5c1:b0:a51:ce66:cf12 with SMTP id
- wg1-20020a17090705c100b00a51ce66cf12mr2718529ejb.35.1712575062719; 
- Mon, 08 Apr 2024 04:17:42 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.144.67])
- by smtp.gmail.com with ESMTPSA id
- u16-20020a170906069000b00a51d45b289dsm1351322ejb.81.2024.04.08.04.17.41
+ d=1e100.net; s=20230601; t=1712577483; x=1713182283;
+ h=content-transfer-encoding:organization:subject:cc:content-language
+ :from:to:user-agent:mime-version:date:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vMbT0kcmgiqM5RcncIEUHlVztzn60aCaRofW6pVPH04=;
+ b=eyeXVZB2XGnXHV0ib8HtJ/wGQuhu5Gc3HIvVOxEzMToYG5qoAKyJ2yEciC58GdPpA5
+ xkHK4FvGSzyzvl0f9hmVK1DBJA0D3yRCpyJ0lgkCNFgPqyueMdbdc1WzdL2hTR1h5n3Z
+ nxsuhrgroGf2VcWKgUZKQNAQsifMlgCWnwRQ+SvzxSd9GGLJ4Yf3JARnovJd/tI1uJiN
+ bLxJm2CsvcFPzPuDhOGkDr8+V/AtDZSMpDps9+/56Pgjz0onvstHzVSTfGjcFDn5mS7R
+ XnuGnysZdYE8L5NMU+GRNEm3rc63XZexu2RF0UKNy9v99PUMqpNJlOdG904TYBnPiuer
+ 81iQ==
+X-Gm-Message-State: AOJu0YwkuVuwiS8SxnzMgaWoRy7MatRepkpQjUIlx78tslgMoIHlBQH1
+ NoQ1+5W4SMAU4Xnk3q3XS+ipHXjYRb6Fb+R2r65op5+rrBvh783+fX4Tpryqb41NHwlfFzGfhDg
+ xRC4dvw==
+X-Google-Smtp-Source: AGHT+IGAtZEuATnJIZ32Ml9zTs6Hh6g7ijaDCejaecsJWLb0jDI0bXnKBbbexk9Ztm8Lz9fPrAk7ug==
+X-Received: by 2002:a17:907:1b24:b0:a51:b463:6b41 with SMTP id
+ mp36-20020a1709071b2400b00a51b4636b41mr5701408ejc.61.1712577482547; 
+ Mon, 08 Apr 2024 04:58:02 -0700 (PDT)
+Received: from [192.168.200.139] (83.11.9.119.ipv4.supernova.orange.pl.
+ [83.11.9.119]) by smtp.gmail.com with ESMTPSA id
+ qs28-20020a170906459c00b00a51bed388a4sm2858713ejc.139.2024.04.08.04.58.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 04:17:42 -0700 (PDT)
-Message-ID: <6fbcf565-f12c-4196-b6c8-559843c7a78c@linaro.org>
-Date: Mon, 8 Apr 2024 13:17:40 +0200
+ Mon, 08 Apr 2024 04:58:02 -0700 (PDT)
+Message-ID: <8b9b96e1-faaa-4866-aeb9-c439d5f83139@linaro.org>
+Date: Mon, 8 Apr 2024 13:58:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? 2/2] hw/misc/applesmc: Fix memory leak in reset()
- handler
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- Zheyu Ma <zheyuma97@gmail.com>
-References: <20240408095217.57239-1-philmd@linaro.org>
- <20240408095217.57239-3-philmd@linaro.org>
- <CAFEAcA-GO0nVyjVy3WR8LrZ3qMJvpjOzncVGGDuU3hzziKm8uQ@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-GO0nVyjVy3WR8LrZ3qMJvpjOzncVGGDuU3hzziKm8uQ@mail.gmail.com>
+To: qemu-devel@nongnu.org
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB, en-HK
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Ard Biesheuvel <ardb+tianocore@kernel.org>,
+ Xiong Yining <xiongyining1480@phytium.com.cn>,
+ Chen Baozi <chenbaozi@phytium.com.cn>
+Subject: How to use pxb-pcie in correct way?
+Organization: Linaro
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,142 +100,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/24 12:34, Peter Maydell wrote:
-> On Mon, 8 Apr 2024 at 10:53, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> AppleSMCData is allocated with g_new0() in applesmc_add_key():
->> release it with g_free().
->>
->> Leaked since commit 1ddda5cd36 ("AppleSMC device emulation").
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2272
->> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/misc/applesmc.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
->> index 8e65816da6..14e3ef667d 100644
->> --- a/hw/misc/applesmc.c
->> +++ b/hw/misc/applesmc.c
->> @@ -274,6 +274,7 @@ static void qdev_applesmc_isa_reset(DeviceState *dev)
->>       /* Remove existing entries */
->>       QLIST_FOREACH_SAFE(d, &s->data_def, node, next) {
->>           QLIST_REMOVE(d, node);
->> +        g_free(d);
->>       }
->>       s->status = 0x00;
->>       s->status_1e = 0x00;
->> --
-> 
-> Cc stable?
-> 
-> This is the right minimal fix for the leak, so
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> but overall this is a bit odd. We don't change either the
-> keys or their values at runtime, they seem to be a fixed
-> set defined by the device properties, so why are we tearing
-> them down and readding them every reset? It would be
-> simpler to create the data structure once at device realize.
+For quite a while I am experimenting with PCI Express setup on SBSA-Ref 
+system. And finally decided to write.
 
-This was my first approach, moving the applesmc_add_key()
-calls to the realize() handler, and freeing them in a
-unrealize() one:
+We want to play with NUMA setup and "pxb-pcie" can be assigned to NUMA 
+node other than cpu0 one. But adding it makes other cards dissapear...
 
--- >8 --
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index 14e3ef667d..59a4899312 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -145,7 +145,7 @@ static void applesmc_io_cmd_write(void *opaque, 
-hwaddr addr, uint64_t val,
-      s->data_pos = 0;
-  }
+When I boot sbsa-ref I have plain PCIe setup:
 
--static struct AppleSMCData *applesmc_find_key(AppleSMCState *s)
-+static const struct AppleSMCData *applesmc_find_key(AppleSMCState *s)
-  {
-      struct AppleSMCData *d;
+(qemu) info pci
+   Bus  0, device   0, function 0:
+     Host bridge: PCI device 1b36:0008
+       PCI subsystem 1af4:1100
+       id ""
+   Bus  0, device   1, function 0:
+     Ethernet controller: PCI device 8086:10d3
+       PCI subsystem 8086:0000
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR2: I/O at 0xffffffffffffffff [0x001e].
+       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+       id ""
+   Bus  0, device   2, function 0:
+     Display controller: PCI device 1234:1111
+       PCI subsystem 1af4:1100
+       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
+       BAR2: 32 bit memory at 0x81084000 [0x81084fff].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
+       id ""
 
-@@ -161,7 +161,7 @@ static void applesmc_io_data_write(void *opaque, 
-hwaddr addr, uint64_t val,
-                                     unsigned size)
-  {
-      AppleSMCState *s = opaque;
--    struct AppleSMCData *d;
-+    const struct AppleSMCData *d;
+Adding extra PCIe card works fine - both just "igb" and "igb" with 
+"pcie-root-port".
 
-      smc_debug("DATA received: 0x%02x\n", (uint8_t)val);
-      switch (s->cmd) {
-@@ -269,23 +269,10 @@ static void applesmc_add_key(AppleSMCState *s, 
-const char *key,
-  static void qdev_applesmc_isa_reset(DeviceState *dev)
-  {
-      AppleSMCState *s = APPLE_SMC(dev);
--    struct AppleSMCData *d, *next;
+But adding "pcie-root-port" + "igb" and then "pxb-pcie" makes "igb" 
+dissapear:
 
--    /* Remove existing entries */
--    QLIST_FOREACH_SAFE(d, &s->data_def, node, next) {
--        QLIST_REMOVE(d, node);
--        g_free(d);
--    }
-      s->status = 0x00;
-      s->status_1e = 0x00;
-      s->last_ret = 0x00;
--
--    applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
--    applesmc_add_key(s, "OSK0", 32, s->osk);
--    applesmc_add_key(s, "OSK1", 32, s->osk + 32);
--    applesmc_add_key(s, "NATJ", 1, "\0");
--    applesmc_add_key(s, "MSSP", 1, "\0");
--    applesmc_add_key(s, "MSSD", 1, "\0x3");
-  }
+../code/qemu/build/qemu-system-aarch64
+-monitor telnet::45454,server,nowait
+-serial stdio
+-device pcie-root-port,id=ULyWl,slot=0,chassis=0
+-device igb,bus=ULyWl
+-device pxb-pcie,bus_nr=1
 
-  static const MemoryRegionOps applesmc_data_io_ops = {
-@@ -343,6 +330,24 @@ static void applesmc_isa_realize(DeviceState *dev, 
-Error **errp)
-      }
+(qemu) info pci
+   Bus  0, device   0, function 0:
+     Host bridge: PCI device 1b36:0008
+       PCI subsystem 1af4:1100
+       id ""
+   Bus  0, device   1, function 0:
+     Ethernet controller: PCI device 8086:10d3
+       PCI subsystem 8086:0000
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR2: I/O at 0xffffffffffffffff [0x001e].
+       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+       id ""
+   Bus  0, device   2, function 0:
+     Display controller: PCI device 1234:1111
+       PCI subsystem 1af4:1100
+       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
+       BAR2: 32 bit memory at 0x81085000 [0x81085fff].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
+       id ""
+   Bus  0, device   3, function 0:
+     PCI bridge: PCI device 1b36:000c
+       IRQ 255, pin A
+       BUS 0.
+       secondary bus 1.
+       subordinate bus 1.
+       IO range [0xf000, 0x0fff]
+       memory range [0xfff00000, 0x000fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 32 bit memory at 0x81084000 [0x81084fff].
+       id "ULyWl"
+   Bus  0, device   4, function 0:
+     Host bridge: PCI device 1b36:000b
+       PCI subsystem 1af4:1100
+       id ""
 
-      QLIST_INIT(&s->data_def);
-+    applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
-+    applesmc_add_key(s, "OSK0", 32, s->osk);
-+    applesmc_add_key(s, "OSK1", 32, s->osk + 32);
-+    applesmc_add_key(s, "NATJ", 1, "\0");
-+    applesmc_add_key(s, "MSSP", 1, "\0");
-+    applesmc_add_key(s, "MSSD", 1, "\0x3");
-+}
-+
-+static void applesmc_unrealize(DeviceState *dev)
-+{
-+    AppleSMCState *s = APPLE_SMC(dev);
-+    struct AppleSMCData *d, *next;
-+
-+    /* Remove existing entries */
-+    QLIST_FOREACH_SAFE(d, &s->data_def, node, next) {
-+        QLIST_REMOVE(d, node);
-+        g_free(d);
-+    }
-  }
 
-  static Property applesmc_isa_properties[] = {
-@@ -377,6 +382,7 @@ static void qdev_applesmc_class_init(ObjectClass 
-*klass, void *data)
-      AcpiDevAmlIfClass *adevc = ACPI_DEV_AML_IF_CLASS(klass);
+If I add "igb" directly (without root port) then it appears correctly:
 
-      dc->realize = applesmc_isa_realize;
-+    dc->unrealize = applesmc_unrealize;
-      dc->reset = qdev_applesmc_isa_reset;
-      device_class_set_props(dc, applesmc_isa_properties);
-      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+(qemu) info pci
+   Bus  0, device   0, function 0:
+     Host bridge: PCI device 1b36:0008
+       PCI subsystem 1af4:1100
+       id ""
+   Bus  0, device   1, function 0:
+     Ethernet controller: PCI device 8086:10d3
+       PCI subsystem 8086:0000
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR2: I/O at 0xffffffffffffffff [0x001e].
+       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+       id ""
+   Bus  0, device   2, function 0:
+     Display controller: PCI device 1234:1111
+       PCI subsystem 1af4:1100
+       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
+       BAR2: 32 bit memory at 0x810c4000 [0x810c4fff].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
+       id ""
+   Bus  0, device   3, function 0:
+     Ethernet controller: PCI device 8086:10c9
+       PCI subsystem 1af4:1100
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR2: I/O at 0xffffffffffffffff [0x001e].
+       BAR3: 64 bit memory at 0xffffffffffffffff [0x00003ffe].
+       id ""
+   Bus  0, device   4, function 0:
+     Host bridge: PCI device 1b36:000b
+       PCI subsystem 1af4:1100
+       id ""
 
----
 
-But since a bit too much changes for the next release, I kept
-it as a separate patch.
+When I add "pcie-root-port" with "igb" followed by "pcie-root-port" and 
+"pxb-pcie" then no IGB again:
 
-Thanks for the review,
 
-Phil.
+-device pcie-root-port,id=RjKXs,slot=0,chassis=0
+-device igb,bus=RjKXs
+-device pcie-root-port,chassis=7
+-device pxb-pcie,bus_nr=1
+
+
+(qemu) info pci
+   Bus  0, device   0, function 0:
+     Host bridge: PCI device 1b36:0008
+       PCI subsystem 1af4:1100
+       id ""
+   Bus  0, device   1, function 0:
+     Ethernet controller: PCI device 8086:10d3
+       PCI subsystem 8086:0000
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR2: I/O at 0xffffffffffffffff [0x001e].
+       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+       id ""
+   Bus  0, device   2, function 0:
+     Display controller: PCI device 1234:1111
+       PCI subsystem 1af4:1100
+       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
+       BAR2: 32 bit memory at 0x81086000 [0x81086fff].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
+       id ""
+   Bus  0, device   3, function 0:
+     PCI bridge: PCI device 1b36:000c
+       IRQ 255, pin A
+       BUS 0.
+       secondary bus 1.
+       subordinate bus 1.
+       IO range [0xf000, 0x0fff]
+       memory range [0xfff00000, 0x000fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 32 bit memory at 0x81085000 [0x81085fff].
+       id "RjKXs"
+   Bus  0, device   4, function 0:
+     PCI bridge: PCI device 1b36:000c
+       IRQ 255, pin A
+       BUS 0.
+       secondary bus 2.
+       subordinate bus 2.
+       IO range [0xf000, 0x0fff]
+       memory range [0xfff00000, 0x000fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 32 bit memory at 0x81084000 [0x81084fff].
+       id ""
+   Bus  0, device   5, function 0:
+     Host bridge: PCI device 1b36:000b
+       PCI subsystem 1af4:1100
+       id ""
+
+
+Same (no "igb") with more complex structure behind "pxb-pcie" bridge:
+
+../code/qemu/build/qemu-system-aarch64 
+ 
+
+-monitor telnet::45454,server,nowait 
+ 
+
+-serial stdio 
+ 
+
+-device pcie-root-port,id=PrZUz,slot=0,chassis=0 
+ 
+
+-device igb,bus=PrZUz 
+ 
+
+-device pcie-root-port,chassis=7 
+ 
+
+-device pxb-pcie,id=pxb1,bus_nr=1 
+ 
+
+-device pcie-pci-bridge,id=pci,bus=pxb1 
+ 
+
+-device es1370,bus=pci,addr=9,id=es1370 
+ 
+
+-device e1000,bus=pci,addr=10,id=e1000 
+ 
+
+-device pcie-root-port,id=root_port_for_ahci,bus=pxb1,chassis=10,slot=0 
+ 
+
+-device ahci,bus=root_port_for_ahci,id=ahci 
+ 
+
+
+   Bus  1, device   0, function 0:
+     PCI bridge: PCI device 1b36:000e
+       IRQ 255, pin A
+       BUS 1.
+       secondary bus 2.
+       subordinate bus 2.
+       IO range [0x1000, 0x1fff]
+       memory range [0x81100000, 0x811fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 64 bit memory at 0x81200000 [0x812000ff].
+       id "pci"
+   Bus  2, device   9, function 0:
+     Audio controller: PCI device 1274:5000
+       PCI subsystem 4942:4c4c
+       IRQ 255, pin A
+       BAR0: I/O at 0xffffffffffffffff [0x00fe].
+       id "es1370"
+   Bus  2, device  16, function 0:
+     Ethernet controller: PCI device 8086:100e
+       PCI subsystem 1af4:1100
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: I/O at 0xffffffffffffffff [0x003e].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+       id "e1000"
+   Bus  1, device   1, function 0:
+     PCI bridge: PCI device 1b36:000c
+       IRQ 255, pin A
+       BUS 1.
+       secondary bus 3.
+       subordinate bus 3.
+       IO range [0x0000, 0x0fff]
+       memory range [0x81000000, 0x810fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 32 bit memory at 0x81201000 [0x81201fff].
+       id "root_port_for_ahci"
+   Bus  3, device   0, function 0:
+     SATA controller: PCI device 8086:2922
+       PCI subsystem 1af4:1100
+       IRQ 255, pin A
+       BAR4: I/O at 0xffffffffffffffff [0x001e].
+       BAR5: 32 bit memory at 0xffffffffffffffff [0x00000ffe].
+       id "ahci"
+   Bus  0, device   0, function 0:
+     Host bridge: PCI device 1b36:0008
+       PCI subsystem 1af4:1100
+       id ""
+   Bus  0, device   1, function 0:
+     Ethernet controller: PCI device 8086:10d3
+       PCI subsystem 8086:0000
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR2: I/O at 0xffffffffffffffff [0x001e].
+       BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+       id ""
+   Bus  0, device   2, function 0:
+     Display controller: PCI device 1234:1111
+       PCI subsystem 1af4:1100
+       BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
+       BAR2: 32 bit memory at 0x81386000 [0x81386fff].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
+       id ""
+   Bus  0, device   3, function 0:
+     PCI bridge: PCI device 1b36:000c
+       IRQ 255, pin A
+       BUS 0.
+       secondary bus 1.
+       subordinate bus 3.
+       IO range [0x0000, 0x1fff]
+       memory range [0x81000000, 0x812fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 32 bit memory at 0x81385000 [0x81385fff].
+       id "PrZUz"
+   Bus  1, device   0, function 0:
+     PCI bridge: PCI device 1b36:000e
+       IRQ 255, pin A
+       BUS 1.
+       secondary bus 2.
+       subordinate bus 2.
+       IO range [0x1000, 0x1fff]
+       memory range [0x81100000, 0x811fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 64 bit memory at 0x81200000 [0x812000ff].
+       id "pci"
+   Bus  2, device   9, function 0:
+     Audio controller: PCI device 1274:5000
+       PCI subsystem 4942:4c4c
+       IRQ 255, pin A
+       BAR0: I/O at 0xffffffffffffffff [0x00fe].
+       id "es1370"
+   Bus  2, device  16, function 0:
+     Ethernet controller: PCI device 8086:100e
+       PCI subsystem 1af4:1100
+       IRQ 255, pin A
+       BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+       BAR1: I/O at 0xffffffffffffffff [0x003e].
+       BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+       id "e1000"
+   Bus  1, device   1, function 0:
+     PCI bridge: PCI device 1b36:000c
+       IRQ 255, pin A
+       BUS 1.
+       secondary bus 3.
+       subordinate bus 3.
+       IO range [0x0000, 0x0fff]
+       memory range [0x81000000, 0x810fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 32 bit memory at 0x81201000 [0x81201fff].
+       id "root_port_for_ahci"
+   Bus  3, device   0, function 0:
+     SATA controller: PCI device 8086:2922
+       PCI subsystem 1af4:1100
+       IRQ 255, pin A
+       BAR4: I/O at 0xffffffffffffffff [0x001e].
+       BAR5: 32 bit memory at 0xffffffffffffffff [0x00000ffe].
+       id "ahci"
+   Bus  0, device   4, function 0:
+     PCI bridge: PCI device 1b36:000c
+       IRQ 255, pin A
+       BUS 0.
+       secondary bus 4.
+       subordinate bus 4.
+       IO range [0xf000, 0x0fff]
+       memory range [0xfff00000, 0x000fffff]
+       prefetchable memory range [0xfffffffffff00000, 0x000fffff]
+       BAR0: 32 bit memory at 0x81384000 [0x81384fff].
+       id ""
+   Bus  0, device   5, function 0:
+     Host bridge: PCI device 1b36:000b
+       PCI subsystem 1af4:1100
+       id "pxb1"
+
+What happens with missing card? It does not have to be "igb" - "ac97" 
+gets lost too.
+
+And only first added one dissapears. If I add two cards (with root-port 
+entries) before "pxb-pcie" then second one is present.
 
