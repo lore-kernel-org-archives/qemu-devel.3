@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C8BCC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E1B8CD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtkkX-0008Dc-Df; Mon, 08 Apr 2024 04:53:09 -0400
+	id 1rtklK-0000dK-A2; Mon, 08 Apr 2024 04:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ysato@users.sourceforge.jp>)
- id 1rtkkV-0008DC-4y
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:07 -0400
+ id 1rtklG-0000Zi-TP
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:54 -0400
 Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
  helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <ysato@users.sourceforge.jp>) id 1rtkkS-0005P0-UZ
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:06 -0400
+ (envelope-from <ysato@users.sourceforge.jp>) id 1rtklF-0005Td-4d
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:53:54 -0400
 Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
- by sakura.ysato.name (Postfix) with ESMTPSA id 12E5D1C102D;
- Mon,  8 Apr 2024 17:52:59 +0900 (JST)
-Date: Mon, 08 Apr 2024 17:52:55 +0900
-Message-ID: <878r1ock2g.wl-ysato@users.sourceforge.jp>
+ by sakura.ysato.name (Postfix) with ESMTPSA id DBDA21C102D;
+ Mon,  8 Apr 2024 17:53:49 +0900 (JST)
+Date: Mon, 08 Apr 2024 17:53:49 +0900
+Message-ID: <877ch8ck0y.wl-ysato@users.sourceforge.jp>
 From: Yoshinori Sato <ysato@users.sourceforge.jp>
-To: Zack Buhman <zack@buhman.org>
-Cc: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Subject: Re: [PATCH v2] sh4: mac.w: implement saturation arithmetic logic
-In-Reply-To: <20240405233802.29128-3-zack@buhman.org>
-References: <CAFEAcA93s+=sHFNU0duK8--3GhUg1tZ+n+UhiGeFErJoY5_+jQ@mail.gmail.com>
- <20240405233802.29128-3-zack@buhman.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 30/32] target/rx: Use translator_ld*
+In-Reply-To: <20240405102459.462551-31-richard.henderson@linaro.org>
+References: <20240405102459.462551-1-richard.henderson@linaro.org>
+ <20240405102459.462551-31-richard.henderson@linaro.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/28.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -59,190 +58,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 06 Apr 2024 08:38:04 +0900,
-Zack Buhman wrote:
+On Fri, 05 Apr 2024 19:24:57 +0900,
+Richard Henderson wrote:
 > 
-> The saturation arithmetic logic in helper_macw is not correct.
-> 
-> I tested and verified this behavior on a SH7091, the general pattern
-> is a code sequence such as:
-> 
-> 	sets
-> 
-> 	mov.l _mach,r2
-> 	lds r2,mach
-> 	mov.l _macl,r2
-> 	lds r2,macl
-> 
-> 	mova _n,r0
-> 	mov r0,r1
-> 	mova _m,r0
-> 	mac.w @r0+,@r1+
-> 
->  _mach: .long 0xffffffff
->  _macl: .long 0xfffffffe
->  _m:    .word 0x0002
->         .word 0
->  _n:    .word 0x0003
->         .word 0
-> 
-> test 0:
->   (mach should not be modified if an overflow did not occur)
-> 
->   given, prior to saturation mac.l:
->     mach = 0xffffffff ; macl = 0xfffffffe
->     @r0  = 0x0002     ; @r1  = 0x0003
-> 
->   expected saturation mac.w result:
->     mach = 0xffffffff (unchanged)
->     macl = 0x00000004
-> 
->   qemu saturation mac.w result (before this commit):
->     mach = 0x00000001
->     macl = 0x80000000
-> 
->   In the context of the helper_macw implementation prior to this
->   commit, initially this appears to be a surprising result. This is
->   because (prior to unary negation) the C literal `0x80000000` (due to
->   being outside the range of a `signed int`) is evaluated as an
->   `unsigned int` whereas the literal `1` (due to being inside the
->   range of `signed int`) is evaluated as `signed int`, as in:
-> 
->     static_assert(1 < -0x80000000 == 1);
->     static_assert(1 < -1 == 0);
-> 
->   This is because the unary negation of an unsigned int is an
->   unsigned int.
-> 
->   In other words, if the `res < -0x80000000` comparison used
->   infinite-precision literals, the saturation mac.w result would have
->   been:
-> 
->     mach = 0x00000000
->     macl = 0x00000004
-> 
->   Due to this (forgivable) misunderstanding of C literals, the
->   following behavior also occurs:
-> 
-> test 1:
->   (`2 * 3 + 0` is not an overflow)
-> 
->   given, prior to saturation mac.l:
->     mach = 0x00000000 ; macl = 0x00000000
->     @r0  = 0x0002     ; @r1  = 0x0003
-> 
->   expected saturation mac.w result:
->     mach = 0x00000000 (unchanged)
->     macl = 0x00000006
-> 
->   qemu saturation mac.w result (before this commit):
->     mach = 0x00000001
->     macl = 0x80000000
-> 
-> test 2:
->   (mach should not be accumulated in saturation mode)
->   (16-bit operands are sign-extended)
-> 
->   given, prior to saturation mac.l:
->     mach = 0x12345678 ; macl = 0x7ffffffe
->     @r0  = 0x0002     ; @r1  = 0xfffd
-> 
->   expected saturation mac.w result:
->     mach = 0x12345678 (unchanged)
->     macl = 0x7ffffff8
-> 
->   qemu saturation mac.w result (before this commit):
->     mach = 0x00000001
->     macl = 0x7fffffff
-> 
-> test 3:
->   (macl should have the correct saturation value)
-> 
->   given, prior to saturation mac.l:
->     mach = 0xabcdef12 ; macl = 0x7ffffffa
->     @r0  = 0x0002     ; @r1  = 0x0003
-> 
->   expected saturation mac.w result:
->     mach = 0x00000001 (overwritten)
->     macl = 0x7fffffff
-> 
->   qemu saturation mac.w result (before this commit):
->     mach = 0x00000001
->     macl = 0x80000000
-> 
-> All of the above also matches the description of MAC.W as documented
-> in cd00147165-sh-4-32-bit-cpu-core-architecture-stmicroelectronics.pdf
-> 
-> Signed-off-by: Zack Buhman <zack@buhman.org>
+> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/sh4/op_helper.c | 45 ++++++++++++++++++++++++++++++++----------
->  1 file changed, 35 insertions(+), 10 deletions(-)
+>  target/rx/translate.c | 27 ++++++++++++++-------------
+>  1 file changed, 14 insertions(+), 13 deletions(-)
 > 
-> diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
-> index ee16524083..07ff2cf53d 100644
-> --- a/target/sh4/op_helper.c
-> +++ b/target/sh4/op_helper.c
-> @@ -187,20 +187,45 @@ void helper_macl(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
+> diff --git a/target/rx/translate.c b/target/rx/translate.c
+> index 92fb2b43ad..9b81cf20b3 100644
+> --- a/target/rx/translate.c
+> +++ b/target/rx/translate.c
+> @@ -22,7 +22,6 @@
+>  #include "cpu.h"
+>  #include "exec/exec-all.h"
+>  #include "tcg/tcg-op.h"
+> -#include "exec/cpu_ldst.h"
+>  #include "exec/helper-proto.h"
+>  #include "exec/helper-gen.h"
+>  #include "exec/translator.h"
+> @@ -75,10 +74,10 @@ static TCGv_i64 cpu_acc;
 >  
->  void helper_macw(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
+>  /* decoder helper */
+>  static uint32_t decode_load_bytes(DisasContext *ctx, uint32_t insn,
+> -                           int i, int n)
+> +                                  int i, int n)
 >  {
-> -    int64_t res;
-> +    int16_t value0 = (int16_t)arg0;
-> +    int16_t value1 = (int16_t)arg1;
-> +    int32_t mul = ((int32_t)value0) * ((int32_t)value1);
->  
-> -    res = ((uint64_t) env->mach << 32) | env->macl;
-> -    res += (int64_t) (int16_t) arg0 *(int64_t) (int16_t) arg1;
-> -    env->mach = (res >> 32) & 0xffffffff;
-> -    env->macl = res & 0xffffffff;
-> +    /* Perform 32-bit saturation arithmetic if the S flag is set */
->      if (env->sr & (1u << SR_S)) {
-> -        if (res < -0x80000000) {
-> -            env->mach = 1;
-> -            env->macl = 0x80000000;
-> -        } else if (res > 0x000000007fffffff) {
-> +        const int32_t upper_bound =  ((1u << 31) - 1);
-> +        const int32_t lower_bound = -((1u << 31) - 0);
-> +
-> +        /*
-> +         * In saturation arithmetic mode, the accumulator is 32-bit
-> +         * with carry. MACH is not considered during the addition
-> +         * operation nor the 32-bit saturation logic.
-> +         */
-> +        int32_t mac = env->macl;
-> +        int32_t result;
-> +        bool overflow = sadd32_overflow(mac, mul, &result);
-> +        if (overflow) {
-> +            result = (mac < 0) ? lower_bound : upper_bound;
-> +            /* MACH is set to 1 to denote overflow */
-> +            env->macl = result;
->              env->mach = 1;
-> -            env->macl = 0x7fffffff;
-> +        } else {
-> +            /*
-> +             * If there is no overflow, the result is already inside
-> +             * the saturation bounds.
-> +             *
-> +             * If there was no overflow, MACH is unchanged.
-> +             */
-> +            env->macl = result;
->          }
-> +    } else {
-> +        /* In non-saturation arithmetic mode, the accumulator is 64-bit */
-> +        int64_t mac = (((uint64_t)env->mach) << 32) | env->macl;
-> +
-> +        /* The carry bit of the 64-bit addition is discarded */
-> +        int64_t result = mac + (int64_t)mul;
-> +        env->macl = result;
-> +        env->mach = result >> 32;
+>      while (++i <= n) {
+> -        uint8_t b = cpu_ldub_code(ctx->env, ctx->base.pc_next++);
+> +        uint8_t b = translator_ldub(ctx->env, &ctx->base, ctx->base.pc_next++);
+>          insn |= b << (32 - i * 8);
 >      }
+>      return insn;
+> @@ -90,22 +89,24 @@ static uint32_t li(DisasContext *ctx, int sz)
+>      CPURXState *env = ctx->env;
+>      addr = ctx->base.pc_next;
+>  
+> -    tcg_debug_assert(sz < 4);
+>      switch (sz) {
+>      case 1:
+>          ctx->base.pc_next += 1;
+> -        return cpu_ldsb_code(env, addr);
+> +        return (int8_t)translator_ldub(env, &ctx->base, addr);
+>      case 2:
+>          ctx->base.pc_next += 2;
+> -        return cpu_ldsw_code(env, addr);
+> +        return (int16_t)translator_lduw(env, &ctx->base, addr);
+>      case 3:
+>          ctx->base.pc_next += 3;
+> -        tmp = cpu_ldsb_code(env, addr + 2) << 16;
+> -        tmp |= cpu_lduw_code(env, addr) & 0xffff;
+> +        tmp = (int8_t)translator_ldub(env, &ctx->base, addr + 2);
+> +        tmp <<= 16;
+> +        tmp |= translator_lduw(env, &ctx->base, addr);
+>          return tmp;
+>      case 0:
+>          ctx->base.pc_next += 4;
+> -        return cpu_ldl_code(env, addr);
+> +        return translator_ldl(env, &ctx->base, addr);
+> +    default:
+> +        g_assert_not_reached();
+>      }
+>      return 0;
+>  }
+> @@ -190,22 +191,22 @@ static inline TCGv rx_index_addr(DisasContext *ctx, TCGv mem,
+>  {
+>      uint32_t dsp;
+>  
+> -    tcg_debug_assert(ld < 3);
+>      switch (ld) {
+>      case 0:
+>          return cpu_regs[reg];
+>      case 1:
+> -        dsp = cpu_ldub_code(ctx->env, ctx->base.pc_next) << size;
+> +        dsp = translator_ldub(ctx->env, &ctx->base, ctx->base.pc_next) << size;
+>          tcg_gen_addi_i32(mem, cpu_regs[reg], dsp);
+>          ctx->base.pc_next += 1;
+>          return mem;
+>      case 2:
+> -        dsp = cpu_lduw_code(ctx->env, ctx->base.pc_next) << size;
+> +        dsp = translator_lduw(ctx->env, &ctx->base, ctx->base.pc_next) << size;
+>          tcg_gen_addi_i32(mem, cpu_regs[reg], dsp);
+>          ctx->base.pc_next += 2;
+>          return mem;
+> +    default:
+> +        g_assert_not_reached();
+>      }
+> -    return NULL;
 >  }
 >  
+>  static inline MemOp mi_to_mop(unsigned mi)
 > -- 
-> 2.41.0
+> 2.34.1
 > 
 
-Reviewd-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 
 -- 
 Yosinori Sato
