@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BC7CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F6DC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtkA2-0003B0-B0; Mon, 08 Apr 2024 04:15:26 -0400
+	id 1rtkAv-0003jy-3f; Mon, 08 Apr 2024 04:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rtkA0-0003AR-4y
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:15:24 -0400
+ id 1rtkAC-0003N9-CJ
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:15:42 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rtk9y-00089q-FC
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:15:23 -0400
+ id 1rtkA9-00089q-JL
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:15:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712564122; x=1744100122;
+ t=1712564134; x=1744100134;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=C4MsvBvx9B64HLRW4B7bTMYTxjVlbMxQElKE/nS9Vhc=;
- b=mzP+eHlcZpmLyNUd3jJHzPOQ1AX+zLpt9kLawSFPa7kJwNEaPpxkgqv0
- hpWPdtuFYJ5+xni+DDLcz16NS8YfEjTUHpIYzrx1n/ejDl1ZBwkNDqyUK
- dOF+ExfFT0MawfKiT3sA0k8tuAG4gGe4wsKwi70s+HdVlROOjjxt0CG6V
- 85VPtSeUCNgljIQCHLcpqtnd+2cm9xAhcO7iokORdWp2pC4EG9QViVboq
- Ugulyv+hJdV1DCipeyw6GdkDdBzby4IDfnG9p8LCIktCjptEqL4bZS+0s
- 6Us5OjtBaxNf2FY+MFH4pbV2zw637plh8kRliZKypmrPTDdqGXCBp5dNU A==;
-X-CSE-ConnectionGUID: 3ge72sZrQ6i70Ao7v1HpPg==
-X-CSE-MsgGUID: dbqPhMitSJuAbFdDQwh0OQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11037"; a="19199712"
-X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="19199712"
+ bh=DVXEQ9yLYmU2ztZd49QkuJi4eo9VDVlNfFqfrJ3+k7g=;
+ b=GSTDpJDXkwkBRm5ZgtjybBWLh1js5xg1Oc6IudeCVkv6qRfQq4FD1Kqo
+ ckoYCi+vK+wepGEbLS+RY4ON/GIvF1g8rd+NDZKNexAnfv/3Wxlxa6TzS
+ Ot7EGTZ1IdZLB4TtWuGbh9okGF8kwN2a5c5+6cJ78dw8SSXmRCgwDU5Vs
+ qLSXdHXSF1qADDz7T0g3QPA/hbdLrhAJeWkKopZuUy/B7NG5c9OkdOedE
+ LpsHHZu1YSfo82kABpxXB13GeoPplw+o3DeP8djfF9sniFGL6Y2LHzJ1p
+ gGjhfiAfj99UK6dsxs2Zqnakb69uXA+YcVJpGqbfy1A5rndTGR0m0xhIt g==;
+X-CSE-ConnectionGUID: UgUpGAStRW2WiKo/+U31FQ==
+X-CSE-MsgGUID: fjvCROubSta6N+jMskoFhw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11037"; a="19199743"
+X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="19199743"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Apr 2024 01:15:22 -0700
-X-CSE-ConnectionGUID: CjhSjub6RROLMU6Ty4M7XQ==
-X-CSE-MsgGUID: wSi5G0lYQ7a3sz9JvvB0qw==
+ 08 Apr 2024 01:15:33 -0700
+X-CSE-ConnectionGUID: nRXBpU6nSUqBwRBd1UeG5Q==
+X-CSE-MsgGUID: RcHR3eY3ThaPjkYeyG39Qw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="19845206"
+X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="19845216"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Apr 2024 01:15:18 -0700
+ 08 Apr 2024 01:15:29 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,9 +53,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 05/10] vfio: Implement get_host_iommu_info() callback
-Date: Mon,  8 Apr 2024 16:12:25 +0800
-Message-Id: <20240408081230.1030078-6-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 08/10] vfio: Create host IOMMU device instance
+Date: Mon,  8 Apr 2024 16:12:28 +0800
+Message-Id: <20240408081230.1030078-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
 References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
@@ -85,74 +85,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Utilize iova_ranges to calculate host IOMMU address width and
-package it in HIOD_LEGACY_INFO for vIOMMU usage.
-
-HIOD_LEGACY_INFO will be used by both VFIO and VDPA so declare
-it in host_iommu_device.h.
+Create host IOMMU device instance and initialize it based on backend.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/sysemu/host_iommu_device.h | 10 ++++++++++
- hw/vfio/container.c                | 24 ++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ include/hw/vfio/vfio-common.h | 1 +
+ hw/vfio/container.c           | 5 +++++
+ hw/vfio/iommufd.c             | 8 ++++++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-index 22ccbe3a5d..beb8be8231 100644
---- a/include/sysemu/host_iommu_device.h
-+++ b/include/sysemu/host_iommu_device.h
-@@ -16,4 +16,14 @@ struct HostIOMMUDeviceClass {
-     int (*get_host_iommu_info)(HostIOMMUDevice *hiod, void *data, uint32_t len,
-                                Error **errp);
- };
-+
-+/*
-+ * Define the format of host IOMMU related info that current VFIO
-+ * or VDPA can privode to vIOMMU.
-+ *
-+ * @aw_bits: Host IOMMU address width. 0xff if no limitation.
-+ */
-+typedef struct HIOD_LEGACY_INFO {
-+    uint8_t aw_bits;
-+} HIOD_LEGACY_INFO;
- #endif
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index d382b12ec1..4fbba85018 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -126,6 +126,7 @@ typedef struct VFIODevice {
+     OnOffAuto pre_copy_dirty_page_tracking;
+     bool dirty_pages_supported;
+     bool dirty_tracking;
++    HostIOMMUDevice *hiod;
+     int devid;
+     IOMMUFDBackend *iommufd;
+ } VFIODevice;
 diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 44018ef085..ba0ad4a41b 100644
+index ba0ad4a41b..fc0c027501 100644
 --- a/hw/vfio/container.c
 +++ b/hw/vfio/container.c
-@@ -1143,8 +1143,32 @@ static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
-     vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
- };
+@@ -915,6 +915,7 @@ static int vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+     VFIODevice *vbasedev_iter;
+     VFIOGroup *group;
+     VFIOContainerBase *bcontainer;
++    HIODLegacyVFIO *hiod_vfio;
+     int ret;
  
-+static int hiod_legacy_vfio_get_host_iommu_info(HostIOMMUDevice *hiod,
-+                                                void *data, uint32_t len,
-+                                                Error **errp)
-+{
-+    VFIODevice *vbasedev = HIOD_LEGACY_VFIO(hiod)->vdev;
-+    /* iova_ranges is a sorted list */
-+    GList *l = g_list_last(vbasedev->bcontainer->iova_ranges);
-+    HIOD_LEGACY_INFO *info = data;
-+
-+    assert(sizeof(HIOD_LEGACY_INFO) <= len);
-+
-+    if (l) {
-+        Range *range = l->data;
-+        info->aw_bits = find_last_bit(&range->upb, BITS_PER_LONG) + 1;
-+    } else {
-+        info->aw_bits = 0xff;
-+    }
-+
-+    return 0;
-+}
-+
- static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
- {
-+    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
-+
-+    hioc->get_host_iommu_info = hiod_legacy_vfio_get_host_iommu_info;
- };
+     if (groupid < 0) {
+@@ -945,6 +946,9 @@ static int vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+     vbasedev->bcontainer = bcontainer;
+     QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+     QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
++    hiod_vfio = HIOD_LEGACY_VFIO(object_new(TYPE_HIOD_LEGACY_VFIO));
++    hiod_vfio->vdev = vbasedev;
++    vbasedev->hiod = HOST_IOMMU_DEVICE(hiod_vfio);
  
- static const TypeInfo types[] = {
+     return ret;
+ }
+@@ -959,6 +963,7 @@ static void vfio_legacy_detach_device(VFIODevice *vbasedev)
+     trace_vfio_detach_device(vbasedev->name, group->groupid);
+     vfio_put_base_device(vbasedev);
+     vfio_put_group(group);
++    object_unref(vbasedev->hiod);
+ }
+ 
+ static int vfio_legacy_pci_hot_reset(VFIODevice *vbasedev, bool single)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 115b9f8e7f..b6d058339b 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -308,6 +308,7 @@ static int iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+     VFIOIOMMUFDContainer *container;
+     VFIOAddressSpace *space;
+     struct vfio_device_info dev_info = { .argsz = sizeof(dev_info) };
++    HIODIOMMUFDVFIO *hiod_vfio;
+     int ret, devfd;
+     uint32_t ioas_id;
+     Error *err = NULL;
+@@ -431,6 +432,12 @@ found_container:
+     QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+     QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+ 
++    hiod_vfio = HIOD_IOMMUFD_VFIO(object_new(TYPE_HIOD_IOMMUFD_VFIO));
++    hiod_iommufd_init(HIOD_IOMMUFD(hiod_vfio), vbasedev->iommufd,
++                      vbasedev->devid);
++    hiod_vfio->vdev = vbasedev;
++    vbasedev->hiod = HOST_IOMMU_DEVICE(hiod_vfio);
++
+     trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
+                                    vbasedev->num_regions, vbasedev->flags);
+     return 0;
+@@ -468,6 +475,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
+     iommufd_cdev_detach_container(vbasedev, container);
+     iommufd_cdev_container_destroy(container);
+     vfio_put_address_space(space);
++    object_unref(vbasedev->hiod);
+ 
+     iommufd_cdev_unbind_and_disconnect(vbasedev);
+     close(vbasedev->fd);
 -- 
 2.34.1
 
