@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF631CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 10:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB6ECD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 10:13:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtlwR-0001Hh-08; Mon, 08 Apr 2024 06:09:31 -0400
+	id 1rtm0O-0002ma-E6; Mon, 08 Apr 2024 06:13:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtlwP-0001Dm-LF
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 06:09:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtm0J-0002m0-9J
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 06:13:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtlwO-0000TI-9R
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 06:09:29 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtm0H-0001Lw-RH
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 06:13:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712570967;
+ s=mimecast20190719; t=1712571208;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kemf8yPR/dSOS9zjAGQAFXrwo2ngD5NRPPoUXt3i+Bs=;
- b=TO0FKZ1Y0oepNOETYWdrMq3Mc9IzSwoul51rns0acbycPoQWj0rmJNr6gAx/JU1HlaZLfY
- u78QxBxxFQlLpsaBpDh6t2SeEYWNC08P02ih/Azy36Gq8sPiKJwaHJ9mSvz1iatXGdMjck
- xAqmESt/SvwV2zzhKmuVe/v8ibi09uM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4iE3H5A4di9y+xNKlKn1R4IgnUXKHyFuDJBIcrRdoAc=;
+ b=LO6t/M92eJiGyR6XH10GfSam9OgwOAxCfR8nl4WeSvtiQ9hSsr8wfFzzM0a5shhkG1qMyg
+ v1B1wOoi/NWAX/BjPsKVBc0oBoce/uPzFlXPewMBHu3cyP8QLwM3Yr3km7DcnKZNK3yi9H
+ 8oP9o0APsEjjRdqY2xN1g+48PTjfVIE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-332-meYciDcmNuKftJCT7pw_cQ-1; Mon, 08 Apr 2024 06:09:26 -0400
-X-MC-Unique: meYciDcmNuKftJCT7pw_cQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-343c6a990dbso1747534f8f.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 03:09:25 -0700 (PDT)
+ us-mta-267-Nz6eQlNSOaSbAmof7quD1Q-1; Mon, 08 Apr 2024 06:13:25 -0400
+X-MC-Unique: Nz6eQlNSOaSbAmof7quD1Q-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4147de378b9so21571555e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 03:13:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712570965; x=1713175765;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kemf8yPR/dSOS9zjAGQAFXrwo2ngD5NRPPoUXt3i+Bs=;
- b=DHhw+Zk9v4RXTiTEbfZg7oz5/MtyTfdVtSr2p8iqdZrfw0SoL8CACg/t4ICNeE3+oY
- 2voDshv+bfBzH0P1W0bzoGe1uNCXfO908FETGV4c36404/JJAZqZvlv5PYt9uyVZJ/mh
- q/wY4A027Fa/JxdwZ+hDrgBQnHfFBYOMaTcdqJILSHcfrnfNljpfEKb/bkBdWbwL7a5b
- 76IohEyEmYGeK/dKZ6PIPPxysWkRDFu0YgAl4acD7MQMg5+VT/B40MesoWuWO2D7msAx
- qA7UWxqfWGg52i4FpBzP7ssfs+MUyUya+p/UElNNqGBBnxOI/lUJk6QnZmLNvIaeDFfm
- S4MA==
+ d=1e100.net; s=20230601; t=1712571204; x=1713176004;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4iE3H5A4di9y+xNKlKn1R4IgnUXKHyFuDJBIcrRdoAc=;
+ b=mzWboQiNRs5GkK8Y/dXOzIRUBWkBV+mpC/rg6lREHDwN45NLrkeGm4Z5v6JQXzet8J
+ K5Ktb66p5VTmTD9eHg9bTyBFBwkZQrF6cBsXi8JU93o1hJPHaAVRes9S5Jc0yfuamm6H
+ XoyWFXCT70PziqijVZ6Iff0KbSHqE3MTwCmyZnf3Lep4rv6W8PS6pYbuF6rNlFgHP9BH
+ jL60C+nlPNGZwcoahl6VVzCucLWVE5JPEr2GiNJrpIO7ije87qVLSrCzlyyJyBV+jres
+ 0JuRc8xvNevGTHNo72zIFn6eWCP1m3OYOm0HdpIa3mlnl6hNQePIj2EJF5wWArLYaszW
+ rfgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWamy5RRHmMH6Mv/Eo0sdZlOdWA4iBUnPaAfr+peo4gpKlQUAZON/WOX5XosKg2V2bbxUckinWa8JDrA3DOOjarg9shUcI=
-X-Gm-Message-State: AOJu0YyQWaMONw7kxr2VWErrxevIObjs3/6WHHc6Wy0QOw35NRe3L0R/
- vrNhVbm6VBtTWUKBsxyMk5WvR9iz3MlZo+/+W6+DHelCyWK0FDToXfgiJdj86DmikhG++gCSaRz
- jCmds5mIbXiVKKx2PypHDJIvpJD8mkaKqVX7aOsVy1LJnDdzlIgR1y/NvSmzowyAOyIqWa4LEVA
- 1QGmJFP+yGb+RVOoa5qE7HbWEt7S8=
-X-Received: by 2002:adf:cf06:0:b0:343:4170:f3f1 with SMTP id
- o6-20020adfcf06000000b003434170f3f1mr7975237wrj.33.1712570965068; 
- Mon, 08 Apr 2024 03:09:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCxsmkz5ntrRrIIYwy2GQn8XI9RWuLEuMQjEbGtWnPtxkrmfkqrPa0l6z5gjOvfNkD5qSJN6QjwtO5jzZIMAM=
-X-Received: by 2002:adf:cf06:0:b0:343:4170:f3f1 with SMTP id
- o6-20020adfcf06000000b003434170f3f1mr7975219wrj.33.1712570964778; Mon, 08 Apr
- 2024 03:09:24 -0700 (PDT)
+ AJvYcCUTAtXSVpGE44gcdyXlM5QJLOLlvMIm9fiPkoRRdrL91qp9kp6qTQidJlk6vDoP0KDk7ytUZ9I4bEIYaMQ+VDvVI+SxS+M=
+X-Gm-Message-State: AOJu0Yx5dMkFozhKaLy3cTrvelfU0VARfv56PJdaS0GTy4e7ChHzrULc
+ zx7Ya68F3KFdiVB0b+d63/9+eNEQyW6E4HSyJSyn6m5ZyEWYyCtduXGJ0SNj/ZOVwGGYVQPkqUq
+ lb050Ks1MgkI96X9f3mm5PqPKDuVbK8B1Jy5JxlOyUhrvsUVB0HhC
+X-Received: by 2002:a05:600c:1384:b0:415:43f2:332b with SMTP id
+ u4-20020a05600c138400b0041543f2332bmr7292339wmf.2.1712571204034; 
+ Mon, 08 Apr 2024 03:13:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJH+eDzpm15041yRChMBa7AmTCwihBrAnj6MWOjwtEY8uSm9Ft9hJsE4K9f/5sY3u6OiJgaQ==
+X-Received: by 2002:a05:600c:1384:b0:415:43f2:332b with SMTP id
+ u4-20020a05600c138400b0041543f2332bmr7292316wmf.2.1712571203483; 
+ Mon, 08 Apr 2024 03:13:23 -0700 (PDT)
+Received: from redhat.com ([2.52.152.188]) by smtp.gmail.com with ESMTPSA id
+ c11-20020adffb4b000000b00345bcb4fdb9sm1922451wrs.16.2024.04.08.03.13.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 03:13:22 -0700 (PDT)
+Date: Mon, 8 Apr 2024 06:13:20 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Jason Wang <jasowang@redhat.com>, Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/2] virtio-net: Fix vhost virtqueue notifiers for RSS
+Message-ID: <20240408061306-mutt-send-email-mst@kernel.org>
+References: <20240326-vhost-v1-0-09bd85b1ba2c@daynix.com>
+ <20240326-vhost-v1-1-09bd85b1ba2c@daynix.com>
 MIME-Version: 1.0
-References: <20240404194757.9343-1-philmd@linaro.org>
- <20240404194757.9343-6-philmd@linaro.org>
-In-Reply-To: <20240404194757.9343-6-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 8 Apr 2024 12:09:13 +0200
-Message-ID: <CABgObfaT=xxHiO=Wx8wvkGu1EoMY+taNko+Vk46+1JjUsM51qQ@mail.gmail.com>
-Subject: Re: [PATCH-for-9.1 5/7] hw/core: Restrict reset handlers API to
- system emulation
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- qemu-devel@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240326-vhost-v1-1-09bd85b1ba2c@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -102,58 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 4, 2024 at 9:48=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> Headers in include/sysemu/ are specific to system
-> emulation and should not be used in user emulation.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On Tue, Mar 26, 2024 at 07:06:29PM +0900, Akihiko Odaki wrote:
+> virtio_net_guest_notifier_pending() and virtio_net_guest_notifier_mask()
+> checked VIRTIO_NET_F_MQ to know there are multiple queues, but
+> VIRTIO_NET_F_RSS also enables multiple queues. Refer to n->multiqueue,
+> which is set to true either of VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS is
+> enabled.
+> 
+> Fixes: 68b0a6395f36 ("virtio-net: align ctrl_vq index for non-mq guest for vhost_vdpa")
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+Jason, are you merging this?
+
 > ---
->  hw/core/reset.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/hw/core/reset.c b/hw/core/reset.c
-> index d50da7e304..167c8bf1a9 100644
-> --- a/hw/core/reset.c
-> +++ b/hw/core/reset.c
-> @@ -24,7 +24,9 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#ifndef CONFIG_USER_ONLY
->  #include "sysemu/reset.h"
-> +#endif
->  #include "hw/resettable.h"
->  #include "hw/core/resetcontainer.h"
->
-> @@ -43,6 +45,7 @@ static ResettableContainer *get_root_reset_container(vo=
-id)
->      return root_reset_container;
->  }
->
-> +#ifndef CONFIG_USER_ONLY
-
-Wait, this does not make sense. The only thing left in the file is a
-single static function, which contradicts the other patch's commit
-message "reset.c contains core code used by any CPU,".
-
-Let me rework these two patches so that reset.c, qdev-hotplug.c and
-hotplug.c can be moved to system_ss. I'll post a v2 shortly.
-
-Paolo
-
->  /*
->   * Reason why the currently in-progress qemu_devices_reset() was called.
->   * If we made at least SHUTDOWN_CAUSE_SNAPSHOT_LOAD have a corresponding
-> @@ -185,3 +188,4 @@ void qemu_devices_reset(ShutdownCause reason)
->      /* Reset the simulation */
->      resettable_reset(OBJECT(get_root_reset_container()), RESET_TYPE_COLD=
-);
->  }
-> +#endif
-> --
-> 2.41.0
->
+>  hw/net/virtio-net.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 9959f1932b1b..a6ff000cd9d3 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3426,7 +3426,7 @@ static bool virtio_net_guest_notifier_pending(VirtIODevice *vdev, int idx)
+>      VirtIONet *n = VIRTIO_NET(vdev);
+>      NetClientState *nc;
+>      assert(n->vhost_started);
+> -    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_MQ) && idx == 2) {
+> +    if (!n->multiqueue && idx == 2) {
+>          /* Must guard against invalid features and bogus queue index
+>           * from being set by malicious guest, or penetrated through
+>           * buggy migration stream.
+> @@ -3458,7 +3458,7 @@ static void virtio_net_guest_notifier_mask(VirtIODevice *vdev, int idx,
+>      VirtIONet *n = VIRTIO_NET(vdev);
+>      NetClientState *nc;
+>      assert(n->vhost_started);
+> -    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_MQ) && idx == 2) {
+> +    if (!n->multiqueue && idx == 2) {
+>          /* Must guard against invalid features and bogus queue index
+>           * from being set by malicious guest, or penetrated through
+>           * buggy migration stream.
+> 
+> -- 
+> 2.44.0
 
 
