@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3D0CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 12:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FD6CD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 13:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtoFT-0004Lu-PK; Mon, 08 Apr 2024 08:37:19 -0400
+	id 1rtocO-0000tN-I9; Mon, 08 Apr 2024 09:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rtoFS-0004LL-Cr
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 08:37:18 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <ross.lagerwall@cloud.com>)
+ id 1rtobw-0000so-Hg
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 09:00:33 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rtoFQ-0001X5-Rb
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 08:37:18 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56e47843cc7so1435937a12.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 05:37:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ross.lagerwall@cloud.com>)
+ id 1rtobn-0006QV-KD
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 09:00:32 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e703e0e5deso3886390b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 06:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712579835; x=1713184635; darn=nongnu.org;
+ d=citrix.com; s=google; t=1712581219; x=1713186019; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9J/ZVhREruH9TnriC5uGWKBw96sf+KUPfNqRr+GOaVY=;
- b=yYUKt/KnNzg4DLng5jfVquVEh64TdiKYesJW7fLFR05AKOG4fl+8QpkVSXnqFVzY1Y
- Mj2v1yLY3LYEH8gN5BGDCmP5OFO/jWQXdnwLR46A6pOTPcrvupswhT6pVSGMK6MxK/BE
- t5FguxflC2s5vD577C3px2xQGnZdHPw1Osy0vhbu0MteQ9U4HhxAGzJVCVpxLSRnGRLA
- Ey/g/JeIdRxyuLPehHeCLwVpOg+uXbbkOSd3xVJsAaIMaR8yzl07LE7vJCzifK7NHgUW
- RERM0AWuUavEzZ+/Esl47TfQM4ki10ZTtBlRPX3FGY8Mu/5HNr6pDwHatxof3cDjRfzO
- iN6A==
+ bh=q714Nm8ZXiiNOCBkZLSgaliRMxIwh9vQdiua8gm1DEY=;
+ b=YuiJ84H2p2PMtEwChvS8tRq/sALplGzfU5Im+nc5s/g7nWtXJszlal1+UmdqjsopY9
+ 4fWuV6259y3jVlpbaBrmwRyC/kVjd8GqVLt66tMMDOx+sqFVmUDj3pU0g55gkdqbmokZ
+ 21/0/SQCW9wzv6GoZKeF6MfQMk3RU/Ekdu29g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712579835; x=1713184635;
+ d=1e100.net; s=20230601; t=1712581219; x=1713186019;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9J/ZVhREruH9TnriC5uGWKBw96sf+KUPfNqRr+GOaVY=;
- b=gIiphj4BFFbllGQQm9+qeQw/x5xr1QnrGFHhmymhqicqB/ACGVa5e0Xc0UpM5GMWOE
- 5dp+P0iEUIYusQUlMN81P+8nBVCvpuAB+O8XI8qY5KH+IdPRuk+EVRKuXrbT/sUqKrjf
- gVKt+ypO7mWLQ/d25K/iaXbypPzpGx5024RbUIXF93h5DH7VEjFJam6OFr8OHuHDVNnm
- 2doZqO64x7lIQmxXIGy0Dm+Sz+xFHpkb6xkB85Of3V9D+SUgjvQitgkb8xDi/CXS8T4U
- 5oJMT+04JlJ9d57k7tYbeAgWRkZDjZofJTrOVbpetlBrLJ2IzFBDEf/wTxS7cf08q3bH
- xpkw==
-X-Gm-Message-State: AOJu0Yy8FSsIVJKPrlq8FqzId/0qcjo5kbyXwVSYarzzIYhI2cbjD3hJ
- Hr7z/3akE3A29KrZiUvfXdMygZ/YjePtLB/vcw5+O+3pPlOL8/1g+7WfRQUJluhOLAwxIslZCtQ
- T553AWvmCMm6z9GxfiBkkwpz5GAv/IHIiqIhMSA==
-X-Google-Smtp-Source: AGHT+IGxuhBf9dyVvbD5aSGKvMbAJiWyijHDqW32+MMASX+VMSARCXZcSwPDYTv5Oh189AnKHIRa7ZqQ8knu/hsS18Y=
-X-Received: by 2002:a50:8e4e:0:b0:56c:2f3a:13a7 with SMTP id
- 14-20020a508e4e000000b0056c2f3a13a7mr5645901edx.25.1712579835336; Mon, 08 Apr
- 2024 05:37:15 -0700 (PDT)
+ bh=q714Nm8ZXiiNOCBkZLSgaliRMxIwh9vQdiua8gm1DEY=;
+ b=PqIrEOnZZcLDyKZpEfTEXF7G+jIlGap1tqCSJbvicOXQLInWtAjK/NiU8A06BWfc+H
+ 2qp90o5kMrwxyuq3Vx1+uPPfr+iG6FZYdEtU/CcDXLY8qW1+E+H6OU0ZCDMBoVZ6zJkT
+ adHprN9RSjdaWL1AOAKi6gM+kUESTxWkSlp5xKLvO5OgJgUYHG8CIWWpgGwqX898Be+a
+ jd97l5mnBRmIuNB3aG4ajaqVTlr70Xywvs1A/mDwvStlS8Fu6MaLocYF32/O9zW87zne
+ bjEmw+zK1+GLdSjrjurwfZnXKsSV8WoSuBPEKKgDww6OPFMZoQ7Vn9upy7hw5CyMOXM/
+ b02g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVi/5hz/i8GYbwn2ZiVQFr0DpiY6VegAwtkvOXUZHR6zon/NpmhEE3xVQgZjt9zRUaSLgQWF2jJ07uyyN4tOBGM2ZSTM30=
+X-Gm-Message-State: AOJu0Yx4hawJiFSLx+3bHK8Tk+Fz6joHw9LX+MQ6V0pN68q+YJ3OJRDK
+ Zi+hB+hnroq2F5qR7wWF8XzQ1PUhfk43Yg90PbP8RK1nbwteGg/dLJ+NKlWJqBCMFakfjB75yMi
+ I7MWb/Vc3KVlKhmzq0PmM6g5rd4HU1ONxXSQV
+X-Google-Smtp-Source: AGHT+IGOQK5Q/iV+vLPvm6a80+xbazHGAgGRWtRhX4Ai4j+kQswxdaL01v/QNZT38gEUJu8sNtf0/rKTLFEvRKTaDNk=
+X-Received: by 2002:a05:6a20:7355:b0:1a7:42b1:f18 with SMTP id
+ v21-20020a056a20735500b001a742b10f18mr8358272pzc.52.1712581218689; Mon, 08
+ Apr 2024 06:00:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240408105149.59258-1-philmd@linaro.org>
- <20240408105149.59258-2-philmd@linaro.org>
-In-Reply-To: <20240408105149.59258-2-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Apr 2024 13:37:04 +0100
-Message-ID: <CAFEAcA8u4HG+g_6Vpv53yq6SW5g3GSUYsjo=S0vc3sZ2Dzgs1w@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0? 1/2] hw/net/lan9118: Replace magic '2048' value
- by 'PKT_SIZE' definition
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
- Alexander Bulekov <alxndr@bu.edu>, qemu-arm@nongnu.org,
- Chuhong Yuan <hslester96@gmail.com>
+References: <20240404140833.1557953-1-ross.lagerwall@citrix.com>
+ <6fad8151-4bde-4a02-96fb-27b99d93757f@gmail.com>
+In-Reply-To: <6fad8151-4bde-4a02-96fb-27b99d93757f@gmail.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
+Date: Mon, 8 Apr 2024 14:00:06 +0100
+Message-ID: <CAG7k0EqEwfS75n8FCncrr_VzPtJZk46KrLiYaMDfWfrZ6CEApg@mail.gmail.com>
+Subject: Re: [PATCH] xen-hvm: Avoid livelock while handling buffered ioreqs
+To: paul@xen.org
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, 
+ xen-devel@lists.xenproject.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=ross.lagerwall@cloud.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,17 +91,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Apr 2024 at 11:53, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
+On Sat, Apr 6, 2024 at 11:58=E2=80=AFAM Durrant, Paul <xadimgnik@gmail.com>=
+ wrote:
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  hw/net/lan9118.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+> On 04/04/2024 15:08, Ross Lagerwall wrote:
+> > A malicious or buggy guest may generated buffered ioreqs faster than
+> > QEMU can process them in handle_buffered_iopage(). The result is a
+> > livelock - QEMU continuously processes ioreqs on the main thread withou=
+t
+> > iterating through the main loop which prevents handling other events,
+> > processing timers, etc. Without QEMU handling other events, it often
+> > results in the guest becoming unsable and makes it difficult to stop th=
+e
+> > source of buffered ioreqs.
+> >
+> > To avoid this, if we process a full page of buffered ioreqs, stop and
+> > reschedule an immediate timer to continue processing them. This lets
+> > QEMU go back to the main loop and catch up.
+> >
+>
+> Do PV backends potentially cause the same scheduling issue (if not using
+> io threads)?
 >
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+From what I can tell:
 
-thanks
--- PMM
+xen-block: It reads req_prod / req_cons once before entering the loop
+so it should be fine, I think.
+
+xen_console: Same as xen-block
+
+xen_nic: It reads req_prod / req_cons once before entering the loop.
+However, once the loop ends it checks for more requests and if there
+are more requests it restarts from the beginning. It seems like this
+could be susceptible to the same issue.
+
+(These PV backends generally aren't used by XenServer's system QEMU
+so I didn't spend too much time looking into it.)
+
+Thanks,
+Ross
 
