@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D4ACD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07FC4CD1292
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtjec-00012P-GR; Mon, 08 Apr 2024 03:42:58 -0400
+	id 1rtjqD-0003Sn-8i; Mon, 08 Apr 2024 03:54:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rtjea-00011r-J8
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:42:56 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
+ id 1rtjqC-0003Sa-DM
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:54:56 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rtjeY-0002ls-Rn
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:42:56 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1e2b1cd446fso29297595ad.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 00:42:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
+ id 1rtjqA-0004Xl-Mx
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:54:56 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-4349bba0ba3so4677601cf.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 00:54:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712562173; x=1713166973;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712562893; x=1713167693;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uLk8OVVlz8f3D/hwm9nTtvWq67frGqJMheqp7UEeozo=;
- b=QUve9royEMgs8fKpv1Eklr0xyPrB3XTZOAC5Cq1RgYnk+dvsUla/tC4UWHGAcdMjvp
- fmJ6OYZGgqH3LNSgprL79xbaycbM7L7e9lg5zVKbtRZRal0DwDQog9c7j4PfNG6hmgLe
- AkxboeHJzhDKCM1/m8BWuv5PZ/2TyyKTD+GOwRuLn0zw8YbN7GGr0wvUiBKMBlwqNlGV
- 0IzYPuieemMbQyQdpMj79CrzxiFq5QKsZfS9N+jM3T4HF8GX/B+vW4QxQ8ebHRx7PMm9
- JPMuZI/YqWgL8Ei49OzOMcc6iccyssHtw8p9KjuPr+Q/ZepU4sIxjI6gTdoDB0AcSR1i
- bKUg==
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LhxZDU8s9FWgi6OsiVtYzwfN5ZxMtk8EheuYwvtlXDQ=;
+ b=ptowPCAMTkFM/8PBlU2eO56WexqWOF6Mm8NINDdvsWyplL77kzxXwgAaJg3alOFeKF
+ +/xcTEKnkxySgTs2LMyHJFUHeMyrgveKzRqG5C471WF7Rn4uRYQd2OCKwBBhXHWeEdQX
+ VaIaweC9wUqfIIi3JpFvX+MC4ZqyA/3EMA47lrnysyPAuKXvUuQg2oA5IKp9YKGeFBmq
+ nPlMzCp93BW1farjJLxdCPJZl8n8otvRgaYjERyzHqriLY6HKE1waNmRwzNTJ2ZWoW1S
+ Bws7Uke+vl8Cdf9C7vjuptEDOzGc92hnx9W1TIOtPNUz3afFV8sqGPaGFf17xESB7fNE
+ Nd6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712562173; x=1713166973;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uLk8OVVlz8f3D/hwm9nTtvWq67frGqJMheqp7UEeozo=;
- b=Tk/EexQp9VKkLO935ienDzAiRiiVhs/8AncjCjGAtRfPMO8XEoWiCLbin+9SsNJ2uj
- 83TiudUzfL3+JwlH53C0W/lZgwJFMHBOXwm44Z+nQnlKbnnOR82uGmxDgvWFLNg6Fwtn
- 9MEwMeGjNRQ+zZLQXdpl5I3dxc5MrM8DagRyPsB5fKx9PRkbireKgsNf8MH7VT04WCyI
- TgwzDC5z3LyLoppKSVz4DW3YkiS1eN3K5rkmrnJZzDUJ70cHqn/jg7YclL5atIqwI6oC
- NqdVO7ILL+V+Exkiqm5Vgzh805AfWKSnDFzqg60ZrpV6xy4YNvx30V54pms/O/Dh5RMH
- XRyw==
+ d=1e100.net; s=20230601; t=1712562893; x=1713167693;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LhxZDU8s9FWgi6OsiVtYzwfN5ZxMtk8EheuYwvtlXDQ=;
+ b=rkxcwO9TL249f8TidUBM4NdXmp1VJaO4cOVljMz9ci076IdA/gO9CHhvBQd8L/o6SD
+ UA1n40H8gRhe4tlrRhfPAc4j8w30iZX5ST0EqW4syHslM0RfwRhWZYfGpxuuGdYjYHb3
+ ZJiiX4ZRJtjkp9x4ypCdaqXWxmtXu4bDkms/yXCttrVUZbfl66m6si0dr66ro8cFMZll
+ GMC23g/I51yQk87L9trx+fr2rt2J8qLl9OtpkYrpQMVdV1QE/cSKGLa+49hFZQzf+Pi4
+ O7Qju17PrJzaVx6KBr9wMNVBxqizKzkHh6jZIOQkcEjfC4r9LlfBiYmjjKE7izTudEvC
+ dpUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWaeQd/7acjgLSdPvXN5WI3Ol9TSQvZAmT5fUbrFHta1Fj1E1HRZRtQifleDivCagcwmzN2/NvMXnOtpJDxea0iP4evL5c=
-X-Gm-Message-State: AOJu0Yza/2O8txd37SllLfxGtX5ChS0Ffb2W+Sp6BrrUCS41PEQRhj4r
- B2aafdKO+JRGI8J/5qFAmr8HqUOSQMLS7vvrgwDAwwTii5Db9B2foIkSc9q3Jpc=
-X-Google-Smtp-Source: AGHT+IGr0GBfWd55mMIpQ8gg2cChM0YesJD7xhjC3ioVkYCdU0JnBGq35CZ6rDwfqtkUYkAsVBCNTQ==
-X-Received: by 2002:a17:902:bd43:b0:1e2:61c9:85de with SMTP id
- b3-20020a170902bd4300b001e261c985demr7837609plx.4.1712562172829; 
- Mon, 08 Apr 2024 00:42:52 -0700 (PDT)
-Received: from [157.82.200.213] ([157.82.200.213])
- by smtp.gmail.com with ESMTPSA id
- jc2-20020a17090325c200b001e28d18bd52sm6266893plb.232.2024.04.08.00.42.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 00:42:52 -0700 (PDT)
-Message-ID: <d2213191-9b16-4716-a311-97751ba670ad@daynix.com>
-Date: Mon, 8 Apr 2024 16:42:47 +0900
+ AJvYcCW0eBYGuX17Qa8V7VkJjvBUxRcd/oOt91D4/V3RWHQ3aQpBz+IiZY6ooAHQpAQY5+0iXk5VVK+a3E8K8Q0Qw9KNfiNjXpw=
+X-Gm-Message-State: AOJu0Yyyivr1sbp3tgymdoXWSgau/jrYry9ZEo1ExHGd3gaOywLECx7g
+ 0XBPvwtdq3jYqphli+UHUyCW1Sq4+YkUYJgyORnX9BojeI43BKg4IB/MzHpXvdHcJVuiY2flLht
+ r3OK2jdOsx5DQ9qBK3MUfXrQ8EBYqwVQMZMQlIQ==
+X-Google-Smtp-Source: AGHT+IEfxdKLFDTyKVeeRq/UvKbuF1EE5kUfUWDPyYDZUYA9TyXX3ajk6z6074NUSGAYcWpfRCAyMJq+n+eQPCqbp3Q=
+X-Received: by 2002:ac8:5d50:0:b0:434:7676:1f9e with SMTP id
+ g16-20020ac85d50000000b0043476761f9emr6832099qtx.20.1712562893598; Mon, 08
+ Apr 2024 00:54:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 16/20] virtio-net: Do not write hashes to peer buffer
-Content-Language: en-US
-To: Yuri Benditovich <yuri.benditovich@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
 References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
  <20240403-rss-v9-16-c6d87e69d38b@daynix.com>
  <CAOEp5Od=KUTHnikVBA7iWfdFPJ=T7hbJrSu4zwCiB_Q1P-Sz+Q@mail.gmail.com>
  <8010b335-4b46-456e-bf6e-c191cdc34964@daynix.com>
  <CAOEp5OeHJR=EeZ=yLovSD9vUPt-zRNKLo2k_fNZPP3W-eX4Fiw@mail.gmail.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAOEp5OeHJR=EeZ=yLovSD9vUPt-zRNKLo2k_fNZPP3W-eX4Fiw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+ <d2213191-9b16-4716-a311-97751ba670ad@daynix.com>
+In-Reply-To: <d2213191-9b16-4716-a311-97751ba670ad@daynix.com>
+From: Yuri Benditovich <yuri.benditovich@daynix.com>
+Date: Mon, 8 Apr 2024 10:54:42 +0300
+Message-ID: <CAOEp5OcNkBr4aRzjFQhgsOTmMmO3aPQH2tQLvGcs__=jUVa5sA@mail.gmail.com>
+Subject: Re: [PATCH v9 16/20] virtio-net: Do not write hashes to peer buffer
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: none client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=yuri.benditovich@daynix.com; helo=mail-qt1-x82f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,39 +102,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/04/08 16:40, Yuri Benditovich wrote:
-> On Mon, Apr 8, 2024 at 4:30 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> On 2024/04/08 7:09, Yuri Benditovich wrote:
->>> On Wed, Apr 3, 2024 at 2:12 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>
->>>> The peer buffer is qualified with const and not meant to be modified.
->>>
->>> IMHO, this buffer is not so 'const' (although the prototype states so),
->>> it is allocated in net.c
->>> btw, another procedure in this file also modifies the buffer
->>> (work_around_broken_dhclient)
->>
->> Right but it has a FIXME comment.
->>
->>>
->>>> It also prevents enabling VIRTIO_NET_F_HASH_REPORT for peers without
->>>> virtio-net header support.
->>>
->>> Does it mean _this commit_ prevents enabling VIRTIO_NET_F_HASH_REPORT
->>> for peers without
->>> virtio-net header support? Where?
->>
->> No, but I meant that this patch fixes such a problem.
-> 
-> No, it does not. Such a problem does not exist in the master, the
-> hash_report feature
-> is silently dropped in such case:
-> https://github.com/qemu/qemu/blob/master/hw/net/virtio-net.c#L816
+On Mon, Apr 8, 2024 at 10:42=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
+>
+> On 2024/04/08 16:40, Yuri Benditovich wrote:
+> > On Mon, Apr 8, 2024 at 4:30=E2=80=AFAM Akihiko Odaki <akihiko.odaki@day=
+nix.com> wrote:
+> >>
+> >> On 2024/04/08 7:09, Yuri Benditovich wrote:
+> >>> On Wed, Apr 3, 2024 at 2:12=E2=80=AFPM Akihiko Odaki <akihiko.odaki@d=
+aynix.com> wrote:
+> >>>>
+> >>>> The peer buffer is qualified with const and not meant to be modified=
+.
+> >>>
+> >>> IMHO, this buffer is not so 'const' (although the prototype states so=
+),
+> >>> it is allocated in net.c
+> >>> btw, another procedure in this file also modifies the buffer
+> >>> (work_around_broken_dhclient)
+> >>
+> >> Right but it has a FIXME comment.
+> >>
+> >>>
+> >>>> It also prevents enabling VIRTIO_NET_F_HASH_REPORT for peers without
+> >>>> virtio-net header support.
+> >>>
+> >>> Does it mean _this commit_ prevents enabling VIRTIO_NET_F_HASH_REPORT
+> >>> for peers without
+> >>> virtio-net header support? Where?
+> >>
+> >> No, but I meant that this patch fixes such a problem.
+> >
+> > No, it does not. Such a problem does not exist in the master, the
+> > hash_report feature
+> > is silently dropped in such case:
+> > https://github.com/qemu/qemu/blob/master/hw/net/virtio-net.c#L816
+>
+> Well, silently dropping VIRTIO_NET_F_HASH_REPORT is not different from
+> preventing enabling VIRTIO_NET_F_HASH_REPORT, is it?
+>
+But how is your patch involved in it? Should this line be removed from
+the commit message?
 
-Well, silently dropping VIRTIO_NET_F_HASH_REPORT is not different from 
-preventing enabling VIRTIO_NET_F_HASH_REPORT, is it?
 
-Regards,
-Akihiko Odaki
+> Regards,
+> Akihiko Odaki
 
