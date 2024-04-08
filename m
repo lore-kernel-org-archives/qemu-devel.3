@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F62CD1296
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E0FC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtpoo-0001yU-Ih; Mon, 08 Apr 2024 10:17:54 -0400
+	id 1rtpon-0001ne-JL; Mon, 08 Apr 2024 10:17:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtpoe-0001kF-Du
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:17:46 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtpoY-0001g5-P3
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:17:39 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtpoO-0002vR-PM
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:17:44 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2d8863d8a6eso22685591fa.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:17:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtpoV-0002xV-VH
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:17:38 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d87660d5dbso22289361fa.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712585847; x=1713190647; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712585852; x=1713190652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tTrrjuqi39GdndcUSlrUx63rjA633KgDlIwvQVz3vGE=;
- b=WGeTUGUhvODhtajlGZ76s226esBCCTVLBYhh2QyRMAII8mqMgBFstaBMn+HX9bN5kG
- W/SzLgdKVhvZ+itiIH2vLx7n7968KUqeykzrC4/mvLOTTendne7lB8Qy4841dIhUZGmp
- flSnvZ3qjnD+2/Pu4ibGwW91HaGakuQ9teA5/z2+rvHSj0tuXr77V81CF6Fwb4Xj57CN
- V1X3dHh3/IsoiiZuxKbkvMI9XuIYmEfteeOwTljzAbj0U+CTmOujsXE+qLw3MVCQBHaw
- 7lM0LdZs8Zo2rKa1VXj9V+Lgt48b+Y+FVTZWn5y013EDcz9eswmMPvt46qVFWC6V4Epf
- 4S8Q==
+ bh=T0UPUS6B8fn4peMJtb8NBu9x0+Ma6yL7q2dFjDj2dHM=;
+ b=LSeYys5BGQu24Pq4BayAUEbiqv01yuxq4lUqsaQbLkMix6LVmTu2p41BqgfOpfyQNK
+ ryjf6hS7tCxJP3SinRioCahtJ2itjMdHfl3iN0+N4r0cTQzJVanUDD5GC47BVirdBhIr
+ iSUaIhiUQTPletkX5ujFGyn1bhrT4Kg8OLVhkCcgB2jJpS9siGwyJ7yrGfPUjOfKBp14
+ UsndyD1V0FMRQRvzFKQrVeIvz7SWbl2kjMLlZjM4j4tXKHnIPyhSlIq8SCsAMr189HkH
+ mNraB6XgOCQioDADVuzlR7c/kFFqFsPVQ13bfJsVXnCMVCGjhyxzERZgKF/wg8MNORmO
+ p4WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712585847; x=1713190647;
+ d=1e100.net; s=20230601; t=1712585852; x=1713190652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tTrrjuqi39GdndcUSlrUx63rjA633KgDlIwvQVz3vGE=;
- b=uRjoDgTYDJT6T676zLOZvtUxArvWHRSTOuCX714V7ogdM4JG0nQWZqFoyJmLKVup42
- P0aSnNe1X2U4XXUHDNsvrfLR7KxZB+7aJR2SpuwtrgGrQJp8Gk1Va4udlRnYa/QCuxcc
- nvY+10n1mAP9cq6NqyfyPK0qdZxDnuSDJs4se/iF2jSXhD/0DqjbusTh/GG1mO2yVLEF
- tqrarNkffNwsZ+6zRklJG+35UqhYJULOP3rm1ugIY68s10xlw+Sx30NZ4fyR6fhf9rQh
- ybGdP0tfgUQcUZOJRELWPObaGoPyL2x1PztbUv/iiSGLnrbZF2kEGfzylbNrGBv9SkqJ
- wbfw==
-X-Gm-Message-State: AOJu0Yy2VDgr3GH3+dZyqOh+BK7S5EK5KyDgjIfEXf16tX4Vt3yX8CDj
- J+oFhg0zb6FKZIgkSItQvixpM55mDDGJaPx4Aof9KhNz5TYMk6I8cGgbviT3fEPNhQ4aiPMbVPQ
- y
-X-Google-Smtp-Source: AGHT+IER0eGuBtQ8QPpa4Lzdb8EQlkRl12ao3NY9kXyi+sBCJUjtY0Sb0+eirU85eldpkQT92XdZew==
-X-Received: by 2002:a05:6512:3c8e:b0:514:88df:88b9 with SMTP id
- h14-20020a0565123c8e00b0051488df88b9mr8747779lfv.45.1712585846534; 
- Mon, 08 Apr 2024 07:17:26 -0700 (PDT)
+ bh=T0UPUS6B8fn4peMJtb8NBu9x0+Ma6yL7q2dFjDj2dHM=;
+ b=Td66TJgS73Kd49iRnJjWw610kMAHsuyuG6WHAVkgpIzao1RxCwEaY6F4Y+u7LEtSGg
+ ThbClmbK98Zbjwxt3aHtAdJ5n8cK2MfmRL/SyYFdlVDPzXsedtCtRvUH2WDSuch8lXGA
+ 8dP5Dy6BIZ13UjXygSqGjh0zXr7WhXNSeZ355TEw8GavEXYxLM8zXF60WynZhayoUR6Q
+ SnfwzGpbvgu7Sr7MqtFeqO6rw0eOpX72GnYKN+TMwpr/zi3P/A5DMYnAiApy4ELbircw
+ 9Z9t27zgcXrwTn7RpCruo8oXrEP98ltBTrL5ieI/4t9lKmxjHVqqLHuUQ+oiWiPZc7NI
+ 6sng==
+X-Gm-Message-State: AOJu0YwJuom/lSsPqZjGWegP1/UYjJGNP/XvKcoBxysPNxbAn1AgH1f3
+ pDQcZmKIC8/OuLy4+F8WZHAhFCEZfyt3byq2UhYbltbwKhW0E1a9PtvbBGOxCbBC6e3pvLz7aH/
+ P
+X-Google-Smtp-Source: AGHT+IF1qDQN4FpawTyG5l+AZ5jaeVkWal0BZgP4mizfese9A8aA0Wy5h8ef64YWEw/4ZwxN8ae1iQ==
+X-Received: by 2002:a05:6512:4896:b0:516:d250:86bd with SMTP id
+ eq22-20020a056512489600b00516d25086bdmr5722907lfb.44.1712585852562; 
+ Mon, 08 Apr 2024 07:17:32 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- ek15-20020a056402370f00b0056c3013485csm4115387edb.69.2024.04.08.07.17.25
+ h1-20020a0564020e8100b005682a0e915fsm4138014eda.76.2024.04.08.07.17.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Apr 2024 07:17:26 -0700 (PDT)
+ Mon, 08 Apr 2024 07:17:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bin.meng@windriver.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alexander Bulekov <alxndr@bu.edu>, qemu-block@nongnu.org
-Subject: [RFC PATCH-for-9.0? 1/2] hw/sd/sdcard: Avoid OOB in sd_read_byte()
- during unexpected CMD switch
-Date: Mon,  8 Apr 2024 16:17:16 +0200
-Message-ID: <20240408141717.66154-2-philmd@linaro.org>
+Subject: [PATCH-for-9.1 2/2] hw/sd/sdcard: Assert @data_offset is in range
+Date: Mon,  8 Apr 2024 16:17:17 +0200
+Message-ID: <20240408141717.66154-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240408141717.66154-1-philmd@linaro.org>
 References: <20240408141717.66154-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,93 +95,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For multi-bytes commands, our implementation uses the @data_start
-and @data_offset fields to track byte access. We initialize the
-command start/offset in buffer once. Malicious guest might abuse
-by switching command while staying in the 'transfer' state, switching
-command buffer size, and our implementation can access out of buffer
-boundary. For example, CMD17 (READ_SINGLE_BLOCK) allows to read up to
-512 bytes, and CMD13 (SEND_STATUS) up to 64 bytes. By switching from
-CMD17 to CMD13 (see reproducer below), bytes [64-511] are out of the
-'status' buffer.
+Prevent out-of-bound access with assertions.
 
-Our implementation return R0 status code for unexpected commands.
-Such in-transaction command switch is unexpected and returns R0.
-This is a good place to reset the start/offset fields to avoid
-malicious accesses.
-
-Can be reproduced running:
-
-  $ export UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1
-  $ cat << EOF | qemu-system-i386 \
-                     -display none -nographic \
-                     -machine accel=qtest -m 512M \
-                     -nodefaults \
-                     -device sdhci-pci,sd-spec-version=3 \
-                     -device sd-card,drive=mydrive \
-                     -drive if=none,index=0,file=null-co://,format=raw,id=mydrive \
-                     -qtest stdio -trace sd\* -trace -sdbus_read
-  outl 0xcf8 0x80001010
-  outl 0xcfc 0xe0000000
-  outl 0xcf8 0x80001004
-  outw 0xcfc 0x02
-  write 0xe000002c 0x1 0x05
-  write 0xe000000f 0x1 0x37
-  write 0xe000000a 0x1 0x01
-  write 0xe000000f 0x1 0x29
-  write 0xe000000f 0x1 0x02
-  write 0xe000000f 0x1 0x03
-  write 0xe000000c 0x1 0x32
-  write 0xe000000f 0x1 0x06
-  write 0xe0000005 0x1 0x01
-  write 0xe0000007 0x1 0x01
-  write 0xe0000003 0x1 0x00
-  write 0xe000000f 0x1 0x11
-  write 0xe000002a 0x1 0x01
-  write 0xe000002a 0x1 0x02
-  write 0xe000000f 0x1 0x0d
-  write 0xe000002a 0x1 0x01
-  write 0xe000002a 0x1 0x02
-  EOF
-  hw/sd/sd.c:1984:15: runtime error: index 256 out of bounds for type 'uint8_t [64]'
-  #0 sd_read_byte hw/sd/sd.c:1984:15
-  #1 sdbus_read_data hw/sd/core.c:157:23
-  #2 sdhci_read_block_from_card hw/sd/sdhci.c:423:9
-  #3 sdhci_blkgap_write hw/sd/sdhci.c:1074:13
-  #4 sdhci_write hw/sd/sdhci.c:1195:13
-  #5 memory_region_write_accessor softmmu/memory.c:492:5
-  #6 access_with_adjusted_size softmmu/memory.c:554:18
-  #7 memory_region_dispatch_write softmmu/memory.c
-  #8 flatview_write_continue softmmu/physmem.c:2778:23
-  #9 flatview_write softmmu/physmem.c:2818:14
-  #10 address_space_write softmmu/physmem.c:2910:18
-  SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior hw/sd/sd.c:1984:15
-
-Reported-by: Alexander Bulekov <alxndr@bu.edu>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/487
-Buglink: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=36240
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/sd/sd.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 807b5d3de3..16d8d52a78 100644
+index 16d8d52a78..c081211582 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -1826,6 +1826,12 @@ send_response:
+@@ -1875,6 +1875,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+                             sd->current_cmd, value);
+     switch (sd->current_cmd) {
+     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
++        assert(sd->data_offset < sizeof(sd->data));
+         sd->data[sd->data_offset ++] = value;
+         if (sd->data_offset >= sd->blk_len) {
+             /* TODO: Check CRC before committing */
+@@ -1901,6 +1902,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+                 }
+             }
+         }
++        assert(sd->data_offset < sizeof(sd->data));
+         sd->data[sd->data_offset++] = value;
+         if (sd->data_offset >= sd->blk_len) {
+             /* TODO: Check CRC before committing */
+@@ -1925,6 +1927,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
          break;
  
-     case sd_r0:
-+        /*
-+         * Invalid state transition, reset implementation
-+         * fields to avoid OOB abuse.
-+         */
-+        sd->data_start = 0;
-+        sd->data_offset = 0;
-     case sd_illegal:
-         rsplen = 0;
+     case 26:  /* CMD26:  PROGRAM_CID */
++        assert(sd->data_offset < sizeof(sd->data));
+         sd->data[sd->data_offset ++] = value;
+         if (sd->data_offset >= sizeof(sd->cid)) {
+             /* TODO: Check CRC before committing */
+@@ -1944,6 +1947,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
          break;
+ 
+     case 27:  /* CMD27:  PROGRAM_CSD */
++        assert(sd->data_offset < sizeof(sd->data));
+         sd->data[sd->data_offset ++] = value;
+         if (sd->data_offset >= sizeof(sd->csd)) {
+             /* TODO: Check CRC before committing */
+@@ -1968,6 +1972,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+         break;
+ 
+     case 42:  /* CMD42:  LOCK_UNLOCK */
++        assert(sd->data_offset < sizeof(sd->data));
+         sd->data[sd->data_offset ++] = value;
+         if (sd->data_offset >= sd->blk_len) {
+             /* TODO: Check CRC before committing */
+@@ -1979,6 +1984,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+         break;
+ 
+     case 56:  /* CMD56:  GEN_CMD */
++        assert(sd->data_offset < sizeof(sd->data));
+         sd->data[sd->data_offset ++] = value;
+         if (sd->data_offset >= sd->blk_len) {
+             APP_WRITE_BLOCK(sd->data_start, sd->data_offset);
+@@ -2046,6 +2052,7 @@ uint8_t sd_read_byte(SDState *sd)
+         break;
+ 
+     case 13:  /* ACMD13: SD_STATUS */
++        assert(sd->data_offset < sizeof(sd->sd_status));
+         ret = sd->sd_status[sd->data_offset ++];
+ 
+         if (sd->data_offset >= sizeof(sd->sd_status))
+@@ -2055,6 +2062,7 @@ uint8_t sd_read_byte(SDState *sd)
+     case 17:  /* CMD17:  READ_SINGLE_BLOCK */
+         if (sd->data_offset == 0)
+             BLK_READ_BLOCK(sd->data_start, io_len);
++        assert(sd->data_offset < sizeof(sd->data));
+         ret = sd->data[sd->data_offset ++];
+ 
+         if (sd->data_offset >= io_len)
+@@ -2069,6 +2077,7 @@ uint8_t sd_read_byte(SDState *sd)
+             }
+             BLK_READ_BLOCK(sd->data_start, io_len);
+         }
++        assert(sd->data_offset < sizeof(sd->data));
+         ret = sd->data[sd->data_offset ++];
+ 
+         if (sd->data_offset >= io_len) {
+@@ -2089,10 +2098,12 @@ uint8_t sd_read_byte(SDState *sd)
+         if (sd->data_offset >= SD_TUNING_BLOCK_SIZE - 1) {
+             sd->state = sd_transfer_state;
+         }
++        assert(sd->data_offset < sizeof(sd_tuning_block_pattern));
+         ret = sd_tuning_block_pattern[sd->data_offset++];
+         break;
+ 
+     case 22:  /* ACMD22: SEND_NUM_WR_BLOCKS */
++        assert(sd->data_offset < sizeof(sd->sd_status));
+         ret = sd->data[sd->data_offset ++];
+ 
+         if (sd->data_offset >= 4)
+@@ -2100,6 +2111,7 @@ uint8_t sd_read_byte(SDState *sd)
+         break;
+ 
+     case 30:  /* CMD30:  SEND_WRITE_PROT */
++        assert(sd->data_offset < sizeof(sd->data));
+         ret = sd->data[sd->data_offset ++];
+ 
+         if (sd->data_offset >= 4)
+@@ -2107,6 +2119,7 @@ uint8_t sd_read_byte(SDState *sd)
+         break;
+ 
+     case 51:  /* ACMD51: SEND_SCR */
++        assert(sd->data_offset < sizeof(sd->scr));
+         ret = sd->scr[sd->data_offset ++];
+ 
+         if (sd->data_offset >= sizeof(sd->scr))
+@@ -2116,6 +2129,7 @@ uint8_t sd_read_byte(SDState *sd)
+     case 56:  /* CMD56:  GEN_CMD */
+         if (sd->data_offset == 0)
+             APP_READ_BLOCK(sd->data_start, sd->blk_len);
++        assert(sd->data_offset < sizeof(sd->data));
+         ret = sd->data[sd->data_offset ++];
+ 
+         if (sd->data_offset >= sd->blk_len)
 -- 
 2.41.0
 
