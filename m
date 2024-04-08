@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E0FC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E742CD1296
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtpon-0001ne-JL; Mon, 08 Apr 2024 10:17:53 -0400
+	id 1rtpvw-0006G2-0u; Mon, 08 Apr 2024 10:25:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtpoY-0001g5-P3
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:17:39 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rtpvt-0006FQ-FH
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:25:14 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtpoV-0002xV-VH
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:17:38 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d87660d5dbso22289361fa.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:17:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rtpvp-0004Tq-RL
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:25:12 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-516d3776334so4216518e87.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712585852; x=1713190652; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1712586308; x=1713191108; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T0UPUS6B8fn4peMJtb8NBu9x0+Ma6yL7q2dFjDj2dHM=;
- b=LSeYys5BGQu24Pq4BayAUEbiqv01yuxq4lUqsaQbLkMix6LVmTu2p41BqgfOpfyQNK
- ryjf6hS7tCxJP3SinRioCahtJ2itjMdHfl3iN0+N4r0cTQzJVanUDD5GC47BVirdBhIr
- iSUaIhiUQTPletkX5ujFGyn1bhrT4Kg8OLVhkCcgB2jJpS9siGwyJ7yrGfPUjOfKBp14
- UsndyD1V0FMRQRvzFKQrVeIvz7SWbl2kjMLlZjM4j4tXKHnIPyhSlIq8SCsAMr189HkH
- mNraB6XgOCQioDADVuzlR7c/kFFqFsPVQ13bfJsVXnCMVCGjhyxzERZgKF/wg8MNORmO
- p4WA==
+ bh=OrBRkuPxXOCZvmMbQCwyyz4itVDU/vM75cSck92WVEI=;
+ b=q7Mn2UboO9Z3JOLkQqndjtwC0WLWb/GaiN+ybqnPLem67MjK/Ku5IQcjmKphNccAgJ
+ BTPmxhlF6Zr0F27EbAvtv53dqcOT2QYF4YX1z14M8yArmIg8Mfn5neDA+UdMsfVKYi59
+ WmkgcTakQsJmDGoz0FqmrO7niPYfHTHbiNKmAXop7jDKHiQhf7ZfuMGtbIAa/xa30fNn
+ cytJ3eco1VT7TWKul66Jdl4lxUc9pa5k/pUW6URNE1VSwOaQP+uyuDXsck9lQCGoY9q8
+ ciAO5sikwHPczWnyM10/f9GmeypGhWQZSGxzA4GXc83bJIHSZw1/ekk61Pj5ifob6MCV
+ 9rAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712585852; x=1713190652;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1712586308; x=1713191108;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T0UPUS6B8fn4peMJtb8NBu9x0+Ma6yL7q2dFjDj2dHM=;
- b=Td66TJgS73Kd49iRnJjWw610kMAHsuyuG6WHAVkgpIzao1RxCwEaY6F4Y+u7LEtSGg
- ThbClmbK98Zbjwxt3aHtAdJ5n8cK2MfmRL/SyYFdlVDPzXsedtCtRvUH2WDSuch8lXGA
- 8dP5Dy6BIZ13UjXygSqGjh0zXr7WhXNSeZ355TEw8GavEXYxLM8zXF60WynZhayoUR6Q
- SnfwzGpbvgu7Sr7MqtFeqO6rw0eOpX72GnYKN+TMwpr/zi3P/A5DMYnAiApy4ELbircw
- 9Z9t27zgcXrwTn7RpCruo8oXrEP98ltBTrL5ieI/4t9lKmxjHVqqLHuUQ+oiWiPZc7NI
- 6sng==
-X-Gm-Message-State: AOJu0YwJuom/lSsPqZjGWegP1/UYjJGNP/XvKcoBxysPNxbAn1AgH1f3
- pDQcZmKIC8/OuLy4+F8WZHAhFCEZfyt3byq2UhYbltbwKhW0E1a9PtvbBGOxCbBC6e3pvLz7aH/
- P
-X-Google-Smtp-Source: AGHT+IF1qDQN4FpawTyG5l+AZ5jaeVkWal0BZgP4mizfese9A8aA0Wy5h8ef64YWEw/4ZwxN8ae1iQ==
-X-Received: by 2002:a05:6512:4896:b0:516:d250:86bd with SMTP id
- eq22-20020a056512489600b00516d25086bdmr5722907lfb.44.1712585852562; 
- Mon, 08 Apr 2024 07:17:32 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.144.67])
- by smtp.gmail.com with ESMTPSA id
- h1-20020a0564020e8100b005682a0e915fsm4138014eda.76.2024.04.08.07.17.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Apr 2024 07:17:32 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>, qemu-block@nongnu.org
-Subject: [PATCH-for-9.1 2/2] hw/sd/sdcard: Assert @data_offset is in range
-Date: Mon,  8 Apr 2024 16:17:17 +0200
-Message-ID: <20240408141717.66154-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240408141717.66154-1-philmd@linaro.org>
-References: <20240408141717.66154-1-philmd@linaro.org>
+ bh=OrBRkuPxXOCZvmMbQCwyyz4itVDU/vM75cSck92WVEI=;
+ b=QxHWk8rHZcbBN6dnlkrUcK78WMujJACi1t9wYhD/LjOh4tbPOWHpxFGxwYpbX6esDS
+ RbZRkBL6m0F2939p75kdH2AiTZtWQGkxKUAmuaosRfWHFn6yru1FLQ20aDufC6LWf2Eg
+ wXx8wRyWdWvEHg8ZaVrhFFVErp705tnoJVpHnHg2kUpJxGnd2agG/P+bZH5MZr2md+14
+ 4QVT/PHChhi/OjDy+3fFBqnSdP8IWp6zNXC3eJhSSMBpmgXiTRydkeBOeQU3TVI0Z2us
+ zm2XjDJjpfGqaMCyZjTaooGyjIKgfJbRCY6Jvj4faHUr33D8mQrke55NBJtmpxKqBXUm
+ 2rhA==
+X-Gm-Message-State: AOJu0Yy9UTizsXGyfm1sV8XXzn3oJNQOha09rPGcYzkohoW7eBD++im/
+ aS6PZBoLbh2IdWXTzerdbYoSrmnOehjK/2tOudov3cq9q2C3KG0zjWZbcBstAdfdcWWCXNguvzp
+ poTKY+apKDJMUNy6xgZ8RLfKgAkJDHN/+JVS95370e6e/mnqm
+X-Google-Smtp-Source: AGHT+IF0GcYu9lmKkZiEEbpSI0MuuNzOfhB+2xq5sIRSQV11VOlDUp55extZ2f7A8uj6DuE9th5HFM5T7E1N1JxofDc=
+X-Received: by 2002:ac2:4ac2:0:b0:516:d4c2:53eb with SMTP id
+ m2-20020ac24ac2000000b00516d4c253ebmr5376563lfp.58.1712586307609; Mon, 08 Apr
+ 2024 07:25:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+References: <20240408105149.59258-1-philmd@linaro.org>
+ <20240408105149.59258-3-philmd@linaro.org>
+In-Reply-To: <20240408105149.59258-3-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Apr 2024 15:24:56 +0100
+Message-ID: <CAFEAcA8vvURMn2FaDP9tXtP5eCMs6-XFOCR9ypo=WBH+6g5prw@mail.gmail.com>
+Subject: Re: [PATCH-for-9.0? 2/2] hw/net/lan9118: Fix overflow in TX FIFO
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
+ Alexander Bulekov <alxndr@bu.edu>, qemu-arm@nongnu.org,
+ Chuhong Yuan <hslester96@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,127 +92,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prevent out-of-bound access with assertions.
+On Mon, 8 Apr 2024 at 11:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> When the TX FIFO is full, raise the TX Status FIFO Overflow (TXSO)
+> flag, "Generated when the TX Status FIFO overflows" [*].
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sd/sd.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+This doesn't sound right. The TX Status FIFO and the
+TX Data FIFO are separate FIFOs, and the TX FIFO has its own
+overflow bit, TDFO. And I think the overflow here is of
+a third FIFO, the MIL's transmit FIFO...
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 16d8d52a78..c081211582 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1875,6 +1875,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-                             sd->current_cmd, value);
-     switch (sd->current_cmd) {
-     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
-+        assert(sd->data_offset < sizeof(sd->data));
-         sd->data[sd->data_offset ++] = value;
-         if (sd->data_offset >= sd->blk_len) {
-             /* TODO: Check CRC before committing */
-@@ -1901,6 +1902,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-                 }
-             }
-         }
-+        assert(sd->data_offset < sizeof(sd->data));
-         sd->data[sd->data_offset++] = value;
-         if (sd->data_offset >= sd->blk_len) {
-             /* TODO: Check CRC before committing */
-@@ -1925,6 +1927,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 26:  /* CMD26:  PROGRAM_CID */
-+        assert(sd->data_offset < sizeof(sd->data));
-         sd->data[sd->data_offset ++] = value;
-         if (sd->data_offset >= sizeof(sd->cid)) {
-             /* TODO: Check CRC before committing */
-@@ -1944,6 +1947,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 27:  /* CMD27:  PROGRAM_CSD */
-+        assert(sd->data_offset < sizeof(sd->data));
-         sd->data[sd->data_offset ++] = value;
-         if (sd->data_offset >= sizeof(sd->csd)) {
-             /* TODO: Check CRC before committing */
-@@ -1968,6 +1972,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 42:  /* CMD42:  LOCK_UNLOCK */
-+        assert(sd->data_offset < sizeof(sd->data));
-         sd->data[sd->data_offset ++] = value;
-         if (sd->data_offset >= sd->blk_len) {
-             /* TODO: Check CRC before committing */
-@@ -1979,6 +1984,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-         break;
- 
-     case 56:  /* CMD56:  GEN_CMD */
-+        assert(sd->data_offset < sizeof(sd->data));
-         sd->data[sd->data_offset ++] = value;
-         if (sd->data_offset >= sd->blk_len) {
-             APP_WRITE_BLOCK(sd->data_start, sd->data_offset);
-@@ -2046,6 +2052,7 @@ uint8_t sd_read_byte(SDState *sd)
-         break;
- 
-     case 13:  /* ACMD13: SD_STATUS */
-+        assert(sd->data_offset < sizeof(sd->sd_status));
-         ret = sd->sd_status[sd->data_offset ++];
- 
-         if (sd->data_offset >= sizeof(sd->sd_status))
-@@ -2055,6 +2062,7 @@ uint8_t sd_read_byte(SDState *sd)
-     case 17:  /* CMD17:  READ_SINGLE_BLOCK */
-         if (sd->data_offset == 0)
-             BLK_READ_BLOCK(sd->data_start, io_len);
-+        assert(sd->data_offset < sizeof(sd->data));
-         ret = sd->data[sd->data_offset ++];
- 
-         if (sd->data_offset >= io_len)
-@@ -2069,6 +2077,7 @@ uint8_t sd_read_byte(SDState *sd)
-             }
-             BLK_READ_BLOCK(sd->data_start, io_len);
-         }
-+        assert(sd->data_offset < sizeof(sd->data));
-         ret = sd->data[sd->data_offset ++];
- 
-         if (sd->data_offset >= io_len) {
-@@ -2089,10 +2098,12 @@ uint8_t sd_read_byte(SDState *sd)
-         if (sd->data_offset >= SD_TUNING_BLOCK_SIZE - 1) {
-             sd->state = sd_transfer_state;
-         }
-+        assert(sd->data_offset < sizeof(sd_tuning_block_pattern));
-         ret = sd_tuning_block_pattern[sd->data_offset++];
-         break;
- 
-     case 22:  /* ACMD22: SEND_NUM_WR_BLOCKS */
-+        assert(sd->data_offset < sizeof(sd->sd_status));
-         ret = sd->data[sd->data_offset ++];
- 
-         if (sd->data_offset >= 4)
-@@ -2100,6 +2111,7 @@ uint8_t sd_read_byte(SDState *sd)
-         break;
- 
-     case 30:  /* CMD30:  SEND_WRITE_PROT */
-+        assert(sd->data_offset < sizeof(sd->data));
-         ret = sd->data[sd->data_offset ++];
- 
-         if (sd->data_offset >= 4)
-@@ -2107,6 +2119,7 @@ uint8_t sd_read_byte(SDState *sd)
-         break;
- 
-     case 51:  /* ACMD51: SEND_SCR */
-+        assert(sd->data_offset < sizeof(sd->scr));
-         ret = sd->scr[sd->data_offset ++];
- 
-         if (sd->data_offset >= sizeof(sd->scr))
-@@ -2116,6 +2129,7 @@ uint8_t sd_read_byte(SDState *sd)
-     case 56:  /* CMD56:  GEN_CMD */
-         if (sd->data_offset == 0)
-             APP_READ_BLOCK(sd->data_start, sd->blk_len);
-+        assert(sd->data_offset < sizeof(sd->data));
-         ret = sd->data[sd->data_offset ++];
- 
-         if (sd->data_offset >= sd->blk_len)
--- 
-2.41.0
+> diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+> index 7be0430ac5..7a1367b0bb 100644
+> --- a/hw/net/lan9118.c
+> +++ b/hw/net/lan9118.c
+> @@ -795,8 +795,11 @@ static void tx_fifo_push(lan9118_state *s, uint32_t =
+val)
+>              /* Documentation is somewhat unclear on the ordering of byte=
+s
+>                 in FIFO words.  Empirical results show it to be little-en=
+dian.
+>                 */
+> -            /* TODO: FIFO overflow checking.  */
+>              while (n--) {
+> +                if (s->txp->len =3D=3D PKT_SIZE) {
+> +                    s->int_sts |=3D TXSO_INT;
+> +                    break;
+> +                }
 
+While I was looking at this bug, I realised that we have serious
+confusion about whether any of the variables we use to track FIFO
+size and FIFO usage are word counts or byte counts.
+
+Looking at table 5-3 in the data sheet, the size of these
+FIFOs is actually software-configurable in the HW_CFG register,
+but we don't implement that and (attempt to) only provide
+the default configuration setting of TX_FIF_SZ =3D=3D 5. That
+should mean:
+ TX data FIFO size =3D=3D 4608 bytes =3D=3D 1152 words
+ RX data FIFO size =3D=3D 10560 bytes =3D=3D 2640 words
+ TX status FIFO size =3D=3D 512 bytes =3D=3D 128 words
+ RX status FIFO size =3D=3D 704 bytes =3D=3D 176 words
+
+But we don't consistently use either word or byte units for the
+variables we use to track FIFO size and FIFO usage. For instance:
+ * we initialise s->tx_fifo_size to 4608, which is a byte count
+ * we initialise s->rx_status_fifo_size to 704, which is a byte count...
+ * ...and then three lines later override that to 176, which is a word
+   count!
+ * we generally simply increment the various fifo_used fields
+   when we push a word into the FIFOs, implying word counts
+ * we mostly do calculations assuming word counts
+ * calculations of the RX_FIFO_INF and TX_FIFO_INF fields
+   (which report the used space in words and the free space
+   in bytes) are confused about units too
+ * the tx_status_fifo[] array is 512 words long and the bounds
+   checks assume 512 is a word count, but it is a byte count
+ * the rx_status_fifo[] array is 896 words long, but the worst
+   case RX status FIFO size is 896 bytes, even if we allowed
+   runtime adjustable FIFO sizes
+ * the rx_fifo[] array, on the other hand, is 3360 words long,
+   which really is the max possible size in words
+
+Anyway, I think that txp->data[] is effectively modelling
+the "2K Byte transmit FIFO" within the MIL, not the TX FIFO.
+(We don't need to model the TX FIFO itself, because we don't
+do asynchronous sending of data packets: as soon as we've
+accumulated a complete packet into the MIL TX FIFO, we
+send it out. In real hardware the guest can put multiple
+packets into the TX data FIFO, which is why it makes sense to be
+able to configure a TX data FIFO size larger than the largest
+possible packet and larger than the MIL TX FIFO.)
+
+So the limit that we are enforcing here is similar to the one
+described in the "Calculating Worst-Case TX FIFO (MIL) usage",
+except that we don't actually use data space for the gaps
+caused by unaligned buffers. So this can only overflow if the
+packet is greater than what the data sheet says is the
+maximum size of 1514 bytes. The datasheet unfortunately doesn't
+describe the behaviour if this maximum is exceeded, and our
+current code doesn't try to check it (it's in the "command B"
+words, which are all supposed to match in the case of a
+fragmented packet, and which we also don't check).
+
+The most plausible behaviour to take I think is to raise
+TXE when we would overflow the s->txp_data[] buffer; there are
+various conditions described for when TXE is raised that seem
+like this would fit in reasonably with them.
+(There is a status bit TDFO for "TX Data FIFO Overrun", which
+I think is probably only for overruns of the TX data FIFO,
+not the MIL's TX FIFO.)
+
+Since the datasheet doesn't say if the packet should be
+dropped or truncated if it's invalid like this, I guess
+we can do whatever's easiest.
+
+>                  s->txp->data[s->txp->len] =3D val & 0xff;
+>                  s->txp->len++;
+>                  val >>=3D 8;
+
+Conclusion:
+ * we should raise TXE, not TXSO
+ * add a comment about what exactly is going on here
+ * we should try to clean up the confusion between words and
+   bytes, as a separate patch that isn't -stable/-9.0
+   material...
+
+thanks
+-- PMM
 
