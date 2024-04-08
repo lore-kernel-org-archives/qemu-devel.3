@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6075CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:36:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA68C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtlPK-0000F1-Ly; Mon, 08 Apr 2024 05:35:18 -0400
+	id 1rtlbI-0002TV-SZ; Mon, 08 Apr 2024 05:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlPJ-0000EB-0K
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:35:17 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlPF-0003zv-S4
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:35:16 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4166ccac761so5562765e9.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712568912; x=1713173712; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ayemA/VVv9k0Zz+UgTmGHdj9k8FnVzs1BskfoiT0CPI=;
- b=te12cmpKaZ7qoc+Jpgp7IxwdL3n1+HaAGZc3JA/otCPXrZBp+Au47nuufHo6Ck6Etc
- /0G03PtWo5GQ5+CAtObpbZGLMdYyjpfScmco9U+VTyppP0+9Zq+tAyvsYa1Z4Qak/1Yp
- Nz0Y2+MPBkt8zEBZepUE+RX4twZeAtoA9yxosYGvP+eHuXoJjlK5bBFH6tclxPRGpSao
- re7AjENhE65QI2P5o6e1WBKUqT0e/Vk5F/M0wLBalWjjiS7O3f4+ByVrx1VocQQXFPM0
- WpUuQXCd2kfAVK+M7coN3NnOvCzH4vmUtezwwr62f4BOnTSxPYCHRQGUSwnCMUlv/ucB
- +7Xw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtlbH-0002TK-93
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:47:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtlbD-0005hv-F4
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:47:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712569654;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=42sfYskPssuPjeznEW/BvX1nGe6MV+cM8zoJKwohHuc=;
+ b=BMlQwlo+myPvrJA+JP3LzlZ7UOIJsTgsryMMSd1sRYcC2pA2i4xjI2G01rLBJMHP1Edw/J
+ BKfCiPcDFDeCK7EztuDqmclcj0FnOg2bKCUSqMY/wDIUeOZeJV8ZrnYP/BMm61q7O1lkiW
+ Y5SC4ZXQUiYazLUF38HCvCSMQCSIeBE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-AidBcL2RNqa1voQHlEerZA-1; Mon, 08 Apr 2024 05:47:32 -0400
+X-MC-Unique: AidBcL2RNqa1voQHlEerZA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-343c86edeb7so2318812f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:47:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712568912; x=1713173712;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712569650; x=1713174450;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ayemA/VVv9k0Zz+UgTmGHdj9k8FnVzs1BskfoiT0CPI=;
- b=IbPxBBvR3Y2SO+5xgdIn5bcmsCfg280W5AEfT56V+AS64xE1nnPqslhiMBKU6vXjzg
- Vm9upFAC4Tf7c5rdiLZLUtSwS4CT7HrApcjPLwBWPzmXm0xyZ7Qupx/Mj4r6cF6TzDow
- a3UaxxBJ5bpYhGGMnS7jFGthxuTBQuBsssnBbrenCBHCH/Et85fbjcEKNSrAglE37f8V
- DsYkQYq+L2jVQ/LaPIrvaFJCCBWj1Tc4T5O8DL1j4NHrZCHZ311Cx3mIm4gj/tQ7jMoq
- l7CSrnyfGKlzk632ibzwzvCWilSyOlyQjKfUx3j0GhJu+jW+le1mlPMvecEvK+Z+etVy
- CA8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUS2Zk6Vyxe9S/gaUPQQQUBskCRZf56/UH6llZh/cAehbmhkLcSs6ziD1HKxF/3RXgbBlgMDrsw8fjRaKxCz35bs41gN/o=
-X-Gm-Message-State: AOJu0Yy8L8+fdmNzWBM5BPyfbooXzrjdF/uwQHuhXCeeSzNSATYevnds
- ML1qWVPxlyu+WBl5Llj168r3OU9h7ts0rkg9wtDvIaCsVjdkOaFGWFcCCyJyk5A=
-X-Google-Smtp-Source: AGHT+IEnDCDsk3GhjQra+3Ep9Ort0Zqt7mVpygFX63mIcJC/COrcJ9TY/edny80HJNhSs1ZEk/humg==
-X-Received: by 2002:a05:600c:4e90:b0:416:3f85:d49 with SMTP id
- f16-20020a05600c4e9000b004163f850d49mr4688499wmq.18.1712568911740; 
- Mon, 08 Apr 2024 02:35:11 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.144.67])
- by smtp.gmail.com with ESMTPSA id
- n5-20020a5d5985000000b00345a5183f01sm2621162wri.108.2024.04.08.02.35.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 02:35:11 -0700 (PDT)
-Message-ID: <feb6202e-5e27-4a3b-b281-2d3a9eb5f58a@linaro.org>
-Date: Mon, 8 Apr 2024 11:35:09 +0200
+ bh=42sfYskPssuPjeznEW/BvX1nGe6MV+cM8zoJKwohHuc=;
+ b=A/f0LN72A1cWvS0ci400djvdzwWJA/Vz74/WhgD8jE2wGqLDIbWa7fh0ak31gE7RlA
+ d/s2X/5JoHQ1hXJYZr2nuNmRSeAMRpR+kzRw0+jSgSpksDsZ5uNQgzaI5Kvcti8Uf+IF
+ nMuZFv4c1zTXnwVxG4PXZm0g0A6KmCl9QJiP3zVeBFsZj8xnnwfMjdSjAlb5gLxx64SP
+ sDyRG1B96AvoLYmWHrHeEb7DeqRjX8vJe8dDq0CkpMWdjAthY9XY7GjZEfQ1EWyS6dlf
+ UYSHY6UYg7b5m0xRLOq72Y92ft6AWwwzbsdo5cgRai/TZr/aub3RubTffR78/mPI7YR6
+ 6i/w==
+X-Gm-Message-State: AOJu0Yxq75Wpj2K5tnJlq5iQdShdwNVkeOiyNIApOF1gyYvFDS0+fBvd
+ zTQSqJP3vIif8I5VymKj/bWBmO11KdeWyOBK2SzBZ2Xa33XbJB9ipyYKCz/MDsZM9mW/XoFIMGX
+ xMCQL9QdnpoFgNPt1bGXTU0DuH+FYSr2Ae5RMMv3Ra2BrilfR+G8A5lz0Qraw/I1dT5k7mYSuU0
+ r83IXW46PNZ1mkkLsA+w9YwiR5VVxEKw==
+X-Received: by 2002:a5d:6d84:0:b0:345:c41a:23a2 with SMTP id
+ l4-20020a5d6d84000000b00345c41a23a2mr1530334wrs.14.1712569650320; 
+ Mon, 08 Apr 2024 02:47:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEszKQyHDWuUALENixLR0AD4jLJOj1/icBA/9m+udILiYCrBbvuRzBftSv/ZCF4xNBKUqZyMQ==
+X-Received: by 2002:a5d:6d84:0:b0:345:c41a:23a2 with SMTP id
+ l4-20020a5d6d84000000b00345c41a23a2mr1530299wrs.14.1712569649565; 
+ Mon, 08 Apr 2024 02:47:29 -0700 (PDT)
+Received: from redhat.com ([2.52.152.188]) by smtp.gmail.com with ESMTPSA id
+ dj15-20020a0560000b0f00b003436cb45f7esm8524803wrb.90.2024.04.08.02.47.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 02:47:29 -0700 (PDT)
+Date: Mon, 8 Apr 2024 05:47:26 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] Revert "hw/virtio: Add support for VDPA network simulation
+ devices"
+Message-ID: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
-To: Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-stable@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Giuseppe_Ghib=C3=B2?= <ghibo@mageia.org>
-References: <20240311075806.668555-1-pbonzini@redhat.com>
- <2f0eefc5-8907-4af7-b717-17e17a9a3019@tls.msk.ru>
- <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,98 +97,609 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/24 19:30, Michael Tokarev wrote:
-> 01.04.2024 09:02, Michael Tokarev:
-> 
->> Anyone can guess why this rather trivial and obviously correct patch 
->> causes segfaults
->> in a few tests in staging-7.2 - when run in tcg mode, namely:
->>
->>    pxe-test
->>    migration-test
->>    boot-serial-test
->>    bios-tables-test
->>    vmgenid-test
->>    cdrom-test
->>
->> When reverting this single commit from staging-7.2, it all works fine 
->> again.
-> 
-> It sigsegvs in probe_access_internal():
-> 
->    CPUTLBEntry *entry = tlb_entry(env, mmu_idx, addr); -- this one 
-> returns NULL,
-> 
-> and next there's a call
-> 
->    tlb_addr = tlb_read_ofs(entry, elt_ofs);
-> 
-> which fails.
-> 
-> #0  0x0000555555c5de8a in tlb_read_ofs (ofs=8, entry=0x0) at 
-> 7.2/accel/tcg/cputlb.c:1455
-> #1  probe_access_internal
->      (env=0x555556a862a0, addr=4294967280, 
-> fault_size=fault_size@entry=1, 
-> access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=5, 
-> nonfault=nonfault@entry=false, phost=0x7fffea4d32a0, 
-> pfull=0x7fffea4d3298, retaddr=0)
->      at 7.2/accel/tcg/cputlb.c:1555
-> #2  0x0000555555c62aba in get_page_addr_code_hostp
->      (env=<optimized out>, addr=addr@entry=4294967280, 
-> hostp=hostp@entry=0x0)
->      at 7.2/accel/tcg/cputlb.c:1691
-> #3  0x0000555555c52b54 in get_page_addr_code (addr=4294967280, 
-> env=<optimized out>)
->      at 7.2/include/exec/exec-all.h:714
-> #4  tb_htable_lookup
->      (cpu=cpu@entry=0x555556a85530, pc=pc@entry=4294967280, 
-> cs_base=cs_base@entry=4294901760, flags=flags@entry=64, 
-> cflags=cflags@entry=4278190080) at 7.2/accel/tcg/cpu-exec.c:236
-> #5  0x0000555555c53e8e in tb_lookup
->      (cflags=4278190080, flags=64, cs_base=4294901760, pc=4294967280, 
-> cpu=0x555556a85530)
->      at 7.2/accel/tcg/cpu-exec.c:270
-> #6  cpu_exec (cpu=cpu@entry=0x555556a85530) at 
-> 7.2/accel/tcg/cpu-exec.c:1001
-> #7  0x0000555555c75d2f in tcg_cpus_exec (cpu=cpu@entry=0x555556a85530)
->      at 7.2/accel/tcg/tcg-accel-ops.c:69
-> #8  0x0000555555c75e80 in mttcg_cpu_thread_fn 
-> (arg=arg@entry=0x555556a85530)
->      at 7.2/accel/tcg/tcg-accel-ops-mttcg.c:95
-> #9  0x0000555555ded098 in qemu_thread_start (args=0x555556adac40)
->      at 7.2/util/qemu-thread-posix.c:505
-> #10 0x00007ffff5793134 in start_thread (arg=<optimized out>)
-> #11 0x00007ffff58137dc in clone3 ()
-> 
-> 
-> I'm removing this whole set from 7.2 for now:
-> 
->   2cc68629a6fc target/i386: fix direction of "32-bit MMU" test
->   90f641531c78 target/i386: use separate MMU indexes for 32-bit accesses
->   5f97afe2543f target/i386: introduce function to query MMU indices
+This reverts commit cd341fd1ffded978b2aa0b5309b00be7c42e347c.
 
-Cc'ing Giuseppe Ghibò for
-https://gitlab.com/qemu-project/qemu/-/issues/2264
+The patch adds non-upstream code in
+include/standard-headers/linux/virtio_pci.h
+which would make maintainance harder.
 
-> This leaves us with
-> 
->   b1661801c184 "target/i386: Fix physical address truncation"
-> 
-> but without its fix, 2cc68629a6fc.
-> 
-> It looks like I should revert b1661801c184 from 7.2 too, re-opening
-> https://gitlab.com/qemu-project/qemu/-/issues/2040 - since to me it isn't
-> clear if this change actually fixes this issue or not without the
-> previous change, 90f641531c78, which is missing from 7.2.10.
-> 
-> At the very least this will simplify possible another attempt to 
-> cherry-pick
-> these changes to 7.2.
-> 
-> Thanks,
-> 
-> /mjt
-> 
+Revert for now.
+
+Suggested-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ include/hw/virtio/virtio-pci.h              |   5 -
+ include/hw/virtio/virtio.h                  |  19 --
+ include/standard-headers/linux/virtio_pci.h |   7 -
+ hw/net/virtio-net.c                         |  16 --
+ hw/virtio/virtio-pci.c                      | 189 +-------------------
+ hw/virtio/virtio.c                          |  39 ----
+ MAINTAINERS                                 |   5 -
+ docs/system/device-emulation.rst            |   1 -
+ docs/system/devices/vdpa-net.rst            | 121 -------------
+ 9 files changed, 3 insertions(+), 399 deletions(-)
+ delete mode 100644 docs/system/devices/vdpa-net.rst
+
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 4d57a9c751..59d88018c1 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -43,7 +43,6 @@ enum {
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
+-    VIRTIO_PCI_FLAG_VDPA_BIT,
+ };
+ 
+ /* Need to activate work-arounds for buggy guests at vmstate load. */
+@@ -90,9 +89,6 @@ enum {
+ #define VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED \
+   (1 << VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT)
+ 
+-/* VDPA supported flags */
+-#define VIRTIO_PCI_FLAG_VDPA (1 << VIRTIO_PCI_FLAG_VDPA_BIT)
+-
+ typedef struct {
+     MSIMessage msg;
+     int virq;
+@@ -144,7 +140,6 @@ struct VirtIOPCIProxy {
+         };
+         VirtIOPCIRegion regs[5];
+     };
+-    VirtIOPCIRegion lm;
+     MemoryRegion modern_bar;
+     MemoryRegion io_bar;
+     uint32_t legacy_io_bar_idx;
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index b3c74a1bca..c8f72850bc 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -35,9 +35,6 @@
+                                 (0x1ULL << VIRTIO_F_NOTIFY_ON_EMPTY) | \
+                                 (0x1ULL << VIRTIO_F_ANY_LAYOUT))
+ 
+-#define LM_DISABLE      0x00
+-#define LM_ENABLE       0x01
+-
+ struct VirtQueue;
+ 
+ static inline hwaddr vring_align(hwaddr addr,
+@@ -98,11 +95,6 @@ enum virtio_device_endian {
+     VIRTIO_DEVICE_ENDIAN_BIG,
+ };
+ 
+-typedef struct BitmapMemoryRegionCaches {
+-    struct rcu_head rcu;
+-    MemoryRegionCache bitmap;
+-} BitmapMemoryRegionCaches;
+-
+ /**
+  * struct VirtIODevice - common VirtIO structure
+  * @name: name of the device
+@@ -136,14 +128,6 @@ struct VirtIODevice
+     uint32_t generation;
+     int nvectors;
+     VirtQueue *vq;
+-    uint8_t lm_logging_ctrl;
+-    uint32_t lm_base_addr_low;
+-    uint32_t lm_base_addr_high;
+-    uint32_t lm_end_addr_low;
+-    uint32_t lm_end_addr_high;
+-
+-    BitmapMemoryRegionCaches *caches;
+-
+     MemoryListener listener;
+     uint16_t device_id;
+     /* @vm_running: current VM running state via virtio_vmstate_change() */
+@@ -395,11 +379,8 @@ hwaddr virtio_queue_get_desc_size(VirtIODevice *vdev, int n);
+ hwaddr virtio_queue_get_avail_size(VirtIODevice *vdev, int n);
+ hwaddr virtio_queue_get_used_size(VirtIODevice *vdev, int n);
+ unsigned int virtio_queue_get_last_avail_idx(VirtIODevice *vdev, int n);
+-unsigned int virtio_queue_get_vring_states(VirtIODevice *vdev, int n);
+ void virtio_queue_set_last_avail_idx(VirtIODevice *vdev, int n,
+                                      unsigned int idx);
+-void virtio_queue_set_vring_states(VirtIODevice *vdev, int n,
+-                                   unsigned int idx);
+ void virtio_queue_restore_last_avail_idx(VirtIODevice *vdev, int n);
+ void virtio_queue_invalidate_signalled_used(VirtIODevice *vdev, int n);
+ void virtio_queue_update_used_idx(VirtIODevice *vdev, int n);
+diff --git a/include/standard-headers/linux/virtio_pci.h b/include/standard-headers/linux/virtio_pci.h
+index 86733278ba..3e2bc2c97e 100644
+--- a/include/standard-headers/linux/virtio_pci.h
++++ b/include/standard-headers/linux/virtio_pci.h
+@@ -221,13 +221,6 @@ struct virtio_pci_cfg_cap {
+ #define VIRTIO_PCI_COMMON_ADM_Q_IDX	60
+ #define VIRTIO_PCI_COMMON_ADM_Q_NUM	62
+ 
+-#define LM_LOGGING_CTRL                 0
+-#define LM_BASE_ADDR_LOW                4
+-#define LM_BASE_ADDR_HIGH               8
+-#define LM_END_ADDR_LOW                 12
+-#define LM_END_ADDR_HIGH                16
+-#define LM_VRING_STATE_OFFSET           0x20
+-
+ #endif /* VIRTIO_PCI_NO_MODERN */
+ 
+ /* Admin command status. */
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 58014a92ad..24e5e7d347 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2039,22 +2039,6 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+             goto err;
+         }
+ 
+-        /* Mark dirty page's bitmap of guest memory */
+-        if (vdev->lm_logging_ctrl == LM_ENABLE) {
+-            uint64_t chunk = elem->in_addr[i] / VHOST_LOG_CHUNK;
+-            /* Get chunk index */
+-            BitmapMemoryRegionCaches *caches = qatomic_rcu_read(&vdev->caches);
+-            uint64_t index = chunk / 8;
+-            uint64_t shift = chunk % 8;
+-            uint8_t val = 0;
+-            address_space_read_cached(&caches->bitmap, index, &val,
+-                                      sizeof(val));
+-            val |= 1 << shift;
+-            address_space_write_cached(&caches->bitmap, index, &val,
+-                                       sizeof(val));
+-            address_space_cache_invalidate(&caches->bitmap, index, sizeof(val));
+-        }
+-
+         elems[i] = elem;
+         lens[i] = total;
+         i++;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index eaaf86402c..cb6940fc0e 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1442,155 +1442,6 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
+     return virtio_pci_add_mem_cap(proxy, &cap.cap);
+ }
+ 
+-/* Called within call_rcu().  */
+-static void bitmap_free_region_cache(BitmapMemoryRegionCaches *caches)
+-{
+-    assert(caches != NULL);
+-    address_space_cache_destroy(&caches->bitmap);
+-    g_free(caches);
+-}
+-
+-static void lm_disable(VirtIODevice *vdev)
+-{
+-    BitmapMemoryRegionCaches *caches;
+-    caches = qatomic_read(&vdev->caches);
+-    qatomic_rcu_set(&vdev->caches, NULL);
+-    if (caches) {
+-        call_rcu(caches, bitmap_free_region_cache, rcu);
+-    }
+-}
+-
+-static void lm_enable(VirtIODevice *vdev)
+-{
+-    BitmapMemoryRegionCaches *old = vdev->caches;
+-    BitmapMemoryRegionCaches *new = NULL;
+-    hwaddr addr, end, size;
+-    int64_t len;
+-
+-    addr = vdev->lm_base_addr_low | ((hwaddr)(vdev->lm_base_addr_high) << 32);
+-    end = vdev->lm_end_addr_low | ((hwaddr)(vdev->lm_end_addr_high) << 32);
+-    size = end - addr;
+-    if (size <= 0) {
+-        error_report("Invalid lm size.");
+-        return;
+-    }
+-
+-    new = g_new0(BitmapMemoryRegionCaches, 1);
+-    len = address_space_cache_init(&new->bitmap, vdev->dma_as, addr, size,
+-                                   true);
+-    if (len < size) {
+-        virtio_error(vdev, "Cannot map bitmap");
+-        goto err_bitmap;
+-    }
+-    qatomic_rcu_set(&vdev->caches, new);
+-
+-    if (old) {
+-        call_rcu(old, bitmap_free_region_cache, rcu);
+-    }
+-
+-    return;
+-
+-err_bitmap:
+-    address_space_cache_destroy(&new->bitmap);
+-    g_free(new);
+-}
+-
+-static uint64_t virtio_pci_lm_read(void *opaque, hwaddr addr,
+-                                       unsigned size)
+-{
+-    VirtIOPCIProxy *proxy = opaque;
+-    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+-    hwaddr offset_end = LM_VRING_STATE_OFFSET +
+-                        virtio_pci_queue_mem_mult(proxy) * VIRTIO_QUEUE_MAX;
+-    uint32_t val;
+-    int qid;
+-
+-    if (vdev == NULL) {
+-        return UINT64_MAX;
+-    }
+-    switch (addr) {
+-    case LM_LOGGING_CTRL:
+-        val = vdev->lm_logging_ctrl;
+-        break;
+-    case LM_BASE_ADDR_LOW:
+-        val = vdev->lm_base_addr_low;
+-        break;
+-    case LM_BASE_ADDR_HIGH:
+-        val = vdev->lm_base_addr_high;
+-        break;
+-    case LM_END_ADDR_LOW:
+-        val = vdev->lm_end_addr_low;
+-        break;
+-    case LM_END_ADDR_HIGH:
+-        val = vdev->lm_end_addr_high;
+-        break;
+-    default:
+-        if (addr >= LM_VRING_STATE_OFFSET && addr <= offset_end) {
+-            qid = (addr - LM_VRING_STATE_OFFSET) /
+-                  virtio_pci_queue_mem_mult(proxy);
+-            val = virtio_queue_get_vring_states(vdev, qid);
+-        } else
+-            val = 0;
+-
+-        break;
+-    }
+-
+-    return val;
+-}
+-
+-static void virtio_pci_lm_write(void *opaque, hwaddr addr,
+-                                    uint64_t val, unsigned size)
+-{
+-    VirtIOPCIProxy *proxy = opaque;
+-    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+-    hwaddr offset_end = LM_VRING_STATE_OFFSET +
+-                        virtio_pci_queue_mem_mult(proxy) * VIRTIO_QUEUE_MAX;
+-    int qid;
+-
+-    if (vdev == NULL) {
+-        return;
+-    }
+-
+-    switch (addr) {
+-    case LM_LOGGING_CTRL:
+-        vdev->lm_logging_ctrl = val;
+-        switch (val) {
+-        case LM_DISABLE:
+-            lm_disable(vdev);
+-            break;
+-        case LM_ENABLE:
+-            lm_enable(vdev);
+-            break;
+-        default:
+-            virtio_error(vdev, "Unsupport LM_LOGGING_CTRL value: %"PRIx64,
+-                         val);
+-                break;
+-        };
+-
+-        break;
+-    case LM_BASE_ADDR_LOW:
+-        vdev->lm_base_addr_low = val;
+-        break;
+-    case LM_BASE_ADDR_HIGH:
+-        vdev->lm_base_addr_high = val;
+-        break;
+-    case LM_END_ADDR_LOW:
+-        vdev->lm_end_addr_low = val;
+-        break;
+-    case LM_END_ADDR_HIGH:
+-        vdev->lm_end_addr_high = val;
+-        break;
+-    default:
+-        if (addr >= LM_VRING_STATE_OFFSET && addr <= offset_end) {
+-            qid = (addr - LM_VRING_STATE_OFFSET) /
+-                  virtio_pci_queue_mem_mult(proxy);
+-            virtio_queue_set_vring_states(vdev, qid, val);
+-        } else
+-            virtio_error(vdev, "Unsupport addr: %"PRIx64, addr);
+-        break;
+-    }
+-}
+-
+ static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
+                                        unsigned size)
+ {
+@@ -1972,15 +1823,6 @@ static void virtio_pci_modern_regions_init(VirtIOPCIProxy *proxy,
+         },
+         .endianness = DEVICE_LITTLE_ENDIAN,
+     };
+-    static const MemoryRegionOps lm_ops = {
+-        .read = virtio_pci_lm_read,
+-        .write = virtio_pci_lm_write,
+-        .impl = {
+-            .min_access_size = 1,
+-            .max_access_size = 4,
+-        },
+-        .endianness = DEVICE_LITTLE_ENDIAN,
+-    };
+     g_autoptr(GString) name = g_string_new(NULL);
+ 
+     g_string_printf(name, "virtio-pci-common-%s", vdev_name);
+@@ -2017,14 +1859,6 @@ static void virtio_pci_modern_regions_init(VirtIOPCIProxy *proxy,
+                           proxy,
+                           name->str,
+                           proxy->notify_pio.size);
+-    if (proxy->flags & VIRTIO_PCI_FLAG_VDPA) {
+-        g_string_printf(name, "virtio-pci-lm-%s", vdev_name);
+-        memory_region_init_io(&proxy->lm.mr, OBJECT(proxy),
+-                          &lm_ops,
+-                          proxy,
+-                          name->str,
+-                          proxy->lm.size);
+-    }
+ }
+ 
+ static void virtio_pci_modern_region_map(VirtIOPCIProxy *proxy,
+@@ -2187,10 +2021,6 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+         virtio_pci_modern_mem_region_map(proxy, &proxy->isr, &cap);
+         virtio_pci_modern_mem_region_map(proxy, &proxy->device, &cap);
+         virtio_pci_modern_mem_region_map(proxy, &proxy->notify, &notify.cap);
+-        if (proxy->flags & VIRTIO_PCI_FLAG_VDPA) {
+-            memory_region_add_subregion(&proxy->modern_bar,
+-                                        proxy->lm.offset, &proxy->lm.mr);
+-        }
+ 
+         if (modern_pio) {
+             memory_region_init(&proxy->io_bar, OBJECT(proxy),
+@@ -2260,9 +2090,6 @@ static void virtio_pci_device_unplugged(DeviceState *d)
+         virtio_pci_modern_mem_region_unmap(proxy, &proxy->isr);
+         virtio_pci_modern_mem_region_unmap(proxy, &proxy->device);
+         virtio_pci_modern_mem_region_unmap(proxy, &proxy->notify);
+-        if (proxy->flags & VIRTIO_PCI_FLAG_VDPA) {
+-            memory_region_del_subregion(&proxy->modern_bar, &proxy->lm.mr);
+-        }
+         if (modern_pio) {
+             virtio_pci_modern_io_region_unmap(proxy, &proxy->notify_pio);
+         }
+@@ -2317,17 +2144,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+     proxy->notify_pio.type = VIRTIO_PCI_CAP_NOTIFY_CFG;
+ 
+     /* subclasses can enforce modern, so do this unconditionally */
+-    if (!(proxy->flags & VIRTIO_PCI_FLAG_VDPA)) {
+-        memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
+-                           /* PCI BAR regions must be powers of 2 */
+-                           pow2ceil(proxy->notify.offset + proxy->notify.size));
+-    } else {
+-        proxy->lm.offset = proxy->notify.offset + proxy->notify.size;
+-        proxy->lm.size = 0x20 + VIRTIO_QUEUE_MAX * 4;
+-        memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
+-                           /* PCI BAR regions must be powers of 2 */
+-                           pow2ceil(proxy->lm.offset + proxy->lm.size));
+-    }
++    memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
++                       /* PCI BAR regions must be powers of 2 */
++                       pow2ceil(proxy->notify.offset + proxy->notify.size));
+ 
+     if (proxy->disable_legacy == ON_OFF_AUTO_AUTO) {
+         proxy->disable_legacy = pcie_port ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+@@ -2482,8 +2301,6 @@ static Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+     DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_AER_BIT, false),
+-    DEFINE_PROP_BIT("vdpa", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_VDPA_BIT, false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index fb6b4ccd83..d229755eae 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3368,18 +3368,6 @@ static uint16_t virtio_queue_split_get_last_avail_idx(VirtIODevice *vdev,
+     return vdev->vq[n].last_avail_idx;
+ }
+ 
+-static uint32_t virtio_queue_split_get_vring_states(VirtIODevice *vdev,
+-                                                      int n)
+-{
+-    struct VirtQueue *vq = &vdev->vq[n];
+-    uint16_t avail, used;
+-
+-    avail = vq->last_avail_idx;
+-    used = vq->used_idx;
+-
+-    return avail | (uint32_t)used << 16;
+-}
+-
+ unsigned int virtio_queue_get_last_avail_idx(VirtIODevice *vdev, int n)
+ {
+     if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
+@@ -3389,33 +3377,6 @@ unsigned int virtio_queue_get_last_avail_idx(VirtIODevice *vdev, int n)
+     }
+ }
+ 
+-unsigned int virtio_queue_get_vring_states(VirtIODevice *vdev, int n)
+-{
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
+-        return -1;
+-    } else {
+-        return virtio_queue_split_get_vring_states(vdev, n);
+-    }
+-}
+-
+-static void virtio_queue_split_set_vring_states(VirtIODevice *vdev,
+-                                                int n, uint32_t idx)
+-{
+-    struct VirtQueue *vq = &vdev->vq[n];
+-    vq->last_avail_idx = (uint16_t)(idx & 0xffff);
+-    vq->shadow_avail_idx = (uint16_t)(idx & 0xffff);
+-    vq->used_idx = (uint16_t)(idx >> 16);
+-}
+-
+-void virtio_queue_set_vring_states(VirtIODevice *vdev, int n, uint32_t idx)
+-{
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
+-        return;
+-    } else {
+-        virtio_queue_split_set_vring_states(vdev, n, idx);
+-    }
+-}
+-
+ static void virtio_queue_packed_set_last_avail_idx(VirtIODevice *vdev,
+                                                    int n, unsigned int idx)
+ {
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e71183eef9..249b678fc6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2370,11 +2370,6 @@ F: hw/virtio/vhost-user-scmi*
+ F: include/hw/virtio/vhost-user-scmi.h
+ F: tests/qtest/libqos/virtio-scmi.*
+ 
+-vdpa-net
+-M: Hao Chen <chenh@yusur.tech>
+-S: Maintained
+-F: docs/system/devices/vdpa-net.rst
+-
+ virtio-crypto
+ M: Gonglei <arei.gonglei@huawei.com>
+ S: Supported
+diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
+index e4a27f53c8..f19777411c 100644
+--- a/docs/system/device-emulation.rst
++++ b/docs/system/device-emulation.rst
+@@ -99,4 +99,3 @@ Emulated Devices
+    devices/canokey.rst
+    devices/usb-u2f.rst
+    devices/igb.rst
+-   devices/vdpa-net.rst
+diff --git a/docs/system/devices/vdpa-net.rst b/docs/system/devices/vdpa-net.rst
+deleted file mode 100644
+index 323d8c926a..0000000000
+--- a/docs/system/devices/vdpa-net.rst
++++ /dev/null
+@@ -1,121 +0,0 @@
+-vdpa net
+-============
+-
+-This document explains the setup and usage of the vdpa network device.
+-The vdpa network device is a paravirtualized vdpa emulate device.
+-
+-Description
+------------
+-
+-VDPA net devices support dirty page bitmap mark and vring state saving and recovery.
+-
+-Users can use this VDPA device for live migration simulation testing in a nested virtualization environment.
+-
+-Registers layout
+-----------------
+-
+-The vdpa device add live migrate registers layout as follow::
+-
+-  Offset       Register Name	        Bitwidth     Associated vq
+-  0x0          LM_LOGGING_CTRL          4bits
+-  0x10         LM_BASE_ADDR_LOW         32bits
+-  0x14         LM_BASE_ADDR_HIGH        32bits
+-  0x18         LM_END_ADDR_LOW          32bits
+-  0x1c         LM_END_ADDR_HIGH         32bits
+-  0x20         LM_RING_STATE_OFFSET	32bits       vq0
+-  0x24         LM_RING_STATE_OFFSET	32bits       vq1
+-  0x28         LM_RING_STATE_OFFSET	32bits       vq2
+-  ......
+-  0x20+1023*4  LM_RING_STATE_OFFSET     32bits       vq1023
+-
+-These registers are extended at the end of the notify bar space.
+-
+-Architecture diagram
+---------------------
+-::
+-
+-  |------------------------------------------------------------------------|
+-  | guest-L1-user-space                                                    |
+-  |                                                                        |
+-  |                               |----------------------------------------|
+-  |                               |       [virtio-net driver]              |
+-  |                               |              ^  guest-L2-src(iommu=on) |
+-  |                               |--------------|-------------------------|
+-  |                               |              |  qemu-L2-src(viommu)    |
+-  | [dpdk-vdpa]<->[vhost socket]<-+->[vhost-user backend(iommu=on)]        |
+-  --------------------------------------------------------------------------
+-  --------------------------------------------------------------------------
+-  |       ^                             guest-L1-kernel-space              |
+-  |       |                                                                |
+-  |    [VFIO]                                                              |
+-  |       ^                                                                |
+-  |       |                             guest-L1-src(iommu=on)             |
+-  --------|-----------------------------------------------------------------
+-  --------|-----------------------------------------------------------------
+-  | [vdpa net device(iommu=on)]        [manager nic device]                |
+-  |          |                                    |                        |
+-  |          |                                    |                        |
+-  |     [tap device]     qemu-L1-src(viommu)      |                        |
+-  ------------------------------------------------+-------------------------
+-                                                  |
+-                                                  |
+-                        ---------------------     |
+-                        | kernel net bridge |<-----
+-                        |     virbr0        |<----------------------------------
+-                        ---------------------                                  |
+-                                                                               |
+-                                                                               |
+-  --------------------------------------------------------------------------   |
+-  | guest-L1-user-space                                                    |   |
+-  |                                                                        |   |
+-  |                               |----------------------------------------|   |
+-  |                               |       [virtio-net driver]              |   |
+-  |                               |              ^  guest-L2-dst(iommu=on) |   |
+-  |                               |--------------|-------------------------|   |
+-  |                               |              |  qemu-L2-dst(viommu)    |   |
+-  | [dpdk-vdpa]<->[vhost socket]<-+->[vhost-user backend(iommu=on)]        |   |
+-  --------------------------------------------------------------------------   |
+-  --------------------------------------------------------------------------   |
+-  |       ^                             guest-L1-kernel-space              |   |
+-  |       |                                                                |   |
+-  |    [VFIO]                                                              |   |
+-  |       ^                                                                |   |
+-  |       |                             guest-L1-dst(iommu=on)             |   |
+-  --------|-----------------------------------------------------------------   |
+-  --------|-----------------------------------------------------------------   |
+-  | [vdpa net device(iommu=on)]        [manager nic device]----------------+----
+-  |          |                                                             |
+-  |          |                                                             |
+-  |     [tap device]     qemu-L1-dst(viommu)                               |
+-  --------------------------------------------------------------------------
+-
+-
+-Device properties
+------------------
+-
+-The Virtio vdpa device can be configured with the following properties:
+-
+- * ``vdpa=on`` open vdpa device emulated.
+-
+-Usages
+---------
+-This patch add virtio sriov support and vdpa live migrate support.
+-You can open vdpa by set xml file as follow::
+-
+-  <qemu:commandline  xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+-  <qemu:arg value='-device'/>
+-  <qemu:arg value='intel-iommu,intremap=on,device-iotlb=on,aw-bits=48'/>
+-  <qemu:arg value='-netdev'/>
+-  <qemu:arg value='tap,id=hostnet1,script=no,downscript=no,vhost=off'/>
+-  <qemu:arg value='-device'/>
+-  <qemu:arg value='virtio-net-pci,netdev=hostnet1,id=net1,mac=56:4a:b7:4f:4d:a9,bus=pci.6,addr=0x0,iommu_platform=on,ats=on,vdpa=on'/>
+-  </qemu:commandline>
+-
+-Limitations
+------------
+-1. Dependent on tap device with param ``vhost=off``.
+-2. Nested virtualization environment only supports ``q35`` machines.
+-3. Current only support split vring live migrate.
+-
+-
+-
+-- 
+MST
 
 
