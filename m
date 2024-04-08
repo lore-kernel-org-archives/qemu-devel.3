@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED635C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65134C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtr6n-0005B6-Ja; Mon, 08 Apr 2024 11:40:33 -0400
+	id 1rtrBN-0006MP-6k; Mon, 08 Apr 2024 11:45:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rtr6m-0005Aw-0C
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:40:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rtr6k-00089S-9n
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:40:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712590829;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=U0ZSSzJ8sJDWeP52BwmOh9K4oF4sYPvXiJT2G4sOHsg=;
- b=Sac4pgXFflykXxcs87DWDtsUP420vcLU/0StLg2ftyUxdnuD2HNjM6LJ7zVnrFkjV1trUs
- wuBgcCquT9gPjxPbffJDWPYl+rZQKBDoeuZcm+L9GkAMOwCSyG5zo8CCFVj0o2G5whqq0g
- dVPtbS6rLp3SDkEKCTBnQJgbczoaemc=
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-caXGk3_lPBKVD_S_tABJdg-1; Mon, 08 Apr 2024 11:40:25 -0400
-X-MC-Unique: caXGk3_lPBKVD_S_tABJdg-1
-Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-6ecf193960bso469698b3a.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:40:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtrBL-0006Lm-QS
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:45:15 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtrBK-0000Ud-28
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:45:15 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a51d83fafa8so130563566b.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:45:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712591112; x=1713195912; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8ZKStiwR5JhBWOERg4EH+miKSZdReZnGSFSeeLdG9Iw=;
+ b=QZPwwNsJTkZqLsM74/tm4mENAHc0B0rIcPY+4wGErClrNooMr8bZckLB3VguO1qP3y
+ ah6S+YDOwgUUaE5amjNeXPxEQOl7+F/03yuxvc6LtRBw5p6EvjD67aZPTfffdprEFTYs
+ 3aJQ7Lv9Mkai9GU2igDEC1bovd1hOhodDRvwhwRhBUh52C9V51/uuw6wRaomw5E9NSgy
+ 5qst80GjoPKg7/iuRkUJR/PnrH0CkVnCpnNblm2uWJeY+NLPRXNXT+rclMj2IFyq68+J
+ 7bVSKjREAOs3eCEjinTInaTCtyWYsg6rAQvA9/QzaupXB8qowP2CLKzambdOyj6I2Zi9
+ musg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712590824; x=1713195624;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U0ZSSzJ8sJDWeP52BwmOh9K4oF4sYPvXiJT2G4sOHsg=;
- b=sd4nMD2UKahjsAWq6MySJxgnGyxBGTita0TiRZQJk/MdSfG4JkkoHp81/M6MuKIqWO
- FJ+mtvfWquH7aZFgb1T3/H+0QAdjUiuLyPUijJUmz/Jacv0KLJnfn/1nJG8+UDg4Ww4b
- zGrQTuWwpOS3+QtP+lZc/s3SdS3E4BgKWA+sJTXuvs9rp81lo44sbKmwHxCwPPK13sbl
- FBv7J6hABV2GqQ0P23rCsqrYTo+HDwk1w/wOFC1qxKEmbsBPXeeiHyQsvf9LReY1waKD
- Z3ut6fPEAw0aXQV5xrHGOClj+nM2O31MtmpdFjKgoPphz2TF/PlbmhZtt89Fa8CEqhzO
- ZYEw==
-X-Gm-Message-State: AOJu0YzX3cYHpdMhGYTAXzlYjWlRJQhMkfh6sbiXcQAv0gFOQjQ/by8R
- lNNzRtiQ+eYb7TfNVAE694hNViNn/W59Muzo34+HwKh9P9I4gyCoPisxv1jLnh04vauSnPJMAiw
- SsyxSaVQwrhD3do8OCCRAuCmQlzfd5MC8xckheWogNen6E4ZaLlBE
-X-Received: by 2002:a05:6a00:8b09:b0:6ec:f5d2:f641 with SMTP id
- if9-20020a056a008b0900b006ecf5d2f641mr9494596pfb.1.1712590824181; 
- Mon, 08 Apr 2024 08:40:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFupmCe2gMiUOCgPPHD7EeM+qqv8SnSBIO0Y/adqI6wo8WZf3NhKLYBvfail2coXsGb7xexwA==
-X-Received: by 2002:a05:6a00:8b09:b0:6ec:f5d2:f641 with SMTP id
- if9-20020a056a008b0900b006ecf5d2f641mr9494553pfb.1.1712590823441; 
- Mon, 08 Apr 2024 08:40:23 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- fb39-20020a056a002da700b006ecfc3a8d6csm6662168pfb.124.2024.04.08.08.40.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 08:40:23 -0700 (PDT)
-Date: Mon, 8 Apr 2024 11:40:19 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Het Gala <het.gala@nutanix.com>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, farosas@suse.de, prerna.saxena@nutanix.com
-Subject: Re: [PATCH 2/2] Call args->connect_channels to actually test
- multifd_tcp_channels_none qtest
-Message-ID: <ZhQP45IJfh_8qBVV@x1n>
-References: <20240407132125.159528-1-het.gala@nutanix.com>
- <20240407132125.159528-3-het.gala@nutanix.com>
+ d=1e100.net; s=20230601; t=1712591112; x=1713195912;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8ZKStiwR5JhBWOERg4EH+miKSZdReZnGSFSeeLdG9Iw=;
+ b=hiArUsD2kyl5xp7f3wLZFn2LqcekQCuFCh2fSCHET7jpwcl/unn1wu+v+njTy5WrRM
+ fTQ6wapUjS5t/w1jLnb5c954xaUJXdXfzHLhKFEeLzqsLnJpSJL+Sla6OWWM6Lq1y1Mt
+ DUDsZ1+y3KZ1wNjLNBjHJaKyRzCfnj3GGmfyR3h/9BCATw/vvSvh01Mv0FHZXDfwjQ64
+ iK8RWbvQgwHBttb6SLUxVqvg3NOWb0v3pBtsbrHuyd4O099KLRme0Pva7b+Z7YK72zfv
+ tXoBt6nbS0by2uwpG9K7AaALkyHcypchzQtSOMmZUbTX9lRO8BkyR5rJx0/tNM3td8n2
+ tfBA==
+X-Gm-Message-State: AOJu0YzBv9yfi+Q3VSdetxJPfuSLKr/LJyqxSA7Tw40wpY9K00/wkbLI
+ 7NPc3KeCuW9ZjP+lpWmVbQvLSgUNrUqipU/Ll7u9orIL6gmpT4/6TMKd2yA3JFN1HW3m5K23YF/
+ f
+X-Google-Smtp-Source: AGHT+IHwTYm09qOD0t8n4RliQLlzEwTXj3cIAmoC4xhFsBbhkTNU47wj1zhNQCX88Tn6RhSQJNGMeA==
+X-Received: by 2002:a17:906:dac3:b0:a51:cdcd:5141 with SMTP id
+ xi3-20020a170906dac300b00a51cdcd5141mr4567291ejb.73.1712591111505; 
+ Mon, 08 Apr 2024 08:45:11 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.144.67])
+ by smtp.gmail.com with ESMTPSA id
+ e11-20020a170906844b00b00a4e23486a5dsm4542256ejy.20.2024.04.08.08.45.10
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 08 Apr 2024 08:45:11 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alexander Bulekov <alxndr@bu.edu>, Zhenwei Pi <pizhenwei@bytedance.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zheyu Ma <zheyuma97@gmail.com>
+Subject: [PATCH-for-9.0?] backends/cryptodev: Do not abort for invalid session
+ ID
+Date: Mon,  8 Apr 2024 17:45:08 +0200
+Message-ID: <20240408154508.67307-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240407132125.159528-3-het.gala@nutanix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,96 +94,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 07, 2024 at 01:21:25PM +0000, Het Gala wrote:
-> Earlier, without args->connect_channels, multifd_tcp_channels_none would
-> call uri internally even though connect_channels was introduced in
-> function definition. To actually call 'migrate' QAPI with modified syntax,
-> args->connect_channels need to be passed.
-> Double free happens while setting correct migration ports. Fix that.
-> 
-> Fixes: (tests/qtest/migration: Add multifd_tcp_plain test using list of
->         channels instead of uri)
+Instead of aborting when a session ID is invalid,
+report an error and return VIRTIO_CRYPTO_INVSESS
+("Invalid session id").
 
-[1]
+Reproduced using:
 
-> Signed-off-by: Het Gala <het.gala@nutanix.com>
-> ---
->  tests/qtest/migration-helpers.c | 2 --
->  tests/qtest/migration-test.c    | 2 +-
->  2 files changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-> index b2a90469fb..b1d06187ab 100644
-> --- a/tests/qtest/migration-helpers.c
-> +++ b/tests/qtest/migration-helpers.c
-> @@ -146,8 +146,6 @@ static void migrate_set_ports(QTestState *to, QList *channel_list)
->                  qdict_put_str(addrdict, "port", addr_port);
->          }
->      }
-> -
-> -    qobject_unref(addr);
+  $ cat << EOF | qemu-system-i386 -display none \
+     -machine q35,accel=qtest -m 512M -nodefaults \
+     -object cryptodev-backend-builtin,id=cryptodev0 \
+     -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
+     -qtest stdio
+  outl 0xcf8 0x80000804
+  outw 0xcfc 0x06
+  outl 0xcf8 0x80000820
+  outl 0xcfc 0xe0008000
+  write 0x10800e 0x1 0x01
+  write 0xe0008016 0x1 0x01
+  write 0xe0008020 0x4 0x00801000
+  write 0xe0008028 0x4 0x00c01000
+  write 0xe000801c 0x1 0x01
+  write 0x110000 0x1 0x05
+  write 0x110001 0x1 0x04
+  write 0x108002 0x1 0x11
+  write 0x108008 0x1 0x48
+  write 0x10800c 0x1 0x01
+  write 0x108018 0x1 0x10
+  write 0x10801c 0x1 0x02
+  write 0x10c002 0x1 0x01
+  write 0xe000b005 0x1 0x00
+  EOF
+  Assertion failed: (session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]),
+  function cryptodev_builtin_close_session, file cryptodev-builtin.c, line 430.
 
-Firstly, this doesn't belong to the commit you were pointing at above [1].
-Instead this line is part of:
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2274
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ backends/cryptodev-builtin.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-  tests/qtest/migration: Add migrate_set_ports into migrate_qmp to update migration port value
-
-You may want to split them?
-
-Side note: I didn't review carefully on the whole patchset, but I think
-it's preferred to not include any dead code like what you did with
-"tests/qtest/migration: Add migrate_set_ports into migrate_qmp to update
-migration port value".  It'll be better to me if we introduce code that
-will be used already otherwise reviewing such patch is a pain, same to when
-we follow up stuff later like this.
-
-More importantly.. why free?  I'll paste whole thing over, and raise my
-questions.
-
-static void migrate_set_ports(QTestState *to, QList *channel_list)
-{
-    QDict *addr;
-    QListEntry *entry;
-    g_autofree const char *addr_port = NULL;   <--------- this points to sub-field of "addr", if we free "addr", why autofree here?
-
-    addr = migrate_get_connect_qdict(to);
-
-    QLIST_FOREACH_ENTRY(channel_list, entry) {
-        QDict *channel = qobject_to(QDict, qlist_entry_obj(entry));
-        QDict *addrdict = qdict_get_qdict(channel, "addr");
-
-        if (qdict_haskey(addrdict, "port") &&
-            qdict_haskey(addr, "port") &&
-            (strcmp(qdict_get_str(addrdict, "port"), "0") == 0)) {
-                addr_port = qdict_get_str(addr, "port");
-                qdict_put_str(addrdict, "port", addr_port);  <--------- shouldn't we g_strdup() instead of dropping the below unref()?
-        }
-    }
-
-    qobject_unref(addr);
-}
-
->  }
->  
->  bool migrate_watch_for_events(QTestState *who, const char *name,
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 584d7c496f..5d6d8cd634 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -1728,7 +1728,7 @@ static void test_precopy_common(MigrateCommon *args)
->          goto finish;
->      }
->  
-> -    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
-> +    migrate_qmp(from, to, args->connect_uri, args->connect_channels, "{}");
->  
->      if (args->result != MIG_TEST_SUCCEED) {
->          bool allow_active = args->result == MIG_TEST_FAIL;
-> -- 
-> 2.22.3
-> 
-
+diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+index 39d0455280..3bbaabe86e 100644
+--- a/backends/cryptodev-builtin.c
++++ b/backends/cryptodev-builtin.c
+@@ -22,6 +22,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ #include "sysemu/cryptodev.h"
+ #include "qapi/error.h"
+ #include "standard-headers/linux/virtio_crypto.h"
+@@ -427,7 +428,10 @@ static int cryptodev_builtin_close_session(
+                       CRYPTODEV_BACKEND_BUILTIN(backend);
+     CryptoDevBackendBuiltinSession *session;
+ 
+-    assert(session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]);
++    if (session_id >= MAX_NUM_SESSIONS || !builtin->sessions[session_id]) {
++        error_report("Cannot find a valid session id: %" PRIu64 "", session_id);
++        return -VIRTIO_CRYPTO_INVSESS;
++    }
+ 
+     session = builtin->sessions[session_id];
+     if (session->cipher) {
 -- 
-Peter Xu
+2.41.0
 
 
