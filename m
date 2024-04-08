@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F31CD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 01:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99AF9CD1292
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 01:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtdpg-0002tT-Hx; Sun, 07 Apr 2024 21:30:00 -0400
+	id 1rtdr4-0003LE-L0; Sun, 07 Apr 2024 21:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rtdpd-0002t6-RH
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 21:29:58 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1rtdqp-0003B2-Ap
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 21:31:15 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rtdpb-0007OK-Mz
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 21:29:57 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-5e4f79007ffso2683133a12.2
- for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 18:29:54 -0700 (PDT)
+ id 1rtdqb-0007kI-6C
+ for qemu-devel@nongnu.org; Sun, 07 Apr 2024 21:31:11 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6ed0938cd1dso1952562b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 18:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712539793; x=1713144593;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712539853; x=1713144653;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=s8tM99cCNV90Hz0YFfr2YhADfBMOVgNclOcHIywGQSM=;
- b=vGibfDHrgjTN1RV0tfch+X4k51R4cDpM+dHG/iC0hYuZYOEMbLs0+VHUY1YuBhkKtB
- Ut05IRhIsLkN54fsY+E47G2Y/86exBgRzXdz9FD6SvSg2enviw8FK/797R7GWnVMKNPj
- VJgY0pjtgHwsNS3l12yiCQnGdCTbmBejukyNyDLb68i67cFr7bUVDjJsQk9C/Y389rTt
- YtJw6Tc0Jtw2kSLJiYl13fY8Ii4HiAOCr/qW7WrHtInDxxjoIgpYo8WVQwvNVF2as9Al
- LudGJQMYurV/pPJppXmTiIah2WIVs20kMk2/Yr8fjI6zztvFRiFaAMvs0kibPxo9BMsU
- /bRg==
+ bh=0wyg4Mx126IuFIAjTQ1f6hmqaxbkg6PvV/7GN3Yip/Y=;
+ b=H4UW3AOphv3WjiwrZ697e4BFeSqF3cy7RwjjIIiv2NkywjPMGAa0nJ8uS539mHNHPI
+ QInPx6kVQFg63EhH7BVhIyy22K6QVyIt1FdvY/LybEer2GOQCw+18Gdu1tSw0OmOYhbE
+ 13kkN9YP1t931LqXo2YEM1A84ZZYiyMwMF+rk1SGHwi3JbGwLzDFa7R3Q96O4WaD9kKA
+ QLcOQpGtKSRN77xMVFuwfYQgLeg+jLZcDUZRi1312iiRCUd2uqCmsQ1/LZgpxXtzG50a
+ ZFWidVf0MIJGOK7j/5ElIakjQ/F0bUzURU/fS0A3ON7oltUUkTrkJ229SK8b1wFOLa4T
+ lzkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712539793; x=1713144593;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712539853; x=1713144653;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s8tM99cCNV90Hz0YFfr2YhADfBMOVgNclOcHIywGQSM=;
- b=nKOn1KmsF4J+StXvuy34OAOnpsknVoeUTClw0dGBEfiaMwtsmmx8XRys78RjQaMfxO
- 4H+5Xpzy4RAsQJf3GfgtBwyroAwvwNquw0Jp+hFfrrckorkHwQMWxXqok+jGGdvqQQgz
- MFFpMQ7iE0abNgRNJe+hdaQ2BDwehhXo+OTpftC9z3v50VG3qjapD4/nKMKbFPnbycI6
- LP6vOmf+3j0OxLYSUJHeOnOf541t0DQA1iye3/7HRWVVGwAAEEWbNaZKu6FichNkIjBI
- PD6iIa9KInYklg+H/3H8FRsHSqb8Ond/bOIWGO+aSomHlgp0t143v6c03FA+JTA8K5kK
- A2IA==
+ bh=0wyg4Mx126IuFIAjTQ1f6hmqaxbkg6PvV/7GN3Yip/Y=;
+ b=CG+fhs0tHbkBtt6/JSIb70aqqGjk1uR5lSl+eghp/mq1ggdnfiernxfXc3xG2uNRgl
+ C8sgMGmVi0hjhL0e7kp749W/5ifRsCbgxrsZBeCYfhK1dABIuz7s2vY4XkxPYgUblrPV
+ UNjtRUX8rLb0ztWruh1teSzBd8LmXynadwM2fHRz4k1Wgs7g5TPDMchzzXMwG04petxc
+ V3WaBelleJWdvhGzrR5VFHqHB2VeoATVMxTZFHnocym6Rhb4Xf5M/dXWIKBEgwCttLpZ
+ nsNy+3LtB0SJnu336LCEK4cdmJbG8v5DKpQdYNA5F+rruJlnZyn8fn1sYk9IEvT1+Ad8
+ nqRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7aTNgFoAXj3GUNOtMGBO9MuTVuc0rqhIL2LXT/HX4c0Qc3rlLD43Ye1DbB+K9t6GLy4YWd51ChGfP+yIGGu/CiU3ry5o=
-X-Gm-Message-State: AOJu0YyG7pinfzpW9vGH4EFhwN1UGD1afGelN36gRkLSKU+pOI9HXvTv
- 4Bd4Oq0pCThCNtcwT2dPlUcLZIMNPw7o4nWtFQCPirnkU/YSczxNAoHaJ3Fwy48=
-X-Google-Smtp-Source: AGHT+IHNUHKCdeZhmtcsOsznETc7UJd76KfhLdTlEdYNH8IYJ26OLVsPXVAgnxmNwOTr0pnX1n9qog==
-X-Received: by 2002:a05:6a21:3d86:b0:1a3:df2f:ab7 with SMTP id
- bj6-20020a056a213d8600b001a3df2f0ab7mr8487989pzc.24.1712539793396; 
- Sun, 07 Apr 2024 18:29:53 -0700 (PDT)
+ AJvYcCXH1UMzRr7e3dC6aVeEF2iqTu1fZjISvlFDAQFwv3DexzfTC6IczS66q+WVwtFn/cq9xKZ14+JAAP3ZZYfg3ochWx7g9+I=
+X-Gm-Message-State: AOJu0YwBBjtcNv9HJ/cPaLxzHCeXJa4IBw0e5IBiQXTONBffIzdBAs6N
+ Nh7NqdRDe1PdbFjTCeeAl7kNyiY970XXEvlhSozeZ6osM2LZt/89z2lKJxa9tGA=
+X-Google-Smtp-Source: AGHT+IG0BvuriinHWaa8w1TDyBqgZ3S+0+j3rIVh0gbIdunj3edMELn2u7G2+QINwmRrh9IcY/2vAA==
+X-Received: by 2002:a05:6a00:4f93:b0:6ec:ff5e:7e66 with SMTP id
+ ld19-20020a056a004f9300b006ecff5e7e66mr10056025pfb.1.1712539853422; 
+ Sun, 07 Apr 2024 18:30:53 -0700 (PDT)
 Received: from [157.82.200.213] ([157.82.200.213])
  by smtp.gmail.com with ESMTPSA id
- h5-20020a631205000000b005cf450e91d2sm5000207pgl.52.2024.04.07.18.29.51
+ h5-20020a631205000000b005cf450e91d2sm5000207pgl.52.2024.04.07.18.30.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 07 Apr 2024 18:29:53 -0700 (PDT)
-Message-ID: <60ad2ff3-ad95-49b8-8d6c-32bdcddde899@daynix.com>
-Date: Mon, 8 Apr 2024 10:29:49 +0900
+ Sun, 07 Apr 2024 18:30:53 -0700 (PDT)
+Message-ID: <8010b335-4b46-456e-bf6e-c191cdc34964@daynix.com>
+Date: Mon, 8 Apr 2024 10:30:51 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 13/20] virtio-net: Return an error when vhost cannot
- enable RSS
+Subject: Re: [PATCH v9 16/20] virtio-net: Do not write hashes to peer buffer
+Content-Language: en-US
 To: Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: Jason Wang <jasowang@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
@@ -76,15 +76,14 @@ Cc: Jason Wang <jasowang@redhat.com>,
  Vincenzo Maffione <v.maffione@gmail.com>,
  Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
 References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
- <20240403-rss-v9-13-c6d87e69d38b@daynix.com>
- <CAOEp5OdKAsUoJnLMXTM3RxbPT3c9Sob-7QRexCSqMNX10Enoug@mail.gmail.com>
-Content-Language: en-US
+ <20240403-rss-v9-16-c6d87e69d38b@daynix.com>
+ <CAOEp5Od=KUTHnikVBA7iWfdFPJ=T7hbJrSu4zwCiB_Q1P-Sz+Q@mail.gmail.com>
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAOEp5OdKAsUoJnLMXTM3RxbPT3c9Sob-7QRexCSqMNX10Enoug@mail.gmail.com>
+In-Reply-To: <CAOEp5Od=KUTHnikVBA7iWfdFPJ=T7hbJrSu4zwCiB_Q1P-Sz+Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::52d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -106,131 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/04/08 6:46, Yuri Benditovich wrote:
-> On Wed, Apr 3, 2024 at 2:11 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On 2024/04/08 7:09, Yuri Benditovich wrote:
+> On Wed, Apr 3, 2024 at 2:12 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >>
->> vhost requires eBPF for RSS. When eBPF is not available, virtio-net
->> implicitly disables RSS even if the user explicitly requests it. Return
->> an error instead of implicitly disabling RSS if RSS is requested but not
->> available.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/net/virtio-net.c | 97 ++++++++++++++++++++++++++---------------------------
->>   1 file changed, 48 insertions(+), 49 deletions(-)
->>
->> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->> index 61b49e335dea..3d53eba88cfc 100644
->> --- a/hw/net/virtio-net.c
->> +++ b/hw/net/virtio-net.c
->> @@ -793,9 +793,6 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
->>           return features;
->>       }
->>
->> -    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
->> -        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
->> -    }
->>       features = vhost_net_get_features(get_vhost_net(nc->peer), features);
->>       vdev->backend_features = features;
->>
->> @@ -3591,6 +3588,50 @@ static bool failover_hide_primary_device(DeviceListener *listener,
->>       return qatomic_read(&n->failover_primary_hidden);
->>   }
->>
->> +static void virtio_net_device_unrealize(DeviceState *dev)
->> +{
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->> +    VirtIONet *n = VIRTIO_NET(dev);
->> +    int i, max_queue_pairs;
->> +
->> +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
->> +        virtio_net_unload_ebpf(n);
->> +    }
->> +
->> +    /* This will stop vhost backend if appropriate. */
->> +    virtio_net_set_status(vdev, 0);
->> +
->> +    g_free(n->netclient_name);
->> +    n->netclient_name = NULL;
->> +    g_free(n->netclient_type);
->> +    n->netclient_type = NULL;
->> +
->> +    g_free(n->mac_table.macs);
->> +    g_free(n->vlans);
->> +
->> +    if (n->failover) {
->> +        qobject_unref(n->primary_opts);
->> +        device_listener_unregister(&n->primary_listener);
->> +        migration_remove_notifier(&n->migration_state);
->> +    } else {
->> +        assert(n->primary_opts == NULL);
->> +    }
->> +
->> +    max_queue_pairs = n->multiqueue ? n->max_queue_pairs : 1;
->> +    for (i = 0; i < max_queue_pairs; i++) {
->> +        virtio_net_del_queue(n, i);
->> +    }
->> +    /* delete also control vq */
->> +    virtio_del_queue(vdev, max_queue_pairs * 2);
->> +    qemu_announce_timer_del(&n->announce_timer, false);
->> +    g_free(n->vqs);
->> +    qemu_del_nic(n->nic);
->> +    virtio_net_rsc_cleanup(n);
->> +    g_free(n->rss_data.indirections_table);
->> +    net_rx_pkt_uninit(n->rx_pkt);
->> +    virtio_cleanup(vdev);
->> +}
->> +
->>   static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->>   {
->>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->> @@ -3760,53 +3801,11 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->>
->>       net_rx_pkt_init(&n->rx_pkt);
->>
->> -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
->> -        virtio_net_load_ebpf(n);
->> -    }
->> -}
->> -
->> -static void virtio_net_device_unrealize(DeviceState *dev)
->> -{
->> -    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->> -    VirtIONet *n = VIRTIO_NET(dev);
->> -    int i, max_queue_pairs;
->> -
->> -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
->> -        virtio_net_unload_ebpf(n);
->> +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS) &&
+>> The peer buffer is qualified with const and not meant to be modified.
 > 
-> I disagree with this change of qemu behavior.
->  From my point of view:
-> - this is not a major problem and it should not be a reason to stop VM execution
-> - it is enough to disable the RSS feature and continue working. Depending on
->    other qemu parameters (number of queues, number of cpus) this might be just
->    suboptimal. might be a minor problem and might be not a problem at all
+> IMHO, this buffer is not so 'const' (although the prototype states so),
+> it is allocated in net.c
+> btw, another procedure in this file also modifies the buffer
+> (work_around_broken_dhclient)
 
-The reasoning is that we shouldn't disable what the user explicitly 
-requested. c.f., 
-https://lore.kernel.org/all/20231102091717-mutt-send-email-mst@kernel.org/
+Right but it has a FIXME comment.
 
-> - this change defines rss as _only_ feature whose absence breaks the VM start,
->    _all_ other features are dropped silently and only rss is not. Why??
+> 
+>> It also prevents enabling VIRTIO_NET_F_HASH_REPORT for peers without
+>> virtio-net header support.
+> 
+> Does it mean _this commit_ prevents enabling VIRTIO_NET_F_HASH_REPORT
+> for peers without
+> virtio-net header support? Where?
 
-I'm following what QEMU does in the other places rather than what it 
-does just in virtio-net. I have pointed out virtio-gpu raises errors in 
-such a situation. c.f., 
-https://lore.kernel.org/all/8880b6f9-f556-46f7-a191-eeec0fe208b0@daynix.com
-
-> - the series has a title 'Fixes and improvements' . This is not a fix and not an
->    improvement, this is significant behavioral change that should be discussed in
->    light of future plans regarding rss
-> - I suggest to remove this change from the series, submit it separately
->    and discuss from all the sides
-
-We should have already discussed about these matters; I responded all 
-past replies in the previous versions months ago and had no update after 
-that. Let's focus on matters that were not previously pointed out.
+No, but I meant that this patch fixes such a problem.
 
 Regards,
 Akihiko Odaki
