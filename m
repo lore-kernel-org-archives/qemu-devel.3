@@ -4,91 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C7CCC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 595AACD1292
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:33:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtjSF-0003cy-HS; Mon, 08 Apr 2024 03:30:11 -0400
+	id 1rtjVY-0004yW-Nf; Mon, 08 Apr 2024 03:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rtjSC-0003cT-Nn
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:30:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <gavin.liu@jaguarmicro.com>)
+ id 1rtjVX-0004yF-15; Mon, 08 Apr 2024 03:33:35 -0400
+Received: from mail-psaapc01on2072f.outbound.protection.outlook.com
+ ([2a01:111:f400:feae::72f]
+ helo=APC01-PSA-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rtjS9-00011J-P1
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:30:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712561404;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PKkE09D30QjVtMV8loqtF/SA8OQynMaIghqXIAXdWVU=;
- b=G3VVQ9PbYM825lHVDiOE+TZUi4HYcsxaUS9ZX0ONfuncbSMIKYQLpEdCDauNoxMOgxG0XH
- sPPkLxBObumN3bDzNhWs0B6MkkAMEopsz6pNtpBnrXAAXL8JlqWKHolj1ysUTxEgu4bGdn
- so1okNwWo516XFfkRNTipmXulgbXuyE=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-BreT-on6NFCuzevRUFf6Hw-1; Mon, 08 Apr 2024 03:30:02 -0400
-X-MC-Unique: BreT-on6NFCuzevRUFf6Hw-1
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-6ed25eb8e01so196490b3a.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 00:30:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712561401; x=1713166201;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PKkE09D30QjVtMV8loqtF/SA8OQynMaIghqXIAXdWVU=;
- b=JG7Gl2Pa3xr1W16Twjk+hi2Bh95ypqiJmbc77XGYnad5jGIj13H4wUVsa8se+uoEHZ
- HtXCZp3iFqTk7ueo+Ihk9PghzekIlrS3VMZXRc1MbtOIAFkp2AOLoXlmXB10RtMAXEUQ
- GXJ3fkBopIpxOxh6bR/4bQNRATtaFQ6H0Yc79OqQIbsYYzfyGHN0tmxfHl5YBvmaUJfI
- RTpuLJiiQ9NhM6DzFIkmL6imcRmvHlA3HIszeoBLJp+7qclwkSRwZehogl8p2Dx2MGWD
- Ss4RQ3wBs4M6ygjOTnKHLedF7iNBRQRFmHTvs8hM2Sz/BynTc4wXvdMdj919e30EvDE5
- k/pA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8Rf1HbVm7G9/AfOdm5u54dpZT722sG/mCsqsCDECHoXLjW6YbVBK7gNGpUcJmk0OXOVO4pKKiZlpwS3+GScxTwUUl31I=
-X-Gm-Message-State: AOJu0YzyHnFiyOga/OQ/H6LbXC4ZS03MR1WbZWzqoml5E70edYaCfAqO
- k3XI2jQ97QHCHNBKA/HkkRdEsA8DXHw5KHSPBTk+DL8/RXgftxsue/7qzIKg+jP2igWCuMGPPaf
- Dlh65RhadSgLqS/wJSjZR2vM5SBDB7+ZzcLu+yI0sSwC21bmtmSaXmFA7Pxf12/mVKHfm49gdHB
- M+it5Xm2zoA9VV7UDIGGu/Ejb9QEk=
-X-Received: by 2002:a05:6a20:6f8a:b0:1a7:5fbf:36a6 with SMTP id
- gv10-20020a056a206f8a00b001a75fbf36a6mr2832202pzb.53.1712561401770; 
- Mon, 08 Apr 2024 00:30:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0N0eYeq3it6FBDVj8uSELmfKyltNPWBfeafbzF+KCAKw/f/D6XLBfccsxl0OajT6Cr9OBtXZap4BE7uhcGVY=
-X-Received: by 2002:a05:6a20:6f8a:b0:1a7:5fbf:36a6 with SMTP id
- gv10-20020a056a206f8a00b001a75fbf36a6mr2832184pzb.53.1712561401471; Mon, 08
- Apr 2024 00:30:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gavin.liu@jaguarmicro.com>)
+ id 1rtjVU-0001lv-PV; Mon, 08 Apr 2024 03:33:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LeLHC7M1sFPg5nkB/2qdfWUeQklOmV/hCSaZ00ASRHQcrqdPjSzDL80dhVOioadIEukn/GeOiMGKHfeezXolBe9gXgX0iS0In92y1qE26tr45cIHlr3SbDltIki2b6WVzR8zz6DfzWf72orl9aMXDqI0JsEZy6TJcWRVVCJC92h+fKNF8frsVa0F8dpNSOw7GBvGUMivR90CjB1acXOdoFqdJxQ6JM13BXh3C0u+uV5ML5jHNmFqqBEb1eRTQLQZNsGa9v8c84wYvQVjH9t0pWt8cZ+vcUZzbXCCOSAZbJYrU9UZO9Kx2vh+qA3tIV8h6XlindoZ3RWYeT69A0mJEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mENliEQ2u6a58UAv5r74EC8EOrR6Ue3K6RE0GFoTuHU=;
+ b=idHhehrer9mxkUIIkcE3bhV1hiXlkIE7Txwq0L5Tw7f0jPnq+dl3bd2PdLOTfsw8lgV2/ksBuVywN8GeV6lQ6VmuaLE13iccW6+btf/HOT5oojmashDKbvBz7CMxD4nm5nvwUjbUyB7gdCuiGz6a0ZGZaQzvHABq9iUi4xIsn2hxGbQNwUmlmsXQ7moRd7xNPvoAVGeIKyw4oQPl3cRRKbui5DrGDn/MtTCnlxC+8UWtwV7k2/duCUNYBr+fJZZrtQ6GzCbmXUxb7N2rMiTfzgiUHfVCUQUpfi/nQlI6oamgksEPotkPTbD/qinnZcq+njsHPlNRm5k6CIVRzV9dpQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
+ header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mENliEQ2u6a58UAv5r74EC8EOrR6Ue3K6RE0GFoTuHU=;
+ b=qLL2FNeXLGgBb2TEt3vzQKOImGUaldUYGW8ucS5aRBf6AlM6wvyHK7UbTd0aHFOuuHflVMIz5be8bEFx6+03m1GdgNH81HKgH4OhWRmEaOTn9YEp154F9WpJkLxxltePz4Nw4LDr06ThgN97AbKwTYtpjdF8gFtmFy0NhHcESAn9I+Z/3narxQeaNLQrfm+7x0dI/83PuuJDIbOVkdmJbIf6//sC6gy9N0lHYStLy0FnxdBrf+TXYZ8yAKGdyfxFanQJD6bMWsrqjaScR6hLWgh7mm7h0Z6igmtcnt0NLGj9HUIu3x4vd+cJJbPUwGcWOq++QhHIeEfUjv5Or1NO/A==
+Received: from SEYPR06MB6756.apcprd06.prod.outlook.com (2603:1096:101:165::11)
+ by TY0PR06MB5778.apcprd06.prod.outlook.com (2603:1096:400:27d::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Mon, 8 Apr
+ 2024 07:33:25 +0000
+Received: from SEYPR06MB6756.apcprd06.prod.outlook.com
+ ([fe80::922f:a649:adbf:6634]) by SEYPR06MB6756.apcprd06.prod.outlook.com
+ ([fe80::922f:a649:adbf:6634%6]) with mapi id 15.20.7409.042; Mon, 8 Apr 2024
+ 07:33:24 +0000
+From: lyx634449800 <yuxue.liu@jaguarmicro.com>
+To: jasowang@redhat.com
+Cc: mst@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ yuxue.liu@jaguarmicro.com
+Subject: [PATCH v2] vhost: don't set vring call if guest notifiers is not
+ enabled
+Date: Mon,  8 Apr 2024 15:33:11 +0800
+Message-Id: <20240408073311.2049-1-yuxue.liu@jaguarmicro.com>
+X-Mailer: git-send-email 2.33.0.windows.2
+In-Reply-To: <CACGkMEsrT4xxW-KzLm=rTqXf0P+u2=0fy03z3EsHZFEqQePjJg@mail.gmail.com>
+References: <CACGkMEsrT4xxW-KzLm=rTqXf0P+u2=0fy03z3EsHZFEqQePjJg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SI2PR01CA0029.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:192::8) To SEYPR06MB6756.apcprd06.prod.outlook.com
+ (2603:1096:101:165::11)
 MIME-Version: 1.0
-References: <20240221073802.2888022-1-chenh@yusur.tech>
- <d9e4f3b4-9c2e-466c-b5f4-3387ce88c6b9@t-8ch.de>
- <20240313155136-mutt-send-email-mst@kernel.org>
- <CACGkMEtSSb-9PsmQKPA4i-UWVJJ4ZVog8rt+1PKoqE+ABhpRTA@mail.gmail.com>
- <20240318083932-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240318083932-mutt-send-email-mst@kernel.org>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 8 Apr 2024 15:29:50 +0800
-Message-ID: <CACGkMEv4J1ZyK9cadVFr5BjZwA7edL7d+yqUuJqa+x8zyQpbBw@mail.gmail.com>
-Subject: Re: [PATCH] hw/virtio: Add support for VDPA network simulation devices
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>, 
- Hao Chen <chenh@yusur.tech>, qemu-devel@nongnu.org, cohuck@redhat.com, 
- pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SEYPR06MB6756:EE_|TY0PR06MB5778:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: tBspZ3PU1HmeeUbMUa3s0invelVUB0gY1fE4Rhi5zsC4KV7rpbjrwpjJ2zPKxajzbDELl1/Mztl4T/wMcc7/lKZ6MTlwW/8fQYjDb60Mnz2oISj+TVX1u/bp73EWTLwVY7/ZjI/MNNxkxwB22X+Pz64QUUKXyqEasiksflsDyhjLJMwtiw47KICYSdI4k7HE+V3lGZTf7GGL/XT184f1lfMUkqCC9/f6ID7RpqVFsuAPJUcv4GN3YhKSNc308C3RK3+uz6fVRbc0+pu8sxZT7/vopPpzf6ZTbDhzUjPSJr/pxfeQIz+Ozwl46Vvx26OjXc+Mi3BdgTijMsuTPFMOMjSoWe5LxzHLp+P7A4vNkGffDmKfjzSJJxF46qjJB8l3fFIGwvJA7j8EKVO9ETcejRuE0uYO5tIgTj8eZe67+7f1kaZNi+YR96fifL7bKEwrC5t7PKKKzcxqootmt23CqO2J0wyjlkkfL3aKBls+K0qsLcno7fIXhqASODrsXJ8eHV3Khal4KVxRuNJnkwzFLfSCyqV7LWa8Gpn5lP1o3NCWRI2JKUxh/1aF5tN5V4/GnBbviyQICK72MCulXOi9S6O36gvb/a0MK5iffjuXnjKY7xaf10gE8uZe1rYFFHsOlcMsOX67xgl1w3nropqLG1cMYR4u1AfQx4U1G1nCJYnxp/CPr2EzWndjib4uTU7MaRsct/16ELWJXZxOxsSUzzojgzom4QlMtlDHt7I+3KIUq77W+QnAufgmrwqG2WG3
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SEYPR06MB6756.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(52116005)(366007)(1800799015)(376005)(38350700005)(43062008);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?IdWdq5rdVjfNxA5di2cp1GWBKFc9VmAZZs+Mt0fIIbJFDM++jWAuLGmLhyTZ?=
+ =?us-ascii?Q?OQA9WMZ2ZsYv0yOcDQe+KbfMmYwTyEPnW9qlfXj+0gEH7AT96SCc6en7J/d5?=
+ =?us-ascii?Q?FKRnNDQrTykKW5goVFZp//YWEUUbpR5+w+B3p/zDqQVrx8W3YDg4HREcWwZk?=
+ =?us-ascii?Q?Fwa12Rj2r4hdpX4v9I9b+I5mJX8mp0fFr2vBbfkzOpIIG7ifY0KL+HJs0bAR?=
+ =?us-ascii?Q?Rp700qCrkogtehr9cfQ3AT6jcifs5y0A0pUeAicQ2YQIZQE2cKh03bQpah7I?=
+ =?us-ascii?Q?5jklbSZOU7bCx11QSBMvYDu9qkDpgcg0dijRapOT+hd1uLj/KRxSCtpCGZ8H?=
+ =?us-ascii?Q?C7MlyOheW2AQPxwrew7NWfC41S6T5Lwd7Mso7lvPfjCt9AF18nfUTP2yCtM5?=
+ =?us-ascii?Q?Me7T1dc2+IAF0L5+tqTb3I7JrwuY8s0eCOabrskLGb9Yy3lPzFjlT8ZvnOv+?=
+ =?us-ascii?Q?pB2W0WhejVr4k12iL3tI9xSZq92hqJjgG8Yu9HwK55bJnC0uc76GDyli4mG8?=
+ =?us-ascii?Q?h/C3t17BhC2SC4L24pnXZRL++qjY7QOADHNz/4qzc7qqf0gMdV25jl560d4Q?=
+ =?us-ascii?Q?O6F1kdy48XptGvKupiMxM94VGWOOOC9NpWcarC/ET6z9rCFd1Vbdnh1KSAxs?=
+ =?us-ascii?Q?qXAAs4ev256td6m7T6WUUkF0N/vU+RqiCLZJ1qym//U6+E+QldtaN5wYQAqe?=
+ =?us-ascii?Q?rhljJJBwF2pDgut4jl/H17UxWbAAJlfBjbhOjF1749bIhGwFOOlvyUk84yJl?=
+ =?us-ascii?Q?CYKI1JePzVEcSxciV5Xey1r0/1c7hH6/WxhJC/TnvTreVCOGEoNRVL+Y+jUK?=
+ =?us-ascii?Q?eKpVS7gnLFOCir9yeC+m8QVNTrC7Rm6a2NMfXbNwr5xPXFrr0KRe9IK8rr02?=
+ =?us-ascii?Q?9br3G32549E59SH/p+Jqy9KCk6etxIohICY0k0n+CludPmlbmj3ZJloDOjYo?=
+ =?us-ascii?Q?6bfU6ah279xFDMpxbFzzcPZpj0PA3nXC2eG3aTZ2eiBCXja6+NSKULTVHQTU?=
+ =?us-ascii?Q?ZPl3bYvYJUAOQR4WN3CDkFG5qttOteYwPuev3oZLDpl8R6QVgWcrUOnJCrLG?=
+ =?us-ascii?Q?8BnhN/5q/Tbpb7kBDl8kcZ788wKNn/kOPm19sAFGrb8JqV9ogydnZV6ADGca?=
+ =?us-ascii?Q?V62O4csbqdQzorIOBzt/bLQRqONAGKUwq0T6pYKkWO88sihNWHOTYgpnxxZP?=
+ =?us-ascii?Q?8bjnP4Zb+ytMKj2Lt0YmF3yESOqi2CMJYMVwEkAsCaB+7g9MUmGtVOczF247?=
+ =?us-ascii?Q?KDvTsA9miP9GHXBSMGiTyr5HjZh+SmzLixrdk0jYphKhUTcmOHrZZ5ELjmDl?=
+ =?us-ascii?Q?MGNLrVxj1FExP8sw0yFvMAlIhWuuVf+vxbZ2tq4a61gojo5cHPIz7QVoflxw?=
+ =?us-ascii?Q?+vy+c9oYK2Qix161CooxfZwdMwrR9DT6vB64Bj/eF5SdUZDFwNuQ88Cr2x/E?=
+ =?us-ascii?Q?R4Wq5CggJaOSOqd/2X6wx9X83X/YttIN4w7aPyX55NbpZF5MPtCGx8utqWtl?=
+ =?us-ascii?Q?FKyUsOrMZv/e9nQmewpz6NRLYhvBrmgFEfPqdijA6ZpdwN14U5nd2SPhrwCN?=
+ =?us-ascii?Q?N2o27U3Tyz4mTcuj7ZW+wyW8tlKeFK9S1EWZHXZyLaUTeITA8Vpx+PD/AFWz?=
+ =?us-ascii?Q?WA=3D=3D?=
+X-OriginatorOrg: jaguarmicro.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6fb10c1c-abec-4bce-1b7f-08dc579e2c7c
+X-MS-Exchange-CrossTenant-AuthSource: SEYPR06MB6756.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Apr 2024 07:33:24.4765 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: u50eQvZrUNt/NS1mFTDzjgIOMPgv3WWaKm7UNidKvLsHFyZt2c+iisD1eBqVemZdItBBC3EP5lwwh5IuIfNMyMTdBYSeYUSKZJ2PRkQdMXI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5778
+Received-SPF: pass client-ip=2a01:111:f400:feae::72f;
+ envelope-from=gavin.liu@jaguarmicro.com;
+ helo=APC01-PSA-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,87 +135,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 18, 2024 at 8:41=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Thu, Mar 14, 2024 at 11:24:33AM +0800, Jason Wang wrote:
-> > On Thu, Mar 14, 2024 at 3:52=E2=80=AFAM Michael S. Tsirkin <mst@redhat.=
-com> wrote:
-> > >
-> > > On Wed, Mar 13, 2024 at 07:51:08PM +0100, Thomas Wei=C3=9Fschuh wrote=
-:
-> > > > On 2024-02-21 15:38:02+0800, Hao Chen wrote:
-> > > > > This patch adds support for VDPA network simulation devices.
-> > > > > The device is developed based on virtio-net and tap backend,
-> > > > > and supports hardware live migration function.
-> > > > >
-> > > > > For more details, please refer to "docs/system/devices/vdpa-net.r=
-st"
-> > > > >
-> > > > > Signed-off-by: Hao Chen <chenh@yusur.tech>
-> > > > > ---
-> > > > >  MAINTAINERS                                 |   5 +
-> > > > >  docs/system/device-emulation.rst            |   1 +
-> > > > >  docs/system/devices/vdpa-net.rst            | 121 +++++++++++++
-> > > > >  hw/net/virtio-net.c                         |  16 ++
-> > > > >  hw/virtio/virtio-pci.c                      | 189 ++++++++++++++=
-+++++-
-> >
-> > I think those modifications should belong to a separate file as it
-> > might conflict with virito features in the future.
-> >
-> > > > >  hw/virtio/virtio.c                          |  39 ++++
-> > > > >  include/hw/virtio/virtio-pci.h              |   5 +
-> > > > >  include/hw/virtio/virtio.h                  |  19 ++
-> > > > >  include/standard-headers/linux/virtio_pci.h |   7 +
-> > > > >  9 files changed, 399 insertions(+), 3 deletions(-)
-> > > > >  create mode 100644 docs/system/devices/vdpa-net.rst
-> > > >
-> > > > [..]
-> > > >
-> > > > > diff --git a/include/standard-headers/linux/virtio_pci.h b/includ=
-e/standard-headers/linux/virtio_pci.h
-> > > > > index b7fdfd0668..fb5391cef6 100644
-> > > > > --- a/include/standard-headers/linux/virtio_pci.h
-> > > > > +++ b/include/standard-headers/linux/virtio_pci.h
-> > > > > @@ -216,6 +216,13 @@ struct virtio_pci_cfg_cap {
-> > > > >  #define VIRTIO_PCI_COMMON_Q_NDATA  56
-> > > > >  #define VIRTIO_PCI_COMMON_Q_RESET  58
-> > > > >
-> > > > > +#define LM_LOGGING_CTRL                 0
-> > > > > +#define LM_BASE_ADDR_LOW                4
-> > > > > +#define LM_BASE_ADDR_HIGH               8
-> > > > > +#define LM_END_ADDR_LOW                 12
-> > > > > +#define LM_END_ADDR_HIGH                16
-> > > > > +#define LM_VRING_STATE_OFFSET           0x20
-> > > >
-> > > > These changes are not in upstream Linux and will be undone by
-> > > > ./scripts/update-linux-headers.sh.
-> > > >
-> > > > Are they intentionally in this header?
-> > >
-> > >
-> > > Good point. Pls move.
-> >
-> > Right and this part, it's not a part of standard virtio.
-> >
-> > Thanks
->
-> I'm thinking of reverting this patch unless there's a resolution
-> soon, and reapplying later after the release.
+When conducting performance testing using testpmd in the guest os,
+it was observed that the performance was lower compared to the
+scenario of direct vfio-pci usage.
 
-I think we need to revert this and re-visit in the next release.
+In the commit 96a3d98d2cdbd897ff5ab33427aa4cfb94077665, the author
+provided a good solution. However, because the guest OS's
+driver(e.g., virtio-net pmd) may not enable the msix capability, the
+function k->query_guest_notifiers(qbus->parent) may return false,
+resulting in the expected effect not being achieved. To address this
+issue, modify the conditional statement.
 
-Thanks
+Signed-off-by: Yuxue Liu <yuxue.liu@jaguarmicro.com>
+---
+V2: Update commit description and title
 
->
->
-> > >
-> > > > > +
-> > > > >  #endif /* VIRTIO_PCI_NO_MODERN */
-> > > > >
-> > > > >  #endif
-> > >
->
+ hw/virtio/vhost.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index f50180e60e..b972c84e67 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1266,13 +1266,15 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         vhost_virtqueue_mask(dev, vdev, idx, false);
+     }
+ 
+-    if (k->query_guest_notifiers &&
+-        k->query_guest_notifiers(qbus->parent) &&
+-        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
+-        file.fd = -1;
+-        r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+-        if (r) {
+-            goto fail_vector;
++    if (k->query_guest_notifiers) {
++        if (!k->query_guest_notifiers(qbus->parent) ||
++            (k->query_guest_notifiers(qbus->parent) &&
++            virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR)) {
++            file.fd = -1;
++            r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
++            if (r) {
++                goto fail_vector;
++            }
+         }
+     }
+ 
+-- 
+2.43.0
 
 
