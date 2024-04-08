@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B549C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29331CD129C
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt8P-00029W-Pg; Mon, 08 Apr 2024 13:50:21 -0400
+	id 1rtt87-000246-8U; Mon, 08 Apr 2024 13:50:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8P-000291-0M
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:21 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1rtt84-000234-UP
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:00 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8M-0003kw-4k
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:20 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2a502547460so936123a91.2
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:17 -0700 (PDT)
+ id 1rtt83-0003gi-F3
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:00 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2a54fb929c8so445000a91.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598616; x=1713203416; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598598; x=1713203398; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Aco89HGhDUqxtzZSl7gQEXCIzX7CLhr3rgmAxnnD0GI=;
- b=BBYYcPUErrRL1Zi8/Yo9kkYmpWGncs3x92LOCH1BT/VR92X/xutiYx1UpHYQuCjgTV
- ZjjbiqarYlooZetraU696fp5nr3B/xvlRAPB2i7KLX97QNzyZFuRo04ZQ2M1hLULnLYg
- ke3Sx2VpnZ0tKnkcSB/QPBSSaDfrP2N7HViBcFHcYm0bJOwygJF5Xw3bNCx2n6V/3Xq5
- B2BUM53Bsz2oTphpgPrzDsLaTPZbrzF5ew81BvHiCHQ0lrRaGAoprY1Lf1JJSjfWvnKv
- EtKxEi8/yFZXMxzVwuMg/mFE5t7o1prHdJWXtg30IoMlxm0O3Mj7ZoBLBO4B2GoNKxiY
- 5yEA==
+ bh=k+ZfX4LwKFG2ttcKfBo5ylpdxbdzoWL4e0yutHC0vAw=;
+ b=qkUGBiTIVoMMWc2uXRdFJV+eM9Dsy9Pnpm37uC8bErrzGtsRuCiai5pZwPYmrCc+pC
+ 4nJs8UrbxxuaaKr3OIaCKqDIrsudoKLZzAHJA4hiUDIKihuq94WEm+WLZgXiFemPaM/k
+ 6/8dY6U6KswealyXgvbNea+JgDcX2R3zt7PRMNFrogC1SMLexX9nlenBCmr8aA4M8AHE
+ Nld+JOqT5RLhEYtDHC9bHH5WgRKHZknFHd7wN3bh+s9XaHO7xrw62nAbygIpmENSlqde
+ DQyBEfaNTM8HdqxnazMASBaskQVUizi9OpcIwesjPbUBWw4xIifjNE4iAjFKBUzvAme8
+ tS4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598616; x=1713203416;
+ d=1e100.net; s=20230601; t=1712598598; x=1713203398;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Aco89HGhDUqxtzZSl7gQEXCIzX7CLhr3rgmAxnnD0GI=;
- b=h8qT7ocKFFUloyVEoWZv5HCQmMTc6SVRnux1/1cQEjs312H812PRB1tVH7MCFaby3c
- LvbJsmuuDDMTHg4dyzpsUTGEPPCJrxXxa8q/8Y3pumfVd1lafrH93KRWnOj5No8hC/lZ
- e9Nl+oUStpzYTe1zsooEnAbLT9lrAjV8FwXhcUUElJp/EoAm9vLnOBUBn2rdCTbPOn3S
- u89mGgzqa0zqXqKawYYJ4kVtOOnpK5otPGgISrC6/k7T+Rj/EWF7r+wV3n31UD1oN0Sh
- 0VRR/1aegvGljBiiUXme1yLRQKEjSeI+L8BuQo7jOZabTnfVGT00HUW1+Afen4xikhmO
- yU2Q==
-X-Gm-Message-State: AOJu0Yw6NvDRIm/IljtTcyuWadoUXGyJHLLKXeDh+5nHRhr8hIuwZyVn
- TyLZDnBsOgYaXP273NVIoOOv/dTWI1vyc9mfoFmOBYnDgAeWl42ez3q4r3wpyHb0WUdaXHuU72A
- v
-X-Google-Smtp-Source: AGHT+IHSdQ3pj21CM+BU8gezpbTGX3i3pUVeLg6Ffn9BgYeJuSwItbyZK/rGcDn/5RJce8prQxHyxA==
-X-Received: by 2002:a17:90a:4614:b0:2a4:ca45:ded1 with SMTP id
- w20-20020a17090a461400b002a4ca45ded1mr4249364pjg.28.1712598616566; 
- Mon, 08 Apr 2024 10:50:16 -0700 (PDT)
+ bh=k+ZfX4LwKFG2ttcKfBo5ylpdxbdzoWL4e0yutHC0vAw=;
+ b=QevCJkNl306icA/soUe6RUfcouARO6NpHtSu7M0f4cSLABVaIQKgzdfogaHL4Zku8J
+ /CVB2m9MEH58CbXI8FtPS6U211VM9ZVaEWf/jHz1wLZ8iZY1Jzr0YzTPJhAuaHzck97z
+ X29ZhKtjpm7OTQY4yv+5tEf6qCCTyIpNWWvzuL6rrYiuJSEd54p/q+bYUxuMU9Li7gIt
+ 3uP2HYsXCS9l5oTFDyxNOsl7CNwayckTx3duVU/l13vbhT4l/q56C5UzzBttssbokViy
+ UH2oY6peCmmtQhJ1FBq4hSI0bStw1UEIa1m15hPINl7tzO/YPKZwPNb0Dd1XvsWdFg/m
+ MvLg==
+X-Gm-Message-State: AOJu0YwO7osU6zmetcSRLfHZEcyve1qk2l+FPCHUexzZ8YI9Z2lZL3mP
+ YbDdosFqX614CGoKICMZEPFXLWSv4JB90eODd5iDyzYC4HdOhYrffQr+tCY1sn4ga+te7liMFT6
+ p
+X-Google-Smtp-Source: AGHT+IGNZ1B0D1k0ieHHBVgli7TqNo9v9dpTqN0h4xpyOk7lwpHXZoXer9je9RPKhsHIvMXBEr0wag==
+X-Received: by 2002:a17:90b:1943:b0:2a2:c127:5aed with SMTP id
+ nk3-20020a17090b194300b002a2c1275aedmr10438332pjb.0.1712598598262; 
+ Mon, 08 Apr 2024 10:49:58 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.15
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.49.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:50:16 -0700 (PDT)
+ Mon, 08 Apr 2024 10:49:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alexander Monakov <amonakov@ispras.ru>,
- Mikhail Romanov <mmromanov@ispras.ru>
-Subject: [PULL 30/35] util/bufferiszero: Reorganize for early test for
- acceleration
-Date: Mon,  8 Apr 2024 07:49:24 -1000
-Message-Id: <20240408174929.862917-31-richard.henderson@linaro.org>
+Cc: Keith Packard <keithp@keithp.com>
+Subject: [PULL 18/35] target/m68k: Support semihosting on non-ColdFire targets
+Date: Mon,  8 Apr 2024 07:49:12 -1000
+Message-Id: <20240408174929.862917-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,209 +94,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Monakov <amonakov@ispras.ru>
+From: Keith Packard <keithp@keithp.com>
 
-Test for length >= 256 inline, where is is often a constant.
-Before calling into the accelerated routine, sample three bytes
-from the buffer, which handles most non-zero buffers.
+According to the m68k semihosting spec:
 
-Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
-Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
-Message-Id: <20240206204809.9859-3-amonakov@ispras.ru>
-[rth: Use __builtin_constant_p; move the indirect call out of line.]
+"The instruction used to trigger a semihosting request depends on the
+ m68k processor variant.  On ColdFire, "halt" is used; on other processors
+ (which don't implement "halt"), "bkpt #0" may be used."
+
+Add support for non-CodeFire processors by matching BKPT #0 instructions.
+
+Signed-off-by: Keith Packard <keithp@keithp.com>
+[rth: Use semihosting_test()]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/cutils.h | 32 ++++++++++++++++-
- util/bufferiszero.c   | 84 +++++++++++++++++--------------------------
- 2 files changed, 63 insertions(+), 53 deletions(-)
+ target/m68k/translate.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-index 92c927a6a3..741dade7cf 100644
---- a/include/qemu/cutils.h
-+++ b/include/qemu/cutils.h
-@@ -187,9 +187,39 @@ char *freq_to_str(uint64_t freq_hz);
- /* used to print char* safely */
- #define STR_OR_NULL(str) ((str) ? (str) : "null")
- 
--bool buffer_is_zero(const void *buf, size_t len);
-+/*
-+ * Check if a buffer is all zeroes.
-+ */
-+
-+bool buffer_is_zero_ool(const void *vbuf, size_t len);
-+bool buffer_is_zero_ge256(const void *vbuf, size_t len);
- bool test_buffer_is_zero_next_accel(void);
- 
-+static inline bool buffer_is_zero_sample3(const char *buf, size_t len)
-+{
-+    /*
-+     * For any reasonably sized buffer, these three samples come from
-+     * three different cachelines.  In qemu-img usage, we find that
-+     * each byte eliminates more than half of all buffer testing.
-+     * It is therefore critical to performance that the byte tests
-+     * short-circuit, so that we do not pull in additional cache lines.
-+     * Do not "optimize" this to !(a | b | c).
-+     */
-+    return !buf[0] && !buf[len - 1] && !buf[len / 2];
-+}
-+
-+#ifdef __OPTIMIZE__
-+static inline bool buffer_is_zero(const void *buf, size_t len)
-+{
-+    return (__builtin_constant_p(len) && len >= 256
-+            ? buffer_is_zero_sample3(buf, len) &&
-+              buffer_is_zero_ge256(buf, len)
-+            : buffer_is_zero_ool(buf, len));
-+}
-+#else
-+#define buffer_is_zero  buffer_is_zero_ool
-+#endif
-+
- /*
-  * Implementation of ULEB128 (http://en.wikipedia.org/wiki/LEB128)
-  * Input is limited to 14-bit numbers
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 641d5f9b9e..972f394cbd 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -26,8 +26,9 @@
- #include "qemu/bswap.h"
- #include "host/cpuinfo.h"
- 
--static bool
--buffer_zero_int(const void *buf, size_t len)
-+static bool (*buffer_is_zero_accel)(const void *, size_t);
-+
-+static bool buffer_is_zero_integer(const void *buf, size_t len)
- {
-     if (unlikely(len < 8)) {
-         /* For a very small buffer, simply accumulate all the bytes.  */
-@@ -128,60 +129,38 @@ buffer_zero_avx2(const void *buf, size_t len)
- }
- #endif /* CONFIG_AVX2_OPT */
- 
--/*
-- * Make sure that these variables are appropriately initialized when
-- * SSE2 is enabled on the compiler command-line, but the compiler is
-- * too old to support CONFIG_AVX2_OPT.
-- */
--#if defined(CONFIG_AVX2_OPT)
--# define INIT_USED     0
--# define INIT_LENGTH   0
--# define INIT_ACCEL    buffer_zero_int
--#else
--# ifndef __SSE2__
--#  error "ISA selection confusion"
--# endif
--# define INIT_USED     CPUINFO_SSE2
--# define INIT_LENGTH   64
--# define INIT_ACCEL    buffer_zero_sse2
--#endif
--
--static unsigned used_accel = INIT_USED;
--static unsigned length_to_accel = INIT_LENGTH;
--static bool (*buffer_accel)(const void *, size_t) = INIT_ACCEL;
--
- static unsigned __attribute__((noinline))
- select_accel_cpuinfo(unsigned info)
- {
-     /* Array is sorted in order of algorithm preference. */
-     static const struct {
-         unsigned bit;
--        unsigned len;
-         bool (*fn)(const void *, size_t);
-     } all[] = {
- #ifdef CONFIG_AVX2_OPT
--        { CPUINFO_AVX2,    128, buffer_zero_avx2 },
-+        { CPUINFO_AVX2,    buffer_zero_avx2 },
- #endif
--        { CPUINFO_SSE2,     64, buffer_zero_sse2 },
--        { CPUINFO_ALWAYS,    0, buffer_zero_int },
-+        { CPUINFO_SSE2,    buffer_zero_sse2 },
-+        { CPUINFO_ALWAYS,  buffer_is_zero_integer },
-     };
- 
-     for (unsigned i = 0; i < ARRAY_SIZE(all); ++i) {
-         if (info & all[i].bit) {
--            length_to_accel = all[i].len;
--            buffer_accel = all[i].fn;
-+            buffer_is_zero_accel = all[i].fn;
-             return all[i].bit;
-         }
-     }
-     return 0;
- }
- 
--#if defined(CONFIG_AVX2_OPT)
-+static unsigned used_accel;
-+
- static void __attribute__((constructor)) init_accel(void)
- {
-     used_accel = select_accel_cpuinfo(cpuinfo_init());
- }
--#endif /* CONFIG_AVX2_OPT */
-+
-+#define INIT_ACCEL NULL
- 
- bool test_buffer_is_zero_next_accel(void)
- {
-@@ -194,36 +173,37 @@ bool test_buffer_is_zero_next_accel(void)
-     used_accel |= used;
-     return used;
- }
--
--static bool select_accel_fn(const void *buf, size_t len)
--{
--    if (likely(len >= length_to_accel)) {
--        return buffer_accel(buf, len);
--    }
--    return buffer_zero_int(buf, len);
--}
--
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 8f61ff1238..659543020b 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -2646,6 +2646,11 @@ DISAS_INSN(bkpt)
+ #if defined(CONFIG_USER_ONLY)
+     gen_exception(s, s->base.pc_next, EXCP_DEBUG);
  #else
--#define select_accel_fn  buffer_zero_int
- bool test_buffer_is_zero_next_accel(void)
- {
-     return false;
- }
-+
-+#define INIT_ACCEL buffer_is_zero_integer
++    /* BKPT #0 is the alternate semihosting instruction. */
++    if ((insn & 7) == 0 && semihosting_test(s)) {
++        gen_exception(s, s->pc, EXCP_SEMIHOSTING);
++        return;
++    }
+     gen_exception(s, s->base.pc_next, EXCP_ILLEGAL);
  #endif
- 
--/*
-- * Checks if a buffer is all zeroes
-- */
--bool buffer_is_zero(const void *buf, size_t len)
-+static bool (*buffer_is_zero_accel)(const void *, size_t) = INIT_ACCEL;
-+
-+bool buffer_is_zero_ool(const void *buf, size_t len)
- {
-     if (unlikely(len == 0)) {
-         return true;
-     }
-+    if (!buffer_is_zero_sample3(buf, len)) {
-+        return false;
-+    }
-+    /* All bytes are covered for any len <= 3.  */
-+    if (unlikely(len <= 3)) {
-+        return true;
-+    }
- 
--    /* Fetch the beginning of the buffer while we select the accelerator.  */
--    __builtin_prefetch(buf);
--
--    /* Use an optimized zero check if possible.  Note that this also
--       includes a check for an unrolled loop over 64-bit integers.  */
--    return select_accel_fn(buf, len);
-+    if (likely(len >= 256)) {
-+        return buffer_is_zero_accel(buf, len);
-+    }
-+    return buffer_is_zero_integer(buf, len);
-+}
-+
-+bool buffer_is_zero_ge256(const void *buf, size_t len)
-+{
-+    return buffer_is_zero_accel(buf, len);
  }
 -- 
 2.34.1
