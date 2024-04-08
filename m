@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1BD7CD129C
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4BB7CD1296
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtrJn-0001EE-3a; Mon, 08 Apr 2024 11:53:59 -0400
+	id 1rtrK9-0001LT-C1; Mon, 08 Apr 2024 11:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtrJk-0001Do-GX
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:53:56 -0400
+ id 1rtrK8-0001LJ-1G
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtrJi-0001oT-L7
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:53:56 -0400
+ id 1rtrK6-0001r4-L6
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712591632;
+ s=mimecast20190719; t=1712591658;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IhGSxJKt87Lk51t1FMaldViRBBvgZjPXp/8O2/Jk8T4=;
- b=aKwYVOQq/dBNW1kqw4aaytIhLs6jLMd401jKmQayeCW3vu/JU8S2Mmpjk7Pqoat2Y86Dod
- QxNOcciOHv20fs14PfBQ+oxUbKjA53s/h797kQ5GA06pKv3xAeMzFUHV3UQuuiSyrR86m3
- r3CxiIBe0j5qsvKa7rLrBdKNJv66zM4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HTrT2BEVdcUWgqnmnvX6ad7E9+4n+PuOGXheGFWkRfI=;
+ b=cc15dIc/hWaRCxVVvLSACOLTD90A7rjVC8R/vQIz/CBwJBTpzF2mHSWfnp/3+Vix7us/ub
+ ZG9afpJXydVBsq6WxHu+pd5OoM8PehldnjA+7dAb7vtnlB93cf0AAzZ6ueuWrhMm3h/r14
+ Ao58es6BQmECVwbg1MlB/MNg+0wdg20=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-220-IVXSdqe2Phu1NUQbnUR_Bw-1; Mon, 08 Apr 2024 11:53:51 -0400
-X-MC-Unique: IVXSdqe2Phu1NUQbnUR_Bw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-416664de900so9016965e9.2
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:53:50 -0700 (PDT)
+ us-mta-590-cmH3mPuGPIS0AQihc0w2EA-1; Mon, 08 Apr 2024 11:54:16 -0400
+X-MC-Unique: cmH3mPuGPIS0AQihc0w2EA-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4165339d3a5so7513905e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:54:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712591628; x=1713196428;
+ d=1e100.net; s=20230601; t=1712591654; x=1713196454;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IhGSxJKt87Lk51t1FMaldViRBBvgZjPXp/8O2/Jk8T4=;
- b=F88DbZTdvWkiCUg5o8DITZE2mTCznf8kOzQNjHC6A4RkV6hTiPEEJHC6AjXKc2caH6
- 5fHFgc3WC3Ix8Zq94epDc5jVP6JfnFr5YsGhW8l13KxnypZadDFPwHpSPpbi2aTUc8Bh
- T+In518vsBWfoGo6zgMyQewvCkAd7yzMz5wLVESGwZafwqEv4+g3ULQW7WBe6ZaVSSeB
- rKf+Xa3DROCsG3ZOXkDrF82q57Hrgq+rL4NJbIyImnyilJBFrVoeQyjc/Mr1sZhHS9+r
- OCCvAb7attmp+yCl3hPtXjjvnls8ExH4qUGyuU7RtL2hUAEZrnCICAnPn0i3jPEk+dNd
- 8c4A==
-X-Gm-Message-State: AOJu0YyNXQW6AAWs8n1C/WZV2ZSCGf1SG8Mkl/uzgkJoc6pPhxPbTEQ5
- MSEESS4ya6k4RlSricOG4GLmE7VIGhWw7N+Lk/6Esj0Nk39nPUfR+hAsY9cC5/63s3I8NsvH2Hz
- Tu0AZQM4boyYm6If3p+QDDQOU0lcUnMBzIHYt/SOMJrlOSUsmpRYE7uaK1cUtI10tvtkgxaDfQr
- V8Fov7+PO+8EPqp5EnltevwK3zf9vqH+jgFsaI
-X-Received: by 2002:a05:600c:470b:b0:416:6be9:c477 with SMTP id
- v11-20020a05600c470b00b004166be9c477mr3030468wmo.10.1712591628728; 
- Mon, 08 Apr 2024 08:53:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEINZWfJhDokKx3xnRZM1ABWHSaUQpx8PvCCfJtW9YkdTuNYt5at91c8DW6LB0zUmrbG7S3og==
-X-Received: by 2002:a05:600c:470b:b0:416:6be9:c477 with SMTP id
- v11-20020a05600c470b00b004166be9c477mr3030456wmo.10.1712591628484; 
- Mon, 08 Apr 2024 08:53:48 -0700 (PDT)
+ bh=HTrT2BEVdcUWgqnmnvX6ad7E9+4n+PuOGXheGFWkRfI=;
+ b=Yku6i0ujnbGKSy4/HfuT0qBGkcuw9Qd0oxQm3UR7e4k3MXz/ih/Ct6Eswaoq/OsT1B
+ sq5CU3YHUNjjwhtZxBHuo1nRzIhm8aEJJNxJg79Z3h6Rqdye90C8S45znasYqc846VFQ
+ Btb7JO6SaT5+qk8biA/cUUTrCGq7AOp2WapExzsKXDEjHBtxPePtrX69BwMBmExywRtt
+ xbsng2IpKLnGfkTTkOPkUbJS8OJ4c4wyraRy7otm19ucJxRjOAiWJIZAGdTlDjsOTbDn
+ HAd1nLOkmo5sli0tQtBk4px8vUQSVWqe8hjBBt9jDcedB0qvD2WRM9xz05U8GqzQ94u4
+ z5eA==
+X-Gm-Message-State: AOJu0YwRvnSzrCra+zGd+g2GCUJ7BM73KiZNSWiPj3JfORutIMOgoqv1
+ KZTTpvb/nAWdqLsly1qoExSnuibTn3+WkV0R4yB2Ov/t8bT2AI8dHFCevBqsg7LP0pmHKJ2tzZF
+ zcw54qQ1HWeLN8XkaA6X0Em6a6DGRq+ThwIAHp4WFcrkK6FYKZIM3fY74HWddKQOggFcpfRQZ0v
+ Huk/VIpFBvQcDPGLL6oEH2BF3oJ4AZbVdtgH59
+X-Received: by 2002:a05:600c:3592:b0:416:8152:8a70 with SMTP id
+ p18-20020a05600c359200b0041681528a70mr1347598wmq.33.1712591654767; 
+ Mon, 08 Apr 2024 08:54:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHsAfPLKZcP/L4W12iqKbbF1J8CSVamSQWifNyHScTj3pfsqnHu7p+STcDmCalydrTXyhm1tg==
+X-Received: by 2002:a05:600c:3592:b0:416:8152:8a70 with SMTP id
+ p18-20020a05600c359200b0041681528a70mr1347591wmq.33.1712591654520; 
+ Mon, 08 Apr 2024 08:54:14 -0700 (PDT)
 Received: from avogadro.local ([151.95.152.232])
  by smtp.gmail.com with ESMTPSA id
- 5-20020a05600c024500b004161b59e230sm13600253wmj.41.2024.04.08.08.53.47
+ p15-20020a05600c358f00b004156b689edfsm13918903wmq.33.2024.04.08.08.54.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 08:53:47 -0700 (PDT)
+ Mon, 08 Apr 2024 08:54:13 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH v2 05/18] yank: only build if needed
-Date: Mon,  8 Apr 2024 17:53:17 +0200
-Message-ID: <20240408155330.522792-6-pbonzini@redhat.com>
+Subject: [PATCH v2 14/18] memory-device: move stubs out of stubs/
+Date: Mon,  8 Apr 2024 17:53:26 +0200
+Message-ID: <20240408155330.522792-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408155330.522792-1-pbonzini@redhat.com>
 References: <20240408155330.522792-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -103,34 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The yank feature is not used in user emulation.
+Since the memory-device stubs are needed exactly when the Kconfig symbols are not
+needed, move them to hw/mem/.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- util/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ stubs/memory_device.c => hw/mem/memory-device-stubs.c | 0
+ hw/mem/meson.build                                    | 1 +
+ stubs/meson.build                                     | 1 -
+ 3 files changed, 1 insertion(+), 1 deletion(-)
+ rename stubs/memory_device.c => hw/mem/memory-device-stubs.c (100%)
 
-diff --git a/util/meson.build b/util/meson.build
-index 0ef9886be04..2ad57b10ba2 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -60,7 +60,6 @@ util_ss.add(files('stats64.c'))
- util_ss.add(files('systemd.c'))
- util_ss.add(files('transactions.c'))
- util_ss.add(files('guest-random.c'))
--util_ss.add(files('yank.c'))
- util_ss.add(files('int128.c'))
- util_ss.add(files('memalign.c'))
- util_ss.add(files('interval-tree.c'))
-@@ -117,6 +116,7 @@ if have_block
-     util_ss.add(files('vfio-helpers.c'))
-     util_ss.add(files('chardev_open.c'))
-   endif
-+  util_ss.add(files('yank.c'))
- endif
+diff --git a/stubs/memory_device.c b/hw/mem/memory-device-stubs.c
+similarity index 100%
+rename from stubs/memory_device.c
+rename to hw/mem/memory-device-stubs.c
+diff --git a/hw/mem/meson.build b/hw/mem/meson.build
+index faee1fe9360..1c1c6da24b5 100644
+--- a/hw/mem/meson.build
++++ b/hw/mem/meson.build
+@@ -6,6 +6,7 @@ mem_ss.add(when: 'CONFIG_NVDIMM', if_true: files('nvdimm.c'))
+ mem_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_true: files('cxl_type3.c'))
+ system_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_false: files('cxl_type3_stubs.c'))
  
- if cpu == 'aarch64'
++system_ss.add(when: 'CONFIG_MEM_DEVICE', if_false: files('memory-device-stubs.c'))
+ system_ss.add_all(when: 'CONFIG_MEM_DEVICE', if_true: mem_ss)
+ 
+ system_ss.add(when: 'CONFIG_SPARSE_MEM', if_true: files('sparse-mem.c'))
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 92887660e41..a4404e765ab 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -31,7 +31,6 @@ stub_ss.add(files('monitor.c'))
+ stub_ss.add(files('monitor-core.c'))
+ stub_ss.add(files('physmem.c'))
+ stub_ss.add(files('qemu-timer-notify-cb.c'))
+-stub_ss.add(files('memory_device.c'))
+ stub_ss.add(files('qmp-command-available.c'))
+ stub_ss.add(files('qmp-quit.c'))
+ stub_ss.add(files('qtest.c'))
 -- 
 2.44.0
 
