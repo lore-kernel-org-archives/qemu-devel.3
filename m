@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA68C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56967C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtlbI-0002TV-SZ; Mon, 08 Apr 2024 05:47:40 -0400
+	id 1rtlee-0003dg-Vh; Mon, 08 Apr 2024 05:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtlbH-0002TK-93
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:47:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rtlec-0003cU-G1
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:51:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtlbD-0005hv-F4
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:47:39 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rtlea-0006I7-My
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:51:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712569654;
+ s=mimecast20190719; t=1712569863;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=42sfYskPssuPjeznEW/BvX1nGe6MV+cM8zoJKwohHuc=;
- b=BMlQwlo+myPvrJA+JP3LzlZ7UOIJsTgsryMMSd1sRYcC2pA2i4xjI2G01rLBJMHP1Edw/J
- BKfCiPcDFDeCK7EztuDqmclcj0FnOg2bKCUSqMY/wDIUeOZeJV8ZrnYP/BMm61q7O1lkiW
- Y5SC4ZXQUiYazLUF38HCvCSMQCSIeBE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UKd/RBHH2eEUyzECHRh3wblVMLrd7XMNRJio0sNuBm8=;
+ b=P11riQmBzo9vJWARsRhjRtkm5nT3gW0GHZ2M6gAgManfjyenYfBziY6if6AjI0rI5SZ8he
+ N/zhSx7LMqsq5OvqvnxKriwUvKiLnpgvEnF6HIcGcEFzMaNv+nhPFhVmP70jH9GFrrm5TB
+ M1bLT8tIjhrEf5D2iCICS7VWRHmsvvU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-AidBcL2RNqa1voQHlEerZA-1; Mon, 08 Apr 2024 05:47:32 -0400
-X-MC-Unique: AidBcL2RNqa1voQHlEerZA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-343c86edeb7so2318812f8f.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:47:32 -0700 (PDT)
+ us-mta-513-eJzsdNaRMfGZrgPlp95S3g-1; Mon, 08 Apr 2024 05:51:02 -0400
+X-MC-Unique: eJzsdNaRMfGZrgPlp95S3g-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-343ee356227so1430787f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:51:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712569650; x=1713174450;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=42sfYskPssuPjeznEW/BvX1nGe6MV+cM8zoJKwohHuc=;
- b=A/f0LN72A1cWvS0ci400djvdzwWJA/Vz74/WhgD8jE2wGqLDIbWa7fh0ak31gE7RlA
- d/s2X/5JoHQ1hXJYZr2nuNmRSeAMRpR+kzRw0+jSgSpksDsZ5uNQgzaI5Kvcti8Uf+IF
- nMuZFv4c1zTXnwVxG4PXZm0g0A6KmCl9QJiP3zVeBFsZj8xnnwfMjdSjAlb5gLxx64SP
- sDyRG1B96AvoLYmWHrHeEb7DeqRjX8vJe8dDq0CkpMWdjAthY9XY7GjZEfQ1EWyS6dlf
- UYSHY6UYg7b5m0xRLOq72Y92ft6AWwwzbsdo5cgRai/TZr/aub3RubTffR78/mPI7YR6
- 6i/w==
-X-Gm-Message-State: AOJu0Yxq75Wpj2K5tnJlq5iQdShdwNVkeOiyNIApOF1gyYvFDS0+fBvd
- zTQSqJP3vIif8I5VymKj/bWBmO11KdeWyOBK2SzBZ2Xa33XbJB9ipyYKCz/MDsZM9mW/XoFIMGX
- xMCQL9QdnpoFgNPt1bGXTU0DuH+FYSr2Ae5RMMv3Ra2BrilfR+G8A5lz0Qraw/I1dT5k7mYSuU0
- r83IXW46PNZ1mkkLsA+w9YwiR5VVxEKw==
-X-Received: by 2002:a5d:6d84:0:b0:345:c41a:23a2 with SMTP id
- l4-20020a5d6d84000000b00345c41a23a2mr1530334wrs.14.1712569650320; 
- Mon, 08 Apr 2024 02:47:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEszKQyHDWuUALENixLR0AD4jLJOj1/icBA/9m+udILiYCrBbvuRzBftSv/ZCF4xNBKUqZyMQ==
-X-Received: by 2002:a5d:6d84:0:b0:345:c41a:23a2 with SMTP id
- l4-20020a5d6d84000000b00345c41a23a2mr1530299wrs.14.1712569649565; 
- Mon, 08 Apr 2024 02:47:29 -0700 (PDT)
-Received: from redhat.com ([2.52.152.188]) by smtp.gmail.com with ESMTPSA id
- dj15-20020a0560000b0f00b003436cb45f7esm8524803wrb.90.2024.04.08.02.47.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 02:47:29 -0700 (PDT)
-Date: Mon, 8 Apr 2024 05:47:26 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] Revert "hw/virtio: Add support for VDPA network simulation
- devices"
-Message-ID: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
+ d=1e100.net; s=20230601; t=1712569861; x=1713174661;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UKd/RBHH2eEUyzECHRh3wblVMLrd7XMNRJio0sNuBm8=;
+ b=G423M42u2xGUa/N2Eu1knWu+DQyvHNMS4fkx1eDlMo+fkFaVJVt/rYjzHTOE25Bz99
+ 0ld7OVkMG9RV2iPQolEseY4WbN/WfA/PLRfju2T+Fsfw+ROaVUwm8a3GspMl3IlCHkf9
+ JAWEGPtUDTT6U8sWe+y2/oirdPM1c0cZx1Ov1tZnYuhPooXu0EJ9uCAwtWYQTC9N5BZX
+ CuXAIF9JzzySovT+/Fo8NDKkxIEqQWnu2I0g4SkN9zxbEEvpY3DPVa6ss6TduJXg82sZ
+ CQ+L4Q1Bir3kSu0t6/nJFsr+V3DxHCJpPd9Capqp4v94HXqj1ZdT4NDG/MUGKH/ewh70
+ Ox/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWz1OYLaPliJSAVw55hkyNVcVCQL3EnrSOSvgkcqCETFFkIKVLpbBliRwgM5kMi9iEfy8XO0SQOh3BHQh1cMHvC021q8Jc=
+X-Gm-Message-State: AOJu0YysMuWW9R1JaA5C8RD1EgaYTuoTNm+KM0/4Zwqc57NQGGnQLe4t
+ WNT4H1+8Aeg48YZ1xYKn+pXwikIJ54QrTjLQxTEe7M89Oiu8e7iA/M+Ib2gEdYoibczHvhEXsDt
+ pZim42P1XooLB2+V+kHoxrxViXoAonWUvc3en1j9zdCyF4xuNC2GGp+aSQ4Mfk0aYsR8pdJVlvJ
+ VWAYwkv4DWwFMsTPYa2PuGWDqOenA=
+X-Received: by 2002:a5d:634d:0:b0:343:7785:fb04 with SMTP id
+ b13-20020a5d634d000000b003437785fb04mr7540693wrw.67.1712569860907; 
+ Mon, 08 Apr 2024 02:51:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEj3ONXkGyun5tFE5IphDNdhqCH5yPaZOkaYesdBIGiDj94OXWI7dVDpie+nhYfB8erMnyTsT5aBNchOXT+4Vg=
+X-Received: by 2002:a5d:634d:0:b0:343:7785:fb04 with SMTP id
+ b13-20020a5d634d000000b003437785fb04mr7540680wrw.67.1712569860588; Mon, 08
+ Apr 2024 02:51:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+References: <20240404194757.9343-1-philmd@linaro.org>
+ <20240404194757.9343-4-philmd@linaro.org>
+In-Reply-To: <20240404194757.9343-4-philmd@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 8 Apr 2024 11:50:48 +0200
+Message-ID: <CABgObfb=Yfd55YiYgrN0YBN+bpZxJs4XHpac4t=kupHKm6oS0w@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 3/7] monitor: Rework stubs to simplify user
+ emulation linking
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -97,609 +101,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit cd341fd1ffded978b2aa0b5309b00be7c42e347c.
+On Thu, Apr 4, 2024 at 9:48=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+>
+> Currently monitor stubs are scattered in 3 files.
+>
+> Merge these stubs in 2 files, a generic one (monitor-core)
+> included in all builds (in particular user emulation), and
+> a less generic one to be included by tools and system emulation.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  stubs/fdset.c        | 17 -----------------
 
-The patch adds non-upstream code in
-include/standard-headers/linux/virtio_pci.h
-which would make maintainance harder.
+Oops, merging fdset.c breaks storage-daemon linking.
 
-Revert for now.
+But it is not needed, all I need is
 
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- include/hw/virtio/virtio-pci.h              |   5 -
- include/hw/virtio/virtio.h                  |  19 --
- include/standard-headers/linux/virtio_pci.h |   7 -
- hw/net/virtio-net.c                         |  16 --
- hw/virtio/virtio-pci.c                      | 189 +-------------------
- hw/virtio/virtio.c                          |  39 ----
- MAINTAINERS                                 |   5 -
- docs/system/device-emulation.rst            |   1 -
- docs/system/devices/vdpa-net.rst            | 121 -------------
- 9 files changed, 3 insertions(+), 399 deletions(-)
- delete mode 100644 docs/system/devices/vdpa-net.rst
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 0bf25e6ca53..67cf80aa846 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -10,7 +10,6 @@ stub_ss.add(files('qemu-timer-notify-cb.c'))
+ stub_ss.add(files('icount.c'))
+ stub_ss.add(files('dump.c'))
+ stub_ss.add(files('error-printf.c'))
+-stub_ss.add(files('fdset.c'))
+ stub_ss.add(files('gdbstub.c'))
+ stub_ss.add(files('get-vm-name.c'))
+ stub_ss.add(files('graph-lock.c'))
+@@ -28,7 +27,10 @@ if libaio.found()
+ endif
+ stub_ss.add(files('migr-blocker.c'))
+ stub_ss.add(files('module-opts.c'))
+-stub_ss.add(files('monitor.c'))
++if have_system or have_tools
++  stub_ss.add(files('monitor.c'))
++  stub_ss.add(files('fdset.c'))
++endif
+ stub_ss.add(files('monitor-core.c'))
+ stub_ss.add(files('physmem.c'))
+ stub_ss.add(files('qemu-timer-notify-cb.c'))
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index 4d57a9c751..59d88018c1 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -43,7 +43,6 @@ enum {
-     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
-     VIRTIO_PCI_FLAG_AER_BIT,
-     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
--    VIRTIO_PCI_FLAG_VDPA_BIT,
- };
- 
- /* Need to activate work-arounds for buggy guests at vmstate load. */
-@@ -90,9 +89,6 @@ enum {
- #define VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED \
-   (1 << VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT)
- 
--/* VDPA supported flags */
--#define VIRTIO_PCI_FLAG_VDPA (1 << VIRTIO_PCI_FLAG_VDPA_BIT)
--
- typedef struct {
-     MSIMessage msg;
-     int virq;
-@@ -144,7 +140,6 @@ struct VirtIOPCIProxy {
-         };
-         VirtIOPCIRegion regs[5];
-     };
--    VirtIOPCIRegion lm;
-     MemoryRegion modern_bar;
-     MemoryRegion io_bar;
-     uint32_t legacy_io_bar_idx;
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index b3c74a1bca..c8f72850bc 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -35,9 +35,6 @@
-                                 (0x1ULL << VIRTIO_F_NOTIFY_ON_EMPTY) | \
-                                 (0x1ULL << VIRTIO_F_ANY_LAYOUT))
- 
--#define LM_DISABLE      0x00
--#define LM_ENABLE       0x01
--
- struct VirtQueue;
- 
- static inline hwaddr vring_align(hwaddr addr,
-@@ -98,11 +95,6 @@ enum virtio_device_endian {
-     VIRTIO_DEVICE_ENDIAN_BIG,
- };
- 
--typedef struct BitmapMemoryRegionCaches {
--    struct rcu_head rcu;
--    MemoryRegionCache bitmap;
--} BitmapMemoryRegionCaches;
--
- /**
-  * struct VirtIODevice - common VirtIO structure
-  * @name: name of the device
-@@ -136,14 +128,6 @@ struct VirtIODevice
-     uint32_t generation;
-     int nvectors;
-     VirtQueue *vq;
--    uint8_t lm_logging_ctrl;
--    uint32_t lm_base_addr_low;
--    uint32_t lm_base_addr_high;
--    uint32_t lm_end_addr_low;
--    uint32_t lm_end_addr_high;
--
--    BitmapMemoryRegionCaches *caches;
--
-     MemoryListener listener;
-     uint16_t device_id;
-     /* @vm_running: current VM running state via virtio_vmstate_change() */
-@@ -395,11 +379,8 @@ hwaddr virtio_queue_get_desc_size(VirtIODevice *vdev, int n);
- hwaddr virtio_queue_get_avail_size(VirtIODevice *vdev, int n);
- hwaddr virtio_queue_get_used_size(VirtIODevice *vdev, int n);
- unsigned int virtio_queue_get_last_avail_idx(VirtIODevice *vdev, int n);
--unsigned int virtio_queue_get_vring_states(VirtIODevice *vdev, int n);
- void virtio_queue_set_last_avail_idx(VirtIODevice *vdev, int n,
-                                      unsigned int idx);
--void virtio_queue_set_vring_states(VirtIODevice *vdev, int n,
--                                   unsigned int idx);
- void virtio_queue_restore_last_avail_idx(VirtIODevice *vdev, int n);
- void virtio_queue_invalidate_signalled_used(VirtIODevice *vdev, int n);
- void virtio_queue_update_used_idx(VirtIODevice *vdev, int n);
-diff --git a/include/standard-headers/linux/virtio_pci.h b/include/standard-headers/linux/virtio_pci.h
-index 86733278ba..3e2bc2c97e 100644
---- a/include/standard-headers/linux/virtio_pci.h
-+++ b/include/standard-headers/linux/virtio_pci.h
-@@ -221,13 +221,6 @@ struct virtio_pci_cfg_cap {
- #define VIRTIO_PCI_COMMON_ADM_Q_IDX	60
- #define VIRTIO_PCI_COMMON_ADM_Q_NUM	62
- 
--#define LM_LOGGING_CTRL                 0
--#define LM_BASE_ADDR_LOW                4
--#define LM_BASE_ADDR_HIGH               8
--#define LM_END_ADDR_LOW                 12
--#define LM_END_ADDR_HIGH                16
--#define LM_VRING_STATE_OFFSET           0x20
--
- #endif /* VIRTIO_PCI_NO_MODERN */
- 
- /* Admin command status. */
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 58014a92ad..24e5e7d347 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2039,22 +2039,6 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
-             goto err;
-         }
- 
--        /* Mark dirty page's bitmap of guest memory */
--        if (vdev->lm_logging_ctrl == LM_ENABLE) {
--            uint64_t chunk = elem->in_addr[i] / VHOST_LOG_CHUNK;
--            /* Get chunk index */
--            BitmapMemoryRegionCaches *caches = qatomic_rcu_read(&vdev->caches);
--            uint64_t index = chunk / 8;
--            uint64_t shift = chunk % 8;
--            uint8_t val = 0;
--            address_space_read_cached(&caches->bitmap, index, &val,
--                                      sizeof(val));
--            val |= 1 << shift;
--            address_space_write_cached(&caches->bitmap, index, &val,
--                                       sizeof(val));
--            address_space_cache_invalidate(&caches->bitmap, index, sizeof(val));
--        }
--
-         elems[i] = elem;
-         lens[i] = total;
-         i++;
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index eaaf86402c..cb6940fc0e 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1442,155 +1442,6 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
-     return virtio_pci_add_mem_cap(proxy, &cap.cap);
- }
- 
--/* Called within call_rcu().  */
--static void bitmap_free_region_cache(BitmapMemoryRegionCaches *caches)
--{
--    assert(caches != NULL);
--    address_space_cache_destroy(&caches->bitmap);
--    g_free(caches);
--}
--
--static void lm_disable(VirtIODevice *vdev)
--{
--    BitmapMemoryRegionCaches *caches;
--    caches = qatomic_read(&vdev->caches);
--    qatomic_rcu_set(&vdev->caches, NULL);
--    if (caches) {
--        call_rcu(caches, bitmap_free_region_cache, rcu);
--    }
--}
--
--static void lm_enable(VirtIODevice *vdev)
--{
--    BitmapMemoryRegionCaches *old = vdev->caches;
--    BitmapMemoryRegionCaches *new = NULL;
--    hwaddr addr, end, size;
--    int64_t len;
--
--    addr = vdev->lm_base_addr_low | ((hwaddr)(vdev->lm_base_addr_high) << 32);
--    end = vdev->lm_end_addr_low | ((hwaddr)(vdev->lm_end_addr_high) << 32);
--    size = end - addr;
--    if (size <= 0) {
--        error_report("Invalid lm size.");
--        return;
--    }
--
--    new = g_new0(BitmapMemoryRegionCaches, 1);
--    len = address_space_cache_init(&new->bitmap, vdev->dma_as, addr, size,
--                                   true);
--    if (len < size) {
--        virtio_error(vdev, "Cannot map bitmap");
--        goto err_bitmap;
--    }
--    qatomic_rcu_set(&vdev->caches, new);
--
--    if (old) {
--        call_rcu(old, bitmap_free_region_cache, rcu);
--    }
--
--    return;
--
--err_bitmap:
--    address_space_cache_destroy(&new->bitmap);
--    g_free(new);
--}
--
--static uint64_t virtio_pci_lm_read(void *opaque, hwaddr addr,
--                                       unsigned size)
--{
--    VirtIOPCIProxy *proxy = opaque;
--    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
--    hwaddr offset_end = LM_VRING_STATE_OFFSET +
--                        virtio_pci_queue_mem_mult(proxy) * VIRTIO_QUEUE_MAX;
--    uint32_t val;
--    int qid;
--
--    if (vdev == NULL) {
--        return UINT64_MAX;
--    }
--    switch (addr) {
--    case LM_LOGGING_CTRL:
--        val = vdev->lm_logging_ctrl;
--        break;
--    case LM_BASE_ADDR_LOW:
--        val = vdev->lm_base_addr_low;
--        break;
--    case LM_BASE_ADDR_HIGH:
--        val = vdev->lm_base_addr_high;
--        break;
--    case LM_END_ADDR_LOW:
--        val = vdev->lm_end_addr_low;
--        break;
--    case LM_END_ADDR_HIGH:
--        val = vdev->lm_end_addr_high;
--        break;
--    default:
--        if (addr >= LM_VRING_STATE_OFFSET && addr <= offset_end) {
--            qid = (addr - LM_VRING_STATE_OFFSET) /
--                  virtio_pci_queue_mem_mult(proxy);
--            val = virtio_queue_get_vring_states(vdev, qid);
--        } else
--            val = 0;
--
--        break;
--    }
--
--    return val;
--}
--
--static void virtio_pci_lm_write(void *opaque, hwaddr addr,
--                                    uint64_t val, unsigned size)
--{
--    VirtIOPCIProxy *proxy = opaque;
--    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
--    hwaddr offset_end = LM_VRING_STATE_OFFSET +
--                        virtio_pci_queue_mem_mult(proxy) * VIRTIO_QUEUE_MAX;
--    int qid;
--
--    if (vdev == NULL) {
--        return;
--    }
--
--    switch (addr) {
--    case LM_LOGGING_CTRL:
--        vdev->lm_logging_ctrl = val;
--        switch (val) {
--        case LM_DISABLE:
--            lm_disable(vdev);
--            break;
--        case LM_ENABLE:
--            lm_enable(vdev);
--            break;
--        default:
--            virtio_error(vdev, "Unsupport LM_LOGGING_CTRL value: %"PRIx64,
--                         val);
--                break;
--        };
--
--        break;
--    case LM_BASE_ADDR_LOW:
--        vdev->lm_base_addr_low = val;
--        break;
--    case LM_BASE_ADDR_HIGH:
--        vdev->lm_base_addr_high = val;
--        break;
--    case LM_END_ADDR_LOW:
--        vdev->lm_end_addr_low = val;
--        break;
--    case LM_END_ADDR_HIGH:
--        vdev->lm_end_addr_high = val;
--        break;
--    default:
--        if (addr >= LM_VRING_STATE_OFFSET && addr <= offset_end) {
--            qid = (addr - LM_VRING_STATE_OFFSET) /
--                  virtio_pci_queue_mem_mult(proxy);
--            virtio_queue_set_vring_states(vdev, qid, val);
--        } else
--            virtio_error(vdev, "Unsupport addr: %"PRIx64, addr);
--        break;
--    }
--}
--
- static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
-                                        unsigned size)
- {
-@@ -1972,15 +1823,6 @@ static void virtio_pci_modern_regions_init(VirtIOPCIProxy *proxy,
-         },
-         .endianness = DEVICE_LITTLE_ENDIAN,
-     };
--    static const MemoryRegionOps lm_ops = {
--        .read = virtio_pci_lm_read,
--        .write = virtio_pci_lm_write,
--        .impl = {
--            .min_access_size = 1,
--            .max_access_size = 4,
--        },
--        .endianness = DEVICE_LITTLE_ENDIAN,
--    };
-     g_autoptr(GString) name = g_string_new(NULL);
- 
-     g_string_printf(name, "virtio-pci-common-%s", vdev_name);
-@@ -2017,14 +1859,6 @@ static void virtio_pci_modern_regions_init(VirtIOPCIProxy *proxy,
-                           proxy,
-                           name->str,
-                           proxy->notify_pio.size);
--    if (proxy->flags & VIRTIO_PCI_FLAG_VDPA) {
--        g_string_printf(name, "virtio-pci-lm-%s", vdev_name);
--        memory_region_init_io(&proxy->lm.mr, OBJECT(proxy),
--                          &lm_ops,
--                          proxy,
--                          name->str,
--                          proxy->lm.size);
--    }
- }
- 
- static void virtio_pci_modern_region_map(VirtIOPCIProxy *proxy,
-@@ -2187,10 +2021,6 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-         virtio_pci_modern_mem_region_map(proxy, &proxy->isr, &cap);
-         virtio_pci_modern_mem_region_map(proxy, &proxy->device, &cap);
-         virtio_pci_modern_mem_region_map(proxy, &proxy->notify, &notify.cap);
--        if (proxy->flags & VIRTIO_PCI_FLAG_VDPA) {
--            memory_region_add_subregion(&proxy->modern_bar,
--                                        proxy->lm.offset, &proxy->lm.mr);
--        }
- 
-         if (modern_pio) {
-             memory_region_init(&proxy->io_bar, OBJECT(proxy),
-@@ -2260,9 +2090,6 @@ static void virtio_pci_device_unplugged(DeviceState *d)
-         virtio_pci_modern_mem_region_unmap(proxy, &proxy->isr);
-         virtio_pci_modern_mem_region_unmap(proxy, &proxy->device);
-         virtio_pci_modern_mem_region_unmap(proxy, &proxy->notify);
--        if (proxy->flags & VIRTIO_PCI_FLAG_VDPA) {
--            memory_region_del_subregion(&proxy->modern_bar, &proxy->lm.mr);
--        }
-         if (modern_pio) {
-             virtio_pci_modern_io_region_unmap(proxy, &proxy->notify_pio);
-         }
-@@ -2317,17 +2144,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-     proxy->notify_pio.type = VIRTIO_PCI_CAP_NOTIFY_CFG;
- 
-     /* subclasses can enforce modern, so do this unconditionally */
--    if (!(proxy->flags & VIRTIO_PCI_FLAG_VDPA)) {
--        memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
--                           /* PCI BAR regions must be powers of 2 */
--                           pow2ceil(proxy->notify.offset + proxy->notify.size));
--    } else {
--        proxy->lm.offset = proxy->notify.offset + proxy->notify.size;
--        proxy->lm.size = 0x20 + VIRTIO_QUEUE_MAX * 4;
--        memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
--                           /* PCI BAR regions must be powers of 2 */
--                           pow2ceil(proxy->lm.offset + proxy->lm.size));
--    }
-+    memory_region_init(&proxy->modern_bar, OBJECT(proxy), "virtio-pci",
-+                       /* PCI BAR regions must be powers of 2 */
-+                       pow2ceil(proxy->notify.offset + proxy->notify.size));
- 
-     if (proxy->disable_legacy == ON_OFF_AUTO_AUTO) {
-         proxy->disable_legacy = pcie_port ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-@@ -2482,8 +2301,6 @@ static Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
-     DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_AER_BIT, false),
--    DEFINE_PROP_BIT("vdpa", VirtIOPCIProxy, flags,
--                    VIRTIO_PCI_FLAG_VDPA_BIT, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index fb6b4ccd83..d229755eae 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3368,18 +3368,6 @@ static uint16_t virtio_queue_split_get_last_avail_idx(VirtIODevice *vdev,
-     return vdev->vq[n].last_avail_idx;
- }
- 
--static uint32_t virtio_queue_split_get_vring_states(VirtIODevice *vdev,
--                                                      int n)
--{
--    struct VirtQueue *vq = &vdev->vq[n];
--    uint16_t avail, used;
--
--    avail = vq->last_avail_idx;
--    used = vq->used_idx;
--
--    return avail | (uint32_t)used << 16;
--}
--
- unsigned int virtio_queue_get_last_avail_idx(VirtIODevice *vdev, int n)
- {
-     if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
-@@ -3389,33 +3377,6 @@ unsigned int virtio_queue_get_last_avail_idx(VirtIODevice *vdev, int n)
-     }
- }
- 
--unsigned int virtio_queue_get_vring_states(VirtIODevice *vdev, int n)
--{
--    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
--        return -1;
--    } else {
--        return virtio_queue_split_get_vring_states(vdev, n);
--    }
--}
--
--static void virtio_queue_split_set_vring_states(VirtIODevice *vdev,
--                                                int n, uint32_t idx)
--{
--    struct VirtQueue *vq = &vdev->vq[n];
--    vq->last_avail_idx = (uint16_t)(idx & 0xffff);
--    vq->shadow_avail_idx = (uint16_t)(idx & 0xffff);
--    vq->used_idx = (uint16_t)(idx >> 16);
--}
--
--void virtio_queue_set_vring_states(VirtIODevice *vdev, int n, uint32_t idx)
--{
--    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
--        return;
--    } else {
--        virtio_queue_split_set_vring_states(vdev, n, idx);
--    }
--}
--
- static void virtio_queue_packed_set_last_avail_idx(VirtIODevice *vdev,
-                                                    int n, unsigned int idx)
- {
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e71183eef9..249b678fc6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2370,11 +2370,6 @@ F: hw/virtio/vhost-user-scmi*
- F: include/hw/virtio/vhost-user-scmi.h
- F: tests/qtest/libqos/virtio-scmi.*
- 
--vdpa-net
--M: Hao Chen <chenh@yusur.tech>
--S: Maintained
--F: docs/system/devices/vdpa-net.rst
--
- virtio-crypto
- M: Gonglei <arei.gonglei@huawei.com>
- S: Supported
-diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
-index e4a27f53c8..f19777411c 100644
---- a/docs/system/device-emulation.rst
-+++ b/docs/system/device-emulation.rst
-@@ -99,4 +99,3 @@ Emulated Devices
-    devices/canokey.rst
-    devices/usb-u2f.rst
-    devices/igb.rst
--   devices/vdpa-net.rst
-diff --git a/docs/system/devices/vdpa-net.rst b/docs/system/devices/vdpa-net.rst
-deleted file mode 100644
-index 323d8c926a..0000000000
---- a/docs/system/devices/vdpa-net.rst
-+++ /dev/null
-@@ -1,121 +0,0 @@
--vdpa net
--============
--
--This document explains the setup and usage of the vdpa network device.
--The vdpa network device is a paravirtualized vdpa emulate device.
--
--Description
-------------
--
--VDPA net devices support dirty page bitmap mark and vring state saving and recovery.
--
--Users can use this VDPA device for live migration simulation testing in a nested virtualization environment.
--
--Registers layout
------------------
--
--The vdpa device add live migrate registers layout as follow::
--
--  Offset       Register Name	        Bitwidth     Associated vq
--  0x0          LM_LOGGING_CTRL          4bits
--  0x10         LM_BASE_ADDR_LOW         32bits
--  0x14         LM_BASE_ADDR_HIGH        32bits
--  0x18         LM_END_ADDR_LOW          32bits
--  0x1c         LM_END_ADDR_HIGH         32bits
--  0x20         LM_RING_STATE_OFFSET	32bits       vq0
--  0x24         LM_RING_STATE_OFFSET	32bits       vq1
--  0x28         LM_RING_STATE_OFFSET	32bits       vq2
--  ......
--  0x20+1023*4  LM_RING_STATE_OFFSET     32bits       vq1023
--
--These registers are extended at the end of the notify bar space.
--
--Architecture diagram
----------------------
--::
--
--  |------------------------------------------------------------------------|
--  | guest-L1-user-space                                                    |
--  |                                                                        |
--  |                               |----------------------------------------|
--  |                               |       [virtio-net driver]              |
--  |                               |              ^  guest-L2-src(iommu=on) |
--  |                               |--------------|-------------------------|
--  |                               |              |  qemu-L2-src(viommu)    |
--  | [dpdk-vdpa]<->[vhost socket]<-+->[vhost-user backend(iommu=on)]        |
--  --------------------------------------------------------------------------
--  --------------------------------------------------------------------------
--  |       ^                             guest-L1-kernel-space              |
--  |       |                                                                |
--  |    [VFIO]                                                              |
--  |       ^                                                                |
--  |       |                             guest-L1-src(iommu=on)             |
--  --------|-----------------------------------------------------------------
--  --------|-----------------------------------------------------------------
--  | [vdpa net device(iommu=on)]        [manager nic device]                |
--  |          |                                    |                        |
--  |          |                                    |                        |
--  |     [tap device]     qemu-L1-src(viommu)      |                        |
--  ------------------------------------------------+-------------------------
--                                                  |
--                                                  |
--                        ---------------------     |
--                        | kernel net bridge |<-----
--                        |     virbr0        |<----------------------------------
--                        ---------------------                                  |
--                                                                               |
--                                                                               |
--  --------------------------------------------------------------------------   |
--  | guest-L1-user-space                                                    |   |
--  |                                                                        |   |
--  |                               |----------------------------------------|   |
--  |                               |       [virtio-net driver]              |   |
--  |                               |              ^  guest-L2-dst(iommu=on) |   |
--  |                               |--------------|-------------------------|   |
--  |                               |              |  qemu-L2-dst(viommu)    |   |
--  | [dpdk-vdpa]<->[vhost socket]<-+->[vhost-user backend(iommu=on)]        |   |
--  --------------------------------------------------------------------------   |
--  --------------------------------------------------------------------------   |
--  |       ^                             guest-L1-kernel-space              |   |
--  |       |                                                                |   |
--  |    [VFIO]                                                              |   |
--  |       ^                                                                |   |
--  |       |                             guest-L1-dst(iommu=on)             |   |
--  --------|-----------------------------------------------------------------   |
--  --------|-----------------------------------------------------------------   |
--  | [vdpa net device(iommu=on)]        [manager nic device]----------------+----
--  |          |                                                             |
--  |          |                                                             |
--  |     [tap device]     qemu-L1-dst(viommu)                               |
--  --------------------------------------------------------------------------
--
--
--Device properties
-------------------
--
--The Virtio vdpa device can be configured with the following properties:
--
-- * ``vdpa=on`` open vdpa device emulated.
--
--Usages
----------
--This patch add virtio sriov support and vdpa live migrate support.
--You can open vdpa by set xml file as follow::
--
--  <qemu:commandline  xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
--  <qemu:arg value='-device'/>
--  <qemu:arg value='intel-iommu,intremap=on,device-iotlb=on,aw-bits=48'/>
--  <qemu:arg value='-netdev'/>
--  <qemu:arg value='tap,id=hostnet1,script=no,downscript=no,vhost=off'/>
--  <qemu:arg value='-device'/>
--  <qemu:arg value='virtio-net-pci,netdev=hostnet1,id=net1,mac=56:4a:b7:4f:4d:a9,bus=pci.6,addr=0x0,iommu_platform=on,ats=on,vdpa=on'/>
--  </qemu:commandline>
--
--Limitations
-------------
--1. Dependent on tap device with param ``vhost=off``.
--2. Nested virtualization environment only supports ``q35`` machines.
--3. Current only support split vring live migrate.
--
--
--
--- 
-MST
+
+Paolo
+
+>  stubs/monitor-core.c | 20 +++++++++++++++-----
+>  stubs/monitor.c      |  8 ++++++--
+>  stubs/meson.build    |  5 +++--
+>  4 files changed, 24 insertions(+), 26 deletions(-)
+>  delete mode 100644 stubs/fdset.c
+>
+> diff --git a/stubs/fdset.c b/stubs/fdset.c
+> deleted file mode 100644
+> index 56b3663d58..0000000000
+> --- a/stubs/fdset.c
+> +++ /dev/null
+> @@ -1,17 +0,0 @@
+> -#include "qemu/osdep.h"
+> -#include "monitor/monitor.h"
+> -
+> -int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+> -{
+> -    errno =3D ENOSYS;
+> -    return -1;
+> -}
+> -
+> -int64_t monitor_fdset_dup_fd_find(int dup_fd)
+> -{
+> -    return -1;
+> -}
+> -
+> -void monitor_fdset_dup_fd_remove(int dupfd)
+> -{
+> -}
+> diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+> index afa477aae6..72e40bcc15 100644
+> --- a/stubs/monitor-core.c
+> +++ b/stubs/monitor-core.c
+> @@ -1,6 +1,7 @@
+> +/* Monitor stub required for user emulation */
+>  #include "qemu/osdep.h"
+>  #include "monitor/monitor.h"
+> -#include "qapi/qapi-emit-events.h"
+> +#include "../monitor/monitor-internal.h"
+>
+>  Monitor *monitor_cur(void)
+>  {
+> @@ -12,11 +13,22 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
+>      return NULL;
+>  }
+>
+> -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+> +int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
+> +{
+> +    errno =3D ENOSYS;
+> +    return -1;
+> +}
+> +
+> +int64_t monitor_fdset_dup_fd_find(int dup_fd)
+> +{
+> +    return -1;
+> +}
+> +
+> +void monitor_fdset_dup_fd_remove(int dupfd)
+>  {
+>  }
+>
+> -void qapi_event_emit(QAPIEvent event, QDict *qdict)
+> +void monitor_fdsets_cleanup(void)
+>  {
+>  }
+>
+> @@ -24,5 +36,3 @@ int monitor_vprintf(Monitor *mon, const char *fmt, va_l=
+ist ap)
+>  {
+>      abort();
+>  }
+> -
+> -
+> diff --git a/stubs/monitor.c b/stubs/monitor.c
+> index 20786ac4ff..2fc4dc1493 100644
+> --- a/stubs/monitor.c
+> +++ b/stubs/monitor.c
+> @@ -1,7 +1,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+> +#include "qapi/qapi-emit-events.h"
+>  #include "monitor/monitor.h"
+> -#include "../monitor/monitor-internal.h"
+>
+>  int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
+>  {
+> @@ -13,6 +13,10 @@ void monitor_init_hmp(Chardev *chr, bool use_readline,=
+ Error **errp)
+>  {
+>  }
+>
+> -void monitor_fdsets_cleanup(void)
+> +void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+> +{
+> +}
+> +
+> +void qapi_event_emit(QAPIEvent event, QDict *qdict)
+>  {
+>  }
+> diff --git a/stubs/meson.build b/stubs/meson.build
+> index 0bf25e6ca5..ca1bc07d30 100644
+> --- a/stubs/meson.build
+> +++ b/stubs/meson.build
+> @@ -10,7 +10,6 @@ stub_ss.add(files('qemu-timer-notify-cb.c'))
+>  stub_ss.add(files('icount.c'))
+>  stub_ss.add(files('dump.c'))
+>  stub_ss.add(files('error-printf.c'))
+> -stub_ss.add(files('fdset.c'))
+>  stub_ss.add(files('gdbstub.c'))
+>  stub_ss.add(files('get-vm-name.c'))
+>  stub_ss.add(files('graph-lock.c'))
+> @@ -28,7 +27,9 @@ if libaio.found()
+>  endif
+>  stub_ss.add(files('migr-blocker.c'))
+>  stub_ss.add(files('module-opts.c'))
+> -stub_ss.add(files('monitor.c'))
+> +if have_system or have_tools
+> +  stub_ss.add(files('monitor.c'))
+> +endif
+>  stub_ss.add(files('monitor-core.c'))
+>  stub_ss.add(files('physmem.c'))
+>  stub_ss.add(files('qemu-timer-notify-cb.c'))
+> --
+> 2.41.0
+>
 
 
