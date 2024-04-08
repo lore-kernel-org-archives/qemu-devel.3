@@ -4,132 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F0ACD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 03:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48426C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 04:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtfHz-0006Nb-Ok; Sun, 07 Apr 2024 23:03:19 -0400
+	id 1rth2F-00012d-9v; Mon, 08 Apr 2024 00:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1rtfHx-0006N4-Bj
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 23:03:17 -0400
-Received: from mail-bn8nam11on2123.outbound.protection.outlook.com
- ([40.107.236.123] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rth2D-00012U-2c
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 00:55:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>) id 1rtfHv-0003ok-Di
- for qemu-devel@nongnu.org; Sun, 07 Apr 2024 23:03:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IHoFPcVF4bJOJAA+auhQniMOv+3uhEhZsa6eTag2dvMD1pf2cli8TSxpTVl5OwcsduXlm0gzVIHp6LBrL2eD0ZnMKxaTPsyZ5/RzPzzZ/y/SjefA84AHUmM3rXemKo7WNjUTt3es1n+f8HjeXNg3PRP6a3EYN066fXCLehgBE0FMSYTdZN2S1IBmOuJGB58odh71XVVM1Qz6D3enXjbrm3V2xTUjlLdz2/jpBNHFnJmbmkJ2I3f5UCPBBbDPl58bgnCCo0kpTkHF+jbpLUuUHUQIH2Oy//Jtbh6aBEsXrahSXe9JsQVmu48Q8OqBSrLHZXutNk0Cq5035Vt4YBCo7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OJkTrHWzSQIIMBxbDKijtbpDEK4mcxQ6aO0FVc0z0LI=;
- b=JnFUoPjO2cgqYV4p6q8bZ+WriFt0Gno5oho4/p8p60cwrqYkYnXM0m9t9orXrmxXeJ0aOJbyxsYGVjr430A36GbD2Hc1ktXbHkcfmOM3kka3MJ8mSoPtdR3iJ5a0D0aCZyAogPVZ35QAD2BPtQf/tYlG+sG8dAinPkZGDmvh4TKJKmaESidI8Y3oJ1moEvjdRgiIdg4+8CUEswaYqDQKSOAJSmniXP+GaOhW+Sa0DRGSuJ/2tkZ/sh5IMgmHbjjg925vMfZ7NRZoTDkckXLlHCqjMf+wE6QqvA8xviXbZspHyifJMQ6c9d6NzZ9cXn1w81ZQmEUcuV3x6SCZyxA+lQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OJkTrHWzSQIIMBxbDKijtbpDEK4mcxQ6aO0FVc0z0LI=;
- b=L9/dJYNJlEcx84N9qr4w4WEf4+ChJwtbPI1oQZP5Ovpz7f/RNHXZlv5IpBmAa7gMfIo4ZthNAcHW5NTOUUCuWCAui1Ye+RaYksoNmlLMQcosqlyAZJuwHeYoDPVblLOnguOClnGHD3nt96AiavB/xxsDIyH2PTkwyO2KPJH2smo0MiamWEHS9nTK1tCrSpN9+ITr2b92igmekyc1jontlCB5YhIVZeLEZ/GH0NAvGLj+L5BgGe+hVAmfI/cGk4AqHTvgx1td7cxzk0WlHr8OgiguOD4JBF2lj1pL4jZwzhWgalXpYKgV+Kv9hA0uv4c2wGKgp+rm+NzFJDQe5d/l4w==
-Received: from SA1PR12MB7199.namprd12.prod.outlook.com (2603:10b6:806:2bc::21)
- by IA1PR12MB6435.namprd12.prod.outlook.com (2603:10b6:208:3ad::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.55; Mon, 8 Apr
- 2024 02:58:10 +0000
-Received: from SA1PR12MB7199.namprd12.prod.outlook.com
- ([fe80::dd65:cb60:936e:6995]) by SA1PR12MB7199.namprd12.prod.outlook.com
- ([fe80::dd65:cb60:936e:6995%6]) with mapi id 15.20.7409.042; Mon, 8 Apr 2024
- 02:58:10 +0000
-From: Ankit Agrawal <ankita@nvidia.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Dave Jiang <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "eduardo@habkost.net"
- <eduardo@habkost.net>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
- "linuxarm@huawei.com" <linuxarm@huawei.com>, Markus Armbruster
- <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>
-Subject: Re: [PATCH 1/6] hw/acpi/GI: Fix trivial parameter alignment issue.
-Thread-Topic: [PATCH 1/6] hw/acpi/GI: Fix trivial parameter alignment issue.
-Thread-Index: AQHahbHjgc+Ytk3QJUOv3scC7T7NfbFdtRJL
-Date: Mon, 8 Apr 2024 02:58:10 +0000
-Message-ID: <SA1PR12MB71996471D7DEAE003803E679B0002@SA1PR12MB7199.namprd12.prod.outlook.com>
-References: <20240403102927.31263-1-Jonathan.Cameron@huawei.com>
- <20240403102927.31263-2-Jonathan.Cameron@huawei.com>
-In-Reply-To: <20240403102927.31263-2-Jonathan.Cameron@huawei.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA1PR12MB7199:EE_|IA1PR12MB6435:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: qrElak44aXP85Vp6P4U6e8sf24HpR4ONwPVm2Kgnm1IIxvdqy3J6DxeqPpg6EsSW82HT7kf2BkVylJhyNojtpNiOw2W/bv/naGRH/7nWIabJtLb9YKCGQv8YKlF+e85NBdaRAUVLDGerWg/sRCTJtmIkSpbfVZ4cAP8sB24o7MOI1rAJPBhhALTMRPI1tv3dzgCTTy2gf7GIdEtSvlMVaJmrbwqR1BiJd8uPWbJle+m8rtXyvth32KMrPZPWryilxk/MvdzKsvJSdh9Enh3iWQgrk9+Y6Af7oMl1NQoiXV9Hn6NnxlGQ8TYJf/sm4XK0/HL463BDLc5h8kLu54BmeaJjK+tGsSn53b/q7K+VAKzYcRG0ZM+YXVEv3lJ6x6Wj4e6dnbo5CdvLjOXq4+BbE4pARJDEXEX+Soqt7lmrEC/j93qrSxVDcm6HOTHYkTvqsJu70VT8nILEu10uIUkDDvpcFIJR7oNLFBpDJICNDFfrSkXYH448mL5U9G4oGgPnNELfRPMJITOprmByBqKEsw7UtI1nsuuOWBvpHiXDY16NFz2oRmstOHIbpY3RtHZQd/mOpq6FebBCe6YDiRVeRy9CDHomlZA6tuMXfG0ZARGHlqFLWuukHZlkXe8UzUJKylB3ngL7hydC4WqX3hQwAnN+N3qy16JNcZqOAKXaoIc=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA1PR12MB7199.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(366007)(376005)(7416005); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?gIlQ+EWP00rpAHpAGsNRnPCf8k/iI2e/OBrmkxtikcTBq5GdK5JgGeA26U?=
- =?iso-8859-1?Q?bk5PspUSYFdrOQfFBpeJhuVSqZzssSQaPYlKHGfO026kWj5R2rz+BTa+Pi?=
- =?iso-8859-1?Q?ViKAUP36UlqDLcmND7/h/7FE2/jh8dKsksVIV3mfJEW7kE/y5cER0NzhRo?=
- =?iso-8859-1?Q?w/pVtUsRHhI3Ni4K3q6UCTAiX3iWVBmx8C7WYmfEf62F7TrDzKk0jDuyvI?=
- =?iso-8859-1?Q?iVg9N7UVgK7kyrPO7xloyxj9dB2laFeTP359eUlqQDxcvmfVQ1KTzKPA7W?=
- =?iso-8859-1?Q?9bUNeAEiQNrhhYPG57RCRQ10c7Vd9W0u7Z8UjjlcGUZxt7gtK8F8QjELsu?=
- =?iso-8859-1?Q?ByB7jNPBKEbq9WO6YiQdNf85MTOP2JJR1xxnRzgveJryCwbEAnBVGQlNKH?=
- =?iso-8859-1?Q?6oZYG89glA0yteN+zHncNhAv7l+hf3sRc3EsQ6BYOPLHG5QlFszemelapE?=
- =?iso-8859-1?Q?gUuzKI5Sh/fKwsDqpldIYAWADWw1WPrqVt2siqvoEPj/tSRUmhs87qyYJj?=
- =?iso-8859-1?Q?tn6pSS3H3FhBFuVfZVEKjcnqEQ6/sqqLJMMd0m08D7KEiTg//kjMz9QTFg?=
- =?iso-8859-1?Q?PhDVlsSkS8NFnyifrnYsanoar0oyzGz6LQx7jsxviDYPGWUO50KftzPkv5?=
- =?iso-8859-1?Q?uZRhvMVc/zHMBV/byzPYKXczIdwEM2CT/5Vza6V1PEEKi8HVuW7mUsFaIl?=
- =?iso-8859-1?Q?kkQZopqg4WByWGPFVKGWJqcn+/sjv8XyUc2Nbl4xFSVQRpXicVwdO7wJ95?=
- =?iso-8859-1?Q?ED0iQ4Z4OuT34PsjVGk95LUb989b8zHghsx4tz4io7AJPFqw/eYFg75ydo?=
- =?iso-8859-1?Q?hX4bwOQY6LcUyPqmLRKkDYvCJFy2zRTctK2t4LsJDM0OC/qYR6+8ZCHLKV?=
- =?iso-8859-1?Q?/TWb4jxgfQypP35gcZ3Y7A7rNvnPFyNvIVTP1ZpWaNSZ9oqMxWzd1ChTCf?=
- =?iso-8859-1?Q?znyK5R+ABDA30myYz/hPqDnlkjJX6ROB0wCmNtkCouLtFdK6+Bb/kbnbnx?=
- =?iso-8859-1?Q?TK7agPcqLJo38P7BSBZF4VrM7ahHWPoUWJ646sL/4CY0MXfo0fJmFPjTqq?=
- =?iso-8859-1?Q?b7BKl3rLooBN7lsN51PETv2rw+mamIkjJHaEP44Ly27iTMIhR9LL9qSOw7?=
- =?iso-8859-1?Q?daXor1YOPlxaMEbQhDdrDZTxGWvpleg9/iDyF3+wy5DfQS9lVU5ujt1Fpg?=
- =?iso-8859-1?Q?ztjCYyYn7hkbmt1w8/BKoWm44Fi3Ow9UM+rbwUkv+DVjHbsoCGRXjkzzrS?=
- =?iso-8859-1?Q?3XO0RLDlYO5PEqndIk8KDWsEc12GhluEQgT348fC6mYqUSGf4BzX+oE/HW?=
- =?iso-8859-1?Q?o/t4mRQCLGagqoDfLQ4xeIo+Dq5SN8sUhvVqxswgmoXfMfSGeyz/58jqSk?=
- =?iso-8859-1?Q?IiVLprURnIwiERfN9OANCMRZ8TEflU3I08kQS0gYdLAfhAx4xrU2StWQcK?=
- =?iso-8859-1?Q?mjGJM+cwKwF3UtvcEHjBgwgHwFt3YYI+Fy2GTgf9pZP2TByWWGoQfJ3ckc?=
- =?iso-8859-1?Q?hKDx4N2IAeRCYyUhuO48/sujHGZp5uiIyhShEM0OBYOsdE6ziLrThgnxFf?=
- =?iso-8859-1?Q?gA6nJqHC1XlaqIBnYJWl2PSZB/OKqHCDlHr8QJOoO/A8SGdGNwi5SrF6dT?=
- =?iso-8859-1?Q?JVvoKMwPTYYNw=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rth2B-00038D-3p
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 00:55:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712552104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=veQYq9vZJzpYWKQI7CJh5BkWpDebxchSfxFtetVisU8=;
+ b=ftkD5SUP8OqPPFr8fHxshLy1zxRgci3NTZA16LSeM0TorNEdnHFRkTvORubCFBNngB5v7P
+ Pdopj4i6bgR8XKkoQXT+ljKF6Bx9gn+P6htgjA9B3qp8fyV92lwQ9d+PCE3L1irjunlKkj
+ VSvuAkBTSjz5Ja1AhPtEU+x6ABuYr7A=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-481-MiiOJPkWNimZlDAR8RCC0Q-1; Mon, 08 Apr 2024 00:55:02 -0400
+X-MC-Unique: MiiOJPkWNimZlDAR8RCC0Q-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-5d8bcf739e5so3635469a12.1
+ for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 21:55:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712552101; x=1713156901;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=veQYq9vZJzpYWKQI7CJh5BkWpDebxchSfxFtetVisU8=;
+ b=rFFcTf4BZJMuYihPnbRzPKLg9p3VZvJkcoRbgBBlZavoG0k2AXzrdjZD9ZjrIvgU5W
+ dpeyUVZIX3v62lYsS3PtglV8vZwUeQSzUYoPdP4Ru4xRxo4cSyhu0gck2WDY3cNUJgps
+ MjzjtthZdwvrGhYlIj6slswYflTH/ZxxIBLag45OWZDKIsFF/eu/umoHXnDN6gg60JDL
+ MSY/1XLfymMcG32cOXi19/hOeHeuY9nubIkkBynsonVldIc1WjLQecrfpxTbLiv4F+fv
+ DS8gFs8nR9cMoCZnU9PBzIAYT7qDFBax5h2GpG/j4Ygo8pETrvUJB+9mZS8LjsJyGu6Z
+ IPbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFjdXcV4DexK31+lAxGDHenp+Twm2e4H6RoQn7G2BsfhIHWcNeINi0EBJdTIOys6XCiRvcs9qbrEHnzkdnaV626VJP2w8=
+X-Gm-Message-State: AOJu0YwC0LURAj4ZQH7o5YzeVgRz6B9JQ0+8EbKyBhL0YCV7SIopzl6y
+ WQzvHN7INO8IW1lr5ZZcKciaZVDdnA9Gp6D8v2ME6cweJU4r6dbGNju5+IKi0KT7eDT0a7ATajV
+ U/JwwAoTHojTb1MVWesI43dw4LeBpXnWuBTFcz07c/K53ZlBtwu9253zf7SRuenJ0frPuk8aWs1
+ 571AdrUtgbuem2zAOyXRiftAChEI0=
+X-Received: by 2002:a05:6a21:2728:b0:1a3:4863:f70e with SMTP id
+ rm40-20020a056a21272800b001a34863f70emr5626242pzb.46.1712552101118; 
+ Sun, 07 Apr 2024 21:55:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE8G2SeqLVNzIkhq2Uj0tpnYz/dAo/EHyuHIvLTG/X7aK5/Jg8sopc+QfQzNjeqtkkkpTWvtrG6858R16zxyss=
+X-Received: by 2002:a05:6a21:2728:b0:1a3:4863:f70e with SMTP id
+ rm40-20020a056a21272800b001a34863f70emr5626239pzb.46.1712552100794; Sun, 07
+ Apr 2024 21:55:00 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB7199.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 77d8f9b0-5b6e-4cb7-5987-08dc5777b98a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Apr 2024 02:58:10.4830 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 2P5Wsq2+CdfgIyyL+YhDLe0Z2rCCxGNMJoKlpAJ/zZ8exSGxrC5YNdZquYXs2GPlTjlZfiQ4FqnPrhMOeY8qMg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6435
-Received-SPF: softfail client-ip=40.107.236.123;
- envelope-from=ankita@nvidia.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
+References: <20240402150218.270587-1-lulu@redhat.com>
+ <20240402150218.270587-2-lulu@redhat.com>
+ <CACGkMEuQc+e+JOnScUdJckP1yb1Ushu9E0VEQKhwdn26W422bw@mail.gmail.com>
+ <20240407075135-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240407075135-mutt-send-email-mst@kernel.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 8 Apr 2024 12:54:49 +0800
+Message-ID: <CACGkMEsYfTu0_8OHs1j1ZV=uKENigBkVxLgLCqX29K7-u=pvsw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] virtio-pci: Fix the crash when the vector changes
+ back from VIRTIO_NO_VECTOR
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Cindy Lu <lulu@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,10 +102,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Before making additional modification, tidy up this misleading indentatio=
-n.=0A=
-=0A=
-Thanks for fixing it.=0A=
-Reviewed-by: Ankit Agrawal <ankita@nvidia.com>=0A=
-=0A=
+On Sun, Apr 7, 2024 at 7:53=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
+wrote:
+>
+> On Sun, Apr 07, 2024 at 12:19:57PM +0800, Jason Wang wrote:
+> > On Tue, Apr 2, 2024 at 11:02=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrot=
+e:
+> > >
+> > > When the guest calls virtio_stop and then virtio_reset,
+> >
+> > Guests could not call those functions directly, it is triggered by for
+> > example writing to some of the registers like reset or others.
+> >
+> > > the vector will change
+> > > to VIRTIO_NO_VECTOR and the IRQFD for this vector will be released. A=
+fter that
+> > > If you want to change the vector back,
+> >
+> > What do you mean by "change the vector back"? Something like
+> >
+> > assign VIRTIO_MSI_NO_VECTOR to vector 0
+> > assign X to vector 0
+> >
+> > And I guess what you meant is to configure the vector after DRIVER_OK.
+> >
+> >
+> > > it will cause a crash.
+> > >
+> > > To fix this, we need to call the function "kvm_virtio_pci_vector_use_=
+one()"
+> > > when the vector changes back from VIRTIO_NO_VECTOR
+> > >
+> > > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > > ---
+> > >  hw/virtio/virtio-pci.c | 31 ++++++++++++++++++++++++++++---
+> > >  1 file changed, 28 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > > index e433879542..45f3ab38c3 100644
+> > > --- a/hw/virtio/virtio-pci.c
+> > > +++ b/hw/virtio/virtio-pci.c
+> > > @@ -874,12 +874,14 @@ static int virtio_pci_get_notifier(VirtIOPCIPro=
+xy *proxy, int queue_no,
+> > >      return 0;
+> > >  }
+> > >
+> > > -static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int =
+queue_no)
+> > > +static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int =
+queue_no,
+> > > +                                         bool recovery)
+> > >  {
+> > >      unsigned int vector;
+> > >      int ret;
+> > >      EventNotifier *n;
+> > >      PCIDevice *dev =3D &proxy->pci_dev;
+> > > +    VirtIOIRQFD *irqfd;
+> > >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
+> > >      VirtioDeviceClass *k =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+> > >
+> > > @@ -890,10 +892,21 @@ static int kvm_virtio_pci_vector_use_one(VirtIO=
+PCIProxy *proxy, int queue_no)
+> > >      if (vector >=3D msix_nr_vectors_allocated(dev)) {
+> > >          return 0;
+> > >      }
+> > > +    /*
+> > > +     * if this is recovery and irqfd still in use, means the irqfd w=
+as not
+> > > +     * release before and don't need to set up again
+> > > +     */
+> > > +    if (recovery) {
+> > > +        irqfd =3D &proxy->vector_irqfd[vector];
+> > > +        if (irqfd->users !=3D 0) {
+> > > +            return 0;
+> > > +        }
+> > > +    }
+> > >      ret =3D kvm_virtio_pci_vq_vector_use(proxy, vector);
+> > >      if (ret < 0) {
+> > >          goto undo;
+> > >      }
+> > > +
+> > >      /*
+> > >       * If guest supports masking, set up irqfd now.
+> > >       * Otherwise, delay until unmasked in the frontend.
+> > > @@ -932,14 +945,14 @@ static int kvm_virtio_pci_vector_vq_use(VirtIOP=
+CIProxy *proxy, int nvqs)
+> > >          if (!virtio_queue_get_num(vdev, queue_no)) {
+> > >              return -1;
+> > >          }
+> > > -        ret =3D kvm_virtio_pci_vector_use_one(proxy, queue_no);
+> > > +        ret =3D kvm_virtio_pci_vector_use_one(proxy, queue_no, false=
+);
+> > >      }
+> > >      return ret;
+> > >  }
+> > >
+> > >  static int kvm_virtio_pci_vector_config_use(VirtIOPCIProxy *proxy)
+> > >  {
+> > > -    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_ID=
+X);
+> > > +    return kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_ID=
+X, false);
+> > >  }
+> > >
+> > >  static void kvm_virtio_pci_vector_release_one(VirtIOPCIProxy *proxy,
+> > > @@ -1570,7 +1583,13 @@ static void virtio_pci_common_write(void *opaq=
+ue, hwaddr addr,
+> > >          } else {
+> > >              val =3D VIRTIO_NO_VECTOR;
+> > >          }
+> > > +        vector =3D vdev->config_vector;
+> > >          vdev->config_vector =3D val;
+> > > +        /*check if the vector need to recovery*/
+> > > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_=
+VECTOR) &&
+> > > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > > +            kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ_I=
+DX, true);
+> > > +        }
+> >
+> > This looks too tricky.
+> >
+> > Think hard of this. I think it's better to split this into two parts:
+> >
+> > 1) a series that disables config irqfd for vhost-net, this series
+> > needs to be backported to -stable which needs to be conservative. It
+> > looks more like your V1, but let's add a boolean for pci proxy.
+>
+> I don't get it. Looks like a huge change to do in stable.
+> All as a replacement to a small 20 line patch?
+
+For example, this patch needs more tweak so it won't be that tiny:
+
+1) needs to check if we can use guest notifiers (irqfd)
+2) the switching from X to NO_VECTOR might need
+kvm_virtio_pci_vq_vector_release()
+
+>
+> Generally I think irqfd is best used everywhere.
+
+Only when msix and kvm are both enabled.
+
+>
+>
+> > 2) a series that deal with the msix vector configuration after
+> > driver_ok, we probably need some refactoring to do per vq use instead
+> > of the current loop in DRIVER_OK
+> >
+> > Does this make sense?
+> >
+> > Thanks
+>
+>
+> Not really let's fix the bug for starters, refactoring can be done later
+> as appropriate.
+
+This is exactly my point. Avoiding that for non vDPA device seems to
+be easier or maybe I was wrong.
+
+Thanks
+
+>
+> > >          break;
+> > >      case VIRTIO_PCI_COMMON_STATUS:
+> > >          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > > @@ -1611,6 +1630,12 @@ static void virtio_pci_common_write(void *opaq=
+ue, hwaddr addr,
+> > >              val =3D VIRTIO_NO_VECTOR;
+> > >          }
+> > >          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> > > +
+> > > +        /*check if the vector need to recovery*/
+> > > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_=
+VECTOR) &&
+> > > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > > +            kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel, tr=
+ue);
+> > > +        }
+> > >          break;
+> > >      case VIRTIO_PCI_COMMON_Q_ENABLE:
+> > >          if (val =3D=3D 1) {
+> > > --
+> > > 2.43.0
+> > >
+>
+
 
