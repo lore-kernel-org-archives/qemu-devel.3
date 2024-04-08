@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE568CD1296
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 16:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9175ECD1296
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 16:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rts4e-00041G-CD; Mon, 08 Apr 2024 12:42:24 -0400
+	id 1rts4z-0004KR-DN; Mon, 08 Apr 2024 12:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rts4b-0003zS-5T
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 12:42:21 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1rts4x-0004Bo-C1
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 12:42:43 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rts4Y-0001MH-N5
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 12:42:20 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1e3ca546d40so22054955ad.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 09:42:17 -0700 (PDT)
+ id 1rts4u-0001N1-PM
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 12:42:42 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-5ce6b5e3c4eso2650388a12.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 09:42:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712594536; x=1713199336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712594559; x=1713199359; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2wJW/hRhTVKt1J8SGJTntMezByZ8BraPsAo4cfQ8Dhs=;
- b=DUcF+VZ+uajgj3v9jQPigjmKDOuIuJm7qxVO7DnkayWgVi6x7fY2ZjskCPYTg6cny0
- wpzbmcVvtuhZbGjPddTf+4yx17fgK6IEcpStJGN3YQ5KOmR2zbTmPQqmwnHnC1pNydEt
- fUfLRLQ+e8LZHx5BCvrvQx4xvfwFlIDs0XJOdt+z3j1KDbdfZziHIO6P+prCDO4E/PeH
- /TxEkBtQolL0VI+Fh+4tKPctnpz//ZWQTUMuLDxMfPGw9XNb38OFLDIAfCihc6A4BGqq
- C0N+OtfWIxE2Oa4kzjgH1un7iWAfJriuWxbW/Na2B8+/rwIXubbL+eCK9l58xzEdJblx
- EK8Q==
+ bh=RyojPmA5akk5gB7fadZyFsHKYJVcIAsCnJVhEFHaTy4=;
+ b=KBb34fySWigptZYgfSBrbcj3wMtCw0eoCak3g3vy1YUqrm6/qg5UmaCXpeOOYCS63H
+ 4gM4SUYGMWUo4ZZUxybaazrTt8B6SQcIHvmaXIW1LrfN3EEjSj8E4+xWBC6xxrTbycIE
+ k4ojPe5GkFl161gw2cjP23JeM9uPO8uVjcPRCI0M+NGwrUpZJX6Vjm8wsHZ3QIdA3Gcm
+ OvwkrpzsQ+zvgUP5tNI6PH8IJgy2iNiObKc9qC57IZjT16bllYVSrgKws9jUTJid2G5a
+ H7L38yW0LdqYF9jeE840dh6DLpCIBFiMg25i9RI9PX7+PkKKqq851obVZpVGdO9YvJhx
+ zeVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712594536; x=1713199336;
+ d=1e100.net; s=20230601; t=1712594559; x=1713199359;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2wJW/hRhTVKt1J8SGJTntMezByZ8BraPsAo4cfQ8Dhs=;
- b=pvixDqRRjBatXpB6cGvwIM2cbsA7g40aTfwydDIm6lXDm5THoDzrD3odBPhNMrrbkI
- rab23ePUXkojZxYGqU1VXb8kiUpLzgRhA2UVnpF1FRwLdV6pm6SUh6Ajz7nn3A2Uinf5
- /UQHFhj+TxCQF8aeaAXAsj6Lb1GkFEXNW65Muob3zyj916oAuqIF/kj5CJVc7Th4g0+v
- Tvp5o5NH9OmH5JX6kT9u/cbb99yAN10BtMuwtn/wWrws7UDJdd4C6Md990EbZdQ4sGCX
- jx/XYi4tiCpff5VMTw3y+UH9ZkRC6nHj/doZzaR3KNSygfWwBu6hCzk9U36ZHHhCDfY9
- f4RQ==
+ bh=RyojPmA5akk5gB7fadZyFsHKYJVcIAsCnJVhEFHaTy4=;
+ b=rqxcUN6y+nm68qoi7WWrRHbF9lc8YhTguFuNYnsWto4jpR+q4Yy5UURDB5UcRq00o0
+ VfnKLjM5dB0SphOZV8JLVGNkLPg6jben119mj1x/ogUoNZ7Fybgi9mkeAG9Q58Pna1oV
+ 4MB2RgeVATZv9ydf5n5GTqUtOk0NQGxjgw8tM0X3YVw/JNEY5We3OgCWQrR5TMAK7+WR
+ M0IYjK52pVGMtGVFxQVKtRZKAxfDcfsQv8Dj91KMRRwGXE8Ayo/RcNTicpruDTDWGMyo
+ HBShh3aHuu4fXgx2oAm//32h7GXyRh+/pIuG7PsfNQhg4FbCEAUdvVYnQiLyAmQss6J5
+ u5DQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4Lqzv6yI4gFh22sAPhLXgeceG+8mVvQfFMWq+6hB9wwwT7Ony9TkiAdbeXWwtTi0fzgAiV3lrRQ+qMBMzbzLOXLV682M=
-X-Gm-Message-State: AOJu0YzogiB/KPoquiGWuU1nBkyzhM3CKqbXMa8W5DwJdle1ixqu/c2D
- aSMnRPaN4ured3b+QrlN9N2KV3MnVndSjVUimK6F7ZYIqu5Lm+ziylO/oj1UCmw=
-X-Google-Smtp-Source: AGHT+IHf8m6nV3tCYg0xg+qt1KcIUds4+aEt9Y/H5dArX9tcqlA2GLUp0zB/0RBmhenrMsDJ/JMsgA==
-X-Received: by 2002:a17:902:e0ca:b0:1e2:15a8:e4c6 with SMTP id
- e10-20020a170902e0ca00b001e215a8e4c6mr6926545pla.55.1712594536180; 
- Mon, 08 Apr 2024 09:42:16 -0700 (PDT)
+ AJvYcCVqS1u/7Lqi3/23INWAKfAa5NF61/dAH48H1UkLjQCgIKWqcUDNvoWJvudWbQPkhs/c0WhSAGyOV5C7bKKVHWS9vcFcU2g=
+X-Gm-Message-State: AOJu0YyyuYopbPv2mvGlZIm+iVCNstbYLHnqguRHZarfO6tNIzZNQlUG
+ 5zj/SU8eEkDgml+2YwpHOtGo9iuyDq0SqGDPfnAO+iiwW/jMiB+1vDmn3O8Yil8=
+X-Google-Smtp-Source: AGHT+IGohBHFPP7lJXU6Kh3fCDRrWUpoCw5bOBm9c+sAyqbI49217EqAIiEQBNmIU6tYkjI/MEzGWg==
+X-Received: by 2002:a05:6a21:6d83:b0:1a5:bc18:97d8 with SMTP id
+ wl3-20020a056a216d8300b001a5bc1897d8mr9697995pzb.3.1712594559029; 
+ Mon, 08 Apr 2024 09:42:39 -0700 (PDT)
 Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- i13-20020a170902c94d00b001e2ba8605dfsm7208443pla.150.2024.04.08.09.42.15
+ fa12-20020a056a002d0c00b006e694719fa0sm4963823pfb.147.2024.04.08.09.42.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 09:42:15 -0700 (PDT)
-Message-ID: <26ba84c3-717b-49fe-8848-f2c851feb250@linaro.org>
-Date: Mon, 8 Apr 2024 06:42:12 -1000
+ Mon, 08 Apr 2024 09:42:38 -0700 (PDT)
+Message-ID: <4e635057-dd21-4d44-ac41-ea13acf9656e@linaro.org>
+Date: Mon, 8 Apr 2024 06:42:35 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/18] tests/unit: match some unit tests to
- corresponding feature switches
+Subject: Re: [PATCH v2 05/18] yank: only build if needed
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org
 References: <20240408155330.522792-1-pbonzini@redhat.com>
- <20240408155330.522792-5-pbonzini@redhat.com>
+ <20240408155330.522792-6-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240408155330.522792-5-pbonzini@redhat.com>
+In-Reply-To: <20240408155330.522792-6-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,17 +99,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/8/24 05:53, Paolo Bonzini wrote:
-> Try not to test code that is not used by user mode emulation, or by the
-> block layer, unless they are being compiled; and fix test-timed-average
-> which was not compiled with --disable-system --enable-tools.
+> The yank feature is not used in user emulation.
 > 
-> This is by no means complete, it only touches the more blatantly
-> wrong cases.
-> 
+> Suggested-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   tests/unit/meson.build | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
+>   util/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
