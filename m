@@ -4,79 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E742CD1296
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C66C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtpvw-0006G2-0u; Mon, 08 Apr 2024 10:25:18 -0400
+	id 1rtpxX-0007db-D2; Mon, 08 Apr 2024 10:26:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rtpvt-0006FQ-FH
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:25:14 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rtpvp-0004Tq-RL
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:25:12 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-516d3776334so4216518e87.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:25:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712586308; x=1713191108; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OrBRkuPxXOCZvmMbQCwyyz4itVDU/vM75cSck92WVEI=;
- b=q7Mn2UboO9Z3JOLkQqndjtwC0WLWb/GaiN+ybqnPLem67MjK/Ku5IQcjmKphNccAgJ
- BTPmxhlF6Zr0F27EbAvtv53dqcOT2QYF4YX1z14M8yArmIg8Mfn5neDA+UdMsfVKYi59
- WmkgcTakQsJmDGoz0FqmrO7niPYfHTHbiNKmAXop7jDKHiQhf7ZfuMGtbIAa/xa30fNn
- cytJ3eco1VT7TWKul66Jdl4lxUc9pa5k/pUW6URNE1VSwOaQP+uyuDXsck9lQCGoY9q8
- ciAO5sikwHPczWnyM10/f9GmeypGhWQZSGxzA4GXc83bJIHSZw1/ekk61Pj5ifob6MCV
- 9rAw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rtpxT-0007cS-Bs
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:26:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rtpxJ-0004lq-JR
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:26:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712586397;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bNIMErwO49CCrP01kpy3mn1tVVv5d400fZ2DSOWNBAk=;
+ b=XBPfA1CmJfzBGMjlvZThGsuGuVZcnkUOS6buRIpCxj+c1h43W6xaRsR1Nw1kh9s8w3zJQJ
+ gv4B+x5EduHlT4Ci4oq9F89/RYIsXZ+GtwbUz6hkPv4Bmvh+Y6eGjipSEEKwN8jR28abTC
+ mnib80cDHPoys9oJTm/NH+y9mkLqtmc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-563-A3Stl9fWNu2lFZd4_FG3sw-1; Mon, 08 Apr 2024 10:25:18 -0400
+X-MC-Unique: A3Stl9fWNu2lFZd4_FG3sw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4165339d3a5so6982075e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:25:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712586308; x=1713191108;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OrBRkuPxXOCZvmMbQCwyyz4itVDU/vM75cSck92WVEI=;
- b=QxHWk8rHZcbBN6dnlkrUcK78WMujJACi1t9wYhD/LjOh4tbPOWHpxFGxwYpbX6esDS
- RbZRkBL6m0F2939p75kdH2AiTZtWQGkxKUAmuaosRfWHFn6yru1FLQ20aDufC6LWf2Eg
- wXx8wRyWdWvEHg8ZaVrhFFVErp705tnoJVpHnHg2kUpJxGnd2agG/P+bZH5MZr2md+14
- 4QVT/PHChhi/OjDy+3fFBqnSdP8IWp6zNXC3eJhSSMBpmgXiTRydkeBOeQU3TVI0Z2us
- zm2XjDJjpfGqaMCyZjTaooGyjIKgfJbRCY6Jvj4faHUr33D8mQrke55NBJtmpxKqBXUm
- 2rhA==
-X-Gm-Message-State: AOJu0Yy9UTizsXGyfm1sV8XXzn3oJNQOha09rPGcYzkohoW7eBD++im/
- aS6PZBoLbh2IdWXTzerdbYoSrmnOehjK/2tOudov3cq9q2C3KG0zjWZbcBstAdfdcWWCXNguvzp
- poTKY+apKDJMUNy6xgZ8RLfKgAkJDHN/+JVS95370e6e/mnqm
-X-Google-Smtp-Source: AGHT+IF0GcYu9lmKkZiEEbpSI0MuuNzOfhB+2xq5sIRSQV11VOlDUp55extZ2f7A8uj6DuE9th5HFM5T7E1N1JxofDc=
-X-Received: by 2002:ac2:4ac2:0:b0:516:d4c2:53eb with SMTP id
- m2-20020ac24ac2000000b00516d4c253ebmr5376563lfp.58.1712586307609; Mon, 08 Apr
- 2024 07:25:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712586312; x=1713191112;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bNIMErwO49CCrP01kpy3mn1tVVv5d400fZ2DSOWNBAk=;
+ b=oGQsq/ew4a7kxngMsz24n8pO3lAa8/I5y4BOJepR+CXPXoxjnNF0crfibF8ykbtHzY
+ SjLQu/0axzd7QVAgRRvFdD4Kb59yL9QSJUrxtrxywHNZWtv5roII+JHnXIXN6xZua934
+ KuefyiZbzPcN8tnIuifoPjfgpUk1KmioK7baGZ54OEugZfI930+AEubCd071ZLAh5mt3
+ gclTJaHlpQXJOhNxhdh3xn9RVEOrnKs3x+5cBPlCx9CfQ6yCCN9nwQ+9wSBJrlRTbQb/
+ I1VAtn6pZefDI0qoDbhWcou2XMVIEavXe9Xydx5DbUJCjbA/zcGHOc4WwCWlNSQW+6Qu
+ H2iQ==
+X-Gm-Message-State: AOJu0YwiS7UN35MUv3VWYUMr2fnynoh26CaJI/sD6MHjDDcfJRAsjijz
+ 0nbMrqAAwJUhQDwmw0tsGATb/bNZ4n8F2Wf3bpUXPitWJjRzAhRP5HcoMeKuvwLzZAW3D7sF1/6
+ qYR04zhCGWHxfA57ZNsw6sybggu4MMaEzovx8MRbDwrjbx8r+ZBABzAY3lzYaU3XEmn3Kh5hdkF
+ AXowbMq6iUt73Ce+/ZDe6qcu8o6vr6yPMyRr1m
+X-Received: by 2002:a05:600c:4f0d:b0:416:7071:6354 with SMTP id
+ l13-20020a05600c4f0d00b0041670716354mr2069845wmq.18.1712586311874; 
+ Mon, 08 Apr 2024 07:25:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE8yn9yQODgncvyPd6x3nxFdlRnAdQyNcuXGgCARBgKSxBuBt3pnj87UgI+swtqiTONyLe8ZA==
+X-Received: by 2002:a05:600c:4f0d:b0:416:7071:6354 with SMTP id
+ l13-20020a05600c4f0d00b0041670716354mr2069825wmq.18.1712586311400; 
+ Mon, 08 Apr 2024 07:25:11 -0700 (PDT)
+Received: from avogadro.local ([151.95.152.232])
+ by smtp.gmail.com with ESMTPSA id
+ i21-20020a05600c355500b0041665b6e111sm4839634wmq.12.2024.04.08.07.25.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 07:25:10 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH for-9.0] nanomips: fix warnings with GCC 14
+Date: Mon,  8 Apr 2024 16:25:09 +0200
+Message-ID: <20240408142509.484027-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-References: <20240408105149.59258-1-philmd@linaro.org>
- <20240408105149.59258-3-philmd@linaro.org>
-In-Reply-To: <20240408105149.59258-3-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Apr 2024 15:24:56 +0100
-Message-ID: <CAFEAcA8vvURMn2FaDP9tXtP5eCMs6-XFOCR9ypo=WBH+6g5prw@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0? 2/2] hw/net/lan9118: Fix overflow in TX FIFO
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, 
- Alexander Bulekov <alxndr@bu.edu>, qemu-arm@nongnu.org,
- Chuhong Yuan <hslester96@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,113 +99,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Apr 2024 at 11:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> When the TX FIFO is full, raise the TX Status FIFO Overflow (TXSO)
-> flag, "Generated when the TX Status FIFO overflows" [*].
+GCC 14 shows -Wshadow=local warnings if an enum conflicts with a local
+variable (including a parameter).  To avoid this, move the problematic
+enum and all of its dependencies after the hundreds of functions that
+have a parameter named "instruction".
 
-This doesn't sound right. The TX Status FIFO and the
-TX Data FIFO are separate FIFOs, and the TX FIFO has its own
-overflow bit, TDFO. And I think the overflow here is of
-a third FIFO, the MIL's transmit FIFO...
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ disas/nanomips.c | 194 +++++++++++++++++++++++------------------------
+ 1 file changed, 97 insertions(+), 97 deletions(-)
 
-> diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-> index 7be0430ac5..7a1367b0bb 100644
-> --- a/hw/net/lan9118.c
-> +++ b/hw/net/lan9118.c
-> @@ -795,8 +795,11 @@ static void tx_fifo_push(lan9118_state *s, uint32_t =
-val)
->              /* Documentation is somewhat unclear on the ordering of byte=
-s
->                 in FIFO words.  Empirical results show it to be little-en=
-dian.
->                 */
-> -            /* TODO: FIFO overflow checking.  */
->              while (n--) {
-> +                if (s->txp->len =3D=3D PKT_SIZE) {
-> +                    s->int_sts |=3D TXSO_INT;
-> +                    break;
-> +                }
+diff --git a/disas/nanomips.c b/disas/nanomips.c
+index a0253598dd6..db0c297b8dc 100644
+--- a/disas/nanomips.c
++++ b/disas/nanomips.c
+@@ -36,35 +36,6 @@ typedef uint32_t uint32;
+ typedef uint16_t uint16;
+ typedef uint64_t img_address;
+ 
+-typedef enum  {
+-    instruction,
+-    call_instruction,
+-    branch_instruction,
+-    return_instruction,
+-    reserved_block,
+-    pool,
+-} TABLE_ENTRY_TYPE;
+-
+-typedef enum {
+-    MIPS64_    = 0x00000001,
+-    XNP_       = 0x00000002,
+-    XMMS_      = 0x00000004,
+-    EVA_       = 0x00000008,
+-    DSP_       = 0x00000010,
+-    MT_        = 0x00000020,
+-    EJTAG_     = 0x00000040,
+-    TLBINV_    = 0x00000080,
+-    CP0_       = 0x00000100,
+-    CP1_       = 0x00000200,
+-    CP2_       = 0x00000400,
+-    UDI_       = 0x00000800,
+-    MCU_       = 0x00001000,
+-    VZ_        = 0x00002000,
+-    TLB_       = 0x00004000,
+-    MVH_       = 0x00008000,
+-    ALL_ATTRIBUTES = 0xffffffffull,
+-} TABLE_ATTRIBUTE_TYPE;
+-
+ typedef struct Dis_info {
+   img_address m_pc;
+   fprintf_function fprintf_func;
+@@ -72,22 +43,6 @@ typedef struct Dis_info {
+   sigjmp_buf buf;
+ } Dis_info;
+ 
+-typedef bool (*conditional_function)(uint64 instruction);
+-typedef char * (*disassembly_function)(uint64 instruction,
+-                                            Dis_info *info);
+-
+-typedef struct Pool {
+-    TABLE_ENTRY_TYPE     type;
+-    const struct Pool    *next_table;
+-    int                  next_table_size;
+-    int                  instructions_size;
+-    uint64               mask;
+-    uint64               value;
+-    disassembly_function disassembly;
+-    conditional_function condition;
+-    uint64               attributes;
+-} Pool;
+-
+ #define IMGASSERTONCE(test)
+ 
+ 
+@@ -544,58 +499,6 @@ static uint64 extract_op_code_value(const uint16 *data, int size)
+ }
+ 
+ 
+-/*
+- * Recurse through tables until the instruction is found then return
+- * the string and size
+- *
+- * inputs:
+- *      pointer to a word stream,
+- *      disassember table and size
+- * returns:
+- *      instruction size    - negative is error
+- *      disassembly string  - on error will constain error string
+- */
+-static int Disassemble(const uint16 *data, char **dis,
+-                     TABLE_ENTRY_TYPE *type, const Pool *table,
+-                     int table_size, Dis_info *info)
+-{
+-    for (int i = 0; i < table_size; i++) {
+-        uint64 op_code = extract_op_code_value(data,
+-                             table[i].instructions_size);
+-        if ((op_code & table[i].mask) == table[i].value) {
+-            /* possible match */
+-            conditional_function cond = table[i].condition;
+-            if ((cond == NULL) || cond(op_code)) {
+-                if (table[i].type == pool) {
+-                    return Disassemble(data, dis, type,
+-                                       table[i].next_table,
+-                                       table[i].next_table_size,
+-                                       info);
+-                } else if ((table[i].type == instruction) ||
+-                           (table[i].type == call_instruction) ||
+-                           (table[i].type == branch_instruction) ||
+-                           (table[i].type == return_instruction)) {
+-                    disassembly_function dis_fn = table[i].disassembly;
+-                    if (dis_fn == 0) {
+-                        *dis = g_strdup(
+-                            "disassembler failure - bad table entry");
+-                        return -6;
+-                    }
+-                    *type = table[i].type;
+-                    *dis = dis_fn(op_code, info);
+-                    return table[i].instructions_size;
+-                } else {
+-                    *dis = g_strdup("reserved instruction");
+-                    return -2;
+-                }
+-            }
+-        }
+-    }
+-    *dis = g_strdup("failed to disassemble");
+-    return -1;      /* failed to disassemble        */
+-}
+-
+-
+ static uint64 extract_code_18_to_0(uint64 instruction)
+ {
+     uint64 value = 0;
+@@ -16213,6 +16116,51 @@ static char *YIELD(uint64 instruction, Dis_info *info)
+  *
+  */
+ 
++typedef enum  {
++    instruction,
++    call_instruction,
++    branch_instruction,
++    return_instruction,
++    reserved_block,
++    pool,
++} TABLE_ENTRY_TYPE;
++
++typedef enum {
++    MIPS64_    = 0x00000001,
++    XNP_       = 0x00000002,
++    XMMS_      = 0x00000004,
++    EVA_       = 0x00000008,
++    DSP_       = 0x00000010,
++    MT_        = 0x00000020,
++    EJTAG_     = 0x00000040,
++    TLBINV_    = 0x00000080,
++    CP0_       = 0x00000100,
++    CP1_       = 0x00000200,
++    CP2_       = 0x00000400,
++    UDI_       = 0x00000800,
++    MCU_       = 0x00001000,
++    VZ_        = 0x00002000,
++    TLB_       = 0x00004000,
++    MVH_       = 0x00008000,
++    ALL_ATTRIBUTES = 0xffffffffull,
++} TABLE_ATTRIBUTE_TYPE;
++
++typedef bool (*conditional_function)(uint64 instruction);
++typedef char * (*disassembly_function)(uint64 instruction,
++                                            Dis_info *info);
++
++typedef struct Pool {
++    TABLE_ENTRY_TYPE     type;
++    const struct Pool    *next_table;
++    int                  next_table_size;
++    int                  instructions_size;
++    uint64               mask;
++    uint64               value;
++    disassembly_function disassembly;
++    conditional_function condition;
++    uint64               attributes;
++} Pool;
++
+ static const Pool P_SYSCALL[2] = {
+     { instruction         , 0                   , 0   , 32,
+        0xfffc0000, 0x00080000, &SYSCALL_32_      , 0,
+@@ -21907,6 +21855,58 @@ static const Pool MAJOR[2] = {
+        0x0                 },        /* P16 */
+ };
+ 
++/*
++ * Recurse through tables until the instruction is found then return
++ * the string and size
++ *
++ * inputs:
++ *      pointer to a word stream,
++ *      disassember table and size
++ * returns:
++ *      instruction size    - negative is error
++ *      disassembly string  - on error will constain error string
++ */
++static int Disassemble(const uint16 *data, char **dis,
++                     TABLE_ENTRY_TYPE *type, const Pool *table,
++                     int table_size, Dis_info *info)
++{
++    for (int i = 0; i < table_size; i++) {
++        uint64 op_code = extract_op_code_value(data,
++                             table[i].instructions_size);
++        if ((op_code & table[i].mask) == table[i].value) {
++            /* possible match */
++            conditional_function cond = table[i].condition;
++            if ((cond == NULL) || cond(op_code)) {
++                if (table[i].type == pool) {
++                    return Disassemble(data, dis, type,
++                                       table[i].next_table,
++                                       table[i].next_table_size,
++                                       info);
++                } else if ((table[i].type == instruction) ||
++                           (table[i].type == call_instruction) ||
++                           (table[i].type == branch_instruction) ||
++                           (table[i].type == return_instruction)) {
++                    disassembly_function dis_fn = table[i].disassembly;
++                    if (dis_fn == 0) {
++                        *dis = g_strdup(
++                            "disassembler failure - bad table entry");
++                        return -6;
++                    }
++                    *type = table[i].type;
++                    *dis = dis_fn(op_code, info);
++                    return table[i].instructions_size;
++                } else {
++                    *dis = g_strdup("reserved instruction");
++                    return -2;
++                }
++            }
++        }
++    }
++    *dis = g_strdup("failed to disassemble");
++    return -1;      /* failed to disassemble        */
++}
++
++
+ static bool nanomips_dis(const uint16_t *data, char **buf, Dis_info *info)
+ {
+     TABLE_ENTRY_TYPE type;
+-- 
+2.44.0
 
-While I was looking at this bug, I realised that we have serious
-confusion about whether any of the variables we use to track FIFO
-size and FIFO usage are word counts or byte counts.
-
-Looking at table 5-3 in the data sheet, the size of these
-FIFOs is actually software-configurable in the HW_CFG register,
-but we don't implement that and (attempt to) only provide
-the default configuration setting of TX_FIF_SZ =3D=3D 5. That
-should mean:
- TX data FIFO size =3D=3D 4608 bytes =3D=3D 1152 words
- RX data FIFO size =3D=3D 10560 bytes =3D=3D 2640 words
- TX status FIFO size =3D=3D 512 bytes =3D=3D 128 words
- RX status FIFO size =3D=3D 704 bytes =3D=3D 176 words
-
-But we don't consistently use either word or byte units for the
-variables we use to track FIFO size and FIFO usage. For instance:
- * we initialise s->tx_fifo_size to 4608, which is a byte count
- * we initialise s->rx_status_fifo_size to 704, which is a byte count...
- * ...and then three lines later override that to 176, which is a word
-   count!
- * we generally simply increment the various fifo_used fields
-   when we push a word into the FIFOs, implying word counts
- * we mostly do calculations assuming word counts
- * calculations of the RX_FIFO_INF and TX_FIFO_INF fields
-   (which report the used space in words and the free space
-   in bytes) are confused about units too
- * the tx_status_fifo[] array is 512 words long and the bounds
-   checks assume 512 is a word count, but it is a byte count
- * the rx_status_fifo[] array is 896 words long, but the worst
-   case RX status FIFO size is 896 bytes, even if we allowed
-   runtime adjustable FIFO sizes
- * the rx_fifo[] array, on the other hand, is 3360 words long,
-   which really is the max possible size in words
-
-Anyway, I think that txp->data[] is effectively modelling
-the "2K Byte transmit FIFO" within the MIL, not the TX FIFO.
-(We don't need to model the TX FIFO itself, because we don't
-do asynchronous sending of data packets: as soon as we've
-accumulated a complete packet into the MIL TX FIFO, we
-send it out. In real hardware the guest can put multiple
-packets into the TX data FIFO, which is why it makes sense to be
-able to configure a TX data FIFO size larger than the largest
-possible packet and larger than the MIL TX FIFO.)
-
-So the limit that we are enforcing here is similar to the one
-described in the "Calculating Worst-Case TX FIFO (MIL) usage",
-except that we don't actually use data space for the gaps
-caused by unaligned buffers. So this can only overflow if the
-packet is greater than what the data sheet says is the
-maximum size of 1514 bytes. The datasheet unfortunately doesn't
-describe the behaviour if this maximum is exceeded, and our
-current code doesn't try to check it (it's in the "command B"
-words, which are all supposed to match in the case of a
-fragmented packet, and which we also don't check).
-
-The most plausible behaviour to take I think is to raise
-TXE when we would overflow the s->txp_data[] buffer; there are
-various conditions described for when TXE is raised that seem
-like this would fit in reasonably with them.
-(There is a status bit TDFO for "TX Data FIFO Overrun", which
-I think is probably only for overruns of the TX data FIFO,
-not the MIL's TX FIFO.)
-
-Since the datasheet doesn't say if the packet should be
-dropped or truncated if it's invalid like this, I guess
-we can do whatever's easiest.
-
->                  s->txp->data[s->txp->len] =3D val & 0xff;
->                  s->txp->len++;
->                  val >>=3D 8;
-
-Conclusion:
- * we should raise TXE, not TXSO
- * add a comment about what exactly is going on here
- * we should try to clean up the confusion between words and
-   bytes, as a separate patch that isn't -stable/-9.0
-   material...
-
-thanks
--- PMM
 
