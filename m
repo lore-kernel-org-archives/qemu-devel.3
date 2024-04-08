@@ -4,97 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D5EEC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:12:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD22BCD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:14:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtk6D-0001gj-Em; Mon, 08 Apr 2024 04:11:29 -0400
+	id 1rtk9C-0002RQ-JM; Mon, 08 Apr 2024 04:14:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rtk6B-0001gA-8q
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:11:27 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rtk69-0007dF-J0
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:11:26 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-6ea1ef7d234so83010a34.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 01:11:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712563883; x=1713168683;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=abxadZhVJiYA+6AGhau2X9pVDfQcCNTlNle+5WdTacE=;
- b=SFUD+AHupIQevrYJvRH1bGaqEqrsksF/x9qzCxfM2phzUda7TCyyQVpaimihPdAwhh
- 7dlvsmJT4efCbvOt3m/pNI9of6wH8n3egpi2hUOM7nHk6G+E7oUbUt5awyaPy7PPSF/I
- KibBfLdCsUAMsMxjgF9vd8Ec4izndExVcsCauhUXotK6qU5+LJ5nHqYchux2NkmgzrYw
- AIWIY9k6RLGRDx9E5QID8q3yb/gnFC73ZrrMN+g/Mu2yZ9tjl9LOL5bCUkYJmfrhvt01
- 8Z+y8PlKOZ/0ZZ2mRs+5QDC6oY0pm3OBinbCm3Dm7yMZCtrLBxaT+2uVzFaV81/t4zKJ
- aTfw==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rtk9A-0002R5-OR
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:14:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rtk8z-0007uP-5u
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:14:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712564060;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sBweMdwas2OWMGIoSGIoMabBj9B9MFbzdi8JfWZyJjE=;
+ b=AD3TLakU8Ctd2Bj/v5RR8aUF4ftr7pcxmTiISFQPW1SeDRCCxu+xG3BZIO9X6e2OLzFgnw
+ ekt4EyJec1zBlDk9STV2+SuS6i3+wnOByoJA1UBRrx2wcccme98ZIFD5OS6S1Tcx6U+tfe
+ 6OOdEPRicP+Qfa/Vn7P1sLkLqDPbhzE=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-Da82FaFXM_KFy-ZOrfiRmg-1; Mon, 08 Apr 2024 04:14:18 -0400
+X-MC-Unique: Da82FaFXM_KFy-ZOrfiRmg-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6993bd297ebso43106026d6.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 01:14:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712563883; x=1713168683;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=abxadZhVJiYA+6AGhau2X9pVDfQcCNTlNle+5WdTacE=;
- b=aPIAvozfcaPA9v8DtRf5F7UA4xau1sP4rjxbm44SISaev9DZC5ywswCG9obgsCyAL7
- SOuzMEPX9CGUYBFSLGovk7q93fDfPHKvuiSnJK+b5zFkwSgtx2JSJsmBZpeEBQ0Vt2Xh
- OMd+0d8f62ter0DVux02pi3yxRbZWelG3Q/hy22tKNiICTheE1xYBGAJr8dNsYjqlMhy
- WPAHy4GXmT2vP4GJGt/ZBuEPmwvyrD+C/ZMg4hw9xCrFYki1favRyoeOojd6f7yXdmyI
- IcQa3GsbtwJj0E8WWmTkJxXWwEhoS/QfHB/qd/QIQnnSjAmx6V2lp7tvHEb0QIb/8GP5
- JzpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZ6U5hTXyNAZWAXLZ9oWS+1/+AUIR2wYZcAwzQUXlU+AWebQgI35lc8JKuNXdNgPsyIM2QKH7Clgxd+2cxkUYeORIN4wg=
-X-Gm-Message-State: AOJu0YwpcVbaqZIjjFyF/fyIpGdWa8r5hR6OdbFZu6RraGEJui7WswJF
- nQqzEIVNrtbII1zyHmrcnQXEdurwMsOMvAhJxGEySuw1nCHZTG7v5IlbdWBWUa8=
-X-Google-Smtp-Source: AGHT+IGVwDf6hLRsoylqtJsg1QpXLkCeyGGmsWCKVE5hsroL2jxyKNw+NVz3/ZCLZcbUIjr7Iy+MDw==
-X-Received: by 2002:a05:6808:1788:b0:3c5:f4f2:3eb6 with SMTP id
- bg8-20020a056808178800b003c5f4f23eb6mr2544623oib.32.1712563883675; 
- Mon, 08 Apr 2024 01:11:23 -0700 (PDT)
-Received: from [157.82.200.213] ([157.82.200.213])
+ d=1e100.net; s=20230601; t=1712564058; x=1713168858;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sBweMdwas2OWMGIoSGIoMabBj9B9MFbzdi8JfWZyJjE=;
+ b=o7RFdC0xaV6Gjk0g9J7jF6VTFZhFoe1yiJN9Qa4JT6Ch8sDF5kftNUShqp3PKNAaFx
+ NHU3Ahm8SPGw32S8i/SoI8tGTeuE00eQ2Mz/5djML3u0y1PiVWVmYD+ZtU5NUefMhMFG
+ bIWSlY+yuqsY/+OXwKJ4v6+vSXFwSwLDX9IGp8hbxuXaSJsImn29tmddd3Of5ZwMB4zV
+ qhCSTIfKfgD8n+oHXLuf7Hxw6mzCXcQlbrI7gEz89kSK+MN+bv5nN3eOSiBoa9Muor+Z
+ s2hwIYa47re5Owl8Ce0jlW4fd2yXYdTko7W73EjtHVaJ8IzbkIYDZz1vFVo9RcyArQ82
+ Mp6g==
+X-Gm-Message-State: AOJu0YzeBOIf8w1hYaNNzsBObqk2KOOEahl0R8UHpAqi8nRUnh5ozcmu
+ +yEROQYmnfCoCxohOZjvm/WxSGgdxOBSCugu+kAmAE2zYjTAlyzr+oRUkGprfhdUqkUTiH2OShj
+ d5+apENvoOqep4AnwO5eKWAtsKeMXki/DhQrXyFWWGTKeVrDSKmUL
+X-Received: by 2002:ad4:5dca:0:b0:69b:2416:c215 with SMTP id
+ m10-20020ad45dca000000b0069b2416c215mr50914qvh.23.1712564058187; 
+ Mon, 08 Apr 2024 01:14:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDAt/VJb+UJqgfNu5hOtuU7P6IbLU3N2uZQA9Ns6xtcHjuIVQaPo6sEbQNbBVkpW96UC2SeA==
+X-Received: by 2002:ad4:5dca:0:b0:69b:2416:c215 with SMTP id
+ m10-20020ad45dca000000b0069b2416c215mr50885qvh.23.1712564057900; 
+ Mon, 08 Apr 2024 01:14:17 -0700 (PDT)
+Received: from sgarzare-redhat ([193.207.183.116])
  by smtp.gmail.com with ESMTPSA id
- k30-20020aa7999e000000b006eb3c2bde43sm5892294pfh.205.2024.04.08.01.11.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 01:11:23 -0700 (PDT)
-Message-ID: <b10e8b4d-b73c-4464-a5e1-883812b40899@daynix.com>
-Date: Mon, 8 Apr 2024 17:11:20 +0900
+ x13-20020a0ce0cd000000b006960f65e08esm2989214qvk.132.2024.04.08.01.14.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 01:14:17 -0700 (PDT)
+Date: Mon, 8 Apr 2024 10:14:06 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, slp@redhat.com,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brad Smith <brad@comstyle.com>, stefanha@redhat.com, 
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ gmaglione@redhat.com, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH for-9.1 v3 09/11] hostmem: add a new memory backend based
+ on POSIX shm_open()
+Message-ID: <thm363fnutlvwazqjtuv572uze2gwjfga4plhzrengb5rczj7v@f6idoxsesjge>
+References: <20240404122330.92710-1-sgarzare@redhat.com>
+ <20240404122330.92710-10-sgarzare@redhat.com>
+ <c5c89a6e-adf7-4f25-b9b5-2979e4367dfd@redhat.com>
+ <gs6o25gxe22j3uptywtadcujnwqexfgc3drthrgzn44m44pder@zugei2amphni>
+ <b2cde66b-4733-4c1c-ad9b-361346a80deb@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 16/20] virtio-net: Do not write hashes to peer buffer
-Content-Language: en-US
-To: Yuri Benditovich <yuri.benditovich@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
-References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
- <20240403-rss-v9-16-c6d87e69d38b@daynix.com>
- <CAOEp5Od=KUTHnikVBA7iWfdFPJ=T7hbJrSu4zwCiB_Q1P-Sz+Q@mail.gmail.com>
- <8010b335-4b46-456e-bf6e-c191cdc34964@daynix.com>
- <CAOEp5OeHJR=EeZ=yLovSD9vUPt-zRNKLo2k_fNZPP3W-eX4Fiw@mail.gmail.com>
- <d2213191-9b16-4716-a311-97751ba670ad@daynix.com>
- <CAOEp5OcNkBr4aRzjFQhgsOTmMmO3aPQH2tQLvGcs__=jUVa5sA@mail.gmail.com>
- <ad692cbf-1963-4051-9b24-50c3599c3f7f@daynix.com>
- <CAOEp5OeNHRdvJ7U2TFs4ZQaNFZHzDg5+_84AfLfb2kDFrfYPGg@mail.gmail.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAOEp5OeNHRdvJ7U2TFs4ZQaNFZHzDg5+_84AfLfb2kDFrfYPGg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <b2cde66b-4733-4c1c-ad9b-361346a80deb@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,57 +115,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/04/08 17:06, Yuri Benditovich wrote:
-> On Mon, Apr 8, 2024 at 10:57 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Mon, Apr 08, 2024 at 10:03:15AM +0200, David Hildenbrand wrote:
+>On 08.04.24 09:58, Stefano Garzarella wrote:
+>>On Thu, Apr 04, 2024 at 04:09:34PM +0200, David Hildenbrand wrote:
+>>>On 04.04.24 14:23, Stefano Garzarella wrote:
+>>>>shm_open() creates and opens a new POSIX shared memory object.
+>>>>A POSIX shared memory object allows creating memory backend with an
+>>>>associated file descriptor that can be shared with external processes
+>>>>(e.g. vhost-user).
+>>>>
+>>>>The new `memory-backend-shm` can be used as an alternative when
+>>>>`memory-backend-memfd` is not available (Linux only), since shm_open()
+>>>>should be provided by any POSIX-compliant operating system.
+>>>>
+>>>>This backend mimics memfd, allocating memory that is practically
+>>>>anonymous. In theory shm_open() requires a name, but this is allocated
+>>>>for a short time interval and shm_unlink() is called right after
+>>>>shm_open(). After that, only fd is shared with external processes
+>>>>(e.g., vhost-user) as if it were associated with anonymous memory.
+>>>>
+>>>>In the future we may also allow the user to specify the name to be
+>>>>passed to shm_open(), but for now we keep the backend simple, mimicking
+>>>>anonymous memory such as memfd.
+>>>>
+>>>>Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>>>>---
+>>>>v3
+>>>>- enriched commit message and documentation to highlight that we
+>>>>   want to mimic memfd (David)
+>>>>---
+>>>>  docs/system/devices/vhost-user.rst |   5 +-
+>>>>  qapi/qom.json                      |  17 +++++
+>>>>  backends/hostmem-shm.c             | 118 +++++++++++++++++++++++++++++
+>>>>  backends/meson.build               |   1 +
+>>>>  qemu-options.hx                    |  11 +++
+>>>>  5 files changed, 150 insertions(+), 2 deletions(-)
+>>>>  create mode 100644 backends/hostmem-shm.c
+>>>>
+>>>>diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
+>>>>index 9b2da106ce..35259d8ec7 100644
+>>>>--- a/docs/system/devices/vhost-user.rst
+>>>>+++ b/docs/system/devices/vhost-user.rst
+>>>>@@ -98,8 +98,9 @@ Shared memory object
+>>>>  In order for the daemon to access the VirtIO queues to process the
+>>>>  requests it needs access to the guest's address space. This is
+>>>>-achieved via the ``memory-backend-file`` or ``memory-backend-memfd``
+>>>>-objects. A reference to a file-descriptor which can access this object
+>>>>+achieved via the ``memory-backend-file``, ``memory-backend-memfd``, or
+>>>>+``memory-backend-shm`` objects.
+>>>>+A reference to a file-descriptor which can access this object
+>>>>  will be passed via the socket as part of the protocol negotiation.
+>>>>  Currently the shared memory object needs to match the size of the main
+>>>>diff --git a/qapi/qom.json b/qapi/qom.json
+>>>>index 85e6b4f84a..5252ec69e3 100644
+>>>>--- a/qapi/qom.json
+>>>>+++ b/qapi/qom.json
+>>>>@@ -721,6 +721,19 @@
+>>>>              '*hugetlbsize': 'size',
+>>>>              '*seal': 'bool' } }
+>>>>+##
+>>>>+# @MemoryBackendShmProperties:
+>>>>+#
+>>>>+# Properties for memory-backend-shm objects.
+>>>>+#
+>>>>+# The @share boolean option is true by default with shm.
+>>>>+#
+>>>>+# Since: 9.1
+>>>>+##
+>>>>+{ 'struct': 'MemoryBackendShmProperties',
+>>>>+  'base': 'MemoryBackendProperties',
+>>>>+  'data': { } }
+>>>>+
+>>>
+>>>Acked-by: David Hildenbrand <david@redhat.com>
+>>>
+>>>One comment: we should maybe just forbid setting share=off. it doesn't
+>>>make any sense and it can even result in an unexpected double memory
+>>>consumption. We missed doing that for memfd, unfortunately.
 >>
->> On 2024/04/08 16:54, Yuri Benditovich wrote:
->>> On Mon, Apr 8, 2024 at 10:42 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>
->>>> On 2024/04/08 16:40, Yuri Benditovich wrote:
->>>>> On Mon, Apr 8, 2024 at 4:30 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>>>
->>>>>> On 2024/04/08 7:09, Yuri Benditovich wrote:
->>>>>>> On Wed, Apr 3, 2024 at 2:12 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>>>>>
->>>>>>>> The peer buffer is qualified with const and not meant to be modified.
->>>>>>>
->>>>>>> IMHO, this buffer is not so 'const' (although the prototype states so),
->>>>>>> it is allocated in net.c
->>>>>>> btw, another procedure in this file also modifies the buffer
->>>>>>> (work_around_broken_dhclient)
->>>>>>
->>>>>> Right but it has a FIXME comment.
->>>>>>
->>>>>>>
->>>>>>>> It also prevents enabling VIRTIO_NET_F_HASH_REPORT for peers without
->>>>>>>> virtio-net header support.
->>>>>>>
->>>>>>> Does it mean _this commit_ prevents enabling VIRTIO_NET_F_HASH_REPORT
->>>>>>> for peers without
->>>>>>> virtio-net header support? Where?
->>>>>>
->>>>>> No, but I meant that this patch fixes such a problem.
->>>>>
->>>>> No, it does not. Such a problem does not exist in the master, the
->>>>> hash_report feature
->>>>> is silently dropped in such case:
->>>>> https://github.com/qemu/qemu/blob/master/hw/net/virtio-net.c#L816
->>>>
->>>> Well, silently dropping VIRTIO_NET_F_HASH_REPORT is not different from
->>>> preventing enabling VIRTIO_NET_F_HASH_REPORT, is it?
->>>>
->>> But how is your patch involved in it? Should this line be removed from
->>> the commit message?
+>>Good point!
 >>
->> In the master, VIRTIO_NET_F_HASH_REPORT is silently dropped, but this
->> patch will change to work without dropping it, which is worth to mention.
-> After applying this series of patches the VIRTIO_NET_F_HASH_REPORT is
-> dropped _the same way_ as in the master
+>>IIUC the `share` property is defined by the parent `hostmem`, so I
+>>should find a way to override the property here and disable the setter,
+>>or add an option to `hostmem` to make the property non-writable.
+>
+>Right, or simply fail later when you would find "share=off" in 
+>shm_backend_memory_alloc().
 
-You are right. I forgot that I dropped patch "virtio-net: Do not clear 
-VIRTIO_NET_F_HASH_REPORT" with v7. I'll drop the line in the next 
-version accordingly. Thanks for pointing out that.
+This seems like the simplest and cleanest approach, I'll go in this 
+direction!
 
-Regards,
-Akihiko Odaki
+>
+>When ever supporting named shmem_open(), it could make sense for VM 
+>snapshotting. Right now it doesn't really make any sense.
+
+Yeah, I see.
+
+Thanks,
+Stefano
+
 
