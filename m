@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD2EC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 22:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97CEBC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 22:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtxHD-0006tg-Be; Mon, 08 Apr 2024 18:15:43 -0400
+	id 1rtxZ0-00038T-4x; Mon, 08 Apr 2024 18:34:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtxHB-0006tE-Dw
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:15:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtxH9-0005pJ-Im
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:15:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712614538;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yFxnw+9m2EZT+0BWnX18QlSqSThNDI0QB59hntizCD0=;
- b=bN6o9powjLAXK8GheM8TfbZegWORUOKYYH55/N1HEsjiHHplxpA/nBSLB+DAoMa8dsA/uV
- eEL+Qy0XK0Agi22O4KuLiaZyXU1qWLpC90Rl9BOmRIm9wLesQyIi7x0DY/6I+kA2M6pMx5
- nxwLZd8aSAOqBTot/kfvTY39oUa7YKk=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-X8ac3nKdPBGm1A4dKfgSyg-1; Mon, 08 Apr 2024 18:15:36 -0400
-X-MC-Unique: X8ac3nKdPBGm1A4dKfgSyg-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-56e3f7ee50aso1661461a12.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 15:15:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rtxYy-00037a-IG
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:34:04 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rtxYw-0008Eo-LZ
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:34:04 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1e220e40998so31242655ad.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 15:34:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1712615639; x=1713220439; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hajyPimY4X17iNMgcO8caBbe9T/dEKp/CSm9o6I0OlA=;
+ b=fYlhB4uoCH7kZn/deJXrfjJ3pMXzeFYYuJBPy+dMH+N+dAGiGK6OxoGV6keEH/avfN
+ fl450cPPuQOfBBAAIWXiS7gu4JEAuhNz2xiIL1MfcSO0RN3vCEimK18bhZ5DS68JHnY6
+ QH90benK2dOmwn4onhFD4i0146P+d03ybFuJ3MHZ6MELXxUAsi/VS10KnuDEbjoijiFa
+ VJXN9l+6q6LkROWGHUgApdM5XNTvs/F8+W7PDuI/p+dkN08w7f//OoK106JEDFvDjORz
+ nMNQWqpMmD/RGjopnyDisIS8YIcYCt3uBLpdTneCcMIAnj14s5J/mnJfm8mMW/CUgThT
+ n48Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712614535; x=1713219335;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1712615639; x=1713220439;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yFxnw+9m2EZT+0BWnX18QlSqSThNDI0QB59hntizCD0=;
- b=vKqCNRawbFndpP/lgH5xnX9S+nVUAcho7Ib4diqDbdfhQafMtyPH9awTw2Mv1fWM6E
- +tcMj9q+UgLS3eECoq813/X6QRs8XxfloCsic9ycIRbz4v1Lr/FGNqb+ql/jK5ijWp2u
- +bUsNd+TB99HI0WtNt+ZbYUg8e3zcC+2P3pRnaYOKmv0arCbY5AI+lWC0GaVx6vKuqyq
- Ecyuc4VX4aK7mHeHLO4xF9YLE1u9/gVehNMcSnQAcBSd/UAJhVcz9MOGVn+7paCkPkL1
- gQCBvJU/0Ved1yuUTKNLeH1c2PLFkrr1O64n16D8ZPafKMll6i1kjIr1Ptm8K3HmuP74
- wSVQ==
+ bh=hajyPimY4X17iNMgcO8caBbe9T/dEKp/CSm9o6I0OlA=;
+ b=iwZj4hL7hqpMgRiYpngZcUEE+Ajn28E8SJnP51mpyCMia0A6D4LcBDUq0RAL0EHvyp
+ dcRWJkaH5PAbKVSC92b1H7gTb4ftMCnT9XUMbeLjIzCc6YNnCv7GTk67qEw2O0i0tJBo
+ RMZlssLnB1Sun73CvjW2XSrkIxuirdmabkre49TAeM1IJX3q28baDhGw3r0PTGTwv5Ug
+ XsUtDmJZZ+g9Mag20i9icw1+3s6G+O/xS91V9JVLqKrffrfXI0XJPsHu8OO1Wlw7oXXk
+ qpLt2rkmZBnex/n2VLSYP8w64oxM/6GHP8pzZCGq5/5aSYnzB92ihKt3sz1hYDV7UsTe
+ 2vkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjZ0U5ebQUikirbG/fWqc7cFmiKglSGKQK+yP0BFqEhJyf4P4bDA2TdjhxH30/JMgMZojkQfgsz5N5fC1Dk+F/KUuhRkU=
-X-Gm-Message-State: AOJu0YxGmAsnlBFyH9NCb+xmbOo/U0iTmRxvOs9vgy1JU8TpzuLE8G2X
- /IME6CvFLGbH0Ig+AEl7f8nSyLTMussRDRQbUq/yLhMR0B9xLiyPbSgrMcejVx54PWZwovEvMbN
- To9rkpoAVvPAEUIG/h9OdjLfmW+NuRnqmA5xwGOjddY07zK2h+RAg
-X-Received: by 2002:a17:906:2792:b0:a51:d8a2:7a35 with SMTP id
- j18-20020a170906279200b00a51d8a27a35mr2352770ejc.37.1712614534999; 
- Mon, 08 Apr 2024 15:15:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGX+TB5MyePHyD6mKv/alKM+HqeYBK1z3tfKeVKH5+CCAmcg4dpRf2hwZthu6Av9FAE8BgOIg==
-X-Received: by 2002:a17:906:2792:b0:a51:d8a2:7a35 with SMTP id
- j18-20020a170906279200b00a51d8a27a35mr2352760ejc.37.1712614534561; 
- Mon, 08 Apr 2024 15:15:34 -0700 (PDT)
-Received: from redhat.com ([2.52.134.26]) by smtp.gmail.com with ESMTPSA id
- my46-20020a1709065a6e00b00a4735e440e1sm4944687ejc.97.2024.04.08.15.15.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 15:15:32 -0700 (PDT)
-Date: Mon, 8 Apr 2024 18:15:29 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>,
- Jason Wang <jasowang@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-Subject: Re: [PATCH] Revert "hw/virtio: Add support for VDPA network
- simulation devices"
-Message-ID: <20240408181452-mutt-send-email-mst@kernel.org>
-References: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
- <CAFEAcA9_mLQ=jWNEHBVLJKHST4X=QVdpgPCTh1mRSSiea7ruzw@mail.gmail.com>
- <20240408061752-mutt-send-email-mst@kernel.org>
- <CABgObfbfi-LiV0_BfK78-53kfTg+z3zX3sfBDAJqr5GxOWiOMA@mail.gmail.com>
+ AJvYcCX4k8unLVO1BEvTS5qYmllcaLhdQc1Ux//4Br5P5+JM0QHR1EfPlCRPv70HZ8B8NrFCYTS0KEYusJprl+4GtUGFDqDjt4M=
+X-Gm-Message-State: AOJu0YwRr9iRO0JI/y/jhBzONqq9YJQLJX1jnqbFlQ2GPK4ZaIzRweg/
+ XZMPqDSPCNX1mMveu2hgTfZ+JMA9TUaS206ZeWw3vbiXWR3Wwr1JlnttsNi/pEs=
+X-Google-Smtp-Source: AGHT+IGJbdvhXPKqGNnGtvoaN9DGLTLAoLP8FXHGKaEXP3vaGCn2lVqdsI23ep53egDqIyz+p5ColQ==
+X-Received: by 2002:a17:902:ce89:b0:1e4:25e8:c2f1 with SMTP id
+ f9-20020a170902ce8900b001e425e8c2f1mr4982798plg.29.1712615639486; 
+ Mon, 08 Apr 2024 15:33:59 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ w11-20020a170902e88b00b001e3e0968f8asm5073595plg.248.2024.04.08.15.33.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Apr 2024 15:33:59 -0700 (PDT)
+Message-ID: <eb3ec708-b4f7-431a-bef0-b09a458f422b@ventanamicro.com>
+Date: Mon, 8 Apr 2024 19:33:55 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfbfi-LiV0_BfK78-53kfTg+z3zX3sfBDAJqr5GxOWiOMA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/intc/riscv_aplic: APLICs should add child earlier than
+ realize
+Content-Language: en-US
+To: "yang.zhang" <gaoshanliukou@163.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com,
+ bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
+ anup@brainfault.org
+Cc: "yang.zhang" <yang.zhang@hexintek.com>
+References: <20240407034652.25739-1-gaoshanliukou@163.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240407034652.25739-1-gaoshanliukou@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,41 +101,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 08, 2024 at 10:11:18PM +0200, Paolo Bonzini wrote:
-> 
-> 
-> Il lun 8 apr 2024, 12:18 Michael S. Tsirkin <mst@redhat.com> ha scritto:
-> 
->     On Mon, Apr 08, 2024 at 10:51:57AM +0100, Peter Maydell wrote:
->     > On Mon, 8 Apr 2024 at 10:48, Michael S. Tsirkin <mst@redhat.com> wrote:
->     > >
->     > > This reverts commit cd341fd1ffded978b2aa0b5309b00be7c42e347c.
->     > >
->     > > The patch adds non-upstream code in
->     > > include/standard-headers/linux/virtio_pci.h
->     > > which would make maintainance harder.
->     > >
->     > > Revert for now.
-> 
-> 
-> As long as it is part of the spec, why not just move the problematic parts to a
-> QEMU specific header? As far as I understand the kernel is never going to
-> consume these constants anyway. 
-> 
-> Paolo 
 
-I expect the contributor to do fixups like this though, not myself.
+
+On 4/7/24 00:46, yang.zhang wrote:
+> From: "yang.zhang" <yang.zhang@hexintek.com>
+> 
+> Since only root APLICs can have hw IRQ lines, aplic->parent should
+> be initialized first.
+
+I think it's worth mentioning that, if we don't do that, there won't be
+an aplic->parent assigned during riscv_aplic_realize() and we won't create
+the adequate IRQ lines.
 
 > 
->     > > Suggested-by: Jason Wang <jasowang@redhat.com>
->     > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
->     >
->     > Are you intending to target this revert for 9.0 ?
->     >
->     > -- PMM
-> 
->     Yes.
-> 
-> 
+> Signed-off-by: yang.zhang <yang.zhang@hexintek.com>
+> ---
 
+Please add:
+
+Fixes: e8f79343cf ("hw/intc: Add RISC-V AIA APLIC device emulation")
+
+
+And:
+
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+
+
+
+>   hw/intc/riscv_aplic.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> index fc5df0d598..32edd6d07b 100644
+> --- a/hw/intc/riscv_aplic.c
+> +++ b/hw/intc/riscv_aplic.c
+> @@ -1000,16 +1000,16 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
+>       qdev_prop_set_bit(dev, "msimode", msimode);
+>       qdev_prop_set_bit(dev, "mmode", mmode);
+>   
+> +    if (parent) {
+> +        riscv_aplic_add_child(parent, dev);
+> +    }
+> +
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>   
+>       if (!is_kvm_aia(msimode)) {
+>           sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+>       }
+>   
+> -    if (parent) {
+> -        riscv_aplic_add_child(parent, dev);
+> -    }
+> -
+>       if (!msimode) {
+>           for (i = 0; i < num_harts; i++) {
+>               CPUState *cpu = cpu_by_arch_id(hartid_base + i);
 
