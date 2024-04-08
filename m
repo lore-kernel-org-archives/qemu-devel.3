@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6428CD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36571C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt8E-00025W-51; Mon, 08 Apr 2024 13:50:10 -0400
+	id 1rtt8N-00027K-0O; Mon, 08 Apr 2024 13:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8B-00025I-Kw
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:07 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1rtt8M-00027B-BU
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:18 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt87-0003iK-Su
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:06 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5d8b519e438so3614117a12.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:03 -0700 (PDT)
+ id 1rtt8J-0003k4-EJ
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:18 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-5e4613f2b56so3665145a12.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598602; x=1713203402; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598614; x=1713203414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qu730y1a5bhHx8+lUgk6PRHwUAMG8x1kinVBmiKeHm0=;
- b=vI2pmm2TEE8vOsPc6lNg7hgoAgdjIBFo6JXJ90bgajS7PuYXi73T4axnj0C9NHVgdn
- /sPRaX39aubUzaU8D6C7OMtlvmjUJe48e8EZFg+CailJn8zB3STx666JwYZHF1/1lagQ
- K2Imze+1M2jiaO8IJvSNsZu74+8/6TETJoa6WGr8zbg4hxJtlYDb6PJBKKFiL9WwvSOK
- SMiYfUlqWuR0JetTYCQgfygGZ85C+GIRs3Typ88cLzJsN/flTM/JF2zhzWi9LBkMbOKl
- 9Zl/5b1SOxheUIIEsLE0IZUZYE70JmSO4xf7WBMOHZdy3WwyZAqCQapaii/RQNGXSFAA
- IK2g==
+ bh=r70v09Z1jYUdUmudZIEve8pIi40latYcxErAtIALfYA=;
+ b=wrA720sPrA8Nm+OQoSIqkjj9BW8Hgk8o3vq4sjrYWHqth0Ucp7DXEL/6QaDY4x2x00
+ Qzj68v95fcVY3h/Fz9bs16FogQlmb7lGIzMNe/T53qjc5I8NW8ETnfp+TtIb6RVbbCo9
+ GOwVjOJTht3gtMwUgCImHCRxpQhmN8/nk7rzBSgV619Wcg9+CFlVsfgklgwwfr7U01OY
+ x+tYqK21NkwSmh3SaEsai6O5lqEDOWnradH/W6XdDz1yonnE1jNGPp2FJJbjNDDaJ2dl
+ RtcoxZVyFaLytocQ4xguXj8MKg/lBzGxE6RYS7JNIzqZhvwsiJkszfj8QfmHGso6QURP
+ RQ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598602; x=1713203402;
+ d=1e100.net; s=20230601; t=1712598614; x=1713203414;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qu730y1a5bhHx8+lUgk6PRHwUAMG8x1kinVBmiKeHm0=;
- b=b7aIrhb0+/V1lrEwO7yqXp1g6bMpmW36eRn7mI7P1617DXtRNXmzlJi8Ds5BpjmHSq
- mwaSZjc2rMAwAl2UUqQxExzITjYsn/Q4/am9Xehf8GGNT8tnOblzOZgn64NumKZZfSRO
- XhkPfuStvjCkXWLR5IHg9sUNlpHHYYVlfOF4nGlOOcgn3T918p8lctV/4mjOPL2htiGF
- pYrUqkyPFjQ27gITEzPte8Xm5eIgdOuR2DkkNy3IFi1m70tWzRmk28KYJVkcR6g+T4ng
- UgVjMRldK8WCU0f+a/WZ/k+IJvFgICW1gM/hx2qZmXsRFd7Gq+OM2LoDynWadEgmR0Xe
- oFZg==
-X-Gm-Message-State: AOJu0Yx595EMx82qBLCpHFpfyk5BXHDoPmYfi4cqNAC+TaGWAeduMQ97
- hRWcRInK98tqhJhPPu8+/hZKqZSE+/rvP0NaIhB3WgVChBpgr2RAjBCd51tT02IW0Mn4lBpf1ik
- v
-X-Google-Smtp-Source: AGHT+IHFcIR8z+B7jJzXE6Jg8Ddatpwu59X/CvKq3s9JwUZxTDT/5HC+DXGEKysqKZyagcUdvdXDmA==
-X-Received: by 2002:a17:90a:df15:b0:29f:ce37:50d8 with SMTP id
- gp21-20020a17090adf1500b0029fce3750d8mr6907984pjb.17.1712598602447; 
- Mon, 08 Apr 2024 10:50:02 -0700 (PDT)
+ bh=r70v09Z1jYUdUmudZIEve8pIi40latYcxErAtIALfYA=;
+ b=OxAEHIKoYt9/9am5W6Dqe654NM00q1DETauFvuRgS3t3riCIlIoTqXU3BgsFkmjLMK
+ 9XppxTs+RqB0K01DHj/CdjfL3Daty+nYx3u+dY/eiInoQAF5QTbAhK+g2L8rhzbsJsmh
+ RnGqo1fB69BUqu8PiCpmJNtVR4FeWeuete4/Zu3S/p1cfq0BNhP3xsC/GhMwxutBYVj6
+ mIScrPphb2RFp+rSrievR+bEE5YFeGS1VhMJeOH1/kGF8Cm1D6tCFUZVtghiU/pTOmXy
+ Mp+fcELwqEH4nWFomHXGiwRumQf+sol/HpbwJgWh5eb9SyfoCybL/gM2gv+jMQzwdPf8
+ dYhw==
+X-Gm-Message-State: AOJu0Yy/Fpk2Y7BReynK29dq7k3CHnHX/WMS3phrhNvI0J3y14UemJSb
+ z7+yqjJCQoRyB65+Kt6rxTXkOvwat5kWKIM3LsmHk9n7RhMk7C1NOV56IWLFZnYKu5YBACn1Kug
+ F
+X-Google-Smtp-Source: AGHT+IE80lerOFer8W/g3BtOG55khwBtNttI6YF0ABRTth2WipfaIEoACLdRRtcktw5n+RSlePjXbQ==
+X-Received: by 2002:a17:90b:1bcc:b0:2a0:2fb3:c1ff with SMTP id
+ oa12-20020a17090b1bcc00b002a02fb3c1ffmr7520545pjb.15.1712598613747; 
+ Mon, 08 Apr 2024 10:50:13 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.01
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:50:02 -0700 (PDT)
+ Mon, 08 Apr 2024 10:50:13 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 21/35] target/arm: Use insn_start from DisasContextBase
-Date: Mon,  8 Apr 2024 07:49:15 -1000
-Message-Id: <20240408174929.862917-22-richard.henderson@linaro.org>
+Cc: Alexander Monakov <amonakov@ispras.ru>,
+ Mikhail Romanov <mmromanov@ispras.ru>
+Subject: [PULL 28/35] util/bufferiszero: Remove SSE4.1 variant
+Date: Mon,  8 Apr 2024 07:49:22 -1000
+Message-Id: <20240408174929.862917-29-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,75 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To keep the multiple update check, replace insn_start
-with insn_start_updated.
+From: Alexander Monakov <amonakov@ispras.ru>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+The SSE4.1 variant is virtually identical to the SSE2 variant, except
+for using 'PTEST+JNZ' in place of 'PCMPEQB+PMOVMSKB+CMP+JNE' for testing
+if an SSE register is all zeroes. The PTEST instruction decodes to two
+uops, so it can be handled only by the complex decoder, and since
+CMP+JNE are macro-fused, both sequences decode to three uops. The uops
+comprising the PTEST instruction dispatch to p0 and p5 on Intel CPUs, so
+PCMPEQB+PMOVMSKB is comparatively more flexible from dispatch
+standpoint.
+
+Hence, the use of PTEST brings no benefit from throughput standpoint.
+Its latency is not important, since it feeds only a conditional jump,
+which terminates the dependency chain.
+
+I never observed PTEST variants to be faster on real hardware.
+
+Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
+Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240206204809.9859-2-amonakov@ispras.ru>
 ---
- target/arm/tcg/translate.h     | 12 ++++++------
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ util/bufferiszero.c | 29 -----------------------------
+ 1 file changed, 29 deletions(-)
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 93be745cf3..dc66ff2190 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -165,10 +165,10 @@ typedef struct DisasContext {
-     uint8_t gm_blocksize;
-     /* True if this page is guarded.  */
-     bool guarded_page;
-+    /* True if the current insn_start has been updated. */
-+    bool insn_start_updated;
-     /* Bottom two bits of XScale c15_cpar coprocessor access control reg */
-     int c15_cpar;
--    /* TCG op of the current insn_start.  */
--    TCGOp *insn_start;
-     /* Offset from VNCR_EL2 when FEAT_NV2 redirects this reg to memory */
-     uint32_t nv2_redirect_offset;
- } DisasContext;
-@@ -276,10 +276,10 @@ static inline void disas_set_insn_syndrome(DisasContext *s, uint32_t syn)
-     syn &= ARM_INSN_START_WORD2_MASK;
-     syn >>= ARM_INSN_START_WORD2_SHIFT;
- 
--    /* We check and clear insn_start_idx to catch multiple updates.  */
--    assert(s->insn_start != NULL);
--    tcg_set_insn_start_param(s->insn_start, 2, syn);
--    s->insn_start = NULL;
-+    /* Check for multiple updates.  */
-+    assert(!s->insn_start_updated);
-+    s->insn_start_updated = true;
-+    tcg_set_insn_start_param(s->base.insn_start, 2, syn);
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index 3e6a5dfd63..f5a3634f9a 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -100,34 +100,6 @@ buffer_zero_sse2(const void *buf, size_t len)
  }
  
- static inline int curr_insn_len(DisasContext *s)
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 340265beb0..2666d52711 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -14179,7 +14179,7 @@ static void aarch64_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-         pc_arg &= ~TARGET_PAGE_MASK;
-     }
-     tcg_gen_insn_start(pc_arg, 0, 0);
--    dc->insn_start = tcg_last_op();
-+    dc->insn_start_updated = false;
- }
- 
- static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 69585e6003..dc49a8d806 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -9273,7 +9273,7 @@ static void arm_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-         condexec_bits = (dc->condexec_cond << 4) | (dc->condexec_mask >> 1);
-     }
-     tcg_gen_insn_start(pc_arg, condexec_bits, 0);
--    dc->insn_start = tcg_last_op();
-+    dc->insn_start_updated = false;
- }
- 
- static bool arm_check_kernelpage(DisasContext *dc)
+ #ifdef CONFIG_AVX2_OPT
+-static bool __attribute__((target("sse4")))
+-buffer_zero_sse4(const void *buf, size_t len)
+-{
+-    __m128i t = _mm_loadu_si128(buf);
+-    __m128i *p = (__m128i *)(((uintptr_t)buf + 5 * 16) & -16);
+-    __m128i *e = (__m128i *)(((uintptr_t)buf + len) & -16);
+-
+-    /* Loop over 16-byte aligned blocks of 64.  */
+-    while (likely(p <= e)) {
+-        __builtin_prefetch(p);
+-        if (unlikely(!_mm_testz_si128(t, t))) {
+-            return false;
+-        }
+-        t = p[-4] | p[-3] | p[-2] | p[-1];
+-        p += 4;
+-    }
+-
+-    /* Finish the aligned tail.  */
+-    t |= e[-3];
+-    t |= e[-2];
+-    t |= e[-1];
+-
+-    /* Finish the unaligned tail.  */
+-    t |= _mm_loadu_si128(buf + len - 16);
+-
+-    return _mm_testz_si128(t, t);
+-}
+-
+ static bool __attribute__((target("avx2")))
+ buffer_zero_avx2(const void *buf, size_t len)
+ {
+@@ -221,7 +193,6 @@ select_accel_cpuinfo(unsigned info)
+ #endif
+ #ifdef CONFIG_AVX2_OPT
+         { CPUINFO_AVX2,    128, buffer_zero_avx2 },
+-        { CPUINFO_SSE4,     64, buffer_zero_sse4 },
+ #endif
+         { CPUINFO_SSE2,     64, buffer_zero_sse2 },
+         { CPUINFO_ALWAYS,    0, buffer_zero_int },
 -- 
 2.34.1
 
