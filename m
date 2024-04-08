@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36571C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93844C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt8N-00027K-0O; Mon, 08 Apr 2024 13:50:19 -0400
+	id 1rtt8N-00027N-1x; Mon, 08 Apr 2024 13:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8M-00027B-BU
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:18 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1rtt8K-00026s-TE
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:16 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8J-0003k4-EJ
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:18 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-5e4613f2b56so3665145a12.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:15 -0700 (PDT)
+ id 1rtt8J-0003jm-1b
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:16 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-5d4d15ec7c5so3811216a12.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598614; x=1713203414; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598612; x=1713203412; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r70v09Z1jYUdUmudZIEve8pIi40latYcxErAtIALfYA=;
- b=wrA720sPrA8Nm+OQoSIqkjj9BW8Hgk8o3vq4sjrYWHqth0Ucp7DXEL/6QaDY4x2x00
- Qzj68v95fcVY3h/Fz9bs16FogQlmb7lGIzMNe/T53qjc5I8NW8ETnfp+TtIb6RVbbCo9
- GOwVjOJTht3gtMwUgCImHCRxpQhmN8/nk7rzBSgV619Wcg9+CFlVsfgklgwwfr7U01OY
- x+tYqK21NkwSmh3SaEsai6O5lqEDOWnradH/W6XdDz1yonnE1jNGPp2FJJbjNDDaJ2dl
- RtcoxZVyFaLytocQ4xguXj8MKg/lBzGxE6RYS7JNIzqZhvwsiJkszfj8QfmHGso6QURP
- RQ5A==
+ bh=LWeWfrDPztEwkV9YuE7zu+DtIohBh0oWfxn6udjmQ4s=;
+ b=XgqngNY7YmqvH/feZBb2y0Pp4VesJsceCYF1LyLUleUK9m7MvWu5/qGaUrhvc8zSb4
+ VwsVtMd21dvdUQ8YnfZG/z+Ivi/uqc8DciYHFxygkHide5fdbkRFbm1vDaT04XB9sHz2
+ F53Ac1ckiysBIXonSUcs1YvJ7LwoM7RGpAzoKIOnRaycsajV7PCIb2vnDs39tF7CWK1o
+ IehPl2S+T+OkqPCXdIJBetDD+Z7k/sHOUnbp01JjLhos4hL+p4k2uRJOfmhAeAYed1+m
+ epnDO2z+FI0GlBeAct9HFS9d7Z0UTB+UKDjCG2l7UanuGagdfPjc/Xx8ZBgMyLmYVSfw
+ v6bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598614; x=1713203414;
+ d=1e100.net; s=20230601; t=1712598612; x=1713203412;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r70v09Z1jYUdUmudZIEve8pIi40latYcxErAtIALfYA=;
- b=OxAEHIKoYt9/9am5W6Dqe654NM00q1DETauFvuRgS3t3riCIlIoTqXU3BgsFkmjLMK
- 9XppxTs+RqB0K01DHj/CdjfL3Daty+nYx3u+dY/eiInoQAF5QTbAhK+g2L8rhzbsJsmh
- RnGqo1fB69BUqu8PiCpmJNtVR4FeWeuete4/Zu3S/p1cfq0BNhP3xsC/GhMwxutBYVj6
- mIScrPphb2RFp+rSrievR+bEE5YFeGS1VhMJeOH1/kGF8Cm1D6tCFUZVtghiU/pTOmXy
- Mp+fcELwqEH4nWFomHXGiwRumQf+sol/HpbwJgWh5eb9SyfoCybL/gM2gv+jMQzwdPf8
- dYhw==
-X-Gm-Message-State: AOJu0Yy/Fpk2Y7BReynK29dq7k3CHnHX/WMS3phrhNvI0J3y14UemJSb
- z7+yqjJCQoRyB65+Kt6rxTXkOvwat5kWKIM3LsmHk9n7RhMk7C1NOV56IWLFZnYKu5YBACn1Kug
- F
-X-Google-Smtp-Source: AGHT+IE80lerOFer8W/g3BtOG55khwBtNttI6YF0ABRTth2WipfaIEoACLdRRtcktw5n+RSlePjXbQ==
-X-Received: by 2002:a17:90b:1bcc:b0:2a0:2fb3:c1ff with SMTP id
- oa12-20020a17090b1bcc00b002a02fb3c1ffmr7520545pjb.15.1712598613747; 
- Mon, 08 Apr 2024 10:50:13 -0700 (PDT)
+ bh=LWeWfrDPztEwkV9YuE7zu+DtIohBh0oWfxn6udjmQ4s=;
+ b=uCsAOScy6qglBj+b54fqHAoeV90FP+tNEXX5aulCZoJbLRfCA0JCcDwmlFmrF+x4iI
+ 0xaG+Oe3SlQ0Sl6xgXw8tgTBLZqZnmGxOogQSvrrVYkEj9koyaGP/HPpc8zP4F17499i
+ 38jKwbYSH97GcXEmIQ1wQOKIRhLAKg8qIe6QKdNYo4sRRQ7YylG+bUSD8CiS+J9rDKgS
+ hg/bdf0igi8cCTkWwjK6hvsBnaaysVrJb1rgW8cJmPVZsAqWv4Whqoz27mS2QWL/7XI+
+ m7vGe+SLb71X88UMi1dPq48o93XyWKdwh9JmQ9Cv1yzrgdhfTda/Ynq/mh3i6CksR1+U
+ Sw4g==
+X-Gm-Message-State: AOJu0YyC2Vr9Pl7AmVcBgvDJW+G2GZizR68X4rSSAZqER8Nh8fjrfFZV
+ WabMCsmPCbQxZTtwc1Lyr7O2Uf6Ze5u0Y2SM06wj11KFhURzVlyO1myjMS+n/vQcA02dn5hFlAb
+ K
+X-Google-Smtp-Source: AGHT+IGtl5EAeMFBnm3J24SXUxUFppKqtxQAhInllf9x+JDL59fGQxM1swl4FRFsZetLLHt4H3PNgw==
+X-Received: by 2002:a17:90b:24a:b0:2a0:8eed:56ec with SMTP id
+ fz10-20020a17090b024a00b002a08eed56ecmr8432988pjb.39.1712598612163; 
+ Mon, 08 Apr 2024 10:50:12 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.12
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:50:13 -0700 (PDT)
+ Mon, 08 Apr 2024 10:50:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alexander Monakov <amonakov@ispras.ru>,
- Mikhail Romanov <mmromanov@ispras.ru>
-Subject: [PULL 28/35] util/bufferiszero: Remove SSE4.1 variant
-Date: Mon,  8 Apr 2024 07:49:22 -1000
-Message-Id: <20240408174929.862917-29-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?J=C3=B8rgen=20Hansen?= <Jorgen.Hansen@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 27/35] accel/tcg: Improve can_do_io management
+Date: Mon,  8 Apr 2024 07:49:21 -1000
+Message-Id: <20240408174929.862917-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,78 +96,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Monakov <amonakov@ispras.ru>
+We already attempted to set and clear can_do_io before the first
+and last insns, but only used the initial value of max_insns and
+the call to translator_io_start to find those insns.
 
-The SSE4.1 variant is virtually identical to the SSE2 variant, except
-for using 'PTEST+JNZ' in place of 'PCMPEQB+PMOVMSKB+CMP+JNE' for testing
-if an SSE register is all zeroes. The PTEST instruction decodes to two
-uops, so it can be handled only by the complex decoder, and since
-CMP+JNE are macro-fused, both sequences decode to three uops. The uops
-comprising the PTEST instruction dispatch to p0 and p5 on Intel CPUs, so
-PCMPEQB+PMOVMSKB is comparatively more flexible from dispatch
-standpoint.
+Now that we track insn_start in DisasContextBase, and now that
+we have emit_before_op, we can wait until we have finished
+translation to identify the true first and last insns and emit
+the sets of can_do_io at that time.
 
-Hence, the use of PTEST brings no benefit from throughput standpoint.
-Its latency is not important, since it feeds only a conditional jump,
-which terminates the dependency chain.
+This fixes the case of a translation block which crossed a page
+boundary, and for which the second page turned out to be mmio.
+In this case we truncate the block, and the previous logic for
+can_do_io could leave a block with a single insn with can_do_io
+set to false, which would fail an assertion in cpu_io_recompile.
 
-I never observed PTEST variants to be faster on real hardware.
-
-Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
-Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240206204809.9859-2-amonakov@ispras.ru>
+Reported-by: Jørgen Hansen <Jorgen.Hansen@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Jørgen Hansen <Jorgen.Hansen@wdc.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- util/bufferiszero.c | 29 -----------------------------
- 1 file changed, 29 deletions(-)
+ include/exec/translator.h |  1 -
+ accel/tcg/translator.c    | 45 ++++++++++++++++++++-------------------
+ 2 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 3e6a5dfd63..f5a3634f9a 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -100,34 +100,6 @@ buffer_zero_sse2(const void *buf, size_t len)
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index ceaeca8c91..2c4fb818e7 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -87,7 +87,6 @@ typedef struct DisasContextBase {
+     int num_insns;
+     int max_insns;
+     bool singlestep_enabled;
+-    int8_t saved_can_do_io;
+     bool plugin_enabled;
+     struct TCGOp *insn_start;
+     void *host_addr[2];
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index ae61c154c2..9de0bc34c8 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -18,20 +18,14 @@
+ 
+ static void set_can_do_io(DisasContextBase *db, bool val)
+ {
+-    if (db->saved_can_do_io != val) {
+-        db->saved_can_do_io = val;
+-
+-        QEMU_BUILD_BUG_ON(sizeof_field(CPUState, neg.can_do_io) != 1);
+-        tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
+-                        offsetof(ArchCPU, parent_obj.neg.can_do_io) -
+-                        offsetof(ArchCPU, env));
+-    }
++    QEMU_BUILD_BUG_ON(sizeof_field(CPUState, neg.can_do_io) != 1);
++    tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
++                    offsetof(ArchCPU, parent_obj.neg.can_do_io) -
++                    offsetof(ArchCPU, env));
  }
  
- #ifdef CONFIG_AVX2_OPT
--static bool __attribute__((target("sse4")))
--buffer_zero_sse4(const void *buf, size_t len)
--{
--    __m128i t = _mm_loadu_si128(buf);
--    __m128i *p = (__m128i *)(((uintptr_t)buf + 5 * 16) & -16);
--    __m128i *e = (__m128i *)(((uintptr_t)buf + len) & -16);
--
--    /* Loop over 16-byte aligned blocks of 64.  */
--    while (likely(p <= e)) {
--        __builtin_prefetch(p);
--        if (unlikely(!_mm_testz_si128(t, t))) {
--            return false;
--        }
--        t = p[-4] | p[-3] | p[-2] | p[-1];
--        p += 4;
--    }
--
--    /* Finish the aligned tail.  */
--    t |= e[-3];
--    t |= e[-2];
--    t |= e[-1];
--
--    /* Finish the unaligned tail.  */
--    t |= _mm_loadu_si128(buf + len - 16);
--
--    return _mm_testz_si128(t, t);
--}
--
- static bool __attribute__((target("avx2")))
- buffer_zero_avx2(const void *buf, size_t len)
+ bool translator_io_start(DisasContextBase *db)
  {
-@@ -221,7 +193,6 @@ select_accel_cpuinfo(unsigned info)
- #endif
- #ifdef CONFIG_AVX2_OPT
-         { CPUINFO_AVX2,    128, buffer_zero_avx2 },
--        { CPUINFO_SSE4,     64, buffer_zero_sse4 },
- #endif
-         { CPUINFO_SSE2,     64, buffer_zero_sse2 },
-         { CPUINFO_ALWAYS,    0, buffer_zero_int },
+-    set_can_do_io(db, true);
+-
+     /*
+      * Ensure that this instruction will be the last in the TB.
+      * The target may override this to something more forceful.
+@@ -84,13 +78,6 @@ static TCGOp *gen_tb_start(DisasContextBase *db, uint32_t cflags)
+                          - offsetof(ArchCPU, env));
+     }
+ 
+-    /*
+-     * cpu->neg.can_do_io is set automatically here at the beginning of
+-     * each translation block.  The cost is minimal, plus it would be
+-     * very easy to forget doing it in the translator.
+-     */
+-    set_can_do_io(db, db->max_insns == 1);
+-
+     return icount_start_insn;
+ }
+ 
+@@ -129,6 +116,7 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+ {
+     uint32_t cflags = tb_cflags(tb);
+     TCGOp *icount_start_insn;
++    TCGOp *first_insn_start = NULL;
+     bool plugin_enabled;
+ 
+     /* Initialize DisasContext */
+@@ -139,7 +127,6 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+     db->num_insns = 0;
+     db->max_insns = *max_insns;
+     db->singlestep_enabled = cflags & CF_SINGLE_STEP;
+-    db->saved_can_do_io = -1;
+     db->insn_start = NULL;
+     db->host_addr[0] = host_pc;
+     db->host_addr[1] = NULL;
+@@ -159,6 +146,9 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+         *max_insns = ++db->num_insns;
+         ops->insn_start(db, cpu);
+         db->insn_start = tcg_last_op();
++        if (first_insn_start == NULL) {
++            first_insn_start = db->insn_start;
++        }
+         tcg_debug_assert(db->is_jmp == DISAS_NEXT);  /* no early exit */
+ 
+         if (plugin_enabled) {
+@@ -171,10 +161,6 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+          * done next -- either exiting this loop or locate the start of
+          * the next instruction.
+          */
+-        if (db->num_insns == db->max_insns) {
+-            /* Accept I/O on the last instruction.  */
+-            set_can_do_io(db, true);
+-        }
+         ops->translate_insn(db, cpu);
+ 
+         /*
+@@ -207,6 +193,21 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+     ops->tb_stop(db, cpu);
+     gen_tb_end(tb, cflags, icount_start_insn, db->num_insns);
+ 
++    /*
++     * Manage can_do_io for the translation block: set to false before
++     * the first insn and set to true before the last insn.
++     */
++    if (db->num_insns == 1) {
++        tcg_debug_assert(first_insn_start == db->insn_start);
++    } else {
++        tcg_debug_assert(first_insn_start != db->insn_start);
++        tcg_ctx->emit_before_op = first_insn_start;
++        set_can_do_io(db, false);
++    }
++    tcg_ctx->emit_before_op = db->insn_start;
++    set_can_do_io(db, true);
++    tcg_ctx->emit_before_op = NULL;
++
+     if (plugin_enabled) {
+         plugin_gen_tb_end(cpu, db->num_insns);
+     }
 -- 
 2.34.1
 
