@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE0DCD129D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B47C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt83-000228-QA; Mon, 08 Apr 2024 13:49:59 -0400
+	id 1rtt7u-0001yS-Ko; Mon, 08 Apr 2024 13:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt82-00021i-Db
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:58 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1rtt7k-0001v4-Q0
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:47 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt80-0003gI-Kw
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:57 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6ecf3943040so3108979b3a.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:49:56 -0700 (PDT)
+ id 1rtt7h-0003c1-Po
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:40 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6eaf1005fcaso3230123b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598595; x=1713203395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598576; x=1713203376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hIaIEQSm9VCOv6FXtjW2b8GU4ZH5b2a473JIJYHIFaQ=;
- b=PoDgMi94+ir6aMg0BDnnv8r6Y3AvpzQocjyT2dVRhOyWxmnwjucjsFESWSwDMtrG5C
- 5nNGP/H/L9HXBZPt/6xJ9sJ0S7RLFxZQzTC4sHHkCq58bj5Wat2gN8JBDjSq1G+0pDnK
- l/OKut9rkp+0lbol3k9rOWSMpQzA4Fe8BpHS6xBqKft1lmsq1aQm8zLkxfLIGo2KuCn6
- PtZSgbeduYW/oqXVZ2Y6kmX94lj2BzbnVttO1bE1wVelJVuZsSjzIKRNxLE6H8azDDXY
- kd2odTDWEDBlddtE/ijQIVETHtnzfBpiKyzQtnDEycU3n/tZX7RO8gJtvxUIfV6jxHT7
- nhQQ==
+ bh=eljbs2yNGMGPnWHJwv7NSq5kkRuO1URzZsDZcIZtS6U=;
+ b=M8XoFFgl0ZUDR9CMxS9z/674CiBP8t3ibG2rq4MDi3WY0KqRMpV3sy9VgQaw2eQoAS
+ rfPc3fzlrR6gM3qQ5Jmr2jBaRX293ZUKGdx2fIB2oJNiTFFHQfRfX7KfXNx9j2cdZg0b
+ ELx3i53+gKplD/nhsfYty49m9FSUMJT4z3CISh1PD+4CYzKwgwDOZvmZvVcQtgoQcsZK
+ c/6yrncgWwp/g3inlZdeIGu86EDW0wbgMUL0cqoMSr93ZL/j+XNPlUbxreKJatH6FjnE
+ f8hFVFe89BpQmKkTe9TmuQA1jRD3neh/cZWHbZHtddZ9zLpp6+NWaa2mK3BQ6slLMEUB
+ QzZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598595; x=1713203395;
+ d=1e100.net; s=20230601; t=1712598576; x=1713203376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hIaIEQSm9VCOv6FXtjW2b8GU4ZH5b2a473JIJYHIFaQ=;
- b=V+yoMwIcjN/W1nnF0O/uA0X3u58du6Wq17kyfVYP4RabVc52LwJ9o+Y9cUqxJgz1YU
- +Wfo63gPlGAjWO9YNegpXWTIA4qDBHze3QfHIMidoEe9v3qRQLQ0MyqgxvvsXubFem1g
- LFUrA3JVQUrfQUjMm392w7DhkdYBqDD5avQTB8S3jNtxB78BXD9R7JYuKQ0McTDkJ4pT
- IQv0r9hw3t5Oz2gor1QcWYTxnK4+hytXz1c3e7kjgZsVo8bs6Y18SVKytl0zk8LKqSev
- wi6O82jUOvH/X6zn5b2krGNavYZzS6CRqo7CBvRmU4OW9huM1pnE3F9LkRRL6eD6Ab3M
- Z5ug==
-X-Gm-Message-State: AOJu0YymZwiPCjcoVDjAJ6Pwek346u6IS9dqVFkz5ShaDfBJyhBPneJt
- imE1/gbjhtMSnwAOBJPzdJMNP/BMPDyQ+8RrYoElS3siMp68wfqnW3dZW9NpWJU1RM65MMjF7o1
- C
-X-Google-Smtp-Source: AGHT+IHCUGskXtyKFxv47WbjHdePOITIscAICbnxwQNPgsQ25ExcBIEe9Cg2Pg1ge7p9W8FnX6pdYg==
-X-Received: by 2002:a05:6300:8085:b0:1a7:3365:d8ed with SMTP id
- ap5-20020a056300808500b001a73365d8edmr8584269pzc.29.1712598595366; 
- Mon, 08 Apr 2024 10:49:55 -0700 (PDT)
+ bh=eljbs2yNGMGPnWHJwv7NSq5kkRuO1URzZsDZcIZtS6U=;
+ b=mEaBNA1ac38LTEb8Y66SpDVAuud5eguKeHz+qtN/GNn3fk/eLUTv8Gc0FVtMWmSlwz
+ kUbbT0ncT4cHkspSIxzJ+OOsTvJxalSvw/xpEmZOf8KX1u+aa+SfTb+UmXItCx/50uXN
+ 2/DpFa8bp7LekCeqlLgToNG5TAzXsgYx2zpzK+ffAUytjoavhArAK5niVi2R/8Rv7hd+
+ Hj4XQLJfQCQk8YymS4rzWvIiqgT2GCUH9BaNbc4sN+nJYy3L8RfcxuATK2AYCuu4ZmSH
+ 5vvgF3sa4FZUI6Gj2i0YSvozoxGU/VZ1xzQ2nnVYb79mMkNRVJdpH2WrzxU9xB1+I0V+
+ a9iQ==
+X-Gm-Message-State: AOJu0Yx8eG9BvFf2u4l6Ldh2dJYdaT+JDKkWg/EDXcG7ASQadEvzF32h
+ j5qdrMBoRu6+3JTBRUlVO7dtGAD/2S4zA9IGV6bpEXCQCfUTE3EjQLiUDyufQ2PKJeQTS4PSWmn
+ q
+X-Google-Smtp-Source: AGHT+IH70IZ2zJgbCNcYWxmVj2WAl3fhBxMySO0HQaLa1HYjQAqSZBGcfH1etz9KKgg2myY0lwEteQ==
+X-Received: by 2002:a05:6a21:9206:b0:1a7:56e5:b047 with SMTP id
+ tl6-20020a056a21920600b001a756e5b047mr5168778pzb.28.1712598576378; 
+ Mon, 08 Apr 2024 10:49:36 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.49.54
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.49.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:49:54 -0700 (PDT)
+ Mon, 08 Apr 2024 10:49:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Keith Packard <keithp@keithp.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 16/35] target/m68k: Pass semihosting arg to exit
-Date: Mon,  8 Apr 2024 07:49:10 -1000
-Message-Id: <20240408174929.862917-17-richard.henderson@linaro.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 03/35] linux-user: do_setsockopt: fix SOL_ALG.ALG_SET_KEY
+Date: Mon,  8 Apr 2024 07:48:57 -1000
+Message-Id: <20240408174929.862917-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,34 +94,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Keith Packard <keithp@keithp.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
 
-Instead of using d0 (the semihost function number), use d1 (the
-provide exit status).
+This setsockopt accepts zero-lengh optlen (current qemu implementation
+does not allow this).  Also, there's no need to make a copy of the key,
+it is enough to use lock_user() (which accepts zero length already).
 
-Signed-off-by: Keith Packard <keithp@keithp.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20230802161914.395443-2-keithp@keithp.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2197
+Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-Id: <20240331100737.2724186-2-mjt@tls.msk.ru>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/m68k-semi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ linux-user/syscall.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/target/m68k/m68k-semi.c b/target/m68k/m68k-semi.c
-index 546cff2246..6fbbd140f3 100644
---- a/target/m68k/m68k-semi.c
-+++ b/target/m68k/m68k-semi.c
-@@ -132,8 +132,8 @@ void do_m68k_semihosting(CPUM68KState *env, int nr)
-     args = env->dregs[1];
-     switch (nr) {
-     case HOSTED_EXIT:
--        gdb_exit(env->dregs[0]);
--        exit(env->dregs[0]);
-+        gdb_exit(env->dregs[1]);
-+        exit(env->dregs[1]);
- 
-     case HOSTED_OPEN:
-         GET_ARG(0);
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3df2b94d9a..59fb3e911f 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2277,18 +2277,13 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+         switch (optname) {
+         case ALG_SET_KEY:
+         {
+-            char *alg_key = g_malloc(optlen);
+-
++            char *alg_key = lock_user(VERIFY_READ, optval_addr, optlen, 1);
+             if (!alg_key) {
+-                return -TARGET_ENOMEM;
+-            }
+-            if (copy_from_user(alg_key, optval_addr, optlen)) {
+-                g_free(alg_key);
+                 return -TARGET_EFAULT;
+             }
+             ret = get_errno(setsockopt(sockfd, level, optname,
+                                        alg_key, optlen));
+-            g_free(alg_key);
++            unlock_user(alg_key, optval_addr, optlen);
+             break;
+         }
+         case ALG_SET_AEAD_AUTHSIZE:
 -- 
 2.34.1
 
