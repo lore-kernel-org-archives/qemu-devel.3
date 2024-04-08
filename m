@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B47C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D98CD1292
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt7u-0001yS-Ko; Mon, 08 Apr 2024 13:49:50 -0400
+	id 1rtt7v-0001yz-Gw; Mon, 08 Apr 2024 13:49:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt7k-0001v4-Q0
+ id 1rtt7q-0001vc-KP
  for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:47 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt7h-0003c1-Po
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:40 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6eaf1005fcaso3230123b3a.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:49:37 -0700 (PDT)
+ id 1rtt7n-0003cd-De
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:45 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2a519ac18b3so832247a91.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598576; x=1713203376; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598582; x=1713203382; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eljbs2yNGMGPnWHJwv7NSq5kkRuO1URzZsDZcIZtS6U=;
- b=M8XoFFgl0ZUDR9CMxS9z/674CiBP8t3ibG2rq4MDi3WY0KqRMpV3sy9VgQaw2eQoAS
- rfPc3fzlrR6gM3qQ5Jmr2jBaRX293ZUKGdx2fIB2oJNiTFFHQfRfX7KfXNx9j2cdZg0b
- ELx3i53+gKplD/nhsfYty49m9FSUMJT4z3CISh1PD+4CYzKwgwDOZvmZvVcQtgoQcsZK
- c/6yrncgWwp/g3inlZdeIGu86EDW0wbgMUL0cqoMSr93ZL/j+XNPlUbxreKJatH6FjnE
- f8hFVFe89BpQmKkTe9TmuQA1jRD3neh/cZWHbZHtddZ9zLpp6+NWaa2mK3BQ6slLMEUB
- QzZw==
+ bh=ClDgWE+squc24jCQx5ASDG99O/TQsFv8OJ3ohhBsa3Y=;
+ b=yLK1y3OEUThstbGG+U0rwnNtyeVJFACwozio/4T9aA2OGMqkdvfdKDEQN5NuT9X8d1
+ rqxwfWY3OeIjnxIp+aw3ut67lCYRvSmNa3XZnQDWf9MDhb9rD2UeFN+wg6VpqXw0rVrb
+ si49M7zv6VebaoN9Qouy/+0WF/ugubV2wr7TQsDe97dENmL5r8E/FMUHqZ1w7QTZoN9z
+ uDZi/Pstr6TKDwp8C6w2eboHx9abTehT46NBchV5faJKj1OFz4m1Zz5qbv83RVBoWsgW
+ Yw69SsIx4AScLDcWJu0cWWNxmU4rd8qQNhm8XGcPT7L5erqPqP2CliHMc6Hzzm70YaFP
+ h4Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598576; x=1713203376;
+ d=1e100.net; s=20230601; t=1712598582; x=1713203382;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eljbs2yNGMGPnWHJwv7NSq5kkRuO1URzZsDZcIZtS6U=;
- b=mEaBNA1ac38LTEb8Y66SpDVAuud5eguKeHz+qtN/GNn3fk/eLUTv8Gc0FVtMWmSlwz
- kUbbT0ncT4cHkspSIxzJ+OOsTvJxalSvw/xpEmZOf8KX1u+aa+SfTb+UmXItCx/50uXN
- 2/DpFa8bp7LekCeqlLgToNG5TAzXsgYx2zpzK+ffAUytjoavhArAK5niVi2R/8Rv7hd+
- Hj4XQLJfQCQk8YymS4rzWvIiqgT2GCUH9BaNbc4sN+nJYy3L8RfcxuATK2AYCuu4ZmSH
- 5vvgF3sa4FZUI6Gj2i0YSvozoxGU/VZ1xzQ2nnVYb79mMkNRVJdpH2WrzxU9xB1+I0V+
- a9iQ==
-X-Gm-Message-State: AOJu0Yx8eG9BvFf2u4l6Ldh2dJYdaT+JDKkWg/EDXcG7ASQadEvzF32h
- j5qdrMBoRu6+3JTBRUlVO7dtGAD/2S4zA9IGV6bpEXCQCfUTE3EjQLiUDyufQ2PKJeQTS4PSWmn
- q
-X-Google-Smtp-Source: AGHT+IH70IZ2zJgbCNcYWxmVj2WAl3fhBxMySO0HQaLa1HYjQAqSZBGcfH1etz9KKgg2myY0lwEteQ==
-X-Received: by 2002:a05:6a21:9206:b0:1a7:56e5:b047 with SMTP id
- tl6-20020a056a21920600b001a756e5b047mr5168778pzb.28.1712598576378; 
- Mon, 08 Apr 2024 10:49:36 -0700 (PDT)
+ bh=ClDgWE+squc24jCQx5ASDG99O/TQsFv8OJ3ohhBsa3Y=;
+ b=Q6NnrzcKld/O+6xuQ3k122TDnCYhffLTtkWCqi5wwHWhuY/6x3vyeRwkVZJYNd9ald
+ oqaPSJHn43FR+47GgS/3wNO6C5VctXKzUH4Y0dxfsdvjfoTrhW7a3Z2/lIzvhiXUxi4h
+ Ea4z+T6QnhQvf8XFqeHnZivhpgqi9cTlFPITKUuxpnzk6Pr5tkZhQztSeW5XsUvtMq2a
+ IFU/tcRzjwYm2an3A7ZuD/47IVkX69pcTgzWTs5PZNzwEtRrlgEz43KLT0m8ZTlwB3xX
+ 7AWbiySisIxgnRVt7sSyGpfFuFOoi/qkae78YafGtu//i19rCnwLnJeEns5OKUcQMPax
+ /IhQ==
+X-Gm-Message-State: AOJu0YybvNUZAMPyl57dVh2KPed/iVjkOT2GRun+p0vp0aBZ5UsflKf3
+ pmD6eDtLdnsMM3TW1KSpjOW8/JybX+jPcu2xW/5btw+kvzyQDUu7VTWorx46HcOOlKOz5Zq69uc
+ u
+X-Google-Smtp-Source: AGHT+IEqR7Syjv4KeQ7C+jDud9uVEuYWENBx7KP442H2uM03hh+wQQHei9DrW3gGRJ1/gVUgxpdAwQ==
+X-Received: by 2002:a17:90a:ce18:b0:2a5:24dd:bd34 with SMTP id
+ f24-20020a17090ace1800b002a524ddbd34mr2206044pju.27.1712598581991; 
+ Mon, 08 Apr 2024 10:49:41 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.49.35
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.49.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:49:35 -0700 (PDT)
+ Mon, 08 Apr 2024 10:49:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 03/35] linux-user: do_setsockopt: fix SOL_ALG.ALG_SET_KEY
-Date: Mon,  8 Apr 2024 07:48:57 -1000
-Message-Id: <20240408174929.862917-4-richard.henderson@linaro.org>
+Cc: Michael Vogt <mvogt@redhat.com>
+Subject: [PULL 07/35] linux-user: Add FITRIM ioctl
+Date: Mon,  8 Apr 2024 07:49:01 -1000
+Message-Id: <20240408174929.862917-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,46 +94,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Tokarev <mjt@tls.msk.ru>
+From: Michael Vogt <mvogt@redhat.com>
 
-This setsockopt accepts zero-lengh optlen (current qemu implementation
-does not allow this).  Also, there's no need to make a copy of the key,
-it is enough to use lock_user() (which accepts zero length already).
+Tiny patch to add the missing FITRIM ioctl.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2197
-Fixes: f31dddd2fc "linux-user: Add support for setsockopt() option SOL_ALG"
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-Id: <20240331100737.2724186-2-mjt@tls.msk.ru>
+Signed-off-by: Michael Vogt <mvogt@redhat.com>
+Message-Id: <20240403092048.16023-2-michael.vogt@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/syscall.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ linux-user/ioctls.h        | 3 +++
+ linux-user/syscall_defs.h  | 1 +
+ linux-user/syscall_types.h | 5 +++++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 3df2b94d9a..59fb3e911f 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2277,18 +2277,13 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-         switch (optname) {
-         case ALG_SET_KEY:
-         {
--            char *alg_key = g_malloc(optlen);
--
-+            char *alg_key = lock_user(VERIFY_READ, optval_addr, optlen, 1);
-             if (!alg_key) {
--                return -TARGET_ENOMEM;
--            }
--            if (copy_from_user(alg_key, optval_addr, optlen)) {
--                g_free(alg_key);
-                 return -TARGET_EFAULT;
-             }
-             ret = get_errno(setsockopt(sockfd, level, optname,
-                                        alg_key, optlen));
--            g_free(alg_key);
-+            unlock_user(alg_key, optval_addr, optlen);
-             break;
-         }
-         case ALG_SET_AEAD_AUTHSIZE:
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 1aec9d5836..d508d0c04a 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -140,6 +140,9 @@
+ #ifdef FITHAW
+      IOCTL(FITHAW, IOC_W | IOC_R, TYPE_INT)
+ #endif
++#ifdef FITRIM
++     IOCTL(FITRIM, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_fstrim_range)))
++#endif
+ 
+      IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
+ #ifdef CONFIG_FIEMAP
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 744fda599e..ce0adb706e 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -945,6 +945,7 @@ struct target_rtc_pll_info {
+ 
+ #define TARGET_FIFREEZE    TARGET_IOWR('X', 119, abi_int)
+ #define TARGET_FITHAW    TARGET_IOWR('X', 120, abi_int)
++#define TARGET_FITRIM    TARGET_IOWR('X', 121, struct fstrim_range)
+ 
+ /*
+  * Note that the ioctl numbers for FS_IOC_<GET|SET><FLAGS|VERSION>
+diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
+index c3b43f8022..6dd7a80ce5 100644
+--- a/linux-user/syscall_types.h
++++ b/linux-user/syscall_types.h
+@@ -341,6 +341,11 @@ STRUCT(file_clone_range,
+        TYPE_ULONGLONG, /* src_length */
+        TYPE_ULONGLONG) /* dest_offset */
+ 
++STRUCT(fstrim_range,
++       TYPE_ULONGLONG, /* start */
++       TYPE_ULONGLONG, /* len */
++       TYPE_ULONGLONG) /* minlen */
++
+ STRUCT(fiemap_extent,
+        TYPE_ULONGLONG, /* fe_logical */
+        TYPE_ULONGLONG, /* fe_physical */
 -- 
 2.34.1
 
