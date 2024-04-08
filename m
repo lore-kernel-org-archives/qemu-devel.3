@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E3ACD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 22:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD2EC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 22:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtx7F-0004pY-Gf; Mon, 08 Apr 2024 18:05:25 -0400
+	id 1rtxHD-0006tg-Be; Mon, 08 Apr 2024 18:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtx7E-0004oi-07
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:05:24 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtx7B-0003Z3-8V
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:05:23 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4165caf9b2dso17038745e9.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 15:05:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712613919; x=1713218719; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hgklZCSMJzVwztwZf9i4cyoWfITG4nxFgImb0mPq6lo=;
- b=VDBsffeUA1jtPy+VqNDjdzuhOEtd0A+817NQaUR9Uf2GKoOAYYfFiQ1nREFCRrVd06
- l8nMoJ6k0E850xoWH5r6wa+Y9ED3wfmsHWH7Vpyfoqb4oVW5aFcPHdV3udaoLx0n+Ogt
- +xkHU52/rdY0ryl0Fp49M6iCVdH9wHB0gGcdZDAgBp852Muwgya4rDUqRAiHL7GbxamX
- 4/3vQ8PFsAc0lneID22N6RCNuEu2/5dsgdcmdRU3z1lct9lE6eR0no2NvhCgGQh21wai
- +bzHu+oLwtSUMm9Gc3gVI+hum1g8NmkhAgjr+MAY2frZ1/SAVza4u2UFcBuKVhRumMmK
- wzDQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtxHB-0006tE-Dw
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:15:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rtxH9-0005pJ-Im
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:15:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712614538;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yFxnw+9m2EZT+0BWnX18QlSqSThNDI0QB59hntizCD0=;
+ b=bN6o9powjLAXK8GheM8TfbZegWORUOKYYH55/N1HEsjiHHplxpA/nBSLB+DAoMa8dsA/uV
+ eEL+Qy0XK0Agi22O4KuLiaZyXU1qWLpC90Rl9BOmRIm9wLesQyIi7x0DY/6I+kA2M6pMx5
+ nxwLZd8aSAOqBTot/kfvTY39oUa7YKk=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-245-X8ac3nKdPBGm1A4dKfgSyg-1; Mon, 08 Apr 2024 18:15:36 -0400
+X-MC-Unique: X8ac3nKdPBGm1A4dKfgSyg-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-56e3f7ee50aso1661461a12.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 15:15:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712613919; x=1713218719;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712614535; x=1713219335;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hgklZCSMJzVwztwZf9i4cyoWfITG4nxFgImb0mPq6lo=;
- b=kWMcuCu7hzwXHtJNVXs8EN0CijdTzPpVxdcIql4eYF5+VmZpyiXJrFNzGhKSUaz6Yu
- BJoEm/kZdT/dXXdXUMC0/bsPPq9j6yWqsd0X1k205KAmZ/Mr6IyKJrAUTtcuesPlSfsr
- /KTp5Iytzo8zsaVbsXX/srdHofKdgK3qRkcTwL/zA07EZxpb3IFkuzp4FkudhNahswup
- 4dit+ToLZzkJCIbMTkBanynWph5Ea/5Uxn7zWXKM/SNG4NKM/RLdbakqINHWrvN9x+kb
- wg14T+UQqy3PYjL88cicrnDvygFn7It/0KS/ueOQR2icx9EWPOL+QbjUORk1xvYw7F2y
- Chdg==
+ bh=yFxnw+9m2EZT+0BWnX18QlSqSThNDI0QB59hntizCD0=;
+ b=vKqCNRawbFndpP/lgH5xnX9S+nVUAcho7Ib4diqDbdfhQafMtyPH9awTw2Mv1fWM6E
+ +tcMj9q+UgLS3eECoq813/X6QRs8XxfloCsic9ycIRbz4v1Lr/FGNqb+ql/jK5ijWp2u
+ +bUsNd+TB99HI0WtNt+ZbYUg8e3zcC+2P3pRnaYOKmv0arCbY5AI+lWC0GaVx6vKuqyq
+ Ecyuc4VX4aK7mHeHLO4xF9YLE1u9/gVehNMcSnQAcBSd/UAJhVcz9MOGVn+7paCkPkL1
+ gQCBvJU/0Ved1yuUTKNLeH1c2PLFkrr1O64n16D8ZPafKMll6i1kjIr1Ptm8K3HmuP74
+ wSVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvaPWpXVzowiItcwhkg9r/RFnG2Vpk1h5n2HfaR/mAfgSNNeCSTR0lP/LbCXHUeDXzKpxGTqAapqCSVI1quCZFeLJbdx4=
-X-Gm-Message-State: AOJu0YyX3fd5/A8hsDV+2oB682LCTFocX3stzKFYd4aNm5uEi1gheaZB
- r2WTlpGvYNR3ajd3mUd8W8hn1nwm1bNbPRObwPWwcML2JnlcSfCP1LR7t/z2Yyk=
-X-Google-Smtp-Source: AGHT+IFNkt6M0VOtxXhbyp4ZVyQ5YhCzVh2FkKcvStVrpb4+ZrHTHsSt3gVgUhHJwtdK6mE0/PmxXw==
-X-Received: by 2002:a5d:6105:0:b0:33d:73de:cd95 with SMTP id
- v5-20020a5d6105000000b0033d73decd95mr9096553wrt.17.1712613919463; 
- Mon, 08 Apr 2024 15:05:19 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.144.67])
- by smtp.gmail.com with ESMTPSA id
- n6-20020a5d6606000000b0033e745b8bcfsm9894161wru.88.2024.04.08.15.05.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 15:05:18 -0700 (PDT)
-Message-ID: <ee492ca9-4d79-4de1-98da-8df9230ca5af@linaro.org>
-Date: Tue, 9 Apr 2024 00:05:16 +0200
+ AJvYcCVjZ0U5ebQUikirbG/fWqc7cFmiKglSGKQK+yP0BFqEhJyf4P4bDA2TdjhxH30/JMgMZojkQfgsz5N5fC1Dk+F/KUuhRkU=
+X-Gm-Message-State: AOJu0YxGmAsnlBFyH9NCb+xmbOo/U0iTmRxvOs9vgy1JU8TpzuLE8G2X
+ /IME6CvFLGbH0Ig+AEl7f8nSyLTMussRDRQbUq/yLhMR0B9xLiyPbSgrMcejVx54PWZwovEvMbN
+ To9rkpoAVvPAEUIG/h9OdjLfmW+NuRnqmA5xwGOjddY07zK2h+RAg
+X-Received: by 2002:a17:906:2792:b0:a51:d8a2:7a35 with SMTP id
+ j18-20020a170906279200b00a51d8a27a35mr2352770ejc.37.1712614534999; 
+ Mon, 08 Apr 2024 15:15:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGX+TB5MyePHyD6mKv/alKM+HqeYBK1z3tfKeVKH5+CCAmcg4dpRf2hwZthu6Av9FAE8BgOIg==
+X-Received: by 2002:a17:906:2792:b0:a51:d8a2:7a35 with SMTP id
+ j18-20020a170906279200b00a51d8a27a35mr2352760ejc.37.1712614534561; 
+ Mon, 08 Apr 2024 15:15:34 -0700 (PDT)
+Received: from redhat.com ([2.52.134.26]) by smtp.gmail.com with ESMTPSA id
+ my46-20020a1709065a6e00b00a4735e440e1sm4944687ejc.97.2024.04.08.15.15.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 15:15:32 -0700 (PDT)
+Date: Mon, 8 Apr 2024 18:15:29 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>,
+ Jason Wang <jasowang@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+Subject: Re: [PATCH] Revert "hw/virtio: Add support for VDPA network
+ simulation devices"
+Message-ID: <20240408181452-mutt-send-email-mst@kernel.org>
+References: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
+ <CAFEAcA9_mLQ=jWNEHBVLJKHST4X=QVdpgPCTh1mRSSiea7ruzw@mail.gmail.com>
+ <20240408061752-mutt-send-email-mst@kernel.org>
+ <CABgObfbfi-LiV0_BfK78-53kfTg+z3zX3sfBDAJqr5GxOWiOMA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? 3/3] hw/block/nand: Fix out-of-bound access in
- NAND block buffer
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Qiang Liu <cyruscyliu@gmail.com>,
- Mauro Matteo Cascella <mcascell@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Alexander Bulekov <alxndr@bu.edu>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-References: <20240408083605.55238-1-philmd@linaro.org>
- <20240408083605.55238-4-philmd@linaro.org>
- <d610c2d2-3576-4ca2-a2b9-4f9a5390e3d3@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d610c2d2-3576-4ca2-a2b9-4f9a5390e3d3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <CABgObfbfi-LiV0_BfK78-53kfTg+z3zX3sfBDAJqr5GxOWiOMA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,28 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/24 18:39, Richard Henderson wrote:
-> On 4/7/24 22:36, Philippe Mathieu-DaudÃ© wrote:
->> nand_command() and nand_getio() don't check @offset points
->> into the block, nor the available data length (s->iolen) is
->> not negative.
->>
->> In order to fix:
->>
->> - check the offset is in range in nand_blk_load_NAND_PAGE_SIZE(),
->> - do not set @iolen if blk_load() failed.
+On Mon, Apr 08, 2024 at 10:11:18PM +0200, Paolo Bonzini wrote:
 > 
-> Do not set, or do not set to non-zero?Â  I had been wondering if the 
+> 
+> Il lun 8 apr 2024, 12:18 Michael S. Tsirkin <mst@redhat.com> ha scritto:
+> 
+>     On Mon, Apr 08, 2024 at 10:51:57AM +0100, Peter Maydell wrote:
+>     > On Mon, 8 Apr 2024 at 10:48, Michael S. Tsirkin <mst@redhat.com> wrote:
+>     > >
+>     > > This reverts commit cd341fd1ffded978b2aa0b5309b00be7c42e347c.
+>     > >
+>     > > The patch adds non-upstream code in
+>     > > include/standard-headers/linux/virtio_pci.h
+>     > > which would make maintainance harder.
+>     > >
+>     > > Revert for now.
+> 
+> 
+> As long as it is part of the spec, why not just move the problematic parts to a
+> QEMU specific header? As far as I understand the kernel is never going to
+> consume these constants anyway. 
+> 
+> Paolo 
 
-Oh, "do not set to non-zero", thanks :)
+I expect the contributor to do fixups like this though, not myself.
 
-> final assignment to s->iolen should go into nand_load_block as well...
-
-For the next tag I rather keep it this way which seems more
-explicit to me.
-
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-Thanks!
+> 
+>     > > Suggested-by: Jason Wang <jasowang@redhat.com>
+>     > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>     >
+>     > Are you intending to target this revert for 9.0 ?
+>     >
+>     > -- PMM
+> 
+>     Yes.
+> 
+> 
 
 
