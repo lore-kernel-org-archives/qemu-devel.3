@@ -4,74 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6AFCD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C7CCC67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtjRN-0002ub-Es; Mon, 08 Apr 2024 03:29:17 -0400
+	id 1rtjSF-0003cy-HS; Mon, 08 Apr 2024 03:30:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rtjRL-0002uD-If
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:29:15 -0400
+ id 1rtjSC-0003cT-Nn
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:30:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rtjRJ-0000vm-P4
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:29:15 -0400
+ id 1rtjS9-00011J-P1
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:30:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712561352;
+ s=mimecast20190719; t=1712561404;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IIlv6P86xpieXM2tFtNCpY9uMS8ndypX9AgcUYxv1Fk=;
- b=YU2z79+Nxo2w4oqUKgmmce0FzIbgAtsTKawWfY6EBNbcBIqyAb/SRJCa/RN8kH3mOZFL9s
- ADOvhW5eoBu/IS5QCyzoceCjqu2bcQxzPtGhNXKSNrBBK+GmVL1uRr/HEjiDkOliAgfj9K
- vRhNCgSs+fBW3ElUcVAcP+/b2b7YxPg=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PKkE09D30QjVtMV8loqtF/SA8OQynMaIghqXIAXdWVU=;
+ b=G3VVQ9PbYM825lHVDiOE+TZUi4HYcsxaUS9ZX0ONfuncbSMIKYQLpEdCDauNoxMOgxG0XH
+ sPPkLxBObumN3bDzNhWs0B6MkkAMEopsz6pNtpBnrXAAXL8JlqWKHolj1ysUTxEgu4bGdn
+ so1okNwWo516XFfkRNTipmXulgbXuyE=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-GfDMLGsdPEqZKxuRgM2BGQ-1; Mon, 08 Apr 2024 03:26:48 -0400
-X-MC-Unique: GfDMLGsdPEqZKxuRgM2BGQ-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2a2fec91d48so3126386a91.2
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 00:26:48 -0700 (PDT)
+ us-mta-607-BreT-on6NFCuzevRUFf6Hw-1; Mon, 08 Apr 2024 03:30:02 -0400
+X-MC-Unique: BreT-on6NFCuzevRUFf6Hw-1
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-6ed25eb8e01so196490b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 00:30:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712561207; x=1713166007;
+ d=1e100.net; s=20230601; t=1712561401; x=1713166201;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IIlv6P86xpieXM2tFtNCpY9uMS8ndypX9AgcUYxv1Fk=;
- b=DeWLj8OYd3IAZoNT8AowVSLN97KVMQu7jY4ojOBTvU8emyCpX7vP7gN7vAKAxJkooN
- i1NsZ7UGOXavZbW5qAK8zTV315nu2rfa95jGCRhE18YUweY6CZhM4OxI59HQ70VjimW4
- lfvtw3tCn9hHhc0/YXZVK9N6Ego1N3n2LgaiQjXAZmE6ElT6pn8QMQ8UDAag0bMqIWHH
- PNq+1/KujO0d7/A5YvPIKzq3c1k73Cbdvq12M3AfbqLdxbB/IyuchJBeR6PPgrOW+3Ij
- YShGaHPUCw6+mBlpvrwXXXkdwbR3nFKDzMk/FVUHlli9ypRMADY31hdUYWvCmpDzaGOl
- Ii+A==
-X-Gm-Message-State: AOJu0Yz3V+ijfx9j3UXe3YFSV+JCDJ/U8NFOVMq9wyv+OtRaRrKjXG1m
- cb4DYAP8JbYYHuy1OD9cu1b8+edV+wXVzkSdX4DoGDsZSPLUEmgasWNuQp781VaS0mRCw3Za2uI
- A7CPyCk2PgjtT/xwY0WyWmyBSJKr0EhTl11AFvfKyCj8/w1/T/z33kVdoheFFx1htTJLpwJ7Mpl
- 89bjwT3f6tQUo+p7NYvjpPwxya/pOKv/ODsjM=
-X-Received: by 2002:a17:90a:1fc9:b0:2a2:1900:493 with SMTP id
- z9-20020a17090a1fc900b002a219000493mr5337850pjz.40.1712561206901; 
- Mon, 08 Apr 2024 00:26:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEp+nwhukXMnivhyYbopqHfIC5h1QXWBXFHXQ6GPN3HxVSxlz1Hzfib42zxjEMdJ3WDWOmIvx2IJSiEekfs7a0=
-X-Received: by 2002:a17:90a:1fc9:b0:2a2:1900:493 with SMTP id
- z9-20020a17090a1fc900b002a219000493mr5337839pjz.40.1712561206634; Mon, 08 Apr
- 2024 00:26:46 -0700 (PDT)
+ bh=PKkE09D30QjVtMV8loqtF/SA8OQynMaIghqXIAXdWVU=;
+ b=JG7Gl2Pa3xr1W16Twjk+hi2Bh95ypqiJmbc77XGYnad5jGIj13H4wUVsa8se+uoEHZ
+ HtXCZp3iFqTk7ueo+Ihk9PghzekIlrS3VMZXRc1MbtOIAFkp2AOLoXlmXB10RtMAXEUQ
+ GXJ3fkBopIpxOxh6bR/4bQNRATtaFQ6H0Yc79OqQIbsYYzfyGHN0tmxfHl5YBvmaUJfI
+ RTpuLJiiQ9NhM6DzFIkmL6imcRmvHlA3HIszeoBLJp+7qclwkSRwZehogl8p2Dx2MGWD
+ Ss4RQ3wBs4M6ygjOTnKHLedF7iNBRQRFmHTvs8hM2Sz/BynTc4wXvdMdj919e30EvDE5
+ k/pA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8Rf1HbVm7G9/AfOdm5u54dpZT722sG/mCsqsCDECHoXLjW6YbVBK7gNGpUcJmk0OXOVO4pKKiZlpwS3+GScxTwUUl31I=
+X-Gm-Message-State: AOJu0YzyHnFiyOga/OQ/H6LbXC4ZS03MR1WbZWzqoml5E70edYaCfAqO
+ k3XI2jQ97QHCHNBKA/HkkRdEsA8DXHw5KHSPBTk+DL8/RXgftxsue/7qzIKg+jP2igWCuMGPPaf
+ Dlh65RhadSgLqS/wJSjZR2vM5SBDB7+ZzcLu+yI0sSwC21bmtmSaXmFA7Pxf12/mVKHfm49gdHB
+ M+it5Xm2zoA9VV7UDIGGu/Ejb9QEk=
+X-Received: by 2002:a05:6a20:6f8a:b0:1a7:5fbf:36a6 with SMTP id
+ gv10-20020a056a206f8a00b001a75fbf36a6mr2832202pzb.53.1712561401770; 
+ Mon, 08 Apr 2024 00:30:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0N0eYeq3it6FBDVj8uSELmfKyltNPWBfeafbzF+KCAKw/f/D6XLBfccsxl0OajT6Cr9OBtXZap4BE7uhcGVY=
+X-Received: by 2002:a05:6a20:6f8a:b0:1a7:5fbf:36a6 with SMTP id
+ gv10-20020a056a206f8a00b001a75fbf36a6mr2832184pzb.53.1712561401471; Mon, 08
+ Apr 2024 00:30:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240405112015.11919-1-adobriyan@yandex-team.ru>
-In-Reply-To: <20240405112015.11919-1-adobriyan@yandex-team.ru>
+References: <20240221073802.2888022-1-chenh@yusur.tech>
+ <d9e4f3b4-9c2e-466c-b5f4-3387ce88c6b9@t-8ch.de>
+ <20240313155136-mutt-send-email-mst@kernel.org>
+ <CACGkMEtSSb-9PsmQKPA4i-UWVJJ4ZVog8rt+1PKoqE+ABhpRTA@mail.gmail.com>
+ <20240318083932-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240318083932-mutt-send-email-mst@kernel.org>
 From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 8 Apr 2024 15:26:35 +0800
-Message-ID: <CACGkMEv-znr-sSXLHmBvcrLMDyrT739tqRQkcQbzLc4XPyU4ZQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] virtio-net: fix bug 1451 aka
- "assert(!virtio_net_get_subqueue(nc)->async_tx.elem); "
-To: Alexey Dobriyan <adobriyan@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, adobriyan@gmail.com, mst@redhat.com, 
- vsementsov@yandex-team.ru
+Date: Mon, 8 Apr 2024 15:29:50 +0800
+Message-ID: <CACGkMEv4J1ZyK9cadVFr5BjZwA7edL7d+yqUuJqa+x8zyQpbBw@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio: Add support for VDPA network simulation devices
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>, 
+ Hao Chen <chenh@yusur.tech>, qemu-devel@nongnu.org, cohuck@redhat.com, 
+ pbonzini@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
@@ -98,100 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 5, 2024 at 7:22=E2=80=AFPM Alexey Dobriyan <adobriyan@yandex-te=
-am.ru> wrote:
+On Mon, Mar 18, 2024 at 8:41=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
 >
-> Don't send zero length packets in virtio_net_flush_tx().
+> On Thu, Mar 14, 2024 at 11:24:33AM +0800, Jason Wang wrote:
+> > On Thu, Mar 14, 2024 at 3:52=E2=80=AFAM Michael S. Tsirkin <mst@redhat.=
+com> wrote:
+> > >
+> > > On Wed, Mar 13, 2024 at 07:51:08PM +0100, Thomas Wei=C3=9Fschuh wrote=
+:
+> > > > On 2024-02-21 15:38:02+0800, Hao Chen wrote:
+> > > > > This patch adds support for VDPA network simulation devices.
+> > > > > The device is developed based on virtio-net and tap backend,
+> > > > > and supports hardware live migration function.
+> > > > >
+> > > > > For more details, please refer to "docs/system/devices/vdpa-net.r=
+st"
+> > > > >
+> > > > > Signed-off-by: Hao Chen <chenh@yusur.tech>
+> > > > > ---
+> > > > >  MAINTAINERS                                 |   5 +
+> > > > >  docs/system/device-emulation.rst            |   1 +
+> > > > >  docs/system/devices/vdpa-net.rst            | 121 +++++++++++++
+> > > > >  hw/net/virtio-net.c                         |  16 ++
+> > > > >  hw/virtio/virtio-pci.c                      | 189 ++++++++++++++=
++++++-
+> >
+> > I think those modifications should belong to a separate file as it
+> > might conflict with virito features in the future.
+> >
+> > > > >  hw/virtio/virtio.c                          |  39 ++++
+> > > > >  include/hw/virtio/virtio-pci.h              |   5 +
+> > > > >  include/hw/virtio/virtio.h                  |  19 ++
+> > > > >  include/standard-headers/linux/virtio_pci.h |   7 +
+> > > > >  9 files changed, 399 insertions(+), 3 deletions(-)
+> > > > >  create mode 100644 docs/system/devices/vdpa-net.rst
+> > > >
+> > > > [..]
+> > > >
+> > > > > diff --git a/include/standard-headers/linux/virtio_pci.h b/includ=
+e/standard-headers/linux/virtio_pci.h
+> > > > > index b7fdfd0668..fb5391cef6 100644
+> > > > > --- a/include/standard-headers/linux/virtio_pci.h
+> > > > > +++ b/include/standard-headers/linux/virtio_pci.h
+> > > > > @@ -216,6 +216,13 @@ struct virtio_pci_cfg_cap {
+> > > > >  #define VIRTIO_PCI_COMMON_Q_NDATA  56
+> > > > >  #define VIRTIO_PCI_COMMON_Q_RESET  58
+> > > > >
+> > > > > +#define LM_LOGGING_CTRL                 0
+> > > > > +#define LM_BASE_ADDR_LOW                4
+> > > > > +#define LM_BASE_ADDR_HIGH               8
+> > > > > +#define LM_END_ADDR_LOW                 12
+> > > > > +#define LM_END_ADDR_HIGH                16
+> > > > > +#define LM_VRING_STATE_OFFSET           0x20
+> > > >
+> > > > These changes are not in upstream Linux and will be undone by
+> > > > ./scripts/update-linux-headers.sh.
+> > > >
+> > > > Are they intentionally in this header?
+> > >
+> > >
+> > > Good point. Pls move.
+> >
+> > Right and this part, it's not a part of standard virtio.
+> >
+> > Thanks
 >
-> Reproducer from https://gitlab.com/qemu-project/qemu/-/issues/1451
-> creates small packet (1 segment, len =3D 10 =3D=3D n->guest_hdr_len),
-> destroys queue.
->
-> "if (n->host_hdr_len !=3D n->guest_hdr_len)" is triggered, if body create=
-s
-> zero length/zero segment packet, because there is nothing after guest
-> header.
+> I'm thinking of reverting this patch unless there's a resolution
+> soon, and reapplying later after the release.
 
-And in this case host_hdr_len is 0.
-
->
-> qemu_sendv_packet_async() tries to send it.
->
-> slirp discards it because it is smaller than Ethernet header,
-> but returns 0.
->
-> 0 length is propagated upwards and is interpreted as "packet has been sen=
-t"
-> which is terrible because queue is being destroyed, nothing has been sent=
-,
-> nobody is waiting for TX to complete and assert it triggered.
->
-> Signed-off-by: Alexey Dobriyan <adobriyan@yandex-team.ru>
-> ---
->  hw/net/virtio-net.c | 18 ++++++++++++------
->  1 file changed, 12 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 58014a92ad..258633f885 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -2765,18 +2765,14 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue=
- *q)
->          out_sg =3D elem->out_sg;
->          if (out_num < 1) {
->              virtio_error(vdev, "virtio-net header not in first element")=
-;
-> -            virtqueue_detach_element(q->tx_vq, elem, 0);
-> -            g_free(elem);
-> -            return -EINVAL;
-> +            goto detach;
->          }
->
->          if (n->has_vnet_hdr) {
->              if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) =
-<
->                  n->guest_hdr_len) {
->                  virtio_error(vdev, "virtio-net header incorrect");
-> -                virtqueue_detach_element(q->tx_vq, elem, 0);
-> -                g_free(elem);
-> -                return -EINVAL;
-> +                goto detach;
->              }
->              if (n->needs_vnet_hdr_swap) {
->                  virtio_net_hdr_swap(vdev, (void *) &vhdr);
-> @@ -2807,6 +2803,11 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue =
-*q)
->                               n->guest_hdr_len, -1);
->              out_num =3D sg_num;
->              out_sg =3D sg;
-> +
-> +            if (iov_size(out_sg, out_num) =3D=3D 0) {
-> +                virtio_error(vdev, "virtio-net nothing to send");
-> +                goto detach;
-> +            }
-
-Nit, I think we can do this check before the iov_copy()?
+I think we need to revert this and re-visit in the next release.
 
 Thanks
 
->          }
 >
->          ret =3D qemu_sendv_packet_async(qemu_get_subqueue(n->nic, queue_=
-index),
-> @@ -2827,6 +2828,11 @@ drop:
->          }
->      }
->      return num_packets;
-> +
-> +detach:
-> +    virtqueue_detach_element(q->tx_vq, elem, 0);
-> +    g_free(elem);
-> +    return -EINVAL;
->  }
 >
->  static void virtio_net_tx_timer(void *opaque);
-> --
-> 2.34.1
+> > >
+> > > > > +
+> > > > >  #endif /* VIRTIO_PCI_NO_MODERN */
+> > > > >
+> > > > >  #endif
+> > >
 >
 
 
