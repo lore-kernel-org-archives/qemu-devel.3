@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082C0CD1296
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CAC2C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtrK6-0001L2-OU; Mon, 08 Apr 2024 11:54:18 -0400
+	id 1rtrK3-0001KU-Cr; Mon, 08 Apr 2024 11:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtrK5-0001Kr-CV
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:17 -0400
+ id 1rtrK1-0001Jx-T6
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtrK3-0001ql-QF
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:17 -0400
+ id 1rtrK0-0001qZ-De
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:54:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712591655;
+ s=mimecast20190719; t=1712591651;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OUsSvx4rS/JvSGux26uwYxv9XLnSYU17H3EwXSZxQ0w=;
- b=gy79+6suawwLTSIT4PQOIfAWmYYVXRKE2BY6auKr2Qy9NthbePJLuXXyfpzyjHNs0R3dgP
- h+zAG0ur7vG3uaRV6bTanpeD0UAq0HkRA/p5/zkt+qDn5SbtflhRrLuY9wnu+31rgnBfYK
- 816Q8rr2RFA0R+MObHuaJLSFss8ame4=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n8MpXgSrFJSCnePEmrzhpTfLb35G0CERg/TyFB4eszo=;
+ b=A8wC9N7/WnAj+TWZwt06qIuj8YxOAeVbje0kTxmFvEVhad13dXHCf3dyqBMkJSS7wsT6i8
+ aNcBkKXKUOEhSJthOrDprEqr6/6kSPo62tBIsp8+17EbtHBetvQ0DChQmvw8abQLfYGVVy
+ PGo6uETkwIvkOBC97RxvtIhLHB0l2Wc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-321--BzWSn6IOeuQMHI4E7u0SQ-1; Mon, 08 Apr 2024 11:54:14 -0400
-X-MC-Unique: -BzWSn6IOeuQMHI4E7u0SQ-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d883dab079so15545861fa.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:54:13 -0700 (PDT)
+ us-mta-13-K8SqHeFrMB6qGkJEtwsrVA-1; Mon, 08 Apr 2024 11:54:10 -0400
+X-MC-Unique: K8SqHeFrMB6qGkJEtwsrVA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-41663c713b7so6462065e9.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:54:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712591651; x=1713196451;
+ d=1e100.net; s=20230601; t=1712591648; x=1713196448;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OUsSvx4rS/JvSGux26uwYxv9XLnSYU17H3EwXSZxQ0w=;
- b=ciEYuGUzLqfap69a1We4NrAvlRQYADOAj69xjZ0TLsHcbXCsidx98ii5b+tJGa3yrq
- /Mqsqa1KuubVTpmiZoFVBaTDK36DEAFk3s1J+NT9UdkgqoAugEsnTfp5EGBhitQS65Mg
- z3O0MS+/zT0Ki+mfckzp3q8r6tcyTh41ss6X+kcAnMXHtO/iVbWuxF81FINJuONwJ3JW
- hjn9ooPgCVPsjk1z16jsrci1LY/VJQqTIdIcXtRhlkganjLUCUVsC1VzO1qSgo+knMU/
- GiCQmyKag1Kc03YC1No/9aUsaH4ceuGLbW+n7Xv3/j/+WLJnIUPRCioMFSfR1tpQyQx9
- 0PBA==
-X-Gm-Message-State: AOJu0YyLnXYveA+LBhZiVZkCt+Q3RaDI+xePvQlLvIx6Nldfa0q9mqXV
- isY3mSY5433NFbbZxVwW8ujRC4jK8v0YSogxI12SMI11LYkuFB7mgsL6u+ccTwW9KT8VBle2Fji
- s3kL7twKgcXgUhWF9NWkuHXavv7xe9Kzm8JMQNgiB2FscEl2WovKTWdAHt3TZg/ZfGWxz/BOpdl
- lJNM0vO0Xl5PCaamRK6UQl24nGqkqvtIq3JYEz
-X-Received: by 2002:a2e:95d4:0:b0:2d6:e0a9:9981 with SMTP id
- y20-20020a2e95d4000000b002d6e0a99981mr6868185ljh.9.1712591651334; 
- Mon, 08 Apr 2024 08:54:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAlgKqvGt9x55z6ZFndNEXaNbZHVKmVcSb0sgjkM6ZyItdDQGtCMUMtuYoEPo3E8eNRfHvqw==
-X-Received: by 2002:a2e:95d4:0:b0:2d6:e0a9:9981 with SMTP id
- y20-20020a2e95d4000000b002d6e0a99981mr6868172ljh.9.1712591650995; 
- Mon, 08 Apr 2024 08:54:10 -0700 (PDT)
+ bh=n8MpXgSrFJSCnePEmrzhpTfLb35G0CERg/TyFB4eszo=;
+ b=eweWsyDW6rv9A7BUZeSiKIYxKzMvnvMre7stt82e71gpEQ/gkgr9ISS7ePBJHqwRRn
+ jIPhv/D4h3e288YamN2XF3QqvMTk9V8C/ihn1QKL1pFY0Kncg/nzXxftGGF9PboMw91a
+ 5HRtSkNibp2RdofPFp6KSJKByjPm3rFSnkpxWv3BOoM6boagU46Q1NvS82BORD9OFhrU
+ 4HFeF4RGydbCJ86XZSqDOySgNeHt++I8Wo1yCTso5wodfI2xyVC5+oAzjDlQ2PQGriS/
+ RvljuCpcn/oIGXX+8gq3//yIBqBpe3oGd/SF+9N9Ira5+2gPif8/ol1ouBptcyj4ujOd
+ BPIg==
+X-Gm-Message-State: AOJu0Yx3oM7esbTaiUg2ru598LpFBcqIRcQtCosZCfNvssF327MBjPqc
+ nGQiWSvo6SCnjgZ/maX54Mcac8HYfRFedDcLuxnk2k2CybYxRYgoBe5HCT9AFNxmPwUB4hOB4pm
+ Hz2YluxEVQgJU5R9M80EUA5uNTuNAb6Eo6gBFdaM8iNIa4K7eNoRVQRALXLVoLpyhL61HQbF7qN
+ 7mANcSrjtQgXTVmWSnWPpWnHurTwgp+vm9KOnG
+X-Received: by 2002:a05:600c:3b05:b0:416:350c:db48 with SMTP id
+ m5-20020a05600c3b0500b00416350cdb48mr66708wms.9.1712591647835; 
+ Mon, 08 Apr 2024 08:54:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGP9lHEYolnWP9iqS/nlVDLY633f/HIAymM5td6KUGBoZefnbs6NoGM8NjjedsS6fvl3gVyiQ==
+X-Received: by 2002:a05:600c:3b05:b0:416:350c:db48 with SMTP id
+ m5-20020a05600c3b0500b00416350cdb48mr66698wms.9.1712591647565; 
+ Mon, 08 Apr 2024 08:54:07 -0700 (PDT)
 Received: from avogadro.local ([151.95.152.232])
  by smtp.gmail.com with ESMTPSA id
- j22-20020a05600c1c1600b004165315d885sm6677512wms.11.2024.04.08.08.54.09
+ m37-20020a05600c3b2500b00416665d3e09sm5019754wms.9.2024.04.08.08.54.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 08:54:09 -0700 (PDT)
+ Mon, 08 Apr 2024 08:54:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH v2 13/18] ramfb: move stubs out of stubs/
-Date: Mon,  8 Apr 2024 17:53:25 +0200
-Message-ID: <20240408155330.522792-14-pbonzini@redhat.com>
+Subject: [PATCH v2 12/18] semihosting: move stubs out of stubs/
+Date: Mon,  8 Apr 2024 17:53:24 +0200
+Message-ID: <20240408155330.522792-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240408155330.522792-1-pbonzini@redhat.com>
 References: <20240408155330.522792-1-pbonzini@redhat.com>
@@ -102,46 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the ramfb stubs are needed exactly when the Kconfig symbols are not
-needed, move them to hw/display/ and compile them when ramfb.c is absent.
+Since the semihosting stubs are needed exactly when the Kconfig symbols
+are not needed, move them to semihosting/ and conditionalize them
+on CONFIG_SEMIHOSTING and/or CONFIG_SYSTEM_ONLY.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- stubs/ramfb.c => hw/display/ramfb-stubs.c | 0
- hw/display/meson.build                    | 2 +-
- stubs/meson.build                         | 1 -
- 3 files changed, 1 insertion(+), 2 deletions(-)
- rename stubs/ramfb.c => hw/display/ramfb-stubs.c (100%)
+ stubs/semihost-all.c => semihosting/stubs-all.c | 0
+ stubs/semihost.c => semihosting/stubs-system.c  | 0
+ semihosting/meson.build                         | 3 +++
+ stubs/meson.build                               | 2 --
+ 4 files changed, 3 insertions(+), 2 deletions(-)
+ rename stubs/semihost-all.c => semihosting/stubs-all.c (100%)
+ rename stubs/semihost.c => semihosting/stubs-system.c (100%)
 
-diff --git a/stubs/ramfb.c b/hw/display/ramfb-stubs.c
+diff --git a/stubs/semihost-all.c b/semihosting/stubs-all.c
 similarity index 100%
-rename from stubs/ramfb.c
-rename to hw/display/ramfb-stubs.c
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index f93a69f70f4..4751aab3ba9 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -3,7 +3,7 @@ hw_display_modules = {}
- system_ss.add(when: 'CONFIG_DDC', if_true: files('i2c-ddc.c'))
- system_ss.add(when: 'CONFIG_EDID', if_true: files('edid-generate.c', 'edid-region.c'))
+rename from stubs/semihost-all.c
+rename to semihosting/stubs-all.c
+diff --git a/stubs/semihost.c b/semihosting/stubs-system.c
+similarity index 100%
+rename from stubs/semihost.c
+rename to semihosting/stubs-system.c
+diff --git a/semihosting/meson.build b/semihosting/meson.build
+index b07cbd980f2..34933e5a195 100644
+--- a/semihosting/meson.build
++++ b/semihosting/meson.build
+@@ -9,5 +9,8 @@ specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: fil
+   'uaccess.c',
+ ))
  
--system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'))
-+system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'), if_false: files('ramfb-stubs.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb-standalone.c'))
- 
- system_ss.add(when: 'CONFIG_VGA_CIRRUS', if_true: files('cirrus_vga.c'))
++common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_false: files('stubs-all.c'))
++system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: files('stubs-system.c'))
++
+ specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
+ 		if_true: files('arm-compat-semi.c'))
 diff --git a/stubs/meson.build b/stubs/meson.build
-index 84ecaa4daa1..92887660e41 100644
+index 60e32d363fa..84ecaa4daa1 100644
 --- a/stubs/meson.build
 +++ b/stubs/meson.build
-@@ -36,7 +36,6 @@ stub_ss.add(files('qmp-command-available.c'))
- stub_ss.add(files('qmp-quit.c'))
- stub_ss.add(files('qtest.c'))
- stub_ss.add(files('ram-block.c'))
--stub_ss.add(files('ramfb.c'))
- stub_ss.add(files('replay.c'))
- stub_ss.add(files('runstate-check.c'))
- stub_ss.add(files('sysbus.c'))
+@@ -55,9 +55,7 @@ if have_block or have_ga
+ endif
+ if have_system
+   stub_ss.add(files('fw_cfg.c'))
+-  stub_ss.add(files('semihost.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
+ else
+   stub_ss.add(files('qdev.c'))
+ endif
+-stub_ss.add(files('semihost-all.c'))
 -- 
 2.44.0
 
