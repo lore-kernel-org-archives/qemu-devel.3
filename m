@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79828C67861
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F81CD1299
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 15:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtrJh-0001Cj-1Z; Mon, 08 Apr 2024 11:53:53 -0400
+	id 1rtrJf-0001BT-86; Mon, 08 Apr 2024 11:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtrJZ-0001AS-2v
+ id 1rtrJZ-0001AT-13
  for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:53:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtrJS-0001m5-JX
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:53:44 -0400
+ id 1rtrJV-0001mD-I9
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 11:53:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712591617;
+ s=mimecast20190719; t=1712591620;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=+mDg/Mrb8+ldQ1J+oBVOKeSkpn7y3AJXhDnTttc/PYw=;
- b=TgG83pnDSPQyU2WO2C2AaZiBoABUftCHwO7y5jYk9QErJZyHYF0kBkkz4MY4OeL3l/nrYt
- MuqnYXAZ4cZ3y2mKet0gMFXTroYAjbE+vPGIURUM11+Cwhf9p8aIvdiyxi4b+NIvLw8x3f
- QXUovt2it8mElQom7N3ivqps/7Ilkyw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tON+RxlIcOKUvuNbAsvnQBYFFWkRj/k0UEnvjOdoODI=;
+ b=KeLaRSLKdFFl5tTkNG4XpInQhHVtPNXjOAUqz54GaQ16Wmvths6tOUbT3QnSCm6CNx4Izq
+ nfygUGGnmFRLHh4nXaMHxNaTijNet8luy16trF5dm2znTkaSh3RaSer69EERb2FOCLXhqW
+ Bf+9UXjB1Bqcjyf6VIOM5DVVFVbkvf8=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-377-6fpJ7n7xOiKmeCNaCjuPqw-1; Mon, 08 Apr 2024 11:53:35 -0400
-X-MC-Unique: 6fpJ7n7xOiKmeCNaCjuPqw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41481f2d826so23162835e9.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:53:34 -0700 (PDT)
+ us-mta-340--O6dlww6Pm-krDbhPnpXmQ-1; Mon, 08 Apr 2024 11:53:39 -0400
+X-MC-Unique: -O6dlww6Pm-krDbhPnpXmQ-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2d87dad1640so14922911fa.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 08:53:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712591613; x=1713196413;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+mDg/Mrb8+ldQ1J+oBVOKeSkpn7y3AJXhDnTttc/PYw=;
- b=Wnjd8BTsUpHr2H47n+2AJ/hTOE/bt/sAFPg3K4zW5hkzZ17W6Un5ApCNr2fOrter4L
- uBg03rz2ZHEXcyAGAZrA07M7ird81dgR7fNd+TEQ8hTp2PYuI0Dyaz2rEWzyp3F9PC3K
- y96AOA/Jzk+s1pzQ5yXYgmFUZvZSN92Ln1xoIUwqq40TpTCtdgzh/eWRnd58NHegIpS8
- jmt/a0QUDSClhvOmhCkrblnSnHDHGNY6j6aNpHdjFSgV1CNO7D++Yh9ppVU8nMYixSqZ
- 2Cchg5s1KnTSO+3pZo4Bh3prrGtrjzh8Ig7TwKSHt3CExTrXL1wrd2Zh7Nn5vBfvNwkv
- At3w==
-X-Gm-Message-State: AOJu0Yxhi+LX6/MhEEatS672P6irbGXOAHkwZPXd4hY4i74jZmUZEDc0
- PL8w5FpV2pMotTn+OmH+g2CZzFumnBx4iY0sq52uAKJcGzFs7/osqRaLL6Yv/eJdg6jJJlv6/95
- EYopdD2gdkS47fY5yrcW6Bgn1+7Y1a7s17WgM75txKzWN4jYsN8m3UEslvZDILGjomiUc5j5lnv
- r11rkSCNdMJLtL5DYS6kqgAI4SVtPOKPkHcIS1
-X-Received: by 2002:a05:600c:4fd5:b0:416:2c8f:12e7 with SMTP id
- o21-20020a05600c4fd500b004162c8f12e7mr7227390wmq.1.1712591613421; 
- Mon, 08 Apr 2024 08:53:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzLyhyyyX1Q6kGIlL3LU8eMqM+46Vdm0ARFvxHPAaRZa2rPZmD9MxsuAxzKlglX7NTLvX8ZQ==
-X-Received: by 2002:a05:600c:4fd5:b0:416:2c8f:12e7 with SMTP id
- o21-20020a05600c4fd500b004162c8f12e7mr7227375wmq.1.1712591613033; 
- Mon, 08 Apr 2024 08:53:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712591617; x=1713196417;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tON+RxlIcOKUvuNbAsvnQBYFFWkRj/k0UEnvjOdoODI=;
+ b=Er3UqUjuc3eC4yC8A6dohKnJfCx9N9KVI7K78zeMlsrNgErDG5Pp9Y8qgbcZ/1NVov
+ cyq6u6wSrgyrP0kJa1fBhTI5/6IvF7/0g9qLXTTvTmgV5zpPmvimUKjGBpLhHHWT6z2B
+ ICgv4Zyjunv8cUWgeRelvoNePqHypprQlSA4Vx4qzs9iRCx8PR7WkeJIKqTtEL94X1h1
+ AsQTRWVCHJvdaoP+g6kNokY15U+XImZbzpKrwqYAfl+Yj1QGBd+iIn8HLV9aI+clud3A
+ qV3KNgKCu2VgPkMweW+OFE/t6D791wgYx1XW2UfpkqTDKho+bQPQ0m1nRgJonmFsnLzj
+ xTig==
+X-Gm-Message-State: AOJu0Yw2uanSWg8/ZVHUbnJ/QAaxlM1Du3Pjs5H2Xe808EFzu3MqENPK
+ 847TbtXuqEfRb8Cll/7bCPRMAD7zxl3THYHw5q/3qkxP1IVmrrHfn4ub4KkfQ0HyvN6OB0Cb4rY
+ BibVulGfSdA6RZoO8sfaFyUpVAvrUj68MW+c6TScMYIYeV7n8dVGjffFa2R7SahBrLUwyBW/UpP
+ Xa4+pJAti2agoe14A24svEqfMHQV8mQWtrX4wv
+X-Received: by 2002:a2e:8695:0:b0:2d8:7200:38ff with SMTP id
+ l21-20020a2e8695000000b002d8720038ffmr4902604lji.24.1712591616829; 
+ Mon, 08 Apr 2024 08:53:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEv+THxP+7lnUNqhkV3MzBGQ4Z7GqCw+HPCw9hv6w5tCj91zmuJAIZP6vv+CWi9SNtYl3nKwA==
+X-Received: by 2002:a2e:8695:0:b0:2d8:7200:38ff with SMTP id
+ l21-20020a2e8695000000b002d8720038ffmr4902594lji.24.1712591616384; 
+ Mon, 08 Apr 2024 08:53:36 -0700 (PDT)
 Received: from avogadro.local ([151.95.152.232])
  by smtp.gmail.com with ESMTPSA id
- k16-20020a05600c1c9000b004166a7afd20sm4683198wms.10.2024.04.08.08.53.32
+ l13-20020a05600c4f0d00b004167071617dsm4119939wmq.9.2024.04.08.08.53.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 08:53:32 -0700 (PDT)
+ Mon, 08 Apr 2024 08:53:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH v2 0/7] buildsys: Start shrinking qemu-user build process
-Date: Mon,  8 Apr 2024 17:53:12 +0200
-Message-ID: <20240408155330.522792-1-pbonzini@redhat.com>
+Subject: [PATCH v2 01/18] meson: do not link pixman automatically into all
+ targets
+Date: Mon,  8 Apr 2024 17:53:13 +0200
+Message-ID: <20240408155330.522792-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240408155330.522792-1-pbonzini@redhat.com>
+References: <20240408155330.522792-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -100,103 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some files (especially from hw/core/, stubs/ and util/) are built for
-user mode emulation unnecessarily; they are not needed by any code that
-is part of qemu-user.
+The dependency on pixman is listed manually in all sourcesets that need it.
+There is no need to bring into libqemuutil, since there is nothing in
+util/ that needs pixman either.
 
-The bulk of the patch (commits 6-17) puts stubs/ on a diet both in
-general (moving stubs out into specific subdirectories and away from
-libqemuutil.a) and for specific builds, by documenting which parts
-of QEMU need the various object files.
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Tested by building
-
-   --disable-system --disable-user --disable-tools --disable-guest-agent
-   --disable-system --enable-user --disable-tools --disable-guest-agent
-   --disable-system --disable-user --enable-tools --disable-guest-agent
-   --disable-system --disable-user --disable-tools --enable-guest-agent
-
-as well as regular CI.
-
-Paolo
-
-Paolo Bonzini (15):
-  meson: do not link pixman automatically into all targets
-  tests: only build plugins if TCG is enabled
-  tests/unit: match some unit tests to corresponding feature switches
-  yank: only build if needed
-  hw/core: Move system emulation files to system_ss
-  stubs: remove obsolete stubs
-  hw/usb: move stubs out of stubs/
-  hw/virtio: move stubs out of stubs/
-  semihosting: move stubs out of stubs/
-  ramfb: move stubs out of stubs/
-  memory-device: move stubs out of stubs/
-  colo: move stubs out of stubs/
-  stubs: split record/replay stubs further
-  stubs: include stubs only if needed
-  stubs: move monitor_fdsets_cleanup with other fdset stubs
-
-Philippe Mathieu-Daudé (3):
-  ebpf: Restrict to system emulation
-  util/qemu-config: Extract QMP commands to qemu-config-qmp.c
-  hw: Include minimal source set in user emulation build
-
- meson.build                                   |   8 +-
- include/qemu/config-file.h                    |   3 +
- include/sysemu/sysemu.h                       |   2 -
- stubs/ramfb.c => hw/display/ramfb-stubs.c     |   0
- .../mem/memory-device-stubs.c                 |   0
- stubs/usb-dev-stub.c => hw/usb/bus-stub.c     |   5 -
- .../virtio/virtio-md-stubs.c                  |   0
- stubs/colo.c => migration/colo-stubs.c        |   0
- monitor/qemu-config-qmp.c                     | 206 ++++++++++++++++++
- stubs/colo-compare.c => net/colo-stubs.c      |   0
- .../semihost-all.c => semihosting/stubs-all.c |   0
- .../semihost.c => semihosting/stubs-system.c  |   0
- stubs/fdset.c                                 |   6 +
- {hw/core => stubs}/hotplug-stubs.c            |   0
- stubs/isa-bus.c                               |   7 -
- stubs/module-opts.c                           |   2 -
- stubs/monitor-core.c                          |   6 -
- stubs/{monitor.c => monitor-internal.c}       |   5 -
- stubs/pci-bus.c                               |   7 -
- stubs/qdev.c                                  |   6 -
- stubs/qtest.c                                 |  10 -
- stubs/replay-mode.c                           |   4 +
- stubs/replay.c                                |   2 -
- util/qemu-config.c                            | 204 +----------------
- ebpf/meson.build                              |   2 +-
- hw/core/meson.build                           |  14 +-
- hw/display/meson.build                        |   2 +-
- hw/mem/meson.build                            |   1 +
- hw/usb/meson.build                            |   2 +-
- hw/virtio/meson.build                         |   3 +-
- migration/meson.build                         |   2 +
- monitor/meson.build                           |   1 +
- net/meson.build                               |   2 +
- semihosting/meson.build                       |   3 +
- stubs/meson.build                             | 133 ++++++-----
- tests/meson.build                             |   2 +-
- tests/unit/meson.build                        |  12 +-
- util/meson.build                              |   2 +-
- 38 files changed, 328 insertions(+), 336 deletions(-)
- rename stubs/ramfb.c => hw/display/ramfb-stubs.c (100%)
- rename stubs/memory_device.c => hw/mem/memory-device-stubs.c (100%)
- rename stubs/usb-dev-stub.c => hw/usb/bus-stub.c (83%)
- rename stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c (100%)
- rename stubs/colo.c => migration/colo-stubs.c (100%)
- create mode 100644 monitor/qemu-config-qmp.c
- rename stubs/colo-compare.c => net/colo-stubs.c (100%)
- rename stubs/semihost-all.c => semihosting/stubs-all.c (100%)
- rename stubs/semihost.c => semihosting/stubs-system.c (100%)
- rename {hw/core => stubs}/hotplug-stubs.c (100%)
- delete mode 100644 stubs/isa-bus.c
- delete mode 100644 stubs/module-opts.c
- rename stubs/{monitor.c => monitor-internal.c} (79%)
- delete mode 100644 stubs/pci-bus.c
- create mode 100644 stubs/replay-mode.c
-
+diff --git a/meson.build b/meson.build
+index c9c3217ba4b..09668e3c5f5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3477,7 +3477,7 @@ util_ss = util_ss.apply({})
+ libqemuutil = static_library('qemuutil',
+                              build_by_default: false,
+                              sources: util_ss.sources() + stub_ss.sources() + genh,
+-                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc, pixman])
++                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc])
+ qemuutil = declare_dependency(link_with: libqemuutil,
+                               sources: genh + version_res,
+                               dependencies: [event_loop_base])
 -- 
 2.44.0
 
