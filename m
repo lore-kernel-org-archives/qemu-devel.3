@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B58A8C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 283FBCD1292
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtsaT-0002dz-OA; Mon, 08 Apr 2024 13:15:18 -0400
+	id 1rtsrQ-0007N0-V3; Mon, 08 Apr 2024 13:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtsaR-0002dd-9M
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:15:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rtsrM-0007MO-NP
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:32:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rtsaM-0006gg-Bi
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:15:15 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rtsrJ-0001Lm-7S
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:32:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712596508;
+ s=mimecast20190719; t=1712597559;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9+AGk7G8Cl6WLT2CHBTlDFDkUZnuXOa04t/zvJtIwT4=;
- b=eAcIgD8yuuewljmQrIUJQoBpwL51HiUlwEnjEMElREPKxGCCg56Qy2IitGF3TCqXDpaAKF
- X+2u8huQluTGY//Eb2V4Di3WTBAhxJ3xx5QY3fzWJMt+ynsLtUQN32+6CQwOaFAL4hBm45
- cVfZ9dkDlm9HCieqRPmavGiQRWBSkyU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Zl+qZ8vxYDtq1eIM5Wd1GYKDIlOJCcTfnOxXRffMWHE=;
+ b=Bgz4Xs3f7Zl2tPD/FeEi6jFmzXq19ymap7ciVvPbWfMlEbk+BrFeBpbbllAwjohvUOcWow
+ a+gKsyiLwKDGZMUvNEFnfBNcwbAkXUjQ4ioNB7nLm8Lu4B87GecxusNH0koBbewIkBCi4G
+ j4f7MtC31oh9TvFOMGP/Pb875Btlezg=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-fliwi9oINcqcMCDOxkGxhA-1; Mon, 08 Apr 2024 13:15:06 -0400
-X-MC-Unique: fliwi9oINcqcMCDOxkGxhA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33ed489edcaso2777513f8f.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:15:06 -0700 (PDT)
+ us-mta-692-doaeiZ7ePqiu5LDummSymg-1; Mon, 08 Apr 2024 13:32:37 -0400
+X-MC-Unique: doaeiZ7ePqiu5LDummSymg-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-6156b93c768so83693467b3.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:32:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712596505; x=1713201305;
+ d=1e100.net; s=20230601; t=1712597557; x=1713202357;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9+AGk7G8Cl6WLT2CHBTlDFDkUZnuXOa04t/zvJtIwT4=;
- b=DPBCrgW8PEJ6jsWRSNDGhzdXTW65u+gSwc/iHjjQV9mZe4ovuQcp81+RPMmcHO2Zfb
- FWNMBexVI0/n1EKVckGFS9IAjFgLb/ZG0LC238zlHKtbto1S+aW+uogYTH9kHIzCAD4A
- pbpiSWszQRV0BVeQ759KQT6u8aNdNfklL/NcyW0cbEbj1EKo8azPhL3i2t5+rEu66vHG
- zC+X0VXolUPKRsmrZSZVYRBp9Yj0u6/aPZX30+rRiPtLUWBxWX3ipfZF1GFkzMnQfp7M
- RmRtQBiL7UhhXoiLgcBEtn25RcBKr5sgEQ7ZsB9yEWVI+BGrKTMkEsBhmGt6W81wifAl
- EdcQ==
-X-Gm-Message-State: AOJu0YxJWwqaKAkOg59uEMCedXtWE4waphfGN73Xw/Dm5OwYn9DizMZz
- elWDav9KqV8czh1e4gb3Bm9ftnWDmgQa8vg5WPGHl7rpNSLgDth2AsDABLkY2wShBa/dMEGidje
- wGhfaItvWC5ahZAlBWSLrRT+a2VZo0/XB4fn1T46Mi+wButPmM8SiaXJXa29HS0nIF7BsgHTxhz
- q7xJwrDbcaStTaZKRNS9m1knCHOyc=
-X-Received: by 2002:a5d:4d4d:0:b0:33e:34aa:d78a with SMTP id
- a13-20020a5d4d4d000000b0033e34aad78amr6196304wru.8.1712596505449; 
- Mon, 08 Apr 2024 10:15:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9UQNiFsSx4U02d+t9OqmrybPpAAlHGhniRh5971L3BDHn9qLQI3DWVYnGemE9i3xEZ+ceVe9BI65fNh0QmlI=
-X-Received: by 2002:a5d:4d4d:0:b0:33e:34aa:d78a with SMTP id
- a13-20020a5d4d4d000000b0033e34aad78amr6196292wru.8.1712596505100; Mon, 08 Apr
- 2024 10:15:05 -0700 (PDT)
+ bh=Zl+qZ8vxYDtq1eIM5Wd1GYKDIlOJCcTfnOxXRffMWHE=;
+ b=hhQNkgq+DZtLSIP+zQxuKd4BZ3aM//1twCdCERFuzQBFWihQVSx4juL9HibzN9sUX/
+ IGb+CJvdxdZvpYPdVxk0dNJXG816Qh6zGKPXENDk4jwjyKEkIV1cCOT4NVAgVU0S/Cwz
+ 9Z9hIHQhgq390rPs5nDpP3QgBHNip3d0ZnLiibo1qb3OTcJMhqZMiitwx8iO1Nonfntx
+ r8Naixm2Gn54OjAeA4XMNLyoaKw04MHGve5NbA2rtG+xog9QUZzfrDpwnfX6sdmAHsZx
+ ulH2ljJpliGlGasSyJsq077RBwAlChXl1DHy5IN6DR69/etXy7Wdu4Pb77W8Zjio2zZs
+ q3sA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcTS5SJcqSoxeiNCJV8Vf9nQzyKRoGf/87egAq9LG0OHwUmEuWTvqKddJTK9TtjlZSPv8pjn0XCZ6gUDB+HuYpORVsUeA=
+X-Gm-Message-State: AOJu0YzgSncPAEiOdq/wNRl1WzWGd75hIG42v3L5UQbc3a29Bs1nvdzl
+ FkprEH9xA+H66W3/EHdk4xFNTpufy+v+mtU7H7de+BcbmFDUcyMtTsjj0gxEY8ecTwQhRPjWc7+
+ 04tx+eu45a92NzYpDH+kRpKAPoOWTtdT4aD+tsKqL7RDgwrU7k/9AThyMGvgdoGqRN1tSJRSV1O
+ jfnddbjfQyANHwRCZ6u8rQwal3A+k=
+X-Received: by 2002:a05:6902:f88:b0:dc6:52ec:7ff8 with SMTP id
+ ft8-20020a0569020f8800b00dc652ec7ff8mr9935871ybb.4.1712597557368; 
+ Mon, 08 Apr 2024 10:32:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE++TPPm5Q5E9HXdoD6vQ/crQ4LCcvA62XmIS1nGHMmUePex8e6tW58wuueyD+6tlpXhG+5F6SKyyBAmJzpkic=
+X-Received: by 2002:a05:6902:f88:b0:dc6:52ec:7ff8 with SMTP id
+ ft8-20020a0569020f8800b00dc652ec7ff8mr9935856ybb.4.1712597557122; Mon, 08 Apr
+ 2024 10:32:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240408155330.522792-1-pbonzini@redhat.com>
- <20240408155330.522792-17-pbonzini@redhat.com>
- <c47df7e1-e6f1-4170-a024-045eae850c3e@linaro.org>
-In-Reply-To: <c47df7e1-e6f1-4170-a024-045eae850c3e@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 8 Apr 2024 19:14:53 +0200
-Message-ID: <CABgObfZFEJ1N5sXg0Q0D_80HKOXYw_ikyoo2+TsCME_hnVdVzw@mail.gmail.com>
-Subject: Re: [PATCH v2 16/18] stubs: split record/replay stubs further
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org
+References: <20240407015451.5228-2-wafer@jaguarmicro.com>
+In-Reply-To: <20240407015451.5228-2-wafer@jaguarmicro.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 8 Apr 2024 19:32:01 +0200
+Message-ID: <CAJaqyWeMbpp_HFLm+jweCE_y70arcUKa58Jg3VXoRQV04MWA=w@mail.gmail.com>
+Subject: Re: [PATCH v4] hw/virtio: Fix packed virtqueue flush used_idx
+To: Wafer <wafer@jaguarmicro.com>
+Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
+ jonah.palmer@oracle.com, leiyang@redhat.com, angus.chen@jaguarmicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -98,31 +99,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 8, 2024 at 6:59=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Sun, Apr 7, 2024 at 3:56=E2=80=AFAM Wafer <wafer@jaguarmicro.com> wrote:
 >
-> On 4/8/24 05:53, Paolo Bonzini wrote:
-> > replay.c symbols are only needed by user mode emulation, with the
-> > exception of replay_mode that is needed by both user mode emulation
-> > (by way of qemu_guest_getrandom) and block layer tools (by way of
-> > util/qemu-timer.c).
-> >
-> > Since it is needed by libqemuutil rather than specific files that
-> > are part of the tools and emulators, split the replay_mode stub
-> > into its own file.
->
-> I don't see how this helps.
->
-> With qemu_guest_getrandom you still pull in replay_read_random and replay=
-_save_random.
-> With timerlist_run_timers you still pull in replay_checkpoint.
->
-> So both stubs files are still used in the same cases.
 
-But user-mode emulation does not use timerlist_run_timers, and block
-layer tools do not use qemu_guest_getrandom. In fact the next patch
-wouldn't compile if that wasn't the case.
+Let me suggest a more generic description for the patch:
 
-Paolo
+In the event of writing many chains of descriptors, the device must
+write just the id of the last buffer in the descriptor chain, skip
+forward the number of descriptors in the chain, and then repeat the
+operations for the rest of chains.
+
+Current QEMU code writes all the buffers id consecutively, and then
+skip all the buffers altogether. This is a bug, and can be reproduced
+with a VirtIONet device with _F_MRG_RXBUB and without
+_F_INDIRECT_DESC...
+---
+
+And then your description, particularly for VirtIONet, is totally
+fine. Feel free to make changes to the description or suggest a better
+wording.
+
+Thanks!
+
+> If a virtio-net device has the VIRTIO_NET_F_MRG_RXBUF feature
+> but not the VIRTIO_RING_F_INDIRECT_DESC feature,
+> 'VirtIONetQueue->rx_vq' will use the merge feature
+> to store data in multiple 'elems'.
+> The 'num_buffers' in the virtio header indicates how many elements are me=
+rged.
+> If the value of 'num_buffers' is greater than 1,
+> all the merged elements will be filled into the descriptor ring.
+> The 'idx' of the elements should be the value of 'vq->used_idx' plus 'nde=
+scs'.
+>
+> Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+> Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> Signed-off-by: Wafer <wafer@jaguarmicro.com>
+>
+> ---
+> Changes in v4:
+>   - Add Acked-by.
+>
+> Changes in v3:
+>   - Add the commit-ID of the introduced problem in commit message.
+>
+> Changes in v2:
+>   - Clarify more in commit message.
+> ---
+>  hw/virtio/virtio.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index fb6b4ccd83..cab5832cac 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -957,12 +957,20 @@ static void virtqueue_packed_flush(VirtQueue *vq, u=
+nsigned int count)
+>          return;
+>      }
+>
+> +    /*
+> +     * For indirect element's 'ndescs' is 1.
+> +     * For all other elemment's 'ndescs' is the
+> +     * number of descriptors chained by NEXT (as set in virtqueue_packed=
+_pop).
+> +     * So When the 'elem' be filled into the descriptor ring,
+> +     * The 'idx' of this 'elem' shall be
+> +     * the value of 'vq->used_idx' plus the 'ndescs'.
+> +     */
+> +    ndescs +=3D vq->used_elems[0].ndescs;
+>      for (i =3D 1; i < count; i++) {
+> -        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], i, false);
+> +        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false=
+);
+>          ndescs +=3D vq->used_elems[i].ndescs;
+>      }
+>      virtqueue_packed_fill_desc(vq, &vq->used_elems[0], 0, true);
+> -    ndescs +=3D vq->used_elems[0].ndescs;
+>
+>      vq->inuse -=3D ndescs;
+>      vq->used_idx +=3D ndescs;
+> --
+> 2.27.0
+>
 
 
