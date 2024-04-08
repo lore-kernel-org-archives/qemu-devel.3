@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D98CD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E549C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 18:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt7v-0001yz-Gw; Mon, 08 Apr 2024 13:49:52 -0400
+	id 1rttYx-00035E-Ds; Mon, 08 Apr 2024 14:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt7q-0001vc-KP
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:47 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rttYu-00033S-Us
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 14:17:44 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt7n-0003cd-De
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:49:45 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2a519ac18b3so832247a91.2
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:49:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rttYt-0008Fo-5g
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 14:17:44 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a51abd0d7c2so449595566b.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 11:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598582; x=1713203382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ClDgWE+squc24jCQx5ASDG99O/TQsFv8OJ3ohhBsa3Y=;
- b=yLK1y3OEUThstbGG+U0rwnNtyeVJFACwozio/4T9aA2OGMqkdvfdKDEQN5NuT9X8d1
- rqxwfWY3OeIjnxIp+aw3ut67lCYRvSmNa3XZnQDWf9MDhb9rD2UeFN+wg6VpqXw0rVrb
- si49M7zv6VebaoN9Qouy/+0WF/ugubV2wr7TQsDe97dENmL5r8E/FMUHqZ1w7QTZoN9z
- uDZi/Pstr6TKDwp8C6w2eboHx9abTehT46NBchV5faJKj1OFz4m1Zz5qbv83RVBoWsgW
- Yw69SsIx4AScLDcWJu0cWWNxmU4rd8qQNhm8XGcPT7L5erqPqP2CliHMc6Hzzm70YaFP
- h4Nw==
+ d=linaro.org; s=google; t=1712600261; x=1713205061; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wJLGKwHsJY5k+a4vpcmjbRP8tPhkpdEOy+7JmFvmUuY=;
+ b=PutdmyR00Y/HkkBVAKmJMHDgSvTASWgD12d6B8jX0RiSSoQQ/QI5SEyfypKCSOU8vu
+ pAD5Mal9z3kAuv89AZtr5OeytFF8MgEq2aNs2PuMcsHZrwsKMdqZSX/TaXMZ8lBnWdal
+ uTsM0gvMJ5EBZ0chk2tKBRVmjD6cIxcXFzelvpZfOP+TS/L5skBFSCIys08+jNW9xjpb
+ 1b44hu/Om8XB3AVHha/hmFE7jcAOhCTsFaDNhNmimDScerXNI5bE2zRvs11neLwh3s20
+ 3OuihxxjE5zRc28w4je3uqfaYkhGdZkVdcAHV8iErga7U6g9LqUZ6leHz03pBSwAtBGQ
+ q+Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598582; x=1713203382;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ClDgWE+squc24jCQx5ASDG99O/TQsFv8OJ3ohhBsa3Y=;
- b=Q6NnrzcKld/O+6xuQ3k122TDnCYhffLTtkWCqi5wwHWhuY/6x3vyeRwkVZJYNd9ald
- oqaPSJHn43FR+47GgS/3wNO6C5VctXKzUH4Y0dxfsdvjfoTrhW7a3Z2/lIzvhiXUxi4h
- Ea4z+T6QnhQvf8XFqeHnZivhpgqi9cTlFPITKUuxpnzk6Pr5tkZhQztSeW5XsUvtMq2a
- IFU/tcRzjwYm2an3A7ZuD/47IVkX69pcTgzWTs5PZNzwEtRrlgEz43KLT0m8ZTlwB3xX
- 7AWbiySisIxgnRVt7sSyGpfFuFOoi/qkae78YafGtu//i19rCnwLnJeEns5OKUcQMPax
- /IhQ==
-X-Gm-Message-State: AOJu0YybvNUZAMPyl57dVh2KPed/iVjkOT2GRun+p0vp0aBZ5UsflKf3
- pmD6eDtLdnsMM3TW1KSpjOW8/JybX+jPcu2xW/5btw+kvzyQDUu7VTWorx46HcOOlKOz5Zq69uc
- u
-X-Google-Smtp-Source: AGHT+IEqR7Syjv4KeQ7C+jDud9uVEuYWENBx7KP442H2uM03hh+wQQHei9DrW3gGRJ1/gVUgxpdAwQ==
-X-Received: by 2002:a17:90a:ce18:b0:2a5:24dd:bd34 with SMTP id
- f24-20020a17090ace1800b002a524ddbd34mr2206044pju.27.1712598581991; 
- Mon, 08 Apr 2024 10:49:41 -0700 (PDT)
-Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ d=1e100.net; s=20230601; t=1712600261; x=1713205061;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wJLGKwHsJY5k+a4vpcmjbRP8tPhkpdEOy+7JmFvmUuY=;
+ b=XbMDdmckIFjrP4MzVF+Jln8cXqmHx02GhXFoN4islt4B0YfBHWEYWEIiMmCOqHRpWT
+ UaUQNfO40ZwQwCgUhRGJj/hKbiR4EoB2xsJZa+MaN5uywjsOIPqYY3rFJCTs+KySr7qK
+ isGtlYu4J7WWEvzoGss4MuDiJtrEz6tstJk3NfFalQ2LmzGuWLHslT1RRlrmVYfs9kKI
+ Kd+diuqpt6AqY6EcDD2S/wzA2kjPWhRCq396jsd46Jh2u+wWLWOgJqPbbJGTAVR2y/aK
+ Vfkia1uOJY+SkF8Jswfx7P9HOxuDHTqF1QqNDM3nxPlQa8dcH9bcjLkqdZSSZ83Y2yz9
+ ODJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUo/hOEpb7ftY4H3bnHeIjm6Kcj10/quC+uGDyKX/y0As4jErEaP4PLP4vZgXLGDWFzGwJruhbM4omlC5/eP1gbV1a3yrc=
+X-Gm-Message-State: AOJu0YyHhaEalgTGYcrhvjGkCUw/Rcz/O+1M/Ga6aZv/V+8p5tvcus2g
+ TSHi5eY27MlBbeOQ+nhsM2hZ0snfGXCGiwn4WUjK8dMz6W+qwEIBVRjmxxJmAD2WNROjU/6X1Ms
+ G
+X-Google-Smtp-Source: AGHT+IETt3c1TWhUSXv0A4VilYh2y23Yp0q2b4secqel22/PzBkKXLJL7osyQ7hHTxmLHab5lNbMIA==
+X-Received: by 2002:a17:906:195a:b0:a4e:679b:8437 with SMTP id
+ b26-20020a170906195a00b00a4e679b8437mr5931401eje.59.1712600260882; 
+ Mon, 08 Apr 2024 11:17:40 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.49.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:49:41 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Michael Vogt <mvogt@redhat.com>
-Subject: [PULL 07/35] linux-user: Add FITRIM ioctl
-Date: Mon,  8 Apr 2024 07:49:01 -1000
-Message-Id: <20240408174929.862917-8-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
-References: <20240408174929.862917-1-richard.henderson@linaro.org>
+ sa2-20020a1709076d0200b00a474ef94fddsm4699360ejc.70.2024.04.08.11.17.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Apr 2024 11:17:40 -0700 (PDT)
+Message-ID: <e2d97284-6dc7-4a38-82a7-4e7c76bfeaf9@linaro.org>
+Date: Mon, 8 Apr 2024 20:17:37 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 14/18] memory-device: move stubs out of stubs/
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240408155330.522792-1-pbonzini@redhat.com>
+ <20240408155330.522792-15-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240408155330.522792-15-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,62 +96,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Vogt <mvogt@redhat.com>
+On 8/4/24 17:53, Paolo Bonzini wrote:
+> Since the memory-device stubs are needed exactly when the Kconfig symbols are not
+> needed, move them to hw/mem/.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   stubs/memory_device.c => hw/mem/memory-device-stubs.c | 0
+>   hw/mem/meson.build                                    | 1 +
+>   stubs/meson.build                                     | 1 -
+>   3 files changed, 1 insertion(+), 1 deletion(-)
+>   rename stubs/memory_device.c => hw/mem/memory-device-stubs.c (100%)
 
-Tiny patch to add the missing FITRIM ioctl.
-
-Signed-off-by: Michael Vogt <mvogt@redhat.com>
-Message-Id: <20240403092048.16023-2-michael.vogt@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/ioctls.h        | 3 +++
- linux-user/syscall_defs.h  | 1 +
- linux-user/syscall_types.h | 5 +++++
- 3 files changed, 9 insertions(+)
-
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 1aec9d5836..d508d0c04a 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -140,6 +140,9 @@
- #ifdef FITHAW
-      IOCTL(FITHAW, IOC_W | IOC_R, TYPE_INT)
- #endif
-+#ifdef FITRIM
-+     IOCTL(FITRIM, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_fstrim_range)))
-+#endif
- 
-      IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
- #ifdef CONFIG_FIEMAP
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 744fda599e..ce0adb706e 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -945,6 +945,7 @@ struct target_rtc_pll_info {
- 
- #define TARGET_FIFREEZE    TARGET_IOWR('X', 119, abi_int)
- #define TARGET_FITHAW    TARGET_IOWR('X', 120, abi_int)
-+#define TARGET_FITRIM    TARGET_IOWR('X', 121, struct fstrim_range)
- 
- /*
-  * Note that the ioctl numbers for FS_IOC_<GET|SET><FLAGS|VERSION>
-diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
-index c3b43f8022..6dd7a80ce5 100644
---- a/linux-user/syscall_types.h
-+++ b/linux-user/syscall_types.h
-@@ -341,6 +341,11 @@ STRUCT(file_clone_range,
-        TYPE_ULONGLONG, /* src_length */
-        TYPE_ULONGLONG) /* dest_offset */
- 
-+STRUCT(fstrim_range,
-+       TYPE_ULONGLONG, /* start */
-+       TYPE_ULONGLONG, /* len */
-+       TYPE_ULONGLONG) /* minlen */
-+
- STRUCT(fiemap_extent,
-        TYPE_ULONGLONG, /* fe_logical */
-        TYPE_ULONGLONG, /* fe_physical */
--- 
-2.34.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
