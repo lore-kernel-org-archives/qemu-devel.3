@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF04CD1297
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A92CD1296
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 14:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtphc-0000PC-KQ; Mon, 08 Apr 2024 10:10:28 -0400
+	id 1rtphW-00085H-HQ; Mon, 08 Apr 2024 10:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3l_oTZggKChQC68CDuzu08805y.w86Ay6E-xyFy578707E.8B0@flex--smostafa.bounces.google.com>)
- id 1rtpgv-0007Fb-Nt
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:09:49 -0400
-Received: from mail-wr1-x44a.google.com ([2a00:1450:4864:20::44a])
+ <3mfoTZggKChYE8AEFw1w2AA270.yA8C08G-z0H079A929G.AD2@flex--smostafa.bounces.google.com>)
+ id 1rtpgy-0007GF-2N
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:09:54 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3l_oTZggKChQC68CDuzu08805y.w86Ay6E-xyFy578707E.8B0@flex--smostafa.bounces.google.com>)
- id 1rtpgh-0001Ox-44
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:09:45 -0400
-Received: by mail-wr1-x44a.google.com with SMTP id
- ffacd0b85a97d-3455cbdea2cso727365f8f.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:09:28 -0700 (PDT)
+ <3mfoTZggKChYE8AEFw1w2AA270.yA8C08G-z0H079A929G.AD2@flex--smostafa.bounces.google.com>)
+ id 1rtpgj-0001PJ-MV
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 10:09:47 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-610b96c8ca2so73370057b3.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 07:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1712585367; x=1713190167; darn=nongnu.org;
+ d=google.com; s=20230601; t=1712585369; x=1713190169; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=0HFXPBczsaFzwM3/E8nUe7UI7cqODAn7zmH22JOuPig=;
- b=yTjpNFWDp7EDhfj/nHTOZLKFUfjwHNbDKpdp70+7wpzkRRM4XqWCa3+NE1AhUb/p+L
- /vJkP+WnwXqBpCl9bu2AWvTWAIdD/if6PGNj4yhXHbU606j3liZQj3OkHegp2nzmv4Cm
- BsmLiq2TS7wNpxEMuIXwvxdxxJV+rypSLtW1d8HLKF89YwIYFiwiX8vHxJAMJtnuqd95
- 3Xg8GgXr5JkX86grFFLbQdaSPPn5TwDK/Ak9XAmUs+R5dIzVvQP7SyCrKo6O0KBLJQ5q
- m0iX6DcIbWR1i0qeuPzFQi90/h/yO9OctGEzIh7HhGce4rmkpp9YvvhwN8kHZJJSxmWy
- zvXg==
+ bh=AMd8YNfC7PIDLuxaX4315ka/K6CHfBg/CUvv3sbGflM=;
+ b=TRywDM2wK6BTL1rXN20MEg6kfmDOY1dhWq9UZou/nC0tq3F0uIVyM1oqc18xrVJiZU
+ twQccS1skSS4KCSpCL7NxubcXW97G6AKOsWOyu8K3m8cKN0dNlUa9ocqKbUT8/HxuUnC
+ 2Q7yccapwwKuV1rcY0sE+X6hwoybaHIbYaf0Rcq7QFyDRKLnEy6TN8lBIKGNg+8XaG1p
+ q2f3TqgOEJB90i7hNRHLo/fx/6zeUEyCcQWqFrLQpMD25Yysshn+lCmZ73rKENtJz2Ag
+ YDaeS5GcZKLUy4IUjO1VyDAn1sQZSX0q2OkQpmDioHgNAmIqXpXgF+sLwpu9RDe5KONE
+ BipQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712585367; x=1713190167;
+ d=1e100.net; s=20230601; t=1712585369; x=1713190169;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0HFXPBczsaFzwM3/E8nUe7UI7cqODAn7zmH22JOuPig=;
- b=rjEa32J2bq5JV49/6Yk/1QjTRvKxMhZCuiv/1vggqS3Fg+d0Rojb8ZuurLM+RxSRdz
- ffGLVFVpoHU09s8m1e1CNYzCWxwN4Mhl/KRmIC+uI/9be0955tZmcJwLiEHWKjWkMWH+
- iuUdAYFv9UZL/u/Yo9X7bJyDkOEXJvVWsvaw4m9aL7vSfr7koOlkTuwzJgGhq2RerU8o
- iDC9kJm/FARQUme4ix1Zyx+OBfyaDllc9CS5toC063sTFJyUBOTQagYZBkttPGhaI7tb
- KiIWDKnGvPU835KEJiEpEoGosV0HmmRguWzXxCZ8taKuG4BbLus7tPA3AHwLlx/2Pu+f
- AxOA==
+ bh=AMd8YNfC7PIDLuxaX4315ka/K6CHfBg/CUvv3sbGflM=;
+ b=wN2ZEMFAJQrJ3bch4n2O9QG2CCjxKy9usC9kp4y8Kl9W0TnplHjH9x1RbpO8ERYeDR
+ xXU/CbUlhoyNKpNrZDtc+pMYHPsFLmBSly1+Rma0SWwH/ek5ecUJykbiLeaSQD6oYjxP
+ l606OTOOLGnTMVnXQII2ZuS03zFy47TAUE3ZQ0Yh70krvZ+FKKbVeIFpj93+4yZWu69y
+ WeIc3FPt2t3Qzk4Q2dtOvwnVnsBH7Tq+F+4cYrjWQmW3ZVlqqIExgOnFR6o/WGKYvdGU
+ E2GssmbERWortVVXSk8FHR1EBZDPI4JwCVsWvNKK0ZY+RRUgXST9KeQb9SkPq6/hjLQ8
+ hPXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2ZdXkIAb8WBsC240mSp+EiP7juZdRgzHSGRoDWzIkePo2elSCPYgRPK7lPWFDCBrumjkB6GMqKEN/rMvQ+vLnzVvAwsY=
-X-Gm-Message-State: AOJu0YzEnpW/bUBzNp/Q+fEZx1NHLL/K7BTdoE7RsN9o1eqmxDD/k1GG
- gqQ7ZbmBlIZHFkbuYCIuK8vEvd9B3l31Fcj7KQqZwznqR7mQO0HGqhjwFNOVrAfL5jMOKXwOcRE
- ZkPiIRyDRzw==
-X-Google-Smtp-Source: AGHT+IE7kCfdgL08HfEqucyFWrSJbWPjvekE7QrePaAghtRgm0vvVoGNYz6lmTGoMFN28/lVMU0gfGcPCY6egg==
+ AJvYcCUj31/elqVwITACEw+s2A6mtfNZ5HONULPdSEd0FNSSSzOXFRRgZQByYMYxaod1Y0/EWWhHudo0KZJCnSr7ZD7FqW5ZFCg=
+X-Gm-Message-State: AOJu0YzcNIaac+mJ32rKKK2Cv+doHQEStP2+lTMfbdV/yCDy1x1ASoiA
+ ZMMdQQC/48YF4YWpZ3XqKm8gyALm/8iiTygYeIsJkLtaRgTwX2/N/TqeKLlzFUR5/JCjQiMUoR7
+ DGUZK/EJnHQ==
+X-Google-Smtp-Source: AGHT+IGluNUcEdGNO/MW02ClIEjM8uOtannDp473rPxeJGa/ejn0j6js4csqJlN5iWXZrJXEDWT/oAQWrex+Lw==
 X-Received: from mostafa.c.googlers.com
  ([fda3:e722:ac3:cc00:28:9cb1:c0a8:333c])
- (user=smostafa job=sendgmr) by 2002:a5d:6f0d:0:b0:343:ecac:5ffc with SMTP id
- ay13-20020a5d6f0d000000b00343ecac5ffcmr116195wrb.7.1712585367719; Mon, 08 Apr
- 2024 07:09:27 -0700 (PDT)
-Date: Mon,  8 Apr 2024 14:08:17 +0000
+ (user=smostafa job=sendgmr) by 2002:a0d:d54a:0:b0:615:165b:8dde with SMTP id
+ x71-20020a0dd54a000000b00615165b8ddemr2605640ywd.10.1712585369753; Mon, 08
+ Apr 2024 07:09:29 -0700 (PDT)
+Date: Mon,  8 Apr 2024 14:08:18 +0000
 In-Reply-To: <20240408140818.3799590-1-smostafa@google.com>
 Mime-Version: 1.0
 References: <20240408140818.3799590-1-smostafa@google.com>
 X-Mailer: git-send-email 2.44.0.478.gd926399ef9-goog
-Message-ID: <20240408140818.3799590-13-smostafa@google.com>
-Subject: [RFC PATCH v2 12/13] hw/arm/smmuv3: Add property for OAS
+Message-ID: <20240408140818.3799590-14-smostafa@google.com>
+Subject: [RFC PATCH v2 13/13] hw/arm/virt: Set SMMU OAS based on CPU PARANGE
 From: Mostafa Saleh <smostafa@google.com>
 To: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org, 
  qemu-devel@nongnu.org
@@ -72,9 +72,9 @@ Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
  nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org, 
  marcin.juszkiewicz@linaro.org, Mostafa Saleh <smostafa@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::44a;
- envelope-from=3l_oTZggKChQC68CDuzu08805y.w86Ay6E-xyFy578707E.8B0@flex--smostafa.bounces.google.com;
- helo=mail-wr1-x44a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3mfoTZggKChYE8AEFw1w2AA270.yA8C08G-z0H079A929G.AD2@flex--smostafa.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,108 +97,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add property that sets the OAS of the SMMU, this in not used in this
-patch.
+Use the new SMMU property to make the SMMU OAS match the CPU PARANGE.
+That's according to SMMU manual ARM IHI 0070F.b:
+    6.3.6 SMMU_IDR5, OAS must match the system physical address size.
 
 Signed-off-by: Mostafa Saleh <smostafa@google.com>
 ---
- hw/arm/smmuv3-internal.h |  3 ++-
- hw/arm/smmuv3.c          | 29 ++++++++++++++++++++++++++++-
- include/hw/arm/smmuv3.h  |  1 +
- 3 files changed, 31 insertions(+), 2 deletions(-)
+ hw/arm/virt.c      | 14 ++++++++++++--
+ target/arm/cpu.h   |  2 ++
+ target/arm/cpu64.c |  5 +++++
+ 3 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index b0d7ad6da3..41612bb9ff 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -105,7 +105,8 @@ REG32(IDR5,                0x14)
-      FIELD(IDR5, VAX,        10, 2);
-      FIELD(IDR5, STALL_MAX,  16, 16);
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0af1943697..599c0f752b 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -235,6 +235,13 @@ static bool ns_el2_virt_timer_present(void)
+         arm_feature(env, ARM_FEATURE_EL2) && cpu_isar_feature(aa64_vh, cpu);
+ }
  
--#define SMMU_IDR5_OAS 4
-+#define SMMU_IDR5_OAS_DEF 4 /* 44 bits. */
-+#define SMMU_IDR5_OAS_MAX 5 /* 48 bits. */
- 
- REG32(IIDR,                0x18)
- REG32(AIDR,                0x1c)
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index c377c05379..a9e35c41b7 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -299,7 +299,9 @@ static void smmuv3_init_regs(SMMUv3State *s)
-     s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
-     s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
- 
--    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS); /* 44 bits */
-+    /* PTW doesn't support 52 bits. */
-+    s->oas = MIN(s->oas, SMMU_IDR5_OAS_MAX);
-+    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, s->oas);
-     /* 4K, 16K and 64K granule support */
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, 1);
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
-@@ -1878,11 +1880,34 @@ static const VMStateDescription vmstate_gbpa = {
-     }
- };
- 
-+static const VMStateDescription vmstate_oas = {
-+    .name = "smmuv3/oas",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(oas, SMMUv3State),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static int smmuv3_preload(void *opaque)
++/* We rely on CPU to define system OAS. */
++static int32_t get_system_oas(void)
 +{
-+    SMMUv3State *s = opaque;
-+
-+    /*
-+     * In case it wasn't migrated, use the value used
-+     * by older QEMU.
-+     */
-+    s->oas = SMMU_IDR5_OAS_DEF;
-+    return 0;
++    ARMCPU *cpu = ARM_CPU(qemu_get_cpu(0));
++    return cpu_arm_get_oas(cpu);
 +}
 +
- static const VMStateDescription vmstate_smmuv3 = {
-     .name = "smmuv3",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .priority = MIG_PRI_IOMMU,
-+    .pre_load = smmuv3_preload,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(features, SMMUv3State),
-         VMSTATE_UINT8(sid_size, SMMUv3State),
-@@ -1910,6 +1935,7 @@ static const VMStateDescription vmstate_smmuv3 = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_gbpa,
-+        &vmstate_oas,
-         NULL
-     }
- };
-@@ -1922,6 +1948,7 @@ static Property smmuv3_properties[] = {
-      * Defaults to stage 1
-      */
-     DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-+    DEFINE_PROP_INT32("oas", SMMUv3State, oas, SMMU_IDR5_OAS_DEF),
-     DEFINE_PROP_END_OF_LIST()
- };
+ static void create_fdt(VirtMachineState *vms)
+ {
+     MachineState *ms = MACHINE(vms);
+@@ -1340,7 +1347,7 @@ static void create_pcie_irq_map(const MachineState *ms,
+ }
  
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index d183a62766..00a9eb4467 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -63,6 +63,7 @@ struct SMMUv3State {
-     qemu_irq     irq[4];
-     QemuMutex mutex;
-     char *stage;
-+    int32_t oas;
- };
+ static void create_smmu(const VirtMachineState *vms,
+-                        PCIBus *bus)
++                        PCIBus *bus, int32_t oas)
+ {
+     char *node;
+     const char compat[] = "arm,smmu-v3";
+@@ -1360,6 +1367,9 @@ static void create_smmu(const VirtMachineState *vms,
  
- typedef enum {
+     object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+                              &error_abort);
++
++    qdev_prop_set_uint64(dev, "oas", oas);
++
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+     for (i = 0; i < NUM_SMMU_IRQS; i++) {
+@@ -1534,7 +1544,7 @@ static void create_pcie(VirtMachineState *vms)
+ 
+         switch (vms->iommu) {
+         case VIRT_IOMMU_SMMUV3:
+-            create_smmu(vms, vms->bus);
++            create_smmu(vms, vms->bus, get_system_oas());
+             qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
+                                    0x0, vms->iommu_phandle, 0x0, 0x10000);
+             break;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index a5b3d8f7da..14ef1a9d37 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -3408,4 +3408,6 @@ static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
+ }
+ #endif
+ 
++int32_t cpu_arm_get_oas(ARMCPU *cpu);
++
+ #endif
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 985b1efe16..08da83c082 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -787,6 +787,11 @@ static const gchar *aarch64_gdb_arch_name(CPUState *cs)
+     return "aarch64";
+ }
+ 
++int32_t cpu_arm_get_oas(ARMCPU *cpu)
++{
++    return FIELD_EX64(cpu->isar.id_aa64mmfr0, ID_AA64MMFR0, PARANGE);
++}
++
+ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+ {
+     CPUClass *cc = CPU_CLASS(oc);
 -- 
 2.44.0.478.gd926399ef9-goog
 
