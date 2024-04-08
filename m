@@ -4,87 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E83C67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6956C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 07:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtjcZ-0007y6-Er; Mon, 08 Apr 2024 03:40:51 -0400
+	id 1rtjdr-0000HV-L2; Mon, 08 Apr 2024 03:42:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1rtjcX-0007xh-6D
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:40:49 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1rtjcU-0002fJ-Vn
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:40:48 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-dcbcea9c261so4259916276.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 00:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712562045; x=1713166845;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f6TdT1MqLHsL0h0baBJt8PRFGb4BdHwo6IaErCVrNEE=;
- b=dQ86yYyJB4XvbAo6w+xmEO2an/jtBAs4Hzs2WBTxm1C1AgMzfk2oVU5iwJoL/C7xbf
- 58jD3rn9EjQkhAu0HxavHpmTooM4aOAWo+d31roaRkKUnJRwRlIdgJPBo3uJTKDQdZAc
- p+PQm1YGrK0h7qMtd88FrIv/UN/WMVDYSrk38wgORdd9K8BYzawoZUlW6tEhyfrWuW3M
- reg1O8gi7RpVDSRJdJH8VAp4GAGyl/qL+fdNf75KcOM4YgflCJJb1EHF+bJ3sHZ9n3Gw
- 41C0T96ypYRO9XqDqqT/ybqjPsqJOJVo5DiQo6hzKsoH5Q3uJ+vnp/sC/X4tLD99nUGC
- esWw==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rtjdo-0000H6-0k
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:42:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rtjdi-0002ir-6u
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 03:42:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712562121;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=636XWh6AmDSjZtDCfvbIRdXoumFJy25dlfeIw61qc1c=;
+ b=Rrl162V/jaDXe6Ju520O3E0D+wvMn1j7FiBeHy4P//hENCteC9cmu7KXrtAsaQZvmm5D0q
+ 2DfNAEj2SIxJvUfZEygbWzzFv5GzRiqfDx4sgty+uAL/9YtLp162FtDgk+CDvfi2hGzHyI
+ WdIDM1wGFWHJg62zIaBPi/kr9A8TUsI=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-BrkvonQVPqSi9fAt5b5R-g-1; Mon, 08 Apr 2024 03:41:59 -0400
+X-MC-Unique: BrkvonQVPqSi9fAt5b5R-g-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-78bd232b170so492834885a.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 00:41:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712562045; x=1713166845;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f6TdT1MqLHsL0h0baBJt8PRFGb4BdHwo6IaErCVrNEE=;
- b=AXZgNB0n5DSo6+reSu5CYc5L9BJ5tI2k8Ek+0rpn2j7LGfGEJYQTxW7TJhFdLVs9dy
- wMi60ddYyF+H1pZIrjs3k6a3qAuaC2quhQ+L7dNE9EinUhKxYUe2uZVgkCW81Uw4S3Mu
- NraR1ABzv+d8c7NeovjnMT8Kvrf0ZWeVdx8j1MJZT6FaB8W/VX1KzjCofguEr0/0LWL2
- Xrp7ABqqSTWB+YWqYxyASRzSfyokzoV6D6wHNnG1u3S4PyLmA/dUN0dqEF6tuYdpdawo
- YvDV5JeyoYlPfNcbUdh8AIzoA6d84OxaxDcio3yrsswl53VlkKRoW/fsNrVZegc2D8Y5
- Zf0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWw5ew2atE8vOrbFUXzpCYsb3uLSvmOXG2QcPEdh1mj14YrIfzwbF0koZiy91xy3JtWenHEOFUrO2wIUfZE/YiGNqmChZ8=
-X-Gm-Message-State: AOJu0YxEIbVLEf9NxwnJ7IO4YQPULAyZaNcEvIUfy18wF3DIOASw3JHk
- yQzyBXEuq0NV3JHbo8uJZJEZMU39SHnlKJqIHdCVI1sUcCzB/mcRkyWbSfiBg9jqx/8nICzAfNy
- KKcN+yZlQ6YvyYHp4z+ycOaUDvRgvhTO5Ena5gQ==
-X-Google-Smtp-Source: AGHT+IGpd1ofcRiUK/l1LEXEI6nG23nmuBktJoDQPZo8yfa6+AY6N0XMxAaa3kqSOHF4NDPbenS8wsyHjE7DROkRETw=
-X-Received: by 2002:a25:b327:0:b0:dcd:30f9:eb6d with SMTP id
- l39-20020a25b327000000b00dcd30f9eb6dmr5177100ybj.57.1712562045659; Mon, 08
- Apr 2024 00:40:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712562119; x=1713166919;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=636XWh6AmDSjZtDCfvbIRdXoumFJy25dlfeIw61qc1c=;
+ b=PxQQAYns/1T50daCqyxGUtEQugsK4/JnFw0oWzlF/YZmJlasNuugkKp2ZCcZmXT+wy
+ kT+crsWXhgk0dZo9q9Gek3hbwIvdZup245Nj1MXtJ+HpUAIpAJwjNmHRDh854CXG7a51
+ VPQ6eVEmRl41+KMzoLb3v8XC8IRN5OCoMt5YbfAEKaYbASBYASeBVzZxoEVSaSVBC2nJ
+ 3QYrg1gvnWr1/r0wBwbw0fGF86Cc50MrnqE3snka21S2KVJ6pTT74ZAI4hSzllOQUdpC
+ BjfXKVntEYbl4u7VuMKaN20WSyHUBciEcK3PCOMZiV0upd6qj1oIorn1KSc/1GlXcTzc
+ adXw==
+X-Gm-Message-State: AOJu0Ywnu1agmbQID7Jk6l3sMzQ+D1iEx5kBKeRxtO84HZbC2t7wRJ2u
+ Ziz/Smdv4WRshA0YedTwhlZjBT7hxvAw7HcrqubfKQr8qoYcjKNeg2aoeIa5jims217PLDU4Vh9
+ FXROF+nXD5gPw+gTGKRMKgeij5xIEZaAKzjnjl7EtKaL/wzYQkKXl
+X-Received: by 2002:a05:620a:2806:b0:78d:6572:ea56 with SMTP id
+ f6-20020a05620a280600b0078d6572ea56mr3032707qkp.13.1712562118981; 
+ Mon, 08 Apr 2024 00:41:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEPfYhWhEJ35b7dAxZQ4ALtIRcb+mvEAIug4nw8OM0pd1E4Xo+0Sb//9HnFgQwZ7F/k5mD1XA==
+X-Received: by 2002:a05:620a:2806:b0:78d:6572:ea56 with SMTP id
+ f6-20020a05620a280600b0078d6572ea56mr3032694qkp.13.1712562118704; 
+ Mon, 08 Apr 2024 00:41:58 -0700 (PDT)
+Received: from sgarzare-redhat ([193.207.101.253])
+ by smtp.gmail.com with ESMTPSA id
+ vv23-20020a05620a563700b0078d68b23254sm328366qkn.107.2024.04.08.00.41.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Apr 2024 00:41:58 -0700 (PDT)
+Date: Mon, 8 Apr 2024 09:41:46 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, slp@redhat.com,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>, 
+ Brad Smith <brad@comstyle.com>, stefanha@redhat.com,
+ Eric Blake <eblake@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ gmaglione@redhat.com, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH for-9.1 v3 08/11] contrib/vhost-user-blk: enable it on
+ any POSIX system
+Message-ID: <la3m3jiogtzpwsqjbyro6k3e7m6g45sy2uxpat73dyom3x52ig@yk3szljbva2p>
+References: <20240404122330.92710-1-sgarzare@redhat.com>
+ <20240404122330.92710-9-sgarzare@redhat.com>
+ <84c9d3f2-9aab-4dd6-b6f8-223acf6364fb@linaro.org>
 MIME-Version: 1.0
-References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
- <20240403-rss-v9-16-c6d87e69d38b@daynix.com>
- <CAOEp5Od=KUTHnikVBA7iWfdFPJ=T7hbJrSu4zwCiB_Q1P-Sz+Q@mail.gmail.com>
- <8010b335-4b46-456e-bf6e-c191cdc34964@daynix.com>
-In-Reply-To: <8010b335-4b46-456e-bf6e-c191cdc34964@daynix.com>
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
-Date: Mon, 8 Apr 2024 10:40:34 +0300
-Message-ID: <CAOEp5OeHJR=EeZ=yLovSD9vUPt-zRNKLo2k_fNZPP3W-eX4Fiw@mail.gmail.com>
-Subject: Re: [PATCH v9 16/20] virtio-net: Do not write hashes to peer buffer
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2607:f8b0:4864:20::b35;
- envelope-from=yuri.benditovich@daynix.com; helo=mail-yb1-xb35.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <84c9d3f2-9aab-4dd6-b6f8-223acf6364fb@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,38 +116,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 8, 2024 at 4:30=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix.=
-com> wrote:
->
-> On 2024/04/08 7:09, Yuri Benditovich wrote:
-> > On Wed, Apr 3, 2024 at 2:12=E2=80=AFPM Akihiko Odaki <akihiko.odaki@day=
-nix.com> wrote:
-> >>
-> >> The peer buffer is qualified with const and not meant to be modified.
-> >
-> > IMHO, this buffer is not so 'const' (although the prototype states so),
-> > it is allocated in net.c
-> > btw, another procedure in this file also modifies the buffer
-> > (work_around_broken_dhclient)
->
-> Right but it has a FIXME comment.
->
-> >
-> >> It also prevents enabling VIRTIO_NET_F_HASH_REPORT for peers without
-> >> virtio-net header support.
-> >
-> > Does it mean _this commit_ prevents enabling VIRTIO_NET_F_HASH_REPORT
-> > for peers without
-> > virtio-net header support? Where?
->
-> No, but I meant that this patch fixes such a problem.
+On Thu, Apr 04, 2024 at 04:00:38PM +0200, Philippe Mathieu-Daudé wrote:
+>Hi Stefano,
 
-No, it does not. Such a problem does not exist in the master, the
-hash_report feature
-is silently dropped in such case:
-https://github.com/qemu/qemu/blob/master/hw/net/virtio-net.c#L816
+Hi Phil!
 
 >
-> Regards,
-> Akihiko Odaki
+>On 4/4/24 14:23, Stefano Garzarella wrote:
+>>Let's make the code more portable by using the "qemu/bswap.h" API
+>>and adding defines from block/file-posix.c to support O_DIRECT in
+>>other systems (e.g. macOS).
+>>
+>>vhost-user-server.c is a dependency, let's enable it for any POSIX
+>>system.
+>>
+>>Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>>---
+>>  meson.build                             |  2 --
+>>  contrib/vhost-user-blk/vhost-user-blk.c | 19 +++++++++++++++++--
+>>  util/meson.build                        |  4 +++-
+>>  3 files changed, 20 insertions(+), 5 deletions(-)
+>
+>
+>>diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
+>>index a8ab9269a2..462e584857 100644
+>>--- a/contrib/vhost-user-blk/vhost-user-blk.c
+>>+++ b/contrib/vhost-user-blk/vhost-user-blk.c
+>>@@ -16,6 +16,7 @@
+>>   */
+>>  #include "qemu/osdep.h"
+>>+#include "qemu/bswap.h"
+>>  #include "standard-headers/linux/virtio_blk.h"
+>>  #include "libvhost-user-glib.h"
+>
+>
+>>@@ -267,13 +282,13 @@ static int vub_virtio_process_req(VubDev *vdev_blk,
+>>      req->in = (struct virtio_blk_inhdr *)elem->in_sg[in_num - 1].iov_base;
+>>      in_num--;
+>>-    type = le32toh(req->out->type);
+>>+    type = le32_to_cpu(req->out->type);
+>>      switch (type & ~VIRTIO_BLK_T_BARRIER) {
+>>      case VIRTIO_BLK_T_IN:
+>>      case VIRTIO_BLK_T_OUT: {
+>>          ssize_t ret = 0;
+>>          bool is_write = type & VIRTIO_BLK_T_OUT;
+>>-        req->sector_num = le64toh(req->out->sector);
+>>+        req->sector_num = le64_to_cpu(req->out->sector);
+>>          if (is_write) {
+>>              ret  = vub_writev(req, &elem->out_sg[1], out_num);
+>>          } else {
+>Can we switch to the bswap API in a preliminary patch,
+
+Sure, I tried to minimize the patches because it's already big,
+but I can split this.
+
+>converting all the source files?
+>
+
+What do you mean with "all the source files"?
+
+"le64toh" is used here and in some subprojects (e.g. libvduse,
+libvhost-user), where IIUC we can't use QEMU's bswap.h because we
+don't want to put a dependency with the QEMU code.
+
+BTW I'll check for other *toh() usage in QEMU code and change in the
+preliminary patch you suggested to add.
+
+Thanks for the review,
+Stefano
+
 
