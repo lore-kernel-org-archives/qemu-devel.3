@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5AAC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6075CD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 09:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtl89-0005Hw-TJ; Mon, 08 Apr 2024 05:17:33 -0400
+	id 1rtlPK-0000F1-Ly; Mon, 08 Apr 2024 05:35:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtl87-0005Hb-UR
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:17:31 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlPJ-0000EB-0K
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:35:17 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtl86-0000oU-4d
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:17:31 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a44ad785a44so490799466b.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:17:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtlPF-0003zv-S4
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 05:35:16 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4166ccac761so5562765e9.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 02:35:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712567848; x=1713172648; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712568912; x=1713173712; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5WPhMGGEAlaCWePqPOlTOMNDZLZtX2QuCPlFl7nQ+uM=;
- b=Gdx4KxJ58ou6ose4TapUnT8Ps33fRXFCVvp0T9rFPwQl/900fV7N9TVHxeJjThITmf
- TBRbOmw1WjiD42k/KYD9/c6te0Ji5p2KvJeoU6FSH7YMpJTw7z/GpwJ8RAaXXoC2uzMk
- rN+1kIN61+guaRpvTBqZJ+l/NAult0U6e2F8jmKUJ1fQ0qcjLxbraXDF672TojRnPiVK
- OrDkc7yOa8+swykdTlKxcLqvYGfzQF17gvYKNmzLHG+L+s+VfrPnV18SihDxvVe/bahJ
- A3G4HcyZ0Oa51pgUJGlol+bVLGFzJNNnuglv835yy2M6WLq31VsVIAeyoHzO2cKAHUAl
- rb5A==
+ bh=ayemA/VVv9k0Zz+UgTmGHdj9k8FnVzs1BskfoiT0CPI=;
+ b=te12cmpKaZ7qoc+Jpgp7IxwdL3n1+HaAGZc3JA/otCPXrZBp+Au47nuufHo6Ck6Etc
+ /0G03PtWo5GQ5+CAtObpbZGLMdYyjpfScmco9U+VTyppP0+9Zq+tAyvsYa1Z4Qak/1Yp
+ Nz0Y2+MPBkt8zEBZepUE+RX4twZeAtoA9yxosYGvP+eHuXoJjlK5bBFH6tclxPRGpSao
+ re7AjENhE65QI2P5o6e1WBKUqT0e/Vk5F/M0wLBalWjjiS7O3f4+ByVrx1VocQQXFPM0
+ WpUuQXCd2kfAVK+M7coN3NnOvCzH4vmUtezwwr62f4BOnTSxPYCHRQGUSwnCMUlv/ucB
+ +7Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712567848; x=1713172648;
+ d=1e100.net; s=20230601; t=1712568912; x=1713173712;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5WPhMGGEAlaCWePqPOlTOMNDZLZtX2QuCPlFl7nQ+uM=;
- b=UxC/XMOl9CGrKIknUoB9YWejmU1Dgh39drT6kkN9wtnkipQLrG0ulJnC34Bxmad4DL
- 7d8aTSUcVGS4mN0SWW8aGqjEqiAACXMy2WV9i0pAmHUOLZNgB1Bj9zGkxjwdpfxNGWb1
- zngwGv69DAQLisXIaoNZ9YeGaBfCoVFFG9FA9C+T+26eFHn4T3y6GgbrIVuEiLmZJJH4
- Abhh7XcaexleOrKPxAS7mpCm9aJtkFJoJMRpxMRCSaVMTWjzbhXER8PWFEbi+Rn/Codl
- mbgNrk6tDcTxNjyNW6zEliebYZ/FRU0TCp6QaxtAXYF7aKLGgENaX/rPSGLnHRdLkOrz
- H9yg==
+ bh=ayemA/VVv9k0Zz+UgTmGHdj9k8FnVzs1BskfoiT0CPI=;
+ b=IbPxBBvR3Y2SO+5xgdIn5bcmsCfg280W5AEfT56V+AS64xE1nnPqslhiMBKU6vXjzg
+ Vm9upFAC4Tf7c5rdiLZLUtSwS4CT7HrApcjPLwBWPzmXm0xyZ7Qupx/Mj4r6cF6TzDow
+ a3UaxxBJ5bpYhGGMnS7jFGthxuTBQuBsssnBbrenCBHCH/Et85fbjcEKNSrAglE37f8V
+ DsYkQYq+L2jVQ/LaPIrvaFJCCBWj1Tc4T5O8DL1j4NHrZCHZ311Cx3mIm4gj/tQ7jMoq
+ l7CSrnyfGKlzk632ibzwzvCWilSyOlyQjKfUx3j0GhJu+jW+le1mlPMvecEvK+Z+etVy
+ CA8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVaZSSlx5rvApSzN/5ducWLWjfW+zbMI0BTTCUhIi/R8xn3ncLVsUKkkBKDMmaXZEKWnswY+LOY9wGwDrXXfXw49s1KHXM=
-X-Gm-Message-State: AOJu0Yyn3u10ekP2ALoxLPH8iYZ/Z33ps0YjqpM/ZWKBbFupHrqBItrt
- Pf1gYuD1MHzse6VF7iWZcx6JRXKABKDrtsTagArBnnBJ5nGkVnL+6BzzlGzA4UBn+mfo255Ywo8
- o
-X-Google-Smtp-Source: AGHT+IGvQtVYMjPtz0nu7w+Rs53Ah8dJIWxGt8kzNo/5lumlaj5IvG4cvdcCSZ3muG+7M/n2+xb0Gw==
-X-Received: by 2002:a17:906:eceb:b0:a51:bca7:3a93 with SMTP id
- qt11-20020a170906eceb00b00a51bca73a93mr3270997ejb.28.1712567848311; 
- Mon, 08 Apr 2024 02:17:28 -0700 (PDT)
+ AJvYcCUS2Zk6Vyxe9S/gaUPQQQUBskCRZf56/UH6llZh/cAehbmhkLcSs6ziD1HKxF/3RXgbBlgMDrsw8fjRaKxCz35bs41gN/o=
+X-Gm-Message-State: AOJu0Yy8L8+fdmNzWBM5BPyfbooXzrjdF/uwQHuhXCeeSzNSATYevnds
+ ML1qWVPxlyu+WBl5Llj168r3OU9h7ts0rkg9wtDvIaCsVjdkOaFGWFcCCyJyk5A=
+X-Google-Smtp-Source: AGHT+IEnDCDsk3GhjQra+3Ep9Ort0Zqt7mVpygFX63mIcJC/COrcJ9TY/edny80HJNhSs1ZEk/humg==
+X-Received: by 2002:a05:600c:4e90:b0:416:3f85:d49 with SMTP id
+ f16-20020a05600c4e9000b004163f850d49mr4688499wmq.18.1712568911740; 
+ Mon, 08 Apr 2024 02:35:11 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- jz8-20020a17090775e800b00a4672fb2a03sm4266768ejc.10.2024.04.08.02.17.27
+ n5-20020a5d5985000000b00345a5183f01sm2621162wri.108.2024.04.08.02.35.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Apr 2024 02:17:27 -0700 (PDT)
-Message-ID: <52a52836-f875-4cb6-8200-bf142d3a6a04@linaro.org>
-Date: Mon, 8 Apr 2024 11:17:26 +0200
+ Mon, 08 Apr 2024 02:35:11 -0700 (PDT)
+Message-ID: <feb6202e-5e27-4a3b-b281-2d3a9eb5f58a@linaro.org>
+Date: Mon, 8 Apr 2024 11:35:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hcd-ohci: Fix inconsistency when resetting ohci root hubs
-To: Qiang Liu <cyruscyliu@gmail.com>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-References: <20220830033022.1164961-1-cyruscyliu@gmail.com>
+Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
+To: Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-stable@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Giuseppe_Ghib=C3=B2?= <ghibo@mageia.org>
+References: <20240311075806.668555-1-pbonzini@redhat.com>
+ <2f0eefc5-8907-4af7-b717-17e17a9a3019@tls.msk.ru>
+ <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20220830033022.1164961-1-cyruscyliu@gmail.com>
+In-Reply-To: <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,42 +100,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/8/22 05:30, Qiang Liu wrote:
-> I found an assertion failure in usb_cancel_packet() and posted my analysis in
-> https://gitlab.com/qemu-project/qemu/-/issues/1180. I think this issue is
-> because the inconsistency when resetting ohci root hubs.
+On 5/4/24 19:30, Michael Tokarev wrote:
+> 01.04.2024 09:02, Michael Tokarev:
 > 
-> There are two ways to reset ohci root hubs: 1) through HcRhPortStatus, 2)
-> through HcControl. However, when the packet's status is USB_PACKET_ASYNC,
-> resetting through HcRhPortStatus will complete the packet and thus resetting
-> through HcControl will fail. That is because IMO resetting through
-> HcRhPortStatus should first detach the port and then invoked usb_device_reset()
-> just like through HcControl. Therefore, I change usb_device_reset() to
-> usb_port_reset() where usb_detach() and usb_device_reset() are invoked
-> consequently.
+>> Anyone can guess why this rather trivial and obviously correct patch 
+>> causes segfaults
+>> in a few tests in staging-7.2 - when run in tcg mode, namely:
+>>
+>>    pxe-test
+>>    migration-test
+>>    boot-serial-test
+>>    bios-tables-test
+>>    vmgenid-test
+>>    cdrom-test
+>>
+>> When reverting this single commit from staging-7.2, it all works fine 
+>> again.
 > 
-> Fixes: d28f4e2d8631 ("usb: kill USB_MSG_RESET")
-> Reported-by: Qiang Liu <cyruscyliu@gmail.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1180
-> Signed-off-by: Qiang Liu <cyruscyliu@gmail.com>
-> ---
->   hw/usb/hcd-ohci.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> It sigsegvs in probe_access_internal():
 > 
-> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index 895b29fb86..72df917834 100644
-> --- a/hw/usb/hcd-ohci.c
-> +++ b/hw/usb/hcd-ohci.c
-> @@ -1426,7 +1426,7 @@ static void ohci_port_set_status(OHCIState *ohci, int portnum, uint32_t val)
->   
->       if (ohci_port_set_if_connected(ohci, portnum, val & OHCI_PORT_PRS)) {
->           trace_usb_ohci_port_reset(portnum);
-> -        usb_device_reset(port->port.dev);
-> +        usb_port_reset(&port->port);
->           port->ctrl &= ~OHCI_PORT_PRS;
->           /* ??? Should this also set OHCI_PORT_PESC.  */
->           port->ctrl |= OHCI_PORT_PES | OHCI_PORT_PRSC;
+>    CPUTLBEntry *entry = tlb_entry(env, mmu_idx, addr); -- this one 
+> returns NULL,
+> 
+> and next there's a call
+> 
+>    tlb_addr = tlb_read_ofs(entry, elt_ofs);
+> 
+> which fails.
+> 
+> #0  0x0000555555c5de8a in tlb_read_ofs (ofs=8, entry=0x0) at 
+> 7.2/accel/tcg/cputlb.c:1455
+> #1  probe_access_internal
+>      (env=0x555556a862a0, addr=4294967280, 
+> fault_size=fault_size@entry=1, 
+> access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=5, 
+> nonfault=nonfault@entry=false, phost=0x7fffea4d32a0, 
+> pfull=0x7fffea4d3298, retaddr=0)
+>      at 7.2/accel/tcg/cputlb.c:1555
+> #2  0x0000555555c62aba in get_page_addr_code_hostp
+>      (env=<optimized out>, addr=addr@entry=4294967280, 
+> hostp=hostp@entry=0x0)
+>      at 7.2/accel/tcg/cputlb.c:1691
+> #3  0x0000555555c52b54 in get_page_addr_code (addr=4294967280, 
+> env=<optimized out>)
+>      at 7.2/include/exec/exec-all.h:714
+> #4  tb_htable_lookup
+>      (cpu=cpu@entry=0x555556a85530, pc=pc@entry=4294967280, 
+> cs_base=cs_base@entry=4294901760, flags=flags@entry=64, 
+> cflags=cflags@entry=4278190080) at 7.2/accel/tcg/cpu-exec.c:236
+> #5  0x0000555555c53e8e in tb_lookup
+>      (cflags=4278190080, flags=64, cs_base=4294901760, pc=4294967280, 
+> cpu=0x555556a85530)
+>      at 7.2/accel/tcg/cpu-exec.c:270
+> #6  cpu_exec (cpu=cpu@entry=0x555556a85530) at 
+> 7.2/accel/tcg/cpu-exec.c:1001
+> #7  0x0000555555c75d2f in tcg_cpus_exec (cpu=cpu@entry=0x555556a85530)
+>      at 7.2/accel/tcg/tcg-accel-ops.c:69
+> #8  0x0000555555c75e80 in mttcg_cpu_thread_fn 
+> (arg=arg@entry=0x555556a85530)
+>      at 7.2/accel/tcg/tcg-accel-ops-mttcg.c:95
+> #9  0x0000555555ded098 in qemu_thread_start (args=0x555556adac40)
+>      at 7.2/util/qemu-thread-posix.c:505
+> #10 0x00007ffff5793134 in start_thread (arg=<optimized out>)
+> #11 0x00007ffff58137dc in clone3 ()
+> 
+> 
+> I'm removing this whole set from 7.2 for now:
+> 
+>   2cc68629a6fc target/i386: fix direction of "32-bit MMU" test
+>   90f641531c78 target/i386: use separate MMU indexes for 32-bit accesses
+>   5f97afe2543f target/i386: introduce function to query MMU indices
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc'ing Giuseppe Ghibò for
+https://gitlab.com/qemu-project/qemu/-/issues/2264
+
+> This leaves us with
+> 
+>   b1661801c184 "target/i386: Fix physical address truncation"
+> 
+> but without its fix, 2cc68629a6fc.
+> 
+> It looks like I should revert b1661801c184 from 7.2 too, re-opening
+> https://gitlab.com/qemu-project/qemu/-/issues/2040 - since to me it isn't
+> clear if this change actually fixes this issue or not without the
+> previous change, 90f641531c78, which is missing from 7.2.10.
+> 
+> At the very least this will simplify possible another attempt to 
+> cherry-pick
+> these changes to 7.2.
+> 
+> Thanks,
+> 
+> /mjt
+> 
 
 
