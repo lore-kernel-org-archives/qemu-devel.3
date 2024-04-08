@@ -4,60 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B2DDC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01A7C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 08:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtkeU-00023k-UJ; Mon, 08 Apr 2024 04:46:54 -0400
+	id 1rtkeG-0001kC-6m; Mon, 08 Apr 2024 04:46:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rtkeT-00021g-5O; Mon, 08 Apr 2024 04:46:53 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rtkeE-0001dI-7q
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:46:38 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rtkeQ-0004Ox-4p; Mon, 08 Apr 2024 04:46:52 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c16:1785:0:640:67c7:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 9E62060D54;
- Mon,  8 Apr 2024 11:46:41 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b483::1:2e] (unknown
- [2a02:6b8:b081:b483::1:2e])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id dkTLWS1ixSw0-dEDxd4uM; Mon, 08 Apr 2024 11:46:40 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1712566000;
- bh=1A+cGG1ekpqd0Tt02qlZg9ecDhNknK/ad1HbPTySeik=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QUmMXIAIlLONeuQMmGEK1C1ZvK/Nb8+NhIM43MhvJq91DHEAQYDPAR1LqwUV4IVYz
- I3R+TwQ/RDUqvl41joAI9TNgHyWAXnliRp3C3ffhKtSZjadrfRK1KhaOsGa8LDPxP7
- HlK6AtcthigSM9dkXWiHTyQiFKOObvBk/gbjqZoc=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <7c0f6e62-2ad5-44f5-a4b2-c1518ae86af2@yandex-team.ru>
-Date: Mon, 8 Apr 2024 11:46:39 +0300
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rtkeC-0004Mu-HO
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 04:46:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712565996; x=1744101996;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=flRYI8hlBU+mW5grayHqfg01LbC404dPjtoArd2qk8s=;
+ b=MLm2ZQpzn5AZ6YIo0iyiPHmfBim7YxyFVB/LcQqqotQ6k8cbXPW6CX9V
+ Jd9ys9CYrp46sTCBf4BUHmZAyevIIfMiw83toh8sGImfzuZOcdjLmwUzt
+ Kp+HRIAfPBDIdX1D5VBr99Uf2lxgSVM5hXXnZ7cCEoPNl5GQDBhW2yuu5
+ ysiPEJp11mxDeV9Kc8kpH4YV4ak+XjfZ0/y2O3o/yoIfu8VilZlu2AOJU
+ umfhwm5Vmcg0Y7+z3CgTjNIyEJpe+g41xRc4v6kc76aYUn4+TdzW4VVy8
+ Z5bvrxoGP7QLT1n2NmmGHvUUGMQ8su0uAxfAtf9sFLK8hKToTLT+Derp4 Q==;
+X-CSE-ConnectionGUID: N7pLhJR4TPSVGcT+mRXhNA==
+X-CSE-MsgGUID: qqwbGFKySNiT6mWwqHGHwg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11037"; a="19269471"
+X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="19269471"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Apr 2024 01:46:35 -0700
+X-CSE-ConnectionGUID: hQvSYEWOTAmiXTZQgt6MmA==
+X-CSE-MsgGUID: kRLFz5DtQKqCmRNbavtyeA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,186,1708416000"; d="scan'208";a="42985899"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
+ by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Apr 2024 01:46:31 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
+ yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 4/5] intel_iommu: Check for compatibility with legacy device
+Date: Mon,  8 Apr 2024 16:44:03 +0800
+Message-Id: <20240408084404.1111628-5-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240408084404.1111628-1-zhenzhong.duan@intel.com>
+References: <20240408084404.1111628-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] nbd/server: do not poll within a coroutine context
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Zhu Yangyang <zhuyangyang14@huawei.com>
-References: <20240405174523.844181-2-eblake@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240405174523.844181-2-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.12;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.355,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,223 +89,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.04.24 20:44, Eric Blake wrote:
-> From: Zhu Yangyang <zhuyangyang14@huawei.com>
-> 
-> Coroutines are not supposed to block. Instead, they should yield.
-> 
-> The client performs TLS upgrade outside of an AIOContext, during
-> synchronous handshake; this still requires g_main_loop.  But the
-> server responds to TLS upgrade inside a coroutine, so a nested
-> g_main_loop is wrong.  Since the two callbacks no longer share more
-> than the setting of data.complete and data.error, it's just as easy to
-> use static helpers instead of trying to share a common code path.
-> 
-> Fixes: f95910f ("nbd: implement TLS support in the protocol negotiation")
-> Signed-off-by: Zhu Yangyang <zhuyangyang14@huawei.com>
-> [eblake: move callbacks to their use point]
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+Currently only stage-2 translation is supported which is backed by
+shadow page table on host side. So we don't need exact matching of
+each bit of cap/ecap between vIOMMU and host. However, we can still
+ensure compatibility of host and vIOMMU's address width at least,
+i.e., vIOMMU's aw-bits <= host IOMMU aw-bits, which is missed before.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-still, some notes below
-
-> ---
-> 
-> v3: https://lists.gnu.org/archive/html/qemu-devel/2024-04/msg00375.html
-> 
-> in v4, factor even the struct to the .c files, avoiding a union [Vladimir]
-> 
->   nbd/nbd-internal.h | 10 ----------
->   nbd/client.c       | 27 +++++++++++++++++++++++----
->   nbd/common.c       | 11 -----------
->   nbd/server.c       | 29 +++++++++++++++++++++++------
->   4 files changed, 46 insertions(+), 31 deletions(-)
-> 
-> diff --git a/nbd/nbd-internal.h b/nbd/nbd-internal.h
-> index dfa02f77ee4..91895106a95 100644
-> --- a/nbd/nbd-internal.h
-> +++ b/nbd/nbd-internal.h
-> @@ -72,16 +72,6 @@ static inline int nbd_write(QIOChannel *ioc, const void *buffer, size_t size,
->       return qio_channel_write_all(ioc, buffer, size, errp) < 0 ? -EIO : 0;
->   }
-> 
-> -struct NBDTLSHandshakeData {
-> -    GMainLoop *loop;
-> -    bool complete;
-> -    Error *error;
-> -};
-> -
-> -
-> -void nbd_tls_handshake(QIOTask *task,
-> -                       void *opaque);
-> -
->   int nbd_drop(QIOChannel *ioc, size_t size, Error **errp);
-> 
->   #endif
-> diff --git a/nbd/client.c b/nbd/client.c
-> index 29ffc609a4b..c7141d7a098 100644
-> --- a/nbd/client.c
-> +++ b/nbd/client.c
-> @@ -596,13 +596,31 @@ static int nbd_request_simple_option(QIOChannel *ioc, int opt, bool strict,
->       return 1;
->   }
-> 
-> +/* Callback to learn when QIO TLS upgrade is complete */
-> +struct NBDTLSClientHandshakeData {
-> +    bool complete;
-> +    Error *error;
-> +    GMainLoop *loop;
-> +};
-> +
-> +static void nbd_client_tls_handshake(QIOTask *task, void *opaque)
-> +{
-> +    struct NBDTLSClientHandshakeData *data = opaque;
-> +
-> +    qio_task_propagate_error(task, &data->error);
-> +    data->complete = true;
-> +    if (data->loop) {
-> +        g_main_loop_quit(data->loop);
-> +    }
-> +}
-> +
->   static QIOChannel *nbd_receive_starttls(QIOChannel *ioc,
->                                           QCryptoTLSCreds *tlscreds,
->                                           const char *hostname, Error **errp)
->   {
->       int ret;
->       QIOChannelTLS *tioc;
-> -    struct NBDTLSHandshakeData data = { 0 };
-> +    struct NBDTLSClientHandshakeData data = { 0 };
-> 
->       ret = nbd_request_simple_option(ioc, NBD_OPT_STARTTLS, true, errp);
->       if (ret <= 0) {
-> @@ -619,18 +637,19 @@ static QIOChannel *nbd_receive_starttls(QIOChannel *ioc,
->           return NULL;
->       }
->       qio_channel_set_name(QIO_CHANNEL(tioc), "nbd-client-tls");
-> -    data.loop = g_main_loop_new(g_main_context_default(), FALSE);
->       trace_nbd_receive_starttls_tls_handshake();
->       qio_channel_tls_handshake(tioc,
-> -                              nbd_tls_handshake,
-> +                              nbd_client_tls_handshake,
->                                 &data,
->                                 NULL,
->                                 NULL);
-> 
->       if (!data.complete) {
-> +        data.loop = g_main_loop_new(g_main_context_default(), FALSE);
->           g_main_loop_run(data.loop);
-> +        g_main_loop_unref(data.loop);
-
-probably good to assert(data.complete);
-
->       }
-> -    g_main_loop_unref(data.loop);
-> +
->       if (data.error) {
->           error_propagate(errp, data.error);
->           object_unref(OBJECT(tioc));
-> diff --git a/nbd/common.c b/nbd/common.c
-> index 3247c1d618a..589a748cfe6 100644
-> --- a/nbd/common.c
-> +++ b/nbd/common.c
-> @@ -47,17 +47,6 @@ int nbd_drop(QIOChannel *ioc, size_t size, Error **errp)
->   }
-> 
-> 
-> -void nbd_tls_handshake(QIOTask *task,
-> -                       void *opaque)
-> -{
-> -    struct NBDTLSHandshakeData *data = opaque;
-> -
-> -    qio_task_propagate_error(task, &data->error);
-> -    data->complete = true;
-> -    g_main_loop_quit(data->loop);
-> -}
-> -
-> -
->   const char *nbd_opt_lookup(uint32_t opt)
->   {
->       switch (opt) {
-> diff --git a/nbd/server.c b/nbd/server.c
-> index c3484cc1ebc..ea13cf0e766 100644
-> --- a/nbd/server.c
-> +++ b/nbd/server.c
-> @@ -748,6 +748,23 @@ static int nbd_negotiate_handle_info(NBDClient *client, Error **errp)
->       return rc;
->   }
-> 
-> +/* Callback to learn when QIO TLS upgrade is complete */
-> +struct NBDTLSServerHandshakeData {
-> +    bool complete;
-> +    Error *error;
-> +    Coroutine *co;
-> +};
-> +
-> +static void nbd_server_tls_handshake(QIOTask *task, void *opaque)
-> +{
-> +    struct NBDTLSServerHandshakeData *data = opaque;
-> +
-> +    qio_task_propagate_error(task, &data->error);
-> +    data->complete = true;
-> +    if (!qemu_coroutine_entered(data->co)) {
-> +        aio_co_wake(data->co);
-> +    }
-> +}
-> 
->   /* Handle NBD_OPT_STARTTLS. Return NULL to drop connection, or else the
->    * new channel for all further (now-encrypted) communication. */
-> @@ -756,7 +773,7 @@ static QIOChannel *nbd_negotiate_handle_starttls(NBDClient *client,
->   {
->       QIOChannel *ioc;
->       QIOChannelTLS *tioc;
-> -    struct NBDTLSHandshakeData data = { 0 };
-> +    struct NBDTLSServerHandshakeData data = { 0 };
-> 
->       assert(client->opt == NBD_OPT_STARTTLS);
-> 
-> @@ -777,17 +794,17 @@ static QIOChannel *nbd_negotiate_handle_starttls(NBDClient *client,
-
-preexisting: lack coroutine_fn, as well as caller nbd_negotiate_options()
-
-> 
->       qio_channel_set_name(QIO_CHANNEL(tioc), "nbd-server-tls");
->       trace_nbd_negotiate_handle_starttls_handshake();
-> -    data.loop = g_main_loop_new(g_main_context_default(), FALSE);
-> +    data.co = qemu_coroutine_self();
->       qio_channel_tls_handshake(tioc,
-> -                              nbd_tls_handshake,
-> +                              nbd_server_tls_handshake,
->                                 &data,
->                                 NULL,
->                                 NULL);
-> 
-> -    if (!data.complete) {
-> -        g_main_loop_run(data.loop);
-> +    while (!data.complete) {
-
-not "if", but "while".. Do we expect entering from somewhere except nbd_server_tls_handshake?
-
-if not, probably safer construction would be
-
-if (!data.complete) {
-    qemu_coroutine_yield();
-    assert(data.complete);
-}
-
-- to avoid hiding unexpected coroutine switching bugs
-
-> +        qemu_coroutine_yield();
->       }
-> -    g_main_loop_unref(data.loop);
-> +
->       if (data.error) {
->           object_unref(OBJECT(tioc));
->           error_propagate(errp, data.error);
-
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index a49b587c73..d2cd186df0 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3824,6 +3824,21 @@ static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+                                  HostIOMMUDevice *hiod,
+                                  Error **errp)
+ {
++    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
++    HIOD_LEGACY_INFO info;
++    int ret;
++
++    ret = hiodc->get_host_iommu_info(hiod, &info, sizeof(info), errp);
++    if (ret) {
++        return ret;
++    }
++
++    if (s->aw_bits > info.aw_bits) {
++        error_setg(errp, "aw-bits %d > host aw-bits %d",
++                   s->aw_bits, info.aw_bits);
++        return -EINVAL;
++    }
++
+     return 0;
+ }
+ 
 -- 
-Best regards,
-Vladimir
+2.34.1
 
 
