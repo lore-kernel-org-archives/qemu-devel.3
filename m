@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E866CC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 21:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E3ACD1292
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 22:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtwdA-000560-Ju; Mon, 08 Apr 2024 17:34:20 -0400
+	id 1rtx7F-0004pY-Gf; Mon, 08 Apr 2024 18:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtwd8-00055k-1Z
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 17:34:18 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtx7E-0004oi-07
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:05:24 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtwcx-0007SP-GH
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 17:34:17 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2d82713f473so85329891fa.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 14:34:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtx7B-0003Z3-8V
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 18:05:23 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4165caf9b2dso17038745e9.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 15:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712612045; x=1713216845; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WfWENAfLLAnvYi1zd6uTHY+RjswkFjXZGx8wC+ulaF4=;
- b=cKE4xIkCMLi/DUe2JRHxYvQ7fFmdEHhEw2WGYWgLMzuGqe34BH/OeOruAm7ctykWoE
- T5QxDfuzN3dzEJuuolYqVgj2BHoo4n86rTxGrloTiUh2f+nHkHuTp4xPqBY+6Qxwkb0E
- eKnny/0AMeRV1j27Or6jr95mFJo0tj+K5wJs0Qi/2ysDxfHKf8O+wMhBE5oTwAQyfioU
- uRJMlTtFzc3cBfZvYmxCvRhHRLcdHpNib60UOcYrdNl2ZKemmKqeFuEl67yL5iAbOHKD
- HU03G8FE8IbvdtaPrE4iZoI1RVuf+YTKM7RPD17+1VmNlwHZ4wiqhADrY75LCOPiEVYJ
- Rs6w==
+ d=linaro.org; s=google; t=1712613919; x=1713218719; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hgklZCSMJzVwztwZf9i4cyoWfITG4nxFgImb0mPq6lo=;
+ b=VDBsffeUA1jtPy+VqNDjdzuhOEtd0A+817NQaUR9Uf2GKoOAYYfFiQ1nREFCRrVd06
+ l8nMoJ6k0E850xoWH5r6wa+Y9ED3wfmsHWH7Vpyfoqb4oVW5aFcPHdV3udaoLx0n+Ogt
+ +xkHU52/rdY0ryl0Fp49M6iCVdH9wHB0gGcdZDAgBp852Muwgya4rDUqRAiHL7GbxamX
+ 4/3vQ8PFsAc0lneID22N6RCNuEu2/5dsgdcmdRU3z1lct9lE6eR0no2NvhCgGQh21wai
+ +bzHu+oLwtSUMm9Gc3gVI+hum1g8NmkhAgjr+MAY2frZ1/SAVza4u2UFcBuKVhRumMmK
+ wzDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712612045; x=1713216845;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WfWENAfLLAnvYi1zd6uTHY+RjswkFjXZGx8wC+ulaF4=;
- b=etefRTR3wr/M6Uad038zN7DmF0l4fOLmru0d6Y200kv28PGk04TErzgzzwf9cNfMvD
- 2w3+bHSsIdFN2sEFYYJQNMWdqDMY7sMzw54w5gEYO9GHY0G5nCKLaxTwjgly/H5+QIXy
- Y0T+CWadDSo5k8VAwBF1EhWDvdK2rndalZPfQeRZmMhUPmQHStxCrjrXerJwRI7Dk/lU
- K0YPnk7Sswz/HvPVHtkXPfjphjzvFAnK5H659kIKiZBtRoz4isenQxyxQsKT+qoyfcoW
- cbOk7QuXDMkd4H5FswTJ4cy1Yo5KDQI6AKcvfa9ZtqG79Wh5hpO/hhm6d/ae+7AV9ouX
- r20w==
-X-Gm-Message-State: AOJu0Yyu8mad8P/BSi2XwB8EJnUrBflF6Zs7tbhfEUR+JMKD3qGSzx6r
- k641v4f6UCX1IsVQSKfhN0uUO0Z8SbUyNvI7wIBOLAgmy9veQxJvFHgXm8Ggr72GCqdChp2/0B4
- 2
-X-Google-Smtp-Source: AGHT+IHHpfU6fle4vmN3TmX98Z3JFGqBZbKMy4nbGz2JB++MvNuUkVW+fago0MOIQrI45Ry+8UKEhw==
-X-Received: by 2002:a2e:918e:0:b0:2d6:87d7:601 with SMTP id
- f14-20020a2e918e000000b002d687d70601mr8586212ljg.9.1712612044963; 
- Mon, 08 Apr 2024 14:34:04 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.144.67])
+ d=1e100.net; s=20230601; t=1712613919; x=1713218719;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hgklZCSMJzVwztwZf9i4cyoWfITG4nxFgImb0mPq6lo=;
+ b=kWMcuCu7hzwXHtJNVXs8EN0CijdTzPpVxdcIql4eYF5+VmZpyiXJrFNzGhKSUaz6Yu
+ BJoEm/kZdT/dXXdXUMC0/bsPPq9j6yWqsd0X1k205KAmZ/Mr6IyKJrAUTtcuesPlSfsr
+ /KTp5Iytzo8zsaVbsXX/srdHofKdgK3qRkcTwL/zA07EZxpb3IFkuzp4FkudhNahswup
+ 4dit+ToLZzkJCIbMTkBanynWph5Ea/5Uxn7zWXKM/SNG4NKM/RLdbakqINHWrvN9x+kb
+ wg14T+UQqy3PYjL88cicrnDvygFn7It/0KS/ueOQR2icx9EWPOL+QbjUORk1xvYw7F2y
+ Chdg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvaPWpXVzowiItcwhkg9r/RFnG2Vpk1h5n2HfaR/mAfgSNNeCSTR0lP/LbCXHUeDXzKpxGTqAapqCSVI1quCZFeLJbdx4=
+X-Gm-Message-State: AOJu0YyX3fd5/A8hsDV+2oB682LCTFocX3stzKFYd4aNm5uEi1gheaZB
+ r2WTlpGvYNR3ajd3mUd8W8hn1nwm1bNbPRObwPWwcML2JnlcSfCP1LR7t/z2Yyk=
+X-Google-Smtp-Source: AGHT+IFNkt6M0VOtxXhbyp4ZVyQ5YhCzVh2FkKcvStVrpb4+ZrHTHsSt3gVgUhHJwtdK6mE0/PmxXw==
+X-Received: by 2002:a5d:6105:0:b0:33d:73de:cd95 with SMTP id
+ v5-20020a5d6105000000b0033d73decd95mr9096553wrt.17.1712613919463; 
+ Mon, 08 Apr 2024 15:05:19 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- ov7-20020a170906fc0700b00a4e44f724e8sm4844136ejb.186.2024.04.08.14.34.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Apr 2024 14:34:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Corey Minyard <cminyard@mvista.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1 4/4] hw/i2c: Convert to spec v7 terminology
- (manually)
-Date: Mon,  8 Apr 2024 23:33:38 +0200
-Message-ID: <20240408213339.83149-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240408213339.83149-1-philmd@linaro.org>
-References: <20240408213339.83149-1-philmd@linaro.org>
+ n6-20020a5d6606000000b0033e745b8bcfsm9894161wru.88.2024.04.08.15.05.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Apr 2024 15:05:18 -0700 (PDT)
+Message-ID: <ee492ca9-4d79-4de1-98da-8df9230ca5af@linaro.org>
+Date: Tue, 9 Apr 2024 00:05:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.0? 3/3] hw/block/nand: Fix out-of-bound access in
+ NAND block buffer
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Qiang Liu <cyruscyliu@gmail.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+References: <20240408083605.55238-1-philmd@linaro.org>
+ <20240408083605.55238-4-philmd@linaro.org>
+ <d610c2d2-3576-4ca2-a2b9-4f9a5390e3d3@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <d610c2d2-3576-4ca2-a2b9-4f9a5390e3d3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,191 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-See previous commit for rationale.
+On 8/4/24 18:39, Richard Henderson wrote:
+> On 4/7/24 22:36, Philippe Mathieu-Daudé wrote:
+>> nand_command() and nand_getio() don't check @offset points
+>> into the block, nor the available data length (s->iolen) is
+>> not negative.
+>>
+>> In order to fix:
+>>
+>> - check the offset is in range in nand_blk_load_NAND_PAGE_SIZE(),
+>> - do not set @iolen if blk_load() failed.
+> 
+> Do not set, or do not set to non-zero?  I had been wondering if the 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/i2c/i2c.h | 52 ++++++++++++++++++++++----------------------
- hw/i2c/core.c        |  2 +-
- 2 files changed, 27 insertions(+), 27 deletions(-)
+Oh, "do not set to non-zero", thanks :)
 
-diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-index fa00098477..abefee78fd 100644
---- a/include/hw/i2c/i2c.h
-+++ b/include/hw/i2c/i2c.h
-@@ -6,8 +6,8 @@
- 
- /*
-  * The QEMU I2C implementation only supports simple transfers that complete
-- * immediately.  It does not support slave devices that need to be able to
-- * defer their response (eg. CPU slave interfaces where the data is supplied
-+ * immediately.  It does not support target devices that need to be able to
-+ * defer their response (eg. CPU target interfaces where the data is supplied
-  * by the device driver in response to an interrupt).
-  */
- 
-@@ -28,23 +28,23 @@ OBJECT_DECLARE_TYPE(I2CTarget, I2CTargetClass,
- struct I2CTargetClass {
-     DeviceClass parent_class;
- 
--    /* Master to slave. Returns non-zero for a NAK, 0 for success. */
-+    /* Controller to target. Returns non-zero for a NAK, 0 for success. */
-     int (*send)(I2CTarget *s, uint8_t data);
- 
-     /*
--     * Master to slave (asynchronous).
--     * Receiving slave must call i2c_ack().
-+     * Controller to target (asynchronous).
-+     * Receiving target must call i2c_ack().
-      */
-     void (*send_async)(I2CTarget *s, uint8_t data);
- 
-     /*
--     * Slave to master.  This cannot fail, the device should always
-+     * Target to controller.  This cannot fail, the device should always
-      * return something here.
-      */
-     uint8_t (*recv)(I2CTarget *s);
- 
-     /*
--     * Notify the slave of a bus state change.  For start event,
-+     * Notify the target of a bus state change.  For start event,
-      * returns non-zero to NAK an operation.  For other events the
-      * return code is not used and should be zero.
-      */
-@@ -96,7 +96,7 @@ struct I2CBus {
-     uint8_t saved_address;
-     bool broadcast;
- 
--    /* Set from slave currently mastering the bus. */
-+    /* Set from target currently controlling the bus. */
-     QEMUBH *bh;
- };
- 
-@@ -107,7 +107,7 @@ int i2c_bus_busy(I2CBus *bus);
-  * i2c_start_transfer: start a transfer on an I2C bus.
-  *
-  * @bus: #I2CBus to be used
-- * @address: address of the slave
-+ * @address: address of the target
-  * @is_recv: indicates the transfer direction
-  *
-  * When @is_recv is a known boolean constant, use the
-@@ -121,7 +121,7 @@ int i2c_start_transfer(I2CBus *bus, uint8_t address, bool is_recv);
-  * i2c_start_recv: start a 'receive' transfer on an I2C bus.
-  *
-  * @bus: #I2CBus to be used
-- * @address: address of the slave
-+ * @address: address of the target
-  *
-  * Returns: 0 on success, -1 on error
-  */
-@@ -131,7 +131,7 @@ int i2c_start_recv(I2CBus *bus, uint8_t address);
-  * i2c_start_send: start a 'send' transfer on an I2C bus.
-  *
-  * @bus: #I2CBus to be used
-- * @address: address of the slave
-+ * @address: address of the target
-  *
-  * Returns: 0 on success, -1 on error
-  */
-@@ -141,7 +141,7 @@ int i2c_start_send(I2CBus *bus, uint8_t address);
-  * i2c_start_send_async: start an asynchronous 'send' transfer on an I2C bus.
-  *
-  * @bus: #I2CBus to be used
-- * @address: address of the slave
-+ * @address: address of the target
-  *
-  * Return: 0 on success, -1 on error
-  */
-@@ -161,9 +161,9 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
-                   I2CNodeList *current_devs);
- 
- /**
-- * Create an I2C slave device on the heap.
-+ * Create an I2C target device on the heap.
-  * @name: a device type name
-- * @addr: I2C address of the slave when put on a bus
-+ * @addr: I2C address of the target when put on a bus
-  *
-  * This only initializes the device state structure and allows
-  * properties to be set. Type @name must exist. The device still
-@@ -172,10 +172,10 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
- I2CTarget *i2c_target_new(const char *name, uint8_t addr);
- 
- /**
-- * Create and realize an I2C slave device on the heap.
-+ * Create and realize an I2C target device on the heap.
-  * @bus: I2C bus to put it on
-- * @name: I2C slave device type name
-- * @addr: I2C address of the slave when put on a bus
-+ * @name: I2C target device type name
-+ * @addr: I2C address of the target when put on a bus
-  *
-  * Create the device state structure, initialize it, put it on the
-  * specified @bus, and drop the reference to it (the device is realized).
-@@ -184,10 +184,10 @@ I2CTarget *i2c_target_create_simple(I2CBus *bus,
-                                     const char *name, uint8_t addr);
- 
- /**
-- * Realize and drop a reference an I2C slave device
-- * @dev: I2C slave device to realize
-+ * Realize and drop a reference an I2C target device
-+ * @dev: I2C target device to realize
-  * @bus: I2C bus to put it on
-- * @addr: I2C address of the slave on the bus
-+ * @addr: I2C address of the target on the bus
-  * @errp: pointer to NULL initialized error object
-  *
-  * Returns: %true on success, %false on failure.
-@@ -196,27 +196,27 @@ I2CTarget *i2c_target_create_simple(I2CBus *bus,
-  * reference to it.
-  *
-  * This function is useful if you have created @dev via qdev_new(),
-- * i2c_target_new() or i2c_slave_try_new() (which take a reference to
-+ * i2c_target_new() or i2c_target_try_new() (which take a reference to
-  * the device it returns to you), so that you can set properties on it
-  * before realizing it. If you don't need to set properties then
-  * i2c_target_create_simple() is probably better (as it does the create,
-  * init and realize in one step).
-  *
-- * If you are embedding the I2C slave into another QOM device and
-+ * If you are embedding the I2C target into another QOM device and
-  * initialized it via some variant on object_initialize_child() then
-  * do not use this function, because that family of functions arrange
-  * for the only reference to the child device to be held by the parent
-  * via the child<> property, and so the reference-count-drop done here
-- * would be incorrect.  (Instead you would want i2c_slave_realize(),
-+ * would be incorrect.  (Instead you would want i2c_target_realize(),
-  * which doesn't currently exist but would be trivial to create if we
-  * had any code that wanted it.)
-  */
- bool i2c_target_realize_and_unref(I2CTarget *dev, I2CBus *bus, Error **errp);
- 
- /**
-- * Set the I2C bus address of a slave device
-- * @dev: I2C slave device
-- * @address: I2C address of the slave when put on a bus
-+ * Set the I2C bus address of a target device
-+ * @dev: I2C target device
-+ * @address: I2C address of the target when put on a bus
-  */
- void i2c_target_set_address(I2CTarget *dev, uint8_t address);
- 
-diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-index fd34a6bc83..a8d12cae4e 100644
---- a/hw/i2c/core.c
-+++ b/hw/i2c/core.c
-@@ -103,7 +103,7 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
-     return broadcast;
- }
- 
--/* TODO: Make this handle multiple masters.  */
-+/* TODO: Make this handle multiple controllers.  */
- /*
-  * Start or continue an i2c transaction.  When this is called for the
-  * first time or after an i2c_end_transfer(), if it returns an error
--- 
-2.41.0
+> final assignment to s->iolen should go into nand_load_block as well...
+
+For the next tag I rather keep it this way which seems more
+explicit to me.
+
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Thanks!
 
 
