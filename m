@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2356EC67861
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 06:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6578ECD128A
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 06:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rti9m-00047R-Hb; Mon, 08 Apr 2024 02:07:02 -0400
+	id 1rtiA0-0004Ae-R1; Mon, 08 Apr 2024 02:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rti9l-00047I-Bh
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:07:01 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rti9y-00049u-JG
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:07:14 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rti9j-0005gD-OI
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:07:01 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56e69a51a33so22517a12.1
- for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 23:06:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rti9x-0005gg-6I
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:07:14 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a51c8274403so132869066b.1
+ for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 23:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712556418; x=1713161218; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712556431; x=1713161231; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=U4u6I5ikWwAhYL5pVzxgdlTz1Ydp99kIUbV3XEzi3iQ=;
- b=bYTlGDOIb2xVNI5p85JXOi8BJmy6gso8K3dQmO3Wr+MPFORcZUQpWP4hdqV4NnPes1
- aKpPK8A+ESoIxpQLjv2yRQ/IJ91El3+lLU7OZDCqwCFmIMYl1DiuCTAplGGcTXK1lgGa
- lBrSw9XvB+nW1k81aIxfy5X6p7OpdnCnp/mH7+gX2sTLLPTJmaLW+vL1AD1z5WfvsJu3
- qYnIzW1a5DiOGQrIh2nlcRNzGofkHMWnFvRXlIF/SwvoHAu/TrPT3xIMtWozZNLjER8x
- 3fmRAxt38Wp4zwxQ/jM0AtjScNQsCJYawQ+xz4FDAPP7tMJXU0nHCr65Pvrc/Qa1KRpP
- YeWA==
+ bh=PrNGz3fFUSXNpSclLhBqxoUlkGc8I5y+gs9scffpAY4=;
+ b=iZ346rHLeZj85jpOyS8rOhmzUdfOjcQNg4XSL1/DrJcVqjS1AJQKGUhXNM4wC+46Cx
+ R/p6c2fahJvMv1bBfvXKx2PzqYBBsY93XjguNlKnnMRM8VT7YUr4YLmWUnSR+2tGJcV3
+ j4aDDXzFwq/RqHemGKFS3J6fPBW6HUjkF3RgFg2h6utCitopbQRpVNp4gCfwGwDhDvgp
+ 0X3B2WG+TfPESYwS3CIO8Ne0O9KIFqpqWpj3P3NsaIVBY62nF3IE67HnKjX0Hgv+40Fc
+ ecO9j4Dq/gAnNSQsixyRfzMFQS+cy+4LfC8MnKPUibiutErDlcmuoBBWlF9PdTmJhFdn
+ cMXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712556418; x=1713161218;
+ d=1e100.net; s=20230601; t=1712556431; x=1713161231;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U4u6I5ikWwAhYL5pVzxgdlTz1Ydp99kIUbV3XEzi3iQ=;
- b=N5bciikqoZhI7+VazKeniVUYc3rfYnFdj6L4x1Jn6PXVu+kbk1iBMFAFSXK+uJM6ZD
- ZNWQ+IMAmXSeADp1gzagJ1DOx+KXAUZmXK3l4h84nTu1AQeQGFj5ymJTRTHBj+3C5La/
- uSAy1gDyB9E1lEXKh9+9V062JuUK6PInCNvtkFIFScqhJjekdIzInerII8xxIpqdjig7
- uFJ564/ggj7/0ghXTGNrkXzkYeMaQjcvxhBwnKhkMlt+0Kb/f96rOIf1n+Q11A/7Ox1A
- nZt2LRUQMnUKF5IUyyBN/ADw9A76yXrGBJm++KwCvj6FGG/jopt5+p9xAwJVSoEmKqmo
- mLdQ==
+ bh=PrNGz3fFUSXNpSclLhBqxoUlkGc8I5y+gs9scffpAY4=;
+ b=TPmE/69KJXT3kwNmBjv1AcbbgS/65yU9+7vVDyz3GMdx04UkjdQKEiNKnmorU1Bb8t
+ EePc5ECoOFIR0jwJP1t7JKxyzB2xBxNwgGpxEdBTSJgTUgrxcSTxiM9cJmUUrmxfiSDG
+ BFsRiGTn4WUeTTxJyPttaWosN31xpe+nKg1b0iN65VsN08zDWkyS0VKuZC2vsKWFxkyS
+ Vgym6vUtpVR0NjmrtWqTZ4EaYii1DyEpavHFEjLLjhuLlKXcaA+gZX8eYx91nrJAb5mr
+ HBKqhOMiECgj9fIPIbvVd5VL4sebYNhWfoG62IDS//T2zAuG78PVg1LeUrx4qKDW/70Y
+ pznA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHOZ7F/XOxa/gxQIaKrzuOnkKVri39oTE+cKSCBH5YZyDKAxHxNI2TEwg0GyYwDSeSBhJYYWmqhEyEn37xf1o7+ZqaEFs=
-X-Gm-Message-State: AOJu0YzidfkXO61z/BIKBpv3XT7B3+AHKy862ZSI3bvTj597vNfIEFgg
- MxOl1hkzVT1rvVhnxZ+Bej51rBuYV8Q+9CqIqhFnYNftPB5W3zCeJo5NF7EPKBw=
-X-Google-Smtp-Source: AGHT+IGtVL8ZpXOytuLUhdIQ/GVzEKTELIGnFepkGSu81xXEuWHJfvpj7cgHWZCnrY857bQDELgPDQ==
-X-Received: by 2002:a50:c358:0:b0:56e:6d9:7bd6 with SMTP id
- q24-20020a50c358000000b0056e06d97bd6mr6919619edb.34.1712556417802; 
- Sun, 07 Apr 2024 23:06:57 -0700 (PDT)
+ AJvYcCULPBbVnGFY9yTKCXyx9907IZqGaR3uHbti4V/UWHCvD14J/HX8OMdBQXyWXGT7aSS+dU53J+OyoDxv1qWWDtCACNYYSg0=
+X-Gm-Message-State: AOJu0Yz38hVLc59xx9/M2fubUrvWfOAdHc8cNpLOfmU57dJ16J8JKgir
+ O244QofVgA8zcy/l/iBGkGVa6k1alOOzogJmuROTLZ+NJeOmUY8FFwC8u3wNoSs=
+X-Google-Smtp-Source: AGHT+IFE5bxuSyaggZOnxU2am6ubk5YisIjlaqtJEL7xfGPqBq3rIvXo0Sc/hja2jjAXmiWILqBb/A==
+X-Received: by 2002:a17:906:c10d:b0:a51:b19d:b1d with SMTP id
+ do13-20020a170906c10d00b00a51b19d0b1dmr4724672ejc.33.1712556431662; 
+ Sun, 07 Apr 2024 23:07:11 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- cn10-20020a0564020caa00b0056e68b14986sm118137edb.29.2024.04.07.23.06.56
+ xi1-20020a170906dac100b00a51d3785c7bsm1113761ejb.196.2024.04.07.23.07.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 07 Apr 2024 23:06:57 -0700 (PDT)
-Message-ID: <ab82ee74-ab22-4204-9ae6-fdc57696f254@linaro.org>
-Date: Mon, 8 Apr 2024 08:06:55 +0200
+ Sun, 07 Apr 2024 23:07:11 -0700 (PDT)
+Message-ID: <36a5d37e-495b-4164-9882-7a5586ea740a@linaro.org>
+Date: Mon, 8 Apr 2024 08:07:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] target/sh4: Fix mac.l with saturation enabled
+Subject: Re: [PATCH v3 2/4] target/sh4: Merge mach and macl into a union
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: zack@buhman.org, peter.maydell@linaro.org, ysato@users.sourceforge.jp
 References: <20240406053732.191398-1-richard.henderson@linaro.org>
- <20240406053732.191398-4-richard.henderson@linaro.org>
+ <20240406053732.191398-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240406053732.191398-4-richard.henderson@linaro.org>
+In-Reply-To: <20240406053732.191398-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,22 +97,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/4/24 07:37, Richard Henderson wrote:
-> From: Zack Buhman <zack@buhman.org>
+> Allow host access to the entire 64-bit accumulator.
 > 
-> The saturation arithmetic logic in helper_macl is not correct.
-> I tested and verified this behavior on a SH7091.
-> 
-> Signed-off-by: Zack Buhman <zack@buhman.org>
-> Message-Id: <20240404162641.27528-2-zack@buhman.org>
-> [rth: Reformat helper_macl, add a test case.]
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/sh4/helper.h           |  2 +-
->   target/sh4/op_helper.c        | 23 ++++++------
->   tests/tcg/sh4/test-macl.c     | 67 +++++++++++++++++++++++++++++++++++
->   tests/tcg/sh4/Makefile.target |  5 +++
->   4 files changed, 86 insertions(+), 11 deletions(-)
->   create mode 100644 tests/tcg/sh4/test-macl.c
+>   target/sh4/cpu.h | 14 ++++++++++++--
+>   1 file changed, 12 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
