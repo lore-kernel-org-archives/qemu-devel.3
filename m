@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6578ECD128A
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 06:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69959C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 06:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtiA0-0004Ae-R1; Mon, 08 Apr 2024 02:07:16 -0400
+	id 1rtiBP-0005M4-C2; Mon, 08 Apr 2024 02:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rti9y-00049u-JG
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:07:14 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtiBN-0005Lv-Ne
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:08:41 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rti9x-0005gg-6I
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:07:14 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a51c8274403so132869066b.1
- for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 23:07:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rtiBM-0005z3-1x
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 02:08:41 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a51a7dc45easo312075766b.2
+ for <qemu-devel@nongnu.org>; Sun, 07 Apr 2024 23:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712556431; x=1713161231; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712556518; x=1713161318; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PrNGz3fFUSXNpSclLhBqxoUlkGc8I5y+gs9scffpAY4=;
- b=iZ346rHLeZj85jpOyS8rOhmzUdfOjcQNg4XSL1/DrJcVqjS1AJQKGUhXNM4wC+46Cx
- R/p6c2fahJvMv1bBfvXKx2PzqYBBsY93XjguNlKnnMRM8VT7YUr4YLmWUnSR+2tGJcV3
- j4aDDXzFwq/RqHemGKFS3J6fPBW6HUjkF3RgFg2h6utCitopbQRpVNp4gCfwGwDhDvgp
- 0X3B2WG+TfPESYwS3CIO8Ne0O9KIFqpqWpj3P3NsaIVBY62nF3IE67HnKjX0Hgv+40Fc
- ecO9j4Dq/gAnNSQsixyRfzMFQS+cy+4LfC8MnKPUibiutErDlcmuoBBWlF9PdTmJhFdn
- cMXA==
+ bh=W4KSWG+OYZJc9cZudDYgiBUYvMbvtXIMkcIDx02xl20=;
+ b=TLUS/R8wYft/kGdgSpXYx138dnpikFxzmolRPAL9apeXGsrxcBiahalODWlXVfEjyq
+ 1BFgG//J4+nrWmNEmiYSJKO7z+EE7FwMDPSRqdCpAiSgWiiTfzVmNePxq0GBrtwIVsXK
+ KnsSfjK32n55puo3ytvubQEln9UHHwqz2QFNpN6dEtCgoyyuAvKbJSvRJuosbT7Oz5/D
+ NIqkMhS+M3oGpKZOP0kYabMDbG4oGRnVeSHxxqhFSK91ZbJfHRszdFj2Z0ac/aiu+vRR
+ 9Oa/SlxXCPvePSZzHA65/jJgasI18VOXdC4wLfsV6Xki6x7Gu2dBTbPkMvf7Qqx6sPV8
+ oIyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712556431; x=1713161231;
+ d=1e100.net; s=20230601; t=1712556518; x=1713161318;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PrNGz3fFUSXNpSclLhBqxoUlkGc8I5y+gs9scffpAY4=;
- b=TPmE/69KJXT3kwNmBjv1AcbbgS/65yU9+7vVDyz3GMdx04UkjdQKEiNKnmorU1Bb8t
- EePc5ECoOFIR0jwJP1t7JKxyzB2xBxNwgGpxEdBTSJgTUgrxcSTxiM9cJmUUrmxfiSDG
- BFsRiGTn4WUeTTxJyPttaWosN31xpe+nKg1b0iN65VsN08zDWkyS0VKuZC2vsKWFxkyS
- Vgym6vUtpVR0NjmrtWqTZ4EaYii1DyEpavHFEjLLjhuLlKXcaA+gZX8eYx91nrJAb5mr
- HBKqhOMiECgj9fIPIbvVd5VL4sebYNhWfoG62IDS//T2zAuG78PVg1LeUrx4qKDW/70Y
- pznA==
+ bh=W4KSWG+OYZJc9cZudDYgiBUYvMbvtXIMkcIDx02xl20=;
+ b=XFX6c1agA6Hwzz9WvSK+JqXXNc1Vn5GRn+45i2SVbGpGsFNWDOHZ0an4geW8n+FybK
+ mYlh8ZVQesBdRlx4SMmzh+deCfIJjngOcY+FKeZG8NvYRgVB5ovnf0dxW22ZcYspgOyP
+ P/C+9EYG4WvyIMKNUGoa+lTYB6esGwJpyc6XaXdnrAjSWbz5vAj/MRy2X0IWPgZkim9r
+ oumSgaUWW3kt12NIi3Eq6tqbJZIXdkpeohkXv01S0IshfIgC2xT+NV8rpikXedNNgKae
+ FC45xiMrKjj2WngA1ZdNssgJsF6VAWFX3VTo30vZem7WguJvZ+jrwA6TMaZ6d+We4bKe
+ AKHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULPBbVnGFY9yTKCXyx9907IZqGaR3uHbti4V/UWHCvD14J/HX8OMdBQXyWXGT7aSS+dU53J+OyoDxv1qWWDtCACNYYSg0=
-X-Gm-Message-State: AOJu0Yz38hVLc59xx9/M2fubUrvWfOAdHc8cNpLOfmU57dJ16J8JKgir
- O244QofVgA8zcy/l/iBGkGVa6k1alOOzogJmuROTLZ+NJeOmUY8FFwC8u3wNoSs=
-X-Google-Smtp-Source: AGHT+IFE5bxuSyaggZOnxU2am6ubk5YisIjlaqtJEL7xfGPqBq3rIvXo0Sc/hja2jjAXmiWILqBb/A==
-X-Received: by 2002:a17:906:c10d:b0:a51:b19d:b1d with SMTP id
- do13-20020a170906c10d00b00a51b19d0b1dmr4724672ejc.33.1712556431662; 
- Sun, 07 Apr 2024 23:07:11 -0700 (PDT)
+ AJvYcCURl1UurPa2f0i2W7m5H8laeuIDbw/AmNUBHGpU3EV8XxjAehSEFBp5JyXzkQaIxAEM7jK1CPUCHSKCwDw7PAkXPRN79Lk=
+X-Gm-Message-State: AOJu0YxHsyeJ+EO03AERdLY+h6xvIqdSoNApA/Kq4Ybzp3UCkUp1ZC80
+ BotDp7WvMQWq8MJjufO1V0kNo53dVdu+GIcnHSPnO+dh7KWnUPVoBtiNCqMgFDQ=
+X-Google-Smtp-Source: AGHT+IEznJUSPiP9D3d2s/+D0Ne/MVDB8lXnOaszk/I8tskSWesMggwZHMEhMKbvJSa//NJQUMbcLw==
+X-Received: by 2002:a17:906:c55:b0:a46:92a1:6459 with SMTP id
+ t21-20020a1709060c5500b00a4692a16459mr4936547ejf.17.1712556518396; 
+ Sun, 07 Apr 2024 23:08:38 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.144.67])
  by smtp.gmail.com with ESMTPSA id
- xi1-20020a170906dac100b00a51d3785c7bsm1113761ejb.196.2024.04.07.23.07.10
+ jg18-20020a170907971200b00a51a60bf400sm3847864ejc.76.2024.04.07.23.08.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 07 Apr 2024 23:07:11 -0700 (PDT)
-Message-ID: <36a5d37e-495b-4164-9882-7a5586ea740a@linaro.org>
-Date: Mon, 8 Apr 2024 08:07:09 +0200
+ Sun, 07 Apr 2024 23:08:38 -0700 (PDT)
+Message-ID: <6e5d5d31-24ab-4284-b26f-66e429f8fc54@linaro.org>
+Date: Mon, 8 Apr 2024 08:08:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] target/sh4: Merge mach and macl into a union
+Subject: Re: [PATCH v3 4/4] target/sh4: Fix mac.w with saturation enabled
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: zack@buhman.org, peter.maydell@linaro.org, ysato@users.sourceforge.jp
 References: <20240406053732.191398-1-richard.henderson@linaro.org>
- <20240406053732.191398-3-richard.henderson@linaro.org>
+ <20240406053732.191398-5-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240406053732.191398-3-richard.henderson@linaro.org>
+In-Reply-To: <20240406053732.191398-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,12 +97,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/4/24 07:37, Richard Henderson wrote:
-> Allow host access to the entire 64-bit accumulator.
+> From: Zack Buhman <zack@buhman.org>
 > 
+> The saturation arithmetic logic in helper_macw is not correct.
+> I tested and verified this behavior on a SH7091.
+> 
+> Signed-off-by: Zack Buhman <zack@buhman.org>
+> Message-Id: <20240405233802.29128-3-zack@buhman.org>
+> [rth: Reformat helper_macw, add a test case.]
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/sh4/cpu.h | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
+>   target/sh4/helper.h           |  2 +-
+>   target/sh4/op_helper.c        | 28 +++++++++-------
+>   tests/tcg/sh4/test-macw.c     | 61 +++++++++++++++++++++++++++++++++++
+>   tests/tcg/sh4/Makefile.target |  3 ++
+>   4 files changed, 82 insertions(+), 12 deletions(-)
+>   create mode 100644 tests/tcg/sh4/test-macw.c
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
