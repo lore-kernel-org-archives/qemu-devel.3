@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 885A3CD1292
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2294C67861
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Apr 2024 17:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rtt8X-0002B8-AV; Mon, 08 Apr 2024 13:50:29 -0400
+	id 1rtt8T-0002A7-0q; Mon, 08 Apr 2024 13:50:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8T-0002AQ-5K
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:25 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1rtt8P-00029Z-Q4
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:21 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rtt8R-0003ov-Is
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:24 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6ed3cafd766so874090b3a.0
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:23 -0700 (PDT)
+ id 1rtt8A-0003iZ-7c
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 13:50:21 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-29e0229d6b5so3889663a91.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 10:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712598622; x=1713203422; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712598604; x=1713203404; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bh4lWnPe+YOgpHGdevl5r/TyXWqM+m5cBerY0p6p+5U=;
- b=Z840WH6h/v144lDoCxL9vxqP1V8DWb9SZlhSjPEoY7CzLXAKCVcL4Xch+kCsSjXHO3
- jsQDNQ0QZnw2AEEiLVAYBliIBLW+bq3P40/E/XwOXXEjuobuwLi34NgjOAPLW+hVdNpn
- OPAndHgJfzgWDRO+PY97O6dACSmaTIJBTqS4cdZpJ8nFCmidmqvnXE6o6zUY892ce/bg
- Lusbk2kNfKG9FCgOA+hJ97HEflcL7s/DizJZqjpFXNfAVDvLfNGLG3PHdmZnN3muq4Ex
- vDodPXGMT9r4OD2l4iGMzk/ketqxUp+kaugvBhKa54SwzSnNrmUoeyJ/JpVWZ2ONv4uH
- OWLg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RFanGzrvK8VkKk4csReRv0GVjABsPRaur2/zSeJo0ZU=;
+ b=uwIFljoGv92YbwCOlvRKIcXNoBXgui3Skk03YLupbSsyS+ah40scL0kXq6AmbLYJWc
+ r3WYfP3QcAO0EOs7nQaqsWwuwg6CR69SALzbCYRQBNT1lsgXK4DYCn3iqlTElF3BWO1E
+ n4pDgo0KtRgwvcNFBQYAfsbEXD3n8Q6TlTrzC/IDF6bOnJF4ueInscl8DdQMgaj/O+mj
+ v2lo8ZAf9EQ+H7SdLmhbsomk12lKEXjlho/sSB8Jb8AhdtVY2FUneXdhrWMvluFdic7a
+ /yUCdbOJGEMyylUnxbaqUD8Vra01ZGnRfV5E10Bet6xTlqX0+/Kf3b3wKMsNOTCu2DEv
+ HqYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712598622; x=1713203422;
+ d=1e100.net; s=20230601; t=1712598604; x=1713203404;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bh4lWnPe+YOgpHGdevl5r/TyXWqM+m5cBerY0p6p+5U=;
- b=GiTqvTLehqLnYO/+co1OE3Ux5YeORfsTN1lLXUpULM9w2Y5Ay0z+jflXwwyYwPfCaX
- ANmPEcUXG+dg5LUnfTDQHlyTGSTGwPYEVyUO1M2ubA6hH8eQ0SQUTZatt4u3Up/B7rxw
- YoMWM3ObzylOTjmUgQmKdBKKAlXvnA9RknjPILS31nyFBGXjlozjwhr+o7h7ytwu2LI3
- k2P6qVFjcaEJCn/jcQ/9EktouOkF9IfIcVNMx1mTQlG7MhlpDwOrwWP5cE41MnuZn6o9
- qXRixfSaljeWOIN6dPkJ/096ekP8YjOsHZFifuK8i7oY5C+dyZmmrSmyXW0xj0gJOIMk
- mkyA==
-X-Gm-Message-State: AOJu0Yy1KQz7AC26kiFTqUw3KyK4EwFmNqFYNP/KVQd2ZftqnXiI9MfD
- FrmVtfbExnfAm0bBCQI6EDPfZ5dG62siOTpH4RKsDU8qtDDWYshCF3yuBz9TAZ4+wxpDtnOSWUP
- A
-X-Google-Smtp-Source: AGHT+IESSFg2VG28jnzKXP/OTmyZaPwy3MG2nlIIzHytJwZ2sTMbr6jhfp/2eCybIckHFuqUokMGcA==
-X-Received: by 2002:a05:6a21:32a0:b0:1a5:6bfb:76de with SMTP id
- yt32-20020a056a2132a000b001a56bfb76demr9501508pzb.2.1712598622246; 
- Mon, 08 Apr 2024 10:50:22 -0700 (PDT)
+ bh=RFanGzrvK8VkKk4csReRv0GVjABsPRaur2/zSeJo0ZU=;
+ b=PIexFw/0RWefzA6VpHqYBnLmtQO3oAVJL00jofXy7VqTDBQUdeafwJxpBPNqTK8D1Z
+ H7XPpN2M5UwZeow+AKYVeM1afmvFIeFx5W/1k15/4CQrCM4ETQbRBvwUPfN2pmF1Znpu
+ sWsuPLsRhPbuK+xB8OitUk0IAKHYajHpLwcAM8zKNDxYsVQbw8bLnW18XBm3NWmpofR5
+ Hrx8ccd64szw/csz0m6dxOanlMadaKwe52eBRRqf8x2IVSIIwQQ4/nBx0iZUn/qYGJib
+ 2s/W4sd8yL7ovUdJ+WIFdyFeOy0ui5Wr+sriYM7in4FxQbb72t18ufdc4EOGLp7776w7
+ 92Dg==
+X-Gm-Message-State: AOJu0YyqwPlz1+iWt2NLCp10QMlNu2enUNwJoLTElT+WEa8cBAr3hAbK
+ MIo6BYYWKB1kyYmB3XVklPOcTbwjGydtRPZJK48wWhBBn3ifksm5eTBkjmrjTGSiVbT32BVXEgM
+ B
+X-Google-Smtp-Source: AGHT+IEVjLISCSOMNT9SjrRAHWJxBYCVsRFpdFzWs3IC/iyoqBaBoeCu25HW/CV86UzfBRDHBoQPjw==
+X-Received: by 2002:a17:90a:ba82:b0:2a4:e9d:9888 with SMTP id
+ t2-20020a17090aba8200b002a40e9d9888mr8099681pjr.16.1712598603795; 
+ Mon, 08 Apr 2024 10:50:03 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.21
- for <qemu-devel@nongnu.org>
+ ga15-20020a17090b038f00b0029c3bac0aa8sm8658432pjb.4.2024.04.08.10.50.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 10:50:21 -0700 (PDT)
+ Mon, 08 Apr 2024 10:50:03 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/35] util/bufferiszero: Introduce biz_accel_fn typedef
-Date: Mon,  8 Apr 2024 07:49:28 -1000
-Message-Id: <20240408174929.862917-35-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 22/35] target/hppa: Use insn_start from DisasContextBase
+Date: Mon,  8 Apr 2024 07:49:16 -1000
+Message-Id: <20240408174929.862917-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 References: <20240408174929.862917-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,51 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+To keep the multiple update check, replace insn_start
+with insn_start_updated.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- util/bufferiszero.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ target/hppa/translate.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index c9a7ded016..eb8030a3f0 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -26,7 +26,8 @@
- #include "qemu/bswap.h"
- #include "host/cpuinfo.h"
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 8a1a8bc3aa..42fa480950 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -44,7 +44,6 @@ typedef struct DisasCond {
+ typedef struct DisasContext {
+     DisasContextBase base;
+     CPUState *cs;
+-    TCGOp *insn_start;
  
--static bool (*buffer_is_zero_accel)(const void *, size_t);
-+typedef bool (*biz_accel_fn)(const void *, size_t);
-+static biz_accel_fn buffer_is_zero_accel;
+     uint64_t iaoq_f;
+     uint64_t iaoq_b;
+@@ -62,6 +61,7 @@ typedef struct DisasContext {
+     int privilege;
+     bool psw_n_nonzero;
+     bool is_pa20;
++    bool insn_start_updated;
  
- static bool buffer_is_zero_int_lt256(const void *buf, size_t len)
+ #ifdef CONFIG_USER_ONLY
+     MemOp unalign;
+@@ -300,9 +300,9 @@ void hppa_translate_init(void)
+ 
+ static void set_insn_breg(DisasContext *ctx, int breg)
  {
-@@ -178,13 +179,15 @@ buffer_zero_avx2(const void *buf, size_t len)
+-    assert(ctx->insn_start != NULL);
+-    tcg_set_insn_start_param(ctx->insn_start, 2, breg);
+-    ctx->insn_start = NULL;
++    assert(!ctx->insn_start_updated);
++    ctx->insn_start_updated = true;
++    tcg_set_insn_start_param(ctx->base.insn_start, 2, breg);
  }
- #endif /* CONFIG_AVX2_OPT */
  
-+
-+
- static unsigned __attribute__((noinline))
- select_accel_cpuinfo(unsigned info)
- {
-     /* Array is sorted in order of algorithm preference. */
-     static const struct {
-         unsigned bit;
--        bool (*fn)(const void *, size_t);
-+        biz_accel_fn fn;
-     } all[] = {
- #ifdef CONFIG_AVX2_OPT
-         { CPUINFO_AVX2,    buffer_zero_avx2 },
-@@ -231,7 +234,7 @@ bool test_buffer_is_zero_next_accel(void)
- #define INIT_ACCEL buffer_is_zero_int_ge256
- #endif
+ static DisasCond cond_make_f(void)
+@@ -4694,7 +4694,7 @@ static void hppa_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
  
--static bool (*buffer_is_zero_accel)(const void *, size_t) = INIT_ACCEL;
-+static biz_accel_fn buffer_is_zero_accel = INIT_ACCEL;
+     tcg_gen_insn_start(ctx->iaoq_f, ctx->iaoq_b, 0);
+-    ctx->insn_start = tcg_last_op();
++    ctx->insn_start_updated = false;
+ }
  
- bool buffer_is_zero_ool(const void *buf, size_t len)
- {
+ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
 -- 
 2.34.1
 
