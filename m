@@ -4,76 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CBC7CD1296
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A66CD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruDAb-0004D5-09; Tue, 09 Apr 2024 11:13:57 -0400
+	id 1ruDBR-0004cZ-MP; Tue, 09 Apr 2024 11:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruDAV-00047I-SN
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:13:52 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruDAS-0000bD-5H
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:13:50 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-516d3776334so5889418e87.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 08:13:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712675625; x=1713280425; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5eDym/nhwaod0NfpcUKKcWLCKPEO2wu/o264/80bkfE=;
- b=rjIMb5kGEv9CR7PEvyLP3BSZhaN4zte1nlBgRcq6XpUZOSI+PrC+XJWixJC453Muex
- xwt0xX5tjuoYr4z5ulNIKFHPAIeIrt+NkrIoGc6pCSTB01lyoCjkXS2zHI+WFYngR2pP
- Yku1HUV7kE17pzicBNLuBVHZLMk0+rjLXxQwDOZFEMQTM1KeVp7TqC/rJ8hP0RRiOpIr
- w3oI/LCznpZvxJnLIGInLhClFzlU/ORS0uuDtKLTkWabEGVU8F04dt4dc9s0GSZ8VsBo
- D+CHhUD2IuTJS6OTw26X5g6BfXevX+MB+ZzZjkUyIMwMAwZT+QP0aXrU/OQGKAff949y
- TC8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712675625; x=1713280425;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5eDym/nhwaod0NfpcUKKcWLCKPEO2wu/o264/80bkfE=;
- b=k2LkAR/nVr0vgkrgIkioJPvJb9ZzkDkrT1mGdOrTV1z6XuQIeF+cLFOtN5jDRRgyFu
- Err//HAjRnYMxWPB33XfRIlkB4m3wkZizErFyp2y7vs+ivaOFiQ1UqmBnqDg3Bv1rSdc
- si+FAibiLxACXM25Cwm5ytcXH+D9/k9tVtKA/RDae9E8thYCQ+dQik8LMsFceiocns4L
- vAhIHaktp/BggvEPRbu2t7hqHNkYL6sm8jVqTYp1QT5sKRuiGIFdCqauvbMoxNd0ReMr
- 0o3fKvRusFTP0ues3rVRiBTBlWSAs26a3roSaOIrIETAU7uDkjATKzRaDW1gXjHpFP1u
- wGWA==
-X-Gm-Message-State: AOJu0YwI/jKNfVkkpHxmQbjj0TNdb5x0ZgkgH5g728VHpIAqQx4g6z5L
- EMvEikaYoEO2ROVvNjWHyPFBNWIAzfAp14GvDTnIQL3a/RqNoD5PtP258HtJYlsmZh307hhhuzl
- /pmUv3OXYz53zaNwP1OGwDVGtItLnoFqI5ZufrQ==
-X-Google-Smtp-Source: AGHT+IEoNlwrfVHhovfLe64/R83PRfJehdgsY08NUoh1lPfvY0AwseTqiFG4uPgF7DVlvjZc1sgZjUqIG9Dz8zvFH3c=
-X-Received: by 2002:a19:ca07:0:b0:516:ced5:3afa with SMTP id
- a7-20020a19ca07000000b00516ced53afamr8068433lfg.5.1712675625255; Tue, 09 Apr
- 2024 08:13:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ruDBP-0004bt-JI
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:14:47 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ruDBL-0000fb-Vn
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:14:47 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VDTs30xhvz6K6cM;
+ Tue,  9 Apr 2024 23:09:43 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 291E6140DB0;
+ Tue,  9 Apr 2024 23:14:29 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 9 Apr
+ 2024 16:14:28 +0100
+Date: Tue, 9 Apr 2024 16:14:27 +0100
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+CC: <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Leif Lindholm
+ <quic_llindhol@quicinc.com>, Ard Biesheuvel <ardb+tianocore@kernel.org>,
+ Xiong Yining <xiongyining1480@phytium.com.cn>, Chen Baozi
+ <chenbaozi@phytium.com.cn>
+Subject: Re: How to use pxb-pcie in correct way?
+Message-ID: <20240409161427.00001b1c@Huawei.com>
+In-Reply-To: <8b9b96e1-faaa-4866-aeb9-c439d5f83139@linaro.org>
+References: <8b9b96e1-faaa-4866-aeb9-c439d5f83139@linaro.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240325144440.1069662-1-kraxel@redhat.com>
- <CAFEAcA8eX=-6yXCZ2+X6niJPcgzkzXfHT9F6LpbfqV4b9VRW6w@mail.gmail.com>
- <sevlzxonvgps5m7r263bkzouabg62tbe6vknvv4rbvjfnnhkqg@jnqkst5xetwn>
- <CAFEAcA-xEK6_eT-TUP+adMsgoTU6kRQoz+9vfXO2Tz_PBLdmyA@mail.gmail.com>
-In-Reply-To: <CAFEAcA-xEK6_eT-TUP+adMsgoTU6kRQoz+9vfXO2Tz_PBLdmyA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 16:13:34 +0100
-Message-ID: <CAFEAcA8Nty9zAvn9PB-azwvR7mF5tYOfz27AXi-vbuZDoS_ZVw@mail.gmail.com>
-Subject: Re: [PATCH] edk2: get version + date from git submodule
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,43 +69,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Apr 2024 at 15:19, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 9 Apr 2024 at 15:14, Gerd Hoffmann <kraxel@redhat.com> wrote:
-> >
-> >   Hi,
-> >
-> > > > +               --version-override "$(EDK2_STABLE)-for-qemu" \
-> > > > +               --release-date "$(EDK2_DATE)" \
-> > >
-> > > Hi -- I've just noticed that we never made this change to
-> > > automate the date/version for EDK2 ROMs, but we also never
-> > > updated the version by hand. So at the moment we ship an
-> > > EDK2 blob that wrongly claims to be an older version.
-> > > See this bug report by a user:
-> > >
-> > > https://gitlab.com/qemu-project/qemu/-/issues/2233
-> > >
-> > > Is it possible to fix this for 9.0?
-> >
-> > I've posted v2 (series) a while back, no feedback so far.
-> >
-> > https://lore.kernel.org/qemu-devel/20240327102448.61877-1-kraxel@redhat.com/
-> >
-> > If there are no objections I can do a PR for these three patches plus an
-> > edk2 binary rebuild (which shouldn't change anything but the version
-> > string).
->
-> I guess that's safe enough, though the very-conservative
-> choice would be to take just the EDK2 rebuild for 9.0.
+On Mon, 8 Apr 2024 13:58:00 +0200
+Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org> wrote:
 
-Would you be able to get a pullreq in for this before rc3?
-(I can delay rc3 by a day or so if necessary; I'd rather
-not have to do an rc4 if we can avoid it...)
+> For quite a while I am experimenting with PCI Express setup on SBSA-Ref 
+> system. And finally decided to write.
+> 
+> We want to play with NUMA setup and "pxb-pcie" can be assigned to NUMA 
+> node other than cpu0 one. But adding it makes other cards dissapear...
+> 
+> When I boot sbsa-ref I have plain PCIe setup:
+> 
+> (qemu) info pci
+>    Bus  0, device   0, function 0:
+>      Host bridge: PCI device 1b36:0008
+>        PCI subsystem 1af4:1100
+>        id ""
+>    Bus  0, device   1, function 0:
+>      Ethernet controller: PCI device 8086:10d3
+>        PCI subsystem 8086:0000
+>        IRQ 255, pin A
+>        BAR0: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+>        BAR1: 32 bit memory at 0xffffffffffffffff [0x0001fffe].
+>        BAR2: I/O at 0xffffffffffffffff [0x001e].
+>        BAR3: 32 bit memory at 0xffffffffffffffff [0x00003ffe].
+>        BAR6: 32 bit memory at 0xffffffffffffffff [0x0003fffe].
+>        id ""
+>    Bus  0, device   2, function 0:
+>      Display controller: PCI device 1234:1111
+>        PCI subsystem 1af4:1100
+>        BAR0: 32 bit prefetchable memory at 0x80000000 [0x80ffffff].
+>        BAR2: 32 bit memory at 0x81084000 [0x81084fff].
+>        BAR6: 32 bit memory at 0xffffffffffffffff [0x00007ffe].
+>        id ""
+> 
+> Adding extra PCIe card works fine - both just "igb" and "igb" with 
+> "pcie-root-port".
+> 
+> But adding "pcie-root-port" + "igb" and then "pxb-pcie" makes "igb" 
+> dissapear:
+> 
+> ../code/qemu/build/qemu-system-aarch64
+> -monitor telnet::45454,server,nowait
+> -serial stdio
+> -device pcie-root-port,id=ULyWl,slot=0,chassis=0
+> -device igb,bus=ULyWl
+> -device pxb-pcie,bus_nr=1
 
-thanks
--- PMM
+That's setting the base bus number to 1.  Very likely to clash with the bus
+number for the bus below the root port.
+
+Set it to bu_nr=128 or something like that.
+
+There is no sanity checking for PXBs because the bus enumeration is
+an EDK2 problem in general - short of enumerating the buses in QEMU
+there isn't a way for it to tell.
+
+J
 
