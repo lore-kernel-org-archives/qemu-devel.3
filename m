@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DC0CD129A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F3ABCD129C
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruCxe-0002lV-8W; Tue, 09 Apr 2024 11:00:34 -0400
+	id 1ruCx2-00021U-Nu; Tue, 09 Apr 2024 10:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1ruCxI-0002OU-Ob; Tue, 09 Apr 2024 11:00:16 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ id 1ruCwt-0001rw-5w; Tue, 09 Apr 2024 10:59:52 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1ruCxD-0006Bk-Uz; Tue, 09 Apr 2024 11:00:11 -0400
+ id 1ruCwr-0005w0-E3; Tue, 09 Apr 2024 10:59:46 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 3F07B33A58;
- Tue,  9 Apr 2024 15:00:06 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F247E33A53;
+ Tue,  9 Apr 2024 14:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712674806; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1712674784; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PK1BOaSiznR5Y3Tqkn92pIJcwhfufC71cNAlVZbSpgA=;
- b=H2unQWHkXDZqT18q+YNVpxXjfsj1RiOnqjlqp1rSdV7sYsvE2d2HiVlyP6gG/3ibCwFT4e
- rPtJaQirrdBMokM9dHpr22f5wDVePpxfIC6Zbn4VUxjXK1MWuWPx9ljMXmY2gih6gDS1Og
- 45fTAvApYLb4VZNyJbZJupGniP93014=
+ bh=KXN44mQf0i947fYSpOF7uoOsAHoUzjJX+q+hPuynvl0=;
+ b=Op4JUdbzPtgd0mehCws6T22pvJkLVDcPnRJzok0oMBxkbT1K4d3gOav8oAyOqwmnH6tstL
+ 1+cTrqvqVXN/mnDBck2Ge85AQ/WdfYPHyacmXIk1KzC+aLlgrLXHaNgzslXmUFJL042eyX
+ I3mSNkyv+SnZjXvQw5AFPpip6nXxHl4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712674806;
+ s=susede2_ed25519; t=1712674784;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PK1BOaSiznR5Y3Tqkn92pIJcwhfufC71cNAlVZbSpgA=;
- b=t36fCesvaDe8JTtSXiXKMXCDXMuNNWF6z3ptpFDqdNCCQFdzgJ0P0MnmuSUYJWQhWMR/fa
- fMAkH9xU9IDWNjBg==
+ bh=KXN44mQf0i947fYSpOF7uoOsAHoUzjJX+q+hPuynvl0=;
+ b=i2uHJ3Qbir2MhsGAGe98feMVT9ntKEp4kpUYY0gsHqpwqbzYpmJkA0sn6ZJaxXxYGQ9uRb
+ y1ojRRo6CadYFBDg==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712674806; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1712674783; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PK1BOaSiznR5Y3Tqkn92pIJcwhfufC71cNAlVZbSpgA=;
- b=H2unQWHkXDZqT18q+YNVpxXjfsj1RiOnqjlqp1rSdV7sYsvE2d2HiVlyP6gG/3ibCwFT4e
- rPtJaQirrdBMokM9dHpr22f5wDVePpxfIC6Zbn4VUxjXK1MWuWPx9ljMXmY2gih6gDS1Og
- 45fTAvApYLb4VZNyJbZJupGniP93014=
+ bh=KXN44mQf0i947fYSpOF7uoOsAHoUzjJX+q+hPuynvl0=;
+ b=G8gCe+JBnBPdlViW2DyXUQtRsPOoMTTxOm3W5YKlM8EDFz80zMUJ1/PD3KMomjH9x4Ixf6
+ wxRm8A94m8ggUsWJjTWYvY3VzhTR+hy6o08suxPrqCJw3FDnOGbgD3HL6my/7cI/Yok4mz
+ seFa2YyBAghAAz8ENMj17xOuQAdJ+7w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712674806;
+ s=susede2_ed25519; t=1712674783;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PK1BOaSiznR5Y3Tqkn92pIJcwhfufC71cNAlVZbSpgA=;
- b=t36fCesvaDe8JTtSXiXKMXCDXMuNNWF6z3ptpFDqdNCCQFdzgJ0P0MnmuSUYJWQhWMR/fa
- fMAkH9xU9IDWNjBg==
+ bh=KXN44mQf0i947fYSpOF7uoOsAHoUzjJX+q+hPuynvl0=;
+ b=9eHFKBhAmYiJAPeON3aqfv8W5C/RUJEYLgu0Rt0vCjPSnTqu9TpqS9uNWn5QCpkxDvrxct
+ X+1qK1xRdn5d01BQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0EF0A13313;
- Tue,  9 Apr 2024 15:00:02 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C5F5F13313;
+ Tue,  9 Apr 2024 14:59:40 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CCfqMfJXFWZGOAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 09 Apr 2024 15:00:02 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uIXqItxXFWZGOAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 09 Apr 2024 14:59:40 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
@@ -79,29 +79,28 @@ Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Claudio Fontana <cfontana@suse.de>, Dario Faggioli <dfaggioli@suse.com>,
  Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 11/11] block: Add a thread-pool version of fstat
-Date: Tue,  9 Apr 2024 11:59:17 -0300
-Message-Id: <20240409145917.6780-12-farosas@suse.de>
+Subject: [PATCH v3 05/11] block: Run bdrv_do_query_node_info in a coroutine
+Date: Tue,  9 Apr 2024 11:59:11 -0300
+Message-Id: <20240409145917.6780-6-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240409145917.6780-1-farosas@suse.de>
 References: <20240409145917.6780-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[12]; RCVD_TLS_ALL(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.988];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_TWELVE(0.00)[12]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- R_RATELIMIT(0.00)[to_ip_from(RL14emxp6ck9fz14jedoy69s36)];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -124,114 +123,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: João Silva <jsilva@suse.de>
+Move this function into a coroutine so we can convert the whole
+qmp_query_block command into a coroutine in the next patches.
 
-The fstat call can take a long time to finish when running over
-NFS. Add a version of it that runs in the thread pool.
+Placing the entire command in a coroutine allow us to yield all the
+way back to the main loop, releasing the BQL and unblocking the main
+loop.
 
-Adapt one of its users, raw_co_get_allocated_file size to use the new
-version. That function is called via QMP under the qemu_global_mutex
-so it has a large chance of blocking VCPU threads in case it takes too
-long to finish.
+When the whole conversion is completed, we'll be able to avoid a
+priority inversion that happens when a QMP command calls a slow
+(buggy) system call and blocks the vcpu thread from doing mmio due to
+contention on the BQL.
 
-Reviewed-by: Claudio Fontana <cfontana@suse.de>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: João Silva <jsilva@suse.de>
+About coroutine safety:
+
+Most callees have coroutine versions themselves and thus are safe to
+call in a coroutine. The remaining ones:
+
+- bdrv_refresh_filename, bdrv_get_full_backing_filename: String
+  manipulation, nothing that would be unsafe for use in coroutines;
+
+- bdrv_get_format_name: Just accesses a field;
+
+- bdrv_get_specific_info, bdrv_query_snapshot_info_list: No locks or
+  anything that would poll or block.
+
+(using a mixed wrapper for now, but after all callers are converted,
+this can become a coroutine exclusively)
+
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- block/file-posix.c      | 40 +++++++++++++++++++++++++++++++++++++---
- include/block/raw-aio.h |  4 +++-
- 2 files changed, 40 insertions(+), 4 deletions(-)
+- used the coroutine version of the called functions when available
+---
+ block/qapi.c         | 11 ++++++-----
+ include/block/qapi.h |  8 ++++++++
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 35684f7e21..6fbf961244 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -226,6 +226,9 @@ typedef struct RawPosixAIOData {
-         struct {
-             unsigned long op;
-         } zone_mgmt;
-+        struct {
-+            struct stat *st;
-+        } fstat;
-     };
- } RawPosixAIOData;
- 
-@@ -2616,6 +2619,34 @@ static void raw_close(BlockDriverState *bs)
-     }
- }
- 
-+static int handle_aiocb_fstat(void *opaque)
-+{
-+    RawPosixAIOData *aiocb = opaque;
-+
-+    if (fstat(aiocb->aio_fildes, aiocb->fstat.st) < 0) {
-+        return -errno;
-+    }
-+
-+    return 0;
-+}
-+
-+static int coroutine_fn raw_co_fstat(BlockDriverState *bs, struct stat *st)
-+{
-+    BDRVRawState *s = bs->opaque;
-+    RawPosixAIOData acb;
-+
-+    acb = (RawPosixAIOData) {
-+        .bs             = bs,
-+        .aio_fildes     = s->fd,
-+        .aio_type       = QEMU_AIO_FSTAT,
-+        .fstat          = {
-+            .st = st,
-+        },
-+    };
-+
-+    return raw_thread_pool_submit(handle_aiocb_fstat, &acb);
-+}
-+
- /**
-  * Truncates the given regular file @fd to @offset and, when growing, fills the
-  * new space according to @prealloc.
-@@ -2860,11 +2891,14 @@ static int64_t coroutine_fn raw_co_getlength(BlockDriverState *bs)
- static int64_t coroutine_fn raw_co_get_allocated_file_size(BlockDriverState *bs)
+diff --git a/block/qapi.c b/block/qapi.c
+index 2b5793f1d9..26a9510345 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -225,8 +225,9 @@ int bdrv_query_snapshot_info_list(BlockDriverState *bs,
+  * Helper function for other query info functions.  Store information about @bs
+  * in @info, setting @errp on error.
+  */
+-static void GRAPH_RDLOCK
+-bdrv_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info, Error **errp)
++void coroutine_fn
++bdrv_co_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info,
++                           Error **errp)
  {
-     struct stat st;
--    BDRVRawState *s = bs->opaque;
-+    int ret;
+     int64_t size;
+     const char *backing_filename;
+@@ -234,7 +235,7 @@ bdrv_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info, Error **errp)
+     int ret;
+     Error *err = NULL;
  
--    if (fstat(s->fd, &st) < 0) {
--        return -errno;
-+    ret = raw_co_fstat(bs, &st);
-+
-+    if (ret) {
-+        return ret;
+-    size = bdrv_getlength(bs);
++    size = bdrv_co_getlength(bs);
+     if (size < 0) {
+         error_setg_errno(errp, -size, "Can't get image size '%s'",
+                          bs->exact_filename);
+@@ -246,13 +247,13 @@ bdrv_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info, Error **errp)
+     info->filename        = g_strdup(bs->filename);
+     info->format          = g_strdup(bdrv_get_format_name(bs));
+     info->virtual_size    = size;
+-    info->actual_size     = bdrv_get_allocated_file_size(bs);
++    info->actual_size     = bdrv_co_get_allocated_file_size(bs);
+     info->has_actual_size = info->actual_size >= 0;
+     if (bs->encrypted) {
+         info->encrypted = true;
+         info->has_encrypted = true;
      }
+-    if (bdrv_get_info(bs, &bdi) >= 0) {
++    if (bdrv_co_get_info(bs, &bdi) >= 0) {
+         if (bdi.cluster_size != 0) {
+             info->cluster_size = bdi.cluster_size;
+             info->has_cluster_size = true;
+diff --git a/include/block/qapi.h b/include/block/qapi.h
+index 54c48de26a..234730b3de 100644
+--- a/include/block/qapi.h
++++ b/include/block/qapi.h
+@@ -25,6 +25,7 @@
+ #ifndef BLOCK_QAPI_H
+ #define BLOCK_QAPI_H
+ 
++#include "block/block-common.h"
+ #include "block/graph-lock.h"
+ #include "block/snapshot.h"
+ #include "qapi/qapi-types-block-core.h"
+@@ -49,4 +50,11 @@ void bdrv_image_info_specific_dump(ImageInfoSpecific *info_spec,
+                                    const char *prefix,
+                                    int indentation);
+ void bdrv_node_info_dump(BlockNodeInfo *info, int indentation, bool protocol);
 +
-     return (int64_t)st.st_blocks * 512;
- }
- 
-diff --git a/include/block/raw-aio.h b/include/block/raw-aio.h
-index 20e000b8ef..0c6af8dc32 100644
---- a/include/block/raw-aio.h
-+++ b/include/block/raw-aio.h
-@@ -31,6 +31,7 @@
- #define QEMU_AIO_ZONE_REPORT  0x0100
- #define QEMU_AIO_ZONE_MGMT    0x0200
- #define QEMU_AIO_ZONE_APPEND  0x0400
-+#define QEMU_AIO_FSTAT        0x0800
- #define QEMU_AIO_TYPE_MASK \
-         (QEMU_AIO_READ | \
-          QEMU_AIO_WRITE | \
-@@ -42,7 +43,8 @@
-          QEMU_AIO_TRUNCATE | \
-          QEMU_AIO_ZONE_REPORT | \
-          QEMU_AIO_ZONE_MGMT | \
--         QEMU_AIO_ZONE_APPEND)
-+         QEMU_AIO_ZONE_APPEND | \
-+         QEMU_AIO_FSTAT)
- 
- /* AIO flags */
- #define QEMU_AIO_MISALIGNED   0x1000
++void coroutine_fn GRAPH_RDLOCK
++bdrv_co_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info,
++                           Error **errp);
++void co_wrapper_bdrv_rdlock
++bdrv_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info,
++                        Error **errp);
+ #endif
 -- 
 2.35.3
 
