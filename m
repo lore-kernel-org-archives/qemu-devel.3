@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E19C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 11:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A33C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 12:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruA5b-000731-Ql; Tue, 09 Apr 2024 07:56:35 -0400
+	id 1ruABd-0000n9-Om; Tue, 09 Apr 2024 08:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruA5Z-00072i-P1
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:56:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruA5X-0005sO-W5
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:56:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712663790;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u2WSL8gcFM2MIVeq6BXRBnkCHQgPHTFhGO6Q5dWxaaU=;
- b=a7TDqwL+7ghQWSOhXkqgeSmgeoPoooxpJKRUU8LzfeF4tSoZyRegF6dV6LaCRgDbmW8q9b
- +uRVJQceDrLS3UxtBXZhvE51EsdWxDewDAZeB+cQl7LaFf87hjifOUGfgIwcRc9h6uiwy/
- c4/HtWHynYIfS3gCLWh3XdB/IRckiaw=
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
- [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-397-sFChTiexOC21sf-MtPw7Xw-1; Tue, 09 Apr 2024 07:56:28 -0400
-X-MC-Unique: sFChTiexOC21sf-MtPw7Xw-1
-Received: by mail-ot1-f71.google.com with SMTP id
- 46e09a7af769-6dea8b7e74aso1907051a34.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 04:56:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ruABa-0000mg-Pe
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 08:02:47 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ruABT-00079t-0f
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 08:02:45 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-516d3a470d5so5031051e87.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 05:02:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712664155; x=1713268955; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q4v19AqMuuwz8hrRjJlPrz06wTZzIIAtu/bcPRW6Vbw=;
+ b=VuLLR/XvqAZwv+cR6Q741lmCNBMzGHM/L16j1nDQh2oqfBxFWnRaKypx157jPItXxQ
+ WhFTFIYeppx58VqGJ5d9DJaB5E2+8X+dRAWFxV4ETDnEjSTkL+LBHJjo6x7MBVEDhTUs
+ GTiUJ4NLoMOuQZR0fVF8OZ2mW2sxfb+Qtf77Hz4CDzFQkpQh4MREKISRrxRKIhavlSU+
+ 0s8h8r3p+KvSz1unE6vc1HX0ny16ePnzM924dOMuvBjOrSHXKHAUXsS24ouze/nWr35P
+ UYNyAQN3nmdLlABhR5mRc8O0hJSLOtWtuTBBSyb6XbY87FvvyKMCrtzr7TRnZZwBE50g
+ wByw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712663787; x=1713268587;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u2WSL8gcFM2MIVeq6BXRBnkCHQgPHTFhGO6Q5dWxaaU=;
- b=ReIfMVq46kUe8Dwwrc3uo91AZ3dMJEAKtTMy7qZTJxXm8oUzyJoNawCA8X0BPa6yiB
- THFXF9a7F2KS8NXXST/uh7sptwRQ3Iy3ugKMtP6FjwWOGyV24s4gzEQemQDeCYM8eq+V
- 7EwGMGlajK0fDySfXoxiEtxgZeJFBDy1FC3E/R0s4ZbDmFdtzk/CEeXCRDRI+rkuKouB
- KLktrCkn838NROmY9KPNtHjO3mQKCyKLxib1qBOoqEq8GvgkaMQdRGbiIfXgORuPaFtE
- yW/tW/Tv0RDIPbFrI7SkoqlKxZ9XOTTietiHu5NLjIf2yPCCrVvTslZIG2af/GlzioRV
- ft6g==
-X-Gm-Message-State: AOJu0YyuMysAQVA6hZPAX33Lrpeuu/n17yPsmsXx7+5IRRNeYRvmRQ3L
- E84+rNb4o7HnBXDZ0E9mM8bW4y/NrlfUyBZCCa2kWKcIe5PxO37CDl60XI2jY8BnIzSnh2K6PfN
- K+bb7ylJjwdoArRwHQeyvkbfcDqf4eXjZPHWsB8/6xQjtm591iv0q
-X-Received: by 2002:a05:6808:2385:b0:3c5:dc47:99e9 with SMTP id
- bp5-20020a056808238500b003c5dc4799e9mr12642107oib.5.1712663787559; 
- Tue, 09 Apr 2024 04:56:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzMRX697NCu7GIHi6UPsmnLVYrO+la7hWsMICgUP9oAoxGlh3BWJO0ZBr66xmNGBYMeux2HQ==
-X-Received: by 2002:a05:6808:2385:b0:3c5:dc47:99e9 with SMTP id
- bp5-20020a056808238500b003c5dc4799e9mr12642085oib.5.1712663787053; 
- Tue, 09 Apr 2024 04:56:27 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- du47-20020a05620a47ef00b0078bc4cad726sm4040554qkb.72.2024.04.09.04.56.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 04:56:26 -0700 (PDT)
-Date: Tue, 9 Apr 2024 07:56:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Het Gala <het.gala@nutanix.com>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, farosas@suse.de, prerna.saxena@nutanix.com
-Subject: Re: [PATCH v2 0/3] qtest/migration: Fixes around
- multifd_tcp_channels_none migration qtest
-Message-ID: <ZhUs6DBA5dG5MvHk@x1n>
-References: <20240409110011.174426-1-het.gala@nutanix.com>
+ d=1e100.net; s=20230601; t=1712664155; x=1713268955;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q4v19AqMuuwz8hrRjJlPrz06wTZzIIAtu/bcPRW6Vbw=;
+ b=maNpNBh2JeXDs7sgpb6hO1bDTOa19OnIQx6+WmT0GH6EhtJAT6aytQlmZ2cKsWjx/b
+ wQuNBwGn29xd0uWGh43eKEQcTOCCXUx2koyeXZUBUXtv8uFkrx6KDoRwOo9sChEkC9Ko
+ p15gTDB89TCY9A29+sj8aktXC/P5UnXXZ2S7SjcozI0HRtXGnTF/oaXyy8W+IfwlCj3t
+ xhRF+2m04OUiWINxUKPQ2BRMkcbeQnHiaGmHBI6pZoXAtIwrZ5xuJLfnhGBPRoLGaySj
+ b9TDRlffmOUS4UYt4pjR/YP1OEP9aWx3C7Sp4tFj7dyp1fJs5DQR0bg6Kah377JQj0r3
+ ToHQ==
+X-Gm-Message-State: AOJu0YwJjOwgC0bIrcJwk1jH5eRqgUktJurqKzszzs5xxcXKNeYuueFl
+ wGGl5Z0IB1HMK1z5RAosWXy+qU7DLgD/wHfw7IXyZF28AVRo1g9DyEU8dGPenS6EOQGOTp3KFHh
+ Ut5h/lLRGq9XG4Vs0XP9tSn88KJPNeWLqbgNR1h1NXOa1CHto
+X-Google-Smtp-Source: AGHT+IHmiK0kCtRh345JKqw/zshkoAbucP3oNLf7+WtdFBWe2q01FRtrl5vopR53DZYOfAdBbCUJKbwFuXpcgcKMx6Q=
+X-Received: by 2002:a19:9119:0:b0:514:a821:a020 with SMTP id
+ t25-20020a199119000000b00514a821a020mr8493342lfd.26.1712664154940; Tue, 09
+ Apr 2024 05:02:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240409110011.174426-1-het.gala@nutanix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20240409115301.21829-1-abelova@astralinux.ru>
+In-Reply-To: <20240409115301.21829-1-abelova@astralinux.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Apr 2024 13:02:24 +0100
+Message-ID: <CAFEAcA_W4qr6EPhOu-s_+d_V+MfADzddKNwd_gUzBTbajQ+xvg@mail.gmail.com>
+Subject: Re: [PATCH] hw/dma: prevent overflow in soc_dma_set_request
+To: Anastasia Belova <abelova@astralinux.ru>
+Cc: qemu-devel@nongnu.org, Andrzej Zaborowski <balrogg@gmail.com>,
+ sdl.qemu@linuxtesting.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,40 +88,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 09, 2024 at 11:00:08AM +0000, Het Gala wrote:
-> With the introduction of new patchset to have 'channels' as the start
-> argument of migrate QAPIs instead of 'uri' (tests/qtest/migration: Add
-> tests for introducing 'channels' argument in migrate QAPIs), a few minor
-> issues got went unnoticed, which were caught while trying to introduce
-> similar qtests in migration-test.c
-> Fix multifd_tcp_channels_none qtest to actually utilize 'channels' arg
-> in migrate QAPIs, fix double freeing of addr Qdict and typos in that
-> patchset.
-> 
-> This patchset is built on top of (tests/qtest/migration: Add tests for
-> introducing 'channels' argument in migrate QAPIs) 
-> 
-> Can find the build pipeline at : https://gitlab.com/galahet/Qemu/-/pipelines/1245462266
-> 
-> v1 --> v2:
-> ---------
-> 1. Split the second patch into different patches - One to deal with double
->    freeing of Qdict and other to add connect_channels inside
->    multifd_tcp_channels_none to actually use 'channels' arg.
-> 2. use 'git commit --fixup' to improve commit message as well as
->    to inform on which commit is the fix meant to be.
-> 
-> Het Gala (3):
->   fixup! tests/qtest/migration: Add negative tests to validate migration
->     QAPIs
->   fixup! tests/qtest/migration: Add migrate_set_ports into migrate_qmp
->     to update migration port value
->   fixup! tests/qtest/migration: Add multifd_tcp_plain test using list of
->     channels instead of uri
+On Tue, 9 Apr 2024 at 12:54, Anastasia Belova <abelova@astralinux.ru> wrote:
+>
+> ch->num can reach values up to 31. Add casting to
+> a larger type before performing left shift to
+> prevent integer overflow.
 
-queued, thanks.
+If ch->num can only reach up to 31, then 1 << ch->num
+is fine, because QEMU can assume that integers are 32 bits,
+and we compile with -fwrapv so there isn't a problem with
+shifting into the sign bit.
 
--- 
-Peter Xu
+And I agree that we shouldn't ever have a ch->num greater
+than 31, because the worst case here is when we call
+soc_dma_init() with an argument of 32, which sets up
+soc_dma_ch_s structs with values of num from 0 to 31.
 
+So this doesn't seem to me to be fixing an active bug.
+Am I missing something?
+
+thanks
+-- PMM
 
