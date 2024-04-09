@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67624C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6ED7C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruG5r-0001WG-5A; Tue, 09 Apr 2024 14:21:15 -0400
+	id 1ruGNy-000745-C1; Tue, 09 Apr 2024 14:39:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruG5p-0001W2-Ss; Tue, 09 Apr 2024 14:21:13 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruG5m-0000MK-Px; Tue, 09 Apr 2024 14:21:12 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B910C5D3B1;
- Tue,  9 Apr 2024 21:23:02 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1D766AF8A3;
- Tue,  9 Apr 2024 21:21:05 +0300 (MSK)
-Message-ID: <272956e5-5a40-4a0c-8230-90526125b3a0@tls.msk.ru>
-Date: Tue, 9 Apr 2024 21:21:04 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ruGNv-00073a-TH
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:39:56 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ruGNs-0003If-AB
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:39:55 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-516d09bd434so6428634e87.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 11:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712687989; x=1713292789; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xvL+glsdz5z4Amq1OoQNU2NXRCqhZxgf8cj+gEXovas=;
+ b=jilLDqwtDPfxD7mQhBlGk4xh9mrECZU1kxK1XzA6KlRUR39RGML9NGjthrW/cuTp9V
+ Dc8q68zjKh/HUMbDTryUgaD1xzCEtQTJAzJGPtD/mzvGqw+S/N8Ioo8RkYW/5PxeIg/u
+ fEOodZirHMwmNO2fVzaPM2af8ZkZyMjWA/Sjts6nj5Eoxw/ofYArg7izuK4WdJ+FlLEx
+ gfPsye1Bd+9YP0V0CPfK+3PmqP8S05k6UHDv1h/I3jx1bTbPvi3Ge7fhHiuxfkpRQjM4
+ EAu1LU/UDmCfBO5oLrcYxPDp0P7IkaHvkNUUmjOfaFsI3hiCVXN5P6VFPztodQ5vrT3n
+ pYbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712687989; x=1713292789;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xvL+glsdz5z4Amq1OoQNU2NXRCqhZxgf8cj+gEXovas=;
+ b=HcK6p/Dwx43LPQ784bdcNkwLkF3kOfhfe8ayUooM1WpsNZmvuJs5BNMzTz8gKcIqN7
+ sFM3PtHjQKpN3LZ5Ywu9fv0wJo02Zv/KHQyeDpqnV0RfNprBJfCrBY9Rv3mfqGRoDD8N
+ 4DJl+DEmaGzQXqQzjGkFDA0stkzMMmoCgRMf0W9xalh95cXLr8id7jpKe8IVH11D2Nn7
+ qDRrsBN5Y2Qd63dIJ171x+HIqnKJeINsiM+xlX6PnrvplDPzj4N5wX6TfABxLzbRMnXy
+ dwiiqx3SpsELnNq5GAi5KiseIx5uZ3bn+QUAjpWMCujD9j1U1zV3Bgqo6pmDAoEUyXfT
+ 6RGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxOxXW/7VHrMuIDaxTSJzVb1pxj1qqiRmduQJBeTxqXoc6bqugsFP9IicFggXk0hPXDCev1cLfTB4Kgy6+1/W8FC2fETM=
+X-Gm-Message-State: AOJu0YzO6vs8Xva46cjuaPnxruv6e71Pk/0NvJ5G8kbCmH+HRmRTFSvr
+ pD9VfbVxLDe8tSBtNOonxggbW6kGARjAID7pBT7eOt2KQWGZdS5iQVN3+j88aBCiDhd8aVVMmES
+ /sW7HTmYJ49dIf4n5HjLU/muwjZJ56VyI2BZTkQ==
+X-Google-Smtp-Source: AGHT+IGOeKhsZh8q3vo1CwFjn5PfrZyR2lETegbrs6OA4Td2qXVZWqFfvioOh3mQaxUqxLBLN79z9Q6K3N84H0UxQQ0=
+X-Received: by 2002:ac2:5bc6:0:b0:516:d16f:29d0 with SMTP id
+ u6-20020ac25bc6000000b00516d16f29d0mr170614lfn.1.1712687989444; Tue, 09 Apr
+ 2024 11:39:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
-To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Giuseppe_Ghib=C3=B2?= <ghibo@mageia.org>
-References: <20240311075806.668555-1-pbonzini@redhat.com>
- <2f0eefc5-8907-4af7-b717-17e17a9a3019@tls.msk.ru>
- <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
- <ZhUi1NpSeUzXUuMu@intel.com>
- <CABgObfb8hn1qsr6Bu9ZxMr6DWd1uT5sb9Y+7GQd3hbMUvOxOXQ@mail.gmail.com>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CABgObfb8hn1qsr6Bu9ZxMr6DWd1uT5sb9Y+7GQd3hbMUvOxOXQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240409162942.454419-1-kraxel@redhat.com>
+ <20240409162942.454419-2-kraxel@redhat.com>
+ <82b11f6c-fe3c-4cd2-8dca-19b5db1cb09d@tls.msk.ru>
+In-Reply-To: <82b11f6c-fe3c-4cd2-8dca-19b5db1cb09d@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Apr 2024 19:39:37 +0100
+Message-ID: <CAFEAcA-MiGPvkJe_Dt8kg8FG4-XJ7CR=hBMGDao0UZBQeBS1tQ@mail.gmail.com>
+Subject: Re: [PULL 1/4] edk2: get version + date from git submodule
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,43 +92,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-09.04.2024 14:02, Paolo Bonzini wrote:
-> On Tue, Apr 9, 2024 at 12:59 PM Zhao Liu <zhao1.liu@intel.com> wrote:
->>
->> Hi Michael & Paolo,
+On Tue, 9 Apr 2024 at 19:02, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> 09.04.2024 19:29, Gerd Hoffmann:
+> > +efi: edk2-version
+> >       $(PYTHON) edk2-build.py --config edk2-build.config \
+> > -             --version-override "edk2-stable202302-for-qemu" \
+> > -             --release-date "03/01/2023"
+> > +             --version-override "$(EDK2_STABLE)-for-qemu" \
+> > +             --release-date "$(EDK2_DATE)" \
+>
+> How it will look like if there's no edk2/.git, for example, when run in
+> extracted release tarball, with empty EDK2_STABLE and EKD2_DATE?
+>
+> Should these values be a part of release tarball maybe?
+> Or maybe it's better to base EKD2_{DATE|VERSION} on qemu date/version in
+> this case?
 
->> I debugged it manually, and found the problem occurs in tlb_index() with
->> mmu_idx=5.
->>
->> For v7.2, the maximum mmu index supported by i386 is 4 (since
->> NB_MMU_MODES = 5 defined in target/i386/cpu-param.h).
+Patch 2 commits the edk2-version file, so it should end up
+in the release tarball that way. (Effectively it becomes an
+output of the "build the roms" process, same as the edk2 blobs
+themselves.)
 
->> On Michael's 7.2-i386-mmu-idx tree, the commit 9fc3a7828d25 ("target/i386:
->> use separate MMU indexes for 32-bit accesses") introduced more indexes
->> without relaxing the NB_MMU_MODES for i386.
-
-Oh well.  I starred a few times at the new MMU_foo_IDXes in v8.2.0-1876-g90f641531c78
-"target/i386: use separate MMU indexes for 32-bit accesses" a few times, it looked
-somehow wrong, but it didn't occur to me what exactly was wrong there :)
-
->> Before this fix, probe_access_internal() just got the wrong mmu_idx as 4,
->> and it's not out of bounds. After this fix, the right mmu_idx=5 is truly
->> out of bounds.
->>
->> On the master branch, there's no such issue since the commits ffd824f3f32d
->> ("include/exec: Set default NB_MMU_MODES to 16") and 6787318a5d86
->> ("target/i386: Remove NB_MMU_MODES define") relaxed upper limit of MMU
->> index for i386.
-> 
-> Thanks Zhao! Alternatively, it's enough to set NB_MMU_MODES to 8 in
-> commit 9fc3a7828d25.
-
-Thank you, both of you, this is exactly the prob.  I fixed it by increasing
-NB_MMU_NODES in "use separate MMU indexes for 32-bit accesses", since this
-is the change which introduces the new indexes.
-
-Now 7.2 work again, and appears to be under control, which is an excellent
-news! :)
-
-/mjt
+thanks
+-- PMM
 
