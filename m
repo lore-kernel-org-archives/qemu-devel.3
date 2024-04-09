@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8D8CC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 05:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AA9FCD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 05:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru3dX-00035N-FQ; Tue, 09 Apr 2024 01:03:11 -0400
+	id 1ru3dd-00037r-QU; Tue, 09 Apr 2024 01:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ru3dV-000352-Jo
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:09 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1ru3dc-00037M-B5
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:16 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ru3dT-0005C0-HP
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:09 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6ed112c64beso1979438b3a.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 22:03:06 -0700 (PDT)
+ id 1ru3da-0005EP-KG
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:16 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6ecf3943040so3483635b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 22:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712638985; x=1713243785; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Q47WV5+w5EHuyJqN5nKeJ49rNv9gzeLMdS2O5z2tA3E=;
- b=elCOqjJ7i28khJw2N/BX+Ocy9Fen46aKesCpdXRFDm1AiBjJmqO20D1HycFvyh43Wl
- EAfIgHU4osOxd5sLsq0UGyL7CPVBpMVsK6fKyvcyupTgz+zQsCK4WQI+XrlEOzm3Wstt
- UNOU3Zfn1UE/E8LsRqrYeyGxX5bZxW9oJvjqGgcPooHCoR55LolybckcZFx4ye+xaLR5
- +5VP7o+i4Ktpqt5HYiONbiFjFlej5Zwf97sc6CC1nRDz0qTzacXk2ltjtJnMjrQuK5W2
- LNWwI9ptU6VmoWh5I09hvVGPFPgieH4wNmIRcdVqcVab8nbYlZi0tAZjJ5XW0odfUciI
- FNlw==
+ d=linaro.org; s=google; t=1712638993; x=1713243793; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=eh7OtO5x8MRpHpQMvxE89QnFoiPmlYi26LFAKoMr5Dg=;
+ b=wzjEoodvMruifXDvp6NWS6chqrAXoBp0rCntuLQtEg2TAcjb2Rsk4j7ALS9yquPucR
+ 53oWQ00OZ4HF3nV7RCd6J+ZXN8hG+2RedrHvOZsqi8Tv2ajvkGLXEKPqAFuov/1kA1ND
+ d2wbwgEOaKaY0wwk0B3JquWWtKpBUSgmy32RfQIOzz8hTYTFj+eFLcjE6k/R2rYCzYKO
+ U0jUVqyqoAPFAGv9n8Jp/KtgHPerqk102fM4/1WhhggnNZiHCnZ2r9y0Mj81unKQN6qQ
+ MwLdGp1E5Y1XS8bX+Z09Nt17N5l/f+tva/TaeYawv22+EOAiyQrTsSfrpXOGr64RX5L8
+ RY6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712638985; x=1713243785;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q47WV5+w5EHuyJqN5nKeJ49rNv9gzeLMdS2O5z2tA3E=;
- b=rlpKcGaSLgN5rvs/J34EDwHjHrJ9EeK/8UwdFKZPsl+3KLCXyYVgiECdzWFX7U106c
- xqs5UOa1mwb19Ht6+Y8psesMvAjH9rVxMg/mY/Dvu9j+zzvEIwFJ06+LrzlrdR30OXfF
- PEF43QiWmEjJ1Z0hFmqAy9lD5M+SJgwM08S8Lg43JMYnOmmZXa3UThKfd2bWNqVcPy1t
- t28oYoaygC4Zi09IXm0ID0V1e0Gc3o/V+wQQdFg8wgla6KLnU3ztugvUen4GKdlo0Gn2
- JIDZ8FVGdF5365phlPV8H8oz2O5clBrmJu4WWkJkeDnCxZW87mrU5B2oiHj0apsU5Z8k
- uQng==
-X-Gm-Message-State: AOJu0YxWUUUbm6uKFIoEkP9gk/if/FPc3/fv8fCB8AeX9IPjjsxRS9wf
- T/XUVamvuOqhyswwRm5bjfgiQXWbtqO2CIA29D096WpQx7PqSzeX7JI4YUCW+Xdih0zZw0qNC2r
- 5
-X-Google-Smtp-Source: AGHT+IFVI2+1+9for0cssfnhIjb80FU40UhJrehKihTHOQA8XKYhvO9Hkz46vJTvUqq6EojdlV9jXQ==
-X-Received: by 2002:a05:6a00:b84:b0:6ea:7981:d40b with SMTP id
- g4-20020a056a000b8400b006ea7981d40bmr9061668pfj.16.1712638985178; 
- Mon, 08 Apr 2024 22:03:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712638993; x=1713243793;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eh7OtO5x8MRpHpQMvxE89QnFoiPmlYi26LFAKoMr5Dg=;
+ b=tMNZFjozwGhinS1edV/JySNWBDDNPDdnobIVPlntA0F8q1WJxrOUDo3mCk7ykOtBZN
+ PvFrXP03K1p2ENtSq4u68hWDvVq9Vs4w04Ktn4UcPcnx0RLa22psosprEiiYITu0XJ+0
+ uMNvNyIwUQDFuqY+YyLx4fast9tcNPqgykbpO+mVV+PVsitDnTtj69qovxoxq7elhK5Y
+ /ORvqONkHMci3OH4KbyauztElEFw1r0n6FewDWjSH7MPTedMcXMYXCQsiyIX2f6Bbh88
+ H7bsiEOs8cSHdTcFh7s1SzRSqU32ChmNkFeD7i2r0LFRoWNk19H1kJmtIH1LexAnoKcj
+ YuDQ==
+X-Gm-Message-State: AOJu0YxZA/gT1K193Z0B4DAlIhMb7R/WAd2UzFwLFS/YQtb9O4MZ365r
+ wdp9uhsISGkWAmCEwG+I706zWrL4mTRZCoqcBV9BSw1nM1Xp63guGaOGSj8W1X/BJtA6YERmsLQ
+ P
+X-Google-Smtp-Source: AGHT+IEQ4HFBF6G5Va2IIh1PjIDjrKvS5rFiioM5979FI4udt065g4ehGllonCOpl5sLpslO5Yo/NQ==
+X-Received: by 2002:a05:6a20:431c:b0:1a7:a6f3:1822 with SMTP id
+ h28-20020a056a20431c00b001a7a6f31822mr1107931pzk.12.1712638992770; 
+ Mon, 08 Apr 2024 22:03:12 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- z26-20020aa785da000000b006e64ddfa71asm7654894pfn.170.2024.04.08.22.03.03
+ z26-20020aa785da000000b006e64ddfa71asm7654894pfn.170.2024.04.08.22.03.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 22:03:04 -0700 (PDT)
+ Mon, 08 Apr 2024 22:03:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH for-9.1 v2 00/28] linux-user/i386: Properly align signal frame
-Date: Mon,  8 Apr 2024 19:02:34 -1000
-Message-Id: <20240409050302.1523277-1-richard.henderson@linaro.org>
+Subject: [PATCH v2 06/28] target/i386: Convert do_fsave, do_frstor to X86Access
+Date: Mon,  8 Apr 2024 19:02:40 -1000
+Message-Id: <20240409050302.1523277-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240409050302.1523277-1-richard.henderson@linaro.org>
+References: <20240409050302.1523277-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,62 +93,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1: https://lore.kernel.org/qemu-devel/20230524054647.1093758-1-richard.henderson@linaro.org/
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/i386/tcg/fpu_helper.c | 60 ++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 27 deletions(-)
 
-But v1 isn't particularly complet or korrect.
-
-Disconnect fpstate from sigframe, just like the kernel does.
-Return the separate portions of the frame from get_sigframe.
-Alter all of the target fpu routines to access memory that
-has already been translated and sized.
-
-
-r~
-
-
-Richard Henderson (28):
-  target/i386: Add tcg/access.[ch]
-  target/i386: Convert do_fldt, do_fstt to X86Access
-  target/i386: Convert helper_{fbld,fbst}_ST0 to X86Access
-  target/i386: Convert do_fldenv to X86Access
-  target/i386: Convert do_fstenv to X86Access
-  target/i386: Convert do_fsave, do_frstor to X86Access
-  target/i386: Convert do_xsave_{fpu,mxcr,sse} to X86Access
-  target/i386: Convert do_xrstor_{fpu,mxcr,sse} to X86Access
-  tagret/i386: Convert do_fxsave, do_fxrstor to X86Access
-  target/i386: Convert do_xsave_* to X86Access
-  target/i386: Convert do_xrstor_* to X86Access
-  target/i386: Split out do_xsave_chk
-  target/i386: Add rbfm argument to cpu_x86_{xsave,xrstor}
-  target/i386: Add {hw,sw}_reserved to X86LegacyXSaveArea
-  linux-user/i386: Drop xfeatures_size from sigcontext arithmetic
-  linux-user/i386: Remove xfeatures from target_fpstate_fxsave
-  linux-user/i386: Replace target_fpstate_fxsave with X86LegacyXSaveArea
-  linux-user/i386: Split out struct target_fregs_state
-  linux-user/i386: Fix -mregparm=3 for signal delivery
-  linux-user/i386: Return boolean success from restore_sigcontext
-  linux-user/i386: Return boolean success from xrstor_sigcontext
-  linux-user/i386: Fix allocation and alignment of fp state
-  target/i386: Honor xfeatures in xrstor_sigcontext
-  target/i386: Convert do_xsave to X86Access
-  target/i386: Convert do_xrstor to X86Access
-  target/i386: Pass host pointer and size to cpu_x86_{fsave,frstor}
-  target/i386: Pass host pointer and size to cpu_x86_{fxsave,fxrstor}
-  target/i386: Pass host pointer and size to cpu_x86_{xsave,xrstor}
-
- target/i386/cpu.h                |  57 ++-
- target/i386/tcg/access.h         |  40 ++
- linux-user/i386/signal.c         | 669 ++++++++++++++++++-------------
- target/i386/tcg/access.c         | 160 ++++++++
- target/i386/tcg/fpu_helper.c     | 561 ++++++++++++++++----------
- tests/tcg/x86_64/test-1648.c     |  33 ++
- target/i386/tcg/meson.build      |   1 +
- tests/tcg/x86_64/Makefile.target |   1 +
- 8 files changed, 1014 insertions(+), 508 deletions(-)
- create mode 100644 target/i386/tcg/access.h
- create mode 100644 target/i386/tcg/access.c
- create mode 100644 tests/tcg/x86_64/test-1648.c
-
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 25074af0ce..e6fa161aa0 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -2468,21 +2468,16 @@ void helper_fldenv(CPUX86State *env, target_ulong ptr, int data32)
+     do_fldenv(&ac, ptr, data32);
+ }
+ 
+-static void do_fsave(CPUX86State *env, target_ulong ptr, int data32,
+-                     uintptr_t retaddr)
++static void do_fsave(X86Access *ac, target_ulong ptr, int data32)
+ {
+-    X86Access ac;
+-    floatx80 tmp;
+-    int i, envsize = 14 << data32;
++    CPUX86State *env = ac->env;
+ 
+-    access_prepare(&ac, env, ptr, envsize + 80, MMU_DATA_STORE, GETPC());
++    do_fstenv(ac, ptr, data32);
++    ptr += 14 << data32;
+ 
+-    do_fstenv(&ac, ptr, data32);
+-    ptr += envsize;
+-
+-    for (i = 0; i < 8; i++) {
+-        tmp = ST(i);
+-        do_fstt(&ac, ptr, tmp);
++    for (int i = 0; i < 8; i++) {
++        floatx80 tmp = ST(i);
++        do_fstt(ac, ptr, tmp);
+         ptr += 10;
+     }
+ 
+@@ -2491,23 +2486,22 @@ static void do_fsave(CPUX86State *env, target_ulong ptr, int data32,
+ 
+ void helper_fsave(CPUX86State *env, target_ulong ptr, int data32)
+ {
+-    do_fsave(env, ptr, data32, GETPC());
++    int size = (14 << data32) + 80;
++    X86Access ac;
++
++    access_prepare(&ac, env, ptr, size, MMU_DATA_STORE, GETPC());
++    do_fsave(&ac, ptr, data32);
+ }
+ 
+-static void do_frstor(CPUX86State *env, target_ulong ptr, int data32,
+-                      uintptr_t retaddr)
++static void do_frstor(X86Access *ac, target_ulong ptr, int data32)
+ {
+-    X86Access ac;
+-    floatx80 tmp;
+-    int i, envsize = 14 << data32;
++    CPUX86State *env = ac->env;
+ 
+-    access_prepare(&ac, env, ptr, envsize + 80, MMU_DATA_LOAD, retaddr);
++    do_fldenv(ac, ptr, data32);
++    ptr += 14 << data32;
+ 
+-    do_fldenv(&ac, ptr, data32);
+-    ptr += envsize;
+-
+-    for (i = 0; i < 8; i++) {
+-        tmp = do_fldt(&ac, ptr);
++    for (int i = 0; i < 8; i++) {
++        floatx80 tmp = do_fldt(ac, ptr);
+         ST(i) = tmp;
+         ptr += 10;
+     }
+@@ -2515,7 +2509,11 @@ static void do_frstor(CPUX86State *env, target_ulong ptr, int data32,
+ 
+ void helper_frstor(CPUX86State *env, target_ulong ptr, int data32)
+ {
+-    do_frstor(env, ptr, data32, GETPC());
++    int size = (14 << data32) + 80;
++    X86Access ac;
++
++    access_prepare(&ac, env, ptr, size, MMU_DATA_LOAD, GETPC());
++    do_frstor(&ac, ptr, data32);
+ }
+ 
+ #define XO(X)  offsetof(X86XSaveArea, X)
+@@ -2971,12 +2969,20 @@ void helper_xrstor(CPUX86State *env, target_ulong ptr, uint64_t rfbm)
+ #if defined(CONFIG_USER_ONLY)
+ void cpu_x86_fsave(CPUX86State *env, target_ulong ptr, int data32)
+ {
+-    do_fsave(env, ptr, data32, 0);
++    int size = (14 << data32) + 80;
++    X86Access ac;
++
++    access_prepare(&ac, env, ptr, size, MMU_DATA_STORE, 0);
++    do_fsave(&ac, ptr, data32);
+ }
+ 
+ void cpu_x86_frstor(CPUX86State *env, target_ulong ptr, int data32)
+ {
+-    do_frstor(env, ptr, data32, 0);
++    int size = (14 << data32) + 80;
++    X86Access ac;
++
++    access_prepare(&ac, env, ptr, size, MMU_DATA_LOAD, 0);
++    do_frstor(&ac, ptr, data32);
+ }
+ 
+ void cpu_x86_fxsave(CPUX86State *env, target_ulong ptr)
 -- 
 2.34.1
 
