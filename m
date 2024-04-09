@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227BFC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C47FCD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:00:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruFl4-0001YN-RE; Tue, 09 Apr 2024 13:59:52 -0400
+	id 1ruFlT-0001bz-N6; Tue, 09 Apr 2024 14:00:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1ruFl1-0001Y0-Fl; Tue, 09 Apr 2024 13:59:43 -0400
+ id 1ruFl2-0001YD-JD; Tue, 09 Apr 2024 13:59:44 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1ruFky-0004tA-Nt; Tue, 09 Apr 2024 13:59:43 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1ruFky-0004tC-RT; Tue, 09 Apr 2024 13:59:44 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 439HVU6Z006463; Tue, 9 Apr 2024 17:59:31 GMT
+ 439HnOco008531; Tue, 9 Apr 2024 17:59:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=Jnio8gXCRBBegDVpdB0WSPfqSBUIY78Ii8fmXeut6Og=;
- b=EGHBCjDgygXBI1GoUGaz1zYH65V1SXxqneOSHUZItmIIOdhRpVtGtDlqXph93r5K/hRF
- kTtdzNnYon7QVlNRBP7NoyBJfss4aN+F6VyoGxSGp8jqW7wQuauoxVUiLT3MTBi39wMW
- V6DyvareZUQU6fyEivIzpWBsGS0fb1Rbs/rFeitYC+V5vegw0JwM4iIiQF05+V3q2G6O
- SpcBqB3x3uO+TngXQrwwe3ho3k/uvGXpUeH54GEBcXpgV1yDJgDnW1eVABtzZ55zGH4g
- Cb+Me8PU7ugyNa6b53iCKYlmneqDsYdaQTfWSIuH8Udo3WkKqBoBZmIX3JPnmKcNupCP lQ== 
+ bh=KMEgc6leM5XxU7v4meRFQCd7u5tL4BPkUOlJfQASFZ0=;
+ b=ifrp/1aomaFEOy5J30pIBMvJ6/eQERmCcPcORy9UXh0iPXJVy+UiJAP8O66QT6Um57G0
+ vQ+Be9NGxRn1pctGmWC4BzCxSmD97H25nB4YS1LTlWtyp7YVQTeV2aqRfYYchyweZSKV
+ cVrtwMAmLFo45ia1lxAWrdNKRMZpLE48czRdT0x7l8/Cde+/nzgjLzRAHeKwXb/SdrcA
+ SvVl8kSlN2U54sKjj1I+Kz2mi2yI7Vk+nBlQbSVMmS3vLeGX9wB0LpzspoQdkbA7dLDU
+ bpQicjNj1+pb9gu4ERD0HYrbIDCmpAqyA/BSlVppNu9LbcYz33+qPCiDY+AkzKKo06a5 pw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xd934r7yb-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xdada80n1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Tue, 09 Apr 2024 17:59:31 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 439HxUtY016529;
- Tue, 9 Apr 2024 17:59:30 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xd934r7wg-1
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 439HxV3X021977;
+ Tue, 9 Apr 2024 17:59:31 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xdada80j4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Apr 2024 17:59:30 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 439HGnZm019092; Tue, 9 Apr 2024 17:57:21 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xbh4081ky-1
+ Tue, 09 Apr 2024 17:59:31 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 439GFXsU016965; Tue, 9 Apr 2024 17:57:29 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xbke2fdks-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Apr 2024 17:57:21 +0000
+ Tue, 09 Apr 2024 17:57:29 +0000
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 439HvFRX45875598
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 439HvOEQ51970364
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Apr 2024 17:57:17 GMT
+ Tue, 9 Apr 2024 17:57:26 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5DA9D20063;
- Tue,  9 Apr 2024 17:57:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id F15972004B;
+ Tue,  9 Apr 2024 17:57:23 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 98C9E20067;
- Tue,  9 Apr 2024 17:57:13 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3732E20043;
+ Tue,  9 Apr 2024 17:57:22 +0000 (GMT)
 Received: from gfwr515.rchland.ibm.com (unknown [9.10.239.103])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  9 Apr 2024 17:57:13 +0000 (GMT)
+ Tue,  9 Apr 2024 17:57:22 +0000 (GMT)
 From: Chalapathi V <chalapathi.v@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
  clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
  chalapathi.v@linux.ibm.com, saif.abrar@linux.vnet.ibm.com,
  dantan@us.ibm.com
-Subject: [PATCH v2 2/6] hw/ppc: SPI controller model - registers implementation
-Date: Tue,  9 Apr 2024 12:56:56 -0500
-Message-Id: <20240409175700.27535-3-chalapathi.v@linux.ibm.com>
+Subject: [PATCH v2 4/6] hw/misc: Microchip's 25CSM04 SEEPROM model
+Date: Tue,  9 Apr 2024 12:56:58 -0500
+Message-Id: <20240409175700.27535-5-chalapathi.v@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
 References: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 3d0JSW4saeY1D5hbzlLo9SfLAvhi358b
-X-Proofpoint-ORIG-GUID: RxLozLxKEQa_jSJruD8ExlWrgp8b3nMa
+X-Proofpoint-ORIG-GUID: SBtuTIYtWAMGwMp3yjImHAXK5-pxPK87
+X-Proofpoint-GUID: xVhpaFTE9jxa2EPtVPr8wS7uDBqG-oeN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-09_12,2024-04-09_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- phishscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 clxscore=1015
- bulkscore=0 priorityscore=1501 adultscore=0 spamscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
- definitions=main-2404090118
+ bulkscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ adultscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2404010000 definitions=main-2404090118
 Received-SPF: pass client-ip=148.163.158.5;
  envelope-from=chalapathi.v@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -115,232 +115,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SPI controller device model supports a connection to a single SPI responder.
-This provide access to SPI seeproms, TPM, flash device and an ADC controller.
+This commit implements a Serial EEPROM utilizing the Serial Peripheral
+Interface (SPI) compatible bus.
+Currently implemented SEEPROM is Microchip's 25CSM04 which provides 4 Mbits
+of Serial EEPROM utilizing the Serial Peripheral Interface (SPI) compatible
+bus. The device is organized as 524288 bytes of 8 bits each (512Kbyte) and
+is optimized for use in consumer and industrial applications where reliable
+and dependable nonvolatile memory storage is essential.
 
-All SPI function control is mapped into the SPI register space to enable full
-control by firmware. In this commit SPI configuration component is modelled
-which contains all SPI configuration and status registers as well as the hold
-registers for data to be sent or having been received.
-
-An existing QEMU SSI framework is used and SSI_BUS is created.
+This seeprom device is created from a parent "ssi-peripheral".
 
 Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
 ---
- include/hw/ppc/pnv_spi_controller.h      |  55 +++++
- include/hw/ppc/pnv_spi_controller_regs.h | 114 ++++++++++
- include/hw/ppc/pnv_xscom.h               |   3 +
- hw/ppc/pnv_spi_controller.c              | 278 +++++++++++++++++++++++
- hw/ppc/Kconfig                           |   1 +
- hw/ppc/meson.build                       |   1 +
- 6 files changed, 452 insertions(+)
- create mode 100644 include/hw/ppc/pnv_spi_controller.h
- create mode 100644 include/hw/ppc/pnv_spi_controller_regs.h
- create mode 100644 hw/ppc/pnv_spi_controller.c
+ include/hw/misc/seeprom_25csm04.h |  48 ++
+ hw/misc/seeprom_25csm04.c         | 780 ++++++++++++++++++++++++++++++
+ hw/misc/Kconfig                   |   3 +
+ hw/misc/meson.build               |   1 +
+ hw/ppc/Kconfig                    |   1 +
+ 5 files changed, 833 insertions(+)
+ create mode 100644 include/hw/misc/seeprom_25csm04.h
+ create mode 100644 hw/misc/seeprom_25csm04.c
 
-diff --git a/include/hw/ppc/pnv_spi_controller.h b/include/hw/ppc/pnv_spi_controller.h
+diff --git a/include/hw/misc/seeprom_25csm04.h b/include/hw/misc/seeprom_25csm04.h
 new file mode 100644
-index 0000000000..5ec50fb14c
+index 0000000000..0343530354
 --- /dev/null
-+++ b/include/hw/ppc/pnv_spi_controller.h
-@@ -0,0 +1,55 @@
++++ b/include/hw/misc/seeprom_25csm04.h
+@@ -0,0 +1,48 @@
 +/*
-+ * QEMU PowerPC SPI Controller model
++ * 25CSM04 Serial EEPROM model
 + *
 + * Copyright (c) 2024, IBM Corporation.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * This model Supports a connection to a single SPI responder.
-+ * Introduced for P10 to provide access to SPI seeproms, TPM, flash device
-+ * and an ADC controller.
++ * The Microchip Technology Inc. 25CSM04 provides 4 Mbits of Serial EEPROM
++ * utilizing the Serial Peripheral Interface (SPI) compatible bus. The device
++ * is organized as 524288 bytes of 8 bits each (512Kbyte) and is optimized
++ * for use in consumer and industrial applications where reliable and
++ * dependable nonvolatile memory storage is essential
 + */
++
++#ifndef SEEPROM_25CSM04_H
++#define SEEPROM_25CSM04_H
++
 +#include "hw/ssi/ssi.h"
++#include "qom/object.h"
 +
-+#ifndef PPC_PNV_SPI_CONTROLLER_H
-+#define PPC_PNV_SPI_CONTROLLER_H
++#define TYPE_SEEPROM_25CSM04 "seeprom-25csm04"
 +
-+#define TYPE_PNV_SPI_CONTROLLER "pnv-spi-controller"
-+#define PNV_SPICONTROLLER(obj) \
-+        OBJECT_CHECK(PnvSpiController, (obj), TYPE_PNV_SPI_CONTROLLER)
++OBJECT_DECLARE_SIMPLE_TYPE(SeepromCsm04, SEEPROM_25CSM04)
 +
-+#define SPI_CONTROLLER_REG_SIZE 8
++typedef struct SeepromCsm04 {
++    SSIPeripheral parent_object;
 +
-+typedef struct SSIBus SSIBus;
++    char        *file;
++    char        *file_name;
++    uint8_t     opcode;
++    uint32_t    addr;
++    uint8_t     rd_state;
++    bool        locked;
++    bool        command_byte;
++    /* device registers */
++    uint8_t     status0;
++    uint8_t     status1;
++    uint8_t     dsn[16];
++    uint8_t     uplid[256];
++    uint8_t     mpr[8];
++    uint8_t     idr[5];
++} SeepromCsm04;
 +
-+#define TYPE_PNV_SPI_BUS "pnv-spi-bus"
-+OBJECT_DECLARE_SIMPLE_TYPE(PnvSPIBus, PNV_SPI_BUS)
-+
-+typedef struct PnvSPIBus {
-+    SysBusDevice parent_obj;
-+
-+    SSIBus *ssi_bus;
-+    qemu_irq *cs_line;
-+    uint32_t id;
-+} PnvSPIBus;
-+
-+typedef struct PnvSpiController {
-+    DeviceState parent;
-+
-+    PnvSPIBus       bus;
-+    MemoryRegion    xscom_spic_regs;
-+    /* SPI controller object number */
-+    uint32_t        spic_num;
-+
-+    /* SPI Controller registers */
-+    uint64_t        error_reg;
-+    uint64_t        counter_config_reg;
-+    uint64_t        config_reg1;
-+    uint64_t        clock_config_reset_control;
-+    uint64_t        memory_mapping_reg;
-+    uint64_t        transmit_data_reg;
-+    uint64_t        receive_data_reg;
-+    uint8_t         sequencer_operation_reg[SPI_CONTROLLER_REG_SIZE];
-+    uint64_t        status_reg;
-+} PnvSpiController;
-+#endif /* PPC_PNV_SPI_CONTROLLER_H */
-diff --git a/include/hw/ppc/pnv_spi_controller_regs.h b/include/hw/ppc/pnv_spi_controller_regs.h
++uint32_t seeprom_transfer(SSIPeripheral *ss, uint32_t tx);
++void seeprom_realize(SSIPeripheral *dev, Error **errp);
++bool compute_addr(SeepromCsm04 *s, uint32_t tx);
++bool validate_addr(SeepromCsm04 *s);
++#endif /* PPC_PNV_SPI_SEEPROM_H */
+diff --git a/hw/misc/seeprom_25csm04.c b/hw/misc/seeprom_25csm04.c
 new file mode 100644
-index 0000000000..6f613aca5e
+index 0000000000..45df66e4b0
 --- /dev/null
-+++ b/include/hw/ppc/pnv_spi_controller_regs.h
-@@ -0,0 +1,114 @@
++++ b/hw/misc/seeprom_25csm04.c
+@@ -0,0 +1,780 @@
 +/*
-+ * QEMU PowerPC SPI Controller model
-+ *
-+ * Copyright (c) 2023, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef SPI_CONTROLLER_REGS_H
-+#define SPI_CONTROLLER_REGS_H
-+
-+/* Error Register */
-+#define ERROR_REG                               0x00
-+
-+/* counter_config_reg */
-+#define COUNTER_CONFIG_REG                      0x01
-+#define COUNTER_CONFIG_REG_SHIFT_COUNT_N1       PPC_BITMASK(0, 7)
-+#define COUNTER_CONFIG_REG_SHIFT_COUNT_N2       PPC_BITMASK(8, 15)
-+#define COUNTER_CONFIG_REG_COUNT_COMPARE1       PPC_BITMASK(24, 31)
-+#define COUNTER_CONFIG_REG_COUNT_COMPARE2       PPC_BITMASK(32, 39)
-+#define COUNTER_CONFIG_REG_N1_COUNT_CONTROL     PPC_BITMASK(48, 51)
-+#define COUNTER_CONFIG_REG_N2_COUNT_CONTROL     PPC_BITMASK(52, 55)
-+
-+/* config_reg */
-+#define CONFIG_REG1                             0x02
-+
-+/* clock_config_reset_control_ecc_enable_reg */
-+#define CLOCK_CONFIG_REG                        0x03
-+#define CLOCK_CONFIG_RESET_CONTROL_HARD_RESET   0x0084000000000000;
-+#define CLOCK_CONFIG_REG_RESET_CONTROL          PPC_BITMASK(24, 27)
-+#define CLOCK_CONFIG_REG_ECC_CONTROL            PPC_BITMASK(28, 30)
-+
-+/* memory_mapping_reg */
-+#define MEMORY_MAPPING_REG                      0x04
-+#define MEMORY_MAPPING_REG_MMSPISM_BASE_ADDR    PPC_BITMASK(0, 15)
-+#define MEMORY_MAPPING_REG_MMSPISM_ADDR_MASK    PPC_BITMASK(16, 31)
-+#define MEMORY_MAPPING_REG_RDR_MATCH_VAL        PPC_BITMASK(32, 47)
-+#define MEMORY_MAPPING_REG_RDR_MATCH_MASK       PPC_BITMASK(48, 63)
-+
-+/* transmit_data_reg */
-+#define TRANSMIT_DATA_REG                       0x05
-+
-+/* receive_data_reg */
-+#define RECEIVE_DATA_REG                        0x06
-+
-+/* sequencer_operation_reg */
-+#define SEQUENCER_OPERATION_REG                 0x07
-+
-+/* status_reg */
-+#define STATUS_REG                              0x08
-+#define STATUS_REG_RDR_FULL                     PPC_BIT(0)
-+#define STATUS_REG_RDR_OVERRUN                  PPC_BIT(1)
-+#define STATUS_REG_RDR_UNDERRUN                 PPC_BIT(2)
-+#define STATUS_REG_TDR_FULL                     PPC_BIT(4)
-+#define STATUS_REG_TDR_OVERRUN                  PPC_BIT(5)
-+#define STATUS_REG_TDR_UNDERRUN                 PPC_BIT(6)
-+#define STATUS_REG_SEQUENCER_FSM                PPC_BITMASK(8, 15)
-+#define STATUS_REG_SHIFTER_FSM                  PPC_BITMASK(16, 27)
-+#define STATUS_REG_SEQUENCER_INDEX              PPC_BITMASK(28, 31)
-+#define STATUS_REG_GENERAL_SPI_STATUS           PPC_BITMASK(32, 63)
-+#define STATUS_REG_RDR                          PPC_BITMASK(1, 3)
-+#define STATUS_REG_TDR                          PPC_BITMASK(5, 7)
-+
-+/*
-+ * Shifter states
-+ *
-+ * These are the same values defined for the Shifter FSM field of the
-+ * status register.  It's a 12 bit field so we will represent it as three
-+ * nibbles in the constants.
-+ *
-+ * These are shifter_fsm values
-+ *
-+ * Status reg bits 16-27 -> field bits 0-11
-+ * bits 0,1,2,5 unused/reserved
-+ * bit 4 crc shift in (unused)
-+ * bit 8 crc shift out (unused)
-+ */
-+
-+#define FSM_DONE                        0x100   /* bit 3 */
-+#define FSM_SHIFT_N2                    0x020   /* bit 6 */
-+#define FSM_WAIT                        0x010   /* bit 7 */
-+#define FSM_SHIFT_N1                    0x004   /* bit 9 */
-+#define FSM_START                       0x002   /* bit 10 */
-+#define FSM_IDLE                        0x001   /* bit 11 */
-+
-+/*
-+ * Sequencer states
-+ *
-+ * These are sequencer_fsm values
-+ *
-+ * Status reg bits 8-15 -> field bits 0-7
-+ * bits 0-3 unused/reserved
-+ *
-+ */
-+#define SEQ_STATE_INDEX_INCREMENT       0x08    /* bit 4 */
-+#define SEQ_STATE_EXECUTE               0x04    /* bit 5 */
-+#define SEQ_STATE_DECODE                0x02    /* bit 6 */
-+#define SEQ_STATE_IDLE                  0x01    /* bit 7 */
-+
-+/*
-+ * These are the supported sequencer operations.
-+ * Only the upper nibble is significant because for many operations
-+ * the lower nibble is a variable specific to the operation.
-+ */
-+#define SEQ_OP_STOP                     0x00
-+#define SEQ_OP_SELECT_SLAVE             0x10
-+#define SEQ_OP_SHIFT_N1                 0x30
-+#define SEQ_OP_SHIFT_N2                 0x40
-+#define SEQ_OP_BRANCH_IFNEQ_RDR         0x60
-+#define SEQ_OP_TRANSFER_TDR             0xC0
-+#define SEQ_OP_BRANCH_IFNEQ_INC_1       0xE0
-+#define SEQ_OP_BRANCH_IFNEQ_INC_2       0xF0
-+
-+#endif
-diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
-index 6209e18492..a77b97f9b1 100644
---- a/include/hw/ppc/pnv_xscom.h
-+++ b/include/hw/ppc/pnv_xscom.h
-@@ -194,6 +194,9 @@ struct PnvXScomInterfaceClass {
- #define PNV10_XSCOM_PEC_PCI_BASE   0x8010800 /* index goes upwards ... */
- #define PNV10_XSCOM_PEC_PCI_SIZE   0x200
- 
-+#define PNV10_XSCOM_PIB_SPIC_BASE 0xc0000
-+#define PNV10_XSCOM_PIB_SPIC_SIZE 0x20
-+
- void pnv_xscom_init(PnvChip *chip, uint64_t size, hwaddr addr);
- int pnv_dt_xscom(PnvChip *chip, void *fdt, int root_offset,
-                  uint64_t xscom_base, uint64_t xscom_size,
-diff --git a/hw/ppc/pnv_spi_controller.c b/hw/ppc/pnv_spi_controller.c
-new file mode 100644
-index 0000000000..e2478a47f2
---- /dev/null
-+++ b/hw/ppc/pnv_spi_controller.c
-@@ -0,0 +1,278 @@
-+/*
-+ * QEMU PowerPC SPI Controller model
++ * 25CSM04 Serial EEPROM model
 + *
 + * Copyright (c) 2024, IBM Corporation.
 + *
@@ -349,298 +206,814 @@ index 0000000000..e2478a47f2
 +
 +#include "qemu/osdep.h"
 +#include "qemu/log.h"
++#include "hw/misc/seeprom_25csm04.h"
 +#include "hw/qdev-properties.h"
-+#include "hw/ppc/pnv_xscom.h"
-+#include "hw/ppc/pnv_spi_controller.h"
-+#include "hw/ppc/pnv_spi_controller_regs.h"
-+#include "hw/ssi/ssi.h"
-+#include "hw/ppc/fdt.h"
-+#include <libfdt.h>
++#include "qemu/datadir.h"
 +#include <math.h>
-+#include "hw/irq.h"
 +
 +#define SPI_DEBUG(x)
 +
-+static uint64_t pnv_spi_controller_read(void *opaque, hwaddr addr,
-+                                 unsigned size)
++/*
++ * 2-byte STATUS register which is a combination of six nonvolatile bits of
++ * EEPROM and five volatile latches.
++ *
++ * status 0:
++ * bit 7 WPEN: Write-Protect Enable bit
++ * 1 = Write-Protect pin is enabled, 0 = Write-Protect pin is ignored
++ *
++ * bit 3-2 BP<1:0>: Block Protection bits
++ * 00 = No array write protection
++ * 01 = Upper quarter memory array protection
++ * 10 = Upper half memory array protection
++ * 11 = Entire memory array protection
++ *
++ * bit 1 WEL: Write Enable Latch bit
++ * 1 = WREN has been executed and device is enabled for writing
++ * 0 = Device is not write-enabled
++ *
++ * bit 0 RDY/BSY: Ready/Busy Status Latch bit
++ * 1 = Device is busy with an internal write cycle
++ * 0 = Device is ready for a new sequence
++ */
++#define STATUS0_WPEN        0x7
++#define STATUS0_BP          0x2
++#define STATUS0_WEL         0x1
++#define STATUS0_BUSY        0x0
++
++/*
++ * status 1:
++ * bit 7 WPM: Write Protection Mode bit(1)
++ * 1 = Enhanced Write Protection mode selected (factory default)
++ * 0 = Legacy Write Protection mode selected
++ *
++ * bit 6 ECS: Error Correction State Latch bit
++ * 1 = The previously executed read sequence did require the ECC
++ * 0 = The previous executed read sequence did not require the ECC
++ *
++ * bit 5 FMPC: Freeze Memory Protection Configuration bit(2)
++ * 1 = Memory Partition registers and write protection mode are permanently
++ *     frozen and cannot be modified
++ * 0 = Memory Partition registers and write protection mode are not frozen
++ *     and are modifiable
++ *
++ * bit 4 PREL: Partition Register Write Enable Latch bit
++ * 1 = PRWE has been executed and WMPR, FRZR and PPAB instructions are enabled
++ * 0 = WMPR, FRZR and PPAB instructions are disabled
++ *
++ * bit 3 PABP: Partition Address Boundary Protection bit
++ * 1 = Partition Address Endpoints set in Memory Partition registers
++ *     cannot be modified
++ * 0 = Partition Address Endpoints set in Memory Partition registers
++ *     are modifiable
++ *
++ * bit 0 RDY/BSY: Ready/Busy Status Latch bit
++ * 1 = Device is busy with an internal write cycle
++ * 0 = Device is ready for a new sequence
++ */
++#define STATUS1_WPM             0x7
++#define STATUS1_ECS             0x6
++#define STATUS1_FMPC            0x5
++#define STATUS1_PREL            0x4
++#define STATUS1_PABP            0x3
++#define STATUS1_BUSY            0x0
++
++/*
++ * MEMORY PARTITION REGISTERS
++ * Note 1: The MPR cannot be written if the FMPC bit has been set.
++ *      2: The Partition Endpoint Address bits cannot be written if the PABP
++ *         bit has been set.
++ *
++ * bits 7-6 PB<1:0>: Partition Behavior bits(1)
++ * 00 = Partition is open and writing is permitted
++ *      factory default is unprotected.
++ * 01 = Partition is always write-protected but can be reversed at a later
++ *      time (software write-protected).
++ * 10 = Partition is write-protected only when WP pin is asserted
++ *      (hardware write-protected).
++ * 11 = Partition is software write-protected and MPR is permanently locked
++ *
++ * bit 5-0 A<18:13>: Partition Endpoint Address bits(1, 2)
++ * 000000 = Endpoint address of partition is set to 01FFFh.
++ * 000001 = Endpoint address of partition is set to 03FFFh.
++ * ----
++ * 111110 = Endpoint address of partition is set to 7DFFFh.
++ * 111111 = Endpoint address of partition is set to 7FFFFh.
++ */
++#define MPR_PB                  0x6
++#define MPR_PEA                 0x5
++
++/* INSTRUCTION SET FOR 25CSM04 */
++#define RDSR        0x05
++#define WRBP        0x08
++#define WREN        0x06
++#define WRDI        0x04
++#define WRSR        0x01
++#define READ        0x03
++#define WRITE       0x02
++#define RDEX_CHLK   0x83
++#define WREX_LOCK   0x82
++#define RMPR        0x31
++#define PRWE        0x07
++#define PRWD        0x0A
++#define WMPR        0x32
++#define PPAB        0x34
++#define FRZR        0x37
++#define SPID        0x9F
++#define SRST        0x7C
++
++/* READ FSM state */
++#define ST_IDLE     0
++#define ST_READ     1
++#define ST_SEC_READ 2
++
++#define DATA_LEN 4
++
++uint32_t seeprom_transfer(SSIPeripheral *ss, uint32_t tx)
 +{
-+    PnvSpiController *sc = PNV_SPICONTROLLER(opaque);
-+    uint32_t reg = addr >> 3;
-+    uint64_t val = ~0ull;
++    SeepromCsm04 *s = SEEPROM_25CSM04(ss);
++    uint16_t idx;
++    FILE *f;
++    bool status0_busy;
++    bool status1_busy;
++    uint32_t rx = -1;
++    uint32_t *buf = NULL;
++    bool failed = false;
 +
-+    switch (reg) {
-+    case ERROR_REG:
-+        val = sc->error_reg;
-+        break;
-+    case COUNTER_CONFIG_REG:
-+        val = sc->counter_config_reg;
-+        break;
-+    case CONFIG_REG1:
-+        val = sc->config_reg1;
-+        break;
-+    case CLOCK_CONFIG_REG:
-+        val = sc->clock_config_reset_control;
-+        break;
-+    case MEMORY_MAPPING_REG:
-+        val = sc->memory_mapping_reg;
-+        break;
-+    case TRANSMIT_DATA_REG:
-+        val = sc->transmit_data_reg;
-+        break;
-+    case RECEIVE_DATA_REG:
-+        val = sc->receive_data_reg;
-+        SPI_DEBUG(qemu_log("RDR being read, data extracted = 0x%16.16lx\n",
-+                           val));
-+        sc->status_reg = SETFIELD(STATUS_REG_RDR_FULL, sc->status_reg, 0);
-+        SPI_DEBUG(qemu_log("RDR being read, RDR_full set to 0\n"));
-+        break;
-+    case SEQUENCER_OPERATION_REG:
-+        val = 0;
-+        for (int i = 0; i < SPI_CONTROLLER_REG_SIZE; i++) {
-+            val = (val << 8) | sc->sequencer_operation_reg[i];
-+        }
-+        break;
-+    case STATUS_REG:
-+        val = sc->status_reg;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "spi_controller_regs: Invalid xscom "
-+                 "read at 0x%08x\n", reg);
-+    }
-+    return val;
-+}
-+
-+static void pnv_spi_controller_write(void *opaque, hwaddr addr,
-+                                 uint64_t val, unsigned size)
-+{
-+    PnvSpiController *sc = PNV_SPICONTROLLER(opaque);
-+    uint32_t reg = addr >> 3;
-+
-+    switch (reg) {
-+    case ERROR_REG:
-+        sc->error_reg = val;
-+        break;
-+    case COUNTER_CONFIG_REG:
-+        sc->counter_config_reg = val;
-+        break;
-+    case CONFIG_REG1:
-+        sc->config_reg1 = val;
-+        break;
-+    case CLOCK_CONFIG_REG:
++    buf = g_malloc0(sizeof(uint32_t));
++    SPI_DEBUG(qemu_log("Received SPI request, tx = 0x%x\n", tx));
++    if (s->command_byte) {
++        s->opcode = tx >> 24;
++        SPI_DEBUG(qemu_log("Command Opcode (0x%x)\n", s->opcode));
 +        /*
-+         * To reset the SPI controller write the sequence 0x5 0xA to
-+         * reset_control field
++         * Check if device is busy with internal write cycle, During this
++         * time, only the Read STATUS Register (RDSR) and the Write Ready/Busy
++         * Poll (WRBP) instructions will be executed by the device.
 +         */
-+        if (GETFIELD(CLOCK_CONFIG_REG_RESET_CONTROL,
-+                                sc->clock_config_reset_control) == 0x5) {
-+            if (GETFIELD(CLOCK_CONFIG_REG_RESET_CONTROL, val) == 0xA) {
-+                SPI_DEBUG(qemu_log("SPI controller reset sequence completed, "
-+                               "resetting..."));
-+                sc->clock_config_reset_control =
-+                                 CLOCK_CONFIG_RESET_CONTROL_HARD_RESET;
-+            } else {
-+                sc->clock_config_reset_control = val;
++        status0_busy = extract8(s->status0, STATUS0_BUSY, 1);
++        status1_busy = extract8(s->status1, STATUS1_BUSY, 1);
++        if (((status0_busy == 1) || (status1_busy == 1)) &&
++            ((s->opcode != RDSR) || (s->opcode != WRBP))) {
++            qemu_log_mask(LOG_GUEST_ERROR, "Busy with internal write Cycle, "
++                           "opcode(0x%x) not executed\n", s->opcode);
++            return rx;
++        }
++        /* For a new command sequence compute Address */
++        failed = compute_addr(s, tx);
++        /*
++         * Address computation failed, nothing to do further, just send
++         * response and return from here.
++         */
++        if (failed) {
++            return tx;
++        }
++    }
++
++    switch (s->opcode) {
++    case READ:
++        if (!s->command_byte) {
++            SPI_DEBUG(qemu_log("READ(0x%x), addr(0x%x)\n",
++                          s->opcode, s->addr));
++            s->rd_state = ST_READ;
++            if (s->file) {
++                f = fopen(s->file, "rb+");
++                if (f) {
++                    if (!fseek(f, s->addr, SEEK_SET)) {
++                        if (fread(buf, sizeof(uint32_t), 1, f) == 1) {
++                            SPI_DEBUG(qemu_log("Read 4 bytes from seeprom\n"));
++                            rx = *buf;
++                        } else {
++                            if (ferror(f)) {
++                                SPI_DEBUG(qemu_log("Error reading seeprom\n"));
++                            }
++                        }
++                    }
++                }
++                fclose(f);
 +            }
-+        } else {
-+            sc->clock_config_reset_control = val;
++            s->addr = (s->addr & 0x7FFFF) + DATA_LEN;
 +        }
 +        break;
-+    case MEMORY_MAPPING_REG:
-+        sc->memory_mapping_reg = val;
++
++    case RDSR:
++        SPI_DEBUG(qemu_log("READ Status Register - RDSR(0x%x)\n",
++                    s->opcode));
++        rx = 0;
++        rx = rx | (s->status0 << 24);
++        rx = rx | (s->status1 << 16);
 +        break;
-+    case TRANSMIT_DATA_REG:
++
++    case WRBP:
++        SPI_DEBUG(qemu_log("Write Ready/Busy Poll - WRBP(0x%x)\n",
++                    s->opcode));
++        status0_busy = extract8(s->status0, STATUS0_BUSY, 1);
++        status1_busy = extract8(s->status1, STATUS1_BUSY, 1);
++        rx = 0;
++        if ((status0_busy == 1) || (status1_busy == 1)) {
++            rx = rx | (0xFF << 24);
++        }
++        break;
++
++    case WREN:
++        SPI_DEBUG(qemu_log("Set Write Enable Latch (WEL) WREN(0x%x)\n",
++                    s->opcode));
++        s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 1);
++        break;
++
++    case WRDI:
++        SPI_DEBUG(qemu_log("Reset Write Enable Latch (WEL) WRDI(0x%x)\n",
++                    s->opcode));
++        s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 0);
++        break;
++
++    case WRSR:
++        SPI_DEBUG(qemu_log("Write STATUS Register WRSR(0x%x)\n",
++                    s->opcode));
++        s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 1);
++        if (extract8(s->status0, STATUS0_WEL, 1) == 1) {
++            /* Mask and update status0/1 bytes */
++            s->status0 = (tx >> 16) & 0x8C;
++            s->status1 = (tx >> 8) & 0x80;
++        }
++        break;
++
++    case SPID:
++        SPI_DEBUG(qemu_log("READ IDENTIFICATION REGISTER, SPID(0x%x)\n",
++                    s->opcode));
++        rx = 0;
++        for (idx = 0; idx < DATA_LEN; idx++) {
++            rx = (rx << 8) | s->idr[idx];
++        }
++        break;
++
++    case SRST:
++        SPI_DEBUG(qemu_log("Software Device Reset, SRST(0x%x)\n",
++                    s->opcode));
 +        /*
-+         * Writing to the transmit data register causes the transmit data
-+         * register full status bit in the status register to be set.  Writing
-+         * when the transmit data register full status bit is already set
-+         * causes a "Resource Not Available" condition.  This is not possible
-+         * in the model since writes to this register are not asynchronous to
-+         * the operation sequence like it would be in hardware.
++         * Note: The SRST instruction cannot interrupt the device while it is
++         * in a Busy state (Section 6.1.4 Ready/Busy Status Latch).
++         * This is already taken care of when the command opcode is fetched
++         *
++         * 1.2 Device Default State
++         * 1.2.1 POWER-UP DEFAULT STATE
++         * The 25CSM04 default state upon power-up consists of:
++         * - Standby Power mode (CS = HIGH)
++         * - A high-to-low level transition on CS is required to enter the
++         *   active state
++         * - WEL bit in the STATUS register = 0
++         * - ECS bit in the STATUS register = 0
++         * - PREL bit in the STATUS register = 0
++         * - Ready/Busy (RDY/BUSY) bit in the STATUS register = 0, indicating
++         *   the device is ready to accept a new instruction.
 +         */
-+        sc->transmit_data_reg = val;
-+        SPI_DEBUG(qemu_log("TDR being written, data written = 0x%16.16lx\n",
-+                            val));
-+        sc->status_reg = SETFIELD(STATUS_REG_TDR_FULL, sc->status_reg, 1);
-+        SPI_DEBUG(qemu_log("TDR being written, TDR_full set to 1\n"));
-+        sc->status_reg = SETFIELD(STATUS_REG_TDR_UNDERRUN, sc->status_reg, 0);
-+        SPI_DEBUG(qemu_log("TDR being written, TDR_underrun set to 0\n"));
-+        SPI_DEBUG(qemu_log("TDR being written, starting sequencer\n"));
++        s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 0);
++        s->status1 = deposit32(s->status1, STATUS1_ECS, 1, 0);
++        s->status1 = deposit32(s->status1, STATUS1_PREL, 1, 0);
++        s->status0 = deposit32(s->status0, STATUS0_BUSY, 1, 0);
++        s->status1 = deposit32(s->status1, STATUS1_BUSY, 1, 0);
 +        break;
-+    case RECEIVE_DATA_REG:
-+        sc->receive_data_reg = val;
-+        break;
-+    case SEQUENCER_OPERATION_REG:
-+        for (int i = 0; i < SPI_CONTROLLER_REG_SIZE; i++) {
-+	    sc->sequencer_operation_reg[i] = (val >> (56 - i * 8)) & 0xFF;
++
++    case WRITE:
++        if (!s->command_byte) {
++            SPI_DEBUG(qemu_log("WRITE(0x%x), addr(0x%x)\n",
++                        s->opcode, s->addr));
++            if (extract8(s->status0, STATUS0_WEL, 1) != 1) {
++                qemu_log_mask(LOG_GUEST_ERROR, "Device is not Write Enabled, "
++                                "ignoring WRITE instruction\n");
++                break;
++            }
++            /* Write into SEEPROM Array */
++            SPI_DEBUG(qemu_log("Write sequence\n"));
++            buf = &tx;
++            if (s->file) {
++                f = fopen(s->file, "rb+");
++                if (f) {
++                    if (!fseek(f, s->addr, SEEK_SET)) {
++                        if (fwrite(buf, sizeof(uint32_t), 1, f) == 1) {
++                            SPI_DEBUG(qemu_log("Write 4 bytes to seeprom\n"));
++                        } else {
++                            SPI_DEBUG(qemu_log("Failed to write seeprom\n"));
++                        }
++                    }
++                }
++                fclose(f);
++            }
++            /* Increase offset in the page */
++            s->addr += DATA_LEN;
 +        }
 +        break;
-+    case STATUS_REG:
-+        /* other fields are ignore_write */
-+        sc->status_reg = SETFIELD(STATUS_REG_RDR_OVERRUN, sc->status_reg,
-+                                  GETFIELD(STATUS_REG_RDR, val));
-+        sc->status_reg = SETFIELD(STATUS_REG_TDR_OVERRUN, sc->status_reg,
-+                                  GETFIELD(STATUS_REG_TDR, val));
++
++    case RMPR:
++        if (!s->command_byte) {
++            /*
++             * The address for each Memory Partition register is embedded into
++             * the first address byte sent to the device,in bit positions A18
++             * through A16.
++             */
++            SPI_DEBUG(qemu_log("RMPR(0x%x) for MPR[%d]\n", s->opcode,
++                      extract8(s->addr, 16, 2)));
++            rx = 0;
++            rx = rx | (s->mpr[extract8(s->addr, 16, 2)] << 24);
++        }
 +        break;
++
++    case PRWE:
++        SPI_DEBUG(qemu_log("Set Memory Partition Write Enable Latch "
++                    "PRWE(0x%x)\n", s->opcode));
++        s->status1 = deposit32(s->status1, STATUS1_PREL, 1, 1);
++        break;
++
++    case PRWD:
++        SPI_DEBUG(qemu_log("Reset Memory Partition Write Enable Latch "
++                    "PRWD(0x%x)\n", s->opcode));
++        s->status1 = deposit32(s->status1, STATUS1_PREL, 1, 0);
++        break;
++
++    case WMPR:
++        if (!s->command_byte) {
++            /*
++             * The address for each Memory Partition register is embedded into
++             * the first address byte sent to the device,in bit positions A18
++             * through A16.
++             */
++            SPI_DEBUG(qemu_log("Write Memory Partition Register[%d] "
++                               "WMPR(0x%x)\n",
++                               extract8(s->addr, 16, 2), s->opcode));
++            /*
++             * Once the WEL and PREL bits in the STATUS register have been
++             * set to 1, the Memory Partition registers can be programmed
++             * provided that the FMPC bit in the STATUS register has not
++             * already been set to a logic 1.
++             */
++            if ((extract8(s->status0, STATUS0_WEL, 1) != 1) ||
++                (extract8(s->status1, STATUS1_PREL, 1) != 1) ||
++                (extract8(s->status1, STATUS1_FMPC, 1) == 1)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "ignoring write to MPR\n");
++                break;
++            }
++            if (extract8(s->status1, STATUS1_PABP, 1) == 1) {
++                /* Partition Address Boundaries Protected */
++                s->mpr[extract8(s->addr, 16, 2)] =
++                    ((tx >> 30) & 0x3);
++            } else {
++                s->mpr[extract8(s->addr, 16, 2)] = (tx >> 24) & 0xFF;
++            }
++            s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 0);
++            s->status1 = deposit32(s->status1, STATUS1_PREL, 1, 0);
++        }
++        break;
++
++    case PPAB:
++        if (!s->command_byte) {
++            SPI_DEBUG(qemu_log("Protect Partition Address Boundaries"
++                                "PPAB(0x%x)\n", s->opcode));
++            if ((extract8(s->status0, STATUS0_WEL, 1) != 1) ||
++                (extract8(s->status1, STATUS1_PREL, 1) != 1) ||
++                (extract8(s->status1, STATUS1_FMPC, 1) == 1)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "Ignoring PPAB command\n");
++                break;
++            }
++            tx = (tx >> 24) & 0xFF;
++            if (tx == 0xFF) {
++                s->status1 = deposit32(s->status1,
++                                                STATUS1_PABP, 1, 1);
++            } else if (tx == 0x0) {
++                s->status1 = deposit32(s->status1,
++                                                STATUS1_PABP, 1, 0);
++            } else {
++                qemu_log_mask(LOG_GUEST_ERROR, "Incorrect data byte(0x%x), "
++                                "should be 0x0 or 0xFF\n", tx);
++            }
++            s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 0);
++            s->status1 = deposit32(s->status1, STATUS1_PREL, 1, 0);
++        }
++        break;
++
++    case FRZR:
++        if (!s->command_byte) {
++            SPI_DEBUG(qemu_log("Freeze Memory Protection Configuration "
++                                    "FRZR(0x%x)\n", s->opcode));
++            if ((extract8(s->status0, STATUS0_WEL, 1) != 1) ||
++                (extract8(s->status1, STATUS1_PREL, 1) != 1) ||
++                (extract8(s->status1, STATUS1_FMPC, 1) == 1)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "ignoring FRZR command\n");
++                break;
++            }
++            tx = (tx >> 24) & 0xFF;
++            if (tx == 0xD2) {
++                s->status1 = deposit32(s->status1,
++                                                STATUS1_FMPC, 1, 1);
++            } else {
++                qemu_log_mask(LOG_GUEST_ERROR, "Invalid confirmation data "
++                                "byte(0x%x), expecting 0xD2", tx);
++            }
++            s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 0);
++            s->status1 = deposit32(s->status1, STATUS1_PREL, 1, 0);
++        }
++        break;
++
++    case RDEX_CHLK:
++        if (!s->command_byte) {
++            SPI_DEBUG(qemu_log("OPCODE = (0x%x)\n", s->opcode));
++            rx = 0;
++            /* Address bit 10 must be 0 to read security register */
++            if (extract8(s->addr, 10, 1) == 0) {
++                uint16_t sidx;
++                /* RDEX */
++                s->rd_state = ST_SEC_READ;
++                for (idx = 0; idx < DATA_LEN; idx++) {
++                    sidx = s->addr & 0x1FF;
++                    if (sidx <= 0xFF) {
++                        rx = (rx << 8) | s->dsn[sidx];
++                    } else {
++                        rx = (rx << 8) | s->uplid[sidx & 0xFF];
++                    }
++                    s->addr = (s->addr & ~0x1FF) | ((s->addr + 1) & 0x1FF);
++                }
++            } else {
++                /* CHLK */
++                if (s->locked) {
++                    rx = rx | (0x01 << 24);
++                }
++            }
++        }
++        break;
++
++    case WREX_LOCK:
++        if (!s->command_byte) {
++            SPI_DEBUG(qemu_log("OPCODE = (0x%x)\n", s->opcode));
++            if (s->locked == true) {
++                qemu_log_mask(LOG_GUEST_ERROR, "Device is already Locked, "
++                                "command is ignored\n");
++                break;
++            }
++            if (extract8(s->status0, STATUS0_WEL, 1) != 1) {
++                qemu_log_mask(LOG_GUEST_ERROR, "Device is not Write Enabled, "
++                                "command is ignored\n");
++                break;
++            }
++            /* Address bit 10 must be 0 to write to security register */
++            if (extract8(s->addr, 10, 1) == 0) {
++                /* WREX */
++                for (idx = 0; idx < DATA_LEN; idx++) {
++                    /*
++                     * The Device Serial Number is factory programmed and
++                     * read-only.
++                     */
++                    s->uplid[extract8(s->addr, 0, 8)] =
++                                                (tx >> (24 - idx * 8)) & 0xFF;
++                    /* Increase address with the page, and let it rollover*/
++                    s->addr = (s->addr & ~0xFF) | ((s->addr + 1) & 0xFF);
++                }
++            } else {
++                /*
++                 * LOCK (82h) instruction is clocked in on the  SI line,
++                 * followed by a fake address where  bits A[23:0] are don't
++                 * care bits with the exception that bit A10 must be set to 1.
++                 * Finally, a confirmation data byte of xxxx_xx1xb  is  sent
++                 */
++                if (((tx >> 24) & 0x02) == 0x2) {
++                    s->locked = true;
++                }
++            }
++        }
++        break;
++
 +    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "spi_controller_regs: Invalid xscom "
-+                 "write at 0x%08x\n", reg);
++        qemu_log_mask(LOG_GUEST_ERROR, "Invalid instruction(0x%x)\n",
++                        s->opcode);
++    } /* end of switch */
++    if (s->command_byte) {
++        s->command_byte = false;
 +    }
-+    return;
++    return rx;
 +}
 +
-+static const MemoryRegionOps pnv_spi_controller_xscom_ops = {
-+    .read = pnv_spi_controller_read,
-+    .write = pnv_spi_controller_write,
-+    .valid.min_access_size = 8,
-+    .valid.max_access_size = 8,
-+    .impl.min_access_size = 8,
-+    .impl.max_access_size = 8,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static void pnv_spi_bus_realize(DeviceState *dev, Error **errp)
++/*
++ * Method : compute_addr
++ * This method is used to compute address and data offset for supported
++ * opcodes and only invoked when a valid new command sequence starts aka
++ * first is 1.
++ */
++bool compute_addr(SeepromCsm04 *s, uint32_t tx)
 +{
-+    PnvSPIBus *s = PNV_SPI_BUS(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    g_autofree char *name = g_strdup_printf(TYPE_PNV_SPI_BUS ".%d", s->id);
++    bool addr_wr_protected = false;
++    bool failed = false;
 +
-+    s->ssi_bus = ssi_create_bus(dev, name);
-+    s->cs_line = g_new0(qemu_irq, 1);
-+    sysbus_init_irq(sbd, &s->cs_line[0]);
-+}
++    switch (s->opcode) {
++    case READ:
++    case WRITE:
++        SPI_DEBUG(qemu_log("Compute address and payload buffer data offset "
++                  "for %s\n", (s->opcode == READ) ? "READ" : "WRITE"));
++        /*
++         * Fetch address from size 24 bit from offset 1,2,3 of payload
++         * and mask of higher 5 bits as valid memory array size is 512KB
++         */
++        s->addr = tx & 0x7FFFF;
++        if (s->opcode == WRITE) {
++            addr_wr_protected = validate_addr(s);
++            if (addr_wr_protected) {
++                qemu_log_mask(LOG_GUEST_ERROR, "SEEPROM Address(0x%x) is Write "
++                              "protected\n", s->addr);
++                failed = true;
++            }
++        }
++        break;
++    case RMPR:
++    case WMPR:
++        SPI_DEBUG(qemu_log("Compute MPR address for %s MPR\n",
++                  (s->opcode == RMPR) ? "READ" : "WRITE"));
++        /*
++         * The address for each Memory Partition register is embedded into
++         * the first address byte sent to the device,in bit positions A18
++         * through A16.
++         */
++        s->addr = tx & 0x70000;
++        break;
 +
-+static Property pnv_spi_bus_properties[] = {
-+    DEFINE_PROP_UINT32("bus-id", PnvSPIBus, id, 0),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
++    case PPAB:
++    case FRZR:
++        SPI_DEBUG(qemu_log("Validate if addr[15:0] is %s\n",
++                  (s->opcode == PPAB) ? "0xCCFF for PPAB" :
++                                               "0xAA40 for FRZR"));
++        /* Address bits A23-A16 are ignored. */
++        s->addr = tx & 0xFFFF;
++        /* Address bits A15-A0 must be set to CC55h. */
++        if ((s->opcode == PPAB) && s->addr != 0xCC55) {
++            qemu_log_mask(LOG_GUEST_ERROR, "Invalid addr[15:0] = 0x%x sent for "
++                          "PPAB\n", s->addr);
++            failed = true;
++        }
++        /* Address bits A15-A0 must be set to AA40h. */
++        if ((s->opcode == FRZR) && s->addr != 0xAA40) {
++            qemu_log_mask(LOG_GUEST_ERROR, "Invalid addr[15:0] = 0x%x sent for "
++                          "FRZR\n", s->addr);
++            failed = true;
++        }
++        break;
 +
-+static void pnv_spi_bus_class_init(ObjectClass *klass, void *data)
++    case RDEX_CHLK:
++    case WREX_LOCK:
++        SPI_DEBUG(qemu_log("Compute Address for Security reg command\n"));
++        /*
++         * RDEX : A[23:9] are don't care bits, except A10 which must be a
++         *        logic 0.
++         * WREX : A[23:9] are don't care bits, except A10 which must be a
++         *        logic 0 and A8 which must be a logic 1 to address the
++         *        second Security register byte that is user programmable.
++         * CHLK : A[23:0] are don't care bits, except A10 which must be a
++         *        logic 1.
++         * LOCK : A[23:0] are don't care bits, except A10 which must be a
++         *        logic 1.
++         */
++        s->addr = tx & 0x5FF;
++        SPI_DEBUG(qemu_log("Received Command %s\n",
++                  (s->opcode == RDEX_CHLK)
++                   ? (extract32(s->addr, 10, 1) ?
++                      "CHLK : Check Lock Status of Security Register" :
++                      "RDEX : Read from the Security Register")
++                   : (extract32(s->addr, 10, 1) ?
++                      "LOCK : Lock the Security Register (permanent)" :
++                      "WREX : Write to the Security Register")));
++        if ((s->opcode == WREX_LOCK) &&
++            (extract32(s->addr, 10, 1) == 0)) {
++            /*
++             * WREX
++             * In Legacy Write Protection mode, the Security register is
++             * write-protected when the BP <1:0> bits (bits 3-2 byte0) of
++             * the STATUS register = 11.
++             */
++            if (extract8(s->status1, STATUS1_WPM, 1) == 0) {
++                addr_wr_protected = validate_addr(s);
++            } else {
++                if (extract32(s->addr, 0, 9) <= 0xFF) {
++                    addr_wr_protected = true;
++                }
++            }
++            if (addr_wr_protected) {
++                qemu_log_mask(LOG_GUEST_ERROR, "SEEPROM Address(0x%x) is "
++                              "Write protected\n", s->addr);
++                failed = true;
++            }
++        }
++        break;
++    } /* end of switch */
++    return failed;
++} /* end of method compute_addr */
++
++/*
++ * Method : validate_addr
++ * This method validates whether SEEPROM address is write protected or not
++ */
++
++bool validate_addr(SeepromCsm04 *s)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    bool addr_wr_protected = false;
++    uint8_t mpr_idx = 0;
 +
-+    dc->desc = "Pnv SPI Bus";
-+    dc->realize = pnv_spi_bus_realize;
-+    device_class_set_props(dc, pnv_spi_bus_properties);
-+}
-+
-+static const TypeInfo pnv_spi_bus_info = {
-+    .name           = TYPE_PNV_SPI_BUS,
-+    .parent         = TYPE_SYS_BUS_DEVICE,
-+    .instance_size  = sizeof(PnvSPIBus),
-+    .class_init     = pnv_spi_bus_class_init,
-+};
-+
-+static Property pnv_spi_controller_properties[] = {
-+    DEFINE_PROP_UINT32("spic_num", PnvSpiController, spic_num, 0),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void pnv_spi_controller_realize(DeviceState *dev, Error **errp)
-+{
-+    PnvSpiController *sc = PNV_SPICONTROLLER(dev);
-+
-+    Object *bus = OBJECT(&sc->bus);
-+    if (!object_property_set_int(bus, "bus-id", sc->spic_num, errp)) {
-+        return;
++    if (extract8(s->status1, STATUS1_WPM, 1) == 1) {
++        /*
++         * enhanced write protection
++         * Memory partition register Bit5  through  bit0 contain the Partition
++         * Endpoint Address of A18:A13, where A12:A0 are a logic "1". For
++         * example, if the first partition of the memory array is desired to
++         * stop after 128-Kbit of memory, that end point address is 03FFFh. The
++         * corresponding A18:A13 address bits to be loaded into MPR0 are
++         * therefore 000001b. The eight MPRs are each decoded sequentially by
++         * the device, starting with MPR0. Each MPR should be set to a
++         * Partition Endpoint Address greater than the ending address of the
++         * previous MPR. If a higher order MPR sets a Partition Endpoint Address
++         * less than or equal to the ending address of a lower order MPR, that
++         * higher order MPR is ignored and no protection is set by it's
++         * contents.
++         */
++        for (mpr_idx = 0; mpr_idx < 8; mpr_idx++) {
++            if ((extract32(s->addr, 13, 6)) <=
++                (extract8(s->mpr[mpr_idx], MPR_PEA, 1))) {
++                switch (extract8(s->mpr[mpr_idx], MPR_PB, 2)) {
++                case 0:
++                    /*
++                     * 0b00 = Partition is open and writing is permitted
++                     * (factory default is unprotected).
++                     */
++                    addr_wr_protected = false;
++                    break;
++                case 1:
++                    /*
++                     * 0b01 = Partition is always write-protected but can be
++                     * reversed at a later time (software write-protected).
++                     */
++                    addr_wr_protected = true;
++                    break;
++                case 2:
++                    /*
++                     * 0b10 = Partition is write-protected only when WP pin is
++                     * asserted (hardware write-protected).
++                     */
++                    addr_wr_protected = false;
++                    break;
++                case 3:
++                    /*
++                     * 0b11 = Partition is software write-protected and Memory
++                     * Partition register is permanently locked.
++                     */
++                    addr_wr_protected = true;
++                    break;
++                } /* end of switch */
++                break; /* break from for loop. */
++            }
++        } /* end of for loop */
++    } else {
++        /* Legacy write protection mode */
++        switch (extract8(s->status0, STATUS0_BP, 2)) {
++        case 0:
++            /*
++             * 0b00 = No array write protection
++             * EEPROM None
++             * Security Register 00000h - 000FFh
++             */
++            if ((s->opcode == WREX_LOCK) &&
++                (extract32(s->addr, 0, 9)  <= 0xFF)) {
++                addr_wr_protected = true;
++            }
++            break;
++        case 1:
++            /*
++             * 0b01 = Upper quarter memory array protection
++             * EEPROM 60000h - 7FFFFh
++             * Security Register 00000h - 000FFh
++             */
++            if ((s->opcode == WREX_LOCK) &&
++                (extract32(s->addr, 0, 9)  <= 0xFF)) {
++                addr_wr_protected = true;
++            } else if ((s->opcode == WRITE) &&
++                       (extract32(s->addr, 0, 19)  <= 0x60000)) {
++                addr_wr_protected = true;
++            }
++            break;
++        case 2:
++            /*
++             * 0b10 = Upper half memory array protection
++             * EEPROM 40000h - 7FFFFh
++             * Security Register 00000h - 000FFh
++             */
++            if ((s->opcode == WREX_LOCK) &&
++                (extract32(s->addr, 0, 9)  <= 0xFF)) {
++                addr_wr_protected = true;
++            } else if ((s->opcode == WRITE) &&
++                       (extract32(s->addr, 0, 19)  <= 0x40000)) {
++                addr_wr_protected = true;
++            }
++            break;
++        case 3:
++            /*
++             * 0b11 = Entire memory array protection
++             * EEPROM 00000h - 7FFFFh
++             * Security Register 00000h - 001FFh
++             */
++            addr_wr_protected = true;
++            break;
++        } /* end of switch */
 +    }
++    return addr_wr_protected;
++} /* end of validate_addr */
 +
-+    if (!sysbus_realize(SYS_BUS_DEVICE(bus), errp)) {
-+        return;
-+    }
 +
-+    /* spi controller scoms */
-+    pnv_xscom_region_init(&sc->xscom_spic_regs, OBJECT(sc),
-+                          &pnv_spi_controller_xscom_ops, sc,
-+                          "xscom-spi-controller-regs",
-+                          PNV10_XSCOM_PIB_SPIC_SIZE);
-+}
-+
-+static int pnv_spi_controller_dt_xscom(PnvXScomInterface *dev, void *fdt,
-+                             int offset)
++static int seeprom_cs(SSIPeripheral *ss, bool select)
 +{
-+    PnvSpiController *sc = PNV_SPICONTROLLER(dev);
-+    g_autofree char *name;
-+    int sc_offset;
-+    const char compat[] = "ibm,power10-spi_controller";
-+    uint32_t spic_pcba = PNV10_XSCOM_PIB_SPIC_BASE +
-+        sc->spic_num * PNV10_XSCOM_PIB_SPIC_SIZE;
-+    uint32_t reg[] = {
-+        cpu_to_be32(spic_pcba),
-+        cpu_to_be32(PNV10_XSCOM_PIB_SPIC_SIZE)
-+    };
-+    name = g_strdup_printf("spi_controller@%x", spic_pcba);
-+    sc_offset = fdt_add_subnode(fdt, offset, name);
-+    _FDT(sc_offset);
++    SeepromCsm04 *s = SEEPROM_25CSM04(ss);
 +
-+    _FDT(fdt_setprop(fdt, sc_offset, "reg", reg, sizeof(reg)));
-+    _FDT(fdt_setprop(fdt, sc_offset, "compatible", compat, sizeof(compat)));
-+    _FDT((fdt_setprop_cell(fdt, sc_offset, "spic_num#", sc->spic_num)));
++    if (select) {
++        s->command_byte = false;
++        s->rd_state = ST_IDLE;
++        s->status0 = deposit32(s->status0, STATUS0_WEL, 1, 0);
++    } else {
++        s->command_byte = true;
++    }
 +    return 0;
 +}
 +
-+static void pnv_spi_instance_init(Object *obj)
++
++void seeprom_realize(SSIPeripheral *dev, Error **errp)
 +{
-+    PnvSpiController *sc = PNV_SPICONTROLLER(obj);
++    SeepromCsm04 *s = SEEPROM_25CSM04(dev);
 +
-+    /* Initialise the bus object */
-+    object_initialize_child(obj, "bus", &sc->bus, TYPE_PNV_SPI_BUS);
-+}
-+
-+static void pnv_spi_controller_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PnvXScomInterfaceClass *xscomc = PNV_XSCOM_INTERFACE_CLASS(klass);
-+
-+    xscomc->dt_xscom = pnv_spi_controller_dt_xscom;
-+
-+    dc->desc = "PowerNV SPI Controller";
-+    dc->realize = pnv_spi_controller_realize;
-+    device_class_set_props(dc, pnv_spi_controller_properties);
-+}
-+
-+static const TypeInfo pnv_spi_controller_info = {
-+    .name          = TYPE_PNV_SPI_CONTROLLER,
-+    .parent        = TYPE_DEVICE,
-+    .instance_init = pnv_spi_instance_init,
-+    .instance_size = sizeof(PnvSpiController),
-+    .class_init    = pnv_spi_controller_class_init,
-+    .interfaces    = (InterfaceInfo[]) {
-+        { TYPE_PNV_XSCOM_INTERFACE },
-+        { }
++    s->command_byte = true;
++    s->rd_state = ST_IDLE;
++    if (s->file_name) {
++        s->file = qemu_find_file(QEMU_FILE_TYPE_BIOS, s->file_name);
 +    }
++}
++
++static Property seeprom_props[] = {
++    DEFINE_PROP_STRING("filename", SeepromCsm04, file_name),
++    DEFINE_PROP_END_OF_LIST()
 +};
 +
-+static void pnv_spi_controller_register_types(void)
++static void seeprom_25csm04_class_init(ObjectClass *klass, void *data)
 +{
-+    type_register_static(&pnv_spi_bus_info);
-+    type_register_static(&pnv_spi_controller_info);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
++
++    k->transfer = seeprom_transfer;
++    k->realize = seeprom_realize;
++    k->set_cs = seeprom_cs;
++    k->cs_polarity = SSI_CS_LOW;
++    device_class_set_props(dc, seeprom_props);
++
++    dc->desc = "PowerNV SPI SEEPROM";
 +}
 +
-+type_init(pnv_spi_controller_register_types);
++static const TypeInfo seeprom_25csm04_info = {
++    .name          = TYPE_SEEPROM_25CSM04,
++    .parent        = TYPE_SSI_PERIPHERAL,
++    .instance_size = sizeof(SeepromCsm04),
++    .class_init    = seeprom_25csm04_class_init,
++};
++
++static void seeprom_25csm04_register_types(void)
++{
++    type_register_static(&seeprom_25csm04_info);
++}
++
++type_init(seeprom_25csm04_register_types);
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 1e08785b83..9442cc657d 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -38,6 +38,9 @@ config PCA9554
+     bool
+     depends on I2C
+ 
++config SEEPROM_25CSM04
++    bool
++
+ config I2C_ECHO
+     bool
+     default y if TEST_DEVICES
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 86596a3888..fd4d646f98 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -3,6 +3,7 @@ system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
+ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
+ system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
++system_ss.add(when: 'CONFIG_SEEPROM_25CSM04', if_true: files('seeprom_25csm04.c'))
+ system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
+ system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
+ system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
 diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-index 37ccf9cdca..ea1178bd73 100644
+index ea1178bd73..6a4803d4ec 100644
 --- a/hw/ppc/Kconfig
 +++ b/hw/ppc/Kconfig
-@@ -35,6 +35,7 @@ config POWERNV
-     select PCI_POWERNV
+@@ -36,6 +36,7 @@ config POWERNV
      select PCA9552
      select PCA9554
-+    select SSI
+     select SSI
++    select SEEPROM_25CSM04
  
  config PPC405
      bool
-diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
-index d096636ee7..68fadbae7b 100644
---- a/hw/ppc/meson.build
-+++ b/hw/ppc/meson.build
-@@ -56,6 +56,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
-   'pnv_pnor.c',
-   'pnv_nest_pervasive.c',
-   'pnv_n1_chiplet.c',
-+  'pnv_spi_controller.c',
- ))
- # PowerPC 4xx boards
- ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
 -- 
 2.39.3
 
