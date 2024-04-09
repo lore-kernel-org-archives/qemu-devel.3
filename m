@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970F6CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 358F6C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruCx4-00024w-VD; Tue, 09 Apr 2024 10:59:58 -0400
+	id 1ruCxC-0002FT-Ju; Tue, 09 Apr 2024 11:00:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1ruCx0-0001wJ-NC; Tue, 09 Apr 2024 10:59:55 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ id 1ruCx8-0002BV-8e; Tue, 09 Apr 2024 11:00:02 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1ruCwy-0005xN-UN; Tue, 09 Apr 2024 10:59:54 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ id 1ruCx6-0005zE-BX; Tue, 09 Apr 2024 11:00:01 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5215E20A78;
- Tue,  9 Apr 2024 14:59:51 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A08BC20A6A;
+ Tue,  9 Apr 2024 14:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712674791; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1712674798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rNhniJdJtCPE7hwb4rO4kEJtB24O1r0vXiH7WmETWpE=;
- b=lIdMSM3c+mmoDTn+xSu8jcKmczmSZeSLxCQ+xYKNYdySkzS/AeDRyuSYtMLG3EMAgTdf3X
- ufjfB54jR5QEfInMJ8AcwVTzCN35f1pmb9Z1NFlbH1Bt4E3EeDOHqDwyrz57gFFMc4ysbY
- HhPPszYdOT2iB61C/1j2QKDayPC4PEc=
+ bh=UsAc/pCFXmSQb/9yLrhfsKxho44YarL6SfffbDN0XhA=;
+ b=kXBH8NaN6dm1PnEOYCB0igdHZgZZtJaTSjHY3vpbrn2/2tCxginAik+ISLe02f8bA71u4X
+ ADcmbhy1EN7+4D3JxW8UNdcXUZmI8ntaju+l9HJg9C2I+e6BirPkcZiqLMICmUM5mhamo3
+ 7VrmYIUIJOR1LcV4YxARnJY1IHu4AKA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712674791;
+ s=susede2_ed25519; t=1712674798;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rNhniJdJtCPE7hwb4rO4kEJtB24O1r0vXiH7WmETWpE=;
- b=qYkYB80SxapEbC0bWbjrHA83wuDYzOEZNat7mVnuZ23HPETTlvPO366d1Bo4Bp8Dq7TwZ4
- Lk3XTFtav3oUHyCA==
+ bh=UsAc/pCFXmSQb/9yLrhfsKxho44YarL6SfffbDN0XhA=;
+ b=3mmxl236a9akO4gu/fp0fMPL1OozAkT1m5Qe4B05044Eip8oyLs7EN5LzoqNd1/GuJBtkc
+ wwlTQARyATkBEXDw==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lIdMSM3c;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=qYkYB80S
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712674791; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1712674798; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rNhniJdJtCPE7hwb4rO4kEJtB24O1r0vXiH7WmETWpE=;
- b=lIdMSM3c+mmoDTn+xSu8jcKmczmSZeSLxCQ+xYKNYdySkzS/AeDRyuSYtMLG3EMAgTdf3X
- ufjfB54jR5QEfInMJ8AcwVTzCN35f1pmb9Z1NFlbH1Bt4E3EeDOHqDwyrz57gFFMc4ysbY
- HhPPszYdOT2iB61C/1j2QKDayPC4PEc=
+ bh=UsAc/pCFXmSQb/9yLrhfsKxho44YarL6SfffbDN0XhA=;
+ b=kXBH8NaN6dm1PnEOYCB0igdHZgZZtJaTSjHY3vpbrn2/2tCxginAik+ISLe02f8bA71u4X
+ ADcmbhy1EN7+4D3JxW8UNdcXUZmI8ntaju+l9HJg9C2I+e6BirPkcZiqLMICmUM5mhamo3
+ 7VrmYIUIJOR1LcV4YxARnJY1IHu4AKA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712674791;
+ s=susede2_ed25519; t=1712674798;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rNhniJdJtCPE7hwb4rO4kEJtB24O1r0vXiH7WmETWpE=;
- b=qYkYB80SxapEbC0bWbjrHA83wuDYzOEZNat7mVnuZ23HPETTlvPO366d1Bo4Bp8Dq7TwZ4
- Lk3XTFtav3oUHyCA==
+ bh=UsAc/pCFXmSQb/9yLrhfsKxho44YarL6SfffbDN0XhA=;
+ b=3mmxl236a9akO4gu/fp0fMPL1OozAkT1m5Qe4B05044Eip8oyLs7EN5LzoqNd1/GuJBtkc
+ wwlTQARyATkBEXDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 20EA013313;
- Tue,  9 Apr 2024 14:59:47 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 72DAF1398D;
+ Tue,  9 Apr 2024 14:59:55 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id eHRGNuNXFWZGOAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 09 Apr 2024 14:59:47 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GPylDutXFWZGOAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 09 Apr 2024 14:59:55 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
@@ -81,36 +79,30 @@ Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Claudio Fontana <cfontana@suse.de>, Dario Faggioli <dfaggioli@suse.com>,
  Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 07/11] block: Convert bdrv_query_image_info to coroutine
-Date: Tue,  9 Apr 2024 11:59:13 -0300
-Message-Id: <20240409145917.6780-8-farosas@suse.de>
+Subject: [PATCH v3 09/11] block: Don't query all block devices at
+ hmp_nbd_server_start
+Date: Tue,  9 Apr 2024 11:59:15 -0300
+Message-Id: <20240409145917.6780-10-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240409145917.6780-1-farosas@suse.de>
 References: <20240409145917.6780-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- DWL_DNSWL_LOW(-1.00)[suse.de:dkim]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[12];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FROM_EQ_ENVFROM(0.00)[];
- R_RATELIMIT(0.00)[to_ip_from(RL8i9y4krh53rntrk3u7dj74zf)];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 5215E20A78
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ R_RATELIMIT(0.00)[to_ip_from(RL14emxp6ck9fz14jedoy69s36)];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -133,89 +125,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function is a caller of bdrv_do_query_node_info(), which have
-been converted to a coroutine. Convert this function as well so we're
-closer from having the whole qmp_query_block as a single coroutine.
+We're currently doing a full query-block just to enumerate the devices
+for qmp_nbd_server_add and then discarding the BlockInfoList
+afterwards. Alter hmp_nbd_server_start to instead iterate explicitly
+over the block_backends list.
 
-Also remove the wrapper for bdrv_co_do_query_node_info() now that all
-its callers are converted.
+This allows the removal of the dependency on qmp_query_block from
+hmp_nbd_server_start. This is desirable because we're about to move
+qmp_query_block into a coroutine and don't need to change the NBD code
+at the same time.
+
+Add the GRAPH_RDLOCK_GUARD_MAINLOOP macro because
+bdrv_skip_implicit_filters() needs the graph lock.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- block/qapi.c         | 16 +++++++---------
- include/block/qapi.h |  8 ++++----
- 2 files changed, 11 insertions(+), 13 deletions(-)
+- add a comment explaining some checks are done to preserve previous
+  behavior;
 
-diff --git a/block/qapi.c b/block/qapi.c
-index 7b1cf48246..5e263960a9 100644
---- a/block/qapi.c
-+++ b/block/qapi.c
-@@ -304,7 +304,7 @@ bdrv_co_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info,
- }
+- we need the strdup when assigning .device to preserve const. Just
+  add a matching g_free();
+
+- about the possible leak at qmp_nbd_server_add() unrelated to this
+  patch, commit 8675cbd68b ("nbd: Utilize QAPI_CLONE for type
+  conversion") mentions that the QAPI visitor will already free
+  arg->name.
+---
+ block/monitor/block-hmp-cmds.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+index d954bec6f1..9db587c661 100644
+--- a/block/monitor/block-hmp-cmds.c
++++ b/block/monitor/block-hmp-cmds.c
+@@ -387,10 +387,12 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
+     bool writable = qdict_get_try_bool(qdict, "writable", false);
+     bool all = qdict_get_try_bool(qdict, "all", false);
+     Error *local_err = NULL;
+-    BlockInfoList *block_list, *info;
++    BlockBackend *blk;
+     SocketAddress *addr;
+     NbdServerAddOptions export;
  
- /**
-- * bdrv_query_image_info:
-+ * bdrv_co_query_image_info:
-  * @bs: block node to examine
-  * @p_info: location to store image information
-  * @flat: skip backing node information
-@@ -325,17 +325,15 @@ bdrv_co_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info,
-  *
-  * @p_info will be set only on success. On error, store error in @errp.
-  */
--void bdrv_query_image_info(BlockDriverState *bs,
--                           ImageInfo **p_info,
--                           bool flat,
--                           bool skip_implicit_filters,
--                           Error **errp)
-+void coroutine_fn
-+bdrv_co_query_image_info(BlockDriverState *bs, ImageInfo **p_info, bool flat,
-+                         bool skip_implicit_filters, Error **errp)
- {
-     ERRP_GUARD();
-     ImageInfo *info;
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
+     if (writable && !all) {
+         error_setg(&local_err, "-w only valid together with -a");
+         goto exit;
+@@ -415,29 +417,43 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
+     /* Then try adding all block devices.  If one fails, close all and
+      * exit.
+      */
+-    block_list = qmp_query_block(NULL);
++    for (blk = blk_all_next(NULL); blk; blk = blk_all_next(blk)) {
++        BlockDriverState *bs = blk_bs(blk);
  
-     info = g_new0(ImageInfo, 1);
--    bdrv_do_query_node_info(bs, qapi_ImageInfo_base(info), errp);
-+    bdrv_co_do_query_node_info(bs, qapi_ImageInfo_base(info), errp);
-     if (*errp) {
-         goto fail;
-     }
-@@ -353,8 +351,8 @@ void bdrv_query_image_info(BlockDriverState *bs,
+-    for (info = block_list; info; info = info->next) {
+-        if (!info->value->inserted) {
++        if (!*blk_name(blk)) {
++            continue;
++        }
++
++        /*
++         * Note: historically we used to call qmp_query_block() to get
++         * the list of block devices. The two 'continue' cases below
++         * are the same as used by that function and are here to
++         * preserve behavior.
++         */
++
++        if (!blk_get_attached_dev(blk)) {
++            continue;
++        }
++
++        bs = bdrv_skip_implicit_filters(bs);
++        if (!bs || !bs->drv) {
+             continue;
          }
  
-         if (backing) {
--            bdrv_query_image_info(backing, &info->backing_image, false,
--                                  skip_implicit_filters, errp);
-+            bdrv_co_query_image_info(backing, &info->backing_image, false,
-+                                     skip_implicit_filters, errp);
-             if (*errp) {
-                 goto fail;
-             }
-diff --git a/include/block/qapi.h b/include/block/qapi.h
-index 76be9cc3e5..5f7e3a690e 100644
---- a/include/block/qapi.h
-+++ b/include/block/qapi.h
-@@ -38,7 +38,10 @@ int GRAPH_RDLOCK
- bdrv_query_snapshot_info_list(BlockDriverState *bs,
-                               SnapshotInfoList **p_list,
-                               Error **errp);
--void GRAPH_RDLOCK
-+void coroutine_fn GRAPH_RDLOCK
-+bdrv_co_query_image_info(BlockDriverState *bs, ImageInfo **p_info, bool flat,
-+                         bool skip_implicit_filters, Error **errp);
-+void co_wrapper_bdrv_rdlock
- bdrv_query_image_info(BlockDriverState *bs, ImageInfo **p_info, bool flat,
-                       bool skip_implicit_filters, Error **errp);
+         export = (NbdServerAddOptions) {
+-            .device         = info->value->device,
++            .device         = g_strdup(blk_name(blk)),
+             .has_writable   = true,
+             .writable       = writable,
+         };
  
-@@ -58,7 +61,4 @@ void bdrv_node_info_dump(BlockNodeInfo *info, int indentation, bool protocol);
- void coroutine_fn GRAPH_RDLOCK
- bdrv_co_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info,
-                            Error **errp);
--void co_wrapper_bdrv_rdlock
--bdrv_do_query_node_info(BlockDriverState *bs, BlockNodeInfo *info,
--                        Error **errp);
- #endif
+         qmp_nbd_server_add(&export, &local_err);
+-
++        g_free(export.device);
+         if (local_err != NULL) {
+             qmp_nbd_server_stop(NULL);
+             break;
+         }
+     }
+ 
+-    qapi_free_BlockInfoList(block_list);
+-
+ exit:
+     hmp_handle_error(mon, local_err);
+ }
 -- 
 2.35.3
 
