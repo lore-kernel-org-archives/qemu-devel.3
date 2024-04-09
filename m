@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6ED7C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A441DCD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruGNy-000745-C1; Tue, 09 Apr 2024 14:39:58 -0400
+	id 1ruGhx-0001s0-KG; Tue, 09 Apr 2024 15:00:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruGNv-00073a-TH
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:39:56 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1ruGhl-0001pT-9e
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:00:34 -0400
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruGNs-0003If-AB
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:39:55 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-516d09bd434so6428634e87.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 11:39:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1ruGhj-0006fc-7y
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:00:25 -0400
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-ddaad2aeab1so5191062276.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712687989; x=1713292789; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xvL+glsdz5z4Amq1OoQNU2NXRCqhZxgf8cj+gEXovas=;
- b=jilLDqwtDPfxD7mQhBlGk4xh9mrECZU1kxK1XzA6KlRUR39RGML9NGjthrW/cuTp9V
- Dc8q68zjKh/HUMbDTryUgaD1xzCEtQTJAzJGPtD/mzvGqw+S/N8Ioo8RkYW/5PxeIg/u
- fEOodZirHMwmNO2fVzaPM2af8ZkZyMjWA/Sjts6nj5Eoxw/ofYArg7izuK4WdJ+FlLEx
- gfPsye1Bd+9YP0V0CPfK+3PmqP8S05k6UHDv1h/I3jx1bTbPvi3Ge7fhHiuxfkpRQjM4
- EAu1LU/UDmCfBO5oLrcYxPDp0P7IkaHvkNUUmjOfaFsI3hiCVXN5P6VFPztodQ5vrT3n
- pYbg==
+ d=bytedance.com; s=google; t=1712689217; x=1713294017; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5CBvcfp0rqG8/aCbqDf2QUOPCz/n3wHa5btTw1mm84E=;
+ b=epphVPTx+qw/7j5kLJir/7olNg43xYOyNvpCCIoQZqVNFLEoDGwO4xobDpDKDDfaJd
+ NATHrzc2IVSLJmq5DjKUWQeJX0UiXCrTrfUPeiIqnPrAtgnye8Bi2QAVe3vaXdzEm//+
+ Rmr/bknmmiQrerTDrJBmx7/+53mwwszaYeeGAW6fwYBYLOk+i5ls4zu/XMJlJ0OANnJm
+ P1aQyDZF3F4Oya6Jb1RGuK8ESvcxf1QD+ENEuiE4rJ3D379LVciEcswK+0JcAz1gsevW
+ GS7ZYbPiuqeZbSaIXcYmgW5D/Zq4tqQaunNIoEl8HcdibdR/kOpEqJzj2tKpPQvu3MNl
+ LEfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712687989; x=1713292789;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xvL+glsdz5z4Amq1OoQNU2NXRCqhZxgf8cj+gEXovas=;
- b=HcK6p/Dwx43LPQ784bdcNkwLkF3kOfhfe8ayUooM1WpsNZmvuJs5BNMzTz8gKcIqN7
- sFM3PtHjQKpN3LZ5Ywu9fv0wJo02Zv/KHQyeDpqnV0RfNprBJfCrBY9Rv3mfqGRoDD8N
- 4DJl+DEmaGzQXqQzjGkFDA0stkzMMmoCgRMf0W9xalh95cXLr8id7jpKe8IVH11D2Nn7
- qDRrsBN5Y2Qd63dIJ171x+HIqnKJeINsiM+xlX6PnrvplDPzj4N5wX6TfABxLzbRMnXy
- dwiiqx3SpsELnNq5GAi5KiseIx5uZ3bn+QUAjpWMCujD9j1U1zV3Bgqo6pmDAoEUyXfT
- 6RGw==
+ d=1e100.net; s=20230601; t=1712689217; x=1713294017;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5CBvcfp0rqG8/aCbqDf2QUOPCz/n3wHa5btTw1mm84E=;
+ b=NmvbGQRJGmP3ltPa5m+1af4Fep1a2lW1A/AYfvVeHIViX3P1fIPabHbzHJSslugaPW
+ NQXbbX0UMsFj1LACgDLHb5WLS14G15aXFTo+ewf5P3X6DbbHj9IsTEs3GBDtNIX0Q9R/
+ jL0hrOnoznD9YBF4Ha3kTuR67EwXp7Uu5UUcnxZTOGTm00YmNs2oFpG4cIYlboSkUKYn
+ t87TdAPhOibFSNETALbJ4TvB0snjrZjlsKGDrcMTILnVqzOgqwbBI4gGl+MQ1ixOWV4O
+ 9boCyrQk52QM6lIOKGjBkqtUkLLP4+MLCllWk2tUaKfiSDycOqmFLTeImCQFcVwDST/8
+ LUOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxOxXW/7VHrMuIDaxTSJzVb1pxj1qqiRmduQJBeTxqXoc6bqugsFP9IicFggXk0hPXDCev1cLfTB4Kgy6+1/W8FC2fETM=
-X-Gm-Message-State: AOJu0YzO6vs8Xva46cjuaPnxruv6e71Pk/0NvJ5G8kbCmH+HRmRTFSvr
- pD9VfbVxLDe8tSBtNOonxggbW6kGARjAID7pBT7eOt2KQWGZdS5iQVN3+j88aBCiDhd8aVVMmES
- /sW7HTmYJ49dIf4n5HjLU/muwjZJ56VyI2BZTkQ==
-X-Google-Smtp-Source: AGHT+IGOeKhsZh8q3vo1CwFjn5PfrZyR2lETegbrs6OA4Td2qXVZWqFfvioOh3mQaxUqxLBLN79z9Q6K3N84H0UxQQ0=
-X-Received: by 2002:ac2:5bc6:0:b0:516:d16f:29d0 with SMTP id
- u6-20020ac25bc6000000b00516d16f29d0mr170614lfn.1.1712687989444; Tue, 09 Apr
- 2024 11:39:49 -0700 (PDT)
+ AJvYcCV7oRBwSI+UBrJHa/SAFf9GX4420yK1ZTev5Bi6GDnfHLTBfKxszJlqZvZROoRIdbRrLFinO1rQG31dVbOP4G9HSo1Ly7s=
+X-Gm-Message-State: AOJu0YwOC5jxxqd6UNCjwYm6Y+mgmcoIfLvUn3gs36647EpX8tN9KZ1o
+ bMYfeApADDSOGNacecbesq1M42XdGoyD+/pB2qaZ9nwXfPL0F8DiJaykLoN35xX27dMKBP1WoJ+
+ Qj8iwMHU4rr20Sn6kz23j7tMzE1IOhHTH0hmGdg==
+X-Google-Smtp-Source: AGHT+IGW6ppz/qE4BrLvmNCRDbTF9xfQE/vBrRFhezaSlxNTiNANoYpDGSEDGNZJ8OzMKjviuEREaTWu0J3o1ZesD1c=
+X-Received: by 2002:a25:2748:0:b0:dcd:ba5a:8704 with SMTP id
+ n69-20020a252748000000b00dcdba5a8704mr700084ybn.24.1712689217227; Tue, 09 Apr
+ 2024 12:00:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240409162942.454419-1-kraxel@redhat.com>
- <20240409162942.454419-2-kraxel@redhat.com>
- <82b11f6c-fe3c-4cd2-8dca-19b5db1cb09d@tls.msk.ru>
-In-Reply-To: <82b11f6c-fe3c-4cd2-8dca-19b5db1cb09d@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 19:39:37 +0100
-Message-ID: <CAFEAcA-MiGPvkJe_Dt8kg8FG4-XJ7CR=hBMGDao0UZBQeBS1tQ@mail.gmail.com>
-Subject: Re: [PULL 1/4] edk2: get version + date from git submodule
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+References: <20240405000707.2670063-1-horenchuang@bytedance.com>
+ <20240405000707.2670063-2-horenchuang@bytedance.com>
+ <20240405145624.00000b31@Huawei.com>
+In-Reply-To: <20240405145624.00000b31@Huawei.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Tue, 9 Apr 2024 12:00:06 -0700
+Message-ID: <CAKPbEqrTvY4bsRjc=wBWpGtJM5_ZfH50-EX4Zq2O_ram9_0WbQ@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v11 1/2] memory tier: dax/kmem: introduce
+ an abstract layer for finding, allocating, and putting memory types
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>,
+ Gregory Price <gourry.memverge@gmail.com>, 
+ aneesh.kumar@linux.ibm.com, mhocko@suse.com, tj@kernel.org, 
+ john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>,
+ Srinivasulu Thanneeru <sthanneeru@micron.com>, 
+ SeongJae Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, 
+ Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, nvdimm@lists.linux.dev, 
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12e.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,28 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Apr 2024 at 19:02, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> 09.04.2024 19:29, Gerd Hoffmann:
-> > +efi: edk2-version
-> >       $(PYTHON) edk2-build.py --config edk2-build.config \
-> > -             --version-override "edk2-stable202302-for-qemu" \
-> > -             --release-date "03/01/2023"
-> > +             --version-override "$(EDK2_STABLE)-for-qemu" \
-> > +             --release-date "$(EDK2_DATE)" \
->
-> How it will look like if there's no edk2/.git, for example, when run in
-> extracted release tarball, with empty EDK2_STABLE and EKD2_DATE?
->
-> Should these values be a part of release tarball maybe?
-> Or maybe it's better to base EKD2_{DATE|VERSION} on qemu date/version in
-> this case?
+Hi Jonathan,
 
-Patch 2 commits the edk2-version file, so it should end up
-in the release tarball that way. (Effectively it becomes an
-output of the "build the roms" process, same as the edk2 blobs
-themselves.)
+On Fri, Apr 5, 2024 at 6:56=E2=80=AFAM Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
+>
+> On Fri,  5 Apr 2024 00:07:05 +0000
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
+>
+> > Since different memory devices require finding, allocating, and putting
+> > memory types, these common steps are abstracted in this patch,
+> > enhancing the scalability and conciseness of the code.
+> >
+> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> > Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawie.com>
+>
+Thank you for reviewing and for adding your "Reviewed-by"!
+I was wondering if I need to send a v12 and manually add
+this to the commit description, or if this is sufficient.
 
-thanks
--- PMM
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
