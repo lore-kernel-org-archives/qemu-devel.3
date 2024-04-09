@@ -4,126 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4383C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 07:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 259DDCD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 07:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru6I5-0000Wf-11; Tue, 09 Apr 2024 03:53:13 -0400
+	id 1ru6No-0001vL-LV; Tue, 09 Apr 2024 03:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ru6Hz-0000Qk-QF
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:53:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1ru6Nj-0001uz-MS
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:59:05 -0400
+Received: from esa4.hc1455-7.c3s2.iphmx.com ([68.232.139.117])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ru6Hx-0005Gj-9t
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:53:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712649183;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aUr/GPovg/EOwz00ZvJNHBGtT0ZHXswySmllKnpBDMw=;
- b=CbCfkeKE1SM+w7k7zxxYtYEGKxIW4bxbHRtBfvzIa8gCt12Iq0MUaY8+ObS2syOq391CIz
- G5N7s+DdVWxERLuKK9haU9QYNvFEhstM+iyuvmNCOAaraTiOHRN2+fvZe1yQiKFNoSvenZ
- x3AM+rSJq0dUMEJu8CSHqkgccDvHPrU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-9o_jgxB_NUO6OyyPJcfH1Q-1; Tue, 09 Apr 2024 03:53:01 -0400
-X-MC-Unique: 9o_jgxB_NUO6OyyPJcfH1Q-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-343d7cd8f46so2494000f8f.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 00:53:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712649180; x=1713253980;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aUr/GPovg/EOwz00ZvJNHBGtT0ZHXswySmllKnpBDMw=;
- b=E5q2UHzg0CYqPl6gO6Co57dgCdbkXYAJDY6aZK8npUg8UNWgGw6ERWYX+/buui6iNz
- ik+sGE9UpFxOxbH+zWhZs0RtA8WK9OWDVkbwnmMf5jjphPUFFIPBxgSi6O4miQprm7UM
- eKam+jMVQ+r87UL0ReWiUyq6cYGJfQzKtKbpYoCDaDjG83ewzmqvRS+7CKnXajSSAjDN
- HTkgs8p+rfsdxdzQwAcBpafRUQ2TwRyzAINn2Jtz7E8EwEl7CWsnmsREUb56MoFi332K
- gCUg3oJLmmkIq19hmBfj58eNYWKmtPojACnNDvgXcdcPeFy4y+70nSvBLTIBkWtLoyLh
- 0gPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXreXoFJT2UYtx9wIvz3RFe6rFHb0s2vxfZUB/5urSqW7zFigGgEuf0+YzAPd/dWaUTwzCNxz9oZt+qpXMW+YQFQgySIGA=
-X-Gm-Message-State: AOJu0YzYNX9DuBobbztU5XCT5qn1xuCt2T3bAi61tvpTwSHPKbiU/XP4
- p42auxtiPI8oX3jFrS5ELxcON0yxviOhOgPCLinp7S/y8pbArQ+WIXkOWOPrzXkv96CgFftHo3n
- gForfVXpVkmniJL0fRBhJRQwKn/s9ummhSzTPM6fXM53eOsdfFfAVJZ4an6kK
-X-Received: by 2002:adf:fd91:0:b0:343:98ee:524 with SMTP id
- d17-20020adffd91000000b0034398ee0524mr6710293wrr.36.1712649180093; 
- Tue, 09 Apr 2024 00:53:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiU13ZDjYqbsrIhBp1rh0P/G4/xqAJK30Pt4ubZ35Mxd7M0+NMUXVDs0dzegGTBt1tAfdUag==
-X-Received: by 2002:adf:fd91:0:b0:343:98ee:524 with SMTP id
- d17-20020adffd91000000b0034398ee0524mr6710285wrr.36.1712649179773; 
- Tue, 09 Apr 2024 00:52:59 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.152.232])
- by smtp.googlemail.com with ESMTPSA id
- n6-20020a5d6606000000b0033e745b8bcfsm10745697wru.88.2024.04.09.00.52.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 00:52:59 -0700 (PDT)
-Message-ID: <a9b44e30-2788-4d88-850b-4f89c4d1f830@redhat.com>
-Date: Tue, 9 Apr 2024 09:52:58 +0200
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1ru6Ng-0006K3-DR
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:59:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1712649540; x=1744185540;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=cr75vmQQ4tjMyuDlPBiVrzxG5Gv0w637W9cL2RfcGas=;
+ b=Q8AzN6pXqrwRt8VXHAxiUR6cT3zwO/EhlFPLpOk7kLOKlSTHBtCh0vKf
+ 9RhkV5ciJgP1WWOZTTZ1duQuJ/0aQaGT7viIKeA3+2fK+eCccyIAK+8uP
+ lc71FtIHCJtIH6K1dcoLvlPsHjUdDH+4LxFnwVSIogfffHzgd3NXXFlri
+ cY/0+ZBkwJHEbeWO/PR6HOq3LwszOF5cBsgwKmg/qRoTcO+uYr0NNLgxq
+ 4wj4Ba4VMgZnYZ7N2Vp4WvGy7xQ7pmpzSc6KKi4+zVERg5apG/2sNKSkC
+ dHvcHQXTE4eR1SOKlKCZZEkj4usqjau3PXpKxHH2LhfCqSTnfd2pvEjyj g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="155309814"
+X-IronPort-AV: E=Sophos;i="6.07,189,1708354800"; d="scan'208";a="155309814"
+Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
+ by esa4.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Apr 2024 16:58:54 +0900
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 68B62DCB72
+ for <qemu-devel@nongnu.org>; Tue,  9 Apr 2024 16:58:52 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 92F96FCEF8
+ for <qemu-devel@nongnu.org>; Tue,  9 Apr 2024 16:58:51 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 1E46D20097CC7
+ for <qemu-devel@nongnu.org>; Tue,  9 Apr 2024 16:58:51 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.226.45])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 6293D1A0002;
+ Tue,  9 Apr 2024 15:58:50 +0800 (CST)
+To: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, qemu-devel@nongnu.org
+Cc: linux-cxl@vger.kernel.org, Dan Williams <dan.j.williams@intel.com>,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH v2] hw/mem/cxl_type3: reset dvsecs in ct3d_reset()
+Date: Tue,  9 Apr 2024 15:58:46 +0800
+Message-Id: <20240409075846.85370-1-lizhijian@fujitsu.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v2 00/28] linux-user/i386: Properly align signal
- frame
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240409050302.1523277-1-richard.henderson@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20240409050302.1523277-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28306.006
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28306.006
+X-TMASE-Result: 10--9.351400-10.000000
+X-TMASE-MatchedRID: uWxJDmPsnWHOugYCEJUMNSrLqyE6Ur/j1Ee54j3itDaJXRC/bWSJueLa
+ AlZI/DlqEpqGYdoOBVcHw5SpXQUTkBT0CagFsN1kEVuC0eNRYvIXivwflisSrCWLxjlrSy8vuxW
+ P7AlD8NO3nQMqHp+dH+affHI8kAmiHY/bzRmIaZGdd2mFBNIr8gV54COoxb6XR6RHdVK85hXuQ7
+ Jl58fF92sRrupgWdD3DHgfvPgXVeSel3N+gDvB50VOF9zLtdyMeF+F9LT9kRKbKItl61J/yZ+in
+ TK0bC9eKrauXd3MZDVt7biF0Cnq/FsUqcjBanlSra5fkKjdyekD49NFNTBfWdZEUZ4TJWg7
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=68.232.139.117;
+ envelope-from=lizhijian@fujitsu.com; helo=esa4.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,69 +93,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
+From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/24 07:02, Richard Henderson wrote:
-> v1: https://lore.kernel.org/qemu-devel/20230524054647.1093758-1-richard.henderson@linaro.org/
-> 
-> But v1 isn't particularly complet or korrect.
-> 
-> Disconnect fpstate from sigframe, just like the kernel does.
-> Return the separate portions of the frame from get_sigframe.
-> Alter all of the target fpu routines to access memory that
-> has already been translated and sized.
+After the kernel commit
+0cab68720598 ("cxl/pci: Fix disabling memory if DVSEC CXL Range does not match a CFMWS window")
+CXL type3 devices cannot be enabled again after the reboot because the
+control register(see 8.1.3.2 in CXL specifiction 2.0 for more details) was
+not reset.
 
-With the exception of patch 22, and with small nits in patches 1/19/23:
+These registers could be changed by the firmware or OS, let them have
+their initial value in reboot so that the OS can read their clean status.
 
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: e1706ea83da0 ("hw/cxl/device: Add a memory device (8.2.8.5)")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+---
+root_port, usp and dsp have the same issue, if this patch get approved,
+I will send another patch to fix them later.
 
-> 
-> r~
-> 
-> 
-> Richard Henderson (28):
->    target/i386: Add tcg/access.[ch]
->    target/i386: Convert do_fldt, do_fstt to X86Access
->    target/i386: Convert helper_{fbld,fbst}_ST0 to X86Access
->    target/i386: Convert do_fldenv to X86Access
->    target/i386: Convert do_fstenv to X86Access
->    target/i386: Convert do_fsave, do_frstor to X86Access
->    target/i386: Convert do_xsave_{fpu,mxcr,sse} to X86Access
->    target/i386: Convert do_xrstor_{fpu,mxcr,sse} to X86Access
->    tagret/i386: Convert do_fxsave, do_fxrstor to X86Access
->    target/i386: Convert do_xsave_* to X86Access
->    target/i386: Convert do_xrstor_* to X86Access
->    target/i386: Split out do_xsave_chk
->    target/i386: Add rbfm argument to cpu_x86_{xsave,xrstor}
->    target/i386: Add {hw,sw}_reserved to X86LegacyXSaveArea
->    linux-user/i386: Drop xfeatures_size from sigcontext arithmetic
->    linux-user/i386: Remove xfeatures from target_fpstate_fxsave
->    linux-user/i386: Replace target_fpstate_fxsave with X86LegacyXSaveArea
->    linux-user/i386: Split out struct target_fregs_state
->    linux-user/i386: Fix -mregparm=3 for signal delivery
->    linux-user/i386: Return boolean success from restore_sigcontext
->    linux-user/i386: Return boolean success from xrstor_sigcontext
->    linux-user/i386: Fix allocation and alignment of fp state
->    target/i386: Honor xfeatures in xrstor_sigcontext
->    target/i386: Convert do_xsave to X86Access
->    target/i386: Convert do_xrstor to X86Access
->    target/i386: Pass host pointer and size to cpu_x86_{fsave,frstor}
->    target/i386: Pass host pointer and size to cpu_x86_{fxsave,fxrstor}
->    target/i386: Pass host pointer and size to cpu_x86_{xsave,xrstor}
-> 
->   target/i386/cpu.h                |  57 ++-
->   target/i386/tcg/access.h         |  40 ++
->   linux-user/i386/signal.c         | 669 ++++++++++++++++++-------------
->   target/i386/tcg/access.c         | 160 ++++++++
->   target/i386/tcg/fpu_helper.c     | 561 ++++++++++++++++----------
->   tests/tcg/x86_64/test-1648.c     |  33 ++
->   target/i386/tcg/meson.build      |   1 +
->   tests/tcg/x86_64/Makefile.target |   1 +
->   8 files changed, 1014 insertions(+), 508 deletions(-)
->   create mode 100644 target/i386/tcg/access.h
->   create mode 100644 target/i386/tcg/access.c
->   create mode 100644 tests/tcg/x86_64/test-1648.c
-> 
+V2:
+   Add fixes tag.
+   Reset all dvsecs registers instead of CTRL only
+---
+ hw/mem/cxl_type3.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index b0a7e9f11b64..4f09d0b8fedc 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -30,6 +30,7 @@
+ #include "hw/pci/msix.h"
+ 
+ #define DWORD_BYTE 4
++#define CT3D_CAP_SN_OFFSET PCI_CONFIG_SPACE_SIZE
+ 
+ /* Default CDAT entries for a memory region */
+ enum {
+@@ -284,6 +285,10 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+              range2_size_hi = 0, range2_size_lo = 0,
+              range2_base_hi = 0, range2_base_lo = 0;
+ 
++    cxl_cstate->dvsec_offset = CT3D_CAP_SN_OFFSET;
++    if (ct3d->sn != UI64_NULL) {
++        cxl_cstate->dvsec_offset += PCI_EXT_CAP_DSN_SIZEOF;
++    }
+     /*
+      * Volatile memory is mapped as (0x0)
+      * Persistent memory is mapped at (volatile->size)
+@@ -664,10 +669,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+ 
+     pcie_endpoint_cap_init(pci_dev, 0x80);
+     if (ct3d->sn != UI64_NULL) {
+-        pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
+-        cxl_cstate->dvsec_offset = 0x100 + 0x0c;
+-    } else {
+-        cxl_cstate->dvsec_offset = 0x100;
++        pcie_dev_ser_num_init(pci_dev, CT3D_CAP_SN_OFFSET, ct3d->sn);
+     }
+ 
+     ct3d->cxl_cstate.pdev = pci_dev;
+@@ -907,6 +909,7 @@ static void ct3d_reset(DeviceState *dev)
+ 
+     cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
+     cxl_device_register_init_t3(ct3d);
++    build_dvsecs(ct3d);
+ 
+     /*
+      * Bring up an endpoint to target with MCTP over VDM.
+-- 
+2.29.2
 
 
