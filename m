@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B0BCCD129A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99FDCD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruHGN-0000Wm-JE; Tue, 09 Apr 2024 15:36:11 -0400
+	id 1ruHGr-0000iN-Fy; Tue, 09 Apr 2024 15:36:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGM-0000Wa-Eu
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:10 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1ruHGp-0000i5-IS
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:39 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGK-0004ch-Mq
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:10 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1e2b1cd446fso44162425ad.3
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:08 -0700 (PDT)
+ id 1ruHGl-0004hs-UW
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:38 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1e4149e7695so19670915ad.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712691367; x=1713296167; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712691395; x=1713296195; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0/ekaTyyBHEzg2gMKpvUq/mv6Nl9iOhi1rhUNF8qDbI=;
- b=Vupl/HD7D60CsOuas8d1rhFSjgblZaHPdwrS4MOwkUzlAl6UGBAUDbAWA0cLir+V4U
- 4QAOvbSZ8fNpgoJVuWdmPqG9tsaflo+Uo7SJ2ahzGd2O9SNlCiqvUFYqzeySus4m4Njs
- bB+BGyGCeZQ+DK2dZuKXtaalqr/dT4GtmQ/aXEHBg+1YnF5i6bItkCPrZ+Te0X6FqAGD
- qlMw6BsHNd/SjANVfQwhtQZovzixqAGLMxlpK/gtyp61jjxvG/fmyARv7Keio9AhdIag
- QksbIBTvU4vqugeL9Unzold0pmkQWBd4uxkJ7moiIM56depruhS7j5eoLpGhYVDIarEn
- wuOA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xpaONpZX7TzlKuP+L0GxHPWtvRjew/38IVUtIRwPa5c=;
+ b=u32rTkWjDpvUVunMYXf5Bu2wHhCy/Usc1g7CLOneDWr3CvNZDldf77QLkTy7uJAJeF
+ jKjwHAHVoz/J8x7SWlyw+Wg5NlDRFNJU7xlEi41cSeozDniZhExe5GwhufFh9tf+sTZR
+ G22po88Kf69jRlOSzmOlyKjqnuxkJPJoFX+mTvO9FbKO/b5FH1tXTTMQF3/ZUbII/6/+
+ n82dPxddUJ67AFHdtpCmQ+AmqgGcMfhGR7HYsHPjl2W074cdDyGgXWOBhO2GXOWvdHR9
+ 4EospU6vHMXGJA4gf9/lLZ5qE+0fx5zAcY9iE6lvHqc/jh5BgPmvHRS6Hf4iIVAbiBNl
+ oYzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712691367; x=1713296167;
+ d=1e100.net; s=20230601; t=1712691395; x=1713296195;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0/ekaTyyBHEzg2gMKpvUq/mv6Nl9iOhi1rhUNF8qDbI=;
- b=fJcliDiQ2TsB6Awp7hcGKa4mE6sQhmqPET4Cbr1Y7bL32tmF2AGBKh/SiPRAHHJDhU
- erwlzZB3YZT8rdIgOBKATczTbWVIVtZZyc+JTrJLnuumTL3Yj5C+kgjh76ZoCTivE5a3
- AUza7AP/T25r1JAgPc33FEc15cFWjU/21/+pwqbAzJDgrr+Xv51EbHTIfj4b6a8FyQ50
- GPPXgEaGYWR756UMxaIwbPH8HAD5dougGm8ZnmgVoNFvzinBBKCWdD96P6wA8htBbskf
- V604DjgDZkQxDwdhIDQUKwDDqdw4ELO23XFtdVrA/06n6/O937mwde3aD0YC0b/3LZdQ
- O/Qw==
-X-Gm-Message-State: AOJu0YyJQgNgDMWQa39BaFGZLjqWmDbCGZ70ErZLj/axktdnv3WuekLd
- iApDLEYkQoC7mFmQOsiFJW0cjQ4Ou4Qb+COCEXKh36+qJWpZmGdN2min12IObuJ9x3q5LkobLy5
- y
-X-Google-Smtp-Source: AGHT+IHA3RfLLR3DsHquCjRYlwclSDo3jybSQ5kXXbsXwW0LXzdB7GJxk/07oZtvLxT1rtH//e7RpA==
-X-Received: by 2002:a17:902:e944:b0:1e3:e093:b5f0 with SMTP id
- b4-20020a170902e94400b001e3e093b5f0mr766918pll.8.1712691367109; 
- Tue, 09 Apr 2024 12:36:07 -0700 (PDT)
+ bh=xpaONpZX7TzlKuP+L0GxHPWtvRjew/38IVUtIRwPa5c=;
+ b=xC5teEQB+BvuuMILMXArzU9KZB0WOVSuJD2txact+Ber2zU2xUbnX9FRrALv7zchCd
+ 0NpNEF3ulfDzcLmmqKWjpXnoY4VrDWi5KX81ueoAaKgxY2tvpp+o7OCwaDzm0zB+gtqQ
+ lm/kQj2UFRAj0ql03bXtGwawQH440fVrv18Jt+uQnyqVYSJZaYUBqlKiblWJAgShkn6A
+ 5wxjJI+RYX4U0FMY3hDv0qaujut9xvG8HVNaLXtuEXbP369VLZ4hSPO9xCq4M9GUk4NA
+ UCkvWD6GrWRrKToIJYnsDawqLbuzKFtR+9k9Xr9Jw+plQGMRclPuDGf9qVPO6X2G0sZg
+ CZQQ==
+X-Gm-Message-State: AOJu0Yw9gIoxtngFHLH5xYLiramuvImzzngUwA3lxNmU1cuu/oCCMZb6
+ 3UH+W/q8SyzQKSBlxDsWMNi9mtUDrH9aLCwYnJHnfKEDmaOwiI/zqfaq0PcjzJDwJVndEiqW9s2
+ /
+X-Google-Smtp-Source: AGHT+IGgXoWFCythR4LhHHwMcwh7J2QSZKAKjS9aEPmSWjlhJR5TK+ocQmiypcZuwC4dj7NAaYQRLQ==
+X-Received: by 2002:a17:902:eb8f:b0:1e0:a7cc:3750 with SMTP id
+ q15-20020a170902eb8f00b001e0a7cc3750mr963465plg.3.1712691394748; 
+ Tue, 09 Apr 2024 12:36:34 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.06
- for <qemu-devel@nongnu.org>
+ c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 12:36:06 -0700 (PDT)
+ Tue, 09 Apr 2024 12:36:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 01/20] tcg/optimize: Do not attempt to constant fold neg_vec
-Date: Tue,  9 Apr 2024 09:35:44 -1000
-Message-Id: <20240409193603.1703216-2-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v2 20/20] linux-user: Preserve unswapped siginfo_t for strace
+Date: Tue,  9 Apr 2024 09:36:03 -1000
+Message-Id: <20240409193603.1703216-21-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240409193603.1703216-1-richard.henderson@linaro.org>
 References: <20240409193603.1703216-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,93 +95,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out the tail of fold_neg to fold_neg_no_const so that we
-can avoid attempting to constant fold vector negate.
+Passing the tswapped structure to strace means that
+our internal si_type is also gone, which then aborts
+in print_siginfo.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2150
+Fixes: 4d6d8a05a0a ("linux-user: Move tswap_siginfo out of target code")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c                    | 17 ++++++++---------
- tests/tcg/aarch64/test-2150.c     | 12 ++++++++++++
- tests/tcg/aarch64/Makefile.target |  2 +-
- 3 files changed, 21 insertions(+), 10 deletions(-)
- create mode 100644 tests/tcg/aarch64/test-2150.c
+ linux-user/signal.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 275db77b42..2e9e5725a9 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1990,16 +1990,10 @@ static bool fold_nand(OptContext *ctx, TCGOp *op)
-     return false;
- }
- 
--static bool fold_neg(OptContext *ctx, TCGOp *op)
-+static bool fold_neg_no_const(OptContext *ctx, TCGOp *op)
- {
--    uint64_t z_mask;
--
--    if (fold_const1(ctx, op)) {
--        return true;
--    }
--
-     /* Set to 1 all bits to the left of the rightmost.  */
--    z_mask = arg_info(op->args[1])->z_mask;
-+    uint64_t z_mask = arg_info(op->args[1])->z_mask;
-     ctx->z_mask = -(z_mask & -z_mask);
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index a93148a4cb..05dc4afb52 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -1173,6 +1173,7 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
+     CPUState *cpu = env_cpu(cpu_env);
+     abi_ulong handler;
+     sigset_t set;
++    target_siginfo_t unswapped;
+     target_sigset_t target_old_set;
+     struct target_sigaction *sa;
+     TaskState *ts = get_task_state(cpu);
+@@ -1182,9 +1183,14 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
+     k->pending = 0;
  
      /*
-@@ -2010,6 +2004,11 @@ static bool fold_neg(OptContext *ctx, TCGOp *op)
-     return true;
- }
+-     * Writes out siginfo values byteswapped, accordingly to the target. It also
+-     * cleans the si_type from si_code making it correct for the target.
++     * Writes out siginfo values byteswapped, accordingly to the target.
++     * It also cleans the si_type from si_code making it correct for
++     * the target.  We must hold on to the original unswapped copy for
++     * strace below, because si_type is still required there.
+      */
++    if (unlikely(qemu_loglevel_mask(LOG_STRACE))) {
++        unswapped = k->info;
++    }
+     tswap_siginfo(&k->info, &k->info);
  
-+static bool fold_neg(OptContext *ctx, TCGOp *op)
-+{
-+    return fold_const1(ctx, op) || fold_neg_no_const(ctx, op);
-+}
-+
- static bool fold_nor(OptContext *ctx, TCGOp *op)
- {
-     if (fold_const2_commutative(ctx, op) ||
-@@ -2418,7 +2417,7 @@ static bool fold_sub_to_neg(OptContext *ctx, TCGOp *op)
-     if (have_neg) {
-         op->opc = neg_op;
-         op->args[1] = op->args[2];
--        return fold_neg(ctx, op);
-+        return fold_neg_no_const(ctx, op);
+     sig = gdb_handlesig(cpu, sig, NULL, &k->info, sizeof(k->info));
+@@ -1197,7 +1203,7 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
      }
-     return false;
- }
-diff --git a/tests/tcg/aarch64/test-2150.c b/tests/tcg/aarch64/test-2150.c
-new file mode 100644
-index 0000000000..fb86c11958
---- /dev/null
-+++ b/tests/tcg/aarch64/test-2150.c
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* See https://gitlab.com/qemu-project/qemu/-/issues/2150 */
-+
-+int main()
-+{
-+    asm volatile(
-+        "movi     v6.4s, #1\n"
-+        "movi     v7.4s, #0\n"
-+        "sub      v6.2d, v7.2d, v6.2d\n"
-+        : : : "v6", "v7");
-+    return 0;
-+}
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 0efd565f05..70d728ae9a 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -10,7 +10,7 @@ VPATH 		+= $(AARCH64_SRC)
  
- # Base architecture tests
- AARCH64_TESTS=fcvt pcalign-a64 lse2-fault
--AARCH64_TESTS += test-2248
-+AARCH64_TESTS += test-2248 test-2150
+     if (unlikely(qemu_loglevel_mask(LOG_STRACE))) {
+-        print_taken_signal(sig, &k->info);
++        print_taken_signal(sig, &unswapped);
+     }
  
- fcvt: LDFLAGS+=-lm
- 
+     if (handler == TARGET_SIG_DFL) {
 -- 
 2.34.1
 
