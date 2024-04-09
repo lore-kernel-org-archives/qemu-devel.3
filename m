@@ -4,73 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35F4C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E79CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 11:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru9CX-0005cR-9f; Tue, 09 Apr 2024 06:59:41 -0400
+	id 1ru9DK-0006Oy-Gv; Tue, 09 Apr 2024 07:00:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ru9CQ-0005c5-4V; Tue, 09 Apr 2024 06:59:34 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1ru9DI-0006OR-Vm
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:00:29 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ru9CN-0003WT-Mp; Tue, 09 Apr 2024 06:59:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712660372; x=1744196372;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=kQ5/iifoDjm2545ej6pWbM0neVWPPDk5fmy69fVHjmI=;
- b=b63K22cQONMDpJNwxyNBqnbnqmEwYV0UYQsYoxRYwSGqH41xyN6PIQOl
- AqZB3nkaC7eKy14pe3W8VFXM0Ak31OmvbmTc5HC/kd2vu6pw0ozx+8W95
- PlVh/JgqgsdJtJUrRN7uGuPaF+ByAi4G7P2j1TNwQ7VCdqeqea43kRDid
- 8NzEqSbyrHB6OgThZGca+ObxUHQeD/yJoIY6UeqIsY2tgh7PiKffD36FY
- NY/gO62oeW5xDWl5NtBW17eNnd/TnWT+4D4DICc9xMkp1v74cpZ2vFJZ7
- BF1rBY1oL8iQLTv1pk3f7hwDQgcRr1v43WBcbJbfHZO8Jlhab4nyB7trf Q==;
-X-CSE-ConnectionGUID: QWF7d1GdTPO5Fdd4hq/1Ng==
-X-CSE-MsgGUID: HYgxL8wlRWG/VpmzP2L9GA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="19399208"
-X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; d="scan'208";a="19399208"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Apr 2024 03:59:27 -0700
-X-CSE-ConnectionGUID: sRpFCGYAS7yjRHHuJ9PwiQ==
-X-CSE-MsgGUID: 3Wlo+GXaTyWr/vvWv+BO2g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; d="scan'208";a="24968563"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa005.jf.intel.com with ESMTP; 09 Apr 2024 03:59:24 -0700
-Date: Tue, 9 Apr 2024 19:13:24 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Giuseppe =?iso-8859-1?Q?Ghib=F2?= <ghibo@mageia.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
-Message-ID: <ZhUi1NpSeUzXUuMu@intel.com>
-References: <20240311075806.668555-1-pbonzini@redhat.com>
- <2f0eefc5-8907-4af7-b717-17e17a9a3019@tls.msk.ru>
- <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1ru9DE-0003r0-43
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:00:25 -0400
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4393VrWL009211;
+ Tue, 9 Apr 2024 04:00:22 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :content-transfer-encoding:content-type:mime-version; s=
+ proofpoint20171006; bh=wTtLGiQ9X8bULbDgfxVDjY65nNUFDTlW27sczzX+H
+ kg=; b=j72+/T/gIZRKua+R3eBP6OOYGDXUw5UPRTG1rDYpnlkPpeGtK7M1ut9Rs
+ NWYKmqASfH3jhJC3BaGWbXaSV8xuxLjWxCgr4vOgApyqE/DGZKW4E4BxnQLetxNf
+ SEYIemDksKcuse2YB0h4jQl8yQlI7xAH61gCRNICCRli+va3ro61WqKh2nyyfrT9
+ defrRe4GcrAtKbaDvmHVjF6+a1QW40CWZoYA/cNwCZtyzs0IOFgryQAlF+zbzDGz
+ RUjCg1FFQmt6CO+UZzHZXt/kqX6qRuLVIL+7F4FAhm7HoIFUrntmYhGiWBWV3Csh
+ /S89LCf78CXVblf2D4st8xROaL1Bw==
+Received: from nam11-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11lp2172.outbound.protection.outlook.com [104.47.58.172])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 3xcwua0mm6-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Apr 2024 04:00:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=T5nJ0KIS2V3K9TyErSF32I6yXN0s/WxyNgIYj6K5bPDCK0JxVJxB0qRKmozMO3UQSZg1RRPq5p069DIHNQ5aze4b+G2wxRom/3BeYo6qbDhuMENhculsxVs1aKYwiwWIbAFpYs7QuHC2+UUQp/eZGrYefYKS1hZDdMG4u/s0khV5jHOQcTe/IL6JPaD3JQH3Ht0Wt0ZZ/EwMOJCZGcW0avYfz8WKmeHtGvmFIxVQG1usrj+ORhiumV/AZGPHoB4yw/mRcTT4MPP3tIMzF1KRr0mTV2iWtGhLa3fMotoXO1jGhYUEALeFP2kpr9udbQRsEyfZaLJqP5wIKGLHT7dBfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wTtLGiQ9X8bULbDgfxVDjY65nNUFDTlW27sczzX+Hkg=;
+ b=CnJ+NG0doePYjRH8m4hF+UykriLj1JMi0ipOWWvs+lXAzwVxy7LfVEJiMk0MigWvYKF4E9UChOZrBpKUscLnjpzHe5vu3DJp4XoHzz1f+4o9Kuzrk4yiOExjGW8NqQsFhk74qaDmgtb21pFh/vZsbYkPdHCaaL1WioVCQf9+kQJQAP2v0LS7Idmw9A8kVU0ijgMBWT6JhYUKn3B5r3A/uernoXJ1/Dy3UhU4u9sv8p3Nuxe2JhRV5qmP99uW4m7EnqA0cAAu5ja+DG4xCH6Cmwh0CHoiP5Giq7O/E0EMnjaueYmWM8OskYb3UHTyjpUwQYxdiIAy4R7FtITzaiNSWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wTtLGiQ9X8bULbDgfxVDjY65nNUFDTlW27sczzX+Hkg=;
+ b=s7y+UrNhEptzQKIomZoxU0CeYi60A9qqmVkNuTWWAZuaubdnErlIlXqWqhWQl+9uAzJPtahYP8JH/oB6bg5tS1Qjueg8jFSKi4QSYoFv26fzPSUfcPDN3IID36yG5Y41YHbiMzQAEQUzXMK7K62NyYQoj482FHATHvKx496HJ2Ts3WvxuKQh0XbKYKfgg88Vz2f+vFQ0r6BieV++tqoshrk3q5TA2lbEGx+KwWZH366ZH6xZhMM7zMkH6vBGt1fm4KVOkhmr6Y75q4H8UEV98GBiDfHr0yJPD1N06Tn6tBYZv28C92KjZpYnib7MN4nFhL4fd9V7vK5g6456P3BSgg==
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
+ by CYYPR02MB9826.namprd02.prod.outlook.com (2603:10b6:930:c0::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Tue, 9 Apr
+ 2024 11:00:20 +0000
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7409.053; Tue, 9 Apr 2024
+ 11:00:20 +0000
+From: Het Gala <het.gala@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ peterx@redhat.com, farosas@suse.de, prerna.saxena@nutanix.com,
+ Het Gala <het.gala@nutanix.com>
+Subject: [PATCH v2 1/3] fixup! tests/qtest/migration: Add negative tests to
+ validate migration QAPIs
+Date: Tue,  9 Apr 2024 11:00:09 +0000
+Message-Id: <20240409110011.174426-2-het.gala@nutanix.com>
+X-Mailer: git-send-email 2.22.3
+In-Reply-To: <20240409110011.174426-1-het.gala@nutanix.com>
+References: <20240409110011.174426-1-het.gala@nutanix.com>
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+Content-Type: text/plain
+X-ClientProxiedBy: BY5PR17CA0009.namprd17.prod.outlook.com
+ (2603:10b6:a03:1b8::22) To SJ2PR02MB9955.namprd02.prod.outlook.com
+ (2603:10b6:a03:55f::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|CYYPR02MB9826:EE_
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: OAWzV0Gh31PxiXVp/PoDPj79L/P3r/jLh//j8VY/OVF7UJiPT6DdS80mgJ1//iiCLEyfYKbOvX0cJFt1dAYo5sMFRRGOX++w1Lktrs+LZiSTn0rPaPPvSjeoP/L9zRWoW26tD2Wk+9nIJMLHJt2swakLexiFIHQIqg+HEHk4H1fkABER2h6D6cqE0/FAK8Tltf7m1CPCzVXwCesFUNqoor2l/a+971A5MslbXyQIXz9414WmCgkO4Ol9cYN65C4vX/VYRM5ItIw0ToDgjSb06k2gTHAgs9XA9l/eMjz7vS3q+x0bLciMlXz085NiUnFfMJDgTluX0k82JuPEIlQwUgTfbt5N6i8WXuII1AkwVKupqQmrMVk/bXcKKUBwC3R0QMbPRuYANglcVOkgIIyn42Pm04jO31RRglf2nOO1uEdl4OnIps40AhOfOuKYpvPDrAq62FHa0pNbliC6SU21KlBVDmZ2+OrtNdWtUebuOZ/bF4qe5s7B8Nvef9TK3krNkMjebuhcJK+wqPMTUPBZmE6OC3C2M4XH1o5p7aidzfD5gLfn/Miz9yUUdZZUftDW/6XU5KaqaEJCkr/n0pLaM0SeD8XOKIiVKIDSZldx0OcBKwGRxmtedZY4ivs3WL7kjiqD3HCHn5Dzudhkxcg3dZvWPwXfo/+b1CyghUo98DsdlO010sSK+W12U648KxNXXljh6fJQBPgcukdJfECjxBqK7VU6l59wrdTofPfPDA8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(52116005)(376005)(1800799015)(38350700005); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?C0Afn3YTT0UZVlXMIBcjOCcX4PrNHj+10zUnTp/9pUbYVsx2nuyauFI79P78?=
+ =?us-ascii?Q?a9pOdLpvV3UbUb7Mr0GVEleczmIk/wbTwaUU1jlfErpIrdzs5lB47zcaP3JH?=
+ =?us-ascii?Q?D2n+dKR80RaLqokNhwG/zTdxIhfzjCWS7Y/008aW92dam3LtwGISdmtFCaK7?=
+ =?us-ascii?Q?bTGqZ7zoswjAyBl+eoWP/5ObHVw02WrM8RMk0p/hUzTn4xNF7L+xCJfRPoKp?=
+ =?us-ascii?Q?pgJS6iMwcsS/eAfsgovLPYdPHipi9RxqXIMypFJzfik0lfHhWFy3rwVmCyr7?=
+ =?us-ascii?Q?BjwvRfcxQuMK0SaOmeR15mBkxUl7MCLBvFb+B9HzDYQkBLOHHniF2qD+TBRO?=
+ =?us-ascii?Q?N93vDz9g6JJRapk752BosjHDnDx2ZA25zCvhKDNAp9nVp/aD2Qz9mTbX3oK3?=
+ =?us-ascii?Q?Rk5IV3VgQ/YIFtZe/mgdD0V1BP5hiEsvhjZy7rijcHrguiGXJyEsrFb+t3+W?=
+ =?us-ascii?Q?IbzhuOxld2MZq1ynDRxXdKHxP83gRI8MCLWoRpiMoUXdo8uKhW6m9YDtVr47?=
+ =?us-ascii?Q?/87ABQ7tsPAFkD9xMr+qw2JdP/rxzoLAGpD8KbtS084NT8Awtt3x3VUnHq0+?=
+ =?us-ascii?Q?fhwlqQ/DXsnSm9MFW/30NaOEUaWaRZcym907lC+KsW/FTzW5ONPHImeNeo3B?=
+ =?us-ascii?Q?qMjb/hNLlqK7YqX/rIIKBOWRBR4S0+0KVQPlQWX8rY0ZRj+7WAMDwJPvTRbu?=
+ =?us-ascii?Q?wdwtqHN17cJdJRhumgQCoPqoKD64busvPMcDAvutqmEhHo4ATYMTNp4H3DDX?=
+ =?us-ascii?Q?uyWFMTyTIt4ZKc6Y/CdvAsrfHkFzsFhi2tHgb9/v+WZ/4XyaYv+Tka6QVcbj?=
+ =?us-ascii?Q?u6NZWleoh/hvnrN/O4UQtp3KdGB1WDYRr8XGU4V0xERFNtByUehEe2c+gf9c?=
+ =?us-ascii?Q?BC1ic/m+FqpbbYvVRrjMqmIODQ3kk1WgMvmckCOheVVj9Y3eObez9+QWnLg8?=
+ =?us-ascii?Q?qeELoU4KgNPAiMqsjjbETXVfRQ0QxlPWQwdAxhC6eslZVWT90wKcwe9VlNYH?=
+ =?us-ascii?Q?5FQQJCSvH0qSssU59q3C+eY6+SnHrewGplpeI2JcQ2ZGEsI3V8kPhtjzUvHy?=
+ =?us-ascii?Q?bUalWhZ9UOPEa6KQFbaTT8D0Ter5n/8j8K+wAlXp74SZISg8qqLSbeb820sz?=
+ =?us-ascii?Q?xtAsNawwwtZLKJ2uOYYmj96B9S5ooEkM6JFbM3cahXedVdMZho5kWwHkvC/w?=
+ =?us-ascii?Q?Qnio/1/zsNrYZyMne+gyRptx+fmVLhLbmLKwS0q52nYYCrc3kWjG9HmgmIEN?=
+ =?us-ascii?Q?VGi+asdvrLPnf+kTYZPQtDFzytfAqfWFfZuGvsvdwduBDd6kF19IVDtjrEhu?=
+ =?us-ascii?Q?xVN9XCpPWLcQ18DtVmUDvgfvmcwUa/L4BrxevJ/cUqCSLN8mcxpvvnKtXu17?=
+ =?us-ascii?Q?Lg5ERIaoAToUnk0AeyEw+wxRqyOqjQvvIn3vsjlnWu1/8en8FmrXDD36g42U?=
+ =?us-ascii?Q?NcBfrk8gzIky71pELWOvbdL9oNFczaRIy6xB9HgaAI9rklEsvOewGT8Ywg3e?=
+ =?us-ascii?Q?tyBU4i5LoWl720jigKjEJcRShKECEAMOVdqEhQEMMg06167GjRS/AfUjBYtD?=
+ =?us-ascii?Q?639gc9oWWYuClFwNeMID1v+tPYjoQtGZMh3b/PJu?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9780bc1-e0c4-4b55-aa68-08dc58843f3f
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2024 11:00:20.1497 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zXJrMZ/+f97m/s9CMJtLnBHeJBT5Pm0onXycTUYHJAQnN4mEgNA6a3aPV3Rj45EJ64wxMV28dfyJRD1EPvkkLA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR02MB9826
+X-Proofpoint-ORIG-GUID: xg5xs9tHXy99gD1kgUJr_GdHsjv2Yjta
+X-Proofpoint-GUID: xg5xs9tHXy99gD1kgUJr_GdHsjv2Yjta
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-09_08,2024-04-05_02,2023-05-22_02
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68; envelope-from=het.gala@nutanix.com;
+ helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,99 +158,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael & Paolo,
+Signed-off-by: Het Gala <het.gala@nutanix.com>
+---
+ tests/qtest/migration-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Fri, Apr 05, 2024 at 08:30:43PM +0300, Michael Tokarev wrote:
-> Date: Fri, 5 Apr 2024 20:30:43 +0300
-> From: Michael Tokarev <mjt@tls.msk.ru>
-> Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
-> 
-> 01.04.2024 09:02, Michael Tokarev:
-> 
-> > Anyone can guess why this rather trivial and obviously correct patch causes segfaults
-> > in a few tests in staging-7.2 - when run in tcg mode, namely:
-> > 
-> >    pxe-test
-> >    migration-test
-> >    boot-serial-test
-> >    bios-tables-test
-> >    vmgenid-test
-> >    cdrom-test
-> > 
-> > When reverting this single commit from staging-7.2, it all works fine again.
-> 
-> It sigsegvs in probe_access_internal():
-> 
->   CPUTLBEntry *entry = tlb_entry(env, mmu_idx, addr); -- this one returns NULL,
-> 
-> and next there's a call
-> 
->   tlb_addr = tlb_read_ofs(entry, elt_ofs);
-> 
-> which fails.
-> 
-> #0  0x0000555555c5de8a in tlb_read_ofs (ofs=8, entry=0x0) at 7.2/accel/tcg/cputlb.c:1455
-> #1  probe_access_internal
->     (env=0x555556a862a0, addr=4294967280, fault_size=fault_size@entry=1,
-> access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=5,
-> nonfault=nonfault@entry=false, phost=0x7fffea4d32a0, pfull=0x7fffea4d3298,
-> retaddr=0)
->     at 7.2/accel/tcg/cputlb.c:1555
-> #2  0x0000555555c62aba in get_page_addr_code_hostp
->     (env=<optimized out>, addr=addr@entry=4294967280, hostp=hostp@entry=0x0)
->     at 7.2/accel/tcg/cputlb.c:1691
-> #3  0x0000555555c52b54 in get_page_addr_code (addr=4294967280, env=<optimized out>)
->     at 7.2/include/exec/exec-all.h:714
-> #4  tb_htable_lookup
->     (cpu=cpu@entry=0x555556a85530, pc=pc@entry=4294967280,
-> cs_base=cs_base@entry=4294901760, flags=flags@entry=64,
-> cflags=cflags@entry=4278190080) at 7.2/accel/tcg/cpu-exec.c:236
-> #5  0x0000555555c53e8e in tb_lookup
->     (cflags=4278190080, flags=64, cs_base=4294901760, pc=4294967280, cpu=0x555556a85530)
->     at 7.2/accel/tcg/cpu-exec.c:270
-> #6  cpu_exec (cpu=cpu@entry=0x555556a85530) at 7.2/accel/tcg/cpu-exec.c:1001
-> #7  0x0000555555c75d2f in tcg_cpus_exec (cpu=cpu@entry=0x555556a85530)
->     at 7.2/accel/tcg/tcg-accel-ops.c:69
-> #8  0x0000555555c75e80 in mttcg_cpu_thread_fn (arg=arg@entry=0x555556a85530)
->     at 7.2/accel/tcg/tcg-accel-ops-mttcg.c:95
-> #9  0x0000555555ded098 in qemu_thread_start (args=0x555556adac40)
->     at 7.2/util/qemu-thread-posix.c:505
-> #10 0x00007ffff5793134 in start_thread (arg=<optimized out>)
-> #11 0x00007ffff58137dc in clone3 ()
-> 
-
-I debugged it manually, and found the problem occurs in tlb_index() with
-mmu_idx=5.
-
-For v7.2, the maximum mmu index supported by i386 is 4 (since
-NB_MMU_MODES = 5 defined in target/i386/cpu-param.h).
-
-On Michael's 7.2-i386-mmu-idx tree, the commit 9fc3a7828d25 ("target/i386:
-use separate MMU indexes for 32-bit accesses") introduced more indexes
-without relaxing the NB_MMU_MODES for i386.
-
-Before this fix, probe_access_internal() just got the wrong mmu_idx as 4,
-and it's not out of bounds. After this fix, the right mmu_idx=5 is truly
-out of bounds.
-
-On the master branch, there's no such issue since the commits ffd824f3f32d
-("include/exec: Set default NB_MMU_MODES to 16") and 6787318a5d86
-("target/i386: Remove NB_MMU_MODES define") relaxed upper limit of MMU
-index for i386.
-
-So these 2 commits should also be picked (with these 2 commits, tests in
-"make check" passed).
-
-However, the cleanup for NB_MMU_MODES is a big series (total 23 patches,
-from the commit ffd824f3f32d ("include/exec: Set default NB_MMU_MODES to
-16") to 00da6b49a227 ("include/exec: Remove guards around NB_MMU_MODES")),
-maybe changes in other arches should be picked together?
-
-In addition, I think maybe we could add assert() in tlb_index() and
-tlb_entry() to ensure the mmu_idx not exceed the limit of NB_MMU_MODES.
-But I'm a little unsure if this will hurt performance, because these 2
-helpers look like the hotspot functions.
-
--Zhao
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index d03a655f83..584d7c496f 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1724,7 +1724,7 @@ static void test_precopy_common(MigrateCommon *args)
+     }
+ 
+     if (args->result == MIG_TEST_QMP_ERROR) {
+-        migrate_qmp_fail(from, args->connect_uri, args->connect_uri, "{}");
++        migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
+         goto finish;
+     }
+ 
+-- 
+2.22.3
 
 
