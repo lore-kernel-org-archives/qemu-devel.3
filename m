@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA1EC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F53C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru85Q-0001E0-Px; Tue, 09 Apr 2024 05:48:16 -0400
+	id 1ru8Aq-0002i6-54; Tue, 09 Apr 2024 05:53:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru85H-0001Db-3N
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:48:08 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru8Ao-0002hS-0b
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:53:50 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru85F-0007nq-99
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:48:06 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a51e452a1ceso137917766b.0
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:48:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru8Am-0000SP-AI
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:53:49 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a51a1c8d931so478110866b.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:53:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712656079; x=1713260879; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3hDI87sq1FSJETxnPQkKo8rSPEGOq41R9YSzB3DSAZQ=;
- b=BnLVPmLDHimgc/PQYER4c6PLRbW3pKw6bFFKG6tZqTi3HIYUC4lOfbnjh8DXDUDmrq
- s2XxZYLakx05EL7Im+asGrddMl3IQFub0FWtvCZ9H50g739ppZXtnlpMvSkjAFP4zY6C
- XN3R6jtNf6pQsJZmBDuz8KgAot6Pda6rK8PqCPzB7IyXjArxf69c87JW2QRcjy6HhvQc
- UF7aGv7UfvJtT8w86nqCKS0mG4F9NtPC21Bp6iJ9Q595r68nNJvPxHphR5bZY3nJzWGp
- RnzRdUOmDxcZFl2VfElcDhLlDivd4r6rwvfRtngr9+uODBvoJW2CMZnYM7Zrl8S1T7MJ
- waUA==
+ d=linaro.org; s=google; t=1712656426; x=1713261226; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=E7/ovNRajK0lnrAKtAxfGldepyF0LEL+IN7nUNnQ/is=;
+ b=dAtY4QCA08KNF8e88Ja4zUSt5KOpoNDYVRFPzZlEH1eydpKypUw05GSm6TXQS8gGXo
+ b4lDSeXFXZsRaeGhobUT9ZMTK9MNicrTaEoBDx3Ry/ARVe1Rux4nR/psLJQ8tUa5vVnl
+ ZHQHpvVbP6jlYA0bQSsU0NlAdj6MkDnQbaEWEjidOexV6NTwg9oT5U9pXxhT+mWHcuZS
+ mbCuFi75hPGumVl2FCAalMwg7eKKgihHXhvUC1zAgm8HrgjY8QD1hHU7xPLygvOjG4oX
+ 0s91Xx+K+qkAODYYepAwQZbR67fxlCbJUrqq9sZ4UKl5EQNkbVb2bxPbmSgGF1ZgV0gZ
+ E7BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712656079; x=1713260879;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3hDI87sq1FSJETxnPQkKo8rSPEGOq41R9YSzB3DSAZQ=;
- b=cjpcVXNCyabJqmcs9MLVt6lqyEy16w8QtBopmQ18nvY1yFTLRyy8TX916cwltIzaK0
- Yfr34qstdMNuLfLHlh34RsAwT1OYJsk3B5Vv4gbCrp/BIwGrji9Oi/Tw14M76ZuPBgNm
- /dj/Gdj9dse/ibEVyX55J7Z7VY0lvHJMbwmQqhechUsup/U5iqr74iaK2xJSWCtEL3/b
- Np6WItwlnv7xufZDZx+2eJKKQG+QwfppFhsuJh5z3sOgbLxHG/YlrEYjdVJeHV3KkGpJ
- 9+2O3m/VNLuXGsDzUzWYcuW+ApTtweHRBt7Jua1Bdcy6H+rZOlDx6RfCTL1dtIPyv01Q
- wCQA==
-X-Gm-Message-State: AOJu0YxERZ1ZV6O5gl/vYafpnGMUNAymyXTGQ+ipK6eFwwg8IvRveQvR
- x0GzG97Eootq7KbP2gC4wQTt+uDRkWJaV01qZXKIN6/AZuCWfMqqPM6W8wCUcbt7eHkeqLyivLu
- o
-X-Google-Smtp-Source: AGHT+IHRESIchrPnaDc1qZuWsH073VMRNWhDKbkNLomtnvh2XrT8yw+OQUDXqbml/xXWFxwlMUXG8w==
-X-Received: by 2002:a17:907:728e:b0:a51:d136:affb with SMTP id
- dt14-20020a170907728e00b00a51d136affbmr5357117ejc.40.1712656079596; 
- Tue, 09 Apr 2024 02:47:59 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.160.134])
+ d=1e100.net; s=20230601; t=1712656426; x=1713261226;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=E7/ovNRajK0lnrAKtAxfGldepyF0LEL+IN7nUNnQ/is=;
+ b=oiy65ivEZY37m3eyP1jl4ZG1I6Oqm/RyUgY+eCuNG5z7FueBWS2o6+KETkNw/ytHR/
+ EtOwWzXCD1V01kUMzoI7s9sFHnBqGqd6I+FeU6MnuE0oyu8p7fYNYi7Ketm/FmpkCoOU
+ gFWO7t3oOHMM4iuKUSA8Fdp+Vu+doePtAmBwK6l2IY8RiKd9Nyjsvum54iea3xNjGF6s
+ JnbcyaboeukgWqrAWGWzulQVLKHDYRdDeYXU8fSOON6m7TloazSDIymOx0gAWQgg5fk2
+ Bo5MSEiWh5Mq7O6oBOHpVws/DhASN5ubdYSnNOJsGQYn5WtrxscpgidjLwwDLG/Yk0SD
+ TZIg==
+X-Gm-Message-State: AOJu0Yy9d7tTZqGmlKD0xqFtlwV/0ZLwaW03xQBXyDfg9t5GUVjfhj/i
+ nD3z1XZiJd43E3RSrwwuEIem7jkL7iURGcRsYbamAJYU1gVlOlWLo6eDheFQ8co=
+X-Google-Smtp-Source: AGHT+IFwtRAyb9rLBw73RGgZOVvPQvAHNEuLNIYD/5dT/Ki5Sy8aKkYG+6HnkSYWbdkt+QJch2IyJA==
+X-Received: by 2002:a17:906:ac7:b0:a51:7d3e:d09f with SMTP id
+ z7-20020a1709060ac700b00a517d3ed09fmr7151613ejf.43.1712656426664; 
+ Tue, 09 Apr 2024 02:53:46 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.160.134])
  by smtp.gmail.com with ESMTPSA id
- g3-20020a170906394300b00a4e40e48f8dsm5443003eje.185.2024.04.09.02.47.58
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Apr 2024 02:47:59 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Zhenwei Pi <pizhenwei@bytedance.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Alexander Bulekov <alxndr@bu.edu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>
-Subject: [PATCH-for-9.0? v2] backends/cryptodev: Do not abort for invalid
- session ID
-Date: Tue,  9 Apr 2024 11:47:56 +0200
-Message-ID: <20240409094757.9127-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ lr12-20020a170906fb8c00b00a4e32ea1c3asm5535081ejb.146.2024.04.09.02.53.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Apr 2024 02:53:46 -0700 (PDT)
+Message-ID: <9d9c52ca-8ac9-45fa-980c-8240477cca2b@linaro.org>
+Date: Tue, 9 Apr 2024 11:53:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/35] misc patch queue
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240408174929.862917-1-richard.henderson@linaro.org>
+ <CAFEAcA-qn-zP2-OkeW1fLW2OPZbfk35jKZ0YUHXQ5Xf4Rma1Ow@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA-qn-zP2-OkeW1fLW2OPZbfk35jKZ0YUHXQ5Xf4Rma1Ow@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,63 +95,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of aborting when a session ID is invalid,
-return VIRTIO_CRYPTO_INVSESS ("Invalid session id").
+On 9/4/24 10:50, Peter Maydell wrote:
+> On Mon, 8 Apr 2024 at 18:51, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> This started out to be tcg and linux-user only, but then added
+>> a few target bug fixes, and the trolled back through my inbox
+>> and picked up some other safe patch sets that got lost.
+>>
+>>
+>> r~
+>>
+>>
+>> The following changes since commit ce64e6224affb8b4e4b019f76d2950270b391af5:
+>>
+>>    Merge tag 'qemu-sparc-20240404' of https://github.com/mcayland/qemu into staging (2024-04-04 15:28:06 +0100)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/rth7680/qemu.git tags/pull-misc-20240408
+>>
+>> for you to fetch changes up to 50dbeda88ab71f9d426b7f4b126c79c44860e475:
+>>
+>>    util/bufferiszero: Simplify test_buffer_is_zero_next_accel (2024-04-08 06:27:58 -1000)
+>>
+>> ----------------------------------------------------------------
 
-Reproduced using:
+> This pullreq alone is more patches than have been committed
+> in the entirety of the rc2-to-rc3 cycle so far. Are they
+> really all important enough to put into rc3 on the day
+> we tag it?
 
-  $ cat << EOF | qemu-system-i386 -display none \
-     -machine q35,accel=qtest -m 512M -nodefaults \
-     -object cryptodev-backend-builtin,id=cryptodev0 \
-     -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
-     -qtest stdio
-  outl 0xcf8 0x80000804
-  outw 0xcfc 0x06
-  outl 0xcf8 0x80000820
-  outl 0xcfc 0xe0008000
-  write 0x10800e 0x1 0x01
-  write 0xe0008016 0x1 0x01
-  write 0xe0008020 0x4 0x00801000
-  write 0xe0008028 0x4 0x00c01000
-  write 0xe000801c 0x1 0x01
-  write 0x110000 0x1 0x05
-  write 0x110001 0x1 0x04
-  write 0x108002 0x1 0x11
-  write 0x108008 0x1 0x48
-  write 0x10800c 0x1 0x01
-  write 0x108018 0x1 0x10
-  write 0x10801c 0x1 0x02
-  write 0x10c002 0x1 0x01
-  write 0xe000b005 0x1 0x00
-  EOF
-  Assertion failed: (session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]),
-  function cryptodev_builtin_close_session, file cryptodev-builtin.c, line 430.
+My 2 cents, I'd keep these for 9.0:
 
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2274
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-v2: Removed error_report()
----
- backends/cryptodev-builtin.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ >> target/m68k: Fix fp accrued exception reporting
+ >> target/hppa: Fix IIAOQ, IIASQ for pa2.0
+ >> target/sh4: Fixes to mac.l and mac.w saturation
+ >> target/sh4: Fixes to illegal delay slot reporting
+ >> linux-user: Fix waitid return of siginfo_t and rusage
+ >> tcg/optimize: Do not attempt to constant fold neg_vec
+ >> accel/tcg: Improve can_do_io management, mmio bug fix
 
-diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-index 39d0455280..a514bbb310 100644
---- a/backends/cryptodev-builtin.c
-+++ b/backends/cryptodev-builtin.c
-@@ -427,7 +427,9 @@ static int cryptodev_builtin_close_session(
-                       CRYPTODEV_BACKEND_BUILTIN(backend);
-     CryptoDevBackendBuiltinSession *session;
- 
--    assert(session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]);
-+    if (session_id >= MAX_NUM_SESSIONS || !builtin->sessions[session_id]) {
-+        return -VIRTIO_CRYPTO_INVSESS;
-+    }
- 
-     session = builtin->sessions[session_id];
-     if (session->cipher) {
--- 
-2.41.0
+Postponing these for 9.1:
+
+ >> util/bufferiszero: Optimizations and cleanups, esp code removal
+ >> target/m68k: Semihosting for non-coldfire cpus
+ >> linux-user: Cleanups for do_setsockopt
+ >> linux-user: Add FITRIM ioctl
+
+> thanks
+> -- PMM
+> 
 
 
