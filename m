@@ -4,86 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D3D3C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06008C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru81o-0007Km-3D; Tue, 09 Apr 2024 05:44:32 -0400
+	id 1ru82F-00089G-2M; Tue, 09 Apr 2024 05:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru81l-0007KJ-Rf
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:44:29 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru81k-0007Bz-1K
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:44:29 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a51fc011e8fso42978366b.0
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:44:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712655865; x=1713260665; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0ONk2ACysYoOUtOHX8ADC/l99dOcxUlQsrwtm1giLSQ=;
- b=aGvWtyZeOmKsZp+Wg9YkYD4MnXwbl1zYsEjAll/O+QeQATwH66SH/5419eLwIYTNVu
- 0Fks7v6sXYucm++G85EKX5TWmTZ5U3wBkGGNp79ReL7PrzKj7tP2pXyP+DoAzwh7AuaA
- Yl89MmfErgUelwRgmbPJhRFgEEQICqRRJZK/4QQSLr61fQLu0Y2Xz5IA0na/LaiQRjcl
- TzIR2ySOmOCxaF6qiGa31yN8s+f4Ns6LzN7UUGK1I8kpsnKkAGTFwEZo46Yd7Jdfhbcd
- +4QsU1Gs5bgLYrTX1aFOmoOk8fXXEPPge6R+avMd8WPX15xW68bRy4M7o6M7bfXalcCh
- RjvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712655865; x=1713260665;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0ONk2ACysYoOUtOHX8ADC/l99dOcxUlQsrwtm1giLSQ=;
- b=CT7/Qa3VUT+zd8qj3u0erKVyQW5ioagNuTjsKTeo6SucGPWNQqHGY6Ht++S1yBRirj
- 3TdygMCsKn0xjlxKpTzFexmWD3wQ933kBzEr7yxiMbo+vGlCTmlB0lUQuL934VcJuYLv
- ZvEJkULySkw3jYeAoNaT+Re65rIGzDEfy2aJwSXqG+uj4a10dVcgP67y9Tq5qrUsHLqq
- Erxm21CZc676F5m+i+cdyPsuXLHMC2jS3thze1/yvD3YNbemAFFQeGRpUA3eM05TQ7MI
- 59xBLtyA2HxjyBGl1Zo892nZNn1nOlc24pYa3MFsxC6AxPC1rGDjfS8OHAfW5OiIR7nA
- v2Xw==
-X-Gm-Message-State: AOJu0Yzkbdimm14y6dTjB7RagVEbJe8dc+Fqc1NTUCzEPqbanc0HeVRN
- 0LrOIQtzRd/pZu/hJzFMlhKMnkq23FgVEt+PY5wSS+A+DSPWufGPOWhwBLSteF4=
-X-Google-Smtp-Source: AGHT+IGZfPvlPJRZlagZSOTs/xF7lV9XQAQsy4QE6TI+wQ0gNwVB4rs05cinSYkwKQjn4dD5/4aaKQ==
-X-Received: by 2002:a17:907:970e:b0:a4f:c80c:1b69 with SMTP id
- jg14-20020a170907970e00b00a4fc80c1b69mr9958733ejc.8.1712655865310; 
- Tue, 09 Apr 2024 02:44:25 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.160.134])
- by smtp.gmail.com with ESMTPSA id
- i3-20020a1709063c4300b00a51fa9f6d92sm465380ejg.38.2024.04.09.02.44.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 02:44:24 -0700 (PDT)
-Message-ID: <384195db-6aab-4da0-80ea-d1c925904d14@linaro.org>
-Date: Tue, 9 Apr 2024 11:44:22 +0200
+ (Exim 4.90_1) (envelope-from <duchao@eswincomputing.com>)
+ id 1ru825-0007nU-2B; Tue, 09 Apr 2024 05:44:50 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <duchao@eswincomputing.com>)
+ id 1ru820-0007Cu-Dw; Tue, 09 Apr 2024 05:44:48 -0400
+Received: from duchao$eswincomputing.com ( [10.64.113.11] ) by
+ ajax-webmail-app2 (Coremail) ; Tue, 9 Apr 2024 17:43:15 +0800 (GMT+08:00)
+X-Originating-IP: [10.64.113.11]
+Date: Tue, 9 Apr 2024 17:43:15 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Chao Du" <duchao@eswincomputing.com>
+To: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ anup@brainfault.org, atishp@atishpatra.org
+Subject: Re: [RFC PATCH 0/4] target/riscv/kvm: QEMU support for KVM Guest
+ Debug on RISC-V
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20220420(169d3f8c)
+ Copyright (c) 2002-2024 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <846ec319-6026-4b14-b156-9e1f42c6dba1@ventanamicro.com>
+References: <20231221094923.7349-1-duchao@eswincomputing.com>
+ <846ec319-6026-4b14-b156-9e1f42c6dba1@ventanamicro.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-9.1 3/4] hw/i2c: Convert to spec v7 terminology
- (automatically)
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Corey Minyard <cminyard@mvista.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Wolfram Sang <wsa+renesas@sang-engineering.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <20240408213339.83149-1-philmd@linaro.org>
- <20240408213339.83149-4-philmd@linaro.org>
- <CABgObfaRtv3WwhYzUKSCpee3UQFuwAzUEstX0uFGdRFOV6j4_Q@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfaRtv3WwhYzUKSCpee3UQFuwAzUEstX0uFGdRFOV6j4_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Message-ID: <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: TQJkCgAnOryzDRVmgrQFAA--.3440W
+X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/1tbiAgECDGYVDQ0ACAABs3
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+ CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+ daVFxhVjvjDU=
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=duchao@eswincomputing.com;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,103 +71,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/24 10:58, Paolo Bonzini wrote:
-> 
-> 
-> Il lun 8 apr 2024, 23:34 Philippe Mathieu-Daudé <philmd@linaro.org 
-> <mailto:philmd@linaro.org>> ha scritto:
-> 
->     Note, the QOM type definition is not modified, TYPE_I2C_TARGET
->     remains defined as "i2c-slave".
-> 
-> 
-> Is this actually necessary? The only thing that could break is -global 
-> but I don't think it matters really.
-
-I remembered some discussion with Gerd where he mentioned we can not
-rename a QOM type because it is a stable interface (-device TYPE),
-but here I missed the type is abstract, so not user-creatable, thus
-it is safe to rename.
-
-Consider the following hunk squashed:
-
--- >8 --
-diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-index abefee78fd..8908267c17 100644
---- a/include/hw/i2c/i2c.h
-+++ b/include/hw/i2c/i2c.h
-@@ -24 +24 @@ typedef struct I2CNodeList I2CNodeList;
--#define TYPE_I2C_TARGET "i2c-slave"
-+#define TYPE_I2C_TARGET "i2c-target"
----
-
-> 
-> Paolo
-> 
-> 
->     [*]
->     https://github.com/conscious-lang/conscious-lang-docs/blob/main/faq.md <https://github.com/conscious-lang/conscious-lang-docs/blob/main/faq.md>
-> 
->     Inspired-by: Wolfram Sang <wsa+renesas@sang-engineering.com
->     <mailto:wsa%2Brenesas@sang-engineering.com>>
->     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org
->     <mailto:philmd@linaro.org>>
->     ---
->       include/hw/display/i2c-ddc.h     |   2 +-
->       include/hw/gpio/pca9552.h        |   2 +-
->       include/hw/gpio/pca9554.h        |   2 +-
->       include/hw/i2c/aspeed_i2c.h      |   4 +-
->       include/hw/i2c/i2c.h             |  66 ++++-----
->       include/hw/i2c/i2c_mux_pca954x.h |   2 +-
->       include/hw/i2c/smbus_slave.h     |   4 +-
->       include/hw/nvram/eeprom_at24c.h  |   4 +-
->       include/hw/sensor/tmp105.h       |   2 +-
->       hw/arm/aspeed.c                  | 232 +++++++++++++++----------------
->       hw/arm/bananapi_m2u.c            |   2 +-
->       hw/arm/cubieboard.c              |   2 +-
->       hw/arm/musicpal.c                |   6 +-
->       hw/arm/npcm7xx_boards.c          |  44 +++---
->       hw/arm/nseries.c                 |   6 +-
->       hw/arm/pxa2xx.c                  |  36 ++---
->       hw/arm/realview.c                |   2 +-
->       hw/arm/spitz.c                   |  12 +-
->       hw/arm/stellaris.c               |   2 +-
->       hw/arm/tosa.c                    |  14 +-
->       hw/arm/versatilepb.c             |   2 +-
->       hw/arm/vexpress.c                |   2 +-
->       hw/arm/z2.c                      |  20 +--
->       hw/audio/wm8750.c                |  18 +--
->       hw/display/ati.c                 |   4 +-
->       hw/display/i2c-ddc.c             |  10 +-
->       hw/display/sii9022.c             |  16 +--
->       hw/display/sm501.c               |   2 +-
->       hw/display/ssd0303.c             |  14 +-
->       hw/display/xlnx_dp.c             |   2 +-
->       hw/gpio/max7310.c                |  14 +-
->       hw/gpio/pca9552.c                |  14 +-
->       hw/gpio/pca9554.c                |  14 +-
->       hw/gpio/pcf8574.c                |  12 +-
->       hw/i2c/aspeed_i2c.c              |  16 +--
->       hw/i2c/core.c                    |  88 ++++++------
->       hw/i2c/i2c_mux_pca954x.c         |   6 +-
->       hw/i2c/imx_i2c.c                 |   2 +-
->       hw/i2c/smbus_slave.c             |  12 +-
->       hw/input/lm832x.c                |  14 +-
->       hw/misc/axp2xx.c                 |  14 +-
->       hw/misc/i2c-echo.c               |  14 +-
->       hw/nvram/eeprom_at24c.c          |  22 +--
->       hw/ppc/e500.c                    |   2 +-
->       hw/ppc/pnv.c                     |   4 +-
->       hw/ppc/sam460ex.c                |   2 +-
->       hw/rtc/ds1338.c                  |  14 +-
->       hw/rtc/m41t80.c                  |  12 +-
->       hw/rtc/twl92230.c                |  16 +--
->       hw/sensor/dps310.c               |  14 +-
->       hw/sensor/emc141x.c              |  16 +--
->       hw/sensor/lsm303dlhc_mag.c       |  16 +--
->       hw/sensor/tmp105.c               |  16 +--
->       hw/sensor/tmp421.c               |  20 +--
->       hw/tpm/tpm_tis_i2c.c             |  12 +-
->       55 files changed, 461 insertions(+), 461 deletions(-)
-
+SGkgRGFuaWVsIGFuZCBhbGwsCgpUaGUgS1ZNIHBhdGNoZXMgaGF2ZSBiZWVuIHJldmlld2QgYW5k
+IGFyZSBpbiB0aGUgcXVldWUuCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2FsbC8yMDI0MDQwMjA2
+MjYyOC41NDI1LTEtZHVjaGFvQGVzd2luY29tcHV0aW5nLmNvbS8KCkNvdWxkIHlvdSBwbGVhc2Ug
+cmV2aWV3IGluIHRoZSBRRU1VIHNpZGUgPwpUaGVuIEkgd2lsbCByZWJhc2UgdGhpcyBzZXJpZXMg
+d2l0aCB5b3VyIGNvbW1lbnRzLgoKU29tZSBOb3RlczoKMS4gQXMgdGhlIGZpcnN0IHN0YWdlLCBv
+bmx5IHRoZSBzb2Z0d2FyZSBicmVha3BvaW50cyBpcyBpbXBsZW1lbnRlZC4KMi4gQSAnY29ybmVy
+IGNhc2UnIGluIHdoaWNoIHRoZSBkZWJ1ZyBleGNlcHRpb24gaXMgbm90IGluc2VydGVkIGJ5IHRo
+ZQpkZWJ1Z2dlciwgbmVlZCB0byBiZSByZS1pbmplY3RlZCB0byB0aGUgZ3Vlc3QuIFRoaXMgaXMg
+bm90IGhhbmRsZWQgeWV0CmluIHRoaXMgc2VyaWVzLgoKVGhhbmtzLApDaGFvCgoKT24gMjAyMy0x
+Mi0yMiAyMjoxNiwgRGFuaWVsIEhlbnJpcXVlIEJhcmJvemEgPGRiYXJib3phQHZlbnRhbmFtaWNy
+by5jb20+IHdyb3RlOgo+IAo+IEhpLAo+IAo+IEl0IHNlZW1zIHRoYXQgd2Ugc3RpbGwgbmVlZCB0
+aGUga2VybmVsIEtWTSBzaWRlIHRvIGJlIHNvcnRlZCBvdXQgZmlyc3QgWzFdLAo+IHNvIEkgYmVs
+aWV2ZSB3ZSBzaG91bGQgd2FpdCBhIGJpdCB1bnRpbCB3ZSBjYW4gcmV2aWV3IHRoaXMgUkZDLiBP
+dGhlcndpc2Ugd2UKPiBtaWdodCByaXNrIHJldmlld2luZyBzb21ldGhpbmcgdGhhdCBoYXMgdG8g
+YmUgY2hhbmdlZCBsYXRlci4KPiAKPiAKPiBbMV0gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcva3Zt
+LzIwMjMxMjIxMDk1MDAyLjc0MDQtMS1kdWNoYW9AZXN3aW5jb21wdXRpbmcuY29tLwo+IAo+IAo+
+IFRoYW5rcywKPiAKPiBEYW5pZWwKPiAKPiBPbiAxMi8yMS8yMyAwNjo0OSwgQ2hhbyBEdSB3cm90
+ZToKPiA+IFRoaXMgc2VyaWVzIGltcGxlbWVudHMgUUVNVSBLVk0gR3Vlc3QgRGVidWcgb24gUklT
+Qy1WLiBDdXJyZW50bHksIHdlIGNhbgo+ID4gZGVidWcgUklTQy1WIEtWTSBndWVzdCBmcm9tIHRo
+ZSBob3N0IHNpZGUsIHdpdGggc29mdHdhcmUgYnJlYWtwb2ludHMuCj4gPiAKPiA+IEEgYnJpZWYg
+dGVzdCB3YXMgZG9uZSBvbiBRRU1VIFJJU0MtViBoeXBlcnZpc29yIGVtdWxhdG9yLgo+ID4gCj4g
+PiBBIFRPRE8gbGlzdCB3aGljaCB3aWxsIGJlIGFkZGVkIGxhdGVyOgo+ID4gMS4gSFcgYnJlYWtw
+b2ludHMgc3VwcG9ydAo+ID4gMi4gVGVzdCBjYXNlcwo+ID4gCj4gPiBUaGlzIHNlcmllcyBpcyBi
+YXNlZCBvbiBRRU1VIDguMi4wLXJjNCBhbmQgaXMgYWxzbyBhdmFpbGFibGUgYXQ6Cj4gPiBodHRw
+czovL2dpdGh1Yi5jb20vRHUtQ2hhby9xZW11L3RyZWUvcmlzY3ZfZ2Rfc3cKPiA+IAo+ID4gVGhp
+cyBpcyBkZXBlbmRlbnQgb24gS1ZNIHNpZGUgY2hhbmdlczoKPiA+IGh0dHBzOi8vZ2l0aHViLmNv
+bS9EdS1DaGFvL2xpbnV4L3RyZWUvcmlzY3ZfZ2Rfc3cKPiA+IAo+ID4gQ2hhbyBEdSAoNCk6Cj4g
+PiAgICB0YXJnZXQvcmlzY3Yva3ZtOiBhZGQgc29mdHdhcmUgYnJlYWtwb2ludHMgc3VwcG9ydAo+
+ID4gICAgdGFyZ2V0L3Jpc2N2L2t2bTogaW1wbGVtZW50IGt2bV9hcmNoX3VwZGF0ZV9ndWVzdF9k
+ZWJ1ZygpCj4gPiAgICB0YXJnZXQvcmlzY3Yva3ZtOiBoYW5kbGUgdGhlIGV4aXQgd2l0aCBkZWJ1
+ZyByZWFzb24KPiA+ICAgIGxpbnV4LWhlYWRlcnM6IGVuYWJsZSBLVk0gR1VFU1QgREVCVUcgZm9y
+IFJJU0MtVgo+ID4gCj4gPiAgIGFjY2VsL2t2bS9rdm0tYWxsLmMgICAgICAgICAgIHwgICA4ICst
+LQo+ID4gICBpbmNsdWRlL3N5c2VtdS9rdm0uaCAgICAgICAgICB8ICAgNiArLQo+ID4gICBsaW51
+eC1oZWFkZXJzL2FzbS1yaXNjdi9rdm0uaCB8ICAgMSArCj4gPiAgIHRhcmdldC9hcm0va3ZtNjQu
+YyAgICAgICAgICAgIHwgICA2ICstCj4gPiAgIHRhcmdldC9pMzg2L2t2bS9rdm0uYyAgICAgICAg
+IHwgICA2ICstCj4gPiAgIHRhcmdldC9taXBzL2t2bS5jICAgICAgICAgICAgIHwgICA2ICstCj4g
+PiAgIHRhcmdldC9wcGMva3ZtLmMgICAgICAgICAgICAgIHwgICA2ICstCj4gPiAgIHRhcmdldC9y
+aXNjdi9rdm0va3ZtLWNwdS5jICAgIHwgMTAxICsrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysKPiA+ICAgdGFyZ2V0L3MzOTB4L2t2bS9rdm0uYyAgICAgICAgfCAgIDYgKy0KPiA+ICAg
+OSBmaWxlcyBjaGFuZ2VkLCAxMzAgaW5zZXJ0aW9ucygrKSwgMTYgZGVsZXRpb25zKC0pCj4gPiAK
+PiA+IC0tCj4gPiAyLjE3LjEKPiA+IAo=
 
