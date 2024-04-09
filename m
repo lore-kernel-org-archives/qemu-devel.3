@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AF8C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98ECAC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruHGj-0000e9-CU; Tue, 09 Apr 2024 15:36:33 -0400
+	id 1ruHGN-0000Wk-FC; Tue, 09 Apr 2024 15:36:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGh-0000dB-3h
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:31 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1ruHGM-0000WN-3w
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:10 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGf-0004fU-IW
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:30 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e3ca4fe4cfso24518625ad.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:29 -0700 (PDT)
+ id 1ruHGJ-0004cc-CK
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:09 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6ecff9df447so4779127b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712691388; x=1713296188; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qqej1cqMOghQjm8tlS0ZXIP7cn0Zxc/ocvLIj3d7Cp0=;
- b=C2LY+22DL8Nx/SZfG6LqgC+WG8D1Icnl6pSLExAjj8WVy9uQkliL3iduFENtY09lIB
- 8ORDRXsdLLlZ1JaGcnuof0DP3vS/oRDIP56j4anQs2EpfwtQrY8ICANiz7KrgbD+k2f/
- oqtz9TYDEm4y8Mne0YYlgo6QsgXt/wkI2vhQmiblCusAZdiePRMaCf7yBaMDHliD4sDj
- vOsUCp/knPNSUqy50hAai5/uQYdKcqFqnyQIptNJAtpLn1cxgc1gWCSpvf74VNkrFsIW
- lD4J+r7UnDEtKJy3kKVb4V8s/XlxoR13qQryN/OEe8jBQElbcrMeCYfSCAgvgBwsCvFP
- tFNg==
+ d=linaro.org; s=google; t=1712691366; x=1713296166; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tbc60AL4+SMOMTPsg2HiG0xE0AaTkxAWt2zpJ+2p98I=;
+ b=LOlW6j7/OYze+rpM74nTZCnrBArM5mClp2sJ1ZHidZthORVUt6AI0rK44rbg2px1oq
+ CREBBHE8SafoWKJSON9YmdW0fsaunZjGFBLGgeZtwreKv3q2/e5mQ7/4hYxFCPz+WLmq
+ eN4tePXWXlD3G5+3t+vHnakbsGI0oVrt7OYXaWPuj6w8EtaAMGHv0swoVn8ZFwHijOoR
+ 7FxaaLOmZCYbv15jwRNVc5drO93SVLzwMmhyklo4rGGykdqw2daFsm0YoVbi/DNec3rH
+ 7jJOyvoiooIVZlhTJ7KVlWTDcP9iMey2LXUoa2s/h8/v4XU6RDaUKAxyPm0xoUSFboV3
+ uplg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712691388; x=1713296188;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qqej1cqMOghQjm8tlS0ZXIP7cn0Zxc/ocvLIj3d7Cp0=;
- b=Wcm2a3luocN0FJDwtLbfd+IDeU9sfD2hv98Y8/alZm0zf3T5CBY4LimG7gzIsgsF8d
- hWHNwCFPG66PjyLFuVFolmyzV9MSH+CUt8kveVLakmzpbc3dciGi9XKBoXlc0gSDNVet
- XblQUvinuEhWguTKbZbQjCAnsSBWd+0xul10uvtlvLg/OtlHZAJogjXllR7LnGrT7tYs
- tpHDEPlExNrmENqz3FNqYReZirr4vdpUmROdDWuqRGjy/w6itpRKefq3vUnXm5Qc40Uz
- YNZUpqytE9Wp4g0KCcmVMnQaoSyAFXaL6vE2pHpfSpfLx5805sF0Fihp1MGyuK4uBrFO
- YfJQ==
-X-Gm-Message-State: AOJu0YwrsLRQRYmrHZKOjyGBv2UmLZGyKRKm6yJSwK/frnW5UlzyN+Ps
- 7TaDhSW+lh2iWvS1g7J5AJEQ8Iyf3clZMq2N6fjYMUKmGH9nOIx8IYUaIc+5pzpZgnCaKGOMZaD
- O
-X-Google-Smtp-Source: AGHT+IFky9feGN4NGBCCapfS3j04xjrGjL1Lao1vUI1bCGeTOwsBdcihARIsQJjbdDxc70ET00DV6Q==
-X-Received: by 2002:a17:903:22d0:b0:1e2:aa62:2fbf with SMTP id
- y16-20020a17090322d000b001e2aa622fbfmr747566plg.45.1712691388290; 
- Tue, 09 Apr 2024 12:36:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712691366; x=1713296166;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tbc60AL4+SMOMTPsg2HiG0xE0AaTkxAWt2zpJ+2p98I=;
+ b=ZExGtwdfVSQQvrL5zHDHGatbbdT8E7vbl8ieEh9Y62dHJec17/yp1Wj3WpicuPf/zB
+ 7mjCQL0i7c3xluLDAMryl35bQCbSYAZma0pbG2avORIy7Ly2ZmR1PAkf2cHWnuthE+1D
+ vVJN2i5X0glwWPVXF8PvhdRJlN7cb99NA20jHYePCZBMpZe69FCIJ2dFx9Mdbo/BsNLP
+ ocSRNxGtcqM08GK5HgyskOsP98b55dXV2QtyYtLglPuvqciO6bfyMpQoQ4Bf+pxlsYOK
+ Phr20BxXnAw9jiCxSxLZbOGJzoN7acsxHFtQKFcm8w6ISuov68OBrQB7d2tIfSyPVsWc
+ Yd5w==
+X-Gm-Message-State: AOJu0YwwD/dLEADWgkeuNgJAw/KbGkzx0Mf6aI9W4t420PtB1ouwTmzy
+ J5cBDYrK7kx931A7FI0ft5wr9sPQlyuKLfzCi1kfA4hGiOn4hxsPLPFvx+nK1EUK8fRO7jlyGDe
+ /
+X-Google-Smtp-Source: AGHT+IEyCO2tZ/OD/G3ctdUnXBdNjTywmaf85/am6rUm2MHak7C5P0kPJ3NrI8lsT0Z+ZykBFcNUiQ==
+X-Received: by 2002:a05:6a20:2584:b0:1a7:aecd:997c with SMTP id
+ k4-20020a056a20258400b001a7aecd997cmr982508pzd.0.1712691365966; 
+ Tue, 09 Apr 2024 12:36:05 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.27
+ c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.05
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 12:36:27 -0700 (PDT)
+ Tue, 09 Apr 2024 12:36:05 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?J=C3=B8rgen=20Hansen?= <Jorgen.Hansen@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 15/20] target/i386: Preserve DisasContextBase.insn_start
- across rewind
-Date: Tue,  9 Apr 2024 09:35:58 -1000
-Message-Id: <20240409193603.1703216-16-richard.henderson@linaro.org>
+Subject: [PULL v2 00/20] misc patch queue
+Date: Tue,  9 Apr 2024 09:35:43 -1000
+Message-Id: <20240409193603.1703216-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240409193603.1703216-1-richard.henderson@linaro.org>
-References: <20240409193603.1703216-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,46 +91,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When aborting translation of the current insn, restore the
-previous value of insn_start.
+Defer 16 patches to 9.1; add fix for -strace.
 
-Acked-by: Paolo Bonzini <pbonzini@redhat.com>
-Tested-by: Jørgen Hansen <Jorgen.Hansen@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/i386/tcg/translate.c | 3 +++
- 1 file changed, 3 insertions(+)
+r~
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 07f642dc9e..76a42c679c 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -139,6 +139,7 @@ typedef struct DisasContext {
-     TCGv_i64 tmp1_i64;
- 
-     sigjmp_buf jmpbuf;
-+    TCGOp *prev_insn_start;
-     TCGOp *prev_insn_end;
- } DisasContext;
- 
-@@ -3123,6 +3124,7 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
-         /* END TODO */
-         s->base.num_insns--;
-         tcg_remove_ops_after(s->prev_insn_end);
-+        s->base.insn_start = s->prev_insn_start;
-         s->base.is_jmp = DISAS_TOO_MANY;
-         return false;
-     default:
-@@ -6995,6 +6997,7 @@ static void i386_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
-     target_ulong pc_arg = dc->base.pc_next;
- 
-+    dc->prev_insn_start = dc->base.insn_start;
-     dc->prev_insn_end = tcg_last_op();
-     if (tb_cflags(dcbase->tb) & CF_PCREL) {
-         pc_arg &= ~TARGET_PAGE_MASK;
--- 
-2.34.1
 
+The following changes since commit bc0cd4ae881dff47e81581a8fea93a50b1d1dbe7:
+
+  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2024-04-09 09:51:07 +0100)
+
+are available in the Git repository at:
+
+  https://gitlab.com/rth7680/qemu.git tags/pull-misc-20240409
+
+for you to fetch changes up to 143bcc1d59f174b6c6743bd4ca8f99415ed1aba2:
+
+  linux-user: Preserve unswapped siginfo_t for strace (2024-04-09 07:47:11 -1000)
+
+----------------------------------------------------------------
+target/m68k: Fix fp accrued exception reporting
+target/hppa: Fix IIAOQ, IIASQ for pa2.0
+target/sh4: Fixes to mac.l and mac.w saturation
+target/sh4: Fixes to illegal delay slot reporting
+linux-user: Fix waitid return of siginfo_t and rusage
+linux-user: Preserve unswapped siginfo_t for strace
+tcg/optimize: Do not attempt to constant fold neg_vec
+accel/tcg: Improve can_do_io management, mmio bug fix
+
+----------------------------------------------------------------
+Keith Packard (1):
+      target/m68k: Map FPU exceptions to FPSR register
+
+Nguyen Dinh Phi (1):
+      linux-user: replace calloc() with g_new0()
+
+Richard Henderson (14):
+      tcg/optimize: Do not attempt to constant fold neg_vec
+      linux-user: Fix waitid return of siginfo_t and rusage
+      target/hppa: Fix IIAOQ, IIASQ for pa2.0
+      target/sh4: Merge mach and macl into a union
+      tcg: Add TCGContext.emit_before_op
+      accel/tcg: Add insn_start to DisasContextBase
+      target/arm: Use insn_start from DisasContextBase
+      target/hppa: Use insn_start from DisasContextBase
+      target/i386: Preserve DisasContextBase.insn_start across rewind
+      target/microblaze: Use insn_start from DisasContextBase
+      target/riscv: Use insn_start from DisasContextBase
+      target/s390x: Use insn_start from DisasContextBase
+      accel/tcg: Improve can_do_io management
+      linux-user: Preserve unswapped siginfo_t for strace
+
+Zack Buhman (4):
+      target/sh4: mac.w: memory accesses are 16-bit words
+      target/sh4: Fix mac.l with saturation enabled
+      target/sh4: Fix mac.w with saturation enabled
+      target/sh4: add missing CHECK_NOT_DELAY_SLOT
+
+ include/exec/translator.h         |  4 ++-
+ include/tcg/tcg.h                 |  6 ++++
+ target/arm/tcg/translate.h        | 12 +++----
+ target/m68k/cpu.h                 |  3 +-
+ target/m68k/helper.h              |  2 ++
+ target/sh4/cpu.h                  | 14 ++++++--
+ target/sh4/helper.h               |  4 +--
+ accel/tcg/translator.c            | 47 +++++++++++++------------
+ linux-user/main.c                 |  6 +---
+ linux-user/signal.c               | 12 +++++--
+ linux-user/syscall.c              | 22 ++++++++----
+ target/arm/tcg/translate-a64.c    |  2 +-
+ target/arm/tcg/translate.c        |  2 +-
+ target/hppa/int_helper.c          | 20 ++++++-----
+ target/hppa/sys_helper.c          | 18 +++++-----
+ target/hppa/translate.c           | 10 +++---
+ target/i386/tcg/translate.c       |  3 ++
+ target/m68k/cpu.c                 | 12 +++++--
+ target/m68k/fpu_helper.c          | 72 +++++++++++++++++++++++++++++++++++++++
+ target/m68k/helper.c              |  4 +--
+ target/m68k/translate.c           |  4 +--
+ target/microblaze/translate.c     |  8 ++---
+ target/riscv/translate.c          | 11 +++---
+ target/s390x/tcg/translate.c      |  4 +--
+ target/sh4/op_helper.c            | 51 +++++++++++++++------------
+ target/sh4/translate.c            |  7 ++--
+ tcg/optimize.c                    | 17 +++++----
+ tcg/tcg.c                         | 14 ++++++--
+ tests/tcg/aarch64/test-2150.c     | 12 +++++++
+ tests/tcg/sh4/test-macl.c         | 67 ++++++++++++++++++++++++++++++++++++
+ tests/tcg/sh4/test-macw.c         | 61 +++++++++++++++++++++++++++++++++
+ tests/tcg/aarch64/Makefile.target |  2 +-
+ tests/tcg/sh4/Makefile.target     |  8 +++++
+ 33 files changed, 412 insertions(+), 129 deletions(-)
+ create mode 100644 tests/tcg/aarch64/test-2150.c
+ create mode 100644 tests/tcg/sh4/test-macl.c
+ create mode 100644 tests/tcg/sh4/test-macw.c
 
