@@ -4,73 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54233C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC86EC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru8b2-0000q3-TQ; Tue, 09 Apr 2024 06:20:57 -0400
+	id 1ru8di-0001kf-KU; Tue, 09 Apr 2024 06:23:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1ru8az-0000po-AL
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:20:53 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ru8df-0001kJ-7v
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:23:39 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1ru8ax-0005Iy-7r
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:20:53 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-516d3776334so5436728e87.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 03:20:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ru8dc-0005XA-A5
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:23:38 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5aa1b7a37b5so1775369eaf.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 03:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.com; s=cloud; t=1712658047; x=1713262847; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=6vi3mXNPAtFhRZ7VRL4VAPHciBEA8X0AtAtcbaG6HHM=;
- b=EtodnypS+ljQt3H38T1Y0zd0XJy9r75SOPszxk+wAOKukWG+9kjeH6JcDukEzOerhb
- 0VhYjq8XQ66Zgvdg6qNowuBbPOR4rj/3xRhtZkbO0THas4IESnbuNS8LglHMzKAx3j/Q
- dmCRs65wyoBGVONwM9CZ4QKZQV6L5i9XohSHY=
+ d=bytedance.com; s=google; t=1712658214; x=1713263014; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DyxleWY2IfO6vab88aKWB1eiBY0XTtW3dvM76WzKa1A=;
+ b=N6kNqpiBj94m5yu0kjxo4eTxhzCQdhxCsMW0OL0kPLzExxqeaDnsopLOgJ+0Wj5wLQ
+ WB27TcrwK9fnIJZEJcZNYI9zH52chFZP3YB8S5lsp/gq72lh+wktIK9YgG3Q8XYvU3Zk
+ jzvSpZDNdjqnQeMDvz+wR1JajGq2J1g+FoTHQgq+N0b0wz/Kui3MrADNxplSsDrVoqBF
+ J8heHDYOj5+rXohaRfNsz4YFCgoLpbSvrtA24JoFElaMptF4YrifQwWLa7109n/gKb4h
+ m5ssm/iE+rcIDUwejT/HIbY9FVCMMKgRwieeA4JBS5OlN9+kMZxGyASuC3ihJlfk9NXM
+ Ib1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712658047; x=1713262847;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6vi3mXNPAtFhRZ7VRL4VAPHciBEA8X0AtAtcbaG6HHM=;
- b=FkwFvmwj23I86S9w7nAkb2aSqpNm8dIHPHtWxjZcgEmhht+RYsYvFkmbKa7Bli9+Mp
- 6bBlY/y3guGCw7xzLkoXvykKI7OAYid5evcbv9r6JhQaHHTqq0u5+741sy4uE+t+hmjU
- RN6Ognh+o2tefOYOQz7G5Tsk6Zo8KQFVOFaJi4ThU3v2p5VpgK21MXYvZj8aMWgvZpjr
- GUpgEQsI1XyJ1pyvctvl8+bYw1fwk8cn7LPrxU5h9BM/r2v5tki6cjsxh91pvUCrucYq
- fpvxwkuJST5Kc2pthI01n3VU2Ywf5FK6T9zzm4694PwTCR2R8oF8HmBUAM/cZcy35KPR
- ytgQ==
+ d=1e100.net; s=20230601; t=1712658214; x=1713263014;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DyxleWY2IfO6vab88aKWB1eiBY0XTtW3dvM76WzKa1A=;
+ b=xU7h1cZPKWBQVpZJOTgs0ePiHUsyYezO3z7JSqP+9IREkxFCD5j5tBMzNnS5/zK1JL
+ 8k3Jr6C5p0eZfpKfcLxUOa1Kmo3RXtqxO7rFB9W1FMjTLjUMqwyF2bnpgc5SQTBpvE6g
+ GJHPxtKkgf5wWOV81bgmOXWn+BEETdRFzdRq17LSsTSLgWrgv1tr/byLOggR6ad2sVPS
+ zDIIANuGdhOcnaaPveod0a8lqqik7XccuGgwrjzRJqB2LJVf9ms7nqlQlPDHW04bULua
+ zXPkgUiCiwyK0pivsNoTnNaIUBXYK6BqBiYBxKGMQn07ZAzcm5uaQWCFh8Gwzcn87kFJ
+ xQrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXksLu0VqqPsHufpJFzyPCYJFleHvL74aZdAC1tqh7hFQdlNvVlPtamEQjfww1jTSxdWac9slQp1hefPNv/Ab+iHUh7Xw=
-X-Gm-Message-State: AOJu0Yw/XA1rDuTJmQg2nSsM5aqLUn0uyrNjfaNeqJy2ms9hWsQAVyxW
- 6Wwp0ZWwIWlmWGQ15rzyd/K6UYtZsr5YTmBlxWLxsTmPmVCeahBTY9rDacJtpys=
-X-Google-Smtp-Source: AGHT+IHaIpT9eyePhKlcsD5qHDIV8IJtmm5ucgNemPRD1+yysRCR0QTSHPLYSNTgt9iOxBdqVBzHAg==
-X-Received: by 2002:ac2:48a4:0:b0:513:c95c:4dc4 with SMTP id
- u4-20020ac248a4000000b00513c95c4dc4mr7701691lfg.7.1712658046987; 
- Tue, 09 Apr 2024 03:20:46 -0700 (PDT)
-Received: from perard.uk.xensource.com (default-46-102-197-194.interdsl.co.uk.
- [46.102.197.194]) by smtp.gmail.com with ESMTPSA id
- be9-20020a05600c1e8900b004163ee3922csm11976111wmb.38.2024.04.09.03.20.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 03:20:46 -0700 (PDT)
-Date: Tue, 9 Apr 2024 11:20:45 +0100
-From: Anthony PERARD <anthony.perard@cloud.com>
-To: Ross Lagerwall <ross.lagerwall@citrix.com>
-Cc: Stefano Stabellini <sstabellini@kernel.org>,
- Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] xen-hvm: Avoid livelock while handling buffered ioreqs
-Message-ID: <90f07634-1600-4654-8e36-7ac9e2f457e8@perard>
-References: <20240404140833.1557953-1-ross.lagerwall@citrix.com>
+ AJvYcCUz6vM8wNtGSlA6VdFss4k3ZMlpoS/naiteU607Uhj/Blo/cQ5cKuBmLblolZC9s0EHjSsgwiA8DZBbL0Uc0jvPF20snNg=
+X-Gm-Message-State: AOJu0YwEXWP8xecqK76aNnN4XXfKxTtnL9mh7vmwMTlxZMUGIr61UhUB
+ yz41wUFgym/FKOLtt8qisL/dspP8YUTgZmT/cFGwwTme3DldcTPhmk/ViLuvacA=
+X-Google-Smtp-Source: AGHT+IGyaSP4v7shfAAGG/IVh0mjrUEHtE8xTI0ek5swFPQV7BZFd0BxK62d/N2swKcZlW8N3XI4UQ==
+X-Received: by 2002:a05:6359:5142:b0:183:a47e:6284 with SMTP id
+ oc2-20020a056359514200b00183a47e6284mr8391706rwb.5.1712658214412; 
+ Tue, 09 Apr 2024 03:23:34 -0700 (PDT)
+Received: from [10.3.43.196] ([61.213.176.14])
+ by smtp.gmail.com with ESMTPSA id
+ s2-20020a62e702000000b006e6c733bde9sm7972540pfh.155.2024.04.09.03.23.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Apr 2024 03:23:34 -0700 (PDT)
+Message-ID: <6a36727c-0104-4631-bd18-41c4b0befa00@bytedance.com>
+Date: Tue, 9 Apr 2024 18:23:30 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240404140833.1557953-1-ross.lagerwall@citrix.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=anthony.perard@cloud.com; helo=mail-lf1-x133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.0? v2] backends/cryptodev: Do not abort for invalid
+ session ID
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Zheyu Ma <zheyuma97@gmail.com>
+References: <20240409094757.9127-1-philmd@linaro.org>
+From: zhenwei pi <pizhenwei@bytedance.com>
+In-Reply-To: <20240409094757.9127-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,52 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 04, 2024 at 03:08:33PM +0100, Ross Lagerwall wrote:
-> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-> index 1627da739822..1116b3978938 100644
-> --- a/hw/xen/xen-hvm-common.c
-> +++ b/hw/xen/xen-hvm-common.c
-> @@ -521,22 +521,30 @@ static bool handle_buffered_iopage(XenIOState *state)
-[...]
->  
->  static void handle_buffered_io(void *opaque)
->  {
-> +    unsigned int handled;
->      XenIOState *state = opaque;
->  
-> -    if (handle_buffered_iopage(state)) {
-> +    handled = handle_buffered_iopage(state);
-> +    if (handled >= IOREQ_BUFFER_SLOT_NUM) {
-> +        /* We handled a full page of ioreqs. Schedule a timer to continue
-> +         * processing while giving other stuff a chance to run.
-> +         */
+LGTM, thanks!
+Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
 
-./scripts/checkpatch.pl report a style issue here:
-    WARNING: Block comments use a leading /* on a separate line
-
-I can try to remember to fix that on commit.
-
->          timer_mod(state->buffered_io_timer,
-> -                BUFFER_IO_MAX_DELAY + qemu_clock_get_ms(QEMU_CLOCK_REALTIME));
-> -    } else {
-> +                qemu_clock_get_ms(QEMU_CLOCK_REALTIME));
-> +    } else if (handled == 0) {
-
-Just curious, why did you check for `handled == 0` here instead of
-`handled != 0`? That would have avoided to invert the last 2 cases, and
-the patch would just have introduce a new case without changing the
-order of the existing ones. But not that important I guess.
-
->          timer_del(state->buffered_io_timer);
->          qemu_xen_evtchn_unmask(state->xce_handle, state->bufioreq_local_port);
-> +    } else {
-> +        timer_mod(state->buffered_io_timer,
-> +                BUFFER_IO_MAX_DELAY + qemu_clock_get_ms(QEMU_CLOCK_REALTIME));
->      }
->  }
-
-Cheers,
+On 4/9/24 17:47, Philippe Mathieu-Daudé wrote:
+> Instead of aborting when a session ID is invalid,
+> return VIRTIO_CRYPTO_INVSESS ("Invalid session id").
+> 
+> Reproduced using:
+> 
+>    $ cat << EOF | qemu-system-i386 -display none \
+>       -machine q35,accel=qtest -m 512M -nodefaults \
+>       -object cryptodev-backend-builtin,id=cryptodev0 \
+>       -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
+>       -qtest stdio
+>    outl 0xcf8 0x80000804
+>    outw 0xcfc 0x06
+>    outl 0xcf8 0x80000820
+>    outl 0xcfc 0xe0008000
+>    write 0x10800e 0x1 0x01
+>    write 0xe0008016 0x1 0x01
+>    write 0xe0008020 0x4 0x00801000
+>    write 0xe0008028 0x4 0x00c01000
+>    write 0xe000801c 0x1 0x01
+>    write 0x110000 0x1 0x05
+>    write 0x110001 0x1 0x04
+>    write 0x108002 0x1 0x11
+>    write 0x108008 0x1 0x48
+>    write 0x10800c 0x1 0x01
+>    write 0x108018 0x1 0x10
+>    write 0x10801c 0x1 0x02
+>    write 0x10c002 0x1 0x01
+>    write 0xe000b005 0x1 0x00
+>    EOF
+>    Assertion failed: (session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]),
+>    function cryptodev_builtin_close_session, file cryptodev-builtin.c, line 430.
+> 
+> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2274
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> v2: Removed error_report()
+> ---
+>   backends/cryptodev-builtin.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+> index 39d0455280..a514bbb310 100644
+> --- a/backends/cryptodev-builtin.c
+> +++ b/backends/cryptodev-builtin.c
+> @@ -427,7 +427,9 @@ static int cryptodev_builtin_close_session(
+>                         CRYPTODEV_BACKEND_BUILTIN(backend);
+>       CryptoDevBackendBuiltinSession *session;
+>   
+> -    assert(session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]);
+> +    if (session_id >= MAX_NUM_SESSIONS || !builtin->sessions[session_id]) {
+> +        return -VIRTIO_CRYPTO_INVSESS;
+> +    }
+>   
+>       session = builtin->sessions[session_id];
+>       if (session->cipher) {
 
 -- 
-Anthony PERARD
+zhenwei pi
 
