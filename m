@@ -4,89 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507BACD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C8CCD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru7Lx-0005hK-0r; Tue, 09 Apr 2024 05:01:17 -0400
+	id 1ru7pG-0003f5-QL; Tue, 09 Apr 2024 05:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ru7Ll-0005UT-Jb
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:01:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru7p5-0003eI-W9
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:31:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ru7Lk-0000UM-0R
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:01:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru7p4-00056e-Ab
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:31:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712653261;
+ s=mimecast20190719; t=1712655081;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7GiYpAWx0LAbg8GHeDh3MC8dTSAlB3H/U0GWaE+Dji8=;
- b=LfgB5WFYp12Cy2hCtrNq+ndG04vVTjWbCP0SYUENLhR+II+wg0zxFzNYbITf1EzzRLBfzz
- lRI6Ovk16CIYp2R0lKNRQPj+lqjesws7bjMHn4VMalwDGcfaB554QGO29AZjhg041DQkY3
- K+EiPtebKeZwhOiwtWoGA4NNMUhfMGg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-25-Uk-daZioPx28-iJzTloAmg-1; Tue,
- 09 Apr 2024 05:00:59 -0400
-X-MC-Unique: Uk-daZioPx28-iJzTloAmg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 49BBD29AA39A;
- Tue,  9 Apr 2024 09:00:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id E551517ABB;
- Tue,  9 Apr 2024 09:00:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 086EF21E65D7; Tue,  9 Apr 2024 11:00:52 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Jinpu Wang <jinpu.wang@ionos.com>,  Yu Zhang <yu.zhang@ionos.com>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,  Elmar Gerdes
- <elmar.gerdes@ionos.com>,  "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>,  Yuval Shaia <yuval.shaia.ml@gmail.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Prasanna Kumar Kalever
- <prasanna.kalever@redhat.com>,  Cornelia Huck <cohuck@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Prasanna Kumar Kalever
- <prasanna4324@gmail.com>,  "integration@gluster.org"
- <integration@gluster.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,  Daniel P. =?utf-8?Q?Be?=
- =?utf-8?Q?rrang=C3=A9?= <berrange@redhat.com>,  "devel@lists.libvirt.org"
- <devel@lists.libvirt.org>,  Hanna Reitz <hreitz@redhat.com>,  "Michael S.
- Tsirkin" <mst@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Song Gao <gaosong@loongson.cn>,  =?utf-8?Q?Marc-And?=
- =?utf-8?Q?r=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
- <bleal@redhat.com>,  arei.gonglei@huawei.com,  pannengyuan@huawei.com
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-In-Reply-To: <ZhQYu3ZnsIGv2qUZ@x1n> (Peter Xu's message of "Mon, 8 Apr 2024
- 12:18:03 -0400")
-References: <20240328130255.52257-1-philmd@linaro.org>
- <20240328130255.52257-3-philmd@linaro.org> <87frwatp7n.fsf@suse.de>
- <ZgWGMmUTq0jqSUvr@x1n>
- <7a510fbe-1c27-4f67-93b8-0d9cf01c1c74@fujitsu.com>
- <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
- <9d082daf-acf0-27c5-1758-5a3f2af7ee0f@fujitsu.com>
- <CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com>
- <Zgx3brrz8m0V7HS4@x1n>
- <CAMGffE=i+hVCNaX_31h1D1VW7JGJBqoa9T0qEJe2CDcb9BPiAA@mail.gmail.com>
- <ZhQYu3ZnsIGv2qUZ@x1n>
-Date: Tue, 09 Apr 2024 11:00:52 +0200
-Message-ID: <87bk6ioqpn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=CHm9lErPneZ6NueFGn5T2q6OqOjCG2hYKnmdyw3Evnc=;
+ b=FB2Sbjf7dc5w6hA73wswe8w62fNPdkegSe7/ekjVOUfqF4GXP4SZ7jV3ScKEN1bQqoKEWy
+ SUdh/yamJhT2/B/Cmg1rBM9oJcUYzC79JeJx5PEroxz3FPWrUHiy3iXOXrEh5N475K0oDw
+ 9Iu/OSCUHEdU9pfj+ikI2JcXhCpvh8o=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-90-Z_rJubhyNP2SVRck6ogXgg-1; Tue, 09 Apr 2024 05:31:18 -0400
+X-MC-Unique: Z_rJubhyNP2SVRck6ogXgg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-41401f598cfso31786225e9.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:31:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712655076; x=1713259876;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CHm9lErPneZ6NueFGn5T2q6OqOjCG2hYKnmdyw3Evnc=;
+ b=uH+GtGS9YMCwitg3hP6tsyQnBiqzFbecFl/7dmOSe+2u+WWYu+uWfVu8pLWNKCqdCc
+ sBU+T4lK0xBM/+D/N2WegwXh0/Fah1odOz4NXtqTsP17g185t//mkpVVva9+aKXVItcA
+ 8nZMzqolAdhnvYistB4FAayXFdU6KtrXhfn2AZlMH6xTVqpN6GlgdeGXGh5Ut8cuS+x3
+ wZWDMNkpb0yqEGkpyPItaQ7a+GVcvUMIUpJf7HqqlSWt8Q70/honG44fjF8aZugFfKpM
+ 1EEjyPjLystIL30/yi6Y6D9Z7HdxiX0Dh1TEm4sIPNCdkobJOrDiR+RvzxKKTket6J8N
+ KH4w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDOJpkp3CFiaoSaKpMP5/A1fgY9ddEedN5/uAvEEtH1fSiiAKxwUUkElIULjR5rPfltcCevpbBeqEeSZ7R3aPe7ozYwok=
+X-Gm-Message-State: AOJu0YxOXjSIH6d09Gy95O3Y6ObjXymbYezhUMDW8M6iCL+WEJuxYaGF
+ g2BeVCvXk72CZ62IiwCPEvs8gY/X3RczinxiUO7hQ6hCvkH2TW4yLi8pszs+G3QANpZxdZGFPs/
+ K+wIC8SO3uPv1/hTmR76voX5d8pEaV5g2nU38+Uvbhx+ZOa7Crf/Y
+X-Received: by 2002:a05:600c:b8e:b0:416:50ce:20d2 with SMTP id
+ fl14-20020a05600c0b8e00b0041650ce20d2mr4844333wmb.0.1712655075735; 
+ Tue, 09 Apr 2024 02:31:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGthi+WR0T65jCCLC2UuGWDSWe4milpnGtbK9ltu+w2f7EgsiDlRR4qreyZjzY3oO5vEBr8WQ==
+X-Received: by 2002:a05:600c:b8e:b0:416:50ce:20d2 with SMTP id
+ fl14-20020a05600c0b8e00b0041650ce20d2mr4844307wmb.0.1712655075168; 
+ Tue, 09 Apr 2024 02:31:15 -0700 (PDT)
+Received: from redhat.com ([2.52.134.26]) by smtp.gmail.com with ESMTPSA id
+ je4-20020a05600c1f8400b004149536479esm16590538wmb.12.2024.04.09.02.31.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Apr 2024 02:31:14 -0700 (PDT)
+Date: Tue, 9 Apr 2024 05:31:11 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: lyx634449800 <yuxue.liu@jaguarmicro.com>
+Cc: jasowang@redhat.com, qemu-stable@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost: don't set vring call if no enabled msix
+Message-ID: <20240409052957-mutt-send-email-mst@kernel.org>
+References: <20240408060842.2012-1-yuxue.liu@jaguarmicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240408060842.2012-1-yuxue.liu@jaguarmicro.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -94,7 +84,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,76 +100,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Mon, Apr 08, 2024 at 02:08:42PM +0800, lyx634449800 wrote:
+> When conducting performance testing using testpmd in the guest os,
+> it was observed that the performance was lower compared to the
+> scenario of direct vfio-pci usage.
+> 
+> In the virtual machine operating system, even if the virtio device
+> does not use msix interrupts, vhost still sets vring call fd. This
+> leads to unnecessary performance overhead. If the guest driver does
+> not enable msix capability (e.g virtio-net pmd), we should also
+> check and clear the vring call fd.
+> 
+> Signed-off-by: Yuxue Liu <yuxue.liu@jaguarmicro.com>
 
-> On Mon, Apr 08, 2024 at 04:07:20PM +0200, Jinpu Wang wrote:
->> Hi Peter,
->
-> Jinpu,
->
-> Thanks for joining the discussion.
->
->>=20
->> On Tue, Apr 2, 2024 at 11:24=E2=80=AFPM Peter Xu <peterx@redhat.com> wro=
-te:
->> >
->> > On Mon, Apr 01, 2024 at 11:26:25PM +0200, Yu Zhang wrote:
->> > > Hello Peter und Zhjian,
->> > >
->> > > Thank you so much for letting me know about this. I'm also a bit sur=
-prised at
->> > > the plan for deprecating the RDMA migration subsystem.
->> >
->> > It's not too late, since it looks like we do have users not yet notifi=
-ed
->> > from this, we'll redo the deprecation procedure even if it'll be the f=
-inal
->> > plan, and it'll be 2 releases after this.
 
-[...]
+Fails testing under cross-i686-tci:
 
->> > Per our best knowledge, RDMA users are rare, and please let anyone kno=
-w if
->> > you are aware of such users.  IIUC the major reason why RDMA stopped b=
-eing
->> > the trend is because the network is not like ten years ago; I don't th=
-ink I
->> > have good knowledge in RDMA at all nor network, but my understanding is
->> > it's pretty easy to fetch modern NIC to outperform RDMAs, then it may =
-make
->> > little sense to maintain multiple protocols, considering RDMA migration
->> > code is so special so that it has the most custom code comparing to ot=
-her
->> > protocols.
->> +cc some guys from Huawei.
->>=20
->> I'm surprised RDMA users are rare,  I guess maybe many are just
->> working with different code base.
->
-> Yes, please cc whoever might be interested (or surprised.. :) to know thi=
-s,
-> and let's be open to all possibilities.
->
-> I don't think it makes sense if there're a lot of users of a feature then
-> we deprecate that without a good reason.  However there's always the
-> resource limitation issue we're facing, so it could still have the
-> possibility that this gets deprecated if nobody is working on our upstream
-> branch. Say, if people use private branches anyway to support rdma without
-> collaborating upstream, keeping such feature upstream then may not make
-> much sense either, unless there's some way to collaborate.  We'll see.
->
-> It seems there can still be people joining this discussion.  I'll hold off
-> a bit on merging this patch to provide enough window for anyone to chim i=
-n.
+https://gitlab.com/mstredhat/qemu/-/jobs/6578881990
 
-Users are not enough.  Only maintainers are.
+36/258 qemu:qtest+qtest-i386 / qtest-i386/ioh3420-test                    OK               0.15s   1 subtests passed
+▶  37/258 ERROR:../tests/qtest/qos-test.c:191:subprocess_run_one_test: child process (/aarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/migrate/subprocess [22197]) failed unexpectedly ERROR         
+ 38/258 qemu:qtest+qtest-i386 / qtest-i386/lpc-ich9-test                   OK               0.16s   1 subtests passed
+ 37/258 qemu:qtest+qtest-aarch64 / qtest-aarch64/qos-test                  ERROR           13.20s   killed by signal 6 SIGABRT
+>>> G_TEST_DBUS_DAEMON=/builds/mstredhat/qemu/tests/dbus-vmstate-daemon.sh PYTHON=/builds/mstredhat/qemu/build/pyvenv/bin/python3 MALLOC_PERTURB_=144 QTEST_QEMU_BINARY=./qemu-system-aarch64 /builds/mstredhat/qemu/build/tests/qtest/qos-test --tap -k
+――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
+stderr:
+**
+ERROR:../tests/qtest/vhost-user-test.c:468:chr_read: assertion failed (err == NULL): Bad file descriptor (g-unix-error-quark, 0)
+**
+ERROR:../tests/qtest/qos-test.c:191:subprocess_run_one_test: child process (/aarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/migrate/subprocess [22197]) failed unexpectedly
+(test program exited with status code -6)
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 
-At some point, people cared enough about RDMA in QEMU to contribute the
-code.  That's why have the code.
 
-To keep the code, we need people who care enough about RDMA in QEMU to
-maintain it.  Without such people, the case for keeping it remains
-dangerously weak, and no amount of talk or even benchmarks can change
-that.
+> ---
+>  hw/virtio/vhost.c | 16 +++++++++-------
+>  1 file changed, 9 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index f50180e60e..b972c84e67 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1266,13 +1266,15 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>          vhost_virtqueue_mask(dev, vdev, idx, false);
+>      }
+>  
+> -    if (k->query_guest_notifiers &&
+> -        k->query_guest_notifiers(qbus->parent) &&
+> -        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
+> -        file.fd = -1;
+> -        r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+> -        if (r) {
+> -            goto fail_vector;
+> +    if (k->query_guest_notifiers) {
+> +        if (!k->query_guest_notifiers(qbus->parent) ||
+> +            (k->query_guest_notifiers(qbus->parent) &&
+> +            virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR)) {
+> +            file.fd = -1;
+> +            r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+> +            if (r) {
+> +                goto fail_vector;
+> +            }
+>          }
+>      }
+>  
+> -- 
+> 2.43.0
 
 
