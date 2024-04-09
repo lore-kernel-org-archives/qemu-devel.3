@@ -4,67 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AADCDC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 526FCCD1296
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruBFc-0007RK-V3; Tue, 09 Apr 2024 09:11:01 -0400
+	id 1ruBTV-0001gd-QE; Tue, 09 Apr 2024 09:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBFa-0007Qm-7E
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:10:58 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBTU-0001gT-Me
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:25:20 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBFY-0003Ta-FB
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:10:57 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-34339f01cd2so4199792f8f.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:10:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBTS-00063F-GK
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:25:19 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-565c6cf4819so11186776a12.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712668255; x=1713273055; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Y4Nxs9MMLY9GubrjsqvRCZSSNoPAbmWLaA+XlQagn/U=;
- b=HZMSng0Rh/ueH4F401TF2aD4RSy8GoOp5TD/y510jyl4SreqOyKv+AqNkX1VBuDaRN
- KS2qsDQzBIR4jtLkweTt7t5N96ExhjHioQqKqy/etXdgLGPRuVoCcb6CLnrQ9DYHsR1Z
- 5KOIsS0vmNsKnICnGH/17bIrDOVPsklFnlBSUyqom86VGNcfcc5nrozhYOU1LtLhnkGG
- b1a4aIYYrfJ5C+KmY9N58BIkwC1o36B9ng2QchykEcm9RdNRv0VBrJrmFyWMCwkFWTLK
- Jcsj1GJXFBbTXPEq2wDutRubrFlJiF3AzTcWMXAmYu+uS1wujDeHJUk5QLvd5eTR4npZ
- CKAg==
+ d=linaro.org; s=google; t=1712669116; x=1713273916; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xvTWnpbEaz4AwHIlzcpNyHp0dTR+1sW3AStMwKqDmNc=;
+ b=d9/kbPcuFWjZTB954Tin6+4bVXOn/7Npgq1aydcFzGetTBbIcupD7H8viaeFRrqoAh
+ itsYRm5IlaAhwKp189tR5eMp97mrvICw2H155pBq4FKHIgvKESqw/foF7k5S4FChozdH
+ QL+6yJw1c6ATewq9X7Imgrn6PhgH51DMW3bUNNk3CYRqtYdOnfVxpAXPjPNkb9I5Rh4l
+ 71s+E+uUKJ+qIYcaAjMgRHOgubihdQCJZG7szNoR++YkRFbtIOwJTlyPUvMa9sf66Zud
+ HcZqrVgJF0SnRr1Qx+ajLiJoPfzmLwP6GGHnyOqCOSJuBmjDybAQTdymJjyNJ0Soff5G
+ cNKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712668255; x=1713273055;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y4Nxs9MMLY9GubrjsqvRCZSSNoPAbmWLaA+XlQagn/U=;
- b=nbg9vLOcSJc9GOytNXJAv5uDUMWizTlZzzC5FgppVW0On+kkQgPrF+5v/ySTGa8Rd+
- X7PIeIPRuwOHHfAO3w66p0dHCBP78F4DAqRzs5hJnl/tkEw2ptJ0auOdZk8cBhdzNM/q
- TAquc4kbYVQMUyxdLSFo5iOSkTI/C8AbnYPXB1bEh1I9tUIiPwl/Sa9lsdDaMVXCH4A2
- BP15S46zN53A+C91eAUlQNbgEJqRHjabIceT/W9jyEhy7RK3NhbVLD1JQHJl00orRLxQ
- x/pDNiBqL+JGwuObkFjkB4Te2mxk3G5qMdP6gf1wKNiin44KbvpUepTkVHIBV5EDY6PI
- 8HIA==
-X-Gm-Message-State: AOJu0YwT4Cm5zJWgcXMV2nCyYLGCcllassZlT1vfz/Nz8hxo/3p70D/8
- hvb9fM5YAFogH4ZYpu5oZ5ZFh9KH9z5itpw5IzvmFIJNpHUTSBekBPbWaMCP8ljQeo7riVxf+2z
- fECw0JdPl6Qp0n9shdOJEyCn4dcjTcc++iK04Vz07hnyLPhzv
-X-Google-Smtp-Source: AGHT+IGdboeP3nS0ZNDCCyi4kYunzpr0HmnyfhLMnW7GnpbksV0t3luQcPIyTXOQofmSo1y7c1tCmQdoUk3sXkI4jFs=
-X-Received: by 2002:a5d:5047:0:b0:341:d8a9:5b7d with SMTP id
- h7-20020a5d5047000000b00341d8a95b7dmr7619384wrt.28.1712668254585; Tue, 09 Apr
- 2024 06:10:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712669116; x=1713273916;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xvTWnpbEaz4AwHIlzcpNyHp0dTR+1sW3AStMwKqDmNc=;
+ b=l9BUIaUkdEqvyobsh1E41gwbtPMhiNd1TpdEk66E84Fzgyw/HfD17lt9sIcW3fDDQb
+ JgX+9YLp6pVCsms6UyOr1NW0SM2WwaEfCEmRiuhbeRtHu40WxkoW/yUy35HwL1EsmS1Q
+ HRB9TX3oxp98nG0lwxJZHyVdjvXbuPXJMfbxeaaWQk2ycvb+sKx59XvcHdkyCHbdPwm8
+ IYsjTCLxy75xlLKczv1lWQxw+lNQNeji/npql7i1ttrhKfkcAgmXLOCc9E8eEnf3UBWQ
+ bweNxiIiQcmtds6wxQx55olzuw0oB/jLBCQMVysqY16sSCwNLCdCUR9M6GUm/ggsV3vI
+ eDbA==
+X-Gm-Message-State: AOJu0YzJ9SvZK+0VD5gGXapiH2uVS9+CwULumZ6P8pg+OHmGaU6iPvEJ
+ HtRmjt+Xo7sGJiJ8cfbzB3SItwZftRFAQf7PCiUsbuS07nRyllac3hMrSi+4d1c=
+X-Google-Smtp-Source: AGHT+IHsDLu/CijEMLrscgJvOnQE5/k/3XgnJB/dFPe3/vJ1fbj5wS3fFbYmIWEh7yjPt1mRElRsvA==
+X-Received: by 2002:a17:906:b2c7:b0:a51:abd8:8621 with SMTP id
+ cf7-20020a170906b2c700b00a51abd88621mr2125373ejb.19.1712669116587; 
+ Tue, 09 Apr 2024 06:25:16 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.160.134])
+ by smtp.gmail.com with ESMTPSA id
+ j5-20020a170906830500b00a4734125fd2sm5695144ejx.31.2024.04.09.06.25.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Apr 2024 06:25:16 -0700 (PDT)
+Message-ID: <96058800-45ca-4bef-ba14-e0ed34155669@linaro.org>
+Date: Tue, 9 Apr 2024 15:25:14 +0200
 MIME-Version: 1.0
-References: <20240325144440.1069662-1-kraxel@redhat.com>
-In-Reply-To: <20240325144440.1069662-1-kraxel@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 14:10:42 +0100
-Message-ID: <CAFEAcA8eX=-6yXCZ2+X6niJPcgzkzXfHT9F6LpbfqV4b9VRW6w@mail.gmail.com>
-Subject: Re: [PATCH] edk2: get version + date from git submodule
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/dma: prevent overflow in soc_dma_set_request
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Anastasia Belova <abelova@astralinux.ru>
+Cc: qemu-devel@nongnu.org, Andrzej Zaborowski <balrogg@gmail.com>,
+ sdl.qemu@linuxtesting.org
+References: <20240409115301.21829-1-abelova@astralinux.ru>
+ <CAFEAcA_W4qr6EPhOu-s_+d_V+MfADzddKNwd_gUzBTbajQ+xvg@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_W4qr6EPhOu-s_+d_V+MfADzddKNwd_gUzBTbajQ+xvg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,52 +96,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 25 Mar 2024 at 14:45, Gerd Hoffmann <kraxel@redhat.com> wrote:
->
-> Turned out hard-coding version and date in the Makefile wasn't a bright
-> idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
-> from git instead.
->
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  roms/Makefile | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/roms/Makefile b/roms/Makefile
-> index edc234a0e886..534eba17ebd0 100644
-> --- a/roms/Makefile
-> +++ b/roms/Makefile
-> @@ -51,6 +51,8 @@ SEABIOS_EXTRAVERSION="-prebuilt.qemu.org"
->  # efi ia32, efi x64) into a single rom binary.
->  #
->  EDK2_EFIROM = edk2/BaseTools/Source/C/bin/EfiRom
-> +EDK2_STABLE = $(shell cd edk2; git describe --tags --match 'edk2-stable*')
-> +EDK2_DATE = $(shell cd edk2; git show --pretty='format:%cd' --date='format:%m/%d/%Y'| head -1)
->
->  default help:
->         @echo "nothing is build by default"
-> @@ -149,8 +151,9 @@ skiboot:
->
->  efi:
->         $(PYTHON) edk2-build.py --config edk2-build.config \
-> -               --version-override "edk2-stable202302-for-qemu" \
-> -               --release-date "03/01/2023"
-> +               --version-override "$(EDK2_STABLE)-for-qemu" \
-> +               --release-date "$(EDK2_DATE)" \
-> +               --silent --no-logs
->         rm -f ../pc-bios/edk2-*.fd.bz2
->         bzip2 --verbose ../pc-bios/edk2-*.fd
+On 9/4/24 14:02, Peter Maydell wrote:
+> On Tue, 9 Apr 2024 at 12:54, Anastasia Belova <abelova@astralinux.ru> wrote:
+>>
+>> ch->num can reach values up to 31. Add casting to
+>> a larger type before performing left shift to
+>> prevent integer overflow.
+> 
+> If ch->num can only reach up to 31, then 1 << ch->num
+> is fine, because QEMU can assume that integers are 32 bits,
+> and we compile with -fwrapv so there isn't a problem with
+> shifting into the sign bit.
+> 
+> And I agree that we shouldn't ever have a ch->num greater
+> than 31, because the worst case here is when we call
+> soc_dma_init() with an argument of 32, which sets up
+> soc_dma_ch_s structs with values of num from 0 to 31.
+> 
+> So this doesn't seem to me to be fixing an active bug.
+> Am I missing something?
 
-Hi -- I've just noticed that we never made this change to
-automate the date/version for EDK2 ROMs, but we also never
-updated the version by hand. So at the moment we ship an
-EDK2 blob that wrongly claims to be an older version.
-See this bug report by a user:
+Maybe this path?
 
-https://gitlab.com/qemu-project/qemu/-/issues/2233
-
-Is it possible to fix this for 9.0?
-
-thanks
--- PMM
+omap2420_mpu_init():
+  -> omap_dma4_init(chans=32);
+      -> soc_dma_init(n=32);
+          -> s->chnum = 32;
 
