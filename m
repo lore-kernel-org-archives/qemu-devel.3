@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16570CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31A1C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru4wV-0001Pt-7v; Tue, 09 Apr 2024 02:26:51 -0400
+	id 1ru4zX-0002O9-GJ; Tue, 09 Apr 2024 02:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru4wH-0001P6-Cx
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:26:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru4wE-0005CK-9g
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:26:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712643992;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n+vBgzkMfWX9QqGlWIVXaqQ3JoTheSuWCYO/W5s/lAg=;
- b=haS0gkxWw9hj4til5FwEXOdTD5ONOWZpXdSB6eiaid3BNgu6j+GkjgbmoPx0TlAlZW5X31
- xytv8P5rXTxN9YDRqgdQ3gadcMev1cpREQc35ssVshADZSl8RHcCXMQhVqzvVMwJP4WXK4
- iTKfMFecxH+4VrAhH1s+0Wu7d3P3Kk4=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-cddYLY_TN-WYVTavpldP5A-1; Tue, 09 Apr 2024 02:26:31 -0400
-X-MC-Unique: cddYLY_TN-WYVTavpldP5A-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-516fe9d0c4dso939473e87.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 23:26:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1ru4zU-0002Lr-AH
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:56 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1ru4zR-0005jo-Ux
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:56 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2d6ff0422a2so65049611fa.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 23:29:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1712644191; x=1713248991; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1YNl4XRMhk+8qgIGEw0ZCW9ZqI2UvIL/DcKOJTTiqdA=;
+ b=byMNp06ugngZkKuPmP3UOf6QOdxNzCpiNgpskC+btqbdggN1iL9+mLaFDpv3KbvtPh
+ Uvi9iPdjdwzb0ObFFm3aDj33oxNSF3ithITRYNmqSggWOtAd8GGnf5RckwsoYEGtJFMh
+ VdiclkkHTYIzckKPWVexXtNyG7ebcMU2zGGZVyLgqqNMyEF3O2oUKqMWxLRnILHJb0D4
+ jXYN+79yr4FEacg1wsdyQBUA0UXnS1HiuWaY05gTx83mwTZGskVhRRwqpKsiJs0wdNpV
+ T6g9DKPVy8Wt2oVVLplA2RskK8ejizOFkeMZIoO2nLtNmy6BlGpLIi90oCqItwtW4smU
+ 9KKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712643989; x=1713248789;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n+vBgzkMfWX9QqGlWIVXaqQ3JoTheSuWCYO/W5s/lAg=;
- b=ADit6KAExNaYepRqxYF8sciI91lmBEgUnjrGBzhfis/BLzVSJox+QC5V4I7rW1G8zZ
- qwsueGiB5Jy2ldU5TFJRapFP2QKHfz3KvVbq0YxRJoXvwGQ4rn12cXClZIGRR1Fbndii
- twI/Adf71ufXqhq9umMURhu/towxUMOK0FpFJM9KfxgDlQk6IBhvOY4k0tCZZQ5Cik/y
- 2t4igxHwzEHtki4QOz/lpW4PxswXST/Uadr/eSMwkvoF5ZjOvK7elS2U7IP7AL5iAAhG
- Xkn+s+7Jmh+EHbpZZIq/lCSKMAzzvZB5N1C7uptQblZmeS0WUe2kTUMxvrYr9bBBL50r
- 1foA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrNOAM3Kyrvuuho4gGuH97qm1pFw/pFC12mtNwNx+hWbzmXH5EhdVIb1EgQ+ppjgStViiBqSOsRDKV7SfKfqtPtLhJtXM=
-X-Gm-Message-State: AOJu0YyEgu2gV/AsHNSsIQudsip2XSATg6b/4XaC9viH7VxvOi3OytXU
- +mGWNILeTzChIx3C7uPMtUlEVFiOl0u4B4GpvucWA+Pn9Npo58ImX+QDOTIHqbRTJRttjqwmqi6
- eylx4hS+DXIc/6Ri8Zuxr/sJBXEDqZEyGFNA17Mz083ccmjktzGtSA3H/QmnO
-X-Received: by 2002:a05:6512:285:b0:516:d18b:eaea with SMTP id
- j5-20020a056512028500b00516d18beaeamr7088645lfp.33.1712643989187; 
- Mon, 08 Apr 2024 23:26:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnCSxx+B6D12G39UZjuU7MkhnUhwgcaFdY0WRRGQ8ZJPtVsmsnWqDi0MixQRi58JpiHzQIEg==
-X-Received: by 2002:a05:6512:285:b0:516:d18b:eaea with SMTP id
- j5-20020a056512028500b00516d18beaeamr7088632lfp.33.1712643988593; 
- Mon, 08 Apr 2024 23:26:28 -0700 (PDT)
-Received: from redhat.com ([2.52.134.26]) by smtp.gmail.com with ESMTPSA id
- ek15-20020a056402370f00b0056c3013485csm4828166edb.69.2024.04.08.23.26.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 23:26:27 -0700 (PDT)
-Date: Tue, 9 Apr 2024 02:26:25 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Zheyu Ma <zheyuma97@gmail.com>
-Cc: Eric Auger <eric.auger@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] virtio-iommu: Do not process commands with bad size
-Message-ID: <20240409022246-mutt-send-email-mst@kernel.org>
-References: <20240404124505.2108743-1-zheyuma97@gmail.com>
+ d=1e100.net; s=20230601; t=1712644191; x=1713248991;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1YNl4XRMhk+8qgIGEw0ZCW9ZqI2UvIL/DcKOJTTiqdA=;
+ b=pZEYS1rGW1/66DaHKFMDJwYWOgf2DagGnEEV8RPru9lnOG4huIE4bJfKHcgOml2BR5
+ y6O8poud7rPNvKWWkbyqfvhcXf5IsJlwPKFQCfnZo0zWWu/VRaeSxT3E/+hfYiitIvep
+ YZ1oiz8YVCdyn6lyIj7tzQh8HOgy2aeuu80EgZpeUx8TfRnCuQa0ANItNpDJVIQrykRA
+ urQMTUmXDF0lwZ4CraqJ17jNMnUJOrseyBjcUfi8kFrFlppypQS72oZlMjbhgk3XFjG6
+ l90/o3aGfGTdwBDvqIGC8TN6eJOnDWfFOoeg8pJppi2+IvWGxvAG+2cCBz03KOZMHHR4
+ BJag==
+X-Gm-Message-State: AOJu0Yx8PTw7srdpoJ8xYn5t6ANrGI1UEDgA2iMJllztnvn5i62S+vUc
+ Z9IUjQ9ltwQSAlWwJoLpwKI1DNbXnANWfeEigN8VBwhyavv3JO1lI9xQ/qFwJQKWPjuUxVKeHyK
+ Pj6FpbuHlwBmpbVg+rBSLDju/d5l9JdWq2UhSLmY/f5ih82Nj4FA=
+X-Google-Smtp-Source: AGHT+IHZ/rcSCbJ/4NIdfF8Or0Q6OIurnzbRj7E0cULnBUyxDnMiET1+Co+wxFJyFzgFnbXXhh/RWXhrzNsMxAk8UDU=
+X-Received: by 2002:a2e:330e:0:b0:2d8:7a75:9452 with SMTP id
+ d14-20020a2e330e000000b002d87a759452mr5412982ljc.29.1712644191066; Mon, 08
+ Apr 2024 23:29:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240404124505.2108743-1-zheyuma97@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240328022343.6871-1-jason.chien@sifive.com>
+ <20240328022343.6871-4-jason.chien@sifive.com>
+In-Reply-To: <20240328022343.6871-4-jason.chien@sifive.com>
+From: Jason Chien <jason.chien@sifive.com>
+Date: Tue, 9 Apr 2024 14:29:39 +0800
+Message-ID: <CADr__8oVf4r=F6pAkt1KERKoR3HG5ViX_4b+NxC9Zw7r3kDH6Q@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] target/riscv: Relax vector register check in RISCV
+ gdbstub
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: multipart/alternative; boundary="000000000000a2bdd10615a40c1e"
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=jason.chien@sifive.com; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,125 +94,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 04, 2024 at 02:45:05PM +0200, Zheyu Ma wrote:
-> The device should not handle the commands which have bad request/reply
-> size, it should just report the error instead of raising an assertation.
-> 
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+--000000000000a2bdd10615a40c1e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This fails test for cross-i686-tci
+Ping.
 
+Jason Chien <jason.chien@sifive.com> =E6=96=BC 2024=E5=B9=B43=E6=9C=8828=E6=
+=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:24=E5=AF=AB=E9=81=93=EF=BC=
+=9A
 
-https://gitlab.com/mstredhat/qemu/-/jobs/6578222837
-
-57/258 ERROR:../tests/qtest/libqos/virtio.c:230:qvirtio_wait_used_elem: assertion failed: (g_get_monotonic_time() - start_time <= timeout_us) ERROR         
- 57/258 qemu:qtest+qtest-i386 / qtest-i386/qos-test                        ERROR           56.69s   killed by signal 6 SIGABRT
->>> QTEST_QEMU_BINARY=./qemu-system-i386 PYTHON=/builds/mstredhat/qemu/build/pyvenv/bin/python3 MALLOC_PERTURB_=112 G_TEST_DBUS_DAEMON=/builds/mstredhat/qemu/tests/dbus-vmstate-daemon.sh /builds/mstredhat/qemu/build/tests/qtest/qos-test --tap -k
-――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
-stderr:
-Vhost user backend fails to broadcast fake RARP
-qemu-system-i386: -chardev socket,id=chr-reconnect,path=/tmp/vhost-test-80QXL2/reconnect.sock,server=on: info: QEMU waiting for connection on: disconnected:unix:/tmp/vhost-test-80QXL2/reconnect.sock,server=on
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: -chardev socket,id=chr-connect-fail,path=/tmp/vhost-test-CZMWL2/connect-fail.sock,server=on: info: QEMU waiting for connection on: disconnected:unix:/tmp/vhost-test-CZMWL2/connect-fail.sock,server=on
-qemu-system-i386: -netdev vhost-user,id=hs0,chardev=chr-connect-fail,vhostforce=on: Failed to read msg header. Read 0 instead of 12. Original request 1.
-qemu-system-i386: -netdev vhost-user,id=hs0,chardev=chr-connect-fail,vhostforce=on: vhost_backend_init failed: Protocol error
-qemu-system-i386: -netdev vhost-user,id=hs0,chardev=chr-connect-fail,vhostforce=on: failed to init vhost_net for queue 0
-qemu-system-i386: -netdev vhost-user,id=hs0,chardev=chr-connect-fail,vhostforce=on: info: QEMU waiting for connection on: disconnected:unix:/tmp/vhost-test-CZMWL2/connect-fail.sock,server=on
-qemu-system-i386: Failed to write msg. Wrote -1 instead of 20.
-qemu-system-i386: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: -chardev socket,id=chr-flags-mismatch,path=/tmp/vhost-test-CBHDM2/flags-mismatch.sock,server=on: info: QEMU waiting for connection on: disconnected:unix:/tmp/vhost-test-CBHDM2/flags-mismatch.sock,server=on
-qemu-system-i386: Failed to write msg. Wrote -1 instead of 84.
-qemu-system-i386: vhost_set_mem_table failed: Invalid argument (22)
-qemu-system-i386: unable to start vhost net: 22: falling back on userspace virtio
-vhost lacks feature mask 0x40000000 for backend
-qemu-system-i386: failed to init vhost_net for queue 0
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to write msg. Wrote -1 instead of 20.
-qemu-system-i386: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 2 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 3 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: Failed to set msg fds.
-qemu-system-i386: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-i386: virtio-iommu bad head/tail size
-**
-ERROR:../tests/qtest/libqos/virtio.c:230:qvirtio_wait_used_elem: assertion failed: (g_get_monotonic_time() - start_time <= timeout_us)
-(test program exited with status code -6)
-――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-
-
-So we hit the error where we did not previously hit the assert.
-
-Dropped for now. Pls figure it out and resubmit.
-
+> In current implementation, the gdbstub allows reading vector registers
+> only if V extension is supported. However, all vector extensions and
+> vector crypto extensions have the vector registers and they all depend
+> on Zve32x. The gdbstub should check for Zve32x instead.
+>
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Max Chou <max.chou@sifive.com>
 > ---
->  hw/virtio/virtio-iommu.c | 10 +++-------
->  1 file changed, 3 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> index 1326c6ec41..3a7cdfe777 100644
-> --- a/hw/virtio/virtio-iommu.c
-> +++ b/hw/virtio/virtio-iommu.c
-> @@ -770,8 +770,8 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
->              return;
->          }
->  
-> -        if (iov_size(elem->in_sg, elem->in_num) < sizeof(tail) ||
-> -            iov_size(elem->out_sg, elem->out_num) < sizeof(head)) {
-> +        if (iov_size(elem->in_sg, elem->in_num) != sizeof(tail) ||
-> +            iov_size(elem->out_sg, elem->out_num) != sizeof(head)) {
->              virtio_error(vdev, "virtio-iommu bad head/tail size");
->              virtqueue_detach_element(vq, elem, 0);
->              g_free(elem);
-> @@ -818,8 +818,6 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
->  out:
->          sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
->                            buf ? buf : &tail, output_size);
-> -        assert(sz == output_size);
-> -
->          virtqueue_push(vq, elem, sz);
->          virtio_notify(vdev, vq);
->          g_free(elem);
-> @@ -852,7 +850,7 @@ static void virtio_iommu_report_fault(VirtIOIOMMU *viommu, uint8_t reason,
->          return;
+>  target/riscv/gdbstub.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index be7a02cd90..d0cc5762c2 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -338,7 +338,7 @@ void riscv_cpu_register_gdb_regs_for_features(CPUStat=
+e
+> *cs)
+>
+> gdb_find_static_feature("riscv-32bit-fpu.xml"),
+>                                   0);
 >      }
->  
-> -    if (iov_size(elem->in_sg, elem->in_num) < sizeof(fault)) {
-> +    if (iov_size(elem->in_sg, elem->in_num) != sizeof(fault)) {
->          virtio_error(vdev, "error buffer of wrong size");
->          virtqueue_detach_element(vq, elem, 0);
->          g_free(elem);
-> @@ -861,8 +859,6 @@ static void virtio_iommu_report_fault(VirtIOIOMMU *viommu, uint8_t reason,
->  
->      sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
->                        &fault, sizeof(fault));
-> -    assert(sz == sizeof(fault));
-> -
->      trace_virtio_iommu_report_fault(reason, flags, endpoint, address);
->      virtqueue_push(vq, elem, sz);
->      virtio_notify(vdev, vq);
-> -- 
-> 2.34.1
+> -    if (env->misa_ext & RVV) {
+> +    if (cpu->cfg.ext_zve32x) {
+>          gdb_register_coprocessor(cs, riscv_gdb_get_vector,
+>                                   riscv_gdb_set_vector,
+>                                   ricsv_gen_dynamic_vector_feature(cs,
+> cs->gdb_num_regs),
+> --
+> 2.43.2
+>
+>
 
+--000000000000a2bdd10615a40c1e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Ping.<br></div><br><div class=3D"gmail_quote"><div dir=3D"=
+ltr" class=3D"gmail_attr">Jason Chien &lt;<a href=3D"mailto:jason.chien@sif=
+ive.com">jason.chien@sifive.com</a>&gt; =E6=96=BC 2024=E5=B9=B43=E6=9C=8828=
+=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:24=E5=AF=AB=E9=81=93=EF=
+=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">In curren=
+t implementation, the gdbstub allows reading vector registers<br>
+only if V extension is supported. However, all vector extensions and<br>
+vector crypto extensions have the vector registers and they all depend<br>
+on Zve32x. The gdbstub should check for Zve32x instead.<br>
+<br>
+Signed-off-by: Jason Chien &lt;<a href=3D"mailto:jason.chien@sifive.com" ta=
+rget=3D"_blank">jason.chien@sifive.com</a>&gt;<br>
+Reviewed-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com" targ=
+et=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
+Reviewed-by: Max Chou &lt;<a href=3D"mailto:max.chou@sifive.com" target=3D"=
+_blank">max.chou@sifive.com</a>&gt;<br>
+---<br>
+=C2=A0target/riscv/gdbstub.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c<br>
+index be7a02cd90..d0cc5762c2 100644<br>
+--- a/target/riscv/gdbstub.c<br>
++++ b/target/riscv/gdbstub.c<br>
+@@ -338,7 +338,7 @@ void riscv_cpu_register_gdb_regs_for_features(CPUState =
+*cs)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gdb_find_static_feature(&quot=
+;riscv-32bit-fpu.xml&quot;),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-=C2=A0 =C2=A0 if (env-&gt;misa_ext &amp; RVV) {<br>
++=C2=A0 =C2=A0 if (cpu-&gt;cfg.ext_zve32x) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gdb_register_coprocessor(cs, riscv_gdb_ge=
+t_vector,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 riscv_gdb_set_vector,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ricsv_gen_dynamic_vector_feat=
+ure(cs, cs-&gt;gdb_num_regs),<br>
+-- <br>
+2.43.2<br>
+<br>
+</blockquote></div>
+
+--000000000000a2bdd10615a40c1e--
 
