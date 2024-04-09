@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB27CD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 721F1CD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:30:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruE5G-0005N7-3U; Tue, 09 Apr 2024 12:12:32 -0400
+	id 1ruEMJ-0001n6-Ak; Tue, 09 Apr 2024 12:30:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ruE52-0005MD-Kz
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:12:16 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEM6-0001lg-4O
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:29:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ruE4w-0002Vp-07
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:12:16 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VDWC83HBWz6J9yq;
- Wed, 10 Apr 2024 00:10:28 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id D5F01140519;
- Wed, 10 Apr 2024 00:12:05 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 9 Apr
- 2024 17:12:05 +0100
-Date: Tue, 9 Apr 2024 17:12:04 +0100
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-CC: "Huang, Ying" <ying.huang@intel.com>, Gregory Price
- <gourry.memverge@gmail.com>, <aneesh.kumar@linux.ibm.com>, <mhocko@suse.com>, 
- <tj@kernel.org>, <john@jagalactic.com>, Eishan Mirakhur
- <emirakhur@micron.com>, Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
- Ravis OpenSrc <Ravis.OpenSrc@micron.com>, Alistair Popple
- <apopple@nvidia.com>, Srinivasulu Thanneeru <sthanneeru@micron.com>, SeongJae
- Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, Vishal Verma
- <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, "Andrew
- Morton" <akpm@linux-foundation.org>, <nvdimm@lists.linux.dev>,
- <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Linux Memory
- Management List" <linux-mm@kvack.org>, "Ho-Ren (Jack) Chuang"
- <horenc@vt.edu>, "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
- <qemu-devel@nongnu.org>, Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH v11 2/2] memory tier: create CPUless memory tiers after
- obtaining HMAT info
-Message-ID: <20240409171204.00001710@Huawei.com>
-In-Reply-To: <CAKPbEqpGM_nR+LKbsoFTviBZaKUKYqJ3zbJp9EOCJAGvuPy6aQ@mail.gmail.com>
-References: <20240405000707.2670063-1-horenchuang@bytedance.com>
- <20240405000707.2670063-3-horenchuang@bytedance.com>
- <20240405150244.00004b49@Huawei.com>
- <CAKPbEqpGM_nR+LKbsoFTviBZaKUKYqJ3zbJp9EOCJAGvuPy6aQ@mail.gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEM3-0005hD-8o
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:29:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712680190;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=s+cXtSHyBPY5sy5W2Geif/XYny2REtsDgxJhOipIxZk=;
+ b=A+xoIZcTGclJ0MqdpJQQQ4poBVoqn47ASnDGpWrMegxspLV0qu4aP48d1UY6D9/0i9/usK
+ jsnYMBGfIJmMkSFRAd+tdweG8uxKMWHvupHoGhuXWTZx+df6yyp3+RBgY3ifpK8sY6rA3Y
+ n4M6lZox9mRYn2pcNCIJr2zsOojW+e0=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-cXF7AWjOMwCTDynCKdw3lw-1; Tue,
+ 09 Apr 2024 12:29:48 -0400
+X-MC-Unique: cXF7AWjOMwCTDynCKdw3lw-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 97E2229AB3FF;
+ Tue,  9 Apr 2024 16:29:48 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.204])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A83782026D1F;
+ Tue,  9 Apr 2024 16:29:47 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 95DB118009F4; Tue,  9 Apr 2024 18:29:42 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 0/4] Edk2 20240409 patches
+Date: Tue,  9 Apr 2024 18:29:30 +0200
+Message-ID: <20240409162942.454419-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,160 +77,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Apr 2024 15:43:47 -0700
-"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
+The following changes since commit e5c6528dce86d7a9ada7ecf02fcb7b8560955131:
 
-> On Fri, Apr 5, 2024 at 7:03=E2=80=AFAM Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
-> >
-> > On Fri,  5 Apr 2024 00:07:06 +0000
-> > "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
-> > =20
-> > > The current implementation treats emulated memory devices, such as
-> > > CXL1.1 type3 memory, as normal DRAM when they are emulated as normal =
-memory
-> > > (E820_TYPE_RAM). However, these emulated devices have different
-> > > characteristics than traditional DRAM, making it important to
-> > > distinguish them. Thus, we modify the tiered memory initialization pr=
-ocess
-> > > to introduce a delay specifically for CPUless NUMA nodes. This delay
-> > > ensures that the memory tier initialization for these nodes is deferr=
-ed
-> > > until HMAT information is obtained during the boot process. Finally,
-> > > demotion tables are recalculated at the end.
-> > >
-> > > * late_initcall(memory_tier_late_init);
-> > > Some device drivers may have initialized memory tiers between
-> > > `memory_tier_init()` and `memory_tier_late_init()`, potentially bring=
-ing
-> > > online memory nodes and configuring memory tiers. They should be excl=
-uded
-> > > in the late init.
-> > >
-> > > * Handle cases where there is no HMAT when creating memory tiers
-> > > There is a scenario where a CPUless node does not provide HMAT inform=
-ation.
-> > > If no HMAT is specified, it falls back to using the default DRAM tier.
-> > >
-> > > * Introduce another new lock `default_dram_perf_lock` for adist calcu=
-lation
-> > > In the current implementation, iterating through CPUlist nodes requir=
-es
-> > > holding the `memory_tier_lock`. However, `mt_calc_adistance()` will e=
-nd up
-> > > trying to acquire the same lock, leading to a potential deadlock.
-> > > Therefore, we propose introducing a standalone `default_dram_perf_loc=
-k` to
-> > > protect `default_dram_perf_*`. This approach not only avoids deadlock
-> > > but also prevents holding a large lock simultaneously.
-> > >
-> > > * Upgrade `set_node_memory_tier` to support additional cases, includi=
-ng
-> > >   default DRAM, late CPUless, and hot-plugged initializations.
-> > > To cover hot-plugged memory nodes, `mt_calc_adistance()` and
-> > > `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()`=
- to
-> > > handle cases where memtype is not initialized and where HMAT informat=
-ion is
-> > > available.
-> > >
-> > > * Introduce `default_memory_types` for those memory types that are not
-> > >   initialized by device drivers.
-> > > Because late initialized memory and default DRAM memory need to be ma=
-naged,
-> > > a default memory type is created for storing all memory types that are
-> > > not initialized by device drivers and as a fallback.
-> > >
-> > > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > > Reviewed-by: "Huang, Ying" <ying.huang@intel.com> =20
-> >
-> > Hi - one remaining question. Why can't we delay init for all nodes
-> > to either drivers or your fallback late_initcall code.
-> > It would be nice to reduce possible code paths. =20
->=20
-> I try not to change too much of the existing code structure in
-> this patchset.
->=20
-> To me, postponing/moving all memory tier registrations to
-> late_initcall() is another possible action item for the next patchset.
->=20
-> After tier_mem(), hmat_init() is called, which requires registering
-> `default_dram_type` info. This is when `default_dram_type` is needed.
-> However, it is indeed possible to postpone the latter part,
-> set_node_memory_tier(), to `late_init(). So, memory_tier_init() can
-> indeed be split into two parts, and the latter part can be moved to
-> late_initcall() to be processed together.
->=20
-> Doing this all memory-type drivers have to call late_initcall() to
-> register a memory tier. I=E2=80=99m not sure how many they are?
->=20
-> What do you guys think?
+  Update version for v9.0.0-rc2 release (2024-04-02 20:59:43 +0100)
 
-Gut feeling - if you are going to move it for some cases, move it for
-all of them.  Then we only have to test once ;)
+are available in the Git repository at:
 
-J
->=20
-> >
-> > Jonathan
-> >
-> > =20
-> > > ---
-> > >  mm/memory-tiers.c | 94 +++++++++++++++++++++++++++++++++++----------=
---
-> > >  1 file changed, 70 insertions(+), 24 deletions(-)
-> > >
-> > > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-> > > index 516b144fd45a..6632102bd5c9 100644
-> > > --- a/mm/memory-tiers.c
-> > > +++ b/mm/memory-tiers.c =20
-> >
-> >
-> > =20
-> > > @@ -855,7 +892,8 @@ static int __init memory_tier_init(void)
-> > >        * For now we can have 4 faster memory tiers with smaller adist=
-ance
-> > >        * than default DRAM tier.
-> > >        */
-> > > -     default_dram_type =3D alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
-> > > +     default_dram_type =3D mt_find_alloc_memory_type(MEMTIER_ADISTAN=
-CE_DRAM,
-> > > +                                                   &default_memory_t=
-ypes);
-> > >       if (IS_ERR(default_dram_type))
-> > >               panic("%s() failed to allocate default DRAM tier\n", __=
-func__);
-> > >
-> > > @@ -865,6 +903,14 @@ static int __init memory_tier_init(void)
-> > >        * types assigned.
-> > >        */
-> > >       for_each_node_state(node, N_MEMORY) {
-> > > +             if (!node_state(node, N_CPU))
-> > > +                     /*
-> > > +                      * Defer memory tier initialization on
-> > > +                      * CPUless numa nodes. These will be initialized
-> > > +                      * after firmware and devices are initialized. =
-=20
-> >
-> > Could the comment also say why we can't defer them all?
-> >
-> > (In an odd coincidence we have a similar issue for some CPU hotplug
-> >  related bring up where review feedback was move all cases later).
-> > =20
-> > > +                      */
-> > > +                     continue;
-> > > +
-> > >               memtier =3D set_node_memory_tier(node);
-> > >               if (IS_ERR(memtier))
-> > >                       /* =20
-> > =20
->=20
->=20
+  https://gitlab.com/kraxel/qemu.git tags/edk2-20240409-pull-request
+
+for you to fetch changes up to e3404e01c7f74efdc3440ddfd339d67bf7a8410e:
+
+  edk2: rebuild binaries with correct version information (2024-04-09 18:21:23 +0200)
+
+----------------------------------------------------------------
+edk2: fix version information, rebuild binaries.
+
+----------------------------------------------------------------
+
+Gerd Hoffmann (4):
+  edk2: get version + date from git submodule
+  edk2: commit version info
+  edk2/seabios: use common extra version
+  edk2: rebuild binaries with correct version information
+
+ pc-bios/edk2-aarch64-code.fd.bz2       | Bin 1589310 -> 1588976 bytes
+ pc-bios/edk2-arm-code.fd.bz2           | Bin 1571693 -> 1571639 bytes
+ pc-bios/edk2-i386-code.fd.bz2          | Bin 1775832 -> 1775230 bytes
+ pc-bios/edk2-i386-secure-code.fd.bz2   | Bin 1876986 -> 1877268 bytes
+ pc-bios/edk2-riscv-code.fd.bz2         | Bin 1289160 -> 1289337 bytes
+ pc-bios/edk2-x86_64-code.fd.bz2        | Bin 1892372 -> 1892766 bytes
+ pc-bios/edk2-x86_64-microvm.fd.bz2     | Bin 1785258 -> 1785290 bytes
+ pc-bios/edk2-x86_64-secure-code.fd.bz2 | Bin 2214892 -> 1969096 bytes
+ roms/Makefile                          |  25 ++++++++++++++++++-------
+ roms/edk2-version                      |   2 ++
+ 10 files changed, 20 insertions(+), 7 deletions(-)
+ create mode 100644 roms/edk2-version
+
+-- 
+2.44.0
 
 
