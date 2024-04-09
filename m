@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03986C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC69CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruBgK-00064w-5z; Tue, 09 Apr 2024 09:38:36 -0400
+	id 1ruBg4-0005oy-3a; Tue, 09 Apr 2024 09:38:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBgC-0005uB-5w
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:38:28 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ruBfz-0005oO-NH
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:38:15 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBg7-0008Dj-Iy
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:38:26 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4169d794358so6526265e9.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:38:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ruBfy-0008BX-4z
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:38:15 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-41650de9e1eso14848675e9.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712669900; x=1713274700; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1712669892; x=1713274692; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DYq6emMuo84KXuK6pkPRkrWEaAEwv9PfaiSXDO6YJ5M=;
- b=cxnoEpD6KAKtBEw5QDjDUrmguX7lzbDV0x8vzdsb8XUcaMF+c/PECNPb7qMz3cRse5
- tuxwcywIHcy90NfWqp6yOx6VwXG+HWWsEZKBWJS0BNqFrS4xHazn3UXT8pimj86Y0KVC
- q1m63i4uFPfJn5/HFRi1e4b8BqsfjtHw3sQSHlMu8btsw2AVJTavZnfbKsEQdNPLW3QW
- KvhKctv52gsS4lJBXwTKIlvz6A/p7fLQSxxlVaaR3s67NrqwtxPvjdOnQ/AGceSYg2PP
- MyWKWXxGlCtLZ0L7dUcQciD+QH/PaY2EetO2VxruQu06qROX9zJMkf6ArpNpr7EZcJDL
- wGGQ==
+ bh=KAapXbhkxXAWLitGi+5BQpI72nNXkUVLPYf/0C/E6HQ=;
+ b=n581zRiOarV2TtBXaGMEYw1lRkKApyaC0WlSBzkPBp1ksPIMc8sMUSLqnOffmqCKTD
+ fVgA5zTMBLX4WY0/4gyl80v1gASPQjpAszlJ1a+3Sk9DL/PDAIRVO9Z+1qZCUYt5ziT1
+ Yy/q/vq79wxkrcyPaXYWHNHfcFnO2JrEpTo+/C4vMoBgH+U+UuLp+qLr9un30YGdp0rQ
+ 4P7zs06GBU1XF1Ck6NU2lTFXV1JE7WKITzaWvPAb9TDAmOQazJwlo+fsLV+uUXNSeezE
+ u1VCA7FTCI8RURXF1xj76FMZwtigWsHc5GkUu1TUCuaEbYARJ98JEPGL9etDxcnnBIwB
+ Sm6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712669900; x=1713274700;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1712669892; x=1713274692;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DYq6emMuo84KXuK6pkPRkrWEaAEwv9PfaiSXDO6YJ5M=;
- b=iwSJqAlFIeLsuyfXngx4Yi+p3UELVI0Wbb2VkjKQ2hbP2lheAJZu+HPzi1REF82yIu
- mbgUsbU+A/WwLNJZSvl6tXlNoJ6+l3Y6d9M88657zQYf/pvTB4SUgr72vax5TTS7Kb6e
- AbS+uqQbxm21A+5qwfjNGid+ViCP61O2/xF4oSX+Y4bqubsQ39GBxXyySZ8FYuWMKSXP
- LxDTkip13EXhNbBzynOTuqB0o9DjDPfZPbQsz2DE7i/o3mftLy6FDiBQFG9sR+AIJg1w
- w8Bl7lTDLzVW2JX4npHVEqXy1dHUncqcf+xR3Al3uBwFkr6ONcuV0o5+ozM28hw1C8+r
- V2Hg==
-X-Gm-Message-State: AOJu0Yxdc3nkIgptEP4kJqcC6ypspimYEl1DpPnIeBbfZrlA65NbCmuZ
- WpBG1hfAj21aPFV9akjzMdq2+ALewbQf7/ce1wcngiMemwR5sDmJgBCHwdDTq07xpfod+NAHOFo
- L
-X-Google-Smtp-Source: AGHT+IFJNO3vuW3jY8RQ657X4tebjgJoKiFR1/PXa+vWUhVI1oog2dETBoUsBWazwOm1m14Pi+htyg==
-X-Received: by 2002:a05:600c:4f0e:b0:416:6e42:ecc5 with SMTP id
- l14-20020a05600c4f0e00b004166e42ecc5mr4129262wmq.40.1712669899965; 
- Tue, 09 Apr 2024 06:38:19 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.160.134])
- by smtp.gmail.com with ESMTPSA id
- q23-20020adfab17000000b003437799a373sm11657644wrc.83.2024.04.09.06.38.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Apr 2024 06:38:19 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Chuhong Yuan <hslester96@gmail.com>, Jason Wang <jasowang@redhat.com>,
- Alexander Bulekov <alxndr@bu.edu>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 v2 03/11] hw/net/lan9118: Remove duplicated assignment
-Date: Tue,  9 Apr 2024 15:37:52 +0200
-Message-ID: <20240409133801.23503-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240409133801.23503-1-philmd@linaro.org>
-References: <20240409133801.23503-1-philmd@linaro.org>
+ bh=KAapXbhkxXAWLitGi+5BQpI72nNXkUVLPYf/0C/E6HQ=;
+ b=VE8uFBa57P15G1ahGw1JENj/tttdPiTY5HQPzJS7AH1713Bq18MqcXPROVUMPEZuxc
+ GhH3h8GAzMPZ7NwmURD+B9WcqWRJvjcW/Oz6UKt48hIExTyySOyQTLcq58ubYcZLYd16
+ 3lpYjb65jOHlbv0170xc5HXGJuNWwSFjAIHmJLOWe/aluQXZc6Igqt+BW4DHL59T7Fkf
+ AkTqySWeUeeV5//ZIDU0UuViSFiWQkJZblNlOl6XnPX2yMn9lNzj/E12Dov95bfNbjeg
+ eaVve5mhC3UejEhQ1DuO9+HSmv9eJWzQ9Jb3GdjQKkTrylJB7hisdvRNwB6Lka0c/KIM
+ xsmw==
+X-Gm-Message-State: AOJu0YxHefTWrUPHPI+5ehnhAciwxCKHtpHIdZTF81EgIbJNhLABI1Ny
+ p0NuEyI172YVGcoe06yQLjumQUbbRAoKqrYw/Xquh6nf7vHb6auROFWNgDYtreYsRbejYMckHz8
+ kn1bsRttHS9z76kz8ujg9OK9R45SKyMZbunaBMut8AK7WCRJg
+X-Google-Smtp-Source: AGHT+IHSht7OpBjcMvVk1N9lwBF3Or2JGRPYo0beplCPpxJbXtYl0N6uHNdDb6quO9qBudKxK10e0Zqk94JwuV5NgP0=
+X-Received: by 2002:a05:600c:3594:b0:416:3deb:e3ef with SMTP id
+ p20-20020a05600c359400b004163debe3efmr2397064wmq.1.1712669892511; Tue, 09 Apr
+ 2024 06:38:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20240409115301.21829-1-abelova@astralinux.ru>
+ <CAFEAcA_W4qr6EPhOu-s_+d_V+MfADzddKNwd_gUzBTbajQ+xvg@mail.gmail.com>
+ <5263ef36-0b82-48fe-a351-b557ead15b01@astralinux.ru>
+In-Reply-To: <5263ef36-0b82-48fe-a351-b557ead15b01@astralinux.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Apr 2024 14:38:00 +0100
+Message-ID: <CAFEAcA9LTLjMtEtCfqnR8_-WSdo2ZZCb28C-roRXgcv+ULa3ww@mail.gmail.com>
+Subject: Re: [PATCH] hw/dma: prevent overflow in soc_dma_set_request
+To: Anastasia Belova <abelova@astralinux.ru>
+Cc: qemu-devel@nongnu.org, Andrzej Zaborowski <balrogg@gmail.com>,
+ sdl.qemu@linuxtesting.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,26 +92,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-s->txp->fifo_used is zeroed in the next 3 lines.
+On Tue, 9 Apr 2024 at 14:32, Anastasia Belova <abelova@astralinux.ru> wrote=
+:
+>
+>
+>
+> 09/04/24 15:02, Peter Maydell =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
+> > On Tue, 9 Apr 2024 at 12:54, Anastasia Belova <abelova@astralinux.ru> w=
+rote:
+> >> ch->num can reach values up to 31. Add casting to
+> >> a larger type before performing left shift to
+> >> prevent integer overflow.
+> > If ch->num can only reach up to 31, then 1 << ch->num
+> > is fine, because QEMU can assume that integers are 32 bits,
+> > and we compile with -fwrapv so there isn't a problem with
+> > shifting into the sign bit.
+>
+> Right, thanks for your comments.
+> I didn't know about this flag before. It became more clear for me now.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/net/lan9118.c | 1 -
- 1 file changed, 1 deletion(-)
+Yep; if you're using a static analyser you probably want to
+configure it to accept the behaviours that are
+undefined-in-standard-C and which get defined behaviour
+with -fwrapv.
 
-diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index 91d81b410b..d6f0e37eb1 100644
---- a/hw/net/lan9118.c
-+++ b/hw/net/lan9118.c
-@@ -438,7 +438,6 @@ static void lan9118_reset(DeviceState *d)
-     s->hw_cfg = s->mode_16bit ? 0x00050000 : 0x00050004;
-     s->pmt_ctrl &= 0x45;
-     s->gpio_cfg = 0;
--    s->txp->fifo_used = 0;
-     s->txp->state = TX_IDLE;
-     s->txp->cmd_a = 0xffffffffu;
-     s->txp->cmd_b = 0xffffffffu;
--- 
-2.41.0
+This code is definitely a bit dubious, though, because
+ch_enable_mask is a uint64_t, so the intention was clearly
+to allow up to 64 channels. So I think we should take this
+patch anyway, with a slightly adjusted commit message.
 
+All the soc_dma.c code will probably be removed in the
+9.2 release, because it's only used by the OMAP board models
+which we've just deprecated, so it doesn't seem worth spending
+too much time on cleaning up the code, but in this case you've
+already written the patch.
+
+I'll put this patch on my list to apply after we've made the
+9.0 release and restarted development for 9.1.
+
+thanks
+-- PMM
 
