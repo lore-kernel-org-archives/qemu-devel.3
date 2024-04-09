@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22472CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 11:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC56CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 11:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru9J5-0002l0-5a; Tue, 09 Apr 2024 07:06:27 -0400
+	id 1ru9jv-0000tW-9r; Tue, 09 Apr 2024 07:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru9J3-0002kf-Rq
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:06:25 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru9J1-0004uA-Sr
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:06:25 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-56e136cbcecso7591022a12.3
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 04:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712660781; x=1713265581; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3FQPgleUWfRDGef1iWkLjCvtXbz/mnfJ9EOOpLGnyUc=;
- b=Tt4x7iMBkzFXvyuw6OlsPkuDHAvkEbqAUQVierVnBl4ytLnUXUEntugxmJxFSGaNEJ
- 1ArMrN6W24RCgj2Jkx51SmrG5f9y6zP/22HxfbZrwqVmvyw+WowJ1FV1/CXSLhsfL2zq
- U8hsXPUg8drb6h0DhQmrt8+Ekm4cCh9Xz6Fc6g3RqE7H89EigbAv8m6zSs3PWTrZX3gY
- RCIdSb6jlKRuuRakMQ3+eYj74aFQjGWmRJzuTHrtYKwxJpm3cQAqM9SpGtAYP7PEg4fE
- NU4XLK4J99UgYGDlsyPm2csxF2cJAWbEFrWERB2k7KiSms0t/ghpbgimnRqomjEIXzcc
- PeUQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru9jt-0000tE-4b
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:34:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru9jq-00028B-Jr
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:34:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712662445;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1E7X/j1t2MysXmzu6WTPy1/Ear62N1jqrtH8eo1uiPA=;
+ b=YYzN0AMuzhhDTQXZuy111zP9pa0pTMf6ZGeRv0v8Pk2BRGUoDRGAoOxkHBW3zsFKUAt/AT
+ Roh2fYrx9z78axEgwnGBhklHvrLcRbgiFuCP8sDG1MgyEfRPbK2nwl0joVk+OFkfc7GUoe
+ wold7axPMdnjcxwgvGVqSWCXCeHhRuw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-403-tKcfQpq6PnyqYEc0v4m1Gw-1; Tue, 09 Apr 2024 07:34:03 -0400
+X-MC-Unique: tKcfQpq6PnyqYEc0v4m1Gw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-343d3e1ff1eso3035908f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 04:34:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712660781; x=1713265581;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3FQPgleUWfRDGef1iWkLjCvtXbz/mnfJ9EOOpLGnyUc=;
- b=g47nFjvilhji2qNNzAbXdX1/kqqPB+45wv1ZgsHADHJQHsj/9OZT4kvMe4XFQtl4q5
- RqZIoUnu52tVSjXh5Sj7sRqTpMFdmdqFJo99+0DecCHWCcNZmWDKRbhT7z1be/De3Y0F
- +a2bneip/DitQVF7QqWZCq1959cS5b3cTVT86tMswI9WW1BVBMouvEH+eX7uvAEUz0I0
- JvsrNF+R9K63rOcXFpZBupliyL7VlY9tFHu3Y2OaEH0u/tcEPWiTUJML2RzQLKVxChKA
- 6vBgJf4gXVMcuLPqWziw/jndgs3g9QwrWEfCWlp4gbiAgaijdoUUXZb4a4mSrojyhANq
- Cbew==
-X-Gm-Message-State: AOJu0YzyzkYG/ocrbBZoEDXA/xpdep+5xPFGTuLElL5idovkwf1Zi51y
- Z+qqt6nhjatzmoK3AASgehCcyHQiQ7PG4c6u/8w8eAIzIyj9fk9bRSAD+wIRbQK1/uWeRtTB7qT
- 8
-X-Google-Smtp-Source: AGHT+IGqvDODxoX3DFlA0LWdu4sIO8j207U7m8HOhL7itf1bazI+vvVqRzsOA0jmNjtmmLY1T52gOA==
-X-Received: by 2002:a17:906:2514:b0:a50:9190:b751 with SMTP id
- i20-20020a170906251400b00a509190b751mr8303807ejb.10.1712660781615; 
- Tue, 09 Apr 2024 04:06:21 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.160.134])
- by smtp.gmail.com with ESMTPSA id
- m9-20020a1709060d8900b00a51ba0be887sm4278105eji.192.2024.04.09.04.06.20
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Apr 2024 04:06:21 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yuxue Liu <yuxue.liu@jaguarmicro.com>
-Subject: [PATCH] mailmap: Fix Yuxue Liu author email
-Date: Tue,  9 Apr 2024 13:06:19 +0200
-Message-ID: <20240409110619.19182-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ d=1e100.net; s=20230601; t=1712662442; x=1713267242;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1E7X/j1t2MysXmzu6WTPy1/Ear62N1jqrtH8eo1uiPA=;
+ b=Qw9vredEm6DfNeG7+fGK1YlWUq2j7HiTirZES1kW5pNnUCYSmfXVSWrqD8hMTwo89H
+ 18Q7ahTLbRMLWhsgfcTUPH6Bj8tseqx3GObUQN1UeMSNMDERXztGXOW5+1smovDrix2l
+ +1B2inRhV0rvBeEm1B0dxIXpQwZ1PrzbZO8MfIi6vJfM7al1T8Y6uvqSKBW4iBvssaz4
+ d2JTEaLRB/TUKFxMtvT28kcUFYhSSQBwaQm3Df3O7EvFy1TMF2OBDMb14kx50RSYZlhk
+ ejczijCJPnMjT9bkd8JKsOIzAJdYH1O8nqp3gMLD0GayoMfw0nneXBCldOV5jTt6oV6/
+ cxlg==
+X-Gm-Message-State: AOJu0Yyt7XxSY/a4j2dp0/vE/pCx/6Pjc8uZ0B4tALWQALb2AAInRDmS
+ Mz+ue4XgcI0X/5TGdGOhOnr83QR4TluzerN/SCHW1xfbPEbZNdYhf88hjGO2Ah2MWxaugqoe++R
+ wMy9f+lLc7bZ5bPm5YO8FkQcajj5+XXLN7x5HDYpJIrj9KAqZn+nt
+X-Received: by 2002:a5d:6946:0:b0:343:8551:8d90 with SMTP id
+ r6-20020a5d6946000000b0034385518d90mr10328878wrw.34.1712662442512; 
+ Tue, 09 Apr 2024 04:34:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzUA1yjCWtw3wJzXaQJPinDJoIEpALsrinwM+Rjnw3WkJUUsck4A7NIIDrytYVoPya7x0Frg==
+X-Received: by 2002:a5d:6946:0:b0:343:8551:8d90 with SMTP id
+ r6-20020a5d6946000000b0034385518d90mr10328854wrw.34.1712662441985; 
+ Tue, 09 Apr 2024 04:34:01 -0700 (PDT)
+Received: from redhat.com ([2.52.134.26]) by smtp.gmail.com with ESMTPSA id
+ jg25-20020a05600ca01900b00416928e239csm4127376wmb.35.2024.04.09.04.34.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Apr 2024 04:34:01 -0700 (PDT)
+Date: Tue, 9 Apr 2024 07:33:58 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Amit Shah <amit@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH-for-9.0 v2 0/4] hw/virtio: Protect from more DMA
+ re-entrancy bugs
+Message-ID: <20240409073320-mutt-send-email-mst@kernel.org>
+References: <20240409105537.18308-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20240409105537.18308-1-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,26 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: 6ae72f609a ("vdpa-dev: Fix device status not updating on config INT")
-Cc: Yuxue Liu <yuxue.liu@jaguarmicro.com>
-Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
----
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
+On Tue, Apr 09, 2024 at 12:55:33PM +0200, Philippe Mathieu-DaudÈ wrote:
+> Fixes for CVE-2024-3446.
+> 
+> Gerd suggested to use the transport guard to protect the
+> device from DMA re-entrancy abuses.
+> 
+> Since v1:
+> - Take a DeviceState argument, not VirtIODevice, so it
+>   works seamlessly with CCW devices (actually the original
+>   code from Gerd).
+> - Build and test :>
+> 
+> I'll send a PR with these patches later today.
 
-diff --git a/.mailmap b/.mailmap
-index 88fb68143e..67c8dfad28 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -38,6 +38,7 @@ Nick Hudson <hnick@vmware.com> hnick@vmware.com <hnick@vmware.com>
- Timoth√©e Cocault <timothee.cocault@gmail.com> timothee.cocault@gmail.com <timothee.cocault@gmail.com>
- Stefan Weil <sw@weilnetz.de> <weil@mail.berlios.de>
- Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@kiwi.(none)>
-+Yuxue Liu <yuxue.liu@jaguarmicro.com> lyx634449800 <yuxue.liu@jaguarmicro.com>
- 
- # There is also a:
- #    (no author) <(no author)@c046a42c-6fe2-441c-8c8c-71466251a162>
--- 
-2.41.0
+I reviewed these too now
+
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+> Regards,
+> 
+> Phil.
+> 
+> Philippe Mathieu-DaudÈ (4):
+>   hw/virtio: Introduce virtio_bh_new_guarded() helper
+>   hw/display/virtio-gpu: Protect from DMA re-entrancy bugs
+>   hw/char/virtio-serial-bus: Protect from DMA re-entrancy bugs
+>   hw/virtio/virtio-crypto: Protect from DMA re-entrancy bugs
+> 
+>  include/hw/virtio/virtio.h  |  7 +++++++
+>  hw/char/virtio-serial-bus.c |  3 +--
+>  hw/display/virtio-gpu.c     |  6 ++----
+>  hw/virtio/virtio-crypto.c   |  4 ++--
+>  hw/virtio/virtio.c          | 10 ++++++++++
+>  5 files changed, 22 insertions(+), 8 deletions(-)
+> 
+> -- 
+> 2.41.0
 
 
