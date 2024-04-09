@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA055CD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7353EC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruFHZ-0000Th-N6; Tue, 09 Apr 2024 13:29:17 -0400
+	id 1ruFSP-0003Ve-Pz; Tue, 09 Apr 2024 13:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruFHW-0000SZ-Sn; Tue, 09 Apr 2024 13:29:14 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFSM-0003VP-Rt
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:40:26 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruFHV-00087n-03; Tue, 09 Apr 2024 13:29:14 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFSK-0001lk-2a
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:40:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 877005D382;
- Tue,  9 Apr 2024 20:31:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 022325D386;
+ Tue,  9 Apr 2024 20:42:16 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E4A72AF822;
- Tue,  9 Apr 2024 20:29:07 +0300 (MSK)
-Message-ID: <5403a58d-8364-4418-995f-1feaac327884@tls.msk.ru>
-Date: Tue, 9 Apr 2024 20:29:07 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7E8EDAF831;
+ Tue,  9 Apr 2024 20:40:19 +0300 (MSK)
+Message-ID: <dd05e66b-1437-4293-b8b6-76b717e70c07@tls.msk.ru>
+Date: Tue, 9 Apr 2024 20:40:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/virtio-blk: Fix memory leak from
- virtio_blk_zone_report
-To: Zheyu Ma <zheyuma97@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
-References: <20240404120040.1951466-1-zheyuma97@gmail.com>
+Subject: Re: [PULL 4/7] hw/virtio: Fix packed virtqueue flush used_idx
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Wafer <wafer@jaguarmicro.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>
+References: <cover.1712647890.git.mst@redhat.com>
+ <2d9a31b3c27311eca1682cb2c076d7a300441960.1712647890.git.mst@redhat.com>
 Content-Language: en-US
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -61,9 +60,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240404120040.1951466-1-zheyuma97@gmail.com>
+In-Reply-To: <2d9a31b3c27311eca1682cb2c076d7a300441960.1712647890.git.mst@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -86,47 +85,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-04.04.2024 15:00, Zheyu Ma wrote:
-> This modification ensures that in scenarios where the buffer size is
-> insufficient for a zone report, the function will now properly set an
-> error status and proceed to a cleanup label, instead of merely
-> returning.
+09.04.2024 10:32, Michael S. Tsirkin wrote:
+> From: Wafer <wafer@jaguarmicro.com>
 > 
-> The following ASAN log reveals it:
+> In the event of writing many chains of descriptors, the device must
+> write just the id of the last buffer in the descriptor chain, skip
+> forward the number of descriptors in the chain, and then repeat the
+> operations for the rest of chains.
 > 
-> ==1767400==ERROR: LeakSanitizer: detected memory leaks
-> Direct leak of 312 byte(s) in 1 object(s) allocated from:
->      #0 0x64ac7b3280cd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
->      #1 0x735b02fb9738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
->      #2 0x64ac7d23be96 in virtqueue_split_pop hw/virtio/virtio.c:1612:12
->      #3 0x64ac7d23728a in virtqueue_pop hw/virtio/virtio.c:1783:16
->      #4 0x64ac7cfcaacd in virtio_blk_get_request hw/block/virtio-blk.c:228:27
->      #5 0x64ac7cfca7c7 in virtio_blk_handle_vq hw/block/virtio-blk.c:1123:23
->      #6 0x64ac7cfecb95 in virtio_blk_handle_output hw/block/virtio-blk.c:1157:5
+> Current QEMU code writes all the buffer ids consecutively, and then
+> skips all the buffers altogether. This is a bug, and can be reproduced
+> with a VirtIONet device with _F_MRG_RXBUB and without
+> _F_INDIRECT_DESC:
 > 
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> If a virtio-net device has the VIRTIO_NET_F_MRG_RXBUF feature
+> but not the VIRTIO_RING_F_INDIRECT_DESC feature,
+> 'VirtIONetQueue->rx_vq' will use the merge feature
+> to store data in multiple 'elems'.
+> The 'num_buffers' in the virtio header indicates how many elements are merged.
+> If the value of 'num_buffers' is greater than 1,
+> all the merged elements will be filled into the descriptor ring.
+> The 'idx' of the elements should be the value of 'vq->used_idx' plus 'ndescs'.
+> 
+> Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+> Acked-by: Eugenio Pérez <eperezma@redhat.com>
+> Signed-off-by: Wafer <wafer@jaguarmicro.com>
+> Message-Id: <20240407015451.5228-2-wafer@jaguarmicro.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 > ---
->   hw/block/virtio-blk.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-> index 92de315f17..bb86e65f65 100644
-> --- a/hw/block/virtio-blk.c
-> +++ b/hw/block/virtio-blk.c
-> @@ -768,7 +768,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
->               sizeof(struct virtio_blk_zone_report) +
->               sizeof(struct virtio_blk_zone_descriptor)) {
->           virtio_error(vdev, "in buffer too small for zone report");
-> -        return;
-> +        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-> +        goto out;
->       }
->   
->       /* start byte offset of the zone report */
+>   hw/virtio/virtio.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
 
-Is this a -stable material, or is it not worth picking up for older release(s)?
+Is this a -stable material?
 
 Thanks,
 
 /mjt
+
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index d229755eae..c5bedca848 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -957,12 +957,20 @@ static void virtqueue_packed_flush(VirtQueue *vq, unsigned int count)
+>           return;
+>       }
+>   
+> +    /*
+> +     * For indirect element's 'ndescs' is 1.
+> +     * For all other elemment's 'ndescs' is the
+> +     * number of descriptors chained by NEXT (as set in virtqueue_packed_pop).
+> +     * So When the 'elem' be filled into the descriptor ring,
+> +     * The 'idx' of this 'elem' shall be
+> +     * the value of 'vq->used_idx' plus the 'ndescs'.
+> +     */
+> +    ndescs += vq->used_elems[0].ndescs;
+>       for (i = 1; i < count; i++) {
+> -        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], i, false);
+> +        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false);
+>           ndescs += vq->used_elems[i].ndescs;
+>       }
+>       virtqueue_packed_fill_desc(vq, &vq->used_elems[0], 0, true);
+> -    ndescs += vq->used_elems[0].ndescs;
+>   
+>       vq->inuse -= ndescs;
+>       vq->used_idx += ndescs;
+
 
