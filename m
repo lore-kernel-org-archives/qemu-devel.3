@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 747DEC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91773C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruBmz-0008Pa-13; Tue, 09 Apr 2024 09:45:29 -0400
+	id 1ruBuV-0003Su-Mp; Tue, 09 Apr 2024 09:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBms-0008Kc-To
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:45:23 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1ruBuI-0003Qc-6h
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:53:05 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBmr-0001oG-Bn
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:45:22 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56e69a51a33so1599416a12.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:45:20 -0700 (PDT)
+ id 1ruBuF-0003Dg-Sb
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:53:01 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56e136cbcecso7866123a12.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:52:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712670319; x=1713275119; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712670778; x=1713275578; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VKGxx2OlQ+3Z0q29r7RMLAlgnAXZwZsrFm//OAQVoFc=;
- b=hon731dXbaWkkyxuTgPlKcQ/a4GWxO+ANmhP6omnCQ0vjZsxIqW/+Fv1FcECuFdFSD
- JR4bQ46kHFHii3Iy7q3MJuJ2N8Ckhwt7aMsvgUVCtpTJhxPoW3/lYDAtRW8DVaysitdu
- kUIyhBVfgRI0ToC58SNUHj2X1hgGNUke/69Yj82Qf4DM7KCn8rr7OxP7CPMzuXfdUhnt
- V+0wf+uB0jBsVWohDYzuesuZTzHGpQi2oVKP5jtWoG0txFbcOYLg9rT/IDTNllgoWDCQ
- S1fV20q+xJJ1b8ccxRYZBM6S3seR8QK5xwR4K67tmvt1sd/CRa7jS+xJcgZ+1eInT0gy
- F2VA==
+ bh=KAv/jBboVXVGqv1Qr5gynsYiRrvU4aNmMVGB5m6bYL0=;
+ b=fUHQ3IA2Ey4Ln4aKZ+uQojVIz3bQSIiZHRDS9GPJkSTGxdHweMLInRaA1kyH3px7Vz
+ +G8KXcKuyr3dmXeRrABE7fj0zWwmUF1wvXHDKJtjMzrWEakI/QmjSCjZ1YDPPpM+vNeV
+ dx4dr2VH/feIZ0baBwzfS+1pqtZ0QGAcasQH+SCvS9BWdFUUcWHORbmQM/j0H3W5WR1J
+ YA0GoIL7qRmeY1GSj5QpwCyzhGXFCjrSzhqbZx2JlhS+d23c70UXd5lfkfADRWcKmDEl
+ Dg/9DegfOe/guAS6bG8VfLXP/4WJIe007/w8CC3PZuhfSJ7iivM2l03nXOFCChviJ86u
+ Rn/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712670319; x=1713275119;
+ d=1e100.net; s=20230601; t=1712670778; x=1713275578;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VKGxx2OlQ+3Z0q29r7RMLAlgnAXZwZsrFm//OAQVoFc=;
- b=RgLb5b8RKwHufcoF9YT0foPF2dYfpusIUlv69U4Kh+YFwOJyfsMbcpPZgC64DHOCnq
- rsjyaqipxDlEEu+izPIiV5eQtZDWettZM96XzPbEcqv7DkLnpXjE/YHvkyINuEbURkNx
- aRh21ZnJA2tjlAQlG7n1poTSehbEbKaQAV6wY+98LCrwBmOIvUdF4EYk9byh3fs5wuPf
- 7jdwspQWMplSaoifDTKdp8rIKafR74KSLP9hd//XvoKANpMNj6A9tCrEzemdb/xSqcVS
- rtBx3zJGtCU2GdPQweGDRVxWbB3sm9FSWBH5NIcOFJRDfRVmXx+HIzq37L0d9j+1fjxp
- TT6A==
-X-Gm-Message-State: AOJu0YyKSXrSI4Ca/l42vb5RJP8lAXOPU2MTMBlFiR2l/txijM4rchea
- xlCSh30Y8hudRDSfgk9PrntXwPsAvYIB8TsR5hgz+1rNBlClYjR7wcfhmtbH3hbxMm0e0ISTWtj
- 7DthaRg9+4BqgYs6IR6cgbg3Bhb6rRY/VR7Ba7A==
-X-Google-Smtp-Source: AGHT+IE9Oxm2mYB7mQ5gzKYwHNV3fqYJ/haYyLrxtmkHGzPnjwpkGMbx+/KXn+Csb+0T9KhB1WPHPA0JChBoc7pDRZU=
-X-Received: by 2002:a50:9ea2:0:b0:568:c621:c496 with SMTP id
- a31-20020a509ea2000000b00568c621c496mr8964965edf.42.1712670319684; Tue, 09
- Apr 2024 06:45:19 -0700 (PDT)
+ bh=KAv/jBboVXVGqv1Qr5gynsYiRrvU4aNmMVGB5m6bYL0=;
+ b=EPHUV+YRCbY3fFtzrumq/abdMY6Vj06W+TjxLJqDq5denOozFgZK4l+r1mfWb/FxBO
+ g3Lz4XcP/GbLmLChpvqxArSK9VO5MOQkA/JZ5zdki26z0zycM3UmtecKw5OOyWMSZmy1
+ 1hf9owzdFyXPSJ2+gt5FODCbC0I3AQhhyuhhy6l1koBXWNgdyZi99JVzpZcdG/SzAxye
+ M/vECsCDJTCGN75deIRRAZg9FauMPjiChoP4YazYy4tjGS3faL5eUX6dsCkM4msTsx16
+ xXLeI7ucOeXb07PserqfTcw4qxMvL3yvWM9o6XG1DM0JHs/HikDVvCXeoenldz1eMvza
+ iluw==
+X-Gm-Message-State: AOJu0YyG2sFYlWpBFfhf9zvYVjUJWg3Ar4KY/BSaFR/hIHRXw8XZGXhS
+ 7c6OLVU6R9NeVwzihzJef7V0xWxOwXC+nkmh+0dAAwZhhKrFAkDVuTIwBtoXNRVsFsYUvZzbqnm
+ pkKPo6LAA/NgURxM65mGALxQgrH7ovKuQb3hNDQ==
+X-Google-Smtp-Source: AGHT+IGZKcke2BFqOOel64tvmKGGJecPnKn9a/9ZBYNWzALFwB3LoxzGq/LFK7EVFlsKXFBNeNgZbr8Og3KDCcQJpP8=
+X-Received: by 2002:a50:8a81:0:b0:56d:fca8:d209 with SMTP id
+ j1-20020a508a81000000b0056dfca8d209mr8784536edj.10.1712670778057; Tue, 09 Apr
+ 2024 06:52:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240409133801.23503-1-philmd@linaro.org>
- <20240409133801.23503-5-philmd@linaro.org>
-In-Reply-To: <20240409133801.23503-5-philmd@linaro.org>
+ <20240409133801.23503-6-philmd@linaro.org>
+In-Reply-To: <20240409133801.23503-6-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 14:45:08 +0100
-Message-ID: <CAFEAcA__PD1ngOeiMhZjwG3rT77oZ5HSd4PeFkMX4fvSDedKXg@mail.gmail.com>
-Subject: Re: [PATCH-for-9.1 v2 04/11] hw/net/lan9118: Replace magic '5' value
- by TX_FIF_SZ_RESET definition
+Date: Tue, 9 Apr 2024 14:52:47 +0100
+Message-ID: <CAFEAcA8BWKHzLnkRDx313WA+pkX7+cV36retiVdBGmH_ZfONxQ@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 v2 05/11] hw/net/lan9118: Add definitions for FIFO
+ allocated sizes
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Chuhong Yuan <hslester96@gmail.com>, 
  Jason Wang <jasowang@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,13 +96,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 9 Apr 2024 at 14:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
 > wrote:
 >
-> TX_FIF_SZ is described in chapter 5.3.9,
-> "HW_CFG =E2=80=94 HARDWARE CONFIGURATION REGISTER".
+> Add definitions for the TX_FIF_SZ=3D5 case, per TABLE 5-3
+> "VALID TX/RX FIFO ALLOCATIONS".
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
+>  hw/net/lan9118.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+> index a6a869de32..00409927fe 100644
+> --- a/hw/net/lan9118.c
+> +++ b/hw/net/lan9118.c
+> @@ -158,6 +158,17 @@ do { printf("lan9118: " fmt , ## __VA_ARGS__); } whi=
+le (0)
+>   */
+>  #define MIL_TXFIFO_SIZE         2048
+>
+> +/*
+> + * TX and RX FIFO space is configurable through the TX FIFO Size (TX_FIF=
+_SZ)
+> + * field in the hardware configuration (CSR HW_CFG) register. These are =
+the
+> + * default configuration settings for TX_FIF_SZ =3D 5
+> + * (see TABLE 5-3: VALID TX/RX FIFO ALLOCATIONS).
+> + */
+> +#define TX_DATA_FIFO_BYTES      4608    /* 1152 words */
+> +#define TX_STATUS_FIFO_BYTES    512     /* 128 words */
+> +#define RX_DATA_FIFO_BYTES      10560   /* 2640 words */
+> +#define RX_STATUS_FIFO_BYTES    704     /* 176 words */
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+We could make these do the actual calculations, rather
+than hardcoding the results:
+
+#define TX_STATUS_FIFO_BYTES 512
+#define TX_TOTAL_FIFO_BYTES(TX_FIF_SZ) (1024 * (TX_FIF_SZ))
+#define RX_TOTAL_FIFO_BYTES(TX_FIF_SZ) (16384 - TX_TOTAL_FIFO_BYTES(TX_FIF_=
+SZ))
+#define TX_DATA_FIFO_BYTES(TX_FIF_SZ) (TX_TOTAL_FIFO_BYTES(TX_FIF_SZ)
+- TX_STATUS_FIFO_BYTES)
+#define RX_STATUS_FIFO_BYTES (RX_TOTAL_FIFO_BYTES(TX_FIF_SZ) >> 4)
+#define RX_DATA_FIFO_BYTES(TX_FIF_SZ) \
+    (RX_TOTAL_FIFO_BYTES(TX_FIF_SZ) - RX_STATUS_FIFO_BYTES(TX_FIF_SZ))
 
 thanks
 -- PMM
