@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C097C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F192DCD1297
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruEMO-0001oX-Ad; Tue, 09 Apr 2024 12:30:12 -0400
+	id 1ruEMK-0001nl-Da; Tue, 09 Apr 2024 12:30:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEMD-0001mS-DS
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:30:05 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEM6-0001lh-Go
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:29:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEMA-0005iG-4h
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:29:59 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEM4-0005hC-6O
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:29:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712680197;
+ s=mimecast20190719; t=1712680190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nVB2Xy3b3M2XySmg3X05h6P0VJP9tjhRzj4PvS3NiNc=;
- b=bSC48OKVen1r9OUvv4ybdVCxbGwxV4EwE3EA+JC/NOSeieqXG0mmq7cNCNymEKnmVnLx4l
- zzq2TKHMboSINKU4+pjwXWmHg4r+TNVu3GLHLFZdOtlpY3HUKEU2VnW71eqRT2pN84z7Yz
- xPa8vhOiChoplv0Pag1KH3HpkN8Avv8=
+ bh=La/sX0FIeAD7xBB6N3ikc+njx+MSTzew0kZCawhAOio=;
+ b=Lh7t7kbOPsWFGqpIi+BpfErNwE1lY9oFVfudIjn4eOAxkEaeL6R9DM0b+NCIG2dITGQxdf
+ s3S82pk2ZiqxfTRT5rkoE2+Ude1IbHm+mdP7oT7sZ6XIcyuetRJxlu4wIOuUYQgY3eJ9zJ
+ 0MdLVo98LCBKg56SUCrxRH1ldi2HGaU=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-fr4qDwzGNiyLDyvL0wTH2w-1; Tue, 09 Apr 2024 12:29:54 -0400
-X-MC-Unique: fr4qDwzGNiyLDyvL0wTH2w-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
+ us-mta-674-55uvktR9MvWCXxg8mDWBtg-1; Tue, 09 Apr 2024 12:29:48 -0400
+X-MC-Unique: 55uvktR9MvWCXxg8mDWBtg-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 044F980B517;
- Tue,  9 Apr 2024 16:29:54 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 11968801FAF;
+ Tue,  9 Apr 2024 16:29:48 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.204])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 994271C06666;
- Tue,  9 Apr 2024 16:29:53 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A841C444303;
+ Tue,  9 Apr 2024 16:29:47 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id BB2E01801AA4; Tue,  9 Apr 2024 18:29:42 +0200 (CEST)
+ id A158518017FB; Tue,  9 Apr 2024 18:29:42 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 3/4] edk2/seabios: use common extra version
-Date: Tue,  9 Apr 2024 18:29:33 +0200
-Message-ID: <20240409162942.454419-4-kraxel@redhat.com>
+Subject: [PULL 1/4] edk2: get version + date from git submodule
+Date: Tue,  9 Apr 2024 18:29:31 +0200
+Message-ID: <20240409162942.454419-2-kraxel@redhat.com>
 In-Reply-To: <20240409162942.454419-1-kraxel@redhat.com>
 References: <20240409162942.454419-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
@@ -82,54 +82,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bring a bit more consistency into the naming.
+Turned out hard-coding version and date in the Makefile wasn't a bright
+idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
+from git instead.  Store in edk2-version, so this can be committed to
+the repo and is present in tarballs too.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240327102448.61877-4-kraxel@redhat.com>
+Message-ID: <20240327102448.61877-2-kraxel@redhat.com>
 ---
- roms/Makefile | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ roms/Makefile | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/roms/Makefile b/roms/Makefile
-index 783a5cab4f4c..dfed2b216a1e 100644
+index edc234a0e886..783a5cab4f4c 100644
 --- a/roms/Makefile
 +++ b/roms/Makefile
-@@ -41,8 +41,8 @@ x86_64_cross_prefix := $(call find-cross-prefix,x86_64)
- riscv32_cross_prefix := $(call find-cross-prefix,riscv32)
- riscv64_cross_prefix := $(call find-cross-prefix,riscv64)
- 
--# tag our seabios builds
--SEABIOS_EXTRAVERSION="-prebuilt.qemu.org"
-+# tag our firmware builds
-+FIRMWARE_EXTRAVERSION = -prebuilt.qemu.org
- 
+@@ -52,6 +52,8 @@ SEABIOS_EXTRAVERSION="-prebuilt.qemu.org"
  #
- # EfiRom utility is shipped with edk2 / tianocore, in BaseTools/
-@@ -93,12 +93,12 @@ build-seabios-config-%: config.%
- 	mkdir -p seabios/builds/$*
- 	cp $< seabios/builds/$*/.config
- 	$(MAKE) -C seabios \
--		EXTRAVERSION=$(SEABIOS_EXTRAVERSION) \
-+		EXTRAVERSION=$(FIRMWARE_EXTRAVERSION) \
- 		CROSS_PREFIX=$(x86_64_cross_prefix) \
- 		KCONFIG_CONFIG=$(CURDIR)/seabios/builds/$*/.config \
- 		OUT=$(CURDIR)/seabios/builds/$*/ oldnoconfig
- 	$(MAKE) -C seabios \
--		EXTRAVERSION=$(SEABIOS_EXTRAVERSION) \
-+		EXTRAVERSION=$(FIRMWARE_EXTRAVERSION) \
- 		CROSS_PREFIX=$(x86_64_cross_prefix) \
- 		KCONFIG_CONFIG=$(CURDIR)/seabios/builds/$*/.config \
- 		OUT=$(CURDIR)/seabios/builds/$*/ all
-@@ -159,7 +159,7 @@ edk2-version: edk2
+ EDK2_EFIROM = edk2/BaseTools/Source/C/bin/EfiRom
  
- efi: edk2-version
++-include edk2-version
++
+ default help:
+ 	@echo "nothing is build by default"
+ 	@echo "available build targets:"
+@@ -147,10 +149,19 @@ skiboot:
+ 	$(MAKE) -C skiboot CROSS=$(powerpc64_cross_prefix)
+ 	cp skiboot/skiboot.lid ../pc-bios/skiboot.lid
+ 
+-efi:
++edk2-version: edk2
++	if test -e edk2/.git; then \
++		echo "EDK2_STABLE = $$(cd edk2; git describe --tags --match 'edk2-stable*')" > $@; \
++		echo "EDK2_DATE = $$(cd edk2; git log -1 --pretty='format:%cd' --date='format:%m/%d/%Y')" >> $@; \
++	else \
++		touch $@; \
++	fi
++
++efi: edk2-version
  	$(PYTHON) edk2-build.py --config edk2-build.config \
--		--version-override "$(EDK2_STABLE)-for-qemu" \
-+		--version-override "$(EDK2_STABLE)$(FIRMWARE_EXTRAVERSION)" \
- 		--release-date "$(EDK2_DATE)" \
- 		--silent --no-logs
+-		--version-override "edk2-stable202302-for-qemu" \
+-		--release-date "03/01/2023"
++		--version-override "$(EDK2_STABLE)-for-qemu" \
++		--release-date "$(EDK2_DATE)" \
++		--silent --no-logs
  	rm -f ../pc-bios/edk2-*.fd.bz2
+ 	bzip2 --verbose ../pc-bios/edk2-*.fd
+ 
 -- 
 2.44.0
 
