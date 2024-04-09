@@ -4,88 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C070ECD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35F4C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru98w-0001OH-9r; Tue, 09 Apr 2024 06:55:58 -0400
+	id 1ru9CX-0005cR-9f; Tue, 09 Apr 2024 06:59:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru98u-0001Nl-C4
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:55:56 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru98s-00038I-E7
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:55:56 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a450bedffdfso765490666b.3
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 03:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712660152; x=1713264952; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7ftq4zs1KH4h2Nl8xlNfkOji3kcpdUIoLmwA4b59RfE=;
- b=MEQZrmo/82y0cVFn3YUaOr6Ui5GrOZTz3VwLXcdbma9eaNhtF5TcC9TWbKmJFiAj3x
- KJi6YqPbEWx0U7JS52ky/zWm0jwtNgdtXy4RPLTsHrVJWunXMTDTJlGZ/ngWUatHQhmw
- MnGJk4UL8EYV0BOrERhp6fmu4qBBXLeerunzKso1pMDcf1rRh4D9FfacuMYRlns6dBaA
- ff4T1fenvrR9NalBvO2ukKy1tZkBfEezi2ZxKJcrUUnzqz/MMn9Zi9cuUHuNRXX104LK
- /PHSflEc92/zMSFzZYR+TAnexE85dg7K8l3ksoDoGC9a4/4MoYzVCuNZv71YRxvRXOHn
- toyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712660152; x=1713264952;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7ftq4zs1KH4h2Nl8xlNfkOji3kcpdUIoLmwA4b59RfE=;
- b=HMKJLWgc+lXZ5QUKcXKRcLAq3EiaKo9fvgxoZVQNGjTtDfNu0HSdAF+5rwz5tUabKI
- betRops9YYv5UvJD14OH+NwjDDCiZBhnA/H2Cvatx/c9GnpjvNcGq3G/q0G3hw1i+1EO
- j955HeRUyrPB7ucAVO9GkO6hsTcJ1YwD0zVQEvg2Se8j7Dw//asWngotmVMJY6i71vLV
- HKurWTQglA2vvp9pXInQcn4Zr+Dt2kijz2Gl43MMsHoFdMBZuGLWGuQs65CygHUQM22k
- txrcsnJfOh0P7y/ksuOOUb7BtEc1IXcmncF+/rSPVjmQ58nLX5RbfL19b6NU3F6sIwOg
- RQJw==
-X-Gm-Message-State: AOJu0Yy4urzNkRXXqcwV7jGucTwOmqJgA3ezzsPcLPhFLzgV62aNRikR
- b6J6vSgld0DPijRWlTHwBt68IXiojP0ScnCpvzO5BqZvV7vYA4sEKZEUJk4VUpokgJ5+jtK5ADu
- T
-X-Google-Smtp-Source: AGHT+IGski8MWhu0AMwjspmEDQdTCWkQxhEyGOhqZgib2fklmgLJRC5AI8QoX1c6wU9tjPGF7WEaCQ==
-X-Received: by 2002:a17:907:72cc:b0:a51:c1db:6578 with SMTP id
- du12-20020a17090772cc00b00a51c1db6578mr6332833ejc.14.1712660152654; 
- Tue, 09 Apr 2024 03:55:52 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.160.134])
- by smtp.gmail.com with ESMTPSA id
- ov7-20020a170906fc0700b00a4e44f724e8sm5519312ejb.186.2024.04.09.03.55.50
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Apr 2024 03:55:52 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Amit Shah <amit@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, Alexander Bulekov <alxndr@bu.edu>,
- Yongkang Jia <kangel@zju.edu.cn>, Xiao Lei <nop.leixiao@gmail.com>,
- Yiming Tao <taoym@zju.edu.cn>
-Subject: [PATCH-for-9.0 v2 2/4] hw/display/virtio-gpu: Protect from DMA
- re-entrancy bugs
-Date: Tue,  9 Apr 2024 12:55:35 +0200
-Message-ID: <20240409105537.18308-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240409105537.18308-1-philmd@linaro.org>
-References: <20240409105537.18308-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ru9CQ-0005c5-4V; Tue, 09 Apr 2024 06:59:34 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ru9CN-0003WT-Mp; Tue, 09 Apr 2024 06:59:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712660372; x=1744196372;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=kQ5/iifoDjm2545ej6pWbM0neVWPPDk5fmy69fVHjmI=;
+ b=b63K22cQONMDpJNwxyNBqnbnqmEwYV0UYQsYoxRYwSGqH41xyN6PIQOl
+ AqZB3nkaC7eKy14pe3W8VFXM0Ak31OmvbmTc5HC/kd2vu6pw0ozx+8W95
+ PlVh/JgqgsdJtJUrRN7uGuPaF+ByAi4G7P2j1TNwQ7VCdqeqea43kRDid
+ 8NzEqSbyrHB6OgThZGca+ObxUHQeD/yJoIY6UeqIsY2tgh7PiKffD36FY
+ NY/gO62oeW5xDWl5NtBW17eNnd/TnWT+4D4DICc9xMkp1v74cpZ2vFJZ7
+ BF1rBY1oL8iQLTv1pk3f7hwDQgcRr1v43WBcbJbfHZO8Jlhab4nyB7trf Q==;
+X-CSE-ConnectionGUID: QWF7d1GdTPO5Fdd4hq/1Ng==
+X-CSE-MsgGUID: HYgxL8wlRWG/VpmzP2L9GA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="19399208"
+X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; d="scan'208";a="19399208"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Apr 2024 03:59:27 -0700
+X-CSE-ConnectionGUID: sRpFCGYAS7yjRHHuJ9PwiQ==
+X-CSE-MsgGUID: 3Wlo+GXaTyWr/vvWv+BO2g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; d="scan'208";a="24968563"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa005.jf.intel.com with ESMTP; 09 Apr 2024 03:59:24 -0700
+Date: Tue, 9 Apr 2024 19:13:24 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Michael Tokarev <mjt@tls.msk.ru>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Giuseppe =?iso-8859-1?Q?Ghib=F2?= <ghibo@mageia.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
+Message-ID: <ZhUi1NpSeUzXUuMu@intel.com>
+References: <20240311075806.668555-1-pbonzini@redhat.com>
+ <2f0eefc5-8907-4af7-b717-17e17a9a3019@tls.msk.ru>
+ <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,135 +86,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace qemu_bh_new_guarded() by virtio_bh_new_guarded()
-so the bus and device use the same guard. Otherwise the
-DMA-reentrancy protection can be bypassed:
+Hi Michael & Paolo,
 
-  $ cat << EOF | qemu-system-i386 -display none -nodefaults \
-                                  -machine q35,accel=qtest \
-                                  -m 512M \
-                                  -device virtio-gpu \
-                                  -qtest stdio
-  outl 0xcf8 0x80000820
-  outl 0xcfc 0xe0004000
-  outl 0xcf8 0x80000804
-  outw 0xcfc 0x06
-  write 0xe0004030 0x4 0x024000e0
-  write 0xe0004028 0x1 0xff
-  write 0xe0004020 0x4 0x00009300
-  write 0xe000401c 0x1 0x01
-  write 0x101 0x1 0x04
-  write 0x103 0x1 0x1c
-  write 0x9301c8 0x1 0x18
-  write 0x105 0x1 0x1c
-  write 0x107 0x1 0x1c
-  write 0x109 0x1 0x1c
-  write 0x10b 0x1 0x00
-  write 0x10d 0x1 0x00
-  write 0x10f 0x1 0x00
-  write 0x111 0x1 0x00
-  write 0x113 0x1 0x00
-  write 0x115 0x1 0x00
-  write 0x117 0x1 0x00
-  write 0x119 0x1 0x00
-  write 0x11b 0x1 0x00
-  write 0x11d 0x1 0x00
-  write 0x11f 0x1 0x00
-  write 0x121 0x1 0x00
-  write 0x123 0x1 0x00
-  write 0x125 0x1 0x00
-  write 0x127 0x1 0x00
-  write 0x129 0x1 0x00
-  write 0x12b 0x1 0x00
-  write 0x12d 0x1 0x00
-  write 0x12f 0x1 0x00
-  write 0x131 0x1 0x00
-  write 0x133 0x1 0x00
-  write 0x135 0x1 0x00
-  write 0x137 0x1 0x00
-  write 0x139 0x1 0x00
-  write 0xe0007003 0x1 0x00
-  EOF
-  ...
-  =================================================================
-  ==276099==ERROR: AddressSanitizer: heap-use-after-free on address 0x60d000011178
-  at pc 0x562cc3b736c7 bp 0x7ffed49dee60 sp 0x7ffed49dee58
-  READ of size 8 at 0x60d000011178 thread T0
-      #0 0x562cc3b736c6 in virtio_gpu_ctrl_response hw/display/virtio-gpu.c:180:42
-      #1 0x562cc3b7c40b in virtio_gpu_ctrl_response_nodata hw/display/virtio-gpu.c:192:5
-      #2 0x562cc3b7c40b in virtio_gpu_simple_process_cmd hw/display/virtio-gpu.c:1015:13
-      #3 0x562cc3b82873 in virtio_gpu_process_cmdq hw/display/virtio-gpu.c:1050:9
-      #4 0x562cc4a85514 in aio_bh_call util/async.c:169:5
-      #5 0x562cc4a85c52 in aio_bh_poll util/async.c:216:13
-      #6 0x562cc4a1a79b in aio_dispatch util/aio-posix.c:423:5
-      #7 0x562cc4a8a2da in aio_ctx_dispatch util/async.c:358:5
-      #8 0x7f36840547a8 in g_main_context_dispatch (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x547a8)
-      #9 0x562cc4a8b753 in glib_pollfds_poll util/main-loop.c:290:9
-      #10 0x562cc4a8b753 in os_host_main_loop_wait util/main-loop.c:313:5
-      #11 0x562cc4a8b753 in main_loop_wait util/main-loop.c:592:11
-      #12 0x562cc3938186 in qemu_main_loop system/runstate.c:782:9
-      #13 0x562cc43b7af5 in qemu_default_main system/main.c:37:14
-      #14 0x7f3683a6c189 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-      #15 0x7f3683a6c244 in __libc_start_main csu/../csu/libc-start.c:381:3
-      #16 0x562cc2a58ac0 in _start (qemu-system-i386+0x231bac0)
+On Fri, Apr 05, 2024 at 08:30:43PM +0300, Michael Tokarev wrote:
+> Date: Fri, 5 Apr 2024 20:30:43 +0300
+> From: Michael Tokarev <mjt@tls.msk.ru>
+> Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
+> 
+> 01.04.2024 09:02, Michael Tokarev:
+> 
+> > Anyone can guess why this rather trivial and obviously correct patch causes segfaults
+> > in a few tests in staging-7.2 - when run in tcg mode, namely:
+> > 
+> >  † pxe-test
+> >  † migration-test
+> >  † boot-serial-test
+> >  † bios-tables-test
+> >  † vmgenid-test
+> >  † cdrom-test
+> > 
+> > When reverting this single commit from staging-7.2, it all works fine again.
+> 
+> It sigsegvs in probe_access_internal():
+> 
+>   CPUTLBEntry *entry = tlb_entry(env, mmu_idx, addr); -- this one returns NULL,
+> 
+> and next there's a call
+> 
+>   tlb_addr = tlb_read_ofs(entry, elt_ofs);
+> 
+> which fails.
+> 
+> #0  0x0000555555c5de8a in tlb_read_ofs (ofs=8, entry=0x0) at 7.2/accel/tcg/cputlb.c:1455
+> #1  probe_access_internal
+>     (env=0x555556a862a0, addr=4294967280, fault_size=fault_size@entry=1,
+> access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=5,
+> nonfault=nonfault@entry=false, phost=0x7fffea4d32a0, pfull=0x7fffea4d3298,
+> retaddr=0)
+>     at 7.2/accel/tcg/cputlb.c:1555
+> #2  0x0000555555c62aba in get_page_addr_code_hostp
+>     (env=<optimized out>, addr=addr@entry=4294967280, hostp=hostp@entry=0x0)
+>     at 7.2/accel/tcg/cputlb.c:1691
+> #3  0x0000555555c52b54 in get_page_addr_code (addr=4294967280, env=<optimized out>)
+>     at 7.2/include/exec/exec-all.h:714
+> #4  tb_htable_lookup
+>     (cpu=cpu@entry=0x555556a85530, pc=pc@entry=4294967280,
+> cs_base=cs_base@entry=4294901760, flags=flags@entry=64,
+> cflags=cflags@entry=4278190080) at 7.2/accel/tcg/cpu-exec.c:236
+> #5  0x0000555555c53e8e in tb_lookup
+>     (cflags=4278190080, flags=64, cs_base=4294901760, pc=4294967280, cpu=0x555556a85530)
+>     at 7.2/accel/tcg/cpu-exec.c:270
+> #6  cpu_exec (cpu=cpu@entry=0x555556a85530) at 7.2/accel/tcg/cpu-exec.c:1001
+> #7  0x0000555555c75d2f in tcg_cpus_exec (cpu=cpu@entry=0x555556a85530)
+>     at 7.2/accel/tcg/tcg-accel-ops.c:69
+> #8  0x0000555555c75e80 in mttcg_cpu_thread_fn (arg=arg@entry=0x555556a85530)
+>     at 7.2/accel/tcg/tcg-accel-ops-mttcg.c:95
+> #9  0x0000555555ded098 in qemu_thread_start (args=0x555556adac40)
+>     at 7.2/util/qemu-thread-posix.c:505
+> #10 0x00007ffff5793134 in start_thread (arg=<optimized out>)
+> #11 0x00007ffff58137dc in clone3 ()
+> 
 
-  0x60d000011178 is located 56 bytes inside of 136-byte region [0x60d000011140,0x60d0000111c8)
-  freed by thread T0 here:
-      #0 0x562cc2adb662 in __interceptor_free (qemu-system-i386+0x239e662)
-      #1 0x562cc3b86b21 in virtio_gpu_reset hw/display/virtio-gpu.c:1524:9
-      #2 0x562cc416e20e in virtio_reset hw/virtio/virtio.c:2145:9
-      #3 0x562cc37c5644 in virtio_pci_reset hw/virtio/virtio-pci.c:2249:5
-      #4 0x562cc4233758 in memory_region_write_accessor system/memory.c:497:5
-      #5 0x562cc4232eea in access_with_adjusted_size system/memory.c:573:18
+I debugged it manually, and found the problem occurs in tlb_index() with
+mmu_idx=5.
 
-  previously allocated by thread T0 here:
-      #0 0x562cc2adb90e in malloc (qemu-system-i386+0x239e90e)
-      #1 0x7f368405a678 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5a678)
-      #2 0x562cc4163ffc in virtqueue_split_pop hw/virtio/virtio.c:1612:12
-      #3 0x562cc4163ffc in virtqueue_pop hw/virtio/virtio.c:1783:16
-      #4 0x562cc3b91a95 in virtio_gpu_handle_ctrl hw/display/virtio-gpu.c:1112:15
-      #5 0x562cc4a85514 in aio_bh_call util/async.c:169:5
-      #6 0x562cc4a85c52 in aio_bh_poll util/async.c:216:13
-      #7 0x562cc4a1a79b in aio_dispatch util/aio-posix.c:423:5
+For v7.2, the maximum mmu index supported by i386 is 4 (since
+NB_MMU_MODES = 5 defined in target/i386/cpu-param.h).
 
-  SUMMARY: AddressSanitizer: heap-use-after-free hw/display/virtio-gpu.c:180:42 in virtio_gpu_ctrl_response
+On Michael's 7.2-i386-mmu-idx tree, the commit 9fc3a7828d25 ("target/i386:
+use separate MMU indexes for 32-bit accesses") introduced more indexes
+without relaxing the NB_MMU_MODES for i386.
 
-With this change, the same reproducer triggers:
+Before this fix, probe_access_internal() just got the wrong mmu_idx as 4,
+and it's not out of bounds. After this fix, the right mmu_idx=5 is truly
+out of bounds.
 
-  qemu-system-i386: warning: Blocked re-entrant IO on MemoryRegion: virtio-pci-common-virtio-gpu at addr: 0x6
+On the master branch, there's no such issue since the commits ffd824f3f32d
+("include/exec: Set default NB_MMU_MODES to 16") and 6787318a5d86
+("target/i386: Remove NB_MMU_MODES define") relaxed upper limit of MMU
+index for i386.
 
-Fixes: CVE-2024-3446
-Cc: qemu-stable@nongnu.org
-Reported-by: Alexander Bulekov <alxndr@bu.edu>
-Reported-by: Yongkang Jia <kangel@zju.edu.cn>
-Reported-by: Xiao Lei <nop.leixiao@gmail.com>
-Reported-by: Yiming Tao <taoym@zju.edu.cn>
-Buglink: https://bugs.launchpad.net/qemu/+bug/1888606
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
----
- hw/display/virtio-gpu.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+So these 2 commits should also be picked (with these 2 commits, tests in
+"make check" passed).
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 78d5a4f164..ae831b6b3e 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1492,10 +1492,8 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
- 
-     g->ctrl_vq = virtio_get_queue(vdev, 0);
-     g->cursor_vq = virtio_get_queue(vdev, 1);
--    g->ctrl_bh = qemu_bh_new_guarded(virtio_gpu_ctrl_bh, g,
--                                     &qdev->mem_reentrancy_guard);
--    g->cursor_bh = qemu_bh_new_guarded(virtio_gpu_cursor_bh, g,
--                                       &qdev->mem_reentrancy_guard);
-+    g->ctrl_bh = virtio_bh_new_guarded(qdev, virtio_gpu_ctrl_bh, g);
-+    g->cursor_bh = virtio_bh_new_guarded(qdev, virtio_gpu_cursor_bh, g);
-     g->reset_bh = qemu_bh_new(virtio_gpu_reset_bh, g);
-     qemu_cond_init(&g->reset_cond);
-     QTAILQ_INIT(&g->reslist);
--- 
-2.41.0
+However, the cleanup for NB_MMU_MODES is a big series (total 23 patches,
+from the commit ffd824f3f32d ("include/exec: Set default NB_MMU_MODES to
+16") to 00da6b49a227 ("include/exec: Remove guards around NB_MMU_MODES")),
+maybe changes in other arches should be picked together?
+
+In addition, I think maybe we could add assert() in tlb_index() and
+tlb_entry() to ensure the mmu_idx not exceed the limit of NB_MMU_MODES.
+But I'm a little unsure if this will hurt performance, because these 2
+helpers look like the hotspot functions.
+
+-Zhao
 
 
