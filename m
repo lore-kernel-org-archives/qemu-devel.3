@@ -4,112 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88337C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 23:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD1FC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 23:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruKae-0006TN-JU; Tue, 09 Apr 2024 19:09:21 -0400
+	id 1ruKbQ-0000FP-NC; Tue, 09 Apr 2024 19:10:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1ruKad-0006TE-OW
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 19:09:19 -0400
-Received: from mail-dm6nam11on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2415::600]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1ruKaa-0005xB-QM
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 19:09:19 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mIgmliFierrXCk/3rYnRtwyVsBLBOC+2KvOHQkWqFpim2J1jn32hMC9w+bi+a0jKmSNLZGPy+Qm456hj27zGAcdpKgdT78iUT/b9R/B9agz+viz4fODGJAPsPHUNaAugwEgfS53HvjxnsiVyre6HUnchgmePcxKPGtajcg/XSbk7ckpdJOr6NKNz1DhxcbK4wiXxgefXdfrmFYJrUKtWUQORtldH6IiDBeIzuUqNXnPorD+s9PBqV6IE6GWxievADHomRCyPvDvB5tIcCHJs0mJDrdhfSsvq+zQe2IPu9ARvXQ8tq4HFggLE/MfmSXv+FOcaroOffyREIjSuhHNcuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ty2IOTc9gTBaJQ7l7S7OWQpXxYtZfDrbKLLcPhLIR9E=;
- b=V0p6c3bwkD+UY6JJAwjuM3PL59U/HNJNb3x8+XGRTL/SreOvCylpt//sQTIlgrQVwhv7B+EtEzs0fUNI7XDdu/9subMUq/SAuC/OZDBXPmOUWck4nZtkLUZsabd+8ZeSKEb/MsEXc3xZzhfBh6s3d2xKCSoZqXTW2+e0ZLyDcxSXbF947JBH05OgYeCrw1uccQdNC9XM/FEweAEFQo3ci24QzYA4acqP/iR8irP5/Ltp/hZ6RTVM/pQ1Fybug188MYfpCiHDW1CVjh+lZUmrPiszONNhzP8T7vBpo2VTmLEpUJ9WQETvDifkik6xevL9+9mixV5+mEMPlbUxhQ3gOw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ty2IOTc9gTBaJQ7l7S7OWQpXxYtZfDrbKLLcPhLIR9E=;
- b=akWmIXDKB4iGeRmfsUTia/N0GXivqVQzBAM2iShjQn5SqEiGOxAl3sEne66NX8/fJMt1gKupMENOEYy75+iRVS0SwjkaNIGjxsL1kbST5XfWNEDjw6o/gHAXFRl1DUd5ERXCOeeA/hEYuLIQX4NkrOxvh18XCGSWUOkzDMxhe/Y=
-Received: from BY5PR04CA0017.namprd04.prod.outlook.com (2603:10b6:a03:1d0::27)
- by MN2PR12MB4126.namprd12.prod.outlook.com (2603:10b6:208:199::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.55; Tue, 9 Apr
- 2024 23:09:11 +0000
-Received: from CY4PEPF0000FCC5.namprd03.prod.outlook.com
- (2603:10b6:a03:1d0:cafe::48) by BY5PR04CA0017.outlook.office365.com
- (2603:10b6:a03:1d0::27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.36 via Frontend
- Transport; Tue, 9 Apr 2024 23:09:11 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000FCC5.mail.protection.outlook.com (10.167.242.107) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7452.22 via Frontend Transport; Tue, 9 Apr 2024 23:09:10 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 9 Apr
- 2024 18:09:09 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <kvm@vger.kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, Tom Lendacky
- <thomas.lendacky@amd.com>, Pankaj Gupta <pankaj.gupta@amd.com>, Larry Dewey
- <Larry.Dewey@amd.com>, Roy Hopkins <roy.hopkins@suse.com>
-Subject: [PATCH v1 3/3] hw/i386/sev: Use legacy SEV VM types for older machine
- types
-Date: Tue, 9 Apr 2024 18:07:43 -0500
-Message-ID: <20240409230743.962513-4-michael.roth@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240409230743.962513-1-michael.roth@amd.com>
-References: <20240409230743.962513-1-michael.roth@amd.com>
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1ruKbO-0000Em-UD
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 19:10:06 -0400
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1ruKbM-00067B-HL
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 19:10:06 -0400
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-dcc6fc978ddso5000256276.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 16:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1712704203; x=1713309003; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CBQMpIqEurG8MF/tPT1PXk9SqhO/wjdruY1OsEdLqVc=;
+ b=b4FBEeVaazQ/1hw03PJMTI4YPxc66AagVrnJDgK2fJJ2WLf2X9R34rb4UdEt+8VsI+
+ HMlJ59ytkUUDIs0zdr4bNefBZtDzQOz/Hr218jjStXSqD52V0OevaGF0CU0QZkw/kz94
+ GlRiL/p4RNLOe3M9LF/hJxW3w85vEBVcCSadC0hlVDOLX8YybhYRQYcB9BCFxrISi/Hs
+ 8VQ/SzxQ4UX2jXENWOmrMA5u5f3pIOnOoGoZ06/A2ADthMXCWiQNcWQt1Zf7vzq2N5vr
+ x4ctIo1Zx8ELuZtrXQ2UWoZKWHqkbjeGermXWENpPdSIkbIjz1JswpoAD6/uuP5sUjCD
+ AUaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712704203; x=1713309003;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CBQMpIqEurG8MF/tPT1PXk9SqhO/wjdruY1OsEdLqVc=;
+ b=KyiWhDtnT4Ifvq2UwsQX+rt1g+osOinHHbadOn2LFdFOlYeebuRGDkAKm1aiuv8hOW
+ u+F9CfWBof73FfKhQuSkHIXkNXqTvdZLpnT/VMZM12oqvv5zWSJiJjEemKplYKh4Ds6l
+ DXcJ2G7fD3Cio0iUHXBQeC6h6MQu0RUoGet5d84GeiwNUKtGvfgtVrKMR6fWYiHisnkN
+ Z5XWZJiiSRA7L5UXL4IOO4aY1ogZNx6FrigUUxDyrLS8J+QF1bdwy5vdhro48Mxs/lB3
+ VPKEFyJSw9yDaW37EjnUIiZCsicdG9yCtO+oW0GhlpguiZzqmGGOD8SlLN5iTUhMCmc+
+ w5yA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcdg8DR0M2vE3Ou0deWaGOqAIzkq1W2geObO+fchmXkwD/hjouZAOIdxtxnv/5oKyhZNYklec0O/f7GStpTovS6lVrJEo=
+X-Gm-Message-State: AOJu0YxOoNyeuDk7mF2u4BK4nvkTR+aTIKFRddMeXmtImX4B1qq1MU7C
+ wqONSfRsEMc+ppsu+BBRER9JjYNF1CUD2H4kvOl965bFD/AUfwOg+wKRJZRx8jBWZrWaEczJDNB
+ xh8xkLzCP7yu26wMxvYXXPYqM+OGgzXA/KpgFGA==
+X-Google-Smtp-Source: AGHT+IGKj70giI0uSMILbO3VPM9mbHT4HM6rigAIadI6TUaytzdkRQBEfqv4b6oKHX4IAAJuxwSf30E0yhjaCwWCgiY=
+X-Received: by 2002:a25:f306:0:b0:de0:cd0f:e9ac with SMTP id
+ c6-20020a25f306000000b00de0cd0fe9acmr2372195ybs.31.1712704202827; Tue, 09 Apr
+ 2024 16:10:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCC5:EE_|MN2PR12MB4126:EE_
-X-MS-Office365-Filtering-Correlation-Id: db23a42b-9102-435f-b690-08dc58ea10bf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: pCasw7mFDxCdsRUopNe8I/j6uQtshA832J7THi2sWAHTmc4Sbqc/U4lX78/5CTrvLzsIfrgLCeCuuidpYJ6xwyhzgpgccwUuIJvTVIpwnFLHrFmudSFhwKMGZ/3pYUwd854/CvAAqLXTL96PSD/AFfLmIjSzaWS7yhAspupAYN1zmcN9RWClfVFEztkpRIZsBgkpvyD4MGjUf/ihzjR0eP1XPfx7GQd4dYp7dLsugMll7M8EJPXTvY/JUl/a6I0ATAEABLUl85oPRAIha3U5nsDbbln4ZPP3pgrGw7w2n7eYloSlPEMiUeVk4CHZDp7PZ6hx4D5QqEqXEXfckvZEOdCgMl+93YHzHqYmUpjE90P/yLGdF1ugChRa2OZwOuco3d50VpczoPAnSbpKv/GOzYGxwfmRIDovfTNADH4omIMeqWRRBDc+fCry6b9TEyCW3ELJZgHCPnnA0MyGJefQpiUpcBaxtPvIXK+at/rXlLz8WaRmOsvYvltT8MzoW0mQQelyncN9+aUrJCDhD6tuSU8e0nYXUWY/NzsdI/gCDymiZldkWjrdivEACtDGOG2mwyjvUVJoE40l+aAup0Pctauq/jpCpfuqPrJblb10DnWyxakp4dTKtGaVg11qGD6hLZfQ4yJgQHerKzZ1u8TL3Vj77KYyHYJpRaeOmJCy/SIOVmPJaxw8N/IeLfA/Y7hZcWI7l86YCf0iQMPvHjBiCQXAS8eCxi6px8o6IqefnX5ddz46446cnd55uoW2zz4X
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(376005)(82310400014)(1800799015)(36860700004); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2024 23:09:10.5265 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: db23a42b-9102-435f-b690-08dc58ea10bf
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000FCC5.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4126
-Received-SPF: permerror client-ip=2a01:111:f403:2415::600;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240405000707.2670063-1-horenchuang@bytedance.com>
+ <20240405000707.2670063-2-horenchuang@bytedance.com>
+ <20240405145624.00000b31@Huawei.com>
+ <CAKPbEqrTvY4bsRjc=wBWpGtJM5_ZfH50-EX4Zq2O_ram9_0WbQ@mail.gmail.com>
+ <20240409145018.e2d240f9a742cc15ff7bc11e@linux-foundation.org>
+In-Reply-To: <20240409145018.e2d240f9a742cc15ff7bc11e@linux-foundation.org>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Tue, 9 Apr 2024 16:09:52 -0700
+Message-ID: <CAKPbEqqWLrD-bJiyE9Yc0CYLh_8_uMtf+9nD_eenXh3S=Ro=pQ@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v11 1/2] memory tier: dax/kmem: introduce
+ an abstract layer for finding, allocating, and putting memory types
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, "Huang,
+ Ying" <ying.huang@intel.com>, 
+ Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, 
+ tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>,
+ Srinivasulu Thanneeru <sthanneeru@micron.com>, 
+ SeongJae Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, 
+ Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>,
+ nvdimm@lists.linux.dev, 
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,89 +110,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Newer 9.1 machine types will default to using the KVM_SEV_INIT2 API for
-creating SEV/SEV-ES going forward. However, this API results in guest
-measurement changes which are generally not expected for users of these
-older guest types and can cause disruption if they switch to a newer
-QEMU/kernel version. Avoid this by continuing to use the older
-KVM_SEV_INIT/KVM_SEV_ES_INIT APIs for older machine types.
+On Tue, Apr 9, 2024 at 2:50=E2=80=AFPM Andrew Morton <akpm@linux-foundation=
+.org> wrote:
+>
+> On Tue, 9 Apr 2024 12:00:06 -0700 "Ho-Ren (Jack) Chuang" <horenchuang@byt=
+edance.com> wrote:
+>
+> > Hi Jonathan,
+> >
+> > On Fri, Apr 5, 2024 at 6:56=E2=80=AFAM Jonathan Cameron
+> > <Jonathan.Cameron@huawei.com> wrote:
+> > >
+> > > On Fri,  5 Apr 2024 00:07:05 +0000
+> > > "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
+> > >
+> > > > Since different memory devices require finding, allocating, and put=
+ting
+> > > > memory types, these common steps are abstracted in this patch,
+> > > > enhancing the scalability and conciseness of the code.
+> > > >
+> > > > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> > > > Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+> > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawie.com>
+> > >
+> > Thank you for reviewing and for adding your "Reviewed-by"!
+> > I was wondering if I need to send a v12 and manually add
+> > this to the commit description, or if this is sufficient.
+>
+> I had added Jonathan's r-b to the mm.git copy of this patch.
 
-Signed-off-by: Michael Roth <michael.roth@amd.com>
----
- hw/i386/pc.c         | 5 +++++
- hw/i386/pc_piix.c    | 1 +
- hw/i386/pc_q35.c     | 1 +
- include/hw/i386/pc.h | 3 +++
- target/i386/sev.c    | 1 +
- 5 files changed, 11 insertions(+)
+Got it~ Thank you Andrew!
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index e80f02bef4..96bf90c17e 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -78,6 +78,11 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
-+GlobalProperty pc_compat_9_0[] = {
-+    { "sev-guest", "legacy-vm-type", "true" },
-+};
-+const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
-+
- GlobalProperty pc_compat_8_2[] = {};
- const size_t pc_compat_8_2_len = G_N_ELEMENTS(pc_compat_8_2);
- 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 069414a1ac..0b7a9debab 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -528,6 +528,7 @@ static void pc_i440fx_9_0_machine_options(MachineClass *m)
-     pc_i440fx_machine_options(m);
-     m->alias = NULL;
-     m->is_default = false;
-+    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
- }
- 
- DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 77d7f700a8..acb55fc787 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -380,6 +380,7 @@ static void pc_q35_9_0_machine_options(MachineClass *m)
- {
-     pc_q35_machine_options(m);
-     m->alias = NULL;
-+    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
- }
- 
- DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index fb1d4106e5..e52290916c 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -199,6 +199,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
- /* sgx.c */
- void pc_machine_init_sgx_epc(PCMachineState *pcms);
- 
-+extern GlobalProperty pc_compat_9_0[];
-+extern const size_t pc_compat_9_0_len;
-+
- extern GlobalProperty pc_compat_8_2[];
- extern const size_t pc_compat_8_2_len;
- 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index f4ee317cb0..d30b68c11e 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1417,6 +1417,7 @@ sev_guest_instance_init(Object *obj)
-     object_property_add_uint32_ptr(obj, "reduced-phys-bits",
-                                    &sev->reduced_phys_bits,
-                                    OBJ_PROP_FLAG_READWRITE);
-+    object_apply_compat_props(obj);
- }
- 
- /* sev guest info */
--- 
-2.25.1
-
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
