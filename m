@@ -4,73 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F346ECD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 11:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1AF6C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 11:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru9xW-00046I-3k; Tue, 09 Apr 2024 07:48:14 -0400
+	id 1ruA3A-0006AF-GJ; Tue, 09 Apr 2024 07:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru9xR-00045p-PC
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:48:11 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru9xQ-0004eG-4L
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:48:09 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-516d536f6f2so4218244e87.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 04:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712663285; x=1713268085; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Degnu0MS5NwnOpDTl8IdP5LDf/dEPp+0UA0JHfd9gb8=;
- b=bwNXGUfdoX0U372YG8cD8wty2prok1FgBF4ZOb+rB4/GbgpT+s4qi4wk+T3P972TeH
- 3cLYx+V+0/gy5OAq7tnRObjrEDShU8tRSoDVgM+N4xuqYzBk+QeDK+6LtDRPcGPYEp8j
- PcBZx7+OjJBgU7dmnJfMvuw3iv5wLFap0W6plP3ILqyFAqsUng9PLkY16yHZ5P4X0hcQ
- 8Bkm5LMP/3D2paI+4mBNXalLy9aRICq/CNWsm+gfKay0VGRBb51rx3FPaL9VFpE6xUTq
- ag8d8n0FqAfncAKVQSWVkdcCa0vPT4fvoSKdNSW/6jQdiKd/+TzBaMHvZN/QKWAvwYul
- 3DoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712663285; x=1713268085;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Degnu0MS5NwnOpDTl8IdP5LDf/dEPp+0UA0JHfd9gb8=;
- b=mk+Bb0CnYw6AVEKC1Zaxt3mMOlQEjg6qWbIdg7RQXRkQCrE+az4+bSrHWhlB02kWrr
- dBLoDgkKrsMa0Vapd2Lvoze/UBY7q/ZaxFZDowLut1DkYyTD/+6x2ZMd2+d46UtPpWJd
- WgYt48F/vuNoIRfiHMA62VUVoy+hYDkTK+LWtTmFiuH7krZkbycDd/09tiMIoaXqwACx
- IjoTw4YXudYvJjNK4VMdFAhdI6kQFksh8b9NyaDGgt5GiDcuppo9mw32gyPv/BblDbkR
- JKT5NAvYt2WE0jT/sP75TvCexMT0aylroq1EzjNY/d3xGLcv7G6Nju2uXiOUPStn60ln
- J2IA==
-X-Gm-Message-State: AOJu0YyGcvCUxpDCtHD6SYkfB/v55EknwEXl++r69ARcaODxNy3l7y+m
- 7lOkeRzYsu+A7bV81kSog2TP6z71k6eZJrCAMXNsCmQD8AAbiXWNkIh7Eg+HnwC++zsJ92ub3jT
- ZfZBLhP3GNSkvWdTHEmMXT9sDyYwbrdlG7B9x9GC2d+9BueEE
-X-Google-Smtp-Source: AGHT+IESNjub7Lw4/pv0B7qGHXsR728luWwsNN0pX6S6zQaM5AZGEEk1ElRP/vCU+ZXibmT1TlstkuYO+aTlBxh+ruo=
-X-Received: by 2002:a05:6512:3993:b0:516:e8b1:177d with SMTP id
- j19-20020a056512399300b00516e8b1177dmr6228303lfu.65.1712663284935; Tue, 09
- Apr 2024 04:48:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1ruA38-0006A6-V5
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:54:02 -0400
+Received: from new-mail.astralinux.ru ([51.250.53.244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1ruA37-0005M6-5M
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:54:02 -0400
+Received: from rbta-msk-lt-106062.astralinux.ru (unknown [10.177.20.58])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VDPVz1TcMzlVmL;
+ Tue,  9 Apr 2024 14:53:47 +0300 (MSK)
+From: Anastasia Belova <abelova@astralinux.ru>
+To: qemu-devel@nongnu.org
+Cc: Anastasia Belova <abelova@astralinux.ru>,
+ Andrzej Zaborowski <balrogg@gmail.com>, sdl.qemu@linuxtesting.org
+Subject: [PATCH] hw/dma: prevent overflow in soc_dma_set_request
+Date: Tue,  9 Apr 2024 14:53:01 +0300
+Message-Id: <20240409115301.21829-1-abelova@astralinux.ru>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-References: <20240408192404.542506-1-pbonzini@redhat.com>
-In-Reply-To: <20240408192404.542506-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 12:47:54 +0100
-Message-ID: <CAFEAcA-11sG_o4-RB31rEP0kb-C3hA3Pf40DQHSuhkZzhytqJw@mail.gmail.com>
-Subject: Re: [PULL 0/3] 9.0 bugfixes for 2024-04-08
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-DrWeb-SpamScore: 0
+X-DrWeb-SpamState: legit
+X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomheptehnrghsthgrshhirgcuuegvlhhovhgruceorggsvghlohhvrgesrghsthhrrghlihhnuhigrdhruheqnecuggftrfgrthhtvghrnhepffdvvdeuheevvdfgiedvuedvudetueelgfefheeifffgheetuddtgfevfedvieehnecuffhomhgrihhnpehlihhnuhigthgvshhtihhnghdrohhrghenucfkphepuddtrddujeejrddvtddrheeknecurfgrrhgrmhephhgvlhhopehrsghtrgdqmhhskhdqlhhtqddutdeitdeivddrrghsthhrrghlihhnuhigrdhruhdpihhnvghtpedutddrudejjedrvddtrdehkeemfeeikeeftddpmhgrihhlfhhrohhmpegrsggvlhhovhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopeegpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegrsggvlhhovhgrsegrshhtrhgrlhhinhhugidrrhhupdhrtghpthhtohepsggrlhhrohhgghesghhmrghilhdrtghomhdprhgtphhtthhopehsughlrdhqvghmuheslhhinhhugihtvghsthhinhhgrdhorhhg
+X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
+ Bailout: 300
+X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
+ SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12586508,
+ Updated: 2024-Apr-09 09:39:37 UTC]
+Received-SPF: pass client-ip=51.250.53.244; envelope-from=abelova@astralinux.ru;
+ helo=new-mail.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,31 +63,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Apr 2024 at 20:25, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> The following changes since commit ce64e6224affb8b4e4b019f76d2950270b391af5:
->
->   Merge tag 'qemu-sparc-20240404' of https://github.com/mcayland/qemu into staging (2024-04-04 15:28:06 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->
-> for you to fetch changes up to e34f4d87e8d47b0a65cb663aaf7bef60c2112d36:
->
->   kvm: error out of kvm_irqchip_add_msi_route() in case of full route table (2024-04-08 21:22:00 +0200)
->
-> ----------------------------------------------------------------
-> * fall back to non-ioeventfd notification if KVM routing table is full
-> * support kitware ninja with jobserver support
-> * nanomips: fix warnings with GCC 14
->
+ch->num can reach values up to 31. Add casting to
+a larger type before performing left shift to
+prevent integer overflow.
 
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Applied, thanks.
+Fixes: afbb5194d4 ("Handle on-chip DMA controllers in one place, convert OMAP DMA to use it.")
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+---
+ hw/dma/soc_dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+diff --git a/hw/dma/soc_dma.c b/hw/dma/soc_dma.c
+index 3a430057f5..d5c52b804f 100644
+--- a/hw/dma/soc_dma.c
++++ b/hw/dma/soc_dma.c
+@@ -209,9 +209,9 @@ void soc_dma_set_request(struct soc_dma_ch_s *ch, int level)
+     dma->enabled_count += level - ch->enable;
+ 
+     if (level)
+-        dma->ch_enable_mask |= 1 << ch->num;
++        dma->ch_enable_mask |= (uint64_t)1 << ch->num;
+     else
+-        dma->ch_enable_mask &= ~(1 << ch->num);
++        dma->ch_enable_mask &= ~((uint64_t)1 << ch->num);
+ 
+     if (level != ch->enable) {
+         soc_dma_ch_freq_update(dma);
+-- 
+2.30.2
 
--- PMM
 
