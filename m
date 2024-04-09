@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3BFFCD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96347C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruBhG-0007f3-6u; Tue, 09 Apr 2024 09:39:34 -0400
+	id 1ruBhE-0007MO-Ay; Tue, 09 Apr 2024 09:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBgt-0006d6-FZ
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:39:13 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBgd-0006CJ-Ud
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:39:01 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBgq-0008Jh-Rc
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:39:10 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-343bccc0b2cso4087158f8f.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:39:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruBgc-0008Gq-04
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:38:55 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-343c2f5b50fso3735527f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712669943; x=1713274743; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712669932; x=1713274732; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C1Zw+CVRCq/SOI5cLQNhCw7GlRbzROScTIFOWQl3mYw=;
- b=QDLRDwUt9F260+tAmYNolfScg60li8Hg55PKVdG0mGNsqfJdsCZ3EhL2EzRWmqJq2M
- R1lY3Z9ufDqcdj5Wa+ff64cqsDay+cmmHubcElOvq8UpXVOIAKxrRQ4VLIqR/Yy57F6n
- +OH+QVZUUDBcmTTjCeM3Rvy+kI9GXfnjOvnIEUonWKCn6Knu2sroQL4bvu3ijZbnfxyz
- 7uXtkkSVoxX94M/+EMLtWyI7ETpb5JdLxU1CgaVyNLMypuUJ1Li8fnEjFvyjL6uCFLz6
- SP9g/kU5AzptsVKOGVyR5vO/CTmLek7e6Z9hkZqJGjr5SuY8A2ukznHdNdy6V5CsRtEC
- KtLg==
+ bh=REIm1SfLMUgG42n/AOyva4uJWnD7BJmJ3hGw4grtNrQ=;
+ b=LSZmv35s7D27V3+dGrZnCHfE9CB5s/cbgVpq5VCM3FIjLogRnulB1NLvrZtcIIwGJh
+ eJM+XFKPxDKbq5MAaQEO0ZDYTxIZOGayb4oY2c55XFTHcddBjq3XoplVkrupSYjbdgBs
+ H+TmTVSv2qO6ifSkFvUskg4L+8eryWlfQ9Q7ugUmZbQjc2qqTsWbEhjrCD0uqyvRQvil
+ CCnUz9o2+VO3g16PfnWXrr18rSrsLFHFN8hDa788XgpEhNMby5Yy9G+lAIZj6PEcPhue
+ MtDxkOTibz42wArgsv/0sXAz7XIMcKVGjQdVfUIDpJNtn6gOaWlSNM4bdGTnWUn8FMUO
+ t4cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712669943; x=1713274743;
+ d=1e100.net; s=20230601; t=1712669932; x=1713274732;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C1Zw+CVRCq/SOI5cLQNhCw7GlRbzROScTIFOWQl3mYw=;
- b=bF+MTTDY0jvwztw1C9FL3TMCVBFwtzql0uTQIJINiBmmgj358ow+EYzvvKbl6tXNlH
- n7BfJBsE65l2cIHdQE88C15Ae27GW7yMD9X6GgUc/4s2avHf3j1SZpfzzgHiq6c9ULY9
- VzxY0TUXWn8283e6C4lsVHnmsf9SgJWNTYZTzT2by2nl7uCmnukg/R9ihM3iyv3hgWa0
- I7ttUCLiGTKDY/lsy5/n1C6AYj8pxzSpk2q/7B1iED2kQzh/Vyf/exzLqIZ/wK9zYz5m
- wdCpRsa5brmZ26b6Z7q1CC5j5+lV5RVRA7SD43Bo5lMBa0HqUpSp8i46b6vxmcdZAmUW
- atFw==
-X-Gm-Message-State: AOJu0YxUe+r3JIP5RDI24qq3DoEVDQTiDGlK87BQYsCzdQOV4s8NRT9h
- mwNmWx3t3jHHK2BJD3arQitIo2mQUl4tOvEUA4g6kex7CBa9WMqizinLY4a9+wbNdZyUyBQsK3/
- N
-X-Google-Smtp-Source: AGHT+IFqoIUE/M1R/hh7rdUjgXcFj4C4BeV8e717z8yEIhV19KziG+GNdIbdK7dfgdC9rxxwgqrv4Q==
-X-Received: by 2002:adf:e847:0:b0:343:dd56:b941 with SMTP id
- d7-20020adfe847000000b00343dd56b941mr8105877wrn.52.1712669942881; 
- Tue, 09 Apr 2024 06:39:02 -0700 (PDT)
+ bh=REIm1SfLMUgG42n/AOyva4uJWnD7BJmJ3hGw4grtNrQ=;
+ b=SpYjdaaB4n/U3px1Prq+yvRg8hqytId8co433g9EVpbNq5qqwvayJ8maG98nSfKsEt
+ 6uOt9JHbtHvqT/Jzxzjs/dlsJH4FxOT2449YmWYF33QdViGnUYKsIPsXD6dHmLrZsrJf
+ t/xyuNCrO1D4KW6B89krbgvSgOo9c8OCyPG4Tc5Lml4GhK1zLqmPBhl5cmDFCcMHv2P2
+ D5ugS0wVxLreOl1xeez8CbZTfZQqQ32bmJWwEJ4956nxrHJ54CGLXvI+UOt54xAQUZ0Y
+ 0IErE9fEonQaC9sbFQxXS/k7bZZSJy0RwF6gijtg4A/7D90c80Z29vZ5x2LYn651aEQr
+ WdSQ==
+X-Gm-Message-State: AOJu0YwIoNnBRM5ayn+tgmCiKfnchYmDSCieXvad1sacSgZdA4B0cU2J
+ 2b6c6ui6nQ8du3vbRU3JfaC/F8nWUnHJ2CoCMgjYVy0wp5bB8b/mk4zH1Ppy0RUF37ox6z9Nrhb
+ u
+X-Google-Smtp-Source: AGHT+IHi8laSSIRUoQSHm4FD2sdjylQ5LL7q86l9s0xiAn9IQNCqQk/PleCS3bDLIwpbLTpVP1wAgQ==
+X-Received: by 2002:a05:6000:1864:b0:33e:48f9:169d with SMTP id
+ d4-20020a056000186400b0033e48f9169dmr11866184wri.31.1712669932225; 
+ Tue, 09 Apr 2024 06:38:52 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.160.134])
  by smtp.gmail.com with ESMTPSA id
- k7-20020a5d5187000000b003434c764f01sm11479350wrv.107.2024.04.09.06.39.01
+ j1-20020adfb301000000b003464e150e30sm236605wrd.15.2024.04.09.06.38.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Apr 2024 06:39:02 -0700 (PDT)
+ Tue, 09 Apr 2024 06:38:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Chuhong Yuan <hslester96@gmail.com>, Jason Wang <jasowang@redhat.com>,
  Alexander Bulekov <alxndr@bu.edu>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH-for-9.1 v2 11/11] hw/net/lan9118: Rename rx_fifo_size ->
- rx_fifo_wordcount
-Date: Tue,  9 Apr 2024 15:38:00 +0200
-Message-ID: <20240409133801.23503-12-philmd@linaro.org>
+Subject: [PATCH-for-9.1 v2 09/11] hw/net/lan9118: Rename rx_status_fifo_size
+ -> rx_status_fifo_wordcount
+Date: Tue,  9 Apr 2024 15:37:58 +0200
+Message-ID: <20240409133801.23503-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240409133801.23503-1-philmd@linaro.org>
 References: <20240409133801.23503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,88 +97,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rx_fifo_size is a word count, rename it to avoid confusion.
+rx_status_fifo_size is a word count, rename it to avoid confusion.
 
 Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/net/lan9118.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ hw/net/lan9118.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index 56cc52d450..3db6bae908 100644
+index cace22381d..663776f575 100644
 --- a/hw/net/lan9118.c
 +++ b/hw/net/lan9118.c
-@@ -263,7 +263,7 @@ struct lan9118_state {
+@@ -259,7 +259,7 @@ struct lan9118_state {
+     int32_t tx_status_fifo_head;
+     uint32_t tx_status_fifo[512];
+ 
+-    int32_t rx_status_fifo_size;
++    int32_t rx_status_fifo_wordcount;
      int32_t rx_status_fifo_used;
      int32_t rx_status_fifo_head;
      uint32_t rx_status_fifo[RX_STATUS_FIFO_BYTES / 4];
--    int32_t rx_fifo_size;
-+    int32_t rx_fifo_wordcount;
-     int32_t rx_fifo_used;
-     int32_t rx_fifo_head;
-     uint32_t rx_fifo[RX_DATA_FIFO_BYTES / 4];
-@@ -335,7 +335,7 @@ static const VMStateDescription vmstate_lan9118 = {
+@@ -329,7 +329,7 @@ static const VMStateDescription vmstate_lan9118 = {
+         VMSTATE_INT32(tx_status_fifo_used, lan9118_state),
+         VMSTATE_INT32(tx_status_fifo_head, lan9118_state),
+         VMSTATE_UINT32_ARRAY(tx_status_fifo, lan9118_state, 512),
+-        VMSTATE_INT32(rx_status_fifo_size, lan9118_state),
++        VMSTATE_INT32(rx_status_fifo_wordcount, lan9118_state),
+         VMSTATE_INT32(rx_status_fifo_used, lan9118_state),
+         VMSTATE_INT32(rx_status_fifo_head, lan9118_state),
          VMSTATE_UINT32_ARRAY(rx_status_fifo, lan9118_state,
-                              RX_STATUS_FIFO_BYTES / 4),
-         VMSTATE_UNUSED(896 * 4 - RX_STATUS_FIFO_BYTES),
--        VMSTATE_INT32(rx_fifo_size, lan9118_state),
-+        VMSTATE_INT32(rx_fifo_wordcount, lan9118_state),
-         VMSTATE_INT32(rx_fifo_used, lan9118_state),
-         VMSTATE_INT32(rx_fifo_head, lan9118_state),
-         VMSTATE_UINT32_ARRAY(rx_fifo, lan9118_state,
 @@ -462,7 +462,7 @@ static void lan9118_reset(DeviceState *d)
-     s->txp->fifo_used = 0;
-     s->tx_fifo_bytes = TX_DATA_FIFO_BYTES;
      s->tx_status_fifo_used = 0;
--    s->rx_fifo_size = RX_DATA_FIFO_BYTES / 4;
-+    s->rx_fifo_wordcount = RX_DATA_FIFO_BYTES / 4;
+     s->rx_fifo_size = 2640;
      s->rx_fifo_used = 0;
-     s->rx_status_fifo_wordcount = RX_STATUS_FIFO_BYTES / 4;
+-    s->rx_status_fifo_size = RX_STATUS_FIFO_BYTES / 4;
++    s->rx_status_fifo_wordcount = RX_STATUS_FIFO_BYTES / 4;
      s->rx_status_fifo_used = 0;
-@@ -504,8 +504,9 @@ static void rx_fifo_push(lan9118_state *s, uint32_t val)
- {
-     int fifo_pos;
-     fifo_pos = s->rx_fifo_head + s->rx_fifo_used;
--    if (fifo_pos >= s->rx_fifo_size)
--      fifo_pos -= s->rx_fifo_size;
-+    if (fifo_pos >= s->rx_fifo_wordcount) {
-+      fifo_pos -= s->rx_fifo_wordcount;
-+    }
-     s->rx_fifo[fifo_pos] = val;
-     s->rx_fifo_used++;
- }
-@@ -584,7 +585,7 @@ static ssize_t lan9118_receive(NetClientState *nc, const uint8_t *buf,
-     fifo_len = (size + n + 3) >> 2;
-     /* Add a word for the CRC.  */
-     fifo_len++;
--    if (s->rx_fifo_size - s->rx_fifo_used < fifo_len) {
-+    if (s->rx_fifo_wordcount - s->rx_fifo_used < fifo_len) {
+     s->rxp_offset = 0;
+     s->rxp_size = 0;
+@@ -568,7 +568,7 @@ static ssize_t lan9118_receive(NetClientState *nc, const uint8_t *buf,
+     }
+ 
+     /* TODO: Implement FIFO overflow notification.  */
+-    if (s->rx_status_fifo_used == s->rx_status_fifo_size) {
++    if (s->rx_status_fifo_used == s->rx_status_fifo_wordcount) {
          return -1;
      }
  
-@@ -672,8 +673,8 @@ static uint32_t rx_fifo_pop(lan9118_state *s)
-     } else if (s->rxp_size > 0) {
-         s->rxp_size--;
-         val = s->rx_fifo[s->rx_fifo_head++];
--        if (s->rx_fifo_head >= s->rx_fifo_size) {
--            s->rx_fifo_head -= s->rx_fifo_size;
-+        if (s->rx_fifo_head >= s->rx_fifo_wordcount) {
-+            s->rx_fifo_head -= s->rx_fifo_wordcount;
+@@ -609,8 +609,8 @@ static ssize_t lan9118_receive(NetClientState *nc, const uint8_t *buf,
+         rx_fifo_push(s, crc);
+     }
+     n = s->rx_status_fifo_head + s->rx_status_fifo_used;
+-    if (n >= s->rx_status_fifo_size) {
+-        n -= s->rx_status_fifo_size;
++    if (n >= s->rx_status_fifo_wordcount) {
++        n -= s->rx_status_fifo_wordcount;
+     }
+     s->rx_packet_size[s->rx_packet_size_tail] = fifo_len;
+     s->rx_packet_size_tail = (s->rx_packet_size_tail + 1023) & 1023;
+@@ -732,8 +732,8 @@ static uint32_t rx_status_fifo_pop(lan9118_state *s)
+     if (s->rx_status_fifo_used != 0) {
+         s->rx_status_fifo_used--;
+         s->rx_status_fifo_head++;
+-        if (s->rx_status_fifo_head >= s->rx_status_fifo_size) {
+-            s->rx_status_fifo_head -= s->rx_status_fifo_size;
++        if (s->rx_status_fifo_head >= s->rx_status_fifo_wordcount) {
++            s->rx_status_fifo_head -= s->rx_status_fifo_wordcount;
          }
-         s->rx_fifo_used--;
-     } else if (s->rxp_pad > 0) {
-@@ -1135,8 +1136,8 @@ static void lan9118_writel(void *opaque, hwaddr offset,
-                 s->rxp_offset = 0;
-             }
-             s->rx_fifo_head += s->rxp_size;
--            if (s->rx_fifo_head >= s->rx_fifo_size) {
--                s->rx_fifo_head -= s->rx_fifo_size;
-+            if (s->rx_fifo_head >= s->rx_fifo_wordcount) {
-+                s->rx_fifo_head -= s->rx_fifo_wordcount;
-             }
-         }
-         break;
+         /* ??? What value should be returned when the FIFO is empty?  */
+         DPRINTF("RX status pop 0x%08x\n", val);
 -- 
 2.41.0
 
