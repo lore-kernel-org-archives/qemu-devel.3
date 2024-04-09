@@ -4,57 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EAD6CD1292
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 01:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59569C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 01:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru0YG-0002rL-Er; Mon, 08 Apr 2024 21:45:32 -0400
+	id 1ru0ZT-0003iK-TN; Mon, 08 Apr 2024 21:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshanliukou@163.com>)
- id 1ru0YD-0002qs-Ny; Mon, 08 Apr 2024 21:45:30 -0400
-Received: from m15.mail.163.com ([45.254.50.220])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaoshanliukou@163.com>)
- id 1ru0Y8-0002dZ-TI; Mon, 08 Apr 2024 21:45:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=SKbmt
- GgfdYAt7wOyjzWxqhxCPv8VX3ag2PzYIUaPHL4=; b=RvTUF2zZcv5tew2E5TiJJ
- 2fDem6qHGgA5qP5mD5fUaqD/N7cHXV+gS3eInrf63b7E6DMiBCtyR9Gc8sI63SsF
- kzX6bepZ0owg609h0TrEyUTL4Br+wVzxw+CGKlpFg6tE7Pk1vFWsFfmllTCr8hSQ
- Xw8vA7hlOOrp17m4VkzZVc=
-Received: from yangzhang2020.localdomain (unknown [60.27.226.9])
- by gzga-smtp-mta-g0-0 (Coremail) with SMTP id _____wDXj5GbnRRm+V4oAg--.35579S2;
- Tue, 09 Apr 2024 09:45:00 +0800 (CST)
-From: "yang.zhang" <gaoshanliukou@163.com>
-To: qemu-devel@nongnu.org
-Cc: dbarboza@ventanamicro.com, bin.meng@windriver.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org,
- "yang.zhang" <yang.zhang@hexintek.com>
-Subject: [PATCH] hw/intc/riscv_aplic: APLICs should add child earlier than
- realize
-Date: Tue,  9 Apr 2024 09:44:45 +0800
-Message-Id: <20240409014445.278-1-gaoshanliukou@163.com>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ru0ZS-0003i9-J8
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 21:46:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ru0ZR-0002zW-02
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 21:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712627203;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KBGljJWvGfiJmcv1NYxhnpKObL+8iQ9pK0qHfslD7EQ=;
+ b=ebr6UqcYP4z+4eaDDRrlZRm0+mQzAkgUbxq08xpOEM3vQ+5moTMVuO2UkekU6slhu4Nbfd
+ 7y8OBe3EzrwyThBv7RPzpiXTupIyORBF1iGvMJ9dfhFMIFtXYwhrPlo55mn1QL/WTFNypV
+ KY4sl4OqkOymCnEatfd4UbDOTfEjWJI=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-34-aOhyIZ3YPcKpj3j_bb3z3w-1; Mon, 08 Apr 2024 21:46:42 -0400
+X-MC-Unique: aOhyIZ3YPcKpj3j_bb3z3w-1
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-1e46bce2455so7175765ad.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 18:46:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712627201; x=1713232001;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KBGljJWvGfiJmcv1NYxhnpKObL+8iQ9pK0qHfslD7EQ=;
+ b=EeeMND/m/akiU0k3TeZmIIypQ/FdEe0sJTy9hWTIrVSPrPfisEgx93dqcBRUlv5iM1
+ 37iwVocQjK4StwUyc6fVL6z8zEsqcCRuUorPNr/r1piWxM1LRY6KxaePV5IcryL0J5X7
+ totatHDDzZ5zUm7nMSYtMz/c1/hPRZOoVMNa5wweu2XV6aCYeC4RTPVyysVQzBkvp7tQ
+ 9tE3US9oaMyYEKlCgEKQViADDsocI/xGvGszZ5IXG0ewHAD6/AB3EYbNrnGs+gfWtPVk
+ 0gcJWVFGbZ25JGOdkNMfnhrthCg671HCOAAmpUCOF8L9fEt6J5AI0EThuQ6q2jO9tmPy
+ PQpA==
+X-Gm-Message-State: AOJu0YwBrVcJGJ8MQnPYRl/2on/LnbXCubvqlvaXoH7hmAli5vsIE5LT
+ vKhS5ENrjbOInzYYf4i2hswrJQRdqYW8gx7Y/A0iGzvV+8uxotP9VnM73f8ZON7zgaUXhi1BMwW
+ xOpH+inUdC1oG0fjABIT4Hfsgz6z6MY6kI/uApKHnFqSXL2n2TiPTr0ZPubURr8kwjwRHIT2Z0u
+ r9MGSMJrI5IOYU3rfEf5i+4Ml/rNs=
+X-Received: by 2002:a17:902:b94a:b0:1e3:e1e8:bb5 with SMTP id
+ h10-20020a170902b94a00b001e3e1e80bb5mr5106531pls.28.1712627201069; 
+ Mon, 08 Apr 2024 18:46:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFD56UXXUnZpYw//q8EwhTMtJSZUiv9hxxVm/HzZmPsM1GDR5R3DsGPYIwePmuJrCMdqMZNKBB3Q0vrlUCnyqg=
+X-Received: by 2002:a17:902:b94a:b0:1e3:e1e8:bb5 with SMTP id
+ h10-20020a170902b94a00b001e3e1e80bb5mr5106523pls.28.1712627200777; Mon, 08
+ Apr 2024 18:46:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wDXj5GbnRRm+V4oAg--.35579S2
-X-Coremail-Antispam: 1Uf129KBjvdXoWrKF1rGr43WFWrGFy7WrW8Crg_yoWkurb_GF
- 9ak3srGr45JF4Fva1DCF4UJrW0v34rurW3ZFWSvF4rtr4UKr98twsF9r93trW09rW7Cr95
- GFykZr93CryUGjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUnWE_tUUUUU==
-X-Originating-IP: [60.27.226.9]
-X-CM-SenderInfo: pjdr2x5dqox3xnrxqiywtou0bp/1tbiRAu68mVOCNubxgACsg
-Received-SPF: pass client-ip=45.254.50.220; envelope-from=gaoshanliukou@163.com;
- helo=m15.mail.163.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
+In-Reply-To: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 9 Apr 2024 09:46:29 +0800
+Message-ID: <CACGkMEtGcn25MT73xczHtXzcYDZwFO1W1TEqcM-gsFEy81Htbg@mail.gmail.com>
+Subject: Re: [PATCH] Revert "hw/virtio: Add support for VDPA network
+ simulation devices"
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,44 +98,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "yang.zhang" <yang.zhang@hexintek.com>
+On Mon, Apr 8, 2024 at 5:47=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
+wrote:
+>
+> This reverts commit cd341fd1ffded978b2aa0b5309b00be7c42e347c.
+>
+> The patch adds non-upstream code in
+> include/standard-headers/linux/virtio_pci.h
+> which would make maintainance harder.
+>
+> Revert for now.
+>
+> Suggested-by: Jason Wang <jasowang@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
-Since only root APLICs can have hw IRQ lines, aplic->parent should
-be initialized first.
+Acked-by: Jason Wang <jasowang@redhat.com>
 
-Fixes: e8f79343cf ("hw/intc: Add RISC-V AIA APLIC device emulation")
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: yang.zhang <yang.zhang@hexintek.com>
----
- hw/intc/riscv_aplic.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index fc5df0d598..32edd6d07b 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -1000,16 +1000,16 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
-     qdev_prop_set_bit(dev, "msimode", msimode);
-     qdev_prop_set_bit(dev, "mmode", mmode);
- 
-+    if (parent) {
-+        riscv_aplic_add_child(parent, dev);
-+    }
-+
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     if (!is_kvm_aia(msimode)) {
-         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
-     }
- 
--    if (parent) {
--        riscv_aplic_add_child(parent, dev);
--    }
--
-     if (!msimode) {
-         for (i = 0; i < num_harts; i++) {
-             CPUState *cpu = cpu_by_arch_id(hartid_base + i);
--- 
-2.25.1
+Thanks
 
 
