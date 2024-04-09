@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9055CD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6182BC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruHGp-0000ho-ML; Tue, 09 Apr 2024 15:36:39 -0400
+	id 1ruHGT-0000Yj-6a; Tue, 09 Apr 2024 15:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGn-0000gr-Fe
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:37 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1ruHGR-0000Ya-V2
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:15 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGk-0004gK-Ng
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:36 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e4266673bbso22532875ad.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:34 -0700 (PDT)
+ id 1ruHGQ-0004dV-97
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:15 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1e3ca546d40so32787645ad.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712691393; x=1713296193; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712691373; x=1713296173; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LWeWfrDPztEwkV9YuE7zu+DtIohBh0oWfxn6udjmQ4s=;
- b=hfDSbyaBzkl5eQ8A3w3/i15lcs4dlSVlqe/IKxEkMMGDQa1RCwiL9omjh7v2s3eXSO
- E4dNnrpiluSqppj1XZSqFnyzd/sWAHLHIepzbwtVuwrW3hHqyoBxMJ1hUTH3qs+RbOXo
- yaoBXHmpWp+1lMbM+Kmpuo4RcCF9Vrk3Xm/I+zNry6oIdIGVVcLe2WdlojrfyxjUG2NG
- zJL5Y/PUjO7Hi3D4YwTqUr7elSix56gx0EgChlx7ftV5ermovGGWxu1YYmVLGKRGLYRa
- PV/95kLuiq26jtlM65YGO5H5vbREMzEIKYbOmi/3IE9nVDlfSqFhfMXmoASTmJiSSXui
- 4NjQ==
+ bh=RcrZGxEnfZgrLqlhciK4hABUGUNHIg16hIoNjeHOda0=;
+ b=O0XjgK0BOwClsrHSD5SVhItjS0tXD5REhSWHRaLcsuoHHSTR5ZKYWhk4sn4yr0uvy5
+ GpAhRKyJB52zRXjE11IY0FpYSD1MEYSU5xNypA1OW9HC7UqZhieTLx0e3Ckdm4E09pW7
+ I7nsWq8yJQBGHIO0CBqTIxbWwGFYXqI1RnwKhz9YIKMknIi6Z4S0lkDvvV8AcEIRkil9
+ KpQKIl6ZjZ++GORxWMbMk1PJpzPYo77idXjyJhOJi5BfYhrLOC2hxuVx2kWBRIlY+f7q
+ WHNb5IowYYcPoSqZKRp/Ix3aNTXGFdgUAKzBHQ27oBHqr3Yq0q2rvopDRIJoIjRKVT9q
+ e4HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712691393; x=1713296193;
+ d=1e100.net; s=20230601; t=1712691373; x=1713296173;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LWeWfrDPztEwkV9YuE7zu+DtIohBh0oWfxn6udjmQ4s=;
- b=eftH58S4avBnucUICkYCcld6c+kk4hRW+uvRoVzYBrgVL4f8+J+hog7xwtXyzS2f53
- o62pyRgMXeL0UaldqnaKtWOJCZzIxBDgWDovWlGZ2PxwAlrxuXnG9XwOBbgHn8uipgx5
- RwGh8g2Gx6HZk7RlAgDSitFlZz+RbujpxXhcFUD2zaeA7xhxKfofC2Y9ImRWowrg9YnJ
- Fvy+3LipKnVkKZzarI9Zt65RYHyVFPO0IDWT4qebxyOQw59U58/qt0nSF+vUek8oFZaf
- Y60N64DldhDVqPHM7bBulHSfU6/gLy5k+KtJqSsUhmKFqyfEEeM7cptSrCPK0DbPWaih
- uKPQ==
-X-Gm-Message-State: AOJu0YxVlc2jX0ovJJ2ShV6W9sjqdZNlFjbCjrtYkp4c3Mv0UfjRdA94
- PqB5+StSAKhpBAWdu1stlXryACHIoei8f7F/RfSESNYesuzn1eJOnSSFF9z9T43Trz0+718taco
- b
-X-Google-Smtp-Source: AGHT+IEzAJnnYLM1IZIBvy/TheKGie2hHjDzTniIG874R+B5uIZIzZxRK2JGUS8Hul+fyG/5P1M46w==
-X-Received: by 2002:a17:903:28c:b0:1e0:4dfd:c121 with SMTP id
- j12-20020a170903028c00b001e04dfdc121mr825476plr.68.1712691393520; 
- Tue, 09 Apr 2024 12:36:33 -0700 (PDT)
+ bh=RcrZGxEnfZgrLqlhciK4hABUGUNHIg16hIoNjeHOda0=;
+ b=BPGnub6gilv+W0pYLEsWTlyr8lkxehhroRgBhF0KLt8WU+r7CY5h5dvCHe7xbfQV//
+ 8R6xKTO6Hx/WGf4P6RdpdXJeEgDP0mbkPJj4TSlY3Ym9L/HTZZf3FIRFCvHlU+/tIHeQ
+ i3UKE2RoqCI58zQ/hZNwTzij7SsgrWN1W+Yon0Cz0F8aOi3rAKpxc16ib8bErhpp/7dB
+ 10uiL2LrjvaJjdDHb8t3IrqXjVzK1lqu2O4sqRt4E7r59q2S/DzaCd+CGPUj8LTpBcw0
+ 91fkdbHiIiZ1M7Ar+lOfRPrx00eYH9vMwU9wlbyuQ9pHiI6NYJOz8jMnGFGiHtg1MXsl
+ yCxw==
+X-Gm-Message-State: AOJu0YzymKBEoT0HlmlkEdb22TTl2bVGmIKX+G0Qa2PMZOfhMFz2dIpY
+ Z/3aVwGupvUTYlX4gz0rUmZ78yWBrxwaKQnamL0Xkm5bry/lApayRe+CXhgulvDlAZeELIMxmba
+ A
+X-Google-Smtp-Source: AGHT+IHzLEmVrSQQngDOt3J2FuXdg443OTw76cp7x8wqkU1vabvTdt/3CtGFOUDAHHmdMR2RXKXMPw==
+X-Received: by 2002:a17:902:e541:b0:1e2:a5b3:e4 with SMTP id
+ n1-20020a170902e54100b001e2a5b300e4mr996525plf.0.1712691372878; 
+ Tue, 09 Apr 2024 12:36:12 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.32
+ c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 12:36:33 -0700 (PDT)
+ Tue, 09 Apr 2024 12:36:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?J=C3=B8rgen=20Hansen?= <Jorgen.Hansen@wdc.com>,
+Cc: Zack Buhman <zack@buhman.org>, Yoshinori Sato <ysato@users.sourceforge.jp>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 19/20] accel/tcg: Improve can_do_io management
-Date: Tue,  9 Apr 2024 09:36:02 -1000
-Message-Id: <20240409193603.1703216-20-richard.henderson@linaro.org>
+Subject: [PULL v2 05/20] target/sh4: mac.w: memory accesses are 16-bit words
+Date: Tue,  9 Apr 2024 09:35:48 -1000
+Message-Id: <20240409193603.1703216-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240409193603.1703216-1-richard.henderson@linaro.org>
 References: <20240409193603.1703216-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,144 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already attempted to set and clear can_do_io before the first
-and last insns, but only used the initial value of max_insns and
-the call to translator_io_start to find those insns.
+From: Zack Buhman <zack@buhman.org>
 
-Now that we track insn_start in DisasContextBase, and now that
-we have emit_before_op, we can wait until we have finished
-translation to identify the true first and last insns and emit
-the sets of can_do_io at that time.
+Before this change, executing a code sequence such as:
 
-This fixes the case of a translation block which crossed a page
-boundary, and for which the second page turned out to be mmio.
-In this case we truncate the block, and the previous logic for
-can_do_io could leave a block with a single insn with can_do_io
-set to false, which would fail an assertion in cpu_io_recompile.
+           mova   tblm,r0
+           mov    r0,r1
+           mova   tbln,r0
+           clrs
+           clrmac
+           mac.w  @r0+,@r1+
+           mac.w  @r0+,@r1+
 
-Reported-by: Jørgen Hansen <Jorgen.Hansen@wdc.com>
+           .align 4
+  tblm:    .word  0x1234
+           .word  0x5678
+  tbln:    .word  0x9abc
+           .word  0xdefg
+
+Does not result in correct behavior:
+
+Expected behavior:
+  first macw : macl = 0x1234 * 0x9abc + 0x0
+               mach = 0x0
+
+  second macw: macl = 0x5678 * 0xdefg + 0xb00a630
+               mach = 0x0
+
+Observed behavior (qemu-sh4eb, prior to this commit):
+
+  first macw : macl = 0x5678 * 0xdefg + 0x0
+               mach = 0x0
+
+  second macw: (unaligned longword memory access, SIGBUS)
+
+Various SH-4 ISA manuals also confirm that `mac.w` is a 16-bit word memory
+access, not a 32-bit longword memory access.
+
+Signed-off-by: Zack Buhman <zack@buhman.org>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Jørgen Hansen <Jorgen.Hansen@wdc.com>
+Message-Id: <20240402093756.27466-1-zack@buhman.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/translator.h |  1 -
- accel/tcg/translator.c    | 45 ++++++++++++++++++++-------------------
- 2 files changed, 23 insertions(+), 23 deletions(-)
+ target/sh4/translate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index ceaeca8c91..2c4fb818e7 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -87,7 +87,6 @@ typedef struct DisasContextBase {
-     int num_insns;
-     int max_insns;
-     bool singlestep_enabled;
--    int8_t saved_can_do_io;
-     bool plugin_enabled;
-     struct TCGOp *insn_start;
-     void *host_addr[2];
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index ae61c154c2..9de0bc34c8 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -18,20 +18,14 @@
- 
- static void set_can_do_io(DisasContextBase *db, bool val)
- {
--    if (db->saved_can_do_io != val) {
--        db->saved_can_do_io = val;
--
--        QEMU_BUILD_BUG_ON(sizeof_field(CPUState, neg.can_do_io) != 1);
--        tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
--                        offsetof(ArchCPU, parent_obj.neg.can_do_io) -
--                        offsetof(ArchCPU, env));
--    }
-+    QEMU_BUILD_BUG_ON(sizeof_field(CPUState, neg.can_do_io) != 1);
-+    tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
-+                    offsetof(ArchCPU, parent_obj.neg.can_do_io) -
-+                    offsetof(ArchCPU, env));
- }
- 
- bool translator_io_start(DisasContextBase *db)
- {
--    set_can_do_io(db, true);
--
-     /*
-      * Ensure that this instruction will be the last in the TB.
-      * The target may override this to something more forceful.
-@@ -84,13 +78,6 @@ static TCGOp *gen_tb_start(DisasContextBase *db, uint32_t cflags)
-                          - offsetof(ArchCPU, env));
-     }
- 
--    /*
--     * cpu->neg.can_do_io is set automatically here at the beginning of
--     * each translation block.  The cost is minimal, plus it would be
--     * very easy to forget doing it in the translator.
--     */
--    set_can_do_io(db, db->max_insns == 1);
--
-     return icount_start_insn;
- }
- 
-@@ -129,6 +116,7 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
- {
-     uint32_t cflags = tb_cflags(tb);
-     TCGOp *icount_start_insn;
-+    TCGOp *first_insn_start = NULL;
-     bool plugin_enabled;
- 
-     /* Initialize DisasContext */
-@@ -139,7 +127,6 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-     db->num_insns = 0;
-     db->max_insns = *max_insns;
-     db->singlestep_enabled = cflags & CF_SINGLE_STEP;
--    db->saved_can_do_io = -1;
-     db->insn_start = NULL;
-     db->host_addr[0] = host_pc;
-     db->host_addr[1] = NULL;
-@@ -159,6 +146,9 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-         *max_insns = ++db->num_insns;
-         ops->insn_start(db, cpu);
-         db->insn_start = tcg_last_op();
-+        if (first_insn_start == NULL) {
-+            first_insn_start = db->insn_start;
-+        }
-         tcg_debug_assert(db->is_jmp == DISAS_NEXT);  /* no early exit */
- 
-         if (plugin_enabled) {
-@@ -171,10 +161,6 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-          * done next -- either exiting this loop or locate the start of
-          * the next instruction.
-          */
--        if (db->num_insns == db->max_insns) {
--            /* Accept I/O on the last instruction.  */
--            set_can_do_io(db, true);
--        }
-         ops->translate_insn(db, cpu);
- 
-         /*
-@@ -207,6 +193,21 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-     ops->tb_stop(db, cpu);
-     gen_tb_end(tb, cflags, icount_start_insn, db->num_insns);
- 
-+    /*
-+     * Manage can_do_io for the translation block: set to false before
-+     * the first insn and set to true before the last insn.
-+     */
-+    if (db->num_insns == 1) {
-+        tcg_debug_assert(first_insn_start == db->insn_start);
-+    } else {
-+        tcg_debug_assert(first_insn_start != db->insn_start);
-+        tcg_ctx->emit_before_op = first_insn_start;
-+        set_can_do_io(db, false);
-+    }
-+    tcg_ctx->emit_before_op = db->insn_start;
-+    set_can_do_io(db, true);
-+    tcg_ctx->emit_before_op = NULL;
-+
-     if (plugin_enabled) {
-         plugin_gen_tb_end(cpu, db->num_insns);
-     }
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index a9b1bc7524..6643c14dde 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -816,10 +816,10 @@ static void _decode_opc(DisasContext * ctx)
+             TCGv arg0, arg1;
+             arg0 = tcg_temp_new();
+             tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
+-                                MO_TESL | MO_ALIGN);
++                                MO_TESW | MO_ALIGN);
+             arg1 = tcg_temp_new();
+             tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx,
+-                                MO_TESL | MO_ALIGN);
++                                MO_TESW | MO_ALIGN);
+             gen_helper_macw(tcg_env, arg0, arg1);
+             tcg_gen_addi_i32(REG(B11_8), REG(B11_8), 2);
+             tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 2);
 -- 
 2.34.1
 
