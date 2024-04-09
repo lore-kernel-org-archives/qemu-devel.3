@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 079A7CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D3D3C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru80u-0006tr-Ll; Tue, 09 Apr 2024 05:43:36 -0400
+	id 1ru81o-0007Km-3D; Tue, 09 Apr 2024 05:44:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ru80r-0006t5-Id
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:43:34 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru81l-0007KJ-Rf
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:44:29 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ru80o-00073w-Ir
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:43:33 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-6e6888358dfso3241797a34.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:43:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru81k-0007Bz-1K
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:44:29 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a51fc011e8fso42978366b.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1712655809; x=1713260609; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1712655865; x=1713260665; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Y3Kcrz1FLMcB5NuIbKjq1jK9dIrPfEZZQKCZyAyPH2E=;
- b=BQj83RTsY+0PBrqd4Hi1ILva6gKSQ2vvkD5wzuPCagEF7o7AKtd5hIXJjipoaPgP9y
- n+lKv3ha6cMiw0yTknKLYfMYIXJR9R9DuR5JxURiSS5ooqay6uUBEF5cP/3KQcUDzONR
- SJZoPn1dDNOeBKhnIcEcc29JMXz3nASZNKfahKXSnthY0rsLroahoMLQles2SP4Uw5c5
- kc9ZIJyK3ypCLEN92QDg3+elEOx+b0m4NR1Orr6mFi0yslEQvtd/vxdPrGeiPUjbfEVk
- OOitlSjLJtYVoI9ktZPiEIpayMlyl7LQQ+rS75E427yBHFSekc4+kKSL3Z8hsrgafm40
- sLZw==
+ bh=0ONk2ACysYoOUtOHX8ADC/l99dOcxUlQsrwtm1giLSQ=;
+ b=aGvWtyZeOmKsZp+Wg9YkYD4MnXwbl1zYsEjAll/O+QeQATwH66SH/5419eLwIYTNVu
+ 0Fks7v6sXYucm++G85EKX5TWmTZ5U3wBkGGNp79ReL7PrzKj7tP2pXyP+DoAzwh7AuaA
+ Yl89MmfErgUelwRgmbPJhRFgEEQICqRRJZK/4QQSLr61fQLu0Y2Xz5IA0na/LaiQRjcl
+ TzIR2ySOmOCxaF6qiGa31yN8s+f4Ns6LzN7UUGK1I8kpsnKkAGTFwEZo46Yd7Jdfhbcd
+ +4QsU1Gs5bgLYrTX1aFOmoOk8fXXEPPge6R+avMd8WPX15xW68bRy4M7o6M7bfXalcCh
+ RjvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712655809; x=1713260609;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712655865; x=1713260665;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y3Kcrz1FLMcB5NuIbKjq1jK9dIrPfEZZQKCZyAyPH2E=;
- b=T1cPMGxvo1negfFU8BhTyu2bmUs2Zb8VS4UncAi6hg6mk6ntmkWQ5Rf3SUZT9d18Gy
- aYKog75Ca16VLCUSkwtJp7BrJpcN+qswq1Ga6SVaVS4cQZ1hAqGAV/PE/TfV2M945DTn
- zl8GlthrEFqESK27MocmPtiYb6jbsMoukur018aggTBWCQzNkjAj0xYtACs9NyS6jAlg
- ReKMwbqcv0+2xn0TsGRviUZt2QnywJqO4OaV7STPdzn648CueLY/Igom/bGr8h/5N325
- slYE7hEI9+c+m0p21xxk3VZSts36M3bl3X8dt3OEI7NJoth/bEWw2AfbDpG9+DFK8Epo
- PLlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWF+pqU/hB2XPsNcwT52Uy0jIbWJW3ilUf3IyXU1lXEGDAv61+RdLnydKgMO1BfTpzUiQDwr+enagb6u7GCpuiNSd1eeQY=
-X-Gm-Message-State: AOJu0Yyk7yhM+3F61jEfxZAPpdpySzmGY20o2B4f3QTz6uE2qhhaggXD
- Obh01UpXjUbRwUTRqFwv7SteCqFgxBOf6oXkZYsD6v/lOtqqdMfnKBg6NO/yL2o=
-X-Google-Smtp-Source: AGHT+IH4IktjB8mMaJogDytSVS9S5Vt5375+G32YoPrq1yufjm8o4s7v5DOGby7jRYalUfyVpB5ppg==
-X-Received: by 2002:a05:6808:a9b:b0:3c5:fc44:643d with SMTP id
- q27-20020a0568080a9b00b003c5fc44643dmr2717889oij.54.1712655809012; 
- Tue, 09 Apr 2024 02:43:29 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.15.159])
+ bh=0ONk2ACysYoOUtOHX8ADC/l99dOcxUlQsrwtm1giLSQ=;
+ b=CT7/Qa3VUT+zd8qj3u0erKVyQW5ioagNuTjsKTeo6SucGPWNQqHGY6Ht++S1yBRirj
+ 3TdygMCsKn0xjlxKpTzFexmWD3wQ933kBzEr7yxiMbo+vGlCTmlB0lUQuL934VcJuYLv
+ ZvEJkULySkw3jYeAoNaT+Re65rIGzDEfy2aJwSXqG+uj4a10dVcgP67y9Tq5qrUsHLqq
+ Erxm21CZc676F5m+i+cdyPsuXLHMC2jS3thze1/yvD3YNbemAFFQeGRpUA3eM05TQ7MI
+ 59xBLtyA2HxjyBGl1Zo892nZNn1nOlc24pYa3MFsxC6AxPC1rGDjfS8OHAfW5OiIR7nA
+ v2Xw==
+X-Gm-Message-State: AOJu0Yzkbdimm14y6dTjB7RagVEbJe8dc+Fqc1NTUCzEPqbanc0HeVRN
+ 0LrOIQtzRd/pZu/hJzFMlhKMnkq23FgVEt+PY5wSS+A+DSPWufGPOWhwBLSteF4=
+X-Google-Smtp-Source: AGHT+IGZfPvlPJRZlagZSOTs/xF7lV9XQAQsy4QE6TI+wQ0gNwVB4rs05cinSYkwKQjn4dD5/4aaKQ==
+X-Received: by 2002:a17:907:970e:b0:a4f:c80c:1b69 with SMTP id
+ jg14-20020a170907970e00b00a4fc80c1b69mr9958733ejc.8.1712655865310; 
+ Tue, 09 Apr 2024 02:44:25 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.160.134])
  by smtp.gmail.com with ESMTPSA id
- t5-20020a635345000000b005e83b3ce8d9sm7825413pgl.8.2024.04.09.02.43.27
+ i3-20020a1709063c4300b00a51fa9f6d92sm465380ejg.38.2024.04.09.02.44.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 02:43:28 -0700 (PDT)
-Message-ID: <7e9cd605-04aa-41d9-af97-aaaadc347a39@ventanamicro.com>
-Date: Tue, 9 Apr 2024 06:43:25 -0300
+ Tue, 09 Apr 2024 02:44:24 -0700 (PDT)
+Message-ID: <384195db-6aab-4da0-80ea-d1c925904d14@linaro.org>
+Date: Tue, 9 Apr 2024 11:44:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] target/riscv: Support Zve32x and Zve64x extensions
+Subject: Re: [RFC PATCH-for-9.1 3/4] hw/i2c: Convert to spec v7 terminology
+ (automatically)
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Corey Minyard <cminyard@mvista.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Wolfram Sang <wsa+renesas@sang-engineering.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20240408213339.83149-1-philmd@linaro.org>
+ <20240408213339.83149-4-philmd@linaro.org>
+ <CABgObfaRtv3WwhYzUKSCpee3UQFuwAzUEstX0uFGdRFOV6j4_Q@mail.gmail.com>
 Content-Language: en-US
-To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-References: <20240328022343.6871-1-jason.chien@sifive.com>
- <CADr__8p1Gzg1u3Rk4EuT8k1nJyjDdXuMCfN7GZLLgWDJN3piSg@mail.gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CADr__8p1Gzg1u3Rk4EuT8k1nJyjDdXuMCfN7GZLLgWDJN3piSg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfaRtv3WwhYzUKSCpee3UQFuwAzUEstX0uFGdRFOV6j4_Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,55 +100,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jason,
-
-
-We're in the middle of code freeze for the incoming 9.0 release. In this
-period the maintainer will only queue bug fixes.
-
-Your support is a new feature, so it'll only be pushed after the release is
-done. Current ETA for the release is Apr 16th if there's no rc4. A safe
-bet is to expect Alistair to queue the patches in the start of May.
-
-
-Thanks,
-
-Daniel
-
-
-
-Perhaps we should start advertising the freeze dates more clearly in the
-qemu-riscv ML.
-
-On 4/9/24 03:29, Jason Chien wrote:
-> Ping.
+On 9/4/24 10:58, Paolo Bonzini wrote:
 > 
-> Jason Chien <jason.chien@sifive.com <mailto:jason.chien@sifive.com>> 於 2024年3月28日 週四 上午10:23寫道：
 > 
->     This patch series adds the support for Zve32x and Zvx64x and makes vector
->     registers visible in GDB if any of the V/Zve*/Zvk* extensions is enabled.
+> Il lun 8 apr 2024, 23:34 Philippe Mathieu-Daudé <philmd@linaro.org 
+> <mailto:philmd@linaro.org>> ha scritto:
 > 
->     v2:
->          Rebase onto riscv-to-apply.next (commit 385e575).
->     v3:
->          Spuash patch 2 into patch 1.
->          Spuash patch 4 into patch 3.
+>     Note, the QOM type definition is not modified, TYPE_I2C_TARGET
+>     remains defined as "i2c-slave".
 > 
->     Jason Chien (3):
->        target/riscv: Add support for Zve32x extension
->        target/riscv: Add support for Zve64x extension
->        target/riscv: Relax vector register check in RISCV gdbstub
 > 
->       target/riscv/cpu.c                      |  4 +++
->       target/riscv/cpu_cfg.h                  |  2 ++
->       target/riscv/cpu_helper.c               |  2 +-
->       target/riscv/csr.c                      |  2 +-
->       target/riscv/gdbstub.c                  |  2 +-
->       target/riscv/insn_trans/trans_rvv.c.inc |  4 +--
->       target/riscv/tcg/tcg-cpu.c              | 33 ++++++++++++++-----------
->       7 files changed, 30 insertions(+), 19 deletions(-)
+> Is this actually necessary? The only thing that could break is -global 
+> but I don't think it matters really.
+
+I remembered some discussion with Gerd where he mentioned we can not
+rename a QOM type because it is a stable interface (-device TYPE),
+but here I missed the type is abstract, so not user-creatable, thus
+it is safe to rename.
+
+Consider the following hunk squashed:
+
+-- >8 --
+diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
+index abefee78fd..8908267c17 100644
+--- a/include/hw/i2c/i2c.h
++++ b/include/hw/i2c/i2c.h
+@@ -24 +24 @@ typedef struct I2CNodeList I2CNodeList;
+-#define TYPE_I2C_TARGET "i2c-slave"
++#define TYPE_I2C_TARGET "i2c-target"
+---
+
 > 
->     -- 
->     2.43.2
+> Paolo
 > 
+> 
+>     [*]
+>     https://github.com/conscious-lang/conscious-lang-docs/blob/main/faq.md <https://github.com/conscious-lang/conscious-lang-docs/blob/main/faq.md>
+> 
+>     Inspired-by: Wolfram Sang <wsa+renesas@sang-engineering.com
+>     <mailto:wsa%2Brenesas@sang-engineering.com>>
+>     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org
+>     <mailto:philmd@linaro.org>>
+>     ---
+>       include/hw/display/i2c-ddc.h     |   2 +-
+>       include/hw/gpio/pca9552.h        |   2 +-
+>       include/hw/gpio/pca9554.h        |   2 +-
+>       include/hw/i2c/aspeed_i2c.h      |   4 +-
+>       include/hw/i2c/i2c.h             |  66 ++++-----
+>       include/hw/i2c/i2c_mux_pca954x.h |   2 +-
+>       include/hw/i2c/smbus_slave.h     |   4 +-
+>       include/hw/nvram/eeprom_at24c.h  |   4 +-
+>       include/hw/sensor/tmp105.h       |   2 +-
+>       hw/arm/aspeed.c                  | 232 +++++++++++++++----------------
+>       hw/arm/bananapi_m2u.c            |   2 +-
+>       hw/arm/cubieboard.c              |   2 +-
+>       hw/arm/musicpal.c                |   6 +-
+>       hw/arm/npcm7xx_boards.c          |  44 +++---
+>       hw/arm/nseries.c                 |   6 +-
+>       hw/arm/pxa2xx.c                  |  36 ++---
+>       hw/arm/realview.c                |   2 +-
+>       hw/arm/spitz.c                   |  12 +-
+>       hw/arm/stellaris.c               |   2 +-
+>       hw/arm/tosa.c                    |  14 +-
+>       hw/arm/versatilepb.c             |   2 +-
+>       hw/arm/vexpress.c                |   2 +-
+>       hw/arm/z2.c                      |  20 +--
+>       hw/audio/wm8750.c                |  18 +--
+>       hw/display/ati.c                 |   4 +-
+>       hw/display/i2c-ddc.c             |  10 +-
+>       hw/display/sii9022.c             |  16 +--
+>       hw/display/sm501.c               |   2 +-
+>       hw/display/ssd0303.c             |  14 +-
+>       hw/display/xlnx_dp.c             |   2 +-
+>       hw/gpio/max7310.c                |  14 +-
+>       hw/gpio/pca9552.c                |  14 +-
+>       hw/gpio/pca9554.c                |  14 +-
+>       hw/gpio/pcf8574.c                |  12 +-
+>       hw/i2c/aspeed_i2c.c              |  16 +--
+>       hw/i2c/core.c                    |  88 ++++++------
+>       hw/i2c/i2c_mux_pca954x.c         |   6 +-
+>       hw/i2c/imx_i2c.c                 |   2 +-
+>       hw/i2c/smbus_slave.c             |  12 +-
+>       hw/input/lm832x.c                |  14 +-
+>       hw/misc/axp2xx.c                 |  14 +-
+>       hw/misc/i2c-echo.c               |  14 +-
+>       hw/nvram/eeprom_at24c.c          |  22 +--
+>       hw/ppc/e500.c                    |   2 +-
+>       hw/ppc/pnv.c                     |   4 +-
+>       hw/ppc/sam460ex.c                |   2 +-
+>       hw/rtc/ds1338.c                  |  14 +-
+>       hw/rtc/m41t80.c                  |  12 +-
+>       hw/rtc/twl92230.c                |  16 +--
+>       hw/sensor/dps310.c               |  14 +-
+>       hw/sensor/emc141x.c              |  16 +--
+>       hw/sensor/lsm303dlhc_mag.c       |  16 +--
+>       hw/sensor/tmp105.c               |  16 +--
+>       hw/sensor/tmp421.c               |  20 +--
+>       hw/tpm/tpm_tis_i2c.c             |  12 +-
+>       55 files changed, 461 insertions(+), 461 deletions(-)
+
 
