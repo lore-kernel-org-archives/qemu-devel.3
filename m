@@ -4,81 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AAFACD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03EB2CD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruFeP-0006Wq-2f; Tue, 09 Apr 2024 13:52:53 -0400
+	id 1ruFj8-0007ro-Rq; Tue, 09 Apr 2024 13:57:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ruFeN-0006WP-Ug
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:52:51 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ruFeL-0003qS-8V
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:52:51 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6ecf8ebff50so3609586b3a.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 10:52:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1712685167; x=1713289967; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=w5C88C2zkVTCDsq5yvLZn9iz9/gb+e827a995NHxivs=;
- b=kuexNo1IqHLATbeP+k+konhfv2fOL6oDvuNe5V7ETvKM8v1F7BUM2YEv7Dtbx4/Msl
- QcuhFr4MZ8gxC6FbZoQNMlqXlBoQmKsjYioBBapXUjtvLo/QnNNsjSydOHg45JTPY2ch
- IoV3FncZ43gQaN+X5FLIl5Cz3bvWpwDEp7O+z4eAj8E3tdu1lArWe1En8lENdcwERzts
- gTuuTORgqK13qvZhLkdEzOQpWimIpbmCW3mbWGlaeRvoFYRPdT8OnDUumwchY/J+RRWz
- n33qdGdIhsOLcZ5dDw4uvs+2QOlG+GOc0Yak/qoRid1POvx7X9C3Ij6PLxgGk9Sp6pvk
- OPFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712685167; x=1713289967;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w5C88C2zkVTCDsq5yvLZn9iz9/gb+e827a995NHxivs=;
- b=n/1uFM5TAUP8uB2bF4CUg4aftovASUgMfQoFmFvIXucjgRdQGYFUzFZVjiY6smLaJy
- lwklMXO9+nVVXA7EuMamHo1t7zz4ruf/gpk6QMHvvIQVG8uRSJNbmHRgGTtip5Re5Iof
- jerZMB6IKZGOpJRDzchwSWVqzcwSCLjhJj8OTxl06H/+UdyaG/D6c/ihr21EYf240vPS
- gyFmTrA6HrRlMBNWWdC2TrjuIc7w8SIr++BNZQ7nBqhYkGYgck+sqn+G3iwbJTk8TWhQ
- 8GoaiYMucKZ7DUYweBbkZzq5PIdxanfqj0lnvuMEmEyezbYsw+hsATR2GJTfQlEbutVp
- o6bA==
-X-Gm-Message-State: AOJu0Yw1Jn8GGKIb5oeZ6hYySDNqi3bYiAVnxdz9E+hXYn336Odsx9NF
- PlQW1zBB+/CZztPvu+QhRp6Iww6g6qgay8ugg/eP7oSRZtUqY6yhgUDvU872eY9I+oq5fkMUsPL
- 6
-X-Google-Smtp-Source: AGHT+IHwuSNaqeH1q6CtQim8AiHIoUSeUhX7xzYyb3eJnWiw6hRzEOKBpPQYCcutsyS6FOjG/XLUcw==
-X-Received: by 2002:a05:6a20:d80d:b0:1a5:6be8:2d70 with SMTP id
- iv13-20020a056a20d80d00b001a56be82d70mr538654pzb.21.1712685167381; 
- Tue, 09 Apr 2024 10:52:47 -0700 (PDT)
-Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
- e11-20020aa7980b000000b006ece5ad143esm8598340pfl.127.2024.04.09.10.52.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 10:52:47 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1ruFir-0007jf-AT; Tue, 09 Apr 2024 13:57:29 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1ruFip-0004UY-JR; Tue, 09 Apr 2024 13:57:29 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 439GRdPP014362; Tue, 9 Apr 2024 17:57:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=BAg1KOQ2TGEoLYfjnJp/3AlYeCubit15NRI4TlQkCnE=;
+ b=pwNIe65KliIEAZHVefZVjJ8BbKQ+edhEX7YzQsmSbjCjMtHqmPtwBjeBpP8QTPG9tJdK
+ hJF82S3g4PCiu7aywIxEUad9ZwMkT+YdHF0j02/jqyqsZyDyrED1LRkEGUZD7/rOfTTk
+ z4rm5sicBeVQA12xW0jD9oOC2PqyUe0haK4SsQXw3XHMPilV4pve2XGjOdeChAHuWrmA
+ U6N19nJbe0/UXHn/hqc6NpAFyY0OJTYTXVvRoddxSYcAJmlPP6DYsDpP00kVvTzsd/cM
+ MWbzLoBD37UUFoCwicW/kXOnLnyhrlxg5YruaAKaPRiA+VUWQhh/rLIlPSUUg6TjSBOv Xw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xd974r79y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Apr 2024 17:57:17 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 439HvG3m028682;
+ Tue, 9 Apr 2024 17:57:16 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xd974r79w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Apr 2024 17:57:16 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 439GUxVY016971; Tue, 9 Apr 2024 17:57:16 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xbke2fdjn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Apr 2024 17:57:15 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 439HvAvs39584006
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 9 Apr 2024 17:57:12 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 49A4E20040;
+ Tue,  9 Apr 2024 17:57:10 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8488B20067;
+ Tue,  9 Apr 2024 17:57:08 +0000 (GMT)
+Received: from gfwr515.rchland.ibm.com (unknown [9.10.239.103])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  9 Apr 2024 17:57:08 +0000 (GMT)
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- alexei.filippov@syntacore.com, richard.henderson@linaro.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Joseph Chan <jchan@ventanamicro.com>
-Subject: [PATCH for-9.0] target/riscv: prioritize pmp errors in
- raise_mmu_exception()
-Date: Tue,  9 Apr 2024 14:52:41 -0300
-Message-ID: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.44.0
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
+ chalapathi.v@linux.ibm.com, saif.abrar@linux.vnet.ibm.com,
+ dantan@us.ibm.com
+Subject: [PATCH v2 1/6] hw/ppc: remove SPI responder model
+Date: Tue,  9 Apr 2024 12:56:55 -0500
+Message-Id: <20240409175700.27535-2-chalapathi.v@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
+References: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: tALhkRQv472rVJ3FGT-jERAzkxfyij6r
+X-Proofpoint-ORIG-GUID: iZs16v2vMeMvMDtoplODMRgpM3elmWcy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-09_12,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
+ suspectscore=0 spamscore=0 priorityscore=1501 phishscore=0 mlxscore=0
+ mlxlogscore=517 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404090118
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,83 +115,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raise_mmu_exception(), as is today, is prioritizing guest page faults by
-checking first if virt_enabled && !first_stage, and then considering the
-regular inst/load/store faults.
+-- Empty commit to align the patch numbers between PATCH v1 and PATCH v2.
+SPI responder model is removed as pnv spi controller and seeprom is
+implemented using QEMU SSI framework.
 
-There's no mention in the spec about guest page fault being a higher
-priority that PMP faults. In fact, privileged spec section 3.7.1 says:
-
-"Attempting to fetch an instruction from a PMP region that does not have
-execute permissions raises an instruction access-fault exception.
-Attempting to execute a load or load-reserved instruction which accesses
-a physical address within a PMP region without read permissions raises a
-load access-fault exception. Attempting to execute a store,
-store-conditional, or AMO instruction which accesses a physical address
-within a PMP region without write permissions raises a store
-access-fault exception."
-
-So, in fact, we're doing it wrong - PMP faults should always be thrown,
-regardless of also being a first or second stage fault.
-
-The way riscv_cpu_tlb_fill() and get_physical_address() work is
-adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
-reflected in the 'pmp_violation' flag. What we need is to change
-raise_mmu_exception() to prioritize it.
-
-Reported-by: Joseph Chan <jchan@ventanamicro.com>
-Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu_helper.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
-
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index fc090d729a..e3a7797d00 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1176,28 +1176,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
- 
-     switch (access_type) {
-     case MMU_INST_FETCH:
--        if (env->virt_enabled && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-+        } else if (env->virt_enabled && !first_stage) {
-             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_LOAD:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_STORE:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
--                RISCV_EXCP_STORE_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
-         }
-         break;
-     default:
--- 
-2.44.0
+Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
 
 
