@@ -4,39 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14DB4CD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6753DCD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruFVh-0004Wd-75; Tue, 09 Apr 2024 13:43:53 -0400
+	id 1ruFYR-0005MS-4k; Tue, 09 Apr 2024 13:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFVd-0004WQ-6w
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:43:49 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFYN-0005M6-4F
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:46:39 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFVR-000299-78
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:43:48 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFYL-0002yo-DX
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:46:38 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FBFD5D38A;
- Tue,  9 Apr 2024 20:45:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E8CF5D38E;
+ Tue,  9 Apr 2024 20:48:33 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 63D28AF832;
- Tue,  9 Apr 2024 20:43:33 +0300 (MSK)
-Message-ID: <8f61cbc2-710f-4026-a8fe-866e17dcd451@tls.msk.ru>
-Date: Tue, 9 Apr 2024 20:43:32 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id DB695AF837;
+ Tue,  9 Apr 2024 20:46:35 +0300 (MSK)
+Message-ID: <0f10a32d-61b7-4687-a4ab-26f4ceb9539c@tls.msk.ru>
+Date: Tue, 9 Apr 2024 20:46:35 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 5/7] vdpa-dev: Fix the issue of device status not updating
- when configuration interruption is triggered
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: lyx634449800 <yuxue.liu@jaguarmicro.com>, Jason Wang
- <jasowang@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <cover.1712647890.git.mst@redhat.com>
- <6ae72f609a21cfc56bf655cd4bcded5d07691ce7.1712647890.git.mst@redhat.com>
+Subject: Re: [PATCH] edk2: get version + date from git submodule
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+References: <20240325144440.1069662-1-kraxel@redhat.com>
 Content-Language: en-US
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -63,16 +57,16 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <6ae72f609a21cfc56bf655cd4bcded5d07691ce7.1712647890.git.mst@redhat.com>
+In-Reply-To: <20240325144440.1069662-1-kraxel@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
 X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,55 +82,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-09.04.2024 10:32, Michael S. Tsirkin пишет:
-> From: lyx634449800 <yuxue.liu@jaguarmicro.com>
-> 
-> The set_config callback function vhost_vdpa_device_get_config in
-> vdpa-dev does not fetch the current device status from the hardware
-> device, causing the guest os to not receive the latest device status
-> information.
-> 
-> The hardware updates the config status of the vdpa device and then
-> notifies the os. The guest os receives an interrupt notification,
-> triggering a get_config access in the kernel, which then enters qemu
-> internally. Ultimately, the vhost_vdpa_device_get_config function of
-> vdpa-dev is called
-> 
-> One scenario encountered is when the device needs to bring down the
-> vdpa net device. After modifying the status field of virtio_net_config
-> in the hardware, it sends an interrupt notification. However, the guest
-> os always receives the STATUS field as VIRTIO_NET_S_LINK_UP.
-> 
-> Signed-off-by: Yuxue Liu <yuxue.liu@jaguarmicro.com>
-> Acked-by: Jason Wang <jasowang@redhat.com>
-> Message-Id: <20240408020003.1979-1-yuxue.liu@jaguarmicro.com>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+25.03.2024 17:44, Gerd Hoffmann:
+> Turned out hard-coding version and date in the Makefile wasn't a bright
+> idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
+> from git instead.
 
-Ditto, is this a -stable material (for 8.2)?
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2233
 
 Thanks,
 
 /mjt
-
-> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-> index 13e87f06f6..64b96b226c 100644
-> --- a/hw/virtio/vdpa-dev.c
-> +++ b/hw/virtio/vdpa-dev.c
-> @@ -195,7 +195,14 @@ static void
->   vhost_vdpa_device_get_config(VirtIODevice *vdev, uint8_t *config)
->   {
->       VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
-> +    int ret;
->   
-> +    ret = vhost_dev_get_config(&s->dev, s->config, s->config_size,
-> +                            NULL);
-> +    if (ret < 0) {
-> +        error_report("get device config space failed");
-> +        return;
-> +    }
->       memcpy(config, s->config, s->config_size);
->   }
->   
-
 
