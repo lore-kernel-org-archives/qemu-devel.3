@@ -4,71 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAA7CD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACF9C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruEQG-0004bj-A6; Tue, 09 Apr 2024 12:34:12 -0400
+	id 1ruETK-0005sT-Lv; Tue, 09 Apr 2024 12:37:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEQE-0004bS-P3
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:34:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEQB-0006Sl-Nt
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:34:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712680446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Oot7y9h2sf/VMjHI33NKvv/6e/dWzuQxmrEH3uq11/I=;
- b=DD+AkHBujpYYlnid4JYT/fE0hXqPYS1vkocwDkPrMvJa2biCjBh4+45Zu0oZU1gSB9dC3z
- qt0bhhD9/qNL9qA42sQb5yslLjQLirxNp4q+VTXa990GzZnNqHnPgAWYtiTaZ2US6L6BOP
- qaaqCJGiUo4pWPRDQlRCemOjaWcOxco=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-gHOIdFYSNiOyJnOei86UnQ-1; Tue,
- 09 Apr 2024 12:34:02 -0400
-X-MC-Unique: gHOIdFYSNiOyJnOei86UnQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A8F7628EC104;
- Tue,  9 Apr 2024 16:34:00 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.204])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 85F62C0157E;
- Tue,  9 Apr 2024 16:34:00 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 6DA4D18009F4; Tue,  9 Apr 2024 18:33:55 +0200 (CEST)
-Date: Tue, 9 Apr 2024 18:33:55 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] edk2: get version + date from git submodule
-Message-ID: <5r7zfrd6lxztzsdbyqu6zs6spbtt445k6m2ylaiw67bvwgpwb2@syfv3wnabwwe>
-References: <20240325144440.1069662-1-kraxel@redhat.com>
- <CAFEAcA8eX=-6yXCZ2+X6niJPcgzkzXfHT9F6LpbfqV4b9VRW6w@mail.gmail.com>
- <sevlzxonvgps5m7r263bkzouabg62tbe6vknvv4rbvjfnnhkqg@jnqkst5xetwn>
- <CAFEAcA-xEK6_eT-TUP+adMsgoTU6kRQoz+9vfXO2Tz_PBLdmyA@mail.gmail.com>
- <CAFEAcA8Nty9zAvn9PB-azwvR7mF5tYOfz27AXi-vbuZDoS_ZVw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <adobriyan@gmail.com>)
+ id 1ruETI-0005sE-0H
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:37:20 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <adobriyan@gmail.com>)
+ id 1ruETA-0006yL-8i
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:37:17 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4169e385984so8711205e9.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 09:37:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712680628; x=1713285428; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=fB6FduRxQytIaWIsdNHPZwA3/7llnAILeuGfl7TYaTM=;
+ b=MTBOb1C2WyVlOHUL/zfrkl1aL5pOSeBukE32P0/28WkUR5aaxP7vI2cdPkyQHMD6yZ
+ aiO4tHN4oFU6YIMlygf9xw+x2SaQ3ZK/vPTNqygo7++v8Ei7XGlu89eUn2fVI9TWpWzj
+ xUS5R2BTnpidK+uL94V7pIxFF8OWU48vvmpIEmxpxBjlRhH1hY3nrAXQ4+lENety2Cim
+ //PnKERTwXlkrSxO0jPAYydtEXIdBehnlPO3sxXu5PaUTnusTZPthaDwP89rUEx438tc
+ YOJd4r5H5yYgvJyvRVf9wPGkQruz93WDCNECwwmJOW+zde4/tfWcX3mMdk423d+rFYru
+ giHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712680628; x=1713285428;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fB6FduRxQytIaWIsdNHPZwA3/7llnAILeuGfl7TYaTM=;
+ b=suuuJxX38Puy3F3vrDSdtKmFSqR1D9OKIzd4nVWDkgcATwBLDUh2nv4Ifi83Wtaa+P
+ pWwE0d0z3vwRnF9oJ5XDA5sJbau0kPkX/zb9aC87J938R/29WLs9coZu+GhIi0LwfzEg
+ G+nLElBzyu8yZSGgXCpEYZFWpFqAV7v2RTqQfwwMTytJXqZEtB3bjVgTCKP73EaqMONZ
+ wvESbCplM6W9B3ExKWboJOaQn5nlPbbKkPsdYMtSOs1B61c/FEITJ3st4TL5lYHZePYq
+ Dmfs0WU0xrdwCprE00ENgaeYk5iV2adXVuKglZkvTPF7jwFO1J9wilq46yFKsW8JCq5j
+ iSvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCViBORA/m5SkoVNhtluQuVU6+1CqeH9SDZEoWNeSoPxZWOfY3VViL/pfUX880DaKOmNVDXlLPDYttWhxgv5exqlojug+bU=
+X-Gm-Message-State: AOJu0YyAFIcSESJDfY+iV2Az8oR+0sqLSiba9v381/yTgLeY+HyXTjiY
+ p+cEVZJy+Hzi7VteihKoImLZH/v8VPPW55vbWISEigvEACkHpF4=
+X-Google-Smtp-Source: AGHT+IG2URpNZKSm4YUzzyARZVqzxjUMZyyhiKDJSOdNMCl5YpWtA8sQ1PtPMczovXqya0CWc2FPkA==
+X-Received: by 2002:a05:600c:3b22:b0:416:6344:8948 with SMTP id
+ m34-20020a05600c3b2200b0041663448948mr182969wms.2.1712680627937; 
+ Tue, 09 Apr 2024 09:37:07 -0700 (PDT)
+Received: from p183 ([46.53.249.134]) by smtp.gmail.com with ESMTPSA id
+ p4-20020a05600c1d8400b00416b74deaf0sm1552039wms.33.2024.04.09.09.37.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Apr 2024 09:37:07 -0700 (PDT)
+Date: Tue, 9 Apr 2024 19:37:04 +0300
+From: Alexey Dobriyan <adobriyan@gmail.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Alexey Dobriyan <adobriyan@yandex-team.ru>, qemu-devel@nongnu.org,
+ jasowang@redhat.com, vsementsov@yandex-team.ru
+Subject: Re: [PATCH 1/1] virtio-net: fix bug 1451 aka
+ "assert(!virtio_net_get_subqueue(nc)->async_tx.elem);"
+Message-ID: <1270933f-ed20-4b59-b450-0ee4103a6eeb@p183>
+References: <20240405112015.11919-1-adobriyan@yandex-team.ru>
+ <20240409025022-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA8Nty9zAvn9PB-azwvR7mF5tYOfz27AXi-vbuZDoS_ZVw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20240409025022-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=adobriyan@gmail.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,44 +96,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 09, 2024 at 04:13:34PM +0100, Peter Maydell wrote:
-> On Tue, 9 Apr 2024 at 15:19, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > On Tue, 9 Apr 2024 at 15:14, Gerd Hoffmann <kraxel@redhat.com> wrote:
-> > >
-> > >   Hi,
-> > >
-> > > > > +               --version-override "$(EDK2_STABLE)-for-qemu" \
-> > > > > +               --release-date "$(EDK2_DATE)" \
-> > > >
-> > > > Hi -- I've just noticed that we never made this change to
-> > > > automate the date/version for EDK2 ROMs, but we also never
-> > > > updated the version by hand. So at the moment we ship an
-> > > > EDK2 blob that wrongly claims to be an older version.
-> > > > See this bug report by a user:
-> > > >
-> > > > https://gitlab.com/qemu-project/qemu/-/issues/2233
-> > > >
-> > > > Is it possible to fix this for 9.0?
-> > >
-> > > I've posted v2 (series) a while back, no feedback so far.
-> > >
-> > > https://lore.kernel.org/qemu-devel/20240327102448.61877-1-kraxel@redhat.com/
-> > >
-> > > If there are no objections I can do a PR for these three patches plus an
-> > > edk2 binary rebuild (which shouldn't change anything but the version
-> > > string).
-> >
-> > I guess that's safe enough, though the very-conservative
-> > choice would be to take just the EDK2 rebuild for 9.0.
+On Tue, Apr 09, 2024 at 02:51:38AM -0400, Michael S. Tsirkin wrote:
+> On Fri, Apr 05, 2024 at 02:20:15PM +0300, Alexey Dobriyan wrote:
+> > Don't send zero length packets in virtio_net_flush_tx().
+> > 
+> > Reproducer from https://gitlab.com/qemu-project/qemu/-/issues/1451
+> > creates small packet (1 segment, len = 10 == n->guest_hdr_len),
+> > destroys queue.
+> > 
+> > "if (n->host_hdr_len != n->guest_hdr_len)" is triggered, if body creates
+> > zero length/zero segment packet, because there is nothing after guest
+> > header.
+> > 
+> > qemu_sendv_packet_async() tries to send it.
+> > 
+> > slirp discards it because it is smaller than Ethernet header,
+> > but returns 0.
 > 
-> Would you be able to get a pullreq in for this before rc3?
-> (I can delay rc3 by a day or so if necessary; I'd rather
-> not have to do an rc4 if we can avoid it...)
+> won't the same issue trigger with a 1 byte packet
+> as opposed to a 0 byte packet though?
 
-https://lore.kernel.org/qemu-devel/20240409162942.454419-1-kraxel@redhat.com/T/
+I don't think so. Only "return 0" is problematic from qemu_sendv_packet_async().
+->deliver hooks are supposed to return total length, so 1 should be fine.
 
-take care,
-  Gerd
-
+> > 0 length is propagated upwards and is interpreted as "packet has been sent"
+> > which is terrible because queue is being destroyed, nothing has been sent,
+> > nobody is waiting for TX to complete and assert it triggered.
+> > 
+> > Signed-off-by: Alexey Dobriyan <adobriyan@yandex-team.ru>
+> > ---
+> >  hw/net/virtio-net.c | 18 ++++++++++++------
+> >  1 file changed, 12 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > index 58014a92ad..258633f885 100644
+> > --- a/hw/net/virtio-net.c
+> > +++ b/hw/net/virtio-net.c
+> > @@ -2765,18 +2765,14 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+> >          out_sg = elem->out_sg;
+> >          if (out_num < 1) {
+> >              virtio_error(vdev, "virtio-net header not in first element");
+> > -            virtqueue_detach_element(q->tx_vq, elem, 0);
+> > -            g_free(elem);
+> > -            return -EINVAL;
+> > +            goto detach;
+> >          }
+> >  
+> >          if (n->has_vnet_hdr) {
+> >              if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
+> >                  n->guest_hdr_len) {
+> >                  virtio_error(vdev, "virtio-net header incorrect");
+> > -                virtqueue_detach_element(q->tx_vq, elem, 0);
+> > -                g_free(elem);
+> > -                return -EINVAL;
+> > +                goto detach;
+> >              }
+> >              if (n->needs_vnet_hdr_swap) {
+> >                  virtio_net_hdr_swap(vdev, (void *) &vhdr);
+> > @@ -2807,6 +2803,11 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+> >                               n->guest_hdr_len, -1);
+> >              out_num = sg_num;
+> >              out_sg = sg;
+> > +
+> > +            if (iov_size(out_sg, out_num) == 0) {
+> > +                virtio_error(vdev, "virtio-net nothing to send");
+> > +                goto detach;
+> > +            }
+> >          }
+> >  
+> >          ret = qemu_sendv_packet_async(qemu_get_subqueue(n->nic, queue_index),
+> > @@ -2827,6 +2828,11 @@ drop:
+> >          }
+> >      }
+> >      return num_packets;
+> > +
+> > +detach:
+> > +    virtqueue_detach_element(q->tx_vq, elem, 0);
+> > +    g_free(elem);
+> > +    return -EINVAL;
+> >  }
+> >  
+> >  static void virtio_net_tx_timer(void *opaque);
+> > -- 
+> > 2.34.1
+> 
 
