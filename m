@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722E1C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67624C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:22:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruFuR-0007L1-Aj; Tue, 09 Apr 2024 14:09:27 -0400
+	id 1ruG5r-0001WG-5A; Tue, 09 Apr 2024 14:21:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruFuP-0007KF-TV
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:09:25 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruFuN-0006iE-Qt
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:09:25 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5d4a1e66750so3626306a12.0
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 11:09:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712686160; x=1713290960; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=grUsye7sMHr7N5eWPtoZseYAqfB7kCryOekwA5LaNsw=;
- b=syWt58mCMdgSN2CLAqYCeTvYgxJTLxYG7UAX+m+Z2hiJ8uiXtKc/i1ZrZqAgEE85Aa
- vesVH4w8182E32WwJqgWI4Cc1b81LmWEVGQD1VCJCeXovoF/JTamDMDQBHV4cYKObstF
- Lm6P/18YFe6MKNzukimWwjo+V6fFI4tigGx3eTcVK48NT0mygz3Nktv4VvCSb5urdFfY
- V4afezsciXdior2D1Fzs+Ind5a9crKFrX+kvMha2C8qwve9/ypuQhIsp9E7GOhtA4R4u
- kYOxCl5fLU8XIfggc4FSY+x5h2DMlkYgWFyEqkVZFPFLPlkG4k2BDa3/iiCjpfvAL3Wd
- wUmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712686160; x=1713290960;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=grUsye7sMHr7N5eWPtoZseYAqfB7kCryOekwA5LaNsw=;
- b=AfQeUukRxpcoBHyDuJkSKySSr/PhVQ1lSLIrwFup3a8A/8SBaEAb/TkO1nvxWYLdso
- KEGl20mxWm0n4rt+axkvx/NRclITzkz2QBEMAcSiP8DU/8Af0bVTXD+DeDpM0+FX2J1N
- DYvN+mL1qblBFVBrPoLxEQ6UhaNulEHtddVUpbs5/O/pjHE0eshd9mthJfVQt8xoVKPu
- 1GfF4e4S7ycIWCca4UA5ktUemqmQHy9a8D3Hh5nPF+FLKQNxBq6M9NjuCHOAw6wvmPhD
- BfnKtli0SqO8Ty1mUq8FZbzivRtaJGhWaXxCIwkzlxZKbLSwtqgoOj+Rx0MyNbCRN10K
- N32A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVfYHdXCiG8pybuENimmiaQc3jQwPW4HXzMMYuOduNCKARwxczRDx67s48oK1QBsi7yfoHiCpmp8GJZhFTDngC+yrtfKZg=
-X-Gm-Message-State: AOJu0YxGThtAYz6wBiyDrm9BKUexE9wOF2XZ5wi0Io0W8Hsegl1G3tyU
- OOElfDXMzbMZiPKF+y5WIFJZ0tx+b6hAiCC4rCHLihMOXQlX/kOVGCueqL5DNUo=
-X-Google-Smtp-Source: AGHT+IEb5U2pfzf+7m4u5pS2SdLbRTQYEyxQZXATv35tNcc4xJG7v0fXoRUl2oh6867m3aK0OOLmuw==
-X-Received: by 2002:a17:90b:46d0:b0:2a2:ab2c:da40 with SMTP id
- jx16-20020a17090b46d000b002a2ab2cda40mr429916pjb.33.1712686160364; 
- Tue, 09 Apr 2024 11:09:20 -0700 (PDT)
-Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
- by smtp.gmail.com with ESMTPSA id
- r7-20020a17090a940700b002a528fae0c2sm3629940pjo.3.2024.04.09.11.09.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 11:09:19 -0700 (PDT)
-Message-ID: <f67bf3a0-d684-4fe7-af05-bf2c1f273e42@linaro.org>
-Date: Tue, 9 Apr 2024 08:09:17 -1000
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ruG5p-0001W2-Ss; Tue, 09 Apr 2024 14:21:13 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ruG5m-0000MK-Px; Tue, 09 Apr 2024 14:21:12 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B910C5D3B1;
+ Tue,  9 Apr 2024 21:23:02 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1D766AF8A3;
+ Tue,  9 Apr 2024 21:21:05 +0300 (MSK)
+Message-ID: <272956e5-5a40-4a0c-8230-90526125b3a0@tls.msk.ru>
+Date: Tue, 9 Apr 2024 21:21:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/28] target/i386: Honor xfeatures in xrstor_sigcontext
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240409050302.1523277-1-richard.henderson@linaro.org>
- <20240409050302.1523277-24-richard.henderson@linaro.org>
- <ecc1ce60-c31f-423b-8d5e-ba5138323212@redhat.com>
+Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
+To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Giuseppe_Ghib=C3=B2?= <ghibo@mageia.org>
+References: <20240311075806.668555-1-pbonzini@redhat.com>
+ <2f0eefc5-8907-4af7-b717-17e17a9a3019@tls.msk.ru>
+ <bfcda496-5781-49b2-a30b-8e28aa373218@tls.msk.ru>
+ <ZhUi1NpSeUzXUuMu@intel.com>
+ <CABgObfb8hn1qsr6Bu9ZxMr6DWd1uT5sb9Y+7GQd3hbMUvOxOXQ@mail.gmail.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ecc1ce60-c31f-423b-8d5e-ba5138323212@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CABgObfb8hn1qsr6Bu9ZxMr6DWd1uT5sb9Y+7GQd3hbMUvOxOXQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,62 +90,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/24 21:44, Paolo Bonzini wrote:
->> +        /*
->> +         * Restore the features indicated in the frame, masked by
->> +         * those currently enabled.  Re-check the frame size.
->> +         * ??? It is not clear where the kernel does this, but it
->> +         * is not in check_xstate_in_sigframe, and so (probably)
->> +         * does not fall back to fxrstor.
->> +         */
+09.04.2024 14:02, Paolo Bonzini wrote:
+> On Tue, Apr 9, 2024 at 12:59 PM Zhao Liu <zhao1.liu@intel.com> wrote:
+>>
+>> Hi Michael & Paolo,
+
+>> I debugged it manually, and found the problem occurs in tlb_index() with
+>> mmu_idx=5.
+>>
+>> For v7.2, the maximum mmu index supported by i386 is 4 (since
+>> NB_MMU_MODES = 5 defined in target/i386/cpu-param.h).
+
+>> On Michael's 7.2-i386-mmu-idx tree, the commit 9fc3a7828d25 ("target/i386:
+>> use separate MMU indexes for 32-bit accesses") introduced more indexes
+>> without relaxing the NB_MMU_MODES for i386.
+
+Oh well.  I starred a few times at the new MMU_foo_IDXes in v8.2.0-1876-g90f641531c78
+"target/i386: use separate MMU indexes for 32-bit accesses" a few times, it looked
+somehow wrong, but it didn't occur to me what exactly was wrong there :)
+
+>> Before this fix, probe_access_internal() just got the wrong mmu_idx as 4,
+>> and it's not out of bounds. After this fix, the right mmu_idx=5 is truly
+>> out of bounds.
+>>
+>> On the master branch, there's no such issue since the commits ffd824f3f32d
+>> ("include/exec: Set default NB_MMU_MODES to 16") and 6787318a5d86
+>> ("target/i386: Remove NB_MMU_MODES define") relaxed upper limit of MMU
+>> index for i386.
 > 
-> I think you're referring to this in __fpu_restore_sig?
-> 
->          if (use_xsave()) {
->                  /*
->                   * Remove all UABI feature bits not set in user_xfeatures
->                   * from the memory xstate header which makes the full
->                   * restore below bring them into init state. This works for
->                   * fx_only mode as well because that has only FP and SSE
->                   * set in user_xfeatures.
->                   *
->                   * Preserve supervisor states!
->                   */
->                  u64 mask = user_xfeatures | xfeatures_mask_supervisor();
-> 
->                  fpregs->xsave.header.xfeatures &= mask;
->                  success = !os_xrstor_safe(fpu->fpstate,
->                                            fpu_kernel_cfg.max_features);
-> 
-> It is not masking against the user process's xcr0, but qemu-user's xcr0
-> is effectively user_xfeatures (it's computed in x86_cpu_reset_hold() and
-> will never change afterwards since XSETBV is privileged).
+> Thanks Zhao! Alternatively, it's enough to set NB_MMU_MODES to 8 in
+> commit 9fc3a7828d25.
 
-No, I'm talking about verifying that the xstate_size is large enough.
+Thank you, both of you, this is exactly the prob.  I fixed it by increasing
+NB_MMU_NODES in "use separate MMU indexes for 32-bit accesses", since this
+is the change which introduces the new indexes.
 
-In check_xstate_in_sigframe,
+Now 7.2 work again, and appears to be under control, which is an excellent
+news! :)
 
-         if (fx_sw->magic1 != FP_XSTATE_MAGIC1 ||
-             fx_sw->xstate_size < min_xstate_size ||
-
-Check for the trivially too small case (fxregs + header).
-
-             fx_sw->xstate_size > current->thread.fpu.fpstate->user_size ||
-
-Check for the trivially too large case (presumably this is to catch stupidly large values, 
-assuming garbage).
-
-             fx_sw->xstate_size > fx_sw->extended_size)
-
-Check for trivial mismatch between fields.
-
-                 goto setfx;
-
-But there's a middle case: if xfeatures > 3, then xstate_size must be > min_xstate_size.
-
-I know that the kernel will handle any #GP in xrstor_from_user_sigframe, but there doesn't 
-seem to be a real check for reading garbage beyond the given size.
-
-
-r~
+/mjt
 
