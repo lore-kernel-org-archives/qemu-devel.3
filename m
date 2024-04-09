@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF947C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6677ECD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruBxH-0004kZ-1q; Tue, 09 Apr 2024 09:56:07 -0400
+	id 1ruByw-0005fQ-7y; Tue, 09 Apr 2024 09:57:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBxF-0004kM-0c
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:56:05 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruByn-0005dn-Aa
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:57:43 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBxD-0003rZ-B9
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:56:04 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-56e6acb39d4so2230951a12.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:56:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruByj-00045C-TV
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:57:40 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-56e2e09fc27so7932554a12.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:57:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712670961; x=1713275761; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cHPCBsDcTz30tRDtJBIJn02BAhV6REqcdmkmIsHcGYs=;
- b=g1/rDMBge4N6l/hVpPNoOky2Mv2AN6G0DzMasvmXdbAOHL0obstFqoRjLXDgUQAjQ2
- pD/8BVPzhdA5bIGGfhQmNWT5xAXGUQ2SmGVXNdXJ8QAsOvImNLHGtd7kqH2cJMgAEztJ
- 6WrVfK4j7h1lSRzlW4PDgQeowBM9e5IlWw0SB0/TKMSqJbLiEFaqhi3/1CngoYqG4+xb
- e+wY0eWN5ncHjV/3xOmBpstKLLEnFeUWeAUnDidw1C1Wxakm/iFlYAPQYX2jt3m5dBWl
- Fmls5e2QZDRJyd14R9xnzLs3ACvDK/oVW4rEdvfa2GMpSDbfECqJzZ8EN3SlWGBD1Jeo
- lKLw==
+ d=linaro.org; s=google; t=1712671056; x=1713275856; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DpPtgaJcjFXwsxDaNzG15doAKh5G5dtClezuwm6CYTo=;
+ b=mQ1yalKoqpD3Io/HbMHyiUarkiFvjc6ewsrksx/QirqS9WnAgOf97WzfF1qquWBASD
+ uoWl6v6WKjxW62JJ+vn1ByaqsIFGhc9IG41hUmSlVrdx0fsUzgpT3IrqEchDC29W7mT5
+ TD2skndCuzbUOQf6oCAeb5BUFTYrypE3JGilGdap/t+YD1dL8Ah0vBVgfIaz3d6nc/dS
+ AbohH26VkRxLLwwP3K+3MRJt5MxKqnyzzFJlVW9HcADYwfSRtCTFgVwW0UgIYCSMLNne
+ VKYsbmP3TzTCfe50yvTyD83azJHrqc9S/jQCwLN6r9OlAnXraquT8VZ3vfkFip8a1GKI
+ Ov0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712670961; x=1713275761;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cHPCBsDcTz30tRDtJBIJn02BAhV6REqcdmkmIsHcGYs=;
- b=NMTUlaciICXKSWqdqNAlqXAmZhDHjM9fnb8dNDOcJ5Llq2b7G9V2IMzE1bQMEDTJ0S
- Y9cU4KECPumdTDWn2mTDd5mgD+0p6ZQrf+92wpxVkyawcd9M3bt2vjxgsOPflEyQvCp9
- 7T0RrJ7UzCHCz2kCkEQhxj7rzAwdhSeKXKzYBt3Kg5qDsXZ/ao9bTPX2b0uLxBFGl7c1
- Tp3LBVv6/USmW1H1xMJqqoPIQA94EKLTjzqjYhwUJ+DVtqSVOywrg2UmlB5SGgZPgfeo
- 5pwEbI2MQJBuq44Ie8ZmP4PY73Qdzbi51UdJeD7CtsIWg1Zy9ZYwxdUseSi5ZZT9lr1Y
- 0hFQ==
-X-Gm-Message-State: AOJu0YyvNvTwCb20PndbDJvKmZEPJsdNjE259vvuc7Kq8uK0cKyhbuxM
- X/X10Rc03gRflggEicqApYhX8S+YmPpKgYcEAIfZYP9LsdHzpyJldu3z80/Zl7JzPEOICzM67PK
- gmiukiO/+fNCD1Exz8/BIJmkYD1RvFuoZCW1Urw==
-X-Google-Smtp-Source: AGHT+IFzf7X3OueHL6fFZZ8ELRe3tnqVcbdg4a8Tjw8Bx1i2N/KOm27kV60Q6mANWZ4W+j8erpK2/Yd8+hO4UcxJn5o=
-X-Received: by 2002:a50:c016:0:b0:56e:de1:f427 with SMTP id
- r22-20020a50c016000000b0056e0de1f427mr7869546edb.25.1712670961247; Tue, 09
- Apr 2024 06:56:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712671056; x=1713275856;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DpPtgaJcjFXwsxDaNzG15doAKh5G5dtClezuwm6CYTo=;
+ b=ldZYx9lwYx85Maw3/CiCcO0ilPAowpbZ/AjLoSlSwaPkNZ5Eyxz4PEX7emaV4Qqy+V
+ mRSUhY3GR2dpMnw1n6smxfygxn7LqcNOVvDh5HNV9+NF/WDM0XlRgcRCTLMDRA8GCZgj
+ /y4hFlM+PW7pVG8kr2Da+ihbK25uGkwf3dQtEAFHJnGjwQKlrWyOu1HQ48bt6zFE69hE
+ X47RClXTj8J/6hRUxG2mPZGYhXlbVg92HNn/Gz91jY3P/ftUx/XXssxmypJz/JNLjI6C
+ 4NyFR/ihRK+vNKxkAt0CAEqkIXcHz7NIaFAtbND+L7SOa+uj+vFSwMz9/s3xaeY2Yemi
+ 754w==
+X-Gm-Message-State: AOJu0YzB/UIdUGNGFdH05UoQwF1TqR2q3KyO4cz0L/uwq0OV+8RtFwOS
+ 4F7BK58XimiwIOduyJoQaXA+2E+MJQt6uZuyu9yMWZp80DVBgGg8W4htS+Vth83mUgVPHJiv/0p
+ q
+X-Google-Smtp-Source: AGHT+IGyHcTUL7sAZnUuWkiuTLGpvZjbgw9l5kn5BRDRx4ZyQKx3GtQJ2QUMkDKeR+enD9/Qmuimhg==
+X-Received: by 2002:a50:d514:0:b0:56e:1e47:c0b2 with SMTP id
+ u20-20020a50d514000000b0056e1e47c0b2mr2815935edi.4.1712671056288; 
+ Tue, 09 Apr 2024 06:57:36 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.160.134])
+ by smtp.gmail.com with ESMTPSA id
+ j7-20020aa7c0c7000000b0056e5306ca11sm3288538edp.53.2024.04.09.06.57.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Apr 2024 06:57:35 -0700 (PDT)
+Message-ID: <6c308332-70c0-4bb8-a17f-f657037b59e7@linaro.org>
+Date: Tue, 9 Apr 2024 15:57:33 +0200
 MIME-Version: 1.0
-References: <20240409133801.23503-1-philmd@linaro.org>
- <20240409133801.23503-8-philmd@linaro.org>
-In-Reply-To: <20240409133801.23503-8-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 14:55:50 +0100
-Message-ID: <CAFEAcA-qas2Qb1d6mZtWfrYFeXrcOE6rwsYMOHdQYF_Zr-yzqQ@mail.gmail.com>
-Subject: Re: [PATCH-for-9.1 v2 07/11] hw/net/lan9118: Rename tx_fifo_size ->
- tx_fifo_bytes
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Chuhong Yuan <hslester96@gmail.com>, 
- Jason Wang <jasowang@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.0? 0/3] hw/block/nand: Fix out-of-bound access in
+ NAND block buffer
+To: Mauro Matteo Cascella <mcascell@redhat.com>
+Cc: qemu-devel@nongnu.org, Qiang Liu <cyruscyliu@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-arm <qemu-arm@nongnu.org>
+References: <20240408083605.55238-1-philmd@linaro.org>
+ <CAA8xKjVPBu2LgsZzJhUM5Yjp1z36=w012-Nea+qPtDopkXeJRw@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAA8xKjVPBu2LgsZzJhUM5Yjp1z36=w012-Nea+qPtDopkXeJRw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,22 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Apr 2024 at 14:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> tx_fifo_size is a byte count, rename it to avoid confusion.
+On 8/4/24 17:45, Mauro Matteo Cascella wrote:
+> On Mon, Apr 8, 2024 at 10:36 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> Fix for https://gitlab.com/qemu-project/qemu/-/issues/1446
+> 
+> Does hw/block/nand meet the security requirements for CVE assignment?
+> 
+> => https://www.qemu.org/docs/master/system/security.html
 
-But we don't consistently use it as a byte count.
-In tx_fifo_push():
+I don't think this device model is used in virtualization,
+so I don't think so. (Cc'ing qemu-arm@ in case).
+Thanks!
 
-    if (s->txp->fifo_used =3D=3D s->tx_fifo_size) {
-        s->int_sts |=3D TDFO_INT;
-        return;
-    }
+> 
+>> Philippe Mathieu-Daudé (3):
+>>    hw/block/nand: Factor nand_load_iolen() method out
+>>    hw/block/nand: Have blk_load() return boolean indicating success
+>>    hw/block/nand: Fix out-of-bound access in NAND block buffer
+>>
+>>   hw/block/nand.c | 50 +++++++++++++++++++++++++++++++++----------------
+>>   1 file changed, 34 insertions(+), 16 deletions(-)
+>>
+>> --
+>> 2.41.0
+>>
+> 
 
-where fifo_used is incremented for every word handled by the
-tx_fifo, not for every byte.
-
-thanks
--- PMM
 
