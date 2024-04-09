@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76228CD1297
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 08:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EB04CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 08:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru78v-0007uv-T1; Tue, 09 Apr 2024 04:47:49 -0400
+	id 1ru7Ba-0000xG-El; Tue, 09 Apr 2024 04:50:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru78q-0007uf-O5
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 04:47:45 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1ru7BY-0000wq-LH
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 04:50:32 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru78n-0006ae-2r
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 04:47:43 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-56845954ffeso7209240a12.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 01:47:40 -0700 (PDT)
+ id 1ru7BW-00078p-Gt
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 04:50:32 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56e48d0a632so4387373a12.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 01:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712652459; x=1713257259; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712652629; x=1713257429; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+HJJA/aXH9ZH+a8SxaouqSZfKOjFnzxLaaAoUsxw4P4=;
- b=Yb2gYxnkKKlbKacFBoiUrLOYkAv0/lCKvPHBfEn+aSBVRRXi+RSftgPWgotmZ+ou+t
- zJE4NbA/UNTZ4Pv9Stp4/34Uuu0Qd/wbj1Z0JjoysRLZcohH/rj9yIaHtZozW01ORiF8
- SpbJCI3FC3a6NzOkWkYdWPfdC6eGFUB+FuQUgt/v5rxoQd1/GaLgbTF3Csbcj7G2Id/s
- 0nDxmkKYmOx/2nS/ZcTSYzsPesVsCInXfKQznMIdrlklpLwWC2UM5OFTEXd9TiaXFZ0U
- rBqdG8p0vLSYiFKHGMhXhI+hTvc23uw8xGLdB2/ODs+HJYZ9ZWDDp+wa6Wns60BVYGsw
- nlmw==
+ bh=hqgRmDRghhhbOVrW91LEfTvfhlWKyTVSf873gQJ8Nqw=;
+ b=eEIMAF8L0WmD2EpeXcJoxL5yjDMsP1MaIra6d+xxF4iWzzl31U5v4W/h+2M0oHISWZ
+ bcvs9AXZcGAiEzMDeZlLWTrW03CDMqsXZPcLNmkA08bCj7bysS6jfdPwSjnNLkQXq+DU
+ cFK86KClDLTli+yA7lvSx7hZYlpAVFZcqkG+27xWmmVkrqpcVBsLCw+8raO4vKXBkIHo
+ xOGLwi3wVZ6AVA8hUC5J1VnSHwEew4ZphdCO3lv15J74rsQ7Lfxm945P8JDqKWskk79y
+ x8FAI77tj7t1Z+uN61zGgUmxS6d9ikzh4vZTObs5oISSaEAInZ+0uInutYIjcHVA7Yds
+ TAkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712652459; x=1713257259;
+ d=1e100.net; s=20230601; t=1712652629; x=1713257429;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+HJJA/aXH9ZH+a8SxaouqSZfKOjFnzxLaaAoUsxw4P4=;
- b=eH48riOqLQ6s7g1A+2CgHtp+O3Yluodvkk8HppkCq5+WnA3YCvEAs7DsBcTQyv2as8
- pqGxLngi7pEqW8VPxLwAdpS460CxACDSh0Y7Is7Tzj8pV6SU7Q5MzKFC5mvA9qnTEDwR
- O3pZ5Mw+KLz6d9KJbba1jj4XqCfY+79qZB6uGkhHzN5JTVKwaZtpOjvItyamWkodGLMh
- eHavsmIroP7mVM0qnWpnIyLMTwW92GoQUWYzQHIJ3zSDax1vOmiurE1omcopSecqx6Yy
- W/oTsY+krViIcG89D/qfAGTME+EyWiJ1iNVpNTqfnG1ABXfEzETBwE8ij5xLV6133ZhW
- uP0Q==
-X-Gm-Message-State: AOJu0Yy6C5xlMmVoo+6aYsGRvN67kXR3rYm8kQo6vKDsRtScW92lBeOh
- IPE34wrKe+kKa0RI/0o4sSap/kJP5QI81/Z+u8shnfoz8in0nGPRf0zlFYdBBoRXEbqdzic5bcg
- zOAL8CZFliw1R7JV+rSTigQwO1gWNIlVsibxsIg==
-X-Google-Smtp-Source: AGHT+IH4XgHPO76I3+vN7eu3A2q0nK0d4xEL/6N3V42BCSRRhXmfuxnYGe/VaklxrxHwtf0Np/vK+z0VrLTjdqwgiYE=
-X-Received: by 2002:a50:8ac2:0:b0:56e:64a:2a47 with SMTP id
- k2-20020a508ac2000000b0056e064a2a47mr6404224edk.42.1712652459273; Tue, 09 Apr
- 2024 01:47:39 -0700 (PDT)
+ bh=hqgRmDRghhhbOVrW91LEfTvfhlWKyTVSf873gQJ8Nqw=;
+ b=eAOOhbR9ihb5eHqHx/kC1D02ZXXUDAaoJC14CqSpBBETcmP4R8fSFZ3RkO0KpQbclB
+ 0LSY2szI5AMbQJkAVjBs37y3/iHAsRD2NxEm3dTB1C9YOvDdvcPD43Eu6fQDPeIyyP20
+ rvcZxasAGL6FMtqxTovhVso69XTvPenwDy/os3jSfj10SikI7RjSYKdka56GJG2l0fog
+ t8CdzTfPQ+wEx+FMK+bsx+OJjNOukqnWsI5i5LDDlr+wDImVhSC8S0OTfkDRghA9qQfg
+ 9MkXY5p0wQq5T3GLvAdC08WdIQMLUfY7KdWbFKWj1xqUJISxxDOc1Se07BIGykklbfVo
+ U0tQ==
+X-Gm-Message-State: AOJu0YyWyF+E1gJ27unOuZNGzRo3nFfILwFoY2dZomaY0HdfTrggR1f/
+ wp5kE0Pjz0NduHVnnJkZiQdn7RFPSLcDYpRHdd9CmLjzxAA3n4Q9hO1C+e/Wgj5WnhfEhykMBPf
+ f42cAFbNX8SE9JKMG2cgwdrKAu/Jwcxi93FMNERyCTgWS5NKr
+X-Google-Smtp-Source: AGHT+IEKdM0F59LAmP2J8XBkzJcf3fDqPDgwXsXLQyQYLjwdesIhpeYoWybEfFnu3guQbMGDbejykmx9yi8PBi6R+64=
+X-Received: by 2002:a50:cddd:0:b0:56b:cecb:a4c8 with SMTP id
+ h29-20020a50cddd000000b0056bcecba4c8mr378886edj.39.1712652628971; Tue, 09 Apr
+ 2024 01:50:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240407184354.1839435-1-peterx@redhat.com>
-In-Reply-To: <20240407184354.1839435-1-peterx@redhat.com>
+References: <20240408174929.862917-1-richard.henderson@linaro.org>
+In-Reply-To: <20240408174929.862917-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 09:47:27 +0100
-Message-ID: <CAFEAcA8Sr+2wEznF2QOyp1AeTX4JYS9ARHxm_VG9rYgyCEdNBQ@mail.gmail.com>
-Subject: Re: [PULL 0/2] Migration 20240407 patches
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, Wei Wang <wei.w.wang@intel.com>, 
- Lei Wang <lei4.wang@intel.com>, Avihai Horon <avihaih@nvidia.com>, 
- Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 9 Apr 2024 09:50:18 +0100
+Message-ID: <CAFEAcA-qn-zP2-OkeW1fLW2OPZbfk35jKZ0YUHXQ5Xf4Rma1Ow@mail.gmail.com>
+Subject: Re: [PULL 00/35] misc patch queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,9 +87,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 7 Apr 2024 at 19:43, <peterx@redhat.com> wrote:
+On Mon, 8 Apr 2024 at 18:51, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> From: Peter Xu <peterx@redhat.com>
+> This started out to be tcg and linux-user only, but then added
+> a few target bug fixes, and the trolled back through my inbox
+> and picked up some other safe patch sets that got lost.
+>
+>
+> r~
+>
 >
 > The following changes since commit ce64e6224affb8b4e4b019f76d2950270b391af5:
 >
@@ -99,26 +104,30 @@ On Sun, 7 Apr 2024 at 19:43, <peterx@redhat.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/peterx/qemu.git tags/migration-20240407-pull-request
+>   https://gitlab.com/rth7680/qemu.git tags/pull-misc-20240408
 >
-> for you to fetch changes up to 8e0b21e375f0f6e6dbaeaecc1d52e2220f163e40:
+> for you to fetch changes up to 50dbeda88ab71f9d426b7f4b126c79c44860e475:
 >
->   MAINTAINERS: Adjust migration documentation files (2024-04-07 14:40:55 -0400)
->
-> ----------------------------------------------------------------
-> Migration pull for 9.0-rc3
->
-> - Wei/Lei's fix on a rare postcopy race that can hang the channel (since 8.0)
-> - Avihai's fix on maintainers file, points to the right doc links
+>   util/bufferiszero: Simplify test_buffer_is_zero_next_accel (2024-04-08 06:27:58 -1000)
 >
 > ----------------------------------------------------------------
->
+> util/bufferiszero: Optimizations and cleanups, esp code removal
+> target/m68k: Semihosting for non-coldfire cpus
+> target/m68k: Fix fp accrued exception reporting
+> target/hppa: Fix IIAOQ, IIASQ for pa2.0
+> target/sh4: Fixes to mac.l and mac.w saturation
+> target/sh4: Fixes to illegal delay slot reporting
+> linux-user: Cleanups for do_setsockopt
+> linux-user: Add FITRIM ioctl
+> linux-user: Fix waitid return of siginfo_t and rusage
+> tcg/optimize: Do not attempt to constant fold neg_vec
+> accel/tcg: Improve can_do_io management, mmio bug fix
 
+This pullreq alone is more patches than have been committed
+in the entirety of the rc2-to-rc3 cycle so far. Are they
+really all important enough to put into rc3 on the day
+we tag it?
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
+thanks
 -- PMM
 
