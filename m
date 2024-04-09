@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C8CCD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D86E4C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 09:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru7pG-0003f5-QL; Tue, 09 Apr 2024 05:31:34 -0400
+	id 1ru7qM-0004M0-Ij; Tue, 09 Apr 2024 05:32:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru7p5-0003eI-W9
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:31:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru7qK-0004K2-UX
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:32:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru7p4-00056e-Ab
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:31:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru7qI-0005Wb-Hw
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 05:32:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712655081;
+ s=mimecast20190719; t=1712655157;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CHm9lErPneZ6NueFGn5T2q6OqOjCG2hYKnmdyw3Evnc=;
- b=FB2Sbjf7dc5w6hA73wswe8w62fNPdkegSe7/ekjVOUfqF4GXP4SZ7jV3ScKEN1bQqoKEWy
- SUdh/yamJhT2/B/Cmg1rBM9oJcUYzC79JeJx5PEroxz3FPWrUHiy3iXOXrEh5N475K0oDw
- 9Iu/OSCUHEdU9pfj+ikI2JcXhCpvh8o=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MfiktwCOWWAUZw/wdhupen/7N1dQmFotSqqQXIY8qew=;
+ b=AZVb8p3UeUDJbzlbGMl97hud1FeWK2BK9pMg5Z6oOvQfOBTsYCSY5nwKh9FphikK0yk0H7
+ IfOGUZHyD8qnGm9BTVV60cv4Tu5tx9+OnWXg+e+MyB2oVC2PIk4vH/XIW2VsmTF2FWR80F
+ H4cowXMxlJKd+IiHsn+dwG5xoMrQ/tE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-90-Z_rJubhyNP2SVRck6ogXgg-1; Tue, 09 Apr 2024 05:31:18 -0400
-X-MC-Unique: Z_rJubhyNP2SVRck6ogXgg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-41401f598cfso31786225e9.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:31:18 -0700 (PDT)
+ us-mta-554-i1AOarZ-NiaQlYFDOlILpA-1; Tue, 09 Apr 2024 05:32:36 -0400
+X-MC-Unique: i1AOarZ-NiaQlYFDOlILpA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4155db7b58cso27696835e9.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 02:32:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712655076; x=1713259876;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CHm9lErPneZ6NueFGn5T2q6OqOjCG2hYKnmdyw3Evnc=;
- b=uH+GtGS9YMCwitg3hP6tsyQnBiqzFbecFl/7dmOSe+2u+WWYu+uWfVu8pLWNKCqdCc
- sBU+T4lK0xBM/+D/N2WegwXh0/Fah1odOz4NXtqTsP17g185t//mkpVVva9+aKXVItcA
- 8nZMzqolAdhnvYistB4FAayXFdU6KtrXhfn2AZlMH6xTVqpN6GlgdeGXGh5Ut8cuS+x3
- wZWDMNkpb0yqEGkpyPItaQ7a+GVcvUMIUpJf7HqqlSWt8Q70/honG44fjF8aZugFfKpM
- 1EEjyPjLystIL30/yi6Y6D9Z7HdxiX0Dh1TEm4sIPNCdkobJOrDiR+RvzxKKTket6J8N
- KH4w==
+ d=1e100.net; s=20230601; t=1712655154; x=1713259954;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MfiktwCOWWAUZw/wdhupen/7N1dQmFotSqqQXIY8qew=;
+ b=IKZOosMSD4MV5ISmpKWVdi9OhfiN/XT7GUBaIt7ZEKZymlW0bag8LWF7VUcnM/Zbw4
+ qovXkmPrJ+tMYDuXuh7nkoVd4tU0Xb7n5WkxjlhQ75racnuAxiQzTI53hVdnCjU+MeWT
+ yqDrFP8Mrt4nZeZvPAcNdOG2Rohghp41zV+lqLkHY4HorqlI2eRbUlxsb6jIMhuiSz4/
+ VQa53GJOigk7REGwwSIzrnPyEIcL9M2mqau2pSlfWGPCemLwzBtCHPQy09ESrAScDh3+
+ nzW9Q+Xr18ACF5+f8jrGUC7y5rO8Aq1KKti+5kkUt+mX7+BoTcWbM2NOD+29D+GOi78j
+ tQmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDOJpkp3CFiaoSaKpMP5/A1fgY9ddEedN5/uAvEEtH1fSiiAKxwUUkElIULjR5rPfltcCevpbBeqEeSZ7R3aPe7ozYwok=
-X-Gm-Message-State: AOJu0YxOXjSIH6d09Gy95O3Y6ObjXymbYezhUMDW8M6iCL+WEJuxYaGF
- g2BeVCvXk72CZ62IiwCPEvs8gY/X3RczinxiUO7hQ6hCvkH2TW4yLi8pszs+G3QANpZxdZGFPs/
- K+wIC8SO3uPv1/hTmR76voX5d8pEaV5g2nU38+Uvbhx+ZOa7Crf/Y
-X-Received: by 2002:a05:600c:b8e:b0:416:50ce:20d2 with SMTP id
- fl14-20020a05600c0b8e00b0041650ce20d2mr4844333wmb.0.1712655075735; 
- Tue, 09 Apr 2024 02:31:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGthi+WR0T65jCCLC2UuGWDSWe4milpnGtbK9ltu+w2f7EgsiDlRR4qreyZjzY3oO5vEBr8WQ==
-X-Received: by 2002:a05:600c:b8e:b0:416:50ce:20d2 with SMTP id
- fl14-20020a05600c0b8e00b0041650ce20d2mr4844307wmb.0.1712655075168; 
- Tue, 09 Apr 2024 02:31:15 -0700 (PDT)
+ AJvYcCUM8uNigqnUqcuB4y5thLOceLxfFxi507A2/+B0HAzPtUhi4P4KVCdZzw/w/2AXKM7YgRka58vA+fj4UFxn7XOkJkhJVPs=
+X-Gm-Message-State: AOJu0YwJHY0WO/TNsZ6e/h/gSQsfipf4igPX0SuncDqiy3AbWgeTEhbq
+ ZaoojDCpgWfKE3srP1KHvPOpc8DEcuyWBOnsNfRY3JL4NVFfVtA9clrPdyBFD/MRCru76my6ZqR
+ lVn+dMeCG1TOtfuu4k57Ct9f1s9CwgQ/pl4W/182STRs0fHm42WLVR++SwHgQ
+X-Received: by 2002:a05:600c:3483:b0:416:b0dd:1fcc with SMTP id
+ a3-20020a05600c348300b00416b0dd1fccmr604204wmq.29.1712655154382; 
+ Tue, 09 Apr 2024 02:32:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEleHWRtUYt9ab+zlVA/XEwL1npKoyYJ8fI1Y+YxuFAlv/eN3Z94inHoirSmsgCeXENQFHIfA==
+X-Received: by 2002:a05:600c:3483:b0:416:b0dd:1fcc with SMTP id
+ a3-20020a05600c348300b00416b0dd1fccmr604178wmq.29.1712655153877; 
+ Tue, 09 Apr 2024 02:32:33 -0700 (PDT)
 Received: from redhat.com ([2.52.134.26]) by smtp.gmail.com with ESMTPSA id
- je4-20020a05600c1f8400b004149536479esm16590538wmb.12.2024.04.09.02.31.13
+ dr20-20020a5d5f94000000b0033ea499c645sm11187563wrb.4.2024.04.09.02.32.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 02:31:14 -0700 (PDT)
-Date: Tue, 9 Apr 2024 05:31:11 -0400
+ Tue, 09 Apr 2024 02:32:33 -0700 (PDT)
+Date: Tue, 9 Apr 2024 05:32:28 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: lyx634449800 <yuxue.liu@jaguarmicro.com>
-Cc: jasowang@redhat.com, qemu-stable@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] vhost: don't set vring call if no enabled msix
-Message-ID: <20240409052957-mutt-send-email-mst@kernel.org>
-References: <20240408060842.2012-1-yuxue.liu@jaguarmicro.com>
+Cc: jasowang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH v2] vhost: don't set vring call if guest notifiers is not
+ enabled
+Message-ID: <20240409053143-mutt-send-email-mst@kernel.org>
+References: <CACGkMEsrT4xxW-KzLm=rTqXf0P+u2=0fy03z3EsHZFEqQePjJg@mail.gmail.com>
+ <20240408073311.2049-1-yuxue.liu@jaguarmicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240408060842.2012-1-yuxue.liu@jaguarmicro.com>
+In-Reply-To: <20240408073311.2049-1-yuxue.liu@jaguarmicro.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
@@ -100,40 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 08, 2024 at 02:08:42PM +0800, lyx634449800 wrote:
+On Mon, Apr 08, 2024 at 03:33:11PM +0800, lyx634449800 wrote:
 > When conducting performance testing using testpmd in the guest os,
 > it was observed that the performance was lower compared to the
 > scenario of direct vfio-pci usage.
 > 
-> In the virtual machine operating system, even if the virtio device
-> does not use msix interrupts, vhost still sets vring call fd. This
-> leads to unnecessary performance overhead. If the guest driver does
-> not enable msix capability (e.g virtio-net pmd), we should also
-> check and clear the vring call fd.
+> In the commit 96a3d98d2cdbd897ff5ab33427aa4cfb94077665, the author
+> provided a good solution. However, because the guest OS's
+> driver(e.g., virtio-net pmd) may not enable the msix capability, the
+> function k->query_guest_notifiers(qbus->parent) may return false,
+> resulting in the expected effect not being achieved. To address this
+> issue, modify the conditional statement.
 > 
 > Signed-off-by: Yuxue Liu <yuxue.liu@jaguarmicro.com>
 
 
-Fails testing under cross-i686-tci:
-
-https://gitlab.com/mstredhat/qemu/-/jobs/6578881990
-
-36/258 qemu:qtest+qtest-i386 / qtest-i386/ioh3420-test                    OK               0.15s   1 subtests passed
-▶  37/258 ERROR:../tests/qtest/qos-test.c:191:subprocess_run_one_test: child process (/aarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/migrate/subprocess [22197]) failed unexpectedly ERROR         
- 38/258 qemu:qtest+qtest-i386 / qtest-i386/lpc-ich9-test                   OK               0.16s   1 subtests passed
- 37/258 qemu:qtest+qtest-aarch64 / qtest-aarch64/qos-test                  ERROR           13.20s   killed by signal 6 SIGABRT
->>> G_TEST_DBUS_DAEMON=/builds/mstredhat/qemu/tests/dbus-vmstate-daemon.sh PYTHON=/builds/mstredhat/qemu/build/pyvenv/bin/python3 MALLOC_PERTURB_=144 QTEST_QEMU_BINARY=./qemu-system-aarch64 /builds/mstredhat/qemu/build/tests/qtest/qos-test --tap -k
-――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
-stderr:
-**
-ERROR:../tests/qtest/vhost-user-test.c:468:chr_read: assertion failed (err == NULL): Bad file descriptor (g-unix-error-quark, 0)
-**
-ERROR:../tests/qtest/qos-test.c:191:subprocess_run_one_test: child process (/aarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/migrate/subprocess [22197]) failed unexpectedly
-(test program exited with status code -6)
-――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-
+I tested v1 and it fails. Sent as reply on that patch.
+Since all you did is tweak description and title the
+problem is probably still there in v2.
 
 > ---
+> V2: Update commit description and title
+> 
 >  hw/virtio/vhost.c | 16 +++++++++-------
 >  1 file changed, 9 insertions(+), 7 deletions(-)
 > 
