@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33EBC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 07:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4383C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 07:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru6HP-00005p-PD; Tue, 09 Apr 2024 03:52:31 -0400
+	id 1ru6I5-0000Wf-11; Tue, 09 Apr 2024 03:53:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ru6HO-00004x-J8
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:52:30 -0400
+ id 1ru6Hz-0000Qk-QF
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:53:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ru6HK-0005A7-4p
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:52:30 -0400
+ id 1ru6Hx-0005Gj-9t
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 03:53:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712649145;
+ s=mimecast20190719; t=1712649183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2+y3X8thPJB4HpzoLRJ/sur02/gFphdU7r5ldKyBVNE=;
- b=DyDv9okclL6hoMwsdJwYdIK93fvy38s6eB8urx5TNQ7HAx+3L9515wL/xgXYHiA8W7F/fB
- TPUGQlFWK8a4HBXnB85DpfWgzDILF3IhTWe63knUJLSrX8CXHZRcpefLKb7fJBQ/IeIgYN
- ODAF2yICw2A94M2egPTZhvUN/tH0Piw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aUr/GPovg/EOwz00ZvJNHBGtT0ZHXswySmllKnpBDMw=;
+ b=CbCfkeKE1SM+w7k7zxxYtYEGKxIW4bxbHRtBfvzIa8gCt12Iq0MUaY8+ObS2syOq391CIz
+ G5N7s+DdVWxERLuKK9haU9QYNvFEhstM+iyuvmNCOAaraTiOHRN2+fvZe1yQiKFNoSvenZ
+ x3AM+rSJq0dUMEJu8CSHqkgccDvHPrU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-183-W5uzJypcOG2aVJz0PF1KLw-1; Tue, 09 Apr 2024 03:52:24 -0400
-X-MC-Unique: W5uzJypcOG2aVJz0PF1KLw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-345cc6c2367so886183f8f.0
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 00:52:23 -0700 (PDT)
+ us-mta-453-9o_jgxB_NUO6OyyPJcfH1Q-1; Tue, 09 Apr 2024 03:53:01 -0400
+X-MC-Unique: 9o_jgxB_NUO6OyyPJcfH1Q-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-343d7cd8f46so2494000f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 00:53:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712649142; x=1713253942;
+ d=1e100.net; s=20230601; t=1712649180; x=1713253980;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2+y3X8thPJB4HpzoLRJ/sur02/gFphdU7r5ldKyBVNE=;
- b=Zgp/j6DWkFgAztxWiW9AXkX3eFvLKYWez6wv0l+R/ccxOipj++VDDF4goaqQuHpHpg
- vCHPFNNiNZmUMEL8MW1FiFDkhyHhvtpWEmr5hL4cuy7rtfmODAPVn8NsOojYMmQd7MlI
- mynZ/IIykdFzfCdT0VgxiOBteCHbRP+vwZT4koR3PTSlFMWYw1LCEYBrR1U1xymYKSYO
- 79cFrGrZ/nzfFCX/l9o52gzYvPH/1JrmHdaSm48BM7SRIwy/cKhmahf7V0pfEeyIh+uX
- 4alEAYGA4RvUP+wsAAl9Zl69J6Bf3HD8TrmxWd9Lk5bC+aN7e9tn8DvqEB9eIYb/QPEz
- u1Pg==
+ bh=aUr/GPovg/EOwz00ZvJNHBGtT0ZHXswySmllKnpBDMw=;
+ b=E5q2UHzg0CYqPl6gO6Co57dgCdbkXYAJDY6aZK8npUg8UNWgGw6ERWYX+/buui6iNz
+ ik+sGE9UpFxOxbH+zWhZs0RtA8WK9OWDVkbwnmMf5jjphPUFFIPBxgSi6O4miQprm7UM
+ eKam+jMVQ+r87UL0ReWiUyq6cYGJfQzKtKbpYoCDaDjG83ewzmqvRS+7CKnXajSSAjDN
+ HTkgs8p+rfsdxdzQwAcBpafRUQ2TwRyzAINn2Jtz7E8EwEl7CWsnmsREUb56MoFi332K
+ gCUg3oJLmmkIq19hmBfj58eNYWKmtPojACnNDvgXcdcPeFy4y+70nSvBLTIBkWtLoyLh
+ 0gPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIlEXINonwnUaF3GMkq48ps6wfsldQGTf1YWSUWXxP4R0neztfrwqHm0GLSNcJxIl3N/4CCLwWQ0CgbOtcc5fwxOKdySk=
-X-Gm-Message-State: AOJu0Yxe+wT7VmlXS/5DfndX291OStzZFyuFeNyLGRsVf0RCMOWJhf56
- Z/8vSxmhEZRHq9BNCU+aMyyNgfe/ZGZC0JAVO2qADdbErijpnioc5Q7PW2hetI2ivTJOrMXeSCz
- aad9Qby3yvnLpcnmpSIuaCj2oH+Ngoh2krv8EAA3wZp/5ptOVMIdTilGZAIQQ
-X-Received: by 2002:a5d:6486:0:b0:343:7573:84d3 with SMTP id
- o6-20020a5d6486000000b00343757384d3mr1985736wri.5.1712649141932; 
- Tue, 09 Apr 2024 00:52:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGwlxk3hMngunQ/YwsH5Jhe+/pRu4WXW70/FuFj8OtPukIe000KsJm55B2odTqSsXWZ1X1PcA==
-X-Received: by 2002:a5d:6486:0:b0:343:7573:84d3 with SMTP id
- o6-20020a5d6486000000b00343757384d3mr1985722wri.5.1712649141582; 
- Tue, 09 Apr 2024 00:52:21 -0700 (PDT)
+ AJvYcCXreXoFJT2UYtx9wIvz3RFe6rFHb0s2vxfZUB/5urSqW7zFigGgEuf0+YzAPd/dWaUTwzCNxz9oZt+qpXMW+YQFQgySIGA=
+X-Gm-Message-State: AOJu0YzYNX9DuBobbztU5XCT5qn1xuCt2T3bAi61tvpTwSHPKbiU/XP4
+ p42auxtiPI8oX3jFrS5ELxcON0yxviOhOgPCLinp7S/y8pbArQ+WIXkOWOPrzXkv96CgFftHo3n
+ gForfVXpVkmniJL0fRBhJRQwKn/s9ummhSzTPM6fXM53eOsdfFfAVJZ4an6kK
+X-Received: by 2002:adf:fd91:0:b0:343:98ee:524 with SMTP id
+ d17-20020adffd91000000b0034398ee0524mr6710293wrr.36.1712649180093; 
+ Tue, 09 Apr 2024 00:53:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGiU13ZDjYqbsrIhBp1rh0P/G4/xqAJK30Pt4ubZ35Mxd7M0+NMUXVDs0dzegGTBt1tAfdUag==
+X-Received: by 2002:adf:fd91:0:b0:343:98ee:524 with SMTP id
+ d17-20020adffd91000000b0034398ee0524mr6710285wrr.36.1712649179773; 
+ Tue, 09 Apr 2024 00:52:59 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.152.232])
  by smtp.googlemail.com with ESMTPSA id
- p13-20020a5d638d000000b00343ad4bca7dsm10773370wru.85.2024.04.09.00.52.19
+ n6-20020a5d6606000000b0033e745b8bcfsm10745697wru.88.2024.04.09.00.52.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 00:52:21 -0700 (PDT)
-Message-ID: <3884a15f-b00e-4805-b0df-0d30cbc48e48@redhat.com>
-Date: Tue, 9 Apr 2024 09:52:15 +0200
+ Tue, 09 Apr 2024 00:52:59 -0700 (PDT)
+Message-ID: <a9b44e30-2788-4d88-850b-4f89c4d1f830@redhat.com>
+Date: Tue, 9 Apr 2024 09:52:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/28] target/i386: Convert do_fldt, do_fstt to
- X86Access
+Subject: Re: [PATCH for-9.1 v2 00/28] linux-user/i386: Properly align signal
+ frame
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240409050302.1523277-1-richard.henderson@linaro.org>
- <20240409050302.1523277-3-richard.henderson@linaro.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -113,7 +112,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20240409050302.1523277-3-richard.henderson@linaro.org>
+In-Reply-To: <20240409050302.1523277-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -141,75 +140,65 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/9/24 07:02, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/i386/tcg/fpu_helper.c | 44 +++++++++++++++++++++++++-----------
->   1 file changed, 31 insertions(+), 13 deletions(-)
+> v1: https://lore.kernel.org/qemu-devel/20230524054647.1093758-1-richard.henderson@linaro.org/
+> 
+> But v1 isn't particularly complet or korrect.
+> 
+> Disconnect fpstate from sigframe, just like the kernel does.
+> Return the separate portions of the frame from get_sigframe.
+> Alter all of the target fpu routines to access memory that
+> has already been translated and sized.
 
-Three incorrect GETPC()s that get fixed later in the series:
+With the exception of patch 22, and with small nits in patches 1/19/23:
 
-do_fsave:
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
 
-> @@ -2459,15 +2465,18 @@ void helper_fldenv(CPUX86State *env, target_ulong ptr, int data32)
->   static void do_fsave(CPUX86State *env, target_ulong ptr, int data32,
->                        uintptr_t retaddr)
->   {
-> +    X86Access ac;
->       floatx80 tmp;
->       int i;
->   
->       do_fstenv(env, ptr, data32, retaddr);
->   
->       ptr += (target_ulong)14 << data32;
-> +    access_prepare(&ac, env, ptr, 80, MMU_DATA_STORE, GETPC());
-> +
-
-do_xsave_fpu:
-
-> @@ -2506,6 +2518,7 @@ static void do_xsave_fpu(CPUX86State *env, target_ulong ptr, uintptr_t ra)
->   {
->       int fpus, fptag, i;
->       target_ulong addr;
-> +    X86Access ac;
->   
->       fpus = (env->fpus & ~0x3800) | (env->fpstt & 0x7) << 11;
->       fptag = 0;
-> @@ -2524,9 +2537,11 @@ static void do_xsave_fpu(CPUX86State *env, target_ulong ptr, uintptr_t ra)
->       cpu_stq_data_ra(env, ptr + XO(legacy.fpdp), 0, ra); /* edp+sel; rdp */
->   
->       addr = ptr + XO(legacy.fpregs);
-> +    access_prepare(&ac, env, addr, 8 * 16, MMU_DATA_STORE, GETPC());
-> +
->       for (i = 0; i < 8; i++) {
->           floatx80 tmp = ST(i);
-> -        do_fstt(env, tmp, addr, ra);
-> +        do_fstt(&ac, addr, tmp);
->           addr += 16;
->       }
->   }
-
-do_xrstor_fpu:
-
-> @@ -2699,6 +2714,7 @@ static void do_xrstor_fpu(CPUX86State *env, target_ulong ptr, uintptr_t ra)
->   {
->       int i, fpuc, fpus, fptag;
->       target_ulong addr;
-> +    X86Access ac;
->   
->       fpuc = cpu_lduw_data_ra(env, ptr + XO(legacy.fcw), ra);
->       fpus = cpu_lduw_data_ra(env, ptr + XO(legacy.fsw), ra);
-> @@ -2711,8 +2727,10 @@ static void do_xrstor_fpu(CPUX86State *env, target_ulong ptr, uintptr_t ra)
->       }
->   
->       addr = ptr + XO(legacy.fpregs);
-> +    access_prepare(&ac, env, addr, 8 * 16, MMU_DATA_LOAD, GETPC());
-> +
->       for (i = 0; i < 8; i++) {
-> -        floatx80 tmp = do_fldt(env, addr, ra);
-> +        floatx80 tmp = do_fldt(&ac, addr);
->           ST(i) = tmp;
->           addr += 16;
->       }
-
+> 
+> r~
+> 
+> 
+> Richard Henderson (28):
+>    target/i386: Add tcg/access.[ch]
+>    target/i386: Convert do_fldt, do_fstt to X86Access
+>    target/i386: Convert helper_{fbld,fbst}_ST0 to X86Access
+>    target/i386: Convert do_fldenv to X86Access
+>    target/i386: Convert do_fstenv to X86Access
+>    target/i386: Convert do_fsave, do_frstor to X86Access
+>    target/i386: Convert do_xsave_{fpu,mxcr,sse} to X86Access
+>    target/i386: Convert do_xrstor_{fpu,mxcr,sse} to X86Access
+>    tagret/i386: Convert do_fxsave, do_fxrstor to X86Access
+>    target/i386: Convert do_xsave_* to X86Access
+>    target/i386: Convert do_xrstor_* to X86Access
+>    target/i386: Split out do_xsave_chk
+>    target/i386: Add rbfm argument to cpu_x86_{xsave,xrstor}
+>    target/i386: Add {hw,sw}_reserved to X86LegacyXSaveArea
+>    linux-user/i386: Drop xfeatures_size from sigcontext arithmetic
+>    linux-user/i386: Remove xfeatures from target_fpstate_fxsave
+>    linux-user/i386: Replace target_fpstate_fxsave with X86LegacyXSaveArea
+>    linux-user/i386: Split out struct target_fregs_state
+>    linux-user/i386: Fix -mregparm=3 for signal delivery
+>    linux-user/i386: Return boolean success from restore_sigcontext
+>    linux-user/i386: Return boolean success from xrstor_sigcontext
+>    linux-user/i386: Fix allocation and alignment of fp state
+>    target/i386: Honor xfeatures in xrstor_sigcontext
+>    target/i386: Convert do_xsave to X86Access
+>    target/i386: Convert do_xrstor to X86Access
+>    target/i386: Pass host pointer and size to cpu_x86_{fsave,frstor}
+>    target/i386: Pass host pointer and size to cpu_x86_{fxsave,fxrstor}
+>    target/i386: Pass host pointer and size to cpu_x86_{xsave,xrstor}
+> 
+>   target/i386/cpu.h                |  57 ++-
+>   target/i386/tcg/access.h         |  40 ++
+>   linux-user/i386/signal.c         | 669 ++++++++++++++++++-------------
+>   target/i386/tcg/access.c         | 160 ++++++++
+>   target/i386/tcg/fpu_helper.c     | 561 ++++++++++++++++----------
+>   tests/tcg/x86_64/test-1648.c     |  33 ++
+>   target/i386/tcg/meson.build      |   1 +
+>   tests/tcg/x86_64/Makefile.target |   1 +
+>   8 files changed, 1014 insertions(+), 508 deletions(-)
+>   create mode 100644 target/i386/tcg/access.h
+>   create mode 100644 target/i386/tcg/access.c
+>   create mode 100644 tests/tcg/x86_64/test-1648.c
+> 
 
 
