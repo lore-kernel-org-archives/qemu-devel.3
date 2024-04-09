@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F192DCD1297
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAA7CD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 16:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruEMK-0001nl-Da; Tue, 09 Apr 2024 12:30:08 -0400
+	id 1ruEQG-0004bj-A6; Tue, 09 Apr 2024 12:34:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEM6-0001lh-Go
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:29:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEQE-0004bS-P3
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:34:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEM4-0005hC-6O
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:29:53 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruEQB-0006Sl-Nt
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 12:34:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712680190;
+ s=mimecast20190719; t=1712680446;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=La/sX0FIeAD7xBB6N3ikc+njx+MSTzew0kZCawhAOio=;
- b=Lh7t7kbOPsWFGqpIi+BpfErNwE1lY9oFVfudIjn4eOAxkEaeL6R9DM0b+NCIG2dITGQxdf
- s3S82pk2ZiqxfTRT5rkoE2+Ude1IbHm+mdP7oT7sZ6XIcyuetRJxlu4wIOuUYQgY3eJ9zJ
- 0MdLVo98LCBKg56SUCrxRH1ldi2HGaU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-55uvktR9MvWCXxg8mDWBtg-1; Tue, 09 Apr 2024 12:29:48 -0400
-X-MC-Unique: 55uvktR9MvWCXxg8mDWBtg-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ bh=Oot7y9h2sf/VMjHI33NKvv/6e/dWzuQxmrEH3uq11/I=;
+ b=DD+AkHBujpYYlnid4JYT/fE0hXqPYS1vkocwDkPrMvJa2biCjBh4+45Zu0oZU1gSB9dC3z
+ qt0bhhD9/qNL9qA42sQb5yslLjQLirxNp4q+VTXa990GzZnNqHnPgAWYtiTaZ2US6L6BOP
+ qaaqCJGiUo4pWPRDQlRCemOjaWcOxco=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-gHOIdFYSNiOyJnOei86UnQ-1; Tue,
+ 09 Apr 2024 12:34:02 -0400
+X-MC-Unique: gHOIdFYSNiOyJnOei86UnQ-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 11968801FAF;
- Tue,  9 Apr 2024 16:29:48 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A8F7628EC104;
+ Tue,  9 Apr 2024 16:34:00 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.204])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A841C444303;
- Tue,  9 Apr 2024 16:29:47 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 85F62C0157E;
+ Tue,  9 Apr 2024 16:34:00 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id A158518017FB; Tue,  9 Apr 2024 18:29:42 +0200 (CEST)
+ id 6DA4D18009F4; Tue,  9 Apr 2024 18:33:55 +0200 (CEST)
+Date: Tue, 9 Apr 2024 18:33:55 +0200
 From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 1/4] edk2: get version + date from git submodule
-Date: Tue,  9 Apr 2024 18:29:31 +0200
-Message-ID: <20240409162942.454419-2-kraxel@redhat.com>
-In-Reply-To: <20240409162942.454419-1-kraxel@redhat.com>
-References: <20240409162942.454419-1-kraxel@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] edk2: get version + date from git submodule
+Message-ID: <5r7zfrd6lxztzsdbyqu6zs6spbtt445k6m2ylaiw67bvwgpwb2@syfv3wnabwwe>
+References: <20240325144440.1069662-1-kraxel@redhat.com>
+ <CAFEAcA8eX=-6yXCZ2+X6niJPcgzkzXfHT9F6LpbfqV4b9VRW6w@mail.gmail.com>
+ <sevlzxonvgps5m7r263bkzouabg62tbe6vknvv4rbvjfnnhkqg@jnqkst5xetwn>
+ <CAFEAcA-xEK6_eT-TUP+adMsgoTU6kRQoz+9vfXO2Tz_PBLdmyA@mail.gmail.com>
+ <CAFEAcA8Nty9zAvn9PB-azwvR7mF5tYOfz27AXi-vbuZDoS_ZVw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8Nty9zAvn9PB-azwvR7mF5tYOfz27AXi-vbuZDoS_ZVw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -82,55 +84,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Turned out hard-coding version and date in the Makefile wasn't a bright
-idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
-from git instead.  Store in edk2-version, so this can be committed to
-the repo and is present in tarballs too.
+On Tue, Apr 09, 2024 at 04:13:34PM +0100, Peter Maydell wrote:
+> On Tue, 9 Apr 2024 at 15:19, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > On Tue, 9 Apr 2024 at 15:14, Gerd Hoffmann <kraxel@redhat.com> wrote:
+> > >
+> > >   Hi,
+> > >
+> > > > > +               --version-override "$(EDK2_STABLE)-for-qemu" \
+> > > > > +               --release-date "$(EDK2_DATE)" \
+> > > >
+> > > > Hi -- I've just noticed that we never made this change to
+> > > > automate the date/version for EDK2 ROMs, but we also never
+> > > > updated the version by hand. So at the moment we ship an
+> > > > EDK2 blob that wrongly claims to be an older version.
+> > > > See this bug report by a user:
+> > > >
+> > > > https://gitlab.com/qemu-project/qemu/-/issues/2233
+> > > >
+> > > > Is it possible to fix this for 9.0?
+> > >
+> > > I've posted v2 (series) a while back, no feedback so far.
+> > >
+> > > https://lore.kernel.org/qemu-devel/20240327102448.61877-1-kraxel@redhat.com/
+> > >
+> > > If there are no objections I can do a PR for these three patches plus an
+> > > edk2 binary rebuild (which shouldn't change anything but the version
+> > > string).
+> >
+> > I guess that's safe enough, though the very-conservative
+> > choice would be to take just the EDK2 rebuild for 9.0.
+> 
+> Would you be able to get a pullreq in for this before rc3?
+> (I can delay rc3 by a day or so if necessary; I'd rather
+> not have to do an rc4 if we can avoid it...)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240327102448.61877-2-kraxel@redhat.com>
----
- roms/Makefile | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+https://lore.kernel.org/qemu-devel/20240409162942.454419-1-kraxel@redhat.com/T/
 
-diff --git a/roms/Makefile b/roms/Makefile
-index edc234a0e886..783a5cab4f4c 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -52,6 +52,8 @@ SEABIOS_EXTRAVERSION="-prebuilt.qemu.org"
- #
- EDK2_EFIROM = edk2/BaseTools/Source/C/bin/EfiRom
- 
-+-include edk2-version
-+
- default help:
- 	@echo "nothing is build by default"
- 	@echo "available build targets:"
-@@ -147,10 +149,19 @@ skiboot:
- 	$(MAKE) -C skiboot CROSS=$(powerpc64_cross_prefix)
- 	cp skiboot/skiboot.lid ../pc-bios/skiboot.lid
- 
--efi:
-+edk2-version: edk2
-+	if test -e edk2/.git; then \
-+		echo "EDK2_STABLE = $$(cd edk2; git describe --tags --match 'edk2-stable*')" > $@; \
-+		echo "EDK2_DATE = $$(cd edk2; git log -1 --pretty='format:%cd' --date='format:%m/%d/%Y')" >> $@; \
-+	else \
-+		touch $@; \
-+	fi
-+
-+efi: edk2-version
- 	$(PYTHON) edk2-build.py --config edk2-build.config \
--		--version-override "edk2-stable202302-for-qemu" \
--		--release-date "03/01/2023"
-+		--version-override "$(EDK2_STABLE)-for-qemu" \
-+		--release-date "$(EDK2_DATE)" \
-+		--silent --no-logs
- 	rm -f ../pc-bios/edk2-*.fd.bz2
- 	bzip2 --verbose ../pc-bios/edk2-*.fd
- 
--- 
-2.44.0
+take care,
+  Gerd
 
 
