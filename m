@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6891C67861
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F346ECD1284
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 11:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru9xH-00044V-AC; Tue, 09 Apr 2024 07:47:59 -0400
+	id 1ru9xW-00046I-3k; Tue, 09 Apr 2024 07:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru9xF-00044G-LZ
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:47:57 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1ru9xR-00045p-PC
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:48:11 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru9xD-0004Zn-Vq
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:47:57 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-56e6acb39d4so2002527a12.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 04:47:54 -0700 (PDT)
+ id 1ru9xQ-0004eG-4L
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 07:48:09 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-516d536f6f2so4218244e87.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 04:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712663274; x=1713268074; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712663285; x=1713268085; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GbC3rrgpJc0Sn3by3trh+q6pYI0eXERbUUdEG57UqxY=;
- b=faiiqPCTp/IlMYzFA6AF65LMdIeqDVimP13QirNp0n+8kqa5tH+lhbFZwYeiOkOyfj
- l+gkn9+CbvaRqnsiJXRIgsN8+l1ZZYFyetkkSV6czbzSgBuypBVPJHPzcHemUgVFDYTe
- TCORdp1RQNPDQ97Coqj3iSgV9tU5od5s5z+wk9CSWv0JtbuDzwigUWzFKPMs3OP6UsI6
- wPUfrZKVdIgv4nB720Pi/7Q7g1uKvpTG2lYVkp2vZ7jAdFS5DRkVkGucBN9Ljtqz4mxO
- o09OhtONUT2t1RO4QRereH5HSTTv/QTYH7CccrYzwAO80TygdcUJXurFQMZo79zDU4YK
- mFbQ==
+ bh=Degnu0MS5NwnOpDTl8IdP5LDf/dEPp+0UA0JHfd9gb8=;
+ b=bwNXGUfdoX0U372YG8cD8wty2prok1FgBF4ZOb+rB4/GbgpT+s4qi4wk+T3P972TeH
+ 3cLYx+V+0/gy5OAq7tnRObjrEDShU8tRSoDVgM+N4xuqYzBk+QeDK+6LtDRPcGPYEp8j
+ PcBZx7+OjJBgU7dmnJfMvuw3iv5wLFap0W6plP3ILqyFAqsUng9PLkY16yHZ5P4X0hcQ
+ 8Bkm5LMP/3D2paI+4mBNXalLy9aRICq/CNWsm+gfKay0VGRBb51rx3FPaL9VFpE6xUTq
+ ag8d8n0FqAfncAKVQSWVkdcCa0vPT4fvoSKdNSW/6jQdiKd/+TzBaMHvZN/QKWAvwYul
+ 3DoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712663274; x=1713268074;
+ d=1e100.net; s=20230601; t=1712663285; x=1713268085;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GbC3rrgpJc0Sn3by3trh+q6pYI0eXERbUUdEG57UqxY=;
- b=AqXoUw4K9GitSWXl9BKa3KV9pPX6fbA0TLfFnmXW8Tv8EUmKsxc29UlVn3/Pk/FyTT
- RtCv6qbZQSv6mixmKfx1aXMA+ziINs4t+BLgaWenlkSg8RN2PHAd8PvkgUJPWtnAChjr
- YnPthgVjUF01h0qtgWg3GLMT2TelOcokb6hax1/2xEX3eukrw25FeoY62N7iTOHfbs05
- Au8Badv4CmMUag+I3kCWunHNF97kZQGpLFodw7ASJb3Af4s41nSTjWmfJmaoVhw+PpwB
- /9ayCNmukLPd4/3E4bg+GVHv5tSA0+vvkXfQqpZN3OligOtx0sZ1PahqqBcrq/gFwOh4
- JjaA==
-X-Gm-Message-State: AOJu0YwTS3WYcsbuY3rtR5iiUdByTuWKmyXkWssN0AYtltXPApitp4Gv
- AEISn/PEv/bs87VZAq8VSYnlSOTDpFyOQIWgKqGyIFAJCPnpglnMzXf9E7LSTxFXEyFcJAJvPnN
- dQ49gp3q6pL4kUcYW8UpO773l960crY5uiTrEFw==
-X-Google-Smtp-Source: AGHT+IH4Ql2Lmc3T++6/KMAOfNM0FYBpvnF5K3O0w+olSbJrOAGraDyUwsENfn5k/2cDWLB02aJFcLdli+dyzeupZJk=
-X-Received: by 2002:a50:9e24:0:b0:56e:6aa:c7c4 with SMTP id
- z33-20020a509e24000000b0056e06aac7c4mr7363448ede.42.1712663273801; Tue, 09
- Apr 2024 04:47:53 -0700 (PDT)
+ bh=Degnu0MS5NwnOpDTl8IdP5LDf/dEPp+0UA0JHfd9gb8=;
+ b=mk+Bb0CnYw6AVEKC1Zaxt3mMOlQEjg6qWbIdg7RQXRkQCrE+az4+bSrHWhlB02kWrr
+ dBLoDgkKrsMa0Vapd2Lvoze/UBY7q/ZaxFZDowLut1DkYyTD/+6x2ZMd2+d46UtPpWJd
+ WgYt48F/vuNoIRfiHMA62VUVoy+hYDkTK+LWtTmFiuH7krZkbycDd/09tiMIoaXqwACx
+ IjoTw4YXudYvJjNK4VMdFAhdI6kQFksh8b9NyaDGgt5GiDcuppo9mw32gyPv/BblDbkR
+ JKT5NAvYt2WE0jT/sP75TvCexMT0aylroq1EzjNY/d3xGLcv7G6Nju2uXiOUPStn60ln
+ J2IA==
+X-Gm-Message-State: AOJu0YyGcvCUxpDCtHD6SYkfB/v55EknwEXl++r69ARcaODxNy3l7y+m
+ 7lOkeRzYsu+A7bV81kSog2TP6z71k6eZJrCAMXNsCmQD8AAbiXWNkIh7Eg+HnwC++zsJ92ub3jT
+ ZfZBLhP3GNSkvWdTHEmMXT9sDyYwbrdlG7B9x9GC2d+9BueEE
+X-Google-Smtp-Source: AGHT+IESNjub7Lw4/pv0B7qGHXsR728luWwsNN0pX6S6zQaM5AZGEEk1ElRP/vCU+ZXibmT1TlstkuYO+aTlBxh+ruo=
+X-Received: by 2002:a05:6512:3993:b0:516:e8b1:177d with SMTP id
+ j19-20020a056512399300b00516e8b1177dmr6228303lfu.65.1712663284935; Tue, 09
+ Apr 2024 04:48:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1712647890.git.mst@redhat.com>
-In-Reply-To: <cover.1712647890.git.mst@redhat.com>
+References: <20240408192404.542506-1-pbonzini@redhat.com>
+In-Reply-To: <20240408192404.542506-1-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 12:47:41 +0100
-Message-ID: <CAFEAcA_PMkyG6TWspMRn87L2FE67ev3nr0nJoR=+NRxBXUHToA@mail.gmail.com>
-Subject: Re: [PULL 0/7] virtio,pc,pci: bugfixes
-To: "Michael S. Tsirkin" <mst@redhat.com>
+Date: Tue, 9 Apr 2024 12:47:54 +0100
+Message-ID: <CAFEAcA-11sG_o4-RB31rEP0kb-C3hA3Pf40DQHSuhkZzhytqJw@mail.gmail.com>
+Subject: Re: [PULL 0/3] 9.0 bugfixes for 2024-04-08
+To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,7 +87,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Apr 2024 at 08:32, Michael S. Tsirkin <mst@redhat.com> wrote:
+On Mon, 8 Apr 2024 at 20:25, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
 > The following changes since commit ce64e6224affb8b4e4b019f76d2950270b391af5:
 >
@@ -95,19 +95,16 @@ On Tue, 9 Apr 2024 at 08:32, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
 >
-> for you to fetch changes up to e1999904a960c33b68fedf26dfb7b8e00abab8f2:
+> for you to fetch changes up to e34f4d87e8d47b0a65cb663aaf7bef60c2112d36:
 >
->   qdev-monitor: fix error message in find_device_state() (2024-04-09 02:31:33 -0400)
+>   kvm: error out of kvm_irqchip_add_msi_route() in case of full route table (2024-04-08 21:22:00 +0200)
 >
 > ----------------------------------------------------------------
-> virtio,pc,pci: bugfixes
->
-> Tiny fixes: important but mostly obvious ones.  Revert VDPA network sim
-> for this release as there are questions around it's maintainatiblity.
->
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> * fall back to non-ioeventfd notification if KVM routing table is full
+> * support kitware ninja with jobserver support
+> * nanomips: fix warnings with GCC 14
 >
 
 
