@@ -4,68 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21483C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687DBCD1299
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru8RS-0006jk-Et; Tue, 09 Apr 2024 06:11:02 -0400
+	id 1ru8Tz-0007aR-64; Tue, 09 Apr 2024 06:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru8RO-0006iv-Kh
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:10:59 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru8Tn-0007Zl-DR
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:13:30 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ru8RM-0003UY-VE
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:10:58 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-516d6898bebso4263127e87.3
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 03:10:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru8Tl-0003ph-Nr
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:13:27 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-56e69a51a33so1391187a12.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 03:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712657454; x=1713262254; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MZY3ZEuilX0QDXeTDjeid/Ta1KPwWAfxpfF4EPNuP2c=;
- b=OT08uEJPjAoP3UUbQ5YFxzCbeYklX3tuyHS9zgiXVlihJW1Q5jZArt/If107qptYd5
- 2vNuUTnXlf7rXsYOCvetegYZBeSko7PJ3Qo/yE3X57ma/nz9wdBlXmljXqztAio36QRM
- +PJx53N2V3rMNqJlW+AQF10QR+itUyMZWKUSQe19p+5Jv6cFN+ohhp+j3O7HrOmmGQDB
- eNC/oF3ZYWjzdzYfsZ6NxWEQiq2Ppz4W2XVkaSNMl9yczA5g3vnAcGlmDeAyWVvmBXQr
- oIKd1xGUzc62GR3T7xfTdQ8gPoGpFsSyt/yeK66LOVExTU50USjaV4mgjrhj9f6gxUum
- Io/g==
+ d=linaro.org; s=google; t=1712657603; x=1713262403; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6ANszgX4aSUH9u8zKZHHhE8et0D1o2RK7kFE6pc/c7A=;
+ b=f8693ktvlpnB89/YOiLSOh24VUfnVdM+ORhyD9JaZKo880ekggut34GbQMATL7p7an
+ vBfsEeNQSQTG0bzencHqhJrUxUsAw0QBGTipk+4Y0p6Qjs0PN2iGJ+LE13/+oNCvOT0Y
+ oZufo6oD9fV7qm5B6RtDlMquoR+tjcef/qYpCj3f0Hiin3nWlzbWTn51oPBwMlQtckzI
+ G55Wq0BO5k8trrJ57fvDG/SKPD7arv0vhSftuK7byGkB7LV0BUKsr7V2b0d8uMedrV9C
+ ef78L56XBraGRBaxJlkJKLKtK5QFhr/3lVH13GMiZGOAQJAgz8AxWvfN+uAKWbmC/e30
+ 0rYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712657454; x=1713262254;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MZY3ZEuilX0QDXeTDjeid/Ta1KPwWAfxpfF4EPNuP2c=;
- b=Qyh9zdeAbngxO5CiUTgTZMLoFnmut2Km3QDZNc/7PeUsjFrtLIGWcCPJMbiAJe9p4c
- dTCbdKfO/+mv3HumlTdh5AXbD+jV99ROKk4jL7VxQ5i5HmAnPPb0k4/iNxVQVvnpsfTP
- RDv0zMo58S0owjBxjwSEG8B51oYU6TZJXy5qQC9pl+Z+MTiGT85Ks7SuYNVMjuwMK105
- SV6ds9XUJd8Y2XqWD5n3bJHBkPtwiACiKHdAsTnPLO4flb9Ib+sZ4gO+9hKu7pBiKuLO
- GiB6Q4slMqUrDZl87jWEIMh2YfuoEBoTsweQBBlTNMpmiU3mu85hgLPks64Sd4pVqH8r
- Mu1g==
-X-Gm-Message-State: AOJu0YyIquVhKaHm2N6iaoneQB8MO4BirDk/pe8xpSZA0/cGhziHwO/E
- fSq2J8WeRswASnLkLjg1+DAqUo4BWnZ4pLxs3VQcEnhFcXk+wq6ValF3+WrZ3lPAoi8AZ6QYL9C
- xxHGWc2OsxvwCawD2TkLz0V15Z8cdwFQgA5KnSA==
-X-Google-Smtp-Source: AGHT+IFW7+0HmCCkR9LiRBoApsqHFLlUvt3na5d50evl9xZs4iZWp1KDdBTA1PA6ISSkHH5Jb6dqabnfsDtDKon6a7o=
-X-Received: by 2002:a19:2d0e:0:b0:516:d4c2:5412 with SMTP id
- k14-20020a192d0e000000b00516d4c25412mr7376164lfj.32.1712657454320; Tue, 09
- Apr 2024 03:10:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712657603; x=1713262403;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6ANszgX4aSUH9u8zKZHHhE8et0D1o2RK7kFE6pc/c7A=;
+ b=l8SQT/1st4wEo8McAfiylSI2DTiD+wq/B9GPpq7zh9XBK06Dq6JGZj7r8CkIomCsNA
+ +NkShJqAXCtsKGBqY50cP6/hakofTWBV25VW4hbhH5KU0k4TdXyliQHNOUT7y8ENOwo0
+ n7b02dnEuO8OYzSP7fyFmIEzgzdgHvIWwR255p5BrEvRBJ8kUW0MFCLzl7XBAIA08jrd
+ y4Oi5oovTyBtdoSvAKBKJovu723dlESuEMFCkEVbZXISds9zsyiYV/m9Aku2nKCnncUl
+ bs6QiEnn9Wf/nyPTU0n/7GDIN10U62l6Ih6uqAtsoxKpT8VAMxZSyiWCITxuM86i3sNJ
+ jVVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUK2C0USw+H4JClsqAyOib5OQ0Lkb+JfMcv+Cni5Vaxv99cEUv0O2q8vdkYK/K3VMicdPJWhj9u+oz4mdnkzDpnwIhf8+k=
+X-Gm-Message-State: AOJu0YweSgvTfoaI8ihRrd5XO9j/XuLnBnwYM6bphPf4oWV5XVKyaHGH
+ V+wosBcXl4VehOZgtvdHK+UiFuZtDKny3HaO3d5w1KGr2qM6XueX2V7rT+ycqVQ=
+X-Google-Smtp-Source: AGHT+IEbcgW2jn1TWxsRIIrBFhlCfhKqDBq9bhwERjwL4xH6nKDr2xFF7Th5c2Jn3hqgUULpQ0RIqQ==
+X-Received: by 2002:a50:a419:0:b0:56b:e089:56ed with SMTP id
+ u25-20020a50a419000000b0056be08956edmr9345710edb.39.1712657603042; 
+ Tue, 09 Apr 2024 03:13:23 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.160.134])
+ by smtp.gmail.com with ESMTPSA id
+ a24-20020a50c318000000b0056e347954f6sm4850404edb.31.2024.04.09.03.13.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Apr 2024 03:13:22 -0700 (PDT)
+Message-ID: <3fb12f7c-2749-40d6-95cd-4ff98796c0f0@linaro.org>
+Date: Tue, 9 Apr 2024 12:13:20 +0200
 MIME-Version: 1.0
-References: <2484ebc6.e9b9.18ec24a8e9e.Coremail.13824125580@163.com>
-In-Reply-To: <2484ebc6.e9b9.18ec24a8e9e.Coremail.13824125580@163.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 11:10:42 +0100
-Message-ID: <CAFEAcA_KES78EcDe6G8hmOAGksxVnJS3K6CtnFzjQ05fPtqc_Q@mail.gmail.com>
-Subject: Re: how does the qemu emulate the "atomic" semantics on host that
- DOES NOT support atomic instructions?
-To: tugouxp <13824125580@163.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0] linux-user: Preserve unswapped siginfo_t for
+ strace
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: gustavo.romero@linaro.org
+References: <20240409003411.1452196-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240409003411.1452196-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,18 +96,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Apr 2024 at 10:58, tugouxp <13824125580@163.com> wrote:
->    How does the qemu emulate the target that support "atomic" ISA, such as riscv "amo" instruction on host machine that does NOT support atomic  instructions ?
-> is this scenario happends?
+On 9/4/24 02:34, Richard Henderson wrote:
+> Passing the tswapped structure to strace means that
+> our internal si_type is also gone, which then aborts
+> in print_siginfo.
+> 
+> Fixes: 4d6d8a05a0a ("linux-user: Move tswap_siginfo out of target code")
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   linux-user/signal.c | 12 +++++++++---
+>   1 file changed, 9 insertions(+), 3 deletions(-)
 
-All hosts that can run QEMU support at least some atomic instructions.
-Where possible we use the host atomic operations to provide the
-necessary atomicity guarantees that a guest instruction must have.
-For cases where we can't do that (eg where the guest needs an atomic
-16-byte store but the host doesn't have one), we arrange to pause
-execution of all the other guest vCPU threads, do the thing that must
-be atomic, and then let everything resume.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-thanks
--- PMM
 
