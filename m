@@ -4,103 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05DF8CD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C84C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 18:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruFmu-0003DD-UV; Tue, 09 Apr 2024 14:01:40 -0400
+	id 1ruFo2-0004U2-83; Tue, 09 Apr 2024 14:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1ruFmp-00037U-Qk; Tue, 09 Apr 2024 14:01:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFnj-0004Qa-MR
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:02:32 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1ruFmn-0005RL-DU; Tue, 09 Apr 2024 14:01:35 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 439HhsNO018465; Tue, 9 Apr 2024 18:01:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=80rWkJvWKXvsZYiRvacBaqIQd/D5rUzbHIt4I2KHueY=;
- b=q5NMonS0ZE4CORsjNxVuiZKa0Nilq6EQbO6mwSO57mvX+jPg3uTexpYDv/4iFQNgQKvc
- iChkz+vsoBke61nl6tW+4SP/g19emzhs0lbTbNlu3dnq+jMjbG4UXFJqK26HJHBuDxFM
- vVXlgnGrbDe1hE5AzEBciZqehBdxDl8QSsGT3QQJFA2ROrJ631gU50c8cSXJJh743ivp
- 6AR4Bae9cDvGsVBPLgc79gYnRXUX8lS59o+u4CDAOk2B803cRRbjyX+Q4Cxggm2aIL4q
- LcHjHib/6nvuixK9OcsjvLjQ36tN4Vq0cvQtwE4KGfBeMvTp0HyrtS4MB/P2ait80DbA /Q== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xda5yr1ss-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Apr 2024 18:01:25 +0000
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 439I1OBX011627;
- Tue, 9 Apr 2024 18:01:24 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xda5yr1r1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Apr 2024 18:01:24 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 439HjHLe022560; Tue, 9 Apr 2024 17:57:33 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xbhqnyuax-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Apr 2024 17:57:33 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 439HvSB251380732
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Apr 2024 17:57:30 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 123402004E;
- Tue,  9 Apr 2024 17:57:28 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 572B02004B;
- Tue,  9 Apr 2024 17:57:26 +0000 (GMT)
-Received: from gfwr515.rchland.ibm.com (unknown [9.10.239.103])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  9 Apr 2024 17:57:26 +0000 (GMT)
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
- chalapathi.v@linux.ibm.com, saif.abrar@linux.vnet.ibm.com,
- dantan@us.ibm.com
-Subject: [PATCH v2 5/6] hw/ppc: SPI controller wiring to P10 chip and create
- seeprom device
-Date: Tue,  9 Apr 2024 12:56:59 -0500
-Message-Id: <20240409175700.27535-6-chalapathi.v@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
-References: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ruFnh-0005de-H4
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 14:02:31 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 76EA45D39D;
+ Tue,  9 Apr 2024 21:04:23 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D7707AF84D;
+ Tue,  9 Apr 2024 21:02:25 +0300 (MSK)
+Message-ID: <82b11f6c-fe3c-4cd2-8dca-19b5db1cb09d@tls.msk.ru>
+Date: Tue, 9 Apr 2024 21:02:23 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: bo5o6NOQGFUcc1UsJp0gtkZTzHKy0_M6
-X-Proofpoint-ORIG-GUID: hmy43hXcOpTjEnQnxmJsLuPBMXMzgfvR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-09_12,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- mlxlogscore=999 impostorscore=0 suspectscore=0 mlxscore=0 phishscore=0
- adultscore=0 priorityscore=1501 clxscore=1015 spamscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404090118
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=chalapathi.v@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 1/4] edk2: get version + date from git submodule
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240409162942.454419-1-kraxel@redhat.com>
+ <20240409162942.454419-2-kraxel@redhat.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240409162942.454419-2-kraxel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,116 +85,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this commit
-Creates SPI controller on p10 chip.
-Create the keystore seeprom of type "seeprom-25csm04"
-Connect the cs of seeprom to PIB_SPIC[2] cs irq.
+09.04.2024 19:29, Gerd Hoffmann:
+> Turned out hard-coding version and date in the Makefile wasn't a bright
+> idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
+> from git instead.  Store in edk2-version, so this can be committed to
+> the repo and is present in tarballs too.
 
-The QOM tree of spi controller and seeprom are.
-/machine (powernv10-machine)
-  /chip[0] (power10_v2.0-pnv-chip)
-    /pib_spic[2] (pnv-spi-controller)
-      /bus (pnv-spi-bus)
-        /pnv-spi-bus.2 (SSI)
-      /xscom-spi-controller-regs[0] (memory-region)
+This too,
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2233
 
-/machine (powernv10-machine)
-  /unattached (container)
-    /device[7] (seeprom-25csm04)
-      /ssi-gpio-cs[0] (irq)
 
-(qemu) qom-get /machine/unattached/device[7] "parent_bus"
-"/machine/chip[0]/pib_spic[2]/bus/pnv-spi-bus.2"
+> +-include edk2-version
 
-Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
----
- include/hw/ppc/pnv_chip.h |  3 +++
- hw/ppc/pnv.c              | 36 +++++++++++++++++++++++++++++++++++-
- 2 files changed, 38 insertions(+), 1 deletion(-)
+> +edk2-version: edk2
+> +	if test -e edk2/.git; then \
+> +		echo "EDK2_STABLE = $$(cd edk2; git describe --tags --match 'edk2-stable*')" > $@; \
+> +		echo "EDK2_DATE = $$(cd edk2; git log -1 --pretty='format:%cd' --date='format:%m/%d/%Y')" >> $@; \
+> +	else \
+> +		touch $@; \
+> +	fi
 
-diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-index 8589f3291e..3edf13e8f9 100644
---- a/include/hw/ppc/pnv_chip.h
-+++ b/include/hw/ppc/pnv_chip.h
-@@ -6,6 +6,7 @@
- #include "hw/ppc/pnv_core.h"
- #include "hw/ppc/pnv_homer.h"
- #include "hw/ppc/pnv_n1_chiplet.h"
-+#include "hw/ppc/pnv_spi_controller.h"
- #include "hw/ppc/pnv_lpc.h"
- #include "hw/ppc/pnv_occ.h"
- #include "hw/ppc/pnv_psi.h"
-@@ -118,6 +119,8 @@ struct Pnv10Chip {
-     PnvSBE       sbe;
-     PnvHomer     homer;
-     PnvN1Chiplet     n1_chiplet;
-+#define PNV10_CHIP_MAX_PIB_SPIC 6
-+    PnvSpiController pib_spic[PNV10_CHIP_MAX_PIB_SPIC];
- 
-     uint32_t     nr_quads;
-     PnvQuad      *quads;
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 6e3a5ccdec..eeb2d650bd 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -46,6 +46,7 @@
- #include "hw/pci-host/pnv_phb.h"
- #include "hw/pci-host/pnv_phb3.h"
- #include "hw/pci-host/pnv_phb4.h"
-+#include "hw/ssi/ssi.h"
- 
- #include "hw/ppc/xics.h"
- #include "hw/qdev-properties.h"
-@@ -1829,6 +1830,11 @@ static void pnv_chip_power10_instance_init(Object *obj)
-     for (i = 0; i < pcc->i2c_num_engines; i++) {
-         object_initialize_child(obj, "i2c[*]", &chip10->i2c[i], TYPE_PNV_I2C);
-     }
-+
-+    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC ; i++) {
-+        object_initialize_child(obj, "pib_spic[*]", &chip10->pib_spic[i],
-+                                TYPE_PNV_SPI_CONTROLLER);
-+    }
- }
- 
- static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
-@@ -2043,7 +2049,35 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
-                               qdev_get_gpio_in(DEVICE(&chip10->psi),
-                                                PSIHB9_IRQ_SBE_I2C));
-     }
--
-+    /* PIB SPI Controller */
-+    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
-+        object_property_set_int(OBJECT(&chip10->pib_spic[i]), "spic_num",
-+                                i , &error_fatal);
-+        /*
-+         * The TPM attached SPIC needs to reverse the bit order in each byte
-+         * it sends to the TPM.
-+         */
-+        if (i == 4) {
-+            object_property_set_bool(OBJECT(&chip10->pib_spic[i]),
-+                    "reverse_bits", true, &error_fatal);
-+        }
-+        if (!qdev_realize(DEVICE(&chip10->pib_spic[i]), NULL, errp)) {
-+            return;
-+        }
-+        pnv_xscom_add_subregion(chip, PNV10_XSCOM_PIB_SPIC_BASE +
-+                                i * PNV10_XSCOM_PIB_SPIC_SIZE,
-+                                &chip10->pib_spic[i].xscom_spic_regs);
-+    }
-+
-+    /* Primary MEAS/MVPD/Keystore SEEPROM connected to pib_spic[2] */
-+    DeviceState *seeprom = qdev_new("seeprom-25csm04");
-+    qdev_prop_set_string(seeprom, "filename",
-+                         "sbe_measurement_seeprom.bin.ecc");
-+    ssi_realize_and_unref(seeprom, ((&chip10->pib_spic[2])->bus).ssi_bus,
-+                          &error_fatal);
-+    qemu_irq seeprom_cs = qdev_get_gpio_in_named(seeprom, SSI_GPIO_CS, 0);
-+    Object *bus = OBJECT(&(&chip10->pib_spic[2])->bus);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(bus), 0, seeprom_cs);
- }
- 
- static void pnv_rainier_i2c_init(PnvMachineState *pnv)
--- 
-2.39.3
+edk2-version will become a stray file in the source dir, not cleaned up.
+But since this code path is only evaluated once, it is trivial to inline
+it, in a way similar to the first version.
 
+BTW, git has -C option instead of using `cd'.
+
+So it goes like this:
+
+EDK2_STABLE = $(shell [ ! -d edk2/.git ] || git -C edk2 describe --tags --match 'edk2-stable*')
+
+ditto for EDK2_DATE.
+
+> +efi: edk2-version
+>   	$(PYTHON) edk2-build.py --config edk2-build.config \
+> -		--version-override "edk2-stable202302-for-qemu" \
+> -		--release-date "03/01/2023"
+> +		--version-override "$(EDK2_STABLE)-for-qemu" \
+> +		--release-date "$(EDK2_DATE)" \
+
+How it will look like if there's no edk2/.git, for example, when run in
+extracted release tarball, with empty EDK2_STABLE and EKD2_DATE?
+
+Should these values be a part of release tarball maybe?
+Or maybe it's better to base EKD2_{DATE|VERSION} on qemu date/version in
+this case?
+
+Thanks,
+
+/mjt
 
