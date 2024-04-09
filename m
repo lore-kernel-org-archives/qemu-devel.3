@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99FDCD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF84C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruHGr-0000iN-Fy; Tue, 09 Apr 2024 15:36:41 -0400
+	id 1ruHGl-0000f8-Lr; Tue, 09 Apr 2024 15:36:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGp-0000i5-IS
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:39 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1ruHGj-0000eW-Nx
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:33 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGl-0004hs-UW
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:38 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e4149e7695so19670915ad.0
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:35 -0700 (PDT)
+ id 1ruHGi-0004fx-8Z
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:33 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1e0bfc42783so51977105ad.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712691395; x=1713296195; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712691391; x=1713296191; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xpaONpZX7TzlKuP+L0GxHPWtvRjew/38IVUtIRwPa5c=;
- b=u32rTkWjDpvUVunMYXf5Bu2wHhCy/Usc1g7CLOneDWr3CvNZDldf77QLkTy7uJAJeF
- jKjwHAHVoz/J8x7SWlyw+Wg5NlDRFNJU7xlEi41cSeozDniZhExe5GwhufFh9tf+sTZR
- G22po88Kf69jRlOSzmOlyKjqnuxkJPJoFX+mTvO9FbKO/b5FH1tXTTMQF3/ZUbII/6/+
- n82dPxddUJ67AFHdtpCmQ+AmqgGcMfhGR7HYsHPjl2W074cdDyGgXWOBhO2GXOWvdHR9
- 4EospU6vHMXGJA4gf9/lLZ5qE+0fx5zAcY9iE6lvHqc/jh5BgPmvHRS6Hf4iIVAbiBNl
- oYzQ==
+ bh=ZPbK/NhQe1+jKC23+AkIKSjI/CWiYdFRaJAq7oh1b28=;
+ b=eQig0s/CPdmF+V+aC0/7ks4SFPAW4XFCi805/nVCH9GAZBb59ySEplKPKObIotCc7d
+ VEy2DNzyOZ08E0L1YejANirDtzM4LXzESRcpjtruG+pLeU4Cj1HAhRv7wn9UvUicvTG7
+ agKLa2iBkwYGl0FVwTKPGD0ircy5PewGmQZhLALXAkLkgd1xxQ2SwNsXGEn5axJyJoxO
+ fnXWlZugjBZaLPy6hYrtLvLyosItoPd0E1Ogp1TZt2vuIaymp70HTjenpSIW+7qstS7B
+ oPurHvKykLbu7ezDxg4DotDmMuLwpb3OFgs4VTq22wUkAMHVd9yPSlhFi0XDFPwUJdLf
+ 7bew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712691395; x=1713296195;
+ d=1e100.net; s=20230601; t=1712691391; x=1713296191;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xpaONpZX7TzlKuP+L0GxHPWtvRjew/38IVUtIRwPa5c=;
- b=xC5teEQB+BvuuMILMXArzU9KZB0WOVSuJD2txact+Ber2zU2xUbnX9FRrALv7zchCd
- 0NpNEF3ulfDzcLmmqKWjpXnoY4VrDWi5KX81ueoAaKgxY2tvpp+o7OCwaDzm0zB+gtqQ
- lm/kQj2UFRAj0ql03bXtGwawQH440fVrv18Jt+uQnyqVYSJZaYUBqlKiblWJAgShkn6A
- 5wxjJI+RYX4U0FMY3hDv0qaujut9xvG8HVNaLXtuEXbP369VLZ4hSPO9xCq4M9GUk4NA
- UCkvWD6GrWRrKToIJYnsDawqLbuzKFtR+9k9Xr9Jw+plQGMRclPuDGf9qVPO6X2G0sZg
- CZQQ==
-X-Gm-Message-State: AOJu0Yw9gIoxtngFHLH5xYLiramuvImzzngUwA3lxNmU1cuu/oCCMZb6
- 3UH+W/q8SyzQKSBlxDsWMNi9mtUDrH9aLCwYnJHnfKEDmaOwiI/zqfaq0PcjzJDwJVndEiqW9s2
- /
-X-Google-Smtp-Source: AGHT+IGgXoWFCythR4LhHHwMcwh7J2QSZKAKjS9aEPmSWjlhJR5TK+ocQmiypcZuwC4dj7NAaYQRLQ==
-X-Received: by 2002:a17:902:eb8f:b0:1e0:a7cc:3750 with SMTP id
- q15-20020a170902eb8f00b001e0a7cc3750mr963465plg.3.1712691394748; 
- Tue, 09 Apr 2024 12:36:34 -0700 (PDT)
+ bh=ZPbK/NhQe1+jKC23+AkIKSjI/CWiYdFRaJAq7oh1b28=;
+ b=Zz5WzBWFJm7NGFOKewk5adTIxW1x+Z8KlfVwd6nIpual3/2WWxL1sUKEuDxeMknqm2
+ lAbxV13a5xnWAn1arKFpjzMuMJGB55ZsWibGmyc3umgJUepzuRtPu2pOcZOhpA+F99wn
+ hDx/ogxfzDdT5mEBQB0ZfQAjgy2DOBrULnqg7Rbs5v9UvAX9KzVf2eKLw+PHMx87+bwl
+ O9Se01yViLSdHfWIXCMhM7L8T9okzcnmPdF/tlL71MuM9TkQDiLZaCypZnqyIiwsjn1B
+ d6yO/5WgMYbAG79Rgl2+xgUiXEMC4yfYqYvrJVckTm5F77A/m/aSizPPHeFsN2HsOzRh
+ pTgg==
+X-Gm-Message-State: AOJu0YwYrOGZzpZVpWTdukbpLa6+vXKuna0aKHRAqC8mz11b+ppNBCo5
+ S6omokRAKsbqdxzUXb+I+D3fXZ9beSSY6wdr4r8SqZXPaP2exk5DHrucEYIcoDl0yX+UrNlcwLc
+ X
+X-Google-Smtp-Source: AGHT+IGzNg9FPa/e7XoCjMuuZEaniikZW7yXxFO7/tW5tX0hvs2ROnXQV5q18k+SOEkxPCEuwnenoA==
+X-Received: by 2002:a17:902:eb8f:b0:1e2:b8fc:745e with SMTP id
+ q15-20020a170902eb8f00b001e2b8fc745emr942414plg.8.1712691390747; 
+ Tue, 09 Apr 2024 12:36:30 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.33
+ c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 12:36:34 -0700 (PDT)
+ Tue, 09 Apr 2024 12:36:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 20/20] linux-user: Preserve unswapped siginfo_t for strace
-Date: Tue,  9 Apr 2024 09:36:03 -1000
-Message-Id: <20240409193603.1703216-21-richard.henderson@linaro.org>
+Subject: [PULL v2 17/20] target/riscv: Use insn_start from DisasContextBase
+Date: Tue,  9 Apr 2024 09:36:00 -1000
+Message-Id: <20240409193603.1703216-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240409193603.1703216-1-richard.henderson@linaro.org>
 References: <20240409193603.1703216-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,55 +95,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Passing the tswapped structure to strace means that
-our internal si_type is also gone, which then aborts
-in print_siginfo.
+To keep the multiple update check, replace insn_start
+with insn_start_updated.
 
-Fixes: 4d6d8a05a0a ("linux-user: Move tswap_siginfo out of target code")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/signal.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ target/riscv/translate.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index a93148a4cb..05dc4afb52 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -1173,6 +1173,7 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
-     CPUState *cpu = env_cpu(cpu_env);
-     abi_ulong handler;
-     sigset_t set;
-+    target_siginfo_t unswapped;
-     target_sigset_t target_old_set;
-     struct target_sigaction *sa;
-     TaskState *ts = get_task_state(cpu);
-@@ -1182,9 +1183,14 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
-     k->pending = 0;
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 9d57089fcc..9ff09ebdb6 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -115,8 +115,7 @@ typedef struct DisasContext {
+     bool itrigger;
+     /* FRM is known to contain a valid value. */
+     bool frm_valid;
+-    /* TCG of the current insn_start */
+-    TCGOp *insn_start;
++    bool insn_start_updated;
+ } DisasContext;
  
-     /*
--     * Writes out siginfo values byteswapped, accordingly to the target. It also
--     * cleans the si_type from si_code making it correct for the target.
-+     * Writes out siginfo values byteswapped, accordingly to the target.
-+     * It also cleans the si_type from si_code making it correct for
-+     * the target.  We must hold on to the original unswapped copy for
-+     * strace below, because si_type is still required there.
-      */
-+    if (unlikely(qemu_loglevel_mask(LOG_STRACE))) {
-+        unswapped = k->info;
-+    }
-     tswap_siginfo(&k->info, &k->info);
+ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+@@ -207,9 +206,9 @@ static void gen_check_nanbox_s(TCGv_i64 out, TCGv_i64 in)
  
-     sig = gdb_handlesig(cpu, sig, NULL, &k->info, sizeof(k->info));
-@@ -1197,7 +1203,7 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
+ static void decode_save_opc(DisasContext *ctx)
+ {
+-    assert(ctx->insn_start != NULL);
+-    tcg_set_insn_start_param(ctx->insn_start, 1, ctx->opcode);
+-    ctx->insn_start = NULL;
++    assert(!ctx->insn_start_updated);
++    ctx->insn_start_updated = true;
++    tcg_set_insn_start_param(ctx->base.insn_start, 1, ctx->opcode);
+ }
+ 
+ static void gen_pc_plus_diff(TCGv target, DisasContext *ctx,
+@@ -1224,7 +1223,7 @@ static void riscv_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
      }
  
-     if (unlikely(qemu_loglevel_mask(LOG_STRACE))) {
--        print_taken_signal(sig, &k->info);
-+        print_taken_signal(sig, &unswapped);
-     }
+     tcg_gen_insn_start(pc_next, 0);
+-    ctx->insn_start = tcg_last_op();
++    ctx->insn_start_updated = false;
+ }
  
-     if (handler == TARGET_SIG_DFL) {
+ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
 -- 
 2.34.1
 
