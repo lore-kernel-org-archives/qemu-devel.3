@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884F1CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 14:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CBF8C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 14:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruCVQ-00080i-6s; Tue, 09 Apr 2024 10:31:24 -0400
+	id 1ruCYT-0001Lj-R4; Tue, 09 Apr 2024 10:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruCVN-00080V-44
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 10:31:21 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruCYS-0001L4-4I
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 10:34:32 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruCVL-0001Xd-CW
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 10:31:20 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-56e6f4ee104so1511430a12.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 07:31:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruCYP-0002K1-Eg
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 10:34:31 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4155819f710so44652825e9.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 07:34:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712673078; x=1713277878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712673267; x=1713278067; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SWeaZ3UzNtUymQPKimedE7d1DoRZIeh2HZSCfAJ0WMY=;
- b=VHVXd2AB3Qg8rgC8UA+VfmsKvrbnT3P1PQFyfEgUxSO2xOrr8oXJF0z5gvbCFcq1J2
- nDfsq07zrhp1qWMo1qKMnV74kuaZaAm01aN3kYPAGEPmjZl2xZE2DyCHsTxCvIkACfkO
- gBYWfR0vfJUNsSZO3yo0URKLjeM9OLzaqbNPgsot+g6RLK4qk9l8XvczJvmCCWpPKQok
- nKdtU1yB2nZSN4+6Gdl7d593+LOa+prOShW38hVfMAt0kTtSkIS2q69/gVSvz3x1jfVf
- Eob35ChkHeGuR68OPigmo5kIIR0YxlNAhRk4xufEUQqqQiaYToRC0b9I2/1PCVSCIHry
- kbPg==
+ bh=yM+0/27o2IoHQcBevLZ/8vstUbrIPLtriNpel/hEE7g=;
+ b=Z18Fwk0cFOkESsbjk42seGi89sJ4glVMnFwLhDWPmpl53fqewbFloLkysUSGqZM/Tz
+ RyYPVrO6O2rTNXqR2bBpP+x3Lvp15HOO0qsHFI/HgYQiXTruN6Kz1HJyplbjOSlS5mMU
+ ufKTax6OyQagpdvatp3bJ9MdxhkLjrvWerBh81YwT3eUY2g+sjU+yp+gkDviKXg77CKF
+ m27LVq0MlvfqaiwPvP0pv41c1xIyiLkXaUbt8wJfKbPYLu94st2sCNqjHP934JhDj+l5
+ nZuurVgyRam0N950XbZRBf99wjNnZY7PG36LStQVPJHRxuA/eA8HlG9jgRZeKC8gRozP
+ vDhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712673078; x=1713277878;
+ d=1e100.net; s=20230601; t=1712673267; x=1713278067;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SWeaZ3UzNtUymQPKimedE7d1DoRZIeh2HZSCfAJ0WMY=;
- b=fzw+y/pcZKlLM/QNvACLOLfQDwNh+9/pR/8IZtqowpla4EkTKJ47/JSgauAzoXlD7X
- oo5nVslo8alDimi+PS4qAWzKmKEITN/rI9JaxKwCmqoi7VzFQxDumzD9YRSnoihlXBmj
- 7qHSOKSirhJGF5KvP8n5DFzRHP7g9V2vHX5vi0ufFBIZLxk2Wu9P5ciALeTBSm41O0cB
- KG+ENslKoxF6UOMKDjOIs9ctjW+CCGxmjoKL5s57IGllCKOsd9UBZaAoul6/z0BE8EpW
- jgGzSvV79Ak4Koc0oduSyJb+JLFJ0mRhT9oIclfUItpA83Y36ZlTjqlUM6Eb8hXrKCJk
- r3Cw==
-X-Gm-Message-State: AOJu0Yy+H3D4tQbRazo/E9J71vNQQqhPmnx4SFJ2lBf2VgJrNFDZC6gH
- XpUrGJVIsL3QlPA9j2w8j8LEyN/H1dVn7AzpSa2Ks53ut6oUAJjMp8QSBfJszHI=
-X-Google-Smtp-Source: AGHT+IH1yurl4/dQIdvZ008M3dVx5hU0TzLMpy+9JzGyIMYpmWL09QX5oUYrdOXQ43Ug6SrGzu4ULA==
-X-Received: by 2002:a50:d4d5:0:b0:56e:2f39:c5d2 with SMTP id
- e21-20020a50d4d5000000b0056e2f39c5d2mr8655944edj.7.1712673077676; 
- Tue, 09 Apr 2024 07:31:17 -0700 (PDT)
+ bh=yM+0/27o2IoHQcBevLZ/8vstUbrIPLtriNpel/hEE7g=;
+ b=icmx+5Fnk1VGCc+4cSVqJCg5RjWXY9qFEb747mb4B8hh20GOJcqM6lsKeFof1JH9nc
+ jCkuVtP4Hk7WkE4NMKzOo3M2R/1mrcJE6oaHbS+So4M1OVFV46fE9Lc4Kuuwu06QYh/6
+ zXu0dxoPmv4EZSR1RDzpDU+pwGv1Mno3oHgO5ARnImFZkTo1+hLKDPix+uVSZkeX3XQp
+ Jwcx1Ajcv10C7BUcaRXXSmHwNR7iDSP0qq4IZz5e2GcY4et1gxxHkptZEo85O4B2co3M
+ Wf/R5rX+/iHjaOeWa/OrluNA2NwPiy9fg2/GDsvls+QglFzL2K4b+16D2r1NWKL+0NTl
+ /oSw==
+X-Gm-Message-State: AOJu0Yxo6zuRindVPA04POX2Bnt1PWuzesdF2M94FJQsR/PoWbWSi8Yp
+ nIOt5ZM87BebMB7jJmPRHoK94LA79dXcmTn2eVadLIf3x1X9GVfJtKUVEf+oU9Hhp3zzaLr60Zp
+ 9
+X-Google-Smtp-Source: AGHT+IGkH2HHaDLXp2PZXpRmx71j4cZc9QEVH88nxpa4dmFj5gxrHDZZdfoJxUNBv21F1uuY/HV1Dw==
+X-Received: by 2002:a05:600c:3108:b0:416:4923:1f2d with SMTP id
+ g8-20020a05600c310800b0041649231f2dmr7115454wmo.30.1712673267186; 
+ Tue, 09 Apr 2024 07:34:27 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.160.134])
  by smtp.gmail.com with ESMTPSA id
- b93-20020a509f66000000b0056e0376286bsm5468010edf.24.2024.04.09.07.31.16
+ r18-20020a05600c459200b004161af729f4sm17537443wmo.31.2024.04.09.07.34.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 07:31:17 -0700 (PDT)
-Message-ID: <678996e0-6920-45b0-a37f-6f6fa1bf1904@linaro.org>
-Date: Tue, 9 Apr 2024 16:31:15 +0200
+ Tue, 09 Apr 2024 07:34:26 -0700 (PDT)
+Message-ID: <9a37459f-6d09-4a82-b506-acd574de66cb@linaro.org>
+Date: Tue, 9 Apr 2024 16:34:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0 v2 0/3] hw/block/nand: Fix out-of-bound access in
- NAND block buffer
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Qiang Liu <cyruscyliu@gmail.com>,
- qemu-block@nongnu.org, Alexander Bulekov <alxndr@bu.edu>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20240409135944.24997-1-philmd@linaro.org>
- <ZhVOGxCG9zfludIs@redhat.com>
+Subject: Re: [PATCH-for-9.0 v2 00/11] hw/net/lan9118: Fix overflow in TX FIFO
+To: qemu-devel@nongnu.org
+Cc: Chuhong Yuan <hslester96@gmail.com>, Jason Wang <jasowang@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, qemu-arm@nongnu.org
+References: <20240409133801.23503-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZhVOGxCG9zfludIs@redhat.com>
+In-Reply-To: <20240409133801.23503-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,21 +95,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/24 16:18, Kevin Wolf wrote:
-> Am 09.04.2024 um 15:59 hat Philippe Mathieu-Daudé geschrieben:
->> Fix for https://gitlab.com/qemu-project/qemu/-/issues/1446
->>
->> Since v1:
->> - Addressed Kevin trivial suggestions (unsigned offset)
+On 9/4/24 15:37, Philippe Mathieu-Daudé wrote:
+> Fix for https://gitlab.com/qemu-project/qemu/-/issues/2267
 > 
-> You already kept the Reviewed-by tags, but looks good to me.
+> Since v1:
+> - Renamed definition as MIL_TXFIFO_SIZE
+> - Addressed Peter review comments in patches 1 & 2
+>    (add comment, return TXE INT)
+> - Trivial patches while digesting Peter's analysis [*]
+> 
+> More work expected during 9.1.
+> 
+> [*] https://lore.kernel.org/qemu-devel/CAFEAcA8vvURMn2FaDP9tXtP5eCMs6-XFOCR9ypo=WBH+6g5prw@mail.gmail.com/
+> 
+> Philippe Mathieu-Daudé (11):
+>    hw/net/lan9118: Replace magic '2048' value by MIL_TXFIFO_SIZE
+>      definition
+>    hw/net/lan9118: Fix overflow in MIL TX FIFO
+>    hw/net/lan9118: Remove duplicated assignment
 
-Less work on your side ;)
-
-The changes seemed trivial enough to keep them, but better
-be safe than sorry.
-
-Thanks!
-
-Series queued.
+Patches 1 & 2 queued.
 
