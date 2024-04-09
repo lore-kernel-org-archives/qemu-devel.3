@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13194C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7246C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 15:50:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruDVe-0003fi-Vv; Tue, 09 Apr 2024 11:35:43 -0400
+	id 1ruDjQ-0006on-17; Tue, 09 Apr 2024 11:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruDVW-0003cv-J8
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:35:36 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruDVS-0004zG-Q3
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:35:32 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2d700beb60bso93562001fa.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 08:35:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712676929; x=1713281729; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OeeAPICL8R+yBspVq6BzSd8N58Dj0IAo6K/hutB7eN0=;
- b=vKZ4yqLGR8Co7o/3TjMjT4VmCJ+Ifs9NVFGKCXP8gHlsLxirxi0pUjnhC3B1wuqS4/
- XYpUFYrfTDGTic8u2ojIXSZgtmgbPh9bjQPpryhkWKyHgUqYWXCzfPmm/YPBjfXvralW
- amyHhBE0S3eZ5D6k/M3iLJ9c+jgKg9rRfod09trhXjd8I/HG0tpqIbQCmcMbLFuf0OSi
- /+zjGx9XWAQb5Y0PUsbazV7Mu6tcMFYWa9doCc43L6DgU3BFcKn8aGenfS8353fVwPUT
- 6B1TKoJGGbRPd05iRWXeNRWO7uVJ7Xib80KquGtpeqL49JWnEPD7JOy37ZXfnA4VdInj
- c7oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712676929; x=1713281729;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OeeAPICL8R+yBspVq6BzSd8N58Dj0IAo6K/hutB7eN0=;
- b=mVzsBjBAckF15N0g5DkzewJEBKUmTMEey7amgyYj5ceJitZVi/6CJgWU9hNkE8Box+
- bqWVAeJFIuA8tgPVVaWsAlzIKHdnea0aT53zUcoYtsXDYc4bzfaXpoykMTnu5nd0VcqM
- 9I+CiT7DJbO84JWlIjED/oQ0dBkzZzTk4VzMyaGGtYH3UNBL/yku+xijk+uIY9pcX2uz
- W/bUKWLBvRCxfRqXU9RI11uE9QZG9G5vz5UPgjlUlt9Z5trdqFIHFMyIIx42UsH6e6Zb
- hWFvCmxjDMfff3cYCBIpgvoclPtt1pyniq4oUU6qWt8u3XPnEHmH9jeKKQJDNDcq3C1m
- YSvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVTuEo+1p5563PAnpu/Cmz7fpR26jzFWLFbZTIjpJ74KmS0kaKrX392bK/lRnn3f3z1Le4fcPDMWVx3R4Ch8GtH8IQPOhw=
-X-Gm-Message-State: AOJu0YxdXpQE9MnxFpVd6IIBKPhbqfvJ7tymyaeInm3ry76yxmBYPmqa
- LX/NbbRHk03JF4q9m+LjNv0m8H41or+XUviyEO33AjrFCf5D0+4YEuZQeGpE9ds=
-X-Google-Smtp-Source: AGHT+IGZsx1aWFDclNk3NLBmvuCdpsruZL+HDyRkQmlMFrslWsG9SGUrFKQS/oq7822kndbo2m+ggQ==
-X-Received: by 2002:a2e:9782:0:b0:2d6:ba1e:a54a with SMTP id
- y2-20020a2e9782000000b002d6ba1ea54amr143445lji.51.1712676927822; 
- Tue, 09 Apr 2024 08:35:27 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.160.134])
- by smtp.gmail.com with ESMTPSA id
- ov7-20020a170906fc0700b00a4e44f724e8sm5777048ejb.186.2024.04.09.08.35.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 08:35:27 -0700 (PDT)
-Message-ID: <f0665213-89f5-400c-b91c-3088fe36e64b@linaro.org>
-Date: Tue, 9 Apr 2024 17:35:25 +0200
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1ruDjH-0006l0-Ro
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:49:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1ruDjF-00077y-NT
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 11:49:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712677784;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6w7Bsc4uznrT5ksMXhJdZ0vxKI+BIJmCr1cqx4d4P8Y=;
+ b=c+mPTYBCCc7ZDW2Z8oWT8I1y58zKMdh/FoszF6yFHkHPMshUFA2LXjEeIpIw8znWgJlZ+J
+ aztVZXJ2w4p5+VaQiYfaYj4PhBSx3cDEZorf28EnS6DGhDTrGpfiKP908wLo9jCgranisD
+ aruiS4r8zyfrQwvxi41jZCRLQinnVvc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562--It6wc6vMzKQJsqE08sPAA-1; Tue, 09 Apr 2024 11:49:42 -0400
+X-MC-Unique: -It6wc6vMzKQJsqE08sPAA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7157A802CA7;
+ Tue,  9 Apr 2024 15:49:42 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.15])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 53B1F40B497A;
+ Tue,  9 Apr 2024 15:49:41 +0000 (UTC)
+Date: Tue, 9 Apr 2024 10:49:19 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Zhu Yangyang <zhuyangyang14@huawei.com>
+Subject: Re: [PATCH v5 2/2] nbd/server: Mark negotiation functions as
+ coroutine_fn
+Message-ID: <eu34jjayqnpqsubkv4wpxogh6dwaok2t35udee4ojpvn5imcv3@n75m44kvv64u>
+References: <20240408160214.1200629-4-eblake@redhat.com>
+ <20240408160214.1200629-6-eblake@redhat.com>
+ <f00ac999-fb9b-4429-b5b9-be27153f77a5@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] linux-user: Fix waitid return of siginfo_t and
- rusage
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240405220034.5128-1-richard.henderson@linaro.org>
-Content-Language: en-US
-Cc: Alex Fan <alex.fan.q@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240405220034.5128-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f00ac999-fb9b-4429-b5b9-be27153f77a5@yandex-team.ru>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,22 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/24 00:00, Richard Henderson wrote:
-> The copy back to siginfo_t should be conditional only on arg3,
-> not the specific values that might have been written.
-> The copy back to rusage was missing entirely.
+On Tue, Apr 09, 2024 at 09:30:39AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 08.04.24 19:00, Eric Blake wrote:
+> > nbd_negotiate() is already marked coroutine_fn.  And given the fix in
+> > the previous patch to have nbd_negotiate_handle_starttls not create
+> > and wait on a g_main_loop (as that would violate coroutine
+> > constraints), it is worth marking the rest of the related static
+> > functions reachable only during option negotiation as also being
+> > coroutine_fn.
+> > 
+> > Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > Signed-off-by: Eric Blake <eblake@redhat.com>
+> > ---
+> >   nbd/server.c | 102 +++++++++++++++++++++++++++++----------------------
+> >   1 file changed, 59 insertions(+), 43 deletions(-)
+> > 
+> > diff --git a/nbd/server.c b/nbd/server.c
+> > index 98ae0e16326..1857fba51c1 100644
 > 
+> [..]
+> 
+> >   {
+> >       int rc;
+> >       g_autofree char *name = NULL;
+> > @@ -755,7 +764,8 @@ struct NBDTLSServerHandshakeData {
+> >       Coroutine *co;
+> >   };
+> > 
+> > -static void nbd_server_tls_handshake(QIOTask *task, void *opaque)
+> > +static coroutine_fn void
+> 
+> This is not, that's a callback for tls handshake, which is not coroutine context as I understand.
 
-Signed-off-by: Alex Fan <alex.fan.q@gmail.com>
+The call chain is:
 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2262
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+nbd_negotiate() - coroutine_fn before this patch
+  nbd_negotiate_options() - marked coroutine_fn here
+    nbd_negotiate_handle_starttls() - marked coroutine_fn here
+      qio_channel_tls_handshake() - in io/channel-tls.c; not marked coroutine_fn, but
+                                    works both in or out of coroutine context
+        ...
+        nbd_server_tls_handshake() - renamed in 1/2 of this series
 
-Tested-by: Alex Fan <alex.fan.q@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> without this hunk:
 
-> ---
->   linux-user/syscall.c | 22 ++++++++++++++++------
->   1 file changed, 16 insertions(+), 6 deletions(-)
+I can drop that particular marking.  There are cases where the
+callback is reached without having done the qemu_coroutine_yield() in
+nbd_negotiate_handle_starttls; but there are also cases where the IO
+took enough time that the coroutine yielded and it is that callback
+that reawakens it.
+
+> 
+> 
+> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+Thanks.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
