@@ -4,72 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA83CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29B5C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru4z5-0002IT-8o; Tue, 09 Apr 2024 02:29:31 -0400
+	id 1ru50f-0003wu-Nx; Tue, 09 Apr 2024 02:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1ru4z3-0002HY-34
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:29 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1ru4z1-0005h3-CM
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:28 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d29aad15a5so48267541fa.3
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 23:29:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1712644165; x=1713248965; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iokoXKahvkzbJmLECwygG7tc6cKoCx20CtQYOHWFhpA=;
- b=I89SdATKZSolBTwTGUPJ4xL5mt3xippaflm315wJiV9iUvXfgJUgj/WnolD2p6SiLJ
- I8o8zCRNMTGh8ew3ADhQYCyuiSA/O//9T1bsw/UDbaskSh2Ma4BAHDBNo8GY9H/u0qGg
- c+ARr4CRpEALAPHD+bqYGj8uBwPDIYHiaWM1pMOfkVlFC68fJk1zlZJYNVbvM66+ciDO
- UfqIkLTw0el/wUpuTpzUr1ieimY41pzucGnvifn4KulAxq7BBsCrrlNKTYYw+ItfQJT+
- zK77DMt7wFbK8QPV8E62kg8fFpWmZV7vsKxkBZxr5JaDf6npL5AFrrUBPwA66O8Ly60g
- mpEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712644165; x=1713248965;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iokoXKahvkzbJmLECwygG7tc6cKoCx20CtQYOHWFhpA=;
- b=sc1CKBuEAXGh9LC5C1Hyi7zIFQFKE3bVzDawL+lNBD3hG/sj+Dw+22Cr/yNGgI4LEc
- jHH/gM12G/F53Vz4U7/JvOAoHFFnXjy6oez0wQteV1G7pfXCe9Gm572ji869v/zzPCuW
- T0Odq+pR99qHXJmlLQH0m0hcm+lSyxATf2Ts/j26FiMPH7k8ywIvLAY6uXhmbaDQ1iuZ
- wqljzJuuqvlLwumLtaALqKqOaCcSaZgI5qS5bPHLdS8DbTG8mMbPoTK+aEXP7IkgRxoV
- Uj6nVv8hMbxZVN9fw9751VosT60JqxiGdFT3RDEuKx5UcnDhbegHIAr0HenOBkPM8OI+
- JAuA==
-X-Gm-Message-State: AOJu0YxMWJQaZDax6fx0iH9LUHV23weilyQFyk/N9mXBatfa867AQZSK
- wl4r38fxz+7iio9GbaLVgOGsM7Vsr484PdVkHvHhY086MgpEkNk7pdQ8NC4Fax/QYD4uka36d/v
- UN61evOfh54RcuVDfji5ohyEssis2/JpeAkKN8aI2czNUVG/z
-X-Google-Smtp-Source: AGHT+IEzVTya2znQiR2A3H+Hoxh9QFW59JQrKuVEbJv0nsQBq1m8KyKAkLHpZqeVVes/cKSzfydl5mA4hNgy2yATYvA=
-X-Received: by 2002:a2e:a4d7:0:b0:2d8:23b4:9067 with SMTP id
- p23-20020a2ea4d7000000b002d823b49067mr6935733ljm.39.1712644164796; Mon, 08
- Apr 2024 23:29:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ru50K-0003oX-FN; Tue, 09 Apr 2024 02:30:49 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ru50H-00068T-3s; Tue, 09 Apr 2024 02:30:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:14ae:0:640:157e:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 6F712608F3;
+ Tue,  9 Apr 2024 09:30:40 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b66e::1:3c] (unknown
+ [2a02:6b8:b081:b66e::1:3c])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id dUSjpO1i2Sw0-6bSY8LRZ; Tue, 09 Apr 2024 09:30:39 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1712644239;
+ bh=r4evT4I1HLDZrYHL56S/UzK0D99bX+H2uOT/aenLSrU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=MmSXl7ZouuHrbR93MO7y0/WmSYxHHC89EMzY//2kLTp1oB7rGVacnz3g9ogESaZzC
+ vUtkIXJcC86owdcCD33Z2zXVNxElpK2XFAYmRGecTvvhye77lkv6DXU7wZjZ0o90bD
+ NQ8WzI25nDST5QMlu4bsJnZRpC4O+naTurkp7jSU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <f00ac999-fb9b-4429-b5b9-be27153f77a5@yandex-team.ru>
+Date: Tue, 9 Apr 2024 09:30:39 +0300
 MIME-Version: 1.0
-References: <20240328022343.6871-1-jason.chien@sifive.com>
-In-Reply-To: <20240328022343.6871-1-jason.chien@sifive.com>
-From: Jason Chien <jason.chien@sifive.com>
-Date: Tue, 9 Apr 2024 14:29:12 +0800
-Message-ID: <CADr__8p1Gzg1u3Rk4EuT8k1nJyjDdXuMCfN7GZLLgWDJN3piSg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] target/riscv: Support Zve32x and Zve64x extensions
-To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000011ea480615a40b8f"
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=jason.chien@sifive.com; helo=mail-lj1-x231.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/2] nbd/server: Mark negotiation functions as
+ coroutine_fn
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Zhu Yangyang <zhuyangyang14@huawei.com>
+References: <20240408160214.1200629-4-eblake@redhat.com>
+ <20240408160214.1200629-6-eblake@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240408160214.1200629-6-eblake@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,89 +76,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000011ea480615a40b8f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 08.04.24 19:00, Eric Blake wrote:
+> nbd_negotiate() is already marked coroutine_fn.  And given the fix in
+> the previous patch to have nbd_negotiate_handle_starttls not create
+> and wait on a g_main_loop (as that would violate coroutine
+> constraints), it is worth marking the rest of the related static
+> functions reachable only during option negotiation as also being
+> coroutine_fn.
+> 
+> Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> ---
+>   nbd/server.c | 102 +++++++++++++++++++++++++++++----------------------
+>   1 file changed, 59 insertions(+), 43 deletions(-)
+> 
+> diff --git a/nbd/server.c b/nbd/server.c
+> index 98ae0e16326..1857fba51c1 100644
 
-Ping.
+[..]
 
-Jason Chien <jason.chien@sifive.com> =E6=96=BC 2024=E5=B9=B43=E6=9C=8828=E6=
-=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:23=E5=AF=AB=E9=81=93=EF=BC=
-=9A
+>   {
+>       int rc;
+>       g_autofree char *name = NULL;
+> @@ -755,7 +764,8 @@ struct NBDTLSServerHandshakeData {
+>       Coroutine *co;
+>   };
+> 
+> -static void nbd_server_tls_handshake(QIOTask *task, void *opaque)
+> +static coroutine_fn void
 
-> This patch series adds the support for Zve32x and Zvx64x and makes vector
-> registers visible in GDB if any of the V/Zve*/Zvk* extensions is enabled.
->
-> v2:
->     Rebase onto riscv-to-apply.next (commit 385e575).
-> v3:
->     Spuash patch 2 into patch 1.
->     Spuash patch 4 into patch 3.
->
-> Jason Chien (3):
->   target/riscv: Add support for Zve32x extension
->   target/riscv: Add support for Zve64x extension
->   target/riscv: Relax vector register check in RISCV gdbstub
->
->  target/riscv/cpu.c                      |  4 +++
->  target/riscv/cpu_cfg.h                  |  2 ++
->  target/riscv/cpu_helper.c               |  2 +-
->  target/riscv/csr.c                      |  2 +-
->  target/riscv/gdbstub.c                  |  2 +-
->  target/riscv/insn_trans/trans_rvv.c.inc |  4 +--
->  target/riscv/tcg/tcg-cpu.c              | 33 ++++++++++++++-----------
->  7 files changed, 30 insertions(+), 19 deletions(-)
->
-> --
-> 2.43.2
->
->
+This is not, that's a callback for tls handshake, which is not coroutine context as I understand.
+without this hunk:
 
---00000000000011ea480615a40b8f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Ping.<br><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
-lass=3D"gmail_attr">Jason Chien &lt;<a href=3D"mailto:jason.chien@sifive.co=
-m" target=3D"_blank">jason.chien@sifive.com</a>&gt; =E6=96=BC 2024=E5=B9=B4=
-3=E6=9C=8828=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:23=E5=AF=AB=
-=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">This patch series adds the support for Zve32x and Zvx64x and makes vecto=
-r<br>
-registers visible in GDB if any of the V/Zve*/Zvk* extensions is enabled.<b=
-r>
-<br>
-v2:<br>
-=C2=A0 =C2=A0 Rebase onto riscv-to-apply.next (commit 385e575).<br>
-v3:<br>
-=C2=A0 =C2=A0 Spuash patch 2 into patch 1.<br>
-=C2=A0 =C2=A0 Spuash patch 4 into patch 3.<br>
-<br>
-Jason Chien (3):<br>
-=C2=A0 target/riscv: Add support for Zve32x extension<br>
-=C2=A0 target/riscv: Add support for Zve64x extension<br>
-=C2=A0 target/riscv: Relax vector register check in RISCV gdbstub<br>
-<br>
-=C2=A0target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 4 +++<br>
-=C2=A0target/riscv/cpu_cfg.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 2 ++<br>
-=C2=A0target/riscv/cpu_helper.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A0target/riscv/csr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0target/riscv/gdbstub.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0target/riscv/insn_trans/trans_rvv.c.inc |=C2=A0 4 +--<br>
-=C2=A0target/riscv/tcg/tcg-cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 | 33 ++++++++++++++-----------<br>
-=C2=A07 files changed, 30 insertions(+), 19 deletions(-)<br>
-<br>
--- <br>
-2.43.2<br>
-<br>
-</blockquote></div></div>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
---00000000000011ea480615a40b8f--
+
+> +nbd_server_tls_handshake(QIOTask *task, void *opaque)
+>   {
+>       struct NBDTLSServerHandshakeData *data = opaque;
+> 
+> @@ -768,8 +778,8 @@ static void nbd_server_tls_handshake(QIOTask *task, void *opaque)
+> 
+
+[..]
+
+-- 
+Best regards,
+Vladimir
+
 
