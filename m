@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D1FCD1296
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA6AC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 13:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruBjl-0006F9-27; Tue, 09 Apr 2024 09:42:09 -0400
+	id 1ruBmR-00089M-TU; Tue, 09 Apr 2024 09:44:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBjf-00066b-DJ
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:42:03 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1ruBmQ-000895-P6
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:44:54 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ruBjd-0000jW-I9
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:42:02 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-56e1f3462caso5795922a12.3
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:42:01 -0700 (PDT)
+ id 1ruBmO-0001ZL-0Q
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 09:44:54 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-516cdb21b34so7144737e87.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 06:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712670120; x=1713274920; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712670289; x=1713275089; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=seoyXeyruefadi2eT8APGXSV51cRic55d3JTadMFQ5Y=;
- b=ADRqkII7cmFZDATYmrkfU8JgFtGkDk22P2XP7gbfKmoZlXXY7m151aSYg7i7CLGKx8
- Oahsa6IjsSkp4K9SNOIhy811uIb+kdDIuMrK7UeR3xk0sd43156aeB1pbc6GQyNY//fK
- qHZgPF9O96hsa1Mvf8qDRrhD2Sk0Q0REDDRALpASvdGhOC2CwJy2Z/YlO0hyuru2ybZV
- dLe1pLgU7Pm3GwfVBdmpcQTO5egNEgJZk0CWgqMB9QSleWuYfDLpFMyd3siM1/bJbeyN
- Bx6HnpBmOFeVW7cjO8oPxgfYf9lRtqHshUoqVP7xEI1w8NOqx2uSr8kqK+EOuhQdGx5v
- R8Qg==
+ bh=XHJAKofpde+C9H1PFyYx60KQ7swMbrzOdT/Elo3VqPk=;
+ b=xp4E873dI8RrDnDiVJODrJjSfdV5c6fqzcE42FA+lb+mh/cgB/TJGi/IRYBH0YPlwH
+ 74IEPMK5h5adDs3Z+T4d0fxCf51ymE2bWqmdPnXhh5OgyaO2npwpkpQyUzczvoFpdYcR
+ 3RZBH0FJulphC1Mf0IQCwyvUWMUVjGqaxBc+7T96mtNBPPSpvXE9+4cXdBwsd4UP14cl
+ hweX5801p5HMGBQeIq98w63OzEoHevPPNOXkoQWlxt9WGgyEIINpQFoKxAdeVExIQmgR
+ vitDAYqCtjRXcv04XJ/uq5L7758z4GlPAY0kHC9e1rdo3ExDirsqWK6gCsn4/+lRc6tV
+ MDeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712670120; x=1713274920;
+ d=1e100.net; s=20230601; t=1712670289; x=1713275089;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=seoyXeyruefadi2eT8APGXSV51cRic55d3JTadMFQ5Y=;
- b=Kn478EGwRzNH9/UpRN+sCNqM6XkxdX6dsiwypVNVJyHA11KzNheOqDWO7j7zXN1KMj
- rNFYRnjrrg+kw0LCTtW/FgC/7UsYA4JiLIKqXhBI0HjY/mT1eSWcvLOzSefXofOx5l3N
- eoqx2n/tW+6r7fandEbJfv0JuuAZ8caDZyEWEsFiwYJxPIpn3iWtSEbalKqXybyG8ls2
- ij7EcNxUlrAK8lqJrLrIsrQpAe0iadMj6cDJRUJTftP8s3w6RiDrD0IMiBR8emyoGmZb
- QY8OX8Ure8caXGXx6XZcGqJ8GI0CZ0y1ind5F4O7FcQ1MbfV4LRdixjUh8Ju6n9CXTt6
- vRsw==
-X-Gm-Message-State: AOJu0YyH/qm/AZxbTzd4zoi0ocZ2JQwpSVqAZXP/CmegK53rS/XuPZA/
- u80tBwYqiVeT5dd8JtO4iaHlLWe5Qi3z76Xjpp2MahWvwyFMZALK4ebOaq1BrjTFJpBojrUH152
- 3YzlFR+6D5F+9ULxPEBK66Sw88EepnSE9g37Snw==
-X-Google-Smtp-Source: AGHT+IGnKzf0N62iFiEwg+b8EGxWNuJ/E7335C5lU3fBCFvn1ilWhFpITWlxYEcSbhpwMfVCakfb+tAiqg6enmWfIgI=
-X-Received: by 2002:a50:9eec:0:b0:56d:faa2:789b with SMTP id
- a99-20020a509eec000000b0056dfaa2789bmr7962495edf.40.1712670120065; Tue, 09
- Apr 2024 06:42:00 -0700 (PDT)
+ bh=XHJAKofpde+C9H1PFyYx60KQ7swMbrzOdT/Elo3VqPk=;
+ b=rXfjUGPdwDlULwceHFHgAYIxN5j6NQQR5GwoFwp7KTLIQNqbg+58qkKOynGhor3+It
+ skv9D+DUY8OCGr5AMpEvE3jrHZ3wTn2+7MkIA7iK8MvspFhrLIvi7s0gEZJ7bemeiXLT
+ Hz6BCjptzULqRGRloexvL6XyueQpoG2VgPDvMe2ra17UBNic8MWCuBUw1Y7f6TfOocUP
+ uJaClexh0eOw4Wq6+YJbt9um2NccobX0qb9IQ3lAHaxm2DBMUyERPWiYwpH8PdrUoxA7
+ uCLCgXSopyH1iKF2vCCkuLwOGtVB4Vo659183cVliUFuvBlK3HT3wAm2D74urLrPaQ4D
+ jIBw==
+X-Gm-Message-State: AOJu0YwNhmlWWDOuw/GP1k7fZ1J7L6V52pLCFRbjuekSK/dBs8EaouZG
+ LxbEz6dI7NT7Nr1KtW4tsETHAVDEcs7iN8xLaTCuYLA3QR3SHXA/LXtAAkoIkyEpshZ7j2xuBD7
+ xfWYaYMOBCKmaOb8EF3Z5M6kwW+55ir9tUAjtnA==
+X-Google-Smtp-Source: AGHT+IG8grxFvGIOZTN/yRK6iFbiikEw+J5VULSe4eMEIrcSbRyxgW8SLm0QmzZ6+iGVg+/2rTQE3cG8n0qXE6iwd5E=
+X-Received: by 2002:a19:750b:0:b0:516:d471:18a0 with SMTP id
+ y11-20020a19750b000000b00516d47118a0mr7052254lfe.67.1712670288840; Tue, 09
+ Apr 2024 06:44:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240409133801.23503-1-philmd@linaro.org>
- <20240409133801.23503-3-philmd@linaro.org>
-In-Reply-To: <20240409133801.23503-3-philmd@linaro.org>
+ <20240409133801.23503-4-philmd@linaro.org>
+In-Reply-To: <20240409133801.23503-4-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Apr 2024 14:41:49 +0100
-Message-ID: <CAFEAcA8EsUJ8mYJDQueZZip7xhipES1exK_FzQOVJ-QYTYqVbg@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0 v2 02/11] hw/net/lan9118: Fix overflow in MIL TX
- FIFO
+Date: Tue, 9 Apr 2024 14:44:38 +0100
+Message-ID: <CAFEAcA9NrzZyXrpfcs0RdvfGgYFjNkapY+V-5Y0HLNgDHyFfeQ@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 v2 03/11] hw/net/lan9118: Remove duplicated
+ assignment
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Chuhong Yuan <hslester96@gmail.com>, 
  Jason Wang <jasowang@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,45 +93,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Apr 2024 at 14:38, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+On Tue, 9 Apr 2024 at 14:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
 > wrote:
 >
-> When the MAC Interface Layer (MIL) transmit FIFO is full,
-> truncate the packet, and raise the Transmitter Error (TXE)
-> flag.
+> s->txp->fifo_used is zeroed in the next 3 lines.
 >
-> Broken since model introduction in commit 2a42499017
-> ("LAN9118 emulation").
->
-> When using the reproducer from
-> https://gitlab.com/qemu-project/qemu/-/issues/2267 we get:
->
->   hw/net/lan9118.c:798:17: runtime error:
->   index 2048 out of bounds for type 'uint8_t[2048]' (aka 'unsigned char[2=
-048]')
->     #0 0x563ec9a057b1 in tx_fifo_push hw/net/lan9118.c:798:43
->     #1 0x563ec99fbb28 in lan9118_writel hw/net/lan9118.c:1042:9
->     #2 0x563ec99f2de2 in lan9118_16bit_mode_write hw/net/lan9118.c:1205:9
->     #3 0x563ecbf78013 in memory_region_write_accessor system/memory.c:497=
-:5
->     #4 0x563ecbf776f5 in access_with_adjusted_size system/memory.c:573:18
->     #5 0x563ecbf75643 in memory_region_dispatch_write system/memory.c:152=
-1:16
->     #6 0x563ecc01bade in flatview_write_continue_step system/physmem.c:27=
-13:18
->     #7 0x563ecc01b374 in flatview_write_continue system/physmem.c:2743:19
->     #8 0x563ecbff1c9b in flatview_write system/physmem.c:2774:12
->     #9 0x563ecbff1768 in address_space_write system/physmem.c:2894:18
->     ...
->
-> [*] LAN9118 DS00002266B.pdf, Table 5.3.3 "INTERRUPT STATUS REGISTER"
->
-> Reported-by: Will Lester
-> Reported-by: Chuhong Yuan <hslester96@gmail.com>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2267
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
+>  hw/net/lan9118.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+> index 91d81b410b..d6f0e37eb1 100644
+> --- a/hw/net/lan9118.c
+> +++ b/hw/net/lan9118.c
+> @@ -438,7 +438,6 @@ static void lan9118_reset(DeviceState *d)
+>      s->hw_cfg =3D s->mode_16bit ? 0x00050000 : 0x00050004;
+>      s->pmt_ctrl &=3D 0x45;
+>      s->gpio_cfg =3D 0;
+> -    s->txp->fifo_used =3D 0;
+>      s->txp->state =3D TX_IDLE;
+>      s->txp->cmd_a =3D 0xffffffffu;
+>      s->txp->cmd_b =3D 0xffffffffu;
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
