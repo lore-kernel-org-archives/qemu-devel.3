@@ -4,74 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31A1C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA83CD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru4zX-0002O9-GJ; Tue, 09 Apr 2024 02:29:59 -0400
+	id 1ru4z5-0002IT-8o; Tue, 09 Apr 2024 02:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1ru4zU-0002Lr-AH
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:56 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ id 1ru4z3-0002HY-34
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:29 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1ru4zR-0005jo-Ux
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:56 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2d6ff0422a2so65049611fa.2
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 23:29:53 -0700 (PDT)
+ id 1ru4z1-0005h3-CM
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:29:28 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d29aad15a5so48267541fa.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 23:29:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1712644191; x=1713248991; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1YNl4XRMhk+8qgIGEw0ZCW9ZqI2UvIL/DcKOJTTiqdA=;
- b=byMNp06ugngZkKuPmP3UOf6QOdxNzCpiNgpskC+btqbdggN1iL9+mLaFDpv3KbvtPh
- Uvi9iPdjdwzb0ObFFm3aDj33oxNSF3ithITRYNmqSggWOtAd8GGnf5RckwsoYEGtJFMh
- VdiclkkHTYIzckKPWVexXtNyG7ebcMU2zGGZVyLgqqNMyEF3O2oUKqMWxLRnILHJb0D4
- jXYN+79yr4FEacg1wsdyQBUA0UXnS1HiuWaY05gTx83mwTZGskVhRRwqpKsiJs0wdNpV
- T6g9DKPVy8Wt2oVVLplA2RskK8ejizOFkeMZIoO2nLtNmy6BlGpLIi90oCqItwtW4smU
- 9KKA==
+ d=sifive.com; s=google; t=1712644165; x=1713248965; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iokoXKahvkzbJmLECwygG7tc6cKoCx20CtQYOHWFhpA=;
+ b=I89SdATKZSolBTwTGUPJ4xL5mt3xippaflm315wJiV9iUvXfgJUgj/WnolD2p6SiLJ
+ I8o8zCRNMTGh8ew3ADhQYCyuiSA/O//9T1bsw/UDbaskSh2Ma4BAHDBNo8GY9H/u0qGg
+ c+ARr4CRpEALAPHD+bqYGj8uBwPDIYHiaWM1pMOfkVlFC68fJk1zlZJYNVbvM66+ciDO
+ UfqIkLTw0el/wUpuTpzUr1ieimY41pzucGnvifn4KulAxq7BBsCrrlNKTYYw+ItfQJT+
+ zK77DMt7wFbK8QPV8E62kg8fFpWmZV7vsKxkBZxr5JaDf6npL5AFrrUBPwA66O8Ly60g
+ mpEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712644191; x=1713248991;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1YNl4XRMhk+8qgIGEw0ZCW9ZqI2UvIL/DcKOJTTiqdA=;
- b=pZEYS1rGW1/66DaHKFMDJwYWOgf2DagGnEEV8RPru9lnOG4huIE4bJfKHcgOml2BR5
- y6O8poud7rPNvKWWkbyqfvhcXf5IsJlwPKFQCfnZo0zWWu/VRaeSxT3E/+hfYiitIvep
- YZ1oiz8YVCdyn6lyIj7tzQh8HOgy2aeuu80EgZpeUx8TfRnCuQa0ANItNpDJVIQrykRA
- urQMTUmXDF0lwZ4CraqJ17jNMnUJOrseyBjcUfi8kFrFlppypQS72oZlMjbhgk3XFjG6
- l90/o3aGfGTdwBDvqIGC8TN6eJOnDWfFOoeg8pJppi2+IvWGxvAG+2cCBz03KOZMHHR4
- BJag==
-X-Gm-Message-State: AOJu0Yx8PTw7srdpoJ8xYn5t6ANrGI1UEDgA2iMJllztnvn5i62S+vUc
- Z9IUjQ9ltwQSAlWwJoLpwKI1DNbXnANWfeEigN8VBwhyavv3JO1lI9xQ/qFwJQKWPjuUxVKeHyK
- Pj6FpbuHlwBmpbVg+rBSLDju/d5l9JdWq2UhSLmY/f5ih82Nj4FA=
-X-Google-Smtp-Source: AGHT+IHZ/rcSCbJ/4NIdfF8Or0Q6OIurnzbRj7E0cULnBUyxDnMiET1+Co+wxFJyFzgFnbXXhh/RWXhrzNsMxAk8UDU=
-X-Received: by 2002:a2e:330e:0:b0:2d8:7a75:9452 with SMTP id
- d14-20020a2e330e000000b002d87a759452mr5412982ljc.29.1712644191066; Mon, 08
- Apr 2024 23:29:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712644165; x=1713248965;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iokoXKahvkzbJmLECwygG7tc6cKoCx20CtQYOHWFhpA=;
+ b=sc1CKBuEAXGh9LC5C1Hyi7zIFQFKE3bVzDawL+lNBD3hG/sj+Dw+22Cr/yNGgI4LEc
+ jHH/gM12G/F53Vz4U7/JvOAoHFFnXjy6oez0wQteV1G7pfXCe9Gm572ji869v/zzPCuW
+ T0Odq+pR99qHXJmlLQH0m0hcm+lSyxATf2Ts/j26FiMPH7k8ywIvLAY6uXhmbaDQ1iuZ
+ wqljzJuuqvlLwumLtaALqKqOaCcSaZgI5qS5bPHLdS8DbTG8mMbPoTK+aEXP7IkgRxoV
+ Uj6nVv8hMbxZVN9fw9751VosT60JqxiGdFT3RDEuKx5UcnDhbegHIAr0HenOBkPM8OI+
+ JAuA==
+X-Gm-Message-State: AOJu0YxMWJQaZDax6fx0iH9LUHV23weilyQFyk/N9mXBatfa867AQZSK
+ wl4r38fxz+7iio9GbaLVgOGsM7Vsr484PdVkHvHhY086MgpEkNk7pdQ8NC4Fax/QYD4uka36d/v
+ UN61evOfh54RcuVDfji5ohyEssis2/JpeAkKN8aI2czNUVG/z
+X-Google-Smtp-Source: AGHT+IEzVTya2znQiR2A3H+Hoxh9QFW59JQrKuVEbJv0nsQBq1m8KyKAkLHpZqeVVes/cKSzfydl5mA4hNgy2yATYvA=
+X-Received: by 2002:a2e:a4d7:0:b0:2d8:23b4:9067 with SMTP id
+ p23-20020a2ea4d7000000b002d823b49067mr6935733ljm.39.1712644164796; Mon, 08
+ Apr 2024 23:29:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240328022343.6871-1-jason.chien@sifive.com>
- <20240328022343.6871-4-jason.chien@sifive.com>
-In-Reply-To: <20240328022343.6871-4-jason.chien@sifive.com>
+In-Reply-To: <20240328022343.6871-1-jason.chien@sifive.com>
 From: Jason Chien <jason.chien@sifive.com>
-Date: Tue, 9 Apr 2024 14:29:39 +0800
-Message-ID: <CADr__8oVf4r=F6pAkt1KERKoR3HG5ViX_4b+NxC9Zw7r3kDH6Q@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] target/riscv: Relax vector register check in RISCV
- gdbstub
+Date: Tue, 9 Apr 2024 14:29:12 +0800
+Message-ID: <CADr__8p1Gzg1u3Rk4EuT8k1nJyjDdXuMCfN7GZLLgWDJN3piSg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] target/riscv: Support Zve32x and Zve64x extensions
 To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: multipart/alternative; boundary="000000000000a2bdd10615a40c1e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=jason.chien@sifive.com; helo=mail-lj1-x235.google.com
+Content-Type: multipart/alternative; boundary="00000000000011ea480615a40b8f"
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=jason.chien@sifive.com; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,100 +85,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a2bdd10615a40c1e
+--00000000000011ea480615a40b8f
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Ping.
 
 Jason Chien <jason.chien@sifive.com> =E6=96=BC 2024=E5=B9=B43=E6=9C=8828=E6=
-=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:24=E5=AF=AB=E9=81=93=EF=BC=
+=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:23=E5=AF=AB=E9=81=93=EF=BC=
 =9A
 
-> In current implementation, the gdbstub allows reading vector registers
-> only if V extension is supported. However, all vector extensions and
-> vector crypto extensions have the vector registers and they all depend
-> on Zve32x. The gdbstub should check for Zve32x instead.
+> This patch series adds the support for Zve32x and Zvx64x and makes vector
+> registers visible in GDB if any of the V/Zve*/Zvk* extensions is enabled.
 >
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Max Chou <max.chou@sifive.com>
-> ---
->  target/riscv/gdbstub.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> v2:
+>     Rebase onto riscv-to-apply.next (commit 385e575).
+> v3:
+>     Spuash patch 2 into patch 1.
+>     Spuash patch 4 into patch 3.
 >
-> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> index be7a02cd90..d0cc5762c2 100644
-> --- a/target/riscv/gdbstub.c
-> +++ b/target/riscv/gdbstub.c
-> @@ -338,7 +338,7 @@ void riscv_cpu_register_gdb_regs_for_features(CPUStat=
-e
-> *cs)
+> Jason Chien (3):
+>   target/riscv: Add support for Zve32x extension
+>   target/riscv: Add support for Zve64x extension
+>   target/riscv: Relax vector register check in RISCV gdbstub
 >
-> gdb_find_static_feature("riscv-32bit-fpu.xml"),
->                                   0);
->      }
-> -    if (env->misa_ext & RVV) {
-> +    if (cpu->cfg.ext_zve32x) {
->          gdb_register_coprocessor(cs, riscv_gdb_get_vector,
->                                   riscv_gdb_set_vector,
->                                   ricsv_gen_dynamic_vector_feature(cs,
-> cs->gdb_num_regs),
+>  target/riscv/cpu.c                      |  4 +++
+>  target/riscv/cpu_cfg.h                  |  2 ++
+>  target/riscv/cpu_helper.c               |  2 +-
+>  target/riscv/csr.c                      |  2 +-
+>  target/riscv/gdbstub.c                  |  2 +-
+>  target/riscv/insn_trans/trans_rvv.c.inc |  4 +--
+>  target/riscv/tcg/tcg-cpu.c              | 33 ++++++++++++++-----------
+>  7 files changed, 30 insertions(+), 19 deletions(-)
+>
 > --
 > 2.43.2
 >
 >
 
---000000000000a2bdd10615a40c1e
+--00000000000011ea480615a40b8f
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Ping.<br></div><br><div class=3D"gmail_quote"><div dir=3D"=
-ltr" class=3D"gmail_attr">Jason Chien &lt;<a href=3D"mailto:jason.chien@sif=
-ive.com">jason.chien@sifive.com</a>&gt; =E6=96=BC 2024=E5=B9=B43=E6=9C=8828=
-=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:24=E5=AF=AB=E9=81=93=EF=
-=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">In curren=
-t implementation, the gdbstub allows reading vector registers<br>
-only if V extension is supported. However, all vector extensions and<br>
-vector crypto extensions have the vector registers and they all depend<br>
-on Zve32x. The gdbstub should check for Zve32x instead.<br>
+<div dir=3D"ltr">Ping.<br><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
+lass=3D"gmail_attr">Jason Chien &lt;<a href=3D"mailto:jason.chien@sifive.co=
+m" target=3D"_blank">jason.chien@sifive.com</a>&gt; =E6=96=BC 2024=E5=B9=B4=
+3=E6=9C=8828=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=8810:23=E5=AF=AB=
+=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
+x">This patch series adds the support for Zve32x and Zvx64x and makes vecto=
+r<br>
+registers visible in GDB if any of the V/Zve*/Zvk* extensions is enabled.<b=
+r>
 <br>
-Signed-off-by: Jason Chien &lt;<a href=3D"mailto:jason.chien@sifive.com" ta=
-rget=3D"_blank">jason.chien@sifive.com</a>&gt;<br>
-Reviewed-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com" targ=
-et=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-Reviewed-by: Max Chou &lt;<a href=3D"mailto:max.chou@sifive.com" target=3D"=
-_blank">max.chou@sifive.com</a>&gt;<br>
----<br>
-=C2=A0target/riscv/gdbstub.c | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+v2:<br>
+=C2=A0 =C2=A0 Rebase onto riscv-to-apply.next (commit 385e575).<br>
+v3:<br>
+=C2=A0 =C2=A0 Spuash patch 2 into patch 1.<br>
+=C2=A0 =C2=A0 Spuash patch 4 into patch 3.<br>
 <br>
-diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c<br>
-index be7a02cd90..d0cc5762c2 100644<br>
---- a/target/riscv/gdbstub.c<br>
-+++ b/target/riscv/gdbstub.c<br>
-@@ -338,7 +338,7 @@ void riscv_cpu_register_gdb_regs_for_features(CPUState =
-*cs)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gdb_find_static_feature(&quot=
-;riscv-32bit-fpu.xml&quot;),<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 if (env-&gt;misa_ext &amp; RVV) {<br>
-+=C2=A0 =C2=A0 if (cpu-&gt;cfg.ext_zve32x) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gdb_register_coprocessor(cs, riscv_gdb_ge=
-t_vector,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 riscv_gdb_set_vector,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ricsv_gen_dynamic_vector_feat=
-ure(cs, cs-&gt;gdb_num_regs),<br>
+Jason Chien (3):<br>
+=C2=A0 target/riscv: Add support for Zve32x extension<br>
+=C2=A0 target/riscv: Add support for Zve64x extension<br>
+=C2=A0 target/riscv: Relax vector register check in RISCV gdbstub<br>
+<br>
+=C2=A0target/riscv/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 4 +++<br>
+=C2=A0target/riscv/cpu_cfg.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 2 ++<br>
+=C2=A0target/riscv/cpu_helper.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0|=C2=A0 2 +-<br>
+=C2=A0target/riscv/csr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
+=C2=A0target/riscv/gdbstub.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
+=C2=A0target/riscv/insn_trans/trans_rvv.c.inc |=C2=A0 4 +--<br>
+=C2=A0target/riscv/tcg/tcg-cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 | 33 ++++++++++++++-----------<br>
+=C2=A07 files changed, 30 insertions(+), 19 deletions(-)<br>
+<br>
 -- <br>
 2.43.2<br>
 <br>
-</blockquote></div>
+</blockquote></div></div>
 
---000000000000a2bdd10615a40c1e--
+--00000000000011ea480615a40b8f--
 
