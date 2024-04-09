@@ -4,61 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527C5C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 01:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA86CC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 01:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru0aG-0004Oq-Vx; Mon, 08 Apr 2024 21:47:37 -0400
+	id 1ru0e9-0005zs-1H; Mon, 08 Apr 2024 21:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshanliukou@163.com>)
- id 1ru0aF-0004OT-0n; Mon, 08 Apr 2024 21:47:35 -0400
-Received: from m16.mail.163.com ([220.197.31.3])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaoshanliukou@163.com>)
- id 1ru0aA-00033g-MF; Mon, 08 Apr 2024 21:47:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
- Message-ID; bh=kpGNrl5sBnKmYWmSt2AiQmdRbsLnaTJzHOjuEdd+NiI=; b=D
- URB1lU2x3shiO4BdVQsb0fLvruN0aeBbCE81Y+AW789tDDyvM/XokDLpBhqIdEtS
- R2yvsoPm0MQc3I8b+EmXbiVkLvdTgBHfmGs9X9w2LH3NMjkJZXx/4PCE5TPJg1AJ
- DmU4XUFk18DmtPh6wVh97KXVeCoNfVsGcD/KtNThMw=
-Received: from gaoshanliukou$163.com ( [60.27.226.9] ) by
- ajax-webmail-wmsvr-40-126 (Coremail) ; Tue, 9 Apr 2024 09:46:47 +0800 (CST)
-X-Originating-IP: [60.27.226.9]
-Date: Tue, 9 Apr 2024 09:46:47 +0800 (CST)
-From: "yang.zhang" <gaoshanliukou@163.com>
-To: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
- liwei1518@gmail.com, bin.meng@windriver.com, 
- alistair.francis@wdc.com, palmer@dabbelt.com, anup@brainfault.org, 
- "yang.zhang" <yang.zhang@hexintek.com>
-Subject: Re:Re: [PATCH] hw/intc/riscv_aplic: APLICs should add child earlier
- than realize
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <eb3ec708-b4f7-431a-bef0-b09a458f422b@ventanamicro.com>
-References: <20240407034652.25739-1-gaoshanliukou@163.com>
- <eb3ec708-b4f7-431a-bef0-b09a458f422b@ventanamicro.com>
-X-NTES-SC: AL_Qu2aAPqZuEor4SmbYekXnEYQh+k3XcK4u/0u2YFVP5E0lST3wxsYf0RhJ3TO+eWkJByViyOIdAFWwOloTJZ/RaHRpjTgXqIpR/zTf4ETRe3E
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ru0e7-0005zV-87
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 21:51:35 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ru0e4-0003j8-5Z
+ for qemu-devel@nongnu.org; Mon, 08 Apr 2024 21:51:35 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1e36b7e7dd2so30267455ad.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 18:51:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1712627488; x=1713232288; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ljs/7JiSa5S3nADxqIvjYXYQh00O6OmkQTKb3VdGWFA=;
+ b=d8pF90KxpzwDo+JGwkZPoueLI144V8nU5LZk/UccuqEOgxdhGbEqyFm2c0GHw4BFHE
+ ozowPo1QYXABQHMICaEgsg8f84aWt+RNV/zeMQFUKLNycNm2oGWp1tUZE7rbzEU2ny+k
+ QzRVi+wTpDpHNAAZLXLs+CLwHNrYl4tE3lW+KALoKvlaSdzoJQlHicG9+Oyuo6MccMqX
+ lGwU/WCxa0zhuZGrmzLqwe6r/31//kcsBNlykUApvPQrQuezbrp8E0GFujS7VXGYpCDA
+ A2q3Qa8/QmcentPKiugJXMEGUKpw+ZeXYB/u9HEZ5NCF3HjyaQZXR6f6E/hk+PqGnyGi
+ Sf+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712627488; x=1713232288;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ljs/7JiSa5S3nADxqIvjYXYQh00O6OmkQTKb3VdGWFA=;
+ b=Ke2E2sNpnUcFrIq7YYRB9uiVrZODjVZjH2g+q3aZsxFBoZGx5c96Q9QfMJ1KoSBK6r
+ LHSa3+EejZNuzASmZvUmr9qrw28dcQ3yeA98ZWYeeXHnrmJ/dpRSLtjJ5y/K+JFs3xyd
+ OD+4wmRP97IJ/2G6e39QiDspV2QuLdapCLj0QnDadJtOm13BUyn8VJtSz4tAuic238dp
+ 8gXe69XeXJzQEgLyB6+nNW4Wdm5cdDj7iAcHLXZEJTufJRN231xl81JlyIeOCzBzTPnw
+ nvZ9q9X9XGbi0+B6CgfhmQodkIhO/O8gMUaH0NFzVThDgmea1eLvbCWVuKyZzrTQB4Ic
+ fprg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpGQMdJfqqZMVLjJeWPeNhwLLyr5+kE6epKsEb02qOmiVKnUCmoNJMFiSVfDCNMMJwzROxedfegRuqXURwnPYRY4+3bUg=
+X-Gm-Message-State: AOJu0YyCbuC6isdKDAztenib4HjwVe8Cfo2ch5MjGiG4ZiDbghq8kSOn
+ Buw0epgph3G6ZYa3RfhD2bYk4Y8bonQFWMoBIkFXdm9pZtAdOeJsCaY/+rOt/yU=
+X-Google-Smtp-Source: AGHT+IE3hMf9MR+5qDvX87oF5RBRNtjYcgKMYd/4DO1pu/zeA4mRI5gKNfrmsmLMZVdHDl0oM7fl+w==
+X-Received: by 2002:a17:902:fc4e:b0:1e4:9db3:fc9 with SMTP id
+ me14-20020a170902fc4e00b001e49db30fc9mr403389plb.36.1712627488236; 
+ Mon, 08 Apr 2024 18:51:28 -0700 (PDT)
+Received: from [10.3.43.196] ([61.213.176.14])
+ by smtp.gmail.com with ESMTPSA id
+ ix5-20020a170902f80500b001e24a287d66sm7725956plb.117.2024.04.08.18.51.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Apr 2024 18:51:27 -0700 (PDT)
+Message-ID: <3aa35c49-b8e6-4fce-a1c8-315cc37fc53d@bytedance.com>
+Date: Tue, 9 Apr 2024 09:51:23 +0800
 MIME-Version: 1.0
-Message-ID: <5b3846fb.270f.18ec0894f02.Coremail.gaoshanliukou@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: _____wD3v0gHnhRmc_8GAA--.20690W
-X-CM-SenderInfo: pjdr2x5dqox3xnrxqiywtou0bp/1tbiRAu68mVOCNubxgADsh
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=220.197.31.3; envelope-from=gaoshanliukou@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.0?] backends/cryptodev: Do not abort for invalid
+ session ID
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alexander Bulekov <alxndr@bu.edu>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Zheyu Ma <zheyuma97@gmail.com>
+References: <20240408154508.67307-1-philmd@linaro.org>
+From: zhenwei pi <pizhenwei@bytedance.com>
+In-Reply-To: <20240408154508.67307-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,34 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CkF0IDIwMjQtMDQtMDkgMDY6MzM6NTUsICJEYW5pZWwgSGVucmlxdWUgQmFyYm96YSIgPGRiYXJi
-b3phQHZlbnRhbmFtaWNyby5jb20+IHdyb3RlOgo+Cj4KPk9uIDQvNy8yNCAwMDo0NiwgeWFuZy56
-aGFuZyB3cm90ZToKPj4gRnJvbTogInlhbmcuemhhbmciIDx5YW5nLnpoYW5nQGhleGludGVrLmNv
-bT4KPj4gCj4+IFNpbmNlIG9ubHkgcm9vdCBBUExJQ3MgY2FuIGhhdmUgaHcgSVJRIGxpbmVzLCBh
-cGxpYy0+cGFyZW50IHNob3VsZAo+PiBiZSBpbml0aWFsaXplZCBmaXJzdC4KPgo+SSB0aGluayBp
-dCdzIHdvcnRoIG1lbnRpb25pbmcgdGhhdCwgaWYgd2UgZG9uJ3QgZG8gdGhhdCwgdGhlcmUgd29u
-J3QgYmUKPmFuIGFwbGljLT5wYXJlbnQgYXNzaWduZWQgZHVyaW5nIHJpc2N2X2FwbGljX3JlYWxp
-emUoKSBhbmQgd2Ugd29uJ3QgY3JlYXRlCj50aGUgYWRlcXVhdGUgSVJRIGxpbmVzLgo+Cj4+IAo+
-PiBTaWduZWQtb2ZmLWJ5OiB5YW5nLnpoYW5nIDx5YW5nLnpoYW5nQGhleGludGVrLmNvbT4KPj4g
-LS0tCj4KPlBsZWFzZSBhZGQ6Cj4KPkZpeGVzOiBlOGY3OTM0M2NmICgiaHcvaW50YzogQWRkIFJJ
-U0MtViBBSUEgQVBMSUMgZGV2aWNlIGVtdWxhdGlvbiIpCj4KPgo+QW5kOgo+Cj4KPlJldmlld2Vk
-LWJ5OiBEYW5pZWwgSGVucmlxdWUgQmFyYm96YSA8ZGJhcmJvemFAdmVudGFuYW1pY3JvLmNvbT4K
-CkRvbmUuClRoYW5rcy4KPj4KPgo+Cj4+ICAgaHcvaW50Yy9yaXNjdl9hcGxpYy5jIHwgOCArKysr
-LS0tLQo+PiAgIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0p
-Cj4+IAo+PiBkaWZmIC0tZ2l0IGEvaHcvaW50Yy9yaXNjdl9hcGxpYy5jIGIvaHcvaW50Yy9yaXNj
-dl9hcGxpYy5jCj4+IGluZGV4IGZjNWRmMGQ1OTguLjMyZWRkNmQwN2IgMTAwNjQ0Cj4+IC0tLSBh
-L2h3L2ludGMvcmlzY3ZfYXBsaWMuYwo+PiArKysgYi9ody9pbnRjL3Jpc2N2X2FwbGljLmMKPj4g
-QEAgLTEwMDAsMTYgKzEwMDAsMTYgQEAgRGV2aWNlU3RhdGUgKnJpc2N2X2FwbGljX2NyZWF0ZSho
-d2FkZHIgYWRkciwgaHdhZGRyIHNpemUsCj4+ICAgICAgIHFkZXZfcHJvcF9zZXRfYml0KGRldiwg
-Im1zaW1vZGUiLCBtc2ltb2RlKTsKPj4gICAgICAgcWRldl9wcm9wX3NldF9iaXQoZGV2LCAibW1v
-ZGUiLCBtbW9kZSk7Cj4+ICAgCj4+ICsgICAgaWYgKHBhcmVudCkgewo+PiArICAgICAgICByaXNj
-dl9hcGxpY19hZGRfY2hpbGQocGFyZW50LCBkZXYpOwo+PiArICAgIH0KPj4gKwo+PiAgICAgICBz
-eXNidXNfcmVhbGl6ZV9hbmRfdW5yZWYoU1lTX0JVU19ERVZJQ0UoZGV2KSwgJmVycm9yX2ZhdGFs
-KTsKPj4gICAKPj4gICAgICAgaWYgKCFpc19rdm1fYWlhKG1zaW1vZGUpKSB7Cj4+ICAgICAgICAg
-ICBzeXNidXNfbW1pb19tYXAoU1lTX0JVU19ERVZJQ0UoZGV2KSwgMCwgYWRkcik7Cj4+ICAgICAg
-IH0KPj4gICAKPj4gLSAgICBpZiAocGFyZW50KSB7Cj4+IC0gICAgICAgIHJpc2N2X2FwbGljX2Fk
-ZF9jaGlsZChwYXJlbnQsIGRldik7Cj4+IC0gICAgfQo+PiAtCj4+ICAgICAgIGlmICghbXNpbW9k
-ZSkgewo+PiAgICAgICAgICAgZm9yIChpID0gMDsgaSA8IG51bV9oYXJ0czsgaSsrKSB7Cj4+ICAg
-ICAgICAgICAgICAgQ1BVU3RhdGUgKmNwdSA9IGNwdV9ieV9hcmNoX2lkKGhhcnRpZF9iYXNlICsg
-aSk7Cg==
+Hi,
+
+VIRTIO_CRYPTO_INVSESS has a quite clear meaning: invalid session ID when 
+executing crypto operations.
+
+Uplayer would get an explicit code once failing to close session, so I 
+suggest no error log printing in this function.
+
+On 4/8/24 23:45, Philippe Mathieu-Daudé wrote:
+> Instead of aborting when a session ID is invalid,
+> report an error and return VIRTIO_CRYPTO_INVSESS
+> ("Invalid session id").
+> 
+> Reproduced using:
+> 
+>    $ cat << EOF | qemu-system-i386 -display none \
+>       -machine q35,accel=qtest -m 512M -nodefaults \
+>       -object cryptodev-backend-builtin,id=cryptodev0 \
+>       -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
+>       -qtest stdio
+>    outl 0xcf8 0x80000804
+>    outw 0xcfc 0x06
+>    outl 0xcf8 0x80000820
+>    outl 0xcfc 0xe0008000
+>    write 0x10800e 0x1 0x01
+>    write 0xe0008016 0x1 0x01
+>    write 0xe0008020 0x4 0x00801000
+>    write 0xe0008028 0x4 0x00c01000
+>    write 0xe000801c 0x1 0x01
+>    write 0x110000 0x1 0x05
+>    write 0x110001 0x1 0x04
+>    write 0x108002 0x1 0x11
+>    write 0x108008 0x1 0x48
+>    write 0x10800c 0x1 0x01
+>    write 0x108018 0x1 0x10
+>    write 0x10801c 0x1 0x02
+>    write 0x10c002 0x1 0x01
+>    write 0xe000b005 0x1 0x00
+>    EOF
+>    Assertion failed: (session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]),
+>    function cryptodev_builtin_close_session, file cryptodev-builtin.c, line 430.
+> 
+> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2274
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   backends/cryptodev-builtin.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+> index 39d0455280..3bbaabe86e 100644
+> --- a/backends/cryptodev-builtin.c
+> +++ b/backends/cryptodev-builtin.c
+> @@ -22,6 +22,7 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/error-report.h"
+>   #include "sysemu/cryptodev.h"
+>   #include "qapi/error.h"
+>   #include "standard-headers/linux/virtio_crypto.h"
+> @@ -427,7 +428,10 @@ static int cryptodev_builtin_close_session(
+>                         CRYPTODEV_BACKEND_BUILTIN(backend);
+>       CryptoDevBackendBuiltinSession *session;
+>   
+> -    assert(session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]);
+> +    if (session_id >= MAX_NUM_SESSIONS || !builtin->sessions[session_id]) {
+> +        error_report("Cannot find a valid session id: %" PRIu64 "", session_id);
+> +        return -VIRTIO_CRYPTO_INVSESS;
+> +    }
+>   
+>       session = builtin->sessions[session_id];
+>       if (session->cipher) {
+
+-- 
+zhenwei pi
 
