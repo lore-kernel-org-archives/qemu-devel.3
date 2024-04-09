@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687DBCD1299
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54233C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru8Tz-0007aR-64; Tue, 09 Apr 2024 06:13:39 -0400
+	id 1ru8b2-0000q3-TQ; Tue, 09 Apr 2024 06:20:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru8Tn-0007Zl-DR
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:13:30 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
+ id 1ru8az-0000po-AL
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:20:53 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ru8Tl-0003ph-Nr
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:13:27 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-56e69a51a33so1391187a12.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 03:13:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
+ id 1ru8ax-0005Iy-7r
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:20:53 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-516d3776334so5436728e87.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 03:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712657603; x=1713262403; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6ANszgX4aSUH9u8zKZHHhE8et0D1o2RK7kFE6pc/c7A=;
- b=f8693ktvlpnB89/YOiLSOh24VUfnVdM+ORhyD9JaZKo880ekggut34GbQMATL7p7an
- vBfsEeNQSQTG0bzencHqhJrUxUsAw0QBGTipk+4Y0p6Qjs0PN2iGJ+LE13/+oNCvOT0Y
- oZufo6oD9fV7qm5B6RtDlMquoR+tjcef/qYpCj3f0Hiin3nWlzbWTn51oPBwMlQtckzI
- G55Wq0BO5k8trrJ57fvDG/SKPD7arv0vhSftuK7byGkB7LV0BUKsr7V2b0d8uMedrV9C
- ef78L56XBraGRBaxJlkJKLKtK5QFhr/3lVH13GMiZGOAQJAgz8AxWvfN+uAKWbmC/e30
- 0rYA==
+ d=cloud.com; s=cloud; t=1712658047; x=1713262847; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=6vi3mXNPAtFhRZ7VRL4VAPHciBEA8X0AtAtcbaG6HHM=;
+ b=EtodnypS+ljQt3H38T1Y0zd0XJy9r75SOPszxk+wAOKukWG+9kjeH6JcDukEzOerhb
+ 0VhYjq8XQ66Zgvdg6qNowuBbPOR4rj/3xRhtZkbO0THas4IESnbuNS8LglHMzKAx3j/Q
+ dmCRs65wyoBGVONwM9CZ4QKZQV6L5i9XohSHY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712657603; x=1713262403;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6ANszgX4aSUH9u8zKZHHhE8et0D1o2RK7kFE6pc/c7A=;
- b=l8SQT/1st4wEo8McAfiylSI2DTiD+wq/B9GPpq7zh9XBK06Dq6JGZj7r8CkIomCsNA
- +NkShJqAXCtsKGBqY50cP6/hakofTWBV25VW4hbhH5KU0k4TdXyliQHNOUT7y8ENOwo0
- n7b02dnEuO8OYzSP7fyFmIEzgzdgHvIWwR255p5BrEvRBJ8kUW0MFCLzl7XBAIA08jrd
- y4Oi5oovTyBtdoSvAKBKJovu723dlESuEMFCkEVbZXISds9zsyiYV/m9Aku2nKCnncUl
- bs6QiEnn9Wf/nyPTU0n/7GDIN10U62l6Ih6uqAtsoxKpT8VAMxZSyiWCITxuM86i3sNJ
- jVVw==
+ d=1e100.net; s=20230601; t=1712658047; x=1713262847;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6vi3mXNPAtFhRZ7VRL4VAPHciBEA8X0AtAtcbaG6HHM=;
+ b=FkwFvmwj23I86S9w7nAkb2aSqpNm8dIHPHtWxjZcgEmhht+RYsYvFkmbKa7Bli9+Mp
+ 6bBlY/y3guGCw7xzLkoXvykKI7OAYid5evcbv9r6JhQaHHTqq0u5+741sy4uE+t+hmjU
+ RN6Ognh+o2tefOYOQz7G5Tsk6Zo8KQFVOFaJi4ThU3v2p5VpgK21MXYvZj8aMWgvZpjr
+ GUpgEQsI1XyJ1pyvctvl8+bYw1fwk8cn7LPrxU5h9BM/r2v5tki6cjsxh91pvUCrucYq
+ fpvxwkuJST5Kc2pthI01n3VU2Ywf5FK6T9zzm4694PwTCR2R8oF8HmBUAM/cZcy35KPR
+ ytgQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUK2C0USw+H4JClsqAyOib5OQ0Lkb+JfMcv+Cni5Vaxv99cEUv0O2q8vdkYK/K3VMicdPJWhj9u+oz4mdnkzDpnwIhf8+k=
-X-Gm-Message-State: AOJu0YweSgvTfoaI8ihRrd5XO9j/XuLnBnwYM6bphPf4oWV5XVKyaHGH
- V+wosBcXl4VehOZgtvdHK+UiFuZtDKny3HaO3d5w1KGr2qM6XueX2V7rT+ycqVQ=
-X-Google-Smtp-Source: AGHT+IEbcgW2jn1TWxsRIIrBFhlCfhKqDBq9bhwERjwL4xH6nKDr2xFF7Th5c2Jn3hqgUULpQ0RIqQ==
-X-Received: by 2002:a50:a419:0:b0:56b:e089:56ed with SMTP id
- u25-20020a50a419000000b0056be08956edmr9345710edb.39.1712657603042; 
- Tue, 09 Apr 2024 03:13:23 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.160.134])
- by smtp.gmail.com with ESMTPSA id
- a24-20020a50c318000000b0056e347954f6sm4850404edb.31.2024.04.09.03.13.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 03:13:22 -0700 (PDT)
-Message-ID: <3fb12f7c-2749-40d6-95cd-4ff98796c0f0@linaro.org>
-Date: Tue, 9 Apr 2024 12:13:20 +0200
+ AJvYcCUXksLu0VqqPsHufpJFzyPCYJFleHvL74aZdAC1tqh7hFQdlNvVlPtamEQjfww1jTSxdWac9slQp1hefPNv/Ab+iHUh7Xw=
+X-Gm-Message-State: AOJu0Yw/XA1rDuTJmQg2nSsM5aqLUn0uyrNjfaNeqJy2ms9hWsQAVyxW
+ 6Wwp0ZWwIWlmWGQ15rzyd/K6UYtZsr5YTmBlxWLxsTmPmVCeahBTY9rDacJtpys=
+X-Google-Smtp-Source: AGHT+IHaIpT9eyePhKlcsD5qHDIV8IJtmm5ucgNemPRD1+yysRCR0QTSHPLYSNTgt9iOxBdqVBzHAg==
+X-Received: by 2002:ac2:48a4:0:b0:513:c95c:4dc4 with SMTP id
+ u4-20020ac248a4000000b00513c95c4dc4mr7701691lfg.7.1712658046987; 
+ Tue, 09 Apr 2024 03:20:46 -0700 (PDT)
+Received: from perard.uk.xensource.com (default-46-102-197-194.interdsl.co.uk.
+ [46.102.197.194]) by smtp.gmail.com with ESMTPSA id
+ be9-20020a05600c1e8900b004163ee3922csm11976111wmb.38.2024.04.09.03.20.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Apr 2024 03:20:46 -0700 (PDT)
+Date: Tue, 9 Apr 2024 11:20:45 +0100
+From: Anthony PERARD <anthony.perard@cloud.com>
+To: Ross Lagerwall <ross.lagerwall@citrix.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] xen-hvm: Avoid livelock while handling buffered ioreqs
+Message-ID: <90f07634-1600-4654-8e36-7ac9e2f457e8@perard>
+References: <20240404140833.1557953-1-ross.lagerwall@citrix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] linux-user: Preserve unswapped siginfo_t for
- strace
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: gustavo.romero@linaro.org
-References: <20240409003411.1452196-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240409003411.1452196-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240404140833.1557953-1-ross.lagerwall@citrix.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=anthony.perard@cloud.com; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,17 +93,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/24 02:34, Richard Henderson wrote:
-> Passing the tswapped structure to strace means that
-> our internal si_type is also gone, which then aborts
-> in print_siginfo.
-> 
-> Fixes: 4d6d8a05a0a ("linux-user: Move tswap_siginfo out of target code")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   linux-user/signal.c | 12 +++++++++---
->   1 file changed, 9 insertions(+), 3 deletions(-)
+On Thu, Apr 04, 2024 at 03:08:33PM +0100, Ross Lagerwall wrote:
+> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+> index 1627da739822..1116b3978938 100644
+> --- a/hw/xen/xen-hvm-common.c
+> +++ b/hw/xen/xen-hvm-common.c
+> @@ -521,22 +521,30 @@ static bool handle_buffered_iopage(XenIOState *state)
+[...]
+>  
+>  static void handle_buffered_io(void *opaque)
+>  {
+> +    unsigned int handled;
+>      XenIOState *state = opaque;
+>  
+> -    if (handle_buffered_iopage(state)) {
+> +    handled = handle_buffered_iopage(state);
+> +    if (handled >= IOREQ_BUFFER_SLOT_NUM) {
+> +        /* We handled a full page of ioreqs. Schedule a timer to continue
+> +         * processing while giving other stuff a chance to run.
+> +         */
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+./scripts/checkpatch.pl report a style issue here:
+    WARNING: Block comments use a leading /* on a separate line
 
+I can try to remember to fix that on commit.
+
+>          timer_mod(state->buffered_io_timer,
+> -                BUFFER_IO_MAX_DELAY + qemu_clock_get_ms(QEMU_CLOCK_REALTIME));
+> -    } else {
+> +                qemu_clock_get_ms(QEMU_CLOCK_REALTIME));
+> +    } else if (handled == 0) {
+
+Just curious, why did you check for `handled == 0` here instead of
+`handled != 0`? That would have avoided to invert the last 2 cases, and
+the patch would just have introduce a new case without changing the
+order of the existing ones. But not that important I guess.
+
+>          timer_del(state->buffered_io_timer);
+>          qemu_xen_evtchn_unmask(state->xce_handle, state->bufioreq_local_port);
+> +    } else {
+> +        timer_mod(state->buffered_io_timer,
+> +                BUFFER_IO_MAX_DELAY + qemu_clock_get_ms(QEMU_CLOCK_REALTIME));
+>      }
+>  }
+
+Cheers,
+
+-- 
+Anthony PERARD
 
