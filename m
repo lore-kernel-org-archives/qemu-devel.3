@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291C1CD1299
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B0BCCD129A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruHGh-0000dW-ML; Tue, 09 Apr 2024 15:36:31 -0400
+	id 1ruHGN-0000Wm-JE; Tue, 09 Apr 2024 15:36:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGg-0000d0-O9
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:30 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1ruHGM-0000Wa-Eu
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:10 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGe-0004fA-Jl
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:30 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e3dda73192so21587385ad.3
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:26 -0700 (PDT)
+ id 1ruHGK-0004ch-Mq
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:10 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e2b1cd446fso44162425ad.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712691385; x=1713296185; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712691367; x=1713296167; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qu730y1a5bhHx8+lUgk6PRHwUAMG8x1kinVBmiKeHm0=;
- b=nxaagpPBYzpTx3yZRMSBsGGRkBaJHvUGLmVx7to+4cHY8oitsJ6bFJSNmqWji7fWEo
- nadJ80bqriMTJlTl+099JOHnp+4h6ERFWW4qCsnVArI/IRvnpt6isTuqoxzsr3FEDkI4
- F4Vlu7LjWE6M3UuRMIvqNqHN852hHHL6q3VHkO45+0SxILAkJxtGZi9WTFoL4+OfYd0d
- Vn2C7JB/wzeFMte3Gb0nB+k+cjE6nbnjgoDf9KoHpCV2JYxMm5oJukGOjrmT3I5wi8u5
- Eokh/HJ82oPzMuKjOEP5ASJ1Ju/sBm8/obz/TJKpq7P3kk0QVufmblC64FFudGsR8rKn
- mr/w==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=0/ekaTyyBHEzg2gMKpvUq/mv6Nl9iOhi1rhUNF8qDbI=;
+ b=Vupl/HD7D60CsOuas8d1rhFSjgblZaHPdwrS4MOwkUzlAl6UGBAUDbAWA0cLir+V4U
+ 4QAOvbSZ8fNpgoJVuWdmPqG9tsaflo+Uo7SJ2ahzGd2O9SNlCiqvUFYqzeySus4m4Njs
+ bB+BGyGCeZQ+DK2dZuKXtaalqr/dT4GtmQ/aXEHBg+1YnF5i6bItkCPrZ+Te0X6FqAGD
+ qlMw6BsHNd/SjANVfQwhtQZovzixqAGLMxlpK/gtyp61jjxvG/fmyARv7Keio9AhdIag
+ QksbIBTvU4vqugeL9Unzold0pmkQWBd4uxkJ7moiIM56depruhS7j5eoLpGhYVDIarEn
+ wuOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712691385; x=1713296185;
+ d=1e100.net; s=20230601; t=1712691367; x=1713296167;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qu730y1a5bhHx8+lUgk6PRHwUAMG8x1kinVBmiKeHm0=;
- b=KkExLiWQW5QcbHD9sxo7Om4cISxRRE81/6RXO/aTqflJqyrhjzr4dKfW8YHNeiXZBP
- RuzrIQjenjbBdrotBGUlAPd3+X3u0SrMsGor8IV9puE4nFNVAs6OtiJdaJ0IMF1dhGY4
- YpzyMEvYnCzC9pbdowZiEItwaIxIdD5g6Bh1v6TJyDi0JwVBOJNfbFIMkx8cevG5z190
- uxbPaoa2XttHsXKRxA83HKHYMKnZ4FLr1NFsY4n7CVtLe26s+V2x+O2/2Qe7QaLV2HHP
- c9/jPW9J1jyAiMyHRUfjgeuF79AI0UIaWbDm7YGNrp3QZ/EKLO8FS9vgkuhAC2Tkl/zj
- secQ==
-X-Gm-Message-State: AOJu0Yx3aAUy9JiAfjuaueMQiFlnZJzsSBH4ltf2Wo+wgOjT0KA70NGP
- vN0mhm08vW8jHBQnny+q0GM0IedhmbPH46lLryW7mJbcSvRoY4fDZO1D/wLKfGn3VgWCDvUJid2
- k
-X-Google-Smtp-Source: AGHT+IFCA9nugoJKX6ZcRyOTZrDdSJpkV5H9aDyOS7XWhdE8zDCPceL+HkGbXy65nHym6c+CsjxMdg==
-X-Received: by 2002:a17:902:7ec1:b0:1e2:7d3b:353c with SMTP id
- p1-20020a1709027ec100b001e27d3b353cmr615668plb.18.1712691385219; 
- Tue, 09 Apr 2024 12:36:25 -0700 (PDT)
+ bh=0/ekaTyyBHEzg2gMKpvUq/mv6Nl9iOhi1rhUNF8qDbI=;
+ b=fJcliDiQ2TsB6Awp7hcGKa4mE6sQhmqPET4Cbr1Y7bL32tmF2AGBKh/SiPRAHHJDhU
+ erwlzZB3YZT8rdIgOBKATczTbWVIVtZZyc+JTrJLnuumTL3Yj5C+kgjh76ZoCTivE5a3
+ AUza7AP/T25r1JAgPc33FEc15cFWjU/21/+pwqbAzJDgrr+Xv51EbHTIfj4b6a8FyQ50
+ GPPXgEaGYWR756UMxaIwbPH8HAD5dougGm8ZnmgVoNFvzinBBKCWdD96P6wA8htBbskf
+ V604DjgDZkQxDwdhIDQUKwDDqdw4ELO23XFtdVrA/06n6/O937mwde3aD0YC0b/3LZdQ
+ O/Qw==
+X-Gm-Message-State: AOJu0YyJQgNgDMWQa39BaFGZLjqWmDbCGZ70ErZLj/axktdnv3WuekLd
+ iApDLEYkQoC7mFmQOsiFJW0cjQ4Ou4Qb+COCEXKh36+qJWpZmGdN2min12IObuJ9x3q5LkobLy5
+ y
+X-Google-Smtp-Source: AGHT+IHA3RfLLR3DsHquCjRYlwclSDo3jybSQ5kXXbsXwW0LXzdB7GJxk/07oZtvLxT1rtH//e7RpA==
+X-Received: by 2002:a17:902:e944:b0:1e3:e093:b5f0 with SMTP id
+ b4-20020a170902e94400b001e3e093b5f0mr766918pll.8.1712691367109; 
+ Tue, 09 Apr 2024 12:36:07 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.24
+ c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.06
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 12:36:24 -0700 (PDT)
+ Tue, 09 Apr 2024 12:36:06 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 13/20] target/arm: Use insn_start from DisasContextBase
-Date: Tue,  9 Apr 2024 09:35:56 -1000
-Message-Id: <20240409193603.1703216-14-richard.henderson@linaro.org>
+Subject: [PULL v2 01/20] tcg/optimize: Do not attempt to constant fold neg_vec
+Date: Tue,  9 Apr 2024 09:35:44 -1000
+Message-Id: <20240409193603.1703216-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240409193603.1703216-1-richard.henderson@linaro.org>
 References: <20240409193603.1703216-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,75 +93,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To keep the multiple update check, replace insn_start
-with insn_start_updated.
+Split out the tail of fold_neg to fold_neg_no_const so that we
+can avoid attempting to constant fold vector negate.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2150
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate.h     | 12 ++++++------
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ tcg/optimize.c                    | 17 ++++++++---------
+ tests/tcg/aarch64/test-2150.c     | 12 ++++++++++++
+ tests/tcg/aarch64/Makefile.target |  2 +-
+ 3 files changed, 21 insertions(+), 10 deletions(-)
+ create mode 100644 tests/tcg/aarch64/test-2150.c
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 93be745cf3..dc66ff2190 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -165,10 +165,10 @@ typedef struct DisasContext {
-     uint8_t gm_blocksize;
-     /* True if this page is guarded.  */
-     bool guarded_page;
-+    /* True if the current insn_start has been updated. */
-+    bool insn_start_updated;
-     /* Bottom two bits of XScale c15_cpar coprocessor access control reg */
-     int c15_cpar;
--    /* TCG op of the current insn_start.  */
--    TCGOp *insn_start;
-     /* Offset from VNCR_EL2 when FEAT_NV2 redirects this reg to memory */
-     uint32_t nv2_redirect_offset;
- } DisasContext;
-@@ -276,10 +276,10 @@ static inline void disas_set_insn_syndrome(DisasContext *s, uint32_t syn)
-     syn &= ARM_INSN_START_WORD2_MASK;
-     syn >>= ARM_INSN_START_WORD2_SHIFT;
- 
--    /* We check and clear insn_start_idx to catch multiple updates.  */
--    assert(s->insn_start != NULL);
--    tcg_set_insn_start_param(s->insn_start, 2, syn);
--    s->insn_start = NULL;
-+    /* Check for multiple updates.  */
-+    assert(!s->insn_start_updated);
-+    s->insn_start_updated = true;
-+    tcg_set_insn_start_param(s->base.insn_start, 2, syn);
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 275db77b42..2e9e5725a9 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1990,16 +1990,10 @@ static bool fold_nand(OptContext *ctx, TCGOp *op)
+     return false;
  }
  
- static inline int curr_insn_len(DisasContext *s)
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 340265beb0..2666d52711 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -14179,7 +14179,7 @@ static void aarch64_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-         pc_arg &= ~TARGET_PAGE_MASK;
+-static bool fold_neg(OptContext *ctx, TCGOp *op)
++static bool fold_neg_no_const(OptContext *ctx, TCGOp *op)
+ {
+-    uint64_t z_mask;
+-
+-    if (fold_const1(ctx, op)) {
+-        return true;
+-    }
+-
+     /* Set to 1 all bits to the left of the rightmost.  */
+-    z_mask = arg_info(op->args[1])->z_mask;
++    uint64_t z_mask = arg_info(op->args[1])->z_mask;
+     ctx->z_mask = -(z_mask & -z_mask);
+ 
+     /*
+@@ -2010,6 +2004,11 @@ static bool fold_neg(OptContext *ctx, TCGOp *op)
+     return true;
+ }
+ 
++static bool fold_neg(OptContext *ctx, TCGOp *op)
++{
++    return fold_const1(ctx, op) || fold_neg_no_const(ctx, op);
++}
++
+ static bool fold_nor(OptContext *ctx, TCGOp *op)
+ {
+     if (fold_const2_commutative(ctx, op) ||
+@@ -2418,7 +2417,7 @@ static bool fold_sub_to_neg(OptContext *ctx, TCGOp *op)
+     if (have_neg) {
+         op->opc = neg_op;
+         op->args[1] = op->args[2];
+-        return fold_neg(ctx, op);
++        return fold_neg_no_const(ctx, op);
      }
-     tcg_gen_insn_start(pc_arg, 0, 0);
--    dc->insn_start = tcg_last_op();
-+    dc->insn_start_updated = false;
+     return false;
  }
+diff --git a/tests/tcg/aarch64/test-2150.c b/tests/tcg/aarch64/test-2150.c
+new file mode 100644
+index 0000000000..fb86c11958
+--- /dev/null
++++ b/tests/tcg/aarch64/test-2150.c
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* See https://gitlab.com/qemu-project/qemu/-/issues/2150 */
++
++int main()
++{
++    asm volatile(
++        "movi     v6.4s, #1\n"
++        "movi     v7.4s, #0\n"
++        "sub      v6.2d, v7.2d, v6.2d\n"
++        : : : "v6", "v7");
++    return 0;
++}
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 0efd565f05..70d728ae9a 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -10,7 +10,7 @@ VPATH 		+= $(AARCH64_SRC)
  
- static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 69585e6003..dc49a8d806 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -9273,7 +9273,7 @@ static void arm_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
-         condexec_bits = (dc->condexec_cond << 4) | (dc->condexec_mask >> 1);
-     }
-     tcg_gen_insn_start(pc_arg, condexec_bits, 0);
--    dc->insn_start = tcg_last_op();
-+    dc->insn_start_updated = false;
- }
+ # Base architecture tests
+ AARCH64_TESTS=fcvt pcalign-a64 lse2-fault
+-AARCH64_TESTS += test-2248
++AARCH64_TESTS += test-2248 test-2150
  
- static bool arm_check_kernelpage(DisasContext *dc)
+ fcvt: LDFLAGS+=-lm
+ 
 -- 
 2.34.1
 
