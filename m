@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36543CD1299
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B9FCD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 19:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruHGP-0000XX-8c; Tue, 09 Apr 2024 15:36:13 -0400
+	id 1ruHGg-0000cc-K1; Tue, 09 Apr 2024 15:36:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGN-0000Wn-Sr
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:11 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1ruHGf-0000c7-GE
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:29 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruHGM-0004cn-59
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:11 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e419d203bdso17890705ad.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:09 -0700 (PDT)
+ id 1ruHGd-0004fM-W4
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 15:36:29 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e244c7cbf8so50588075ad.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 12:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712691369; x=1713296169; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712691387; x=1713296187; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WEK6zSUurL5c5k/x0P2XhXs6AUgqTg+iWS/4jd0p2Dg=;
- b=Z8qCRVXM4cOfMlTJalO+eP7UjsmthD+Uf33jk4cfqo6BX73sA8IY95nlulHTpqqVsT
- W5f8iLmtOomkFt7Or+aDNGZB6gctUX028Bf2Km7py5E9MxPoEZXx+ymcDrtfPCo/Uwmt
- jAK4iUQf0qG7zAJwtpsLkFpNhcTnM+bX5vqSp6y+Ck4Aew47OzWM0lxlTaBGGt14HP1x
- Q2ay9wJFqRJZDqPbNncH49IWYAyTGC6lrrFDnGOjTB8PjBbkd3OwH4WOhJ1IjBAcHwEU
- mZlnrv9hOQsa/35+VyPqrtJREpqeDbecKcd2xHKKrkAbhUlE4s66W/povDyeFK7GCD34
- nsbg==
+ bh=RFanGzrvK8VkKk4csReRv0GVjABsPRaur2/zSeJo0ZU=;
+ b=aZM1ux2UJCV1OgPgSgP9Fy6HBJQbKnCxBVXqiuXG6s4ChKTxmqisZIkltudV5ApwZQ
+ rVfKw9NBqiUT8ilZ6dFDSdEKk9ZtlGUHY8dSEnXpaIAF4lc1uXMZqbJO6B57PuGtVnYD
+ TpQVYiWa0eO4vj0TnfYWseSQ5X/Sp4SOOJFm9+CAci1UyL4EvonhI0xCGFpYS6ccBnjp
+ n/WI1j0I4/58AA4WZ9Us0SjvA6jN6FjqhkVYw7anoH/yXypITqXotKfU/CZzYDX1P8HB
+ oAIq4vY1odvmu0RaqlO4RSRimkPMXFDIYmpTgdE+OR4Kn1aBORAY9Uoq0s+4xNX8E69Z
+ H6fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712691369; x=1713296169;
+ d=1e100.net; s=20230601; t=1712691387; x=1713296187;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WEK6zSUurL5c5k/x0P2XhXs6AUgqTg+iWS/4jd0p2Dg=;
- b=lppAkZSkxXCeg9yWBRv5FLbG1n65NW9wQBAsC+paVoGTwVgmJmeQEBzN+joDtZFTCh
- hqc96KhaHiWSj/x7UEZhgID5yKJqGXcQjQaJUTitOL79AkRqE3+fe084BXx9uAZpdb1b
- HV8yzcNxtyL9aDmbaK5TVIw+PDHNoT9C1MeG6aE6c7vpXrRIxFrvqE8nTAD3OWbSdBnj
- 5NKYWDPj+gicNt7x9/uGpb9YVjvwmrWrZWmTTjOu/CmWyFcbgLJZ2po+ws2Cn43reurz
- kQkKws6VtJE4GCuO7WOS2+mRjyS2clDlhrYgvNBJptiMwz8U8XrEz/Tw4DRKBKFMiL4v
- sIaQ==
-X-Gm-Message-State: AOJu0Yw+80XoCBTBGMaHmI17kLbhYCCUOLUVz9m/8Uc3QJebEAwqmRK8
- kqiVr4Rf87wEg/J6zIp7lR46TdwCg1yAeMupZ3SR1egc5Y5r8gw9RfrYL/DmUsp+6GtkoJ2bmY7
- a
-X-Google-Smtp-Source: AGHT+IFEplnRbGJvD2WUEIIE//yGm2A/93PXhxONYKf3QUdzTJIdc9VSzBDxzgaFrV1MJeKZ9UNYDA==
-X-Received: by 2002:a17:902:c405:b0:1e2:7015:6a1d with SMTP id
- k5-20020a170902c40500b001e270156a1dmr887279plk.60.1712691368681; 
- Tue, 09 Apr 2024 12:36:08 -0700 (PDT)
+ bh=RFanGzrvK8VkKk4csReRv0GVjABsPRaur2/zSeJo0ZU=;
+ b=rxZoLQsHfy7zwbSreO67daRWvQcP2FvBlyMHAwNMLXnqfze3MZw2QAPr8yCvcrhumV
+ 0RIiHCIai2H7cBv/TLPhaHnd8zIy/R7doQo7jzZhzXbmatgZm82T38xXLPsi3bIycIJ5
+ GBML2o5O9TMpspTPCNQuFES8BbU8Bax2q6XRQpQQiKVVjDjXMHNNBAD+F9eECUG6EExz
+ mhcvH+DsLwCpBNxrDBkIA/aKvv5jLEL7TTjluNUwrOFrBeIlY/nb/O0wOzZ6u2hmEdyg
+ DyVNm285dCpSajr2EGic1W7fo35wfEYe1oL4zGLgWWUhfetPYMh4XZGQlQ99Yiq9d15J
+ bHVg==
+X-Gm-Message-State: AOJu0YxIS+Asw7RovcWGRwDubRMcQOA/gmS+HKJrj3vRtCDzhJwWq/aG
+ Q2Q7dwObqmq+DQDMVH/iPZenQ0HajBQ3hszQJ8OQfhQsRoBC14eDInOegToR/kNn/Vfwk/hdooR
+ 2
+X-Google-Smtp-Source: AGHT+IEm6hqAUc9vq65tDBptyLAFU0dcujShlCQccSDdv7oUL+/nqDzNNWqluGj3MorH0Azdx2+16A==
+X-Received: by 2002:a17:902:f392:b0:1e2:23b9:eb24 with SMTP id
+ f18-20020a170902f39200b001e223b9eb24mr705753ple.33.1712691386735; 
+ Tue, 09 Apr 2024 12:36:26 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.07
+ c17-20020a170902d49100b001e1071cf0bbsm6065843plg.302.2024.04.09.12.36.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Apr 2024 12:36:08 -0700 (PDT)
+ Tue, 09 Apr 2024 12:36:26 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alex Fan <alex.fan.q@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 02/20] linux-user: Fix waitid return of siginfo_t and rusage
-Date: Tue,  9 Apr 2024 09:35:45 -1000
-Message-Id: <20240409193603.1703216-3-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v2 14/20] target/hppa: Use insn_start from DisasContextBase
+Date: Tue,  9 Apr 2024 09:35:57 -1000
+Message-Id: <20240409193603.1703216-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240409193603.1703216-1-richard.henderson@linaro.org>
 References: <20240409193603.1703216-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,53 +95,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The copy back to siginfo_t should be conditional only on arg3,
-not the specific values that might have been written.
-The copy back to rusage was missing entirely.
+To keep the multiple update check, replace insn_start
+with insn_start_updated.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2262
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Alex Fan <alex.fan.q@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/syscall.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ target/hppa/translate.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e12d969c2e..3df2b94d9a 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9272,14 +9272,24 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #ifdef TARGET_NR_waitid
-     case TARGET_NR_waitid:
-         {
-+            struct rusage ru;
-             siginfo_t info;
--            info.si_pid = 0;
--            ret = get_errno(safe_waitid(arg1, arg2, &info, arg4, NULL));
--            if (!is_error(ret) && arg3 && info.si_pid != 0) {
--                if (!(p = lock_user(VERIFY_WRITE, arg3, sizeof(target_siginfo_t), 0)))
-+
-+            ret = get_errno(safe_waitid(arg1, arg2, (arg3 ? &info : NULL),
-+                                        arg4, (arg5 ? &ru : NULL)));
-+            if (!is_error(ret)) {
-+                if (arg3) {
-+                    p = lock_user(VERIFY_WRITE, arg3,
-+                                  sizeof(target_siginfo_t), 0);
-+                    if (!p) {
-+                        return -TARGET_EFAULT;
-+                    }
-+                    host_to_target_siginfo(p, &info);
-+                    unlock_user(p, arg3, sizeof(target_siginfo_t));
-+                }
-+                if (arg5 && host_to_target_rusage(arg5, &ru)) {
-                     return -TARGET_EFAULT;
--                host_to_target_siginfo(p, &info);
--                unlock_user(p, arg3, sizeof(target_siginfo_t));
-+                }
-             }
-         }
-         return ret;
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 8a1a8bc3aa..42fa480950 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -44,7 +44,6 @@ typedef struct DisasCond {
+ typedef struct DisasContext {
+     DisasContextBase base;
+     CPUState *cs;
+-    TCGOp *insn_start;
+ 
+     uint64_t iaoq_f;
+     uint64_t iaoq_b;
+@@ -62,6 +61,7 @@ typedef struct DisasContext {
+     int privilege;
+     bool psw_n_nonzero;
+     bool is_pa20;
++    bool insn_start_updated;
+ 
+ #ifdef CONFIG_USER_ONLY
+     MemOp unalign;
+@@ -300,9 +300,9 @@ void hppa_translate_init(void)
+ 
+ static void set_insn_breg(DisasContext *ctx, int breg)
+ {
+-    assert(ctx->insn_start != NULL);
+-    tcg_set_insn_start_param(ctx->insn_start, 2, breg);
+-    ctx->insn_start = NULL;
++    assert(!ctx->insn_start_updated);
++    ctx->insn_start_updated = true;
++    tcg_set_insn_start_param(ctx->base.insn_start, 2, breg);
+ }
+ 
+ static DisasCond cond_make_f(void)
+@@ -4694,7 +4694,7 @@ static void hppa_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+     tcg_gen_insn_start(ctx->iaoq_f, ctx->iaoq_b, 0);
+-    ctx->insn_start = tcg_last_op();
++    ctx->insn_start_updated = false;
+ }
+ 
+ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
 -- 
 2.34.1
 
