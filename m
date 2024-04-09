@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B92CD1284
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 05:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF060C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 05:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru3dv-0003Dq-4M; Tue, 09 Apr 2024 01:03:35 -0400
+	id 1ru3dr-0003CX-Kr; Tue, 09 Apr 2024 01:03:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ru3du-0003DJ-3k
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:34 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ id 1ru3dq-0003CN-EE
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:30 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ru3ds-0005M8-8b
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:33 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-22f01274622so1543947fac.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 22:03:31 -0700 (PDT)
+ id 1ru3do-0005KD-O9
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 01:03:30 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3c5efef980cso303318b6e.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 22:03:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712639011; x=1713243811; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712639007; x=1713243807; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HlBd919hOWRpacVU0kzMPBm6pP4Z5Z1zQwF3gBDERhU=;
- b=IaOGd88uwSlx2AXSmDSochmWr+CSxz7bTPXoeShfh4H8VooUz2uRzF+h4F86Pqs3E7
- B2YI4h3XN72Jxr9fI0QuXi/GEX0I5UCD7ZhJC/MwSMYWImbcvWkn26O/T2Qyj+CWhp6n
- HJPm5TeyDBy1IQ40umBhLdrN6wi5oSIGyt5+kbHqQzFz5OneViO41qYPpZIcKGOpSh5s
- w41AaQitDXx1G3qlfAwqhrkaXC88Nb5+1ZOMzmJ+76npyZ3b3NZCxyVVat5yjNQpMn9d
- o3xKV7mdSfEnAlzz4ib1+mCqiOTQBF/OljWm7wiQk2fs2p0vq+khbF4f+cdKS0Kvqodz
- oEuQ==
+ :reply-to; bh=lfYCgXuXxRvNB6GamBg7nUp4jaKTlVTiooGSAkryLH8=;
+ b=lqnqz0UeH9XnkiLJWsRywouGizM1Ym/QZ7H+plEk6CsH0WiUNyE+g7gWpBAwJ6fuDY
+ Uzd7Z+FS4VBvlfAlYV28btvDulNRl3ELaFsirkMI1+b2Y35xCYSzLgFwV72b66rKsniR
+ xGlR/TLjzH/Gq6Q2l8cuJo3JrvOyrE9rflLU9wP38pOPDgwblt87/3bMxrB7hsKgEWlP
+ T0qxG2m1zzEfMVzr8LD3TI+67mypJNs63Z8D/kouzveeJCDKhendENjpjTbRkKytiXmO
+ 1B4b0QFiQ01AHrFUoqFuZ+ZfMmmbGe1+IiEa870884kaQ2JaIabf/RYxFZ0fc2gnfyNE
+ LbYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712639011; x=1713243811;
+ d=1e100.net; s=20230601; t=1712639007; x=1713243807;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HlBd919hOWRpacVU0kzMPBm6pP4Z5Z1zQwF3gBDERhU=;
- b=qdsFslyv5TjIXy4uuIG0XQcE4F+2HgBm4JZGZ9v8LUp+Tfs7P96cUVf7HQKNYuzKGs
- DM334Ewl7JbpMyoXRCmY0TrGd6ijkU3ozSHn7aOOSL6a77x+9cMtaOg0HzacVgZNmr8F
- QiOoAKJ86QjrUPSU5jhCcY6c1M8BHE9fIkwp0XsB+5NUesINCmCJHnjt+B8ygODLI4Md
- OIvRqGgxfY+towvmGWjqNxqu9iyeoQ0L12EQDMUhfILUwwu8OqRSvK7GwhvRBJ0JebPX
- c6tS1/dFnIkNf8iJHyUiR3dd7CY3QOZSJovsdeV3rIEyswCvLTN9CoBp3Q41qVsGWxGr
- A8JQ==
-X-Gm-Message-State: AOJu0YxwPhi+97YXTK2CHrCqL+xvpzxWkv9ddfXAYFJ4aX6EYdmJhxoN
- /NOkcNEcv9/0ZYzulNE6AbVmqDhHuT2AUJEWTICA/1mvR088LmE16agQSkLEFi2Wn5TubRiBODi
- k
-X-Google-Smtp-Source: AGHT+IGX7K4kgiY7YEfVlbp3W+EK6O6AVb/AYeihJwA+6YOridLVVe1+IzvBB/ara7OhH3uTio6i6A==
-X-Received: by 2002:a05:6871:88a:b0:22e:dfbc:4d90 with SMTP id
- r10-20020a056871088a00b0022edfbc4d90mr11912206oaq.5.1712639011107; 
- Mon, 08 Apr 2024 22:03:31 -0700 (PDT)
+ bh=lfYCgXuXxRvNB6GamBg7nUp4jaKTlVTiooGSAkryLH8=;
+ b=fzlCmujbWB9gOsGCKmzSbOzC8zJzdHtvGT4OMbuhyQzG+FbUf0HehYHFtqQT6bQF9h
+ v/9PPmKOKKTSWrv1VHIWjw+yK7qqxxci2Hqo/UbRGcVUrRrGJ9dNYMJwxTFQg6wK7ezp
+ z0Ddwy4RKU8ZRkv7s+jIysZ0raSugFweImxbRKJu1gOIk2f53gyDNRLCwEqqJIriur5m
+ X487ZVzTynq4Dp3XARW35WsVQt45BPXG8dCajrHgMIXy88HFCmfCUDdH7sfWji0huVNn
+ eR1MtIQHCFwLYs+N5IJA/4yvOsaJ//+hjY7kRp02jMi/8Vc0p1+zWpRMraTmo8042J2K
+ 0B0w==
+X-Gm-Message-State: AOJu0YxdfQeJI2HCxu7JjH2/eAobi7fToVln4Dimb90LjjDD3f6TmvVy
+ cu40SW+61MUWFdoYWbsK82vZegH85rDyZHBSYe+lofF42irc9VdFbvTyZy/oVGir6bHsMiIIHdE
+ L
+X-Google-Smtp-Source: AGHT+IGzTEB+sJnh4UeHa/tFlbut/7yUK7by8JNX2uyzRJHYnPcyOxuSQpnolqCBorkpNKW+Th59xA==
+X-Received: by 2002:aca:110d:0:b0:3c6:3bc:a686 with SMTP id
+ 13-20020aca110d000000b003c603bca686mr24979oir.17.1712639007568; 
+ Mon, 08 Apr 2024 22:03:27 -0700 (PDT)
 Received: from stoup.. (098-147-007-212.res.spectrum.com. [98.147.7.212])
  by smtp.gmail.com with ESMTPSA id
- z26-20020aa785da000000b006e64ddfa71asm7654894pfn.170.2024.04.08.22.03.30
+ z26-20020aa785da000000b006e64ddfa71asm7654894pfn.170.2024.04.08.22.03.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 22:03:30 -0700 (PDT)
+ Mon, 08 Apr 2024 22:03:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 21/28] linux-user/i386: Return boolean success from
- xrstor_sigcontext
-Date: Mon,  8 Apr 2024 19:02:55 -1000
-Message-Id: <20240409050302.1523277-22-richard.henderson@linaro.org>
+Subject: [PATCH v2 18/28] linux-user/i386: Split out struct target_fregs_state
+Date: Mon,  8 Apr 2024 19:02:52 -1000
+Message-Id: <20240409050302.1523277-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240409050302.1523277-1-richard.henderson@linaro.org>
 References: <20240409050302.1523277-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,66 +93,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Invert the sense of the return value and use bool.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/i386/signal.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ linux-user/i386/signal.c | 43 +++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 18 deletions(-)
 
 diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index 1571ff8553..d600a4355b 100644
+index ed98b4d073..559b63c25b 100644
 --- a/linux-user/i386/signal.c
 +++ b/linux-user/i386/signal.c
-@@ -529,8 +529,8 @@ give_sigsegv:
-     force_sigsegv(sig);
- }
+@@ -33,6 +33,23 @@ struct target_fpreg {
+     uint16_t exponent;
+ };
  
--static int xrstor_sigcontext(CPUX86State *env, X86LegacyXSaveArea *fxsave,
--                             abi_ulong fxsave_addr)
-+static bool xrstor_sigcontext(CPUX86State *env, X86LegacyXSaveArea *fxsave,
-+                              abi_ulong fxsave_addr)
- {
-     struct target_fpx_sw_bytes *sw = (void *)&fxsave->sw_reserved;
++/* Legacy x87 fpu state format for FSAVE/FRESTOR. */
++struct target_fregs_state {
++    uint32_t cwd;
++    uint32_t swd;
++    uint32_t twd;
++    uint32_t fip;
++    uint32_t fcs;
++    uint32_t foo;
++    uint32_t fos;
++    struct target_fpreg st[8];
++
++    /* Software status information [not touched by FSAVE]. */
++    uint16_t status;
++    uint16_t magic;   /* 0xffff: FPU data only, 0x0000: FXSR FPU data */
++};
++QEMU_BUILD_BUG_ON(sizeof(struct target_fregs_state) != 32 + 80);
++
+ struct target_fpx_sw_bytes {
+     uint32_t magic1;
+     uint32_t extended_size;
+@@ -43,29 +60,19 @@ struct target_fpx_sw_bytes {
+ QEMU_BUILD_BUG_ON(sizeof(struct target_fpx_sw_bytes) != 12*4);
  
-@@ -548,19 +548,19 @@ static int xrstor_sigcontext(CPUX86State *env, X86LegacyXSaveArea *fxsave,
-             && extended_size >= minimum_size) {
-             if (!access_ok(env_cpu(env), VERIFY_READ, fxsave_addr,
-                            extended_size - TARGET_FPSTATE_FXSAVE_OFFSET)) {
--                return 1;
-+                return false;
-             }
-             magic2 = tswapl(*(uint32_t *)((void *)fxsave + xstate_size));
-             if (magic2 == TARGET_FP_XSTATE_MAGIC2) {
-                 cpu_x86_xrstor(env, fxsave_addr, -1);
--                return 0;
-+                return true;
-             }
-         }
-         /* fall through to fxrstor */
-     }
+ struct target_fpstate_32 {
+-    /* Regular FPU environment */
+-    uint32_t cw;
+-    uint32_t sw;
+-    uint32_t tag;
+-    uint32_t ipoff;
+-    uint32_t cssel;
+-    uint32_t dataoff;
+-    uint32_t datasel;
+-    struct target_fpreg st[8];
+-    uint16_t  status;
+-    uint16_t  magic;          /* 0xffff = regular FPU data only */
+-    X86LegacyXSaveArea fxsave;
++    struct target_fregs_state fpstate;
++    X86LegacyXSaveArea fxstate;
+ };
  
-     cpu_x86_fxrstor(env, fxsave_addr);
--    return 0;
-+    return true;
- }
+ /*
+  * For simplicity, setup_frame aligns struct target_fpstate_32 to
+  * 16 bytes, so ensure that the FXSAVE area is also aligned.
+  */
+-QEMU_BUILD_BUG_ON(offsetof(struct target_fpstate_32, fxsave) & 15);
++QEMU_BUILD_BUG_ON(offsetof(struct target_fpstate_32, fxstate) & 15);
  
- static bool restore_sigcontext(CPUX86State *env, struct target_sigcontext *sc)
-@@ -628,11 +628,11 @@ static bool restore_sigcontext(CPUX86State *env, struct target_sigcontext *sc)
-         cpu_x86_frstor(env, fpstate_addr, 1);
-         ok = true;
-     } else {
--        ok = !xrstor_sigcontext(env, &fpstate->fxstate,
--                                fpstate_addr + TARGET_FPSTATE_FXSAVE_OFFSET);
-+        ok = xrstor_sigcontext(env, &fpstate->fxstate,
-+                               fpstate_addr + TARGET_FPSTATE_FXSAVE_OFFSET);
-     }
+ #ifndef TARGET_X86_64
+ # define target_fpstate target_fpstate_32
+-# define TARGET_FPSTATE_FXSAVE_OFFSET offsetof(struct target_fpstate_32, fxsave)
++# define TARGET_FPSTATE_FXSAVE_OFFSET offsetof(struct target_fpstate_32, fxstate)
  #else
--    ok = !xrstor_sigcontext(env, fpstate, fpstate_addr);
-+    ok = xrstor_sigcontext(env, fpstate, fpstate_addr);
- #endif
-     unlock_user_struct(fpstate, fpstate_addr, 0);
+ # define target_fpstate X86LegacyXSaveArea
+ # define TARGET_FPSTATE_FXSAVE_OFFSET 0
+@@ -278,15 +285,15 @@ static void setup_sigcontext(struct target_sigcontext *sc,
+     __put_user(env->segs[R_SS].selector, (unsigned int *)&sc->ss);
  
+     cpu_x86_fsave(env, fpstate_addr, 1);
+-    fpstate->status = fpstate->sw;
++    fpstate->fpstate.status = fpstate->fpstate.swd;
+     if (!(env->features[FEAT_1_EDX] & CPUID_FXSR)) {
+         magic = 0xffff;
+     } else {
+-        xsave_sigcontext(env, &fpstate->fxsave,
++        xsave_sigcontext(env, &fpstate->fxstate,
+                          fpstate_addr + TARGET_FPSTATE_FXSAVE_OFFSET);
+         magic = 0;
+     }
+-    __put_user(magic, &fpstate->magic);
++    __put_user(magic, &fpstate->fpstate.magic);
+ #else
+     __put_user(env->regs[R_EDI], &sc->rdi);
+     __put_user(env->regs[R_ESI], &sc->rsi);
+@@ -622,7 +629,7 @@ restore_sigcontext(CPUX86State *env, struct target_sigcontext *sc)
+             cpu_x86_frstor(env, fpstate_addr, 1);
+             err = 0;
+         } else {
+-            err = xrstor_sigcontext(env, &fpstate->fxsave,
++            err = xrstor_sigcontext(env, &fpstate->fxstate,
+                                     fpstate_addr + TARGET_FPSTATE_FXSAVE_OFFSET);
+         }
+ #else
 -- 
 2.34.1
 
