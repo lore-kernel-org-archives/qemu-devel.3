@@ -4,62 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC2FC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8683ECD1284
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 10:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru8u0-00058s-Nz; Tue, 09 Apr 2024 06:40:32 -0400
+	id 1ru91Y-00079q-SL; Tue, 09 Apr 2024 06:48:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <13824125580@163.com>)
- id 1ru8tz-00058b-CO
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:40:31 -0400
-Received: from m15.mail.163.com ([45.254.50.219])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <13824125580@163.com>) id 1ru8tv-0000Gr-AW
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:40:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
- Message-ID; bh=biFdX8d5ExHQkbz0M14xMG79jXxTXq5liZiHqCP73FI=; b=A
- whC4fbjgNUzUbe7DjE11BXbLM+2YMyUXVZyPwHp0xLbclvmAs4Bxx4ifkXHg1R2C
- C504WcBBaT/VP+sVwurAiDLTzrVaBWn3x5eYWs5ScVtPjbzgvzZuHvX7z9jz8vgH
- LT1DoPF8n2ATORR7e8o41Mxia+S1rLZKSuiC4clK58=
-Received: from 13824125580$163.com ( [14.125.55.124] ) by
- ajax-webmail-wmsvr-40-121 (Coremail) ; Tue, 9 Apr 2024 18:40:13 +0800 (CST)
-X-Originating-IP: [14.125.55.124]
-Date: Tue, 9 Apr 2024 18:40:13 +0800 (CST)
-From: tugouxp  <13824125580@163.com>
-To: "Peter Maydell" <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re:Re: how does the qemu emulate the "atomic" semantics on host
- that DOES NOT support atomic instructions?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <CAFEAcA_KES78EcDe6G8hmOAGksxVnJS3K6CtnFzjQ05fPtqc_Q@mail.gmail.com>
-References: <2484ebc6.e9b9.18ec24a8e9e.Coremail.13824125580@163.com>
- <CAFEAcA_KES78EcDe6G8hmOAGksxVnJS3K6CtnFzjQ05fPtqc_Q@mail.gmail.com>
-X-NTES-SC: AL_Qu2aAPqetkoq5SmQYOkfm0sQjuY3UcOxvPsk245RO51wjArp8RAnb3tJF3z74s2KGSuHkxKdfRtu1v9Uf4BZToUlpHnGdQHC7Y3wf90tf4xEGw==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_230381_2011268207.1712659213990"
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ru91W-00075S-OL
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:48:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ru91V-0001pZ-ER
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 06:48:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712659696;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AzYRQIc3co/gG7XXFWnX4DEGjBWcrxnZquufV1VYqSc=;
+ b=C4RuZFRMMv6uI6TRdvCd2B/hPHYEXelZnMfKM/1pS04D4Dm7axkXbfinXmWXw8CBtGi4Kq
+ mcbb0Vt/ra7EbUs/JNi2de/8ns15Qe6JlUEXmcyHU9JpSEXHjW6gSonNKBNu4k8HfH66pH
+ HHQAQxkejn01gK/azX3YUhaVGyabzlE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-418-Hpl_TguwOtGxHon_76lrxg-1; Tue, 09 Apr 2024 06:48:11 -0400
+X-MC-Unique: Hpl_TguwOtGxHon_76lrxg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 62C1488AA24;
+ Tue,  9 Apr 2024 10:48:10 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.192.74])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 422F617B36;
+ Tue,  9 Apr 2024 10:48:08 +0000 (UTC)
+Date: Tue, 9 Apr 2024 12:48:03 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Qiang Liu <cyruscyliu@gmail.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH-for-9.0? 1/3] hw/block/nand: Factor nand_load_iolen()
+ method out
+Message-ID: <ZhUc47XdQXFvTMEz@redhat.com>
+References: <20240408083605.55238-1-philmd@linaro.org>
+ <20240408083605.55238-2-philmd@linaro.org>
 MIME-Version: 1.0
-Message-ID: <41f35ede.f15e.18ec271aea7.Coremail.13824125580@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: _____wD3vzYOGxVmh0UGAA--.35376W
-X-CM-SenderInfo: bprtmjyurskkiyq6il2tof0z/1tbiZRK7QmXAlDFjFAADs6
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=45.254.50.219; envelope-from=13824125580@163.com;
- helo=m15.mail.163.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
- FROM_LOCAL_HEX=0.006, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240408083605.55238-2-philmd@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,92 +85,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------=_Part_230381_2011268207.1712659213990
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+Am 08.04.2024 um 10:36 hat Philippe Mathieu-Daudé geschrieben:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/block/nand.c | 32 +++++++++++++++++++-------------
+>  1 file changed, 19 insertions(+), 13 deletions(-)
+> 
+> diff --git a/hw/block/nand.c b/hw/block/nand.c
+> index d1435f2207..6fa9038bb5 100644
+> --- a/hw/block/nand.c
+> +++ b/hw/block/nand.c
+> @@ -243,9 +243,25 @@ static inline void nand_pushio_byte(NANDFlashState *s, uint8_t value)
+>      }
+>  }
+>  
+> +/*
+> + * nand_load_block: Load block containing (s->addr + @offset).
+> + * Returns length of data available at @offset in this block.
+> + */
+> +static int nand_load_block(NANDFlashState *s, int offset)
+> +{
+> +    int iolen;
+> +
+> +    s->blk_load(s, s->addr, offset);
 
-SGkgcGV0ZXI7CiAgICBtdWNoLCBtdWNoIGFwcHJlY2lhdGUgeW91ciBleHBsYW5hdGlvbiEKPiAu
-LmJ1dCB0aGUgaG9zdCBkb2Vzbid0IGhhdmUgb25lLCB3ZSBhcnJhbmdlIHRvIHBhdXNlIGV4ZWN1
-dGlvbiBvZiBhbGwgdGhlIG90aGVyIGd1ZXN0IHZDUFUgdGhyZWFkcywKPT09PnllcywgaSBzb21l
-aG93IGEgbGl0dGxlIGJpdCBvZiBndWVzcyBzdWNoIGxpa2UgdGhhdCwgYnV0IHdoZW4gdHJ5IHRv
-IGZpbmQgc29tZSBjb2RlIGluIHFlbXUgdG8gcHJvdmUgdGhlIGd1ZXNzLCBpIGZvdW5kIGkgd2Fz
-IGxvc3QgYW5kIGV4YXVzdGVkIGluIHRoZSBvY2VhbiBvZiB0aGUgY29kZSBhbmQgY29tcGxleCBs
-b2dpYyBvZiBxZXVtdS4KYmVjYXVzZSBpbiBteSB0aG91Z3RoLCBpdCBtYXkgYmUgZG8gdGhlIHN5
-bmMgaW4gdXNlciBwdGhyZWFkIGxldmVsLCBzbyBpIGdyZXAgdGhlICJwdGhyZWFkIiAibXV0ZXgi
-LCAiY29uZHRpb24iLC4uLiBhbmQgc28gb24sIGJ1dCBkaWQgbm90IGZpbmQgYW55IHBvc2l0aW9u
-IHRvIHByb3ZlIHRoaXMgdGhvdWdodC4Kc28sIGNhbiB5b3Ugb2ZmZXIgbWUgdGhlIGRlbW8gY29k
-ZSBwb3NpdGlvbiBvZiBkbyB0aGUgc3luYyBsaWtlICJwYXVzZSBleGVjdXRpb24gb2YgYWxsIHRo
-ZSBvdGhlciBndWVzdCB2Q1BVIHRocmVhZHMsIiwgdG8gbWFrZSB0aGUgYXRvbWljIG9wZXJhdGlv
-bnMgbWVldCB0aGUgc2VtYXRpY3M/CnRoYW5rIHlvdSEKQlJzCnpsY2FvLgoKCgoKCkF0IDIwMjQt
-MDQtMDkgMTg6MTA6NDIsICJQZXRlciBNYXlkZWxsIiA8cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3Jn
-PiB3cm90ZToKPk9uIFR1ZSwgOSBBcHIgMjAyNCBhdCAxMDo1OCwgdHVnb3V4cCA8MTM4MjQxMjU1
-ODBAMTYzLmNvbT4gd3JvdGU6Cj4+ICAgIEhvdyBkb2VzIHRoZSBxZW11IGVtdWxhdGUgdGhlIHRh
-cmdldCB0aGF0IHN1cHBvcnQgImF0b21pYyIgSVNBLCBzdWNoIGFzIHJpc2N2ICJhbW8iIGluc3Ry
-dWN0aW9uIG9uIGhvc3QgbWFjaGluZSB0aGF0IGRvZXMgTk9UIHN1cHBvcnQgYXRvbWljICBpbnN0
-cnVjdGlvbnMgPwo+PiBpcyB0aGlzIHNjZW5hcmlvIGhhcHBlbmRzPwo+Cj5BbGwgaG9zdHMgdGhh
-dCBjYW4gcnVuIFFFTVUgc3VwcG9ydCBhdCBsZWFzdCBzb21lIGF0b21pYyBpbnN0cnVjdGlvbnMu
-Cj5XaGVyZSBwb3NzaWJsZSB3ZSB1c2UgdGhlIGhvc3QgYXRvbWljIG9wZXJhdGlvbnMgdG8gcHJv
-dmlkZSB0aGUKPm5lY2Vzc2FyeSBhdG9taWNpdHkgZ3VhcmFudGVlcyB0aGF0IGEgZ3Vlc3QgaW5z
-dHJ1Y3Rpb24gbXVzdCBoYXZlLgo+Rm9yIGNhc2VzIHdoZXJlIHdlIGNhbid0IGRvIHRoYXQgKGVn
-IHdoZXJlIHRoZSBndWVzdCBuZWVkcyBhbiBhdG9taWMKPjE2LWJ5dGUgc3RvcmUgYnV0IHRoZSBo
-b3N0IGRvZXNuJ3QgaGF2ZSBvbmUpLCB3ZSBhcnJhbmdlIHRvIHBhdXNlCj5leGVjdXRpb24gb2Yg
-YWxsIHRoZSBvdGhlciBndWVzdCB2Q1BVIHRocmVhZHMsIGRvIHRoZSB0aGluZyB0aGF0IG11c3QK
-PmJlIGF0b21pYywgYW5kIHRoZW4gbGV0IGV2ZXJ5dGhpbmcgcmVzdW1lLgo+Cj50aGFua3MKPi0t
-IFBNTQo=
-------=_Part_230381_2011268207.1712659213990
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Wouldn't it make more sense for @offset to be unsigned, like in
+nand_command() before this patch?
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPkhpIHBldGVyOzwvZGl2
-PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPiZuYnNwOyAmbmJzcDsgbXVjaCwgbXVjaCBhcHByZWNp
-YXRlIHlvdXIgZXhwbGFuYXRpb24hPC9kaXY+PHByZT48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1j
-b2xvcjogcmdiKDIyMSwgNjQsIDUwKTsiPiZndDsgLi5idXQgdGhlIGhvc3QgZG9lc24ndCBoYXZl
-IG9uZSwgd2UgYXJyYW5nZSB0byBwYXVzZSBleGVjdXRpb24gb2YgYWxsIHRoZSBvdGhlciBndWVz
-dCB2Q1BVIHRocmVhZHMsPC9zcGFuPjwvcHJlPjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPj09PSZn
-dDs8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogcmdiKDExOSwgMjAxLCA3NSk7Ij55ZXM8
-L3NwYW4+LCBpIHNvbWVob3cgYSBsaXR0bGUgYml0IG9mIGd1ZXNzIHN1Y2ggbGlrZSB0aGF0LCBi
-dXQgd2hlbiB0cnkgdG8gZmluZCBzb21lIGNvZGUgaW4gcWVtdSB0byBwcm92ZSB0aGUgZ3Vlc3Ms
-IGkgZm91bmQgaSB3YXMgbG9zdCBhbmQgZXhhdXN0ZWQgaW4gdGhlIG9jZWFuIG9mIHRoZSBjb2Rl
-IGFuZCBjb21wbGV4IGxvZ2ljIG9mIHFldW11LjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsi
-PmJlY2F1c2UgaW4gbXkgdGhvdWd0aCwgaXQgbWF5IGJlIGRvIHRoZSBzeW5jIGluIHVzZXIgcHRo
-cmVhZCBsZXZlbCwgc28gaSBncmVwIHRoZSAicHRocmVhZCIgIm11dGV4IiwgImNvbmR0aW9uIiwu
-Li4gYW5kIHNvIG9uLCBidXQgZGlkIG5vdCBmaW5kIGFueSBwb3NpdGlvbiB0byBwcm92ZSB0aGlz
-IHRob3VnaHQuPC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOiAwOyI+c28sIGNhbiB5b3Ugb2ZmZXIg
-bWUgdGhlIGRlbW8gY29kZSBwb3NpdGlvbiBvZiBkbyB0aGUgc3luYyBsaWtlIDxzcGFuIHN0eWxl
-PSJjb2xvcjogcmdiKDIyMSwgNjQsIDUwKTsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjU1
-LCAyNTUpOyI+IjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDIyMSwgNjQsIDUwKTsgYmFja2dyb3Vu
-ZC1jb2xvcjogcmdiKDI1NSwgMjU1LCAyNTUpOyBmb250LWZhbWlseTogYXJpYWw7IHdoaXRlLXNw
-YWNlLWNvbGxhcHNlOiBwcmVzZXJ2ZTsiPjxiPnBhdXNlIGV4ZWN1dGlvbiBvZiBhbGwgdGhlIG90
-aGVyIGd1ZXN0IHZDUFUgdGhyZWFkczwvYj4sIiwgdG8gbWFrZSB0aGUgYXRvbWljIG9wZXJhdGlv
-bnMgbWVldCB0aGUgc2VtYXRpY3M/IDwvc3Bhbj48L3NwYW4+PC9kaXY+PGRpdiBzdHlsZT0ibWFy
-Z2luOiAwOyI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBhcmlhbDsgd2hpdGUtc3BhY2UtY29s
-bGFwc2U6IHByZXNlcnZlOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7IGNv
-bG9yOiByZ2IoNjMsIDY1LCA2NCk7Ij50aGFuayB5b3UhPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9
-Im1hcmdpbjogMDsiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUs
-IDI1NSk7IGZvbnQtZmFtaWx5OiBhcmlhbDsgd2hpdGUtc3BhY2UtY29sbGFwc2U6IHByZXNlcnZl
-OyBjb2xvcjogcmdiKDYzLCA2NSwgNjQpOyI+QlJzPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9Im1h
-cmdpbjogMDsiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1
-NSk7IGZvbnQtZmFtaWx5OiBhcmlhbDsgd2hpdGUtc3BhY2UtY29sbGFwc2U6IHByZXNlcnZlOyBj
-b2xvcjogcmdiKDYzLCA2NSwgNjQpOyI+emxjYW8uPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9InBv
-c2l0aW9uOnJlbGF0aXZlO3pvb206MSI+PC9kaXY+PGRpdiBpZD0iZGl2TmV0ZWFzZU1haWxDYXJk
-Ij48L2Rpdj48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48cHJlPjxicj5BdCAyMDI0LTA0
-LTA5IDE4OjEwOjQyLCAiUGV0ZXIgTWF5ZGVsbCIgJmx0O3BldGVyLm1heWRlbGxAbGluYXJvLm9y
-ZyZndDsgd3JvdGU6CiZndDtPbiBUdWUsIDkgQXByIDIwMjQgYXQgMTA6NTgsIHR1Z291eHAgJmx0
-OzEzODI0MTI1NTgwQDE2My5jb20mZ3Q7IHdyb3RlOgomZ3Q7Jmd0OyAgICBIb3cgZG9lcyB0aGUg
-cWVtdSBlbXVsYXRlIHRoZSB0YXJnZXQgdGhhdCBzdXBwb3J0ICJhdG9taWMiIElTQSwgc3VjaCBh
-cyByaXNjdiAiYW1vIiBpbnN0cnVjdGlvbiBvbiBob3N0IG1hY2hpbmUgdGhhdCBkb2VzIE5PVCBz
-dXBwb3J0IGF0b21pYyAgaW5zdHJ1Y3Rpb25zID8KJmd0OyZndDsgaXMgdGhpcyBzY2VuYXJpbyBo
-YXBwZW5kcz8KJmd0OwomZ3Q7QWxsIGhvc3RzIHRoYXQgY2FuIHJ1biBRRU1VIHN1cHBvcnQgYXQg
-bGVhc3Qgc29tZSBhdG9taWMgaW5zdHJ1Y3Rpb25zLgomZ3Q7V2hlcmUgcG9zc2libGUgd2UgdXNl
-IHRoZSBob3N0IGF0b21pYyBvcGVyYXRpb25zIHRvIHByb3ZpZGUgdGhlCiZndDtuZWNlc3Nhcnkg
-YXRvbWljaXR5IGd1YXJhbnRlZXMgdGhhdCBhIGd1ZXN0IGluc3RydWN0aW9uIG11c3QgaGF2ZS4K
-Jmd0O0ZvciBjYXNlcyB3aGVyZSB3ZSBjYW4ndCBkbyB0aGF0IChlZyB3aGVyZSB0aGUgZ3Vlc3Qg
-bmVlZHMgYW4gYXRvbWljCiZndDsxNi1ieXRlIHN0b3JlIGJ1dCB0aGUgaG9zdCBkb2Vzbid0IGhh
-dmUgb25lKSwgd2UgYXJyYW5nZSB0byBwYXVzZQomZ3Q7ZXhlY3V0aW9uIG9mIGFsbCB0aGUgb3Ro
-ZXIgZ3Vlc3QgdkNQVSB0aHJlYWRzLCBkbyB0aGUgdGhpbmcgdGhhdCBtdXN0CiZndDtiZSBhdG9t
-aWMsIGFuZCB0aGVuIGxldCBldmVyeXRoaW5nIHJlc3VtZS4KJmd0OwomZ3Q7dGhhbmtzCiZndDst
-LSBQTU0KPC9wcmU+PC9kaXY+
-------=_Part_230381_2011268207.1712659213990--
+I think the values are guaranteed to be small enough to fit in either
+signed or unsigned, but we never check for < 0 (maybe that should be
+done in your patch to s->blk_load() anyway).
+
+> +    iolen = (1 << s->page_shift) - offset;
+
+This is not new, but I'm confused. Can this legitimately be negative?
+offset seems to be limited to (1 << s->addr_shift) + s->offset in
+practice, but addr_shift > page_shift for NAND_PAGE_SIZE == 2048.
+
+After patch 3, offset is implicitly limited to NAND_PAGE_SIZE + OOB_SIZE
+because we return early if s->blk_load() fails. I wonder if it wouldn't
+be better to catch this in the callers already and only assert in
+s->blk_load().
+
+Anyway, after patch 3 iolen can only temporarily become negative here...
+
+> +    if (s->gnd) {
+> +        iolen += 1 << s->oob_shift;
+
+...before it becomes non-negative again here.
+
+> +    }
+> +    return iolen;
+> +}
+
+So none of this makes the code technically incorrect after applying the
+full series, but let someone modify it who doesn't understand these
+intricacies and I think chances are that it will fall apart.
+
+Kevin
 
 
