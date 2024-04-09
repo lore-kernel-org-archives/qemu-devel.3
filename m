@@ -4,85 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59569C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 01:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527C5C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 01:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru0ZT-0003iK-TN; Mon, 08 Apr 2024 21:46:47 -0400
+	id 1ru0aG-0004Oq-Vx; Mon, 08 Apr 2024 21:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ru0ZS-0003i9-J8
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 21:46:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ru0ZR-0002zW-02
- for qemu-devel@nongnu.org; Mon, 08 Apr 2024 21:46:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712627203;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KBGljJWvGfiJmcv1NYxhnpKObL+8iQ9pK0qHfslD7EQ=;
- b=ebr6UqcYP4z+4eaDDRrlZRm0+mQzAkgUbxq08xpOEM3vQ+5moTMVuO2UkekU6slhu4Nbfd
- 7y8OBe3EzrwyThBv7RPzpiXTupIyORBF1iGvMJ9dfhFMIFtXYwhrPlo55mn1QL/WTFNypV
- KY4sl4OqkOymCnEatfd4UbDOTfEjWJI=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-aOhyIZ3YPcKpj3j_bb3z3w-1; Mon, 08 Apr 2024 21:46:42 -0400
-X-MC-Unique: aOhyIZ3YPcKpj3j_bb3z3w-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-1e46bce2455so7175765ad.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 18:46:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712627201; x=1713232001;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KBGljJWvGfiJmcv1NYxhnpKObL+8iQ9pK0qHfslD7EQ=;
- b=EeeMND/m/akiU0k3TeZmIIypQ/FdEe0sJTy9hWTIrVSPrPfisEgx93dqcBRUlv5iM1
- 37iwVocQjK4StwUyc6fVL6z8zEsqcCRuUorPNr/r1piWxM1LRY6KxaePV5IcryL0J5X7
- totatHDDzZ5zUm7nMSYtMz/c1/hPRZOoVMNa5wweu2XV6aCYeC4RTPVyysVQzBkvp7tQ
- 9tE3US9oaMyYEKlCgEKQViADDsocI/xGvGszZ5IXG0ewHAD6/AB3EYbNrnGs+gfWtPVk
- 0gcJWVFGbZ25JGOdkNMfnhrthCg671HCOAAmpUCOF8L9fEt6J5AI0EThuQ6q2jO9tmPy
- PQpA==
-X-Gm-Message-State: AOJu0YwBrVcJGJ8MQnPYRl/2on/LnbXCubvqlvaXoH7hmAli5vsIE5LT
- vKhS5ENrjbOInzYYf4i2hswrJQRdqYW8gx7Y/A0iGzvV+8uxotP9VnM73f8ZON7zgaUXhi1BMwW
- xOpH+inUdC1oG0fjABIT4Hfsgz6z6MY6kI/uApKHnFqSXL2n2TiPTr0ZPubURr8kwjwRHIT2Z0u
- r9MGSMJrI5IOYU3rfEf5i+4Ml/rNs=
-X-Received: by 2002:a17:902:b94a:b0:1e3:e1e8:bb5 with SMTP id
- h10-20020a170902b94a00b001e3e1e80bb5mr5106531pls.28.1712627201069; 
- Mon, 08 Apr 2024 18:46:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFD56UXXUnZpYw//q8EwhTMtJSZUiv9hxxVm/HzZmPsM1GDR5R3DsGPYIwePmuJrCMdqMZNKBB3Q0vrlUCnyqg=
-X-Received: by 2002:a17:902:b94a:b0:1e3:e1e8:bb5 with SMTP id
- h10-20020a170902b94a00b001e3e1e80bb5mr5106523pls.28.1712627200777; Mon, 08
- Apr 2024 18:46:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaoshanliukou@163.com>)
+ id 1ru0aF-0004OT-0n; Mon, 08 Apr 2024 21:47:35 -0400
+Received: from m16.mail.163.com ([220.197.31.3])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaoshanliukou@163.com>)
+ id 1ru0aA-00033g-MF; Mon, 08 Apr 2024 21:47:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+ Message-ID; bh=kpGNrl5sBnKmYWmSt2AiQmdRbsLnaTJzHOjuEdd+NiI=; b=D
+ URB1lU2x3shiO4BdVQsb0fLvruN0aeBbCE81Y+AW789tDDyvM/XokDLpBhqIdEtS
+ R2yvsoPm0MQc3I8b+EmXbiVkLvdTgBHfmGs9X9w2LH3NMjkJZXx/4PCE5TPJg1AJ
+ DmU4XUFk18DmtPh6wVh97KXVeCoNfVsGcD/KtNThMw=
+Received: from gaoshanliukou$163.com ( [60.27.226.9] ) by
+ ajax-webmail-wmsvr-40-126 (Coremail) ; Tue, 9 Apr 2024 09:46:47 +0800 (CST)
+X-Originating-IP: [60.27.226.9]
+Date: Tue, 9 Apr 2024 09:46:47 +0800 (CST)
+From: "yang.zhang" <gaoshanliukou@163.com>
+To: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ liwei1518@gmail.com, bin.meng@windriver.com, 
+ alistair.francis@wdc.com, palmer@dabbelt.com, anup@brainfault.org, 
+ "yang.zhang" <yang.zhang@hexintek.com>
+Subject: Re:Re: [PATCH] hw/intc/riscv_aplic: APLICs should add child earlier
+ than realize
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <eb3ec708-b4f7-431a-bef0-b09a458f422b@ventanamicro.com>
+References: <20240407034652.25739-1-gaoshanliukou@163.com>
+ <eb3ec708-b4f7-431a-bef0-b09a458f422b@ventanamicro.com>
+X-NTES-SC: AL_Qu2aAPqZuEor4SmbYekXnEYQh+k3XcK4u/0u2YFVP5E0lST3wxsYf0RhJ3TO+eWkJByViyOIdAFWwOloTJZ/RaHRpjTgXqIpR/zTf4ETRe3E
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-References: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
-In-Reply-To: <df6b6b465753e754a19459e8cd61416548f89a42.1712569644.git.mst@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 9 Apr 2024 09:46:29 +0800
-Message-ID: <CACGkMEtGcn25MT73xczHtXzcYDZwFO1W1TEqcM-gsFEy81Htbg@mail.gmail.com>
-Subject: Re: [PATCH] Revert "hw/virtio: Add support for VDPA network
- simulation devices"
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.494,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <5b3846fb.270f.18ec0894f02.Coremail.gaoshanliukou@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: _____wD3v0gHnhRmc_8GAA--.20690W
+X-CM-SenderInfo: pjdr2x5dqox3xnrxqiywtou0bp/1tbiRAu68mVOCNubxgADsh
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Received-SPF: pass client-ip=220.197.31.3; envelope-from=gaoshanliukou@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,22 +74,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 8, 2024 at 5:47=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
-wrote:
->
-> This reverts commit cd341fd1ffded978b2aa0b5309b00be7c42e347c.
->
-> The patch adds non-upstream code in
-> include/standard-headers/linux/virtio_pci.h
-> which would make maintainance harder.
->
-> Revert for now.
->
-> Suggested-by: Jason Wang <jasowang@redhat.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-
-Acked-by: Jason Wang <jasowang@redhat.com>
-
-Thanks
-
+CkF0IDIwMjQtMDQtMDkgMDY6MzM6NTUsICJEYW5pZWwgSGVucmlxdWUgQmFyYm96YSIgPGRiYXJi
+b3phQHZlbnRhbmFtaWNyby5jb20+IHdyb3RlOgo+Cj4KPk9uIDQvNy8yNCAwMDo0NiwgeWFuZy56
+aGFuZyB3cm90ZToKPj4gRnJvbTogInlhbmcuemhhbmciIDx5YW5nLnpoYW5nQGhleGludGVrLmNv
+bT4KPj4gCj4+IFNpbmNlIG9ubHkgcm9vdCBBUExJQ3MgY2FuIGhhdmUgaHcgSVJRIGxpbmVzLCBh
+cGxpYy0+cGFyZW50IHNob3VsZAo+PiBiZSBpbml0aWFsaXplZCBmaXJzdC4KPgo+SSB0aGluayBp
+dCdzIHdvcnRoIG1lbnRpb25pbmcgdGhhdCwgaWYgd2UgZG9uJ3QgZG8gdGhhdCwgdGhlcmUgd29u
+J3QgYmUKPmFuIGFwbGljLT5wYXJlbnQgYXNzaWduZWQgZHVyaW5nIHJpc2N2X2FwbGljX3JlYWxp
+emUoKSBhbmQgd2Ugd29uJ3QgY3JlYXRlCj50aGUgYWRlcXVhdGUgSVJRIGxpbmVzLgo+Cj4+IAo+
+PiBTaWduZWQtb2ZmLWJ5OiB5YW5nLnpoYW5nIDx5YW5nLnpoYW5nQGhleGludGVrLmNvbT4KPj4g
+LS0tCj4KPlBsZWFzZSBhZGQ6Cj4KPkZpeGVzOiBlOGY3OTM0M2NmICgiaHcvaW50YzogQWRkIFJJ
+U0MtViBBSUEgQVBMSUMgZGV2aWNlIGVtdWxhdGlvbiIpCj4KPgo+QW5kOgo+Cj4KPlJldmlld2Vk
+LWJ5OiBEYW5pZWwgSGVucmlxdWUgQmFyYm96YSA8ZGJhcmJvemFAdmVudGFuYW1pY3JvLmNvbT4K
+CkRvbmUuClRoYW5rcy4KPj4KPgo+Cj4+ICAgaHcvaW50Yy9yaXNjdl9hcGxpYy5jIHwgOCArKysr
+LS0tLQo+PiAgIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0p
+Cj4+IAo+PiBkaWZmIC0tZ2l0IGEvaHcvaW50Yy9yaXNjdl9hcGxpYy5jIGIvaHcvaW50Yy9yaXNj
+dl9hcGxpYy5jCj4+IGluZGV4IGZjNWRmMGQ1OTguLjMyZWRkNmQwN2IgMTAwNjQ0Cj4+IC0tLSBh
+L2h3L2ludGMvcmlzY3ZfYXBsaWMuYwo+PiArKysgYi9ody9pbnRjL3Jpc2N2X2FwbGljLmMKPj4g
+QEAgLTEwMDAsMTYgKzEwMDAsMTYgQEAgRGV2aWNlU3RhdGUgKnJpc2N2X2FwbGljX2NyZWF0ZSho
+d2FkZHIgYWRkciwgaHdhZGRyIHNpemUsCj4+ICAgICAgIHFkZXZfcHJvcF9zZXRfYml0KGRldiwg
+Im1zaW1vZGUiLCBtc2ltb2RlKTsKPj4gICAgICAgcWRldl9wcm9wX3NldF9iaXQoZGV2LCAibW1v
+ZGUiLCBtbW9kZSk7Cj4+ICAgCj4+ICsgICAgaWYgKHBhcmVudCkgewo+PiArICAgICAgICByaXNj
+dl9hcGxpY19hZGRfY2hpbGQocGFyZW50LCBkZXYpOwo+PiArICAgIH0KPj4gKwo+PiAgICAgICBz
+eXNidXNfcmVhbGl6ZV9hbmRfdW5yZWYoU1lTX0JVU19ERVZJQ0UoZGV2KSwgJmVycm9yX2ZhdGFs
+KTsKPj4gICAKPj4gICAgICAgaWYgKCFpc19rdm1fYWlhKG1zaW1vZGUpKSB7Cj4+ICAgICAgICAg
+ICBzeXNidXNfbW1pb19tYXAoU1lTX0JVU19ERVZJQ0UoZGV2KSwgMCwgYWRkcik7Cj4+ICAgICAg
+IH0KPj4gICAKPj4gLSAgICBpZiAocGFyZW50KSB7Cj4+IC0gICAgICAgIHJpc2N2X2FwbGljX2Fk
+ZF9jaGlsZChwYXJlbnQsIGRldik7Cj4+IC0gICAgfQo+PiAtCj4+ICAgICAgIGlmICghbXNpbW9k
+ZSkgewo+PiAgICAgICAgICAgZm9yIChpID0gMDsgaSA8IG51bV9oYXJ0czsgaSsrKSB7Cj4+ICAg
+ICAgICAgICAgICAgQ1BVU3RhdGUgKmNwdSA9IGNwdV9ieV9hcmNoX2lkKGhhcnRpZF9iYXNlICsg
+aSk7Cg==
 
