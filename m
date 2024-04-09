@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB259C67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D605C67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 06:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ru5Ie-0006pg-HI; Tue, 09 Apr 2024 02:49:44 -0400
+	id 1ru5Kj-0007iC-Cc; Tue, 09 Apr 2024 02:51:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru5Ic-0006pO-J2
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:49:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru5Kg-0007hj-5q
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:51:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru5IZ-0001c9-Gp
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:49:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ru5Kd-0002AF-OQ
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 02:51:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712645377;
+ s=mimecast20190719; t=1712645505;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=GxdEMEnvJp0prgraFJkiygpZvNlGz6/xsvms31K1e+I=;
- b=TjKrO80ai0G8IibyrXsEDnQe871AjuMjeAyHCCsqbLwd8eAWjt7WaKyTTu3aLhgY4eUdru
- +f1N5MZpRJwy9KO+57xxrv6iMqvaut3QcVptBTtwe3eUNhOvnZDMguOWF4SG1V5OCCy/jz
- SrN2Yx3Xfv5z88kYFCPo0M6MaBWnhhc=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SRu3m9eBGFpzaEBTzYuIhlp5H2k0JjgjIPwXeYD2wvY=;
+ b=SAuZyGfjYgEb0oaX6ARwo6aQI6ytsJpD742hEivpIO0SX70xpmzetTxQ8ihoxZnv1aH07N
+ VpwJLSizwfPyJ9+mXCzDSDZaDVT+6wW9xuUEpIWBRQpOX+5YmgHLxJJv+caj/KVCxxjqhe
+ sLXbNycZg3qkReLDlpdsc9+mf8e0LL0=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-S_TjNWBKPFKhJLrtN_Cuig-1; Tue, 09 Apr 2024 02:49:36 -0400
-X-MC-Unique: S_TjNWBKPFKhJLrtN_Cuig-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a51c03c9b8bso90761066b.1
- for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 23:49:36 -0700 (PDT)
+ us-mta-648-LjbdpWxxPpK05o-bNOVStQ-1; Tue, 09 Apr 2024 02:51:44 -0400
+X-MC-Unique: LjbdpWxxPpK05o-bNOVStQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a51beadf1f8so189025666b.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Apr 2024 23:51:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712645375; x=1713250175;
+ d=1e100.net; s=20230601; t=1712645503; x=1713250303;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GxdEMEnvJp0prgraFJkiygpZvNlGz6/xsvms31K1e+I=;
- b=AgcAZ7XuhC/POpIq3ew8xd1sK42ars0Zpde3rBBYzXqEOx6S7NcexDYVwKIBJXfwgo
- HNPzTZDOetQQtpSvFUWi4b5e0uE/EyeJoNwjzP42J9J6uPSONZuLcn4nrZc9hg9xVAli
- 71b2Vc5bq1kIJzaNamnLdh+nRP5GzEn30WCh9lUetbrro+yRFBcUk9AdT/WljyDQXBC2
- LTxSNfpxVWNfsGcXkyeJPS0pHTD4JwCDu3H5wq8iXwaA+omaAx9dOz37GIzbJtmlDUoy
- b/qePcnuwmUK/gyMPCNsZ7BECiJ3Dq6Ag712JYIOtDt6/PGgYYuBPgen5KUpCG0rgQH2
- Ibog==
-X-Gm-Message-State: AOJu0YzfxaK2IMUN2/scc/Pma3yNOWVrwOkPh4Xg8PfA5S+qTYMKkM3y
- zoDRncZlFQQ8MzX/a1RyRN1XGzNk4NN6drH2TWUXwRCYW5WC5AuLJOakU4Wp8lS+Yb9MQpSRGlW
- yRyteithxob1glYSE4Js1zACAUnmyelmu3C1FQOT/hYXs7QObvuQb
-X-Received: by 2002:a17:906:eceb:b0:a51:bca7:3a93 with SMTP id
- qt11-20020a170906eceb00b00a51bca73a93mr4841681ejb.28.1712645374908; 
- Mon, 08 Apr 2024 23:49:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjKtsSez8/RBdjEQrW1y+gYgDcy5MzNzQCaNwjE4tmZ1PxW8+yZ3jp/aNZSbWySHEO/A689w==
-X-Received: by 2002:a17:906:eceb:b0:a51:bca7:3a93 with SMTP id
- qt11-20020a170906eceb00b00a51bca73a93mr4841675ejb.28.1712645374364; 
- Mon, 08 Apr 2024 23:49:34 -0700 (PDT)
+ bh=SRu3m9eBGFpzaEBTzYuIhlp5H2k0JjgjIPwXeYD2wvY=;
+ b=XzZ5/+XuugsnFpuxFZY9tpMLbSuQDsXQzon1sTluOQKpBQMuFT36fOZNTuWOF/ZEF/
+ usbAGfDF0fx/Wp6BBt+TsQ+8NfyuvSi31sT7e09AORHIni2JTXtofIy4uIFN+w2V/pyp
+ Fx/icK9LQOthC4SzhR4X46Yzjk2EO3AbjKTe/wYEfSpI60SaRZStso3G783/jmOhVtB3
+ NNg9KPEbWKSCqkP0WOULgkscyNbtwtbfDJ1g+Y8kfAuUTPu9TvYIHpM8AXec1HGbqrjQ
+ JREw4hxBUy6cYmUJEcs++ZXkEuI2GXiBwZas+eEiz60U/J4Yy/xougqpyX+OCn1nTgjn
+ 3flA==
+X-Gm-Message-State: AOJu0YyPXeb3YFuS785o13jm9rLaY0z1pZWbcYVQXHFLNkULQIi5cChs
+ EjJp+gTJI0yAk18qiYkFHgJTmtJJcjE+nXK6oKeGOJ/YQYMw/JxZPKZkPL+XOlC9FhixtMQort8
+ ZM+H+8pOy/8fe9dwosHzMMxtSQ5ejtMsSHWKMwY2DUq9J6X885uXO
+X-Received: by 2002:a17:906:2416:b0:a4a:850f:28fd with SMTP id
+ z22-20020a170906241600b00a4a850f28fdmr8455952eja.29.1712645502918; 
+ Mon, 08 Apr 2024 23:51:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/f9pbT4xoM8CJrEle0UkXdafqlRXG0uGJI8wuYCg8mY0B6qzmqpMjMrJNGo/yvgXJY/l27A==
+X-Received: by 2002:a17:906:2416:b0:a4a:850f:28fd with SMTP id
+ z22-20020a170906241600b00a4a850f28fdmr8455936eja.29.1712645502338; 
+ Mon, 08 Apr 2024 23:51:42 -0700 (PDT)
 Received: from redhat.com ([2.52.134.26]) by smtp.gmail.com with ESMTPSA id
- h19-20020a1709070b1300b00a51971dd79csm5386383ejl.143.2024.04.08.23.49.32
+ c27-20020a170906d19b00b00a51a00142bdsm5304442ejz.212.2024.04.08.23.51.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Apr 2024 23:49:33 -0700 (PDT)
-Date: Tue, 9 Apr 2024 02:49:30 -0400
+ Mon, 08 Apr 2024 23:51:41 -0700 (PDT)
+Date: Tue, 9 Apr 2024 02:51:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Alexey Dobriyan <adobriyan@yandex-team.ru>
 Cc: qemu-devel@nongnu.org, adobriyan@gmail.com, jasowang@redhat.com,
  vsementsov@yandex-team.ru
 Subject: Re: [PATCH 1/1] virtio-net: fix bug 1451 aka
  "assert(!virtio_net_get_subqueue(nc)->async_tx.elem);"
-Message-ID: <20240409023928-mutt-send-email-mst@kernel.org>
+Message-ID: <20240409025022-mutt-send-email-mst@kernel.org>
 References: <20240405112015.11919-1-adobriyan@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -113,7 +113,12 @@ On Fri, Apr 05, 2024 at 02:20:15PM +0300, Alexey Dobriyan wrote:
 > 
 > slirp discards it because it is smaller than Ethernet header,
 > but returns 0.
-> 
+
+won't the same issue trigger with a 1 byte packet
+as opposed to a 0 byte packet though?
+
+
+
 > 0 length is propagated upwards and is interpreted as "packet has been sent"
 > which is terrible because queue is being destroyed, nothing has been sent,
 > nobody is waiting for TX to complete and assert it triggered.
@@ -154,14 +159,6 @@ On Fri, Apr 05, 2024 at 02:20:15PM +0300, Alexey Dobriyan wrote:
 >              out_sg = sg;
 > +
 > +            if (iov_size(out_sg, out_num) == 0) {
-
-calling iov_size an extra time on data path and scanning
-a potentially long s/g list just so we can check
-it's not 0 is not welcome, though.
-
-
-won't the previous iov_copy return 0 in this case?
-
 > +                virtio_error(vdev, "virtio-net nothing to send");
 > +                goto detach;
 > +            }
