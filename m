@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EDFCC67861
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA055CD128A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruFCG-0006uC-OU; Tue, 09 Apr 2024 13:23:49 -0400
+	id 1ruFHZ-0000Th-N6; Tue, 09 Apr 2024 13:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruFC2-0006tU-1d
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:23:35 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruFC0-0007O1-Er
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:23:33 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2d8129797fcso80932631fa.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 10:23:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712683410; x=1713288210; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LBzddX7Em7kinVA6DEHn/HF9siAcyzpdmt+TEBKRpr0=;
- b=lTycx5JvgfYY4iCVvtFWNBDI/TGOzDH0bwQPYhNGCNirkG9+BRUai7GnXQHxh5ByMG
- TpbMdmkBFbrTJ82f1h82Phod3dF0XPykGxLF3KB9XXbdjUBUz7dTm3PQLds6ofoJ1ZgQ
- eVJXLjiqVchRvnVTJJqFksMMxUJxIwNgla+F8qioUxv7yKusUc1N3P+sYakY6+eVyIzU
- 2oFXKKR3VBZ2C/NXqKFMNe1+MVmRyD9zNaWKWrMp6wVm2Csr22WVFKTDDJ07Ui+zP5VU
- hCkREht1/AN0nzCZROYS0kkTXLZGb73jAQaLTuToRytC1ZVzDM8gs5X74CDCJJfn4522
- c8Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712683410; x=1713288210;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LBzddX7Em7kinVA6DEHn/HF9siAcyzpdmt+TEBKRpr0=;
- b=CrX+wQ5wmGiEVdcPj4j8ytOEm6A/9HjbPjznyhaJt8XVHL/6QGf2uVGdZfPIchkfY4
- Sjtgpnx+bJ8oYB+fo5ZQ6/j/FeC05QnqSoDyTS5mcMLg5L2wfapdd44g1Ityb7DUQ06b
- y66gfH3Fi1g16241ALroIrBoX1KtfNfLfd2pabtViT1JWykvmJfBSrzujheLgxz7PBtb
- 0eq6NGNcKGi5i6ZslByV+4pPO4aqmVwlNWzduFbtwIhRUhYMOzWpFnfTTVPjgt72fqOY
- zLiRA/lonkjdthxdH0Hy9RNpQNPUnGcozFu1jmyJr1y5NDtXNJC3wgHGqOu3bdIIlRyK
- iBEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/zTxAdgpsmRmSX4uO/qmbCEd+j90fhdkyQbTuxbl7gVc5DL+MKH4Rpu5G/qqqFFjtSaWbV3ANmnnGIZXXwiwIJJ+mMcA=
-X-Gm-Message-State: AOJu0YygfOPiORfyuOblawUh8uOAjOqabggeK0fEe5g3MP68tbSrGEK1
- Yznm9g0sUzqzMLZf8sXYWNT291rnSF5wCzsP1Oxp+vKkKa5iWTRlbzji/mOfwp8=
-X-Google-Smtp-Source: AGHT+IE42nAZXrOqK7nnoyZV3JGtvKimKpRKKs2deAkX1DP8i1NRnXXQ1gMP4m3NTVTZoINQyH7zhw==
-X-Received: by 2002:a2e:978d:0:b0:2d8:57a4:968d with SMTP id
- y13-20020a2e978d000000b002d857a4968dmr319681lji.12.1712683410022; 
- Tue, 09 Apr 2024 10:23:30 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.160.134])
- by smtp.gmail.com with ESMTPSA id
- h6-20020a05600c350600b00416645e7e47sm9396068wmq.13.2024.04.09.10.23.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 10:23:29 -0700 (PDT)
-Message-ID: <37129ec0-3cec-4fda-8ae8-f26e3312affc@linaro.org>
-Date: Tue, 9 Apr 2024 19:23:27 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ruFHW-0000SZ-Sn; Tue, 09 Apr 2024 13:29:14 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ruFHV-00087n-03; Tue, 09 Apr 2024 13:29:14 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 877005D382;
+ Tue,  9 Apr 2024 20:31:05 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E4A72AF822;
+ Tue,  9 Apr 2024 20:29:07 +0300 (MSK)
+Message-ID: <5403a58d-8364-4418-995f-1feaac327884@tls.msk.ru>
+Date: Tue, 9 Apr 2024 20:29:07 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 03/19] target/i386: remove mask from CCPrepare
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-4-pbonzini@redhat.com>
+Subject: Re: [PATCH] block/virtio-blk: Fix memory leak from
+ virtio_blk_zone_report
+To: Zheyu Ma <zheyuma97@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+References: <20240404120040.1951466-1-zheyuma97@gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240409164323.776660-4-pbonzini@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240404120040.1951466-1-zheyuma97@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,16 +86,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/24 18:43, Paolo Bonzini wrote:
-> With the introduction of TSTEQ and TSTNE the .mask field is always -1,
-> so remove all the now-unnecessary code.
+04.04.2024 15:00, Zheyu Ma wrote:
+> This modification ensures that in scenarios where the buffer size is
+> insufficient for a zone report, the function will now properly set an
+> error status and proceed to a cleanup label, instead of merely
+> returning.
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> The following ASAN log reveals it:
+> 
+> ==1767400==ERROR: LeakSanitizer: detected memory leaks
+> Direct leak of 312 byte(s) in 1 object(s) allocated from:
+>      #0 0x64ac7b3280cd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
+>      #1 0x735b02fb9738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
+>      #2 0x64ac7d23be96 in virtqueue_split_pop hw/virtio/virtio.c:1612:12
+>      #3 0x64ac7d23728a in virtqueue_pop hw/virtio/virtio.c:1783:16
+>      #4 0x64ac7cfcaacd in virtio_blk_get_request hw/block/virtio-blk.c:228:27
+>      #5 0x64ac7cfca7c7 in virtio_blk_handle_vq hw/block/virtio-blk.c:1123:23
+>      #6 0x64ac7cfecb95 in virtio_blk_handle_output hw/block/virtio-blk.c:1157:5
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 > ---
->   target/i386/tcg/translate.c | 81 +++++++++++++------------------------
->   1 file changed, 27 insertions(+), 54 deletions(-)
+>   hw/block/virtio-blk.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> index 92de315f17..bb86e65f65 100644
+> --- a/hw/block/virtio-blk.c
+> +++ b/hw/block/virtio-blk.c
+> @@ -768,7 +768,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
+>               sizeof(struct virtio_blk_zone_report) +
+>               sizeof(struct virtio_blk_zone_descriptor)) {
+>           virtio_error(vdev, "in buffer too small for zone report");
+> -        return;
+> +        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
+> +        goto out;
+>       }
+>   
+>       /* start byte offset of the zone report */
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Is this a -stable material, or is it not worth picking up for older release(s)?
 
+Thanks,
+
+/mjt
 
