@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E347CD128A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EDFCC67861
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Apr 2024 17:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruF9G-0005ug-QV; Tue, 09 Apr 2024 13:20:42 -0400
+	id 1ruFCG-0006uC-OU; Tue, 09 Apr 2024 13:23:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruF9F-0005uT-5u
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:20:41 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruFC2-0006tU-1d
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:23:35 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruF9D-00073e-Kd
- for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:20:40 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-416b66163a9so6567205e9.2
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 10:20:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruFC0-0007O1-Er
+ for qemu-devel@nongnu.org; Tue, 09 Apr 2024 13:23:33 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2d8129797fcso80932631fa.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 10:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712683238; x=1713288038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712683410; x=1713288210; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7upzKhctXTHB+JezNvrEEB+2BZRWcLbA9Hxk6neYrCU=;
- b=upq4OEcZWbsbwcQ3fZXlNikRYWFKRG2TukPKMEm/x+blRc+jiKocwGqGjBdy5e6G0c
- fcTMbAJGYvPbPB46rM/8wCxxjTv/PjgKVbDuOzEuayqeJlBSQDTJ//69yHRrBSyflDuv
- IwB/ddcehD6nhGG02tSg/X2ipgvZ2fYRMf1OU90Ei/9sOETw2Y2t20hIqjgr1XE5+eBx
- 0n5Q5Or+HmcDjnONQMCTrlydrt3zUGGIOmzgazqkl7V6u/kL4P/Atz+YlFBoEtcRdHn7
- l0CRESZQK/sw8DXYgbgv7qqy0FgyL4CyO7YBtpek6CmpAoUF0Sw1yn0R37lJVhM/zCDY
- 5C1w==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LBzddX7Em7kinVA6DEHn/HF9siAcyzpdmt+TEBKRpr0=;
+ b=lTycx5JvgfYY4iCVvtFWNBDI/TGOzDH0bwQPYhNGCNirkG9+BRUai7GnXQHxh5ByMG
+ TpbMdmkBFbrTJ82f1h82Phod3dF0XPykGxLF3KB9XXbdjUBUz7dTm3PQLds6ofoJ1ZgQ
+ eVJXLjiqVchRvnVTJJqFksMMxUJxIwNgla+F8qioUxv7yKusUc1N3P+sYakY6+eVyIzU
+ 2oFXKKR3VBZ2C/NXqKFMNe1+MVmRyD9zNaWKWrMp6wVm2Csr22WVFKTDDJ07Ui+zP5VU
+ hCkREht1/AN0nzCZROYS0kkTXLZGb73jAQaLTuToRytC1ZVzDM8gs5X74CDCJJfn4522
+ c8Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712683238; x=1713288038;
+ d=1e100.net; s=20230601; t=1712683410; x=1713288210;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7upzKhctXTHB+JezNvrEEB+2BZRWcLbA9Hxk6neYrCU=;
- b=IU6yM4eLZpsDEMPXRl9He1e5LjheH6+MH+Vg9uy31JR0Dg9R3LWi5Tczk+rkR/Ajvy
- nAMKxeyjctfdnXHUWLDgIQoRTTfXbJd2HZMjZ7mYqBZgTUcZ+q1PSAc5DkYG6uSTUWgr
- efZXkcR1F1oMhF6KTi8uj7bKfs+MRr7PMk7yarHHnCWL82OePJU6kmnnsRbo9GO+inP9
- 0nLcf+R+R+pJoWuUxINBudQUD65NfnFLlYd96mWeTerHXWcS8Bh6MsI89jrVaPTBHw//
- X5zNlKGPgwofrN058Z2zM0oOgQx7macJ+8TqTnsUgBzIDw41okUJHZBPdYwTx0K0Qhkf
- b0KQ==
+ bh=LBzddX7Em7kinVA6DEHn/HF9siAcyzpdmt+TEBKRpr0=;
+ b=CrX+wQ5wmGiEVdcPj4j8ytOEm6A/9HjbPjznyhaJt8XVHL/6QGf2uVGdZfPIchkfY4
+ Sjtgpnx+bJ8oYB+fo5ZQ6/j/FeC05QnqSoDyTS5mcMLg5L2wfapdd44g1Ityb7DUQ06b
+ y66gfH3Fi1g16241ALroIrBoX1KtfNfLfd2pabtViT1JWykvmJfBSrzujheLgxz7PBtb
+ 0eq6NGNcKGi5i6ZslByV+4pPO4aqmVwlNWzduFbtwIhRUhYMOzWpFnfTTVPjgt72fqOY
+ zLiRA/lonkjdthxdH0Hy9RNpQNPUnGcozFu1jmyJr1y5NDtXNJC3wgHGqOu3bdIIlRyK
+ iBEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUwhI8hFSUfTbN21fpnu9Yk2ePgWZS6J9ZFJHfXFpM+mSjUDiVdxvCUPa4DbtoBPUio0fXTYKhcpsl7a0//MbwqE2Kx3E=
-X-Gm-Message-State: AOJu0YxYVpfBmNMvXuDtoHFxIjHrQeITkAs6dG4plDwnbGjEcdscvxvf
- S0rzzayH8My6Y8E+YRtEencQQC7Q+izVpw4Iw6CITuPA5QYPEDQwmP4VFVjhaEc=
-X-Google-Smtp-Source: AGHT+IEoc0jly4dgSxE5syp4xtuG+LSngxikU0Y+j+d73nGZ0mEsXLPuWktELbfH+ec5Hze1g4bsww==
-X-Received: by 2002:a05:600c:154b:b0:416:4641:5947 with SMTP id
- f11-20020a05600c154b00b0041646415947mr343827wmg.34.1712683237683; 
- Tue, 09 Apr 2024 10:20:37 -0700 (PDT)
+ AJvYcCW/zTxAdgpsmRmSX4uO/qmbCEd+j90fhdkyQbTuxbl7gVc5DL+MKH4Rpu5G/qqqFFjtSaWbV3ANmnnGIZXXwiwIJJ+mMcA=
+X-Gm-Message-State: AOJu0YygfOPiORfyuOblawUh8uOAjOqabggeK0fEe5g3MP68tbSrGEK1
+ Yznm9g0sUzqzMLZf8sXYWNT291rnSF5wCzsP1Oxp+vKkKa5iWTRlbzji/mOfwp8=
+X-Google-Smtp-Source: AGHT+IE42nAZXrOqK7nnoyZV3JGtvKimKpRKKs2deAkX1DP8i1NRnXXQ1gMP4m3NTVTZoINQyH7zhw==
+X-Received: by 2002:a2e:978d:0:b0:2d8:57a4:968d with SMTP id
+ y13-20020a2e978d000000b002d857a4968dmr319681lji.12.1712683410022; 
+ Tue, 09 Apr 2024 10:23:30 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.160.134])
  by smtp.gmail.com with ESMTPSA id
- u2-20020a05600c4d0200b0041668053ca9sm1996829wmp.0.2024.04.09.10.20.36
+ h6-20020a05600c350600b00416645e7e47sm9396068wmq.13.2024.04.09.10.23.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 10:20:37 -0700 (PDT)
-Message-ID: <0f4affa2-9ae3-4673-8542-ae42c1cb2218@linaro.org>
-Date: Tue, 9 Apr 2024 19:20:35 +0200
+ Tue, 09 Apr 2024 10:23:29 -0700 (PDT)
+Message-ID: <37129ec0-3cec-4fda-8ae8-f26e3312affc@linaro.org>
+Date: Tue, 9 Apr 2024 19:23:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 17/19] target/i386: decode x87 instructions in a
- separate function
+Subject: Re: [PATCH for-9.1 03/19] target/i386: remove mask from CCPrepare
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
 References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-18-pbonzini@redhat.com>
+ <20240409164323.776660-4-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240409164323.776660-18-pbonzini@redhat.com>
+In-Reply-To: <20240409164323.776660-4-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,18 +97,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/4/24 18:43, Paolo Bonzini wrote:
-> These are unlikely to be converted to the table-based decoding
-> soon (perhaps there could be generic ESC decoding in decode-new.c.inc
-> for the Mod/RM byte, but not operand decoding), so keep them separate
-> from the remaining legacy-decoded instructions.
+> With the introduction of TSTEQ and TSTNE the .mask field is always -1,
+> so remove all the now-unnecessary code.
 > 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 1120 ++++++++++++++++++-----------------
->   1 file changed, 566 insertions(+), 554 deletions(-)
-
-Reviewed with 'git-diff --color-moved=dimmed-zebra
---color-moved-ws=allow-indentation-change'.
+>   target/i386/tcg/translate.c | 81 +++++++++++++------------------------
+>   1 file changed, 27 insertions(+), 54 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
