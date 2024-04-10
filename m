@@ -4,86 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60C3CD1297
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5648DCD11C2
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQoz-0007AN-LH; Wed, 10 Apr 2024 01:48:33 -0400
+	id 1ruQoG-0004CO-DU; Wed, 10 Apr 2024 01:47:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ruQox-00074e-HY
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 01:48:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ruQoD-0003t6-OQ; Wed, 10 Apr 2024 01:47:45 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ruQow-0002Dv-2W
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 01:48:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712728109;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Aqm8BRHEYAMlTASdrlz3TRv/0AL45a291pR1V6IyaxE=;
- b=Ylyg4l5xkNa1I8Cqjnp2lgRv2ClJzs6Kb88kaFEBH2PaHdxR+evIhYlv8lJqNCg9qYOCK5
- IkRw2EPc6szvQqw0D145FmLb+UPGAlFBA8+Q3mQb+HDtUmFdMXWxQ5XDmbK06xuNCusnbv
- e4SnsfdWRosnhBWcBiho7j/yA2j/ElE=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-_iuUDXA0N8qm6ry8aqFBXg-1; Wed, 10 Apr 2024 01:48:25 -0400
-X-MC-Unique: _iuUDXA0N8qm6ry8aqFBXg-1
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-5d5a080baf1so4675668a12.1
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 22:48:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712728105; x=1713332905;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Aqm8BRHEYAMlTASdrlz3TRv/0AL45a291pR1V6IyaxE=;
- b=kozfcZSwgiRQ96it+sFMzeGIornm9E15G5E0yYwZXs4fbxBouIy0pe3AKniNx+shWU
- Z4tUJ/4XoSKziPoZtHJD2t+aeZBLxCXQuqcNkpao6NnG6XdcQZXzBw/27BUgMp9ZT0vq
- ZYEkPNsSfUXxhzZVzeThQcA18wNT9XdgkOdrYtBcBzvkKjy1dANrwBR68f3yvT1ZlyGu
- oP1DxGoJ9wWUxeZ4gOYrSJIIkaFTIIhhlk+kUzI4rUudwdp+vEDS/8Zb39mzDu1Fwu9C
- pfpjlmMQ1KUzDG5YF02BbkzrpLiCxHSmgw7YauhgfVAqdCqq0EX2xY2YaERpN3jFKB3Z
- 6nLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwn2GbnbsV29WlRbzOHzNLzP3BKjlXEQ7XsYOMpn6cMFfqzoStS51nVt6pvLcq0foVA/0pOPesyr37AnJlRCKKiiIxyro=
-X-Gm-Message-State: AOJu0Yxw1rWCKWotXDtBNC7d9H5xJA9cFoPb9byQDcFe0zZGlUl82Q+Q
- pEGnws3FOSZZcU8xrSXFV5zytBzeiQzwvAXHRlqO2a2XNnlkshwo66r5QC9XPelxRQmdIRUd4sT
- tJ7R2z0Lsil0KK1NgsdxNFg3IMtwiD4INAbjO719ew5doqsSEXO3y66Zn8PH4h5pigJ1m3o+9G2
- zD6nlc2lLBhiVLjGe6/IVhucRcmw4=
-X-Received: by 2002:a05:6a21:880d:b0:1a3:e2ed:62af with SMTP id
- ta13-20020a056a21880d00b001a3e2ed62afmr2109645pzc.34.1712728104509; 
- Tue, 09 Apr 2024 22:48:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEBlix2qcjpgcyMu2GmAHmxEBecDuYWClnuQ1oSts6LQAsQP9jUJ3VdmRV4L7pOk/OOnO6UyNsKaM0t43aH3M=
-X-Received: by 2002:a05:6a21:880d:b0:1a3:e2ed:62af with SMTP id
- ta13-20020a056a21880d00b001a3e2ed62afmr2109632pzc.34.1712728104211; Tue, 09
- Apr 2024 22:48:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ruQoB-00023D-OL; Wed, 10 Apr 2024 01:47:45 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 13E015D4FC;
+ Wed, 10 Apr 2024 08:46:17 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id CD2CDB0163;
+ Wed, 10 Apr 2024 08:44:18 +0300 (MSK)
+Received: (nullmailer pid 4182111 invoked by uid 1000);
+ Wed, 10 Apr 2024 05:44:16 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 36/41] tcg/optimize: Fix sign_mask for logical
+ right-shift
+Date: Wed, 10 Apr 2024 08:43:57 +0300
+Message-Id: <20240410054416.4181891-36-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
+References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 MIME-Version: 1.0
-References: <20240410052926.417674-1-lulu@redhat.com>
- <20240410052926.417674-2-lulu@redhat.com>
-In-Reply-To: <20240410052926.417674-2-lulu@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 10 Apr 2024 13:48:13 +0800
-Message-ID: <CACGkMEunM_JPGg82kN+SvFVeNO4jtf-PRfkEjoNkCYwxy204Mg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] virtio-pci: Fix the crash that the vector was used
- after released.
-To: Cindy Lu <lulu@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,21 +63,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10, 2024 at 1:29=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
->
-> When the guest triggers vhost_stop and then virtio_reset, the vector will=
- the
-> IRQFD for this vector will be released and change to VIRTIO_NO_VECTOR.
-> After that, the guest called vhost_net_start,  (at this time, the configu=
-re
-> vector is still VIRTIO_NO_VECTOR),  vector 0 still was not "init".
-> The guest system continued to boot, set the vector back to 0, and then me=
-t the crash.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Btw, the description of the cover letter seems to be better, how about
-just using that (so there won't be a cover letter since this series
-just have 1 patch)?
+The 'sign' computation is attempting to locate the sign bit that has
+been repeated, so that we can test if that bit is known zero.  That
+computation can be zero if there are no known sign repetitions.
 
-Thanks
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2248
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 2911e9b95f3bb03783ae5ca3e2494dc3b44a9161)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: trivial context fixup in tests/tcg/aarch64/Makefile.target)
+
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index ae081ab29c..b6f6436c74 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1907,7 +1907,7 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+          * will not reduced the number of input sign repetitions.
+          */
+         sign = (s_mask & -s_mask) >> 1;
+-        if (!(z_mask & sign)) {
++        if (sign && !(z_mask & sign)) {
+             ctx->s_mask = s_mask;
+         }
+         break;
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 5e4ea7c998..474f61bc30 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -10,6 +10,7 @@ VPATH 		+= $(AARCH64_SRC)
+ 
+ # Base architecture tests
+ AARCH64_TESTS=fcvt pcalign-a64
++AARCH64_TESTS += test-2248
+ 
+ fcvt: LDFLAGS+=-lm
+ 
+diff --git a/tests/tcg/aarch64/test-2248.c b/tests/tcg/aarch64/test-2248.c
+new file mode 100644
+index 0000000000..aac2e17836
+--- /dev/null
++++ b/tests/tcg/aarch64/test-2248.c
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* See https://gitlab.com/qemu-project/qemu/-/issues/2248 */
++
++#include <assert.h>
++
++__attribute__((noinline))
++long test(long x, long y, long sh)
++{
++    long r;
++    asm("cmp   %1, %2\n\t"
++        "cset  x12, lt\n\t"
++        "and   w11, w12, #0xff\n\t"
++        "cmp   w11, #0\n\t"
++        "csetm x14, ne\n\t"
++        "lsr   x13, x14, %3\n\t"
++        "sxtb  %0, w13"
++        : "=r"(r)
++        : "r"(x), "r"(y), "r"(sh)
++        : "x11", "x12", "x13", "x14");
++    return r;
++}
++
++int main()
++{
++    long r = test(0, 1, 2);
++    assert(r == -1);
++    return 0;
++}
+-- 
+2.39.2
 
 
