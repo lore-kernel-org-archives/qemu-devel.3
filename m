@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C929CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A2ADCD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:30:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSJO-000083-7s; Wed, 10 Apr 2024 03:24:04 -0400
+	id 1ruSOp-00082Y-Rf; Wed, 10 Apr 2024 03:29:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSJA-0008Lg-ME; Wed, 10 Apr 2024 03:23:48 -0400
+ id 1ruSOT-0007Q3-Nl; Wed, 10 Apr 2024 03:29:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSJ9-0003x3-3U; Wed, 10 Apr 2024 03:23:48 -0400
+ id 1ruSOR-0004zx-Gn; Wed, 10 Apr 2024 03:29:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 457605D67C;
- Wed, 10 Apr 2024 10:25:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 29BD25D6B0;
+ Wed, 10 Apr 2024 10:25:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id DCF3EB02BD;
- Wed, 10 Apr 2024 10:23:04 +0300 (MSK)
-Received: (nullmailer pid 4191684 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id C0EB5B02F0;
+ Wed, 10 Apr 2024 10:23:08 +0300 (MSK)
+Received: (nullmailer pid 4191842 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yu Zhang <yu.zhang@ionos.com>,
- Li Zhijian <lizhijian@fujitsu.com>, Peter Xu <peterx@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 13/87] migration/rdma: Fix a memory issue for migration
-Date: Wed, 10 Apr 2024 10:21:46 +0300
-Message-Id: <20240410072303.4191455-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 64/87] target/riscv/vector_helper.c: fix 'vmvr_v'
+ memcpy endianess
+Date: Wed, 10 Apr 2024 10:22:37 +0300
+Message-Id: <20240410072303.4191455-64-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -61,40 +63,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yu Zhang <yu.zhang@ionos.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-In commit 3fa9642ff7 change was made to convert the RDMA backend to
-accept MigrateAddress struct. However, the assignment of "host" leads
-to data corruption on the target host and the failure of migration.
+vmvr_v isn't handling the case where the host might be big endian and
+the bytes to be copied aren't sequential.
 
-    isock->host = rdma->host;
-
-By allocating the memory explicitly for it with g_strdup_printf(), the
-issue is fixed and the migration doesn't fail any more.
-
-Fixes: 3fa9642ff7 ("migration: convert rdma backend to accept MigrateAddress")
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Cc: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://lore.kernel.org/r/CAHEcVy4L_D6tuhJ8h=xLR4WaPaprJE3nnxZAEyUnoTrxQ6CF5w@mail.gmail.com
-Signed-off-by: Yu Zhang <yu.zhang@ionos.com>
-[peterx: use g_strdup() instead of g_strdup_printf(), per Zhijian]
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 69f7b00d057f8832a841a53d5ee31eb303157398)
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240314175704.478276-4-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 768e7b329c0be22035da077fe76221dd0a47103b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 4141c0bd25..143008a28a 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -3357,7 +3357,7 @@ static int qemu_rdma_accept(RDMAContext *rdma)
-         goto err_rdma_dest_wait;
-     }
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 6215a0bc5e..d5a98acce0 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -5064,9 +5064,17 @@ void HELPER(vmvr_v)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
+     uint32_t startb = env->vstart * sewb;
+     uint32_t i = startb;
  
--    isock->host = rdma->host;
-+    isock->host = g_strdup(rdma->host);
-     isock->port = g_strdup_printf("%d", rdma->port);
++    if (HOST_BIG_ENDIAN && i % 8 != 0) {
++        uint32_t j = ROUND_UP(i, 8);
++        memcpy((uint8_t *)vd + H1(j - 1),
++               (uint8_t *)vs2 + H1(j - 1),
++               j - i);
++        i = j;
++    }
++
+     memcpy((uint8_t *)vd + H1(i),
+            (uint8_t *)vs2 + H1(i),
+-           maxsz - startb);
++           maxsz - i);
  
-     /*
+     env->vstart = 0;
+ }
 -- 
 2.39.2
 
