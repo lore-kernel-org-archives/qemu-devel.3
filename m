@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B267CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3511CD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQmc-0005jK-GG; Wed, 10 Apr 2024 01:46:07 -0400
+	id 1ruQoB-0003P0-2H; Wed, 10 Apr 2024 01:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQlv-00053y-Cl; Wed, 10 Apr 2024 01:45:24 -0400
+ id 1ruQn7-0007JS-1U; Wed, 10 Apr 2024 01:46:37 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQlt-0001hI-PT; Wed, 10 Apr 2024 01:45:23 -0400
+ id 1ruQn4-0001tj-TH; Wed, 10 Apr 2024 01:46:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D3225D4E7;
- Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6CE945D4F3;
+ Wed, 10 Apr 2024 08:46:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 63452B014E;
- Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
-Received: (nullmailer pid 4182046 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 32AF3B015A;
+ Wed, 10 Apr 2024 08:44:18 +0300 (MSK)
+Received: (nullmailer pid 4182083 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 15/41] hw/nvme: cleanup error reporting in
- nvme_init_pci()
-Date: Wed, 10 Apr 2024 08:43:36 +0300
-Message-Id: <20240410054416.4181891-15-mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 27/41] tests: Raise timeouts for bufferiszero and
+ crypto-tlscredsx509
+Date: Wed, 10 Apr 2024 08:43:48 +0300
+Message-Id: <20240410054416.4181891-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -63,81 +63,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Replace the local Error variable with errp and ERRP_GUARD() and change
-the return value to bool.
+On our gcov CI job, the bufferiszero and crypto-tlscredsx509
+tests time out occasionally, making the job flaky. Double the
+timeout on these two tests.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 973f76cf7743545a5d8a0a8bfdfe2cd02aa3e238)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2221
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-id: 20240312110815.116992-1-peter.maydell@linaro.org
+(cherry picked from commit 55f7c6a5f2bd82e1d2d0eac6eee0185ce0451815)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: needed for v8.2.0-2319-gfa905f65c5
- "hw/nvme: add machine compatibility parameter to enable msix exclusive bar")
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 75180823a6..f2b308f5fa 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7288,15 +7288,14 @@ static int nvme_add_pm_capability(PCIDevice *pci_dev, uint8_t offset)
-     return 0;
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 60eb89ea98..ca44f45232 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -167,9 +167,10 @@ test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
+ 
+ slow_tests = {
+   'test-aio-multithread' : 120,
++  'test-bufferiszero': 60,
+   'test-crypto-block' : 300,
+-  'test-crypto-tlscredsx509': 45,
+-  'test-crypto-tlssession': 45,
++  'test-crypto-tlscredsx509': 90,
++  'test-crypto-tlssession': 90,
+   'test-replication': 60,
  }
  
--static int nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-+static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
- {
-+    ERRP_GUARD();
-     uint8_t *pci_conf = pci_dev->config;
-     uint64_t bar_size;
-     unsigned msix_table_offset, msix_pba_offset;
-     int ret;
- 
--    Error *err = NULL;
--
-     pci_conf[PCI_INTERRUPT_PIN] = 1;
-     pci_config_set_prog_interface(pci_conf, 0x2);
- 
-@@ -7333,14 +7332,14 @@ static int nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     }
-     ret = msix_init(pci_dev, n->params.msix_qsize,
-                     &n->bar0, 0, msix_table_offset,
--                    &n->bar0, 0, msix_pba_offset, 0, &err);
--    if (ret < 0) {
--        if (ret == -ENOTSUP) {
--            warn_report_err(err);
--        } else {
--            error_propagate(errp, err);
--            return ret;
--        }
-+                    &n->bar0, 0, msix_pba_offset, 0, errp);
-+    if (ret == -ENOTSUP) {
-+        /* report that msix is not supported, but do not error out */
-+        warn_report_err(*errp);
-+        *errp = NULL;
-+    } else if (ret < 0) {
-+        /* propagate error to caller */
-+        return false;
-     }
- 
-     nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
-@@ -7357,7 +7356,7 @@ static int nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-         nvme_init_sriov(n, pci_dev, 0x120);
-     }
- 
--    return 0;
-+    return true;
- }
- 
- static void nvme_init_subnqn(NvmeCtrl *n)
-@@ -7533,7 +7532,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-         return;
-     }
-     nvme_init_state(n);
--    if (nvme_init_pci(n, pci_dev, errp)) {
-+    if (!nvme_init_pci(n, pci_dev, errp)) {
-         return;
-     }
-     nvme_init_ctrl(n, pci_dev);
 -- 
 2.39.2
 
