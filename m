@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42BEFCD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB921CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQlC-0004ji-4u; Wed, 10 Apr 2024 01:44:38 -0400
+	id 1ruQmj-00060C-Br; Wed, 10 Apr 2024 01:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQl7-0004iK-7A; Wed, 10 Apr 2024 01:44:33 -0400
+ id 1ruQmS-0005Uu-TJ; Wed, 10 Apr 2024 01:46:02 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQl5-0001AS-Ge; Wed, 10 Apr 2024 01:44:32 -0400
+ id 1ruQmP-0001m9-2y; Wed, 10 Apr 2024 01:45:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A9E795D4DA;
- Wed, 10 Apr 2024 08:46:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E0ED65D4EB;
+ Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6E2C6B0141;
- Wed, 10 Apr 2024 08:44:16 +0300 (MSK)
-Received: (nullmailer pid 4182006 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id A27ADB0152;
+ Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
+Received: (nullmailer pid 4182058 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, David Parsons <dave@daveparsons.net>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Gal Hammer <gal.hammer@sap.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 02/41] ui/cocoa: Fix window clipping on macOS 14
-Date: Wed, 10 Apr 2024 08:43:23 +0300
-Message-Id: <20240410054416.4181891-2-mjt@tls.msk.ru>
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 19/41] pcie: Introduce pcie_sriov_num_vfs
+Date: Wed, 10 Apr 2024 08:43:40 +0300
+Message-Id: <20240410054416.4181891-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -63,48 +63,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Parsons <dave@daveparsons.net>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-macOS Sonoma changes the NSView.clipsToBounds to false by default
-where it was true in earlier version of macOS. This causes the window
-contents to be occluded by the frame at the top of the window. This
-fixes the issue by conditionally compiling the clipping on Sonoma to
-true. NSView only exposes the clipToBounds in macOS 14 and so has
-to be fixed via conditional compilation.
+igb can use this function to change its behavior depending on the
+number of virtual functions currently enabled.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
-Signed-off-by: David Parsons <dave@daveparsons.net>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20240224140620.39200-1-dave@daveparsons.net>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit f5af80271aad356233b2bea2369b3b2211fa395d)
+Signed-off-by: Gal Hammer <gal.hammer@sap.com>
+Signed-off-by: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 31180dbdca2859ae9841939f85158908453ea01d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: needed for v8.2.0-2290-g91bb64a8d2
+ "hw/nvme: Use pcie_sriov_num_vfs()" (CVE-2024-26328))
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 660d3e0935..c41689e951 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -53,6 +53,10 @@
- #define MAC_OS_X_VERSION_10_13 101300
- #endif
- 
-+#ifndef MAC_OS_VERSION_14_0
-+#define MAC_OS_VERSION_14_0 140000
-+#endif
-+
- /* 10.14 deprecates NSOnState and NSOffState in favor of
-  * NSControlStateValueOn/Off, which were introduced in 10.13.
-  * Define for older versions
-@@ -361,6 +365,9 @@ - (id)initWithFrame:(NSRect)frameRect
-         screen.width = frameRect.size.width;
-         screen.height = frameRect.size.height;
-         kbd = qkbd_state_init(dcl.con);
-+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
-+        [self setClipsToBounds:YES];
-+#endif
- 
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 61a4e06768..3703d250f0 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -299,3 +299,8 @@ PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
      }
-     return self;
+     return NULL;
+ }
++
++uint16_t pcie_sriov_num_vfs(PCIDevice *dev)
++{
++    return dev->exp.sriov_pf.num_vfs;
++}
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 80f5c84e75..072a583405 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -74,4 +74,7 @@ PCIDevice *pcie_sriov_get_pf(PCIDevice *dev);
+  */
+ PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n);
+ 
++/* Returns the current number of virtual functions. */
++uint16_t pcie_sriov_num_vfs(PCIDevice *dev);
++
+ #endif /* QEMU_PCIE_SRIOV_H */
 -- 
 2.39.2
 
