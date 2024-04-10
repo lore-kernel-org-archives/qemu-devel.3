@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B73CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE6DCD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSJw-0002bX-JN; Wed, 10 Apr 2024 03:24:38 -0400
+	id 1ruSJq-0002N4-LB; Wed, 10 Apr 2024 03:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSJn-0002NB-6V; Wed, 10 Apr 2024 03:24:28 -0400
+ id 1ruSJh-0001ZO-E2; Wed, 10 Apr 2024 03:24:21 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSJl-00045e-Hv; Wed, 10 Apr 2024 03:24:26 -0400
+ id 1ruSJf-0003y3-Ir; Wed, 10 Apr 2024 03:24:21 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C11885D682;
+ by isrv.corpit.ru (Postfix) with ESMTP id 907585D67F;
  Wed, 10 Apr 2024 10:25:03 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 66F85B02C3;
+ by tsrv.corpit.ru (Postfix) with SMTP id 34AA9B02C0;
  Wed, 10 Apr 2024 10:23:05 +0300 (MSK)
-Received: (nullmailer pid 4191702 invoked by uid 1000);
+Received: (nullmailer pid 4191693 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Minwoo Im <minwoo.im@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 19/87] hw/nvme: fix invalid check on mcl
-Date: Wed, 10 Apr 2024 10:21:52 +0300
-Message-Id: <20240410072303.4191455-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Nick Briggs <nicholas.h.briggs@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 16/87] Avoid unaligned fetch in ladr_match()
+Date: Wed, 10 Apr 2024 10:21:49 +0300
+Message-Id: <20240410072303.4191455-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -60,32 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Nick Briggs <nicholas.h.briggs@gmail.com>
 
-The number of logical blocks within a source range is converted into a
-1s based number at the time of parsing. However, when verifying the copy
-length we add one again, causing the check against MCL to fail in error.
+There is no guarantee that the PCNetState is allocated such that
+csr[8] is allocated on an 8-byte boundary.  Since not all hosts are
+capable of unaligned fetches the 16-bit elements need to be fetched
+individually to avoid a potential fault.  Closes issue #2143
 
-Cc: qemu-stable@nongnu.org
-Fixes: 381ab99d8587 ("hw/nvme: check maximum copy length (MCL) for COPY")
-Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 8c78015a55d84c016da6d5e41b6b5f618ecb25ab)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2143
+Signed-off-by: Nick Briggs <nicholas.h.briggs@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 6a5287ce80470bb8df95901d73ee779a64e70c3a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 94ef639457..abc0387f2c 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -2855,7 +2855,7 @@ static inline uint16_t nvme_check_copy_mcl(NvmeNamespace *ns,
-         uint32_t nlb;
-         nvme_copy_source_range_parse(iocb->ranges, idx, iocb->format, NULL,
-                                      &nlb, NULL, NULL, NULL);
--        copy_len += nlb + 1;
-+        copy_len += nlb;
-     }
- 
-     if (copy_len > ns->id_ns.mcl) {
+diff --git a/hw/net/pcnet.c b/hw/net/pcnet.c
+index a7e123e60d..7d574f487b 100644
+--- a/hw/net/pcnet.c
++++ b/hw/net/pcnet.c
+@@ -632,7 +632,7 @@ static inline int ladr_match(PCNetState *s, const uint8_t *buf, int size)
+ {
+     struct qemu_ether_header *hdr = (void *)buf;
+     if ((*(hdr->ether_dhost)&0x01) &&
+-        ((uint64_t *)&s->csr[8])[0] != 0LL) {
++        (s->csr[8] | s->csr[9] | s->csr[10] | s->csr[11]) != 0) {
+         uint8_t ladr[8] = {
+             s->csr[8] & 0xff, s->csr[8] >> 8,
+             s->csr[9] & 0xff, s->csr[9] >> 8,
 -- 
 2.39.2
 
