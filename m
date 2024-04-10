@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB387CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9530ECD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQol-00063o-E2; Wed, 10 Apr 2024 01:48:19 -0400
+	id 1ruQo8-0002tY-0p; Wed, 10 Apr 2024 01:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQoN-0004sO-7n; Wed, 10 Apr 2024 01:47:55 -0400
+ id 1ruQnj-0000fZ-Db; Wed, 10 Apr 2024 01:47:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQoL-000271-Lb; Wed, 10 Apr 2024 01:47:55 -0400
+ id 1ruQnZ-0001xp-Rs; Wed, 10 Apr 2024 01:47:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 414815D4FF;
- Wed, 10 Apr 2024 08:46:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B70295D4F7;
+ Wed, 10 Apr 2024 08:46:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 06E0FB0166;
- Wed, 10 Apr 2024 08:44:19 +0300 (MSK)
-Received: (nullmailer pid 4182120 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 794D1B015E;
+ Wed, 10 Apr 2024 08:44:18 +0300 (MSK)
+Received: (nullmailer pid 4182096 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 39/41] hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS
- if int group is disabled
-Date: Wed, 10 Apr 2024 08:44:00 +0300
-Message-Id: <20240410054416.4181891-39-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tao Su <tao1.su@linux.intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 31/41] target/i386: Revert monitor_puts() in
+ do_inject_x86_mce()
+Date: Wed, 10 Apr 2024 08:43:52 +0300
+Message-Id: <20240410054416.4181891-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -62,46 +62,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Tao Su <tao1.su@linux.intel.com>
 
-If the group of the highest priority pending interrupt is disabled
-via ICC_IGRPEN*, the ICC_HPPIR* registers should return
-INTID_SPURIOUS, not the interrupt ID.  (See the GIC architecture
-specification pseudocode functions ICC_HPPIR1_EL1[] and
-HighestPriorityPendingInterrupt().)
+monitor_puts() doesn't check the monitor pointer, but do_inject_x86_mce()
+may have a parameter with NULL monitor pointer. Revert monitor_puts() in
+do_inject_x86_mce() to fix, then the fact that we send the same message to
+monitor and log is again more obvious.
 
-Make HPPIR reads honour the group disable, the way we already do
-when determining whether to preempt in icc_hppi_can_preempt().
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240328153333.2522667-1-peter.maydell@linaro.org
-(cherry picked from commit 44e25fbc1900c99c91a44e532c5bd680bc403459)
+Fixes: bf0c50d4aa85 (monitor: expose monitor_puts to rest of code)
+Reviwed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+Message-ID: <20240320083640.523287-1-tao1.su@linux.intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 7fd226b04746f0be0b636de5097f1b42338951a0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index f71b3b07d8..ddfbc69d65 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1065,7 +1065,7 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
-      */
-     bool irq_is_secure;
- 
--    if (cs->hppi.prio == 0xff) {
-+    if (icc_no_enabled_hppi(cs)) {
-         return INTID_SPURIOUS;
-     }
- 
-@@ -1102,7 +1102,7 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
-      */
-     bool irq_is_secure;
- 
--    if (cs->hppi.prio == 0xff) {
-+    if (icc_no_enabled_hppi(cs)) {
-         return INTID_SPURIOUS;
-     }
- 
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 0ac2da066d..290d9d309c 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -427,7 +427,7 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+         if (need_reset) {
+             emit_guest_memory_failure(MEMORY_FAILURE_ACTION_RESET, ar,
+                                       recursive);
+-            monitor_puts(params->mon, msg);
++            monitor_printf(params->mon, "%s", msg);
+             qemu_log_mask(CPU_LOG_RESET, "%s\n", msg);
+             qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+             return;
 -- 
 2.39.2
 
