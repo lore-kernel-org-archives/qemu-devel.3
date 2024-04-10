@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5917CD128A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 12:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A01CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 12:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruXIw-0006dq-CO; Wed, 10 Apr 2024 08:43:54 -0400
+	id 1ruXSC-00027e-Eq; Wed, 10 Apr 2024 08:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruXIh-0006d7-S3
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 08:43:44 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruXIe-0007zP-60
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 08:43:39 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-56e6282dd72so4063570a12.3
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 05:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712753014; x=1713357814; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=silx6WvOZCCUkQd6NNOSEGukz1iuPqJ3bRG5dHWkQao=;
- b=epWXnhTKdaMB0ywr/7oe1XqfrD+HB2TTwF1+/Q0C0JkNBM7Y+70CjIgSUJGGDKjrv9
- xD/phULZbuJLCrDX7a8dTzHoTqu9fCXc9wZiQ26ePGBUXpMrdnQUwUDpheGMu6bYgFtC
- DtvouM5Jeqdi84d6eKlLv24IikJzr87DGZpDo0TNOEnNMCaRtbYzQAglVBR/RXA5W0TR
- esLpDSDNwfBjK44BfedCi+mDTnS9Z+nRVEdBVJ/dtqqi8WTP0t9D0f/6yTEpbse3pJuU
- W18bZYY5QjRXnYO/5E6ZweVmNQnnwbnMWnYT/nQdMT4r9/R4xAF+Lxp1oY4rZEiL25Mc
- 9SvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712753014; x=1713357814;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=silx6WvOZCCUkQd6NNOSEGukz1iuPqJ3bRG5dHWkQao=;
- b=S/tm6+R58qDNvt4fb6LRftAH7ShzVq6AxQKROzaImPnH08PxIMmqagvF82SVrzkNw9
- kiapc+PycUmEGoQWVv0ualIR7+hnu/13voBuj5BH9W7VHYV83bpG0nK4VrYnMLvD9bvO
- /pztBneKfbJAO+3fUF/E1bfftbW/BE/qFav0wozlAhoQltKE6k/ZuVOizF2tu267PZgl
- eEmkDyfmI2pwFLgU9IfJfSLD6Jv7O2xMVnIuEn3YTtwnglEfYsXWni5LuMheYVTUgUfq
- Udg1V9GrDp9N6fuNdwC2GZMp0rkCLm8iACZo0hiuHxDCuKQF91m0uu3CJPcfNyaHyNGe
- PcRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqMpUR0To0D77dR/V6wbz9+jaahIJcxu3CEHFqrFHOkQzWKYH8PQczverOAQZSwW8UuO7UL9clnmPiafan+Ubb4op9joE=
-X-Gm-Message-State: AOJu0YxvGWRWeodX6Tq7DdPlF94YTH6o0gsQNulMB76fDDgcVlPGl2VK
- TBG2bI2984qeBS5ErxUoT2BkrOZzi6jygmlgjWbGJRMTI37Y1eGsEzly5AgaA/wxgpkMLqciUoy
- TStwpXSCeoTaNjvuQdrko+pMLu45bXSrd2+c0J4Fr
-X-Google-Smtp-Source: AGHT+IHoJpfLg9UYg5CGJWy1UMpyuu4ud2j4nd2jP5XyU4ZaOEt3o/smjKQK9NGDvUmFDHs824ww6m+HmrzITmMlPHA=
-X-Received: by 2002:a50:cd13:0:b0:56e:2e2c:f5c5 with SMTP id
- z19-20020a50cd13000000b0056e2e2cf5c5mr1454055edi.37.1712753014425; Wed, 10
- Apr 2024 05:43:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1ruXS8-00026r-Al
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 08:53:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1ruXS5-00025u-6k
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 08:53:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712753600;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=caZM7rtRjsuS3iLa65dZktnUNXGk0M/o/y95auFUw/U=;
+ b=FH7YCVKi2sroOibzEy9LiSsS6yIE8IznN9o0fZyZZSvKBz0a0GpK6UBrKWlpoIZMS42QTA
+ Y946aOq+eRcFUrDn+onEpBHvsY8/2u73k/FgCEH+92FFUNCqao7P8yBUdDSMVVwpb4otja
+ IC3ZGj90Zfcif8PwWhC1e7gpUKNNqA4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-JPGQ7fxTOlOIYW10s78Czw-1; Wed,
+ 10 Apr 2024 08:53:16 -0400
+X-MC-Unique: JPGQ7fxTOlOIYW10s78Czw-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4977D3C100CC;
+ Wed, 10 Apr 2024 12:53:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.15])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id DF53C1C06667;
+ Wed, 10 Apr 2024 12:53:14 +0000 (UTC)
+Date: Wed, 10 Apr 2024 07:53:09 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Zhu Yangyang <zhuyangyang14@huawei.com>
+Subject: Re: [PATCH v5 2/2] nbd/server: Mark negotiation functions as
+ coroutine_fn
+Message-ID: <2mijqphs3shdkr3j24mlcisekpsookri4q6fah5fws6veiokvb@lt6yfouqspif>
+References: <20240408160214.1200629-4-eblake@redhat.com>
+ <20240408160214.1200629-6-eblake@redhat.com>
+ <f00ac999-fb9b-4429-b5b9-be27153f77a5@yandex-team.ru>
+ <eu34jjayqnpqsubkv4wpxogh6dwaok2t35udee4ojpvn5imcv3@n75m44kvv64u>
+ <67979e90-653b-410e-9ed4-02d37410dea1@yandex-team.ru>
 MIME-Version: 1.0
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <9kisd.h00guzdfowp4@linaro.org> <Zd-ClG4RSAzfli50@amd.com>
-In-Reply-To: <Zd-ClG4RSAzfli50@amd.com>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Wed, 10 Apr 2024 14:43:22 +0200
-Message-ID: <CAJy5ezq8Kv-PYqwx596CfW9iwd6hMVGYruTjbK-dFKDUbn78hg@mail.gmail.com>
-Subject: Re: [QEMU][PATCH v3 0/7] Xen: support grant mappings.
-To: Vikram Garhwal <vikram.garhwal@amd.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
- sstabellini@kernel.org, jgross@suse.com
-Content-Type: multipart/alternative; boundary="000000000000034dcf0615bd6307"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <67979e90-653b-410e-9ed4-02d37410dea1@yandex-team.ru>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,87 +85,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000034dcf0615bd6307
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, Apr 10, 2024 at 10:05:28AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > @@ -755,7 +764,8 @@ struct NBDTLSServerHandshakeData {
+> > > >        Coroutine *co;
+> > > >    };
+> > > > 
+> > > > -static void nbd_server_tls_handshake(QIOTask *task, void *opaque)
+> > > > +static coroutine_fn void
+> > > 
+> > > This is not, that's a callback for tls handshake, which is not coroutine context as I understand.
+> > 
+> > The call chain is:
+> > 
+> > nbd_negotiate() - coroutine_fn before this patch
+> >    nbd_negotiate_options() - marked coroutine_fn here
+> >      nbd_negotiate_handle_starttls() - marked coroutine_fn here
+> >        qio_channel_tls_handshake() - in io/channel-tls.c; not marked coroutine_fn, but
+> >                                      works both in or out of coroutine context
+> >          ...
+> >          nbd_server_tls_handshake() - renamed in 1/2 of this series
+> > 
+> > > without this hunk:
+> > 
+> > I can drop that particular marking.  There are cases where the
+> > callback is reached without having done the qemu_coroutine_yield() in
+> > nbd_negotiate_handle_starttls; but there are also cases where the IO
+> > took enough time that the coroutine yielded and it is that callback
+> > that reawakens it.
+> 
+> The key thing for me is that in this case (when coroutine yielded), nbd_server_tls_handshake() would finally be called from glib IO handler, set in
+> 
+>    qio_channel_tls_handshake()
+>       qio_channel_tls_handshake_task()
+>          qio_channel_add_watch_full()
+>             g_source_set_callback(source, (GSourceFunc)func, user_data, notify);   <<<
+> 
+> , which would definitely not be a coroutine context.
+> 
+> 
+> Do I understand correctly, that "coroutine_fn" means "only call from coroutine context"[1], or does it mean "could be called from coroutine context"[2]?
 
-On Wed, Feb 28, 2024 at 8:00=E2=80=AFPM Vikram Garhwal <vikram.garhwal@amd.=
-com>
-wrote:
+I'm always fuzzy on that distinction myself.  But reading the docs helps...
 
-> Hi Manos,
-> On Wed, Feb 28, 2024 at 03:27:12PM +0200, Manos Pitsidianakis wrote:
-> > Hello Vikram,
-> >
-> > Series doesn't apply on master. Can you rebase and also provide a
-> > base-commit with --base=3D<COMMIT_SHA> when you use git-format-patch? T=
-his
-> > will help git rebase if there are any conflicts found locally.
-> I rebased it with latest master and it works fine. Series is based on
-> following
-> commit: bfe8020c814a30479a4241aaa78b63960655962b.
->
-> For v4, I will send a version with base-commit id.
->
-> Can you please share what is base-commit id on your side?
->
-> Thanks!
-> >
-> > Thanks,
->
 
-Hi all,
+> 
+> The comment in osdep.h says:
+> 
+>  * Mark a function that executes in coroutine context                                                     |}
+>  *                                                                                                        |
+>  * Functions that execute in coroutine context cannot be called directly from                             |
+>  * normal functions. ...
+> 
+> So I assume, we mean [1].
 
-I'll send a v4 on behalf of Vikram.
+...[1] sounds more appropriate.  Adding the marker is more of a
+promise that "I've audited that this function does not block and is
+therefore safe for a function in coroutine context to use", but
+sometimes additionally implies "this function assumes a coroutine is
+present; if you are not in a coroutine, things might break".  But with
+a bit of thought, it is obvious that a coroutine can call functions
+that are not marked with coroutine_fn: any non-blocking syscall fits
+in this category (since we don't have control over system headers to
+add coroutine_fn annotations to those).  So on that grounds, it is
+okay for a function marked coroutine_fn to call another function not
+marked coroutine_fn - it just makes the auditing harder to ensure that
+you aren't violating your promise of no non-blocking calls.
 
-Stefano, I saw your comments here:
-https://marc.info/?l=3Dqemu-devel&m=3D169999555103080
-I've manage to loose the email so I can't reply but you indicated that
-you're OK with the current patch but perhaps would have preferred another
-approach.
-I like what Juergen did (so I RB tagged it) but if you feel strongly about
-finding another approach we can have a look.
+It's too close to 9.0-rc3 for my comfort to include this patch series.
+Even though this bug can cause wedged migrations, I'd feel more
+comfortable with preparing the pull request for this series (including
+your fix for dropping this one annotation) for 9.1 and for qemu-stable
+once the release is complete.
 
-Best regards,
-Edgar
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
---000000000000034dcf0615bd6307
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Wed, Feb 28, 2024 at 8:00=E2=80=AFPM V=
-ikram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd.com">vikram.garhwal@=
-amd.com</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">Hi Manos,<br>
-On Wed, Feb 28, 2024 at 03:27:12PM +0200, Manos Pitsidianakis wrote:<br>
-&gt; Hello Vikram,<br>
-&gt; <br>
-&gt; Series doesn&#39;t apply on master. Can you rebase and also provide a<=
-br>
-&gt; base-commit with --base=3D&lt;COMMIT_SHA&gt; when you use git-format-p=
-atch? This<br>
-&gt; will help git rebase if there are any conflicts found locally.<br>
-I rebased it with latest master and it works fine. Series is based on follo=
-wing<br>
-commit: bfe8020c814a30479a4241aaa78b63960655962b.<br>
-<br>
-For v4, I will send a version with base-commit id.<br>
-<br>
-Can you please share what is base-commit id on your side?<br>
-<br>
-Thanks!<br>
-&gt; <br>
-&gt; Thanks,<br></blockquote><div><br></div><div>Hi all,</div><div><br></di=
-v><div>I&#39;ll send a v4 on behalf of Vikram.</div><div><br></div><div>Ste=
-fano, I saw your comments here: <a href=3D"https://marc.info/?l=3Dqemu-deve=
-l&amp;m=3D169999555103080">https://marc.info/?l=3Dqemu-devel&amp;m=3D169999=
-555103080</a></div><div>I&#39;ve manage to loose the email so I can&#39;t r=
-eply but you indicated that you&#39;re OK with the current patch but perhap=
-s would have preferred=C2=A0another approach.</div><div>I like what Juergen=
- did (so I RB tagged it) but if you feel strongly about finding another app=
-roach we can have a look.</div><div><br></div><div>Best regards,</div><div>=
-Edgar</div><div><br></div><div><br></div><div>=C2=A0</div></div></div>
-
---000000000000034dcf0615bd6307--
 
