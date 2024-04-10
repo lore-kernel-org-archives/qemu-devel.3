@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80894CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E460CD129A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSJU-0000X7-53; Wed, 10 Apr 2024 03:24:08 -0400
+	id 1ruSK1-00038E-Tr; Wed, 10 Apr 2024 03:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSJG-00005c-Di; Wed, 10 Apr 2024 03:23:59 -0400
+ id 1ruSJk-00029f-W5; Wed, 10 Apr 2024 03:24:26 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSJD-0003xN-K8; Wed, 10 Apr 2024 03:23:54 -0400
+ id 1ruSJj-00044Z-0c; Wed, 10 Apr 2024 03:24:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 623255D67D;
+ by isrv.corpit.ru (Postfix) with ESMTP id B278C5D681;
  Wed, 10 Apr 2024 10:25:03 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id EE521B02BE;
- Wed, 10 Apr 2024 10:23:04 +0300 (MSK)
-Received: (nullmailer pid 4191687 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 57F20B02C2;
+ Wed, 10 Apr 2024 10:23:05 +0300 (MSK)
+Received: (nullmailer pid 4191699 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- akihiko.odaki@daynix.com, Jason Wang <jasowang@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 14/87] igb: fix link state on resume
-Date: Wed, 10 Apr 2024 10:21:47 +0300
-Message-Id: <20240410072303.4191455-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Minwoo Im <minwoo.im@samsung.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 18/87] hw/nvme: separate 'serial' property for VFs
+Date: Wed, 10 Apr 2024 10:21:51 +0300
+Message-Id: <20240410072303.4191455-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -61,152 +60,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Minwoo Im <minwoo.im@samsung.com>
 
-On resume igb_vm_state_change() always calls igb_autoneg_resume()
-that sets link_down to false, and thus activates the link even
-if we have disabled it.
+Currently, when a VF is created, it uses the 'params' object of the PF
+as it is. In other words, the 'params.serial' string memory area is also
+shared. In this situation, if the VF is removed from the system, the
+PF's 'params.serial' object is released with object_finalize() followed
+by object_property_del_all() which release the memory for 'serial'
+property. If that happens, the next VF created will inherit a serial
+from a corrupted memory area.
 
-The problem can be reproduced starting qemu in paused state (-S) and
-then set the link to down. When we resume the machine the link appears
-to be up.
+If this happens, an error will occur when comparing subsys->serial and
+n->params.serial in the nvme_subsys_register_ctrl() function.
 
-Reproducer:
-
-   # qemu-system-x86_64 ... -device igb,netdev=netdev0,id=net0 -S
-
-   {"execute": "qmp_capabilities" }
-   {"execute": "set_link", "arguments": {"name": "net0", "up": false}}
-   {"execute": "cont" }
-
-To fix the problem, merge the content of igb_vm_state_change()
-into igb_core_post_load() as e1000 does.
-
-Buglink: https://issues.redhat.com/browse/RHEL-21867
-Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
-Cc: akihiko.odaki@daynix.com
-Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 65c2ab808571dcd9322020690a63df63281a67f0)
+Cc: qemu-stable@nongnu.org
+Fixes: 44c2c09488db ("hw/nvme: Add support for SR-IOV")
+Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 4f0a4a3d5854824e5c5eccf353d4a1f4f749a29d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index 2a7a11aa9e..bcd5f6cd9c 100644
---- a/hw/net/igb_core.c
-+++ b/hw/net/igb_core.c
-@@ -160,14 +160,6 @@ igb_intmgr_timer_resume(IGBIntrDelayTimer *timer)
-     }
- }
- 
--static void
--igb_intmgr_timer_pause(IGBIntrDelayTimer *timer)
--{
--    if (timer->running) {
--        timer_del(timer->timer);
--    }
--}
--
- static void
- igb_intrmgr_on_msix_throttling_timer(void *opaque)
- {
-@@ -212,16 +204,6 @@ igb_intrmgr_resume(IGBCore *core)
-     }
- }
- 
--static void
--igb_intrmgr_pause(IGBCore *core)
--{
--    int i;
--
--    for (i = 0; i < IGB_INTR_NUM; i++) {
--        igb_intmgr_timer_pause(&core->eitr[i]);
--    }
--}
--
- static void
- igb_intrmgr_reset(IGBCore *core)
- {
-@@ -4290,12 +4272,6 @@ igb_core_read(IGBCore *core, hwaddr addr, unsigned size)
-     return 0;
- }
- 
--static inline void
--igb_autoneg_pause(IGBCore *core)
--{
--    timer_del(core->autoneg_timer);
--}
--
- static void
- igb_autoneg_resume(IGBCore *core)
- {
-@@ -4307,22 +4283,6 @@ igb_autoneg_resume(IGBCore *core)
-     }
- }
- 
--static void
--igb_vm_state_change(void *opaque, bool running, RunState state)
--{
--    IGBCore *core = opaque;
--
--    if (running) {
--        trace_e1000e_vm_state_running();
--        igb_intrmgr_resume(core);
--        igb_autoneg_resume(core);
--    } else {
--        trace_e1000e_vm_state_stopped();
--        igb_autoneg_pause(core);
--        igb_intrmgr_pause(core);
--    }
--}
--
- void
- igb_core_pci_realize(IGBCore        *core,
-                      const uint16_t *eeprom_templ,
-@@ -4335,8 +4295,6 @@ igb_core_pci_realize(IGBCore        *core,
-                                        igb_autoneg_timer, core);
-     igb_intrmgr_pci_realize(core);
- 
--    core->vmstate = qemu_add_vm_change_state_handler(igb_vm_state_change, core);
--
-     for (i = 0; i < IGB_NUM_QUEUES; i++) {
-         net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
-     }
-@@ -4360,8 +4318,6 @@ igb_core_pci_uninit(IGBCore *core)
- 
-     igb_intrmgr_pci_unint(core);
- 
--    qemu_del_vm_change_state_handler(core->vmstate);
--
-     for (i = 0; i < IGB_NUM_QUEUES; i++) {
-         net_tx_pkt_uninit(core->tx[i].tx_pkt);
-     }
-@@ -4586,5 +4542,12 @@ igb_core_post_load(IGBCore *core)
-      */
-     nc->link_down = (core->mac[STATUS] & E1000_STATUS_LU) == 0;
- 
-+    /*
-+     * we need to restart intrmgr timers, as an older version of
-+     * QEMU can have stopped them before migration
-+     */
-+    igb_intrmgr_resume(core);
-+    igb_autoneg_resume(core);
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 76fe039704..94ef639457 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8309,9 +8309,15 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
+     if (pci_is_vf(pci_dev)) {
+         /*
+          * VFs derive settings from the parent. PF's lifespan exceeds
+-         * that of VF's, so it's safe to share params.serial.
++         * that of VF's.
+          */
+         memcpy(&n->params, &pn->params, sizeof(NvmeParams));
 +
-     return 0;
- }
-diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-index bf8c46f26b..d70b54e318 100644
---- a/hw/net/igb_core.h
-+++ b/hw/net/igb_core.h
-@@ -90,8 +90,6 @@ struct IGBCore {
++        /*
++         * Set PF's serial value to a new string memory to prevent 'serial'
++         * property object release of PF when a VF is removed from the system.
++         */
++        n->params.serial = g_strdup(pn->params.serial);
+         n->subsys = pn->subsys;
+     }
  
-     IGBIntrDelayTimer eitr[IGB_INTR_NUM];
- 
--    VMChangeStateEntry *vmstate;
--
-     uint32_t eitr_guest_value[IGB_INTR_NUM];
- 
-     uint8_t permanent_mac[ETH_ALEN];
 -- 
 2.39.2
 
