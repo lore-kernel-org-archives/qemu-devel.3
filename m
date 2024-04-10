@@ -4,145 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C63DCD128A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85732CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruVvw-0007XN-BK; Wed, 10 Apr 2024 07:16:04 -0400
+	id 1ruVx3-0000vV-0i; Wed, 10 Apr 2024 07:17:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1ruVvt-0007Tt-3D
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:01 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1ruVvo-00019N-5g
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:00 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 439H5sJm016731;
- Wed, 10 Apr 2024 04:15:54 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :content-transfer-encoding:content-type:mime-version; s=
- proofpoint20171006; bh=i319eQzVrMzWZgGm44SUMcldzNGFG5MMhuQv8ox8G
- uw=; b=fRTx92ZTt7HMDHxNicdZnu9mnYmovEjv/mPv2t1D537iV3y6s4Li/kCDe
- WhKpUxTXPxx/T3eVU2zjr+n/zMHiZDDSq6Xtt+XAjmaUioxgY4K7mV831zwsGHSH
- FRiwrYsOBx3P9ltvXCIjeFNVArt7YrGGmELq5XICei8nXsmckBO27DxdTvwef1Rr
- wgnH61KdZpX438Npn1woobvgRE9UvYhoML+d9ymlE+VMz+id0hB+4YTgIzowpIU6
- mfqkH2xUauTIKjvgG7zRKY6VDRv27LHslaG//YZXAj9wFXv//OgERfpuRJX26+nR
- 0zjnL+n2jRx3yizkFRawBveObvIsg==
-Received: from nam12-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam12lp2169.outbound.protection.outlook.com [104.47.55.169])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3xct2k33fn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 10 Apr 2024 04:15:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ba+DWqZ2DFPJiFkKoo+wZByr5R3xoHRtVgK97lbjjNM4qNhwkQzhIQtTrlRcjNjCUGDk7DecJkMSg+y0HEMqTRjCcYOrLDkGZxGggENFPb7ziy57QGzIagnbkBLjrourhEnL6G7B4yndLTzuGq5Iu3qy6O7J2MThRIotMcUwjZyuBmchMJyFcNvbKHcwJZnqsWo605yAHaYuGfCCFoSYpotJwRUga/Yfw1SiEmaFV2tX70vf2NZVXadWqs/yyxSvxmZepuroX/pQ0d0SUgk8/nQ1IhJEIRn4Tu6NEPzvjs0Uw+q4f9acGh5+t7C8IZ8SDiIoO0eshXvgl5zp5vAntw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i319eQzVrMzWZgGm44SUMcldzNGFG5MMhuQv8ox8Guw=;
- b=J9tgENLSgIaZUMY/svwzfcxjh8TMTkCrCh0tvuPzBwQqKEEIgRogo4pmL7n/S5SQx1aKQ87GzzZgnHUFl16Fk9uEYq9K/BWY97rqDIS+R+UKa739MnI3q8Im4peTYtATXM/iilA4Uzzl9JwBo4DwvO0UQhgD5MTw1GN8EPBYKnee45fYzH9I+HdKSayPlRJ8IhcKyWjnG3+1RRElNHyBlxBxrSlVhBFYUuMm9K+aY9bmJnpqcJ8NHz1wcatmURtQiyBD0NDuZRTusuBFkBWz29AX2opuc8SEt3vlJZBIr/jnICltSO/dv0o3X56RRkozLiwemwQ5bxjmcsHV+DpHnw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i319eQzVrMzWZgGm44SUMcldzNGFG5MMhuQv8ox8Guw=;
- b=gyxSK2mzkYmKPEthZ+ke/Iv8gZta+R0Wfreww9c+wYf73Cerq9O9vMHgJ73LcvTbz1BMND/FXNMSgUKTGW/iMOuR7OVkAS8QHkOk2b1o3LiXgAelzkux1EFsH/89KO5fHn77k7XGPzpquAyeuZEgCULaGx3HNcofeGKLk9pfTK5l4b4Wj5Y+OI7FbUEGhzPLYMKa29MJfyxWDfyJ394/R3dCmZAypyafMxf/MzVLsDWb/HYIhMZfnu1IdJ56MmEfpaa483XZIAsKGeCtcVaI3UGLmp/hEPT/D+jqfhdTBSv6v6oXzV/C8qBELC+ae/1Ddr0phzKV/zqi3LVqlFgokA==
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
- by CH2PR02MB6791.namprd02.prod.outlook.com (2603:10b6:610:ab::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Wed, 10 Apr
- 2024 11:15:52 +0000
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7409.053; Wed, 10 Apr 2024
- 11:15:52 +0000
-From: Het Gala <het.gala@nutanix.com>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- peterx@redhat.com, farosas@suse.de, prerna.saxena@nutanix.com,
- Het Gala <het.gala@nutanix.com>
-Subject: [PATCH 2/4] tests/qtest/migration: Replace 'migrate-incoming'
- qtest_qmp_assert_success with migrate_incoming_qmp
-Date: Wed, 10 Apr 2024 11:15:39 +0000
-Message-Id: <20240410111541.188504-3-het.gala@nutanix.com>
-X-Mailer: git-send-email 2.22.3
-In-Reply-To: <20240410111541.188504-1-het.gala@nutanix.com>
-References: <20240410111541.188504-1-het.gala@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH0PR07CA0016.namprd07.prod.outlook.com
- (2603:10b6:510:5::21) To SJ2PR02MB9955.namprd02.prod.outlook.com
- (2603:10b6:a03:55f::16)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1ruVwn-0000jp-8B
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:57 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1ruVwk-0001DU-IV
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:56 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56e2b3e114fso6765892a12.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 04:16:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712747813; x=1713352613; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=XXuEyWGKyd6shOUPsOvMnxOTSgyVEg2dFYS/NWsx1Hk=;
+ b=fh292kfRT3vFIbcR+zjm53gDEXxqFdeMrCYM9rSDRFPpK0B/dTYBUfhWQwSFiVrDW9
+ dP9PJj06kcAHC7NFUlVteKuZ5P73tDZHU794CAwl7KyCZZUdw62qVRO4K558LYESlM5t
+ k71cElgdSRmO+it/6PPA4pNnWydZCIhj0k8aKYTQ6TI0aL4K6bVfohwYLZKfRZj4hLV1
+ XPsqs4ExlafhbU7JBSyG/BcSWjsJEhtOz5LjWyQadsD7ARgbkZn+wvUXQeMlnRsOZUEk
+ 8Lwj2GgQhXJrd7RdXn+rbZdM5e9n/YEy7bVARt3N71neoK4FD32i4ZDxvnE3bxZpC9f3
+ o3yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712747813; x=1713352613;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XXuEyWGKyd6shOUPsOvMnxOTSgyVEg2dFYS/NWsx1Hk=;
+ b=trxLCBYHP4EqgYdeVcOhbCaNKihb+rlhH/piMJ146r6HiS5LQf/JYJOPyQ0H6jvBU+
+ 1RiDUHzAbJ3kL2k5m6SkMv7g+U/6wmwufbxXH/xEcpTM41/LpNPDp10eVCR86/HkP3LO
+ CKcK1OrW98jTBmVtm4S2dwC5hg6QADVsC7lAPiGtALHXpxBJiCtOnGF4iiU1Q4B1aE81
+ 9W3D4I6oD4eXWBg1QSwnsItgiTxvstPlpJlYJ5CKqizoEycuw6yRnlfa/zHa15Yfkzd2
+ VORDzvFWsDEKNvBGGM6keyJRJ1S7E2lc+atW3nHpJekgp+XFIFdxHpQXOIKBdWuqdsVO
+ XDxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdhqRMyNcpMTvHbIsMsnby9UBUJKEyvrwXNSE25sEZ+06BjZRNPigIU5cGwfIAg9mUXCnEZINvPWl9Ty9CCykx+ri56vs=
+X-Gm-Message-State: AOJu0YzY13kZutJ7CJ1CpW/gtbIfQdVzl04QMYIeHUFfBMN5HrEab5IQ
+ 2faVJE1xzr8s/xfdye4Kii1rZAqcikO8S651LP02jA3kuVd69DccS0fVzVnIdX7Pe6HHcOBY3St
+ lC2fvHVhT2KJRe6MJqu33e811keY=
+X-Google-Smtp-Source: AGHT+IH6SmNE7KfCLbME02RaYkGbD4/bVZiSVYSE2JOJaBgkqvkWNzuTqa1BZxvwbZsVpWLZsW5Qb109+McIEGvC6DU=
+X-Received: by 2002:a50:f61d:0:b0:566:777:af4f with SMTP id
+ c29-20020a50f61d000000b005660777af4fmr1423220edn.1.1712747812674; Wed, 10 Apr
+ 2024 04:16:52 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|CH2PR02MB6791:EE_
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Z75nrkwnB9DDL1d7ifCnaId1UtIurbqSlGysXiBN4I7q7YY7BVU9aAqHyPh5QgWUHRKgjtBX8kPPvC4DOcsWM+3wlUhZ2sj792jQuipL8FGKNAo9d9SlH+wp+K6qDY7AxjqNn++mFEOSAtb+T2xBXUz8xWrewO5rIFbIUFB8WJH4bTSL1dbpf61x+B1t5ZGnRhWDtb6C5/vbw30WuUAGWDoT9wX6xBkVqrRp+eX1TwIWzFZP2Gpzn2GYjQoRjd61Ru2eWnf904eeCOEDDUy8JwQBbtvm2YQtgOXNx6V8BaHgVTC5BmvmRVeX6w3jXpkwTsdubyxGCvNoOoX5F1Zna0sFqyBWzyx/YAhOvCkKQqCV3A4onLm7n5jlW4MXheK7APhrn3c25nLz2LQZjL2xZK33MSELgwSReEYc8T4rLamMDcw26C0PyrPgvxrSHpi2H7Wu/h3iYLNWq+x/U9EpKR4sIKfRWJSyZqLOSxScNSSDBdOat9GIg4nFQVCa4nH4ZpMAIyNMmjUPl12W/5JqXP156dniKxmQyDPNQiaKsoBJPY8G7NbjBElVL/JN6J00bfx7SD79aUmeCjhqjSJ4EZZ7EWeLq//1lo+UCAXmVExx5HyB4cbxySJXU9dOHkYVepez7M9zVDNMDZvb4AgCCqfbNSZrcxnKXsySwkOirIim5F3POIMvYq41mkT0muguYNnpS9Z4NSipA7xG2ThijUCbrQrJXM6xSg9beGjKXXk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(366007)(52116005)(376005)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?kkXJ1+/cp7ESUBkr6/70bCrJjNmA+h8E37JhVboneboUVZDg9LDhMPy9F9U0?=
- =?us-ascii?Q?wMGt7vO5Roec9uvHNcgO3d6aWMS25bfmVmPbGRoTBaooU71KaiPM2WANPy+L?=
- =?us-ascii?Q?W6Xng0aizu2CbsSbYKXyWx2HlSjupWNpygNeIB3kV5HMFv0StIgebC7YD4Ea?=
- =?us-ascii?Q?wKDFMZxgJerlbYrcemqAUl2Cap6myoBzlR6FC4sR1l6r9IVwqnH+CIIxy8P1?=
- =?us-ascii?Q?AWRNA/h2tK8fcmAnt7eh6izcpGKXlTW0iL0xlRZCm3MOxvx9X7enjcAbUeD/?=
- =?us-ascii?Q?l+gDAQglTkAIigZ7QKwPO/2ebJ9G0eHxY/YAMAt/LnaqIrzH5Fftrv3Hpamp?=
- =?us-ascii?Q?H877mJVKm7zPWStCNIDVmuFBuiegMUCn6DGwtQ5kOXyI1B2AyFl2pXDmbcmc?=
- =?us-ascii?Q?HZXDSiHfyLGm9Jn26BTPbfY7D91mKB8PYT/d5qDM0l1bwQypvnY0DocBZHQ3?=
- =?us-ascii?Q?xPZYZrzD5M8X8BHW/d2XvrpgoGUw62xuEduRCcdMNhuPPPZuDWaQ9IGCh4XT?=
- =?us-ascii?Q?qx6dNroQYQX/+zMNrwFIj6UXjbLTGcv6E9Da1fwjGNpjykCk5hkfjAUlAMQk?=
- =?us-ascii?Q?x/Y0Eobu8nyyaZafvHD6TAG0MT4ZNI2Gh3zL9faqdq5FwLN5T7uUF33Xc5O3?=
- =?us-ascii?Q?EZ13UeI0JWJ1cavvb08awdJcPjL3Fd/TyunN70ThOITt6LgTbxJ9XmnzuEm8?=
- =?us-ascii?Q?2r6NHlD+ob8jrtir0reHf8PJ0xvfoUcZNEkDGsauPD18xQH1KoubBNR3iuTY?=
- =?us-ascii?Q?PwtZ3k7f2a7zowpiBVzsqHa197Y2qbOPyiDNOWs2ZRwSNf19YpG5kmBwC1ts?=
- =?us-ascii?Q?Vjo144BoVQXrSYp3OWpkVz+qk7aMSfnuABRfaZCsO2Fx/sfgyY7IU1v5k771?=
- =?us-ascii?Q?JrDidzRVjE2R9v+O8+HfBR6MLxZfrPWG0y+Y8AI3IGuQsNk0IRV6qeQ3keyG?=
- =?us-ascii?Q?bACnvWTKNOwzeAlalGAOqR/fi2n5VeRVLH9aMPpq/JYsWSbr+5/eQRXiF8Fn?=
- =?us-ascii?Q?wlNE2j63zkyDl7ZSOZd56Ay0FmjQbjbV1XmfrZ1HS0a9JrOwEdtXZ61BbabY?=
- =?us-ascii?Q?BLx4ld83sLfAFbDBxM9dOXxi0/Kl07xDVA5ZfNnjpilZLcVR9qUUsFfYH6UI?=
- =?us-ascii?Q?Pef+D8e9Q0E30YVThPGI1tZW1QC5m+67u0/It1y7FaJN/JMyboiRieY0TRDg?=
- =?us-ascii?Q?9T5I2/dT9B38OqbLzR3QHIpiA7qkYnk0XPFGspwQfaOr76KW1DltvKzOeTHJ?=
- =?us-ascii?Q?ZTxaBggOxBCk5gGYRgXOF/T3zCUGhnRfhdC0CdF9hbru2MZ/I84Yy8Vo2r/G?=
- =?us-ascii?Q?wPI0jkIEvntFsvPv4+GldB21DiXKUlz/p4DHl9xNzplgRQ7nBduNgTilX5N8?=
- =?us-ascii?Q?Gd2hUhhZp3dQsiWrkAL8O69/HTX+fcq9/TdT7Xe/ZnxcuZcZi7Z5sN/slr13?=
- =?us-ascii?Q?/tVxaAnKnTQF/bzzfbigu7NXFJzr0NuUdJUtap6/jv3CzFopTlEjp+dI4+y5?=
- =?us-ascii?Q?vozsuGPFMCC0ExsigxNz3woVtKcTtwZHj2a2ly3g5JS929Ys15Nc1wwj78oJ?=
- =?us-ascii?Q?mlT4rRfJ/xq/9QEfN9dHnfwZ4avhQ+r1vRSVbDFD?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51a1f9d7-8bab-45fa-2638-08dc594f956f
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2024 11:15:52.5639 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1W6jDnfiNSaRpZtZ8flDEx5bebknR0pJZLCN6F7gGlGoZ3abcksKTkmsof6RrP4BxY78zgPtX2U2GSola2JSJg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR02MB6791
-X-Proofpoint-GUID: idOI-0jltp-Xk1deT2I6d8aedo1GO8R0
-X-Proofpoint-ORIG-GUID: idOI-0jltp-Xk1deT2I6d8aedo1GO8R0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-10_04,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
- helo=mx0b-002c1b01.pphosted.com
+References: <20240227223501.28475-1-vikram.garhwal@amd.com>
+ <20240227223501.28475-6-vikram.garhwal@amd.com>
+ <alpine.DEB.2.22.394.2402291510270.853156@ubuntu-linux-20-04-desktop>
+In-Reply-To: <alpine.DEB.2.22.394.2402291510270.853156@ubuntu-linux-20-04-desktop>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Wed, 10 Apr 2024 13:16:41 +0200
+Message-ID: <CAJy5ezo=wyZnbCa5xBKNx59qVTZtrReLkgWf=_s8+db+tijOYg@mail.gmail.com>
+Subject: Re: [QEMU][PATCH v3 5/7] memory: add MemoryRegion map and unmap
+ callbacks
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Vikram Garhwal <vikram.garhwal@amd.com>, qemu-devel@nongnu.org,
+ jgross@suse.com, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000f6e3f50615bc2cf9"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,31 +96,421 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Already have a migrate_incoming_qmp helper function to initiate
-'migrate-incoming' QMP command with some additional checks.
-Replace 'migrate-incoming' qtest_qmp_assert_success command with
-calling migrate_incoming_qmp helper function for postcopy qtests.
+--000000000000f6e3f50615bc2cf9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Het Gala <het.gala@nutanix.com>
----
- tests/qtest/migration-test.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+On Fri, Mar 1, 2024 at 12:11=E2=80=AFAM Stefano Stabellini <sstabellini@ker=
+nel.org>
+wrote:
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 27a1066ae4..f2c27d611c 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -1296,8 +1296,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
-     migrate_ensure_non_converge(from);
- 
-     migrate_prepare_for_dirty_mem(from);
--    qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
--                             "  'arguments': { 'uri': 'tcp:127.0.0.1:0' }}");
-+    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
- 
-     /* Wait for the first serial output from the source */
-     wait_for_serial("src_serial");
--- 
-2.22.3
+> On Tue, 27 Feb 2024, Vikram Garhwal wrote:
+> > From: Juergen Gross <jgross@suse.com>
+> >
+> > In order to support mapping and unmapping guest memory dynamically to
+> > and from qemu during address_space_[un]map() operations add the map()
+> > and unmap() callbacks to MemoryRegionOps.
+> >
+> > Those will be used e.g. for Xen grant mappings when performing guest
+> > I/Os.
+> >
+> > Signed-off-by: Juergen Gross <jgross@suse.com>
+> > Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
+>
+> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+>
 
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
+
+> ---
+> >  include/exec/memory.h | 21 ++++++++++++++++++
+> >  system/physmem.c      | 50 +++++++++++++++++++++++++++++++++----------
+> >  2 files changed, 60 insertions(+), 11 deletions(-)
+> >
+> > diff --git a/include/exec/memory.h b/include/exec/memory.h
+> > index 8626a355b3..9f7dfe59c7 100644
+> > --- a/include/exec/memory.h
+> > +++ b/include/exec/memory.h
+> > @@ -282,6 +282,27 @@ struct MemoryRegionOps {
+> >                                      unsigned size,
+> >                                      MemTxAttrs attrs);
+> >
+> > +    /*
+> > +     * Dynamically create mapping. @addr is the guest address to map;
+> @plen
+> > +     * is the pointer to the usable length of the buffer.
+> > +     * @mr contents can be changed in case a new memory region is
+> created for
+> > +     * the mapping.
+> > +     * Returns the buffer address for accessing the data.
+> > +     */
+> > +    void *(*map)(MemoryRegion **mr,
+> > +                 hwaddr addr,
+> > +                 hwaddr *plen,
+> > +                 bool is_write,
+> > +                 MemTxAttrs attrs);
+> > +
+> > +    /* Unmap an area obtained via map() before. */
+> > +    void (*unmap)(MemoryRegion *mr,
+> > +                  void *buffer,
+> > +                  ram_addr_t addr,
+> > +                  hwaddr len,
+> > +                  bool is_write,
+> > +                  hwaddr access_len);
+> > +
+> >      enum device_endian endianness;
+> >      /* Guest-visible constraints: */
+> >      struct {
+> > diff --git a/system/physmem.c b/system/physmem.c
+> > index 949dcb20ba..d989e9fc1f 100644
+> > --- a/system/physmem.c
+> > +++ b/system/physmem.c
+> > @@ -3141,6 +3141,7 @@ void *address_space_map(AddressSpace *as,
+> >      hwaddr len =3D *plen;
+> >      hwaddr l, xlat;
+> >      MemoryRegion *mr;
+> > +    void *ptr =3D NULL;
+> >      FlatView *fv;
+> >
+> >      if (len =3D=3D 0) {
+> > @@ -3174,12 +3175,20 @@ void *address_space_map(AddressSpace *as,
+> >          return bounce.buffer;
+> >      }
+> >
+> > -
+> >      memory_region_ref(mr);
+> > +
+> > +    if (mr->ops && mr->ops->map) {
+> > +        ptr =3D mr->ops->map(&mr, addr, plen, is_write, attrs);
+> > +    }
+> > +
+> >      *plen =3D flatview_extend_translation(fv, addr, len, mr, xlat,
+> >                                          l, is_write, attrs);
+> >      fuzz_dma_read_cb(addr, *plen, mr);
+> > -    return qemu_ram_ptr_length(mr->ram_block, xlat, plen, true);
+> > +    if (ptr =3D=3D NULL) {
+> > +        ptr =3D qemu_ram_ptr_length(mr->ram_block, xlat, plen, true);
+> > +    }
+> > +
+> > +    return ptr;
+> >  }
+> >
+> >  /* Unmaps a memory region previously mapped by address_space_map().
+> > @@ -3195,11 +3204,16 @@ void address_space_unmap(AddressSpace *as, void
+> *buffer, hwaddr len,
+> >
+> >          mr =3D memory_region_from_host(buffer, &addr1);
+> >          assert(mr !=3D NULL);
+> > -        if (is_write) {
+> > -            invalidate_and_set_dirty(mr, addr1, access_len);
+> > -        }
+> > -        if (xen_enabled()) {
+> > -            xen_invalidate_map_cache_entry(buffer);
+> > +
+> > +        if (mr->ops && mr->ops->unmap) {
+> > +            mr->ops->unmap(mr, buffer, addr1, len, is_write,
+> access_len);
+> > +        } else {
+> > +            if (is_write) {
+> > +                invalidate_and_set_dirty(mr, addr1, access_len);
+> > +            }
+> > +            if (xen_enabled()) {
+> > +                xen_invalidate_map_cache_entry(buffer);
+> > +            }
+> >          }
+> >          memory_region_unref(mr);
+> >          return;
+> > @@ -3272,10 +3286,18 @@ int64_t
+> address_space_cache_init(MemoryRegionCache *cache,
+> >           * doing this if we found actual RAM, which behaves the same
+> >           * regardless of attributes; so UNSPECIFIED is fine.
+> >           */
+> > +        if (mr->ops && mr->ops->map) {
+> > +            cache->ptr =3D mr->ops->map(&mr, addr, &l, is_write,
+> > +                                      MEMTXATTRS_UNSPECIFIED);
+> > +        }
+> > +
+> >          l =3D flatview_extend_translation(cache->fv, addr, len, mr,
+> >                                          cache->xlat, l, is_write,
+> >                                          MEMTXATTRS_UNSPECIFIED);
+> > -        cache->ptr =3D qemu_ram_ptr_length(mr->ram_block, cache->xlat,
+> &l, true);
+> > +        if (!cache->ptr) {
+> > +            cache->ptr =3D qemu_ram_ptr_length(mr->ram_block,
+> cache->xlat, &l,
+> > +                                             true);
+> > +        }
+> >      } else {
+> >          cache->ptr =3D NULL;
+> >      }
+> > @@ -3297,14 +3319,20 @@ void
+> address_space_cache_invalidate(MemoryRegionCache *cache,
+> >
+> >  void address_space_cache_destroy(MemoryRegionCache *cache)
+> >  {
+> > -    if (!cache->mrs.mr) {
+> > +    MemoryRegion *mr =3D cache->mrs.mr;
+> > +
+> > +    if (!mr) {
+> >          return;
+> >      }
+> >
+> > -    if (xen_enabled()) {
+> > +    if (mr->ops && mr->ops->unmap) {
+> > +            mr->ops->unmap(mr, cache->ptr, cache->xlat, cache->len,
+> > +                           cache->is_write, cache->len);
+> > +    } else if (xen_enabled()) {
+> >          xen_invalidate_map_cache_entry(cache->ptr);
+> >      }
+> > -    memory_region_unref(cache->mrs.mr);
+> > +
+> > +    memory_region_unref(mr);
+> >      flatview_unref(cache->fv);
+> >      cache->mrs.mr =3D NULL;
+> >      cache->fv =3D NULL;
+> > --
+> > 2.17.1
+> >
+>
+>
+
+--000000000000f6e3f50615bc2cf9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 1, 2024 at 12:11=E2=80=AF=
+AM Stefano Stabellini &lt;<a href=3D"mailto:sstabellini@kernel.org">sstabel=
+lini@kernel.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
+ding-left:1ex">On Tue, 27 Feb 2024, Vikram Garhwal wrote:<br>
+&gt; From: Juergen Gross &lt;<a href=3D"mailto:jgross@suse.com" target=3D"_=
+blank">jgross@suse.com</a>&gt;<br>
+&gt; <br>
+&gt; In order to support mapping and unmapping guest memory dynamically to<=
+br>
+&gt; and from qemu during address_space_[un]map() operations add the map()<=
+br>
+&gt; and unmap() callbacks to MemoryRegionOps.<br>
+&gt; <br>
+&gt; Those will be used e.g. for Xen grant mappings when performing guest<b=
+r>
+&gt; I/Os.<br>
+&gt; <br>
+&gt; Signed-off-by: Juergen Gross &lt;<a href=3D"mailto:jgross@suse.com" ta=
+rget=3D"_blank">jgross@suse.com</a>&gt;<br>
+&gt; Signed-off-by: Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd=
+.com" target=3D"_blank">vikram.garhwal@amd.com</a>&gt;<br>
+<br>
+Reviewed-by: Stefano Stabellini &lt;<a href=3D"mailto:sstabellini@kernel.or=
+g" target=3D"_blank">sstabellini@kernel.org</a>&gt;<br></blockquote><div><b=
+r></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.igl=
+esias@amd.com">edgar.iglesias@amd.com</a>&gt;=C2=A0</div><div><br></div><di=
+v><br></div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
+">
+&gt; ---<br>
+&gt;=C2=A0 include/exec/memory.h | 21 ++++++++++++++++++<br>
+&gt;=C2=A0 system/physmem.c=C2=A0 =C2=A0 =C2=A0 | 50 ++++++++++++++++++++++=
++++++++++++----------<br>
+&gt;=C2=A0 2 files changed, 60 insertions(+), 11 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/include/exec/memory.h b/include/exec/memory.h<br>
+&gt; index 8626a355b3..9f7dfe59c7 100644<br>
+&gt; --- a/include/exec/memory.h<br>
+&gt; +++ b/include/exec/memory.h<br>
+&gt; @@ -282,6 +282,27 @@ struct MemoryRegionOps {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned siz=
+e,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MemTxAttrs a=
+ttrs);<br>
+&gt;=C2=A0 <br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* Dynamically create mapping. @addr is the guest =
+address to map; @plen<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* is the pointer to the usable length of the buff=
+er.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* @mr contents can be changed in case a new memor=
+y region is created for<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* the mapping.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* Returns the buffer address for accessing the da=
+ta.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 void *(*map)(MemoryRegion **mr,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0hwaddr =
+addr,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0hwaddr =
+*plen,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bool is=
+_write,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MemTxAt=
+trs attrs);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /* Unmap an area obtained via map() before. */<br>
+&gt; +=C2=A0 =C2=A0 void (*unmap)(MemoryRegion *mr,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 void *=
+buffer,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ram_ad=
+dr_t addr,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hwaddr=
+ len,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bool i=
+s_write,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hwaddr=
+ access_len);<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 enum device_endian endianness;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 /* Guest-visible constraints: */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 struct {<br>
+&gt; diff --git a/system/physmem.c b/system/physmem.c<br>
+&gt; index 949dcb20ba..d989e9fc1f 100644<br>
+&gt; --- a/system/physmem.c<br>
+&gt; +++ b/system/physmem.c<br>
+&gt; @@ -3141,6 +3141,7 @@ void *address_space_map(AddressSpace *as,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 hwaddr len =3D *plen;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 hwaddr l, xlat;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 MemoryRegion *mr;<br>
+&gt; +=C2=A0 =C2=A0 void *ptr =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 FlatView *fv;<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (len =3D=3D 0) {<br>
+&gt; @@ -3174,12 +3175,20 @@ void *address_space_map(AddressSpace *as,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return bounce.buffer;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; -<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 memory_region_ref(mr);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (mr-&gt;ops &amp;&amp; mr-&gt;ops-&gt;map) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ptr =3D mr-&gt;ops-&gt;map(&amp;mr, addr,=
+ plen, is_write, attrs);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 *plen =3D flatview_extend_translation(fv, addr, le=
+n, mr, xlat,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 l, is_write, attrs);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 fuzz_dma_read_cb(addr, *plen, mr);<br>
+&gt; -=C2=A0 =C2=A0 return qemu_ram_ptr_length(mr-&gt;ram_block, xlat, plen=
+, true);<br>
+&gt; +=C2=A0 =C2=A0 if (ptr =3D=3D NULL) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ptr =3D qemu_ram_ptr_length(mr-&gt;ram_bl=
+ock, xlat, plen, true);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return ptr;<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 /* Unmaps a memory region previously mapped by address_space_map=
+().<br>
+&gt; @@ -3195,11 +3204,16 @@ void address_space_unmap(AddressSpace *as, voi=
+d *buffer, hwaddr len,<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mr =3D memory_region_from_host(buffe=
+r, &amp;addr1);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert(mr !=3D NULL);<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_write) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 invalidate_and_set_dirty(mr=
+, addr1, access_len);<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (xen_enabled()) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 xen_invalidate_map_cache_en=
+try(buffer);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mr-&gt;ops &amp;&amp; mr-&gt;ops-&gt;=
+unmap) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mr-&gt;ops-&gt;unmap(mr, bu=
+ffer, addr1, len, is_write, access_len);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_write) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 invalidate_an=
+d_set_dirty(mr, addr1, access_len);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (xen_enabled()) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 xen_invalidat=
+e_map_cache_entry(buffer);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_region_unref(mr);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt; @@ -3272,10 +3286,18 @@ int64_t address_space_cache_init(MemoryRegionC=
+ache *cache,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* doing this if we found actua=
+l RAM, which behaves the same<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* regardless of attributes; so=
+ UNSPECIFIED is fine.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mr-&gt;ops &amp;&amp; mr-&gt;ops-&gt;=
+map) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cache-&gt;ptr =3D mr-&gt;op=
+s-&gt;map(&amp;mr, addr, &amp;l, is_write,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MEMTXATTRS_=
+UNSPECIFIED);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 l =3D flatview_extend_translation(ca=
+che-&gt;fv, addr, len, mr,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 cache-&gt;xlat, l, is_write,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 MEMTXATTRS_UNSPECIFIED);<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 cache-&gt;ptr =3D qemu_ram_ptr_length(mr-=
+&gt;ram_block, cache-&gt;xlat, &amp;l, true);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!cache-&gt;ptr) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cache-&gt;ptr =3D qemu_ram_=
+ptr_length(mr-&gt;ram_block, cache-&gt;xlat, &amp;l,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0true);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 } else {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cache-&gt;ptr =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; @@ -3297,14 +3319,20 @@ void address_space_cache_invalidate(MemoryRegi=
+onCache *cache,<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 void address_space_cache_destroy(MemoryRegionCache *cache)<br>
+&gt;=C2=A0 {<br>
+&gt; -=C2=A0 =C2=A0 if (!cache-&gt;<a href=3D"http://mrs.mr" rel=3D"norefer=
+rer" target=3D"_blank">mrs.mr</a>) {<br>
+&gt; +=C2=A0 =C2=A0 MemoryRegion *mr =3D cache-&gt;<a href=3D"http://mrs.mr=
+" rel=3D"noreferrer" target=3D"_blank">mrs.mr</a>;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!mr) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 if (xen_enabled()) {<br>
+&gt; +=C2=A0 =C2=A0 if (mr-&gt;ops &amp;&amp; mr-&gt;ops-&gt;unmap) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mr-&gt;ops-&gt;unmap(mr, ca=
+che-&gt;ptr, cache-&gt;xlat, cache-&gt;len,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0cache-&gt;is_write, cache-&gt;len);<br>
+&gt; +=C2=A0 =C2=A0 } else if (xen_enabled()) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 xen_invalidate_map_cache_entry(cache=
+-&gt;ptr);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; -=C2=A0 =C2=A0 memory_region_unref(cache-&gt;<a href=3D"http://mrs.mr"=
+ rel=3D"noreferrer" target=3D"_blank">mrs.mr</a>);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 memory_region_unref(mr);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 flatview_unref(cache-&gt;fv);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 cache-&gt;<a href=3D"http://mrs.mr" rel=3D"norefer=
+rer" target=3D"_blank">mrs.mr</a> =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 cache-&gt;fv =3D NULL;<br>
+&gt; -- <br>
+&gt; 2.17.1<br>
+&gt; <br>
+<br>
+</blockquote></div></div>
+
+--000000000000f6e3f50615bc2cf9--
 
