@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8112CD1299
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB40CD11C2
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQno-0000fa-KY; Wed, 10 Apr 2024 01:47:22 -0400
+	id 1ruQmn-0006PN-Fj; Wed, 10 Apr 2024 01:46:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQlz-00056E-0c; Wed, 10 Apr 2024 01:45:35 -0400
+ id 1ruQmW-0005Xl-09; Wed, 10 Apr 2024 01:46:03 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQlx-0001hr-1N; Wed, 10 Apr 2024 01:45:26 -0400
+ id 1ruQmT-0001mb-0z; Wed, 10 Apr 2024 01:45:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AC6985D4E8;
+ by isrv.corpit.ru (Postfix) with ESMTP id EFFFA5D4EC;
  Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7282CB014F;
+ by tsrv.corpit.ru (Postfix) with SMTP id B5B82B0153;
  Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
-Received: (nullmailer pid 4182049 invoked by uid 1000);
+Received: (nullmailer pid 4182061 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Minwoo Im <minwoo.im@samsung.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 16/41] hw/nvme: separate 'serial' property for VFs
-Date: Wed, 10 Apr 2024 08:43:37 +0300
-Message-Id: <20240410054416.4181891-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 20/41] hw/nvme: Use pcie_sriov_num_vfs()
+Date: Wed, 10 Apr 2024 08:43:41 +0300
+Message-Id: <20240410054416.4181891-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -60,48 +60,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im@samsung.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Currently, when a VF is created, it uses the 'params' object of the PF
-as it is. In other words, the 'params.serial' string memory area is also
-shared. In this situation, if the VF is removed from the system, the
-PF's 'params.serial' object is released with object_finalize() followed
-by object_property_del_all() which release the memory for 'serial'
-property. If that happens, the next VF created will inherit a serial
-from a corrupted memory area.
+nvme_sriov_pre_write_ctrl() used to directly inspect SR-IOV
+configurations to know the number of VFs being disabled due to SR-IOV
+configuration writes, but the logic was flawed and resulted in
+out-of-bound memory access.
 
-If this happens, an error will occur when comparing subsys->serial and
-n->params.serial in the nvme_subsys_register_ctrl() function.
+It assumed PCI_SRIOV_NUM_VF always has the number of currently enabled
+VFs, but it actually doesn't in the following cases:
+- PCI_SRIOV_NUM_VF has been set but PCI_SRIOV_CTRL_VFE has never been.
+- PCI_SRIOV_NUM_VF was written after PCI_SRIOV_CTRL_VFE was set.
+- VFs were only partially enabled because of realization failure.
+
+It is a responsibility of pcie_sriov to interpret SR-IOV configurations
+and pcie_sriov does it correctly, so use pcie_sriov_num_vfs(), which it
+provides, to get the number of enabled VFs before and after SR-IOV
+configuration writes.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 44c2c09488db ("hw/nvme: Add support for SR-IOV")
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 4f0a4a3d5854824e5c5eccf353d4a1f4f749a29d)
+Fixes: CVE-2024-26328
+Fixes: 11871f53ef8e ("hw/nvme: Add support for the Virtualization Management command")
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240228-reuse-v8-1-282660281e60@daynix.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 91bb64a8d2014fda33a81fcf0fce37340f0d3b0c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index f2b308f5fa..c2c0fc991d 100644
+index 88c40afc28..027d67f10b 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -7515,9 +7515,15 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-     if (pci_is_vf(pci_dev)) {
-         /*
-          * VFs derive settings from the parent. PF's lifespan exceeds
--         * that of VF's, so it's safe to share params.serial.
-+         * that of VF's.
-          */
-         memcpy(&n->params, &pn->params, sizeof(NvmeParams));
-+
-+        /*
-+         * Set PF's serial value to a new string memory to prevent 'serial'
-+         * property object release of PF when a VF is removed from the system.
-+         */
-+        n->params.serial = g_strdup(pn->params.serial);
-         n->subsys = pn->subsys;
-     }
+@@ -7704,36 +7704,26 @@ static void nvme_pci_reset(DeviceState *qdev)
+     nvme_ctrl_reset(n, NVME_RESET_FUNCTION);
+ }
  
+-static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
+-                                      uint32_t val, int len)
++static void nvme_sriov_post_write_config(PCIDevice *dev, uint16_t old_num_vfs)
+ {
+     NvmeCtrl *n = NVME(dev);
+     NvmeSecCtrlEntry *sctrl;
+-    uint16_t sriov_cap = dev->exp.sriov_cap;
+-    uint32_t off = address - sriov_cap;
+-    int i, num_vfs;
++    int i;
+ 
+-    if (!sriov_cap) {
+-        return;
+-    }
+-
+-    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
+-        if (!(val & PCI_SRIOV_CTRL_VFE)) {
+-            num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+-            for (i = 0; i < num_vfs; i++) {
+-                sctrl = &n->sec_ctrl_list.sec[i];
+-                nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
+-            }
+-        }
++    for (i = pcie_sriov_num_vfs(dev); i < old_num_vfs; i++) {
++        sctrl = &n->sec_ctrl_list.sec[i];
++        nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
+     }
+ }
+ 
+ static void nvme_pci_write_config(PCIDevice *dev, uint32_t address,
+                                   uint32_t val, int len)
+ {
+-    nvme_sriov_pre_write_ctrl(dev, address, val, len);
++    uint16_t old_num_vfs = pcie_sriov_num_vfs(dev);
++
+     pci_default_write_config(dev, address, val, len);
+     pcie_cap_flr_write_config(dev, address, val, len);
++    nvme_sriov_post_write_config(dev, old_num_vfs);
+ }
+ 
+ static const VMStateDescription nvme_vmstate = {
 -- 
 2.39.2
 
