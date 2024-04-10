@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DC1CD1296
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE16CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:42:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSQR-00058f-ED; Wed, 10 Apr 2024 03:31:20 -0400
+	id 1ruSP4-0001Q3-A9; Wed, 10 Apr 2024 03:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSQ5-0004Yg-N0; Wed, 10 Apr 2024 03:30:59 -0400
+ id 1ruSP2-0001Dj-9L; Wed, 10 Apr 2024 03:29:52 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSQ2-0005Pd-Of; Wed, 10 Apr 2024 03:30:57 -0400
+ id 1ruSOu-00053A-R8; Wed, 10 Apr 2024 03:29:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 696D65D6C1;
- Wed, 10 Apr 2024 10:25:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E4455D6B4;
+ Wed, 10 Apr 2024 10:25:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 0E938B0301;
- Wed, 10 Apr 2024 10:23:10 +0300 (MSK)
-Received: (nullmailer pid 4191895 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 220EDB02F4;
+ Wed, 10 Apr 2024 10:23:09 +0300 (MSK)
+Received: (nullmailer pid 4191854 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 81/87] block/virtio-blk: Fix memory leak from
- virtio_blk_zone_report
-Date: Wed, 10 Apr 2024 10:22:54 +0300
-Message-Id: <20240410072303.4191455-81-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
+ Jim Shu <jim.shu@sifive.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 68/87] hw/intc: Update APLIC IDC after claiming iforce
+ register
+Date: Wed, 10 Apr 2024 10:22:41 +0300
+Message-Id: <20240410072303.4191455-68-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -45,7 +46,7 @@ X-Spam_score_int: -68
 X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,45 +62,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zheyu Ma <zheyuma97@gmail.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-This modification ensures that in scenarios where the buffer size is
-insufficient for a zone report, the function will now properly set an
-error status and proceed to a cleanup label, instead of merely
-returning.
+Currently, QEMU only sets the iforce register to 0 and returns early
+when claiming the iforce register. However, this may leave mip.meip
+remains at 1 if a spurious external interrupt triggered by iforce
+register is the only pending interrupt to be claimed, and the interrupt
+cannot be lowered as expected.
 
-The following ASAN log reveals it:
+This commit fixes this issue by calling riscv_aplic_idc_update() to
+update the IDC status after the iforce register is claimed.
 
-==1767400==ERROR: LeakSanitizer: detected memory leaks
-Direct leak of 312 byte(s) in 1 object(s) allocated from:
-    #0 0x64ac7b3280cd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
-    #1 0x735b02fb9738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
-    #2 0x64ac7d23be96 in virtqueue_split_pop hw/virtio/virtio.c:1612:12
-    #3 0x64ac7d23728a in virtqueue_pop hw/virtio/virtio.c:1783:16
-    #4 0x64ac7cfcaacd in virtio_blk_get_request hw/block/virtio-blk.c:228:27
-    #5 0x64ac7cfca7c7 in virtio_blk_handle_vq hw/block/virtio-blk.c:1123:23
-    #6 0x64ac7cfecb95 in virtio_blk_handle_output hw/block/virtio-blk.c:1157:5
-
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-Message-id: 20240404120040.1951466-1-zheyuma97@gmail.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit bbdf9023665f409113cb07b463732861af63fb47)
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240321104951.12104-1-frank.chang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 078189b327ae5c5727b51ec714d9663b1d0ca3df)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 31aac14581..59fb3e9a8e 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -783,7 +783,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-             sizeof(struct virtio_blk_zone_report) +
-             sizeof(struct virtio_blk_zone_descriptor)) {
-         virtio_error(vdev, "in buffer too small for zone report");
--        return;
-+        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+        goto out;
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index c677b5cfbb..6e816e33bf 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -463,6 +463,7 @@ static uint32_t riscv_aplic_idc_claimi(RISCVAPLICState *aplic, uint32_t idc)
+ 
+     if (!topi) {
+         aplic->iforce[idc] = 0;
++        riscv_aplic_idc_update(aplic, idc);
+         return 0;
      }
  
-     /* start byte offset of the zone report */
 -- 
 2.39.2
 
