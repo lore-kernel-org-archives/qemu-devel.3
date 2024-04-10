@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED65ECD1296
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFEEACD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSPP-00026p-G7; Wed, 10 Apr 2024 03:30:15 -0400
+	id 1ruSOp-00080I-8f; Wed, 10 Apr 2024 03:29:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSP8-0001Xt-Vm; Wed, 10 Apr 2024 03:29:59 -0400
+ id 1ruSOU-0007Qh-Je; Wed, 10 Apr 2024 03:29:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSP6-00054x-FJ; Wed, 10 Apr 2024 03:29:57 -0400
+ id 1ruSOR-0004zy-Gs; Wed, 10 Apr 2024 03:29:18 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B0B365D6B7;
+ by isrv.corpit.ru (Postfix) with ESMTP id 48E9A5D6B1;
  Wed, 10 Apr 2024 10:25:07 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 53C97B02F7;
- Wed, 10 Apr 2024 10:23:09 +0300 (MSK)
-Received: (nullmailer pid 4191864 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id D2E29B02F1;
+ Wed, 10 Apr 2024 10:23:08 +0300 (MSK)
+Received: (nullmailer pid 4191845 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 71/87] target/riscv/kvm: fix timebase-frequency when
- using KVM acceleration
-Date: Wed, 10 Apr 2024 10:22:44 +0300
-Message-Id: <20240410072303.4191455-71-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 65/87] target/riscv: always clear vstart in whole vec
+ move insns
+Date: Wed, 10 Apr 2024 10:22:38 +0300
+Message-Id: <20240410072303.4191455-65-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,66 +64,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The timebase-frequency of guest OS should be the same with host
-machine. The timebase-frequency value in DTS should be got from
-hypervisor when using KVM acceleration.
+These insns have 2 paths: we'll either have vstart already cleared if
+vstart_eq_zero or we'll do a brcond to check if vstart >= maxsz to call
+the 'vmvr_v' helper. The helper will clear vstart if it executes until
+the end, or if vstart >= vl.
 
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Message-ID: <20240314061510.9800-1-yongxuan.wang@sifive.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+For starters, the check itself is wrong: we're checking vstart >= maxsz,
+when in fact we should use vstart in bytes, or 'startb' like 'vmvr_v' is
+calling, to do the comparison. But even after fixing the comparison we'll
+still need to clear vstart in the end, which isn't happening too.
+
+We want to make the helpers responsible to manage vstart, including
+these corner cases, precisely to avoid these situations:
+
+- remove the wrong vstart >= maxsz cond from the translation;
+- add a 'startb >= maxsz' cond in 'vmvr_v', and clear vstart if that
+  happens.
+
+This way we're now sure that vstart is being cleared in the end of the
+execution, regardless of the path taken.
+
+Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240314175704.478276-5-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 385e575cd5ab2436c123e4b7f8c9b383a64c0dbe)
+(cherry picked from commit 7e53e3ddf6dff200098e112c5370ab16d2d5dbd1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix due to missing other changes in this area in 8.2.x)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d2eac24156..7e802c3837 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -743,6 +743,8 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 8bbea80c58..db9e45b696 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3653,12 +3653,9 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               \
+                              vreg_ofs(s, a->rs2), maxsz, maxsz);        \
+             mark_vs_dirty(s);                                           \
+         } else {                                                        \
+-            TCGLabel *over = gen_new_label();                           \
+-            tcg_gen_brcondi_tl(TCG_COND_GEU, cpu_vstart, maxsz, over);  \
+             tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2), \
+                                tcg_env, maxsz, maxsz, 0, gen_helper_vmvr_v); \
+             mark_vs_dirty(s);                                           \
+-            gen_set_label(over);                                        \
+         }                                                               \
+         return true;                                                    \
+     }                                                                   \
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index d5a98acce0..3c146afc88 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -5064,6 +5064,11 @@ void HELPER(vmvr_v)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
+     uint32_t startb = env->vstart * sewb;
+     uint32_t i = startb;
  
-     qemu_fdt_add_subnode(ms->fdt, "/cpus");
-     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
-+                          kvm_enabled() ?
-+                          kvm_riscv_get_timebase_frequency(first_cpu) :
-                           RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
-     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
-     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 117e33cf90..c1675158fe 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -684,6 +684,15 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
-     env->kvm_timer_dirty = false;
- }
- 
-+uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
-+{
-+    uint64_t reg;
++    if (startb >= maxsz) {
++        env->vstart = 0;
++        return;
++    }
 +
-+    KVM_RISCV_GET_TIMER(cs, frequency, reg);
-+
-+    return reg;
-+}
-+
- typedef struct KVMScratchCPU {
-     int kvmfd;
-     int vmfd;
-diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
-index 8329cfab82..4728281632 100644
---- a/target/riscv/kvm/kvm_riscv.h
-+++ b/target/riscv/kvm/kvm_riscv.h
-@@ -27,5 +27,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-                           uint64_t guest_num);
- void riscv_kvm_aplic_request(void *opaque, int irq, int level);
- int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
-+uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs);
- 
- #endif
+     if (HOST_BIG_ENDIAN && i % 8 != 0) {
+         uint32_t j = ROUND_UP(i, 8);
+         memcpy((uint8_t *)vd + H1(j - 1),
 -- 
 2.39.2
 
