@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0754CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 14:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D14CD128A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 15:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruZK6-0004nX-Su; Wed, 10 Apr 2024 10:53:15 -0400
+	id 1ruZSX-00007e-FK; Wed, 10 Apr 2024 11:01:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruZK5-0004nK-Jr
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 10:53:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruZS5-0008Uk-T3
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 11:01:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruZK4-0006gG-36
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 10:53:13 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruZS1-0008T6-P0
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 11:01:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712760790;
+ s=mimecast20190719; t=1712761284;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=u/h/TNmo0F+OAndnIIoxs/HTz/VoDakMvSCofeZ0TgE=;
- b=Dvq5Ex8EvYVSzHrqORff4ukPHcsa0y7oqzEtnmaPf36OI/8KkFHshT4Gtdd7AlAv8F90R+
- 5w3beQs9j074J0JOu2bpUtgPwgzM7f+xpymJOwU1Mi1lI3D0WO0bAwB8pa+tlICJCHD+MB
- 7jbl/CmTe0kxalqPHeVfjtLVsfMnj0Y=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WOMx7QHoEllo6WD1Lf9VfvRjTMMkqlxEXjGr6IWXg9Q=;
+ b=KiEeWMGzOf1GP/EMcpIieaFfRq7j0SLxaHcXwDZuBAH/Z930KbczzSLZJ4NWcnyH2v6UMS
+ tqn5nc8cIdYzzFDg8EcS+yhgBWu6QwP8kjubvq0gbuNGx0ylxUIAc5ZDDaNoO4BQlAHhCa
+ z+F/eBY1mFQaKEMvI0slOZ8pQBdEgGM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-B3s_zFk8Pb6b-iUAubZGEg-1; Wed, 10 Apr 2024 10:53:06 -0400
-X-MC-Unique: B3s_zFk8Pb6b-iUAubZGEg-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-6dea8b7e74aso2430092a34.1
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 07:53:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712760786; x=1713365586;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u/h/TNmo0F+OAndnIIoxs/HTz/VoDakMvSCofeZ0TgE=;
- b=ajueS6xMI12Jfc7YF2jBZqQFJchoHlgyauZSj9WUNFvqAQ+MsQ/GByoeMYJcYXRHwG
- L5ESfzJHzEDfhX3++3mdIhzdqtHzYaaRupn4ZYCEJ8eIuHFz5oZPdgPT5iS2IGlG7rSI
- wB2mnshBijLgtaaSPdMH7/bQkOKn2eqYv8osikDSQM9mYdX1O5OjlyRbrJoU2zGWLUc8
- VHq7E2N3LTKtE8KEIYjnF9rUZv2Wql4UKipbf2NGFEu4vjFFDrnI+wZ/A2+dV6KT+Bnx
- Dx55c3Jt3zPVphNI5KCKN2pF06XQAFfCIeMz4VhjEWC9g9HRpJEiQ3XAFhQn0374XdPS
- TN1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWg1UPI1gQT/jLb+9c2/yuz6jVGXb35oqtD4um+c+6fCkgXsBB7+9eD9vJgidk2rN0xekfWF/1r6Az2OwMNaCF1YjIiOCo=
-X-Gm-Message-State: AOJu0YwquptJm/6aukLz4AjLFmUC8lpqfzSiLIuI1XfrzHzDWTVpbCrX
- aP6pFP7xGajGI1a0zVppTsx1RS36XEVfd8o1PRNByx2r+Qbj08YNHe+6O72/hjlZhEZiDc9xtaQ
- x2pQZjX5XmVQcF5gQCLxv6cNdW3c+IOcBEeEg8khlqLNKDgjlkfCA
-X-Received: by 2002:a9d:7dc2:0:b0:6ea:10b8:954c with SMTP id
- k2-20020a9d7dc2000000b006ea10b8954cmr3225158otn.0.1712760786048; 
- Wed, 10 Apr 2024 07:53:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfOZUr0kfLVutAeDhA/BWlkevu03yE6GQXaxd0QVNX1Jat+l4/Hf+ImCkQFUsFRVHX3km6QA==
-X-Received: by 2002:a9d:7dc2:0:b0:6ea:10b8:954c with SMTP id
- k2-20020a9d7dc2000000b006ea10b8954cmr3225135otn.0.1712760785639; 
- Wed, 10 Apr 2024 07:53:05 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- cx19-20020a05620a51d300b0078d582a4b6esm4214245qkb.12.2024.04.10.07.53.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Apr 2024 07:53:05 -0700 (PDT)
-Date: Wed, 10 Apr 2024 10:53:04 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org,
- thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- prerna.saxena@nutanix.com
-Subject: Re: [PATCH 1/4] Revert "migration: modify test_multifd_tcp_none() to
- use new QAPI syntax"
-Message-ID: <Zhan0Brg_CXzt79-@x1n>
-References: <20240410111541.188504-1-het.gala@nutanix.com>
- <20240410111541.188504-2-het.gala@nutanix.com>
- <874jc9v066.fsf@suse.de>
+ us-mta-617-LYZ0Q7tdM12QiLLv4_XKiA-1; Wed, 10 Apr 2024 11:01:20 -0400
+X-MC-Unique: LYZ0Q7tdM12QiLLv4_XKiA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ECBC31809EC5;
+ Wed, 10 Apr 2024 15:01:19 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.204])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 03B0F1C0666C;
+ Wed, 10 Apr 2024 15:01:19 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id C68B718009BB; Wed, 10 Apr 2024 17:01:13 +0200 (CEST)
+Date: Wed, 10 Apr 2024 17:01:13 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, Daniel Berrange <berrange@redhat.com>, 
+ Cole Robinson <crobinso@redhat.com>
+Subject: Re: secure boot & direct kernel load (was: Re: [PATCH] x86/loader:
+ only patch linux kernels)
+Message-ID: <sskscm6i24dzowdpwo2devpktscpwv7gacv2z6b3r6zjvngkpl@ivrwlisbitkx>
+References: <20240410072126.617063-1-kraxel@redhat.com>
+ <20240410032448-mutt-send-email-mst@kernel.org>
+ <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
+ <20240410070801-mutt-send-email-mst@kernel.org>
+ <yndpkfhvaiclz2coihzlzsv3gjnzdtcksunvr5fvfudamc3v32@ahmxbypgk6f6>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <874jc9v066.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <yndpkfhvaiclz2coihzlzsv3gjnzdtcksunvr5fvfudamc3v32@ahmxbypgk6f6>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,33 +89,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10, 2024 at 10:04:33AM -0300, Fabiano Rosas wrote:
-> Het Gala <het.gala@nutanix.com> writes:
+> > > Options I see:
+> > > 
+> > >   (a) Stop using direct kernel boot, let virt-install & other tools
+> > >       create vfat boot media with shim+kernel+initrd instead.
+> > > 
+> > >   (b) Enroll the distro signing keys in the efi variable store, so
+> > >       booting the kernel without shim.efi works.
+> > > 
+> > >   (c) Add support for loading shim to qemu (and ovmf), for example
+> > >       with a new '-shim' command line option which stores shim.efi
+> > >       in some new fw_cfg file.
+> > > 
+> > > (b) + (c) both require a fix for the patching issue.  The options
+> > > I see here are:
+> > > 
+> > >   (A) Move the patching from qemu to the linuxboot option rom.
+> > >       Strictly speaking it belongs there anyway.  It doesn't look
+> > >       that easy though, for qemu it is easier to gather all
+> > >       information needed ...
+> > > 
+> > >   (B) Provide both patched and unpatched setup header, so the
+> > >       guest can choose what it needs.
+> > > 
+> > >   (C) When implementing (c) above we can piggyback on the -shim
+> > >       switch and skip patching in case it is present.
+> > > 
+> > >   (D) Add a flag to skip the patching.
+> > > 
+> > > Comments?  Other/better ideas?
+> > > 
+> > > take care,
+> > >   Gerd
+> > 
+> > So if you didn't decide whether to do b or c then I guess D is
+> > easiest and covers both cases?
 > 
-> > This reverts commit 8e3766eefbb4036cbc280c1f1a0d28537929f7fb
-> >
-> > After addition of 'channels' as the starting argument of new QAPI
-> > syntax inside postcopy test, even if the user entered the old QAPI
-> > syntax, test used the new syntax.
-> > It was a temporary patch added to have some presence of the new syntax
-> > since the migration qtest framework lacked any logic for introducing
-> > 'channels' argument.
+> Easiest if you look at qemu only.  Adding a new config option adds
+> burdens elsewhere though.  Users and the management stack have to
+> learn to use the new option.
 > 
-> That wasn't clear to me when we merged that. Was that really the case?
+> Both (A) and (B) work automatically and can be combined with both (b)
+> and (c).  (B) is probably much easier to implement, drawback is it
+> requires an firmware update too.
 
-Yeah these look all a bit confusing..
+Sneak preview for (c) + (B) is here:
+  https://git.kraxel.org/cgit/qemu/log/?h=sirius/direct-secure-boot
 
-I'm wondering whether do we need the new interface to cover both precopy
-and postcopy, or one would suffice?
+(well, almost, instead of unpatched setup header it exposes an unpatched
+kernel binary).
 
-Both should share the same interface.  I think it means if we covered the
-channels interface in precopy, then perhaps we don't need to test anywhere
-else, as we got the code paths all covered.
+Currently looking at the ovmf side of things to make sure the idea
+actually works before posting patches to the list.
 
-We actually do the same already for all kinds of channels for postcopy,
-where we stick with either tcp/unix but don't cover the rest.
-
--- 
-Peter Xu
+take care,
+  Gerd
 
 
