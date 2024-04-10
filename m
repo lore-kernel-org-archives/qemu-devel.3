@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEFEECD129A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF08CD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSQ3-0004SU-Hk; Wed, 10 Apr 2024 03:30:55 -0400
+	id 1ruSNL-0003GN-Vx; Wed, 10 Apr 2024 03:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSQ1-0004HR-Bk; Wed, 10 Apr 2024 03:30:53 -0400
+ id 1ruSMR-0001gv-Oa; Wed, 10 Apr 2024 03:27:12 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSPz-0005NW-DG; Wed, 10 Apr 2024 03:30:53 -0400
+ id 1ruSMO-0004gw-Id; Wed, 10 Apr 2024 03:27:11 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B1F45D6BF;
- Wed, 10 Apr 2024 10:25:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A771A5D69C;
+ Wed, 10 Apr 2024 10:25:05 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D4863B02FF;
- Wed, 10 Apr 2024 10:23:09 +0300 (MSK)
-Received: (nullmailer pid 4191889 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4B926B02DC;
+ Wed, 10 Apr 2024 10:23:07 +0300 (MSK)
+Received: (nullmailer pid 4191780 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Sven Schnelle <svens@stackframe.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 79/87] target/arm: take HSTR traps of cp15 accesses to
- EL2, not EL1
-Date: Wed, 10 Apr 2024 10:22:52 +0300
-Message-Id: <20240410072303.4191455-79-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 44/87] target/hppa: ldcw,s uses static shift of 3
+Date: Wed, 10 Apr 2024 10:22:17 +0300
+Message-Id: <20240410072303.4191455-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -62,38 +61,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Sven Schnelle <svens@stackframe.org>
 
-The HSTR_EL2 register allows the hypervisor to trap AArch32 EL1 and
-EL0 accesses to cp15 registers.  We incorrectly implemented this so
-they trap to EL1 when we detect the need for a HSTR trap at code
-generation time.  (The check in access_check_cp_reg() which we do at
-runtime to catch traps from EL0 is correctly routing them to EL2.)
-
-Use the correct target EL when generating the code to take the trap.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2226
-Fixes: 049edada5e93df ("target/arm: Make HSTR_EL2 traps take priority over UNDEF-at-EL1")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 96d6407f363 ("target-hppa: Implement loads and stores")
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240325133116.2075362-1-peter.maydell@linaro.org
-(cherry picked from commit fbe5ac5671a9cfcc7f4aee9a5fac7720eea08876)
+Message-Id: <20240319161921.487080-2-svens@stackframe.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit c3ea1996a14d5dbbedb3f9036f7ebec4395dc889)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index b3660173d1..e555e885a1 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -4584,7 +4584,7 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
-             tcg_gen_andi_i32(t, t, 1u << maskbit);
-             tcg_gen_brcondi_i32(TCG_COND_EQ, t, 0, over.label);
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 23ff14c39b..533feca5ec 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -3129,7 +3129,7 @@ static bool trans_ldc(DisasContext *ctx, arg_ldst *a)
+         dest = dest_gpr(ctx, a->t);
+     }
  
--            gen_exception_insn(s, 0, EXCP_UDEF, syndrome);
-+            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, 2);
-             /*
-              * gen_exception_insn() will set is_jmp to DISAS_NORETURN,
-              * but since we're conditionally branching over it, we want
+-    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? a->size : 0,
++    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? 3 : 0,
+              a->disp, a->sp, a->m, MMU_DISABLED(ctx));
+ 
+     /*
 -- 
 2.39.2
 
