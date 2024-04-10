@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B3BCD1296
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09B1CD129A
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSIt-0007fG-1e; Wed, 10 Apr 2024 03:23:31 -0400
+	id 1ruSLG-0005kc-08; Wed, 10 Apr 2024 03:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSIo-0007Ye-GT; Wed, 10 Apr 2024 03:23:26 -0400
+ id 1ruSKn-0005Gx-Fr; Wed, 10 Apr 2024 03:25:33 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSIl-0003uA-Jl; Wed, 10 Apr 2024 03:23:26 -0400
+ id 1ruSKh-0004VL-B0; Wed, 10 Apr 2024 03:25:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D00B55D676;
- Wed, 10 Apr 2024 10:25:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F22C5D68B;
+ Wed, 10 Apr 2024 10:25:04 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 72C36B02B7;
- Wed, 10 Apr 2024 10:23:04 +0300 (MSK)
-Received: (nullmailer pid 4191665 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 130B7B02CC;
+ Wed, 10 Apr 2024 10:23:06 +0300 (MSK)
+Received: (nullmailer pid 4191730 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 07/87] target/arm: Fix 32-bit SMOPA
-Date: Wed, 10 Apr 2024 10:21:40 +0300
-Message-Id: <20240410072303.4191455-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 28/87] nbd/server: only traverse NBDExport->clients
+ from main loop thread
+Date: Wed, 10 Apr 2024 10:22:01 +0300
+Message-Id: <20240410072303.4191455-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,253 +61,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-While the 8-bit input elements are sequential in the input vector,
-the 32-bit output elements are not sequential in the output matrix.
-Do not attempt to compute 2 32-bit outputs at the same time.
+The NBD clients list is currently accessed from both the export
+AioContext and the main loop thread. When the AioContext lock is removed
+there will be nothing protecting the clients list.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 23a5e3859f5 ("target/arm: Implement SME integer outer product")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2083
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240305163931.242795-1-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit d572bcb222010b38b382871a23b2f38e2c3f4d2d)
+Adding a lock around the clients list is tricky because NBDClient
+structs are refcounted and may be freed from the export AioContext or
+the main loop thread. nbd_export_request_shutdown() -> client_close() ->
+nbd_client_put() is also tricky because the list lock would be held
+while indirectly dropping references to NDBClients.
+
+A simpler approach is to only allow nbd_client_put() and client_close()
+calls from the main loop thread. Then the NBD clients list is only
+accessed from the main loop thread and no fancy locking is needed.
+
+nbd_trip() just needs to reschedule itself in the main loop AioContext
+before calling nbd_client_put() and client_close(). This costs more CPU
+cycles per NBD request so add nbd_client_put_nonzero() to optimize the
+common case where more references to NBDClient remain.
+
+Note that nbd_client_get() can still be called from either thread, so
+make NBDClient->refcount atomic.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20231221192452.1785567-6-stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit f816310d0c32c8482e56807ea0f9faa8d1b5f696)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 904bfdac43..e2e0575039 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -1083,11 +1083,32 @@ void HELPER(sme_bfmopa)(void *vza, void *vzn, void *vzm, void *vpn,
+diff --git a/nbd/server.c b/nbd/server.c
+index 895cf0a752..65ec99fa92 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -122,7 +122,7 @@ struct NBDMetaContexts {
+ };
+ 
+ struct NBDClient {
+-    int refcount;
++    int refcount; /* atomic */
+     void (*close_fn)(NBDClient *client, bool negotiated);
+ 
+     NBDExport *exp;
+@@ -1501,14 +1501,17 @@ static int coroutine_fn nbd_receive_request(NBDClient *client, NBDRequest *reque
+ 
+ #define MAX_NBD_REQUESTS 16
+ 
++/* Runs in export AioContext and main loop thread */
+ void nbd_client_get(NBDClient *client)
+ {
+-    client->refcount++;
++    qatomic_inc(&client->refcount);
+ }
+ 
+ void nbd_client_put(NBDClient *client)
+ {
+-    if (--client->refcount == 0) {
++    assert(qemu_in_main_thread());
++
++    if (qatomic_fetch_dec(&client->refcount) == 1) {
+         /* The last reference should be dropped by client->close,
+          * which is called by client_close.
+          */
+@@ -1529,8 +1532,35 @@ void nbd_client_put(NBDClient *client)
      }
  }
  
--typedef uint64_t IMOPFn(uint64_t, uint64_t, uint64_t, uint8_t, bool);
-+typedef uint32_t IMOPFn32(uint32_t, uint32_t, uint32_t, uint8_t, bool);
-+static inline void do_imopa_s(uint32_t *za, uint32_t *zn, uint32_t *zm,
-+                              uint8_t *pn, uint8_t *pm,
-+                              uint32_t desc, IMOPFn32 *fn)
++/*
++ * Tries to release the reference to @client, but only if other references
++ * remain. This is an optimization for the common case where we want to avoid
++ * the expense of scheduling nbd_client_put() in the main loop thread.
++ *
++ * Returns true upon success or false if the reference was not released because
++ * it is the last reference.
++ */
++static bool nbd_client_put_nonzero(NBDClient *client)
 +{
-+    intptr_t row, col, oprsz = simd_oprsz(desc) / 4;
-+    bool neg = simd_data(desc);
++    int old = qatomic_read(&client->refcount);
++    int expected;
 +
-+    for (row = 0; row < oprsz; ++row) {
-+        uint8_t pa = (pn[H1(row >> 1)] >> ((row & 1) * 4)) & 0xf;
-+        uint32_t *za_row = &za[tile_vslice_index(row)];
-+        uint32_t n = zn[H4(row)];
- 
--static inline void do_imopa(uint64_t *za, uint64_t *zn, uint64_t *zm,
--                            uint8_t *pn, uint8_t *pm,
--                            uint32_t desc, IMOPFn *fn)
-+        for (col = 0; col < oprsz; ++col) {
-+            uint8_t pb = pm[H1(col >> 1)] >> ((col & 1) * 4);
-+            uint32_t *a = &za_row[H4(col)];
-+
-+            *a = fn(n, zm[H4(col)], *a, pa & pb, neg);
++    do {
++        if (old == 1) {
++            return false;
 +        }
-+    }
++
++        expected = old;
++        old = qatomic_cmpxchg(&client->refcount, expected, expected - 1);
++    } while (old != expected);
++
++    return true;
 +}
 +
-+typedef uint64_t IMOPFn64(uint64_t, uint64_t, uint64_t, uint8_t, bool);
-+static inline void do_imopa_d(uint64_t *za, uint64_t *zn, uint64_t *zm,
-+                              uint8_t *pn, uint8_t *pm,
-+                              uint32_t desc, IMOPFn64 *fn)
+ static void client_close(NBDClient *client, bool negotiated)
  {
-     intptr_t row, col, oprsz = simd_oprsz(desc) / 8;
-     bool neg = simd_data(desc);
-@@ -1107,25 +1128,16 @@ static inline void do_imopa(uint64_t *za, uint64_t *zn, uint64_t *zm,
++    assert(qemu_in_main_thread());
++
+     if (client->closing) {
+         return;
+     }
+@@ -2936,15 +2966,20 @@ static coroutine_fn int nbd_handle_request(NBDClient *client,
+ static coroutine_fn void nbd_trip(void *opaque)
+ {
+     NBDClient *client = opaque;
+-    NBDRequestData *req;
++    NBDRequestData *req = NULL;
+     NBDRequest request = { 0 };    /* GCC thinks it can be used uninitialized */
+     int ret;
+     Error *local_err = NULL;
+ 
++    /*
++     * Note that nbd_client_put() and client_close() must be called from the
++     * main loop thread. Use aio_co_reschedule_self() to switch AioContext
++     * before calling these functions.
++     */
++
+     trace_nbd_trip();
+     if (client->closing) {
+-        nbd_client_put(client);
+-        return;
++        goto done;
+     }
+ 
+     if (client->quiescing) {
+@@ -2952,10 +2987,9 @@ static coroutine_fn void nbd_trip(void *opaque)
+          * We're switching between AIO contexts. Don't attempt to receive a new
+          * request and kick the main context which may be waiting for us.
+          */
+-        nbd_client_put(client);
+         client->recv_coroutine = NULL;
+         aio_wait_kick();
+-        return;
++        goto done;
+     }
+ 
+     req = nbd_request_get(client);
+@@ -3015,8 +3049,13 @@ static coroutine_fn void nbd_trip(void *opaque)
+ 
+     qio_channel_set_cork(client->ioc, false);
+ done:
+-    nbd_request_put(req);
+-    nbd_client_put(client);
++    if (req) {
++        nbd_request_put(req);
++    }
++    if (!nbd_client_put_nonzero(client)) {
++        aio_co_reschedule_self(qemu_get_aio_context());
++        nbd_client_put(client);
++    }
+     return;
+ 
+ disconnect:
+@@ -3024,6 +3063,8 @@ disconnect:
+         error_reportf_err(local_err, "Disconnect client, due to: ");
+     }
+     nbd_request_put(req);
++
++    aio_co_reschedule_self(qemu_get_aio_context());
+     client_close(client, true);
+     nbd_client_put(client);
  }
- 
- #define DEF_IMOP_32(NAME, NTYPE, MTYPE) \
--static uint64_t NAME(uint64_t n, uint64_t m, uint64_t a, uint8_t p, bool neg) \
-+static uint32_t NAME(uint32_t n, uint32_t m, uint32_t a, uint8_t p, bool neg) \
- {                                                                           \
--    uint32_t sum0 = 0, sum1 = 0;                                            \
-+    uint32_t sum = 0;                                                       \
-     /* Apply P to N as a mask, making the inactive elements 0. */           \
-     n &= expand_pred_b(p);                                                  \
--    sum0 += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                              \
--    sum0 += (NTYPE)(n >> 8) * (MTYPE)(m >> 8);                              \
--    sum0 += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                            \
--    sum0 += (NTYPE)(n >> 24) * (MTYPE)(m >> 24);                            \
--    sum1 += (NTYPE)(n >> 32) * (MTYPE)(m >> 32);                            \
--    sum1 += (NTYPE)(n >> 40) * (MTYPE)(m >> 40);                            \
--    sum1 += (NTYPE)(n >> 48) * (MTYPE)(m >> 48);                            \
--    sum1 += (NTYPE)(n >> 56) * (MTYPE)(m >> 56);                            \
--    if (neg) {                                                              \
--        sum0 = (uint32_t)a - sum0, sum1 = (uint32_t)(a >> 32) - sum1;       \
--    } else {                                                                \
--        sum0 = (uint32_t)a + sum0, sum1 = (uint32_t)(a >> 32) + sum1;       \
--    }                                                                       \
--    return ((uint64_t)sum1 << 32) | sum0;                                   \
-+    sum += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                               \
-+    sum += (NTYPE)(n >> 8) * (MTYPE)(m >> 8);                               \
-+    sum += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                             \
-+    sum += (NTYPE)(n >> 24) * (MTYPE)(m >> 24);                             \
-+    return neg ? a - sum : a + sum;                                         \
- }
- 
- #define DEF_IMOP_64(NAME, NTYPE, MTYPE) \
-@@ -1151,16 +1163,17 @@ DEF_IMOP_64(umopa_d, uint16_t, uint16_t)
- DEF_IMOP_64(sumopa_d, int16_t, uint16_t)
- DEF_IMOP_64(usmopa_d, uint16_t, int16_t)
- 
--#define DEF_IMOPH(NAME) \
--    void HELPER(sme_##NAME)(void *vza, void *vzn, void *vzm, void *vpn,      \
--                            void *vpm, uint32_t desc)                        \
--    { do_imopa(vza, vzn, vzm, vpn, vpm, desc, NAME); }
--
--DEF_IMOPH(smopa_s)
--DEF_IMOPH(umopa_s)
--DEF_IMOPH(sumopa_s)
--DEF_IMOPH(usmopa_s)
--DEF_IMOPH(smopa_d)
--DEF_IMOPH(umopa_d)
--DEF_IMOPH(sumopa_d)
--DEF_IMOPH(usmopa_d)
-+#define DEF_IMOPH(NAME, S) \
-+    void HELPER(sme_##NAME##_##S)(void *vza, void *vzn, void *vzm,          \
-+                                  void *vpn, void *vpm, uint32_t desc)      \
-+    { do_imopa_##S(vza, vzn, vzm, vpn, vpm, desc, NAME##_##S); }
-+
-+DEF_IMOPH(smopa, s)
-+DEF_IMOPH(umopa, s)
-+DEF_IMOPH(sumopa, s)
-+DEF_IMOPH(usmopa, s)
-+
-+DEF_IMOPH(smopa, d)
-+DEF_IMOPH(umopa, d)
-+DEF_IMOPH(sumopa, d)
-+DEF_IMOPH(usmopa, d)
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index cded1d01fc..ea3e232e65 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -67,7 +67,7 @@ endif
- 
- # SME Tests
- ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
--AARCH64_TESTS += sme-outprod1
-+AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
- endif
- 
- # System Registers Tests
-diff --git a/tests/tcg/aarch64/sme-smopa-1.c b/tests/tcg/aarch64/sme-smopa-1.c
-new file mode 100644
-index 0000000000..c62d5e0007
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-smopa-1.c
-@@ -0,0 +1,47 @@
-+#include <stdio.h>
-+#include <string.h>
-+
-+int main()
-+{
-+    static const int cmp[4][4] = {
-+        {  110,  134,  158,  182 },
-+        {  390,  478,  566,  654 },
-+        {  670,  822,  974, 1126 },
-+        {  950, 1166, 1382, 1598 }
-+    };
-+    int dst[4][4];
-+    int *tmp = &dst[0][0];
-+
-+    asm volatile(
-+        ".arch armv8-r+sme\n\t"
-+        "smstart\n\t"
-+        "index z0.b, #0, #1\n\t"
-+        "movprfx z1, z0\n\t"
-+        "add z1.b, z1.b, #16\n\t"
-+        "ptrue p0.b\n\t"
-+        "smopa za0.s, p0/m, p0/m, z0.b, z1.b\n\t"
-+        "ptrue p0.s, vl4\n\t"
-+        "mov w12, #0\n\t"
-+        "st1w { za0h.s[w12, #0] }, p0, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w { za0h.s[w12, #1] }, p0, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w { za0h.s[w12, #2] }, p0, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w { za0h.s[w12, #3] }, p0, [%0]\n\t"
-+        "smstop"
-+        : "+r"(tmp) : : "memory");
-+
-+    if (memcmp(cmp, dst, sizeof(dst)) == 0) {
-+        return 0;
-+    }
-+
-+    /* See above for correct results. */
-+    for (int i = 0; i < 4; ++i) {
-+        for (int j = 0; j < 4; ++j) {
-+            printf("%6d", dst[i][j]);
-+        }
-+        printf("\n");
-+    }
-+    return 1;
-+}
-diff --git a/tests/tcg/aarch64/sme-smopa-2.c b/tests/tcg/aarch64/sme-smopa-2.c
-new file mode 100644
-index 0000000000..c9f48c3bfc
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-smopa-2.c
-@@ -0,0 +1,54 @@
-+#include <stdio.h>
-+#include <string.h>
-+
-+int main()
-+{
-+    static const long cmp[4][4] = {
-+        {  110,  134,  158,  182 },
-+        {  390,  478,  566,  654 },
-+        {  670,  822,  974, 1126 },
-+        {  950, 1166, 1382, 1598 }
-+    };
-+    long dst[4][4];
-+    long *tmp = &dst[0][0];
-+    long svl;
-+
-+    /* Validate that we have a wide enough vector for 4 elements. */
-+    asm(".arch armv8-r+sme-i64\n\trdsvl %0, #1" : "=r"(svl));
-+    if (svl < 32) {
-+        return 0;
-+    }
-+
-+    asm volatile(
-+        "smstart\n\t"
-+        "index z0.h, #0, #1\n\t"
-+        "movprfx z1, z0\n\t"
-+        "add z1.h, z1.h, #16\n\t"
-+        "ptrue p0.b\n\t"
-+        "smopa za0.d, p0/m, p0/m, z0.h, z1.h\n\t"
-+        "ptrue p0.d, vl4\n\t"
-+        "mov w12, #0\n\t"
-+        "st1d { za0h.d[w12, #0] }, p0, [%0]\n\t"
-+        "add %0, %0, #32\n\t"
-+        "st1d { za0h.d[w12, #1] }, p0, [%0]\n\t"
-+        "mov w12, #2\n\t"
-+        "add %0, %0, #32\n\t"
-+        "st1d { za0h.d[w12, #0] }, p0, [%0]\n\t"
-+        "add %0, %0, #32\n\t"
-+        "st1d { za0h.d[w12, #1] }, p0, [%0]\n\t"
-+        "smstop"
-+        : "+r"(tmp) : : "memory");
-+
-+    if (memcmp(cmp, dst, sizeof(dst)) == 0) {
-+        return 0;
-+    }
-+
-+    /* See above for correct results. */
-+    for (int i = 0; i < 4; ++i) {
-+        for (int j = 0; j < 4; ++j) {
-+            printf("%6ld", dst[i][j]);
-+        }
-+        printf("\n");
-+    }
-+    return 1;
-+}
 -- 
 2.39.2
 
