@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F4FCD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9713ACD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSN3-0002bK-Re; Wed, 10 Apr 2024 03:27:52 -0400
+	id 1ruSNA-0002oA-LR; Wed, 10 Apr 2024 03:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSLY-0006Ju-6j; Wed, 10 Apr 2024 03:26:19 -0400
+ id 1ruSM3-0008Nk-1j; Wed, 10 Apr 2024 03:26:48 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSLV-0004ap-FI; Wed, 10 Apr 2024 03:26:15 -0400
+ id 1ruSM1-0004gC-68; Wed, 10 Apr 2024 03:26:46 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0C86C5D693;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A2265D699;
  Wed, 10 Apr 2024 10:25:05 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9A058B02D4;
- Wed, 10 Apr 2024 10:23:06 +0300 (MSK)
-Received: (nullmailer pid 4191755 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 025D6B02D9;
+ Wed, 10 Apr 2024 10:23:07 +0300 (MSK)
+Received: (nullmailer pid 4191771 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Sven Schnelle <svens@stackframe.org>, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 36/87] target/i386: use separate MMU indexes for 32-bit
- accesses
-Date: Wed, 10 Apr 2024 10:22:09 +0300
-Message-Id: <20240410072303.4191455-36-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 41/87] target/hppa: Fix assemble_16 insns for wide mode
+Date: Wed, 10 Apr 2024 10:22:14 +0300
+Message-Id: <20240410072303.4191455-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -61,108 +61,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Accesses from a 32-bit environment (32-bit code segment for instruction
-accesses, EFER.LMA==0 for processor accesses) have to mask away the
-upper 32 bits of the address.  While a bit wasteful, the easiest way
-to do so is to use separate MMU indexes.  These days, QEMU anyway is
-compiled with a fixed value for NB_MMU_MODES.  Split MMU_USER_IDX,
-MMU_KSMAP_IDX and MMU_KNOSMAP_IDX in two.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 90f641531c782c873a05895f411c05fbbbef3c49)
+Reported-by: Sven Schnelle <svens@stackframe.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 72bace2d13cb427fde3bb50ae1a71a2abe9acc0f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: move changes for x86_cpu_mmu_index() to cpu_mmu_index() due to missing
- v8.2.0-1030-gace0c5fe59 "target/i386: Populate CPUClass.mmu_index")
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index df1f602758..70e6713ba3 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2289,27 +2289,42 @@ uint64_t cpu_get_tsc(CPUX86State *env);
- #define cpu_list x86_cpu_list
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index f5a3f02fd1..0d9f8159ec 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -27,13 +27,14 @@
+ %assemble_11a   0:s1 4:10            !function=expand_shl3
+ %assemble_12    0:s1 2:1 3:10        !function=expand_shl2
+ %assemble_12a   0:s1 3:11            !function=expand_shl2
++%assemble_16    0:16                 !function=expand_16
+ %assemble_17    0:s1 16:5 2:1 3:10   !function=expand_shl2
+ %assemble_22    0:s1 16:10 2:1 3:10  !function=expand_shl2
++%assemble_sp    14:2                 !function=sp0_if_wide
  
- /* MMU modes definitions */
--#define MMU_KSMAP_IDX   0
--#define MMU_USER_IDX    1
--#define MMU_KNOSMAP_IDX 2
--#define MMU_NESTED_IDX  3
--#define MMU_PHYS_IDX    4
-+#define MMU_KSMAP64_IDX    0
-+#define MMU_KSMAP32_IDX    1
-+#define MMU_USER64_IDX     2
-+#define MMU_USER32_IDX     3
-+#define MMU_KNOSMAP64_IDX  4
-+#define MMU_KNOSMAP32_IDX  5
-+#define MMU_PHYS_IDX       6
-+#define MMU_NESTED_IDX     7
+ %assemble_21    0:s1 1:11 14:2 16:5 12:2  !function=expand_shl11
+ 
+ %lowsign_11     0:s1 1:10
+-%lowsign_14     0:s1 1:13
+ 
+ %sm_imm         16:10 !function=expand_sm_imm
+ 
+@@ -221,7 +222,7 @@ sub_b_tsv       000010 ..... ..... .... 110100 . .....  @rrr_cf_d
+ 
+ ldil            001000 t:5 .....................        i=%assemble_21
+ addil           001010 r:5 .....................        i=%assemble_21
+-ldo             001101 b:5 t:5 -- ..............        i=%lowsign_14
++ldo             001101 b:5 t:5  ................        i=%assemble_16
+ 
+ addi            101101 ..... ..... .... 0 ...........   @rri_cf
+ addi_tsv        101101 ..... ..... .... 1 ...........   @rri_cf
+@@ -306,10 +307,12 @@ fstd            001011 ..... ..... .. . 1 -- 100 0 . .....      @fldstdi
+ 
+ @ldstim11       ...... b:5 t:5 sp:2 ..............      \
+                 &ldst disp=%assemble_11a m=%ma2_to_m x=0 scale=0 size=3
+-@ldstim14       ...... b:5 t:5 sp:2 ..............      \
+-                &ldst disp=%lowsign_14 x=0 scale=0 m=0
+-@ldstim14m      ...... b:5 t:5 sp:2 ..............      \
+-                &ldst disp=%lowsign_14 x=0 scale=0 m=%neg_to_m
++@ldstim14       ...... b:5 t:5 ................          \
++                &ldst sp=%assemble_sp disp=%assemble_16  \
++                x=0 scale=0 m=0
++@ldstim14m      ...... b:5 t:5 ................          \
++                &ldst sp=%assemble_sp disp=%assemble_16  \
++                x=0 scale=0 m=%neg_to_m
+ @ldstim12m      ...... b:5 t:5 sp:2 ..............      \
+                 &ldst disp=%assemble_12a x=0 scale=0 m=%pos_to_m
+ 
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 3ef39b1bd7..5d9f448acd 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -144,6 +144,28 @@ static int assemble_6(DisasContext *ctx, int val)
+     return (val ^ 31) + 1;
+ }
+ 
++/* Expander for assemble_16(s,im14). */
++static int expand_16(DisasContext *ctx, int val)
++{
++    /*
++     * @val is bits [0:15], containing both im14 and s.
++     * Swizzle thing around depending on PSW.W.
++     */
++    int s = extract32(val, 14, 2);
++    int i = (-(val & 1) << 13) | extract32(val, 1, 13);
 +
-+#ifdef CONFIG_USER_ONLY
-+#ifdef TARGET_X86_64
-+#define MMU_USER_IDX MMU_USER64_IDX
-+#else
-+#define MMU_USER_IDX MMU_USER32_IDX
-+#endif
-+#endif
- 
- static inline int cpu_mmu_index(CPUX86State *env, bool ifetch)
- {
--    return (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER_IDX :
--        (!(env->hflags & HF_SMAP_MASK) || (env->eflags & AC_MASK))
--        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
-+    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
-+    int mmu_index_base =
-+        (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER64_IDX :
-+        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-+        (env->eflags & AC_MASK) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
++    if (ctx->tb_flags & PSW_W) {
++        i ^= s << 13;
++    }
++    return i;
++}
 +
-+    return mmu_index_base + mmu_index_32;
- }
- 
- static inline bool is_mmu_index_smap(int mmu_index)
- {
--    return mmu_index == MMU_KSMAP_IDX;
-+    return (mmu_index & ~1) == MMU_KSMAP64_IDX;
- }
- 
- static inline bool is_mmu_index_user(int mmu_index)
- {
--    return mmu_index == MMU_USER_IDX;
-+    return (mmu_index & ~1) == MMU_USER64_IDX;
- }
- 
- static inline bool is_mmu_index_32(int mmu_index)
-@@ -2320,9 +2335,12 @@ static inline bool is_mmu_index_32(int mmu_index)
- 
- static inline int cpu_mmu_index_kernel(CPUX86State *env)
- {
--    return !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP_IDX :
--        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK))
--        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
-+    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
-+    int mmu_index_base =
-+        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-+        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
++/* The sp field is only present with !PSW_W. */
++static int sp0_if_wide(DisasContext *ctx, int sp)
++{
++    return ctx->tb_flags & PSW_W ? 0 : sp;
++}
 +
-+    return mmu_index_base + mmu_index_32;
- }
- 
- #define CC_DST  (env->cc_dst)
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 18fde700c1..8f7011d966 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -542,7 +542,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-         if (likely(use_stage2)) {
-             in.cr3 = env->nested_cr3;
-             in.pg_mode = env->nested_pg_mode;
--            in.mmu_idx = MMU_USER_IDX;
-+            in.mmu_idx =
-+                env->nested_pg_mode & PG_MODE_LMA ? MMU_USER64_IDX : MMU_USER32_IDX;
-             in.ptw_idx = MMU_PHYS_IDX;
- 
-             if (!mmu_translate(env, &in, out, err)) {
+ /* Translate CMPI doubleword conditions to standard. */
+ static int cmpbid_c(DisasContext *ctx, int val)
+ {
 -- 
 2.39.2
 
