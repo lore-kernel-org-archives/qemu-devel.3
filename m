@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB40CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA908CD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQmn-0006PN-Fj; Wed, 10 Apr 2024 01:46:17 -0400
+	id 1ruQoo-0006F8-It; Wed, 10 Apr 2024 01:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmW-0005Xl-09; Wed, 10 Apr 2024 01:46:03 -0400
+ id 1ruQom-0006D3-UX; Wed, 10 Apr 2024 01:48:21 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmT-0001mb-0z; Wed, 10 Apr 2024 01:45:59 -0400
+ id 1ruQok-00027h-5l; Wed, 10 Apr 2024 01:48:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EFFFA5D4EC;
- Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 655D85D501;
+ Wed, 10 Apr 2024 08:46:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B5B82B0153;
- Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
-Received: (nullmailer pid 4182061 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 2992DB0168;
+ Wed, 10 Apr 2024 08:44:19 +0300 (MSK)
+Received: (nullmailer pid 4182127 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+Cc: qemu-stable@nongnu.org, Wafer <wafer@jaguarmicro.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 20/41] hw/nvme: Use pcie_sriov_num_vfs()
-Date: Wed, 10 Apr 2024 08:43:41 +0300
-Message-Id: <20240410054416.4181891-20-mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 41/41] hw/virtio: Fix packed virtqueue flush used_idx
+Date: Wed, 10 Apr 2024 08:44:02 +0300
+Message-Id: <20240410054416.4181891-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,84 +62,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Wafer <wafer@jaguarmicro.com>
 
-nvme_sriov_pre_write_ctrl() used to directly inspect SR-IOV
-configurations to know the number of VFs being disabled due to SR-IOV
-configuration writes, but the logic was flawed and resulted in
-out-of-bound memory access.
+In the event of writing many chains of descriptors, the device must
+write just the id of the last buffer in the descriptor chain, skip
+forward the number of descriptors in the chain, and then repeat the
+operations for the rest of chains.
 
-It assumed PCI_SRIOV_NUM_VF always has the number of currently enabled
-VFs, but it actually doesn't in the following cases:
-- PCI_SRIOV_NUM_VF has been set but PCI_SRIOV_CTRL_VFE has never been.
-- PCI_SRIOV_NUM_VF was written after PCI_SRIOV_CTRL_VFE was set.
-- VFs were only partially enabled because of realization failure.
+Current QEMU code writes all the buffer ids consecutively, and then
+skips all the buffers altogether. This is a bug, and can be reproduced
+with a VirtIONet device with _F_MRG_RXBUB and without
+_F_INDIRECT_DESC:
 
-It is a responsibility of pcie_sriov to interpret SR-IOV configurations
-and pcie_sriov does it correctly, so use pcie_sriov_num_vfs(), which it
-provides, to get the number of enabled VFs before and after SR-IOV
-configuration writes.
+If a virtio-net device has the VIRTIO_NET_F_MRG_RXBUF feature
+but not the VIRTIO_RING_F_INDIRECT_DESC feature,
+'VirtIONetQueue->rx_vq' will use the merge feature
+to store data in multiple 'elems'.
+The 'num_buffers' in the virtio header indicates how many elements are merged.
+If the value of 'num_buffers' is greater than 1,
+all the merged elements will be filled into the descriptor ring.
+The 'idx' of the elements should be the value of 'vq->used_idx' plus 'ndescs'.
 
-Cc: qemu-stable@nongnu.org
-Fixes: CVE-2024-26328
-Fixes: 11871f53ef8e ("hw/nvme: Add support for the Virtualization Management command")
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240228-reuse-v8-1-282660281e60@daynix.com>
+Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Wafer <wafer@jaguarmicro.com>
+Message-Id: <20240407015451.5228-2-wafer@jaguarmicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 91bb64a8d2014fda33a81fcf0fce37340f0d3b0c)
+(cherry picked from commit 2d9a31b3c27311eca1682cb2c076d7a300441960)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 88c40afc28..027d67f10b 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7704,36 +7704,26 @@ static void nvme_pci_reset(DeviceState *qdev)
-     nvme_ctrl_reset(n, NVME_RESET_FUNCTION);
- }
- 
--static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
--                                      uint32_t val, int len)
-+static void nvme_sriov_post_write_config(PCIDevice *dev, uint16_t old_num_vfs)
- {
-     NvmeCtrl *n = NVME(dev);
-     NvmeSecCtrlEntry *sctrl;
--    uint16_t sriov_cap = dev->exp.sriov_cap;
--    uint32_t off = address - sriov_cap;
--    int i, num_vfs;
-+    int i;
- 
--    if (!sriov_cap) {
--        return;
--    }
--
--    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
--        if (!(val & PCI_SRIOV_CTRL_VFE)) {
--            num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
--            for (i = 0; i < num_vfs; i++) {
--                sctrl = &n->sec_ctrl_list.sec[i];
--                nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
--            }
--        }
-+    for (i = pcie_sriov_num_vfs(dev); i < old_num_vfs; i++) {
-+        sctrl = &n->sec_ctrl_list.sec[i];
-+        nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index b7da7f074d..e4f8ed1e63 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1367,12 +1367,20 @@ static void virtqueue_packed_flush(VirtQueue *vq, unsigned int count)
+         return;
      }
- }
  
- static void nvme_pci_write_config(PCIDevice *dev, uint32_t address,
-                                   uint32_t val, int len)
- {
--    nvme_sriov_pre_write_ctrl(dev, address, val, len);
-+    uint16_t old_num_vfs = pcie_sriov_num_vfs(dev);
-+
-     pci_default_write_config(dev, address, val, len);
-     pcie_cap_flr_write_config(dev, address, val, len);
-+    nvme_sriov_post_write_config(dev, old_num_vfs);
- }
++    /*
++     * For indirect element's 'ndescs' is 1.
++     * For all other elemment's 'ndescs' is the
++     * number of descriptors chained by NEXT (as set in virtqueue_packed_pop).
++     * So When the 'elem' be filled into the descriptor ring,
++     * The 'idx' of this 'elem' shall be
++     * the value of 'vq->used_idx' plus the 'ndescs'.
++     */
++    ndescs += vq->used_elems[0].ndescs;
+     for (i = 1; i < count; i++) {
+-        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], i, false);
++        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false);
+         ndescs += vq->used_elems[i].ndescs;
+     }
+     virtqueue_packed_fill_desc(vq, &vq->used_elems[0], 0, true);
+-    ndescs += vq->used_elems[0].ndescs;
  
- static const VMStateDescription nvme_vmstate = {
+     vq->inuse -= ndescs;
+     vq->used_idx += ndescs;
 -- 
 2.39.2
 
