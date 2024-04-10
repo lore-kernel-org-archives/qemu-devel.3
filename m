@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC3CECD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25785CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruVq4-0002tt-U4; Wed, 10 Apr 2024 07:10:01 -0400
+	id 1ruVqg-0003Dy-L6; Wed, 10 Apr 2024 07:10:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruVq3-0002tS-EQ; Wed, 10 Apr 2024 07:09:59 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruVpw-0008N1-So; Wed, 10 Apr 2024 07:09:54 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-56e2b3e114fso6756630a12.2; 
- Wed, 10 Apr 2024 04:09:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712747391; x=1713352191; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vE92hnc8BAG0T6Kx44GKeZRxsC+3iq1fx3ux4Mdkiqk=;
- b=dof510Sqxl/FjzoeIGQfcxUMCAVS+dtJuBZUlvlm0hoRcrth9+1gjuyD3Aw6Hd3KeX
- JWQ1sY636E+g21W++k/9DDNkrQWqaYOqgq+6qmBJkgaxfp1+LVmn9A+EoaNFOpZUq5us
- +ncqYb8sQKlNXevBr3lXl9rosHNn7RGXbJa+4WfPzaaKuOpYLs6V1pzKcQvIFegxdA7e
- lR0ORbKeOCxfn7qJXbxP0rGtZDwJXRdoqau5jhQ1gmvcbLHnSvjyx4Jrjcc4czcA7VmC
- 2BGkvQYtqyBIGkZjKZ7puJY03pSMksmRl4gRxDKncuBnzR1sCNmkFKRirUPK3y/qtSmw
- 1YKw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ruVqc-00037p-N6
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:10:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ruVqa-0000DG-Py
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:10:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712747430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=F413NOHpFMsWFYZVQhFkCG84TJ77ku5or7fivJuTfgw=;
+ b=biDJw3zlknW4f1z/P4R9VW07aoFC4ZBK4+D2ZZaOeaJ3x2CdUWm12p7GWmM3SxrRkf4x5P
+ dJEMAOqzzjZQTtAMDuW/b4mFEPs2+riflmNurze3n7DOBvPUBF1ldjCO7SyyjZZ/c+JxZX
+ Q8dJ7yaSICNDvx3JbkCuOKZFItKQhck=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-295-6X4KMnV7OEWkd_d_aFYWfg-1; Wed, 10 Apr 2024 07:10:28 -0400
+X-MC-Unique: 6X4KMnV7OEWkd_d_aFYWfg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a5198c1a6f4so318540666b.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 04:10:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712747391; x=1713352191;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vE92hnc8BAG0T6Kx44GKeZRxsC+3iq1fx3ux4Mdkiqk=;
- b=jKXbTG9If/tGVR5MrhGVmPzRaw7oKidVaIBVQUeEpjsfe3ePqy5uruDcyzv07gcafs
- B/Is0kj1uCfezf6y2SVjqWGZRmLhbvJvY+AFpRIVrT1JP5WHFYF3lS71Po3LGtFNBt6b
- o6oIAMZaVkQRUKFIrRdaCYnybaCyZAjHpc6eFJ6hZTU/CchkWwn+5NbxPmtlkw8kYKFn
- 8OYJwTAytHh6jGCw+h6xhEXQKYE3Oh/adsxOSTd06Ij68pdNRfa/plsUagQ86oihNgS7
- k57nUgYxclPhCjfs5IgQCJH8/vWug3Nkir0Unt9CfRyRelMSfYWMbiJpXmcybiUzKawy
- MSbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXD7QLX4zWNS9E7daVCyUAB2oh60h9h1mkh1ZGeeE/BO2Cu46zA8ohmsAH79QDUAZseWvQznE9AFB4ky73p37FECYi/qeyi0TH+5OtZjBU2P+LZGjIGDGdH2Yc=
-X-Gm-Message-State: AOJu0Yz92V5dKjq63GExSxLT/CGsFYs/FLExRr8bx3E27JuzgwaClVth
- o40H9X5JE7QgQpEvhrXIX4fj9wTpTYikXOFh/vifw/BKrLnwSs20wMdD/D0WOSCyhRGJ7jl3thq
- e6tyzaxXRhiXnOUDngaq7xoStRIE=
-X-Google-Smtp-Source: AGHT+IHrJ+Y8ioHbIy0Osc3IVG8sczZ/fh2l/i3k+Pjsz6iAjVr7s4zdD5EDW4dIxxrrt0vurUB8+OFWHS+EEB1t83Q=
-X-Received: by 2002:a50:8a89:0:b0:56d:c88a:f37 with SMTP id
- j9-20020a508a89000000b0056dc88a0f37mr1422295edj.26.1712747390673; Wed, 10 Apr
- 2024 04:09:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712747427; x=1713352227;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F413NOHpFMsWFYZVQhFkCG84TJ77ku5or7fivJuTfgw=;
+ b=xBFrmMqlSlJqeIqaZ6+0BWhbrBaaUQaO8oCF1Wz8r5muKmqrKZMyCRGXoCHBzRmoQp
+ JLrMu8YSHHjeVFmbu4GPugWBynvX+6Z7IioMYfDmfbWVa4KmHBfejOVrclYYtF8Dmq50
+ APodM9MrSLeFNNIv8er/1Tf1OpZk6ZlE9aCKXibwKPzG/5YO7afUCcFtCPLdGBZHn4w1
+ ZO4YQ+69UEc9PxmiIe3Mu5S9++GZokf/ozCpHIc/Dzg681k59sdbY7yBHv57qc1YEJOI
+ yZbnBQ+1UTg19WNjjgSHhXUFW9Mppne4BgGX2+8HacvdmwSFgrwuZ77FP4rT36Vc/aLg
+ /ysg==
+X-Gm-Message-State: AOJu0YwHuqwnKgP3xVtvmKeTA9dNR6Gdg5BLrlvgLy4uW23f0GjjAHlV
+ +j7Dl3fZ29DwQ5c2V9cug9YnnChYq44ahu3T8LQvqg8jFSfinCUpDBuZHvc5f0jQLSqkdHC1ubH
+ qIl746QTJihztXBLjFAFl10af9XXmMTEjKtxvscFwsmhdfd9JK2gs
+X-Received: by 2002:a17:906:cb9a:b0:a51:cab2:e55d with SMTP id
+ mf26-20020a170906cb9a00b00a51cab2e55dmr1431836ejb.15.1712747427359; 
+ Wed, 10 Apr 2024 04:10:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyTlEiwOzdCDRt4eXQrgkHvjufXiRIHFk8ltFVs8TZo4SJk3Abao7PNu+uIGoNivJWAu98nw==
+X-Received: by 2002:a17:906:cb9a:b0:a51:cab2:e55d with SMTP id
+ mf26-20020a170906cb9a00b00a51cab2e55dmr1431814ejb.15.1712747426854; 
+ Wed, 10 Apr 2024 04:10:26 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:179:8bde:8cd:63ff:6fae:3872])
+ by smtp.gmail.com with ESMTPSA id
+ qy1-20020a170907688100b00a51a8d91397sm6561799ejc.73.2024.04.10.04.10.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Apr 2024 04:10:26 -0700 (PDT)
+Date: Wed, 10 Apr 2024 07:10:22 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Daniel Berrange <berrange@redhat.com>, Cole Robinson <crobinso@redhat.com>
+Subject: Re: secure boot & direct kernel load (was: Re: [PATCH] x86/loader:
+ only patch linux kernels)
+Message-ID: <20240410070801-mutt-send-email-mst@kernel.org>
+References: <20240410072126.617063-1-kraxel@redhat.com>
+ <20240410032448-mutt-send-email-mst@kernel.org>
+ <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
 MIME-Version: 1.0
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-8-vikram.garhwal@amd.com>
- <87il25514r.fsf@draig.linaro.org> <ZejYmXhm87RGhQED@amd.com>
-In-Reply-To: <ZejYmXhm87RGhQED@amd.com>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Wed, 10 Apr 2024 13:09:39 +0200
-Message-ID: <CAJy5ezqc1MsfR7A=ba5N42M-r42ciDzTvDy92r3SENQKg+FMYw@mail.gmail.com>
-Subject: Re: [QEMU][PATCH v3 7/7] hw: arm: Add grant mapping.
-To: Vikram Garhwal <vikram.garhwal@amd.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com, 
- Peter Maydell <peter.maydell@linaro.org>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000cfa99e0615bc13e8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,96 +104,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cfa99e0615bc13e8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, Apr 10, 2024 at 12:35:13PM +0200, Gerd Hoffmann wrote:
+> On Wed, Apr 10, 2024 at 03:26:29AM -0400, Michael S. Tsirkin wrote:
+> > On Wed, Apr 10, 2024 at 09:21:26AM +0200, Gerd Hoffmann wrote:
+> > > If the binary loaded via -kernel is *not* a linux kernel (in which
+> > > case protocol == 0), do not patch the linux kernel header fields.
+> > > 
+> > > It's (a) pointless and (b) might break binaries by random patching
+> > > and (c) changes the binary hash which in turn breaks secure boot
+> > > verification.
+> > > 
+> > > Background: OVMF happily loads and runs not only linux kernels but
+> > > any efi binary via direct kernel boot.
+> > > 
+> > > Note: Breaking the secure boot verification is a problem for linux
+> > > kernels too, but fixed that is left for another day ...
+> > 
+> > Um we kind of care about Linux ;)
+> > 
+> > What's the plan?  I suspect we should just add a command line flag
+> > to skip patching? And once we do that, it seems safer to just
+> > always rely on the flag?
+> 
+> Well, there are more problems to solve here than just the patching.  So
+> lets have a look at the bigger picture before discussion the details ...
+> 
+> [ Cc'ing Daniel + Cole ]
+> 
+> Current state of affairs is that OVMF supports two ways to boot a linux
+> kernel:
+> 
+>  (1) Just load it as EFI binary and boot via linux kernel EFI stub,
+>      which is the modern way to load a linux kernel (which is why you
+>      can boot not only linux kernels but any efi binary).
+> 
+>  (2) Use the old EFI handover protocol.  Which is the RHEL-6 era way to
+>      boot a linux kernel on EFI.
+> 
+> For method (1) secure boot verification must pass.  For (2) not.  So if
+> you try to use direct kernel boot with secure boot enabled OVMF will
+> first try (1), which will fail, then go fallback to (2).
+> 
+> The reason for the failure is not only the patching, but also the fact
+> that the linux kernel is typically verified by shim.efi (and the distro
+> keys compiled into the binary) instead of the firmware.
+> 
+> Going though (2) is not ideal for multiple reasons, so we need some
+> strategy how we'll go handle direct kernel load with uefi and secure
+> boot in a way that (1) works.
+> 
+> Options I see:
+> 
+>   (a) Stop using direct kernel boot, let virt-install & other tools
+>       create vfat boot media with shim+kernel+initrd instead.
+> 
+>   (b) Enroll the distro signing keys in the efi variable store, so
+>       booting the kernel without shim.efi works.
+> 
+>   (c) Add support for loading shim to qemu (and ovmf), for example
+>       with a new '-shim' command line option which stores shim.efi
+>       in some new fw_cfg file.
+> 
+> (b) + (c) both require a fix for the patching issue.  The options
+> I see here are:
+> 
+>   (A) Move the patching from qemu to the linuxboot option rom.
+>       Strictly speaking it belongs there anyway.  It doesn't look
+>       that easy though, for qemu it is easier to gather all
+>       information needed ...
+> 
+>   (B) Provide both patched and unpatched setup header, so the
+>       guest can choose what it needs.
+> 
+>   (C) When implementing (c) above we can piggyback on the -shim
+>       switch and skip patching in case it is present.
+> 
+>   (D) Add a flag to skip the patching.
+> 
+> Comments?  Other/better ideas?
+> 
+> take care,
+>   Gerd
 
-On Wed, Mar 6, 2024 at 9:57=E2=80=AFPM Vikram Garhwal <vikram.garhwal@amd.c=
-om>
-wrote:
+So if you didn't decide whether to do b or c then I guess D is
+easiest and covers both cases?
 
-> Hi Alex,
-> On Fri, Mar 01, 2024 at 05:10:28PM +0000, Alex Benn=C3=A9e wrote:
-> > Vikram Garhwal <vikram.garhwal@amd.com> writes:
-> >
-> > > Enable grant ram mapping support for Xenpvh machine on ARM.
-> > >
-> > > Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
-> > > Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-> > > ---
-> > >  hw/arm/xen_arm.c | 3 +++
-> > >  1 file changed, 3 insertions(+)
-> > >
-> > > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-> > > index 32776d94df..b5993ef2a6 100644
-> > > --- a/hw/arm/xen_arm.c
-> > > +++ b/hw/arm/xen_arm.c
-> > > @@ -125,6 +125,9 @@ static void xen_init_ram(MachineState *machine)
-> > >                                   GUEST_RAM1_BASE, ram_size[1]);
-> > >          memory_region_add_subregion(sysmem, GUEST_RAM1_BASE, &ram_hi=
-);
-> > >      }
-> > > +
-> > > +    DPRINTF("init grant ram mapping for XEN\n");
-> >
-> > I don't think we need the DPRINTF here (there others where recently
-> > converted to trace-points although I suspect a memory_region tracepoint
-> > would be a better place to capture this).
-> May be drop the print? As it's not providing much information anyways.
->
+-- 
+MST
 
-With the DPRINTF dropped:
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
---000000000000cfa99e0615bc13e8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Wed, Mar 6, 2024 at 9:57=E2=80=AFPM Vi=
-kram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd.com">vikram.garhwal@a=
-md.com</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">Hi Alex,<br>
-On Fri, Mar 01, 2024 at 05:10:28PM +0000, Alex Benn=C3=A9e wrote:<br>
-&gt; Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd.com" target=3D=
-"_blank">vikram.garhwal@amd.com</a>&gt; writes:<br>
-&gt; <br>
-&gt; &gt; Enable grant ram mapping support for Xenpvh machine on ARM.<br>
-&gt; &gt;<br>
-&gt; &gt; Signed-off-by: Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwa=
-l@amd.com" target=3D"_blank">vikram.garhwal@amd.com</a>&gt;<br>
-&gt; &gt; Reviewed-by: Stefano Stabellini &lt;<a href=3D"mailto:sstabellini=
-@kernel.org" target=3D"_blank">sstabellini@kernel.org</a>&gt;<br>
-&gt; &gt; ---<br>
-&gt; &gt;=C2=A0 hw/arm/xen_arm.c | 3 +++<br>
-&gt; &gt;=C2=A0 1 file changed, 3 insertions(+)<br>
-&gt; &gt;<br>
-&gt; &gt; diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c<br>
-&gt; &gt; index 32776d94df..b5993ef2a6 100644<br>
-&gt; &gt; --- a/hw/arm/xen_arm.c<br>
-&gt; &gt; +++ b/hw/arm/xen_arm.c<br>
-&gt; &gt; @@ -125,6 +125,9 @@ static void xen_init_ram(MachineState *machin=
-e)<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0GUEST_RAM1_BASE,=
- ram_size[1]);<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_region_add_subregion(sys=
-mem, GUEST_RAM1_BASE, &amp;ram_hi);<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; +<br>
-&gt; &gt; +=C2=A0 =C2=A0 DPRINTF(&quot;init grant ram mapping for XEN\n&quo=
-t;);<br>
-&gt; <br>
-&gt; I don&#39;t think we need the DPRINTF here (there others where recentl=
-y<br>
-&gt; converted to trace-points although I suspect a memory_region tracepoin=
-t<br>
-&gt; would be a better place to capture this).<br>
-May be drop the print? As it&#39;s not providing much information anyways.<=
-br>
-</blockquote><div><br></div><div>With the DPRINTF dropped:</div><div>Review=
-ed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@amd.com">edga=
-r.iglesias@amd.com</a>&gt;</div><div><br></div><div><br></div></div></div>
-
---000000000000cfa99e0615bc13e8--
 
