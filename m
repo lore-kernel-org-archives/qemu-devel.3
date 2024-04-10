@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC13CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31EACD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSPM-0001mh-RF; Wed, 10 Apr 2024 03:30:13 -0400
+	id 1ruSPr-0003MI-Rz; Wed, 10 Apr 2024 03:30:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSP5-0001Uw-3z; Wed, 10 Apr 2024 03:29:55 -0400
+ id 1ruSPg-00033w-H3; Wed, 10 Apr 2024 03:30:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSOu-00053x-9A; Wed, 10 Apr 2024 03:29:53 -0400
+ id 1ruSPe-0005NP-AL; Wed, 10 Apr 2024 03:30:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E0455D6B5;
- Wed, 10 Apr 2024 10:25:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B27C5D6BE;
+ Wed, 10 Apr 2024 10:25:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 32F88B02F5;
+ by tsrv.corpit.ru (Postfix) with SMTP id C505CB02FE;
  Wed, 10 Apr 2024 10:23:09 +0300 (MSK)
-Received: (nullmailer pid 4191858 invoked by uid 1000);
+Received: (nullmailer pid 4191885 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 69/87] target/riscv: rvv: Remove the dependency of
- Zvfbfmin to Zfbfmin
-Date: Wed, 10 Apr 2024 10:22:42 +0300
-Message-Id: <20240410072303.4191455-69-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 78/87] hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if
+ int group is disabled
+Date: Wed, 10 Apr 2024 10:22:51 +0300
+Message-Id: <20240410072303.4191455-78-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -61,35 +62,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-According to the Zvfbfmin definition in the RISC-V BF16 extensions spec,
-the Zvfbfmin extension only requires either the V extension or the
-Zve32f extension.
+If the group of the highest priority pending interrupt is disabled
+via ICC_IGRPEN*, the ICC_HPPIR* registers should return
+INTID_SPURIOUS, not the interrupt ID.  (See the GIC architecture
+specification pseudocode functions ICC_HPPIR1_EL1[] and
+HighestPriorityPendingInterrupt().)
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240321170929.1162507-1-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit c9b07fe14d3525cd3f2fc01f46eeb3d4ed7c3603)
+Make HPPIR reads honour the group disable, the way we already do
+when determining whether to preempt in icc_hppi_can_preempt().
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240328153333.2522667-1-peter.maydell@linaro.org
+(cherry picked from commit 44e25fbc1900c99c91a44e532c5bd680bc403459)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 8a35683a34..b437180b27 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -417,11 +417,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index 258dee1b80..3364f6b706 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1067,7 +1067,7 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
+      */
+     bool irq_is_secure;
+ 
+-    if (cs->hppi.prio == 0xff) {
++    if (icc_no_enabled_hppi(cs)) {
+         return INTID_SPURIOUS;
      }
  
--    if (cpu->cfg.ext_zvfbfmin && !cpu->cfg.ext_zfbfmin) {
--        error_setg(errp, "Zvfbfmin extension depends on Zfbfmin extension");
--        return;
--    }
--
-     if (cpu->cfg.ext_zvfbfmin && !cpu->cfg.ext_zve32f) {
-         error_setg(errp, "Zvfbfmin extension depends on Zve32f extension");
-         return;
+@@ -1104,7 +1104,7 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+      */
+     bool irq_is_secure;
+ 
+-    if (cs->hppi.prio == 0xff) {
++    if (icc_no_enabled_hppi(cs)) {
+         return INTID_SPURIOUS;
+     }
+ 
 -- 
 2.39.2
 
