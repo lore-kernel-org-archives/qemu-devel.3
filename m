@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC1BCD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0107CD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQnN-00088M-J2; Wed, 10 Apr 2024 01:46:55 -0400
+	id 1ruQo2-00020A-6J; Wed, 10 Apr 2024 01:47:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmb-0005gu-8T; Wed, 10 Apr 2024 01:46:05 -0400
+ id 1ruQnV-0000Rt-Gt; Wed, 10 Apr 2024 01:47:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmZ-0001nY-Hx; Wed, 10 Apr 2024 01:46:04 -0400
+ id 1ruQnS-0001uT-Ke; Wed, 10 Apr 2024 01:47:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1C99B5D4EE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 953045D4F5;
  Wed, 10 Apr 2024 08:46:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D6293B0155;
- Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
-Received: (nullmailer pid 4182068 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 50061B015C;
+ Wed, 10 Apr 2024 08:44:18 +0300 (MSK)
+Received: (nullmailer pid 4182089 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 22/41] hmat acpi: Fix out of bounds access due to
- missing use of indirection
-Date: Wed, 10 Apr 2024 08:43:43 +0300
-Message-Id: <20240410054416.4181891-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 29/41] target/i386: use separate MMU indexes for
+ 32-bit accesses
+Date: Wed, 10 Apr 2024 08:43:50 +0300
+Message-Id: <20240410054416.4181891-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -61,60 +61,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-With a numa set up such as
+Accesses from a 32-bit environment (32-bit code segment for instruction
+accesses, EFER.LMA==0 for processor accesses) have to mask away the
+upper 32 bits of the address.  While a bit wasteful, the easiest way
+to do so is to use separate MMU indexes.  These days, QEMU anyway is
+compiled with a fixed value for NB_MMU_MODES.  Split MMU_USER_IDX,
+MMU_KSMAP_IDX and MMU_KNOSMAP_IDX in two.
 
--numa nodeid=0,cpus=0 \
--numa nodeid=1,memdev=mem \
--numa nodeid=2,cpus=1
-
-and appropriate hmat_lb entries the initiator list is correctly
-computed and writen to HMAT as 0,2 but then the LB data is accessed
-using the node id (here 2), landing outside the entry_list array.
-
-Stash the reverse lookup when writing the initiator list and use
-it to get the correct array index index.
-
-Fixes: 4586a2cb83 ("hmat acpi: Build System Locality Latency and Bandwidth Information Structure(s)")
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240307160326.31570-3-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 74e2845c5f95b0c139c79233ddb65bb17f2dd679)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 90f641531c782c873a05895f411c05fbbbef3c49)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: move changes for x86_cpu_mmu_index() to cpu_mmu_index() due to missing
+ v8.2.0-1030-gace0c5fe5950 "target/i386: Populate CPUClass.mmu_index"
+ Increase NB_MMU_MODES from 5 to 8 in target/i386/cpu-param.h due to missing
+ v7.2.0-2640-gffd824f3f32d "include/exec: Set default NB_MMU_MODES to 16"
+ v7.2.0-2647-g6787318a5d86 "target/i386: Remove NB_MMU_MODES define"
+ which relaxed upper limit of MMU index for i386, since this commit starts
+ using MMU_NESTED_IDX=7.
+ Thanks Zhao Liu and Paolo Bonzini for the analisys and suggestions.
+)
 
-diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
-index 3a6d51282a..768038e0da 100644
---- a/hw/acpi/hmat.c
-+++ b/hw/acpi/hmat.c
-@@ -77,6 +77,7 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
-                           uint32_t *initiator_list)
+diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
+index f579b16bd2..e21e472e1e 100644
+--- a/target/i386/cpu-param.h
++++ b/target/i386/cpu-param.h
+@@ -23,7 +23,7 @@
+ # define TARGET_VIRT_ADDR_SPACE_BITS  32
+ #endif
+ #define TARGET_PAGE_BITS 12
+-#define NB_MMU_MODES 5
++#define NB_MMU_MODES 8
+ 
+ #ifndef CONFIG_USER_ONLY
+ # define TARGET_TB_PCREL 1
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index f175e18768..73eee08f3f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2182,27 +2182,42 @@ uint64_t cpu_get_tsc(CPUX86State *env);
+ #define cpu_list x86_cpu_list
+ 
+ /* MMU modes definitions */
+-#define MMU_KSMAP_IDX   0
+-#define MMU_USER_IDX    1
+-#define MMU_KNOSMAP_IDX 2
+-#define MMU_NESTED_IDX  3
+-#define MMU_PHYS_IDX    4
++#define MMU_KSMAP64_IDX    0
++#define MMU_KSMAP32_IDX    1
++#define MMU_USER64_IDX     2
++#define MMU_USER32_IDX     3
++#define MMU_KNOSMAP64_IDX  4
++#define MMU_KNOSMAP32_IDX  5
++#define MMU_PHYS_IDX       6
++#define MMU_NESTED_IDX     7
++
++#ifdef CONFIG_USER_ONLY
++#ifdef TARGET_X86_64
++#define MMU_USER_IDX MMU_USER64_IDX
++#else
++#define MMU_USER_IDX MMU_USER32_IDX
++#endif
++#endif
+ 
+ static inline int cpu_mmu_index(CPUX86State *env, bool ifetch)
  {
-     int i, index;
-+    uint32_t initiator_to_index[MAX_NODES] = {};
-     HMAT_LB_Data *lb_data;
-     uint16_t *entry_list;
-     uint32_t base;
-@@ -120,6 +121,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
-     /* Initiator Proximity Domain List */
-     for (i = 0; i < num_initiator; i++) {
-         build_append_int_noprefix(table_data, initiator_list[i], 4);
-+        /* Reverse mapping for array possitions */
-+        initiator_to_index[initiator_list[i]] = i;
-     }
+-    return (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER_IDX :
+-        (!(env->hflags & HF_SMAP_MASK) || (env->eflags & AC_MASK))
+-        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
++    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
++    int mmu_index_base =
++        (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER64_IDX :
++        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
++        (env->eflags & AC_MASK) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
++
++    return mmu_index_base + mmu_index_32;
+ }
  
-     /* Target Proximity Domain List */
-@@ -131,7 +134,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
-     entry_list = g_new0(uint16_t, num_initiator * num_target);
-     for (i = 0; i < hmat_lb->list->len; i++) {
-         lb_data = &g_array_index(hmat_lb->list, HMAT_LB_Data, i);
--        index = lb_data->initiator * num_target + lb_data->target;
-+        index = initiator_to_index[lb_data->initiator] * num_target +
-+            lb_data->target;
+ static inline bool is_mmu_index_smap(int mmu_index)
+ {
+-    return mmu_index == MMU_KSMAP_IDX;
++    return (mmu_index & ~1) == MMU_KSMAP64_IDX;
+ }
  
-         entry_list[index] = (uint16_t)(lb_data->data / hmat_lb->base);
-     }
+ static inline bool is_mmu_index_user(int mmu_index)
+ {
+-    return mmu_index == MMU_USER_IDX;
++    return (mmu_index & ~1) == MMU_USER64_IDX;
+ }
+ 
+ static inline bool is_mmu_index_32(int mmu_index)
+@@ -2213,9 +2228,12 @@ static inline bool is_mmu_index_32(int mmu_index)
+ 
+ static inline int cpu_mmu_index_kernel(CPUX86State *env)
+ {
+-    return !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP_IDX :
+-        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK))
+-        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
++    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
++    int mmu_index_base =
++        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
++        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
++
++    return mmu_index_base + mmu_index_32;
+ }
+ 
+ #define CC_DST  (env->cc_dst)
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 553a60d976..5f13252d68 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -541,7 +541,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+         if (likely(use_stage2)) {
+             in.cr3 = env->nested_cr3;
+             in.pg_mode = env->nested_pg_mode;
+-            in.mmu_idx = MMU_USER_IDX;
++            in.mmu_idx =
++                env->nested_pg_mode & PG_MODE_LMA ? MMU_USER64_IDX : MMU_USER32_IDX;
+             in.ptw_idx = MMU_PHYS_IDX;
+ 
+             if (!mmu_translate(env, &in, out, err)) {
 -- 
 2.39.2
 
