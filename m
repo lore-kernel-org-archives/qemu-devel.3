@@ -4,128 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B12A5C67861
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 02:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54671C67861
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 03:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruNws-0004a9-HF; Tue, 09 Apr 2024 22:44:30 -0400
+	id 1ruOCd-0007Wf-De; Tue, 09 Apr 2024 23:00:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gavin.liu@jaguarmicro.com>)
- id 1ruNwq-0004Zu-LH; Tue, 09 Apr 2024 22:44:29 -0400
-Received: from mail-tyzapc01on20701.outbound.protection.outlook.com
- ([2a01:111:f403:2011::701]
- helo=APC01-TYZ-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gavin.liu@jaguarmicro.com>)
- id 1ruNwo-0006Wo-8G; Tue, 09 Apr 2024 22:44:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UTCywBUdLVO1+q1GAt+bJUxaXtbGPT/3U8CAs81Bf7/FCaHaRatnoVhaI1+hd7sblcTTpg4SfHWsTOMwnl1hapFHVccMq9tQfZxa31FLYRYmKkbbSCoQoxCYGqDS66nsq1GWRVvlzdXJqCOvycymm8Y91/kvMS2s/zUaDFais/ncF4REtY7wffO0rB9UMv6KNehSbfeH2avZ4WAc0bv4JP7uZDlqFVfWZ1JDIuLr9Yn1Vavi7QHJpLdNtieV/9pSUAwh/wRNKQZHPyqeGVrHiMs74v9BcVvH+hFj2fsdzNXMkSwtH9AmY6UZsYo5hIVJ14EFCU0gmPAUIY7d8LCA5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ffJpt6vxAoAcrceYTCzXtMMHjFKTfYFXw9G/7Mj+3Bw=;
- b=oVa4CL2ieOV69OHHj7lS86PomS8PBbc2SW22UYBlFAhcX0OnAqGQvO/Y5vwjOur1ctq6IGp3Q0dVmg+jItwTreGZp31s+bCCFcLo/eHj9aM+70CZgIsk3fbON5zfAGsYp6b85jAVmY2ZmlbJDDZbMSZmLdIaam04DXIsHPrc0DOsosREuWBdASbXpjeyhPXOPvs0MP+WxTXPwcaUnbCJZ0JNu+PbXWEqFFBTtBndR3iscMhmp9lU54zWIbqf0wZ7NDh3/CD5t+bvIY/bXWkexAj/m3kNTbhaw3IlIXffzfvd00dOHjG1uxVL8E2A61+Y6vvYG5R/KhPHZqNVzfEDew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
- header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ffJpt6vxAoAcrceYTCzXtMMHjFKTfYFXw9G/7Mj+3Bw=;
- b=Eh8ZIAZsnRAtPMhDKsQt7L6ti2ysy1b+P/pgAJETZfS1xYlgz1eFh67bU1dO83iCOxwULQm6ITUsVhR5rGqQwCI+cH1hmtFYx550LbVbGx9ydmQ24z6AniLaFe4q7kyKZnyEMV/gd6/SwujxSjRdCTYfsHqmMsPyVui3rfSngU45UCn51CoNJDBZP7xu+kwNDQhKZsW0X75251oVUIrGdIymzA216nqNWpXuur3Wg1+R7J0TDSmVUoaaqwDjQAFFPLXCunE530SYfXuYSNfCnl39Sz6iQ8fFp/7QlKmJViCSOoc3pNaceX1OBsyPmTzHDm6Jm4qsnV/wVeEB4wN1KA==
-Received: from SEYPR06MB6756.apcprd06.prod.outlook.com (2603:1096:101:165::11)
- by TYZPR06MB6953.apcprd06.prod.outlook.com (2603:1096:405:3f::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Wed, 10 Apr
- 2024 02:44:16 +0000
-Received: from SEYPR06MB6756.apcprd06.prod.outlook.com
- ([fe80::922f:a649:adbf:6634]) by SEYPR06MB6756.apcprd06.prod.outlook.com
- ([fe80::922f:a649:adbf:6634%6]) with mapi id 15.20.7409.042; Wed, 10 Apr 2024
- 02:44:15 +0000
-From: Gavin Liu <gavin.liu@jaguarmicro.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: "jasowang@redhat.com" <jasowang@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v2] vhost: don't set vring call if guest notifiers is not
- enabled
-Thread-Topic: [PATCH v2] vhost: don't set vring call if guest notifiers is not
- enabled
-Thread-Index: AdqK8OMThO/rkmqhTe2K0o+mYFaB/w==
-Date: Wed, 10 Apr 2024 02:44:15 +0000
-Message-ID: <SEYPR06MB67561ABD83633689B5037395EC062@SEYPR06MB6756.apcprd06.prod.outlook.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEYPR06MB6756:EE_|TYZPR06MB6953:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: R9gTU6HGja7LFB6HfgPuc4XXsn7TsJvT0uUgYV/DSWKgWe5H8mxfykDsidsw4XqFi2Vk5aDNjnQkqZmu9jInJyZ1qzv2j6YQxF04keZbLx9pkGWOqhZnZKfQM32zrF7RNhrPRjDQm8wjmFoXHF4EDkhDKuIjngntXoGT2KNXDeZUIxTjl0FdPDaBFAA/WCOOyEskzB+qEsMI+11R9YIlOdwkeWaZNBQzFRt2IHPQ7FpJUoT2br4ICSDYtzfnoAWzHE1GgNBYtCViP0VqiGaSuBvzJezG1BwBdACNU59jDM4fvXhMEpBXGxozqPAjsxVS0UKntYrEmpcc4D4ebcXXRYpNUR59tUCmm7GuhUhSzx3Hu96dgaxFPtGTSAJqJE4nRHes//3dT0loOpEChhRiOoQUPv4YL1ERxejfpOpN6V9afDVIqma0ZIvLQowPconTWPMT1aRFXxfNwer744yG07ywExiyRQBTgWJpLNadcxUTpkE8NkdzplyickPOnAPjMbT/FFJfLZ1MVj3OVbGMpb7z9Ha5xi3enf3J6whIqp3l/jrkYpPFFq+5/DwgFNq/s+0HD8jxTxtMEJrosF6kKgE9uomAKHb3zqglsPNh1lT60In4Q6e3f/8+35XZQiXPbv4qJmM/mDsoOHeisdbqE2RpDj3iULoOOFdw3FiALU4=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-cn; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SEYPR06MB6756.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230031)(376005)(1800799015)(366007); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Y29tanZxcEg3U09QMUNaWm1KckVwMkowTjJCcjJlUFFPUldBdGkzVEJrL0cv?=
- =?utf-8?B?ajEyMHJmVG53TGxkaDBLMXY0bHJlZzh1M2FPN3hqdTBGNFNxTzVyRkVJR0Rz?=
- =?utf-8?B?TW14dlNVRHo0WCtWaUVlazhyY0NQNVJEcklaZ0lOUkJQQitqblRwRkJHbUNM?=
- =?utf-8?B?amtvVitJdlIzRGJqY3pUMEw5eVdNWVE4Z3ZEb1V6SjkrRVlNVjdVZm9DQmtp?=
- =?utf-8?B?ZkdRSHZWSlR5aE1lUE5xc212bkhrVmtHK3hsUGJQV1EzVkFrTUhudG5JQnZv?=
- =?utf-8?B?aGJiNGhSUE9Cd0FiYzY1NTBFVmNiMXlFN0QrQ1BXdW43aGRFU1I1TGRuR2Ru?=
- =?utf-8?B?dFVQejhoSk53RXlCQ1pmUE5za3BlYmFKREpodzFaVTkwWlMzYmkxNWlqTTdZ?=
- =?utf-8?B?OHlvYit3b0tZVFlnL1l2bGdtREVCTXQyRHFLY1krd1lVbmZrM3l6dUYxSW9B?=
- =?utf-8?B?YThKQmJNaWtKeVBtNjB1eFFpMisvdjNLWDNwT2FjcHFyeUhOS3VITVowbE8z?=
- =?utf-8?B?QlFKVFgvS0RpbnliakI0NDRtcmlQUThmdmdEWjNiK2x2RGhCeHpmUFNWM2Fu?=
- =?utf-8?B?aFIzTHdVUGVMWG5KUWt0dmJ4WkVZZkpPNStySkl4K3Z4WHlzZG1zQVFrdXlJ?=
- =?utf-8?B?UjRjR3ZvTnZJMlFpcURCSVVaUzJJM290djM2Z3hNZHFuNXZhNnJzK2l6WnJr?=
- =?utf-8?B?ZFlGRlRTdW9ncllOc21xMTNqdVdBWURyaWk2eForWFZsS2kzUjFpWXRXM0pt?=
- =?utf-8?B?R1RtbW5Cc0tzVlhaUDdYYjA3TUlZMDFuQTF3SzRXTlBsTlNFN2xtMlRCdWRm?=
- =?utf-8?B?ZDNZZ2JSV3NicXRZZHY4WmZQUWNJTTY4V2EzTGh1TzdDaXk1bVJsakl3N2xX?=
- =?utf-8?B?Qm4wdFo1VDZkRnVzMUtWbUdlL3ZJVDlxdHRYOUluWGtTb3NKRlZlbDBRa1lX?=
- =?utf-8?B?bGpGYWdJdlhKL0krK3E4TUkwdjJDY1Awa0dnMzJ4QjE4Z0dybk9jVThVY1F3?=
- =?utf-8?B?bDBuUXdBSnB6eVRoU0Zwa2pNWTZHelF3S0M3dmdqZ3BqTm1iSkhVYmt2UHRY?=
- =?utf-8?B?ZXZ4L3cvRndyeGlOTVo0TnYrMnVmMU5BODkyTEF0aHVMc0hCNk91ZmtVcW03?=
- =?utf-8?B?RGh1VWpBdHEwRWJ2dlVqNlNCSHhndStONjVtYmV1MUluTGNEVEF3S2ZUYm9O?=
- =?utf-8?B?T2VPSUJPOTc2cDJ0a3d6ZlNreW5lSEpnVlhrVVBLcStjZ1cvZm1QVzA0SWI3?=
- =?utf-8?B?VXhCNWs3Tmp4cThRSzUwMzVScGVCQTRFbkVUNVh0eVRjWjhOTUNGdFRaL2Ry?=
- =?utf-8?B?N0I3b1l1SXgyR0VaVXhsNWJFMjNEci8vbHBKUEJ3Z2luSDczZHdycmlmNmpG?=
- =?utf-8?B?UytDMXFqUmVjQ2hvdmJRb1h6cURMK1ZiYWZHYVVZWExvbnhMcFkwN3p5Vm9Z?=
- =?utf-8?B?MlkySFBKYU1DaDg2Z2tHZGdzbGt2dGhJanh4SXhFdFVHTEh5RGg5cDJpTDVW?=
- =?utf-8?B?VDRyYnllTmRMWmRnM0h1L3BkL2NqLzA3YUVONGg0UUowSkRHbnZwRkVyeGM1?=
- =?utf-8?B?OVEyaGpyYWxwZ0FZdndoMzZCcmhSZFc1YkJZRmRyZHFudkYrQkRnUVI0RnBr?=
- =?utf-8?B?ai9McSsxM3QyMTk3Yjk1YnV1MXdvVEl5WjVXNTNkd05BRDRPZ1cxRDkvTXA4?=
- =?utf-8?B?aTE2NHUyLzFEa2JXNnI1SVJ3UHltNGFqdVlmaGJWSktac1YwK2tGV09YRlFz?=
- =?utf-8?B?YWlwWGxpR3hxR0VuV2MrY0xQYTFuVk51SUluQ0pPeDE0RHZVUjRLREFKMjFT?=
- =?utf-8?B?T3dwN1hlNW85LzBlUUo2bHFoSEpSOFVLVExQWVZJejA3eDYxQmd3V3pKWTVq?=
- =?utf-8?B?ODhacWVQOWM2K0JlQnA2T1ltTE1xWUdDTXNVWWFlQ003bnAvclViY1FaSURZ?=
- =?utf-8?B?V3d4cE1xRUl6NHNnZ0EvK0IvMVNJeHJrTHdkbHM3bzQ3ZDliVW91WkhlWFds?=
- =?utf-8?B?K0hjdDg2SGRvQkxtb0tlUkh6SGErdjRia08xZHBJTDA3Q29zeW9yVHJFV1Fv?=
- =?utf-8?B?TU1JSUIyOUdWTXFkNVdva2lPOS9UNFNDOVpRcW1HZmkwN0R0TVVreTFtVG5k?=
- =?utf-8?Q?pt9RHeuMfLpr2f3ldvb+wqVAh?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
+ id 1ruOCb-0007Vz-BI; Tue, 09 Apr 2024 23:00:45 -0400
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
+ id 1ruOCZ-0000wF-CY; Tue, 09 Apr 2024 23:00:45 -0400
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-22efc6b8dc5so2485254fac.0; 
+ Tue, 09 Apr 2024 20:00:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712718040; x=1713322840; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7yE75OHeYY2o3De6kqKsS5Sb4EjT8h9PWiWsiDQKW/g=;
+ b=ippHVoP9s9u1GfGA0x6MwxX80C9HHxEdQ3CffcJrVKn2oRZERvB7xFXnwSemUtvzQ+
+ aJjRVQa41ektleXfrQRWdWQZu3k7a8VgjAAOkk18wVDivxznSio0KAjAADS3TUXeGCid
+ SwbXEVZl9RikKzHNZ+8FONjAE2ihEnMhy5H6JCMeuW2KhbsLEoJ7rtL3q9eCGQoui9e2
+ xOzNWm9iwRsaxO5goSMeaqn65P+IJLDOjwjm2inuhDHI/s1gd9GHbgWR/WU+FjccFdF+
+ VhgycsivkOKKjMc5RH5bHxJANccejqjS6VU4sGZzFlMBpBknSLZXFukekGZsIIB/k2kv
+ yIBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712718040; x=1713322840;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7yE75OHeYY2o3De6kqKsS5Sb4EjT8h9PWiWsiDQKW/g=;
+ b=AHKzgTO9o5iIi3PbmG6kSppmIardAm4KNEvRajN6Yp39JPUEquA8Llyxf3mqBdTsoE
+ rhfwZWZiBCTvWP7BHm+kNUjcfmf8BG1Z80TrXIweDCcTZYh/Y9L4h9DcZy73BjoAsWi5
+ m619xgiYHLz9pDPUWUpnkqNp6aGF5Hej/hgaacKrtsn6dAySjr0jkNPTDM8VVlEA/Xic
+ 38cwVmFPbsRBs3J2XhY5k4x39kJKwPp0AxB3nxFqHJe5nORi/0Gi+kcpUOaIeb+oClcu
+ qP34XrBU4XBlHN+8j4nZZo60cShifzZLLbwGkCuNRTZy7Ml7ELBSTAZsfJ3S6UqeiVXa
+ DVkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVLiPnkip8tKmptVKpbU9pi3n6D+lVqlkV0XRLgwf4vlfHQ/TxqPNTZdb/3DPkniO/IsQiKCkOeNXRMrpaNkgCI+1pu+uU=
+X-Gm-Message-State: AOJu0YwEP20phSO8vIido5zZSVhn3pDEJzA9IChNaJOsazunsUMgj5E2
+ ALuWuU9rAMkKfopjhW8sjayNis5xx9v1Jt4aJ4nwABkNV6qQ4rXJ
+X-Google-Smtp-Source: AGHT+IFx/Lc0QaBRp8d9XqtDovYXPLJ/NLSJVYNTXekuO8/kF2MvQUlR3NbCkvPb7kkpzKOperBjBw==
+X-Received: by 2002:a05:6870:82a4:b0:22e:ae2f:7a9c with SMTP id
+ q36-20020a05687082a400b0022eae2f7a9cmr1499658oae.56.1712718040230; 
+ Tue, 09 Apr 2024 20:00:40 -0700 (PDT)
+Received: from [172.20.149.24] ([222.151.198.97])
+ by smtp.gmail.com with ESMTPSA id
+ k17-20020aa79d11000000b006e6b959b636sm9060013pfp.53.2024.04.09.20.00.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Apr 2024 20:00:39 -0700 (PDT)
+Message-ID: <1311ffa0-785f-3e96-d1c5-395437656184@gmail.com>
+Date: Wed, 10 Apr 2024 12:00:32 +0900
 MIME-Version: 1.0
-X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEYPR06MB6756.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d8c53b7-359a-4753-3c8c-08dc59081cb8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2024 02:44:15.6101 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: K+uTCFiZFvfGnPUSiK9A7pawvt7dgLGwE8q+0V9CX6dFQscYkVuyh0YaWeEPMTWeqMDWfd98vV6JB8hzaCiL3gWe+W+3Fc7vFK/LJ86MsrM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6953
-Received-SPF: pass client-ip=2a01:111:f403:2011::701;
- envelope-from=gavin.liu@jaguarmicro.com;
- helo=APC01-TYZ-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH RFC v3 0/6] virtio-net: add support for SR-IOV emulation
+Content-Language: en-US
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ 20240228-reuse-v8-0-282660281e60@daynix.com
+References: <20240305-sriov-v3-0-abdb75770372@daynix.com>
+From: Yui Washizu <yui.washidu@gmail.com>
+In-Reply-To: <20240305-sriov-v3-0-abdb75770372@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=yui.washidu@gmail.com; helo=mail-oa1-x2d.google.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ NICE_REPLY_A=-1.751, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,101 +106,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCkhpIE1pY2hhZWwsDQoNCuKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAlSDinIAgIOKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKAleKA
-leKAleKAleKAleKAleKAleKAlQ0Kc3RkZXJyOg0KKioNCkVSUk9SOi4uL3Rlc3RzL3F0ZXN0L3Zo
-b3N0LXVzZXItdGVzdC5jOjQ2ODpjaHJfcmVhZDogYXNzZXJ0aW9uIGZhaWxlZCAoZXJyID09IE5V
-TEwpOiBCYWQgZmlsZSBkZXNjcmlwdG9yIChnLXVuaXgtZXJyb3ItcXVhcmssIDApDQoqKg0KRVJS
-T1I6Li4vdGVzdHMvcXRlc3QvcW9zLXRlc3QuYzoxOTE6c3VicHJvY2Vzc19ydW5fb25lX3Rlc3Q6
-IGNoaWxkIHByb2Nlc3MgKC9hYXJjaDY0L3ZpcnQvZ2VuZXJpYy1wY2lob3N0L3BjaS1idXMtZ2Vu
-ZXJpYy9wY2ktYnVzL3ZpcnRpby1uZXQtcGNpL3ZpcnRpby1uZXQvdmlydGlvLW5ldC10ZXN0cy92
-aG9zdC11c2VyL21pZ3JhdGUvc3VicHJvY2VzcyBbMjIxOTddKSBmYWlsZWQgdW5leHBlY3RlZGx5
-ICh0ZXN0IHByb2dyYW0gZXhpdGVkIHdpdGggc3RhdHVzIGNvZGUgLTYpIOKAleKAlQ0KX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fDQoNCg0KV2hlbiBJIGFuYWx5emUgdGhlIHByb2JsZW0sIHRoZSBzY2VuYXJpbyBtaWdodCBi
-ZSBsaWtlIHRoaXPvvJoNCuS4gOOAgXZob3N0IHVzZXIgc2VydmVy77yaDQogICAx77yac2V0IGNh
-bGwgZmQgLTENCiAgIDLvvJpUaGUgZnVuY3Rpb24gdmhvc3RfdXNlcl9zZXRfdnJpbmdfY2FsbCBp
-bnZva2VzIHZob3N0X3NldF92cmluZ19maWxlIHRvIHNlbmQgdGhlIGZpbGUgZGVzY3JpcHRvciBp
-bmZvcm1hdGlvbiwgd2hlcmUgZmQ9LTEsIHRodXMgZmRfbnVtPTANCiAgIDM6IFRoZSBmdW5jdGlv
-biBjYWxsIHZob3N0X3VzZXJfd3JpdGUoZGV2LCAmbXNnLCBmZHMsIGZkX251bSkgc2VuZHMgdG8g
-dGhlIHZob3N0IHVzZXIgY2xpZW50LiAgDQogICANCuS6jOOAgXZob3N0IHVzZXIgY2xpZW50DQog
-ICAxOiBUaGUgZnVuY3Rpb24gY2FsbCB2aG9zdF91c2VyX3JlYWQgcmVjZWl2ZXMgdGhlIGZpbGUg
-ZGVzY3JpcHRvciBpbmZvcm1hdGlvbiBzZW50IGJ5IHRoZSBzZXJ2ZXIuDQogICAyOiBTb2NrZXRD
-aGFyZGV2ICpzID0gU09DS0VUX0NIQVJERVYoY2hyKTsgVXBkYXRlIHMtPnJlYWRfbXNnZmRzX251
-bSA9IG1zZ2Zkc19udW0gPSAwLg0KICAgDQrkuInjgIF0ZXN0cy9xdGVzdC92aG9zdC11c2VyLXRl
-c3QNCiAgIDHvvJp2aG9zdC11c2VyLXRlc3QgaW52b2tlcyB0aGUgY2hyX3JlYWQgZnVuY3Rpb24g
-dG8gaGFuZGxlIHRoZSBtZXNzYWdlcyBzZW50IGJ5IHRoZSBzZXJ2ZXIuDQogICAy77yaVGhlIGNo
-cl9yZWFkIGZ1bmN0aW9uIGluaXRpYWxpemVzIHRoZSBsb2NhbCB2YXJpYWJsZSBmZCB0byAtMS4N
-CiAgIDPvvJoNCiAgICAgICAgY2FzZSBWSE9TVF9VU0VSX1NFVF9WUklOR19DQUxMOg0KCQkJcWVt
-dV9jaHJfZmVfZ2V0X21zZ2ZkcyhjaHIsICZmZCwgMSk7IA0KCQkJDQohISEgQmVjYXVzZSBzLT5y
-ZWFkX21zZ2Zkc19udW0gPSAwLCBhZnRlciB0aGUgZnVuY3Rpb24gcWVtdV9jaHJfZmVfZ2V0X21z
-Z2ZkcyhjaHIsICZmZCwgMSkgaXMgZXhlY3V0ZWQsIGZkPS0xLiEhIQ0KDQoJCQlnX3VuaXhfc2V0
-X2ZkX25vbmJsb2NraW5nKGZkLCB0cnVlLCAmZXJyKTsgDQoJCQkNCiEhISBBbiBleGNlcHRpb24g
-d2lsbCBvY2N1ciB3aGVuIHNldHRpbmcgbm9uYmxvY2tpbmcgd2hlbiBmZCA8IDAuICEhIQkNCgkJ
-CWdfYXNzZXJ0X25vX2Vycm9yKGVycik7DQoJCQkJCQkNCuWbm+OAgU9mZmVyIGEgbW9kaWZpY2F0
-aW9uIHN1Z2dlc3Rpb24NCiAgIDHvvJpSZWZlciB0byB0aGUgdGNwX2Nocl9yZWN2IGZ1bmN0aW9u
-Og0KCQkJCQkJc3RhdGljIHNzaXplX3QgdGNwX2Nocl9yZWN2KENoYXJkZXYgKmNociwgY2hhciAq
-YnVmLCBzaXplX3QgbGVuKQ0KCQkJCQkJew0KCQkJCQkJCVNvY2tldENoYXJkZXYgKnMgPSBTT0NL
-RVRfQ0hBUkRFVihjaHIpOw0KCQkJCQkJCSAgLS0tLS0NCgkJCQkJCQkgIC0tLS0NCgkJCQkJCQlm
-b3IgKGkgPSAwOyBpIDwgcy0+cmVhZF9tc2dmZHNfbnVtOyBpKyspIHsNCgkJCQkJCQkJaW50IGZk
-ID0gcy0+cmVhZF9tc2dmZHNbaV07DQoJCQkJCQkJCWlmIChmZCA8IDApIHsNCgkJCQkhISEhV2hl
-biBmZCA8IDAsIHRoZSBxZW11X3NvY2tldF9zZXRfYmxvY2sgZnVuY3Rpb24gd2lsbCBub3QgYmUg
-Y2FsbGVkICEhISEJCQkNCgkJCQkJCQkJCWNvbnRpbnVlOw0KCQkJCQkJCQl9DQoNCgkJCQkJCQkJ
-LyogT19OT05CTE9DSyBpcyBwcmVzZXJ2ZWQgYWNyb3NzIFNDTV9SSUdIVFMgc28gcmVzZXQgaXQg
-Ki8NCgkJCQkJCQkJcWVtdV9zb2NrZXRfc2V0X2Jsb2NrKGZkKTsNCgkJCQkNCiAgIDI6IG1vZGlm
-eSBjaHJfcmVhZCBmdW5jdGlvbiANCg0KCQkJCWNhc2UgVkhPU1RfVVNFUl9TRVRfVlJJTkdfQ0FM
-TDoNCgkJCQkJCXFlbXVfY2hyX2ZlX2dldF9tc2dmZHMoY2hyLCAmZmQsIDEpOyANCgkJCQkJCWlm
-IChmZCA8MCkgICAvKiBBZGQgYSBjb25kaXRpb24gY2hlY2suICovDQoJCQkJCQkJYnJlYWs7DQoJ
-CQkJCQlnX3VuaXhfc2V0X2ZkX25vbmJsb2NraW5nKGZkLCB0cnVlLCAmZXJyKTsgDQoJCQkJCQln
-X2Fzc2VydF9ub19lcnJvcihlcnIpOw0KDQpCZXN0IHJlZ2FyZHMsDQpZdXh1ZSBMaXUNCg0KDQpf
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KDQotLS0tLSBPcmlnaW5h
-bCBNZXNzYWdlIC0tLS0tDQpGcm9tOiBNaWNoYWVsIFMuIFRzaXJraW4gbXN0QHJlZGhhdC5jb20N
-ClNlbnQ6IEFwcmlsIDksIDIwMjQgMTc6MzENClRvOiBHYXZpbiBMaXUgZ2F2aW4ubGl1QGphZ3Vh
-cm1pY3JvLmNvbQ0KQ2M6IGphc293YW5nQHJlZGhhdC5jb207IHFlbXUtc3RhYmxlQG5vbmdudS5v
-cmc7IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KU3ViamVjdDogUmU6IFtQQVRDSF0gdmhvc3Q6IGRv
-bid0IHNldCB2cmluZyBjYWxsIGlmIG5vIGVuYWJsZWQgbXNpeA0KDQoNCg0KRXh0ZXJuYWwgTWFp
-bDogVGhpcyBlbWFpbCBvcmlnaW5hdGVkIGZyb20gT1VUU0lERSBvZiB0aGUgb3JnYW5pemF0aW9u
-IQ0KRG8gbm90IGNsaWNrIGxpbmtzLCBvcGVuIGF0dGFjaG1lbnRzIG9yIHByb3ZpZGUgQU5ZIGlu
-Zm9ybWF0aW9uIHVubGVzcyB5b3UgcmVjb2duaXplIHRoZSBzZW5kZXIgYW5kIGtub3cgdGhlIGNv
-bnRlbnQgaXMgc2FmZS4NCg0KDQpPbiBNb24sIEFwciAwOCwgMjAyNCBhdCAwMzozMzoxMVBNICsw
-ODAwLCBseXg2MzQ0NDk4MDAgd3JvdGU6DQo+IFdoZW4gY29uZHVjdGluZyBwZXJmb3JtYW5jZSB0
-ZXN0aW5nIHVzaW5nIHRlc3RwbWQgaW4gdGhlIGd1ZXN0IG9zLCBpdCANCj4gd2FzIG9ic2VydmVk
-IHRoYXQgdGhlIHBlcmZvcm1hbmNlIHdhcyBsb3dlciBjb21wYXJlZCB0byB0aGUgc2NlbmFyaW8g
-DQo+IG9mIGRpcmVjdCB2ZmlvLXBjaSB1c2FnZS4NCj4NCj4gSW4gdGhlIGNvbW1pdCA5NmEzZDk4
-ZDJjZGJkODk3ZmY1YWIzMzQyN2FhNGNmYjk0MDc3NjY1LCB0aGUgYXV0aG9yIA0KPiBwcm92aWRl
-ZCBhIGdvb2Qgc29sdXRpb24uIEhvd2V2ZXIsIGJlY2F1c2UgdGhlIGd1ZXN0IE9TJ3MgZHJpdmVy
-KGUuZy4sIA0KPiB2aXJ0aW8tbmV0IHBtZCkgbWF5IG5vdCBlbmFibGUgdGhlIG1zaXggY2FwYWJp
-bGl0eSwgdGhlIGZ1bmN0aW9uIA0KPiBrLT5xdWVyeV9ndWVzdF9ub3RpZmllcnMocWJ1cy0+cGFy
-ZW50KSBtYXkgcmV0dXJuIGZhbHNlLCByZXN1bHRpbmcgaW4gDQo+IHRoZSBleHBlY3RlZCBlZmZl
-Y3Qgbm90IGJlaW5nIGFjaGlldmVkLiBUbyBhZGRyZXNzIHRoaXMgaXNzdWUsIG1vZGlmeSANCj4g
-dGhlIGNvbmRpdGlvbmFsIHN0YXRlbWVudC4NCj4NCj4gU2lnbmVkLW9mZi1ieTogWXV4dWUgTGl1
-IDx5dXh1ZS5saXVAamFndWFybWljcm8uY29tPg0KDQoNCkkgdGVzdGVkIHYxIGFuZCBpdCBmYWls
-cy4gU2VudCBhcyByZXBseSBvbiB0aGF0IHBhdGNoLg0KU2luY2UgYWxsIHlvdSBkaWQgaXMgdHdl
-YWsgZGVzY3JpcHRpb24gYW5kIHRpdGxlIHRoZSBwcm9ibGVtIGlzIHByb2JhYmx5IHN0aWxsIHRo
-ZXJlIGluIHYyLg0KDQo+IC0tLQ0KPiBWMjogVXBkYXRlIGNvbW1pdCBkZXNjcmlwdGlvbiBhbmQg
-dGl0bGUNCj4NCj4gIGh3L3ZpcnRpby92aG9zdC5jIHwgMTYgKysrKysrKysrLS0tLS0tLQ0KPiAg
-MSBmaWxlIGNoYW5nZWQsIDkgaW5zZXJ0aW9ucygrKSwgNyBkZWxldGlvbnMoLSkNCj4NCj4gZGlm
-ZiAtLWdpdCBhL2h3L3ZpcnRpby92aG9zdC5jIGIvaHcvdmlydGlvL3Zob3N0LmMgaW5kZXggDQo+
-IGY1MDE4MGU2MGUuLmI5NzJjODRlNjcgMTAwNjQ0DQo+IC0tLSBhL2h3L3ZpcnRpby92aG9zdC5j
-DQo+ICsrKyBiL2h3L3ZpcnRpby92aG9zdC5jDQo+IEBAIC0xMjY2LDEzICsxMjY2LDE1IEBAIGlu
-dCB2aG9zdF92aXJ0cXVldWVfc3RhcnQoc3RydWN0IHZob3N0X2RldiAqZGV2LA0KPiAgICAgICAg
-ICB2aG9zdF92aXJ0cXVldWVfbWFzayhkZXYsIHZkZXYsIGlkeCwgZmFsc2UpOw0KPiAgICAgIH0N
-Cj4NCj4gLSAgICBpZiAoay0+cXVlcnlfZ3Vlc3Rfbm90aWZpZXJzICYmDQo+IC0gICAgICAgIGst
-PnF1ZXJ5X2d1ZXN0X25vdGlmaWVycyhxYnVzLT5wYXJlbnQpICYmDQo+IC0gICAgICAgIHZpcnRp
-b19xdWV1ZV92ZWN0b3IodmRldiwgaWR4KSA9PSBWSVJUSU9fTk9fVkVDVE9SKSB7DQo+IC0gICAg
-ICAgIGZpbGUuZmQgPSAtMTsNCj4gLSAgICAgICAgciA9IGRldi0+dmhvc3Rfb3BzLT52aG9zdF9z
-ZXRfdnJpbmdfY2FsbChkZXYsICZmaWxlKTsNCj4gLSAgICAgICAgaWYgKHIpIHsNCj4gLSAgICAg
-ICAgICAgIGdvdG8gZmFpbF92ZWN0b3I7DQo+ICsgICAgaWYgKGstPnF1ZXJ5X2d1ZXN0X25vdGlm
-aWVycykgew0KPiArICAgICAgICBpZiAoIWstPnF1ZXJ5X2d1ZXN0X25vdGlmaWVycyhxYnVzLT5w
-YXJlbnQpIHx8DQo+ICsgICAgICAgICAgICAoay0+cXVlcnlfZ3Vlc3Rfbm90aWZpZXJzKHFidXMt
-PnBhcmVudCkgJiYNCj4gKyAgICAgICAgICAgIHZpcnRpb19xdWV1ZV92ZWN0b3IodmRldiwgaWR4
-KSA9PSBWSVJUSU9fTk9fVkVDVE9SKSkgew0KPiArICAgICAgICAgICAgZmlsZS5mZCA9IC0xOw0K
-PiArICAgICAgICAgICAgciA9IGRldi0+dmhvc3Rfb3BzLT52aG9zdF9zZXRfdnJpbmdfY2FsbChk
-ZXYsICZmaWxlKTsNCj4gKyAgICAgICAgICAgIGlmIChyKSB7DQo+ICsgICAgICAgICAgICAgICAg
-Z290byBmYWlsX3ZlY3RvcjsNCj4gKyAgICAgICAgICAgIH0NCj4gICAgICAgICAgfQ0KPiAgICAg
-IH0NCj4NCj4gLS0NCj4gMi40My4wDQoNCg==
+
+On 2024/03/05 17:58, Akihiko Odaki wrote:
+> Based-on: <20240228-reuse-v8-0-282660281e60@daynix.com>
+> ("[PATCH v8 00/15] hw/pci: SR-IOV related fixes and improvements")
+>
+> Introduction
+> ------------
+>
+> This series is based on the RFC series submitted by Yui Washizu[1].
+> See also [2] for the context.
+>
+> This series enables SR-IOV emulation for virtio-net. It is useful
+> to test SR-IOV support on the guest, or to expose several vDPA devices
+> in a VM. vDPA devices can also provide L2 switching feature for
+> offloading though it is out of scope to allow the guest to configure
+> such a feature.
+>
+> The PF side code resides in virtio-pci. The VF side code resides in
+> the PCI common infrastructure, but it is restricted to work only for
+> virtio-net-pci because of lack of validation.
+>
+> User Interface
+> --------------
+>
+> A user can configure a SR-IOV capable virtio-net device by adding
+> virtio-net-pci functions to a bus. Below is a command line example:
+>    -netdev user,id=n -netdev user,id=o
+>    -netdev user,id=p -netdev user,id=q
+>    -device pcie-root-port,id=b
+>    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
+>    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
+>
+> The VFs specify the paired PF with "sriov-pf" property. The PF must be
+> added after all VFs. It is user's responsibility to ensure that VFs have
+> function numbers larger than one of the PF, and the function numbers
+> have a consistent stride.
+
+
+QEMU crashed same as RFC v2:
+
+https://lore.kernel.org/all/20231210-sriov-v2-6-b959e8a6dfaf@daynix.com/T/#mb16bdef667a0b0b7c08f487fcd18e8d627694bf6
+
+
+>
+> Keeping VF instances
+> --------------------
+>
+> A problem with SR-IOV emulation is that it needs to hotplug the VFs as
+> the guest requests. Previously, this behavior was implemented by
+> realizing and unrealizing VFs at runtime. However, this strategy does
+> not work well for the proposed virtio-net emulation; in this proposal,
+> device options passed in the command line must be maintained as VFs
+> are hotplugged, but they are consumed when the machine starts and not
+> available after that, which makes realizing VFs at runtime impossible.
+>
+> As an strategy alternative to runtime realization/unrealization, this
+> series proposes to reuse the code to power down PCI Express devices.
+> When a PCI Express device is powered down, it will be hidden from the
+> guest but will be kept realized. This effectively implements the
+> behavior we need for the SR-IOV emulation.
+>
+> Summary
+> -------
+>
+> Patch 1 disables ROM BAR, which virtio-net-pci enables by default, for
+> VFs.
+> Patch 2 and 3 adds validations.
+> Patch 4 adds user-created SR-IOV VF infrastructure.
+> Patch 5 makes virtio-pci work as SR-IOV PF for user-created VFs.
+> Patch 6 allows user to create SR-IOV VFs with virtio-net-pci.
+>
+> [1] https://patchew.org/QEMU/1689731808-3009-1-git-send-email-yui.washidu@gmail.com/
+> [2] https://lore.kernel.org/all/5d46f455-f530-4e5e-9ae7-13a2297d4bc5@daynix.com/
+>
+> Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Changes in v3:
+> - Rebased.
+> - Link to v2: https://lore.kernel.org/r/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com
+>
+> Changes in v2:
+> - Changed to keep VF instances.
+> - Link to v1: https://lore.kernel.org/r/20231202-sriov-v1-0-32b3570f7bd6@daynix.com
+>
+> ---
+> Akihiko Odaki (6):
+>        hw/pci: Do not add ROM BAR for SR-IOV VF
+>        pcie_sriov: Ensure PF and VF are mutually exclusive
+>        pcie_sriov: Check PCI Express for SR-IOV PF
+>        pcie_sriov: Allow user to create SR-IOV device
+>        virtio-pci: Implement SR-IOV PF
+>        virtio-net: Implement SR-IOV VF
+>
+>   include/hw/pci/pci_device.h |   6 +-
+>   include/hw/pci/pcie_sriov.h |  19 +++
+>   hw/pci/pci.c                |  70 +++++++----
+>   hw/pci/pcie_sriov.c         | 299 +++++++++++++++++++++++++++++++++++---------
+>   hw/virtio/virtio-net-pci.c  |   1 +
+>   hw/virtio/virtio-pci.c      |   7 ++
+>   6 files changed, 319 insertions(+), 83 deletions(-)
+> ---
+> base-commit: 2c4eb0476e461b8a4b2f745d25f987e831c7f640
+> change-id: 20231202-sriov-9402fb262be8
+>
+> Best regards,
 
