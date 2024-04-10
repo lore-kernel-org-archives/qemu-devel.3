@@ -4,51 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2105DCD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF43CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQmm-0006La-U5; Wed, 10 Apr 2024 01:46:17 -0400
+	id 1ruQwQ-0008KR-41; Wed, 10 Apr 2024 01:56:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQm9-0005B4-8I; Wed, 10 Apr 2024 01:45:37 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQlz-0001dy-Lt; Wed, 10 Apr 2024 01:45:29 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E1B85D4E6;
- Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5162AB014D;
- Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
-Received: (nullmailer pid 4182043 invoked by uid 1000);
- Wed, 10 Apr 2024 05:44:16 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 14/41] hw/nvme: clean up confusing use of
- errp/local_err
-Date: Wed, 10 Apr 2024 08:43:35 +0300
-Message-Id: <20240410054416.4181891-14-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
-References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1ruQwN-0008K6-Tb
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 01:56:11 -0400
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1ruQwL-00045U-Ae
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 01:56:11 -0400
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-dcc80d6004bso6445174276.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 22:56:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1712728565; x=1713333365; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IqGY/vGIyR9LCZTBxU/bq4zwRiV3ymHiMH0aV8SV/K8=;
+ b=iHOhOxuPQ0XwzOm9vA8yGGPGxKyCTMo3rduqwDSzZfbnhOrB7XFzn1EpWZXiYPqZYU
+ sn1y3bYxwcZrdgi8VbMgEOzXKzX93+z1Q/yVXvp68z01anfyUW3mel68I7+O0wiGn7fZ
+ 2Io0lL27cWvlfy5TtHfwWPanRkad+hvZpURqagvdtoEEhyYLZc3Z/1OaMeMLR8FQ2X8q
+ GS7IzkBmmWFZbRuXbVrx0vkoR8/xSDPazbxIALj29OAdKJwy8SiejiBGzxax6B3Ht43v
+ qTBB4TaxrHlb6sQVFw5RAxEflQKhmRdEQK1P0lxxCvwsvoV6Zs2ZNsKuxL5q3fr67gX1
+ YCpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712728565; x=1713333365;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IqGY/vGIyR9LCZTBxU/bq4zwRiV3ymHiMH0aV8SV/K8=;
+ b=QPTaTojF/kr+jFUV04ai8yrMKR/9gi5eh4nwTTSKtBal1QgumeglYiG+Wq+3D+/Y+W
+ BHXUoCiT0fHiTg2FuI964K2sZKjLYQ98+knZQJ7/aUKBLyZJ7rZkzyE5X3kAX95MdYqc
+ wr30Y8kwomw9WoaRCEhj76fvyhG6jKyN71Xxyb5uVWbdgv4TX9MACG6Hh8+LzouvJ+Eg
+ s/88jRUjGB/i7q8JjWVPKDzFXbraPphOGd3c/Y3CkVv8gzWfvAhcX1LLiH0AofSmse+N
+ 7b3F8WtpHJdWrc7SS8iBUF+9zyWtrddZ4MFsazmsyP5BWfNseu2hYbhnzth8ltFEIeRi
+ qzCA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXp/WLIJyY1t1sUNrcn5QTtzgddbVbQEjorWl/89alCREektGfhVd7qraIa+C0vAK6mHc9Cl64qO1ePGHUtd1OClkw1jJ8=
+X-Gm-Message-State: AOJu0Yz8XT+nqYZ8k2kHtKbKyiNFcFcxS1kPTXicaAxsUNzb2UCc7agN
+ PRCvOjssAd1pAkVm4v0cutBhsMXdzt/OXpVbOle97utRoN/G7AzXt3CzoBL2KNxIxXtvuKeO6QA
+ y+A2qlhTxWJNl/N9enwC1100nRkI7TSrnsLQwbQ==
+X-Google-Smtp-Source: AGHT+IHeeE9q1+cJcZFRlCtvV1BbpZVxnUEWrSDgdRRs3q/CuKFEvKs0kmjhM3Z408INF7Cm0W+a8a8XNmlyII/QV0E=
+X-Received: by 2002:a25:be92:0:b0:dcd:5635:5c11 with SMTP id
+ i18-20020a25be92000000b00dcd56355c11mr1731856ybk.45.1712728565448; Tue, 09
+ Apr 2024 22:56:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240405000707.2670063-1-horenchuang@bytedance.com>
+ <20240405000707.2670063-3-horenchuang@bytedance.com>
+ <20240405150244.00004b49@Huawei.com>
+ <CAKPbEqpGM_nR+LKbsoFTviBZaKUKYqJ3zbJp9EOCJAGvuPy6aQ@mail.gmail.com>
+ <87ttka54pr.fsf@yhuang6-desk2.ccr.corp.intel.com>
+In-Reply-To: <87ttka54pr.fsf@yhuang6-desk2.ccr.corp.intel.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Tue, 9 Apr 2024 22:55:54 -0700
+Message-ID: <CAKPbEqqH0nhVUAcJUxDc_bPewY85+TqhtO94MyypV35GBo33+A@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v11 2/2] memory tier: create CPUless memory
+ tiers after obtaining HMAT info
+To: "Huang, Ying" <ying.huang@intel.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Gregory Price <gourry.memverge@gmail.com>, 
+ aneesh.kumar@linux.ibm.com, mhocko@suse.com, tj@kernel.org, 
+ john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>,
+ Srinivasulu Thanneeru <sthanneeru@micron.com>, 
+ SeongJae Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, 
+ Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, nvdimm@lists.linux.dev, 
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Linux Memory Management List <linux-mm@kvack.org>,
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>, 
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org, 
+ Hao Xiang <hao.xiang@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,203 +111,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+On Tue, Apr 9, 2024 at 7:33=E2=80=AFPM Huang, Ying <ying.huang@intel.com> w=
+rote:
+>
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+>
+> > On Fri, Apr 5, 2024 at 7:03=E2=80=AFAM Jonathan Cameron
+> > <Jonathan.Cameron@huawei.com> wrote:
+> >>
+> >> On Fri,  5 Apr 2024 00:07:06 +0000
+> >> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
+> >>
+> >> > The current implementation treats emulated memory devices, such as
+> >> > CXL1.1 type3 memory, as normal DRAM when they are emulated as normal=
+ memory
+> >> > (E820_TYPE_RAM). However, these emulated devices have different
+> >> > characteristics than traditional DRAM, making it important to
+> >> > distinguish them. Thus, we modify the tiered memory initialization p=
+rocess
+> >> > to introduce a delay specifically for CPUless NUMA nodes. This delay
+> >> > ensures that the memory tier initialization for these nodes is defer=
+red
+> >> > until HMAT information is obtained during the boot process. Finally,
+> >> > demotion tables are recalculated at the end.
+> >> >
+> >> > * late_initcall(memory_tier_late_init);
+> >> > Some device drivers may have initialized memory tiers between
+> >> > `memory_tier_init()` and `memory_tier_late_init()`, potentially brin=
+ging
+> >> > online memory nodes and configuring memory tiers. They should be exc=
+luded
+> >> > in the late init.
+> >> >
+> >> > * Handle cases where there is no HMAT when creating memory tiers
+> >> > There is a scenario where a CPUless node does not provide HMAT infor=
+mation.
+> >> > If no HMAT is specified, it falls back to using the default DRAM tie=
+r.
+> >> >
+> >> > * Introduce another new lock `default_dram_perf_lock` for adist calc=
+ulation
+> >> > In the current implementation, iterating through CPUlist nodes requi=
+res
+> >> > holding the `memory_tier_lock`. However, `mt_calc_adistance()` will =
+end up
+> >> > trying to acquire the same lock, leading to a potential deadlock.
+> >> > Therefore, we propose introducing a standalone `default_dram_perf_lo=
+ck` to
+> >> > protect `default_dram_perf_*`. This approach not only avoids deadloc=
+k
+> >> > but also prevents holding a large lock simultaneously.
+> >> >
+> >> > * Upgrade `set_node_memory_tier` to support additional cases, includ=
+ing
+> >> >   default DRAM, late CPUless, and hot-plugged initializations.
+> >> > To cover hot-plugged memory nodes, `mt_calc_adistance()` and
+> >> > `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()=
+` to
+> >> > handle cases where memtype is not initialized and where HMAT informa=
+tion is
+> >> > available.
+> >> >
+> >> > * Introduce `default_memory_types` for those memory types that are n=
+ot
+> >> >   initialized by device drivers.
+> >> > Because late initialized memory and default DRAM memory need to be m=
+anaged,
+> >> > a default memory type is created for storing all memory types that a=
+re
+> >> > not initialized by device drivers and as a fallback.
+> >> >
+> >> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> >> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> >> > Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+> >>
+> >> Hi - one remaining question. Why can't we delay init for all nodes
+> >> to either drivers or your fallback late_initcall code.
+> >> It would be nice to reduce possible code paths.
+> >
+> > I try not to change too much of the existing code structure in
+> > this patchset.
+> >
+> > To me, postponing/moving all memory tier registrations to
+> > late_initcall() is another possible action item for the next patchset.
+> >
+> > After tier_mem(), hmat_init() is called, which requires registering
+> > `default_dram_type` info. This is when `default_dram_type` is needed.
+> > However, it is indeed possible to postpone the latter part,
+> > set_node_memory_tier(), to `late_init(). So, memory_tier_init() can
+> > indeed be split into two parts, and the latter part can be moved to
+> > late_initcall() to be processed together.
+>
+> I don't think that it's good to move all memory_tier initialization in
+> drivers to late_initcall().  It's natural to keep them in
+> device_initcall() level.
+>
+> If so, we can allocate default_dram_type in memory_tier_init(), and call
+> set_node_memory_tier() only in memory_tier_lateinit().  We can call
+> memory_tier_lateinit() in device_initcall() level too.
+>
 
-Remove an unnecessary local Error value in nvme_realize(). In the
-process, change nvme_check_constraints() to return a bool.
+It makes sense to me to leave only `default_dram_type ` and
+hotplug_init() in memory_tier_init(), postponing all
+set_node_memory_tier()s to memory_tier_late_init()
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 784fd35387e9e6b42e3f365ddf44263eb25de8f7)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: needed for v8.2.0-2319-gfa905f65c5
- "hw/nvme: add machine compatibility parameter to enable msix exclusive bar")
+Would it be possible there is no device_initcall() calling
+memory_tier_late_init()? If yes, I think putting memory_tier_late_init()
+in late_init() is still necessary.
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index a87f79296c..75180823a6 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6980,7 +6980,7 @@ static const MemoryRegionOps nvme_cmb_ops = {
-     },
- };
- 
--static void nvme_check_constraints(NvmeCtrl *n, Error **errp)
-+static bool nvme_check_params(NvmeCtrl *n, Error **errp)
- {
-     NvmeParams *params = &n->params;
- 
-@@ -6994,38 +6994,38 @@ static void nvme_check_constraints(NvmeCtrl *n, Error **errp)
-     if (n->namespace.blkconf.blk && n->subsys) {
-         error_setg(errp, "subsystem support is unavailable with legacy "
-                    "namespace ('drive' property)");
--        return;
-+        return false;
-     }
- 
-     if (params->max_ioqpairs < 1 ||
-         params->max_ioqpairs > NVME_MAX_IOQPAIRS) {
-         error_setg(errp, "max_ioqpairs must be between 1 and %d",
-                    NVME_MAX_IOQPAIRS);
--        return;
-+        return false;
-     }
- 
-     if (params->msix_qsize < 1 ||
-         params->msix_qsize > PCI_MSIX_FLAGS_QSIZE + 1) {
-         error_setg(errp, "msix_qsize must be between 1 and %d",
-                    PCI_MSIX_FLAGS_QSIZE + 1);
--        return;
-+        return false;
-     }
- 
-     if (!params->serial) {
-         error_setg(errp, "serial property not set");
--        return;
-+        return false;
-     }
- 
-     if (n->pmr.dev) {
-         if (host_memory_backend_is_mapped(n->pmr.dev)) {
-             error_setg(errp, "can't use already busy memdev: %s",
-                        object_get_canonical_path_component(OBJECT(n->pmr.dev)));
--            return;
-+            return false;
-         }
- 
-         if (!is_power_of_2(n->pmr.dev->size)) {
-             error_setg(errp, "pmr backend size needs to be power of 2 in size");
--            return;
-+            return false;
-         }
- 
-         host_memory_backend_set_mapped(n->pmr.dev, true);
-@@ -7034,64 +7034,64 @@ static void nvme_check_constraints(NvmeCtrl *n, Error **errp)
-     if (n->params.zasl > n->params.mdts) {
-         error_setg(errp, "zoned.zasl (Zone Append Size Limit) must be less "
-                    "than or equal to mdts (Maximum Data Transfer Size)");
--        return;
-+        return false;
-     }
- 
-     if (!n->params.vsl) {
-         error_setg(errp, "vsl must be non-zero");
--        return;
-+        return false;
-     }
- 
-     if (params->sriov_max_vfs) {
-         if (!n->subsys) {
-             error_setg(errp, "subsystem is required for the use of SR-IOV");
--            return;
-+            return false;
-         }
- 
-         if (params->sriov_max_vfs > NVME_MAX_VFS) {
-             error_setg(errp, "sriov_max_vfs must be between 0 and %d",
-                        NVME_MAX_VFS);
--            return;
-+            return false;
-         }
- 
-         if (params->cmb_size_mb) {
-             error_setg(errp, "CMB is not supported with SR-IOV");
--            return;
-+            return false;
-         }
- 
-         if (n->pmr.dev) {
-             error_setg(errp, "PMR is not supported with SR-IOV");
--            return;
-+            return false;
-         }
- 
-         if (!params->sriov_vq_flexible || !params->sriov_vi_flexible) {
-             error_setg(errp, "both sriov_vq_flexible and sriov_vi_flexible"
-                        " must be set for the use of SR-IOV");
--            return;
-+            return false;
-         }
- 
-         if (params->sriov_vq_flexible < params->sriov_max_vfs * 2) {
-             error_setg(errp, "sriov_vq_flexible must be greater than or equal"
-                        " to %d (sriov_max_vfs * 2)", params->sriov_max_vfs * 2);
--            return;
-+            return false;
-         }
- 
-         if (params->max_ioqpairs < params->sriov_vq_flexible + 2) {
-             error_setg(errp, "(max_ioqpairs - sriov_vq_flexible) must be"
-                        " greater than or equal to 2");
--            return;
-+            return false;
-         }
- 
-         if (params->sriov_vi_flexible < params->sriov_max_vfs) {
-             error_setg(errp, "sriov_vi_flexible must be greater than or equal"
-                        " to %d (sriov_max_vfs)", params->sriov_max_vfs);
--            return;
-+            return false;
-         }
- 
-         if (params->msix_qsize < params->sriov_vi_flexible + 1) {
-             error_setg(errp, "(msix_qsize - sriov_vi_flexible) must be"
-                        " greater than or equal to 1");
--            return;
-+            return false;
-         }
- 
-         if (params->sriov_max_vi_per_vf &&
-@@ -7099,7 +7099,7 @@ static void nvme_check_constraints(NvmeCtrl *n, Error **errp)
-             error_setg(errp, "sriov_max_vi_per_vf must meet:"
-                        " (sriov_max_vi_per_vf - 1) %% %d == 0 and"
-                        " sriov_max_vi_per_vf >= 1", NVME_VF_RES_GRANULARITY);
--            return;
-+            return false;
-         }
- 
-         if (params->sriov_max_vq_per_vf &&
-@@ -7108,9 +7108,11 @@ static void nvme_check_constraints(NvmeCtrl *n, Error **errp)
-             error_setg(errp, "sriov_max_vq_per_vf must meet:"
-                        " (sriov_max_vq_per_vf - 1) %% %d == 0 and"
-                        " sriov_max_vq_per_vf >= 2", NVME_VF_RES_GRANULARITY);
--            return;
-+            return false;
-         }
-     }
-+
-+    return true;
- }
- 
- static void nvme_init_state(NvmeCtrl *n)
-@@ -7509,7 +7511,6 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
- {
-     NvmeCtrl *n = NVME(pci_dev);
-     NvmeNamespace *ns;
--    Error *local_err = NULL;
-     NvmeCtrl *pn = NVME(pcie_sriov_get_pf(pci_dev));
- 
-     if (pci_is_vf(pci_dev)) {
-@@ -7521,9 +7522,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-         n->subsys = pn->subsys;
-     }
- 
--    nvme_check_constraints(n, &local_err);
--    if (local_err) {
--        error_propagate(errp, local_err);
-+    if (!nvme_check_params(n, errp)) {
-         return;
-     }
- 
-@@ -7531,7 +7530,6 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-               &pci_dev->qdev, n->parent_obj.qdev.id);
- 
-     if (nvme_init_subsys(n, errp)) {
--        error_propagate(errp, local_err);
-         return;
-     }
-     nvme_init_state(n);
--- 
-2.39.2
+> --
+> Best Regards,
+> Huang, Ying
+>
+> > Doing this all memory-type drivers have to call late_initcall() to
+> > register a memory tier. I=E2=80=99m not sure how many they are?
+> >
+> > What do you guys think?
+> >
+> >>
+> >> Jonathan
+> >>
+> >>
+> >> > ---
+> >> >  mm/memory-tiers.c | 94 +++++++++++++++++++++++++++++++++++---------=
+---
+> >> >  1 file changed, 70 insertions(+), 24 deletions(-)
+> >> >
+> >> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> >> > index 516b144fd45a..6632102bd5c9 100644
+> >> > --- a/mm/memory-tiers.c
+> >> > +++ b/mm/memory-tiers.c
+> >>
+> >>
+> >>
+> >> > @@ -855,7 +892,8 @@ static int __init memory_tier_init(void)
+> >> >        * For now we can have 4 faster memory tiers with smaller adis=
+tance
+> >> >        * than default DRAM tier.
+> >> >        */
+> >> > -     default_dram_type =3D alloc_memory_type(MEMTIER_ADISTANCE_DRAM=
+);
+> >> > +     default_dram_type =3D mt_find_alloc_memory_type(MEMTIER_ADISTA=
+NCE_DRAM,
+> >> > +                                                   &default_memory_=
+types);
+> >> >       if (IS_ERR(default_dram_type))
+> >> >               panic("%s() failed to allocate default DRAM tier\n", _=
+_func__);
+> >> >
+> >> > @@ -865,6 +903,14 @@ static int __init memory_tier_init(void)
+> >> >        * types assigned.
+> >> >        */
+> >> >       for_each_node_state(node, N_MEMORY) {
+> >> > +             if (!node_state(node, N_CPU))
+> >> > +                     /*
+> >> > +                      * Defer memory tier initialization on
+> >> > +                      * CPUless numa nodes. These will be initializ=
+ed
+> >> > +                      * after firmware and devices are initialized.
+> >>
+> >> Could the comment also say why we can't defer them all?
+> >>
+> >> (In an odd coincidence we have a similar issue for some CPU hotplug
+> >>  related bring up where review feedback was move all cases later).
+> >>
+> >> > +                      */
+> >> > +                     continue;
+> >> > +
+> >> >               memtier =3D set_node_memory_tier(node);
+> >> >               if (IS_ERR(memtier))
+> >> >                       /*
+> >>
 
+
+
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
