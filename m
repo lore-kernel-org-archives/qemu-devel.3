@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43138CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 418FBCD1299
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQlI-0004kE-5j; Wed, 10 Apr 2024 01:44:44 -0400
+	id 1ruQlS-0004oW-2R; Wed, 10 Apr 2024 01:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQlG-0004k1-95; Wed, 10 Apr 2024 01:44:42 -0400
+ id 1ruQlP-0004no-VT; Wed, 10 Apr 2024 01:44:51 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQl8-0001CV-Jb; Wed, 10 Apr 2024 01:44:42 -0400
+ id 1ruQlO-0001Mo-7F; Wed, 10 Apr 2024 01:44:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB0145D4DC;
- Wed, 10 Apr 2024 08:46:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1DD515D4E0;
+ Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 90C0FB0143;
+ by tsrv.corpit.ru (Postfix) with SMTP id D6344B0147;
  Wed, 10 Apr 2024 08:44:16 +0300 (MSK)
-Received: (nullmailer pid 4182012 invoked by uid 1000);
+Received: (nullmailer pid 4182024 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Sven Schnelle <svens@stackframe.org>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 04/41] tests/tcg/aarch64/sysregs.c: Use S syntax for
- id_aa64zfr0_el1 and id_aa64smfr0_el1
-Date: Wed, 10 Apr 2024 08:43:25 +0300
-Message-Id: <20240410054416.4181891-4-mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 08/41] hw/scsi/lsi53c895a: stop script on phase
+ mismatch
+Date: Wed, 10 Apr 2024 08:43:29 +0300
+Message-Id: <20240410054416.4181891-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -41,11 +42,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,89 +62,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Sven Schnelle <svens@stackframe.org>
 
-Some assemblers will complain about attempts to access
-id_aa64zfr0_el1 and id_aa64smfr0_el1 by name if the test
-binary isn't built for the right processor type:
+Netbsd isn't happy with qemu lsi53c895a emulation:
 
- /tmp/ccASXpLo.s:782: Error: selected processor does not support system register name 'id_aa64zfr0_el1'
- /tmp/ccASXpLo.s:829: Error: selected processor does not support system register name 'id_aa64smfr0_el1'
+cd0(esiop0:0:2:0): command with tag id 0 reset
+esiop0: autoconfiguration error: phase mismatch without command
+esiop0: autoconfiguration error: unhandled scsi interrupt, sist=0x80 sstat1=0x0 DSA=0x23a64b1 DSP=0x50
 
-However, these registers are in the ID space and are guaranteed to
-read-as-zero on older CPUs, so the access is both safe and sensible.
-Switch to using the S syntax, as we already do for ID_AA64ISAR2_EL1
-and ID_AA64MMFR2_EL1.  This allows us to drop the HAS_ARMV9_SME check
-and the makefile machinery to adjust the CFLAGS for this test, so we
-don't rely on having a sufficiently new compiler to be able to check
-these registers.
+This is because lsi_bad_phase() triggers a phase mismatch, which
+stops SCRIPT processing. However, after returning to
+lsi_command_complete(), SCRIPT is restarted with lsi_resume_script().
+Fix this by adding a return value to lsi_bad_phase(), and only resume
+script processing when lsi_bad_phase() didn't trigger a host interrupt.
 
-This means we're actually testing the SME ID register: no released
-GCC yet recognizes -march=armv9-a+sme, so that was always skipped.
-It also avoids a future problem if we try to switch the "do we have
-SME support in the toolchain" check from "in the compiler" to "in the
-assembler" (at which point we would otherwise run into the above
-errors).
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 3dc2afeab2964b54848715b913b6c605f36be3e1)
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Tested-by: Helge Deller <deller@gmx.de>
+Message-ID: <20240302214453.2071388-1-svens@stackframe.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit a9198b3132d81a6bfc9fdbf6f3d3a514c2864674)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: pick this for v8.0.0-2361-g1f51573f79
- "target/arm: Fix SME full tile indexing")
 
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index fc6d5d824d..118d069073 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -51,15 +51,10 @@ AARCH64_TESTS += mte-1 mte-2 mte-3 mte-4 mte-5 mte-6 mte-7
- mte-%: CFLAGS += -march=armv8.5-a+memtag
- endif
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index ca619ed564..905f5ef237 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -570,8 +570,9 @@ static inline void lsi_set_phase(LSIState *s, int phase)
+     s->sstat1 = (s->sstat1 & ~PHASE_MASK) | phase;
+ }
  
--ifneq ($(CROSS_CC_HAS_SVE),)
- # System Registers Tests
- AARCH64_TESTS += sysregs
--ifneq ($(CROSS_CC_HAS_ARMV9_SME),)
--sysregs: CFLAGS+=-march=armv9-a+sme -DHAS_ARMV9_SME
--else
--sysregs: CFLAGS+=-march=armv8.1-a+sve
--endif
+-static void lsi_bad_phase(LSIState *s, int out, int new_phase)
++static int lsi_bad_phase(LSIState *s, int out, int new_phase)
+ {
++    int ret = 0;
+     /* Trigger a phase mismatch.  */
+     if (s->ccntl0 & LSI_CCNTL0_ENPMJ) {
+         if ((s->ccntl0 & LSI_CCNTL0_PMJCTL)) {
+@@ -584,8 +585,10 @@ static void lsi_bad_phase(LSIState *s, int out, int new_phase)
+         trace_lsi_bad_phase_interrupt();
+         lsi_script_scsi_interrupt(s, LSI_SIST0_MA, 0);
+         lsi_stop_script(s);
++        ret = 1;
+     }
+     lsi_set_phase(s, new_phase);
++    return ret;
+ }
  
-+ifneq ($(CROSS_CC_HAS_SVE),)
- # SVE ioctl test
- AARCH64_TESTS += sve-ioctls
- sve-ioctls: CFLAGS+=-march=armv8.1-a+sve
-diff --git a/tests/tcg/aarch64/sysregs.c b/tests/tcg/aarch64/sysregs.c
-index 46b931f781..d8eb06abcf 100644
---- a/tests/tcg/aarch64/sysregs.c
-+++ b/tests/tcg/aarch64/sysregs.c
-@@ -25,9 +25,14 @@
- /*
-  * Older assemblers don't recognize newer system register names,
-  * but we can still access them by the Sn_n_Cn_Cn_n syntax.
-+ * This also means we don't need to specifically request that the
-+ * assembler enables whatever architectural features the ID registers
-+ * syntax might be gated behind.
-  */
- #define SYS_ID_AA64ISAR2_EL1 S3_0_C0_C6_2
- #define SYS_ID_AA64MMFR2_EL1 S3_0_C0_C7_2
-+#define SYS_ID_AA64ZFR0_EL1 S3_0_C0_C4_4
-+#define SYS_ID_AA64SMFR0_EL1 S3_0_C0_C4_5
  
- int failed_bit_count;
+@@ -789,7 +792,7 @@ static int lsi_queue_req(LSIState *s, SCSIRequest *req, uint32_t len)
+ static void lsi_command_complete(SCSIRequest *req, size_t resid)
+ {
+     LSIState *s = LSI53C895A(req->bus->qbus.parent);
+-    int out;
++    int out, stop = 0;
  
-@@ -132,10 +137,8 @@ int main(void)
-     /* all hidden, DebugVer fixed to 0x6 (ARMv8 debug architecture) */
-     get_cpu_reg_check_mask(id_aa64dfr0_el1,  _m(0000,0000,0000,0006));
-     get_cpu_reg_check_zero(id_aa64dfr1_el1);
--    get_cpu_reg_check_mask(id_aa64zfr0_el1,  _m(0ff0,ff0f,00ff,00ff));
--#ifdef HAS_ARMV9_SME
--    get_cpu_reg_check_mask(id_aa64smfr0_el1, _m(80f1,00fd,0000,0000));
--#endif
-+    get_cpu_reg_check_mask(SYS_ID_AA64ZFR0_EL1,  _m(0ff0,ff0f,00ff,00ff));
-+    get_cpu_reg_check_mask(SYS_ID_AA64SMFR0_EL1, _m(80f1,00fd,0000,0000));
+     out = (s->sstat1 & PHASE_MASK) == PHASE_DO;
+     trace_lsi_command_complete(req->status);
+@@ -797,7 +800,10 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
+     s->command_complete = 2;
+     if (s->waiting && s->dbc != 0) {
+         /* Raise phase mismatch for short transfers.  */
+-        lsi_bad_phase(s, out, PHASE_ST);
++        stop = lsi_bad_phase(s, out, PHASE_ST);
++        if (stop) {
++            s->waiting = 0;
++        }
+     } else {
+         lsi_set_phase(s, PHASE_ST);
+     }
+@@ -807,7 +813,9 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
+         lsi_request_free(s, s->current);
+         scsi_req_unref(req);
+     }
+-    lsi_resume_script(s);
++    if (!stop) {
++        lsi_resume_script(s);
++    }
+ }
  
-     get_cpu_reg_check_zero(id_aa64afr0_el1);
-     get_cpu_reg_check_zero(id_aa64afr1_el1);
+  /* Callback to indicate that the SCSI layer has completed a transfer.  */
 -- 
 2.39.2
 
