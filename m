@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B340CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA1EECD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSQu-0005bt-Tm; Wed, 10 Apr 2024 03:31:49 -0400
+	id 1ruSPw-0003el-Pg; Wed, 10 Apr 2024 03:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSQU-0005J0-Ph; Wed, 10 Apr 2024 03:31:23 -0400
+ id 1ruSPc-00030a-QR; Wed, 10 Apr 2024 03:30:30 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSQR-0005QD-RE; Wed, 10 Apr 2024 03:31:21 -0400
+ id 1ruSPa-0005Mi-F7; Wed, 10 Apr 2024 03:30:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 89AA45D6C3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0D2895D6BC;
  Wed, 10 Apr 2024 10:25:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2E992B0303;
- Wed, 10 Apr 2024 10:23:10 +0300 (MSK)
-Received: (nullmailer pid 4191901 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id A5937B02FC;
+ Wed, 10 Apr 2024 10:23:09 +0300 (MSK)
+Received: (nullmailer pid 4191879 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 83/87] target/arm: Use correct SecuritySpace for
- AArch64 AT ops at EL3
-Date: Wed, 10 Apr 2024 10:22:56 +0300
-Message-Id: <20240410072303.4191455-83-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 76/87] migration/postcopy: Ensure postcopy_start() sets
+ errp if it fails
+Date: Wed, 10 Apr 2024 10:22:49 +0300
+Message-Id: <20240410072303.4191455-76-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,70 +63,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Avihai Horon <avihaih@nvidia.com>
 
-When we do an AT address translation operation, the page table walk
-is supposed to be performed in the context of the EL we're doing the
-walk for, so for instance an AT S1E2R walk is done for EL2.  In the
-pseudocode an EL is passed to AArch64.AT(), which calls
-SecurityStateAtEL() to find the security state that we should be
-doing the walk with.
+There are several places where postcopy_start() fails without setting
+errp. This can cause a null pointer de-reference, as in case of error,
+the caller of postcopy_start() copies/prints the error set in errp.
 
-In ats_write64() we get this wrong, instead using the current
-security space always.  This is fine for AT operations performed from
-EL1 and EL2, because there the current security state and the
-security state for the lower EL are the same.  But for AT operations
-performed from EL3, the current security state is always either
-Secure or Root, whereas we want to use the security state defined by
-SCR_EL3.{NS,NSE} for the walk. This affects not just guests using
-FEAT_RME but also ones where EL3 is Secure state and the EL3 code
-is trying to do an AT for a NonSecure EL2 or EL1.
+Fix it by setting errp in all of postcopy_start() error paths.
 
-Use arm_security_space_below_el3() to get the SecuritySpace to
-pass to do_ats_write() for all AT operations except the
-AT S1E3* operations.
-
-Cc: qemu-stable@nongnu.org
-Fixes: e1ee56ec2383 ("target/arm: Pass security space rather than flag for AT instructions")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2250
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240405180232.3570066-1-peter.maydell@linaro.org
-(cherry picked from commit 19b254e86a900dc5ee332e3ac0baf9c521301abf)
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Fixes: 908927db28ea ("migration: Update error description whenever migration fails")
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20240328140252.16756-3-avihaih@nvidia.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit d0ad271a7613459bd0a3397c8071a4ad06f3f7eb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index df1646de3a..ca2c6e9732 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3703,6 +3703,8 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
-     ARMMMUIdx mmu_idx;
-     uint64_t hcr_el2 = arm_hcr_el2_eff(env);
-     bool regime_e20 = (hcr_el2 & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE);
-+    bool for_el3 = false;
-+    ARMSecuritySpace ss;
- 
-     switch (ri->opc2 & 6) {
-     case 0:
-@@ -3720,6 +3722,7 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
-             break;
-         case 6: /* AT S1E3R, AT S1E3W */
-             mmu_idx = ARMMMUIdx_E3;
-+            for_el3 = true;
-             break;
-         default:
-             g_assert_not_reached();
-@@ -3738,8 +3741,8 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
-         g_assert_not_reached();
+diff --git a/migration/migration.c b/migration/migration.c
+index 982ab85f04..dbc6c3947c 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2408,6 +2408,8 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+         migration_wait_main_channel(ms);
+         if (postcopy_preempt_establish_channel(ms)) {
+             migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
++            error_setg(errp, "%s: Failed to establish preempt channel",
++                       __func__);
+             return -1;
+         }
+     }
+@@ -2427,17 +2429,22 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+     global_state_store();
+     ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
+     if (ret < 0) {
++        error_setg_errno(errp, -ret, "%s: Failed to stop the VM", __func__);
+         goto fail;
      }
  
--    env->cp15.par_el[1] = do_ats_write(env, value, access_type,
--                                       mmu_idx, arm_security_space(env));
-+    ss = for_el3 ? arm_security_space(env) : arm_security_space_below_el3(env);
-+    env->cp15.par_el[1] = do_ats_write(env, value, access_type, mmu_idx, ss);
- #else
-     /* Handled by hardware accelerator. */
-     g_assert_not_reached();
+     ret = migration_maybe_pause(ms, &cur_state,
+                                 MIGRATION_STATUS_POSTCOPY_ACTIVE);
+     if (ret < 0) {
++        error_setg_errno(errp, -ret, "%s: Failed in migration_maybe_pause()",
++                         __func__);
+         goto fail;
+     }
+ 
+     ret = bdrv_inactivate_all();
+     if (ret < 0) {
++        error_setg_errno(errp, -ret, "%s: Failed in bdrv_inactivate_all()",
++                         __func__);
+         goto fail;
+     }
+     restart_block = true;
+@@ -2514,6 +2521,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+ 
+     /* Now send that blob */
+     if (qemu_savevm_send_packaged(ms->to_dst_file, bioc->data, bioc->usage)) {
++        error_setg(errp, "%s: Failed to send packaged data", __func__);
+         goto fail_closefb;
+     }
+     qemu_fclose(fb);
 -- 
 2.39.2
 
