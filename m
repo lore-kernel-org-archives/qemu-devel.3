@@ -4,78 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35DC2CD1296
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C63DCD128A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruVwD-0007i1-8V; Wed, 10 Apr 2024 07:16:21 -0400
+	id 1ruVvw-0007XN-BK; Wed, 10 Apr 2024 07:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruVw5-0007ad-9J
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:14 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruVw3-0001Ac-2n
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:13 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-56e6a1edecfso3989843a12.1
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 04:16:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712747769; x=1713352569; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+IN7un69bqHkcPqreTU10boYRttPxsSWpC4RIALq0Tk=;
- b=SHhBf0sM2qZxdjPx8tfrEZCtrPXM+JGExdqUI+oHqRWwz5CJandFl8iNcIxcsePfJb
- 8QCrKSxVgzpZRDaxLpkXrOQD/q3O70MHpPiU0/r3smSQ/qOi0yAhDG3UrU1q0CX+SdXX
- 5OvN7zhhs8j3j36+LpAZrnEzcTK0aVKYrQKVgVzEDhyi/Tid+1kTeMjA8Lpa62bd+LL5
- OSiwXSrJ+xNKlQcp0Rdb+LPjO3kh4nAn8+eV68j+gcnigESoiHjrQayltAdutSyJQWeo
- GVlV605TFBbLk9tr5niC4QF48PYrLW6eSnsbKq1wqBshgT5kTF4u5MN2YVIhsP0YCkuJ
- k6Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712747769; x=1713352569;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+IN7un69bqHkcPqreTU10boYRttPxsSWpC4RIALq0Tk=;
- b=TAxIn6PRlsDshYsPAYtDH1ZzsldDnkufMwSdkHJ3ceLCbx0/cvWI3FBThbO27W5k8g
- 1swkoYYjWjAqoiYCSCrjqCbqMAirrbc/DYw8OvAcY9E15c76iJohYWwnnX/0Kch5DHmD
- n3PrZ+zQ+XAy9NEVbpczMrQux9HHsr1Bkq9Yzmfh6XU4/l4R9+y2K3H4rpCN5w5LOUxs
- 020+JcdAqVCQ8ocNgZZ/19KPhHyhq9RvJy4/o/RUmeehbhHLLe/5WvXLiZaYFomXcQtP
- U4ZeaW86jA4fpRAcwL5Tfs/lYo2goIuyfDyKa49A7svwH19xMqmk8foRFuyg/v6x0+kD
- 019Q==
-X-Gm-Message-State: AOJu0YxaxW+jRItdAtJ6VedojFJaeV8qQwEUxyNl+AFo0xxInF707z6C
- 6sb+B51uW87GCADEJB1hcbsSSjtdhxfdB0yBZ+ibcINOEiNAo9ltipjGcx+gs16dgEMzft9XShz
- BiSU2z3011Nnlz7Ubth79/iFxe9M=
-X-Google-Smtp-Source: AGHT+IEW01CMFpOVcXIOi32Peel71hH36R4znipkhO//pqBD9Ikcs10QfxtQoTAD+2CiKEFtzpYGR32oXz94nkrl0e8=
-X-Received: by 2002:a50:c313:0:b0:56e:447:1e44 with SMTP id
- a19-20020a50c313000000b0056e04471e44mr1631304edb.8.1712747768656; Wed, 10 Apr
- 2024 04:16:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1ruVvt-0007Tt-3D
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:01 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1ruVvo-00019N-5g
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:00 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 439H5sJm016731;
+ Wed, 10 Apr 2024 04:15:54 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :content-transfer-encoding:content-type:mime-version; s=
+ proofpoint20171006; bh=i319eQzVrMzWZgGm44SUMcldzNGFG5MMhuQv8ox8G
+ uw=; b=fRTx92ZTt7HMDHxNicdZnu9mnYmovEjv/mPv2t1D537iV3y6s4Li/kCDe
+ WhKpUxTXPxx/T3eVU2zjr+n/zMHiZDDSq6Xtt+XAjmaUioxgY4K7mV831zwsGHSH
+ FRiwrYsOBx3P9ltvXCIjeFNVArt7YrGGmELq5XICei8nXsmckBO27DxdTvwef1Rr
+ wgnH61KdZpX438Npn1woobvgRE9UvYhoML+d9ymlE+VMz+id0hB+4YTgIzowpIU6
+ mfqkH2xUauTIKjvgG7zRKY6VDRv27LHslaG//YZXAj9wFXv//OgERfpuRJX26+nR
+ 0zjnL+n2jRx3yizkFRawBveObvIsg==
+Received: from nam12-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam12lp2169.outbound.protection.outlook.com [104.47.55.169])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3xct2k33fn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 10 Apr 2024 04:15:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Ba+DWqZ2DFPJiFkKoo+wZByr5R3xoHRtVgK97lbjjNM4qNhwkQzhIQtTrlRcjNjCUGDk7DecJkMSg+y0HEMqTRjCcYOrLDkGZxGggENFPb7ziy57QGzIagnbkBLjrourhEnL6G7B4yndLTzuGq5Iu3qy6O7J2MThRIotMcUwjZyuBmchMJyFcNvbKHcwJZnqsWo605yAHaYuGfCCFoSYpotJwRUga/Yfw1SiEmaFV2tX70vf2NZVXadWqs/yyxSvxmZepuroX/pQ0d0SUgk8/nQ1IhJEIRn4Tu6NEPzvjs0Uw+q4f9acGh5+t7C8IZ8SDiIoO0eshXvgl5zp5vAntw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i319eQzVrMzWZgGm44SUMcldzNGFG5MMhuQv8ox8Guw=;
+ b=J9tgENLSgIaZUMY/svwzfcxjh8TMTkCrCh0tvuPzBwQqKEEIgRogo4pmL7n/S5SQx1aKQ87GzzZgnHUFl16Fk9uEYq9K/BWY97rqDIS+R+UKa739MnI3q8Im4peTYtATXM/iilA4Uzzl9JwBo4DwvO0UQhgD5MTw1GN8EPBYKnee45fYzH9I+HdKSayPlRJ8IhcKyWjnG3+1RRElNHyBlxBxrSlVhBFYUuMm9K+aY9bmJnpqcJ8NHz1wcatmURtQiyBD0NDuZRTusuBFkBWz29AX2opuc8SEt3vlJZBIr/jnICltSO/dv0o3X56RRkozLiwemwQ5bxjmcsHV+DpHnw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i319eQzVrMzWZgGm44SUMcldzNGFG5MMhuQv8ox8Guw=;
+ b=gyxSK2mzkYmKPEthZ+ke/Iv8gZta+R0Wfreww9c+wYf73Cerq9O9vMHgJ73LcvTbz1BMND/FXNMSgUKTGW/iMOuR7OVkAS8QHkOk2b1o3LiXgAelzkux1EFsH/89KO5fHn77k7XGPzpquAyeuZEgCULaGx3HNcofeGKLk9pfTK5l4b4Wj5Y+OI7FbUEGhzPLYMKa29MJfyxWDfyJ394/R3dCmZAypyafMxf/MzVLsDWb/HYIhMZfnu1IdJ56MmEfpaa483XZIAsKGeCtcVaI3UGLmp/hEPT/D+jqfhdTBSv6v6oXzV/C8qBELC+ae/1Ddr0phzKV/zqi3LVqlFgokA==
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
+ by CH2PR02MB6791.namprd02.prod.outlook.com (2603:10b6:610:ab::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Wed, 10 Apr
+ 2024 11:15:52 +0000
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7409.053; Wed, 10 Apr 2024
+ 11:15:52 +0000
+From: Het Gala <het.gala@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ peterx@redhat.com, farosas@suse.de, prerna.saxena@nutanix.com,
+ Het Gala <het.gala@nutanix.com>
+Subject: [PATCH 2/4] tests/qtest/migration: Replace 'migrate-incoming'
+ qtest_qmp_assert_success with migrate_incoming_qmp
+Date: Wed, 10 Apr 2024 11:15:39 +0000
+Message-Id: <20240410111541.188504-3-het.gala@nutanix.com>
+X-Mailer: git-send-email 2.22.3
+In-Reply-To: <20240410111541.188504-1-het.gala@nutanix.com>
+References: <20240410111541.188504-1-het.gala@nutanix.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH0PR07CA0016.namprd07.prod.outlook.com
+ (2603:10b6:510:5::21) To SJ2PR02MB9955.namprd02.prod.outlook.com
+ (2603:10b6:a03:55f::16)
 MIME-Version: 1.0
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-4-vikram.garhwal@amd.com>
-In-Reply-To: <20240227223501.28475-4-vikram.garhwal@amd.com>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Wed, 10 Apr 2024 13:15:57 +0200
-Message-ID: <CAJy5ezrmVBH1FD0oQy+hxmx5yymkp0EQr4-xO+F00M46yd7nkQ@mail.gmail.com>
-Subject: Re: [QEMU][PATCH v3 3/7] softmmu: let qemu_map_ram_ptr() use
- qemu_ram_ptr_length()
-To: Vikram Garhwal <vikram.garhwal@amd.com>
-Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000573c170615bc2ad7"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52e.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|CH2PR02MB6791:EE_
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Z75nrkwnB9DDL1d7ifCnaId1UtIurbqSlGysXiBN4I7q7YY7BVU9aAqHyPh5QgWUHRKgjtBX8kPPvC4DOcsWM+3wlUhZ2sj792jQuipL8FGKNAo9d9SlH+wp+K6qDY7AxjqNn++mFEOSAtb+T2xBXUz8xWrewO5rIFbIUFB8WJH4bTSL1dbpf61x+B1t5ZGnRhWDtb6C5/vbw30WuUAGWDoT9wX6xBkVqrRp+eX1TwIWzFZP2Gpzn2GYjQoRjd61Ru2eWnf904eeCOEDDUy8JwQBbtvm2YQtgOXNx6V8BaHgVTC5BmvmRVeX6w3jXpkwTsdubyxGCvNoOoX5F1Zna0sFqyBWzyx/YAhOvCkKQqCV3A4onLm7n5jlW4MXheK7APhrn3c25nLz2LQZjL2xZK33MSELgwSReEYc8T4rLamMDcw26C0PyrPgvxrSHpi2H7Wu/h3iYLNWq+x/U9EpKR4sIKfRWJSyZqLOSxScNSSDBdOat9GIg4nFQVCa4nH4ZpMAIyNMmjUPl12W/5JqXP156dniKxmQyDPNQiaKsoBJPY8G7NbjBElVL/JN6J00bfx7SD79aUmeCjhqjSJ4EZZ7EWeLq//1lo+UCAXmVExx5HyB4cbxySJXU9dOHkYVepez7M9zVDNMDZvb4AgCCqfbNSZrcxnKXsySwkOirIim5F3POIMvYq41mkT0muguYNnpS9Z4NSipA7xG2ThijUCbrQrJXM6xSg9beGjKXXk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(366007)(52116005)(376005)(38350700005); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?kkXJ1+/cp7ESUBkr6/70bCrJjNmA+h8E37JhVboneboUVZDg9LDhMPy9F9U0?=
+ =?us-ascii?Q?wMGt7vO5Roec9uvHNcgO3d6aWMS25bfmVmPbGRoTBaooU71KaiPM2WANPy+L?=
+ =?us-ascii?Q?W6Xng0aizu2CbsSbYKXyWx2HlSjupWNpygNeIB3kV5HMFv0StIgebC7YD4Ea?=
+ =?us-ascii?Q?wKDFMZxgJerlbYrcemqAUl2Cap6myoBzlR6FC4sR1l6r9IVwqnH+CIIxy8P1?=
+ =?us-ascii?Q?AWRNA/h2tK8fcmAnt7eh6izcpGKXlTW0iL0xlRZCm3MOxvx9X7enjcAbUeD/?=
+ =?us-ascii?Q?l+gDAQglTkAIigZ7QKwPO/2ebJ9G0eHxY/YAMAt/LnaqIrzH5Fftrv3Hpamp?=
+ =?us-ascii?Q?H877mJVKm7zPWStCNIDVmuFBuiegMUCn6DGwtQ5kOXyI1B2AyFl2pXDmbcmc?=
+ =?us-ascii?Q?HZXDSiHfyLGm9Jn26BTPbfY7D91mKB8PYT/d5qDM0l1bwQypvnY0DocBZHQ3?=
+ =?us-ascii?Q?xPZYZrzD5M8X8BHW/d2XvrpgoGUw62xuEduRCcdMNhuPPPZuDWaQ9IGCh4XT?=
+ =?us-ascii?Q?qx6dNroQYQX/+zMNrwFIj6UXjbLTGcv6E9Da1fwjGNpjykCk5hkfjAUlAMQk?=
+ =?us-ascii?Q?x/Y0Eobu8nyyaZafvHD6TAG0MT4ZNI2Gh3zL9faqdq5FwLN5T7uUF33Xc5O3?=
+ =?us-ascii?Q?EZ13UeI0JWJ1cavvb08awdJcPjL3Fd/TyunN70ThOITt6LgTbxJ9XmnzuEm8?=
+ =?us-ascii?Q?2r6NHlD+ob8jrtir0reHf8PJ0xvfoUcZNEkDGsauPD18xQH1KoubBNR3iuTY?=
+ =?us-ascii?Q?PwtZ3k7f2a7zowpiBVzsqHa197Y2qbOPyiDNOWs2ZRwSNf19YpG5kmBwC1ts?=
+ =?us-ascii?Q?Vjo144BoVQXrSYp3OWpkVz+qk7aMSfnuABRfaZCsO2Fx/sfgyY7IU1v5k771?=
+ =?us-ascii?Q?JrDidzRVjE2R9v+O8+HfBR6MLxZfrPWG0y+Y8AI3IGuQsNk0IRV6qeQ3keyG?=
+ =?us-ascii?Q?bACnvWTKNOwzeAlalGAOqR/fi2n5VeRVLH9aMPpq/JYsWSbr+5/eQRXiF8Fn?=
+ =?us-ascii?Q?wlNE2j63zkyDl7ZSOZd56Ay0FmjQbjbV1XmfrZ1HS0a9JrOwEdtXZ61BbabY?=
+ =?us-ascii?Q?BLx4ld83sLfAFbDBxM9dOXxi0/Kl07xDVA5ZfNnjpilZLcVR9qUUsFfYH6UI?=
+ =?us-ascii?Q?Pef+D8e9Q0E30YVThPGI1tZW1QC5m+67u0/It1y7FaJN/JMyboiRieY0TRDg?=
+ =?us-ascii?Q?9T5I2/dT9B38OqbLzR3QHIpiA7qkYnk0XPFGspwQfaOr76KW1DltvKzOeTHJ?=
+ =?us-ascii?Q?ZTxaBggOxBCk5gGYRgXOF/T3zCUGhnRfhdC0CdF9hbru2MZ/I84Yy8Vo2r/G?=
+ =?us-ascii?Q?wPI0jkIEvntFsvPv4+GldB21DiXKUlz/p4DHl9xNzplgRQ7nBduNgTilX5N8?=
+ =?us-ascii?Q?Gd2hUhhZp3dQsiWrkAL8O69/HTX+fcq9/TdT7Xe/ZnxcuZcZi7Z5sN/slr13?=
+ =?us-ascii?Q?/tVxaAnKnTQF/bzzfbigu7NXFJzr0NuUdJUtap6/jv3CzFopTlEjp+dI4+y5?=
+ =?us-ascii?Q?vozsuGPFMCC0ExsigxNz3woVtKcTtwZHj2a2ly3g5JS929Ys15Nc1wwj78oJ?=
+ =?us-ascii?Q?mlT4rRfJ/xq/9QEfN9dHnfwZ4avhQ+r1vRSVbDFD?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51a1f9d7-8bab-45fa-2638-08dc594f956f
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2024 11:15:52.5639 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1W6jDnfiNSaRpZtZ8flDEx5bebknR0pJZLCN6F7gGlGoZ3abcksKTkmsof6RrP4BxY78zgPtX2U2GSola2JSJg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR02MB6791
+X-Proofpoint-GUID: idOI-0jltp-Xk1deT2I6d8aedo1GO8R0
+X-Proofpoint-ORIG-GUID: idOI-0jltp-Xk1deT2I6d8aedo1GO8R0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-10_04,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
+ helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,302 +159,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000573c170615bc2ad7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Already have a migrate_incoming_qmp helper function to initiate
+'migrate-incoming' QMP command with some additional checks.
+Replace 'migrate-incoming' qtest_qmp_assert_success command with
+calling migrate_incoming_qmp helper function for postcopy qtests.
 
-On Tue, Feb 27, 2024 at 11:37=E2=80=AFPM Vikram Garhwal <vikram.garhwal@amd=
-.com>
-wrote:
+Signed-off-by: Het Gala <het.gala@nutanix.com>
+---
+ tests/qtest/migration-test.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-> From: Juergen Gross <jgross@suse.com>
->
-> qemu_map_ram_ptr() and qemu_ram_ptr_length() share quite some code, so
-> modify qemu_ram_ptr_length() a little bit and use it for
-> qemu_map_ram_ptr(), too.
->
-> Signed-off-by: Juergen Gross <jgross@suse.com>
-> Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
-> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
->
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 27a1066ae4..f2c27d611c 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1296,8 +1296,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+     migrate_ensure_non_converge(from);
+ 
+     migrate_prepare_for_dirty_mem(from);
+-    qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
+-                             "  'arguments': { 'uri': 'tcp:127.0.0.1:0' }}");
++    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", "{}");
+ 
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+-- 
+2.22.3
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-
-
-
-> ---
->  system/physmem.c | 56 ++++++++++++++++++++----------------------------
->  1 file changed, 23 insertions(+), 33 deletions(-)
->
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 84f3022099..949dcb20ba 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2163,43 +2163,17 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t
-> length)
->  }
->  #endif /* !_WIN32 */
->
-> -/* Return a host pointer to ram allocated with qemu_ram_alloc.
-> - * This should not be used for general purpose DMA.  Use address_space_m=
-ap
-> - * or address_space_rw instead. For local memory (e.g. video ram) that t=
-he
-> - * device owns, use memory_region_get_ram_ptr.
-> - *
-> - * Called within RCU critical section.
-> - */
-> -void *qemu_map_ram_ptr(RAMBlock *block, ram_addr_t addr)
-> -{
-> -    if (block =3D=3D NULL) {
-> -        block =3D qemu_get_ram_block(addr);
-> -        addr -=3D block->offset;
-> -    }
-> -
-> -    if (xen_enabled() && block->host =3D=3D NULL) {
-> -        /* We need to check if the requested address is in the RAM
-> -         * because we don't want to map the entire memory in QEMU.
-> -         * In that case just map until the end of the page.
-> -         */
-> -        if (block->offset =3D=3D 0) {
-> -            return xen_map_cache(addr, 0, 0, false);
-> -        }
-> -
-> -        block->host =3D xen_map_cache(block->offset, block->max_length, =
-1,
-> false);
-> -    }
-> -    return ramblock_ptr(block, addr);
-> -}
-> -
-> -/* Return a host pointer to guest's ram. Similar to qemu_map_ram_ptr
-> - * but takes a size argument.
-> +/*
-> + * Return a host pointer to guest's ram.
->   *
->   * Called within RCU critical section.
->   */
->  static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
->                                   hwaddr *size, bool lock)
->  {
-> -    if (*size =3D=3D 0) {
-> +    hwaddr len =3D 0;
-> +
-> +    if (size && *size =3D=3D 0) {
->          return NULL;
->      }
->
-> @@ -2207,7 +2181,10 @@ static void *qemu_ram_ptr_length(RAMBlock *block,
-> ram_addr_t addr,
->          block =3D qemu_get_ram_block(addr);
->          addr -=3D block->offset;
->      }
-> -    *size =3D MIN(*size, block->max_length - addr);
-> +    if (size) {
-> +        *size =3D MIN(*size, block->max_length - addr);
-> +        len =3D *size;
-> +    }
->
->      if (xen_enabled() && block->host =3D=3D NULL) {
->          /* We need to check if the requested address is in the RAM
-> @@ -2215,7 +2192,7 @@ static void *qemu_ram_ptr_length(RAMBlock *block,
-> ram_addr_t addr,
->           * In that case just map the requested area.
->           */
->          if (block->offset =3D=3D 0) {
-> -            return xen_map_cache(addr, *size, lock, lock);
-> +            return xen_map_cache(addr, len, lock, lock);
->          }
->
->          block->host =3D xen_map_cache(block->offset, block->max_length, =
-1,
-> lock);
-> @@ -2224,6 +2201,19 @@ static void *qemu_ram_ptr_length(RAMBlock *block,
-> ram_addr_t addr,
->      return ramblock_ptr(block, addr);
->  }
->
-> +/*
-> + * Return a host pointer to ram allocated with qemu_ram_alloc.
-> + * This should not be used for general purpose DMA.  Use address_space_m=
-ap
-> + * or address_space_rw instead. For local memory (e.g. video ram) that t=
-he
-> + * device owns, use memory_region_get_ram_ptr.
-> + *
-> + * Called within RCU critical section.
-> + */
-> +void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
-> +{
-> +    return qemu_ram_ptr_length(ram_block, addr, NULL, false);
-> +}
-> +
->  /* Return the offset of a hostpointer within a ramblock */
->  ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host)
->  {
-> --
-> 2.17.1
->
->
->
-
---000000000000573c170615bc2ad7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 27, 2024 at 11:37=E2=80=
-=AFPM Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd.com">vikram.g=
-arhwal@amd.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">From: Juergen Gross &lt;<a href=3D"mailto:jgross@suse.com" ta=
-rget=3D"_blank">jgross@suse.com</a>&gt;<br>
-<br>
-qemu_map_ram_ptr() and qemu_ram_ptr_length() share quite some code, so<br>
-modify qemu_ram_ptr_length() a little bit and use it for<br>
-qemu_map_ram_ptr(), too.<br>
-<br>
-Signed-off-by: Juergen Gross &lt;<a href=3D"mailto:jgross@suse.com" target=
-=3D"_blank">jgross@suse.com</a>&gt;<br>
-Signed-off-by: Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd.com"=
- target=3D"_blank">vikram.garhwal@amd.com</a>&gt;<br>
-Reviewed-by: Stefano Stabellini &lt;<a href=3D"mailto:sstabellini@kernel.or=
-g" target=3D"_blank">sstabellini@kernel.org</a>&gt;<br></blockquote><div><b=
-r></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.igl=
-esias@amd.com">edgar.iglesias@amd.com</a>&gt;<br></div><div><br></div><div>=
-<br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margi=
-n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
-">
----<br>
-=C2=A0system/physmem.c | 56 ++++++++++++++++++++---------------------------=
--<br>
-=C2=A01 file changed, 23 insertions(+), 33 deletions(-)<br>
-<br>
-diff --git a/system/physmem.c b/system/physmem.c<br>
-index 84f3022099..949dcb20ba 100644<br>
---- a/system/physmem.c<br>
-+++ b/system/physmem.c<br>
-@@ -2163,43 +2163,17 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t len=
-gth)<br>
-=C2=A0}<br>
-=C2=A0#endif /* !_WIN32 */<br>
-<br>
--/* Return a host pointer to ram allocated with qemu_ram_alloc.<br>
-- * This should not be used for general purpose DMA.=C2=A0 Use address_spac=
-e_map<br>
-- * or address_space_rw instead. For local memory (e.g. video ram) that the=
-<br>
-- * device owns, use memory_region_get_ram_ptr.<br>
-- *<br>
-- * Called within RCU critical section.<br>
-- */<br>
--void *qemu_map_ram_ptr(RAMBlock *block, ram_addr_t addr)<br>
--{<br>
--=C2=A0 =C2=A0 if (block =3D=3D NULL) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 block =3D qemu_get_ram_block(addr);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 addr -=3D block-&gt;offset;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 if (xen_enabled() &amp;&amp; block-&gt;host =3D=3D NULL) {<b=
-r>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* We need to check if the requested address i=
-s in the RAM<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* because we don&#39;t want to map the e=
-ntire memory in QEMU.<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* In that case just map until the end of=
- the page.<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (block-&gt;offset =3D=3D 0) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return xen_map_cache(addr, 0, 0,=
- false);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 block-&gt;host =3D xen_map_cache(block-&gt;off=
-set, block-&gt;max_length, 1, false);<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 return ramblock_ptr(block, addr);<br>
--}<br>
--<br>
--/* Return a host pointer to guest&#39;s ram. Similar to qemu_map_ram_ptr<b=
-r>
-- * but takes a size argument.<br>
-+/*<br>
-+ * Return a host pointer to guest&#39;s ram.<br>
-=C2=A0 *<br>
-=C2=A0 * Called within RCU critical section.<br>
-=C2=A0 */<br>
-=C2=A0static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hwaddr *size, bool lock)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 if (*size =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 hwaddr len =3D 0;<br>
-+<br>
-+=C2=A0 =C2=A0 if (size &amp;&amp; *size =3D=3D 0) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return NULL;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-@@ -2207,7 +2181,10 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ra=
-m_addr_t addr,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0block =3D qemu_get_ram_block(addr);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0addr -=3D block-&gt;offset;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 *size =3D MIN(*size, block-&gt;max_length - addr);<br>
-+=C2=A0 =C2=A0 if (size) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *size =3D MIN(*size, block-&gt;max_length - ad=
-dr);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 len =3D *size;<br>
-+=C2=A0 =C2=A0 }<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0if (xen_enabled() &amp;&amp; block-&gt;host =3D=3D NULL=
-) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* We need to check if the requested addr=
-ess is in the RAM<br>
-@@ -2215,7 +2192,7 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram=
-_addr_t addr,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * In that case just map the requested ar=
-ea.<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (block-&gt;offset =3D=3D 0) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return xen_map_cache(addr, *size=
-, lock, lock);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return xen_map_cache(addr, len, =
-lock, lock);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0block-&gt;host =3D xen_map_cache(block-&g=
-t;offset, block-&gt;max_length, 1, lock);<br>
-@@ -2224,6 +2201,19 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ra=
-m_addr_t addr,<br>
-=C2=A0 =C2=A0 =C2=A0return ramblock_ptr(block, addr);<br>
-=C2=A0}<br>
-<br>
-+/*<br>
-+ * Return a host pointer to ram allocated with qemu_ram_alloc.<br>
-+ * This should not be used for general purpose DMA.=C2=A0 Use address_spac=
-e_map<br>
-+ * or address_space_rw instead. For local memory (e.g. video ram) that the=
-<br>
-+ * device owns, use memory_region_get_ram_ptr.<br>
-+ *<br>
-+ * Called within RCU critical section.<br>
-+ */<br>
-+void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)<br>
-+{<br>
-+=C2=A0 =C2=A0 return qemu_ram_ptr_length(ram_block, addr, NULL, false);<br=
->
-+}<br>
-+<br>
-=C2=A0/* Return the offset of a hostpointer within a ramblock */<br>
-=C2=A0ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host)<br>
-=C2=A0{<br>
--- <br>
-2.17.1<br>
-<br>
-<br>
-</blockquote></div></div>
-
---000000000000573c170615bc2ad7--
 
