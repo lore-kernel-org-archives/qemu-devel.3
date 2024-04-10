@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C814DCD1296
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92330CD11C2
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSMP-0001JJ-PQ; Wed, 10 Apr 2024 03:27:09 -0400
+	id 1ruSNT-0003Tp-7u; Wed, 10 Apr 2024 03:28:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSLF-0005sA-MK; Wed, 10 Apr 2024 03:25:57 -0400
+ id 1ruSMW-0001qC-Pv; Wed, 10 Apr 2024 03:27:21 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSLE-0004Wn-3O; Wed, 10 Apr 2024 03:25:57 -0400
+ id 1ruSMU-0004o5-UH; Wed, 10 Apr 2024 03:27:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B7F135D68F;
- Wed, 10 Apr 2024 10:25:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DA0145D69F;
+ Wed, 10 Apr 2024 10:25:05 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5D455B02D0;
- Wed, 10 Apr 2024 10:23:06 +0300 (MSK)
-Received: (nullmailer pid 4191743 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 7DF1AB02DF;
+ Wed, 10 Apr 2024 10:23:07 +0300 (MSK)
+Received: (nullmailer pid 4191789 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Sven Schnelle <svens@stackframe.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 32/87] tests/unit: Bump test-aio-multithread test
- timeout to 2 minutes
-Date: Wed, 10 Apr 2024 10:22:05 +0300
-Message-Id: <20240410072303.4191455-32-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 47/87] target/hppa: exit tb on flush cache instructions
+Date: Wed, 10 Apr 2024 10:22:20 +0300
+Message-Id: <20240410072303.4191455-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,31 +61,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Sven Schnelle <svens@stackframe.org>
 
-When running the tests in slow mode on a very loaded system and with
---enable-debug, the test-aio-multithread can take longer than 1 minute.
-Bump the timeout to two minutes to make sure that it also passes in
-such situations.
+When the guest modifies the tb it is currently executing from,
+it executes a fic instruction. Exit the tb on such instruction,
+otherwise we might execute stale code.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20231215070357.10888-14-thuth@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit c45f8f1aef35730a2dcf3cabe296ac12965db43d)
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Message-Id: <20240319161921.487080-5-svens@stackframe.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit ad1fdacd1b936557514dd72c2079a80be0c2dfb4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index a05d471090..0b0c7c1411 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -172,6 +172,7 @@ test_env.set('G_TEST_SRCDIR', meson.current_source_dir())
- test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index 5412ff9836..f58455dfdb 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -144,9 +144,9 @@ getshadowregs   1111 1111 1111 1101 1110 1010 1101 0010
+ nop             000001 ----- ----- -- 11001010 0 -----         # fdc, disp
+ nop_addrx       000001 ..... ..... -- 01001010 . -----  @addrx # fdc, index
+ nop_addrx       000001 ..... ..... -- 01001011 . -----  @addrx # fdce
+-nop_addrx       000001 ..... ..... --- 0001010 . -----  @addrx # fic 0x0a
+-nop_addrx       000001 ..... ..... -- 01001111 . 00000  @addrx # fic 0x4f
+-nop_addrx       000001 ..... ..... --- 0001011 . -----  @addrx # fice
++fic             000001 ..... ..... --- 0001010 . -----  @addrx # fic 0x0a
++fic             000001 ..... ..... -- 01001111 . 00000  @addrx # fic 0x4f
++fic             000001 ..... ..... --- 0001011 . -----  @addrx # fice
+ nop_addrx       000001 ..... ..... -- 01001110 . 00000  @addrx # pdc
  
- slow_tests = {
-+  'test-aio-multithread' : 120,
-   'test-crypto-tlscredsx509': 45,
-   'test-crypto-tlssession': 45
+ probe           000001 b:5 ri:5 sp:2 imm:1 100011 write:1 0 t:5
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 15a8bfd48c..ccf03b1ce7 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -2337,6 +2337,13 @@ static bool trans_nop_addrx(DisasContext *ctx, arg_ldst *a)
+     return true;
  }
+ 
++static bool trans_fic(DisasContext *ctx, arg_ldst *a)
++{
++    /* End TB for flush instruction cache, so we pick up new insns. */
++    ctx->base.is_jmp = DISAS_IAQ_N_STALE;
++    return trans_nop_addrx(ctx, a);
++}
++
+ static bool trans_probe(DisasContext *ctx, arg_probe *a)
+ {
+     TCGv_i64 dest, ofs;
 -- 
 2.39.2
 
