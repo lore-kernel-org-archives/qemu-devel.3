@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C11CCD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 09:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB9ECD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 09:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruU1i-0005nU-IW; Wed, 10 Apr 2024 05:13:54 -0400
+	id 1ruU2W-00069U-6j; Wed, 10 Apr 2024 05:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruU1h-0005nM-Rw
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 05:13:53 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruU2U-00068n-9Z
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 05:14:42 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruU1g-0005ZW-8K
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 05:13:53 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a5200afe39eso147156766b.1
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 02:13:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruU2O-0005fJ-In
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 05:14:42 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a47385a4379so1386593066b.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 02:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712740430; x=1713345230; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712740473; x=1713345273; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+KsSirCZg01hhKd4JAUXgq8lzzdN/Hb2WqmF/tsoo34=;
- b=g8dVZt2nAQq1yN7yU8j0Srki/Lh3hrZSTekEbT44PdmZOjvmTwTPzIrrI8jPKAwM3P
- 1E9XnUuM7ihPEJuhcPM36Nu7Ql23WtcLMb1bWxI+YfTM1rWMZ85AB3AIZ0M6OKT3cRB1
- IuL8IcUjHLAzap//pBU9JiJEg9vnHAtFFi1Y7VoltyR+aOW85kvEwSG0xqdOBxhw3l23
- lycq5KBPD/UblaUqClZGL5yuYkWlBNwXYQBVW3DzqbTWGF2ZajuUPiy72//H/Nw84sVq
- bWcX+7mg/vL5F61uFfe+IC5BcVmJ/HVS1hqGW/ovfrC0o3LlYpjKoVy6qsC5+ASkgQKA
- Y72A==
+ bh=X+HfBaogaKesnx0L+UIHNSkZQ9BO28r47IsjVL4QJyA=;
+ b=fziNY459L/G51xwhYEsRLnfI7vVFdMBeXLPpaBkzs9h+77XeC6PR4vztYGECqOuQA0
+ kVJ4mrFCOQAvDLmjX0OWvt1b+bNmD9Gijw+2VmcyxO12BpkTGE3epGy2p+oThhX2kICE
+ 6OOfXaC2ZMSAquAhIqMj4H/YSo+YEF4+nu0afR902q2wwgukTkRF0bOcGCreTngK26jA
+ Xq+KsEIi/jqEbFzO5paRKYGM/wiA4X1/X//3FQ8pLTbfbA0wHkOEZ5dIPiVDCzP6TLI6
+ J0TsYVf36ZW4GnhOenzrTvb26sfctSgqO19hoPvc+3gfwfico9Jvo3KzofIJJ2sBKmvg
+ mwUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712740430; x=1713345230;
+ d=1e100.net; s=20230601; t=1712740473; x=1713345273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+KsSirCZg01hhKd4JAUXgq8lzzdN/Hb2WqmF/tsoo34=;
- b=qtJf/QX/KI9OArmVOUcLT698jeNFJCACydIXbw8Wa9QnG0OQaxn2H3lHdg0/KpgbL4
- ZuIPgMYxa0zbRHvuY5p1b9XUYZKP3/NaED8Gaa2hX23r7susTy0bNar1SYVE3yc1ATes
- EHKVS9N3sIJZo26QQ/MAgWCfGvrq1VwnODiPTfv3bBT050Jw7Gb+vLGk/7U+5o8DkJz6
- tGiUwd6jaP6jdRVzVsFc2TxhycaElGNNH0HDHZ7IyDDjZLZUAcImUUvjB3qlpKKMQrUF
- g4ONneXFjn37Bib/m3KzswFPYffM5zq6bGjrYieXpPynp7qTOE+9eWzl2x1DR5FvC/ZA
- XKyQ==
-X-Gm-Message-State: AOJu0YxivZ7gM1xXxJUPT678pqir3xQ0P7zH8KnjUdCrTrCglBwYA1WC
- FtEq+yFdsAxoGJShd0co43cOgMQrWgMxGrlRkicPvrf7gy0ZV7NDNmhNYL104O1l9ibNJAlP/7O
+ bh=X+HfBaogaKesnx0L+UIHNSkZQ9BO28r47IsjVL4QJyA=;
+ b=qCy+aoKqpioyQOCzaZQDiXjXJ2ypWdPaYkVCGx1c3LYJMIQzH4tSGY8s4N+fUakrvh
+ JPu7X45LCI2xCHuPPjHf+c3dwAGsQxu2dAVZIuitmds1fvRXENQFph6znK/+G8vpc2Zv
+ Lg3FMZg9O0duZshm+VghMsoMcjI7Ls++gtaLFLnFHvYMxF7oS7m6c96xAXIKMWKChWHX
+ mN1Lz83lEqeuujpeBCKFH/dV8BfO494aAEQub/UkzMYkA1ojreWRjIrTsuZ8lO0JPmmO
+ 88ucL43FN4iz8sCDEPcfbji2R47OSD0lPQ5KAtj1kn5vdtmHV+T+a/vtlVA9eE+Tp5+B
+ I8jg==
+X-Gm-Message-State: AOJu0YzDxSU8tsUEN9TVVNnd1syUKpEKUoMp0stSQpxbFedAc5H3KcN2
+ qxDduE6gvPHSUX20c1vf4lvHeW0+GwPLdGWZ2Zj72hp8vhyNPzhOm94zwZWRXbn5E4EUCKv/Aow
  Y
-X-Google-Smtp-Source: AGHT+IGfbrGv2eRQo22z+re7ozKJqKSBXnJkE8EPhHfBWLFhkVQ6x3/4nVassDnuBA0bYsdMW4tmIg==
-X-Received: by 2002:a17:906:f116:b0:a52:10dc:4ca8 with SMTP id
- gv22-20020a170906f11600b00a5210dc4ca8mr782642ejb.72.1712740430220; 
- Wed, 10 Apr 2024 02:13:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoDMUXuKMrP/V8KdlIOOIUr52ADKubzuoInKXcw+xRBDNyFt26/8mDZavXBDNCamsIKesVCg==
+X-Received: by 2002:a17:906:4899:b0:a51:b49e:473e with SMTP id
+ v25-20020a170906489900b00a51b49e473emr1755593ejq.19.1712740473385; 
+ Wed, 10 Apr 2024 02:14:33 -0700 (PDT)
 Received: from m1x-phil.lan (arl95-h02-176-184-34-173.dsl.sta.abo.bbox.fr.
  [176.184.34.173]) by smtp.gmail.com with ESMTPSA id
- hd19-20020a170907969300b00a51bd3b432fsm5302611ejc.115.2024.04.10.02.13.49
+ jx24-20020a170907761800b00a46baba1a0asm6723080ejc.100.2024.04.10.02.14.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 10 Apr 2024 02:13:49 -0700 (PDT)
+ Wed, 10 Apr 2024 02:14:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Yuquan Wang <wangyuquan1236@phytium.com.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 05/16] qemu-options: Fix CXL Fixed Memory Window
- interleave-granularity typo
-Date: Wed, 10 Apr 2024 11:13:04 +0200
-Message-ID: <20240410091315.57241-6-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 12/16] hw/net/lan9118: Replace magic '2048' value by
+ MIL_TXFIFO_SIZE definition
+Date: Wed, 10 Apr 2024 11:13:11 +0200
+Message-ID: <20240410091315.57241-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240410091315.57241-1-philmd@linaro.org>
 References: <20240410091315.57241-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,42 +94,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+The magic 2048 is explained in the LAN9211 datasheet (DS00002414A)
+in chapter 1.4, "10/100 Ethernet MAC":
 
-Fix the unit typo of interleave-granularity of CXL Fixed Memory
-Window in qemu-option.hx.
+  The MAC Interface Layer (MIL), within the MAC, contains a
+  2K Byte transmit and a 128 Byte receive FIFO which is separate
+  from the TX and RX FIFOs. [...]
 
-Fixes: 03b39fcf64 ("hw/cxl: Make the CFMW a machine parameter.")
-Signed-off-by: Yuquan Wang wangyuquan1236@phytium.com.cn
-Message-ID: <20240407083539.1488172-2-wangyuquan1236@phytium.com.cn>
-[PMD: Reworded]
+Note, the use of the constant in lan9118_receive() reveals that
+our implementation is using the same buffer for both tx and rx.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20240409133801.23503-2-philmd@linaro.org>
 ---
- qemu-options.hx | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/net/lan9118.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 7fd1713fa8..8ce85d4559 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -151,14 +151,14 @@ SRST
-         platform and configuration dependent.
+diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+index 47ff25b441..8214569a2c 100644
+--- a/hw/net/lan9118.c
++++ b/hw/net/lan9118.c
+@@ -150,6 +150,12 @@ do { printf("lan9118: " fmt , ## __VA_ARGS__); } while (0)
  
-         ``interleave-granularity=granularity`` sets the granularity of
--        interleave. Default 256KiB. Only 256KiB, 512KiB, 1024KiB, 2048KiB
--        4096KiB, 8192KiB and 16384KiB granularities supported.
-+        interleave. Default 256 (bytes). Only 256, 512, 1k, 2k,
-+        4k, 8k and 16k granularities supported.
+ #define GPT_TIMER_EN    0x20000000
  
-         Example:
++/*
++ * The MAC Interface Layer (MIL), within the MAC, contains a 2K Byte transmit
++ * and a 128 Byte receive FIFO which is separate from the TX and RX FIFOs.
++ */
++#define MIL_TXFIFO_SIZE         2048
++
+ enum tx_state {
+     TX_IDLE,
+     TX_B,
+@@ -166,7 +172,7 @@ typedef struct {
+     int32_t pad;
+     int32_t fifo_used;
+     int32_t len;
+-    uint8_t data[2048];
++    uint8_t data[MIL_TXFIFO_SIZE];
+ } LAN9118Packet;
  
-         ::
+ static const VMStateDescription vmstate_lan9118_packet = {
+@@ -182,7 +188,7 @@ static const VMStateDescription vmstate_lan9118_packet = {
+         VMSTATE_INT32(pad, LAN9118Packet),
+         VMSTATE_INT32(fifo_used, LAN9118Packet),
+         VMSTATE_INT32(len, LAN9118Packet),
+-        VMSTATE_UINT8_ARRAY(data, LAN9118Packet, 2048),
++        VMSTATE_UINT8_ARRAY(data, LAN9118Packet, MIL_TXFIFO_SIZE),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -544,7 +550,7 @@ static ssize_t lan9118_receive(NetClientState *nc, const uint8_t *buf,
+         return -1;
+     }
  
--            -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512k
-+            -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
- ERST
+-    if (size >= 2048 || size < 14) {
++    if (size >= MIL_TXFIFO_SIZE || size < 14) {
+         return -1;
+     }
  
- DEF("M", HAS_ARG, QEMU_OPTION_M,
 -- 
 2.41.0
 
