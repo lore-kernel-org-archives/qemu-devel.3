@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25785CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E1ACD128A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:11:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruVqg-0003Dy-L6; Wed, 10 Apr 2024 07:10:40 -0400
+	id 1ruVqk-0003H4-Dd; Wed, 10 Apr 2024 07:10:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ruVqc-00037p-N6
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:10:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ruVqa-0000DG-Py
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:10:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712747430;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=F413NOHpFMsWFYZVQhFkCG84TJ77ku5or7fivJuTfgw=;
- b=biDJw3zlknW4f1z/P4R9VW07aoFC4ZBK4+D2ZZaOeaJ3x2CdUWm12p7GWmM3SxrRkf4x5P
- dJEMAOqzzjZQTtAMDuW/b4mFEPs2+riflmNurze3n7DOBvPUBF1ldjCO7SyyjZZ/c+JxZX
- Q8dJ7yaSICNDvx3JbkCuOKZFItKQhck=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-6X4KMnV7OEWkd_d_aFYWfg-1; Wed, 10 Apr 2024 07:10:28 -0400
-X-MC-Unique: 6X4KMnV7OEWkd_d_aFYWfg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a5198c1a6f4so318540666b.3
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 04:10:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1ruVqf-0003CZ-Hf
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:10:37 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1ruVqd-0000ES-TS
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:10:37 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-56e6f4ee104so2842227a12.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 04:10:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712747434; x=1713352234; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wWJ8haMrz/OQpydWXDXs0EfuocOmYJASl59aPKDepuU=;
+ b=XYCc3cnAI64chNy3EOJ4MbfCI3pIsdiJX0kjsVTB+PsIjsD+i7668mQFxZbdMO69DC
+ KXFLixK8/RIkfOAQQjTVmfn5dG3MZo/qwzPlMjuRHpoLp1N84yhWXqJIZ9kGob3WmZcy
+ RvmbADA1Xqg8xsDClDnrZQinFz54rrDCgwwPUtRuLcf/plLR+w/5BXibQhJ5UOAj6LCz
+ Rz7WrfG4EhWJOtlpgLa8EApvaZRQ7escrWOgCq2w8LoFq0QOLYaOTzfUYpKRaOJCD+Bx
+ cno6xIz80ksiIBtOamm3olDrOfZUTBc+cQGqSfcbXmLKFa3uaC27DpId4rap+QRU7GHz
+ 3FLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712747427; x=1713352227;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F413NOHpFMsWFYZVQhFkCG84TJ77ku5or7fivJuTfgw=;
- b=xBFrmMqlSlJqeIqaZ6+0BWhbrBaaUQaO8oCF1Wz8r5muKmqrKZMyCRGXoCHBzRmoQp
- JLrMu8YSHHjeVFmbu4GPugWBynvX+6Z7IioMYfDmfbWVa4KmHBfejOVrclYYtF8Dmq50
- APodM9MrSLeFNNIv8er/1Tf1OpZk6ZlE9aCKXibwKPzG/5YO7afUCcFtCPLdGBZHn4w1
- ZO4YQ+69UEc9PxmiIe3Mu5S9++GZokf/ozCpHIc/Dzg681k59sdbY7yBHv57qc1YEJOI
- yZbnBQ+1UTg19WNjjgSHhXUFW9Mppne4BgGX2+8HacvdmwSFgrwuZ77FP4rT36Vc/aLg
- /ysg==
-X-Gm-Message-State: AOJu0YwHuqwnKgP3xVtvmKeTA9dNR6Gdg5BLrlvgLy4uW23f0GjjAHlV
- +j7Dl3fZ29DwQ5c2V9cug9YnnChYq44ahu3T8LQvqg8jFSfinCUpDBuZHvc5f0jQLSqkdHC1ubH
- qIl746QTJihztXBLjFAFl10af9XXmMTEjKtxvscFwsmhdfd9JK2gs
-X-Received: by 2002:a17:906:cb9a:b0:a51:cab2:e55d with SMTP id
- mf26-20020a170906cb9a00b00a51cab2e55dmr1431836ejb.15.1712747427359; 
- Wed, 10 Apr 2024 04:10:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyTlEiwOzdCDRt4eXQrgkHvjufXiRIHFk8ltFVs8TZo4SJk3Abao7PNu+uIGoNivJWAu98nw==
-X-Received: by 2002:a17:906:cb9a:b0:a51:cab2:e55d with SMTP id
- mf26-20020a170906cb9a00b00a51cab2e55dmr1431814ejb.15.1712747426854; 
- Wed, 10 Apr 2024 04:10:26 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:179:8bde:8cd:63ff:6fae:3872])
- by smtp.gmail.com with ESMTPSA id
- qy1-20020a170907688100b00a51a8d91397sm6561799ejc.73.2024.04.10.04.10.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Apr 2024 04:10:26 -0700 (PDT)
-Date: Wed, 10 Apr 2024 07:10:22 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Daniel Berrange <berrange@redhat.com>, Cole Robinson <crobinso@redhat.com>
-Subject: Re: secure boot & direct kernel load (was: Re: [PATCH] x86/loader:
- only patch linux kernels)
-Message-ID: <20240410070801-mutt-send-email-mst@kernel.org>
-References: <20240410072126.617063-1-kraxel@redhat.com>
- <20240410032448-mutt-send-email-mst@kernel.org>
- <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
+ d=1e100.net; s=20230601; t=1712747434; x=1713352234;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wWJ8haMrz/OQpydWXDXs0EfuocOmYJASl59aPKDepuU=;
+ b=PTUUebeiLWS07ZJqxOQCz1+QKxe+U4RjAYxkBHlf//BOxeegNy5bIKzGztShsgP5iX
+ X8U0xfVRZYTGMULlnbZCxT74g8DsdKbu0At+U/6zYIwzDPhF6sQ8POU4GkJZ1KaL7qu2
+ wXOx9wQmIQQBMe7iqTgVYkk1GHERczyyBHMTOYSM9Y7UrHF4k9SLe/42kUZFmbUW+QxX
+ kXlxF3Vui3WVpUwaAzZw0OLrClCOg+lMnVwBKufMIVjrz2Wwf/7UZtFvrb47k1FynwKz
+ lJIE28Ocd00lLbwjEcUKiQepnyy4Om7JruDqHzolLWORDRDQBo8d0dBFTA7QkPW4LEZW
+ mftw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXo/WBr5gLYhOKpj+6VTnuangn0BrCgGnEP/lj4zQ1+KNOEznwMft0BV0Sw/pqR8oF3aLVOPNmavg05L28qfnms1NVsYhE=
+X-Gm-Message-State: AOJu0YyYCBLUdehRSvud8luDWYRjZFWAkh+cCfx7YBqiDgs2IN1C1SBA
+ /+zGJTv6wrXcrOYpP01zXtnCqdGEKZi5RS4Dv8IG9b5u0bWnwGe29DmD4v2yzpMoswnbk8K78Yu
+ T4VC+G2orzU/xFCXCgGJdLt5yo54=
+X-Google-Smtp-Source: AGHT+IGWvSW2wLEVssQLWwFvjIekn9ST4Y/n9PTd+1wDj4gm6/wiJrSg3Py6LxERsol1jCEh23/gykINJ608Ocj62hY=
+X-Received: by 2002:a50:d498:0:b0:56e:2148:f517 with SMTP id
+ s24-20020a50d498000000b0056e2148f517mr1395762edi.33.1712747433978; Wed, 10
+ Apr 2024 04:10:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240227223501.28475-1-vikram.garhwal@amd.com>
+ <20240227223501.28475-2-vikram.garhwal@amd.com>
+ <87bk7y5gpz.fsf@draig.linaro.org>
+In-Reply-To: <87bk7y5gpz.fsf@draig.linaro.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Wed, 10 Apr 2024 13:10:22 +0200
+Message-ID: <CAJy5ezr71cwbTOSKTGTzDN_CO1HKVyYitWPed-1DRkxEfQuZsQ@mail.gmail.com>
+Subject: Re: [QEMU][PATCH v3 1/7] softmmu: physmem: Split ram_block_add()
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Vikram Garhwal <vikram.garhwal@amd.com>, qemu-devel@nongnu.org,
+ sstabellini@kernel.org, 
+ jgross@suse.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000006474480615bc16a7"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,92 +95,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10, 2024 at 12:35:13PM +0200, Gerd Hoffmann wrote:
-> On Wed, Apr 10, 2024 at 03:26:29AM -0400, Michael S. Tsirkin wrote:
-> > On Wed, Apr 10, 2024 at 09:21:26AM +0200, Gerd Hoffmann wrote:
-> > > If the binary loaded via -kernel is *not* a linux kernel (in which
-> > > case protocol == 0), do not patch the linux kernel header fields.
-> > > 
-> > > It's (a) pointless and (b) might break binaries by random patching
-> > > and (c) changes the binary hash which in turn breaks secure boot
-> > > verification.
-> > > 
-> > > Background: OVMF happily loads and runs not only linux kernels but
-> > > any efi binary via direct kernel boot.
-> > > 
-> > > Note: Breaking the secure boot verification is a problem for linux
-> > > kernels too, but fixed that is left for another day ...
-> > 
-> > Um we kind of care about Linux ;)
-> > 
-> > What's the plan?  I suspect we should just add a command line flag
-> > to skip patching? And once we do that, it seems safer to just
-> > always rely on the flag?
-> 
-> Well, there are more problems to solve here than just the patching.  So
-> lets have a look at the bigger picture before discussion the details ...
-> 
-> [ Cc'ing Daniel + Cole ]
-> 
-> Current state of affairs is that OVMF supports two ways to boot a linux
-> kernel:
-> 
->  (1) Just load it as EFI binary and boot via linux kernel EFI stub,
->      which is the modern way to load a linux kernel (which is why you
->      can boot not only linux kernels but any efi binary).
-> 
->  (2) Use the old EFI handover protocol.  Which is the RHEL-6 era way to
->      boot a linux kernel on EFI.
-> 
-> For method (1) secure boot verification must pass.  For (2) not.  So if
-> you try to use direct kernel boot with secure boot enabled OVMF will
-> first try (1), which will fail, then go fallback to (2).
-> 
-> The reason for the failure is not only the patching, but also the fact
-> that the linux kernel is typically verified by shim.efi (and the distro
-> keys compiled into the binary) instead of the firmware.
-> 
-> Going though (2) is not ideal for multiple reasons, so we need some
-> strategy how we'll go handle direct kernel load with uefi and secure
-> boot in a way that (1) works.
-> 
-> Options I see:
-> 
->   (a) Stop using direct kernel boot, let virt-install & other tools
->       create vfat boot media with shim+kernel+initrd instead.
-> 
->   (b) Enroll the distro signing keys in the efi variable store, so
->       booting the kernel without shim.efi works.
-> 
->   (c) Add support for loading shim to qemu (and ovmf), for example
->       with a new '-shim' command line option which stores shim.efi
->       in some new fw_cfg file.
-> 
-> (b) + (c) both require a fix for the patching issue.  The options
-> I see here are:
-> 
->   (A) Move the patching from qemu to the linuxboot option rom.
->       Strictly speaking it belongs there anyway.  It doesn't look
->       that easy though, for qemu it is easier to gather all
->       information needed ...
-> 
->   (B) Provide both patched and unpatched setup header, so the
->       guest can choose what it needs.
-> 
->   (C) When implementing (c) above we can piggyback on the -shim
->       switch and skip patching in case it is present.
-> 
->   (D) Add a flag to skip the patching.
-> 
-> Comments?  Other/better ideas?
-> 
-> take care,
->   Gerd
+--0000000000006474480615bc16a7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-So if you didn't decide whether to do b or c then I guess D is
-easiest and covers both cases?
+On Fri, Mar 1, 2024 at 12:35=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
 
--- 
-MST
+> Vikram Garhwal <vikram.garhwal@amd.com> writes:
+>
+> > Extract ram block list update to a new function ram_block_add_list().
+> This is
+> > done to support grant mappings which adds a memory region for granted
+> memory and
+> > updates the ram_block list.
+> >
+> > Signed-off-by: Juergen Gross <jgross@suse.com>
+> > Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
+> > Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+>
 
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+--0000000000006474480615bc16a7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Fri, Mar 1, 2024 at 12:35=E2=80=AFPM A=
+lex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@l=
+inaro.org</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">Vikram Garhwal &lt;<a href=3D"mailto:vi=
+kram.garhwal@amd.com" target=3D"_blank">vikram.garhwal@amd.com</a>&gt; writ=
+es:<br>
+<br>
+&gt; Extract ram block list update to a new function ram_block_add_list(). =
+This is<br>
+&gt; done to support grant mappings which adds a memory region for granted =
+memory and<br>
+&gt; updates the ram_block list.<br>
+&gt;<br>
+&gt; Signed-off-by: Juergen Gross &lt;<a href=3D"mailto:jgross@suse.com" ta=
+rget=3D"_blank">jgross@suse.com</a>&gt;<br>
+&gt; Signed-off-by: Vikram Garhwal &lt;<a href=3D"mailto:vikram.garhwal@amd=
+.com" target=3D"_blank">vikram.garhwal@amd.com</a>&gt;<br>
+&gt; Reviewed-by: Stefano Stabellini &lt;<a href=3D"mailto:sstabellini@kern=
+el.org" target=3D"_blank">sstabellini@kernel.org</a>&gt;<br>
+<br>
+Reviewed-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org"=
+ target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+<br></blockquote><div><br></div><div>=C2=A0</div><div>Reviewed-by: Edgar E.=
+ Iglesias &lt;<a href=3D"mailto:edgar.iglesias@amd.com">edgar.iglesias@amd.=
+com</a>&gt;=C2=A0</div></div></div>
+
+--0000000000006474480615bc16a7--
 
