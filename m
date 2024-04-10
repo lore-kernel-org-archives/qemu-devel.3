@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD178CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ACA3CD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:29:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSNM-0003GT-3C; Wed, 10 Apr 2024 03:28:08 -0400
+	id 1ruSNB-0002rS-BR; Wed, 10 Apr 2024 03:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSMw-0002bL-B8; Wed, 10 Apr 2024 03:27:44 -0400
+ id 1ruSLc-0006Nq-7T; Wed, 10 Apr 2024 03:26:22 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSMt-0004rO-ME; Wed, 10 Apr 2024 03:27:41 -0400
+ id 1ruSLZ-0004bT-ID; Wed, 10 Apr 2024 03:26:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 16D355D6A2;
- Wed, 10 Apr 2024 10:25:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C14F5D695;
+ Wed, 10 Apr 2024 10:25:05 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B014EB02E2;
- Wed, 10 Apr 2024 10:23:07 +0300 (MSK)
-Received: (nullmailer pid 4191799 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id B5319B02D5;
+ Wed, 10 Apr 2024 10:23:06 +0300 (MSK)
+Received: (nullmailer pid 4191758 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 50/87] target/loongarch: Fix qemu-loongarch64 hang when
- executing 'll.d $t0, $t0, 0'
-Date: Wed, 10 Apr 2024 10:22:23 +0300
-Message-Id: <20240410072303.4191455-50-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 37/87] target/i386: fix direction of "32-bit MMU" test
+Date: Wed, 10 Apr 2024 10:22:10 +0300
+Message-Id: <20240410072303.4191455-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -62,43 +61,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Song Gao <gaosong@loongson.cn>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-On gen_ll, if a->imm is zero, make_address_x return src1,
-but the load to destination may clobber src1. We use a new
-destination to fix this problem.
+The low bit of MMU indices for x86 TCG indicates whether the processor is
+in 32-bit mode and therefore linear addresses have to be masked to 32 bits.
+However, the index was computed incorrectly, leading to possible conflicts
+in the TLB for any address above 4G.
 
-Fixes: c5af6628f4be (target/loongarch: Extract make_address_i() helper)
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240320013955.1561311-1-gaosong@loongson.cn>
-(cherry picked from commit 77642f92c0b71a105aba2a4d03bc62328eae703b)
+Analyzed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Fixes: b1661801c18 ("target/i386: Fix physical address truncation", 2024-02-28)
+Fixes: a28b6b4e743 ("target/i386: Fix physical address truncation" in stable-8.2)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2206
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 2cc68629a6fc198f4a972698bdd6477f883aedfb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: move changes for x86_cpu_mmu_index() to cpu_mmu_index() due to missing
+ v8.2.0-1030-gace0c5fe59 "target/i386: Populate CPUClass.mmu_index")
 
-diff --git a/target/loongarch/insn_trans/trans_atomic.c.inc b/target/loongarch/insn_trans/trans_atomic.c.inc
-index 80c2e286fd..974bc2a70f 100644
---- a/target/loongarch/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/insn_trans/trans_atomic.c.inc
-@@ -5,14 +5,14 @@
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 70e6713ba3..2f1e7425a3 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2308,7 +2308,7 @@ uint64_t cpu_get_tsc(CPUX86State *env);
  
- static bool gen_ll(DisasContext *ctx, arg_rr_i *a, MemOp mop)
+ static inline int cpu_mmu_index(CPUX86State *env, bool ifetch)
  {
--    TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
-+    TCGv t1 = tcg_temp_new();
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv t0 = make_address_i(ctx, src1, a->imm);
+-    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
++    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 0 : 1;
+     int mmu_index_base =
+         (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER64_IDX :
+         !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
+@@ -2335,7 +2335,7 @@ static inline bool is_mmu_index_32(int mmu_index)
  
--    tcg_gen_qemu_ld_i64(dest, t0, ctx->mem_idx, mop);
-+    tcg_gen_qemu_ld_i64(t1, t0, ctx->mem_idx, mop);
-     tcg_gen_st_tl(t0, tcg_env, offsetof(CPULoongArchState, lladdr));
--    tcg_gen_st_tl(dest, tcg_env, offsetof(CPULoongArchState, llval));
--    gen_set_gpr(a->rd, dest, EXT_NONE);
-+    tcg_gen_st_tl(t1, tcg_env, offsetof(CPULoongArchState, llval));
-+    gen_set_gpr(a->rd, t1, EXT_NONE);
- 
-     return true;
- }
+ static inline int cpu_mmu_index_kernel(CPUX86State *env)
+ {
+-    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
++    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
+     int mmu_index_base =
+         !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
+         ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
 -- 
 2.39.2
 
