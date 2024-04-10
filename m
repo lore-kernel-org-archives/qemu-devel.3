@@ -4,109 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96D5CCD128A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 13:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0754CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 14:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruYKO-0003X6-Dv; Wed, 10 Apr 2024 09:49:28 -0400
+	id 1ruZK6-0004nX-Su; Wed, 10 Apr 2024 10:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruYKM-0003Vx-5u
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 09:49:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruZK5-0004nK-Jr
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 10:53:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruYKJ-0003y3-HL
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 09:49:25 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruZK4-0006gG-36
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 10:53:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712756961;
+ s=mimecast20190719; t=1712760790;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BT5Dkz5bp2rlO5YGzBq+1Pv3yMGWLnPTuyD0ndOH6FA=;
- b=KXpPNe1ZMtQxdqJRw3RxQuF73+4mKui5vDDwFG//oHh8kVIxSvNV7aYvnNEculh6ENWjKg
- vARO4JHj74yYCHXbZdQoKErDkezrFBIDXts13faIotASvTNOY0TacOc6kqf5/2WqDZlv+i
- gBpJP3WIn48df2knhXsQe6znriLHcaM=
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
- [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u/h/TNmo0F+OAndnIIoxs/HTz/VoDakMvSCofeZ0TgE=;
+ b=Dvq5Ex8EvYVSzHrqORff4ukPHcsa0y7oqzEtnmaPf36OI/8KkFHshT4Gtdd7AlAv8F90R+
+ 5w3beQs9j074J0JOu2bpUtgPwgzM7f+xpymJOwU1Mi1lI3D0WO0bAwB8pa+tlICJCHD+MB
+ 7jbl/CmTe0kxalqPHeVfjtLVsfMnj0Y=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-r4RfvsE8NBC_7BdiyGwF6A-1; Wed, 10 Apr 2024 09:49:19 -0400
-X-MC-Unique: r4RfvsE8NBC_7BdiyGwF6A-1
-Received: by mail-ot1-f71.google.com with SMTP id
- 46e09a7af769-6ea11083fbeso855137a34.1
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 06:49:19 -0700 (PDT)
+ us-mta-108-B3s_zFk8Pb6b-iUAubZGEg-1; Wed, 10 Apr 2024 10:53:06 -0400
+X-MC-Unique: B3s_zFk8Pb6b-iUAubZGEg-1
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-6dea8b7e74aso2430092a34.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 07:53:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712756959; x=1713361759;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BT5Dkz5bp2rlO5YGzBq+1Pv3yMGWLnPTuyD0ndOH6FA=;
- b=SOzmc96aKVDd/pcP2NqhL3J2n8h1E4yk8if4qUs/rOvHsWbmPvQ3AOsONNhMzmghlz
- v5rhx0JnPqJQVzJi2Em/POiU00xqf+/cR24ScTJJBn9gjFImDtm79DQSTX7RZO/5mkDj
- T8A43qZGvlZZWspY1b5+fvp7I3Mx4pwIu7gW83CfeShN1RDynSXdfSlJCIs7WvAyxJ3r
- y8RBmAQazJ7Jq5qIeiraRf6i+ka6eZc6qvn8mhZ9+2qvJ4cgtT4y1sJ6OuvbZn40r+aI
- mZyC0RgCyVYzKZ4pxIrfAUpRrPtklKd/+jA0+QGZASlBOZVAOI/nm5Dq0euUVACobfP/
- p7rQ==
+ d=1e100.net; s=20230601; t=1712760786; x=1713365586;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u/h/TNmo0F+OAndnIIoxs/HTz/VoDakMvSCofeZ0TgE=;
+ b=ajueS6xMI12Jfc7YF2jBZqQFJchoHlgyauZSj9WUNFvqAQ+MsQ/GByoeMYJcYXRHwG
+ L5ESfzJHzEDfhX3++3mdIhzdqtHzYaaRupn4ZYCEJ8eIuHFz5oZPdgPT5iS2IGlG7rSI
+ wB2mnshBijLgtaaSPdMH7/bQkOKn2eqYv8osikDSQM9mYdX1O5OjlyRbrJoU2zGWLUc8
+ VHq7E2N3LTKtE8KEIYjnF9rUZv2Wql4UKipbf2NGFEu4vjFFDrnI+wZ/A2+dV6KT+Bnx
+ Dx55c3Jt3zPVphNI5KCKN2pF06XQAFfCIeMz4VhjEWC9g9HRpJEiQ3XAFhQn0374XdPS
+ TN1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQ0AeS92tz4lLVxDa2boqax0v6qR6vPChc6Ksgsp6CDFSWFNZ7kOZ9VnJHRhCcff2h+eBoluuggd2RhxtkJnu3WjESH0E=
-X-Gm-Message-State: AOJu0YyiL3Q2PTcV+PsDecwVcKal9pugX4rPHRmPB0Eb9kw/i4n/MbhE
- 3qhl+t877R4hXbYwDDv967yQ7B9svpbJgxqQtCKaQtuPQZfqq9h0j/Hptt23YWtBnb4mqq7WPYo
- 2OJmdec5Fnrb+/Hac6VKP/UIt5qnmpf7TcUBxhHNKhzg+Gf/2c+9X
-X-Received: by 2002:a9d:7a4b:0:b0:6ea:1a31:6be7 with SMTP id
- z11-20020a9d7a4b000000b006ea1a316be7mr3126579otm.1.1712756958815; 
- Wed, 10 Apr 2024 06:49:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGO/4tzS8AgY3C9eGfgVkgd8QOvAcWWmTxp+ZGKhQohkI3kz9t6pgk5/xdRD/mDBdGo/fCRAA==
-X-Received: by 2002:a9d:7a4b:0:b0:6ea:1a31:6be7 with SMTP id
- z11-20020a9d7a4b000000b006ea1a316be7mr3126531otm.1.1712756958327; 
- Wed, 10 Apr 2024 06:49:18 -0700 (PDT)
+ AJvYcCWg1UPI1gQT/jLb+9c2/yuz6jVGXb35oqtD4um+c+6fCkgXsBB7+9eD9vJgidk2rN0xekfWF/1r6Az2OwMNaCF1YjIiOCo=
+X-Gm-Message-State: AOJu0YwquptJm/6aukLz4AjLFmUC8lpqfzSiLIuI1XfrzHzDWTVpbCrX
+ aP6pFP7xGajGI1a0zVppTsx1RS36XEVfd8o1PRNByx2r+Qbj08YNHe+6O72/hjlZhEZiDc9xtaQ
+ x2pQZjX5XmVQcF5gQCLxv6cNdW3c+IOcBEeEg8khlqLNKDgjlkfCA
+X-Received: by 2002:a9d:7dc2:0:b0:6ea:10b8:954c with SMTP id
+ k2-20020a9d7dc2000000b006ea10b8954cmr3225158otn.0.1712760786048; 
+ Wed, 10 Apr 2024 07:53:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHfOZUr0kfLVutAeDhA/BWlkevu03yE6GQXaxd0QVNX1Jat+l4/Hf+ImCkQFUsFRVHX3km6QA==
+X-Received: by 2002:a9d:7dc2:0:b0:6ea:10b8:954c with SMTP id
+ k2-20020a9d7dc2000000b006ea10b8954cmr3225135otn.0.1712760785639; 
+ Wed, 10 Apr 2024 07:53:05 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- h20-20020a05620a10b400b0078d60973a51sm3766353qkk.75.2024.04.10.06.49.16
+ cx19-20020a05620a51d300b0078d582a4b6esm4214245qkb.12.2024.04.10.07.53.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Apr 2024 06:49:18 -0700 (PDT)
-Date: Wed, 10 Apr 2024 09:49:15 -0400
+ Wed, 10 Apr 2024 07:53:05 -0700 (PDT)
+Date: Wed, 10 Apr 2024 10:53:04 -0400
 From: Peter Xu <peterx@redhat.com>
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Cc: Jinpu Wang <jinpu.wang@ionos.com>, Yu Zhang <yu.zhang@ionos.com>,
- Elmar Gerdes <elmar.gerdes@ionos.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Prasanna Kumar Kalever <prasanna4324@gmail.com>,
- "integration@gluster.org" <integration@gluster.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
- Song Gao <gaosong@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>,
- "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>,
- "pannengyuan@huawei.com" <pannengyuan@huawei.com>
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-Message-ID: <ZhaY2_cO6CrQFCt3@x1n>
-References: <7a510fbe-1c27-4f67-93b8-0d9cf01c1c74@fujitsu.com>
- <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
- <9d082daf-acf0-27c5-1758-5a3f2af7ee0f@fujitsu.com>
- <CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com>
- <Zgx3brrz8m0V7HS4@x1n>
- <CAMGffE=i+hVCNaX_31h1D1VW7JGJBqoa9T0qEJe2CDcb9BPiAA@mail.gmail.com>
- <ZhQYu3ZnsIGv2qUZ@x1n>
- <CAMGffEm2TWJxOPcNQTQ1Sjytf5395dBzTCMYiKRqfxDzJwSN6A@mail.gmail.com>
- <ZhWa0YeAb9ySVKD1@x1n>
- <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org,
+ thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ prerna.saxena@nutanix.com
+Subject: Re: [PATCH 1/4] Revert "migration: modify test_multifd_tcp_none() to
+ use new QAPI syntax"
+Message-ID: <Zhan0Brg_CXzt79-@x1n>
+References: <20240410111541.188504-1-het.gala@nutanix.com>
+ <20240410111541.188504-2-het.gala@nutanix.com>
+ <874jc9v066.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
+In-Reply-To: <874jc9v066.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -116,7 +89,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,36 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10, 2024 at 02:28:59AM +0000, Zhijian Li (Fujitsu) via wrote:
+On Wed, Apr 10, 2024 at 10:04:33AM -0300, Fabiano Rosas wrote:
+> Het Gala <het.gala@nutanix.com> writes:
 > 
-> 
-> on 4/10/2024 3:46 AM, Peter Xu wrote:
-> 
-> >> Is there document/link about the unittest/CI for migration tests, Why
-> >> are those tests missing?
-> >> Is it hard or very special to set up an environment for that? maybe we
-> >> can help in this regards.
-> > See tests/qtest/migration-test.c.  We put most of our migration tests
-> > there and that's covered in CI.
+> > This reverts commit 8e3766eefbb4036cbc280c1f1a0d28537929f7fb
 > >
-> > I think one major issue is CI systems don't normally have rdma devices.
-> > Can rdma migration test be carried out without a real hardware?
+> > After addition of 'channels' as the starting argument of new QAPI
+> > syntax inside postcopy test, even if the user entered the old QAPI
+> > syntax, test used the new syntax.
+> > It was a temporary patch added to have some presence of the new syntax
+> > since the migration qtest framework lacked any logic for introducing
+> > 'channels' argument.
 > 
-> Yeah,  RXE aka. SOFT-RoCE is able to emulate the RDMA, for example
-> $ sudo rdma link add rxe_eth0 type rxe netdev eth0  # on host
-> then we can get a new RDMA interface "rxe_eth0".
-> This new RDMA interface is able to do the QEMU RDMA migration.
-> 
-> Also, the loopback(lo) device is able to emulate the RDMA interface 
-> "rxe_lo", however when
-> I tried(years ago) to do RDMA migration over this 
-> interface(rdma:127.0.0.1:3333) , it got something wrong.
-> So i gave up enabling the RDMA migration qtest at that time.
+> That wasn't clear to me when we merged that. Was that really the case?
 
-Thanks, Zhijian.
+Yeah these look all a bit confusing..
 
-I'm not sure adding an emu-link for rdma is doable for CI systems, though.
-Maybe someone more familiar with how CI works can chim in.
+I'm wondering whether do we need the new interface to cover both precopy
+and postcopy, or one would suffice?
+
+Both should share the same interface.  I think it means if we covered the
+channels interface in precopy, then perhaps we don't need to test anywhere
+else, as we got the code paths all covered.
+
+We actually do the same already for all kinds of channels for postcopy,
+where we stick with either tcp/unix but don't cover the rest.
 
 -- 
 Peter Xu
