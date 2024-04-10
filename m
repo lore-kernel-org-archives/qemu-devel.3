@@ -4,35 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CFC1CD1296
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E2CCD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSNP-0003LJ-FI; Wed, 10 Apr 2024 03:28:11 -0400
+	id 1ruSNQ-0003P6-T5; Wed, 10 Apr 2024 03:28:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSN0-0002hk-N9; Wed, 10 Apr 2024 03:27:48 -0400
+ id 1ruSNO-0003Kx-Fr; Wed, 10 Apr 2024 03:28:10 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSMw-0004ro-DR; Wed, 10 Apr 2024 03:27:46 -0400
+ id 1ruSNM-0004sR-6P; Wed, 10 Apr 2024 03:28:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2637B5D6A3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4BD815D6A5;
  Wed, 10 Apr 2024 10:25:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C00F5B02E3;
+ by tsrv.corpit.ru (Postfix) with SMTP id E0581B02E5;
  Wed, 10 Apr 2024 10:23:07 +0300 (MSK)
-Received: (nullmailer pid 4191802 invoked by uid 1000);
+Received: (nullmailer pid 4191808 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [Stable-8.2.3 51/87] docs/conf.py: Remove usage of distutils
-Date: Wed, 10 Apr 2024 10:22:24 +0300
-Message-Id: <20240410072303.4191455-51-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ido Plat <ido.plat@ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 53/87] target/s390x: Use mutable temporary value for
+ op_ts
+Date: Wed, 10 Apr 2024 10:22:26 +0300
+Message-Id: <20240410072303.4191455-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -60,80 +64,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Ido Plat <ido.plat@ibm.com>
 
-The macOS jobs in our CI recently started failing, complaining that
-the distutils module is not available anymore. And indeed, according to
-https://peps.python.org/pep-0632/ it's been deprecated since a while
-and now likely got removed in recent Python versions.
+Otherwise TCG would assume the register that holds t1 would be constant
+and reuse whenever it needs the value within it.
 
-Fortunately, we only use it for a version check via LooseVersion here
-which we don't really need anymore - according to Repology.org, these
-are the versions of sphinx-rtd-theme that are currently used by the
-various distros:
-
- centos_stream_8: 0.3.1
- centos_stream_9: 0.5.1
- fedora_38: 1.1.1
- fedora_39: 1.2.2
- freebsd: 1.0.0
- haikuports_master: 1.2.1
- openbsd: 1.2.2
- opensuse_leap_15_5: 0.5.1
- pkgsrc_current: 2.0.0
- debian_11: 0.5.1
- debian_12: 1.2.0
- ubuntu_20_04: 0.4.3
- ubuntu_22_04: 1.0.0
- ubuntu_24_04: 2.0.0
-
-So except for CentOS 8, all distros are using a newer version of
-sphinx-rtd-theme, and for CentOS 8 we don't support compiling with
-the Sphinx of the distro anymore anyway, since it's based on the
-Python 3.6 interpreter there. For compiling on CentOS 8, you have
-to use the alternative Python 3.8 interpreter which comes without
-Sphinx, so that needs the Sphinx installed via pip in the venv
-instead, and that is using a newer version, too, according to our
-pythondeps.toml file.
-
-Thus we can simply drop the version check now to get rid of the
-distutils dependency here.
-
+Cc: qemu-stable@nongnu.org
+Fixes: f1ea739bd598 ("target/s390x: Use tcg_constant_* in local contexts")
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+[iii: Adjust a newline and capitalization, add tags]
+Signed-off-by: Ido Plat <ido.plat@ibm.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Message-ID: <20240318202722.20675-1-iii@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-id: 20240304130403.129543-1-thuth@redhat.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit eb844330bd36ebdd4959053da08069d1e5d49119)
+(cherry picked from commit 272fba9779af0bb1c29cd30302fc1e31c59274d0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/docs/conf.py b/docs/conf.py
-index e84a95e71c..1b2afa241c 100644
---- a/docs/conf.py
-+++ b/docs/conf.py
-@@ -29,7 +29,6 @@
- import os
- import sys
- import sphinx
--from distutils.version import LooseVersion
- from sphinx.errors import ConfigError
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 8df00b7df9..3af81fa8f0 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -4783,9 +4783,10 @@ static DisasJumpType op_trXX(DisasContext *s, DisasOps *o)
  
- # The per-manual conf.py will set qemu_docdir for a single-manual build;
-@@ -165,11 +164,10 @@
- # Theme options are theme-specific and customize the look and feel of a theme
- # further.  For a list of options available for each theme, see the
- # documentation.
--if LooseVersion(sphinx_rtd_theme.__version__) >= LooseVersion("0.4.3"):
--    html_theme_options = {
--        "style_nav_header_background": "#802400",
--        "navigation_with_keys": True,
--    }
-+html_theme_options = {
-+    "style_nav_header_background": "#802400",
-+    "navigation_with_keys": True,
-+}
+ static DisasJumpType op_ts(DisasContext *s, DisasOps *o)
+ {
+-    TCGv_i32 t1 = tcg_constant_i32(0xff);
++    TCGv_i32 ff = tcg_constant_i32(0xff);
++    TCGv_i32 t1 = tcg_temp_new_i32();
  
- html_logo = os.path.join(qemu_docdir, "../ui/icons/qemu_128x128.png")
- 
+-    tcg_gen_atomic_xchg_i32(t1, o->in2, t1, get_mem_index(s), MO_UB);
++    tcg_gen_atomic_xchg_i32(t1, o->in2, ff, get_mem_index(s), MO_UB);
+     tcg_gen_extract_i32(cc_op, t1, 7, 1);
+     set_cc_static(s);
+     return DISAS_NEXT;
 -- 
 2.39.2
 
