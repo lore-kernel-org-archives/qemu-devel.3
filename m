@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA54BCD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47230CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSIu-0007jW-RF; Wed, 10 Apr 2024 03:23:32 -0400
+	id 1ruSIp-0007aU-OK; Wed, 10 Apr 2024 03:23:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSIk-0007Sl-3l; Wed, 10 Apr 2024 03:23:22 -0400
+ id 1ruSIl-0007Xs-Cu; Wed, 10 Apr 2024 03:23:24 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSIi-0003td-6i; Wed, 10 Apr 2024 03:23:21 -0400
+ id 1ruSIj-0003tq-Ft; Wed, 10 Apr 2024 03:23:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AD6835D674;
+ by isrv.corpit.ru (Postfix) with ESMTP id BE72A5D675;
  Wed, 10 Apr 2024 10:25:02 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 52AC8B02B5;
+ by tsrv.corpit.ru (Postfix) with SMTP id 621F2B02B6;
  Wed, 10 Apr 2024 10:23:04 +0300 (MSK)
-Received: (nullmailer pid 4191659 invoked by uid 1000);
+Received: (nullmailer pid 4191662 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 05/87] gitlab: update FreeBSD Cirrus CI image to 13.3
-Date: Wed, 10 Apr 2024 10:21:38 +0300
-Message-Id: <20240410072303.4191455-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, David Parsons <dave@daveparsons.net>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 06/87] ui/cocoa: Fix window clipping on macOS 14
+Date: Wed, 10 Apr 2024 10:21:39 +0300
+Message-Id: <20240410072303.4191455-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
@@ -62,31 +63,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: David Parsons <dave@daveparsons.net>
 
-The 13.2 images have been deleted from gcloud
+macOS Sonoma changes the NSView.clipsToBounds to false by default
+where it was true in earlier version of macOS. This causes the window
+contents to be occluded by the frame at the top of the window. This
+fixes the issue by conditionally compiling the clipping on Sonoma to
+true. NSView only exposes the clipToBounds in macOS 14 and so has
+to be fixed via conditional compilation.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240304144456.3825935-3-berrange@redhat.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 9ea920dc28254cd9a363aaef01985dffd8abedd7)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
+Signed-off-by: David Parsons <dave@daveparsons.net>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-ID: <20240224140620.39200-1-dave@daveparsons.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit f5af80271aad356233b2bea2369b3b2211fa395d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 64f2e25afa..b45f9de62f 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -52,7 +52,7 @@ x64-freebsd-13-build:
-     NAME: freebsd-13
-     CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
-     CIRRUS_VM_IMAGE_SELECTOR: image_family
--    CIRRUS_VM_IMAGE_NAME: freebsd-13-2
-+    CIRRUS_VM_IMAGE_NAME: freebsd-13-3
-     CIRRUS_VM_CPUS: 8
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update; pkg upgrade -y
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index cd069da696..d39c9e2a3b 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -54,6 +54,10 @@
+ #define MAC_OS_X_VERSION_10_13 101300
+ #endif
+ 
++#ifndef MAC_OS_VERSION_14_0
++#define MAC_OS_VERSION_14_0 140000
++#endif
++
+ /* 10.14 deprecates NSOnState and NSOffState in favor of
+  * NSControlStateValueOn/Off, which were introduced in 10.13.
+  * Define for older versions
+@@ -365,6 +369,9 @@ - (id)initWithFrame:(NSRect)frameRect
+         screen.width = frameRect.size.width;
+         screen.height = frameRect.size.height;
+         kbd = qkbd_state_init(dcl.con);
++#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
++        [self setClipsToBounds:YES];
++#endif
+ 
+     }
+     return self;
 -- 
 2.39.2
 
