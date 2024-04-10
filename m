@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6937CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4357ECD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSNQ-0003MI-Bz; Wed, 10 Apr 2024 03:28:12 -0400
+	id 1ruSQu-0005Zs-RR; Wed, 10 Apr 2024 03:31:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSMT-0001jh-Ho; Wed, 10 Apr 2024 03:27:17 -0400
+ id 1ruSQW-0005Qq-8R; Wed, 10 Apr 2024 03:31:29 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSMR-0004ne-R1; Wed, 10 Apr 2024 03:27:13 -0400
+ id 1ruSQU-0005QY-HE; Wed, 10 Apr 2024 03:31:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B666E5D69D;
- Wed, 10 Apr 2024 10:25:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9AB035D6C4;
+ Wed, 10 Apr 2024 10:25:08 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5AC0EB02DD;
- Wed, 10 Apr 2024 10:23:07 +0300 (MSK)
-Received: (nullmailer pid 4191783 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 3E3C9B0304;
+ Wed, 10 Apr 2024 10:23:10 +0300 (MSK)
+Received: (nullmailer pid 4191904 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sven Schnelle <svens@stackframe.org>,
- Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 45/87] target/hppa: fix shrp for wide mode
-Date: Wed, 10 Apr 2024 10:22:18 +0300
-Message-Id: <20240410072303.4191455-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Wafer <wafer@jaguarmicro.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 84/87] hw/virtio: Fix packed virtqueue flush used_idx
+Date: Wed, 10 Apr 2024 10:22:57 +0300
+Message-Id: <20240410072303.4191455-84-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,39 +62,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sven Schnelle <svens@stackframe.org>
+From: Wafer <wafer@jaguarmicro.com>
 
-Fixes: f7b775a9c075 ("target/hppa: Implement SHRPD")
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240319161921.487080-3-svens@stackframe.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit d37fad0ae5bd2c544fdb0f2eff6acdb28a155be0)
+In the event of writing many chains of descriptors, the device must
+write just the id of the last buffer in the descriptor chain, skip
+forward the number of descriptors in the chain, and then repeat the
+operations for the rest of chains.
+
+Current QEMU code writes all the buffer ids consecutively, and then
+skips all the buffers altogether. This is a bug, and can be reproduced
+with a VirtIONet device with _F_MRG_RXBUB and without
+_F_INDIRECT_DESC:
+
+If a virtio-net device has the VIRTIO_NET_F_MRG_RXBUF feature
+but not the VIRTIO_RING_F_INDIRECT_DESC feature,
+'VirtIONetQueue->rx_vq' will use the merge feature
+to store data in multiple 'elems'.
+The 'num_buffers' in the virtio header indicates how many elements are merged.
+If the value of 'num_buffers' is greater than 1,
+all the merged elements will be filled into the descriptor ring.
+The 'idx' of the elements should be the value of 'vq->used_idx' plus 'ndescs'.
+
+Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Wafer <wafer@jaguarmicro.com>
+Message-Id: <20240407015451.5228-2-wafer@jaguarmicro.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 2d9a31b3c27311eca1682cb2c076d7a300441960)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 533feca5ec..15a8bfd48c 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -3506,7 +3506,7 @@ static bool trans_shrp_sar(DisasContext *ctx, arg_shrp_sar *a)
-     /* Install the new nullification.  */
-     cond_free(&ctx->null_cond);
-     if (a->c) {
--        ctx->null_cond = do_sed_cond(ctx, a->c, false, dest);
-+        ctx->null_cond = do_sed_cond(ctx, a->c, a->d, dest);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 356d690cc9..aa02c4937c 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -957,12 +957,20 @@ static void virtqueue_packed_flush(VirtQueue *vq, unsigned int count)
+         return;
      }
-     return nullify_end(ctx);
- }
-@@ -3549,7 +3549,7 @@ static bool trans_shrp_imm(DisasContext *ctx, arg_shrp_imm *a)
-     /* Install the new nullification.  */
-     cond_free(&ctx->null_cond);
-     if (a->c) {
--        ctx->null_cond = do_sed_cond(ctx, a->c, false, dest);
-+        ctx->null_cond = do_sed_cond(ctx, a->c, a->d, dest);
+ 
++    /*
++     * For indirect element's 'ndescs' is 1.
++     * For all other elemment's 'ndescs' is the
++     * number of descriptors chained by NEXT (as set in virtqueue_packed_pop).
++     * So When the 'elem' be filled into the descriptor ring,
++     * The 'idx' of this 'elem' shall be
++     * the value of 'vq->used_idx' plus the 'ndescs'.
++     */
++    ndescs += vq->used_elems[0].ndescs;
+     for (i = 1; i < count; i++) {
+-        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], i, false);
++        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false);
+         ndescs += vq->used_elems[i].ndescs;
      }
-     return nullify_end(ctx);
- }
+     virtqueue_packed_fill_desc(vq, &vq->used_elems[0], 0, true);
+-    ndescs += vq->used_elems[0].ndescs;
+ 
+     vq->inuse -= ndescs;
+     vq->used_idx += ndescs;
 -- 
 2.39.2
 
