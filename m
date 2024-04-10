@@ -4,82 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9402CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 04:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73896CD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruPjV-0002Bu-If; Wed, 10 Apr 2024 00:38:49 -0400
+	id 1ruQWr-0000in-Qp; Wed, 10 Apr 2024 01:29:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1ruPjR-0002BR-2g; Wed, 10 Apr 2024 00:38:46 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1ruPjP-0007dE-BG; Wed, 10 Apr 2024 00:38:44 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6ed32341906so2348759b3a.1; 
- Tue, 09 Apr 2024 21:38:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712723920; x=1713328720; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JiS56cHvDoDYEOPmeRAazFfdabqjkT7+PmAEiu4hEGs=;
- b=ex/5prpDDckEUS1bzvBm3MfLyt1g6Yc8PBm403gXXUGAOqhiO2eUlicnhEAD+Lf4AJ
- 4Re3g3wiWYF0eqp9ib08LijpxaLE+On6zW5/OxuNqjto5NDEcmeVgjS3SHwqrs9dsTxh
- WswweyjZ5WVjdhXMhyoUtOnjjLwTK8Qj1ASXJ1EjhaVjjOvtNq4fZ8Bmws2vDSJmOBDw
- eEZIcfg48kMIkJRg5VdEZo4izLGBaQkejEYw7abOhXOk0gmueM/5DGccKzEGoG9AWj94
- 4dbYfgOXurWbopFpjJ+g51rrw9IuH8gSR9RelNzzwxgygn9bIjuENE9iPk9ylpIAI4JJ
- O2dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712723920; x=1713328720;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=JiS56cHvDoDYEOPmeRAazFfdabqjkT7+PmAEiu4hEGs=;
- b=kbYaMk6L5xAIfRU+Bvz5uaxw9Xjo5/mClgztV1fXD6ICWisgzMqNgCFJ4XSjCWQ0M5
- 0Q3nMl+tdH0NqsDkyEvfbSFufWrF+9BbnrdIo9ZBYcU64iXz+nPUVgmuzXMybm6nXmtR
- DtwuuD6xIgp9MB5F2R/oG404gwCqLFZu6t/yuaSGJgBRAb6psWRsmWlrgMSSwoyTgCkx
- 1zXgqAUfG1NEUtHCxsIPlyHLf+FmEgkPFcLeOly83392uTaXrkrN+xO2zXLLTxhhsMWf
- r7rKcQF/3D3jvGCJOw47wl22GHZBrAZQubl8BNKtQUSUgUrqmwngU2zxdvWSz6OSYQiV
- qtAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVNwlQ5VEaXX5klH7yrxPe8hornsqw/1WlBQYJb7VHQE5qMsAeCNPn0gmYQw99Yk1xOL6240Pkdj6qpaBH/iEX/Gtj4ZWQxrEDepsojcauG1hKDrQX4QbunSQ=
-X-Gm-Message-State: AOJu0YzQyFXky62FRkKvp4oveeuZNDvFGn3WbSh+GQ0+fR4UXON59rHt
- l68E1LlkaWD9W++cNfdCD6hEmXzGG06iMvnyb1Ar/xh/5Mv8+V/x
-X-Google-Smtp-Source: AGHT+IF257ek+g5jKbTf+z39CmZsM5K2huaa7gWWhQiI5kvuaiPhQKYOUORVgdDaHwGVclT3aEgzxQ==
-X-Received: by 2002:a05:6a00:7006:b0:6ed:caf6:6e54 with SMTP id
- lf6-20020a056a00700600b006edcaf66e54mr236986pfb.28.1712723920394; 
- Tue, 09 Apr 2024 21:38:40 -0700 (PDT)
-Received: from localhost ([1.146.50.27]) by smtp.gmail.com with ESMTPSA id
- r25-20020aa78459000000b006eb3c3db4afsm9206180pfn.186.2024.04.09.21.38.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 21:38:39 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 10 Apr 2024 14:38:33 +1000
-Message-Id: <D0G5YFXXNK98.3NO5536V5LC8N@gmail.com>
-Cc: "Peter Maydell" <peter.maydell@linaro.org>, <philmd@linaro.org>
-Subject: Re: [PATCH for-9.0] ppc440_pcix: Do not expose a bridge device on
- PCI bus
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240409235543.0E0C34E601C@zero.eik.bme.hu>
-In-Reply-To: <20240409235543.0E0C34E601C@zero.eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1ruQWq-0000iX-8O
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 01:29:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1ruQWo-00070w-SG
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 01:29:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712726985;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lUyt2lP+iaweP7GGIQcQN2/vMQc1UDRPtDmxt5CULrM=;
+ b=DZMmjcA7pGd6TKsl9XbTptHgatV595yGfaq/bC3EPNQeXyJg8L4gEpCJmLI366Xrz9VJIn
+ 7/N4DBmcVejU7ZUXra5xsMVMdYk2xBqsA6cfNvzqkS+WXOhEV8b1I62bMkNPyOaUcjOTgf
+ b6fCvppwkFAn7v/0P/ai4WsKJ94a2EU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-326-ddmoYyiJMYWA5XAH6AcuYQ-1; Wed, 10 Apr 2024 01:29:41 -0400
+X-MC-Unique: ddmoYyiJMYWA5XAH6AcuYQ-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D716D802E4D
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 05:29:40 +0000 (UTC)
+Received: from server.redhat.com (unknown [10.72.112.217])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 11FD6C0157E;
+ Wed, 10 Apr 2024 05:29:37 +0000 (UTC)
+From: Cindy Lu <lulu@redhat.com>
+To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v2 0/1] virtio-pci: Fix the crash that the vector was used
+ after released
+Date: Wed, 10 Apr 2024 13:27:55 +0800
+Message-ID: <20240410052926.417674-1-lulu@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,80 +76,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Apr 10, 2024 at 9:55 AM AEST, BALATON Zoltan wrote:
-> Real 460EX SoC apparently does not expose a bridge device and having
-> it appear on PCI bus confuses an AmigaOS file system driver that uses
-> this to detect which machine it is running on. Since values written
-> here by firmware are never read, just ignore these writes and drop the
-> bridge device.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
-> This is only used by sam460ex and this fixes an issue with AmigaOS on
-> this machine so I'd like this to be merged for 9.0 please.
+During the booting process of the Vyatta image, the behavior of the
+called function in qemu is as follows:
 
-Is it a regression? Does it have a fixes: or resolves: tag?
+1. vhost_net_stop() was triggered by guest image . This will call the function
+virtio_pci_set_guest_notifiers() with assgin= false, and
+virtio_pci_set_guest_notifiers(） will release the irqfd for vector 0
 
-Unless we broke it in this cycle, I would be inclined to wait,
-and we can ask to put it in stable.
+2. virtio_reset() was called -->set configure vector to VIRTIO_NO_VECTOR
 
-Thanks,
-Nick
+3.vhost_net_start() was called (at this time, the configure vector is
+still VIRTIO_NO_VECTOR) and call virtio_pci_set_guest_notifiers() with
+assgin= true, so the irqfd for vector 0 is still not "init" during this process
 
->
->  hw/pci-host/ppc440_pcix.c | 14 +-------------
->  1 file changed, 1 insertion(+), 13 deletions(-)
->
-> diff --git a/hw/pci-host/ppc440_pcix.c b/hw/pci-host/ppc440_pcix.c
-> index 1926ae2a27..ba38172989 100644
-> --- a/hw/pci-host/ppc440_pcix.c
-> +++ b/hw/pci-host/ppc440_pcix.c
-> @@ -52,7 +52,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(PPC440PCIXState, PPC440_PCIX=
-_HOST)
->  struct PPC440PCIXState {
->      PCIHostState parent_obj;
-> =20
-> -    PCIDevice *dev;
->      struct PLBOutMap pom[PPC440_PCIX_NR_POMS];
->      struct PLBInMap pim[PPC440_PCIX_NR_PIMS];
->      uint32_t sts;
-> @@ -170,10 +169,6 @@ static void ppc440_pcix_reg_write4(void *opaque, hwa=
-ddr addr,
-> =20
->      trace_ppc440_pcix_reg_write(addr, val, size);
->      switch (addr) {
-> -    case PCI_VENDOR_ID ... PCI_MAX_LAT:
-> -        stl_le_p(s->dev->config + addr, val);
-> -        break;
-> -
->      case PCIX0_POM0LAL:
->          s->pom[0].la &=3D 0xffffffff00000000ULL;
->          s->pom[0].la |=3D val;
-> @@ -301,10 +296,6 @@ static uint64_t ppc440_pcix_reg_read4(void *opaque, =
-hwaddr addr,
->      uint32_t val;
-> =20
->      switch (addr) {
-> -    case PCI_VENDOR_ID ... PCI_MAX_LAT:
-> -        val =3D ldl_le_p(s->dev->config + addr);
-> -        break;
-> -
->      case PCIX0_POM0LAL:
->          val =3D s->pom[0].la;
->          break;
-> @@ -498,10 +489,7 @@ static void ppc440_pcix_realize(DeviceState *dev, Er=
-ror **errp)
->      memory_region_init(&s->iomem, OBJECT(dev), "pci-io", 64 * KiB);
->      h->bus =3D pci_register_root_bus(dev, NULL, ppc440_pcix_set_irq,
->                           ppc440_pcix_map_irq, &s->irq, &s->busmem, &s->i=
-omem,
-> -                         PCI_DEVFN(0, 0), 1, TYPE_PCI_BUS);
-> -
-> -    s->dev =3D pci_create_simple(h->bus, PCI_DEVFN(0, 0),
-> -                               TYPE_PPC4xx_HOST_BRIDGE);
-> +                         PCI_DEVFN(1, 0), 1, TYPE_PCI_BUS);
-> =20
->      memory_region_init(&s->bm, OBJECT(s), "bm-ppc440-pcix", UINT64_MAX);
->      memory_region_add_subregion(&s->bm, 0x0, &s->busmem);
+4. The system continues to boot,set the vector back to 0, and msix_fire_vector_notifier() was triggered
+ unmask the vector 0 and then met the crash
+[msix_fire_vector_notifier] 112 called vector 0 is_masked 1
+[msix_fire_vector_notifier] 112 called vector 0 is_masked 0
+
+To fix this, we need to call the function "kvm_virtio_pci_vector_use_one()"
+when the vector changes back from VIRTIO_NO_VECTOR.
+
+The reason that we don't need to call kvm_virtio_pci_vector_release_one while the vector changes to
+VIRTIO_NO_VECTOR is this function will called in vhost_net_stop(),
+So this step will not lost during this process.
+
+Change from V1
+1.add the check for if using irqfd
+2.remove the check for bool recovery, irqfd's user is enough to check status
+
+Cindy Lu (1):
+  virtio-pci: Fix the crash that the vector was used after released.
+
+ hw/virtio/virtio-pci.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+-- 
+2.43.0
 
 
