@@ -4,73 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550AACD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 10:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06184CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruVJ4-0004M1-Qr; Wed, 10 Apr 2024 06:35:55 -0400
+	id 1ruVkC-00011c-RM; Wed, 10 Apr 2024 07:03:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruVIt-0004Ky-GF
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 06:35:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1ruVkA-00011H-IN; Wed, 10 Apr 2024 07:03:54 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ruVIr-00022E-LB
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 06:35:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712745339;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=c/JhOomIpUEzNGGVS15jcROIQDytxa86oqbJB+CBiFI=;
- b=IlL8cuIfNKqVV1FOpq73XQLkhvEHUK3+X+yFZEJ27d+zuoOlwdxFcAr5WYKHisTs1F5erg
- r1I3TWF26Ps7YVBjJwkfipDd8owv5K8LSc31GnlKImacrMgEr7xV73N7JoiI6MBzEQ21zU
- 4dSyddlMWwFSMFyqpEO8uTEpkKcns48=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-_TUMpmo-P-6iZvyJKmTODA-1; Wed, 10 Apr 2024 06:35:35 -0400
-X-MC-Unique: _TUMpmo-P-6iZvyJKmTODA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2050A802A6F;
- Wed, 10 Apr 2024 10:35:35 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.204])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 912CE490F9;
- Wed, 10 Apr 2024 10:35:34 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 5EC3B18009BB; Wed, 10 Apr 2024 12:35:13 +0200 (CEST)
-Date: Wed, 10 Apr 2024 12:35:13 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>, Daniel Berrange <berrange@redhat.com>, 
- Cole Robinson <crobinso@redhat.com>
-Subject: secure boot & direct kernel load (was: Re: [PATCH] x86/loader: only
- patch linux kernels)
-Message-ID: <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
-References: <20240410072126.617063-1-kraxel@redhat.com>
- <20240410032448-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1ruVk5-0006rG-VK; Wed, 10 Apr 2024 07:03:53 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DCC8F4E601C;
+ Wed, 10 Apr 2024 13:03:45 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id MU4Pys85kDK0; Wed, 10 Apr 2024 13:03:43 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E37334E6027; Wed, 10 Apr 2024 13:03:43 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E01487456B4;
+ Wed, 10 Apr 2024 13:03:43 +0200 (CEST)
+Date: Wed, 10 Apr 2024 13:03:43 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Nicholas Piggin <npiggin@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, philmd@linaro.org
+Subject: Re: [PATCH for-9.0] ppc440_pcix: Do not expose a bridge device on
+ PCI bus
+In-Reply-To: <D0G5YFXXNK98.3NO5536V5LC8N@gmail.com>
+Message-ID: <887fc804-54a6-8f00-1b62-afcf247ba319@eik.bme.hu>
+References: <20240409235543.0E0C34E601C@zero.eik.bme.hu>
+ <D0G5YFXXNK98.3NO5536V5LC8N@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240410032448-mutt-send-email-mst@kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,85 +65,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10, 2024 at 03:26:29AM -0400, Michael S. Tsirkin wrote:
-> On Wed, Apr 10, 2024 at 09:21:26AM +0200, Gerd Hoffmann wrote:
-> > If the binary loaded via -kernel is *not* a linux kernel (in which
-> > case protocol == 0), do not patch the linux kernel header fields.
-> > 
-> > It's (a) pointless and (b) might break binaries by random patching
-> > and (c) changes the binary hash which in turn breaks secure boot
-> > verification.
-> > 
-> > Background: OVMF happily loads and runs not only linux kernels but
-> > any efi binary via direct kernel boot.
-> > 
-> > Note: Breaking the secure boot verification is a problem for linux
-> > kernels too, but fixed that is left for another day ...
-> 
-> Um we kind of care about Linux ;)
-> 
-> What's the plan?  I suspect we should just add a command line flag
-> to skip patching? And once we do that, it seems safer to just
-> always rely on the flag?
+On Wed, 10 Apr 2024, Nicholas Piggin wrote:
+> On Wed Apr 10, 2024 at 9:55 AM AEST, BALATON Zoltan wrote:
+>> Real 460EX SoC apparently does not expose a bridge device and having
+>> it appear on PCI bus confuses an AmigaOS file system driver that uses
+>> this to detect which machine it is running on. Since values written
+>> here by firmware are never read, just ignore these writes and drop the
+>> bridge device.
+>>
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>> This is only used by sam460ex and this fixes an issue with AmigaOS on
+>> this machine so I'd like this to be merged for 9.0 please.
+>
+> Is it a regression? Does it have a fixes: or resolves: tag?
+>
+> Unless we broke it in this cycle, I would be inclined to wait,
+> and we can ask to put it in stable.
 
-Well, there are more problems to solve here than just the patching.  So
-lets have a look at the bigger picture before discussion the details ...
+It's not something that broke in this cycle but since this does not affect 
+anything else than sam460ex I think it's OK to change this for 9.0. The 
+changes to 440 tlb in this cycle made sam460ex more useful to run AmigaOS 
+and this fixes the file system driver on it so it would make 9.0 really 
+usable. Otherwise people would have to wait longer until August or install 
+a stable update. Since this has low chance to break anything (tested with 
+AmogaOS and Linux and MorphOS does not boot due to do_io changes anyway) I 
+don't think we have to wait with this.
 
-[ Cc'ing Daniel + Cole ]
+Regards,
+BALATON Zoltan
 
-Current state of affairs is that OVMF supports two ways to boot a linux
-kernel:
-
- (1) Just load it as EFI binary and boot via linux kernel EFI stub,
-     which is the modern way to load a linux kernel (which is why you
-     can boot not only linux kernels but any efi binary).
-
- (2) Use the old EFI handover protocol.  Which is the RHEL-6 era way to
-     boot a linux kernel on EFI.
-
-For method (1) secure boot verification must pass.  For (2) not.  So if
-you try to use direct kernel boot with secure boot enabled OVMF will
-first try (1), which will fail, then go fallback to (2).
-
-The reason for the failure is not only the patching, but also the fact
-that the linux kernel is typically verified by shim.efi (and the distro
-keys compiled into the binary) instead of the firmware.
-
-Going though (2) is not ideal for multiple reasons, so we need some
-strategy how we'll go handle direct kernel load with uefi and secure
-boot in a way that (1) works.
-
-Options I see:
-
-  (a) Stop using direct kernel boot, let virt-install & other tools
-      create vfat boot media with shim+kernel+initrd instead.
-
-  (b) Enroll the distro signing keys in the efi variable store, so
-      booting the kernel without shim.efi works.
-
-  (c) Add support for loading shim to qemu (and ovmf), for example
-      with a new '-shim' command line option which stores shim.efi
-      in some new fw_cfg file.
-
-(b) + (c) both require a fix for the patching issue.  The options
-I see here are:
-
-  (A) Move the patching from qemu to the linuxboot option rom.
-      Strictly speaking it belongs there anyway.  It doesn't look
-      that easy though, for qemu it is easier to gather all
-      information needed ...
-
-  (B) Provide both patched and unpatched setup header, so the
-      guest can choose what it needs.
-
-  (C) When implementing (c) above we can piggyback on the -shim
-      switch and skip patching in case it is present.
-
-  (D) Add a flag to skip the patching.
-
-Comments?  Other/better ideas?
-
-take care,
-  Gerd
-
+> Thanks,
+> Nick
+>
+>>
+>>  hw/pci-host/ppc440_pcix.c | 14 +-------------
+>>  1 file changed, 1 insertion(+), 13 deletions(-)
+>>
+>> diff --git a/hw/pci-host/ppc440_pcix.c b/hw/pci-host/ppc440_pcix.c
+>> index 1926ae2a27..ba38172989 100644
+>> --- a/hw/pci-host/ppc440_pcix.c
+>> +++ b/hw/pci-host/ppc440_pcix.c
+>> @@ -52,7 +52,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(PPC440PCIXState, PPC440_PCIX_HOST)
+>>  struct PPC440PCIXState {
+>>      PCIHostState parent_obj;
+>>
+>> -    PCIDevice *dev;
+>>      struct PLBOutMap pom[PPC440_PCIX_NR_POMS];
+>>      struct PLBInMap pim[PPC440_PCIX_NR_PIMS];
+>>      uint32_t sts;
+>> @@ -170,10 +169,6 @@ static void ppc440_pcix_reg_write4(void *opaque, hwaddr addr,
+>>
+>>      trace_ppc440_pcix_reg_write(addr, val, size);
+>>      switch (addr) {
+>> -    case PCI_VENDOR_ID ... PCI_MAX_LAT:
+>> -        stl_le_p(s->dev->config + addr, val);
+>> -        break;
+>> -
+>>      case PCIX0_POM0LAL:
+>>          s->pom[0].la &= 0xffffffff00000000ULL;
+>>          s->pom[0].la |= val;
+>> @@ -301,10 +296,6 @@ static uint64_t ppc440_pcix_reg_read4(void *opaque, hwaddr addr,
+>>      uint32_t val;
+>>
+>>      switch (addr) {
+>> -    case PCI_VENDOR_ID ... PCI_MAX_LAT:
+>> -        val = ldl_le_p(s->dev->config + addr);
+>> -        break;
+>> -
+>>      case PCIX0_POM0LAL:
+>>          val = s->pom[0].la;
+>>          break;
+>> @@ -498,10 +489,7 @@ static void ppc440_pcix_realize(DeviceState *dev, Error **errp)
+>>      memory_region_init(&s->iomem, OBJECT(dev), "pci-io", 64 * KiB);
+>>      h->bus = pci_register_root_bus(dev, NULL, ppc440_pcix_set_irq,
+>>                           ppc440_pcix_map_irq, &s->irq, &s->busmem, &s->iomem,
+>> -                         PCI_DEVFN(0, 0), 1, TYPE_PCI_BUS);
+>> -
+>> -    s->dev = pci_create_simple(h->bus, PCI_DEVFN(0, 0),
+>> -                               TYPE_PPC4xx_HOST_BRIDGE);
+>> +                         PCI_DEVFN(1, 0), 1, TYPE_PCI_BUS);
+>>
+>>      memory_region_init(&s->bm, OBJECT(s), "bm-ppc440-pcix", UINT64_MAX);
+>>      memory_region_add_subregion(&s->bm, 0x0, &s->busmem);
+>
+>
+>
 
