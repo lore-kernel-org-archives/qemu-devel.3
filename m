@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DA5CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 18:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E57ECD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 19:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rud82-0005DA-6G; Wed, 10 Apr 2024 14:57:02 -0400
+	id 1rudNf-0001bH-GE; Wed, 10 Apr 2024 15:13:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rud81-0005D2-71
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 14:57:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rud7z-0005Nn-AV
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 14:57:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712775418;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=exl5ipGlLlrZYQCIi5yXFy4XxLFK1yrCYzRNbyHOKmM=;
- b=Qg9jMk1KQnGC2vlKTtwa5bpm92CFRF24nqAhlQoK+BpFUi4US1RiXf2y+fSaIbkpFG/Oi+
- UTSw5RaDINdY/DkPaIXK+xgEM1XBgaWg/dmpWLM+kyvM1P6aX1gF+/gUlEw7WiCiCqgkbm
- Lb9dgvkxg1GGn8PZesMR4nJMz976DNQ=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-om-wwhSeORuTpOPQHV0eYQ-1; Wed, 10 Apr 2024 14:56:56 -0400
-X-MC-Unique: om-wwhSeORuTpOPQHV0eYQ-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-611018baafaso21325577b3.1
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 11:56:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rudNe-0001b5-5b
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 15:13:10 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rudNM-0007oV-Ey
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 15:13:08 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6ecf3f001c5so5849067b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 12:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712776370; x=1713381170; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K5DcqdSAdbuKnYaF+G88dGl3X18nqFIMKDGaSYN84kA=;
+ b=OjguU1xlrYtePClOdGfl0EzzPj/NZV+Sz0dm5h4W8H2OFBv2ZOfr9ruTLeveyaDrAp
+ UeKX+K/gRlp26HEmnMV9oogLKVCoiPhu+2VwnIaWTCHZKdI3l9C6nPkN/CI8sR8NnLpn
+ VY+ThO1Ju/0+30fGueQ3tkc5JWRHgL++9asO1NYfAlibi5nwuzpXhzWvlF/5OwGLlbkK
+ YSFRHjZDQ6EZbj4oDTdEsIFowoKa9Oi1U1fqRcNyAQ0sYZItgHwUaYZ6u3AxSM9vCl5K
+ 7lSkuUf4bWqCbST+PYcDEsxIuyz9rN+vwkErma8XrCGMN7Mv0yxRkaloIbbmjsMRyWc8
+ i7rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712775416; x=1713380216;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1712776370; x=1713381170;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=exl5ipGlLlrZYQCIi5yXFy4XxLFK1yrCYzRNbyHOKmM=;
- b=ll6dezkMsC4lqgBLxYfViSRaJR7lcVWpJMmebVsABnTIQ+IUPy3w4PZ5s172t3LpQj
- cqpVnIB+ogHM7EuLaUEODtgsBcR9I6efX3TPiJlAXwM58w16efmIJ1CVKC3K11kN9v+H
- uOU1+HqZZ5tWb+B5WDhUqdCY7jMCj+rKunj3c3YImKhduNgE4Vt7tJET0pNjLocynLZ6
- GIjL2Q5F4dZ3HXqtckFmwZDnpwRyQdzRo8GJOdEEC8CdYtNKZvxxVyPLnRn87wN1lqGt
- 9ljF+cmeV4sBXwz5+tzPmhavILcUh2Eq8AP963901cILvtRmAUiS6YE/PZ8c3E0HQsWU
- +DaA==
+ bh=K5DcqdSAdbuKnYaF+G88dGl3X18nqFIMKDGaSYN84kA=;
+ b=Z3NAlSSzYoxPyijjTuRH85YFB4HFgFUnJU5mynhx0OXqsV4pMSlyZ7LfddBW5dqGxX
+ V2d92bDvSYHvhKJkgzbJscz9TtwY27G7gsGxYql0aZQiZ1XwMG2gTpRyNGNZI9RAOjFo
+ PyqXxkUfaiSlxqfidsVSd6AhUY+CUuGuOEr8NKx2gllZ7XXPRS6r6fHyZx63b1tXmfqh
+ YIXlK+bxuRBKiw0MubRK6/xDQXuoe35/uiPCFU24tgDcV8OxHeY/sMUtPidxz5cU2wdo
+ SzHkqBDmmY3qv1i9zGX+9Kbz57ADd1kXiWCXVK1/9AHv1/1cQWXF8TY+kU5VnVtnn3LF
+ rpXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8k4j7nIRYIWhxIgIhLiBprugzAmp1QMNFvuPDqhcnf5VYrkd3I3mEqcM0tr21IVhBQLCG/x6/pnjkFIM+WuOiYiXribI=
-X-Gm-Message-State: AOJu0YyrttWMG2vVSDaA/PQPCg0MZDQXVxYcrnvss7XbO8jF7YquFGjY
- Ueo10Ub7xC1dgs8yjm5bwAhjlBvd3BBs7ydy8pPvdPQqjVKwfv008JbTvAMJ9eKRMh/OrSieJLp
- J86kpTHEyIC6x3zvLVZmBNnvkEW4nWSxvGWTXb47ckELM5v3pLqLZ
-X-Received: by 2002:a25:ea4c:0:b0:dcd:1cd7:f6aa with SMTP id
- o12-20020a25ea4c000000b00dcd1cd7f6aamr2901300ybe.2.1712775415948; 
- Wed, 10 Apr 2024 11:56:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxh2N/y5AztnaPzBRNWgOvjbQZkHZeNjP1opModc0ZFMkMpPHtne5lC8XV9ik78lGzVthIsg==
-X-Received: by 2002:a25:ea4c:0:b0:dcd:1cd7:f6aa with SMTP id
- o12-20020a25ea4c000000b00dcd1cd7f6aamr2901270ybe.2.1712775415137; 
- Wed, 10 Apr 2024 11:56:55 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- f28-20020ad4559c000000b006993ddfcfc0sm5404501qvx.38.2024.04.10.11.56.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Apr 2024 11:56:54 -0700 (PDT)
-Date: Wed, 10 Apr 2024 14:56:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, sstabellini@kernel.org,
- vikram.garhwal@amd.com, jgross@suse.com
-Subject: Re: [QEMU][PATCH v3 5/7] memory: add MemoryRegion map and unmap
- callbacks
-Message-ID: <Zhbg9alYH1-J9poU@x1n>
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-6-vikram.garhwal@amd.com>
- <CAJy5ezpCWkOqthGR1c5Nsfyi_W_yGL_d17Jcp0VckaCEwx9z3Q@mail.gmail.com>
+ AJvYcCX96dPNwRj/++4AidLkRo+C4UmTenkGa79AZQbCibG1ESRDbJWJ//79+dqx+9deMF3wOqYtE/E1GZxdfqdfH172ohiVD80=
+X-Gm-Message-State: AOJu0Yyl0C/CPjdvTz8wDSP9XtNTbbHxeGSx98r0yuq+cosRwya2OErn
+ ar8HIUyT3ju9emeEeVd7Lz3SyewWFahtKpX62OMBp1NlkAgSb7nHgoIRDZTi7V4=
+X-Google-Smtp-Source: AGHT+IGAIvaQZUWcau85aBTFYcIsnR2JWC7pHE+dbHcMPtb4garlu+sNi1OykxzFnwdpF2kGh+rDbQ==
+X-Received: by 2002:a05:6a00:4fd1:b0:6eb:2fdc:f8d9 with SMTP id
+ le17-20020a056a004fd100b006eb2fdcf8d9mr3682039pfb.9.1712776370309; 
+ Wed, 10 Apr 2024 12:12:50 -0700 (PDT)
+Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ by smtp.gmail.com with ESMTPSA id
+ e15-20020aa78c4f000000b006ea858e6e78sm10478196pfd.45.2024.04.10.12.12.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Apr 2024 12:12:49 -0700 (PDT)
+Message-ID: <c4c8f2b8-7ef2-4b2f-a9d4-8c1e64668570@linaro.org>
+Date: Wed, 10 Apr 2024 09:12:46 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/12] misc: Remove sprintf() due to macOS deprecation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org
+References: <20240410160614.90627-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240410160614.90627-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJy5ezpCWkOqthGR1c5Nsfyi_W_yGL_d17Jcp0VckaCEwx9z3Q@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,62 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10, 2024 at 06:44:38PM +0200, Edgar E. Iglesias wrote:
-> On Tue, Feb 27, 2024 at 11:37 PM Vikram Garhwal <vikram.garhwal@amd.com>
-> wrote:
+On 4/10/24 06:06, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
-> > From: Juergen Gross <jgross@suse.com>
-> >
-> > In order to support mapping and unmapping guest memory dynamically to
-> > and from qemu during address_space_[un]map() operations add the map()
-> > and unmap() callbacks to MemoryRegionOps.
-> >
-> > Those will be used e.g. for Xen grant mappings when performing guest
-> > I/Os.
-> >
-> > Signed-off-by: Juergen Gross <jgross@suse.com>
-> > Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
-> >
-> 
-> 
-> Paolo, Peter, David, Phiippe, do you guys have any concerns with this patch?
+> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
+> resulting in painful developper experience.
 
-This introduces a 3rd memory type afaict, neither direct nor !direct.
+Is snprintf also deprecated?
+It might be easier to convert some of these fixed buffer cases that way, if allowed.
 
-What happens if someone does address_space_write() to it?  I didn't see it
-covered here..
 
-OTOH, the cover letter didn't mention too much either on the big picture:
-
-https://lore.kernel.org/all/20240227223501.28475-1-vikram.garhwal@amd.com/
-
-I want to have a quick grasp on whether it's justified worthwhile we should
-introduce this complexity to qemu memory core.
-
-Could I request a better cover letter when repost?  It'll be great to
-mention things like:
-
-  - what is grant mapping, why it needs to be used, when it can be used (is
-    it only relevant to vIOMMU=on)?  Some more information on the high
-    level design using this type or MR would be great.
-
-  - why a 3rd memory type is required?  Do we have other alternatives?
-
-    So it's all based on my very limited understanding of reading this:
-    https://xenbits.xenproject.org/docs/4.3-testing/misc/grant-tables.txt
-
-    If it's about cross-vm sharing memory, does it mean that in reality
-    there are RAMs allocated, but it's only about permission management?
-    In that case, is there any option we implement it with direct access
-    mode (however with some extra dynamic permissions applied on top using
-    some mechanism)?
-
-  - perhaps sold old links would be great too so people can read about the
-    context when it's not obvious, without a need to copy-paste.
-
-Thanks,
-
--- 
-Peter Xu
-
+r~
 
