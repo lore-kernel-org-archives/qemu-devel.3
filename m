@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BACDCD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8112CD1299
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQon-0006Et-Vt; Wed, 10 Apr 2024 01:48:22 -0400
+	id 1ruQno-0000fa-KY; Wed, 10 Apr 2024 01:47:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQoR-00050n-FP; Wed, 10 Apr 2024 01:47:59 -0400
+ id 1ruQlz-00056E-0c; Wed, 10 Apr 2024 01:45:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQoO-00027V-4E; Wed, 10 Apr 2024 01:47:59 -0400
+ id 1ruQlx-0001hr-1N; Wed, 10 Apr 2024 01:45:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 54CB55D500;
- Wed, 10 Apr 2024 08:46:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC6985D4E8;
+ Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1611AB0167;
- Wed, 10 Apr 2024 08:44:19 +0300 (MSK)
-Received: (nullmailer pid 4182123 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 7282CB014F;
+ Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
+Received: (nullmailer pid 4182049 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yajun Wu <yajunw@nvidia.com>,
- Jiri Pirko <jiri@nvidia.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 40/41] hw/net/virtio-net: fix qemu set used ring flag
- even vhost started
-Date: Wed, 10 Apr 2024 08:44:01 +0300
-Message-Id: <20240410054416.4181891-40-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Minwoo Im <minwoo.im@samsung.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 16/41] hw/nvme: separate 'serial' property for VFs
+Date: Wed, 10 Apr 2024 08:43:37 +0300
+Message-Id: <20240410054416.4181891-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,65 +60,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yajun Wu <yajunw@nvidia.com>
+From: Minwoo Im <minwoo.im@samsung.com>
 
-When vhost-user or vhost-kernel is handling virtio net datapath,
-QEMU should not touch used ring.
+Currently, when a VF is created, it uses the 'params' object of the PF
+as it is. In other words, the 'params.serial' string memory area is also
+shared. In this situation, if the VF is removed from the system, the
+PF's 'params.serial' object is released with object_finalize() followed
+by object_property_del_all() which release the memory for 'serial'
+property. If that happens, the next VF created will inherit a serial
+from a corrupted memory area.
 
-But with vhost-user socket reconnect scenario, in a very rare case
-(has pending kick event). VRING_USED_F_NO_NOTIFY is set by QEMU in
-following code path:
+If this happens, an error will occur when comparing subsys->serial and
+n->params.serial in the nvme_subsys_register_ctrl() function.
 
-	#0  virtio_queue_split_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:511
-	#1  0x0000559d6dbf033b in virtio_queue_set_notification (vq=0x7ff5f4c920a8, enable=0) at ../hw/virtio/virtio.c:576
-	#2  0x0000559d6dbbbdbc in virtio_net_handle_tx_bh (vdev=0x559d703a6aa0, vq=0x7ff5f4c920a8) at ../hw/net/virtio-net.c:2801
-	#3  0x0000559d6dbf4791 in virtio_queue_notify_vq (vq=0x7ff5f4c920a8) at ../hw/virtio/virtio.c:2248
-	#4  0x0000559d6dbf79da in virtio_queue_host_notifier_read (n=0x7ff5f4c9211c) at ../hw/virtio/virtio.c:3525
-	#5  0x0000559d6d9a5814 in virtio_bus_cleanup_host_notifier (bus=0x559d703a6a20, n=1) at ../hw/virtio/virtio-bus.c:321
-	#6  0x0000559d6dbf83c9 in virtio_device_stop_ioeventfd_impl (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3774
-	#7  0x0000559d6d9a55c8 in virtio_bus_stop_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:259
-	#8  0x0000559d6d9a53e8 in virtio_bus_grab_ioeventfd (bus=0x559d703a6a20) at ../hw/virtio/virtio-bus.c:199
-	#9  0x0000559d6dbf841c in virtio_device_grab_ioeventfd (vdev=0x559d703a6aa0) at ../hw/virtio/virtio.c:3783
-	#10 0x0000559d6d9bde18 in vhost_dev_enable_notifiers (hdev=0x559d707edd70, vdev=0x559d703a6aa0) at ../hw/virtio/vhost.c:1592
-	#11 0x0000559d6d89a0b8 in vhost_net_start_one (net=0x559d707edd70, dev=0x559d703a6aa0) at ../hw/net/vhost_net.c:266
-	#12 0x0000559d6d89a6df in vhost_net_start (dev=0x559d703a6aa0, ncs=0x559d7048d890, data_queue_pairs=31, cvq=0) at ../hw/net/vhost_net.c:412
-	#13 0x0000559d6dbb5b89 in virtio_net_vhost_status (n=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:311
-	#14 0x0000559d6dbb5e34 in virtio_net_set_status (vdev=0x559d703a6aa0, status=15 '\017') at ../hw/net/virtio-net.c:392
-	#15 0x0000559d6dbb60d8 in virtio_net_set_link_status (nc=0x559d7048d890) at ../hw/net/virtio-net.c:455
-	#16 0x0000559d6da64863 in qmp_set_link (name=0x559d6f0b83d0 "hostnet1", up=true, errp=0x7ffdd76569f0) at ../net/net.c:1459
-	#17 0x0000559d6da7226e in net_vhost_user_event (opaque=0x559d6f0b83d0, event=CHR_EVENT_OPENED) at ../net/vhost-user.c:301
-	#18 0x0000559d6ddc7f63 in chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:62
-	#19 0x0000559d6ddc7fdc in qemu_chr_be_event (s=0x559d6f2ffea0, event=CHR_EVENT_OPENED) at ../chardev/char.c:82
-
-This issue causes guest kernel stop kicking device and traffic stop.
-
-Add vhost_started check in virtio_net_handle_tx_bh to fix this wrong
-VRING_USED_F_NO_NOTIFY set.
-
-Signed-off-by: Yajun Wu <yajunw@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20240402045109.97729-1-yajunw@nvidia.com>
-[PMD: Use unlikely()]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 4c54f5bc8e1d38f15cc35b6a6932d8fbe219c692)
+Cc: qemu-stable@nongnu.org
+Fixes: 44c2c09488db ("hw/nvme: Add support for SR-IOV")
+Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 4f0a4a3d5854824e5c5eccf353d4a1f4f749a29d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 57d5a377c8..b6177a6afe 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2746,6 +2746,10 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
-     VirtIONet *n = VIRTIO_NET(vdev);
-     VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
- 
-+    if (unlikely(n->vhost_started)) {
-+        return;
-+    }
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index f2b308f5fa..c2c0fc991d 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7515,9 +7515,15 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
+     if (pci_is_vf(pci_dev)) {
+         /*
+          * VFs derive settings from the parent. PF's lifespan exceeds
+-         * that of VF's, so it's safe to share params.serial.
++         * that of VF's.
+          */
+         memcpy(&n->params, &pn->params, sizeof(NvmeParams));
 +
-     if (unlikely((n->status & VIRTIO_NET_S_LINK_UP) == 0)) {
-         virtio_net_drop_tx_queue_data(vdev, vq);
-         return;
++        /*
++         * Set PF's serial value to a new string memory to prevent 'serial'
++         * property object release of PF when a VF is removed from the system.
++         */
++        n->params.serial = g_strdup(pn->params.serial);
+         n->subsys = pn->subsys;
+     }
+ 
 -- 
 2.39.2
 
