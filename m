@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76070CD11C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A0DCD1296
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 10:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruUoC-0007II-SG; Wed, 10 Apr 2024 06:04:00 -0400
+	id 1ruUoC-0007IH-RA; Wed, 10 Apr 2024 06:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1ruUoB-0007I0-Nd
+ id 1ruUoB-0007Hz-N5
  for qemu-devel@nongnu.org; Wed, 10 Apr 2024 06:03:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1ruUoA-0005EU-2P
+ id 1ruUoA-0005ES-2R
  for qemu-devel@nongnu.org; Wed, 10 Apr 2024 06:03:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1712743436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VYQeA+wWYtJQ0eyYnnv+4qhKcpC9BVa2JlqlKNbRL3U=;
- b=B9Zo0lF2GiE+zM+GU34j5e3UT0IjSt0LzHdEz9eL56Wzh95ap9wyohhU01lToxOwe5ChwC
- 44v1bUc6MQFPBhRDg3UFou/jxLVyzgsxrEnZGjy0MZZZFfSJDtGPeY+92wpQVN7D/v1Cgx
- bR1jOA/KdDeNQ5jqiqUu2a36MnlfImI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-JNGWog0ZPIq90kljcBcMdw-1; Wed,
- 10 Apr 2024 06:03:55 -0400
-X-MC-Unique: JNGWog0ZPIq90kljcBcMdw-1
+ content-transfer-encoding:content-transfer-encoding;
+ bh=McYhAfYFFcAoUU37ko5xltJUn66Pg+YAABlswhmIqDc=;
+ b=e7mHmLXUxIUWTrw1VVMgRY5EJX2Yg9Af70uIUxViph3TxldeyazzbBXAZwAOswsNxI+Ve6
+ 2IKqp+b/OXN/fZbZmcJHqYUY5+m3BKEplB613jfAJEFzxqtjZQH2XlG6Lj3+C9v8QJcFjP
+ EC0gnQQF+2qz8qKrRzIksgjtlIXNp3Y=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-255-B38Es6_6PLy4622Xd0bu3Q-1; Wed, 10 Apr 2024 06:03:53 -0400
+X-MC-Unique: B38Es6_6PLy4622Xd0bu3Q-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F294E29ABA0D;
- Wed, 10 Apr 2024 10:03:54 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DEE8E10499A4;
+ Wed, 10 Apr 2024 10:03:52 +0000 (UTC)
 Received: from eperezma-thinkpadt480s.rmtes.csb (unknown [10.39.192.136])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 2B148C04227;
- Wed, 10 Apr 2024 10:03:53 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 101A1C09A05;
+ Wed, 10 Apr 2024 10:03:50 +0000 (UTC)
 From: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Si-Wei Liu <si-wei.liu@oracle.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Lei Yang <leiyang@redhat.com>, Peter Xu <peterx@redhat.com>,
  Jonah Palmer <jonah.palmer@oracle.com>,
  Dragos Tatulea <dtatulea@nvidia.com>, Jason Wang <jasowang@redhat.com>
-Subject: [RFC 1/2] iova_tree: add an id member to DMAMap
-Date: Wed, 10 Apr 2024 12:03:44 +0200
-Message-ID: <20240410100345.389462-2-eperezma@redhat.com>
-In-Reply-To: <20240410100345.389462-1-eperezma@redhat.com>
-References: <20240410100345.389462-1-eperezma@redhat.com>
+Subject: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
+Date: Wed, 10 Apr 2024 12:03:43 +0200
+Message-ID: <20240410100345.389462-1-eperezma@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
@@ -84,57 +81,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IOVA tree is also used to track the mappings of virtio-net shadow
-virtqueue.  This mappings may not match with the GPA->HVA ones.
+The guest may have overlapped memory regions, where different GPA leads
+to the same HVA.  This causes a problem when overlapped regions
+(different GPA but same translated HVA) exists in the tree, as looking
+them by HVA will return them twice.
 
-This causes a problem when overlapped regions (different GPA but same
-translated HVA) exists in the tree, as looking them by HVA will return
-them twice.  To solve this, create an id member so we can assign unique
-identifiers (GPA) to the maps.
+To solve this, track GPA in the DMA entry that acs as unique identifiers
+to the maps.  When the map needs to be removed, iova tree is able to
+find the right one.
 
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
----
+Users that does not go to this extra layer of indirection can use the
+iova tree as usual, with id = 0.
+
+This was found by Si-Wei Liu <si-wei.liu@oracle.com>, but I'm having a hard
+time to reproduce the issue.  This has been tested only without overlapping
+maps.  If it works with overlapping maps, it will be intergrated in the main
+series.
+
+Comments are welcome.  Thanks!
+
+Eugenio Pérez (2):
+  iova_tree: add an id member to DMAMap
+  vdpa: identify aliased maps in iova_tree
+
+ hw/virtio/vhost-vdpa.c   | 2 ++
  include/qemu/iova-tree.h | 5 +++--
  util/iova-tree.c         | 3 ++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
-index 2a10a7052e..34ee230e7d 100644
---- a/include/qemu/iova-tree.h
-+++ b/include/qemu/iova-tree.h
-@@ -36,6 +36,7 @@ typedef struct DMAMap {
-     hwaddr iova;
-     hwaddr translated_addr;
-     hwaddr size;                /* Inclusive */
-+    uint64_t id;
-     IOMMUAccessFlags perm;
- } QEMU_PACKED DMAMap;
- typedef gboolean (*iova_tree_iterator)(DMAMap *map);
-@@ -100,8 +101,8 @@ const DMAMap *iova_tree_find(const IOVATree *tree, const DMAMap *map);
-  * @map: the mapping to search
-  *
-  * Search for a mapping in the iova tree that translated_addr overlaps with the
-- * mapping range specified.  Only the first found mapping will be
-- * returned.
-+ * mapping range specified and map->id is equal.  Only the first found
-+ * mapping will be returned.
-  *
-  * Return: DMAMap pointer if found, or NULL if not found.  Note that
-  * the returned DMAMap pointer is maintained internally.  User should
-diff --git a/util/iova-tree.c b/util/iova-tree.c
-index 536789797e..0863e0a3b8 100644
---- a/util/iova-tree.c
-+++ b/util/iova-tree.c
-@@ -97,7 +97,8 @@ static gboolean iova_tree_find_address_iterator(gpointer key, gpointer value,
- 
-     needle = args->needle;
-     if (map->translated_addr + map->size < needle->translated_addr ||
--        needle->translated_addr + needle->size < map->translated_addr) {
-+        needle->translated_addr + needle->size < map->translated_addr ||
-+        needle->id != map->id) {
-         return false;
-     }
- 
 -- 
 2.44.0
 
