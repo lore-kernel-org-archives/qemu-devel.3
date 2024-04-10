@@ -4,111 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB86CD128A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 13:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96D5CCD128A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 13:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruYI2-0001fg-9q; Wed, 10 Apr 2024 09:47:02 -0400
+	id 1ruYKO-0003X6-Dv; Wed, 10 Apr 2024 09:49:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ruYHs-0001eb-1R
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 09:46:56 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ruYHn-0003XF-7E
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 09:46:50 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id CB69D5CE6D;
- Wed, 10 Apr 2024 13:46:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712756806; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruYKM-0003Vx-5u
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 09:49:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruYKJ-0003y3-HL
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 09:49:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712756961;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HPCaSvLWx8Sw1ak1MIpoqBJkJ5XkgnAxT2lujHe/VS4=;
- b=E7Xe4wsbqjbHF1/G1ilIe3K1eHQtf5JJ5HgsQ1u/JgAJcS0YVw1UXnX+aWUB57AwxO7e69
- pAc1yfO/IcGtLx7uhyPnflF26zGLZrYx1FJJxWnkGxjMS/UE9unB8tIApL2XgUzOadzURl
- mxIw/4/uEmyqj7HnUFKnTkwixwhfnxA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712756806;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HPCaSvLWx8Sw1ak1MIpoqBJkJ5XkgnAxT2lujHe/VS4=;
- b=UJohR9MxtEHLgRXuSd35upp2/8FsE3CpXH6r+2c+3rEAbfc8NLTsNRQHTB4j1+HBaczAkp
- 5Lw/RMleTsfXaAAA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1712756805; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HPCaSvLWx8Sw1ak1MIpoqBJkJ5XkgnAxT2lujHe/VS4=;
- b=QYGpIzvlqxX310DhtMnovBmXGuy8cz54ASh4JTrDvYWh33sqgp6SBA66Yfa52p+pW6PHd9
- yWXCigIPXT+84qqSUDa5/Y2PJRbsqz4UayP1RM0UHc9oaaKS2PZpbfTUYF8CsdLzzBXosG
- Yfx6lZMQwASOUxZyNJ+MU+LF2i7PlfM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1712756805;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HPCaSvLWx8Sw1ak1MIpoqBJkJ5XkgnAxT2lujHe/VS4=;
- b=atnX61UuBPy3WfZ5YlfEyfHYEBp1THMJ9VJoMakuQxB/EEMkRGqVm2o9FppHUgXsIm/DRZ
- e4FzBpqD6dKxUrAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 55A6513691;
- Wed, 10 Apr 2024 13:46:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id glSLB0WYFmZlFQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 10 Apr 2024 13:46:45 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- peterx@redhat.com
-Subject: Re: [PATCH] tests/qtest: Standardize qtest function caller strings.
-In-Reply-To: <84e782ab-d4d2-4e66-8d55-28206e313bb8@nutanix.com>
-References: <20240326193843.8444-1-het.gala@nutanix.com>
- <87zfukvh0r.fsf@suse.de>
- <1f336795-5c5d-4320-8783-3cbe238f894c@nutanix.com>
- <87a5m7vq73.fsf@suse.de>
- <84e782ab-d4d2-4e66-8d55-28206e313bb8@nutanix.com>
-Date: Wed, 10 Apr 2024 10:46:42 -0300
-Message-ID: <87ttk9ba9p.fsf@suse.de>
+ bh=BT5Dkz5bp2rlO5YGzBq+1Pv3yMGWLnPTuyD0ndOH6FA=;
+ b=KXpPNe1ZMtQxdqJRw3RxQuF73+4mKui5vDDwFG//oHh8kVIxSvNV7aYvnNEculh6ENWjKg
+ vARO4JHj74yYCHXbZdQoKErDkezrFBIDXts13faIotASvTNOY0TacOc6kqf5/2WqDZlv+i
+ gBpJP3WIn48df2knhXsQe6znriLHcaM=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-r4RfvsE8NBC_7BdiyGwF6A-1; Wed, 10 Apr 2024 09:49:19 -0400
+X-MC-Unique: r4RfvsE8NBC_7BdiyGwF6A-1
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-6ea11083fbeso855137a34.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 06:49:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712756959; x=1713361759;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BT5Dkz5bp2rlO5YGzBq+1Pv3yMGWLnPTuyD0ndOH6FA=;
+ b=SOzmc96aKVDd/pcP2NqhL3J2n8h1E4yk8if4qUs/rOvHsWbmPvQ3AOsONNhMzmghlz
+ v5rhx0JnPqJQVzJi2Em/POiU00xqf+/cR24ScTJJBn9gjFImDtm79DQSTX7RZO/5mkDj
+ T8A43qZGvlZZWspY1b5+fvp7I3Mx4pwIu7gW83CfeShN1RDynSXdfSlJCIs7WvAyxJ3r
+ y8RBmAQazJ7Jq5qIeiraRf6i+ka6eZc6qvn8mhZ9+2qvJ4cgtT4y1sJ6OuvbZn40r+aI
+ mZyC0RgCyVYzKZ4pxIrfAUpRrPtklKd/+jA0+QGZASlBOZVAOI/nm5Dq0euUVACobfP/
+ p7rQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQ0AeS92tz4lLVxDa2boqax0v6qR6vPChc6Ksgsp6CDFSWFNZ7kOZ9VnJHRhCcff2h+eBoluuggd2RhxtkJnu3WjESH0E=
+X-Gm-Message-State: AOJu0YyiL3Q2PTcV+PsDecwVcKal9pugX4rPHRmPB0Eb9kw/i4n/MbhE
+ 3qhl+t877R4hXbYwDDv967yQ7B9svpbJgxqQtCKaQtuPQZfqq9h0j/Hptt23YWtBnb4mqq7WPYo
+ 2OJmdec5Fnrb+/Hac6VKP/UIt5qnmpf7TcUBxhHNKhzg+Gf/2c+9X
+X-Received: by 2002:a9d:7a4b:0:b0:6ea:1a31:6be7 with SMTP id
+ z11-20020a9d7a4b000000b006ea1a316be7mr3126579otm.1.1712756958815; 
+ Wed, 10 Apr 2024 06:49:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGO/4tzS8AgY3C9eGfgVkgd8QOvAcWWmTxp+ZGKhQohkI3kz9t6pgk5/xdRD/mDBdGo/fCRAA==
+X-Received: by 2002:a9d:7a4b:0:b0:6ea:1a31:6be7 with SMTP id
+ z11-20020a9d7a4b000000b006ea1a316be7mr3126531otm.1.1712756958327; 
+ Wed, 10 Apr 2024 06:49:18 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ h20-20020a05620a10b400b0078d60973a51sm3766353qkk.75.2024.04.10.06.49.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Apr 2024 06:49:18 -0700 (PDT)
+Date: Wed, 10 Apr 2024 09:49:15 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>, Yu Zhang <yu.zhang@ionos.com>,
+ Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>,
+ "arei.gonglei@huawei.com" <arei.gonglei@huawei.com>,
+ "pannengyuan@huawei.com" <pannengyuan@huawei.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Message-ID: <ZhaY2_cO6CrQFCt3@x1n>
+References: <7a510fbe-1c27-4f67-93b8-0d9cf01c1c74@fujitsu.com>
+ <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
+ <9d082daf-acf0-27c5-1758-5a3f2af7ee0f@fujitsu.com>
+ <CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com>
+ <Zgx3brrz8m0V7HS4@x1n>
+ <CAMGffE=i+hVCNaX_31h1D1VW7JGJBqoa9T0qEJe2CDcb9BPiAA@mail.gmail.com>
+ <ZhQYu3ZnsIGv2qUZ@x1n>
+ <CAMGffEm2TWJxOPcNQTQ1Sjytf5395dBzTCMYiKRqfxDzJwSN6A@mail.gmail.com>
+ <ZhWa0YeAb9ySVKD1@x1n>
+ <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, nutanix.com:email, suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,159 +132,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Het Gala <het.gala@nutanix.com> writes:
+On Wed, Apr 10, 2024 at 02:28:59AM +0000, Zhijian Li (Fujitsu) via wrote:
+> 
+> 
+> on 4/10/2024 3:46 AM, Peter Xu wrote:
+> 
+> >> Is there document/link about the unittest/CI for migration tests, Why
+> >> are those tests missing?
+> >> Is it hard or very special to set up an environment for that? maybe we
+> >> can help in this regards.
+> > See tests/qtest/migration-test.c.  We put most of our migration tests
+> > there and that's covered in CI.
+> >
+> > I think one major issue is CI systems don't normally have rdma devices.
+> > Can rdma migration test be carried out without a real hardware?
+> 
+> Yeah,  RXE aka. SOFT-RoCE is able to emulate the RDMA, for example
+> $ sudo rdma link add rxe_eth0 type rxe netdev eth0  # on host
+> then we can get a new RDMA interface "rxe_eth0".
+> This new RDMA interface is able to do the QEMU RDMA migration.
+> 
+> Also, the loopback(lo) device is able to emulate the RDMA interface 
+> "rxe_lo", however when
+> I tried(years ago) to do RDMA migration over this 
+> interface(rdma:127.0.0.1:3333) , it got something wrong.
+> So i gave up enabling the RDMA migration qtest at that time.
 
-> On 05/04/24 7:58 pm, Fabiano Rosas wrote:
->> !-------------------------------------------------------------------|
->>    CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->> Het Gala<het.gala@nutanix.com>  writes:
->>
->>> On 27/03/24 2:37 am, Fabiano Rosas wrote:
->>>> Het Gala<het.gala@nutanix.com>   writes:
->>>>
->>>> Some comments, mostly just thinking out loud...
->>>>
->>>>> For <test-type> --> migrate
->>>>> /<test-type>/<migration-mode>/<method>/<transport>/<invocation>/
->>>>> <compression>/<encryption>/O:<others>/...
->>>>>
->>>>> For <test-type> --> validate
->>>>> /<test-type>/<validate-variable>/O:<transport>/O:<invocation>/
->>>>> <validate-test-result>/O:<test-reason>/O:<others>/...
->>>> Do we need an optional 'capability' element? I'm not sure how practical
->>>> is to leave that as 'others', because that puts it at the end of the
->>>> string. We'd want the element that's more important/with more variants
->>>> to be towards the start of the string so we can run all tests of the
->>>> same kind with the -r option.
->>> While also looking at different functions for figuring out the transport
->>> and invocation, my observation was that, there might be many capabiliti=
-es
->>> added to the same test, while it might not be important also.
->>> Ex: /migrate/multifd/tcp/plain
->>> 1. multifd is defined as a migration mode.
->>> 2. It is also a capability, and comes in 2 parts [multifd, multifd-chan=
-nels]
->>>   =C2=A0=C2=A0 though one is a capability and another is parameter
->>> Similarly in other examples of compression, there are many capabilities
->>> and parameters added, but it might be not important to mention that ?
->>>
->>> Secondly, there are multiple migration capabilities IIRC (> 15). And a =
-test
->>> requiring multiple capabilities, the overall string would be too long, =
-and
->>> not that important also to mention all capabilities.
->>>
->>> Just thinking out of mind - Can we have selective list of capabilities ?
->>> 1. multifd 2. compress (again, there might be confusion with multifd
->>> compression methods like zstd, zlib and just 'compress') 3. zero-page
->>> (This will have sub capabilities ?)
->> I was thinking of keeping that part more open-ended. So not specifying
->> capabilities one by one, but more like "if you're testing a capability,
->> it comes here".
->>
->> About multifd, it's a bit special since it cannot be seen as just a
->> "feature" anymore. It's a core part of the migration code. I wouldn't
->> classify it as capability for the purposes of the tests.
-> Ack, got it.
+Thanks, Zhijian.
 
-Meta: it's a good idea to add a blank line before and after your reply
-when replying inline like this, it makes it easier on the eyes to spot
-the various snippets in a wall of text (note how this reply itself has
-extra blank lines before and after it).
+I'm not sure adding an emu-link for rdma is doable for CI systems, though.
+Maybe someone more familiar with how CI works can chim in.
 
->>>>> test-type            :: migrate | validate
->>>> We could alternatively drop migration|migrate|validate. They are kind =
-of
->>>> superfluous.
->>> I agree with the above comment. 'migrate' and 'validate' have a differe=
-nt
->>> set of variables required, some necessary, while other optional. IMO th=
-is
->>> will help is in streamlining the design further.
->>>>> migration-mode
->>>>>     a. migrate -->     :: precopy | postcopy | multifd
->>>>>     b. validate -->    :: (what to validate)
->>>>> methods              :: preempt | recovery | reboot | suspend | simple
->>> I want some inputs here.
->>> 1. is there a better variable name rather than 'methods'
->> Does this fall into the "mode" terminology that Steven introduced?
-> Yes, as we decided that we don't want 'migration-mode' key-value pair,
-> naming 'mode' would be a better term.
->
-> In cases, where multiple modes are to be used ex: postcopy_preempt_recove=
-ry
-> I feel it might be a good idea to separate multiple modes by '-'
-> For example - .../preempty-recovery/...
-> Similarly for other keys too if required
+-- 
+Peter Xu
 
-Possibly... as long as we don't lose the ability of running subsets of
-tests in one command, i.e. "all postcopy tests", "all postcopy recovery
-tests", etc.
-
->>> 2. 'simple' does not fit perfect here IMO.
->> Can we go without it?
-> You mean omit the key itself in case of a no-op ?
-
-Yes
-
->>>>> transport            :: tcp | fd | unix | file
->>>>> invocation           :: uri | channels | both
->>>>> CompressionType      :: zlib | zstd | none
->>>> s/none/nocomp/ ? We're already familiar with that.
->>> Ack. Will change that.
->>>>> encryptionType       :: tls | plain
->>>> s/plain/notls/ ?
->>> What if there is another encryption technique in future ?
->>>> Or maybe we simply omit the noop options. It would make the string way
->>>> shorter in most cases.
->>> This might be a better approach. Can have some keys/variables as option=
-al
->>> while some necessary. For ex: for 'migrate' - transport and invocation
->>> might be necessary while it might not be necessary for 'validate' qtests
->> Yep
-> Ack, will do that!
->>>>> validate-test-result :: success | failure
->>>>> others               :: other comments/capability that needs to be
->>>>>                           addressed. Can be multiple
->>>>>
->>>>> (more than one applicable, separated by using '-' in between)
->>>>> O: optional
->>>>>
->>>>> Signed-off-by: Het Gala<het.gala@nutanix.com>
->>>>> Suggested-by: Fabiano Rosas<farosas@suse.de>
->>>>> ---
->>>>>    tests/qtest/migration-test.c | 143 ++++++++++++++++++-------------=
-----
->>>>>    1 file changed, 72 insertions(+), 71 deletions(-)
->>>>>
->>>>> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-tes=
-t.c
->>>>> index bd9f4b9dbb..bf4d000b76 100644
->>>>> --- a/tests/qtest/migration-test.c
->>>>> +++ b/tests/qtest/migration-test.c
->>> Regards,
->>> Het Gala
->> I'm wondering whether we should leave the existing tests untouched and
->> require the new format only for new tests. Going through a git bisection
->> with a change in the middle that alters test names would be infuriating.
-> Hmm yup. I had this doubt on, how would we be enforcing the new design
-> for any new qtests that gets added from now on ?
-
-We put a big comment somewhere and refer to it during review. Perhaps at
-main(), right before the migration_test_add calls.
-
-> Can we have this design started for validation tests maybe for now, the
-> number is low and might get some feedback to improve this ?
-
-Ok. Please put this all together in a new version, make sure you mention
-that you're not touching the old tests to preserve bisectability and
-let's see what others think.
-
->
->
-> Regards,
-> Het Gala
 
