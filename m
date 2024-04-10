@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811D2CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 06:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFDECD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 06:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruRXy-0003xv-DM; Wed, 10 Apr 2024 02:35:03 -0400
+	id 1ruRpn-0007AJ-Fq; Wed, 10 Apr 2024 02:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruRXv-0003xd-QI
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 02:34:59 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1ruRpk-0007A7-BS
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 02:53:24 -0400
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ruRXu-0004Jd-1h
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 02:34:59 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-222b6a05bb1so3594309fac.3
- for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 23:34:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1ruRpi-00075L-Ex
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 02:53:24 -0400
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-3c4f23d23d9so3813533b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 23:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712730896; x=1713335696; darn=nongnu.org;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1712732001; x=1713336801;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DjssVysbhcp9rJd99TSABMh/n519hYdFgDAbHKkdo70=;
- b=NfHFWuYvaIr6Welupjad1/W49AdBaOFrV8rtmhI7Tal+2FVNh0+fQDFAq/sRsQJ84e
- 5xbfOkJFS0iAf2xyv31/YUcLu2cJwrZeNmfmH9b/vYt4lLfFAt+Q0iK91UqetGS9Jg0Z
- xhRa0hZlCtOJIb1xHusHDsmwOamuueJvl+TPGV7ZQsI8wH1Zd3XXAgkwvSCYxgEJmh68
- qUNy0EQf2AbPHUXFVx+6u9RjDR/jBgyUtSG+a95NB5nBE8yzndlZyvpLSiq7NAIiN5Xa
- rqL68H/WFiyrYbsdzIrLBqpZMxGiSJ9pWGeTSb6CdrIjxcLmW5eINO0hClc6PjvGOgsF
- stIA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=j/p4arB/1qjsJwmHhZEC0s20YjGzZVU9g9hzrGCHVX8=;
+ b=RRUEIJ86GKd2++ap9yiq8h3OyXC9ihPiJnrPkyHdZwczHrYipG61qQAVVodKyXohYm
+ tdmjlFqkTjTsidZbb/Cum/vR29N7ocgzZWtFwxkLSE0TonkUQLubzlCesIWz0sFaKv33
+ AguuJX6y2VVx+LIS57l1Y1qvgXUd1tnzyLm0bVxDIum3P33xgdEqwSKuKtTbxEGhb5vm
+ NaphQ1AfA7isYcWS+Sjf44lsoCJFFM9wAe4dxRjdEh3LpAsjTLlxbwX2NwekkXaXOYbJ
+ UKTfFznzDvCPz6JoU1GQOs1qpQc4YFvKqDqlNkkYREW1N2LeBC4XKILYuXBF+igCl59v
+ ZpYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712730896; x=1713335696;
+ d=1e100.net; s=20230601; t=1712732001; x=1713336801;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DjssVysbhcp9rJd99TSABMh/n519hYdFgDAbHKkdo70=;
- b=cWkyPXBE5EyV/AQsqsVis6tPluJafYIn7tmZB8rqh4SeP3GElHaZSeMvEY/CZvuwoY
- 8j3kKSkqKvIKPklV8d8UPzTNeKJDjaDaJ9GXRwXCMPm91/igh/UpjmqmOvP/RwHXC4d5
- d8Tonfa5DKECcXCeMrOShrVFpiUW0X3IWOMBOUjg/Y3vDchRYVEO2GpBvZvIg4qQNDDZ
- Z6T4l7v9sJh0p4fBQQADnWv+pRpFq31IanW1zHLViHp9CFjnw+L2zU2LDG8wr4NUeTGs
- oon7UhS/gQK+vd2hcFDeVYCQEEIPfHcVNcVVjw96sndGexW8YYeRU4UWo+4PLiXHTG7y
- lo7g==
+ bh=j/p4arB/1qjsJwmHhZEC0s20YjGzZVU9g9hzrGCHVX8=;
+ b=NE+221A3bVsaHz3nU7/T3MM2QgXsYOpHm0TQe3dCBUfJuXyjb+I66si7Ci2CJk+Kwg
+ 5PYEF9oY6+2jvH0NZKleo1TYv43l4bvq9fb0ALIzWgRTOy9qtHMjn3XoG2HjACd76Un+
+ xQa1b+8yK0A+C7ERVlAYpr4+CsJJPUGjcrJYBvg+ygH9oiOykJCK6Q0Us3DIDBvJQpHX
+ cNju7SG5gtXZgz8Fvx4hTiRVcQrrKvBKl4yB2luLNYFxylgE8SmOuMY7TRXG8033YlUR
+ 8zOzhXedIUTVmEEWRclCJkh67g0tMdoN5ES25vxTJpP/1Yg6Kj11RNQt0kgYNNa0qrI5
+ dbKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKcpgJZ+IBL4DoijHAMXoy3fO5Owi1otZPI2nPpIupB2Owdt9XJ1/vpLcdoNO1jBm1/7WB4NNwZNdJJm7bIyT/+MZKJ1I=
-X-Gm-Message-State: AOJu0YxUD3w//8cnfCuTLYa3VIayejSLvLFlRsZ2rh95x8OJDU+x/Fby
- GJ9vkG4Y0huo7hEN4E6rKGQGrDb9k6ZyT833LkaGhXzIpP5u38D/xYNLe88WwBs=
-X-Google-Smtp-Source: AGHT+IHnXj1TqanBT/Ok8Rmhqz3ihtinRSMZ2zEr7NnEz5Hn8HjPUSF0dLif9RPbAX2psXQYovZqjw==
-X-Received: by 2002:a05:6870:968c:b0:22a:7899:37c4 with SMTP id
- o12-20020a056870968c00b0022a789937c4mr2002035oaq.20.1712730896244; 
- Tue, 09 Apr 2024 23:34:56 -0700 (PDT)
-Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
+ AJvYcCUoOmA2En537nutD8cHsfdE9vXKY5MX7N+cxCEycSHNqBDdpgHC7ky3TpzFaq++YfUL5moTz3yKPjQZ6u97Yt4Ay1hdE4w=
+X-Gm-Message-State: AOJu0Yz7l18hEBZ+9Y5NQVkBbio/NAEs+CBzwlD1ltnyUBIN0NR3R0zM
+ BVgl8jV1bJxelcnxh5inkhej5wATqNMd9XT2ttod2fYhkbmAsg8Gihk8Drl4SS8=
+X-Google-Smtp-Source: AGHT+IFt2T6AxxDmE3AezdxRqhw0ughr1upTh9VMhOs4COEas5rBVWDTseEHsBTHy/Q+2pTP2UI+1g==
+X-Received: by 2002:a05:6808:51:b0:3c6:ce1:e2d3 with SMTP id
+ v17-20020a056808005100b003c60ce1e2d3mr471877oic.39.1712732000985; 
+ Tue, 09 Apr 2024 23:53:20 -0700 (PDT)
+Received: from [157.82.200.213] ([157.82.200.213])
  by smtp.gmail.com with ESMTPSA id
- gr6-20020a056a004d0600b006ead007a49dsm9431286pfb.49.2024.04.09.23.34.55
+ u12-20020a63f64c000000b005e857e39b10sm9259133pgj.56.2024.04.09.23.53.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Apr 2024 23:34:55 -0700 (PDT)
-Message-ID: <ec63bef5-780e-44d0-8979-a31f7b54b07f@linaro.org>
-Date: Tue, 9 Apr 2024 20:34:52 -1000
+ Tue, 09 Apr 2024 23:53:20 -0700 (PDT)
+Message-ID: <94c118ab-9cc9-4a9c-931d-7ba2b9acded5@daynix.com>
+Date: Wed, 10 Apr 2024 15:53:17 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 04/19] target/i386: do not use s->tmp0 and s->tmp4
- to compute flags
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-5-pbonzini@redhat.com>
+Subject: Re: [RFC PATCH-for-9.0?] hw/net/net_tx_pkt: Fix overrun in
+ update_sctp_checksum()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Dmitry Fleytman
+ <dmitry.fleytman@gmail.com>, Zheyu Ma <zheyuma97@gmail.com>
+References: <20240409180450.31815-1-philmd@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240409164323.776660-5-pbonzini@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240409180450.31815-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::233;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x233.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,94 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/24 06:43, Paolo Bonzini wrote:
-> Create a new temporary whenever flags have to use one, instead of using
-> s->tmp0 or s->tmp4.  NULL can now be passed as the scratch register
-> to gen_prepare_*.
+On 2024/04/10 3:04, Philippe Mathieu-Daudé wrote:
+> If a fragmented packet size is too short, do not try to
+> calculate its checksum.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Reproduced using:
+> 
+>    $ cat << EOF | qemu-system-i386 -display none -nodefaults \
+>                                    -machine q35,accel=qtest -m 32M \
+>                                    -device igb,netdev=net0 \
+>                                    -netdev user,id=net0 \
+>                                    -qtest stdio
+>    outl 0xcf8 0x80000810
+>    outl 0xcfc 0xe0000000
+>    outl 0xcf8 0x80000804
+>    outw 0xcfc 0x06
+>    write 0xe0000403 0x1 0x02
+>    writel 0xe0003808 0xffffffff
+>    write 0xe000381a 0x1 0x5b
+>    write 0xe000381b 0x1 0x00
+>    EOF
+>    Assertion failed: (offset == 0), function iov_from_buf_full, file util/iov.c, line 39.
+>    #1 0x5575e81e952a in iov_from_buf_full qemu/util/iov.c:39:5
+>    #2 0x5575e6500768 in net_tx_pkt_update_sctp_checksum qemu/hw/net/net_tx_pkt.c:144:9
+>    #3 0x5575e659f3e1 in igb_setup_tx_offloads qemu/hw/net/igb_core.c:478:11
+>    #4 0x5575e659f3e1 in igb_tx_pkt_send qemu/hw/net/igb_core.c:552:10
+>    #5 0x5575e659f3e1 in igb_process_tx_desc qemu/hw/net/igb_core.c:671:17
+>    #6 0x5575e659f3e1 in igb_start_xmit qemu/hw/net/igb_core.c:903:9
+>    #7 0x5575e659f3e1 in igb_set_tdt qemu/hw/net/igb_core.c:2812:5
+>    #8 0x5575e657d6a4 in igb_core_write qemu/hw/net/igb_core.c:4248:9
+> 
+> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+> Fixes: f199b13bc1 ("igb: Implement Tx SCTP CSO")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2273
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/tcg/translate.c | 54 +++++++++++++++++++++----------------
->   1 file changed, 31 insertions(+), 23 deletions(-)
+> No clue this makes sense, but avoids the crash...
+> ---
+>   hw/net/net_tx_pkt.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index 197cccb6c96..debc1b27283 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -947,9 +947,9 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
->       case CC_OP_SUBB ... CC_OP_SUBQ:
->           /* (DATA_TYPE)CC_SRCT < (DATA_TYPE)CC_SRC */
->           size = s->cc_op - CC_OP_SUBB;
-> -        t1 = gen_ext_tl(s->tmp0, cpu_cc_src, size, false);
-> -        /* If no temporary was used, be careful not to alias t1 and t0.  */
-> -        t0 = t1 == cpu_cc_src ? s->tmp0 : reg;
-> +        /* Be careful not to alias t1 and t0.  */
-> +        t1 = gen_ext_tl(NULL, cpu_cc_src, size, false);
-> +        t0 = (reg == t1 || !reg) ? tcg_temp_new() : reg;
->           tcg_gen_mov_tl(t0, s->cc_srcT);
->           gen_extu(size, t0);
-
-The tcg_temp_new, mov, and extu can be had with gen_ext_tl...
-
->           goto add_sub;
-> @@ -957,8 +957,9 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
->       case CC_OP_ADDB ... CC_OP_ADDQ:
->           /* (DATA_TYPE)CC_DST < (DATA_TYPE)CC_SRC */
->           size = s->cc_op - CC_OP_ADDB;
-> -        t1 = gen_ext_tl(s->tmp0, cpu_cc_src, size, false);
-> -        t0 = gen_ext_tl(reg, cpu_cc_dst, size, false);
-> +        /* Be careful not to alias t1 and t0.  */
-> +        t1 = gen_ext_tl(NULL, cpu_cc_src, size, false);
-> +        t0 = gen_ext_tl(reg == t1 ? NULL : reg, cpu_cc_dst, size, false);
-
-... like this.
-
-It would be helpful to update the function comments (nothing is 'compute ... to reg' in 
-these functions).  Future cleanup, perhaps rename 'reg' to 'scratch', or remove the 
-argument entirely where applicable.
-
-> @@ -1109,11 +1113,13 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
->           size = s->cc_op - CC_OP_SUBB;
->           switch (jcc_op) {
->           case JCC_BE:
-> -            tcg_gen_mov_tl(s->tmp4, s->cc_srcT);
-> -            gen_extu(size, s->tmp4);
-> -            t0 = gen_ext_tl(s->tmp0, cpu_cc_src, size, false);
-> -            cc = (CCPrepare) { .cond = TCG_COND_LEU, .reg = s->tmp4,
-> -                               .reg2 = t0, .use_reg2 = true };
-> +            /* Be careful not to alias t1 and t0.  */
-> +            t1 = gen_ext_tl(NULL, cpu_cc_src, size, false);
-> +            t0 = (reg == t1 || !reg) ? tcg_temp_new() : reg;
-> +            tcg_gen_mov_tl(t0, s->cc_srcT);
-> +            gen_extu(size, t0);
-
-gen_ext_tl
-
-> +            cc = (CCPrepare) { .cond = TCG_COND_LEU, .reg = t0,
-> +                               .reg2 = t1, .use_reg2 = true };
->               break;
+> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+> index 2134a18c4c..6a8640157f 100644
+> --- a/hw/net/net_tx_pkt.c
+> +++ b/hw/net/net_tx_pkt.c
+> @@ -141,6 +141,10 @@ bool net_tx_pkt_update_sctp_checksum(struct NetTxPkt *pkt)
+>       uint32_t csum = 0;
+>       struct iovec *pl_start_frag = pkt->vec + NET_TX_PKT_PL_START_FRAG;
 >   
->           case JCC_L:
-> @@ -1122,11 +1128,13 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
->           case JCC_LE:
->               cond = TCG_COND_LE;
->           fast_jcc_l:
-> -            tcg_gen_mov_tl(s->tmp4, s->cc_srcT);
-> -            gen_exts(size, s->tmp4);
-> -            t0 = gen_ext_tl(s->tmp0, cpu_cc_src, size, true);
-> -            cc = (CCPrepare) { .cond = cond, .reg = s->tmp4,
-> -                               .reg2 = t0, .use_reg2 = true };
-> +            /* Be careful not to alias t1 and t0.  */
-> +            t1 = gen_ext_tl(NULL, cpu_cc_src, size, true);
-> +            t0 = (reg == t1 || !reg) ? tcg_temp_new() : reg;
-> +            tcg_gen_mov_tl(t0, s->cc_srcT);
-> +            gen_exts(size, t0);
+> +    if (iov_size(pl_start_frag, pkt->payload_frags) < sizeof(csum)) {
+> +        return false;
+> +    }
+> +
 
-gen_ext_tl
+iov_from_buf() uses 8 as offset, so we should check if the size >= 8 + 
+sizeof(csum).
 
-With that,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+However I doubt that it is worth to fix. I think it is fine to remove 
+the assertion (i.e., remove the requirement that the offset specified 
+for iov_from_buf() must be inside iov and instead let the function() 
+return 0 in that case).
 
+Regards,
+Akihiko Odaki
 
-r~
+>       if (iov_from_buf(pl_start_frag, pkt->payload_frags, 8, &csum, sizeof(csum)) < sizeof(csum)) {
+>           return false;
+>       }
 
