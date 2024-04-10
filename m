@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C92CD1296
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 08:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B3FCD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 08:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruTIn-0006Hh-Ry; Wed, 10 Apr 2024 04:27:29 -0400
+	id 1ruTKL-0007Xw-0l; Wed, 10 Apr 2024 04:29:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruTIk-0006HA-Fk
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 04:27:26 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruTIi-0006jN-LA
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 04:27:26 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a51a7dc45easo612649566b.2
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 01:27:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712737642; x=1713342442; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TvNUWkfIStlGuEJgVPFYmXNVjyyN3UG8KuLFg/lC00A=;
- b=n9J1hXb0SaENTmHI3cm5R3TPG/LZYWGATbo5GXrgpCYSEQAghR9+i5Y474xYgxrC4/
- HYyumb+lzS7WITO+K0rC0uGVy66g+D+Hw5y27OXzLhr1IRrMrby1OXnwxe/5PEEnw5e8
- L7xpZI2MC76DdgEVVQk8UD4u8t5mFwkdNPwWTiPWJf+N82c36NKM7rAmKqjT6GSvkCsG
- 00nVgw7TSZjCDPFRq2AjRiBmVFh+rxnSX26wkKqhCNzy02E5d5jhbFZzD2P9cV34Na+p
- mabXrkHcW+eAuQmgTv/W3tvifXug9PBqUo4mo+W6WpVtBu3TaTgdYtUorf51jf7NypSF
- AoEg==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ruTKJ-0007XU-K3
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 04:29:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ruTKH-0006oq-OS
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 04:29:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712737741;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yEoQPFieeleOc7/zkX4yIq1u2yeD9HFxHEUb20LNvH8=;
+ b=L7MaUK6RuNCnqFX+CDqc5d9EFzbI9MvniSP+KfqAHkYIpG6Oc9a+PDatuSQZ6IAtUNLkeF
+ jriIFwdN99CSmIFCdQ/7Zahq3uhg70tH5yCPAWn3GuSOs54OTw6iVDwTtoej/W34Dx2SY5
+ fpnLQS8DC4RCjoIpnH0agPdiqPYMiRk=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-658-Qvctntg3Ptq6-ILVPb3TaA-1; Wed, 10 Apr 2024 04:28:58 -0400
+X-MC-Unique: Qvctntg3Ptq6-ILVPb3TaA-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2a53909676fso2115519a91.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 01:28:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712737642; x=1713342442;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TvNUWkfIStlGuEJgVPFYmXNVjyyN3UG8KuLFg/lC00A=;
- b=nTrBHFenCBenT2vCNXmS+G285alOT35MTBWrRovyH0T4gQOXqMNBsGIBL9Mb1IulK6
- ZllJtwKBh73pLFQShhh2mI3IME2Y8S7/a/lTT5/ongicMbDFS5KUorLgHPtkVFFuUGtf
- iT51Rhq3TJgh5Nsud4rjJ5YoKjX6y1onQ283Hlnt4orjgU6/usDsWNXhHK80+Iog8gLf
- mVzEWPzQmgme8E3j41Qh7ONpLkRBov7oA3m2icH9sEn7uqu6yB1Nx7VQWjLBMPtr+CRc
- 7y9Xb0vTLQf78gZAl7aAdL/+u4D262uKZ5FZX83LuGBIHPiJ0nzAWcmbEJ5wxiBmzugJ
- sqbQ==
-X-Gm-Message-State: AOJu0Ywr1BtvKaY2Yo9u+9xENI3c1VbktR1zhuxiRr/KwcvERUxXe2kW
- aQ4s5sr36CMBRU/IeWEcaOMcKn9eUqlXqbCe0svmFdgd1g7Mx3+y1JSGMa3PMPk=
-X-Google-Smtp-Source: AGHT+IEYs0ReobtgzmNvCORFzj1wdNMnPfV5v0DYxhnk8o7M6i5euox4lYAfL8PqSBHXFYwkzfGGVQ==
-X-Received: by 2002:a17:906:4ac9:b0:a51:7ee5:514f with SMTP id
- u9-20020a1709064ac900b00a517ee5514fmr1074238ejt.3.1712737641816; 
- Wed, 10 Apr 2024 01:27:21 -0700 (PDT)
-Received: from [192.168.69.100] (arl95-h02-176-184-34-173.dsl.sta.abo.bbox.fr.
- [176.184.34.173]) by smtp.gmail.com with ESMTPSA id
- ho40-20020a1709070ea800b00a4e8acaccb1sm6627330ejc.132.2024.04.10.01.27.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Apr 2024 01:27:21 -0700 (PDT)
-Message-ID: <7f9861df-6647-4edf-adb2-49a4dbeaf800@linaro.org>
-Date: Wed, 10 Apr 2024 10:27:19 +0200
+ d=1e100.net; s=20230601; t=1712737737; x=1713342537;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yEoQPFieeleOc7/zkX4yIq1u2yeD9HFxHEUb20LNvH8=;
+ b=LPp3IC7LIC2ygJL9Ke9pDjqnREEnpzIrWscDQM2JRaLFZYGwV7W0Ii7/FMWN+ovuA7
+ +H6rzGUcMbQwXRkcf/XLLRKxwfMpll891QhgCznyDr8V5ske6JwXdaa0XW1e4lwYg75i
+ 6rY/Kr9t2ioR36qwP9QJL5jP/5k2ZKmH+RxZtOuEBfqrvJJXqkARAnPT4hH7vVbXitmJ
+ pfAfBf6DWrwaXLGHBZL54IYpHd4rrdSgWodAHsCcAIzuHg3MtDEDa/msPB7OsDtxCKb8
+ t0JLvNLJ5iB7QY/HFzeb2UfEF34EJtx+s56GWL7YKqZEsD6gLOsYqBFgk1NvZWmpMzP+
+ 5Jaw==
+X-Gm-Message-State: AOJu0YzkWDbmUoQsxCyHMkKbQxWwtCPUkPTU9Ch0GJKFMKborSuVNtqP
+ 4Jt6x96WpSQlf489swpRx2vlODSo4gaGQAxDVU16loYhCqDkepS2/nNADJKgUv298OP/luNQnDm
+ y1AAXT2L1d7NFgCZRhLXDl9q+5X7hsumDqXFX8Bc9dJa/NDxNWPXWVfrtVppOJPggZOKtbXv5Q4
+ BPNtnsBFrFkbbPfnoGuD9tR25AO7e30CuXE7I=
+X-Received: by 2002:a17:90b:124e:b0:2a5:b95a:8622 with SMTP id
+ gx14-20020a17090b124e00b002a5b95a8622mr1943048pjb.36.1712737737065; 
+ Wed, 10 Apr 2024 01:28:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKKUrHFkiQvsvElhG7k7FGcDOnkP2BF78vFJ/uOnRcZGzlEgO2O+Ggkw9nrBNkT41v6r+IS2cqVR72KeVwuPk=
+X-Received: by 2002:a17:90b:124e:b0:2a5:b95a:8622 with SMTP id
+ gx14-20020a17090b124e00b002a5b95a8622mr1943033pjb.36.1712737736571; Wed, 10
+ Apr 2024 01:28:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? v2] hw/net/net_tx_pkt: Fix overrun in
- update_sctp_checksum()
-To: Mauro Matteo Cascella <mcascell@redhat.com>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, qemu-stable@nongnu.org,
- Zheyu Ma <zheyuma97@gmail.com>
-References: <20240410070459.49112-1-philmd@linaro.org>
- <CAA8xKjVrv5cnpuLiNsZxoA8RfX8-jN3PvKYCAcPXY2Xcmw-wFw@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAA8xKjVrv5cnpuLiNsZxoA8RfX8-jN3PvKYCAcPXY2Xcmw-wFw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240410052926.417674-1-lulu@redhat.com>
+ <20240410052926.417674-2-lulu@redhat.com>
+ <CACGkMEuDqp7DGtL8feYry2bL+USprSRes-7fiG=Q8b-jcTvokQ@mail.gmail.com>
+ <CACLfguXh5EmfFGnJuK3UHBPb0oPFx507RGggaRKUG-q67hUv3Q@mail.gmail.com>
+In-Reply-To: <CACLfguXh5EmfFGnJuK3UHBPb0oPFx507RGggaRKUG-q67hUv3Q@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 10 Apr 2024 16:28:44 +0800
+Message-ID: <CACGkMEv8BBJn2Q+a-+DF8zsnvzfA5DTaivxSBcr-tJ54-tV-CQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] virtio-pci: Fix the crash that the vector was used
+ after released.
+To: Cindy Lu <lulu@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Michael Tsirkin <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,56 +100,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/4/24 09:35, Mauro Matteo Cascella wrote:
-> Hi,
-> 
-> On Wed, Apr 10, 2024 at 9:05 AM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> If a fragmented packet size is too short, do not try to
->> calculate its checksum.
-> 
-> This was assigned CVE-2024-3567.
+Offline:
 
-Thanks for the quick reaction!
+On Wed, Apr 10, 2024 at 2:28=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+>
+> On Wed, Apr 10, 2024 at 1:36=E2=80=AFPM Jason Wang <jasowang@redhat.com> =
+wrote:
+> >
+> > On Wed, Apr 10, 2024 at 1:29=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrot=
+e:
+> > >
+> > > When the guest triggers vhost_stop and then virtio_reset, the vector =
+will the
+> > > IRQFD for this vector will be released and change to VIRTIO_NO_VECTOR=
+.
+> > > After that, the guest called vhost_net_start,  (at this time, the con=
+figure
+> > > vector is still VIRTIO_NO_VECTOR),  vector 0 still was not "init".
+> > > The guest system continued to boot, set the vector back to 0, and the=
+n met the crash.
+> > >
+> > > To fix this, we need to call the function "kvm_virtio_pci_vector_use_=
+one()"
+> > > when the vector changes back from VIRTIO_NO_VECTOR
+> > >
+> > > (gdb) bt
+> > > 0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=
+=3Dsigno@entry=3D6, no_tid=3Dno_tid@entry=3D0)
+> > >     at pthread_kill.c:44
+> > > 1  0x00007fc87148ec53 in __pthread_kill_internal (signo=3D6, threadid=
+=3D<optimized out>) at pthread_kill.c:78
+> > > 2  0x00007fc87143e956 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysde=
+ps/posix/raise.c:26
+> > > 3  0x00007fc8714287f4 in __GI_abort () at abort.c:79
+> > > 4  0x00007fc87142871b in __assert_fail_base
+> > >     (fmt=3D0x7fc8715bbde0 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n"=
+, assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "../acce=
+l/kvm/kvm-all.c", line=3D1837, function=3D<optimized out>) at assert.c:92
+> > > 5  0x00007fc871437536 in __GI___assert_fail
+> > >     (assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d=
+ "../accel/kvm/kvm-all.c", line=3D1837, function=3D0x5606413f06f0 <__PRETTY=
+_FUNCTION__.19> "kvm_irqchip_commit_routes") at assert.c:101
+> > > 6  0x0000560640f884b5 in kvm_irqchip_commit_routes (s=3D0x560642cae1f=
+0) at ../accel/kvm/kvm-all.c:1837
+> > > 7  0x0000560640c98f8e in virtio_pci_one_vector_unmask
+> > >     (proxy=3D0x560643c65f00, queue_no=3D4294967295, vector=3D0, msg=
+=3D..., n=3D0x560643c6e4c8)
+> > >     at ../hw/virtio/virtio-pci.c:1005
+> > > 8  0x0000560640c99201 in virtio_pci_vector_unmask (dev=3D0x560643c65f=
+00, vector=3D0, msg=3D...)
+> > >     at ../hw/virtio/virtio-pci.c:1070
+> > > 9  0x0000560640bc402e in msix_fire_vector_notifier (dev=3D0x560643c65=
+f00, vector=3D0, is_masked=3Dfalse)
+> > >     at ../hw/pci/msix.c:120
+> > > 10 0x0000560640bc40f1 in msix_handle_mask_update (dev=3D0x560643c65f0=
+0, vector=3D0, was_masked=3Dtrue)
+> > >     at ../hw/pci/msix.c:140
+> > > 11 0x0000560640bc4503 in msix_table_mmio_write (opaque=3D0x560643c65f=
+00, addr=3D12, val=3D0, size=3D4)
+> > >     at ../hw/pci/msix.c:231
+> > > 12 0x0000560640f26d83 in memory_region_write_accessor
+> > >     (mr=3D0x560643c66540, addr=3D12, value=3D0x7fc86b7bc628, size=3D4=
+, shift=3D0, mask=3D4294967295, attrs=3D...)
+> > >     at ../system/memory.c:497
+> > > 13 0x0000560640f270a6 in access_with_adjusted_size
+> > >
+> > >      (addr=3D12, value=3D0x7fc86b7bc628, size=3D4, access_size_min=3D=
+1, access_size_max=3D4, access_fn=3D0x560640f26c8d <memory_region_write_acc=
+essor>, mr=3D0x560643c66540, attrs=3D...) at ../system/memory.c:573
+> > > 14 0x0000560640f2a2b5 in memory_region_dispatch_write (mr=3D0x560643c=
+66540, addr=3D12, data=3D0, op=3DMO_32, attrs=3D...)
+> > >     at ../system/memory.c:1521
+> > > 15 0x0000560640f37bac in flatview_write_continue
+> > >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., ptr=3D0x7fc=
+871e9c028, len=3D4, addr1=3D12, l=3D4, mr=3D0x560643c66540)
+> > >     at ../system/physmem.c:2714
+> > > 16 0x0000560640f37d0f in flatview_write
+> > >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., buf=3D0x7fc=
+871e9c028, len=3D4) at ../system/physmem.c:2756
+> > > 17 0x0000560640f380bf in address_space_write
+> > >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, a=
+ttrs=3D..., buf=3D0x7fc871e9c028, len=3D4)
+> > >     at ../system/physmem.c:2863
+> > > 18 0x0000560640f3812c in address_space_rw
+> > >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, a=
+ttrs=3D..., buf=3D0x7fc871e9c028, len=3D4, is_write=3Dtrue) at ../system/ph=
+ysmem.c:2873
+> > > --Type <RET> for more, q to quit, c to continue without paging--
+> > > 19 0x0000560640f8aa55 in kvm_cpu_exec (cpu=3D0x560642f205e0) at ../ac=
+cel/kvm/kvm-all.c:2915
+> > > 20 0x0000560640f8d731 in kvm_vcpu_thread_fn (arg=3D0x560642f205e0) at=
+ ../accel/kvm/kvm-accel-ops.c:51
+> > > 21 0x00005606411949f4 in qemu_thread_start (args=3D0x560642f292b0) at=
+ ../util/qemu-thread-posix.c:541
+> > > 22 0x00007fc87148cdcd in start_thread (arg=3D<optimized out>) at pthr=
+ead_create.c:442
+> > > 23 0x00007fc871512630 in clone3 () at ../sysdeps/unix/sysv/linux/x86_=
+64/clone3.S:81
+> > > (gdb)
+> > > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > > ---
+> > >  hw/virtio/virtio-pci.c | 35 +++++++++++++++++++++++++++++++++++
+> > >  1 file changed, 35 insertions(+)
+> > >
+> > > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > > index 1a7039fb0c..344f4fb844 100644
+> > > --- a/hw/virtio/virtio-pci.c
+> > > +++ b/hw/virtio/virtio-pci.c
+> > > @@ -880,6 +880,7 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPC=
+IProxy *proxy, int queue_no)
+> > >      int ret;
+> > >      EventNotifier *n;
+> > >      PCIDevice *dev =3D &proxy->pci_dev;
+> > > +    VirtIOIRQFD *irqfd;
+> > >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
+> > >      VirtioDeviceClass *k =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+> > >
+> > > @@ -890,10 +891,19 @@ static int kvm_virtio_pci_vector_use_one(VirtIO=
+PCIProxy *proxy, int queue_no)
+> > >      if (vector >=3D msix_nr_vectors_allocated(dev)) {
+> > >          return 0;
+> > >      }
+> > > +    /*
+> > > +     * if the irqfd still in use, means the irqfd was not
+> > > +     * release before and don't need to set up
+> > > +     */
+> > > +    irqfd =3D &proxy->vector_irqfd[vector];
+> > > +    if (irqfd->users !=3D 0) {
+> > > +        return 0;
+> > > +    }
+> >
+> > kvm_virtio_pci_vq_vector_use() has a similar check and it looks to me
+> > kvm_virtio_pci_irqfd_use() can work when users > 0.
+> >
+> > Any reason we need an extra check here?
+> >
+> > Thanks
+> >
+> in function kvm_virtio_pci_vq_vector_use(). this will not init the
+> irqfd, but there will be an
+>     irqfd->users++;
 
->> Reproduced using:
->>
->>    $ cat << EOF | qemu-system-i386 -display none -nodefaults \
->>                                    -machine q35,accel=qtest -m 32M \
->>                                    -device igb,netdev=net0 \
->>                                    -netdev user,id=net0 \
->>                                    -qtest stdio
->>    outl 0xcf8 0x80000810
->>    outl 0xcfc 0xe0000000
->>    outl 0xcf8 0x80000804
->>    outw 0xcfc 0x06
->>    write 0xe0000403 0x1 0x02
->>    writel 0xe0003808 0xffffffff
->>    write 0xe000381a 0x1 0x5b
->>    write 0xe000381b 0x1 0x00
->>    EOF
->>    Assertion failed: (offset == 0), function iov_from_buf_full, file util/iov.c, line 39.
->>    #1 0x5575e81e952a in iov_from_buf_full qemu/util/iov.c:39:5
->>    #2 0x5575e6500768 in net_tx_pkt_update_sctp_checksum qemu/hw/net/net_tx_pkt.c:144:9
->>    #3 0x5575e659f3e1 in igb_setup_tx_offloads qemu/hw/net/igb_core.c:478:11
->>    #4 0x5575e659f3e1 in igb_tx_pkt_send qemu/hw/net/igb_core.c:552:10
->>    #5 0x5575e659f3e1 in igb_process_tx_desc qemu/hw/net/igb_core.c:671:17
->>    #6 0x5575e659f3e1 in igb_start_xmit qemu/hw/net/igb_core.c:903:9
->>    #7 0x5575e659f3e1 in igb_set_tdt qemu/hw/net/igb_core.c:2812:5
->>    #8 0x5575e657d6a4 in igb_core_write qemu/hw/net/igb_core.c:4248:9
->>
->> Cc: qemu-stable@nongnu.org
->> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
->> Fixes: f199b13bc1 ("igb: Implement Tx SCTP CSO")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2273
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> Since v1: check at offset 8 (Akihiko)
->> ---
->>   hw/net/net_tx_pkt.c | 4 ++++
->>   1 file changed, 4 insertions(+)
+This needs to be ref-counted correctly otherwise we may hit issues elsewher=
+e.
 
-Patch queued.
+More below.
+
+> so the user number will be wrong in this irqfd, There will be check
+> for this in other function
+> sunch like kvm_virtio_pci_vq_vector_release()
+> {
+>     VirtIOIRQFD *irqfd =3D &proxy->vector_irqfd[vector];
+>
+>     if (--irqfd->users =3D=3D 0) {
+>         kvm_irqchip_release_virq(kvm_state, irqfd->virq);
+>     }
+> }
+> this will cause problem
+> thanks
+> Cindy
+>
+>
+> > >      ret =3D kvm_virtio_pci_vq_vector_use(proxy, vector);
+> > >      if (ret < 0) {
+> > >          goto undo;
+> > >      }
+> > > +
+> > >      /*
+> > >       * If guest supports masking, set up irqfd now.
+> > >       * Otherwise, delay until unmasked in the frontend.
+> > > @@ -1570,7 +1580,19 @@ static void virtio_pci_common_write(void *opaq=
+ue, hwaddr addr,
+> > >          } else {
+> > >              val =3D VIRTIO_NO_VECTOR;
+> > >          }
+> > > +        vector =3D vdev->config_vector;
+> > >          vdev->config_vector =3D val;
+> > > +        /*
+> > > +         *if the val was change from NO_VECTOR, this means the vecto=
+r maybe
+> > > +         * release before, need to check if need to set up
+> > > +         */
+> > > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_=
+VECTOR) &&
+> > > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > > +            /* check if use irqfd*/
+> > > +            if (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_e=
+nabled()) {
+> > > +                kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_I=
+RQ_IDX);
+> > > +            }
+> > > +        }
+> > >          break;
+> > >      case VIRTIO_PCI_COMMON_STATUS:
+> > >          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > > @@ -1611,6 +1633,19 @@ static void virtio_pci_common_write(void *opaq=
+ue, hwaddr addr,
+> > >              val =3D VIRTIO_NO_VECTOR;
+> > >          }
+> > >          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> > > +
+> > > +        /*
+> > > +         *if the val was change from NO_VECTOR, this means the vecto=
+r maybe
+> > > +         * release before, need to check if need to set up
+> > > +         */
+> > > +
+> > > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_=
+VECTOR) &&
+> > > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > > +            /* check if use irqfd*/
+> > > +            if (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_e=
+nabled()) {
+> > > +                kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel=
+);
+> > > +            }
+> > > +        }
+
+Need to deal with from X to Y, not only NO_VECTOR to x or x to NO_VECTOR.
+
+So the logic might be
+
+if (vdev->status &VIRTIO_CONFIG_S_DRIVER_OK) {
+   if (vector !=3D NO_VECTOR)
+       vector_release_one()
+   if (val !=3D NO_VECTOR)
+       vector_use_one()
+}
+
+?
+
+Thanks
+
+> > >          break;
+> > >      case VIRTIO_PCI_COMMON_Q_ENABLE:
+> > >          if (val =3D=3D 1) {
+> > > --
+> > > 2.43.0
+> > >
+> >
+>
 
 
