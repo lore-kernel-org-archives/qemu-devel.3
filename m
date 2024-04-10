@@ -4,82 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D44CD128A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA7E9CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 11:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruVuS-0006h4-GM; Wed, 10 Apr 2024 07:14:32 -0400
+	id 1ruVvw-0007X8-2o; Wed, 10 Apr 2024 07:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruVuR-0006gl-Dg
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:14:31 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1ruVuP-0000su-RV
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:14:31 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56bdf81706aso8773431a12.2
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 04:14:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1712747668; x=1713352468; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=94RVQwcYAG4eFmMmGTmocKdyi2FDWMMAMoG0R8BdJRo=;
- b=REAXYuWjWoEFtU5FxhZeTrL8EIUTgFBE5PR30UwM0GsinO+YdLqkeyae3ToSur7OPI
- jZB5wHErABfIOyxKnLSzlMRwlEscARThdPYB0SmDXviKZ7WZjh5GZ3MiWXHrXeMb5sET
- gY5GcSB8lDQRdtJmz7/gWghR6rRv1ONjraIB2D9+ojRlqHTbVizssxFqtHY6VH2hyaEa
- 2lqtELJEIpDSMdnVq4b7dc2YaAK0wMVKpdtD6Sc5G6Sl+AjqBdAXMoo1nLz+ypFV4jL9
- AN5qSBz4kVgTVUdIR/nfp8DO+o2DsVoyDVTBPr327cYQ4PUI9hlTP5+voFnTe0yOoine
- 1ePA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712747668; x=1713352468;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=94RVQwcYAG4eFmMmGTmocKdyi2FDWMMAMoG0R8BdJRo=;
- b=AxKENZmOP7/e1q8d/aOjqlvPNokQirM9m5KDxNbCJjhJB/WgH3DaU14NPFG9FEQwmN
- SlRfDPLSNupEMyt+OuDq/YIXn0gHMhybp3ZF/mFTL+GzzQGv62LObOW3FNiv5GDNDbZG
- HmkjKJcil0PojSKbYT7tv2NBpZPe6UQmECzFH7JbWprxAaSuGWETBoo7//JW/NXQgqMP
- SIJqQ7TF1lR+CLtTYa06PH2hYak49OVlfGa2UHRA836tQyCdhZT/xk54fr1YBWhFJbLM
- HerFzLxw1ogP/n6B/2QJZ2TxSEMSf4uZTqMLLycTo4i3HMsUpYDjlXcs07FRHhqIMY7L
- rIXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCYJW8Za4qO6NBCIFbR8eOIzfOm5iGwbw4RWA3pCPVDN3Cydz/02m6aizM2hoP/27m1ujDDWfIS9ryvzLTXWfXVQj0wRs=
-X-Gm-Message-State: AOJu0Ywa6Nrth1hNgayBQ5gpYbqvTm40clX4xGiBQzX1GxGiDXmrdiIu
- 8J2ZCoz5Pd/aVlAG7Y0W5DnWQ5jBicAjV7lkOsls6Rmqk18cn2Nys4TuFjVxsLt7N7yZEeaImwu
- fZ4I6Jpn/DUcVorG60jDVM6CIGds=
-X-Google-Smtp-Source: AGHT+IHZUo6Pt6cHPn2HE+zPZFOJvm6Ppz12wUMJIHfV1gr9Dy/wFeCvOTGykeUz1W16/FiVEwX1BlwUryFYMPLE4VE=
-X-Received: by 2002:a50:d5d9:0:b0:568:8e22:4eff with SMTP id
- g25-20020a50d5d9000000b005688e224effmr1525770edj.37.1712747668168; Wed, 10
- Apr 2024 04:14:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1ruVvr-0007TE-6N
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:16:00 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1ruVvo-00019J-5R
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 07:15:58 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43A84cHU006475;
+ Wed, 10 Apr 2024 04:15:52 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :content-transfer-encoding:content-type:mime-version; s=
+ proofpoint20171006; bh=BBveIMQzMN9VGFFWv+Q5S69+yVwy83mk/iUU64mV9
+ i0=; b=RdzxV34KH2EaHVgBQRYEHlXOWOwJoDtEItV1FAHwJU6eNsmRKLM1bp7a4
+ wmWzcIlRlf5a8UolQldmbQgIIM0SQ62B4+xBCQl7T8p3WbQW0xYK0O3lsbhVI6pC
+ RnhtlpHatyXk7FoZ8bv10+rjwOpbPQc6WuRIZ/kf/PVorWx0GiRmPApMpy5kEMDS
+ TOJUjSIUPfOfRgKXktpo6aNWv66qLkbH3xjDEmruKd70p6ZTrNTHoab7fvoIJBvs
+ Pq3CeWTad21967FXh9uG82J89FUat+Li40UGrMefYMjRu5EDbRRmAYZaSFccBm6u
+ Nda8ng8lHe5YGlfU/pOFRKYoFftmw==
+Received: from nam12-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam12lp2168.outbound.protection.outlook.com [104.47.55.168])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3xdpxe89hd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 10 Apr 2024 04:15:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=R0HybIi6Uq3+EUZV/qCXnyKaA23bO3mKS4WQNr7XFExvZPv6WCG0Eu7CfI4K2WnEjMCLUjK0T3dIht3zuLL7w+X89qT7F1r8dMKnZGEuJji/puYGySA0G+7JHayXKp1Bwq7ShaBLuXSJOUwALmFy5TnL0aRTIH7wJeEDoq1Lj0zm9Hd94Akxip3QzZhzmNFo0Ot9dVgSsW3xFt693RdbLYJDXY1vlo7/fguwyp98i6o++P6cCuZ52iJQV2jonBCmm/qRaH3/KelZu3JfiDuwcW+Ebt2KgN2G8U2aOxUssWetF7kUujU/8Zn60lieJTJwb24sKdphD1kjnJa543MVjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BBveIMQzMN9VGFFWv+Q5S69+yVwy83mk/iUU64mV9i0=;
+ b=DoTGvHpXeSNVcjB5yCFYjVEBlt9PQ6ceAj5Ka6ClsZYRnFXKy0uQkl32Mkgo2mRY58biTV7RXvuax4lwh8/d0wprCqd0q9f38tx+ePos+Dird7SJTAGAxYorfieoDz+QGciufsf4kvCPFEQQHoPKXsmVvis0bsQ9+EH5m1zQfgYmmS1xCgZRXjGUKndfd6N8nRNs2NAomFAcLULP5vxckNNSHXWBECmmEvxoslDLzEPTsEmUid9rDSGg47E2MnHNBWomfb1RjzScXq0GSB7xldoCpDZc5RVuXPBdjBSGr4iMwNC0b/nF6aYDmeHuN2MftqtWi1WaUCXnQ2PQYzzXsQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BBveIMQzMN9VGFFWv+Q5S69+yVwy83mk/iUU64mV9i0=;
+ b=kHxx0rt3FiX3N5dc2wzyrqNaFzubAnkE1yJOWyOhjk78kb6luy4ZJ193UeT9JLoc1ms9nsG24RYI0o1xPbA2f85oDjj6qaGA4EQI1lnq1KnSXewRLGcf3Xcvz6MQh/nlZxPI6BHlpeest7v61VkreDypq5O2o+0mQYz1+qubgKq2Xpk3IX2FmXH9fKPUcu1XrjPKnBs9GuXKTu3mG3D/mcIeKaVYnBIhCrsTRJZiRhnnrHmx6QqCYUKl0GJptf7KyGlexYllAX3Gd21vZJJ2jFmdNotV3Og4Hi42sGnGhzqWnQTv6Ctk8ZGVGnknHKFa05nh5lQr4xmydpWY9tWMQQ==
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
+ by CH2PR02MB6791.namprd02.prod.outlook.com (2603:10b6:610:ab::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Wed, 10 Apr
+ 2024 11:15:51 +0000
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7409.053; Wed, 10 Apr 2024
+ 11:15:51 +0000
+From: Het Gala <het.gala@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ peterx@redhat.com, farosas@suse.de, prerna.saxena@nutanix.com,
+ Het Gala <het.gala@nutanix.com>
+Subject: [PATCH 1/4] Revert "migration: modify test_multifd_tcp_none() to use
+ new QAPI syntax"
+Date: Wed, 10 Apr 2024 11:15:38 +0000
+Message-Id: <20240410111541.188504-2-het.gala@nutanix.com>
+X-Mailer: git-send-email 2.22.3
+In-Reply-To: <20240410111541.188504-1-het.gala@nutanix.com>
+References: <20240410111541.188504-1-het.gala@nutanix.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH0PR07CA0016.namprd07.prod.outlook.com
+ (2603:10b6:510:5::21) To SJ2PR02MB9955.namprd02.prod.outlook.com
+ (2603:10b6:a03:55f::16)
 MIME-Version: 1.0
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-5-vikram.garhwal@amd.com>
- <87o7bx5187.fsf@draig.linaro.org>
-In-Reply-To: <87o7bx5187.fsf@draig.linaro.org>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Wed, 10 Apr 2024 13:14:16 +0200
-Message-ID: <CAJy5ezrG0m6_5hKD1axpOSYLp-jk14=E+XPo9=oThyY-TN-7TQ@mail.gmail.com>
-Subject: Re: [QEMU][PATCH v3 4/7] xen: let xen_ram_addr_from_mapcache() return
- -1 in case of not found entry
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Vikram Garhwal <vikram.garhwal@amd.com>, qemu-devel@nongnu.org,
- sstabellini@kernel.org, 
- jgross@suse.com, Anthony Perard <anthony.perard@citrix.com>,
- Paul Durrant <paul@xen.org>, 
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Content-Type: multipart/alternative; boundary="00000000000059e8be0615bc2419"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|CH2PR02MB6791:EE_
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: IwjnGvc4R8w+rUUiWt6JibJJd5bVfWdjXnJLKFbBT1d2Qaje/E8vXg46LQsQAHkALOiBG/fTqnlvLS/gaOMCyin3tlyb/10sdjzRRycKzaxBaLywvScuWjHcE48o10Gj07d4gPvOFHBtVpd74fQnkxFKmaejaz6gD8N7U6wmFW+L5bsPrqn5TMNgdMLUaiT3GdNF0tHRmCQAWM8HTiODkbUqB0rhBxOIPf7wdy73TKoKVRhxEytdKRvkQdogptSC1vvydJiwvJAHBSEQ/d4Xh30212e3WoFef2OdMdcbJncVcTz3leYdOJYpYNFHwmcRsoxY2l+9PPyadyxOIbCKIl9zaKY4gVgvL6grJuHX1btiHhXYtiA50aS8qIpKWGmm+WdBTjAF+n3pNwpRMHkHAv+srYl/Gaj3Qb0lxQNnNypZwsuAn+HnxQSPPEawVhgDPE1ThQzJeyqc77921+LXT+CPcZwFVwJomQnTjlb0DWtkD5+6J7CMxLcCyv2rb1GWY1cB/QOiW4RcdM4Ir6CRzoJO5tX5zKMro12Ikj1gCTErGs35Ie9qQdHUP2+HetdFRfne/tIpuSDuuhQztHWfgY4hL6BHRmeH+F1Z1kruXXxNbfyUYzbLvbCHMsHNBDuDGt6CwEwSTgSCtGCZ+MC9hS3LOEcobBElZHS7dxl4Kt9dye7QDPTeAo3TE+VS57YdiL92n9ZYJ5hfC7TRCiIhbtjlLQ55ySw6zK5Pzo8lCcY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(366007)(52116005)(376005)(38350700005); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3rD/cBlG4gDBtq7zUtTeAihP4kWhfpNEEzj6CQyxLJv+mG7nMSsnwl6TIvca?=
+ =?us-ascii?Q?PFB9lnLP2aNWmX155ot29R/M8+zbI8euMi4q+/zwBILVUUg2MVUqko8BaomJ?=
+ =?us-ascii?Q?cwOQ3H3CNkKFZaX7QYsJ8NL4/N84mQJibJHMovbI7FJ0ixNKNNWNhSURTbCd?=
+ =?us-ascii?Q?Rcom+EqeK6MKst8ITCRng79wXdh1sjfgQX8WBChRRkPfyk3fivUlwXdhnORL?=
+ =?us-ascii?Q?WWkY1+BSFtfax5i1u+IZqtcau0fuNrdCaQFIgw3/toNtXWrmctXGY4gWQLEn?=
+ =?us-ascii?Q?WU1JHoQxAOV52LDKTnyxFOvJKexPSyCwgsbYBUpBEflX5dlaEe0BmrOxxQkl?=
+ =?us-ascii?Q?DyiVOzOvAl/lFHoOKJfZSdQFwc2xoskjq7ohpuCK4LueuAT0PrwFVf11SVhR?=
+ =?us-ascii?Q?t4ukijesmNZCC9GWxbLdpKipqx3rxazbWqN+Yk8af9G03z8HtlhHRa6WBMC8?=
+ =?us-ascii?Q?LyVn9a2rfAFW/FeRScC32zXxacRXaaauOeYGmqLmgz+yDk3yFGAmqp+O3zvx?=
+ =?us-ascii?Q?onKDo7++DxGRsFydRKUjVnpZ56LUMVtDBuJlzf57qzu79YoDzKs9M6trQH0X?=
+ =?us-ascii?Q?9Lg55r9gxmOyaHZ4+oQu889pqnaGTOop/YOLN8puKuLPMnq+ykO8JrhWSSxN?=
+ =?us-ascii?Q?dzs+oe+wmCS/rICPbrM49zk4/Iojk6ogshdpQP2qbinm6pBVYJTv/hJf5Lf3?=
+ =?us-ascii?Q?+Mo1OA/7qN6sHXqlKnM3Nu0eqrkpWMrYuR1Tkd4eY0hpwXh9UPRWFuIKzNpT?=
+ =?us-ascii?Q?ie2jClzghsI+QU4P24HVA9qyeO7E1b1zEJmBP0IjZCCbv+aDVj8l/5+qiDO+?=
+ =?us-ascii?Q?jTAepq0V7pG9HHIzdDDkNlJ+qMNfpSI+V5ciVjow9InDzuL7tsQNiYPRYgn8?=
+ =?us-ascii?Q?rAPHvYtwMxpuiZhoHn6MT1MXcXEg/BZMAdGg8rDGWBiU/umDNQAA7NhhByA7?=
+ =?us-ascii?Q?Gn95iXXPkHIij+R3cTCujhbBC/t/mYHIXolLGEIaxugNhm2jfeBzsDkUqvfN?=
+ =?us-ascii?Q?hxUh3gsGFstAja5U1Kn1egB9iDGv/AZTrcxvNlS3FjVvX3etJYiUYyWJqKi4?=
+ =?us-ascii?Q?WAu5LybY1XggFOU95kQVJp67xApCvoY/ei0ieeBQld2bGTZlKcSfEc+5YWBo?=
+ =?us-ascii?Q?NfdiNFLFe2mmGkWHTcCUgU7uJY6sWDTi+tQ1/pb5ctFfBMxgGw9J3lQuPUMP?=
+ =?us-ascii?Q?9ehA90CatH1MCFf2y6FLZWJ4YzK3pjnML7xb4NUae1ceyDIAfu/i++tOsimh?=
+ =?us-ascii?Q?IKS8xggb49ZPihfNkixhoBpCdB0D3+7AC3FFLlY1cm/KImJ/WXKXhYskXA3a?=
+ =?us-ascii?Q?aBtb8FCElmbY3uSmTitapLGUEo2fk10DZLkkt8HEng19jWH8WxLbefwVbAD+?=
+ =?us-ascii?Q?7tJB0aYapctfL/3+z7oiTIChH9dfLUz0chJRAzhq1zY7iU2lvxHN34i+dMZ2?=
+ =?us-ascii?Q?GRN9o0VCFIB1OMQFSIvBv0rK7hEHGEzu4XnCpj8Z3Oj8cDXrKXkqFgDx5ARF?=
+ =?us-ascii?Q?kOaKqw7GeYIhQnLKGmolDVguCGeNu1M0jhzb9HGwmcipmoMsq5Sy60ZVmclM?=
+ =?us-ascii?Q?JLM/K0rH/XzntJQEJVysFbKPSScuHGeq3MXSoP32?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5fd8c313-0845-44cb-2059-08dc594f948a
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2024 11:15:51.0142 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2N+J5LCD3x781RuatYzaJhgQEtInTwauqDlIckfylryOiSu47B0xBB8aBnBaWZQj1ntlGhMJgeTnQjCUlXfMPA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR02MB6791
+X-Proofpoint-ORIG-GUID: eXMkZQhB1G6tM0Sta88acIQA4A77-hwa
+X-Proofpoint-GUID: eXMkZQhB1G6tM0Sta88acIQA4A77-hwa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-10_04,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
+ helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,115 +159,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000059e8be0615bc2419
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This reverts commit 8e3766eefbb4036cbc280c1f1a0d28537929f7fb
 
-On Fri, Mar 1, 2024 at 6:08=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro=
-.org> wrote:
+After addition of 'channels' as the starting argument of new QAPI
+syntax inside postcopy test, even if the user entered the old QAPI
+syntax, test used the new syntax.
+It was a temporary patch added to have some presence of the new syntax
+since the migration qtest framework lacked any logic for introducing
+'channels' argument.
 
-> Vikram Garhwal <vikram.garhwal@amd.com> writes:
->
-> > From: Juergen Gross <jgross@suse.com>
-> >
-> > Today xen_ram_addr_from_mapcache() will either abort() or return 0 in
-> > case it can't find a matching entry for a pointer value. Both cases
-> > are bad, so change that to return an invalid address instead.
-> >
-> > Signed-off-by: Juergen Gross <jgross@suse.com>
-> > Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-> > ---
-> >  hw/xen/xen-mapcache.c | 11 +++--------
-> >  1 file changed, 3 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> > index dfc412d138..179b7e95b2 100644
-> > --- a/hw/xen/xen-mapcache.c
-> > +++ b/hw/xen/xen-mapcache.c
-> > @@ -396,13 +396,8 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-> >          }
-> >      }
-> >      if (!found) {
-> > -        trace_xen_ram_addr_from_mapcache_not_found(ptr);
-> > -        QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
-> > -
-> trace_xen_ram_addr_from_mapcache_found(reventry->paddr_index,
-> > -                                                   reventry->vaddr_req=
-);
-> > -        }
->
-> If these tracepoints aren't useful they need removing from trace-events.
-> However I suspect it would be better to keep them in as they are fairly
-> cheap.
->
-> Otherwise:
->
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
->
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Now that the qtest framework has logic to introduce uri and channel
+argument separately, we can remove this temporary change.
 
---00000000000059e8be0615bc2419
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Het Gala <het.gala@nutanix.com>
+---
+ tests/qtest/migration-test.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Fri, Mar 1, 2024 at 6:08=E2=80=AFPM Al=
-ex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@li=
-naro.org</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">Vikram Garhwal &lt;<a href=3D"mailto:vik=
-ram.garhwal@amd.com" target=3D"_blank">vikram.garhwal@amd.com</a>&gt; write=
-s:<br>
-<br>
-&gt; From: Juergen Gross &lt;<a href=3D"mailto:jgross@suse.com" target=3D"_=
-blank">jgross@suse.com</a>&gt;<br>
-&gt;<br>
-&gt; Today xen_ram_addr_from_mapcache() will either abort() or return 0 in<=
-br>
-&gt; case it can&#39;t find a matching entry for a pointer value. Both case=
-s<br>
-&gt; are bad, so change that to return an invalid address instead.<br>
-&gt;<br>
-&gt; Signed-off-by: Juergen Gross &lt;<a href=3D"mailto:jgross@suse.com" ta=
-rget=3D"_blank">jgross@suse.com</a>&gt;<br>
-&gt; Reviewed-by: Stefano Stabellini &lt;<a href=3D"mailto:sstabellini@kern=
-el.org" target=3D"_blank">sstabellini@kernel.org</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/xen/xen-mapcache.c | 11 +++--------<br>
-&gt;=C2=A0 1 file changed, 3 insertions(+), 8 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c<br>
-&gt; index dfc412d138..179b7e95b2 100644<br>
-&gt; --- a/hw/xen/xen-mapcache.c<br>
-&gt; +++ b/hw/xen/xen-mapcache.c<br>
-&gt; @@ -396,13 +396,8 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (!found) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_xen_ram_addr_from_mapcache_not_foun=
-d(ptr);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 QTAILQ_FOREACH(reventry, &amp;mapcache-&g=
-t;locked_entries, next) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_xen_ram_addr_from_map=
-cache_found(reventry-&gt;paddr_index,<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reventry-&gt;vaddr_req);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-If these tracepoints aren&#39;t useful they need removing from trace-events=
-.<br>
-However I suspect it would be better to keep them in as they are fairly<br>
-cheap.<br>
-<br>
-Otherwise:<br>
-<br>
-Reviewed-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org"=
- target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
-<br></blockquote><div><br></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a =
-href=3D"mailto:edgar.iglesias@amd.com">edgar.iglesias@amd.com</a>&gt;<br></=
-div><div><br></div></div></div>
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 5d6d8cd634..27a1066ae4 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1297,12 +1297,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+ 
+     migrate_prepare_for_dirty_mem(from);
+     qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
+-                             "  'arguments': { "
+-                             "      'channels': [ { 'channel-type': 'main',"
+-                             "      'addr': { 'transport': 'socket',"
+-                             "                'type': 'inet',"
+-                             "                'host': '127.0.0.1',"
+-                             "                'port': '0' } } ] } }");
++                             "  'arguments': { 'uri': 'tcp:127.0.0.1:0' }}");
+ 
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+-- 
+2.22.3
 
---00000000000059e8be0615bc2419--
 
