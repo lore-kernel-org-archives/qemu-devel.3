@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E5E6CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC1BCD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQo4-0002Oy-R3; Wed, 10 Apr 2024 01:47:36 -0400
+	id 1ruQnN-00088M-J2; Wed, 10 Apr 2024 01:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmy-00072q-JV; Wed, 10 Apr 2024 01:46:29 -0400
+ id 1ruQmb-0005gu-8T; Wed, 10 Apr 2024 01:46:05 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmt-0001ng-Jb; Wed, 10 Apr 2024 01:46:28 -0400
+ id 1ruQmZ-0001nY-Hx; Wed, 10 Apr 2024 01:46:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FCAD5D4EF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C99B5D4EE;
  Wed, 10 Apr 2024 08:46:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E5B49B0156;
+ by tsrv.corpit.ru (Postfix) with SMTP id D6293B0155;
  Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
-Received: (nullmailer pid 4182071 invoked by uid 1000);
+Received: (nullmailer pid 4182068 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 23/41] migration: Skip only empty block devices
-Date: Wed, 10 Apr 2024 08:43:44 +0300
-Message-Id: <20240410054416.4181891-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 22/41] hmat acpi: Fix out of bounds access due to
+ missing use of indirection
+Date: Wed, 10 Apr 2024 08:43:43 +0300
+Message-Id: <20240410054416.4181891-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -48,7 +45,7 @@ X-Spam_score_int: -68
 X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,45 +61,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-The block .save_setup() handler calls a helper routine
-init_blk_migration() which builds a list of block devices to take into
-account for migration. When one device is found to be empty (sectors
-== 0), the loop exits and all the remaining devices are ignored. This
-is a regression introduced when bdrv_iterate() was removed.
+With a numa set up such as
 
-Change that by skipping only empty devices.
+-numa nodeid=0,cpus=0 \
+-numa nodeid=1,memdev=mem \
+-numa nodeid=2,cpus=1
 
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Fixes: fea68bb6e9fa ("block: Eliminate bdrv_iterate(), use bdrv_next()")
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Link: https://lore.kernel.org/r/20240312120431.550054-1-clg@redhat.com
-[peterx: fix "Suggested-by:"]
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 2e128776dc56f502c2ee41750afe83938f389528)
+and appropriate hmat_lb entries the initiator list is correctly
+computed and writen to HMAT as 0,2 but then the LB data is accessed
+using the node id (here 2), landing outside the entry_list array.
+
+Stash the reverse lookup when writing the initiator list and use
+it to get the correct array index index.
+
+Fixes: 4586a2cb83 ("hmat acpi: Build System Locality Latency and Bandwidth Information Structure(s)")
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240307160326.31570-3-Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 74e2845c5f95b0c139c79233ddb65bb17f2dd679)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/block.c b/migration/block.c
-index 4026b73f75..867901d2b1 100644
---- a/migration/block.c
-+++ b/migration/block.c
-@@ -415,7 +415,10 @@ static int init_blk_migration(QEMUFile *f)
-         }
+diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
+index 3a6d51282a..768038e0da 100644
+--- a/hw/acpi/hmat.c
++++ b/hw/acpi/hmat.c
+@@ -77,6 +77,7 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+                           uint32_t *initiator_list)
+ {
+     int i, index;
++    uint32_t initiator_to_index[MAX_NODES] = {};
+     HMAT_LB_Data *lb_data;
+     uint16_t *entry_list;
+     uint32_t base;
+@@ -120,6 +121,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+     /* Initiator Proximity Domain List */
+     for (i = 0; i < num_initiator; i++) {
+         build_append_int_noprefix(table_data, initiator_list[i], 4);
++        /* Reverse mapping for array possitions */
++        initiator_to_index[initiator_list[i]] = i;
+     }
  
-         sectors = bdrv_nb_sectors(bs);
--        if (sectors <= 0) {
-+        if (sectors == 0) {
-+            continue;
-+        }
-+        if (sectors < 0) {
-             ret = sectors;
-             bdrv_next_cleanup(&it);
-             goto out;
+     /* Target Proximity Domain List */
+@@ -131,7 +134,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+     entry_list = g_new0(uint16_t, num_initiator * num_target);
+     for (i = 0; i < hmat_lb->list->len; i++) {
+         lb_data = &g_array_index(hmat_lb->list, HMAT_LB_Data, i);
+-        index = lb_data->initiator * num_target + lb_data->target;
++        index = initiator_to_index[lb_data->initiator] * num_target +
++            lb_data->target;
+ 
+         entry_list[index] = (uint16_t)(lb_data->data / hmat_lb->base);
+     }
 -- 
 2.39.2
 
