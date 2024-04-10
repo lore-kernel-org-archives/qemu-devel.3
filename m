@@ -4,56 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B9E3CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 06:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F0BCD1296
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 06:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruRJG-0007QU-4V; Wed, 10 Apr 2024 02:19:50 -0400
+	id 1ruRRj-0000fh-0U; Wed, 10 Apr 2024 02:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1ruRJA-0007Nr-IA; Wed, 10 Apr 2024 02:19:44 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32])
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1ruRRh-0000fT-Ap
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 02:28:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1ruRJ6-0000tz-Tm; Wed, 10 Apr 2024 02:19:44 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4VDt1c4VdRz21kf6;
- Wed, 10 Apr 2024 14:18:28 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id F1BF3140154;
- Wed, 10 Apr 2024 14:19:23 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 10 Apr 2024 14:19:23 +0800
-Message-ID: <5afa6458-808a-df3d-a734-53dedb0f5aff@huawei.com>
-Date: Wed, 10 Apr 2024 14:19:22 +0800
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1ruRRf-0002r3-AJ
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 02:28:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712730510;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=obxfaaRAdKiIY0VH4+TPlZldDKORkwC6Ld4RJwLas2k=;
+ b=UBNd+2g4Dlr6tlhhBe/s5F3wfD6GIqeRrhXDdaX+0w0d1Kr6JHXxQe0SldM+OcBO+AJLk6
+ 94NmlaYA6WpFsnUVjLekQQWBnoJFBlc8Arw3KtSGInzuEugCaqCwsKOvG3kxF/QSAS8pkz
+ 5Kdo8md3X3Xp0x/51ZDGc3siXfMJdz4=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-471-HtAjRCQ-Mpea0xgfHMj-GQ-1; Wed, 10 Apr 2024 02:28:27 -0400
+X-MC-Unique: HtAjRCQ-Mpea0xgfHMj-GQ-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-516da5d2043so3711788e87.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Apr 2024 23:28:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712730506; x=1713335306;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=obxfaaRAdKiIY0VH4+TPlZldDKORkwC6Ld4RJwLas2k=;
+ b=kmalz/cBsr7b+25mjBWNaAQnvvZeVWFji5UUjNSdqgJjC/y/D6cQ7O28nueRfbSLpe
+ QeRz3jd9e41a8Z0gA9LMAJ7b2mJsQ2ehPhSQNrRg3wWeAR8MKc/HoJAY3zSZ3Qz+9ZVI
+ PcrnkRQDjHdyw59NMW9DDwidOzmnvnF8u12ePjKIwlCfvAWh1j1OttJHxJBM1FGTyFgm
+ b/duC/7BSjtQA6Zl7fa/xRoSmfhbsS4U5whUMDMJV5QX2PL74WExiYbp1vYrntgTgXxx
+ CkW2vJoZtUwyrZjnJxoaBZLk67RFN5TwX7MZtd1MRCCS6gYjWzsz2vqYuPvgLBz7IQZI
+ zabA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGlo+/kiX2igRyCnZOtaPzXpxBRPuGiPsrYf1DAf1aQQcZkZLSAr3EaICH6o92kFKhCbI4Bld5j8E+cZW6IRPGqj9mZgw=
+X-Gm-Message-State: AOJu0Yzdhha1ARekP/Aa0I8spIfBo+8dXGMh6w7cMhH4+bpnj9Q/NReK
+ g36/GXm1SXZr8VEs56zZV1KSHmwOBc+5mvignyUjFjD6xHldqpoZjTb/W272nFF5JT/Y0bWXZ5g
+ X4xeMyy0UTxNpu7BNbXVCCw2hq2g83bzlzqEotr2yD6kkrXLPC+P5w46NnWmHz7rTjEX9FkyLGG
+ wLwhugjaKvwME7WNoRLnV5fxCUo6Y=
+X-Received: by 2002:ac2:5f87:0:b0:516:d09b:cbe4 with SMTP id
+ r7-20020ac25f87000000b00516d09bcbe4mr1230661lfe.53.1712730505990; 
+ Tue, 09 Apr 2024 23:28:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFS5D0TfEs1//ITsheJdGjOpghC2RLFQVqgvwnbTQikkLlc3awnxSRh7udpUWY9zdBz1pTVeS0SP3UzPW15e90=
+X-Received: by 2002:ac2:5f87:0:b0:516:d09b:cbe4 with SMTP id
+ r7-20020ac25f87000000b00516d09bcbe4mr1230644lfe.53.1712730505542; Tue, 09 Apr
+ 2024 23:28:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH v13 00/24] target/arm: Implement FEAT_NMI and
- FEAT_GICv3_NMI
-To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
- <qemu-arm@nongnu.org>
-References: <20240407081733.3231820-1-ruanjinjie@huawei.com>
-Content-Language: en-US
-In-Reply-To: <20240407081733.3231820-1-ruanjinjie@huawei.com>
+References: <20240410052926.417674-1-lulu@redhat.com>
+ <20240410052926.417674-2-lulu@redhat.com>
+ <CACGkMEuDqp7DGtL8feYry2bL+USprSRes-7fiG=Q8b-jcTvokQ@mail.gmail.com>
+In-Reply-To: <CACGkMEuDqp7DGtL8feYry2bL+USprSRes-7fiG=Q8b-jcTvokQ@mail.gmail.com>
+From: Cindy Lu <lulu@redhat.com>
+Date: Wed, 10 Apr 2024 14:27:45 +0800
+Message-ID: <CACLfguXh5EmfFGnJuK3UHBPb0oPFx507RGggaRKUG-q67hUv3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] virtio-pci: Fix the crash that the vector was used
+ after released.
+To: Jason Wang <jasowang@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
- helo=szxga06-in.huawei.com
-X-Spam_score_int: -58
-X-Spam_score: -5.9
-X-Spam_bar: -----
-X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.751,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.701,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,275 +96,218 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping.
+On Wed, Apr 10, 2024 at 1:36=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
+ote:
+>
+> On Wed, Apr 10, 2024 at 1:29=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+> >
+> > When the guest triggers vhost_stop and then virtio_reset, the vector wi=
+ll the
+> > IRQFD for this vector will be released and change to VIRTIO_NO_VECTOR.
+> > After that, the guest called vhost_net_start,  (at this time, the confi=
+gure
+> > vector is still VIRTIO_NO_VECTOR),  vector 0 still was not "init".
+> > The guest system continued to boot, set the vector back to 0, and then =
+met the crash.
+> >
+> > To fix this, we need to call the function "kvm_virtio_pci_vector_use_on=
+e()"
+> > when the vector changes back from VIRTIO_NO_VECTOR
+> >
+> > (gdb) bt
+> > 0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Ds=
+igno@entry=3D6, no_tid=3Dno_tid@entry=3D0)
+> >     at pthread_kill.c:44
+> > 1  0x00007fc87148ec53 in __pthread_kill_internal (signo=3D6, threadid=
+=3D<optimized out>) at pthread_kill.c:78
+> > 2  0x00007fc87143e956 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysdeps=
+/posix/raise.c:26
+> > 3  0x00007fc8714287f4 in __GI_abort () at abort.c:79
+> > 4  0x00007fc87142871b in __assert_fail_base
+> >     (fmt=3D0x7fc8715bbde0 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", =
+assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "../accel/=
+kvm/kvm-all.c", line=3D1837, function=3D<optimized out>) at assert.c:92
+> > 5  0x00007fc871437536 in __GI___assert_fail
+> >     (assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "=
+../accel/kvm/kvm-all.c", line=3D1837, function=3D0x5606413f06f0 <__PRETTY_F=
+UNCTION__.19> "kvm_irqchip_commit_routes") at assert.c:101
+> > 6  0x0000560640f884b5 in kvm_irqchip_commit_routes (s=3D0x560642cae1f0)=
+ at ../accel/kvm/kvm-all.c:1837
+> > 7  0x0000560640c98f8e in virtio_pci_one_vector_unmask
+> >     (proxy=3D0x560643c65f00, queue_no=3D4294967295, vector=3D0, msg=3D.=
+.., n=3D0x560643c6e4c8)
+> >     at ../hw/virtio/virtio-pci.c:1005
+> > 8  0x0000560640c99201 in virtio_pci_vector_unmask (dev=3D0x560643c65f00=
+, vector=3D0, msg=3D...)
+> >     at ../hw/virtio/virtio-pci.c:1070
+> > 9  0x0000560640bc402e in msix_fire_vector_notifier (dev=3D0x560643c65f0=
+0, vector=3D0, is_masked=3Dfalse)
+> >     at ../hw/pci/msix.c:120
+> > 10 0x0000560640bc40f1 in msix_handle_mask_update (dev=3D0x560643c65f00,=
+ vector=3D0, was_masked=3Dtrue)
+> >     at ../hw/pci/msix.c:140
+> > 11 0x0000560640bc4503 in msix_table_mmio_write (opaque=3D0x560643c65f00=
+, addr=3D12, val=3D0, size=3D4)
+> >     at ../hw/pci/msix.c:231
+> > 12 0x0000560640f26d83 in memory_region_write_accessor
+> >     (mr=3D0x560643c66540, addr=3D12, value=3D0x7fc86b7bc628, size=3D4, =
+shift=3D0, mask=3D4294967295, attrs=3D...)
+> >     at ../system/memory.c:497
+> > 13 0x0000560640f270a6 in access_with_adjusted_size
+> >
+> >      (addr=3D12, value=3D0x7fc86b7bc628, size=3D4, access_size_min=3D1,=
+ access_size_max=3D4, access_fn=3D0x560640f26c8d <memory_region_write_acces=
+sor>, mr=3D0x560643c66540, attrs=3D...) at ../system/memory.c:573
+> > 14 0x0000560640f2a2b5 in memory_region_dispatch_write (mr=3D0x560643c66=
+540, addr=3D12, data=3D0, op=3DMO_32, attrs=3D...)
+> >     at ../system/memory.c:1521
+> > 15 0x0000560640f37bac in flatview_write_continue
+> >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., ptr=3D0x7fc87=
+1e9c028, len=3D4, addr1=3D12, l=3D4, mr=3D0x560643c66540)
+> >     at ../system/physmem.c:2714
+> > 16 0x0000560640f37d0f in flatview_write
+> >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., buf=3D0x7fc87=
+1e9c028, len=3D4) at ../system/physmem.c:2756
+> > 17 0x0000560640f380bf in address_space_write
+> >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, att=
+rs=3D..., buf=3D0x7fc871e9c028, len=3D4)
+> >     at ../system/physmem.c:2863
+> > 18 0x0000560640f3812c in address_space_rw
+> >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, att=
+rs=3D..., buf=3D0x7fc871e9c028, len=3D4, is_write=3Dtrue) at ../system/phys=
+mem.c:2873
+> > --Type <RET> for more, q to quit, c to continue without paging--
+> > 19 0x0000560640f8aa55 in kvm_cpu_exec (cpu=3D0x560642f205e0) at ../acce=
+l/kvm/kvm-all.c:2915
+> > 20 0x0000560640f8d731 in kvm_vcpu_thread_fn (arg=3D0x560642f205e0) at .=
+./accel/kvm/kvm-accel-ops.c:51
+> > 21 0x00005606411949f4 in qemu_thread_start (args=3D0x560642f292b0) at .=
+./util/qemu-thread-posix.c:541
+> > 22 0x00007fc87148cdcd in start_thread (arg=3D<optimized out>) at pthrea=
+d_create.c:442
+> > 23 0x00007fc871512630 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64=
+/clone3.S:81
+> > (gdb)
+> > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > ---
+> >  hw/virtio/virtio-pci.c | 35 +++++++++++++++++++++++++++++++++++
+> >  1 file changed, 35 insertions(+)
+> >
+> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > index 1a7039fb0c..344f4fb844 100644
+> > --- a/hw/virtio/virtio-pci.c
+> > +++ b/hw/virtio/virtio-pci.c
+> > @@ -880,6 +880,7 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIP=
+roxy *proxy, int queue_no)
+> >      int ret;
+> >      EventNotifier *n;
+> >      PCIDevice *dev =3D &proxy->pci_dev;
+> > +    VirtIOIRQFD *irqfd;
+> >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
+> >      VirtioDeviceClass *k =3D VIRTIO_DEVICE_GET_CLASS(vdev);
+> >
+> > @@ -890,10 +891,19 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPC=
+IProxy *proxy, int queue_no)
+> >      if (vector >=3D msix_nr_vectors_allocated(dev)) {
+> >          return 0;
+> >      }
+> > +    /*
+> > +     * if the irqfd still in use, means the irqfd was not
+> > +     * release before and don't need to set up
+> > +     */
+> > +    irqfd =3D &proxy->vector_irqfd[vector];
+> > +    if (irqfd->users !=3D 0) {
+> > +        return 0;
+> > +    }
+>
+> kvm_virtio_pci_vq_vector_use() has a similar check and it looks to me
+> kvm_virtio_pci_irqfd_use() can work when users > 0.
+>
+> Any reason we need an extra check here?
+>
+> Thanks
+>
+in function kvm_virtio_pci_vq_vector_use(). this will not init the
+irqfd, but there will be an
+    irqfd->users++;
+so the user number will be wrong in this irqfd, There will be check
+for this in other function
+sunch like kvm_virtio_pci_vq_vector_release()
+{
+    VirtIOIRQFD *irqfd =3D &proxy->vector_irqfd[vector];
 
-On 2024/4/7 16:17, Jinjie Ruan wrote:
-> This patch set implements FEAT_NMI and FEAT_GICv3_NMI for ARMv8. These
-> introduce support for a new category of interrupts in the architecture
-> which we can use to provide NMI like functionality.
-> 
-> There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
-> PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
-> interrupts including those with superpriority to be masked on entry to ELn
-> until the mask is explicitly removed by software or hardware. PSTATE.ALLINT
-> can be managed by software using the new register control ALLINT.ALLINT.
-> Independent controls are provided for this feature at each EL, usage at EL1
-> should not disrupt EL2 or EL3.
-> 
-> I have tested it with the following Linux patches which try to support
-> FEAT_NMI in Linux kernel:
-> 
-> 	https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
-> 
-> In the test, SGI, PPI and SPI interrupts can all be set to have super priority
-> to be converted to a hardware NMI interrupt. The SGI is tested with kernel
-> IPI as NMI framework, softlockup, hardlockup and kgdb test cases, and the PPI
-> interrupt is tested with "perf top" command with hardware NMI enabled, and
-> the SPI interrupt is tested with a custom test module, in which NMI interrupts
-> can be received and sent normally.
-> 
-> And the Virtual NMI(VNMI) SGI, PPI and SPI interrupts has also been tested in
-> nested QEMU Virtual Machine with host "virtualization=true". The SGI VNMI is
-> tested by accessing GICR_INMIR0 and GICR_ISPENDR0 with devmem command, as well
-> as hardlockup and kgdb testcases. The PPI VNMI is tested by accessing
-> GICR_INMIR0 and GICR_ISPENDR0 with devmem command, as well as "perf top"
-> command with hardware NMI enabled, which works well. The SPI VNMI is tested
-> with a custom test module, in which SPI VNMI can be sent from the GIC and
-> received normally.
-> 
->          +-------------------------------------------------+
->          |               Distributor                       |
->          +-------------------------------------------------+
->              SPI |  NMI                        |  NMI
->                 \/                            \/
->             +--------+                     +-------+
->             | Redist |                     | Redist|
->             +--------+                     +-------+
->             SGI  | NMI                     PPI | NMI
->                 \/                            \/
->           +-------------+             +---------------+
->           |CPU Interface|   ...       | CPU Interface |
->           +-------------+             +---------------+
->                | NMI                         | NMI
->               \/                            \/
->             +-----+                       +-----+
->             |  PE |                       |  PE |
->             +-----+                       +-----+
-> 
-> Changes in v13:
-> - Handle PSTATE.ALLINT the same way as PSTATE.DAIF in the illegal_return
->   exit path.
-> - Adjust "hw/arm/virt: Wire NMI and VINMI irq lines from GIC to CPU" to after
->   "hw/intc/arm_gicv3: Add external IRQ lines for NMI" to fix the unexpected
->   error with patchseries at this point.
-> - Only connect NMI irq lines from GIC to CPU if vms->gic_version is not
->   VIRT_GIC_VERSION_2 to fix the gic-version=2 unexpected error.
-> - Enforce RES0 bit in NMI field when FEAT_GICv3_NMI is not implemented for
->   ICH_LR<n>_EL2.
-> - Swap the order of the "irq" and "prio" args in gicv3_get_priority() to make
->   input before output.
-> - Check tcg_enabled() for gicv3_nmi_present().
-> - Update the comment for gicv3_nmi_present().
-> - Update the commit message.
-> - Add Reviewed-by.
-> - Add Suggested-by.
-> 
-> Changes in v12:
-> - pPriority<63> = ICC_AP1R_EL1NS<63> if HaveNMIExt() and HaveEL(EL3) and
->   (IsNonSecure(), fix the wrong writing.
-> - Do not check nmi_support repetitively in icc_hppi_can_preempt(),
->   and icc_activate_irq, ich_highest_active_virt_prio(), hppvi_index(),
->   icv_hppi_can_preempt(), icv_rpr_read() and icv_activate_irq(),
->   gicv3_cpuif_virt_irq_fiq_update().
-> - Check hppi.nmi after check icc_hppi_can_preempt() for icc_iar1_read() and
->   icc_nmiar1_read().
-> - When NMI is 1, the virtual interrupt's priority is 0x0.
-> - Make the thisnmi logic more concisely in hppvi_index().
-> - Use is_nmi to simplify code and check is_nmi before comparing vpmr.
-> - Also check sctlrx.NMI in icv_iar_read().
-> - Check icv_hppi_can_preempt() for icv_nmiar1_read().
-> - Check ICH_LR_EL2.NMI after check icv_hppi_can_preempt() as icv_iar_read()
->   do it in icv_nmiar1_read().
-> - Correct thisnmi to bool in icv_eoir_write().
-> - Check thisnmi and nmi both true instead of identical in icv_eoir_write().
-> - nmi_needed -> gicv3_cpu_nmi_needed, needed_nmi -> gicv3_nmi_needed.
-> - Correct the comment style in arm_cpu_initfn() and icv_nmiar1_read().
-> - Fix the typo, "prioirty" -> "priority".
-> - Remove the redundant blank line.
-> - Update the subject and commit message, hppi.superprio -> hppi.nmi,
->   super priority -> non-maskable property.
-> - Add Reviewed-by.
-> 
-> Changes in v11:
-> - Put vmstate_gicv3_cpu_nmi and vmstate_gicv3_gicd_nmi into existing list.
-> - Remove the excess != 0.
-> - Handle NMI priority in icc_highest_active_prio() and handle NMI RPR in
->   icc_rpr_read() separately.
-> - Only set NMI bit for a NMI and and ordinary priority bit for a non-NMI in
->   icc_activate_irq().
-> - Only clear APR bit for AP1R0 in icc_drop_prio().
-> - Check special INTID_* in callers instead of passing two extra boolean args
->   for ack functions.
-> - Handle NMI in icc_hppi_can_preempt() and icc_highest_active_group().
-> - Also check icc_hppi_can_preempt() for icc_nmiar1_read().
-> - Deal with NMI in the callers instead of ich_highest_active_virt_prio().
-> - Set either NMI or a group-priority bit, not both.
-> - Only set AP NMI bits in the 0 reg.
-> - Handle NMI in hppvi_index(), icv_hppi_can_preempt() and icv_eoir_write().
-> - Add Reviewed-by.
-> 
-> Changes in v10:
-> - Correct the exception_target_el(env) to 2 in msr_set_allint_el1 helper,
->   since it is a hypervisor trap from EL1 to EL2.
-> - In arm_cpu_exec_interrupt(), if SCTLR_ELx.NMI is 0, NMI -> IRQ,
->   VINMI -> VIRQ, VFNMI -> VFIQ.
-> - Make arm_cpu_update_virq() and arm_cpu_update_vfiq() check that it is not a
->   VINMI/VFNMI, so only set 1 bit in interrupt_request, not 2.
-> - Adjust "hw/intc: Enable FEAT_GICv3_NMI Feature" to before "add irq
->   non-maskable property".
-> - superprio -> nmi, gicr_isuperprio -> gicr_inmir0, is_nmi -> nmi,
->   is_hppi -> hppi, has_superprio -> nmi, superpriority -> non-maskable property.
-> - Save NMI state in vmstate_gicv3_cpu and vmstate_gicv3.
-> - Exchange the order of nmi and hppi parameters.
-> - Handle APR and RPR NMI bits, rename ICH_AP1R_EL2_NMI to ICV_AP1R_EL1_NMI.
-> - Set ICV_RPR_EL1.NMI according to the ICV_AP1R<n>_EL1.NMI in
->   ich_highest_active_virt_prio()
-> - Update the commit message.
-> 
-> Changes in v9:
-> - Move nmi_reginfo and related functions inside an existing ifdef
->   TARGET_AARCH64 to solve the --target-list=aarch64-softmmu,arm-softmmu
->   compilation problem.
-> - Check 'isread' when writing to ALLINT.
-> - Update the GPIOs passed in the arm_cpu_kvm_set_irq, and update the comment.
-> - Definitely not merge VINMI and VFNMI into EXCP_VNMI.
-> - ARM_CPU_VNMI -> ARM_CPU_VINMI, CPU_INTERRUPT_VNMI -> CPU_INTERRUPT_VINMI.
-> - Update VINMI and VFNMI when writing HCR_EL2 or HCRX_EL2.
-> - Update the commit subject and message, VNMI -> VINMI.
-> - Handle CPSR_F and ISR_FS according to CPU_INTERRUPT_VFNMI instead of
->   CPU_INTERRUPT_VFIQ and HCRX_EL2.VFNMI.
-> - Not check SCTLR_NMI in arm_cpu_do_interrupt_aarch64().
-> - Correct the INTID_NMI logic.
-> - Declare cpu variable to reuse latter.
-> 
-> Changes in v8:
-> - Fix the rcu stall after sending a VNMI in qemu VM.
-> - Fix an unexpected interrupt bug when sending VNMI by running qemu VM.
-> - Test the VNMI interrupt.
-> - Update the commit message.
-> - Add Reviewed-by.
-> 
-> Changes in v7:
-> - env->cp15.hcrx_el2 -> arm_hcrx_el2_eff().
-> - Reorder the irqbetter() code for clarity.
-> - Eliminate the has_superprio local variable for gicv3_get_priority().
-> - false -> cs->hpplpi.superprio in gicv3_redist_update_noirqset().
-> - 0x0 -> false in arm_gicv3_common_reset_hold().
-> - Clear superprio in several places for hppi, hpplpi and hppvlpi.
-> - Add Reviewed-by.
-> 
-> Changes in v6:
-> - Fix DISAS_TOO_MANY to DISAS_UPDATE_EXIT for ALLINT MSR (immediate).
-> - Verify that HCR_EL2.VF is set before checking VFNMI.
-> - env->cp15.hcr_el2 -> arm_hcr_el2_eff().
-> - env->cp15.hcrx_el2 -> arm_hcrx_el2_eff().
-> - Not combine VFNMI with CPU_INTERRUPT_VNMI.
-> - Implement icv_nmiar1_read().
-> - Put the "extract superprio info" code into gicv3_get_priority().
-> - Update the comment in irqbetter().
-> - Reset the cs->hppi.superprio to 0x0.
-> - Set hppi.superprio to false for LPI.
-> - Add Reviewed-by.
-> 
-> Changes in v5:
-> - Remove the comment for ALLINT in cpu.h.
-> - Merge allint_check() to msr_i_allint to clear the ALLINT MSR (immediate)
->   implementation.
-> - Rename msr_i_allint() to msr_set_allint_el1() to make it clearer.
-> - Drop the & 1 in trans_MSR_i_ALLINT().
-> - Add Reviewed-by.
-> 
-> Changes in v4:
-> - Handle VNMI within the CPU and the GIC.
-> - Keep PSTATE.ALLINT in env->pstate but not env->allint.
-> - Fix the ALLINT MSR (immediate) decodetree implementation.
-> - Accept NMI unconditionally for arm_cpu_has_work() but add comment.
-> - Improve nmi mask in arm_excp_unmasked().
-> - Make the GICR_INMIR0 and GICD_INMIR implementation more clearer.
-> - Improve ICC_NMIAR1_EL1 implementation
-> - Extract gicv3_get_priority() to avoid priority code repetition.
-> - Add Reviewed-by.
-> 
-> Changes in v3:
-> - Remove the FIQ NMI.
-> - Adjust the patches Sequence.
-> - Reomve the patch "Set pstate.ALLINT in arm_cpu_reset_hold".
-> - Check whether support FEAT_NMI and FEAT_GICv3 for FEAT_GICv3_NMI.
-> - With CPU_INTERRUPT_NMI, both CPSR_I and ISR_IS must be set.
-> - Not include NMI logic when FEAT_NMI or SCTLR_ELx.NMI not enabled.
-> - Refator nmi mask in arm_excp_unmasked().
-> - Add VNMI definitions, add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
-> - Add Reviewed-by and Acked-by.
-> - Update the commit message.
-> 
-> Changes in v2:
-> - Break up the patches so that each one does only one thing.
-> - Remove the command line option and just implement it in "max" cpu.
-> 
-> Jinjie Ruan (24):
->   target/arm: Handle HCR_EL2 accesses for bits introduced with FEAT_NMI
->   target/arm: Add PSTATE.ALLINT
->   target/arm: Add support for FEAT_NMI, Non-maskable Interrupt
->   target/arm: Implement ALLINT MSR (immediate)
->   target/arm: Support MSR access to ALLINT
->   target/arm: Add support for Non-maskable Interrupt
->   target/arm: Add support for NMI in arm_phys_excp_target_el()
->   target/arm: Handle IS/FS in ISR_EL1 for NMI, VINMI and VFNMI
->   target/arm: Handle PSTATE.ALLINT on taking an exception
->   hw/intc/arm_gicv3: Add external IRQ lines for NMI
->   hw/arm/virt: Wire NMI and VINMI irq lines from GIC to CPU
->   target/arm: Handle NMI in arm_cpu_do_interrupt_aarch64()
->   hw/intc/arm_gicv3: Add has-nmi property to GICv3 device
->   hw/intc/arm_gicv3_kvm: Not set has-nmi=true for the KVM GICv3
->   hw/intc/arm_gicv3: Add irq non-maskable property
->   hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
->   hw/intc/arm_gicv3: Implement GICD_INMIR
->   hw/intc/arm_gicv3: Add NMI handling CPU interface registers
->   hw/intc/arm_gicv3: Handle icv_nmiar1_read() for icc_nmiar1_read()
->   hw/intc/arm_gicv3: Implement NMI interrupt priority
->   hw/intc/arm_gicv3: Report the NMI interrupt in gicv3_cpuif_update()
->   hw/intc/arm_gicv3: Report the VINMI interrupt
->   target/arm: Add FEAT_NMI to max
->   hw/arm/virt: Add FEAT_GICv3_NMI feature support in virt GIC
-> 
->  docs/system/arm/emulation.rst      |   1 +
->  hw/arm/virt.c                      |  27 ++-
->  hw/intc/arm_gicv3.c                |  67 +++++++-
->  hw/intc/arm_gicv3_common.c         |  48 ++++++
->  hw/intc/arm_gicv3_cpuif.c          | 258 +++++++++++++++++++++++++++--
->  hw/intc/arm_gicv3_dist.c           |  36 ++++
->  hw/intc/arm_gicv3_kvm.c            |   5 +
->  hw/intc/arm_gicv3_redist.c         |  22 +++
->  hw/intc/gicv3_internal.h           |  13 ++
->  hw/intc/trace-events               |   2 +
->  include/hw/intc/arm_gic_common.h   |   2 +
->  include/hw/intc/arm_gicv3_common.h |   7 +
->  target/arm/cpu-features.h          |   5 +
->  target/arm/cpu-qom.h               |   5 +-
->  target/arm/cpu.c                   | 147 ++++++++++++++--
->  target/arm/cpu.h                   |   9 +
->  target/arm/helper.c                | 101 ++++++++++-
->  target/arm/internals.h             |  21 +++
->  target/arm/tcg/a64.decode          |   1 +
->  target/arm/tcg/cpu64.c             |   1 +
->  target/arm/tcg/helper-a64.c        |  16 +-
->  target/arm/tcg/helper-a64.h        |   1 +
->  target/arm/tcg/translate-a64.c     |  19 +++
->  23 files changed, 767 insertions(+), 47 deletions(-)
-> 
+    if (--irqfd->users =3D=3D 0) {
+        kvm_irqchip_release_virq(kvm_state, irqfd->virq);
+    }
+}
+this will cause problem
+thanks
+Cindy
+
+
+> >      ret =3D kvm_virtio_pci_vq_vector_use(proxy, vector);
+> >      if (ret < 0) {
+> >          goto undo;
+> >      }
+> > +
+> >      /*
+> >       * If guest supports masking, set up irqfd now.
+> >       * Otherwise, delay until unmasked in the frontend.
+> > @@ -1570,7 +1580,19 @@ static void virtio_pci_common_write(void *opaque=
+, hwaddr addr,
+> >          } else {
+> >              val =3D VIRTIO_NO_VECTOR;
+> >          }
+> > +        vector =3D vdev->config_vector;
+> >          vdev->config_vector =3D val;
+> > +        /*
+> > +         *if the val was change from NO_VECTOR, this means the vector =
+maybe
+> > +         * release before, need to check if need to set up
+> > +         */
+> > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_VE=
+CTOR) &&
+> > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > +            /* check if use irqfd*/
+> > +            if (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_ena=
+bled()) {
+> > +                kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ=
+_IDX);
+> > +            }
+> > +        }
+> >          break;
+> >      case VIRTIO_PCI_COMMON_STATUS:
+> >          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > @@ -1611,6 +1633,19 @@ static void virtio_pci_common_write(void *opaque=
+, hwaddr addr,
+> >              val =3D VIRTIO_NO_VECTOR;
+> >          }
+> >          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> > +
+> > +        /*
+> > +         *if the val was change from NO_VECTOR, this means the vector =
+maybe
+> > +         * release before, need to check if need to set up
+> > +         */
+> > +
+> > +        if ((val !=3D VIRTIO_NO_VECTOR) && (vector =3D=3D VIRTIO_NO_VE=
+CTOR) &&
+> > +            (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > +            /* check if use irqfd*/
+> > +            if (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_ena=
+bled()) {
+> > +                kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel);
+> > +            }
+> > +        }
+> >          break;
+> >      case VIRTIO_PCI_COMMON_Q_ENABLE:
+> >          if (val =3D=3D 1) {
+> > --
+> > 2.43.0
+> >
+>
+
 
