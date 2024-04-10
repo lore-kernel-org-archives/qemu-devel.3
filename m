@@ -4,39 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CC2CD1284
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 22:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 141AECD128A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 22:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rugOB-0007oM-9p; Wed, 10 Apr 2024 18:25:55 -0400
+	id 1rugPt-0000EX-NB; Wed, 10 Apr 2024 18:27:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rugO8-0007o0-0I; Wed, 10 Apr 2024 18:25:52 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1rugPr-0000D4-JP; Wed, 10 Apr 2024 18:27:39 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rugO5-0005Ng-Tg; Wed, 10 Apr 2024 18:25:51 -0400
+ id 1rugPq-0005UY-5f; Wed, 10 Apr 2024 18:27:39 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 012B14E601C;
- Thu, 11 Apr 2024 00:25:45 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8BB4D4E6005;
+ Thu, 11 Apr 2024 00:27:35 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id BVpgzSltNPMx; Thu, 11 Apr 2024 00:25:43 +0200 (CEST)
+ with ESMTP id 5xJ6R8LCw7x6; Thu, 11 Apr 2024 00:27:33 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0EA534E6005; Thu, 11 Apr 2024 00:25:43 +0200 (CEST)
+ id 9C0F94E601C; Thu, 11 Apr 2024 00:27:33 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9A4417456FE;
+ Thu, 11 Apr 2024 00:27:33 +0200 (CEST)
+Date: Thu, 11 Apr 2024 00:27:33 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] hw/isa/vt82c686: Keep track of PIRQ/PINT pins separately
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, philmd@linaro.org
-Message-Id: <20240410222543.0EA534E6005@zero.eik.bme.hu>
-Date: Thu, 11 Apr 2024 00:25:43 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 00/12] misc: Remove sprintf() due to macOS deprecation
+In-Reply-To: <c4c8f2b8-7ef2-4b2f-a9d4-8c1e64668570@linaro.org>
+Message-ID: <220fddca-0017-79c9-ec1f-23bb8a68728c@eik.bme.hu>
+References: <20240410160614.90627-1-philmd@linaro.org>
+ <c4c8f2b8-7ef2-4b2f-a9d4-8c1e64668570@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="3866299591-614907941-1712788053=:22034"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -57,40 +66,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move calculation of mask after the switch which sets the function
-number for PIRQ/PINT pins to make sure the state of these pins are
-kept track of separately and IRQ is raised if any of them is active.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Fixes: 7e01bd80c1 hw/isa/vt82c686: Bring back via_isa_set_irq()
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
-Preferably for 9.0 if there will be another RC.
+--3866299591-614907941-1712788053=:22034
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
- hw/isa/vt82c686.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Wed, 10 Apr 2024, Richard Henderson wrote:
+> On 4/10/24 06:06, Philippe Mathieu-Daudé wrote:
+>> Hi,
+>> 
+>> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
+>> resulting in painful developper experience.
+>
+> Is snprintf also deprecated?
+> It might be easier to convert some of these fixed buffer cases that way, if 
+> allowed.
 
-diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-index aa91942745..8582ac0322 100644
---- a/hw/isa/vt82c686.c
-+++ b/hw/isa/vt82c686.c
-@@ -658,7 +658,7 @@ void via_isa_set_irq(PCIDevice *d, int pin, int level)
-     ViaISAState *s = VIA_ISA(pci_get_function_0(d));
-     uint8_t irq = d->config[PCI_INTERRUPT_LINE], max_irq = 15;
-     int f = PCI_FUNC(d->devfn);
--    uint16_t mask = BIT(f);
-+    uint16_t mask;
- 
-     switch (f) {
-     case 0: /* PIRQ/PINT inputs */
-@@ -673,6 +673,7 @@ void via_isa_set_irq(PCIDevice *d, int pin, int level)
-     }
- 
-     /* Keep track of the state of all sources */
-+    mask = BIT(f);
-     if (level) {
-         s->irq_state[0] |= mask;
-     } else {
--- 
-2.30.9
+I had the same thought as some of these might also have performance 
+implications (although most of them are in rarely called places).
 
+Regards,
+BALATON Zoltan
+--3866299591-614907941-1712788053=:22034--
 
