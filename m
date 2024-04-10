@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4357ECD1296
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F20D2CD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSQu-0005Zs-RR; Wed, 10 Apr 2024 03:31:49 -0400
+	id 1ruSMN-00017r-VX; Wed, 10 Apr 2024 03:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSQW-0005Qq-8R; Wed, 10 Apr 2024 03:31:29 -0400
+ id 1ruSLY-0006Jw-7g; Wed, 10 Apr 2024 03:26:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSQU-0005QY-HE; Wed, 10 Apr 2024 03:31:23 -0400
+ id 1ruSLS-0004aV-Lw; Wed, 10 Apr 2024 03:26:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9AB035D6C4;
- Wed, 10 Apr 2024 10:25:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E4E245D692;
+ Wed, 10 Apr 2024 10:25:04 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 3E3C9B0304;
- Wed, 10 Apr 2024 10:23:10 +0300 (MSK)
-Received: (nullmailer pid 4191904 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 8B756B02D3;
+ Wed, 10 Apr 2024 10:23:06 +0300 (MSK)
+Received: (nullmailer pid 4191752 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Wafer <wafer@jaguarmicro.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 84/87] hw/virtio: Fix packed virtqueue flush used_idx
-Date: Wed, 10 Apr 2024 10:22:57 +0300
-Message-Id: <20240410072303.4191455-84-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 35/87] target/i386: introduce function to query MMU
+ indices
+Date: Wed, 10 Apr 2024 10:22:08 +0300
+Message-Id: <20240410072303.4191455-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,63 +61,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wafer <wafer@jaguarmicro.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-In the event of writing many chains of descriptors, the device must
-write just the id of the last buffer in the descriptor chain, skip
-forward the number of descriptors in the chain, and then repeat the
-operations for the rest of chains.
+Remove knowledge of specific MMU indexes (other than MMU_NESTED_IDX and
+MMU_PHYS_IDX) from mmu_translate().  This will make it possible to split
+32-bit and 64-bit MMU indexes.
 
-Current QEMU code writes all the buffer ids consecutively, and then
-skips all the buffers altogether. This is a bug, and can be reproduced
-with a VirtIONet device with _F_MRG_RXBUB and without
-_F_INDIRECT_DESC:
-
-If a virtio-net device has the VIRTIO_NET_F_MRG_RXBUF feature
-but not the VIRTIO_RING_F_INDIRECT_DESC feature,
-'VirtIONetQueue->rx_vq' will use the merge feature
-to store data in multiple 'elems'.
-The 'num_buffers' in the virtio header indicates how many elements are merged.
-If the value of 'num_buffers' is greater than 1,
-all the merged elements will be filled into the descriptor ring.
-The 'idx' of the elements should be the value of 'vq->used_idx' plus 'ndescs'.
-
-Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Wafer <wafer@jaguarmicro.com>
-Message-Id: <20240407015451.5228-2-wafer@jaguarmicro.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 2d9a31b3c27311eca1682cb2c076d7a300441960)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 5f97afe2543f09160a8d123ab6e2e8c6d98fa9ce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fixup in target/i386/cpu.h due to other changes in that area)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 356d690cc9..aa02c4937c 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -957,12 +957,20 @@ static void virtqueue_packed_flush(VirtQueue *vq, unsigned int count)
-         return;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 705d925e6c..df1f602758 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2302,6 +2302,16 @@ static inline int cpu_mmu_index(CPUX86State *env, bool ifetch)
+         ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
+ }
+ 
++static inline bool is_mmu_index_smap(int mmu_index)
++{
++    return mmu_index == MMU_KSMAP_IDX;
++}
++
++static inline bool is_mmu_index_user(int mmu_index)
++{
++    return mmu_index == MMU_USER_IDX;
++}
++
+ static inline bool is_mmu_index_32(int mmu_index)
+ {
+     assert(mmu_index < MMU_PHYS_IDX);
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index e16d3a69d1..18fde700c1 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -136,7 +136,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+ {
+     const target_ulong addr = in->addr;
+     const int pg_mode = in->pg_mode;
+-    const bool is_user = (in->mmu_idx == MMU_USER_IDX);
++    const bool is_user = is_mmu_index_user(in->mmu_idx);
+     const MMUAccessType access_type = in->access_type;
+     uint64_t ptep, pte, rsvd_mask;
+     PTETranslate pte_trans = {
+@@ -357,7 +357,7 @@ do_check_protect_pse36:
      }
  
-+    /*
-+     * For indirect element's 'ndescs' is 1.
-+     * For all other elemment's 'ndescs' is the
-+     * number of descriptors chained by NEXT (as set in virtqueue_packed_pop).
-+     * So When the 'elem' be filled into the descriptor ring,
-+     * The 'idx' of this 'elem' shall be
-+     * the value of 'vq->used_idx' plus the 'ndescs'.
-+     */
-+    ndescs += vq->used_elems[0].ndescs;
-     for (i = 1; i < count; i++) {
--        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], i, false);
-+        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false);
-         ndescs += vq->used_elems[i].ndescs;
-     }
-     virtqueue_packed_fill_desc(vq, &vq->used_elems[0], 0, true);
--    ndescs += vq->used_elems[0].ndescs;
- 
-     vq->inuse -= ndescs;
-     vq->used_idx += ndescs;
+     int prot = 0;
+-    if (in->mmu_idx != MMU_KSMAP_IDX || !(ptep & PG_USER_MASK)) {
++    if (!is_mmu_index_smap(in->mmu_idx) || !(ptep & PG_USER_MASK)) {
+         prot |= PAGE_READ;
+         if ((ptep & PG_RW_MASK) || !(is_user || (pg_mode & PG_MODE_WP))) {
+             prot |= PAGE_WRITE;
 -- 
 2.39.2
 
