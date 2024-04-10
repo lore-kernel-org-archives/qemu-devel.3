@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56BC6CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB387CD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQo7-0002aA-IQ; Wed, 10 Apr 2024 01:47:39 -0400
+	id 1ruQol-00063o-E2; Wed, 10 Apr 2024 01:48:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQn5-0007Bp-AK; Wed, 10 Apr 2024 01:46:35 -0400
+ id 1ruQoN-0004sO-7n; Wed, 10 Apr 2024 01:47:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQn3-0001tU-P5; Wed, 10 Apr 2024 01:46:35 -0400
+ id 1ruQoL-000271-Lb; Wed, 10 Apr 2024 01:47:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5DB465D4F2;
- Wed, 10 Apr 2024 08:46:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 414815D4FF;
+ Wed, 10 Apr 2024 08:46:17 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 235AFB0159;
- Wed, 10 Apr 2024 08:44:18 +0300 (MSK)
-Received: (nullmailer pid 4182080 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 06E0FB0166;
+ Wed, 10 Apr 2024 08:44:19 +0300 (MSK)
+Received: (nullmailer pid 4182120 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 26/41] tests/unit: Bump test-replication timeout to 60
- seconds
-Date: Wed, 10 Apr 2024 08:43:47 +0300
-Message-Id: <20240410054416.4181891-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 39/41] hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS
+ if int group is disabled
+Date: Wed, 10 Apr 2024 08:44:00 +0300
+Message-Id: <20240410054416.4181891-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -61,36 +62,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-We're seeing timeouts for this test on CI runs (specifically for
-ubuntu-20.04-s390x-all). It doesn't fail consistently, but even the
-successful runs take about 27 or 28 seconds, which is not very far from
-the 30 seconds timeout.
+If the group of the highest priority pending interrupt is disabled
+via ICC_IGRPEN*, the ICC_HPPIR* registers should return
+INTID_SPURIOUS, not the interrupt ID.  (See the GIC architecture
+specification pseudocode functions ICC_HPPIR1_EL1[] and
+HighestPriorityPendingInterrupt().)
 
-Bump the timeout a bit to make failure less likely even on this CI host.
+Make HPPIR reads honour the group disable, the way we already do
+when determining whether to preempt in icc_hppi_can_preempt().
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20240125165803.48373-1-kwolf@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 63b18312d14ac984acaf13c7c55d9baa2d61496e)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240328153333.2522667-1-peter.maydell@linaro.org
+(cherry picked from commit 44e25fbc1900c99c91a44e532c5bd680bc403459)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 2727ec235e..60eb89ea98 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -169,7 +169,8 @@ slow_tests = {
-   'test-aio-multithread' : 120,
-   'test-crypto-block' : 300,
-   'test-crypto-tlscredsx509': 45,
--  'test-crypto-tlssession': 45
-+  'test-crypto-tlssession': 45,
-+  'test-replication': 60,
- }
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index f71b3b07d8..ddfbc69d65 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1065,7 +1065,7 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
+      */
+     bool irq_is_secure;
  
- foreach test_name, extra: tests
+-    if (cs->hppi.prio == 0xff) {
++    if (icc_no_enabled_hppi(cs)) {
+         return INTID_SPURIOUS;
+     }
+ 
+@@ -1102,7 +1102,7 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+      */
+     bool irq_is_secure;
+ 
+-    if (cs->hppi.prio == 0xff) {
++    if (icc_no_enabled_hppi(cs)) {
+         return INTID_SPURIOUS;
+     }
+ 
 -- 
 2.39.2
 
