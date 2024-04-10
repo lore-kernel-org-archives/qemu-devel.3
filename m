@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47230CD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F2CCD11C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 07:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruSIp-0007aU-OK; Wed, 10 Apr 2024 03:23:27 -0400
+	id 1ruSJz-0002k7-80; Wed, 10 Apr 2024 03:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSIl-0007Xs-Cu; Wed, 10 Apr 2024 03:23:24 -0400
+ id 1ruSJk-00023X-4s; Wed, 10 Apr 2024 03:24:26 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruSIj-0003tq-Ft; Wed, 10 Apr 2024 03:23:23 -0400
+ id 1ruSJh-0003yN-K6; Wed, 10 Apr 2024 03:24:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BE72A5D675;
- Wed, 10 Apr 2024 10:25:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A2FA25D680;
+ Wed, 10 Apr 2024 10:25:03 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 621F2B02B6;
- Wed, 10 Apr 2024 10:23:04 +0300 (MSK)
-Received: (nullmailer pid 4191662 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 45908B02C1;
+ Wed, 10 Apr 2024 10:23:05 +0300 (MSK)
+Received: (nullmailer pid 4191696 invoked by uid 1000);
  Wed, 10 Apr 2024 07:23:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, David Parsons <dave@daveparsons.net>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 06/87] ui/cocoa: Fix window clipping on macOS 14
-Date: Wed, 10 Apr 2024 10:21:39 +0300
-Message-Id: <20240410072303.4191455-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peng Fan <peng.fan@nxp.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 17/87] xen: Drop out of coroutine context
+ xen_invalidate_map_cache_entry
+Date: Wed, 10 Apr 2024 10:21:50 +0300
+Message-Id: <20240410072303.4191455-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,48 +62,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Parsons <dave@daveparsons.net>
+From: Peng Fan <peng.fan@nxp.com>
 
-macOS Sonoma changes the NSView.clipsToBounds to false by default
-where it was true in earlier version of macOS. This causes the window
-contents to be occluded by the frame at the top of the window. This
-fixes the issue by conditionally compiling the clipping on Sonoma to
-true. NSView only exposes the clipToBounds in macOS 14 and so has
-to be fixed via conditional compilation.
+xen_invalidate_map_cache_entry is not expected to run in a
+coroutine. Without this, there is crash:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
-Signed-off-by: David Parsons <dave@daveparsons.net>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20240224140620.39200-1-dave@daveparsons.net>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit f5af80271aad356233b2bea2369b3b2211fa395d)
+    signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+    threadid=<optimized out>) at pthread_kill.c:78
+    at /usr/src/debug/glibc/2.38+git-r0/sysdeps/posix/raise.c:26
+    fmt=0xffff9e1ca8a8 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n",
+    assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
+    file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
+    function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:92
+    assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
+    file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
+    function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:101
+    at ../qemu-xen-dir-remote/block/graph-lock.c:260
+    at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/block/graph-lock.h:259
+    host=host@entry=0xffff742c8000, size=size@entry=2097152)
+    at ../qemu-xen-dir-remote/block/io.c:3362
+    host=0xffff742c8000, size=2097152)
+    at ../qemu-xen-dir-remote/block/block-backend.c:2859
+    host=<optimized out>, size=<optimized out>, max_size=<optimized out>)
+    at ../qemu-xen-dir-remote/block/block-ram-registrar.c:33
+    size=2097152, max_size=2097152)
+    at ../qemu-xen-dir-remote/hw/core/numa.c:883
+    buffer=buffer@entry=0xffff743c5000 "")
+    at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:475
+    buffer=buffer@entry=0xffff743c5000 "")
+    at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:487
+    as=as@entry=0xaaaae1ca3ae8 <address_space_memory>, buffer=0xffff743c5000,
+    len=<optimized out>, is_write=is_write@entry=true,
+    access_len=access_len@entry=32768)
+    at ../qemu-xen-dir-remote/system/physmem.c:3199
+    dir=DMA_DIRECTION_FROM_DEVICE, len=<optimized out>,
+    buffer=<optimized out>, as=0xaaaae1ca3ae8 <address_space_memory>)
+    at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/sysemu/dma.h:236
+    elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769)
+    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:758
+    elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769, idx=idx@entry=0)
+    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:919
+    elem=elem@entry=0xaaaaf620aa30, len=32769)
+    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:994
+    req=req@entry=0xaaaaf620aa30, status=status@entry=0 '\000')
+    at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:67
+    ret=0) at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:136
+    at ../qemu-xen-dir-remote/block/block-backend.c:1559
+--Type <RET> for more, q to quit, c to continue without paging--
+    at ../qemu-xen-dir-remote/block/block-backend.c:1614
+    i1=<optimized out>) at ../qemu-xen-dir-remote/util/coroutine-ucontext.c:177
+    at ../sysdeps/unix/sysv/linux/aarch64/setcontext.S:123
+
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Message-Id: <20240124021450.21656-1-peng.fan@oss.nxp.com>
+Signed-off-by: Anthony PERARD <anthony.perard@citrix.com>
+(cherry picked from commit 9253d83062268209533df4b29859e5b51a2dc324)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index cd069da696..d39c9e2a3b 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -54,6 +54,10 @@
- #define MAC_OS_X_VERSION_10_13 101300
- #endif
+diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+index f7d974677d..8d62b3d2ed 100644
+--- a/hw/xen/xen-mapcache.c
++++ b/hw/xen/xen-mapcache.c
+@@ -481,11 +481,37 @@ static void xen_invalidate_map_cache_entry_unlocked(uint8_t *buffer)
+     g_free(entry);
+ }
  
-+#ifndef MAC_OS_VERSION_14_0
-+#define MAC_OS_VERSION_14_0 140000
-+#endif
+-void xen_invalidate_map_cache_entry(uint8_t *buffer)
++typedef struct XenMapCacheData {
++    Coroutine *co;
++    uint8_t *buffer;
++} XenMapCacheData;
 +
- /* 10.14 deprecates NSOnState and NSOffState in favor of
-  * NSControlStateValueOn/Off, which were introduced in 10.13.
-  * Define for older versions
-@@ -365,6 +369,9 @@ - (id)initWithFrame:(NSRect)frameRect
-         screen.width = frameRect.size.width;
-         screen.height = frameRect.size.height;
-         kbd = qkbd_state_init(dcl.con);
-+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
-+        [self setClipsToBounds:YES];
-+#endif
++static void xen_invalidate_map_cache_entry_bh(void *opaque)
+ {
++    XenMapCacheData *data = opaque;
++
+     mapcache_lock();
+-    xen_invalidate_map_cache_entry_unlocked(buffer);
++    xen_invalidate_map_cache_entry_unlocked(data->buffer);
+     mapcache_unlock();
++
++    aio_co_wake(data->co);
++}
++
++void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
++{
++    if (qemu_in_coroutine()) {
++        XenMapCacheData data = {
++            .co = qemu_coroutine_self(),
++            .buffer = buffer,
++        };
++        aio_bh_schedule_oneshot(qemu_get_current_aio_context(),
++                                xen_invalidate_map_cache_entry_bh, &data);
++        qemu_coroutine_yield();
++    } else {
++        mapcache_lock();
++        xen_invalidate_map_cache_entry_unlocked(buffer);
++        mapcache_unlock();
++    }
+ }
  
-     }
-     return self;
+ void xen_invalidate_map_cache(void)
 -- 
 2.39.2
 
