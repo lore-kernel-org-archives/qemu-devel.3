@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CB5CD1297
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B53CD1297
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Apr 2024 05:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruQnw-0001F5-I6; Wed, 10 Apr 2024 01:47:28 -0400
+	id 1ruQmj-000601-B7; Wed, 10 Apr 2024 01:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmN-0005QT-KT; Wed, 10 Apr 2024 01:45:59 -0400
+ id 1ruQls-000522-F2; Wed, 10 Apr 2024 01:45:22 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ruQmL-0001iP-K8; Wed, 10 Apr 2024 01:45:51 -0400
+ id 1ruQlo-0001R7-Qt; Wed, 10 Apr 2024 01:45:18 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD1825D4E9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6C1C25D4E4;
  Wed, 10 Apr 2024 08:46:15 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 81605B0150;
+ by tsrv.corpit.ru (Postfix) with SMTP id 24841B014B;
  Wed, 10 Apr 2024 08:44:17 +0300 (MSK)
-Received: (nullmailer pid 4182052 invoked by uid 1000);
+Received: (nullmailer pid 4182037 invoked by uid 1000);
  Wed, 10 Apr 2024 05:44:16 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Wendel Devantier <foss@defmacro.it>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 17/41] hw/nvme: generalize the mbar size helper
-Date: Wed, 10 Apr 2024 08:43:38 +0300
-Message-Id: <20240410054416.4181891-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 12/41] e1000e: fix link state on resume
+Date: Wed, 10 Apr 2024 08:43:33 +0300
+Message-Id: <20240410054416.4181891-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240410084037@cover.tls.msk.ru>
@@ -60,88 +61,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-Generalize the mbar size helper such that it can handle cases where the
-MSI-X table and PBA are expected to be in an exclusive bar.
+On resume e1000e_vm_state_change() always calls e1000e_autoneg_resume()
+that sets link_down to false, and thus activates the link even
+if we have disabled it.
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit ee7bda4d38cda3eaf114c850a723dd12e23d3abc)
+The problem can be reproduced starting qemu in paused state (-S) and
+then set the link to down. When we resume the machine the link appears
+to be up.
+
+Reproducer:
+
+   # qemu-system-x86_64 ... -device e1000e,netdev=netdev0,id=net0 -S
+
+   {"execute": "qmp_capabilities" }
+   {"execute": "set_link", "arguments": {"name": "net0", "up": false}}
+   {"execute": "cont" }
+
+To fix the problem, merge the content of e1000e_vm_state_change()
+into e1000e_core_post_load() as e1000 does.
+
+Buglink: https://issues.redhat.com/browse/RHEL-21867
+Fixes: 6f3fbe4ed06a ("net: Introduce e1000e device emulation")
+Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 4cadf10234989861398e19f3bb441d3861f3bb7c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index c2c0fc991d..32df214762 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7221,13 +7221,18 @@ static void nvme_init_pmr(NvmeCtrl *n, PCIDevice *pci_dev)
-     memory_region_set_enabled(&n->pmr.dev->mr, false);
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index c71d82ce1d..742f5ec800 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -108,14 +108,6 @@ e1000e_intmgr_timer_resume(E1000IntrDelayTimer *timer)
+     }
  }
  
--static uint64_t nvme_bar_size(unsigned total_queues, unsigned total_irqs,
--                              unsigned *msix_table_offset,
--                              unsigned *msix_pba_offset)
-+static uint64_t nvme_mbar_size(unsigned total_queues, unsigned total_irqs,
-+                               unsigned *msix_table_offset,
-+                               unsigned *msix_pba_offset)
+-static void
+-e1000e_intmgr_timer_pause(E1000IntrDelayTimer *timer)
+-{
+-    if (timer->running) {
+-        timer_del(timer->timer);
+-    }
+-}
+-
+ static inline void
+ e1000e_intrmgr_stop_timer(E1000IntrDelayTimer *timer)
  {
--    uint64_t bar_size, msix_table_size, msix_pba_size;
-+    uint64_t bar_size, msix_table_size;
- 
-     bar_size = sizeof(NvmeBar) + 2 * total_queues * NVME_DB_SIZE;
-+
-+    if (total_irqs == 0) {
-+        goto out;
-+    }
-+
-     bar_size = QEMU_ALIGN_UP(bar_size, 4 * KiB);
- 
-     if (msix_table_offset) {
-@@ -7242,11 +7247,10 @@ static uint64_t nvme_bar_size(unsigned total_queues, unsigned total_irqs,
-         *msix_pba_offset = bar_size;
+@@ -397,24 +389,6 @@ e1000e_intrmgr_resume(E1000ECore *core)
      }
- 
--    msix_pba_size = QEMU_ALIGN_UP(total_irqs, 64) / 8;
--    bar_size += msix_pba_size;
-+    bar_size += QEMU_ALIGN_UP(total_irqs, 64) / 8;
- 
--    bar_size = pow2ceil(bar_size);
--    return bar_size;
-+out:
-+    return pow2ceil(bar_size);
  }
  
- static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
-@@ -7254,7 +7258,7 @@ static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
-     uint16_t vf_dev_id = n->params.use_intel_id ?
-                          PCI_DEVICE_ID_INTEL_NVME : PCI_DEVICE_ID_REDHAT_NVME;
-     NvmePriCtrlCap *cap = &n->pri_ctrl_cap;
--    uint64_t bar_size = nvme_bar_size(le16_to_cpu(cap->vqfrsm),
-+    uint64_t bar_size = nvme_mbar_size(le16_to_cpu(cap->vqfrsm),
-                                       le16_to_cpu(cap->vifrsm),
-                                       NULL, NULL);
+-static void
+-e1000e_intrmgr_pause(E1000ECore *core)
+-{
+-    int i;
+-
+-    e1000e_intmgr_timer_pause(&core->radv);
+-    e1000e_intmgr_timer_pause(&core->rdtr);
+-    e1000e_intmgr_timer_pause(&core->raid);
+-    e1000e_intmgr_timer_pause(&core->tidv);
+-    e1000e_intmgr_timer_pause(&core->tadv);
+-
+-    e1000e_intmgr_timer_pause(&core->itr);
+-
+-    for (i = 0; i < E1000E_MSIX_VEC_NUM; i++) {
+-        e1000e_intmgr_timer_pause(&core->eitr[i]);
+-    }
+-}
+-
+ static void
+ e1000e_intrmgr_reset(E1000ECore *core)
+ {
+@@ -3336,12 +3310,6 @@ e1000e_core_read(E1000ECore *core, hwaddr addr, unsigned size)
+     return 0;
+ }
  
-@@ -7293,7 +7297,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     ERRP_GUARD();
-     uint8_t *pci_conf = pci_dev->config;
-     uint64_t bar_size;
--    unsigned msix_table_offset, msix_pba_offset;
-+    unsigned msix_table_offset = 0, msix_pba_offset = 0;
-     int ret;
- 
-     pci_conf[PCI_INTERRUPT_PIN] = 1;
-@@ -7316,8 +7320,8 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+-static inline void
+-e1000e_autoneg_pause(E1000ECore *core)
+-{
+-    timer_del(core->autoneg_timer);
+-}
+-
+ static void
+ e1000e_autoneg_resume(E1000ECore *core)
+ {
+@@ -3353,22 +3321,6 @@ e1000e_autoneg_resume(E1000ECore *core)
      }
+ }
  
-     /* add one to max_ioqpairs to account for the admin queue pair */
--    bar_size = nvme_bar_size(n->params.max_ioqpairs + 1, n->params.msix_qsize,
--                             &msix_table_offset, &msix_pba_offset);
-+    bar_size = nvme_mbar_size(n->params.max_ioqpairs + 1, n->params.msix_qsize,
-+                              &msix_table_offset, &msix_pba_offset);
+-static void
+-e1000e_vm_state_change(void *opaque, bool running, RunState state)
+-{
+-    E1000ECore *core = opaque;
+-
+-    if (running) {
+-        trace_e1000e_vm_state_running();
+-        e1000e_intrmgr_resume(core);
+-        e1000e_autoneg_resume(core);
+-    } else {
+-        trace_e1000e_vm_state_stopped();
+-        e1000e_autoneg_pause(core);
+-        e1000e_intrmgr_pause(core);
+-    }
+-}
+-
+ void
+ e1000e_core_pci_realize(E1000ECore     *core,
+                         const uint16_t *eeprom_templ,
+@@ -3381,9 +3333,6 @@ e1000e_core_pci_realize(E1000ECore     *core,
+                                        e1000e_autoneg_timer, core);
+     e1000e_intrmgr_pci_realize(core);
  
-     memory_region_init(&n->bar0, OBJECT(n), "nvme-bar0", bar_size);
-     memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nvme",
+-    core->vmstate =
+-        qemu_add_vm_change_state_handler(e1000e_vm_state_change, core);
+-
+     for (i = 0; i < E1000E_NUM_QUEUES; i++) {
+         net_tx_pkt_init(&core->tx[i].tx_pkt, core->owner,
+                         E1000E_MAX_TX_FRAGS, core->has_vnet);
+@@ -3408,8 +3357,6 @@ e1000e_core_pci_uninit(E1000ECore *core)
+ 
+     e1000e_intrmgr_pci_unint(core);
+ 
+-    qemu_del_vm_change_state_handler(core->vmstate);
+-
+     for (i = 0; i < E1000E_NUM_QUEUES; i++) {
+         net_tx_pkt_reset(core->tx[i].tx_pkt);
+         net_tx_pkt_uninit(core->tx[i].tx_pkt);
+@@ -3561,5 +3508,12 @@ e1000e_core_post_load(E1000ECore *core)
+      */
+     nc->link_down = (core->mac[STATUS] & E1000_STATUS_LU) == 0;
+ 
++    /*
++     * we need to restart intrmgr timers, as an older version of
++     * QEMU can have stopped them before migration
++     */
++    e1000e_intrmgr_resume(core);
++    e1000e_autoneg_resume(core);
++
+     return 0;
+ }
+diff --git a/hw/net/e1000e_core.h b/hw/net/e1000e_core.h
+index 4ddb4d2c39..f2a8ff4a33 100644
+--- a/hw/net/e1000e_core.h
++++ b/hw/net/e1000e_core.h
+@@ -100,8 +100,6 @@ struct E1000Core {
+     E1000IntrDelayTimer eitr[E1000E_MSIX_VEC_NUM];
+     bool eitr_intr_pending[E1000E_MSIX_VEC_NUM];
+ 
+-    VMChangeStateEntry *vmstate;
+-
+     uint32_t itr_guest_value;
+     uint32_t eitr_guest_value[E1000E_MSIX_VEC_NUM];
+ 
 -- 
 2.39.2
 
