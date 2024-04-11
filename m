@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70984CD1297
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 01:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA166CD11C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 01:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rujDH-0003BF-64; Wed, 10 Apr 2024 21:26:51 -0400
+	id 1rujfX-0007mt-TD; Wed, 10 Apr 2024 21:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rujDG-0003B7-36
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 21:26:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <707242047@qq.com>) id 1rujfW-0007mi-38
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 21:56:02 -0400
+Received: from out203-205-221-209.mail.qq.com ([203.205.221.209])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rujDE-0000LG-6I
- for qemu-devel@nongnu.org; Wed, 10 Apr 2024 21:26:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712798806;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FBKQkKGQqdOquR2YMSBzzbDA/q9edlgpR9Nli4L6YBA=;
- b=VIUWlkm7PQO9isrAtMX0i7TywqInHpfj/Pi988U86cMfFZVhcOGkTJ/G9GJ6Y0eNr3LtiA
- 1hYie7j0mlD/kqT+RHK1kRC7mrlk8Ou6cfcqfrCHTostwbZL/8WL1TL9ss3iET8uBmSdDo
- +qU26QBvh+85eqo8iwVtCKTS7owqIdc=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-B0ZsWWS1PfmC0Yz_OYRP1Q-1; Wed, 10 Apr 2024 21:26:42 -0400
-X-MC-Unique: B0ZsWWS1PfmC0Yz_OYRP1Q-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a46bae02169so53136366b.1
- for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 18:26:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712798801; x=1713403601;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FBKQkKGQqdOquR2YMSBzzbDA/q9edlgpR9Nli4L6YBA=;
- b=K7wpt39hrrvGblfgY4cI+8XqJ0lXEq8+hgyedq/wOybB8DMjsjT4rQKouOPUsSByKF
- v6Ic7khKOEBia/pG1Z5YrK28BxNidhnvT6c1dyIwUc9SSeFjyY7hDxtm9veWL02fMxMr
- I5sQZpaK0meN/zjcrQRalordKlHJO+bU7isHZ0GkFthAfX68INcqB5IZFILMsXlpAlS5
- x2ZnPcE0GKipbaPKc3P+3dqFBRYVEb+lC7K0IhFH5y9XK6UcMgKhlKpPvcop5agUc1yM
- 2sXvR4NqjdRQ+ce6Hi0/E0ZUP+E2naf3QkbqsWsahlWnjswRV6cFxQmnDdG0JKyg4TIo
- Igig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHPNzscDbxMh6nxmAYftBXAaivZrFAeH5/e2af4xNevxqM6Z5Jh7UF8NqaEgUTu81ITolWJYbKd4Wcqni+ReL9FHZpvBk=
-X-Gm-Message-State: AOJu0Yz0AAdWUBjZT0aYN5ENS1axlniT2ipIs4lt3SyCjX68N7l6fyXz
- 00cbbVmZfjyR4RtLCPao2M9DXI2o30dd5E67qiujDTfovjofYFrQZwtT+NW+jYGk6nDhgR14JHA
- lkwK071hoJq2KDs0HcVOeTPhuxaJ6vuKE8n0msGOMDXrS7DgjBh2Luupj8vevyQBc/gLz4vTRVP
- nRILe9w8YtA5UDLES5Qoobln8yfGg=
-X-Received: by 2002:a17:907:72d6:b0:a51:f46a:b000 with SMTP id
- du22-20020a17090772d600b00a51f46ab000mr1218391ejc.20.1712798801134; 
- Wed, 10 Apr 2024 18:26:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/3TBo+io0iZqEQj6iZHqpVd80JGJZX6qGSItnDa6qumIBOxqrEnaVEDMTleHPr/NmTOgpCITFH+vQeEbJst0=
-X-Received: by 2002:a17:907:72d6:b0:a51:f46a:b000 with SMTP id
- du22-20020a17090772d600b00a51f46ab000mr1218376ejc.20.1712798800745; Wed, 10
- Apr 2024 18:26:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240410161203.437079-1-lulu@redhat.com>
- <20240410121618-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240410121618-mutt-send-email-mst@kernel.org>
-From: Cindy Lu <lulu@redhat.com>
-Date: Thu, 11 Apr 2024 09:25:59 +0800
-Message-ID: <CACLfguUgFKpRj3DMAo5JrHPvEuyb=2h8nYAjyfgi_tXwi=Z+4Q@mail.gmail.com>
-Subject: Re: [PATCH v3] virtio-pci: Fix the crash that the vector was used
- after released.
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: jasowang@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
+ (Exim 4.90_1) (envelope-from <707242047@qq.com>) id 1rujfR-000556-BO
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 21:56:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1712800542; bh=1MMgNMZhP/a/GXBul3f5z7XBnf7MSaDSF/lOmpnlspc=;
+ h=In-Reply-To:References:From:To:Cc:Subject:Date;
+ b=yvIEhFuonyLhKgGiw6LG0Xty7gOIXDC8FnrhtgxkYDv2WiKrLa6z9ZGx/U/FzhCLp
+ dLAymFv9AsI6U1TejnuSkRUX3giqSjUwA1uvE+ZMLdFUF7zgVmWxKOCej/NyBA0qqC
+ F0yb9TA7/GP4Qz/O/OYaOkRVS1zouXTXMs/N1ja0=
+X-QQ-FEAT: 8OvYDnhju3N/pZRks5WA+Od71SZhOOrs
+X-QQ-SSF: 0000000000000050000000000000
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-QQ-XMAILINFO: OY1xLn4i1DCCREtnojdKXQrZy5tn3FhZ/hAHOrAd+tJ1xBEgG67vI6DkjGvpAS
+ N79p3ttuVwBIF8ZCCzF0rn8+R2wjF9sHVJjv0e22OK1adNMhYstnZRfimH9ZU6yAPBIXw0Zaa1r4U
+ ia3t2sB7szKs2dkcEJTC34Hx4BDEI0EPq+cTyPqb7AVphRyGxln1nnlfN3rheFtm+8xw356sVAg17
+ oXhnppttBQF+ni7TplZy4A5MVmU6y5CTIFX9OBriDwtm8aMtDYy7FCg6RD/A0XVvWQE46IT5GA1fW
+ pAJgLOPakDuIHEbs060je+l7BwRdqmbWO+kR3ygTkmdp0SBM5jPIPOPoAs5+2wflu8AYoLpoEeiJj
+ W7oxfbCjEto+Rzj2AgjZNjaD0LjG9RgIJDQYzGybGldGTKRR54OnUCCJlTRtII5kwlUqHiqiLhUnW
+ ldKw56pfV74tXyRrSaj7wwgLvo1ircbwm2bzmMW4oClWmABG0QQzTaLezoLSCtcf0ACMdLAxR1q69
+ K8y6B20YGwqz3Z1FrPOP6Nl4OVenvw9o1wUpvBd9cCqLHLF6XDcQ9mUUmPsekcj0/2+DyHw3VvXjJ
+ v9209gj8nXcsPWZXIizsl090o6tgicvq3jfoSwFmABMSuRTjy42067+5rMRPua8mRrAaFRV96b3Ka
+ L5Pg35xHahNcP3YeAz4/sxDW4QBS7y2B/8P1f3dQuQuyyqYynch9XEP6+q+2lrnwLsByBTYKuMk9E
+ kjeAI+JrvTYed46GmbSZnEEd0Id3p5Kmkp6XR5hnXkuNODnKCfbwfam1dQtCbIMIJNTEuP1SrcdZ9
+ SbTxOHF834XPL4muyTz2qEoEs1o5kMyT3GFrwS5OnLHJksGc+G0WNDFyjLLHlfkurG5/yVic3En8m
+ Havb7D6P6RXRPeWJ6p683He+4oZMYRQj0i5TrIb121eQPgn+uAWU9m5fvHQ7f5bv8OTZk9+icw5/9
+ xMm/Qy/A==
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 112.5.119.192
+In-Reply-To: <CAMxuvazoMKnhU8bcSnON2daO7Am4h4oTYrvPjgRhKL8uUCzTFA@mail.gmail.com>
+References: <tencent_BE1012EC266132443B1FA040EF8A60D1EC0A@qq.com>
+ <CAMxuvazoMKnhU8bcSnON2daO7Am4h4oTYrvPjgRhKL8uUCzTFA@mail.gmail.com>
+X-QQ-STYLE: 
+X-QQ-mid: webmail285t1712800541t394695
+From: "=?gb18030?B?qWdseW0=?=" <707242047@qq.com>
+To: "=?gb18030?B?TWFyYy1BbmRyqKYgTHVyZWF1?=" <marcandre.lureau@redhat.com>
+Cc: "=?gb18030?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>,
+ "=?gb18030?B?a3JheGVs?=" <kraxel@redhat.com>
+Subject: =?gb18030?B?u9i4tKO6IFtQQVRDSCBSRkMgdjFdZGlzcGxheTog?=
+ =?gb18030?B?Zml4IGhlYXAgdXNlIGFmdGVyIGZyZWUgaW4gY3Vy?=
+ =?gb18030?B?c29yX3B1dA==?=
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_6617431D_11A90538_1501AF78"
+Content-Transfer-Encoding: 8Bit
+Date: Thu, 11 Apr 2024 09:55:41 +0800
+X-Priority: 3
+Message-ID: <tencent_EC82468ED075970213367AE7801FBA4C0405@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+Received-SPF: pass client-ip=203.205.221.209; envelope-from=707242047@qq.com;
+ helo=out203-205-221-209.mail.qq.com
+X-Spam_score_int: 67
+X-Spam_score: 6.7
+X-Spam_bar: ++++++
+X-Spam_report: (6.7 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ HELO_DYNAMIC_IPADDR=1.951, HTML_MESSAGE=0.001, MIME_CHARSET_FARAWAY=2.45,
+ NO_FM_NAME_IP_HOSTN=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RDNS_DYNAMIC=0.982,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_action: reject
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,192 +92,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 11, 2024 at 12:18=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
-> wrote:
->
-> On Thu, Apr 11, 2024 at 12:12:00AM +0800, Cindy Lu wrote:
-> > During the booting process of the non-standard image, the behavior of t=
-he
-> > called function in qemu is as follows:
-> >
-> > 1. vhost_net_stop() was triggered by guest image. This will call the fu=
-nction
-> > virtio_pci_set_guest_notifiers() with assgin=3D false,
-> > virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vec=
-tor 0
-> >
-> > 2. virtio_reset() was triggered, this will set configure vector to VIRT=
-IO_NO_VECTOR
-> >
-> > 3.vhost_net_start() was called (at this time, the configure vector is
-> > still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() =
-with
-> > assgin=3Dtrue, so the irqfd for vector 0 is still not "init" during thi=
-s process
-> >
-> > 4. The system continues to boot and sets the vector back to 0. After th=
-at
-> > msix_fire_vector_notifier() was triggered to unmask the vector 0 and  m=
-eet the crash
-> >
-> > To fix the issue, we need to support changing the vector after VIRTIO_C=
-ONFIG_S_DRIVER_OK is set.
-> >
-> > (gdb) bt
-> > 0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Ds=
-igno@entry=3D6, no_tid=3Dno_tid@entry=3D0)
-> >     at pthread_kill.c:44
-> > 1  0x00007fc87148ec53 in __pthread_kill_internal (signo=3D6, threadid=
-=3D<optimized out>) at pthread_kill.c:78
-> > 2  0x00007fc87143e956 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysdeps=
-/posix/raise.c:26
-> > 3  0x00007fc8714287f4 in __GI_abort () at abort.c:79
-> > 4  0x00007fc87142871b in __assert_fail_base
-> >     (fmt=3D0x7fc8715bbde0 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", =
-assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "../accel/=
-kvm/kvm-all.c", line=3D1837, function=3D<optimized out>) at assert.c:92
-> > 5  0x00007fc871437536 in __GI___assert_fail
-> >     (assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "=
-../accel/kvm/kvm-all.c", line=3D1837, function=3D0x5606413f06f0 <__PRETTY_F=
-UNCTION__.19> "kvm_irqchip_commit_routes") at assert.c:101
-> > 6  0x0000560640f884b5 in kvm_irqchip_commit_routes (s=3D0x560642cae1f0)=
- at ../accel/kvm/kvm-all.c:1837
-> > 7  0x0000560640c98f8e in virtio_pci_one_vector_unmask
-> >     (proxy=3D0x560643c65f00, queue_no=3D4294967295, vector=3D0, msg=3D.=
-.., n=3D0x560643c6e4c8)
-> >     at ../hw/virtio/virtio-pci.c:1005
-> > 8  0x0000560640c99201 in virtio_pci_vector_unmask (dev=3D0x560643c65f00=
-, vector=3D0, msg=3D...)
-> >     at ../hw/virtio/virtio-pci.c:1070
-> > 9  0x0000560640bc402e in msix_fire_vector_notifier (dev=3D0x560643c65f0=
-0, vector=3D0, is_masked=3Dfalse)
-> >     at ../hw/pci/msix.c:120
-> > 10 0x0000560640bc40f1 in msix_handle_mask_update (dev=3D0x560643c65f00,=
- vector=3D0, was_masked=3Dtrue)
-> >     at ../hw/pci/msix.c:140
-> > 11 0x0000560640bc4503 in msix_table_mmio_write (opaque=3D0x560643c65f00=
-, addr=3D12, val=3D0, size=3D4)
-> >     at ../hw/pci/msix.c:231
-> > 12 0x0000560640f26d83 in memory_region_write_accessor
-> >     (mr=3D0x560643c66540, addr=3D12, value=3D0x7fc86b7bc628, size=3D4, =
-shift=3D0, mask=3D4294967295, attrs=3D...)
-> >     at ../system/memory.c:497
-> > 13 0x0000560640f270a6 in access_with_adjusted_size
-> >
-> >      (addr=3D12, value=3D0x7fc86b7bc628, size=3D4, access_size_min=3D1,=
- access_size_max=3D4, access_fn=3D0x560640f26c8d <memory_region_write_acces=
-sor>, mr=3D0x560643c66540, attrs=3D...) at ../system/memory.c:573
-> > 14 0x0000560640f2a2b5 in memory_region_dispatch_write (mr=3D0x560643c66=
-540, addr=3D12, data=3D0, op=3DMO_32, attrs=3D...)
-> >     at ../system/memory.c:1521
-> > 15 0x0000560640f37bac in flatview_write_continue
-> >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., ptr=3D0x7fc87=
-1e9c028, len=3D4, addr1=3D12, l=3D4, mr=3D0x560643c66540)
-> >     at ../system/physmem.c:2714
-> > 16 0x0000560640f37d0f in flatview_write
-> >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., buf=3D0x7fc87=
-1e9c028, len=3D4) at ../system/physmem.c:2756
-> > 17 0x0000560640f380bf in address_space_write
-> >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, att=
-rs=3D..., buf=3D0x7fc871e9c028, len=3D4)
-> >     at ../system/physmem.c:2863
-> > 18 0x0000560640f3812c in address_space_rw
-> >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, att=
-rs=3D..., buf=3D0x7fc871e9c028, len=3D4, is_write=3Dtrue) at ../system/phys=
-mem.c:2873
-> > --Type <RET> for more, q to quit, c to continue without paging--
-> > 19 0x0000560640f8aa55 in kvm_cpu_exec (cpu=3D0x560642f205e0) at ../acce=
-l/kvm/kvm-all.c:2915
-> > 20 0x0000560640f8d731 in kvm_vcpu_thread_fn (arg=3D0x560642f205e0) at .=
-./accel/kvm/kvm-accel-ops.c:51
-> > 21 0x00005606411949f4 in qemu_thread_start (args=3D0x560642f292b0) at .=
-./util/qemu-thread-posix.c:541
-> > 22 0x00007fc87148cdcd in start_thread (arg=3D<optimized out>) at pthrea=
-d_create.c:442
-> > 23 0x00007fc871512630 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64=
-/clone3.S:81
-> > (gdb)
-> > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > ---
-> >  hw/virtio/virtio-pci.c | 30 ++++++++++++++++++++++++++++++
-> >  1 file changed, 30 insertions(+)
-> >
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index 1a7039fb0c..b3b1a4a66f 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -1570,7 +1570,22 @@ static void virtio_pci_common_write(void *opaque=
-, hwaddr addr,
-> >          } else {
-> >              val =3D VIRTIO_NO_VECTOR;
-> >          }
-> > +        vector =3D vdev->config_vector;
-> >          vdev->config_vector =3D val;
-> > +        /*
-> > +         * If the value was changed after DRIVER_OK was set, it means =
-that
-> > +         * we need to release the old vector and set up the new vector=
-.
-> > +         */
-> > +        if ((vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> > +            /*check if use the irqfd*/
-> > +            (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enable=
-d())) {
-> > +            if (val !=3D VIRTIO_NO_VECTOR) {
-> > +                kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ=
-_IDX);
-> > +            }
-> > +            if (vector !=3D VIRTIO_NO_VECTOR) {
-> > +                kvm_virtio_pci_vector_release_one(proxy, VIRTIO_CONFIG=
-_IRQ_IDX);
-> > +            }
-> > +        }
-> >          break;
-> >      case VIRTIO_PCI_COMMON_STATUS:
-> >          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> > @@ -1611,6 +1626,21 @@ static void virtio_pci_common_write(void *opaque=
-, hwaddr addr,
-> >              val =3D VIRTIO_NO_VECTOR;
-> >          }
-> >          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
-> > +
-> > +        /*
-> > +         * If the value was changed after DRIVER_OK was set, it means =
-that
-> > +         * we need to release the old vector and set up the new vector=
-.
-> > +         */
-> > +        if ((vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> > +            /*check if use the irqfd*/
->
-> by comment style
-will fix this
->
-> > +            (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enable=
-d())) {
-> > +            if (val !=3D VIRTIO_NO_VECTOR) {
-> > +                kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel);
-> > +            }
-> > +            if (vector !=3D VIRTIO_NO_VECTOR) {
-> > +                kvm_virtio_pci_vector_release_one(proxy, vdev->queue_s=
-el);
-> > +            }
->
-> does it matter in which order to do this?
-> if we release 1st there's more of a chance use will succeeed.
->
-> I would also check val !=3D vector
-> if value did not change there is nothing to do.
->
-Sure, thanks Michael, will send a new version soon
-thanks
-cindy
-> > +        }
-> >          break;
-> >      case VIRTIO_PCI_COMMON_Q_ENABLE:
-> >          if (val =3D=3D 1) {
-> > --
-> > 2.43.0
->
+This is a multi-part message in MIME format.
+
+------=_NextPart_6617431D_11A90538_1501AF78
+Content-Type: text/plain;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
+
+SGkNCg0KDQpEdXJpbmcgdGhlIHRlc3Qgd2l0aCBsb2dnaW5nLCBJIGZvdW5kIHRoYXQgdGhl
+cmUgbWF5IGJlIGEgY29uZmxpY3QgYmV0d2VlbiB0aGUgbG9naWMgb2YgdXBkYXRpbmcgdGhl
+IHJlZmNvdW50IGluIHZuY19kcHlfY3Vyc29yX2RlZmluZSgpIGFuZCBRWExfQ1VSU09SX1NF
+VCZuYnNwO2FjdGlvbiwmbmJzcDsgc2FtZSBhcyBkcHlfY3Vyc29yX2RlZmluZSgpIGFmdGVy
+IGNvbW1pdCZuYnNwOzM4NWFjOTdmLCZuYnNwOyZuYnNwO2FuZCB0aGUgYXRvbWljIG9wZXJh
+dGlvbiBuZWVkcyB0byBiZSBlbnN1cmVkOw0KDQoNClRoZSBmaXJzdCB0aG91Z2h0cyBhcmUg
+YXMgZm9sbG93c6Osb25seSBsb2NrIGN1cnNvcl91bnJlZi9jdXJzb3JfcmVmIHdpdGggc3Nk
+LmxvY2ujrEJ1dCZuYnNwO2l0IHNlZW1zIHdlIGNhbid0IGdldCBzc2QubG9jayB3aXRoaW4g
+ZHB5X2N1cnNvcl9kZWZpbmWjrHNvIGlmIHdlIGNhbid0IGxvY2sgVGhlIHRvcC1sZXZlbCBm
+dW5jdGlvbiZuYnNwO3FlbXVfc3BpY2VfY3Vyc29yX3JlZnJlc2hfYmgoKaO/DQoNCg0KLS0t
+IGEvaHcvZGlzcGxheS9xeGwtcmVuZGVyLmMNCisrKyBiL2h3L2Rpc3BsYXkvcXhsLXJlbmRl
+ci5jDQpAQCAtMzM2LDYgKzMzNiw3IEBAIGludCBxeGxfcmVuZGVyX2N1cnNvcihQQ0lRWExE
+ZXZpY2UgKnF4bCwgUVhMQ29tbWFuZEV4dCAqZXh0KQ0KJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwO30NCiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtxZW11
+X211dGV4X2xvY2soJmFtcDtxeGwtJmd0O3NzZC5sb2NrKTsNCiZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDtpZiAocXhsLSZndDtzc2QuY3Vyc29yKSB7DQorJm5ic3A7ICZu
+YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgLy8gb3RoZXIgdGhyZWFkDQombmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtjdXJzb3JfdW5y
+ZWYocXhsLSZndDtzc2QuY3Vyc29yKTsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDt9DQombmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cXhsLSZndDtzc2Qu
+Y3Vyc29yID0gYzsNCmRpZmYgLS1naXQgYS91aS9jb25zb2xlLmMgYi91aS9jb25zb2xlLmMN
+CmluZGV4IDQzMjI2YzVjMTQuLjMxZGJkOGZjNmYgMTAwNjQ0DQotLS0gYS91aS9jb25zb2xl
+LmMNCisrKyBiL3VpL2NvbnNvbGUuYw0KQEAgLTk4NSw4ICs5ODUsMTAgQEAgdm9pZCBkcHlf
+Y3Vyc29yX2RlZmluZShRZW11Q29uc29sZSAqYywgUUVNVUN1cnNvciAqY3Vyc29yKQ0KJm5i
+c3A7ICZuYnNwOyAmbmJzcDtEaXNwbGF5U3RhdGUgKnMgPSBjLSZndDtkczsNCiZuYnNwOyAm
+bmJzcDsgJm5ic3A7RGlzcGxheUNoYW5nZUxpc3RlbmVyICpkY2w7DQombmJzcDsNCismbmJz
+cDsgJm5ic3A7IC8vbG9jaywgbWFpbiB0aHJlYWQNCiZuYnNwOyAmbmJzcDsgJm5ic3A7Y3Vy
+c29yX3VucmVmKGNvbi0mZ3Q7Y3Vyc29yKTsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7Y29uLSZn
+dDtjdXJzb3IgPSBjdXJzb3JfcmVmKGN1cnNvcik7DQorJm5ic3A7ICZuYnNwOyAvL3VubG9j
+aw0KJm5ic3A7ICZuYnNwOyAmbmJzcDtpZiAoIXFlbXVfY29uc29sZV9pc192aXNpYmxlKGMp
+KSB7DQombmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cmV0dXJuOw0KJm5ic3A7
+ICZuYnNwOyAmbmJzcDt9DQoNCg0KDQoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tJm5ic3A71K3K
+vNPKvP4mbmJzcDstLS0tLS0tLS0tLS0tLS0tLS0NCreivP7IyzogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiTWFy
+Yy1BbmRyqKYgTHVyZWF1IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxtYXJjYW5k
+cmUubHVyZWF1QHJlZGhhdC5jb20mZ3Q7Ow0Kt6LLzcqxvOQ6Jm5ic3A7MjAyNMTqNNTCMTDI
+1SjQx8bayP0pIM3tyc85OjI0DQrK1bz+yMs6Jm5ic3A7IqlnbHltIjw3MDcyNDIwNDdAcXEu
+Y29tJmd0OzsNCrOty806Jm5ic3A7InFlbXUtZGV2ZWwiPHFlbXUtZGV2ZWxAbm9uZ251Lm9y
+ZyZndDs7ImtyYXhlbCI8a3JheGVsQHJlZGhhdC5jb20mZ3Q7Ow0K1vfM4jombmJzcDtSZTog
+W1BBVENIIFJGQyB2MV1kaXNwbGF5OiBmaXggaGVhcCB1c2UgYWZ0ZXIgZnJlZSBpbiBjdXJz
+b3JfcHV0DQoNCg0KDQpIaQ0KDQpPbiBXZWQsIEFwciAxMCwgMjAyNCBhdCAyOjA2gTanMlBN
+IKlnbHltIDw3MDcyNDIwNDdAcXEuY29tJmd0OyB3cm90ZToNCiZndDsNCiZndDsNCg0KUGxl
+YXNlIHNlbmQgdGhlIHBhdGNoIGFzIGlubGluZToNCmh0dHBzOi8vd3d3LnFlbXUub3JnL2Rv
+Y3MvbWFzdGVyL2RldmVsL3N1Ym1pdHRpbmctYS1wYXRjaC5odG1sI2RvLW5vdC1zZW5kLWFz
+LWFuLWF0dGFjaG1lbnQNCg0KVGhlIHBhdGNoIGlzIGRvaW5nIHRvbyBtdWNoIGNoYW5nZXMg
+dG8gdGhlIHNzZC5sb2NrIHVzYWdlIHdpdGhvdXQNCmV4cGxhaW5pbmcgaW4gZGV0YWlsIHdo
+aWNoIHJhY2UgYW5kIGhvdyBpdCBzb2x2ZWQgaXQuDQoNCkluIHBhcnRpY3VsYXIsIHVpL3Nw
+aWNlLWRpc3BsYXkuYyB1c2FnZSBzZWVtcyBzYWZlciBiZWZvcmUgeW91cg0KY2hhbmdlLCBz
+aW5jZSBpdCB0YWtlcyB0aGUgbG9jayBvbiBkaXNwbGF5X3JlZnJlc2ggYW5kDQpkaXNwbGF5
+X21vdXNlX2RlZmluZS4gSXQgcHJvcGVybHkgdGVtcG9yYXJpbHkgcmVsZWFzZXMgdGhlIGxv
+Y2sgYmVmb3JlDQpjYWxsaW5nIHRoZSBkcHlfbW91c2Vfc2V0KCkgYW5kIGRweV9jdXJzb3Jf
+ZGVmaW5lKCkgYXMgd2VsbC4NCg0KVG8gbWUsIGl0IGxvb2tzIGxpa2UgdGhlIG9ubHkgb2Zm
+ZW5kZXIgaXMgcXhsX3NwaWNlX3Jlc2V0X2N1cnNvcigpLA0Kd2hpY2ggbGFja3MgbG9ja2lu
+ZyBiZWZvcmUgdW5yZWZpbmcuDQoNCkNvdWxkIHlvdSBjb25maXJtIHRoaXMgaHlwb3RoZXNp
+cyBpZiB5b3UgYXJlIGFibGUgdG8gcmVwcm9kdWNlIHRoZSBpc3N1ZT8NCg0KdGhhbmtz
+
+------=_NextPart_6617431D_11A90538_1501AF78
+Content-Type: text/html;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
+
+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
+YXJzZXQ9R0IxODAzMCI+PGRpdj5IaTwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+RHVyaW5n
+IHRoZSB0ZXN0IHdpdGggbG9nZ2luZywgSSBmb3VuZCB0aGF0IHRoZXJlIG1heSBiZSBhIGNv
+bmZsaWN0IGJldHdlZW4gdGhlIGxvZ2ljIG9mIHVwZGF0aW5nIHRoZSByZWZjb3VudCBpbiB2
+bmNfZHB5X2N1cnNvcl9kZWZpbmUoKSBhbmQgUVhMX0NVUlNPUl9TRVQmbmJzcDthY3Rpb24s
+Jm5ic3A7IHNhbWUgYXMgZHB5X2N1cnNvcl9kZWZpbmUoKSBhZnRlciBjb21taXQmbmJzcDs8
+YSBjbGFzcz0iZ2ZtIGdmbS1jb21taXQgaGFzLXRvb2x0aXAiIHRpdGxlPSIiIGRhdGEtcGxh
+Y2VtZW50PSJ0b3AiIGRhdGEtY29udGFpbmVyPSJib2R5IiBkYXRhLWNvbW1pdD0iMzg1YWM5
+N2Y4ZmFkMGU2OTgwYzVkZmVhNzExMzJkNWVjZmIxNjYwOCIgZGF0YS1wcm9qZWN0PSIxMTE2
+NzY5OSIgZGF0YS1saW5rLXJlZmVyZW5jZT0iZmFsc2UiIGRhdGEtbGluaz0iZmFsc2UiIGRh
+dGEtb3JpZ2luYWw9IjM4NWFjOTdmOGZhZDBlNjk4MGM1ZGZlYTcxMTMyZDVlY2ZiMTY2MDgi
+IGRhdGEtcmVmZXJlbmNlLXR5cGU9ImNvbW1pdCIgaHJlZj0iL3FlbXUtcHJvamVjdC9xZW11
+Ly0vY29tbWl0LzM4NWFjOTdmOGZhZDBlNjk4MGM1ZGZlYTcxMTMyZDVlY2ZiMTY2MDgiIGRh
+dGEtb3JpZ2luYWwtdGl0bGU9InVpOiBrZWVwIGN1cnJlbnQgY3Vyc29yIHdpdGggUWVtdUNv
+bnNvbGUiIGFyaWEtZGVzY3JpYmVkYnk9ImdsLXRvb2x0aXAxMTgiPjM4NWFjOTdmPC9hPiwm
+bmJzcDsmbmJzcDthbmQgdGhlIGF0b21pYyBvcGVyYXRpb24gbmVlZHMgdG8gYmUgZW5zdXJl
+ZDs8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlRoZSBmaXJzdCB0aG91Z2h0cyBhcmUgYXMg
+Zm9sbG93c6Osb25seSBsb2NrIGN1cnNvcl91bnJlZi9jdXJzb3JfcmVmIHdpdGggc3NkLmxv
+Y2ujrEJ1dCZuYnNwO2l0IHNlZW1zIHdlIGNhbid0IGdldCBzc2QubG9jayB3aXRoaW4gZHB5
+X2N1cnNvcl9kZWZpbmWjrHNvIGlmIHdlIGNhbid0IGxvY2sgVGhlIHRvcC1sZXZlbCBmdW5j
+dGlvbiZuYnNwO3FlbXVfc3BpY2VfY3Vyc29yX3JlZnJlc2hfYmgoKaO/PC9kaXY+PGRpdj48
+YnI+PC9kaXY+PGRpdj48ZGl2Pi0tLSBhL2h3L2Rpc3BsYXkvcXhsLXJlbmRlci5jPC9kaXY+
+PGRpdj4rKysgYi9ody9kaXNwbGF5L3F4bC1yZW5kZXIuYzwvZGl2PjxkaXY+QEAgLTMzNiw2
+ICszMzYsNyBAQCBpbnQgcXhsX3JlbmRlcl9jdXJzb3IoUENJUVhMRGV2aWNlICpxeGwsIFFY
+TENvbW1hbmRFeHQgKmV4dCk8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
+OyAmbmJzcDt9PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+cWVtdV9tdXRleF9sb2NrKCZhbXA7cXhsLSZndDtzc2QubG9jayk7PC9kaXY+PGRpdj4mbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7aWYgKHF4bC0mZ3Q7c3NkLmN1cnNvcikg
+ezwvZGl2PjxkaXY+KyZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+IC8vIG90aGVyIHRocmVhZDwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7Y3Vyc29yX3VucmVmKHF4bC0mZ3Q7c3NkLmN1cnNvcik7
+PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7fTwvZGl2Pjxk
+aXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3F4bC0mZ3Q7c3NkLmN1cnNv
+ciA9IGM7PC9kaXY+PGRpdj5kaWZmIC0tZ2l0IGEvdWkvY29uc29sZS5jIGIvdWkvY29uc29s
+ZS5jPC9kaXY+PGRpdj5pbmRleCA0MzIyNmM1YzE0Li4zMWRiZDhmYzZmIDEwMDY0NDwvZGl2
+PjxkaXY+LS0tIGEvdWkvY29uc29sZS5jPC9kaXY+PGRpdj4rKysgYi91aS9jb25zb2xlLmM8
+L2Rpdj48ZGl2PkBAIC05ODUsOCArOTg1LDEwIEBAIHZvaWQgZHB5X2N1cnNvcl9kZWZpbmUo
+UWVtdUNvbnNvbGUgKmMsIFFFTVVDdXJzb3IgKmN1cnNvcik8L2Rpdj48ZGl2PiZuYnNwOyAm
+bmJzcDsgJm5ic3A7RGlzcGxheVN0YXRlICpzID0gYy0mZ3Q7ZHM7PC9kaXY+PGRpdj4mbmJz
+cDsgJm5ic3A7ICZuYnNwO0Rpc3BsYXlDaGFuZ2VMaXN0ZW5lciAqZGNsOzwvZGl2PjxkaXY+
+Jm5ic3A7PC9kaXY+PGRpdj4rJm5ic3A7ICZuYnNwOyAvL2xvY2ssIG1haW4gdGhyZWFkPC9k
+aXY+PGRpdj4mbmJzcDsgJm5ic3A7ICZuYnNwO2N1cnNvcl91bnJlZihjb24tJmd0O2N1cnNv
+cik7PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7ICZuYnNwO2Nvbi0mZ3Q7Y3Vyc29yID0gY3Vy
+c29yX3JlZihjdXJzb3IpOzwvZGl2PjxkaXY+KyZuYnNwOyAmbmJzcDsgLy91bmxvY2s8L2Rp
+dj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7aWYgKCFxZW11X2NvbnNvbGVfaXNfdmlzaWJs
+ZShjKSkgezwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3Jl
+dHVybjs8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7fTwvZGl2PjwvZGl2PjxkaXYg
+c3R5bGU9InBvc2l0aW9uOiByZWxhdGl2ZTsiPjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwv
+ZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTogMTJweDtmb250LWZhbWlseTogQXJpYWwgTmFy
+cm93O3BhZGRpbmc6MnB4IDAgMnB4IDA7Ij4tLS0tLS0tLS0tLS0tLS0tLS0mbmJzcDvUrcq8
+08q8/iZuYnNwOy0tLS0tLS0tLS0tLS0tLS0tLTwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6
+ZTogMTJweDtiYWNrZ3JvdW5kOiNlZmVmZWY7cGFkZGluZzo4cHg7Ij48ZGl2PjxiPreivP7I
+yzo8L2I+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIk1hcmMtQW5kcqimIEx1cmVhdSIgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAmbHQ7bWFyY2FuZHJlLmx1cmVhdUByZWRoYXQuY29tJmd0Ozs8L2Rp
+dj48ZGl2PjxiPreiy83KsbzkOjwvYj4mbmJzcDsyMDI0xOo01MIxMMjVKNDHxtrI/Skgze3J
+zzk6MjQ8L2Rpdj48ZGl2PjxiPsrVvP7Iyzo8L2I+Jm5ic3A7IqlnbHltIiZsdDs3MDcyNDIw
+NDdAcXEuY29tJmd0Ozs8d2JyPjwvZGl2PjxkaXY+PGI+s63LzTo8L2I+Jm5ic3A7InFlbXUt
+ZGV2ZWwiJmx0O3FlbXUtZGV2ZWxAbm9uZ251Lm9yZyZndDs7ImtyYXhlbCImbHQ7a3JheGVs
+QHJlZGhhdC5jb20mZ3Q7Ozx3YnI+PC9kaXY+PGRpdj48Yj7W98ziOjwvYj4mbmJzcDtSZTog
+W1BBVENIIFJGQyB2MV1kaXNwbGF5OiBmaXggaGVhcCB1c2UgYWZ0ZXIgZnJlZSBpbiBjdXJz
+b3JfcHV0PC9kaXY+PC9kaXY+PGRpdj48YnI+PC9kaXY+SGk8YnI+PGJyPk9uIFdlZCwgQXBy
+IDEwLCAyMDI0IGF0IDI6MDaBNqcyUE0gqWdseW0gJmx0OzcwNzI0MjA0N0BxcS5jb20mZ3Q7
+IHdyb3RlOjxicj4mZ3Q7PGJyPiZndDs8YnI+PGJyPlBsZWFzZSBzZW5kIHRoZSBwYXRjaCBh
+cyBpbmxpbmU6PGJyPmh0dHBzOi8vd3d3LnFlbXUub3JnL2RvY3MvbWFzdGVyL2RldmVsL3N1
+Ym1pdHRpbmctYS1wYXRjaC5odG1sI2RvLW5vdC1zZW5kLWFzLWFuLWF0dGFjaG1lbnQ8YnI+
+PGJyPlRoZSBwYXRjaCBpcyBkb2luZyB0b28gbXVjaCBjaGFuZ2VzIHRvIHRoZSBzc2QubG9j
+ayB1c2FnZSB3aXRob3V0PGJyPmV4cGxhaW5pbmcgaW4gZGV0YWlsIHdoaWNoIHJhY2UgYW5k
+IGhvdyBpdCBzb2x2ZWQgaXQuPGJyPjxicj5JbiBwYXJ0aWN1bGFyLCB1aS9zcGljZS1kaXNw
+bGF5LmMgdXNhZ2Ugc2VlbXMgc2FmZXIgYmVmb3JlIHlvdXI8YnI+Y2hhbmdlLCBzaW5jZSBp
+dCB0YWtlcyB0aGUgbG9jayBvbiBkaXNwbGF5X3JlZnJlc2ggYW5kPGJyPmRpc3BsYXlfbW91
+c2VfZGVmaW5lLiBJdCBwcm9wZXJseSB0ZW1wb3JhcmlseSByZWxlYXNlcyB0aGUgbG9jayBi
+ZWZvcmU8YnI+Y2FsbGluZyB0aGUgZHB5X21vdXNlX3NldCgpIGFuZCBkcHlfY3Vyc29yX2Rl
+ZmluZSgpIGFzIHdlbGwuPGJyPjxicj5UbyBtZSwgaXQgbG9va3MgbGlrZSB0aGUgb25seSBv
+ZmZlbmRlciBpcyBxeGxfc3BpY2VfcmVzZXRfY3Vyc29yKCksPGJyPndoaWNoIGxhY2tzIGxv
+Y2tpbmcgYmVmb3JlIHVucmVmaW5nLjxicj48YnI+Q291bGQgeW91IGNvbmZpcm0gdGhpcyBo
+eXBvdGhlc2lzIGlmIHlvdSBhcmUgYWJsZSB0byByZXByb2R1Y2UgdGhlIGlzc3VlPzxicj48
+YnI+dGhhbmtzPGJyPjwvZGl2Pg==
+
+------=_NextPart_6617431D_11A90538_1501AF78--
 
 
