@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 305C2C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 19:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CAFC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 20:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv0O8-0007aq-Jo; Thu, 11 Apr 2024 15:47:14 -0400
+	id 1rv0hh-0003K0-Dd; Thu, 11 Apr 2024 16:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv0O7-0007a4-6p
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 15:47:11 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rv0hc-0003J1-O3
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:07:22 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv0O4-0003Qu-Di
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 15:47:10 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6ecee1f325bso206512b3a.2
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 12:47:05 -0700 (PDT)
+ id 1rv0hb-0006nQ-4C
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:07:20 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6eddff25e4eso231490b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 13:07:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712864824; x=1713469624; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712866032; x=1713470832; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=S46kT4t7NiJqb2sOUbszK1wdb9x9qW18XR0HsqAIj4o=;
- b=F/UB+gOIMkLw22wS4df0mfgkJzoym/LuIujmipBkk71x7MWkPo9j4xE6xYeYsspE15
- AKca0leEsOUVolyDPfDaufRM3OZySyrhbONz2Xg5pfeH1kMuFHgSPZcHnNOezNv3/VAc
- SXcESV8aSsgT9QPmrvh5dy+OGlob0pYdh9fSPRuDPI4IyLvC2tD7Lg9E15PnwT4m4tIh
- lrGtm5gP/i1klCd1DwHHdsAOMiZ1UIYQPFFFuF6p1Q7zcZ6f1aI8tSCIObIo262oMD+R
- Q6loHi+E9V52l+SzbHJaq3I47QufKeOztQOMvpgdlFhDMyBuEgTrFX56mMoeqxtEtFGt
- ck/A==
+ bh=RjJZcjUlCUYpyhqM4iU+yENzWXNTqDQyMdK9vg5KE50=;
+ b=vvvlhYmPSuG3KVuR8PlTsI+GzS8f9We6wQvsf2RUf4EypUgA6RyykrmdI9B0INuj+4
+ 0NGrw1ePuwrA5fr1tauim/Fp305y3/aVeLn47ccKCAPmTePmPX4YZwxKutXnNKLuMwQ8
+ YxXbOSXauzp/32QnS3r5ScZuGePbx2kgHIEv5D9Bi9Ylx3DvIfHX6xzAU2i350YVqqDe
+ V0eGPwFTiaH8guo9SANf/Cj2upsSBXOMVlYSeY/sN+o0ohvDUnAxUo37Ftdzd2JFPk67
+ S78ZoMKsjSOOFMc68s26yX8Eb6TmPSDXegT2SifFoTT8EPlnma2947TXBKb6iZFW4NKL
+ Sigg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712864824; x=1713469624;
+ d=1e100.net; s=20230601; t=1712866032; x=1713470832;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S46kT4t7NiJqb2sOUbszK1wdb9x9qW18XR0HsqAIj4o=;
- b=iw2CnK4VxL96gyQyOFwyJOSS/ZqMepWAB8xycxlrBFYQJKkL9XBHIpmdU6bkim5wqA
- ziTAr6cuHNdDtKEX80IDtaSNmIiX7B22HhWbmsVcauqIzOjW0zfb3F9CKSF2BqC5Utfm
- k8kRTZ+T9hBAWyfbTxy1jjXVHB1j4rNfJ7de6Hu049tum7RPq1VtxMSrjfFP3CvKNrs/
- WukzGmO30CxWgNKpMj0BXAYe+RHrhVpRsME+63jYiDiOwo3iBAhafXE2ZggtpOOj4jBX
- uzGT5hwze1y+PzWZKErEQg3jqp5uOzKquxRFBXudF5XBOowH8r2kfzIdu0h2VyKeAXIa
- RA2A==
+ bh=RjJZcjUlCUYpyhqM4iU+yENzWXNTqDQyMdK9vg5KE50=;
+ b=H/Sgv+pwmWPS7ZykawyPLEc7OCtaP5I7e3OyBjkXhUeZMOlzuBJapiEP8gHVD71zQQ
+ w6Xy27TMOpnLrpcPFuh4sQWM0Te6fjQQZyhcRMzuIcbNLBxC8NLVbEI/+lfQ7a/j7v67
+ 4f03mb94CHYcfhln7U4oupzODw8YBhAKjPoZA0omKPSfmiM7hfBaI/Uf4c/sC1Gx0KJk
+ gPfdPE5sFzzlvh/lICFSqRNxXegc+K1xzuDQ6tK1otSPXW4q93XapwsqytqjkQsfojXb
+ 4wYGCJ+mz3pnZWQcoZzJoaP0DGPb8xo8FR+iQC7SPI2FiPPuFGqnNuIne2/fAR+IZu9B
+ iKng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUq9mm6KaLetMiRhx2lG/fVbblFwGOS/6o29wNMmiHACEGYh1ws0PmO2iIJS3rjgekLrBZkWTA8/zoxJV+Ml2movlBN5iM=
-X-Gm-Message-State: AOJu0YzluV/2bjB5EQj059BzfRLIFA6rF23c1r+4W+WwsBlpqWQVQTso
- 7mbONeJLVxooxeZBWqtC2/Rnc0Jgcw/nhNqCnwCdGG2V8f+tvvuSf5emzHNoAHNXF8mWIyiOglL
- g
-X-Google-Smtp-Source: AGHT+IHcbCXhaHpRQADpktIwvxlW2I3KjP96lK5gOWWoB3mHAB+2s8WZUXFrPDSqM2KcHtlRx9/5xw==
-X-Received: by 2002:a05:6a21:606:b0:1a3:af3e:1c87 with SMTP id
- ll6-20020a056a21060600b001a3af3e1c87mr965926pzb.11.1712864824576; 
- Thu, 11 Apr 2024 12:47:04 -0700 (PDT)
+ AJvYcCUKjvTo0zkZxwX0RxO6u0egd+7MYWmMAfVMV4NEQJH4r1AsLgcbn8muYSz9t1d4u9ywYVjAwCHF+7khaznQUvmqrL3uXRc=
+X-Gm-Message-State: AOJu0Yz88zJYrtiFkRQFNRhpsCamaQQgu/im3CUaQQaAsuZwMWAxtx6E
+ A4Md3KNb5TBdAIOhJXdENjPBIAn4+wxJhrU4s3XRp8iTafEPGNOYag6HPTz34Cg=
+X-Google-Smtp-Source: AGHT+IGOroPCnijKcpiVfNJheA+vCQftL/2zq+q48PIFQ5Twy5l0fut1uimYCxQgVkSTEfNJny+e9A==
+X-Received: by 2002:a05:6a00:3d42:b0:6ec:ed90:65ea with SMTP id
+ lp2-20020a056a003d4200b006eced9065eamr786916pfb.32.1712866032399; 
+ Thu, 11 Apr 2024 13:07:12 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- q2-20020a056a00084200b006ead124ff9fsm1543636pfk.136.2024.04.11.12.47.03
+ x23-20020a056a000bd700b006e6b180d87asm1582041pfu.35.2024.04.11.13.07.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Apr 2024 12:47:04 -0700 (PDT)
-Message-ID: <694e45fd-e2bf-4fd9-8dba-13490225afc4@linaro.org>
-Date: Thu, 11 Apr 2024 12:47:02 -0700
+ Thu, 11 Apr 2024 13:07:12 -0700 (PDT)
+Message-ID: <89453f6f-1ffe-4141-a8aa-fde7319f3e17@linaro.org>
+Date: Thu, 11 Apr 2024 13:07:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/13] hw/ppc/spapr: Replace sprintf() by snprintf()
+Subject: Re: [PATCH v2 04/13] hw/mips/malta: Add re-usable rng_seed_hex_new()
+ method
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>
 References: <20240411101550.99392-1-philmd@linaro.org>
- <20240411101550.99392-4-philmd@linaro.org>
+ <20240411101550.99392-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240411101550.99392-4-philmd@linaro.org>
+In-Reply-To: <20240411101550.99392-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,26 +102,71 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/11/24 03:15, Philippe Mathieu-Daudé wrote:
-> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-> resulting in painful developper experience.
+> Extract common code from reinitialize_rng_seed() and
+> load_kernel() to rng_seed_hex_new().
 > 
-> Replace sprintf() by snprintf() in order to avoid:
-> 
->    hw/ppc/spapr.c:385:5: warning: 'sprintf' is deprecated:
->      This function is provided for compatibility reasons only.
->      Due to security concerns inherent in the design of sprintf(3),
->      it is highly recommended that you use snprintf(3) instead.
->      [-Wdeprecated-declarations]
->        sprintf(mem_name, "memory@%" HWADDR_PRIx, start);
->        ^
->    1 warning generated.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/ppc/spapr.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/mips/malta.c | 20 ++++++++++++--------
+>   1 file changed, 12 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+> index af74008c82..9fc6a7d313 100644
+> --- a/hw/mips/malta.c
+> +++ b/hw/mips/malta.c
+> @@ -850,15 +850,24 @@ static void G_GNUC_PRINTF(3, 4) prom_set(uint32_t *prom_buf, int index,
+>       va_end(ap);
+>   }
+>   
+> -static void reinitialize_rng_seed(void *opaque)
+> +static char *rng_seed_hex_new(void)
+>   {
+> -    char *rng_seed_hex = opaque;
+>       uint8_t rng_seed[32];
+> +    char rng_seed_hex[sizeof(rng_seed) * 2 + 1];
+>   
+>       qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
+>       for (size_t i = 0; i < sizeof(rng_seed); ++i) {
+>           sprintf(rng_seed_hex + i * 2, "%02x", rng_seed[i]);
+>       }
+> +
+> +    return g_strdup(rng_seed_hex);
+> +}
+> +
+> +static void reinitialize_rng_seed(void *opaque)
+> +{
+> +    g_autofree char *rng_seed_hex = rng_seed_hex_new();
+> +
+> +    strcpy(opaque, rng_seed_hex);
+>   }
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Though it isn't deprecated, strcpy isn't really any safer than sprintf.
+We don't need to be copying text around quite as much as this.
+
+How about:
+
+#define RNG_SEED_SIZE 32
+
+static void rng_seed_hex_new(char buf[2 * RNG_SEED_SIZE + 1])
+{
+     static const char hex = "0123456789abcdef";
+     uint8_t rng_seed[RNG_SEED_SIZE];
+
+     qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
+     for (int i = 0; i < RNG_SEED_SIZE; ++i) {
+         buf[i * 2 + 0] = hex[rng_seed[i] / 16];
+         buf[i * 2 + 1] = hex[rng_seed[i] % 16];
+     }
+     buf[RNG_SEED_SIZE * 2] = '\0';
+}
+
+static void reinitialize_rng_seed(void *opaque)
+{
+     rng_seed_hex_new(opaque);
+}
+
+with little change in load_kernel.
+
 
 r~
 
