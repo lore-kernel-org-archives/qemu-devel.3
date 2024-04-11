@@ -4,78 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0381CD1284
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 12:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A932CD1284
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 12:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rut7n-0001JE-Mu; Thu, 11 Apr 2024 08:01:51 -0400
+	id 1rutEL-0003yA-AS; Thu, 11 Apr 2024 08:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rut7k-00016A-6b
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:01:48 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rut7i-0003JS-KJ
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:01:47 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-56e6acb39d4so5117320a12.1
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 05:01:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712836905; x=1713441705; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=veCA5XuoiI2x3nFfPCI/nxUC6o5oC93sOeqtZpyyTvE=;
- b=JwZ9+Kk0QuqtWx3r3zvma2I5YcnoxC919n0M2cyUYTLCa+44RE0tVfMU2WKAb/F+/G
- 14O/RnZptmAWBLMHEfgMajo79rn6+q91/roHooA++p/MkMcAyTz1825Fv2mxf2L4nwq5
- CcyWLj/0ZaRJ7rBNT3wcp1PE4OQYh/X49qiE1uRPLyiO9Xc3SRDCH3KICv8Xa/k765So
- pD+A6igGglgihUIrzN5YUAxAOlcJhI0Ac8klZXilh/d6g0+sQbWq1Beba58GiP5eDo7v
- kCBRHdgOGJULcPzOfd7Cjdjkl5LS78UOBJbk2paBYGtWv7iM66MPGtrTxkI3U+5woGW1
- lkag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712836905; x=1713441705;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=veCA5XuoiI2x3nFfPCI/nxUC6o5oC93sOeqtZpyyTvE=;
- b=n3dhVFFkdtAY1la62gP/YYyoiDvzcMm8fgKc2E+RL3VT94JpJyUZZssqvoV+iQT0ju
- 1/7bF7QKKkQlWWTgTSH5SNUka9zDzmPBV1nxfob3+VTi7pyTkoSL0zNTMcNQgdH0A3a1
- +eZKU/CCRc8bcSLgD1ym2F4aihLP7vKf9HJqtIayNTMm33yy/NGu6i/fFJrVBC2LRSsu
- owqsjWjKBAmuhF4UQ3SpGYLJ20ZuI2ZeIuHwbcmy/XzpwANY834sG8UXbvyW6FUzwZZL
- qWrtcAiyjLv0UFYefq/iUZLyOGu/In1JIcEuonliPkxy5pH8hCvEPcPodK7HCM2zqc2C
- fOtA==
-X-Gm-Message-State: AOJu0YzdA97KptSneLLfYeCEGIiobrWDr7LihkPxxmmyK+UGauYCnvr+
- NKw0h8allN2WMhril0S9vln5bIQp2h8+n+oKriP3BI6iB9iyKkyR4iET7MPyf+e82pxuJmTH5Ho
- qCP90XGSz40tQt/LdeTwQRxD4DxwnQUZGO6HnFA==
-X-Google-Smtp-Source: AGHT+IExzea7Wn0tfVctGqtaeBG5SG1R9SqwGSagyXwti6Uj7YGcwPfnnmemdyzA/8j/iIMcC6jmfUrsw0Qitixs/GI=
-X-Received: by 2002:a50:cddb:0:b0:56e:7884:9c7 with SMTP id
- h27-20020a50cddb000000b0056e788409c7mr3957528edj.19.1712836905190; Thu, 11
- Apr 2024 05:01:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rutEI-0003y2-Lr
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:08:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rutEF-0004wf-Gi
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:08:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712837310;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=opJ+WC0UhA7DXDKHCUJnEdNPmjLDNHndFdpnO7C6VtY=;
+ b=Y3zVP76z+ZI6JlVxCGXHZBZDG7jl4b60LF9VI/eFGAE1fJrfhduCepfuXl13+/n5MtjFTt
+ 0bU5CA2PTtS4MvCaadhY9QXmaRmFVaPj94UyyU9ZiXzqF+o9FVy+VbYSi7up4UM+WiFkpR
+ qwaNMUMmFIIM6fSYEy6Ym3Ue7dtBSqY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-6aiQuQLSM1emyMk8ECKGUw-1; Thu,
+ 11 Apr 2024 08:08:27 -0400
+X-MC-Unique: 6aiQuQLSM1emyMk8ECKGUw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EE2D1380621F;
+ Thu, 11 Apr 2024 12:08:26 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.252])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9E85D2166B36;
+ Thu, 11 Apr 2024 12:08:24 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Brad Smith <brad@comstyle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH for-9.0] meson.build: Disable -fzero-call-used-regs on OpenBSD
+Date: Thu, 11 Apr 2024 14:08:19 +0200
+Message-ID: <20240411120819.56417-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20240411104340.6617-1-philmd@linaro.org>
- <20240411104340.6617-2-philmd@linaro.org>
-In-Reply-To: <20240411104340.6617-2-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 11 Apr 2024 13:01:34 +0100
-Message-ID: <CAFEAcA_N8yFY15v=QrCOAOPPPnsrfZk2Pqm_CBmxaj_8Gvf1xg@mail.gmail.com>
-Subject: Re: [PATCH 1/9] disas/m68k: Replace sprintf() by snprintf()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,20 +78,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Apr 2024 at 11:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-> resulting in painful developper experience. Use snprintf() instead.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  disas/m68k.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
+QEMU currently does not work on OpenBSD since the -fzero-call-used-regs
+option that we added to meson.build recently does not work with the
+"retguard" extension from OpenBSD's Clang. Thus let's disable the
+-fzero-call-used-regs here until there's a better solution available.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2278
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ Note: Given that we're close to the release, I think the host_os check
+ is the best we can do ... the problem does not seem to trigger in all
+ functions, only if certain registers are used by the compiler, so a
+ more sophisticated check here seems to be too fragile to me right now.
 
-thanks
--- PMM
+ meson.build | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index c9c3217ba4..91a0aa64c6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -562,7 +562,11 @@ hardening_flags = [
+ #
+ # NB: Clang 17 is broken and SEGVs
+ # https://github.com/llvm/llvm-project/issues/75168
+-if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }',
++#
++# NB2: This clashes with the "retguard" extension of OpenBSD's Clang
++# https://gitlab.com/qemu-project/qemu/-/issues/2278
++if host_os != 'openbsd' and \
++   cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }',
+                name: '-fzero-call-used-regs=used-gpr',
+                args: ['-O2', '-fzero-call-used-regs=used-gpr'])
+     hardening_flags += '-fzero-call-used-regs=used-gpr'
+-- 
+2.44.0
+
 
