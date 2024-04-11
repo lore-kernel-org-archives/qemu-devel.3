@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B39CD1284
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D4FCD1292
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rurYr-0000GJ-L9; Thu, 11 Apr 2024 06:21:43 -0400
+	id 1rurYe-00082j-2N; Thu, 11 Apr 2024 06:21:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rurYc-0008CH-N3
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:21:28 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ id 1rurYT-0006bL-CI
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:21:17 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rurYY-0000D8-JV
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:21:26 -0400
+ id 1rurYQ-00009A-R8
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:21:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1712830881;
- bh=+QYZVsfW80rN0aldZ0gNPIPNihlL1741+ROhUZjpSDE=;
+ s=mail; t=1712830873;
+ bh=NuUwS7WiqhfXR+Rl+EE/U3M0NN9zH1i+9fVNHS9nZ20=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=4DzSn8ylqV8mj/BlW7cb/wI2lF59NnHqotWkx/0kBrAB9tlQhCi06dx1DDoXNEJfZ
- cs/PgbXTf3E6buhnDX1eLSSmK/mOOxoTVZ5Pqa9FHlJTC5NCntlfETRWeVNu3b0O6Z
- ztXRBd8+7gitJUVxGHyPPj4A7LMDEmSqUt/b9vlllEeLRX/X/CUsG5/xeRCAEG+DZl
- CK/b9a1JO4gkiey76w5d8Ta0OeJIGXBAla69PACyoh5tMV52lSui/J9oGFUMopUu7u
- 0ShGQ3QAWD/v0nyFxYwXkOHGvstV0HHn4lSh3dsuBxP5/IX/RuthM4cf9LIPF76mHx
- RAoQ3uCls7Mpg==
+ b=4Jk9G20bJ9lXrcPTLa6zcRUEJFG0O8bKmWfAWi3QOp6di9D1J0fkI7uwy+XE4kuGM
+ 3kWOPopVYfP3qgEpkP4cbgsIeXzwB2+2EfoSsqhoLVrotlHOxkCQ1cB2UxaNdFNGIL
+ bb/V3dThnfpFo9y+0C5v7ViOV+5bq61+qsaal87Ab1thMI/sAO6GuQ7NJi73bFgk28
+ riRkJQ2n7zAv+v+lydArA45QSfbL4dSdPaBxeFoX+68dAmtASwhuyvJ7N+8Tivel8T
+ gR6AvAaLxxtE7OzNctllYqlTOOoVGd7oyBjHRak6T6/g2Os51wsVjEEyTM8Di7FLTK
+ 91247VuNCRjdw==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id A5AE83782139;
- Thu, 11 Apr 2024 10:21:19 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 51D833782133;
+ Thu, 11 Apr 2024 10:21:11 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -59,15 +59,15 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>
-Subject: [PATCH v7 10/10] virtio-gpu: Initialize Venus
-Date: Thu, 11 Apr 2024 13:20:02 +0300
-Message-ID: <20240411102002.240536-11-dmitry.osipenko@collabora.com>
+Subject: [PATCH v7 06/10] virtio-gpu: Support blob scanout using dmabuf fd
+Date: Thu, 11 Apr 2024 13:19:58 +0300
+Message-ID: <20240411102002.240536-7-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
 References: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,100 +90,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Antonio Caggiano <antonio.caggiano@collabora.com>
+From: Robert Beckett <bob.beckett@collabora.com>
 
-Request Venus when initializing VirGL and if vulkan=true flag is set for
-virtio-gpu device.
+Support displaying blob resources by handling SET_SCANOUT_BLOB
+command.
 
-Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+Signed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+Signed-off-by: Robert Beckett <bob.beckett@collabora.com>
 Signed-off-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c  |  5 +++++
- hw/display/virtio-gpu.c        | 15 +++++++++++++++
- include/hw/virtio/virtio-gpu.h |  3 +++
- meson.build                    |  1 +
- 4 files changed, 24 insertions(+)
+ hw/display/virtio-gpu-virgl.c  | 109 +++++++++++++++++++++++++++++++++
+ hw/display/virtio-gpu.c        |  12 ++--
+ include/hw/virtio/virtio-gpu.h |   7 +++
+ meson.build                    |   1 +
+ 4 files changed, 123 insertions(+), 6 deletions(-)
 
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 0d8f00c7939a..c4448d663282 100644
+index 04f7a191c41a..c2057b0c2147 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -1052,6 +1052,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-         flags |= VIRGL_RENDERER_D3D11_SHARE_TEXTURE;
-     }
- #endif
-+#ifdef VIRGL_RENDERER_VENUS
-+    if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-+        flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
-+    }
-+#endif
+@@ -17,6 +17,8 @@
+ #include "trace.h"
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/virtio-gpu.h"
++#include "hw/virtio/virtio-gpu-bswap.h"
++#include "hw/virtio/virtio-gpu-pixman.h"
  
-     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
-     if (ret != 0) {
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index dd8dcc441709..6130592d65cd 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1491,6 +1491,19 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
- #endif
-     }
+ #include "ui/egl-helpers.h"
  
-+    if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-+#ifdef HAVE_VIRGL_VENUS
-+        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
-+            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-+            error_setg(errp, "venus requires enabled blob and hostmem options");
-+            return;
-+        }
-+#else
-+        error_setg(errp, "old virglrenderer, venus unsupported");
+@@ -61,6 +63,7 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+     res->height = c2d.height;
+     res->format = c2d.format;
+     res->resource_id = c2d.resource_id;
++    res->dmabuf_fd = -1;
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ 
+     args.handle = c2d.resource_id;
+@@ -108,6 +111,7 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+     res->height = c3d.height;
+     res->format = c3d.format;
+     res->resource_id = c3d.resource_id;
++    res->dmabuf_fd = -1;
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ 
+     args.handle = c3d.resource_id;
+@@ -490,6 +494,106 @@ static void virgl_cmd_get_capset(VirtIOGPU *g,
+     g_free(resp);
+ }
+ 
++#ifdef HAVE_VIRGL_RESOURCE_BLOB
++static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
++                                       struct virtio_gpu_ctrl_command *cmd)
++{
++    struct virtio_gpu_framebuffer fb = { 0 };
++    struct virgl_renderer_resource_info info;
++    struct virtio_gpu_simple_resource *res;
++    struct virtio_gpu_set_scanout_blob ss;
++    uint64_t fbend;
++
++    VIRTIO_GPU_FILL_CMD(ss);
++    virtio_gpu_scanout_blob_bswap(&ss);
++    trace_virtio_gpu_cmd_set_scanout_blob(ss.scanout_id, ss.resource_id,
++                                          ss.r.width, ss.r.height, ss.r.x,
++                                          ss.r.y);
++
++    if (ss.scanout_id >= g->parent_obj.conf.max_outputs) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout id specified %d",
++                      __func__, ss.scanout_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_SCANOUT_ID;
 +        return;
-+#endif
 +    }
 +
-     if (!virtio_gpu_base_device_realize(qdev,
-                                         virtio_gpu_handle_ctrl_cb,
-                                         virtio_gpu_handle_cursor_cb,
-@@ -1667,6 +1680,8 @@ static Property virtio_gpu_properties[] = {
-     DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
-                     VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
-     DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0),
-+    DEFINE_PROP_BIT("vulkan", VirtIOGPU, parent_obj.conf.flags,
-+                    VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
++    if (ss.resource_id == 0) {
++        virtio_gpu_disable_scanout(g, ss.scanout_id);
++        return;
++    }
++
++    if (ss.width < 16 ||
++        ss.height < 16 ||
++        ss.r.x + ss.r.width > ss.width ||
++        ss.r.y + ss.r.height > ss.height) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
++                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
++                      __func__, ss.scanout_id, ss.resource_id,
++                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
++                      ss.width, ss.height);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
++
++    res = virtio_gpu_find_resource(g, ss.resource_id);
++    if (!res) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not exist %d\n",
++                      __func__, ss.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++    if (virgl_renderer_resource_get_info(ss.resource_id, &info)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not have info %d\n",
++                      __func__, ss.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++    if (res->dmabuf_fd < 0) {
++        res->dmabuf_fd = info.fd;
++    }
++    if (res->dmabuf_fd < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource not backed by dmabuf %d\n",
++                      __func__, ss.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
++    fb.format = virtio_gpu_get_pixman_format(ss.format);
++    if (!fb.format) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: pixel format not supported %d\n",
++                      __func__, ss.format);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
++
++    fb.bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
++    fb.width = ss.width;
++    fb.height = ss.height;
++    fb.stride = ss.strides[0];
++    fb.offset = ss.offsets[0] + ss.r.x * fb.bytes_pp + ss.r.y * fb.stride;
++
++    fbend = fb.offset;
++    fbend += fb.stride * (ss.r.height - 1);
++    fbend += fb.bytes_pp * ss.r.width;
++    if (fbend > res->blob_size) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: fb end out of range\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
++
++    g->parent_obj.enable = 1;
++    if (virtio_gpu_update_dmabuf(g, ss.scanout_id, res, &fb, &ss.r)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to update dmabuf\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
++
++    virtio_gpu_update_scanout(g, ss.scanout_id, res, &fb, &ss.r);
++}
++#endif /* HAVE_VIRGL_RESOURCE_BLOB */
++
+ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                       struct virtio_gpu_ctrl_command *cmd)
+ {
+@@ -556,6 +660,11 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     case VIRTIO_GPU_CMD_GET_EDID:
+         virtio_gpu_get_edid(g, cmd);
+         break;
++#ifdef HAVE_VIRGL_RESOURCE_BLOB
++    case VIRTIO_GPU_CMD_SET_SCANOUT_BLOB:
++        virgl_cmd_set_scanout_blob(g, cmd);
++        break;
++#endif /* HAVE_VIRGL_RESOURCE_BLOB */
+     default:
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         break;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index dac272ecadb1..1e57a53d346c 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -380,7 +380,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ }
  
+-static void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
++void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
+ {
+     struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
+     struct virtio_gpu_simple_resource *res;
+@@ -597,11 +597,11 @@ static void virtio_unref_resource(pixman_image_t *image, void *data)
+     pixman_image_unref(data);
+ }
+ 
+-static void virtio_gpu_update_scanout(VirtIOGPU *g,
+-                                      uint32_t scanout_id,
+-                                      struct virtio_gpu_simple_resource *res,
+-                                      struct virtio_gpu_framebuffer *fb,
+-                                      struct virtio_gpu_rect *r)
++void virtio_gpu_update_scanout(VirtIOGPU *g,
++                               uint32_t scanout_id,
++                               struct virtio_gpu_simple_resource *res,
++                               struct virtio_gpu_framebuffer *fb,
++                               struct virtio_gpu_rect *r)
+ {
+     struct virtio_gpu_simple_resource *ores;
+     struct virtio_gpu_scanout *scanout;
 diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index a16263334b47..71fbfff0258a 100644
+index ed44cdad6b34..44c676c3ca4a 100644
 --- a/include/hw/virtio/virtio-gpu.h
 +++ b/include/hw/virtio/virtio-gpu.h
-@@ -103,6 +103,7 @@ enum virtio_gpu_base_conf_flags {
-     VIRTIO_GPU_FLAG_BLOB_ENABLED,
-     VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED,
-     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
-+    VIRTIO_GPU_FLAG_VENUS_ENABLED,
- };
+@@ -329,6 +329,13 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+                              struct virtio_gpu_framebuffer *fb,
+                              struct virtio_gpu_rect *r);
  
- #define virtio_gpu_virgl_enabled(_cfg) \
-@@ -121,6 +122,8 @@ enum virtio_gpu_base_conf_flags {
-     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED))
- #define virtio_gpu_hostmem_enabled(_cfg) \
-     (_cfg.hostmem > 0)
-+#define virtio_gpu_venus_enabled(_cfg) \
-+    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
- 
- struct virtio_gpu_base_conf {
-     uint32_t max_outputs;
++void virtio_gpu_update_scanout(VirtIOGPU *g,
++                               uint32_t scanout_id,
++                               struct virtio_gpu_simple_resource *res,
++                               struct virtio_gpu_framebuffer *fb,
++                               struct virtio_gpu_rect *r);
++void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id);
++
+ /* virtio-gpu-3d.c */
+ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                   struct virtio_gpu_ctrl_command *cmd);
 diff --git a/meson.build b/meson.build
-index dcc5568bb382..040d843f054c 100644
+index f58623685477..dcc5568bb382 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2286,6 +2286,7 @@ if virgl.version().version_compare('>=1.0.0')
+@@ -2285,6 +2285,7 @@ config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+ if virgl.version().version_compare('>=1.0.0')
    config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT', 1)
    config_host_data.set('HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS', 1)
-   config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
-+  config_host_data.set('HAVE_VIRGL_VENUS', 1)
++  config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
  endif
  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
  config_host_data.set('CONFIG_VTE', vte.found())
