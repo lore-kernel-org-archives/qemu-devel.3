@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6A8CD1284
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 11:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C375CD128A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 11:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rusgD-0000Ro-BI; Thu, 11 Apr 2024 07:33:21 -0400
+	id 1rushD-000146-OZ; Thu, 11 Apr 2024 07:34:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rusfm-0000NK-Qe
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:32:55 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1rushB-0000x1-Gu
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:34:21 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rusfk-0006Fr-Eo
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:32:53 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-56e69888a36so5572451a12.3
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 04:32:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1rush9-0006V7-3A
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:34:21 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-343c8d7064aso1471431f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 04:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712835171; x=1713439971; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gKW27QqBx2ht5r59ew3GF9HDkfUQawGcCPc7HVvCMwk=;
- b=Y6V/KAYks98/K5ima+xgnU4xKC61hkhQ+gDslVxqftOg8EoQSsOWW2RRXBvCjJGVLQ
- lvkpbQAyv+NA42dB0I8Mu8kcEhJ5rm+KyWtaxC9pKLA5oJv+hzwGvdf1hD2B/wARMcXi
- Fcn3MJqYsdmmrr0XkSr4jjrVH3fK/bV1JJgtchJhz50MKBsfPpI+NMnK3K9QE0WZzGT5
- DZ9CxpKHolrL9RO1ZrTcYMu1LnTkTR/Jeewo8h/vqCEUV1yYjInNIXgQSztwS/dG8Nfv
- LzpTyqXpW4AouqePrzq8gbZS1bSkCk1kiHdYkUJe+daP9PUNpN1BMHtqYy6f00HHDtWb
- qong==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1712835256; x=1713440056;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dhg1qThRQZKAnIydYrVnrsjqRJWIakORnGcfY7auAjk=;
+ b=dlAWOl07dmv5BDTIDCHkJSf1KLsfmFDalgVCWQS+4atdz5ccLfzKtPC0385xknAvuY
+ nbGZWoPqxmX3CwJY+nW4g+CZC+ImFUuuhe9higa+CfJi85WQqsizb5wMHcLRgWdJpogR
+ 63kZvO45mpMJNiNZJW2hLhzUBkjLkSegvFvvTxPUpO5Ziy3AFSJHgBDefcB4uCSgPtm2
+ TMG2k73IKG1XbMR+OatVCGNuQ1rl7jJRdzPOrP5AcmPh4WDcgbs96HTXFx/B0NNKlp1D
+ fwq4JUBKdccWo/yu+s9DWbp9Ubm0xym+e4rYiNgm8kEfzBuSbPqHmpWIGTf8tnAGT1hW
+ H/Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712835171; x=1713439971;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gKW27QqBx2ht5r59ew3GF9HDkfUQawGcCPc7HVvCMwk=;
- b=XF7P+SthdddSDBztWLfQ9IxMKBkgbRx8z1G8U98Mk/shHE76Du1WJdS4vUNRHMIEzn
- 8o4ACTxrYYBIfD+/FPSjs2w7oPv1mY9B6lxyd2651OMUA1U9blSKpK+EXZZeY+CaGTt0
- YKnOi3jIjgK4YkF+IHG+LOfNtLVRwc7n7yrJ89080KdgJxFzzi21GlkL3eaLW3H0nFiE
- fYnDHgmOhS95jACfTF7L9K5HKLZuzNC+z21d5I+z7UuHbq+6EPWPDy+sE1z9vAQGUko0
- zCurWLl/3OF97jjcphMpIrX/wUduWkejj9Lsgh1jmkFHv8SgyKSfMW/NzYP6EfZjpWb6
- z7SA==
-X-Gm-Message-State: AOJu0Yw5QpJhRoq00ieWCcOlKr2Gi6pFKIToNhKjlRLNgY+An1ErJlvK
- Smu3YyWdyW9X/cUVAX0yRd6rYYo5uqkP9Z+nJubuQNuMPNrrIownKGa006Dkz0se5O2e3VGXjK2
- 5C8jUqyyb00slExg05IFUXxDkcoJJl9ZQhyThTQ==
-X-Google-Smtp-Source: AGHT+IGMxi7mNHEK6ElvMbN4l63YR5wesesQnIfm9RF0dY01ebFD7Y80oJeu2PAOm2Bf+bA3LO2YipHXiRtbAc1d6P4=
-X-Received: by 2002:a50:8e50:0:b0:56d:f3a7:60e with SMTP id
- 16-20020a508e50000000b0056df3a7060emr3752165edx.22.1712835170769; Thu, 11 Apr
- 2024 04:32:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712835256; x=1713440056;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dhg1qThRQZKAnIydYrVnrsjqRJWIakORnGcfY7auAjk=;
+ b=PUyr0xolgX5UrwIX3Kr/sHirIS/xDuiXgWClrX4DWuFBENOrks03cCMgray6+YhMtv
+ FzYa+9id4xlJhcZ4tAYIEqEVzi4VjGi2vaLkp4/iYHlMkff+OwbJNjPOnHiiD2vNNSWa
+ bqnLJuyavehrN7z9alf+d022RqXvoJIqgN/rA4N8jZQeZnxwvU/1AECLVG/fgy0FCvYd
+ hCEgO7mMgpveyIuU+pLzn9d5kvDxkHTDh3H78eoyjSUWfyZgWlRh4hmGwQL4UpuTmxjK
+ kK0knSlCNH06RlbVdAzTy3pIOndslXgbWe8S/iY6i36RGYjkAcip+K66/Jwu/i+59tQB
+ F5cg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCcI4IgHQpBEvcEt7krVdtHDeiAAgIM7q4+XRICnasHToQb8YUJBayUQnkXJnPc4jyFnAHotY2QskWl0bqmKNUjrmJaro=
+X-Gm-Message-State: AOJu0YznU3bqEMCAdbJ3mfiwPFz0TRRORebnfUSjh0MzIZyMy2aQqfpu
+ nRyX+dBEDOHIs+zvT/h3zARHaNJgyPqufbzFUk99XNBNQaANKqkJVi4KoBO0JxQ=
+X-Google-Smtp-Source: AGHT+IEO7pMDVJ2m1BQnxpFZfRC9wCMiPpcU79+9F6yA31evVKJ9UWkG+3omotzVD6/S+lU12TPbEQ==
+X-Received: by 2002:a05:600c:5104:b0:416:a773:7d18 with SMTP id
+ o4-20020a05600c510400b00416a7737d18mr3775149wms.0.1712835256118; 
+ Thu, 11 Apr 2024 04:34:16 -0700 (PDT)
+Received: from carbon-x1.. ([2a01:e0a:999:a3a0:3624:d9b3:4998:d76b])
+ by smtp.gmail.com with ESMTPSA id
+ g13-20020a05600c4ecd00b004148d7b889asm5255206wmq.8.2024.04.11.04.34.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Apr 2024 04:34:15 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ qemu-devel@nongnu.org, Atish Patra <atishp@rivosinc.com>
+Subject: [PATCH] target/riscv: fix instructions count handling in icount mode
+Date: Thu, 11 Apr 2024 13:34:05 +0200
+Message-ID: <20240411113406.1301906-1-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20240411104340.6617-1-philmd@linaro.org>
- <20240411104340.6617-9-philmd@linaro.org>
-In-Reply-To: <20240411104340.6617-9-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 11 Apr 2024 12:32:40 +0100
-Message-ID: <CAFEAcA_2=3-jCR0FDPAE=Y-wG+LCx-Pqq-Oe4ageuUi=beGCrw@mail.gmail.com>
-Subject: Re: [PATCH 8/9] target/arm: Replace sprintf() by snprintf()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=cleger@rivosinc.com; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,42 +98,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Apr 2024 at 11:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-> resulting in painful developper experience. Use snprintf() instead.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  target/arm/cpu64.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 985b1efe16..f0f4fe6714 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -433,7 +433,7 @@ void aarch64_add_sve_properties(Object *obj)
->
->      for (vq =3D 1; vq <=3D ARM_MAX_VQ; ++vq) {
->          char name[8];
-> -        sprintf(name, "sve%d", vq * 128);
-> +        snprintf(name, sizeof(name), "sve%d", vq * 128);
->          object_property_add(obj, name, "bool", cpu_arm_get_vq,
->                              cpu_arm_set_vq, NULL, &cpu->sve_vq);
->      }
-> @@ -458,7 +458,7 @@ void aarch64_add_sme_properties(Object *obj)
->
->      for (vq =3D 1; vq <=3D ARM_MAX_VQ; vq <<=3D 1) {
->          char name[8];
-> -        sprintf(name, "sme%d", vq * 128);
-> +        snprintf(name, sizeof(name), "sme%d", vq * 128);
->          object_property_add(obj, name, "bool", cpu_arm_get_vq,
->                              cpu_arm_set_vq, NULL, &cpu->sme_vq);
->      }
+When icount is enabled, rather than returning the virtual CPU time, we
+should return the instruction count itself. Add an instructions bool
+parameter to get_ticks() to correctly return icount_get_raw() when
+icount_enabled() == 1 and instruction count is queried. This will modify
+the existing behavior which was returning an instructions count close to
+the number of cycles (CPI ~= 1).
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
 
-thanks
--- PMM
+---
+ target/riscv/csr.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
+
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 726096444f..5f1dcee102 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -762,14 +762,17 @@ static RISCVException write_vcsr(CPURISCVState *env, int csrno,
+ }
+ 
+ /* User Timers and Counters */
+-static target_ulong get_ticks(bool shift)
++static target_ulong get_ticks(bool shift, bool instructions)
+ {
+     int64_t val;
+     target_ulong result;
+ 
+ #if !defined(CONFIG_USER_ONLY)
+     if (icount_enabled()) {
+-        val = icount_get();
++        if (instructions)
++            val = icount_get_raw();
++        else
++            val = icount_get();
+     } else {
+         val = cpu_get_host_ticks();
+     }
+@@ -804,14 +807,14 @@ static RISCVException read_timeh(CPURISCVState *env, int csrno,
+ static RISCVException read_hpmcounter(CPURISCVState *env, int csrno,
+                                       target_ulong *val)
+ {
+-    *val = get_ticks(false);
++    *val = get_ticks(false, (csrno == CSR_INSTRET));
+     return RISCV_EXCP_NONE;
+ }
+ 
+ static RISCVException read_hpmcounterh(CPURISCVState *env, int csrno,
+                                        target_ulong *val)
+ {
+-    *val = get_ticks(true);
++    *val = get_ticks(true, (csrno == CSR_INSTRETH));
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -875,11 +878,11 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
+     int ctr_idx = csrno - CSR_MCYCLE;
+     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
+     uint64_t mhpmctr_val = val;
++    bool instr = riscv_pmu_ctr_monitor_instructions(env, ctr_idx);
+ 
+     counter->mhpmcounter_val = val;
+-    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+-        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+-        counter->mhpmcounter_prev = get_ticks(false);
++    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) || instr) {
++        counter->mhpmcounter_prev = get_ticks(false, instr);
+         if (ctr_idx > 2) {
+             if (riscv_cpu_mxl(env) == MXL_RV32) {
+                 mhpmctr_val = mhpmctr_val |
+@@ -902,12 +905,12 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
+     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
+     uint64_t mhpmctr_val = counter->mhpmcounter_val;
+     uint64_t mhpmctrh_val = val;
++    bool instr = riscv_pmu_ctr_monitor_instructions(env, ctr_idx);
+ 
+     counter->mhpmcounterh_val = val;
+     mhpmctr_val = mhpmctr_val | (mhpmctrh_val << 32);
+-    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+-        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+-        counter->mhpmcounterh_prev = get_ticks(true);
++    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) || instr) {
++        counter->mhpmcounterh_prev = get_ticks(true, instr);
+         if (ctr_idx > 2) {
+             riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
+         }
+@@ -926,6 +929,7 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+                                          counter->mhpmcounter_prev;
+     target_ulong ctr_val = upper_half ? counter->mhpmcounterh_val :
+                                         counter->mhpmcounter_val;
++    bool instr = riscv_pmu_ctr_monitor_instructions(env, ctr_idx);
+ 
+     if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
+         /*
+@@ -946,9 +950,8 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+      * The kernel computes the perf delta by subtracting the current value from
+      * the value it initialized previously (ctr_val).
+      */
+-    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+-        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+-        *val = get_ticks(upper_half) - ctr_prev + ctr_val;
++    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) || instr) {
++        *val = get_ticks(upper_half, instr) - ctr_prev + ctr_val;
+     } else {
+         *val = ctr_val;
+     }
+-- 
+2.43.0
+
 
