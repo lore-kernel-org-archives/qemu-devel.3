@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCECCD128A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA1EECD128A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rurue-0002vD-4F; Thu, 11 Apr 2024 06:44:12 -0400
+	id 1rurx9-0006TH-I1; Thu, 11 Apr 2024 06:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruruc-0002t4-PJ
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:44:10 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rurx6-0006HQ-EL
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:46:44 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurua-0004Ip-3i
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:44:10 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-41551639550so53105795e9.2
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:44:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rurx4-00053D-Ug
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:46:44 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-56e56ee8d5cso6507098a12.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712832246; x=1713437046; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1712832401; x=1713437201; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+zSTvPGfcRjEBEVqiYMcCOTilCqnhe5Ojdjg6D66FBk=;
- b=g/IYJVI4TbLIZNWEaOtyNXFOaUJQriPR0NuDWqHXF562W7r8h4uT0kewQ7GjUp2IpN
- CmwWDW7PcUt+mtLAC7j2Q8gDGXZhqEPq1h9rIL6i2To4e/if2r6MeRhDg9RRXK35NPyi
- xRuDCX7F/YKJN/pfv+7vKnNpK2ux6Y8tuFqkicRazqn5uK28h5BdYhBZyXP6rZY3r8N5
- ZrUx3BBHF9DkkVh9Gm67H+AuPHXtQSROCq1rfLtLuiyTyCF1YUBBePMlbWBYyPfP/fza
- KTcs1+TPCi+PVEzso55hM0FKUFSgtDXAex9C9tHhKyam7HTr5DlFDMWLaPybq0enJ1tN
- 51MA==
+ bh=vbkLjk7fSqzJjIzpx+/g4deWwnUPCXq7b84Avz4t4Dk=;
+ b=NqVZYDjZXCPlGN7eQrgh/B8zFVDzFXkjHiwOXO8GHPjrnSXGboyRLILqoJ8ig8eoXn
+ l9zGwyQqNDcc+jlrAhnecjPYxS+FvrjO8fYufD7vkXFO3Ps67nJD8SouBnoX0pr7XOk3
+ jhB/8Q396M7NmEDvNFfbFdftSTA3Pm4EPL88MvaUtXtn8piqw2tBQsht+WS8dbeVqzUp
+ ZoxZzbqf5vCYLpUDy/S+bV1so1TGkocfMekTbvsnqXtrMzEOc++IojP+Xzgw+BDedAYl
+ 0QpdRzbgLWI8x3wLl71rQkKj7hUGdIsnxSfd+9eSx3sVRbe8c6b6UUUEL38XUF+EGJxz
+ +F1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712832246; x=1713437046;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1712832401; x=1713437201;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+zSTvPGfcRjEBEVqiYMcCOTilCqnhe5Ojdjg6D66FBk=;
- b=tLuuupQfKcDVXPj8y148us6exhJTVjM6Z247toRkD8YRctsg/NykilankRHzeKXnm5
- F8Ci8YXQLcLGg4ITbSja/ckXzsrHEj34A+4nJ3fhp2z8WklqDxMQH2gkPayv2T7GJLXi
- AOkMJREWDaDJjMQfCr1txAsl0KBdOXW6w+dn0K1tMBplXH7yJ5cXjls9yizueurTSjWO
- AzAVNPHrqw29oLbl02naRA28hiCREJ+Ugj7XJX9Ozeu4usX/ugRwfdGh7S0RA9c5iiPV
- jDAh69gzfI9xkozTeiNKBuk21b9Ykr+OUyq3Xp+CEL1T4DLIgY7tQWHXCkhqZU9VwYSE
- eBcw==
-X-Gm-Message-State: AOJu0YyGn1+Ct4x/o560830v1/5SjX2zFFUnjqL9EPO6nh8oYyqTkMvH
- Y3LMwrxkCsljGRscswuizGzNQwW8glFJitBjM1J9//cvYSgPJcbfEauE8ldVaVrShUIVt6LDAXm
- W2P8=
-X-Google-Smtp-Source: AGHT+IHxWCKV8vYBX67vSm5fYCoJpyfz69U+mU6osVHyQ5gWbl898Jyb5aDRd9nQg5wgrHKpy7krBg==
-X-Received: by 2002:a05:600c:3154:b0:416:b7c0:23bc with SMTP id
- h20-20020a05600c315400b00416b7c023bcmr4403843wmo.10.1712832246485; 
- Thu, 11 Apr 2024 03:44:06 -0700 (PDT)
-Received: from localhost.localdomain
- (137.red-88-29-174.dynamicip.rima-tde.net. [88.29.174.137])
- by smtp.gmail.com with ESMTPSA id
- t13-20020a05600c450d00b004171f151a5csm1914852wmo.16.2024.04.11.03.44.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Apr 2024 03:44:06 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 4/9] linux-user/flatload: Replace sprintf() by snprintf()
-Date: Thu, 11 Apr 2024 12:43:35 +0200
-Message-ID: <20240411104340.6617-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240411104340.6617-1-philmd@linaro.org>
-References: <20240411104340.6617-1-philmd@linaro.org>
+ bh=vbkLjk7fSqzJjIzpx+/g4deWwnUPCXq7b84Avz4t4Dk=;
+ b=diYhxFht0RL3rTroqih0cuVlsSqpIxtInH1hzfIPlNBuv7I+ZYBMf45FiCFgBsxOtJ
+ netgRq8UGfm8gBPPq5i/homXFvnnlvd9DSpWh9lJ+VL+KhDuklQYzoB6MB/qwcD49p52
+ V+puJn4RlzO0v8Wer0qg/VqMrwEboFk496vDdMTtY00wnIsUJmQ69XTfMm7UDqB7vkdw
+ +IUaUzgmZ7FEj+E1Xj4+EA54y+o3l2JgyHDlJzl7FL7qhRNR4W46ktWs8BNjevdRbckt
+ qE/7e2ACjKmREvuVlc35QRtXohDPVfIbfjZhnY0rtbyZqyxAaxlOMOXD79LjSm3wpt46
+ tHLQ==
+X-Gm-Message-State: AOJu0YzGSmstSXPbj/Zk8r8IYevXa+HB73oQnsIzxZGzGNdWOuP5GnBU
+ v+Jd+uEzviEdbTa+EIvn3Q1k0s+JZ0epi5PEC+v5EceigWxeW6NpArDtISzYp27N8prYy5mCMsr
+ oRuQ9ux8TCJ90CN7Ho6+qeSZXxd8COmIZj3dKzA==
+X-Google-Smtp-Source: AGHT+IF8HhxjCUu34evUGWEZ0hJ0lxCW5q+iEzpHoDV9B+DfmTJn2WtoNcY4GuM+XqDMtrXkBV6r2m+914k/EEQvTH0=
+X-Received: by 2002:a50:a6d2:0:b0:56d:fdb3:bcc5 with SMTP id
+ f18-20020a50a6d2000000b0056dfdb3bcc5mr3907275edc.12.1712832401239; Thu, 11
+ Apr 2024 03:46:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+References: <20240411104340.6617-1-philmd@linaro.org>
+ <20240411104340.6617-6-philmd@linaro.org>
+In-Reply-To: <20240411104340.6617-6-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 11 Apr 2024 11:46:29 +0100
+Message-ID: <CAFEAcA-oDLAE1F9MThZBRabDeD1B6XdTSX_Qw_8PRGiK2Bjy9A@mail.gmail.com>
+Subject: Re: [PATCH 5/9] hw/misc/imx: Replace sprintf() by snprintf()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, 
+ Jason Wang <jasowang@redhat.com>, Alistair Francis <alistair@alistair23.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,28 +93,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-resulting in painful developper experience. Use snprintf() instead.
+On Thu, 11 Apr 2024 at 11:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
+> resulting in painful developper experience. Use snprintf() instead.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/misc/imx25_ccm.c  | 2 +-
+>  hw/misc/imx31_ccm.c  | 2 +-
+>  hw/misc/imx6_ccm.c   | 4 ++--
+>  hw/misc/imx6_src.c   | 2 +-
+>  hw/misc/imx6ul_ccm.c | 4 ++--
+>  hw/misc/imx7_src.c   | 2 +-
+>  hw/net/imx_fec.c     | 2 +-
+>  hw/ssi/imx_spi.c     | 2 +-
+>  8 files changed, 10 insertions(+), 10 deletions(-)
+>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- linux-user/flatload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/linux-user/flatload.c b/linux-user/flatload.c
-index 5b62aa0a2b..b0f04af4b6 100644
---- a/linux-user/flatload.c
-+++ b/linux-user/flatload.c
-@@ -692,7 +692,7 @@ static int load_flat_shared_library(int id, struct lib_info *libs)
- 	char buf[16];
- 
- 	/* Create the file name */
--	sprintf(buf, "/lib/lib%d.so", id);
-+    snprintf(buf, sizeofbuf), "/lib/lib%d.so", id);
- 
- 	/* Open the file up */
- 	bprm.filename = buf;
--- 
-2.41.0
-
+thanks
+-- PMM
 
