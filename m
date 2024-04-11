@@ -4,59 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE939CD1284
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 11:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D07CD1284
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 11:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rusi0-0002ie-FC; Thu, 11 Apr 2024 07:35:12 -0400
+	id 1rusnU-0003tl-Nv; Thu, 11 Apr 2024 07:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chunfu.jian@shingroup.cn>)
- id 1rushy-0002fc-Ad
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:35:10 -0400
-Received: from smtpbgau2.qq.com ([54.206.34.216])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chunfu.jian@shingroup.cn>)
- id 1rushi-0006Ww-IC
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:35:10 -0400
-X-QQ-mid: bizesmtp77t1712835254t2pj01zg
-X-QQ-Originating-IP: 35nfrdd5gv3Z0cbK7zSfoar6tdxjeF3/YedJb90i93M=
-Received: from localhost.localdomain ( [112.0.147.129])
- by bizesmtp.qq.com (ESMTP) with 
- id ; Thu, 11 Apr 2024 19:34:06 +0800 (CST)
-X-QQ-SSF: 0140000000000090B000000A0000000
-X-QQ-FEAT: tnN4C/PdIDX9ci0/KCVZhBUlZ9bFAfqm4BdGOrMsm3PkXaCbUDM8H7CfQtQtx
- Or6+H/OZFaZxJk+47z997UUmnCqnkPBVARrLSIobUGsByd1MBitSCej9FvRDmhL4CMOcJc1
- gSRYcc2TllNdTIjZ0lELJQbg5cBxvOBRmqxRfrvIwzzzXKYYSJWBMoWwNFg27+eFGNV0Hac
- tu89HZBLuxE5rZpRNAbv8uuYCBBF/f58Vr5v4yFiRrYeZiNSN5YY3UcLnfDplz3shHkNQ1Z
- 4rsly5KL2Vbej7xNCcwTUCOzAGOOqt0413IM702D/3WCkkULrza5+OuGlrz7dmQsyezYLRB
- aS111khAhhZp+rBi1ctFdp95buqE99req2Bf+hxM3ItxhBKRVu1opDb15QcMxVFbUqgwG2q
- aulCov9LfsY=
-X-QQ-GoodBg: 2
-X-BIZMAIL-ID: 11069852116706908286
-From: JianChunfu <chunfu.jian@shingroup.cn>
-To: mst@redhat.com,
-	cohuck@redhat.com,
-	pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org,
-	JianChunfu <chunfu.jian@shingroup.cn>
-Subject: [PATCH] linux-headers: change the annotation of
- VFIO_IOMMU_SPAPR_REGISTER_MEMORY in vfio.h
-Date: Thu, 11 Apr 2024 19:34:04 +0800
-Message-Id: <20240411113404.1274855-1-chunfu.jian@shingroup.cn>
-X-Mailer: git-send-email 2.27.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rusnD-0003rw-0z
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:40:35 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rusnB-0007h1-3o
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 07:40:34 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-56e2b41187aso1307570a12.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 04:40:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712835631; x=1713440431; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IHIF+i0Ss53JiQ/A2LOt4RnE65a5xhTGwSUyEeHDJVw=;
+ b=LX4FUlvE4dnHpXvZETTPLoGACp0g3xv1FKrrjZpVSWUfOUkvXHbPz/TtGDIIgTs0RU
+ dk1R+YusScXGeVJQfs3chhhOQN4F/Y2TjQFf8k/ikrdHPkhE8GxVToEA8UY6Pc1xSw8r
+ lMBbLVTJNmALGnR/Lt9VP6Ff4yFeuhyN7nEh0HNI0CVkZPR9iI29Hv6AUq/Do+m2Kr9A
+ ds9Ut+zLEjW/BUYFtbDnvUZW8wkb800XWoE/izBz9bN+IycL1PSuSuM++l3HS/Q/5GLu
+ 5DAUBc8eo3VQ/m0pTt0GHtVGH9tPmT98c6jDDHQqPRc6CyvYn+0D60B6mMX7FtXHopit
+ hx0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712835631; x=1713440431;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IHIF+i0Ss53JiQ/A2LOt4RnE65a5xhTGwSUyEeHDJVw=;
+ b=vhq+F7II4DNEPsKvPN5XErUtDEPaS4cVQsfw6TTswcRpEUbxftDyx7BPFspO8pSvdu
+ kIjV95mLQRRKhhta/7Wk30ccE7lx/Mf5aX9uBKbcs41NsrmCQ1w6QVes3p6dog2NQKXA
+ 58hd50ivRapDhpojqUDXqTuD1ozqUSt20SO/vwqfonE25kUz6fTC0j7K6A5lI6+XhCpz
+ MiKrzVCCGS8yAoxQVfvqeBTOoMmpl+pVKO+TFCU6YmCWBg7TW4Mj52JHi+FiuYy200mx
+ FM6L87dfb2PjlTXkIdSefWTjK/7COnkwnnIBDqi4UD9BoMqSM91uhGBnAgSddJjbB7GQ
+ 2tOw==
+X-Gm-Message-State: AOJu0Yy85K/qIS0GDTWZofoY3tDMUvgo9sX9+R4DeD6kGMhnqfdZAQdf
+ 6G2VXu3+Vt6bremCe9i0y1GCtlJXZkG1RzEYdsjcWmyzZ3S3IYnmPoait6K2D0HfbTCN/zcf6NV
+ VpR8bmEbQQB5wW+kwsvEbwwwDAaUY905mlZ13cQ==
+X-Google-Smtp-Source: AGHT+IEfWyD8uMgsXWURZ+Ox3U60AF9v0S5kuitkDL0ZI3bcAnjhshs8QcyRUl/qjCYAA7/cNpeaaNi6MV81LaDSLPw=
+X-Received: by 2002:a05:6402:f12:b0:56e:566e:730c with SMTP id
+ i18-20020a0564020f1200b0056e566e730cmr2244064eda.12.1712835631180; Thu, 11
+ Apr 2024 04:40:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:shingroup.cn:qybglogicsvrsz:qybglogicsvrsz4a-1
-Received-SPF: pass client-ip=54.206.34.216;
- envelope-from=chunfu.jian@shingroup.cn; helo=smtpbgau2.qq.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20240411104340.6617-1-philmd@linaro.org>
+ <20240411104340.6617-5-philmd@linaro.org>
+In-Reply-To: <20240411104340.6617-5-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 11 Apr 2024 12:40:20 +0100
+Message-ID: <CAFEAcA-S-go8U0hJPNSRhXQ3hSQ0BN4WVcTBPie4MRnjzGh0VQ@mail.gmail.com>
+Subject: Re: [PATCH 4/9] linux-user/flatload: Replace sprintf() by snprintf()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,29 +91,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ioctl(VFIO_IOMMU_MAP_DMA/VFIO_IOMMU_UNMAP_DMA) won't be called
-in SPAPR machine, which is replaced by VFIO_IOMMU_SPAPR_TCE_CREATE/
-VFIO_IOMMU_SPAPR_TCE_REMOVE, so change the description.
+On Thu, 11 Apr 2024 at 11:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
+> resulting in painful developper experience. Use snprintf() instead.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  linux-user/flatload.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/linux-user/flatload.c b/linux-user/flatload.c
+> index 5b62aa0a2b..b0f04af4b6 100644
+> --- a/linux-user/flatload.c
+> +++ b/linux-user/flatload.c
+> @@ -692,7 +692,7 @@ static int load_flat_shared_library(int id, struct li=
+b_info *libs)
+>         char buf[16];
+>
+>         /* Create the file name */
+> -       sprintf(buf, "/lib/lib%d.so", id);
+> +    snprintf(buf, sizeofbuf), "/lib/lib%d.so", id);
 
-Signed-off-by: JianChunfu <chunfu.jian@shingroup.cn>
----
- linux-headers/linux/vfio.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Indentation has gone wrong, and another missing '('.
 
-diff --git a/linux-headers/linux/vfio.h b/linux-headers/linux/vfio.h
-index b4be37b22..20e8e6ae8 100644
---- a/linux-headers/linux/vfio.h
-+++ b/linux-headers/linux/vfio.h
-@@ -1764,7 +1764,7 @@ struct vfio_eeh_pe_op {
-  *
-  * Registers user space memory where DMA is allowed. It pins
-  * user pages and does the locked memory accounting so
-- * subsequent VFIO_IOMMU_MAP_DMA/VFIO_IOMMU_UNMAP_DMA calls
-+ * subsequent VFIO_IOMMU_SPAPR_TCE_CREATE/VFIO_IOMMU_SPAPR_TCE_REMOVE calls
-  * get faster.
-  */
- struct vfio_iommu_spapr_register_memory {
--- 
-2.27.0
+Looking at that, I notice that this function is actually
+dead code -- it's in code that is only compiled and called
+if CONFIG_BINFMT_SHARED_FLAT is defined, and if you try to
+define that you will hit the "#error needs checking" in the
+calc_reloc() function. It seems to have been like this since
+the flatload support was added in 2006.
 
+So I think we should remove the dead code -- I'll send a patch.
+
+thanks
+-- PMM
 
