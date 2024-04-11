@@ -4,70 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BA4C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 14:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B464CC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 14:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruvFN-00065j-5q; Thu, 11 Apr 2024 10:17:49 -0400
+	id 1ruvHK-0006sx-8i; Thu, 11 Apr 2024 10:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ruvFL-00065H-6k
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:17:47 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ruvFJ-0007QU-4Z
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:17:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712845065; x=1744381065;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=D2/xZ/+UAN3hoV64W3sdxFk8s157sjQ6wR8/ys8mY5A=;
- b=CPcMBwifm5yule7pjfhZwHLGjCjnKQldedV8GDjSJaSydBdHj1zdxDba
- Ee+r0no3IbNOOhyAvnYyrqcOQsCZilTxo8kOWv4xI9t+y2a1qEzXtPzLW
- HX5/tJjWCcaEAd/rHqz6NUYDHepOksMWhJZDVV0fczcQlcfupWATRMm0R
- UY9cReM3U3HmPlIupucjzDHjU4dhd5mbKKSwIJtNXC+HK69+h7E/2T35v
- PmEVizfyzjhdGwHcsLd2+H8+Gd9u2xa6zu6PJg4g9hapopeihCqxvfBC5
- brWHuCKE2sg+s6JnGNS/Ivsm1YSC8ZSbaEisRrm9Omon35Sk4QGGsFKPI g==;
-X-CSE-ConnectionGUID: rR5AEAyfRWuFwgqu7KwHCg==
-X-CSE-MsgGUID: 7aKbuN4RQhiX3aafko5DNw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11041"; a="8816410"
-X-IronPort-AV: E=Sophos;i="6.07,193,1708416000"; 
-   d="scan'208";a="8816410"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Apr 2024 07:17:40 -0700
-X-CSE-ConnectionGUID: +tqthBRhRIKs3rjh53749A==
-X-CSE-MsgGUID: VZAMf4BxS12yNBuc/k4oIQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,193,1708416000"; d="scan'208";a="20964246"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 11 Apr 2024 07:17:40 -0700
-Date: Thu, 11 Apr 2024 22:31:41 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH for-9.1 09/19] target/i386: move 60-BF opcodes to new
- decoder
-Message-ID: <Zhf0Te5frGkdGnF9@intel.com>
-References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-10-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
+ id 1ruvHI-0006si-GS
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:19:48 -0400
+Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
+ id 1ruvHG-0007iN-RQ
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:19:48 -0400
+Received: by mail-qv1-xf31.google.com with SMTP id
+ 6a1803df08f44-69b10ead8f5so26299666d6.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 07:19:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=konsulko.com; s=google; t=1712845185; x=1713449985; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:date:message-id:subject
+ :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SZi6EZlMCSwTIOE5HWH3P6AYsvsBMzQX3hgCcaeA0MM=;
+ b=l+GP1hPmOGjMN0VmZmdGFLGyNm5V8WVsJuS8/FDr9KL4Y19PBviNUSYqXsLjTVnTlT
+ 3wWZzGawfpElugRGdDVeH+2bewPl3VCvWTYYDCCHgUmKsS4t9HgbF4eyvIoEsW5JWunb
+ XiG4qsOggnBESd1wc3W1RQD6YNu6EBPLkkOXg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712845185; x=1713449985;
+ h=content-transfer-encoding:mime-version:date:message-id:subject
+ :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SZi6EZlMCSwTIOE5HWH3P6AYsvsBMzQX3hgCcaeA0MM=;
+ b=fEo2/RU424MHkVlVqlK+DfZrr2FeruL5p0Mm3um5SksoHig59CLbFW3UY2KPbUhzHu
+ Ym/v2OvXFo4zfK6jxVr15ErZ0QjGBr740V681EVN3GuDAA3Ngp0v5JF1TBk718yePB/B
+ +ZdF9ssx2/TRGo9/Bqc1umRPY9tNa7ews4r1nnqrWHz2AY0pyRNuI0eGNt3u5UDyF11g
+ ome3jG03gCzOshI3MXt1O17XooKoRdo3aP1xnNc426+XAxMcKJJU1TT4GccyEq/dhnT2
+ OZ0MHOtgllYmNFC90bFXSaWoJqLY8V2aRcJw6qbgJNI3hjjeZxYYm9uP6+vymvVus07k
+ m0Mg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFDSdZA4aZRs0BKY9oyKthoe6H0B2OHOhV4KBpuiTWL7BsADBoxCHhOeXEo/Fg0mpkGZ0HhLNZbb+NTi14o4dN43wb69w=
+X-Gm-Message-State: AOJu0YwSSP8zCljt67K1p4Yep0YXtGyboyUIwCC9obAZjuv7DnTY1Zu7
+ 7/Aa9Q1uUCRRfdBulj/qZjor1Kl315ZmUmjICwrYpB4/4zD6uB3ELTafWeXmpaU=
+X-Google-Smtp-Source: AGHT+IHFq58JEsmIe4Jon/zA4gkpGb3tgBbX6KB2yjTvy4LDW36276+zj+keg/EOkMMwT+1xV0paYw==
+X-Received: by 2002:a05:6214:766:b0:699:274b:2173 with SMTP id
+ f6-20020a056214076600b00699274b2173mr5127650qvz.14.1712845185434; 
+ Thu, 11 Apr 2024 07:19:45 -0700 (PDT)
+Received: from [127.0.1.1] ([187.144.73.35]) by smtp.gmail.com with ESMTPSA id
+ dd9-20020ad45809000000b0069941839737sm1002421qvb.3.2024.04.11.07.19.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Apr 2024 07:19:44 -0700 (PDT)
+From: Tom Rini <trini@konsulko.com>
+To: U-Boot Mailing List <u-boot@lists.denx.de>, Simon Glass <sjg@chromium.org>
+Cc: Anatolij Gustschin <agust@denx.de>, Bin Meng <bmeng.cn@gmail.com>, 
+ Bin Meng <bmeng@tinylab.org>, Devarsh Thakkar <devarsht@ti.com>, 
+ Dzmitry Sankouski <dsankouski@gmail.com>, Fabio Estevam <festevam@denx.de>, 
+ Heinrich Schuchardt <xypron.glpk@gmx.de>, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ Nikhil M Jain <n-jain1@ti.com>, Peter Robinson <pbrobinson@gmail.com>, 
+ Svyatoslav Ryhel <clamor95@gmail.com>, 
+ Venkatesh Yadav Abbarapu <venkatesh.abbarapu@amd.com>, 
+ qemu-devel@nongnu.org
+In-Reply-To: <20240104151042.695717-1-sjg@chromium.org>
+References: <20240104151042.695717-1-sjg@chromium.org>
+Subject: Re: [PATCH v6 0/7] Resolve issues with booting distros on x86
+Message-Id: <171284518298.255737.6903946545215484016.b4-ty@konsulko.com>
+Date: Thu, 11 Apr 2024 08:19:42 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240409164323.776660-10-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -52
-X-Spam_score: -5.3
-X-Spam_bar: -----
-X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
+ envelope-from=trini@konsulko.com; helo=mail-qv1-xf31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,43 +100,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+On Thu, 04 Jan 2024 08:10:35 -0700, Simon Glass wrote:
 
-I just did some tests,
+> This little series reprises the EFI-video fix, fixes a USB problem and
+> enables a boot script for coreboot.
+> 
+> It also moves to truetype fonts for coreboot and qemu-x86, since the
+> menus look much better and there are no strong size constraints.
+> 
+> With these changes it is possible to boot a Linux distro automatically
+> with U-Boot on x86, including when U-Boot is the second-stage
+> bootloader.
+> 
+> [...]
 
-> +    [0x98] = X86_OP_ENTRY1(CBW,    0,v), /* rAX */
-> +    [0x99] = X86_OP_ENTRY3(CWD,    2,v, 0,v, None, None), /* rDX, rAX */
-> +    [0x9A] = X86_OP_ENTRYrr(CALLF, I_unsigned,p, I_unsigned,w, chk(i64)),
+Applied to u-boot/master, thanks!
 
-X86_TYPE_I_unsigned is defined in patch 11, so the related changes
-should be move into this patch to avoid compiling failures:
+-- 
+Tom
 
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1642,6 +1642,11 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-         decode->immediate = op->imm = insn_get_signed(env, s, op->ot);
-         break;
 
-+    case X86_TYPE_I_unsigned:  /* Immediate */
-+        op->unit = X86_OP_IMM;
-+        decode->immediate = op->imm = insn_get(env, s, op->ot);
-+        break;
-+
-     case X86_TYPE_L:  /* The upper 4 bits of the immediate select a 128-bit register */
-         op->n = insn_get(env, s, op->ot) >> 4;
-         break;
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index ca99a620ce94..790ad5e1d006 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -48,6 +48,7 @@ typedef enum X86OpType {
-
-     /* Custom */
-     X86_TYPE_WM, /* modrm byte selects an XMM/YMM memory operand */
-+    X86_TYPE_I_unsigned, /* Immediate, zero-extended */
-     X86_TYPE_2op, /* 2-operand RMW instruction */
-     X86_TYPE_LoBits, /* encoded in bits 0-2 of the operand + REX.B */
-     X86_TYPE_0, /* Hard-coded GPRs (RAX..RDI) */
-
--Zhao
 
