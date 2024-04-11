@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B5D2CD128A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C51CD1292
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:21:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rurUv-00067E-Mx; Thu, 11 Apr 2024 06:17:37 -0400
+	id 1rurYU-0006pB-Nh; Thu, 11 Apr 2024 06:21:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurU6-0005Hg-Bk
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:16:47 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurU4-0007Xu-FJ
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:16:46 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d700beb6beso82827231fa.2
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:16:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712830602; x=1713435402; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iYu1kmJUzwiQNwtOT3Hu+HqZtkyD9XR4Mu5bcSA+DO0=;
- b=U6k/BHCwgJFABigzB8R+bTpGMo28cYY+vNyrudGuDwq1DJYL2lhXDfgjt3muytAsxA
- vP+xn1te8pMdZ6luDwKbW5odiXZYp8i3Faubm9B9z0Nncgf/b6/72c3I0nr5mkQtEaAP
- iPADb5sEiJmcuZgoDKuCW0ieFql3hZzaWA+LlZljQpSbih+fAzT+grI7AncvMdHePOdc
- +28tTx2bHK9S5lhrUXN9VtBdttNbZibdWQELUcrvRhpak0jn5G7nw82GJqiDHdetu9lY
- MK0LvgZQ9s9Icmkf+raAusEUmFnFeWdbFK6AMlefBCrU9rClOT9Es4CgciEWeWqdnNgD
- InRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712830602; x=1713435402;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iYu1kmJUzwiQNwtOT3Hu+HqZtkyD9XR4Mu5bcSA+DO0=;
- b=cCO5JvbOkDBEXCo56d7DQN6o97lUmvuiMdblLfj10RvD4mLvyqp5DLsB7bnXzkybVi
- F6onU1Tue8mk6fvi3IBgYn/C9jPxzACbhzED1kxG7OnLa7ksHkM98zcx7q0zohTv2QTz
- 6jPSp1TwPhorrQgSL+cg3kw28OIbH3+T6tyOJTVLhd5LR+8xAPFreizGkIFj7bswkSaT
- PpZ/gKfmUb4iCoZUz5BVpO8OnZyX3SCXT+HPW2ri0zSm218tudl09ev5TsvBDnuxt/Rf
- o4mzqPWjRS6KGf3PDDO0+tu4phgLlwFCF4ho0rlrm52Es+PTkEuHc2NqiGNvXU6TWxNx
- ttRg==
-X-Gm-Message-State: AOJu0YyTt7i0b1uy5g+5n5na/Iyf7YtVgy0m/VRT6cM1JnUfxtQ3N21R
- Zlhheqj2z3etP5D7DEOIapoNMjo7X9k49PBHDPtZljMrEMYK1+0XA8i5Lq+t5A941VUH6Q1feeF
- +EWk=
-X-Google-Smtp-Source: AGHT+IEYcrSsnKC+BNy0igxOfTznc1k8qeifQMpPAh+YXA34UAl4IH8I9oOIAFR8asGlor1swIb/RQ==
-X-Received: by 2002:a2e:9219:0:b0:2d8:d23a:f440 with SMTP id
- k25-20020a2e9219000000b002d8d23af440mr2454866ljg.6.1712830602221; 
- Thu, 11 Apr 2024 03:16:42 -0700 (PDT)
-Received: from localhost.localdomain
- (137.red-88-29-174.dynamicip.rima-tde.net. [88.29.174.137])
- by smtp.gmail.com with ESMTPSA id
- p5-20020a05600c1d8500b00417e227f40bsm740594wms.3.2024.04.11.03.16.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Apr 2024 03:16:41 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rurYO-0006Kh-3Q
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:21:14 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rurYK-00007l-Qq
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:21:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1712830867;
+ bh=/7QspR69QvWGSJhEkwpSIX+VN7YWFJYXA2osXJn+Sp4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=SLgc8hdx4vGQqMg7ujm4Io3GdTL/N4nVcVO6sTzoSdJHAn8O0r9GEjqdacUu25hq2
+ DGWuq3e/+6CbgJxB4RPw/QZM7uQoaluPur0d8ucXkWZdbPw5VI70kvI5b9K/hrGQqd
+ YGaG9tEZRdJe3kIGbiVs3dFG9vxdUJDse9RBNI45KVlVVTPrCZY3Dw+nIKnS4eiEp3
+ q/AjjqYdNyWMCGRzCWvLmptc9nBJCA+45FaI9Y0rgqEN8ZSsNXwL4g/iYekTXA/aIq
+ dHWFWcLV/jufZ52My5ytHcjcGHRaw9KDDkYulFsxfjiPiNNtj0UQPuOH0AiEOnod8J
+ ohtL1GAQNQQmQ==
+Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 2DD213782132;
+ Thu, 11 Apr 2024 10:21:05 +0000 (UTC)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 08/13] util/hexdump: Have qemu_hexdump_line() return heap
- allocated buffer
-Date: Thu, 11 Apr 2024 12:15:44 +0200
-Message-ID: <20240411101550.99392-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240411101550.99392-1-philmd@linaro.org>
-References: <20240411101550.99392-1-philmd@linaro.org>
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>
+Subject: [PATCH v7 03/10] virtio-gpu: Support context-init feature with
+ virglrenderer
+Date: Thu, 11 Apr 2024 13:19:55 +0300
+Message-ID: <20240411102002.240536-4-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
+References: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,105 +91,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/qemu/cutils.h  | 10 +++++++---
- hw/virtio/vhost-vdpa.c |  5 +++--
- util/hexdump.c         | 12 ++++++++----
- 3 files changed, 18 insertions(+), 9 deletions(-)
+From: Huang Rui <ray.huang@amd.com>
 
-diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-index 70ca4b876b..e8d6b86098 100644
---- a/include/qemu/cutils.h
-+++ b/include/qemu/cutils.h
-@@ -254,18 +254,22 @@ int parse_debug_env(const char *name, int max, int initial);
+Patch "virtio-gpu: CONTEXT_INIT feature" has added the context_init
+feature flags. Expose this feature and support creating virglrenderer
+context with flags using context_id if libvirglrenderer is new enough.
+
+Originally-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ hw/display/virtio-gpu-gl.c    |  4 ++++
+ hw/display/virtio-gpu-virgl.c | 20 ++++++++++++++++++--
+ meson.build                   |  1 +
+ 3 files changed, 23 insertions(+), 2 deletions(-)
+
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index e06be60dfbfc..ba478124e2c2 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -127,6 +127,10 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+     VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
+         virtio_gpu_virgl_get_num_capsets(g);
  
- /**
-  * qemu_hexdump_line:
-- * @line: Buffer to be filled by the hexadecimal/ASCII dump
-  * @bufptr: Buffer to dump
-  * @offset: Offset within @bufptr to start the dump
-  * @len: Length of the bytes do dump
-  * @ascii: Replace non-ASCII characters by the dot symbol
-  *
-  * Hexdump a line of a byte buffer into a hexadecimal/ASCII buffer
-+ *
-+ * The caller must use g_free() to free the returned data when it is
-+ * no longer required.
-+ *
-+ * Returns: Hexadecimal/ASCII dump
-  */
- #define QEMU_HEXDUMP_LINE_BYTES 16 /* Number of bytes to dump */
- #define QEMU_HEXDUMP_LINE_LEN 75   /* Number of characters in line */
--void qemu_hexdump_line(char *line, const void *bufptr, unsigned offset,
--                       unsigned int len, bool ascii);
-+char *qemu_hexdump_line(const void *bufptr, unsigned offset,
-+                        unsigned int len, bool ascii);
- 
- /*
-  * Hexdump a buffer to a file. An optional string prefix is added to every line
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index cf7cfa3f16..e61af86d9d 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -942,12 +942,13 @@ static void vhost_vdpa_dump_config(struct vhost_dev *dev, const uint8_t *config,
-                                    uint32_t config_len)
- {
-     int ofs, len;
--    char line[QEMU_HEXDUMP_LINE_LEN];
-+    char *line;
- 
-     for (ofs = 0; ofs < config_len; ofs += 16) {
-         len = config_len - ofs;
--        qemu_hexdump_line(line, config, ofs, len, false);
-+        line = qemu_hexdump_line(config, ofs, len, false);
-         trace_vhost_vdpa_dump_config(dev, line);
-+        g_free(line);
-     }
- }
- 
-diff --git a/util/hexdump.c b/util/hexdump.c
-index 469083d8c0..b6f70e93bb 100644
---- a/util/hexdump.c
-+++ b/util/hexdump.c
-@@ -16,9 +16,10 @@
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
- 
--void qemu_hexdump_line(char *line, const void *bufptr, unsigned offset,
--                       unsigned int len, bool ascii)
-+char *qemu_hexdump_line(const void *bufptr, unsigned offset,
-+                        unsigned int len, bool ascii)
- {
-+    char linebuf[QEMU_HEXDUMP_LINE_BYTES], *line = linebuf;
-     const char *buf = bufptr;
-     int i, c;
- 
-@@ -48,18 +49,21 @@ void qemu_hexdump_line(char *line, const void *bufptr, unsigned offset,
-         }
-     }
-     *line = '\0';
++#ifdef HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS
++    g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
++#endif
 +
-+    return g_strdup(linebuf);
+     virtio_gpu_device_realize(qdev, errp);
  }
  
- void qemu_hexdump(FILE *fp, const char *prefix,
-                   const void *bufptr, size_t size)
- {
-     unsigned int ofs, len;
--    char line[QEMU_HEXDUMP_LINE_LEN];
-+    char *line;
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 9f34d0e6619c..ef598d8d23ee 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -106,8 +106,24 @@ static void virgl_cmd_context_create(VirtIOGPU *g,
+     trace_virtio_gpu_cmd_ctx_create(cc.hdr.ctx_id,
+                                     cc.debug_name);
  
-     for (ofs = 0; ofs < size; ofs += QEMU_HEXDUMP_LINE_BYTES) {
-         len = size - ofs;
--        qemu_hexdump_line(line, bufptr, ofs, len, true);
-+        line = qemu_hexdump_line(bufptr, ofs, len, true);
-         fprintf(fp, "%s: %s\n", prefix, line);
-+        g_free(line);
-     }
- 
+-    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen,
+-                                  cc.debug_name);
++    if (cc.context_init) {
++        if (!virtio_gpu_context_init_enabled(g->parent_obj.conf)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: context_init disabled",
++                          __func__);
++            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
++            return;
++        }
++
++#ifdef HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS
++        virgl_renderer_context_create_with_flags(cc.hdr.ctx_id,
++                                                 cc.context_init,
++                                                 cc.nlen,
++                                                 cc.debug_name);
++        return;
++#endif
++    }
++
++    virgl_renderer_context_create(cc.hdr.ctx_id, cc.nlen, cc.debug_name);
  }
+ 
+ static void virgl_cmd_context_destroy(VirtIOGPU *g,
+diff --git a/meson.build b/meson.build
+index f085722c89dc..f58623685477 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2284,6 +2284,7 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+ config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+ if virgl.version().version_compare('>=1.0.0')
+   config_host_data.set('HAVE_VIRGL_D3D_INFO_EXT', 1)
++  config_host_data.set('HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS', 1)
+ endif
+ config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+ config_host_data.set('CONFIG_VTE', vte.found())
 -- 
-2.41.0
+2.44.0
 
 
