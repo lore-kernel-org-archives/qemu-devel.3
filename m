@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC0A1CD128A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 08:16:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A67CD128A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 08:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rupbP-0004gh-7m; Thu, 11 Apr 2024 04:16:11 -0400
+	id 1rupcR-0005Q2-LW; Thu, 11 Apr 2024 04:17:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rupbN-0004gS-8O
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 04:16:09 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1rupcO-0005PT-Ix
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 04:17:12 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rupbK-0005Df-Uq
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 04:16:08 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6ecff9df447so6351663b3a.1
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 01:16:06 -0700 (PDT)
+ id 1rupcM-0005HX-HK
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 04:17:12 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1e4266673bbso36618975ad.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 01:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712823364; x=1713428164; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712823429; x=1713428229; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VE9fzmSB/sHdUF7YMeAyAVnL2WSxZl1ES34T0xSXyx8=;
- b=b7AK1+NkGv7P0ftwdVQgyvvm5bbBSw4FdFcSxaOlCQPBDyJ/Jprwc2wUozqIfSZLwx
- O+nKdmjDEiKqxfZ6oo3RtiUZ4IJLkl8Hr019xOhazizzF+u/x95Ym+dUdj4F4Xt7SnRZ
- x7u4wdj7PDGCxEnqEL0y9IvcC0UJsz7aV2yxBmSF52+fWEJYHgBC7kCsRf0khjJZaS7B
- b7acjrE6cUABWZt3oySeTBloDldBmlRa8ljZFx6Fs2v7PJrKtJeVnBhmWTXQHq1qzw2l
- QUvZMwLi1dYPZCQWhZ10AqxVOzS5ZXLRw8EQ5xXGVpBsh9Jh1cxNfuMPTwyTTQxRPxpj
- x9Kg==
+ bh=QbyICbgQc6MdWIYxl7YkS7lViiMSn8SHJrY55ezy97k=;
+ b=YLBFey/OZvrKAZWtzFhWdlwA/1+se/HSVmKUhQtz1+a8lySyFrj9smbWTEKsm5nXoJ
+ wNhZHCqNdrBqHov6iZOZXrp+A/lA/C2I4oDwxLyHEqTNzPqJKKZiV1G8IUYa/qhzR+FL
+ Ef89lOgwAYnxJUB/xbomQGMoqNXXCVNtfOBIfzaQlboWejakRwxBCcglmjM6TmDBUn5k
+ o/TUmgUPnKIDvbzrRZko3tuMTq94NLscaiTFDw/YyWJHL9fjsmLuYuTj2siJF3OxSN/x
+ 5km/CdbAorDVKSE1CjHcBflKLY50++g5W3VrhLyaPF+EITC70s0DP0S3Vxg6Z5p73nUk
+ 1XSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712823364; x=1713428164;
+ d=1e100.net; s=20230601; t=1712823429; x=1713428229;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VE9fzmSB/sHdUF7YMeAyAVnL2WSxZl1ES34T0xSXyx8=;
- b=RSN+dUxcvBF62tKwCmEFN+Ly0u/ttRbRiWaYVyGXlZ9K20GZtZ61/6ueyeVwtwFq/u
- 7GBA/gdFtesblzLMF9pDNdXPV2Qr9GFzmvVtfLp6w/UsPBM/7ww4B5QpDxJQ5pxuwlRB
- 7ItA3X+zTOuHixYJGSFvWyslnEsRRhFoDZqRziQba2Ak/RAg32vULZ0XSm+rThDpfZsH
- MVSvEmIblZUEvfL74yNExEGcwCprwRsxHIH4/Th+JwTUrWO+jXrsDaJuaR4vCBW1haNQ
- dRr6UC7hbVeLEEOYKRPgdJ+S6bEWY2Jwm9Ae0yVQjQLDDYoPeTltf0fE21h5YZ7K97zV
- AuPg==
+ bh=QbyICbgQc6MdWIYxl7YkS7lViiMSn8SHJrY55ezy97k=;
+ b=huKvYDkWnbSDf/yCXu5mar1gmHSDaIz93bQ3u4aXujKec3c4zcwGYwwoxzEtGcd7Dt
+ METASFvbtYFIpibZa/2Zk6T8PAagTU43kmWCYqsje/yTJcOVMgnea6jemjRbZ2HB+BFN
+ lTvuePcuvvIFBDmnKjkAB/3XXKmrFVoozg3pj8S8VDIVJIOFvNmhIxTTdBlbim6/qtKs
+ PQehpbMOpjHdnCKoRvipL6DZelpR8ty8DNHoKH2oQ8x7SG/pJqPdSLht63xpMYK8FvHo
+ h4K9RNPZqElFBVvZlp7diXD39EOjcwCJ9OVUV0njkTiD5Fk6/nkesVMOW5ztvXV4LqGc
+ Uijg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFUgT+TaudiBRIGPDwWy7anyggsFvdmKVGRBq4/dZomfqW6A5MFvtQ9gdoCJAbXyzq3is7uFmaWnkYI2MOZCCA7OYzJNY=
-X-Gm-Message-State: AOJu0YwO5N1o75bUKsJ0yJz8YpjjOLWxTKvVTG3C65AmdnU1x8TrmA2b
- U94Ii9LI6Xm9mXxKW73eK1M87WHIu/N401jtjzBpvuLq9GZkCtiltKPoptjW32w=
-X-Google-Smtp-Source: AGHT+IGejog4GzUwDpSWJ+GS/I5eOdLFfoWiw8VH9Uy5+ogRdkDT5BGpBANks+wpfTCNN4QNR7r2OQ==
-X-Received: by 2002:a05:6a00:1389:b0:6ea:c04c:71cb with SMTP id
- t9-20020a056a00138900b006eac04c71cbmr5834119pfg.3.1712823364473; 
- Thu, 11 Apr 2024 01:16:04 -0700 (PDT)
+ AJvYcCWoyMHleT/eNBF2g5dXa7dmcNoKjcT+W8vcgqM3Zbz6mWKZcnM6cueI7v9mltzAHGj21z3JNImkGfM5qGMn8NgPiVgC/Co=
+X-Gm-Message-State: AOJu0YxRJaQWGVOr8j2zTGTwI96N9I/svOQvmRpXIgTIup6Qf4wG2GWw
+ Xp1snLhZlISMsmvDHW/1x5rUZw/U2IfIGoD8He1e5mQzIgftDU2wpSxfkFKM368=
+X-Google-Smtp-Source: AGHT+IHj2BaGAzrIbJYLKuPYaK9m06G+Yzs/KTNRJjNOZkdj1sb9VoFlQqYxDr1Fb5ERR4gvR3pNmQ==
+X-Received: by 2002:a17:902:f68f:b0:1e3:c9f6:c4b with SMTP id
+ l15-20020a170902f68f00b001e3c9f60c4bmr5834287plg.10.1712823428967; 
+ Thu, 11 Apr 2024 01:17:08 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- f11-20020a056a00228b00b006ed26aa0ae6sm746360pfe.54.2024.04.11.01.16.03
+ l16-20020a170903245000b001e55d7c5c41sm475855pls.267.2024.04.11.01.17.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Apr 2024 01:16:03 -0700 (PDT)
-Message-ID: <65f973d9-8357-43f0-ba9b-42d885e1fc8e@linaro.org>
-Date: Thu, 11 Apr 2024 01:16:02 -0700
+ Thu, 11 Apr 2024 01:17:08 -0700 (PDT)
+Message-ID: <ebc75323-3297-4fac-acb3-eaedc7dc47fb@linaro.org>
+Date: Thu, 11 Apr 2024 01:17:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 17/19] target/i386: decode x87 instructions in a
+Subject: Re: [PATCH for-9.1 18/19] target/i386: split legacy decoder into a
  separate function
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-18-pbonzini@redhat.com>
+ <20240409164323.776660-19-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240409164323.776660-18-pbonzini@redhat.com>
+In-Reply-To: <20240409164323.776660-19-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,17 +99,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/9/24 09:43, Paolo Bonzini wrote:
-> These are unlikely to be converted to the table-based decoding
-> soon (perhaps there could be generic ESC decoding in decode-new.c.inc
-> for the Mod/RM byte, but not operand decoding), so keep them separate
-> from the remaining legacy-decoded instructions.
+> Split the bits that have some duplication with disas_insn_new, from
+> those that should be the main topic of the conversion.  This is the
+> first step towards removing duplicate decoding of prefixes between
+> disas_insn and disas_insn_new.
 > 
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 1120 ++++++++++++++++++-----------------
->   1 file changed, 566 insertions(+), 554 deletions(-)
+>   target/i386/tcg/translate.c | 58 +++++++++++++++++++++++--------------
+>   1 file changed, 37 insertions(+), 21 deletions(-)
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
