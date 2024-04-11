@@ -4,92 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658B0C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 14:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5DBC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 14:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruvOP-0000p6-8F; Thu, 11 Apr 2024 10:27:09 -0400
+	id 1ruvTY-0002TM-UJ; Thu, 11 Apr 2024 10:32:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruvON-0000on-IK
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:27:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ruvT9-0002QQ-7C
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:32:04 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ruvOM-0000tk-3K
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:27:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712845625;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lVao6WQq6GlF4InXsU8dQ9kDPyVt9Ra6P0r3D+7rDIM=;
- b=dsCKmiX0WsoXFwmw6h6MkC6wwAlKgvNE9N8veC3C1+ygNfRNWat4pug6Bs9qVMfaZjHukv
- qNIzTxj5kwTDvr1MsVCNsXkIThHBQGs6VXF0vroXqIFGSEH1EbmgzMVC68iPvrtdSJjoxa
- 38DzHbz1Y9gkf1UVM9d/5nXQYCn7YRw=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-Sw5zniVcMee8T_T8WAykxw-1; Thu, 11 Apr 2024 10:27:03 -0400
-X-MC-Unique: Sw5zniVcMee8T_T8WAykxw-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-6ea2ec4773eso654128a34.0
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 07:27:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712845621; x=1713450421;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lVao6WQq6GlF4InXsU8dQ9kDPyVt9Ra6P0r3D+7rDIM=;
- b=WKBY5YPQS35OGUTfgwITeLzW/d7CVfLdgtJ4JyB4mfqUwPfq5J+jtLjz3JGMshJgGD
- 2YuYc2BHXZOSPXh7FBhBWX+gdwjA7bYmkbMGpiY6yABr5DQRkZ5/ko2CzaLwStuTMwJV
- gw04IzNRDKY0Rp/HUGr3OeJwSL3AAdgQtemm8ceH74sRXiMPVRTwkRhuivNn3sXHDFMa
- pH2IGWxb7rHU5K2MVl1PeK3oq7fmq0JSzCDrm4tKtNxY1Aw26472gAoZblJHCMMoGc/d
- gclkdNqx2SA/I91miK4af3FgR6NtU0mmTK+DvgkaCwTSyvkVcmT4qrmiGDqwMazJ/4YX
- boDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUcySX1y4+jT3AupxjKRrT/XwXJWH+7KdBm0vd28XLBitLw7fM0wX/6Yb2Qwt/1ij1UrJgprh5Tjv1zYQlTshVAtz59bEs=
-X-Gm-Message-State: AOJu0YzyF0uCm7+Ei4yUJVel+UVALu7vnLIi3i9mvgO2jrrErWOyH3rI
- Q5m5LtHtQyVMysYScAhkIVp2+tc3Y2zwCtg5hEdLUK3IKvGynOT90rcN8fkeE/U+dvNrrJp53sd
- zXx6vZZc+mUT3U7wNJd9Hn4krxD9m+xc82njaOuxJ3nr3uGlR4k4j
-X-Received: by 2002:a05:6830:1d62:b0:6ea:2a7b:2de4 with SMTP id
- l2-20020a0568301d6200b006ea2a7b2de4mr5560613oti.2.1712845620872; 
- Thu, 11 Apr 2024 07:27:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGcmQetJHXZGtZwkKTQIe33ejt9NR4IjPmI3CBuwt2lGyXzewibOz1OdymWG1PJh+CIyyy3xw==
-X-Received: by 2002:a05:6830:1d62:b0:6ea:2a7b:2de4 with SMTP id
- l2-20020a0568301d6200b006ea2a7b2de4mr5560577oti.2.1712845620248; 
- Thu, 11 Apr 2024 07:27:00 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- i6-20020ad45386000000b0069b4d64ab0bsm694023qvv.138.2024.04.11.07.26.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Apr 2024 07:26:59 -0700 (PDT)
-Date: Thu, 11 Apr 2024 10:26:58 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Het Gala <het.gala@nutanix.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- prerna.saxena@nutanix.com
-Subject: Re: [PATCH 1/4] Revert "migration: modify test_multifd_tcp_none() to
- use new QAPI syntax"
-Message-ID: <ZhfzMt3t2oU7qt90@x1n>
-References: <20240410111541.188504-1-het.gala@nutanix.com>
- <20240410111541.188504-2-het.gala@nutanix.com>
- <874jc9v066.fsf@suse.de> <Zhan0Brg_CXzt79-@x1n>
- <8621e850-168a-454a-8f00-615f476eac31@nutanix.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ruvT4-0001Xi-TK
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:32:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712845920; x=1744381920;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=9iYwU/GixJig1EPBHxi1sh8g6A/f9aPX/0fmYayaLLI=;
+ b=dtUJlIShNVRzuIFfsu6n4kcx6dqHQrOYiKsjMeHJSQW/wZOV+GVKidu7
+ vaVwOI2QVClcXoTXBF+KK6j9LnGtFGJ3D9gcUaMXK0PZ8KD+cIONulMhk
+ AUGfZFqhWq/j2lx054R1dYzDaFGjiVRlu/mz6u6eqfnG/HxxhHqUL2aUN
+ UlTfgtvfMMI/EzmvpRf1/0limuIr1cT/XilSt/81F6tsF0993Lh27Gtct
+ fnriML4Lqvb9T6YMY+tjf2PHv3Y/qypknoMDIiRdSvGlPmON52KT8m4Jj
+ dc8vttAf9Tf975N/7yCFh55mIyVUmFtjEf28/CE/effh/TGFeM4++Wqjk A==;
+X-CSE-ConnectionGUID: fD33OqOwSEO1m3wi72MJgg==
+X-CSE-MsgGUID: wV2rY5iASdi39sqafMO01w==
+X-IronPort-AV: E=McAfee;i="6600,9927,11041"; a="25712645"
+X-IronPort-AV: E=Sophos;i="6.07,193,1708416000"; d="scan'208";a="25712645"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Apr 2024 07:31:56 -0700
+X-CSE-ConnectionGUID: 5OwuhGWCTGq7kKD8g0a7WA==
+X-CSE-MsgGUID: r+Ll/ui8TKCz6eWLNkK3+Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,193,1708416000"; d="scan'208";a="21358377"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa006.jf.intel.com with ESMTP; 11 Apr 2024 07:31:55 -0700
+Date: Thu, 11 Apr 2024 22:45:56 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH for-9.1 10/19] target/i386: generalize gen_movl_seg_T0
+Message-ID: <Zhf3pDGRxqRmr5np@intel.com>
+References: <20240409164323.776660-1-pbonzini@redhat.com>
+ <20240409164323.776660-11-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8621e850-168a-454a-8f00-615f476eac31@nutanix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
+In-Reply-To: <20240409164323.776660-11-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,57 +82,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 11, 2024 at 07:45:21PM +0530, Het Gala wrote:
+Hi Paolo,
+
+On Tue, Apr 09, 2024 at 06:43:14PM +0200, Paolo Bonzini wrote:
+> Date: Tue,  9 Apr 2024 18:43:14 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH for-9.1 10/19] target/i386: generalize gen_movl_seg_T0
+> X-Mailer: git-send-email 2.44.0
 > 
-> On 10/04/24 8:23 pm, Peter Xu wrote:
-> > !-------------------------------------------------------------------|
-> >    CAUTION: External Email
-> > 
-> > |-------------------------------------------------------------------!
-> > 
-> > On Wed, Apr 10, 2024 at 10:04:33AM -0300, Fabiano Rosas wrote:
-> > > Het Gala <het.gala@nutanix.com> writes:
-> > > 
-> > > > This reverts commit 8e3766eefbb4036cbc280c1f1a0d28537929f7fb
-> > > > 
-> > > > After addition of 'channels' as the starting argument of new QAPI
-> > > > syntax inside postcopy test, even if the user entered the old QAPI
-> > > > syntax, test used the new syntax.
-> > > > It was a temporary patch added to have some presence of the new syntax
-> > > > since the migration qtest framework lacked any logic for introducing
-> > > > 'channels' argument.
-> > > That wasn't clear to me when we merged that. Was that really the case?
-> > Yeah these look all a bit confusing..
-> > 
-> > I'm wondering whether do we need the new interface to cover both precopy
-> > and postcopy, or one would suffice?
-> > 
-> > Both should share the same interface.  I think it means if we covered the
-> > channels interface in precopy, then perhaps we don't need to test anywhere
-> > else, as we got the code paths all covered.
-> > 
-> > We actually do the same already for all kinds of channels for postcopy,
-> > where we stick with either tcp/unix but don't cover the rest.
-> Do we want to add other transports too (vsock, exec, rdma) with the new
-> interface ?
-> I believe we have tests for fd based migration
+> In the new decoder it is sometimes easier to put the segment
+> in T1 instead of T0, usually because another operand was loaded
+> by common code in T0.  Genrealize gen_movl_seg_T0 to allow
+> using any source.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/i386/tcg/translate.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index de1ccb6ea7f..8a34e50c452 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -2531,12 +2531,12 @@ static void gen_op_movl_seg_real(DisasContext *s, X86Seg seg_reg, TCGv seg)
+>      tcg_gen_shli_tl(cpu_seg_base[seg_reg], selector, 4);
+>  }
+>  
+> -/* move T0 to seg_reg and compute if the CPU state may change. Never
+> +/* move SRC to seg_reg and compute if the CPU state may change. Never
+>     call this function with seg_reg == R_CS */
+> -static void gen_movl_seg_T0(DisasContext *s, X86Seg seg_reg)
+> +static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src)
+>  {
+>      if (PE(s) && !VM86(s)) {
+> -        tcg_gen_trunc_tl_i32(s->tmp2_i32, s->T0);
+> +        tcg_gen_trunc_tl_i32(s->tmp2_i32, src);
+>          gen_helper_load_seg(tcg_env, tcg_constant_i32(seg_reg), s->tmp2_i32);
+>          /* abort translation because the addseg value may change or
+>             because ss32 may change. For R_SS, translation must always
 
-Het,
+This patch missed to include another gen_movl_seg_T0() use in emit.c.inc,
+which was cleaned up later in patch 11. We could move that cleanup into
+this patch to avoid compiling failures.
 
-What I meant is we used to do white box testing for migration, trying to
-cover all the code paths would suffice for us in that case.
-
-It means maybe we don't need the postcopy test to cover the channels
-interface as long as precopy has covered that and also if that covered all
-the "channels" abi then we should be safe.
-
-What I worry is we keep extending the test matrix but we're actually
-testing the same code paths.  Then the test runs slower each time, we burn
-more cpus for each CI kick, but without a real beneift.
-
-Thanks,
-
--- 
-Peter Xu
+-Zhao
 
 
