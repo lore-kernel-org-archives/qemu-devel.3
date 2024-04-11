@@ -4,68 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5DBC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 14:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F3B4C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 14:40:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruvTY-0002TM-UJ; Thu, 11 Apr 2024 10:32:29 -0400
+	id 1ruvai-0004F8-Cd; Thu, 11 Apr 2024 10:39:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ruvT9-0002QQ-7C
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:32:04 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ruvT4-0001Xi-TK
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:32:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712845920; x=1744381920;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=9iYwU/GixJig1EPBHxi1sh8g6A/f9aPX/0fmYayaLLI=;
- b=dtUJlIShNVRzuIFfsu6n4kcx6dqHQrOYiKsjMeHJSQW/wZOV+GVKidu7
- vaVwOI2QVClcXoTXBF+KK6j9LnGtFGJ3D9gcUaMXK0PZ8KD+cIONulMhk
- AUGfZFqhWq/j2lx054R1dYzDaFGjiVRlu/mz6u6eqfnG/HxxhHqUL2aUN
- UlTfgtvfMMI/EzmvpRf1/0limuIr1cT/XilSt/81F6tsF0993Lh27Gtct
- fnriML4Lqvb9T6YMY+tjf2PHv3Y/qypknoMDIiRdSvGlPmON52KT8m4Jj
- dc8vttAf9Tf975N/7yCFh55mIyVUmFtjEf28/CE/effh/TGFeM4++Wqjk A==;
-X-CSE-ConnectionGUID: fD33OqOwSEO1m3wi72MJgg==
-X-CSE-MsgGUID: wV2rY5iASdi39sqafMO01w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11041"; a="25712645"
-X-IronPort-AV: E=Sophos;i="6.07,193,1708416000"; d="scan'208";a="25712645"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Apr 2024 07:31:56 -0700
-X-CSE-ConnectionGUID: 5OwuhGWCTGq7kKD8g0a7WA==
-X-CSE-MsgGUID: r+Ll/ui8TKCz6eWLNkK3+Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,193,1708416000"; d="scan'208";a="21358377"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa006.jf.intel.com with ESMTP; 11 Apr 2024 07:31:55 -0700
-Date: Thu, 11 Apr 2024 22:45:56 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH for-9.1 10/19] target/i386: generalize gen_movl_seg_T0
-Message-ID: <Zhf3pDGRxqRmr5np@intel.com>
-References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-11-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ruvaa-0004EZ-TX
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:39:44 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ruvaW-0002rs-Tt
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 10:39:44 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AF93E375B5;
+ Thu, 11 Apr 2024 14:39:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1712846376; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=WBNvzVpZF0lcpbITGVaq735Fov1GdvVgbyazH/jItqU=;
+ b=VW8u5dlZ7ieEH/tDZrQkI2vm1NIj1tQ5zax6ZHYbA16lpRnui7W/oVRkntfTwr4B2LDcBj
+ Yqt/7lEwRA1oRfYlBcxMjaSKwxazFwk1k81ObYQOFw8+qUajLkzAyE5ly06TunxRJZuZWM
+ fas2wGj2NDCLE16OW7buQKfk4mkN63k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1712846376;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=WBNvzVpZF0lcpbITGVaq735Fov1GdvVgbyazH/jItqU=;
+ b=qQS42Hj7cfBb4C5AwuXT5ZqK9zd0fTmX/3+wOZA3mW6cyKUNZLHdCJi8aOWcu/6a7T7Ktf
+ TDZzDwFLAdP8rmAA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1712846376; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=WBNvzVpZF0lcpbITGVaq735Fov1GdvVgbyazH/jItqU=;
+ b=VW8u5dlZ7ieEH/tDZrQkI2vm1NIj1tQ5zax6ZHYbA16lpRnui7W/oVRkntfTwr4B2LDcBj
+ Yqt/7lEwRA1oRfYlBcxMjaSKwxazFwk1k81ObYQOFw8+qUajLkzAyE5ly06TunxRJZuZWM
+ fas2wGj2NDCLE16OW7buQKfk4mkN63k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1712846376;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=WBNvzVpZF0lcpbITGVaq735Fov1GdvVgbyazH/jItqU=;
+ b=qQS42Hj7cfBb4C5AwuXT5ZqK9zd0fTmX/3+wOZA3mW6cyKUNZLHdCJi8aOWcu/6a7T7Ktf
+ TDZzDwFLAdP8rmAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3A33B13685;
+ Thu, 11 Apr 2024 14:39:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id pRjHACj2F2a+SQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 11 Apr 2024 14:39:36 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Hailiang Zhang <zhanghailiang@xfusion.com>, Zhang Chen
+ <chen.zhang@intel.com>, Li Zhijian <lizhijian@fujitsu.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Subject: COLO state?
+Date: Thu, 11 Apr 2024 11:39:33 -0300
+Message-ID: <87pluwarq2.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240409164323.776660-11-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -52
-X-Spam_score: -5.3
-X-Spam_bar: -----
-X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-3.16 / 50.00]; BAYES_HAM(-2.86)[99.41%];
+ SUBJECT_ENDS_QUESTION(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[fujitsu.com:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,49 +108,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+Hi COLO maintainers,
 
-On Tue, Apr 09, 2024 at 06:43:14PM +0200, Paolo Bonzini wrote:
-> Date: Tue,  9 Apr 2024 18:43:14 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH for-9.1 10/19] target/i386: generalize gen_movl_seg_T0
-> X-Mailer: git-send-email 2.44.0
-> 
-> In the new decoder it is sometimes easier to put the segment
-> in T1 instead of T0, usually because another operand was loaded
-> by common code in T0.  Genrealize gen_movl_seg_T0 to allow
-> using any source.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/tcg/translate.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index de1ccb6ea7f..8a34e50c452 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -2531,12 +2531,12 @@ static void gen_op_movl_seg_real(DisasContext *s, X86Seg seg_reg, TCGv seg)
->      tcg_gen_shli_tl(cpu_seg_base[seg_reg], selector, 4);
->  }
->  
-> -/* move T0 to seg_reg and compute if the CPU state may change. Never
-> +/* move SRC to seg_reg and compute if the CPU state may change. Never
->     call this function with seg_reg == R_CS */
-> -static void gen_movl_seg_T0(DisasContext *s, X86Seg seg_reg)
-> +static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src)
->  {
->      if (PE(s) && !VM86(s)) {
-> -        tcg_gen_trunc_tl_i32(s->tmp2_i32, s->T0);
-> +        tcg_gen_trunc_tl_i32(s->tmp2_i32, src);
->          gen_helper_load_seg(tcg_env, tcg_constant_i32(seg_reg), s->tmp2_i32);
->          /* abort translation because the addseg value may change or
->             because ss32 may change. For R_SS, translation must always
+Would you please take a look at this issue?
 
-This patch missed to include another gen_movl_seg_T0() use in emit.c.inc,
-which was cleaned up later in patch 11. We could move that cleanup into
-this patch to avoid compiling failures.
+https://gitlab.com/qemu-project/qemu/-/issues/2277
 
--Zhao
+The reporter claims it affects from 9.0-rc2 all the way back to QEMU
+7.2. I don't have any kind of setup for COLO, so it will take me a while
+to be able to verify this.
 
+Could you also provide clarification on what is the state of COLO these
+days? Are any of you looking at it? Do we know of active users of the
+feature?
+
+Also, is the MAINTAINERS file reflecting the actual maintenance state
+according to you?
+
+COLO Framework
+M: Hailiang Zhang <zhanghailiang@xfusion.com>
+S: Maintained
+F: migration/colo*
+F: include/migration/colo.h
+F: include/migration/failover.h
+F: docs/COLO-FT.txt
+
+COLO Proxy
+M: Zhang Chen <chen.zhang@intel.com>
+M: Li Zhijian <lizhijian@fujitsu.com>
+S: Supported
+F: docs/colo-proxy.txt
+F: net/colo*
+F: net/filter-rewriter.c
+F: net/filter-mirror.c
+F: tests/qtest/test-filter*
+
+Thanks
 
