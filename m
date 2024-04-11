@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E551BCD1284
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7119CD128A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rurVG-0006Uw-CW; Thu, 11 Apr 2024 06:17:58 -0400
+	id 1rurUw-0006CO-6L; Thu, 11 Apr 2024 06:17:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurUa-0005Yh-JV
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:17:18 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurUK-0005MV-IU
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:17:06 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurUX-0007eN-4D
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:17:14 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-343cfa6faf0so5805123f8f.0
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:17:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurUH-0007bF-CO
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:16:59 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2d700beb60bso123181411fa.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712830631; x=1713435431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712830614; x=1713435414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2cVNgvNeXvdU51bO0Cz/mKYmbc4VssBzSVzGArcUzjU=;
- b=csDD1xx0Z0zF6wd1E23GjOvXPx3NEC5RNlBSZDRspr2zmMs+NclJfIRFriPRDXdt4r
- d8Ji4BQJfWRuQTlQHDHnSrwmuPB2ceiNlUfxc0Oj9D5JmvTixhaRZuDtVVBkIIhEwbYY
- SeNGX+ieQ1kyML4edBYmFXiSje6yy8GC4iy69WlGzyhchqvSULK3bR5MUdow7evnTZVj
- qqAN+k5nvmz0WbE8MAT+rsC4d4jmSC3E/qrM1zEAv2bgoNhQUzC9mLQAyIxRWFbcVb+j
- 4LLhaoq1eMoPiwmE13BAyBt1S+El2JjQZwg1lO9fHlhn3J2SxFdF3GDQjdCoAS6+20J7
- cUDw==
+ bh=urm+Npyj3/f/E1cmlvhojimXxZbt++WU9CB9v2xORc4=;
+ b=OSBc6wG+2rBkcpRghqTREESEvkDIHxU1tiW/aopm0NA7XmJngLRzAOe6LpUUKgrLVU
+ ruuGvQbRRl2zRHczezhHm1a1ncYO6IB1D/U3OMvxdygk6SBCL3D9LvtSACmuj/DFF5d6
+ qxs+EhjitLV+NfXTjS2+Ra7MX91wYwTe4aqerPZeuPXGlNvEju3eZ0sqb03Qm8vF0tAi
+ PLplMIXcntOsJpZNuzJrhuP6YguSjGggNrQL7ZILHAz25rn1vav7OqHgkTn8ggh/elck
+ U3Xu/lU20+0Lxr4+KB8gFCrhgqtZI4hc7BqSjIWh5rPgWEO+zFKAxtGtpvD4DAxDdgAM
+ NRVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712830631; x=1713435431;
+ d=1e100.net; s=20230601; t=1712830614; x=1713435414;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2cVNgvNeXvdU51bO0Cz/mKYmbc4VssBzSVzGArcUzjU=;
- b=FDMtfUYHrkS9FlxSfs43BdtZPSwB2uCuedy+PvljEApIi21mjKZWlYdCszPqTK03jH
- 5b1tM5TtR/2opTwG21ysEuAuKJd+KIwLvv137ELUlMk79sqdvaffXuvl9BagB7X8zvOZ
- Olhjofvk8VKjYNCk0WRiXTZboR2FEkurR35gpUShrzqSTeAkuwACD593h2OlV82t7Gnz
- tafBLdxCFq02xWqeSBKRTVQDRCmLH1ZP8LUh4mN5xRz0kJTPlJK6h0l7UGmKf8Bt3uMq
- +UNGFBH6YYaXEotwxQVOMUdaBxKoXGmQcczdnJxPt5Jn8MDgAwTufm0ZhZyzxaXasGqV
- dEcg==
-X-Gm-Message-State: AOJu0Yz21uaO371cExYU34tXYhL0f2Eci+fLEJnzApexICZ1FZnfSF1L
- 0zUkoBFTVo4Q3khpWM6u/7JtRLSDULyQ2Y7s4dc8w58UFBXgujx4Q9FmkBK3uySiZb2J0bR8yYr
- nlds=
-X-Google-Smtp-Source: AGHT+IHdltH2e6GjIrJCIhTrRGuk53JS50K8lEHZCpVMgnPXaBK8O9V3kEWM4ilpsXuryIUk+KWEoA==
-X-Received: by 2002:a05:6000:186b:b0:343:6b76:251f with SMTP id
- d11-20020a056000186b00b003436b76251fmr5589625wri.42.1712830631600; 
- Thu, 11 Apr 2024 03:17:11 -0700 (PDT)
+ bh=urm+Npyj3/f/E1cmlvhojimXxZbt++WU9CB9v2xORc4=;
+ b=cWA88EKt7UudNfaAHl/UjoTP+EjTIUWyG81LtqVnU6XylQ7bsFHixDIlJPv1Tmho6/
+ Hjp1dy1dD7RPJFTcQWNHBkIYVYTplejJHR/B1+NPAWwpmwgO2WfYad4ZecX/pqzDV1/n
+ y0PLJxseenovKnQLaiiJEWHPkqztZrUFId/eupdf3dJmK2YfDWlnS/+py5SLqdYc+c1v
+ Gy4NhUoagBGwr14hV2UErsQF0NJXp4ZYGzISXTelVTXy25//lJIFxmYIQwE09Ry1iZeY
+ hmCTD1nF5pWfJe/DtCrxwRAZtSpOvNUM+IethXQHbIiDMtnUjf4mRt0+2Hy1ArKK2oIg
+ LsYw==
+X-Gm-Message-State: AOJu0YxQBl7XLwwPb1wKZQjlrNnGBrzCzKqnm8sXDjNaOFV9rbzgT09Z
+ 0QvJ8advIrvLoTwQOPniSBqQSbMvkmZoUz1YoE4qEHikSO6lsuC170B8bsx3PPiBdF8Qlp+63el
+ Qv+A=
+X-Google-Smtp-Source: AGHT+IG9+lkMVPvqfPMMsIhH6GYCZs8mJ805Y9tsJCi4f8ryfbo2SNvTVUSv7O8vg7Yr25j2umi6hw==
+X-Received: by 2002:a2e:9317:0:b0:2d8:5fe6:820d with SMTP id
+ e23-20020a2e9317000000b002d85fe6820dmr4355192ljh.11.1712830613862; 
+ Thu, 11 Apr 2024 03:16:53 -0700 (PDT)
 Received: from localhost.localdomain
  (137.red-88-29-174.dynamicip.rima-tde.net. [88.29.174.137])
  by smtp.gmail.com with ESMTPSA id
- e18-20020adffd12000000b00343826878e8sm1413910wrr.38.2024.04.11.03.17.10
+ iv11-20020a05600c548b00b0041665b6e111sm5064848wmb.12.2024.04.11.03.16.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Apr 2024 03:17:11 -0700 (PDT)
+ Thu, 11 Apr 2024 03:16:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Berger <stefanb@linux.ibm.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: [PATCH v2 13/13] backends/tpm: Use qemu_hexdump_line() to avoid
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: [PATCH v2 10/13] hw/scsi/scsi-disk: Use qemu_hexdump_line() to avoid
  sprintf()
-Date: Thu, 11 Apr 2024 12:15:49 +0200
-Message-ID: <20240411101550.99392-14-philmd@linaro.org>
+Date: Thu, 11 Apr 2024 12:15:46 +0200
+Message-ID: <20240411101550.99392-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240411101550.99392-1-philmd@linaro.org>
 References: <20240411101550.99392-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,67 +102,43 @@ resulting in painful developper experience.
 
 Use qemu_hexdump_line() to avoid sprintf() calls, silencing:
 
-  backends/tpm/tpm_util.c:357:14: warning: 'sprintf' is deprecated:
+  [105/169] Compiling C object libcommon.fa.p/hw_scsi_scsi-disk.c.o
+  hw/scsi/scsi-disk.c:2659:14: warning: 'sprintf' is deprecated:
     This function is provided for compatibility reasons only.
     Due to security concerns inherent in the design of sprintf(3),
     it is highly recommended that you use snprintf(3) instead.
     [-Wdeprecated-declarations]
-        p += sprintf(p, "%.2X ", buffer[i]);
+        p += sprintf(p, " 0x%02x", buf[i]);
              ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- backends/tpm/tpm_util.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ hw/scsi/scsi-disk.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
-index 1856589c3b..0747af2d1c 100644
---- a/backends/tpm/tpm_util.c
-+++ b/backends/tpm/tpm_util.c
-@@ -21,6 +21,7 @@
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 4bd7af9d0c..4f914df5c2 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -2648,16 +2648,12 @@ static const SCSIReqOps *const scsi_disk_reqops_dispatch[256] = {
  
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qemu/cutils.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "tpm_int.h"
-@@ -336,27 +337,18 @@ void tpm_sized_buffer_reset(TPMSizedBuffer *tsb)
- void tpm_util_show_buffer(const unsigned char *buffer,
-                           size_t buffer_size, const char *string)
+ static void scsi_disk_new_request_dump(uint32_t lun, uint32_t tag, uint8_t *buf)
  {
--    size_t len, i;
+-    int i;
+     int len = scsi_cdb_length(buf);
 -    char *line_buffer, *p;
-+    size_t len;
-+    char *line, *lineup;
++    char *line_buffer;
  
-     if (!trace_event_get_state_backends(TRACE_TPM_UTIL_SHOW_BUFFER)) {
-         return;
-     }
-     len = MIN(tpm_cmd_get_size(buffer), buffer_size);
- 
--    /*
--     * allocate enough room for 3 chars per buffer entry plus a
--     * newline after every 16 chars and a final null terminator.
--     */
--    line_buffer = g_malloc(len * 3 + (len / 16) + 1);
-+    line = qemu_hexdump_line(buffer, 0, len, false);
-+    lineup = g_ascii_strup(line, -1);
-+    trace_tpm_util_show_buffer(string, len, lineup);
+     assert(len > 0 && len <= 16);
+-    line_buffer = g_malloc(len * 5 + 1);
  
 -    for (i = 0, p = line_buffer; i < len; i++) {
--        if (i && !(i % 16)) {
--            p += sprintf(p, "\n");
--        }
--        p += sprintf(p, "%.2X ", buffer[i]);
+-        p += sprintf(p, " 0x%02x", buf[i]);
 -    }
--    trace_tpm_util_show_buffer(string, len, line_buffer);
--
--    g_free(line_buffer);
-+    g_free(line);
-+    g_free(lineup);
- }
++    line_buffer = qemu_hexdump_line(buf, 0, len, false);
+     trace_scsi_disk_new_request(lun, tag, line_buffer);
+ 
+     g_free(line_buffer);
 -- 
 2.41.0
 
