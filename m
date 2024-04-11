@@ -4,87 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63FF2C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 21:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33950C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 21:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv1zZ-0000ai-U7; Thu, 11 Apr 2024 17:29:57 -0400
+	id 1rv21T-00020V-Mr; Thu, 11 Apr 2024 17:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv1zW-0000ZV-Q6
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 17:29:55 -0400
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ (Exim 4.90_1) (envelope-from <bazz1tv2@gmail.com>)
+ id 1rv21Q-000206-8W
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 17:31:52 -0400
+Received: from mail-ot1-f53.google.com ([209.85.210.53])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv1zU-00034u-3z
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 17:29:54 -0400
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-229bd1776dcso146527fac.0
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 14:29:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712870990; x=1713475790; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mxeb9Qi5ilEzWYWacyUKXpeH6yDELX9V1W2dQgietGQ=;
- b=pdaRJ9qWEokG91ZhM/ACKVOlW102ZW4IZXS8l5OlJNcTkdZJPPiU13Mzpu1QPeY7je
- TJYz1eIsL4gOX1aQhsk8hFJ9amqtjXGeJo74k8WuZThAaePxLWA3Nhsb0KtCUQfT+FsU
- JlRgPvDmKidpVKJ4MUpkA1qLhUX2/9+P+SKAHSXxkCDa82WN8kJg+nmF7SG+u7nMUiyk
- DdimXbNc1iGgIh7kXxEHNCkVMSiyFxZ4fbIbmo+REeXTK/fPhhvWv18ysrQtDdjcmTU7
- ux03dBH66RDhFg7j/KKqd4CWVtR7xN9u4uYn7Mo78KW9WV4iia/cbfNCv4Milq55kwWH
- eB7w==
+ (Exim 4.90_1) (envelope-from <bazz1tv2@gmail.com>)
+ id 1rv21O-0003bJ-4R
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 17:31:52 -0400
+Received: by mail-ot1-f53.google.com with SMTP id
+ 46e09a7af769-6ea2ac4607aso177056a34.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 14:31:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712870990; x=1713475790;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mxeb9Qi5ilEzWYWacyUKXpeH6yDELX9V1W2dQgietGQ=;
- b=CDByDkoBPnOrlGecFpvFE8h7s5yWWll8+0rsgm1QivJiOfUSjTPuwU2ZubIitRpch6
- Caftmuin/ttVyo28eUvj6dErA+arGxNst7L20BtHan3Kahb/HJoCjK3GRkvi5wFAq9EK
- PbGXty4P56wjHcRiBumClqAxRh2r7cme+K70QsqLJFZhbfNrOSARzcH+GGPZEtLBRDy4
- uaJgqRx5ctWZ1SCXW9SJ1S550HX7OPXLbL06vrUYl56yR9pD+OYlltUV7hOP15lmVM13
- ZsCHSnx63aQU75pGca8LR7fGqcl7JQncN2hoBj+B2eh1Lo+hYfr04kXjpjvJ9gCek5+W
- QmAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWIrY06hzfFcYP+CGeW6S4PHwm+C/ESL9I3xaRu0E/DzefIPPwvRgAEZHc2/9nTTv4qSUAiz5XMle8rDdYAQz4gvoyEKk=
-X-Gm-Message-State: AOJu0YzWubIHhnanUQb0G0XIwQeJyXvhspWma3O7qllvdzov7V/FFqM5
- fi8n1KgLRVrs+MnMw7Ci0LVGgfuSizbg5z2+V8VZtiUpLrk6Zlomv9XIPiZStMU=
-X-Google-Smtp-Source: AGHT+IHeDw79VNjh4f99OQcxlOJEkb0U2VzKrV5YzeuFSU+t+VOd+sjjZbLjVpNj8WKWl4KVGQGWoA==
-X-Received: by 2002:a05:6870:8c19:b0:229:8169:ae49 with SMTP id
- ec25-20020a0568708c1900b002298169ae49mr554932oab.46.1712870989851; 
- Thu, 11 Apr 2024 14:29:49 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ d=1e100.net; s=20230601; t=1712871106; x=1713475906;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9eTKB9jKB7nvQuM5iHphykYJr3NXxpvQe5kGQR0xZlA=;
+ b=XHlNNKwM2vp+pG+xSsaOW+M/juQtAmXDEp8rXRgy8nYqJnyZtpLrpPqZFqn/eHfcmJ
+ eALlxe9JNIGp4MXL+T++Z9rF/WTEpm1u5rLc4b1GfU8YrGQyuThFdzAn1XnYcGyObWDR
+ GAjgPMq3h3X2ZhiLBX5n9o4+bYsD58EOXIlTufsA2SGFE3/scRF38XHRq4WVPhXwxMke
+ yfo2AoGBf9lmTk7Rh+up28ZVHpXGIyU72qEMl+d8erb2QqjBDiFISG81OctRh0vNsTa/
+ XjgpLAMk8Ti1VSC1JwEgOxwaOhK+tPZmmi+T1Ul04FgYvzjYUTFfPu0XTOouk9wOy6LN
+ wioA==
+X-Gm-Message-State: AOJu0Yx5s6bu3qaJgzh9EeOXVoytgdf+Egflq1DgTIzxWEUfS33IA/Yx
+ z4kTc9FTqogMtjOYOIxI0umzN5Y7/1Ybq5HmAUYuZqKdmgs3yTnuT/F0VNdo4Rs=
+X-Google-Smtp-Source: AGHT+IEvGjaH7s6Vy8ZYKdcRKtOr9RzXYgUc+U8iBFGmT/I+cpmuTQEVXQLmC2HIb6AH04geo1rT4w==
+X-Received: by 2002:a05:6830:1144:b0:6ea:fd0:44ec with SMTP id
+ x4-20020a056830114400b006ea0fd044ecmr806302otq.21.1712871106697; 
+ Thu, 11 Apr 2024 14:31:46 -0700 (PDT)
+Received: from localhost.localdomain ([2601:47:4286:35e0:7d2d:6c94:a5ed:56f8])
  by smtp.gmail.com with ESMTPSA id
- k187-20020a636fc4000000b005d6a0b2efb3sm1504986pgc.21.2024.04.11.14.29.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Apr 2024 14:29:49 -0700 (PDT)
-Message-ID: <e43c2c7d-e12c-43ba-b3d2-7a5bdce2b364@linaro.org>
-Date: Thu, 11 Apr 2024 14:29:47 -0700
+ 17-20020a05620a04d100b0078d693c0b4bsm1503354qks.135.2024.04.11.14.31.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Apr 2024 14:31:46 -0700 (PDT)
+From: M Bazz <bazz@bazz1.com>
+To: qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, M Bazz <bazz@bazz1.com>
+Subject: [PATCH] target/sparc: resolve ASI_USERTXT correctly
+Date: Thu, 11 Apr 2024 17:29:36 -0400
+Message-ID: <20240411212936.945-1-bazz@bazz1.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] target/arm: Replace sprintf() by snprintf()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240411104340.6617-1-philmd@linaro.org>
- <20240411104340.6617-9-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240411104340.6617-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=209.85.210.53; envelope-from=bazz1tv2@gmail.com;
+ helo=mail-ot1-f53.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,16 +81,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/24 03:43, Philippe Mathieu-Daudé wrote:
-> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-> resulting in painful developper experience. Use snprintf() instead.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/arm/cpu64.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+fixes a longstanding bug which causes a "Nonparity Synchronous Error"
+kernel panic while using a debugger on Solaris / SunOS systems. The panic
+would occur on the first attempt to single-step the process.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The problem stems from an lda instruction on ASI_USERTXT (8). This asi
+was not being resolved correctly by resolve_asi().
 
-r~
+Further details can be found in #2281
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2281
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2059
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1609
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1166
+
+Signed-off-by: M Bazz <bazz@bazz1.com>
+---
+ target/sparc/translate.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 319934d9bd..1596005e22 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -3,6 +3,7 @@
+ 
+    Copyright (C) 2003 Thomas M. Ogrisegg <tom@fnord.at>
+    Copyright (C) 2003-2005 Fabrice Bellard
++   Copyright (C) 2024 M Bazz <bazz@bazz1.com>
+ 
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+@@ -1159,6 +1160,7 @@ static DisasASI resolve_asi(DisasContext *dc, int asi, MemOp memop)
+                || (asi == ASI_USERDATA
+                    && (dc->def->features & CPU_FEATURE_CASA))) {
+         switch (asi) {
++        case ASI_USERTXT:    /* User text access */
+         case ASI_USERDATA:   /* User data access */
+             mem_idx = MMU_USER_IDX;
+             type = GET_ASI_DIRECT;
+-- 
+2.43.0
+
 
