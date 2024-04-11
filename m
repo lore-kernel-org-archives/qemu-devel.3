@@ -4,56 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF1FCD1284
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460D9CD128A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rurVn-0001pp-9P; Thu, 11 Apr 2024 06:18:31 -0400
+	id 1rurUt-00065k-EZ; Thu, 11 Apr 2024 06:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rurVh-0001Or-Dq
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:18:25 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rurVe-0007ka-41
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:18:24 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VFbBK0msbz6K8wH;
- Thu, 11 Apr 2024 18:13:29 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id BA4B81400E7;
- Thu, 11 Apr 2024 18:18:17 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 11 Apr
- 2024 11:18:17 +0100
-Date: Thu, 11 Apr 2024 11:18:16 +0100
-To: Li Zhijian <lizhijian@fujitsu.com>
-CC: Fan Ni <fan.ni@samsung.com>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>, Dan Williams <dan.j.williams@intel.com>
-Subject: Re: [PATCH v2] hw/mem/cxl_type3: reset dvsecs in ct3d_reset()
-Message-ID: <20240411111816.0000343c@Huawei.com>
-In-Reply-To: <20240409075846.85370-1-lizhijian@fujitsu.com>
-References: <20240409075846.85370-1-lizhijian@fujitsu.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurU8-0005Ig-GL
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:16:49 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurTz-0007X5-JE
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:16:48 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-343f62d8124so4196147f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:16:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712830596; x=1713435396; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F1NpFpUrBWuL7lYE+0KLDn2ZH8pFKE5VoepA/3Vy6uc=;
+ b=bqWxbHYmOd1JWL1B1rM2r0OISujofCgTs0ans5zEtEhsPecQWJIKbbMRPRK2F2pRdl
+ VwmcwGkGMw8LJTs/WoUfc9A9KgtBoeMifr6GaRJVmdK5toE2UsjbUkowam/3nTXUvTw2
+ MK2Jy+eWMMahZi9f32Ataaq87sGEN60EzyJssIdlt0vfjzJa2wQtfM3tHeUY1wXBmfRG
+ R4j0NIqf5Vt8UhyKFCYRqlxy9kZGnIMTDHfVFMlXe98H0pfAYr72huj/L5wAmzykiyxL
+ ky8FCdKOd4+AWXoUKWcA35GHwZWUQGromgyxsUtEHYsH84hzOTHS+dQ+X0HKAJlXXDDh
+ sirQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712830596; x=1713435396;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F1NpFpUrBWuL7lYE+0KLDn2ZH8pFKE5VoepA/3Vy6uc=;
+ b=XPsda1wrZn7tHQKIwdYD3cymh5oTosWEUPbCGHQPrgxJAdD6LUtYi/Z1AGC15WcAzz
+ LnIdwn9ies/NfpvEPzU8w4mY6eBllBgJmbze+nfGVUIcJHwRn26OglOJZdOrPBWIP/D/
+ PZGQoCmNLHkwtgS3KnyTE0It/zGaF0ULE0C0N6CfSz3E+xqUlG+wap6U+q2dRIXWeKFh
+ GOCF950CxBjhvkC/V2pVFWP9VvYLauZMhB67fAkabFJlNpsPI4vssshCmjxAC1pmoBuK
+ Usgo6bxeCIXJmTRWVaMgAW5mZa6ZNOQR6GFPdowXbKZtMCgdUZc1D1yXHpfQ0mQWtqWX
+ m1Jw==
+X-Gm-Message-State: AOJu0YzZ1zHi4DgpM0hgM6Ur56Hb5OFZ90ymvjPNePykE+/hko5jYkEb
+ RsYzJArhCsunALJVGQ6gsbz+uqzV45J1D/dsJ2MqDi3YUur8Vgke6c1QRn8eRNVP034JjOgTZIM
+ f6rk=
+X-Google-Smtp-Source: AGHT+IFabFXytzpi0S6RKnZTzWn2GxfjiKDgM8gxB71W9+ROLe+iNWe2CspWV4NUTF9gcrQWlPnYJQ==
+X-Received: by 2002:a5d:5609:0:b0:346:9903:d10f with SMTP id
+ l9-20020a5d5609000000b003469903d10fmr1969474wrv.12.1712830596342; 
+ Thu, 11 Apr 2024 03:16:36 -0700 (PDT)
+Received: from localhost.localdomain
+ (137.red-88-29-174.dynamicip.rima-tde.net. [88.29.174.137])
+ by smtp.gmail.com with ESMTPSA id
+ bl40-20020adfe268000000b00346d886f3d8sm318488wrb.16.2024.04.11.03.16.35
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 11 Apr 2024 03:16:35 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2 07/13] util/hexdump: Rename @offset argument in
+ qemu_hexdump_line()
+Date: Thu, 11 Apr 2024 12:15:43 +0200
+Message-ID: <20240411101550.99392-8-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240411101550.99392-1-philmd@linaro.org>
+References: <20240411101550.99392-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,89 +94,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  9 Apr 2024 15:58:46 +0800
-Li Zhijian <lizhijian@fujitsu.com> wrote:
+@offset argument is more descriptive than @b.
 
-> After the kernel commit
-> 0cab68720598 ("cxl/pci: Fix disabling memory if DVSEC CXL Range does not match a CFMWS window")
-> CXL type3 devices cannot be enabled again after the reboot because the
-> control register(see 8.1.3.2 in CXL specifiction 2.0 for more details) was
-> not reset.
-> 
-> These registers could be changed by the firmware or OS, let them have
-> their initial value in reboot so that the OS can read their clean status.
-> 
-> Fixes: e1706ea83da0 ("hw/cxl/device: Add a memory device (8.2.8.5)")
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Hi,
+Inverse @bufptr <-> @offset arguments order.
 
-We need to have a close look at what this is actually doing before
-considering applying it.  I don't have time to get that this week, but
-hopefully will find some time later this month.
+Document qemu_hexdump_line().
 
-I don't want a partial fix for one particular case that causes
-us potential trouble in others.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qemu/cutils.h  | 11 +++++++++--
+ hw/virtio/vhost-vdpa.c |  8 ++++----
+ util/hexdump.c         | 16 ++++++++--------
+ 3 files changed, 21 insertions(+), 14 deletions(-)
 
-Jonathan
-
-> ---
-> root_port, usp and dsp have the same issue, if this patch get approved,
-> I will send another patch to fix them later.
-> 
-> V2:
->    Add fixes tag.
->    Reset all dvsecs registers instead of CTRL only
-> ---
->  hw/mem/cxl_type3.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index b0a7e9f11b64..4f09d0b8fedc 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -30,6 +30,7 @@
->  #include "hw/pci/msix.h"
->  
->  #define DWORD_BYTE 4
-> +#define CT3D_CAP_SN_OFFSET PCI_CONFIG_SPACE_SIZE
->  
->  /* Default CDAT entries for a memory region */
->  enum {
-> @@ -284,6 +285,10 @@ static void build_dvsecs(CXLType3Dev *ct3d)
->               range2_size_hi = 0, range2_size_lo = 0,
->               range2_base_hi = 0, range2_base_lo = 0;
->  
-> +    cxl_cstate->dvsec_offset = CT3D_CAP_SN_OFFSET;
-> +    if (ct3d->sn != UI64_NULL) {
-> +        cxl_cstate->dvsec_offset += PCI_EXT_CAP_DSN_SIZEOF;
-> +    }
->      /*
->       * Volatile memory is mapped as (0x0)
->       * Persistent memory is mapped at (volatile->size)
-> @@ -664,10 +669,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->  
->      pcie_endpoint_cap_init(pci_dev, 0x80);
->      if (ct3d->sn != UI64_NULL) {
-> -        pcie_dev_ser_num_init(pci_dev, 0x100, ct3d->sn);
-> -        cxl_cstate->dvsec_offset = 0x100 + 0x0c;
-> -    } else {
-> -        cxl_cstate->dvsec_offset = 0x100;
-> +        pcie_dev_ser_num_init(pci_dev, CT3D_CAP_SN_OFFSET, ct3d->sn);
->      }
->  
->      ct3d->cxl_cstate.pdev = pci_dev;
-> @@ -907,6 +909,7 @@ static void ct3d_reset(DeviceState *dev)
->  
->      cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
->      cxl_device_register_init_t3(ct3d);
-> +    build_dvsecs(ct3d);
->  
->      /*
->       * Bring up an endpoint to target with MCTP over VDM.
+diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
+index 92c927a6a3..70ca4b876b 100644
+--- a/include/qemu/cutils.h
++++ b/include/qemu/cutils.h
+@@ -252,12 +252,19 @@ static inline const char *yes_no(bool b)
+  */
+ int parse_debug_env(const char *name, int max, int initial);
+ 
+-/*
++/**
++ * qemu_hexdump_line:
++ * @line: Buffer to be filled by the hexadecimal/ASCII dump
++ * @bufptr: Buffer to dump
++ * @offset: Offset within @bufptr to start the dump
++ * @len: Length of the bytes do dump
++ * @ascii: Replace non-ASCII characters by the dot symbol
++ *
+  * Hexdump a line of a byte buffer into a hexadecimal/ASCII buffer
+  */
+ #define QEMU_HEXDUMP_LINE_BYTES 16 /* Number of bytes to dump */
+ #define QEMU_HEXDUMP_LINE_LEN 75   /* Number of characters in line */
+-void qemu_hexdump_line(char *line, unsigned int b, const void *bufptr,
++void qemu_hexdump_line(char *line, const void *bufptr, unsigned offset,
+                        unsigned int len, bool ascii);
+ 
+ /*
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index e827b9175f..cf7cfa3f16 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -941,12 +941,12 @@ static int vhost_vdpa_set_config_call(struct vhost_dev *dev,
+ static void vhost_vdpa_dump_config(struct vhost_dev *dev, const uint8_t *config,
+                                    uint32_t config_len)
+ {
+-    int b, len;
++    int ofs, len;
+     char line[QEMU_HEXDUMP_LINE_LEN];
+ 
+-    for (b = 0; b < config_len; b += 16) {
+-        len = config_len - b;
+-        qemu_hexdump_line(line, b, config, len, false);
++    for (ofs = 0; ofs < config_len; ofs += 16) {
++        len = config_len - ofs;
++        qemu_hexdump_line(line, config, ofs, len, false);
+         trace_vhost_vdpa_dump_config(dev, line);
+     }
+ }
+diff --git a/util/hexdump.c b/util/hexdump.c
+index 9921114b3c..469083d8c0 100644
+--- a/util/hexdump.c
++++ b/util/hexdump.c
+@@ -16,7 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
+ 
+-void qemu_hexdump_line(char *line, unsigned int b, const void *bufptr,
++void qemu_hexdump_line(char *line, const void *bufptr, unsigned offset,
+                        unsigned int len, bool ascii)
+ {
+     const char *buf = bufptr;
+@@ -26,13 +26,13 @@ void qemu_hexdump_line(char *line, unsigned int b, const void *bufptr,
+         len = QEMU_HEXDUMP_LINE_BYTES;
+     }
+ 
+-    line += snprintf(line, 6, "%04x:", b);
++    line += snprintf(line, 6, "%04x:", offset);
+     for (i = 0; i < QEMU_HEXDUMP_LINE_BYTES; i++) {
+         if ((i % 4) == 0) {
+             *line++ = ' ';
+         }
+         if (i < len) {
+-            line += sprintf(line, " %02x", (unsigned char)buf[b + i]);
++            line += sprintf(line, " %02x", (unsigned char)buf[offset + i]);
+         } else {
+             line += sprintf(line, "   ");
+         }
+@@ -40,7 +40,7 @@ void qemu_hexdump_line(char *line, unsigned int b, const void *bufptr,
+     if (ascii) {
+         *line++ = ' ';
+         for (i = 0; i < len; i++) {
+-            c = buf[b + i];
++            c = buf[offset + i];
+             if (c < ' ' || c > '~') {
+                 c = '.';
+             }
+@@ -53,12 +53,12 @@ void qemu_hexdump_line(char *line, unsigned int b, const void *bufptr,
+ void qemu_hexdump(FILE *fp, const char *prefix,
+                   const void *bufptr, size_t size)
+ {
+-    unsigned int b, len;
++    unsigned int ofs, len;
+     char line[QEMU_HEXDUMP_LINE_LEN];
+ 
+-    for (b = 0; b < size; b += QEMU_HEXDUMP_LINE_BYTES) {
+-        len = size - b;
+-        qemu_hexdump_line(line, b, bufptr, len, true);
++    for (ofs = 0; ofs < size; ofs += QEMU_HEXDUMP_LINE_BYTES) {
++        len = size - ofs;
++        qemu_hexdump_line(line, bufptr, ofs, len, true);
+         fprintf(fp, "%s: %s\n", prefix, line);
+     }
+ 
+-- 
+2.41.0
 
 
