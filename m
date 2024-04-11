@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E48C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 20:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35745C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 20:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv1NA-00078V-Et; Thu, 11 Apr 2024 16:50:16 -0400
+	id 1rv1PO-0008En-7K; Thu, 11 Apr 2024 16:52:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv1N6-00077b-LQ
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:50:12 -0400
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rv1PL-0008EU-Uv
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:52:32 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv1N2-0004wv-Ez
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:50:11 -0400
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-36a3b9bc797so1170465ab.2
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 13:50:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rv1PJ-0005Oj-OS
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:52:31 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-417f81ef467so991085e9.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 13:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712868607; x=1713473407; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1712868747; x=1713473547; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wYl9hKGRD29tCif38dwA9tV+sTngp8c3HAIW4/e57aY=;
- b=rC1ObVFBg2aIMf5W/Mb8RA4BVsHMs/dm1Mz1qNGkI8qHSXAwugFqpQhKmVy+t3vJnY
- nEaJ8JuTMn8QuNItHB0krLXEPPGBWD0VanR+jhym96f0uV9CXjjXEtc/exf/d/FY6/RU
- AmEVQjCo9uLbsZ/uzIRpiyIrHunDa0fgCakBsubD/Y8phYytAG6tsH9/hCNMp61sFi3C
- 58QgZ5grODtcldYQghB4zJID6oqGZk0kRmlHVpg4o09AHDb2GFAkspejIKwrqJlXIR7W
- reE0lC8jpBNHtFs58lsgXlRHtC5lLeL560Vep7FjAepgjQv+4HiAk9K7R1f77cnn5vZZ
- ZmcA==
+ bh=7O8j3IQZJ7GoRXTbOdB+iZPgEPiO85NDldNfvtBqSb8=;
+ b=h9XjfdSmJGX08KPmZ56cIrSRw2eq1/g+vsAY9VzDDLs7IQPUCY6gBgPrSwNmUGNBlf
+ NDBuT7ix9vzde2IFhgiF7VlT3UZAVUfPCdmx1rl4Trc3FrvDBtyqFDDpSsEMC2V9ACwe
+ QBroU27/WaOZoBAJVp0yULktWeaLJChUHyp3OSS3CDFIrraEnoEAiSL417mVBYe3MXJc
+ bUDo00OZZz78PTt+PzhB5Q8OVIu9+zeEV2gGqdW9Bn7yvIIA073tsL64Yd3FBKafcV0P
+ lzvdWQBZ0RmnafS2RGEFJNHpr2hUIgL+GtBC+5VJJaomp9C8OhpSkbDTQkIhn4PSJsA8
+ HVYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712868607; x=1713473407;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712868747; x=1713473547;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wYl9hKGRD29tCif38dwA9tV+sTngp8c3HAIW4/e57aY=;
- b=aud4Z5geYo/WuqnteyCYITcu2bCmZLGkJ4kiGhenGJEidIlj/4hgdHENXiGbn4+4RL
- bN3lpdeuwreaeuRnc0R5CIbRuDQaELFEaPkGZE5wNlB/ldctHUi54JbidYAeuivUKpZL
- oKSm4Nw5kkdKQQSocnsBOHiLR7ujC1cYPxNhX5Eg4Ml2V/TIL5QluPvv3lnFbeVMPlcX
- ac2MhCPxdncRikCj17yjdXZiUq8gb3CJNpsq1wyLYMArqrjNQneAIHsgzrNCbB/mZQtR
- TJBXi+9rOWR1WQxBX6EeLAOem1IsLPnMpPh9Drq6GfWVA1SBqft3UO0Et5T/xv2cTnoK
- kQGg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/l5bx9bqs83QWPFrm/mfBWD39vH6fVuMBZ1tUJRq11KKdq1csSa5P8DL++YRVlazN0xhIoAg4eVg2IeiR5ycke4suyk4=
-X-Gm-Message-State: AOJu0YxVToUaP9BlIuI2eZy8lKR8DjuB/zX+IA646c5+swUkQqPibSYI
- ZhImN1Xdp9QLmcdcp4U/YmjLn4SiCqgOMi4zQpM7A0DW55szOpFlMnlCmGoKSaY=
-X-Google-Smtp-Source: AGHT+IGRXCbQxp9tUowh3jXiilQ0NHGBgeO2SfB0gQPwAhZpqELYzxYmUyo4yeNvhT4vmav+OfNtQQ==
-X-Received: by 2002:a05:6e02:174a:b0:369:b97e:7e52 with SMTP id
- y10-20020a056e02174a00b00369b97e7e52mr870114ill.21.1712868606751; 
- Thu, 11 Apr 2024 13:50:06 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- o35-20020a634e63000000b005f072084432sm1493255pgl.38.2024.04.11.13.50.06
+ bh=7O8j3IQZJ7GoRXTbOdB+iZPgEPiO85NDldNfvtBqSb8=;
+ b=NvOX8HQcyHryIIIbpEsmkfZDEf9CgNHHWxyVHfMye0p/25sdc5JcOpVET0TcpXxtge
+ 3CpBJbg8j3K7JS93PiMO2vRMZ12qU8Ab2hdmzv2OJULuOVLogf3RN+BODDqjfHMl4eiG
+ vCIvF7XEG62Nieood1G067/CmS2+5IV1rG2b++l9tCdL9B55Cz+IvpUw9ERl/lYa510E
+ SMNNLJzohChopLX63a9FTyfUCKA9sHxHYs1tEVz1O+2yI+Aa+yA/vnORtgWokmB889KO
+ xSXA3DVZbhEp1cJbZTFdycxcv9+M9PH+l4JlOBbuVHbozcifALd6Lt59YJpcG/QElyF/
+ zqGw==
+X-Gm-Message-State: AOJu0YzLnndaU2Kp3pnw0Tlvuz32luf99AKJnUA+l0r4qIU3MpBMvrnV
+ bJffPOTw4rIPccebZQkk3KT09deBzGeDkB0oKm8TvhHRpMCt8VFXZwmVeOfNx2AIsu9tmODdiYL
+ doOc=
+X-Google-Smtp-Source: AGHT+IHU7YoTRAJ8xe0pCeewlYL/WfGGUnOpMBSPyvM977aZ0d2epK1q3TRQi5JXZPOVch6CTkN5LA==
+X-Received: by 2002:a05:600c:3511:b0:416:2629:bbaf with SMTP id
+ h17-20020a05600c351100b004162629bbafmr738067wmq.29.1712868747309; 
+ Thu, 11 Apr 2024 13:52:27 -0700 (PDT)
+Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ fm6-20020a05600c0c0600b004156afd6843sm6625049wmb.18.2024.04.11.13.52.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Apr 2024 13:50:06 -0700 (PDT)
-Message-ID: <0e0d59c5-d628-414e-9f16-2d5b75f68ec9@linaro.org>
-Date: Thu, 11 Apr 2024 13:50:04 -0700
+ Thu, 11 Apr 2024 13:52:26 -0700 (PDT)
+Message-ID: <2da86ddc-f74f-4a3f-944d-f152b3e42f9d@linaro.org>
+Date: Thu, 11 Apr 2024 22:52:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/13] util/hexdump: Replace sprintf() by
- g_string_append_printf()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240411101550.99392-1-philmd@linaro.org>
- <20240411101550.99392-10-philmd@linaro.org>
- <19938e9b-ddd0-4dfe-a75f-f4ad0f281a85@linaro.org>
+Subject: QEMU Community Call Agenda Items (April 16th, 2024)
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: QEMU Developers <qemu-devel@nongnu.org>
+References: <23a27641-4e51-41d7-867f-89e3f305d2b9@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <19938e9b-ddd0-4dfe-a75f-f4ad0f281a85@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, afaerber@suse.de,
+ ale@rev.ng, alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>,
+ armbru@redhat.com, bbauman@redhat.com, bcain@quicinc.com,
+ berrange@redhat.com, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, clg@kaod.org, cw@f00f.org,
+ Damien Hedde <dhedde@kalrayinc.com>, eblake@redhat.com,
+ edgar.iglesias@gmail.com, eduardo@habkost.net,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, eric.auger@redhat.com,
+ felipe@nutanix.com, iggy@theiggy.com, imp@bsdimp.com, jan.kiszka@web.de,
+ jgg@nvidia.com, jidong.xiao@gmail.com, jim.shu@sifive.com,
+ jjherne@linux.vnet.ibm.com, Joao Martins <joao.m.martins@oracle.com>,
+ konrad.wilk@oracle.com, Luc Michel <luc@lmichel.fr>,
+ mburton@qti.qualcomm.com, mdean@redhat.com, mimu@linux.vnet.ibm.com,
+ paul.walmsley@sifive.com, pbonzini@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ shentey@gmail.com, stefanha@gmail.com, wei.w.wang@intel.com, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com,
+ eblot@rivosinc.com, max.chou@sifive.com
+In-Reply-To: <23a27641-4e51-41d7-867f-89e3f305d2b9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,65 +113,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/24 13:43, Philippe Mathieu-Daudé wrote:
-> On 11/4/24 12:15, Philippe Mathieu-Daudé wrote:
->> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
->> resulting in painful developper experience.
->>
->> Replace sprintf() by GString API in order to avoid:
->>
->>    [426/1310] Compiling C object libqemuutil.a.p/util_hexdump.c.o
->>    util/hexdump.c:35:21: warning: 'sprintf' is deprecated:
->>      This function is provided for compatibility reasons only.
->>      Due to security concerns inherent in the design of sprintf(3),
->>      it is highly recommended that you use snprintf(3) instead.
->>      [-Wdeprecated-declarations]
->>              line += sprintf(line, " %02x", (unsigned char)buf[b + i]);
->>                      ^
->>    util/hexdump.c:37:21: warning: 'sprintf' is deprecated:
->>              line += sprintf(line, "   ");
->>                      ^
->>    2 warnings generated.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   util/hexdump.c | 17 ++++++++---------
->>   1 file changed, 8 insertions(+), 9 deletions(-)
->>
->> diff --git a/util/hexdump.c b/util/hexdump.c
->> index b6f70e93bb..2ec1171de3 100644
->> --- a/util/hexdump.c
->> +++ b/util/hexdump.c
->> @@ -19,7 +19,7 @@
->>   char *qemu_hexdump_line(const void *bufptr, unsigned offset,
->>                           unsigned int len, bool ascii)
->>   {
->> -    char linebuf[QEMU_HEXDUMP_LINE_BYTES], *line = linebuf;
->> +    g_autoptr(GString) gs = g_string_sized_new(QEMU_HEXDUMP_LINE_BYTES);
->>       const char *buf = bufptr;
->>       int i, c;
->> @@ -27,30 +27,29 @@ char *qemu_hexdump_line(const void *bufptr, unsigned offset,
->>           len = QEMU_HEXDUMP_LINE_BYTES;
->>       }
->> -    line += snprintf(line, 6, "%04x:", offset);
->> +    g_string_append_printf(gs, "%04x:", offset);
->>       for (i = 0; i < QEMU_HEXDUMP_LINE_BYTES; i++) {
->>           if ((i % 4) == 0) {
->> -            *line++ = ' ';
->> +            g_string_append_c(gs, ' ');
->>           }
->>           if (i < len) {
->> -            line += sprintf(line, " %02x", (unsigned char)buf[offset + i]);
->> +            g_string_append_printf(gs, " %02x", (unsigned char)buf[offset + i]);
-> 
-> I find using g_string_append_printf() simpler than checking snprintf()
-> return value, and don't expect this function to be in hot path, but if
-> preferred I can try to not use the GString API.
+Hi,
 
-GString api is pretty good.
+The KVM/QEMU community call is at:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+   https://meet.jit.si/kvmcallmeeting
+   @
+   16/4/2024 14:00 UTC
+
+Are there any agenda items for the sync-up?
 
 
-r~
+Alex maintains the invite on our Linaro project calendar here:
+
+https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MWd2dWI5NDM1bzdocnJlbTBhMHJhbG5sNWlfMjAyNDAyMjBUMTQwMDAwWiBjX2s1cDJscGd2YnB0ZGlya3U1c2kwMWJsbW5rQGc&tmsrc=c_k5p2lpgvbptdirku5si01blmnk%40group.calendar.google.com&scp=ALL
+
+If you want to be added to the invite list let him know and you can get
+spammed by your calendar app as well 😉
+
+Regards,
+
+Phil.
 
