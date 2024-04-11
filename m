@@ -4,89 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B06C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 15:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F04E2C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 16:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruwVi-0003Ki-3v; Thu, 11 Apr 2024 11:38:46 -0400
+	id 1ruxQK-00078F-QE; Thu, 11 Apr 2024 12:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1ruwVf-0003KD-Sg
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 11:38:43 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1ruwVe-0004wP-0Y
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 11:38:43 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 43BC07SA001843; Thu, 11 Apr 2024 15:38:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding:content-type; s=
- qcppdkim1; bh=qc3xni4UjMOI1Bu8ABvn6DXr5RhO126T7+BLVEFsYP8=; b=Rc
- btHiajr6K2urfvAARc+MKBE5dB+Oi02RHPBos1OHjyTgZD+8YjmIkBLiGcuTpd0P
- wwXfC9KgfuW5sP+4S/+c320XT5bDJE5fogL7/49cDpuTO8EA3n++i9MgSo6rLCG7
- bke2M7eI7ALosKfSpm839bJoQpjxhQ3u1sKhY53f65gWDCbTFGLfbUTtsnhWZyJ7
- 5cX6DNApMqqpdJsOgImC6LxoPW8wWd4KMl0yMuCjioj/lTYhY1enBoZ0p7gCud27
- dM8YupbGfk+/oVHhSzHQrYq4jmNjZr9yzn4s4IhZ/U3GAhg6c9jm379hjUO9t+4c
- Jgo560uDAkr2QjCfN9CA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xe9jsaav8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 11 Apr 2024 15:38:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43BFcRWZ014702
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 11 Apr 2024 15:38:27 GMT
-Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 11 Apr 2024 08:38:27 -0700
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-CC: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- <qemu-devel@nongnu.org>, <pbonzini@redhat.com>, <martin@geanix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, Thomas Huth
- <thuth@redhat.com>
-Subject: Re: [PATCH] Makefile: fix use of -j without an argument
-Date: Thu, 11 Apr 2024 12:38:04 -0300
-Message-ID: <20240411153804.3849645-1-quic_mathbern@quicinc.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <fb8c5aa0-d412-4ac0-b77b-64816d72a996@linaro.org>
-References: <fb8c5aa0-d412-4ac0-b77b-64816d72a996@linaro.org>
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1ruxQJ-00077j-9h
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 12:37:15 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1ruxQC-0006qq-Lr
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 12:37:15 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-56e6acb39d4so5536254a12.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 09:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ionos.com; s=google; t=1712853425; x=1713458225; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xEsBPCb59XpCNMWUPY1qcsKCuKrD1GGTHKLwPxoBsPo=;
+ b=IaxA6dHrEoqxva+EtLRuWEF1or94XyRN/ShBpXyv9yI7zSu0TWqu84vc2sxdQJAcDI
+ IBqzFlS6nms9iR4AYASRXrT4WQoJo0LkK5Htvrg7+PnpRrIvssS8AoEM0SnDFmFqBbmu
+ lLsDU0Z5NksdPlU+Hu08IQsdRKbT2xEcexVydrm0u3c6ayly1e8dvhloApuUCTICB+Hf
+ yf3b974Gf9+aZOLj5KLsc/BaPZC5yNyeNgBvgBms9jxljcR7OSmlvrKwWW+TQSqfSjBZ
+ YymRT81PSmcM2a5zbifZlfZyQ4BvAKJDaDs8fIwCIBZ2HOsAN0mMqgE6spVv+rula0RF
+ nZbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712853425; x=1713458225;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xEsBPCb59XpCNMWUPY1qcsKCuKrD1GGTHKLwPxoBsPo=;
+ b=ZWp0oY9MLDCc+P9DroO+gSDA1ZqpY0CmrM0naHdUYGfGxZq9JeJHeyJgxOFSGhZpXg
+ gURMpv6YMlLX4HNyvJLDHJyxwmObDuGCxaRYUtV8yfkpoMPBI/2Bq7ZAjf34SJdj8Kae
+ AN9SPoyeNLfNpaxcwZ8IeSxROK1EspS2nR55B2xPbwrqFnnz4yMrCYj5h1x48NFjUwbm
+ lxIFApyah//EI+zYiYgydLP7h1Qrio3K87JKW0vBnsAdLu/u/kOKetxvLazlnG1tW0qB
+ hVvjd4JDtyEcVO+Atva6ZYlNssKoiniRiM1O0Pr1U92yRW/o8LJlpiLQtFWpLGmagc3L
+ 5Gbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnAczQ87pyUxAuK5KfavqEwsLwBfK+f64ah4+QvU51xVd8ZtoyS1BhgrZRJk7bit8LONlWVDaF0JfchI8kTU+k1JbJ26w=
+X-Gm-Message-State: AOJu0YwGXJKdu2/+5rmXyc2JD3ZL2u6Chbd/jdnGWOrcbYuZyGqBJ9pI
+ I2oOkrXpGHD2Aq6t4Z5/BR2q6C5No7jPjRsPtJ+pHszw5QrYq0XFyFImZdc5wtXql4nc/EMtfhx
+ iT9K5Z/Qxz8OWEi6a2y/dZwdmifrMjkyfnBn0DA==
+X-Google-Smtp-Source: AGHT+IHP4jy3cKiL9cIw9NVCrm+KyRIszlxZOuty+FO2dzK6oH98DnfLyeoyVcv+jBsOfn5+H+vG/vaWtld+UQo5pyM=
+X-Received: by 2002:a17:906:3488:b0:a52:e86:ae62 with SMTP id
+ g8-20020a170906348800b00a520e86ae62mr156368ejb.54.1712853425151; Thu, 11 Apr
+ 2024 09:37:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: ox_KIsnJBZsQ0TcvGG_iropB1sXptO5e
-X-Proofpoint-GUID: ox_KIsnJBZsQ0TcvGG_iropB1sXptO5e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-11_08,2024-04-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0
- mlxscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- spamscore=0 adultscore=0 suspectscore=0 impostorscore=0 mlxlogscore=999
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404110114
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+References: <ef160e75-d4a4-4be0-81f3-77d8b0e76178@linaro.org>
+ <9d082daf-acf0-27c5-1758-5a3f2af7ee0f@fujitsu.com>
+ <CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com>
+ <Zgx3brrz8m0V7HS4@x1n>
+ <CAMGffE=i+hVCNaX_31h1D1VW7JGJBqoa9T0qEJe2CDcb9BPiAA@mail.gmail.com>
+ <ZhQYu3ZnsIGv2qUZ@x1n>
+ <CAMGffEm2TWJxOPcNQTQ1Sjytf5395dBzTCMYiKRqfxDzJwSN6A@mail.gmail.com>
+ <ZhWa0YeAb9ySVKD1@x1n> <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
+ <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
+In-Reply-To: <Zhfxoaz9yNTx8Btd@x1n>
+From: Yu Zhang <yu.zhang@ionos.com>
+Date: Thu, 11 Apr 2024 18:36:54 +0200
+Message-ID: <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+To: Peter Xu <peterx@redhat.com>
+Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>, 
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com, 
+ pannengyuan@huawei.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=2a00:1450:4864:20::529;
+ envelope-from=yu.zhang@ionos.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,62 +119,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Philippe
+> 1) Either a CI test covering at least the major RDMA paths, or at least
+>     periodically tests for each QEMU release will be needed.
+We use a batch of regression test cases for the stack, which covers the
+test for QEMU. I did such test for most of the QEMU releases planned as
+candidates for rollout.
 
-On Thu, 11 Apr 2024 17:29:58 +0200 =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org> wrote:
+The migration test needs a pair of (either physical or virtual) servers wit=
+h
+InfiniBand network, which makes it difficult to do on a single server. The
+nested VM could be a possible approach, for which we may need virtual
+InfiniBand network. Is SoftRoCE [1] a choice? I will try it and let you kno=
+w.
+
+[1]  https://enterprise-support.nvidia.com/s/article/howto-configure-soft-r=
+oce
+
+Thanks and best regards!
+
+On Thu, Apr 11, 2024 at 4:20=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
 >
-> Hi Matheus,
-> 
-> On 11/4/24 17:09, Matheus Tavares Bernardino wrote:
-> > Our Makefile massages the given make arguments to invoke ninja
-> > accordingly. One key difference is that ninja will parallelize by
-> > default, whereas make only does so with -j<n> or -j. The make man page
-> > says that "if the -j option is given without an argument, make will not
-> > limit the number of jobs that can run simultaneously". We use to support
-> > that by replacing -j with "" (empty string) when calling ninja, so that
-> > it would do its auto-parallelization based on the number of CPU cores.
-> > 
-> > This was accidentally broken at d1ce2cc95b (Makefile: preserve
-> > --jobserver-auth argument when calling ninja, 2024-04-02),
-> > causing `make -j` to fail:
-> > 
-> > $ make -j V=1
-> >    /usr/bin/ninja -v   -j -d keepdepfile all | cat
-> >    make  -C contrib/plugins/ V="1" TARGET_DIR="contrib/plugins/" all
-> >    ninja: fatal: invalid -j parameter
-> >    make: *** [Makefile:161: run-ninja] Error
-> > 
-> > Let's fix that and indent the touched code for better readability.
-> > 
-> > Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> > ---
-> >   Makefile | 8 ++++++--
-> >   1 file changed, 6 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/Makefile b/Makefile
-> > index 183756018f..d299c14dab 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -142,8 +142,12 @@ MAKE.k = $(findstring k,$(firstword $(filter-out --%,$(MAKEFLAGS))))
-> >   MAKE.q = $(findstring q,$(firstword $(filter-out --%,$(MAKEFLAGS))))
-> >   MAKE.nq = $(if $(word 2, $(MAKE.n) $(MAKE.q)),nq)
-> >   NINJAFLAGS = $(if $V,-v) $(if $(MAKE.n), -n) $(if $(MAKE.k), -k0) \
-> > -        $(or $(filter -l% -j%, $(MAKEFLAGS)), $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1)) \
-> > -        -d keepdepfile
-> > +        $(if $(filter -j, $(MAKEFLAGS)) \
-> > +	     ,, \
-> > +	     $(or \
-> > +	          $(filter -l% -j%, $(MAKEFLAGS)), \
-> > +	          $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1)) \
-> > +        ) -d keepdepfile
-> >   ninja-cmd-goals = $(or $(MAKECMDGOALS), all)
-> >   ninja-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
-> >   
-> 
-> Apparently Martin sent the same patch (although not as nicely
-> indented) and Paolo queued it:
-> https://lore.kernel.org/qemu-devel/20240402081738.1051560-1-martin@geanix.com/
-
-Actually, this patch is a follow-up to that one, fixing a feature that was
-accidentally broken.
+> On Wed, Apr 10, 2024 at 09:49:15AM -0400, Peter Xu wrote:
+> > On Wed, Apr 10, 2024 at 02:28:59AM +0000, Zhijian Li (Fujitsu) via wrot=
+e:
+> > >
+> > >
+> > > on 4/10/2024 3:46 AM, Peter Xu wrote:
+> > >
+> > > >> Is there document/link about the unittest/CI for migration tests, =
+Why
+> > > >> are those tests missing?
+> > > >> Is it hard or very special to set up an environment for that? mayb=
+e we
+> > > >> can help in this regards.
+> > > > See tests/qtest/migration-test.c.  We put most of our migration tes=
+ts
+> > > > there and that's covered in CI.
+> > > >
+> > > > I think one major issue is CI systems don't normally have rdma devi=
+ces.
+> > > > Can rdma migration test be carried out without a real hardware?
+> > >
+> > > Yeah,  RXE aka. SOFT-RoCE is able to emulate the RDMA, for example
+> > > $ sudo rdma link add rxe_eth0 type rxe netdev eth0  # on host
+> > > then we can get a new RDMA interface "rxe_eth0".
+> > > This new RDMA interface is able to do the QEMU RDMA migration.
+> > >
+> > > Also, the loopback(lo) device is able to emulate the RDMA interface
+> > > "rxe_lo", however when
+> > > I tried(years ago) to do RDMA migration over this
+> > > interface(rdma:127.0.0.1:3333) , it got something wrong.
+> > > So i gave up enabling the RDMA migration qtest at that time.
+> >
+> > Thanks, Zhijian.
+> >
+> > I'm not sure adding an emu-link for rdma is doable for CI systems, thou=
+gh.
+> > Maybe someone more familiar with how CI works can chim in.
+>
+> Some people got dropped on the cc list for unknown reason, I'm adding the=
+m
+> back (Fabiano, Peter Maydell, Phil).  Let's make sure nobody is dropped b=
+y
+> accident.
+>
+> I'll try to summarize what is still missing, and I think these will be
+> greatly helpful if we don't want to deprecate rdma migration:
+>
+>   1) Either a CI test covering at least the major RDMA paths, or at least
+>      periodically tests for each QEMU release will be needed.
+>
+>   2) Some performance tests between modern RDMA and NIC devices are
+>      welcomed.  The current knowledge is modern NIC can work similarly to
+>      RDMA in performance, then it's debatable why we still maintain so mu=
+ch
+>      rdma specific code.
+>
+>   3) No need to be soild patchsets for this one, but some plan to improve
+>      RDMA migration code so that it is not almost isolated from the rest
+>      protocols.
+>
+>   4) Someone to look after this code for real.
+>
+> For 2) and 3) more info is here:
+>
+> https://lore.kernel.org/r/ZhWa0YeAb9ySVKD1@x1n
+>
+> Here 4) can be the most important as Markus pointed out.  We just didn't
+> get there yet on the discussions, but maybe Markus is right that we shoul=
+d
+> talk that first.
+>
+> Thanks,
+>
+> --
+> Peter Xu
+>
 
