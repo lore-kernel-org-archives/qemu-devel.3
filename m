@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2BAFCD1284
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F77DCD1284
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 10:47:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rurur-0003B3-JZ; Thu, 11 Apr 2024 06:44:25 -0400
+	id 1rurxp-0002fA-Dq; Thu, 11 Apr 2024 06:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruruq-00039P-5G
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:44:24 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rurxh-0002Ln-TA
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:47:22 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rurum-0004Mv-9z
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:44:23 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4167fce0a41so4154555e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:44:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rurxT-00056x-MW
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 06:47:21 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-56e2b41187aso1234079a12.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 03:47:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712832259; x=1713437059; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=chFRh2l0gcnmg03fCHQ7SXYogZ+gzE1I40m0bX1o6CE=;
- b=c5j3mEqIll58L5zq6hJWJGZLhH1d7hh/36VU6fYKyFvE7mJflDy8Z6/IxZVkoclLC6
- Us8uwAhhcOIjWRB5wKRchzmwBY9E8yf6W7fULJ3Be0ehRRyuTjBJs7WSjbMAS975K7I1
- PnAl+pFAkjmudj99nUZ3jEWvNGzGwp9ZFJi3xAI1T/6HJIcJkRuntvyUWhmoIvfjTisP
- akSmFEtZuSWCMwto/n3+ztSYikX0U5COHsw7i6pKKvHG7ObedGuMRSDVuA/150ek0E8q
- 4YLe8V0pNGJw0WHllYGIl96QB5dm81ulpqa5jVyiGSJeSyrl4gIdQ6bbft69/BKMkLCJ
- wjdg==
+ d=linaro.org; s=google; t=1712832426; x=1713437226; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sKWmKBLG+YXBZ1tTc61l69JC4XvmnzRAHSm/Kg1vw9U=;
+ b=Z5X5HUdTOhuGTwVwDZu7uz2sZq5zpbUeZNhLEAogXRISL+49mCUZvcu36qVeSRQ4cD
+ /fRfWvmCsoM8depr49EPNH26O4+It+/E1OgPqD3PCTt07RuA+9Wi1fdE7W6I4kRSXBdd
+ v+4yMNae6Y+nyxeTc7pZEasOOzWb/B/XC/PBoLJXVK1nhJswEZkzlHHymL7H3M/Gk95j
+ vimcW5Cj7y2J+tZZi4kILg//RrkmR+nLqxwIjG2smwAbCObC2HkJ+qgrnM+xI1ZRAymr
+ JfqrkSU1Bzm5koy/2+ukOFKmUT/8H4RWrtn7StyvisLN3F7xC7SwDoSqVoNDVO++uQEW
+ uYMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712832259; x=1713437059;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=chFRh2l0gcnmg03fCHQ7SXYogZ+gzE1I40m0bX1o6CE=;
- b=xBwPBnCS8oSlEw6+Go7n6x+vOtgtGDmw2RPeOSYx0NwuJkike8DVwlMi+mqN6MLpTB
- sB0cXvN72kI5VwcnmGeOVlNjKIsWgT5221c/TT2YJzjevnwXFqes7lfY2UpXN1eCD1xH
- rl3FBfOy4NgSrIKioMvpPW2+GK6pbdT3TQvpoKsHqqkG+uK5BcaHTzHE5lp+0jzXKwIN
- 93di0f0spfNRc7MzUhvA4H8RmHrcDtweDze6QQQc/0jUzv8cPzgL7ClwUq3o+32m5T22
- 66grUyMG6w3km1OallKyM/DjV3jhUSSF5vZxalvSOcNhbCnlUKoAYXotlq54OE8uVGJW
- fVpA==
-X-Gm-Message-State: AOJu0YyVM7mzIByMp1duwxkLgcjkqgFI5kNcS+SosBt1QFwP5hVT88Bi
- rchMeJzYn5EX+SOhYRxNsRg8Y9BwDkuJ6TsqtgHuA3vM+ZI04LRB2N9exXJCvJ4ZpaK9UTAL2b0
- 7QFY=
-X-Google-Smtp-Source: AGHT+IFjECzwDpyVWvUJySuSwoGDnBY202ZAAe8bPly8W7j1uYJbgDuXOU1kDaCF/UNyeX5b3pH3Kw==
-X-Received: by 2002:a05:600c:4f53:b0:416:89bc:dec6 with SMTP id
- m19-20020a05600c4f5300b0041689bcdec6mr2004919wmq.11.1712832258773; 
- Thu, 11 Apr 2024 03:44:18 -0700 (PDT)
-Received: from localhost.localdomain
- (137.red-88-29-174.dynamicip.rima-tde.net. [88.29.174.137])
- by smtp.gmail.com with ESMTPSA id
- he8-20020a05600c540800b00416a08788a5sm5123079wmb.27.2024.04.11.03.44.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Apr 2024 03:44:18 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 6/9] hw/net/rocker: Replace sprintf() by snprintf()
-Date: Thu, 11 Apr 2024 12:43:37 +0200
-Message-ID: <20240411104340.6617-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240411104340.6617-1-philmd@linaro.org>
-References: <20240411104340.6617-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1712832426; x=1713437226;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sKWmKBLG+YXBZ1tTc61l69JC4XvmnzRAHSm/Kg1vw9U=;
+ b=PM5miPkVWv+HYljKck8ovBOD6nIhIRhnwvX7Lo7EjFb7Bw8J8G/mGmgIzSQOQFltLa
+ NgptZ30ORJzmcGDtloTNnAy+NgHrTwYsBXNGZh8z4ia812mBLNrMT8bK62R0EjS77SDA
+ B74jNol2TGBLzj+ZSRLN4rHP7q42Lx0A9Z8HvMrpmpb5/Yxp6he0sj7/anIlKhhBuwgr
+ 9eh7Oih2K9CnuLw9uozcJ6cWgI9cLww5el5N5RqOir7sZsHZulmE1DFPXY+Uc6WyeSlC
+ /+eOAM5dCzAuDXdyjUR5lsv9v7utEGVHAK3VPS6c0AxCGMkdfE9fOCSn6WBpXIx1aYRo
+ CSQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUS5gNeog1JAtl4U7P7UIbHYY82WUs48TGDRFZHveGk8k1NKrhEoFQzcJcXGtJ7SPpD023ffia8hsLYM19tUWuMFmXTVFs=
+X-Gm-Message-State: AOJu0YwL3cwmdcZtwEz5mr1g4EoUOVe+TMExQ4iSfJV0+RLavxpi9J8A
+ lGdqMDk8bZ2HJDQvD8GwVUnK3buv7SVzG5e2wBtkB6hDbuem5h2PTWzASomG4Tw+H3SbiKAY+We
+ 46cNGzFxwbdaAs1ZDD3XpuYMjbw2W2JpPeyGm+Q==
+X-Google-Smtp-Source: AGHT+IGT0SIm+7bz8FJuCUjI46yXJbsBQ6DCyC8G+2TvHa6rXvfGg22ujNbkn/rju1wwNmNGp4nw+sWLWIhsh/XHGB0=
+X-Received: by 2002:a50:cd8c:0:b0:56d:c85a:7893 with SMTP id
+ p12-20020a50cd8c000000b0056dc85a7893mr2169253edi.8.1712832425985; Thu, 11 Apr
+ 2024 03:47:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+References: <20240411104532.588170-1-peter.maydell@linaro.org>
+In-Reply-To: <20240411104532.588170-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 11 Apr 2024 11:46:55 +0100
+Message-ID: <CAFEAcA8-QfBq_UGHtS00tBYEOY1y0ZbzbcyaCeNp430kHuGJLg@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc: Avoid sprintf() in the imx devices
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,72 +90,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-resulting in painful developper experience. Use snprintf() instead.
+On Thu, 11 Apr 2024 at 11:45, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Various imx devices in hw/misc have a pattern in the
+> debug logging where a function which prints register names
+> has a fallback case for an unknown offset that uses sprintf().
+> Use snprintf() instead to avoid warnings on macos. (The
+> buffer could never overflow because it is 20 bytes and we
+> will write at most 10 digits plus 4 nondigits plus NUL.)
+>
+> Commit created with:
+>
+> sed -i -e 's/sprintf(unknown/snprintf(unknown, sizeof(unknown)/' hw/misc/imx*
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Philippe: here's an easy sprintf->snprintf conversion for your pile :-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/net/rocker/rocker.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+Never mind, I hadn't noticed you'd sent a second patchset on
+the sprintf issue, and you've already covered this one.
 
-diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
-index 7ea8eb6ba5..03ac7a7ae9 100644
---- a/hw/net/rocker/rocker.c
-+++ b/hw/net/rocker/rocker.c
-@@ -915,40 +915,40 @@ static const char *rocker_reg_name(void *opaque, hwaddr addr)
- 
-         switch (index) {
-         case 0:
--            sprintf(ring_name, "cmd");
-+            snprintf(ring_name, sizeof(ring_name), "cmd");
-             break;
-         case 1:
--            sprintf(ring_name, "event");
-+            snprintf(ring_name, sizeof(ring_name), "event");
-             break;
-         default:
--            sprintf(ring_name, "%s-%d", index % 2 ? "rx" : "tx",
--                    (index - 2) / 2);
-+            snprintf(ring_name, sizeof(ring_name), "%s-%d",
-+                     index % 2 ? "rx" : "tx", (index - 2) / 2);
-         }
- 
-         switch (offset) {
-         case ROCKER_DMA_DESC_ADDR_OFFSET:
--            sprintf(buf, "Ring[%s] ADDR", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] ADDR", ring_name);
-             return buf;
-         case ROCKER_DMA_DESC_ADDR_OFFSET+4:
--            sprintf(buf, "Ring[%s] ADDR+4", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] ADDR+4", ring_name);
-             return buf;
-         case ROCKER_DMA_DESC_SIZE_OFFSET:
--            sprintf(buf, "Ring[%s] SIZE", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] SIZE", ring_name);
-             return buf;
-         case ROCKER_DMA_DESC_HEAD_OFFSET:
--            sprintf(buf, "Ring[%s] HEAD", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] HEAD", ring_name);
-             return buf;
-         case ROCKER_DMA_DESC_TAIL_OFFSET:
--            sprintf(buf, "Ring[%s] TAIL", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] TAIL", ring_name);
-             return buf;
-         case ROCKER_DMA_DESC_CTRL_OFFSET:
--            sprintf(buf, "Ring[%s] CTRL", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] CTRL", ring_name);
-             return buf;
-         case ROCKER_DMA_DESC_CREDITS_OFFSET:
--            sprintf(buf, "Ring[%s] CREDITS", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] CREDITS", ring_name);
-             return buf;
-         default:
--            sprintf(buf, "Ring[%s] ???", ring_name);
-+            snprintf(buf, sizeofbuf), "Ring[%s] ???", ring_name);
-             return buf;
-         }
-     } else {
--- 
-2.41.0
-
+-- PMM
 
