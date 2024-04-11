@@ -4,58 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A63CD11C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 01:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70984CD1297
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 01:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruj0P-0000qD-CM; Wed, 10 Apr 2024 21:13:33 -0400
+	id 1rujDH-0003BF-64; Wed, 10 Apr 2024 21:26:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1ruj0N-0000oI-Ga; Wed, 10 Apr 2024 21:13:31 -0400
-Received: from szxga02-in.huawei.com ([45.249.212.188])
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rujDG-0003B7-36
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 21:26:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1ruj0G-0006fc-J2; Wed, 10 Apr 2024 21:13:31 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.48])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4VFM7M1fS9zXl2g;
- Thu, 11 Apr 2024 09:10:07 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 5ED9218007A;
- Thu, 11 Apr 2024 09:13:16 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Thu, 11 Apr 2024 09:13:15 +0800
-Message-ID: <bc91e886-16c8-d76b-5e2e-79c5af31d778@huawei.com>
-Date: Thu, 11 Apr 2024 09:13:15 +0800
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rujDE-0000LG-6I
+ for qemu-devel@nongnu.org; Wed, 10 Apr 2024 21:26:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712798806;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FBKQkKGQqdOquR2YMSBzzbDA/q9edlgpR9Nli4L6YBA=;
+ b=VIUWlkm7PQO9isrAtMX0i7TywqInHpfj/Pi988U86cMfFZVhcOGkTJ/G9GJ6Y0eNr3LtiA
+ 1hYie7j0mlD/kqT+RHK1kRC7mrlk8Ou6cfcqfrCHTostwbZL/8WL1TL9ss3iET8uBmSdDo
+ +qU26QBvh+85eqo8iwVtCKTS7owqIdc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-416-B0ZsWWS1PfmC0Yz_OYRP1Q-1; Wed, 10 Apr 2024 21:26:42 -0400
+X-MC-Unique: B0ZsWWS1PfmC0Yz_OYRP1Q-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a46bae02169so53136366b.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Apr 2024 18:26:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712798801; x=1713403601;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FBKQkKGQqdOquR2YMSBzzbDA/q9edlgpR9Nli4L6YBA=;
+ b=K7wpt39hrrvGblfgY4cI+8XqJ0lXEq8+hgyedq/wOybB8DMjsjT4rQKouOPUsSByKF
+ v6Ic7khKOEBia/pG1Z5YrK28BxNidhnvT6c1dyIwUc9SSeFjyY7hDxtm9veWL02fMxMr
+ I5sQZpaK0meN/zjcrQRalordKlHJO+bU7isHZ0GkFthAfX68INcqB5IZFILMsXlpAlS5
+ x2ZnPcE0GKipbaPKc3P+3dqFBRYVEb+lC7K0IhFH5y9XK6UcMgKhlKpPvcop5agUc1yM
+ 2sXvR4NqjdRQ+ce6Hi0/E0ZUP+E2naf3QkbqsWsahlWnjswRV6cFxQmnDdG0JKyg4TIo
+ Igig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHPNzscDbxMh6nxmAYftBXAaivZrFAeH5/e2af4xNevxqM6Z5Jh7UF8NqaEgUTu81ITolWJYbKd4Wcqni+ReL9FHZpvBk=
+X-Gm-Message-State: AOJu0Yz0AAdWUBjZT0aYN5ENS1axlniT2ipIs4lt3SyCjX68N7l6fyXz
+ 00cbbVmZfjyR4RtLCPao2M9DXI2o30dd5E67qiujDTfovjofYFrQZwtT+NW+jYGk6nDhgR14JHA
+ lkwK071hoJq2KDs0HcVOeTPhuxaJ6vuKE8n0msGOMDXrS7DgjBh2Luupj8vevyQBc/gLz4vTRVP
+ nRILe9w8YtA5UDLES5Qoobln8yfGg=
+X-Received: by 2002:a17:907:72d6:b0:a51:f46a:b000 with SMTP id
+ du22-20020a17090772d600b00a51f46ab000mr1218391ejc.20.1712798801134; 
+ Wed, 10 Apr 2024 18:26:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/3TBo+io0iZqEQj6iZHqpVd80JGJZX6qGSItnDa6qumIBOxqrEnaVEDMTleHPr/NmTOgpCITFH+vQeEbJst0=
+X-Received: by 2002:a17:907:72d6:b0:a51:f46a:b000 with SMTP id
+ du22-20020a17090772d600b00a51f46ab000mr1218376ejc.20.1712798800745; Wed, 10
+ Apr 2024 18:26:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH v13 00/24] target/arm: Implement FEAT_NMI and
- FEAT_GICv3_NMI
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <eduardo@habkost.net>, <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, 
- <wangyanan55@huawei.com>, <richard.henderson@linaro.org>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-References: <20240407081733.3231820-1-ruanjinjie@huawei.com>
- <5afa6458-808a-df3d-a734-53dedb0f5aff@huawei.com>
- <CAFEAcA-TQxXR08YkijF-WW8mP1LcTfyRy64Rhdh971OnVrAmJw@mail.gmail.com>
-In-Reply-To: <CAFEAcA-TQxXR08YkijF-WW8mP1LcTfyRy64Rhdh971OnVrAmJw@mail.gmail.com>
+References: <20240410161203.437079-1-lulu@redhat.com>
+ <20240410121618-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240410121618-mutt-send-email-mst@kernel.org>
+From: Cindy Lu <lulu@redhat.com>
+Date: Thu, 11 Apr 2024 09:25:59 +0800
+Message-ID: <CACLfguUgFKpRj3DMAo5JrHPvEuyb=2h8nYAjyfgi_tXwi=Z+4Q@mail.gmail.com>
+Subject: Re: [PATCH v3] virtio-pci: Fix the crash that the vector was used
+ after released.
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: jasowang@redhat.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.188;
- envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
-X-Spam_score_int: -75
-X-Spam_score: -7.6
-X-Spam_bar: -------
-X-Spam_report: (-7.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.441,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,25 +95,195 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Apr 11, 2024 at 12:18=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
+> wrote:
+>
+> On Thu, Apr 11, 2024 at 12:12:00AM +0800, Cindy Lu wrote:
+> > During the booting process of the non-standard image, the behavior of t=
+he
+> > called function in qemu is as follows:
+> >
+> > 1. vhost_net_stop() was triggered by guest image. This will call the fu=
+nction
+> > virtio_pci_set_guest_notifiers() with assgin=3D false,
+> > virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vec=
+tor 0
+> >
+> > 2. virtio_reset() was triggered, this will set configure vector to VIRT=
+IO_NO_VECTOR
+> >
+> > 3.vhost_net_start() was called (at this time, the configure vector is
+> > still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() =
+with
+> > assgin=3Dtrue, so the irqfd for vector 0 is still not "init" during thi=
+s process
+> >
+> > 4. The system continues to boot and sets the vector back to 0. After th=
+at
+> > msix_fire_vector_notifier() was triggered to unmask the vector 0 and  m=
+eet the crash
+> >
+> > To fix the issue, we need to support changing the vector after VIRTIO_C=
+ONFIG_S_DRIVER_OK is set.
+> >
+> > (gdb) bt
+> > 0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Ds=
+igno@entry=3D6, no_tid=3Dno_tid@entry=3D0)
+> >     at pthread_kill.c:44
+> > 1  0x00007fc87148ec53 in __pthread_kill_internal (signo=3D6, threadid=
+=3D<optimized out>) at pthread_kill.c:78
+> > 2  0x00007fc87143e956 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysdeps=
+/posix/raise.c:26
+> > 3  0x00007fc8714287f4 in __GI_abort () at abort.c:79
+> > 4  0x00007fc87142871b in __assert_fail_base
+> >     (fmt=3D0x7fc8715bbde0 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", =
+assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "../accel/=
+kvm/kvm-all.c", line=3D1837, function=3D<optimized out>) at assert.c:92
+> > 5  0x00007fc871437536 in __GI___assert_fail
+> >     (assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "=
+../accel/kvm/kvm-all.c", line=3D1837, function=3D0x5606413f06f0 <__PRETTY_F=
+UNCTION__.19> "kvm_irqchip_commit_routes") at assert.c:101
+> > 6  0x0000560640f884b5 in kvm_irqchip_commit_routes (s=3D0x560642cae1f0)=
+ at ../accel/kvm/kvm-all.c:1837
+> > 7  0x0000560640c98f8e in virtio_pci_one_vector_unmask
+> >     (proxy=3D0x560643c65f00, queue_no=3D4294967295, vector=3D0, msg=3D.=
+.., n=3D0x560643c6e4c8)
+> >     at ../hw/virtio/virtio-pci.c:1005
+> > 8  0x0000560640c99201 in virtio_pci_vector_unmask (dev=3D0x560643c65f00=
+, vector=3D0, msg=3D...)
+> >     at ../hw/virtio/virtio-pci.c:1070
+> > 9  0x0000560640bc402e in msix_fire_vector_notifier (dev=3D0x560643c65f0=
+0, vector=3D0, is_masked=3Dfalse)
+> >     at ../hw/pci/msix.c:120
+> > 10 0x0000560640bc40f1 in msix_handle_mask_update (dev=3D0x560643c65f00,=
+ vector=3D0, was_masked=3Dtrue)
+> >     at ../hw/pci/msix.c:140
+> > 11 0x0000560640bc4503 in msix_table_mmio_write (opaque=3D0x560643c65f00=
+, addr=3D12, val=3D0, size=3D4)
+> >     at ../hw/pci/msix.c:231
+> > 12 0x0000560640f26d83 in memory_region_write_accessor
+> >     (mr=3D0x560643c66540, addr=3D12, value=3D0x7fc86b7bc628, size=3D4, =
+shift=3D0, mask=3D4294967295, attrs=3D...)
+> >     at ../system/memory.c:497
+> > 13 0x0000560640f270a6 in access_with_adjusted_size
+> >
+> >      (addr=3D12, value=3D0x7fc86b7bc628, size=3D4, access_size_min=3D1,=
+ access_size_max=3D4, access_fn=3D0x560640f26c8d <memory_region_write_acces=
+sor>, mr=3D0x560643c66540, attrs=3D...) at ../system/memory.c:573
+> > 14 0x0000560640f2a2b5 in memory_region_dispatch_write (mr=3D0x560643c66=
+540, addr=3D12, data=3D0, op=3DMO_32, attrs=3D...)
+> >     at ../system/memory.c:1521
+> > 15 0x0000560640f37bac in flatview_write_continue
+> >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., ptr=3D0x7fc87=
+1e9c028, len=3D4, addr1=3D12, l=3D4, mr=3D0x560643c66540)
+> >     at ../system/physmem.c:2714
+> > 16 0x0000560640f37d0f in flatview_write
+> >     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., buf=3D0x7fc87=
+1e9c028, len=3D4) at ../system/physmem.c:2756
+> > 17 0x0000560640f380bf in address_space_write
+> >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, att=
+rs=3D..., buf=3D0x7fc871e9c028, len=3D4)
+> >     at ../system/physmem.c:2863
+> > 18 0x0000560640f3812c in address_space_rw
+> >     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, att=
+rs=3D..., buf=3D0x7fc871e9c028, len=3D4, is_write=3Dtrue) at ../system/phys=
+mem.c:2873
+> > --Type <RET> for more, q to quit, c to continue without paging--
+> > 19 0x0000560640f8aa55 in kvm_cpu_exec (cpu=3D0x560642f205e0) at ../acce=
+l/kvm/kvm-all.c:2915
+> > 20 0x0000560640f8d731 in kvm_vcpu_thread_fn (arg=3D0x560642f205e0) at .=
+./accel/kvm/kvm-accel-ops.c:51
+> > 21 0x00005606411949f4 in qemu_thread_start (args=3D0x560642f292b0) at .=
+./util/qemu-thread-posix.c:541
+> > 22 0x00007fc87148cdcd in start_thread (arg=3D<optimized out>) at pthrea=
+d_create.c:442
+> > 23 0x00007fc871512630 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64=
+/clone3.S:81
+> > (gdb)
+> > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > ---
+> >  hw/virtio/virtio-pci.c | 30 ++++++++++++++++++++++++++++++
+> >  1 file changed, 30 insertions(+)
+> >
+> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > index 1a7039fb0c..b3b1a4a66f 100644
+> > --- a/hw/virtio/virtio-pci.c
+> > +++ b/hw/virtio/virtio-pci.c
+> > @@ -1570,7 +1570,22 @@ static void virtio_pci_common_write(void *opaque=
+, hwaddr addr,
+> >          } else {
+> >              val =3D VIRTIO_NO_VECTOR;
+> >          }
+> > +        vector =3D vdev->config_vector;
+> >          vdev->config_vector =3D val;
+> > +        /*
+> > +         * If the value was changed after DRIVER_OK was set, it means =
+that
+> > +         * we need to release the old vector and set up the new vector=
+.
+> > +         */
+> > +        if ((vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> > +            /*check if use the irqfd*/
+> > +            (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enable=
+d())) {
+> > +            if (val !=3D VIRTIO_NO_VECTOR) {
+> > +                kvm_virtio_pci_vector_use_one(proxy, VIRTIO_CONFIG_IRQ=
+_IDX);
+> > +            }
+> > +            if (vector !=3D VIRTIO_NO_VECTOR) {
+> > +                kvm_virtio_pci_vector_release_one(proxy, VIRTIO_CONFIG=
+_IRQ_IDX);
+> > +            }
+> > +        }
+> >          break;
+> >      case VIRTIO_PCI_COMMON_STATUS:
+> >          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> > @@ -1611,6 +1626,21 @@ static void virtio_pci_common_write(void *opaque=
+, hwaddr addr,
+> >              val =3D VIRTIO_NO_VECTOR;
+> >          }
+> >          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> > +
+> > +        /*
+> > +         * If the value was changed after DRIVER_OK was set, it means =
+that
+> > +         * we need to release the old vector and set up the new vector=
+.
+> > +         */
+> > +        if ((vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> > +            /*check if use the irqfd*/
+>
+> by comment style
+will fix this
+>
+> > +            (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enable=
+d())) {
+> > +            if (val !=3D VIRTIO_NO_VECTOR) {
+> > +                kvm_virtio_pci_vector_use_one(proxy, vdev->queue_sel);
+> > +            }
+> > +            if (vector !=3D VIRTIO_NO_VECTOR) {
+> > +                kvm_virtio_pci_vector_release_one(proxy, vdev->queue_s=
+el);
+> > +            }
+>
+> does it matter in which order to do this?
+> if we release 1st there's more of a chance use will succeeed.
+>
+> I would also check val !=3D vector
+> if value did not change there is nothing to do.
+>
+Sure, thanks Michael, will send a new version soon
+thanks
+cindy
+> > +        }
+> >          break;
+> >      case VIRTIO_PCI_COMMON_Q_ENABLE:
+> >          if (val =3D=3D 1) {
+> > --
+> > 2.43.0
+>
 
-
-On 2024/4/10 20:58, Peter Maydell wrote:
-> On Wed, 10 Apr 2024 at 07:19, Jinjie Ruan via <qemu-arm@nongnu.org> wrote:
->>
->> Ping.
-> 
-> As I said in my reply on the previous version, we're in
-> freeze at the moment, so this patchset is not going anywhere
-> until 9.0 releases. I think it's in shape to apply after that.
-
-Thank you! I don't know if there's any other minor issues.
-
-> 
-> thanks
-> -- PMM
 
