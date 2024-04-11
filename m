@@ -4,136 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F1ACD1292
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 12:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC9FCD128A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 12:16:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rutIC-0004uz-01; Thu, 11 Apr 2024 08:12:36 -0400
+	id 1rutKT-0005qY-49; Thu, 11 Apr 2024 08:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rutI5-0004ty-Ez
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:12:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rutKQ-0005pK-Rs
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:14:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rutI3-0006d5-B1
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:12:28 -0400
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rutKN-0007Aq-NI
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 08:14:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712837545;
+ s=mimecast20190719; t=1712837691;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Rn9/XTLxjVr1HPxEoR9u06CvqQZ61nBz0m285Le0e4U=;
- b=GirN3z4PlrQV5h7b8c4FEwhKWz5ibgnLC0UHzPqzlJPdiNb8Wu/NM6kQjNvqQvmbrm0Jwx
- JQlFI/vK1yEbfbCywkobMJXGQFhFyJ4FadAVfyhm9dr5Xkn5EUUb66eaEJQZTtwGbLDw5m
- nmQiHaWoN6OFn+6QcAOC3FlntgjY4f0=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=R0maDu+jkT9D5sMy66uzUtbAkYAmZnv1BgYgKWSzxNQ=;
+ b=X/C+WjBqATwr/a1CAwrXS97cr9HQRIChfT7yrPY8+ySsDdLs4pK5wwwYG/SeZzYss9+mG+
+ nNeG8Jn2P9eUdugg+ZETtxrFU/Nq26EtyTQMrkBXICSWMs68ZBiYfyeudvllzY02ADEHC5
+ F9eDhznjk5dR+1Ydy71mqIUth4tcETw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-580-Vxom9C6yN9eUPsDEzCKR9w-1; Thu, 11 Apr 2024 08:12:24 -0400
-X-MC-Unique: Vxom9C6yN9eUPsDEzCKR9w-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-6ea16ead32cso5245704a34.3
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 05:12:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712837543; x=1713442343;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Rn9/XTLxjVr1HPxEoR9u06CvqQZ61nBz0m285Le0e4U=;
- b=RWPcpe4HqHR6CMuWvKEApBTiTN5NaVMnOkmmewqxOFbr6idJHD5ks12EH481F0n2aK
- oZf5Zwo3goLxpwSuo1yowSYKneUf1Zi4yd7NBmC2H7OX3t0HFOnZG+J0D34FOUl4DDay
- PGB+w192WEwBr4oJpZDEQhvVcr/AI4vsfYGonExMzIWatbwDnpEOsZxvQOMrc+WO7gX9
- eLJ5MvO1iKtYDBzcIKlCCs7gX7oRCkhdR7mzIKWJS0IqCT0JzhnRfSEZvNLxw+cBcq9G
- 74+uT/wYZ4qLXwV2tv+IRnSpi3QS/IP94oUoau7+5QBFXfppeSuuAemHf3Qf8qVX0j5U
- 3EAg==
-X-Gm-Message-State: AOJu0Ywgvyow2mSmHyOd/HuBaQ+4lWGww+ewIqoBY16CjYmtn6awEA7D
- 6qhB1EXC2Qm2BbXORPi/Q2gTnBFY4Dn7I41uQtmTXm3iMUXFnpZ3eVYrO4ZCAsY1ggyaaW1qwPN
- fv5Z6lVC8pd8ZBJmqwRkX7llvyBhjW0zDQOK0JykRmrFyMIMbHJxS0SPZuA/7UWyAH5b62cNrAd
- 2HC7z++MdoKSJFZLkZStSQC0EMOfFhjfXk
-X-Received: by 2002:a9d:6945:0:b0:6ea:1c73:a198 with SMTP id
- p5-20020a9d6945000000b006ea1c73a198mr6122787oto.0.1712837543561; 
- Thu, 11 Apr 2024 05:12:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvA3z3k2IGVe8bOyr3IWu0AHJyx+8H99mGpRMSD5oJ5jVGaW3lTxFzEkcvRlkpuxUGlmQAzg==
-X-Received: by 2002:a9d:6945:0:b0:6ea:1c73:a198 with SMTP id
- p5-20020a9d6945000000b006ea1c73a198mr6122759oto.0.1712837543177; 
- Thu, 11 Apr 2024 05:12:23 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-179-142.web.vodafone.de.
- [109.43.179.142]) by smtp.gmail.com with ESMTPSA id
- w11-20020a0ce10b000000b006986c3f3d21sm852954qvk.116.2024.04.11.05.12.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Apr 2024 05:12:22 -0700 (PDT)
-Message-ID: <1ccea33f-23cd-4beb-b6d4-8bdc9c623dd9@redhat.com>
-Date: Thu, 11 Apr 2024 14:12:20 +0200
+ us-mta-681-YZEgvBo1McOEIw6kD8xWxg-1; Thu, 11 Apr 2024 08:14:49 -0400
+X-MC-Unique: YZEgvBo1McOEIw6kD8xWxg-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7611D8007BA
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 12:14:49 +0000 (UTC)
+Received: from fedora.redhat.com (unknown [10.39.208.31])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C837C444420;
+ Thu, 11 Apr 2024 12:14:47 +0000 (UTC)
+From: Anthony Harivel <aharivel@redhat.com>
+To: pbonzini@redhat.com,
+	mtosatti@redhat.com,
+	berrange@redhat.com
+Cc: qemu-devel@nongnu.org, vchundur@redhat.com, rjarry@redhat.com,
+ Anthony Harivel <aharivel@redhat.com>
+Subject: [PATCH v5 2/3] tools: build qemu-vmsr-helper
+Date: Thu, 11 Apr 2024 14:14:33 +0200
+Message-ID: <20240411121434.253353-3-aharivel@redhat.com>
+In-Reply-To: <20240411121434.253353-1-aharivel@redhat.com>
+References: <20240411121434.253353-1-aharivel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] meson.build: Disable -fzero-call-used-regs on
- OpenBSD
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Brad Smith <brad@comstyle.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20240411120819.56417-1-thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240411120819.56417-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,47 +83,771 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/04/2024 14.08, Thomas Huth wrote:
-> QEMU currently does not work on OpenBSD since the -fzero-call-used-regs
+Introduce a privileged helper to access RAPL MSR.
 
-That should be "OpenBSD 7.5" ... older versions are fine since they are 
-using an older version of Clang that does not have -fzero-call-used-regs 
-yet, I think.
+The privileged helper tool, qemu-vmsr-helper, is designed to provide
+virtual machines with the ability to read specific RAPL (Running Average
+Power Limit) MSRs without requiring CAP_SYS_RAWIO privileges or relying
+on external, out-of-tree patches.
 
-  Thomas
+The helper tool leverages Unix permissions and SO_PEERCRED socket
+options to enforce access control, ensuring that only processes
+explicitly requesting read access via readmsr() from a valid Thread ID
+can access these MSRs.
 
+The list of RAPL MSRs that are allowed to be read by the helper tool is
+defined in rapl-msr-index.h. This list corresponds to the RAPL MSRs that
+will be supported in the next commit titled "Add support for RAPL MSRs
+in KVM/QEMU."
 
-> option that we added to meson.build recently does not work with the
-> "retguard" extension from OpenBSD's Clang. Thus let's disable the
-> -fzero-call-used-regs here until there's a better solution available.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2278
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   Note: Given that we're close to the release, I think the host_os check
->   is the best we can do ... the problem does not seem to trigger in all
->   functions, only if certain registers are used by the compiler, so a
->   more sophisticated check here seems to be too fragile to me right now.
-> 
->   meson.build | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index c9c3217ba4..91a0aa64c6 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -562,7 +562,11 @@ hardening_flags = [
->   #
->   # NB: Clang 17 is broken and SEGVs
->   # https://github.com/llvm/llvm-project/issues/75168
-> -if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }',
-> +#
-> +# NB2: This clashes with the "retguard" extension of OpenBSD's Clang
-> +# https://gitlab.com/qemu-project/qemu/-/issues/2278
-> +if host_os != 'openbsd' and \
-> +   cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }',
->                  name: '-fzero-call-used-regs=used-gpr',
->                  args: ['-O2', '-fzero-call-used-regs=used-gpr'])
->       hardening_flags += '-fzero-call-used-regs=used-gpr'
+The tool is intentionally designed to run on the Linux x86 platform.
+This initial implementation is tailored for Intel CPUs but can be
+extended to support AMD CPUs in the future.
+
+Signed-off-by: Anthony Harivel <aharivel@redhat.com>
+---
+ contrib/systemd/qemu-vmsr-helper.service |  15 +
+ contrib/systemd/qemu-vmsr-helper.socket  |   9 +
+ docs/tools/index.rst                     |   1 +
+ docs/tools/qemu-vmsr-helper.rst          |  89 ++++
+ meson.build                              |   7 +
+ tools/i386/qemu-vmsr-helper.c            | 529 +++++++++++++++++++++++
+ tools/i386/rapl-msr-index.h              |  28 ++
+ 7 files changed, 678 insertions(+)
+ create mode 100644 contrib/systemd/qemu-vmsr-helper.service
+ create mode 100644 contrib/systemd/qemu-vmsr-helper.socket
+ create mode 100644 docs/tools/qemu-vmsr-helper.rst
+ create mode 100644 tools/i386/qemu-vmsr-helper.c
+ create mode 100644 tools/i386/rapl-msr-index.h
+
+diff --git a/contrib/systemd/qemu-vmsr-helper.service b/contrib/systemd/qemu-vmsr-helper.service
+new file mode 100644
+index 000000000000..8fd397bf79a9
+--- /dev/null
++++ b/contrib/systemd/qemu-vmsr-helper.service
+@@ -0,0 +1,15 @@
++[Unit]
++Description=Virtual RAPL MSR Daemon for QEMU
++
++[Service]
++WorkingDirectory=/tmp
++Type=simple
++ExecStart=/usr/bin/qemu-vmsr-helper
++PrivateTmp=yes
++ProtectSystem=strict
++ReadWritePaths=/var/run
++RestrictAddressFamilies=AF_UNIX
++Restart=always
++RestartSec=0
++
++[Install]
+diff --git a/contrib/systemd/qemu-vmsr-helper.socket b/contrib/systemd/qemu-vmsr-helper.socket
+new file mode 100644
+index 000000000000..183e8304d6e2
+--- /dev/null
++++ b/contrib/systemd/qemu-vmsr-helper.socket
+@@ -0,0 +1,9 @@
++[Unit]
++Description=Virtual RAPL MSR helper for QEMU
++
++[Socket]
++ListenStream=/run/qemu-vmsr-helper.sock
++SocketMode=0600
++
++[Install]
++WantedBy=multi-user.target
+diff --git a/docs/tools/index.rst b/docs/tools/index.rst
+index 8e65ce0dfc7b..33ad438e86f6 100644
+--- a/docs/tools/index.rst
++++ b/docs/tools/index.rst
+@@ -16,3 +16,4 @@ command line utilities and other standalone programs.
+    qemu-pr-helper
+    qemu-trace-stap
+    virtfs-proxy-helper
++   qemu-vmsr-helper
+diff --git a/docs/tools/qemu-vmsr-helper.rst b/docs/tools/qemu-vmsr-helper.rst
+new file mode 100644
+index 000000000000..6ec87b49d962
+--- /dev/null
++++ b/docs/tools/qemu-vmsr-helper.rst
+@@ -0,0 +1,89 @@
++==================================
++QEMU virtual RAPL MSR helper
++==================================
++
++Synopsis
++--------
++
++**qemu-vmsr-helper** [*OPTION*]
++
++Description
++-----------
++
++Implements the virtual RAPL MSR helper for QEMU.
++
++Accessing the RAPL (Running Average Power Limit) MSR enables the RAPL powercap
++driver to advertise and monitor the power consumption or accumulated energy
++consumption of different power domains, such as CPU packages, DRAM, and other
++components when available.
++
++However those register are accesible under priviliged access (CAP_SYS_RAWIO).
++QEMU can use an external helper to access those priviliged register.
++
++:program:`qemu-vmsr-helper` is that external helper; it creates a listener
++socket which will accept incoming connections for communication with QEMU.
++
++If you want to run VMs in a setup like this, this helper should be started as a
++system service, and you should read the QEMU manual section on "RAPL MSR
++support" to find out how to configure QEMU to connect to the socket created by
++:program:`qemu-vmsr-helper`.
++
++After connecting to the socket, :program:`qemu-vmsr-helper` can
++optionally drop root privileges, except for those capabilities that
++are needed for its operation.
++
++:program:`qemu-vmsr-helper` can also use the systemd socket activation
++protocol.  In this case, the systemd socket unit should specify a
++Unix stream socket, like this::
++
++    [Socket]
++    ListenStream=/var/run/qemu-vmsr-helper.sock
++
++Options
++-------
++
++.. program:: qemu-vmsr-helper
++
++.. option:: -d, --daemon
++
++  run in the background (and create a PID file)
++
++.. option:: -q, --quiet
++
++  decrease verbosity
++
++.. option:: -v, --verbose
++
++  increase verbosity
++
++.. option:: -f, --pidfile=PATH
++
++  PID file when running as a daemon. By default the PID file
++  is created in the system runtime state directory, for example
++  :file:`/var/run/qemu-vmsr-helper.pid`.
++
++.. option:: -k, --socket=PATH
++
++  path to the socket. By default the socket is created in
++  the system runtime state directory, for example
++  :file:`/var/run/qemu-vmsr-helper.sock`.
++
++.. option:: -T, --trace [[enable=]PATTERN][,events=FILE][,file=FILE]
++
++  .. include:: ../qemu-option-trace.rst.inc
++
++.. option:: -u, --user=USER
++
++  user to drop privileges to
++
++.. option:: -g, --group=GROUP
++
++  group to drop privileges to
++
++.. option:: -h, --help
++
++  Display a help message and exit.
++
++.. option:: -V, --version
++
++  Display version information and exit.
+diff --git a/meson.build b/meson.build
+index b375248a7614..11467f7ce46d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4052,6 +4052,13 @@ if have_tools
+                dependencies: [authz, crypto, io, qom, qemuutil,
+                               libcap_ng, mpathpersist],
+                install: true)
++
++    if cpu in ['x86', 'x86_64']
++      executable('qemu-vmsr-helper', files('tools/i386/qemu-vmsr-helper.c'),
++               dependencies: [authz, crypto, io, qom, qemuutil,
++                              libcap_ng, mpathpersist],
++               install: true)
++    endif
+   endif
+ 
+   if have_ivshmem
+diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
+new file mode 100644
+index 000000000000..a7e26c267a3f
+--- /dev/null
++++ b/tools/i386/qemu-vmsr-helper.c
+@@ -0,0 +1,529 @@
++/*
++ * Privileged RAPL MSR helper commands for QEMU
++ *
++ * Copyright (C) 2024 Red Hat, Inc. <aharivel@redhat.com>
++ *
++ * Author: Anthony Harivel <aharivel@redhat.com>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; under version 2 of the License.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "qemu/osdep.h"
++#include <getopt.h>
++#include <stdbool.h>
++#include <sys/ioctl.h>
++#ifdef CONFIG_LIBCAP_NG
++#include <cap-ng.h>
++#endif
++#include <pwd.h>
++#include <grp.h>
++
++#include "qemu/help-texts.h"
++#include "qapi/error.h"
++#include "qemu/cutils.h"
++#include "qemu/main-loop.h"
++#include "qemu/module.h"
++#include "qemu/error-report.h"
++#include "qemu/config-file.h"
++#include "qemu-version.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/log.h"
++#include "qemu/systemd.h"
++#include "io/channel.h"
++#include "io/channel-socket.h"
++#include "trace/control.h"
++#include "qemu-version.h"
++#include "rapl-msr-index.h"
++
++#define MSR_PATH_TEMPLATE "/dev/cpu/%u/msr"
++
++static char *socket_path;
++static char *pidfile;
++static enum { RUNNING, TERMINATE, TERMINATING } state;
++static QIOChannelSocket *server_ioc;
++static int server_watch;
++static int num_active_sockets = 1;
++
++#ifdef CONFIG_LIBCAP_NG
++static int uid = -1;
++static int gid = -1;
++#endif
++
++static void compute_default_paths(void)
++{
++    g_autofree char *state = qemu_get_local_state_dir();
++
++    socket_path = g_build_filename(state, "run", "qemu-vmsr-helper.sock", NULL);
++    pidfile = g_build_filename(state, "run", "qemu-vmsr-helper.pid", NULL);
++}
++
++static int is_intel_processor(void)
++{
++    int result;
++    int ebx, ecx, edx;
++
++    /* Execute CPUID instruction with eax=0 (basic identification) */
++    asm volatile (
++        "cpuid"
++        : "=b" (ebx), "=c" (ecx), "=d" (edx)
++        : "a" (0)
++    );
++
++    /*
++     *  Check if processor is "GenuineIntel"
++     *  0x756e6547 = "Genu"
++     *  0x49656e69 = "ineI"
++     *  0x6c65746e = "ntel"
++     */
++    result = (ebx == 0x756e6547) && (edx == 0x49656e69) && (ecx == 0x6c65746e);
++
++    return result;
++}
++
++static int is_rapl_enabled(void)
++{
++    const char *path = "/sys/class/powercap/intel-rapl/enabled";
++    FILE *file = fopen(path, "r");
++    int value = 0;
++
++    if (file != NULL) {
++        if (fscanf(file, "%d", &value) != 1) {
++            error_report("INTEL RAPL not enabled");
++        }
++        fclose(file);
++    } else {
++        error_report("Error opening %s", path);
++    }
++
++    return value;
++}
++
++/*
++ * Check if the TID that request the MSR read
++ * belongs to the peer. It be should a TID of a vCPU.
++ */
++static bool is_tid_present(pid_t pid, pid_t tid)
++{
++    g_autofree char *tidPath = g_strdup_printf("/proc/%d/task/%d", pid, tid);
++
++    /* Check if the TID directory exists within the PID directory */
++    if (access(tidPath, F_OK) == 0) {
++        return true;
++    }
++
++    error_report("Failed to open /proc at %s", tidPath);
++    return false;
++}
++
++/*
++ * Only the RAPL MSR in target/i386/cpu.h are allowed
++ */
++static bool is_msr_allowed(uint32_t reg)
++{
++    switch (reg) {
++    case MSR_RAPL_POWER_UNIT:
++    case MSR_PKG_POWER_LIMIT:
++    case MSR_PKG_ENERGY_STATUS:
++    case MSR_PKG_POWER_INFO:
++        return true;
++    default:
++        return false;
++    }
++}
++
++static uint64_t vmsr_read_msr(uint32_t msr_register, unsigned int cpu_id)
++{
++    int fd;
++    uint64_t result = 0;
++
++    g_autofree char *path = g_strdup_printf(MSR_PATH_TEMPLATE, cpu_id);
++
++    fd = open(path, O_RDONLY);
++    if (fd < 0) {
++        error_report("Failed to open MSR file at %s", path);
++        return result;
++    }
++
++    if (pread(fd, &result, sizeof(result), msr_register) != sizeof(result)) {
++        error_report("Failed to read MSR");
++        result = 0;
++    }
++
++    close(fd);
++    return result;
++}
++
++static void usage(const char *name)
++{
++    (printf) (
++"Usage: %s [OPTIONS] FILE\n"
++"Virtual RAPL MSR helper program for QEMU\n"
++"\n"
++"  -h, --help                display this help and exit\n"
++"  -V, --version             output version information and exit\n"
++"\n"
++"  -d, --daemon              run in the background\n"
++"  -f, --pidfile=PATH        PID file when running as a daemon\n"
++"                            (default '%s')\n"
++"  -k, --socket=PATH         path to the unix socket\n"
++"                            (default '%s')\n"
++"  -T, --trace [[enable=]<pattern>][,events=<file>][,file=<file>]\n"
++"                            specify tracing options\n"
++#ifdef CONFIG_LIBCAP_NG
++"  -u, --user=USER           user to drop privileges to\n"
++"  -g, --group=GROUP         group to drop privileges to\n"
++#endif
++"\n"
++QEMU_HELP_BOTTOM "\n"
++    , name, pidfile, socket_path);
++}
++
++static void version(const char *name)
++{
++    printf(
++"%s " QEMU_FULL_VERSION "\n"
++"Written by Anthony Harivel.\n"
++"\n"
++QEMU_COPYRIGHT "\n"
++"This is free software; see the source for copying conditions.  There is NO\n"
++"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
++    , name);
++}
++
++typedef struct VMSRHelperClient {
++    QIOChannelSocket *ioc;
++    Coroutine *co;
++} VMSRHelperClient;
++
++static void coroutine_fn vh_co_entry(void *opaque)
++{
++    VMSRHelperClient *client = opaque;
++    Error *local_err = NULL;
++    unsigned int peer_pid;
++    uint32_t request[3];
++    uint64_t vmsr;
++    int r;
++
++    qio_channel_set_blocking(QIO_CHANNEL(client->ioc),
++                             false, NULL);
++
++    qio_channel_set_follow_coroutine_ctx(QIO_CHANNEL(client->ioc), true);
++
++    /*
++     * Check peer credentials
++     */
++    r = qio_channel_get_peerpid(QIO_CHANNEL(client->ioc),
++                                &peer_pid,
++                                &local_err);
++    if (r < 0) {
++        error_report_err(local_err);
++        goto out;
++    }
++
++    /*
++     * Read the requested MSR
++     * Only RAPL MSR in rapl-msr-index.h is allowed
++     */
++    r = qio_channel_read_all(QIO_CHANNEL(client->ioc),
++                             (char *) &request, sizeof(request), &local_err);
++    if (r < 0) {
++        error_report_err(local_err);
++        goto out;
++    }
++
++    if (!is_msr_allowed(request[0])) {
++        error_report("Requested unallowed msr: %d", request[0]);
++        goto out;
++    }
++
++    vmsr = vmsr_read_msr(request[0], request[1]);
++
++    if (!is_tid_present(peer_pid, request[2])) {
++        error_report("Requested TID not in peer PID: %d %d",
++            peer_pid, request[2]);
++        vmsr = 0;
++    }
++
++    r = qio_channel_write_all(QIO_CHANNEL(client->ioc),
++                              (char *) &vmsr,
++                              sizeof(vmsr),
++                              &local_err);
++    if (r < 0) {
++        error_report_err(local_err);
++        goto out;
++    }
++
++out:
++    object_unref(OBJECT(client->ioc));
++    g_free(client);
++}
++
++static gboolean accept_client(QIOChannel *ioc,
++                              GIOCondition cond,
++                              gpointer opaque)
++{
++    QIOChannelSocket *cioc;
++    VMSRHelperClient *vmsrh;
++
++    cioc = qio_channel_socket_accept(QIO_CHANNEL_SOCKET(ioc),
++                                     NULL);
++    if (!cioc) {
++        return TRUE;
++    }
++
++    vmsrh = g_new(VMSRHelperClient, 1);
++    vmsrh->ioc = cioc;
++    vmsrh->co = qemu_coroutine_create(vh_co_entry, vmsrh);
++    qemu_coroutine_enter(vmsrh->co);
++
++    return TRUE;
++}
++
++static void termsig_handler(int signum)
++{
++    qatomic_cmpxchg(&state, RUNNING, TERMINATE);
++    qemu_notify_event();
++}
++
++static void close_server_socket(void)
++{
++    assert(server_ioc);
++
++    g_source_remove(server_watch);
++    server_watch = -1;
++    object_unref(OBJECT(server_ioc));
++    num_active_sockets--;
++}
++
++#ifdef CONFIG_LIBCAP_NG
++static int drop_privileges(void)
++{
++    /* clear all capabilities */
++    capng_clear(CAPNG_SELECT_BOTH);
++
++    if (capng_update(CAPNG_ADD, CAPNG_EFFECTIVE | CAPNG_PERMITTED,
++                     CAP_SYS_RAWIO) < 0) {
++        return -1;
++    }
++
++    return 0;
++}
++#endif
++
++int main(int argc, char **argv)
++{
++    const char *sopt = "hVk:f:dT:u:g:vq";
++    struct option lopt[] = {
++        { "help", no_argument, NULL, 'h' },
++        { "version", no_argument, NULL, 'V' },
++        { "socket", required_argument, NULL, 'k' },
++        { "pidfile", required_argument, NULL, 'f' },
++        { "daemon", no_argument, NULL, 'd' },
++        { "trace", required_argument, NULL, 'T' },
++        { "verbose", no_argument, NULL, 'v' },
++        { NULL, 0, NULL, 0 }
++    };
++    int opt_ind = 0;
++    int ch;
++    Error *local_err = NULL;
++    bool daemonize = false;
++    bool pidfile_specified = false;
++    bool socket_path_specified = false;
++    unsigned socket_activation;
++
++    struct sigaction sa_sigterm;
++    memset(&sa_sigterm, 0, sizeof(sa_sigterm));
++    sa_sigterm.sa_handler = termsig_handler;
++    sigaction(SIGTERM, &sa_sigterm, NULL);
++    sigaction(SIGINT, &sa_sigterm, NULL);
++    sigaction(SIGHUP, &sa_sigterm, NULL);
++
++    signal(SIGPIPE, SIG_IGN);
++
++    error_init(argv[0]);
++    module_call_init(MODULE_INIT_TRACE);
++    module_call_init(MODULE_INIT_QOM);
++    qemu_add_opts(&qemu_trace_opts);
++    qemu_init_exec_dir(argv[0]);
++
++    compute_default_paths();
++
++    /*
++     * Sanity check
++     * 1. cpu must be Intel cpu
++     * 2. RAPL must be enabled
++     */
++    if (!is_intel_processor()) {
++        error_report("error: CPU is not INTEL cpu");
++        exit(EXIT_FAILURE);
++    }
++
++    if (!is_rapl_enabled()) {
++        error_report("error: RAPL driver not enable");
++        exit(EXIT_FAILURE);
++    }
++
++    while ((ch = getopt_long(argc, argv, sopt, lopt, &opt_ind)) != -1) {
++        switch (ch) {
++        case 'k':
++            g_free(socket_path);
++            socket_path = g_strdup(optarg);
++            socket_path_specified = true;
++            if (socket_path[0] != '/') {
++                error_report("socket path must be absolute");
++                exit(EXIT_FAILURE);
++            }
++            break;
++        case 'f':
++            g_free(pidfile);
++            pidfile = g_strdup(optarg);
++            pidfile_specified = true;
++            break;
++#ifdef CONFIG_LIBCAP_NG
++        case 'u': {
++            unsigned long res;
++            struct passwd *userinfo = getpwnam(optarg);
++            if (userinfo) {
++                uid = userinfo->pw_uid;
++            } else if (qemu_strtoul(optarg, NULL, 10, &res) == 0 &&
++                       (uid_t)res == res) {
++                uid = res;
++            } else {
++                error_report("invalid user '%s'", optarg);
++                exit(EXIT_FAILURE);
++            }
++            break;
++        }
++        case 'g': {
++            unsigned long res;
++            struct group *groupinfo = getgrnam(optarg);
++            if (groupinfo) {
++                gid = groupinfo->gr_gid;
++            } else if (qemu_strtoul(optarg, NULL, 10, &res) == 0 &&
++                       (gid_t)res == res) {
++                gid = res;
++            } else {
++                error_report("invalid group '%s'", optarg);
++                exit(EXIT_FAILURE);
++            }
++            break;
++        }
++#else
++        case 'u':
++        case 'g':
++            error_report("-%c not supported by this %s", ch, argv[0]);
++            exit(1);
++#endif
++        case 'd':
++            daemonize = true;
++            break;
++        case 'T':
++            trace_opt_parse(optarg);
++            break;
++        case 'V':
++            version(argv[0]);
++            exit(EXIT_SUCCESS);
++            break;
++        case 'h':
++            usage(argv[0]);
++            exit(EXIT_SUCCESS);
++            break;
++        case '?':
++            error_report("Try `%s --help' for more information.", argv[0]);
++            exit(EXIT_FAILURE);
++        }
++    }
++
++    if (!trace_init_backends()) {
++        exit(EXIT_FAILURE);
++    }
++    trace_init_file();
++    qemu_set_log(LOG_TRACE, &error_fatal);
++
++    socket_activation = check_socket_activation();
++    if (socket_activation == 0) {
++        SocketAddress saddr;
++        saddr = (SocketAddress){
++            .type = SOCKET_ADDRESS_TYPE_UNIX,
++            .u.q_unix.path = socket_path,
++        };
++        server_ioc = qio_channel_socket_new();
++        if (qio_channel_socket_listen_sync(server_ioc, &saddr,
++                                           1, &local_err) < 0) {
++            object_unref(OBJECT(server_ioc));
++            error_report_err(local_err);
++            return 1;
++        }
++    } else {
++        /* Using socket activation - check user didn't use -p etc. */
++        if (socket_path_specified) {
++            error_report("Unix socket can't be set when"
++                         "using socket activation");
++            exit(EXIT_FAILURE);
++        }
++
++        /* Can only listen on a single socket.  */
++        if (socket_activation > 1) {
++            error_report("%s does not support socket activation"
++                         "with LISTEN_FDS > 1",
++                        argv[0]);
++            exit(EXIT_FAILURE);
++        }
++        server_ioc = qio_channel_socket_new_fd(FIRST_SOCKET_ACTIVATION_FD,
++                                               &local_err);
++        if (server_ioc == NULL) {
++            error_reportf_err(local_err,
++                              "Failed to use socket activation: ");
++            exit(EXIT_FAILURE);
++        }
++    }
++
++    qemu_init_main_loop(&error_fatal);
++
++    server_watch = qio_channel_add_watch(QIO_CHANNEL(server_ioc),
++                                         G_IO_IN,
++                                         accept_client,
++                                         NULL, NULL);
++
++    if (daemonize) {
++        if (daemon(0, 0) < 0) {
++            error_report("Failed to daemonize: %s", strerror(errno));
++            exit(EXIT_FAILURE);
++        }
++    }
++
++    if (daemonize || pidfile_specified) {
++        qemu_write_pidfile(pidfile, &error_fatal);
++    }
++
++#ifdef CONFIG_LIBCAP_NG
++    if (drop_privileges() < 0) {
++        error_report("Failed to drop privileges: %s", strerror(errno));
++        exit(EXIT_FAILURE);
++    }
++#endif
++
++    info_report("Listening on %s", socket_path);
++
++    state = RUNNING;
++    do {
++        main_loop_wait(false);
++        if (state == TERMINATE) {
++            state = TERMINATING;
++            close_server_socket();
++        }
++    } while (num_active_sockets > 0);
++
++    exit(EXIT_SUCCESS);
++}
+diff --git a/tools/i386/rapl-msr-index.h b/tools/i386/rapl-msr-index.h
+new file mode 100644
+index 000000000000..9a7118639ae3
+--- /dev/null
++++ b/tools/i386/rapl-msr-index.h
+@@ -0,0 +1,28 @@
++/*
++ * Allowed list of MSR for Privileged RAPL MSR helper commands for QEMU
++ *
++ * Copyright (C) 2023 Red Hat, Inc. <aharivel@redhat.com>
++ *
++ * Author: Anthony Harivel <aharivel@redhat.com>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; under version 2 of the License.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++/*
++ * Should stay in sync with the RAPL MSR
++ * in target/i386/cpu.h
++ */
++#define MSR_RAPL_POWER_UNIT             0x00000606
++#define MSR_PKG_POWER_LIMIT             0x00000610
++#define MSR_PKG_ENERGY_STATUS           0x00000611
++#define MSR_PKG_POWER_INFO              0x00000614
+-- 
+2.44.0
 
 
