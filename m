@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F6CC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 16:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B04C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 17:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ruxWI-0000lo-Te; Thu, 11 Apr 2024 12:43:26 -0400
+	id 1ruxuN-0005S4-F5; Thu, 11 Apr 2024 13:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ruxWH-0000la-V0
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 12:43:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ruxWG-0007cF-9y
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 12:43:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712853803;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qhQQr7IyTzlV1rrPa7Qul8/JxVFgKpzwRH4Uh3r/XbQ=;
- b=jLWwzNoYLfOqZlaFVdxcM1T+x1R274LQsAfG4J6XhfVUz1bwTscMTucREXkXielI27x6RH
- 5iHa+wcZk4e/prlX7MfqjO/gcWB0CJjMoPdUDqoOu5mt5SInH2fL+kCdOG1ZQf7R+l47u2
- 2289XI1pwNv8NvclvUVtfGFLZAfzRTk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-9GvrOztIPk23AaEifnO3iA-1; Thu, 11 Apr 2024 12:43:20 -0400
-X-MC-Unique: 9GvrOztIPk23AaEifnO3iA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-343f08542f8so4415791f8f.0
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 09:43:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruxuL-0005Rg-61
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 13:08:17 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ruxuJ-0003EC-7a
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 13:08:16 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2d4886a1cb4so67191fa.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 10:08:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712855292; x=1713460092; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hbOI/YT9E0aF1zHmlZtEIv3EiGt2ZE3bgpvsZg56Yyw=;
+ b=eWDEtToF0WSbLlTW404ZU849lxFCFFbA26iwFvt/LUVaNQZI1tCUaizFc19bfURDwq
+ OqWTR/jDlIvQtdqt8eNO3NUjAR6aojL3VP1QIjbvR9tyWD5tsfNtnq4uV8FKiQe8hvrU
+ EpmSM8K5ff/A1lRSpcTFVeeNU/T1KQamXz51BSfQoMDARI7dok1bsq3ruDqSdiQynweR
+ oQaE4qKWKctVGYFdj5HzYexV5puGxV7ilOALxE9VuaB0RF7Lb2UiiTDMPSAVhiWFYzDV
+ fE2sanVo5vt02UJ8bR6g7sArkeG5kATeu5qQyDSI5R5KosVuBfDAJKBd9GLtAeSmQhcy
+ R0Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712853799; x=1713458599;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qhQQr7IyTzlV1rrPa7Qul8/JxVFgKpzwRH4Uh3r/XbQ=;
- b=HHMMsJq/a/M4TaQJJMXivQtPG/VT8MI+YIYUx7iFyYTt9jWg7folT6mpbMMt2dfsUU
- I23ZnFg6teUSFTcJZ8Li1SgazqG/o1JpYMuw3EK3XJEkWUrrpy5iAvU/4evnTjwZOcfh
- 21bH6PB+WeCjbJYHCt4Gmm5zjMDFcnUBPswgDUoRfssDt0lmRSHnhAqyb09LyY2iLh/9
- 6MYcm9N/yU+I+a5BRi4trg3awXX8MQf85u/XOZIdNYk16fGKJBJwcKq3/YX5otJaDVCA
- fwlP4URGwaW3bMRIp5ucMrj7fki+Vapt3N/3P7rpI9akvEnhpuhILX4J2NUYHkpJvm8X
- P0qw==
-X-Gm-Message-State: AOJu0Yyxh4WGM69x4Fd5CLUG+QbvPz6ttPLG4zy/1QkmvutbOlPZOLOf
- 6+ladSfoFJOAHWq5ZJRNqo6Yccc83Q2afrD1aAKRvWP3m0arXeRCyf/VZuGWi3Jj2K3M0CldrPd
- rbti7C63AaBoVyUApZ/fMHBaU5+g1oSzzLfOAPT4ub5RZus7MR5f9F9suAVXyMghzRdfldJne8b
- BHYLO0qzdiSb4wd0z0sdkdGOFBQYVe73unhY8=
-X-Received: by 2002:a5d:47a2:0:b0:343:71c2:287e with SMTP id
- 2-20020a5d47a2000000b0034371c2287emr67054wrb.59.1712853798790; 
- Thu, 11 Apr 2024 09:43:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZJPURLAk7Z95XmuRTvjeu02bHNx3wDBlYf+Lkp7i+Navw0Cvrj50VrG/G1T6bKMr0i7JHxUEhFr/oMOVAPaM=
-X-Received: by 2002:a5d:47a2:0:b0:343:71c2:287e with SMTP id
- 2-20020a5d47a2000000b0034371c2287emr67041wrb.59.1712853798449; Thu, 11 Apr
- 2024 09:43:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712855292; x=1713460092;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hbOI/YT9E0aF1zHmlZtEIv3EiGt2ZE3bgpvsZg56Yyw=;
+ b=NaOdI5rHjs+yGD842C0MGI+4eyOhH0eWvOOhOKfPcNLTpvegov7hUTooxUJsM+7D8Y
+ uktbOY12if9s4FwMF0SxwUAQ6Nz3bmulBy6dH3d16uQLuNIQkjfiQLkBRw63vzyQ0tk9
+ g1sxZ/NBBPyOjafVcMxoE+q//Avw+9k6GNF4c/HZc/MX0WWmcmWr0e30nuuqP+1/pjql
+ gvHizpI9EY9EuLvlLV/Qli1962KdgKUQEZntDoQ1fcqx+AEC5dHVUXOiDTbljr8SyIcu
+ lE2zIPpZGlJ7mIfbs3Qj9G0ec47As0TibuRb6k2aWO5WAveKUgb9e5nj2aPBx80mENRx
+ Vk1w==
+X-Gm-Message-State: AOJu0Yw+4xNq1RIOM3/ljYxehy889ia1U6Ihbyb11tdZr9/YFJ1l3JFK
+ 6l9tHzAi3eOoYaG1DE+AnCSi3ybAHqsl44TlSjM52misfQHaytNGSbzzUZl7viI=
+X-Google-Smtp-Source: AGHT+IHD3oRnkxHdd2dpsFAsu2CmiC/Ye4m/10s4Z218aT2TDofJJdRMubznXEq+4WZiVcpUsaiAQQ==
+X-Received: by 2002:a05:651c:502:b0:2d8:5e35:6076 with SMTP id
+ o2-20020a05651c050200b002d85e356076mr184870ljp.51.1712855292360; 
+ Thu, 11 Apr 2024 10:08:12 -0700 (PDT)
+Received: from [192.168.120.175] (31.red-95-127-88.dynamicip.rima-tde.net.
+ [95.127.88.31]) by smtp.gmail.com with ESMTPSA id
+ fm24-20020a05600c0c1800b004166b960469sm2917244wmb.38.2024.04.11.10.08.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Apr 2024 10:08:11 -0700 (PDT)
+Message-ID: <fde8cad1-6308-4890-8054-534bbbde12b5@linaro.org>
+Date: Thu, 11 Apr 2024 19:08:06 +0200
 MIME-Version: 1.0
-References: <20240409164323.776660-1-pbonzini@redhat.com>
- <20240409164323.776660-10-pbonzini@redhat.com>
- <Zhf/czBP8LaaGORr@intel.com>
-In-Reply-To: <Zhf/czBP8LaaGORr@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 11 Apr 2024 18:43:00 +0200
-Message-ID: <CABgObfYvN98O6ifLtrRyC10_+6e3nzeED2O7o+2jGXrg2dcBBw@mail.gmail.com>
-Subject: Re: [PATCH for-9.1 09/19] target/i386: move 60-BF opcodes to new
- decoder
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Makefile: fix use of -j without an argument
+To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, martin@geanix.com,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <fb8c5aa0-d412-4ac0-b77b-64816d72a996@linaro.org>
+ <20240411153804.3849645-1-quic_mathbern@quicinc.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240411153804.3849645-1-quic_mathbern@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,49 +96,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 11, 2024 at 5:05=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
->
-> On Tue, Apr 09, 2024 at 06:43:13PM +0200, Paolo Bonzini wrote:
-> > Date: Tue,  9 Apr 2024 18:43:13 +0200
-> > From: Paolo Bonzini <pbonzini@redhat.com>
-> > Subject: [PATCH for-9.1 09/19] target/i386: move 60-BF opcodes to new
-> >  decoder
-> > X-Mailer: git-send-email 2.44.0
-> >
-> > Compared to the old decoder, the main differences in translation
-> > are for the little-used ARPL instruction.  IMUL is adjusted a bit
-> > to share more code to produce flags, but is otherwise very similar.
-> >
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >  target/i386/tcg/decode-new.h     |   2 +
-> >  target/i386/tcg/translate.c      |   9 +-
-> >  target/i386/tcg/decode-new.c.inc | 171 +++++++++++++++++
-> >  target/i386/tcg/emit.c.inc       | 317 +++++++++++++++++++++++++++++++
-> >  4 files changed, 497 insertions(+), 2 deletions(-)
->
-> HMM, I met Guest boot failure on this patch because of ata unrecognized.
-> I haven't located the exact error yet, so let me post my log first.
-> If there are other means I can use to dig further, I'd be happy to try
-> that too.
->
-> # Command (boot a ubuntu Guest via TCG)
->
-> ./qemu/build/qemu-system-x86_64 \
-> -smp 1 \
-> -name ubuntu -m 4G \
-> -cpu max -accel tcg \
-> -hda ../img_qemu/test.qcow2 -nographic \
-> -kernel ../img_qemu/kernel/vmlinuz-6.4.0-rc6+ \
-> -initrd ../img_qemu/kernel/initrd.img-6.4.0-rc6+ \
-> -append "root=3D/dev/sda ro console=3DttyS0" \
-> -qmp unix:/tmp/qmp-sock,server=3Don,wait=3Doff
+On 11/4/24 17:38, Matheus Tavares Bernardino wrote:
+> Hi, Philippe
+> 
+> On Thu, 11 Apr 2024 17:29:58 +0200 =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org> wrote:
+>>
+>> Hi Matheus,
+>>
+>> On 11/4/24 17:09, Matheus Tavares Bernardino wrote:
+>>> Our Makefile massages the given make arguments to invoke ninja
+>>> accordingly. One key difference is that ninja will parallelize by
+>>> default, whereas make only does so with -j<n> or -j. The make man page
+>>> says that "if the -j option is given without an argument, make will not
+>>> limit the number of jobs that can run simultaneously". We use to support
+>>> that by replacing -j with "" (empty string) when calling ninja, so that
+>>> it would do its auto-parallelization based on the number of CPU cores.
+>>>
+>>> This was accidentally broken at d1ce2cc95b (Makefile: preserve
+>>> --jobserver-auth argument when calling ninja, 2024-04-02),
+>>> causing `make -j` to fail:
+>>>
+>>> $ make -j V=1
+>>>     /usr/bin/ninja -v   -j -d keepdepfile all | cat
+>>>     make  -C contrib/plugins/ V="1" TARGET_DIR="contrib/plugins/" all
+>>>     ninja: fatal: invalid -j parameter
+>>>     make: *** [Makefile:161: run-ninja] Error
+>>>
+>>> Let's fix that and indent the touched code for better readability.
+>>>
+>>> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+>>> ---
+>>>    Makefile | 8 ++++++--
+>>>    1 file changed, 6 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Makefile b/Makefile
+>>> index 183756018f..d299c14dab 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -142,8 +142,12 @@ MAKE.k = $(findstring k,$(firstword $(filter-out --%,$(MAKEFLAGS))))
+>>>    MAKE.q = $(findstring q,$(firstword $(filter-out --%,$(MAKEFLAGS))))
+>>>    MAKE.nq = $(if $(word 2, $(MAKE.n) $(MAKE.q)),nq)
+>>>    NINJAFLAGS = $(if $V,-v) $(if $(MAKE.n), -n) $(if $(MAKE.k), -k0) \
+>>> -        $(or $(filter -l% -j%, $(MAKEFLAGS)), $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1)) \
+>>> -        -d keepdepfile
+>>> +        $(if $(filter -j, $(MAKEFLAGS)) \
+>>> +	     ,, \
+>>> +	     $(or \
+>>> +	          $(filter -l% -j%, $(MAKEFLAGS)), \
+>>> +	          $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1)) \
+>>> +        ) -d keepdepfile
+>>>    ninja-cmd-goals = $(or $(MAKECMDGOALS), all)
+>>>    ninja-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
+>>>    
+>>
+>> Apparently Martin sent the same patch (although not as nicely
+>> indented) and Paolo queued it:
+>> https://lore.kernel.org/qemu-devel/20240402081738.1051560-1-martin@geanix.com/
+> 
+> Actually, this patch is a follow-up to that one, fixing a feature that was
+> accidentally broken.
 
-I did run a bunch of boot tests but I'll check this one too.
-
-Thanks!
-
-Paolo
-
+Oops sorry I missed that, I was not expecting this patch to be merged
+in 9.0 :/
 
