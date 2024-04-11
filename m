@@ -4,89 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9FAC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 20:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515C4C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Apr 2024 20:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv0nl-0004c9-Mr; Thu, 11 Apr 2024 16:13:43 -0400
+	id 1rv12B-0000L1-KW; Thu, 11 Apr 2024 16:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv0nW-0004ap-Hq
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:13:28 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rv0nU-0007hd-Ak
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:13:26 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1e504f58230so2093495ad.2
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 13:13:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712866403; x=1713471203; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gFX/sl7xJ0Uk86tSI51fKGf1ykvVdP9omN56kE7qKv0=;
- b=Z9pQeDSxxkHTnwmr9s3ZLU2JtkY7Ellf9x4d1THuZaNHnTUZfrclhekXzX+wsFidX4
- 8Ku3MxbJo/rhGIDhTXG7qauwh/xdRMVv3AWppeADkjPFu6LkWp0NiLNQ5841DqArRWYJ
- LCmwN0+Mb8ZfAvI4+kGQSPgAHLej3ehdSPkZvFZ6KF4vZ4+SY/zwnSrvpmuDZOzfVwdS
- rUvk1RNGpUh6EsqTGtnIva/z4dXjlh8ErP1B5Pd/xFaIPO7ulJWNZOw9UdEVHEOpQ8Zr
- 9XzmFAm1iKw7J1HmqWUv8e9TxHazKkvXQ0sqH/xWEzI1FWb6bkjHwv/57WSEfmml8fcH
- lUKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712866403; x=1713471203;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gFX/sl7xJ0Uk86tSI51fKGf1ykvVdP9omN56kE7qKv0=;
- b=snj7nMUgUKMDQIw57xsfWdDSNaC9oUTdhs5VtzHVhaZbwolM4v8jBMwv8//Rk/N7Km
- bnCZAChboTOLzLCtQvleImDZZpXOagcIfwPh0rPT3BhR50ORJID7rPtUsFrqJMmc/F4o
- +0dRevHKq3fHG6ErqdfPdE71L20herkZd8mz9Mq/X9uLynmRBilLthDWJUIzBUSlBUN2
- UTnINxnVGb2UFN9Rqc3QpgnIxqHvC+47oMWIh5iHWAOVDraZ3jthLRlxJ0ZjGek5xsm6
- buKp/vn2wrOIdLoPPcxuH3FOCW0CjAI+UvdmqgcH8Q46xL0+aOSm+x7r6Mw1uEhRaM0j
- t8+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWl/6Gh6BANXaPc9oSzjXatFMq5WPHXSrDCX8UHRfm8SPmXdFRzozUEDb6lOoW51k0eSJdFnzYRExHUed4ajcq6ci+r2Io=
-X-Gm-Message-State: AOJu0YzNECiP8Y7zy7ujxbIRYh+x5OXPVs69aBXRaRf3vD+730mawo9D
- 2gq9/XXD0iViq6hzU3OpEZmryQyKOwH1NY7wmwZXQDZ5LV/TnnIzlM8iHSTZ368=
-X-Google-Smtp-Source: AGHT+IGPnb6rLQ8m4Qg93NAPegoLnISObIX80ZO8jg3RxQLzDDmbjft1zuhdnlaau+PFVUEsKsfEhw==
-X-Received: by 2002:a17:902:ccce:b0:1e4:62e2:fc86 with SMTP id
- z14-20020a170902ccce00b001e462e2fc86mr699234ple.7.1712866402829; 
- Thu, 11 Apr 2024 13:13:22 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- h19-20020a170902f7d300b001e290af5ec9sm1566304plw.115.2024.04.11.13.13.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Apr 2024 13:13:22 -0700 (PDT)
-Message-ID: <8fd3391c-7515-47a3-89f2-49cf90b61ae1@linaro.org>
-Date: Thu, 11 Apr 2024 13:13:20 -0700
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1rv122-0000KV-5b
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:28:26 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1rv11w-0001O4-AA
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 16:28:24 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4VFrqZ6HPcz8PbP;
+ Thu, 11 Apr 2024 16:28:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=comstyle.com; h=message-id
+ :date:mime-version:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding; s=default; bh=+mVxElw3F
+ 3vGv7MRJO7lNmwCvF0=; b=Ti8UG2qKXpytDiEy7/69VVbdH0EYYa2KhXK8kpsnp
+ QEGH0HsvHSoRS29lV+DD7/7sI9d+MAKiv5WV2nbahWd0E34oDpamHm04ymhx4ZD0
+ Ehjww1SspZaGFS4awjBH06viIIoiqLNOcDgFpfzMAfvUzM4qwPl0xJxFTthoWpmo
+ Zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
+ :date:mime-version:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding; q=dns; s=default; b=ctQ
+ 3dEcylL4o5rVdGiwj8MlFMzIUzH6ff6RBpShODc/nUv9yHuvgMQdUIEyLio/zjRw
+ Hinn4ENGgMwUHgyjJg9y51WPpwuU4CGlF0zHG4OFhbKi1EAodHlGOdNP/GAzafG1
+ UhG6NXxFvPw/aX1THiP73HUpY8zDhO/G+8QOKn7E=
+Received: from [192.168.100.147]
+ (ipagstaticip-fb0cb5d9-e423-dda2-c442-adc5999de965.sdsl.bell.ca
+ [76.65.209.165])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4VFrqZ5FLzz8PbN;
+ Thu, 11 Apr 2024 16:28:10 -0400 (EDT)
+Message-ID: <1ff86ac9-917c-4703-85c6-c1e5bf3be79d@comstyle.com>
+Date: Thu, 11 Apr 2024 16:28:10 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/13] system/qtest: Replace sprintf() by
- g_string_append_printf()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240411101550.99392-1-philmd@linaro.org>
- <20240411101550.99392-7-philmd@linaro.org>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH for-9.0] meson.build: Disable -fzero-call-used-regs on
+ OpenBSD
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20240411120819.56417-1-thuth@redhat.com>
+ <1ccea33f-23cd-4beb-b6d4-8bdc9c623dd9@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240411101550.99392-7-philmd@linaro.org>
+From: Brad Smith <brad@comstyle.com>
+In-Reply-To: <1ccea33f-23cd-4beb-b6d4-8bdc9c623dd9@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,29 +84,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/24 03:15, Philippe Mathieu-Daudé wrote:
-> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-> resulting in painful developper experience.
-> 
-> Replace sprintf() by GString API uses in order to avoid:
-> 
->    [120/169] Compiling C object libcommon.fa.p/system_qtest.c.o
->    system/qtest.c:623:13: warning: 'sprintf' is deprecated:
->      This function is provided for compatibility reasons only.
->      Due to security concerns inherent in the design of sprintf(3),
->      it is highly recommended that you use snprintf(3) instead.
->      [-Wdeprecated-declarations]
->              sprintf(&enc[i * 2], "%02x", data[i]);
->              ^
->    1 warning generated.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Thomas Huth<thuth@redhat.com>
-> ---
->   system/qtest.c | 8 +++-----
->   1 file changed, 3 insertions(+), 5 deletions(-)
+On 4/11/2024 8:12 AM, Thomas Huth wrote:
+> On 11/04/2024 14.08, Thomas Huth wrote:
+>> QEMU currently does not work on OpenBSD since the -fzero-call-used-reg=
+s
+>
+> That should be "OpenBSD 7.5" ... older versions are fine since they=20
+> are using an older version of Clang that does not have=20
+> -fzero-call-used-regs yet, I think.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+About the compiler version that is correct. Between 7.4 and 7.5 we=20
+upgraded from Clang 13 to 16.
 
-r~
+-fzero-call-used-regs=C2=A0 was added with the 15 release.
+
+https://github.com/llvm/llvm-project/commit/deaf22bc0e306bc44c70d2503e936=
+4b5ed312c49
+
+Retguard is also used to mitigate ROP exploits and is enabled by default.
+
+https://www.openbsd.org/papers/asiabsdcon2019-rop-paper.pdf
+
 
