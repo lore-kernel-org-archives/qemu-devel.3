@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E0EC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F54BC04FF8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvKfz-0006eH-Ss; Fri, 12 Apr 2024 13:26:59 -0400
+	id 1rvKgO-0006lZ-Mi; Fri, 12 Apr 2024 13:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rvKfz-0006dy-0J
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:26:59 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvKgN-0006lK-GN
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:27:23 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rvKfv-00030V-M3
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:26:58 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1e4c4fb6af3so6646475ad.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:26:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvKgM-000342-05
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:27:23 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-5cf2d73a183so1411261a12.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1712942814; x=1713547614; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P3DKA10cGVxqOJD5ZVls9Bezx11cg5ENXIVx4Fno3QA=;
- b=CgO5JZaMoTS8mP2TudaZCU7yJmnBPBO5RRp05iIFyGNVVuqnFOEs8O0GWnXWpY/zA1
- Vs5M3VaGG3RWa3bT03X6n3hsKawQ9m8TDDYVrqdFDrqv6uF89/gGGzDv1Yk+I7zR2bRG
- P1ZN0VkKI7nsDFNQzK76zS34wbipojs3Am5IsejeerN4i2YMGSmkxL6dsKk084LmB+uA
- nl9tJg8cqYFx3OwthXrq2zmySVsZVBxI2c3EcGtBnPP+pYVd8GU+hrGx5iEu0Ag+CBDX
- wbkHZ/7yjKO+hhTUJI2mfpgRZWPfKxIYVL3UQ4AyHVWt7hEgBZFMaflKTJMHiYTrUwTc
- dxBw==
+ d=linaro.org; s=google; t=1712942840; x=1713547640; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=blSiuCRQkThnszztMNDft+rWd/OfnM0Cs6umsTzT5W4=;
+ b=A034OmZBXdtpu4YfP+tOHKd5y61bnK4HQRsngloYCV2eqgzalE+e9I9Jgv+V/J2HgF
+ pNagKEdq1yIK9iqYnh7NCQD7o+awmuEo4qE3MdQ1fveaoSMDb/svGlyn5EqqpIWTFAa1
+ x2aM8k3uqsh6QbesOUNAXWlFFFDD4czjuaEfeSmp63ZkiBWYwXQUlN4ZCWsDK7Nhzs7+
+ 92CIKGT6ZEMv7AavPOt735LJZN5ykHoewdyg1RvFDBpO0475l/ap3fJr+HKSVVB8rBqc
+ igQiajfQQSKMoDCz2swlgOvohl3wbzwfXukuobTsYJJU/MHQEK/qcgmTGxJLtHlO30QX
+ Mvyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712942814; x=1713547614;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712942840; x=1713547640;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P3DKA10cGVxqOJD5ZVls9Bezx11cg5ENXIVx4Fno3QA=;
- b=E8Jp6fyumyA1nROVbgpKCRvk/4vutPSoYsK0eJk6NvkPf7NxKjqHOLpZxdth8fwrg4
- XwnKdDAroo9MgzYHFXH6wY3IkqMLf9jmAjx5RG+B6nBZNo4YYdjfkESQRXN38Q6tzWDt
- EEYOblEHqNnXczCNrMeiGKHMTtbJ9AA33FDgRLkwl2g48gP/5KRi3aIyY7l9w+pIuwgK
- PI0ozgcGXikc4EeFltaePWMf+vrAlz2WwYEF6bNA9vGLdktoNUXiacdpiT27vg0OkI5C
- ru6Bka+sCT6veYbw4G1QRV2z96/XRpafvBW5KKs1eHL5Q9pFlXe2OLIizphA/xGhN2OM
- W47g==
+ bh=blSiuCRQkThnszztMNDft+rWd/OfnM0Cs6umsTzT5W4=;
+ b=rWT5BOvAsMqHcgAvW7p0TyLsFUWSmvbt1AqruXrzB7rR/wHy/hyc9J3693nhHGvgEz
+ xwW9Rkfdxb2u0q7cwJT5EnS8X7Rv2jJgpIO6NPMOnX+65fiQSFxyfBNU0kTQrGABdR7m
+ XxuB+SB/SWWnOoM0RDUPq4DJHuCl4PMOnvM6CYtE3Jhj0tXhxUu/wTqZWbc/S2dSC/bd
+ SjRdQHoPsSoksCbFryYYLziua4sPh81szC5Vv7jeQ6h1Ief8w4GiBU7fPJE2j+UY/naE
+ K+xpK//DZ0aVX4NdsylHyzfgupgT/yOupZAUMT9YcXguegMe9MmVWc8UkB9ucChWFvTW
+ qZJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgYGMpmAfvXzhCxG9qGx8PWrMI2/cZS7EwN2ahymvCh95PtVmXr3gewNfIXMo6qYxY4arSzniZKTFB+fgFm8r5P221Afo=
-X-Gm-Message-State: AOJu0YzKYZkvZt475htJnqP7ljBhU5ttLuPDquQzfVFFYlSSADNSW0OW
- hoK/zAO3BypxTyZK9FBJJrWf56aCGHsURudx/R/DDNDO/Pw1MlUyF3ROxgusYmT9nwtICXDWXMc
- U
-X-Google-Smtp-Source: AGHT+IEAuNi3rKWw6Fpsh+YTeZVBu3QptdUZbQ4LBCOfI1QP03Z/vJ/KMBacI7ReZmdfP6iQuc7TPQ==
-X-Received: by 2002:a17:903:22c2:b0:1e3:c186:8db3 with SMTP id
- y2-20020a17090322c200b001e3c1868db3mr8798912plg.15.1712942814001; 
- Fri, 12 Apr 2024 10:26:54 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.202])
+ AJvYcCU8hXI48D14ejDkW6NbHrBJJkkHg+cMSNCYjpNujBcBkdmwt15VZfD6PG8oELl8hb3zc0aFIHAVXAEfVQlxUUn8QnT5nrs=
+X-Gm-Message-State: AOJu0YzrG8Og0kF+Gv9Y6iW5VZK98GD0u0iasUaU6CitL4HQjEvxtNWT
+ BIHlBqVsboY8lMBXiKz7K8+qlZWqIvfB4g9A3gX1+w/5GxWIFK6IvfpbiBB+8dM=
+X-Google-Smtp-Source: AGHT+IHZ6/uM8gVaOdAdxXvSBr+wsAES9Sj2lpOdOXi8re76104CgORYJUCtS4VKKCtGL50Oj+2BKQ==
+X-Received: by 2002:a17:90b:e05:b0:2a2:7494:15df with SMTP id
+ ge5-20020a17090b0e0500b002a2749415dfmr4851135pjb.9.1712942840469; 
+ Fri, 12 Apr 2024 10:27:20 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- u11-20020a170902e5cb00b001e20587b552sm3245046plf.163.2024.04.12.10.26.50
+ o19-20020a17090aac1300b002a269828bb8sm2909093pjq.40.2024.04.12.10.27.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 10:26:53 -0700 (PDT)
-Message-ID: <70b7f011-e091-426a-b4aa-88ed9f112c79@ventanamicro.com>
-Date: Fri, 12 Apr 2024 14:26:49 -0300
+ Fri, 12 Apr 2024 10:27:20 -0700 (PDT)
+Message-ID: <ebe85e8f-1dc5-475c-8851-a333f38e795f@linaro.org>
+Date: Fri, 12 Apr 2024 10:27:18 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] target/riscv: prioritize pmp errors in
- raise_mmu_exception()
+Subject: Re: [PATCH 4/6] hw, target: Add ResetType argument to hold and exit
+ phase methods
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240412160809.1260625-1-peter.maydell@linaro.org>
+ <20240412160809.1260625-5-peter.maydell@linaro.org>
 Content-Language: en-US
-To: Aleksei Filippov <alexei.filippov@syntacore.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org, Joseph Chan <jchan@ventanamicro.com>
-References: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
- <a8680fb3-8547-4b68-98d1-fd2d2d278375@syntacore.com>
- <6947ea59-ccbd-43b8-b8a0-bc543b9992f9@ventanamicro.com>
- <a4a23a7a-04fb-494d-b13a-933ab1a93ffa@syntacore.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <a4a23a7a-04fb-494d-b13a-933ab1a93ffa@syntacore.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240412160809.1260625-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,72 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/12/24 13:52, Aleksei Filippov wrote:
+On 4/12/24 09:08, Peter Maydell wrote:
+> We pass a ResetType argument to the Resettable class enter
+> phase method, but we don't pass it to hold and exit, even though
+> the callsites have it readily available. This means that if
+> a device cared about the ResetType it would need to record it
+> in the enter phase method to use later on. Pass the type to
+> all three of the phase methods to avoid having to do that.
 > 
+> Commit created with
 > 
-> On 12.04.2024 19:00, Daniel Henrique Barboza wrote:
+>    for dir in hw target include; do \
+>        spatch --macro-file scripts/cocci-macro-file.h \
+>               --sp-file scripts/coccinelle/reset-type.cocci \
+>               --keep-comments --smpl-spacing --in-place \
+>               --include-headers --dir $dir; done
 > 
->> Thanks for giving it a go. You're right, this patch alone is not enough and we'll
->> need your patch too.
->>
->> But note that, with what you've said in mind, your patch will also end up setting
->> mtval2 and env->guest_phys_fault_addr in case a PMP fault occurs during the
->> get_physical_address() right at the start of second stage:
->>
->>          if (ret == TRANSLATE_SUCCESS) {
->>              /* Second stage lookup */
->>              im_address = pa;
->>
->>              ret = get_physical_address(env, &pa, &prot2, im_address, NULL,
->>                                         access_type, MMUIdx_U, false, true,
->>                                         false);
->>
->>
->> I think your patch needs to also prevent env->guest_phys_fault_addr to be set when
->> ret == TRANSLATE_PMP_FAIL.
->>
->> With these changes in your patch, and this patch, we're free to set "first_stage_error = false;"
->> at the start of second stage lookup, keeping consistency, because raise_mmu_exception is now
->> able to deal with it. I can amend this change in this patch. This patch would prioritize
->> PMP errors, your patch will fix the problem with mtval2.
->>
->> Let me know what do you think. If you agree I can re-send both patches together.
->>
->>
->> Thanks,
->>
->>
->> Daniel
+> and no manual edits.
 > 
-> Oh, I actually missed that, thx, you are right. I could prepare patch to fix
-> this, do you want it in this thread or in previous with only my patch in?
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
 
-If you don't mind, please re-send it together in a new thread with this patch too.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Include this one as is, then include yours as a complement that fixes the problem
-with mtval2 that my patch missed. You can use the explanation you gave me as the
-new commit msg for your patch. E.g:
-
-"target/riscv: do not set mtval2 for non guest-page faults
-
-Previous patch fixed the PMP priority in raise_mmu_exception() but we're still
-setting mtval2 incorrectly. In riscv_cpu_tlb_fill(), after pmp check in 2 stage
-translation part, mtval2 will be set in case of successes 2 stage translation but
-failed pmp check.
-
-In this case we gonna set mtval2 via env->guest_phys_fault_addr in context of
-riscv_cpu_tlb_fill(), as this was a guest-page-fault, but it didn't and mtval2
-should be zero, according to RISCV privileged spec sect. 9.4.4: When a guest
-page-fault is taken into M-mode, mtval2 is written with either zero or guest
-physical address that faulted, shifted by 2 bits. *For other traps, mtval2
-is set to zero...* "
-
-
-Thanks,
-
-Daniel
-
-> 
+r~
 
