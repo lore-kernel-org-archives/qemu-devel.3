@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76191C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 13:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1482AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 13:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvGti-00032x-Do; Fri, 12 Apr 2024 09:24:54 -0400
+	id 1rvGtf-00031K-5j; Fri, 12 Apr 2024 09:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGth-00032P-7G
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtd-00030A-7o
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtf-0007Ad-5a
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtX-00078y-Os
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712928290;
+ s=mimecast20190719; t=1712928283;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6aehVjTUCEW3bvg0IafvmDd3clfrw7bJ/UXD+C/uC0M=;
- b=LncpFrGYYmjDshOcGUWVe5+Oo7+Ig397J9bmcxuGzSbtsG2hkvRyE680UdyPAGQ+9bdd40
- cQpJWaYkr+L7XLeuP4EtXt4AonzdiKzIjEgyq+/478xcQ5NNWGUQs6tNk36rNPza1R78/x
- EBLRnj2jt0QlI3QhTy0nqkBS5zjZGhk=
+ bh=XnvIgt9Ca07N2Ax2QGvBG4C2O8YRltlKRV7Gbt6pVLE=;
+ b=BBjqAdThq6sX8ENJ5ehwtyz+fLc8KpK8HlXB09dkA3Oe8jCsRMrhVJTWXjqOMXaXT6EmK+
+ mUSbAdjLk1Vh7wDKradH6BjBAdWTPD3oElnG3r3pf9lvFDjdcYjKC6afYYdCtfxtPTkKig
+ DHnwJA414aoCUma4Ju9TqLXHqitLrVA=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-368-HaH5VMQ8NSGOjQHJNa_dCw-1; Fri, 12 Apr 2024 09:24:46 -0400
-X-MC-Unique: HaH5VMQ8NSGOjQHJNa_dCw-1
+ us-mta-284-dWdirUKTNkSuhec4e6JkyA-1; Fri, 12 Apr 2024 09:24:39 -0400
+X-MC-Unique: dWdirUKTNkSuhec4e6JkyA-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1E1DD1807ACC;
- Fri, 12 Apr 2024 13:24:46 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 40DBE1807ACF;
+ Fri, 12 Apr 2024 13:24:39 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.215])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 91CD72166B34;
- Fri, 12 Apr 2024 13:24:43 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1ECCF2166B31;
+ Fri, 12 Apr 2024 13:24:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -53,10 +53,10 @@ To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v2 06/13] ci: move external build environment setups to CentOS
- Stream 9
-Date: Fri, 12 Apr 2024 15:24:08 +0200
-Message-ID: <20240412132415.282354-7-thuth@redhat.com>
+Subject: [PATCH v2 04/13] tests: Update our CI to use CentOS Stream 9 instead
+ of 8
+Date: Fri, 12 Apr 2024 15:24:06 +0200
+Message-ID: <20240412132415.282354-5-thuth@redhat.com>
 In-Reply-To: <20240412132415.282354-1-thuth@redhat.com>
 References: <20240412132415.282354-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -70,8 +70,7 @@ X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,255 +86,308 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
-
 RHEL 9 (and thus also the derivatives) are available since two years
 now, so according to QEMU's support policy, we can drop the active
 support for the previous major version 8 now.
+Thus upgrade our CentOS Stream container to major version 9 now.
 
-Thus upgrade our CentOS Stream build environment playbooks to major
-version 9 now.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240412103708.27650-1-pbonzini@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- .../stream/{8 => 9}/build-environment.yml     | 31 ++++++-------
- .../stream/{8 => 9}/x86_64/configure          |  4 +-
- .../stream/{8 => 9}/x86_64/test-avocado       |  0
- scripts/ci/setup/build-environment.yml        | 44 +++++++------------
- 4 files changed, 34 insertions(+), 45 deletions(-)
- rename scripts/ci/org.centos/stream/{8 => 9}/build-environment.yml (75%)
- rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/configure (98%)
- rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/test-avocado (100%)
+ .gitlab-ci.d/buildtest.yml                    | 16 ++++-----
+ .gitlab-ci.d/container-core.yml               |  4 +--
+ .../{centos8.docker => centos9.docker}        | 34 +++++++------------
+ tests/lcitool/mappings.yml                    | 20 -----------
+ tests/lcitool/refresh                         |  2 +-
+ tests/vm/centos                               |  4 +--
+ 6 files changed, 26 insertions(+), 54 deletions(-)
+ rename tests/docker/dockerfiles/{centos8.docker => centos9.docker} (82%)
 
-diff --git a/scripts/ci/org.centos/stream/8/build-environment.yml b/scripts/ci/org.centos/stream/9/build-environment.yml
-similarity index 75%
-rename from scripts/ci/org.centos/stream/8/build-environment.yml
-rename to scripts/ci/org.centos/stream/9/build-environment.yml
-index 1ead77e2cb..cd29fe6f27 100644
---- a/scripts/ci/org.centos/stream/8/build-environment.yml
-+++ b/scripts/ci/org.centos/stream/9/build-environment.yml
-@@ -2,32 +2,32 @@
- - name: Installation of extra packages to build QEMU
-   hosts: all
-   tasks:
--    - name: Extra check for CentOS Stream 8
-+    - name: Extra check for CentOS Stream 9
-       lineinfile:
-         path: /etc/redhat-release
--        line: CentOS Stream release 8
-+        line: CentOS Stream release 9
-         state: present
-       check_mode: yes
--      register: centos_stream_8
-+      register: centos_stream_9
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index cfdff175c3..9f34c650d6 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -158,9 +158,9 @@ build-system-centos:
+     - .native_build_job_template
+     - .native_build_artifact_template
+   needs:
+-    job: amd64-centos8-container
++    job: amd64-centos9-container
+   variables:
+-    IMAGE: centos8
++    IMAGE: centos9
+     CONFIGURE_ARGS: --disable-nettle --enable-gcrypt --enable-vfio-user-server
+       --enable-modules --enable-trace-backends=dtrace --enable-docs
+     TARGETS: ppc64-softmmu or1k-softmmu s390x-softmmu
+@@ -242,7 +242,7 @@ check-system-centos:
+     - job: build-system-centos
+       artifacts: true
+   variables:
+-    IMAGE: centos8
++    IMAGE: centos9
+     MAKE_CHECK_ARGS: check
  
--    - name: Enable EPEL repo on CentOS Stream 8
-+    - name: Enable EPEL repo on CentOS Stream 9
-       dnf:
-         name:
-           - epel-release
-         state: present
-       when:
--        - centos_stream_8
-+        - centos_stream_9
+ avocado-system-centos:
+@@ -251,7 +251,7 @@ avocado-system-centos:
+     - job: build-system-centos
+       artifacts: true
+   variables:
+-    IMAGE: centos8
++    IMAGE: centos9
+     MAKE_CHECK_ARGS: check-avocado
+     AVOCADO_TAGS: arch:ppc64 arch:or1k arch:s390x arch:x86_64 arch:rx
+       arch:sh4 arch:nios2
+@@ -327,9 +327,9 @@ avocado-system-flaky:
+ build-tcg-disabled:
+   extends: .native_build_job_template
+   needs:
+-    job: amd64-centos8-container
++    job: amd64-centos9-container
+   variables:
+-    IMAGE: centos8
++    IMAGE: centos9
+   script:
+     - mkdir build
+     - cd build
+@@ -651,9 +651,9 @@ build-tci:
+ build-without-defaults:
+   extends: .native_build_job_template
+   needs:
+-    job: amd64-centos8-container
++    job: amd64-centos9-container
+   variables:
+-    IMAGE: centos8
++    IMAGE: centos9
+     CONFIGURE_ARGS:
+       --without-default-devices
+       --without-default-features
+diff --git a/.gitlab-ci.d/container-core.yml b/.gitlab-ci.d/container-core.yml
+index 08f8450fa1..5459447676 100644
+--- a/.gitlab-ci.d/container-core.yml
++++ b/.gitlab-ci.d/container-core.yml
+@@ -1,10 +1,10 @@
+ include:
+   - local: '/.gitlab-ci.d/container-template.yml'
  
--    - name: Enable PowerTools repo on CentOS Stream 8
-+    - name: Enable CRB repo on CentOS Stream 9
-       ini_file:
--        path: /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
--        section: powertools
-+        path: /etc/yum.repos.d/centos.repo
-+        section: crb
-         option: enabled
-         value: "1"
-       when:
--        - centos_stream_8
-+        - centos_stream_9
+-amd64-centos8-container:
++amd64-centos9-container:
+   extends: .container_job_template
+   variables:
+-    NAME: centos8
++    NAME: centos9
  
--    - name: Install basic packages to build QEMU on CentOS Stream 8
-+    - name: Install basic packages to build QEMU on CentOS Stream 9
-       dnf:
-         name:
-           - bzip2
-@@ -42,7 +42,6 @@
-           - gettext
-           - git
-           - glib2-devel
--          - glusterfs-api-devel
-           - gnutls-devel
-           - libaio-devel
-           - libcap-ng-devel
-@@ -61,22 +60,24 @@
-           - lzo-devel
-           - make
-           - mesa-libEGL-devel
-+          - meson
-           - nettle-devel
-           - ninja-build
-           - nmap-ncat
-           - numactl-devel
-           - pixman-devel
--          - python38
-+          - python3
-+          - python3-pip
-           - python3-sphinx
-+          - python3-sphinx_rtd_theme
-+          - python3-tomli
-           - rdma-core-devel
-           - redhat-rpm-config
-           - snappy-devel
--          - spice-glib-devel
--          - spice-server-devel
-           - systemd-devel
-           - systemtap-sdt-devel
-           - tar
-           - zlib-devel
-         state: present
-       when:
--        - centos_stream_8
-+        - centos_stream_9
-diff --git a/scripts/ci/org.centos/stream/8/x86_64/configure b/scripts/ci/org.centos/stream/9/x86_64/configure
-similarity index 98%
-rename from scripts/ci/org.centos/stream/8/x86_64/configure
-rename to scripts/ci/org.centos/stream/9/x86_64/configure
-index 76781f17f4..1b6f40fd78 100755
---- a/scripts/ci/org.centos/stream/8/x86_64/configure
-+++ b/scripts/ci/org.centos/stream/9/x86_64/configure
-@@ -16,7 +16,7 @@
- # that patches adding downstream specific devices are not available.
+ amd64-fedora-container:
+   extends: .container_job_template
+diff --git a/tests/docker/dockerfiles/centos8.docker b/tests/docker/dockerfiles/centos9.docker
+similarity index 82%
+rename from tests/docker/dockerfiles/centos8.docker
+rename to tests/docker/dockerfiles/centos9.docker
+index ea618bf352..6cf47ce786 100644
+--- a/tests/docker/dockerfiles/centos8.docker
++++ b/tests/docker/dockerfiles/centos9.docker
+@@ -1,15 +1,14 @@
+ # THIS FILE WAS AUTO-GENERATED
  #
- ../configure \
----python=/usr/bin/python3.8 \
-+--python=/usr/bin/python3.9 \
- --prefix="/usr" \
- --libdir="/usr/lib64" \
- --datadir="/usr/share" \
-@@ -157,7 +157,6 @@
- --enable-docs \
- --enable-fdt \
- --enable-gcrypt \
----enable-glusterfs \
- --enable-gnutls \
- --enable-guest-agent \
- --enable-iconv \
-@@ -180,7 +179,6 @@
- --enable-seccomp \
- --enable-snappy \
- --enable-smartcard \
----enable-spice \
- --enable-system \
- --enable-tcg \
- --enable-tools \
-diff --git a/scripts/ci/org.centos/stream/8/x86_64/test-avocado b/scripts/ci/org.centos/stream/9/x86_64/test-avocado
-similarity index 100%
-rename from scripts/ci/org.centos/stream/8/x86_64/test-avocado
-rename to scripts/ci/org.centos/stream/9/x86_64/test-avocado
-diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/build-environment.yml
-index f344d1a850..9b7d96c01b 100644
---- a/scripts/ci/setup/build-environment.yml
-+++ b/scripts/ci/setup/build-environment.yml
-@@ -174,26 +174,26 @@
-         - ansible_facts['distribution_version'] == '22.04'
-         - ansible_facts['architecture'] == 'aarch64'
+-#  $ lcitool dockerfile --layers all centos-stream-8 qemu
++#  $ lcitool dockerfile --layers all centos-stream-9 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
--    - name: Enable EPEL repo on EL8
-+    - name: Enable EPEL repo on EL9
-       dnf:
-         name:
-           - epel-release
-         state: present
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_major_version'] == '8'
-+        - ansible_facts['distribution_major_version'] == '9'
+-FROM quay.io/centos/centos:stream8
++FROM quay.io/centos/centos:stream9
  
--    - name: Enable PowerTools repo on CentOS 8
-+    - name: Enable CRB repo on CentOS 9
-       ini_file:
--        path: /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
--        section: powertools
-+        path: /etc/yum.repos.d/centos.repo
-+        section: crb
-         option: enabled
-         value: "1"
-       when:
-         - ansible_facts['distribution_file_variety'] == 'CentOS'
--        - ansible_facts['distribution_major_version'] == '8'
-+        - ansible_facts['distribution_major_version'] == '9'
+ RUN dnf distro-sync -y && \
+     dnf install 'dnf-command(config-manager)' -y && \
+-    dnf config-manager --set-enabled -y powertools && \
+-    dnf install -y centos-release-advanced-virtualization && \
++    dnf config-manager --set-enabled -y crb && \
+     dnf install -y epel-release && \
+     dnf install -y epel-next-release && \
+     dnf install -y \
+@@ -42,7 +41,6 @@ RUN dnf distro-sync -y && \
+         glib2-static \
+         glibc-langpack-en \
+         glibc-static \
+-        glusterfs-api-devel \
+         gnutls-devel \
+         gtk3-devel \
+         hostname \
+@@ -82,6 +80,7 @@ RUN dnf distro-sync -y && \
+         lzo-devel \
+         make \
+         mesa-libgbm-devel \
++        meson \
+         mtools \
+         ncurses-devel \
+         nettle-devel \
+@@ -95,25 +94,25 @@ RUN dnf distro-sync -y && \
+         pixman-devel \
+         pkgconfig \
+         pulseaudio-libs-devel \
+-        python38 \
+-        python38-PyYAML \
+-        python38-numpy \
+-        python38-pip \
+-        python38-setuptools \
+-        python38-wheel \
++        python3 \
++        python3-PyYAML \
++        python3-numpy \
++        python3-pillow \
++        python3-pip \
++        python3-sphinx \
++        python3-sphinx_rtd_theme \
++        python3-tomli \
+         rdma-core-devel \
+         sed \
+         snappy-devel \
+         socat \
+         spice-protocol \
+-        spice-server-devel \
+         swtpm \
+         systemd-devel \
+         systemtap-sdt-devel \
+         tar \
+         usbredir-devel \
+         util-linux \
+-        virglrenderer-devel \
+         vte291-devel \
+         which \
+         xfsprogs-devel \
+@@ -132,18 +131,11 @@ RUN dnf distro-sync -y && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
  
--    - name: Install basic packages to build QEMU on EL8
-+    - name: Install basic packages to build QEMU on EL9
-       dnf:
-         # This list of packages start with tests/docker/dockerfiles/centos8.docker
-         # but only include files that are common to all distro variants and present
-@@ -211,7 +211,6 @@
-           - gettext
-           - git
-           - glib2-devel
--          - glusterfs-api-devel
-           - gnutls-devel
-           - libaio-devel
-           - libcap-ng-devel
-@@ -229,17 +228,20 @@
-           - lzo-devel
-           - make
-           - mesa-libEGL-devel
-+          - meson
-           - nettle-devel
-           - ninja-build
-           - nmap-ncat
-           - numactl-devel
-           - pixman-devel
--          - python38
-+          - python3
-+          - python3-pip
-           - python3-sphinx
-+          - python3-sphinx_rtd_theme
-+          - python3-tomli
-           - rdma-core-devel
-           - redhat-rpm-config
-           - snappy-devel
--          - spice-glib-devel
-           - systemd-devel
-           - systemtap-sdt-devel
-           - tar
-@@ -247,28 +249,16 @@
-         state: present
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
+-RUN /usr/bin/pip3.8 install \
+-                    meson==0.63.2 \
+-                    pillow \
+-                    sphinx \
+-                    sphinx-rtd-theme \
+-                    tomli
 -
--    - name: Install packages only available on x86 and aarch64
--      dnf:
--        # Spice server not available in ppc64le
--        name:
--          - spice-server
--          - spice-server-devel
--        state: present
--      when:
--        - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
-+        - ansible_facts['distribution_version'] == '9'
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+ ENV NINJA "/usr/bin/ninja"
+-ENV PYTHON "/usr/bin/python3.8"
++ENV PYTHON "/usr/bin/python3"
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index 407c03301b..03b974ad02 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -1,66 +1,50 @@
+ mappings:
+   flake8:
+-    CentOSStream8:
+     OpenSUSELeap15:
  
-     - name: Check whether the Python runtime version is managed by alternatives
-       stat:
-         path: /etc/alternatives/python3
-       register: python3
+   meson:
+-    CentOSStream8:
+     OpenSUSELeap15:
  
--    - name: Set default Python runtime to 3.8 on EL8
--      command: alternatives --set python3 /usr/bin/python3.8
-+    - name: Set default Python runtime to 3.9 on EL9
-+      command: alternatives --set python3 /usr/bin/python3.9
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - python3.stat.islnk and python3.stat.lnk_target != '/usr/bin/python3.8'
-+        - ansible_facts['distribution_version'] == '9'
-+        - python3.stat.exists and python3.stat.islnk and python3.stat.lnk_target != '/usr/bin/python3.9'
+   python3:
+-    CentOSStream8: python38
+     OpenSUSELeap15: python311-base
+ 
+   python3-PyYAML:
+-    CentOSStream8: python38-PyYAML
+     OpenSUSELeap15:
+ 
+   python3-devel:
+-    CentOSStream8: python38-devel
+     OpenSUSELeap15: python311-devel
+ 
+   python3-docutils:
+-    CentOSStream8:
+     OpenSUSELeap15:
+ 
+   python3-numpy:
+-    CentOSStream8: python38-numpy
+     OpenSUSELeap15:
+ 
+   python3-opencv:
+-    CentOSStream8:
+     OpenSUSELeap15:
+ 
+   python3-pillow:
+-    CentOSStream8:
+     OpenSUSELeap15:
+ 
+   python3-pip:
+-    CentOSStream8: python38-pip
+     OpenSUSELeap15: python311-pip
+ 
+   python3-pillow:
+-    CentOSStream8:
+     OpenSUSELeap15:
+ 
+   python3-selinux:
+-    CentOSStream8:
+     OpenSUSELeap15:
+ 
+   python3-setuptools:
+-    CentOSStream8: python38-setuptools
+     OpenSUSELeap15: python311-setuptools
+ 
+   python3-sphinx:
+-    CentOSStream8:
+     OpenSUSELeap15:
+ 
+   python3-sphinx-rtd-theme:
+-    CentOSStream8:
+     OpenSUSELeap15:
+ 
+   python3-sqlite3:
+-    CentOSStream8: python38
+     OpenSUSELeap15: python311
+ 
+   python3-tomli:
+@@ -69,15 +53,11 @@ mappings:
+     Fedora:
+     Debian12:
+     OpenSUSELeap15:
+-    # Not available for Python 3.8
+-    CentOSStream8:
+ 
+   python3-venv:
+-    CentOSStream8: python38
+     OpenSUSELeap15: python311-base
+ 
+   python3-wheel:
+-    CentOSStream8: python38-wheel
+     OpenSUSELeap15: python311-pip
+ 
+ pypi_mappings:
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 692752a3df..24a735a3f2 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -125,7 +125,7 @@ try:
+     # Standard native builds
+     #
+     generate_dockerfile("alpine", "alpine-318")
+-    generate_dockerfile("centos8", "centos-stream-8")
++    generate_dockerfile("centos9", "centos-stream-9")
+     generate_dockerfile("debian", "debian-12",
+                         trailer="".join(debian12_extras))
+     generate_dockerfile("fedora", "fedora-38")
+diff --git a/tests/vm/centos b/tests/vm/centos
+index 097a9ca14d..d25c8f8b5b 100755
+--- a/tests/vm/centos
++++ b/tests/vm/centos
+@@ -26,8 +26,8 @@ class CentosVM(basevm.BaseVM):
+         export SRC_ARCHIVE=/dev/vdb;
+         sudo chmod a+r $SRC_ARCHIVE;
+         tar -xf $SRC_ARCHIVE;
+-        make docker-test-block@centos8 {verbose} J={jobs} NETWORK=1;
+-        make docker-test-quick@centos8 {verbose} J={jobs} NETWORK=1;
++        make docker-test-block@centos9 {verbose} J={jobs} NETWORK=1;
++        make docker-test-quick@centos9 {verbose} J={jobs} NETWORK=1;
+     """
+ 
+     def build_image(self, img):
 -- 
 2.44.0
 
