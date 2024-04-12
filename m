@@ -4,74 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BCD9C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54D1C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvIKl-0008FP-K9; Fri, 12 Apr 2024 10:56:55 -0400
+	id 1rvIMy-00015j-9J; Fri, 12 Apr 2024 10:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvIKk-0008FA-27
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:56:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvIKi-0000Fm-Gm
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:56:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712933811;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QtvpYcxs46xucWkwjyfLDsyOServLHRcfz3UgnxKiRk=;
- b=cNV0npqvXzsNCuYOo5LbeVH7/EiRe5vcmMKn93KJ/n/m2fHzvcEU1ajtxEgljwwL88ZnCC
- Ua5syd6clNysMK8ia1lqVvjrsUEe/QOn2UfgQrQWPVHPh8QUIVM2FuOPpJi2T9V4bdDqmW
- N7jlfrv78QNIRFbJ8pLtjCIKKz6R9vw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-pgWlwWdVO6-ij8Yt0sEyPg-1; Fri,
- 12 Apr 2024 10:56:48 -0400
-X-MC-Unique: pgWlwWdVO6-ij8Yt0sEyPg-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rvIMn-00014v-53
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:59:01 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rvIMj-0000ay-WB
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:59:00 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F12811C0AF58;
- Fri, 12 Apr 2024 14:56:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.15])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 317E1C13FA0;
- Fri, 12 Apr 2024 14:56:46 +0000 (UTC)
-Date: Fri, 12 Apr 2024 09:56:40 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 12/13] block/ssh: Use URI parsing code from glib
-Message-ID: <fxncshsyb5bnknswy2wkpr6l32adiy5hz6smd42o5eyomezz2k@twgbjztfubps>
-References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-13-thuth@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D417C5FE42;
+ Fri, 12 Apr 2024 14:58:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1712933931; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0RnLugBNvvuXUFF4w2ZmKO4UDb9kbtfcLjnmWLJ3F+A=;
+ b=qs/9BMCXbh4i/GUzcgk8K+Xofah8mSkS9xdCAYzKUdYZ8molSLIEwUouipcRIdo+mMSLJZ
+ vHiUsFdeCXS+GsbB8V9k+ePy1GwcgPO0t7zrnDeskGUiU/VMc2NUy5ZnQSo7ye5BmaOw6i
+ VGZakMRt8SoZijOYu1tNK9uCCxelObU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1712933931;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0RnLugBNvvuXUFF4w2ZmKO4UDb9kbtfcLjnmWLJ3F+A=;
+ b=N4iaYmzAJteAJLxXNti7CKosUGjwy23MAxexN03+38PYsNGu6waxcLlNKxeEKK7b+omSHT
+ doTiLg1yjTM7OOAg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lhA1ONWr;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=x+evAVMg
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1712933930; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0RnLugBNvvuXUFF4w2ZmKO4UDb9kbtfcLjnmWLJ3F+A=;
+ b=lhA1ONWrtCDBlIQO1IqNlsUe0afjwKd0UAJLdIiPaKMqOsiFC12Lad57Hce1gDlY4idqb3
+ khhBTq9EYbsfxbtzYCv22YJej3FUn8GBsYEyy8H95rLixTsWh7OjHbREUjon7ExV8ZVvRg
+ iOEFeyZbKAHq8lXI6kIDsjGKLbLY4Cg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1712933930;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0RnLugBNvvuXUFF4w2ZmKO4UDb9kbtfcLjnmWLJ3F+A=;
+ b=x+evAVMg2yJPjW0dVEkbFYWyRo6KthbWuXiqw6twUfnV4gdeoDq/oui3HjikYKqc7EGPVp
+ +SHPxo+4XJD2qdDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 589DB1368B;
+ Fri, 12 Apr 2024 14:58:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id dHhQBypMGWbtewAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 12 Apr 2024 14:58:50 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org,
+ thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ prerna.saxena@nutanix.com
+Subject: Re: [PATCH 1/4] Revert "migration: modify test_multifd_tcp_none()
+ to use new QAPI syntax"
+In-Reply-To: <ZhlCcPTnW_-V85qR@x1n>
+References: <20240410111541.188504-1-het.gala@nutanix.com>
+ <20240410111541.188504-2-het.gala@nutanix.com> <874jc9v066.fsf@suse.de>
+ <Zhan0Brg_CXzt79-@x1n> <8621e850-168a-454a-8f00-615f476eac31@nutanix.com>
+ <ZhfzMt3t2oU7qt90@x1n> <e0f41009-a2bc-4302-82d5-c396d95a5cff@nutanix.com>
+ <ZhgvAicT_36OLEBR@x1n> <87le5jbsbn.fsf@suse.de> <ZhlCcPTnW_-V85qR@x1n>
+Date: Fri, 12 Apr 2024 11:58:43 -0300
+Message-ID: <87il0mbpb0.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240412132415.282354-13-thuth@redhat.com>
-User-Agent: NeoMutt/20240201
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: D417C5FE42
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,62 +135,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 03:24:14PM +0200, Thomas Huth wrote:
-> Since version 2.66, glib has useful URI parsing functions, too.
-> Use those instead of the QEMU-internal ones to be finally able
-> to get rid of the latter.
-> 
-> Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  block/ssh.c | 75 ++++++++++++++++++++++++++++-------------------------
->  1 file changed, 40 insertions(+), 35 deletions(-)
-> 
+Peter Xu <peterx@redhat.com> writes:
 
->  
-> -    if (g_strcmp0(uri->scheme, "ssh") != 0) {
-> +    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
+> On Thu, Apr 11, 2024 at 04:41:16PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>>=20
+>> > On Thu, Apr 11, 2024 at 11:31:08PM +0530, Het Gala wrote:
+>> >> I just wanted to highlight couple of pointers:
+>> >> 1. though we are using 'channels' in the precopy tests for 'migrate' =
+QAPI,
+>> >> we
+>> >> =C2=A0=C2=A0 use the old uri for 'migrate-incoming' QAPI.
+>> >> 2. We do not cover other 'channels' abi, only have tcp path tested.
+>> >>=20
+>> >> So, the TO-DOs could be:
+>> >> 1. Omit the 4th patch here, which introduced postcopy qtests with 'ch=
+annels'
+>> >> =C2=A0=C2=A0 interface OR have 'channels' interface with other than t=
+cp transport
+>> >> =C2=A0=C2=A0 (file, exec, vsock, etc) so as to cover different code p=
+aths.
+>> >> 2. Extend channels interface to migrate-incoming QAPI for precopy qte=
+sts
+>> >
+>> > You can see whether Fabiano has anything to say, but what you proposed
+>> > looks good to me.
+>>=20
+>> Ok, so what about we convert some of the 'plain' tests into channels to
+>> cover all transports?
+>>=20
+>> - tcp: test_multifd_tcp_none  (this one we already did)
+>> - file: test_precopy_file
+>> - unix: test_precopy_unix_plain
+>> - exec: test_analyze_script
+>> - fd: test_migrate_precopy_fd_socket
+>>=20
+>> Those^, plus the validate_uri that's already in next should cover
+>> everything.
+>>=20
+>> We don't need to do this at once, by the way.
+>>=20
+>> Moreover:
+>>=20
+>> - leave all test strings untouched to preserve bisecting;
+>>=20
+>> - let's not bother adding "channels" and "uri" to the test string
+>>   anymore. The channels API should be taken for granted at this point, I
+>>   don't expect we start hitting bugs that will require us to run either
+>>   foo/uri/plain or foo/channels/plain, so there's not much point in
+>>   making the distinction.
+>
+> Do you mean we can put "uri:" aside?  Maybe I misunderstood..
 
-Yet another case-sensitive spot to consider.
+I mean the test name does not need to specify "channels" vs. "uri"
+because that should never be broken to the point that we actually need
+to go fetch those tests by name. We'd still have at least 1 test for
+each transport with channels and (existing) at least 1 test for each
+transport with uri.
 
->  
-> -    qdict_put_str(options, "path", uri->path);
-> -
-> -    /* Pick out any query parameters that we understand, and ignore
-> -     * the rest.
-> -     */
-> -    for (i = 0; i < qp->n; ++i) {
-> -        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
-> -            qdict_put_str(options, "host_key_check", qp->p[i].value);
-> +    qdict_put_str(options, "path", uri_path);
-> +
-> +    uri_query = g_uri_get_query(uri);
-> +    if (uri_query) {
-> +        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
-> +        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
-> +            if (!qp_name || !qp_value || gerror) {
-> +                warn_report("Failed to parse SSH URI parameters '%s'.",
-> +                            uri_query);
-> +                break;
-> +            }
-> +            /*
-> +             * Pick out the query parameters that we understand, and ignore
-> +             * (or rather warn about) the rest.
-> +             */
-> +            if (g_str_equal(qp_name, "host_key_check")) {
-> +                qdict_put_str(options, "host_key_check", qp_value);
-> +            } else {
-> +                warn_report("Unsupported parameter '%s' in URI.", qp_name);
+>
+> The matrix previously was (I think.. when this series posted):
+>
+>   [tcp, unix, file, exec, fd] x [uri, channels] x [precopy, postcopy]
+>
+> Drop postcopy as doesn't seem to have any special paths:
+>
+>   [tcp, unix, file, exec, fd] x [uri, channels]
+>
+> So logically we should still cover these, right?
 
-Do we want the trailing '.' in warn_report?
-
-The warning is new; it was not in the old code, nor mentioned in the
-commit message.  It seems like a good idea, but we should be more
-intentional if we intend to make that change.
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+Right, I'm just suggesting we convert some tests to use channels, one
+for each transport, to test the channels API in full. The rest of the
+existing tests as well as future tests need not have a uri (or channel)
+variant. Just one of them is enough.
 
