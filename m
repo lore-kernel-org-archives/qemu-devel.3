@@ -4,86 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7581DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A1D2C04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvDZK-00050T-0J; Fri, 12 Apr 2024 05:51:38 -0400
+	id 1rvDZm-0005W6-AO; Fri, 12 Apr 2024 05:52:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvDZG-0004zq-HV
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 05:51:34 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvDZE-0007fk-1C
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 05:51:33 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2da01cb187cso9958371fa.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 02:51:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvDZj-0005SA-QH; Fri, 12 Apr 2024 05:52:03 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvDZg-0007jk-CJ; Fri, 12 Apr 2024 05:52:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712915490; x=1713520290; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XDier/PQlGVyNeReFRn3wefMWX91b1CUN/VjbmUf1yM=;
- b=rt+odv6Rtbvssm5B0QBLzCMHgTAugyLyQ3G34H9a+OCRh7BeIHlzY2pE1YNrtjiE9B
- HdVzr2kLCheHkJ2ajNaKo5BKWy1ruuRlpps9l6AH4qjDXDYqsFdzc08dNOpYlsPP55GD
- JHtwf8QJBKr2/YFRLTXE9318yqWefQrHBiHJ4ShNGXy/jYlBx+u4DweNlsvW/PPb710e
- SYtrBq/bx0vAxibf+5MvwZxXghS80yODAPqAAcEJz9JZHXZ4A3//88vc01t7C5IyvPWx
- LkU3tG64xdV9T75EaXxS8/VgtM7y7Vw2LDsND+J2NmnJ0Oqte1qYBwFoSC6e6kFb0Y3P
- Ey7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712915490; x=1713520290;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XDier/PQlGVyNeReFRn3wefMWX91b1CUN/VjbmUf1yM=;
- b=Cjinli48GtDgnTl4uW9MarNCBqDqN13DryMb/w5Hagvvhse9XBPNtD/wKT8nZoDtue
- UGDykfYUYPN8eDxsfXAAJ0V05pQeXbw1xgTIeCmtkiejFdhvnBf2Er4abJBQnwETwXh6
- oTSbPTRY0pleg34ngGMMtosyqQLSh/805Kac6Lk2BtGcLuxEBDcUQCOwHw/j2SW6IfVW
- Pnxsr5bxCg39JrrQQHGy14XENNdOXzPOFB2Swx8fwgGwxVuNPbujfK1heRxdXb0F2Q6a
- JrqVuW1tIefvbhOv5VNUquDRTgm71T9C3KGCsCIANMaemuBMWyLXjR+5l3MVsLQakc4N
- q+2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTLsDpuh5qIGrgixr9Fi4n1s1ga1AXSzFyuA1ak2xXpPcxSdYGaVTFCrt8CKMp20n+3ILDL5cwfBIunoGCYjuNgMCSIHQ=
-X-Gm-Message-State: AOJu0Yyz8rPHaMWmhtDOpg78FgjPOyK8DlEaOZWDlaSsyKmhRvtFzXNI
- BuAR+euIhVuyL56Ezgl65ffXsMeKGwCaqYfq4FxX7DheqT5pJkHGZJhq6s7KjD4=
-X-Google-Smtp-Source: AGHT+IHgy4JIfLNm3k+qrnVuti7wjciKjzq8+ByLnCj7qZYzSVtjc9XiXkKwyOSP+JXbDddTVo3eRg==
-X-Received: by 2002:a05:651c:623:b0:2da:16fd:5c9b with SMTP id
- k35-20020a05651c062300b002da16fd5c9bmr648317lje.9.1712915489646; 
- Fri, 12 Apr 2024 02:51:29 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- p10-20020a05600c468a00b00416ba2db6b4sm5089040wmo.18.2024.04.12.02.51.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 02:51:29 -0700 (PDT)
-Message-ID: <5569cc14-992e-40de-81a8-88cad244e163@linaro.org>
-Date: Fri, 12 Apr 2024 11:51:28 +0200
+ d=linux.alibaba.com; s=default;
+ t=1712915511; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=O9JEdbM/55FFdsPIYnErCakBqaPzk+l9txOOWl3u26E=;
+ b=QHSrE6e2G7xmW5yPZHmUAkR247KC3itp19M6J7Wjf1wAC2L4hKwRdI59RBCMl/dptDG+gw+9Iz2jdozpXyG6BmXhSLW2e63E0Vu+hFy9mmUzXsLmuxhhd+fGtfk6wC5+kWW76Q8XC8wSEID59lgR79Dx2xHm9z0kSU77xF1bOzw=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R311e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045168;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W4O-Ryn_1712915510; 
+Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W4O-Ryn_1712915510) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 17:51:50 +0800
+From: Huang Tao <eric.huang@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Huang Tao <eric.huang@linux.alibaba.com>
+Subject: [PATCH 58/65] target/riscv: Add vector iota instruction for
+ XTheadVector
+Date: Fri, 12 Apr 2024 15:37:28 +0800
+Message-ID: <20240412073735.76413-59-eric.huang@linux.alibaba.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
+References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dma-helpers: Fix iovec alignment
-To: Stefan Fritsch <sf@sfritsch.de>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- John Snow <jsnow@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-block <qemu-block@nongnu.org>
-References: <20240412080617.1299883-1-sf@sfritsch.de>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240412080617.1299883-1-sf@sfritsch.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,37 +71,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 10:06, Stefan Fritsch wrote:
-> Commit 99868af3d0 changed the hardcoded constant BDRV_SECTOR_SIZE to a
-> dynamic field 'align' but introduced a bug. qemu_iovec_discard_back()
-> is now passed the wanted iov length instead of the actually required
-> amount that should be removed from the end of the iov.
-> 
-> The bug can likely only be hit in uncommon configurations, e.g. with
-> icount enabled or when reading from disk directly to device memory.
-> 
-> Fixes: 99868af3d0a75cf6 ("dma-helpers: explicitly pass alignment into DMA helpers")
+The instruction has the same function as RVV1.0. Overall there are only
+general differences between XTheadVector and RVV1.0.
 
-Cc'ing developers mentioned in this commit.
+Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
+---
+ target/riscv/helper.h                         |  5 ++++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 29 +++++++++++++++++-
+ target/riscv/xtheadvector_helper.c            | 30 +++++++++++++++++++
+ 3 files changed, 63 insertions(+), 1 deletion(-)
 
-> Signed-off-by: Stefan Fritsch <sf@sfritsch.de>
-> ---
->   system/dma-helpers.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-> index 9b221cf94e..c9677fd39b 100644
-> --- a/system/dma-helpers.c
-> +++ b/system/dma-helpers.c
-> @@ -174,8 +174,7 @@ static void dma_blk_cb(void *opaque, int ret)
->       }
->   
->       if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
-> -        qemu_iovec_discard_back(&dbs->iov,
-> -                                QEMU_ALIGN_DOWN(dbs->iov.size, dbs->align));
-> +        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size % dbs->align);
->       }
->   
->       dbs->acb = dbs->io_func(dbs->offset, &dbs->iov,
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 90a1ff2601..a1c85e5254 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -2306,3 +2306,8 @@ DEF_HELPER_4(th_vmfirst_m, tl, ptr, ptr, env, i32)
+ DEF_HELPER_5(th_vmsbf_m, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(th_vmsif_m, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(th_vmsof_m, void, ptr, ptr, ptr, env, i32)
++
++DEF_HELPER_5(th_viota_m_b, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_viota_m_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_viota_m_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_viota_m_d, void, ptr, ptr, ptr, env, i32)
+diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+index d41c691c31..93f4ee4a12 100644
+--- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
++++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+@@ -2534,13 +2534,40 @@ GEN_M_TRANS_TH(th_vmsbf_m)
+ GEN_M_TRANS_TH(th_vmsif_m)
+ GEN_M_TRANS_TH(th_vmsof_m)
+ 
++/* Vector Iota Instruction */
++static bool trans_th_viota_m(DisasContext *s, arg_th_viota_m *a)
++{
++    if (require_xtheadvector(s) &&
++        vext_check_isa_ill(s) &&
++        th_check_reg(s, a->rd, false) &&
++        th_check_overlap_group(a->rd, 1 << s->lmul, a->rs2, 1) &&
++        (a->vm != 0 || a->rd != 0) &&
++        s->vstart_eq_zero) {
++        uint32_t data = 0;
++
++        data = FIELD_DP32(data, VDATA_TH, MLEN, s->mlen);
++        data = FIELD_DP32(data, VDATA_TH, VM, a->vm);
++        data = FIELD_DP32(data, VDATA_TH, LMUL, s->lmul);
++        static gen_helper_gvec_3_ptr * const fns[4] = {
++            gen_helper_th_viota_m_b, gen_helper_th_viota_m_h,
++            gen_helper_th_viota_m_w, gen_helper_th_viota_m_d,
++        };
++        tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, 0),
++                           vreg_ofs(s, a->rs2), tcg_env,
++                           s->cfg_ptr->vlenb,
++                           s->cfg_ptr->vlenb, data, fns[s->sew]);
++        finalize_rvv_inst(s);
++        return true;
++    }
++    return false;
++}
++
+ #define TH_TRANS_STUB(NAME)                                \
+ static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
+ {                                                          \
+     return require_xtheadvector(s);                        \
+ }
+ 
+-TH_TRANS_STUB(th_viota_m)
+ TH_TRANS_STUB(th_vid_v)
+ TH_TRANS_STUB(th_vext_x_v)
+ TH_TRANS_STUB(th_vmv_s_x)
+diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
+index d4f1665bf3..b0ddb3b307 100644
+--- a/target/riscv/xtheadvector_helper.c
++++ b/target/riscv/xtheadvector_helper.c
+@@ -3622,3 +3622,33 @@ void HELPER(th_vmsof_m)(void *vd, void *v0, void *vs2, CPURISCVState *env,
+ {
+     vmsetm(vd, v0, vs2, env, desc, ONLY_FIRST);
+ }
++
++/* Vector Iota Instruction */
++#define GEN_TH_VIOTA_M(NAME, ETYPE, H, CLEAR_FN)                          \
++void HELPER(NAME)(void *vd, void *v0, void *vs2, CPURISCVState *env,      \
++                  uint32_t desc)                                          \
++{                                                                         \
++    uint32_t mlen = th_mlen(desc);                                        \
++    uint32_t vlmax = (env_archcpu(env)->cfg.vlenb << 3) / mlen;           \
++    uint32_t vm = th_vm(desc);                                            \
++    uint32_t vl = env->vl;                                                \
++    uint32_t sum = 0;                                                     \
++    int i;                                                                \
++                                                                          \
++    for (i = env->vstart; i < vl; i++) {                                  \
++        if (!vm && !th_elem_mask(v0, mlen, i)) {                          \
++            continue;                                                     \
++        }                                                                 \
++        *((ETYPE *)vd + H(i)) = sum;                                      \
++        if (th_elem_mask(vs2, mlen, i)) {                                 \
++            sum++;                                                        \
++        }                                                                 \
++    }                                                                     \
++    env->vstart = 0;                                                      \
++    CLEAR_FN(vd, vl, vl * sizeof(ETYPE), vlmax * sizeof(ETYPE));          \
++}
++
++GEN_TH_VIOTA_M(th_viota_m_b, uint8_t, H1, clearb_th)
++GEN_TH_VIOTA_M(th_viota_m_h, uint16_t, H2, clearh_th)
++GEN_TH_VIOTA_M(th_viota_m_w, uint32_t, H4, clearl_th)
++GEN_TH_VIOTA_M(th_viota_m_d, uint64_t, H8, clearq_th)
+-- 
+2.44.0
 
 
