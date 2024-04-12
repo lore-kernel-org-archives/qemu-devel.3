@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8574C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0497C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvI8O-0002ik-E3; Fri, 12 Apr 2024 10:44:08 -0400
+	id 1rvIAE-0003a6-Nl; Fri, 12 Apr 2024 10:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvI8K-0002iI-1R
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:44:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvIAD-0003ZD-Mp
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:46:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvI8G-0006SC-DI
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:44:03 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvIAC-00074p-2w
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:46:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712933039;
+ s=mimecast20190719; t=1712933159;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JyCJ0OBHrAFLsVEaAgj7oAyZxx+EF0nspzCjRoS2GSQ=;
- b=SLhsFuJEVkXKqkc62D93MgMQykLtAKrHBv/aTifGMngAIk4b7UrBgOSZdU08ZTfQTzOSDr
- 9xYesJUjx/cU2OmXiWTOWFYzwg9j6v4CCcULGZjzUS5gT8JMEW/6Am1Fjt2ivmys+I/pe2
- HPvERvHnQ4ho7l+aoid+H3AKkIWh1ks=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-CCyf5nA8MxK7CAHc4wzxHg-1; Fri,
- 12 Apr 2024 10:43:56 -0400
-X-MC-Unique: CCyf5nA8MxK7CAHc4wzxHg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=AqVq3ynROCE1RoKFfbPnLY6jMasMcotBF1NVSfMU3Tk=;
+ b=QZuO8/09XHhrtn1oI/5JCXrQQiWCHLsmS2eM2nwftbRQkjsYXP+waA9DbYuUGq794nGQtO
+ Sic4yQ2AjbqF93cjpznY33fXcgIfM2DRfuqAw0/jkGYNRz0FC8x6jyoCboEly2O06NpZxh
+ BS+DbYQEFhoAHzB/BU8tsATSkEiorEc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-153-o2PP6sw8OaS5z2XNsyg9TA-1; Fri, 12 Apr 2024 10:45:55 -0400
+X-MC-Unique: o2PP6sw8OaS5z2XNsyg9TA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E14843813F30;
- Fri, 12 Apr 2024 14:43:55 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6187A881E64;
+ Fri, 12 Apr 2024 14:45:55 +0000 (UTC)
 Received: from redhat.com (unknown [10.2.16.15])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 55A2E492BC8;
- Fri, 12 Apr 2024 14:43:54 +0000 (UTC)
-Date: Fri, 12 Apr 2024 09:43:48 -0500
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id CAE90C13FA5;
+ Fri, 12 Apr 2024 14:45:53 +0000 (UTC)
+Date: Fri, 12 Apr 2024 09:45:48 -0500
 From: Eric Blake <eblake@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
@@ -53,18 +53,17 @@ Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 09/13] block/gluster: Use URI parsing code from glib
-Message-ID: <mnh2ivlennuabigyvgwdickf62tvgazemgewr6m3bxx33fqdpn@aow25badqmlt>
+Subject: Re: [PATCH v2 10/13] block/nbd: Use URI parsing code from glib
+Message-ID: <24wmqsrvzxt2llup4hx4eti5i63ps36hbvub2s32t3zuyfyjgn@zwm3ndftj4tp>
 References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-10-thuth@redhat.com>
- <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
+ <20240412132415.282354-11-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
+In-Reply-To: <20240412132415.282354-11-thuth@redhat.com>
 User-Agent: NeoMutt/20240201
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -88,23 +87,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 09:40:18AM -0500, Eric Blake wrote:
-> > @@ -364,57 +363,57 @@ static int qemu_gluster_parse_uri(BlockdevOptionsGluster *gconf,
-> >      QAPI_LIST_PREPEND(gconf->server, gsconf);
-> >  
-> >      /* transport */
-> > -    if (!uri->scheme || !strcmp(uri->scheme, "gluster")) {
-> > +    uri_scheme = g_uri_get_scheme(uri);
-> > +    if (!uri_scheme || !strcmp(uri_scheme, "gluster")) {
+On Fri, Apr 12, 2024 at 03:24:12PM +0200, Thomas Huth wrote:
+> Since version 2.66, glib has useful URI parsing functions, too.
+> Use those instead of the QEMU-internal ones to be finally able
+> to get rid of the latter. The g_uri_get_host() also takes care
+> of removing the square brackets from IPv6 addresses, so we can
+> drop that part of the QEMU code now, too.
 > 
-> Pre-existing, but per RFC 3986, we should probably be using strcasecmp
-> for scheme comparisons (I'm not sure if g_uri_parse guarantees a
-> lower-case return, even when the user passed in upper case).  That can
-> be a separate patch.
+> Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  block/nbd.c | 76 ++++++++++++++++++++++++++---------------------------
+>  1 file changed, 37 insertions(+), 39 deletions(-)
+> 
 
-Even beter, g_ascii_strcasecmp() (since strcasecmp can be
-locale-specific which is generally not what we need here)
+>  
+>      /* transport */
+> -    if (!g_strcmp0(uri->scheme, "nbd")) {
+> +    uri_scheme = g_uri_get_scheme(uri);
+> +    if (!g_strcmp0(uri_scheme, "nbd")) {
+>          is_unix = false;
 
+As with gluster, we should probably be using g_ascii_strcasecmp() here
+to match the RFC; again, worth a separate patch.
+
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
 -- 
 Eric Blake, Principal Software Engineer
