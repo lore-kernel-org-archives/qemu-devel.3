@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB6FC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 11:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3E00C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 11:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvErK-0003Kr-Qq; Fri, 12 Apr 2024 07:14:18 -0400
+	id 1rvEu3-0004Dh-Ba; Fri, 12 Apr 2024 07:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvErI-0003KU-S2
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:14:16 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvEtp-0004AI-Fc
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:16:56 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvErG-0006kS-UZ
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:14:16 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-417d14c3411so8442245e9.2
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 04:14:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvEtn-0007EI-MX
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:16:53 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-56e69a51a33so760391a12.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 04:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712920453; x=1713525253; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=J8IsO5LZ3WBcUBOwYbHPBR56scuaYOlQlJqyc8Z83gg=;
- b=j+oXN2vzEsEpXjH7x3hHqeg92CTXsfRMeev/a9ryf7kPCddjQb0AIRMF/yRja0KqMV
- c6xw4dq0GYrAXgJXPrYzGGcPEiOY1KE5oX/Lbv1ESsCza5MejyUjb95pvgvWryLN7gyE
- wnq4bT1Pgd81PJ5mQPGJEqirqJ3HSpf/EfNeNvW6Ok253t5osUUAXEu12+E1GJcmdg9j
- 7+xl6Nqvj6Xez0MkeW/PvcbJ16jT1FE4POr1NZiQHqyh7ATTW3lWCaaar2wNo3NqjFSV
- y0ZBS2HLKQ/ULhmS+yp/+edteK23BDMXg4ChGSV3cjeFXCCbgwbXTt/oc/WAZp+ZrbBg
- Mbig==
+ d=linaro.org; s=google; t=1712920608; x=1713525408; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3jqSbrxyi5xSCUnUddcbVQoWDnwGwMym4KBlHA4R8Qk=;
+ b=Nwydtu5IIP5KPJPMB2IzoY8cv4fxHSOanT1Y+5QsroYwxG85DDWCy4E+gXmg0+omLm
+ e0R/pwRtqttzsQpSumJi7Zx8cBipI28v/E1ihBjbSqstp5KtOHOI94T+hern8qeCjwMx
+ R7H2x+zD4qc/7uql7uffCA9amA3NmmokkwscqqQ2EMuZyCa1s52FtQpdIQUYNOxHQFE/
+ IDgGI+8dJuCbzwiZgUYOt/lNRJJ/TCG1d7hYvVDY7FoK3mG40n+oR5+1lZyNE8DKnqfz
+ 2I+uRuPGIa4psz2hAWVY7+wMvvPmEE4c49x8mgPelGYjcKLWZ6bsxnSfeuVfiuBw3SY7
+ KGVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712920453; x=1713525253;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J8IsO5LZ3WBcUBOwYbHPBR56scuaYOlQlJqyc8Z83gg=;
- b=h2mikw2nDpT0DU/flwa2krLMZo5Ob1niwoK9v5FEJDRJFn0WWsj7JBJ0aCSYm7fykr
- 6em3TWaSRa1u6NEF10VcjyzXNi/0xKAP6XLI26yTMEHLn+PHi1g/He0ftAwGWZNVXDAR
- Ip/cS2FL4rZqi5BWFbkvTPxyviAkZ/H99V9m7hOLUNryPvLo5BrWKAXVV9cUPL7AQX7r
- V2sZb6362+hAOxuQM7uQUT2CfpTSV/jTUJbHlusGc860wzhQL2fIvlOc/yzLXVyhVqMp
- QgFbyD5RqeSJdZQN9hFcII9U+unMTCQ0PBN2ufsjAXYPiOR7NeBqc8y2Y6kB9uxUWNdV
- n5Ng==
-X-Gm-Message-State: AOJu0Yz1V49h/P31xcHS1gGfISXV4sWlwr6wvsErUmysRSjQpOFdvRsf
- f1gfqD5fBpACoZbNbPnsu7GsFDsatumcB9DYAV84+uKjKjhplU83IuI7wKc4Lvk=
-X-Google-Smtp-Source: AGHT+IEJyzq8RQSIslDLUU7tO4EAeHKl+Gg7v85lA6Bal3fFreregzR6sShech3gSSAY+YlC1G7sEA==
-X-Received: by 2002:a05:600c:1c13:b0:416:7233:9d1e with SMTP id
- j19-20020a05600c1c1300b0041672339d1emr1850771wms.28.1712920453079; 
- Fri, 12 Apr 2024 04:14:13 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- z4-20020a5d6404000000b00343b09729easm4038980wru.69.2024.04.12.04.14.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 04:14:12 -0700 (PDT)
-Message-ID: <921ae82a-3007-4435-af7d-91a08a5acae7@linaro.org>
-Date: Fri, 12 Apr 2024 13:14:11 +0200
+ d=1e100.net; s=20230601; t=1712920608; x=1713525408;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3jqSbrxyi5xSCUnUddcbVQoWDnwGwMym4KBlHA4R8Qk=;
+ b=f3Y6JUrssL36AgKvYpYNz7/b+u3AdrGFcdVN2Ly/UsB0GfrEDs04aAs4eP4+ulquGy
+ aNSRc895vR5+TGU8IbED+IP/3vErgkAvwysyOqTaAV8UrwWZEapXPmAdG06JlDAFJgnG
+ lxHCqPfivsnVFRNbBXRVhljB7XfcJoqWZl6hdViAd6e5ooNW1s5vb1l1alttJtY4QxEc
+ pK/Gl+G3q6WCQXeTGh+wldPnt3LShRqueZOEH0Dow91njzm5bzZlXUD5dM9YvTKmmNfP
+ /98g26ruEQLhr/bPkmzxtQiJRy9P3+sy2hvdMK+uOeTJ+Z62TS4VZ0sf8kFOSYqUsBfE
+ Bifg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWE0UQXbQJQj0nMOx30vXBFWOB9eFrQRKd+iNGYu2+EGtuZ6RogZraqE/IudKvFmf2DCUF6x403HL/p31d7NEtxWy8L51A=
+X-Gm-Message-State: AOJu0YzUcv1eldb3H9cIat4wt955Q1NrxNmMHa4/aQyd9mYnikcH5X1N
+ LlGaxtmfEtSmDHPcyRtk/B7vs+XI3bDdPuMQ3NOb3ouTuDRs8ucJkXE6t2lCc4K47KY92H34bBn
+ EmVEklxd9iCd6muqkmmcm47+WqfwVHbuoV6hGHA==
+X-Google-Smtp-Source: AGHT+IHUmT7JAI2k4DaLb54JQQQB8CMKRHyRXR/6bNAHUX9AKjpV2sIcamOP6QZtrPSbcGVreinGadVRr+eRpHDtPCs=
+X-Received: by 2002:a50:f60c:0:b0:56e:23a1:a0da with SMTP id
+ c12-20020a50f60c000000b0056e23a1a0damr1672479edn.7.1712920608502; Fri, 12 Apr
+ 2024 04:16:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sparc: Use GET_ASI_CODE for ASI_KERNELTXT and
- ASI_USERTXT
-To: M Bazz <bazz@bazz1.com>, Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20240412021509.145502-1-richard.henderson@linaro.org>
- <CAMFqb-bp48=Kd23AzwZ2U3AsPbnwUBUiyv=37ua1V_RDQ3wdyg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAMFqb-bp48=Kd23AzwZ2U3AsPbnwUBUiyv=37ua1V_RDQ3wdyg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20240412100401.20047-1-pbonzini@redhat.com>
+ <0eb8a3b5-cff2-4ce8-8e6d-ab4dc2dda84a@linaro.org>
+In-Reply-To: <0eb8a3b5-cff2-4ce8-8e6d-ab4dc2dda84a@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 12 Apr 2024 12:16:37 +0100
+Message-ID: <CAFEAcA-nZ6hEnSy-Xdt8ovmhs3mQ_5dKTTqZsZVvUNp-8XW3Hw@mail.gmail.com>
+Subject: Re: [PULL 0/2] Final build system fixes for 9.0
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,57 +92,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bazz,
+On Fri, 12 Apr 2024 at 12:07, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Hi Peter,
+>
+> On 12/4/24 12:03, Paolo Bonzini wrote:
+> > The following changes since commit 02e16ab9f4f19c4bdd17c51952d70e2ded74=
+c6bf:
+> >
+> >    Update version for v9.0.0-rc3 release (2024-04-10 18:05:18 +0100)
+> >
+> > are available in the Git repository at:
+> >
+> >    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> >
+> > for you to fetch changes up to 2d6d995709482cc8b6a76dbb5334a28001a14a9a=
+:
+> >
+> >    meson.build: Disable -fzero-call-used-regs on OpenBSD (2024-04-12 12=
+:02:12 +0200)
+> >
+> > ----------------------------------------------------------------
+> > build system fixes
+>
+> Since these 2 patches don't modify what we can build with v9.0.0-rc3,
+> would it be acceptable to merge them without having to produce a
+> v9.0.0-rc4 tag before the final release?
 
-On 12/4/24 06:18, M Bazz wrote:
-> On Thu, Apr 11, 2024, 10:15 PM Richard Henderson 
-> <richard.henderson@linaro.org <mailto:richard.henderson@linaro.org>> wrote:
-> 
->     Reads are done with execute access.  It is not clear whether writes
->     are legal at all -- for now, leave helper_st_asi unchanged, so that
->     we continue to raise an mmu fault.
-> 
->     This generalizes the exiting code for ASI_KERNELTXT to be usable for
->     ASI_USERTXT as well, by passing down the MemOpIdx to use.
-> 
->     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2281
->     <https://gitlab.com/qemu-project/qemu/-/issues/2281>
->     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2059
->     <https://gitlab.com/qemu-project/qemu/-/issues/2059>
->     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1609
->     <https://gitlab.com/qemu-project/qemu/-/issues/1609>
->     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1166
->     <https://gitlab.com/qemu-project/qemu/-/issues/1166>
->     Signed-off-by: Richard Henderson <richard.henderson@linaro.org
->     <mailto:richard.henderson@linaro.org>>
->     ---
->       target/sparc/helper.h      |  3 ++
->       target/sparc/ldst_helper.c | 65 ++++++++++++++++++++++++++------------
->       target/sparc/translate.c   | 49 ++++++++++++++++++++++++++--
->       3 files changed, 95 insertions(+), 22 deletions(-)
+As a principle, I don't ever do a final release that doesn't
+match the last rc tag. If the changes are minimal I might
+reduce the time between last-rc and final release.
 
-> Hi Richard,
-> 
-> I see this is in your hands now. I agree with your take on leaving 
-> writes alone. I'm also grateful for the opportunity to collaborate with you.
-> 
-> It brings a smile for the community members who will be touched by this 
-> amazing contribution. I see them happily realizing that this perplexing 
-> bug has been solved, and in our case finally able to use the debuggers 
-> we love! :D
+But we'll see if anything else turns up that needs to go
+into 9.0. There was so much late stuff for rc3 that I
+have a feeling this might not be the only 9.0 pullreq.
 
-Does that mean you tested this patch and it resolves your issues?
-
-If so, could you add your 'Tested-by: M Bazz <bazz@bazz1.com>' tag
-when committing this patch?
-
-Regards,
-
-Phil.
-
-> Thanks for the proper fix, qemu sensei!
-> 
-> -bazz
-> 
-
+thanks
+-- PMM
 
