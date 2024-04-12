@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AFFC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 07:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D27C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 07:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvBYT-0000iv-Na; Fri, 12 Apr 2024 03:42:37 -0400
+	id 1rvBaQ-0001Ys-IE; Fri, 12 Apr 2024 03:44:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvBYQ-0000ib-Un; Fri, 12 Apr 2024 03:42:34 -0400
-Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
+ id 1rvBaO-0001YQ-CA; Fri, 12 Apr 2024 03:44:36 -0400
+Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvBYO-00008x-CZ; Fri, 12 Apr 2024 03:42:34 -0400
+ id 1rvBaK-0000S5-Kj; Fri, 12 Apr 2024 03:44:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1712907745; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=HN6DhZ1YDyjygjYarsnv77wizJM6gixFAR0kv+mDYD8=;
- b=HECwdnN5XD6mDtqQwYEHk7amfQOX4gPXPx9A0Iu/DWZz1c/asR1IJZMCy41SRnyY8Wkp6DHrFpilOdL+B/L3uF/sbWUxUhtAwY5oRdOvkvyMefKrzXozGSGjhhhYGhtWcCYOIQe6mXslKzoWNassuR7P6OoGScoNYFYEsKQnenA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045192;
+ t=1712907866; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=hKbo4P0vi87lED25C2k2TdmTf1KALgcOHYKTjpACgqs=;
+ b=NQ29oGTcqR49ovH3DRUlTWGTfw8/40AxDtqdTyarOUiHG/9hZJlo1IZRBp/VzcgX11mPSNEOoE3e4J7ZvQgfHZjzXHCYmDRprJb2jLVcvvhsSEYl21cOKUC6huH9UjRbcULz52eh47LpPYjb/B7aim8p9piJkV4fYnxZeeXegEM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046060;
  MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W4NQA-S_1712907742; 
+ TI=SMTPD_---0W4NQAh5_1712907864; 
 Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W4NQA-S_1712907742) by smtp.aliyun-inc.com;
- Fri, 12 Apr 2024 15:42:23 +0800
+ fp:SMTPD_---0W4NQAh5_1712907864) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 15:44:25 +0800
 From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com,
  Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 02/65] target/riscv: Reuse th_csr.c to add user-mode csrs
-Date: Fri, 12 Apr 2024 15:36:32 +0800
-Message-ID: <20240412073735.76413-3-eric.huang@linux.alibaba.com>
+Subject: [PATCH 03/65] target/riscv: Add properties for XTheadVector extension
+Date: Fri, 12 Apr 2024 15:36:33 +0800
+Message-ID: <20240412073735.76413-4-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.112;
+Received-SPF: pass client-ip=115.124.30.124;
  envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
+ helo=out30-124.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,105 +70,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The former patch added th_csr.c to add th.sxstatus csr for XTheadMaee.
-However, it can only support system-mode vendor csrs.
-In this patch, I change the way of compiling th_csr.c and calling the
-function th_register_custom_csrs, using '#if !defined(CONFIG_USER_ONLY)' in
-th_csr.c to support both user-mode and system-mode vendor csrs.
+Add ext_xtheadvector properties.
+In this patch, we add ext_xtheadvector in RISCVCPUConfig
+for XTheadVector as a start. In rv64_thead_c906_cpu_init,
+we make ext_xtheadvector equals false to avoid affecting
+other extensions when it is not fully implemented.
 
 Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- target/riscv/cpu.c       |  2 +-
- target/riscv/meson.build |  2 +-
- target/riscv/th_csr.c    | 21 +++++++++++++--------
- 3 files changed, 15 insertions(+), 10 deletions(-)
+ target/riscv/cpu.c         |  3 +++
+ target/riscv/cpu_cfg.h     |  2 ++
+ target/riscv/cpu_helper.c  |  2 +-
+ target/riscv/tcg/tcg-cpu.c | 33 +++++++++++++++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 1 deletion(-)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 46a66cdbbb..3f21c976ba 100644
+index 3f21c976ba..05652e8c87 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -545,8 +545,8 @@ static void rv64_thead_c906_cpu_init(Object *obj)
+@@ -201,6 +201,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(xtheadmemidx, PRIV_VERSION_1_11_0, ext_xtheadmemidx),
+     ISA_EXT_DATA_ENTRY(xtheadmempair, PRIV_VERSION_1_11_0, ext_xtheadmempair),
+     ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsync),
++    ISA_EXT_DATA_ENTRY(xtheadvector, PRIV_VERSION_1_11_0, ext_xtheadvector),
+     ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVentanaCondOps),
+ 
+     DEFINE_PROP_END_OF_LIST(),
+@@ -541,6 +542,7 @@ static void rv64_thead_c906_cpu_init(Object *obj)
+     cpu->cfg.ext_xtheadmemidx = true;
+     cpu->cfg.ext_xtheadmempair = true;
+     cpu->cfg.ext_xtheadsync = true;
++    cpu->cfg.ext_xtheadvector = false;
+ 
      cpu->cfg.mvendorid = THEAD_VENDOR_ID;
  #ifndef CONFIG_USER_ONLY
-     set_satp_mode_max_supported(cpu, VM_1_10_SV39);
--    th_register_custom_csrs(cpu);
+@@ -1567,6 +1569,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+     MULTI_EXT_CFG_BOOL("xtheadmemidx", ext_xtheadmemidx, false),
+     MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
+     MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
++    MULTI_EXT_CFG_BOOL("xtheadvector", ext_xtheadvector, false),
+     MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
+ 
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index cb750154bd..da85e94e04 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -149,6 +149,7 @@ struct RISCVCPUConfig {
+     bool ext_xtheadmemidx;
+     bool ext_xtheadmempair;
+     bool ext_xtheadsync;
++    bool ext_xtheadvector;
+     bool ext_XVentanaCondOps;
+ 
+     uint32_t pmu_mask;
+@@ -205,6 +206,7 @@ MATERIALISE_EXT_PREDICATE(xtheadmac)
+ MATERIALISE_EXT_PREDICATE(xtheadmemidx)
+ MATERIALISE_EXT_PREDICATE(xtheadmempair)
+ MATERIALISE_EXT_PREDICATE(xtheadsync)
++MATERIALISE_EXT_PREDICATE(xtheadvector)
+ MATERIALISE_EXT_PREDICATE(XVentanaCondOps)
+ 
  #endif
-+    th_register_custom_csrs(cpu);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index fc090d729a..5882b65321 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -72,7 +72,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+     *pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc;
+     *cs_base = 0;
  
-     /* inherited from parent obj via riscv_cpu_init() */
-     cpu->cfg.pmp = true;
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index a4bd61e52a..b01a6cfb23 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -12,6 +12,7 @@ riscv_ss.add(files(
-   'cpu.c',
-   'cpu_helper.c',
-   'csr.c',
-+  'th_csr.c',
-   'fpu_helper.c',
-   'gdbstub.c',
-   'op_helper.c',
-@@ -33,7 +34,6 @@ riscv_system_ss.add(files(
-   'monitor.c',
-   'machine.c',
-   'pmu.c',
--  'th_csr.c',
-   'time_helper.c',
-   'riscv-qmp-cmds.c',
- ))
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-index 66d260cabd..dc087b1ffa 100644
---- a/target/riscv/th_csr.c
-+++ b/target/riscv/th_csr.c
-@@ -33,6 +33,15 @@ typedef struct {
-     riscv_csr_operations csr_ops;
- } riscv_csr;
+-    if (cpu->cfg.ext_zve32f) {
++    if (cpu->cfg.ext_zve32f || cpu->cfg.ext_xtheadvector) {
+         /*
+          * If env->vl equals to VLMAX, we can use generic vector operation
+          * expanders (GVEC) to accerlate the vector operations.
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 483774e4f8..f7a105b30e 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -281,6 +281,25 @@ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
+     }
+ }
  
-+static int test_thead_mvendorid(RISCVCPU *cpu)
++static void th_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
++                              Error **errp)
 +{
-+    if (cpu->cfg.mvendorid != THEAD_VENDOR_ID) {
-+        return -1;
++    uint32_t vlen = cfg->vlenb << 3;
++
++    if (vlen < 32) {
++        error_setg(errp,
++                   "In XTheadVector extension, VLEN must be "
++                   "greater than or equal to 32");
 +    }
-+    return 0;
++
++    if (vlen < cfg->elen) {
++        error_setg(errp,
++                   "In XTheadVector extension, VLEN must be "
++                   "greater than or equal to ELEN");
++        return;
++    }
 +}
 +
-+#if !defined(CONFIG_USER_ONLY)
- static RISCVException s_mode_csr(CPURISCVState *env, int csrno)
+ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
  {
-     if (env->debugger)
-@@ -44,13 +53,6 @@ static RISCVException s_mode_csr(CPURISCVState *env, int csrno)
-     return RISCV_EXCP_ILLEGAL_INST;
- }
+     CPURISCVState *env = &cpu->env;
+@@ -485,6 +504,20 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
  
--static int test_thead_mvendorid(RISCVCPU *cpu)
--{
--    if (cpu->cfg.mvendorid != THEAD_VENDOR_ID)
--        return -1;
--    return 0;
--}
--
- static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
- {
-@@ -58,13 +60,16 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
-     *val = TH_SXSTATUS_UCME | TH_SXSTATUS_THEADISAEE;
-     return RISCV_EXCP_NONE;
- }
-+#endif
- 
- static riscv_csr th_csr_list[] = {
-+#if !defined(CONFIG_USER_ONLY)
-     {
-         .csrno = CSR_TH_SXSTATUS,
-         .insertion_test = test_thead_mvendorid,
-         .csr_ops = { "th.sxstatus", s_mode_csr, read_th_sxstatus }
--    }
-+    },
-+#endif
- };
- 
- void th_register_custom_csrs(RISCVCPU *cpu)
++    if (cpu->cfg.ext_xtheadvector && riscv_has_ext(env, RVV)) {
++        error_setg(errp, "XTheadVector extension is incompatible with "
++                         "RVV extension");
++        return;
++    }
++
++    if (cpu->cfg.ext_xtheadvector) {
++        th_cpu_validate_v(env, &cpu->cfg, &local_err);
++        if (local_err != NULL) {
++            error_propagate(errp, local_err);
++            return;
++        }
++    }
++
+     if (riscv_has_ext(env, RVV)) {
+         riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+         if (local_err != NULL) {
 -- 
 2.44.0
 
