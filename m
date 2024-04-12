@@ -4,57 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EEEC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C54C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvDna-000807-5L; Fri, 12 Apr 2024 06:06:22 -0400
+	id 1rvDoR-0000RG-MR; Fri, 12 Apr 2024 06:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvDnW-0007wD-SP; Fri, 12 Apr 2024 06:06:18 -0400
-Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvDnP-00022L-6H; Fri, 12 Apr 2024 06:06:18 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvDoP-0000Qn-Uz
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:07:13 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvDoJ-00027t-Lx
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:07:13 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-56e346224bdso627342a12.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 03:07:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1712916362; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=S6PxTgtORypWKOerrWqfq+DLXyveNYf73gc+A01znRY=;
- b=Z6MQcW5NZoLm+vQ8e2OsUcOhKKSd9tQd4+KHGYuGyu84cpt0ljCIQj1R9C+e4hIy7JmtjpiBlCV/LQePp8A4vwbUTsd7QpyMo4PIlSTruAun/irMw9sf+JCypEU9KQNKZugP4qY7lvtrPnguudh1c2TFmo2zuyuClgiYgk+AU4s=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R161e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045176;
- MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W4NtSbs_1712916361; 
-Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W4NtSbs_1712916361) by smtp.aliyun-inc.com;
- Fri, 12 Apr 2024 18:06:02 +0800
-From: Huang Tao <eric.huang@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
- alistair.francis@wdc.com, palmer@dabbelt.com,
- Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 65/65] target/riscv: Enable XTheadVector extension for c906
-Date: Fri, 12 Apr 2024 15:37:35 +0800
-Message-ID: <20240412073735.76413-66-eric.huang@linux.alibaba.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
-References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
+ d=linaro.org; s=google; t=1712916425; x=1713521225; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=CRq1VK8S0LEFDcUOe52ENFNImtSvO7NrWm3Uw1gqR4Q=;
+ b=in/FYg+NCQRDFLJogW5NSSF/Ti9i8u/NQI7x8pPwPmwj/Ci4lsYCpVIOGogK8DpEkf
+ qMf8LFcy/qqMnJJ2eDRb2Tauaz65hPVdFnxa1KhdHZtbkxH8rKuXN+UZM9PcgTxbgWZT
+ lGLDVOMrjSYclfNjLXuA7BTH6GvvuUOGIZi54EEONcEH5oXTx3+b73J5BTtS6/rxwafQ
+ VR9ptlYQkjv01wYEguTJz59pj4QJpfXeqtgFI+4hQGodkYNLd9J+ARF88uOTA7/z49Gp
+ g/tMQmaRhU/+218whA+h0cxWI99WDQzRt4YAYeRpndtk9FQ1HoCK7gmQrDVzEOgzAH46
+ 4v7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712916425; x=1713521225;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CRq1VK8S0LEFDcUOe52ENFNImtSvO7NrWm3Uw1gqR4Q=;
+ b=kSpv0he/xqK/Ok++sXyx94cnIeX2StE14W3skW4V6shjVCEm6sqVvxV9KBs2J0HA8Q
+ B6gg45twbnZLNwLmbrKDuXbanT1KPephRZtNDHxxh9Va4ROJOMZXItfQf0W6IqTIGZrC
+ 1AWcPr42ZsQOsWlFyylpqSRQvSiKcMq82Hh4GkidKQXEsAtgEd+Az1w5AXS/SeoaX8DK
+ AX11k9TFuxprx+9G4w4ji2+JPEKhPWqSyDn5Z6oHgbVMXhKSi8a7KyT9yDssY3a/hcmK
+ UaYuYLbEBsO+8zsZGWF9rNzs+YPVoonXYOKiN+hSucQNmXJBRvPkaEVQHluhxemi9AtJ
+ yl7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVF98sx8VuRvOAlGiu8TRVC78wdwn50Am8UwzDhShJR4abl3JuLzUPaVxPjJJ09F2iU//+n1oL0QGdL9rlwRXlZT+oymOA=
+X-Gm-Message-State: AOJu0YyLdyPqJziMXcs+Kyz/WlXCZR41YiSuGghUQVWDdDhxaWW7HyiJ
+ YU8kbK7odOUb/2rfEux6qcg+zZp7wSOuwaJkyqg34wRy0WCGQ3+nmOVxudy+wurmPk+SgJwmHGa
+ ahiSAgJI6jrT80ruf0HAz8bMAc3Sahka1EuNHf75cnnROL2op
+X-Google-Smtp-Source: AGHT+IG3E6TyTVC4L/oAn+xXwRa38DWTAhJ+TGxyvDeWXq1rT8iidFEWU7Wafdf7X90VmtdW3p2S+92Mw2cOBUGV8x0=
+X-Received: by 2002:a50:9e84:0:b0:56d:f979:8d82 with SMTP id
+ a4-20020a509e84000000b0056df9798d82mr1430825edf.25.1712916425565; Fri, 12 Apr
+ 2024 03:07:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+References: <20240412081328.11183-1-adiupina@astralinux.ru>
+In-Reply-To: <20240412081328.11183-1-adiupina@astralinux.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 12 Apr 2024 11:06:54 +0100
+Message-ID: <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
+Subject: Re: [PATCH RFC] prevent overflow in
+ xlnx_dpdma_desc_get_source_address()
+To: Alexandra Diupina <adiupina@astralinux.ru>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,27 +92,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch enables XTheadVector for the c906.
+On Fri, 12 Apr 2024 at 09:13, Alexandra Diupina <adiupina@astralinux.ru> wrote:
+>
+> Overflow can occur in a situation where desc->source_address
+> has a maximum value (pow(2, 32) - 1), so add a cast to a
+> larger type before the assignment.
+>
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>
+> Fixes: d3c6369a96 ("introduce xlnx-dpdma")
+> Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+> ---
+>  hw/dma/xlnx_dpdma.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+> index 1f5cd64ed1..224259225c 100644
+> --- a/hw/dma/xlnx_dpdma.c
+> +++ b/hw/dma/xlnx_dpdma.c
+> @@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+>
+>      switch (frag) {
+>      case 0:
+> -        addr = desc->source_address
+> -            + (extract32(desc->address_extension, 16, 12) << 20);
+> +        addr = (uint64_t)(desc->source_address
+> +            + (extract32(desc->address_extension, 16, 12) << 20));
 
-Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
----
- target/riscv/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Unless I'm confused, this cast doesn't help, because we
+will have already done a 32-bit addition of desc->source_address
+and the value from the address_extension part, so it doesn't
+change the result.
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 05652e8c87..e85aa51237 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -542,7 +542,7 @@ static void rv64_thead_c906_cpu_init(Object *obj)
-     cpu->cfg.ext_xtheadmemidx = true;
-     cpu->cfg.ext_xtheadmempair = true;
-     cpu->cfg.ext_xtheadsync = true;
--    cpu->cfg.ext_xtheadvector = false;
-+    cpu->cfg.ext_xtheadvector = true;
- 
-     cpu->cfg.mvendorid = THEAD_VENDOR_ID;
- #ifndef CONFIG_USER_ONLY
--- 
-2.44.0
+If we want to do the addition at 64 bits then using extract64()
+would be the simplest way to arrange for that.
 
+However, I can't figure out what this code is trying to do and
+make that line up with the data sheet; maybe this isn't the
+right datasheet for this device?
+
+https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/ADDR_EXT-Field
+
+The datasheet suggests that we should take 32 bits of the address
+from one field (here desc->source_address) and 16 bits of the
+address from another (here desc->address_extension's high bits)
+and combine them to make a 48 bit address. But this code is only
+looking at 12 bits of the high 16 in address_extension, and it
+doesn't shift them right enough to put them into bits [47:32]
+of the final address.
+
+Xilinx folks: what hardware is this modelling, and is it
+really the right behaviour?
+
+Also, this device looks like it has a host-endianness bug: the
+DPDMADescriptor struct is read directly from guest memory in
+dma_memory_read(), but the device never does anything to swap
+the fields from guest memory order to host memory order. So
+this is likely broken on big-endian hosts.
+
+thanks
+-- PMM
 
