@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763FBC00A94
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 07:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E1D2C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 07:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvBQI-00074H-3N; Fri, 12 Apr 2024 03:34:10 -0400
+	id 1rvBQ4-0006zB-77; Fri, 12 Apr 2024 03:33:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvBQA-00070s-9l
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:34:03 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1rvBQ1-0006xO-4u
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:33:53 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvBQ7-0007BB-Ve
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:34:01 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e3c9300c65so6283825ad.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 00:33:59 -0700 (PDT)
+ id 1rvBPy-00074g-DC
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:33:52 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-5dca1efad59so451629a12.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 00:33:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712907239; x=1713512039; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712907229; x=1713512029; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rYVeh39A85lKzN367OYcjUFCWQI2goI5Bmql3JBqN/4=;
- b=Oie4f+HNrso8VcxuLvXfbRirQR/F89QWTrudQ2ye6PCwB+7oi2KSKbEW9N04VEMGq2
- ANF3azTIB8F9t9IGp7Fv/VeiSleiPBGuxD3h3oJHw58t0PUNHHQWx8mJsEwkZKv9ZZsX
- apktQXyVDnCXCXiDiADyRS2YYLDQlrRs6SAqbUIJO6Ed0HrYS9hPNeYKhMsqpWhUu4/t
- D2GhUOdeOvRsuUZDzpYfKz+i8btM5ke11yZpQTHtNEQLXcQqujxoWLv6hHiAbgqSh2Rg
- E/D31qHb3sSVpp6DpmUPfdmUA9XXDAseNRBw+ZZAHyQtstQa1vK3SBhleUxocFI1Ie8Q
- hFoA==
+ :reply-to; bh=+WtY4DsJRn2jEDsEW21TOMqrULwYncFBXOs9a6AYGRc=;
+ b=efqxISQZfqOPZjn4MTPsnHQcAkoNh3ktYf1OveUy2/hMVh0RRqO6jwblvv/3JIU2eF
+ xqBxUHyS/WZml8f427Mx0fo5KuzpM3vgRM828wuclKCgmyZFr+r2qxAmL6aY52fDxWAI
+ OxuhKGyvt5DNhHaBGDHtVjW71ewJEJLxEbCHPGY5ix9bQCBe2FeH2nR+pEy9k7ygrcga
+ Q0vrzV0le61GpptaqrKT1Cn5fq/48uqMVR+sxkfLoiHFo+z5JK75pbpdT7zzM6qCCj8b
+ Zsv1aExQaPosk+DUD1Orb97M++FUTI+mX1kVcGNs9pneeULOmmLH67rfZifgt+dSYk87
+ 3jKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712907239; x=1713512039;
+ d=1e100.net; s=20230601; t=1712907229; x=1713512029;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rYVeh39A85lKzN367OYcjUFCWQI2goI5Bmql3JBqN/4=;
- b=WZncITnH6S4EVZlyeZqUWxaL0SEdtu2StVU47NE5VnY8OBkq6C+QLjnDqi8snOmFQm
- 7wreJ+jx5HQJqY11eivmrZH2lpMCq4Pd2y+nhbDB0YnFXdTYdZHV22PiG/zq5m1c09mf
- hbEbJ1cSPiLJ8bjGYDLKG6P4iqonmOLtlHDQQlS58rh/ADwg9NxHMtmLu65sbRX7z3o9
- MYmYMNSD2LdtohULfaf9w8zzYbN58RDXMTrVqZ11YeV6klIEGKf6p2aHo28x9QmQc6OH
- JwAi+m7YOpzneoVBh3/s5070QahgGjeqcQ7/1pZZXIfvhgvZgHYwpyTLE9mqlKtaRFCZ
- uShQ==
-X-Gm-Message-State: AOJu0Yxj0n74qo67S9Jsm/r6oeaUaJiIhaskbU2g3E9n+jF+qo29KJvl
- dO1pjtsQ+YcTlgmzZwDs+hULijd0EWYnn4yWnxcDyvzgLmehcMsYvbcOOf7ud/B3AVuMBb3nsEj
- T
-X-Google-Smtp-Source: AGHT+IGzGaK0wHiD+ekAvlxNIssQ1JJ0aRWXHhHPuixoMGvretn8jfyoxHJZU3Zi45GfnG+j+CtAMA==
-X-Received: by 2002:a17:902:ba84:b0:1e4:4a3f:9a88 with SMTP id
- k4-20020a170902ba8400b001e44a3f9a88mr1489311pls.46.1712907238778; 
- Fri, 12 Apr 2024 00:33:58 -0700 (PDT)
+ bh=+WtY4DsJRn2jEDsEW21TOMqrULwYncFBXOs9a6AYGRc=;
+ b=tDLU1OSK886T52h6Ae8nmqyYHG5T4AtTtdMiCEiU96doNN0KbQEhUslfJNsiPcrcj7
+ uCtPMAAVK9nNWH3fvEBom9S/1DC5xckKET6Vi89Ynv1SsgSPScAWgAkNYwQxwRTQ3Ksz
+ +52ly/9fIOk/nWRp5w2nS3zCTSftCxqPgRe5Ik7SVI1AdDYUo5GPrqgi6olAqoXDbj/0
+ sy3rSFdJaiJnbhbr3lovfU7lKymMVApJ8ErTmy7EjPUdjT8P66ngqQPxUgouRUp+iKB5
+ sHL3w9CrBnwyghPQYl3omntCEV5stytGlji41yf95BuzfrA4CsDea9Uzn5kfEf5UH3S9
+ kLmw==
+X-Gm-Message-State: AOJu0Yyz09xBwnMvo8/zqrwCyjV3UNcBRp7pOHQ1n0UPrWVlioLy1PMo
+ i55+lRzd9XRVHAENcLA2O8O8S41ZUEDQ8CMiidk5slxWvioMh1svIum/H7nv2uvrqS5kQvSJ9jZ
+ O
+X-Google-Smtp-Source: AGHT+IGv0uisfcQpQYJDOzdqbBY/pHSv+RBuKW6VvhCXjjWsXyt91vMbh+yWx9FYe+tZE0jeXplvqQ==
+X-Received: by 2002:a05:6a21:151a:b0:1a9:b3e9:a62c with SMTP id
+ nq26-20020a056a21151a00b001a9b3e9a62cmr307545pzb.48.1712907229154; 
+ Fri, 12 Apr 2024 00:33:49 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- e5-20020a17090301c500b001e556734814sm2206099plh.134.2024.04.12.00.33.58
+ e5-20020a17090301c500b001e556734814sm2206099plh.134.2024.04.12.00.33.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 00:33:58 -0700 (PDT)
+ Fri, 12 Apr 2024 00:33:48 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 14/27] disas/microblaze: Split out print_immval_addr
-Date: Fri, 12 Apr 2024 00:33:33 -0700
-Message-Id: <20240412073346.458116-15-richard.henderson@linaro.org>
+Subject: [PATCH v3 02/27] util/hexdump: Remove ascii parameter from
+ qemu_hexdump_line
+Date: Fri, 12 Apr 2024 00:33:21 -0700
+Message-Id: <20240412073346.458116-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240412073346.458116-1-richard.henderson@linaro.org>
 References: <20240412073346.458116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,134 +94,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unify the code blocks that try to print a symbolic address.
+Split out asciidump_line as a separate function, local to hexdump.c,
+for use by qemu_hexdump.  Use "%-*s" to generate the alignment
+between the hex and the ascii, rather than explicit spaces.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/microblaze.c | 89 +++++++++++++++-------------------------------
- 1 file changed, 29 insertions(+), 60 deletions(-)
+ include/qemu/cutils.h  |  3 +--
+ hw/virtio/vhost-vdpa.c |  2 +-
+ util/hexdump.c         | 54 ++++++++++++++++++++++++------------------
+ 3 files changed, 33 insertions(+), 26 deletions(-)
 
-diff --git a/disas/microblaze.c b/disas/microblaze.c
-index 49a4c0fd40..3473c94164 100644
---- a/disas/microblaze.c
-+++ b/disas/microblaze.c
-@@ -767,6 +767,24 @@ read_insn_microblaze (bfd_vma memaddr,
-   return inst;
+diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
+index 3415f5d249..d0c5386e6c 100644
+--- a/include/qemu/cutils.h
++++ b/include/qemu/cutils.h
+@@ -257,8 +257,7 @@ int parse_debug_env(const char *name, int max, int initial);
+  */
+ #define QEMU_HEXDUMP_LINE_BYTES 16 /* Number of bytes to dump */
+ #define QEMU_HEXDUMP_LINE_LEN 75   /* Number of characters in line */
+-void qemu_hexdump_line(char *line, const void *bufptr,
+-                       unsigned int len, bool ascii);
++void qemu_hexdump_line(char *line, const void *bufptr, size_t len);
+ 
+ /*
+  * Hexdump a buffer to a file. An optional string prefix is added to every line
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index b4afa142f6..32bad5ce68 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -946,7 +946,7 @@ static void vhost_vdpa_dump_config(struct vhost_dev *dev, const uint8_t *config,
+ 
+     for (b = 0; b < config_len; b += 16) {
+         len = config_len - b;
+-        qemu_hexdump_line(line, config + b, len, false);
++        qemu_hexdump_line(line, config + b, len);
+         trace_vhost_vdpa_dump_config(dev, b, line);
+     }
+ }
+diff --git a/util/hexdump.c b/util/hexdump.c
+index 7324e7b126..dbc536fe84 100644
+--- a/util/hexdump.c
++++ b/util/hexdump.c
+@@ -16,8 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
+ 
+-void qemu_hexdump_line(char *line, const void *bufptr,
+-                       unsigned int len, bool ascii)
++void qemu_hexdump_line(char *line, const void *bufptr, size_t len)
+ {
+     const char *buf = bufptr;
+     int i, c;
+@@ -26,39 +25,48 @@ void qemu_hexdump_line(char *line, const void *bufptr,
+         len = QEMU_HEXDUMP_LINE_BYTES;
+     }
+ 
+-    for (i = 0; i < QEMU_HEXDUMP_LINE_BYTES; i++) {
++    for (i = 0; i < len; i++) {
+         if (i != 0 && (i % 4) == 0) {
+             *line++ = ' ';
+         }
+-        if (i < len) {
+-            line += sprintf(line, " %02x", (unsigned char)buf[i]);
+-        } else {
+-            line += sprintf(line, "   ");
+-        }
+-    }
+-    if (ascii) {
+-        *line++ = ' ';
+-        for (i = 0; i < len; i++) {
+-            c = buf[i];
+-            if (c < ' ' || c > '~') {
+-                c = '.';
+-            }
+-            *line++ = c;
+-        }
++        line += sprintf(line, " %02x", (unsigned char)buf[i]);
+     }
+     *line = '\0';
  }
  
-+static void print_immval_addr(struct disassemble_info *info, bool immfound,
-+                              int immval, unsigned inst, int addend)
++static void asciidump_line(char *line, const void *bufptr, size_t len)
 +{
-+    if (info->print_address_func && info->symbol_at_address_func) {
-+        if (immfound) {
-+            immval |= get_int_field_imm(inst) & 0x0000ffff;
-+        } else {
-+            immval = (int16_t)get_int_field_imm(inst);
++    const char *buf = bufptr;
++
++    for (size_t i = 0; i < len; i++) {
++        char c = buf[i];
++
++        if (c < ' ' || c > '~') {
++            c = '.';
 +        }
-+        immval += addend;
-+        if (immval != 0 && info->symbol_at_address_func(immval, info)) {
-+            info->fprintf_func(info->stream, "\t// ");
-+            info->print_address_func (immval, info);
-+        } else if (addend) {
-+            info->fprintf_func(info->stream, "\t// %x", immval);
-+        }
++        *line++ = c;
 +    }
++    *line = '\0';
 +}
++
++#define QEMU_HEXDUMP_LINE_WIDTH \
++    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
++
+ void qemu_hexdump(FILE *fp, const char *prefix,
+                   const void *bufptr, size_t size)
+ {
+-    unsigned int b, len;
+     char line[QEMU_HEXDUMP_LINE_LEN];
++    char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
++    size_t b, len;
  
- int 
- print_insn_microblaze (bfd_vma memaddr, struct disassemble_info * info)
-@@ -821,18 +839,8 @@ print_insn_microblaze (bfd_vma memaddr, struct disassemble_info * info)
-      break;
-         case INST_TYPE_RD_R1_IMM:
- 	  fprintf_func(stream, "\t%s, %s, %s", get_field_rd(inst), get_field_r1(inst), get_field_imm(inst));
--	  if (info->print_address_func && get_int_field_r1(inst) == 0 && info->symbol_at_address_func) {
--	    if (immfound)
--	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
--	    else {
--	      immval = get_int_field_imm(inst);
--	      if (immval & 0x8000)
--		immval |= 0xFFFF0000;
--	    }
--	    if (immval > 0 && info->symbol_at_address_func(immval, info)) {
--	      fprintf_func (stream, "\t// ");
--	      info->print_address_func (immval, info);
--	    }
-+	  if (get_int_field_r1(inst) == 0) {
-+              print_immval_addr(info, immfound, immval, inst, 0);
- 	  }
- 	  break;
- 	case INST_TYPE_RD_R1_IMM5:
-@@ -860,61 +868,22 @@ print_insn_microblaze (bfd_vma memaddr, struct disassemble_info * info)
- 	  fprintf_func(stream, "\t%s, %s", get_field_r1(inst), get_field_imm(inst));
- 	  /* The non-pc relative instructions are returns, which shouldn't 
- 	     have a label printed */
--	  if (info->print_address_func && op->inst_offset_type == INST_PC_OFFSET && info->symbol_at_address_func) {
--	    if (immfound)
--	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
--	    else {
--	      immval = get_int_field_imm(inst);
--	      if (immval & 0x8000)
--		immval |= 0xFFFF0000;
--	    }
--	    immval += memaddr;
--	    if (immval > 0 && info->symbol_at_address_func(immval, info)) {
--	      fprintf_func (stream, "\t// ");
--	      info->print_address_func (immval, info);
--	    } else {
--	      fprintf_func (stream, "\t\t// ");
--	      fprintf_func (stream, "%x", immval);
--	    }
-+	  if (op->inst_offset_type == INST_PC_OFFSET) {
-+              print_immval_addr(info, immfound, immval, inst, memaddr);
- 	  }
- 	  break;
-         case INST_TYPE_RD_IMM:
- 	  fprintf_func(stream, "\t%s, %s", get_field_rd(inst), get_field_imm(inst));
--	  if (info->print_address_func && info->symbol_at_address_func) {
--	    if (immfound)
--	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
--	    else {
--	      immval = get_int_field_imm(inst);
--	      if (immval & 0x8000)
--		immval |= 0xFFFF0000;
--	    }
--	    if (op->inst_offset_type == INST_PC_OFFSET)
--	      immval += (int) memaddr;
--	    if (info->symbol_at_address_func(immval, info)) {
--	      fprintf_func (stream, "\t// ");
--	      info->print_address_func (immval, info);
--	    } 
--	  }
-+          print_immval_addr(info, immfound, immval, inst,
-+                            op->inst_offset_type == INST_PC_OFFSET
-+                            ? memaddr : 0);
- 	  break;
-         case INST_TYPE_IMM:
- 	  fprintf_func(stream, "\t%s", get_field_imm(inst));
--	  if (info->print_address_func && info->symbol_at_address_func && op->instr != imm) {
--	    if (immfound)
--	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
--	    else {
--	      immval = get_int_field_imm(inst);
--	      if (immval & 0x8000)
--		immval |= 0xFFFF0000;
--	    }
--	    if (op->inst_offset_type == INST_PC_OFFSET)
--	      immval += (int) memaddr;
--	    if (immval > 0 && info->symbol_at_address_func(immval, info)) {
--	      fprintf_func (stream, "\t// ");
--	      info->print_address_func (immval, info);
--	    } else if (op->inst_offset_type == INST_PC_OFFSET) {
--	      fprintf_func (stream, "\t\t// ");
--	      fprintf_func (stream, "%x", immval);
--	    }
-+	  if (op->instr != imm) {
-+              print_immval_addr(info, immfound, immval, inst,
-+                                op->inst_offset_type == INST_PC_OFFSET
-+                                ? memaddr : 0);
- 	  }
- 	  break;
-         case INST_TYPE_RD_R2:
+-    for (b = 0; b < size; b += QEMU_HEXDUMP_LINE_BYTES) {
+-        len = size - b;
+-        qemu_hexdump_line(line, bufptr + b, len, true);
+-        fprintf(fp, "%s: %04x: %s\n", prefix, b, line);
++    for (b = 0; b < size; b += len) {
++        len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
++
++        qemu_hexdump_line(line, bufptr + b, len);
++        asciidump_line(ascii, bufptr + b, len);
++
++        fprintf(fp, "%s: %04x: %-*s %s\n",
++                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, line, ascii);
+     }
+ 
+ }
 -- 
 2.34.1
 
