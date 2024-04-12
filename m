@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C560AC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C78C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvKY0-0003BL-8R; Fri, 12 Apr 2024 13:18:44 -0400
+	id 1rvKZ0-00040D-WF; Fri, 12 Apr 2024 13:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKXz-0003B2-83
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:18:43 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rvKYz-0003yY-9j
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:19:45 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKXw-0001AD-Ul
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:18:42 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-41802e8db9aso4491945e9.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:18:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rvKYx-0001IO-4d
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:19:45 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e3e84a302eso8804415ad.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:19:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712942319; x=1713547119; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=ventanamicro.com; s=google; t=1712942380; x=1713547180; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=S3c9Y25udULLg/ch1hsrheK8fX4OeuYjhJOJmnrkbR0=;
- b=Cr3ll2hYcMmb64uJpGg5so1Nz/wxu0vMqeT/jp9GJqmcI71aUjc0U8MSh7pXWmzIMn
- ElqEfera/zjzr5EuKQHNOr/vCaUIM4Dkq612+lDvMiJ+dWS7Sw7k95nE12hZ/j7M+Rv3
- ypHawFWk44SMcjjECD+Tac7NoZbX0EHHgczF6Gt/tVuisLe7eWn/RCVRBdhOWJ/kOCuO
- JW8DmVQsSSLCPE+g1Uk+8jqEHw6H1jxf4Zvv/R5bXSZX9tylnbPlxy4ghZf9isfKZd4C
- CvFqRUTJPqkGtsS/C6v0HCV4slUyK7hI2eKbWSjBgBAou17Tr1aoa0TBN2Ua4Qig1EX7
- fp6w==
+ bh=pKfWM+CvdWFEkgGojd8ew4JZrU+UNJW9I1Aq/Px1mKw=;
+ b=jXN/f6ts/LgIZzssdYEWpo3DzWIzI6Zn5q4wHueIShUyoCzhvlUNix9E/lmEwayqEe
+ 7h3T4eoQo8XlHDRqFevSwBvILeBmcIlknZc8+mm8Q1oXxjF6YrcaskZSJdFBDREAvRp9
+ 1gK5Bh53UvY8lzufQARLl+jjwiBzZbGAUiTO2pwiJaoNMHQe7R1FMO9S3BeKJo3FRGAr
+ PRvGR+fJrc8PAmlefCfmiHYL5pjimTzhEwDxu7J5ReF82j14fsK+TA/lWBeq8IKr9q5s
+ Jl7hp40i4eDiyAWUjQzKrk2AToZYJ+Yv9rfj0gPFbNOdShIyDBpnJEbEEMyDz8ePFIs/
+ X6eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712942319; x=1713547119;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712942380; x=1713547180;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S3c9Y25udULLg/ch1hsrheK8fX4OeuYjhJOJmnrkbR0=;
- b=FcZo4g15/D4rMNJye+B058974fn17UKrHIX1NIRkpSkmGPDiJ25shwo6ZAJu5qxJ0i
- kBC8oxXpTO4kkGvdOvrivo+mRW8FNjQuO68lAuT+IkXgmxsAKBMRL/hNq4Mcfh1cLmXr
- 99yeg3fPqMkPT+1CkEcm0PxX/s07IhjExCiBwsf9UASUKWN/CdUxOmWJ8fQ8Yty12qNc
- PW9yAi1MN1HXDxb6TAae/VQd0+JWf9q2dXE/4DF/lzFjScMG7vPnVsSiudBGi3UNGeOt
- 8Z+52rz52UjV9iwsG6XuuLz4FAMZyltdZTrr6cwzfTBjbiP2EuHbQskXQViYtIhNqu0V
- +xlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6KX8E14Jhxl2EMl84WSsG5gLV1hZDKc1pKHJHMmG9S2P8zmLj0Ngw4w0Alise3Og+CmJL9UYHPJfiiulw5QEFlUYTx+I=
-X-Gm-Message-State: AOJu0Yy2rhz1g4ZUebn9pRL/83RXXj2zcfLXQVxPKQH4Qa5PAQxSeKFm
- nYuFoWGEvrmrjmXaJarOeJt/gHzpjw5xT6nJll2ARUJ8/99Nr35TH2iBOItJB78=
-X-Google-Smtp-Source: AGHT+IHVAHG/P81agPt7c4tmPSpMnjV5RGR6luTk4vIT6jANPIPRsf9sCgUkk2JncUSDN7PjMRpPEA==
-X-Received: by 2002:a05:600c:4f45:b0:418:af0:3b4e with SMTP id
- m5-20020a05600c4f4500b004180af03b4emr1765073wmq.0.1712942318752; 
- Fri, 12 Apr 2024 10:18:38 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- u14-20020a05600c19ce00b0041772ec5d18sm8723904wmq.0.2024.04.12.10.18.37
+ bh=pKfWM+CvdWFEkgGojd8ew4JZrU+UNJW9I1Aq/Px1mKw=;
+ b=ZU3c/r74DE3mNT/X3KtX5FANCdsxn2hgApsNmBlgjEXad+vs35YEGBL9Pwq2iVqs5G
+ iX4wL0HGTTnRLfdEc7MZxEmJrRiLeUKNnyfQfCu7aWtFjNBghH5vFwYYwUmeZPIPxKkL
+ GnMtPqzSa43ecxrr65m4hy9C3eN2h/WVmYzH+bYJPJj1dgAgS3FEO81Xv8maAUq9urBl
+ gq9vyvY0OJwPKbkoZvy8q2go9/ObhiyxY9PkRDy+kC1FDuwVvTHUCPqv2dr+4YDT3nEd
+ 6+be1rrT6CjuL1yYkSW5XX0F16G3naejTrxd+fSxkpdwRJQsvQr8Gq9o41COXpMYPWPb
+ nM6w==
+X-Gm-Message-State: AOJu0YyyD/1VTkiwUJ3Kjkn5e40jfg0YX/gpFkUPZZDrgin6dukV0zN7
+ ZxGLr/4XA9hn0jOMJYMU2T6NY1QskSVU1qvF0d90cjA2+cp7G8LWQre+EPsWH9U=
+X-Google-Smtp-Source: AGHT+IH3B6D3viulP17Qi2o/M/KT06vAqWWmLz6B6trqWZ6DQ3UbO7orXvW91y3XYAQbofWzDI0qRg==
+X-Received: by 2002:a17:902:cecc:b0:1e5:2883:6ff6 with SMTP id
+ d12-20020a170902cecc00b001e528836ff6mr3683840plg.11.1712942380389; 
+ Fri, 12 Apr 2024 10:19:40 -0700 (PDT)
+Received: from [192.168.68.110] ([177.45.186.202])
+ by smtp.gmail.com with ESMTPSA id
+ k18-20020a170902f29200b001e0da190a07sm3252659plc.167.2024.04.12.10.19.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 10:18:38 -0700 (PDT)
-Message-ID: <dacc8233-40e9-4c30-81b4-80edd0fa3bd2@linaro.org>
-Date: Fri, 12 Apr 2024 19:18:37 +0200
+ Fri, 12 Apr 2024 10:19:40 -0700 (PDT)
+Message-ID: <7c65a766-7419-4e73-bccb-43475527734f@ventanamicro.com>
+Date: Fri, 12 Apr 2024 14:19:36 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/13] tests: Remove Ubuntu 20.04 container
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-2-thuth@redhat.com>
+Subject: Re: [PATCH for-9.0] target/riscv: prioritize pmp errors in
+ raise_mmu_exception()
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240412132415.282354-2-thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com, alexei.filippov@syntacore.com,
+ richard.henderson@linaro.org, Joseph Chan <jchan@ventanamicro.com>
+References: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
+ <CAFEAcA-XkK8ksZ7aMj-ap4BRw6V8dMJ6hGTozagGAAQfXz_=bg@mail.gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAFEAcA-XkK8ksZ7aMj-ap4BRw6V8dMJ6hGTozagGAAQfXz_=bg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,17 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 15:24, Thomas Huth wrote:
-> Since Ubuntu 22.04 is now available since two years, we can stop
-> actively supporting the previous LTS version of Ubuntu now.
+
+
+On 4/12/24 14:12, Peter Maydell wrote:
+> On Tue, 9 Apr 2024 at 18:53, Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+>>
+>> raise_mmu_exception(), as is today, is prioritizing guest page faults by
+>> checking first if virt_enabled && !first_stage, and then considering the
+>> regular inst/load/store faults.
+>>
+>> There's no mention in the spec about guest page fault being a higher
+>> priority that PMP faults. In fact, privileged spec section 3.7.1 says:
+>>
+>> "Attempting to fetch an instruction from a PMP region that does not have
+>> execute permissions raises an instruction access-fault exception.
+>> Attempting to execute a load or load-reserved instruction which accesses
+>> a physical address within a PMP region without read permissions raises a
+>> load access-fault exception. Attempting to execute a store,
+>> store-conditional, or AMO instruction which accesses a physical address
+>> within a PMP region without write permissions raises a store
+>> access-fault exception."
+>>
+>> So, in fact, we're doing it wrong - PMP faults should always be thrown,
+>> regardless of also being a first or second stage fault.
+>>
+>> The way riscv_cpu_tlb_fill() and get_physical_address() work is
+>> adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
+>> reflected in the 'pmp_violation' flag. What we need is to change
+>> raise_mmu_exception() to prioritize it.
+>>
+>> Reported-by: Joseph Chan <jchan@ventanamicro.com>
+>> Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/docker/dockerfiles/ubuntu2004.docker | 157 ---------------------
->   tests/lcitool/refresh                      |   1 -
->   2 files changed, 158 deletions(-)
->   delete mode 100644 tests/docker/dockerfiles/ubuntu2004.docker
+> I guess from the Fixes: git commit hash that this isn't a regression
+> since 8.2 ? That would make it too late for 9.0 at this point in
+> the release cycle.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I don't think it's critical enough to push it for 9.0 now. We'll settle for
+9.1 and then Michael can pick it for 9.0-stable.
 
+
+Thanks,
+
+Daniel
+
+> 
+> thanks
+> -- PMM
 
