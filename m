@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEC6C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 11:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF880C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 11:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvFBN-0000sp-Od; Fri, 12 Apr 2024 07:35:02 -0400
+	id 1rvFD9-0001ip-RP; Fri, 12 Apr 2024 07:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rvFBL-0000sf-1K
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:34:59 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rvFBH-0002Cl-6d
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:34:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712921695; x=1744457695;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=dlyMxfaxOonmDS5+XCzDETRRzK4rIxMFOVjW/aZ5EP8=;
- b=Fz4wFn0ZwROIwW+K09P9WYta4B3Sq0k2uA6LLJksyt0xKZsN4R8oxpzz
- WsRMdmB25C+abpb77VGFT6x2nWm44W2p2UyJbv7CI1j7A+QpjZD4cd9ms
- iOkryDe+zPX01XO5uG4MuJ4im9UC7Z1rAlKTqcsMXPa9RtiMi2b+AS1kI
- EpK1E/Jqn10pZi21yVk6IkYQhqj2IW/f//EUHHoiyxj/ZG9kESoNaryQD
- FiLm7ckhgbjcKUFCpxOABNwoIuSeKTZ2pkL21U5YFVkXmgNwg0j4SFD0Q
- zZ+Sr33BU9N1bmdqzFalylOXan7L3BN/vXeepP1ZiVmuHV+adBO8r2M7y w==;
-X-CSE-ConnectionGUID: ZTLXAY9nTs+ltaygKt0cUA==
-X-CSE-MsgGUID: 1Wzp759sQLazAoIiH824kw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11041"; a="8228907"
-X-IronPort-AV: E=Sophos;i="6.07,195,1708416000"; 
-   d="scan'208";a="8228907"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Apr 2024 04:34:53 -0700
-X-CSE-ConnectionGUID: 68VQyTqzQVynbkCPUOO3uQ==
-X-CSE-MsgGUID: +ZjAS4UbTe+1+W78AE19bQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,196,1708416000"; d="scan'208";a="44470146"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 12 Apr 2024 04:34:51 -0700
-Date: Fri, 12 Apr 2024 19:48:53 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: Re: [PATCH-for-9.0?] docs: i386: pc: Update maximum CPU numbers for
- PC Q35
-Message-ID: <ZhkfpQUwRMXDUSsp@intel.com>
-References: <20240412085358.731560-1-zhao1.liu@linux.intel.com>
- <305d659b-d4d6-4681-bdad-cd869e552333@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvFD8-0001iJ-A2
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:36:50 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvFD6-0002ak-MH
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:36:50 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-56845954ffeso925962a12.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 04:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712921806; x=1713526606; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xlMSl6AZxnSBBoc0mH7VbIptvRJGyRHmkjbLnzCBIa8=;
+ b=EYb1HF4Aev5dHJG6evPa+DTfPRjjg+eac4fcU9XRC/YFBnRXU1KBe5ctT9uZmraGD0
+ Zxc9CsFop6QscdL4LKVKSXNNr/Dny42b26ZyKZPPqQBKvTLi9nq6PkBxde2yMd2HscAE
+ Cl4AH9Y7yOR600iZjbTO0Xr/iQGfPmN02MsnHpsunQ4eQQooCz4RHkhBZavtPezpCJPL
+ l2ZDSofrwesJeN4+0+jojLmHjU9P/EKYpz5xKR6RJKVcSKsbfXgenLYT3mHKB6yho/6g
+ pGxSd3xYwfF8OG/4l+2np2Dj4PfKL47q18TA8S6V1zlK67lYYMiMb1Yr7Nf8oFUw/XCe
+ WH5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712921806; x=1713526606;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xlMSl6AZxnSBBoc0mH7VbIptvRJGyRHmkjbLnzCBIa8=;
+ b=j1bFE+kFRpxy3E+KWyE6TReqlvJ/r4tXhBm3yxvsbUm1/IJKMlCURoSqshXTXomcqC
+ IHrk6sHyS8WpWN1YlgVuWSJwoIoFVizdF5/9ot2R3xmRYmCAbFXS8zdmm8Qu9ORJwtj8
+ rnsNSAcwKs4XGIlxuVocYgfdSE4hw7ceytqnQw0odayLc9JgmFBvxNdZsCJWaSusBUAC
+ 04IkscGRNhru3A3WTGB5U6ufL9ePFdVJz9rfhtA4032RAffmJ7iCGYieoqMqXUzCzS6w
+ 173GTHfCy7fRRT139H9ZMLGhVJinUBwZRW5fv/+s8fzaR98zR5h9gPA3KF8QyBpNU6LN
+ LLNw==
+X-Gm-Message-State: AOJu0Yw5QYeoFPHJbW/exYSskIYDGN1HYfoaWmBvGh1kApiaHEMRdZXD
+ QvxCx8AxI/+xDgUB0OWgKPjwUg0tq+MYdh52ibknvkLN4cVNjmBAphYdIf8UoX+u+SL7QLDFAFH
+ ug+lesbGLMm3cMnhGT4xbS5391/W/5JnGdejfeWNHqIRCvx8I
+X-Google-Smtp-Source: AGHT+IEsmza4/8ALqGLoUH0Ya9EYpg22xwYlX4FhRZuAd9BvuTTHg7PsYdrpcH6ATBTmy7ojfQM6S/suuS42dTWAH2k=
+X-Received: by 2002:a50:9e84:0:b0:56d:f979:8d82 with SMTP id
+ a4-20020a509e84000000b0056df9798d82mr1586037edf.25.1712921806372; Fri, 12 Apr
+ 2024 04:36:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <305d659b-d4d6-4681-bdad-cd869e552333@linaro.org>
-Received-SPF: none client-ip=192.198.163.18;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20220620175235.60881-1-richard.henderson@linaro.org>
+ <20220620175235.60881-18-richard.henderson@linaro.org>
+In-Reply-To: <20220620175235.60881-18-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 12 Apr 2024 12:36:35 +0100
+Message-ID: <CAFEAcA8pQ9dZXh1sghqGmuVRubFkn2HQpRnzDSGQpkUSKGg+jA@mail.gmail.com>
+Subject: Re: [PATCH v3 17/51] target/arm: Add cpu properties for SME
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,31 +88,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+On Mon, 20 Jun 2022 at 19:08, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Mirror the properties for SVE.  The main difference is
+> that any arbitrary set of powers of 2 may be supported,
+> and not the stricter constraints that apply to SVE.
 
-On Fri, Apr 12, 2024 at 11:57:35AM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Fri, 12 Apr 2024 11:57:35 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: Re: [PATCH-for-9.0?] docs: i386: pc: Update maximum CPU numbers
->  for PC Q35
-> 
-> > -SMP is supported with up to 255 CPUs.
-> > +SMP is supported with up to 255 CPUs (and 4096 CPUs for PC Q35 machine).
-> 
-> This comment is not accurate since a while, IIUC:
-> 
-> Up to q35-2.7: 255
-> q35-2.8: 288
-> q35-8.0+: 1024
-> q35-9.0: 4096
+> +SME CPU Property Examples
+> +-------------------------
+> +
+> +  1) Disable SME::
+> +
+> +     $ qemu-system-aarch64 -M virt -cpu max,sme=off
+> +
+> +  2) Implicitly enable all vector lengths for the ``max`` CPU type::
+> +
+> +     $ qemu-system-aarch64 -M virt -cpu max
+> +
+> +  3) Only enable the 256-bit vector length::
+> +
+> +     $ qemu-system-aarch64 -M virt -cpu max,sme256=on
+> +
+> +  3) Enable the 256-bit and 1024-bit vector lengths::
+> +
+> +     $ qemu-system-aarch64 -M virt -cpu max,sme256=on,sme1024=on
+> +
+> +  4) Disable the 512-bit vector length.  This results in all the other
+> +     lengths supported by ``max`` defaulting to enabled
+> +     (128, 256, 1024 and 2048)::
+> +
+> +     $ qemu-system-aarch64 -M virt -cpu max,sve512=off
+> +
 
-Yes, I think there should be no need to mention older versions here?
+I just noticed this while I was trying to understand the
+SME and SVE property documentation -- the example 4 here
+is in the SME property examples section, but it's changing
+sve512, not sme512. Is that an error, or intentional? (If the
+latter, the explanation could be enlarged upon to say that
+it's changing behaviour of the SME vector length by adjusting
+the SVE vector length.)
 
-Since the Q35's 4096 CPUs change will be stated in the v9.0 release, I
-doubt we should synchronize the doc update (so I added the "for-v9.0?"
-tag to throw this question out).
+Also, the documentation for the SVE properties uses this
+same command line, but it describes the effects differently:
 
-Thanks,
-Zhao
+# Disable the 512-bit vector length and all larger vector lengths,
+# since 512 is a power-of-two. This results in all the smaller,
+# uninitialized lengths (128, 256, and 384) defaulting to enabled:
+#
+# $ qemu-system-aarch64 -M virt -cpu max,sve512=off
 
+In the SME section we say that all other lengths default
+to enabled, but in the SVE section we say that the
+smaller lengths default to enabled but the longer
+lengths are disabled. Is:
+ * the SVE part wrong?
+ * the SME part wrong?
+ * the behaviour deliberately different for SVE and SME
+   vector lengths? (If so, we should say so explicitly to
+   highlight that to users).
+
+thanks
+-- PMM
 
