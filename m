@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6DDC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFED8C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvKxY-00086f-9G; Fri, 12 Apr 2024 13:45:08 -0400
+	id 1rvKy7-0000Bz-UZ; Fri, 12 Apr 2024 13:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKxW-00086V-Oo
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:45:06 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKy5-0000Bl-TI
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:45:41 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKxV-0006aT-5y
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:45:06 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4180c6a1003so3776405e9.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:45:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKy4-0006lE-Ap
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:45:41 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-343c2f5b50fso791816f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712943903; x=1713548703; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712943939; x=1713548739; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hC4S870ULBs00RxU2IpfPlbwvPclGRZqBSlDp+e6NzM=;
- b=ooWi7ej96mRWYl9Lz/ET1HtOFqN+6NmxcbTYysbPiVq0yCUwXybsxflvH0oxVUVKn8
- MSe+85PjW7l2v/GLIxVMSRoNL+RbatYkauRX2d0yNW9y/45FEjR54j8oLjoR+4uTGHhI
- CcArIJ5VbdLiYdCdPVOSdX725PjZ8H5EaTa3JVfOxh4pwPymUDG0jZF17jLTY7gYPKWU
- mE64bZ9pw/3UBG+K4g8R3dMeq1cfu0XLUJi8uXjf+MqwkFtU2wDxYh/IYQn48WXK3D3h
- 2gceFJQh4YQToIvQIjFlrl9Qiop7kdkSBZHTyPTcqdD9AxBZgJ6rSs8DIFvW28Y4CiD5
- YCOw==
+ bh=9LLxjJrKOU/RZB6lETW3lESfwoK7Q2gd5hathJbreZs=;
+ b=nBhGrTokf4LBAGULv5x3bg3BMTGPZXEG17lYuyBwye3F1tQcwa7s5KWF4yfin+jWZ8
+ 2rne2Cfh2SZ8YlVpzqOrIY4WkoU3BdiP0o+d3BfnzfDjARno3AoJoUo383k6jb48aSvi
+ PUkm5JV574rJGAfNgodTvmit1ZrUo1nqbDCzEZqrNGspB6iA3sfC26TQf8uO2WO9Hht3
+ 4Ij7J52BB+pel4ybbMxNbn/QG32ixhRhOL1gUMzQ51XLjBOBTt9KEGJ5fmKNzCiunBP7
+ PlC53+5cJdtko6d1vAFDUbFaDsmNebJUS6Rfx8fWL8uV/I7ZwDWHZTb7O4AGsA6xPk2g
+ Ey6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712943903; x=1713548703;
+ d=1e100.net; s=20230601; t=1712943939; x=1713548739;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hC4S870ULBs00RxU2IpfPlbwvPclGRZqBSlDp+e6NzM=;
- b=qEWACnRipgJk3pOhwIdAnwHuXkWNbfg0PNxI95fXT5AoiNL8zmWIYro42iuyBpCzru
- 1kI1/I08JV0mrh9V3B8t+P+lH6brIYFORmTsPZY/KOlzVVsYxnCN+EriwiylCVMwCLVe
- qRps9K/uLjUC43c2G2iFImasJs/xfUlz4lVvj/zFHyffKpFO2jdCKk0HCTagNtQetzhY
- gjmgIeWuamDXxftDIjrLM8ktyj92vVlc2Lsn8Et+p+IzvNcLxMCYZotR+i90ilEBx+nG
- 1hRlU/DoKrl+OKj6A//u5WaWLtzuVEsbwtl1/mcg1yPjY1aoEn9rRYnh9SbbpUBAtl0M
- ZmvA==
+ bh=9LLxjJrKOU/RZB6lETW3lESfwoK7Q2gd5hathJbreZs=;
+ b=tjHdv15EIxLQZlf6dK4uzTQoQSLe/2agHxuJBC8r20cYNSQwrHzaQCXTO/HlxxMpoA
+ R2xoSRZMtaFV2cztby3gAcJz4Q2hfUTMcirjULSiI6FMGa6MXSTeypZliixGwjgfb2oj
+ JL5kQQkXdm0KyNcRPtHVkYyAK5ZR8PDnkY9em7ocWmMmbefAfqegl9F0irTw60ehnRPv
+ jSYgcjFIsF19JQdOhL8pveBPqe43zWZ6IH53JuUuyU4IrPnKNoA7R3W2ZEVT25FcXqLZ
+ AHz6PdiJYLe+3/YtPLilGF7a8tj6RKVUs8O7BHV3FrcDYKjxcDRQrWYdjczFuqk3SfAP
+ vGyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZVKcytNooMXEZ1Rj9IINx0eMmY32tLwXkh3GO7l5/owLVaJbP3AaoK+j3dR5ZvTgK5clbhD4ph+w98j32h+JLYKq0dO8=
-X-Gm-Message-State: AOJu0YxP/dPj6KMt9Oei+FKNa9R1WkWCKWj9AjFWM8xB9YznXnl3mrDT
- ktELhgwKxJ25AUdR5jg+u7D46N1xDkExGH/CweP0KcqKncQq4bfJ19NewAiy3Kg=
-X-Google-Smtp-Source: AGHT+IHvjPJGeOT6M7gpA83M8N2dTJuWfw5nMd7kd9H1+b67MTw04aG8HZA6XycJhoRJtVA2Y/ITRQ==
-X-Received: by 2002:a05:600c:3848:b0:416:920b:19ad with SMTP id
- s8-20020a05600c384800b00416920b19admr2267908wmr.17.1712943903521; 
- Fri, 12 Apr 2024 10:45:03 -0700 (PDT)
+ AJvYcCVcLu3ntA9GvoGNcF3E/ADOeb+w4cvEvLPeR4+Kk5N7X2rsyx8IXgvAuXIACVQAtu3gd2dVTBUpB0CfjYgYe3QB6l6gNy8=
+X-Gm-Message-State: AOJu0Yy40YAIicfAPlLhecIH/QQ/aCL3WIF1xE5uaF2HghWlfjsqax2H
+ qR7LRJ9kDBAc9uTvyNbsLIhZ8qNpWDn2QRW9D6jRiAYgnaJkQ7a7yxVmspM3KHyh1p3jh+1oOt0
+ Y
+X-Google-Smtp-Source: AGHT+IFX4mz4nz3wRVv8IiUYgAl6fA8z+xX6KPl8eUFE/I4NvZzDV26FDbVR9hJ1KcOU0d75Ttax8w==
+X-Received: by 2002:adf:fe88:0:b0:346:7f2d:7775 with SMTP id
+ l8-20020adffe88000000b003467f2d7775mr2403375wrr.48.1712943938869; 
+ Fri, 12 Apr 2024 10:45:38 -0700 (PDT)
 Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- ay22-20020a05600c1e1600b0041817890fdesm479939wmb.41.2024.04.12.10.45.02
+ j19-20020a5d6e53000000b0034349225fbcsm4702290wrz.114.2024.04.12.10.45.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 10:45:03 -0700 (PDT)
-Message-ID: <6cfd2fc7-af11-4e8f-9644-6ee7bb64856f@linaro.org>
-Date: Fri, 12 Apr 2024 19:45:02 +0200
+ Fri, 12 Apr 2024 10:45:38 -0700 (PDT)
+Message-ID: <28501f34-b355-4d94-8602-c8c0cf1c80c6@linaro.org>
+Date: Fri, 12 Apr 2024 19:45:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/27] system/qtest: Replace sprintf by
- qemu_hexdump_line
+Subject: Re: [PATCH v3 08/27] hw/scsi/scsi-disk: Use qemu_hexdump_line to
+ avoid sprintf
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240412073346.458116-1-richard.henderson@linaro.org>
- <20240412073346.458116-8-richard.henderson@linaro.org>
+ <20240412073346.458116-9-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240412073346.458116-8-richard.henderson@linaro.org>
+In-Reply-To: <20240412073346.458116-9-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,12 +104,14 @@ On 12/4/24 09:33, Richard Henderson wrote:
 > Using qemu_hexdump_line both fixes the deprecation warning and
 > simplifies the code base.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>`
-> [rth: Use qemu_hexdump_line]
+> Note that this drops the "0x" prefix to every byte, which should
+> be of no consequence to tracing.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   system/qtest.c | 12 ++++--------
->   1 file changed, 4 insertions(+), 8 deletions(-)
+>   hw/scsi/scsi-disk.c | 13 +++----------
+>   1 file changed, 3 insertions(+), 10 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
