@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9F82C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D8EC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvChA-0006AW-0h; Fri, 12 Apr 2024 04:55:40 -0400
+	id 1rvCjA-0007XG-Ay; Fri, 12 Apr 2024 04:57:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvCh6-00069P-CR; Fri, 12 Apr 2024 04:55:36 -0400
-Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
+ id 1rvCj7-0007WV-GF; Fri, 12 Apr 2024 04:57:41 -0400
+Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvCh3-0006Oq-T7; Fri, 12 Apr 2024 04:55:36 -0400
+ id 1rvCj4-0006iM-Pf; Fri, 12 Apr 2024 04:57:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1712912129; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=RhMedefveBKypwSrPdvtto1wZmstSaKCZtiSNPSjXc8=;
- b=XKEFb0fTYu11fWc9MjysrlKA5juvWhiKxR6NxsAUmIP/qQYua/6d913oCxLWfrXA+D2dkU70uwbJJVxUfc8T0lh5uH+ktKD9vUeAMbiOebTHmaOzOi/A6DEq/pFMLZzbsBTOznPpDyviOLIfs1Rfhwb2r5/7rL86ufWVEQ8GtnE=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045192;
+ t=1712912250; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=zQtzfvqT8ZVzyxELeDR0sSIiQ6qjRvgIusJJ4q/c0c4=;
+ b=pSSuXEXMWiBpvGrtNpy3F27r4I2IwQbxtmetg5ug7YLbtpC/bonKdW85NIeV7b+Y7IKHBmV+JBfpQa1XNi5l6qUxwjMi0z33AxlZSU6FZOZssFvyORipyRsBWWOZCSCvq96SWgOvzS6/XkWK86QhwxPCazKYFVh09JsZSq02wlc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045168;
  MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W4NgW78_1712912127; 
+ TI=SMTPD_---0W4Nc0YC_1712912248; 
 Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W4NgW78_1712912127) by smtp.aliyun-inc.com;
- Fri, 12 Apr 2024 16:55:28 +0800
+ fp:SMTPD_---0W4Nc0YC_1712912248) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 16:57:29 +0800
 From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com,
  Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 38/65] target/riscv: Add single-width floating-point
- multiply/divide instructions for XTheadVector
-Date: Fri, 12 Apr 2024 15:37:08 +0800
-Message-ID: <20240412073735.76413-39-eric.huang@linux.alibaba.com>
+Subject: [PATCH 39/65] target/riscv: Add widening floating-point multiply
+ instructions for XTheadVector
+Date: Fri, 12 Apr 2024 15:37:09 +0800
+Message-ID: <20240412073735.76413-40-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.101;
+Received-SPF: pass client-ip=115.124.30.119;
  envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
+ helo=out30-119.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -76,51 +76,37 @@ general differences between XTheadVector and RVV1.0.
 
 Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- target/riscv/helper.h                         | 16 +++++++++
- .../riscv/insn_trans/trans_xtheadvector.c.inc | 12 ++++---
- target/riscv/vector_helper.c                  |  6 ++--
- target/riscv/vector_internals.h               |  4 +++
- target/riscv/xtheadvector_helper.c            | 34 +++++++++++++++++++
- 5 files changed, 64 insertions(+), 8 deletions(-)
+ target/riscv/helper.h                            |  5 +++++
+ target/riscv/insn_trans/trans_xtheadvector.c.inc |  6 ++++--
+ target/riscv/vector_helper.c                     |  4 ++--
+ target/riscv/vector_internals.h                  |  3 +++
+ target/riscv/xtheadvector_helper.c               | 11 +++++++++++
+ 5 files changed, 25 insertions(+), 4 deletions(-)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 21916e9e3c..f63239676a 100644
+index f63239676a..3102b078e4 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -2029,3 +2029,19 @@ DEF_HELPER_6(th_vfwadd_wf_h, void, ptr, ptr, i64, ptr, env, i32)
- DEF_HELPER_6(th_vfwadd_wf_w, void, ptr, ptr, i64, ptr, env, i32)
- DEF_HELPER_6(th_vfwsub_wf_h, void, ptr, ptr, i64, ptr, env, i32)
- DEF_HELPER_6(th_vfwsub_wf_w, void, ptr, ptr, i64, ptr, env, i32)
+@@ -2045,3 +2045,8 @@ DEF_HELPER_6(th_vfdiv_vf_d, void, ptr, ptr, i64, ptr, env, i32)
+ DEF_HELPER_6(th_vfrdiv_vf_h, void, ptr, ptr, i64, ptr, env, i32)
+ DEF_HELPER_6(th_vfrdiv_vf_w, void, ptr, ptr, i64, ptr, env, i32)
+ DEF_HELPER_6(th_vfrdiv_vf_d, void, ptr, ptr, i64, ptr, env, i32)
 +
-+DEF_HELPER_6(th_vfmul_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vfmul_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vfmul_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vfdiv_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vfdiv_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vfdiv_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vfmul_vf_h, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfmul_vf_w, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfmul_vf_d, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfdiv_vf_h, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfdiv_vf_w, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfdiv_vf_d, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfrdiv_vf_h, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfrdiv_vf_w, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfrdiv_vf_d, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(th_vfwmul_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vfwmul_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vfwmul_vf_h, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(th_vfwmul_vf_w, void, ptr, ptr, i64, ptr, env, i32)
 diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-index 64d7a7fb76..940b212f5e 100644
+index 940b212f5e..3d0370f220 100644
 --- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
 +++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-@@ -2008,17 +2008,19 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
- GEN_OPFWF_WIDEN_TRANS_TH(th_vfwadd_wf)
- GEN_OPFWF_WIDEN_TRANS_TH(th_vfwsub_wf)
+@@ -2015,14 +2015,16 @@ GEN_OPFVF_TRANS_TH(th_vfmul_vf,  opfvf_check_th)
+ GEN_OPFVF_TRANS_TH(th_vfdiv_vf,  opfvf_check_th)
+ GEN_OPFVF_TRANS_TH(th_vfrdiv_vf,  opfvf_check_th)
  
-+/* Vector Single-Width Floating-Point Multiply/Divide Instructions */
-+GEN_OPFVV_TRANS_TH(th_vfmul_vv, opfvv_check_th)
-+GEN_OPFVV_TRANS_TH(th_vfdiv_vv, opfvv_check_th)
-+GEN_OPFVF_TRANS_TH(th_vfmul_vf,  opfvf_check_th)
-+GEN_OPFVF_TRANS_TH(th_vfdiv_vf,  opfvf_check_th)
-+GEN_OPFVF_TRANS_TH(th_vfrdiv_vf,  opfvf_check_th)
++/* Vector Widening Floating-Point Multiply */
++GEN_OPFVV_WIDEN_TRANS_TH(th_vfwmul_vv, opfvv_widen_check_th)
++GEN_OPFVF_WIDEN_TRANS_TH(th_vfwmul_vf)
 +
  #define TH_TRANS_STUB(NAME)                                \
  static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
@@ -128,94 +114,62 @@ index 64d7a7fb76..940b212f5e 100644
      return require_xtheadvector(s);                        \
  }
  
--TH_TRANS_STUB(th_vfmul_vv)
--TH_TRANS_STUB(th_vfmul_vf)
--TH_TRANS_STUB(th_vfdiv_vv)
--TH_TRANS_STUB(th_vfdiv_vf)
--TH_TRANS_STUB(th_vfrdiv_vf)
- TH_TRANS_STUB(th_vfwmul_vv)
- TH_TRANS_STUB(th_vfwmul_vf)
+-TH_TRANS_STUB(th_vfwmul_vv)
+-TH_TRANS_STUB(th_vfwmul_vf)
  TH_TRANS_STUB(th_vfmacc_vv)
+ TH_TRANS_STUB(th_vfnmacc_vv)
+ TH_TRANS_STUB(th_vfnmacc_vf)
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 6d0358876a..d65b32c584 100644
+index d65b32c584..aa7714d651 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -3036,17 +3036,17 @@ GEN_VEXT_VF(vfdiv_vf_h, 2)
- GEN_VEXT_VF(vfdiv_vf_w, 4)
- GEN_VEXT_VF(vfdiv_vf_d, 8)
+@@ -3059,13 +3059,13 @@ GEN_VEXT_VF(vfrdiv_vf_w, 4)
+ GEN_VEXT_VF(vfrdiv_vf_d, 8)
  
--static uint16_t float16_rdiv(uint16_t a, uint16_t b, float_status *s)
-+uint16_t float16_rdiv(uint16_t a, uint16_t b, float_status *s)
+ /* Vector Widening Floating-Point Multiply */
+-static uint32_t vfwmul16(uint16_t a, uint16_t b, float_status *s)
++uint32_t vfwmul16(uint16_t a, uint16_t b, float_status *s)
  {
-     return float16_div(b, a, s);
+     return float32_mul(float16_to_float32(a, true, s),
+                        float16_to_float32(b, true, s), s);
  }
  
--static uint32_t float32_rdiv(uint32_t a, uint32_t b, float_status *s)
-+uint32_t float32_rdiv(uint32_t a, uint32_t b, float_status *s)
+-static uint64_t vfwmul32(uint32_t a, uint32_t b, float_status *s)
++uint64_t vfwmul32(uint32_t a, uint32_t b, float_status *s)
  {
-     return float32_div(b, a, s);
- }
- 
--static uint64_t float64_rdiv(uint64_t a, uint64_t b, float_status *s)
-+uint64_t float64_rdiv(uint64_t a, uint64_t b, float_status *s)
- {
-     return float64_div(b, a, s);
- }
+     return float64_mul(float32_to_float64(a, s),
+                        float32_to_float64(b, s), s);
 diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 0786f5a4e1..29263c6a53 100644
+index 29263c6a53..8903a894d7 100644
 --- a/target/riscv/vector_internals.h
 +++ b/target/riscv/vector_internals.h
-@@ -353,4 +353,8 @@ uint64_t vfwaddw32(uint64_t a, uint32_t b, float_status *s);
- uint32_t vfwsubw16(uint32_t a, uint16_t b, float_status *s);
- uint64_t vfwsubw32(uint64_t a, uint32_t b, float_status *s);
+@@ -357,4 +357,7 @@ uint16_t float16_rdiv(uint16_t a, uint16_t b, float_status *s);
+ uint32_t float32_rdiv(uint32_t a, uint32_t b, float_status *s);
+ uint64_t float64_rdiv(uint64_t a, uint64_t b, float_status *s);
  
-+uint16_t float16_rdiv(uint16_t a, uint16_t b, float_status *s);
-+uint32_t float32_rdiv(uint32_t a, uint32_t b, float_status *s);
-+uint64_t float64_rdiv(uint64_t a, uint64_t b, float_status *s);
++uint32_t vfwmul16(uint16_t a, uint16_t b, float_status *s);
++uint64_t vfwmul32(uint32_t a, uint32_t b, float_status *s);
 +
  #endif /* TARGET_RISCV_VECTOR_INTERNALS_H */
 diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
-index cab489a4ae..770f36346f 100644
+index 770f36346f..dd01d66933 100644
 --- a/target/riscv/xtheadvector_helper.c
 +++ b/target/riscv/xtheadvector_helper.c
-@@ -2734,3 +2734,37 @@ THCALL(TH_OPFVF2, th_vfwsub_wf_h, WOP_WUUU_H, H4, H2, vfwsubw16)
- THCALL(TH_OPFVF2, th_vfwsub_wf_w, WOP_WUUU_W, H8, H4, vfwsubw32)
- GEN_TH_VF(th_vfwsub_wf_h, 2, 4, clearl_th)
- GEN_TH_VF(th_vfwsub_wf_w, 4, 8, clearq_th)
+@@ -2768,3 +2768,14 @@ THCALL(TH_OPFVF2, th_vfrdiv_vf_d, OP_UUU_D, H8, H8, float64_rdiv)
+ GEN_TH_VF(th_vfrdiv_vf_h, 2, 2, clearh_th)
+ GEN_TH_VF(th_vfrdiv_vf_w, 4, 4, clearl_th)
+ GEN_TH_VF(th_vfrdiv_vf_d, 8, 8, clearq_th)
 +
-+/* Vector Single-Width Floating-Point Multiply/Divide Instructions */
-+THCALL(TH_OPFVV2, th_vfmul_vv_h, OP_UUU_H, H2, H2, H2, float16_mul)
-+THCALL(TH_OPFVV2, th_vfmul_vv_w, OP_UUU_W, H4, H4, H4, float32_mul)
-+THCALL(TH_OPFVV2, th_vfmul_vv_d, OP_UUU_D, H8, H8, H8, float64_mul)
-+GEN_TH_VV_ENV(th_vfmul_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV_ENV(th_vfmul_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV_ENV(th_vfmul_vv_d, 8, 8, clearq_th)
-+THCALL(TH_OPFVF2, th_vfmul_vf_h, OP_UUU_H, H2, H2, float16_mul)
-+THCALL(TH_OPFVF2, th_vfmul_vf_w, OP_UUU_W, H4, H4, float32_mul)
-+THCALL(TH_OPFVF2, th_vfmul_vf_d, OP_UUU_D, H8, H8, float64_mul)
-+GEN_TH_VF(th_vfmul_vf_h, 2, 2, clearh_th)
-+GEN_TH_VF(th_vfmul_vf_w, 4, 4, clearl_th)
-+GEN_TH_VF(th_vfmul_vf_d, 8, 8, clearq_th)
++/* Vector Widening Floating-Point Multiply */
 +
-+THCALL(TH_OPFVV2, th_vfdiv_vv_h, OP_UUU_H, H2, H2, H2, float16_div)
-+THCALL(TH_OPFVV2, th_vfdiv_vv_w, OP_UUU_W, H4, H4, H4, float32_div)
-+THCALL(TH_OPFVV2, th_vfdiv_vv_d, OP_UUU_D, H8, H8, H8, float64_div)
-+GEN_TH_VV_ENV(th_vfdiv_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV_ENV(th_vfdiv_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV_ENV(th_vfdiv_vv_d, 8, 8, clearq_th)
-+THCALL(TH_OPFVF2, th_vfdiv_vf_h, OP_UUU_H, H2, H2, float16_div)
-+THCALL(TH_OPFVF2, th_vfdiv_vf_w, OP_UUU_W, H4, H4, float32_div)
-+THCALL(TH_OPFVF2, th_vfdiv_vf_d, OP_UUU_D, H8, H8, float64_div)
-+GEN_TH_VF(th_vfdiv_vf_h, 2, 2, clearh_th)
-+GEN_TH_VF(th_vfdiv_vf_w, 4, 4, clearl_th)
-+GEN_TH_VF(th_vfdiv_vf_d, 8, 8, clearq_th)
-+
-+THCALL(TH_OPFVF2, th_vfrdiv_vf_h, OP_UUU_H, H2, H2, float16_rdiv)
-+THCALL(TH_OPFVF2, th_vfrdiv_vf_w, OP_UUU_W, H4, H4, float32_rdiv)
-+THCALL(TH_OPFVF2, th_vfrdiv_vf_d, OP_UUU_D, H8, H8, float64_rdiv)
-+GEN_TH_VF(th_vfrdiv_vf_h, 2, 2, clearh_th)
-+GEN_TH_VF(th_vfrdiv_vf_w, 4, 4, clearl_th)
-+GEN_TH_VF(th_vfrdiv_vf_d, 8, 8, clearq_th)
++THCALL(TH_OPFVV2, th_vfwmul_vv_h, WOP_UUU_H, H4, H2, H2, vfwmul16)
++THCALL(TH_OPFVV2, th_vfwmul_vv_w, WOP_UUU_W, H8, H4, H4, vfwmul32)
++GEN_TH_VV_ENV(th_vfwmul_vv_h, 2, 4, clearl_th)
++GEN_TH_VV_ENV(th_vfwmul_vv_w, 4, 8, clearq_th)
++THCALL(TH_OPFVF2, th_vfwmul_vf_h, WOP_UUU_H, H4, H2, vfwmul16)
++THCALL(TH_OPFVF2, th_vfwmul_vf_w, WOP_UUU_W, H8, H4, vfwmul32)
++GEN_TH_VF(th_vfwmul_vf_h, 2, 4, clearl_th)
++GEN_TH_VF(th_vfwmul_vf_w, 4, 8, clearq_th)
 -- 
 2.44.0
 
