@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3913C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378F1C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:33:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvKl2-0002gU-2H; Fri, 12 Apr 2024 13:32:12 -0400
+	id 1rvKmN-0003kU-Rs; Fri, 12 Apr 2024 13:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKkz-0002cZ-UZ
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:32:10 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKmM-0003kL-Oh
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:33:34 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKky-00041U-CP
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:32:09 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4167fce0a41so12654065e9.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:32:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvKmL-0004Ev-2B
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:33:34 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4180c6a60baso3747135e9.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:33:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712943125; x=1713547925; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712943211; x=1713548011; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ppe/IFgqWSRwmGZlaqDQBrpp3cJ6ShUPHLYgN0DnFfU=;
- b=AYqxWhru9eTXK3PBU7pPsGZPBVTtykObN3zcOn5i7hvQdkaPj94DsX0NYggVzwpm1L
- KePkfyQyxoxQZ8UziZWoDFCdW6HpykAcvvV9rwPWmzVH+w/hVt13E8wAdKOYtLCCFoG2
- 2wZaxMFuGt944I/cFP62XZYnkejsUCoWQQuRnIGWKmjIj0PMeY3+ah+Emj60VqLT0SOF
- Dg5gYNU+mNLgQ0x55FvEQy7Mk+Pl0bs9KdIq9d1q102ySB4Yu/EdFEgIYQtVIRaOTNfK
- c+TOUnveUUiiTZVB8ztkcPC8ActeD8neALR3cOquszfC/vNjEsDFK7OGi32SPQXohXwf
- D8Dw==
+ bh=IHObx4vJm1LE6X2KrAOYhzWxOZlYzfq5HvIkVYziS8k=;
+ b=qwoxejTdOdN/nszqFPy8Up1thk8tN0C5JiCo7eE56MyYPs1DFmBqn7ip1s7QZJu8/Y
+ QdX41uYD97QYO3mC+3feRTvdn6DiRyZnzd/hahtDVf3P9rOEchPbOGbIp8YyhnRh9etJ
+ 1Sa23deu12n27a1KvQCEoA68+gbGOLDQy+eyxOeaxTA8WWEjzOvN/JWKfTpiFZhApjSj
+ k3jkxwkDaNYkDM2tek8IX7/cy/O+KYuPvtHW2O5tZUYP3IQfXHIGnjZJLP0gYGV0ps0h
+ ypSK6+2oO+06jkfgpvI7cVgJvGPTYbSY78qFmbBli3Jv3Xe5aKRa1/M8CxISw3fynSQ7
+ ExQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712943125; x=1713547925;
+ d=1e100.net; s=20230601; t=1712943211; x=1713548011;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ppe/IFgqWSRwmGZlaqDQBrpp3cJ6ShUPHLYgN0DnFfU=;
- b=YICu3g1j3F1U8+w0liDnZ1lAcjRnszkYpXbi1jieezD8ZCgyIR9VvKcw/eMO0e+94O
- 8251587p85BxllZ9r0Bhs80MaXJiaHrE01fJMBK0iypRDMKivjire4UhQMp7QF6LH8Fr
- uDWY69lGce4MPHi5gvDuDuz0FIKtaupTM20SSVB/8lYu+jiqUvYI+D55948pkyfUSrUF
- bCqQXIN3jMrUSK0UCYLdnwWZh7k29NLrGsiE0dsehd9mVEZOwi8axnOdKJLuAnVOhaHS
- lSSMhm+dmmXsYuQ50ANAiPdppBLi9uCcDzfSXpoFon9rOHYcwc88rD2Tupz9LNSJREKq
- S/OQ==
+ bh=IHObx4vJm1LE6X2KrAOYhzWxOZlYzfq5HvIkVYziS8k=;
+ b=DXJPH8+XL5Ktt9Dty2pnkMdDX59i/WG0Y0YUg3/TOsDbDp5drV7UQOWFPThf0C0hUJ
+ XkHb8V1pJdqPIUyaSi2cntDXC3Qfa0fKHGpIl0CAbbRy3er+o3nMl7HL+WtzjLl76Y4N
+ B6iE+fnSB4tkIEW60lh0xmZOvTN7v3jS5OQJEAd/4QHyXd2wQL058n7V9KuZCl0tPaUA
+ qVXlT70si58Vh0JgwVpw/8YIvb8ZxcEvsoR4gOiLXP7MQpFITsO4M+9HjuHT8iKUd3c8
+ H7Gj8Ec/d+fPpk7PMem/edZCGFgAaa5nfSgpUUCR3vp2iGwoqvM19sg8bMO/3Glp0Wtn
+ lQGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUwH23nxcAonwJjdtzQqTjDLOGYWt75edlv008dQkDtgukge0M+aonUr4FScgam8h9PCSizeYBpi5Om4/kpnTnKpQf0cI=
-X-Gm-Message-State: AOJu0Yzhmq1j5ahQ5WL9DAaTPhoQ+hM6p62DF+DwSC4lk3nmfzjqwVFB
- Uk0DHD5qxkdqB7q9Ilr7n+uHzBjGqctDc76wwiZTEw4yW3PM4/uJ4ZixovF7OT5Bk3vnmY1OvgD
- 0
-X-Google-Smtp-Source: AGHT+IHfsFiinPhSbJ4l5rO34hdxITn68aHskdJbZzHnMVTXIFsHq/ln+we0R174fLGhru/h3hk9Gg==
-X-Received: by 2002:a05:600c:5102:b0:416:9887:9581 with SMTP id
- o2-20020a05600c510200b0041698879581mr5797781wms.5.1712943125645; 
- Fri, 12 Apr 2024 10:32:05 -0700 (PDT)
+ AJvYcCXgAypGD9I12wYlohltH2HUYDfjwuuslvZDz635oNZoM/NBD1KdTG9cEJgpiaVaJKchYHrABp2NKUww5Le+1VCiQuAtq34=
+X-Gm-Message-State: AOJu0Yy5gB3T1s1bd4GM00+K1feXqm4sFeCSjqr4xR4a2yMOykBhu38k
+ G0QEwb4uBrtScOJPY2FwIlMi+yd4qFadT8eDkz1AGUy8SKtfGtU552JKR6BlSzlxv0BpJAWREli
+ I
+X-Google-Smtp-Source: AGHT+IGrX6UCGXKy0ih2IRk+GB8XKOeQVqIlDcYNElnjNQYY8UW9k5ELgCX7aX0F/o5AfJW3n03pAQ==
+X-Received: by 2002:a05:600c:350b:b0:415:45ba:bf55 with SMTP id
+ h11-20020a05600c350b00b0041545babf55mr2490636wmq.34.1712943211500; 
+ Fri, 12 Apr 2024 10:33:31 -0700 (PDT)
 Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- f19-20020a05600c4e9300b0041628f694dfsm6339392wmq.23.2024.04.12.10.32.05
+ fc18-20020a05600c525200b0041563096e15sm9595932wmb.5.2024.04.12.10.33.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 10:32:05 -0700 (PDT)
-Message-ID: <6c2c0d2a-4acd-4def-843b-185b2720c4ae@linaro.org>
-Date: Fri, 12 Apr 2024 19:32:04 +0200
+ Fri, 12 Apr 2024 10:33:31 -0700 (PDT)
+Message-ID: <cb3b51d1-e6ab-4643-9f35-1a6e20683ce5@linaro.org>
+Date: Fri, 12 Apr 2024 19:33:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/misc: Don't special case RESET_TYPE_COLD in
- npcm7xx_clk, gcr
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240412160809.1260625-1-peter.maydell@linaro.org>
- <20240412160809.1260625-2-peter.maydell@linaro.org>
+Subject: Re: [PATCH] MAINTAINERS: Update my email address
+To: Bin Meng <bmeng.cn@gmail.com>, qemu-devel@nongnu.org
+References: <20240412123729.1340062-1-bmeng.cn@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240412160809.1260625-2-peter.maydell@linaro.org>
+In-Reply-To: <20240412123729.1340062-1-bmeng.cn@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,25 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 18:08, Peter Maydell wrote:
-> The npcm7xx_clk and npcm7xx_gcr device reset methods look at
-> the ResetType argument and only handle RESET_TYPE_COLD,
-> producing a warning if another reset type is passed. This
-> is different from how every other three-phase-reset method
-> we have works, and makes it difficult to add new reset types.
+Hi Bin,
+
+On 12/4/24 14:37, Bin Meng wrote:
+> The Wind River email address might change in the future. Use my
+> personal email address instead.
 > 
-> A better pattern is "assume that any reset type you don't know
-> about should be handled like RESET_TYPE_COLD"; switch these
-> devices to do that. Then adding a new reset type will only
-> need to touch those devices where its behaviour really needs
-> to be different from the standard cold reset.
+> Signed-off-by: Bin Meng <bmeng.cn@gmail.com>
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/misc/npcm7xx_clk.c | 13 +++----------
->   hw/misc/npcm7xx_gcr.c | 12 ++++--------
->   2 files changed, 7 insertions(+), 18 deletions(-)
+> 
+>   MAINTAINERS | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f1f6922025..50729a0985 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -332,7 +332,7 @@ F: tests/tcg/ppc*/*
+>   RISC-V TCG CPUs
+>   M: Palmer Dabbelt <palmer@dabbelt.com>
+>   M: Alistair Francis <alistair.francis@wdc.com>
+> -M: Bin Meng <bin.meng@windriver.com>
+> +M: Bin Meng <bmeng.cn@gmail.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Do you mind confirming that from your windriver.com
+email while you still have it?
 
+Thanks,
+
+Phil.
 
