@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA6DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 00:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E6AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 00:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv4Ov-0002z4-0j; Thu, 11 Apr 2024 20:04:17 -0400
+	id 1rv4hL-0005id-Af; Thu, 11 Apr 2024 20:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zack@buhman.org>) id 1rv4Os-0002yn-8M
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 20:04:14 -0400
-Received: from wfhigh7-smtp.messagingengine.com ([64.147.123.158])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zack@buhman.org>) id 1rv4Op-0002W5-Nv
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 20:04:13 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailfhigh.west.internal (Postfix) with ESMTP id 2D47018000F6
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 20:04:06 -0400 (EDT)
-Received: from imap47 ([10.202.2.97])
- by compute5.internal (MEProxy); Thu, 11 Apr 2024 20:04:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=buhman.org; h=cc
- :content-type:content-type:date:date:from:from:in-reply-to
- :message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
- t=1712880245; x=1712966645; bh=qZcNMuxv3+R2tkgrqX00gSps2W/uON3E
- qrODaMuoeJQ=; b=rG0bc+8gg2pKuC8wdWD7SOzcR2vh5iHlvs6dl59V7dUSL1+/
- nE6dWaJWvZ97WklHCnMDXJbVc1o5zg/JFcE2a6ZYnUJkHbvDJbF3aU9N2iPJkp7M
- qa3n6QoG6vRvS1t19OnmeMoGtxSeYuZ4igNLurpTPhym0C9FmnSydXuXdfTZR1Wf
- qL71pEFOJofeia5a3L34fNqPkadWJOh1qBa0aUvAXyWrybklYDVNH3/j/94XdyG2
- J/bS7b76VtSzrLy41x0BAW426acv3y+6hilhrvfxVmow2wf05W2sXVFNSHsQVP5H
- Ku1gMIyBYJNFvIxHBmuElDkJxkq2daJtBKTNwQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:message-id
- :mime-version:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1712880245; x=1712966645; bh=qZcNMuxv3+R2tkgrqX00gSps2W/uON3EqrO
- DaMuoeJQ=; b=DAqw8Y1X4UkFYqbDmqf7VKRZFOOGQZb55fro/xh9r5ADg/cZ6aL
- YcOVaKLhhZIYOc7gpcjnlt+VN8hK0NA+SdNRjvGssEJJHOZ2qa7g8jXPrk4fkQDo
- NEsPx0QjbzRHKFY7jkPKXHuJxlsdsCGf3V/0kdaO8GDVp/LRY8m6trqUBcJebMOV
- jK/0U4zj7IM4m3I84FdHWjyI93CB837/uTvcYAdJ+ICuZqw3Tn0mgzsDnMUI7fjq
- AnH2vR04b8h2NPgk/tmTo/2RcMmSrYGIOmQA4wRymDKXluLs3G+Ck3iPZo9atpi5
- rqCtbHIqQA0jBpMRz6erglZOMhkFgAjXxDg==
-X-ME-Sender: <xms:dXoYZvQYjva2TF_syuN8XrTf7ell3Qx2oe0uZ9rWzzALib9OBsKcAg>
- <xme:dXoYZgz00YVnRJXxIVtcKlAddIGlUQ46a8AAy-p_qNEnuHD7c9h7DOMhuxIjHgrMf
- KNRlPebYGRyQ1evt_8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehledgfedtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
- erredtnecuhfhrohhmpedfkggrtghkuceuuhhhmhgrnhdfuceoiigrtghksegsuhhhmhgr
- nhdrohhrgheqnecuggftrfgrthhtvghrnhepjedtfeeugeeluddvvedvvdeileevfeejhf
- dttedttdetudffteehfefhffefgfetnecuffhomhgrihhnpehqvghmuhdrohhrghenucev
- lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeiirggtkhessg
- huhhhmrghnrdhorhhg
-X-ME-Proxy: <xmx:dXoYZk0JGPZeoExquj0m_-VIX_bkMMpsbCcZfS5-KaSUF-EHp-naiA>
- <xmx:dXoYZvCPdv7xkjEXWs-OfJGGsOszI0gJNmxYj5VnbgmN-G3zLJkBVA>
- <xmx:dXoYZoitUOumb4IA6Dhb57eCMRTgzPE2e8hzNGhxu2LZIYCxF6hRSA>
- <xmx:dXoYZjqviBdZ0IWfv7-utdzhGcVXtU7WmzlecLTRM2PqeGMf4w7UhA>
- <xmx:dXoYZgIjTvrmKUjrppn5zmjT-PJSpBUq-EAnQkmvNzDuYj8pra_ZGYUT>
-Feedback-ID: i1541475f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 4697AA60079; Thu, 11 Apr 2024 20:04:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1rv4hJ-0005iE-Au
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 20:23:17 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1rv4hH-0005Tc-PW
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 20:23:17 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-5cf2d73a183so909567a12.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 17:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712881394; x=1713486194; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5yonxxLD33/2mwRqBfF52xYF9OYL+BxZtjX2YJskTSQ=;
+ b=hVwTKGQws/k9nJ1PjRxv5JAiHrO8P7UGecvbauV0nyXPst/9K+tSzlYIGLOqIUCUW8
+ AaTVtPcm+NclESbR/70Xh2vueedKFVbFCCvcT4z5Zi70j/jpDpmFkT3e5unQFcAALEoO
+ S07pPksHc4vyt1db0lJLlOyvwyNExyFSlKrs6wGLFKP6Le9lT5731YjdBzaS4x8kzn74
+ ZTXrXES6V/nY+m9HXwkmmQ5t2LDJTA93mlFUsMIpbwiZM0Jk8OkbKvmWDmJkIiQPzvIa
+ rDOP3OGMv2h1DLxF6pWbEu1tzbPAtbdUMUqJyr7nhFFxMlhHNQv1TXqNrpkkbj1Dce/0
+ OG2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712881394; x=1713486194;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5yonxxLD33/2mwRqBfF52xYF9OYL+BxZtjX2YJskTSQ=;
+ b=bjNP8NGnfuEdhjlC5z3CEJ5iaErPr1zyfkU/gXYm9L+niey25DrB6HGQfwfYakiDHB
+ dmSZg+OWtKFeS8+A5Xc5bW+fqyDSxH+2wNRIAlLajf36pJ8Mi/hxHLDPVvIXGsvIiKqs
+ VGc/NzcWh/ztlJgmtR+9ImBHrYtsDzEZD1z5rU54Qbiz2qBeLMSetPLF+QRQ4LZWZftq
+ AvM37lOr2q5P8iTgRaQcyrXXBmuGF2bYWJmw+xFGMHyPZ7AJhLDFn0jMw12XxRgh/N7o
+ qZzc7SAeJNDktcGkgLANvcm+Mm5pTXbGVId5hHWrjrs27r4JOlgMUbPkTqJVQCT4S9Kx
+ jPPQ==
+X-Gm-Message-State: AOJu0Yx+OYKZ5LnV3n4pD4ypOVko5wpwr9wkSiPidoyIDYGZ2FtqWRHh
+ daZYyfWa/s9uzcJngX0RZnqvNb6C+TtJ5YKG8+A/0gxCCSMO+B1PX2tRyBdsoLhR3DfroiLNqpM
+ PCFxHG4nXHHJHWf3YQ8xLEDi4GH4Yqg==
+X-Google-Smtp-Source: AGHT+IE06Q0bELPC965EOUcUdGG0HnQ9fh1s6I0NMqF1lmoYoIWmdjBcxP8iDjcw3/oaFwoWsmoy3QdSRaYFM2giWDs=
+X-Received: by 2002:a17:90a:4987:b0:2a2:b436:60c5 with SMTP id
+ d7-20020a17090a498700b002a2b43660c5mr1516424pjh.22.1712881393528; Thu, 11 Apr
+ 2024 17:23:13 -0700 (PDT)
 MIME-Version: 1.0
-Message-Id: <a60e71ec-93d5-40bc-83b9-99a635e8d1ab@app.fastmail.com>
-Date: Fri, 12 Apr 2024 08:03:54 +0800
-From: "Zack Buhman" <zack@buhman.org>
-To: qemu-devel@nongnu.org
-Subject: wiki.qemu.org account access request
-Content-Type: text/plain
-Received-SPF: pass client-ip=64.147.123.158; envelope-from=zack@buhman.org;
- helo=wfhigh7-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <a60e71ec-93d5-40bc-83b9-99a635e8d1ab@app.fastmail.com>
+In-Reply-To: <a60e71ec-93d5-40bc-83b9-99a635e8d1ab@app.fastmail.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Thu, 11 Apr 2024 17:23:02 -0700
+Message-ID: <CAMo8BfJCCOYj81LaO4fB=PJo3tY5005B8OxWizG5DX7QcbLTAA@mail.gmail.com>
+Subject: Re: wiki.qemu.org account access request
+To: Zack Buhman <zack@buhman.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,9 +90,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I noticed the recent SH4 patches are included in the 9.0.0-rc3 release. 
+On Thu, Apr 11, 2024 at 5:06=E2=80=AFPM Zack Buhman <zack@buhman.org> wrote=
+:
+>
+> I noticed the recent SH4 patches are included in the 9.0.0-rc3 release.
+>
+> Is it appropriate that I request a wiki.qemu.org account so that I may do=
+cument these changes in https://wiki.qemu.org/ChangeLog/9.0 in a manner tha=
+t is consistent with how the changes to other CPUs have been documented so =
+far?
+>
+> If so, I indeed desire such an account.
 
-Is it appropriate that I request a wiki.qemu.org account so that I may document these changes in https://wiki.qemu.org/ChangeLog/9.0 in a manner that is consistent with how the changes to other CPUs have been documented so far?
+I've created an account ZackBuhman for you and sent the password off-list.
 
-If so, I indeed desire such an account.
+--=20
+Thanks.
+-- Max
 
