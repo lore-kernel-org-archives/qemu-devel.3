@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4154BC00A94
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 19:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D608C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 19:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvM8C-00086Z-FE; Fri, 12 Apr 2024 15:00:12 -0400
+	id 1rvMva-0007lZ-T3; Fri, 12 Apr 2024 15:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvM83-000863-28
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 15:00:04 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <bazz1tv2@gmail.com>)
+ id 1rvMvZ-0007lR-Bp
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 15:51:13 -0400
+Received: from mail-qv1-f44.google.com ([209.85.219.44])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvM80-0003LT-DE
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 15:00:01 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6ed054f282aso1050486b3a.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 11:59:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712948398; x=1713553198; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=t/k0TNiHldkMmv37B0HHpihpSzZ1wa+uIG/r15WdVz8=;
- b=wlwWykQTQXIpZD0w2e3GYeZu7kO44RXOX5i9LUmXqj0CcuIAzOMYAQQqzhNvqAipvR
- eUVcGGHzZzHzTjfzTfxF+ARsMUOLoNukmyUZB6teriF+ANBX+mlwz9PJkQDWAXReM9tg
- ziaxI1MAjCPpt/LuFL02Lz9AePGoq69+hkEZYLykZStbmiWb3fx9MGittruTbBSyPw44
- Ds2Tsf3OPkCvN3EfPb2JY338nXToMP2ElF5VdbV1f66EsRVHhu/ipyXg810qUpBra/jB
- b8jpfkmdjDqKetypiaoPuBucEj7e1t6B6s8WR5kJ+2UuYIkbCW0SjVMTVUl1UUS897wQ
- Xinw==
+ (Exim 4.90_1) (envelope-from <bazz1tv2@gmail.com>)
+ id 1rvMvX-0004wd-IL
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 15:51:13 -0400
+Received: by mail-qv1-f44.google.com with SMTP id
+ 6a1803df08f44-6962a97752eso9651296d6.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 12:51:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712948398; x=1713553198;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t/k0TNiHldkMmv37B0HHpihpSzZ1wa+uIG/r15WdVz8=;
- b=RHl7ReHFSUlhlIrv7GmGG79JJ9njctpIIuei/hofEw9s9Q65rsTigA1vgpDA+ABnkS
- UPo+J+NPmm3WqUaNER2BL/gAoAjacpkVFZ9x2v7LLti6QBEMJ6hlIe20/fK89U0wAGZ+
- phLeTveNz6RcJP7Z96cWroHBvrDwe21a+H0gZEkmncjXejK7pLsh0DJVwcNReUeflw5C
- 1M61p/Hqjs9y8TQ0ZffrJ2UMFLNbzmz2l4vNSBKV+g7DFU+Vy9pa7Xy/wFWC3xZWmHGh
- lX9z7jaP5alFxWNAiYK6j50ypeplMUZh1GgNQKTy6IJ7fldvbFfP2Z3EY7ldukOlna4W
- lHBA==
+ d=1e100.net; s=20230601; t=1712951470; x=1713556270;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JuTxckrOnt77M3pRoWH01c3airIKIweKEGeN7yukrR4=;
+ b=cvDAu90FkMUvUV7SYW23Jo2+9PiLkkNeVF689syLfk5fafHAX/yGYFs9mSzjQ4rLTS
+ of7n584KvzR/J2Fxy+yWoxb87/UFzQ2ZhGsGsk41e7HnAJhwLmCV9kDtN4MYrJnRe0vJ
+ DwWNgSrmUTLew7upLtPC9k4xNzJV2xqair3BGdS9AMfc+T5nIqE3XQLaKQoxSPA+vdI4
+ qbvJe7GzN+pWjqp1xdKPfc/DkEmuJA69HgZLsIEujL9w7d8Y7j40XGqyoLCluMhvbWC7
+ oxSqjHloa9VWku3NlE+n9LMS9eZGzy3/rdxVJpjmU+tEOaAyjI30nCTMikmH8EUnofJ6
+ bwKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqndzqs4/mIyG8gP2+PEGsBYILsMMpfAP0R0uMpciLlWY89vp0tBJeiX5KNP4tOHkyLbvTMiI3sNWPYWB+8aMX0WbJs/g=
-X-Gm-Message-State: AOJu0YwAQct7Y+M3K3+EhAsB5G3bOhHcfhrdBIQYdO+KbB+OIch6UhV8
- y0f+leRCfJ/ccCiPRa7Pfgzbg3Ip6Sgm79oiyqsy9v/AzZ6Qd5K3rWS/2JyZee9cakXkfTW1SvU
- G
-X-Google-Smtp-Source: AGHT+IEpUxOSFDpy67a+kXTpUr/yU7xbhL457tCHnwnoGoV1y447L/nrcFyg8QtqP4jo7cexhQuicA==
-X-Received: by 2002:a05:6a20:3251:b0:1a7:5614:a8a0 with SMTP id
- hm17-20020a056a20325100b001a75614a8a0mr3699578pzc.44.1712948398551; 
- Fri, 12 Apr 2024 11:59:58 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- lc11-20020a056a004f4b00b006e6529c7d75sm3216351pfb.3.2024.04.12.11.59.57
+ AJvYcCXadYPuzBpCDI7XuPfFYigHTCf+HeEq+y6P+1wcIk/3XVJG287dS/Q2L1PZumBuMWD+SBnpLWY86sxWsIFBotm9S2zvUwY=
+X-Gm-Message-State: AOJu0YxZTjrH45O0S75766dDMvwNBVqum1L7ZirPsCF7+a/CmUb3bdLZ
+ RpCPVL3fylHgR2VUkVE7GeJuPhJfiG+clHZPDiqYeT4MPi5yJTkLoOEZkjKpXZ4=
+X-Google-Smtp-Source: AGHT+IG7wuzkczuBAMNzSjuji/o/LM9sr6OLeLcRwQ4YhThjlLdpQU3r1ii1Vqw3ejt3z1hKqfuCfQ==
+X-Received: by 2002:a0c:eb05:0:b0:69b:2f64:6240 with SMTP id
+ j5-20020a0ceb05000000b0069b2f646240mr4056343qvp.45.1712951470323; 
+ Fri, 12 Apr 2024 12:51:10 -0700 (PDT)
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com.
+ [209.85.222.176]) by smtp.gmail.com with ESMTPSA id
+ u7-20020a0cdd07000000b00690c9256676sm2711750qvk.49.2024.04.12.12.51.09
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 11:59:58 -0700 (PDT)
-Message-ID: <738c7ce6-7c09-45fd-ba00-d3f74e1812b2@linaro.org>
-Date: Fri, 12 Apr 2024 11:59:56 -0700
+ Fri, 12 Apr 2024 12:51:10 -0700 (PDT)
+Received: by mail-qk1-f176.google.com with SMTP id
+ af79cd13be357-78d575054c8so78351685a.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 12:51:09 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUD01aCVR+xiBcQn6UqoPZ1hjSqR+TzBtagax/RLXmROnpbOnCkyvhuu937RpaAsoQwkxrXYr5l45Ii6vUknWr3oxTBmLo=
+X-Received: by 2002:a05:6214:1765:b0:69b:155c:a793 with SMTP id
+ et5-20020a056214176500b0069b155ca793mr3950706qvb.39.1712951469667; Fri, 12
+ Apr 2024 12:51:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/27] util/hexdump: Use a GString for qemu_hexdump_line
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240412073346.458116-1-richard.henderson@linaro.org>
- <20240412073346.458116-4-richard.henderson@linaro.org>
- <698cc16f-cfb4-47a8-86fe-e4c8a6faecb6@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <698cc16f-cfb4-47a8-86fe-e4c8a6faecb6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240412021509.145502-1-richard.henderson@linaro.org>
+ <CAMFqb-bp48=Kd23AzwZ2U3AsPbnwUBUiyv=37ua1V_RDQ3wdyg@mail.gmail.com>
+ <921ae82a-3007-4435-af7d-91a08a5acae7@linaro.org>
+In-Reply-To: <921ae82a-3007-4435-af7d-91a08a5acae7@linaro.org>
+From: M Bazz <bazz@bazz1.com>
+Date: Fri, 12 Apr 2024 15:49:32 -0400
+X-Gmail-Original-Message-ID: <CAMFqb-afq2RwkKZx1kAeEFRf=VUhoUk_Nsp6NCDVWP-qfNZEHg@mail.gmail.com>
+Message-ID: <CAMFqb-afq2RwkKZx1kAeEFRf=VUhoUk_Nsp6NCDVWP-qfNZEHg@mail.gmail.com>
+Subject: Re: [PATCH] target/sparc: Use GET_ASI_CODE for ASI_KERNELTXT and
+ ASI_USERTXT
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=209.85.219.44; envelope-from=bazz1tv2@gmail.com;
+ helo=mail-qv1-f44.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,52 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/12/24 10:41, Philippe Mathieu-Daudé wrote:
->> -void qemu_hexdump_line(char *line, const void *bufptr, size_t len)
->> +GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len)
->>   {
->> -    const char *buf = bufptr;
->> -    int i, c;
->> +    const uint8_t *buf = vbuf;
->> +    size_t i;
->> -    if (len > QEMU_HEXDUMP_LINE_BYTES) {
->> -        len = QEMU_HEXDUMP_LINE_BYTES;
->> +    if (str == NULL) {
->> +        /* Estimate the length of the output to avoid reallocs. */
->> +        i = len * 3 + len / 4;
->> +        str = g_string_sized_new(i + 1);
->>       }
-> 
-> [*]
->           else {
->             g_string_truncate(str, 0);
->           }
-> 
-...
->> @@ -49,24 +52,26 @@ static void asciidump_line(char *line, const void *bufptr, size_t len)
->>       *line = '\0';
->>   }
->> +#define QEMU_HEXDUMP_LINE_BYTES 16
->>   #define QEMU_HEXDUMP_LINE_WIDTH \
->>       (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
->>   void qemu_hexdump(FILE *fp, const char *prefix,
->>                     const void *bufptr, size_t size)
->>   {
->> -    char line[QEMU_HEXDUMP_LINE_LEN];
->> +    g_autoptr(GString) str = g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
->>       char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
->>       size_t b, len;
->>       for (b = 0; b < size; b += len) {
->>           len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
->> -        qemu_hexdump_line(line, bufptr + b, len);
->> +        g_string_truncate(str, 0);
-> 
-> Shouldn't we truncate in [*] ?
+Hi Philippe,
 
-The usage in tpm puts several lines together in one string,
-adding \n in between, for output in one go.
+On Fri, Apr 12, 2024 at 7:14=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Bazz,
+>
+> On 12/4/24 06:18, M Bazz wrote:
+> > On Thu, Apr 11, 2024, 10:15 PM Richard Henderson
+> > <richard.henderson@linaro.org <mailto:richard.henderson@linaro.org>> wr=
+ote:
+> >
+> >     Reads are done with execute access.  It is not clear whether writes
+> >     are legal at all -- for now, leave helper_st_asi unchanged, so that
+> >     we continue to raise an mmu fault.
+> >
+> >     This generalizes the exiting code for ASI_KERNELTXT to be usable fo=
+r
+> >     ASI_USERTXT as well, by passing down the MemOpIdx to use.
+> >
+> >     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2281
+> >     <https://gitlab.com/qemu-project/qemu/-/issues/2281>
+> >     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2059
+> >     <https://gitlab.com/qemu-project/qemu/-/issues/2059>
+> >     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1609
+> >     <https://gitlab.com/qemu-project/qemu/-/issues/1609>
+> >     Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1166
+> >     <https://gitlab.com/qemu-project/qemu/-/issues/1166>
+> >     Signed-off-by: Richard Henderson <richard.henderson@linaro.org
+> >     <mailto:richard.henderson@linaro.org>>
+> >     ---
+> >       target/sparc/helper.h      |  3 ++
+> >       target/sparc/ldst_helper.c | 65 ++++++++++++++++++++++++++-------=
+-----
+> >       target/sparc/translate.c   | 49 ++++++++++++++++++++++++++--
+> >       3 files changed, 95 insertions(+), 22 deletions(-)
+>
+> > Hi Richard,
+> >
+> > I see this is in your hands now. I agree with your take on leaving
+> > writes alone. I'm also grateful for the opportunity to collaborate with=
+ you.
+> >
+> > It brings a smile for the community members who will be touched by this
+> > amazing contribution. I see them happily realizing that this perplexing
+> > bug has been solved, and in our case finally able to use the debuggers
+> > we love! :D
+>
+> Does that mean you tested this patch and it resolves your issues?
+>
+> If so, could you add your 'Tested-by: M Bazz <bazz@bazz1.com>' tag
+> when committing this patch?
+>
+> Regards,
+>
+> Phil.
 
+Yes, I can confirm the issue is resolved. Richard has already made the
+pull request. I am appreciative of the fast movement on this.
 
-r~
+I would like to have my "Tested-by" tag added to the PR, if it's no
+trouble. How might I get it there?
 
+Tested-by: M Bazz <bazz@bazz1.com>
+
+>
+> > Thanks for the proper fix, qemu sensei!
+> >
+> > -bazz
+> >
+>
 
