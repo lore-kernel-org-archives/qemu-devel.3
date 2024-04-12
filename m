@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C78C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E94C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvKZ0-00040D-WF; Fri, 12 Apr 2024 13:19:47 -0400
+	id 1rvKac-0004l9-Nh; Fri, 12 Apr 2024 13:21:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rvKYz-0003yY-9j
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:19:45 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvKaa-0004kz-NI
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:21:24 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rvKYx-0001IO-4d
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:19:45 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1e3e84a302eso8804415ad.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:19:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvKaZ-0001v1-7K
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:21:24 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-5bdbe2de25fso856342a12.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1712942380; x=1713547180; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pKfWM+CvdWFEkgGojd8ew4JZrU+UNJW9I1Aq/Px1mKw=;
- b=jXN/f6ts/LgIZzssdYEWpo3DzWIzI6Zn5q4wHueIShUyoCzhvlUNix9E/lmEwayqEe
- 7h3T4eoQo8XlHDRqFevSwBvILeBmcIlknZc8+mm8Q1oXxjF6YrcaskZSJdFBDREAvRp9
- 1gK5Bh53UvY8lzufQARLl+jjwiBzZbGAUiTO2pwiJaoNMHQe7R1FMO9S3BeKJo3FRGAr
- PRvGR+fJrc8PAmlefCfmiHYL5pjimTzhEwDxu7J5ReF82j14fsK+TA/lWBeq8IKr9q5s
- Jl7hp40i4eDiyAWUjQzKrk2AToZYJ+Yv9rfj0gPFbNOdShIyDBpnJEbEEMyDz8ePFIs/
- X6eg==
+ d=linaro.org; s=google; t=1712942481; x=1713547281; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=giTUusHE69G77DRHyQglqRjDRIwDR+B0rDQUi+EZv5k=;
+ b=SJ2sp1Pkgq1XjSjnRLG6i0mO8BJ9nCkhkqMq/2iSVHQUlMQPtD4GZUUVSLy7OMXvUD
+ VVlNiKEHADz8TWmBaB2TZvYDq4sgnISM7DHuVJ4fwOri1bdpUbJz5wiMRnKtC+WZcg8d
+ XJHhC3XwEitsmWOeuPfe8W6d+BeLbz7rClZ80s13xUlxKH7tT/PKQ4umcr2bXp0bkK4H
+ OAqMWnMvwN5tEuefNbFO9Zux25bo2FOlMtaV277Py+ymDhr5DEQuBuCPpqC2wsNXuGgN
+ KmyL3QDgmWTzxumSRYFDUB099Q4bZo4VXm3CSuufxbgioBh2OdKxRW6B96nejNX9hoTE
+ oCWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712942380; x=1713547180;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1712942481; x=1713547281;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pKfWM+CvdWFEkgGojd8ew4JZrU+UNJW9I1Aq/Px1mKw=;
- b=ZU3c/r74DE3mNT/X3KtX5FANCdsxn2hgApsNmBlgjEXad+vs35YEGBL9Pwq2iVqs5G
- iX4wL0HGTTnRLfdEc7MZxEmJrRiLeUKNnyfQfCu7aWtFjNBghH5vFwYYwUmeZPIPxKkL
- GnMtPqzSa43ecxrr65m4hy9C3eN2h/WVmYzH+bYJPJj1dgAgS3FEO81Xv8maAUq9urBl
- gq9vyvY0OJwPKbkoZvy8q2go9/ObhiyxY9PkRDy+kC1FDuwVvTHUCPqv2dr+4YDT3nEd
- 6+be1rrT6CjuL1yYkSW5XX0F16G3naejTrxd+fSxkpdwRJQsvQr8Gq9o41COXpMYPWPb
- nM6w==
-X-Gm-Message-State: AOJu0YyyD/1VTkiwUJ3Kjkn5e40jfg0YX/gpFkUPZZDrgin6dukV0zN7
- ZxGLr/4XA9hn0jOMJYMU2T6NY1QskSVU1qvF0d90cjA2+cp7G8LWQre+EPsWH9U=
-X-Google-Smtp-Source: AGHT+IH3B6D3viulP17Qi2o/M/KT06vAqWWmLz6B6trqWZ6DQ3UbO7orXvW91y3XYAQbofWzDI0qRg==
-X-Received: by 2002:a17:902:cecc:b0:1e5:2883:6ff6 with SMTP id
- d12-20020a170902cecc00b001e528836ff6mr3683840plg.11.1712942380389; 
- Fri, 12 Apr 2024 10:19:40 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.202])
+ bh=giTUusHE69G77DRHyQglqRjDRIwDR+B0rDQUi+EZv5k=;
+ b=rgj8n2iGhTmTk6Mid1PXIm5h8PQphxAOI369fLUzV1lAsCQSSxoXlksHb0jpFicc+Z
+ mzGIhYBKooX9jF1MiNOQkIP2U/8pVZyj9XQR3mdhdPKoc/dTU1poKgy40Wc4a12+o0EA
+ gY2dgsTjF2as22C7RaiqPJWCojFEOvcc5fMtFeVFATjsWHFp2NyXaMAUdR+xkOxvmWSM
+ PJg3tr1yqb7yPy0dM5G09ZBKJkyQYrltPO0AjhMgWyBGsPRJ72XA5BxhSAzsqY0KcUDi
+ bGLAKEPgLi1cgObiV/TUvKXSz6IJmChH72mkNaE5sj0IwaVyWZ7/d1j7ZvNMrO4JJ4qY
+ knaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAn/QYWh/zxIP7SXqZIj8YU//JTkYGKP9warZzKQr82sbfhL4qryaLfcrSXgU1LsKobyoTWREOejrZtYCRF4XT88KfRgk=
+X-Gm-Message-State: AOJu0YwIUGZi8ceAKUg8KB3v4ek04KBN7MwCOJ3szjO8hQu0pkgdy7wp
+ 1qTFLN4CP/TMQCElsvJAAgXzNI8KcrzzERQVzqpM3AkP+EtytglGhIS1Tlo+Ejc=
+X-Google-Smtp-Source: AGHT+IGiSjvPuas8pARaY2+L6K2C+ott31b74U4ZF9zUQGrFyu8uMZ2zn6Vv12QDjd0LiZi6n4pORw==
+X-Received: by 2002:a17:902:f78c:b0:1e5:93fc:efb4 with SMTP id
+ q12-20020a170902f78c00b001e593fcefb4mr3713052pln.35.1712942481581; 
+ Fri, 12 Apr 2024 10:21:21 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- k18-20020a170902f29200b001e0da190a07sm3252659plc.167.2024.04.12.10.19.37
+ kw14-20020a170902f90e00b001e249903b0fsm3240601plb.256.2024.04.12.10.21.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 10:19:40 -0700 (PDT)
-Message-ID: <7c65a766-7419-4e73-bccb-43475527734f@ventanamicro.com>
-Date: Fri, 12 Apr 2024 14:19:36 -0300
+ Fri, 12 Apr 2024 10:21:21 -0700 (PDT)
+Message-ID: <2abdd5fa-707d-4b7b-9114-cc0143d66a50@linaro.org>
+Date: Fri, 12 Apr 2024 10:21:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] target/riscv: prioritize pmp errors in
- raise_mmu_exception()
+Subject: Re: [PATCH 1/6] hw/misc: Don't special case RESET_TYPE_COLD in
+ npcm7xx_clk, gcr
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240412160809.1260625-1-peter.maydell@linaro.org>
+ <20240412160809.1260625-2-peter.maydell@linaro.org>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, alexei.filippov@syntacore.com,
- richard.henderson@linaro.org, Joseph Chan <jchan@ventanamicro.com>
-References: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
- <CAFEAcA-XkK8ksZ7aMj-ap4BRw6V8dMJ6hGTozagGAAQfXz_=bg@mail.gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAFEAcA-XkK8ksZ7aMj-ap4BRw6V8dMJ6hGTozagGAAQfXz_=bg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240412160809.1260625-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,53 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/12/24 14:12, Peter Maydell wrote:
-> On Tue, 9 Apr 2024 at 18:53, Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
->>
->> raise_mmu_exception(), as is today, is prioritizing guest page faults by
->> checking first if virt_enabled && !first_stage, and then considering the
->> regular inst/load/store faults.
->>
->> There's no mention in the spec about guest page fault being a higher
->> priority that PMP faults. In fact, privileged spec section 3.7.1 says:
->>
->> "Attempting to fetch an instruction from a PMP region that does not have
->> execute permissions raises an instruction access-fault exception.
->> Attempting to execute a load or load-reserved instruction which accesses
->> a physical address within a PMP region without read permissions raises a
->> load access-fault exception. Attempting to execute a store,
->> store-conditional, or AMO instruction which accesses a physical address
->> within a PMP region without write permissions raises a store
->> access-fault exception."
->>
->> So, in fact, we're doing it wrong - PMP faults should always be thrown,
->> regardless of also being a first or second stage fault.
->>
->> The way riscv_cpu_tlb_fill() and get_physical_address() work is
->> adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
->> reflected in the 'pmp_violation' flag. What we need is to change
->> raise_mmu_exception() to prioritize it.
->>
->> Reported-by: Joseph Chan <jchan@ventanamicro.com>
->> Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On 4/12/24 09:08, Peter Maydell wrote:
+> The npcm7xx_clk and npcm7xx_gcr device reset methods look at
+> the ResetType argument and only handle RESET_TYPE_COLD,
+> producing a warning if another reset type is passed. This
+> is different from how every other three-phase-reset method
+> we have works, and makes it difficult to add new reset types.
 > 
-> I guess from the Fixes: git commit hash that this isn't a regression
-> since 8.2 ? That would make it too late for 9.0 at this point in
-> the release cycle.
-
-I don't think it's critical enough to push it for 9.0 now. We'll settle for
-9.1 and then Michael can pick it for 9.0-stable.
-
-
-Thanks,
-
-Daniel
-
+> A better pattern is "assume that any reset type you don't know
+> about should be handled like RESET_TYPE_COLD"; switch these
+> devices to do that. Then adding a new reset type will only
+> need to touch those devices where its behaviour really needs
+> to be different from the standard cold reset.
 > 
-> thanks
-> -- PMM
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   hw/misc/npcm7xx_clk.c | 13 +++----------
+>   hw/misc/npcm7xx_gcr.c | 12 ++++--------
+>   2 files changed, 7 insertions(+), 18 deletions(-)
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
