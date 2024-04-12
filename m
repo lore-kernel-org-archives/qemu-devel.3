@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C67C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5156C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvIFe-0006Nf-TM; Fri, 12 Apr 2024 10:51:38 -0400
+	id 1rvIIv-0007S1-Vw; Fri, 12 Apr 2024 10:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvIFd-0006ND-4A
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:51:37 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvIIh-0007Qm-Ea
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:54:49 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvIFa-0007te-TM
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:51:36 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6eaf9565e6bso824022b3a.2
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 07:51:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvIIc-0008Mf-DF
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:54:44 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a46de423039so58326666b.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 07:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712933492; x=1713538292; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JxMIdEMEIJb6gwo6CrMzE/TyI1JfqOeYi8xaE90MHSI=;
- b=Y9K2PUyBbCsmw/RS7ZLvvJjNjm85W5VJCaZ7rw/OMuPkEyA2Na3zb2pqKbinWU7oEb
- BCHZs0VMq6MCNnVdWA/bWAXEAvWYlCL77Vr9lp5krGdV8Nh9AOCArtuLKTtY/6+jjUon
- 6UaLa2IZvp/INMBGMhdmZb+42wUoKofqn/pOthRkv86L04HOYtTg41W30YdA6QTPdcL0
- IXGvEaCbnuw2+elKbF/4DqwynQ4UrvkXJfE3WZupEX9GxnU5y4kCkEPMLetCxESfp5wD
- uKYOmsiI4pvrGO+TZi4J6I5RWA1KAOfTGklrZFZ2Pr6b/w4XqIQqAFwl0oNyqc3tJWDW
- P5Xg==
+ d=linaro.org; s=google; t=1712933680; x=1713538480; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fy0rMmid7rKAn87eUQOzYFJ4yOMfe7Ycv7fBWrgZdGU=;
+ b=cVZkFR6Bk9sCDDaLSrAMm2dI8wfuTspF8WPgZm87VMbS9Jnsj4IaoxlR8x/mH6f61P
+ WukrVbv2OuU1ue6eIoKhwMvUkyIN4tiHQd264GJYpmqw0QP6T2zig3sEd/tKaHxOv/ac
+ uqyjLU6NJWfNf4NtJPKQ5rRhHyB7i0z8fwd+G9Ii7fWlaKWWKcKGQyKl6om6uoub4yDi
+ jmCECeCUvc2nJs9g4bkHokQKQdeWuxjVZ8hMWI8fAX1plFe2vlgCPGDI2Rq1wj10FGzc
+ zpgn1mnnl6wzhpFNT2P9RnCbEXvw2BYSBHFl6tEpiU6UfTjQZc6GaXCgTxH7Tv1pQ1PY
+ /DTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712933492; x=1713538292;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JxMIdEMEIJb6gwo6CrMzE/TyI1JfqOeYi8xaE90MHSI=;
- b=srJX8Adr3H6jrZJuXTMf09Wl3UDZRteZmvRzczKpOjtGZUpqrUuHnZ8U47rfpqvEoM
- ylIxF/s7E9zbWJoGjEybnhCQ6YMBryWp9NNpNhaZr/Y7V2T1ZfxTMwubWiB2qoK62Ild
- wqfwKqXI7YqJg+6Zpjvo44TYd4NRGjzTLddpMG69SpFMY/47hpwT3fUxGGCIZfN7JSDW
- 0dEOzQt1vZxKp0tvIsizr1LtoUz7cvGiR6sqpIcAns1al5MYO/7euPQmf4AS9ZiYK9ND
- tRMZOhV5PlUf3WYTXXJ9/4qdKjKeqfQqflcLTZuggLsMpGOtGGRGBJN8ThE9nfuIZXhK
- vYGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHU6Sa19nV970xr0nEUPyYh5NYDKSxH1LtpF9/XOfUXw6CTFlHOsagKnPe552YlPq3iEN1Oma6TgUZs1klyR1kPRNqJi0=
-X-Gm-Message-State: AOJu0YzMNRkSzWz8lNHlFCjxZXZ/ct0o+bsi5lmOTngh3sBN9Ihjx6Z1
- 0gKwDFLJTT9SMfQ0wRMT6SMtb3IC/V4oVyo+Vbp3pImXRSDPbgS3KZZtRXBgyaim80H2M9YHusk
- F
-X-Google-Smtp-Source: AGHT+IFpIpcFQXDPOTa1d0XmIcX/WyEr5oJEuZZUpa8qQaP45R8XH/PvIyM1YHoISYpHHRtNirEolw==
-X-Received: by 2002:a05:6a21:999e:b0:1a3:64e8:eb8f with SMTP id
- ve30-20020a056a21999e00b001a364e8eb8fmr3717906pzb.11.1712933491759; 
- Fri, 12 Apr 2024 07:51:31 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- m3-20020a056a00080300b006ecfc3a8d6csm2950683pfk.124.2024.04.12.07.51.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 07:51:31 -0700 (PDT)
-Message-ID: <015bc53a-fadd-4d3d-b755-73b0f5d140bc@linaro.org>
-Date: Fri, 12 Apr 2024 07:51:29 -0700
+ d=1e100.net; s=20230601; t=1712933680; x=1713538480;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fy0rMmid7rKAn87eUQOzYFJ4yOMfe7Ycv7fBWrgZdGU=;
+ b=OOZnjQqE+AIlLrOLnF3npNgimK2qw3+5RSRolOASjfLqu8Gs1uJHYR8U7w0R31WCxv
+ y1nbjdpyGEkgP6vvYvCC9zti23ehDQGyzxlj8FombU5N0HhGLwlO8F1eeeU0j6jXKqjJ
+ vr/Dsz2wPqyguCVIkocqbTtu1+BG21E3K3wbspt2V8jORsAQWEX0M0a0yHqgkgmNZ2o4
+ UkUfSfE/D1uzTMg2P68j36MZgitCMZu9A9ZLsPdzg1DQlcwEgrNkHQ4/33ZxoFYi5Xsi
+ Ho2uK4XSns0UQAuqhxlW+0Vfzt60SByq1Om/ZFei/MaC/3iOFNMVM/hwMFZdclW7qpcU
+ vt7Q==
+X-Gm-Message-State: AOJu0YxlACxKGFLz6pfyAUSzG8dMuXysV7mJqa/VsVyYYrO4g6uWTNE+
+ V1KtAnAvOufzdfzavvwEga4J5usiNKcJTQ2OQv4la4AvsuHcsp1e86IUrNqUbj+kd7CLFzpeFDq
+ /F2qJflGYY+/bddzw/9Az8pIO4+KHDEc3jmMuYA==
+X-Google-Smtp-Source: AGHT+IFepbNOy478BzGbKBzGr3nbgKk0v53sSTDFRVDsZ5HMqtKSU/Cb9Hfv2P+cun6CJNpLh5lUE21CUuooSZAe8OQ=
+X-Received: by 2002:a50:9513:0:b0:56e:ddc:17ad with SMTP id
+ u19-20020a509513000000b0056e0ddc17admr2658461eda.30.1712933680348; Fri, 12
+ Apr 2024 07:54:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 24/27] hw/net/rocker: Replace sprintf() by snprintf()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240412073346.458116-1-richard.henderson@linaro.org>
- <20240412073346.458116-25-richard.henderson@linaro.org>
- <897eeeb8-d97e-4309-83df-d2828916b5be@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <897eeeb8-d97e-4309-83df-d2828916b5be@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+References: <20240412100401.20047-1-pbonzini@redhat.com>
+In-Reply-To: <20240412100401.20047-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 12 Apr 2024 15:54:28 +0100
+Message-ID: <CAFEAcA_JAZQKaJtbercmL0LKAnO=wHtt+35XsBU2fmPFaCT9Sw@mail.gmail.com>
+Subject: Re: [PULL 0/2] Final build system fixes for 9.0
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,31 +87,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/12/24 03:58, Philippe Mathieu-Daudé wrote:
-> On 12/4/24 09:33, Richard Henderson wrote:
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
->> resulting in painful developper experience. Use snprintf() instead.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Message-Id: <20240411104340.6617-7-philmd@linaro.org>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   hw/net/rocker/rocker.c | 24 ++++++++++++------------
->>   1 file changed, 12 insertions(+), 12 deletions(-)
-> 
-> 
->>           switch (offset) {
->>           case ROCKER_DMA_DESC_ADDR_OFFSET:
->> -            sprintf(buf, "Ring[%s] ADDR", ring_name);
->> +            snprintf(buf, sizeofbuf), "Ring[%s] ADDR", ring_name);
-> 
-> Ideally we should convert the DEBUG_FOO guards to trace events,
-> to avoid to maintain dead code.
+On Fri, 12 Apr 2024 at 11:04, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> The following changes since commit 02e16ab9f4f19c4bdd17c51952d70e2ded74c6bf:
+>
+>   Update version for v9.0.0-rc3 release (2024-04-10 18:05:18 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to 2d6d995709482cc8b6a76dbb5334a28001a14a9a:
+>
+>   meson.build: Disable -fzero-call-used-regs on OpenBSD (2024-04-12 12:02:12 +0200)
+>
+> ----------------------------------------------------------------
+> build system fixes
+>
+> ----------------------------------------------------------------
+> Matheus Tavares Bernardino (1):
+>       Makefile: fix use of -j without an argument
+>
+> Thomas Huth (1):
+>       meson.build: Disable -fzero-call-used-regs on OpenBSD
 
-Grr, I knew there was another of these that needed fixing up.
+Something's gone wrong with your pullreq : that tags/for-upstream
+doesn't have these commits, it still has the contents from your
+April 9th pullreq.
 
-
-r~
+thanks
+-- PMM
 
