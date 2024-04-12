@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC105C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 21:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07612C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 22:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvO9K-0003im-KL; Fri, 12 Apr 2024 17:09:30 -0400
+	id 1rvPYi-0007pf-PL; Fri, 12 Apr 2024 18:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rvO9I-0003gi-Ew
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 17:09:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rvO9G-0001cm-MJ
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 17:09:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712956165;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Dal1NZcbygwizUjtOCwy8UwaHJQRI2H8SiQhJQeyYEY=;
- b=JC1dKgGTNT25vBRMgtqiZYy3l1XXJMtEgXuNJvsLG3nzL5jQ1hWL+LjYLYyS7mOBVdOOd4
- rsFkLugaJQ3XmhK7+aeUnvWmO3xDHXdYYFV8CvudLyyaopHr5kJDn5kz22x8Z8U4U5prcb
- 66P4RQCRy2/IC7xmSqBSoqPWjIOABVI=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-4bsiaSI1P3KgpM5bOA2rYQ-1; Fri, 12 Apr 2024 17:09:23 -0400
-X-MC-Unique: 4bsiaSI1P3KgpM5bOA2rYQ-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-6dea8b7e74aso585642a34.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 14:09:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvPYf-0007pR-Ai
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 18:39:45 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvPYN-0008EO-Cd
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 18:39:29 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2a2f82ded89so856845a91.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 15:39:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712961565; x=1713566365; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/z1FRpujluDYs5zX5Th7zZh41irmg+bo8RV6QA0k1BM=;
+ b=uPBzLBDt+4enugmclau4EuQkj7igB8W5qQOVZqf/8QlrTnlUk5bOL3PCE77CKqE/x6
+ Bv7ZUKcj6pzImejR9Z2cAYu4Ogkrc8kicejNqlt32MvXISk2PRXZyspICutKlsaSk7E3
+ sMySYzLXdpm8fTq1K5SuqSiBzmnkQxLrkfCSNyb7wlGWq/Dzz4MRWaAgiVkaKh4xjSKE
+ C74nTMpJEk9P3GGRXOVFmpkVPm6jqrERzsE7hHuq0T4teNN7tzsY1uRYdRPeiL1HN/hW
+ DtqfTGfKMDLH1V9LJIbcSqRu9aHc2CAnkr51FqfTOFwycUIeI3XV2bzGLOE8TAIfQI5g
+ nhqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712956162; x=1713560962;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1712961565; x=1713566365;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Dal1NZcbygwizUjtOCwy8UwaHJQRI2H8SiQhJQeyYEY=;
- b=q6dnaiPyx0QEjYKj10n/8YGmTn0YUY2HtFqCqQVEapFhZH/5o0CHifQ9dxEHX1bnqz
- nhArPCWXYLc7c4THKITi/JClbh8v28raq9aPILTfnmPnX77N3XPnmf/EQ6CS5+VjYiF+
- XRr9MWwN6cNKw8jzNaMIlnFbeFh0tkCqEEzGyzhz/pbXxYewG/DKt5YSmZLs0YeCTW7e
- Yx76A33XNs6G9tQ1njZuhE/SlFkPAJ5FnVhN5h6EArogn8d4MCvzuc3l43fubHQNDg5F
- JwerF5BY3yw4gzCKEAryUztqfOdZot+f/IK4xCRxWQ4uj77KbtQg4FXV/KHtVv0EVlQt
- wO8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUo907eUDAv5Y8lbwpoyxtxBZAHXT/1D70c7tw7rJRb+eiy6CkAFbN2bcejDgxqhkLicrVJYt7c1UPcJc4nipStH0z+Jqs=
-X-Gm-Message-State: AOJu0YybN6/WFVAgOA2fzrQbI5Uo39+g1QtmJOQ9RdgOjrxOcL/1+pbP
- /ffl+P4QM75r2bEQ/crtPMdiqoBMfe4mRDvJxLk0O0J95ngFGscnmyox6F8IGeKm1qvJ1/yOYMh
- Oim4//V+1vfCpcXrB8WzX8gx0w+l9J3LHEAogI540CYbn5o9oPDkm
-X-Received: by 2002:a05:6808:13d4:b0:3c6:f7d0:43f3 with SMTP id
- d20-20020a05680813d400b003c6f7d043f3mr2161789oiw.0.1712956162492; 
- Fri, 12 Apr 2024 14:09:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHQj2brjUiZ2iC9QFWD3Y4P3W/lnhw1w8kl/Srv24SWUApiyLEJd995T21fbsNKpPdZYefcIA==
-X-Received: by 2002:a05:6808:13d4:b0:3c6:f7d0:43f3 with SMTP id
- d20-20020a05680813d400b003c6f7d043f3mr2161766oiw.0.1712956161852; 
- Fri, 12 Apr 2024 14:09:21 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- o11-20020ac872cb000000b0043484220ac8sm2653190qtp.63.2024.04.12.14.09.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 14:09:21 -0700 (PDT)
-Date: Fri, 12 Apr 2024 17:09:20 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org,
- thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- prerna.saxena@nutanix.com
-Subject: Re: [PATCH 1/4] Revert "migration: modify test_multifd_tcp_none() to
- use new QAPI syntax"
-Message-ID: <ZhmjABurFOqqkkpA@x1n>
-References: <20240410111541.188504-2-het.gala@nutanix.com>
- <874jc9v066.fsf@suse.de> <Zhan0Brg_CXzt79-@x1n>
- <8621e850-168a-454a-8f00-615f476eac31@nutanix.com>
- <ZhfzMt3t2oU7qt90@x1n>
- <e0f41009-a2bc-4302-82d5-c396d95a5cff@nutanix.com>
- <ZhgvAicT_36OLEBR@x1n> <87le5jbsbn.fsf@suse.de>
- <ZhlCcPTnW_-V85qR@x1n> <87il0mbpb0.fsf@suse.de>
+ bh=/z1FRpujluDYs5zX5Th7zZh41irmg+bo8RV6QA0k1BM=;
+ b=FSQlH/tZf3craYetY+nX9GIdQFEG3WexEG+x7InNn9FOAh8Abr40TXCW+E63umF+CI
+ UCl5mnYe5hUj31cGAaUxSA5fEWS+R3/IhT3xtlT+VwF8mYLFxstEoI57/gshPtShCRO9
+ CsN5Hpa1axNxLmFZExNaMIEdVWXBrEcNXazc0ixYGdFfBojRCHBB0WDRddJEVdcgk3Uo
+ xodNizFh6fqHTf7QstDxqRbYGwAVVx/kOUYUh3jVNo96MduzOgQE9MBYUaa5R45yXqzW
+ wZBwG+cwIOLcMu3a5I2//MpznAWVqyhpREQZDi8XTeqUu9w0CBnTu9ycRKigbV4nVsK7
+ MqdA==
+X-Gm-Message-State: AOJu0YwxR4fWD7vaHbxvNVtzFpQbZc0XyZ8SGaDDlYShTJfdwq0+TLJQ
+ 9WcQdNYr+PVhYQU9A5mb9dSz9TMxKy6bjjdT1joBhnwONNIsa+ND0n+t6Cf04TRdqmXg/k9mIl7
+ D
+X-Google-Smtp-Source: AGHT+IGuTed+IwJKHguiZO/emM07KDgna7745IAGE3xRfhC1MfOcJZKdZRW1ssxekvc/KMOGUYqyFg==
+X-Received: by 2002:a17:90b:46d0:b0:2a5:34a7:3430 with SMTP id
+ jx16-20020a17090b46d000b002a534a73430mr4287059pjb.11.1712961564763; 
+ Fri, 12 Apr 2024 15:39:24 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ o19-20020a17090aac1300b002a537abb536sm4765066pjq.57.2024.04.12.15.39.23
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Apr 2024 15:39:24 -0700 (PDT)
+Message-ID: <05edd96c-1073-48ff-a51e-622d2aac46f2@linaro.org>
+Date: Fri, 12 Apr 2024 15:39:22 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87il0mbpb0.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/1] target/sparc late fix
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20240412185431.465942-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20240412185431.465942-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,79 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 11:58:43AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 4/12/24 11:54, Richard Henderson wrote:
+> Since this problem has 4 issues open, let's get it for 9.0.
 > 
-> > On Thu, Apr 11, 2024 at 04:41:16PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Thu, Apr 11, 2024 at 11:31:08PM +0530, Het Gala wrote:
-> >> >> I just wanted to highlight couple of pointers:
-> >> >> 1. though we are using 'channels' in the precopy tests for 'migrate' QAPI,
-> >> >> we
-> >> >>    use the old uri for 'migrate-incoming' QAPI.
-> >> >> 2. We do not cover other 'channels' abi, only have tcp path tested.
-> >> >> 
-> >> >> So, the TO-DOs could be:
-> >> >> 1. Omit the 4th patch here, which introduced postcopy qtests with 'channels'
-> >> >>    interface OR have 'channels' interface with other than tcp transport
-> >> >>    (file, exec, vsock, etc) so as to cover different code paths.
-> >> >> 2. Extend channels interface to migrate-incoming QAPI for precopy qtests
-> >> >
-> >> > You can see whether Fabiano has anything to say, but what you proposed
-> >> > looks good to me.
-> >> 
-> >> Ok, so what about we convert some of the 'plain' tests into channels to
-> >> cover all transports?
-> >> 
-> >> - tcp: test_multifd_tcp_none  (this one we already did)
-> >> - file: test_precopy_file
-> >> - unix: test_precopy_unix_plain
-> >> - exec: test_analyze_script
-> >> - fd: test_migrate_precopy_fd_socket
-> >> 
-> >> Those^, plus the validate_uri that's already in next should cover
-> >> everything.
-> >> 
-> >> We don't need to do this at once, by the way.
-> >> 
-> >> Moreover:
-> >> 
-> >> - leave all test strings untouched to preserve bisecting;
-> >> 
-> >> - let's not bother adding "channels" and "uri" to the test string
-> >>   anymore. The channels API should be taken for granted at this point, I
-> >>   don't expect we start hitting bugs that will require us to run either
-> >>   foo/uri/plain or foo/channels/plain, so there's not much point in
-> >>   making the distinction.
-> >
-> > Do you mean we can put "uri:" aside?  Maybe I misunderstood..
 > 
-> I mean the test name does not need to specify "channels" vs. "uri"
-> because that should never be broken to the point that we actually need
-> to go fetch those tests by name. We'd still have at least 1 test for
-> each transport with channels and (existing) at least 1 test for each
-> transport with uri.
+> r~
 > 
-> >
-> > The matrix previously was (I think.. when this series posted):
-> >
-> >   [tcp, unix, file, exec, fd] x [uri, channels] x [precopy, postcopy]
-> >
-> > Drop postcopy as doesn't seem to have any special paths:
-> >
-> >   [tcp, unix, file, exec, fd] x [uri, channels]
-> >
-> > So logically we should still cover these, right?
 > 
-> Right, I'm just suggesting we convert some tests to use channels, one
-> for each transport, to test the channels API in full. The rest of the
-> existing tests as well as future tests need not have a uri (or channel)
-> variant. Just one of them is enough.
+> The following changes since commit be72d6ab361a26878752467a17289066dfd5bc28:
 
-Ah so that's the "test string"; sounds all good.
+I've updated the tag to 2786a3f8d3a047cc21271380324c0b7d8217f238
+to include M Bazz's tested-by tag.
 
--- 
-Peter Xu
+
+r~
+
+> 
+>    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-04-12 16:01:04 +0100)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/rth7680/qemu.git tags/pull-sp-20240412
+> 
+> for you to fetch changes up to c84f5198b0b676ad67962b5250af1b0d0842e319:
+> 
+>    target/sparc: Use GET_ASI_CODE for ASI_KERNELTXT and ASI_USERTXT (2024-04-12 11:48:26 -0700)
+> 
+> ----------------------------------------------------------------
+> target/sparc: Fix ASI_USERTXT for Solaris gdb crashes
+> 
+> ----------------------------------------------------------------
+> Richard Henderson (1):
+>        target/sparc: Use GET_ASI_CODE for ASI_KERNELTXT and ASI_USERTXT
+> 
+>   target/sparc/helper.h      |  3 +++
+>   target/sparc/ldst_helper.c | 65 ++++++++++++++++++++++++++++++++--------------
+>   target/sparc/translate.c   | 48 ++++++++++++++++++++++++++++++++--
+>   3 files changed, 94 insertions(+), 22 deletions(-)
 
 
