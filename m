@@ -4,84 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF130C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E43C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvDhy-0001mp-I3; Fri, 12 Apr 2024 06:00:42 -0400
+	id 1rvDjZ-00037w-Ug; Fri, 12 Apr 2024 06:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvDho-0001mD-Ro
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:00:26 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvDhi-00012x-2Q
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:00:22 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-346b96f1483so371628f8f.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 03:00:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvDjY-00037U-3K; Fri, 12 Apr 2024 06:02:12 -0400
+Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvDjR-0001DV-Ox; Fri, 12 Apr 2024 06:02:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712916015; x=1713520815; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lrhE71LSgkGFtR5fBLCZ3ZIpkZ0j4N9kUQY21X4yfug=;
- b=oMQN+hzfxboDsPZaks8yIUi9yzvFrDsEHZ/UspPCEs5GivwzvZex0JA/IV+bSJJgJA
- dEp5cUrxl7xfZJgiLwUTQspeM0RpZo8hLxKyIZ0nrcW0SqumY0t8DI1ZZLjYYllstjqU
- 2Jl6eYUziv6nezoOfv1qcKSw9i9rSOcVrW3bvMbNz2UZ79NgCu4CLqMi5V1HJuPXoQ/H
- /XSR/NhRZIanmrFnXliJTkYfRs21/EEDqfO3P3uG740BOTGUk6Jq4hINdEyCdIhj+fyD
- yp6Lq6KLExM+rywASD2mYvLNB86g8B7JSO1tGvymgxF3AoJABRxFwtY5FUviWsM/kQUb
- Kizw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712916015; x=1713520815;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lrhE71LSgkGFtR5fBLCZ3ZIpkZ0j4N9kUQY21X4yfug=;
- b=GqC78GuihRwgOquXrkO5CC3io/bLIZQf4shB9fSCEh+TtfyUsD1JMsr2Bu7S5Ub0OT
- djPP2w+Lvtt4qnDfm7lMeziu+kEYeMzeol6xmE9y5g1UFidRBn3LLWw8lZ9OKEFUQBgX
- NKfETM3M8cFT1XCvf9nTaNJ5PSA5zgMo0bhiXr9m26nq2P6diff+neOyNeM1I4q2nq9r
- 7IyffMagjd9oP6j/RYuosuKSm+MQgV6KLfUZHH0h1dqStlCZi5DJ85pRuARbg667ay49
- H1cMqwEvghSoNkAZxBH/4yDfhv6kE074QOTZNndDBdOuqqe5UUvzSInvxT1GV6Zdtxax
- WrMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVK0O06M4yWeddoDy6H0Y0nCw6UHSrQnQQHFtzlY4NBhuibGCRPeOMCl0l6WG7QW46QzyLGZZBswlbQF2EEYNVSMJFSMvw=
-X-Gm-Message-State: AOJu0Yxus10EbeDNUOe/U0MQCJiH8hXm8hjsvRqwPfx9J4RSago8mwj5
- LBsk4ar0YS1iS02Uyw0EKlwysQaEIK+S+taVRRW8yU4Lw987hJNd7Q+h5pyLy/gQgnPWA2uRU2X
- MXYs=
-X-Google-Smtp-Source: AGHT+IGfTiLsv64s3BiDYn102wSMBKrhLlaBzcLcZZTtTE/8G+1RbKKwAMznFi+H0xzurSgbL9sqPg==
-X-Received: by 2002:adf:cd8f:0:b0:346:a9b3:f0f6 with SMTP id
- q15-20020adfcd8f000000b00346a9b3f0f6mr1701127wrj.18.1712916015282; 
- Fri, 12 Apr 2024 03:00:15 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- g12-20020a5d488c000000b003472489d26fsm348461wrq.19.2024.04.12.03.00.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 03:00:14 -0700 (PDT)
-Message-ID: <8f9dad3b-7105-4820-9c29-170aadd51e1a@linaro.org>
-Date: Fri, 12 Apr 2024 12:00:14 +0200
+ d=linux.alibaba.com; s=default;
+ t=1712916120; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=rKnpcCoeh0YvzwdWQhd/twJaWjtVRJRykEO5548t2OA=;
+ b=v19+I8YBi84yIYzaofvSN4NEZxoKqWjLkOTxzuJeQv9c2LmQjW//LxNkmnwFDook/JXQpRT2mZPFa+glAdGRTvfvhBnY+2sJfJO2NVsB3Va//asr+a4HQKjtAYImFCzncO+h0tCH0EOm2ddn6R5IIYJU2ewDKM5WHjCb00C/nsM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046049;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W4NtRJZ_1712916118; 
+Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W4NtRJZ_1712916118) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 18:01:59 +0800
+From: Huang Tao <eric.huang@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Huang Tao <eric.huang@linux.alibaba.com>
+Subject: [PATCH 63/65] target/riscv: Add vector register gather instructions
+ for XTheadVector
+Date: Fri, 12 Apr 2024 15:37:33 +0800
+Message-ID: <20240412073735.76413-64-eric.huang@linux.alibaba.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
+References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/27] util/hexdump: Remove b parameter from
- qemu_hexdump_line
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240412073346.458116-1-richard.henderson@linaro.org>
- <20240412073346.458116-2-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240412073346.458116-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,31 +71,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 09:33, Richard Henderson wrote:
-> Require that the caller output the offset and increment bufptr.
-> Use QEMU_HEXDUMP_LINE_BYTES in vhost_vdpa_dump_config instead
-> of raw integer.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/qemu/cutils.h  |  2 +-
->   hw/virtio/vhost-vdpa.c |  4 ++--
->   util/hexdump.c         | 13 ++++++-------
->   hw/virtio/trace-events |  2 +-
->   4 files changed, 10 insertions(+), 11 deletions(-)
+The instructions have the same function as RVV1.0. Overall there are only
+general differences between XTheadVector and RVV1.0.
 
+Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
+---
+ target/riscv/helper.h                         |  9 ++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 85 ++++++++++++++++++-
+ target/riscv/xtheadvector_helper.c            | 64 ++++++++++++++
+ 3 files changed, 155 insertions(+), 3 deletions(-)
 
-> @@ -58,8 +57,8 @@ void qemu_hexdump(FILE *fp, const char *prefix,
->   
->       for (b = 0; b < size; b += QEMU_HEXDUMP_LINE_BYTES) {
->           len = size - b;
-> -        qemu_hexdump_line(line, b, bufptr, len, true);
-> -        fprintf(fp, "%s: %s\n", prefix, line);
-> +        qemu_hexdump_line(line, bufptr + b, len, true);
-> +        fprintf(fp, "%s: %04x: %s\n", prefix, b, line);
-
-Clever :)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 6ce0bcbba7..b650e299cf 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -2333,3 +2333,12 @@ DEF_HELPER_6(th_vslide1down_vx_b, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vslide1down_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vslide1down_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vslide1down_vx_d, void, ptr, ptr, tl, ptr, env, i32)
++
++DEF_HELPER_6(th_vrgather_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vrgather_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vrgather_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vrgather_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vrgather_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vrgather_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vrgather_vx_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vrgather_vx_d, void, ptr, ptr, tl, ptr, env, i32)
+diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+index 46cfc51690..f6da1ff384 100644
+--- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
++++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+@@ -2816,13 +2816,92 @@ GEN_OPIVX_TRANS_TH(th_vslidedown_vx, opivx_check_th)
+ GEN_OPIVX_TRANS_TH(th_vslide1down_vx, opivx_check_th)
+ GEN_OPIVI_TRANS_TH(th_vslidedown_vi, IMM_ZX, th_vslidedown_vx, opivx_check_th)
+ 
++/* Vector Register Gather Instruction */
++static bool vrgather_vv_check_th(DisasContext *s, arg_rmrr *a)
++{
++    return (require_xtheadvector(s) &&
++            vext_check_isa_ill(s) &&
++            th_check_overlap_mask(s, a->rd, a->vm, true) &&
++            th_check_reg(s, a->rd, false) &&
++            th_check_reg(s, a->rs1, false) &&
++            th_check_reg(s, a->rs2, false) &&
++            (a->rd != a->rs2) && (a->rd != a->rs1));
++}
++
++GEN_OPIVV_TRANS_TH(th_vrgather_vv, vrgather_vv_check_th)
++
++static bool vrgather_vx_check_th(DisasContext *s, arg_rmrr *a)
++{
++    return (require_xtheadvector(s) &&
++            vext_check_isa_ill(s) &&
++            th_check_overlap_mask(s, a->rd, a->vm, true) &&
++            th_check_reg(s, a->rd, false) &&
++            th_check_reg(s, a->rs2, false) &&
++            (a->rd != a->rs2));
++}
++
++/* vrgather.vx vd, vs2, rs1, vm # vd[i] = (x[rs1] >= VLMAX) ? 0 : vs2[rs1] */
++static bool trans_th_vrgather_vx(DisasContext *s, arg_rmrr *a)
++{
++    if (!vrgather_vx_check_th(s, a)) {
++        return false;
++    }
++
++    if (a->vm && s->vl_eq_vlmax) {
++        int vlmax = (s->cfg_ptr->vlenb << 3) / s->mlen;
++        TCGv_i64 dest = tcg_temp_new_i64();
++
++        if (a->rs1 == 0) {
++            th_element_loadi(s, dest, a->rs2, 0);
++        } else {
++            th_element_loadx(s, dest, a->rs2, cpu_gpr[a->rs1], vlmax);
++        }
++
++        tcg_gen_gvec_dup_i64(s->sew, vreg_ofs(s, a->rd),
++                             MAXSZ(s), MAXSZ(s), dest);
++        finalize_rvv_inst(s);
++    } else {
++        static gen_helper_opivx * const fns[4] = {
++            gen_helper_th_vrgather_vx_b, gen_helper_th_vrgather_vx_h,
++            gen_helper_th_vrgather_vx_w, gen_helper_th_vrgather_vx_d
++        };
++        return opivx_trans_th(a->rd, a->rs1, a->rs2, a->vm, fns[s->sew], s);
++    }
++    return true;
++}
++
++/* vrgather.vi vd, vs2, imm, vm # vd[i] = (imm >= VLMAX) ? 0 : vs2[imm] */
++static bool trans_th_vrgather_vi(DisasContext *s, arg_rmrr *a)
++{
++    if (!vrgather_vx_check_th(s, a)) {
++        return false;
++    }
++
++    if (a->vm && s->vl_eq_vlmax) {
++        if (a->rs1 >= (s->cfg_ptr->vlenb << 3) / s->mlen) {
++            tcg_gen_gvec_dup_imm(MO_64, vreg_ofs(s, a->rd),
++                                 MAXSZ(s), MAXSZ(s), 0);
++        } else {
++            tcg_gen_gvec_dup_mem(s->sew, vreg_ofs(s, a->rd),
++                                 endian_ofs(s, a->rs2, a->rs1),
++                                 MAXSZ(s), MAXSZ(s));
++        }
++        finalize_rvv_inst(s);
++    } else {
++        static gen_helper_opivx * const fns[4] = {
++            gen_helper_th_vrgather_vx_b, gen_helper_th_vrgather_vx_h,
++            gen_helper_th_vrgather_vx_w, gen_helper_th_vrgather_vx_d
++        };
++        return opivi_trans_th(a->rd, a->rs1, a->rs2, a->vm, fns[s->sew],
++                              s, IMM_ZX);
++    }
++    return true;
++}
++
+ #define TH_TRANS_STUB(NAME)                                \
+ static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
+ {                                                          \
+     return require_xtheadvector(s);                        \
+ }
+ 
+-TH_TRANS_STUB(th_vrgather_vv)
+-TH_TRANS_STUB(th_vrgather_vx)
+-TH_TRANS_STUB(th_vrgather_vi)
+ TH_TRANS_STUB(th_vcompress_vm)
+diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
+index 73a15eb070..2598824bb3 100644
+--- a/target/riscv/xtheadvector_helper.c
++++ b/target/riscv/xtheadvector_helper.c
+@@ -3801,3 +3801,67 @@ GEN_TH_VSLIDE1DOWN_VX(th_vslide1down_vx_b, uint8_t, H1, clearb_th)
+ GEN_TH_VSLIDE1DOWN_VX(th_vslide1down_vx_h, uint16_t, H2, clearh_th)
+ GEN_TH_VSLIDE1DOWN_VX(th_vslide1down_vx_w, uint32_t, H4, clearl_th)
+ GEN_TH_VSLIDE1DOWN_VX(th_vslide1down_vx_d, uint64_t, H8, clearq_th)
++
++/* Vector Register Gather Instruction */
++#define GEN_TH_VRGATHER_VV(NAME, ETYPE, H, CLEAR_FN)                      \
++void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,               \
++                  CPURISCVState *env, uint32_t desc)                      \
++{                                                                         \
++    uint32_t mlen = th_mlen(desc);                                        \
++    uint32_t vlmax = (env_archcpu(env)->cfg.vlenb << 3) / mlen;           \
++    uint32_t vm = th_vm(desc);                                            \
++    uint32_t vl = env->vl;                                                \
++    uint32_t index, i;                                                    \
++                                                                          \
++    VSTART_CHECK_EARLY_EXIT(env);                                         \
++    for (i = env->vstart; i < vl; i++) {                                  \
++        if (!vm && !th_elem_mask(v0, mlen, i)) {                          \
++            continue;                                                     \
++        }                                                                 \
++        index = *((ETYPE *)vs1 + H(i));                                   \
++        if (index >= vlmax) {                                             \
++            *((ETYPE *)vd + H(i)) = 0;                                    \
++        } else {                                                          \
++            *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(index));           \
++        }                                                                 \
++    }                                                                     \
++    env->vstart = 0;                                                      \
++    CLEAR_FN(vd, vl, vl * sizeof(ETYPE), vlmax * sizeof(ETYPE));          \
++}
++
++/* vd[i] = (vs1[i] >= VLMAX) ? 0 : vs2[vs1[i]]; */
++GEN_TH_VRGATHER_VV(th_vrgather_vv_b, uint8_t, H1, clearb_th)
++GEN_TH_VRGATHER_VV(th_vrgather_vv_h, uint16_t, H2, clearh_th)
++GEN_TH_VRGATHER_VV(th_vrgather_vv_w, uint32_t, H4, clearl_th)
++GEN_TH_VRGATHER_VV(th_vrgather_vv_d, uint64_t, H8, clearq_th)
++
++#define GEN_TH_VRGATHER_VX(NAME, ETYPE, H, CLEAR_FN)                      \
++void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
++                  CPURISCVState *env, uint32_t desc)                      \
++{                                                                         \
++    uint32_t mlen = th_mlen(desc);                                        \
++    uint32_t vlmax = (env_archcpu(env)->cfg.vlenb << 3) / mlen;           \
++    uint32_t vm = th_vm(desc);                                            \
++    uint32_t vl = env->vl;                                                \
++    uint32_t index = s1, i;                                               \
++                                                                          \
++    VSTART_CHECK_EARLY_EXIT(env);                                         \
++    for (i = env->vstart; i < vl; i++) {                                  \
++        if (!vm && !th_elem_mask(v0, mlen, i)) {                          \
++            continue;                                                     \
++        }                                                                 \
++        if (index >= vlmax) {                                             \
++            *((ETYPE *)vd + H(i)) = 0;                                    \
++        } else {                                                          \
++            *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(index));           \
++        }                                                                 \
++    }                                                                     \
++    env->vstart = 0;                                                      \
++    CLEAR_FN(vd, vl, vl * sizeof(ETYPE), vlmax * sizeof(ETYPE));          \
++}
++
++/* vd[i] = (x[rs1] >= VLMAX) ? 0 : vs2[rs1] */
++GEN_TH_VRGATHER_VX(th_vrgather_vx_b, uint8_t, H1, clearb_th)
++GEN_TH_VRGATHER_VX(th_vrgather_vx_h, uint16_t, H2, clearh_th)
++GEN_TH_VRGATHER_VX(th_vrgather_vx_w, uint32_t, H4, clearl_th)
++GEN_TH_VRGATHER_VX(th_vrgather_vx_d, uint64_t, H8, clearq_th)
+-- 
+2.44.0
 
 
