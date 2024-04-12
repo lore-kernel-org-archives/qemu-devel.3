@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5D9C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 406DBC04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvDll-0005EN-Dk; Fri, 12 Apr 2024 06:04:29 -0400
+	id 1rvDlZ-0005BC-2m; Fri, 12 Apr 2024 06:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rvDld-0005Cd-F3
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:04:23 -0400
+ id 1rvDlU-00059A-IX
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:04:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rvDlV-0001ZA-0Q
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:04:20 -0400
+ id 1rvDlR-0001Yc-SL
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:04:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712916252;
+ s=mimecast20190719; t=1712916248;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r2BbovmUqZ6XBAj8TY6CbhKs/XGlgMyKhhvHB01jC9I=;
- b=Igka8zAgvsD4IqXiMQHbxoyx4MI8qGjW+iPBQW+zaETnQbdhuNtnVWJ4uEV3ryTeRY2Azl
- 0/tuxNr1vNfhVt24KwTAfc/WkY567TXl9vZNcMP1f48dF/sMduSxGrhgyylHRD/q8vGo9T
- l9eiypEIHgC1JSEke5kMqQ/x71jQdmY=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=A5Llucl1jLUHeO2gAswtv29kQ2WFQbLL8CXHS8kKVi4=;
+ b=NJud7B2zxyvh77j0uh8L2V3dnCyxky0xZ1yjbGaNEu+d+4iBLtyo+oQoqTK7YTfcXPgEMD
+ dWHt9Dk6p7p1X2scEiIdfX1ACLSlC6S7mdz8Ky8VkwK9TDXxcr6EOuIkhN9mTBYZ7wD16c
+ gE8wy9OeI4SZ1BVP9qhCYj2W7EvbZ/c=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-G5ZEf8cLN62_geJ80CL2AQ-1; Fri, 12 Apr 2024 06:04:10 -0400
-X-MC-Unique: G5ZEf8cLN62_geJ80CL2AQ-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-517866a127fso767996e87.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 03:04:10 -0700 (PDT)
+ us-mta-551-WJqSSSvZP-21LgZPLianIw-1; Fri, 12 Apr 2024 06:04:07 -0400
+X-MC-Unique: WJqSSSvZP-21LgZPLianIw-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-56fe77747a0so1951922a12.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 03:04:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712916248; x=1713521048;
+ d=1e100.net; s=20230601; t=1712916245; x=1713521045;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r2BbovmUqZ6XBAj8TY6CbhKs/XGlgMyKhhvHB01jC9I=;
- b=E1KWYkL3cltmul+hTevTGRa88ho/ewEY4V61v7qBx1l8rJyUokrS6lYHklnzGZHqL7
- Ny18yvdwjtiy2H7mPNxL7RWR9ZG4srbBz3da29IiGN4zrEXUS0WDdVXJm71T2nbZYDno
- CcRmEcHyInXhCiVVz0a3r0awP1M547e6kjkABupw1vi1cOXronV0M4oAEJ7YOAS+bYM8
- CQh5d10s98zOy4QDgVd59LxsDIUPo5ABJBlAW4OWSyQfKVP2aeKlw51DcVa+bZhqDdv9
- GPSbOsqHSJiwZDOKaU2ldVGse7TmzWsxzmg3jxz74KjIgatD6VtSebqJjDdzIpXfkckk
- EB0A==
-X-Gm-Message-State: AOJu0YxYPO2o1VYmhnXY1C5r1c9TKCnG/VoGXIBi5VFCOX/GgaD+B0NT
- 5OqxjcCbo6NOxp5n9LVrDQBc3CKSX4H821KETx/yoQL6deOx/MvShB3YcancEL+s6iv/EdegF/c
- DXlySId2PKG23yfPdtHCUnfRK09cqGKqcCDnVuHCIzzODuiCfCa2RlfqksRJTNf9+U53hYr68fU
- Epi2nnBwhcJn8NrOlZhuIbq6AQt96x3ASNGnhq
-X-Received: by 2002:a05:6512:b94:b0:518:902d:8b98 with SMTP id
- b20-20020a0565120b9400b00518902d8b98mr736109lfv.18.1712916248339; 
- Fri, 12 Apr 2024 03:04:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRU/t4cGza1xPrVQyJrQ62s4awbiG6ha8gvL968scZzu8kkZnJWW4qVpLcdiAfR7TUv9M4Wg==
-X-Received: by 2002:a05:6512:b94:b0:518:902d:8b98 with SMTP id
- b20-20020a0565120b9400b00518902d8b98mr736078lfv.18.1712916247845; 
- Fri, 12 Apr 2024 03:04:07 -0700 (PDT)
+ bh=A5Llucl1jLUHeO2gAswtv29kQ2WFQbLL8CXHS8kKVi4=;
+ b=CVVyMXvZgDQSaZAavLoXLWy163cjcOar51ldc/TkcrAI6i7rRhIcbD3t2lPYKpPLPs
+ B2+aU9G+OE0OY/D7p27yOoPVkKSawxQTW9ynrkJ1wF6KBNw4UKWPhfagjKBkYFO1cgEp
+ qZMaAqNBV7qgoRYZlARWq6ON8rN+mJ2MUdJFvNtF01/ZOkb5ZkAfJLmhq4pqL4UxCXos
+ N1DTkwRd7w+ey9T/bMXBMwQLEh8UjFNCalJ1KYCZsxn5lnnR41+d6P1E7QziSrl/bUKU
+ ts9bm0QpYlt06nEe/5JALF+/ODZMpKjutO27V42iaqjEW4cwsZ+phTtNWtkU/Ga3FDgz
+ 97LA==
+X-Gm-Message-State: AOJu0Yw3XnrYRJfTpLxaEAH1FZnQF4Z4PnW5+HXvfykVQhgF92s8bmb3
+ 3HLjYx5zWp1XCWXUXHl0AG1XG3hnC6Pd+s2CLN0/OOrY/agmYiJrlrkhOOBHT7C/oumvRbPbO9n
+ YgD2l/yYzPY3CoygqooQXhuUy1bHWtZD52+7m0oEKgGH54IfpjEktGdzps9dpoO9HMMM93qp/YN
+ meygN3tRtR7itEpEFxdyDoYyje/xzxLGGaWJZd
+X-Received: by 2002:a50:f604:0:b0:56b:d013:a67e with SMTP id
+ c4-20020a50f604000000b0056bd013a67emr1916308edn.18.1712916245597; 
+ Fri, 12 Apr 2024 03:04:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvk4F6HwlTEZvLA3g8y47IjrnxSeaJ0O4otCmhUZDVCde6k9Ro5o7bIvLOQS8s83DRV+kX7w==
+X-Received: by 2002:a50:f604:0:b0:56b:d013:a67e with SMTP id
+ c4-20020a50f604000000b0056bd013a67emr1916295edn.18.1712916245272; 
+ Fri, 12 Apr 2024 03:04:05 -0700 (PDT)
 Received: from avogadro.local ([176.206.87.39])
  by smtp.gmail.com with ESMTPSA id
- w6-20020a1709064a0600b00a5209dc79c1sm1654420eju.146.2024.04.12.03.04.07
+ dh5-20020a0564021d2500b0056e3e0394absm1504902edb.68.2024.04.12.03.04.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 03:04:07 -0700 (PDT)
+ Fri, 12 Apr 2024 03:04:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 2/2] meson.build: Disable -fzero-call-used-regs on OpenBSD
-Date: Fri, 12 Apr 2024 12:04:01 +0200
-Message-ID: <20240412100401.20047-3-pbonzini@redhat.com>
+Cc: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Subject: [PULL 1/2] Makefile: fix use of -j without an argument
+Date: Fri, 12 Apr 2024 12:04:00 +0200
+Message-ID: <20240412100401.20047-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412100401.20047-1-pbonzini@redhat.com>
 References: <20240412100401.20047-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -87,8 +85,8 @@ X-Spam_score: -4.6
 X-Spam_bar: ----
 X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
 
-QEMU currently does not work on OpenBSD since the -fzero-call-used-regs
-option that we added to meson.build recently does not work with the
-"retguard" extension from OpenBSD's Clang. Thus let's disable the
--fzero-call-used-regs here until there's a better solution available.
+Our Makefile massages the given make arguments to invoke ninja
+accordingly. One key difference is that ninja will parallelize by
+default, whereas make only does so with -j<n> or -j. The make man page
+says that "if the -j option is given without an argument, make will not
+limit the number of jobs that can run simultaneously". We use to support
+that by replacing -j with "" (empty string) when calling ninja, so that
+it would do its auto-parallelization based on the number of CPU cores.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2278
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240411120819.56417-1-thuth@redhat.com>
+This was accidentally broken at d1ce2cc95b (Makefile: preserve
+--jobserver-auth argument when calling ninja, 2024-04-02),
+causing `make -j` to fail:
+
+$ make -j V=1
+  /usr/bin/ninja -v   -j -d keepdepfile all | cat
+  make  -C contrib/plugins/ V="1" TARGET_DIR="contrib/plugins/" all
+  ninja: fatal: invalid -j parameter
+  make: *** [Makefile:161: run-ninja] Error
+
+Let's fix that and indent the touched code for better readability.
+
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Fixes: d1ce2cc95b ("Makefile: preserve --jobserver-auth argument when calling ninja", 2024-04-02)
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Makefile | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index c9c3217ba4b..91a0aa64c64 100644
---- a/meson.build
-+++ b/meson.build
-@@ -562,7 +562,11 @@ hardening_flags = [
- #
- # NB: Clang 17 is broken and SEGVs
- # https://github.com/llvm/llvm-project/issues/75168
--if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }',
-+#
-+# NB2: This clashes with the "retguard" extension of OpenBSD's Clang
-+# https://gitlab.com/qemu-project/qemu/-/issues/2278
-+if host_os != 'openbsd' and \
-+   cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }',
-                name: '-fzero-call-used-regs=used-gpr',
-                args: ['-O2', '-fzero-call-used-regs=used-gpr'])
-     hardening_flags += '-fzero-call-used-regs=used-gpr'
+diff --git a/Makefile b/Makefile
+index 183756018ff..02a257584ba 100644
+--- a/Makefile
++++ b/Makefile
+@@ -141,8 +141,13 @@ MAKE.n = $(findstring n,$(firstword $(filter-out --%,$(MAKEFLAGS))))
+ MAKE.k = $(findstring k,$(firstword $(filter-out --%,$(MAKEFLAGS))))
+ MAKE.q = $(findstring q,$(firstword $(filter-out --%,$(MAKEFLAGS))))
+ MAKE.nq = $(if $(word 2, $(MAKE.n) $(MAKE.q)),nq)
+-NINJAFLAGS = $(if $V,-v) $(if $(MAKE.n), -n) $(if $(MAKE.k), -k0) \
+-        $(or $(filter -l% -j%, $(MAKEFLAGS)), $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1)) \
++NINJAFLAGS = \
++        $(if $V,-v) \
++        $(if $(MAKE.n), -n) \
++        $(if $(MAKE.k), -k0) \
++        $(filter-out -j, \
++          $(or $(filter -l% -j%, $(MAKEFLAGS)), \
++               $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1))) \
+         -d keepdepfile
+ ninja-cmd-goals = $(or $(MAKECMDGOALS), all)
+ ninja-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
 -- 
 2.44.0
 
