@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6510C46467
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 06:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E82B5C04FF9
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 06:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvAHi-00083P-O7; Fri, 12 Apr 2024 02:21:15 -0400
+	id 1rvAHp-00085B-3K; Fri, 12 Apr 2024 02:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvAHX-00081i-3z
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvAHW-00081b-2L
  for qemu-devel@nongnu.org; Fri, 12 Apr 2024 02:21:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvAHV-0003xC-GB
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 02:21:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvAHQ-0003vo-VF
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 02:21:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712902861;
+ s=mimecast20190719; t=1712902856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M3pHJXitrzW9t03hD8J9U0TGDtXrWQ6mDQ+QD6JttrI=;
- b=MKxrswWxzKXYOJWDIYKEZRp8RMC4JgXQNzHE/5WFyDqZjcNxpq/w+GgVSdgJpCGnpuSZON
- IJ/+4QoEPV9GAE+d8nPxUS42IWlSQQTvrOwYevw5652t5d2yfJainW1ZA4DmupVAxh13zQ
- 0W0jGtGVlHH6l+r0QUJQhr8+qD3XM30=
+ bh=uyMEVv+Qr1JCuwaBXRg/o4Yz92IoErl3L0BiP00m6ZY=;
+ b=Q4ZGwMvoP4ozNcQQTQmVRKllqfSsYwW1FvVyFJZFsesO5acGZ3EdGb0Su6u7tcLXp6C9PR
+ vvxBWj7Jr+g0yskgSLHjGah1c1yo+fuxvJX4rk/eVHUJkep2xrHQZW7CLhil1wCM+aKGEs
+ YyWtnZg8ilYtpIAASXlZhMmbskYS0s8=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-32-clnc3zOkMamtg1eqxIkzjQ-1; Fri,
- 12 Apr 2024 02:20:56 -0400
-X-MC-Unique: clnc3zOkMamtg1eqxIkzjQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-BbUu1v88PzmQK77FvRhb2Q-1; Fri,
+ 12 Apr 2024 02:20:53 -0400
+X-MC-Unique: BbUu1v88PzmQK77FvRhb2Q-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0E9B828EA6E3;
- Fri, 12 Apr 2024 06:20:56 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.215])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 527551121306;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0ED0B1C29EAD;
  Fri, 12 Apr 2024 06:20:53 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.215])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C99BB1121306;
+ Fri, 12 Apr 2024 06:20:50 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -52,9 +52,10 @@ Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>,
  Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 2/2] hw: Add a Kconfig switch for the TYPE_CPU_CLUSTER device
-Date: Fri, 12 Apr 2024 08:20:42 +0200
-Message-ID: <20240412062042.105174-3-thuth@redhat.com>
+Subject: [PATCH 1/2] hw: Fix problem with the A*MPCORE switches in the Kconfig
+ files
+Date: Fri, 12 Apr 2024 08:20:41 +0200
+Message-ID: <20240412062042.105174-2-thuth@redhat.com>
 In-Reply-To: <20240412062042.105174-1-thuth@redhat.com>
 References: <20240412062042.105174-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,87 +85,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The cpu-cluster device is only needed for some few arm and riscv
-machines. Let's avoid compiling and linking it if it is not really
-necessary.
+A9MPCORE, ARM11MPCORE and A15MPCORE are defined twice, once in
+hw/cpu/Kconfig and once in hw/arm/Kconfig. This is only possible
+by accident, since hw/cpu/Kconfig is never included from hw/Kconfig.
+Fix it by declaring the switches only in hw/cpu/Kconfig (since the
+related files reside in the hw/cpu/ folder) and by making sure that
+the file hw/cpu/Kconfig is now properly included from hw/Kconfig.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/arm/Kconfig     | 3 +++
- hw/cpu/Kconfig     | 3 +++
- hw/cpu/meson.build | 2 +-
- hw/riscv/Kconfig   | 2 ++
- 4 files changed, 9 insertions(+), 1 deletion(-)
+ hw/Kconfig     |  1 +
+ hw/arm/Kconfig | 15 ---------------
+ hw/cpu/Kconfig | 12 +++++++++---
+ 3 files changed, 10 insertions(+), 18 deletions(-)
 
+diff --git a/hw/Kconfig b/hw/Kconfig
+index 2c00936c28..9567cc475d 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -48,6 +48,7 @@ source watchdog/Kconfig
+ 
+ # arch Kconfig
+ source arm/Kconfig
++source cpu/Kconfig
+ source alpha/Kconfig
+ source avr/Kconfig
+ source cris/Kconfig
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index d97015c45c..5d4015b75a 100644
+index 893a7bff66..d97015c45c 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -485,6 +485,7 @@ config XLNX_ZYNQMP_ARM
-     select AHCI
-     select ARM_GIC
-     select CADENCE
-+    select CPU_CLUSTER
-     select DDC
-     select DPCD
-     select SDHCI
-@@ -503,6 +504,7 @@ config XLNX_VERSAL
-     default y
-     depends on TCG && AARCH64
-     select ARM_GIC
-+    select CPU_CLUSTER
-     select PL011
-     select CADENCE
-     select VIRTIO_MMIO
-@@ -688,6 +690,7 @@ config ARMSSE
-     select CMSDK_APB_DUALTIMER
-     select CMSDK_APB_UART
-     select CMSDK_APB_WATCHDOG
-+    select CPU_CLUSTER
-     select IOTKIT_SECCTL
-     select IOTKIT_SYSCTL
-     select IOTKIT_SYSINFO
+@@ -678,21 +678,6 @@ config ZAURUS
+     select NAND
+     select ECC
+ 
+-config A9MPCORE
+-    bool
+-    select A9_GTIMER
+-    select A9SCU       # snoop control unit
+-    select ARM_GIC
+-    select ARM_MPTIMER
+-
+-config A15MPCORE
+-    bool
+-    select ARM_GIC
+-
+-config ARM11MPCORE
+-    bool
+-    select ARM11SCU
+-
+ config ARMSSE
+     bool
+     select ARM_V7M
 diff --git a/hw/cpu/Kconfig b/hw/cpu/Kconfig
-index f776e884cd..baff478e1b 100644
+index 1767d028ac..f776e884cd 100644
 --- a/hw/cpu/Kconfig
 +++ b/hw/cpu/Kconfig
-@@ -12,3 +12,6 @@ config A15MPCORE
- config ARM11MPCORE
+@@ -1,8 +1,14 @@
+-config ARM11MPCORE
+-    bool
+-
+ config A9MPCORE
      bool
-     select ARM11SCU
-+
-+config CPU_CLUSTER
-+    bool
-diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
-index 38cdcfbe57..43a34c4c6e 100644
---- a/hw/cpu/meson.build
-+++ b/hw/cpu/meson.build
-@@ -1,4 +1,4 @@
--system_ss.add(files('core.c', 'cluster.c'))
-+system_ss.add(when: 'CONFIG_CPU_CLUSTER', if_true: files('core.c', 'cluster.c'))
++    select A9_GTIMER
++    select A9SCU       # snoop control unit
++    select ARM_GIC
++    select ARM_MPTIMER
  
- system_ss.add(when: 'CONFIG_ARM11MPCORE', if_true: files('arm11mpcore.c'))
- system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview_mpcore.c'))
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 5d644eb7b1..fc72ef0379 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -9,6 +9,7 @@ config IBEX
- config MICROCHIP_PFSOC
+ config A15MPCORE
      bool
-     select CADENCE_SDHCI
-+    select CPU_CLUSTER
-     select MCHP_PFSOC_DMC
-     select MCHP_PFSOC_IOSCB
-     select MCHP_PFSOC_MMUART
-@@ -68,6 +69,7 @@ config SIFIVE_E
- config SIFIVE_U
-     bool
-     select CADENCE
-+    select CPU_CLUSTER
-     select RISCV_ACLINT
-     select SIFIVE_GPIO
-     select SIFIVE_PDMA
++    select ARM_GIC
++
++config ARM11MPCORE
++    bool
++    select ARM11SCU
 -- 
 2.44.0
 
