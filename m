@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1673AC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A165C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvCZY-0008G6-9X; Fri, 12 Apr 2024 04:47:48 -0400
+	id 1rvCbH-0001Iv-5K; Fri, 12 Apr 2024 04:49:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvCZP-00085H-75; Fri, 12 Apr 2024 04:47:44 -0400
-Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
+ id 1rvCbE-0001Ie-NX; Fri, 12 Apr 2024 04:49:32 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvCZH-00053f-K3; Fri, 12 Apr 2024 04:47:38 -0400
+ id 1rvCbB-0005Gb-Ku; Fri, 12 Apr 2024 04:49:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1712911643; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=u4+DkqirLDfgVnFo+QL+8djwBn76H13Ork4i/falbKI=;
- b=aqo8TkoIa3R2pn0huN7txZJxdmKq+0vxlOIXIq45WKbal4GIrghEhLHEsvFE3AqyKjaUTsURMXqHper024dcAfXuOmTn0RZgWJtn1B4GfrJwlqM6MBnj64Yivn5sy6DXgUjMqu0nEirQvgMjKmQKkzVTZul1J6ta7TCsy/vJJzM=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R811e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045168;
+ t=1712911764; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=uHj4HVxobXUy4ZlMB2RX3KERQ7oVvKO031CGOKwBY9o=;
+ b=X1MrwWgiW8Mcp0tyTseqOow1PJRcI/VjP2sESjOk5jRE/et+MnI9kguqNS45OeQmA12O0BvGvXVnMzYVo+SuBNI3gk4lHCphtsyLd2soiXsuPMctRa91Rn3KaWyRw4jjoBYw+ZcsKzchB5jGAOdygZTt0txNGC0rcOnugvLB6q4=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046050;
  MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W4NqAEn_1712911641; 
+ TI=SMTPD_---0W4Nohny_1712911763; 
 Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W4NqAEn_1712911641) by smtp.aliyun-inc.com;
- Fri, 12 Apr 2024 16:47:22 +0800
+ fp:SMTPD_---0W4Nohny_1712911763) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 16:49:23 +0800
 From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com,
  Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 34/65] target/riscv: Add single-width scaling shift
+Subject: [PATCH 35/65] target/riscv: Add narrowing fixed-point clip
  instructions for XTheadVector
-Date: Fri, 12 Apr 2024 15:37:04 +0800
-Message-ID: <20240412073735.76413-35-eric.huang@linux.alibaba.com>
+Date: Fri, 12 Apr 2024 15:37:05 +0800
+Message-ID: <20240412073735.76413-36-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.101;
+Received-SPF: pass client-ip=115.124.30.133;
  envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
+ helo=out30-133.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
 X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
  USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,53 +76,49 @@ general differences between XTheadVector and RVV1.0.
 
 Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- target/riscv/helper.h                         | 17 +++++++++
- .../riscv/insn_trans/trans_xtheadvector.c.inc | 14 ++++---
- target/riscv/vector_helper.c                  | 24 ++++--------
- target/riscv/vector_internals.h               | 10 +++++
- target/riscv/xtheadvector_helper.c            | 38 +++++++++++++++++++
- 5 files changed, 81 insertions(+), 22 deletions(-)
+ target/riscv/helper.h                         | 13 +++++++++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 14 +++++----
+ target/riscv/vector_helper.c                  | 26 ++++-------------
+ target/riscv/vector_internals.h               | 14 +++++++++
+ target/riscv/xtheadvector_helper.c            | 29 +++++++++++++++++++
+ 5 files changed, 70 insertions(+), 26 deletions(-)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index d45477ee1b..70d3f34a59 100644
+index 70d3f34a59..6254be771f 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -1966,3 +1966,20 @@ DEF_HELPER_6(th_vwsmaccsu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
- DEF_HELPER_6(th_vwsmaccus_vx_b, void, ptr, ptr, tl, ptr, env, i32)
- DEF_HELPER_6(th_vwsmaccus_vx_h, void, ptr, ptr, tl, ptr, env, i32)
- DEF_HELPER_6(th_vwsmaccus_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+@@ -1983,3 +1983,16 @@ DEF_HELPER_6(th_vssra_vx_b, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vssra_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vssra_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vssra_vx_d, void, ptr, ptr, tl, ptr, env, i32)
 +
-+DEF_HELPER_6(th_vssrl_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssrl_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssrl_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssrl_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vssrl_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vssrl_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vssrl_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vssrl_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vssra_vx_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vnclip_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vnclip_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vnclip_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vnclipu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vnclipu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vnclipu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vnclipu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vnclipu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vnclipu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vnclip_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vnclip_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vnclip_vx_w, void, ptr, ptr, tl, ptr, env, i32)
 diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-index 175516e3a7..d1f523832b 100644
+index d1f523832b..108f3249d0 100644
 --- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
 +++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-@@ -1730,18 +1730,20 @@ GEN_OPIVX_WIDEN_TRANS_TH(th_vwsmacc_vx, opivx_widen_check_th)
- GEN_OPIVX_WIDEN_TRANS_TH(th_vwsmaccsu_vx, opivx_widen_check_th)
- GEN_OPIVX_WIDEN_TRANS_TH(th_vwsmaccus_vx, opivx_widen_check_th)
+@@ -1738,18 +1738,20 @@ GEN_OPIVX_TRANS_TH(th_vssra_vx,  opivx_check_th)
+ GEN_OPIVI_TRANS_TH(th_vssrl_vi, IMM_TRUNC_SEW, th_vssrl_vx, opivx_check_th)
+ GEN_OPIVI_TRANS_TH(th_vssra_vi, IMM_TRUNC_SEW, th_vssra_vx, opivx_check_th)
  
-+/* Vector Single-Width Scaling Shift Instructions */
-+GEN_OPIVV_TRANS_TH(th_vssrl_vv, opivv_check_th)
-+GEN_OPIVV_TRANS_TH(th_vssra_vv, opivv_check_th)
-+GEN_OPIVX_TRANS_TH(th_vssrl_vx,  opivx_check_th)
-+GEN_OPIVX_TRANS_TH(th_vssra_vx,  opivx_check_th)
-+GEN_OPIVI_TRANS_TH(th_vssrl_vi, IMM_TRUNC_SEW, th_vssrl_vx, opivx_check_th)
-+GEN_OPIVI_TRANS_TH(th_vssra_vi, IMM_TRUNC_SEW, th_vssra_vx, opivx_check_th)
++/* Vector Narrowing Fixed-Point Clip Instructions */
++GEN_OPIVV_NARROW_TRANS_TH(th_vnclipu_vv)
++GEN_OPIVV_NARROW_TRANS_TH(th_vnclip_vv)
++GEN_OPIVX_NARROW_TRANS_TH(th_vnclipu_vx)
++GEN_OPIVX_NARROW_TRANS_TH(th_vnclip_vx)
++GEN_OPIVI_NARROW_TRANS_TH(th_vnclipu_vi, IMM_ZX, th_vnclipu_vx)
++GEN_OPIVI_NARROW_TRANS_TH(th_vnclip_vi, IMM_ZX, th_vnclip_vx)
 +
  #define TH_TRANS_STUB(NAME)                                \
  static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
@@ -130,159 +126,161 @@ index 175516e3a7..d1f523832b 100644
      return require_xtheadvector(s);                        \
  }
  
--TH_TRANS_STUB(th_vssrl_vv)
--TH_TRANS_STUB(th_vssrl_vx)
--TH_TRANS_STUB(th_vssrl_vi)
--TH_TRANS_STUB(th_vssra_vv)
--TH_TRANS_STUB(th_vssra_vx)
--TH_TRANS_STUB(th_vssra_vi)
- TH_TRANS_STUB(th_vnclipu_vv)
- TH_TRANS_STUB(th_vnclipu_vx)
- TH_TRANS_STUB(th_vnclipu_vi)
+-TH_TRANS_STUB(th_vnclipu_vv)
+-TH_TRANS_STUB(th_vnclipu_vx)
+-TH_TRANS_STUB(th_vnclipu_vi)
+-TH_TRANS_STUB(th_vnclip_vv)
+-TH_TRANS_STUB(th_vnclip_vx)
+-TH_TRANS_STUB(th_vnclip_vi)
+ TH_TRANS_STUB(th_vfadd_vv)
+ TH_TRANS_STUB(th_vfadd_vf)
+ TH_TRANS_STUB(th_vfsub_vv)
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index ec11acf487..be1f1bc8e2 100644
+index be1f1bc8e2..262cb28824 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -2581,8 +2581,7 @@ GEN_VEXT_VX_RM(vsmul_vx_w, 4)
- GEN_VEXT_VX_RM(vsmul_vx_d, 8)
+@@ -646,14 +646,6 @@ GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b)
+  * Vector Integer Arithmetic Instructions
+  */
  
- /* Vector Single-Width Scaling Shift Instructions */
--static inline uint8_t
--vssrl8(CPURISCVState *env, int vxrm, uint8_t a, uint8_t b)
-+uint8_t vssrl8(CPURISCVState *env, int vxrm, uint8_t a, uint8_t b)
- {
-     uint8_t round, shift = b & 0x7;
-     uint8_t res;
-@@ -2591,24 +2590,21 @@ vssrl8(CPURISCVState *env, int vxrm, uint8_t a, uint8_t b)
-     res = (a >> shift) + round;
-     return res;
- }
--static inline uint16_t
--vssrl16(CPURISCVState *env, int vxrm, uint16_t a, uint16_t b)
-+uint16_t vssrl16(CPURISCVState *env, int vxrm, uint16_t a, uint16_t b)
- {
-     uint8_t round, shift = b & 0xf;
+-/* (TD, T1, T2, TX1, TX2) */
+-#define NOP_SSS_B int8_t, int8_t, int16_t, int8_t, int16_t
+-#define NOP_SSS_H int16_t, int16_t, int32_t, int16_t, int32_t
+-#define NOP_SSS_W int32_t, int32_t, int64_t, int32_t, int64_t
+-#define NOP_UUU_B uint8_t, uint8_t, uint16_t, uint8_t, uint16_t
+-#define NOP_UUU_H uint16_t, uint16_t, uint32_t, uint16_t, uint32_t
+-#define NOP_UUU_W uint32_t, uint32_t, uint64_t, uint32_t, uint64_t
+-
+ #define DO_SUB(N, M) (N - M)
+ #define DO_RSUB(N, M) (M - N)
  
-     round = get_round(vxrm, a, shift);
-     return (a >> shift) + round;
- }
--static inline uint32_t
--vssrl32(CPURISCVState *env, int vxrm, uint32_t a, uint32_t b)
-+uint32_t vssrl32(CPURISCVState *env, int vxrm, uint32_t a, uint32_t b)
- {
-     uint8_t round, shift = b & 0x1f;
+@@ -2677,8 +2669,7 @@ GEN_VEXT_VX_RM(vssra_vx_w, 4)
+ GEN_VEXT_VX_RM(vssra_vx_d, 8)
  
-     round = get_round(vxrm, a, shift);
-     return (a >> shift) + round;
- }
--static inline uint64_t
--vssrl64(CPURISCVState *env, int vxrm, uint64_t a, uint64_t b)
-+uint64_t vssrl64(CPURISCVState *env, int vxrm, uint64_t a, uint64_t b)
- {
-     uint8_t round, shift = b & 0x3f;
- 
-@@ -2633,32 +2629,28 @@ GEN_VEXT_VX_RM(vssrl_vx_h, 2)
- GEN_VEXT_VX_RM(vssrl_vx_w, 4)
- GEN_VEXT_VX_RM(vssrl_vx_d, 8)
- 
+ /* Vector Narrowing Fixed-Point Clip Instructions */
 -static inline int8_t
--vssra8(CPURISCVState *env, int vxrm, int8_t a, int8_t b)
-+int8_t vssra8(CPURISCVState *env, int vxrm, int8_t a, int8_t b)
- {
-     uint8_t round, shift = b & 0x7;
- 
-     round = get_round(vxrm, a, shift);
-     return (a >> shift) + round;
- }
--static inline int16_t
--vssra16(CPURISCVState *env, int vxrm, int16_t a, int16_t b)
-+int16_t vssra16(CPURISCVState *env, int vxrm, int16_t a, int16_t b)
+-vnclip8(CPURISCVState *env, int vxrm, int16_t a, int8_t b)
++int8_t vnclip8(CPURISCVState *env, int vxrm, int16_t a, int8_t b)
  {
      uint8_t round, shift = b & 0xf;
- 
-     round = get_round(vxrm, a, shift);
-     return (a >> shift) + round;
+     int16_t res;
+@@ -2696,8 +2687,7 @@ vnclip8(CPURISCVState *env, int vxrm, int16_t a, int8_t b)
+     }
  }
--static inline int32_t
--vssra32(CPURISCVState *env, int vxrm, int32_t a, int32_t b)
-+int32_t vssra32(CPURISCVState *env, int vxrm, int32_t a, int32_t b)
+ 
+-static inline int16_t
+-vnclip16(CPURISCVState *env, int vxrm, int32_t a, int16_t b)
++int16_t vnclip16(CPURISCVState *env, int vxrm, int32_t a, int16_t b)
  {
      uint8_t round, shift = b & 0x1f;
- 
-     round = get_round(vxrm, a, shift);
-     return (a >> shift) + round;
+     int32_t res;
+@@ -2715,8 +2705,7 @@ vnclip16(CPURISCVState *env, int vxrm, int32_t a, int16_t b)
+     }
  }
--static inline int64_t
--vssra64(CPURISCVState *env, int vxrm, int64_t a, int64_t b)
-+int64_t vssra64(CPURISCVState *env, int vxrm, int64_t a, int64_t b)
+ 
+-static inline int32_t
+-vnclip32(CPURISCVState *env, int vxrm, int64_t a, int32_t b)
++int32_t vnclip32(CPURISCVState *env, int vxrm, int64_t a, int32_t b)
  {
      uint8_t round, shift = b & 0x3f;
+     int64_t res;
+@@ -2748,8 +2737,7 @@ GEN_VEXT_VX_RM(vnclip_wx_b, 1)
+ GEN_VEXT_VX_RM(vnclip_wx_h, 2)
+ GEN_VEXT_VX_RM(vnclip_wx_w, 4)
  
+-static inline uint8_t
+-vnclipu8(CPURISCVState *env, int vxrm, uint16_t a, uint8_t b)
++uint8_t vnclipu8(CPURISCVState *env, int vxrm, uint16_t a, uint8_t b)
+ {
+     uint8_t round, shift = b & 0xf;
+     uint16_t res;
+@@ -2764,8 +2752,7 @@ vnclipu8(CPURISCVState *env, int vxrm, uint16_t a, uint8_t b)
+     }
+ }
+ 
+-static inline uint16_t
+-vnclipu16(CPURISCVState *env, int vxrm, uint32_t a, uint16_t b)
++uint16_t vnclipu16(CPURISCVState *env, int vxrm, uint32_t a, uint16_t b)
+ {
+     uint8_t round, shift = b & 0x1f;
+     uint32_t res;
+@@ -2780,8 +2767,7 @@ vnclipu16(CPURISCVState *env, int vxrm, uint32_t a, uint16_t b)
+     }
+ }
+ 
+-static inline uint32_t
+-vnclipu32(CPURISCVState *env, int vxrm, uint64_t a, uint32_t b)
++uint32_t vnclipu32(CPURISCVState *env, int vxrm, uint64_t a, uint32_t b)
+ {
+     uint8_t round, shift = b & 0x3f;
+     uint64_t res;
 diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 99f69ef8fa..02b5fd49f0 100644
+index 02b5fd49f0..a42dc080ec 100644
 --- a/target/riscv/vector_internals.h
 +++ b/target/riscv/vector_internals.h
-@@ -316,4 +316,14 @@ int64_t vsmul64(CPURISCVState *env, int vxrm, int64_t a, int64_t b);
+@@ -255,6 +255,12 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1,    \
+ #define WOP_SSU_B int16_t, int8_t, uint8_t, int16_t, uint16_t
+ #define WOP_SSU_H int32_t, int16_t, uint16_t, int32_t, uint32_t
+ #define WOP_SSU_W int64_t, int32_t, uint32_t, int64_t, uint64_t
++#define NOP_SSS_B int8_t, int8_t, int16_t, int8_t, int16_t
++#define NOP_SSS_H int16_t, int16_t, int32_t, int16_t, int32_t
++#define NOP_SSS_W int32_t, int32_t, int64_t, int32_t, int64_t
++#define NOP_UUU_B uint8_t, uint8_t, uint16_t, uint8_t, uint16_t
++#define NOP_UUU_H uint16_t, uint16_t, uint32_t, uint16_t, uint32_t
++#define NOP_UUU_W uint32_t, uint32_t, uint64_t, uint32_t, uint64_t
  
- uint8_t get_round(int vxrm, uint64_t v, uint8_t shift);
+ /* share functions */
+ static inline target_ulong adjust_addr(CPURISCVState *env, target_ulong addr)
+@@ -326,4 +332,12 @@ int16_t vssra16(CPURISCVState *env, int vxrm, int16_t a, int16_t b);
+ int32_t vssra32(CPURISCVState *env, int vxrm, int32_t a, int32_t b);
+ int64_t vssra64(CPURISCVState *env, int vxrm, int64_t a, int64_t b);
  
-+uint8_t vssrl8(CPURISCVState *env, int vxrm, uint8_t a, uint8_t b);
-+uint16_t vssrl16(CPURISCVState *env, int vxrm, uint16_t a, uint16_t b);
-+uint32_t vssrl32(CPURISCVState *env, int vxrm, uint32_t a, uint32_t b);
-+uint64_t vssrl64(CPURISCVState *env, int vxrm, uint64_t a, uint64_t b);
++int8_t vnclip8(CPURISCVState *env, int vxrm, int16_t a, int8_t b);
++int16_t vnclip16(CPURISCVState *env, int vxrm, int32_t a, int16_t b);
++int32_t vnclip32(CPURISCVState *env, int vxrm, int64_t a, int32_t b);
 +
-+int8_t vssra8(CPURISCVState *env, int vxrm, int8_t a, int8_t b);
-+int16_t vssra16(CPURISCVState *env, int vxrm, int16_t a, int16_t b);
-+int32_t vssra32(CPURISCVState *env, int vxrm, int32_t a, int32_t b);
-+int64_t vssra64(CPURISCVState *env, int vxrm, int64_t a, int64_t b);
++uint8_t vnclipu8(CPURISCVState *env, int vxrm, uint16_t a, uint8_t b);
++uint16_t vnclipu16(CPURISCVState *env, int vxrm, uint32_t a, uint16_t b);
++uint32_t vnclipu32(CPURISCVState *env, int vxrm, uint64_t a, uint32_t b);
 +
  #endif /* TARGET_RISCV_VECTOR_INTERNALS_H */
 diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
-index 1964855d2d..8cd3fd028b 100644
+index 8cd3fd028b..2e97a95392 100644
 --- a/target/riscv/xtheadvector_helper.c
 +++ b/target/riscv/xtheadvector_helper.c
-@@ -2523,3 +2523,41 @@ THCALL(TH_OPIVX3_RM, th_vwsmaccus_vx_w, WOP_SUS_W, H8, H4, vwsmaccus32)
- GEN_TH_VX_RM(th_vwsmaccus_vx_b, 1, 2, clearh_th)
- GEN_TH_VX_RM(th_vwsmaccus_vx_h, 2, 4, clearl_th)
- GEN_TH_VX_RM(th_vwsmaccus_vx_w, 4, 8, clearq_th)
+@@ -2561,3 +2561,32 @@ GEN_TH_VX_RM(th_vssra_vx_b, 1, 1, clearb_th)
+ GEN_TH_VX_RM(th_vssra_vx_h, 2, 2, clearh_th)
+ GEN_TH_VX_RM(th_vssra_vx_w, 4, 4, clearl_th)
+ GEN_TH_VX_RM(th_vssra_vx_d, 8, 8, clearq_th)
 +
-+/* Vector Single-Width Scaling Shift Instructions */
++/* Vector Narrowing Fixed-Point Clip Instructions */
++THCALL(TH_OPIVV2_RM, th_vnclip_vv_b, NOP_SSS_B, H1, H2, H1, vnclip8)
++THCALL(TH_OPIVV2_RM, th_vnclip_vv_h, NOP_SSS_H, H2, H4, H2, vnclip16)
++THCALL(TH_OPIVV2_RM, th_vnclip_vv_w, NOP_SSS_W, H4, H8, H4, vnclip32)
++GEN_TH_VV_RM(th_vnclip_vv_b, 1, 1, clearb_th)
++GEN_TH_VV_RM(th_vnclip_vv_h, 2, 2, clearh_th)
++GEN_TH_VV_RM(th_vnclip_vv_w, 4, 4, clearl_th)
 +
-+THCALL(TH_OPIVV2_RM, th_vssrl_vv_b, OP_UUU_B, H1, H1, H1, vssrl8)
-+THCALL(TH_OPIVV2_RM, th_vssrl_vv_h, OP_UUU_H, H2, H2, H2, vssrl16)
-+THCALL(TH_OPIVV2_RM, th_vssrl_vv_w, OP_UUU_W, H4, H4, H4, vssrl32)
-+THCALL(TH_OPIVV2_RM, th_vssrl_vv_d, OP_UUU_D, H8, H8, H8, vssrl64)
-+GEN_TH_VV_RM(th_vssrl_vv_b, 1, 1, clearb_th)
-+GEN_TH_VV_RM(th_vssrl_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV_RM(th_vssrl_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV_RM(th_vssrl_vv_d, 8, 8, clearq_th)
++THCALL(TH_OPIVX2_RM, th_vnclip_vx_b, NOP_SSS_B, H1, H2, vnclip8)
++THCALL(TH_OPIVX2_RM, th_vnclip_vx_h, NOP_SSS_H, H2, H4, vnclip16)
++THCALL(TH_OPIVX2_RM, th_vnclip_vx_w, NOP_SSS_W, H4, H8, vnclip32)
++GEN_TH_VX_RM(th_vnclip_vx_b, 1, 1, clearb_th)
++GEN_TH_VX_RM(th_vnclip_vx_h, 2, 2, clearh_th)
++GEN_TH_VX_RM(th_vnclip_vx_w, 4, 4, clearl_th)
 +
-+THCALL(TH_OPIVX2_RM, th_vssrl_vx_b, OP_UUU_B, H1, H1, vssrl8)
-+THCALL(TH_OPIVX2_RM, th_vssrl_vx_h, OP_UUU_H, H2, H2, vssrl16)
-+THCALL(TH_OPIVX2_RM, th_vssrl_vx_w, OP_UUU_W, H4, H4, vssrl32)
-+THCALL(TH_OPIVX2_RM, th_vssrl_vx_d, OP_UUU_D, H8, H8, vssrl64)
-+GEN_TH_VX_RM(th_vssrl_vx_b, 1, 1, clearb_th)
-+GEN_TH_VX_RM(th_vssrl_vx_h, 2, 2, clearh_th)
-+GEN_TH_VX_RM(th_vssrl_vx_w, 4, 4, clearl_th)
-+GEN_TH_VX_RM(th_vssrl_vx_d, 8, 8, clearq_th)
++THCALL(TH_OPIVV2_RM, th_vnclipu_vv_b, NOP_UUU_B, H1, H2, H1, vnclipu8)
++THCALL(TH_OPIVV2_RM, th_vnclipu_vv_h, NOP_UUU_H, H2, H4, H2, vnclipu16)
++THCALL(TH_OPIVV2_RM, th_vnclipu_vv_w, NOP_UUU_W, H4, H8, H4, vnclipu32)
++GEN_TH_VV_RM(th_vnclipu_vv_b, 1, 1, clearb_th)
++GEN_TH_VV_RM(th_vnclipu_vv_h, 2, 2, clearh_th)
++GEN_TH_VV_RM(th_vnclipu_vv_w, 4, 4, clearl_th)
 +
-+THCALL(TH_OPIVV2_RM, th_vssra_vv_b, OP_SSS_B, H1, H1, H1, vssra8)
-+THCALL(TH_OPIVV2_RM, th_vssra_vv_h, OP_SSS_H, H2, H2, H2, vssra16)
-+THCALL(TH_OPIVV2_RM, th_vssra_vv_w, OP_SSS_W, H4, H4, H4, vssra32)
-+THCALL(TH_OPIVV2_RM, th_vssra_vv_d, OP_SSS_D, H8, H8, H8, vssra64)
-+GEN_TH_VV_RM(th_vssra_vv_b, 1, 1, clearb_th)
-+GEN_TH_VV_RM(th_vssra_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV_RM(th_vssra_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV_RM(th_vssra_vv_d, 8, 8, clearq_th)
-+
-+THCALL(TH_OPIVX2_RM, th_vssra_vx_b, OP_SSS_B, H1, H1, vssra8)
-+THCALL(TH_OPIVX2_RM, th_vssra_vx_h, OP_SSS_H, H2, H2, vssra16)
-+THCALL(TH_OPIVX2_RM, th_vssra_vx_w, OP_SSS_W, H4, H4, vssra32)
-+THCALL(TH_OPIVX2_RM, th_vssra_vx_d, OP_SSS_D, H8, H8, vssra64)
-+GEN_TH_VX_RM(th_vssra_vx_b, 1, 1, clearb_th)
-+GEN_TH_VX_RM(th_vssra_vx_h, 2, 2, clearh_th)
-+GEN_TH_VX_RM(th_vssra_vx_w, 4, 4, clearl_th)
-+GEN_TH_VX_RM(th_vssra_vx_d, 8, 8, clearq_th)
++THCALL(TH_OPIVX2_RM, th_vnclipu_vx_b, NOP_UUU_B, H1, H2, vnclipu8)
++THCALL(TH_OPIVX2_RM, th_vnclipu_vx_h, NOP_UUU_H, H2, H4, vnclipu16)
++THCALL(TH_OPIVX2_RM, th_vnclipu_vx_w, NOP_UUU_W, H4, H8, vnclipu32)
++GEN_TH_VX_RM(th_vnclipu_vx_b, 1, 1, clearb_th)
++GEN_TH_VX_RM(th_vnclipu_vx_h, 2, 2, clearh_th)
++GEN_TH_VX_RM(th_vnclipu_vx_w, 4, 4, clearl_th)
 -- 
 2.44.0
 
