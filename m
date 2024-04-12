@@ -4,86 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC1F3C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 03:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507AAC04FF9
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 03:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv7de-000565-Lm; Thu, 11 Apr 2024 23:31:42 -0400
+	id 1rv81G-00089X-Cq; Thu, 11 Apr 2024 23:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rv7dd-00055l-Km
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 23:31:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1rv81E-00089A-NL
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 23:56:04 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rv7db-0000S2-M2
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 23:31:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712892698;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qjugd3lx1YyXYeHgDgwQHurl8fO6DLNSnvm0BcUOtI4=;
- b=KyHAJo8egNS216EvMJIKKT7jhtwYJkdFsZUStdioz9rgzifvWU8PDnhyzLLYeVRxxon9rm
- KVsrKWx6QNtSxpRuNwwC042Vcx/L11J4lo4kMp9/JWy0fkPz8QComHnTIEU5P5j0zfZ+7k
- E69Rvf4n7cYDZb1S3mdUrMH5DU3rFik=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-671-or8zg-0mOqqr1hn4jAsX5Q-1; Thu, 11 Apr 2024 23:31:36 -0400
-X-MC-Unique: or8zg-0mOqqr1hn4jAsX5Q-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5c65e666609so485844a12.1
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 20:31:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712892695; x=1713497495;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Qjugd3lx1YyXYeHgDgwQHurl8fO6DLNSnvm0BcUOtI4=;
- b=q6PWFDqPy2NBAxpZtqWUsxpv/hXWCPIjuv9BqVCKlQ+dm1orVpI3xnyc5ASheQ5F6x
- tJ9qJFBCifUY/P+dx1HGqmGYYhQAvDtiZkCpxIM+J54/nSs3lk8OnUKxe9HGRC0VD6J0
- ZA7zz93cNcmn771HOHmkSUwkz4fCHSN+8A3tRzzJiifDk6vOmyIeN3nrQsUQe+LykruW
- WOO3wQ4y1brD0H9PraDQfRytWkRTy3W77ZZ9j4SfH1+Y0OjlK1r2V23peyQpypRITyGl
- 9Hj/akC3oVfnYil7/n4nP1bXpSAZGkXjsSfNV0fUoo9OOLqaNicuLpMrlu/VlPHtqOVq
- Vj5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQYm4a9z9O32QAT2zkW5u1tLVKIt1+DwljlALstGhbCRQ6bh7XQjHOm9st/lbd6idJWXIn4cJV0QXUmYpTLG51kRJaOWY=
-X-Gm-Message-State: AOJu0YzYaJ5mfQ8UpJY2aFgSTkB1SaLv4FLHC1IgrwGKsZXYWlX0BEg5
- nyU4mjU+NOEit+UyvprmXjGyL8PukSkPcwVxpxv/GnG2XQcQlNIMAA+KAECSCBV/jbfV8uu8DJI
- gDYRgZPlnG1+64QYKMBsjIFJ0x6HuOb6gwcXwX4IQ5n2nxrWY11075JigYMMplMbjfJC5xskzgA
- Iuzj+Q8L8le0hlKD2MoLLaspeAch0=
-X-Received: by 2002:a05:6a20:7347:b0:1a9:9cf2:69c0 with SMTP id
- v7-20020a056a20734700b001a99cf269c0mr2006161pzc.34.1712892695613; 
- Thu, 11 Apr 2024 20:31:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9enC1fAc2wX6lg6nQ2fMBl3LTfchm65NRt7LVsWuttMJ/+d97t/nz2KZvzKcozeSzVfJUhev4W7k5XJYfctg=
-X-Received: by 2002:a05:6a20:7347:b0:1a9:9cf2:69c0 with SMTP id
- v7-20020a056a20734700b001a99cf269c0mr2006142pzc.34.1712892695236; Thu, 11 Apr
- 2024 20:31:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1rv81C-00049Q-Rp
+ for qemu-devel@nongnu.org; Thu, 11 Apr 2024 23:56:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1712894163; x=1744430163;
+ h=from:to:subject:date:message-id:in-reply-to:references:
+ mime-version:content-transfer-encoding;
+ bh=VUF4uTVHQQwcIgc2IkzWhuF4P13jR1cs03eo4A3sTeE=;
+ b=hCEKAh4niBq7LiGjWfOSeqzKN6+HcfG2B1jJsqvUk3tG1LULKWcbYLYz
+ 6hgx7CHVuWnNOpD4l7UkfF0a+3KQFzG09gfkEL/G5Aa6r88BqLZPWnT7R
+ Sq3eS4r9xBOYtHt4l9smNdYYnne7U4W9mg+7NelzmYuqgSwP9b6D7NQ/e
+ s7DdhpHoBrrdVw3UzPbgD6nf+IFPf/SnpRH1oElKbvjn0f+EdTJ2UKuvZ
+ SUFzGtE1N08Ct8J1j+Kk7s9slapbqZ7Xtc9z+1sJtSNEdwsU4b7DKeT0a
+ hzKSDuUVb0mHPkcyOtrFGpDQzPI6WBUzT/PyK8LibaqGOSQyEpgW1YtAJ w==;
+X-CSE-ConnectionGUID: uylvg0P7TMGCK6175ldLuw==
+X-CSE-MsgGUID: 7ZtanaSUQCO7XjfQRl9WqQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11041"; a="25792866"
+X-IronPort-AV: E=Sophos;i="6.07,195,1708416000"; d="scan'208";a="25792866"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Apr 2024 20:55:53 -0700
+X-CSE-ConnectionGUID: x05cscnhTxeyM2G7cmeCdA==
+X-CSE-MsgGUID: bfD//MJOQZuW2RtIcZnNzQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,195,1708416000"; d="scan'208";a="25779741"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by orviesa003.jf.intel.com with ESMTP; 11 Apr 2024 20:55:52 -0700
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH v5 2/3] ui/console: Introduce dpy_gl_qemu_dmabuf_set_..()
+ helpers
+Date: Thu, 11 Apr 2024 20:53:52 -0700
+Message-Id: <20240412035353.2433864-2-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240412035353.2433864-1-dongwon.kim@intel.com>
+References: <20240412035353.2433864-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
-References: <20240411080237.455060-1-lulu@redhat.com>
-In-Reply-To: <20240411080237.455060-1-lulu@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 12 Apr 2024 11:31:24 +0800
-Message-ID: <CACGkMEsD_eZ88TpZ91XEjDB6LuZyoy_=keq6d2JvKDzy3ORFKw@mail.gmail.com>
-Subject: Re: [PATCH v5] virtio-pci: Fix the crash that the vector was used
- after released.
-To: Cindy Lu <lulu@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=dongwon.kim@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -52
+X-Spam_score: -5.3
+X-Spam_bar: -----
+X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,187 +81,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 11, 2024 at 4:03=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
->
-> During the booting process of the non-standard image, the behavior of the
-> called function in qemu is as follows:
->
-> 1. vhost_net_stop() was triggered by guest image. This will call the func=
-tion
-> virtio_pci_set_guest_notifiers() with assgin=3D false,
-> virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vecto=
-r 0
->
-> 2. virtio_reset() was triggered, this will set configure vector to VIRTIO=
-_NO_VECTOR
->
-> 3.vhost_net_start() was called (at this time, the configure vector is
-> still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() wi=
-th
-> assgin=3Dtrue, so the irqfd for vector 0 is still not "init" during this =
-process
->
-> 4. The system continues to boot and sets the vector back to 0. After that
-> msix_fire_vector_notifier() was triggered to unmask the vector 0 and  mee=
-t the crash
->
-> To fix the issue, we need to support changing the vector after VIRTIO_CON=
-FIG_S_DRIVER_OK is set.
->
-> (gdb) bt
-> 0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Dsig=
-no@entry=3D6, no_tid=3Dno_tid@entry=3D0)
->     at pthread_kill.c:44
-> 1  0x00007fc87148ec53 in __pthread_kill_internal (signo=3D6, threadid=3D<=
-optimized out>) at pthread_kill.c:78
-> 2  0x00007fc87143e956 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysdeps/p=
-osix/raise.c:26
-> 3  0x00007fc8714287f4 in __GI_abort () at abort.c:79
-> 4  0x00007fc87142871b in __assert_fail_base
->     (fmt=3D0x7fc8715bbde0 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", as=
-sertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "../accel/kv=
-m/kvm-all.c", line=3D1837, function=3D<optimized out>) at assert.c:92
-> 5  0x00007fc871437536 in __GI___assert_fail
->     (assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "..=
-/accel/kvm/kvm-all.c", line=3D1837, function=3D0x5606413f06f0 <__PRETTY_FUN=
-CTION__.19> "kvm_irqchip_commit_routes") at assert.c:101
-> 6  0x0000560640f884b5 in kvm_irqchip_commit_routes (s=3D0x560642cae1f0) a=
-t ../accel/kvm/kvm-all.c:1837
-> 7  0x0000560640c98f8e in virtio_pci_one_vector_unmask
->     (proxy=3D0x560643c65f00, queue_no=3D4294967295, vector=3D0, msg=3D...=
-, n=3D0x560643c6e4c8)
->     at ../hw/virtio/virtio-pci.c:1005
-> 8  0x0000560640c99201 in virtio_pci_vector_unmask (dev=3D0x560643c65f00, =
-vector=3D0, msg=3D...)
->     at ../hw/virtio/virtio-pci.c:1070
-> 9  0x0000560640bc402e in msix_fire_vector_notifier (dev=3D0x560643c65f00,=
- vector=3D0, is_masked=3Dfalse)
->     at ../hw/pci/msix.c:120
-> 10 0x0000560640bc40f1 in msix_handle_mask_update (dev=3D0x560643c65f00, v=
-ector=3D0, was_masked=3Dtrue)
->     at ../hw/pci/msix.c:140
-> 11 0x0000560640bc4503 in msix_table_mmio_write (opaque=3D0x560643c65f00, =
-addr=3D12, val=3D0, size=3D4)
->     at ../hw/pci/msix.c:231
-> 12 0x0000560640f26d83 in memory_region_write_accessor
->     (mr=3D0x560643c66540, addr=3D12, value=3D0x7fc86b7bc628, size=3D4, sh=
-ift=3D0, mask=3D4294967295, attrs=3D...)
->     at ../system/memory.c:497
-> 13 0x0000560640f270a6 in access_with_adjusted_size
->
->      (addr=3D12, value=3D0x7fc86b7bc628, size=3D4, access_size_min=3D1, a=
-ccess_size_max=3D4, access_fn=3D0x560640f26c8d <memory_region_write_accesso=
-r>, mr=3D0x560643c66540, attrs=3D...) at ../system/memory.c:573
-> 14 0x0000560640f2a2b5 in memory_region_dispatch_write (mr=3D0x560643c6654=
-0, addr=3D12, data=3D0, op=3DMO_32, attrs=3D...)
->     at ../system/memory.c:1521
-> 15 0x0000560640f37bac in flatview_write_continue
->     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., ptr=3D0x7fc871e=
-9c028, len=3D4, addr1=3D12, l=3D4, mr=3D0x560643c66540)
->     at ../system/physmem.c:2714
-> 16 0x0000560640f37d0f in flatview_write
->     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., buf=3D0x7fc871e=
-9c028, len=3D4) at ../system/physmem.c:2756
-> 17 0x0000560640f380bf in address_space_write
->     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, attrs=
-=3D..., buf=3D0x7fc871e9c028, len=3D4)
->     at ../system/physmem.c:2863
-> 18 0x0000560640f3812c in address_space_rw
->     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, attrs=
-=3D..., buf=3D0x7fc871e9c028, len=3D4, is_write=3Dtrue) at ../system/physme=
-m.c:2873
-> --Type <RET> for more, q to quit, c to continue without paging--
-> 19 0x0000560640f8aa55 in kvm_cpu_exec (cpu=3D0x560642f205e0) at ../accel/=
-kvm/kvm-all.c:2915
-> 20 0x0000560640f8d731 in kvm_vcpu_thread_fn (arg=3D0x560642f205e0) at ../=
-accel/kvm/kvm-accel-ops.c:51
-> 21 0x00005606411949f4 in qemu_thread_start (args=3D0x560642f292b0) at ../=
-util/qemu-thread-posix.c:541
-> 22 0x00007fc87148cdcd in start_thread (arg=3D<optimized out>) at pthread_=
-create.c:442
-> 23 0x00007fc871512630 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/c=
-lone3.S:81
-> (gdb)
->
-> Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
-> Cc: qemu-stable@nongnu.org
->
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Acked-by: Jason Wang <jasowang@redhat.com>
+To enhance security in accessing the QemuDmaBuf struct, new helper
+functions for setting specific fields within the struct were introduced.
+And all occurrences where these fields were previously set directly
+have been updated to utilize these helper functions.
 
-Thanks
+Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ include/ui/console.h |  5 +++++
+ ui/console.c         | 30 ++++++++++++++++++++++++++++++
+ ui/egl-helpers.c     | 16 +++++++++-------
+ ui/gtk-egl.c         |  4 ++--
+ ui/gtk-gl-area.c     |  4 ++--
+ ui/gtk.c             |  2 +-
+ 6 files changed, 49 insertions(+), 12 deletions(-)
 
-> ---
->  hw/virtio/virtio-pci.c | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
->
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 1a7039fb0c..4f2663b27d 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -1423,6 +1423,24 @@ static int virtio_pci_add_mem_cap(VirtIOPCIProxy *=
-proxy,
->
->      return offset;
->  }
-> +static void virtio_pci_vector_change(VirtIODevice *vdev, VirtIOPCIProxy =
-*proxy,
-> +                                     int queue_no, uint16_t old_vector,
-> +                                     uint16_t new_vector)
-> +{
-> +    /*
-> +     * If the device uses irqfd and the vector changes after DRIVER_OK i=
-s
-> +     * set, we need to release the old vector and set up the new one.
-> +     */
-> +    if ((vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> +        (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled())) =
-{
-> +        if (old_vector !=3D VIRTIO_NO_VECTOR) {
-> +            kvm_virtio_pci_vector_release_one(proxy, queue_no);
-> +        }
-> +        if (new_vector !=3D VIRTIO_NO_VECTOR) {
-> +            kvm_virtio_pci_vector_use_one(proxy, queue_no);
-> +        }
-> +    }
-> +}
->
->  int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
->                             uint8_t bar, uint64_t offset, uint64_t length=
-,
-> @@ -1570,7 +1588,13 @@ static void virtio_pci_common_write(void *opaque, =
-hwaddr addr,
->          } else {
->              val =3D VIRTIO_NO_VECTOR;
->          }
-> +        vector =3D vdev->config_vector;
->          vdev->config_vector =3D val;
-> +        /*check if need to change the vector*/
-> +        if (val !=3D vector) {
-> +            virtio_pci_vector_change(vdev, proxy, VIRTIO_CONFIG_IRQ_IDX,=
- vector,
-> +                                     val);
-> +        }
->          break;
->      case VIRTIO_PCI_COMMON_STATUS:
->          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> @@ -1611,6 +1635,11 @@ static void virtio_pci_common_write(void *opaque, =
-hwaddr addr,
->              val =3D VIRTIO_NO_VECTOR;
->          }
->          virtio_queue_set_vector(vdev, vdev->queue_sel, val);
-> +        /*check if need to change the vector*/
-> +        if (val !=3D vector) {
-> +            virtio_pci_vector_change(vdev, proxy, vdev->queue_sel, vecto=
-r, val);
-> +        }
-> +
->          break;
->      case VIRTIO_PCI_COMMON_Q_ENABLE:
->          if (val =3D=3D 1) {
-> --
-> 2.43.0
->
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 6292943a82..3d9d8b9fce 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -375,6 +375,11 @@ void *dpy_gl_qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
+ int32_t dpy_gl_qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
+ bool dpy_gl_qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
+ bool dpy_gl_qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
++void dpy_gl_qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
++void dpy_gl_qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
++void dpy_gl_qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
++void dpy_gl_qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted);
++void dpy_gl_qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
+ void dpy_gl_release_dmabuf(QemuConsole *con,
+                            QemuDmaBuf *dmabuf);
+ void dpy_gl_update(QemuConsole *con,
+diff --git a/ui/console.c b/ui/console.c
+index 5d5635f783..d4ca9e6e0f 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -1244,6 +1244,36 @@ bool dpy_gl_qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf)
+     return dmabuf->draw_submitted;
+ }
+ 
++void dpy_gl_qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture)
++{
++    assert(dmabuf != NULL);
++    dmabuf->texture = texture;
++}
++
++void dpy_gl_qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
++{
++    assert(dmabuf != NULL);
++    dmabuf->fence_fd = fence_fd;
++}
++
++void dpy_gl_qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
++{
++    assert(dmabuf != NULL);
++    dmabuf->sync = sync;
++}
++
++void dpy_gl_qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted)
++{
++    assert(dmabuf != NULL);
++    dmabuf->draw_submitted = draw_submitted;
++}
++
++void dpy_gl_qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd)
++{
++    assert(dmabuf != NULL);
++    dmabuf->fd = fd;
++}
++
+ void dpy_gl_release_dmabuf(QemuConsole *con,
+                           QemuDmaBuf *dmabuf)
+ {
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index 86d64c68ce..c71a2878c2 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -348,8 +348,8 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
+         return;
+     }
+ 
+-    glGenTextures(1, &dmabuf->texture);
+-    texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
++    glGenTextures(1, &texture);
++    dpy_gl_qemu_dmabuf_set_texture(dmabuf, texture);
+     glBindTexture(GL_TEXTURE_2D, texture);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+@@ -368,7 +368,7 @@ void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
+     }
+ 
+     glDeleteTextures(1, &texture);
+-    dmabuf->texture = 0;
++    dpy_gl_qemu_dmabuf_set_texture(dmabuf, 0);
+ }
+ 
+ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+@@ -382,7 +382,7 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+         sync = eglCreateSyncKHR(qemu_egl_display,
+                                 EGL_SYNC_NATIVE_FENCE_ANDROID, NULL);
+         if (sync != EGL_NO_SYNC_KHR) {
+-            dmabuf->sync = sync;
++            dpy_gl_qemu_dmabuf_set_sync(dmabuf, sync);
+         }
+     }
+ }
+@@ -390,12 +390,14 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
+ {
+     void *sync = dpy_gl_qemu_dmabuf_get_sync(dmabuf);
++    int fence_fd;
+ 
+     if (sync) {
+-        dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
+-                                                      sync);
++        fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
++                                              sync);
++        dpy_gl_qemu_dmabuf_set_fence_fd(dmabuf, fence_fd);
+         eglDestroySyncKHR(qemu_egl_display, sync);
+-        dmabuf->sync = NULL;
++        dpy_gl_qemu_dmabuf_set_sync(dmabuf, NULL);
+     }
+ }
+ 
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index c9469af9ed..7494a34d7c 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -87,7 +87,7 @@ void gd_egl_draw(VirtualConsole *vc)
+             if (!dpy_gl_qemu_dmabuf_get_draw_submitted(dmabuf)) {
+                 return;
+             } else {
+-                dmabuf->draw_submitted = false;
++                dpy_gl_qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
+         }
+ #endif
+@@ -381,7 +381,7 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+     if (vc->gfx.guest_fb.dmabuf &&
+         !dpy_gl_qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+         graphic_hw_gl_block(vc->gfx.dcl.con, true);
+-        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
++        dpy_gl_qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_egl_set_scanout_mode(vc, true);
+         gtk_widget_queue_draw_area(area, x, y, w, h);
+         return;
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 193862ecc2..26b9689a5f 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -63,7 +63,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+             if (!dpy_gl_qemu_dmabuf_get_draw_submitted(dmabuf)) {
+                 return;
+             } else {
+-                dmabuf->draw_submitted = false;
++                dpy_gl_qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
+         }
+ #endif
+@@ -291,7 +291,7 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
+     if (vc->gfx.guest_fb.dmabuf &&
+         !dpy_gl_qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+         graphic_hw_gl_block(vc->gfx.dcl.con, true);
+-        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
++        dpy_gl_qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_gl_area_set_scanout_mode(vc, true);
+     }
+     gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 2c054a42ba..b6a1f6f897 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -601,7 +601,7 @@ void gd_hw_gl_flushed(void *vcon)
+     fence_fd = dpy_gl_qemu_dmabuf_get_fence_fd(dmabuf);
+     qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
+     close(fence_fd);
+-    dmabuf->fence_fd = -1;
++    dpy_gl_qemu_dmabuf_set_fence_fd(dmabuf, -1);
+     graphic_hw_gl_block(vc->gfx.dcl.con, false);
+ }
+ 
+-- 
+2.34.1
 
 
