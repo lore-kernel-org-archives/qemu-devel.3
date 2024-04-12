@@ -4,87 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980D8C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E56C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 10:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvEHh-0007sC-4a; Fri, 12 Apr 2024 06:37:29 -0400
+	id 1rvEUG-0001g4-AQ; Fri, 12 Apr 2024 06:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rvEHY-0007ro-4i
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:37:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvEUF-0001fr-2H
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:50:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rvEHV-0007mM-Ja
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:37:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvETz-0001ir-Lt
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 06:50:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712918235;
+ s=mimecast20190719; t=1712919009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=8ZvKcsH0ceQnfvo7hpTorewYLfN4OJB3ZHS+i24E7jA=;
- b=AlnYEEF1llgAQOmBTfEqZ62aaTMKOhH/5OAGDeLHF6yv2X3jTL+Hc1znkDc1X74fM1wZEd
- E+cYVLqDL2hTbDnrnL+BTna9cRY5xc/pVhilPb1PTNOCJUd95tHSal2tLytuuJVaXXZJTZ
- LuHtEpIy8WQNA5dviJdM5hFrd8UdgME=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=P4Kh61DnxowwkQlIDCmCT++HS8I04Oji3EERfleKqo0=;
+ b=a2mOpEBO6vrpE50b2MQVCoc9soDZpO49KV4B1NJVC37xk8H5MF/byeQqgoKj0FrFqXdN4e
+ jYXy3xJbLbPyT6N2Ah0WW6u9bHO1GqgOt9plUPhYL9eB8OxRV4dACw2uv89wn/Egk3l9oW
+ Ydb3mO1w9ZsOYht6LuddIzx+oMrVmXM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-179-F7XT-X5bP0uVqVjsVde_zQ-1; Fri, 12 Apr 2024 06:37:14 -0400
-X-MC-Unique: F7XT-X5bP0uVqVjsVde_zQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a51eb0c14c8so33502066b.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 03:37:14 -0700 (PDT)
+ us-mta-678-SNYvZHINPoOJjRUpMSTGvg-1; Fri, 12 Apr 2024 06:50:07 -0400
+X-MC-Unique: SNYvZHINPoOJjRUpMSTGvg-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4359c5929d8so7240321cf.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 03:50:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712918232; x=1713523032;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8ZvKcsH0ceQnfvo7hpTorewYLfN4OJB3ZHS+i24E7jA=;
- b=aJRpO+rYh5DC6uExLWp5XgftpADYf0Cw0cVVM0baYiHPeH1v/4NIgFOW1oCelcStNU
- KjGQQ51rSw2TPB6ZRODjvAlZ3KMr1Z4SMaakWPr8hUNKFeX3syCL23oWpKyn/QJHYn8j
- qq7xnF5wo09XrxltjbLIS+2v3pV7CteqPZWcpsXjyTxWt407gNT9Kcr0T2eGi+1QSDF4
- +hRyjZgE9SI2lLJlHFbwtJjsCN46Mf5DBo7dMFh7EgvA0dSYpk+yHVbQd2km4ml+kRug
- ocWjBo0nWGiQNBctgnwvfJ5XpYjJYABMxxSdd7WSsVe0ymT6QApt5MZbldID5Qf319gr
- 9EYQ==
-X-Gm-Message-State: AOJu0YzW+zWpmylSPYkvxH2LRNJTKw1tsfx6p1nxQr3Eanq/nu7xhlUu
- uHc7xBzH16TX5T28EhBMrj+qYQIoHr7a91DdT3Xz5Jz378u4lN5e2L3s4prc8yG+Fd6U8qV/S86
- JDE6AEW5DNzap7PkURPzecAKOop5O0cHV2D7Aw9OXxtD5gFTDaCyebBQULnx7KPRjnf/7NP5A2p
- A6mmfCozmnSiIFXlxlqdNvd5cyvzPeXBHaGRhp
-X-Received: by 2002:a17:906:fa0e:b0:a52:396e:8cc4 with SMTP id
- lo14-20020a170906fa0e00b00a52396e8cc4mr722824ejb.68.1712918231754; 
- Fri, 12 Apr 2024 03:37:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFndm7FoTcjb+Ie2AvcnIAPEKj/R2MvSMJo8Zo2nRDdn39mFGsEWIpC8jFowRfifbjrBsKd3g==
-X-Received: by 2002:a17:906:fa0e:b0:a52:396e:8cc4 with SMTP id
- lo14-20020a170906fa0e00b00a52396e8cc4mr722814ejb.68.1712918231192; 
- Fri, 12 Apr 2024 03:37:11 -0700 (PDT)
-Received: from avogadro.local ([176.206.87.39])
- by smtp.gmail.com with ESMTPSA id
- nb17-20020a1709071c9100b00a4e6582edf8sm1645313ejc.102.2024.04.12.03.37.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 03:37:10 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com
-Subject: [PATCH] ci: move external build environment setups to CentOS Stream 9
-Date: Fri, 12 Apr 2024 12:37:08 +0200
-Message-ID: <20240412103708.27650-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ d=1e100.net; s=20230601; t=1712919006; x=1713523806;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=P4Kh61DnxowwkQlIDCmCT++HS8I04Oji3EERfleKqo0=;
+ b=mYopFcoMazDcG8Z4ZeDlOG5RyCUvRrOK7R0Nfkf8lBSM4ffip1AJaUIOVaXLPPsztc
+ ouZ9FLg1JiXSYtnAeX31iTs47XXlQ/h+gIlbavsNp7lVxdcLI2bb6czfN0En9XQ0OUw8
+ SxdzOi/WhYmWC4zQoSf/p8crTV8DNdXDU2lN7NcMh9cdVAIYtRrM22OIsb9XCSRwqAke
+ 7OUymEzwnM8jQTuETgxy2kEXvAy0qtIUv/JdC4Z+Ccmi9LesnhMpyxBP6VW9xuOJ6PO5
+ bEloMKNXzliqj6jpugcNTQCXoZCti2ZuSDUz416K4CNEgRnvIUf7DkWZIIKaOFNKYyOv
+ T9aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRmIG2ESI8ypXscYn2/VDB34kZG69eHIch28I0MZK11lsOlqxMW9PBcKt3RYGjx4c4Ile/4B08ciRyBNuwTNlxu27YeOE=
+X-Gm-Message-State: AOJu0YzNRam6yyobc1gQTo3DDUKfu/njLujYqIHFAb+i7dDmFj1+QFYE
+ 7fFlOl/mAj/JXIOOLZyZfDnHfwTEmwiHIZjDVXUwYWcDCWk7pdBI6wXUaSPH1uP6dXjyzaHWO0z
+ 4HXSRxsnlKjvXSkaqToCfpIpmDTvmIKSIXooQwe4CKthCWOqn14L1
+X-Received: by 2002:ac8:5709:0:b0:436:970:75db with SMTP id
+ 9-20020ac85709000000b00436097075dbmr2830731qtw.41.1712919006640; 
+ Fri, 12 Apr 2024 03:50:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE18Q8qMAJBT2bWITZ45khzlOLGILnbFW0iHenklj0E4sZqqbTwDPNtO43GY40gdW/az/sufQ==
+X-Received: by 2002:ac8:5709:0:b0:436:970:75db with SMTP id
+ 9-20020ac85709000000b00436097075dbmr2830719qtw.41.1712919006343; 
+ Fri, 12 Apr 2024 03:50:06 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-179-142.web.vodafone.de.
+ [109.43.179.142]) by smtp.gmail.com with ESMTPSA id
+ kk5-20020a05622a2c0500b00433002038a2sm2088328qtb.44.2024.04.12.03.50.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Apr 2024 03:50:06 -0700 (PDT)
+Message-ID: <22e32244-e219-4d02-9b8e-2b01668a48be@redhat.com>
+Date: Fri, 12 Apr 2024 12:50:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ci: move external build environment setups to CentOS
+ Stream 9
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240412103708.27650-1-pbonzini@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240412103708.27650-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,251 +144,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RHEL 9 (and thus also the derivatives) are available since two years
-now, so according to QEMU's support policy, we can drop the active
-support for the previous major version 8 now.
+On 12/04/2024 12.37, Paolo Bonzini wrote:
+> RHEL 9 (and thus also the derivatives) are available since two years
+> now, so according to QEMU's support policy, we can drop the active
+> support for the previous major version 8 now.
+> 
+> Thus upgrade our CentOS Stream build environment playbooks to major
+> version 9 now.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   .../stream/{8 => 9}/build-environment.yml     | 31 ++++++-------
+>   .../stream/{8 => 9}/x86_64/configure          |  4 +-
+>   .../stream/{8 => 9}/x86_64/test-avocado       |  0
+>   scripts/ci/setup/build-environment.yml        | 44 +++++++------------
+>   4 files changed, 34 insertions(+), 45 deletions(-)
+>   rename scripts/ci/org.centos/stream/{8 => 9}/build-environment.yml (75%)
+>   rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/configure (98%)
+>   rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/test-avocado (100%)
 
-Thus upgrade our CentOS Stream build environment playbooks to major
-version 9 now.
+Looks sane to me!
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- .../stream/{8 => 9}/build-environment.yml     | 31 ++++++-------
- .../stream/{8 => 9}/x86_64/configure          |  4 +-
- .../stream/{8 => 9}/x86_64/test-avocado       |  0
- scripts/ci/setup/build-environment.yml        | 44 +++++++------------
- 4 files changed, 34 insertions(+), 45 deletions(-)
- rename scripts/ci/org.centos/stream/{8 => 9}/build-environment.yml (75%)
- rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/configure (98%)
- rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/test-avocado (100%)
-
-diff --git a/scripts/ci/org.centos/stream/8/build-environment.yml b/scripts/ci/org.centos/stream/9/build-environment.yml
-similarity index 75%
-rename from scripts/ci/org.centos/stream/8/build-environment.yml
-rename to scripts/ci/org.centos/stream/9/build-environment.yml
-index 1ead77e2cbf..cd29fe6f275 100644
---- a/scripts/ci/org.centos/stream/8/build-environment.yml
-+++ b/scripts/ci/org.centos/stream/9/build-environment.yml
-@@ -2,32 +2,32 @@
- - name: Installation of extra packages to build QEMU
-   hosts: all
-   tasks:
--    - name: Extra check for CentOS Stream 8
-+    - name: Extra check for CentOS Stream 9
-       lineinfile:
-         path: /etc/redhat-release
--        line: CentOS Stream release 8
-+        line: CentOS Stream release 9
-         state: present
-       check_mode: yes
--      register: centos_stream_8
-+      register: centos_stream_9
- 
--    - name: Enable EPEL repo on CentOS Stream 8
-+    - name: Enable EPEL repo on CentOS Stream 9
-       dnf:
-         name:
-           - epel-release
-         state: present
-       when:
--        - centos_stream_8
-+        - centos_stream_9
- 
--    - name: Enable PowerTools repo on CentOS Stream 8
-+    - name: Enable CRB repo on CentOS Stream 9
-       ini_file:
--        path: /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
--        section: powertools
-+        path: /etc/yum.repos.d/centos.repo
-+        section: crb
-         option: enabled
-         value: "1"
-       when:
--        - centos_stream_8
-+        - centos_stream_9
- 
--    - name: Install basic packages to build QEMU on CentOS Stream 8
-+    - name: Install basic packages to build QEMU on CentOS Stream 9
-       dnf:
-         name:
-           - bzip2
-@@ -42,7 +42,6 @@
-           - gettext
-           - git
-           - glib2-devel
--          - glusterfs-api-devel
-           - gnutls-devel
-           - libaio-devel
-           - libcap-ng-devel
-@@ -61,22 +60,24 @@
-           - lzo-devel
-           - make
-           - mesa-libEGL-devel
-+          - meson
-           - nettle-devel
-           - ninja-build
-           - nmap-ncat
-           - numactl-devel
-           - pixman-devel
--          - python38
-+          - python3
-+          - python3-pip
-           - python3-sphinx
-+          - python3-sphinx_rtd_theme
-+          - python3-tomli
-           - rdma-core-devel
-           - redhat-rpm-config
-           - snappy-devel
--          - spice-glib-devel
--          - spice-server-devel
-           - systemd-devel
-           - systemtap-sdt-devel
-           - tar
-           - zlib-devel
-         state: present
-       when:
--        - centos_stream_8
-+        - centos_stream_9
-diff --git a/scripts/ci/org.centos/stream/8/x86_64/configure b/scripts/ci/org.centos/stream/9/x86_64/configure
-similarity index 98%
-rename from scripts/ci/org.centos/stream/8/x86_64/configure
-rename to scripts/ci/org.centos/stream/9/x86_64/configure
-index 76781f17f41..1b6f40fd785 100755
---- a/scripts/ci/org.centos/stream/8/x86_64/configure
-+++ b/scripts/ci/org.centos/stream/9/x86_64/configure
-@@ -16,7 +16,7 @@
- # that patches adding downstream specific devices are not available.
- #
- ../configure \
----python=/usr/bin/python3.8 \
-+--python=/usr/bin/python3.9 \
- --prefix="/usr" \
- --libdir="/usr/lib64" \
- --datadir="/usr/share" \
-@@ -157,7 +157,6 @@
- --enable-docs \
- --enable-fdt \
- --enable-gcrypt \
----enable-glusterfs \
- --enable-gnutls \
- --enable-guest-agent \
- --enable-iconv \
-@@ -180,7 +179,6 @@
- --enable-seccomp \
- --enable-snappy \
- --enable-smartcard \
----enable-spice \
- --enable-system \
- --enable-tcg \
- --enable-tools \
-diff --git a/scripts/ci/org.centos/stream/8/x86_64/test-avocado b/scripts/ci/org.centos/stream/9/x86_64/test-avocado
-similarity index 100%
-rename from scripts/ci/org.centos/stream/8/x86_64/test-avocado
-rename to scripts/ci/org.centos/stream/9/x86_64/test-avocado
-diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/build-environment.yml
-index f344d1a8509..9b7d96c01b2 100644
---- a/scripts/ci/setup/build-environment.yml
-+++ b/scripts/ci/setup/build-environment.yml
-@@ -174,26 +174,26 @@
-         - ansible_facts['distribution_version'] == '22.04'
-         - ansible_facts['architecture'] == 'aarch64'
- 
--    - name: Enable EPEL repo on EL8
-+    - name: Enable EPEL repo on EL9
-       dnf:
-         name:
-           - epel-release
-         state: present
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_major_version'] == '8'
-+        - ansible_facts['distribution_major_version'] == '9'
- 
--    - name: Enable PowerTools repo on CentOS 8
-+    - name: Enable CRB repo on CentOS 9
-       ini_file:
--        path: /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
--        section: powertools
-+        path: /etc/yum.repos.d/centos.repo
-+        section: crb
-         option: enabled
-         value: "1"
-       when:
-         - ansible_facts['distribution_file_variety'] == 'CentOS'
--        - ansible_facts['distribution_major_version'] == '8'
-+        - ansible_facts['distribution_major_version'] == '9'
- 
--    - name: Install basic packages to build QEMU on EL8
-+    - name: Install basic packages to build QEMU on EL9
-       dnf:
-         # This list of packages start with tests/docker/dockerfiles/centos8.docker
-         # but only include files that are common to all distro variants and present
-@@ -211,7 +211,6 @@
-           - gettext
-           - git
-           - glib2-devel
--          - glusterfs-api-devel
-           - gnutls-devel
-           - libaio-devel
-           - libcap-ng-devel
-@@ -229,17 +228,20 @@
-           - lzo-devel
-           - make
-           - mesa-libEGL-devel
-+          - meson
-           - nettle-devel
-           - ninja-build
-           - nmap-ncat
-           - numactl-devel
-           - pixman-devel
--          - python38
-+          - python3
-+          - python3-pip
-           - python3-sphinx
-+          - python3-sphinx_rtd_theme
-+          - python3-tomli
-           - rdma-core-devel
-           - redhat-rpm-config
-           - snappy-devel
--          - spice-glib-devel
-           - systemd-devel
-           - systemtap-sdt-devel
-           - tar
-@@ -247,28 +249,16 @@
-         state: present
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--
--    - name: Install packages only available on x86 and aarch64
--      dnf:
--        # Spice server not available in ppc64le
--        name:
--          - spice-server
--          - spice-server-devel
--        state: present
--      when:
--        - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
-+        - ansible_facts['distribution_version'] == '9'
- 
-     - name: Check whether the Python runtime version is managed by alternatives
-       stat:
-         path: /etc/alternatives/python3
-       register: python3
- 
--    - name: Set default Python runtime to 3.8 on EL8
--      command: alternatives --set python3 /usr/bin/python3.8
-+    - name: Set default Python runtime to 3.9 on EL9
-+      command: alternatives --set python3 /usr/bin/python3.9
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - python3.stat.islnk and python3.stat.lnk_target != '/usr/bin/python3.8'
-+        - ansible_facts['distribution_version'] == '9'
-+        - python3.stat.exists and python3.stat.islnk and python3.stat.lnk_target != '/usr/bin/python3.9'
--- 
-2.44.0
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
