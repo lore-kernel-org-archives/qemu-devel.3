@@ -4,79 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A14B3C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450E3C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvDWH-0002f9-AI; Fri, 12 Apr 2024 05:48:29 -0400
+	id 1rvDXq-0003yI-SI; Fri, 12 Apr 2024 05:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rvDWC-0002dp-IJ
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 05:48:24 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rvDW8-0006kM-Gg
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 05:48:24 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5700106506fso335406a12.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 02:48:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvDXh-0003vm-Vd; Fri, 12 Apr 2024 05:50:00 -0400
+Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvDXf-0006xW-RV; Fri, 12 Apr 2024 05:49:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712915298; x=1713520098; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zZB8y0xNEwspYUuJxh7QF5y7cPX4V9BxIXwM0skdv1E=;
- b=Osg2HxdyAxqTkfUeH+GhjY3mfDEoF5T05WTQ6IP+t9g9o4mrm7wV7DJs+pqtlym1BI
- 1GFc3b1EfupoNHC7GrCeZUa5LEy9iF45QMXHzdsvWmybynpf+ZfpmksVS6L/CeV+uMqn
- 04dFDFMPx2G3neZ+vgiZUhWydF4ei9IpWExY8IaJOC3qy2fpPNlpqiujT7vXwNNpeWrp
- VFkF3XJDdD53NwN5RLQqeyFlZy0Lbph4bnaVxucGaruWD3aKyHunAR3iTnxuPah+Ki/e
- h9V2i1k15bmPyquM83CrMvHlZOU+JYwCD/nO+W2xefkYNfvi7y70ZkAl4gw8eFXTZN/M
- EZBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712915298; x=1713520098;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zZB8y0xNEwspYUuJxh7QF5y7cPX4V9BxIXwM0skdv1E=;
- b=qOe4nLcSdb3gQQTKSN2U5nUFsdijC7lROIthsD5h40hhxjUflWH1hBLcxJD36WG7EP
- wrmfCcdR8dPVLynYURrbuNX5jZ+QhpjMnjSYGwJ8aFikaSuDHdzGKTe/rpHwASDohcon
- zvUGXJ39WBT6TTs0i0Bcnl1afpJMBiRHA2ihr077vW9Ca+HM1mIqWRMnLBY+fDliEsbi
- 2fOSX/VfADexk0fZBHzBe3VUm9gToEIkI5n1PV2HjWCqiKtwkwnsNM7SxGViY9Tdw5Zc
- gMBhZyH5HXhDv7hNJRc3O66LNupj4gj/Q/3U5umwfJAzfaJXh1JTRbbC5SUslABy9DRe
- C0aQ==
-X-Gm-Message-State: AOJu0Ywx8Vc/3eHPJuCaEzJHRl3W3cUGaHO/OYIXywuzB2i/d0Q7yEsH
- ks98zdKUkJOBW1T8ujRjwTak8Iv/IBS49oTlAj2LXhZDH0NXRbntUeWcLLp481OGLG1Dg9ia9ah
- O8WfzYzABfyQ95QlrROv47N4jayamfVInEAVfyg==
-X-Google-Smtp-Source: AGHT+IF3TI86TAXH/Vff4KI7pLvNcQ9azZKz4+CCPp6R6F3ywlHopf2Eg1dI8da18/R4K1cJJHd3PcZ1XaQHCLjOfVU=
-X-Received: by 2002:a50:8a91:0:b0:56d:f246:bfa4 with SMTP id
- j17-20020a508a91000000b0056df246bfa4mr1938855edj.23.1712915297839; Fri, 12
- Apr 2024 02:48:17 -0700 (PDT)
+ d=linux.alibaba.com; s=default;
+ t=1712915390; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=imXaAcxAeJEThFU0GM/qjKnSob7ed7kgIB3usibiBv8=;
+ b=hwZKwu264V2ta7yl8JLorBB7tEh7KMKhlHRUhX459hBX9HowmyA1FyUYG0QM+RmW+mJq/UCAuCCpvSJEB0QGYOpsKJvvXX2WpWE1MzPQzKsB+7FSyW6RxbrOnNc2pvR30G0slVnRDfAD5bOvIGnGB05mkPSENOp4DT6nA2DY6Ms=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R461e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046050;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W4Nshnm_1712915388; 
+Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W4Nshnm_1712915388) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 17:49:49 +0800
+From: Huang Tao <eric.huang@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Huang Tao <eric.huang@linux.alibaba.com>
+Subject: [PATCH 57/65] target/riscv: Add set-X-first mask bit instructrions
+ for XTheadVector
+Date: Fri, 12 Apr 2024 15:37:27 +0800
+Message-ID: <20240412073735.76413-58-eric.huang@linux.alibaba.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
+References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
-References: <20240412073346.458116-1-richard.henderson@linaro.org>
- <20240412073346.458116-23-richard.henderson@linaro.org>
-In-Reply-To: <20240412073346.458116-23-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Apr 2024 10:48:06 +0100
-Message-ID: <CAFEAcA9cY_DOpg7+5pVtH3biLMOUburV89=EE101fyDvdsV33Q@mail.gmail.com>
-Subject: Re: [PATCH v3 22/27] linux-user/flatload: Replace sprintf() by
- snprintf()
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.98;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-98.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,22 +71,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Apr 2024 at 08:36, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
-> resulting in painful developper experience. Use snprintf() instead.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Message-Id: <20240411104340.6617-5-philmd@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+The instructions have the same function as RVV1.0. Overall there are only
+general differences between XTheadVector and RVV1.0.
 
-Rather than this, I think we should use my patch which
-drops this dead code entirely:
+Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
+---
+ target/riscv/helper.h                         |  4 ++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 36 ++++++++++-
+ target/riscv/xtheadvector_helper.c            | 64 +++++++++++++++++++
+ 3 files changed, 101 insertions(+), 3 deletions(-)
 
-https://patchew.org/QEMU/20240411115313.680433-1-peter.maydell@linaro.org/
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 2379a3431d..90a1ff2601 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -2302,3 +2302,7 @@ DEF_HELPER_6(th_vmxnor_mm, void, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_4(th_vmpopc_m, tl, ptr, ptr, env, i32)
+ 
+ DEF_HELPER_4(th_vmfirst_m, tl, ptr, ptr, env, i32)
++
++DEF_HELPER_5(th_vmsbf_m, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vmsif_m, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vmsof_m, void, ptr, ptr, ptr, env, i32)
+diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+index 45554c38fb..d41c691c31 100644
+--- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
++++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+@@ -2500,6 +2500,39 @@ static bool trans_th_vmfirst_m(DisasContext *s, arg_rmr *a)
+     }
+     return false;
+ }
++/*
++ * th.vmsbf.m set-before-first mask bit
++ * th.vmsif.m set-including-first mask bit
++ * th.vmsof.m set-only-first mask bit
++ */
++#define GEN_M_TRANS_TH(NAME)                                       \
++static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
++{                                                                  \
++    if (require_xtheadvector(s) &&                                 \
++        vext_check_isa_ill(s) &&                                   \
++        (a->rd != a->rs2) &&                                       \
++        s->vstart_eq_zero) {                                       \
++        uint32_t data = 0;                                         \
++        gen_helper_gvec_3_ptr *fn = gen_helper_##NAME;             \
++                                                                   \
++        data = FIELD_DP32(data, VDATA_TH, MLEN, s->mlen);          \
++        data = FIELD_DP32(data, VDATA_TH, VM, a->vm);              \
++        data = FIELD_DP32(data, VDATA_TH, LMUL, s->lmul);          \
++        tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd),                     \
++                           vreg_ofs(s, 0),                         \
++                           vreg_ofs(s, a->rs2),                    \
++                           tcg_env, s->cfg_ptr->vlenb,             \
++                           s->cfg_ptr->vlenb,                      \
++                           data, fn);                              \
++        finalize_rvv_inst(s);                                      \
++        return true;                                               \
++    }                                                              \
++    return false;                                                  \
++}
++
++GEN_M_TRANS_TH(th_vmsbf_m)
++GEN_M_TRANS_TH(th_vmsif_m)
++GEN_M_TRANS_TH(th_vmsof_m)
+ 
+ #define TH_TRANS_STUB(NAME)                                \
+ static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
+@@ -2507,9 +2540,6 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
+     return require_xtheadvector(s);                        \
+ }
+ 
+-TH_TRANS_STUB(th_vmsbf_m)
+-TH_TRANS_STUB(th_vmsif_m)
+-TH_TRANS_STUB(th_vmsof_m)
+ TH_TRANS_STUB(th_viota_m)
+ TH_TRANS_STUB(th_vid_v)
+ TH_TRANS_STUB(th_vext_x_v)
+diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
+index 1860e47f4f..d4f1665bf3 100644
+--- a/target/riscv/xtheadvector_helper.c
++++ b/target/riscv/xtheadvector_helper.c
+@@ -3558,3 +3558,67 @@ target_ulong HELPER(th_vmfirst_m)(void *v0, void *vs2, CPURISCVState *env,
+     env->vstart = 0;
+     return -1LL;
+ }
++
++enum set_mask_type_th {
++    ONLY_FIRST = 1,
++    INCLUDE_FIRST,
++    BEFORE_FIRST,
++};
++
++static void vmsetm(void *vd, void *v0, void *vs2, CPURISCVState *env,
++                   uint32_t desc, enum set_mask_type_th type)
++{
++    uint32_t mlen = th_mlen(desc);
++    uint32_t vlmax = (env_archcpu(env)->cfg.vlenb << 3) / mlen;
++    uint32_t vm = th_vm(desc);
++    uint32_t vl = env->vl;
++    int i;
++    bool first_mask_bit = false;
++
++    for (i = env->vstart; i < vl; i++) {
++        if (!vm && !th_elem_mask(v0, mlen, i)) {
++            continue;
++        }
++        /* write a zero to all following active elements */
++        if (first_mask_bit) {
++            th_set_elem_mask(vd, mlen, i, 0);
++            continue;
++        }
++        if (th_elem_mask(vs2, mlen, i)) {
++            first_mask_bit = true;
++            if (type == BEFORE_FIRST) {
++                th_set_elem_mask(vd, mlen, i, 0);
++            } else {
++                th_set_elem_mask(vd, mlen, i, 1);
++            }
++        } else {
++            if (type == ONLY_FIRST) {
++                th_set_elem_mask(vd, mlen, i, 0);
++            } else {
++                th_set_elem_mask(vd, mlen, i, 1);
++            }
++        }
++    }
++    env->vstart = 0;
++    for (; i < vlmax; i++) {
++        th_set_elem_mask(vd, mlen, i, 0);
++    }
++}
++
++void HELPER(th_vmsbf_m)(void *vd, void *v0, void *vs2, CPURISCVState *env,
++                        uint32_t desc)
++{
++    vmsetm(vd, v0, vs2, env, desc, BEFORE_FIRST);
++}
++
++void HELPER(th_vmsif_m)(void *vd, void *v0, void *vs2, CPURISCVState *env,
++                        uint32_t desc)
++{
++    vmsetm(vd, v0, vs2, env, desc, INCLUDE_FIRST);
++}
++
++void HELPER(th_vmsof_m)(void *vd, void *v0, void *vs2, CPURISCVState *env,
++                        uint32_t desc)
++{
++    vmsetm(vd, v0, vs2, env, desc, ONLY_FIRST);
++}
+-- 
+2.44.0
 
--- PMM
 
