@@ -4,67 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD08C04FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C208C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvCTg-0007eM-DX; Fri, 12 Apr 2024 04:41:44 -0400
+	id 1rvCTl-0008PM-Aj; Fri, 12 Apr 2024 04:41:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rvCT1-0006qQ-DP
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 04:41:04 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvCTZ-0007Ic-Ct; Fri, 12 Apr 2024 04:41:39 -0400
+Received: from out30-99.freemail.mail.aliyun.com ([115.124.30.99])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rvCSS-0002ja-Er
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 04:41:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712911228; x=1744447228;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=Gye3ezfUZUQgYabKp57UFmi3HZOsbTFqJkeu2em8YCM=;
- b=aeC5A2kPHeBErGp+o6Xj86LscBcPFsiMyGP6qqdyUfYKpAbNtnw1VsAc
- vHDAoZWiKGiyrdY14yXYb1hJJTYldiNekjacis83gI+jyYNR/kIeS0tWO
- VC90bFaf19vOnipIsAFNMbS8GmNpEE0xJ0aWxHxCsjwV0DhhM+PYy2iDA
- K3DKf6Fj3b+0JYa/dLcIelP//SHKZ9sWw1AH0vplJrjsN1d+Vlyzai6nQ
- j8fhGGwbHvDACJOWQpa75qcKcAezg3aM8y5HsSmxSyPKiHgUl7s0otiTI
- I1bBKS04h3D/yhCrcLFJXiZpvKB/hJNMQJxs+Iyhj1fJeY0RytDy4S2dy Q==;
-X-CSE-ConnectionGUID: 8RwkV5+gQF6G+jSrHNszvw==
-X-CSE-MsgGUID: hEHquW+XRWq4Eda93Y7ctw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11041"; a="12143747"
-X-IronPort-AV: E=Sophos;i="6.07,195,1708416000"; d="scan'208";a="12143747"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Apr 2024 01:40:14 -0700
-X-CSE-ConnectionGUID: H+uqnmNSTPWs4DG7kgruWg==
-X-CSE-MsgGUID: 41y+7qHXTo2M9fMNokmIuQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,195,1708416000"; d="scan'208";a="21261803"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 12 Apr 2024 01:40:12 -0700
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH-for-9.0?] docs: i386: pc: Update maximum CPU numbers for PC Q35
-Date: Fri, 12 Apr 2024 16:53:58 +0800
-Message-Id: <20240412085358.731560-1-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvCTN-0003Aq-2P; Fri, 12 Apr 2024 04:41:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1712911279; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=TA2IBlLpBlvP8g1Ia3w0hCZemcZTshgWCLhS4KfguoM=;
+ b=te1j7G0CPnkUqe0UflrGPMBq1/KG7TLFYtTpGnu5lwfnpFJsvyJSOzqxnbHG69GuzLzNyZzsvmHILrByXT8zIINZ+Bi4gmOBYqjMFJfDbt/LxcXN0xO6TzEYrlIqxISWWIclmXKWeAcSEtAGIHIyRFgoENybl/9TZ4Rte/0AlkY=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046049;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W4NfL5J_1712911277; 
+Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W4NfL5J_1712911277) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 16:41:18 +0800
+From: Huang Tao <eric.huang@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Huang Tao <eric.huang@linux.alibaba.com>
+Subject: [PATCH 31/65] target/riscv: Add single-width average add and sub
+ instructions for XTheadVector
+Date: Fri, 12 Apr 2024 15:37:01 +0800
+Message-ID: <20240412073735.76413-32-eric.huang@linux.alibaba.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
+References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.12;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.99;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-99.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,32 +71,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+The instructions have the same function as RVV1.0. Overall there are only
+general differences between XTheadVector and RVV1.0.
 
-Commit e4e98c7eebfa ("pc: q35: Bump max_cpus to 4096 vcpus") increases
-the supported CPUs for PC Q35 machine.
-
-Update maximum CPU numbers for PC Q35 in the document.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- docs/system/target-i386-desc.rst.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/helper.h                         | 17 +++++++++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 12 ++++---
+ target/riscv/vector_helper.c                  |  8 ++---
+ target/riscv/vector_internals.h               |  5 +++
+ target/riscv/xtheadvector_helper.c            | 36 +++++++++++++++++++
+ 5 files changed, 69 insertions(+), 9 deletions(-)
 
-diff --git a/docs/system/target-i386-desc.rst.inc b/docs/system/target-i386-desc.rst.inc
-index 5ebbcda9db4c..319e540573d3 100644
---- a/docs/system/target-i386-desc.rst.inc
-+++ b/docs/system/target-i386-desc.rst.inc
-@@ -36,7 +36,7 @@ The QEMU PC System emulator simulates the following peripherals:
- -  PCI UHCI, OHCI, EHCI or XHCI USB controller and a virtual USB-1.1
-    hub.
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index c5156d9939..aab2979328 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1918,3 +1918,20 @@ DEF_HELPER_6(th_vssub_vx_b, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vssub_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vssub_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vssub_vx_d, void, ptr, ptr, tl, ptr, env, i32)
++
++DEF_HELPER_6(th_vaadd_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vaadd_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vaadd_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vaadd_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vaadd_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vaadd_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vaadd_vx_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vaadd_vx_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vx_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vasub_vx_d, void, ptr, ptr, tl, ptr, env, i32)
+diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+index e60da5b237..59da1e4b3f 100644
+--- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
++++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+@@ -1710,17 +1710,19 @@ GEN_OPIVX_TRANS_TH(th_vssub_vx,  opivx_check_th)
+ GEN_OPIVI_TRANS_TH(th_vsaddu_vi, IMM_ZX, th_vsaddu_vx, opivx_check_th)
+ GEN_OPIVI_TRANS_TH(th_vsadd_vi, IMM_SX, th_vsadd_vx, opivx_check_th)
  
--SMP is supported with up to 255 CPUs.
-+SMP is supported with up to 255 CPUs (and 4096 CPUs for PC Q35 machine).
++/* Vector Single-Width Averaging Add and Subtract */
++GEN_OPIVV_TRANS_TH(th_vaadd_vv, opivv_check_th)
++GEN_OPIVV_TRANS_TH(th_vasub_vv, opivv_check_th)
++GEN_OPIVX_TRANS_TH(th_vaadd_vx,  opivx_check_th)
++GEN_OPIVX_TRANS_TH(th_vasub_vx,  opivx_check_th)
++GEN_OPIVI_TRANS_TH(th_vaadd_vi, IMM_SX, th_vaadd_vx, opivx_check_th)
++
+ #define TH_TRANS_STUB(NAME)                                \
+ static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
+ {                                                          \
+     return require_xtheadvector(s);                        \
+ }
  
- QEMU uses the PC BIOS from the Seabios project and the Plex86/Bochs LGPL
- VGA BIOS.
+-TH_TRANS_STUB(th_vaadd_vv)
+-TH_TRANS_STUB(th_vaadd_vx)
+-TH_TRANS_STUB(th_vaadd_vi)
+-TH_TRANS_STUB(th_vasub_vv)
+-TH_TRANS_STUB(th_vasub_vx)
+ TH_TRANS_STUB(th_vsmul_vv)
+ TH_TRANS_STUB(th_vsmul_vx)
+ TH_TRANS_STUB(th_vwsmaccu_vv)
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 8664a3d4ef..ea1e449174 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -2323,7 +2323,7 @@ static inline uint8_t get_round(int vxrm, uint64_t v, uint8_t shift)
+     return 0; /* round-down (truncate) */
+ }
+ 
+-static inline int32_t aadd32(CPURISCVState *env, int vxrm, int32_t a,
++int32_t aadd32(CPURISCVState *env, int vxrm, int32_t a,
+                              int32_t b)
+ {
+     int64_t res = (int64_t)a + b;
+@@ -2332,7 +2332,7 @@ static inline int32_t aadd32(CPURISCVState *env, int vxrm, int32_t a,
+     return (res >> 1) + round;
+ }
+ 
+-static inline int64_t aadd64(CPURISCVState *env, int vxrm, int64_t a,
++int64_t aadd64(CPURISCVState *env, int vxrm, int64_t a,
+                              int64_t b)
+ {
+     int64_t res = a + b;
+@@ -2398,7 +2398,7 @@ GEN_VEXT_VX_RM(vaaddu_vx_h, 2)
+ GEN_VEXT_VX_RM(vaaddu_vx_w, 4)
+ GEN_VEXT_VX_RM(vaaddu_vx_d, 8)
+ 
+-static inline int32_t asub32(CPURISCVState *env, int vxrm, int32_t a,
++int32_t asub32(CPURISCVState *env, int vxrm, int32_t a,
+                              int32_t b)
+ {
+     int64_t res = (int64_t)a - b;
+@@ -2407,7 +2407,7 @@ static inline int32_t asub32(CPURISCVState *env, int vxrm, int32_t a,
+     return (res >> 1) + round;
+ }
+ 
+-static inline int64_t asub64(CPURISCVState *env, int vxrm, int64_t a,
++int64_t asub64(CPURISCVState *env, int vxrm, int64_t a,
+                              int64_t b)
+ {
+     int64_t res = (int64_t)a - b;
+diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
+index a70ebdabe4..19f174f4c8 100644
+--- a/target/riscv/vector_internals.h
++++ b/target/riscv/vector_internals.h
+@@ -303,4 +303,9 @@ uint8_t ssubu8(CPURISCVState *env, int vxrm, uint8_t a, uint8_t b);
+ uint16_t ssubu16(CPURISCVState *env, int vxrm, uint16_t a, uint16_t b);
+ uint32_t ssubu32(CPURISCVState *env, int vxrm, uint32_t a, uint32_t b);
+ uint64_t ssubu64(CPURISCVState *env, int vxrm, uint64_t a, uint64_t b);
++
++int32_t aadd32(CPURISCVState *env, int vxrm, int32_t a, int32_t b);
++int64_t aadd64(CPURISCVState *env, int vxrm, int64_t a, int64_t b);
++int32_t asub32(CPURISCVState *env, int vxrm, int32_t a, int32_t b);
++int64_t asub64(CPURISCVState *env, int vxrm, int64_t a, int64_t b);
+ #endif /* TARGET_RISCV_VECTOR_INTERNALS_H */
+diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
+index 5e21ab2e07..06ac5940b7 100644
+--- a/target/riscv/xtheadvector_helper.c
++++ b/target/riscv/xtheadvector_helper.c
+@@ -2258,3 +2258,39 @@ GEN_TH_VX_RM(th_vssub_vx_b, 1, 1, clearb_th)
+ GEN_TH_VX_RM(th_vssub_vx_h, 2, 2, clearh_th)
+ GEN_TH_VX_RM(th_vssub_vx_w, 4, 4, clearl_th)
+ GEN_TH_VX_RM(th_vssub_vx_d, 8, 8, clearq_th)
++
++THCALL(TH_OPIVV2_RM, th_vaadd_vv_b, OP_SSS_B, H1, H1, H1, aadd32)
++THCALL(TH_OPIVV2_RM, th_vaadd_vv_h, OP_SSS_H, H2, H2, H2, aadd32)
++THCALL(TH_OPIVV2_RM, th_vaadd_vv_w, OP_SSS_W, H4, H4, H4, aadd32)
++THCALL(TH_OPIVV2_RM, th_vaadd_vv_d, OP_SSS_D, H8, H8, H8, aadd64)
++GEN_TH_VV_RM(th_vaadd_vv_b, 1, 1, clearb_th)
++GEN_TH_VV_RM(th_vaadd_vv_h, 2, 2, clearh_th)
++GEN_TH_VV_RM(th_vaadd_vv_w, 4, 4, clearl_th)
++GEN_TH_VV_RM(th_vaadd_vv_d, 8, 8, clearq_th)
++
++THCALL(TH_OPIVX2_RM, th_vaadd_vx_b, OP_SSS_B, H1, H1, aadd32)
++THCALL(TH_OPIVX2_RM, th_vaadd_vx_h, OP_SSS_H, H2, H2, aadd32)
++THCALL(TH_OPIVX2_RM, th_vaadd_vx_w, OP_SSS_W, H4, H4, aadd32)
++THCALL(TH_OPIVX2_RM, th_vaadd_vx_d, OP_SSS_D, H8, H8, aadd64)
++GEN_TH_VX_RM(th_vaadd_vx_b, 1, 1, clearb_th)
++GEN_TH_VX_RM(th_vaadd_vx_h, 2, 2, clearh_th)
++GEN_TH_VX_RM(th_vaadd_vx_w, 4, 4, clearl_th)
++GEN_TH_VX_RM(th_vaadd_vx_d, 8, 8, clearq_th)
++
++THCALL(TH_OPIVV2_RM, th_vasub_vv_b, OP_SSS_B, H1, H1, H1, asub32)
++THCALL(TH_OPIVV2_RM, th_vasub_vv_h, OP_SSS_H, H2, H2, H2, asub32)
++THCALL(TH_OPIVV2_RM, th_vasub_vv_w, OP_SSS_W, H4, H4, H4, asub32)
++THCALL(TH_OPIVV2_RM, th_vasub_vv_d, OP_SSS_D, H8, H8, H8, asub64)
++GEN_TH_VV_RM(th_vasub_vv_b, 1, 1, clearb_th)
++GEN_TH_VV_RM(th_vasub_vv_h, 2, 2, clearh_th)
++GEN_TH_VV_RM(th_vasub_vv_w, 4, 4, clearl_th)
++GEN_TH_VV_RM(th_vasub_vv_d, 8, 8, clearq_th)
++
++THCALL(TH_OPIVX2_RM, th_vasub_vx_b, OP_SSS_B, H1, H1, asub32)
++THCALL(TH_OPIVX2_RM, th_vasub_vx_h, OP_SSS_H, H2, H2, asub32)
++THCALL(TH_OPIVX2_RM, th_vasub_vx_w, OP_SSS_W, H4, H4, asub32)
++THCALL(TH_OPIVX2_RM, th_vasub_vx_d, OP_SSS_D, H8, H8, asub64)
++GEN_TH_VX_RM(th_vasub_vx_b, 1, 1, clearb_th)
++GEN_TH_VX_RM(th_vasub_vx_h, 2, 2, clearh_th)
++GEN_TH_VX_RM(th_vasub_vx_w, 4, 4, clearl_th)
++GEN_TH_VX_RM(th_vasub_vx_d, 8, 8, clearq_th)
 -- 
-2.34.1
+2.44.0
 
 
