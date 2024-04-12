@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB4EC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 11:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C309CC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 11:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvEkk-0007vh-Js; Fri, 12 Apr 2024 07:07:31 -0400
+	id 1rvEll-0008NY-Qz; Fri, 12 Apr 2024 07:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvEkh-0007vF-OW
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:07:28 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvEkg-0004uM-10
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:07:27 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4167fce0a41so10429475e9.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 04:07:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712920044; x=1713524844; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZTQBHv8uoMiQWEf8a6YUUTEodp8zg0PUA1ZmymYUuoE=;
- b=gEqqya5/6stunARk6YqL321sH1XL+oiFSrpvP+yrf4wA1RKcdx2Dm9OqouhKL7V1BJ
- 8owdEgiCjbGZtJWqeUWNj30qc6MzIOhDW8+B99DcboCIM5nt38Nnao21EJTtP/sCPdZ3
- /iIaFevgl1dVYwShOVocGkSB+HxBR5ZKEf169WRrkiqtZySPSZxldnMauAOJn4iXEqxq
- bTQFBBu8xrVJhFPNG5soKwzp+viZSwxNUpcBZn25gxgH+kyttxUdMP14P/7DIAY+b3CU
- BjzWOVHuIrvviwTYUeMKccKqFAKZZ7KIkkMG9FyyB4jOrbgf+cxjyZ/e82eIxOkry/jT
- ge0g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rvElj-0008MZ-Nr
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:08:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rvElh-0005Kt-0l
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 07:08:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712920107;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J7FOY5huWn4O8JB3aXhFdTLL8lkSGoqBoyCHJwWo+QI=;
+ b=TM6M8Qs+LOFJhA76uSVzXIu/PIRb1/Y2VZ/hgK3JGIZIITiai2m5oYlT8/VhCUUKI0fVAf
+ wG1MecDyFicN74SKKp0pPObo5j1C1zqS+dlkOYaDklhOlvPDt1Vt0DuW6E5KaiGsHyPn/h
+ CxaFWDzCpNkpkGfCz7jy8JaWrBshUT4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-O0e1Cx5CMbu2W8dIZfIGoQ-1; Fri, 12 Apr 2024 07:08:26 -0400
+X-MC-Unique: O0e1Cx5CMbu2W8dIZfIGoQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-343eb273904so483903f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 04:08:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712920044; x=1713524844;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZTQBHv8uoMiQWEf8a6YUUTEodp8zg0PUA1ZmymYUuoE=;
- b=k9OMZ/kziasAppGkc81cYl2SIgNAfCnkpIPvlttHyoRdEYQiPkp9K4IWoAuD3LTxcC
- njPNFbcWN0WR1vRhmXNLLN7m8lKewfiUxpQEomOapOV12Omeij/1D06274pUXaiIqibJ
- wX8ZpT/JJ9oNopVNBGVNw9lVyktaZE413e7SwivUVA6MfW0vZBDkNf6QFluojMIS+Wvc
- V9ipTVwrjAn6iG4jhyJv/aHHTDbYa3gpuODWu2HCsnRfDw33YSnx1a8lkxeRzcQ0sZDP
- 6mjuQ8vVLnu97PcN7TZqBIgbMQhjtXeJv5hmAWr4FG/vidm5BpcQssfVu7vKmdn5klP7
- sIwg==
+ d=1e100.net; s=20230601; t=1712920105; x=1713524905;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J7FOY5huWn4O8JB3aXhFdTLL8lkSGoqBoyCHJwWo+QI=;
+ b=Wdm5FfXHXsopIzwqrwTAS/IjUzxU/vOTDqvc/egZCoGr0JCVRiiszyxf5ith4CS3F+
+ 9rA555oxewhAHAWV2Yj9eZQy0yhY0rCVGO02aP7VMwwkrRDgVfgj40W892DiawuBxyJW
+ uUbPxiiucvRlFhV2yAFG3k0JBW275nxcpPPrfe0V0VczySLk2auCxCRYvj+c+IwZsY3v
+ Panie/rd2pe/4leScVRurJBAWiZmELSO/wrdyjT1WsG+/8wOIlar89Tv4g7mIy5VnjIv
+ FX2igFdFeALTxr5FQnC2HZofHBedTdVKzQbI87CV3wPG69sjEOh4z/8DheaEZ6yi7vTP
+ tLaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV90X9W6KpW3NELlzj1w5ci1HV6grHpPRhGiuHZ/91M5dzrHTBbfsEx5iC6jKF4sAkOzL9PZMuvU+68CdLuUUIYavPeTg0=
-X-Gm-Message-State: AOJu0YyzXYbfvJTsr2EnCIhfiEp6YRxAJ3KMnsxYuDLm2Hfd7hAbKkCC
- 6SQ2BiSky6HAp2AOLDmEAQCWARnEjpOiOnFI4ephCKyjR1Q09bl6YR2/UWuNsL8=
-X-Google-Smtp-Source: AGHT+IFTyYLQ/e2nxTBjbmtBC9oF6s/r/mA6UwZd9N2um8Lu2VaGTFN6p/fDDRnAQkoY7+bEazjtWA==
-X-Received: by 2002:a05:600c:3146:b0:416:259d:b250 with SMTP id
- h6-20020a05600c314600b00416259db250mr2075054wmo.18.1712920043594; 
- Fri, 12 Apr 2024 04:07:23 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- j19-20020a05600c191300b0041663c75ef1sm5369441wmq.32.2024.04.12.04.07.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 04:07:23 -0700 (PDT)
-Message-ID: <0eb8a3b5-cff2-4ce8-8e6d-ab4dc2dda84a@linaro.org>
-Date: Fri, 12 Apr 2024 13:07:22 +0200
+ AJvYcCULeozs5QyUGM6t902GmCk9t19Hb2z21F/CCzU1c2dW9a4pUyKwyifXyH3M5aOTn/px/F8MCn8e05KI3/5z0DESogkL8DI=
+X-Gm-Message-State: AOJu0Yzk9FZO4Y0BDdPttHwD7zZ7G71L9rpv3jHJLAdtPJvRqhXwFzPa
+ 9CXc6elhgenetB/GvpchyAdIMoIMS9tQr32fGas25Pyuk0MnvYbvBlFR7cHjDu/vvQSqwo0R4wQ
+ +G+iZLHIcf6shmM9IpRllPs2fP6X2uqcT2BJMz7MThNcdHRC8lYKXSC+D9dAnFYtLUuXzLOn3do
+ +OQUINHUVY+qxStWjIt191705gEo4=
+X-Received: by 2002:adf:f1c3:0:b0:346:9850:f8bd with SMTP id
+ z3-20020adff1c3000000b003469850f8bdmr1532275wro.23.1712920104871; 
+ Fri, 12 Apr 2024 04:08:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWO/LZ4K2IQs0GgQBTB+7iFCKSqs5UPHkXJL2PXTI5ErtjFZlc8Ygn+AC3zD9Bb2hDdFy2nKWXisNqn/eJ3BY=
+X-Received: by 2002:adf:f1c3:0:b0:346:9850:f8bd with SMTP id
+ z3-20020adff1c3000000b003469850f8bdmr1532262wro.23.1712920104576; Fri, 12 Apr
+ 2024 04:08:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Final build system fixes for 9.0
-To: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240412100401.20047-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240412100401.20047-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <0eb8a3b5-cff2-4ce8-8e6d-ab4dc2dda84a@linaro.org>
+In-Reply-To: <0eb8a3b5-cff2-4ce8-8e6d-ab4dc2dda84a@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 12 Apr 2024 13:08:12 +0200
+Message-ID: <CABgObfbCae+4R7dxxVRMMmMc9BgYaGqVBMFTOSzY47u6_ykuAw@mail.gmail.com>
+Subject: Re: [PULL 0/2] Final build system fixes for 9.0
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,37 +97,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+> Since these 2 patches don't modify what we can build with v9.0.0-rc3,
+> would it be acceptable to merge them without having to produce a
+> v9.0.0-rc4 tag before the final release?
 
-On 12/4/24 12:03, Paolo Bonzini wrote:
-> The following changes since commit 02e16ab9f4f19c4bdd17c51952d70e2ded74c6bf:
-> 
->    Update version for v9.0.0-rc3 release (2024-04-10 18:05:18 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> 
-> for you to fetch changes up to 2d6d995709482cc8b6a76dbb5334a28001a14a9a:
-> 
->    meson.build: Disable -fzero-call-used-regs on OpenBSD (2024-04-12 12:02:12 +0200)
-> 
-> ----------------------------------------------------------------
-> build system fixes
+I didn't want to ask you about that, but I agree it would not be an issue.
 
-Since these 2 patches don't modify what we can build with v9.0.0-rc3,
-would it be acceptable to merge them without having to produce a
-v9.0.0-rc4 tag before the final release?
-
-> ----------------------------------------------------------------
-> Matheus Tavares Bernardino (1):
->        Makefile: fix use of -j without an argument
-> 
-> Thomas Huth (1):
->        meson.build: Disable -fzero-call-used-regs on OpenBSD
-> 
->   Makefile    | 9 +++++++--
->   meson.build | 6 +++++-
->   2 files changed, 12 insertions(+), 3 deletions(-)
+Paolo
 
 
