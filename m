@@ -4,68 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B68C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 03:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FE9C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 04:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv81I-00089p-4T; Thu, 11 Apr 2024 23:56:08 -0400
+	id 1rv89a-0002BP-GR; Fri, 12 Apr 2024 00:04:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rv81G-00089b-Jq
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 23:56:06 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <Ray.Huang@amd.com>) id 1rv89Y-0002BC-Jw
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 00:04:40 -0400
+Received: from mail-mw2nam12on2086.outbound.protection.outlook.com
+ ([40.107.244.86] helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rv81E-00049j-Be
- for qemu-devel@nongnu.org; Thu, 11 Apr 2024 23:56:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1712894164; x=1744430164;
- h=from:to:subject:date:message-id:in-reply-to:references:
- mime-version:content-transfer-encoding;
- bh=RT/BH3qg8Jmw7tZPJXCSDX0TBSe2uO95fK+KjIqEghc=;
- b=O5/dg4AiwHhQaWuiukZqAAMu/8ewb+YfaJJLQm3iMEKMAFaOvXIOBoSq
- SpqT5Cw2EuNClSyD2pEXszhsDWuMjiJgLb8ZZRKhut5wp7StFm/aTs/Zv
- Pjv6MUnjcw5EKAXbkBzZWDCMengnC3c8WClqSSm2mQu7WVube96wjSS6I
- TPHeV2oVMkHXY66COF8t6ufBqbVZFqSLfBAmrziOUtWD0e+c8iL/EzXnh
- xGmJFJmdzZtF+MROpIR2K6jCYy01+Os8DaqaD4kCpAIvyau7hV1W0VMPS
- IdDT7GbFeLuF7Jwd6CETmSkq6sCoKvNIsp4XvZXmd6s6gdifft0Gbyh6x w==;
-X-CSE-ConnectionGUID: SPU0eCXJRXygoBCAidWtFQ==
-X-CSE-MsgGUID: o8og5swQR+WSvsFVLLGIsg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11041"; a="25792867"
-X-IronPort-AV: E=Sophos;i="6.07,195,1708416000"; d="scan'208";a="25792867"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Apr 2024 20:55:53 -0700
-X-CSE-ConnectionGUID: U4DhnDJiS2iNejgun2EhXQ==
-X-CSE-MsgGUID: rsB6GuLNTuuUoaVx8jSWkQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,195,1708416000"; d="scan'208";a="25779742"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa003.jf.intel.com with ESMTP; 11 Apr 2024 20:55:53 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Subject: [PATCH v5 3/3] ui/console: Introduce dpy_gl_qemu_dmabuf_new() and
- free() helpers
-Date: Thu, 11 Apr 2024 20:53:53 -0700
-Message-Id: <20240412035353.2433864-3-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240412035353.2433864-1-dongwon.kim@intel.com>
-References: <20240412035353.2433864-1-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <Ray.Huang@amd.com>) id 1rv89K-0005ZW-TZ
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 00:04:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=D3Eugu5zqKyBMsvMnhMHvCOKa1B5cNxeRDauc2L0dqWUH4dqYnZLvDpCe994ndDLcoLN6e8H0p6qc0L6dKVqh2piMKAsuHbjaK1gbF2j7+YJvCm8Q4cM9xS9rGNZlxvBe+/KhJ9Zccd1hzf78ygdAY75zKQBaQgv1UHsi6f1Up9APwHVMqosVPGsoNlzb/91rt55yj+I68rmWNdpzF6zw7wQ61p8eFsj6nZWvTmO76lnxNOpFgSRtAhKMALcJOVDK/1pWtUPv1l9tKc8AeF6xSUnuOawwenj+HZkZu/Lkjcz3cYxELjNtJUU/n0ojSdrnvCbJOTheTjhnAFCIi7prg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vfiGfEicZbPxJsquJibkVM3EnJWzxevfqqofDgKS5FQ=;
+ b=SalI9n2OWKrmIyOfVdxaEO7PpIZTsMx8vGDnf6c433MqMFsAv5m2G2cHFFhMle8MbmOel/jmwV3zgd+wfdA2BhnHYNOXE1X4cXGtzcBv61wpydvZH5SP0LYUSx5W+8A1TzXgERZrKBCDCI/ldaWH9FIg/fAkWjAVQI8stLgaNP25H3teNWQkrWwviMD/6SQsjmNdm71hKyz87+eLD6RiyCZ2sT+50KZoIpY59zKoWgthUSxk8N4djRMkag3N5wLoPJgq3+Xh3X7qrgzKnsxIJ2J9k+hWloxgNOka1KyVlphNHQQSDYhx2sOfRzB9o76bvjMF4WgUWMRIZmXK4zG+vA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vfiGfEicZbPxJsquJibkVM3EnJWzxevfqqofDgKS5FQ=;
+ b=oR/DAF/QaNzfN07NLoP9ZlgKv0f+T6pxYJjuGzFjRmlvSOjoXjwUNigo6BJXkE5kACB+fwjn58QVDThb0MVHk2K5uz6AoQKpXfP3mNLnm0Ry0YjOELdcyObE9tAFQhh0MKZjcieIzKE/WoeQPPS5CvMCaFAaKmWBYSm4F3oClTY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8690.namprd12.prod.outlook.com (2603:10b6:a03:540::10)
+ by SN7PR12MB7811.namprd12.prod.outlook.com (2603:10b6:806:34f::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Fri, 12 Apr
+ 2024 03:59:18 +0000
+Received: from SJ2PR12MB8690.namprd12.prod.outlook.com
+ ([fe80::e7a:5022:4b7d:ade1]) by SJ2PR12MB8690.namprd12.prod.outlook.com
+ ([fe80::e7a:5022:4b7d:ade1%7]) with mapi id 15.20.7409.042; Fri, 12 Apr 2024
+ 03:59:18 +0000
+Date: Fri, 12 Apr 2024 11:58:53 +0800
+From: Huang Rui <ray.huang@amd.com>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Gurchetan Singh <gurchetansingh@chromium.org>,
+ "ernunes@redhat.com" <ernunes@redhat.com>, Alyssa Ross <hi@alyssa.is>,
+ Roger Pau =?iso-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>,
+ "Deucher, Alexander" <Alexander.Deucher@amd.com>,
+ "Stabellini, Stefano" <stefano.stabellini@amd.com>,
+ "Koenig, Christian" <Christian.Koenig@amd.com>,
+ "Ragiadakou, Xenia" <Xenia.Ragiadakou@amd.com>,
+ "Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>,
+ "Huang, Honglei1" <Honglei1.Huang@amd.com>,
+ "Zhang, Julia" <Julia.Zhang@amd.com>, "Chen, Jiqian" <Jiqian.Chen@amd.com>
+Subject: Re: [PATCH v7 00/10] Support blob memory and venus on qemu
+Message-ID: <ZhixfZ93e3htVMGs@amd.com>
+References: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
+X-ClientProxiedBy: SI2PR02CA0012.apcprd02.prod.outlook.com
+ (2603:1096:4:194::7) To SJ2PR12MB8690.namprd12.prod.outlook.com
+ (2603:10b6:a03:540::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -52
-X-Spam_score: -5.3
-X-Spam_bar: -----
-X-Spam_report: (-5.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8690:EE_|SN7PR12MB7811:EE_
+X-MS-Office365-Filtering-Correlation-Id: 34bb4c26-252b-45b6-972c-08dc5aa4ed3c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: mOe2kp84r43nC2EAyzq4h92venkZCbuiRz5rtLYtGyog73HmTWzDJzvqFvCIZy5Gfn09QCxUqKE01VagsoqrhRpq0hdh5RyVfsWvyYEHW4nze0FaPgpsB5rw/TJDZVosaXi1gti2NWUSAFPlYSFPfxTao9Qp6LkYUTF2Ia7K25ylYMe0DEcFIbKmWnWG35uM1OoKvwADEK2i+vVigw0eC0CV9BYxhNWnYmp0KXMYKRoPMtyC7HzjZV5k1/KU7jx1Jk1/sS3vXUlbm+Whrf/fgdeLMLhK1OpKgyljs6xyndXPr7YE9vlpQLYJYDNdDRbHOGtL11Jb29CKPzSIj6UYSYkeSYfdB1C7V/06LSFwXkLT6go4WYnFrWxi1Eyqr6nT+rp54WnWXZEtix916kd2fmQnFn5vKpRdvgwF7uVAEJlRwiWp+YtaET61ImzXw8wZPk7PMRIYcp6kxJRJ1/ai949+SJAx8XPwwnXkgy4w5hM2HgXwJ7Gn8vDdRuKlD2MPO2LBFPAxzzUBVm5tX11CKOnvOsZnbd5UXgMdh8HI7a9hlsnLUZWU/cM97HtyaJVnLmxb6zVXvqP6wJl6yGMulybfUPbYy7PVShQhsnaiGSoUL8SiHTpPt56qnFmhBdDS+Xd76DJdBD/fEirrFM9sBd6ghdUXfJBpgy2HzTJ/lyw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8690.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(1800799015)(376005)(7416005); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gHYv9Um3POafB5WQj+y/eGXIISL2wLkFF7KQ5iRNw7UBoqOsyzhcyY5p/9sS?=
+ =?us-ascii?Q?fKMj7GnhGViviWmxTucYriEHpUVZJGubajf+jw3h1RbOuYlze0epd9Sc0y3v?=
+ =?us-ascii?Q?7Fu2Fpy5Hci62DurYUV9g/EpksHZtUpTZFnEUJ+nhmP3vLPgZz9iA7/uCFyl?=
+ =?us-ascii?Q?xhJ0UaQMBJU/ecTuuvH94aR6g5QhWMcI6ryDKjG80ldfFPeQBeZsvjS/Oc7E?=
+ =?us-ascii?Q?3pbVmcFcKaFUfnnL2mcUM/u/6+UE1sAvzEjmkor+/U63M0ZSO/TSLpghRpZU?=
+ =?us-ascii?Q?7/uF4j1ocmzUgtm2LAJPT4X8qvonQLtMBCd5bqrGEdeIy5BBiq67zkx0b2b7?=
+ =?us-ascii?Q?VVp3sHcELvmqHyJZGI3f2GMj9eyty1KxaZDa5KOle6LqnRs+z78I5okuuSqh?=
+ =?us-ascii?Q?IcxCUNxfC+EadDPIAh0SpoJwcK0okUlFtfe4BekCO8u5ZOTj54EUDLavicQY?=
+ =?us-ascii?Q?9ySs8tAYRyP2yXjNUWOHJ3gvoTuJ+6pFhGh+ul0txKYOhzigph5thvh1i5kE?=
+ =?us-ascii?Q?3NWi2odZhZRz4aEy7+Mms1QqiBqk2l86W7a7mjIVOFZcBhfUhnDi5bb1AcPS?=
+ =?us-ascii?Q?vffSBeg5fKGetP+VwokuvmSUk1PF5tqsRDwAxBTmGCXCSBGbtaTNBGRO0Dko?=
+ =?us-ascii?Q?rR92BbQM+hvQdUtOvZy3crKnxmsVMjEmlMmpmwdP6RTOoKtsyLBUhAIZXptm?=
+ =?us-ascii?Q?fghmS1Zrnihw02a0yd7uYgwhFQj4MxvxrrSYH54JW+OuvT0U9Dyuw9cGpsRq?=
+ =?us-ascii?Q?N5strsJNmPhndNpV4eBobsl1+nHOHG/C5Xw4FRMUpN28pQx1aIZJFEVAmv65?=
+ =?us-ascii?Q?XxONDm0cCdwUfXeY6/M9eZjG7AtduhY48PVIjCd/sc6t3XNE6blcI5lOTLHk?=
+ =?us-ascii?Q?7t74tvxzaQCTvng/J8hAIoU2xS/5DmTIsOJ6BY+nbR9lSWj2TsGk/uqHImav?=
+ =?us-ascii?Q?AAj1mbv9WR/WfwSIZgLAHZMv9LuVQxPwXSkky0ykTRdW0ibG6L721dzvxfVu?=
+ =?us-ascii?Q?fPFhLBorj0jiJxRsbcbGzS05Dwqwlf4MMgDP1vG2FqNt6Jf55KVj3J5Hj2RJ?=
+ =?us-ascii?Q?55aJLk6QV3H8Iz9l3iwlrS1wwzZV2UzxZGnhsbAcKdqdQqu/vDEAYMY+HslT?=
+ =?us-ascii?Q?fg3YulBrlgEKwVNdauJDIQZHboTboxcSYsed/76qPOEIw8ft8mVKEUnxNyjY?=
+ =?us-ascii?Q?OqfM27KOxOIxXCg/5DP4bQStr9ReP7wu6MMgd5STt4qShRzDD2QdngdWz+5R?=
+ =?us-ascii?Q?Whqxh9AQiPzw0e/lKkt6HFovZvwF25Ikhd2rxEsFI0FiyAZ4Tn8ZcWePqvRW?=
+ =?us-ascii?Q?e4gDsSRv1S0pGXRJNI6xOts2/HI1QKU/6dEjuShKFc5a9yoSD/myNBRnkpix?=
+ =?us-ascii?Q?9aYsbvhL3EnQwLAABrQdpLVbr3ME1bijOUFAlCnvAUKFRI2kY3EEKBTBjxO5?=
+ =?us-ascii?Q?0DhzpPUQitPeJSgUk45Z7dJYy+LcCxQCqKtXu6Rj8V+Ez/zsl56eaDO/cMx7?=
+ =?us-ascii?Q?zgyc2m63ssfVTNl5KVdnKqVH6Ko14uNjxytAKg7h5IK2PSOON+LrVK54ejrE?=
+ =?us-ascii?Q?O5Hrc6ZHIOIEeE7rwFSEBx4Jlf5mEyslvcMvB/F7?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34bb4c26-252b-45b6-972c-08dc5aa4ed3c
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8690.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Apr 2024 03:59:18.3046 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BMMIIFRFR744XouDZZsGjBJehpaWgkJqfm+28+WPrBrpsB9ByeJAEm1OQdyXuvb2e5XKj/wbdvZsLG6HNUG2Ew==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7811
+Received-SPF: permerror client-ip=40.107.244.86;
+ envelope-from=Ray.Huang@amd.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,346 +151,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+On Thu, Apr 11, 2024 at 06:19:52PM +0800, Dmitry Osipenko wrote:
+> Hello,
+> 
+> This series enables Vulkan Venus context support on virtio-gpu.
+> Upstreaming of Venus to Qemu was originally started by Antonio Caggiano,
+> later Huang Rui continued the effort. I'm now taking it over because
+> Rui will be busy for awhile and he asked me to do so.
+> 
 
-This commit introduces utility functions for the creation and deallocation
-of QemuDmaBuf instances. Additionally, it updates all relevant sections
-of the codebase to utilize these new utility functions.
+Thanks Dmitry! :-)
+Please go ahead and it's important implementation which is not only on
+venus but also on virtio native context.
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- include/hw/vfio/vfio-common.h   |  2 +-
- include/hw/virtio/virtio-gpu.h  |  4 ++--
- include/ui/console.h            |  8 +++++++-
- hw/display/vhost-user-gpu.c     | 32 +++++++++++++++++--------------
- hw/display/virtio-gpu-udmabuf.c | 24 +++++++++--------------
- hw/vfio/display.c               | 26 ++++++++++++-------------
- ui/console.c                    | 34 +++++++++++++++++++++++++++++++++
- ui/dbus-listener.c              | 28 ++++++++++++---------------
- 8 files changed, 95 insertions(+), 63 deletions(-)
-
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index b9da6c08ef..d66e27db02 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -148,7 +148,7 @@ typedef struct VFIOGroup {
- } VFIOGroup;
- 
- typedef struct VFIODMABuf {
--    QemuDmaBuf buf;
-+    QemuDmaBuf *buf;
-     uint32_t pos_x, pos_y, pos_updates;
-     uint32_t hot_x, hot_y, hot_updates;
-     int dmabuf_id;
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index ed44cdad6b..56d6e821bf 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
-     DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
- 
- typedef struct VGPUDMABuf {
--    QemuDmaBuf buf;
-+    QemuDmaBuf *buf;
-     uint32_t scanout_id;
-     QTAILQ_ENTRY(VGPUDMABuf) next;
- } VGPUDMABuf;
-@@ -238,7 +238,7 @@ struct VhostUserGPU {
-     VhostUserBackend *vhost;
-     int vhost_gpu_fd; /* closed by the chardev */
-     CharBackend vhost_chr;
--    QemuDmaBuf dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
-+    QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
-     bool backend_blocked;
- };
- 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 3d9d8b9fce..6d7c03b7c5 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -358,7 +358,13 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
-                           bool have_hot, uint32_t hot_x, uint32_t hot_y);
- void dpy_gl_cursor_position(QemuConsole *con,
-                             uint32_t pos_x, uint32_t pos_y);
--
-+QemuDmaBuf *dpy_gl_qemu_dmabuf_new(uint32_t width, uint32_t height,
-+                                   uint32_t stride, uint32_t x,
-+                                   uint32_t y, uint32_t backing_width,
-+                                   uint32_t backing_height, uint32_t fourcc,
-+                                   uint64_t modifier, uint32_t dmabuf_fd,
-+                                   bool allow_fences, bool y0_top);
-+void dpy_gl_qemu_dmabuf_free(QemuDmaBuf *dmabuf);
- int32_t dpy_gl_qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
- uint32_t dpy_gl_qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
- uint32_t dpy_gl_qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 87dcfbca10..4d8461e94a 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -250,6 +250,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         VhostUserGpuDMABUFScanout *m = &msg->payload.dmabuf_scanout;
-         int fd = qemu_chr_fe_get_msgfd(&g->vhost_chr);
-         int old_fd;
-+        uint64_t modifier = 0;
-         QemuDmaBuf *dmabuf;
- 
-         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
-@@ -262,31 +263,34 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
- 
-         g->parent_obj.enable = 1;
-         con = g->parent_obj.scanout[m->scanout_id].con;
--        dmabuf = &g->dmabuf[m->scanout_id];
--        old_fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
--        if (old_fd >= 0) {
--            close(old_fd);
--            dmabuf->fd = -1;
-+        dmabuf = g->dmabuf[m->scanout_id];
-+        if (dmabuf) {
-+            old_fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
-+            if (old_fd >= 0) {
-+                close(old_fd);
-+                dpy_gl_qemu_dmabuf_set_fd(dmabuf, -1);
-+            }
-         }
-         dpy_gl_release_dmabuf(con, dmabuf);
-+        g_clear_pointer(&dmabuf, dpy_gl_qemu_dmabuf_free);
-         if (fd == -1) {
-             dpy_gl_scanout_disable(con);
-             break;
-         }
--        *dmabuf = (QemuDmaBuf) {
--            .fd = fd,
--            .width = m->fd_width,
--            .height = m->fd_height,
--            .stride = m->fd_stride,
--            .fourcc = m->fd_drm_fourcc,
--            .y0_top = m->fd_flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
--        };
-+
-         if (msg->request == VHOST_USER_GPU_DMABUF_SCANOUT2) {
-             VhostUserGpuDMABUFScanout2 *m2 = &msg->payload.dmabuf_scanout2;
--            dmabuf->modifier = m2->modifier;
-+            modifier = m2->modifier;
-         }
- 
-+        dmabuf = dpy_gl_qemu_dmabuf_new(m->fd_width, m->fd_height,
-+                                        m->fd_stride, 0, 0, 0, 0,
-+                                        m->fd_drm_fourcc, modifier,
-+                                        fd, false, m->fd_flags &
-+                                        VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
-+
-         dpy_gl_scanout_dmabuf(con, dmabuf);
-+        g->dmabuf[m->scanout_id] = dmabuf;
-         break;
-     }
-     case VHOST_USER_GPU_DMABUF_UPDATE: {
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index e3f358b575..79eafc7289 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -162,7 +162,8 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
-     struct virtio_gpu_scanout *scanout;
- 
-     scanout = &g->parent_obj.scanout[dmabuf->scanout_id];
--    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
-+    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
-+    g_clear_pointer(&dmabuf->buf, dpy_gl_qemu_dmabuf_free);
-     QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
-     g_free(dmabuf);
- }
-@@ -181,17 +182,10 @@ static VGPUDMABuf
-     }
- 
-     dmabuf = g_new0(VGPUDMABuf, 1);
--    dmabuf->buf.width = r->width;
--    dmabuf->buf.height = r->height;
--    dmabuf->buf.stride = fb->stride;
--    dmabuf->buf.x = r->x;
--    dmabuf->buf.y = r->y;
--    dmabuf->buf.backing_width = fb->width;
--    dmabuf->buf.backing_height = fb->height;
--    dmabuf->buf.fourcc = qemu_pixman_to_drm_format(fb->format);
--    dmabuf->buf.fd = res->dmabuf_fd;
--    dmabuf->buf.allow_fences = true;
--    dmabuf->buf.draw_submitted = false;
-+    dmabuf->buf = dpy_gl_qemu_dmabuf_new(r->width, r->height, fb->stride,
-+                                         r->x, r->y, fb->width, fb->height,
-+                                         qemu_pixman_to_drm_format(fb->format),
-+                                         0, res->dmabuf_fd, false, 0);
-     dmabuf->scanout_id = scanout_id;
-     QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
- 
-@@ -217,11 +211,11 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-         old_primary = g->dmabuf.primary[scanout_id];
-     }
- 
--    width = dpy_gl_qemu_dmabuf_get_width(&new_primary->buf);
--    height = dpy_gl_qemu_dmabuf_get_height(&new_primary->buf);
-+    width = dpy_gl_qemu_dmabuf_get_width(new_primary->buf);
-+    height = dpy_gl_qemu_dmabuf_get_height(new_primary->buf);
-     g->dmabuf.primary[scanout_id] = new_primary;
-     qemu_console_resize(scanout->con, width, height);
--    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
-+    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
- 
-     if (old_primary) {
-         virtio_gpu_free_dmabuf(g, old_primary);
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index f9c39cbd51..7e26d9667f 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -241,14 +241,11 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDevice *vdev,
- 
-     dmabuf = g_new0(VFIODMABuf, 1);
-     dmabuf->dmabuf_id  = plane.dmabuf_id;
--    dmabuf->buf.width  = plane.width;
--    dmabuf->buf.height = plane.height;
--    dmabuf->buf.backing_width = plane.width;
--    dmabuf->buf.backing_height = plane.height;
--    dmabuf->buf.stride = plane.stride;
--    dmabuf->buf.fourcc = plane.drm_format;
--    dmabuf->buf.modifier = plane.drm_format_mod;
--    dmabuf->buf.fd     = fd;
-+    dmabuf->buf = dpy_gl_qemu_dmabuf_new(plane.width, plane.height,
-+                                         plane.stride, 0, 0, plane.width,
-+                                         plane.height, plane.drm_format,
-+                                         plane.drm_format_mod, fd, false, 0);
-+
-     if (plane_type == DRM_PLANE_TYPE_CURSOR) {
-         vfio_display_update_cursor(dmabuf, &plane);
-     }
-@@ -263,8 +260,9 @@ static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
- 
-     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
- 
--    fd = dpy_gl_qemu_dmabuf_get_fd(&dmabuf->buf);
--    dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
-+    fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf->buf);
-+    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
-+    g_clear_pointer(&dmabuf->buf, dpy_gl_qemu_dmabuf_free);
-     close(fd);
-     g_free(dmabuf);
- }
-@@ -301,13 +299,13 @@ static void vfio_display_dmabuf_update(void *opaque)
-         return;
-     }
- 
--    width = dpy_gl_qemu_dmabuf_get_width(&primary->buf);
--    height = dpy_gl_qemu_dmabuf_get_height(&primary->buf);
-+    width = dpy_gl_qemu_dmabuf_get_width(primary->buf);
-+    height = dpy_gl_qemu_dmabuf_get_height(primary->buf);
- 
-     if (dpy->dmabuf.primary != primary) {
-         dpy->dmabuf.primary = primary;
-         qemu_console_resize(dpy->con, width, height);
--        dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
-+        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
-         free_bufs = true;
-     }
- 
-@@ -321,7 +319,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-     if (cursor && (new_cursor || cursor->hot_updates)) {
-         bool have_hot = (cursor->hot_x != 0xffffffff &&
-                          cursor->hot_y != 0xffffffff);
--        dpy_gl_cursor_dmabuf(dpy->con, &cursor->buf, have_hot,
-+        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
-                              cursor->hot_x, cursor->hot_y);
-         cursor->hot_updates = 0;
-     } else if (!cursor && new_cursor) {
-diff --git a/ui/console.c b/ui/console.c
-index d4ca9e6e0f..ea23fd8af6 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1132,6 +1132,40 @@ void dpy_gl_cursor_position(QemuConsole *con,
-     }
- }
- 
-+QemuDmaBuf *dpy_gl_qemu_dmabuf_new(uint32_t width, uint32_t height,
-+                                   uint32_t stride, uint32_t x,
-+                                   uint32_t y, uint32_t backing_width,
-+                                   uint32_t backing_height, uint32_t fourcc,
-+                                   uint64_t modifier, uint32_t dmabuf_fd,
-+                                   bool allow_fences, bool y0_top) {
-+    QemuDmaBuf *dmabuf;
-+
-+    dmabuf = g_new0(QemuDmaBuf, 1);
-+
-+    dmabuf->width = width;
-+    dmabuf->height = height;
-+    dmabuf->stride = stride;
-+    dmabuf->x = x;
-+    dmabuf->y = y;
-+    dmabuf->backing_width = backing_width;
-+    dmabuf->backing_height = backing_height;
-+    dmabuf->fourcc = fourcc;
-+    dmabuf->modifier = modifier;
-+    dmabuf->fd = dmabuf_fd;
-+    dmabuf->allow_fences = allow_fences;
-+    dmabuf->y0_top = y0_top;
-+    dmabuf->fence_fd = -1;
-+
-+    return dmabuf;
-+}
-+
-+void dpy_gl_qemu_dmabuf_free(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    g_free(dmabuf);
-+}
-+
- int32_t dpy_gl_qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
- {
-     assert(dmabuf != NULL);
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index c6c7d93753..85d779a45c 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -442,28 +442,24 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
-     trace_dbus_scanout_texture(tex_id, backing_y_0_top,
-                                backing_width, backing_height, x, y, w, h);
- #ifdef CONFIG_GBM
--    QemuDmaBuf dmabuf = {
--        .width = w,
--        .height = h,
--        .y0_top = backing_y_0_top,
--        .x = x,
--        .y = y,
--        .backing_width = backing_width,
--        .backing_height = backing_height,
--    };
-+    int32_t fd;
-+    uint32_t stride, fourcc;
-+    uint64_t modifier;
-+    QemuDmaBuf *dmabuf;
- 
-     assert(tex_id);
--    dmabuf.fd = egl_get_fd_for_texture(
--        tex_id, (EGLint *)&dmabuf.stride,
--        (EGLint *)&dmabuf.fourcc,
--        &dmabuf.modifier);
--    if (dmabuf.fd < 0) {
-+    fd = egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&fourcc,
-+                                &modifier);
-+    if (fd < 0) {
-         error_report("%s: failed to get fd for texture", __func__);
-         return;
-     }
-+    dmabuf = dpy_gl_qemu_dmabuf_new(w, h, stride, x, y, backing_width,
-+                                    backing_height, fourcc, modifier, fd,
-+                                    false, backing_y_0_top);
- 
--    dbus_scanout_dmabuf(dcl, &dmabuf);
--    close(dmabuf.fd);
-+    dbus_scanout_dmabuf(dcl, dmabuf);
-+    close(fd);
- #endif
- 
- #ifdef WIN32
--- 
-2.34.1
-
+Best Regards,
+Ray
 
