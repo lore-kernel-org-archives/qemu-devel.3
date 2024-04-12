@@ -4,56 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDFC2C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8574C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvI6j-0001sw-04; Fri, 12 Apr 2024 10:42:25 -0400
+	id 1rvI8O-0002ik-E3; Fri, 12 Apr 2024 10:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rvI6g-0001rc-Qp
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:42:23 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvI8K-0002iI-1R
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:44:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rvI6f-0005qI-AV
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:42:22 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rvI8G-0006SC-DI
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:44:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712932940;
+ s=mimecast20190719; t=1712933039;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=tNy/cqs5Bdu6zbwcxe69AiuJInaF+xbVwMbFnsln5Wk=;
- b=Xmcmai3Lw1icvczOFkHSf+v/jJoHbmiA3GGjQWpOfQL1Ky+Z4wFMXDneZBANu23vgqB70o
- 5K7sHFThBPoquy1Fp8e31q7/HGw569ww5rVUOp8CZw0J85y3lTUzXD65lsCGN4oJRlTrse
- ZDLfSEG/JvEVY5DY9UiIsn2NPFgPwbM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-1Lk8svP6PnGxt0mHUOf__w-1; Fri, 12 Apr 2024 10:42:18 -0400
-X-MC-Unique: 1Lk8svP6PnGxt0mHUOf__w-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JyCJ0OBHrAFLsVEaAgj7oAyZxx+EF0nspzCjRoS2GSQ=;
+ b=SLhsFuJEVkXKqkc62D93MgMQykLtAKrHBv/aTifGMngAIk4b7UrBgOSZdU08ZTfQTzOSDr
+ 9xYesJUjx/cU2OmXiWTOWFYzwg9j6v4CCcULGZjzUS5gT8JMEW/6Am1Fjt2ivmys+I/pe2
+ HPvERvHnQ4ho7l+aoid+H3AKkIWh1ks=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-CCyf5nA8MxK7CAHc4wzxHg-1; Fri,
+ 12 Apr 2024 10:43:56 -0400
+X-MC-Unique: CCyf5nA8MxK7CAHc4wzxHg-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 64F6F881E63;
- Fri, 12 Apr 2024 14:42:18 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.39.192.26])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 282AA1121306;
- Fri, 12 Apr 2024 14:42:16 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	peter.maydell@linaro.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH for-9.0?] usb-storage: Fix BlockConf defaults
-Date: Fri, 12 Apr 2024 16:42:02 +0200
-Message-ID: <20240412144202.13786-1-kwolf@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E14843813F30;
+ Fri, 12 Apr 2024 14:43:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.15])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 55A2E492BC8;
+ Fri, 12 Apr 2024 14:43:54 +0000 (UTC)
+Date: Fri, 12 Apr 2024 09:43:48 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH v2 09/13] block/gluster: Use URI parsing code from glib
+Message-ID: <mnh2ivlennuabigyvgwdickf62tvgazemgewr6m3bxx33fqdpn@aow25badqmlt>
+References: <20240412132415.282354-1-thuth@redhat.com>
+ <20240412132415.282354-10-thuth@redhat.com>
+ <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -77,60 +88,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 30896374 started to pass the full BlockConf from usb-storage to
-scsi-disk, while previously only a few select properties would be
-forwarded. This enables the user to set more properties, e.g. the block
-size, that are actually taking effect.
+On Fri, Apr 12, 2024 at 09:40:18AM -0500, Eric Blake wrote:
+> > @@ -364,57 +363,57 @@ static int qemu_gluster_parse_uri(BlockdevOptionsGluster *gconf,
+> >      QAPI_LIST_PREPEND(gconf->server, gsconf);
+> >  
+> >      /* transport */
+> > -    if (!uri->scheme || !strcmp(uri->scheme, "gluster")) {
+> > +    uri_scheme = g_uri_get_scheme(uri);
+> > +    if (!uri_scheme || !strcmp(uri_scheme, "gluster")) {
+> 
+> Pre-existing, but per RFC 3986, we should probably be using strcasecmp
+> for scheme comparisons (I'm not sure if g_uri_parse guarantees a
+> lower-case return, even when the user passed in upper case).  That can
+> be a separate patch.
 
-However, now the calls to blkconf_apply_backend_options() and
-blkconf_blocksizes() in usb_msd_storage_realize() that modify some of
-these properties take effect, too, instead of being silently ignored.
-This means at least that the block sizes get an unconditional default of
-512 bytes before the configuration is passed to scsi-disk.
+Even beter, g_ascii_strcasecmp() (since strcasecmp can be
+locale-specific which is generally not what we need here)
 
-Before commit 30896374, the property wouldn't be set for scsi-disk and
-therefore the device dependent defaults would apply - 512 for scsi-hd,
-but 2048 for scsi-cd. The latter default has now become 512, too, which
-makes at least Windows 11 installation fail when installing from
-usb-storage.
 
-Fix this by simply not calling these functions any more in usb-storage
-and passing BlockConf on unmodified (except for the BlockBackend). The
-same functions are called by the SCSI code anyway and it sets the right
-defaults for the actual media type.
-
-Fixes: 308963746169 ('scsi: Don't ignore most usb-storage properties')
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2260
-Reported-by: Jonas Svensson
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
-Considering this a candidate for 9.0 given that we're already having an
-rc4, it's a regression from 8.2 and breaks installing Windows from USB
-
- hw/usb/dev-storage-classic.c | 9 ---------
- 1 file changed, 9 deletions(-)
-
-diff --git a/hw/usb/dev-storage-classic.c b/hw/usb/dev-storage-classic.c
-index 50a3ad6285..6147387dc6 100644
---- a/hw/usb/dev-storage-classic.c
-+++ b/hw/usb/dev-storage-classic.c
-@@ -38,15 +38,6 @@ static void usb_msd_storage_realize(USBDevice *dev, Error **errp)
-         return;
-     }
- 
--    if (!blkconf_blocksizes(&s->conf, errp)) {
--        return;
--    }
--
--    if (!blkconf_apply_backend_options(&s->conf, !blk_supports_write_perm(blk),
--                                       true, errp)) {
--        return;
--    }
--
-     /*
-      * Hack alert: this pretends to be a block device, but it's really
-      * a SCSI bus that can serve only a single device, which it
 -- 
-2.44.0
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
