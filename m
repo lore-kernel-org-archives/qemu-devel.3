@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F749C04FF8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08672C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvKKF-0000UC-P1; Fri, 12 Apr 2024 13:04:31 -0400
+	id 1rvKSq-0001wZ-94; Fri, 12 Apr 2024 13:13:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rvKKE-0000TZ-9N
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:04:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rvKKC-0006mO-Jt
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:04:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712941466;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7iayZMH+i0HEjbIbzcAtJYCtz2S9Jbu7EYLsvSXoZrg=;
- b=Fit4u9pcenjQecza75PUDXOqbdnbkjhaMM2UyIxm+uospezr9gdjJRhWTUcR6ImLKPjj1a
- nVeW+mkq+Aitc73XJOApIVDjbmW03QMs7RbwQvIdJ5I+24JBIPzSp/vuWkU8OjTRYF5qxF
- FDG4lB4wGw05BQ1kft3PcI5CZnqRk3c=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-376-fJDkFOF5OcKX-7hBv98wjA-1; Fri, 12 Apr 2024 13:04:20 -0400
-X-MC-Unique: fJDkFOF5OcKX-7hBv98wjA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A5C41802E4D;
- Fri, 12 Apr 2024 17:04:19 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6B8E62166B31;
- Fri, 12 Apr 2024 17:04:19 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7FBB021E6811; Fri, 12 Apr 2024 19:04:14 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Vladimir
- Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  Peter Lieven <pl@kamp.de>,  "Richard W.M.
- Jones" <rjones@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,  qemu-block@nongnu.org
-Subject: Re: [PATCH v2 12/13] block/ssh: Use URI parsing code from glib
-In-Reply-To: <fxncshsyb5bnknswy2wkpr6l32adiy5hz6smd42o5eyomezz2k@twgbjztfubps>
- (Eric Blake's message of "Fri, 12 Apr 2024 09:56:40 -0500")
-References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-13-thuth@redhat.com>
- <fxncshsyb5bnknswy2wkpr6l32adiy5hz6smd42o5eyomezz2k@twgbjztfubps>
-Date: Fri, 12 Apr 2024 19:04:14 +0200
-Message-ID: <878r1i8qcx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvKSm-0001vz-RN
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:13:20 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rvKSY-00005b-PW
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:13:20 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a46de423039so65410866b.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:13:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1712941985; x=1713546785; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7VsbUUaibF5nfYRC96Q8mZf5uNpcuRgBvGBgtYAlVx4=;
+ b=vkS4N9W6j0KKQktL4yhHkFkQ2/odz0194ljfkH+uqx3W0GeASw874iy1ZH7qJAYmRa
+ tpS2TOvVqFYlXslmYaWI8LrjyBqQf1Rz1U0Cl/XgDGtpmcBkmQq1VHGW3uNLCZAcIPkZ
+ g8P1tC0WE4NcTfp9H1N71yHnOXp+N2gnzVhTK2T3+hcuwxi9JUmMQ1J5Ar79U0vCUe/W
+ WsS/NYWrs77W6Ugh+5nwHqIA1HYV6A/ge7UkIyRnUsS8y3Yw40U9uD5FhaxuKFrBXC7B
+ 3EfYppShZK4TiyDyp6oV5b/NbiWbwe/sIys1N7KbyM/jI9228Gy2bh29R8Im6cpH/NB8
+ go9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712941985; x=1713546785;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7VsbUUaibF5nfYRC96Q8mZf5uNpcuRgBvGBgtYAlVx4=;
+ b=C8uK92u7qD2YAmU7BXOwnmG+Z2fUAlSFMiNIZoPO5v9ABF/TQZAUzdI8lwc6sfBO3G
+ vf+wsYzUbLfWKVD8OY9nc9eqODu09RMmMFBtlKcMUUmTKVruq2bnJrav18VF/0Ej6sJY
+ 1nk556mDreEkILvE4L+xXOojmt/xvO018h/mlkgt6eGPKZ4YS0iiJ7AkIDdX3GY8QLit
+ U4b8n2h1rImNfe2rxBJzPv3AGLRE7hiyaF4s/TTfZqyj4uE3/lXH4lY67dx8UoBTlhXG
+ 9/X7wGrFnEg46kjL624cxv4LDB4TFJ1jcuQdPhVFnQaAgvwYQS4dUWwRLBbysC3h0xHE
+ a9kw==
+X-Gm-Message-State: AOJu0YyRbQFn4WWVj030lXhIjNGzoyidLD8xe+0Ym3+L/GP+o5yfgOY1
+ 8zTZWyjrl+y0TiXIEWOff2JbZxF2YAd0kbwxZ3qHvJlcqZ5gfMTq65bdnfghm5y1GvRgggHBrLP
+ RkRg8N9ENxBZO/cHse/FUFKLw/IBV34W0AGWN9g==
+X-Google-Smtp-Source: AGHT+IHZCNWdN6Mzv9f7IfIc8gR8581Xs1fV8MENQjmVj/yriEpzOQgHhn31D28ScGGkth/G9Pr5UiTNywz/+TwhMmA=
+X-Received: by 2002:a50:d516:0:b0:568:d7fe:a768 with SMTP id
+ u22-20020a50d516000000b00568d7fea768mr3003053edi.25.1712941985028; Fri, 12
+ Apr 2024 10:13:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 12 Apr 2024 18:12:53 +0100
+Message-ID: <CAFEAcA-XkK8ksZ7aMj-ap4BRw6V8dMJ6hGTozagGAAQfXz_=bg@mail.gmail.com>
+Subject: Re: [PATCH for-9.0] target/riscv: prioritize pmp errors in
+ raise_mmu_exception()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, alexei.filippov@syntacore.com, 
+ richard.henderson@linaro.org, Joseph Chan <jchan@ventanamicro.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,61 +90,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eric Blake <eblake@redhat.com> writes:
-
-> On Fri, Apr 12, 2024 at 03:24:14PM +0200, Thomas Huth wrote:
->> Since version 2.66, glib has useful URI parsing functions, too.
->> Use those instead of the QEMU-internal ones to be finally able
->> to get rid of the latter.
->> 
->> Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>  block/ssh.c | 75 ++++++++++++++++++++++++++++-------------------------
->>  1 file changed, 40 insertions(+), 35 deletions(-)
->> 
+On Tue, 9 Apr 2024 at 18:53, Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
->>  
->> -    if (g_strcmp0(uri->scheme, "ssh") != 0) {
->> +    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
+> raise_mmu_exception(), as is today, is prioritizing guest page faults by
+> checking first if virt_enabled && !first_stage, and then considering the
+> regular inst/load/store faults.
 >
-> Yet another case-sensitive spot to consider.
+> There's no mention in the spec about guest page fault being a higher
+> priority that PMP faults. In fact, privileged spec section 3.7.1 says:
 >
->>  
->> -    qdict_put_str(options, "path", uri->path);
->> -
->> -    /* Pick out any query parameters that we understand, and ignore
->> -     * the rest.
->> -     */
->> -    for (i = 0; i < qp->n; ++i) {
->> -        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
->> -            qdict_put_str(options, "host_key_check", qp->p[i].value);
->> +    qdict_put_str(options, "path", uri_path);
->> +
->> +    uri_query = g_uri_get_query(uri);
->> +    if (uri_query) {
->> +        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
->> +        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
->> +            if (!qp_name || !qp_value || gerror) {
->> +                warn_report("Failed to parse SSH URI parameters '%s'.",
->> +                            uri_query);
->> +                break;
->> +            }
->> +            /*
->> +             * Pick out the query parameters that we understand, and ignore
->> +             * (or rather warn about) the rest.
->> +             */
->> +            if (g_str_equal(qp_name, "host_key_check")) {
->> +                qdict_put_str(options, "host_key_check", qp_value);
->> +            } else {
->> +                warn_report("Unsupported parameter '%s' in URI.", qp_name);
+> "Attempting to fetch an instruction from a PMP region that does not have
+> execute permissions raises an instruction access-fault exception.
+> Attempting to execute a load or load-reserved instruction which accesses
+> a physical address within a PMP region without read permissions raises a
+> load access-fault exception. Attempting to execute a store,
+> store-conditional, or AMO instruction which accesses a physical address
+> within a PMP region without write permissions raises a store
+> access-fault exception."
 >
-> Do we want the trailing '.' in warn_report?
+> So, in fact, we're doing it wrong - PMP faults should always be thrown,
+> regardless of also being a first or second stage fault.
+>
+> The way riscv_cpu_tlb_fill() and get_physical_address() work is
+> adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
+> reflected in the 'pmp_violation' flag. What we need is to change
+> raise_mmu_exception() to prioritize it.
+>
+> Reported-by: Joseph Chan <jchan@ventanamicro.com>
+> Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-We do not.
+I guess from the Fixes: git commit hash that this isn't a regression
+since 8.2 ? That would make it too late for 9.0 at this point in
+the release cycle.
 
-> The warning is new; it was not in the old code, nor mentioned in the
-> commit message.  It seems like a good idea, but we should be more
-> intentional if we intend to make that change.
-
+thanks
+-- PMM
 
