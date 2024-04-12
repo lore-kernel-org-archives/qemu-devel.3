@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D080EC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87784C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvDEH-0002hM-HA; Fri, 12 Apr 2024 05:29:53 -0400
+	id 1rvDG5-0003fa-LN; Fri, 12 Apr 2024 05:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvDEB-0002ew-Ab; Fri, 12 Apr 2024 05:29:49 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
+ id 1rvDG4-0003f9-AR; Fri, 12 Apr 2024 05:31:44 -0400
+Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvDE4-0003oK-SS; Fri, 12 Apr 2024 05:29:46 -0400
+ id 1rvDG2-0004FG-2m; Fri, 12 Apr 2024 05:31:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1712914176; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=8umZ3OYSUXMZOWPRFyta6L/0drZPcl2rI0y+4M2ZquQ=;
- b=cObjeej2wjWDy8t5YnUYG8eeaEXdIcWpJnvynup2ocp3WvzK+HEEaGkCWdkmE8ZZiK32Sqvh9MEMAYqA07x2brR22+NCjEN0vo7t41Y/3Zyx1m6RaglG9EK6C2KNREYpfUQ22PCNmm9ZK+lwcmzRky913fpvHt6a9d79oPg89AA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046050;
+ t=1712914297; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=OQkwqlQyAGecjgu36JEhPI+x+SwzdeavdQ8Z7kWrmk8=;
+ b=N/xasp9Fa5+6OGnwkM6lf87zZ6gdkszNCWr69MDatzkuX+1HUXAZsJg3kYa2PvdMXUY+TOg8V0znkPwYR3Qq+QmtVdy0I+rUKOn24Nr/huweVzZFNL7i4ptelE3EzwH0p5geDPS0kxnNv3Z51Y9VvESG6bMfFJ/f02WT608DCJU=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046060;
  MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W4Nsagg_1712914174; 
+ TI=SMTPD_---0W4NqQ8L_1712914296; 
 Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W4Nsagg_1712914174) by smtp.aliyun-inc.com;
- Fri, 12 Apr 2024 17:29:35 +0800
+ fp:SMTPD_---0W4NqQ8L_1712914296) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 17:31:36 +0800
 From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com,
  Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 47/65] target/riscv: Add single-width floating-point/integer
+Subject: [PATCH 48/65] target/riscv: Add widening floating-point/integer
  type-convert instructions for XTheadVector
-Date: Fri, 12 Apr 2024 15:37:17 +0800
-Message-ID: <20240412073735.76413-48-eric.huang@linux.alibaba.com>
+Date: Fri, 12 Apr 2024 15:37:18 +0800
+Message-ID: <20240412073735.76413-49-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.131;
+Received-SPF: pass client-ip=115.124.30.101;
  envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
+ helo=out30-101.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -78,45 +78,129 @@ as RVV1.0. Overall there are only general differences between XTheadVector and R
 
 Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- target/riscv/helper.h                         | 13 ++++++++
- .../riscv/insn_trans/trans_xtheadvector.c.inc | 10 +++---
- target/riscv/xtheadvector_helper.c            | 33 +++++++++++++++++++
- 3 files changed, 52 insertions(+), 4 deletions(-)
+ target/riscv/helper.h                         | 13 +++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 93 ++++++++++++++++++-
+ target/riscv/vector_helper.c                  |  5 +-
+ target/riscv/vector_internals.h               |  3 +
+ target/riscv/xtheadvector_helper.c            | 44 +++++++++
+ 5 files changed, 149 insertions(+), 9 deletions(-)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 886655899e..18640c4a1e 100644
+index 18640c4a1e..e2d737c9c4 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -2197,3 +2197,16 @@ DEF_HELPER_5(th_vfclass_v_d, void, ptr, ptr, ptr, env, i32)
- DEF_HELPER_6(th_vfmerge_vfm_h, void, ptr, ptr, i64, ptr, env, i32)
- DEF_HELPER_6(th_vfmerge_vfm_w, void, ptr, ptr, i64, ptr, env, i32)
- DEF_HELPER_6(th_vfmerge_vfm_d, void, ptr, ptr, i64, ptr, env, i32)
+@@ -2210,3 +2210,16 @@ DEF_HELPER_5(th_vfcvt_f_xu_v_d, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(th_vfcvt_f_x_v_h, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(th_vfcvt_f_x_v_w, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(th_vfcvt_f_x_v_d, void, ptr, ptr, ptr, env, i32)
 +
-+DEF_HELPER_5(th_vfcvt_xu_f_v_h, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_xu_f_v_w, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_xu_f_v_d, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_x_f_v_h, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_x_f_v_w, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_x_f_v_d, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_f_xu_v_h, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_f_xu_v_w, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_f_xu_v_d, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_f_x_v_h, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_f_x_v_w, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfcvt_f_x_v_d, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_xu_f_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_xu_f_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_x_f_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_x_f_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_xu_v_b, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_xu_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_xu_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_x_v_b, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_x_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_x_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_f_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfwcvt_f_f_v_w, void, ptr, ptr, ptr, env, i32)
 diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-index 8e928febb7..27a06c2cac 100644
+index 27a06c2cac..72643facb1 100644
 --- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
 +++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-@@ -2191,16 +2191,18 @@ static bool trans_th_vfmv_v_f(DisasContext *s, arg_th_vfmv_v_f *a)
-     return false;
- }
+@@ -2197,17 +2197,100 @@ GEN_OPFV_TRANS_TH(th_vfcvt_x_f_v, opfv_check_th)
+ GEN_OPFV_TRANS_TH(th_vfcvt_f_xu_v, opfv_check_th)
+ GEN_OPFV_TRANS_TH(th_vfcvt_f_x_v, opfv_check_th)
  
-+/* Single-Width Floating-Point/Integer Type-Convert Instructions */
-+GEN_OPFV_TRANS_TH(th_vfcvt_xu_f_v, opfv_check_th)
-+GEN_OPFV_TRANS_TH(th_vfcvt_x_f_v, opfv_check_th)
-+GEN_OPFV_TRANS_TH(th_vfcvt_f_xu_v, opfv_check_th)
-+GEN_OPFV_TRANS_TH(th_vfcvt_f_x_v, opfv_check_th)
++/* Widening Floating-Point/Integer Type-Convert Instructions */
++
++/*
++ * If the current SEW does not correspond to a supported IEEE floating-point
++ * type, an illegal instruction exception is raised
++ */
++static bool opfv_widen_check_th(DisasContext *s, arg_rmr *a)
++{
++    return (require_xtheadvector(s) &&
++            vext_check_isa_ill(s) &&
++            th_check_overlap_mask(s, a->rd, a->vm, true) &&
++            th_check_reg(s, a->rd, true) &&
++            th_check_reg(s, a->rs2, false) &&
++            th_check_overlap_group(a->rd, 2 << s->lmul, a->rs2,
++                                   1 << s->lmul) &&
++            (s->lmul < 0x3) && (s->sew < 0x3) && (s->sew != 0));
++}
++
++static bool opfxv_widen_check_th(DisasContext *s, arg_rmr *a)
++{
++    return (require_xtheadvector(s) &&
++            vext_check_isa_ill(s) &&
++            th_check_overlap_mask(s, a->rd, a->vm, true) &&
++            th_check_reg(s, a->rd, true) &&
++            th_check_reg(s, a->rs2, false) &&
++            th_check_overlap_group(a->rd, 2 << s->lmul, a->rs2,
++                                   1 << s->lmul) &&
++            (s->lmul < 0x3) && (s->sew < 0x3));
++}
++
++#define GEN_OPFXV_WIDEN_TRANS_TH(NAME)                             \
++static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
++{                                                                  \
++    if (opfxv_widen_check_th(s, a)) {                              \
++        uint32_t data = 0;                                         \
++        static gen_helper_gvec_3_ptr * const fns[3] = {            \
++            gen_helper_##NAME##_b,                                 \
++            gen_helper_##NAME##_h,                                 \
++            gen_helper_##NAME##_w,                                 \
++        };                                                         \
++        gen_set_rm(s, RISCV_FRM_DYN);                              \
++                                                                   \
++        data = FIELD_DP32(data, VDATA_TH, MLEN, s->mlen);          \
++        data = FIELD_DP32(data, VDATA_TH, VM, a->vm);              \
++        data = FIELD_DP32(data, VDATA_TH, LMUL, s->lmul);          \
++        tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd),                     \
++                           vreg_ofs(s, 0),                         \
++                           vreg_ofs(s, a->rs2), tcg_env,           \
++                           s->cfg_ptr->vlenb,                      \
++                           s->cfg_ptr->vlenb, data,                \
++                           fns[s->sew]);                           \
++        finalize_rvv_inst(s);                                      \
++        return true;                                               \
++    }                                                              \
++    return false;                                                  \
++}
++GEN_OPFXV_WIDEN_TRANS_TH(th_vfwcvt_f_xu_v)
++GEN_OPFXV_WIDEN_TRANS_TH(th_vfwcvt_f_x_v)
++
++#define GEN_OPFV_WIDEN_TRANS_TH(NAME)                              \
++static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
++{                                                                  \
++    if (opfv_widen_check_th(s, a)) {                               \
++        uint32_t data = 0;                                         \
++        static gen_helper_gvec_3_ptr * const fns[2] = {            \
++            gen_helper_##NAME##_h,                                 \
++            gen_helper_##NAME##_w,                                 \
++        };                                                         \
++        gen_set_rm(s, RISCV_FRM_DYN);                              \
++                                                                   \
++        data = FIELD_DP32(data, VDATA_TH, MLEN, s->mlen);          \
++        data = FIELD_DP32(data, VDATA_TH, VM, a->vm);              \
++        data = FIELD_DP32(data, VDATA_TH, LMUL, s->lmul);          \
++        tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd),                     \
++                           vreg_ofs(s, 0),                         \
++                           vreg_ofs(s, a->rs2), tcg_env,           \
++                           s->cfg_ptr->vlenb,                      \
++                           s->cfg_ptr->vlenb, data,                \
++                           fns[s->sew - 1]);                       \
++        finalize_rvv_inst(s);                                      \
++        return true;                                               \
++    }                                                              \
++    return false;                                                  \
++}
++GEN_OPFV_WIDEN_TRANS_TH(th_vfwcvt_xu_f_v)
++GEN_OPFV_WIDEN_TRANS_TH(th_vfwcvt_x_f_v)
++GEN_OPFV_WIDEN_TRANS_TH(th_vfwcvt_f_f_v)
 +
  #define TH_TRANS_STUB(NAME)                                \
  static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
@@ -124,54 +208,96 @@ index 8e928febb7..27a06c2cac 100644
      return require_xtheadvector(s);                        \
  }
  
--TH_TRANS_STUB(th_vfcvt_xu_f_v)
--TH_TRANS_STUB(th_vfcvt_x_f_v)
--TH_TRANS_STUB(th_vfcvt_f_xu_v)
--TH_TRANS_STUB(th_vfcvt_f_x_v)
- TH_TRANS_STUB(th_vfwcvt_xu_f_v)
- TH_TRANS_STUB(th_vfwcvt_x_f_v)
- TH_TRANS_STUB(th_vfwcvt_f_xu_v)
+-TH_TRANS_STUB(th_vfwcvt_xu_f_v)
+-TH_TRANS_STUB(th_vfwcvt_x_f_v)
+-TH_TRANS_STUB(th_vfwcvt_f_xu_v)
+-TH_TRANS_STUB(th_vfwcvt_f_x_v)
+-TH_TRANS_STUB(th_vfwcvt_f_f_v)
+ TH_TRANS_STUB(th_vfncvt_xu_f_v)
+ TH_TRANS_STUB(th_vfncvt_x_f_v)
+ TH_TRANS_STUB(th_vfncvt_f_xu_v)
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index c966600d0c..105c2eb00a 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -4265,10 +4265,7 @@ GEN_VEXT_V_ENV(vfcvt_f_x_v_w, 4)
+ GEN_VEXT_V_ENV(vfcvt_f_x_v_d, 8)
+ 
+ /* Widening Floating-Point/Integer Type-Convert Instructions */
+-/* (TD, T2, TX2) */
+-#define WOP_UU_B uint16_t, uint8_t,  uint8_t
+-#define WOP_UU_H uint32_t, uint16_t, uint16_t
+-#define WOP_UU_W uint64_t, uint32_t, uint32_t
++
+ /*
+  * vfwcvt.xu.f.v vd, vs2, vm # Convert float to double-width unsigned integer.
+  */
+diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
+index b870e15392..aac96f830c 100644
+--- a/target/riscv/vector_internals.h
++++ b/target/riscv/vector_internals.h
+@@ -132,6 +132,9 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
+ #define OP_UU_H uint16_t, uint16_t, uint16_t
+ #define OP_UU_W uint32_t, uint32_t, uint32_t
+ #define OP_UU_D uint64_t, uint64_t, uint64_t
++#define WOP_UU_B uint16_t, uint8_t,  uint8_t
++#define WOP_UU_H uint32_t, uint16_t, uint16_t
++#define WOP_UU_W uint64_t, uint32_t, uint32_t
+ 
+ /* (TD, T1, T2, TX1, TX2) */
+ #define OP_UUU_B uint8_t, uint8_t, uint8_t, uint8_t, uint8_t
 diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
-index e31e13dff3..7e98c1ead2 100644
+index 7e98c1ead2..42328a8a58 100644
 --- a/target/riscv/xtheadvector_helper.c
 +++ b/target/riscv/xtheadvector_helper.c
-@@ -3205,3 +3205,36 @@ void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2, \
- GEN_VFMERGE_VF_TH(th_vfmerge_vfm_h, int16_t, H2, clearh_th)
- GEN_VFMERGE_VF_TH(th_vfmerge_vfm_w, int32_t, H4, clearl_th)
- GEN_VFMERGE_VF_TH(th_vfmerge_vfm_d, int64_t, H8, clearq_th)
+@@ -3238,3 +3238,47 @@ THCALL(TH_OPFVV1, th_vfcvt_f_x_v_d, OP_UU_D, H8, H8, int64_to_float64)
+ GEN_TH_V_ENV(th_vfcvt_f_x_v_h, 2, 2, clearh_th)
+ GEN_TH_V_ENV(th_vfcvt_f_x_v_w, 4, 4, clearl_th)
+ GEN_TH_V_ENV(th_vfcvt_f_x_v_d, 8, 8, clearq_th)
 +
-+/* Single-Width Floating-Point/Integer Type-Convert Instructions */
-+/* vfcvt.xu.f.v vd, vs2, vm # Convert float to unsigned integer. */
-+THCALL(TH_OPFVV1, th_vfcvt_xu_f_v_h, OP_UU_H, H2, H2, float16_to_uint16)
-+THCALL(TH_OPFVV1, th_vfcvt_xu_f_v_w, OP_UU_W, H4, H4, float32_to_uint32)
-+THCALL(TH_OPFVV1, th_vfcvt_xu_f_v_d, OP_UU_D, H8, H8, float64_to_uint64)
-+GEN_TH_V_ENV(th_vfcvt_xu_f_v_h, 2, 2, clearh_th)
-+GEN_TH_V_ENV(th_vfcvt_xu_f_v_w, 4, 4, clearl_th)
-+GEN_TH_V_ENV(th_vfcvt_xu_f_v_d, 8, 8, clearq_th)
++/* Widening Floating-Point/Integer Type-Convert Instructions */
 +
-+/* vfcvt.x.f.v vd, vs2, vm # Convert float to signed integer. */
-+THCALL(TH_OPFVV1, th_vfcvt_x_f_v_h, OP_UU_H, H2, H2, float16_to_int16)
-+THCALL(TH_OPFVV1, th_vfcvt_x_f_v_w, OP_UU_W, H4, H4, float32_to_int32)
-+THCALL(TH_OPFVV1, th_vfcvt_x_f_v_d, OP_UU_D, H8, H8, float64_to_int64)
-+GEN_TH_V_ENV(th_vfcvt_x_f_v_h, 2, 2, clearh_th)
-+GEN_TH_V_ENV(th_vfcvt_x_f_v_w, 4, 4, clearl_th)
-+GEN_TH_V_ENV(th_vfcvt_x_f_v_d, 8, 8, clearq_th)
++/* vfwcvt.xu.f.v vd, vs2, vm # Convert float to double-width unsigned integer.*/
++THCALL(TH_OPFVV1, th_vfwcvt_xu_f_v_h, WOP_UU_H, H4, H2, float16_to_uint32)
++THCALL(TH_OPFVV1, th_vfwcvt_xu_f_v_w, WOP_UU_W, H8, H4, float32_to_uint64)
++GEN_TH_V_ENV(th_vfwcvt_xu_f_v_h, 2, 4, clearl_th)
++GEN_TH_V_ENV(th_vfwcvt_xu_f_v_w, 4, 8, clearq_th)
 +
-+/* vfcvt.f.xu.v vd, vs2, vm # Convert unsigned integer to float. */
-+THCALL(TH_OPFVV1, th_vfcvt_f_xu_v_h, OP_UU_H, H2, H2, uint16_to_float16)
-+THCALL(TH_OPFVV1, th_vfcvt_f_xu_v_w, OP_UU_W, H4, H4, uint32_to_float32)
-+THCALL(TH_OPFVV1, th_vfcvt_f_xu_v_d, OP_UU_D, H8, H8, uint64_to_float64)
-+GEN_TH_V_ENV(th_vfcvt_f_xu_v_h, 2, 2, clearh_th)
-+GEN_TH_V_ENV(th_vfcvt_f_xu_v_w, 4, 4, clearl_th)
-+GEN_TH_V_ENV(th_vfcvt_f_xu_v_d, 8, 8, clearq_th)
++/* vfwcvt.x.f.v vd, vs2, vm # Convert float to double-width signed integer. */
++THCALL(TH_OPFVV1, th_vfwcvt_x_f_v_h, WOP_UU_H, H4, H2, float16_to_int32)
++THCALL(TH_OPFVV1, th_vfwcvt_x_f_v_w, WOP_UU_W, H8, H4, float32_to_int64)
++GEN_TH_V_ENV(th_vfwcvt_x_f_v_h, 2, 4, clearl_th)
++GEN_TH_V_ENV(th_vfwcvt_x_f_v_w, 4, 8, clearq_th)
 +
-+/* vfcvt.f.x.v vd, vs2, vm # Convert integer to float. */
-+THCALL(TH_OPFVV1, th_vfcvt_f_x_v_h, OP_UU_H, H2, H2, int16_to_float16)
-+THCALL(TH_OPFVV1, th_vfcvt_f_x_v_w, OP_UU_W, H4, H4, int32_to_float32)
-+THCALL(TH_OPFVV1, th_vfcvt_f_x_v_d, OP_UU_D, H8, H8, int64_to_float64)
-+GEN_TH_V_ENV(th_vfcvt_f_x_v_h, 2, 2, clearh_th)
-+GEN_TH_V_ENV(th_vfcvt_f_x_v_w, 4, 4, clearl_th)
-+GEN_TH_V_ENV(th_vfcvt_f_x_v_d, 8, 8, clearq_th)
++/* vfwcvt.f.xu.v vd, vs2, vm # Convert unsigned integer to double-width float */
++THCALL(TH_OPFVV1, th_vfwcvt_f_xu_v_b, WOP_UU_B, H2, H1, uint8_to_float16)
++THCALL(TH_OPFVV1, th_vfwcvt_f_xu_v_h, WOP_UU_H, H4, H2, uint16_to_float32)
++THCALL(TH_OPFVV1, th_vfwcvt_f_xu_v_w, WOP_UU_W, H8, H4, uint32_to_float64)
++GEN_TH_V_ENV(th_vfwcvt_f_xu_v_b, 1, 2, clearh_th)
++GEN_TH_V_ENV(th_vfwcvt_f_xu_v_h, 2, 4, clearl_th)
++GEN_TH_V_ENV(th_vfwcvt_f_xu_v_w, 4, 8, clearq_th)
++
++/* vfwcvt.f.x.v vd, vs2, vm # Convert integer to double-width float. */
++THCALL(TH_OPFVV1, th_vfwcvt_f_x_v_b, WOP_UU_B, H2, H1, int8_to_float16)
++THCALL(TH_OPFVV1, th_vfwcvt_f_x_v_h, WOP_UU_H, H4, H2, int16_to_float32)
++THCALL(TH_OPFVV1, th_vfwcvt_f_x_v_w, WOP_UU_W, H8, H4, int32_to_float64)
++GEN_TH_V_ENV(th_vfwcvt_f_x_v_b, 1, 2, clearh_th)
++GEN_TH_V_ENV(th_vfwcvt_f_x_v_h, 2, 4, clearl_th)
++GEN_TH_V_ENV(th_vfwcvt_f_x_v_w, 4, 8, clearq_th)
++
++/*
++ * vfwcvt.f.f.v vd, vs2, vm #
++ * Convert single-width float to double-width float.
++ */
++static uint32_t vfwcvtffv16(uint16_t a, float_status *s)
++{
++    return float16_to_float32(a, true, s);
++}
++
++THCALL(TH_OPFVV1, th_vfwcvt_f_f_v_h, WOP_UU_H, H4, H2, vfwcvtffv16)
++THCALL(TH_OPFVV1, th_vfwcvt_f_f_v_w, WOP_UU_W, H8, H4, float32_to_float64)
++GEN_TH_V_ENV(th_vfwcvt_f_f_v_h, 2, 4, clearl_th)
++GEN_TH_V_ENV(th_vfwcvt_f_f_v_w, 4, 8, clearq_th)
 -- 
 2.44.0
 
