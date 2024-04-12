@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E1D2C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 07:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A63BC00A94
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 07:37:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvBQ4-0006zB-77; Fri, 12 Apr 2024 03:33:56 -0400
+	id 1rvBQI-00074L-Rm; Fri, 12 Apr 2024 03:34:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvBQ1-0006xO-4u
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:33:53 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1rvBQA-00070r-9f
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:34:03 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvBPy-00074g-DC
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:33:52 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-5dca1efad59so451629a12.2
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 00:33:50 -0700 (PDT)
+ id 1rvBQ7-0007Ab-Dp
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 03:34:01 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1e3c3aa8938so4339325ad.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 00:33:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712907229; x=1713512029; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712907238; x=1713512038; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+WtY4DsJRn2jEDsEW21TOMqrULwYncFBXOs9a6AYGRc=;
- b=efqxISQZfqOPZjn4MTPsnHQcAkoNh3ktYf1OveUy2/hMVh0RRqO6jwblvv/3JIU2eF
- xqBxUHyS/WZml8f427Mx0fo5KuzpM3vgRM828wuclKCgmyZFr+r2qxAmL6aY52fDxWAI
- OxuhKGyvt5DNhHaBGDHtVjW71ewJEJLxEbCHPGY5ix9bQCBe2FeH2nR+pEy9k7ygrcga
- Q0vrzV0le61GpptaqrKT1Cn5fq/48uqMVR+sxkfLoiHFo+z5JK75pbpdT7zzM6qCCj8b
- Zsv1aExQaPosk+DUD1Orb97M++FUTI+mX1kVcGNs9pneeULOmmLH67rfZifgt+dSYk87
- 3jKA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5eqjrZGd5HpdIOKB4IPvtcJuO95xZlA91V8rntFRy4Y=;
+ b=GsxyWnq4SPm1F6qxQ7Er7HRkqR5DDdg2apELXOOdsttru4Erlo2D/uH1sSa9vSIwoD
+ f6yyyPNGUWwi7qe1smpliAwLbJXWOKB1L8Ekdv2Q+p0iN3HnU93OVIq1LrIBTox5QmUh
+ K4wse7xjKckIvfXuB6UJP9Pvtwh0fXKP/z6joiPAHxn9UasRybTZP0hvBEEg+aoXoSBw
+ nocGumaEgJOn9VViOJeQ1zvI8RYjyn8zweCrBm3Kld1XzoFJ1nxVKbbsDNWy5g9GA6aK
+ JV0qgRICARRuFryGdQ5er2ikjgW0dO/fscmtd9L9DPc9lPelolMmLn/EpHP709VyD1/m
+ 4URQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712907229; x=1713512029;
+ d=1e100.net; s=20230601; t=1712907238; x=1713512038;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+WtY4DsJRn2jEDsEW21TOMqrULwYncFBXOs9a6AYGRc=;
- b=tDLU1OSK886T52h6Ae8nmqyYHG5T4AtTtdMiCEiU96doNN0KbQEhUslfJNsiPcrcj7
- uCtPMAAVK9nNWH3fvEBom9S/1DC5xckKET6Vi89Ynv1SsgSPScAWgAkNYwQxwRTQ3Ksz
- +52ly/9fIOk/nWRp5w2nS3zCTSftCxqPgRe5Ik7SVI1AdDYUo5GPrqgi6olAqoXDbj/0
- sy3rSFdJaiJnbhbr3lovfU7lKymMVApJ8ErTmy7EjPUdjT8P66ngqQPxUgouRUp+iKB5
- sHL3w9CrBnwyghPQYl3omntCEV5stytGlji41yf95BuzfrA4CsDea9Uzn5kfEf5UH3S9
- kLmw==
-X-Gm-Message-State: AOJu0Yyz09xBwnMvo8/zqrwCyjV3UNcBRp7pOHQ1n0UPrWVlioLy1PMo
- i55+lRzd9XRVHAENcLA2O8O8S41ZUEDQ8CMiidk5slxWvioMh1svIum/H7nv2uvrqS5kQvSJ9jZ
- O
-X-Google-Smtp-Source: AGHT+IGv0uisfcQpQYJDOzdqbBY/pHSv+RBuKW6VvhCXjjWsXyt91vMbh+yWx9FYe+tZE0jeXplvqQ==
-X-Received: by 2002:a05:6a21:151a:b0:1a9:b3e9:a62c with SMTP id
- nq26-20020a056a21151a00b001a9b3e9a62cmr307545pzb.48.1712907229154; 
- Fri, 12 Apr 2024 00:33:49 -0700 (PDT)
+ bh=5eqjrZGd5HpdIOKB4IPvtcJuO95xZlA91V8rntFRy4Y=;
+ b=GYPCvFYMLqeAW4dh8rKKZM0QOZobk8DbxNAkHFmauZqov+OtF9scQq2rLTulogkgIW
+ PQJhsFr1nO8vDy8kNYB8fT8P/j8QM0Z3DG/nuNLulYCaqCoJYy9YQnCPv5yP8WnGaJ4W
+ EJtJ06Joe3xcEYzNi2suuo9fFIq+vFbuWCFfYFO/UXJbPgbXh5AtZp+HKdVnBVjk1wV4
+ QHZvA2EIyKaDrHuC4stewUQ5grnXx2Emgo0YEQgu4lYeeVK3eRscH5WXinPhh7rVSr9Y
+ 1ej4a1aa5zuthMBEI239+LKfo1+31iVCqDhGi4wl8EIKpxwkySCQHwuZYs7H5wAaRhb4
+ pyjQ==
+X-Gm-Message-State: AOJu0YwyacDpnDYUoHuYn+VL4/4sltLnLE6ncVh+f+w3/ZdY5Zf/tUrY
+ UPdzTG1jZSUlbiqIoSxOt9iHq25Tc0HC6+iDiNdwWoJQ5bIDCcuh7df2EOjlKa6/rJsZtJ/nzRj
+ t
+X-Google-Smtp-Source: AGHT+IHZUV/7g8Q7Ay7lwMoeCqJbHYAPLuR7zU8YnkTW2irWRzcU0UK9lp4LsaP9eDaju1eQOGIbzA==
+X-Received: by 2002:a17:902:e882:b0:1e4:70d0:9337 with SMTP id
+ w2-20020a170902e88200b001e470d09337mr2121487plg.45.1712907238090; 
+ Fri, 12 Apr 2024 00:33:58 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- e5-20020a17090301c500b001e556734814sm2206099plh.134.2024.04.12.00.33.48
- for <qemu-devel@nongnu.org>
+ e5-20020a17090301c500b001e556734814sm2206099plh.134.2024.04.12.00.33.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 00:33:48 -0700 (PDT)
+ Fri, 12 Apr 2024 00:33:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 02/27] util/hexdump: Remove ascii parameter from
- qemu_hexdump_line
-Date: Fri, 12 Apr 2024 00:33:21 -0700
-Message-Id: <20240412073346.458116-3-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH v3 13/27] disas/microblaze: Replace sprintf() by snprintf()
+Date: Fri, 12 Apr 2024 00:33:32 -0700
+Message-Id: <20240412073346.458116-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240412073346.458116-1-richard.henderson@linaro.org>
 References: <20240412073346.458116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,128 +96,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out asciidump_line as a separate function, local to hexdump.c,
-for use by qemu_hexdump.  Use "%-*s" to generate the alignment
-between the hex and the ascii, rather than explicit spaces.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1,
+resulting in painful developper experience. Use snprintf() instead.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-Id: <20240411104340.6617-3-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/cutils.h  |  3 +--
- hw/virtio/vhost-vdpa.c |  2 +-
- util/hexdump.c         | 54 ++++++++++++++++++++++++------------------
- 3 files changed, 33 insertions(+), 26 deletions(-)
+ disas/microblaze.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-index 3415f5d249..d0c5386e6c 100644
---- a/include/qemu/cutils.h
-+++ b/include/qemu/cutils.h
-@@ -257,8 +257,7 @@ int parse_debug_env(const char *name, int max, int initial);
-  */
- #define QEMU_HEXDUMP_LINE_BYTES 16 /* Number of bytes to dump */
- #define QEMU_HEXDUMP_LINE_LEN 75   /* Number of characters in line */
--void qemu_hexdump_line(char *line, const void *bufptr,
--                       unsigned int len, bool ascii);
-+void qemu_hexdump_line(char *line, const void *bufptr, size_t len);
- 
- /*
-  * Hexdump a buffer to a file. An optional string prefix is added to every line
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index b4afa142f6..32bad5ce68 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -946,7 +946,7 @@ static void vhost_vdpa_dump_config(struct vhost_dev *dev, const uint8_t *config,
- 
-     for (b = 0; b < config_len; b += 16) {
-         len = config_len - b;
--        qemu_hexdump_line(line, config + b, len, false);
-+        qemu_hexdump_line(line, config + b, len);
-         trace_vhost_vdpa_dump_config(dev, b, line);
-     }
- }
-diff --git a/util/hexdump.c b/util/hexdump.c
-index 7324e7b126..dbc536fe84 100644
---- a/util/hexdump.c
-+++ b/util/hexdump.c
-@@ -16,8 +16,7 @@
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
- 
--void qemu_hexdump_line(char *line, const void *bufptr,
--                       unsigned int len, bool ascii)
-+void qemu_hexdump_line(char *line, const void *bufptr, size_t len)
+diff --git a/disas/microblaze.c b/disas/microblaze.c
+index 0b89b9c4fa..49a4c0fd40 100644
+--- a/disas/microblaze.c
++++ b/disas/microblaze.c
+@@ -600,7 +600,8 @@ static char *
+ get_field (long instr, long mask, unsigned short low)
  {
-     const char *buf = bufptr;
-     int i, c;
-@@ -26,39 +25,48 @@ void qemu_hexdump_line(char *line, const void *bufptr,
-         len = QEMU_HEXDUMP_LINE_BYTES;
-     }
- 
--    for (i = 0; i < QEMU_HEXDUMP_LINE_BYTES; i++) {
-+    for (i = 0; i < len; i++) {
-         if (i != 0 && (i % 4) == 0) {
-             *line++ = ' ';
-         }
--        if (i < len) {
--            line += sprintf(line, " %02x", (unsigned char)buf[i]);
--        } else {
--            line += sprintf(line, "   ");
--        }
--    }
--    if (ascii) {
--        *line++ = ' ';
--        for (i = 0; i < len; i++) {
--            c = buf[i];
--            if (c < ' ' || c > '~') {
--                c = '.';
--            }
--            *line++ = c;
--        }
-+        line += sprintf(line, " %02x", (unsigned char)buf[i]);
-     }
-     *line = '\0';
+   char tmpstr[25];
+-  sprintf(tmpstr, "%s%d", register_prefix, (int)((instr & mask) >> low));
++  snprintf(tmpstr, sizeof(tmpstr), "%s%d", register_prefix,
++           (int)((instr & mask) >> low));
+   return(strdup(tmpstr));
  }
  
-+static void asciidump_line(char *line, const void *bufptr, size_t len)
-+{
-+    const char *buf = bufptr;
-+
-+    for (size_t i = 0; i < len; i++) {
-+        char c = buf[i];
-+
-+        if (c < ' ' || c > '~') {
-+            c = '.';
-+        }
-+        *line++ = c;
-+    }
-+    *line = '\0';
-+}
-+
-+#define QEMU_HEXDUMP_LINE_WIDTH \
-+    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
-+
- void qemu_hexdump(FILE *fp, const char *prefix,
-                   const void *bufptr, size_t size)
+@@ -608,7 +609,8 @@ static char *
+ get_field_imm (long instr)
  {
--    unsigned int b, len;
-     char line[QEMU_HEXDUMP_LINE_LEN];
-+    char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
-+    size_t b, len;
- 
--    for (b = 0; b < size; b += QEMU_HEXDUMP_LINE_BYTES) {
--        len = size - b;
--        qemu_hexdump_line(line, bufptr + b, len, true);
--        fprintf(fp, "%s: %04x: %s\n", prefix, b, line);
-+    for (b = 0; b < size; b += len) {
-+        len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
-+
-+        qemu_hexdump_line(line, bufptr + b, len);
-+        asciidump_line(ascii, bufptr + b, len);
-+
-+        fprintf(fp, "%s: %04x: %-*s %s\n",
-+                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, line, ascii);
-     }
- 
+   char tmpstr[25];
+-  sprintf(tmpstr, "%d", (short)((instr & IMM_MASK) >> IMM_LOW));
++  snprintf(tmpstr, sizeof(tmpstr), "%d",
++           (short)((instr & IMM_MASK) >> IMM_LOW));
+   return(strdup(tmpstr));
  }
+ 
+@@ -616,7 +618,8 @@ static char *
+ get_field_imm5 (long instr)
+ {
+   char tmpstr[25];
+-  sprintf(tmpstr, "%d", (short)((instr & IMM5_MASK) >> IMM_LOW));
++  snprintf(tmpstr, sizeof(tmpstr), "%d",
++           (short)((instr & IMM5_MASK) >> IMM_LOW));
+   return(strdup(tmpstr));
+ }
+ 
+@@ -624,7 +627,8 @@ static char *
+ get_field_rfsl (long instr)
+ {
+   char tmpstr[25];
+-  sprintf(tmpstr, "%s%d", fsl_register_prefix, (short)((instr & RFSL_MASK) >> IMM_LOW));
++  snprintf(tmpstr, sizeof(tmpstr), "%s%d", fsl_register_prefix,
++           (short)((instr & RFSL_MASK) >> IMM_LOW));
+   return(strdup(tmpstr));
+ }
+ 
+@@ -632,7 +636,8 @@ static char *
+ get_field_imm15 (long instr)
+ {
+   char tmpstr[25];
+-  sprintf(tmpstr, "%d", (short)((instr & IMM15_MASK) >> IMM_LOW));
++  snprintf(tmpstr, sizeof(tmpstr), "%d",
++           (short)((instr & IMM15_MASK) >> IMM_LOW));
+   return(strdup(tmpstr));
+ }
+ 
+@@ -641,7 +646,8 @@ static char *
+ get_field_unsigned_imm (long instr)
+ {
+   char tmpstr[25];
+-  sprintf(tmpstr, "%d", (int)((instr & IMM_MASK) >> IMM_LOW));
++  snprintf(tmpstr, sizeof(tmpstr), "%d",
++           (int)((instr & IMM_MASK) >> IMM_LOW));
+   return(strdup(tmpstr));
+ }
+ #endif
+@@ -653,7 +659,8 @@ get_field_unsigned_imm (long instr)
+   {
+   char tmpstr[25];
+   
+-  sprintf(tmpstr, "%s%s", register_prefix, (((instr & IMM_MASK) >> IMM_LOW) & REG_MSR_MASK) == 0 ? "pc" : "msr");
++  snprintf(tmpstr, sizeof(tmpstr), "%s%s", register_prefix,
++          (((instr & IMM_MASK) >> IMM_LOW) & REG_MSR_MASK) == 0 ? "pc" : "msr");
+   
+   return(strdup(tmpstr));
+   }
+@@ -709,7 +716,7 @@ get_field_special(long instr, const struct op_code_struct *op)
+    default :
+      {
+        if ( ((((instr & IMM_MASK) >> IMM_LOW) ^ op->immval_mask) & 0xE000) == REG_PVR_MASK) {
+-	  sprintf(tmpstr, "%s%u", pvr_register_prefix,
++          snprintf(tmpstr, sizeof(tmpstr), "%s%u", pvr_register_prefix,
+                  (unsigned short)(((instr & IMM_MASK) >> IMM_LOW) ^
+                                   op->immval_mask) ^ REG_PVR_MASK);
+ 	 return(strdup(tmpstr));
+@@ -720,7 +727,7 @@ get_field_special(long instr, const struct op_code_struct *op)
+      break;
+    }
+    
+-   sprintf(tmpstr, "%s%s", register_prefix, spr);
++   snprintf(tmpstr, sizeof(tmpstr), "%s%s", register_prefix, spr);
+    return(strdup(tmpstr));
+ }
+ 
 -- 
 2.34.1
 
