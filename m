@@ -4,86 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FA4C04FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:03:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B5AC00A94
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvBs6-0003L5-Hc; Fri, 12 Apr 2024 04:02:54 -0400
+	id 1rvBuD-0005PC-8l; Fri, 12 Apr 2024 04:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rvBs4-0003Ks-KQ
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 04:02:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvBu9-0005Ou-Dp; Fri, 12 Apr 2024 04:05:01 -0400
+Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rvBrz-0004K1-VT
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 04:02:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712908966;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=A5Llucl1jLUHeO2gAswtv29kQ2WFQbLL8CXHS8kKVi4=;
- b=SjAgnY8GRyKGp7YSVmhnqrV8l4HGqzTzezOAnF/6hbu9q+CNCDVv8JWBX54VOMh3ueP4ro
- 5lSPva4d5LEhr0FmJB5rrBn4WOODICOcHTLUQ+BKiEvpYfD1NBJkdy9AElmXHePDqrRVdd
- ig0xfaMdQJae7fPwIs7DcEN6bsbPbBk=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-98-JP5lpbHiN1GS-J5tbQCdjA-1; Fri, 12 Apr 2024 04:02:40 -0400
-X-MC-Unique: JP5lpbHiN1GS-J5tbQCdjA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a523c6b9639so11540266b.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 01:02:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712908957; x=1713513757;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=A5Llucl1jLUHeO2gAswtv29kQ2WFQbLL8CXHS8kKVi4=;
- b=df7gQjUdsTxTti38j1sr3gXg2htjiBpxx0S26/t4kbeuty1HMFMwmiBCkRYrnQU4gM
- UC2An6EkCtvtzj2G/WuuAHNZa83zxLWU3poNRLmYl7Kzun41DpCrkvFPqjS6ZWVsRrL5
- 2ILboixskUvCX6bmoR/g14Flfbh2JPj5fARRNVCqXWOnGgK/ZqhhbtDWz1WGLLEYzJeB
- U6G0lZPPMJnivOq149oKA+jFLWYMGFX9nCoUYtgwHG5qmO7ursBGYVWDpG0X1NXOKhPV
- yymziSqe60x/f+08fc48jo/6MiwFKFMzI+nb1qVACy24REX0kObRGCNnXoClxY7VXrxA
- xBuw==
-X-Gm-Message-State: AOJu0YzFXirfDbz9CNGkLi+cVXeShic484MsWwK5Jm2wNSm5+yJkNX2N
- qfAWESt213Di34f9yxl5LfvWHGu/yovr8V3fsbC9yGZ8ofLWlIEOw6VVNV0MxKDf53w3lXOnpmu
- IsxZOMMUuTnHFgjC4gjyexHhfuJUgvWQaKww22q1zlBV9cYtyOANti6dEbT9FUlExAk2FARPVUE
- fPYeVEyeB2D6NSMvYI+8lz6LoNwSHFOWiMkOXF
-X-Received: by 2002:a17:906:5fc2:b0:a51:ae51:5206 with SMTP id
- k2-20020a1709065fc200b00a51ae515206mr1062252ejv.42.1712908957514; 
- Fri, 12 Apr 2024 01:02:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IErYet4bg0RW0ZUFW5vbK0hieqtx589Pl3BQxJEIVNRcGIFWcxktt9Y+3yogZ4bLyEvdBLGIQ==
-X-Received: by 2002:a17:906:5fc2:b0:a51:ae51:5206 with SMTP id
- k2-20020a1709065fc200b00a51ae515206mr1062236ejv.42.1712908957125; 
- Fri, 12 Apr 2024 01:02:37 -0700 (PDT)
-Received: from [192.168.10.117] ([176.206.87.39])
- by smtp.gmail.com with ESMTPSA id
- wp20-20020a170907061400b00a5226f9542dsm1178675ejb.27.2024.04.12.01.02.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 01:02:36 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rvBu5-0004WY-1H; Fri, 12 Apr 2024 04:05:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1712909091; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=9ugy1gHKeOMe5mNFWAUsyeoGXw4JWDzoRj/8nAijsX8=;
+ b=Xkp9PBdbFIN9Kr3RuE2DgCdjTrLCZ78cR5VMXvGh317vWsGuiGQlwkP9BzzlEpYTTWYbq3ZXWxTf1P4Bj6uBhNUF0WDfmAf5eAgZCKcVEvXV8cVvSSqFZoM3U0URnrcPwidt7uUKsJPPdk6FmIeZfLlTsBS/urs75qoxkqIojYo=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046056;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W4Nah7i_1712909089; 
+Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W4Nah7i_1712909089) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 16:04:50 +0800
+From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-Subject: [PATCH v2] Makefile: fix use of -j without an argument
-Date: Fri, 12 Apr 2024 10:02:35 +0200
-Message-ID: <20240412080235.11478-1-pbonzini@redhat.com>
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Huang Tao <eric.huang@linux.alibaba.com>
+Subject: [PATCH 13/65] target/riscv: Add indexed store instructions for
+ XTheadVector
+Date: Fri, 12 Apr 2024 15:36:43 +0800
+Message-ID: <20240412073735.76413-14-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
+References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.124;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-124.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,55 +71,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+XTheadVector indexed store instructions diff from RVV1.0 in the following
+points:
+1. Different mask reg layout.
+2. Different access width. As same as XTheadVector indexed load instructions,
+   except store does not need to distinguish between zero and sign extended.
+3. Different masked elements process policy.
+4. Different check policy.
 
-Our Makefile massages the given make arguments to invoke ninja
-accordingly. One key difference is that ninja will parallelize by
-default, whereas make only does so with -j<n> or -j. The make man page
-says that "if the -j option is given without an argument, make will not
-limit the number of jobs that can run simultaneously". We use to support
-that by replacing -j with "" (empty string) when calling ninja, so that
-it would do its auto-parallelization based on the number of CPU cores.
-
-This was accidentally broken at d1ce2cc95b (Makefile: preserve
---jobserver-auth argument when calling ninja, 2024-04-02),
-causing `make -j` to fail:
-
-$ make -j V=1
-  /usr/bin/ninja -v   -j -d keepdepfile all | cat
-  make  -C contrib/plugins/ V="1" TARGET_DIR="contrib/plugins/" all
-  ninja: fatal: invalid -j parameter
-  make: *** [Makefile:161: run-ninja] Error
-
-Let's fix that and indent the touched code for better readability.
-
-Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-Fixes: d1ce2cc95b ("Makefile: preserve --jobserver-auth argument when calling ninja", 2024-04-02)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- Makefile | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ target/riscv/helper.h                         | 13 +++++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 49 +++++++++++++++++--
+ target/riscv/xtheadvector_helper.c            | 24 +++++++++
+ 3 files changed, 82 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 183756018ff..02a257584ba 100644
---- a/Makefile
-+++ b/Makefile
-@@ -141,8 +141,13 @@ MAKE.n = $(findstring n,$(firstword $(filter-out --%,$(MAKEFLAGS))))
- MAKE.k = $(findstring k,$(firstword $(filter-out --%,$(MAKEFLAGS))))
- MAKE.q = $(findstring q,$(firstword $(filter-out --%,$(MAKEFLAGS))))
- MAKE.nq = $(if $(word 2, $(MAKE.n) $(MAKE.q)),nq)
--NINJAFLAGS = $(if $V,-v) $(if $(MAKE.n), -n) $(if $(MAKE.k), -k0) \
--        $(or $(filter -l% -j%, $(MAKEFLAGS)), $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1)) \
-+NINJAFLAGS = \
-+        $(if $V,-v) \
-+        $(if $(MAKE.n), -n) \
-+        $(if $(MAKE.k), -k0) \
-+        $(filter-out -j, \
-+          $(or $(filter -l% -j%, $(MAKEFLAGS)), \
-+               $(if $(filter --jobserver-auth=%, $(MAKEFLAGS)),, -j1))) \
-         -d keepdepfile
- ninja-cmd-goals = $(or $(MAKECMDGOALS), all)
- ninja-cmd-goals += $(foreach g, $(MAKECMDGOALS), $(.ninja-goals.$g))
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 733071bdc6..fd81db2f74 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1409,3 +1409,16 @@ DEF_HELPER_6(th_vlxhu_v_w, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vlxhu_v_d, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vlxwu_v_w, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vlxwu_v_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxb_v_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxb_v_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxb_v_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxb_v_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxh_v_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxh_v_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxh_v_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxw_v_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxw_v_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxe_v_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxe_v_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxe_v_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vsxe_v_d, void, ptr, ptr, tl, ptr, env, i32)
+diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+index 8148097de3..68a2a9a0cf 100644
+--- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
++++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
+@@ -537,6 +537,51 @@ GEN_TH_TRANS(th_vlxbu_v, 4, rnfvm, ld_index_op_th, ld_index_check_th)
+ GEN_TH_TRANS(th_vlxhu_v, 5, rnfvm, ld_index_op_th, ld_index_check_th)
+ GEN_TH_TRANS(th_vlxwu_v, 6, rnfvm, ld_index_op_th, ld_index_check_th)
+ 
++/*
++ * This function is almost the copy of st_index_op, except:
++ * 1) different data encoding.
++ */
++static bool st_index_op_th(DisasContext *s, arg_rnfvm *a, uint8_t seq)
++{
++    uint32_t data = 0;
++    gen_helper_ldst_index_th *fn;
++    static gen_helper_ldst_index_th * const fns[4][4] = {
++        { gen_helper_th_vsxb_v_b,  gen_helper_th_vsxb_v_h,
++          gen_helper_th_vsxb_v_w,  gen_helper_th_vsxb_v_d },
++        { NULL,                    gen_helper_th_vsxh_v_h,
++          gen_helper_th_vsxh_v_w,  gen_helper_th_vsxh_v_d },
++        { NULL,                    NULL,
++          gen_helper_th_vsxw_v_w,  gen_helper_th_vsxw_v_d },
++        { gen_helper_th_vsxe_v_b,  gen_helper_th_vsxe_v_h,
++          gen_helper_th_vsxe_v_w,  gen_helper_th_vsxe_v_d }
++    };
++
++    fn =  fns[seq][s->sew];
++    if (fn == NULL) {
++        return false;
++    }
++
++    data = FIELD_DP32(data, VDATA_TH, MLEN, s->mlen);
++    data = FIELD_DP32(data, VDATA_TH, VM, a->vm);
++    data = FIELD_DP32(data, VDATA_TH, LMUL, s->lmul);
++    data = FIELD_DP32(data, VDATA_TH, NF, a->nf);
++    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
++}
++
++static bool st_index_check_th(DisasContext *s, arg_rnfvm* a)
++{
++    return (require_xtheadvector(s) &&
++            vext_check_isa_ill(s) &&
++            th_check_reg(s, a->rd, false) &&
++            th_check_reg(s, a->rs2, false) &&
++            th_check_nf(s, a->rd, a->nf));
++}
++
++GEN_TH_TRANS(th_vsxb_v, 0, rnfvm, st_index_op_th, st_index_check_th)
++GEN_TH_TRANS(th_vsxh_v, 1, rnfvm, st_index_op_th, st_index_check_th)
++GEN_TH_TRANS(th_vsxw_v, 2, rnfvm, st_index_op_th, st_index_check_th)
++GEN_TH_TRANS(th_vsxe_v, 3, rnfvm, st_index_op_th, st_index_check_th)
++
+ #define TH_TRANS_STUB(NAME)                                \
+ static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
+ {                                                          \
+@@ -550,10 +595,6 @@ TH_TRANS_STUB(th_vleff_v)
+ TH_TRANS_STUB(th_vlbuff_v)
+ TH_TRANS_STUB(th_vlhuff_v)
+ TH_TRANS_STUB(th_vlwuff_v)
+-TH_TRANS_STUB(th_vsxb_v)
+-TH_TRANS_STUB(th_vsxh_v)
+-TH_TRANS_STUB(th_vsxw_v)
+-TH_TRANS_STUB(th_vsxe_v)
+ TH_TRANS_STUB(th_vamoswapw_v)
+ TH_TRANS_STUB(th_vamoaddw_v)
+ TH_TRANS_STUB(th_vamoxorw_v)
+diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
+index a9ae157296..22af4774df 100644
+--- a/target/riscv/xtheadvector_helper.c
++++ b/target/riscv/xtheadvector_helper.c
+@@ -518,3 +518,27 @@ GEN_TH_LD_INDEX(th_vlxhu_v_w, uint16_t, uint32_t, idx_w, ldhu_w, clearl_th)
+ GEN_TH_LD_INDEX(th_vlxhu_v_d, uint16_t, uint64_t, idx_d, ldhu_d, clearq_th)
+ GEN_TH_LD_INDEX(th_vlxwu_v_w, uint32_t, uint32_t, idx_w, ldwu_w, clearl_th)
+ GEN_TH_LD_INDEX(th_vlxwu_v_d, uint32_t, uint64_t, idx_d, ldwu_d, clearq_th)
++
++/* Similar to GEN_VEXT_ST_INDEX */
++#define GEN_TH_ST_INDEX(NAME, MTYPE, ETYPE, INDEX_FN, STORE_FN)  \
++void HELPER(NAME)(void *vd, void *v0, target_ulong base,         \
++                  void *vs2, CPURISCVState *env, uint32_t desc)  \
++{                                                                \
++    th_ldst_index(vd, v0, base, vs2, env, desc, INDEX_FN,        \
++                  STORE_FN, NULL, sizeof(ETYPE), sizeof(MTYPE),  \
++                  GETPC());                                      \
++}
++
++GEN_TH_ST_INDEX(th_vsxb_v_b, int8_t,  int8_t,  idx_b, stb_b)
++GEN_TH_ST_INDEX(th_vsxb_v_h, int8_t,  int16_t, idx_h, stb_h)
++GEN_TH_ST_INDEX(th_vsxb_v_w, int8_t,  int32_t, idx_w, stb_w)
++GEN_TH_ST_INDEX(th_vsxb_v_d, int8_t,  int64_t, idx_d, stb_d)
++GEN_TH_ST_INDEX(th_vsxh_v_h, int16_t, int16_t, idx_h, sth_h)
++GEN_TH_ST_INDEX(th_vsxh_v_w, int16_t, int32_t, idx_w, sth_w)
++GEN_TH_ST_INDEX(th_vsxh_v_d, int16_t, int64_t, idx_d, sth_d)
++GEN_TH_ST_INDEX(th_vsxw_v_w, int32_t, int32_t, idx_w, stw_w)
++GEN_TH_ST_INDEX(th_vsxw_v_d, int32_t, int64_t, idx_d, stw_d)
++GEN_TH_ST_INDEX(th_vsxe_v_b, int8_t,  int8_t,  idx_b, ste_b)
++GEN_TH_ST_INDEX(th_vsxe_v_h, int16_t, int16_t, idx_h, ste_h)
++GEN_TH_ST_INDEX(th_vsxe_v_w, int32_t, int32_t, idx_w, ste_w)
++GEN_TH_ST_INDEX(th_vsxe_v_d, int64_t, int64_t, idx_d, ste_d)
 -- 
 2.44.0
 
