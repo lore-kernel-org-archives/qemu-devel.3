@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 060EAC00A94
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 16:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A00EC04FFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 16:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvJRt-0001uO-G2; Fri, 12 Apr 2024 12:08:21 -0400
+	id 1rvJRt-0001uD-7O; Fri, 12 Apr 2024 12:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rvJRq-0001sj-2m
+ id 1rvJRq-0001t4-FW
  for qemu-devel@nongnu.org; Fri, 12 Apr 2024 12:08:18 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rvJRm-0004ZE-G6
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 12:08:17 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-41819c27ea3so116435e9.0
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 09:08:12 -0700 (PDT)
+ id 1rvJRm-0004ZA-GP
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 12:08:18 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-343eb6cc46bso685109f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 09:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1712938091; x=1713542891; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dnNoCn2uuTyof16mVyr36WFsEKC/7L9I7y8bsz+RKho=;
- b=qN27ALbOigZLK8Eod9grGvVpybJOgDXRrFFonbfhYKJf7hnXEHRjP7i06DgWywPx8u
- KwgMEGtRiF6VFU0c957cSWO7zuj6TA2boQzw6uPPFHsZIk3Gn0Nn4UuzwvYKfCNJRx4n
- 8KMt39BQEsHiZArk2qEy2qAMad1eLNv+6ZcsEmN+xqedlnSN/uqdwpPXjoG+rl/LRmRp
- H4W+BP+olg/OyE2c8l/gnsdj6ORBaa/qP6jcxXLdo04QZDiUvYb9MmjeHssMP6jr9Wth
- 0zKQRI+bUILpF4uNrZkuQM0YWc9TQzgSGPhDz2ws1Wsa2A6VottIlMXcyh2cohhNg36u
- yBKw==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YPNUCG34JRtanqhu40n9+rt/oe0ODrWbJJWPvLvAacM=;
+ b=AO2sDC3Q87jebDEjw2c6aO3gHudt6i0aeSwU3cr7/cmX6P7eB/xwroGt+mXC+gL+WW
+ S62gJn6kVHzwAEhxiIub5mkxUFBa0jqK4ShuWNMcM8IGIwhkEkO5rufxae3fk6V8PX+H
+ xO9OryDwlJ0YsKgWO62rAaJ0Yaq5A1KmFcTVB27zmdIllN9WdCAnVSZdDUO4d0PITRbT
+ 9uVtMQc6tbF6qBu2NI/RsDeU/41bdXnncVbiLxeXA0ZyAnYjeTSsLr2ivxiGo1Z0u2Nw
+ IGZjTLTbHb0I6Njogf/YT3wrX1EVjEV1aADMKfDeAVPXqHncpVKmYzZ0mWkVc4ak1Bjc
+ A2YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1712938091; x=1713542891;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dnNoCn2uuTyof16mVyr36WFsEKC/7L9I7y8bsz+RKho=;
- b=BwEH9vdLLN4dIbh5HOleOEVOduyLd0Ad3+Yop8zA/wgDcki9zbBKnq0fM3eC245Uby
- uB2WE5wXegYqgfIla05nu/XtjdOfWUsoE2rHkLo1h33ZevJi5dAEFqgkkha1RtrQClDy
- rZU36bsxrLB+dalZL9GmB3wbAnTPCM15w64ndYtmbIIGVVOSOFBBBo9FMyJ2cyv/+ewy
- fJbfApRwUyeqwlSa+GP6w78vlvxS7cIrToTNsPz3m0P+UEBGLpNe6gYE1JhfL4DqRXee
- l7BNkciItcsbHJZIRh/7QXlrK3PbhTo51yGbp4RojBQEiRowOBnqh5YdGQuVtZmLH5Hw
- wxaA==
-X-Gm-Message-State: AOJu0YyMZOmNMEoxh31Kt/XTZPvYFoPfPRKiNjVxc/IVgXiHDe+i34tQ
- 6yO32g2RWI+SfMKsY7IH5fUwOChQzpnulkvGr6RdrBRExa7jMIpRIlGvpPj5itJPTkh8EwkofLR
- l
-X-Google-Smtp-Source: AGHT+IGgDifFk87qM9eBg/xZtCCIz6uynT3d0aviSe/eQtDiQ6mVWI84p/TrO00VFqZyYFJ+F+DxiA==
-X-Received: by 2002:a5d:6841:0:b0:346:bbd8:dd07 with SMTP id
- o1-20020a5d6841000000b00346bbd8dd07mr1785319wrw.30.1712938091057; 
- Fri, 12 Apr 2024 09:08:11 -0700 (PDT)
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YPNUCG34JRtanqhu40n9+rt/oe0ODrWbJJWPvLvAacM=;
+ b=fAjT+2r0QsXo5wJmg9Wre3DL2gbBN8caiturCBa5hXphY+cTLM2fiFQ7SZkEjDgSJT
+ ZZaLhyoCdHjlsv5cBNEAhBbHnDV+mxWKZ7EMJBXHp3LjIX2JKGHlNR652JzBfa6HOF76
+ VxPcb8LuUxbrwM42QYMZ1se2KpbAWM0DT5hWf9vdz3FKH0lR6NYfnbvfh4jVTawF6RI0
+ QEBsr5o+oHyNgC0sZo1brCcQKUL2yHCwqJ/s/4w509zyOKoF1ubNu+BPWVJgmFSJ5Qg/
+ YDCMkrs/llc6pOTiJGGj3kZerb7VY/oMdNXMHYOnEeVjqotDwhUGuXUWdGFQssOQAYAh
+ IJ0w==
+X-Gm-Message-State: AOJu0YyMm+mnvC+WigLRZDd/bJGFDrf774dycsxgdGIF/l5QdG3tFGVa
+ WtCJGUOyW5FFdAc8+aBBX9w06RW44TPeb4gwuANb9OlKCRu1e3HadcItB7djxqsApmSSUhsP8oI
+ L
+X-Google-Smtp-Source: AGHT+IHN1mVsSN3sHhwLQidMwnAh/9/jM7SdbaODEOHCCesKN6OULHGizTP/zg8NzSLEMDch8apppg==
+X-Received: by 2002:a5d:640b:0:b0:343:77f4:e663 with SMTP id
+ z11-20020a5d640b000000b0034377f4e663mr1922582wru.18.1712938090609; 
+ Fri, 12 Apr 2024 09:08:10 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  cr12-20020a05600004ec00b00341ce80ea66sm4582371wrb.82.2024.04.12.09.08.10
@@ -61,17 +60,14 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  Fri, 12 Apr 2024 09:08:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/6] hw/misc: Don't special case RESET_TYPE_COLD in
- npcm7xx_clk, gcr
-Date: Fri, 12 Apr 2024 17:08:04 +0100
-Message-Id: <20240412160809.1260625-2-peter.maydell@linaro.org>
+Subject: [PATCH 0/6] reset: Add RESET_TYPE_SNAPSHOT_LOAD
+Date: Fri, 12 Apr 2024 17:08:03 +0100
+Message-Id: <20240412160809.1260625-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240412160809.1260625-1-peter.maydell@linaro.org>
-References: <20240412160809.1260625-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,75 +90,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The npcm7xx_clk and npcm7xx_gcr device reset methods look at
-the ResetType argument and only handle RESET_TYPE_COLD,
-producing a warning if another reset type is passed. This
-is different from how every other three-phase-reset method
-we have works, and makes it difficult to add new reset types.
+Some devices and machines need to handle the reset before a vmsave
+snapshot is loaded differently -- the main user is the handling of
+RNG seed information, which does not want to put a new RNG seed into
+a ROM blob when we are doing a snapshot load.
 
-A better pattern is "assume that any reset type you don't know
-about should be handled like RESET_TYPE_COLD"; switch these
-devices to do that. Then adding a new reset type will only
-need to touch those devices where its behaviour really needs
-to be different from the standard cold reset.
+Currently this kind of reset handling is supported only for:
+ * TYPE_MACHINE reset methods, which take a ShutdownCause argument
+ * reset functions registered with qemu_register_reset_nosnapshotload
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/misc/npcm7xx_clk.c | 13 +++----------
- hw/misc/npcm7xx_gcr.c | 12 ++++--------
- 2 files changed, 7 insertions(+), 18 deletions(-)
+Adding a new ResetType that indicates the pre-snapshot-load reset
+allows code that implements reset via Resettable to also do this.
+As an immediate consequence, that means we can clean up the ugly
+global variable in reset.c that we use to implement the
+qemu_register_reset_nosnapshotload() callbacks. Slightly longer
+term, I'm looking at making TYPE_MACHINE a subtype of TYPE_DEVICE,
+and converting the non-standard reset method of MachineClass into
+a Resettable as a result, so we'll need this ResetType there too.
 
-diff --git a/hw/misc/npcm7xx_clk.c b/hw/misc/npcm7xx_clk.c
-index ac1622c38aa..2098c85ee01 100644
---- a/hw/misc/npcm7xx_clk.c
-+++ b/hw/misc/npcm7xx_clk.c
-@@ -873,20 +873,13 @@ static void npcm7xx_clk_enter_reset(Object *obj, ResetType type)
- 
-     QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
- 
--    switch (type) {
--    case RESET_TYPE_COLD:
--        memcpy(s->regs, cold_reset_values, sizeof(cold_reset_values));
--        s->ref_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--        npcm7xx_clk_update_all_clocks(s);
--        return;
--    }
--
-+    memcpy(s->regs, cold_reset_values, sizeof(cold_reset_values));
-+    s->ref_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    npcm7xx_clk_update_all_clocks(s);
-     /*
-      * A small number of registers need to be reset on a core domain reset,
-      * but no such reset type exists yet.
-      */
--    qemu_log_mask(LOG_UNIMP, "%s: reset type %d not implemented.",
--                  __func__, type);
- }
- 
- static void npcm7xx_clk_init_clock_hierarchy(NPCM7xxCLKState *s)
-diff --git a/hw/misc/npcm7xx_gcr.c b/hw/misc/npcm7xx_gcr.c
-index 9252f9d1488..c4c4e246d7e 100644
---- a/hw/misc/npcm7xx_gcr.c
-+++ b/hw/misc/npcm7xx_gcr.c
-@@ -159,14 +159,10 @@ static void npcm7xx_gcr_enter_reset(Object *obj, ResetType type)
- 
-     QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
- 
--    switch (type) {
--    case RESET_TYPE_COLD:
--        memcpy(s->regs, cold_reset_values, sizeof(s->regs));
--        s->regs[NPCM7XX_GCR_PWRON] = s->reset_pwron;
--        s->regs[NPCM7XX_GCR_MDLR] = s->reset_mdlr;
--        s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
--        break;
--    }
-+    memcpy(s->regs, cold_reset_values, sizeof(s->regs));
-+    s->regs[NPCM7XX_GCR_PWRON] = s->reset_pwron;
-+    s->regs[NPCM7XX_GCR_MDLR] = s->reset_mdlr;
-+    s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
- }
- 
- static void npcm7xx_gcr_realize(DeviceState *dev, Error **errp)
+Adding a new reset type makes plain an awkwardness in our current
+Resettable API: we only pass the ResetType in to the 'enter' phase
+method, not 'hold' and 'exit', even though we have it available
+in the calling code. To avoid annoying workarounds like implementing
+an 'enter' method that stashes the ResetType for the later 'hold'
+or 'exit' method to use, we change the signatures of the 'hold'
+and 'exit' methods to also pass the ResetType. Patch 3 is a
+Coccinelle script which implements the transformation of the code,
+and patch 4 is the result of running that script, with no manual
+tweaks. This is really the biggest part of this patchset.
+
+Patch 6 is the actual addition of the new ResetType, which isn't
+very complicated. There is a TODO comment in resettable.h that
+claims that "ResettableState structure has to be expanded" to
+add more ResetTypes, but I can't see any reason why this should
+be, and I didn't find any discussion in the mailing list archives
+about it, so I have gone ahead anyway...
+
+thanks
+-- PMM
+
+Peter Maydell (6):
+  hw/misc: Don't special case RESET_TYPE_COLD in npcm7xx_clk, gcr
+  allwinner-i2c, adm1272: Use device_cold_reset() for software-triggered
+    reset
+  scripts/coccinelle: New script to add ResetType to hold and exit
+    phases
+  hw, target: Add ResetType argument to hold and exit phase methods
+  docs/devel/reset: Update to new API for hold and exit phase methods
+  reset: Add RESET_TYPE_SNAPSHOT_LOAD
+
+ docs/devel/reset.rst                |  25 ++++--
+ scripts/coccinelle/reset-type.cocci | 133 ++++++++++++++++++++++++++++
+ include/hw/resettable.h             |   5 +-
+ hw/adc/npcm7xx_adc.c                |   2 +-
+ hw/arm/pxa2xx_pic.c                 |   2 +-
+ hw/arm/smmu-common.c                |   2 +-
+ hw/arm/smmuv3.c                     |   4 +-
+ hw/arm/stellaris.c                  |  10 +--
+ hw/audio/asc.c                      |   2 +-
+ hw/char/cadence_uart.c              |   2 +-
+ hw/char/sifive_uart.c               |   2 +-
+ hw/core/cpu-common.c                |   2 +-
+ hw/core/qdev.c                      |   4 +-
+ hw/core/reset.c                     |  17 ++--
+ hw/core/resettable.c                |   8 +-
+ hw/display/virtio-vga.c             |   4 +-
+ hw/gpio/npcm7xx_gpio.c              |   2 +-
+ hw/gpio/pl061.c                     |   2 +-
+ hw/gpio/stm32l4x5_gpio.c            |   2 +-
+ hw/hyperv/vmbus.c                   |   2 +-
+ hw/i2c/allwinner-i2c.c              |   5 +-
+ hw/i2c/npcm7xx_smbus.c              |   2 +-
+ hw/input/adb.c                      |   2 +-
+ hw/input/ps2.c                      |  12 +--
+ hw/intc/arm_gic_common.c            |   2 +-
+ hw/intc/arm_gic_kvm.c               |   4 +-
+ hw/intc/arm_gicv3_common.c          |   2 +-
+ hw/intc/arm_gicv3_its.c             |   4 +-
+ hw/intc/arm_gicv3_its_common.c      |   2 +-
+ hw/intc/arm_gicv3_its_kvm.c         |   4 +-
+ hw/intc/arm_gicv3_kvm.c             |   4 +-
+ hw/intc/xics.c                      |   2 +-
+ hw/m68k/q800-glue.c                 |   2 +-
+ hw/misc/djmemc.c                    |   2 +-
+ hw/misc/iosb.c                      |   2 +-
+ hw/misc/mac_via.c                   |   8 +-
+ hw/misc/macio/cuda.c                |   4 +-
+ hw/misc/macio/pmu.c                 |   4 +-
+ hw/misc/mos6522.c                   |   2 +-
+ hw/misc/npcm7xx_clk.c               |  13 +--
+ hw/misc/npcm7xx_gcr.c               |  12 +--
+ hw/misc/npcm7xx_mft.c               |   2 +-
+ hw/misc/npcm7xx_pwm.c               |   2 +-
+ hw/misc/stm32l4x5_exti.c            |   2 +-
+ hw/misc/stm32l4x5_rcc.c             |  10 +--
+ hw/misc/stm32l4x5_syscfg.c          |   2 +-
+ hw/misc/xlnx-versal-cframe-reg.c    |   2 +-
+ hw/misc/xlnx-versal-crl.c           |   2 +-
+ hw/misc/xlnx-versal-pmc-iou-slcr.c  |   2 +-
+ hw/misc/xlnx-versal-trng.c          |   2 +-
+ hw/misc/xlnx-versal-xramc.c         |   2 +-
+ hw/misc/xlnx-zynqmp-apu-ctrl.c      |   2 +-
+ hw/misc/xlnx-zynqmp-crf.c           |   2 +-
+ hw/misc/zynq_slcr.c                 |   4 +-
+ hw/net/can/xlnx-zynqmp-can.c        |   2 +-
+ hw/net/e1000.c                      |   2 +-
+ hw/net/e1000e.c                     |   2 +-
+ hw/net/igb.c                        |   2 +-
+ hw/net/igbvf.c                      |   2 +-
+ hw/nvram/xlnx-bbram.c               |   2 +-
+ hw/nvram/xlnx-versal-efuse-ctrl.c   |   2 +-
+ hw/nvram/xlnx-zynqmp-efuse.c        |   2 +-
+ hw/pci-bridge/cxl_root_port.c       |   4 +-
+ hw/pci-bridge/pcie_root_port.c      |   2 +-
+ hw/pci-host/bonito.c                |   2 +-
+ hw/pci-host/pnv_phb.c               |   4 +-
+ hw/pci-host/pnv_phb3_msi.c          |   4 +-
+ hw/pci/pci.c                        |   4 +-
+ hw/rtc/mc146818rtc.c                |   2 +-
+ hw/s390x/css-bridge.c               |   2 +-
+ hw/sensor/adm1266.c                 |   2 +-
+ hw/sensor/adm1272.c                 |   4 +-
+ hw/sensor/isl_pmbus_vr.c            |  10 +--
+ hw/sensor/max31785.c                |   2 +-
+ hw/sensor/max34451.c                |   2 +-
+ hw/ssi/npcm7xx_fiu.c                |   2 +-
+ hw/timer/etraxfs_timer.c            |   2 +-
+ hw/timer/npcm7xx_timer.c            |   2 +-
+ hw/usb/hcd-dwc2.c                   |   8 +-
+ hw/usb/xlnx-versal-usb2-ctrl-regs.c |   2 +-
+ hw/virtio/virtio-pci.c              |   2 +-
+ target/arm/cpu.c                    |   4 +-
+ target/avr/cpu.c                    |   4 +-
+ target/cris/cpu.c                   |   4 +-
+ target/hexagon/cpu.c                |   4 +-
+ target/i386/cpu.c                   |   4 +-
+ target/loongarch/cpu.c              |   4 +-
+ target/m68k/cpu.c                   |   4 +-
+ target/microblaze/cpu.c             |   4 +-
+ target/mips/cpu.c                   |   4 +-
+ target/nios2/cpu.c                  |   4 +-
+ target/openrisc/cpu.c               |   4 +-
+ target/ppc/cpu_init.c               |   4 +-
+ target/riscv/cpu.c                  |   4 +-
+ target/rx/cpu.c                     |   4 +-
+ target/sh4/cpu.c                    |   4 +-
+ target/sparc/cpu.c                  |   4 +-
+ target/tricore/cpu.c                |   4 +-
+ target/xtensa/cpu.c                 |   4 +-
+ 99 files changed, 317 insertions(+), 195 deletions(-)
+ create mode 100644 scripts/coccinelle/reset-type.cocci
+
 -- 
 2.34.1
 
