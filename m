@@ -4,114 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103F7C00A94
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2A8C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvHVz-000222-4Z; Fri, 12 Apr 2024 10:04:27 -0400
+	id 1rvHgz-0004PT-VV; Fri, 12 Apr 2024 10:15:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rvHVy-00021p-4m
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:04:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1rvHgv-0004Op-8P; Fri, 12 Apr 2024 10:15:47 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rvHVv-0007SX-VV
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:04:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712930663;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zLPXq62KRww5CQ12vH/oVDAiL58c/oGk9QhddVff1AM=;
- b=T9di+LU4YCrw2Ftt9nNoj68C1VmpBDRpEaR37gKL68o/gfg6PzGQf3nfr1pi7ZaTFWvDrM
- TJjs8mZmz3E8akYusM8qJfAFEAfABa40LwnXo0slE2n7Zwgsehoo8xLWIUM+DQZvJP0S6j
- 7vWWCb7VKy7EdzzKoL6GY+1+40lU0+Y=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-nx6Qa0jbORqgmBg3-jPhCg-1; Fri, 12 Apr 2024 10:04:21 -0400
-X-MC-Unique: nx6Qa0jbORqgmBg3-jPhCg-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-434c15e1ea5so2533311cf.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 07:04:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712930661; x=1713535461;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zLPXq62KRww5CQ12vH/oVDAiL58c/oGk9QhddVff1AM=;
- b=ItYLYStz60+lDlvaCKqRCZ1W13G2cDUED6W18ov6KVTNmUaOrNcIEhKnoLt2TuIUT8
- emQdBRtHqQBKeucacPsMEe5bpSC7QNNvT3+CcoOVL/hOoRRiu3ZfK8NS8xTfHm3IpQjh
- GYvHfQmv/PFCtBzen/1qX2pIB/0cPKXpbuSirAPnxPiBwWCq7v2uE9BOy5OqXcqYZlID
- yZPitE2ZWNWgXg2LOvkDV/v6LZrleqFLA/6p4IA6inXJgbelVDYG7qzFgITZLUACnoPN
- TIqORYgKq5X6L0JCIseCQ2vuAszCtNZnSIz8I5EVp9s8ImsX3FGySuM8heGzNZLHCX3z
- I6mQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3BzmCM9NzCwwDPzWFaWukSFcxYG17vs+SodsnniXxj/hX5aXQmTtiZVcJxfxxoxOBoXDwUhWvlEzCVj0DQnXv8Hm3amg=
-X-Gm-Message-State: AOJu0YwGK9dvWuSaWJ9qe1pW1wOYEch05UBOolMrVbcAXC2pNkX3n7bT
- bibeFSyEqpglb6aO6MVnUwhC0rfBYAuGEHo/8AQsCTP5jzQ+SdD/G1VDXvmB7q2Jogw6NPMcf2n
- xCoB9h+9kN1yJW9SAcBXc1+2ebUzHs/Oo3zWG7hD1EKT1fhC++OLi
-X-Received: by 2002:a05:622a:d1:b0:434:515e:411d with SMTP id
- p17-20020a05622a00d100b00434515e411dmr2787958qtw.1.1712930660861; 
- Fri, 12 Apr 2024 07:04:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGCD9Jeb2LpMZ6nCCbfrs1gZPYqWwDnEGFXl33cWX+Gg+VkEi/nD7EeZF591XMWW2w+hXT4PQ==
-X-Received: by 2002:a05:622a:d1:b0:434:515e:411d with SMTP id
- p17-20020a05622a00d100b00434515e411dmr2787889qtw.1.1712930660006; 
- Fri, 12 Apr 2024 07:04:20 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- f14-20020ac8498e000000b0042f04e421d2sm2247361qtq.24.2024.04.12.07.04.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 07:04:19 -0700 (PDT)
-Date: Fri, 12 Apr 2024 10:04:17 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yu Zhang <yu.zhang@ionos.com>
-Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
- Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Prasanna Kumar Kalever <prasanna4324@gmail.com>,
- "integration@gluster.org" <integration@gluster.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
- Song Gao <gaosong@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, arei.gonglei@huawei.com,
- pannengyuan@huawei.com
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-Message-ID: <Zhk_YcYZ09Ga9IyV@x1n>
-References: <CAHEcVy50AtvDyCjwPa9Hu+x1wiUF6xf5McGOTHL+wdt3WN3pgA@mail.gmail.com>
- <Zgx3brrz8m0V7HS4@x1n>
- <CAMGffE=i+hVCNaX_31h1D1VW7JGJBqoa9T0qEJe2CDcb9BPiAA@mail.gmail.com>
- <ZhQYu3ZnsIGv2qUZ@x1n>
- <CAMGffEm2TWJxOPcNQTQ1Sjytf5395dBzTCMYiKRqfxDzJwSN6A@mail.gmail.com>
- <ZhWa0YeAb9ySVKD1@x1n>
- <082a21b0-d4d1-9f6c-24b5-bee56263008e@fujitsu.com>
- <ZhaY2_cO6CrQFCt3@x1n> <Zhfxoaz9yNTx8Btd@x1n>
- <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1rvHgs-0001GY-PG; Fri, 12 Apr 2024 10:15:44 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 8BE6BC0004
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1712931334;
+ bh=s5KgHUMnTchmTncqtzelthPVC8GTkKnMtyhK8SjohpM=;
+ h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
+ b=zKLKPE0jzRAXWt7ycxjBQbqiBg0X3tsD0S57LQ+tMk566+N+vz09KnSBIIROCiXzg
+ NJDZcaowpkS2oSfMjnepXr672KgvAesKWLNZ3JMGIAsiYJrcxIfRP3vl42WUOq2pnY
+ nh6Kfa+ARLvhGezUNMeL6lkPm6EzPD728cxUuNfnxU8VNXHOabJ0TNGT322udjJhah
+ XV74l2eknkXhPFsBTF5aOEHiCUd+9/h9qt4onavRv2rdTLnyHZ2TqtwdI6Ryo/BTXo
+ 7AdhSbF+Y3OV1rioS4Kt8663DmF5R66joB7MQ85+smx/7S01Mc4gOHhgSpXFBRxj0U
+ Dk0GL2aFHApFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1712931334;
+ bh=s5KgHUMnTchmTncqtzelthPVC8GTkKnMtyhK8SjohpM=;
+ h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
+ b=aLhmsM900vFM0k9NdVW26tizjjluXV/vRQK9RAaam9D8MaTenkkZwTqyw2h1YoWpH
+ 1nHzivXqB2JFkWfQAf2fDlRc1Qj1vB9HWKu06gXyTxdsT6kIkb66oN9IXvX8ztG+5E
+ 7kWO9//3SZSYFYRaOIGjIQExamamG9RsIsuPdtYF2XcOzn1pX15UbF/GUHOTnqJxTc
+ 5lO7Yit7gYrbSbzT900kWwFh+jPqd5IbEbkrYv6Csg0wPnVxlKNgLeu0m6xgsUm59Z
+ TRPKR4DJ3l/uJaPVAP82VC7V0NDNk0/kkG36MAfltnKCTbYgulPgPyeo4P1sTONDue
+ l7Dx75syV9IaQ==
+Message-ID: <a8680fb3-8547-4b68-98d1-fd2d2d278375@syntacore.com>
+Date: Fri, 12 Apr 2024 17:15:32 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHEcVy7POArt+CmY8dyNTzLJp3XxXgjh3k8=C=9K+_cw1CSJFA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0] target/riscv: prioritize pmp errors in
+ raise_mmu_exception()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <alistair.francis@wdc.com>, <bmeng@tinylab.org>, 
+ <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>,
+ <palmer@rivosinc.com>, 
+ <richard.henderson@linaro.org>, Joseph Chan <jchan@ventanamicro.com>
+References: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Aleksei Filippov <alexei.filippov@syntacore.com>
+Organization: Syntacore
+In-Reply-To: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: T-EXCH-07.corp.yadro.com (172.17.11.57) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,43 +83,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yu,
 
-On Thu, Apr 11, 2024 at 06:36:54PM +0200, Yu Zhang wrote:
-> > 1) Either a CI test covering at least the major RDMA paths, or at least
-> >     periodically tests for each QEMU release will be needed.
-> We use a batch of regression test cases for the stack, which covers the
-> test for QEMU. I did such test for most of the QEMU releases planned as
-> candidates for rollout.
 
-The least I can think of is a few tests in one release.  Definitely too
-less if one release can already break..
-
+On 09.04.2024 20:52, Daniel Henrique Barboza wrote:
+> raise_mmu_exception(), as is today, is prioritizing guest page faults by
+> checking first if virt_enabled && !first_stage, and then considering the
+> regular inst/load/store faults.
 > 
-> The migration test needs a pair of (either physical or virtual) servers with
-> InfiniBand network, which makes it difficult to do on a single server. The
-> nested VM could be a possible approach, for which we may need virtual
-> InfiniBand network. Is SoftRoCE [1] a choice? I will try it and let you know.
+> There's no mention in the spec about guest page fault being a higher
+> priority that PMP faults. In fact, privileged spec section 3.7.1 says:
 > 
-> [1]  https://enterprise-support.nvidia.com/s/article/howto-configure-soft-roce
+> "Attempting to fetch an instruction from a PMP region that does not have
+> execute permissions raises an instruction access-fault exception.
+> Attempting to execute a load or load-reserved instruction which accesses
+> a physical address within a PMP region without read permissions raises a
+> load access-fault exception. Attempting to execute a store,
+> store-conditional, or AMO instruction which accesses a physical address
+> within a PMP region without write permissions raises a store
+> access-fault exception."
+> 
+> So, in fact, we're doing it wrong - PMP faults should always be thrown,
+> regardless of also being a first or second stage fault.
+> 
+> The way riscv_cpu_tlb_fill() and get_physical_address() work is
+> adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
+> reflected in the 'pmp_violation' flag. What we need is to change
+> raise_mmu_exception() to prioritize it.
+> 
+> Reported-by: Joseph Chan <jchan@ventanamicro.com>
+> Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>   target/riscv/cpu_helper.c | 22 ++++++++++++----------
+>   1 file changed, 12 insertions(+), 10 deletions(-)
+> 
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index fc090d729a..e3a7797d00 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1176,28 +1176,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+> 
+>       switch (access_type) {
+>       case MMU_INST_FETCH:
+> -        if (env->virt_enabled && !first_stage) {
+> +        if (pmp_violation) {
+> +            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
+> +        } else if (env->virt_enabled && !first_stage) {
+>               cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
+>           } else {
+> -            cs->exception_index = pmp_violation ?
+> -                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
+> +            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
+>           }
+>           break;
+>       case MMU_DATA_LOAD:
+> -        if (two_stage && !first_stage) {
+> +        if (pmp_violation) {
+> +            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
+> +        } else if (two_stage && !first_stage) {
+>               cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
+>           } else {
+> -            cs->exception_index = pmp_violation ?
+> -                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
+> +            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
+>           }
+>           break;
+>       case MMU_DATA_STORE:
+> -        if (two_stage && !first_stage) {
+> +        if (pmp_violation) {
+> +            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
+> +        } else if (two_stage && !first_stage) {
+>               cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
+>           } else {
+> -            cs->exception_index = pmp_violation ?
+> -                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
+> -                RISCV_EXCP_STORE_PAGE_FAULT;
+> +            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
+>           }
+>           break;
+>       default:
 
-Does it require a kernel driver?  The less host kernel / hardware /
-.. dependencies the better.
 
-I am wondering whether there can be a library doing everything in
-userspace, translating RDMA into e.g. socket messages (so maybe ultimately
-that's something like IP->rdma->IP.. just to cover the "rdma" procedures),
-then that'll work for CI reliably.
-
-Please also see my full list, though, especially entry 4).  Thanks already
-for looking for solutions on the tests, but I don't want to waste your time
-then found that tests are not enough even if ready.  I think we need people
-that understand these stuff well enough, have dedicated time and look after
-it.
-
-Thanks,
-
+Just tested your patch and found out that we still need to fix `if else` in
+riscv_cpu_tlb_fill() after pmp check in 2 stage translation part, as I suggested
+before, cz the problem with mtval2 will happened in case of successes 2 stage
+translation but failed pmp check. In this case we gonna set
+mtval2(env->guest_phys_fault_addr in context of riscv_cpu_tlb_fill()) as this
+was a guest-page-fault, but it didn't and mtval2 should be zero, according to
+RISCV privileged spec sect. 9.4.4: When a guest page-fault is taken into M-mode,
+mtval2 is written with either zero or guest physical address that faulted,
+shifted by 2 bits. *For other traps, mtval2 is set to zero...*
 -- 
-Peter Xu
-
+Sincerely,
+Aleksei Filippov
 
