@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDF8C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 16:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C67C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 16:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvJXY-0007n7-Rg; Fri, 12 Apr 2024 12:14:12 -0400
+	id 1rvJap-0000Qd-5e; Fri, 12 Apr 2024 12:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rvJXX-0007mV-3J
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 12:14:11 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvJaj-0000Pw-KL
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 12:17:33 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rvJXJ-00062k-LE
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 12:14:10 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso1097048a12.3
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 09:13:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rvJah-0006aJ-H7
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 12:17:28 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1e2bbc2048eso9397655ad.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 09:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712938436; x=1713543236; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=k+bQ4iKIkyDjUP8KtZJusSD+PohDP3Qwhz0TnpzrNv0=;
- b=CMX+uPoO9cKJuS5yNRX96R24cL+beJWvP+x9kBqVIq2eEtZk8CO/HMMJgkchad3S22
- NV5sCMNWsIE2UmULVEhx61SoxNY6voIE/iTRQvbjheUpl0Juyw+HN9jbaKjk36ycuzbT
- hY4YVymORLdBgCnMeIVdI43PiUlmGCaTHWZekW1a4xOdWKl1BDXIszqg0noiKlmzCyd/
- GRPc6QZcdtDzgsVdSUygZULA4xk/TePDJ4JYWmYhbR8gKXpKXg+n39ZXvAw02vFwjcie
- WBo0oBg1CHubC8HBUhrDhuLfF+Q8CprLr4EQsM36c+25hx/am8dHQt67ZwMrtNK1fxs2
- 7WXQ==
+ d=linaro.org; s=google; t=1712938644; x=1713543444; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=USoFStEqNXqZnRqMSDJ7Q4ksTEbQBxRG0TPfOFM2CtY=;
+ b=Tc8WBqkLIcT1ZsKFCTg2/7cD1d1p9c/h9HHohi8tZqqqyM75jmtuI1in1wU2pvsxzk
+ VGWJUseUyQV/BjtVSH2oJ7lqaIe3PbJG2CDj9nFjk2+gpKlOFpb4Jtpy3nC7OrdQKcMr
+ 6bTUaIT8GeID0wZVM7zr8+6yX3gMpMGzPAycGElDK6/dx24pN14u5UBRNr9jAVWBq3/k
+ wawI9xYIWbaovWhnJN27fJ+QkiXsKyIuMbniuJUJ4UU61M1+nnW9fj9hVjfDlYv6y5yr
+ OXWq6UnRepTCmy+RjFtHCfrZY2XH8Y2ptL3sjXwKpUxiJLflq3zrDUajsQxqeUg5QNZR
+ +8eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712938436; x=1713543236;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=k+bQ4iKIkyDjUP8KtZJusSD+PohDP3Qwhz0TnpzrNv0=;
- b=OqAUWoZYG2zzWHjmt2uCrzwkyC4mdgDb/sRFvitQ6RDSf469Od0Momaxs34j/YIq+k
- YvVSd0kSA0lYrkbh93ngtjFPkYgJJClR0VnwW6qcnYBapK4TBRqYheCLD+sj/GIz+5FV
- UoRS83GZgNmSpJEdvnFzXu/MwcYqOU97ILPVWRXJK8qUIA3cLGxzgjI7IzsCKiQQy00R
- JGgiIR04Gx5o/0TUDGBgQK+vOQ/+CoI5jNEJhidW0IR6rDrk5lETnJxwvc1bXhldRdBR
- oU494MRP6MzmXVsdORTW8PVq1gPYiS4KMP5g9hQhxx0Vf360tXWqXygOaLdWU8RWV/Dz
- xD8w==
-X-Gm-Message-State: AOJu0YzVL5+uSDppZ3BDKudyqM4ATgeg4Za5x/CZagJo4XxsTVAKtmvh
- pbTPJJ4cCZIaM1kk/CuxC8FyUScJI9q79p9To7Re1UgEnXLmOc9fCyoyg493pRPr25Yl3jzTtwX
- 0yJK/1XEgvkPg7ZX9vZU64Lj8SSf+6jsWYCx7MA==
-X-Google-Smtp-Source: AGHT+IH/bVB1UJNaOr2Y9oPWlKwaWdzTJezKChnt9tsreS5L5sy9Ol06U6myLVU68DGkvziBvhuVz3wDjRI13pvYaSY=
-X-Received: by 2002:a50:d49c:0:b0:56e:5b2:2d2a with SMTP id
- s28-20020a50d49c000000b0056e05b22d2amr2769574edi.3.1712938435920; Fri, 12 Apr
- 2024 09:13:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1712938644; x=1713543444;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=USoFStEqNXqZnRqMSDJ7Q4ksTEbQBxRG0TPfOFM2CtY=;
+ b=tZbaTfFdyQam3JSGYEs3FZw6z6VzK6ox6n8yeebEWH2m5R4QrpWWOrXflY1WdfvDqg
+ +qdDH4AM+Is8qqL/hme4cRiBwv+VHMp9UqijGESgb3prAyOCj+m0S6W9aQNNIINJd6Px
+ nNI1RkLlGmu8RuBAlPEVptuYbvlppzu1oWK0/Vwm2SKW+XK/i7PZMw7rU1mC3P1zCyww
+ UeKzsf9tZg1vQxSfGKpixLv6o346uNZIBcn8saMF8CSUbRkCaJ4+sCC6TyUIIYdDxDUb
+ +X5uiYlrc00WBso+z6X811ju8tngSj+vsoyYCfKB5jjvNeA2IZwP06Sp86dVkAXYo6Xm
+ T27g==
+X-Gm-Message-State: AOJu0YwWkK7Ft9oD/+mFn3C4qBZSQIjrAoBllc2Ww8Fp1QSEhkewFSTK
+ AXcoYVwSSEn585WVd/boZSB1Mfw+eVW3PPB+yHJ1amJ7omzHk9itPpUsE0pPjts=
+X-Google-Smtp-Source: AGHT+IEodbjFP7FO7ia+7vCP80/7g4ic0sKRsN1Wcb1qnj2wATUvmhVgvP70/O+a8lPQR5o/E0NHDA==
+X-Received: by 2002:a17:902:b287:b0:1de:f91:3cf3 with SMTP id
+ u7-20020a170902b28700b001de0f913cf3mr2573948plr.55.1712938644386; 
+ Fri, 12 Apr 2024 09:17:24 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ h11-20020a170902f54b00b001e420abf8c1sm3169196plf.165.2024.04.12.09.17.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Apr 2024 09:17:24 -0700 (PDT)
+Message-ID: <21265e46-637d-46db-81e2-c2ae948e312f@linaro.org>
+Date: Fri, 12 Apr 2024 09:17:22 -0700
 MIME-Version: 1.0
-References: <20240412100401.20047-1-pbonzini@redhat.com>
-In-Reply-To: <20240412100401.20047-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Apr 2024 17:13:45 +0100
-Message-ID: <CAFEAcA_qKTPHCy0mfshPrkXxqokfhh=yojnxtwXm8dPN5P-LEg@mail.gmail.com>
-Subject: Re: [PULL 0/2] Final build system fixes for 9.0
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 17/51] target/arm: Add cpu properties for SME
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20220620175235.60881-1-richard.henderson@linaro.org>
+ <20220620175235.60881-18-richard.henderson@linaro.org>
+ <CAFEAcA8pQ9dZXh1sghqGmuVRubFkn2HQpRnzDSGQpkUSKGg+jA@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA8pQ9dZXh1sghqGmuVRubFkn2HQpRnzDSGQpkUSKGg+jA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,30 +97,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Apr 2024 at 11:04, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> The following changes since commit 02e16ab9f4f19c4bdd17c51952d70e2ded74c6bf:
->
->   Update version for v9.0.0-rc3 release (2024-04-10 18:05:18 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
->
-> for you to fetch changes up to 2d6d995709482cc8b6a76dbb5334a28001a14a9a:
->
->   meson.build: Disable -fzero-call-used-regs on OpenBSD (2024-04-12 12:02:12 +0200)
->
-> ----------------------------------------------------------------
-> build system fixes
->
-> ----------------------------------------------------------------
+On 4/12/24 04:36, Peter Maydell wrote:
+>> +  4) Disable the 512-bit vector length.  This results in all the other
+>> +     lengths supported by ``max`` defaulting to enabled
+>> +     (128, 256, 1024 and 2048)::
+>> +
+>> +     $ qemu-system-aarch64 -M virt -cpu max,sve512=off
+>> +
+> 
+> I just noticed this while I was trying to understand the
+> SME and SVE property documentation -- the example 4 here
+> is in the SME property examples section, but it's changing
+> sve512, not sme512. Is that an error, or intentional?
+
+Error.
+
+> In the SME section we say that all other lengths default
+> to enabled, but in the SVE section we say that the
+> smaller lengths default to enabled but the longer
+> lengths are disabled. Is:
+>   * the SVE part wrong?
+>   * the SME part wrong?
+>   * the behaviour deliberately different for SVE and SME
+>     vector lengths? (If so, we should say so explicitly to
+>     highlight that to users).
+
+The behaviour is deliberately different.
+
+See R_JRCSH and especially I_FQKMN:
+
+     For example, this means that the set of supported SVLs might be
+     discontiguous and might not start at the smallest permitted SVL.
+
+whereas for SVE, the implementation is required to support all powers of 2 up to the 
+maximum (see e.g. the text for ZCR_EL3.LEN).
 
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
+r~
 
