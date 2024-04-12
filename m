@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EDB3C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D080EC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 09:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvDCM-0001a6-00; Fri, 12 Apr 2024 05:27:54 -0400
+	id 1rvDEH-0002hM-HA; Fri, 12 Apr 2024 05:29:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvDCH-0001Xs-9k; Fri, 12 Apr 2024 05:27:49 -0400
-Received: from out30-110.freemail.mail.aliyun.com ([115.124.30.110])
+ id 1rvDEB-0002ew-Ab; Fri, 12 Apr 2024 05:29:49 -0400
+Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvDCD-0003X4-3Y; Fri, 12 Apr 2024 05:27:48 -0400
+ id 1rvDE4-0003oK-SS; Fri, 12 Apr 2024 05:29:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1712914055; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=u18ajQw8BnyfQfbSYOWjFV4OF+CR1EdD+IwPlrADmSY=;
- b=qQGukJHBu0ps21+a/jPDEDmO0OBJ5sWDwXztUD5e96fI6xjt2iN23HvZBL3nRNQGjXM+ZZa7HuFxmI1RBwqUadn6eM3lnTfdn4Aiz9uRfsG5p2RFqOhytw4hSL8Xtz+HZkpH9OcYBaqmeVoyyPbneHjj5C8IxMitaHrq1TzYQSs=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046059;
+ t=1712914176; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=8umZ3OYSUXMZOWPRFyta6L/0drZPcl2rI0y+4M2ZquQ=;
+ b=cObjeej2wjWDy8t5YnUYG8eeaEXdIcWpJnvynup2ocp3WvzK+HEEaGkCWdkmE8ZZiK32Sqvh9MEMAYqA07x2brR22+NCjEN0vo7t41Y/3Zyx1m6RaglG9EK6C2KNREYpfUQ22PCNmm9ZK+lwcmzRky913fpvHt6a9d79oPg89AA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046050;
  MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W4Novpj_1712914053; 
+ TI=SMTPD_---0W4Nsagg_1712914174; 
 Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W4Novpj_1712914053) by smtp.aliyun-inc.com;
- Fri, 12 Apr 2024 17:27:34 +0800
+ fp:SMTPD_---0W4Nsagg_1712914174) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 17:29:35 +0800
 From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com,
  Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 46/65] target/riscv: Add floating-point classify and merge
- instructions for XTheadVector
-Date: Fri, 12 Apr 2024 15:37:16 +0800
-Message-ID: <20240412073735.76413-47-eric.huang@linux.alibaba.com>
+Subject: [PATCH 47/65] target/riscv: Add single-width floating-point/integer
+ type-convert instructions for XTheadVector
+Date: Fri, 12 Apr 2024 15:37:17 +0800
+Message-ID: <20240412073735.76413-48-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.110;
+Received-SPF: pass client-ip=115.124.30.131;
  envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
+ helo=out30-131.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -71,87 +71,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The instructions have the same function as RVV1.0. Overall there are only
-general differences between XTheadVector and RVV1.0.
+Compared to RVV1.0, XTheadVector lacks .rtz instructions, which specify the
+rounding mode of rounding to zero.
+Except of lack of similar instructions, the instructions have the same function
+as RVV1.0. Overall there are only general differences between XTheadVector and RVV1.0.
 
 Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- target/riscv/helper.h                         |  8 +++
- .../riscv/insn_trans/trans_xtheadvector.c.inc | 51 +++++++++++++++-
- target/riscv/xtheadvector_helper.c            | 58 +++++++++++++++++++
- 3 files changed, 114 insertions(+), 3 deletions(-)
+ target/riscv/helper.h                         | 13 ++++++++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 10 +++---
+ target/riscv/xtheadvector_helper.c            | 33 +++++++++++++++++++
+ 3 files changed, 52 insertions(+), 4 deletions(-)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 5771a4fa8a..886655899e 100644
+index 886655899e..18640c4a1e 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -2189,3 +2189,11 @@ DEF_HELPER_6(th_vmford_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
- DEF_HELPER_6(th_vmford_vf_h, void, ptr, ptr, i64, ptr, env, i32)
- DEF_HELPER_6(th_vmford_vf_w, void, ptr, ptr, i64, ptr, env, i32)
- DEF_HELPER_6(th_vmford_vf_d, void, ptr, ptr, i64, ptr, env, i32)
+@@ -2197,3 +2197,16 @@ DEF_HELPER_5(th_vfclass_v_d, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_6(th_vfmerge_vfm_h, void, ptr, ptr, i64, ptr, env, i32)
+ DEF_HELPER_6(th_vfmerge_vfm_w, void, ptr, ptr, i64, ptr, env, i32)
+ DEF_HELPER_6(th_vfmerge_vfm_d, void, ptr, ptr, i64, ptr, env, i32)
 +
-+DEF_HELPER_5(th_vfclass_v_h, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfclass_v_w, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_5(th_vfclass_v_d, void, ptr, ptr, ptr, env, i32)
-+
-+DEF_HELPER_6(th_vfmerge_vfm_h, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfmerge_vfm_w, void, ptr, ptr, i64, ptr, env, i32)
-+DEF_HELPER_6(th_vfmerge_vfm_d, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_xu_f_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_xu_f_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_xu_f_v_d, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_x_f_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_x_f_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_x_f_v_d, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_f_xu_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_f_xu_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_f_xu_v_d, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_f_x_v_h, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_f_x_v_w, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(th_vfcvt_f_x_v_d, void, ptr, ptr, ptr, env, i32)
 diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-index 1e773c673e..8e928febb7 100644
+index 8e928febb7..27a06c2cac 100644
 --- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
 +++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-@@ -2143,15 +2143,60 @@ GEN_OPFVF_TRANS_TH(th_vmfgt_vf, opfvf_cmp_check_th)
- GEN_OPFVF_TRANS_TH(th_vmfge_vf, opfvf_cmp_check_th)
- GEN_OPFVF_TRANS_TH(th_vmford_vf, opfvf_cmp_check_th)
+@@ -2191,16 +2191,18 @@ static bool trans_th_vfmv_v_f(DisasContext *s, arg_th_vfmv_v_f *a)
+     return false;
+ }
  
-+/* Vector Floating-Point Classify Instruction */
-+GEN_OPFV_TRANS_TH(th_vfclass_v, opfv_check_th)
-+
-+/* Vector Floating-Point Merge Instruction */
-+GEN_OPFVF_TRANS_TH(th_vfmerge_vfm,  opfvf_check_th)
-+
-+/* Besides of check function, th_vfmv_v_f just reuse the helper_th_vmv_v_x */
-+static bool trans_th_vfmv_v_f(DisasContext *s, arg_th_vfmv_v_f *a)
-+{
-+    if (require_xtheadvector(s) &&
-+        vext_check_isa_ill(s) &&
-+        th_check_reg(s, a->rd, false) &&
-+        (s->sew != 0)) {
-+
-+        TCGv_i64 t1;
-+
-+        if (s->vl_eq_vlmax) {
-+            t1 = tcg_temp_new_i64();
-+            /* NaN-box f[rs1] */
-+            do_nanbox(s, t1, cpu_fpr[a->rs1]);
-+            tcg_gen_gvec_dup_i64(s->sew, vreg_ofs(s, a->rd),
-+                                 MAXSZ(s), MAXSZ(s), t1);
-+        } else {
-+            TCGv_ptr dest;
-+            TCGv_i32 desc;
-+            uint32_t data = FIELD_DP32(0, VDATA_TH, LMUL, s->lmul);
-+            static gen_helper_vmv_vx_th * const fns[3] = {
-+                gen_helper_th_vmv_v_x_h,
-+                gen_helper_th_vmv_v_x_w,
-+                gen_helper_th_vmv_v_x_d,
-+            };
-+
-+            t1 = tcg_temp_new_i64();
-+            /* NaN-box f[rs1] */
-+            do_nanbox(s, t1, cpu_fpr[a->rs1]);
-+
-+            dest = tcg_temp_new_ptr();
-+            desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
-+                                              s->cfg_ptr->vlenb, data));
-+            tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, a->rd));
-+            fns[s->sew - 1](dest, t1, tcg_env, desc);
-+        }
-+        finalize_rvv_inst(s);
-+        return true;
-+    }
-+    return false;
-+}
++/* Single-Width Floating-Point/Integer Type-Convert Instructions */
++GEN_OPFV_TRANS_TH(th_vfcvt_xu_f_v, opfv_check_th)
++GEN_OPFV_TRANS_TH(th_vfcvt_x_f_v, opfv_check_th)
++GEN_OPFV_TRANS_TH(th_vfcvt_f_xu_v, opfv_check_th)
++GEN_OPFV_TRANS_TH(th_vfcvt_f_x_v, opfv_check_th)
 +
  #define TH_TRANS_STUB(NAME)                                \
  static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
@@ -159,78 +124,54 @@ index 1e773c673e..8e928febb7 100644
      return require_xtheadvector(s);                        \
  }
  
--TH_TRANS_STUB(th_vfclass_v)
--TH_TRANS_STUB(th_vfmerge_vfm)
--TH_TRANS_STUB(th_vfmv_v_f)
- TH_TRANS_STUB(th_vfcvt_xu_f_v)
- TH_TRANS_STUB(th_vfcvt_x_f_v)
- TH_TRANS_STUB(th_vfcvt_f_xu_v)
+-TH_TRANS_STUB(th_vfcvt_xu_f_v)
+-TH_TRANS_STUB(th_vfcvt_x_f_v)
+-TH_TRANS_STUB(th_vfcvt_f_xu_v)
+-TH_TRANS_STUB(th_vfcvt_f_x_v)
+ TH_TRANS_STUB(th_vfwcvt_xu_f_v)
+ TH_TRANS_STUB(th_vfwcvt_x_f_v)
+ TH_TRANS_STUB(th_vfwcvt_f_xu_v)
 diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
-index 603b34a094..e31e13dff3 100644
+index e31e13dff3..7e98c1ead2 100644
 --- a/target/riscv/xtheadvector_helper.c
 +++ b/target/riscv/xtheadvector_helper.c
-@@ -3147,3 +3147,61 @@ GEN_TH_CMP_VV_ENV(th_vmford_vv_d, uint64_t, H8, !float64_unordered_quiet)
- GEN_TH_CMP_VF(th_vmford_vf_h, uint16_t, H2, !float16_unordered_quiet)
- GEN_TH_CMP_VF(th_vmford_vf_w, uint32_t, H4, !float32_unordered_quiet)
- GEN_TH_CMP_VF(th_vmford_vf_d, uint64_t, H8, !float64_unordered_quiet)
+@@ -3205,3 +3205,36 @@ void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2, \
+ GEN_VFMERGE_VF_TH(th_vfmerge_vfm_h, int16_t, H2, clearh_th)
+ GEN_VFMERGE_VF_TH(th_vfmerge_vfm_w, int32_t, H4, clearl_th)
+ GEN_VFMERGE_VF_TH(th_vfmerge_vfm_d, int64_t, H8, clearq_th)
 +
-+/* Vector Floating-Point Classify Instruction */
-+#define TH_OPIVV1(NAME, TD, T2, TX2, HD, HS2, OP) \
-+        OPIVV1(NAME, TD, T2, TX2, HD, HS2, OP)
++/* Single-Width Floating-Point/Integer Type-Convert Instructions */
++/* vfcvt.xu.f.v vd, vs2, vm # Convert float to unsigned integer. */
++THCALL(TH_OPFVV1, th_vfcvt_xu_f_v_h, OP_UU_H, H2, H2, float16_to_uint16)
++THCALL(TH_OPFVV1, th_vfcvt_xu_f_v_w, OP_UU_W, H4, H4, float32_to_uint32)
++THCALL(TH_OPFVV1, th_vfcvt_xu_f_v_d, OP_UU_D, H8, H8, float64_to_uint64)
++GEN_TH_V_ENV(th_vfcvt_xu_f_v_h, 2, 2, clearh_th)
++GEN_TH_V_ENV(th_vfcvt_xu_f_v_w, 4, 4, clearl_th)
++GEN_TH_V_ENV(th_vfcvt_xu_f_v_d, 8, 8, clearq_th)
 +
-+#define GEN_TH_V(NAME, ESZ, DSZ, CLEAR_FN)             \
-+void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
-+                  CPURISCVState *env, uint32_t desc)   \
-+{                                                      \
-+    uint32_t vlmax = th_maxsz(desc) / ESZ;             \
-+    uint32_t mlen = th_mlen(desc);                     \
-+    uint32_t vm = th_vm(desc);                         \
-+    uint32_t vl = env->vl;                             \
-+    uint32_t i;                                        \
-+                                                       \
-+    VSTART_CHECK_EARLY_EXIT(env);                      \
-+    for (i = env->vstart; i < vl; i++) {               \
-+        if (!vm && !th_elem_mask(v0, mlen, i)) {       \
-+            continue;                                  \
-+        }                                              \
-+        do_##NAME(vd, vs2, i);                         \
-+    }                                                  \
-+    env->vstart = 0;                                   \
-+    CLEAR_FN(vd, vl, vl * DSZ,  vlmax * DSZ);          \
-+}
++/* vfcvt.x.f.v vd, vs2, vm # Convert float to signed integer. */
++THCALL(TH_OPFVV1, th_vfcvt_x_f_v_h, OP_UU_H, H2, H2, float16_to_int16)
++THCALL(TH_OPFVV1, th_vfcvt_x_f_v_w, OP_UU_W, H4, H4, float32_to_int32)
++THCALL(TH_OPFVV1, th_vfcvt_x_f_v_d, OP_UU_D, H8, H8, float64_to_int64)
++GEN_TH_V_ENV(th_vfcvt_x_f_v_h, 2, 2, clearh_th)
++GEN_TH_V_ENV(th_vfcvt_x_f_v_w, 4, 4, clearl_th)
++GEN_TH_V_ENV(th_vfcvt_x_f_v_d, 8, 8, clearq_th)
 +
-+THCALL(TH_OPIVV1, th_vfclass_v_h, OP_UU_H, H2, H2, fclass_h)
-+THCALL(TH_OPIVV1, th_vfclass_v_w, OP_UU_W, H4, H4, fclass_s)
-+THCALL(TH_OPIVV1, th_vfclass_v_d, OP_UU_D, H8, H8, fclass_d)
-+GEN_TH_V(th_vfclass_v_h, 2, 2, clearh_th)
-+GEN_TH_V(th_vfclass_v_w, 4, 4, clearl_th)
-+GEN_TH_V(th_vfclass_v_d, 8, 8, clearq_th)
++/* vfcvt.f.xu.v vd, vs2, vm # Convert unsigned integer to float. */
++THCALL(TH_OPFVV1, th_vfcvt_f_xu_v_h, OP_UU_H, H2, H2, uint16_to_float16)
++THCALL(TH_OPFVV1, th_vfcvt_f_xu_v_w, OP_UU_W, H4, H4, uint32_to_float32)
++THCALL(TH_OPFVV1, th_vfcvt_f_xu_v_d, OP_UU_D, H8, H8, uint64_to_float64)
++GEN_TH_V_ENV(th_vfcvt_f_xu_v_h, 2, 2, clearh_th)
++GEN_TH_V_ENV(th_vfcvt_f_xu_v_w, 4, 4, clearl_th)
++GEN_TH_V_ENV(th_vfcvt_f_xu_v_d, 8, 8, clearq_th)
 +
-+/* Vector Floating-Point Merge Instruction */
-+#define GEN_VFMERGE_VF_TH(NAME, ETYPE, H, CLEAR_FN)           \
-+void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2, \
-+                  CPURISCVState *env, uint32_t desc)          \
-+{                                                             \
-+    uint32_t mlen = th_mlen(desc);                            \
-+    uint32_t vm = th_vm(desc);                                \
-+    uint32_t vl = env->vl;                                    \
-+    uint32_t esz = sizeof(ETYPE);                             \
-+    uint32_t vlmax = th_maxsz(desc) / esz;                    \
-+    uint32_t i;                                               \
-+                                                              \
-+    VSTART_CHECK_EARLY_EXIT(env);                             \
-+    for (i = env->vstart; i < vl; i++) {                      \
-+        ETYPE s2 = *((ETYPE *)vs2 + H(i));                    \
-+        *((ETYPE *)vd + H(i))                                 \
-+          = (!vm && !th_elem_mask(v0, mlen, i) ? s2 : s1);    \
-+    }                                                         \
-+    env->vstart = 0;                                          \
-+    CLEAR_FN(vd, vl, vl * esz, vlmax * esz);                  \
-+}
-+
-+GEN_VFMERGE_VF_TH(th_vfmerge_vfm_h, int16_t, H2, clearh_th)
-+GEN_VFMERGE_VF_TH(th_vfmerge_vfm_w, int32_t, H4, clearl_th)
-+GEN_VFMERGE_VF_TH(th_vfmerge_vfm_d, int64_t, H8, clearq_th)
++/* vfcvt.f.x.v vd, vs2, vm # Convert integer to float. */
++THCALL(TH_OPFVV1, th_vfcvt_f_x_v_h, OP_UU_H, H2, H2, int16_to_float16)
++THCALL(TH_OPFVV1, th_vfcvt_f_x_v_w, OP_UU_W, H4, H4, int32_to_float32)
++THCALL(TH_OPFVV1, th_vfcvt_f_x_v_d, OP_UU_D, H8, H8, int64_to_float64)
++GEN_TH_V_ENV(th_vfcvt_f_x_v_h, 2, 2, clearh_th)
++GEN_TH_V_ENV(th_vfcvt_f_x_v_w, 4, 4, clearl_th)
++GEN_TH_V_ENV(th_vfcvt_f_x_v_d, 8, 8, clearq_th)
 -- 
 2.44.0
 
