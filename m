@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 815D0C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27DD7C04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 08:36:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvCLd-0002YV-Vb; Fri, 12 Apr 2024 04:33:26 -0400
+	id 1rvCNg-0003M1-NB; Fri, 12 Apr 2024 04:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvCLb-0002YB-CR; Fri, 12 Apr 2024 04:33:23 -0400
-Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
+ id 1rvCNa-0003LX-2O; Fri, 12 Apr 2024 04:35:26 -0400
+Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rvCLY-0001Ox-9G; Fri, 12 Apr 2024 04:33:23 -0400
+ id 1rvCNV-0001cS-TK; Fri, 12 Apr 2024 04:35:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1712910792; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=1ju8qwYBWtviK5bZttluimjs+DUO08y/3B/TO2LfaVU=;
- b=bqeUpNRrIGfNh7wiDJdsrlDm7NXtpwnNuGNyVnJEm9ioXSCJHg0TMH8Jg7vrXibe4DReiQkI7Eq6zFCz3crwqr36z082eTljrFBwPu5B4qUqF7Ww61dBQelUhC/Sr1TH/YC8WogJtKbtsrNVGwszDTN7FMGdhXiloV8neom7S2E=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045170;
+ t=1712910914; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=Agt9GBO/lBPUx+8bOSXPzQaLoEc1ZRP8fQYxpEsTH6c=;
+ b=PMh9ipcF7xj4A3dE8ke9Rc9tJe5iN/W08GfX+FAfbbACAZQu8aEMp/h5ErBZxMgyXickjbZWAR2ykez4PBnlB97uOVQgPrT7wDxuPeuLmcshFbFDJsqjTS3CtBWggo+pZjmP60VsfWwPBKiZZ+a1CexUkdTsfg/zSvdjpNOuMF8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046049;
  MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W4Nasex_1712910791; 
+ TI=SMTPD_---0W4NbDgh_1712910912; 
 Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W4Nasex_1712910791) by smtp.aliyun-inc.com;
- Fri, 12 Apr 2024 16:33:12 +0800
+ fp:SMTPD_---0W4NbDgh_1712910912) by smtp.aliyun-inc.com;
+ Fri, 12 Apr 2024 16:35:13 +0800
 From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com,
  Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 27/65] target/riscv: Add single-width integer multiply-add
+Subject: [PATCH 28/65] target/riscv: Add widening integer multiply-add
  instructions for XTheadVector
-Date: Fri, 12 Apr 2024 15:36:57 +0800
-Message-ID: <20240412073735.76413-28-eric.huang@linux.alibaba.com>
+Date: Fri, 12 Apr 2024 15:36:58 +0800
+Message-ID: <20240412073735.76413-29-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 References: <20240412073735.76413-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.124;
+Received-SPF: pass client-ip=115.124.30.98;
  envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
+ helo=out30-98.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -76,69 +76,59 @@ general differences between XTheadVector and RVV1.0.
 
 Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
- target/riscv/helper.h                         | 33 +++++++
- .../riscv/insn_trans/trans_xtheadvector.c.inc | 18 ++--
- target/riscv/xtheadvector_helper.c            | 87 +++++++++++++++++++
- 3 files changed, 130 insertions(+), 8 deletions(-)
+ target/riscv/helper.h                         | 22 +++++++++
+ .../riscv/insn_trans/trans_xtheadvector.c.inc | 16 ++++---
+ target/riscv/vector_helper.c                  |  3 --
+ target/riscv/vector_internals.h               |  3 ++
+ target/riscv/xtheadvector_helper.c            | 45 +++++++++++++++++++
+ 5 files changed, 79 insertions(+), 10 deletions(-)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 93e6a3f33d..a6abb48b55 100644
+index a6abb48b55..8b8dd62761 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -1813,3 +1813,36 @@ DEF_HELPER_6(th_vwmulu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
- DEF_HELPER_6(th_vwmulsu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
- DEF_HELPER_6(th_vwmulsu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
- DEF_HELPER_6(th_vwmulsu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+@@ -1846,3 +1846,25 @@ DEF_HELPER_6(th_vnmsub_vx_b, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vnmsub_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vnmsub_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(th_vnmsub_vx_d, void, ptr, ptr, tl, ptr, env, i32)
 +
-+DEF_HELPER_6(th_vmacc_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmacc_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmacc_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmacc_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vv_d, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(th_vmacc_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vmacc_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vmacc_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vmacc_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsac_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vmadd_vx_d, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vx_b, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vx_h, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vx_w, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(th_vnmsub_vx_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmacc_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmacc_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmacc_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccsu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccsu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccsu_vv_w, void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmacc_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmacc_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmacc_vx_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccsu_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccsu_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccsu_vx_w, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccus_vx_b, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccus_vx_h, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(th_vwmaccus_vx_w, void, ptr, ptr, tl, ptr, env, i32)
 diff --git a/target/riscv/insn_trans/trans_xtheadvector.c.inc b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-index 681e967078..d84edd90ca 100644
+index d84edd90ca..bfa3a26f78 100644
 --- a/target/riscv/insn_trans/trans_xtheadvector.c.inc
 +++ b/target/riscv/insn_trans/trans_xtheadvector.c.inc
-@@ -1557,20 +1557,22 @@ GEN_OPIVX_WIDEN_TRANS_TH(th_vwmul_vx, opivx_widen_check_th)
- GEN_OPIVX_WIDEN_TRANS_TH(th_vwmulu_vx, opivx_widen_check_th)
- GEN_OPIVX_WIDEN_TRANS_TH(th_vwmulsu_vx, opivx_widen_check_th)
+@@ -1567,19 +1567,21 @@ GEN_OPIVX_TRANS_TH(th_vnmsac_vx, opivx_check_th)
+ GEN_OPIVX_TRANS_TH(th_vmadd_vx, opivx_check_th)
+ GEN_OPIVX_TRANS_TH(th_vnmsub_vx, opivx_check_th)
  
-+/* Vector Single-Width Integer Multiply-Add Instructions */
-+GEN_OPIVV_TRANS_TH(th_vmacc_vv, opivv_check_th)
-+GEN_OPIVV_TRANS_TH(th_vnmsac_vv, opivv_check_th)
-+GEN_OPIVV_TRANS_TH(th_vmadd_vv, opivv_check_th)
-+GEN_OPIVV_TRANS_TH(th_vnmsub_vv, opivv_check_th)
-+GEN_OPIVX_TRANS_TH(th_vmacc_vx, opivx_check_th)
-+GEN_OPIVX_TRANS_TH(th_vnmsac_vx, opivx_check_th)
-+GEN_OPIVX_TRANS_TH(th_vmadd_vx, opivx_check_th)
-+GEN_OPIVX_TRANS_TH(th_vnmsub_vx, opivx_check_th)
++/* Vector Widening Integer Multiply-Add Instructions */
++GEN_OPIVV_WIDEN_TRANS_TH(th_vwmaccu_vv, opivx_widen_check_th)
++GEN_OPIVV_WIDEN_TRANS_TH(th_vwmacc_vv, opivx_widen_check_th)
++GEN_OPIVV_WIDEN_TRANS_TH(th_vwmaccsu_vv, opivx_widen_check_th)
++GEN_OPIVX_WIDEN_TRANS_TH(th_vwmaccu_vx, opivx_widen_check_th)
++GEN_OPIVX_WIDEN_TRANS_TH(th_vwmacc_vx, opivx_widen_check_th)
++GEN_OPIVX_WIDEN_TRANS_TH(th_vwmaccsu_vx, opivx_widen_check_th)
++GEN_OPIVX_WIDEN_TRANS_TH(th_vwmaccus_vx, opivx_widen_check_th)
 +
  #define TH_TRANS_STUB(NAME)                                \
  static bool trans_##NAME(DisasContext *s, arg_##NAME *a)   \
@@ -146,112 +136,97 @@ index 681e967078..d84edd90ca 100644
      return require_xtheadvector(s);                        \
  }
  
--TH_TRANS_STUB(th_vmacc_vv)
--TH_TRANS_STUB(th_vmacc_vx)
--TH_TRANS_STUB(th_vnmsac_vv)
--TH_TRANS_STUB(th_vnmsac_vx)
--TH_TRANS_STUB(th_vmadd_vv)
--TH_TRANS_STUB(th_vmadd_vx)
--TH_TRANS_STUB(th_vnmsub_vv)
--TH_TRANS_STUB(th_vnmsub_vx)
- TH_TRANS_STUB(th_vwmaccu_vv)
- TH_TRANS_STUB(th_vwmaccu_vx)
- TH_TRANS_STUB(th_vwmacc_vv)
+-TH_TRANS_STUB(th_vwmaccu_vv)
+-TH_TRANS_STUB(th_vwmaccu_vx)
+-TH_TRANS_STUB(th_vwmacc_vv)
+-TH_TRANS_STUB(th_vwmacc_vx)
+-TH_TRANS_STUB(th_vwmaccsu_vv)
+-TH_TRANS_STUB(th_vwmaccsu_vx)
+-TH_TRANS_STUB(th_vwmaccus_vx)
+ TH_TRANS_STUB(th_vmv_v_v)
+ TH_TRANS_STUB(th_vmv_v_x)
+ TH_TRANS_STUB(th_vmv_v_i)
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index b312d67f87..06ca77691d 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -647,9 +647,6 @@ GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b)
+  */
+ 
+ /* (TD, T1, T2, TX1, TX2) */
+-#define WOP_SSU_B int16_t, int8_t, uint8_t, int16_t, uint16_t
+-#define WOP_SSU_H int32_t, int16_t, uint16_t, int32_t, uint32_t
+-#define WOP_SSU_W int64_t, int32_t, uint32_t, int64_t, uint64_t
+ #define NOP_SSS_B int8_t, int8_t, int16_t, int8_t, int16_t
+ #define NOP_SSS_H int16_t, int16_t, int32_t, int16_t, int32_t
+ #define NOP_SSS_W int32_t, int32_t, int64_t, int32_t, int64_t
+diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
+index c3d9752e2e..e99caa8e2d 100644
+--- a/target/riscv/vector_internals.h
++++ b/target/riscv/vector_internals.h
+@@ -252,6 +252,9 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1,    \
+ #define WOP_SUS_B int16_t, uint8_t, int8_t, uint16_t, int16_t
+ #define WOP_SUS_H int32_t, uint16_t, int16_t, uint32_t, int32_t
+ #define WOP_SUS_W int64_t, uint32_t, int32_t, uint64_t, int64_t
++#define WOP_SSU_B int16_t, int8_t, uint8_t, int16_t, uint16_t
++#define WOP_SSU_H int32_t, int16_t, uint16_t, int32_t, uint32_t
++#define WOP_SSU_W int64_t, int32_t, uint32_t, int64_t, uint64_t
+ 
+ /* share functions */
+ static inline target_ulong adjust_addr(CPURISCVState *env, target_ulong addr)
 diff --git a/target/riscv/xtheadvector_helper.c b/target/riscv/xtheadvector_helper.c
-index b5b1e55452..ccf6eb8a43 100644
+index ccf6eb8a43..19aad626c9 100644
 --- a/target/riscv/xtheadvector_helper.c
 +++ b/target/riscv/xtheadvector_helper.c
-@@ -1791,3 +1791,90 @@ GEN_TH_VX(th_vwmulu_vx_w, 4, 8, clearq_th)
- GEN_TH_VX(th_vwmulsu_vx_b, 1, 2, clearh_th)
- GEN_TH_VX(th_vwmulsu_vx_h, 2, 4, clearl_th)
- GEN_TH_VX(th_vwmulsu_vx_w, 4, 8, clearq_th)
+@@ -1878,3 +1878,48 @@ GEN_TH_VX(th_vnmsub_vx_b, 1, 1, clearb_th)
+ GEN_TH_VX(th_vnmsub_vx_h, 2, 2, clearh_th)
+ GEN_TH_VX(th_vnmsub_vx_w, 4, 4, clearl_th)
+ GEN_TH_VX(th_vnmsub_vx_d, 8, 8, clearq_th)
 +
-+/* Vector Single-Width Integer Multiply-Add Instructions */
-+#define TH_OPIVV3(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2, OP)   \
-+static void do_##NAME(void *vd, void *vs1, void *vs2, int i)       \
-+{                                                                  \
-+    TX1 s1 = *((T1 *)vs1 + HS1(i));                                \
-+    TX2 s2 = *((T2 *)vs2 + HS2(i));                                \
-+    TD d = *((TD *)vd + HD(i));                                    \
-+    *((TD *)vd + HD(i)) = OP(s2, s1, d);                           \
-+}
-+#define TH_MACC(N, M, D) (M * N + D)
-+#define TH_NMSAC(N, M, D) (-(M * N) + D)
-+#define TH_MADD(N, M, D) (M * D + N)
-+#define TH_NMSUB(N, M, D) (-(M * D) + N)
-+THCALL(TH_OPIVV3, th_vmacc_vv_b, OP_SSS_B, H1, H1, H1, TH_MACC)
-+THCALL(TH_OPIVV3, th_vmacc_vv_h, OP_SSS_H, H2, H2, H2, TH_MACC)
-+THCALL(TH_OPIVV3, th_vmacc_vv_w, OP_SSS_W, H4, H4, H4, TH_MACC)
-+THCALL(TH_OPIVV3, th_vmacc_vv_d, OP_SSS_D, H8, H8, H8, TH_MACC)
-+THCALL(TH_OPIVV3, th_vnmsac_vv_b, OP_SSS_B, H1, H1, H1, TH_NMSAC)
-+THCALL(TH_OPIVV3, th_vnmsac_vv_h, OP_SSS_H, H2, H2, H2, TH_NMSAC)
-+THCALL(TH_OPIVV3, th_vnmsac_vv_w, OP_SSS_W, H4, H4, H4, TH_NMSAC)
-+THCALL(TH_OPIVV3, th_vnmsac_vv_d, OP_SSS_D, H8, H8, H8, TH_NMSAC)
-+THCALL(TH_OPIVV3, th_vmadd_vv_b, OP_SSS_B, H1, H1, H1, TH_MADD)
-+THCALL(TH_OPIVV3, th_vmadd_vv_h, OP_SSS_H, H2, H2, H2, TH_MADD)
-+THCALL(TH_OPIVV3, th_vmadd_vv_w, OP_SSS_W, H4, H4, H4, TH_MADD)
-+THCALL(TH_OPIVV3, th_vmadd_vv_d, OP_SSS_D, H8, H8, H8, TH_MADD)
-+THCALL(TH_OPIVV3, th_vnmsub_vv_b, OP_SSS_B, H1, H1, H1, TH_NMSUB)
-+THCALL(TH_OPIVV3, th_vnmsub_vv_h, OP_SSS_H, H2, H2, H2, TH_NMSUB)
-+THCALL(TH_OPIVV3, th_vnmsub_vv_w, OP_SSS_W, H4, H4, H4, TH_NMSUB)
-+THCALL(TH_OPIVV3, th_vnmsub_vv_d, OP_SSS_D, H8, H8, H8, TH_NMSUB)
-+GEN_TH_VV(th_vmacc_vv_b, 1, 1, clearb_th)
-+GEN_TH_VV(th_vmacc_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV(th_vmacc_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV(th_vmacc_vv_d, 8, 8, clearq_th)
-+GEN_TH_VV(th_vnmsac_vv_b, 1, 1, clearb_th)
-+GEN_TH_VV(th_vnmsac_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV(th_vnmsac_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV(th_vnmsac_vv_d, 8, 8, clearq_th)
-+GEN_TH_VV(th_vmadd_vv_b, 1, 1, clearb_th)
-+GEN_TH_VV(th_vmadd_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV(th_vmadd_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV(th_vmadd_vv_d, 8, 8, clearq_th)
-+GEN_TH_VV(th_vnmsub_vv_b, 1, 1, clearb_th)
-+GEN_TH_VV(th_vnmsub_vv_h, 2, 2, clearh_th)
-+GEN_TH_VV(th_vnmsub_vv_w, 4, 4, clearl_th)
-+GEN_TH_VV(th_vnmsub_vv_d, 8, 8, clearq_th)
++/* Vector Widening Integer Multiply-Add Instructions */
++THCALL(TH_OPIVV3, th_vwmaccu_vv_b, WOP_UUU_B, H2, H1, H1, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmaccu_vv_h, WOP_UUU_H, H4, H2, H2, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmaccu_vv_w, WOP_UUU_W, H8, H4, H4, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmacc_vv_b, WOP_SSS_B, H2, H1, H1, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmacc_vv_h, WOP_SSS_H, H4, H2, H2, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmacc_vv_w, WOP_SSS_W, H8, H4, H4, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmaccsu_vv_b, WOP_SSU_B, H2, H1, H1, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmaccsu_vv_h, WOP_SSU_H, H4, H2, H2, TH_MACC)
++THCALL(TH_OPIVV3, th_vwmaccsu_vv_w, WOP_SSU_W, H8, H4, H4, TH_MACC)
++GEN_TH_VV(th_vwmaccu_vv_b, 1, 2, clearh_th)
++GEN_TH_VV(th_vwmaccu_vv_h, 2, 4, clearl_th)
++GEN_TH_VV(th_vwmaccu_vv_w, 4, 8, clearq_th)
++GEN_TH_VV(th_vwmacc_vv_b, 1, 2, clearh_th)
++GEN_TH_VV(th_vwmacc_vv_h, 2, 4, clearl_th)
++GEN_TH_VV(th_vwmacc_vv_w, 4, 8, clearq_th)
++GEN_TH_VV(th_vwmaccsu_vv_b, 1, 2, clearh_th)
++GEN_TH_VV(th_vwmaccsu_vv_h, 2, 4, clearl_th)
++GEN_TH_VV(th_vwmaccsu_vv_w, 4, 8, clearq_th)
 +
-+#define TH_OPIVX3(NAME, TD, T1, T2, TX1, TX2, HD, HS2, OP)             \
-+static void do_##NAME(void *vd, target_long s1, void *vs2, int i)   \
-+{                                                                   \
-+    TX2 s2 = *((T2 *)vs2 + HS2(i));                                 \
-+    TD d = *((TD *)vd + HD(i));                                     \
-+    *((TD *)vd + HD(i)) = OP(s2, (TX1)(T1)s1, d);                   \
-+}
-+
-+THCALL(TH_OPIVX3, th_vmacc_vx_b, OP_SSS_B, H1, H1, TH_MACC)
-+THCALL(TH_OPIVX3, th_vmacc_vx_h, OP_SSS_H, H2, H2, TH_MACC)
-+THCALL(TH_OPIVX3, th_vmacc_vx_w, OP_SSS_W, H4, H4, TH_MACC)
-+THCALL(TH_OPIVX3, th_vmacc_vx_d, OP_SSS_D, H8, H8, TH_MACC)
-+THCALL(TH_OPIVX3, th_vnmsac_vx_b, OP_SSS_B, H1, H1, TH_NMSAC)
-+THCALL(TH_OPIVX3, th_vnmsac_vx_h, OP_SSS_H, H2, H2, TH_NMSAC)
-+THCALL(TH_OPIVX3, th_vnmsac_vx_w, OP_SSS_W, H4, H4, TH_NMSAC)
-+THCALL(TH_OPIVX3, th_vnmsac_vx_d, OP_SSS_D, H8, H8, TH_NMSAC)
-+THCALL(TH_OPIVX3, th_vmadd_vx_b, OP_SSS_B, H1, H1, TH_MADD)
-+THCALL(TH_OPIVX3, th_vmadd_vx_h, OP_SSS_H, H2, H2, TH_MADD)
-+THCALL(TH_OPIVX3, th_vmadd_vx_w, OP_SSS_W, H4, H4, TH_MADD)
-+THCALL(TH_OPIVX3, th_vmadd_vx_d, OP_SSS_D, H8, H8, TH_MADD)
-+THCALL(TH_OPIVX3, th_vnmsub_vx_b, OP_SSS_B, H1, H1, TH_NMSUB)
-+THCALL(TH_OPIVX3, th_vnmsub_vx_h, OP_SSS_H, H2, H2, TH_NMSUB)
-+THCALL(TH_OPIVX3, th_vnmsub_vx_w, OP_SSS_W, H4, H4, TH_NMSUB)
-+THCALL(TH_OPIVX3, th_vnmsub_vx_d, OP_SSS_D, H8, H8, TH_NMSUB)
-+GEN_TH_VX(th_vmacc_vx_b, 1, 1, clearb_th)
-+GEN_TH_VX(th_vmacc_vx_h, 2, 2, clearh_th)
-+GEN_TH_VX(th_vmacc_vx_w, 4, 4, clearl_th)
-+GEN_TH_VX(th_vmacc_vx_d, 8, 8, clearq_th)
-+GEN_TH_VX(th_vnmsac_vx_b, 1, 1, clearb_th)
-+GEN_TH_VX(th_vnmsac_vx_h, 2, 2, clearh_th)
-+GEN_TH_VX(th_vnmsac_vx_w, 4, 4, clearl_th)
-+GEN_TH_VX(th_vnmsac_vx_d, 8, 8, clearq_th)
-+GEN_TH_VX(th_vmadd_vx_b, 1, 1, clearb_th)
-+GEN_TH_VX(th_vmadd_vx_h, 2, 2, clearh_th)
-+GEN_TH_VX(th_vmadd_vx_w, 4, 4, clearl_th)
-+GEN_TH_VX(th_vmadd_vx_d, 8, 8, clearq_th)
-+GEN_TH_VX(th_vnmsub_vx_b, 1, 1, clearb_th)
-+GEN_TH_VX(th_vnmsub_vx_h, 2, 2, clearh_th)
-+GEN_TH_VX(th_vnmsub_vx_w, 4, 4, clearl_th)
-+GEN_TH_VX(th_vnmsub_vx_d, 8, 8, clearq_th)
++THCALL(TH_OPIVX3, th_vwmaccu_vx_b, WOP_UUU_B, H2, H1, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccu_vx_h, WOP_UUU_H, H4, H2, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccu_vx_w, WOP_UUU_W, H8, H4, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmacc_vx_b, WOP_SSS_B, H2, H1, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmacc_vx_h, WOP_SSS_H, H4, H2, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmacc_vx_w, WOP_SSS_W, H8, H4, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccsu_vx_b, WOP_SSU_B, H2, H1, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccsu_vx_h, WOP_SSU_H, H4, H2, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccsu_vx_w, WOP_SSU_W, H8, H4, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccus_vx_b, WOP_SUS_B, H2, H1, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccus_vx_h, WOP_SUS_H, H4, H2, TH_MACC)
++THCALL(TH_OPIVX3, th_vwmaccus_vx_w, WOP_SUS_W, H8, H4, TH_MACC)
++GEN_TH_VX(th_vwmaccu_vx_b, 1, 2, clearh_th)
++GEN_TH_VX(th_vwmaccu_vx_h, 2, 4, clearl_th)
++GEN_TH_VX(th_vwmaccu_vx_w, 4, 8, clearq_th)
++GEN_TH_VX(th_vwmacc_vx_b, 1, 2, clearh_th)
++GEN_TH_VX(th_vwmacc_vx_h, 2, 4, clearl_th)
++GEN_TH_VX(th_vwmacc_vx_w, 4, 8, clearq_th)
++GEN_TH_VX(th_vwmaccsu_vx_b, 1, 2, clearh_th)
++GEN_TH_VX(th_vwmaccsu_vx_h, 2, 4, clearl_th)
++GEN_TH_VX(th_vwmaccsu_vx_w, 4, 8, clearq_th)
++GEN_TH_VX(th_vwmaccus_vx_b, 1, 2, clearh_th)
++GEN_TH_VX(th_vwmaccus_vx_h, 2, 4, clearl_th)
++GEN_TH_VX(th_vwmaccus_vx_w, 4, 8, clearq_th)
 -- 
 2.44.0
 
