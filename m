@@ -4,78 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8418C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 04:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1731C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 06:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rv8NW-0004xe-D8; Fri, 12 Apr 2024 00:19:06 -0400
+	id 1rvA1H-0000zH-NU; Fri, 12 Apr 2024 02:04:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bazz1tv2@gmail.com>)
- id 1rv8NU-0004xO-FB
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 00:19:04 -0400
-Received: from mail-lj1-f179.google.com ([209.85.208.179])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bazz1tv2@gmail.com>)
- id 1rv8NP-0007jt-MN
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 00:19:04 -0400
-Received: by mail-lj1-f179.google.com with SMTP id
- 38308e7fff4ca-2d48d75ab70so6497941fa.0
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 21:18:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712895537; x=1713500337;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YeXG9bxUc2aeeokE+GrsM51ZLkkwxA9pWcijAoTSoJw=;
- b=HdXfgOAqw1kEXgIYQzJK7WySxoCBJ77F28b85GExNCYXcmR4uPAHsIpatc4XfUqbrm
- 1oHZ+hmNcBDgKMF3dQpEnxPCmOt7z73MjLMWhleI38JGVdaSejkdAVr2m6H0fJ+RRd8I
- eRySPgfJ/lXnk60quDmpGM6iiSp69hFn/QzxDs0K17MLRPABiR5lSGWuuVEi9tQgbuxO
- GRZRInnwuaCiL6HT2jLeV6AInHQSMqvxDssAPtoajp6zcjZiYPe2JTp8N+58RsJXr4Zu
- eGA1aQSGC1o+P3A1rn74j57ObSyDBQIZPv+cozl0ysnqR/hSF24rA7cqaV7olDZ1FPw4
- vqFg==
-X-Gm-Message-State: AOJu0Ywz0RTCQhRwgaHAV8OrB5CqNtFzgF8RHo8c7/mKsqT12hvIL3wm
- wr/FC4kaFcsGJpwzI6vvjOFcN/6sk2Cg+kFDr0OCCLNlPq0bLkDQ1p+318jEi1w=
-X-Google-Smtp-Source: AGHT+IEgib4jWrpTO39bj23v2iOiL6T0abBlelhx1G1Th+0+bPdNTkxm1u2Qd8WPlUpcSE4DfCzXwA==
-X-Received: by 2002:a2e:b2d1:0:b0:2d8:5084:f5b9 with SMTP id
- 17-20020a2eb2d1000000b002d85084f5b9mr827626ljz.28.1712895536992; 
- Thu, 11 Apr 2024 21:18:56 -0700 (PDT)
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com.
- [209.85.208.176]) by smtp.gmail.com with ESMTPSA id
- k8-20020a05651c0a0800b002d85452f55csm401193ljq.47.2024.04.11.21.18.56
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Apr 2024 21:18:56 -0700 (PDT)
-Received: by mail-lj1-f176.google.com with SMTP id
- 38308e7fff4ca-2d8a24f8a3cso4235151fa.1
- for <qemu-devel@nongnu.org>; Thu, 11 Apr 2024 21:18:56 -0700 (PDT)
-X-Received: by 2002:a05:651c:1a21:b0:2d8:4890:c0fa with SMTP id
- by33-20020a05651c1a2100b002d84890c0famr981155ljb.35.1712895536538; Thu, 11
- Apr 2024 21:18:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rvA1F-0000yu-M5
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 02:04:13 -0400
+Received: from mail-co1nam11on2047.outbound.protection.outlook.com
+ ([40.107.220.47] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rvA1C-0000AT-SE
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 02:04:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Khepx59Y75J8MVdwGar3ulDvdgjTTX19kZMS9bgBFi8IxgEm+Dg3LfcMxtsOjPw47U/hxif3WMIYQdy1QczcOoSA2cIDyrxDf563l31h7Hg26H2sZESGl8zeW2ssrrAiwao0/GBFAmGtQRqZemi9zXJFYhJ8/lejODHiq9cBpasvt0bSJBclk4N2Vds53yvcwfDnZfaQGaiX93x7IUPMUY5v/6FP046ItiRBCqMziYHd0ETy3FphQP+lmtLMcJPgOldFsHXkhgtl7CnLQTCVozgzBNU+zu3sUAGQMWzIPSLWFHu+sOZK37RVCK6asLasTATdfL/Hy6n4acS3UbS3Bw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VNZ1HN3me6sDQTCbA3HzaKefa9L9Dbg3Lcrcq93LO1c=;
+ b=HuCs0cNVVXm5FtVKA2KA02CDbYaWEO3VaIagkCGVDxgn4PQ0kMCPQDeRupYKhjgXpM3ggLqrU3ckePIVsVKDBKD/bBNMIxEqNAUvoVkbPaHTXCSYdiH2FwDN8O5yI0ARxVS+a2Lp4tuksMI8ceMBWSb84h5wkpvmBrqtbMVBAHjvu6KVfhkO48othIerwTeO2BNCtIlu3sVOWyUXzwW0yus40/0QNe5AvWltGt67mKxbk3iC+FTazRc2C19d9nOtNisWzKfn0xJDcjZuVGdhW2h7JUaqnKZkbdVglTIsq3hjPasA86LP7buwTGC++1mXh4l7TmjfT0pyN8zLlr48tQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VNZ1HN3me6sDQTCbA3HzaKefa9L9Dbg3Lcrcq93LO1c=;
+ b=KZmCzzMgkYxPN/F+uu1tdUQqlVNLhV2yyKrwpfvlP1hntveUtfub3MyWz/42nQkWpjJK+3t/ZWYLh29+fzqCaJaUGk/W5DK1bB5QtDsIUQ5mylTX830c2uNsvOkZCp+0HboJdVprWmQ7D4QMZyBP21D4RFiVLRseElKhBrqHh3o=
+Received: from BL1PR12MB5849.namprd12.prod.outlook.com (2603:10b6:208:384::18)
+ by DS0PR12MB8318.namprd12.prod.outlook.com (2603:10b6:8:f6::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Fri, 12 Apr
+ 2024 05:59:03 +0000
+Received: from BL1PR12MB5849.namprd12.prod.outlook.com
+ ([fe80::b77f:9333:3a5a:d285]) by BL1PR12MB5849.namprd12.prod.outlook.com
+ ([fe80::b77f:9333:3a5a:d285%6]) with mapi id 15.20.7409.053; Fri, 12 Apr 2024
+ 05:59:03 +0000
+From: "Chen, Jiqian" <Jiqian.Chen@amd.com>
+To: Jason Wang <jasowang@redhat.com>
+CC: "Michael S. Tsirkin" <mst@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "Huang, Ray" <Ray.Huang@amd.com>, "Chen, Jiqian"
+ <Jiqian.Chen@amd.com>
+Subject: Re: [RFC QEMU PATCH v8 2/2] virtio-pci: implement No_Soft_Reset bit
+Thread-Topic: [RFC QEMU PATCH v8 2/2] virtio-pci: implement No_Soft_Reset bit
+Thread-Index: AQHagPw4nwt3E6Dxr0GcatBwmH6cBbFM+5kAgACHiID//5QEAIABse2A//+IQICAADj0gIAGTJQAgAdcY4CACIoRgA==
+Date: Fri, 12 Apr 2024 05:59:02 +0000
+Message-ID: <BL1PR12MB5849380AAAE41CD6A2405D09E7042@BL1PR12MB5849.namprd12.prod.outlook.com>
+References: <20240328103903.408290-1-Jiqian.Chen@amd.com>
+ <20240328103903.408290-3-Jiqian.Chen@amd.com>
+ <20240328065606-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849ACCD6602EAB88BE2FED9E73B2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <20240328083503-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849C37A0B0E1AF02644C203E73A2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <CACGkMEt=V4V4JgT08o5_f7tj-eNZDi2GB4=H_Qp7xALrRxBWhQ@mail.gmail.com>
+ <20240329064431-mutt-send-email-mst@kernel.org>
+ <BL1PR12MB5849AA89DC28465714590B56E73E2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <CACGkMEu6uEF+4P3_3Q5tw4TNZ9dj3GwJh+h_BtWDfq3WeUhKJQ@mail.gmail.com>
+In-Reply-To: <CACGkMEu6uEF+4P3_3Q5tw4TNZ9dj3GwJh+h_BtWDfq3WeUhKJQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-imapappendstamp: BL1PR12MB5947.namprd12.prod.outlook.com
+ (15.20.7472.008)
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL1PR12MB5849:EE_|DS0PR12MB8318:EE_
+x-ms-office365-filtering-correlation-id: 7c18f164-4b6b-4da6-8844-08dc5ab5a7c5
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: WHzm5D/MvyY4euOguxKIrmosKZEV0l+aWPlkWZ6A/ldb429kQ0tYRZ/kw7SjVDytZ9BwRNnRC4eqwcig0p7Cff+OJ8pyUO9IvvIh8lwWmMg3lUPEHxlOlL34UVfJAVxb58dYkASKO7fNxLMCiSoGNnhKqqkdESF7S5/XerKcTklIAoFBR2yIFCE5flLm6NOVtBGtI290ZOI5fIRTvvQsCq7FFjwlUT+ZAwt49mXtg82e16ZJdjY1o44rtGA731JPRD3jBZT30Vi/hHT2HOTjxRjDm5tCa9rWWkaC3V7Xunbq/Ijixkoctevc8FcQOAjVjoDwZ7i2ijboHlFfGF20T0s7l+Kiqy0r9cKGocQnmLOHq0tnE4nM3lyNnNa8GNhWv70LLnJHJOjLOyoNoaZeCx5fXGy4eU1pR/zl6orn4yhOhBdNsd1AtvSVRiTa+VGlxJQuTOTqkyPQFacDXfzHQijVyxiYjs54lBLMRacGmQpZZKgrlvNFSnnO2kRoqsLkWHLdEgVcieZNazXX8Ag2KE531F8W19CWhpld8AaaOMtc+Y1CKnclAsPFJ4x6Lt6DPTYsCGPRVzePQ0EGGc12NE+zYKlNZG3rx+MqZj/uwXz8Yl1783rNLDggrVlpjZaAfI1vXyCOT/qASLvhEad239wJ2NI1+ATj0yDay3OfS8Hmxu+tiPUUBNtdNyAqUmV8wo/ilCORoC0ilEu7yfWPM232uEsbVHGlhSF8g7xxlwY=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5849.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(366007)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?a08rRnJ6VjlKbDcwakRsc1c3V21HWnNCMzF3bTQwa1J5SzJycGZmdUwvc09Y?=
+ =?utf-8?B?eGx3ejRhWi90WUpQaEM4eTJ0MTNuUmFBNlpsWWNINERuUGNlWXErekp6WXBK?=
+ =?utf-8?B?VGZ0Yk8rQ1JVaEtFWisxZXJnVitTNW5aak1BYVNkL1h4aitMOGlaTHU3SjFi?=
+ =?utf-8?B?RU5nU00vVTgybDREVVRBVEQ2ek1DR2JxUXF0T2NZV3hLYit2ZlkvdVRBN1p3?=
+ =?utf-8?B?c3ZoalNyT1VMV0NRbVFpRWZISi9OVHFSTmtGY3NkcFMvbjd3SjRYRForTWJs?=
+ =?utf-8?B?SzBHSjJZS2dXSGNRT3JqVWpjRDhJL3NHZ2xpeUhQQWNsY2FiSW5CdkpBRHJX?=
+ =?utf-8?B?ZlYxTy9OL0FTQW15Mk1NOWhQZ0todTdmeGw2ejhPSjVJL3pSdlpETi9DQ0h4?=
+ =?utf-8?B?S1FNWXByU2NZMm1CcWhrWXB6Sk9HRFJNUlVsTXA3S2VvWmpOVWFDYWRWZE1C?=
+ =?utf-8?B?RXFQK3E5bkcxbythbjE1a0Rrai9oSWdDZlpINXdiajlMajBDT3gwQ0dOaHZ3?=
+ =?utf-8?B?bUZRbjBHaGlLbWp6QkNYeEVyMTV6NzJrc0dQbU9tNUNrMDBzRHJsKzlpNlNn?=
+ =?utf-8?B?cWRwU3FFSTJJOXdvcmtHQ3RkY3J2YlRTYlJtQ1pJWTVoaFQ3dEtsVFEwL0Z4?=
+ =?utf-8?B?L0RITmJPM0d0L1l0MUpvZHZvR3NGVzBQWmRIZ0Z3cEU3bzBaYmo3WFRIWUlL?=
+ =?utf-8?B?VncwZGxpZDA0cHdjWmVrd2hqUDd4U0dTRTlEcll6K1kzNm42ZkNqMU9sdU9M?=
+ =?utf-8?B?SjFTU3hSRUdJUWxUWTBRRVJGRzdjdy8xT0ZCOXQ4NC9mZGJGN2NmNFBsMS9Q?=
+ =?utf-8?B?MUZrc1lIWGdkSmJKY1ZiSTBtekRqY1d1WWlNei9vUllQV0d1TGRrWmlyTXVt?=
+ =?utf-8?B?ZjM0aWQzTWFMd2pXbHIrZEZseGg5UDI5NU9NakhIbGhWSTFtTjBLOUhyMFVs?=
+ =?utf-8?B?S3lDbkdzZjRtY05ZdnZrRWQyNkJ3QVdpRnNLeHJ5cHRzck10NCthSWRWUm9J?=
+ =?utf-8?B?SGFuZ1VZODRuVHI5RitCeWRGcExQcFcyeFlzOHB0UGdmK2FmQkxGTXd1STVp?=
+ =?utf-8?B?OXBHNTVqcElHUUdodzl0b1B4NldDY3NUQkZ2Vi9rNVNqYm1VcHpZNFR3MXl5?=
+ =?utf-8?B?Sll6TGxVZUdlYkJuRW84K1hubW81a0xzUlpHcElycSt3cnluOVBRRUllWEQ4?=
+ =?utf-8?B?MXhRK09JWnJ0Vm9ZakxFcXZyaGxWSXVLRG9aOGwxQXh3N0p4bWUvK3k3dVBz?=
+ =?utf-8?B?NnBjY2NDQ2QwL1VYNk5yRCtLUjg2T3Z5dlUwM3dwMFRRL3k3cWZxS2RoSUxx?=
+ =?utf-8?B?NVNrOHBvZUc5NDEwOXYxazVBaVhyQ2h6RDF1NWFVRmN6QjFFWkQ0T3QrUG4x?=
+ =?utf-8?B?b2lOeDlHbzd1KytuOXhZOXFjeEF2Z2ZUbDNWTFFJRm8vWkgyZW1JUm1XRTVh?=
+ =?utf-8?B?WFJkRFp3Q21lR2hpS1loOHJad3BaNTAwMlQ2V1Q3TnQzZjdYMkV6NmJ2aHBj?=
+ =?utf-8?B?K0I5cElTL1F0N1AvTm0zSnlibUtlYjdjVzc0dUxPNnBzOGZSckQ1eHMzaFJp?=
+ =?utf-8?B?bVFoUUxFMTRUUVlKcm51TEJkNWR2Nnp1c2lmaWRjKzJDWWhmSjErTGZHcjBh?=
+ =?utf-8?B?cUw4TkxwUE9WTUpVT3pubDJJSzVZbFFGVndiUTRPbXc2dUxOMWhiREtvNk9T?=
+ =?utf-8?B?cFlqTFd0aWlOT2RHN1RLci9IRC9CUVRuTDUxOXBudlh5SGJTTWF6aHNaVHlN?=
+ =?utf-8?B?dkdFUnY2ek51NlhRdHNlS1ptdnZLdjg4eUlSV0VzOUE1U1NRWFlJSU5mWmF1?=
+ =?utf-8?B?TmpZaHNSYncrODFtcWdRQ0lBTEtwSTZyYmp3d3AzbUJKMkwyUjF0VU13eGt3?=
+ =?utf-8?B?NXJ6akQ5RUJrL1lPOWpPdUt2ZDFJTDJVVjVLTGpkb0pzQldLak5TZk55aTNG?=
+ =?utf-8?B?dmhCS1dvTSsyT3U0ZFFhZzEraEcxQy9aRDNQeEIzWTYrVDdMZ2FhYnNTS1Zo?=
+ =?utf-8?B?di9WQTJpa3NqeEUvQ3BYcktxOGxFN3pNUC82eGFlMmRnRTN5QjU0dXNYQjJx?=
+ =?utf-8?B?TENCSWh0MU9PUFNjMjVzRzVQeDFFd2cyRkRHbmxqWXQ1ZjNFTFUvSGd6ek1U?=
+ =?utf-8?Q?+o6w=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D451ACAE9E490741B0C4CC13C6FD335C@amdcloud.onmicrosoft.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20240412021509.145502-1-richard.henderson@linaro.org>
-In-Reply-To: <20240412021509.145502-1-richard.henderson@linaro.org>
-From: M Bazz <bazz@bazz1.com>
-Date: Fri, 12 Apr 2024 00:18:44 -0400
-X-Gmail-Original-Message-ID: <CAMFqb-bp48=Kd23AzwZ2U3AsPbnwUBUiyv=37ua1V_RDQ3wdyg@mail.gmail.com>
-Message-ID: <CAMFqb-bp48=Kd23AzwZ2U3AsPbnwUBUiyv=37ua1V_RDQ3wdyg@mail.gmail.com>
-Subject: Re: [PATCH] target/sparc: Use GET_ASI_CODE for ASI_KERNELTXT and
- ASI_USERTXT
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Artyom Tarasenko <atar4qemu@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000fe2f4a0615de9181"
-Received-SPF: pass client-ip=209.85.208.179; envelope-from=bazz1tv2@gmail.com;
- helo=mail-lj1-f179.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7c18f164-4b6b-4da6-8844-08dc5ab5a7c5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Apr 2024 05:59:02.9877 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: h45oEZKXOASjgG5FtP7VHpnpPDhMB4T2e0kTiCUPbFz9cITQRr0hAuJmwGEGXHbqvTPfimy/aL7ThXzHecPrhQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8318
+Received-SPF: permerror client-ip=40.107.220.47;
+ envelope-from=Jiqian.Chen@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.49,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,582 +160,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fe2f4a0615de9181
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, Apr 11, 2024, 10:15 PM Richard Henderson <
-richard.henderson@linaro.org> wrote:
-
-> Reads are done with execute access.  It is not clear whether writes
-> are legal at all -- for now, leave helper_st_asi unchanged, so that
-> we continue to raise an mmu fault.
->
-> This generalizes the exiting code for ASI_KERNELTXT to be usable for
-> ASI_USERTXT as well, by passing down the MemOpIdx to use.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2281
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2059
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1609
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1166
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/sparc/helper.h      |  3 ++
->  target/sparc/ldst_helper.c | 65 ++++++++++++++++++++++++++------------
->  target/sparc/translate.c   | 49 ++++++++++++++++++++++++++--
->  3 files changed, 95 insertions(+), 22 deletions(-)
->
-> diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-> index e55fad5b8c..b8087d0d2b 100644
-> --- a/target/sparc/helper.h
-> +++ b/target/sparc/helper.h
-> @@ -32,6 +32,9 @@ DEF_HELPER_FLAGS_3(udiv, TCG_CALL_NO_WG, i64, env, tl,
-> tl)
->  DEF_HELPER_FLAGS_3(sdiv, TCG_CALL_NO_WG, i64, env, tl, tl)
->  DEF_HELPER_3(taddcctv, tl, env, tl, tl)
->  DEF_HELPER_3(tsubcctv, tl, env, tl, tl)
-> +#if !defined(CONFIG_USER_ONLY) && !defined(TARGET_SPARC64)
-> +DEF_HELPER_FLAGS_3(ld_code, TCG_CALL_NO_WG, i64, env, tl, i32)
-> +#endif
->  #if !defined(CONFIG_USER_ONLY) || defined(TARGET_SPARC64)
->  DEF_HELPER_FLAGS_4(ld_asi, TCG_CALL_NO_WG, i64, env, tl, int, i32)
->  DEF_HELPER_FLAGS_5(st_asi, TCG_CALL_NO_WG, void, env, tl, i64, int, i32)
-> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-> index e581bb42ac..2846a86cc4 100644
-> --- a/target/sparc/ldst_helper.c
-> +++ b/target/sparc/ldst_helper.c
-> @@ -585,7 +585,6 @@ uint64_t helper_ld_asi(CPUSPARCState *env,
-> target_ulong addr,
->  #if defined(DEBUG_MXCC) || defined(DEBUG_ASI)
->      uint32_t last_addr = addr;
->  #endif
-> -    MemOpIdx oi;
->
->      do_check_align(env, addr, size - 1, GETPC());
->      switch (asi) {
-> @@ -684,24 +683,6 @@ uint64_t helper_ld_asi(CPUSPARCState *env,
-> target_ulong addr,
->      case ASI_M_DIAGS:   /* Turbosparc DTLB Diagnostic */
->      case ASI_M_IODIAG:  /* Turbosparc IOTLB Diagnostic */
->          break;
-> -    case ASI_KERNELTXT: /* Supervisor code access */
-> -        oi = make_memop_idx(memop, cpu_mmu_index(env_cpu(env), true));
-> -        switch (size) {
-> -        case 1:
-> -            ret = cpu_ldb_code_mmu(env, addr, oi, GETPC());
-> -            break;
-> -        case 2:
-> -            ret = cpu_ldw_code_mmu(env, addr, oi, GETPC());
-> -            break;
-> -        default:
-> -        case 4:
-> -            ret = cpu_ldl_code_mmu(env, addr, oi, GETPC());
-> -            break;
-> -        case 8:
-> -            ret = cpu_ldq_code_mmu(env, addr, oi, GETPC());
-> -            break;
-> -        }
-> -        break;
->      case ASI_M_TXTC_TAG:   /* SparcStation 5 I-cache tag */
->      case ASI_M_TXTC_DATA:  /* SparcStation 5 I-cache data */
->      case ASI_M_DATAC_TAG:  /* SparcStation 5 D-cache tag */
-> @@ -779,7 +760,6 @@ uint64_t helper_ld_asi(CPUSPARCState *env,
-> target_ulong addr,
->      case 0x4c: /* SuperSPARC MMU Breakpoint Action */
->          ret = env->mmubpaction;
->          break;
-> -    case ASI_USERTXT: /* User code access, XXX */
->      default:
->          sparc_raise_mmu_fault(cs, addr, false, false, asi, size, GETPC());
->          ret = 0;
-> @@ -787,6 +767,8 @@ uint64_t helper_ld_asi(CPUSPARCState *env,
-> target_ulong addr,
->
->      case ASI_USERDATA: /* User data access */
->      case ASI_KERNELDATA: /* Supervisor data access */
-> +    case ASI_USERTXT: /* User code access */
-> +    case ASI_KERNELTXT: /* Supervisor code access */
->      case ASI_P: /* Implicit primary context data access (v9 only?) */
->      case ASI_M_BYPASS:    /* MMU passthrough */
->      case ASI_LEON_BYPASS: /* LEON MMU passthrough */
-> @@ -1161,6 +1143,49 @@ void helper_st_asi(CPUSPARCState *env, target_ulong
-> addr, uint64_t val,
->  #endif
->  }
->
-> +uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t
-> oi)
-> +{
-> +    MemOp mop = get_memop(oi);
-> +    uintptr_t ra = GETPC();
-> +    uint64_t ret;
-> +
-> +    switch (mop & MO_SIZE) {
-> +    case MO_8:
-> +        ret = cpu_ldb_code_mmu(env, addr, oi, ra);
-> +        if (mop & MO_SIGN) {
-> +            ret = (int8_t)ret;
-> +        }
-> +        break;
-> +    case MO_16:
-> +        ret = cpu_ldw_code_mmu(env, addr, oi, ra);
-> +        if ((mop & MO_BSWAP) != MO_TE) {
-> +            ret = bswap16(ret);
-> +        }
-> +        if (mop & MO_SIGN) {
-> +            ret = (int16_t)ret;
-> +        }
-> +        break;
-> +    case MO_32:
-> +        ret = cpu_ldl_code_mmu(env, addr, oi, ra);
-> +        if ((mop & MO_BSWAP) != MO_TE) {
-> +            ret = bswap32(ret);
-> +        }
-> +        if (mop & MO_SIGN) {
-> +            ret = (int32_t)ret;
-> +        }
-> +        break;
-> +    case MO_64:
-> +        ret = cpu_ldq_code_mmu(env, addr, oi, ra);
-> +        if ((mop & MO_BSWAP) != MO_TE) {
-> +            ret = bswap64(ret);
-> +        }
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +    return ret;
-> +}
-> +
->  #endif /* CONFIG_USER_ONLY */
->  #else /* TARGET_SPARC64 */
->
-> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-> index 319934d9bd..c9b9b047df 100644
-> --- a/target/sparc/translate.c
-> +++ b/target/sparc/translate.c
-> @@ -1117,6 +1117,7 @@ typedef enum {
->      GET_ASI_EXCP,
->      GET_ASI_DIRECT,
->      GET_ASI_DTWINX,
-> +    GET_ASI_CODE,
->      GET_ASI_BLOCK,
->      GET_ASI_SHORT,
->      GET_ASI_BCOPY,
-> @@ -1159,14 +1160,22 @@ static DisasASI resolve_asi(DisasContext *dc, int
-> asi, MemOp memop)
->                 || (asi == ASI_USERDATA
->                     && (dc->def->features & CPU_FEATURE_CASA))) {
->          switch (asi) {
-> -        case ASI_USERDATA:   /* User data access */
-> +        case ASI_USERDATA:    /* User data access */
->              mem_idx = MMU_USER_IDX;
->              type = GET_ASI_DIRECT;
->              break;
-> -        case ASI_KERNELDATA: /* Supervisor data access */
-> +        case ASI_KERNELDATA:  /* Supervisor data access */
->              mem_idx = MMU_KERNEL_IDX;
->              type = GET_ASI_DIRECT;
->              break;
-> +        case ASI_USERTXT:     /* User text access */
-> +            mem_idx = MMU_USER_IDX;
-> +            type = GET_ASI_CODE;
-> +            break;
-> +        case ASI_KERNELTXT:   /* Supervisor text access */
-> +            mem_idx = MMU_KERNEL_IDX;
-> +            type = GET_ASI_CODE;
-> +            break;
->          case ASI_M_BYPASS:    /* MMU passthrough */
->          case ASI_LEON_BYPASS: /* LEON MMU passthrough */
->              mem_idx = MMU_PHYS_IDX;
-> @@ -1379,6 +1388,22 @@ static void gen_ld_asi(DisasContext *dc, DisasASI
-> *da, TCGv dst, TCGv addr)
->      case GET_ASI_DIRECT:
->          tcg_gen_qemu_ld_tl(dst, addr, da->mem_idx, da->memop | MO_ALIGN);
->          break;
-> +
-> +    case GET_ASI_CODE:
-> +#if !defined(CONFIG_USER_ONLY) && !defined(TARGET_SPARC64)
-> +        {
-> +            MemOpIdx oi = make_memop_idx(da->memop, da->mem_idx);
-> +            TCGv_i32 r_oi = tcg_constant_i32(oi);
-> +            TCGv_i64 t64 = tcg_temp_new_i64();
-> +
-> +            gen_helper_ld_code(t64, tcg_env, addr, r_oi);
-> +            tcg_gen_trunc_i64_tl(dst, t64);
-> +        }
-> +        break;
-> +#else
-> +        g_assert_not_reached();
-> +#endif
-> +
->      default:
->          {
->              TCGv_i32 r_asi = tcg_constant_i32(da->asi);
-> @@ -1791,6 +1816,26 @@ static void gen_ldda_asi(DisasContext *dc, DisasASI
-> *da, TCGv addr, int rd)
->          }
->          break;
->
-> +    case GET_ASI_CODE:
-> +#if !defined(CONFIG_USER_ONLY) && !defined(TARGET_SPARC64)
-> +        {
-> +            TCGv_i64 tmp = tcg_temp_new_i64();
-> +            MemOpIdx oi = make_memop_idx(da->memop, da->mem_idx);
-> +
-> +            gen_helper_ld_code(tmp, tcg_env, addr, tcg_constant_i32(oi));
-> +
-> +            /* See above.  */
-> +            if ((da->memop & MO_BSWAP) == MO_TE) {
-> +                tcg_gen_extr_i64_tl(lo, hi, tmp);
-> +            } else {
-> +                tcg_gen_extr_i64_tl(hi, lo, tmp);
-> +            }
-> +        }
-> +        break;
-> +#else
-> +        g_assert_not_reached();
-> +#endif
-> +
->      default:
->          /* ??? In theory we've handled all of the ASIs that are valid
->             for ldda, and this should raise DAE_invalid_asi.  However,
-> --
-> 2.34.1
->
-
-Hi Richard,
-
-I see this is in your hands now. I agree with your take on leaving writes
-alone. I'm also grateful for the opportunity to collaborate with you.
-
-It brings a smile for the community members who will be touched by this
-amazing contribution. I see them happily realizing that this perplexing bug
-has been solved, and in our case finally able to use the debuggers we love!
-:D
-
-Thanks for the proper fix, qemu sensei!
-
--bazz
-
->
-
---000000000000fe2f4a0615de9181
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Thu, Apr 11, 2024, 10:15 PM Richard Henderson &lt;<a href=
-=3D"mailto:richard.henderson@linaro.org">richard.henderson@linaro.org</a>&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
-.8ex;border-left:1px #ccc solid;padding-left:1ex">Reads are done with execu=
-te access.=C2=A0 It is not clear whether writes<br>
-are legal at all -- for now, leave helper_st_asi unchanged, so that<br>
-we continue to raise an mmu fault.<br>
-<br>
-This generalizes the exiting code for ASI_KERNELTXT to be usable for<br>
-ASI_USERTXT as well, by passing down the MemOpIdx to use.<br>
-<br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2281" re=
-l=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-proje=
-ct/qemu/-/issues/2281</a><br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2059" re=
-l=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-proje=
-ct/qemu/-/issues/2059</a><br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/1609" re=
-l=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-proje=
-ct/qemu/-/issues/1609</a><br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/1166" re=
-l=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-proje=
-ct/qemu/-/issues/1166</a><br>
-Signed-off-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@li=
-naro.org" target=3D"_blank" rel=3D"noreferrer">richard.henderson@linaro.org=
-</a>&gt;<br>
----<br>
-=C2=A0target/sparc/helper.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ++<br>
-=C2=A0target/sparc/ldst_helper.c | 65 ++++++++++++++++++++++++++-----------=
--<br>
-=C2=A0target/sparc/translate.c=C2=A0 =C2=A0| 49 ++++++++++++++++++++++++++-=
--<br>
-=C2=A03 files changed, 95 insertions(+), 22 deletions(-)<br>
-<br>
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h<br>
-index e55fad5b8c..b8087d0d2b 100644<br>
---- a/target/sparc/helper.h<br>
-+++ b/target/sparc/helper.h<br>
-@@ -32,6 +32,9 @@ DEF_HELPER_FLAGS_3(udiv, TCG_CALL_NO_WG, i64, env, tl, tl=
-)<br>
-=C2=A0DEF_HELPER_FLAGS_3(sdiv, TCG_CALL_NO_WG, i64, env, tl, tl)<br>
-=C2=A0DEF_HELPER_3(taddcctv, tl, env, tl, tl)<br>
-=C2=A0DEF_HELPER_3(tsubcctv, tl, env, tl, tl)<br>
-+#if !defined(CONFIG_USER_ONLY) &amp;&amp; !defined(TARGET_SPARC64)<br>
-+DEF_HELPER_FLAGS_3(ld_code, TCG_CALL_NO_WG, i64, env, tl, i32)<br>
-+#endif<br>
-=C2=A0#if !defined(CONFIG_USER_ONLY) || defined(TARGET_SPARC64)<br>
-=C2=A0DEF_HELPER_FLAGS_4(ld_asi, TCG_CALL_NO_WG, i64, env, tl, int, i32)<br=
->
-=C2=A0DEF_HELPER_FLAGS_5(st_asi, TCG_CALL_NO_WG, void, env, tl, i64, int, i=
-32)<br>
-diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c<br>
-index e581bb42ac..2846a86cc4 100644<br>
---- a/target/sparc/ldst_helper.c<br>
-+++ b/target/sparc/ldst_helper.c<br>
-@@ -585,7 +585,6 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong=
- addr,<br>
-=C2=A0#if defined(DEBUG_MXCC) || defined(DEBUG_ASI)<br>
-=C2=A0 =C2=A0 =C2=A0uint32_t last_addr =3D addr;<br>
-=C2=A0#endif<br>
--=C2=A0 =C2=A0 MemOpIdx oi;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0do_check_align(env, addr, size - 1, GETPC());<br>
-=C2=A0 =C2=A0 =C2=A0switch (asi) {<br>
-@@ -684,24 +683,6 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulon=
-g addr,<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_M_DIAGS:=C2=A0 =C2=A0/* Turbosparc DTLB Diagno=
-stic */<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_M_IODIAG:=C2=A0 /* Turbosparc IOTLB Diagnostic=
- */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
--=C2=A0 =C2=A0 case ASI_KERNELTXT: /* Supervisor code access */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 oi =3D make_memop_idx(memop, cpu_mmu_index(env=
-_cpu(env), true));<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 switch (size) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 case 1:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldb_code_mmu(env, ad=
-dr, oi, GETPC());<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 case 2:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldw_code_mmu(env, ad=
-dr, oi, GETPC());<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 case 4:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldl_code_mmu(env, ad=
-dr, oi, GETPC());<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 case 8:<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldq_code_mmu(env, ad=
-dr, oi, GETPC());<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_M_TXTC_TAG:=C2=A0 =C2=A0/* SparcStation 5 I-ca=
-che tag */<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_M_TXTC_DATA:=C2=A0 /* SparcStation 5 I-cache d=
-ata */<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_M_DATAC_TAG:=C2=A0 /* SparcStation 5 D-cache t=
-ag */<br>
-@@ -779,7 +760,6 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong=
- addr,<br>
-=C2=A0 =C2=A0 =C2=A0case 0x4c: /* SuperSPARC MMU Breakpoint Action */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D env-&gt;mmubpaction;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
--=C2=A0 =C2=A0 case ASI_USERTXT: /* User code access, XXX */<br>
-=C2=A0 =C2=A0 =C2=A0default:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sparc_raise_mmu_fault(cs, addr, false, fa=
-lse, asi, size, GETPC());<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D 0;<br>
-@@ -787,6 +767,8 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong=
- addr,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_USERDATA: /* User data access */<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_KERNELDATA: /* Supervisor data access */<br>
-+=C2=A0 =C2=A0 case ASI_USERTXT: /* User code access */<br>
-+=C2=A0 =C2=A0 case ASI_KERNELTXT: /* Supervisor code access */<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_P: /* Implicit primary context data access (v9=
- only?) */<br>
-=C2=A0 =C2=A0 =C2=A0case ASI_M_BYPASS:=C2=A0 =C2=A0 /* MMU passthrough */<b=
-r>
-=C2=A0 =C2=A0 =C2=A0case ASI_LEON_BYPASS: /* LEON MMU passthrough */<br>
-@@ -1161,6 +1143,49 @@ void helper_st_asi(CPUSPARCState *env, target_ulong =
-addr, uint64_t val,<br>
-=C2=A0#endif<br>
-=C2=A0}<br>
-<br>
-+uint64_t helper_ld_code(CPUSPARCState *env, target_ulong addr, uint32_t oi=
-)<br>
-+{<br>
-+=C2=A0 =C2=A0 MemOp mop =3D get_memop(oi);<br>
-+=C2=A0 =C2=A0 uintptr_t ra =3D GETPC();<br>
-+=C2=A0 =C2=A0 uint64_t ret;<br>
-+<br>
-+=C2=A0 =C2=A0 switch (mop &amp; MO_SIZE) {<br>
-+=C2=A0 =C2=A0 case MO_8:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldb_code_mmu(env, addr, oi, ra);<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mop &amp; MO_SIGN) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D (int8_t)ret;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 case MO_16:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldw_code_mmu(env, addr, oi, ra);<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((mop &amp; MO_BSWAP) !=3D MO_TE) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D bswap16(ret);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mop &amp; MO_SIGN) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D (int16_t)ret;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 case MO_32:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldl_code_mmu(env, addr, oi, ra);<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((mop &amp; MO_BSWAP) !=3D MO_TE) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D bswap32(ret);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mop &amp; MO_SIGN) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D (int32_t)ret;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 case MO_64:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D cpu_ldq_code_mmu(env, addr, oi, ra);<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((mop &amp; MO_BSWAP) !=3D MO_TE) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D bswap64(ret);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 return ret;<br>
-+}<br>
-+<br>
-=C2=A0#endif /* CONFIG_USER_ONLY */<br>
-=C2=A0#else /* TARGET_SPARC64 */<br>
-<br>
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c<br>
-index 319934d9bd..c9b9b047df 100644<br>
---- a/target/sparc/translate.c<br>
-+++ b/target/sparc/translate.c<br>
-@@ -1117,6 +1117,7 @@ typedef enum {<br>
-=C2=A0 =C2=A0 =C2=A0GET_ASI_EXCP,<br>
-=C2=A0 =C2=A0 =C2=A0GET_ASI_DIRECT,<br>
-=C2=A0 =C2=A0 =C2=A0GET_ASI_DTWINX,<br>
-+=C2=A0 =C2=A0 GET_ASI_CODE,<br>
-=C2=A0 =C2=A0 =C2=A0GET_ASI_BLOCK,<br>
-=C2=A0 =C2=A0 =C2=A0GET_ASI_SHORT,<br>
-=C2=A0 =C2=A0 =C2=A0GET_ASI_BCOPY,<br>
-@@ -1159,14 +1160,22 @@ static DisasASI resolve_asi(DisasContext *dc, int a=
-si, MemOp memop)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 || (asi =3D=3D ASI_=
-USERDATA<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;=
-&amp; (dc-&gt;def-&gt;features &amp; CPU_FEATURE_CASA))) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0switch (asi) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 case ASI_USERDATA:=C2=A0 =C2=A0/* User data ac=
-cess */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case ASI_USERDATA:=C2=A0 =C2=A0 /* User data a=
-ccess */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mem_idx =3D MMU_USER_IDX;<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0type =3D GET_ASI_DIRECT;<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 case ASI_KERNELDATA: /* Supervisor data access=
- */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case ASI_KERNELDATA:=C2=A0 /* Supervisor data =
-access */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mem_idx =3D MMU_KERNEL_IDX;=
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0type =3D GET_ASI_DIRECT;<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case ASI_USERTXT:=C2=A0 =C2=A0 =C2=A0/* User t=
-ext access */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_idx =3D MMU_USER_IDX;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D GET_ASI_CODE;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case ASI_KERNELTXT:=C2=A0 =C2=A0/* Supervisor =
-text access */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_idx =3D MMU_KERNEL_IDX;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D GET_ASI_CODE;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case ASI_M_BYPASS:=C2=A0 =C2=A0 /* MMU pa=
-ssthrough */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case ASI_LEON_BYPASS: /* LEON MMU passthr=
-ough */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mem_idx =3D MMU_PHYS_IDX;<b=
-r>
-@@ -1379,6 +1388,22 @@ static void gen_ld_asi(DisasContext *dc, DisasASI *d=
-a, TCGv dst, TCGv addr)<br>
-=C2=A0 =C2=A0 =C2=A0case GET_ASI_DIRECT:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tcg_gen_qemu_ld_tl(dst, addr, da-&gt;mem_=
-idx, da-&gt;memop | MO_ALIGN);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-+<br>
-+=C2=A0 =C2=A0 case GET_ASI_CODE:<br>
-+#if !defined(CONFIG_USER_ONLY) &amp;&amp; !defined(TARGET_SPARC64)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MemOpIdx oi =3D make_memop_idx(d=
-a-&gt;memop, da-&gt;mem_idx);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TCGv_i32 r_oi =3D tcg_constant_i=
-32(oi);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TCGv_i64 t64 =3D tcg_temp_new_i6=
-4();<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_helper_ld_code(t64, tcg_env,=
- addr, r_oi);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_trunc_i64_tl(dst, t64);<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+#else<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-+#endif<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0default:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TCGv_i32 r_asi =3D tcg_cons=
-tant_i32(da-&gt;asi);<br>
-@@ -1791,6 +1816,26 @@ static void gen_ldda_asi(DisasContext *dc, DisasASI =
-*da, TCGv addr, int rd)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-<br>
-+=C2=A0 =C2=A0 case GET_ASI_CODE:<br>
-+#if !defined(CONFIG_USER_ONLY) &amp;&amp; !defined(TARGET_SPARC64)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TCGv_i64 tmp =3D tcg_temp_new_i6=
-4();<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MemOpIdx oi =3D make_memop_idx(d=
-a-&gt;memop, da-&gt;mem_idx);<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_helper_ld_code(tmp, tcg_env,=
- addr, tcg_constant_i32(oi));<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* See above.=C2=A0 */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((da-&gt;memop &amp; MO_BSWAP=
-) =3D=3D MO_TE) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_extr_i64_t=
-l(lo, hi, tmp);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_extr_i64_t=
-l(hi, lo, tmp);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+#else<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-+#endif<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0default:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* ??? In theory we&#39;ve handled all of=
- the ASIs that are valid<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for ldda, and this should raise D=
-AE_invalid_asi.=C2=A0 However,<br>
--- <br>
-2.34.1<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"=
-auto">Hi Richard,</div><div dir=3D"auto"><br></div><div dir=3D"auto">I see =
-this is in your hands now. I agree with your take on leaving writes alone. =
-I&#39;m also grateful for the opportunity to collaborate with you.</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">It brings a smile for the commun=
-ity members who will be touched by this amazing contribution. I see them ha=
-ppily realizing that this perplexing bug has been solved, and in our case f=
-inally able to use the debuggers we love! :D</div><div dir=3D"auto"><br></d=
-iv><div dir=3D"auto">Thanks for the proper fix, qemu sensei!</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">-bazz</div><div dir=3D"auto"><div cla=
-ss=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
-.8ex;border-left:1px #ccc solid;padding-left:1ex"></blockquote></div></div>=
-</div>
-
---000000000000fe2f4a0615de9181--
+T24gMjAyNC80LzcgMTE6MjAsIEphc29uIFdhbmcgd3JvdGU6DQo+IE9uIFR1ZSwgQXByIDIsIDIw
+MjQgYXQgMTE6MDPigK9BTSBDaGVuLCBKaXFpYW4gPEppcWlhbi5DaGVuQGFtZC5jb20+IHdyb3Rl
+Og0KPj4NCj4+IE9uIDIwMjQvMy8yOSAxODo0NCwgTWljaGFlbCBTLiBUc2lya2luIHdyb3RlOg0K
+Pj4+IE9uIEZyaSwgTWFyIDI5LCAyMDI0IGF0IDAzOjIwOjU5UE0gKzA4MDAsIEphc29uIFdhbmcg
+d3JvdGU6DQo+Pj4+IE9uIEZyaSwgTWFyIDI5LCAyMDI0IGF0IDM6MDfigK9QTSBDaGVuLCBKaXFp
+YW4gPEppcWlhbi5DaGVuQGFtZC5jb20+IHdyb3RlOg0KPj4+Pj4NCj4+Pj4+IE9uIDIwMjQvMy8y
+OCAyMDozNiwgTWljaGFlbCBTLiBUc2lya2luIHdyb3RlOg0KPj4+Pj4+Pj4+ICt9DQo+Pj4+Pj4+
+Pj4gKw0KPj4+Pj4+Pj4+ICBzdGF0aWMgdm9pZCB2aXJ0aW9fcGNpX2J1c19yZXNldF9ob2xkKE9i
+amVjdCAqb2JqKQ0KPj4+Pj4+Pj4+ICB7DQo+Pj4+Pj4+Pj4gICAgICBQQ0lEZXZpY2UgKmRldiA9
+IFBDSV9ERVZJQ0Uob2JqKTsNCj4+Pj4+Pj4+PiAgICAgIERldmljZVN0YXRlICpxZGV2ID0gREVW
+SUNFKG9iaik7DQo+Pj4+Pj4+Pj4NCj4+Pj4+Pj4+PiArICAgIGlmICh2aXJ0aW9fcGNpX25vX3Nv
+ZnRfcmVzZXQoZGV2KSkgew0KPj4+Pj4+Pj4+ICsgICAgICAgIHJldHVybjsNCj4+Pj4+Pj4+PiAr
+ICAgIH0NCj4+Pj4+Pj4+PiArDQo+Pj4+Pj4+Pj4gICAgICB2aXJ0aW9fcGNpX3Jlc2V0KHFkZXYp
+Ow0KPj4+Pj4+Pj4+DQo+Pj4+Pj4+Pj4gICAgICBpZiAocGNpX2lzX2V4cHJlc3MoZGV2KSkgew0K
+Pj4+Pj4+Pj4+IEBAIC0yNDg0LDYgKzI1MTEsOCBAQCBzdGF0aWMgUHJvcGVydHkgdmlydGlvX3Bj
+aV9wcm9wZXJ0aWVzW10gPSB7DQo+Pj4+Pj4+Pj4gICAgICAgICAgICAgICAgICAgICAgVklSVElP
+X1BDSV9GTEFHX0lOSVRfTE5LQ1RMX0JJVCwgdHJ1ZSksDQo+Pj4+Pj4+Pj4gICAgICBERUZJTkVf
+UFJPUF9CSVQoIngtcGNpZS1wbS1pbml0IiwgVmlydElPUENJUHJveHksIGZsYWdzLA0KPj4+Pj4+
+Pj4+ICAgICAgICAgICAgICAgICAgICAgIFZJUlRJT19QQ0lfRkxBR19JTklUX1BNX0JJVCwgdHJ1
+ZSksDQo+Pj4+Pj4+Pj4gKyAgICBERUZJTkVfUFJPUF9CSVQoIngtcGNpZS1wbS1uby1zb2Z0LXJl
+c2V0IiwgVmlydElPUENJUHJveHksIGZsYWdzLA0KPj4+Pj4+Pj4+ICsgICAgICAgICAgICAgICAg
+ICAgIFZJUlRJT19QQ0lfRkxBR19QTV9OT19TT0ZUX1JFU0VUX0JJVCwgZmFsc2UpLA0KPj4+Pg0K
+Pj4+PiBXaHkgZG9lcyBpdCBjb21lIHdpdGggYW4geCBwcmVmaXg/DQo+Pj4+DQo+Pj4+Pj4+Pj4g
+ICAgICBERUZJTkVfUFJPUF9CSVQoIngtcGNpZS1mbHItaW5pdCIsIFZpcnRJT1BDSVByb3h5LCBm
+bGFncywNCj4+Pj4+Pj4+PiAgICAgICAgICAgICAgICAgICAgICBWSVJUSU9fUENJX0ZMQUdfSU5J
+VF9GTFJfQklULCB0cnVlKSwNCj4+Pj4+Pj4+PiAgICAgIERFRklORV9QUk9QX0JJVCgiYWVyIiwg
+VmlydElPUENJUHJveHksIGZsYWdzLA0KPj4+Pj4+Pj4NCj4+Pj4+Pj4+IEkgYW0gYSBiaXQgY29u
+ZnVzZWQgYWJvdXQgdGhpcyBwYXJ0Lg0KPj4+Pj4+Pj4gRG8geW91IHdhbnQgdG8gbWFrZSB0aGlz
+IHNvZnR3YXJlIGNvbnRyb2xsYWJsZT8NCj4+Pj4+Pj4gWWVzLCBiZWNhdXNlIGV2ZW4gdGhlIHJl
+YWwgaGFyZHdhcmUsIHRoaXMgYml0IGlzIG5vdCBhbHdheXMgc2V0Lg0KPj4+Pg0KPj4+PiBXZSBh
+cmUgdGFsa2luZyBhYm91dCBlbXVsYXRlZCBkZXZpY2VzIGhlcmUuDQo+Pj4+DQo+Pj4+Pj4NCj4+
+Pj4+PiBTbyB3aGljaCB2aXJ0aW8gZGV2aWNlcyBzaG91bGQgYW5kIHdoaWNoIHNob3VsZCBub3Qg
+c2V0IHRoaXMgYml0Pw0KPj4+Pj4gVGhpcyBkZXBlbmRzIG9uIHRoZSBzY2VuYXJpbyB0aGUgdmly
+dGlvLWRldmljZSBpcyB1c2VkLCBpZiB3ZSB3YW50IHRvIHRyaWdnZXIgYW4gaW50ZXJuYWwgc29m
+dCByZXNldCBmb3IgdGhlIHZpcnRpby1kZXZpY2UgZHVyaW5nIFMzLCB0aGlzIGJpdCBzaG91bGRu
+J3QgYmUgc2V0Lg0KPj4+Pg0KPj4+PiBJZiB0aGUgZGV2aWNlIGRvZXNuJ3QgbmVlZCByZXNldCwg
+d2h5IGJvdGhlciB0aGUgZHJpdmVyIGZvciB0aGlzPw0KPj4+Pg0KPj4+PiBCdHcsIG5vX3NvZnRf
+cmVzZXQgaXMgaW5zdWZmaWNpZW50IGZvciBzb21lIGNhc2VzLCB0aGVyZSdzIGEgcHJvcG9zYWwN
+Cj4+Pj4gZm9yIHRoZSB2aXJ0aW8tc3BlYy4gSSB0aGluayB3ZSBuZWVkIHRvIHdhaXQgdW50aWwg
+aXQgaXMgZG9uZS4NCj4+Pg0KPj4+IFRoYXQgc2VlbXMgb3J0aG9nb25hbCBvciBkaWQgSSBtaXNz
+IHNvbWV0aGluZz8NCj4+IFllcywgSSBsb29rZWQgdGhlIGRldGFpbCBvZiB0aGUgcHJvcG9zYWws
+IEkgYWxzbyB0aGluayB0aGV5IGFyZSB1bnJlbGF0ZWQuDQo+IA0KPiBUaGUgcG9pbnQgaXMgdGhl
+IHByb3Bvc2FsIHNhaWQNCj4gDQo+ICIiIg0KPiBXaXRob3V0IGEgbWVjaGFuaXNtIHRvDQo+IHN1
+c3BlbmQvcmVzdW1lIHZpcnRpbyBkZXZpY2VzIHdoZW4gdGhlIGRyaXZlciBpcyBzdXNwZW5kZWQv
+cmVzdW1lZCBpbg0KPiB0aGUgZWFybHkgcGhhc2Ugb2Ygc3VzcGVuZC9sYXRlIHBoYXNlIG9mIHJl
+c3VtZSwgdGhlcmUgaXMgYSB3aW5kb3cgd2hlcmUNCj4gaW50ZXJydXB0cyBjYW4gYmUgbG9zdC4N
+Cj4gIiIiDQo+IA0KPiBJdCBsb29rcyBzYWZlIHRvIGVuYWJsZSBpdCB3aXRoIHRoZSBzdXNwZW5k
+IGJpdC4gT3IgaWYgeW91IHRoaW5rIGl0J3MNCj4gd3JvbmcsIHBsZWFzZSBjb21tZW50IG9uIHRo
+ZSB2aXJ0aW8gc3BlYyBwYXRjaC4NCklmIEkgdW5kZXJzdGFuZCB0aGUgcHJvcG9zYWwgY29ycmVj
+dGx5Lg0KT25seSBuZWVkIHRvIGNoZWNrIHRoZSBTVVNQRU5EIGJpdCB3aGVuIHZpcnRpb19wY2lf
+YnVzX3Jlc2V0X2hvbGQgaXMgY2FsbGVkLg0KSXQgc2VlbXMgdGhlIHByb3Bvc2FsIHdvbid0IGJs
+b2NrIHRoaXMgcGF0Y2ggdG8gdXBzdHJlYW0uDQpJbiBuZXh0IHZlcnNpb24sIEkgd2lsbCBhZGQg
+Y29tbWVudHMgdG8gbm90ZSB0aGUgU1VTUEVORCBiaXQgdGhhdCBuZWVkIHRvIGJlIGNvbnNpZGVy
+ZWQgb25jZSBpdCBpcyBhY2NlcHRlZC4NCg0KPiANCj4+IEkgd2lsbCBzZXQgdGhlIGRlZmF1bHQg
+dmFsdWUgb2YgTm9fU29mdF9SZXNldCBiaXQgdG8gdHJ1ZSBpbiBuZXh0IHZlcnNpb24gYWNjb3Jk
+aW5nIHRvIHlvdXIgb3Bpbmlvbi4NCj4+IEFib3V0IHRoZSBjb21wYXRpYmlsaXR5IG9mIG9sZCBt
+YWNoaW5lIHR5cGVzLCB3aGljaCB0eXBlcyBzaG91bGQgSSBjb25zaWRlcj8gRG9lcyB0aGUgc2Ft
+ZSBhcyB4LXBjaWUtcG0taW5pdChod19jb21wYXRfMl84KT8NCj4+IEZvcmdpdmUgbWUgZm9yIG5v
+dCBrbm93aW5nIG11Y2ggYWJvdXQgY29tcGF0aWJpbGl0eS4NCj4gDQo+ICJ4IiBtZWFucyBubyBj
+b21wYXRpYmlsaXR5IGF0IGFsbCwgcGxlYXNlIGRyb3AgdGhlICJ4IiBwcmVmaXguIEFuZCBpdA0K
+VGhhbmtzIHRvIGV4cGxhaW4uDQpTbyBpdCBzZWVtcyB0aGUgcHJlZml4ICJ4IiBvZiAieC1wY2ll
+LXBtLWluaXQiIGlzIGFsc28gd3Jvbmc/IEJlY2F1c2UgaXQgY29uc2lkZXJlZCB0aGUgaHdfY29t
+cGF0XzJfOC4gQWxzbyAieC1wY2llLWZsci1pbml0Ii4NCkJhY2sgdG8gTm9fU29mdF9SZXNldCwg
+ZG8geW91IGtub3cgd2hpY2ggb2xkIG1hY2hpbmVzIHNob3VsZCBJIGNvbnNpZGVyIHRvIGNvbXBh
+dGlibGUgd2l0aD8NCg0KPiBsb29rcyBtb3JlIHNhZmUgdG8gc3RhcnQgYXMgImZhbHNlIiBieSBk
+ZWZhdWx0Lg0KPiANCj4gVGhhbmtzDQo+IA0KPj4+DQo+Pj4+PiBJbiBteSB1c2UgY2FzZSBvbiBt
+eSBlbnZpcm9ubWVudCwgSSBkb24ndCB3YW50IHRvIHJlc2V0IHZpcnRpby1ncHUgZHVyaW5nIFMz
+LA0KPj4+Pj4gYmVjYXVzZSBvbmNlIHRoZSBkaXNwbGF5IHJlc291cmNlcyBhcmUgZGVzdHJveWVk
+LCB0aGVyZSBhcmUgbm90IGVub3VnaCBpbmZvcm1hdGlvbiB0byByZS1jcmVhdGUgdGhlbSwgc28g
+dGhpcyBiaXQgc2hvdWxkIGJlIHNldC4NCj4+Pj4+IE1ha2luZyB0aGlzIGJpdCBzb2Z0d2FyZSBj
+b250cm9sbGFibGUgaXMgY29udmVuaWVudCBmb3IgdXNlcnMgdG8gdGFrZSB0aGVpciBvd24gY2hv
+aWNlcy4NCj4+Pj4NCj4+Pj4gVGhhbmtzDQo+Pj4+DQo+Pj4+Pg0KPj4+Pj4+DQo+Pj4+Pj4+PiBP
+ciBzaG91bGQgdGhpcyBiZSBzZXQgdG8gdHJ1ZSBieSBkZWZhdWx0IGFuZCB0aGVuDQo+Pj4+Pj4+
+PiBjaGFuZ2VkIHRvIGZhbHNlIGZvciBvbGQgbWFjaGluZSB0eXBlcz8NCj4+Pj4+Pj4gSG93IGNh
+biBJIGRvIHNvPw0KPj4+Pj4+PiBEbyB5b3UgbWVhbiBzZXQgdGhpcyB0byB0cnVlIGJ5IGRlZmF1
+bHQsIGFuZCBpZiBvbGQgbWFjaGluZSB0eXBlcyBkb24ndCBuZWVkIHRoaXMgYml0LCB0aGV5IGNh
+biBwYXNzIGZhbHNlIGNvbmZpZyB0byBxZW11IHdoZW4gcnVubmluZyBxZW11Pw0KPj4+Pj4+DQo+
+Pj4+Pj4gTm8sIHlvdSB3b3VsZCB1c2UgY29tcGF0IG1hY2hpbmVyeS4gU2VlIGhvdyBpcyB4LXBj
+aWUtZmxyLWluaXQgaGFuZGxlZC4NCj4+Pj4+Pg0KPj4+Pj4+DQo+Pj4+Pg0KPj4+Pj4gLS0NCj4+
+Pj4+IEJlc3QgcmVnYXJkcywNCj4+Pj4+IEppcWlhbiBDaGVuLg0KPj4+DQo+Pg0KPj4gLS0NCj4+
+IEJlc3QgcmVnYXJkcywNCj4+IEppcWlhbiBDaGVuLg0KPiANCg0KLS0gDQpCZXN0IHJlZ2FyZHMs
+DQpKaXFpYW4gQ2hlbi4NCg==
 
