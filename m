@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 547F9C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 13:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C864C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 13:27:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvGu4-0003Bs-1H; Fri, 12 Apr 2024 09:25:16 -0400
+	id 1rvGtd-000307-8u; Fri, 12 Apr 2024 09:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGu0-00039k-Uc
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:25:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtZ-0002yj-4U
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtz-0007Ee-53
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:25:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtV-00078G-5g
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712928310;
+ s=mimecast20190719; t=1712928280;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EX4Uerm0eo5Kmx5JIUK0JJzWYqOJJrmeNb+2wE1NvaU=;
- b=dNUbxddcPtuBMuPT9jGjc6iHk58+xZbUA4oGsVNN/f1hEhLF0OIGQx0TyFQApYZbzIIL4m
- i8fEuXVjAxgVKNO/rBwIbPAnYEHmoWykwDhEcIWdX6Wbh5bfdzKicqQPZHGa6fzHKm2Krw
- x2vvzxVgLE1VBcZ5P/BgZxkYV35mcNs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-FxEHK-C4Opajgpb3bJ9r2g-1; Fri, 12 Apr 2024 09:25:07 -0400
-X-MC-Unique: FxEHK-C4Opajgpb3bJ9r2g-1
+ bh=tUjgim+hw27l0hbL1qhRfhfcAsUyg9k0+ExqAOum6w8=;
+ b=EeWZyfVFDP8vsuUtIrXmSaWPZaJRKw+kg2b8/qVDxwhzzOsT9BER3Xy3yOE4u67J5j+AB2
+ L6ucxhoLg9g5cFcjP0AmX8Y/kRnniqhAecV8wjcNCtAPVuMctG1mnhZhcveXUR9bDQaG6/
+ BQC80poawG1iuI8g2l0eQKpNTKi3glI=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-d6g4Gl_SMQmNMXFMyQsOWQ-1; Fri,
+ 12 Apr 2024 09:24:36 -0400
+X-MC-Unique: d6g4Gl_SMQmNMXFMyQsOWQ-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C9B521044572;
- Fri, 12 Apr 2024 13:25:06 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D2A291C0514E;
+ Fri, 12 Apr 2024 13:24:35 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.215])
- by smtp.corp.redhat.com (Postfix) with ESMTP id C77032166B31;
- Fri, 12 Apr 2024 13:25:03 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 252722166B31;
+ Fri, 12 Apr 2024 13:24:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -53,15 +53,16 @@ To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v2 12/13] block/ssh: Use URI parsing code from glib
-Date: Fri, 12 Apr 2024 15:24:14 +0200
-Message-ID: <20240412132415.282354-13-thuth@redhat.com>
+Subject: [PATCH v2 03/13] tests/docker/dockerfiles: Run lcitool-refresh after
+ the lcitool update
+Date: Fri, 12 Apr 2024 15:24:05 +0200
+Message-ID: <20240412132415.282354-4-thuth@redhat.com>
 In-Reply-To: <20240412132415.282354-1-thuth@redhat.com>
 References: <20240412132415.282354-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -69,7 +70,7 @@ X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,134 +86,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since version 2.66, glib has useful URI parsing functions, too.
-Use those instead of the QEMU-internal ones to be finally able
-to get rid of the latter.
+This update adds the removing of the EXTERNALLY-MANAGED marker files
+that has been added to the lcitool recently.
 
-Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- block/ssh.c | 75 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 40 insertions(+), 35 deletions(-)
+ tests/docker/dockerfiles/alpine.docker                | 3 ++-
+ tests/docker/dockerfiles/centos8.docker               | 1 +
+ tests/docker/dockerfiles/debian-amd64-cross.docker    | 3 ++-
+ tests/docker/dockerfiles/debian-arm64-cross.docker    | 3 ++-
+ tests/docker/dockerfiles/debian-armel-cross.docker    | 3 ++-
+ tests/docker/dockerfiles/debian-armhf-cross.docker    | 3 ++-
+ tests/docker/dockerfiles/debian-i686-cross.docker     | 3 ++-
+ tests/docker/dockerfiles/debian-mips64el-cross.docker | 3 ++-
+ tests/docker/dockerfiles/debian-mipsel-cross.docker   | 3 ++-
+ tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 3 ++-
+ tests/docker/dockerfiles/debian-riscv64-cross.docker  | 3 ++-
+ tests/docker/dockerfiles/debian-s390x-cross.docker    | 3 ++-
+ tests/docker/dockerfiles/debian.docker                | 1 +
+ tests/docker/dockerfiles/fedora-win64-cross.docker    | 3 ++-
+ tests/docker/dockerfiles/fedora.docker                | 1 +
+ tests/docker/dockerfiles/opensuse-leap.docker         | 1 +
+ tests/docker/dockerfiles/ubuntu2204.docker            | 1 +
+ 17 files changed, 29 insertions(+), 12 deletions(-)
 
-diff --git a/block/ssh.c b/block/ssh.c
-index 2748253d4a..18ae565e55 100644
---- a/block/ssh.c
-+++ b/block/ssh.c
-@@ -37,7 +37,6 @@
- #include "qemu/ctype.h"
- #include "qemu/cutils.h"
- #include "qemu/sockets.h"
--#include "qemu/uri.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qapi/qapi-visit-block-core.h"
- #include "qapi/qmp/qdict.h"
-@@ -181,65 +180,71 @@ static void sftp_error_trace(BDRVSSHState *s, const char *op)
+diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
+index 42f6928627..cd9d7af1ce 100644
+--- a/tests/docker/dockerfiles/alpine.docker
++++ b/tests/docker/dockerfiles/alpine.docker
+@@ -116,7 +116,8 @@ RUN apk update && \
+         zlib-static \
+         zstd \
+         zstd-dev && \
+-    apk list | sort > /packages.txt && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
++    apk list --installed | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
+diff --git a/tests/docker/dockerfiles/centos8.docker b/tests/docker/dockerfiles/centos8.docker
+index d97c30e96a..ea618bf352 100644
+--- a/tests/docker/dockerfiles/centos8.docker
++++ b/tests/docker/dockerfiles/centos8.docker
+@@ -123,6 +123,7 @@ RUN dnf distro-sync -y && \
+         zstd && \
+     dnf autoremove -y && \
+     dnf clean all -y && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     rpm -qa | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
+diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
+index 00bdc06021..d0b0e9778e 100644
+--- a/tests/docker/dockerfiles/debian-amd64-cross.docker
++++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
+@@ -64,7 +64,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
- static int parse_uri(const char *filename, QDict *options, Error **errp)
- {
--    URI *uri = NULL;
--    QueryParams *qp;
-+    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
-+    const char *uri_host, *uri_path, *uri_user, *uri_query;
-     char *port_str;
--    int i;
-+    int port;
-+    g_autoptr(GError) gerror = NULL;
-+    char *qp_name, *qp_value;
-+    GUriParamsIter qp;
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
+index 2dae3777f7..8cb225740e 100644
+--- a/tests/docker/dockerfiles/debian-arm64-cross.docker
++++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
+@@ -64,7 +64,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
--    uri = uri_parse(filename);
-     if (!uri) {
-         return -EINVAL;
-     }
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/docker/dockerfiles/debian-armel-cross.docker b/tests/docker/dockerfiles/debian-armel-cross.docker
+index 75342c09b0..e6f37418ed 100644
+--- a/tests/docker/dockerfiles/debian-armel-cross.docker
++++ b/tests/docker/dockerfiles/debian-armel-cross.docker
+@@ -65,7 +65,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
--    if (g_strcmp0(uri->scheme, "ssh") != 0) {
-+    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
-         error_setg(errp, "URI scheme must be 'ssh'");
--        goto err;
-+        return -EINVAL;
-     }
+ RUN /usr/bin/pip3 install tomli
  
--    if (!uri->server || strcmp(uri->server, "") == 0) {
-+    uri_host = g_uri_get_host(uri);
-+    if (!uri_host || g_str_equal(uri_host, "")) {
-         error_setg(errp, "missing hostname in URI");
--        goto err;
-+        return -EINVAL;
-     }
+diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
+index 180ed836e6..407a014f57 100644
+--- a/tests/docker/dockerfiles/debian-armhf-cross.docker
++++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
+@@ -64,7 +64,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
--    if (!uri->path || strcmp(uri->path, "") == 0) {
-+    uri_path = g_uri_get_path(uri);
-+    if (!uri_path || g_str_equal(uri_path, "")) {
-         error_setg(errp, "missing remote path in URI");
--        goto err;
--    }
--
--    qp = query_params_parse(uri->query);
--    if (!qp) {
--        error_setg(errp, "could not parse query parameters");
--        goto err;
-+        return -EINVAL;
-     }
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
+index 3fc4e15acd..bdc9566b67 100644
+--- a/tests/docker/dockerfiles/debian-i686-cross.docker
++++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+@@ -65,7 +65,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
--    if(uri->user && strcmp(uri->user, "") != 0) {
--        qdict_put_str(options, "user", uri->user);
-+    uri_user = g_uri_get_user(uri);
-+    if (uri_user && !g_str_equal(uri_user, "")) {
-+        qdict_put_str(options, "user", uri_user);
-     }
+ RUN /usr/bin/pip3 install tomli
  
--    qdict_put_str(options, "server.host", uri->server);
-+    qdict_put_str(options, "server.host", uri_host);
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index 17d3e01ecc..4d995d0b12 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -65,7 +65,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
--    port_str = g_strdup_printf("%d", uri->port ?: 22);
-+    port = g_uri_get_port(uri);
-+    port_str = g_strdup_printf("%d", port > 0 ? port : 22);
-     qdict_put_str(options, "server.port", port_str);
-     g_free(port_str);
+ RUN /usr/bin/pip3 install tomli
  
--    qdict_put_str(options, "path", uri->path);
--
--    /* Pick out any query parameters that we understand, and ignore
--     * the rest.
--     */
--    for (i = 0; i < qp->n; ++i) {
--        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
--            qdict_put_str(options, "host_key_check", qp->p[i].value);
-+    qdict_put_str(options, "path", uri_path);
-+
-+    uri_query = g_uri_get_query(uri);
-+    if (uri_query) {
-+        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
-+        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
-+            if (!qp_name || !qp_value || gerror) {
-+                warn_report("Failed to parse SSH URI parameters '%s'.",
-+                            uri_query);
-+                break;
-+            }
-+            /*
-+             * Pick out the query parameters that we understand, and ignore
-+             * (or rather warn about) the rest.
-+             */
-+            if (g_str_equal(qp_name, "host_key_check")) {
-+                qdict_put_str(options, "host_key_check", qp_value);
-+            } else {
-+                warn_report("Unsupported parameter '%s' in URI.", qp_name);
-+            }
-         }
-     }
+diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+index 5fcd641f15..0cf803bda5 100644
+--- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
++++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+@@ -65,7 +65,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
  
--    query_params_free(qp);
--    uri_free(uri);
-     return 0;
--
-- err:
--    uri_free(uri);
--    return -EINVAL;
- }
+ RUN /usr/bin/pip3 install tomli
  
- static bool ssh_has_filename_options_conflict(QDict *options, Error **errp)
+diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+index d6be2f0cc5..6180ec08c3 100644
+--- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+@@ -64,7 +64,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+index a26637ec4f..591572ae94 100644
+--- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
++++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+@@ -33,7 +33,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
+index ec0041d6aa..90c8d3c7b8 100644
+--- a/tests/docker/dockerfiles/debian-s390x-cross.docker
++++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
+@@ -64,7 +64,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoremove -y && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
+index b5e642d5b6..5722482e4c 100644
+--- a/tests/docker/dockerfiles/debian.docker
++++ b/tests/docker/dockerfiles/debian.docker
+@@ -137,6 +137,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+     dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
+diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
+index f8e4cb70d3..d1a480fa71 100644
+--- a/tests/docker/dockerfiles/fedora-win64-cross.docker
++++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
+@@ -64,7 +64,8 @@ exec "$@"\n' > /usr/bin/nosync && \
+                xorriso \
+                zstd && \
+     nosync dnf autoremove -y && \
+-    nosync dnf clean all -y
++    nosync dnf clean all -y && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
+ 
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
+index 9e9c71fa94..7e6ab0308a 100644
+--- a/tests/docker/dockerfiles/fedora.docker
++++ b/tests/docker/dockerfiles/fedora.docker
+@@ -137,6 +137,7 @@ exec "$@"\n' > /usr/bin/nosync && \
+                zstd && \
+     nosync dnf autoremove -y && \
+     nosync dnf clean all -y && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     rpm -qa | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
+diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
+index cf753383a4..c4055bdd10 100644
+--- a/tests/docker/dockerfiles/opensuse-leap.docker
++++ b/tests/docker/dockerfiles/opensuse-leap.docker
+@@ -119,6 +119,7 @@ RUN zypper update -y && \
+            zlib-devel-static \
+            zstd && \
+     zypper clean --all && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     rpm -qa | sort > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+index 2ca9cff79c..b8e78331db 100644
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ b/tests/docker/dockerfiles/ubuntu2204.docker
+@@ -137,6 +137,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     eatmydata apt-get autoclean -y && \
+     sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+     dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
+     mkdir -p /usr/libexec/ccache-wrappers && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
 -- 
 2.44.0
 
