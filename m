@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F7DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 13:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5B8C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 13:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvGtd-000308-Bj; Fri, 12 Apr 2024 09:24:49 -0400
+	id 1rvH7J-00066J-IK; Fri, 12 Apr 2024 09:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtb-0002zo-HJ
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rvGtZ-00079b-S5
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:24:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1712928285;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ui42U3OZLUmR2c+fDS4a9VZnDL92raLSRw8NqRlqnmg=;
- b=dIZ7oKiYQyIoduOeNPMMuggDFLJVPPvTB+IuRxscJf7Szs6mkrg6q7j4APMc9wQeQchxBt
- IWjVbAdhxnpyeqr6rJK+j5/mmljMxz8s3fNBH2GoZAtdXnyYUXKCcLq+YdzkDcvuU7YQST
- IJvYV5SsEFkOgsTyRdxfB1xBwNCnYio=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-AcBmGHeSPWW6-VOj0fx6Mg-1; Fri,
- 12 Apr 2024 09:24:43 -0400
-X-MC-Unique: AcBmGHeSPWW6-VOj0fx6Mg-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1B3343C01B96;
- Fri, 12 Apr 2024 13:24:43 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.215])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 82FFC2166B31;
- Fri, 12 Apr 2024 13:24:39 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v2 05/13] .travis.yml: Update the jobs to Ubuntu 22.04
-Date: Fri, 12 Apr 2024 15:24:07 +0200
-Message-ID: <20240412132415.282354-6-thuth@redhat.com>
-In-Reply-To: <20240412132415.282354-1-thuth@redhat.com>
-References: <20240412132415.282354-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rvH7F-00065x-W4
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:38:54 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rvH7A-0001pv-NJ
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 09:38:53 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-56e37503115so786131a12.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 06:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1712929126; x=1713533926; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C8EcT/6Qbql/Srv3fLG5/PNPCsJNC5GqrZpF6YgbmGY=;
+ b=aDSc6KI1fFT2ZmX9c5w3IlsNpS4umWRPa3Ww9iiH6k8eLGpBhiv1LCMhkMCq+cJ+Cv
+ 4XKXaSblcnVVhEvo6Svw1doCyu1ndP37FbGSlkAIf51sNV+IVYqwP0/LWCn7xysLv8IC
+ sHipF6STTOgv9Jf+Eeb+dgvfkUAYWTC6yvynQDCd/pJfzA4x8hffyGtxkqFcXjfwMp18
+ WDjR/wwkR0/ueJa5mRkdtAPQItvz5zqZ2gUZjP2qALQWa3yE/UgCSX3Ack3ECG/u5UvN
+ yEQEOB0KQC2zXgWRmOo1VSF788QJNwHK5ZPVUvxDWWIcrObIEAKqjfriq3vPB3B6XDiG
+ gfVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712929126; x=1713533926;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=C8EcT/6Qbql/Srv3fLG5/PNPCsJNC5GqrZpF6YgbmGY=;
+ b=gTGrlyk5u400L1JSkI+hWaFkek8iib0cj9iivYwyEvJx0uPa0+Oimi5DhjHBt3RxSF
+ 9JArp2QV3CMI+p37GwzLJjGZo4ldAWZPSnsyRHQ7ONOtZpJ/eF5E0SkgHE6mBPnAoCTY
+ kd1agnDijS5pZ1CCRCFTatj7QKu2hbx+cmnh0s0RnnszoKvE/jIJUIejb/peuk3M0U+C
+ Tun2vrPm9DhEWgDQ4IHySSF5m76MMQhIAyINLiK06q3ytyQUa9TcnLtEK70Nnr2XexUu
+ eB+ZAJZHCuXzc8/ojEo8+l7xBw+6x97Nb8OSO2Why6mqyvJyfdYyLsf6XRougSzO16LC
+ JXSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPH7gyyYRYhPFFCalZ+Y8OWXcC5J0vENe1XP0XWmRivaxyiDtS1uPF+OOD0vU6RmFblcr8Qpdp/aCc2BQpwUjwX8YhsSo=
+X-Gm-Message-State: AOJu0YxW9nSpswuJ1Iic1hWXfSOzGOv89nB5ev0JfNhz+JfmX/hDt6KM
+ ETIaLyNur/Gkn4V5ZGZCmTuyCQt+aL690Sm812fs1bD/K7iadfDAOYmNQcWy7Lg4dUg+s6HTREH
+ JST4cQJqtMA/c2Y3Ly/vEIefDMOk=
+X-Google-Smtp-Source: AGHT+IFG9USiicsTH4o+FzJy7m91cQT6LV2mNerlXBchmaRVVzza/jm2y7amO2y2mWzZj53OoXyaDn3IBYu+HyEJchE=
+X-Received: by 2002:a50:d79c:0:b0:56c:3b74:ea4 with SMTP id
+ w28-20020a50d79c000000b0056c3b740ea4mr1937840edi.21.1712929125984; Fri, 12
+ Apr 2024 06:38:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20190821163341.16309-1-damien.hedde@greensocs.com>
+ <20190821163341.16309-3-damien.hedde@greensocs.com>
+ <CAFEAcA8FUgmnq0-QfutpbN=xkeKxRe75b56Fu2zoXknXczwnvA@mail.gmail.com>
+ <6b384586-c7ad-4b6c-a1f1-8a8d8b0ad526@linaro.org>
+ <CAFEAcA9+LXUg_u2QFuYMbhxeqofD3iC4CGHo5WXL77QMCOYy8Q@mail.gmail.com>
+In-Reply-To: <CAFEAcA9+LXUg_u2QFuYMbhxeqofD3iC4CGHo5WXL77QMCOYy8Q@mail.gmail.com>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Fri, 12 Apr 2024 15:38:34 +0200
+Message-ID: <CAJy5ezqkz9RLytkysd8RKvVGP6oSc-xd-mjdv9K0E=7W7xMBxA@mail.gmail.com>
+Subject: Re: [PATCH v4 02/10] hw/core: create Resettable QOM interface
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com, 
+ david@gibson.dropbear.id.au, Damien Hedde <damien.hedde@dahe.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,97 +97,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to our support policy, we'll soon drop our official support
-for Ubuntu 20.04 ("Focal Fossa") in QEMU. Thus we should update the
-Travis jobs now to a newer release (Ubuntu 22.04 - "Jammy Jellyfish")
-for future testing. Since all jobs are using this release now, we
-can drop the entries from the individual jobs and use the global
-setting again.
+On Fri, Apr 12, 2024 at 3:05=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Thu, 11 Apr 2024 at 18:23, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
+org> wrote:
+> >
+> > On 11/4/24 15:43, Peter Maydell wrote:
+> > > On Wed, 21 Aug 2019 at 17:34, Damien Hedde <damien.hedde@greensocs.co=
+m> wrote:
+> > >>
+> > >> This commit defines an interface allowing multi-phase reset. This ai=
+ms
+> > >> to solve a problem of the actual single-phase reset (built in
+> > >> DeviceClass and BusClass): reset behavior is dependent on the order
+> > >> in which reset handlers are called. In particular doing external
+> > >> side-effect (like setting an qemu_irq) is problematic because receiv=
+ing
+> > >> object may not be reset yet.
+> > >
+> > > So, I wanted to drag up this ancient patch to ask a couple
+> > > of Resettable questions, because I'm working on adding a
+> > > new ResetType (the equivalent of SHUTDOWN_CAUSE_SNAPSHOT_LOAD).
+> > >
+> > >> +/**
+> > >> + * ResetType:
+> > >> + * Types of reset.
+> > >> + *
+> > >> + * + Cold: reset resulting from a power cycle of the object.
+> > >> + *
+> > >> + * TODO: Support has to be added to handle more types. In particula=
+r,
+> > >> + * ResetState structure needs to be expanded.
+> > >> + */
+> > >
+> > > Does anybody remember what this TODO comment is about? What
+> > > in particular would need to be in the ResetState struct
+> > > to allow another type to be added?
+> >
+> > IIRC this comes from this discussion:
+> > https://lore.kernel.org/qemu-devel/7c193b33-8188-2cda-cbf2-fb545254458b=
+@greensocs.com/
+> > Updated in this patch (see after '---' description):
+> > https://lore.kernel.org/qemu-devel/20191018150630.31099-9-damien.hedde@=
+greensocs.com/
+>
+> Hmm, I can't see anything in there that mentions this
+> TODO or what we'd need more ResetState fields to handle.
+> I guess I'll go ahead with adding my new ResetType and ignore
+> this TODO, because I can't see any reason why we need to
+> do anything in particular for a new ResetType...
+>
+> > >
+> > >> +typedef enum ResetType {
+> > >> +    RESET_TYPE_COLD,
+> > >> +} ResetType;
+> > >
+> > >> +typedef void (*ResettableInitPhase)(Object *obj, ResetType type);
+> > >> +typedef void (*ResettableHoldPhase)(Object *obj);
+> > >> +typedef void (*ResettableExitPhase)(Object *obj);
+> > >
+> > > Was there a reason why we only pass the ResetType to the init
+> > > phase method, and not also to the hold and exit phases ?
+> > > Given that many devices don't need to implement init, it
+> > > seems awkward to require them to do so just to stash the
+> > > ResetType somewhere so they can look at it in the hold
+> > > or exit phase, so I was thinking about adding the argument
+> > > to the other two phase methods.
+> >
+> > You are right, the type should be propagated to to all phase
+> > handlers.
+>
+> I have some patches which do this; I'll probably send them out
+> in a series next week once I've figured out whether they fit
+> better in with other patches that give the motivation.
+>
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .travis.yml | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+Hi,
 
-diff --git a/.travis.yml b/.travis.yml
-index 8a3ae76a7c..56a2a01e14 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -1,5 +1,5 @@
- os: linux
--dist: focal
-+dist: jammy
- language: c
- compiler:
-   - gcc
-@@ -7,7 +7,7 @@ cache:
-   # There is one cache per branch and compiler version.
-   # characteristics of each job are used to identify the cache:
-   # - OS name (currently only linux)
--  # - OS distribution (for Linux, bionic or focal)
-+  # - OS distribution (e.g. "jammy" for Linux)
-   # - Names and values of visible environment variables set in .travis.yml or Settings panel
-   timeout: 1200
-   ccache: true
-@@ -83,7 +83,6 @@ jobs:
- 
-     - name: "[aarch64] GCC check-tcg"
-       arch: arm64
--      dist: focal
-       addons:
-         apt_packages:
-           - libaio-dev
-@@ -119,7 +118,6 @@ jobs:
- 
-     - name: "[ppc64] GCC check-tcg"
-       arch: ppc64le
--      dist: focal
-       addons:
-         apt_packages:
-           - libaio-dev
-@@ -154,7 +152,6 @@ jobs:
- 
-     - name: "[s390x] GCC check-tcg"
-       arch: s390x
--      dist: focal
-       addons:
-         apt_packages:
-           - libaio-dev
-@@ -199,7 +196,6 @@ jobs:
- 
-     - name: "[s390x] GCC (other-system)"
-       arch: s390x
--      dist: focal
-       addons:
-         apt_packages:
-           - libaio-dev
-@@ -229,7 +225,6 @@ jobs:
- 
-     - name: "[s390x] GCC (user)"
-       arch: s390x
--      dist: focal
-       addons:
-         apt_packages:
-           - libgcrypt20-dev
-@@ -244,8 +239,7 @@ jobs:
- 
-     - name: "[s390x] Clang (disable-tcg)"
-       arch: s390x
--      dist: focal
--      compiler: clang-10
-+      compiler: clang
-       addons:
-         apt_packages:
-           - libaio-dev
-@@ -271,7 +265,6 @@ jobs:
-           - libvdeplug-dev
-           - libvte-2.91-dev
-           - ninja-build
--          - clang-10
-       env:
-         - TEST_CMD="make check-unit"
-         - CONFIG="--disable-containers --disable-tcg --enable-kvm --disable-tools
--- 
-2.44.0
+I don't remember the details on your first questions but I also agree
+with adding the type to the other callbacks!
 
+Cheers,
+Edgar
 
