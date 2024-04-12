@@ -4,70 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2A8C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A387C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 14:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvHgz-0004PT-VV; Fri, 12 Apr 2024 10:15:50 -0400
+	id 1rvHid-0005Zd-GK; Fri, 12 Apr 2024 10:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1rvHgv-0004Op-8P; Fri, 12 Apr 2024 10:15:47 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rvHib-0005Xr-Rv
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:17:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1rvHgs-0001GY-PG; Fri, 12 Apr 2024 10:15:44 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 8BE6BC0004
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1712931334;
- bh=s5KgHUMnTchmTncqtzelthPVC8GTkKnMtyhK8SjohpM=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=zKLKPE0jzRAXWt7ycxjBQbqiBg0X3tsD0S57LQ+tMk566+N+vz09KnSBIIROCiXzg
- NJDZcaowpkS2oSfMjnepXr672KgvAesKWLNZ3JMGIAsiYJrcxIfRP3vl42WUOq2pnY
- nh6Kfa+ARLvhGezUNMeL6lkPm6EzPD728cxUuNfnxU8VNXHOabJ0TNGT322udjJhah
- XV74l2eknkXhPFsBTF5aOEHiCUd+9/h9qt4onavRv2rdTLnyHZ2TqtwdI6Ryo/BTXo
- 7AdhSbF+Y3OV1rioS4Kt8663DmF5R66joB7MQ85+smx/7S01Mc4gOHhgSpXFBRxj0U
- Dk0GL2aFHApFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1712931334;
- bh=s5KgHUMnTchmTncqtzelthPVC8GTkKnMtyhK8SjohpM=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=aLhmsM900vFM0k9NdVW26tizjjluXV/vRQK9RAaam9D8MaTenkkZwTqyw2h1YoWpH
- 1nHzivXqB2JFkWfQAf2fDlRc1Qj1vB9HWKu06gXyTxdsT6kIkb66oN9IXvX8ztG+5E
- 7kWO9//3SZSYFYRaOIGjIQExamamG9RsIsuPdtYF2XcOzn1pX15UbF/GUHOTnqJxTc
- 5lO7Yit7gYrbSbzT900kWwFh+jPqd5IbEbkrYv6Csg0wPnVxlKNgLeu0m6xgsUm59Z
- TRPKR4DJ3l/uJaPVAP82VC7V0NDNk0/kkG36MAfltnKCTbYgulPgPyeo4P1sTONDue
- l7Dx75syV9IaQ==
-Message-ID: <a8680fb3-8547-4b68-98d1-fd2d2d278375@syntacore.com>
-Date: Fri, 12 Apr 2024 17:15:32 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rvHia-0001Y8-4a
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 10:17:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1712931446;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=weUlRJmEriVGlhdTVB9SwCxAfTTm0SSH0zhQwH9vXfM=;
+ b=DO3UtYbB0BExgtq6tGp2q7tlylGF3y9kHsj68sHQ+1efjZQR6ZF9aH1P0gOZ9xfV8vf6ev
+ mP5ttTVop1ihH2Ba1VgnSp3bnP6DFzgMLKPsbfucfkirQRhPhe0yRhDJZViCblA2GB+Z65
+ XM/YbZgOte4TzsinVZm8NojEgB7GY2g=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-59-LZcQ6O75OUG4HowECK0WxA-1; Fri, 12 Apr 2024 10:17:24 -0400
+X-MC-Unique: LZcQ6O75OUG4HowECK0WxA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-436507937ecso2998871cf.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 07:17:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1712931443; x=1713536243;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=weUlRJmEriVGlhdTVB9SwCxAfTTm0SSH0zhQwH9vXfM=;
+ b=rqZThmfpdcIucD1JUnHcqYefG0YRS8GxW6A8AzD81uxPpF6tw6Ft7giEI/10Rhj8u+
+ JGE+KUJkU1Lf/+VNBKumwtbRnNmkWbM1YoA33lEKgKg75cd7AjeahCfoSFGgIK7b9wga
+ LdX57INgn/dL+CAEsCUm2ynoPGVHmMNcWDKxZ/T4w5ELt7Rysx1Gk+Sao6LfjC23Jzcw
+ f7BcdMu8jn9V3HswGJLWTAK4E6Bje+H+EkNF6DmvT224P/T88ZiPUIxO0c9iNgHp5Iq7
+ soej+hjsMWuQCvc8c5dRSkWs8AhH+PV/h9IVOnEqePrxTDZamoqybpEJJKCFpqDS5tu6
+ 8oFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2MirLIpm1LXYTJ3ph7XLHaqCNydeMYWyWnM+0v5RU7K7kYDDHY+LZaqMkOLixHuvlnAV5NgIS/TFlaREmly9EZ+iiwQU=
+X-Gm-Message-State: AOJu0YxrT4p6Rg5ktnG8wDQ7as3QNAF2kj7tsxGz6RQrGOkiWg//uPIc
+ 78V8hdfsg+IR+BLYFg7lM7OFJ2vnl7PwFailOvmaywdTKuy2+cyABEQjkuhbIIzTqCFwyYJkiHc
+ 6ifIRGdg2gRo6z2UAQZKIPejYUotVoLE3ppEZYQ74onipyjgFxEVEoMxJDFG8
+X-Received: by 2002:a05:622a:18a1:b0:436:7438:9629 with SMTP id
+ v33-20020a05622a18a100b0043674389629mr3179810qtc.4.1712931442417; 
+ Fri, 12 Apr 2024 07:17:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDMlQV2BJpv84W6HEwI4YGb5XUn7eFJEbsY1CHddwxZqDLzr3X8nniqGoGo26mD4Y6T4yRkw==
+X-Received: by 2002:a05:622a:18a1:b0:436:7438:9629 with SMTP id
+ v33-20020a05622a18a100b0043674389629mr3179779qtc.4.1712931441880; 
+ Fri, 12 Apr 2024 07:17:21 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ he4-20020a05622a600400b00434efa0feaasm2285983qtb.1.2024.04.12.07.17.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Apr 2024 07:17:21 -0700 (PDT)
+Date: Fri, 12 Apr 2024 10:17:20 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org,
+ thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ prerna.saxena@nutanix.com
+Subject: Re: [PATCH 1/4] Revert "migration: modify test_multifd_tcp_none() to
+ use new QAPI syntax"
+Message-ID: <ZhlCcPTnW_-V85qR@x1n>
+References: <20240410111541.188504-1-het.gala@nutanix.com>
+ <20240410111541.188504-2-het.gala@nutanix.com>
+ <874jc9v066.fsf@suse.de> <Zhan0Brg_CXzt79-@x1n>
+ <8621e850-168a-454a-8f00-615f476eac31@nutanix.com>
+ <ZhfzMt3t2oU7qt90@x1n>
+ <e0f41009-a2bc-4302-82d5-c396d95a5cff@nutanix.com>
+ <ZhgvAicT_36OLEBR@x1n> <87le5jbsbn.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] target/riscv: prioritize pmp errors in
- raise_mmu_exception()
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <alistair.francis@wdc.com>, <bmeng@tinylab.org>, 
- <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>,
- <palmer@rivosinc.com>, 
- <richard.henderson@linaro.org>, Joseph Chan <jchan@ventanamicro.com>
-References: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Aleksei Filippov <alexei.filippov@syntacore.com>
-Organization: Syntacore
-In-Reply-To: <20240409175241.1297072-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: T-EXCH-07.corp.yadro.com (172.17.11.57) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87le5jbsbn.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.103,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,97 +111,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Apr 11, 2024 at 04:41:16PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Thu, Apr 11, 2024 at 11:31:08PM +0530, Het Gala wrote:
+> >> I just wanted to highlight couple of pointers:
+> >> 1. though we are using 'channels' in the precopy tests for 'migrate' QAPI,
+> >> we
+> >>    use the old uri for 'migrate-incoming' QAPI.
+> >> 2. We do not cover other 'channels' abi, only have tcp path tested.
+> >> 
+> >> So, the TO-DOs could be:
+> >> 1. Omit the 4th patch here, which introduced postcopy qtests with 'channels'
+> >>    interface OR have 'channels' interface with other than tcp transport
+> >>    (file, exec, vsock, etc) so as to cover different code paths.
+> >> 2. Extend channels interface to migrate-incoming QAPI for precopy qtests
+> >
+> > You can see whether Fabiano has anything to say, but what you proposed
+> > looks good to me.
+> 
+> Ok, so what about we convert some of the 'plain' tests into channels to
+> cover all transports?
+> 
+> - tcp: test_multifd_tcp_none  (this one we already did)
+> - file: test_precopy_file
+> - unix: test_precopy_unix_plain
+> - exec: test_analyze_script
+> - fd: test_migrate_precopy_fd_socket
+> 
+> Those^, plus the validate_uri that's already in next should cover
+> everything.
+> 
+> We don't need to do this at once, by the way.
+> 
+> Moreover:
+> 
+> - leave all test strings untouched to preserve bisecting;
+> 
+> - let's not bother adding "channels" and "uri" to the test string
+>   anymore. The channels API should be taken for granted at this point, I
+>   don't expect we start hitting bugs that will require us to run either
+>   foo/uri/plain or foo/channels/plain, so there's not much point in
+>   making the distinction.
 
+Do you mean we can put "uri:" aside?  Maybe I misunderstood..
 
-On 09.04.2024 20:52, Daniel Henrique Barboza wrote:
-> raise_mmu_exception(), as is today, is prioritizing guest page faults by
-> checking first if virt_enabled && !first_stage, and then considering the
-> regular inst/load/store faults.
-> 
-> There's no mention in the spec about guest page fault being a higher
-> priority that PMP faults. In fact, privileged spec section 3.7.1 says:
-> 
-> "Attempting to fetch an instruction from a PMP region that does not have
-> execute permissions raises an instruction access-fault exception.
-> Attempting to execute a load or load-reserved instruction which accesses
-> a physical address within a PMP region without read permissions raises a
-> load access-fault exception. Attempting to execute a store,
-> store-conditional, or AMO instruction which accesses a physical address
-> within a PMP region without write permissions raises a store
-> access-fault exception."
-> 
-> So, in fact, we're doing it wrong - PMP faults should always be thrown,
-> regardless of also being a first or second stage fault.
-> 
-> The way riscv_cpu_tlb_fill() and get_physical_address() work is
-> adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
-> reflected in the 'pmp_violation' flag. What we need is to change
-> raise_mmu_exception() to prioritize it.
-> 
-> Reported-by: Joseph Chan <jchan@ventanamicro.com>
-> Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   target/riscv/cpu_helper.c | 22 ++++++++++++----------
->   1 file changed, 12 insertions(+), 10 deletions(-)
-> 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index fc090d729a..e3a7797d00 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1176,28 +1176,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-> 
->       switch (access_type) {
->       case MMU_INST_FETCH:
-> -        if (env->virt_enabled && !first_stage) {
-> +        if (pmp_violation) {
-> +            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-> +        } else if (env->virt_enabled && !first_stage) {
->               cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
->           } else {
-> -            cs->exception_index = pmp_violation ?
-> -                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
-> +            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
->           }
->           break;
->       case MMU_DATA_LOAD:
-> -        if (two_stage && !first_stage) {
-> +        if (pmp_violation) {
-> +            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-> +        } else if (two_stage && !first_stage) {
->               cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
->           } else {
-> -            cs->exception_index = pmp_violation ?
-> -                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
-> +            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
->           }
->           break;
->       case MMU_DATA_STORE:
-> -        if (two_stage && !first_stage) {
-> +        if (pmp_violation) {
-> +            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-> +        } else if (two_stage && !first_stage) {
->               cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
->           } else {
-> -            cs->exception_index = pmp_violation ?
-> -                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
-> -                RISCV_EXCP_STORE_PAGE_FAULT;
-> +            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
->           }
->           break;
->       default:
+The matrix previously was (I think.. when this series posted):
 
+  [tcp, unix, file, exec, fd] x [uri, channels] x [precopy, postcopy]
 
-Just tested your patch and found out that we still need to fix `if else` in
-riscv_cpu_tlb_fill() after pmp check in 2 stage translation part, as I suggested
-before, cz the problem with mtval2 will happened in case of successes 2 stage
-translation but failed pmp check. In this case we gonna set
-mtval2(env->guest_phys_fault_addr in context of riscv_cpu_tlb_fill()) as this
-was a guest-page-fault, but it didn't and mtval2 should be zero, according to
-RISCV privileged spec sect. 9.4.4: When a guest page-fault is taken into M-mode,
-mtval2 is written with either zero or guest physical address that faulted,
-shifted by 2 bits. *For other traps, mtval2 is set to zero...*
+Drop postcopy as doesn't seem to have any special paths:
+
+  [tcp, unix, file, exec, fd] x [uri, channels]
+
+So logically we should still cover these, right?
+
+Thanks,
+
 -- 
-Sincerely,
-Aleksei Filippov
+Peter Xu
+
 
