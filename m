@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F54BC04FF8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF90C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Apr 2024 17:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvKgO-0006lZ-Mi; Fri, 12 Apr 2024 13:27:24 -0400
+	id 1rvKgh-00070D-2U; Fri, 12 Apr 2024 13:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvKgN-0006lK-GN
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:27:23 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1rvKgd-0006yq-WF
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:27:40 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvKgM-000342-05
- for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:27:23 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-5cf2d73a183so1411261a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:27:21 -0700 (PDT)
+ id 1rvKgc-00036b-En
+ for qemu-devel@nongnu.org; Fri, 12 Apr 2024 13:27:39 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1e3f6f03594so8537455ad.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 10:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712942840; x=1713547640; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712942857; x=1713547657; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=blSiuCRQkThnszztMNDft+rWd/OfnM0Cs6umsTzT5W4=;
- b=A034OmZBXdtpu4YfP+tOHKd5y61bnK4HQRsngloYCV2eqgzalE+e9I9Jgv+V/J2HgF
- pNagKEdq1yIK9iqYnh7NCQD7o+awmuEo4qE3MdQ1fveaoSMDb/svGlyn5EqqpIWTFAa1
- x2aM8k3uqsh6QbesOUNAXWlFFFDD4czjuaEfeSmp63ZkiBWYwXQUlN4ZCWsDK7Nhzs7+
- 92CIKGT6ZEMv7AavPOt735LJZN5ykHoewdyg1RvFDBpO0475l/ap3fJr+HKSVVB8rBqc
- igQiajfQQSKMoDCz2swlgOvohl3wbzwfXukuobTsYJJU/MHQEK/qcgmTGxJLtHlO30QX
- Mvyg==
+ bh=xmqwLRBdO+Ogm7OZAmZsDA7CdHddyWikipuketaQvl4=;
+ b=IoM+cA1INVof5BuZ6mi6DEBUoZG+euaADZnjlQTM7rUJ8Yv7/v0/2j/OX00YNDmXqW
+ lgXpYt/IEdfWwBEOwQd9TjFNvX0AfZeGSonglJ21Z5PvDhhHkPfEfacUgC2+Y55RGDzw
+ 5qS+gKlpVrjWGB7V4AhhRuVCo+YOkjO4veqj86zTSZkYuq5diRbvMzR0GkuP+oI7hYuZ
+ OKB7bkpVK8NM01XHwBdND5udE69chzAp7n6uEzgMARIgajD4s7vW/QxlI4nUWTpLulHh
+ 0uTb9aWLrlYfkRHMxTQUYSax9AYukdLaEjFJ0sJK9FsILyxGE30JTvpXovJy7AeupEVm
+ t4nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712942840; x=1713547640;
+ d=1e100.net; s=20230601; t=1712942857; x=1713547657;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=blSiuCRQkThnszztMNDft+rWd/OfnM0Cs6umsTzT5W4=;
- b=rWT5BOvAsMqHcgAvW7p0TyLsFUWSmvbt1AqruXrzB7rR/wHy/hyc9J3693nhHGvgEz
- xwW9Rkfdxb2u0q7cwJT5EnS8X7Rv2jJgpIO6NPMOnX+65fiQSFxyfBNU0kTQrGABdR7m
- XxuB+SB/SWWnOoM0RDUPq4DJHuCl4PMOnvM6CYtE3Jhj0tXhxUu/wTqZWbc/S2dSC/bd
- SjRdQHoPsSoksCbFryYYLziua4sPh81szC5Vv7jeQ6h1Ief8w4GiBU7fPJE2j+UY/naE
- K+xpK//DZ0aVX4NdsylHyzfgupgT/yOupZAUMT9YcXguegMe9MmVWc8UkB9ucChWFvTW
- qZJg==
+ bh=xmqwLRBdO+Ogm7OZAmZsDA7CdHddyWikipuketaQvl4=;
+ b=wwNsJlWIAKL1PWBcYoQ0QttI/Xr5nQ0Pzv6mhZYuX9hy4NuIHiPQ/VYR/o6KDC2XvE
+ qvC/rIcwhoFmZ5xfQZ8S3C/rDGVdqQEjjeJt/c4/7/8LmLsulNLdnhr6lW3a2pIVnnv5
+ K2LAVRblTR6s5DqEiYcQHMlfnCdegGdLWqpqXvwliXWvmv66OShOhM4PTUcZJgSr3XCU
+ IooOZhJBxiUNldta4BOYUkALCI0YZDQDc88Yj32E0MLnem393aICxV7Xqa1K4YRKPvSt
+ ED96kg5BvDpAj/r+DyejozdBopw3+/NA0msIPNVgZnHPPCVDd1heHNrzkWFaWbjKIqdT
+ SOeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8hXI48D14ejDkW6NbHrBJJkkHg+cMSNCYjpNujBcBkdmwt15VZfD6PG8oELl8hb3zc0aFIHAVXAEfVQlxUUn8QnT5nrs=
-X-Gm-Message-State: AOJu0YzrG8Og0kF+Gv9Y6iW5VZK98GD0u0iasUaU6CitL4HQjEvxtNWT
- BIHlBqVsboY8lMBXiKz7K8+qlZWqIvfB4g9A3gX1+w/5GxWIFK6IvfpbiBB+8dM=
-X-Google-Smtp-Source: AGHT+IHZ6/uM8gVaOdAdxXvSBr+wsAES9Sj2lpOdOXi8re76104CgORYJUCtS4VKKCtGL50Oj+2BKQ==
-X-Received: by 2002:a17:90b:e05:b0:2a2:7494:15df with SMTP id
- ge5-20020a17090b0e0500b002a2749415dfmr4851135pjb.9.1712942840469; 
- Fri, 12 Apr 2024 10:27:20 -0700 (PDT)
+ AJvYcCXhGn6gMQWyVf4Odk47CpCRYCPt6Stg4OZCblLIJMyuQkfEvOvaC3lOtsUvRTMYw6VZvPcHbiYPOjvT7gzCvMas5LY5X7E=
+X-Gm-Message-State: AOJu0Yy1PD21mHLbiLKQsV9SlFSHj0KILx7X4IUfLcu4NgWvLtK0BQAa
+ T4NaF5Uq8qjvQktTTBNqiyxNabIg2pN4HqhgDwZLstdHI8BGarx9VWroY0o+OuLkOL4jLui0CDo
+ F
+X-Google-Smtp-Source: AGHT+IFgqTPjJ6tpZwYMPQdLTmVYdK6ncOc/iiDfegO4nvAtjXtWBTIQ9gs1WUZSioHx9L9P/v2MGw==
+X-Received: by 2002:a17:902:c40c:b0:1e5:43ed:6311 with SMTP id
+ k12-20020a170902c40c00b001e543ed6311mr3559655plk.49.1712942856965; 
+ Fri, 12 Apr 2024 10:27:36 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- o19-20020a17090aac1300b002a269828bb8sm2909093pjq.40.2024.04.12.10.27.19
+ kw6-20020a170902f90600b001e2c8bc6bebsm3241963plb.81.2024.04.12.10.27.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Apr 2024 10:27:20 -0700 (PDT)
-Message-ID: <ebe85e8f-1dc5-475c-8851-a333f38e795f@linaro.org>
-Date: Fri, 12 Apr 2024 10:27:18 -0700
+ Fri, 12 Apr 2024 10:27:36 -0700 (PDT)
+Message-ID: <0a685006-ec4a-4c53-9203-b3f5b549a6c8@linaro.org>
+Date: Fri, 12 Apr 2024 10:27:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] hw, target: Add ResetType argument to hold and exit
+Subject: Re: [PATCH 5/6] docs/devel/reset: Update to new API for hold and exit
  phase methods
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20240412160809.1260625-1-peter.maydell@linaro.org>
- <20240412160809.1260625-5-peter.maydell@linaro.org>
+ <20240412160809.1260625-6-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240412160809.1260625-5-peter.maydell@linaro.org>
+In-Reply-To: <20240412160809.1260625-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,25 +100,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/12/24 09:08, Peter Maydell wrote:
-> We pass a ResetType argument to the Resettable class enter
-> phase method, but we don't pass it to hold and exit, even though
-> the callsites have it readily available. This means that if
-> a device cared about the ResetType it would need to record it
-> in the enter phase method to use later on. Pass the type to
-> all three of the phase methods to avoid having to do that.
-> 
-> Commit created with
-> 
->    for dir in hw target include; do \
->        spatch --macro-file scripts/cocci-macro-file.h \
->               --sp-file scripts/coccinelle/reset-type.cocci \
->               --keep-comments --smpl-spacing --in-place \
->               --include-headers --dir $dir; done
-> 
-> and no manual edits.
+> Update the reset documentation's example code to match the new API
+> for the hold and exit phase method APIs where they take a ResetType
+> argument.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
+>   docs/devel/reset.rst | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
