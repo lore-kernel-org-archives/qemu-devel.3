@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CF5AC04FF0
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Apr 2024 05:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EFD2C41513
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Apr 2024 05:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvVrc-0001t2-Ao; Sat, 13 Apr 2024 01:23:44 -0400
+	id 1rvVrf-0001u5-H9; Sat, 13 Apr 2024 01:23:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvVrb-0001ss-4l
- for qemu-devel@nongnu.org; Sat, 13 Apr 2024 01:23:43 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ id 1rvVrd-0001ta-8i
+ for qemu-devel@nongnu.org; Sat, 13 Apr 2024 01:23:45 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rvVrY-0001dC-Mc
- for qemu-devel@nongnu.org; Sat, 13 Apr 2024 01:23:42 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-5aa4204bacdso1222922eaf.2
- for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 22:23:40 -0700 (PDT)
+ id 1rvVrb-0001da-HA
+ for qemu-devel@nongnu.org; Sat, 13 Apr 2024 01:23:44 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1e2bbc2048eso13204925ad.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Apr 2024 22:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1712985819; x=1713590619; darn=nongnu.org;
+ d=linaro.org; s=google; t=1712985822; x=1713590622; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nGlcb0FOsVrtW/loWoknwOL1pthHdADUVw02ahp2qOs=;
- b=eTxDeJKHK5jWg78ggzI05M8cZUleNlmYKPZbnzABr/wg6DQnb+Vke7uz/QsN2kJ0TC
- iQy9MtDiDf418EcWnvYwvOrYzFqavT4xkFSngc4k+tQBm6k2h8KTVW/2yE4l9UB3P2L3
- thgJiW2jjogV8i2kKwApWyiowcXaB9oGOuVlUfWsGkF4iqojcf/JMUxHC6I7zGCu3yRH
- iYtitqCS1gPKEzCatRFaoiaXNyrxwBJntgL+Xju+GdS9ph5kRYYc8HKQnGI37rYJXiqV
- gQROfFiohT8WheePZLRJvFt0VDeUuosha4V0UWX2g5Ig1eHAdyjtAFkHK6T+Nv//4JDy
- 3aHg==
+ bh=1i3GYPODdGEunG05Dn7518COsozxbeHPzw45fI5pR1c=;
+ b=VNApF3/hWFHop3H4G2rHERoXM7b22zAN6+1OnAOZSUQ0vRmBA/EKJ0FYfQmd39EmXK
+ WPlU4MeOg1m16VCrA/TiWrfjLVzdcwj01kPA8rkSI9CaVId1ISjHHXh9JRIxz7pUCEA7
+ +tGhoIjSEwRZitRXpcFyWjjqQTwrD+19UdfMTrGq5eQdDUZxSj2BBdoyGAPuMgad21Qt
+ M6RQRDltUMtZXWDJtxpPVeCKiNH9jBN3USdPMdqkFXY0Pk4tcIaKvdaDU9zkZmWzdn44
+ Pzb2ngOXNYJdJfu3a8KrfFeZmBZV8LEMFoIlk7r9yjB0dti4Pcm8lEVByyqWl9AAz35O
+ 5hcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712985819; x=1713590619;
+ d=1e100.net; s=20230601; t=1712985822; x=1713590622;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nGlcb0FOsVrtW/loWoknwOL1pthHdADUVw02ahp2qOs=;
- b=rJniLkQTeeOGS/2gatNTWVRDr2BnffZyshHZJCA8VStNOfYuDGevGz5+bT6TWwQlJ/
- ApIVuWHPN6x6eYSmX3f+LTQc2aM2UbAot6nwiQiA9jz2AvbO9k6ywzpaGWpfQXk0KxaO
- skMUNJLC/faaTVq5RxqZwCnu4U8HhsuidWDdkJ7K2bJihlH2Ouy8mzUUQjGKJYuf3R7X
- bGHxj2M1SYbe8xe8u+CJHKEhzqoPXa51JGeibZy+KTZUbYUCA7nWHQ6EBIraL7hBOpNv
- iC30HrlH6L0zx8jpzXpZJUi+ngHrpx01FdQZyPLcnav33WO4rfJL3K+t4FpCZd4e9CH9
- 06Qg==
-X-Gm-Message-State: AOJu0YwimAIk7gteuw37S51bvjsHj+U1mgbI3aCmHIrqfoy5hEPKrI/q
- /psna19wQJx5VVcSBlUoiIva+7reohj4GrYUTTx9cMiXzYwo9u9DqTen8uEHIqWi89S0izgOM7X
- X
-X-Google-Smtp-Source: AGHT+IGsDrY2kGlKQi/BstwiTxQ/4+GN6O/ac97MDFf62SHf2vzU6HzFsCB/2F/sfojegCIPWopl5Q==
-X-Received: by 2002:a05:6358:7c13:b0:181:6575:1b22 with SMTP id
- p19-20020a0563587c1300b0018165751b22mr4657754rwf.6.1712985819025; 
- Fri, 12 Apr 2024 22:23:39 -0700 (PDT)
+ bh=1i3GYPODdGEunG05Dn7518COsozxbeHPzw45fI5pR1c=;
+ b=vbgVlLd5RhgKcWYsRt3gzrsSewWTqO55QRN2PomGmbeekU/8YCgJ/hWLOqXwr4HNTn
+ OBiOZl19lwVIWD+44r0Dyw5tvWiH/t4uwtMQzelZB4zGSRSZsj41eDqRaEfBhMzUWpkz
+ NDPz7vDoIP9R4HRhAO8r32PYqfJtlSc71hy9tFbMwrxqsVnHFjRsQIj/v3c51VLJ1Hn1
+ HeSSlxvdddF0B0n+Rs7ucYf9UPougIpUKh0gQ8w2fkwGeTmwiuEpmne+37eAcJHfWGr1
+ IsMSyeFn9eVOcoCsJ+h4/XyloJ8U2J+842rGaUMZyDan6J6JDivKPbNYHjep0+7jvbL1
+ b9ng==
+X-Gm-Message-State: AOJu0YwU6cOBZW6XuRenl5JyNdPo/QB4a8UfK3ialSqw9EHnm8aje1BA
+ YQMyv6EtRgLna7fW6EoU7Tz9kRTkNMrscCkZwBHwXVeetRXds5l3cUPSvg7/FijkAQHD2ixTpHB
+ t
+X-Google-Smtp-Source: AGHT+IGC78uYqxyTgow5ZpgGrA5vO4+oDzbQp5d/T/Jvjdm81AEEDXml1BmiZpixiFFJAaQVnWnXDg==
+X-Received: by 2002:a05:6a20:5648:b0:1a7:47ff:5f3e with SMTP id
+ is8-20020a056a20564800b001a747ff5f3emr4370168pzc.9.1712985821960; 
+ Fri, 12 Apr 2024 22:23:41 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- v19-20020a17090abb9300b002a0544b81d6sm3564074pjr.35.2024.04.12.22.23.38
+ v19-20020a17090abb9300b002a0544b81d6sm3564074pjr.35.2024.04.12.22.23.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Apr 2024 22:23:38 -0700 (PDT)
+ Fri, 12 Apr 2024 22:23:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: edgar.iglesias@gmail.com,
 	philmd@linaro.org
-Subject: [PATCH 3/6] disas/cris: Drop with_reg_prefix
-Date: Fri, 12 Apr 2024 22:23:30 -0700
-Message-Id: <20240413052333.688151-4-richard.henderson@linaro.org>
+Subject: [PATCH 6/6] disas/cris: Improve output of register names
+Date: Fri, 12 Apr 2024 22:23:33 -0700
+Message-Id: <20240413052333.688151-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240413052333.688151-1-richard.henderson@linaro.org>
 References: <20240413052333.688151-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,355 +95,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The *_without_reg_prefix functions are all commented out.
-Remove them, remove all 'with_reg_prefix' parameters,
-and remove all of the conditions that test them.
+Add REGISTER_PREFIX as a string literal that may be concatenated
+with other string literals.  Use a table of the 16 register names
+instead of using g_string_append_printf.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/cris.c | 188 +++++++++------------------------------------------
- 1 file changed, 32 insertions(+), 156 deletions(-)
+ disas/cris.c | 45 +++++++++++++++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
 
 diff --git a/disas/cris.c b/disas/cris.c
-index 1cc8752104..27f71a8257 100644
+index 71c292188a..01ea63c428 100644
 --- a/disas/cris.c
 +++ b/disas/cris.c
-@@ -1692,13 +1692,11 @@ format_dec (long number, char *outbuffer, size_t outsize, int signedp)
- static char *
- format_reg (struct cris_disasm_data *disdata,
-             int regno,
--            char *outbuffer_start,
--            bfd_boolean with_reg_prefix)
-+            char *outbuffer_start)
+@@ -1234,6 +1234,7 @@ cris_cc_strings[] =
+ #endif
+ 
+ /* Sometimes we prefix all registers with this character.  */
++#define REGISTER_PREFIX      "$"
+ #define REGISTER_PREFIX_CHAR '$'
+ 
+ enum cris_disass_family
+@@ -1669,26 +1670,31 @@ format_dec(long number, GString *str, int signedp)
+ static void
+ format_reg(enum cris_disass_family distype, int regno, GString *str)
  {
-   char *outbuffer = outbuffer_start;
+-  g_string_append_c(str, REGISTER_PREFIX_CHAR);
++  static const char reg_names[16][5] = {
++    REGISTER_PREFIX "r0",
++    REGISTER_PREFIX "r1",
++    REGISTER_PREFIX "r2",
++    REGISTER_PREFIX "r3",
++    REGISTER_PREFIX "r4",
++    REGISTER_PREFIX "r5",
++    REGISTER_PREFIX "r6",
++    REGISTER_PREFIX "r7",
++    REGISTER_PREFIX "r8",
++    REGISTER_PREFIX "r9",
++    REGISTER_PREFIX "r10",
++    REGISTER_PREFIX "r11",
++    REGISTER_PREFIX "r12",
++    REGISTER_PREFIX "r13",
++    REGISTER_PREFIX "sp",
++    REGISTER_PREFIX "pc",
++  };
++  const char *name = reg_names[regno];
  
--  if (with_reg_prefix)
--    *outbuffer++ = REGISTER_PREFIX_CHAR;
-+  *outbuffer++ = REGISTER_PREFIX_CHAR;
+-  switch (regno)
+-    {
+-    case 15:
+-      /* For v32, there is no context in which we output PC.  */
+-      if (distype == cris_dis_v32)
+-        g_string_append(str, "acr");
+-      else
+-        g_string_append(str, "pc");
+-      break;
++  /* For v32, there is no context in which we output PC.  */
++  if (regno == 15 && distype == cris_dis_v32)
++    name = REGISTER_PREFIX "acr";
  
-   switch (regno)
-     {
-@@ -1726,14 +1724,12 @@ format_reg (struct cris_disasm_data *disdata,
+-    case 14:
+-      g_string_append(str, "sp");
+-      break;
+-
+-    default:
+-      g_string_append_printf(str, "r%d", regno);
+-      break;
+-    }
++  g_string_append(str, name);
+ }
  
- static char *
- format_sup_reg (unsigned int regno,
--                char *outbuffer_start,
--                bfd_boolean with_reg_prefix)
-+                char *outbuffer_start)
- {
-   char *outbuffer = outbuffer_start;
-   int i;
- 
--  if (with_reg_prefix)
--    *outbuffer++ = REGISTER_PREFIX_CHAR;
-+  *outbuffer++ = REGISTER_PREFIX_CHAR;
- 
-   for (i = 0; cris_support_regs[i].name != NULL; i++)
-     if (cris_support_regs[i].number == regno)
-@@ -1845,8 +1841,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-                         it.  */
-                      const struct cris_opcode *prefix_opcodep,
-                      unsigned int prefix_insn,
--                     unsigned char *prefix_buffer,
--                     bfd_boolean with_reg_prefix)
-+                     unsigned char *prefix_buffer)
- {
-   /* Get a buffer of somewhat reasonable size where we store
-      intermediate parts of the insn.  */
-@@ -1908,12 +1903,11 @@ print_with_operands (const struct cris_opcode *opcodep,
-     switch (*s)
-       {
-       case 'T':
--        tp = format_sup_reg ((insn >> 12) & 15, tp, with_reg_prefix);
-+        tp = format_sup_reg ((insn >> 12) & 15, tp);
+ /* Format the name of a support register into outbuffer.  */
+@@ -1861,8 +1867,7 @@ print_with_operands(const struct cris_opcode *opcodep,
          break;
  
        case 'A':
--        if (with_reg_prefix)
--          *tp++ = REGISTER_PREFIX_CHAR;
-+        *tp++ = REGISTER_PREFIX_CHAR;
-         *tp++ = 'a';
-         *tp++ = 'c';
-         *tp++ = 'r';
-@@ -1945,11 +1939,11 @@ print_with_operands (const struct cris_opcode *opcodep,
- 
-       case 'D':
-       case 'r':
--        tp = format_reg (disdata, insn & 15, tp, with_reg_prefix);
-+        tp = format_reg (disdata, insn & 15, tp);
+-        g_string_append_c(str, REGISTER_PREFIX_CHAR);
+-        g_string_append(str, "acr");
++        g_string_append(str, REGISTER_PREFIX "acr");
          break;
  
-       case 'R':
--        tp = format_reg (disdata, (insn >> 12) & 15, tp, with_reg_prefix);
-+        tp = format_reg (disdata, (insn >> 12) & 15, tp);
-         break;
- 
-       case 'n':
-@@ -2132,7 +2126,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-               {
-                 if (insn & 0x400)
-                   {
--                    tp = format_reg (disdata, insn & 15, tp, with_reg_prefix);
-+                    tp = format_reg (disdata, insn & 15, tp);
-                     *tp++ = '=';
-                   }
- 
-@@ -2174,8 +2168,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-                         info->target2 = prefix_insn & 15;
- 
-                         *tp++ = '[';
--                        tp = format_reg (disdata, prefix_insn & 15, tp,
--                                         with_reg_prefix);
-+                        tp = format_reg (disdata, prefix_insn & 15, tp);
-                         if (prefix_insn & 0x400)
-                           *tp++ = '+';
-                         *tp++ = ']';
-@@ -2191,8 +2184,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-                         number -= 256;
- 
-                       /* Output "reg+num" or, if num < 0, "reg-num".  */
--                      tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp,
--                                       with_reg_prefix);
-+                      tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp);
-                       if (number >= 0)
-                         *tp++ = '+';
-                       tp = FORMAT_DEC (number, tp, 1);
-@@ -2205,11 +2197,9 @@ print_with_operands (const struct cris_opcode *opcodep,
- 
-                   case BIAP_OPCODE:
-                     /* Output "r+R.m".  */
--                    tp = format_reg (disdata, prefix_insn & 15, tp,
--                                     with_reg_prefix);
-+                    tp = format_reg (disdata, prefix_insn & 15, tp);
-                     *tp++ = '+';
--                    tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp,
--                                     with_reg_prefix);
-+                    tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp);
-                     *tp++ = '.';
-                     *tp++ = mode_char[(prefix_insn >> 4) & 3];
- 
-@@ -2226,8 +2216,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-                   case BDAP_INDIR_OPCODE:
-                     /* Output "r+s.m", or, if "s" is [pc+], "r+s" or
-                        "r-s".  */
--                    tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp,
--                                     with_reg_prefix);
-+                    tp = format_reg (disdata, (prefix_insn >> 12) & 15, tp);
- 
-                     if ((prefix_insn & 0x400) && (prefix_insn & 15) == 15)
-                       {
-@@ -2297,8 +2286,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-                         /* Output "r+[R].m" or "r+[R+].m".  */
-                         *tp++ = '+';
-                         *tp++ = '[';
--                        tp = format_reg (disdata, prefix_insn & 15, tp,
--                                         with_reg_prefix);
-+                        tp = format_reg (disdata, prefix_insn & 15, tp);
-                         if (prefix_insn & 0x400)
-                           *tp++ = '+';
-                         *tp++ = ']';
-@@ -2327,7 +2315,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-               }
-             else
-               {
--                tp = format_reg (disdata, insn & 15, tp, with_reg_prefix);
-+                tp = format_reg (disdata, insn & 15, tp);
- 
-                 info->flags |= CRIS_DIS_FLAG_MEM_TARGET_IS_REG;
-                 info->target = insn & 15;
-@@ -2340,7 +2328,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-         break;
- 
-       case 'x':
--        tp = format_reg (disdata, (insn >> 12) & 15, tp, with_reg_prefix);
-+        tp = format_reg (disdata, (insn >> 12) & 15, tp);
-         *tp++ = '.';
-         *tp++ = mode_char[(insn >> 4) & 3];
-         break;
-@@ -2414,7 +2402,7 @@ print_with_operands (const struct cris_opcode *opcodep,
- 
-         tp = FORMAT_DEC (number, tp, 1);
-         *tp++ = ',';
--        tp = format_reg (disdata, (insn >> 12) & 15, tp, with_reg_prefix);
-+        tp = format_reg (disdata, (insn >> 12) & 15, tp);
-       }
-       break;
- 
-@@ -2436,8 +2424,7 @@ print_with_operands (const struct cris_opcode *opcodep,
-           *tp++ = '?';
-         else
-           {
--            if (with_reg_prefix)
--              *tp++ = REGISTER_PREFIX_CHAR;
-+            *tp++ = REGISTER_PREFIX_CHAR;
-             strcpy (tp, sregp->name);
-             tp += strlen (tp);
-           }
-@@ -2466,8 +2453,7 @@ print_with_operands (const struct cris_opcode *opcodep,
- 
- static int
- print_insn_cris_generic (bfd_vma memaddr,
--                         disassemble_info *info,
--                         bfd_boolean with_reg_prefix)
-+                         disassemble_info *info)
- {
-   int nbytes;
-   unsigned int insn;
-@@ -2587,7 +2573,7 @@ print_insn_cris_generic (bfd_vma memaddr,
-                  to the operands.   */
-               print_with_operands (matchedp, insn, bufp, addr, info,
-                                    prefix_opcodep, prefix_insn,
--                                   prefix_buffer, with_reg_prefix);
-+                                   prefix_buffer);
-             }
-         }
-     }
-@@ -2622,134 +2608,24 @@ print_insn_cris_generic (bfd_vma memaddr,
-   return advance;
- }
- 
--/* Disassemble, prefixing register names with `$'.  CRIS v0..v10.  */
--static int
--print_insn_cris_with_register_prefix (bfd_vma vma,
--                                      disassemble_info *info)
--{
--  struct cris_disasm_data disdata;
--  info->private_data = &disdata;
--  cris_parse_disassembler_options (&disdata, info->disassembler_options,
--                                   cris_dis_v0_v10);
--  return print_insn_cris_generic (vma, info, true);
--}
--/* Disassemble, prefixing register names with `$'.  CRIS v32.  */
--
--static int
--print_insn_crisv32_with_register_prefix (bfd_vma vma,
--                                         disassemble_info *info)
--{
--  struct cris_disasm_data disdata;
--  info->private_data = &disdata;
--  cris_parse_disassembler_options (&disdata, info->disassembler_options,
--                                   cris_dis_v32);
--  return print_insn_cris_generic (vma, info, true);
--}
--
--#if 0
--/* Disassemble, prefixing register names with `$'.
--   Common v10 and v32 subset.  */
--
--static int
--print_insn_crisv10_v32_with_register_prefix (bfd_vma vma,
--                                             disassemble_info *info)
--{
--  struct cris_disasm_data disdata;
--  info->private_data = &disdata;
--  cris_parse_disassembler_options (&disdata, info->disassembler_options,
--                                   cris_dis_common_v10_v32);
--  return print_insn_cris_generic (vma, info, true);
--}
--
--/* Disassemble, no prefixes on register names.  CRIS v0..v10.  */
--
--static int
--print_insn_cris_without_register_prefix (bfd_vma vma,
--                                         disassemble_info *info)
--{
--  struct cris_disasm_data disdata;
--  info->private_data = &disdata;
--  cris_parse_disassembler_options (&disdata, info->disassembler_options,
--                                   cris_dis_v0_v10);
--  return print_insn_cris_generic (vma, info, false);
--}
--
--/* Disassemble, no prefixes on register names.  CRIS v32.  */
--
--static int
--print_insn_crisv32_without_register_prefix (bfd_vma vma,
--                                            disassemble_info *info)
--{
--  struct cris_disasm_data disdata;
--  info->private_data = &disdata;
--  cris_parse_disassembler_options (&disdata, info->disassembler_options,
--                                   cris_dis_v32);
--  return print_insn_cris_generic (vma, info, false);
--}
--
--/* Disassemble, no prefixes on register names.
--   Common v10 and v32 subset.  */
--
--static int
--print_insn_crisv10_v32_without_register_prefix (bfd_vma vma,
--                                                disassemble_info *info)
--{
--  struct cris_disasm_data disdata;
--  info->private_data = &disdata;
--  cris_parse_disassembler_options (&disdata, info->disassembler_options,
--                                   cris_dis_common_v10_v32);
--  return print_insn_cris_generic (vma, info, false);
--}
--#endif
--
- int
- print_insn_crisv10 (bfd_vma vma,
-                     disassemble_info *info)
- {
--  return print_insn_cris_with_register_prefix(vma, info);
-+  struct cris_disasm_data disdata;
-+  info->private_data = &disdata;
-+  cris_parse_disassembler_options (&disdata, info->disassembler_options,
-+                                   cris_dis_v0_v10);
-+  return print_insn_cris_generic (vma, info);
- }
- 
- int
- print_insn_crisv32 (bfd_vma vma,
-                     disassemble_info *info)
- {
--  return print_insn_crisv32_with_register_prefix(vma, info);
-+  struct cris_disasm_data disdata;
-+  info->private_data = &disdata;
-+  cris_parse_disassembler_options (&disdata, info->disassembler_options,
-+                                   cris_dis_v32);
-+  return print_insn_cris_generic (vma, info);
- }
--
--/* Return a disassembler-function that prints registers with a `$' prefix,
--   or one that prints registers without a prefix.
--   FIXME: We should improve the solution to avoid the multitude of
--   functions seen above.  */
--#if 0
--disassembler_ftype
--cris_get_disassembler (bfd *abfd)
--{
--  /* If there's no bfd in sight, we return what is valid as input in all
--     contexts if fed back to the assembler: disassembly *with* register
--     prefix.  Unfortunately this will be totally wrong for v32.  */
--  if (abfd == NULL)
--    return print_insn_cris_with_register_prefix;
--
--  if (bfd_get_symbol_leading_char (abfd) == 0)
--    {
--      if (bfd_get_mach (abfd) == bfd_mach_cris_v32)
--        return print_insn_crisv32_with_register_prefix;
--      if (bfd_get_mach (abfd) == bfd_mach_cris_v10_v32)
--        return print_insn_crisv10_v32_with_register_prefix;
--
--      /* We default to v10.  This may be specifically specified in the
--         bfd mach, but is also the default setting.  */
--      return print_insn_cris_with_register_prefix;
--    }
--
--  if (bfd_get_mach (abfd) == bfd_mach_cris_v32)
--    return print_insn_crisv32_without_register_prefix;
--  if (bfd_get_mach (abfd) == bfd_mach_cris_v10_v32)
--    return print_insn_crisv10_v32_without_register_prefix;
--  return print_insn_cris_without_register_prefix;
--}
--#endif
--/* Local variables:
--   eval: (c-set-style "gnu")
--   indent-tabs-mode: t
--   End:  */
+       case '[':
 -- 
 2.34.1
 
