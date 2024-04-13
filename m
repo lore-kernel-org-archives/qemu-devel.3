@@ -4,91 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE2DC4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Apr 2024 09:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED8D9C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Apr 2024 09:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rva2L-00040T-Sr; Sat, 13 Apr 2024 05:51:05 -0400
+	id 1rva2v-0004fj-Aa; Sat, 13 Apr 2024 05:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rva2G-0003zQ-9m
- for qemu-devel@nongnu.org; Sat, 13 Apr 2024 05:51:01 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1rva2t-0004eA-8P; Sat, 13 Apr 2024 05:51:39 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rva2A-0003J8-7w
- for qemu-devel@nongnu.org; Sat, 13 Apr 2024 05:50:57 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-343c7fae6e4so1274326f8f.1
- for <qemu-devel@nongnu.org>; Sat, 13 Apr 2024 02:50:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1rva2r-0003cj-S7; Sat, 13 Apr 2024 05:51:39 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1e51398cc4eso16284335ad.2; 
+ Sat, 13 Apr 2024 02:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713001853; x=1713606653; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bJOu7SmLQ4SK5G8Ze27aM5i/v4HGQsYscYUNFejLy3o=;
- b=o7UjCJzAdN7pqFFGNqU71c4edggRqD2f2jNBCoXR8zJJpLPQ7tbaNZqYm710byKxAB
- JvQQfrk52fuAeIau+2deTwakhCu7vezT4nWjpC37mM2M2W+wUFPDFi5IBlGmYEuo9L9C
- z7cMmoQYMbS27pUvAHg0HZu2ZNhPk7dZBKkWyPztYdYqs4PyuSNI9q450uI1MuGQb2TM
- zVAJbNHPfmwfdy1ct55fJvGJeOqbvnPbrtSFn+gs58p3UVHBg8ac++t+7wDK37HOcPRz
- GHnxTj/MZn+RoO2vTJ9Vo407cFE2V2hX6vsoQ3kLK+liHvXVURxp2m1Ua7hGW+QHxMWy
- AXcQ==
+ d=gmail.com; s=20230601; t=1713001894; x=1713606694; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=wfCSZiW9m2sPQXA3lr1sCNEaD79HpO4qmE698hitf2I=;
+ b=XPldLAoA3NqZfuj+d7YXkTZeUjxvLODh1BdL+illy9ICvLV6MGbedZnCWEfYIezXJA
+ 8WOacLHhpjL2YqJVo1Ow43FVjpkIlM1B6wX71OzaHHTUFSB3I0gp8h+Bl/bynJZYKUHN
+ /y/Y/XHrhWYOpAzN09WwExSb4sWgrZW4v9dbM3phzdAQUA9vYviQcNOy7d67DXWNXnRZ
+ wqzRQ6dUz1IVUK/IagnUr4dXLXM3mgKPYrvobcJ3AW3CFawjoqu/I3PgG7DAkl81w7w1
+ DgeQYBfMQlWtlfjDl8jCDYt4PoV2jDbdqU25LtnAKhpILI9rt6DvebuYci/qVa7/3nZJ
+ HOxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713001853; x=1713606653;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bJOu7SmLQ4SK5G8Ze27aM5i/v4HGQsYscYUNFejLy3o=;
- b=HC1KOFM0JrRywAxKpVPCnlVvvPY6hcwFCQqKlVKE1TLXLkosQaEvrtd17zdYxsUOnJ
- gRq2iQf42AjL41bEuku6mDCy7OF3Ai5KlUiXJG3evGmpQxref6DFTJEW9levFKhsN2XS
- zvgWkKGk7DfjxqHHXsABfj3MuWe7CECkNUuI2IGBJGJqcTDNjy7bHK/Bsm1AmV88kWUs
- 6qoaZ2kuhlS1RCbeNabRYHFvhtbAK8gzsRd/uyz9tz7fYIwBZjqhOvp9G1b5xQ+owdW0
- yZcje2hu6vkDVMrIDhpOU6r6cANgwANL9YqDv6LIKoM22AGCVLE4RAlGoolzFi5isWzF
- goKA==
+ d=1e100.net; s=20230601; t=1713001894; x=1713606694;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wfCSZiW9m2sPQXA3lr1sCNEaD79HpO4qmE698hitf2I=;
+ b=sGVIXqlMfllX76ddJ2UNJfOrp5oFwt8ZkHVWOfjx7cnBoH/b2+O8ctdSw+xIcYWmau
+ 3mosFOpTtnCyauSjlIT8N+x660dOI3zOJmgftQNXJz6Y3PQmg+TanX2Sydf9tLUzIPDw
+ L5HQJUzy1A7JZEdxNdsyvK2abmJzpn7EEvRrhDnWUdP4PGdB2bZ6YWXTwiFfHXouMI3B
+ PaI1mZtbAV3ydlT8bMYNQAT5KDze0cUWSA6GqvrlmtOv9Wjtp4bUiBm86VyaTJMWkmvq
+ YU+Ypj7TZ+lF9hzlTcVf22HAXLjH4rsLUpqTKPm/oNPgHwYj4A9tfJboNMtuIVrvjE3a
+ JMzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRCYDJY+uIZyEadgb5omuWGPHJ7oA4yNiiB3So69b02A3aC5Z0SjsRhzi86tyat4yVRexBcvuz23VN+i3F8GkoAlrfPRg=
-X-Gm-Message-State: AOJu0YyE4vL2shQbjvLOHS5VisYTm3uyysq8/+JKZqnehacGMy7hQR2s
- g72nNN6fkBbYD0CqsMaVoDNDu1o6knt0riadA9npKSG6E0AbTty7xaQowVP8lQI=
-X-Google-Smtp-Source: AGHT+IEDeOsfbS+NVLX/0Ea2NGXoTMn7gGRN53iVRd/TDVYx+A6F9z/VhxE2nBRNGrwMfv/SPu7wkA==
-X-Received: by 2002:a05:6000:232:b0:346:e650:61eb with SMTP id
- l18-20020a056000023200b00346e65061ebmr3154664wrz.9.1713001852631; 
- Sat, 13 Apr 2024 02:50:52 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- e8-20020adfe388000000b003469b59b2a2sm6183094wrm.106.2024.04.13.02.50.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 13 Apr 2024 02:50:52 -0700 (PDT)
-Message-ID: <a6bb2e1d-ef8e-446e-b898-5ddf13cd66b0@linaro.org>
-Date: Sat, 13 Apr 2024 11:50:51 +0200
+ AJvYcCWQ4yzsphjpYgz1Fz+rJdx3kd5kGyQXpt9zAzd71/a1+XM5B3d9VYOzzZT0+xiZht4GRhwBqCc3PH9nEF4DFWS9iPgdSxo=
+X-Gm-Message-State: AOJu0YySIOodjCJJjsx/ylf20qoagGIdJaZLISyitepenug5pDJWqrCd
+ OXo3Pf8CTL0ePtoqO4Ekm883SzykZ46qfGnmYXVkDSPm/viNOOOfFnN+BB4DM/9cRQ==
+X-Google-Smtp-Source: AGHT+IECATYlUdoXQ15UBKFBWF03N0eaI8yMDWoXusp8yjuUT50MMi+daUlofMz5j67l5sFmA9n4pg==
+X-Received: by 2002:a17:902:a515:b0:1e3:dbb4:2c90 with SMTP id
+ s21-20020a170902a51500b001e3dbb42c90mr4931748plq.64.1713001894537; 
+ Sat, 13 Apr 2024 02:51:34 -0700 (PDT)
+Received: from amjad-pc ([192.228.218.97]) by smtp.gmail.com with ESMTPSA id
+ l16-20020a170902f69000b001e29c4b7bd2sm4280764plg.240.2024.04.13.02.51.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 13 Apr 2024 02:51:33 -0700 (PDT)
+Date: Sat, 13 Apr 2024 17:51:29 +0800
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "open list:vvfat" <qemu-block@nongnu.org>
+Subject: Re: [PATCH 0/3] vvfat: Fix bugs in writing and reading files -- PING
+Message-ID: <ZhpVofMHYUewg2qq@amjad-pc>
+References: <20240327201231.31046-1-amjadsharafi10@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw: Add a Kconfig switch for the TYPE_CPU_CLUSTER
- device
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-References: <20240412062042.105174-1-thuth@redhat.com>
- <20240412062042.105174-3-thuth@redhat.com>
- <12d6a650-a0a9-4e25-9ad1-68aa03064794@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <12d6a650-a0a9-4e25-9ad1-68aa03064794@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240327201231.31046-1-amjadsharafi10@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=amjadsharafi10@gmail.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,37 +93,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 11:15, Thomas Huth wrote:
-> On 12/04/2024 08.20, Thomas Huth wrote:
->> The cpu-cluster device is only needed for some few arm and riscv
->> machines. Let's avoid compiling and linking it if it is not really
->> necessary.
-
-I expect clustering become the new default for heterogeneous machines,
-but we are not there yet.
-
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   hw/arm/Kconfig     | 3 +++
->>   hw/cpu/Kconfig     | 3 +++
->>   hw/cpu/meson.build | 2 +-
->>   hw/riscv/Kconfig   | 2 ++
->>   4 files changed, 9 insertions(+), 1 deletion(-)
-
->> diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
->> index 38cdcfbe57..43a34c4c6e 100644
->> --- a/hw/cpu/meson.build
->> +++ b/hw/cpu/meson.build
->> @@ -1,4 +1,4 @@
->> -system_ss.add(files('core.c', 'cluster.c'))
->> +system_ss.add(when: 'CONFIG_CPU_CLUSTER', if_true: files('core.c', 
->> 'cluster.c'))
-> 
-> Oops, sorry, the switch should only be used for cluster.c, not for 
-> core.c. I'll change it in v2 ...
-
-For v2:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Ping to the vvfat maintainers.
 
 
