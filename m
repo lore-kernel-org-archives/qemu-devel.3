@@ -4,84 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC71C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Apr 2024 10:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E801AC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Apr 2024 11:00:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvaD9-0006sD-GV; Sat, 13 Apr 2024 06:02:15 -0400
+	id 1rvb6w-0000W9-RX; Sat, 13 Apr 2024 06:59:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvaD7-0006rn-EJ
- for qemu-devel@nongnu.org; Sat, 13 Apr 2024 06:02:13 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rvaD5-0006CS-N8
- for qemu-devel@nongnu.org; Sat, 13 Apr 2024 06:02:13 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-41550858cabso11509345e9.2
- for <qemu-devel@nongnu.org>; Sat, 13 Apr 2024 03:02:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713002530; x=1713607330; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E/8TOcv4r/ctWTXXe8ps1n6oddvUwI/skAQUtcBK0Ys=;
- b=mnhenB6+qTCpTAfuSWYyTXFPOKtMfimP732wvvlNDeJulwnj5vKKe/b/qVUPKEgVmi
- vOnTPIKlWVlRVQUA/yhinkgDcP5az3UsLpHNheBzDSUNPYH/SlyEw1fa1CCl7VzjqosJ
- 5y5zN6ysGrha5ZIEP2JDz8gp0Eba+iJGgSCIyKaMraE6nFA/Q2EYjIb4SuDFtZxuwpnb
- Kq+4jS4VS8X50fvPRgfMOUHxQIvMehqcMGPglJXg5WFfohgVdpqL2uSKqR2cQOs38GhU
- xskHw8D961m9k4iomTwAFFkvG66tKKwmAvOMyWsk0UWHAHJ7n2dV82Flm23nKolLSTB3
- EwKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713002530; x=1713607330;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E/8TOcv4r/ctWTXXe8ps1n6oddvUwI/skAQUtcBK0Ys=;
- b=ARY1qlRphP8RMP5cJhyL2rmYH4s61T78WD9m+3/avjbC7JGW+QM0hNZvsv/hs80taB
- Ca4T+zlABuBti97FqQP+s+1DQ/Nckr0qytSTLz/QMynzYvVFMa7AnMttyNE2on/QWfZJ
- nKEfuxZAcqe/ZcOLY5r0L3lh/m29Ccv2gK8UpNk7cR1PB3A+18b0y9QM4bv5NN+EJaEs
- gepnmBVsSB3KwtRi5KV6v6ALAKSw46sJGUR+QqYrqRSUqg2ik3M1pQZYl4nVJzOqjijy
- MQyfU9dTv2Nvi5M822AicHn8dugJdpxqU6XgIasFC3c5f2xAupQTjj74/iiyh73E42oQ
- IbuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmp2p4K253DHDQ1YWNXgq5utCeX4547jbqs5QL9VE3yad2VDGLAUcwMcvEmPY2oh9PbjVgzfeBkKQueSNBSQyYZS23ZNk=
-X-Gm-Message-State: AOJu0YwKSceFgK+Rp4l086ZsAXlVnVqOm6Y7dk5GJsSTGwsvA3uJFuLa
- 6+Vq36gtSyhC7+6Q7VaK2UQH2vquf0auAGppfSLj0FPG1+QehZ/FNCsGp02Jg1A=
-X-Google-Smtp-Source: AGHT+IFlnhDdxcxEWn7x2e0JnrB1Kz51mMrwz+Nk2itORHWUX0pWPoo0OKBG0vnQR0tQdMeYUZZNfg==
-X-Received: by 2002:a05:600c:4510:b0:418:ef3:6cfb with SMTP id
- t16-20020a05600c451000b004180ef36cfbmr2019166wmo.26.1713002529850; 
- Sat, 13 Apr 2024 03:02:09 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- iv18-20020a05600c549200b004174ff337f4sm8445890wmb.7.2024.04.13.03.02.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 13 Apr 2024 03:02:09 -0700 (PDT)
-Message-ID: <eecb616c-ad00-42da-ac49-1ebe51d0a1ec@linaro.org>
-Date: Sat, 13 Apr 2024 12:02:08 +0200
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1rvb6v-0000VI-2z; Sat, 13 Apr 2024 06:59:53 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1rvb6s-00027s-M6; Sat, 13 Apr 2024 06:59:52 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 7F2DFC0003
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1713005985;
+ bh=3CcDcXZJegh8W1uUIlJHgdnrNh4FFZdThdW2zm0ltzc=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=ULhSzDEcSnqaz5g+DJevZ6d96qxSIPGD97UO+PtbfEnmOspdbm+3exk+HHSFsSpOd
+ ImTvVZ0GnjKWnAM6XTAk+t+9Th1Hfeg6PCxJoiTqr1MTRavMHi8d0LU4WnD72OAB+v
+ xna3ywpmQ0SCj/4XBHJW0F1RkmfBa2QdwBPOg1I7DJRMe26OWxF4lNxQVPk/jMpfCS
+ 25kiDEVJdPfS78WNUxyIfUrtXzDHZCBf7Tij8VAeD2U+u03++7gLaGP6ndGSWyitOe
+ ylohhVP9QOR9LArkHTvwSax7dvHTkuB7tEcFCl4GH/Lwv0LTTHUTWamxHtrkzG3RLQ
+ qOkUmAfjPIHTg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1713005985;
+ bh=3CcDcXZJegh8W1uUIlJHgdnrNh4FFZdThdW2zm0ltzc=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=lDcD4WWNebseyoTvfvIeyTiAQ00FWrw7cS/wI23j0Gezs1PnhJlhN5WqHjuGM3Pup
+ UBtHGNNw3+KeBc5ncqeTDmgkP7fIV5NQMmejpQunOu1Fe+qNk6byw4+d1zgvL8lhBW
+ Wxy3Rtr8dv6QWUIUb35vZh9vo0kAJi8Wlccbxql8W9fHxoN6OjCG0zub1FQ5KayBFz
+ PJDjKvvxgEZLUjNehDEtQK3oQhZOnQXyWXZUdkavXg+vF46vYinjU/8f4enCrfltX3
+ K9/fuPnwRwqBRhs5jp5N/Otl0A1NdtKyTPn0NziqgGfyNqeLROxgnVrzDZhD5MsC2q
+ trRlMNUkfRkrQ==
+From: Alexei Filippov <alexei.filippov@syntacore.com>
+To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
+ <bin.meng@windriver.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
+ <zhiwei_liu@linux.alibaba.com>
+CC: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, Joseph Chan
+ <jchan@ventanamicro.com>
+Subject: [PATCH 1/2] target/riscv: prioritize pmp errors in
+ raise_mmu_exception()
+Date: Sat, 13 Apr 2024 13:59:28 +0300
+Message-ID: <20240413105929.7030-1-alexei.filippov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ppc440_pcix: Do not expose a bridge device on PCI bus
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240411192443.B4D644E6026@zero.eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240411192443.B4D644E6026@zero.eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-06.corp.yadro.com (172.17.10.110) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,20 +78,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/4/24 21:24, BALATON Zoltan wrote:
-> Real 460EX SoC apparently does not expose a bridge device and having
-> it appear on PCI bus confuses an AmigaOS file system driver that uses
-> this to detect which machine it is running on.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
-> Here's another version that keeps the values and only drops the device
-> so it's even less likely it could break anything, in case this can be
-> accepted for 9.0.
-> 
->   hw/pci-host/ppc440_pcix.c | 11 ++++-------
->   1 file changed, 4 insertions(+), 7 deletions(-)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+raise_mmu_exception(), as is today, is prioritizing guest page faults by
+checking first if virt_enabled && !first_stage, and then considering the
+regular inst/load/store faults.
+
+There's no mention in the spec about guest page fault being a higher
+priority that PMP faults. In fact, privileged spec section 3.7.1 says:
+
+"Attempting to fetch an instruction from a PMP region that does not have
+execute permissions raises an instruction access-fault exception.
+Attempting to execute a load or load-reserved instruction which accesses
+a physical address within a PMP region without read permissions raises a
+load access-fault exception. Attempting to execute a store,
+store-conditional, or AMO instruction which accesses a physical address
+within a PMP region without write permissions raises a store
+access-fault exception."
+
+So, in fact, we're doing it wrong - PMP faults should always be thrown,
+regardless of also being a first or second stage fault.
+
+The way riscv_cpu_tlb_fill() and get_physical_address() work is
+adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
+reflected in the 'pmp_violation' flag. What we need is to change
+raise_mmu_exception() to prioritize it.
+
+Reported-by: Joseph Chan <jchan@ventanamicro.com>
+Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/cpu_helper.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index bc70ab5abc..196166f8dd 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1203,28 +1203,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+ 
+     switch (access_type) {
+     case MMU_INST_FETCH:
+-        if (env->virt_enabled && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
++        } else if (env->virt_enabled && !first_stage) {
+             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
+         }
+         break;
+     case MMU_DATA_LOAD:
+-        if (two_stage && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
++        } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
+         }
+         break;
+     case MMU_DATA_STORE:
+-        if (two_stage && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
++        } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
+-                RISCV_EXCP_STORE_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
+         }
+         break;
+     default:
+-- 
+2.34.1
 
 
