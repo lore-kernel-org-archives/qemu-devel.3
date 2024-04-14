@@ -4,55 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2521FC4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 13:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90F3C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 16:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rw0B6-0003Rt-9J; Sun, 14 Apr 2024 09:45:52 -0400
+	id 1rw2WW-0001vW-Ax; Sun, 14 Apr 2024 12:16:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1rw0B4-0003Qw-15
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 09:45:50 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1rw0B1-0004xa-AY
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 09:45:49 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id C3EEACE0925;
- Sun, 14 Apr 2024 13:45:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AE0C072AA;
- Sun, 14 Apr 2024 13:45:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1713102340;
- bh=VpnAZmrmIP5/ENO3QKsdOZnFUI49ounKx4tptzFt17g=;
- h=Subject:To:Cc:From:Date:From;
- b=mB3oUU9wvM0Ch0Ut+IpGq77l4paRCOsyzzwU6EI4RxrhYZHmD5/0fCZ27LZAgaabG
- K7qe8IxvUatZpDXDmg70CB7S9rvAW9z0m4FFqWkcoGAmgeyCtpzGEV/fI70TDJYwiX
- OacrYKrppzz8Te0uflgiTSc2a1HV0ZzyidkRu0RM=
-Subject: Patch "virtio_net: Do not send RSS key if it is not supported" has
- been added to the 6.8-stable tree
-To: davem@davemloft.net, gregkh@linuxfoundation.org, hengqi@linux.alibaba.com,
- leitao@debian.org, qemu-devel@nongnu.org, xuanzhuo@linux.alibaba.com
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Sun, 14 Apr 2024 15:43:57 +0200
-Message-ID: <2024041456-debrief-crawlers-98b4@gregkh>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rw2WS-0001ue-T7
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 12:16:06 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rw2WQ-00058e-Dr
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 12:16:04 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2d717603aa5so29175611fa.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Apr 2024 09:16:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713111359; x=1713716159; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1Uck1Qt1Ycd+htozfGY+LR76H53rRIlW25I0ktt2iaY=;
+ b=dXpqMxLl+Lni/oc8i7HBMADeUrSQSLgWeeb4SrpBR6epkHBcHeZRRhZy84k/Gzra7U
+ YW6J2Kc5OfESquQOzb4RNv/VMqS6rI8+Xu8aU9T9/NYDEBD/ntkr6j06FHR9oJNz6yo8
+ lIgWBa+kidXSqPWMC/iylbiJzyBrNVs6GT5ZBTXbLpdxMwZOCY4YXuNTKLI/ia5w26Kh
+ w92UdHPf158jvuY5a5pnLg2SQWh8Zv6gw8QY9z3r6FIoCNjwz0i6rDnH50IOa3wWUhZX
+ 2oTc0WW31qIhrPDFpcy7ByJoqO6TupvenqqbPlmlZMFX9C5HvhojpkkgiCs3FhEN5v+o
+ 9DdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713111359; x=1713716159;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1Uck1Qt1Ycd+htozfGY+LR76H53rRIlW25I0ktt2iaY=;
+ b=g+suyMGW8hQK2WfrT7sapIImxNrfGlk3cIJL5HRKMVKVTEPo1RmbiMAViAOwRvRYGZ
+ ic9t3jaWsMGRjJ2KXrZ8yyGhfCa2uyqXKwCDGx50950nNQ4I5SWNqM7l9Z6fM6QNsrcu
+ Ey2J9XQL95Yae0/FCWqppI7HDV54ZbmjapliTGraMl0Og8chGyBWmofMj0hIJynI1Zl6
+ nGu4NDAWD2roxWFZzOkiM1mArZCzr1MJgU97w/G3J0ci6S/nDmHavULp2tvfnNHqmRHc
+ MpgG5ZBmLHwPp97X/rYazBqq6cRe+kNudZFGW+6dAXaIHAJDTe4B2CR7wnHRlVmI3rvU
+ 243Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVngzTezkwHQiOyVfHfsicF8zmFmjAJMr+iuWhAV2/nZh1W4HH4NWeNQUwDyrGVMHP8G8kBqcR/Xx/9dJMoFAD4WDv97tQ=
+X-Gm-Message-State: AOJu0YzWfbCgombHXtr/zAKmZn/AJIwvuC1IFPsoVsJC8O3+pDEaChP+
+ YquhKM+iB781i8D5jdP52GlAXRUaPZ9AeFbU0+8sH4qvrCauCAojx5+fA1FxFzI=
+X-Google-Smtp-Source: AGHT+IH6l+Wh0nm8dRTFtEoGTdg0sSCp6UNG9ZvbEDuQ738Ctly+3FNph4ODOFMUMIqEP/tvdAcGKA==
+X-Received: by 2002:a2e:9805:0:b0:2d8:9955:cd27 with SMTP id
+ a5-20020a2e9805000000b002d89955cd27mr5259621ljj.48.1713111358618; 
+ Sun, 14 Apr 2024 09:15:58 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.196.200])
+ by smtp.gmail.com with ESMTPSA id
+ v13-20020a05600c444d00b0041663450a4asm15923711wmn.45.2024.04.14.09.15.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 14 Apr 2024 09:15:58 -0700 (PDT)
+Message-ID: <07e79630-7171-4cb5-829d-a87a8165adc5@linaro.org>
+Date: Sun, 14 Apr 2024 18:15:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
+User-Agent: Mozilla Thunderbird
+Subject: Re: Qemu for TC377
+To: Sameer Kalliadan Poyil <sameer.kp.in@gmail.com>, qemu-discuss@nongnu.org, 
+ qemu-devel@nongnu.org
+References: <CAAA2AK8p=RtqeNZXfnqprw+kqEBTvrQo1Va81+ctfYAT6k6jnA@mail.gmail.com>
+Content-Language: en-US
+Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAAA2AK8p=RtqeNZXfnqprw+kqEBTvrQo1Va81+ctfYAT6k6jnA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=gregkh@linuxfoundation.org; helo=sin.source.kernel.org
-X-Spam_score_int: -64
-X-Spam_score: -6.5
-X-Spam_bar: ------
-X-Spam_report: (-6.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.127,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,156 +96,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Sameer,
 
-This is a note to let you know that I've just added the patch titled
+On 13/4/24 14:52, Sameer Kalliadan Poyil wrote:
+> Hello All,
+> I see that Latest qemu supports for tricore TC277 and TC377
+> image.png
+> But when I downloaded source code and checked for TC377 related file , I 
+> didn't find anything
+> 
+> I want to run RTOS/bare metal code on TC377 . could you please let me 
+> know how to start qemu on TC377 ?
+> Here is the latest version of qemu i have , I didn't download 9.0
 
-    virtio_net: Do not send RSS key if it is not supported
+$ qemu-system-tricore -cpu help
+Available CPUs:
+   tc1796
+   tc1797
+   tc27x
+   tc37x
+$
 
-to the 6.8-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+Try 'qemu-system-tricore -machine KIT_AURIX_TC277_TRB -cpu tc37x',
+this should start a TC377 SoC on an AURIX board (~KIT_A2G_TC377_TRB).
 
-The filename of the patch is:
-     virtio_net-do-not-send-rss-key-if-it-is-not-supported.patch
-and it can be found in the queue-6.8 subdirectory.
+Cc'ing Bastian for further help.
 
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
+Regards,
 
+Phil.
 
-From 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 Mon Sep 17 00:00:00 2001
-From: Breno Leitao <leitao@debian.org>
-Date: Wed, 3 Apr 2024 08:43:12 -0700
-Subject: virtio_net: Do not send RSS key if it is not supported
+> Regards
+> Sameer
 
-From: Breno Leitao <leitao@debian.org>
-
-commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
-
-There is a bug when setting the RSS options in virtio_net that can break
-the whole machine, getting the kernel into an infinite loop.
-
-Running the following command in any QEMU virtual machine with virtionet
-will reproduce this problem:
-
-    # ethtool -X eth0  hfunc toeplitz
-
-This is how the problem happens:
-
-1) ethtool_set_rxfh() calls virtnet_set_rxfh()
-
-2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
-
-3) virtnet_commit_rss_command() populates 4 entries for the rss
-scatter-gather
-
-4) Since the command above does not have a key, then the last
-scatter-gatter entry will be zeroed, since rss_key_size == 0.
-sg_buf_size = vi->rss_key_size;
-
-5) This buffer is passed to qemu, but qemu is not happy with a buffer
-with zero length, and do the following in virtqueue_map_desc() (QEMU
-function):
-
-  if (!sz) {
-      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
-
-6) virtio_error() (also QEMU function) set the device as broken
-
-    vdev->broken = true;
-
-7) Qemu bails out, and do not repond this crazy kernel.
-
-8) The kernel is waiting for the response to come back (function
-virtnet_send_command())
-
-9) The kernel is waiting doing the following :
-
-      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-	     !virtqueue_is_broken(vi->cvq))
-	      cpu_relax();
-
-10) None of the following functions above is true, thus, the kernel
-loops here forever. Keeping in mind that virtqueue_is_broken() does
-not look at the qemu `vdev->broken`, so, it never realizes that the
-vitio is broken at QEMU side.
-
-Fix it by not sending RSS commands if the feature is not available in
-the device.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Cc: stable@vger.kernel.org
-Cc: qemu-devel@nongnu.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/virtio_net.c |   26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
-
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3768,6 +3768,7 @@ static int virtnet_set_rxfh(struct net_d
- 			    struct netlink_ext_ack *extack)
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
-+	bool update = false;
- 	int i;
- 
- 	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
-@@ -3775,13 +3776,28 @@ static int virtnet_set_rxfh(struct net_d
- 		return -EOPNOTSUPP;
- 
- 	if (rxfh->indir) {
-+		if (!vi->has_rss)
-+			return -EOPNOTSUPP;
-+
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
- 			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
-+		update = true;
- 	}
--	if (rxfh->key)
-+
-+	if (rxfh->key) {
-+		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
-+		 * device provides hash calculation capabilities, that is,
-+		 * hash_key is configured.
-+		 */
-+		if (!vi->has_rss && !vi->has_rss_hash_report)
-+			return -EOPNOTSUPP;
-+
- 		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
-+		update = true;
-+	}
- 
--	virtnet_commit_rss_command(vi);
-+	if (update)
-+		virtnet_commit_rss_command(vi);
- 
- 	return 0;
- }
-@@ -4686,13 +4702,15 @@ static int virtnet_probe(struct virtio_d
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
- 		vi->has_rss_hash_report = true;
- 
--	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
-+	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
- 		vi->has_rss = true;
- 
--	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_indir_table_size =
- 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
- 				rss_max_indirection_table_length));
-+	}
-+
-+	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_key_size =
- 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
- 
-
-
-Patches currently in stable-queue which might be from leitao@debian.org are
-
-queue-6.8/virtio_net-do-not-send-rss-key-if-it-is-not-supported.patch
 
