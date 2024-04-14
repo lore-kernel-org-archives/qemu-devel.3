@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90F3C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 16:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3ADC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 16:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rw2WW-0001vW-Ax; Sun, 14 Apr 2024 12:16:08 -0400
+	id 1rw2ZU-0003SU-3I; Sun, 14 Apr 2024 12:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rw2WS-0001ue-T7
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 12:16:06 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rw2ZS-0003S4-88
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 12:19:10 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rw2WQ-00058e-Dr
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 12:16:04 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2d717603aa5so29175611fa.0
- for <qemu-devel@nongnu.org>; Sun, 14 Apr 2024 09:16:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rw2ZQ-0005Vl-PS
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 12:19:10 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41854ba7fd5so1371475e9.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Apr 2024 09:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713111359; x=1713716159; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1Uck1Qt1Ycd+htozfGY+LR76H53rRIlW25I0ktt2iaY=;
- b=dXpqMxLl+Lni/oc8i7HBMADeUrSQSLgWeeb4SrpBR6epkHBcHeZRRhZy84k/Gzra7U
- YW6J2Kc5OfESquQOzb4RNv/VMqS6rI8+Xu8aU9T9/NYDEBD/ntkr6j06FHR9oJNz6yo8
- lIgWBa+kidXSqPWMC/iylbiJzyBrNVs6GT5ZBTXbLpdxMwZOCY4YXuNTKLI/ia5w26Kh
- w92UdHPf158jvuY5a5pnLg2SQWh8Zv6gw8QY9z3r6FIoCNjwz0i6rDnH50IOa3wWUhZX
- 2oTc0WW31qIhrPDFpcy7ByJoqO6TupvenqqbPlmlZMFX9C5HvhojpkkgiCs3FhEN5v+o
- 9DdQ==
+ d=linaro.org; s=google; t=1713111547; x=1713716347; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qasJ6vqXaVJF/UQMO0ISNoIjzC1qyYgIpkBn6bTltFk=;
+ b=i0PQPIdWoUTqZnAREHGIFOvP2rJW1XnCOkGuATmEJJvraD+GfFNool7HprD3iDDoXN
+ AHRUPTNUYUgVaGDL//YWy7gVTi+Xv5qe7+WAlmMbF9IfjzPDo7C1px9cdH8tLSwrc2FF
+ c2kcLToDrQe8hyVz1IfqD9WYq0V9GvmvKKOxWGPMMKOlmPzxYHxHe+TX7OyTmUgvTQqW
+ LzDgW5gmvKWR/Aj14XOMzJlJmUgzqNizs+VX4V32yFyY1suCDgiUv65jofKhax/RuN+1
+ F5plGd8vHZyJFjjLU/sVeoCCtYuMa8PZYI20bKCz03OK3TQD8sw+VZR8XikOsfqZF3ym
+ N11A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713111359; x=1713716159;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1713111547; x=1713716347;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1Uck1Qt1Ycd+htozfGY+LR76H53rRIlW25I0ktt2iaY=;
- b=g+suyMGW8hQK2WfrT7sapIImxNrfGlk3cIJL5HRKMVKVTEPo1RmbiMAViAOwRvRYGZ
- ic9t3jaWsMGRjJ2KXrZ8yyGhfCa2uyqXKwCDGx50950nNQ4I5SWNqM7l9Z6fM6QNsrcu
- Ey2J9XQL95Yae0/FCWqppI7HDV54ZbmjapliTGraMl0Og8chGyBWmofMj0hIJynI1Zl6
- nGu4NDAWD2roxWFZzOkiM1mArZCzr1MJgU97w/G3J0ci6S/nDmHavULp2tvfnNHqmRHc
- MpgG5ZBmLHwPp97X/rYazBqq6cRe+kNudZFGW+6dAXaIHAJDTe4B2CR7wnHRlVmI3rvU
- 243Q==
+ bh=qasJ6vqXaVJF/UQMO0ISNoIjzC1qyYgIpkBn6bTltFk=;
+ b=h8ZbDhtGGvLnKLR+iQ2oNa/FBF+6aKh4bnCinIameVlHZDy276LKLSik9ryMt5qzOY
+ XguzUeuyl/H3BI7rR3tPzVvWbZNLfFo3cbeTtayOZjzzB30C/2VxCBGAMlwFGERvROIi
+ yrmZOZPHwQb4TORZYmE4WOOCmDCZ1h9wv+6VMD7uUuO4H2/S+RgIRaPrW3WYTi2PobdC
+ QFHZZTIX+4Sh0K2s3tZ2igpyZcNSu3v4ssbCAapEFcEzgaphCjhDN52lO+vnrb7d9Qjv
+ 7M61lcDX1fY0/FL4n72IU/UK2172/KscdBhFhS3tzedYHSX7Lk60jyCrsir+A8aw5Z8k
+ ZvNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVngzTezkwHQiOyVfHfsicF8zmFmjAJMr+iuWhAV2/nZh1W4HH4NWeNQUwDyrGVMHP8G8kBqcR/Xx/9dJMoFAD4WDv97tQ=
-X-Gm-Message-State: AOJu0YzWfbCgombHXtr/zAKmZn/AJIwvuC1IFPsoVsJC8O3+pDEaChP+
- YquhKM+iB781i8D5jdP52GlAXRUaPZ9AeFbU0+8sH4qvrCauCAojx5+fA1FxFzI=
-X-Google-Smtp-Source: AGHT+IH6l+Wh0nm8dRTFtEoGTdg0sSCp6UNG9ZvbEDuQ738Ctly+3FNph4ODOFMUMIqEP/tvdAcGKA==
-X-Received: by 2002:a2e:9805:0:b0:2d8:9955:cd27 with SMTP id
- a5-20020a2e9805000000b002d89955cd27mr5259621ljj.48.1713111358618; 
- Sun, 14 Apr 2024 09:15:58 -0700 (PDT)
+ AJvYcCXH4gFQpbAcQBc7pRioMdR7JdSx2aCts/pPy3DXAg3MR1gu7krl3yUL++IOIacpKEnhd4BIxLLDSXKR52EXmB1kro4TaTw=
+X-Gm-Message-State: AOJu0YzL5++n/RKJdom8V69s3NRfXvjAbUuTWN8BT3mMS2dMsEWJ0AeG
+ nEX02cjqgulJCg0jE3N6VWtg9TQvQKwWDwPXXVQCoYnQ03qhTCQJSM783cHjpSQ=
+X-Google-Smtp-Source: AGHT+IESaWVOtFx9BWtmGMgDc/Ef+99rMoFmYnf2tB80ocQEfyZEkUkyqAKtny9pJlhzsTbuxtvGEg==
+X-Received: by 2002:a05:600c:1552:b0:418:3719:61ea with SMTP id
+ f18-20020a05600c155200b00418371961eamr2085544wmg.41.1713111546671; 
+ Sun, 14 Apr 2024 09:19:06 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.196.200])
  by smtp.gmail.com with ESMTPSA id
- v13-20020a05600c444d00b0041663450a4asm15923711wmn.45.2024.04.14.09.15.57
+ a20-20020a05600c349400b004184e3a82edsm2268804wmq.32.2024.04.14.09.19.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Apr 2024 09:15:58 -0700 (PDT)
-Message-ID: <07e79630-7171-4cb5-829d-a87a8165adc5@linaro.org>
-Date: Sun, 14 Apr 2024 18:15:56 +0200
+ Sun, 14 Apr 2024 09:19:06 -0700 (PDT)
+Message-ID: <f8878a58-8eb6-4a2d-8e77-d38b11a5d4c1@linaro.org>
+Date: Sun, 14 Apr 2024 18:19:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Qemu for TC377
-To: Sameer Kalliadan Poyil <sameer.kp.in@gmail.com>, qemu-discuss@nongnu.org, 
+Subject: Re: [PATCH] tests/qtest : Use `g_assert_cmphex` instead of
+ `g_assert_cmpuint`
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
  qemu-devel@nongnu.org
-References: <CAAA2AK8p=RtqeNZXfnqprw+kqEBTvrQo1Va81+ctfYAT6k6jnA@mail.gmail.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+References: <20240414132518.278858-1-ines.varhol@telecom-paris.fr>
 Content-Language: en-US
-Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAAA2AK8p=RtqeNZXfnqprw+kqEBTvrQo1Va81+ctfYAT6k6jnA@mail.gmail.com>
+In-Reply-To: <20240414132518.278858-1-ines.varhol@telecom-paris.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sameer,
+Hi Inès,
 
-On 13/4/24 14:52, Sameer Kalliadan Poyil wrote:
-> Hello All,
-> I see that Latest qemu supports for tricore TC277 and TC377
-> image.png
-> But when I downloaded source code and checked for TC377 related file , I 
-> didn't find anything
+On 14/4/24 15:24, Inès Varhol wrote:
+> The messages for STM32L4x5 tests will be easier to understand with
+> `g_assert_cmphex` since the comparisions were made with hexadecimal
+
+"comparisons"
+
+> numbers.
 > 
-> I want to run RTOS/bare metal code on TC377 . could you please let me 
-> know how to start qemu on TC377 ?
-> Here is the latest version of qemu i have , I didn't download 9.0
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   tests/qtest/stm32l4x5_exti-test.c   | 138 ++++++++++++++--------------
+>   tests/qtest/stm32l4x5_syscfg-test.c |  74 +++++++--------
+>   2 files changed, 106 insertions(+), 106 deletions(-)
 
-$ qemu-system-tricore -cpu help
-Available CPUs:
-   tc1796
-   tc1797
-   tc27x
-   tc37x
-$
+$ git grep g_assert_cmpuint.*,\ 0x tests/qtest/stm32*| wc -l
+      105
 
-Try 'qemu-system-tricore -machine KIT_AURIX_TC277_TRB -cpu tc37x',
-this should start a TC377 SoC on an AURIX board (~KIT_A2G_TC377_TRB).
+Nice cleanup!
 
-Cc'ing Bastian for further help.
+$ git grep g_assert_cmpuint.*,\ 0x | wc -l
+      148
 
-Regards,
+Still 33 to go... (not asking you to do it!).
 
-Phil.
-
-> Regards
-> Sameer
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
