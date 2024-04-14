@@ -4,83 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE723C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 18:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 638E4C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 19:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rw4xo-0001gn-0G; Sun, 14 Apr 2024 14:52:28 -0400
+	id 1rw5f4-0000mI-QY; Sun, 14 Apr 2024 15:37:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rw4xm-0001gb-JX
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 14:52:26 -0400
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ (Exim 4.90_1) (envelope-from <giacomo.parmeggiani@gmail.com>)
+ id 1rw5f2-0000lr-Up; Sun, 14 Apr 2024 15:37:08 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rw4xk-0003BU-6L
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 14:52:26 -0400
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5aa318db8a0so1749861eaf.1
- for <qemu-devel@nongnu.org>; Sun, 14 Apr 2024 11:52:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <giacomo.parmeggiani@gmail.com>)
+ id 1rw5ez-0001TO-Ti; Sun, 14 Apr 2024 15:37:07 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2a3095907ffso1145972a91.0; 
+ Sun, 14 Apr 2024 12:37:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713120742; x=1713725542; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YtLbwdlhUjBV1zcrpKenNTXqLDtwVrzXUvVG+OxVtdg=;
- b=DL6geLu5JUq2E+T59dBNXnSxXF2j+H3Kr3FNF/CpRKdEJRJjXPyrSvYizH8Q1gsiB8
- EAdfCHOP9CnwdVr3k+CBuK9AvJr48CMqEsd8Sn/RYba3x8xeUlKfkL6s9xXablA37OJS
- jWLcft//v0m5X3mHtFpunxYiDBS2Zntn1QQOQeJm5vuqNQjtYSDkfKeINqjTDEQPvQUp
- +Qvi5WDmyff6p3hZbHux3nW1GWQFYfHLX6iQLXsBoJGf/dyhUr+y4jjg42oDVHJorjec
- v9NZvmfWKAw4ArkmcP1r4wwyq69AQFTXZ5ygSWPaD3Bi/Sft00rX6lc8aayob6O0Ri+s
- xc1A==
+ d=gmail.com; s=20230601; t=1713123423; x=1713728223; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FuxkjjjCEolnUBjtBcKRGALZMe76TcfbHSx0+qH9yfA=;
+ b=QUx4SdYZEp4zi8Q8d1ayJFG1qVfMf+DhcahVqXLmncN3A02m3QRWe220bm9jteAqQu
+ TbHW7jbEoiuBW7lS/1wRh5GavYTFHkmYMR2LZiE5aeVJbB6aq4WIH3UqRlhBzWpNG7tX
+ J8c5m4lhgAKSIgXb6HYsKF5W5HCmRyMj1YZ9m3e0AaEm7q4wclWMJpGy3n/UhOnGtnEN
+ 4iz5i5yvWBM0X5WmBISVYu7lbuxBeK+cI+BHWQPSF3sfMAvnEePQj2XmHU/ro+9Ito37
+ eRxMz2/BNxM9rLVdcWMYVVJs9CBkWDXO3IU7bn7Vtx8D9hNa6uflZ42O9LxRy4cLUYtq
+ Jeqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713120742; x=1713725542;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YtLbwdlhUjBV1zcrpKenNTXqLDtwVrzXUvVG+OxVtdg=;
- b=XkDUR8Sa/gX+vkPbeBWvggrEhvl0GGhexi3FfHxoO3OAZHmvj/FU6l55uJch19PIl3
- Rk7sKlqtun1BEaM5Tq6erbeB64tdTGMfKmVvLWLEuz0MKYBPbmA2qbmHr3oCVmh+6LHe
- D4NbOhvEShEkwnoNd0FZJm4W7sLIC/LOlVjGISAyk9tCsivp9GtF8Dm6d1exOg8Blra8
- 019urQVwMseIe/df/P/N3e2NWGMFniYZSMsqC/VpOdlsSy6Yh7a4Lvh169oENbFqF/z/
- KWrTryCVgBBco8dyKb0mD4Kq5bI5jAcnoYhkOutDQBqtJxbPvpPkzGRB+UIQIsCh8ZG5
- skwg==
-X-Gm-Message-State: AOJu0YztdqX3aZmnUaLD0KyRmrlbOMkyPF+xJ79JC9TrA6PqfgesgxNX
- kEOmU4zR72+g8cDxHnK0YSs1PC9/FpFvK82ShRvy2V1Jr+99uBlx
-X-Google-Smtp-Source: AGHT+IHtA3B45rsjVLDDAlBw7uW2ieFC5Vr2BgFBTFNAxGKoPP8DJFQeOZmAsw5QWEpcI9g8av8zUA==
-X-Received: by 2002:a05:6871:4101:b0:22e:c6b2:849e with SMTP id
- la1-20020a056871410100b0022ec6b2849emr10576503oab.9.1713120742217; 
- Sun, 14 Apr 2024 11:52:22 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.85.160])
- by smtp.gmail.com with ESMTPSA id
- u6-20020aa78486000000b006edca18c194sm5874245pfn.22.2024.04.14.11.52.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Apr 2024 11:52:21 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: qemu-level <qemu-devel@nongnu.org>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: Intention to work on GSoC project
-Date: Mon, 15 Apr 2024 00:22:18 +0530
-Message-ID: <2192541.Mh6RI2rZIc@valdaarhun>
-In-Reply-To: <3316716.aeNJFYEL58@valdaarhun>
-References: <13625712.uLZWGnKmhe@valdaarhun>
- <CAJaqyWc+8OJZ33TtqeBy+Vy9HdW8zzbMKqg2mNWVaFda=g0XBA@mail.gmail.com>
- <3316716.aeNJFYEL58@valdaarhun>
+ d=1e100.net; s=20230601; t=1713123423; x=1713728223;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FuxkjjjCEolnUBjtBcKRGALZMe76TcfbHSx0+qH9yfA=;
+ b=aJ9A1b4ROt3Fz4+ylbfQBu0v7JTdV3ywvYT5lxOUYvjuk2hJoXDzQxZAkA1CV45zXA
+ nO/tqQJuuYNhtbRG28J4Cg/tJLxXUXWT7eGMyIdl+vv9ogtSBGh/uTzU11caJu755usT
+ i4cQurCIShbf415061IQBycWZuT/7/zH+AZt+mAw53nF95b3goClLilx5XEhVc8Fnkr7
+ V9FxylkNIYa/W/sywrNRVQDIi7zSGWEGr8peLBLUjzJCKVN4RtZqHpGZLc6L3GqIo4ep
+ jZM/60kdwaxCrjvFOMfkVzmVjaHMjKu9IIrgrkuNYrEv/cl1NozqoTD/S/TJ0Q9l1UR1
+ samQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1JdKeAW6NbbyaJjkJ/N0iqh4US7H9eqMFQb7Yn/N4v3+9E/h2aTW80utptvr1Wg2ghXvwMnBgtKgL8t+/id8QULyzQ/k=
+X-Gm-Message-State: AOJu0Yxt12pSYKkQk/HbH7DglvY1plm5It1SN+5KtgSB9Et+Er1yuZCj
+ xWh5OVxmD+LZFElm05XhyVh9A/iuiumD3r0j1NsDnIyPcto0nKKBw0ePyuHzGQ3gQ5lK0qTvPch
+ Ke0wRqNyr91IMfQfly/pvdTKwf7of7Xrt
+X-Google-Smtp-Source: AGHT+IHwGmC5CtVh0rdopBMxKPsV7+oGohFaNwtvdx2MpvCboq2xzs8s+ZX4+pTQ+izvDlYn4PJwZt5c7UqvBXvTzYI=
+X-Received: by 2002:a17:90b:108c:b0:2a2:5ec9:3754 with SMTP id
+ gj12-20020a17090b108c00b002a25ec93754mr5866182pjb.33.1713123423434; Sun, 14
+ Apr 2024 12:37:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=icegambit91@gmail.com; helo=mail-oo1-xc33.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240330203520.64892-1-giacomo.parmeggiani@gmail.com>
+In-Reply-To: <20240330203520.64892-1-giacomo.parmeggiani@gmail.com>
+From: Giacomo Parmeggiani <giacomo.parmeggiani@gmail.com>
+Date: Sun, 14 Apr 2024 21:36:27 +0200
+Message-ID: <CAGSiPK8kAxNSVSQ7vA4sBq9W0J=PMLTEoODVwMFjbimkmp=iUg@mail.gmail.com>
+Subject: Re: [PATCH] m25p80: Add support for the GD25WQ32E flash
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000001c4665061613a148"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=giacomo.parmeggiani@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,73 +89,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+--0000000000001c4665061613a148
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Friday, April 5, 2024 12:36:02=E2=80=AFAM IST Sahil wrote:
-> [...]=20
-> I'll set up this environment as well.
+PING
 
-I would like to post an update here. I spent the last week=20
-trying to set up the environment as described in the blog [1].
-I initially tried to get the L1 VM running on my host machine
-(Arch Linux). However,  I was unable to use virt-sysprep or
-virt-cutomize to install packages in the qcow2 image. It wasn't
-able to resolve the hosts while downloading the packages.
+Hi all, could you have a look at this small patch?
+See also:
+https://patchew.org/QEMU/20240330203520.64892-1-giacomo.parmeggiani@gmail.c=
+om/
 
-According to the logs, /etc/resolv.conf was a dangling symlink.
-I tried to use "virt-rescue" to configure DNS resolution. I tried
-following these sections [2], [3] in the Arch wiki but that didn't
-work either. I tried using qemu-nbd as well following this section
-[4] to access the image. While I managed gain access to the
-image, I wasn't able to install packages after performing a
-chroot.
+BR,
+Giacomo Parmeggiani
 
-One workaround was to set this environment up in a VM. I
-decided to set up the environment with a Fedora image in
-virtualbox acting as L0. I have managed to set up an L1 VM
-in this environment and I can load it using qemu-kvm.
+On Sat, Mar 30, 2024 at 9:36=E2=80=AFPM Giacomo Parmeggiani <
+giacomo.parmeggiani@gmail.com> wrote:
 
-I have one question though. One of the options (use case 1 in [1])
-given to the "qemu-kvm" command is:
-> -device virtio-net-pci,netdev=3Dvhost-vdpa0,bus=3Dpcie.0,addr=3D0x7\
-> ,disable-modern=3Doff,page-per-vq=3Don
+> This introduces the GigaDevice GD25WQ32E flash, including the SFDP table
+>
+> Signed-off-by: Giacomo Parmeggiani <giacomo.parmeggiani@gmail.com>
+> ---
+>  hw/block/m25p80.c      |  2 ++
+>  hw/block/m25p80_sfdp.c | 40 ++++++++++++++++++++++++++++++++++++++++
+>  hw/block/m25p80_sfdp.h |  2 ++
+>  3 files changed, 44 insertions(+)
+>
+> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> index 8dec134832..6cc05b63e5 100644
+> --- a/hw/block/m25p80.c
+> +++ b/hw/block/m25p80.c
+> @@ -205,6 +205,8 @@ static const FlashPartInfo known_devices[] =3D {
+>      /* GigaDevice */
+>      { INFO("gd25q32",     0xc84016,      0,  64 << 10,  64, ER_4K) },
+>      { INFO("gd25q64",     0xc84017,      0,  64 << 10, 128, ER_4K) },
+> +    { INFO("gd25wq32e",   0xc86516,      0,  64 << 10,  64, ER_4K),
+> +      .sfdp_read =3D m25p80_sfdp_gd25wq32e },
+>
+>      /* Intel/Numonyx -- xxxs33b */
+>      { INFO("160s33b",     0x898911,      0,  64 << 10,  32, 0) },
+> diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
+> index 6ee2cfaf11..cb0963328d 100644
+> --- a/hw/block/m25p80_sfdp.c
+> +++ b/hw/block/m25p80_sfdp.c
+> @@ -406,3 +406,43 @@ static const uint8_t sfdp_is25wp256[] =3D {
+>      0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+>  };
+>  define_sfdp_read(is25wp256);
+> +
+> +/*
+> + * GigaDevice
+> + */
+> +
+> +static const uint8_t sfdp_gd25wq32e[] =3D {
+> +    0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
+> +    0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
+> +    0xc8, 0x00, 0x01, 0x03, 0x90, 0x00, 0x00, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xe5, 0x20, 0xf1, 0xff, 0xff, 0xff, 0xff, 0x01,
+> +    0x44, 0xeb, 0x08, 0x6b, 0x08, 0x3b, 0x42, 0xbb,
+> +    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0xff,
+> +    0xff, 0xff, 0x00, 0xff, 0x0c, 0x20, 0x0f, 0x52,
+> +    0x10, 0xd8, 0x00, 0xff, 0x63, 0x92, 0xfd, 0xfe,
+> +    0x83, 0x2f, 0x26, 0x46, 0xec, 0x82, 0x18, 0x44,
+> +    0x7a, 0x75, 0x7a, 0x75, 0x04, 0xbd, 0xd5, 0x5c,
+> +    0x00, 0x06, 0x64, 0x00, 0x08, 0x10, 0x00, 0x00,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0x00, 0x36, 0x50, 0x16, 0x9e, 0xf9, 0x77, 0x64,
+> +    0xfc, 0xcb, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+> +    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+> +};
+> +define_sfdp_read(gd25wq32e);
+> diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
+> index 1733b56950..7d1f60f2ee 100644
+> --- a/hw/block/m25p80_sfdp.h
+> +++ b/hw/block/m25p80_sfdp.h
+> @@ -29,4 +29,6 @@ uint8_t m25p80_sfdp_w25q01jvq(uint32_t addr);
+>
+>  uint8_t m25p80_sfdp_is25wp256(uint32_t addr);
+>
+> +uint8_t m25p80_sfdp_gd25wq32e(uint32_t addr);
+> +
+>  #endif
+> --
+> 2.32.1 (Apple Git-133)
+>
+>
 
-This gives an error:
-> Bus "pcie.0" not found
+--=20
+*Giacomo Parmeggiani*
 
-Does pcie refer to PCI Express? Changing this to pci.0 works.
-I read through the "device buses" section in QEMU's user
-documentation [5], but I have still not understood this.=20
+--0000000000001c4665061613a148
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"ls /sys/bus/pci/devices/* | grep vdpa" does not give any results.
-Replacing pci with pci_express doesn't give any results either. How
-does one know which pci bus the vdpa device is connected to?
-I have gone through the "vDPA bus drivers" section of the "vDPA
-kernel framework" article [6] but I haven't managed to find an
-answer yet. Am I missing something here?
+<div dir=3D"ltr">PING<div><br></div><div>Hi all, could you have a look at t=
+his small patch?</div><div>See also:=C2=A0<a href=3D"https://patchew.org/QE=
+MU/20240330203520.64892-1-giacomo.parmeggiani@gmail.com/">https://patchew.o=
+rg/QEMU/20240330203520.64892-1-giacomo.parmeggiani@gmail.com/</a></div><div=
+><br></div><div>BR,</div><div>Giacomo Parmeggiani</div></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Mar 30, 2024=
+ at 9:36=E2=80=AFPM Giacomo Parmeggiani &lt;<a href=3D"mailto:giacomo.parme=
+ggiani@gmail.com">giacomo.parmeggiani@gmail.com</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">This introduces the GigaDevi=
+ce GD25WQ32E flash, including the SFDP table<br>
+<br>
+Signed-off-by: Giacomo Parmeggiani &lt;<a href=3D"mailto:giacomo.parmeggian=
+i@gmail.com" target=3D"_blank">giacomo.parmeggiani@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0hw/block/m25p80.c=C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 ++<br>
+=C2=A0hw/block/m25p80_sfdp.c | 40 ++++++++++++++++++++++++++++++++++++++++<=
+br>
+=C2=A0hw/block/m25p80_sfdp.h |=C2=A0 2 ++<br>
+=C2=A03 files changed, 44 insertions(+)<br>
+<br>
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c<br>
+index 8dec134832..6cc05b63e5 100644<br>
+--- a/hw/block/m25p80.c<br>
++++ b/hw/block/m25p80.c<br>
+@@ -205,6 +205,8 @@ static const FlashPartInfo known_devices[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0/* GigaDevice */<br>
+=C2=A0 =C2=A0 =C2=A0{ INFO(&quot;gd25q32&quot;,=C2=A0 =C2=A0 =C2=A00xc84016=
+,=C2=A0 =C2=A0 =C2=A0 0,=C2=A0 64 &lt;&lt; 10,=C2=A0 64, ER_4K) },<br>
+=C2=A0 =C2=A0 =C2=A0{ INFO(&quot;gd25q64&quot;,=C2=A0 =C2=A0 =C2=A00xc84017=
+,=C2=A0 =C2=A0 =C2=A0 0,=C2=A0 64 &lt;&lt; 10, 128, ER_4K) },<br>
++=C2=A0 =C2=A0 { INFO(&quot;gd25wq32e&quot;,=C2=A0 =C2=A00xc86516,=C2=A0 =
+=C2=A0 =C2=A0 0,=C2=A0 64 &lt;&lt; 10,=C2=A0 64, ER_4K),<br>
++=C2=A0 =C2=A0 =C2=A0 .sfdp_read =3D m25p80_sfdp_gd25wq32e },<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/* Intel/Numonyx -- xxxs33b */<br>
+=C2=A0 =C2=A0 =C2=A0{ INFO(&quot;160s33b&quot;,=C2=A0 =C2=A0 =C2=A00x898911=
+,=C2=A0 =C2=A0 =C2=A0 0,=C2=A0 64 &lt;&lt; 10,=C2=A0 32, 0) },<br>
+diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c<br>
+index 6ee2cfaf11..cb0963328d 100644<br>
+--- a/hw/block/m25p80_sfdp.c<br>
++++ b/hw/block/m25p80_sfdp.c<br>
+@@ -406,3 +406,43 @@ static const uint8_t sfdp_is25wp256[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A00xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
+=C2=A0};<br>
+=C2=A0define_sfdp_read(is25wp256);<br>
++<br>
++/*<br>
++ * GigaDevice<br>
++ */<br>
++<br>
++static const uint8_t sfdp_gd25wq32e[] =3D {<br>
++=C2=A0 =C2=A0 0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,<br>
++=C2=A0 =C2=A0 0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,<br>
++=C2=A0 =C2=A0 0xc8, 0x00, 0x01, 0x03, 0x90, 0x00, 0x00, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xe5, 0x20, 0xf1, 0xff, 0xff, 0xff, 0xff, 0x01,<br>
++=C2=A0 =C2=A0 0x44, 0xeb, 0x08, 0x6b, 0x08, 0x3b, 0x42, 0xbb,<br>
++=C2=A0 =C2=A0 0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0x00, 0xff, 0x0c, 0x20, 0x0f, 0x52,<br>
++=C2=A0 =C2=A0 0x10, 0xd8, 0x00, 0xff, 0x63, 0x92, 0xfd, 0xfe,<br>
++=C2=A0 =C2=A0 0x83, 0x2f, 0x26, 0x46, 0xec, 0x82, 0x18, 0x44,<br>
++=C2=A0 =C2=A0 0x7a, 0x75, 0x7a, 0x75, 0x04, 0xbd, 0xd5, 0x5c,<br>
++=C2=A0 =C2=A0 0x00, 0x06, 0x64, 0x00, 0x08, 0x10, 0x00, 0x00,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0x00, 0x36, 0x50, 0x16, 0x9e, 0xf9, 0x77, 0x64,<br>
++=C2=A0 =C2=A0 0xfc, 0xcb, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,<br>
++=C2=A0 =C2=A0 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff<br>
++};<br>
++define_sfdp_read(gd25wq32e);<br>
+diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h<br>
+index 1733b56950..7d1f60f2ee 100644<br>
+--- a/hw/block/m25p80_sfdp.h<br>
++++ b/hw/block/m25p80_sfdp.h<br>
+@@ -29,4 +29,6 @@ uint8_t m25p80_sfdp_w25q01jvq(uint32_t addr);<br>
+<br>
+=C2=A0uint8_t m25p80_sfdp_is25wp256(uint32_t addr);<br>
+<br>
++uint8_t m25p80_sfdp_gd25wq32e(uint32_t addr);<br>
++<br>
+=C2=A0#endif<br>
+-- <br>
+2.32.1 (Apple Git-133)<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><b>Giacomo Parmeggiani</b><span style=3D"color:rgb(34,34,34)=
+"><br></span></div></div>
 
-There's one more thing. In "use case 1" of "Running traffic with
-vhost_vdpa in Guest" [1], running "modprobe pktgen" in the L1 VM
-gives an error:
-> module pktgen couldn't be found in /lib/modules/6.5.6-300.fc39.x86_64.
-
-The kernel version is 6.5.6-300.fc39.x86_64. I haven't tried building
-pktgen manually in L1. I'll try that and will check if vdpa_sim works
-as expected after that.
-
-[1] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-=
-got-hardware-part-1
-[2] https://wiki.archlinux.org/title/QEMU#User-mode_networking
-[3] https://wiki.archlinux.org/title/Systemd-networkd#Required_services_and=
-_setup
-[4] https://wiki.archlinux.org/title/QEMU#Mounting_a_partition_from_a_qcow2=
-_image
-[5] https://qemu-project.gitlab.io/qemu/system/device-emulation.html
-[6] https://www.redhat.com/en/blog/vdpa-kernel-framework-part-1-vdpa-bus-ab=
-stracting-hardware
-
-Thanks,
-Sahil
-
-
+--0000000000001c4665061613a148--
 
