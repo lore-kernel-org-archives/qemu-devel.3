@@ -4,70 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BF2C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 13:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2521FC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 13:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvzrV-0007d4-6D; Sun, 14 Apr 2024 09:25:38 -0400
+	id 1rw0B6-0003Rt-9J; Sun, 14 Apr 2024 09:45:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rvzrS-0007cp-0x
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 09:25:34 -0400
-Received: from zproxy3.enst.fr ([2001:660:330f:2::de])
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1rw0B4-0003Qw-15
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 09:45:50 -0400
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rvzrN-00029f-Tk
- for qemu-devel@nongnu.org; Sun, 14 Apr 2024 09:25:33 -0400
-Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 7FC77A0697;
- Sun, 14 Apr 2024 15:25:27 +0200 (CEST)
-Received: from zproxy3.enst.fr ([IPv6:::1])
- by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id hXtfDKFtSn_G; Sun, 14 Apr 2024 15:25:26 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 66E40A0675;
- Sun, 14 Apr 2024 15:25:26 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 66E40A0675
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1713101126;
- bh=Zb1J77teVeXIVDf+n62vgXntI9T/gVyBhjzwotC6gl0=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=6tsRq3LvYnrJNvMJGStSNB08t48QEoYRqks9dzp1s+HWJDa7qP+f1xI7zMIt1w2DI
- ytkiPD18980k5hzTS5dQXwc1XXoiL59kDguzBWPIreou5/AHoL/9NNYJu5NpUsVCqv
- oTynCRLun+MWJpo6LVv2x16g8zL8BBv3JTlnXCM4=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy3.enst.fr ([IPv6:::1])
- by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id b8WOHQI6Rmqo; Sun, 14 Apr 2024 15:25:26 +0200 (CEST)
-Received: from inesv-Inspiron-3501.enst.fr (unknown
- [IPv6:2a04:8ec0:0:124::190c])
- by zproxy3.enst.fr (Postfix) with ESMTPSA id 8C657A056C;
- Sun, 14 Apr 2024 15:25:25 +0200 (CEST)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Subject: [PATCH] tests/qtest : Use `g_assert_cmphex` instead of
- `g_assert_cmpuint`
-Date: Sun, 14 Apr 2024 15:24:41 +0200
-Message-ID: <20240414132518.278858-1-ines.varhol@telecom-paris.fr>
-X-Mailer: git-send-email 2.43.2
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1rw0B1-0004xa-AY
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 09:45:49 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id C3EEACE0925;
+ Sun, 14 Apr 2024 13:45:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AE0C072AA;
+ Sun, 14 Apr 2024 13:45:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1713102340;
+ bh=VpnAZmrmIP5/ENO3QKsdOZnFUI49ounKx4tptzFt17g=;
+ h=Subject:To:Cc:From:Date:From;
+ b=mB3oUU9wvM0Ch0Ut+IpGq77l4paRCOsyzzwU6EI4RxrhYZHmD5/0fCZ27LZAgaabG
+ K7qe8IxvUatZpDXDmg70CB7S9rvAW9z0m4FFqWkcoGAmgeyCtpzGEV/fI70TDJYwiX
+ OacrYKrppzz8Te0uflgiTSc2a1HV0ZzyidkRu0RM=
+Subject: Patch "virtio_net: Do not send RSS key if it is not supported" has
+ been added to the 6.8-stable tree
+To: davem@davemloft.net, gregkh@linuxfoundation.org, hengqi@linux.alibaba.com,
+ leitao@debian.org, qemu-devel@nongnu.org, xuanzhuo@linux.alibaba.com
+Cc: <stable-commits@vger.kernel.org>
+From: <gregkh@linuxfoundation.org>
+Date: Sun, 14 Apr 2024 15:43:57 +0200
+Message-ID: <2024041456-debrief-crawlers-98b4@gregkh>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::de;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 8bit
+X-stable: commit
+X-Patchwork-Hint: ignore 
+Received-SPF: pass client-ip=145.40.73.55;
+ envelope-from=gregkh@linuxfoundation.org; helo=sin.source.kernel.org
+X-Spam_score_int: -64
+X-Spam_score: -6.5
+X-Spam_bar: ------
+X-Spam_report: (-6.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.127,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,604 +69,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The messages for STM32L4x5 tests will be easier to understand with
-`g_assert_cmphex` since the comparisions were made with hexadecimal
-numbers.
 
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+This is a note to let you know that I've just added the patch titled
+
+    virtio_net: Do not send RSS key if it is not supported
+
+to the 6.8-stable tree which can be found at:
+    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+
+The filename of the patch is:
+     virtio_net-do-not-send-rss-key-if-it-is-not-supported.patch
+and it can be found in the queue-6.8 subdirectory.
+
+If you, or anyone else, feels it should not be added to the stable tree,
+please let <stable@vger.kernel.org> know about it.
+
+
+From 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 Mon Sep 17 00:00:00 2001
+From: Breno Leitao <leitao@debian.org>
+Date: Wed, 3 Apr 2024 08:43:12 -0700
+Subject: virtio_net: Do not send RSS key if it is not supported
+
+From: Breno Leitao <leitao@debian.org>
+
+commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
+
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
+
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
+
+    # ethtool -X eth0  hfunc toeplitz
+
+This is how the problem happens:
+
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+scatter-gather
+
+4) Since the command above does not have a key, then the last
+scatter-gatter entry will be zeroed, since rss_key_size == 0.
+sg_buf_size = vi->rss_key_size;
+
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+with zero length, and do the following in virtqueue_map_desc() (QEMU
+function):
+
+  if (!sz) {
+      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+    vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+	     !virtqueue_is_broken(vi->cvq))
+	      cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+loops here forever. Keeping in mind that virtqueue_is_broken() does
+not look at the qemu `vdev->broken`, so, it never realizes that the
+vitio is broken at QEMU side.
+
+Fix it by not sending RSS commands if the feature is not available in
+the device.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tests/qtest/stm32l4x5_exti-test.c   | 138 ++++++++++++++--------------
- tests/qtest/stm32l4x5_syscfg-test.c |  74 +++++++--------
- 2 files changed, 106 insertions(+), 106 deletions(-)
+ drivers/net/virtio_net.c |   26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/stm32l4x5_exti-test.c b/tests/qtest/stm32l4x5_ex=
-ti-test.c
-index 81830be8ae..7092860b9b 100644
---- a/tests/qtest/stm32l4x5_exti-test.c
-+++ b/tests/qtest/stm32l4x5_exti-test.c
-@@ -70,44 +70,44 @@ static void test_reg_write_read(void)
-     /* Test that non-reserved bits in xMR and xTSR can be set and cleare=
-d */
-=20
-     exti_writel(EXTI_IMR1, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_IMR1), =3D=3D, 0xFFFFFFFF);
-+    g_assert_cmphex(exti_readl(EXTI_IMR1), =3D=3D, 0xFFFFFFFF);
-     exti_writel(EXTI_IMR1, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_IMR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_IMR1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_EMR1, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_EMR1), =3D=3D, 0xFFFFFFFF);
-+    g_assert_cmphex(exti_readl(EXTI_EMR1), =3D=3D, 0xFFFFFFFF);
-     exti_writel(EXTI_EMR1, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_EMR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_EMR1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_RTSR1, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_RTSR1), =3D=3D, 0x007DFFFF);
-+    g_assert_cmphex(exti_readl(EXTI_RTSR1), =3D=3D, 0x007DFFFF);
-     exti_writel(EXTI_RTSR1, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_RTSR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_RTSR1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_FTSR1, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_FTSR1), =3D=3D, 0x007DFFFF);
-+    g_assert_cmphex(exti_readl(EXTI_FTSR1), =3D=3D, 0x007DFFFF);
-     exti_writel(EXTI_FTSR1, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_FTSR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_FTSR1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_IMR2, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_IMR2), =3D=3D, 0x000000FF);
-+    g_assert_cmphex(exti_readl(EXTI_IMR2), =3D=3D, 0x000000FF);
-     exti_writel(EXTI_IMR2, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_IMR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_IMR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_EMR2, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_EMR2), =3D=3D, 0x000000FF);
-+    g_assert_cmphex(exti_readl(EXTI_EMR2), =3D=3D, 0x000000FF);
-     exti_writel(EXTI_EMR2, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_EMR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_EMR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_RTSR2, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000078);
-+    g_assert_cmphex(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000078);
-     exti_writel(EXTI_RTSR2, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_FTSR2, 0xFFFFFFFF);
--    g_assert_cmpuint(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000078);
-+    g_assert_cmphex(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000078);
-     exti_writel(EXTI_FTSR2, 0x00000000);
--    g_assert_cmpuint(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000000);
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3768,6 +3768,7 @@ static int virtnet_set_rxfh(struct net_d
+ 			    struct netlink_ext_ack *extack)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
++	bool update = false;
+ 	int i;
+ 
+ 	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
+@@ -3775,13 +3776,28 @@ static int virtnet_set_rxfh(struct net_d
+ 		return -EOPNOTSUPP;
+ 
+ 	if (rxfh->indir) {
++		if (!vi->has_rss)
++			return -EOPNOTSUPP;
++
+ 		for (i = 0; i < vi->rss_indir_table_size; ++i)
+ 			vi->ctrl->rss.indirection_table[i] = rxfh->indir[i];
++		update = true;
+ 	}
+-	if (rxfh->key)
++
++	if (rxfh->key) {
++		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
++		 * device provides hash calculation capabilities, that is,
++		 * hash_key is configured.
++		 */
++		if (!vi->has_rss && !vi->has_rss_hash_report)
++			return -EOPNOTSUPP;
++
+ 		memcpy(vi->ctrl->rss.key, rxfh->key, vi->rss_key_size);
++		update = true;
++	}
+ 
+-	virtnet_commit_rss_command(vi);
++	if (update)
++		virtnet_commit_rss_command(vi);
+ 
+ 	return 0;
  }
-=20
- static void test_direct_lines_write(void)
-@@ -115,28 +115,28 @@ static void test_direct_lines_write(void)
-     /* Test that direct lines reserved bits are not written to */
-=20
-     exti_writel(EXTI_RTSR1, 0xFF820000);
--    g_assert_cmpuint(exti_readl(EXTI_RTSR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_RTSR1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_FTSR1, 0xFF820000);
--    g_assert_cmpuint(exti_readl(EXTI_FTSR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_FTSR1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_SWIER1, 0xFF820000);
--    g_assert_cmpuint(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_PR1, 0xFF820000);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_RTSR2, 0x00000087);
--    g_assert_cmpuint(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_FTSR2, 0x00000087);
--    g_assert_cmpuint(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_SWIER2, 0x00000087);
--    g_assert_cmpuint(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_PR2, 0x00000087);
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
- }
-=20
- static void test_reserved_bits_write(void)
-@@ -144,22 +144,22 @@ static void test_reserved_bits_write(void)
-     /* Test that reserved bits stay are not written to */
-=20
-     exti_writel(EXTI_IMR2, 0xFFFFFF00);
--    g_assert_cmpuint(exti_readl(EXTI_IMR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_IMR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_EMR2, 0xFFFFFF00);
--    g_assert_cmpuint(exti_readl(EXTI_EMR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_EMR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_RTSR2, 0xFFFFFF00);
--    g_assert_cmpuint(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_RTSR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_FTSR2, 0xFFFFFF00);
--    g_assert_cmpuint(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_FTSR2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_SWIER2, 0xFFFFFF00);
--    g_assert_cmpuint(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000000);
-=20
-     exti_writel(EXTI_PR2, 0xFFFFFF00);
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
- }
-=20
- static void test_software_interrupt(void)
-@@ -180,7 +180,7 @@ static void test_software_interrupt(void)
-=20
-     enable_nvic_irq(EXTI0_IRQ);
-     /* Check that there are no interrupts already pending in PR */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that this specific interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -191,9 +191,9 @@ static void test_software_interrupt(void)
-     exti_writel(EXTI_SWIER1, 0x00000001);
-=20
-     /* Check that the write in SWIER was effective */
--    g_assert_cmpuint(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000001);
-     /* Check that the corresponding pending bit in PR is set */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-     /* Check that the corresponding interrupt is pending in the NVIC */
-     g_assert_true(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -201,9 +201,9 @@ static void test_software_interrupt(void)
-     exti_writel(EXTI_PR1, 0x00000001);
-=20
-     /* Check that the write in PR was effective */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that the corresponding bit in SWIER was cleared */
--    g_assert_cmpuint(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000000);
-     /* Check that the interrupt is still pending in the NVIC */
-     g_assert_true(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -214,7 +214,7 @@ static void test_software_interrupt(void)
-=20
-     enable_nvic_irq(EXTI35_IRQ);
-     /* Check that there are no interrupts already pending */
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-     g_assert_false(check_nvic_pending(EXTI35_IRQ));
-=20
-     /* Enable interrupt line EXTI0 */
-@@ -224,9 +224,9 @@ static void test_software_interrupt(void)
-     exti_writel(EXTI_SWIER2, 0x00000008);
-=20
-     /* Check that the write in SWIER was effective */
--    g_assert_cmpuint(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000008);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000008);
-     /* Check that the corresponding pending bit in PR is set */
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000008);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000008);
-     /* Check that the corresponding interrupt is pending in the NVIC */
-     g_assert_true(check_nvic_pending(EXTI35_IRQ));
-=20
-@@ -234,9 +234,9 @@ static void test_software_interrupt(void)
-     exti_writel(EXTI_PR2, 0x00000008);
-=20
-     /* Check that the write in PR was effective */
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-     /* Check that the corresponding bit in SWIER was cleared */
--    g_assert_cmpuint(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000000);
-     /* Check that the interrupt is still pending in the NVIC */
-     g_assert_true(check_nvic_pending(EXTI35_IRQ));
-=20
-@@ -259,16 +259,16 @@ static void test_edge_selector(void)
-=20
-     /* Test that an irq is raised on rising edge only */
-     exti_set_irq(0, 0);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-     exti_set_irq(0, 1);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-     g_assert_true(check_nvic_pending(EXTI0_IRQ));
-=20
-     /* Clean the test */
-     exti_writel(EXTI_PR1, 0x00000001);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     unpend_nvic_irq(EXTI0_IRQ);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -280,16 +280,16 @@ static void test_edge_selector(void)
-=20
-     /* Test that an irq is raised on falling edge only */
-     exti_set_irq(0, 1);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-     exti_set_irq(0, 0);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-     g_assert_true(check_nvic_pending(EXTI0_IRQ));
-=20
-     /* Clean the test */
-     exti_writel(EXTI_PR1, 0x00000001);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     unpend_nvic_irq(EXTI0_IRQ);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -300,23 +300,23 @@ static void test_edge_selector(void)
-=20
-     /* Test that an irq is raised on rising edge */
-     exti_set_irq(0, 1);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-     g_assert_true(check_nvic_pending(EXTI0_IRQ));
-=20
-     /* Clean the test */
-     exti_writel(EXTI_PR1, 0x00000001);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     unpend_nvic_irq(EXTI0_IRQ);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-     /* Test that an irq is raised on falling edge */
-     exti_set_irq(0, 0);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000001);
-     g_assert_true(check_nvic_pending(EXTI0_IRQ));
-=20
-     /* Clean the test */
-     exti_writel(EXTI_PR1, 0x00000001);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     unpend_nvic_irq(EXTI0_IRQ);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -327,11 +327,11 @@ static void test_edge_selector(void)
-=20
-     /* Test that no irq is raised */
-     exti_set_irq(0, 1);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-     exti_set_irq(0, 0);
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
- }
-=20
-@@ -350,7 +350,7 @@ static void test_no_software_interrupt(void)
-=20
-     enable_nvic_irq(EXTI0_IRQ);
-     /* Check that there are no interrupts already pending in PR */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that this specific interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -361,9 +361,9 @@ static void test_no_software_interrupt(void)
-     exti_writel(EXTI_SWIER1, 0x00000001);
-=20
-     /* Check that the write in SWIER was effective */
--    g_assert_cmpuint(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER1), =3D=3D, 0x00000001);
-     /* Check that the pending bit in PR wasn't set */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that the interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -371,7 +371,7 @@ static void test_no_software_interrupt(void)
-     exti_writel(EXTI_IMR1, 0x00000001);
-=20
-     /* Check that the pending bit in PR wasn't set */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that the interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI0_IRQ));
-=20
-@@ -382,7 +382,7 @@ static void test_no_software_interrupt(void)
-=20
-     enable_nvic_irq(EXTI35_IRQ);
-     /* Check that there are no interrupts already pending in PR */
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-     /* Check that this specific interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI35_IRQ));
-=20
-@@ -393,9 +393,9 @@ static void test_no_software_interrupt(void)
-     exti_writel(EXTI_SWIER2, 0x00000008);
-=20
-     /* Check that the write in SWIER was effective */
--    g_assert_cmpuint(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000008);
-+    g_assert_cmphex(exti_readl(EXTI_SWIER2), =3D=3D, 0x00000008);
-     /* Check that the pending bit in PR wasn't set */
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-     /* Check that the interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI35_IRQ));
-=20
-@@ -403,7 +403,7 @@ static void test_no_software_interrupt(void)
-     exti_writel(EXTI_IMR2, 0x00000008);
-=20
-     /* Check that the pending bit in PR wasn't set */
--    g_assert_cmpuint(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR2), =3D=3D, 0x00000000);
-     /* Check that the interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI35_IRQ));
- }
-@@ -423,7 +423,7 @@ static void test_masked_interrupt(void)
-=20
-     enable_nvic_irq(EXTI1_IRQ);
-     /* Check that there are no interrupts already pending in PR */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that this specific interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI1_IRQ));
-=20
-@@ -437,7 +437,7 @@ static void test_masked_interrupt(void)
-     exti_set_irq(1, 1);
-=20
-     /* Check that the pending bit in PR wasn't set */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that the interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI1_IRQ));
-=20
-@@ -445,7 +445,7 @@ static void test_masked_interrupt(void)
-     exti_writel(EXTI_IMR1, 0x00000002);
-=20
-     /* Check that the pending bit in PR wasn't set */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that the interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI1_IRQ));
- }
-@@ -469,7 +469,7 @@ static void test_interrupt(void)
-=20
-     enable_nvic_irq(EXTI1_IRQ);
-     /* Check that there are no interrupts already pending in PR */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that this specific interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI1_IRQ));
-=20
-@@ -483,7 +483,7 @@ static void test_interrupt(void)
-     exti_set_irq(1, 1);
-=20
-     /* Check that the pending bit in PR was set */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000002);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000002);
-     /* Check that the interrupt is pending in NVIC */
-     g_assert_true(check_nvic_pending(EXTI1_IRQ));
-=20
-@@ -491,7 +491,7 @@ static void test_interrupt(void)
-     exti_writel(EXTI_PR1, 0x00000002);
-=20
-     /* Check that the write in PR was effective */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that the interrupt is still pending in the NVIC */
-     g_assert_true(check_nvic_pending(EXTI1_IRQ));
-=20
-@@ -509,7 +509,7 @@ static void test_orred_interrupts(void)
-      */
-     enable_nvic_irq(EXTI5_9_IRQ);
-     /* Check that there are no interrupts already pending in PR */
--    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-     /* Check that this specific interrupt isn't pending in NVIC */
-     g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
-=20
-@@ -522,11 +522,11 @@ static void test_orred_interrupts(void)
-     /* Raise GPIO line i, check that the interrupt is pending */
-     for (unsigned i =3D 5; i < 10; i++) {
-         exti_set_irq(i, 1);
--        g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << i);
-+        g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 1 << i);
-         g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
-=20
-         exti_writel(EXTI_PR1, 1 << i);
--        g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+        g_assert_cmphex(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-         g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
-=20
-         unpend_nvic_irq(EXTI5_9_IRQ);
-diff --git a/tests/qtest/stm32l4x5_syscfg-test.c b/tests/qtest/stm32l4x5_=
-syscfg-test.c
-index ed4801798d..59bac829b7 100644
---- a/tests/qtest/stm32l4x5_syscfg-test.c
-+++ b/tests/qtest/stm32l4x5_syscfg-test.c
-@@ -54,27 +54,27 @@ static void test_reset(void)
-     /*
-      * Test that registers are initialized at the correct values
-      */
--    g_assert_cmpuint(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x7C000001);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x7C000001);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SCSR), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SCSR), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR2), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SWPR), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SWPR), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x00000000);
-=20
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SWPR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SWPR2), =3D=3D, 0x00000000);
- }
-=20
- static void test_reserved_bits(void)
-@@ -87,25 +87,25 @@ static void test_reserved_bits(void)
-      * register is still at reset value
-      */
-     syscfg_writel(SYSCFG_MEMRMP, 0xFFFFFEF8);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_CFGR1, 0x7F00FEFF);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x7C000001);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x7C000001);
-=20
-     syscfg_writel(SYSCFG_EXTICR1, 0xFFFF0000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_EXTICR2, 0xFFFF0000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_EXTICR3, 0xFFFF0000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_EXTICR4, 0xFFFF0000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_SKR, 0xFFFFFF00);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x00000000);
- }
-=20
- static void test_set_and_clear(void)
-@@ -114,40 +114,40 @@ static void test_set_and_clear(void)
-      * Test that regular bits can be set and cleared
-      */
-     syscfg_writel(SYSCFG_MEMRMP, 0x00000107);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000107);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000107);
-     syscfg_writel(SYSCFG_MEMRMP, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_MEMRMP), =3D=3D, 0x00000000);
-=20
-     /* cfgr1 bit 0 is clear only so we keep it set */
-     syscfg_writel(SYSCFG_CFGR1, 0xFCFF0101);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0xFCFF0101);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0xFCFF0101);
-     syscfg_writel(SYSCFG_CFGR1, 0x00000001);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x00000001);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x00000001);
-=20
-     syscfg_writel(SYSCFG_EXTICR1, 0x0000FFFF);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x0000FFFF);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x0000FFFF);
-     syscfg_writel(SYSCFG_EXTICR1, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR1), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_EXTICR2, 0x0000FFFF);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x0000FFFF);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x0000FFFF);
-     syscfg_writel(SYSCFG_EXTICR2, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR2), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_EXTICR3, 0x0000FFFF);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x0000FFFF);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x0000FFFF);
-     syscfg_writel(SYSCFG_EXTICR3, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR3), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_EXTICR4, 0x0000FFFF);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x0000FFFF);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x0000FFFF);
-     syscfg_writel(SYSCFG_EXTICR4, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_EXTICR4), =3D=3D, 0x00000000);
-=20
-     syscfg_writel(SYSCFG_SKR, 0x000000FF);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x000000FF);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x000000FF);
-     syscfg_writel(SYSCFG_SKR, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SKR), =3D=3D, 0x00000000);
- }
-=20
- static void test_clear_by_writing_1(void)
-@@ -156,7 +156,7 @@ static void test_clear_by_writing_1(void)
-      * Test that writing '1' doesn't set the bit
-      */
-     syscfg_writel(SYSCFG_CFGR2, 0x00000100);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR2), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR2), =3D=3D, 0x00000000);
- }
-=20
- static void test_set_only_bits(void)
-@@ -166,15 +166,15 @@ static void test_set_only_bits(void)
-      */
-     syscfg_writel(SYSCFG_CFGR2, 0x0000000F);
-     syscfg_writel(SYSCFG_CFGR2, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR2), =3D=3D, 0x0000000F);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR2), =3D=3D, 0x0000000F);
-=20
-     syscfg_writel(SYSCFG_SWPR, 0xFFFFFFFF);
-     syscfg_writel(SYSCFG_SWPR, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SWPR), =3D=3D, 0xFFFFFFFF);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SWPR), =3D=3D, 0xFFFFFFFF);
-=20
-     syscfg_writel(SYSCFG_SWPR2, 0xFFFFFFFF);
-     syscfg_writel(SYSCFG_SWPR2, 0x00000000);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_SWPR2), =3D=3D, 0xFFFFFFFF);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_SWPR2), =3D=3D, 0xFFFFFFFF);
-=20
-     system_reset();
- }
-@@ -186,7 +186,7 @@ static void test_clear_only_bits(void)
-      */
-     syscfg_writel(SYSCFG_CFGR1, 0x00000000);
-     syscfg_writel(SYSCFG_CFGR1, 0x00000001);
--    g_assert_cmpuint(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x00000000);
-+    g_assert_cmphex(syscfg_readl(SYSCFG_CFGR1), =3D=3D, 0x00000000);
-=20
-     system_reset();
- }
---=20
-2.43.2
+@@ -4686,13 +4702,15 @@ static int virtnet_probe(struct virtio_d
+ 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+ 		vi->has_rss_hash_report = true;
+ 
+-	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
++	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+ 		vi->has_rss = true;
+ 
+-	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_indir_table_size =
+ 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+ 				rss_max_indirection_table_length));
++	}
++
++	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_key_size =
+ 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+ 
 
+
+Patches currently in stable-queue which might be from leitao@debian.org are
+
+queue-6.8/virtio_net-do-not-send-rss-key-if-it-is-not-supported.patch
 
