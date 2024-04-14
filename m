@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC64C001CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 13:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8163BC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Apr 2024 13:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rvzZ5-0007n8-Pq; Sun, 14 Apr 2024 09:06:35 -0400
+	id 1rvzZ3-0007lU-Rs; Sun, 14 Apr 2024 09:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rvzZ1-0007kA-Rf; Sun, 14 Apr 2024 09:06:31 -0400
-Received: from zproxy1.enst.fr ([2001:660:330f:2::dc])
+ id 1rvzZ1-0007k9-R3; Sun, 14 Apr 2024 09:06:31 -0400
+Received: from zproxy1.enst.fr ([137.194.2.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rvzYw-0007Et-0W; Sun, 14 Apr 2024 09:06:30 -0400
+ id 1rvzYw-0007F0-19; Sun, 14 Apr 2024 09:06:30 -0400
 Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 5F41AC064E;
- Sun, 14 Apr 2024 15:06:18 +0200 (CEST)
+ by zproxy1.enst.fr (Postfix) with ESMTP id 29CE6C063B;
+ Sun, 14 Apr 2024 15:06:19 +0200 (CEST)
 Received: from zproxy1.enst.fr ([IPv6:::1])
  by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id oWntk_Dx0LQf; Sun, 14 Apr 2024 15:06:17 +0200 (CEST)
+ id w-I1qe1IwXKy; Sun, 14 Apr 2024 15:06:18 +0200 (CEST)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id D375CC062F;
- Sun, 14 Apr 2024 15:06:17 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr D375CC062F
+ by zproxy1.enst.fr (Postfix) with ESMTP id D401FC0593;
+ Sun, 14 Apr 2024 15:06:18 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr D401FC0593
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1713099977;
- bh=/o1ab/cxfRN6X232LswwPlcMA4iU/ZqxyADyzyD45ek=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1713099978;
+ bh=j1OLjRXz8cKZbnXoeuqFRRV9nutmUnwXbF7aVzmCyuQ=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=m2C8M+I6hRKb9bitarjXjFymZzOj9vLOb9fYRqt6Q1ymlP7lpWEViYkQUEjQkIq3g
- 7o7h/OQtFE3BbWLVz+2ScwYPdP+duZGNLGFSDPrkHYy7MWzTqoAaFeZMm4SIjib7rm
- /DkL2Z1EM/jN51BLhBJnMBF3lXzFNbLcS0vxdL1I=
+ b=l57prrSDt+1kH/NGPrSTRu/QqzgRBNtS6XpB6qA6/jsKKDbrsA6hVO6IVAjtoPbyX
+ Y6PW3dbwrH32Qlnf5XFwmFPgS5D14Jr3SZXaZ4F4CRu9cGp7lINJK1hm7e9CBtDOTz
+ tZSG0zinB6fWGVEl6oRUmSu73tIST0TKWFRmHuhA=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy1.enst.fr ([IPv6:::1])
  by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id 7dghrslxCNKr; Sun, 14 Apr 2024 15:06:17 +0200 (CEST)
+ id 8M2D6NsgYhSc; Sun, 14 Apr 2024 15:06:18 +0200 (CEST)
 Received: from inesv-Inspiron-3501.enst.fr (unknown
  [IPv6:2a04:8ec0:0:124::190c])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id D923BC0593;
- Sun, 14 Apr 2024 15:06:16 +0200 (CEST)
+ by zproxy1.enst.fr (Postfix) with ESMTPSA id CE540C061B;
+ Sun, 14 Apr 2024 15:06:17 +0200 (CEST)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -53,16 +53,16 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Samuel Tardieu <sam@rfc1149.net>,
  Arnaud Minier <arnaud.minier@telecom-paris.fr>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v4 2/5] hw/arm : Pass STM32L4x5 SYSCFG gpios to STM32L4x5 SoC
-Date: Sun, 14 Apr 2024 15:05:45 +0200
-Message-ID: <20240414130604.182059-3-ines.varhol@telecom-paris.fr>
+Subject: [PATCH v4 3/5] hw/arm : Create Bl475eMachineState
+Date: Sun, 14 Apr 2024 15:05:46 +0200
+Message-ID: <20240414130604.182059-4-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240414130604.182059-1-ines.varhol@telecom-paris.fr>
 References: <20240414130604.182059-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::dc;
+Received-SPF: pass client-ip=137.194.2.220;
  envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy1.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,27 +85,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Exposing SYSCFG inputs to the SoC is practical in order to wire the SoC
-to the optional DM163 display from the board code (GPIOs outputs need
-to be connected to both SYSCFG inputs and DM163 inputs).
-
-STM32L4x5 SYSCFG in-irq interception needed to be changed accordingly.
-
 Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 ---
- hw/arm/stm32l4x5_soc.c              |  6 ++++--
- tests/qtest/stm32l4x5_gpio-test.c   | 12 +++++++-----
- tests/qtest/stm32l4x5_syscfg-test.c | 16 +++++++++-------
- 3 files changed, 20 insertions(+), 14 deletions(-)
+ hw/arm/b-l475e-iot01a.c | 44 +++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 13 deletions(-)
 
-diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
-index 40e294f838..c4b45e6956 100644
---- a/hw/arm/stm32l4x5_soc.c
-+++ b/hw/arm/stm32l4x5_soc.c
-@@ -1,8 +1,8 @@
- /*
-  * STM32L4x5 SoC family
+diff --git a/hw/arm/b-l475e-iot01a.c b/hw/arm/b-l475e-iot01a.c
+index d862aa43fc..2b570b3e09 100644
+--- a/hw/arm/b-l475e-iot01a.c
++++ b/hw/arm/b-l475e-iot01a.c
+@@ -2,8 +2,8 @@
+  * B-L475E-IOT01A Discovery Kit machine
+  * (B-L475E-IOT01A IoT Node)
   *
 - * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
 - * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
@@ -114,143 +106,69 @@ index 40e294f838..c4b45e6956 100644
   *
   * SPDX-License-Identifier: GPL-2.0-or-later
   *
-@@ -221,6 +221,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
-c, Error **errp)
-         }
-     }
+@@ -32,33 +32,51 @@
 =20
-+    qdev_pass_gpios(DEVICE(&s->syscfg), dev_soc, NULL);
+ /* B-L475E-IOT01A implementation is derived from netduinoplus2 */
+=20
+-static void b_l475e_iot01a_init(MachineState *machine)
++#define TYPE_B_L475E_IOT01A MACHINE_TYPE_NAME("b-l475e-iot01a")
++OBJECT_DECLARE_SIMPLE_TYPE(Bl475eMachineState, B_L475E_IOT01A)
 +
-     /* EXTI device */
-     busdev =3D SYS_BUS_DEVICE(&s->exti);
-     if (!sysbus_realize(busdev, errp)) {
-diff --git a/tests/qtest/stm32l4x5_gpio-test.c b/tests/qtest/stm32l4x5_gp=
-io-test.c
-index 0f6bda54d3..495a6fc413 100644
---- a/tests/qtest/stm32l4x5_gpio-test.c
-+++ b/tests/qtest/stm32l4x5_gpio-test.c
-@@ -43,6 +43,8 @@
- #define OTYPER_PUSH_PULL 0
- #define OTYPER_OPEN_DRAIN 1
-=20
-+#define SYSCFG "/machine/soc"
++typedef struct Bl475eMachineState {
++    MachineState parent_obj;
 +
- const uint32_t moder_reset[NUM_GPIOS] =3D {
-     0xABFFFFFF,
-     0xFFFFFEBF,
-@@ -284,7 +286,7 @@ static void test_gpio_output_mode(const void *data)
-     uint32_t gpio =3D test_gpio_addr(data);
-     unsigned int gpio_id =3D get_gpio_id(gpio);
-=20
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
-+    qtest_irq_intercept_in(global_qtest, SYSCFG);
-=20
-     /* Set a bit in ODR and check nothing happens */
-     gpio_set_bit(gpio, ODR, pin, 1);
-@@ -319,7 +321,7 @@ static void test_gpio_input_mode(const void *data)
-     uint32_t gpio =3D test_gpio_addr(data);
-     unsigned int gpio_id =3D get_gpio_id(gpio);
-=20
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
-+    qtest_irq_intercept_in(global_qtest, SYSCFG);
-=20
-     /* Configure a line as input, raise it, and check that the pin is hi=
-gh */
-     gpio_set_2bits(gpio, MODER, pin, MODER_INPUT);
-@@ -348,7 +350,7 @@ static void test_pull_up_pull_down(const void *data)
-     uint32_t gpio =3D test_gpio_addr(data);
-     unsigned int gpio_id =3D get_gpio_id(gpio);
-=20
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
-+    qtest_irq_intercept_in(global_qtest, SYSCFG);
-=20
-     /* Configure a line as input with pull-up, check the line is set hig=
-h */
-     gpio_set_2bits(gpio, MODER, pin, MODER_INPUT);
-@@ -378,7 +380,7 @@ static void test_push_pull(const void *data)
-     uint32_t gpio =3D test_gpio_addr(data);
-     uint32_t gpio2 =3D GPIO_BASE_ADDR + (GPIO_H - gpio);
-=20
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
-+    qtest_irq_intercept_in(global_qtest, SYSCFG);
-=20
-     /* Setting a line high externally, configuring it in push-pull outpu=
-t */
-     /* And checking the pin was disconnected */
-@@ -425,7 +427,7 @@ static void test_open_drain(const void *data)
-     uint32_t gpio =3D test_gpio_addr(data);
-     uint32_t gpio2 =3D GPIO_BASE_ADDR + (GPIO_H - gpio);
-=20
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
-+    qtest_irq_intercept_in(global_qtest, SYSCFG);
-=20
-     /* Setting a line high externally, configuring it in open-drain outp=
-ut */
-     /* And checking the pin was disconnected */
-diff --git a/tests/qtest/stm32l4x5_syscfg-test.c b/tests/qtest/stm32l4x5_=
-syscfg-test.c
-index ed4801798d..eed9d5940b 100644
---- a/tests/qtest/stm32l4x5_syscfg-test.c
-+++ b/tests/qtest/stm32l4x5_syscfg-test.c
-@@ -1,8 +1,8 @@
- /*
-  * QTest testcase for STM32L4x5_SYSCFG
-  *
-- * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-- * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-+ * Copyright (c) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-+ * Copyright (c) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-  *
-  * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-  * See the COPYING file in the top-level directory.
-@@ -25,6 +25,9 @@
- #define SYSCFG_SWPR2 0x28
- #define INVALID_ADDR 0x2C
-=20
-+#define EXTI "/machine/soc/exti"
-+#define SYSCFG "/machine/soc"
++    Stm32l4x5SocState soc;
++} Bl475eMachineState;
 +
- static void syscfg_writel(unsigned int offset, uint32_t value)
++static void bl475e_init(MachineState *machine)
  {
-     writel(SYSCFG_BASE_ADDR + offset, value);
-@@ -37,8 +40,7 @@ static uint32_t syscfg_readl(unsigned int offset)
++    Bl475eMachineState *s =3D B_L475E_IOT01A(machine);
+     const Stm32l4x5SocClass *sc;
+-    DeviceState *dev;
 =20
- static void syscfg_set_irq(int num, int level)
- {
--   qtest_set_irq_in(global_qtest, "/machine/soc/syscfg",
--                    NULL, num, level);
-+   qtest_set_irq_in(global_qtest, SYSCFG, NULL, num, level);
+-    dev =3D qdev_new(TYPE_STM32L4X5XG_SOC);
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    object_initialize_child(OBJECT(machine), "soc", &s->soc,
++                            TYPE_STM32L4X5XG_SOC);
++    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+=20
+-    sc =3D STM32L4X5_SOC_GET_CLASS(dev);
++    sc =3D STM32L4X5_SOC_GET_CLASS(&s->soc);
+     armv7m_load_kernel(ARM_CPU(first_cpu),
+-                       machine->kernel_filename,
+-                       0, sc->flash_size);
++        machine->kernel_filename, 0, sc->flash_size);
  }
 =20
- static void system_reset(void)
-@@ -197,7 +199,7 @@ static void test_interrupt(void)
-      * Test that GPIO rising lines result in an irq
-      * with the right configuration
-      */
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/exti");
-+    qtest_irq_intercept_in(global_qtest, EXTI);
+-static void b_l475e_iot01a_machine_init(MachineClass *mc)
++static void bl475e_machine_init(ObjectClass *oc, void *data)
+ {
++    MachineClass *mc =3D MACHINE_CLASS(oc);
+     static const char *machine_valid_cpu_types[] =3D {
+         ARM_CPU_TYPE_NAME("cortex-m4"),
+         NULL
+     };
+     mc->desc =3D "B-L475E-IOT01A Discovery Kit (Cortex-M4)";
+-    mc->init =3D b_l475e_iot01a_init;
++    mc->init =3D bl475e_init;
+     mc->valid_cpu_types =3D machine_valid_cpu_types;
 =20
-     /* GPIOA is the default source for EXTI lines 0 to 15 */
+     /* SRAM pre-allocated as part of the SoC instantiation */
+     mc->default_ram_size =3D 0;
+ }
 =20
-@@ -230,7 +232,7 @@ static void test_irq_pin_multiplexer(void)
-      * Test that syscfg irq sets the right exti irq
-      */
-=20
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/exti");
-+    qtest_irq_intercept_in(global_qtest, EXTI);
-=20
-     syscfg_set_irq(0, 1);
-=20
-@@ -257,7 +259,7 @@ static void test_irq_gpio_multiplexer(void)
-      * Test that an irq is generated only by the right GPIO
-      */
-=20
--    qtest_irq_intercept_in(global_qtest, "/machine/soc/exti");
-+    qtest_irq_intercept_in(global_qtest, EXTI);
-=20
-     /* GPIOA is the default source for EXTI lines 0 to 15 */
-=20
+-DEFINE_MACHINE("b-l475e-iot01a", b_l475e_iot01a_machine_init)
++static const TypeInfo bl475e_machine_type[] =3D {
++    {
++        .name           =3D TYPE_B_L475E_IOT01A,
++        .parent         =3D TYPE_MACHINE,
++        .instance_size  =3D sizeof(Bl475eMachineState),
++        .class_init     =3D bl475e_machine_init,
++    }
++};
++
++DEFINE_TYPES(bl475e_machine_type)
 --=20
 2.43.2
 
