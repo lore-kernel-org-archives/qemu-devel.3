@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ED1EC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 09:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61B8C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 09:43:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwIqI-0003uC-2V; Mon, 15 Apr 2024 05:41:39 -0400
+	id 1rwIrd-00052j-Am; Mon, 15 Apr 2024 05:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwIq4-0003tN-HG
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:41:25 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwIpz-0005jt-QZ
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:41:24 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d8b194341eso24822731fa.3
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 02:41:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713174075; x=1713778875; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CmaCiUrvyVtRYi9Y9EJpG/Va5Q4CHt5H8x2chPqH73g=;
- b=wTPgWQajlmetO2G3iUq5bHCd/TSg59g+yopRV3Bs/SH9elblk+p66iapJQBMvpvDuG
- 8sZXafgN8hubkzVh796P7M1L/e462yyszc11QKmaVUfEVYmgCFAACGxliV+kFEQcZeul
- tOIPRhsGKGEBQXL4gtI/frz4OZQuYdys17kP/ihvZDbHyDJ4SHkkvMZ8iScTb9sAurAX
- rUTI3uWNX1qwyJcNV6EBwbznud5j6ftAn38RF8QlYRW5ks5uWVi+FPq+4zvkZMKKaWd9
- Iwm5BWVnI4LzAELIXpQS/Cszglc8P1TTahV5+ZY1Zt1J/bi0KLIBSq+BG3nfIS46u7kc
- Wzgg==
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rwIrX-000526-U2
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:42:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rwIrV-0005wZ-HW
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:42:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713174164;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y44WESwrPvKb2/7jLN9t57Te23sFFoIGiNTiKgnL++g=;
+ b=BEarI59bBcnEvexITYR8oLNOXs8PItBT+RmBn0sHl1cwcEE0aCUkCxdYOBDbkKXXWDjo1Z
+ 7TbYpVfywWTL7uNPeuI9WSp0vD4gXkbY65+NyCy1MVlvQgcWD6gbUoHAaKKbOaXJbP3UnO
+ HIcoQTj5FOsacGnQWuPHsSAlAYOUoew=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-249-neg0PzYnO3StXZpq361WJA-1; Mon, 15 Apr 2024 05:42:42 -0400
+X-MC-Unique: neg0PzYnO3StXZpq361WJA-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a52511b783dso150710866b.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 02:42:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713174075; x=1713778875;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CmaCiUrvyVtRYi9Y9EJpG/Va5Q4CHt5H8x2chPqH73g=;
- b=Ff2YknvNPQ6ESB5buyMagce33Y5+Xmbh914VACh8bbs2omY+FN6ZzmQ+Lx6u/hH8ZX
- ji4e1vTCN7NivGJRkzLeGYu6h2ltoF9ujA/8ekJWmdhgZE9EPTXXFIQ5xp4wtbRj7liT
- wDL4w97Y6GydXHdgsELErOgu81hkD/FF1NPiL2PNq7MH3PQpRKidbSOCGJYXMr5JRRG6
- t2hDWwTX3on0ix3CFxFR3wYgE0XGWzdu1XTPzbFhEL3cFvkjt02YG/c3lMRVI0KutQx6
- YXqXp7qOPauLZgirBKq3tn6xp1PJfldzeazzX5Szzrp70YrommrUp/TFIHIMTsCVnUCm
- eXMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhn2EeWiicbq9AVOh5eZjHcmpNE3HGeCIS2eek0nUq6DY6hZqUH24Y3gqzvgJuXfVV4ymzW43UDrAqUW5vMfCpPIGR2vY=
-X-Gm-Message-State: AOJu0Yy1F0KwABo8aQQC1iuJKnEy32nwQjndpX3/9lAFNzH3//QzZ4bY
- vVpCMhQV76w/Xy8KTjJaYdHrylE0RYaBGyDYT1DXbvRC7FON0BmqYInKT0DHUTg=
-X-Google-Smtp-Source: AGHT+IH3umij8ke0AmNCEUyq9JWqzhFxI9R5CFORD4r/GcVefgQTaxAk0axSyx3Si9mxhBpiraJNXg==
-X-Received: by 2002:a2e:9b49:0:b0:2d8:df61:9c6c with SMTP id
- o9-20020a2e9b49000000b002d8df619c6cmr5895426ljj.20.1713174074947; 
- Mon, 15 Apr 2024 02:41:14 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.132.126])
- by smtp.gmail.com with ESMTPSA id
- ay36-20020a05600c1e2400b004186df974f1sm1897343wmb.33.2024.04.15.02.41.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 02:41:14 -0700 (PDT)
-Message-ID: <beef0bc3-7964-4f41-af51-374b84ba20aa@linaro.org>
-Date: Mon, 15 Apr 2024 11:41:12 +0200
+ d=1e100.net; s=20230601; t=1713174161; x=1713778961;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Y44WESwrPvKb2/7jLN9t57Te23sFFoIGiNTiKgnL++g=;
+ b=YYxd2Imef6aB5Fx4JPCoVXdu3uulFU+eE5M3SQpgApSNSFt8vCicajsDqKZoQn+Wzu
+ AwgCmFTb5q2lwtFQShfMzUAkwpW+oZS4e7Ckw/eLfXD/rtAlllg4+e12cE0uP18kDysZ
+ V7tLTk28PQRjpymTzCmOHTqACrgBKnjEPsZlOqDRwN1hNzeCuURyhkwE1Dxxmtr9AHtN
+ oL3LhT6BB+Vz6IPRb42jS36Z4ek7t8UNMC/giDQ3B5S5Gk+AXtSxdLJpviToUnJk/YbE
+ GotRqQszsATQSDl7tzEmMYnBhMu+qvsZOaTP9lPUOGVJB53A+KFHch7dulPj0OjFi/4w
+ t3SQ==
+X-Gm-Message-State: AOJu0YyM1u+JvYBMNa91Stqrz0mrRPUGiM+RopNm229gKoeWctBB2eYN
+ fgxMhZwDPLlbVXQxHL2ik2qXcSH3xp72lxUUd4OTU6RBEzVcjNS7MuVJEkyR5r+ohMHm0gJyPiZ
+ P6QHzScRDmSdL/P+8r6ZeHjlsknuhGhU7/TmFXxAoJ9L6UyQUpRtKCkwFoYMLv2zfLBTYvDIc+n
+ cQzG+8MAMvQFxb+F8N11sfEETtLv8=
+X-Received: by 2002:a17:907:764c:b0:a52:57ad:63d0 with SMTP id
+ kj12-20020a170907764c00b00a5257ad63d0mr2550413ejc.20.1713174161573; 
+ Mon, 15 Apr 2024 02:42:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUaN66WcPs1BcJiC55tALTNppAnZdUk67ekFWrAGpQrYpnNQ0klrcgSibX+Ek5QxFvjKqcHvxxwbE1Iiqc0y8=
+X-Received: by 2002:a17:907:764c:b0:a52:57ad:63d0 with SMTP id
+ kj12-20020a170907764c00b00a5257ad63d0mr2550402ejc.20.1713174161250; Mon, 15
+ Apr 2024 02:42:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/5] hw/arm : Connect DM163 to B-L475E-IOT01A
-To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Samuel Tardieu <sam@rfc1149.net>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240414130604.182059-1-ines.varhol@telecom-paris.fr>
- <20240414130604.182059-5-ines.varhol@telecom-paris.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240414130604.182059-5-ines.varhol@telecom-paris.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <2321ade5f601367efe7380c04e3f61379c59b48f.1713173550.git.mst@redhat.com>
+In-Reply-To: <2321ade5f601367efe7380c04e3f61379c59b48f.1713173550.git.mst@redhat.com>
+From: Cindy Lu <lulu@redhat.com>
+Date: Mon, 15 Apr 2024 17:42:04 +0800
+Message-ID: <CACLfguXEepZkZw9XzXa1uSdTAZMZX87F7MjcNtW+5qFkZBEiOg@mail.gmail.com>
+Subject: Re: [PATCH v8] virtio-pci: fix use of a released vector
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.127,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,78 +95,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/24 15:05, Inès Varhol wrote:
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+On Mon, Apr 15, 2024 at 5:34=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> From: Cindy Lu <lulu@redhat.com>
+>
+> During the booting process of the non-standard image, the behavior of the
+> called function in qemu is as follows:
+>
+> 1. vhost_net_stop() was triggered by guest image. This will call the func=
+tion
+> virtio_pci_set_guest_notifiers() with assgin=3D false,
+> virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vecto=
+r 0
+>
+> 2. virtio_reset() was triggered, this will set configure vector to VIRTIO=
+_NO_VECTOR
+>
+> 3.vhost_net_start() was called (at this time, the configure vector is
+> still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() wi=
+th
+> assgin=3Dtrue, so the irqfd for vector 0 is still not "init" during this =
+process
+>
+> 4. The system continues to boot and sets the vector back to 0. After that
+> msix_fire_vector_notifier() was triggered to unmask the vector 0 and  mee=
+t the crash
+>
+> To fix the issue, we need to support changing the vector after VIRTIO_CON=
+FIG_S_DRIVER_OK is set.
+>
+> (gdb) bt
+> 0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Dsig=
+no@entry=3D6, no_tid=3Dno_tid@entry=3D0)
+>     at pthread_kill.c:44
+> 1  0x00007fc87148ec53 in __pthread_kill_internal (signo=3D6, threadid=3D<=
+optimized out>) at pthread_kill.c:78
+> 2  0x00007fc87143e956 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysdeps/p=
+osix/raise.c:26
+> 3  0x00007fc8714287f4 in __GI_abort () at abort.c:79
+> 4  0x00007fc87142871b in __assert_fail_base
+>     (fmt=3D0x7fc8715bbde0 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", as=
+sertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "../accel/kv=
+m/kvm-all.c", line=3D1837, function=3D<optimized out>) at assert.c:92
+> 5  0x00007fc871437536 in __GI___assert_fail
+>     (assertion=3D0x5606413efd53 "ret =3D=3D 0", file=3D0x5606413ef87d "..=
+/accel/kvm/kvm-all.c", line=3D1837, function=3D0x5606413f06f0 <__PRETTY_FUN=
+CTION__.19> "kvm_irqchip_commit_routes") at assert.c:101
+> 6  0x0000560640f884b5 in kvm_irqchip_commit_routes (s=3D0x560642cae1f0) a=
+t ../accel/kvm/kvm-all.c:1837
+> 7  0x0000560640c98f8e in virtio_pci_one_vector_unmask
+>     (proxy=3D0x560643c65f00, queue_no=3D4294967295, vector=3D0, msg=3D...=
+, n=3D0x560643c6e4c8)
+>     at ../hw/virtio/virtio-pci.c:1005
+> 8  0x0000560640c99201 in virtio_pci_vector_unmask (dev=3D0x560643c65f00, =
+vector=3D0, msg=3D...)
+>     at ../hw/virtio/virtio-pci.c:1070
+> 9  0x0000560640bc402e in msix_fire_vector_notifier (dev=3D0x560643c65f00,=
+ vector=3D0, is_masked=3Dfalse)
+>     at ../hw/pci/msix.c:120
+> 10 0x0000560640bc40f1 in msix_handle_mask_update (dev=3D0x560643c65f00, v=
+ector=3D0, was_masked=3Dtrue)
+>     at ../hw/pci/msix.c:140
+> 11 0x0000560640bc4503 in msix_table_mmio_write (opaque=3D0x560643c65f00, =
+addr=3D12, val=3D0, size=3D4)
+>     at ../hw/pci/msix.c:231
+> 12 0x0000560640f26d83 in memory_region_write_accessor
+>     (mr=3D0x560643c66540, addr=3D12, value=3D0x7fc86b7bc628, size=3D4, sh=
+ift=3D0, mask=3D4294967295, attrs=3D...)
+>     at ../system/memory.c:497
+> 13 0x0000560640f270a6 in access_with_adjusted_size
+>
+>      (addr=3D12, value=3D0x7fc86b7bc628, size=3D4, access_size_min=3D1, a=
+ccess_size_max=3D4, access_fn=3D0x560640f26c8d <memory_region_write_accesso=
+r>, mr=3D0x560643c66540, attrs=3D...) at ../system/memory.c:573
+> 14 0x0000560640f2a2b5 in memory_region_dispatch_write (mr=3D0x560643c6654=
+0, addr=3D12, data=3D0, op=3DMO_32, attrs=3D...)
+>     at ../system/memory.c:1521
+> 15 0x0000560640f37bac in flatview_write_continue
+>     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., ptr=3D0x7fc871e=
+9c028, len=3D4, addr1=3D12, l=3D4, mr=3D0x560643c66540)
+>     at ../system/physmem.c:2714
+> 16 0x0000560640f37d0f in flatview_write
+>     (fv=3D0x7fc65805e0b0, addr=3D4273803276, attrs=3D..., buf=3D0x7fc871e=
+9c028, len=3D4) at ../system/physmem.c:2756
+> 17 0x0000560640f380bf in address_space_write
+>     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, attrs=
+=3D..., buf=3D0x7fc871e9c028, len=3D4)
+>     at ../system/physmem.c:2863
+> 18 0x0000560640f3812c in address_space_rw
+>     (as=3D0x560642161ae0 <address_space_memory>, addr=3D4273803276, attrs=
+=3D..., buf=3D0x7fc871e9c028, len=3D4, is_write=3Dtrue) at ../system/physme=
+m.c:2873
+> --Type <RET> for more, q to quit, c to continue without paging--
+> 19 0x0000560640f8aa55 in kvm_cpu_exec (cpu=3D0x560642f205e0) at ../accel/=
+kvm/kvm-all.c:2915
+> 20 0x0000560640f8d731 in kvm_vcpu_thread_fn (arg=3D0x560642f205e0) at ../=
+accel/kvm/kvm-accel-ops.c:51
+> 21 0x00005606411949f4 in qemu_thread_start (args=3D0x560642f292b0) at ../=
+util/qemu-thread-posix.c:541
+> 22 0x00007fc87148cdcd in start_thread (arg=3D<optimized out>) at pthread_=
+create.c:442
+> 23 0x00007fc871512630 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/c=
+lone3.S:81
+> (gdb)
+>
+> MST: coding style and typo fixups
+>
+> Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> Message-Id: <20240412062750.475180-1-lulu@redhat.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 > ---
->   hw/arm/b-l475e-iot01a.c | 59 +++++++++++++++++++++++++++++++++++++++--
->   hw/arm/Kconfig          |  1 +
->   2 files changed, 58 insertions(+), 2 deletions(-)
-
-
-> +/*
-> + * There are actually 14 input pins in the DM163 device.
-> + * Here the DM163 input pin EN isn't connected to the STM32L4x5
-> + * GPIOs as the IM120417002 colors shield doesn't actually use
-> + * this pin to drive the RGB matrix.
-> + */
-> +#define NUM_DM163_INPUTS 13
+>  hw/virtio/virtio-pci.c | 37 +++++++++++++++++++++++++++++++++++--
+>  1 file changed, 35 insertions(+), 2 deletions(-)
+>
+> v7->v8:
+> more cleanups, suggested by Philip
+>
+> still untested, i just got involved to help address coding style
+> issues
+>
+Really thanks for your help, I will do the qtest and sanity test for this
+thanks
+cindy
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index cb6940fc0e..cb159fd078 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -1424,6 +1424,38 @@ static int virtio_pci_add_mem_cap(VirtIOPCIProxy *=
+proxy,
+>      return offset;
+>  }
+>
+> +static void virtio_pci_set_vector(VirtIODevice *vdev,
+> +                                  VirtIOPCIProxy *proxy,
+> +                                  int queue_no, uint16_t old_vector,
+> +                                  uint16_t new_vector)
+> +{
+> +    bool kvm_irqfd =3D (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> +        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
 > +
-> +static const int dm163_input[NUM_DM163_INPUTS] = {
-
-s/int/unsigned/
-
-> +    1 * GPIO_NUM_PINS + 2,  /* ROW0  PB2       */
-> +    0 * GPIO_NUM_PINS + 15, /* ROW1  PA15      */
-> +    0 * GPIO_NUM_PINS + 2,  /* ROW2  PA2       */
-> +    0 * GPIO_NUM_PINS + 7,  /* ROW3  PA7       */
-> +    0 * GPIO_NUM_PINS + 6,  /* ROW4  PA6       */
-> +    0 * GPIO_NUM_PINS + 5,  /* ROW5  PA5       */
-> +    1 * GPIO_NUM_PINS + 0,  /* ROW6  PB0       */
-> +    0 * GPIO_NUM_PINS + 3,  /* ROW7  PA3       */
-> +    0 * GPIO_NUM_PINS + 4,  /* SIN (SDA) PA4   */
-> +    1 * GPIO_NUM_PINS + 1,  /* DCK (SCK) PB1   */
-> +    2 * GPIO_NUM_PINS + 3,  /* RST_B (RST) PC3 */
-> +    2 * GPIO_NUM_PINS + 4,  /* LAT_B (LAT) PC4 */
-> +    2 * GPIO_NUM_PINS + 5,  /* SELBK (SB)  PC5 */
-> +};
->   
->   #define TYPE_B_L475E_IOT01A MACHINE_TYPE_NAME("b-l475e-iot01a")
->   OBJECT_DECLARE_SIMPLE_TYPE(Bl475eMachineState, B_L475E_IOT01A)
-> @@ -39,12 +66,16 @@ typedef struct Bl475eMachineState {
->       MachineState parent_obj;
->   
->       Stm32l4x5SocState soc;
-> +    SplitIRQ gpio_splitters[NUM_DM163_INPUTS];
-> +    DM163State dm163;
->   } Bl475eMachineState;
->   
->   static void bl475e_init(MachineState *machine)
->   {
->       Bl475eMachineState *s = B_L475E_IOT01A(machine);
->       const Stm32l4x5SocClass *sc;
-> +    DeviceState *dev, *gpio_out_splitter;
-> +    int gpio, pin;
-
-unsigned.
-
->   
->       object_initialize_child(OBJECT(machine), "soc", &s->soc,
->                               TYPE_STM32L4X5XG_SOC);
-> @@ -53,6 +84,30 @@ static void bl475e_init(MachineState *machine)
->       sc = STM32L4X5_SOC_GET_CLASS(&s->soc);
->       armv7m_load_kernel(ARM_CPU(first_cpu),
->           machine->kernel_filename, 0, sc->flash_size);
+> +    if (new_vector =3D=3D old_vector) {
+> +        return;
+> +    }
 > +
-> +    if (object_class_by_name("dm163")) {
-
-TYPE_DM163
-
-> +        object_initialize_child(OBJECT(machine), "dm163",
-> +                                &s->dm163, TYPE_DM163);
-> +        dev = DEVICE(&s->dm163);
-> +        qdev_realize(dev, NULL, &error_abort);
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> +    /*
+> +     * If the device uses irqfd and the vector changes after DRIVER_OK i=
+s
+> +     * set, we need to release the old vector and set up the new one.
+> +     * Otherwise just need to set the new vector on the device.
+> +     */
+> +    if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR) {
+> +        kvm_virtio_pci_vector_release_one(proxy, queue_no);
+> +    }
+> +    /* Set the new vector on the device. */
+> +    if (queue_no =3D=3D VIRTIO_CONFIG_IRQ_IDX) {
+> +        vdev->config_vector =3D new_vector;
+> +    } else {
+> +        virtio_queue_set_vector(vdev, queue_no, new_vector);
+> +    }
+> +    /* If the new vector changed need to set it up. */
+> +    if (kvm_irqfd && new_vector !=3D VIRTIO_NO_VECTOR) {
+> +        kvm_virtio_pci_vector_use_one(proxy, queue_no);
+> +    }
+> +}
+> +
+>  int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
+>                             uint8_t bar, uint64_t offset, uint64_t length=
+,
+>                             uint8_t id)
+> @@ -1570,7 +1602,8 @@ static void virtio_pci_common_write(void *opaque, h=
+waddr addr,
+>          } else {
+>              val =3D VIRTIO_NO_VECTOR;
+>          }
+> -        vdev->config_vector =3D val;
+> +        virtio_pci_set_vector(vdev, proxy, VIRTIO_CONFIG_IRQ_IDX,
+> +                              vdev->config_vector, val);
+>          break;
+>      case VIRTIO_PCI_COMMON_STATUS:
+>          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> @@ -1610,7 +1643,7 @@ static void virtio_pci_common_write(void *opaque, h=
+waddr addr,
+>          } else {
+>              val =3D VIRTIO_NO_VECTOR;
+>          }
+> -        virtio_queue_set_vector(vdev, vdev->queue_sel, val);
+> +        virtio_pci_set_vector(vdev, proxy, vdev->queue_sel, vector, val)=
+;
+>          break;
+>      case VIRTIO_PCI_COMMON_Q_ENABLE:
+>          if (val =3D=3D 1) {
+> --
+> MST
+>
 
 
