@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B047C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 06:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BC9C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 06:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwGD1-0002yD-Rx; Mon, 15 Apr 2024 02:52:55 -0400
+	id 1rwGHF-0004AB-OA; Mon, 15 Apr 2024 02:57:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1rwGCz-0002xY-U3
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 02:52:53 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1rwGCy-0004aX-8L
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 02:52:53 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1e651a9f3ffso2686045ad.1
- for <qemu-devel@nongnu.org>; Sun, 14 Apr 2024 23:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1713163970; x=1713768770; darn=nongnu.org;
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BTcCQdUvjp2hbnjbDYmBwM5NCyK6LP1p76vlGeR6wsw=;
- b=iulNVCjBVcsXXOX2gNAdGqNUzYB/dz+pCSQ1dl3igizP8E8qwTuKElG+x2hlZBFV4n
- 16aD094CTsKuDPZMmdt7PQImZIjhAsemOobnyvTyJQ8WsjNEj6+HJhzR9gzqP+uKvOit
- dfeCCWcU0IBDwd+cU6k8Q4wk49Y/Kti+AAfnagLcacYmz7bVw0TyUp3mpuooTYmnA3Qj
- AEou0aXMdVoS9EwfXrUYz55ggA+/WzNCWfVSax3D2Y7a4/4TRQ81K8MichNd9bi77wY1
- s/5HKfw72JHqUG/cG9xrJljI+v34NxzCxlSesGL4lbrwbR+QYIfZK7zCgi8R6BKNiq7d
- pT+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713163970; x=1713768770;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BTcCQdUvjp2hbnjbDYmBwM5NCyK6LP1p76vlGeR6wsw=;
- b=fm5YHuhpkNKixK8v4D7R/dGj6XZGYf39HVrtTL5sZ/YY2Ps6TIDqKYLqtw1ECUxkxC
- eEO9WS8qLmBlrP8z3JExLJAzq/24+0IEyTADWfIUMNDNhJl6CwuGAgWQScpCsbMv6ATu
- +Qe8u/AW0yAaSKwO/0ENPguD/NB41tghBuT4nrVx6IWlNEWTyJVqmc93V4jTDRBd6NkL
- 8C45waIvBUqkWU8pKyRj4gwAAXpIjTVnGMV2nHKO8fXw17kFUwLKAZPB5dtVgNsyZS7M
- UoHevKuiRVsfh7W54KyZgEPgPiGMwucjhABdkOdGi3a7zuZWsfncP8pzHmU4ziRR0EvU
- RhQw==
-X-Gm-Message-State: AOJu0YyXMjFMA7zb6Z7GWn+5neL+J9/DRmi81NDlcCQlvqFWtZOJXRoT
- LxXkRHVbw6a7wmffFFDezb3Knsj93K/2M7r6cCTVsk1A4UN22CTU8IDMqa9m1Hr5GG6w/6AvjUu
- sEKw70qj6ygyh8MWMl+FO2Y0B0NVsDKONlUxZGxfsZ5L4jNwTifxbBTB3nIysQd39FLCll6IAC3
- HsAVNBtHzC7NnuMDh4LN7d6WNbHSA3fQpBnv5qqcEUOaea
-X-Google-Smtp-Source: AGHT+IHuj1udC5yzyDkvK5bH6sWXvRQRDFmC9qWucyK3jxf2LP6ciBmKufIDxWWa5C34csmXaJFnJQ==
-X-Received: by 2002:a17:902:7402:b0:1e6:3577:190e with SMTP id
- g2-20020a170902740200b001e63577190emr2443553pll.24.1713163970331; 
- Sun, 14 Apr 2024 23:52:50 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- jb12-20020a170903258c00b001e2a3014541sm7182394plb.190.2024.04.14.23.52.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Apr 2024 23:52:50 -0700 (PDT)
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
- jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rwGHD-00049A-Gt
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 02:57:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rwGHC-0005N0-0j
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 02:57:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713164233;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7Lz2JnI4BuEf2+/HhO8OCBk+1ARmeP7ymGcjdIAyv8g=;
+ b=ieppptiL62/5aPJzBLO5iMrUsExW4xBA4/4Xj51lvxePuM1x6PpxtxLBGjvXWmJJ4YicqK
+ C8+dUHeuOk5Cyezw7aMgWcovFQtp8hQC4qeY1xFa7KAn4kKz8nuCkDOt5+CwzCABPmy90k
+ gVcj0D9IROfvuB4n+xpXooTYnIoDJjM=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-n5-qj7j4O8eV64APjybssQ-1; Mon,
+ 15 Apr 2024 02:57:08 -0400
+X-MC-Unique: n5-qj7j4O8eV64APjybssQ-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 98BE91C02D26;
+ Mon, 15 Apr 2024 06:57:07 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.87])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7FE4FC13FA1;
+ Mon, 15 Apr 2024 06:57:04 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/1] target/riscv/kvm.c: Fix the hart bit setting of AIA
-Date: Mon, 15 Apr 2024 14:52:43 +0800
-Message-Id: <20240415065245.25455-1-yongxuan.wang@sifive.com>
-X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH v2 1/2] hw: Fix problem with the A*MPCORE switches in the
+ Kconfig files
+Date: Mon, 15 Apr 2024 08:56:54 +0200
+Message-ID: <20240415065655.130099-2-thuth@redhat.com>
+In-Reply-To: <20240415065655.130099-1-thuth@redhat.com>
+References: <20240415065655.130099-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.127,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,40 +86,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hart bit setting is different with Linux AIA driver[1] when the number
-of hart is power of 2. For example, when the guest has 4 harts, the
-estimated result of AIA driver is 2, whereas we pass 3 to RISC-V/KVM. Since
-only 2 bits are needed to represent 4 harts, update the formula to get the
-accurate result.
+A9MPCORE, ARM11MPCORE and A15MPCORE are defined twice, once in
+hw/cpu/Kconfig and once in hw/arm/Kconfig. This is only possible
+by accident, since hw/cpu/Kconfig is never included from hw/Kconfig.
+Fix it by declaring the switches only in hw/cpu/Kconfig (since the
+related files reside in the hw/cpu/ folder) and by making sure that
+the file hw/cpu/Kconfig is now properly included from hw/Kconfig.
 
-[1] https://lore.kernel.org/all/20240307140307.646078-1-apatel@ventanamicro.com/
-
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/Kconfig     |  1 +
+ hw/arm/Kconfig | 15 ---------------
+ hw/cpu/Kconfig | 12 +++++++++---
+ 3 files changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 6a6c6cae80f1..388c4ddaa145 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1642,7 +1642,14 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-         }
-     }
+diff --git a/hw/Kconfig b/hw/Kconfig
+index 2c00936c28..9567cc475d 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -48,6 +48,7 @@ source watchdog/Kconfig
  
--    hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
+ # arch Kconfig
+ source arm/Kconfig
++source cpu/Kconfig
+ source alpha/Kconfig
+ source avr/Kconfig
+ source cris/Kconfig
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 893a7bff66..d97015c45c 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -678,21 +678,6 @@ config ZAURUS
+     select NAND
+     select ECC
+ 
+-config A9MPCORE
+-    bool
+-    select A9_GTIMER
+-    select A9SCU       # snoop control unit
+-    select ARM_GIC
+-    select ARM_MPTIMER
+-
+-config A15MPCORE
+-    bool
+-    select ARM_GIC
+-
+-config ARM11MPCORE
+-    bool
+-    select ARM11SCU
+-
+ config ARMSSE
+     bool
+     select ARM_V7M
+diff --git a/hw/cpu/Kconfig b/hw/cpu/Kconfig
+index 1767d028ac..f776e884cd 100644
+--- a/hw/cpu/Kconfig
++++ b/hw/cpu/Kconfig
+@@ -1,8 +1,14 @@
+-config ARM11MPCORE
+-    bool
+-
+ config A9MPCORE
+     bool
++    select A9_GTIMER
++    select A9SCU       # snoop control unit
++    select ARM_GIC
++    select ARM_MPTIMER
+ 
+ config A15MPCORE
+     bool
++    select ARM_GIC
 +
-+    if (max_hart_per_socket > 1) {
-+        max_hart_per_socket--;
-+        hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
-+    } else {
-+        hart_bits = 0;
-+    }
-+
-     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
-                             KVM_DEV_RISCV_AIA_CONFIG_HART_BITS,
-                             &hart_bits, true, NULL);
++config ARM11MPCORE
++    bool
++    select ARM11SCU
 -- 
-2.17.1
+2.44.0
 
 
