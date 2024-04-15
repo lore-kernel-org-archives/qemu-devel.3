@@ -4,86 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFD5C00A94
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 13:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BEE5C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 13:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwMX4-00063y-TW; Mon, 15 Apr 2024 09:38:02 -0400
+	id 1rwMh8-0000L8-DR; Mon, 15 Apr 2024 09:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwMWx-00061n-QU
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:37:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwMh7-0000Ih-4d
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:48:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwMWt-0004HH-1H
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:37:55 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwMgx-00065R-US
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:48:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713188270;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Otby01cZZu++YmW/6+3uGCtE2y6g9ZUJlqPrv0gkNDg=;
- b=DMOtW4C1ViDn1FPlkXqoMBgBtblRlVu1eQd95pkdp2h2AxJLe9J4pSdOJMEf1C1lK2WLLT
- ARot0xkRb7j2EUhVeDuZSpYCuXG0dNtpTWLwffGAWtkmroZDV7M1WPtiB2cr0mXR3cIYXb
- hOFXlJsnA+s4rZtSJpru/Fx+/EYrG4c=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1713188894;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=XQhqI9hqCGfHwEpmyUUmTqBtqO74H2Di1XbdcnFk704=;
+ b=bSBvOMhZnh9STxK/p2OeY1+LrNee2mBzw6Bije3AY4XiMplGEHnih8G47x9kCHdOiyhqZx
+ z8KQTmze4tXusVbsEyUQjsClSDgxcE9QYvzL6Q1xmCdvqPTcEGHoRMLqU1fAmNbjUPj846
+ nMUtUZg154QBC8oQPalUr8K1j3MlT+o=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-fHMGT9tqNi6lg_xKa-T95Q-1; Mon, 15 Apr 2024 09:37:49 -0400
-X-MC-Unique: fHMGT9tqNi6lg_xKa-T95Q-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-78ecaccfda5so331540485a.1
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 06:37:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713188268; x=1713793068;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Otby01cZZu++YmW/6+3uGCtE2y6g9ZUJlqPrv0gkNDg=;
- b=gnPAh3AO++8IPm/KHRvOLu8beACLQiox9o36nqOlDFGxbqiiUD1K+Ji7y+RG8xxvi6
- 0e76k/uGyMbRg7INfHBAkafu4Jd+IX7cl6lUSg30KRBrHw0kN9zSslYUtL9TYb7rQOCX
- MMYIiHLS4SVAfeQwOkSebVNgaqRfM0AAH/7B8Puu1kYCvq1SBqeuHf9Coy27OMvThMel
- 1nuZrWAu81g8deWaCK5abR5kt+XZCHbWUITWMJv1K8QIFe7VIepPDBRy2MIQ7xaXE6Pm
- jK5ysQ3/tHGFn8A4Xnc6+LcTRp92u+9uD4OWtxKbFvNnUU7dq4hwqnmYckbXJso95hzt
- S+Sg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRu/hzfRVzBHc5xruCAvXKd01ZyoQVzWG71K6F3yEn0AsTrt2MHpvopmtPjl/A6oc63w+S6ycYq8El47IY24pecEfHBzw=
-X-Gm-Message-State: AOJu0Yy7g7ECnzmh6JkGX8sJIvSm63LFoPLEMm07cBJnfRNik2aVrAQI
- M6My+5Hboh0LEmMHRrfPy23pBEs3WpDLsYVH5cCyzXI4LOH5f1vP7MhTZS13K0j0cvyUbZp3V9P
- gQ2w8Shjf2CFPRlcR++gASNREOH/XMmagtxS5moz+dlENscoZCVTD
-X-Received: by 2002:ae9:e201:0:b0:78d:646d:e2e7 with SMTP id
- c1-20020ae9e201000000b0078d646de2e7mr11026052qkc.66.1713188268394; 
- Mon, 15 Apr 2024 06:37:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHutCgrPI6+hYMGifyLmudnASBYdRAuSjyAoOEqLoRUciGSIJEVoyHvxHSDIBWW84TkQNgnsw==
-X-Received: by 2002:ae9:e201:0:b0:78d:646d:e2e7 with SMTP id
- c1-20020ae9e201000000b0078d646de2e7mr11025981qkc.66.1713188267204; 
- Mon, 15 Apr 2024 06:37:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
- ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
- by smtp.gmail.com with ESMTPSA id
- e20-20020a05620a209400b0078edc0a447dsm2902548qka.68.2024.04.15.06.37.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 06:37:46 -0700 (PDT)
-Message-ID: <b635938a-0cfe-40f9-a51d-c4f3f17bed89@redhat.com>
-Date: Mon, 15 Apr 2024 15:37:43 +0200
+ us-mta-533-wuNxy6YrP4mnrLD4go1Cng-1; Mon, 15 Apr 2024 09:48:11 -0400
+X-MC-Unique: wuNxy6YrP4mnrLD4go1Cng-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0C3D680D626;
+ Mon, 15 Apr 2024 13:48:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.103])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C3CE82026D06;
+ Mon, 15 Apr 2024 13:48:09 +0000 (UTC)
+Date: Mon, 15 Apr 2024 14:48:03 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Cole Robinson <crobinso@redhat.com>
+Subject: Re: secure boot & direct kernel load (was: Re: [PATCH] x86/loader:
+ only patch linux kernels)
+Message-ID: <Zh0wExsBiH4NxLcn@redhat.com>
+References: <20240410072126.617063-1-kraxel@redhat.com>
+ <20240410032448-mutt-send-email-mst@kernel.org>
+ <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
+ <Zh0WsG3nVHgTwOkc@redhat.com>
+ <asxsrqicnilb5wszzz23ebuidyqacmasb4ggtflcksdlufrspc@23x4k2gqge6r>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/10] vfio: Pass HostIOMMUDevice to vIOMMU
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, peterx@redhat.com,
- jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>
-References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
- <20240408081230.1030078-11-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240408081230.1030078-11-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <asxsrqicnilb5wszzz23ebuidyqacmasb4ggtflcksdlufrspc@23x4k2gqge6r>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
@@ -104,106 +87,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/24 10:12, Zhenzhong Duan wrote:
-> With HostIOMMUDevice passed, vIOMMU can check compatibility with host
-> IOMMU, call into IOMMUFD specific methods, etc.
+On Mon, Apr 15, 2024 at 03:30:32PM +0200, Gerd Hoffmann wrote:
+>   Hi,
 > 
-> Originally-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-LGTM, waiting v3.
-
-
-Thanks,
-
-C.
-
-
-
-
-> ---
->   hw/vfio/pci.c | 20 +++++++++++++++-----
->   1 file changed, 15 insertions(+), 5 deletions(-)
+> > > Options I see:
+> > > 
+> > >   (a) Stop using direct kernel boot, let virt-install & other tools
+> > >       create vfat boot media with shim+kernel+initrd instead.
+> > > 
+> > >   (b) Enroll the distro signing keys in the efi variable store, so
+> > >       booting the kernel without shim.efi works.
+> > > 
+> > >   (c) Add support for loading shim to qemu (and ovmf), for example
+> > >       with a new '-shim' command line option which stores shim.efi
+> > >       in some new fw_cfg file.
+> > 
+> > The problem with this is that now virt-install  has to actually
+> > find the correct a shim.efi binary. It is already somewhat hard
+> > to find a suitable kerenl+initrd binary, and AFAIK, the places
+> > where we get these binaries don't have shim.efi alongside.
+> > 
+> > eg for RHEL/Fedora we grab kernel+initrd from the pxeboot dir:
+> > 
+> >   https://fedora.mirrorservice.org/fedora/linux/development/rawhide/Everything/x86_64/os/images/pxeboot/
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 64780d1b79..224501a86e 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3111,11 +3111,17 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->   
->       vfio_bars_register(vdev);
->   
-> -    ret = vfio_add_capabilities(vdev, errp);
-> +    ret = pci_device_set_iommu_device(pdev, vbasedev->hiod, errp);
->       if (ret) {
-> +        error_prepend(errp, "Failed to set iommu_device: ");
->           goto out_teardown;
->       }
->   
-> +    ret = vfio_add_capabilities(vdev, errp);
-> +    if (ret) {
-> +        goto out_unset_idev;
-> +    }
-> +
->       if (vdev->vga) {
->           vfio_vga_quirk_setup(vdev);
->       }
-> @@ -3132,7 +3138,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->               error_setg(errp,
->                          "cannot support IGD OpRegion feature on hotplugged "
->                          "device");
-> -            goto out_teardown;
-> +            goto out_unset_idev;
->           }
->   
->           ret = vfio_get_dev_region_info(vbasedev,
-> @@ -3141,13 +3147,13 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->           if (ret) {
->               error_setg_errno(errp, -ret,
->                                "does not support requested IGD OpRegion feature");
-> -            goto out_teardown;
-> +            goto out_unset_idev;
->           }
->   
->           ret = vfio_pci_igd_opregion_init(vdev, opregion, errp);
->           g_free(opregion);
->           if (ret) {
-> -            goto out_teardown;
-> +            goto out_unset_idev;
->           }
->       }
->   
-> @@ -3233,6 +3239,8 @@ out_deregister:
->       if (vdev->intx.mmap_timer) {
->           timer_free(vdev->intx.mmap_timer);
->       }
-> +out_unset_idev:
-> +    pci_device_unset_iommu_device(pdev);
->   out_teardown:
->       vfio_teardown_msi(vdev);
->       vfio_bars_exit(vdev);
-> @@ -3261,6 +3269,7 @@ static void vfio_instance_finalize(Object *obj)
->   static void vfio_exitfn(PCIDevice *pdev)
->   {
->       VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIODevice *vbasedev = &vdev->vbasedev;
->   
->       vfio_unregister_req_notifier(vdev);
->       vfio_unregister_err_notifier(vdev);
-> @@ -3275,7 +3284,8 @@ static void vfio_exitfn(PCIDevice *pdev)
->       vfio_teardown_msi(vdev);
->       vfio_pci_disable_rp_atomics(vdev);
->       vfio_bars_exit(vdev);
-> -    vfio_migration_exit(&vdev->vbasedev);
-> +    vfio_migration_exit(vbasedev);
-> +    pci_device_unset_iommu_device(pdev);
->   }
->   
->   static void vfio_pci_reset(DeviceState *dev)
+> shim is https://fedora.mirrorservice.org/fedora/linux/development/rawhide/Everything/x86_64/os/EFI/BOOT/BOOTX64.EFI
+> 
+> > In various forums we have discussed adding the secureboot
+> > certs to the libosinfo database, so that we can have a
+> > customized EFI varstore with minimized certs, even for the
+> > ISO / HDD boot scenario.
+> 
+> Well.  It's not that easy unfortunately.  At least the "minimized certs"
+> part.  shim often is signed with the microsoft keys only, so you can't
+> drop that without rendering the install.iso unbootable.
+> 
+> Only adding the distro certs without removing the microsoft certs works
+> of course.
+
+In that scenario libosinfo would report that the given OS
+requires both the microsoft & $distro certs to be
+enrolled.
+
+Only if shim were signed by the $distro certs, would
+libosifo omit reporting the microsoft certs.
+
+Basically libosinfo would have to report whatever set
+of 'n' certs are required to make boot work.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
