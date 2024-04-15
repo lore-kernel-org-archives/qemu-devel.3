@@ -4,83 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891F3C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 18:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E50C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 18:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwR5n-0006lC-Ky; Mon, 15 Apr 2024 14:30:13 -0400
+	id 1rwRFE-0000dW-S1; Mon, 15 Apr 2024 14:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwR5l-0006kw-OZ
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 14:30:09 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwR5k-0007uD-0j
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 14:30:09 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-516d2b9cd69so4256954e87.2
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 11:30:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713205806; x=1713810606; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ErqVx4xQAmKM1pbFeZnxTYHT3KuUv0DO97EtB5dIXHA=;
- b=jIZkMFMQV3yEnLEbSZeOJudkl95HhAPglU2SkBN3xuFpoD48mBJZHd675Uis13UiLu
- Sljdd5dvpymM6hEtlxpM02Qs9/ptD2dlvpbYUqUxn4ZE6wSydmTgDTUfw0zX9efhw9KB
- NeF9/wwP7+vPPrmaX1og0NRb0s+Yjf/55Bmhqn1hwNoLSUivcsk1OsxjWjVPTSXQCLm5
- lQKd2ips+gTaT+JzJEL5uvJh87vii+4WfebGodJxhXE4lDuoNajaW7AJW7zLdqbHZWRd
- NHqXkHhi1O4NaJE+DkXsOhMrn/fsJ3CMcm+Y4cpt1D8AHZ0RSJfuw93XZEVW6/Bbd7Q2
- r9hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713205806; x=1713810606;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ErqVx4xQAmKM1pbFeZnxTYHT3KuUv0DO97EtB5dIXHA=;
- b=lhY1803otIFQGsSihOeKfq+Cay4LqA7mIvW6sfkNe1nTZuV4w7fvK7Ef6ZZo+Ef9Pz
- HUuQ1I1RFB91Sr9nXgWM3gHKcjM8TvbruijFPUC2gVXxC7ebKZ/g76IHxtd7m+86wFd3
- RgdzXZuHlI+g3zV+y9730wJwmmfTj941K/vCAXbjePyYUapriscctMVPFUz/df8O/guN
- x4ctEk0bkTiycgEZw9HN4eOMIq7VxQPARqwUXmFgWbALwjiEwO7Laiu1Vf2a7s0DkQc7
- 9bn3jSecAxx55Xe5j+TVb2Hhi2OaSQ6X5LbMBWw5YqBf15POyS18W09VsX8ME/FR7fUr
- T7+Q==
-X-Gm-Message-State: AOJu0Yyf/fGtbiUVHoGyBzPav93TTxI5MOxeDLpuHZt8iZ/rxNPWQnyM
- PMEIJB8OXj5tAzLHIQB97SKNPoPlgWvay8BeTW4RDbX77R2BxpOSVGmz5RqbVOM=
-X-Google-Smtp-Source: AGHT+IEnI7HsAbnUgKwlwMvMAMayFD7KhTFd8uFT8rpoRJsrDL2sAnxDhWxbSigBCJc/48B+qwXyPw==
-X-Received: by 2002:a05:6512:3107:b0:518:6d2:2a8f with SMTP id
- n7-20020a056512310700b0051806d22a8fmr6651256lfb.24.1713205805594; 
- Mon, 15 Apr 2024 11:30:05 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.132.126])
- by smtp.gmail.com with ESMTPSA id
- t4-20020a05640203c400b005704011143asm70371edw.93.2024.04.15.11.30.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 11:30:04 -0700 (PDT)
-Message-ID: <78b7d022-1bb8-4b1d-ad52-db241582350c@linaro.org>
-Date: Mon, 15 Apr 2024 20:30:02 +0200
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rwRFC-0000bc-I1
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 14:39:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rwRF9-0000er-M7
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 14:39:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713206390;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=i4lJtzziT2vbm2px4BQsYWejbYHAV8yo1PJXIBeoq9g=;
+ b=MjgqhQFblQfUNZNsVoUUShtKKKTWMPKfTdGbi5nSPUEzk+85+Tdo3v/PZMJ9owl46+UwOz
+ C9+AlBCeaZQE5Z6z3y1eD38MIhJdQQqHnB235PJOrJYr0+cO+e0Pbhub9M3ST0CWbeHejo
+ xOv6IYgNvt86+ZPAekauv7wdMAiV7Mo=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-KujS253aMgiG3WG9JvFiwA-1; Mon, 15 Apr 2024 14:39:48 -0400
+X-MC-Unique: KujS253aMgiG3WG9JvFiwA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 750C810499A2
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 18:39:48 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.87])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 5F78140C5CA;
+ Mon, 15 Apr 2024 18:39:47 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] qemu-options: Deprecate "-runas" and introduce "-run-with
+ user=..." instead
+Date: Mon, 15 Apr 2024 20:39:42 +0200
+Message-ID: <20240415183942.195781-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/i386: Give IRQs a chance when resetting
- HF_INHIBIT_IRQ_MASK
-To: Paolo Bonzini <pbonzini@redhat.com>, Ruihan Li <lrh2000@pku.edu.cn>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240415064518.4951-4-lrh2000@pku.edu.cn>
- <CABgObfZmQoSBMQx=t0UYCa6t5d9RRZKy23zeW3orrBYnVQtKYQ@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfZmQoSBMQx=t0UYCa6t5d9RRZKy23zeW3orrBYnVQtKYQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,59 +77,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/4/24 11:32, Paolo Bonzini wrote:
-> On Mon, Apr 15, 2024 at 8:50 AM Ruihan Li <lrh2000@pku.edu.cn> wrote:
->>
->> When emulated with QEMU, interrupts will never come in the following
->> loop. However, if the NOP instruction is uncommented, interrupts will
->> fire as normal.
->>
->>          loop:
->>                  cli
->>                  call do_sti
->>                  jmp loop
->>
->>          do_sti:
->>                  sti
->>                  # nop
->>                  ret
->>
->> This behavior is different from that of a real processor. For example,
->> if KVM is enabled, interrupts will always fire regardless of whether the
->> NOP instruction is commented or not. Also, the Intel Software Developer
->> Manual states that after the STI instruction is executed, the interrupt
->> inhibit should end as soon as the next instruction (e.g., the RET
->> instruction if the NOP instruction is commented) is executed.
-> 
-> Thanks, interesting bug!
-> 
-> What do you think about writing this:
-> 
->>       /* If several instructions disable interrupts, only the first does it.  */
->>       if (inhibit && !(s->flags & HF_INHIBIT_IRQ_MASK)) {
->>           gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
->> -    } else {
->> +        inhibit_reset = false;
->> +    } else if (!inhibit && (s->flags & HF_INHIBIT_IRQ_MASK)) {
->>           gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
->> +        inhibit_reset = true;
->> +    } else {
->> +        inhibit_reset = false;
->>       }
-> 
-> in a slightly simpler manner:
-> 
->      inhibit_reset = false;
->      if (s->flags & HF_INHIBIT_IRQ_MASK) {
->          gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
->          inhibit_reset = true;
->      } else if (inhibit) {
->          gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
->      }
-> 
-> No need to submit v3, I can do the change myself when applying.
+The old "-runas" option has the disadvantage that it is not visible
+in the QAPI schema, so it is not available via the normal introspection
+mechanisms. We've recently introduced the "-run-with" option for exactly
+this purpose, which is meant to handle the options that affect the
+runtime behavior. Thus let's introduce a "user=..." parameter here now
+and deprecate the old "-runas" option.
 
-Cc: qemu-stable@nongnu.org
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ docs/about/deprecated.rst |  6 ++++++
+ system/vl.c               | 15 +++++++++++++++
+ qemu-options.hx           | 11 +++++++++--
+ 3 files changed, 30 insertions(+), 2 deletions(-)
 
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 7b548519b5..6b932961bc 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -61,6 +61,12 @@ configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
+ marked deprecated since 9.0, users have to ensure that all the topology members
+ described with -smp are supported by the target machine.
+ 
++``-runas`` (since 9.1)
++----------------------
++
++Use ``-run-with user=..`` instead.
++
++
+ User-mode emulator command line arguments
+ -----------------------------------------
+ 
+diff --git a/system/vl.c b/system/vl.c
+index c644222982..cccca8e979 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -770,6 +770,10 @@ static QemuOptsList qemu_run_with_opts = {
+             .name = "chroot",
+             .type = QEMU_OPT_STRING,
+         },
++        {
++            .name = "user",
++            .type = QEMU_OPT_STRING,
++        },
+         { /* end of list */ }
+     },
+ };
+@@ -3583,6 +3587,7 @@ void qemu_init(int argc, char **argv)
+                 break;
+ #if defined(CONFIG_POSIX)
+             case QEMU_OPTION_runas:
++                warn_report("-runas is deprecated, use '-run-with user=...' instead");
+                 if (!os_set_runas(optarg)) {
+                     error_report("User \"%s\" doesn't exist"
+                                  " (and is not <uid>:<gid>)",
+@@ -3609,6 +3614,16 @@ void qemu_init(int argc, char **argv)
+                 if (str) {
+                     os_set_chroot(str);
+                 }
++                str = qemu_opt_get(opts, "user");
++                if (str) {
++                    if (!os_set_runas(str)) {
++                        error_report("User \"%s\" doesn't exist"
++                                     " (and is not <uid>:<gid>)",
++                                     optarg);
++                        exit(1);
++                    }
++                }
++
+                 break;
+             }
+ #endif /* CONFIG_POSIX */
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 8ce85d4559..50912c7dab 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4824,7 +4824,8 @@ DEF("runas", HAS_ARG, QEMU_OPTION_runas, \
+ SRST
+ ``-runas user``
+     Immediately before starting guest execution, drop root privileges,
+-    switching to the specified user.
++    switching to the specified user. This option is deprecated, use
++    ``-run-with user=...`` instead.
+ ERST
+ 
+ DEF("prom-env", HAS_ARG, QEMU_OPTION_prom_env,
+@@ -4993,7 +4994,9 @@ DEF("run-with", HAS_ARG, QEMU_OPTION_run_with,
+     "-run-with [async-teardown=on|off][,chroot=dir]\n"
+     "                Set miscellaneous QEMU process lifecycle options:\n"
+     "                async-teardown=on enables asynchronous teardown (Linux only)\n"
+-    "                chroot=dir chroot to dir just before starting the VM\n",
++    "                chroot=dir chroot to dir just before starting the VM\n"
++    "                user=username switch to the specified user before starting the VM\n"
++    "                user=uid:gid dito, but use specified user-ID and group-ID instead\n",
+     QEMU_ARCH_ALL)
+ SRST
+ ``-run-with [async-teardown=on|off][,chroot=dir]``
+@@ -5013,6 +5016,10 @@ SRST
+     ``chroot=dir`` can be used for doing a chroot to the specified directory
+     immediately before starting the guest execution. This is especially useful
+     in combination with -runas.
++
++    ``user=username`` or ``user=uid:gid`` can be used to drop root privileges
++    by switching to the specified user (via username) or user and group
++    (via uid:gid) immediately before starting guest execution.
+ ERST
+ #endif
+ 
+-- 
+2.44.0
 
 
