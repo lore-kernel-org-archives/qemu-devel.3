@@ -4,59 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C6FC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 01:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED9DC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 02:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwBT3-0006MQ-6d; Sun, 14 Apr 2024 21:49:09 -0400
+	id 1rwCHY-0004EH-DD; Sun, 14 Apr 2024 22:41:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <duchao@eswincomputing.com>)
- id 1rwBT0-0006Li-Aw; Sun, 14 Apr 2024 21:49:06 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <duchao@eswincomputing.com>)
- id 1rwBSx-0007ZY-Rb; Sun, 14 Apr 2024 21:49:06 -0400
-Received: from duchao$eswincomputing.com ( [10.64.113.11] ) by
- ajax-webmail-app2 (Coremail) ; Mon, 15 Apr 2024 09:47:31 +0800 (GMT+08:00)
-X-Originating-IP: [10.64.113.11]
-Date: Mon, 15 Apr 2024 09:47:31 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Chao Du" <duchao@eswincomputing.com>
-To: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
- alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- anup@brainfault.org, atishp@atishpatra.org
-Subject: Re: [RFC PATCH 0/4] target/riscv/kvm: QEMU support for KVM Guest
- Debug on RISC-V
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20220420(169d3f8c)
- Copyright (c) 2002-2024 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
-References: <20231221094923.7349-1-duchao@eswincomputing.com>
- <846ec319-6026-4b14-b156-9e1f42c6dba1@ventanamicro.com>
- <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <chen.zhang@intel.com>)
+ id 1rwCHX-0004Dq-2l
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 22:41:19 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chen.zhang@intel.com>)
+ id 1rwCHU-00081j-4E
+ for qemu-devel@nongnu.org; Sun, 14 Apr 2024 22:41:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713148876; x=1744684876;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=WTfWJJBhVZkDD9Cxu17k8PzMeHnQcXVjKpk0l8NV7tI=;
+ b=jtF10K4er34cF4Gj8VgyU2d++wm4CYWHSxqXAQyYNAjAf0oXaC7RiNF4
+ v5I9Z/YVPurzYHnazycEftyCHaX8SXeObF29DRn48d27Bcu+nKrVPeF3g
+ 4k34PclSA6gxolCBKbXrV1kGdCqOIyjzAQI7VR1Cq1vd99XuhaEUW2gI6
+ 9enUVwBlkXE8CUFvrDPKwpQxNRrQ8yAN1u2BW+ksCasPnb7zSjLGceBBG
+ NPnPyMMYT7kzUHfKLDiuRlIk/oOxHxeOxPQ7ia++KetNsX8IxYgGgMvER
+ 2K3WcbZ9LlQdl8/iamy9O9OjnapvBrbnvkXnaI8KWJ7k4v0uzl1i9vT6T w==;
+X-CSE-ConnectionGUID: Mo4ExrTZSFyWo/gk3IanGQ==
+X-CSE-MsgGUID: yN3pg4WxShSf8UFBb0E3jQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8738917"
+X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
+   d="scan'208";a="8738917"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Apr 2024 19:41:11 -0700
+X-CSE-ConnectionGUID: mifVBubDT2awQm4OYC7veA==
+X-CSE-MsgGUID: b0UIHHsaT8GE917iAugqHw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; d="scan'208";a="26442873"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 14 Apr 2024 19:41:10 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Sun, 14 Apr 2024 19:41:10 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Sun, 14 Apr 2024 19:41:09 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Sun, 14 Apr 2024 19:41:09 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Sun, 14 Apr 2024 19:41:09 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CQJYylNZot+7z+iM8iyIolXuQzAN8a4iciLachvgpEaMQiky372TpzdBrpBgE1IS6yZDCrWwhDIKBy6td6unmxgUDTEPvtwDaC/Br3lC31Jo1bCjXbc2riYgwnJKm0m7bFRmRNLfjsz6482yQpBHGN5CTBgrsz4lD1jA012zly26Tk083tk5FJH8E0SVng2JE84J9JAiVwxbS8VE8l77a/FUFHfPDao6YHDbJC5Jvdol+xRHBFLNKkF/AeszZQEVaA77HLbYsi0/4QIjQ5sE9yO4OPOLn7yyUN/40KlYENcYbfXrkd/lBXdEJ3jHkyagPLXE0D+Bnyrb9zTpcLejkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WTfWJJBhVZkDD9Cxu17k8PzMeHnQcXVjKpk0l8NV7tI=;
+ b=XzTybNqsWfa2Lo7yd3esS0/ZytyiSFkWXun30Qh03hgCVLbpcaVG6n22S4coJdD3iEyDy6F0ZObOc1bPCKjLsDiDi3n0hluTpyAEeh0X/t/O+i1aegceucvNuppIBNQ/HCWf3vbWa3YZNI2uxweZnKCsTFTEHuMloXhjuNCsuDzZnlt3oUCN1oHVTlutcEbNDC19IVFYHSpzScqD/sO4hRgrwPMJ5Zq3IMY+oWNjs0js2A9JsV9hLja3l3mFoVpAtSGdbFA0b9XqDtx1U0tyoQtqXG4FhCuHQwLZJTY04Focs6bGccIAzWvxoK98274GOPMOsvrGO+WJ0cJtP0XoJw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from CYYPR11MB8432.namprd11.prod.outlook.com (2603:10b6:930:be::8)
+ by MW4PR11MB5892.namprd11.prod.outlook.com (2603:10b6:303:16a::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.26; Mon, 15 Apr
+ 2024 02:41:07 +0000
+Received: from CYYPR11MB8432.namprd11.prod.outlook.com
+ ([fe80::60a7:2a84:f3d8:2828]) by CYYPR11MB8432.namprd11.prod.outlook.com
+ ([fe80::60a7:2a84:f3d8:2828%6]) with mapi id 15.20.7472.027; Mon, 15 Apr 2024
+ 02:41:06 +0000
+From: "Zhang, Chen" <chen.zhang@intel.com>
+To: Fabiano Rosas <farosas@suse.de>, "Zhang, Hailiang"
+ <zhanghailiang@xfusion.com>, Li Zhijian <lizhijian@fujitsu.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Peter Xu
+ <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>, "dave@treblig.org"
+ <dave@treblig.org>, Wen Congyang <wencongyang2@huawei.com>, Xie Changlong
+ <xiechanglong.d@gmail.com>
+Subject: RE: COLO state?
+Thread-Topic: COLO state?
+Thread-Index: AQHajB4aIMpJiQ+dM0Gpejgp/BPv57FonsIg
+Date: Mon, 15 Apr 2024 02:41:06 +0000
+Message-ID: <CYYPR11MB8432C2BF07FECE505D1C63FD9B092@CYYPR11MB8432.namprd11.prod.outlook.com>
+References: <87pluwarq2.fsf@suse.de>
+In-Reply-To: <87pluwarq2.fsf@suse.de>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CYYPR11MB8432:EE_|MW4PR11MB5892:EE_
+x-ms-office365-filtering-correlation-id: 3bf89e7d-6269-4865-3270-08dc5cf58049
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 7KgKBu0DeaiaGw8O4TvMo1cmiMkpHdjudi9CCTBHc1TeSCXnvjdGJ43qaGplnZYrGwfTFUFNabKEaXhA1nQVsNsc7pLHiNG5hZXYL4gBw9cNsGZj7F5u4RE8bNVWt2d+SuOvckCGYsJE4W14dt1iTUjH8SoQoVS1Qook9/COpBh4qI/WnJW3UKlnK+Lxs6p6c8HrPIMYnugRe6XbbES2DTVmg9jd60McfnpPrnFD9/w4KUBsGeFE0V4RehFQP4D6QQ/5jZBkXE+6Cl15niXLLrrmYQd358bRgawuxeQ8CxMEbyJoFxW1c2td2MJR3kRiYsjufCHIjj4Q6QFh2dsfyGq1qiTreKyNOlA6Src9yEmCavd2X67j0KbX3bcAnar+r4N4/IDcH3pZxn4HP3mkpxjdTGONyMhp+nRb7KTrE3BUA2zPmUQax5pgd5rKnQU2eoAHv/oJM2cY6CwDg5E5iAEVMIlay3+rlgFd0mUT8n+pcF0Su4otmeqgnIx+CYsEmNvp2q9leFLEggCFbrCbgfPyC9NFvFURQahwSa5W4TgGAqK0RWefcfXoMy/FncOCSIARoBtj2xyGYUM8wx4XrLEeF+KgAlGQjGnpJvjv4ztGrZ9yUpnr6V0rJgPELIACHnSy0N6iQm5uvpzw4MkNqKbWLwiYqVtn++EqBAe3pDat90hP5Y4BWoQkNx/v3VH+
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CYYPR11MB8432.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(366007)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?OHwrExZrSkEV/vdjQ72BuiXnrtiMgs1Vrd9xAxCiOwC8GwyPbbOeHoArT9KY?=
+ =?us-ascii?Q?FdvLQ7hrKMWrwd5DimVyAF3lyG6Sqf1jSqywJ7IuanI+n3+uqvwB4nwFSKhf?=
+ =?us-ascii?Q?JsehXcyF4eGcaQQidZrCCyEUnQRHN1gQmfdqYKjHKHBHfHJkeT3nKfpirnMy?=
+ =?us-ascii?Q?S3E+N2qr22XGPWkSkOgFgH/kRyL2jTZPStQJrx6Z/SWqPWIIJVOA4uhE/lqx?=
+ =?us-ascii?Q?2BynP/6VxO+W37sKF1fSQHcuElg3s9mJ7+LSfB/cHbep6DtiT/n4oJPMDU2R?=
+ =?us-ascii?Q?MMy84xdD+qO4YVh2BSRDeAxC7KeXOpTX/KSlak1587Lzq/2h3vKYmEMWphG4?=
+ =?us-ascii?Q?gch5uGcKFL+fGzOZNAiHYMqa8fP56Jn7i9bsl+dOGPqwxAKogrjk/7oymkC0?=
+ =?us-ascii?Q?2vXDwWn8upfMuaZeGNzXrlIourZTWnNj36Yi1yRwVaPKKCDOPeFo7hUKeBn/?=
+ =?us-ascii?Q?4TqN1jhtl5k7bzIq6Ku4OQkIdd2kJI1NLIuo6nuuLLyLybx8lj+SYsSDAxhd?=
+ =?us-ascii?Q?UE64beeS43QxP0/c3lwew4YbyenZQfETYhZYbvUf/UWaMAPV6iWvMfDPw3Up?=
+ =?us-ascii?Q?Nm/wdsaRLVqsFHbAnpU8eeHQNMdMX783jXdK+P//a7Q5HB4yYxjKt1RYyxgB?=
+ =?us-ascii?Q?bKl1acorEmdN+WXrXMXe8PxtjDIiZ+EG6bdYLZ02bOrMUAYAI+dxDcQN0/5A?=
+ =?us-ascii?Q?AdZXAS6jveZU8OU6WirBLq9nfSiV8K+Uokc+hXtorfFW6aPctdLRiFb7y1BQ?=
+ =?us-ascii?Q?BRzyiwJIhWcBuCs7oNdPztRi1t04k/VPxaEc1IVMqQgPojoh2Wkjgg5n2n7H?=
+ =?us-ascii?Q?eQvhgAfeaNtbcC1dbL84Ka0itwbT10fd80VPQRrXQi0khIgcZ2Tinz6LduNP?=
+ =?us-ascii?Q?IWPMW3aVml2QVE2WWeurbLxqu4J/b7mbhwFa/iZK/R4n+AtawrolQhIVXra1?=
+ =?us-ascii?Q?TpAgtBZBSpwbPxpt+H/XbQXVL1VEFTD8GJ4QJL4uQOv0Gff5+heViYaau0sv?=
+ =?us-ascii?Q?D9H86sVjXe4PRT5qd+6xY8+g74JnN8gfpMnNghgg4ORBh1VgNPy27BfkkzaB?=
+ =?us-ascii?Q?EGREJs5YYENwJOo/6qTYZ9GhpgPOIjJiGIeQtYA7Y+FjiIGbpVGfeDmd9z+G?=
+ =?us-ascii?Q?1xQeFxQuQGP4UeCOn/ehYhWthU3usLn5O1pmjF1HdCVTJufUbXRiP/1w8jUg?=
+ =?us-ascii?Q?AHCqM8VGm+i81jSxRgMhlTjDhn9xwcd3jg7/EBz4cChUeFwKy+WMSOi2EIvO?=
+ =?us-ascii?Q?GyWDjob43aautWQuFcrP95Uw5GCZcQyS0yVljJ0e/yLGCxbIW4ISWBfcHXbv?=
+ =?us-ascii?Q?Zpy/YWZnfsEOnMzB5epuyJajrH2wZ1Vdm5n4BK/+uCla9rSKWgV0twJxLIq1?=
+ =?us-ascii?Q?DbfcVNmByeUaXVeRHesVd83zDTu4m7F+6lADNugyASwsb8mKPmDbY8004GKw?=
+ =?us-ascii?Q?e/oQ7XDIizvpmTzapKiFWmphbSgpiXIZlnLPNxN3Ow9j+A7IHwvum5q9isyg?=
+ =?us-ascii?Q?W/6UIzLFB5qnmvBJh//xdZs/RSKRLNS0IPKD1u3zDlrSqYx/j9yDXYNC1gqx?=
+ =?us-ascii?Q?dQXLiwHOh66aEWeoWuyqk9u9ikCRYyK9ba0RjUtj?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Message-ID: <74adbf4d.2bb3.18edf7020f7.Coremail.duchao@eswincomputing.com>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: TQJkCgBHWbszhxxm230GAA--.3729W
-X-CM-SenderInfo: xgxfxt3r6h245lqf0zpsxwx03jof0z/1tbiAQEIDGYboscKDgADsb
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
- CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
- daVFxhVjvjDU=
-Received-SPF: permerror client-ip=129.150.39.64;
- envelope-from=duchao@eswincomputing.com; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL=1.31, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CYYPR11MB8432.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3bf89e7d-6269-4865-3270-08dc5cf58049
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Apr 2024 02:41:06.8472 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0xwNdfpIeABH9JTckfDsEWct+Fhj30gcmIQj+OzAcctycgHoFrlgZmqAAOXGNWeQQgw3GT4RKf1YfGEZDQadRQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB5892
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=chen.zhang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.127,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,49 +178,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-R2VudGxlIHBpbmcuLi4KCk9uIDIwMjQtMDQtMDkgMTc6NDMsIENoYW8gRHUgPGR1Y2hhb0Blc3dp
-bmNvbXB1dGluZy5jb20+IHdyb3RlOgo+IAo+IEhpIERhbmllbCBhbmQgYWxsLAo+IAo+IFRoZSBL
-Vk0gcGF0Y2hlcyBoYXZlIGJlZW4gcmV2aWV3ZCBhbmQgYXJlIGluIHRoZSBxdWV1ZS4KPiBodHRw
-czovL2xvcmUua2VybmVsLm9yZy9hbGwvMjAyNDA0MDIwNjI2MjguNTQyNS0xLWR1Y2hhb0Blc3dp
-bmNvbXB1dGluZy5jb20vCj4gCj4gQ291bGQgeW91IHBsZWFzZSByZXZpZXcgaW4gdGhlIFFFTVUg
-c2lkZSA/Cj4gVGhlbiBJIHdpbGwgcmViYXNlIHRoaXMgc2VyaWVzIHdpdGggeW91ciBjb21tZW50
-cy4KPiAKPiBTb21lIE5vdGVzOgo+IDEuIEFzIHRoZSBmaXJzdCBzdGFnZSwgb25seSB0aGUgc29m
-dHdhcmUgYnJlYWtwb2ludHMgaXMgaW1wbGVtZW50ZWQuCj4gMi4gQSAnY29ybmVyIGNhc2UnIGlu
-IHdoaWNoIHRoZSBkZWJ1ZyBleGNlcHRpb24gaXMgbm90IGluc2VydGVkIGJ5IHRoZQo+IGRlYnVn
-Z2VyLCBuZWVkIHRvIGJlIHJlLWluamVjdGVkIHRvIHRoZSBndWVzdC4gVGhpcyBpcyBub3QgaGFu
-ZGxlZCB5ZXQKPiBpbiB0aGlzIHNlcmllcy4KPiAKPiBUaGFua3MsCj4gQ2hhbwo+IAo+IAo+IE9u
-IDIwMjMtMTItMjIgMjI6MTYsIERhbmllbCBIZW5yaXF1ZSBCYXJib3phIDxkYmFyYm96YUB2ZW50
-YW5hbWljcm8uY29tPiB3cm90ZToKPiA+IAo+ID4gSGksCj4gPiAKPiA+IEl0IHNlZW1zIHRoYXQg
-d2Ugc3RpbGwgbmVlZCB0aGUga2VybmVsIEtWTSBzaWRlIHRvIGJlIHNvcnRlZCBvdXQgZmlyc3Qg
-WzFdLAo+ID4gc28gSSBiZWxpZXZlIHdlIHNob3VsZCB3YWl0IGEgYml0IHVudGlsIHdlIGNhbiBy
-ZXZpZXcgdGhpcyBSRkMuIE90aGVyd2lzZSB3ZQo+ID4gbWlnaHQgcmlzayByZXZpZXdpbmcgc29t
-ZXRoaW5nIHRoYXQgaGFzIHRvIGJlIGNoYW5nZWQgbGF0ZXIuCj4gPiAKPiA+IAo+ID4gWzFdIGh0
-dHBzOi8vbG9yZS5rZXJuZWwub3JnL2t2bS8yMDIzMTIyMTA5NTAwMi43NDA0LTEtZHVjaGFvQGVz
-d2luY29tcHV0aW5nLmNvbS8KPiA+IAo+ID4gCj4gPiBUaGFua3MsCj4gPiAKPiA+IERhbmllbAo+
-ID4gCj4gPiBPbiAxMi8yMS8yMyAwNjo0OSwgQ2hhbyBEdSB3cm90ZToKPiA+ID4gVGhpcyBzZXJp
-ZXMgaW1wbGVtZW50cyBRRU1VIEtWTSBHdWVzdCBEZWJ1ZyBvbiBSSVNDLVYuIEN1cnJlbnRseSwg
-d2UgY2FuCj4gPiA+IGRlYnVnIFJJU0MtViBLVk0gZ3Vlc3QgZnJvbSB0aGUgaG9zdCBzaWRlLCB3
-aXRoIHNvZnR3YXJlIGJyZWFrcG9pbnRzLgo+ID4gPiAKPiA+ID4gQSBicmllZiB0ZXN0IHdhcyBk
-b25lIG9uIFFFTVUgUklTQy1WIGh5cGVydmlzb3IgZW11bGF0b3IuCj4gPiA+IAo+ID4gPiBBIFRP
-RE8gbGlzdCB3aGljaCB3aWxsIGJlIGFkZGVkIGxhdGVyOgo+ID4gPiAxLiBIVyBicmVha3BvaW50
-cyBzdXBwb3J0Cj4gPiA+IDIuIFRlc3QgY2FzZXMKPiA+ID4gCj4gPiA+IFRoaXMgc2VyaWVzIGlz
-IGJhc2VkIG9uIFFFTVUgOC4yLjAtcmM0IGFuZCBpcyBhbHNvIGF2YWlsYWJsZSBhdDoKPiA+ID4g
-aHR0cHM6Ly9naXRodWIuY29tL0R1LUNoYW8vcWVtdS90cmVlL3Jpc2N2X2dkX3N3Cj4gPiA+IAo+
-ID4gPiBUaGlzIGlzIGRlcGVuZGVudCBvbiBLVk0gc2lkZSBjaGFuZ2VzOgo+ID4gPiBodHRwczov
-L2dpdGh1Yi5jb20vRHUtQ2hhby9saW51eC90cmVlL3Jpc2N2X2dkX3N3Cj4gPiA+IAo+ID4gPiBD
-aGFvIER1ICg0KToKPiA+ID4gICAgdGFyZ2V0L3Jpc2N2L2t2bTogYWRkIHNvZnR3YXJlIGJyZWFr
-cG9pbnRzIHN1cHBvcnQKPiA+ID4gICAgdGFyZ2V0L3Jpc2N2L2t2bTogaW1wbGVtZW50IGt2bV9h
-cmNoX3VwZGF0ZV9ndWVzdF9kZWJ1ZygpCj4gPiA+ICAgIHRhcmdldC9yaXNjdi9rdm06IGhhbmRs
-ZSB0aGUgZXhpdCB3aXRoIGRlYnVnIHJlYXNvbgo+ID4gPiAgICBsaW51eC1oZWFkZXJzOiBlbmFi
-bGUgS1ZNIEdVRVNUIERFQlVHIGZvciBSSVNDLVYKPiA+ID4gCj4gPiA+ICAgYWNjZWwva3ZtL2t2
-bS1hbGwuYyAgICAgICAgICAgfCAgIDggKy0tCj4gPiA+ICAgaW5jbHVkZS9zeXNlbXUva3ZtLmgg
-ICAgICAgICAgfCAgIDYgKy0KPiA+ID4gICBsaW51eC1oZWFkZXJzL2FzbS1yaXNjdi9rdm0uaCB8
-ICAgMSArCj4gPiA+ICAgdGFyZ2V0L2FybS9rdm02NC5jICAgICAgICAgICAgfCAgIDYgKy0KPiA+
-ID4gICB0YXJnZXQvaTM4Ni9rdm0va3ZtLmMgICAgICAgICB8ICAgNiArLQo+ID4gPiAgIHRhcmdl
-dC9taXBzL2t2bS5jICAgICAgICAgICAgIHwgICA2ICstCj4gPiA+ICAgdGFyZ2V0L3BwYy9rdm0u
-YyAgICAgICAgICAgICAgfCAgIDYgKy0KPiA+ID4gICB0YXJnZXQvcmlzY3Yva3ZtL2t2bS1jcHUu
-YyAgICB8IDEwMSArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCj4gPiA+ICAgdGFy
-Z2V0L3MzOTB4L2t2bS9rdm0uYyAgICAgICAgfCAgIDYgKy0KPiA+ID4gICA5IGZpbGVzIGNoYW5n
-ZWQsIDEzMCBpbnNlcnRpb25zKCspLCAxNiBkZWxldGlvbnMoLSkKPiA+ID4gCj4gPiA+IC0tCj4g
-PiA+IDIuMTcuMQo+ID4gPiAK
+
+
+> -----Original Message-----
+> From: Fabiano Rosas <farosas@suse.de>
+> Sent: Thursday, April 11, 2024 10:40 PM
+> To: Zhang, Hailiang <zhanghailiang@xfusion.com>; Zhang, Chen
+> <chen.zhang@intel.com>; Li Zhijian <lizhijian@fujitsu.com>
+> Cc: qemu-devel@nongnu.org; Peter Xu <peterx@redhat.com>
+> Subject: COLO state?
+>=20
+> Hi COLO maintainers,
+>=20
+> Would you please take a look at this issue?
+>=20
+> https://gitlab.com/qemu-project/qemu/-/issues/2277
+>=20
+
+Sure, please share more details in gitlab of your test. For example the pri=
+mary/secondary VM boot scripts and the backtrace...etc...
+
+> The reporter claims it affects from 9.0-rc2 all the way back to QEMU 7.2.=
+ I
+> don't have any kind of setup for COLO, so it will take me a while to be a=
+ble to
+> verify this.
+>=20
+> Could you also provide clarification on what is the state of COLO these d=
+ays?
+> Are any of you looking at it? Do we know of active users of the feature?
+
+Currently, all the COLO code already merged by QEMU. But there is no suppor=
+t for libvirt (Need to passthrough QMP command to QEMU for enable COLO).
+Any users can use the WIKI page(https://wiki.qemu.org/Features/COLO) to set=
+up COLO based on upstream code.(Maybe have issues? I will double check it..=
+. ).
+As we know, many cloud services provider build there HA/FT system or produc=
+ts based on COLO project.
+
+>=20
+> Also, is the MAINTAINERS file reflecting the actual maintenance state
+> according to you?
+
+ I will check w/ Hailiang/Zhijian/Congyang/Changlong(Block replication) to =
+see if he will keep working on COLO or not.
+
+Thanks
+Chen
+
+>=20
+> COLO Framework
+> M: Hailiang Zhang <zhanghailiang@xfusion.com>
+> S: Maintained
+> F: migration/colo*
+> F: include/migration/colo.h
+> F: include/migration/failover.h
+> F: docs/COLO-FT.txt
+>=20
+> COLO Proxy
+> M: Zhang Chen <chen.zhang@intel.com>
+> M: Li Zhijian <lizhijian@fujitsu.com>
+> S: Supported
+> F: docs/colo-proxy.txt
+> F: net/colo*
+> F: net/filter-rewriter.c
+> F: net/filter-mirror.c
+> F: tests/qtest/test-filter*
+>=20
+> Thanks
 
