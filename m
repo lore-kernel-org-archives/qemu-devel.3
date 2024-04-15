@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4898C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 14:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC5DC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 14:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwNc8-000741-E2; Mon, 15 Apr 2024 10:47:20 -0400
+	id 1rwNcc-0007DK-CE; Mon, 15 Apr 2024 10:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwNc5-00073Y-Ll
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 10:47:19 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwNcY-0007Bi-31
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 10:47:46 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwNc3-00018E-4M
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 10:47:17 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-343f62d8124so2826809f8f.2
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 07:47:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwNcU-00019r-Rj
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 10:47:45 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41869c1a95aso5061635e9.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 07:47:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713192433; x=1713797233; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713192461; x=1713797261; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Z2DzZxJ/KOgagmr8P8Cs3+qyAvqhJlFjKrTrXZYEl14=;
- b=Peei211ivEEE8GqCx6ShSYRFhOY5cEo24PyQmRaL19mv3e0P7ZppzCJkYDC21GzcA6
- 4LDML/e9q7Otg3yMZvCbFMad4TZ2elE4eFLBnkoKRoEMvpFtbtFuc1TAR1hqeVgEg2pi
- 3zzS4NIBjCTT8gvzHTzM7vg4gjklGE8AgWmb9NeRfe7qwHcHaXNERkJKK65HHl3Vm7jO
- XpmKWNc4lGJC2s9Ua65KNtUiGJnV5ncogwJFDo5KWRZTVbRVEwWG0y/5h+ZHwSgGaIsa
- VYP/clFf3lggcVzGkgSWgQAKzyd7/MVRl8yOWHrZP6cc9V/2CiW+/mZS3PfMNgkWpqC9
- nCbw==
+ bh=xjZ3Rspq8QEGVUkMI0bH+lmZ28HUYTtxTCCx8oa14t4=;
+ b=W0eRr9HUMISGmknPPxuuYaEEEEZvzeWpIEYj0FoB/P6xWX20FkI8rHrtawA5MX1NPn
+ Mlwui7y/W6+IsEMP8cM/aPynuykAaLe3ns0FmUWHdV38NCjgeNpZuIIw8EMKZEOwquF+
+ sCSkEtfKqfrFPoERDNkqXKaejpBYM3xdTSO4xciXT4VcaTUfFeNQ/9u2Rg2eJSkEl/Zt
+ 95YKSHGpiBdjiN3RB2bzYN6MDEDbyBEMcUaF6cryCuUlXqHv1tjMlDIvFa+UNlKolp60
+ pV2EMr0tcPxkYB/0pH4iUC8Ae/+kn5OIIxnoiG4H49SUSuogNXSRsEcqZ3vpplQMXFSx
+ 7xAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713192433; x=1713797233;
+ d=1e100.net; s=20230601; t=1713192461; x=1713797261;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Z2DzZxJ/KOgagmr8P8Cs3+qyAvqhJlFjKrTrXZYEl14=;
- b=RrW2Fa+NIW6305HJxvWcyJn8jdLZO68F0QZlL5f68FkZygcwUki4AzF7rukeioEshE
- UWcnCicKcUhbNTI6WV2zFOyzhztfwOFzyYedizGJbKRKsQtTBdXxmEVwO3SZ8kGCvxcj
- /FPsQF5RAa52w0n+s10+GuTTk8/8RCN4J3Juex77pZMHn5/rKC6rdtxyoJqXrsPc3UFm
- devkOSBGhHo5yRgPd8OJOwCh6mRXQk7w3W7iyaB1E+TowEP+2o3LlsRC+oEUkEkqM112
- xDhT9rxFbgpQ0tfOJXKZYMHNGcm5meOn99L4VQ1xXFgUPAL9t7NtgV6fhD2y2Re6CpzD
- l/tA==
-X-Gm-Message-State: AOJu0YzO0bnMVpOqHPZwZTZwLZZZk0X+tkd+AmkfgqvXy7xlHNZEApIK
- b9y6bVpfyyLNhraRjDFdqlpiUMntIJIvuu3Cd4hWp5SfBEPi9V2UGq7wyaEN3r0=
-X-Google-Smtp-Source: AGHT+IHVqFaw+X7kQmIYHO6O8KtMFmcLIg8o7t3S26yp8WCOS/aWQgCT0m8o/4E1gH6+weNrIb8r9g==
-X-Received: by 2002:a5d:5104:0:b0:346:f906:f6c0 with SMTP id
- s4-20020a5d5104000000b00346f906f6c0mr6168432wrt.8.1713192432642; 
- Mon, 15 Apr 2024 07:47:12 -0700 (PDT)
+ bh=xjZ3Rspq8QEGVUkMI0bH+lmZ28HUYTtxTCCx8oa14t4=;
+ b=HLr8ULd6JJ31sG1WGDF2Vem9IpQwGkEm9b+pbxuTzb+8OEmdrdnPBPzQa+MvXz/yK7
+ ShMBkvoXaWad4sHsjWsoCZvWAWYJGKpguvG5qPVT08WCj1CSKzbK8tqxghUlG1XDdtVW
+ w/h2iavytmjBo5Y1wb3OMCyBPW8fsiUTnkiM2IHpifN+Izygk7Y9jbPoqFV3LKey2vzN
+ ydKZTnkFh6R53Qgr7Tf+sF2rMLXp5wBKhLih3yZ2hlIChdoI7JQbwRxGxLxj7nmebiyX
+ RGe1NZfnsyX7Y1AfjNScXeZU3Pk6VL7bWl9G2eGvUrgKSp5OV61eG4ZPtWpoxNqBnWBB
+ 1alg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVUglEOOx7o1yzb1c6hu6zoKg1Frp3gmZpesP9f60L04xVvJ13/DZ5XU46UNB2gIDnIpx3RozMAz/GFDGHY523NUDqgCfo=
+X-Gm-Message-State: AOJu0YyKvR4YLHOLRNhDjM7aXMTbZbjFL1PaJaEmHj54CbwbT/qS006Z
+ 8aytUzEol4aXUPX9emoUd32txc7AYCt3zTtXYV+p07gj5sqfOXqWLmksHd0bv7k=
+X-Google-Smtp-Source: AGHT+IE6xPJsfS2TxlrqORWQi/SiPefdKjdrpIgxW6JAiqeWPTW5qnkYXQMYsU4r/Y472vMbfrpeHw==
+X-Received: by 2002:a05:600c:5011:b0:418:677d:cded with SMTP id
+ n17-20020a05600c501100b00418677dcdedmr1911869wmr.0.1713192461422; 
+ Mon, 15 Apr 2024 07:47:41 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.132.126])
  by smtp.gmail.com with ESMTPSA id
- j10-20020adff00a000000b003469e7f5c52sm12329928wro.80.2024.04.15.07.47.11
+ m6-20020a05600c4f4600b0041875ff29adsm2201511wmq.2.2024.04.15.07.47.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 07:47:12 -0700 (PDT)
-Message-ID: <9d11f4fa-8153-49b7-8920-7edb61ef36f7@linaro.org>
-Date: Mon, 15 Apr 2024 16:47:10 +0200
+ Mon, 15 Apr 2024 07:47:40 -0700 (PDT)
+Message-ID: <05baa627-64ee-41b7-a206-3b05f694c2f5@linaro.org>
+Date: Mon, 15 Apr 2024 16:47:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ppc440_pcix: Do not expose a bridge device on PCI bus
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <20240411192443.B4D644E6026@zero.eik.bme.hu>
- <eecb616c-ad00-42da-ac49-1ebe51d0a1ec@linaro.org>
- <81128dae-f01e-ff40-c2cc-ff721dfdf288@eik.bme.hu>
+Subject: Re: [PATCH] hw/isa/vt82c686: Keep track of PIRQ/PINT pins separately
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240410222543.0EA534E6005@zero.eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <81128dae-f01e-ff40-c2cc-ff721dfdf288@eik.bme.hu>
+In-Reply-To: <20240410222543.0EA534E6005@zero.eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,29 +97,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/24 15:00, BALATON Zoltan wrote:
-> On Sat, 13 Apr 2024, Philippe Mathieu-Daudé wrote:
->> On 11/4/24 21:24, BALATON Zoltan wrote:
->>> Real 460EX SoC apparently does not expose a bridge device and having
->>> it appear on PCI bus confuses an AmigaOS file system driver that uses
->>> this to detect which machine it is running on.
->>>
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>> Here's another version that keeps the values and only drops the device
->>> so it's even less likely it could break anything, in case this can be
->>> accepted for 9.0.
->>>
->>>   hw/pci-host/ppc440_pcix.c | 11 ++++-------
->>>   1 file changed, 4 insertions(+), 7 deletions(-)
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 11/4/24 00:25, BALATON Zoltan wrote:
+> Move calculation of mask after the switch which sets the function
+> number for PIRQ/PINT pins to make sure the state of these pins are
+> kept track of separately and IRQ is raised if any of them is active.
 > 
-> Thanks. Nick, could you ack this please so it could be merged if you 
-> won't send more pull requests? (I'm the maintainer of this file as it's 
-> only used by sam460ex so maybe an ack is not needed but it could help to 
-> show you have no problem with it.)
+> Fixes: 7e01bd80c1 hw/isa/vt82c686: Bring back via_isa_set_irq()
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+> Preferably for 9.0 if there will be another RC.
+> 
+>   hw/isa/vt82c686.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-No need, queued, thanks.
-
+Queued, thanks.
 
