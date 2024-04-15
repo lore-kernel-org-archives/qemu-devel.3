@@ -4,176 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AD6C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 09:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6565FC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 10:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwJ6i-0002oV-Ch; Mon, 15 Apr 2024 05:58:36 -0400
+	id 1rwJ8c-0003Wd-5s; Mon, 15 Apr 2024 06:00:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rwJ6g-0002oI-W7
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:58:35 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rwJ6f-000145-CT
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:58:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713175113; x=1744711113;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=alM2aCGstHNQOqdvDvzEeKiUEpEGtNivmHMD0MSD5hM=;
- b=iWxupX7FeMl/riIeG9MK0NVOH15L8aFK9rYLRMc2gaB/v0h0owIUpjWW
- 3VX9wYVtyBwwUheqrz984uzusVm46w2EwoEFc4V9rUVA44zIELJJd9HVC
- s5UUDEIXT8Pl8pc/JRzDdCAowuCHcno/cA/X8dIS+Y/IjUoNx7QWdCBue
- JsxTFApMkefO/V6qRS8475e//L/lt4jPvk0ElT8qeFAU0VFBDf2fLmkxa
- UYR2P1nDusTRuLEHBU4m9wwfjwupIiD8LNvSceLmLJhJSQYFbKKhY5UjA
- zFru2i+iLoCAe6VnHvfcpReW8eKICwGW+HuifvIvN7lcEw8dKF9T62p1a Q==;
-X-CSE-ConnectionGUID: PV4hx69+TvKHVVAQI2fTjg==
-X-CSE-MsgGUID: hyFP90POTeSCNnQTNlTU4g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11044"; a="8775593"
-X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; 
-   d="scan'208";a="8775593"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Apr 2024 02:58:31 -0700
-X-CSE-ConnectionGUID: hkz51mpvTPKXNuRd4bk1Rw==
-X-CSE-MsgGUID: u087kh6yRImEMFMIl7153A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,202,1708416000"; d="scan'208";a="22432582"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by orviesa008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 15 Apr 2024 02:58:31 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 15 Apr 2024 02:58:30 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 15 Apr 2024 02:58:30 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 15 Apr 2024 02:58:30 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WXXUPJ2HGqeg5ERoHNRgBExYZyRiDCGCCJBQpyVNVZ7VFi5wL/PHa05gkJbCnhpKeNpBRbE8ynez1EBAF/t1RKkvxjQE2CO966iMtRgZV/IzPWyuf9LOJeJp2LkgFvvE6C2iWI4etqYrYdD9pxmKyYFFlSSx1RvsMGDFxqq/4RM28L3fZOyGAfPTxB+12XkRDzTCf4Y8RasxZaYhx+Z0ptFd0v/pyRIu2bEI90WLWtxaQt5BPgzWYY4A+NrQ7913dq9lJ/fLMCFQbRRmZcVLWn0xvtT9PPINc8AAJLClcIkVxsbjKXStSYGtlH9pjisY+tKDnVbY/wNePCZfDPF5oA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=alM2aCGstHNQOqdvDvzEeKiUEpEGtNivmHMD0MSD5hM=;
- b=hxSJlo+kUs6oQsZQL/Is3RJZHC7kF4N3T9FZMTsL8jDXLdx29BmQikdRLaS95vP5u3Ft+ijSC7OBSftIyWBluZjj90jbYFbqZZ6trLgd6ivTWBypAQ3q3MyO107EDOj7MxwxdXRSuKeV+kAaAk8EKhEeXEj18IxduLnZgNBDRNLp1jAHXJvLzvP7OUmsfio1U2qn11TPxGz3SxiUIzfg+fmSfiAD8ipVhRwlpcIPTyE2SML2mRi5sApKXSfwLIq+djPb2/Nu7oufd8sJXDe7xsqNnPBrUzfJdKUhPvS4ZD2G7UotSncaG/X2bIfiUAo4hy7caD/vtysr6baGZdrwxg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by CYYPR11MB8430.namprd11.prod.outlook.com (2603:10b6:930:c6::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.25; Mon, 15 Apr
- 2024 09:58:29 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129%7]) with mapi id 15.20.7472.025; Mon, 15 Apr 2024
- 09:58:29 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
- L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>
-Subject: RE: [PATCH v2 01/10] backends: Introduce abstract HostIOMMUDevice
-Thread-Topic: [PATCH v2 01/10] backends: Introduce abstract HostIOMMUDevice
-Thread-Index: AQHaiYzk06tnPwLhp0Oyp2E1dvnOG7FpGLOAgAAK+IA=
-Date: Mon, 15 Apr 2024 09:58:28 +0000
-Message-ID: <SJ0PR11MB6744C49963705051AE06C0F992092@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
- <20240408081230.1030078-2-zhenzhong.duan@intel.com>
- <3203dcc8-294c-439d-a38b-b71ba1dbfc5c@linaro.org>
-In-Reply-To: <3203dcc8-294c-439d-a38b-b71ba1dbfc5c@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|CYYPR11MB8430:EE_
-x-ms-office365-filtering-correlation-id: 291e74ae-3b6b-4bbb-6f27-08dc5d3299d3
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: QXR5T09eYVQJzgiCBBgRNvc/QIvDtjnsApnjAWBJSfRZHnhc//ewDGU23A4hgkDiHlBxKdk98GUnWPSw2TTkaMBps+sCID0DFGBD4clGe5y+ggrxDRPTGSsfI3mICgeGHLRXMujqSC9GxTlYSMHw2oBp8LLf1hc1mt52O+52uJuzMsi5hIN44keeE4ZV5zNoN62kd2MrhLmUzOcEaqP0KgD39mkaYg4D1CN2IHiXi/oOR6xqXg2iPYg0aab8Z2JdwVCY/RnTxy28JSQVL6mfJWlQlfWzXgIYy0FPZimr9wOcu0QUDmqCO7GuQazbfW/624U+rwQJXIGJ1rJ6boRkUBAexwHJ+hh8dwgA+D3vRDKemJlH1xlVPXVaGxii+qyUAQ90yCYqb69glNaXGyAjU9jwxXL8zvI0iDizb8cjufZaPxCXsrWqKOTG7WJpLRgBtFLaYf6TP8ewqzr/lI0hm9LjnnmNEUUCRrP69B3dzPeXwWUFdh7f4q5SxfBl2vZnPrS+Zbpr9ZgmbOhBnW7OSBn8QomLSnh5iFqO3J3OCOvmxlpW2Ju2GaHb29k7FTD/zdrQHdWcYWEQNIeQ2GSyzFyDRoufa9wOVGhG2PhPMgYRf9SeV/LeY3bV0VBZf5PC4mY1aWWC58aWvE6bW18FIhBndAfUgdlDP8HeHXjENf9rrDkfpSJgUYqcgf7f7cTwcej37KbXIyOqMqeOdjDeUYGzEtipS2tBAM83B0NOrMc=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(366007)(7416005)(376005)(38070700009); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZmpiMWRnWk5vb1Y2Tm9IU0RWbllTdUlpb2oyS0JlamtraWpaU01tTHk4VEpx?=
- =?utf-8?B?NEhRVFVJV0gvQmxhNmdJdjVMdEpaTXJhRXZVQWpRRlIwb0pOS1RRZmJMVG9l?=
- =?utf-8?B?L0c3eEtheitSUUhKRExITXpJeWs4bHBYa3hVYmF5a0YwNndmWVpaWnZSUjdB?=
- =?utf-8?B?azNMRmd3dGx6MlZhUVl2eU9DV3p4dHZvK1haOHRDejd5Z0orK01EamoyeDB5?=
- =?utf-8?B?Rnd0RzVIRTl2c3ZWdXI0OVpVRzYxUS9lRGpQbUdQVEkyQU5XVE1GUjBVUkNV?=
- =?utf-8?B?UkZ0bGczYzhtWnNKNThJRlhyT0lHUHpFRnNvQkRVemozYlpkWUpTMm5qa1NR?=
- =?utf-8?B?NmM4MkxrRzUyaHNKNVBCYi95V2FoWVpXbGlCR1F3OXZTQ2c1end1eFd2Y0hB?=
- =?utf-8?B?cHZEN0wraktkQy8yaHBrZlZYTEFWTkppWEE0Ym9IUjZUUC9KRlhwZ1RoaVIy?=
- =?utf-8?B?TmwrUi9BWVdWRmtiQmxwaHVKcmJ1WFlxM0E5Wkt5QWtyS0JzNm8wYVhha1ov?=
- =?utf-8?B?M2VYQktkK3UyeDR1WVFlWm5LQzRHUlRMeGM1S2FJcFpaMHVCY09lVS9XeHp5?=
- =?utf-8?B?aDhCYlZtUFduWnhXTE1OeDBiZGRaemp2MnJ5dzBwMlFRajNKUzFyaGFMMm56?=
- =?utf-8?B?N1BXV1lZOGpzbzVUM24rVTg2YkJJbVVTU3IvSmpicW5nSW9jdUJNUElUOE5U?=
- =?utf-8?B?ZkYwYS9rSXV1aHFjcXowd1h1T2Q4R01SeWMydFBBdFVpNDhQSWpOWGl2dzZS?=
- =?utf-8?B?a0J0azZCZTdvVFdSNTVuVXFjK2o2Sk5Ed1p3cWRnYlliN3d4V3hTUU1EYWRS?=
- =?utf-8?B?MmlWeFVsb0xuMzRjTElNeWNUR3pCSVhRM292Zzd2YXNTMkdoY3UxSi9nb2Nr?=
- =?utf-8?B?UmxFTlBIeS9OaTNNQnNYK1V4RXc2ZzRGbGZQcUxWd01NM2pVN1FzWTMyMVk4?=
- =?utf-8?B?eHJRblorS2QxKzhoMFUvOTRleE05UHBURXBJdzFqMlJYV28rSFg5VEoyMjZR?=
- =?utf-8?B?dnJlR0ZaajFWK05LSUZRS1ZmVVZEVmg5QTlQVnlocmxnQVJ2ejh5cWZvSDRm?=
- =?utf-8?B?UW0vV0hmVHdCNWJBSTFQdllvVTIwNXQybkVaQkpZWUNMVUN6RTBWME1BM2g0?=
- =?utf-8?B?K1l2WVZLUWw3cWtnQWlaNVI3dlpBSmJ6QWNNakxRY240dlM0bnlLTkVHcnlB?=
- =?utf-8?B?VkJZZERUWWV6NzJXck9WVUZicXBjWGtvczB3U2t6NnZpKzVleVpxYVNjNGFM?=
- =?utf-8?B?Q3B5T05wN1VSeFpBME1iNmJ0OTFvL20xRFluYWI4MmhyOGxiM043bURxbzdt?=
- =?utf-8?B?dkdhd0hUOXBYdEFvR2x3SEsrRFA4SXNzd2wxV3dTU2I2Mm5RUkw0c0FlK0ln?=
- =?utf-8?B?VW9oMStRZU02YUpwUjN5SEJRdWgxT0tDUHZ4ZEZSYU5YL2VrUEhGWGpHMWpJ?=
- =?utf-8?B?UithUzI5YU13TXpPZXhRaVl5ellyYzluUGJsSS85V2Z6eWNlSmp1cjUyUWpz?=
- =?utf-8?B?U0puNDhsUVo3WnBrUjBxdm1jWnRHNitaZjZnOTRKZG5wcElNY3c4WU1mYlR5?=
- =?utf-8?B?ZlJHSXNMLzA4YUdoUm1QUDl3b3ZlZEZrV05vc3ZEZFBHeFpGMU9UVXFFWUtW?=
- =?utf-8?B?N0xLdjJGYUxudWc3TVF5RU8yR1N5dG9tSTN2bXp1dUV2Y1pRcTBFRWxRcW1T?=
- =?utf-8?B?T0RpWU81NHB3MTViTVo3YVAzeUViZVFhY1RHTFU5cVhiRi9WMWk0S0JVbmRl?=
- =?utf-8?B?VG41WUdKYWE2S3p3dHUybWRhQnR0WDRnb0hTcmcwL3EyVk1SZHpESnNVUjhZ?=
- =?utf-8?B?aDZEaGZRUmt3Sk9BR2hzS3R3VEl4L3Y3Ujd4VGtrWHl6ekVhOEtRRlIvSHJG?=
- =?utf-8?B?QWtPR3B5MnVzNHZJVE5mNGhVNlNrcnNVUVhvL2tMSENIU1JkQVU5TXJXRU02?=
- =?utf-8?B?VVhZNE0wd01QcC9Bd3lDdEc0NHl3V0VIc0NxUUJhQ2c4djBRK0lqWWg1RzFG?=
- =?utf-8?B?N0QwMERmMWg1T204VXNOWTc2TmpqMVBvSjE3aEw4REpOSjZSY0N6cDJ6VFhL?=
- =?utf-8?B?c2pucTBBbjhQUG1ReVJ3bkRYUlhmWGN0cHNnM1hmWFJtdmRWR2ZjNkZiTkVU?=
- =?utf-8?Q?2cmg4NMnFUkWN+K0ZmYsIVQ1v?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwJ8N-0003Vh-NF
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:00:23 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwJ8J-0001TZ-9e
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:00:19 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4185e80adfbso2548455e9.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 03:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713175210; x=1713780010; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wVZoDGmy7n2YFhP3n9Yj01/03KToH2CTZo5lCQd8atk=;
+ b=c3zpf019oxV+LWLPhFoPco35sP8xqhUcQbp/lIa0Gj0cJusCtKpCW+eMaBqHRJAR47
+ Y1rJG/a5Kr1ToVQj8s+M0Do/AnGXlvghrgELnPHwhy2M0U12lbACtiqEAC7QgSqrgHq5
+ BkJwG6o5v03NQBeGEtdBKXqZfKxZzP4a1fnaTADFNFIutW4EYXvFY5l6NkJf+nuPIbEC
+ IwGJ6FZEQ3lIHesTa0HmZQTtC6I4Tsj+qQzK+ctz3lVAQoUjCUVQoApEwSwceshkWysc
+ QHpW3ZOBLZf875ooJrHTLNUSsUYanbxh9pd7N+mTv/8mJEftWU9nZW+gmkqSchqHQ18j
+ vpLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713175210; x=1713780010;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wVZoDGmy7n2YFhP3n9Yj01/03KToH2CTZo5lCQd8atk=;
+ b=YxQ46LILEJOyZRr8Hvzmd6CZNxU5dsoNI8NhQbCa68Vms6wL5u8fWIbcp0HYg3gK4C
+ SFetEkOfZpxHxtxoptSLzfydzg7pedF5mwUnLWXDkSKtGG5I6Y5GRBwe4FMuxMCRgrcB
+ 8U5+2QLXf1NsIkHdUUc21HkmG37glDS0STS6jfU2ZUmzEhc36AdztFjq5XHVmhjIRq57
+ Wwvyb9S/JpCpmvTDy6GrgNvUZ+hr6bOLB0D32pGChw/EOksfFaRdyPfro9RxWdfnEr1i
+ 1OKeERSKemMYF5qdZgdav9Y68fYZXCjYeXmWdQ/dc0HyIbyfi60uY7snL1dnSmWkmk1p
+ OmDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWSa/fqUHcWlH2jEXOQ+Iwlib9aNZhwyIyo1XUvIYtdet4M1ldmWI4uhvrd/hEaM5EIqceYWnXyeszm1Azlf/0bHZmedqE=
+X-Gm-Message-State: AOJu0YyxBiQYd3eM5OyFMputsKO+aY/8IBa0UqcbIYyyyktHgzuosUuK
+ fMwMqiKwp83a9cMkUQaoB6wKUDkqPnZ1yQp/+KdmnMvBzLFjx0E0DeVNeFa67HQ=
+X-Google-Smtp-Source: AGHT+IEZ4Zam1WLxIHlxdzE2MTRpFWGgWUfgh2liw+KOPw3Kv0mzCSJOwO8vYV510gSeLqIYzSE0ZA==
+X-Received: by 2002:a05:600c:501e:b0:418:5ed2:5aa7 with SMTP id
+ n30-20020a05600c501e00b004185ed25aa7mr1621819wmr.14.1713175210588; 
+ Mon, 15 Apr 2024 03:00:10 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.132.126])
+ by smtp.gmail.com with ESMTPSA id
+ ay36-20020a05600c1e2400b004186df974f1sm1959303wmb.33.2024.04.15.03.00.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Apr 2024 03:00:10 -0700 (PDT)
+Message-ID: <3995d868-c7fe-40c0-840f-4929ad17557f@linaro.org>
+Date: Mon, 15 Apr 2024 12:00:08 +0200
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 291e74ae-3b6b-4bbb-6f27-08dc5d3299d3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Apr 2024 09:58:28.9921 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qh5C9wZXTzimL/Vm42JoOUs8Hh+VH83dlRvgztdtUf9s3B4h7dqroyCRySi+8N17QqtVDBalZf0lGXveGDtC4+nCAio7+PfkwINT46AoRO8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR11MB8430
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.14;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.127,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/5] hw/display : Add device DM163
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Samuel Tardieu <sam@rfc1149.net>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20240414130604.182059-1-ines.varhol@telecom-paris.fr>
+ <20240414130604.182059-2-ines.varhol@telecom-paris.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240414130604.182059-2-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -190,41 +103,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFBoaWxpcHBlIE1hdGhpZXUt
-RGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCj5TdWJqZWN0OiBSZTogW1BBVENIIHYyIDAxLzEw
-XSBiYWNrZW5kczogSW50cm9kdWNlIGFic3RyYWN0DQo+SG9zdElPTU1VRGV2aWNlDQo+DQo+SGkg
-Wmhlbnpob25nLA0KPg0KPk9uIDgvNC8yNCAxMDoxMiwgWmhlbnpob25nIER1YW4gd3JvdGU6DQo+
-PiBJbnRyb2R1Y2UgSG9zdElPTU1VRGV2aWNlIGFzIGFuIGFic3RyYWN0aW9uIG9mIGhvc3QgSU9N
-TVUgZGV2aWNlLg0KPj4NCj4+IGdldF9ob3N0X2lvbW11X2luZm8oKSBpcyB1c2VkIHRvIGdldCBo
-b3N0IElPTU1VIGluZm8sIGRpZmZlcmVudA0KPj4gYmFja2VuZHMgY2FuIGhhdmUgZGlmZmVyZW50
-IGltcGxlbWVudGF0aW9ucyBhbmQgcmVzdWx0IGZvcm1hdC4NCj4+DQo+PiBJbnRyb2R1Y2UgYSBt
-YWNybyBDT05GSUdfSE9TVF9JT01NVV9ERVZJQ0UgdG8gZGVmaW5lIHRoZSB1c2FnZQ0KPj4gZm9y
-IFZGSU8sIGFuZCBWRFBBIGluIHRoZSBmdXR1cmUuDQo+Pg0KPj4gU3VnZ2VzdGVkLWJ5OiBDw6lk
-cmljIExlIEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+DQo+PiBTaWduZWQtb2ZmLWJ5OiBaaGVuemhv
-bmcgRHVhbiA8emhlbnpob25nLmR1YW5AaW50ZWwuY29tPg0KPj4gLS0tDQo+PiAgIE1BSU5UQUlO
-RVJTICAgICAgICAgICAgICAgICAgICAgICAgfCAgMiArKw0KPj4gICBpbmNsdWRlL3N5c2VtdS9o
-b3N0X2lvbW11X2RldmljZS5oIHwgMTkgKysrKysrKysrKysrKysrKysrKw0KPj4gICBiYWNrZW5k
-cy9ob3N0X2lvbW11X2RldmljZS5jICAgICAgIHwgMTkgKysrKysrKysrKysrKysrKysrKw0KPj4g
-ICBiYWNrZW5kcy9LY29uZmlnICAgICAgICAgICAgICAgICAgIHwgIDUgKysrKysNCj4+ICAgYmFj
-a2VuZHMvbWVzb24uYnVpbGQgICAgICAgICAgICAgICB8ICAxICsNCj4+ICAgNSBmaWxlcyBjaGFu
-Z2VkLCA0NiBpbnNlcnRpb25zKCspDQo+PiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBpbmNsdWRlL3N5
-c2VtdS9ob3N0X2lvbW11X2RldmljZS5oDQo+PiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCBiYWNrZW5k
-cy9ob3N0X2lvbW11X2RldmljZS5jDQo+DQo+DQo+PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9zeXNl
-bXUvaG9zdF9pb21tdV9kZXZpY2UuaA0KPmIvaW5jbHVkZS9zeXNlbXUvaG9zdF9pb21tdV9kZXZp
-Y2UuaA0KPj4gbmV3IGZpbGUgbW9kZSAxMDA2NDQNCj4+IGluZGV4IDAwMDAwMDAwMDAuLjIyY2Ni
-ZTNhNWQNCj4+IC0tLSAvZGV2L251bGwNCj4+ICsrKyBiL2luY2x1ZGUvc3lzZW11L2hvc3RfaW9t
-bXVfZGV2aWNlLmgNCj4+IEBAIC0wLDAgKzEsMTkgQEANCj4+ICsjaWZuZGVmIEhPU1RfSU9NTVVf
-REVWSUNFX0gNCj4+ICsjZGVmaW5lIEhPU1RfSU9NTVVfREVWSUNFX0gNCj4+ICsNCj4+ICsjaW5j
-bHVkZSAicW9tL29iamVjdC5oIg0KPj4gKw0KPj4gKyNkZWZpbmUgVFlQRV9IT1NUX0lPTU1VX0RF
-VklDRSAiaG9zdC1pb21tdS1kZXZpY2UiDQo+PiArT0JKRUNUX0RFQ0xBUkVfVFlQRShIb3N0SU9N
-TVVEZXZpY2UsIEhvc3RJT01NVURldmljZUNsYXNzLA0KPkhPU1RfSU9NTVVfREVWSUNFKQ0KPj4g
-Kw0KPj4gK3N0cnVjdCBIb3N0SU9NTVVEZXZpY2Ugew0KPj4gKyAgICBPYmplY3QgcGFyZW50Ow0K
-Pj4gK307DQo+PiArDQo+PiArc3RydWN0IEhvc3RJT01NVURldmljZUNsYXNzIHsNCj4+ICsgICAg
-T2JqZWN0Q2xhc3MgcGFyZW50X2NsYXNzOw0KPj4gKw0KPj4gKyAgICBpbnQgKCpnZXRfaG9zdF9p
-b21tdV9pbmZvKShIb3N0SU9NTVVEZXZpY2UgKmhpb2QsIHZvaWQgKmRhdGEsDQo+dWludDMyX3Qg
-bGVuLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBFcnJvciAqKmVycnApOw0K
-Pg0KPlBsZWFzZSBkb2N1bWVudCB0aGlzIG5ldyBtZXRob2QgKGluIHBhcnRpY3VsYXIgcmV0dXJu
-IHZhbHVlIGFuZCBAZGF0YSkuDQo+DQo+U2luY2UgQGxlbiBpcyBzaXplb2YoZGF0YSksIGNhbiB3
-ZSB1c2UgdGhlIHNpemVfdCB0eXBlPw0KDQpTdXJlLCB3aWxsIGRvLg0KDQpUaGFua3MNClpoZW56
-aG9uZw0K
+Hi Inès,
+
+On 14/4/24 15:05, Inès Varhol wrote:
+> This device implements the IM120417002 colors shield v1.1 for Arduino
+> (which relies on the DM163 8x3-channel led driving logic) and features
+> a simple display of an 8x8 RGB matrix. The columns of the matrix are
+> driven by the DM163 and the rows are driven externally.
+> 
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   docs/system/arm/b-l475e-iot01a.rst |   3 +-
+>   include/hw/display/dm163.h         |  58 +++++
+>   hw/display/dm163.c                 | 333 +++++++++++++++++++++++++++++
+>   hw/display/Kconfig                 |   3 +
+>   hw/display/meson.build             |   1 +
+>   hw/display/trace-events            |  14 ++
+>   6 files changed, 411 insertions(+), 1 deletion(-)
+>   create mode 100644 include/hw/display/dm163.h
+>   create mode 100644 hw/display/dm163.c
+
+
+> diff --git a/include/hw/display/dm163.h b/include/hw/display/dm163.h
+> new file mode 100644
+> index 0000000000..00d0504640
+> --- /dev/null
+> +++ b/include/hw/display/dm163.h
+> @@ -0,0 +1,58 @@
+> +/*
+> + * QEMU DM163 8x3-channel constant current led driver
+> + * driving columns of associated 8x8 RGB matrix.
+> + *
+> + * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
+> + * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> + * Copyright (C) 2024 Inès Varhol <ines.varhol@telecom-paris.fr>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_DISPLAY_DM163_H
+> +#define HW_DISPLAY_DM163_H
+> +
+> +#include "qom/object.h"
+> +#include "hw/qdev-core.h"
+> +
+> +#define TYPE_DM163 "dm163"
+> +OBJECT_DECLARE_SIMPLE_TYPE(DM163State, DM163);
+> +
+> +#define DM163_NUM_LEDS 24
+> +#define RGB_MATRIX_NUM_ROWS 8
+> +#define RGB_MATRIX_NUM_COLS (DM163_NUM_LEDS / 3)
+
+Maybe better as:
+
+   #define DM163_NUM_LEDS (RGB_MATRIX_NUM_COLS * RGB_MATRIX_NUM_ROWS)
+
+> +#define COLOR_BUFFER_SIZE RGB_MATRIX_NUM_ROWS
+
+It could ease the code to define here directly as:
+
+   /* The last row is filled with 0 (turned off row) */
+   #define COLOR_BUFFER_SIZE (RGB_MATRIX_NUM_ROWS + 1)
+
+> +
+> +typedef struct DM163State {
+> +    DeviceState parent_obj;
+> +
+> +    /* DM163 driver */
+> +    uint64_t bank0_shift_register[3];
+> +    uint64_t bank1_shift_register[3];
+> +    uint16_t latched_outputs[DM163_NUM_LEDS];
+> +    uint16_t outputs[DM163_NUM_LEDS];
+> +    qemu_irq sout;
+> +
+> +    uint8_t sin;
+> +    uint8_t dck;
+> +    uint8_t rst_b;
+> +    uint8_t lat_b;
+> +    uint8_t selbk;
+> +    uint8_t en_b;
+> +
+> +    /* IM120417002 colors shield */
+> +    uint8_t activated_rows;
+> +
+> +    /* 8x8 RGB matrix */
+> +    QemuConsole *console;
+> +    uint8_t redraw;
+> +    /* Rows currently being displayed on the matrix. */
+> +    /* The last row is filled with 0 (turned off row) */
+> +    uint32_t buffer[COLOR_BUFFER_SIZE + 1][RGB_MATRIX_NUM_COLS];
+> +    uint8_t last_buffer_idx;
+> +    uint8_t buffer_idx_of_row[RGB_MATRIX_NUM_ROWS];
+> +    /* Used to simulate retinal persistence of rows */
+> +    uint8_t age_of_row[RGB_MATRIX_NUM_ROWS];
+
+Maybe "row_persistence_delay"?
+
+> +} DM163State;
+> +
+> +#endif /* HW_DISPLAY_DM163_H */
+
+
+> +static void dm163_dck_gpio_handler(void *opaque, int line, int new_state)
+> +{
+> +    DM163State *s = DM163(opaque);
+
+GPIO handlers are initialized in dm163_realize() where we know @dev
+is already a DM163State:
+
+   static void dm163_realize(DeviceState *dev, Error **errp)
+   {
+       DM163State *s = DM163(dev);
+                       ^^^^^
+       qdev_init_gpio_in(dev, dm163_rows_gpio_handler, 8);
+
+So here (and other handlers) you can avoid the QOM cast macro,
+and directly use:
+
+       DM163State *s = opaque;
+
+> +
+> +    if (new_state && !s->dck) {
+> +        /*
+> +         * On raising dck, sample selbk to get the bank to use, and
+> +         * sample sin for the bit to enter into the bank shift buffer.
+> +         */
+> +        uint64_t *sb =
+> +            s->selbk ? s->bank1_shift_register : s->bank0_shift_register;
+> +        /* Output the outgoing bit on sout */
+> +        const bool sout = (s->selbk ? sb[2] & MAKE_64BIT_MASK(63, 1) :
+> +                           sb[2] & MAKE_64BIT_MASK(15, 1)) != 0;
+> +        qemu_set_irq(s->sout, sout);
+> +        /* Enter sin into the shift buffer */
+> +        sb[2] = (sb[2] << 1) | ((sb[1] >> 63) & 1);
+> +        sb[1] = (sb[1] << 1) | ((sb[0] >> 63) & 1);
+> +        sb[0] = (sb[0] << 1) | s->sin;
+> +    }
+> +
+> +    s->dck = new_state;
+> +    trace_dm163_dck(new_state);
+> +}
+
+
+> +static void dm163_en_b_gpio_handler(void *opaque, int line, int new_state)
+> +{
+> +    DM163State *s = DM163(opaque);
+> +
+> +    s->en_b = new_state;
+> +    dm163_propagate_outputs(s);
+> +    trace_dm163_en_b(new_state);
+> +}
+> +
+> +static inline uint8_t dm163_bank0(const DM163State *s, uint8_t led)
+
+No need to force the compiler to inline these methods.
+
+> +{
+> +    /*
+> +     * Bank 1 uses 6 bits per led, so a value may be stored accross
+> +     * two uint64_t entries.
+> +     */
+> +    const uint8_t low_bit = 6 * led;
+> +    const uint8_t low_word = low_bit / 64;
+> +    const uint8_t high_word = (low_bit + 5) / 64;
+> +    const uint8_t low_shift = low_bit % 64;
+> +
+> +    if (low_word == high_word) {
+> +        /* Simple case: the value belongs to one entry. */
+> +        return (s->bank0_shift_register[low_word] &
+> +                MAKE_64BIT_MASK(low_shift, 6)) >> low_shift;
+> +    }
+> +
+> +    const uint8_t bits_in_low_word = 64 - low_shift;
+> +    const uint8_t bits_in_high_word = 6 - bits_in_low_word;
+> +    return ((s->bank0_shift_register[low_word] &
+> +             MAKE_64BIT_MASK(low_shift, bits_in_low_word)) >>
+> +            low_shift) |
+> +           ((s->bank0_shift_register[high_word] &
+> +             MAKE_64BIT_MASK(0, bits_in_high_word))
+> +         << bits_in_low_word);
+> +}
+> +
+> +static inline uint8_t dm163_bank1(const DM163State *s, uint8_t led)
+> +{
+> +    const uint64_t entry = s->bank1_shift_register[led / 8];
+> +    const unsigned shift = 8 * (led % 8);
+> +    return (entry & MAKE_64BIT_MASK(shift, 8)) >> shift;
+> +}
+
+
+> +static void dm163_realize(DeviceState *dev, Error **errp)
+> +{
+> +    DM163State *s = DM163(dev);
+> +
+> +    qdev_init_gpio_in(dev, dm163_rows_gpio_handler, 8);
+
+s/8/RGB_MATRIX_NUM_ROWS/
+
+> +    qdev_init_gpio_in(dev, dm163_sin_gpio_handler, 1);
+> +    qdev_init_gpio_in(dev, dm163_dck_gpio_handler, 1);
+> +    qdev_init_gpio_in(dev, dm163_rst_b_gpio_handler, 1);
+> +    qdev_init_gpio_in(dev, dm163_lat_b_gpio_handler, 1);
+> +    qdev_init_gpio_in(dev, dm163_selbk_gpio_handler, 1);
+> +    qdev_init_gpio_in(dev, dm163_en_b_gpio_handler, 1);
+> +    qdev_init_gpio_out_named(dev, &s->sout, "sout", 1);
+> +
+> +    s->console = graphic_console_init(dev, 0, &dm163_ops, s);
+> +    qemu_console_resize(s->console, RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZE,
+> +                        RGB_MATRIX_NUM_ROWS * LED_SQUARE_SIZE);
+> +}
+
+
+> diff --git a/hw/display/trace-events b/hw/display/trace-events
+> index 2336a0ca15..fc7cbdcd36 100644
+> --- a/hw/display/trace-events
+> +++ b/hw/display/trace-events
+
+
+> +# dm163.c
+> +dm163_redraw(uint8_t redraw) "0x%02x"
+> +dm163_dck(int new_state) "dck : %d"
+> +dm163_en_b(int new_state) "en_b : %d"
+> +dm163_rst_b(int new_state) "rst_b : %d"
+> +dm163_lat_b(int new_state) "lat_b : %d"
+> +dm163_sin(int new_state) "sin : %d"
+> +dm163_selbk(int new_state) "selbk : %d"
+
+unsigned new_state, "%u"
+
+> +dm163_activated_rows(int new_state) "Activated rows : 0x%" PRIx32 ""
+> +dm163_bits_ppi(unsigned dest_width) "dest_width : %u"
+> +dm163_leds(int led, uint32_t value) "led %d: 0x%x"
+> +dm163_channels(int channel, uint8_t value) "channel %d: 0x%x"
+> +dm163_refresh_rate(uint32_t rr) "refresh rate %d"
+
+Minor comments, otherwise LGTM!
+
+Regards,
+
+Phil.
 
