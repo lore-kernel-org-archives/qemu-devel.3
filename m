@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27BFC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 09:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67CF3C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 09:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwItZ-0005zS-HC; Mon, 15 Apr 2024 05:45:01 -0400
+	id 1rwJ0R-0000M9-GA; Mon, 15 Apr 2024 05:52:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rwItX-0005vb-BH
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:44:59 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rwJ0O-0000Lm-EB
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:52:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rwItV-0006XA-EW
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:44:59 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rwJ0M-00088Z-Q0
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:52:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713174296;
+ s=mimecast20190719; t=1713174720;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=fZguhwIqTs1ZL2uGcRdmBzVDriXwvoFuOGWAFyfM4VeToFBpvPSbVpom0n5sFmFDbD4AT8
- qJsKpdyT218UwhxzsnYNT+9XVtr3cVm7Lc7xNMMtAXllOt+Yk30cjKOkX6GlD2mQZpvyT5
- 2DkcUlSYT6JYn8vHs4eCcHY0q/NT3Hw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CEcy9//jlC/L/E7f1uHpmmakPqaVknws3pe+/RVvmeY=;
+ b=NBYtpXMZaZESQn4LCQLD+syuK+MPle6bYXCms7vHphy1jD0zRpUGjfKEARNtqjcLwyMACB
+ DOidFlmMJ1Vdc6HRQxycWD0FhLJra6OAXqePHJbg8hVwUQEGG4tsxeNX4FyxV+fVMnqlXj
+ JQ2z0yXt6WcNbCMJvc1NieybZD7NYX8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-569-kEwE5YbWNTG58f8L-X7jOg-1; Mon, 15 Apr 2024 05:44:54 -0400
-X-MC-Unique: kEwE5YbWNTG58f8L-X7jOg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-417cf901ab4so11763275e9.1
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 02:44:54 -0700 (PDT)
+ us-mta-529-DQTfkRJcNJOCSWLoRQpfUA-1; Mon, 15 Apr 2024 05:51:58 -0400
+X-MC-Unique: DQTfkRJcNJOCSWLoRQpfUA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-345fa9052b7so1938448f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 02:51:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713174293; x=1713779093;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=Ce5pJuNcby0XqG6RUw8eUKg92JVQMlY4jC8ebr0E1XXcSs+NcHKS5PAe8zG9wu0IXD
- HAslLQdS/oF+1L6v/wutEgAbXxngJ9dGzbH4F42Oq7c/xY7EBlzc8avMyRNp2qRAHT7k
- 3WvdjW1uJwF36E8bdYB2b6J1A1m9xQN97wh9Ch80VuaChcseZeq9MfEBBAefH4yJuqdd
- 7iRZwLsRaL/ZCaF+HLNQkNm7XXmqKc/Hh3Lg5Q1FaLQTKtNpUg4b55gG7P5SiFd4Sf/P
- Zl2NqAr5/lIvFj99EeE8XZKCINpXoQvSYSC3nLin31Melq6tOFFoz2FIgbnsYIwIlOcs
- D98g==
+ d=1e100.net; s=20230601; t=1713174717; x=1713779517;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CEcy9//jlC/L/E7f1uHpmmakPqaVknws3pe+/RVvmeY=;
+ b=GRLHCK9eZk0d23hNhPt1Zp2VzADRdU4ZDXUBukxN3UyHPUvZxERIM8NG1eO4c21qmN
+ CO41bQUmoGBjSjcPk1du53BGdTbk1ThQ1jSrLsLrHCPogQHDOhDFjcR7ItMcol22BiPh
+ x7xGCXPNAGRV+LCSELr7Dd1XN8hOljPhGSoISeFIIeXYlde61KY3Zr2RMBa9MZShQkML
+ WxvnSY6+CU07Gd29beBx9WJWwHgxq65QeLqfnlTmntDjAl5ZCqlws0a81t2VHq/1GzJB
+ sEnF8NG2nlgOnhXAWBS5EZHuncfe42mGtTviyjg66qRwoRPuCg1Yx2anTj287FoLC90S
+ sSDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUhLJp2lJXL1YH6usR5oY+yLklIv+u1UHYq8J6f3M3QNQdpHg4LrgBVXTG7lkzsuyxeHMshBtKZMypiCsF3VbOpIQ6K94=
-X-Gm-Message-State: AOJu0YzLpTGh0EhxoLkjtJRrgqXfln58QQWNKqsKdXfZ7hY3xKM8Uxwr
- gxSJDZifrb2ug6JQoynWdPXDCqOqSAdZdaQPeVpaEPqhxF8GVD42TbiLtOyAbFHr2dkEigZf2q1
- IunNYOxi8eq81jsCs4Fbtu559xknut051SawWv7xTyYxCtENkiPk6
-X-Received: by 2002:a05:600c:3d9b:b0:418:7c47:32c9 with SMTP id
- bi27-20020a05600c3d9b00b004187c4732c9mr214602wmb.29.1713174293498; 
- Mon, 15 Apr 2024 02:44:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqeEh0E8VAV3DfWUV9AaW77mYtke5mkqW0ym8ETAjIvkD5yYd7Gm+o6g7JFJWKOPU+SO5SBA==
-X-Received: by 2002:a05:600c:3d9b:b0:418:7c47:32c9 with SMTP id
- bi27-20020a05600c3d9b00b004187c4732c9mr214588wmb.29.1713174293219; 
- Mon, 15 Apr 2024 02:44:53 -0700 (PDT)
-Received: from avogadro.local ([151.49.82.91])
+ AJvYcCXs6fsUWF38+H+3lzbc+/cOgC+wic1vU/X7whaa9weSiZSQH7vjY8Qrq06rz4N+q6ah6r/zOZuvpkuxMuaqK9XGH13p1jw=
+X-Gm-Message-State: AOJu0YyIJd//IESF2zvm0QAVOY1IB1oBG8HTqURFTeLrWHZgs+4aIwV+
+ j7axgBlvNBq5QnBnYNm/f2vqhXENgs2ZaIvzHx8QQUnZHXflsXzng4k/D8G84xk6bIgnxfjdj6P
+ NrghvgmsvrpXE45RHf9+oYe6EbnZEMHF9hqaNguRJc6vkVaYbDc/P++FJAZH7
+X-Received: by 2002:a5d:63c7:0:b0:346:b6c1:1374 with SMTP id
+ c7-20020a5d63c7000000b00346b6c11374mr6392521wrw.65.1713174716885; 
+ Mon, 15 Apr 2024 02:51:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKehQjN7oAnzi0gZhIo9egBW1eLn0xDMFG80/3ymmoYtKRf+t35Ys5B6YwKpFGn0AEetlO3Q==
+X-Received: by 2002:a5d:63c7:0:b0:346:b6c1:1374 with SMTP id
+ c7-20020a5d63c7000000b00346b6c11374mr6392511wrw.65.1713174716409; 
+ Mon, 15 Apr 2024 02:51:56 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:172:a95b:a91:79d:72cd:ca48])
  by smtp.gmail.com with ESMTPSA id
- t10-20020a05600c198a00b004186c58a9b5sm2011058wmq.44.2024.04.15.02.44.52
+ a14-20020adffb8e000000b00347363b77dasm7366256wrr.33.2024.04.15.02.51.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Apr 2024 02:44:52 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Mon, 15 Apr 2024 02:51:55 -0700 (PDT)
+Date: Mon, 15 Apr 2024 05:51:50 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
- isaku.yamahata@intel.com,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, isaku.yamahata@intel.com,
  "Kirill A . Shutemov" <kirill.shutemov@linux.intel.com>
-Subject: Re: [PATCH v2] hw/i386/acpi: Set PCAT_COMPAT bit only when pic is not
- disabled
-Date: Mon, 15 Apr 2024 11:44:50 +0200
-Message-ID: <20240415094450.268675-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240403145953.3082491-1-xiaoyao.li@intel.com>
-References: 
+Subject: Re: [PATCH v2] hw/i386/acpi: Set PCAT_COMPAT bit only when pic is
+ not disabled
+Message-ID: <20240415054955-mutt-send-email-mst@kernel.org>
+References: <20240403145953.3082491-1-xiaoyao.li@intel.com>
+ <20240415094450.268675-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240415094450.268675-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -108,8 +106,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+On Mon, Apr 15, 2024 at 11:44:50AM +0200, Paolo Bonzini wrote:
+> Queued, thanks.
+> 
+> Paolo
 
-Paolo
+I actually had it queued too - it's not 9.0 material though.
+If you queue it don't forget to tweak the commit log manually.
+
+-- 
+MST
 
 
