@@ -4,80 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF3BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 15:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2234C00A94
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 15:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwO6f-00023K-Tx; Mon, 15 Apr 2024 11:18:53 -0400
+	id 1rwOIe-0004i4-8d; Mon, 15 Apr 2024 11:31:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rwO6d-00020y-41
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 11:18:51 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rwO6a-0006f6-PH
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 11:18:50 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-41884e96fe0so1042975e9.0
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 08:18:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713194327; x=1713799127; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Ym3EZJbJl0gm6jPMdSsVldV1r8b8PwCAMdNAgUyaFS8=;
- b=Qsan/htadBB4kZFjCbj23cbWN2JCoy29EW0md+NxcPvaQDMycUcJl6wZVe72ua6V9G
- 6yHXGviP2LMMqg+2B9tclX0VFHNrS2GrXTNlTCLWZgkqQ8erGGCeIcE/XBnweGgWp3os
- 3jzXLsBQUfE6Y53un7N3Mp6237TlOteU6e31Kz/CyluaMIB2U/X1oLIjYg3n9Pr8iUQu
- oM59U3haGVmyvgaOopVt6zptDYrEB1B2fJHGCjXwFYQPfPFcZv0N+mBsa0TtdGR18VKE
- jRI94+ETdraB0+9ryUBIks4Db92Da2hVJO/RCIODwjNO+gA42N5+ls9k2UAIgAstCHpk
- XmFQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwOIY-0004hH-EB
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 11:31:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwOIW-0000K2-MK
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 11:31:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713195067;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=auKFO1AZqC8KLYq+lreUp1bKXpqDjWwGiKZDct91Rc8=;
+ b=jTB1GhnRV9Bwh/PnuDgEYmeCzloKpBKgzVnCq8DZCPOMiVd3tjhiQwIAwLGyw+bf7P4MBX
+ SISwbICLHwC1slXzihKgnZCrdR9L+rUCoBOTECeqDn4Bws6acgCwhHwm4f86y8WJakLyWg
+ dW8JfgSTpV7CZLtdaxb83zwBeLqguEA=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-638-XUpZIqX3Mt-mOfAmydl--g-1; Mon, 15 Apr 2024 11:31:04 -0400
+X-MC-Unique: XUpZIqX3Mt-mOfAmydl--g-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a4488afb812so202504666b.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 08:31:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713194327; x=1713799127;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ym3EZJbJl0gm6jPMdSsVldV1r8b8PwCAMdNAgUyaFS8=;
- b=qWpl/MnjYvRVHF9ncbHm/BO0aUUkAMwccmoq48oNFjmewy84p0K1HZ1zoTruDCWska
- xMXqklj9YgxKgOo6LKTkYwcXo45bNDayAtF3B1DtkTfjWo19y/cwbt7AIg05UB8cbkA8
- x9Wg45rnf9t65X4AUiEg9VY39FFSK0tW/RnUzSPww1sa9v1JqxaOAWr8QpG2GVH3ztJV
- YAuIoExRMB2WbonZUCYqZ0t/iNNbt2PZumqPNlRdyQ/6TtPgshhYMfsDFyaKo+aI47Uo
- Bha/xQ3PDhhrhCS35S2VKiDmIj3hXsA2fcIDNH7zV/4yvZMXos23lFGJjlVWbOL78jw3
- iNgA==
+ d=1e100.net; s=20230601; t=1713195063; x=1713799863;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=auKFO1AZqC8KLYq+lreUp1bKXpqDjWwGiKZDct91Rc8=;
+ b=oRkKALf7D2a78vC6p+ATXAc9iSvECj2/IYt6aau9A/bWMJhTbCp4oANYJ9R2pzYE0e
+ 1fvIt5mczRi3qIM2wq1jjs06ZtR4Q1Vm2SakCeaGWZALVGOpRbzMXW57eUFAlb03mmfh
+ YpMfJR+u5EsuzyNpXmZSMf5QHPcpdp85zllTK564tJXdROu12BnAXZ5hXYDDXljhGcQy
+ S4Emur1gEDVwZ3AR51WrHEZ+N6sqd4q3YRBGD1HneRXjh8Dvs+S4NHF5By757DE0lW2H
+ AiJGc4jWUBWDQ3KVUxfRUngAD1t8ffb9ut7yBj89cr34tlwEsGilPbsdyf017wW5iZQ1
+ 1j/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9ASE0+48mQJq0GJposEi9oHc9xdHgtGQv6+jKVKpGi3PPV1BzxSZUnIMdvM/+Zlkit1QQ6fHFNjFLJ4JpJ2pbE/O6Muw=
-X-Gm-Message-State: AOJu0YzyUF4LAFcOoyqgU+btXyzdWqpRmTenbxRTOrn93hQ1w/1u6uzp
- jEgFx4EDfy7myC8g7wfNEgO4wkYNSuPJi+Wf+4RqqPKigGZzXCWZpz5bFkayjIk=
-X-Google-Smtp-Source: AGHT+IFfsEm4mxE6RBUHOV7RvR10FdVlSw85w7ZZz2qC5I6b5f9FJI+RBc8UPYkqb21Z+gAGRP6jpA==
-X-Received: by 2002:a5d:457c:0:b0:343:6b09:7551 with SMTP id
- a28-20020a5d457c000000b003436b097551mr5954148wrc.38.1713194326989; 
- Mon, 15 Apr 2024 08:18:46 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ AJvYcCX3CXgOjJXu2Escj8XrmJxbQ7EW6Pr6zVCNOAtTr1lqiFqol7wPCfTk8On255ZwmYkZgv30XEk4z5OK5FzM0EUdXexL4KI=
+X-Gm-Message-State: AOJu0YzSbBazXKwDWgWxou6qIcOd1IMVykx7xjNMa+HyZ9F8qkj6jbX8
+ zuc/eYlCDBkCFUZVslUuEmRNv95lg0JbXOcpC1k5vRhSXwq7DvU8lwDiifXO3TtrVMGjPfgq40f
+ c34IB0iPwVqmFhMZ75H5MnuUa/bZ1QrCTOTYpjl74KoUYs2OQ+/RY
+X-Received: by 2002:a17:907:d2a:b0:a4d:fc83:70e1 with SMTP id
+ gn42-20020a1709070d2a00b00a4dfc8370e1mr6536473ejc.56.1713195063368; 
+ Mon, 15 Apr 2024 08:31:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyNo0AAtPiLBHNP6Fyah0vVBedm5wTs1fNmqX/WbGwaUAlg1Eoyf1MWvhHmhHIDcODgHXCew==
+X-Received: by 2002:a17:907:d2a:b0:a4d:fc83:70e1 with SMTP id
+ gn42-20020a1709070d2a00b00a4dfc8370e1mr6536446ejc.56.1713195062953; 
+ Mon, 15 Apr 2024 08:31:02 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
+ ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
  by smtp.gmail.com with ESMTPSA id
- w5-20020a5d4045000000b00346ceb9e060sm11546672wrp.103.2024.04.15.08.18.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Apr 2024 08:18:46 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] tests/avocado: update sunxi kernel from armbian to 6.6.16
-Date: Mon, 15 Apr 2024 16:18:45 +0100
-Message-Id: <20240415151845.1564201-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ mb24-20020a170906eb1800b00a525609ae30sm2770842ejb.169.2024.04.15.08.31.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Apr 2024 08:31:02 -0700 (PDT)
+Message-ID: <251715ae-5378-4dfb-bc14-47ba2e62f83a@redhat.com>
+Date: Mon, 15 Apr 2024 17:31:00 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] intel_iommu: Add a framework to do compatibility
+ check with host IOMMU cap/ecap
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20240408084404.1111628-1-zhenzhong.duan@intel.com>
+ <20240408084404.1111628-4-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240408084404.1111628-4-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,200 +112,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Linux kernel 5.10.16 binary for sunxi has been removed from
-apt.armbian.com. This means that the avocado tests for these machines
-will be skipped (status CANCEL) if the old binary isn't present in
-the avocado cache.
+On 4/8/24 10:44, Zhenzhong Duan wrote:
+> From: Yi Liu <yi.l.liu@intel.com>
+> 
+> If check fails, the host side device(either vfio or vdpa device) should not
+> be passed to guest.
+> 
+> Implementation details for different backends will be in following patches.
+> 
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   hw/i386/intel_iommu.c | 35 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 35 insertions(+)
+> 
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 4f84e2e801..a49b587c73 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -35,6 +35,7 @@
+>   #include "sysemu/kvm.h"
+>   #include "sysemu/dma.h"
+>   #include "sysemu/sysemu.h"
+> +#include "sysemu/iommufd.h"
+>   #include "hw/i386/apic_internal.h"
+>   #include "kvm/kvm_i386.h"
+>   #include "migration/vmstate.h"
+> @@ -3819,6 +3820,32 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>       return vtd_dev_as;
+>   }
+>   
+> +static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+> +                                 HostIOMMUDevice *hiod,
+> +                                 Error **errp)
+> +{
+> +    return 0;
+> +}
+> +
+> +static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+> +                                  HostIOMMUDevice *hiod,
+> +                                  Error **errp)
+> +{
+> +    return 0;
+> +}
+> +
+> +static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
+> +                          Error **errp)
+> +{
+> +    HostIOMMUDevice *hiod = vtd_hdev->dev;
+> +
+> +    if (object_dynamic_cast(OBJECT(hiod), TYPE_HIOD_IOMMUFD)) {
+> +        return vtd_check_iommufd_hdev(s, hiod, errp);
+> +    }
+> +
+> +    return vtd_check_legacy_hdev(s, hiod, errp);
+> +}
 
-Update to 6.6.16, in the same way we did in commit e384db41d8661
-when we moved to 5.10.16 in 2021.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2284
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-At this point in the release cycle I don't think I really want
-to put this into 9.0, though I could just about squeeze it in.
+I think we should be using the .get_host_iommu_info() class handler
+instead. Can we refactor the code slightly to avoid this check on
+the type ?
 
-cc'ing stable as an FYI -- since the tests fall back to the
-CANCEL status this doesn't break CI, so it's not a requirement
-to backport to any stable branches. But it would probably be
-preferable to get the coverage back on the stable branches so
-we can detect if we get something wrong on a backport of a
-patch that affects these machines.
----
- tests/avocado/boot_linux_console.py | 70 ++++++++++++++---------------
- tests/avocado/replay_kernel.py      |  8 ++--
- 2 files changed, 39 insertions(+), 39 deletions(-)
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 989b65111c0..d0ab5aaa83a 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -646,12 +646,12 @@ def test_arm_cubieboard_initrd(self):
-         :avocado: tags=accel:tcg
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun4i-a10-cubieboard.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
-@@ -690,12 +690,12 @@ def test_arm_cubieboard_sata(self):
-         :avocado: tags=accel:tcg
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun4i-a10-cubieboard.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         rootfs_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
-@@ -872,13 +872,13 @@ def test_arm_bpim2u(self):
-         :avocado: tags=machine:bpim2u
-         :avocado: tags=accel:tcg
-         """
--        deb_url = ('https://apt.armbian.com/pool/main/l/linux-5.10.16-sunxi/'
--                   'linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+        deb_url = ('https://apt.armbian.com/pool/main/l/'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = ('/usr/lib/linux-image-current-sunxi/'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('/usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
- 
-@@ -899,13 +899,13 @@ def test_arm_bpim2u_initrd(self):
-         :avocado: tags=accel:tcg
-         :avocado: tags=machine:bpim2u
-         """
--        deb_url = ('https://apt.armbian.com/pool/main/l/linux-5.10.16-sunxi/'
--                   'linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+        deb_url = ('https://apt.armbian.com/pool/main/l/'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = ('/usr/lib/linux-image-current-sunxi/'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('/usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-@@ -946,13 +946,13 @@ def test_arm_bpim2u_gmac(self):
-         """
-         self.require_netdev('user')
- 
--        deb_url = ('https://apt.armbian.com/pool/main/l/linux-5.10.16-sunxi/'
--                   'linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+        deb_url = ('https://apt.armbian.com/pool/main/l/'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = ('/usr/lib/linux-image-current-sunxi/'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('/usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         rootfs_url = ('http://storage.kernelci.org/images/rootfs/buildroot/'
-@@ -1049,12 +1049,12 @@ def test_arm_orangepi(self):
-         :avocado: tags=accel:tcg
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
- 
-         self.vm.set_console()
-@@ -1075,12 +1075,12 @@ def test_arm_orangepi_initrd(self):
-         :avocado: tags=machine:orangepi-pc
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
-@@ -1121,12 +1121,12 @@ def test_arm_orangepi_sd(self):
-         self.require_netdev('user')
- 
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         rootfs_url = ('http://storage.kernelci.org/images/rootfs/buildroot/'
-                       'buildroot-baseline/20221116.0/armel/rootfs.ext2.xz')
-diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index 10d99403a4c..0474f7b7c8e 100644
---- a/tests/avocado/replay_kernel.py
-+++ b/tests/avocado/replay_kernel.py
-@@ -203,12 +203,12 @@ def test_arm_cubieboard_initrd(self):
-         :avocado: tags=machine:cubieboard
-         """
-         deb_url = ('https://apt.armbian.com/pool/main/l/'
--                   'linux-5.10.16-sunxi/linux-image-current-sunxi_21.02.2_armhf.deb')
--        deb_hash = '9fa84beda245cabf0b4fa84cf6eaa7738ead1da0'
-+                   'linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb')
-+        deb_hash = 'f7c3c8c5432f765445dc6e7eab02f3bbe668256b'
-         deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-         kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-5.10.16-sunxi')
--        dtb_path = '/usr/lib/linux-image-current-sunxi/sun4i-a10-cubieboard.dtb'
-+                                            '/boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
-         dtb_path = self.extract_from_deb(deb_path, dtb_path)
-         initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-                       '2eb0a73b5d5a28df3170c546ddaaa9757e1e0848/rootfs/'
--- 
-2.34.1
+Thanks,
+
+C.
+
+
+
+
+> +
+>   static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>                                       HostIOMMUDevice *hiod, Error **errp)
+>   {
+> @@ -3829,6 +3856,7 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>           .devfn = devfn,
+>       };
+>       struct vtd_as_key *new_key;
+> +    int ret;
+>   
+>       assert(hiod);
+>   
+> @@ -3848,6 +3876,13 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>       vtd_hdev->iommu_state = s;
+>       vtd_hdev->dev = hiod;
+>   
+> +    ret = vtd_check_hdev(s, vtd_hdev, errp);
+> +    if (ret) {
+> +        g_free(vtd_hdev);
+> +        vtd_iommu_unlock(s);
+> +        return ret;
+> +    }
+> +
+>       new_key = g_malloc(sizeof(*new_key));
+>       new_key->bus = bus;
+>       new_key->devfn = devfn;
 
 
