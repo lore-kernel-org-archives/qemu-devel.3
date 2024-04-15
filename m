@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF97BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 07:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF968C00A94
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 07:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwGlX-0003Av-1S; Mon, 15 Apr 2024 03:28:35 -0400
+	id 1rwGse-0004Lp-GB; Mon, 15 Apr 2024 03:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xieyongji@bytedance.com>)
- id 1rwGlV-0003Aj-OV
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 03:28:33 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwGsb-0004Kd-IF
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 03:35:53 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xieyongji@bytedance.com>)
- id 1rwGlT-0001y4-Cb
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 03:28:33 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6ee13f19e7eso1941212b3a.1
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 00:28:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwGsY-0003bb-MM
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 03:35:52 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2d094bc2244so32266701fa.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 00:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1713166107; x=1713770907; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ALNYSbrNyWyR7nJbhxUaAD5aYzFFjmdtLSpenaRrYL0=;
- b=iF2dsER6d38RUFMva4if2emOtS9nFlaBnIcNo2jg/WbYJ7DAdRqipRfuja8/jE5wAe
- SaUy8OW2noCixooZQnvjOGa7ezt5JtOzYDzGOm+yz1GMQLrg+qnJ/7zYNyqF3MBmUYnd
- +GDZIAYbRqcBq2PKNW7zyb/+eDckYpQu+cimPPDlhLExPYr5sXqpkhjlHdkY7j4Y80df
- o5+7vvAS465uhuE3jN666hzUx92GDJfupedd7mf1gTRscFXuCdGktqRtdO8tUhTWgD2E
- mtWFDGB8Kg5hvTBePTNp1TkdgWNS1brzCnnDIx30SmHVOZ16DN+SNYwtZQvTkTfc52Te
- r7aQ==
+ d=linaro.org; s=google; t=1713166547; x=1713771347; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XRUAnlKiaRRwzf0wfbwa43E1iCK7RwwFAsvsJo8rp3Y=;
+ b=n/9hWh981wUWsp90QOd2Qb3rDyhHoLeKV8pEvKUtm1iyaW0eF52b+efbUBhxkK1ilX
+ qwjyk/1Ay8Kbo3P6AbdHnpnGNvos277l866LRcJTmd8AW3RnI59fuAP/CHRX23mbkJry
+ rt+xustBH5AijunQSFWiVSe3Q2VCTSBj0r+A92FzYtGmyLoPLLWF6TgEVnC0uDgGOgde
+ xC3CZMe6EfgtH0cavz5JagubQVn3fmguTwwyxsbDv0Ui/8XWXjNzpsJBsEn/gWMq4nqU
+ HH96fWAV38wcPZG9RBxypuitdfoRGc6vFq14bqGLDFzmMTjc6ojmQB5Mo8DpWLPX0Y7O
+ E+JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713166107; x=1713770907;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ALNYSbrNyWyR7nJbhxUaAD5aYzFFjmdtLSpenaRrYL0=;
- b=POET8kz7IUJyDBMgSvONZnJ4Yo6F9FcyS6eWcmA4Ag9QbtdYwek+T1zcd6+5ln0KhP
- c/x8kZeQtm/lrT+JPkuLCVjB68LadEVXeKf0ZTH57nAYgQPo8FQZ81Ow7RJnlLxT14k+
- K1DfSe0EOnRfGyeBDyW4xzfiB5L7y9OqNg7KfDsmQ9J/8RCZxGxj04BPsGSGkbKVYL6J
- 0L0k3XJK9gVW8vfPCzmwGxDyw2yl42zZnPlCV4P3Sf66uTzBkSZX7C+BX3H3mVcBGLrm
- AhjbyTqtvZxLZKG8WqMC1bsmLKztiO8iv+lwKAfTTydLZqNU0KXo0RrjTrghQIwmlDPX
- rSVQ==
+ d=1e100.net; s=20230601; t=1713166547; x=1713771347;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XRUAnlKiaRRwzf0wfbwa43E1iCK7RwwFAsvsJo8rp3Y=;
+ b=Ra9LsIbeOJtQcdO2sGWkfrd+PHegz/jfPB1NSIrplsZHJVVJrw4JcZYednRspDqUVI
+ NHzHzUO0Y/KgiKBE0eNTgY+fkV8TCLnXsu+B8kUEFKTaRiXyLGVSCIz0yg9/46fW9GvE
+ SkNQgaKx1wbXD0Y7l+AwcrsHsJnx2bPrtg0iEoWtB/H5NKDYtS44XZ/9hXiFrXsCobDw
+ s43pkbMCoEhhtIAGfNfSjfLcmpR681w+OBRL9aPu0L1zd/2b04t+aHF9++CQUVBbJ2rs
+ /zjUGHd+0IBlWwXvCP8aFIDsvuMCSg3Mu/ITcDLTfjxeQpQBGlaQaWG+YPA0KsW/mVXf
+ alsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgQnKSl09ozjl6IgRqw66WzSetPUYOeTCQKRhtjdF/kTsjUBweBO9QwqtanAjSXy5zG407LtopueKAXJ40ejnY4Ugx+bY=
-X-Gm-Message-State: AOJu0YyRNUIrIb0jQoGrrSLn9zjHwL61yAK3fS1lWI/TYMYz/RWUtBlW
- G0v+fyYsnliR50xW4xqkAhB/jxF/B659GoRImXY2b4VaBXUgTfaGXES/Pf6EXoL+wF6Wjpy8Ppg
- U9ZmLNIrx6RjrwNxOcDyA/7B59APp2itQXCII
-X-Google-Smtp-Source: AGHT+IGFxMpebuHs+dmarShvW98snNgUMCQVYNAu2hhiE6BOzt1kC2asMpPYBBDQ+kgoIUlHuggqMJjZLzMUJK3V5TM=
-X-Received: by 2002:a05:6a20:2d22:b0:1a3:dfd2:949c with SMTP id
- g34-20020a056a202d2200b001a3dfd2949cmr7949324pzl.54.1713166106883; Mon, 15
- Apr 2024 00:28:26 -0700 (PDT)
+ AJvYcCUo/8xWGi15Ap42XjUWdJF6oCBTTalXucv9refLvQfYwDRtuowaO+ncoIRUKR5JqGJGR+yjLcucQ1YgPg7V3RSko1jOvPQ=
+X-Gm-Message-State: AOJu0Yyj20/3qNxk9HJ/NGHMs64WLxvsyQHqHlZRO+1fn1MuzmyHL/iv
+ vgkdzk9Mwk2Byu66rtoEv7fmMnK47DWSNteiwJuhgU5u2XPJDllm9ZQPlXZ6wDA=
+X-Google-Smtp-Source: AGHT+IHyQK8L5pwFW3e5m2nLNwOUaOwJmq7Y/+T+/JrcHIJ+MeegCQaB/K1Jr4iNG6lJBOsAo03NHA==
+X-Received: by 2002:a2e:99c6:0:b0:2d8:74c6:c44c with SMTP id
+ l6-20020a2e99c6000000b002d874c6c44cmr5044349ljj.46.1713166547395; 
+ Mon, 15 Apr 2024 00:35:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.132.126])
+ by smtp.gmail.com with ESMTPSA id
+ w13-20020a5d680d000000b003433bf6651dsm11310911wru.75.2024.04.15.00.35.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Apr 2024 00:35:46 -0700 (PDT)
+Message-ID: <af647bac-d0b7-4382-b762-5ba055411872@linaro.org>
+Date: Mon, 15 Apr 2024 09:35:44 +0200
 MIME-Version: 1.0
-References: <CAJaqyWcL7DRSj7bPK=MfAZoTw-GgZCKr4on3U0Q8jmRd2OZSPg@mail.gmail.com>
- <20240414044353-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240414044353-mutt-send-email-mst@kernel.org>
-From: Yongji Xie <xieyongji@bytedance.com>
-Date: Mon, 15 Apr 2024 15:28:16 +0800
-Message-ID: <CACycT3uXtwQ+TPrBxrz5VcFxYWWQ7vfsYU8nwgstYZ_GhRov_Q@mail.gmail.com>
-Subject: Re: Discrepancy between mmap call on DPDK/libvduse and rust vm-memory
- crate
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Eugenio Perez Martin <eperezma@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Maxime Coquelin <maxime.coquelin@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>, German Maglione <gmaglione@redhat.com>, 
- Hanna Czenczek <hczenczek@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=xieyongji@bytedance.com; helo=mail-pf1-x429.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/qtest : Use `g_assert_cmphex` instead of
+ `g_assert_cmpuint`
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-block@nongnu.org,
+ Ninad Palsule <ninad@linux.ibm.com>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+References: <20240414173349.31194-1-ines.varhol@telecom-paris.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240414173349.31194-1-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,53 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 14, 2024 at 5:02=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Fri, Apr 12, 2024 at 12:15:40PM +0200, Eugenio Perez Martin wrote:
-> > Hi!
-> >
-> > I'm building a bridge to expose vhost-user devices through VDUSE. The
-> > code is still immature but I'm able to forward packets using
-> > dpdk-l2fwd through VDUSE to VM. I'm now developing exposing virtiofsd,
-> > but I've hit an error I'd like to discuss.
-> >
-> > VDUSE devices can get all the memory regions the driver is using by
-> > VDUSE_IOTLB_GET_FD ioctl. It returns a file descriptor with a memory
-> > region associated that can be mapped with mmap, and an information
-> > entry about the map it contains:
-> > * Start and end addresses from the driver POV
-> > * Offset within the mmaped region of these start and end
-> > * Device permissions over that region.
-> >
-> > [start=3D0xc3000][last=3D0xe7fff][offset=3D0xc3000][perm=3D1]
-> >
-> > Now when I try to map it, it is impossible for the userspace device to
-> > call mmap with any offset different than 0.
->
-> How exactly did you allocate memory? hugetlbfs?
->
-> > So the "straightforward"
-> > mmap with size =3D entry.last-entry.start and offset =3D entry.offset d=
-oes
-> > not work. I don't know if this is a limitation of Linux or VDUSE.
-> >
-> > Checking QEMU's
-> > subprojects/libvduse/libvduse.c:vduse_iova_add_region() I see it
-> > handles the offset by adding it up to the size, instead of using it
-> > directly as a parameter in the mmap:
-> >
-> > void *mmap_addr =3D mmap(0, size + offset, prot, MAP_SHARED, fd, 0);
->
->
-> CC Xie Yongji who wrote this code, too.
->
+On 14/4/24 19:28, Inès Varhol wrote:
+> The messages for assertions using hexadecimal numbers will be
+> easier to understand with `g_assert_cmphex`.
+> 
+> Cases changed : "cmpuint.*0x", "cmpuint.*<<"
+> 
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   tests/qtest/aspeed_fsi-test.c          |  20 ++--
+>   tests/qtest/cmsdk-apb-dualtimer-test.c |   2 +-
+>   tests/qtest/cmsdk-apb-watchdog-test.c  |   2 +-
+>   tests/qtest/erst-test.c                |   2 +-
+>   tests/qtest/ivshmem-test.c             |  10 +-
+>   tests/qtest/libqos/ahci.c              |   4 +-
+>   tests/qtest/microbit-test.c            |  46 ++++-----
+>   tests/qtest/sse-timer-test.c           |   4 +-
+>   tests/qtest/stm32l4x5_exti-test.c      | 138 ++++++++++++-------------
+>   tests/qtest/stm32l4x5_syscfg-test.c    |  74 ++++++-------
+>   10 files changed, 151 insertions(+), 151 deletions(-)
 
-The mmap() with hugetlb would fail if the offset into the file is not
-aligned to the huge page size. So libvhost-user did something like
-this. But I think VDUSE doesn't have this problem. So it's fine to
-directly use the offset as a parameter in the mmap(2) here.
+Thanks for the generic cleanup!
 
-Thanks,
-Yongji
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
