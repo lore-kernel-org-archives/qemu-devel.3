@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D461C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 16:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF6EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 16:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwPH9-00035R-80; Mon, 15 Apr 2024 12:33:47 -0400
+	id 1rwPL4-00044z-KU; Mon, 15 Apr 2024 12:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tpearson@raptorengineering.com>)
- id 1rwPH5-00034y-2b; Mon, 15 Apr 2024 12:33:44 -0400
-Received: from mail.raptorengineering.com ([23.155.224.40]
- helo=raptorengineering.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tpearson@raptorengineering.com>)
- id 1rwPH2-0002uc-Hu; Mon, 15 Apr 2024 12:33:42 -0400
-Received: from localhost (localhost [127.0.0.1])
- by mail.rptsys.com (Postfix) with ESMTP id D304482858A5;
- Mon, 15 Apr 2024 11:33:31 -0500 (CDT)
-Received: from mail.rptsys.com ([127.0.0.1])
- by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10032)
- with ESMTP id pi9C5f6qi11L; Mon, 15 Apr 2024 11:33:29 -0500 (CDT)
-Received: from localhost (localhost [127.0.0.1])
- by mail.rptsys.com (Postfix) with ESMTP id 550CF8286DEB;
- Mon, 15 Apr 2024 11:33:29 -0500 (CDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com 550CF8286DEB
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwPL1-00044k-9g
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:37:48 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwPKy-0003V7-DH
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:37:46 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56e477db7fbso5421744a12.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 09:37:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=raptorengineering.com; s=B8E824E6-0BE2-11E6-931D-288C65937AAD;
- t=1713198809; bh=P2UtEkrK8NQrOfREm5ddQtcxsooWs9QURg1noB8x6Fg=;
- h=Date:From:To:Message-ID:MIME-Version;
- b=qC+0aALgisu6FCXmvq513V8CiXwWjojBitnwh121fBNuf2O6kPODCx8P3NI8lMmI2
- UfaxYXpCNi1K7DWPLNNUvTrHvJl0DJAPFwHk4IxVJeUlEne4HCCfQkgCeeOeLDElh+
- TbmsRE7a2PxJxWcK/8B5JSP9SLLherQYDQopluAo=
-X-Virus-Scanned: amavisd-new at rptsys.com
-Received: from mail.rptsys.com ([127.0.0.1])
- by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10026)
- with ESMTP id Yl1RUa48K7Qp; Mon, 15 Apr 2024 11:33:29 -0500 (CDT)
-Received: from vali.starlink.edu (localhost [127.0.0.1])
- by mail.rptsys.com (Postfix) with ESMTP id 16BFE82858A5;
- Mon, 15 Apr 2024 11:33:29 -0500 (CDT)
-Date: Mon, 15 Apr 2024 11:33:28 -0500 (CDT)
-From: Timothy Pearson <tpearson@raptorengineering.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: Alexey Kardashevskiy <aik@ozlabs.ru>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- Timothy Pearson <tpearson@raptorengineering.com>, 
- "list@suse.de:PowerPC" <qemu-ppc@nongnu.org>, 
- qemu-devel <qemu-devel@nongnu.org>, 
- Frederic Barrat <fbarrat@linux.ibm.com>, npiggin <npiggin@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>
-Message-ID: <2125253552.30561871.1713198808922.JavaMail.zimbra@raptorengineeringinc.com>
-In-Reply-To: <3e188eb4-40dd-952c-9764-4cc8cb255f01@kaod.org>
-References: <1891893257.448156.1647023745384.JavaMail.zimbra@raptorengineeringinc.com>
- <9638ec8f-2edf-97df-0c14-95ae2344dc70@kaod.org>
- <6f0a92ca-9f53-b8b8-e85d-43f4da36200d@kaod.org>
- <edfa8ca4-8e8a-335a-2e7e-c69661ec73da@ozlabs.ru>
- <560c8c1a-a87e-71f9-cfea-0a034933070b@ozlabs.ru>
- <e25296b3-b1ec-a90a-ee72-ed15fe5130f6@kaod.org>
- <5308af13-a943-efeb-d819-e39cfc2f2907@ozlabs.ru>
- <3e188eb4-40dd-952c-9764-4cc8cb255f01@kaod.org>
-Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy load
+ d=linaro.org; s=google; t=1713199062; x=1713803862; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mbiaBcLgJ3q3jSpPgGeGxVQfX2CKh5exMIjxeglmr0g=;
+ b=dAIb4E0kuRuHQHXk0nyPCr9OaUIeTsUNeriefYWht8W1+ytWMxdRG4ImU3Xa2EIdHl
+ QFttHk1zwkixhyM4iGj5EH/Xz5NnDXpzw5SzctOobnribXpApi698UYDzzvTrOCYNPfV
+ weWwVNAHS/+Pi05evq2sq13ZUa/MF+PZxy6xstkqhW81AVLBBuron6ZL8ihI28K93ods
+ xf1DEesxYAtVEF112FZrs4bMWJ8zK/oIdi2AlbP3sH/KxK1qVfN5xlqPEJlP6muBQvSh
+ vxRiyVINVxtnWuThjO6caNYH5pkM4E88ppg3NDH6MEXIp9A2N0XK8bv6JvhBGr/2K+rR
+ OJRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713199062; x=1713803862;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mbiaBcLgJ3q3jSpPgGeGxVQfX2CKh5exMIjxeglmr0g=;
+ b=Wyb94PVtzPZXAgHwNDi3G3E2oJzT3c3W60uR5CwHhHMvGTtTxsZHEixNmq71HVIWr9
+ V9sSa9dLLdj1p/eyqqIjgexHmd8kQnpxT6YfA4JmLm44Nc7rjQaYWm+jLNT8j2bMviFm
+ p0BcETXGeVhUDrNEETPF9Xkr3k1fX7D9REzWla5YxAe3Aw+dUtKFk9AU4dmV7N2YPeGT
+ AeUHUqi05tU8dlnmpP/sOGDQEOY693nPwt+2QlGAs/nMjMpKs2NuFtzbqhBpolZ8CIgq
+ 4HUx/jAL8oNE04mlUX308I8uQ8Ng6hYdOf9duEdvmt2VKPYx1aL76OUWmlpWOF754/56
+ vDSQ==
+X-Gm-Message-State: AOJu0Yzb+QYHCW2Xj7a8k1Rm6Uew+BbrC3cRewTUwyo/PAJKFhqZQdwt
+ zj5F2D3hl9LMal4lq5YbHJAg5gj5QYr3UGM40Da/Je7oy3xUk5W1LVUWQT7zHOQmsAILlJ9LTpy
+ /lPVGyRHxkrfQDdPZ0l6qObF+cyXJ5QrF2EmnOQ==
+X-Google-Smtp-Source: AGHT+IGnu9Af8ARbDOqsuh3Tmh7IhlYxvA4oaxJK1OjEgWfQH0/wh/1pS9NDyEgiwvjCrup86N1MMF9nwC3c6nPgRjY=
+X-Received: by 2002:a50:aadc:0:b0:568:a30c:2db5 with SMTP id
+ r28-20020a50aadc000000b00568a30c2db5mr5913306edc.40.1713199061857; Mon, 15
+ Apr 2024 09:37:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Zimbra 8.5.0_GA_3042 (ZimbraWebClient - GC123 (Linux)/8.5.0_GA_3042)
-Thread-Topic: XIVE VFIO kernel resample failure in INTx mode under heavy load
-Thread-Index: deIr1MHtwC5ZXfgisgYC7lwKFkKupA==
-Received-SPF: pass client-ip=23.155.224.40;
- envelope-from=tpearson@raptorengineering.com; helo=raptorengineering.com
+References: <20240415160818.2316599-1-porter@cs.unc.edu>
+In-Reply-To: <20240415160818.2316599-1-porter@cs.unc.edu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 15 Apr 2024 17:37:30 +0100
+Message-ID: <CAFEAcA88myOeQwZ212q9R4EHBPpJbQ1qZYjuz6SS=HZbqS+NCQ@mail.gmail.com>
+Subject: Re: Add 'info pg' command to monitor
+To: Don Porter <porter@cs.unc.edu>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, dave@treblig.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,79 +87,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 15 Apr 2024 at 17:09, Don Porter <porter@cs.unc.edu> wrote:
+> I am a CS professor (and, newly, a second-time contributor). I have
+> been using qemu in my courses for over a decade, especially a course
+> that asks students to write major pieces of an OS kernel from starter
+> code.
+>
+> I have some patches, originally from Austin Clements at MIT, that I
+> have found useful over the years and that may be useful to others.  It
+> would also be nice not to have to build a custom qemu each semester.  I
+> have cleared upstreaming these with Austin, the original author.
+>
+> This patch set adds an 'info pg' command to the monitor, which prints
+> a nicer view of the page tables.  A project in my graduate OS course
+> involves implementing x86 page table support, and my students have
+> found this helpful for debugging.
 
+So, my issue with this is that it's x86 specific, and it adds
+yet another monitor command that is doing "show some kind of debug
+info related to the guest page tables", along with "info mem"
+and "info tlb". Plus it is yet another lump of code that's
+walking the guest page tables and interpreting them.
 
------ Original Message -----
-> From: "C=C3=A9dric Le Goater" <clg@kaod.org>
-> To: "Alexey Kardashevskiy" <aik@ozlabs.ru>, "Alex Williamson" <alex.willi=
-amson@redhat.com>, "Timothy Pearson"
-> <tpearson@raptorengineering.com>
-> Cc: "list@suse.de:PowerPC" <qemu-ppc@nongnu.org>, "qemu-devel" <qemu-deve=
-l@nongnu.org>, "Frederic Barrat"
-> <fbarrat@linux.ibm.com>, "npiggin" <npiggin@gmail.com>, "David Gibson" <d=
-avid@gibson.dropbear.id.au>
-> Sent: Thursday, April 21, 2022 1:35:50 AM
-> Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy l=
-oad
+What I'd really like to see is some infrastructure that is
+at least somewhat guest-architecture-agnostic, so we can
+minimise what a guest architecture needs to implement (and
+then make providing that mandatory).
 
-> On 4/21/22 05:07, Alexey Kardashevskiy wrote:
->>=20
->>=20
->> On 14/04/2022 22:41, C=C3=A9dric Le Goater wrote:
->>>
->>>>> After re-reading what I just wrote, I am leaning towards disabling us=
-e of
->>>>> KVM_CAP_IRQFD_RESAMPLE as it seems last worked on POWER8 and never si=
-nce :)
->>>>>
->>>>> Did I miss something in the picture (hey Cedric)?
->>>>
->>>> How about disabling it like this?
->>>>
->>>> =3D=3D=3D=3D=3D
->>>> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
->>>> index 5bfd4aa9e5aa..c999f7b1ab1b 100644
->>>> --- a/hw/ppc/spapr_pci.c
->>>> +++ b/hw/ppc/spapr_pci.c
->>>> @@ -732,7 +732,7 @@ static PCIINTxRoute spapr_route_intx_pin_to_irq(vo=
-id
->>>> *opaque, int pin)
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SpaprPhbState *sphb =3D SPAPR_PCI_HOST_=
-BRIDGE(opaque);
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 PCIINTxRoute route;
->>>>
->>>> -=C2=A0=C2=A0=C2=A0 route.mode =3D PCI_INTX_ENABLED;
->>>> +=C2=A0=C2=A0=C2=A0 route.mode =3D PCI_INTX_DISABLED;
->>>>
->>>> =3D=3D=3D=3D=3D
->>>
->>> I like it.
->>=20
->>=20
->> The only thing is that this resampling works on POWER8/XICS and
->> removing it there is not great. So far sPAPR PHB was unaware of
->> underlying interrupt controller, or was not it?
->=20
-> It is. The dynamic change of the underlying irqchip in QEMU and
-> in KVM required that for CAS. Of course, plenty is done in the
-> back of the devices when this happens, see spapr_irq.
->=20
-> There are some quirks related to LPM with VIO devices in Linux.
-> This is the only case I know about.
->=20
-> Thanks,
->=20
-> C.
+The other thing I'd like to see is perhaps some investigation of
+whether there's any way to implement something useful by
+using/extending the existing get_phys_page_attrs_debug() and
+similar functions, so that you don't have to write one lot
+of page-table-walking code for QEMU to use when it's executing
+guest code and a separate lot (that's bound to get out of
+sync or not support new functionality/changes) that's only
+handling these monitor debug commands. There's a lot of
+complexity in figuring out things like permissions in a
+modern architecture...
 
-Unfortunately this remains quite broken, and after a kernel upgrade (includ=
-ing the purported fix [1]) and a qemu upgrade we have now completely lost t=
-he ability to get the card working in the guest with *any* combination of p=
-arameters.
-
-In guest XIVE mode with irqchip on it passes through a handful of interrupt=
-s, then dies.  In guest XICS mode we're dropping the majority of the interr=
-upts.  This is all on POWER9.
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/arch/powerpc/kvm/powerpc.c?id=3D52882b9c7a761b2b4e44717d6fbd1ed94c601b7f
+thanks
+-- PMM
 
