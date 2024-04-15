@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 143FDC04FF9
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 17:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A60A1C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 17:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwPsF-0003fq-7s; Mon, 15 Apr 2024 13:12:07 -0400
+	id 1rwPtB-0004AJ-3w; Mon, 15 Apr 2024 13:13:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rwPs9-0003f5-9E
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:12:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rwPt0-00047i-9h
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:12:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rwPs7-0000cn-KR
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:12:01 -0400
+ id 1rwPsr-0000jg-Rz
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:12:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713201118;
+ s=mimecast20190719; t=1713201163;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3c+5MMQ1af1qYngnm+i0shoAyyPaHc8tS0h2nmHgGoo=;
- b=GUffRd43cbo0wLwLIFj2//dCDyT1eG9JVyEtQlqj1cdVrX/WpX2rlutLrGv7KH4ek2BZU/
- IF8W6wEOKQxAPCmymCZMa5SZWWip8vu4uq9EFW34qcgti8aJUNqSODIfJMhGIikNz/kv8S
- YeJf4D93yhrRAtCGEBDDXc0+2G0tO40=
+ bh=qrC97JYddSIqBwkiYicOLbDEL51kphzvenUeW/yE3Rs=;
+ b=KKz4hcBW1IFjYIXITjZoJIzDjF/yaATQ4iefGRNIrk2t1xiZ/1YQl8Lryv6fwSnnOtUTdW
+ 3Xy9l2rz6mNbjfd1ZM2dJxUbNrIcQPCVIFfToAvDz7px/d3iscgk7LKgUaGIzDE4zmRQiW
+ XnrhumEMuvqslZXOVrc2sEjVyxsXL5Y=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-eaEK2t2lNgW-MYUhrMn4Gg-1; Mon,
- 15 Apr 2024 13:11:55 -0400
-X-MC-Unique: eaEK2t2lNgW-MYUhrMn4Gg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-FKyMEmVONQyQPDll4CBd3w-1; Mon,
+ 15 Apr 2024 13:12:40 -0400
+X-MC-Unique: FKyMEmVONQyQPDll4CBd3w-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D48F329AA394;
- Mon, 15 Apr 2024 17:11:54 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 395963804511;
+ Mon, 15 Apr 2024 17:12:40 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.20])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3589E40C6DAE;
- Mon, 15 Apr 2024 17:11:53 +0000 (UTC)
-Date: Mon, 15 Apr 2024 18:11:31 +0100
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B7E031121312;
+ Mon, 15 Apr 2024 17:12:38 +0000 (UTC)
+Date: Mon, 15 Apr 2024 18:12:32 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,19 +57,19 @@ Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 03/13] tests/docker/dockerfiles: Run lcitool-refresh
- after the lcitool update
-Message-ID: <Zh1fw3vWYJmcCfjW@redhat.com>
+Subject: Re: [PATCH v2 04/13] tests: Update our CI to use CentOS Stream 9
+ instead of 8
+Message-ID: <Zh1gAFbUcSSIzJD1@redhat.com>
 References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-4-thuth@redhat.com>
+ <20240412132415.282354-5-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240412132415.282354-4-thuth@redhat.com>
+In-Reply-To: <20240412132415.282354-5-thuth@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
@@ -94,39 +94,22 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 03:24:05PM +0200, Thomas Huth wrote:
-> This update adds the removing of the EXTERNALLY-MANAGED marker files
-> that has been added to the lcitool recently.
-
-For those who don't know, python now commonly blocks the ability to
-run 'pip install' outside of a venv. This generally makes sense for
-a precious installation environment. Our containers are disposable
-though, so a venv has no benefit. Removing the 'EXTERNALLY-MANAGED'
-allows the historical arbitrary use of 'pip' outside a venv.
-lcitool just does this unconditionally given the containers are
-not precious.
-
+On Fri, Apr 12, 2024 at 03:24:06PM +0200, Thomas Huth wrote:
+> RHEL 9 (and thus also the derivatives) are available since two years
+> now, so according to QEMU's support policy, we can drop the active
+> support for the previous major version 8 now.
+> Thus upgrade our CentOS Stream container to major version 9 now.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  tests/docker/dockerfiles/alpine.docker                | 3 ++-
->  tests/docker/dockerfiles/centos8.docker               | 1 +
->  tests/docker/dockerfiles/debian-amd64-cross.docker    | 3 ++-
->  tests/docker/dockerfiles/debian-arm64-cross.docker    | 3 ++-
->  tests/docker/dockerfiles/debian-armel-cross.docker    | 3 ++-
->  tests/docker/dockerfiles/debian-armhf-cross.docker    | 3 ++-
->  tests/docker/dockerfiles/debian-i686-cross.docker     | 3 ++-
->  tests/docker/dockerfiles/debian-mips64el-cross.docker | 3 ++-
->  tests/docker/dockerfiles/debian-mipsel-cross.docker   | 3 ++-
->  tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 3 ++-
->  tests/docker/dockerfiles/debian-riscv64-cross.docker  | 3 ++-
->  tests/docker/dockerfiles/debian-s390x-cross.docker    | 3 ++-
->  tests/docker/dockerfiles/debian.docker                | 1 +
->  tests/docker/dockerfiles/fedora-win64-cross.docker    | 3 ++-
->  tests/docker/dockerfiles/fedora.docker                | 1 +
->  tests/docker/dockerfiles/opensuse-leap.docker         | 1 +
->  tests/docker/dockerfiles/ubuntu2204.docker            | 1 +
->  17 files changed, 29 insertions(+), 12 deletions(-)
+>  .gitlab-ci.d/buildtest.yml                    | 16 ++++-----
+>  .gitlab-ci.d/container-core.yml               |  4 +--
+>  .../{centos8.docker => centos9.docker}        | 34 +++++++------------
+>  tests/lcitool/mappings.yml                    | 20 -----------
+>  tests/lcitool/refresh                         |  2 +-
+>  tests/vm/centos                               |  4 +--
+>  6 files changed, 26 insertions(+), 54 deletions(-)
+>  rename tests/docker/dockerfiles/{centos8.docker => centos9.docker} (82%)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
