@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99822C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 16:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15492C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 16:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwPLJ-0004B9-C9; Mon, 15 Apr 2024 12:38:05 -0400
+	id 1rwPW7-0007KL-FI; Mon, 15 Apr 2024 12:49:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwPLG-00047f-FP
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:38:04 -0400
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
+ id 1rwPVg-0007AD-R4
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:48:49 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwPLE-0003Xb-FF
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:38:01 -0400
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-5acb90b2a82so569482eaf.0
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 09:37:59 -0700 (PDT)
+ id 1rwPVe-0005KM-Uf
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:48:48 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e3c9300c65so28159685ad.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 09:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713199078; x=1713803878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713199723; x=1713804523; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WR0C/bDlj0yZGBR3HjZISTZYjAKrgqB1NvNhAZgHqQo=;
- b=w3xoMlpillAvyWp4hIJxSZ5kx+OUSarp1Q3WRbur29FmRxb/lJncXUmOXLlRJz1JAA
- zR/dzgOKOeZSE8LAOaEWK8x4Y5pzqmIwpdwcjlYmUIeAU9rgkBLu2775jQ5b4fW1if3q
- KcKTFFITLXS3dZ+20sB+7LGC05Y5O2g84MJUnsKCorPmeB386r79RTwreGPJ0/wKnRnh
- O7xRjkinbxSGTQ0kfdEKlexEdN0QlnRxUGkblG2+2fk0EEQcoxYP3TG6IN3WIeto4XNk
- lk5aChe34t6zODUC2cl09hbLp0re46lZcHUldfN7HRycAeyULTOP16jKqcbr0PJZWLRG
- CXgw==
+ bh=AFzuPWBjHOi5jfnpZTkVNprL9qWgrCLYxanfJmaFGOc=;
+ b=MSRoALAbbOkJJ5kkaPk4Pcg84BVCL0olUESrm+qe9Ty0gLP9Z67KoeQgFgiPKKL7zn
+ 3CYWvYyFX3bWApzYj/3buPGQDuMQUJwi2kaKC63O81Fwizea1E4/eRkTT14FUdP2SUu/
+ 80FegsP2tbjikey8r+2EWBLehcpjlnwrNOAbXPRRjhwak19n5jmI8z/G9rYgaziKDkde
+ 5JjzlB8d/APxeY/tLJbFI04GupaZlxU2k/7rsxONHFVO4CZw9nadXlpY+edr81rRfxJH
+ OD1JMVeVX4t3HWwc43FS/qA3OAttiIzmkodYzXBFiigxIFdvlrrnO1YGYj5f4M+65qxf
+ QJ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713199078; x=1713803878;
+ d=1e100.net; s=20230601; t=1713199723; x=1713804523;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WR0C/bDlj0yZGBR3HjZISTZYjAKrgqB1NvNhAZgHqQo=;
- b=wGy1zhrWUKuP1CNW2ZO+I313Ky3eNq2KxImnxSwsnRKw2AJx/FVQxaIY7q1VUzWb9Q
- ijxRxr65j9VBvAAWcTTqRhIqbzJveSOOPBdMpk8vmSv4RtEtnWoR0SHZ6nWaFtI2nClg
- 7dyPpmdV1EOFP1WqnMfhzygObkKtzU/77owKHj6g7rGbFo5LaK94nyc8bw0BHbklwJQp
- JsttAEnC8bTMUpR8e7jrBFKgEDXA5ZPx17Oq/JXbt0ofvLJwKxP5OEZ+dJ2ztBmTKY7Q
- r+RB2FYOBh1vI2tuk3oePc8QaPgsIAQkW2k2OgSegAX2sNpVKraAv3g6Rm+ADxvzjN86
- xc8Q==
-X-Gm-Message-State: AOJu0Yx/LcRhjKQo7lTP1TrV65e20WZQp64iKM7VjbpPvAIonLL4oLHY
- MOnPdhCGTT9SVEIiZT3Os1RwcjFC1UWS25OPBZEmd2Ou8r7rINS/JBdRVWBollQ=
-X-Google-Smtp-Source: AGHT+IHgWVvhZzWkiN7bSoQLwXrK6tOUBxwz4XdZXwHMSQbo8VufG5N4lNzHA/psCgfg1imJRtp1Pg==
-X-Received: by 2002:a05:6870:9627:b0:22e:e26e:73ad with SMTP id
- d39-20020a056870962700b0022ee26e73admr10914954oaq.58.1713199078695; 
- Mon, 15 Apr 2024 09:37:58 -0700 (PDT)
+ bh=AFzuPWBjHOi5jfnpZTkVNprL9qWgrCLYxanfJmaFGOc=;
+ b=mIFntuICL1dX6MdXr99u+MlACm+pL/22r+uSk92IZ3F/kHjSmgPN/nG1DpvQqMwJgD
+ IdrsfhPvg6C0JwdZlPFq/GYYlELnMQUqitNABYoTWD7NuG/ZiZG+MffPP5nePgPBWkAG
+ 9dhKvB2uEslGXKKUF9Op2vxgYM7Q6Ee7zikl6xXc61+LPULepScWswxBKtLZyWu3uLV7
+ PvujkEb477aX9LI/r4snUBmPw91Vx+19h8I3I8nBTXVlygkEyakIcbZdEY74E+sQK0GB
+ 58pYYrteIVnk6irMN+9wS+PclqvppFceVzXdS0jc6ymR28WgYG0xho6873nxRZAPGvgV
+ gJmQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbXlgDRgwW0apve0hTcuCnIGsQvWYU3J7KCcOGsf+H73k4Em0RUGuodf6gGZet11zFJFycjHvtF8ekFVNQ+VRi4QUmu98=
+X-Gm-Message-State: AOJu0Yw08+PXLBn7JZTHUQ+rzqX1eIBHLxEOdEj4Iq50whZoCEmQJ2pe
+ bVsS0cKZznyDJzYnaX0dy8cEVrzQ/XiVpz4sPuDtq2Y6DfcdgnvKP7f7v8X3lpg=
+X-Google-Smtp-Source: AGHT+IEMX133cxctRCQkZlI6UDqMw1JHE925QJPGDbtOUjNY9XevPhPELluGX3kJBxZuC7NWnIb13w==
+X-Received: by 2002:a17:902:7609:b0:1e5:10e5:b675 with SMTP id
+ k9-20020a170902760900b001e510e5b675mr9091584pll.32.1713199723288; 
+ Mon, 15 Apr 2024 09:48:43 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- v12-20020aa799cc000000b006edcdb08d25sm7600326pfi.91.2024.04.15.09.37.57
+ kw7-20020a170902f90700b001e45240eca4sm8150401plb.196.2024.04.15.09.48.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 09:37:58 -0700 (PDT)
-Message-ID: <139c7bdf-a62d-4993-a076-eb46ce742748@linaro.org>
-Date: Mon, 15 Apr 2024 09:37:55 -0700
+ Mon, 15 Apr 2024 09:48:42 -0700 (PDT)
+Message-ID: <0a3c4f12-96d7-4f32-9dda-b349ede39f25@linaro.org>
+Date: Mon, 15 Apr 2024 09:48:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sparc: resolve ASI_USERTXT correctly
-To: M Bazz <bazz@bazz1.com>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20240411212936.945-1-bazz@bazz1.com>
- <dfa87b87-8685-46ea-ae5d-3735124fc76a@linaro.org>
- <CAMFqb-anRmzo1HP8Gn2y0eD98+ZsG_a54c_fLMaMc=0AGAz7DA@mail.gmail.com>
- <48ec5cfe-e584-4e84-85d8-856bfd46345a@linaro.org>
- <CAMFqb-Y5mRrVk7dmEjt=EWerFu3qKAVjxE74=X6yfrRJJnqF5g@mail.gmail.com>
- <d831adc5-bfd7-482c-9e83-a10da1014b4b@linaro.org>
- <CAMFqb-ZV9FJ3JBZNv9APpkmLWdBm1YsWRJyGkKqyN7F0HbNVZw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Improvements for switches in hw/cpu/Kconfig
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20240415065655.130099-1-thuth@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAMFqb-ZV9FJ3JBZNv9APpkmLWdBm1YsWRJyGkKqyN7F0HbNVZw@mail.gmail.com>
+In-Reply-To: <20240415065655.130099-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,52 +103,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/14/24 15:48, M Bazz wrote:
-> I noticed that cpu_mmu_index() would have returned MMU_USER_IDX
-> if the supervisor bit hadn't happened to be set (not sure if this
-> execution path can occur for lda).
+On 4/14/24 23:56, Thomas Huth wrote:
+> Thomas Huth (2):
+>    hw: Fix problem with the A*MPCORE switches in the Kconfig files
+>    hw: Add a Kconfig switch for the TYPE_CPU_CLUSTER device
 
-No, it cannot.
-
-> Note that this check is gone in your patch.
-
-Correct.  Since 'lda' has already checked that supervisor mode has been enabled, the 
-translator may jump directly to the desired result of MMU_KERNEL_IDX.
-
-> If I understand everything you've taught me, then the following patch would
-> have also satisfied the permissions issue. Could you confirm this please?
-> The essential change is the MMU_USER_IDX in the call to make_memop_idx()
-> 
-> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-> index e581bb42ac..be3c03a3b6 100644
-> --- a/target/sparc/ldst_helper.c
-> +++ b/target/sparc/ldst_helper.c
-> @@ -702,6 +702,24 @@ uint64_t helper_ld_asi(CPUSPARCState *env,
-> target_ulong addr,
->               break;
->           }
->           break;
-> +    case ASI_USERTXT: /* User code access */
-> +        oi = make_memop_idx(memop, MMU_USER_IDX);
-> +        switch (size) {
-> +        case 1:
-> +            ret = cpu_ldb_code_mmu(env, addr, oi, GETPC());
-> +            break;
-> +        case 2:
-> +            ret = cpu_ldw_code_mmu(env, addr, oi, GETPC());
-> +            break;
-> +        default:
-> +        case 4:
-> +            ret = cpu_ldl_code_mmu(env, addr, oi, GETPC());
-> +            break;
-> +        case 8:
-> +            ret = cpu_ldq_code_mmu(env, addr, oi, GETPC());
-> +            break;
-> +        }
-> +        break;
-
-Correct, that would also work.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
