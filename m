@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CEDC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 08:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B262DC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 08:46:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwHl1-00037S-EZ; Mon, 15 Apr 2024 04:32:07 -0400
+	id 1rwHyD-0006cR-KV; Mon, 15 Apr 2024 04:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rwHkz-00037C-G9
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 04:32:05 -0400
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rwHyA-0006c1-Kd
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 04:45:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rwHkx-0006hr-BZ
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 04:32:05 -0400
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rwHy8-0001ut-EV
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 04:45:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713169922;
+ s=mimecast20190719; t=1713170739;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DyVNjLFKQZug9xZidML/UrV0l6/OLEDMm3+9ZALeUTo=;
- b=EpvKG7KxrxeFE5GrEpb4Pe5krPJAeCEMWbJvkHUqMD/oUqx5Gyt3mBrQ1nwB/WeWfkqdXW
- N2VJ2UnsLGJzPyeWNJdpBDiDum50/7Al1nVhJzNZwLowwv6UdiOfuN4IihiGGdDzHe/JuF
- 64O+Y9903ldhE52uP5kn2aCmqrTb8Oc=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PdTQCTLd1OKAmeTn6fUWW+7eanONkG3Om71bIHqYcys=;
+ b=M0diz4E75ZXbB8/9OkiZMgdld8n9kz5ibfyxX9ItdQJx4UQH5IsIWRt/UhG5D/DvHTpBwx
+ WlOYlIqxmuUKzJTjPtUTDTyUm6+dJFfR3muyDss2pXS9/n2F1x7ObPQHoOyZ++0jDhRCCe
+ U/wLVkT6aaqYDXFSck9xlg5d8/67Kq4=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-gjoTapPWNf-B1rSAT1Biug-1; Mon, 15 Apr 2024 04:31:59 -0400
-X-MC-Unique: gjoTapPWNf-B1rSAT1Biug-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d8781cabdaso24382021fa.2
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 01:31:59 -0700 (PDT)
+ us-mta-295-p4tG-mEdMue7ZNqeRIQfIw-1; Mon, 15 Apr 2024 04:45:34 -0400
+X-MC-Unique: p4tG-mEdMue7ZNqeRIQfIw-1
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-6ee128aa957so2080996b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 01:45:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713169918; x=1713774718;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DyVNjLFKQZug9xZidML/UrV0l6/OLEDMm3+9ZALeUTo=;
- b=EGy82AccHJheVw0R5yNFaQFdeQcti+2MxaCU6EoCSAB8v9Z5dNrRaktlHZiJawUI/t
- +PmJq4PMxfAh7sM8hLRWKHnP38a7esBHnneruLtxyhS+GAFbPumB07vB2CG0wesk7IB1
- RWSE3oMPmcoHSUKqpl3+EfXEwofra/D0QtvHRYSgQogAzaHHhInbs2ah4WT/1uZ1qJGM
- p9LaUvOpjfZT564a7Y+qaX1iGPNP8UfzNs3eixLD4WGsgM6ZH7qQogl6fh1jig9qx35N
- ul5hWwY8GLIpokwCRnH6f4Dqhqpb4/C1OAmYv+SacEHDBRCRD0JuIMPaR9v4ZK9E0Mz3
- EEaQ==
+ d=1e100.net; s=20230601; t=1713170734; x=1713775534;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PdTQCTLd1OKAmeTn6fUWW+7eanONkG3Om71bIHqYcys=;
+ b=U9578/1pI5OFGBrYCnSrGVKvZcfSmQD3aGSiaQWm9cKyaEmdFg/1IJqr7jUnjWsncA
+ DTK5CjMVdEI+7Dt1Ok/YySAC7YHS4RJSJkSosrDGt9+p5FvPctAWbzx5ReqdlJUVkois
+ k3L7Z8yKdfhGZA23flU3pC7aY5hrERJB5pyS9mvvHvS3d3JaqnoUK5tEy5kzB8AHqnSU
+ EL15CulZFaXBc7JBZuIz2IzV+hFD2iIp/q69qA0gu1DPN4gPlCp2/GW1MHorbOzF2ty2
+ GD+MD1sapNt0uKsPnM5mrMwV8p/tvb7Gty9AQBTKZBYLvV3tk6csu4ztHs7wk1aikgpO
+ lmyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbuyl4d416stJaH/94bv3KN327BVJ7nrjRGgTvVo+7Ocp6sc7rwJiGvgaDh463TXiLHtC/cCaYTpj+K23H2A0nhCZq6RY=
-X-Gm-Message-State: AOJu0YytZiIVcQRWidfw4FS7OSZJ2Sd6q1V9Vrl/z8EDAQKQVwcMgXy2
- IV7EyxBnTmVxwq+m2iPutcaU4lvCTHA96s90CuFXxuxrjRRxjlzCoGv65SwHYMtOsh17Zftdpd2
- tV3WoEJwHwvXTGW7t/zfmq7INdS8WcGh3q545UzkyKD6NSb3laEjG
-X-Received: by 2002:a05:651c:548:b0:2d8:785c:cdb0 with SMTP id
- q8-20020a05651c054800b002d8785ccdb0mr6516868ljp.8.1713169917834; 
- Mon, 15 Apr 2024 01:31:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6NrJ/2NwShhXXXLg7vlJ/L2Vl3WnX27gT/DXPY708nrm8jUmyUT88XMIwZyUC5AcSBmDwOQ==
-X-Received: by 2002:a05:651c:548:b0:2d8:785c:cdb0 with SMTP id
- q8-20020a05651c054800b002d8785ccdb0mr6516826ljp.8.1713169917172; 
- Mon, 15 Apr 2024 01:31:57 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:172:a95b:a91:79d:72cd:ca48])
- by smtp.gmail.com with ESMTPSA id
- m6-20020a05600c4f4600b0041875ff29adsm938509wmq.2.2024.04.15.01.31.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Apr 2024 01:31:56 -0700 (PDT)
-Date: Mon, 15 Apr 2024 04:31:52 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Cindy Lu <lulu@redhat.com>
-Cc: jasowang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v6] virtio-pci: Fix the crash that the vector was used
- after released.
-Message-ID: <20240415042934-mutt-send-email-mst@kernel.org>
-References: <20240412062750.475180-1-lulu@redhat.com>
+ AJvYcCUE8xS4TfcmjqD2TLZS457u2PYz9FR8ycmQWnls+UEGpSU75GWq8QhNw73C3dRaXIke66HZnMZfEU9iH/ShjpOLiUemlr4=
+X-Gm-Message-State: AOJu0Ywprez6l7aadFrVCGNh9LhnLd0RxCd8JS0I0t0lk9k/4uxCEtfp
+ ou1ZkznMmB1qDSroPvQ+zzTOIX6TroGNqHCZUyBRcF8BP2cshwFAzmQ6r+JfsxLA1+B5OIZGPLv
+ pEESa7wIVewzCb9S0oNQK/E7H2W/ScpUhQkxetOxo2fJnjfMsLFANhIjO1gW76+/qkWlQVsyQjs
+ BFBNIkGL92L6mZ0Rxo6JnZV3ey4pc=
+X-Received: by 2002:a05:6a21:615:b0:1aa:282e:8dcc with SMTP id
+ ll21-20020a056a21061500b001aa282e8dccmr517832pzb.59.1713170733862; 
+ Mon, 15 Apr 2024 01:45:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+bmciiazboxdFdI/kvdYgs9neLcnoQx0V8Fv/MAuCDrOYTH0f1aCgiDA/+oBfhAekqQsy2jL8LOkfT9XZW/4=
+X-Received: by 2002:a05:6a21:615:b0:1aa:282e:8dcc with SMTP id
+ ll21-20020a056a21061500b001aa282e8dccmr517817pzb.59.1713170733527; Mon, 15
+ Apr 2024 01:45:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240412062750.475180-1-lulu@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+References: <CAJaqyWcL7DRSj7bPK=MfAZoTw-GgZCKr4on3U0Q8jmRd2OZSPg@mail.gmail.com>
+ <20240414044353-mutt-send-email-mst@kernel.org>
+ <CACycT3uXtwQ+TPrBxrz5VcFxYWWQ7vfsYU8nwgstYZ_GhRov_Q@mail.gmail.com>
+In-Reply-To: <CACycT3uXtwQ+TPrBxrz5VcFxYWWQ7vfsYU8nwgstYZ_GhRov_Q@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 15 Apr 2024 16:45:22 +0800
+Message-ID: <CACGkMEvvR7k4djutzG0Ypr5fmUVLdBUqgk_8NX09W+1MmHB2=A@mail.gmail.com>
+Subject: Re: Discrepancy between mmap call on DPDK/libvduse and rust vm-memory
+ crate
+To: Yongji Xie <xieyongji@bytedance.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Eugenio Perez Martin <eperezma@redhat.com>, 
+ Maxime Coquelin <maxime.coquelin@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Czenczek <hczenczek@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -103,162 +105,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 02:26:55PM +0800, Cindy Lu wrote:
-> During the booting process of the non-standard image, the behavior of the
-> called function in qemu is as follows:
-> 
-> 1. vhost_net_stop() was triggered by guest image. This will call the function
-> virtio_pci_set_guest_notifiers() with assgin= false,
-> virtio_pci_set_guest_notifiers(） will release the irqfd for vector 0
-> 
-> 2. virtio_reset() was triggered, this will set configure vector to VIRTIO_NO_VECTOR
-> 
-> 3.vhost_net_start() was called (at this time, the configure vector is
-> still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() with
-> assgin=true, so the irqfd for vector 0 is still not "init" during this process
-> 
-> 4. The system continues to boot and sets the vector back to 0. After that
-> msix_fire_vector_notifier() was triggered to unmask the vector 0 and  meet the crash
-> 
-> To fix the issue, we need to support changing the vector after VIRTIO_CONFIG_S_DRIVER_OK is set.
-> 
-> (gdb) bt
-> 0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0)
->     at pthread_kill.c:44
-> 1  0x00007fc87148ec53 in __pthread_kill_internal (signo=6, threadid=<optimized out>) at pthread_kill.c:78
-> 2  0x00007fc87143e956 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-> 3  0x00007fc8714287f4 in __GI_abort () at abort.c:79
-> 4  0x00007fc87142871b in __assert_fail_base
->     (fmt=0x7fc8715bbde0 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion=0x5606413efd53 "ret == 0", file=0x5606413ef87d "../accel/kvm/kvm-all.c", line=1837, function=<optimized out>) at assert.c:92
-> 5  0x00007fc871437536 in __GI___assert_fail
->     (assertion=0x5606413efd53 "ret == 0", file=0x5606413ef87d "../accel/kvm/kvm-all.c", line=1837, function=0x5606413f06f0 <__PRETTY_FUNCTION__.19> "kvm_irqchip_commit_routes") at assert.c:101
-> 6  0x0000560640f884b5 in kvm_irqchip_commit_routes (s=0x560642cae1f0) at ../accel/kvm/kvm-all.c:1837
-> 7  0x0000560640c98f8e in virtio_pci_one_vector_unmask
->     (proxy=0x560643c65f00, queue_no=4294967295, vector=0, msg=..., n=0x560643c6e4c8)
->     at ../hw/virtio/virtio-pci.c:1005
-> 8  0x0000560640c99201 in virtio_pci_vector_unmask (dev=0x560643c65f00, vector=0, msg=...)
->     at ../hw/virtio/virtio-pci.c:1070
-> 9  0x0000560640bc402e in msix_fire_vector_notifier (dev=0x560643c65f00, vector=0, is_masked=false)
->     at ../hw/pci/msix.c:120
-> 10 0x0000560640bc40f1 in msix_handle_mask_update (dev=0x560643c65f00, vector=0, was_masked=true)
->     at ../hw/pci/msix.c:140
-> 11 0x0000560640bc4503 in msix_table_mmio_write (opaque=0x560643c65f00, addr=12, val=0, size=4)
->     at ../hw/pci/msix.c:231
-> 12 0x0000560640f26d83 in memory_region_write_accessor
->     (mr=0x560643c66540, addr=12, value=0x7fc86b7bc628, size=4, shift=0, mask=4294967295, attrs=...)
->     at ../system/memory.c:497
-> 13 0x0000560640f270a6 in access_with_adjusted_size
-> 
->      (addr=12, value=0x7fc86b7bc628, size=4, access_size_min=1, access_size_max=4, access_fn=0x560640f26c8d <memory_region_write_accessor>, mr=0x560643c66540, attrs=...) at ../system/memory.c:573
-> 14 0x0000560640f2a2b5 in memory_region_dispatch_write (mr=0x560643c66540, addr=12, data=0, op=MO_32, attrs=...)
->     at ../system/memory.c:1521
-> 15 0x0000560640f37bac in flatview_write_continue
->     (fv=0x7fc65805e0b0, addr=4273803276, attrs=..., ptr=0x7fc871e9c028, len=4, addr1=12, l=4, mr=0x560643c66540)
->     at ../system/physmem.c:2714
-> 16 0x0000560640f37d0f in flatview_write
->     (fv=0x7fc65805e0b0, addr=4273803276, attrs=..., buf=0x7fc871e9c028, len=4) at ../system/physmem.c:2756
-> 17 0x0000560640f380bf in address_space_write
->     (as=0x560642161ae0 <address_space_memory>, addr=4273803276, attrs=..., buf=0x7fc871e9c028, len=4)
->     at ../system/physmem.c:2863
-> 18 0x0000560640f3812c in address_space_rw
->     (as=0x560642161ae0 <address_space_memory>, addr=4273803276, attrs=..., buf=0x7fc871e9c028, len=4, is_write=true) at ../system/physmem.c:2873
-> --Type <RET> for more, q to quit, c to continue without paging--
-> 19 0x0000560640f8aa55 in kvm_cpu_exec (cpu=0x560642f205e0) at ../accel/kvm/kvm-all.c:2915
-> 20 0x0000560640f8d731 in kvm_vcpu_thread_fn (arg=0x560642f205e0) at ../accel/kvm/kvm-accel-ops.c:51
-> 21 0x00005606411949f4 in qemu_thread_start (args=0x560642f292b0) at ../util/qemu-thread-posix.c:541
-> 22 0x00007fc87148cdcd in start_thread (arg=<optimized out>) at pthread_create.c:442
-> 23 0x00007fc871512630 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
-> (gdb)
-> 
-> Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
-> Cc: qemu-stable@nongnu.org
+On Mon, Apr 15, 2024 at 3:28=E2=80=AFPM Yongji Xie <xieyongji@bytedance.com=
+> wrote:
 >
+> On Sun, Apr 14, 2024 at 5:02=E2=80=AFPM Michael S. Tsirkin <mst@redhat.co=
+m> wrote:
+> >
+> > On Fri, Apr 12, 2024 at 12:15:40PM +0200, Eugenio Perez Martin wrote:
+> > > Hi!
+> > >
+> > > I'm building a bridge to expose vhost-user devices through VDUSE. The
+> > > code is still immature but I'm able to forward packets using
+> > > dpdk-l2fwd through VDUSE to VM. I'm now developing exposing virtiofsd=
+,
+> > > but I've hit an error I'd like to discuss.
+> > >
+> > > VDUSE devices can get all the memory regions the driver is using by
+> > > VDUSE_IOTLB_GET_FD ioctl. It returns a file descriptor with a memory
+> > > region associated that can be mapped with mmap, and an information
+> > > entry about the map it contains:
+> > > * Start and end addresses from the driver POV
+> > > * Offset within the mmaped region of these start and end
+> > > * Device permissions over that region.
+> > >
+> > > [start=3D0xc3000][last=3D0xe7fff][offset=3D0xc3000][perm=3D1]
+> > >
+> > > Now when I try to map it, it is impossible for the userspace device t=
+o
+> > > call mmap with any offset different than 0.
+> >
+> > How exactly did you allocate memory? hugetlbfs?
+> >
+> > > So the "straightforward"
+> > > mmap with size =3D entry.last-entry.start and offset =3D entry.offset=
+ does
+> > > not work. I don't know if this is a limitation of Linux or VDUSE.
+> > >
+> > > Checking QEMU's
+> > > subprojects/libvduse/libvduse.c:vduse_iova_add_region() I see it
+> > > handles the offset by adding it up to the size, instead of using it
+> > > directly as a parameter in the mmap:
+> > >
+> > > void *mmap_addr =3D mmap(0, size + offset, prot, MAP_SHARED, fd, 0);
+> >
+> >
+> > CC Xie Yongji who wrote this code, too.
+> >
+>
+> The mmap() with hugetlb would fail if the offset into the file is not
+> aligned to the huge page size. So libvhost-user did something like
+> this. But I think VDUSE doesn't have this problem.
 
-empty line not needed here
- 
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
+I think what you meant is that VDUSE IOTLB doesn't have this problem.
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Btw, I think we need to understand the setup. E.g is this used for
+containers (bounce pages) or VM (hugetlb or other).
 
-It's guest triggerable so either we merge this before the release,
-or rely on stable process :(
+Thanks
 
-> ---
->  hw/virtio/virtio-pci.c | 43 ++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 41 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 1a7039fb0c..f83ec92990 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -1423,6 +1423,36 @@ static int virtio_pci_add_mem_cap(VirtIOPCIProxy *proxy,
->  
->      return offset;
->  }
-> +static void virtio_pci_set_and_change_vector(VirtIODevice *vdev,
-> +                                             VirtIOPCIProxy *proxy,
-> +                                             int queue_no, uint16_t old_vector,
-> +                                             uint16_t new_vector)
-> +{
-> +    /*
-> +     * If the device uses irqfd and the vector changes after DRIVER_OK is
-> +     * set, we need to release the old vector and set up the new one.
-> +     * others just need to set the new vector to device
-> +     */
-> +    if ((vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> +        (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled())) {
-> +        if (old_vector != VIRTIO_NO_VECTOR) {
-> +            kvm_virtio_pci_vector_release_one(proxy, queue_no);
-> +        }
-> +    }
-> +    /*set the new vector to device*/
-> +    if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
-> +        vdev->config_vector = new_vector;
-> +    } else {
-> +        virtio_queue_set_vector(vdev, queue_no, new_vector);
-> +    }
-> +    /* if the new vector chanegd need to set it up */
-
-typo
-
-> +    if ((vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> +        (msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled())) {
-> +        if (new_vector != VIRTIO_NO_VECTOR) {
-> +            kvm_virtio_pci_vector_use_one(proxy, queue_no);
-> +        }
-> +    }
-> +}
->  
->  int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
->                             uint8_t bar, uint64_t offset, uint64_t length,
-> @@ -1570,7 +1600,12 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
->          } else {
->              val = VIRTIO_NO_VECTOR;
->          }
-> -        vdev->config_vector = val;
-> +        vector = vdev->config_vector;
-> +        /*check if need to change the vector*/
-> +        if (val != vector) {
-> +            virtio_pci_set_and_change_vector(vdev, proxy, VIRTIO_CONFIG_IRQ_IDX,
-> +                                             vector, val);
-> +        }
->          break;
->      case VIRTIO_PCI_COMMON_STATUS:
->          if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> @@ -1610,7 +1645,11 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
->          } else {
->              val = VIRTIO_NO_VECTOR;
->          }
-> -        virtio_queue_set_vector(vdev, vdev->queue_sel, val);
-> +        /*check if need to change the vector*/
-> +        if (val != vector) {
-> +            virtio_pci_set_and_change_vector(vdev, proxy, vdev->queue_sel,
-> +                                             vector, val);
-> +        }
->          break;
->      case VIRTIO_PCI_COMMON_Q_ENABLE:
->          if (val == 1) {
-> -- 
-> 2.43.0
+> So it's fine to
+> directly use the offset as a parameter in the mmap(2) here.
+>
+> Thanks,
+> Yongji
+>
 
 
