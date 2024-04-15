@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195F0C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 10:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC7AC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 11:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwK2f-0007gg-2V; Mon, 15 Apr 2024 06:58:30 -0400
+	id 1rwKGR-0002n3-B1; Mon, 15 Apr 2024 07:12:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lrh2000@pku.edu.cn>)
- id 1rwK2S-0007di-Gb
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:58:17 -0400
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net ([162.243.161.220])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lrh2000@pku.edu.cn>) id 1rwK2K-0004Jb-Us
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:58:16 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwKGQ-0002mB-2r
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 07:12:42 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwKGM-0007s7-6a
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 07:12:41 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4187481e3feso2320295e9.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 04:12:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
- Message-ID:References:MIME-Version:Content-Type:
- Content-Disposition:In-Reply-To; bh=Am61oWCLIJ5IIMd92Y+dxQDj7V02
- EWzSeppA5VY3Toc=; b=gMHfrVcd9xPlhY/TCoe+B9WjA/7wcG0H4DQSrfas3Ytm
- hqwAXPQuBrRVIPi+hOq3k1dZZr+asjVJngpRcz3z2pxzQFNsxxH0MfWlXTYs8o5O
- 3+0gP/i9enQQOb0xtmmUAUQym3hIzJgeqViueWzMA4hq+bvZrgcBCxvSwHufcCc=
-Received: from localhost (unknown [116.84.110.137])
- by front02 (Coremail) with SMTP id 54FpogCHDkszCB1m02JmAw--.17356S2;
- Mon, 15 Apr 2024 18:58:01 +0800 (CST)
-Date: Mon, 15 Apr 2024 19:57:53 +0900
-From: Ruihan Li <lrh2000@pku.edu.cn>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Ruihan Li <lrh2000@pku.edu.cn>
-Subject: Re: [PATCH v2] target/i386: Give IRQs a chance when resetting
- HF_INHIBIT_IRQ_MASK
-Message-ID: <3vdrympspwm25t23nromdtaqv6ham2lvbico6u2artvk7nidtp@p7ppubsmw4tk>
-References: <20240415064518.4951-4-lrh2000@pku.edu.cn>
- <CABgObfZmQoSBMQx=t0UYCa6t5d9RRZKy23zeW3orrBYnVQtKYQ@mail.gmail.com>
+ d=linaro.org; s=google; t=1713179556; x=1713784356; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Me1m/CUyr3PDGjWeHZ8S+XC++axadX1bqmyN4Ku0vvA=;
+ b=YxhFwmxDapqh4nBsPJlWkYvXt+MyjQaKGzeTCLJjldT9m269mOj44SVGl9cVl2mJnh
+ KSP7SDFM8Vcts0cnzFS7flbknPXDrAEpAongisuOVcxL7nlbnAqjXym/vCNOIQKxa4qf
+ GF/gZf9kdPMr5PiIWj9LKXwpWojt17lqOGvm9AbsEL+R8BkYquAxuoMzrfRhOJmSEhuY
+ 80GRE5r8JKd11hr7RIMt3PfmHte0OdjCo4wMHjI1BMbDNSBny5//M1ODEPQ4djD8H9ss
+ 2+g6zfasloBbICq2PbhHS7zbNV+H5lLK87+QUwO/WPPZCqhsYt1bUEkHoYXXRAviDuBS
+ /edQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713179556; x=1713784356;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Me1m/CUyr3PDGjWeHZ8S+XC++axadX1bqmyN4Ku0vvA=;
+ b=SKDgwsbT/lW/Gj/7KG36I1wB8Ek72yVxNNSadB6As8sRkSFJcy0ESuEV/XvC8yKXyh
+ 234Ex5BCD3bVNLRziMJ7Ty/rPNCVrdHs9k3GeB0iC1V7BJUg4DVZATyHYh9Nf4j50s/3
+ eWfR1zHh0ouXdOjLuBdK6sDQc4fQnMdLPzSIDcjNKVZ/HB9f6YfCAFVqNeIZAmXOdrIu
+ +VlANSf4LFnaCsewQpOPRk9leE2RnYNSH/OCWCY5BHPORuaExKa8q8Ofe8FbTCSupRgK
+ kSNFjWoltDzTjVietsxCFhtIaJY2jlyD0NAsKARkA6h5CAn4vGlWuEHYEl3dN2pPIbJA
+ KY5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3ccWaSwKMPqQae8MbpWKXZIpqbDFGy3Fnk9tvhtSet2wKWliopkys/wwwGGztr2mOc0fXEWMZ/wO/yHbqXwrHaj84hQE=
+X-Gm-Message-State: AOJu0Yws9JzWPgKEo+iT8IdPBT2PxV8iJha+PXuBEGfPTQ3091FkLAWA
+ jwjPocbEfnMDN6WvRIiUIHWs9IJLuWMB9o3vgSvqAIpYUKmix/jDRO6wfxHUuhw=
+X-Google-Smtp-Source: AGHT+IEwmTsuvEG3oNcGZT297anbg7jK+CKPTW9BVyfUdAaX0aKr94cymWOXEaGJSS9IN8AEi6ffrw==
+X-Received: by 2002:a05:600c:4ecd:b0:417:ec11:c445 with SMTP id
+ g13-20020a05600c4ecd00b00417ec11c445mr5854624wmq.13.1713179555910; 
+ Mon, 15 Apr 2024 04:12:35 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.132.126])
+ by smtp.gmail.com with ESMTPSA id
+ p7-20020a05600c358700b004182cd07133sm8332586wmq.3.2024.04.15.04.12.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Apr 2024 04:12:35 -0700 (PDT)
+Message-ID: <7ffb8e3d-d02e-452f-9ed7-d977b5870a70@linaro.org>
+Date: Mon, 15 Apr 2024 13:12:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfZmQoSBMQx=t0UYCa6t5d9RRZKy23zeW3orrBYnVQtKYQ@mail.gmail.com>
-X-CM-TRANSID: 54FpogCHDkszCB1m02JmAw--.17356S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7XryUtF1fXr47tw4rGF4Uurg_yoWDArbEga
- yDJanFk3W5WryrCw17Ka409r17CrZ7Wws7JFWqvFy8uFZ3XF1qy39rAr4vqry5JF4ayFZx
- Ar12vrnIyw1jvjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbfAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AK
- wVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20x
- vE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK6I8E
- 87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1lnxkEFVAIw20F6c
- xK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2Wl
- Yx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbV
- WUJVW8JwACjcxG0xvEwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_
- JF0_Jw1lc2xSY4AK6cCY6r4DMxAIw28IcxkI7VAKI48JMxAIw28IcVCjz48v1sIEY20_Kw
- 1UJr1UMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
- r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6x
- IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAI
- w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
- 0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUU89N7UUUUU==
-X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEHBWYavlcgnwAIsj
-Received-SPF: pass client-ip=162.243.161.220; envelope-from=lrh2000@pku.edu.cn;
- helo=zg8tmtyylji0my4xnjeumjiw.icoremail.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/10] vfio: Introduce HIODLegacyVFIO device
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
+ <20240408081230.1030078-3-zhenzhong.duan@intel.com>
+ <9e71a87e-ad23-4048-bc9a-c26dfafa646c@linaro.org>
+ <SJ0PR11MB67448B10E7E9C052417D6C0392092@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <SJ0PR11MB67448B10E7E9C052417D6C0392092@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_BL=0.001, RCVD_IN_MSPIKE_L5=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,41 +108,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
-
-On Mon, Apr 15, 2024 at 11:32:51AM +0200, Paolo Bonzini wrote:
-> What do you think about writing this:
+On 15/4/24 12:10, Duan, Zhenzhong wrote:
+> Hi Philippe,
 > 
-> >      /* If several instructions disable interrupts, only the first does it.  */
-> >      if (inhibit && !(s->flags & HF_INHIBIT_IRQ_MASK)) {
-> >          gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
-> > -    } else {
-> > +        inhibit_reset = false;
-> > +    } else if (!inhibit && (s->flags & HF_INHIBIT_IRQ_MASK)) {
-> >          gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
-> > +        inhibit_reset = true;
-> > +    } else {
-> > +        inhibit_reset = false;
-> >      }
+>> -----Original Message-----
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Sent: Monday, April 15, 2024 5:20 PM
+>> To: Duan, Zhenzhong <zhenzhong.duan@intel.com>; qemu-
+>> devel@nongnu.org
+>> Cc: alex.williamson@redhat.com; clg@redhat.com; eric.auger@redhat.com;
+>> peterx@redhat.com; jasowang@redhat.com; mst@redhat.com;
+>> jgg@nvidia.com; nicolinc@nvidia.com; joao.m.martins@oracle.com; Tian,
+>> Kevin <kevin.tian@intel.com>; Liu, Yi L <yi.l.liu@intel.com>; Peng, Chao P
+>> <chao.p.peng@intel.com>
+>> Subject: Re: [PATCH v2 02/10] vfio: Introduce HIODLegacyVFIO device
+>>
+>> On 8/4/24 10:12, Zhenzhong Duan wrote:
+>>> HIODLegacyVFIO represents a host IOMMU device under VFIO legacy
+>>> container backend.
+>>>
+>>> It includes a link to VFIODevice.
+>>>
+>>> Suggested-by: Eric Auger <eric.auger@redhat.com>
+>>> Suggested-by: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>    include/hw/vfio/vfio-common.h | 11 +++++++++++
+>>>    hw/vfio/container.c           | 11 ++++++++++-
+>>>    2 files changed, 21 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-
+>> common.h
+>>> index b9da6c08ef..f30772f534 100644
+>>> --- a/include/hw/vfio/vfio-common.h
+>>> +++ b/include/hw/vfio/vfio-common.h
+>>> @@ -31,6 +31,7 @@
+>>>    #endif
+>>>    #include "sysemu/sysemu.h"
+>>>    #include "hw/vfio/vfio-container-base.h"
+>>> +#include "sysemu/host_iommu_device.h"
+>>>
+>>>    #define VFIO_MSG_PREFIX "vfio %s: "
+>>>
+>>> @@ -147,6 +148,16 @@ typedef struct VFIOGroup {
+>>>        bool ram_block_discard_allowed;
+>>>    } VFIOGroup;
+>>>
+>>> +#define TYPE_HIOD_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-
+>> vfio"
+>>> +OBJECT_DECLARE_SIMPLE_TYPE(HIODLegacyVFIO, HIOD_LEGACY_VFIO)
+>>> +
+>>> +/* Abstraction of VFIO legacy host IOMMU device */
+>>> +struct HIODLegacyVFIO {
+>>> +    /*< private >*/
+>>
+>> Please drop this comment.
 > 
-> in a slightly simpler manner:
+> Will do. But may I ask the rules when to use that comment and when not?
+
+Sure, see 
+https://www.qemu.org/docs/master/devel/style.html#qemu-object-model-declarations
+
+> I see some QOM use that comment to mark private vs. public, for example:
 > 
->     inhibit_reset = false;
->     if (s->flags & HF_INHIBIT_IRQ_MASK) {
->         gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
->         inhibit_reset = true;
->     } else if (inhibit) {
->         gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
->     }
+> struct AccelState {
+>      /*< private >*/
+>      Object parent_obj;
 
-Yes, I agree with you that your changes look a bit clearer. I have
-tested your changes and verified that they fix the reported bug.
+This is old style which might be cleaned some day...
 
-> No need to submit v3, I can do the change myself when applying.
-
-Thank you for your review. Feel free to do that.
+> };
+> 
+> typedef struct AccelClass {
+>      /*< private >*/
+>      ObjectClass parent_class;
+>      /*< public >*/
+> 
+>>
+>>> +    HostIOMMUDevice parent;
+>>
+>> Please name 'parent_obj'.
+> 
+> Will do.
 
 Thanks,
-Ruihan Li
+
+Phil.
+
+> 
+> Thanks
+> Zhenzhong
+> 
+>>
+>>> +    VFIODevice *vdev;
+>>> +};
+> 
 
 
