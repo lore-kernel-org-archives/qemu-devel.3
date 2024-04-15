@@ -4,67 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98F4C04FF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 13:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CECF2C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 13:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwMQ6-00047x-Rc; Mon, 15 Apr 2024 09:30:50 -0400
+	id 1rwMTT-00056B-UK; Mon, 15 Apr 2024 09:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rwMQ3-00047i-VY
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:30:48 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwMTS-00055u-9o
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:34:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rwMPz-0002y7-PS
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:30:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwMTP-0003hs-8P
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 09:34:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713187842;
+ s=mimecast20190719; t=1713188054;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rqVjjTtTygb49WdcsR/QtMO3T69J6pmxsmOvGBIuTHw=;
- b=PtmjzdUM1BJFRRlFnyIAYEUwOvyrtxxPhQZm4tF3pjj7X8ePH9tQlYMmKnw5p2DUvrAYI0
- ERhC503NtU996NaiEyte3iiaGJKwySSuOjPPMNdfOSYVsMCMrNxJ7Fp9nYk70kuQycc+4s
- qOwlR5DO0Tzfwqg9K9tkRuQLjSiNg7s=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-_eOsGaqAMH2I0H_Yuds-zg-1; Mon,
- 15 Apr 2024 09:30:38 -0400
-X-MC-Unique: _eOsGaqAMH2I0H_Yuds-zg-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 10BEC28C97DC;
- Mon, 15 Apr 2024 13:30:38 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.140])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8D0FE1C066BB;
- Mon, 15 Apr 2024 13:30:37 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 5CE8318014BC; Mon, 15 Apr 2024 15:30:32 +0200 (CEST)
-Date: Mon, 15 Apr 2024 15:30:32 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Cole Robinson <crobinso@redhat.com>
-Subject: Re: secure boot & direct kernel load (was: Re: [PATCH] x86/loader:
- only patch linux kernels)
-Message-ID: <asxsrqicnilb5wszzz23ebuidyqacmasb4ggtflcksdlufrspc@23x4k2gqge6r>
-References: <20240410072126.617063-1-kraxel@redhat.com>
- <20240410032448-mutt-send-email-mst@kernel.org>
- <p4ifsoadheo2phszidswkl63ttt6wkq4luxk55gtlteaz6umpk@mb4gmtrrx3tt>
- <Zh0WsG3nVHgTwOkc@redhat.com>
+ bh=AbhXMDavblqnysjaxgpjrBlOO7/UYo3xs8Ugruns2Ag=;
+ b=UyHhNsuLHY6ufWNp9RufHnOapLG4iWjFdLmkk2kTAvzQijqrvhK6gHq1klVMSOEMYpSuvp
+ iAGPF8wms/o3QKedT2KBJhslVvVRhmD7ir5XVLj7sZHkUOcrTkbBMv+6D0KN46epydHUig
+ R2gokvjgZtdydswI23hSSeNDPUXWJQk=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-411-klYIk0ANNwG4K0KQsDGQpQ-1; Mon, 15 Apr 2024 09:34:13 -0400
+X-MC-Unique: klYIk0ANNwG4K0KQsDGQpQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-78a43601cddso288343885a.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 06:34:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713188052; x=1713792852;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AbhXMDavblqnysjaxgpjrBlOO7/UYo3xs8Ugruns2Ag=;
+ b=DHmTMixkUsXQM8tTY9uD9Q6zvOFSJ9zzp9GeMMX+HDFuNnviQUKhKyo3UGRJwhEEHa
+ LrCYK61jy6DQVal8E2Vm36zCLcFePuM6YgTIpyd55GWNBRJJddh3gBuqGnWY++42i1A8
+ 2sWm2dXjuFsgi0Syk1O3LV9Bher5/EVt/V+sLufmFGRo7oT5QST5ophr05CUv4iIBc9v
+ zkFrRMeTbhyrRc99ANTbWQoeAx2bs7mOWC+G5KGa1AC+wj3vzBFoF2livrgclsZHJO41
+ aKyHAuAtXURhF3b/5e1RbUsxKBQ10X0wZ2Tqq4YcSEsLuh8/tIkXZ9JwX5oL/UjSIelY
+ 7aeg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4Hn7HfpLiMBgPCU1V4yw904HNjaDzv5+zRfWPqa2MQuKUs4WLLBgW4k87hMkgRc3XkLgaychZsglQnNfJ47gO7YxIl/s=
+X-Gm-Message-State: AOJu0YwUEcN4MO1ym4t4SwwPP3EaQbzPN02qfzwwC3W5AAsr+ELoXeRN
+ PeGML9BGiY+94CAwAbC6ub+TFa34YVXvxImUWdCHWV7G9oulmLrcrXQbnHQxXr/9Ipo8ywsKO+S
+ dU/gqjQfSytIrXrJc5l4xkX3p7xhXx93hmB+Eowg0F0mGU71bKQQO
+X-Received: by 2002:a05:620a:2204:b0:789:e263:2e3c with SMTP id
+ m4-20020a05620a220400b00789e2632e3cmr9524679qkh.28.1713188052544; 
+ Mon, 15 Apr 2024 06:34:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkkhmSTs1MZcsPnYVgZZ0HXNMW5Fx82F/QoO+M2IoU7av4OH3uiisjpdll561TY7vckYYzyA==
+X-Received: by 2002:a05:620a:2204:b0:789:e263:2e3c with SMTP id
+ m4-20020a05620a220400b00789e2632e3cmr9524653qkh.28.1713188052196; 
+ Mon, 15 Apr 2024 06:34:12 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
+ ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
+ by smtp.gmail.com with ESMTPSA id
+ x7-20020a05620a098700b0078ecc54b1b9sm4771241qkx.71.2024.04.15.06.34.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Apr 2024 06:34:11 -0700 (PDT)
+Message-ID: <24e91342-eec6-4d2a-b271-84c2380533a8@redhat.com>
+Date: Mon, 15 Apr 2024 15:34:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zh0WsG3nVHgTwOkc@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/10] hw/pci: Introduce
+ pci_device_set/unset_iommu_device()
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
+ <20240408081230.1030078-10-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240408081230.1030078-10-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
@@ -88,82 +109,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
-
-> > Options I see:
-> > 
-> >   (a) Stop using direct kernel boot, let virt-install & other tools
-> >       create vfat boot media with shim+kernel+initrd instead.
-> > 
-> >   (b) Enroll the distro signing keys in the efi variable store, so
-> >       booting the kernel without shim.efi works.
-> > 
-> >   (c) Add support for loading shim to qemu (and ovmf), for example
-> >       with a new '-shim' command line option which stores shim.efi
-> >       in some new fw_cfg file.
+On 4/8/24 10:12, Zhenzhong Duan wrote:
+> From: Yi Liu <yi.l.liu@intel.com>
 > 
-> The problem with this is that now virt-install  has to actually
-> find the correct a shim.efi binary. It is already somewhat hard
-> to find a suitable kerenl+initrd binary, and AFAIK, the places
-> where we get these binaries don't have shim.efi alongside.
+> This adds pci_device_set/unset_iommu_device() to set/unset
+> HostIOMMUDevice for a given PCI device. Caller of set
+> should fail if set operation fails.
 > 
-> eg for RHEL/Fedora we grab kernel+initrd from the pxeboot dir:
+> Extract out pci_device_get_iommu_bus_devfn() to facilitate
+
+I would separate this change in a prereq patch.
+
+
+Thanks,
+
+C.
+
+
+> implementation of pci_device_set/unset_iommu_device().
 > 
->   https://fedora.mirrorservice.org/fedora/linux/development/rawhide/Everything/x86_64/os/images/pxeboot/
-
-shim is https://fedora.mirrorservice.org/fedora/linux/development/rawhide/Everything/x86_64/os/EFI/BOOT/BOOTX64.EFI
-
-> In various forums we have discussed adding the secureboot
-> certs to the libosinfo database, so that we can have a
-> customized EFI varstore with minimized certs, even for the
-> ISO / HDD boot scenario.
-
-Well.  It's not that easy unfortunately.  At least the "minimized certs"
-part.  shim often is signed with the microsoft keys only, so you can't
-drop that without rendering the install.iso unbootable.
-
-Only adding the distro certs without removing the microsoft certs works
-of course.
-
-> If we do that, then (b) is trivial for direct kernel boot too.
-
-Yep.
-
-> (b) kills all birds with the same stone :-)
-
-See above.  I'd love this being true but it is not.
-
-> > (b) + (c) both require a fix for the patching issue.  The options
-> > I see here are:
-> > 
-> >   (A) Move the patching from qemu to the linuxboot option rom.
-> >       Strictly speaking it belongs there anyway.  It doesn't look
-> >       that easy though, for qemu it is easier to gather all
-> >       information needed ...
-> > 
-> >   (B) Provide both patched and unpatched setup header, so the
-> >       guest can choose what it needs.
-> > 
-> >   (C) When implementing (c) above we can piggyback on the -shim
-> >       switch and skip patching in case it is present.
-> > 
-> >   (D) Add a flag to skip the patching.
-> > 
-> > Comments?  Other/better ideas?
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   include/hw/pci/pci.h | 40 ++++++++++++++++++++++-
+>   hw/pci/pci.c         | 75 ++++++++++++++++++++++++++++++++++++++++++--
+>   2 files changed, 111 insertions(+), 4 deletions(-)
 > 
-> I guess (b) + (D) is probably my preference.
-
-I prefer (B) over (D) because that doesn't require a new config option
-(which probably needs support in libvirt and possibly higher up in the
-management stack too ...).
-
-Patch series implementing (B) and the -shim switch:
-https://lore.kernel.org/qemu-devel/20240411094830.1337658-1-kraxel@redhat.com/
-
-Using -shim is optional, so it's up to virt-install whenever it wants go
-for (b) or (c).
-
-take care,
-  Gerd
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index eaa3fc99d8..4ae7fe6f3f 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -3,6 +3,7 @@
+>   
+>   #include "exec/memory.h"
+>   #include "sysemu/dma.h"
+> +#include "sysemu/host_iommu_device.h"
+>   
+>   /* PCI includes legacy ISA access.  */
+>   #include "hw/isa/isa.h"
+> @@ -383,10 +384,47 @@ typedef struct PCIIOMMUOps {
+>        *
+>        * @devfn: device and function number
+>        */
+> -   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
+> +    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
+> +    /**
+> +     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
+> +     *
+> +     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
+> +     * retrieve host information from the associated HostIOMMUDevice.
+> +     *
+> +     * Return true if HostIOMMUDevice is attached, or else return false
+> +     * with errp set.
+> +     *
+> +     * @bus: the #PCIBus of the PCI device.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * @devfn: device and function number of the PCI device.
+> +     *
+> +     * @dev: the data structure representing host IOMMU device.
+> +     *
+> +     * @errp: pass an Error out only when return false
+> +     *
+> +     */
+> +    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
+> +                            HostIOMMUDevice *dev, Error **errp);
+> +    /**
+> +     * @unset_iommu_device: detach a HostIOMMUDevice from a vIOMMU
+> +     *
+> +     * Optional callback.
+> +     *
+> +     * @bus: the #PCIBus of the PCI device.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * @devfn: device and function number of the PCI device.
+> +     */
+> +    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
+>   } PCIIOMMUOps;
+>   
+>   AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
+> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+> +                                Error **errp);
+> +void pci_device_unset_iommu_device(PCIDevice *dev);
+>   
+>   /**
+>    * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index e7a39cb203..8ece617673 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2648,11 +2648,27 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
+>       }
+>   }
+>   
+> -AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +/*
+> + * Get IOMMU root bus, aliased bus and devfn of a PCI device
+> + *
+> + * IOMMU root bus is needed by all call sites to call into iommu_ops.
+> + * For call sites which don't need aliased BDF, passing NULL to
+> + * aliased_[bus/devfn] is allowed.
+> + *
+> + * @piommu_bus: return root #PCIBus backed by an IOMMU for the PCI device.
+> + *
+> + * @aliased_bus: return aliased #PCIBus of the PCI device, optional.
+> + *
+> + * @aliased_devfn: return aliased devfn of the PCI device, optional.
+> + */
+> +static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+> +                                           PCIBus **piommu_bus,
+> +                                           PCIBus **aliased_bus,
+> +                                           int *aliased_devfn)
+>   {
+>       PCIBus *bus = pci_get_bus(dev);
+>       PCIBus *iommu_bus = bus;
+> -    uint8_t devfn = dev->devfn;
+> +    int devfn = dev->devfn;
+>   
+>       while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
+>           PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
+> @@ -2693,13 +2709,66 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+>   
+>           iommu_bus = parent_bus;
+>       }
+> -    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
+> +
+> +    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
+> +    assert(iommu_bus);
+> +
+> +    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
+> +        iommu_bus = NULL;
+> +    }
+> +
+> +    *piommu_bus = iommu_bus;
+> +
+> +    if (aliased_bus) {
+> +        *aliased_bus = bus;
+> +    }
+> +
+> +    if (aliased_devfn) {
+> +        *aliased_devfn = devfn;
+> +    }
+> +}
+> +
+> +AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +{
+> +    PCIBus *bus;
+> +    PCIBus *iommu_bus;
+> +    int devfn;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+> +    if (iommu_bus) {
+>           return iommu_bus->iommu_ops->get_address_space(bus,
+>                                    iommu_bus->iommu_opaque, devfn);
+>       }
+>       return &address_space_memory;
+>   }
+>   
+> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+> +                                Error **errp)
+> +{
+> +    PCIBus *iommu_bus;
+> +
+> +    /* set_iommu_device requires device's direct BDF instead of aliased BDF */
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
+> +    if (iommu_bus && iommu_bus->iommu_ops->set_iommu_device) {
+> +        return iommu_bus->iommu_ops->set_iommu_device(pci_get_bus(dev),
+> +                                                      iommu_bus->iommu_opaque,
+> +                                                      dev->devfn, hiod, errp);
+> +    }
+> +    return 0;
+> +}
+> +
+> +void pci_device_unset_iommu_device(PCIDevice *dev)
+> +{
+> +    PCIBus *iommu_bus;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
+> +    if (iommu_bus && iommu_bus->iommu_ops->unset_iommu_device) {
+> +        return iommu_bus->iommu_ops->unset_iommu_device(pci_get_bus(dev),
+> +                                                        iommu_bus->iommu_opaque,
+> +                                                        dev->devfn);
+> +    }
+> +}
+> +
+>   void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+>   {
+>       /*
 
 
