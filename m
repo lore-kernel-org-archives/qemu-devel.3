@@ -4,94 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AB8C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 12:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718E9C04FF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 12:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwLkQ-0002Qh-Hb; Mon, 15 Apr 2024 08:47:46 -0400
+	id 1rwLpC-0005BP-2k; Mon, 15 Apr 2024 08:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwLkK-0002Q9-5q
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 08:47:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwLkE-0002Ct-8W
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 08:47:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713185252;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hzsPjwJyeBjZM/FtbGa5+lsek7Ow9bow3tFCBz6qNSw=;
- b=V4WvNeIj16aHbd+DOBaQpjn6pjVq7z4Y51QVLhMqBde8reoEx46VKxHGXpMpJMitrtjZZe
- 4yU36P3ijbFWQFT5Hf0A5tPBKhQk+GSX5MQPpi+A3zR+M1g1AIT/fY8Rh3gKJ61uMXhhja
- tC1xRONFhmJchc9imiEYyUCD6MTkv6U=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-266-sy-3sa5JOuW-14gSLPnE1w-1; Mon, 15 Apr 2024 08:47:31 -0400
-X-MC-Unique: sy-3sa5JOuW-14gSLPnE1w-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4147de378b9so15053405e9.3
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 05:47:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwLo6-0004Eq-GA
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 08:51:37 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwLnw-00030G-2X
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 08:51:28 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56e509baddaso2918140a12.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 05:51:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713185481; x=1713790281; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z8AepQQxvUrPrG9q2kSM9bsltAFNkulnFvczKTzhPCw=;
+ b=ivJXcFpoLg20ubV/D6V5trRcSZYO8XwUq/Rj1amhIaJgSTqYKkAcywUSWEz7FTmihN
+ koQoj+0TqCM6/WmlMOtUUtfgITxk0pE4Q6XpYRi0CZOxEiewsNwKOQrgdlxve9x9EPY6
+ h0S7tP1jo8xON8nIM0ekhbGpTf+RfBZLWOaIfgRr0p7xX7Xssq5sCHl++t/Kc3Cl64Tp
+ 1bnM5MGhz0p8eCh9IjU1Ll18QT8Iq9+gITjyxwI5iHL+9q2YlqwCT8/BQ4FyhTiBwTT0
+ hjDIJBQNfu8E7cjBgmfzaEDTzIvLI0Gf7nsy/vz7Jdm/zNkg0Ej1afcmDjNKitrk/1rN
+ UP9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713185250; x=1713790050;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hzsPjwJyeBjZM/FtbGa5+lsek7Ow9bow3tFCBz6qNSw=;
- b=US8GYebdJ0fdDp1L141wARuOnn+Iftw9OOr3Orwznyv61TKByH+thEacpkD/5kOHdz
- DIrgmHvaYofcyNOD7F53wUp8eWQEB37+42K/MKYLVrZznjKPTdw7HIIcOcvw2UfGCAjd
- JaL+LSjWmMWh3r9o4P3hKQDTGVFL7JrX8Qk7I6p+AT1nKLZsBtu0rCxqC+u64tLvGlu6
- 6UV5mJ2sg940pnF28yVg9wtdjHs5ayCHBY5maeT/DQjJ/aHgGF3m6u5v4GOfMtnGC9t5
- tHyojgX5FfEHnQpKw2vxPfnoAw3mBLvHM57KLhJRhjevS6HjuM6JE4t+efgG5r4mwfiE
- vOfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXN0Z2LuK1F/7wAw1k30n68HSsjzz5pClndVDYrAUiRs18o8lQpwXi7IIDQPY+gHCUE6NGpusEYuJKHPGhtR7rcCeC3R/4=
-X-Gm-Message-State: AOJu0YxYCFGfVPLpXFxQTAIcKlrT7v+GY1FFnB05lzUN/v7jKsGbli/B
- PQ2Ud2w79NCZ/HUSZUeAW186RSdBLy32j8y7sH3TSxezCkGJfhEqabTryhkD9OzNwwaiIe6LylW
- +xqRajgBOjNAe3+ID1E3mEq1BgbfJ+n+KhkuKzFreoSssmZbcJpn4
-X-Received: by 2002:a05:600c:1549:b0:416:af4d:e3dc with SMTP id
- f9-20020a05600c154900b00416af4de3dcmr9679506wmg.12.1713185250109; 
- Mon, 15 Apr 2024 05:47:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOm1LJ+Zxpmzn1w2v4VTp6zR6xI52E0B+9dJpyObPnM7v/Q+2r+OU7pdeCvw1r03WHV05s7A==
-X-Received: by 2002:a05:600c:1549:b0:416:af4d:e3dc with SMTP id
- f9-20020a05600c154900b00416af4de3dcmr9679492wmg.12.1713185249703; 
- Mon, 15 Apr 2024 05:47:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
- ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
- by smtp.gmail.com with ESMTPSA id
- d4-20020a05600c34c400b004186cb8298fsm2574857wmq.16.2024.04.15.05.47.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 05:47:29 -0700 (PDT)
-Message-ID: <9869ac57-56c6-41b7-a2c6-d42a5ba475ee@redhat.com>
-Date: Mon, 15 Apr 2024 14:47:27 +0200
+ d=1e100.net; s=20230601; t=1713185481; x=1713790281;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=z8AepQQxvUrPrG9q2kSM9bsltAFNkulnFvczKTzhPCw=;
+ b=NZhrRTFWeEAbMIYN7RDNoOx6Cg88wfkgJbdRIQsSY9iZxzQCsUGBZJUK/lafkaIOKT
+ nzUGmdIoSIHESrV6CwSnvk6P6F4K5p7ePyyD8we1zWnSypl6y7LgUtq9xfEl5MtUifJz
+ ZCx+nnbcjjOiFmMEQ5YWwvxXwIRhI1QWl2WbaaMhFB22zNiY9Dm5icbNGZ/Xkcxtlmj+
+ EwZfJ/FEaqUItka5s9nAiCtJkiJgkP+AWlEhf2eg4wkogF/3WMkRVx+hwwY6P6J63FsS
+ RM27ML/QmKsXeY/w/YiMdHz/v8awwQ8PGyz+zfsKJh8D0aJgJpfB+aaSZnU9cGl9P3hJ
+ thaw==
+X-Gm-Message-State: AOJu0YzwiIxrlBj1LVQ2pyw6zRTE5DD5Xt6Zlc5d11M7LlQ+zMnoOBy4
+ +wCCH0J3wLW4yJlUWJTJFLb/tEtH3AzHOPlLFV2K5mPb6asm4269lCTiMESFv1IA+rVixkvvvaA
+ uXkwQzo+fDzTK8eI/bpxj5Nl5jv6/EjToYjKMIA==
+X-Google-Smtp-Source: AGHT+IFlwlfQBWDoHyNbxCNLd9ijV5sDceLSaIFl+tiUsiCuuNWlHW1Efuh+39WEMcVwy2jY3DUORRrOqQYBvT8AhnA=
+X-Received: by 2002:a50:aad1:0:b0:56d:e6f6:f73c with SMTP id
+ r17-20020a50aad1000000b0056de6f6f73cmr5686900edc.42.1713185481193; Mon, 15
+ Apr 2024 05:51:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/10] vfio: Introduce HIODLegacyVFIO device
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, peterx@redhat.com,
- jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
- <20240408081230.1030078-3-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240408081230.1030078-3-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240118200643.29037-1-philmd@linaro.org>
+ <20240118200643.29037-9-philmd@linaro.org>
+In-Reply-To: <20240118200643.29037-9-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 15 Apr 2024 13:51:09 +0100
+Message-ID: <CAFEAcA_snH+ucZQELesLgf0uDUgON8Sj==4JYPHh=4oLbczxQQ@mail.gmail.com>
+Subject: Re: [PATCH 08/20] target/arm: Rename arm_cpu_mp_affinity
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,95 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/24 10:12, Zhenzhong Duan wrote:
-> HIODLegacyVFIO represents a host IOMMU device under VFIO legacy
-> container backend.
-> 
-> It includes a link to VFIODevice.
-> 
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   include/hw/vfio/vfio-common.h | 11 +++++++++++
->   hw/vfio/container.c           | 11 ++++++++++-
->   2 files changed, 21 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index b9da6c08ef..f30772f534 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -31,6 +31,7 @@
->   #endif
->   #include "sysemu/sysemu.h"
->   #include "hw/vfio/vfio-container-base.h"
-> +#include "sysemu/host_iommu_device.h"
->   
->   #define VFIO_MSG_PREFIX "vfio %s: "
->   
-> @@ -147,6 +148,16 @@ typedef struct VFIOGroup {
->       bool ram_block_discard_allowed;
->   } VFIOGroup;
->   
-> +#define TYPE_HIOD_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
+On Thu, 18 Jan 2024 at 20:07, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> From: Richard Henderson <richard.henderson@linaro.org>
+>
+> Rename to arm_build_mp_affinity.  This frees up the name for
+> other usage, and emphasizes that the cpu object is not involved.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-I would prefer to keep the prefix TYPE_HOST_IOMMU_DEVICE.
+Hi; I just had cause to re-look at this commit. The problem
+here is that to determine the right MP affinity value the
+CPU *should* be involved. This is because for some Arm
+CPUs the MPIDR MT bit is 0, and the CPU number is in Aff0,
+but for others the MPIDR MT bit is 1, and the CPU number is
+in Aff1, and Aff0 is 0. We don't currently model the latter
+CPUs correctly, treating everything as MT=3D0, but we should.
+So really arm_build_mp_affinity() ought to take a CPU
+argument (which is awkward because we don't always have one
+to hand at the callsite)...
 
-> +OBJECT_DECLARE_SIMPLE_TYPE(HIODLegacyVFIO, HIOD_LEGACY_VFIO)
-> +
-> +/* Abstraction of VFIO legacy host IOMMU device */
-> +struct HIODLegacyVFIO {
-
-same here
-
-> +    /*< private >*/
-> +    HostIOMMUDevice parent;
-> +    VFIODevice *vdev;
-
-It seems to me that the back pointer should be on the container instead.
-Looks more correct conceptually.
-
-
-> +};
-> +
->   typedef struct VFIODMABuf {
->       QemuDmaBuf buf;
->       uint32_t pos_x, pos_y, pos_updates;
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 77bdec276e..44018ef085 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -1143,12 +1143,21 @@ static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
->       vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
->   };
->   
-> +static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
-> +{
-> +};
-
-Is it preferable to introduce routines when they are actually useful.
-Please drop the .class_init definition.
-
-Thanks,
-
-C.
-
-
-> +
->   static const TypeInfo types[] = {
->       {
->           .name = TYPE_VFIO_IOMMU_LEGACY,
->           .parent = TYPE_VFIO_IOMMU,
->           .class_init = vfio_iommu_legacy_class_init,
-> -    },
-> +    }, {
-> +        .name = TYPE_HIOD_LEGACY_VFIO,
-> +        .parent = TYPE_HOST_IOMMU_DEVICE,
-> +        .instance_size = sizeof(HIODLegacyVFIO),
-> +        .class_init = hiod_legacy_vfio_class_init,
-> +    }
->   };
->   
->   DEFINE_TYPES(types)
-
+thanks
+-- PMM
 
