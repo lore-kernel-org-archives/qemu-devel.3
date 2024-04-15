@@ -4,90 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6565FC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 10:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9851DC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 10:05:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwJ8c-0003Wd-5s; Mon, 15 Apr 2024 06:00:37 -0400
+	id 1rwJDE-0004a0-IT; Mon, 15 Apr 2024 06:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwJ8N-0003Vh-NF
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:00:23 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rwJDC-0004Zo-Ex
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:05:18 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwJ8J-0001TZ-9e
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:00:19 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4185e80adfbso2548455e9.1
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 03:00:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rwJD7-0002eI-RE
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 06:05:18 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-5ca29c131ebso1911937a12.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 03:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713175210; x=1713780010; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1713175512; x=1713780312;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wVZoDGmy7n2YFhP3n9Yj01/03KToH2CTZo5lCQd8atk=;
- b=c3zpf019oxV+LWLPhFoPco35sP8xqhUcQbp/lIa0Gj0cJusCtKpCW+eMaBqHRJAR47
- Y1rJG/a5Kr1ToVQj8s+M0Do/AnGXlvghrgELnPHwhy2M0U12lbACtiqEAC7QgSqrgHq5
- BkJwG6o5v03NQBeGEtdBKXqZfKxZzP4a1fnaTADFNFIutW4EYXvFY5l6NkJf+nuPIbEC
- IwGJ6FZEQ3lIHesTa0HmZQTtC6I4Tsj+qQzK+ctz3lVAQoUjCUVQoApEwSwceshkWysc
- QHpW3ZOBLZf875ooJrHTLNUSsUYanbxh9pd7N+mTv/8mJEftWU9nZW+gmkqSchqHQ18j
- vpLQ==
+ bh=hilhxvaMVV7rm+w6K+VA4tZtOrkq7aFFzc+J8jht57E=;
+ b=lYKLZhTeEaqLTrkCH8AHv57poFttZFzaPGpW8mqxQAJEXSRBe+zhfTWayRtujG4FRz
+ 1krfw6mUhVOqIHgd1C56ZjcasT5eRmd//gajgnkvoKsuM9xpajRmyJ6QZQzpivlzmZCP
+ pqRcQLfATsDDQkLy82VxFL+aGI1Z2jbjUhFrxv95fACYHWwB3AmzUjHDhTxC8KKO2b0w
+ u9oRSI4JTdo4WsmF22/DmwGcfjlQOM22VZxo+4DiuaQOQ4FdmOA/TeveeoUT+zAYDfBq
+ aipUS4GGvChgtSejHcWZlSh8AVW9l0ViUBfD9QiCWYUhWpnf0URWao5wZInECbMODrL5
+ 2rzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713175210; x=1713780010;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1713175512; x=1713780312;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wVZoDGmy7n2YFhP3n9Yj01/03KToH2CTZo5lCQd8atk=;
- b=YxQ46LILEJOyZRr8Hvzmd6CZNxU5dsoNI8NhQbCa68Vms6wL5u8fWIbcp0HYg3gK4C
- SFetEkOfZpxHxtxoptSLzfydzg7pedF5mwUnLWXDkSKtGG5I6Y5GRBwe4FMuxMCRgrcB
- 8U5+2QLXf1NsIkHdUUc21HkmG37glDS0STS6jfU2ZUmzEhc36AdztFjq5XHVmhjIRq57
- Wwvyb9S/JpCpmvTDy6GrgNvUZ+hr6bOLB0D32pGChw/EOksfFaRdyPfro9RxWdfnEr1i
- 1OKeERSKemMYF5qdZgdav9Y68fYZXCjYeXmWdQ/dc0HyIbyfi60uY7snL1dnSmWkmk1p
- OmDA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSa/fqUHcWlH2jEXOQ+Iwlib9aNZhwyIyo1XUvIYtdet4M1ldmWI4uhvrd/hEaM5EIqceYWnXyeszm1Azlf/0bHZmedqE=
-X-Gm-Message-State: AOJu0YyxBiQYd3eM5OyFMputsKO+aY/8IBa0UqcbIYyyyktHgzuosUuK
- fMwMqiKwp83a9cMkUQaoB6wKUDkqPnZ1yQp/+KdmnMvBzLFjx0E0DeVNeFa67HQ=
-X-Google-Smtp-Source: AGHT+IEZ4Zam1WLxIHlxdzE2MTRpFWGgWUfgh2liw+KOPw3Kv0mzCSJOwO8vYV510gSeLqIYzSE0ZA==
-X-Received: by 2002:a05:600c:501e:b0:418:5ed2:5aa7 with SMTP id
- n30-20020a05600c501e00b004185ed25aa7mr1621819wmr.14.1713175210588; 
- Mon, 15 Apr 2024 03:00:10 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.132.126])
+ bh=hilhxvaMVV7rm+w6K+VA4tZtOrkq7aFFzc+J8jht57E=;
+ b=av9rq7u8eXD4yF9H6M/GFx9nQleiNtCRtSSS4jC715ipozyRSfzUj8mV3ILXxZRIRr
+ jtMoMa5TDHZc6QqUBOVDwutKRhHfbRiH7PtKsanv36+1vqLRXjQv4gUnPA9kqoy6Pnzc
+ r5utwi/KtB1AYSFA68Gs43v6Vz5yzc6TpmE2X2EYqHkOPicYYXiPSIQ3ag7QYyzmXpOi
+ yyjkOJiWgAXCa3k7xJ/kSp5xDWxp/fmKzfriP14P+U+s2UeL9ZsBJjosBILTd8ka7bl6
+ STnS4Sh8MUJPUxWug2SseXtxxOB6ZnV/evgZBYPAAk1rkE4Zpokd12ngru7MYh+INLXA
+ kpkg==
+X-Gm-Message-State: AOJu0Yya1aV0+cap/3+aFWFm+RhmKpAxs+7bpYsYUueiZEbisFCwNdCr
+ OykPD9qvqp3HEyGemjbpkitlAZmqi2bMIKcUb1klqRu/lp0ZAI7OLMrbRRv7DPk=
+X-Google-Smtp-Source: AGHT+IF58HW35q3+wYUEIwaLkZS1YKn5LWIL6ofclDd/mDTvrqhRKx9B50EldXlMfbBaeQW08JIoSw==
+X-Received: by 2002:a17:902:b105:b0:1e4:5b89:dbfe with SMTP id
+ q5-20020a170902b10500b001e45b89dbfemr9494089plr.25.1713175512186; 
+ Mon, 15 Apr 2024 03:05:12 -0700 (PDT)
+Received: from [157.82.206.17] ([157.82.206.17])
  by smtp.gmail.com with ESMTPSA id
- ay36-20020a05600c1e2400b004186df974f1sm1959303wmb.33.2024.04.15.03.00.09
+ w10-20020a170902e88a00b001e3e0a8b32asm7501836plg.45.2024.04.15.03.05.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 03:00:10 -0700 (PDT)
-Message-ID: <3995d868-c7fe-40c0-840f-4929ad17557f@linaro.org>
-Date: Mon, 15 Apr 2024 12:00:08 +0200
+ Mon, 15 Apr 2024 03:05:11 -0700 (PDT)
+Message-ID: <1fc1d55d-7eb7-49f4-9ed1-f52fe34cc876@daynix.com>
+Date: Mon, 15 Apr 2024 19:05:06 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] hw/display : Add device DM163
-To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Samuel Tardieu <sam@rfc1149.net>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20240414130604.182059-1-ines.varhol@telecom-paris.fr>
- <20240414130604.182059-2-ines.varhol@telecom-paris.fr>
+Subject: Re: [PATCH v7 07/10] virtio-gpu: Handle resource blob commands
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240414130604.182059-2-ines.varhol@telecom-paris.fr>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>
+References: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
+ <20240411102002.240536-8-dmitry.osipenko@collabora.com>
+ <29a55f63-593e-46d0-8dfe-f55e2b2de7ac@daynix.com>
+ <918fb26b-72e9-446a-841b-810eb983dabe@collabora.com>
+ <83e4454f-98d5-4e7d-b8d0-46d3d52442b1@daynix.com>
+ <68c33b13-83ea-4ea4-b219-43a930a6ad10@collabora.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <68c33b13-83ea-4ea4-b219-43a930a6ad10@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,245 +120,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Inès,
-
-On 14/4/24 15:05, Inès Varhol wrote:
-> This device implements the IM120417002 colors shield v1.1 for Arduino
-> (which relies on the DM163 8x3-channel led driving logic) and features
-> a simple display of an 8x8 RGB matrix. The columns of the matrix are
-> driven by the DM163 and the rows are driven externally.
+On 2024/04/15 17:49, Dmitry Osipenko wrote:
+> On 4/15/24 11:13, Akihiko Odaki wrote:
+>> On 2024/04/15 17:03, Dmitry Osipenko wrote:
+>>> Hello,
+>>>
+>>> On 4/13/24 14:57, Akihiko Odaki wrote:
+>>> ...
+>>>>> +static void
+>>>>> +virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>>>>> +                                     struct
+>>>>> virtio_gpu_simple_resource *res)
+>>>>> +{
+>>>>> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+>>>>> +
+>>>>> +    if (!res->mr) {
+>>>>> +        return;
+>>>>> +    }
+>>>>> +
+>>>>> +    memory_region_set_enabled(res->mr, false);
+>>>>> +    memory_region_del_subregion(&b->hostmem, res->mr);
+>>>>> +
+>>>>> +    /* memory region owns res->mr object and frees it when mr is
+>>>>> released */
+>>>>> +    res->mr = NULL;
+>>>>> +
+>>>>> +    virgl_renderer_resource_unmap(res->resource_id);
+>>>>
+>>>> Hi,
+>>>>
+>>>> First, thanks for keeping working on this.
+>>>>
+>>>> This patch has some changes since the previous version, but it is still
+>>>> vulnerable to the race condition pointed out. The memory region is
+>>>> asynchronously unmapped from the guest address space, but the backing
+>>>> memory on the host address space is unmapped synchronously before that.
+>>>> This results in use-after-free. The whole unmapping operation needs to
+>>>> be implemented in an asynchronous manner.
+>>>
+>>> Thanks for the clarification! I missed this point from the previous
+>>> discussion.
+>>>
+>>> Could you please clarify what do you mean by the "asynchronous manner"?
+>>> Virglrenderer API works only in the virtio-gpu-gl context, it can't be
+>>> accessed from other places.
+>>>
+>>> The memory_region_del_subregion() should remove the region as long as
+>>> nobody references it, isn't it? On Linux guest nobody should reference
+>>> hostmem regions besides virtio-gpu device on the unmap, don't know about
+>>> other guests.
+>>>
+>>> We can claim it a guest's fault if MR lives after the deletion and in
+>>> that case exit Qemu with a noisy error msg or leak resource. WDYT?
+>>>
+>>
+>> We need to be prepared for a faulty guest for reliability and security
+>> as they are common goals of virtualization, and it is nice to have them
+>> after all.
+>>
+>> You need to call virgl_renderer_resource_unmap() after the MR actually
+>> gets freed. The virtio-gpu-gl context is just a context with BQL so it
+>> is fine to call virgl functions in most places.
 > 
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-> ---
->   docs/system/arm/b-l475e-iot01a.rst |   3 +-
->   include/hw/display/dm163.h         |  58 +++++
->   hw/display/dm163.c                 | 333 +++++++++++++++++++++++++++++
->   hw/display/Kconfig                 |   3 +
->   hw/display/meson.build             |   1 +
->   hw/display/trace-events            |  14 ++
->   6 files changed, 411 insertions(+), 1 deletion(-)
->   create mode 100644 include/hw/display/dm163.h
->   create mode 100644 hw/display/dm163.c
+> Do you have example of a legit use-case where hostmem MR could outlive
+> resource mapping?
 
+MR outliving after memory_region_del_subregion() is not a use-case, but 
+a situation that occurs due to the limitation of the memory subsystem. 
+It is not easy to answer how often such a situation happens.
 
-> diff --git a/include/hw/display/dm163.h b/include/hw/display/dm163.h
-> new file mode 100644
-> index 0000000000..00d0504640
-> --- /dev/null
-> +++ b/include/hw/display/dm163.h
-> @@ -0,0 +1,58 @@
-> +/*
-> + * QEMU DM163 8x3-channel constant current led driver
-> + * driving columns of associated 8x8 RGB matrix.
-> + *
-> + * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
-> + * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (C) 2024 Inès Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_DISPLAY_DM163_H
-> +#define HW_DISPLAY_DM163_H
-> +
-> +#include "qom/object.h"
-> +#include "hw/qdev-core.h"
-> +
-> +#define TYPE_DM163 "dm163"
-> +OBJECT_DECLARE_SIMPLE_TYPE(DM163State, DM163);
-> +
-> +#define DM163_NUM_LEDS 24
-> +#define RGB_MATRIX_NUM_ROWS 8
-> +#define RGB_MATRIX_NUM_COLS (DM163_NUM_LEDS / 3)
+> 
+> Turning it into a error condition is much more reasonable to do than to
+> to worry about edge case that nobody cares about, which can't be tested
+> easily and that not trivial to support, IMO.
+> 
+I'm not sure what you mean by turning into an error condition. I doubt 
+it's possible to emit errors when someone touches an unmapped region.
 
-Maybe better as:
+Reproducing this issue is not easy as it's often cases for 
+use-after-free bugs, but fixing it is not that complicated in my opinion 
+since you already have an implementation which asynchronously unmaps the 
+region in v6. I write my suggestions to fix problems in v6:
 
-   #define DM163_NUM_LEDS (RGB_MATRIX_NUM_COLS * RGB_MATRIX_NUM_ROWS)
+- Remove ref member in virgl_gpu_resource, vres_get_ref(), 
+vres_put_ref(), and virgl_resource_unmap().
 
-> +#define COLOR_BUFFER_SIZE RGB_MATRIX_NUM_ROWS
+- Change virtio_gpu_virgl_process_cmd(), 
+virgl_cmd_resource_unmap_blob(), and virgl_cmd_resource_unref() to 
+return a bool, which tells if the command was processed or suspended.
 
-It could ease the code to define here directly as:
+- In virtio_gpu_process_cmdq(), break if the command was suspended.
 
-   /* The last row is filled with 0 (turned off row) */
-   #define COLOR_BUFFER_SIZE (RGB_MATRIX_NUM_ROWS + 1)
+- In virgl_resource_blob_async_unmap(), call virtio_gpu_gl_block(g, false).
 
-> +
-> +typedef struct DM163State {
-> +    DeviceState parent_obj;
-> +
-> +    /* DM163 driver */
-> +    uint64_t bank0_shift_register[3];
-> +    uint64_t bank1_shift_register[3];
-> +    uint16_t latched_outputs[DM163_NUM_LEDS];
-> +    uint16_t outputs[DM163_NUM_LEDS];
-> +    qemu_irq sout;
-> +
-> +    uint8_t sin;
-> +    uint8_t dck;
-> +    uint8_t rst_b;
-> +    uint8_t lat_b;
-> +    uint8_t selbk;
-> +    uint8_t en_b;
-> +
-> +    /* IM120417002 colors shield */
-> +    uint8_t activated_rows;
-> +
-> +    /* 8x8 RGB matrix */
-> +    QemuConsole *console;
-> +    uint8_t redraw;
-> +    /* Rows currently being displayed on the matrix. */
-> +    /* The last row is filled with 0 (turned off row) */
-> +    uint32_t buffer[COLOR_BUFFER_SIZE + 1][RGB_MATRIX_NUM_COLS];
-> +    uint8_t last_buffer_idx;
-> +    uint8_t buffer_idx_of_row[RGB_MATRIX_NUM_ROWS];
-> +    /* Used to simulate retinal persistence of rows */
-> +    uint8_t age_of_row[RGB_MATRIX_NUM_ROWS];
-
-Maybe "row_persistence_delay"?
-
-> +} DM163State;
-> +
-> +#endif /* HW_DISPLAY_DM163_H */
-
-
-> +static void dm163_dck_gpio_handler(void *opaque, int line, int new_state)
-> +{
-> +    DM163State *s = DM163(opaque);
-
-GPIO handlers are initialized in dm163_realize() where we know @dev
-is already a DM163State:
-
-   static void dm163_realize(DeviceState *dev, Error **errp)
-   {
-       DM163State *s = DM163(dev);
-                       ^^^^^
-       qdev_init_gpio_in(dev, dm163_rows_gpio_handler, 8);
-
-So here (and other handlers) you can avoid the QOM cast macro,
-and directly use:
-
-       DM163State *s = opaque;
-
-> +
-> +    if (new_state && !s->dck) {
-> +        /*
-> +         * On raising dck, sample selbk to get the bank to use, and
-> +         * sample sin for the bit to enter into the bank shift buffer.
-> +         */
-> +        uint64_t *sb =
-> +            s->selbk ? s->bank1_shift_register : s->bank0_shift_register;
-> +        /* Output the outgoing bit on sout */
-> +        const bool sout = (s->selbk ? sb[2] & MAKE_64BIT_MASK(63, 1) :
-> +                           sb[2] & MAKE_64BIT_MASK(15, 1)) != 0;
-> +        qemu_set_irq(s->sout, sout);
-> +        /* Enter sin into the shift buffer */
-> +        sb[2] = (sb[2] << 1) | ((sb[1] >> 63) & 1);
-> +        sb[1] = (sb[1] << 1) | ((sb[0] >> 63) & 1);
-> +        sb[0] = (sb[0] << 1) | s->sin;
-> +    }
-> +
-> +    s->dck = new_state;
-> +    trace_dm163_dck(new_state);
-> +}
-
-
-> +static void dm163_en_b_gpio_handler(void *opaque, int line, int new_state)
-> +{
-> +    DM163State *s = DM163(opaque);
-> +
-> +    s->en_b = new_state;
-> +    dm163_propagate_outputs(s);
-> +    trace_dm163_en_b(new_state);
-> +}
-> +
-> +static inline uint8_t dm163_bank0(const DM163State *s, uint8_t led)
-
-No need to force the compiler to inline these methods.
-
-> +{
-> +    /*
-> +     * Bank 1 uses 6 bits per led, so a value may be stored accross
-> +     * two uint64_t entries.
-> +     */
-> +    const uint8_t low_bit = 6 * led;
-> +    const uint8_t low_word = low_bit / 64;
-> +    const uint8_t high_word = (low_bit + 5) / 64;
-> +    const uint8_t low_shift = low_bit % 64;
-> +
-> +    if (low_word == high_word) {
-> +        /* Simple case: the value belongs to one entry. */
-> +        return (s->bank0_shift_register[low_word] &
-> +                MAKE_64BIT_MASK(low_shift, 6)) >> low_shift;
-> +    }
-> +
-> +    const uint8_t bits_in_low_word = 64 - low_shift;
-> +    const uint8_t bits_in_high_word = 6 - bits_in_low_word;
-> +    return ((s->bank0_shift_register[low_word] &
-> +             MAKE_64BIT_MASK(low_shift, bits_in_low_word)) >>
-> +            low_shift) |
-> +           ((s->bank0_shift_register[high_word] &
-> +             MAKE_64BIT_MASK(0, bits_in_high_word))
-> +         << bits_in_low_word);
-> +}
-> +
-> +static inline uint8_t dm163_bank1(const DM163State *s, uint8_t led)
-> +{
-> +    const uint64_t entry = s->bank1_shift_register[led / 8];
-> +    const unsigned shift = 8 * (led % 8);
-> +    return (entry & MAKE_64BIT_MASK(shift, 8)) >> shift;
-> +}
-
-
-> +static void dm163_realize(DeviceState *dev, Error **errp)
-> +{
-> +    DM163State *s = DM163(dev);
-> +
-> +    qdev_init_gpio_in(dev, dm163_rows_gpio_handler, 8);
-
-s/8/RGB_MATRIX_NUM_ROWS/
-
-> +    qdev_init_gpio_in(dev, dm163_sin_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_dck_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_rst_b_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_lat_b_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_selbk_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_en_b_gpio_handler, 1);
-> +    qdev_init_gpio_out_named(dev, &s->sout, "sout", 1);
-> +
-> +    s->console = graphic_console_init(dev, 0, &dm163_ops, s);
-> +    qemu_console_resize(s->console, RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZE,
-> +                        RGB_MATRIX_NUM_ROWS * LED_SQUARE_SIZE);
-> +}
-
-
-> diff --git a/hw/display/trace-events b/hw/display/trace-events
-> index 2336a0ca15..fc7cbdcd36 100644
-> --- a/hw/display/trace-events
-> +++ b/hw/display/trace-events
-
-
-> +# dm163.c
-> +dm163_redraw(uint8_t redraw) "0x%02x"
-> +dm163_dck(int new_state) "dck : %d"
-> +dm163_en_b(int new_state) "en_b : %d"
-> +dm163_rst_b(int new_state) "rst_b : %d"
-> +dm163_lat_b(int new_state) "lat_b : %d"
-> +dm163_sin(int new_state) "sin : %d"
-> +dm163_selbk(int new_state) "selbk : %d"
-
-unsigned new_state, "%u"
-
-> +dm163_activated_rows(int new_state) "Activated rows : 0x%" PRIx32 ""
-> +dm163_bits_ppi(unsigned dest_width) "dest_width : %u"
-> +dm163_leds(int led, uint32_t value) "led %d: 0x%x"
-> +dm163_channels(int channel, uint8_t value) "channel %d: 0x%x"
-> +dm163_refresh_rate(uint32_t rr) "refresh rate %d"
-
-Minor comments, otherwise LGTM!
+- In virgl_cmd_resource_unmap_blob() and virgl_cmd_resource_unref(), 
+call memory_region_del_subregion() and virtio_gpu_gl_block(g, true), and 
+tell that the command was suspended if the reference counter of 
+MemoryRegion > 0. Free and unmap the MR otherwise.
 
 Regards,
-
-Phil.
+Akihiko Odaki
 
