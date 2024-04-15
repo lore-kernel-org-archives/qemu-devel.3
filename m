@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45927C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 09:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3E2C00A94
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 09:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwIg2-00075U-AM; Mon, 15 Apr 2024 05:31:02 -0400
+	id 1rwIiB-0000Fm-99; Mon, 15 Apr 2024 05:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwIfz-00074B-C7
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:31:00 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwIfx-0003DJ-CB
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:30:59 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4187481e3feso1712375e9.1
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 02:30:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713173454; x=1713778254; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2VSaVO0jKEglRFYHwOI5PvU1TZFN7MEPyVaQBRQh+z0=;
- b=B15CJU3XnFWKYEp/NREhkLhsZmJWwUh2BbKaQS9Vtt0McusixDtIbUAo4lnEXUQAec
- md4NOKEGkORXZruOKTIu96l4pGxUr55dYaUqIszdjr3MxRUsqdYTxqItErG2LnhYr27Z
- rfWLSueLCHv00K6UaElPYjoA9JHAA3AIEor6ouBmTRiNrF/cmNJz9x7AUQ2FMHBmupB2
- HRVUgJBXuvAbbszllvMbQZqWsLHWQzT25bJ45RaLUNYYBYXCWhDsM+S+BNa0koZ01V/P
- ZTd1348+ZeTK7To7QTizNnUPkqr4bdq3gMRMK4Lf7cG6g27R1rtuRoz1RYjWnp8VoKWc
- qeQg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rwIi8-0000BU-9L
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:33:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rwIi6-0003x3-Pr
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 05:33:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713173588;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YXeVV5KZsiTO7GW8ApZLRezbInuXzzD0NSa2Eoj+xTY=;
+ b=bWxm8nb4lTzIhL8/VGTKEuljqN4NEkHUpBdpGrBkkWav8S2H9FRAD7RlEYGY9e0A6cHexP
+ Rr6FrbY9sEAHQDlnNTvLXODkaCtD90pHuyVXaotIqOAhg30j2KGR0e3XTx6L9LUhC/IDnR
+ 2y394styGdOo0pHI0spOFNSWHeN8ELQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-264-kBQlcQQaOiaHqCreaeASgg-1; Mon, 15 Apr 2024 05:33:05 -0400
+X-MC-Unique: kBQlcQQaOiaHqCreaeASgg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-343d7cd8f46so2319698f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 02:33:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713173454; x=1713778254;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2VSaVO0jKEglRFYHwOI5PvU1TZFN7MEPyVaQBRQh+z0=;
- b=w3He8LbnSEK1ISyjAuShB32SYfnY9X9ch2gi71DVEKBs183awPv4ptMFqQ99adM9u5
- MdPrXTPlPdQUMg2nDJcuSskFfTUYtFcEGeFGNBns+CfUy+opzSHpcN8KuJIyYSkDVsPR
- qv/dqpeoVEgvKaY/2E2kE1/bBiD011X2zaN5yOpYKj8OalUWk3amumZIuDTVrDT8viUa
- /qFroTU2iSZ+arakx7FXoTnMjWqE02p2JYkfArKmeOCvIECmDLxbIscjOqJDLNw6uJYA
- qJ5qXUTC6S1X2KGjVkgjPichoAr69WGYH+MXX+BGwS8F+T8ZHGZzq5WAN1HhuDCJ9B5s
- xKfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPavvJbbWPXhPlsa55cT+kBpm+dCSc7zAHkBeidBVYx0ANQHn9OVdnl7SF/Jy6PQnEivbYUR4YlcqBVEwtcCcK21wDLNQ=
-X-Gm-Message-State: AOJu0YxGZAQMy36d1CZkOchJJDJ+ZOZF53AL52XZ1iC1v7UIogcd1UXT
- x8m6U+r2cltlkP0w6Dk+s/Q02DI20V27DFiexSAmPply2wbqvKYoLr7UE9pi0ek=
-X-Google-Smtp-Source: AGHT+IE3Jmf6oAn2eFQFrhR9XM94Om6rf4A73ItGGNZB606WL34KPvlBBTtVft5zfzhAzQh1DyanmQ==
-X-Received: by 2002:adf:f40b:0:b0:343:facf:228a with SMTP id
- g11-20020adff40b000000b00343facf228amr5417701wro.19.1713173454445; 
- Mon, 15 Apr 2024 02:30:54 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.132.126])
- by smtp.gmail.com with ESMTPSA id
- e1-20020a5d5941000000b0034722442e60sm8086547wri.61.2024.04.15.02.30.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 02:30:54 -0700 (PDT)
-Message-ID: <14d2fa55-4938-4007-ac65-6ec6c48fbec9@linaro.org>
-Date: Mon, 15 Apr 2024 11:30:52 +0200
+ d=1e100.net; s=20230601; t=1713173583; x=1713778383;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YXeVV5KZsiTO7GW8ApZLRezbInuXzzD0NSa2Eoj+xTY=;
+ b=I0TL3AZUOZhuWA+r/+pN3/sLGWqhxmba1iuQ6patk78KfGG0KQkXb0HhqSm0hMgPOy
+ wFgr/Vp8RHxdn+1vTdsAbn3PVzf45bTDUiUwhdkpQ2sflXPSRinXfvrNDwswGJbcCTUL
+ CzEvape4ggQ0M9VIg6B5QXRj/3DF09+IdOB38dgJI7hYyIjXHJiQ4m7zBnYMZDASMQuv
+ oUN+cpxYeapYDAV2jLvxqJ9r2NINMvPguMGJQNG/iXDxhK8Io5uwuFKAP9O4RLbXGDFm
+ H96J39B0l4OKJw0l9KAtiJSTuHxiy/UIHS2cJ3PAyRt2OK8YOwevANdR7DqUfOahA+Sh
+ EcsA==
+X-Gm-Message-State: AOJu0YzdhBrAaycOjDRy/IE0fRhu01WYoRHbu8AH6Gq1K+b2xQ9zF+jw
+ 241TA2frOaoKcBBzIHlK5uJg6hQgARKHLyfiI7rWKVHw9v96beYqUtT7tD9mteudcgVERPCPuR5
+ ZiJnH3IdUZZgjJWfBwe/Mmju6VfU37h9GC2S39AODx5Cc3p28azUzS6I5500Hr/xFU/JILnpzh3
+ lIsaY9Ek/QsJGnKrLX97szATl5PUbcxRGAR7jnKQ==
+X-Received: by 2002:adf:db48:0:b0:346:7f2d:777d with SMTP id
+ f8-20020adfdb48000000b003467f2d777dmr5618712wrj.2.1713173583740; 
+ Mon, 15 Apr 2024 02:33:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5DUTXuVTZI6hbCxAFI/NsPy13P6jnVr9qrzxTIV2NDdxVwnTnY5RxCtxhHX3hnXUVBZkeMMtfF7jLIfMeps8=
+X-Received: by 2002:adf:db48:0:b0:346:7f2d:777d with SMTP id
+ f8-20020adfdb48000000b003467f2d777dmr5618700wrj.2.1713173583389; Mon, 15 Apr
+ 2024 02:33:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] hw/arm : Create Bl475eMachineState
-To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Samuel Tardieu <sam@rfc1149.net>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240414130604.182059-1-ines.varhol@telecom-paris.fr>
- <20240414130604.182059-4-ines.varhol@telecom-paris.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240414130604.182059-4-ines.varhol@telecom-paris.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240415064518.4951-4-lrh2000@pku.edu.cn>
+In-Reply-To: <20240415064518.4951-4-lrh2000@pku.edu.cn>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 15 Apr 2024 11:32:51 +0200
+Message-ID: <CABgObfZmQoSBMQx=t0UYCa6t5d9RRZKy23zeW3orrBYnVQtKYQ@mail.gmail.com>
+Subject: Re: [PATCH v2] target/i386: Give IRQs a chance when resetting
+ HF_INHIBIT_IRQ_MASK
+To: Ruihan Li <lrh2000@pku.edu.cn>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.127,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,59 +98,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/24 15:05, Inès Varhol wrote:
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-> ---
->   hw/arm/b-l475e-iot01a.c | 44 +++++++++++++++++++++++++++++------------
->   1 file changed, 31 insertions(+), 13 deletions(-)
-> 
-> diff --git a/hw/arm/b-l475e-iot01a.c b/hw/arm/b-l475e-iot01a.c
-> index d862aa43fc..2b570b3e09 100644
-> --- a/hw/arm/b-l475e-iot01a.c
-> +++ b/hw/arm/b-l475e-iot01a.c
-> @@ -2,8 +2,8 @@
->    * B-L475E-IOT01A Discovery Kit machine
->    * (B-L475E-IOT01A IoT Node)
->    *
-> - * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> - * Copyright (c) 2023 Inès Varhol <ines.varhol@telecom-paris.fr>
-> + * Copyright (c) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (c) 2024 Inès Varhol <ines.varhol@telecom-paris.fr>
+On Mon, Apr 15, 2024 at 8:50=E2=80=AFAM Ruihan Li <lrh2000@pku.edu.cn> wrot=
+e:
+>
+> When emulated with QEMU, interrupts will never come in the following
+> loop. However, if the NOP instruction is uncommented, interrupts will
+> fire as normal.
+>
+>         loop:
+>                 cli
+>                 call do_sti
+>                 jmp loop
+>
+>         do_sti:
+>                 sti
+>                 # nop
+>                 ret
+>
+> This behavior is different from that of a real processor. For example,
+> if KVM is enabled, interrupts will always fire regardless of whether the
+> NOP instruction is commented or not. Also, the Intel Software Developer
+> Manual states that after the STI instruction is executed, the interrupt
+> inhibit should end as soon as the next instruction (e.g., the RET
+> instruction if the NOP instruction is commented) is executed.
 
-2023-2024
+Thanks, interesting bug!
 
->    *
->    * SPDX-License-Identifier: GPL-2.0-or-later
->    *
-> @@ -32,33 +32,51 @@
+What do you think about writing this:
 
+>      /* If several instructions disable interrupts, only the first does i=
+t.  */
+>      if (inhibit && !(s->flags & HF_INHIBIT_IRQ_MASK)) {
+>          gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
+> -    } else {
+> +        inhibit_reset =3D false;
+> +    } else if (!inhibit && (s->flags & HF_INHIBIT_IRQ_MASK)) {
+>          gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
+> +        inhibit_reset =3D true;
+> +    } else {
+> +        inhibit_reset =3D false;
+>      }
 
-> +static void bl475e_init(MachineState *machine)
->   {
-> +    Bl475eMachineState *s = B_L475E_IOT01A(machine);
->       const Stm32l4x5SocClass *sc;
-> -    DeviceState *dev;
->   
-> -    dev = qdev_new(TYPE_STM32L4X5XG_SOC);
-> -    object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
-> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +    object_initialize_child(OBJECT(machine), "soc", &s->soc,
-> +                            TYPE_STM32L4X5XG_SOC);
-> +    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
->   
-> -    sc = STM32L4X5_SOC_GET_CLASS(dev);
-> +    sc = STM32L4X5_SOC_GET_CLASS(&s->soc);
->       armv7m_load_kernel(ARM_CPU(first_cpu),
-> -                       machine->kernel_filename,
-> -                       0, sc->flash_size);
-> +        machine->kernel_filename, 0, sc->flash_size);
+in a slightly simpler manner:
 
-Spurious line change.
+    inhibit_reset =3D false;
+    if (s->flags & HF_INHIBIT_IRQ_MASK) {
+        gen_reset_hflag(s, HF_INHIBIT_IRQ_MASK);
+        inhibit_reset =3D true;
+    } else if (inhibit) {
+        gen_set_hflag(s, HF_INHIBIT_IRQ_MASK);
+    }
 
->   }
+No need to submit v3, I can do the change myself when applying.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Paolo
 
 
