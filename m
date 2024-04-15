@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90916C00A94
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92EC9C41513
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 16:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwOsl-0005aX-Dq; Mon, 15 Apr 2024 12:08:35 -0400
+	id 1rwOsh-0005Zu-Ke; Mon, 15 Apr 2024 12:08:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1rwOsk-0005aO-2z
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:08:34 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1rwOsg-0005Zl-3Z
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:08:30 -0400
+Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1rwOsh-00073B-6z
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:08:33 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-78edc3ad5fdso143379985a.0
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 09:08:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1rwOsd-00072q-Sl
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 12:08:29 -0400
+Received: by mail-qk1-x72f.google.com with SMTP id
+ af79cd13be357-78d723c0dc5so316936285a.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 09:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cs.unc.edu; s=google; t=1713197309; x=1713802109; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bKxn4zRRP0GuBodYPfxVKDxf/AVc0hWzzsTLBwSwSK0=;
- b=CB/Vg7Ps6l4ec2DpKGF3kQMFI+FVAmO1c07ZqP4RqNk2W52vI2QlJlEQUBT+zAV08I
- slNbTLeUpjuD+piDN/kxfswWePSOFj5Zlkq66rmvdxHjz7tAbZSXUOcZODJerf9Xi2/4
- aSB60Mm7mwSNSp3epCJSUwZvYYXW8k5D2p/vIsrHhdnyN1CGJl67xSNXhV6zOv6GTKeQ
- 9Qo1VKvRE1Y3A5Xoc+xLIGCxtXLl6Aua/9pspUEazj9gESipynkJcm0zv6Id+aXDoxid
- ktV5QwgyptmtK3cARqqfeaojOsHPRhTyqms3jZ13AdXN+R2Dtde4UEexU4VgBAPdp/Gk
- BzTA==
+ d=cs.unc.edu; s=google; t=1713197305; x=1713802105; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ai4M5l/9Eood3VScV5m5i3ihGF8DJeatzhBfUaTHOMU=;
+ b=UhmHy/sC5Rkt9McXZ8BKEobLPpCwK1lnCCZW5/Xmnu814i4RWXkCnoWzOWBt9Tp7U7
+ 3DwqpjtsB9F8DrAhR3g+DrVrymbiinTOfHDRrZGTUDk5kaaQf9nFpN2BkjPANM/S/2/z
+ kDePHQ0tCdopDhZTDXRUWC9LkJyN02g11yrtcXhAN7COV3Y5xg3c3ltUUQ0J+dDrsOtS
+ yUl2hPdD54Q7dIdsoI7+/QOBqTnBb4EX/I+bUAxmfUjZ9AISt4eau1VOX3KaGMBaW2YN
+ hWdPx3HYnxhphuPCHXYCGFyTTDHoSpgYJOTFYFQGmVDODxMFj76wiLkaegbqXFtZ3tBF
+ pDrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713197309; x=1713802109;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bKxn4zRRP0GuBodYPfxVKDxf/AVc0hWzzsTLBwSwSK0=;
- b=J7ipD6TWZlzYaeTRV6GNtlWv+bnda8HFc3ZhmFnaM/P2bcuMq3Yigvt6EIR11an7G7
- J6hqU4IJEBlU5ycz8uI77UREm/7B1GvqY/XXrmK+vUfJ8Kb1mDc1lhnypJ0o9QfESSQH
- iF0qCGysZNVYXuEhQP1k7Wt93/K7T5UE01vTYgsp94oGrvrl9tBzmPCbjNZ08KpzBBYU
- H/xwdaN5ACRirwUn8KYBXFwLx1OS9zpWhUQYptxCU/itlSatWFG+zDEwkZjDqRa16Z9r
- 7WvP6O46KHZ+vjOTYCQZdZdAYoAqxspFi7/ggrUzWqjUiLgPG8Ps3i9QiuybsMoy9pgr
- Heig==
-X-Gm-Message-State: AOJu0YwnYk6LLmFcXBmaMnOn3rKrmMIOL4/ar4dBhSm2mm3seto5t+t4
- sIKeUs7axB6ox8iNzxLZeGvHDVeVrmK0W/ef+5xwIXBtwOnovDQdi0ZWPUBGnlIDea9BvloJ8hr
- m/DjxeNkg35XTOuBOHrXPt9k8jyji+cgkq53sfpqzTDWJWDYZB0ZOVEO2tGf+OdygGiIyy3aTtQ
- uiimJ9N9KBdGvxbfGuV5hJjKZSm0xK
-X-Google-Smtp-Source: AGHT+IGM3HwK96EL+ewxdJMiBI4LSJwliK4Vi2ZuBvpIHVYBB0hkxipzECsMfX2LPK0pUsUUNNiSkw==
-X-Received: by 2002:a05:620a:4010:b0:78d:4596:b77f with SMTP id
- h16-20020a05620a401000b0078d4596b77fmr174474qko.18.1713197309238; 
- Mon, 15 Apr 2024 09:08:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1713197305; x=1713802105;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ai4M5l/9Eood3VScV5m5i3ihGF8DJeatzhBfUaTHOMU=;
+ b=XUzhX8OXwy9UilAhCGhz16rTOArCG730I3yq1rUYrrkz5c524++blaCblNTAre0+Vr
+ oiftLVVqpHcNkQR6eiQ4+Po8ifVS9BkGJGMuNo2cgBYeKaydfxWQ+R/zxkvreGjHjyv7
+ xORT8JP/TePOOQRs0I31fjT+7H6m0IE2zH3rawsLWo2EOaOW93FuAlMf4bUIgJw13eMw
+ DlHOdqUdyVLc3XOizRkF99i8yqIa1TBovyDX7UE7+/KTMtzmJZTyu0nTnMF5BBfeZ3nT
+ cj7FclNKwryQ8GHup2IG8izuc47IukTqWp6uJSa+CD6nEgPBbC4Rs32hHH6iy4xTe1rB
+ 9G7w==
+X-Gm-Message-State: AOJu0YygMCyvR+760DYpLFs0Pko9vudZXKGNKPwP4YX6h8SqpV5nxADk
+ 0GY3R4yQgFiDAYgMixgJSkcVtqRUH0hH3FgDr7Uv2Zx1deArjg7wf+kQZEREUgIPgbA+t3GKouV
+ sjx43D1CJEYz9yeqCtI4Br7yxglhlqzVQkOG7aCu8L1pQvNELkxKJpugzviaqM5mUKAUVwVEryY
+ N3+T4w/TRwcGU0D8Al7TcpbgQQONOT
+X-Google-Smtp-Source: AGHT+IEfMX+nDMxJR86t4j4W3hJC1Fo2kIOvRn2pOD+4J6a8RPvCATpYY/ckxp5JsAktiH95CLKF5w==
+X-Received: by 2002:a05:620a:4ad3:b0:78e:bf95:fba6 with SMTP id
+ sq19-20020a05620a4ad300b0078ebf95fba6mr12747684qkn.60.1713197305338; 
+ Mon, 15 Apr 2024 09:08:25 -0700 (PDT)
 Received: from kermit.cs.unc.edu (kermit.cs.unc.edu. [152.2.133.133])
  by smtp.gmail.com with ESMTPSA id
- h7-20020a05620a21c700b0078d72553055sm6491341qka.11.2024.04.15.09.08.28
+ h7-20020a05620a21c700b0078d72553055sm6491341qka.11.2024.04.15.09.08.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Apr 2024 09:08:28 -0700 (PDT)
+ Mon, 15 Apr 2024 09:08:24 -0700 (PDT)
 From: Don Porter <porter@cs.unc.edu>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, dave@treblig.org,
- Austin Clements <aclements@csail.mit.edu>,
- Geoffrey Thomas <geofft@ldpreload.com>, Don Porter <porter@cs.unc.edu>
-Subject: [PATCH 1/2] monitor: Implement a generic x86 page table iterator
-Date: Mon, 15 Apr 2024 12:08:17 -0400
-Message-Id: <20240415160818.2316599-2-porter@cs.unc.edu>
+Cc: pbonzini@redhat.com,
+	dave@treblig.org
+Subject: Add 'info pg' command to monitor
+Date: Mon, 15 Apr 2024 12:08:16 -0400
+Message-Id: <20240415160818.2316599-1-porter@cs.unc.edu>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240415160818.2316599-1-porter@cs.unc.edu>
-References: <20240415160818.2316599-1-porter@cs.unc.edu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=porter@cs.unc.edu; helo=mail-qk1-x734.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
+ envelope-from=porter@cs.unc.edu; helo=mail-qk1-x72f.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -94,187 +90,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Austin Clements <aclements@csail.mit.edu>
+Hi all,
 
-This iterator provides a way to traverse 32-bit, PAE, and 64-bit page
-tables by abstracting them as n-ary trees.  A struct describes the
-full range of x86 page table layouts and the iterator builds on this
-to provide a "successor" function for efficiently traversing the page
-table tree.
+I am a CS professor (and, newly, a second-time contributor). I have
+been using qemu in my courses for over a decade, especially a course
+that asks students to write major pieces of an OS kernel from starter
+code.
 
-This code is currently unused, but provides the groundwork for the
-following "info pg" patch.  It could also be used to unify and
-simplify the implementations of "info mem" and "info tlb".
+I have some patches, originally from Austin Clements at MIT, that I
+have found useful over the years and that may be useful to others.  It
+would also be nice not to have to build a custom qemu each semester.  I
+have cleared upstreaming these with Austin, the original author.
 
-Signed-off-by: Austin Clements <aclements@csail.mit.edu>
-[geofft@ldpreload.com: Rebased on top of 2.9.0]
-Signed-off-by: Geoffrey Thomas <geofft@ldpreload.com>
-Signed-off-by: Don Porter <porter@cs.unc.edu>
----
- target/i386/monitor.c | 149 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 149 insertions(+)
+This patch set adds an 'info pg' command to the monitor, which prints
+a nicer view of the page tables.  A project in my graduate OS course
+involves implementing x86 page table support, and my students have
+found this helpful for debugging.
 
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 3a281dab02..7924de6520 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -34,6 +34,155 @@
- #include "qapi/qapi-commands-misc-target.h"
- #include "qapi/qapi-commands-misc.h"
- 
-+/**
-+ * PTLayout describes the layout of an x86 page table in enough detail
-+ * to fully decode up to a 4-level 64-bit page table tree.
-+ */
-+typedef struct PTLayout {
-+    int levels, entsize;
-+    int entries[4];             /* Entries in each table level */
-+    int shift[4];               /* VA bit shift each each level */
-+    bool pse[4];                /* Whether PSE bit is valid */
-+    const char *names[4];
-+    int vaw, paw;               /* VA and PA width in characters */
-+} PTLayout;
-+
-+/**
-+ * PTIter provides a generic way to traverse and decode an x86 page
-+ * table tree.
-+ */
-+typedef struct PTIter {
-+    const PTLayout *layout;
-+    bool pse;                   /* PSE enabled */
-+    int level;                  /* Current level */
-+    int i[4];                   /* Index at each level */
-+    hwaddr base[4];             /* Physical base pointer */
-+
-+    uint64_t ent;               /* Current entry */
-+    bool present, leaf;
-+    target_ulong va;
-+    hwaddr pa;
-+    target_ulong  size;
-+} PTIter;
-+
-+static bool ptiter_succ(PTIter *it);
-+
-+/**
-+ * Initialize a PTIter to point to the first entry of the page table's
-+ * top level.  On failure, prints a message to mon and returns false.
-+ */
-+static bool
-+__attribute__ ((unused))
-+ptiter_init(Monitor *mon, PTIter *it)
-+{
-+    static const PTLayout l32 = {
-+        2, 4, {1024, 1024}, {22, 12}, {1, 0}, {"PDE", "PTE"}, 8, 8
-+    };
-+    static const PTLayout lpae = {
-+        3, 8, {4, 512, 512}, {30, 21, 12}, {0, 1, 0},
-+        {"PDP", "PDE", "PTE"}, 8, 13
-+    };
-+#ifdef TARGET_X86_64
-+    static const PTLayout l64 = {
-+        4, 8, {512, 512, 512, 512}, {39, 30, 21, 12}, {0, 1, 1, 0},
-+        {"PML4", "PDP", "PDE", "PTE"}, 12, 13
-+    };
-+#endif
-+    CPUArchState *env;
-+
-+    env = mon_get_cpu_env(mon);
-+
-+    if (!(env->cr[0] & CR0_PG_MASK)) {
-+        monitor_printf(mon, "PG disabled\n");
-+        return false;
-+    }
-+
-+    memset(it, 0, sizeof(*it));
-+    if (env->cr[4] & CR4_PAE_MASK) {
-+#ifdef TARGET_X86_64
-+        if (env->hflags & HF_LMA_MASK) {
-+            it->layout = &l64;
-+            it->base[0] = env->cr[3] & 0x3fffffffff000ULL;
-+        } else
-+#endif
-+        {
-+            it->layout = &lpae;
-+            it->base[0] = env->cr[3] & ~0x1f;
-+        }
-+        it->pse = true;
-+    } else {
-+        it->layout = &l32;
-+        it->base[0] = env->cr[3] & ~0xfff;
-+        it->pse = (env->cr[4] & CR4_PSE_MASK);
-+    }
-+
-+    /* Trick ptiter_succ into doing the hard initialization. */
-+    it->i[0] = -1;
-+    it->leaf = true;
-+    ptiter_succ(it);
-+    return true;
-+}
-+
-+/**
-+ * Move a PTIter to the successor of the current entry.  Specifically:
-+ * if the iterator points to a leaf, move to its next sibling, or to
-+ * the next sibling of a parent if it has no more siblings.  If the
-+ * iterator points to a non-leaf, move to its first child.  If there
-+ * is no successor, return false.
-+ *
-+ * Note that the resulting entry may not be marked present, though
-+ * non-present entries are always leafs (within a page
-+ * table/directory/etc, this will always visit all entries).
-+ */
-+static bool ptiter_succ(PTIter *it)
-+{
-+    int i, l, entsize;
-+    uint64_t ent64;
-+    uint32_t ent32;
-+    bool large;
-+
-+    if (it->level < 0) {
-+        return false;
-+    } else if (!it->leaf) {
-+        /* Move to this entry's first child */
-+        it->level++;
-+        it->base[it->level] = it->pa;
-+        it->i[it->level] = 0;
-+    } else {
-+        /* Move forward and, if we hit the end of this level, up */
-+        while (++it->i[it->level] == it->layout->entries[it->level]) {
-+            if (it->level-- == 0) {
-+                /* We're out of page table */
-+                return false;
-+            }
-+        }
-+    }
-+
-+    /* Read this entry */
-+    l = it->level;
-+    entsize = it->layout->entsize;
-+    cpu_physical_memory_read(it->base[l] + it->i[l] * entsize,
-+                             entsize == 4 ? (void *)&ent32 : (void *)&ent64,
-+                             entsize);
-+    if (entsize == 4) {
-+        it->ent = le32_to_cpu(ent32);
-+    } else {
-+        it->ent = le64_to_cpu(ent64);
-+    }
-+
-+    /* Decode the entry */
-+    large = (it->pse && it->layout->pse[l] && (it->ent & PG_PSE_MASK));
-+    it->present = it->ent & PG_PRESENT_MASK;
-+    it->leaf = (large || !it->present || ((l + 1) == it->layout->levels));
-+    it->va = 0;
-+    for (i = 0; i <= l; i++) {
-+        it->va |= (uint64_t)it->i[i] << it->layout->shift[i];
-+    }
-+    it->pa = it->ent & (large ? 0x3ffffffffc000ULL : 0x3fffffffff000ULL);
-+    it->size = 1 << it->layout->shift[l];
-+    return true;
-+}
-+
- /* Perform linear address sign extension */
- static hwaddr addr_canonical(CPUArchState *env, hwaddr addr)
- {
--- 
-2.25.1
+Thank you in advance for your time,
+Don Porter
+
 
 
