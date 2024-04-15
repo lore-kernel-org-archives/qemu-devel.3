@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3705C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 17:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD7F1C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Apr 2024 17:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwPwm-0006iw-Sx; Mon, 15 Apr 2024 13:16:48 -0400
+	id 1rwPx8-0006t9-PI; Mon, 15 Apr 2024 13:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rwPwf-0006iF-OP
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:16:43 -0400
+ id 1rwPx7-0006sg-2a
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:17:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rwPwa-0001Fi-L5
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:16:40 -0400
+ id 1rwPx5-0001Vw-6d
+ for qemu-devel@nongnu.org; Mon, 15 Apr 2024 13:17:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713201394;
+ s=mimecast20190719; t=1713201426;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2K4ORAj6C+1KkBu9/SLZ1YdOeNi40MI1ibZA10LpbHQ=;
- b=bXMt/4ntlRCT/JOuJ+B+i3d9Ld/awYnh5aH+bVLPLRpEiva1jspagQcYVOXU7UrDC9IflE
- sHLlpQqkJSbY8AgEuQu7tUUg/SFcGrInW+uYsggBAAoNbyuw7FbCCAf5PdPmgVvdmGGS0J
- KfcQN/vQ88P23rkhhtxijpUVOTsoyok=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-75-hB-nvPJwP3Owmgf9_F6NDg-1; Mon, 15 Apr 2024 13:16:31 -0400
-X-MC-Unique: hB-nvPJwP3Owmgf9_F6NDg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=qZPM4E17Sw4PhwjCB2LnDEE9CqJscVOoKssdAGg++II=;
+ b=Jx/KK6VcWagZllPY+UjrEHr0gdBzCyg2Q52I/uTK0Ux9YXplirPzvKBwJLZY07DhHd8n9H
+ 83r/BqfPhemHAYjjzGwPkAcglJdcyNhIFSFBp+cjMN+RhJDaUva5Uk43g+9QYIkZPwXfuS
+ msQqobkdD32vdioLW/iBp13YUP3Tdk8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-FLXIUZVKOmqkh665ddXFFg-1; Mon,
+ 15 Apr 2024 13:17:04 -0400
+X-MC-Unique: FLXIUZVKOmqkh665ddXFFg-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E5070811001;
- Mon, 15 Apr 2024 17:16:30 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5F08F3C0ED4C;
+ Mon, 15 Apr 2024 17:17:04 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.20])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 726E4492BC8;
- Mon, 15 Apr 2024 17:16:29 +0000 (UTC)
-Date: Mon, 15 Apr 2024 18:16:23 +0100
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B4858C15771;
+ Mon, 15 Apr 2024 17:17:02 +0000 (UTC)
+Date: Mon, 15 Apr 2024 18:16:56 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,17 +57,18 @@ Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 07/13] Bump minimum glib version to v2.66
-Message-ID: <Zh1g5_d-Oqaxw1Vd@redhat.com>
+Subject: Re: [PATCH v2 08/13] Remove glib compatibility code that is not
+ required anymore
+Message-ID: <Zh1hCJt3AEeREe-8@redhat.com>
 References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-8-thuth@redhat.com>
+ <20240412132415.282354-9-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240412132415.282354-8-thuth@redhat.com>
+In-Reply-To: <20240412132415.282354-9-thuth@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -42
@@ -93,31 +94,16 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 03:24:09PM +0200, Thomas Huth wrote:
-> Now that we dropped support for CentOS 8 and Ubuntu 20.04, we can
-> look into bumping the glib version to a new minimum for further
-> clean-ups. According to repology.org, available versions are:
+On Fri, Apr 12, 2024 at 03:24:10PM +0200, Thomas Huth wrote:
+> Now that we bumped the minumum glib version to 2.66, we can drop
+> the old code.
 > 
->  CentOS Stream 9:       2.66.7
->  Debian 11:             2.66.8
->  Fedora 38:             2.74.1
->  Freebsd:               2.78.4
->  Homebrew:              2.80.0
->  Openbsd:               2.78.4
->  OpenSuse leap 15.5:    2.70.5
->  pkgsrc_current:        2.78.4
->  Ubuntu 22.04:          2.72.1
-> 
-> Thus it should be safe to bump the minimum glib version to 2.66 now.
-> Version 2.66 comes with new functions for URI parsing which will
-> allow further clean-ups in the following patches.
-> 
+> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  meson.build              | 16 +---------------
->  include/glib-compat.h    | 27 ++-------------------------
->  qga/commands-posix-ssh.c |  4 ++--
->  3 files changed, 5 insertions(+), 42 deletions(-)
+>  qga/commands-posix-ssh.c |  8 --------
+>  util/error-report.c      | 10 ----------
+>  2 files changed, 18 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
