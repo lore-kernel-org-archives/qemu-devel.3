@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED69AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 06:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73205C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 06:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwcV5-0004gH-3v; Tue, 16 Apr 2024 02:41:03 -0400
+	id 1rwcUv-0004c1-MI; Tue, 16 Apr 2024 02:40:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1rwcV4-0004g1-6Q; Tue, 16 Apr 2024 02:41:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1rwcUt-0004UV-EU; Tue, 16 Apr 2024 02:40:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1rwcUw-0006kg-Sl; Tue, 16 Apr 2024 02:41:01 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1rwcUr-0006ju-H8; Tue, 16 Apr 2024 02:40:51 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43G5hPVX014544; Tue, 16 Apr 2024 06:40:52 GMT
+ 43G6ToNj026405; Tue, 16 Apr 2024 06:40:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=FnPeQarKz9kxmDQrLnKrcg7DMfninh20EtRl8C1eqoQ=;
- b=E6o8Gg1fOAZsZw2MzCpvOu3I2Pb+f8kvCapXuEIynFeVgYw8BRrXGOa0PpCL6lpyuKBR
- 3c+jT0xlqy5vNhtc4DElGAfDYbE8PwZdQURsl21f+IoKeGEB1iDaR4H+5Jg8laNR32BA
- BHeKWSLjVkujCyFMuFu72SYATTTCc//gjBc1ok/c5/+kt9VmtiWG7qzls17hU7HPD5vE
- fQOBqtykXGpNuuBn+97V0GqdmI8p77LOQwt4WHnZT8y+ayuF/Q7FQh6lZJVPexwF5LKi
- uFBOJMI4vsaR83IacNyXnjmteeuQI/NkssEukyUqUipGu14VXX5uDPfwZXiva7EWFVDI dA== 
+ bh=u/bdAiVA+8bV4Oc0Rewr4IlSyjl4nGbh0yO6G29gaD4=;
+ b=M5eVCvTYH0sAclIaGGudPiEyrXGqk8VAZIsvn+Jx1tZew5z1c96VUW8FxDHPTuEWEEcM
+ hbNTGYJ+1pGFvKpN/ESC+taQJU2HBV1wDTgSlHdd5h73RCtjbZHthHWE++cgycy7K4m+
+ 5U5O2i57LEfFt4J4hXfRLJ9M549yptbCz56A1Bed7bjILXbhzh+8MZRKM8rFQQ5iBFaY
+ PNOIgfTAiVO7+qcfo7+mYrPVxKe/pMdYXdBva5z2xc5CPs3nZ3MNUvqK3UAtloX6l57R
+ 0QAIvUwJ2+oiV/bJotFWGIFMsc1Pq5SSPCA4AUg1msiLlEl1jZMB9TVsX8Ua4H1qx6gT lw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xhkds834p-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xhm3f80p7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Apr 2024 06:40:52 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43G6ep3u005413;
- Tue, 16 Apr 2024 06:40:51 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xhkds834m-1
+ Tue, 16 Apr 2024 06:40:47 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43G6eloD010896;
+ Tue, 16 Apr 2024 06:40:47 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xhm3f80p6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Apr 2024 06:40:51 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43G5RJUU023681; Tue, 16 Apr 2024 06:40:50 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xg5cnvgp7-1
+ Tue, 16 Apr 2024 06:40:46 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43G3b1Pk021365; Tue, 16 Apr 2024 06:40:46 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xg6kkc5kn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Apr 2024 06:40:50 +0000
+ Tue, 16 Apr 2024 06:40:46 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43G6ekVa51839242
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43G6efDD12779820
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Apr 2024 06:40:48 GMT
+ Tue, 16 Apr 2024 06:40:44 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0695420040;
- Tue, 16 Apr 2024 06:40:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4C5DD2004B;
+ Tue, 16 Apr 2024 06:40:41 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BA4092004B;
- Tue, 16 Apr 2024 06:40:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0E99320071;
+ Tue, 16 Apr 2024 06:40:40 +0000 (GMT)
 Received: from localhost.in.ibm.com (unknown [9.199.192.140])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 16 Apr 2024 06:40:44 +0000 (GMT)
+ Tue, 16 Apr 2024 06:40:39 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
  richard.henderson@linaro.org, harshpb@linux.ibm.com
-Subject: [PATCH 7/8] target/ppc: Move cmp{rb, eqb}, tw[i], td[i],
- isel instructions to decodetree.
-Date: Tue, 16 Apr 2024 12:09:26 +0530
-Message-Id: <20240416063927.99428-8-rathc@linux.ibm.com>
+Subject: [PATCH 4/8] target/ppc: Move neg, darn, mod{sw, uw} to decodetree.
+Date: Tue, 16 Apr 2024 12:09:23 +0530
+Message-Id: <20240416063927.99428-5-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240416063927.99428-1-rathc@linux.ibm.com>
 References: <20240416063927.99428-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: mweY0ecjt_1ItqWOKf2XXQXajotyJoo3
-X-Proofpoint-ORIG-GUID: LWZsTZypnXIwRER5qwzyiHikYO1BGT1G
+X-Proofpoint-ORIG-GUID: oYH3IBh5qbIueWmux9SvTh5ioh-BN9Mg
+X-Proofpoint-GUID: d-_kdyivd5rzW3_kQ4yvwF11KnghV38V
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-16_04,2024-04-15_01,2023-05-22_02
+ definitions=2024-04-16_03,2024-04-15_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 mlxscore=0
- impostorscore=0 spamscore=0 suspectscore=0 adultscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404160039
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ impostorscore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ mlxlogscore=739 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404160038
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -114,430 +113,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moving the following instructions to decodetree specification :
+Moving the below instructions to decodetree specification :
 
-	cmp{rb, eqb}, t{w, d}	: X-form
-	t{w, d}i		: D-form
-	isel			: A-form
+	neg[o][.]       	: XO-form
+	mod{sw, uw}, darn	: X-form
 
 The changes were verified by validating that the tcg ops generated by those
-instructions remain the same, which were captured using the '-d in_asm,op' flag.
+instructions remain the same, which were captured with the '-d in_asm,op' flag.
 
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/helper.h                        |   6 +-
- target/ppc/insn32.decode                   |  16 +++
- target/ppc/excp_helper.c                   |   4 +-
- target/ppc/int_helper.c                    |   2 +-
- target/ppc/translate.c                     | 133 +--------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 123 +++++++++++++++++++
- 6 files changed, 148 insertions(+), 136 deletions(-)
+ target/ppc/helper.h                        |  4 +-
+ target/ppc/insn32.decode                   |  8 ++++
+ target/ppc/int_helper.c                    |  4 +-
+ target/ppc/translate.c                     | 56 ----------------------
+ target/ppc/translate/fixedpoint-impl.c.inc | 44 +++++++++++++++++
+ 5 files changed, 56 insertions(+), 60 deletions(-)
 
 diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index e862bdceaf..05f7ab5f6e 100644
+index 1fc8b7c5fd..09d0b0074b 100644
 --- a/target/ppc/helper.h
 +++ b/target/ppc/helper.h
-@@ -1,8 +1,8 @@
- DEF_HELPER_FLAGS_3(raise_exception_err, TCG_CALL_NO_WG, noreturn, env, i32, i32)
- DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, i32)
--DEF_HELPER_FLAGS_4(tw, TCG_CALL_NO_WG, void, env, tl, tl, i32)
-+DEF_HELPER_FLAGS_4(TW, TCG_CALL_NO_WG, void, env, tl, tl, i32)
- #if defined(TARGET_PPC64)
--DEF_HELPER_FLAGS_4(td, TCG_CALL_NO_WG, void, env, tl, tl, i32)
-+DEF_HELPER_FLAGS_4(TD, TCG_CALL_NO_WG, void, env, tl, tl, i32)
- #endif
- DEF_HELPER_4(HASHST, void, env, tl, tl, tl)
- DEF_HELPER_4(HASHCHK, void, env, tl, tl, tl)
-@@ -67,7 +67,7 @@ DEF_HELPER_FLAGS_2(PEXTD, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_1(CDTBCD, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_1(CBCDTD, TCG_CALL_NO_RWG_SE, tl, tl)
- #if defined(TARGET_PPC64)
--DEF_HELPER_FLAGS_2(cmpeqb, TCG_CALL_NO_RWG_SE, i32, tl, tl)
-+DEF_HELPER_FLAGS_2(CMPEQB, TCG_CALL_NO_RWG_SE, i32, tl, tl)
+@@ -71,8 +71,8 @@ DEF_HELPER_FLAGS_2(cmpeqb, TCG_CALL_NO_RWG_SE, i32, tl, tl)
  DEF_HELPER_FLAGS_1(popcntw, TCG_CALL_NO_RWG_SE, tl, tl)
  DEF_HELPER_FLAGS_2(bpermd, TCG_CALL_NO_RWG_SE, i64, i64, i64)
  DEF_HELPER_3(srad, tl, env, tl, tl)
+-DEF_HELPER_FLAGS_0(darn32, TCG_CALL_NO_RWG, tl)
+-DEF_HELPER_FLAGS_0(darn64, TCG_CALL_NO_RWG, tl)
++DEF_HELPER_FLAGS_0(DARN32, TCG_CALL_NO_RWG, tl)
++DEF_HELPER_FLAGS_0(DARN64, TCG_CALL_NO_RWG, tl)
+ #endif
+ 
+ DEF_HELPER_FLAGS_1(cntlsw32, TCG_CALL_NO_RWG_SE, i32, i32)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 509961023b..80a7bb1872 100644
+index bfccebd9a7..654f55471b 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -23,6 +23,9 @@
- &A_tb           frt frb rc:bool
- @A_tb           ...... frt:5 ..... frb:5 ..... ..... rc:1       &A_tb
+@@ -187,6 +187,9 @@
+ &X_a            ra
+ @X_a            ...... ra:3 .. ..... ..... .......... .         &X_a
  
-+&A_tab_bc       rt ra rb bc
-+@A_tab_bc       ...... rt:5 ra:5 rb:5 bc:5 ..... .              &A_tab_bc
++&X_tl           rt l
++@X_tl           ...... rt:5 ... l:2 ..... .......... .          &X_tl
 +
- &D              rt ra si:int64_t
- @D              ...... rt:5 ra:5 si:s16                         &D
+ &XO             rt ra rb oe:bool rc:bool
+ @XO             ...... rt:5 ra:5 rb:5 oe:1 ......... rc:1       &XO
  
-@@ -331,6 +334,19 @@ CMP             011111 ... - . ..... ..... 0000000000 - @X_bfl
- CMPL            011111 ... - . ..... ..... 0000100000 - @X_bfl
- CMPI            001011 ... - . ..... ................   @D_bfs
- CMPLI           001010 ... - . ..... ................   @D_bfu
-+CMPRB           011111 ... - . ..... ..... 0011000000 - @X_bfl
-+CMPEQB          011111 ... -- ..... ..... 0011100000 -  @X_bf
+@@ -367,6 +370,11 @@ DIVWU           011111 ..... ..... ..... . 111001011 .  @XO
+ DIVWE           011111 ..... ..... ..... . 110101011 .  @XO
+ DIVWEU          011111 ..... ..... ..... . 110001011 .  @XO
+ 
++MODSW           011111 ..... ..... ..... 1100001011 -   @X
++MODUW           011111 ..... ..... ..... 0100001011 -   @X
++DARN            011111 ..... --- .. ----- 1011110011 -  @X_tl
++NEG             011111 ..... ..... ----- . 001101000 .  @XO_ta
 +
-+### Fixed-Point Trap Instructions
-+
-+TW              011111 ..... ..... ..... 0000000100 -   @X
-+TD              011111 ..... ..... ..... 0001000100 -   @X
-+TWI             000011 ..... ..... ................     @D
-+TDI             000010 ..... ..... ................     @D
-+
-+### Fixed-Point Select Instruction
-+
-+ISEL            011111 ..... ..... ..... ..... 01111 -  @A_tab_bc
+ ## Fixed-Point Logical Instructions
  
- ### Fixed-Point Arithmetic Instructions
- 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 674c05a2ce..79dd9b82cf 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -2750,7 +2750,7 @@ void helper_rfmci(CPUPPCState *env)
- }
- #endif /* !CONFIG_USER_ONLY */
- 
--void helper_tw(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
-+void helper_TW(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
-                uint32_t flags)
- {
-     if (!likely(!(((int32_t)arg1 < (int32_t)arg2 && (flags & 0x10)) ||
-@@ -2764,7 +2764,7 @@ void helper_tw(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
- }
- 
- #ifdef TARGET_PPC64
--void helper_td(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
-+void helper_TD(CPUPPCState *env, target_ulong arg1, target_ulong arg2,
-                uint32_t flags)
- {
-     if (!likely(!(((int64_t)arg1 < (int64_t)arg2 && (flags & 0x10)) ||
+ CFUGED          011111 ..... ..... ..... 0011011100 -   @X
 diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
-index 585c2b65d3..d12dcc28e1 100644
+index dc1f72ff38..bc25d5b062 100644
 --- a/target/ppc/int_helper.c
 +++ b/target/ppc/int_helper.c
-@@ -159,7 +159,7 @@ uint64_t helper_DIVDE(CPUPPCState *env, uint64_t rau, uint64_t rbu, uint32_t oe)
- /* When you XOR the pattern and there is a match, that byte will be zero */
- #define hasvalue(x, n)  (haszero((x) ^ pattern(n)))
- 
--uint32_t helper_cmpeqb(target_ulong ra, target_ulong rb)
-+uint32_t helper_CMPEQB(target_ulong ra, target_ulong rb)
+@@ -171,7 +171,7 @@ uint32_t helper_cmpeqb(target_ulong ra, target_ulong rb)
+ /*
+  * Return a random number.
+  */
+-uint64_t helper_darn32(void)
++uint64_t helper_DARN32(void)
  {
-     return hasvalue(rb, ra) ? CRF_GT : 0;
+     Error *err = NULL;
+     uint32_t ret;
+@@ -186,7 +186,7 @@ uint64_t helper_darn32(void)
+     return ret;
  }
+ 
+-uint64_t helper_darn64(void)
++uint64_t helper_DARN64(void)
+ {
+     Error *err = NULL;
+     uint64_t ret;
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 8900da85e5..98e642b19a 100644
+index 0a1d1d63b3..436fcfc645 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -1564,66 +1564,6 @@ static inline void gen_set_Rc0(DisasContext *ctx, TCGv reg)
+@@ -1878,17 +1878,6 @@ static inline void gen_op_arith_modw(DisasContext *ctx, TCGv ret, TCGv arg1,
      }
  }
  
--/* cmprb - range comparison: isupper, isaplha, islower*/
--static void gen_cmprb(DisasContext *ctx)
--{
--    TCGv_i32 src1 = tcg_temp_new_i32();
--    TCGv_i32 src2 = tcg_temp_new_i32();
--    TCGv_i32 src2lo = tcg_temp_new_i32();
--    TCGv_i32 src2hi = tcg_temp_new_i32();
--    TCGv_i32 crf = cpu_crf[crfD(ctx->opcode)];
--
--    tcg_gen_trunc_tl_i32(src1, cpu_gpr[rA(ctx->opcode)]);
--    tcg_gen_trunc_tl_i32(src2, cpu_gpr[rB(ctx->opcode)]);
--
--    tcg_gen_andi_i32(src1, src1, 0xFF);
--    tcg_gen_ext8u_i32(src2lo, src2);
--    tcg_gen_shri_i32(src2, src2, 8);
--    tcg_gen_ext8u_i32(src2hi, src2);
--
--    tcg_gen_setcond_i32(TCG_COND_LEU, src2lo, src2lo, src1);
--    tcg_gen_setcond_i32(TCG_COND_LEU, src2hi, src1, src2hi);
--    tcg_gen_and_i32(crf, src2lo, src2hi);
--
--    if (ctx->opcode & 0x00200000) {
--        tcg_gen_shri_i32(src2, src2, 8);
--        tcg_gen_ext8u_i32(src2lo, src2);
--        tcg_gen_shri_i32(src2, src2, 8);
--        tcg_gen_ext8u_i32(src2hi, src2);
--        tcg_gen_setcond_i32(TCG_COND_LEU, src2lo, src2lo, src1);
--        tcg_gen_setcond_i32(TCG_COND_LEU, src2hi, src1, src2hi);
--        tcg_gen_and_i32(src2lo, src2lo, src2hi);
--        tcg_gen_or_i32(crf, crf, src2lo);
--    }
--    tcg_gen_shli_i32(crf, crf, CRF_GT_BIT);
+-#define GEN_INT_ARITH_MODW(name, opc3, sign)                                \
+-static void glue(gen_, name)(DisasContext *ctx)                             \
+-{                                                                           \
+-    gen_op_arith_modw(ctx, cpu_gpr[rD(ctx->opcode)],                        \
+-                      cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)],   \
+-                      sign);                                                \
 -}
 -
--#if defined(TARGET_PPC64)
--/* cmpeqb */
--static void gen_cmpeqb(DisasContext *ctx)
--{
--    gen_helper_cmpeqb(cpu_crf[crfD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)],
--                      cpu_gpr[rB(ctx->opcode)]);
--}
--#endif
+-GEN_INT_ARITH_MODW(moduw, 0x08, 0);
+-GEN_INT_ARITH_MODW(modsw, 0x18, 1);
 -
--/* isel (PowerPC 2.03 specification) */
--static void gen_isel(DisasContext *ctx)
--{
--    uint32_t bi = rC(ctx->opcode);
--    uint32_t mask = 0x08 >> (bi & 0x03);
--    TCGv t0 = tcg_temp_new();
--    TCGv zr;
--
--    tcg_gen_extu_i32_tl(t0, cpu_crf[bi >> 2]);
--    tcg_gen_andi_tl(t0, t0, mask);
--
--    zr = tcg_constant_tl(0);
--    tcg_gen_movcond_tl(TCG_COND_NE, cpu_gpr[rD(ctx->opcode)], t0, zr,
--                       rA(ctx->opcode) ? cpu_gpr[rA(ctx->opcode)] : zr,
--                       cpu_gpr[rB(ctx->opcode)]);
--}
--
- /* cmpb: PowerPC 2.05 specification */
- static void gen_cmpb(DisasContext *ctx)
- {
-@@ -4259,76 +4199,20 @@ static void gen_scv(DisasContext *ctx)
- /***                                Trap                                   ***/
- 
- /* Check for unconditional traps (always or never) */
--static bool check_unconditional_trap(DisasContext *ctx)
-+static bool check_unconditional_trap(DisasContext *ctx, int to)
- {
-     /* Trap never */
--    if (TO(ctx->opcode) == 0) {
-+    if (to == 0) {
-         return true;
+ #if defined(TARGET_PPC64)
+ static inline void gen_op_arith_modd(DisasContext *ctx, TCGv ret, TCGv arg1,
+                                      TCGv arg2, int sign)
+@@ -2055,27 +2044,6 @@ static inline void gen_op_arith_subf(DisasContext *ctx, TCGv ret, TCGv arg1,
      }
-     /* Trap always */
--    if (TO(ctx->opcode) == 31) {
-+    if (to == 31) {
-         gen_exception_err(ctx, POWERPC_EXCP_PROGRAM, POWERPC_EXCP_TRAP);
-         return true;
-     }
-     return false;
  }
  
--/* tw */
--static void gen_tw(DisasContext *ctx)
+-/* neg neg. nego nego. */
+-static inline void gen_op_arith_neg(DisasContext *ctx, bool compute_ov)
 -{
--    TCGv_i32 t0;
--
--    if (check_unconditional_trap(ctx)) {
--        return;
--    }
--    t0 = tcg_constant_i32(TO(ctx->opcode));
--    gen_helper_tw(tcg_env, cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)],
--                  t0);
+-    TCGv zero = tcg_constant_tl(0);
+-    gen_op_arith_subf(ctx, cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)],
+-                      zero, 0, 0, compute_ov, Rc(ctx->opcode));
 -}
 -
--/* twi */
--static void gen_twi(DisasContext *ctx)
+-static void gen_neg(DisasContext *ctx)
 -{
--    TCGv t0;
--    TCGv_i32 t1;
--
--    if (check_unconditional_trap(ctx)) {
--        return;
+-    tcg_gen_neg_tl(cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode))) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
 -    }
--    t0 = tcg_constant_tl(SIMM(ctx->opcode));
--    t1 = tcg_constant_i32(TO(ctx->opcode));
--    gen_helper_tw(tcg_env, cpu_gpr[rA(ctx->opcode)], t0, t1);
 -}
 -
--#if defined(TARGET_PPC64)
--/* td */
--static void gen_td(DisasContext *ctx)
+-static void gen_nego(DisasContext *ctx)
 -{
--    TCGv_i32 t0;
--
--    if (check_unconditional_trap(ctx)) {
--        return;
--    }
--    t0 = tcg_constant_i32(TO(ctx->opcode));
--    gen_helper_td(tcg_env, cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)],
--                  t0);
+-    gen_op_arith_neg(ctx, 1);
 -}
 -
--/* tdi */
--static void gen_tdi(DisasContext *ctx)
+ /***                            Integer logical                            ***/
+ #define GEN_LOGICAL2(name, tcg_op, opc, type)                                 \
+ static void glue(gen_, name)(DisasContext *ctx)                               \
+@@ -2401,24 +2369,6 @@ static void gen_cnttzd(DisasContext *ctx)
+         gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+     }
+ }
+-
+-/* darn */
+-static void gen_darn(DisasContext *ctx)
 -{
--    TCGv t0;
--    TCGv_i32 t1;
+-    int l = L(ctx->opcode);
 -
--    if (check_unconditional_trap(ctx)) {
--        return;
+-    if (l > 2) {
+-        tcg_gen_movi_i64(cpu_gpr[rD(ctx->opcode)], -1);
+-    } else {
+-        translator_io_start(&ctx->base);
+-        if (l == 0) {
+-            gen_helper_darn32(cpu_gpr[rD(ctx->opcode)]);
+-        } else {
+-            /* Return 64-bit random for both CRN and RRN */
+-            gen_helper_darn64(cpu_gpr[rD(ctx->opcode)]);
+-        }
 -    }
--    t0 = tcg_constant_tl(SIMM(ctx->opcode));
--    t1 = tcg_constant_i32(TO(ctx->opcode));
--    gen_helper_td(tcg_env, cpu_gpr[rA(ctx->opcode)], t0, t1);
 -}
--#endif
--
- /***                          Processor control                            ***/
- 
- /* mcrxr */
-@@ -6145,12 +6029,7 @@ GEN_HANDLER_E(brw, 0x1F, 0x1B, 0x04, 0x0000F801, PPC_NONE, PPC2_ISA310),
- GEN_HANDLER_E(brh, 0x1F, 0x1B, 0x06, 0x0000F801, PPC_NONE, PPC2_ISA310),
  #endif
- GEN_HANDLER(invalid, 0x00, 0x00, 0x00, 0xFFFFFFFF, PPC_NONE),
--#if defined(TARGET_PPC64)
--GEN_HANDLER_E(cmpeqb, 0x1F, 0x00, 0x07, 0x00600000, PPC_NONE, PPC2_ISA300),
--#endif
- GEN_HANDLER_E(cmpb, 0x1F, 0x1C, 0x0F, 0x00000001, PPC_NONE, PPC2_ISA205),
--GEN_HANDLER_E(cmprb, 0x1F, 0x00, 0x06, 0x00400001, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER(isel, 0x1F, 0x0F, 0xFF, 0x00000001, PPC_ISEL),
+ 
+ /***                             Integer rotate                            ***/
+@@ -6330,8 +6280,6 @@ GEN_HANDLER(isel, 0x1F, 0x0F, 0xFF, 0x00000001, PPC_ISEL),
+ #if defined(TARGET_PPC64)
+ GEN_HANDLER(mulld, 0x1F, 0x09, 0x07, 0x00000000, PPC_64B),
+ #endif
+-GEN_HANDLER(neg, 0x1F, 0x08, 0x03, 0x0000F800, PPC_INTEGER),
+-GEN_HANDLER(nego, 0x1F, 0x08, 0x13, 0x0000F800, PPC_INTEGER),
  GEN_HANDLER2(andi_, "andi.", 0x1C, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
  GEN_HANDLER2(andis_, "andis.", 0x1D, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
  GEN_HANDLER(cntlzw, 0x1F, 0x1A, 0x00, 0x00000000, PPC_INTEGER),
-@@ -6249,12 +6128,6 @@ GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
- /* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
- GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
- GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
--GEN_HANDLER(tw, 0x1F, 0x04, 0x00, 0x00000001, PPC_FLOW),
--GEN_HANDLER(twi, 0x03, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
--#if defined(TARGET_PPC64)
--GEN_HANDLER(td, 0x1F, 0x04, 0x02, 0x00000001, PPC_64B),
--GEN_HANDLER(tdi, 0x02, 0xFF, 0xFF, 0x00000000, PPC_64B),
--#endif
- GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
- GEN_HANDLER(mfcr, 0x1F, 0x13, 0x00, 0x00000801, PPC_MISC),
- GEN_HANDLER(mfmsr, 0x1F, 0x13, 0x02, 0x001FF801, PPC_MISC),
+@@ -6352,7 +6300,6 @@ GEN_HANDLER_E(prtyw, 0x1F, 0x1A, 0x04, 0x0000F801, PPC_NONE, PPC2_ISA205),
+ GEN_HANDLER(popcntd, 0x1F, 0x1A, 0x0F, 0x0000F801, PPC_POPCNTWD),
+ GEN_HANDLER(cntlzd, 0x1F, 0x1A, 0x01, 0x00000000, PPC_64B),
+ GEN_HANDLER_E(cnttzd, 0x1F, 0x1A, 0x11, 0x00000000, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER_E(darn, 0x1F, 0x13, 0x17, 0x001CF801, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(prtyd, 0x1F, 0x1A, 0x05, 0x0000F801, PPC_NONE, PPC2_ISA205),
+ GEN_HANDLER_E(bpermd, 0x1F, 0x1C, 0x07, 0x00000001, PPC_NONE, PPC2_PERM_ISA206),
+ #endif
+@@ -6542,9 +6489,6 @@ GEN_HANDLER_E(maddhd_maddhdu, 0x04, 0x18, 0xFF, 0x00000000, PPC_NONE,
+ GEN_HANDLER_E(maddld, 0x04, 0x19, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA300),
+ #endif
+ 
+-GEN_HANDLER_E(modsw, 0x1F, 0x0B, 0x18, 0x00000001, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER_E(moduw, 0x1F, 0x0B, 0x08, 0x00000001, PPC_NONE, PPC2_ISA300),
+-
+ #if defined(TARGET_PPC64)
+ #undef GEN_INT_ARITH_DIVD
+ #define GEN_INT_ARITH_DIVD(name, opc3, sign, compute_ov)                      \
 diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index d8a0a21ebe..b3f071e669 100644
+index 3f787bbeaa..2dfd6bea57 100644
 --- a/target/ppc/translate/fixedpoint-impl.c.inc
 +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -289,6 +289,49 @@ TRANS(CMPL, do_cmp_X, false);
- TRANS(CMPI, do_cmp_D, true);
- TRANS(CMPLI, do_cmp_D, false);
+@@ -490,6 +490,50 @@ TRANS(DIVWU, do_divw, 0);
+ TRANS(DIVWE, do_divwe, gen_helper_DIVWE);
+ TRANS(DIVWEU, do_divwe, gen_helper_DIVWEU);
  
-+static bool trans_CMPRB(DisasContext *ctx, arg_CMPRB *a)
++static bool do_modw(DisasContext *ctx, arg_X *a, bool sign)
 +{
-+    TCGv_i32 src1 = tcg_temp_new_i32();
-+    TCGv_i32 src2 = tcg_temp_new_i32();
-+    TCGv_i32 src2lo = tcg_temp_new_i32();
-+    TCGv_i32 src2hi = tcg_temp_new_i32();
-+    TCGv_i32 crf = cpu_crf[a->bf];
-+
 +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    tcg_gen_trunc_tl_i32(src1, cpu_gpr[a->ra]);
-+    tcg_gen_trunc_tl_i32(src2, cpu_gpr[a->rb]);
-+
-+    tcg_gen_andi_i32(src1, src1, 0xFF);
-+    tcg_gen_ext8u_i32(src2lo, src2);
-+    tcg_gen_shri_i32(src2, src2, 8);
-+    tcg_gen_ext8u_i32(src2hi, src2);
-+
-+    tcg_gen_setcond_i32(TCG_COND_LEU, src2lo, src2lo, src1);
-+    tcg_gen_setcond_i32(TCG_COND_LEU, src2hi, src1, src2hi);
-+    tcg_gen_and_i32(crf, src2lo, src2hi);
-+
-+    if (a->l) {
-+        tcg_gen_shri_i32(src2, src2, 8);
-+        tcg_gen_ext8u_i32(src2lo, src2);
-+        tcg_gen_shri_i32(src2, src2, 8);
-+        tcg_gen_ext8u_i32(src2hi, src2);
-+        tcg_gen_setcond_i32(TCG_COND_LEU, src2lo, src2lo, src1);
-+        tcg_gen_setcond_i32(TCG_COND_LEU, src2hi, src1, src2hi);
-+        tcg_gen_and_i32(src2lo, src2lo, src2hi);
-+        tcg_gen_or_i32(crf, crf, src2lo);
-+    }
-+    tcg_gen_shli_i32(crf, crf, CRF_GT_BIT);
++    gen_op_arith_modw(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb],
++                      sign);
 +    return true;
 +}
 +
-+static bool trans_CMPEQB(DisasContext *ctx, arg_CMPEQB *a)
++TRANS(MODUW, do_modw, false);
++TRANS(MODSW, do_modw, true);
++
++static bool trans_NEG(DisasContext *ctx, arg_NEG *a)
++{
++    if (a->oe) {
++        TCGv zero = tcg_constant_tl(0);
++        gen_op_arith_subf(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra], zero,
++                          false, false, true, a->rc);
++    } else {
++        tcg_gen_neg_tl(cpu_gpr[a->rt], cpu_gpr[a->ra]);
++        if (unlikely(a->rc)) {
++            gen_set_Rc0(ctx, cpu_gpr[a->rt]);
++        }
++    }
++    return true;
++}
++
++static bool trans_DARN(DisasContext *ctx, arg_DARN *a)
 +{
 +    REQUIRE_64BIT(ctx);
 +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-+    gen_helper_CMPEQB(cpu_crf[a->bf], cpu_gpr[a->ra], cpu_gpr[a->rb]);
-+    return true;
-+}
-+
- /*
-  * Fixed-Point Arithmetic Instructions
-  */
-@@ -642,6 +685,86 @@ TRANS64(DIVDEU, do_dive, gen_helper_DIVDEU);
- TRANS64(MODSD, do_modd, true);
- TRANS64(MODUD, do_modd, false);
- 
-+/*
-+ * Fixed-Point Select Instructions
-+ */
-+
-+static bool trans_ISEL(DisasContext *ctx, arg_ISEL *a)
-+{
-+    REQUIRE_INSNS_FLAGS(ctx, ISEL);
-+    uint32_t bi = a->bc;
-+    uint32_t mask = 0x08 >> (bi & 0x03);
-+    TCGv t0 = tcg_temp_new();
-+    TCGv zr;
-+
-+    tcg_gen_extu_i32_tl(t0, cpu_crf[bi >> 2]);
-+    tcg_gen_andi_tl(t0, t0, mask);
-+
-+    zr = tcg_constant_tl(0);
-+    tcg_gen_movcond_tl(TCG_COND_NE, cpu_gpr[a->rt], t0, zr,
-+                       a->ra ? cpu_gpr[a->ra] : zr,
-+                       cpu_gpr[a->rb]);
-+    return true;
-+}
-+
-+/*
-+ * Fixed-Point Trap Instructions
-+ */
-+
-+static bool trans_TW(DisasContext *ctx, arg_TW *a)
-+{
-+    TCGv_i32 t0;
-+
-+    if (check_unconditional_trap(ctx, a->rt)) {
-+        return true;
++    if (a->l > 2) {
++        tcg_gen_movi_i64(cpu_gpr[a->rt], -1);
++    } else {
++        translator_io_start(&ctx->base);
++        if (a->l == 0) {
++            gen_helper_DARN32(cpu_gpr[a->rt]);
++        } else {
++            /* Return 64-bit random for both CRN and RRN */
++            gen_helper_DARN64(cpu_gpr[a->rt]);
++        }
 +    }
-+    t0 = tcg_constant_i32(a->rt);
-+    gen_helper_TW(tcg_env, cpu_gpr[a->ra], cpu_gpr[a->rb], t0);
-+    return true;
-+}
-+
-+static bool trans_TWI(DisasContext *ctx, arg_TWI *a)
-+{
-+    TCGv t0;
-+    TCGv_i32 t1;
-+
-+    if (check_unconditional_trap(ctx, a->rt)) {
-+        return true;
-+    }
-+    t0 = tcg_constant_tl(a->si);
-+    t1 = tcg_constant_i32(a->rt);
-+    gen_helper_TW(tcg_env, cpu_gpr[a->ra], t0, t1);
-+    return true;
-+}
-+
-+static bool trans_TD(DisasContext *ctx, arg_TD *a)
-+{
-+    TCGv_i32 t0;
-+
-+    REQUIRE_64BIT(ctx);
-+    if (check_unconditional_trap(ctx, a->rt)) {
-+        return true;
-+    }
-+    t0 = tcg_constant_i32(a->rt);
-+    gen_helper_TD(tcg_env, cpu_gpr[a->ra], cpu_gpr[a->rb], t0);
-+    return true;
-+}
-+
-+static bool trans_TDI(DisasContext *ctx, arg_TDI *a)
-+{
-+    TCGv t0;
-+    TCGv_i32 t1;
-+
-+    REQUIRE_64BIT(ctx);
-+    if (check_unconditional_trap(ctx, a->rt)) {
-+        return true;
-+    }
-+    t0 = tcg_constant_tl(a->si);
-+    t1 = tcg_constant_i32(a->rt);
-+    gen_helper_TD(tcg_env, cpu_gpr[a->ra], t0, t1);
 +    return true;
 +}
 +
