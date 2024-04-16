@@ -4,83 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC46C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852E0C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwhKu-0006EP-41; Tue, 16 Apr 2024 07:50:52 -0400
+	id 1rwhP7-0007T8-8D; Tue, 16 Apr 2024 07:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rwhKs-0006DW-2y
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:50:50 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rwhKp-0002gf-Np
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:50:49 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2da68af6c6fso28243011fa.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 04:50:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713268246; x=1713873046; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PiQEyFO+4ftP4OAfOPJXJoSKCu2llqwcfZclQYAnCoc=;
- b=NFH+n14NhHsoB7UoPdWA7tDMTcClYU43Qx5ZhiixYy73aYUnaJeK7dq4TcE6TzPzER
- qZt/V2qAoL/sfPcCuu9rvHjkt0LyLrYxlYK31gOtf3nepp+EEhk9cfup7lAW0fprycSL
- TWGOYdNnp5o1Q2N2ysAp07JynhGluVNnaU27R9t2ZTg5h2Qx8HSgabKkDYjzdwo3EwdV
- fuIveRKMZyw8Ob3jLvDjfntyXZpoMsZH2a1ehuJtGId/QuEOkZX3J31efCpAdP8xqBtT
- 8aEvMWdQIKPB3wGqBgwf38l6IazpNSkHxovQOa8ARMbpfb3m84KmaJSt8JZiAxXEw41O
- vAQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713268246; x=1713873046;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PiQEyFO+4ftP4OAfOPJXJoSKCu2llqwcfZclQYAnCoc=;
- b=qPRpryby1S+sfQTpy5thycCWKdAEX7LPJ5VrFSw8+TmokWHQVz5FI7JRUwo0vbhtjL
- oN5Ev1Sb7uxV4TwdcgaN03mOirW8+u6BLBLp8IlDgNmfdfr1dTBx2rbxVIqdQvokk0Zc
- np4z8XCW+hRaG5K5Q8/QmWJ2gsIwIuuKxstCxeEPknl4rGBuRccZ+0rjKvvy3Cm1+9hW
- J9JLJg27Cl/V311xAMeOTZpn9E6tV0OqUNlrzvMZd+fpaCo88jTawdsk5Spmd6JBYPfh
- dbzePSszuAnVkX7VkTH9GEjuqWAwiTx5VgT+WCf0T7ZBJoQIUD0uGBzCKNJLvA7YCkNo
- NUTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW7DBOIS8d4klijZDCyrrpf1hvISW/rV53I5nzzo+UV4o79EEv2XNh0Q1S9GUJhFvLo6T25kLVOTY9qJoyVL23kCLx+Qbs=
-X-Gm-Message-State: AOJu0YzZVgLx8kin/VOWPa7cIJYgPnXovWklL6SidZObwgol9xDPDboO
- mT0NXjbmlLMCiq1avsrK+wieTxnq/9T4i4qEb/sdcA6FXcDG3mycxrzIyqOSgkoRa13DEszSjsY
- nxfVcJRuUb38ODKkgpd/UAyrbav5dev2VuEOP2g==
-X-Google-Smtp-Source: AGHT+IFtrtmqrwqpvDI2+B3vW6Qm6be1ykch5Ki8+YfeYMCtEfFxSb0RoohZolMFdBWjZTdACqGJJyxayx8f8KNxd98=
-X-Received: by 2002:ac2:46c9:0:b0:516:fe8c:ef9b with SMTP id
- p9-20020ac246c9000000b00516fe8cef9bmr7279570lfo.57.1713268245610; Tue, 16 Apr
- 2024 04:50:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
+ id 1rwhP4-0007Rj-7Z; Tue, 16 Apr 2024 07:55:10 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
+ id 1rwhP0-00034O-Id; Tue, 16 Apr 2024 07:55:09 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43GAwSpR018870; Tue, 16 Apr 2024 11:54:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=BF+WWx2eyJpyEbVOTgr946Qb3Qp3BXMlMICw75obs9E=;
+ b=NYbG5VSQNK3NWK2XLcpaQKTcDVi84vffP5V3A3TI7pWPdywGgw2Z+7gkEa7cvdGFrg1e
+ dZE2AENcx2wRC5i/mqCDJ0yP16ATZYgM/gRAj1BD6nG8tle+hPmdrlU4uT7+92tpRkiS
+ d5g5ul1+mwOVGaaOVSxSC6dz8GFSXhcZY16zci3tefJr6I29HLP/lPECPqJs0nfPR9AA
+ 6hNjeJO3xYKNFdZc2lbGMPDJRA0vMOGK+C3LJXEZCTLz9904fqg2XF/OMB+BptmskUH7
+ Vr7vLIIYP4CPT71GngSr9eQU5HpyyH+EDvTSCSOm3ULl8wuGHEc0uOFbFL8rDnmy1Efg ZQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xhr1rg3a1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Apr 2024 11:54:51 +0000
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43GBspYI003700;
+ Tue, 16 Apr 2024 11:54:51 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xhr1rg39x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Apr 2024 11:54:51 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43G8fhhx027311; Tue, 16 Apr 2024 11:54:50 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xg4ryx1hq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Apr 2024 11:54:50 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43GBsl2729033166
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 16 Apr 2024 11:54:50 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CFAC458067;
+ Tue, 16 Apr 2024 11:54:47 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 666EE58062;
+ Tue, 16 Apr 2024 11:54:47 +0000 (GMT)
+Received: from [9.24.12.86] (unknown [9.24.12.86])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 16 Apr 2024 11:54:47 +0000 (GMT)
+Message-ID: <a860264b-e1e4-4d10-87f7-a95f0eee4e01@linux.ibm.com>
+Date: Tue, 16 Apr 2024 06:54:47 -0500
 MIME-Version: 1.0
-References: <cover.1713178348.git.mst@redhat.com>
- <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
- <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
- <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
-In-Reply-To: <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Apr 2024 12:50:34 +0100
-Message-ID: <CAFEAcA_WxhOpjtZ5r-CfoOaf1aiKeaEV9eX=drb1JaBCiBoDKA@mail.gmail.com>
-Subject: Re: [PULL 1/1] virtio-pci: fix use of a released vector
-To: Cindy Lu <lulu@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, 
- Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/qtest : Use `g_assert_cmphex` instead of
+ `g_assert_cmpuint`
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ qemu-block@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+References: <20240414173349.31194-1-ines.varhol@telecom-paris.fr>
+Content-Language: en-US
+From: Ninad Palsule <ninad@linux.ibm.com>
+In-Reply-To: <20240414173349.31194-1-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: z5-AnbfhOBMo_IJkUGSeHREa5Uef08ku
+X-Proofpoint-ORIG-GUID: mG6XJ0J1cvqu1R3E9vwkLOx5-VCk8zTn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-16_08,2024-04-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 suspectscore=0
+ malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0 adultscore=0
+ spamscore=0 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404160073
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=ninad@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,50 +124,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Apr 2024 at 12:05, Cindy Lu <lulu@redhat.com> wrote:
+
+On 4/14/24 12:28, Inès Varhol wrote:
+> The messages for assertions using hexadecimal numbers will be
+> easier to understand with `g_assert_cmphex`.
 >
-> On Tue, Apr 16, 2024 at 6:01=E2=80=AFPM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
-> > Here we pass that through to kvm_virtio_pci_vector_use_one().
-> > In kvm_virtio_pci_vector_use_one()'s error-exit path ("undo")
-> > it does
-> >     vector =3D virtio_queue_vector(vdev, queue_no);
-> > and in virtio_queue_vector() it does:
-> >
-> >     return n < VIRTIO_QUEUE_MAX ? vdev->vq[n].vector :
-> >         VIRTIO_NO_VECTOR;
-> >
-> > where 'n' is an int, so if we can get here with queue_no being
-> > VIRTIO_CONFIG_IRQ_IDX then we'll index off the front of the
-> > vdev->vq[] array.
-> >
-> > Maybe this is a "can't happen" case, but it does seem odd that
-> > virtio_queue_vector() only bounds-checks the "too big" case
-> > for its argument and not the "too small" case and/or it
-> > doesn't have a special case for VIRTIO_CONFIG_IRQ_IDX.
-> >
-> > > +    }
-> > > +}
-> > > +
-> >
-> hi peter
-> I think we can simply remove the part
->     vector =3D virtio_queue_vector(vdev, queue_no);
-> the vector is get from virtio_pci_get_notifier() and don't need to get it=
- again
-> I will send the fix soon
+> Cases changed : "cmpuint.*0x", "cmpuint.*<<"
+>
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   tests/qtest/aspeed_fsi-test.c          |  20 ++--
+>   tests/qtest/cmsdk-apb-dualtimer-test.c |   2 +-
+>   tests/qtest/cmsdk-apb-watchdog-test.c  |   2 +-
+>   tests/qtest/erst-test.c                |   2 +-
+>   tests/qtest/ivshmem-test.c             |  10 +-
+>   tests/qtest/libqos/ahci.c              |   4 +-
+>   tests/qtest/microbit-test.c            |  46 ++++-----
+>   tests/qtest/sse-timer-test.c           |   4 +-
+>   tests/qtest/stm32l4x5_exti-test.c      | 138 ++++++++++++-------------
+>   tests/qtest/stm32l4x5_syscfg-test.c    |  74 ++++++-------
+>   10 files changed, 151 insertions(+), 151 deletions(-)
+>
+> diff --git a/tests/qtest/aspeed_fsi-test.c b/tests/qtest/aspeed_fsi-test.c
+> index b3020dd821..f5ab269972 100644
+> --- a/tests/qtest/aspeed_fsi-test.c
+> +++ b/tests/qtest/aspeed_fsi-test.c
+> @@ -63,22 +63,22 @@ static void test_fsi_setup(QTestState *s, uint32_t base_addr)
+>           /* Unselect FSI1 */
+>           aspeed_fsi_writel(s, ASPEED_FSI_OPB1_BUS_SELECT, 0x0);
+>           curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB1_BUS_SELECT);
+> -        g_assert_cmpuint(curval, ==, 0x0);
+> +        g_assert_cmphex(curval, ==, 0x0);
+>   
+>           /* Select FSI0 */
+>           aspeed_fsi_writel(s, ASPEED_FSI_OPB0_BUS_SELECT, 0x1);
+>           curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB0_BUS_SELECT);
+> -        g_assert_cmpuint(curval, ==, 0x1);
+> +        g_assert_cmphex(curval, ==, 0x1);
+>       } else if (base_addr == AST2600_OPB_FSI1_BASE_ADDR) {
+>           /* Unselect FSI0 */
+>           aspeed_fsi_writel(s, ASPEED_FSI_OPB0_BUS_SELECT, 0x0);
+>           curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB0_BUS_SELECT);
+> -        g_assert_cmpuint(curval, ==, 0x0);
+> +        g_assert_cmphex(curval, ==, 0x0);
+>   
+>           /* Select FSI1 */
+>           aspeed_fsi_writel(s, ASPEED_FSI_OPB1_BUS_SELECT, 0x1);
+>           curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB1_BUS_SELECT);
+> -        g_assert_cmpuint(curval, ==, 0x1);
+> +        g_assert_cmphex(curval, ==, 0x1);
+>       } else {
+>           g_assert_not_reached();
+>       }
+> @@ -145,11 +145,11 @@ static void test_fsi0_getcfam_addr0(const void *data)
+>       aspeed_fsi_writel(s, ASPEED_FSI_ENGINER_TRIGGER, 0x1);
+>   
+>       curval = aspeed_fsi_readl(s, ASPEED_FSI_INTRRUPT_STATUS);
+> -    g_assert_cmpuint(curval, ==, 0x10000);
+> +    g_assert_cmphex(curval, ==, 0x10000);
+>       curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB0_BUS_STATUS);
+> -    g_assert_cmpuint(curval, ==, 0x0);
+> +    g_assert_cmphex(curval, ==, 0x0);
+>       curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB0_READ_DATA);
+> -    g_assert_cmpuint(curval, ==, 0x152d02c0);
+> +    g_assert_cmphex(curval, ==, 0x152d02c0);
+>   }
+>   
+>   static void test_fsi1_getcfam_addr0(const void *data)
+> @@ -168,11 +168,11 @@ static void test_fsi1_getcfam_addr0(const void *data)
+>       aspeed_fsi_writel(s, ASPEED_FSI_ENGINER_TRIGGER, 0x1);
+>   
+>       curval = aspeed_fsi_readl(s, ASPEED_FSI_INTRRUPT_STATUS);
+> -    g_assert_cmpuint(curval, ==, 0x20000);
+> +    g_assert_cmphex(curval, ==, 0x20000);
+>       curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB1_BUS_STATUS);
+> -    g_assert_cmpuint(curval, ==, 0x0);
+> +    g_assert_cmphex(curval, ==, 0x0);
+>       curval = aspeed_fsi_readl(s, ASPEED_FSI_OPB1_READ_DATA);
+> -    g_assert_cmpuint(curval, ==, 0x152d02c0);
+> +    g_assert_cmphex(curval, ==, 0x152d02c0);
+>   }
+>   
 
-The error handling in kvm_virtio_pci_vector_use_one() looks
-a bit odd in other ways, too. The only bit of "undoing"
-it does as far as I can see is calling kvm_virtio_pci_irqfd_release(),
-but there is no code path that gets to there where the
-main codepath's call to kvm_virtio-pci_irqfd_use() succeeded
-and needs to be undone. So perhaps the entire "undo" code
-block should be deleted, and the "goto undo" lines
-replaced by simple "return ret;" ?  (The codepath
-for "kvm_virtio_pci_irqfd_use() failed" already does the
-"kvm_virtio_pci_vq_vector_release()" by hand there.)
+aspeed-fsi-test changes looks good. Thanks
 
-thanks
--- PMM
+Reviewed-by: Ninad Palsule <ninad@linux.ibm.com>
+
+
 
