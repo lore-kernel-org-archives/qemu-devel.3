@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE6FC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C96C04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk4S-00088f-C3; Tue, 16 Apr 2024 10:46:04 -0400
+	id 1rwk4T-0008Ie-9j; Tue, 16 Apr 2024 10:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3x-0006ku-6m
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:35 -0400
+ id 1rwk4C-00070c-MN
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:56 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3u-0002cV-9S
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:32 -0400
+ id 1rwk49-0002pf-Pf
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:48 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3T-0002iz-F7; Tue, 16 Apr 2024 16:45:03 +0200
+ id 1rwk3t-0002kV-HG; Tue, 16 Apr 2024 16:45:29 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,10 +32,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 21/26] migration/multifd: Device state transfer support -
- receive side
-Date: Tue, 16 Apr 2024 16:43:00 +0200
-Message-ID: <a7a20b0de049b53d27b4ce8363fc68e601155104.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 26/26] vfio/migration: Multifd device state transfer
+ support - send side
+Date: Tue, 16 Apr 2024 16:43:05 +0200
+Message-ID: <3c31f4da5165c64a7f0aa9cd74f95dbe397942ec.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -65,427 +65,315 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Add a basic support for receiving device state via multifd channels -
-both dedicated ones or shared with RAM transfer.
+Implement the multifd device state transfer via additional per-device
+thread spawned from save_live_complete_precopy_async handler.
 
-To differentiate between a device state and a RAM packet the packet
-header is read first.
-
-Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
-packet header either device state  (MultiFDPacketDeviceState_t) or RAM
-data (existing MultiFDPacket_t) is then read.
-
-The received device state data is provided to
-qemu_loadvm_load_state_buffer() function for processing in the
-device's load_state_buffer handler.
+Switch between doing the data transfer in the new handler and doing it
+in the old save_state handler depending on the
+migration_has_device_state_support() return value.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/migration.c |   7 +-
- migration/multifd.c   | 146 ++++++++++++++++++++++++++++++++++++------
- migration/multifd.h   |  34 +++++++++-
- 3 files changed, 163 insertions(+), 24 deletions(-)
+ hw/vfio/migration.c           | 195 ++++++++++++++++++++++++++++++++++
+ hw/vfio/trace-events          |   3 +
+ include/hw/vfio/vfio-common.h |   8 ++
+ 3 files changed, 206 insertions(+)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index e4f82695a338..ea2c8a043a77 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -987,7 +987,7 @@ static void migration_ioc_process_incoming_no_header(QIOChannel *ioc,
-         /* Multiple connections */
-         assert(migration_needs_multiple_sockets());
-         if (migrate_multifd()) {
--            multifd_recv_new_channel(ioc, &local_err);
-+            multifd_recv_new_channel(ioc, false, &local_err);
-         } else {
-             assert(migrate_postcopy_preempt());
-             f = qemu_file_new_input(ioc);
-@@ -1031,6 +1031,7 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-         postcopy_preempt_new_channel(migration_incoming_get_current(), f);
-         break;
-     case MIG_CHANNEL_TYPE_MULTIFD:
-+    case MIG_CHANNEL_TYPE_MULTIFD_DEVICE_STATE:
-     {
-         Error *local_err = NULL;
- 
-@@ -1039,7 +1040,9 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-             return;
-         }
- 
--        multifd_recv_new_channel(ioc, &local_err);
-+        multifd_recv_new_channel(ioc,
-+                                 header.channel_type == MIG_CHANNEL_TYPE_MULTIFD_DEVICE_STATE,
-+                                 &local_err);
-         if (local_err) {
-             error_propagate(errp, local_err);
-             return;
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 7118c69a4d49..a26418d87485 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -22,6 +22,7 @@
- #include "file.h"
- #include "migration.h"
- #include "migration-stats.h"
-+#include "savevm.h"
- #include "socket.h"
- #include "tls.h"
- #include "qemu-file.h"
-@@ -404,7 +405,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-     uint32_t zero_num = pages->num - pages->normal_num;
-     int i;
- 
--    packet->flags = cpu_to_be32(p->flags);
-+    packet->hdr.flags = cpu_to_be32(p->flags);
-     packet->pages_alloc = cpu_to_be32(p->pages->allocated);
-     packet->normal_pages = cpu_to_be32(pages->normal_num);
-     packet->zero_pages = cpu_to_be32(zero_num);
-@@ -432,28 +433,44 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
-                        p->flags, p->next_packet_size);
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 3af62dea6899..6177431a0cd3 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -608,11 +608,15 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+     return qemu_file_get_error(f);
  }
  
--static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p, MultiFDPacketHdr_t *hdr,
-+                                             Error **errp)
++static void vfio_save_complete_precopy_async_thread_thread_terminate(VFIODevice *vbasedev);
++
+ static void vfio_save_cleanup(void *opaque)
  {
--    MultiFDPacket_t *packet = p->packet;
--    int i;
--
--    packet->magic = be32_to_cpu(packet->magic);
--    if (packet->magic != MULTIFD_MAGIC) {
-+    hdr->magic = be32_to_cpu(hdr->magic);
-+    if (hdr->magic != MULTIFD_MAGIC) {
-         error_setg(errp, "multifd: received packet "
-                    "magic %x and expected magic %x",
--                   packet->magic, MULTIFD_MAGIC);
-+                   hdr->magic, MULTIFD_MAGIC);
-         return -1;
-     }
+     VFIODevice *vbasedev = opaque;
+     VFIOMigration *migration = vbasedev->migration;
  
--    packet->version = be32_to_cpu(packet->version);
--    if (packet->version != MULTIFD_VERSION) {
-+    hdr->version = be32_to_cpu(hdr->version);
-+    if (hdr->version != MULTIFD_VERSION) {
-         error_setg(errp, "multifd: received packet "
-                    "version %u and expected version %u",
--                   packet->version, MULTIFD_VERSION);
-+                   hdr->version, MULTIFD_VERSION);
-         return -1;
-     }
- 
--    p->flags = be32_to_cpu(packet->flags);
-+    p->flags = be32_to_cpu(hdr->flags);
++    vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
 +
-+    return 0;
-+}
-+
-+static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p, Error **errp)
-+{
-+    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
-+
-+    packet->instance_id = be32_to_cpu(packet->instance_id);
-+    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-+
-+    return 0;
-+}
-+
-+static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
-+{
-+    MultiFDPacket_t *packet = p->packet;
-+    int i;
- 
-     packet->pages_alloc = be32_to_cpu(packet->pages_alloc);
      /*
-@@ -485,7 +502,6 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+      * Changing device state from STOP_COPY to STOP can take time. Do it here,
+      * after migration has completed, so it won't increase downtime.
+@@ -621,6 +625,7 @@ static void vfio_save_cleanup(void *opaque)
+         vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_STOP);
+     }
  
-     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-     p->packet_num = be64_to_cpu(packet->packet_num);
--    p->packets_recved++;
-     p->total_normal_pages += p->normal_num;
-     p->total_zero_pages += p->zero_num;
++    g_clear_pointer(&migration->idstr, g_free);
+     g_free(migration->data_buffer);
+     migration->data_buffer = NULL;
+     migration->precopy_init_size = 0;
+@@ -735,6 +740,12 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+     ssize_t data_size;
+     int ret;
  
-@@ -533,6 +549,19 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-     return 0;
- }
- 
-+static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-+{
-+    p->packets_recved++;
-+
-+    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
-+        return multifd_recv_unfill_packet_device_state(p, errp);
-+    } else {
-+        return multifd_recv_unfill_packet_ram(p, errp);
++    if (migration_has_device_state_support()) {
++        /* Emit dummy NOP data */
++        qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
++        return 0;
 +    }
 +
-+    g_assert_not_reached();
+     trace_vfio_save_complete_precopy_started(vbasedev->name);
+ 
+     /* We reach here with device state STOP or STOP_COPY only */
+@@ -762,11 +773,186 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+     return ret;
+ }
+ 
++static int vfio_save_complete_precopy_async_thread_config_state(VFIODevice *vbasedev, uint32_t idx)
++{
++    VFIOMigration *migration = vbasedev->migration;
++    g_autoptr(QIOChannelBuffer) bioc = NULL;
++    QEMUFile *f = NULL;
++    int ret;
++    g_autofree VFIODeviceStatePacket *packet = NULL;
++    size_t packet_len;
++
++    bioc = qio_channel_buffer_new(0);
++    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-save");
++
++    f = qemu_file_new_output(QIO_CHANNEL(bioc));
++
++    ret = vfio_save_device_config_state(f, vbasedev);
++    if (ret) {
++        return ret;
++    }
++
++    ret = qemu_fflush(f);
++    if (ret) {
++        goto ret_close_file;
++    }
++
++    packet_len = sizeof(*packet) + bioc->usage;
++    packet = g_malloc0(packet_len);
++    packet->idx = idx;
++    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
++    memcpy(&packet->data, bioc->data, bioc->usage);
++
++    ret = multifd_queue_device_state(migration->idstr, migration->instance_id,
++                                     (char *)packet, packet_len);
++
++    bytes_transferred += packet_len;
++
++ret_close_file:
++    g_clear_pointer(&f, qemu_fclose);
++    return ret;
 +}
 +
- static bool multifd_send_should_exit(void)
- {
-     return qatomic_read(&multifd_send_state->exiting);
-@@ -1239,8 +1268,8 @@ bool multifd_send_setup(void)
-             p->packet_len = sizeof(MultiFDPacket_t)
-                           + sizeof(uint64_t) * page_count;
-             p->packet = g_malloc0(p->packet_len);
--            p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
--            p->packet->version = cpu_to_be32(MULTIFD_VERSION);
-+            p->packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
-+            p->packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
- 
-             /* We need one extra place for the packet header */
-             p->iov = g_new0(struct iovec, page_count + 1);
-@@ -1415,6 +1444,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
-+    g_clear_pointer(&p->packet_dev_state, g_free);
-     g_free(p->iov);
-     p->iov = NULL;
-     g_free(p->normal);
-@@ -1474,6 +1504,8 @@ void multifd_recv_sync_main(void)
-         for (i = 0; i < thread_count; i++) {
-             MultiFDRecvParams *p = &multifd_recv_state->params[i];
- 
-+            assert(!p->is_device_state_dedicated);
++static void *vfio_save_complete_precopy_async_thread(void *opaque)
++{
++    VFIODevice *vbasedev = opaque;
++    VFIOMigration *migration = vbasedev->migration;
++    int *ret = &migration->save_complete_precopy_thread_ret;
++    g_autofree VFIODeviceStatePacket *packet = NULL;
++    uint32_t idx;
 +
-             trace_multifd_recv_sync_main_signal(p->id);
-             qemu_sem_post(&p->sem);
-         }
-@@ -1489,6 +1521,12 @@ void multifd_recv_sync_main(void)
-      * the work (pending_job=false).
-      */
-     for (i = 0; i < thread_count; i++) {
-+        MultiFDRecvParams *p = &multifd_recv_state->params[i];
++    /* We reach here with device state STOP or STOP_COPY only */
++    *ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
++                                    VFIO_DEVICE_STATE_STOP);
++    if (*ret) {
++        return NULL;
++    }
 +
-+        if (p->is_device_state_dedicated) {
-+            continue;
++    packet = g_malloc0(sizeof(*packet) + migration->data_buffer_size);
++
++    for (idx = 0; ; idx++) {
++        ssize_t data_size;
++        size_t packet_size;
++
++        data_size = read(migration->data_fd, &packet->data,
++                         migration->data_buffer_size);
++        if (data_size < 0) {
++            if (errno != ENOMSG) {
++                *ret = -errno;
++                return NULL;
++            }
++
++            /*
++             * Pre-copy emptied all the device state for now. For more information,
++             * please refer to the Linux kernel VFIO uAPI.
++             */
++            data_size = 0;
 +        }
 +
-         trace_multifd_recv_sync_main_wait(i);
-         qemu_sem_wait(&multifd_recv_state->sem_sync);
-     }
-@@ -1507,6 +1545,10 @@ void multifd_recv_sync_main(void)
-     for (i = 0; i < thread_count; i++) {
-         MultiFDRecvParams *p = &multifd_recv_state->params[i];
- 
-+        if (p->is_device_state_dedicated) {
-+            continue;
++        if (data_size == 0)
++            break;
++
++        packet->idx = idx;
++        packet_size = sizeof(*packet) + data_size;
++
++        *ret = multifd_queue_device_state(migration->idstr, migration->instance_id,
++                                          (char *)packet, packet_size);
++        if (*ret) {
++            return NULL;
 +        }
 +
-         WITH_QEMU_LOCK_GUARD(&p->mutex) {
-             if (multifd_recv_state->packet_num < p->packet_num) {
-                 multifd_recv_state->packet_num = p->packet_num;
-@@ -1529,8 +1571,13 @@ static void *multifd_recv_thread(void *opaque)
-     rcu_register_thread();
- 
-     while (true) {
-+        MultiFDPacketHdr_t hdr;
-         uint32_t flags = 0;
-+        bool is_device_state = false;
-         bool has_data = false;
-+        uint8_t *pkt_buf;
-+        size_t pkt_len;
++        bytes_transferred += packet_size;
++    }
 +
-         p->normal_num = 0;
- 
-         if (use_packets) {
-@@ -1538,8 +1585,27 @@ static void *multifd_recv_thread(void *opaque)
-                 break;
-             }
- 
--            ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
--                                           p->packet_len, &local_err);
-+            ret = qio_channel_read_all_eof(p->c, (void *)&hdr,
-+                                           sizeof(hdr), &local_err);
-+            if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
-+                break;
-+            }
++    *ret = vfio_save_complete_precopy_async_thread_config_state(vbasedev, idx);
++    if (*ret) {
++        return NULL;
++    }
 +
-+            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
-+            if (ret) {
-+                break;
-+            }
++    trace_vfio_save_complete_precopy_async_finished(vbasedev->name);
 +
-+            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
-+            if (is_device_state) {
-+                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
-+                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
-+            } else {
-+                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
-+                pkt_len = p->packet_len - sizeof(hdr);
-+            }
++    return NULL;
++}
 +
-+            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len, &local_err);
-             if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
-                 break;
-             }
-@@ -1582,8 +1648,39 @@ static void *multifd_recv_thread(void *opaque)
-             has_data = !!p->data->size;
-         }
- 
--        if (has_data) {
--            ret = multifd_recv_state->ops->recv(p, &local_err);
-+        if (!is_device_state) {
-+            if (p->is_device_state_dedicated) {
-+                error_setg(&local_err,
-+                           "multifd: received non-device-state packet on device-state-dedicated thread");
-+                break;
-+            }
++static int vfio_save_complete_precopy_async(QEMUFile *f,
++                                            char *idstr, uint32_t instance_id,
++                                            void *opaque)
++{
++    VFIODevice *vbasedev = opaque;
++    VFIOMigration *migration = vbasedev->migration;
++    int ret;
 +
-+            if (has_data) {
-+                ret = multifd_recv_state->ops->recv(p, &local_err);
-+                if (ret != 0) {
-+                    break;
-+                }
-+            }
-+        } else {
-+            g_autofree char *idstr = NULL;
-+            g_autofree char *dev_state_buf = NULL;
++    migration->save_complete_precopy_thread_ret = 0;
 +
-+            assert(use_packets);
++    if (!migration_has_device_state_support()) {
++        /* Emit dummy NOP data */
++        qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
++        return 0;
++    }
 +
-+            if (p->next_packet_size > 0) {
-+                dev_state_buf = g_malloc(p->next_packet_size);
++    qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE_COMPLETE);
++    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
 +
-+                ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, &local_err);
-+                if (ret != 0) {
-+                    break;
-+                }
-+            }
++    ret = qemu_fflush(f);
++    if (ret) {
++        return ret;
++    }
 +
-+            idstr = g_strndup(p->packet_dev_state->idstr, sizeof(p->packet_dev_state->idstr));
-+            ret = qemu_loadvm_load_state_buffer(idstr,
-+                                                p->packet_dev_state->instance_id,
-+                                                dev_state_buf, p->next_packet_size,
-+                                                &local_err);
-             if (ret != 0) {
-                 break;
-             }
-@@ -1591,6 +1688,11 @@ static void *multifd_recv_thread(void *opaque)
- 
-         if (use_packets) {
-             if (flags & MULTIFD_FLAG_SYNC) {
-+                if (is_device_state) {
-+                    error_setg(&local_err, "multifd: received SYNC device state packet");
-+                    break;
-+                }
++    assert(!migration->save_complete_precopy_thread_started);
 +
-                 qemu_sem_post(&multifd_recv_state->sem_sync);
-                 qemu_sem_wait(&p->sem_sync);
-             }
-@@ -1662,6 +1764,7 @@ int multifd_recv_setup(Error **errp)
-             p->packet_len = sizeof(MultiFDPacket_t)
-                 + sizeof(uint64_t) * page_count;
-             p->packet = g_malloc0(p->packet_len);
-+            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
-         }
-         p->name = g_strdup_printf("multifdrecv_%d", i);
-         p->iov = g_new0(struct iovec, page_count);
-@@ -1703,7 +1806,9 @@ bool multifd_recv_all_channels_created(void)
-  * Try to receive all multifd channels to get ready for the migration.
-  * Sets @errp when failing to receive the current channel.
-  */
--void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
-+void multifd_recv_new_channel(QIOChannel *ioc,
-+                              bool is_device_state_dedicated,
-+                              Error **errp)
++    assert(!migration->idstr);
++    migration->idstr = g_strdup(idstr);
++    migration->instance_id = instance_id;
++
++    qemu_thread_create(&migration->save_complete_precopy_thread,
++                       "vfio-save_complete_precopy",
++                       vfio_save_complete_precopy_async_thread,
++                       opaque, QEMU_THREAD_JOINABLE);
++
++    migration->save_complete_precopy_thread_started = true;
++
++    trace_vfio_save_complete_precopy_async_started(vbasedev->name, idstr, instance_id);
++
++    return 0;
++}
++
++static void vfio_save_complete_precopy_async_thread_thread_terminate(VFIODevice *vbasedev)
++{
++    VFIOMigration *migration = vbasedev->migration;
++
++    if (!migration->save_complete_precopy_thread_started) {
++        return;
++    }
++
++    qemu_thread_join(&migration->save_complete_precopy_thread);
++
++    migration->save_complete_precopy_thread_started = false;
++
++    trace_vfio_save_complete_precopy_async_joined(vbasedev->name,
++                                                  migration->save_complete_precopy_thread_ret);
++}
++
++static int vfio_save_complete_precopy_async_wait(QEMUFile *f, void *opaque)
++{
++    VFIODevice *vbasedev = opaque;
++    VFIOMigration *migration = vbasedev->migration;
++
++    vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
++
++    return migration->save_complete_precopy_thread_ret;
++}
++
+ static void vfio_save_state(QEMUFile *f, void *opaque)
  {
-     MultiFDRecvParams *p;
-     Error *local_err = NULL;
-@@ -1733,6 +1838,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
-         error_propagate(errp, local_err);
-         return;
-     }
-+    p->is_device_state_dedicated = is_device_state_dedicated;
-     p->c = ioc;
-     object_ref(OBJECT(ioc));
+     VFIODevice *vbasedev = opaque;
+     int ret;
  
-diff --git a/migration/multifd.h b/migration/multifd.h
-index fd0cd29104c1..b5fa56b791af 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -24,7 +24,7 @@ int multifd_recv_setup(Error **errp);
- void multifd_recv_cleanup(void);
- void multifd_recv_shutdown(void);
- bool multifd_recv_all_channels_created(void);
--void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
-+void multifd_recv_new_channel(QIOChannel *ioc, bool is_device_state_dedicated, Error **errp);
- void multifd_recv_sync_main(void);
- int multifd_send_sync_main(void);
- bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
-@@ -41,6 +41,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
- #define MULTIFD_FLAG_ZLIB (1 << 1)
- #define MULTIFD_FLAG_ZSTD (2 << 1)
++    if (migration_has_device_state_support()) {
++        /* Emit dummy NOP data */
++        qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
++        return;
++    }
++
+     ret = vfio_save_device_config_state(f, opaque);
+     if (ret) {
+         error_report("%s: Failed to save device config space",
+@@ -1014,6 +1200,8 @@ static const SaveVMHandlers savevm_vfio_handlers = {
+     .state_pending_exact = vfio_state_pending_exact,
+     .is_active_iterate = vfio_is_active_iterate,
+     .save_live_iterate = vfio_save_iterate,
++    .save_live_complete_precopy_async = vfio_save_complete_precopy_async,
++    .save_live_complete_precopy_async_wait = vfio_save_complete_precopy_async_wait,
+     .save_live_complete_precopy = vfio_save_complete_precopy,
+     .save_state = vfio_save_state,
+     .load_setup = vfio_load_setup,
+@@ -1034,6 +1222,10 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
+     enum vfio_device_mig_state new_state;
+     int ret;
  
-+/*
-+ * If set it means that this packet contains device state
-+ * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
-+ */
-+#define MULTIFD_FLAG_DEVICE_STATE (1 << 4)
++    if (running) {
++        vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
++    }
 +
- /* This value needs to be a multiple of qemu_target_page_size() */
- #define MULTIFD_PACKET_SIZE (512 * 1024)
+     new_state = migration->device_state == VFIO_DEVICE_STATE_PRE_COPY ?
+                     VFIO_DEVICE_STATE_PRE_COPY_P2P :
+                     VFIO_DEVICE_STATE_RUNNING_P2P;
+@@ -1059,6 +1251,9 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+     int ret;
  
-@@ -48,6 +54,11 @@ typedef struct {
-     uint32_t magic;
-     uint32_t version;
-     uint32_t flags;
-+} __attribute__((packed)) MultiFDPacketHdr_t;
+     if (running) {
++        /* In case "prepare" callback wasn't registered */
++        vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
 +
-+typedef struct {
-+    MultiFDPacketHdr_t hdr;
-+
-     /* maximum number of allocated pages */
-     uint32_t pages_alloc;
-     /* non zero pages */
-@@ -68,6 +79,16 @@ typedef struct {
-     uint64_t offset[];
- } __attribute__((packed)) MultiFDPacket_t;
+         new_state = VFIO_DEVICE_STATE_RUNNING;
+     } else {
+         new_state =
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 569bb6897b66..44c7bb01a004 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -165,6 +165,9 @@ vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
+ vfio_save_cleanup(const char *name) " (%s)"
+ vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
+ vfio_save_complete_precopy_started(const char *name) " (%s)"
++vfio_save_complete_precopy_async_started(const char *name, const char *idstr, uint32_t instance_id) " (%s) idstr %s instance %"PRIu32
++vfio_save_complete_precopy_async_finished(const char *name) " (%s)"
++vfio_save_complete_precopy_async_joined(const char *name, int ret) " (%s) ret %d"
+ vfio_save_device_config_state(const char *name) " (%s)"
+ vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
+ vfio_save_iterate_started(const char *name) " (%s)"
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index f861cbd13384..0c51b8bf4d9a 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -74,12 +74,20 @@ typedef struct VFIOMigration {
  
-+typedef struct {
-+    MultiFDPacketHdr_t hdr;
+     bool save_iterate_run;
+     bool save_iterate_empty_hit;
 +
-+    char idstr[256] QEMU_NONSTRING;
-+    uint32_t instance_id;
++    QemuThread save_complete_precopy_thread;
++    int save_complete_precopy_thread_ret;
++    bool save_complete_precopy_thread_started;
 +
-+    /* size of the next packet that contains the actual data */
-+    uint32_t next_packet_size;
-+} __attribute__((packed)) MultiFDPacketDeviceState_t;
-+
- typedef struct {
-     /* number of used pages */
-     uint32_t num;
-@@ -87,6 +108,13 @@ struct MultiFDRecvData {
-     off_t file_offset;
- };
+     QemuThread load_bufs_thread;
+     Error *load_bufs_thread_errp;
+     bool load_bufs_thread_started;
+     bool load_bufs_thread_finished;
+     bool load_bufs_thread_want_exit;
  
-+typedef struct {
 +    char *idstr;
 +    uint32_t instance_id;
-+    char *buf;
-+    size_t buf_len;
-+} MultiFDDeviceState_t;
 +
- typedef struct {
-     /* Fields are only written at creating/deletion time */
-     /* No lock required for them, they are read only */
-@@ -175,6 +203,7 @@ typedef struct {
-     uint32_t page_size;
-     /* number of pages in a full packet */
-     uint32_t page_count;
-+    bool is_device_state_dedicated;
- 
-     /* syncs main thread and channels */
-     QemuSemaphore sem_sync;
-@@ -194,8 +223,9 @@ typedef struct {
- 
-     /* thread local variables. No locking required */
- 
--    /* pointer to the packet */
-+    /* pointers to the possible packet types */
-     MultiFDPacket_t *packet;
-+    MultiFDPacketDeviceState_t *packet_dev_state;
-     /* size of the next packet that contains pages */
-     uint32_t next_packet_size;
-     /* packets received through this channel */
+     GArray *load_bufs;
+     bool load_bufs_device_ready;
+     GCond load_bufs_device_ready_cond;
 
