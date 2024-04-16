@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DC2C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892FFC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwezd-0003Rs-9Z; Tue, 16 Apr 2024 05:20:47 -0400
+	id 1rweyQ-0002Yp-Uj; Tue, 16 Apr 2024 05:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rwez1-0002w6-HU; Tue, 16 Apr 2024 05:20:09 -0400
+ id 1rweyL-0002Xn-2D; Tue, 16 Apr 2024 05:19:25 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rweyz-0007iy-Ld; Tue, 16 Apr 2024 05:20:07 -0400
+ id 1rweyA-0007Zt-Cf; Tue, 16 Apr 2024 05:19:17 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 16 Apr
- 2024 17:19:08 +0800
+ 2024 17:19:04 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 16 Apr 2024 17:19:08 +0800
+ Transport; Tue, 16 Apr 2024 17:19:04 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -35,15 +35,13 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 08/16] aspeed/smc: support 64 bits dma dram address
-Date: Tue, 16 Apr 2024 17:18:55 +0800
-Message-ID: <20240416091904.935283-9-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 00/16] Add AST2700 support
+Date: Tue, 16 Apr 2024 17:18:47 +0800
+Message-ID: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
-References: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,190 +66,94 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AST2700 support the maximum dram size is 8GiB
-and has a "DMA DRAM Side Address High Part(0x7C)"
-register to support 64 bits dma dram address.
-Add helper routines functions to compute the dma dram
-address, new features and update trace-event
-to support 64 bits dram address.
+Changes from v1:
+The patch series supports WDT, SDMC, SMC, SCU, SLI and INTC for AST2700 SoC.
 
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/ssi/aspeed_smc.c | 66 +++++++++++++++++++++++++++++++++++++++------
- hw/ssi/trace-events |  2 +-
- 2 files changed, 59 insertions(+), 9 deletions(-)
+Changes from v2:
+- replace is_aarch64 with is_bus64bit for sdmc patch review.
+- fix incorrect dram size for AST2700
 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 71abc7a2d8..a67cac3d0f 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -132,6 +132,9 @@
- #define   FMC_WDT2_CTRL_BOOT_SOURCE      BIT(4) /* O: primary 1: alternate */
- #define   FMC_WDT2_CTRL_EN               BIT(0)
- 
-+/* DMA DRAM Side Address High Part (AST2700) */
-+#define R_DMA_DRAM_ADDR_HIGH   (0x7c / 4)
-+
- /* DMA Control/Status Register */
- #define R_DMA_CTRL        (0x80 / 4)
- #define   DMA_CTRL_REQUEST      (1 << 31)
-@@ -187,6 +190,7 @@
-  *   0x1FFFFFF: 32M bytes
-  */
- #define DMA_DRAM_ADDR(asc, val)   ((val) & (asc)->dma_dram_mask)
-+#define DMA_DRAM_ADDR_HIGH(val)   ((val) & 0xf)
- #define DMA_FLASH_ADDR(asc, val)  ((val) & (asc)->dma_flash_mask)
- #define DMA_LENGTH(val)         ((val) & 0x01FFFFFF)
- 
-@@ -207,6 +211,7 @@ static const AspeedSegments aspeed_2500_spi2_segments[];
- #define ASPEED_SMC_FEATURE_DMA       0x1
- #define ASPEED_SMC_FEATURE_DMA_GRANT 0x2
- #define ASPEED_SMC_FEATURE_WDT_CONTROL 0x4
-+#define ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH 0x08
- 
- static inline bool aspeed_smc_has_dma(const AspeedSMCClass *asc)
- {
-@@ -218,6 +223,11 @@ static inline bool aspeed_smc_has_wdt_control(const AspeedSMCClass *asc)
-     return !!(asc->features & ASPEED_SMC_FEATURE_WDT_CONTROL);
- }
- 
-+static inline bool aspeed_smc_has_dma_dram_addr_high(const AspeedSMCClass *asc)
-+{
-+    return !!(asc->features & ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH);
-+}
-+
- #define aspeed_smc_error(fmt, ...)                                      \
-     qemu_log_mask(LOG_GUEST_ERROR, "%s: " fmt "\n", __func__, ## __VA_ARGS__)
- 
-@@ -747,6 +757,9 @@ static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
-         (aspeed_smc_has_dma(asc) && addr == R_DMA_CTRL) ||
-         (aspeed_smc_has_dma(asc) && addr == R_DMA_FLASH_ADDR) ||
-         (aspeed_smc_has_dma(asc) && addr == R_DMA_DRAM_ADDR) ||
-+        (aspeed_smc_has_dma(asc) &&
-+         aspeed_smc_has_dma_dram_addr_high(asc) &&
-+         addr == R_DMA_DRAM_ADDR_HIGH) ||
-         (aspeed_smc_has_dma(asc) && addr == R_DMA_LEN) ||
-         (aspeed_smc_has_dma(asc) && addr == R_DMA_CHECKSUM) ||
-         (addr >= R_SEG_ADDR0 &&
-@@ -847,6 +860,23 @@ static bool aspeed_smc_inject_read_failure(AspeedSMCState *s)
-     }
- }
- 
-+static uint64_t aspeed_smc_dma_dram_addr(AspeedSMCState *s)
-+{
-+    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
-+    uint64_t dram_addr_high;
-+    uint64_t dma_dram_addr;
-+
-+    if (aspeed_smc_has_dma_dram_addr_high(asc)) {
-+        dram_addr_high = s->regs[R_DMA_DRAM_ADDR_HIGH];
-+        dram_addr_high <<= 32;
-+        dma_dram_addr = dram_addr_high | s->regs[R_DMA_DRAM_ADDR];
-+    } else {
-+        dma_dram_addr = s->regs[R_DMA_DRAM_ADDR];
-+    }
-+
-+    return dma_dram_addr;
-+}
-+
- static uint32_t aspeed_smc_dma_len(AspeedSMCState *s)
- {
-     AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
-@@ -914,24 +944,34 @@ static void aspeed_smc_dma_checksum(AspeedSMCState *s)
- 
- static void aspeed_smc_dma_rw(AspeedSMCState *s)
- {
-+    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
-+    uint64_t dram_addr_high;
-+    uint64_t dma_dram_addr;
-+    uint64_t dram_addr;
-     MemTxResult result;
-     uint32_t dma_len;
-     uint32_t data;
- 
-     dma_len = aspeed_smc_dma_len(s);
-+    dma_dram_addr = aspeed_smc_dma_dram_addr(s);
-+
-+    if (aspeed_smc_has_dma_dram_addr_high(asc)) {
-+        dram_addr = dma_dram_addr - s->dram_mr->container->addr;
-+    } else {
-+        dram_addr = dma_dram_addr;
-+    }
- 
-     trace_aspeed_smc_dma_rw(s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE ?
-                             "write" : "read",
-                             s->regs[R_DMA_FLASH_ADDR],
--                            s->regs[R_DMA_DRAM_ADDR],
-+                            dram_addr,
-                             dma_len);
-     while (dma_len) {
-         if (s->regs[R_DMA_CTRL] & DMA_CTRL_WRITE) {
--            data = address_space_ldl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
-+            data = address_space_ldl_le(&s->dram_as, dram_addr,
-                                         MEMTXATTRS_UNSPECIFIED, &result);
-             if (result != MEMTX_OK) {
--                aspeed_smc_error("DRAM read failed @%08x",
--                                 s->regs[R_DMA_DRAM_ADDR]);
-+                aspeed_smc_error("DRAM read failed @%" PRIx64, dram_addr);
-                 return;
-             }
- 
-@@ -951,11 +991,10 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
-                 return;
-             }
- 
--            address_space_stl_le(&s->dram_as, s->regs[R_DMA_DRAM_ADDR],
-+            address_space_stl_le(&s->dram_as, dram_addr,
-                                  data, MEMTXATTRS_UNSPECIFIED, &result);
-             if (result != MEMTX_OK) {
--                aspeed_smc_error("DRAM write failed @%08x",
--                                 s->regs[R_DMA_DRAM_ADDR]);
-+                aspeed_smc_error("DRAM write failed @%" PRIx64, dram_addr);
-                 return;
-             }
-         }
-@@ -964,8 +1003,15 @@ static void aspeed_smc_dma_rw(AspeedSMCState *s)
-          * When the DMA is on-going, the DMA registers are updated
-          * with the current working addresses and length.
-          */
-+        dram_addr += 4;
-+        dma_dram_addr += 4;
-+        if (aspeed_smc_has_dma_dram_addr_high(asc)) {
-+            dram_addr_high = dma_dram_addr >> 32;
-+            s->regs[R_DMA_DRAM_ADDR_HIGH] = dram_addr_high;
-+        }
-+
-+        s->regs[R_DMA_DRAM_ADDR] = dma_dram_addr & 0xffffffff;
-         s->regs[R_DMA_FLASH_ADDR] += 4;
--        s->regs[R_DMA_DRAM_ADDR] += 4;
-         dma_len -= 4;
-         s->regs[R_DMA_LEN] = dma_len;
-         s->regs[R_DMA_CHECKSUM] += data;
-@@ -1118,6 +1164,10 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
-     } else if (aspeed_smc_has_dma(asc) && addr == R_DMA_LEN &&
-                aspeed_smc_dma_granted(s)) {
-         s->regs[addr] = DMA_LENGTH(value);
-+    } else if (aspeed_smc_has_dma(asc) &&
-+               aspeed_smc_has_dma_dram_addr_high(asc) &&
-+               addr == R_DMA_DRAM_ADDR_HIGH) {
-+        s->regs[addr] = DMA_DRAM_ADDR_HIGH(value);
-     } else {
-         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
-                       __func__, addr);
-diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
-index 2d5bd2b83d..7b5ad6a939 100644
---- a/hw/ssi/trace-events
-+++ b/hw/ssi/trace-events
-@@ -6,7 +6,7 @@ aspeed_smc_do_snoop(int cs, int index, int dummies, int data) "CS%d index:0x%x d
- aspeed_smc_flash_write(int cs, uint64_t addr,  uint32_t size, uint64_t data, int mode) "CS%d @0x%" PRIx64 " size %u: 0x%" PRIx64" mode:%d"
- aspeed_smc_read(uint64_t addr,  uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
- aspeed_smc_dma_checksum(uint32_t addr, uint32_t data) "0x%08x: 0x%08x"
--aspeed_smc_dma_rw(const char *dir, uint32_t flash_addr, uint32_t dram_addr, uint32_t size) "%s flash:@0x%08x dram:@0x%08x size:0x%08x"
-+aspeed_smc_dma_rw(const char *dir, uint32_t flash_addr, uint64_t dram_addr, uint32_t size) "%s flash:@0x%08x dram:@0x%" PRIx64 " size:0x%08x"
- aspeed_smc_write(uint64_t addr,  uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
- aspeed_smc_flash_select(int cs, const char *prefix) "CS%d %sselect"
- 
+Changes from v3:
+- Add AST2700 Evaluation board in ASPEED document
+- Add avocado test cases for AST2700 Evaluation board
+- Fix reviewers review issues and add reviewers suggestions
+- Implement INTC model GICINT 128 to GICINT136 for AST2700
+
+Test steps:
+1. Download the latest openbmc image for AST2700 from AspeedTech-BMC/openbmc
+   repository, https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.01
+   link: https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.01/ast2700-default-obmc.tar.gz
+2. untar ast2700-default-obmc.tar.gz
+   ```
+   tar -xf ast2700-default-obmc.tar.gz
+   ```
+3. Run and the contents of scripts as following
+IMGDIR=ast2700-default
+UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+UBOOT_DTB_ADDR=$((0x400000000 + ${UBOOT_SIZE}))
+
+qemu-system-aarch64 -M ast2700-evb -nographic\
+ -device loader,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin,force-raw=on\
+ -device loader,addr=${UBOOT_DTB_ADDR},file=${IMGDIR}/u-boot.dtb,force-raw=on\
+ -device loader,addr=0x430000000,file=${IMGDIR}/bl31.bin,force-raw=on\
+ -device loader,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin,force-raw=on\
+ -device loader,addr=0x430000000,cpu-num=0\
+ -device loader,addr=0x430000000,cpu-num=1\
+ -device loader,addr=0x430000000,cpu-num=2\
+ -device loader,addr=0x430000000,cpu-num=3\
+ -smp 4\
+ -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd\
+ -serial mon:stdio\
+ -snapshot
+
+Jamin Lin (16):
+  aspeed/wdt: Add AST2700 support
+  aspeed/sli: Add AST2700 support
+  aspeed/sdmc: remove redundant macros
+  aspeed/sdmc: fix coding style
+  aspeed/sdmc: Add AST2700 support
+  aspeed/smc: correct device description
+  aspeed/smc: fix dma moving incorrect data length issue
+  aspeed/smc: support 64 bits dma dram address
+  aspeed/smc: Add AST2700 support
+  aspeed/scu: Add AST2700 support
+  aspeed/intc: Add AST2700 support
+  aspeed/soc: Add AST2700 support
+  aspeed: Add an AST2700 eval board
+  aspeed/soc: fix incorrect dram size for AST2700
+  test/avocado/machine_aspeed.py: Add AST2700 test case
+  docs:aspeed: Add AST2700 Evaluation board
+
+ docs/system/arm/aspeed.rst       |  39 +-
+ hw/arm/aspeed.c                  |  32 ++
+ hw/arm/aspeed_ast27x0.c          | 646 +++++++++++++++++++++++++++++++
+ hw/arm/meson.build               |   1 +
+ hw/intc/aspeed_intc.c            | 269 +++++++++++++
+ hw/intc/meson.build              |   1 +
+ hw/intc/trace-events             |   6 +
+ hw/misc/aspeed_scu.c             | 306 ++++++++++++++-
+ hw/misc/aspeed_sdmc.c            | 216 ++++++++++-
+ hw/misc/aspeed_sli.c             | 178 +++++++++
+ hw/misc/meson.build              |   3 +-
+ hw/misc/trace-events             |  11 +
+ hw/ssi/aspeed_smc.c              | 344 +++++++++++++++-
+ hw/ssi/trace-events              |   2 +-
+ hw/watchdog/wdt_aspeed.c         |  24 ++
+ include/hw/arm/aspeed_soc.h      |  27 +-
+ include/hw/intc/aspeed_intc.h    |  35 ++
+ include/hw/misc/aspeed_scu.h     |  47 ++-
+ include/hw/misc/aspeed_sdmc.h    |   5 +-
+ include/hw/misc/aspeed_sli.h     |  31 ++
+ include/hw/ssi/aspeed_smc.h      |   1 +
+ include/hw/watchdog/wdt_aspeed.h |   3 +-
+ tests/avocado/machine_aspeed.py  |  62 +++
+ 23 files changed, 2234 insertions(+), 55 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast27x0.c
+ create mode 100644 hw/intc/aspeed_intc.c
+ create mode 100644 hw/misc/aspeed_sli.c
+ create mode 100644 include/hw/intc/aspeed_intc.h
+ create mode 100644 include/hw/misc/aspeed_sli.h
+
 -- 
 2.25.1
 
