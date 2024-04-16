@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D27C4C04FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2859DC04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwo3O-0001Zl-MJ; Tue, 16 Apr 2024 15:01:14 -0400
+	id 1rwo4V-0005U0-SZ; Tue, 16 Apr 2024 15:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo37-0001Cw-DN
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:59 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo4F-0003go-Qp
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:02:08 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo31-0005fx-Qn
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:56 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-516cbf3fd3dso5982707e87.2
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo4C-0005tr-Cm
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:02:07 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-516d727074eso6174608e87.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713294049; x=1713898849; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713294122; x=1713898922; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0cSOUYBAUJgDyQn/Z100iE3+Sgt5Cj+78hNwZltzxNs=;
- b=WWc+gDkXmB/FHCwWPSOUAQP2rx4wMRhKrR+82tLpnhncn5GGnheWvS5Sssb+PbvF7i
- lUaaKTW9l/qSu+S//u4d4hQXZRVamzTdabW9e2D11p9bR2upz7RAe+s7In+B2F8eyI6K
- Ca2kqlBPpFRsPRmPE3RZKEkCzvdDNnXK+l8QjJH0Fp12koXAHtViY+kaQGMSVk4AWvWs
- e51l1hqx4apYZnGhEGZTsBCfSYZezI1rf5UgE273Mq0FWCm/imH928mU5iNN3wggz2fz
- oMGcVgyjWKXvuvYu62teqWhEDgFqxXMB8mg/ZEuVJOL4t7oLEITpEsiB7T+U8YlP06CO
- ybPw==
+ bh=h1653K/UfEWnXUTbr/YeJw2UmUosHHOUFfds+vppZrE=;
+ b=m1uu1bXdSeZn95aU1obdUE+N8UpmxJNLlyH3r5X5RSKi06txBlJsLRQMVBh4ZsI6oF
+ 5SYh+aa3YvHPNO7p7hmWL4GoJM6y+1BmZLf0oAN5c+VksvXVuAzi4WDIYOHa55cEmeuo
+ p6kGy1xPcalKykCSlcGZNtkDDG2qDia+dPBWx8cqd6MWi2IuqEIJKXfs6Am7oqYbRWyh
+ sE0DSE8LLy/rO7cGXPJ9ldDrUJUkz75P8fB1knZhlRw4cv8qbpwdRaR6GAwzVwvWlQaV
+ /jPjxRMF7RgywrF0eqmm4sigJdTvVFCWIvenwqELTHiZJg5QDQQiAd3sIf69i3LZsdk6
+ kSCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713294049; x=1713898849;
+ d=1e100.net; s=20230601; t=1713294122; x=1713898922;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0cSOUYBAUJgDyQn/Z100iE3+Sgt5Cj+78hNwZltzxNs=;
- b=oiCdjJ5PMlENXCbSZkF9q8toCQ95xG8DZF1MTA6hju/v1z5xr+0vTwn/YKrJMxD1kX
- zdtb5ZHUfZbnIlhSBP8XbZdCJewba57QfIvNqYHwihTLMwxlCz7bWyot8b6Q7cy+8Om2
- f59m9IPxkBS/uPsDyLoNh3a7ctqcroLARj9hMzqh+3LGAB+oz1unNnOlxVR7c3KyoLL9
- 6dS3jOpDbxjhuexio/aeOoNjIAmhmhpLAuUyF2mD0pLZfd9i8x97+RB0hvfiOq4ST7Ev
- LVlzdd4FDNwKfAr3TgOUic+nlHV9ZxEtYLvdJbfyaxKvhhkOpamytwdZX6KotE8tXn0B
- pf4Q==
-X-Gm-Message-State: AOJu0Yzmm0VoCRAMU9aNO8+BmteKRPMsywj/3ADPnzE8OcyOMDcU12RP
- Se+6F9r84LXOxarCBJreYyN6aQZtYah2ugns9UIAOL8fLQ+T9EiBD472YkgH9scL/n1i0ChAlxc
- u
-X-Google-Smtp-Source: AGHT+IHGTBCSVJo2t7yAUY9UWwABae+zuiW472THcqCnHvQ3bUekN+LNwbNpJnex0bMnOpxnGv/ltw==
-X-Received: by 2002:a05:6512:3c9e:b0:517:866a:117e with SMTP id
- h30-20020a0565123c9e00b00517866a117emr12821425lfv.7.1713294049051; 
- Tue, 16 Apr 2024 12:00:49 -0700 (PDT)
+ bh=h1653K/UfEWnXUTbr/YeJw2UmUosHHOUFfds+vppZrE=;
+ b=cRo7V9DtRM702xcrFGDGenQ9NANCw55BAN3iDkzO0ND/dYr21hjOYzmRq0OGoSZ4iT
+ Mn3ZEW2+zVkwG2NcvCz6L2GEXYkKkvwh2QC8lW72XTWd5OyG+/i9oYVW2gYKxgPGY/7Y
+ 45DRWN+6uYXmbhF7eMfn1puY/nO9m77/YWkSPZ3CN9qc8i3BaFME6pu5vQK7Rx8626Pc
+ r59VO3daQW1S9QOw7Xi0vgTaoIr3Z1UGWZ7RXk8ri64Wg7cV6NGm53dtU6Iibdt5nfez
+ oQVCp0vjaBWWuG3f1ipQc4GXx+euCdr0pd1dtXPj6C1ke3Qyi6GO6Pwde2D4uf52tt8a
+ 3o7g==
+X-Gm-Message-State: AOJu0YwAMy8zR1RlawLx1uNtOef68Q6JADFiGom7IU0p1N0bU5nQlDXd
+ FaIQJXVAzaE3/N7/qHIqSX+ZpVGHoudYKqjBZanULnVH+uHjuwTOTfAJfNe0OGI+zVG99Lak6Cs
+ 1
+X-Google-Smtp-Source: AGHT+IEHRsVutYB17m+/QrIlhkoNuNzc8b/Lou/MToYRe0nANYYcGjkDKUkf+XUo5NjTJqJrDznq6w==
+X-Received: by 2002:ac2:5a0f:0:b0:518:d259:8542 with SMTP id
+ q15-20020ac25a0f000000b00518d2598542mr5101592lfn.2.1713294122153; 
+ Tue, 16 Apr 2024 12:02:02 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- du2-20020a17090772c200b00a52299d8eecsm6710577ejc.135.2024.04.16.12.00.47
+ y9-20020a170906470900b00a51a74409dcsm7262977ejq.221.2024.04.16.12.01.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 12:00:48 -0700 (PDT)
+ Tue, 16 Apr 2024 12:02:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,29 +65,26 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v4 10/22] hw/i386/pc: Remove
- PCMachineClass::smbios_uuid_encoded
-Date: Tue, 16 Apr 2024 20:59:26 +0200
-Message-ID: <20240416185939.37984-11-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Subject: [PATCH v4 21/22] target/i386: Remove X86CPU::kvm_no_smi_migration
+ field
+Date: Tue, 16 Apr 2024 20:59:37 +0200
+Message-ID: <20240416185939.37984-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 References: <20240416185939.37984-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,57 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCMachineClass::smbios_uuid_encoded was only used by the
-pc-i440fx-2.1 machine, which got removed. It is now always
-true, remove it.
+X86CPU::kvm_no_smi_migration was only used by the
+pc-i440fx-2.3 machine, which got removed. Remove it
+and simplify kvm_put_vcpu_events().
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/hw/i386/pc.h | 1 -
- hw/i386/fw_cfg.c     | 3 +--
- hw/i386/pc.c         | 1 -
- 3 files changed, 1 insertion(+), 4 deletions(-)
+ target/i386/cpu.h     | 3 ---
+ target/i386/cpu.c     | 2 --
+ target/i386/kvm/kvm.c | 7 +------
+ 3 files changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index b528f17904..c2d9af36b2 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -109,7 +109,6 @@ struct PCMachineClass {
-     /* SMBIOS compat: */
-     bool smbios_defaults;
-     bool smbios_legacy_mode;
--    bool smbios_uuid_encoded;
-     SmbiosEntryPointType default_smbios_ep_type;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 6b05738079..5b016d6667 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2018,9 +2018,6 @@ struct ArchCPU {
+     /* if set, limit maximum value for phys_bits when host_phys_bits is true */
+     uint8_t host_phys_bits_limit;
  
-     /* RAM / address space compat: */
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index d802d2787f..f7c2501161 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -63,8 +63,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+-    /* Stop SMI delivery for migration compatibility with old machines */
+-    bool kvm_no_smi_migration;
+-
+     /* Forcefully disable KVM PV features not exposed in guest CPUIDs */
+     bool kvm_pv_enforce_cpuid;
  
-     if (pcmc->smbios_defaults) {
-         /* These values are guest ABI, do not change */
--        smbios_set_defaults("QEMU", mc->desc, mc->name,
--                            pcmc->smbios_uuid_encoded);
-+        smbios_set_defaults("QEMU", mc->desc, mc->name, true);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 33760a2ee1..f9991e7398 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7905,8 +7905,6 @@ static Property x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
+     DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
+     DEFINE_PROP_BOOL("l3-cache", X86CPU, enable_l3_cache, true),
+-    DEFINE_PROP_BOOL("kvm-no-smi-migration", X86CPU, kvm_no_smi_migration,
+-                     false),
+     DEFINE_PROP_BOOL("kvm-pv-enforce-cpuid", X86CPU, kvm_pv_enforce_cpuid,
+                      false),
+     DEFINE_PROP_BOOL("vmware-cpuid-freq", X86CPU, vmware_cpuid_freq, true),
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index e68cbe9293..88f4a7da33 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -4337,6 +4337,7 @@ static int kvm_put_vcpu_events(X86CPU *cpu, int level)
+     events.sipi_vector = env->sipi_vector;
+ 
+     if (has_msr_smbase) {
++        events.flags |= KVM_VCPUEVENT_VALID_SMM;
+         events.smi.smm = !!(env->hflags & HF_SMM_MASK);
+         events.smi.smm_inside_nmi = !!(env->hflags2 & HF2_SMM_INSIDE_NMI_MASK);
+         if (kvm_irqchip_in_kernel()) {
+@@ -4351,12 +4352,6 @@ static int kvm_put_vcpu_events(X86CPU *cpu, int level)
+             events.smi.pending = 0;
+             events.smi.latched_init = 0;
+         }
+-        /* Stop SMI delivery on old machine types to avoid a reboot
+-         * on an inward migration of an old VM.
+-         */
+-        if (!cpu->kvm_no_smi_migration) {
+-            events.flags |= KVM_VCPUEVENT_VALID_SMM;
+-        }
      }
  
-     /* tell smbios about cpuid version and features */
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index cd6335d6b4..2bf1bfd5b2 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1778,7 +1778,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     pcmc->has_acpi_build = true;
-     pcmc->rsdp_in_ram = true;
-     pcmc->smbios_defaults = true;
--    pcmc->smbios_uuid_encoded = true;
-     pcmc->gigabyte_align = true;
-     pcmc->has_reserved_memory = true;
-     pcmc->enforce_aligned_dimm = true;
+     if (level >= KVM_PUT_RESET_STATE) {
 -- 
 2.41.0
 
