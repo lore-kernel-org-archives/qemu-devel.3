@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87440C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A85BC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwjFU-0001oP-Gd; Tue, 16 Apr 2024 09:53:24 -0400
+	id 1rwjGJ-0002pJ-Ur; Tue, 16 Apr 2024 09:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjFP-0001jN-CX
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:53:19 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjG8-0002YN-9o
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:04 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjFM-0001ZM-1f
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:53:19 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4167fce0a41so30183335e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:53:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjG5-0001pu-F7
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:04 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-570423c4f80so973934a12.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713275594; x=1713880394; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713275639; x=1713880439; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r/B5UTN+VVzZIBHg8vuvzaIXLhoLwQMP7eYF+iW6nSk=;
- b=b23KKU09ePFrV1jVJJl/ioQJSuUgpPTMVX7uZDHfiyZDweIxQY56QHqQsukcYttyhv
- cIOjgnSuZFJQ5lu3NXnvHh7hjhYsscN47kIhyjjfyPoI4hL1+/ewr1cgmgvZ0tVNEtEU
- FPOVGnMGCfgFUNXfmWakC8hasbTGgNa+hYr0A3M8v2gwZA9lI7x3/jJ9HEtLf80QbxKi
- APKicOei6lluGwwahBPGJivJejlvU2slydSCVVLziA6yymXu0QdCJh3G7bmXrtHdK7Io
- uw0T30/lDgKPcSCxTE6rmdJQnwVW66UdCLpB8IZAp75VXn9U/R+MaeDoh0vNWi184Kes
- kKsg==
+ bh=0cSOUYBAUJgDyQn/Z100iE3+Sgt5Cj+78hNwZltzxNs=;
+ b=nT5CS1DcP8cMCSi8W4vlxRzaBmQtfKzCdcxNWIJbr14tMBZ1NeZNuX3wJTici29BlL
+ qNrKaQJsrJkJK2P52LuyRZTr/Tr+RqMgaqsLmxc16X4ORblhEnDt4jOC/wjbX7GZjRpE
+ 7NtPS2zk4qALXtQobT/HIY8JC1RsqTZ0vOAXavpofJts2w3yURdVwoYIEg9cYpyMCUof
+ 3COEyMuGRZcutBroa2EkV51FCh70b7VO+yaJcEmKIzMT1BMgOZiUzD1l2O35c5nqgoZH
+ VoaEtNiIliA5O3jlJcwBNewG0PSXlV7S49K1BEsoY9Ezr8gubAoxhWaM5pNmBhfwMz8b
+ 9nSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713275594; x=1713880394;
+ d=1e100.net; s=20230601; t=1713275639; x=1713880439;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r/B5UTN+VVzZIBHg8vuvzaIXLhoLwQMP7eYF+iW6nSk=;
- b=rMBlKv2SJ1aOslCb6d2UwSDnwX05pGkus/gYI5M2j4zHqYaNoApPUVmCUfUl/GJ4JV
- fNYp5blictgN0xAP3/2rehQUAPwaImWVRPRvt7lNQ0YT1wFEhKcQOvurxjN9o/tPcqLg
- hCwKyWl9XHOO1G+sGg6iwKylruHDgHCVOYUvXbPttPpSx16aFRxC/8pGELRneyDw/rYY
- xNZn5lVxXcORMSmBmol7Odhfupeq0I8VlZL3AwKZbDrVZnQYNWp4VR2QP4N0gLt1qEq5
- PteJxPDNeI6n0OQInYZ2Yig1ayIwx7dFUAqQA+k0wUkQNpeskDVX5sxVzaTMGpawlvRZ
- YFsQ==
-X-Gm-Message-State: AOJu0YztJzbBL2Hv7U/iedaqqFjwx7ABbThZU6bvaJM2pxFUo/MuUC5u
- Vb5Bj02EYe1hcXxRGRlu9RF237XUjsdfWUBO+lN54QuqLu8YFneiVXP0bvKGa6uI+jFIk6JIs57
- 7
-X-Google-Smtp-Source: AGHT+IGr25g7tT9GOge8RppCUGG0XGC0pUUb6sMITSrWC+oN3oRm8Ll4CqHRAl7M2H0Fphqk+ClUQA==
-X-Received: by 2002:a05:600c:1c0d:b0:418:9ff4:3eed with SMTP id
- j13-20020a05600c1c0d00b004189ff43eedmr1222847wms.20.1713275593925; 
- Tue, 16 Apr 2024 06:53:13 -0700 (PDT)
+ bh=0cSOUYBAUJgDyQn/Z100iE3+Sgt5Cj+78hNwZltzxNs=;
+ b=Kw3dGnP6oOfsPxfNjw54xeOYHl+cwHvwuBZTm1T65VrSA3SliOLTrJyX+FXSxjxky/
+ l8Cs+jzfg29xn22nc6A0aXe7LpmAhFwUqbGJFe1tbDWz1oHC3SCVlJsWXVM5DC+HK0iW
+ fkr8MmWuSvDFJBvyseASN4KC7SXMaPM9ZiAg92porwdSBijM03oGfN01X3xe53CxlCfC
+ EDLVQLR1/3lpTPoHGn78pg9Wu3OzqgKN7iVOfkIdk4zKBAElx/1w32Jz0V3H/y6Xta4v
+ 4owwjgm8QmDgWIm+DFZorgGtr+F/le/RqbJ5FvZ0Q2O8sDlS5Adkg3ofoy6pzN+Zzzjf
+ I0Hw==
+X-Gm-Message-State: AOJu0YwJdazt05rhs+Ew+KxpSmssvddHDuK4GWNe04R47BvY2D9rj1Ae
+ BvvjrXO4wgWOvTjZG1lO7DARlWessG4SOUPbiow0WybPNF2xz6r11pJhiorTGSsilMqyY5MvAKt
+ U
+X-Google-Smtp-Source: AGHT+IH25qpXTodrDyAR9/gxikoinWnTP0zcJbrjsTK89otp6pxL4CKwj5mWVB7RUHKX+qhqsQivEQ==
+X-Received: by 2002:a17:906:689:b0:a52:613d:e49e with SMTP id
+ u9-20020a170906068900b00a52613de49emr4621712ejb.36.1713275639502; 
+ Tue, 16 Apr 2024 06:53:59 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- m2-20020a05600c4f4200b0041892c774bcsm2586712wmq.2.2024.04.16.06.53.12
+ bv1-20020a170906b1c100b00a522cd687aesm6303312ejb.142.2024.04.16.06.53.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 06:53:13 -0700 (PDT)
+ Tue, 16 Apr 2024 06:53:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,19 +65,21 @@ Cc: Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v3 03/22] hw/usb/hcd-xhci: Remove XHCI_FLAG_FORCE_PCIE_ENDCAP
- flag
-Date: Tue, 16 Apr 2024 15:52:32 +0200
-Message-ID: <20240416135252.8384-4-philmd@linaro.org>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v3 10/22] hw/i386/pc: Remove
+ PCMachineClass::smbios_uuid_encoded
+Date: Tue, 16 Apr 2024 15:52:39 +0200
+Message-ID: <20240416135252.8384-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416135252.8384-1-philmd@linaro.org>
 References: <20240416135252.8384-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,58 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
-pc-i440fx-2.0 machine, which got removed. Remove it
-and simplify usb_xhci_pci_realize().
+PCMachineClass::smbios_uuid_encoded was only used by the
+pc-i440fx-2.1 machine, which got removed. It is now always
+true, remove it.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/usb/hcd-xhci.h     | 1 -
- hw/usb/hcd-xhci-nec.c | 2 --
- hw/usb/hcd-xhci-pci.c | 3 +--
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ include/hw/i386/pc.h | 1 -
+ hw/i386/fw_cfg.c     | 3 +--
+ hw/i386/pc.c         | 1 -
+ 3 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
-index 98f598382a..1efa4858fb 100644
---- a/hw/usb/hcd-xhci.h
-+++ b/hw/usb/hcd-xhci.h
-@@ -37,7 +37,6 @@ typedef struct XHCIEPContext XHCIEPContext;
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index b528f17904..c2d9af36b2 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -109,7 +109,6 @@ struct PCMachineClass {
+     /* SMBIOS compat: */
+     bool smbios_defaults;
+     bool smbios_legacy_mode;
+-    bool smbios_uuid_encoded;
+     SmbiosEntryPointType default_smbios_ep_type;
  
- enum xhci_flags {
-     XHCI_FLAG_SS_FIRST = 1,
--    XHCI_FLAG_FORCE_PCIE_ENDCAP,
-     XHCI_FLAG_ENABLE_STREAMS,
- };
+     /* RAM / address space compat: */
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index d802d2787f..f7c2501161 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -63,8 +63,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
  
-diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
-index 328e5bfe7c..5d5b069cf9 100644
---- a/hw/usb/hcd-xhci-nec.c
-+++ b/hw/usb/hcd-xhci-nec.c
-@@ -43,8 +43,6 @@ static Property nec_xhci_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
-                     XHCI_FLAG_SS_FIRST, true),
--    DEFINE_PROP_BIT("force-pcie-endcap", XHCINecState, flags,
--                    XHCI_FLAG_FORCE_PCIE_ENDCAP, false),
-     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
-     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-index 4423983308..cbad96f393 100644
---- a/hw/usb/hcd-xhci-pci.c
-+++ b/hw/usb/hcd-xhci-pci.c
-@@ -148,8 +148,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
-                      PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &s->xhci.mem);
- 
--    if (pci_bus_is_express(pci_get_bus(dev)) ||
--        xhci_get_flag(&s->xhci, XHCI_FLAG_FORCE_PCIE_ENDCAP)) {
-+    if (pci_bus_is_express(pci_get_bus(dev))) {
-         ret = pcie_endpoint_cap_init(dev, 0xa0);
-         assert(ret > 0);
+     if (pcmc->smbios_defaults) {
+         /* These values are guest ABI, do not change */
+-        smbios_set_defaults("QEMU", mc->desc, mc->name,
+-                            pcmc->smbios_uuid_encoded);
++        smbios_set_defaults("QEMU", mc->desc, mc->name, true);
      }
+ 
+     /* tell smbios about cpuid version and features */
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index cd6335d6b4..2bf1bfd5b2 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1778,7 +1778,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     pcmc->has_acpi_build = true;
+     pcmc->rsdp_in_ram = true;
+     pcmc->smbios_defaults = true;
+-    pcmc->smbios_uuid_encoded = true;
+     pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_aligned_dimm = true;
 -- 
 2.41.0
 
