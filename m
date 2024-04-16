@@ -4,78 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F795C04FF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4084C41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwepW-0005u6-TW; Tue, 16 Apr 2024 05:10:18 -0400
+	id 1rwep0-0005s1-Rb; Tue, 16 Apr 2024 05:09:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rwepU-0005tv-W0
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:10:17 -0400
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rwepR-00069P-Ea
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:10:16 -0400
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-434b7ab085fso44284881cf.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 02:10:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713258612; x=1713863412; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Cph4wnFsS72o4diDKIbPBncVkYLnfyS5FY292uJ6NYg=;
- b=J4Im3HGOzv56Vt4d24s1yAcicxD5Tt+ocJR4tzXAE9XXmb5Hh1oM+gOPXncBCuAluq
- ZhvtEaOZd2LNqE93mQHdGqJ347P95xY/o0FfH+KmTH1MVnWRmNtla6TInXZ9WcwHNblQ
- 5sj+GenSggD7JIuIohrOKE1MAs3b+7CMKCsx/f3EQIOH/RfQu2sALdkw1H34VeuDcjEr
- ABLTMWgy60l9rltTnnc0EYFDJaewpt4rzuw1B9c+FYAFpCAaw86xTT8nSJVnPSEcyzYG
- t0WC8VdPxk59FVhcc+ngegYYo623IOuGISfIbc5U63GmqAF+TsEqu1fmN4N05Ky7ocdw
- enlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713258612; x=1713863412;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Cph4wnFsS72o4diDKIbPBncVkYLnfyS5FY292uJ6NYg=;
- b=Vb++bV/b4Qj/Vmt0C+HQHkVoZFCmdryU+Btw3AU+GQgzqpAQlgwa/mwrz2UGpeqOYW
- rA8bkb/h1Pop4ulUk8DXQejPEYTyw1BKHULgLUD91bQv72e37qZm8ZBxnFvj5pbMmAr2
- gPKecDIPBoJT6Wg9fHJBOhXNOh/3GIzkTk6baniVl55TmQphLXX66rBjHtJg/8Ae0r8E
- XcbAhZS/8iPps33hlXEuUwtd8kxyqyvL2NX/clIf3FBLxOSPD5Md2wLFmhjWeVKUhEu2
- /w79Wp7AIqVpc0HoIYNeT5/bZN7EE5ANRWQMjBo/l9blW0MfgbEA8cJbJ0PACysqD9EU
- 3Lcw==
-X-Gm-Message-State: AOJu0YyAcknivMBnkHZ4c+6xeY0CSsl0LMSbxQR+aD8uxkkot5UB8rgh
- hxL40U04JNRrR8zUi3ooXJt3LbEcGPF58zGDZH6xlfWOxQFZ+M7b31uuflBwvJ9ljRxvarcLfd2
- fBi/6AzeHp0sG1+q5KsixBkONyco=
-X-Google-Smtp-Source: AGHT+IEREJQv5AuemdOwRusZu/gF+fyZVY3aaaZaFObeZq+8UX76aHXSJHVVBdT1IZLjzq8/6Y3XIEPQW7EddhjVStc=
-X-Received: by 2002:ac8:5fc3:0:b0:434:6c3e:3074 with SMTP id
- k3-20020ac85fc3000000b004346c3e3074mr1897219qta.22.1713258611966; Tue, 16 Apr
- 2024 02:10:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1rweoy-0005rZ-V7
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:09:44 -0400
+Received: from mail-bn8nam04on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2408::601]
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1rweor-0005uL-04
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:09:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=aEn+LcR8PvmC0Y2cv4Xza6MFy03wJXhfFmwQEBspDGruSa7AecnFl/w8s5eCOOdij8bAjq0LVuUPi3WswXUFkW9Xd7jJCpPR/03e78smxR9QTmjqp64Exfou6hoxokFxMWsWwHsxiU6K4pu7JP+TLQ+1TcX/RtmEtGrbgkgaRVSQF8ytsEbYriQRqB2lISEl5vl/osr6RkA//02CPFHt+7Z9Ef6j8TqpcqtFIiSdkEHTfc7rzY+zb2xNhHoC0Smcrw68IXWJO5kQ/InyjQCLlwB3Ly9ASw3hRoLHzW8PQU3n2zTYPEiTfjODxq2IqR+owFSKo7olOCFKgCeqaPcsaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yLpST9PUcWfHD4cwNLpsjnZMGjCxGEY9fXxLoCn+SCk=;
+ b=X0dDEnkdH9+cnZpFFJFo+Py2gZOMV3sJvetvJ8T2a+u9cT87K5sorojdMrHW8r4sQf0zrKZOMoUzKOxNFZAe1cn+dIwlPJfryMPyi9kFigEQKNSOaQDXPAzIM8Sgz1Xckrs3lr2EStrsipOoWBAMaSbyXpwkYi23bBvJyJ36k1aVikPCqcIOQXCnxhKr9FRmkAzMitN4R7yKW48WEQlgnZdFMot4hEKawPKJE6JqEehrjxDaDAQTLE4fm1bjrD3DYlkYSEv8BiTkTIDbIxQFDq4F7muaiHBo1fnwLVE3xAPw/yMWQ5UQDYLklbh5EuxiQZ4lf/xpl04Y4qAM9F/Prg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yLpST9PUcWfHD4cwNLpsjnZMGjCxGEY9fXxLoCn+SCk=;
+ b=NMjcxfszVD0emSXqCCdp153wxsLyB6ovAApCrw9NE638KLcPeIRTbQxECsXoHOTHbbre1M8tfxH4dgPFoTb8lGI78igv6pBilc7LlFUqIAklDkphq5nwSB2kqR4ugeotJxcxXbKakzD/JzCNssvjR5u2Uq8gsz56UNUtR5VkKvs=
+Received: from CH2PR10CA0006.namprd10.prod.outlook.com (2603:10b6:610:4c::16)
+ by LV8PR12MB9450.namprd12.prod.outlook.com (2603:10b6:408:202::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.46; Tue, 16 Apr
+ 2024 09:09:30 +0000
+Received: from CH1PEPF0000AD79.namprd04.prod.outlook.com
+ (2603:10b6:610:4c:cafe::f9) by CH2PR10CA0006.outlook.office365.com
+ (2603:10b6:610:4c::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.39 via Frontend
+ Transport; Tue, 16 Apr 2024 09:09:26 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CH1PEPF0000AD79.mail.protection.outlook.com (10.167.244.57) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7452.22 via Frontend Transport; Tue, 16 Apr 2024 09:09:26 +0000
+Received: from SATLEXMB08.amd.com (10.181.40.132) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 16 Apr
+ 2024 04:09:26 -0500
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB08.amd.com
+ (10.181.40.132) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 16 Apr
+ 2024 02:09:26 -0700
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
+ Transport; Tue, 16 Apr 2024 04:09:25 -0500
+Date: Tue, 16 Apr 2024 11:09:23 +0200
+From: Luc Michel <luc.michel@amd.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/6] allwinner-i2c, adm1272: Use device_cold_reset() for
+ software-triggered reset
+Message-ID: <Zh5AQ1mQYOdNsyD5@XFR-LUMICHEL-L2.amd.com>
+References: <20240412160809.1260625-1-peter.maydell@linaro.org>
+ <20240412160809.1260625-3-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20240324152150.21506-1-irina.ryapolova@syntacore.com>
- <CAJ+F1C+hB4Awoids71q3RU8od+_QfqEm47c=3AE8UoC=7+q74A@mail.gmail.com>
-In-Reply-To: <CAJ+F1C+hB4Awoids71q3RU8od+_QfqEm47c=3AE8UoC=7+q74A@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 16 Apr 2024 13:10:00 +0400
-Message-ID: <CAJ+F1CJOt=HLASCwKeFqHwu0A+_H4vx+A=2ZOc-75vONkZYW2A@mail.gmail.com>
-Subject: Re: [PATCH] chardev/char-win-stdio: Fix keyboard input after exit
- Qemu on
-To: Irina Ryapolova <irina.ryapolova@syntacore.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240412160809.1260625-3-peter.maydell@linaro.org>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD79:EE_|LV8PR12MB9450:EE_
+X-MS-Office365-Filtering-Correlation-Id: 50558a11-a959-40af-7a9f-08dc5df4ea98
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 4iGIuvumxewzgD/GOFcdktrDX7oEzkPVWgqf6MkJV9RmKCU7DoY+Yp1oMg7NWoORa7xihiW7LsUfgf9ytdUUwPpOfIhXZROcoIByqMqBgb8y+VCMBKV9CdUCEIqvTfV51mjGWG5HuixGCKEjeNOp5Wh0lBxqp6KGo3ERK8uy9D+F3+QNQq2DjZ3tC/URafQgWSLJff81GpCRpPp9/h+fK+Jnoi+X/1nt+/6m7KV+wda1C8zjPTdVdumDMOlXHffGBzUcX7NIQBD3rYIJ8c51t+9fSISCS5EDj7bN/8LxegWX6lvcw6CGY1w89zrMFcTkOjn7AjP+V4zybb9Ip+CXApaRTL+JP2YS2FqgI0U77Tk3r640/YEd1Nx4h3hctB2VD9OSncqf9SQrfXKwv9ch+jhMQA9FAvpEVyfz0rF59oe2q4+yhsVLX2eOd+QDLspW/C7IoB1XS/O0WsfI+JhJoKh0hFlIjyGV4lz/Rdn6+FzJQbTzK661vx5DCa/Voq/Ekvak08on954N81FTehO64MTYNPKG6feW/njnQe5gqYszlmPp36SPKdASau7ksD0mBGOxb/ErySaH+0fTbvSfX4M6HoLKrXRhrCj5dRT+GzvVKCQD0VJvxjucaI0xXWTz93uvFJSz4L66jfAeVF5PfcXKjQjC+akK1a2XlMfU+FD4MDvLBWh0KBMx2erEDbR/2E6Y7r/qNigUw51V953qpVQx3w+UHGtlGDr3hBEob+SobswfyJN+yzULUOLa6a4H
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(82310400014)(36860700004)(1800799015)(376005); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 09:09:26.8407 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 50558a11-a959-40af-7a9f-08dc5df4ea98
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD79.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9450
+Received-SPF: permerror client-ip=2a01:111:f403:2408::601;
+ envelope-from=Luc.Michel@amd.com;
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,51 +128,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Irina
+On 17:08 Fri 12 Apr     , Peter Maydell wrote:
+> Rather than directly calling the device's implementation of its 'hold'
+> reset phase, call device_cold_reset(). This means we don't have to
+> adjust this callsite when we add another argument to the function
+> signature for the hold and exit reset methods.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-On Mon, Mar 25, 2024 at 10:44=E2=80=AFAM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
->
-> Hi
->
-> On Sun, Mar 24, 2024 at 7:23=E2=80=AFPM Irina Ryapolova
-> <irina.ryapolova@syntacore.com> wrote:
-> >
-> > After exit Qemu need to return the terminal to the default state.
-> >
-> > Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
-> > ---
-> >  chardev/char-win-stdio.c | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> >
-> > diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-> > index 1a18999e78..4fa2c3de8b 100644
-> > --- a/chardev/char-win-stdio.c
-> > +++ b/chardev/char-win-stdio.c
-> > @@ -220,6 +220,7 @@ err1:
-> >  static void char_win_stdio_finalize(Object *obj)
-> >  {
-> >      WinStdioChardev *stdio =3D WIN_STDIO_CHARDEV(obj);
-> > +    DWORD dwMode;
-> >
-> >      if (stdio->hInputReadyEvent !=3D INVALID_HANDLE_VALUE) {
-> >          CloseHandle(stdio->hInputReadyEvent);
-> > @@ -230,6 +231,10 @@ static void char_win_stdio_finalize(Object *obj)
-> >      if (stdio->hInputThread !=3D INVALID_HANDLE_VALUE) {
-> >          TerminateThread(stdio->hInputThread, 0);
-> >      }
-> > +
-> > +    GetConsoleMode(stdio->hStdIn, &dwMode);
-> > +    dwMode &=3D ~ENABLE_VIRTUAL_TERMINAL_INPUT;
-> > +    SetConsoleMode(stdio->hStdIn, dwMode);
->
-> I'd suggest saving the mode when opening instead, to make sure we
-> restore the same value.
->
-> thanks
+Reviewed-by: Luc Michel <luc.michel@amd.com>
 
-Do you agree? Could you update the patch? thanks
+> ---
+>  hw/i2c/allwinner-i2c.c | 3 +--
+>  hw/sensor/adm1272.c    | 2 +-
+>  2 files changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/i2c/allwinner-i2c.c b/hw/i2c/allwinner-i2c.c
+> index 8abcc39a5c2..96c20c86372 100644
+> --- a/hw/i2c/allwinner-i2c.c
+> +++ b/hw/i2c/allwinner-i2c.c
+> @@ -385,8 +385,7 @@ static void allwinner_i2c_write(void *opaque, hwaddr offset,
+>          break;
+>      case TWI_SRST_REG:
+>          if (((value & TWI_SRST_MASK) == 0) && (s->srst & TWI_SRST_MASK)) {
+> -            /* Perform reset */
+> -            allwinner_i2c_reset_hold(OBJECT(s));
+> +            device_cold_reset(DEVICE(s));
+>          }
+>          s->srst = value & TWI_SRST_MASK;
+>          break;
+> diff --git a/hw/sensor/adm1272.c b/hw/sensor/adm1272.c
+> index 1f7c8abb838..a19557ec9ea 100644
+> --- a/hw/sensor/adm1272.c
+> +++ b/hw/sensor/adm1272.c
+> @@ -386,7 +386,7 @@ static int adm1272_write_data(PMBusDevice *pmdev, const uint8_t *buf,
+>          break;
+> 
+>      case ADM1272_MFR_POWER_CYCLE:
+> -        adm1272_exit_reset((Object *)s);
+> +        device_cold_reset(DEVICE(s));
+>          break;
+> 
+>      case ADM1272_HYSTERESIS_LOW:
+> --
+> 2.34.1
+> 
+> 
 
---=20
-Marc-Andr=C3=A9 Lureau
+-- 
 
