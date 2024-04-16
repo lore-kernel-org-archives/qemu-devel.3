@@ -4,90 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62666C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 12:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29EEDC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwiEw-0004Sa-UP; Tue, 16 Apr 2024 08:48:46 -0400
+	id 1rwiPB-0007Gy-Vu; Tue, 16 Apr 2024 08:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rwiEv-0004Rz-1K
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 08:48:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hsu@peterdavehello.org>)
+ id 1rwh2K-0001ny-Tf
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:31:40 -0400
+Received: from mail-4317.proton.ch ([185.70.43.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rwiEr-0004yK-A3
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 08:48:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713271720;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HWa+11aDS5+sC4igVjpxUSaARS6hQfyXQYY5jxAl8qU=;
- b=LzHGAJEjfOHqFVI0R6Jw6XEocgZNZGnWV12fMywVyvV1BiUmzwwKZTFfO93YWP5T/EYVQk
- DP6lgkEXKuqLHJkFYb9fPQZeQE21q5u9ZqvzCv+wOJe3XDXdc8BaPe819L88C+Aey+PVJr
- AdfYhTl/ohbd6siR/UTx0sx2R6dowHw=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-Vb2UQjzDOlS-x7h60MLTcw-1; Tue, 16 Apr 2024 08:48:37 -0400
-X-MC-Unique: Vb2UQjzDOlS-x7h60MLTcw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a4e9ac44d37so263827066b.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 05:48:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713271716; x=1713876516;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HWa+11aDS5+sC4igVjpxUSaARS6hQfyXQYY5jxAl8qU=;
- b=BllJiYb2LBW1rhjWoi5TncYUxUhJ4Idlqj/QJ4guDublBfMd0Ybm8rihNu8nhCI9mI
- WxuHY1LBVmbD3uLDsjWQKYVlbegGxv3pzKxgQ+8X05h0S7r4pzEkLkRlwe7pRoPgJSzw
- 88ms1NQE7fgSOHcH0hdfY0CSIhfgZ1Hq/fmtbkVxUkPwU2PKLTYPL0zYYu+hxtFIfsfn
- 6v4RdWlU+xlwXSsbTNe3W/JAFJv+jcdHbxZmS3PNyedXGKxXvAO6vP9Xz91NixTLjdZu
- /81A+71CC6E4/U7fzS27M8GqWRuY2t2TThzqg59CPs/0PxD9c4aifh7eXtZJ3BuPle6V
- n/nw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV226R+ZaSlsTaEqKKf+5bmPUpHZrboeM5OnUzCXstjXMVDSGYuu/r9W7w1HNFxln+AqOsJp1SWerbgBP5f4tB+/qqwwPY=
-X-Gm-Message-State: AOJu0YxkJTUaz3DjPr97s2GCzqM/O5W6KiUW2YmQGEX0e0AQxo0Y9pZc
- Nj+wcxY6m+AvmMaXxtGpHChH6xEwPFDMgpqYyF/FTa7zzOTgMo0OYXejkDC2HxlhuoH+MXu5VGu
- DSmmK4n3VSWMQ6SMoWaosqaCGuEMsu+HdfXJA4teDBji9NzXDDMDTk1ZIiG3XjWScBpNCO/pZCe
- ZWloh740Rg9fGH8uBjRzuig3nk/3A=
-X-Received: by 2002:a17:906:f745:b0:a52:6a7d:ebe2 with SMTP id
- jp5-20020a170906f74500b00a526a7debe2mr3158319ejb.14.1713271716707; 
- Tue, 16 Apr 2024 05:48:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJudLCRK7dq2ymZgWzJ/g+gb+HlYpoH/h9zckpz8aGuiKYCL/a23RDAasEwWk7g2l+w3Y1huMwwCujZEFlMWE=
-X-Received: by 2002:a17:906:f745:b0:a52:6a7d:ebe2 with SMTP id
- jp5-20020a170906f74500b00a526a7debe2mr3158306ejb.14.1713271716323; Tue, 16
- Apr 2024 05:48:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hsu@peterdavehello.org>)
+ id 1rwh2H-0007On-IF
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:31:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=peterdavehello.org;
+ s=protonmail; t=1713267093; x=1713526293;
+ bh=jB+DsHeLKsoztsHH3i8WfLOpjDZzFWljYEOKwLTu6rw=;
+ h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=V36zoBvSYPzdmxoyWW1R7ZF8k1VgfCFdTjSkwiqXTot1ySmMIuaZI/nAGloQ2K25J
+ cjAiwTyWP5ZbWBJke7C6aja+4pxh0nG6fBYLbIVbRurziw3ijsDcxaQhh0i5iXAhqi
+ ZpjND/yZIwO+YvXI0QYX4SQpKXPcbNLHGVaYyCYp5nlJshlRB6DxjrK6wYv55hqCjT
+ feuF9qGYSv+Bf5bD0HADtH8LAAfRiqSq9YxyGCzGqo1lAYCzyl0Xoilv9NPLIATVtY
+ BahahIfTBsq82ZLxhD0OM6KhGpXxSKBLNwJi+ho+xbY2SU9bR0gj/ffMdEJTsZmpNP
+ zV14Aa1uwgXzA==
+Date: Tue, 16 Apr 2024 11:31:24 +0000
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+From: Peter Dave Hello <hsu@peterdavehello.org>
+Subject: [PATCH] Add zh_TW Traditional Chinese translation
+Message-ID: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
+Feedback-ID: 93059541:user:proton
 MIME-Version: 1.0
-References: <cover.1713178348.git.mst@redhat.com>
- <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
- <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
- <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
- <CAFEAcA_WxhOpjtZ5r-CfoOaf1aiKeaEV9eX=drb1JaBCiBoDKA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_WxhOpjtZ5r-CfoOaf1aiKeaEV9eX=drb1JaBCiBoDKA@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Tue, 16 Apr 2024 20:47:57 +0800
-Message-ID: <CACLfguX=OXk9Q-ax87FOTADT+b5Yov1x14XBgxH5J2=SGy1O6w@mail.gmail.com>
-Subject: Re: [PULL 1/1] virtio-pci: fix use of a released vector
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, 
- Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=185.70.43.17; envelope-from=hsu@peterdavehello.org;
+ helo=mail-4317.proton.ch
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 16 Apr 2024 08:59:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,60 +65,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 16, 2024 at 7:50=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Tue, 16 Apr 2024 at 12:05, Cindy Lu <lulu@redhat.com> wrote:
-> >
-> > On Tue, Apr 16, 2024 at 6:01=E2=80=AFPM Peter Maydell <peter.maydell@li=
-naro.org> wrote:
-> > > Here we pass that through to kvm_virtio_pci_vector_use_one().
-> > > In kvm_virtio_pci_vector_use_one()'s error-exit path ("undo")
-> > > it does
-> > >     vector =3D virtio_queue_vector(vdev, queue_no);
-> > > and in virtio_queue_vector() it does:
-> > >
-> > >     return n < VIRTIO_QUEUE_MAX ? vdev->vq[n].vector :
-> > >         VIRTIO_NO_VECTOR;
-> > >
-> > > where 'n' is an int, so if we can get here with queue_no being
-> > > VIRTIO_CONFIG_IRQ_IDX then we'll index off the front of the
-> > > vdev->vq[] array.
-> > >
-> > > Maybe this is a "can't happen" case, but it does seem odd that
-> > > virtio_queue_vector() only bounds-checks the "too big" case
-> > > for its argument and not the "too small" case and/or it
-> > > doesn't have a special case for VIRTIO_CONFIG_IRQ_IDX.
-> > >
-> > > > +    }
-> > > > +}
-> > > > +
-> > >
-> > hi peter
-> > I think we can simply remove the part
-> >     vector =3D virtio_queue_vector(vdev, queue_no);
-> > the vector is get from virtio_pci_get_notifier() and don't need to get =
-it again
-> > I will send the fix soon
->
-> The error handling in kvm_virtio_pci_vector_use_one() looks
-> a bit odd in other ways, too. The only bit of "undoing"
-> it does as far as I can see is calling kvm_virtio_pci_irqfd_release(),
-> but there is no code path that gets to there where the
-> main codepath's call to kvm_virtio-pci_irqfd_use() succeeded
-> and needs to be undone. So perhaps the entire "undo" code
-> block should be deleted, and the "goto undo" lines
-> replaced by simple "return ret;" ?  (The codepath
-> for "kvm_virtio_pci_irqfd_use() failed" already does the
-> "kvm_virtio_pci_vq_vector_release()" by hand there.)
->
-> thanks
-> -- PMM
->
-Hi peter,
-Really thanks for your help. I have rewrite this part, the error
-handling part is incorrect
-Thanks
-Cindy
+From: Peter Dave Hello <hsu@peterdavehello.org>
+Date: Tue, 16 Apr 2024 00:43:29 +0800
+Subject: [PATCH] Add a simple zh_TW Traditional Chinese translation
+
+This patch adds a basic zh_TW translation file for Taiwan Traditional
+Chinese users.
+
+Signed-off-by: Peter Dave Hello <hsu@peterdavehello.org>
+---
+ po/LINGUAS  |  1 +
+ po/zh_TW.po | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 94 insertions(+)
+ create mode 100644 po/zh_TW.po
+
+diff --git a/po/LINGUAS b/po/LINGUAS
+index 9b33a36..08163e8 100644
+--- a/po/LINGUAS
++++ b/po/LINGUAS
+@@ -7,3 +7,4 @@ sv
+ tr
+ uk
+ zh_CN
++zh_TW
+diff --git a/po/zh_TW.po b/po/zh_TW.po
+new file mode 100644
+index 0000000..d25557e
+--- /dev/null
++++ b/po/zh_TW.po
+@@ -0,0 +1,93 @@
++# Chinese translations for PACKAGE package.
++# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
++# This file is distributed under the same license as the PACKAGE package.
++# Peter Hsu <hsu@peterdavehello.org>, 2024.
++#
++msgid ""
++msgstr ""
++"Project-Id-Version: PACKAGE VERSION\n"
++"Report-Msgid-Bugs-To: \n"
++"POT-Creation-Date: 2024-04-16 17:52+0800\n"
++"PO-Revision-Date: 2024-04-16 17:52+0800\n"
++"Last-Translator: Peter Hsu <hsu@peterdavehello.org>\n"
++"Language-Team: Chinese (traditional)\n"
++"Language: zh_TW\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=3DASCII\n"
++"Content-Transfer-Encoding: 8bit\n"
++
++#: ui/gtk.c:231
++msgid " - Press Ctrl+Alt+G to release grab"
++msgstr " - =E6=8C=89=E4=B8=8B Ctrl+Alt+G =E4=BB=A5=E9=87=8B=E6=94=BE=
+=E9=8E=96=E5=AE=9A"
++
++#: ui/gtk.c:235
++msgid " [Paused]"
++msgstr " [=E5=B7=B2=E6=9A=AB=E5=81=9C]"
++
++#: ui/gtk.c:2094
++msgid "_Pause"
++msgstr "=E6=9A=AB=E5=81=9C(_P)"
++
++#: ui/gtk.c:2100
++msgid "_Reset"
++msgstr "=E9=87=8D=E8=A8=AD(_R)"
++
++#: ui/gtk.c:2103
++msgid "Power _Down"
++msgstr "=E9=97=9C=E6=A9=9F(_D)"
++
++#: ui/gtk.c:2109
++msgid "_Quit"
++msgstr "=E7=B5=90=E6=9D=9F(_Q)"
++
++#: ui/gtk.c:2239
++msgid "_Fullscreen"
++msgstr "=E5=85=A8=E8=9E=A2=E5=B9=95(_F)"
++
++#: ui/gtk.c:2242
++msgid "_Copy"
++msgstr "=E8=A4=87=E8=A3=BD(_C)"
++
++#: ui/gtk.c:2256
++msgid "Zoom _In"
++msgstr "=E6=94=BE=E5=A4=A7(_I)"
++
++#: ui/gtk.c:2265
++msgid "Zoom _Out"
++msgstr "=E7=B8=AE=E5=B0=8F(_O)"
++
++#: ui/gtk.c:2272
++msgid "Best _Fit"
++msgstr "=E6=9C=80=E4=BD=B3=E5=B0=BA=E5=AF=B8(_F)"
++
++#: ui/gtk.c:2279
++msgid "Zoom To _Fit"
++msgstr "=E8=AA=BF=E6=95=B4=E8=87=B3=E6=9C=80=E4=BD=B3=E5=A4=A7=E5=B0=8F(_F=
+)"
++
++#: ui/gtk.c:2285
++msgid "Grab On _Hover"
++msgstr "=E6=BB=91=E9=81=8E=E6=99=82=E9=8E=96=E5=AE=9A(_H)"
++
++#: ui/gtk.c:2288
++msgid "_Grab Input"
++msgstr "=E9=8E=96=E5=AE=9A=E8=BC=B8=E5=85=A5(_G)"
++
++#: ui/gtk.c:2317
++msgid "Show _Tabs"
++msgstr "=E9=A1=AF=E7=A4=BA=E5=88=86=E9=A0=81(_T)"
++
++#: ui/gtk.c:2320
++msgid "Detach Tab"
++msgstr "=E5=88=86=E9=9B=A2=E5=88=86=E9=A0=81"
++
++#: ui/gtk.c:2324
++msgid "Show Menubar"
++msgstr "=E9=A1=AF=E7=A4=BA=E5=8A=9F=E8=83=BD=E8=A1=A8=E5=88=97(_M)"
++
++#: ui/gtk.c:2346
++msgid "_Machine"
++msgstr "=E6=A9=9F=E5=99=A8(_M)"
++
++#: ui/gtk.c:2351
++msgid "_View"
++msgstr "=E6=AA=A2=E8=A6=96(_V)"
+--=20
+2.25.1
+
 
 
