@@ -4,87 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CD2C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD0FC04FF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwjG6-0002P6-Ig; Tue, 16 Apr 2024 09:54:02 -0400
+	id 1rwjG5-0002OH-Ry; Tue, 16 Apr 2024 09:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjG5-0002MH-0i
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:01 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjG0-0001pK-Rs
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:00 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-56e136cbcecso5341711a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713275633; x=1713880433; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WRu6gIdKkp2mUDaWmMaxQTExs6byim7bx/MfazoYUmc=;
- b=a3ValaZfVsRt7AwaNcsfIdK/zd28l8JepYU5QBjoQr7ndWkReNfvvi0Z9xJ2P21GHa
- V2CVxp1GOZ+kViB6F7Jfo+vhsCjEFsDK2I6F6izQoGQkcSLIZTyysdCbQ3b/FNq4kUqr
- X8IZTEkTTpy6U7hQcP2TT9v0irx4lnU1WGN/dLqLSFtqBz49riuIY6D1BfrePSFzKDGZ
- 97EGjNpX+MlK/qBv0O9GsidReP1N7Gh3f+W/sANGYIukSFTEdR4qu04W6IlpMtX5nbCi
- DPvIwSngd1wk48sGtKiV9havaz/X9qq8C8O1SmK6T38G9LAtAn30dc3YeJ2GeGl2V46G
- uVQA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwjFu-00027E-Lo
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:53:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rwjFo-0001nC-Dv
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:53:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713275622;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SruzmuCz9ab5PjZSebP+Here1pfTlCM8lvBkspnwglU=;
+ b=LXbFQG/RzHpR1bKlDvnL/zjIUfvSGWk31iKyVn45VPw2NZ6V9XW96rc0Si9lfQeChvsRbX
+ /hyi7fW+Muh1UdKbsuqlY0M64Uj7NooQioLzCqBuW6S3w1Q1CSYTv63YDp7UuvT3LFZBbh
+ E0/74loh6CCqA4acmS12r4qN1TF8dXs=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-393-pk3_wOLeO26wPIxw5t2Ukg-1; Tue, 16 Apr 2024 09:53:41 -0400
+X-MC-Unique: pk3_wOLeO26wPIxw5t2Ukg-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-69b81cb0865so20780836d6.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:53:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713275633; x=1713880433;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WRu6gIdKkp2mUDaWmMaxQTExs6byim7bx/MfazoYUmc=;
- b=Vc1PtjAh3Xo8BAsFJTrFwkzqWxZQNZ9bJYkaoxAAAT1o6HsyilBpNWT4nBeU55hCTj
- Ro4yGmQkhw+5Tgp5lAuiB4jUNxIeqBINdNCnScKqa6dJxmKPWnIhg6JE2E4FDh2+s2zh
- aXx61+owKA8JJY+aBghVURTqaH1I6tFR5b4Mshqy79VdqGU2IDSLQlPC7N0/OLWWIbh6
- 7jnm1cS657/xJrj9ajE00K1toqR/L//MnGTRuapJRyt7DAZvfHqY2efjTHrdMogMUpBH
- Q31blEzrf5NdgYVcj93boeOOJgOSshUeQHQmetF09U26ZaaZ9Na/FqN4uI0o2ElO8YMd
- vzpw==
-X-Gm-Message-State: AOJu0Yz6iLPuoYBspWVlAOCOpNgDOasBMffVE8lIuGtFWSpQ7d6M08lO
- bHa4jPe5oCW2cTv6Yef5l8cDBoLT9ZiL9vSAfWPIK+Z0IHMlKy7/S8vyY/t7V2VawdI0M0bU48p
- 1
-X-Google-Smtp-Source: AGHT+IGEkV4NtWFwS7smQ8etZfExDim57HWSMuEPad1Ashde9/8qRGKDeoK0TUptFcJYLEy24Oqhkg==
-X-Received: by 2002:a50:9545:0:b0:570:1de9:4cd7 with SMTP id
- v5-20020a509545000000b005701de94cd7mr6143993eda.15.1713275633197; 
- Tue, 16 Apr 2024 06:53:53 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.155.61])
+ d=1e100.net; s=20230601; t=1713275620; x=1713880420;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SruzmuCz9ab5PjZSebP+Here1pfTlCM8lvBkspnwglU=;
+ b=NlEGUlzbfbUPZbr+aVmagWG3MMg51oaV5UPTB+CX9POU5OqqlyOv+QPhiJjeQzLoA+
+ lQKxHKnZRdMbvJgYj6huqs1+oIOMxzYBZuhv+4mT63R3+eZP2lGb0kzv2GqmBupDJP4M
+ 6GV8Vr/0osFpmpsu1oy0kM0kWEJmekboJVzq9yf3L64wmPMIvy0rM53tf44r1O3gdeKL
+ qah+c+ekwwCArmY5J/eXTcCuXfAe6EI6DRm9A9vx+wjqkjm/ZmwMkepvrzR9fBarqHXq
+ K1Oh7AwU/pfZOHg0tU+5bRoPPrNakuIk9Bz5Yp26+PLRQoKoFUnjGcxdQ6San1Es9M3k
+ IdCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmGZusSmk7f3yiiFJgySxbeQAdlRLAGromSkxP5qHDIzycd3aNaebPsC8ek0/DzlkAc0HQOR+PuCuCdXTM2BefEOsrRt0=
+X-Gm-Message-State: AOJu0YxorZEOO9O0Vq2Z95zG1DCx8bFkGdVxUBJJNmKKZbFsbvCYhbTb
+ BGyppqjuyMg/uHeYe4e4ReCDxABOO7f3jpxzEHdbO3UtOCa7XmE8mJOul/BSvXcymhOqHWrKqQO
+ j0g5PG0wNPSO0DzV8RIcr3xUKV5dvFmkErT+0kf+vZ6UX6WGMTxuB
+X-Received: by 2002:a05:6214:3b81:b0:699:2e62:4115 with SMTP id
+ nf1-20020a0562143b8100b006992e624115mr14887536qvb.23.1713275620733; 
+ Tue, 16 Apr 2024 06:53:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUIEs99b1QgHzDks/nNVLwSsN+sq5sNORYehypergDTw6JjnAR7gKLiZ1AfrrKX4rbJirjTQ==
+X-Received: by 2002:a05:6214:3b81:b0:699:2e62:4115 with SMTP id
+ nf1-20020a0562143b8100b006992e624115mr14887514qvb.23.1713275620357; 
+ Tue, 16 Apr 2024 06:53:40 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
+ ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
  by smtp.gmail.com with ESMTPSA id
- n13-20020a05640206cd00b005704ae9272dsm240052edy.93.2024.04.16.06.53.51
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 06:53:52 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Thomas Huth <thuth@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
-Subject: [PATCH v3 09/22] target/i386/kvm: Remove x86_cpu_change_kvm_default()
- and 'kvm-cpu.h'
-Date: Tue, 16 Apr 2024 15:52:38 +0200
-Message-ID: <20240416135252.8384-10-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240416135252.8384-1-philmd@linaro.org>
-References: <20240416135252.8384-1-philmd@linaro.org>
+ d7-20020ad450a7000000b0069b26d7f061sm7427889qvq.99.2024.04.16.06.53.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Apr 2024 06:53:39 -0700 (PDT)
+Message-ID: <a46d4d57-0d6c-4ba3-887b-bc167a25434a@redhat.com>
+Date: Tue, 16 Apr 2024 15:53:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/10] vfio: Introduce HIODLegacyVFIO device
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
+ <20240408081230.1030078-3-zhenzhong.duan@intel.com>
+ <9869ac57-56c6-41b7-a2c6-d42a5ba475ee@redhat.com>
+ <SJ0PR11MB67448DE106AEE894D080D3F492082@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <SJ0PR11MB67448DE106AEE894D080D3F492082@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,89 +116,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86_cpu_change_kvm_default() was only used out of kvm-cpu.c by
-the pc-i440fx-2.1 machine, which got removed. Make it static,
-and remove its declaration. "kvm-cpu.h" is now empty, remove it.
+Hello,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240305134221.30924-8-philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/kvm/kvm-cpu.h | 41 ---------------------------------------
- target/i386/kvm/kvm-cpu.c |  3 +--
- 2 files changed, 1 insertion(+), 43 deletions(-)
- delete mode 100644 target/i386/kvm/kvm-cpu.h
+On 4/16/24 05:41, Duan, Zhenzhong wrote:
+> Hi Cédric,
+> 
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@redhat.com>
+>> Subject: Re: [PATCH v2 02/10] vfio: Introduce HIODLegacyVFIO device
+>>
+>> On 4/8/24 10:12, Zhenzhong Duan wrote:
+>>> HIODLegacyVFIO represents a host IOMMU device under VFIO legacy
+>>> container backend.
+>>>
+>>> It includes a link to VFIODevice.
+>>>
+>>> Suggested-by: Eric Auger <eric.auger@redhat.com>
+>>> Suggested-by: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>    include/hw/vfio/vfio-common.h | 11 +++++++++++
+>>>    hw/vfio/container.c           | 11 ++++++++++-
+>>>    2 files changed, 21 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-
+>> common.h
+>>> index b9da6c08ef..f30772f534 100644
+>>> --- a/include/hw/vfio/vfio-common.h
+>>> +++ b/include/hw/vfio/vfio-common.h
+>>> @@ -31,6 +31,7 @@
+>>>    #endif
+>>>    #include "sysemu/sysemu.h"
+>>>    #include "hw/vfio/vfio-container-base.h"
+>>> +#include "sysemu/host_iommu_device.h"
+>>>
+>>>    #define VFIO_MSG_PREFIX "vfio %s: "
+>>>
+>>> @@ -147,6 +148,16 @@ typedef struct VFIOGroup {
+>>>        bool ram_block_discard_allowed;
+>>>    } VFIOGroup;
+>>>
+>>> +#define TYPE_HIOD_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-
+>> vfio"
+>>
+>> I would prefer to keep the prefix TYPE_HOST_IOMMU_DEVICE.
+> 
+> Will do.
+> 
+>>
+>>> +OBJECT_DECLARE_SIMPLE_TYPE(HIODLegacyVFIO, HIOD_LEGACY_VFIO)
+>>> +
+>>> +/* Abstraction of VFIO legacy host IOMMU device */
+>>> +struct HIODLegacyVFIO {
+>>
+>> same here
+> 
+> Should I do the same for all the HostIOMMUDevice and HostIOMMUDeviceClass sub-structures?
 
-diff --git a/target/i386/kvm/kvm-cpu.h b/target/i386/kvm/kvm-cpu.h
-deleted file mode 100644
-index e858ca21e5..0000000000
---- a/target/i386/kvm/kvm-cpu.h
-+++ /dev/null
-@@ -1,41 +0,0 @@
--/*
-- * i386 KVM CPU type and functions
-- *
-- *  Copyright (c) 2003 Fabrice Bellard
-- *
-- * This library is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU Lesser General Public
-- * License as published by the Free Software Foundation; either
-- * version 2 of the License, or (at your option) any later version.
-- *
-- * This library is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * Lesser General Public License for more details.
-- *
-- * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-- */
--
--#ifndef KVM_CPU_H
--#define KVM_CPU_H
--
--#ifdef CONFIG_KVM
--/*
-- * Change the value of a KVM-specific default
-- *
-- * If value is NULL, no default will be set and the original
-- * value from the CPU model table will be kept.
-- *
-- * It is valid to call this function only for properties that
-- * are already present in the kvm_default_props table.
-- */
--void x86_cpu_change_kvm_default(const char *prop, const char *value);
--
--#else /* !CONFIG_KVM */
--
--#define x86_cpu_change_kvm_default(a, b)
--
--#endif /* CONFIG_KVM */
--
--#endif /* KVM_CPU_H */
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 9c791b7b05..cb8c73d20c 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -10,7 +10,6 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "host-cpu.h"
--#include "kvm-cpu.h"
- #include "qapi/error.h"
- #include "sysemu/sysemu.h"
- #include "hw/boards.h"
-@@ -144,7 +143,7 @@ static PropValue kvm_default_props[] = {
- /*
-  * Only for builtin_x86_defs models initialized with x86_register_cpudef_types.
-  */
--void x86_cpu_change_kvm_default(const char *prop, const char *value)
-+static void x86_cpu_change_kvm_default(const char *prop, const char *value)
- {
-     PropValue *pv;
-     for (pv = kvm_default_props; pv->prop; pv++) {
--- 
-2.41.0
+I would for type names. The main reason is for naming consistency, which is
+useful for grep and code analysis.
+
+> 
+> The reason I used 'HIOD' abbreviation is some function names become extremely long
+> and exceed 80 characters. E.g.:
+> 
+> @@ -1148,9 +1148,9 @@ static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
+>       vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
+>   };
+> 
+> -static int hiod_legacy_vfio_get_host_iommu_info(HostIOMMUDevice *hiod,
+> -                                                void *data, uint32_t len,
+> -                                                Error **errp)
+> +static int host_iommu_device_legacy_vfio_get_host_iommu_info(HostIOMMUDevice *hiod,
+> +                                                             void *data, uint32_t len,
+> +                                                             Error **errp)
+>   {
+>       VFIODevice *vbasedev = HIOD_LEGACY_VFIO(hiod)->vdev;
+>       /* iova_ranges is a sorted list */
+> @@ -1173,7 +1173,7 @@ static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
+>   {
+>       HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+> 
+> -    hioc->get_host_iommu_info = hiod_legacy_vfio_get_host_iommu_info;
+> +    hioc->get_host_iommu_info = host_iommu_device_legacy_vfio_get_host_iommu_info;
+>   };
+> 
+> I didn't find other way to make it meet the 80 chars limitation. Any suggestions on this?
+
+Try :
+
+@@ -1177,7 +1177,8 @@ static void hiod_legacy_vfio_class_init(
+  {
+      HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+  
+-    hioc->get_host_iommu_info = hiod_legacy_vfio_get_host_iommu_info;
++    hioc->get_host_iommu_info =
++        host_iommu_device_legacy_vfio_get_host_iommu_info;
+  };
+  
+  static const TypeInfo types[] = {
+
+That said, I agree that 'host_iommu_device_legacy_vfio' routine prefix
+could be shortened to 'hiod_legacy_vfio'.
+
+
+Thanks,
+
+C.
+
+
+
+> 
+>>
+>>> +    /*< private >*/
+>>> +    HostIOMMUDevice parent;
+>>> +    VFIODevice *vdev;
+>>
+>> It seems to me that the back pointer should be on the container instead.
+>> Looks more correct conceptually.
+> 
+> Yes, that makes sense for legacy VFIO, as iova_ranges, pgsizes etc are all saved in bcontainer.
+> 
+>>
+>>
+>>> +};
+>>> +
+>>>    typedef struct VFIODMABuf {
+>>>        QemuDmaBuf buf;
+>>>        uint32_t pos_x, pos_y, pos_updates;
+>>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+>>> index 77bdec276e..44018ef085 100644
+>>> --- a/hw/vfio/container.c
+>>> +++ b/hw/vfio/container.c
+>>> @@ -1143,12 +1143,21 @@ static void
+>> vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
+>>>        vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
+>>>    };
+>>>
+>>> +static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
+>>> +{
+>>> +};
+>>
+>> Is it preferable to introduce routines when they are actually useful.
+>> Please drop the .class_init definition.
+> 
+> Sure.
+> 
+> Thanks
+> Zhenzhong
+> 
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>> +
+>>>    static const TypeInfo types[] = {
+>>>        {
+>>>            .name = TYPE_VFIO_IOMMU_LEGACY,
+>>>            .parent = TYPE_VFIO_IOMMU,
+>>>            .class_init = vfio_iommu_legacy_class_init,
+>>> -    },
+>>> +    }, {
+>>> +        .name = TYPE_HIOD_LEGACY_VFIO,
+>>> +        .parent = TYPE_HOST_IOMMU_DEVICE,
+>>> +        .instance_size = sizeof(HIODLegacyVFIO),
+>>> +        .class_init = hiod_legacy_vfio_class_init,
+>>> +    }
+>>>    };
+>>>
+>>>    DEFINE_TYPES(types)
+> 
 
 
