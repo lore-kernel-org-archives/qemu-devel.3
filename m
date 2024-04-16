@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 173CCC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CB2C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 10:03:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwfWt-0006dV-1c; Tue, 16 Apr 2024 05:55:07 -0400
+	id 1rwfdc-0008SA-RV; Tue, 16 Apr 2024 06:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1rwfWp-0006d7-HO
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:55:04 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwfdS-0008KN-9K
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 06:01:55 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1rwfWn-0005dy-Gd
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:55:03 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-78d57b9f3caso261703185a.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 02:55:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwfdP-0006vZ-LE
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 06:01:53 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-56e56ee8d5cso5388474a12.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 03:01:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1713261299; x=1713866099;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1713261708; x=1713866508; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bjHtK/lZ2J39VqDcjOkMw5T5JI97jtSHrL6cTuPhQqo=;
- b=I8cu7v9MnpIAWQC6Me5ynhFT95KA3WW8soBaFGq9nB09Nm5vR+cdKeu81fRUl6V5di
- JAAi6Vl4MklUMh9JMnwPMQP158zhEDtNcY0qKE//GllW3H2aO8zHC2g3K0tNB2KkpM3X
- FVOcCpeBdXCx/bvfCqYtcN6SymP2OGsqKenQ5NSPwm+5xzebU1ZtS1AHdvCIb0duBBPD
- wfQLXoyLhP/UaVycL4tnMibw2ebhDCzGHQp1MPTuebXvQQMrIE1dzZtZfbS5D0tjAkub
- ELL5JtdBto4jK48cJnf+kAjCQHXd+UnDXZknmf6oyFTr/nPPiiOjKZKE4r0cmua6/JYL
- BoMg==
+ bh=p9jJyc/K8buPW/8td9T3xkqrOfd+jk9vWaohElDiKdQ=;
+ b=WH0GVmJyBO8NT7Z2wBYhkAme+kqwH5uWo0h22kk6d58PkIgjLQm2j6VbGr/NXMXl/B
+ taTufOI0hc3MZqMr8b//WAQrnwBdg2JhVToDd8ywoWFh9Hg0gexjMenHYe8onbNkiW/W
+ NBpIhXe2Z7xIWobzhfpvEU0zRY8AcGrt8zL1j4EI5bfXIbAsN3QkU1tDE140KqW1wAax
+ Sf8Lkh24gEQHreTic5BuejH7wQnAaz4PZKA5eYLmoXB2fddldXZKYwdN7mkyYhqUHoX6
+ 1r3exg7ux1HP3DjCxFdzbVUHCEMmKDJzKDLLqnh0j0p9JO4oV0YCugJ27VCyaHI3vAhI
+ qcCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713261299; x=1713866099;
+ d=1e100.net; s=20230601; t=1713261708; x=1713866508;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bjHtK/lZ2J39VqDcjOkMw5T5JI97jtSHrL6cTuPhQqo=;
- b=pAiJai3uomsHyQl+pV3kW0XE9IY9p+MQtIcRbBzkj+qcCw64Dtw10QS5T7u2ng/Ao6
- APfnw2NHF+EiijaH2eA2T73wY3zu0mJvpy8otDa6aH+vv2fST2rINAoy8j7wQTqORBmM
- kSoEq9yNvYVGmYdg5KKsujD1kDW89jX/F8CUIaaaRZ4IYiR2ynsY16/YCZ/JZKAha4cQ
- YNjjboyJ4t+Z33obIm1Be/3oQTuuZHN81ASQ4zM80crETDxm/H3SLeV1r9ETxl0eRtZE
- RcU8FaaE+hS58E8Y9xfxfOECdYxHSKyZgGwNMiwo/edO+C2p04Y0QKvHmrYhG8pzONyd
- uCAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/kirK3Z/8N5eObAkR/JMZC4e0qEJsNiszLZRxJZ5LW1KeBmKVOHie10kkY9lUMiE6+0KuaVQpCcSFrG8CN2W4NHsh+rQ=
-X-Gm-Message-State: AOJu0YwH8WyJRIYZSpaZjDKih8v6hiQp/PXKLVIEqVFpE/zvoHXj5uHg
- hfDM0CSVe30iINJeYqFiGPKr2iS6VTABE65JJ4lyFvUl+ygvme8FbwZrfXfW7UrR+5R5t646SmK
- 8P0dsfhk/eYbYFbIa6V6y9sko6uyjhDy9sX1TOw==
-X-Google-Smtp-Source: AGHT+IG8VYYTCo7SXr6KO1374N0StcD/fm4uu85+1X3gb/frQKdxSJZcd05wMvcEVdCAxG7Qth6UNWyFxBdP4VP6UtM=
-X-Received: by 2002:a05:622a:15d4:b0:432:e65e:bacc with SMTP id
- d20-20020a05622a15d400b00432e65ebaccmr14290986qty.58.1713261299710; Tue, 16
- Apr 2024 02:54:59 -0700 (PDT)
+ bh=p9jJyc/K8buPW/8td9T3xkqrOfd+jk9vWaohElDiKdQ=;
+ b=uGdcdnRSPMVgCWvGRRbWFGKeo7ZsQ6AfoRiZyxf3hQ68UpYbivU/nC0gA9YUD+sKRa
+ sW6uWCWXPPgUHuzfU6M2wOC6K65we/BO4E/Tka+5+b88VeCUGjU7+jn4LWJDgTMPGrB8
+ PnXZkU1tHV7TALawKNBpp+1onYptq5gxveMHV18zVekKHpIOI/PFEG8H+jzpuirQGuau
+ dewJ7c+CCaUF4jICbn+jUe3sRJO1mlkjeer+kcS/0xvJCQw/QP7hs8txPj/cHhW/cpQG
+ EEatsPuaQL0EpGrUoFi+GMNgJ6yDJwUlLpsx74cCdqo8dlH7GE6RmdQDMfEMYwnVd96A
+ wo8Q==
+X-Gm-Message-State: AOJu0Ywj8zI7pZbc0Tg8VzwLxt+bEZ4LnvAl3+Un/4jmUIZjhMCnKpZH
+ j7VSdD+9ylwczfBBMNA5bbNcaDePWkPCEUzmZG1YXzWpERETgS6Pvcw9OtDq12nLWvtpyZFvYn5
+ IxMcEZfYIN8AcV7vz6yVt66oxODgdIg3HfK4V1g==
+X-Google-Smtp-Source: AGHT+IGNfulkCc3pyS7dJNSaCexDXpoMFYe0hZBVRaXeWe3/VJ7BdKk1NiH7ZUbwk3YYZT+ICnhgXR+p6tke8nKQMJ4=
+X-Received: by 2002:a50:875d:0:b0:56e:2bfa:c7e0 with SMTP id
+ 29-20020a50875d000000b0056e2bfac7e0mr8706742edv.13.1713261708149; Tue, 16 Apr
+ 2024 03:01:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
- <20240403-rss-v9-13-c6d87e69d38b@daynix.com>
-In-Reply-To: <20240403-rss-v9-13-c6d87e69d38b@daynix.com>
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
-Date: Tue, 16 Apr 2024 12:54:48 +0300
-Message-ID: <CAOEp5OdWg-YeKwVt+UPLGANNpDx9OVvvEVsC3EPo+_ftoXrsDg@mail.gmail.com>
-Subject: Re: [PATCH v9 13/20] virtio-net: Return an error when vhost cannot
- enable RSS
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
+References: <cover.1713178348.git.mst@redhat.com>
+ <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
+In-Reply-To: <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Apr 2024 11:01:36 +0100
+Message-ID: <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
+Subject: Re: [PULL 1/1] virtio-pci: fix use of a released vector
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Cindy Lu <lulu@redhat.com>, qemu-stable@nongnu.org, 
+ Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2607:f8b0:4864:20::732;
- envelope-from=yuri.benditovich@daynix.com; helo=mail-qk1-x732.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,155 +91,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 3, 2024 at 2:11=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
-com> wrote:
+On Mon, 15 Apr 2024 at 11:52, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> vhost requires eBPF for RSS. When eBPF is not available, virtio-net
-> implicitly disables RSS even if the user explicitly requests it. Return
-> an error instead of implicitly disabling RSS if RSS is requested but not
-> available.
+> From: Cindy Lu <lulu@redhat.com>
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/net/virtio-net.c | 97 ++++++++++++++++++++++++++---------------------=
-------
->  1 file changed, 48 insertions(+), 49 deletions(-)
+> During the booting process of the non-standard image, the behavior of the
+> called function in qemu is as follows:
 >
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 61b49e335dea..3d53eba88cfc 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -793,9 +793,6 @@ static uint64_t virtio_net_get_features(VirtIODevice =
-*vdev, uint64_t features,
->          return features;
->      }
+> 1. vhost_net_stop() was triggered by guest image. This will call the func=
+tion
+> virtio_pci_set_guest_notifiers() with assgin=3D false,
+> virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vecto=
+r 0
 >
-> -    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
-> -        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
-> -    }
->      features =3D vhost_net_get_features(get_vhost_net(nc->peer), feature=
-s);
->      vdev->backend_features =3D features;
+> 2. virtio_reset() was triggered, this will set configure vector to VIRTIO=
+_NO_VECTOR
 >
-> @@ -3591,6 +3588,50 @@ static bool failover_hide_primary_device(DeviceLis=
-tener *listener,
->      return qatomic_read(&n->failover_primary_hidden);
+> 3.vhost_net_start() was called (at this time, the configure vector is
+> still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() wi=
+th
+> assgin=3Dtrue, so the irqfd for vector 0 is still not "init" during this =
+process
+>
+> 4. The system continues to boot and sets the vector back to 0. After that
+> msix_fire_vector_notifier() was triggered to unmask the vector 0 and  mee=
+t the crash
+>
+> To fix the issue, we need to support changing the vector after VIRTIO_CON=
+FIG_S_DRIVER_OK is set.
+>
+
+Hi; Coverity points out what it thinks is a problem in this commit
+(CID 1543938):
+
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index cb6940fc0e..cb159fd078 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -1424,6 +1424,38 @@ static int virtio_pci_add_mem_cap(VirtIOPCIProxy *=
+proxy,
+>      return offset;
 >  }
 >
-> +static void virtio_net_device_unrealize(DeviceState *dev)
+> +static void virtio_pci_set_vector(VirtIODevice *vdev,
+> +                                  VirtIOPCIProxy *proxy,
+> +                                  int queue_no, uint16_t old_vector,
+> +                                  uint16_t new_vector)
 > +{
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> +    VirtIONet *n =3D VIRTIO_NET(dev);
-> +    int i, max_queue_pairs;
+> +    bool kvm_irqfd =3D (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> +        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
 > +
-> +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
-> +        virtio_net_unload_ebpf(n);
+> +    if (new_vector =3D=3D old_vector) {
+> +        return;
 > +    }
 > +
-> +    /* This will stop vhost backend if appropriate. */
-> +    virtio_net_set_status(vdev, 0);
-> +
-> +    g_free(n->netclient_name);
-> +    n->netclient_name =3D NULL;
-> +    g_free(n->netclient_type);
-> +    n->netclient_type =3D NULL;
-> +
-> +    g_free(n->mac_table.macs);
-> +    g_free(n->vlans);
-> +
-> +    if (n->failover) {
-> +        qobject_unref(n->primary_opts);
-> +        device_listener_unregister(&n->primary_listener);
-> +        migration_remove_notifier(&n->migration_state);
+> +    /*
+> +     * If the device uses irqfd and the vector changes after DRIVER_OK i=
+s
+> +     * set, we need to release the old vector and set up the new one.
+> +     * Otherwise just need to set the new vector on the device.
+> +     */
+> +    if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR) {
+> +        kvm_virtio_pci_vector_release_one(proxy, queue_no);
+> +    }
+> +    /* Set the new vector on the device. */
+> +    if (queue_no =3D=3D VIRTIO_CONFIG_IRQ_IDX) {
+> +        vdev->config_vector =3D new_vector;
 > +    } else {
-> +        assert(n->primary_opts =3D=3D NULL);
+> +        virtio_queue_set_vector(vdev, queue_no, new_vector);
 > +    }
-> +
-> +    max_queue_pairs =3D n->multiqueue ? n->max_queue_pairs : 1;
-> +    for (i =3D 0; i < max_queue_pairs; i++) {
-> +        virtio_net_del_queue(n, i);
+
+Here queue_no can be VIRTIO_CONFIG_IRQ_IDX, which is -1.
+
+> +    /* If the new vector changed need to set it up. */
+> +    if (kvm_irqfd && new_vector !=3D VIRTIO_NO_VECTOR) {
+> +        kvm_virtio_pci_vector_use_one(proxy, queue_no);
+
+Here we pass that through to kvm_virtio_pci_vector_use_one().
+In kvm_virtio_pci_vector_use_one()'s error-exit path ("undo")
+it does
+    vector =3D virtio_queue_vector(vdev, queue_no);
+and in virtio_queue_vector() it does:
+
+    return n < VIRTIO_QUEUE_MAX ? vdev->vq[n].vector :
+        VIRTIO_NO_VECTOR;
+
+where 'n' is an int, so if we can get here with queue_no being
+VIRTIO_CONFIG_IRQ_IDX then we'll index off the front of the
+vdev->vq[] array.
+
+Maybe this is a "can't happen" case, but it does seem odd that
+virtio_queue_vector() only bounds-checks the "too big" case
+for its argument and not the "too small" case and/or it
+doesn't have a special case for VIRTIO_CONFIG_IRQ_IDX.
+
 > +    }
-> +    /* delete also control vq */
-> +    virtio_del_queue(vdev, max_queue_pairs * 2);
-> +    qemu_announce_timer_del(&n->announce_timer, false);
-> +    g_free(n->vqs);
-> +    qemu_del_nic(n->nic);
-> +    virtio_net_rsc_cleanup(n);
-> +    g_free(n->rss_data.indirections_table);
-> +    net_rx_pkt_uninit(n->rx_pkt);
-> +    virtio_cleanup(vdev);
 > +}
 > +
->  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->  {
->      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> @@ -3760,53 +3801,11 @@ static void virtio_net_device_realize(DeviceState=
- *dev, Error **errp)
->
->      net_rx_pkt_init(&n->rx_pkt);
->
-> -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
-> -        virtio_net_load_ebpf(n);
-> -    }
-> -}
-> -
-> -static void virtio_net_device_unrealize(DeviceState *dev)
-> -{
-> -    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> -    VirtIONet *n =3D VIRTIO_NET(dev);
-> -    int i, max_queue_pairs;
-> -
-> -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
-> -        virtio_net_unload_ebpf(n);
-> +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS) &&
-> +        !virtio_net_load_ebpf(n) && get_vhost_net(nc->peer)) {
-> +        virtio_net_device_unrealize(dev);
-> +        error_setg(errp, "Can't load eBPF RSS for vhost");
 
-One more thing:
-In case of failure the message (it will be visible to the user, if I'm
-not mistaken)
-should be more clear, with a suggestion to disable the 'rss' feature.
-
->      }
-> -
-> -    /* This will stop vhost backend if appropriate. */
-> -    virtio_net_set_status(vdev, 0);
-> -
-> -    g_free(n->netclient_name);
-> -    n->netclient_name =3D NULL;
-> -    g_free(n->netclient_type);
-> -    n->netclient_type =3D NULL;
-> -
-> -    g_free(n->mac_table.macs);
-> -    g_free(n->vlans);
-> -
-> -    if (n->failover) {
-> -        qobject_unref(n->primary_opts);
-> -        device_listener_unregister(&n->primary_listener);
-> -        migration_remove_notifier(&n->migration_state);
-> -    } else {
-> -        assert(n->primary_opts =3D=3D NULL);
-> -    }
-> -
-> -    max_queue_pairs =3D n->multiqueue ? n->max_queue_pairs : 1;
-> -    for (i =3D 0; i < max_queue_pairs; i++) {
-> -        virtio_net_del_queue(n, i);
-> -    }
-> -    /* delete also control vq */
-> -    virtio_del_queue(vdev, max_queue_pairs * 2);
-> -    qemu_announce_timer_del(&n->announce_timer, false);
-> -    g_free(n->vqs);
-> -    qemu_del_nic(n->nic);
-> -    virtio_net_rsc_cleanup(n);
-> -    g_free(n->rss_data.indirections_table);
-> -    net_rx_pkt_uninit(n->rx_pkt);
-> -    virtio_cleanup(vdev);
->  }
->
->  static void virtio_net_reset(VirtIODevice *vdev)
->
-> --
-> 2.44.0
->
+thanks
+-- PMM
 
