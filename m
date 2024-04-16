@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6284C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041E2C04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwias-0003SE-7A; Tue, 16 Apr 2024 09:11:26 -0400
+	id 1rwiuI-0002ex-48; Tue, 16 Apr 2024 09:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rwiao-0003Rm-3b
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:11:23 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rwial-0001ue-PX
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:11:21 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-516d3a470d5so5023650e87.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:11:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713273074; x=1713877874; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ro2fMHnjeUthqpsIxFUUg3EH8LaFn/o6R+MVUCk18Pk=;
- b=zDFhOvOV4Y0o2cmw1cJ5UaIFEqcS7jLJHrK1HyhRWqH9L6VcqWSEZHs2A2IqpAMYxG
- O7EnMHspYgpDs74O9PewX/M4cW4ZoHfey3t5fJe4/I+1acLH7Kotfysse8FoQfLWCGDC
- F6YBaSjLtsTQIyOstVeaGb7TRH0zhA68SthhlnFX7SE8rOdGVn9+7w5swBvfWvAMaIQ1
- EHfyYGpzzM6wI8V5qcd3wGmsr3p4t4mvIgCyrdN+cs+9uuiOG87drIMqXHNL3auIirdA
- mOjPMOVQhNhghLKLfZpRY5OppFyF9GfU+umfYHZu6YcuTetTuhmdMhgNgU1Dneldkco/
- bqCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713273074; x=1713877874;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ro2fMHnjeUthqpsIxFUUg3EH8LaFn/o6R+MVUCk18Pk=;
- b=uumdCy0uA+ml/g8HiaPAmas8I+1QjNBoV27IgXhZ7R0TbjTSsdLzjnSosGb0bl6w71
- bPjwoxeGRo5+0MP97AqprJ7XLu2K2aqvBUVhTbDRpghyc80ycMGY5b31cdwpXLziJi0i
- dGECx1gjqj742OucCJiZJiUtnabFG4bMGMJw6aHGTckvZk2L2/pyUspvVH1adpiDZDGg
- l5yQcYigZeUZRwdmLSfIAhsvaYVASJW7Y140KttblDJcGkXFsGqK+lMyuh0kBzWxYRku
- ySxKBlexEJX5MlnwQmWguyUCaZfh/WwSaOq4bI1Xs5dgeDz6WVQXlyqvSP/Kl3JvP7Ix
- TuZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlGVrf14KRPGP3TrJUnNZYuNTa4GNZpJ2cNS3nDJI0x7LvWlZEXdlAovAdpQ+Jx421clB8lyvMSShwhuV3JmaCau50MeU=
-X-Gm-Message-State: AOJu0YwsFVbzDFWSibnYGUBi0+iFCWlRFgD/4b/wbz79a4fA8pg/iUjg
- YZyAnIM5ioE0IS+sADfwCa79m2TDuGFjJmgaHQvk0MQyDE/mkmdJ0vGHtgct0tvMjh55D5H8sJf
- MM1nGMz5oA229gFJhUUeMdbN4yopg7luxbQH6Dg==
-X-Google-Smtp-Source: AGHT+IEATC39Bld0haR37qPYF2C5uMd4/GAeVkHG5t9Uho3G7q7GxiVfxE148Horuectu7Yw3h0iUx9WsGKxaFGATWE=
-X-Received: by 2002:ac2:5931:0:b0:515:99f6:2ca4 with SMTP id
- v17-20020ac25931000000b0051599f62ca4mr8513146lfi.36.1713273074529; Tue, 16
- Apr 2024 06:11:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwiuG-0002eK-2f
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwiuD-0005kn-JB
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713274284;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ay8f3QrmesUuJpr6Xnv/URkLo7BCLLsv36wohgy4hCY=;
+ b=Ut5uRPaglBihLjoJ0ROoJSilEQePaNhqKagiXvxYPqTQz1TBCTVYuDE1gK8rsA6LSqvESa
+ 753P7ii4KX65Xyg9f2kY5RD9j/up8lUOqQWC/wtbjbZqOcgEVW2sUYTIqYQitxPfpJfXPr
+ MKyN1dduw9QWzg7126VWVIYInd9njbQ=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-2Y5RHPC4OSubIcIo7s8UPQ-1; Tue,
+ 16 Apr 2024 09:31:21 -0400
+X-MC-Unique: 2Y5RHPC4OSubIcIo7s8UPQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D05583C0FCAA;
+ Tue, 16 Apr 2024 13:31:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.173])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C3F1F1BDAA;
+ Tue, 16 Apr 2024 13:31:17 +0000 (UTC)
+Date: Tue, 16 Apr 2024 14:31:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Roy Hopkins <roy.hopkins@suse.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v2 03/10] backends/confidential-guest-support: Add
+ functions to support IGVM
+Message-ID: <Zh59n3w5Ijfd2uLs@redhat.com>
+References: <cover.1712141833.git.roy.hopkins@suse.com>
+ <1dff8015f9f9cf735de21a16e5dba14371c39155.1712141833.git.roy.hopkins@suse.com>
+ <c31dcace-92da-4de7-93e6-631120829a75@linaro.org>
 MIME-Version: 1.0
-References: <cover.1713178348.git.mst@redhat.com>
- <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
- <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
- <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
- <CAFEAcA_WxhOpjtZ5r-CfoOaf1aiKeaEV9eX=drb1JaBCiBoDKA@mail.gmail.com>
- <CAFEAcA_AcKdOXO3+ez6J+hQ4NmGoUa+fBUNK3XL_YSvRk09Gcg@mail.gmail.com>
- <CACLfguWfxarkB2qtn4Dt5JS01t-tFUsOfbX486exvNo8vOM1AA@mail.gmail.com>
-In-Reply-To: <CACLfguWfxarkB2qtn4Dt5JS01t-tFUsOfbX486exvNo8vOM1AA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Apr 2024 14:11:03 +0100
-Message-ID: <CAFEAcA_B=Nauddj6_chxQQugDtsF1oRcjt1kE38ZY3y1TYh77g@mail.gmail.com>
-Subject: Re: [PULL 1/1] virtio-pci: fix use of a released vector
-To: Cindy Lu <lulu@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, 
- Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c31dcace-92da-4de7-93e6-631120829a75@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,34 +96,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Apr 2024 at 14:06, Cindy Lu <lulu@redhat.com> wrote:
->
-> On Tue, Apr 16, 2024 at 8:22=E2=80=AFPM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
-> > Paolo's comment on CID 1468940 was to suggest "virtio_queue_vector
-> > should check VIRTIO_CONFIG_IRQ_IDX just like virtio_pci_get_notifier",
-> > incidentally.
-> >
-> Hi peter=EF=BC=8C
-> Really sorry all these mess, but I still have a stuipid question,
-> where can I get
-> this CID result ?maybe there are a mailing list=EF=BC=9FI just wonder may=
-be I can fix
-> these code earlier next time, Really thanks for your help
+On Thu, Apr 04, 2024 at 10:00:53AM +0200, Philippe Mathieu-Daudé wrote:
+> Hi Roy,
+> 
+> On 3/4/24 13:11, Roy Hopkins wrote:
+> > In preparation for supporting the processing of IGVM files to configure
+> > guests, this adds a set of functions to ConfidentialGuestSupport
+> > allowing configuration of secure virtual machines that can be
+> > implemented for each supported isolation platform type such as Intel TDX
+> > or AMD SEV-SNP. These functions will be called by IGVM processing code
+> > in subsequent patches.
+> > 
+> > This commit provides a default implementation of the functions that
+> > either perform no action or generate a warning or error when they are
+> > called. Targets that support ConfidentalGuestSupport should override
+> > these implementations.
+> > 
+> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> > ---
+> >   backends/confidential-guest-support.c     | 32 ++++++++++
+> >   include/exec/confidential-guest-support.h | 74 +++++++++++++++++++++++
+> >   2 files changed, 106 insertions(+)
+> 
+> 
+> >   struct ConfidentialGuestSupport {
+> >       Object parent;
+> > @@ -60,6 +94,46 @@ struct ConfidentialGuestSupport {
+> >        */
+> >       char *igvm_filename;
+> >   #endif
+> > +
+> > +    /*
+> > +     * The following virtual methods need to be implemented by systems that
+> > +     * support confidential guests that can be configured with IGVM and are
+> > +     * used during processing of the IGVM file with process_igvm().
+> > +     */
+> > +
+> > +    /*
+> > +     * Check for to see if this confidential guest supports a particular
+> > +     * platform or configuration
+> > +     */
+> > +    int (*check_support)(ConfidentialGuestPlatformType platform,
+> > +                         uint16_t platform_version, uint8_t highest_vtl,
+> > +                         uint64_t shared_gpa_boundary);
+> > +
+> > +    /*
+> > +     * Configure part of the state of a guest for a particular set of data, page
+> > +     * type and gpa. This can be used for example to pre-populate and measure
+> > +     * guest memory contents, define private ranges or set the initial CPU state
+> > +     * for one or more CPUs.
+> > +     *
+> > +     * If memory_type is CGS_PAGE_TYPE_VMSA then ptr points to the initial CPU
+> > +     * context for a virtual CPU. The format of the data depends on the type of
+> > +     * confidential virtual machine. For example, for SEV-ES ptr will point to a
+> > +     * vmcb_save_area structure that should be copied into guest memory at the
+> > +     * address specified in gpa. The cpu_index parameter contains the index of
+> > +     * the CPU the VMSA applies to.
+> > +     */
+> > +    int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, uint64_t len,
+> > +                           ConfidentialGuestPageType memory_type,
+> > +                           uint16_t cpu_index, Error **errp);
+> > +
+> > +    /*
+> > +     * Iterate the system memory map, getting the entry with the given index
+> > +     * that can be populated into guest memory.
+> > +     *
+> > +     * Returns 0 for ok, 1 if the index is out of range and -1 on error.
+> > +     */
+> > +    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
+> > +                             Error **errp);
+> >   };
+> >   typedef struct ConfidentialGuestSupportClass {
+> 
+> Methods are usually a class field, not an instance one. Any
+> reason to diverge from this norm?
 
-These CID numbers are the identifiers of the issues in the
-Coverity Scan online UI: https://scan.coverity.com/projects/qemu
-You need to apply for access but we give that to anybody who's
-a QEMU developer.
+Agreed, this should all be against the Class.
 
-Unfortunately we can only do a very limited amount of Coverity
-Scan runs (about one a day), so we run them only on code that
-has been committed to QEMU already, and we aren't able to use
-it to find problems in patches before we apply them.
 
-thanks
--- PMM
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
