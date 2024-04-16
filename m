@@ -4,98 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2342C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE8ACC04FF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwiwY-0004Bt-Qh; Tue, 16 Apr 2024 09:33:50 -0400
+	id 1rwisV-0001l9-Bm; Tue, 16 Apr 2024 09:29:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiwE-00046j-0m
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:33:34 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiwA-0006DP-W1
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:33:29 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3498c7d4473so349277f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713274405; x=1713879205; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8ejCkE3cYY+5NHE0dWEkXgBRP4mtgFRv6mrQVJe9Kjo=;
- b=XAjHLgabfnZOzzaKrKG2a1y+Ld787QKVj/JxAuNHiFRsJLH4dvuIfH/tomy425KivL
- SVSiTID3OI+0GhZG+52rFVImvngM/xTCvq3foazEcxhgGCpMrKPgo1lcN3PwNnCr9nym
- Ai89O5wp1mEHcjvupshjy5tN1AzO/n79wWqv2pAyrZUG0QxT8j/hapckfiaPkF3p2oVE
- GWyuUFfjHRsYHePxnINoBh9aPAGlRy76Hrp4DEOedn9unRdM6z17mFSZGAaZLQ9q44ab
- 7Q/HDVw/3QoQVkmgPO1kTAz15bRE6Wm++Gos5ozm0ATNr7aRIwPY1RkIUnbtQPmGx1Tv
- Cw2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713274405; x=1713879205;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8ejCkE3cYY+5NHE0dWEkXgBRP4mtgFRv6mrQVJe9Kjo=;
- b=rV3Cijaazzx9lbJG2HfcXsRIGq5QrAUjKp1HaGGJxFSflVgELz6kPrikzqQSO1xPGk
- sMxNKcTHqGmUqLIF61tvAQi2J/r8kc2MYKougFntoD2qOVEnc3GGGvUvsNdL/tHntyRJ
- TBIdECO1Oc6W2+pC+TFITfDFe2M4PAU5XO5c8lk6ZxHo8GhYAg308t6b8cLlnQQ2ZnCN
- prDUHDZMSDGndyZrvVhYvayR3FAae3klU5CL/Z54K9G3e5U8pb3C090DwfOQWDjrpBIh
- Tc2CvG7qk7n5EOIS0lUclRVSGtD86pRwJTDYyCQ73i9EoUMglvPQ7yF9GWB3v9+6sPxj
- E4Kg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXTrHzRBqmIXRCHllaTNdFPuivJKtw/SmVCDjl7DmM9jfHPrNF5o3IJyE5GeCm5BOWbcHl9PAbH2Dr2IWYqxxaUq5o4Yxw=
-X-Gm-Message-State: AOJu0Ywjq9JO2RS8DvFhVml4HZLOiqQKc7UKzPA7vGTsCv4XJ/vC5ZP8
- tyDxCMKn8RqVmPasG/Vr3OhGMG4PtWDPmRDaHkVznNEvNK95vK/QV30yIcqi7as=
-X-Google-Smtp-Source: AGHT+IH92HJHUuNl6TyR7RfHKXIxtrZrX9UW/aYad8LjNwOFRn7nCyGMUtWcnxl8fGtGuf+eLBlrtw==
-X-Received: by 2002:a5d:54c8:0:b0:345:c169:8808 with SMTP id
- x8-20020a5d54c8000000b00345c1698808mr9106697wrv.4.1713274405201; 
- Tue, 16 Apr 2024 06:33:25 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.155.61])
- by smtp.gmail.com with ESMTPSA id
- dd15-20020a0560001e8f00b003436cb45f7esm14924652wrb.90.2024.04.16.06.33.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 06:33:24 -0700 (PDT)
-Message-ID: <b2c237b5-9dc4-4557-ab00-0c19a5be0366@linaro.org>
-Date: Tue, 16 Apr 2024 15:33:22 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2 13/21] hw/mem/pc-dimm: Remove legacy_align
- argument from pc_dimm_pre_plug()
-To: David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwisT-0001kq-Ey
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:29:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwisR-0005ES-D3
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:29:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713274173;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=DOzvuPk3l4UW+jQjqNwTbpPqeZwkuzPq9sWo/e7Ws+w=;
+ b=iZEltRNjeH4OwLFP+rD28DXu8aqUC51bqvOyWI5e4vcj9r/+nsummoPIHWchrfR96NftQs
+ nAcRMD66FFfcMTsh7jfu3Tucp9z03kTsZ1hSzUGKNvnv3Bd4QPKxH7NxJIENxoEOVrZmWm
+ iF3utay6ehVeqJtubMwY4J7B+vcz1TQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-215-Y9ATW11BMAeKNhyvu8rObw-1; Tue, 16 Apr 2024 09:29:29 -0400
+X-MC-Unique: Y9ATW11BMAeKNhyvu8rObw-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 32E2A8011AF;
+ Tue, 16 Apr 2024 13:29:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.173])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C3EFA492BD4;
+ Tue, 16 Apr 2024 13:29:25 +0000 (UTC)
+Date: Tue, 16 Apr 2024 14:29:19 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>,
- Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20240327095124.73639-1-philmd@linaro.org>
- <20240327095124.73639-14-philmd@linaro.org>
- <5efe6309-2c7e-404c-9674-2221606b35ac@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5efe6309-2c7e-404c-9674-2221606b35ac@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v2 02/10] backends/confidential-guest-support: Add IGVM
+ file parameter
+Message-ID: <Zh59L_9w6gCQ_ZO_@redhat.com>
+References: <cover.1712141833.git.roy.hopkins@suse.com>
+ <af70dfcfeddf36d860ff28765ee30bdde2b2c110.1712141833.git.roy.hopkins@suse.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <af70dfcfeddf36d860ff28765ee30bdde2b2c110.1712141833.git.roy.hopkins@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,28 +91,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/24 12:32, David Hildenbrand wrote:
-> On 27.03.24 10:51, Philippe Mathieu-Daudé wrote:
->> 'legacy_align' is always NULL, remove it.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Message-Id: <20240305134221.30924-11-philmd@linaro.org>
->> ---
+On Wed, Apr 03, 2024 at 12:11:33PM +0100, Roy Hopkins wrote:
+> In order to add support for parsing IGVM files for secure virtual
+> machines, a the path to an IGVM file needs to be specified as
+> part of the guest configuration. It makes sense to add this to
+> the ConfidentialGuestSupport object as this is common to all secure
+> virtual machines that potentially could support IGVM based
+> configuration.
 > 
-> I was really confused for a second until I saw that this series is 
-> dependent on another one.
+> This patch allows the filename to be configured via the QEMU
+> object model in preparation for subsequent patches that will read and
+> parse the IGVM file.
 > 
-> Please make sure to CC people you CC on patches to also CC on the cover 
-> letter.
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> ---
+>  backends/confidential-guest-support.c     | 21 +++++++++++++++++++++
+>  include/exec/confidential-guest-support.h |  9 +++++++++
+>  qapi/qom.json                             | 13 +++++++++++++
+>  qemu-options.hx                           |  8 +++++++-
+>  4 files changed, 50 insertions(+), 1 deletion(-)
+> 
+> diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
+> index 052fde8db0..da436fb736 100644
+> --- a/backends/confidential-guest-support.c
+> +++ b/backends/confidential-guest-support.c
+> @@ -20,8 +20,29 @@ OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
+>                              CONFIDENTIAL_GUEST_SUPPORT,
+>                              OBJECT)
+>  
+> +#if defined(CONFIG_IGVM)
+> +static char *get_igvm(Object *obj, Error **errp)
+> +{
+> +    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+> +    return g_strdup(cgs->igvm_filename);
+> +}
+> +
+> +static void set_igvm(Object *obj, const char *value, Error **errp)
+> +{
+> +    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+> +    g_free(cgs->igvm_filename);
+> +    cgs->igvm_filename = g_strdup(value);
+> +}
+> +#endif
+> +
+>  static void confidential_guest_support_class_init(ObjectClass *oc, void *data)
+>  {
+> +#if defined(CONFIG_IGVM)
+> +    object_class_property_add_str(oc, "igvm-file",
+> +        get_igvm, set_igvm);
+> +    object_class_property_set_description(oc, "igvm-file",
+> +        "Set the IGVM filename to use");
+> +#endif
+>  }
+>  
+>  static void confidential_guest_support_init(Object *obj)
+> diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
+> index ba2dd4b5df..ec74da8877 100644
+> --- a/include/exec/confidential-guest-support.h
+> +++ b/include/exec/confidential-guest-support.h
+> @@ -51,6 +51,15 @@ struct ConfidentialGuestSupport {
+>       * so 'ready' is not set, we'll abort.
+>       */
+>      bool ready;
+> +
+> +#if defined(CONFIG_IGVM)
+> +    /*
+> +     * igvm_filename: Optional filename that specifies a file that contains
+> +     *                the configuration of the guest in Independent Guest
+> +     *                Virtual Machine (IGVM) format.
+> +     */
+> +    char *igvm_filename;
+> +#endif
+>  };
+>  
+>  typedef struct ConfidentialGuestSupportClass {
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 85e6b4f84a..5935e1b7a6 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -874,6 +874,18 @@
+>    'base': 'RngProperties',
+>    'data': { '*filename': 'str' } }
+>  
+> +##
+> +# @ConfidentialGuestProperties:
+> +#
+> +# Properties common to objects that are derivatives of confidential-guest-support.
+> +#
+> +# @igvm-file: IGVM file to use to configure guest (default: none)
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'struct': 'ConfidentialGuestProperties',
+> +  'data': { '*igvm-file': 'str' } }
 
-Oops, sorry. I really should patch that on git-publish...
+Since the rest of this patch is conditional on CONFIG_IGVM,
+this property should be too, so apps can probe for whether
+QEMU is built with IGVM support or not.
 
-> Reviewed-by: David Hildenbrand <david@redhat.com>
+> +
+>  ##
+>  # @SevGuestProperties:
+>  #
+> @@ -901,6 +913,7 @@
+>  # Since: 2.12
+>  ##
+>  { 'struct': 'SevGuestProperties',
+> +  'base': 'ConfidentialGuestProperties',
+>    'data': { '*sev-device': 'str',
+>              '*dh-cert-file': 'str',
+>              '*session-file': 'str',
 
-Thanks!
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
