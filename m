@@ -4,71 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD307C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 04:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E431C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 04:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwa4p-0007ir-AA; Tue, 16 Apr 2024 00:05:47 -0400
+	id 1rwa5M-0008AO-Oq; Tue, 16 Apr 2024 00:06:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwa4m-0007iQ-LF
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 00:05:44 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1rwa5K-0007wS-27
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 00:06:18 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwa4k-00078Q-Mr
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 00:05:44 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6eaf9565e6bso2428421b3a.2
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 21:05:41 -0700 (PDT)
+ id 1rwa5I-0007A5-3f
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 00:06:17 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e220e40998so25203965ad.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 21:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713240340; x=1713845140; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PR3CJUUo2/VGKB2RGbMarxktvJK4SxiTMKyT7dvFViA=;
- b=MFJilO/pDyBx6Vb5Ss3KcK7DLYfPtb0+g9HMdLjWqBEo6dLeukXt6s0C+ndZ0AQNia
- S75RLzc/f3FcyrRwaTFHn/eGzpjbc6xCxRfJqPwLeSsvvcSL/qx+VDxAG7UdTFtuJvlV
- DVd5CPVtLiBfFOaTcQEWMDqa9p1Ek1GYNPVvAS+8EaejGRdT1Rqfres/WJIewMrZBOjw
- iixeKhv23NQ7otdHn3AcX8GuAcwfi8iyBMt/wp6xS6fYwSkknA96VCLWXQysFDBajvJD
- GRlUZDUzTqnIdS2TqBgkpyAoCJgSYqLQGY1WnctKICaxhJoFwCJIt/YLblOigXRO55kb
- C76Q==
+ d=linaro.org; s=google; t=1713240375; x=1713845175; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Zbqcgu18SLn9cjl7+e/QBG9Rh9IFLtqhM10K4KhEsKw=;
+ b=EQdhEDTUckWVosXGgfbcekjkCjcxtIo0BHjQJcwU6TkcehlWCo3LyQieWGnzBJwR3M
+ XLFnP7VQJoxJp50EFK/Ub+Mb2cCy4wyhM1CyKgDzs753fHVN5A2we5hxajyPi65b9iHg
+ rJBhofBVIvB0dA4tkW9lZpp01aCFy/kfDHgEElJ0hluFrW975+GfC/JGFeYHrdK8nTyL
+ UW0gm+3d4UWYgQFex2toPbH4TrEO0eH5s6s3UtOpaL6sBrlTkyT+KvSwRA5JgdFiIkZC
+ ziBl64Hjgh/OK7lic16V30mAtsi75A2e2qd+LDiVTYML4upQE/cXEnmwu66kmwWHGGPr
+ EHYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713240340; x=1713845140;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PR3CJUUo2/VGKB2RGbMarxktvJK4SxiTMKyT7dvFViA=;
- b=ihpa+sz3oY6m49QAr8MOfUF6oDv42c8UyM7SM96KcwQ9Gud1IAG3R+9+Kr0Zs3nzYJ
- V/4stRhGsIJ+EJgN2v4Ga1EDEV4zgQlCZTVuL39ErmmIQWGUHwl3EGQBgXXonZeCdn2D
- 0ArpKcogfJ7w5Nd4+Ki/op/OfyTgh6aUI3YdsMyBswxmVkoqTEKl+e5Fbf3qGfn2l/QM
- tRxQek6M79uUc1mYbHUNo7vKzoDlMBNdM0DxRnLjpErHQBGxN6vlrngVOqyVjRmvWaPz
- /Geefhrb+PHo/GPCsU/OaOOZQqCHnlvOqkvxi7b+RsCf6mun02V4d7QXsAa+MkVinw+Z
- 9CEg==
-X-Gm-Message-State: AOJu0YwljqSI07JUPTtOy6M6pteC8b5BeyJrFFgzygmYQMacE32L1Rr8
- Wp91g5B0xqyO8jtfa5nUdrP7+Ar9AxtH0ATtnhFmnXO1Q5YglVqXHxsNczwhqn01PoLYJU0ELnD
- E
-X-Google-Smtp-Source: AGHT+IF/At63aucah0unUDUygfnW/OSDiHUfD59mJz1mAW2emb6NFjkaFzBIcGKuGkM4Z1WtYf5kxQ==
-X-Received: by 2002:a05:6a20:2451:b0:1a8:4243:7553 with SMTP id
- t17-20020a056a20245100b001a842437553mr11463800pzc.12.1713240340421; 
- Mon, 15 Apr 2024 21:05:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1713240375; x=1713845175;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Zbqcgu18SLn9cjl7+e/QBG9Rh9IFLtqhM10K4KhEsKw=;
+ b=jQwz6nAW1gGze/7fTpBeAtDfQRvRh+S5ujaEz3mHjM6qldSqcv5I1rCzQNf4xIsIn2
+ Cifx4XMLAeDWtNaKQ4WMHqa2dhddhMJODKqBZBtQcTwbU2HJLnhy/Zk93DjA4ER4iG4p
+ Qkspwo3jgnkyBIQ1ZErcm1YsjReC2Nxbxp4WMun+DfZLEM00JFJj9Xg/Tpc/+wpIBV3M
+ XOmY4aX67fPa6qmH04YETcM/dSgRkVaUwBQDdITEhD/n6DEprhZWYQN0rjgfleBg57X5
+ XKJxxnfTNBR8BZDDX/DmmguSAAkZWe6bNMkPBZGO7ZaeZR2MSIQxDRwqiBYjEY8+ws01
+ QeHw==
+X-Gm-Message-State: AOJu0YzFNg4TeWDaW6QAAwuh3KhvU7VVA0CSRfB0ZhtkSQFDKolnDjtM
+ k1R1LWtk4SNV3XHqPHGWndevoob87s1K18lstMXrmcUW85M7PJ3ULBuf4eC0VREHHvK7SIK8p1p
+ z
+X-Google-Smtp-Source: AGHT+IFRbQtj+sH6emYDvOVpOSePzRCOpPO5wtjr9NuKJB6G096d6lFKerSUb0BhozPjpFkmzvrQMw==
+X-Received: by 2002:a17:902:f785:b0:1e5:4f69:15eb with SMTP id
+ q5-20020a170902f78500b001e54f6915ebmr15578523pln.7.1713240374674; 
+ Mon, 15 Apr 2024 21:06:14 -0700 (PDT)
 Received: from stoup.. (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- cm6-20020a17090afa0600b002a2c905158asm7880202pjb.46.2024.04.15.21.05.39
+ l1-20020a170902f68100b001e3e244e5c0sm8694439plg.78.2024.04.15.21.06.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Apr 2024 21:05:40 -0700 (PDT)
+ Mon, 15 Apr 2024 21:06:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org
-Subject: [PATCH 0/7] plugins: Use unwind info for special gdb registers
-Date: Mon, 15 Apr 2024 21:05:26 -0700
-Message-Id: <20240416040539.1313535-1-richard.henderson@linaro.org>
+Subject: [PATCH 4/7] plugins: Introduce TCGCPUOps callbacks for mid-tb
+ register reads
+Date: Mon, 15 Apr 2024 21:06:06 -0700
+Message-Id: <20240416040609.1313605-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240416040609.1313605-1-richard.henderson@linaro.org>
+References: <20240416040609.1313605-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,49 +95,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 20240404230611.21231-1-richard.henderson@linaro.org
-("[PATCH v2 00/21] Rewrite plugin code generation")
+Certain target registers are not updated continuously within
+the translation block.  For normal exception handling we use
+unwind info to re-generate the correct value when required.
+Leverage that same info for reading those registers for plugins.
 
-This is an attempt to fix
-https://gitlab.com/qemu-project/qemu/-/issues/2208
-("PC is not updated for each instruction in TCG plugins")
+All targets will need updating for these new callbacks.
 
-I have only updated target/i386 so far, but basically all targets
-need updating for the new callbacks.  Extra points to anyone who
-sees how to avoid the extra code duplication.  :-)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/hw/core/tcg-cpu-ops.h | 13 +++++++++++++
+ plugins/api.c                 | 36 +++++++++++++++++++++++++++++++++--
+ 2 files changed, 47 insertions(+), 2 deletions(-)
 
-
-r~
-
-
-Richard Henderson (7):
-  tcg: Introduce INDEX_op_plugin_pc
-  accel/tcg: Set CPUState.plugin_ra before all plugin callbacks
-  accel/tcg: Return the TranslationBlock from cpu_unwind_state_data
-  plugins: Introduce TCGCPUOps callbacks for mid-tb register reads
-  target/i386: Split out gdb-internal.h
-  target/i386: Introduce cpu_compute_eflags_ccop
-  target/i386: Implement TCGCPUOps for plugin register reads
-
- include/exec/cpu-common.h     |  9 +++--
- include/hw/core/cpu.h         |  1 +
- include/hw/core/tcg-cpu-ops.h | 13 +++++++
- include/tcg/tcg-op-common.h   |  1 +
- include/tcg/tcg-opc.h         |  1 +
- target/i386/cpu.h             |  2 +
- target/i386/gdb-internal.h    | 65 +++++++++++++++++++++++++++++++
- accel/tcg/plugin-gen.c        | 50 +++++++++++++++++++++---
- accel/tcg/translate-all.c     |  9 +++--
- plugins/api.c                 | 36 +++++++++++++++++-
- target/i386/gdbstub.c         |  1 +
- target/i386/helper.c          |  6 ++-
- target/i386/tcg/cc_helper.c   | 10 +++++
- target/i386/tcg/tcg-cpu.c     | 72 +++++++++++++++++++++++++++--------
- tcg/tcg-op.c                  |  5 +++
- tcg/tcg.c                     | 10 +++++
- 16 files changed, 258 insertions(+), 33 deletions(-)
- create mode 100644 target/i386/gdb-internal.h
-
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index bf8ff8e3ee..e954d83edf 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -49,6 +49,19 @@ struct TCGCPUOps {
+     /** @debug_excp_handler: Callback for handling debug exceptions */
+     void (*debug_excp_handler)(CPUState *cpu);
+ 
++    /**
++     * @plugin_need_unwind_for_reg:
++     * True if unwind info needed for reading reg.
++     */
++    bool (*plugin_need_unwind_for_reg)(CPUState *cpu, int reg);
++    /**
++     * @plugin_unwind_read_reg:
++     * Like CPUClass.gdb_read_register, but for registers that require
++     * regeneration using unwind info, like in @restore_state_to_opc.
++     */
++    int (*plugin_unwind_read_reg)(CPUState *cpu, GByteArray *buf, int reg,
++                                  const TranslationBlock *tb,
++                                  const uint64_t *data);
+ #ifdef NEED_CPU_H
+ #ifdef CONFIG_USER_ONLY
+     /**
+diff --git a/plugins/api.c b/plugins/api.c
+index 3912c9cc8f..3543647a89 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -40,10 +40,12 @@
+ #include "qemu/plugin.h"
+ #include "qemu/log.h"
+ #include "tcg/tcg.h"
++#include "tcg/insn-start-words.h"
+ #include "exec/exec-all.h"
+ #include "exec/gdbstub.h"
+ #include "exec/ram_addr.h"
+ #include "disas/disas.h"
++#include "hw/core/tcg-cpu-ops.h"
+ #include "plugin.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "qemu/plugin-memory.h"
+@@ -454,9 +456,39 @@ GArray *qemu_plugin_get_registers(void)
+ 
+ int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+ {
+-    g_assert(current_cpu);
++    CPUState *cs;
++    uintptr_t ra;
++    int regno;
+ 
+-    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg));
++    assert(current_cpu);
++    cs = current_cpu;
++    ra = cs->neg.plugin_ra;
++    regno = GPOINTER_TO_INT(reg);
++
++    /*
++     * When plugin_ra is 0, we have no unwind info.  This will be true for
++     * TB callbacks that happen before any insns of the TB have started.
++     */
++    if (ra) {
++        const TCGCPUOps *tcg_ops = cs->cc->tcg_ops;
++
++        /*
++         * For plugins in the middle of the TB, we may need to locate
++         * and use unwind data to reconstruct a register value.
++         * Usually this required for the PC, but there may be others.
++         */
++        if (tcg_ops->plugin_need_unwind_for_reg &&
++            tcg_ops->plugin_need_unwind_for_reg(cs, regno)) {
++            uint64_t data[TARGET_INSN_START_WORDS];
++            const TranslationBlock *tb;
++
++            tb = cpu_unwind_state_data(cs, ra, data);
++            assert(tb);
++            return tcg_ops->plugin_unwind_read_reg(cs, buf, regno, tb, data);
++        }
++    }
++
++    return gdb_read_register(cs, buf, regno);
+ }
+ 
+ struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
 -- 
 2.34.1
 
