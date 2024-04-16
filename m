@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCA8CC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51AD2C04FFF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwo4P-0004id-Hs; Tue, 16 Apr 2024 15:02:17 -0400
+	id 1rwo3N-0001Wq-In; Tue, 16 Apr 2024 15:01:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo4M-0004N5-KR
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:02:14 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo32-00019D-2C
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:54 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo4I-0005um-ON
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:02:14 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-516f2e0edb7so5851778e87.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:02:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2h-0005eg-NI
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:48 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a450bedffdfso607604466b.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713294129; x=1713898929; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713294029; x=1713898829; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kMNnC0CtBUMfvsWtjsnWY6TflDR4yCy2djdqUVTuvak=;
- b=t8qs/JL8yAg1ebnAvx1Dg30Vhcqu7XK6aUmJbOqPN3aK2zHtuVx8yJ1wnXj5OKCEv1
- ff+HuhQ6I4YoZFL54caz/HOwpwFp8RkK42zn/nhGyO8YbQWY7cDXd77LLXU6UwHVy2zC
- lmS6fWa59XnTxFEUnOBwiExbsC4eZRx5CuLakiz7xa09hxh+5RO23gHWidxPDrFxlJLk
- myYdxS4F+L2oAout86NnOcqQHfiqe/jb1L+hQ4m0mNHW9Oft+JHx5MmQE5/u0mwcc8Q1
- iO+Xe38b20rqI1rdM7Fl37zblJy2l7aJFxpYgnQiYP5i8NgqKtSR80JM4FJd5Ag7+xZB
- cVBA==
+ bh=aDu2aZ9r50YKxf+dNaxDqKUjAn6DYpDYAzbmilk8iWY=;
+ b=m5i35H+mtunEze2FUlynMSiXOwtwgt1mn7mHer+VSwXqBikJHdoDa6P3SngIb8pHJD
+ EAKHGlqhYfinaCTT4wxgHGCOUhiedu/NmTasBFwnDm7Mr7CCIvdxKziWChbPX0uSHJqZ
+ AhDUK3L6268Mr2AUDpwJuLSa9XaZjKlJNvPgAMpQ+7jqoJipTXL2bzNVaWImzkSwylKQ
+ 7Tud2/+2FT3lVVRnkPGeUawX8CbKHHVpL6CtMDW2adGUJXd4UT0SBJD+COeIFVVJSU26
+ M6x6qBlh38p27F6KI1NNFfarqVlzDnm8pCH7dNOh38Ggs6kDbU7Z2d3HIJk88nmXw83P
+ AjJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713294129; x=1713898929;
+ d=1e100.net; s=20230601; t=1713294029; x=1713898829;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kMNnC0CtBUMfvsWtjsnWY6TflDR4yCy2djdqUVTuvak=;
- b=sNtyvDgAHMOACrkf1IYuP+T31fNPqUk68tYy7Uo122FQlmhQ/maN2u7+T42lQhASTN
- 2dPLgmAa5CBa6WIhogTGBnGVXjNb3WFz8R+jMs/LtTV4ajR5kMlbtGyNePob1NaX5vD8
- SNXFcrdxx83bBW2yv+EP7B2NAWeMvvH4FHW7c5gzjROw0pf8siequuovktA4gSPq39Mb
- 9LWk1sboMfSX1MuzqIK29tkcXijmkpo6E5JLhnZsQKbKvT5XaVWVMAXxQNTnYI7lmiIm
- Nm9ekrYcPUxxk0wYWsnG4Ka/bJyg1jCQR+GGDXV+CHyYndPMSRrPYcTBDgDRNoZBkYyB
- FN7Q==
-X-Gm-Message-State: AOJu0YxBS7ToSVPgDawXGviu5HV8FimRIN5lS+dgGWKJd1mQ9nNFZW8Q
- 2A9XEvE1vvOocvqIljzSp/2G1HihLBVB8S/W+NdF+CRY7FkcZEuDpOH8QbB/gYWt4TFZvm4/5+Q
- Y
-X-Google-Smtp-Source: AGHT+IGfYRyj7r002C9yM3FRzUGXQloA8hUqiyYSxfijYilgXSYfYJaEenswdOWXoxEW0bqJoGIMTA==
-X-Received: by 2002:a05:6512:33c8:b0:518:b069:3b7d with SMTP id
- d8-20020a05651233c800b00518b0693b7dmr6333284lfg.6.1713294128761; 
- Tue, 16 Apr 2024 12:02:08 -0700 (PDT)
+ bh=aDu2aZ9r50YKxf+dNaxDqKUjAn6DYpDYAzbmilk8iWY=;
+ b=p779rd2YUbm4EBIASOosi8Fr9Npzmec4Khnzd92x1fNLABv6LSGjYdTNVkq4sDLsGu
+ QWUNAI7A62Oi7kWD0oMvD72nwqp5gVI/VNcjCE+TUzlefXQG+u5yTo1qOa4mc3jBbxS7
+ P85e/kdC+f8/HMAgY5oGUWAxDR6OCguAB8aRerLEZKxPeDTBwRkgWTqxuA7PhucoWmfU
+ M0cu4ph4SHkQxO894+AJQELzKse4fiz6lCVzE7JfzbKCPuw5lqXgj5s2O/DZVPXHIDmI
+ 9efFSpCwNGN+fXvXU34ro3qyY4ZXggF5pkSLQuVCpQ5hxgGS/vzjEUFlU5C2jqsOSN51
+ QvFg==
+X-Gm-Message-State: AOJu0Yxha+yNIyg3T0jlBs1tE12ekFoMGZ0JC4fHYqU3bqaxoGptvhWV
+ D043vTPlVIkwoMxirhhM6Rx+Lyhio0Y2/ttPMry8sJxQpsiZZlXY8oeeOJP6bxvRShT8xwug6N9
+ L
+X-Google-Smtp-Source: AGHT+IEc0M7W+KyDB0aQ8QUm+zC7hkHWbLtW7gtPPIqf8ccsUyI98Px0KPtH3uOffjFEYOIbTwSX0w==
+X-Received: by 2002:a17:907:1b1d:b0:a52:2b39:879b with SMTP id
+ mp29-20020a1709071b1d00b00a522b39879bmr10404824ejc.46.1713294029119; 
+ Tue, 16 Apr 2024 12:00:29 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- d19-20020a170906c21300b00a553846966csm1570949ejz.24.2024.04.16.12.02.06
+ em3-20020a170907288300b00a5180d5b31asm7161409ejc.32.2024.04.16.12.00.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 12:02:08 -0700 (PDT)
+ Tue, 16 Apr 2024 12:00:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -66,21 +66,20 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v4 22/22] hw/i386/pc: Replace PCMachineClass::acpi_data_size
- by PC_ACPI_DATA_SIZE
-Date: Tue, 16 Apr 2024 20:59:38 +0200
-Message-ID: <20240416185939.37984-23-philmd@linaro.org>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH v4 07/22] hw/acpi/ich9: Remove dead code related to
+ 'acpi_memory_hotplug'
+Date: Tue, 16 Apr 2024 20:59:23 +0200
+Message-ID: <20240416185939.37984-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 References: <20240416185939.37984-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,92 +102,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCMachineClass::acpi_data_size was only used by the pc-i440fx-2.0
-machine, which got removed. Since it is constant, replace the class
-field by a definition (local to hw/i386/pc.c, since not used
-elsewhere).
+acpi_memory_hotplug::is_enabled is set to %true once via
+ich9_lpc_initfn() -> ich9_pm_add_properties(). No need to
+check it, so remove now dead code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/hw/i386/pc.h |  4 ----
- hw/i386/pc.c         | 19 ++++++++++++-------
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ hw/acpi/ich9.c | 28 ++++++----------------------
+ 1 file changed, 6 insertions(+), 22 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 96ccb4583f..0ad971782c 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -74,9 +74,6 @@ typedef struct PCMachineState {
-  *
-  * Compat fields:
-  *
-- * @acpi_data_size: Size of the chunk of memory at the top of RAM
-- *                  for the BIOS ACPI tables and other BIOS
-- *                  datastructures.
-  * @gigabyte_align: Make sure that guest addresses aligned at
-  *                  1Gbyte boundaries get mapped to host
-  *                  addresses aligned at 1Gbyte boundaries. This
-@@ -100,7 +97,6 @@ struct PCMachineClass {
+diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+index 9b605af21a..02d8546bd3 100644
+--- a/hw/acpi/ich9.c
++++ b/hw/acpi/ich9.c
+@@ -153,17 +153,10 @@ static int ich9_pm_post_load(void *opaque, int version_id)
+      .offset     = vmstate_offset_pointer(_state, _field, uint8_t),  \
+  }
  
-     /* ACPI compat: */
-     bool has_acpi_build;
--    unsigned acpi_data_size;
-     int pci_root_uid;
+-static bool vmstate_test_use_memhp(void *opaque)
+-{
+-    ICH9LPCPMRegs *s = opaque;
+-    return s->acpi_memory_hotplug.is_enabled;
+-}
+-
+ static const VMStateDescription vmstate_memhp_state = {
+     .name = "ich9_pm/memhp",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = vmstate_test_use_memhp,
+     .fields = (const VMStateField[]) {
+         VMSTATE_MEMORY_HOTPLUG(acpi_memory_hotplug, ICH9LPCPMRegs),
+         VMSTATE_END_OF_LIST()
+@@ -335,11 +328,9 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+     legacy_acpi_cpu_hotplug_init(pci_address_space_io(lpc_pci),
+         OBJECT(lpc_pci), &pm->gpe_cpu, ICH9_CPU_HOTPLUG_IO_BASE);
  
-     /* SMBIOS compat: */
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 2e2146f42b..0be8f08c47 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -256,6 +256,16 @@ GlobalProperty pc_compat_2_4[] = {
- };
- const size_t pc_compat_2_4_len = G_N_ELEMENTS(pc_compat_2_4);
+-    if (pm->acpi_memory_hotplug.is_enabled) {
+-        acpi_memory_hotplug_init(pci_address_space_io(lpc_pci), OBJECT(lpc_pci),
+-                                 &pm->acpi_memory_hotplug,
+-                                 ACPI_MEMORY_HOTPLUG_BASE);
+-    }
++    acpi_memory_hotplug_init(pci_address_space_io(lpc_pci), OBJECT(lpc_pci),
++                             &pm->acpi_memory_hotplug,
++                             ACPI_MEMORY_HOTPLUG_BASE);
+ }
  
-+/*
-+ * @PC_ACPI_DATA_SIZE:
-+ * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
-+ * and other BIOS datastructures.
-+ *
-+ * BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K
-+ * reported to be used at the moment, 32K should be enough for a while.
-+ */
-+#define PC_ACPI_DATA_SIZE (0x20000 + 0x8000)
-+
- GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
+ static void ich9_pm_get_gpe0_blk(Object *obj, Visitor *v, const char *name,
+@@ -460,12 +451,7 @@ void ich9_pm_device_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+         return;
+     }
+ 
+-    if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) &&
+-        !lpc->pm.acpi_memory_hotplug.is_enabled) {
+-        error_setg(errp,
+-                   "memory hotplug is not enabled: %s.memory-hotplug-support "
+-                   "is not set", object_get_typename(OBJECT(lpc)));
+-    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++    if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         uint64_t negotiated = lpc->smi_negotiated_features;
+ 
+         if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
+@@ -509,8 +495,7 @@ void ich9_pm_device_unplug_request_cb(HotplugHandler *hotplug_dev,
  {
-     GSIState *s;
-@@ -634,8 +644,7 @@ void xen_load_linux(PCMachineState *pcms)
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-     rom_set_fw(fw_cfg);
+     ICH9LPCState *lpc = ICH9_LPC_DEVICE(hotplug_dev);
  
--    x86_load_linux(x86ms, fw_cfg, pcmc->acpi_data_size,
--                   pcmc->pvh_enabled);
-+    x86_load_linux(x86ms, fw_cfg, PC_ACPI_DATA_SIZE, pcmc->pvh_enabled);
-     for (i = 0; i < nb_option_roms; i++) {
-         assert(!strcmp(option_rom[i].name, "linuxboot.bin") ||
-                !strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
-@@ -969,8 +978,7 @@ void pc_memory_init(PCMachineState *pcms,
-     }
+-    if (lpc->pm.acpi_memory_hotplug.is_enabled &&
+-        object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
++    if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         acpi_memory_unplug_request_cb(hotplug_dev,
+                                       &lpc->pm.acpi_memory_hotplug, dev,
+                                       errp);
+@@ -545,8 +530,7 @@ void ich9_pm_device_unplug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+ {
+     ICH9LPCState *lpc = ICH9_LPC_DEVICE(hotplug_dev);
  
-     if (linux_boot) {
--        x86_load_linux(x86ms, fw_cfg, pcmc->acpi_data_size,
--                       pcmc->pvh_enabled);
-+        x86_load_linux(x86ms, fw_cfg, PC_ACPI_DATA_SIZE, pcmc->pvh_enabled);
-     }
- 
-     for (i = 0; i < nb_option_roms; i++) {
-@@ -1724,9 +1732,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     pcmc->gigabyte_align = true;
-     pcmc->has_reserved_memory = true;
-     pcmc->enforce_amd_1tb_hole = true;
--    /* BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K reported
--     * to be used at the moment, 32K should be enough for a while.  */
--    pcmc->acpi_data_size = 0x20000 + 0x8000;
-     pcmc->pvh_enabled = true;
-     pcmc->kvmclock_create_always = true;
-     x86mc->apic_xrupt_override = true;
+-    if (lpc->pm.acpi_memory_hotplug.is_enabled &&
+-        object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
++    if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         acpi_memory_unplug_cb(&lpc->pm.acpi_memory_hotplug, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU) &&
+                !lpc->pm.cpu_hotplug_legacy) {
 -- 
 2.41.0
 
