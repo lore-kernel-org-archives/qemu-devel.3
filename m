@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F8BAC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483C1C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwf2x-0004FD-89; Tue, 16 Apr 2024 05:24:11 -0400
+	id 1rwf58-0007P8-R8; Tue, 16 Apr 2024 05:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwf2k-0003lQ-JY
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:24:00 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1rwf4o-0007My-Q2
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:26:12 -0400
+Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwf2e-0000lR-Ni
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:23:57 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1e3cf5b171eso33926105ad.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 02:23:49 -0700 (PDT)
+ id 1rwf4l-0001Go-J6
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:26:06 -0400
+Received: by mail-il1-x12f.google.com with SMTP id
+ e9e14a558f8ab-369e3c29aedso18639355ab.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 02:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713259428; x=1713864228; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=ventanamicro.com; s=google; t=1713259561; x=1713864361; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IpW/hijO0aHHxkG2Zb18GBzP2NduAGDhiCt875BvOCU=;
- b=TeiCww9bvjJpD3tRM2PpBB03b4pr1Ad1TIyaANpZQX6kDEnzoXBua4jl14lTZ0ePSw
- XZjBRBs8j0w3S4VOoClv+kb4NbaoABoO035qO8kS5HNC/DBJlIRN3KtOZXta08sTy1pJ
- AB0NkOhkmLfqZKpiBFujDcNFzefxkwTR1wDnVkgzKrZLCWClH0yGlUweM/NZYHfAT4Mn
- eDkEyVedJty2igTs4s2g9jj/BRjoxenFGUQOx0IfXGoq1JnDy9YeOYEpd1Jc5DHad8aP
- PxoHOVENkq3Ed+erhiCUO3g2dGM/NSssERvcoiNA1hMbukbKrl5RSX9zTRw6UK+wWgV0
- o+wg==
+ bh=wXVhb8brYlfg9y9PMTKGdC+D/djaL9iRPIqdffYkTz4=;
+ b=cgeoMTaqm4OIknRTzqF/ov8XvM+Bfb3gqai/JJdqYeZTPZ27V/Rtgf6paVNsZQOnk+
+ a5FCEw5llmpe3tsRlrZXk4KdPIDcBmYh+RiDOrUy+tKdztNinUPPmDgGhl0buuvt5m4R
+ t7Lk2gawGr0Fqb3b655A7Hqq606XlMRdu5phKfRKTfM+fe3tMpwoiXW1xmoX/ve4T2Ku
+ jVwSaA383Ow6dcjXV57+wqdSql00ca1rZMkbenxHkBHk1AfAdP5MMJB1KGoB+yV4fooH
+ 0pFTTBuoPG3AAVkEKHa/n74iOudMFzmS0W6LGMECm+0a8EX0r8In453AqItIWQjDAYWi
+ Lv9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713259428; x=1713864228;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1713259561; x=1713864361;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IpW/hijO0aHHxkG2Zb18GBzP2NduAGDhiCt875BvOCU=;
- b=kRoUBBllw1djartO/Tf4sZ0jGOZg6QmPhvDOXVWvm9PjcB9wIzoZy0tdEdT8dunFXn
- 7SQeRIu0iM3oN+FoA3EmU/txiZgriCvYQp9o4p+yPc+BPHnq/GBJZ5XoCmo1i/wGE/e2
- kUFSu5xc5+GfFowZ5hLeRd+j2cR5g67vdZdbpkGNMLY9WeVxNxqpEMY7KJOjGFmbLRvy
- XRlGiu5UKu+F2+mYKd4AVY0hM49dtuY9blk2tzSfRa3AHnvJAjHcSOq7cqdV4UsGJDtG
- 6qX7WLwuwqCP3OTplwrlMKHWyB2Jk9bPYQ3mTWI6SfbrZ2Yig+KjxbHTsXr1HSN/BWwQ
- hHGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUalOhB+wNiYiIJneojaCG5YiMSaq3RZKNpJSWgMsS5sr7B2h8L7yITqyYLgXLGKz2WSEbDJsBnWyvF68Ki76rKZ+9vD38=
-X-Gm-Message-State: AOJu0YyPG26EaVnRqfd+pz7raFz6/Mfx4HTvDkbzHuRMJpQFjZb8Xkad
- /kc6O/hrbzRZL+pkKzAQb/AT9hn6scMRaWEK0+uNbUMRT8F8UvA6SMyFzn2a/zo=
-X-Google-Smtp-Source: AGHT+IFz7sxyqodhqcMHkpWTghH665tQ4vQZCJAbH/Yc1xan5QSBX/4nYRpWz375G6Ln2ElNnxZyrA==
-X-Received: by 2002:a17:902:ea12:b0:1e3:dfdc:6972 with SMTP id
- s18-20020a170902ea1200b001e3dfdc6972mr17052582plg.9.1713259428336; 
- Tue, 16 Apr 2024 02:23:48 -0700 (PDT)
+ bh=wXVhb8brYlfg9y9PMTKGdC+D/djaL9iRPIqdffYkTz4=;
+ b=iQZTZPFEvsQifmg45uk+oqbzOYRpO+8zVwbBC5HTUBIkhqLHiNUFQhT9119CLVZ6X0
+ GbryPU5dK8CM1EHIK1Af95dpGJ7zSOIg+bua7muXjPpjxS78ffjWKnCkjIrNjzrggM7F
+ CkoPVYvZa5qTb/k3B9L/asqH+1t41x0AB5yJQItYMzoiSQw6EhZhwMvO0ulM+AA/81+6
+ lpCdXhXMMvz1DaZ6eT4aKi5KRIkpDbIYZFJopOOGnt/YCftW07t8KHPwx0qF8Nr2imgP
+ uQJfYbUuHtvbWXsY6X79X5MTuBzu03BpYSIB2mZ21JU4Aj0LcSXFtjuyXWI4jNbl3Pow
+ zaDQ==
+X-Gm-Message-State: AOJu0YxRZl2lQ+fOtiSwjhmG5ZhlhLsbTCeafw32gEJRdj8HBI34Zlz1
+ yvx3HFisW0G7yd3sI+PlzQ++6Ob/pBzf7nVBVBURVaREEKGI3B+jLbwzhY99SiA=
+X-Google-Smtp-Source: AGHT+IGhAbnMJxflCiBtp+4bwFnOlJKhUMcJyLct3XJiZsDnMy/+85DcaL9WkEWUMYSoYRyRiaXxHg==
+X-Received: by 2002:a05:6e02:152a:b0:36b:be7:f2d1 with SMTP id
+ i10-20020a056e02152a00b0036b0be7f2d1mr12722463ilu.6.1713259561467; 
+ Tue, 16 Apr 2024 02:26:01 -0700 (PDT)
 Received: from [192.168.68.110] ([177.45.186.202])
  by smtp.gmail.com with ESMTPSA id
- q6-20020a170902a3c600b001dd0d0d26a4sm9553362plb.147.2024.04.16.02.23.45
+ u10-20020a63b54a000000b005dca5caed40sm8431575pgo.81.2024.04.16.02.25.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 02:23:47 -0700 (PDT)
-Message-ID: <ada42503-dab4-474f-a61a-a9fe3fa63afa@ventanamicro.com>
-Date: Tue, 16 Apr 2024 06:23:43 -0300
+ Tue, 16 Apr 2024 02:26:01 -0700 (PDT)
+Message-ID: <b93f13c4-05a9-4772-8ed9-a74b2f5f9cef@ventanamicro.com>
+Date: Tue, 16 Apr 2024 06:25:55 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/4] target/riscv/kvm: add software breakpoints support
+Subject: Re: [RFC PATCH 0/4] target/riscv/kvm: QEMU support for KVM Guest
+ Debug on RISC-V
 Content-Language: en-US
-To: Chao Du <duchao@eswincomputing.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, pbonzini@redhat.com, alistair23@gmail.com,
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, zhiwei_liu@linux.alibaba.com,
- palmer@dabbelt.com, anup@brainfault.org, atishp@atishpatra.org
+To: Chao Du <duchao@eswincomputing.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
+ alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, anup@brainfault.org,
+ atishp@atishpatra.org
 References: <20231221094923.7349-1-duchao@eswincomputing.com>
- <20231221094923.7349-2-duchao@eswincomputing.com>
+ <846ec319-6026-4b14-b156-9e1f42c6dba1@ventanamicro.com>
+ <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20231221094923.7349-2-duchao@eswincomputing.com>
+In-Reply-To: <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-il1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,227 +103,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 12/21/23 06:49, Chao Du wrote:
-> This patch implements insert/remove software breakpoint process:
+On 4/9/24 06:43, Chao Du wrote:
+> Hi Daniel and all,
 > 
-> Add an input parameter for kvm_arch_insert_sw_breakpoint() and
-> kvm_arch_remove_sw_breakpoint() to pass the length information,
-> which helps us to know whether it is a compressed instruction.
-> For some remove cases, we do not have the length info, so we need
-> to judge by ourselves.
+> The KVM patches have been reviewd and are in the queue.
+> https://lore.kernel.org/all/20240402062628.5425-1-duchao@eswincomputing.com/
 > 
-> For RISC-V, GDB treats single-step similarly to breakpoint: add a
-> breakpoint at the next step address, then continue. So this also
-> works for single-step debugging.
+> Could you please review in the QEMU side ?
+> Then I will rebase this series with your comments.
 > 
-> Add some stubs which are necessary for building, and will be
-> implemented later.
-> 
-> Signed-off-by: Chao Du <duchao@eswincomputing.com>
-> ---
->   accel/kvm/kvm-all.c        |  8 ++--
->   include/sysemu/kvm.h       |  6 ++-
->   target/arm/kvm64.c         |  6 ++-
->   target/i386/kvm/kvm.c      |  6 ++-
->   target/mips/kvm.c          |  6 ++-
->   target/ppc/kvm.c           |  6 ++-
->   target/riscv/kvm/kvm-cpu.c | 79 ++++++++++++++++++++++++++++++++++++++
->   target/s390x/kvm/kvm.c     |  6 ++-
->   8 files changed, 107 insertions(+), 16 deletions(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index e39a810a4e..ccc505d0c2 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -3231,7 +3231,7 @@ int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
->           bp = g_new(struct kvm_sw_breakpoint, 1);
->           bp->pc = addr;
->           bp->use_count = 1;
-> -        err = kvm_arch_insert_sw_breakpoint(cpu, bp);
-> +        err = kvm_arch_insert_sw_breakpoint(cpu, bp, len);
->           if (err) {
->               g_free(bp);
->               return err;
-> @@ -3270,7 +3270,7 @@ int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len)
->               return 0;
->           }
->   
-> -        err = kvm_arch_remove_sw_breakpoint(cpu, bp);
-> +        err = kvm_arch_remove_sw_breakpoint(cpu, bp, len);
->           if (err) {
->               return err;
->           }
-> @@ -3300,10 +3300,10 @@ void kvm_remove_all_breakpoints(CPUState *cpu)
->       CPUState *tmpcpu;
->   
->       QTAILQ_FOREACH_SAFE(bp, &s->kvm_sw_breakpoints, entry, next) {
-> -        if (kvm_arch_remove_sw_breakpoint(cpu, bp) != 0) {
-> +        if (kvm_arch_remove_sw_breakpoint(cpu, bp, 0) != 0) {
->               /* Try harder to find a CPU that currently sees the breakpoint. */
->               CPU_FOREACH(tmpcpu) {
-> -                if (kvm_arch_remove_sw_breakpoint(tmpcpu, bp) == 0) {
-> +                if (kvm_arch_remove_sw_breakpoint(tmpcpu, bp, 0) == 0) {
->                       break;
->                   }
->               }
-> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-> index d614878164..ab38c23def 100644
-> --- a/include/sysemu/kvm.h
-> +++ b/include/sysemu/kvm.h
-> @@ -391,9 +391,11 @@ struct kvm_sw_breakpoint *kvm_find_sw_breakpoint(CPUState *cpu,
->   int kvm_sw_breakpoints_active(CPUState *cpu);
->   
->   int kvm_arch_insert_sw_breakpoint(CPUState *cpu,
-> -                                  struct kvm_sw_breakpoint *bp);
-> +                                  struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len);
->   int kvm_arch_remove_sw_breakpoint(CPUState *cpu,
-> -                                  struct kvm_sw_breakpoint *bp);
-> +                                  struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len);
->   int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type);
->   int kvm_arch_remove_hw_breakpoint(vaddr addr, vaddr len, int type);
->   void kvm_arch_remove_all_hw_breakpoints(void);
-> diff --git a/target/arm/kvm64.c b/target/arm/kvm64.c
-> index 3c175c93a7..023e92b577 100644
-> --- a/target/arm/kvm64.c
-> +++ b/target/arm/kvm64.c
-> @@ -1139,7 +1139,8 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
->   /* C6.6.29 BRK instruction */
->   static const uint32_t brk_insn = 0xd4200000;
->   
-> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       if (have_guest_debug) {
->           if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 0) ||
-> @@ -1153,7 +1154,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
->       }
->   }
->   
-> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       static uint32_t brk;
->   
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 4ce80555b4..742b7c8296 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -4935,7 +4935,8 @@ static int kvm_handle_tpr_access(X86CPU *cpu)
->       return 1;
->   }
->   
-> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       static const uint8_t int3 = 0xcc;
->   
-> @@ -4946,7 +4947,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
->       return 0;
->   }
->   
-> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       uint8_t int3;
->   
-> diff --git a/target/mips/kvm.c b/target/mips/kvm.c
-> index e22e24ed97..2f68938cdf 100644
-> --- a/target/mips/kvm.c
-> +++ b/target/mips/kvm.c
-> @@ -112,13 +112,15 @@ void kvm_mips_reset_vcpu(MIPSCPU *cpu)
->       DPRINTF("%s\n", __func__);
->   }
->   
-> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       DPRINTF("%s\n", __func__);
->       return 0;
->   }
->   
-> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       DPRINTF("%s\n", __func__);
->       return 0;
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 9b1abe2fc4..a99c85b2f3 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -1375,7 +1375,8 @@ static int kvmppc_handle_dcr_write(CPUPPCState *env,
->       return 0;
->   }
->   
-> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       /* Mixed endian case is not handled */
->       uint32_t sc = debug_inst_opcode;
-> @@ -1389,7 +1390,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
->       return 0;
->   }
->   
-> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       uint32_t sc;
->   
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 45b6cf1cfa..e9110006b0 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1521,3 +1521,82 @@ static const TypeInfo riscv_kvm_cpu_type_infos[] = {
->   };
->   
->   DEFINE_TYPES(riscv_kvm_cpu_type_infos)
-> +
-> +static const uint32_t ebreak_insn = 0x00100073;
-> +static const uint16_t c_ebreak_insn = 0x9002;
-> +
-> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
-> +{
-> +    if (len != 4 && len != 2) {
-> +        return -EINVAL;
-> +    }
+> Some Notes:
+> 1. As the first stage, only the software breakpoints is implemented.
+> 2. A 'corner case' in which the debug exception is not inserted by the
+> debugger, need to be re-injected to the guest. This is not handled yet
+> in this series.
 
-I wonder if this verification should be moved to kvm_insert_breakpoint(). Is
-there any known reason why other archs would use 'len' other than 2 or 4? The
-parent function can throw the EINVAL in this case. Otherwise all callers from
-all archs will need a similar EINVAL check.
+Aside from the comments I made in patch 1 w.r.t checks that (perhaps) can be moved
+to kvm-all.c, it looks good to me.
 
-> +
-> +    uint8_t * insn = (len == 4) ? (uint8_t *)&ebreak_insn :
-> +                                  (uint8_t *)&c_ebreak_insn;
-> +
-> +    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, len, 0) ||
-> +        cpu_memory_rw_debug(cs, bp->pc, insn, len, 1)) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
-> +{
-> +    uint8_t length;
-> +
-> +    if (len == 4 || len == 2) {
-> +        length = (uint8_t)len;
-
-Same question as above - perhaps the len = 0 | 2 | 4 conditional can be moved to
-kvm_remove_breakpoint().
+Since you're changing kvm-all.c we'll need Paolo to ack the changes in patch 1, so
+feel free to wait for him to take a look before sending v2.
 
 
 Thanks,
@@ -330,79 +130,61 @@ Thanks,
 
 Daniel
 
-
-> +    } else if (len == 0) {
-> +        /* Need to decide the instruction length in this case. */
-> +        uint32_t read_4_bytes;
-> +        uint16_t read_2_bytes;
-> +
-> +        if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&read_4_bytes, 4, 0) ||
-> +            cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&read_2_bytes, 2, 0)) {
-> +            return -EINVAL;
-> +        }
-> +
-> +        if (read_4_bytes == ebreak_insn) {
-> +            length = 4;
-> +        } else if (read_2_bytes == c_ebreak_insn) {
-> +            length = 2;
-> +        } else {
-> +            return -EINVAL;
-> +        }
-> +    } else {
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn,
-> +                            length, 1)) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type)
-> +{
-> +    /* TODO; To be implemented later. */
-> +    return -EINVAL;
-> +}
-> +
-> +int kvm_arch_remove_hw_breakpoint(vaddr addr, vaddr len, int type)
-> +{
-> +    /* TODO; To be implemented later. */
-> +    return -EINVAL;
-> +}
-> +
-> +void kvm_arch_remove_all_hw_breakpoints(void)
-> +{
-> +    /* TODO; To be implemented later. */
-> +}
-> +
-> +void kvm_arch_update_guest_debug(CPUState *cs, struct kvm_guest_debug *dbg)
-> +{
-> +    /* TODO; To be implemented later. */
-> +}
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index 33ab3551f4..fafacedd6a 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -867,7 +867,8 @@ static void determine_sw_breakpoint_instr(void)
->           }
->   }
->   
-> -int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       determine_sw_breakpoint_instr();
->   
-> @@ -879,7 +880,8 @@ int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
->       return 0;
->   }
->   
-> -int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp,
-> +                                  vaddr len)
->   {
->       uint8_t t[MAX_ILEN];
->   
+> 
+> Thanks,
+> Chao
+> 
+> 
+> On 2023-12-22 22:16, Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
+>>
+>> Hi,
+>>
+>> It seems that we still need the kernel KVM side to be sorted out first [1],
+>> so I believe we should wait a bit until we can review this RFC. Otherwise we
+>> might risk reviewing something that has to be changed later.
+>>
+>>
+>> [1] https://lore.kernel.org/kvm/20231221095002.7404-1-duchao@eswincomputing.com/
+>>
+>>
+>> Thanks,
+>>
+>> Daniel
+>>
+>> On 12/21/23 06:49, Chao Du wrote:
+>>> This series implements QEMU KVM Guest Debug on RISC-V. Currently, we can
+>>> debug RISC-V KVM guest from the host side, with software breakpoints.
+>>>
+>>> A brief test was done on QEMU RISC-V hypervisor emulator.
+>>>
+>>> A TODO list which will be added later:
+>>> 1. HW breakpoints support
+>>> 2. Test cases
+>>>
+>>> This series is based on QEMU 8.2.0-rc4 and is also available at:
+>>> https://github.com/Du-Chao/qemu/tree/riscv_gd_sw
+>>>
+>>> This is dependent on KVM side changes:
+>>> https://github.com/Du-Chao/linux/tree/riscv_gd_sw
+>>>
+>>> Chao Du (4):
+>>>     target/riscv/kvm: add software breakpoints support
+>>>     target/riscv/kvm: implement kvm_arch_update_guest_debug()
+>>>     target/riscv/kvm: handle the exit with debug reason
+>>>     linux-headers: enable KVM GUEST DEBUG for RISC-V
+>>>
+>>>    accel/kvm/kvm-all.c           |   8 +--
+>>>    include/sysemu/kvm.h          |   6 +-
+>>>    linux-headers/asm-riscv/kvm.h |   1 +
+>>>    target/arm/kvm64.c            |   6 +-
+>>>    target/i386/kvm/kvm.c         |   6 +-
+>>>    target/mips/kvm.c             |   6 +-
+>>>    target/ppc/kvm.c              |   6 +-
+>>>    target/riscv/kvm/kvm-cpu.c    | 101 ++++++++++++++++++++++++++++++++++
+>>>    target/s390x/kvm/kvm.c        |   6 +-
+>>>    9 files changed, 130 insertions(+), 16 deletions(-)
+>>>
+>>> --
+>>> 2.17.1
+>>>
 
