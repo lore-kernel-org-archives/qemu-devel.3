@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483C1C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D00C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwf58-0007P8-R8; Tue, 16 Apr 2024 05:26:26 -0400
+	id 1rwf5C-0007QB-Sf; Tue, 16 Apr 2024 05:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwf4o-0007My-Q2
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:26:12 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwf4l-0001Go-J6
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:26:06 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-369e3c29aedso18639355ab.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 02:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713259561; x=1713864361; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wXVhb8brYlfg9y9PMTKGdC+D/djaL9iRPIqdffYkTz4=;
- b=cgeoMTaqm4OIknRTzqF/ov8XvM+Bfb3gqai/JJdqYeZTPZ27V/Rtgf6paVNsZQOnk+
- a5FCEw5llmpe3tsRlrZXk4KdPIDcBmYh+RiDOrUy+tKdztNinUPPmDgGhl0buuvt5m4R
- t7Lk2gawGr0Fqb3b655A7Hqq606XlMRdu5phKfRKTfM+fe3tMpwoiXW1xmoX/ve4T2Ku
- jVwSaA383Ow6dcjXV57+wqdSql00ca1rZMkbenxHkBHk1AfAdP5MMJB1KGoB+yV4fooH
- 0pFTTBuoPG3AAVkEKHa/n74iOudMFzmS0W6LGMECm+0a8EX0r8In453AqItIWQjDAYWi
- Lv9w==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rwf56-0007Or-6P
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:26:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rwf4q-0001HH-Ej
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:26:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713259565;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=50Dw7as93RN5q6+esv7+ClV6UaVcs+ihqYfNvO3BArE=;
+ b=jFtN2yyZXBr7x69E7Ir9Fmlw0/Efq7RfoyTjRgNGMFP9ZqIUw7ydURk3Xz2T4vI7KZgGE8
+ 9GZM3NQlu6yyvmaQvv8pJGY3Cvs/WXEKYhF0R191mkrAaaGv9a8awjF/Ko5AncNAhfJncm
+ xOcNmFUBpXvRoDYVpcSWFQ+egntkswk=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-137-BCWG_XwCO_ivWI6-rGddgA-1; Tue, 16 Apr 2024 05:26:03 -0400
+X-MC-Unique: BCWG_XwCO_ivWI6-rGddgA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a52521c7e12so181854566b.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 02:26:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713259561; x=1713864361;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1713259562; x=1713864362;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wXVhb8brYlfg9y9PMTKGdC+D/djaL9iRPIqdffYkTz4=;
- b=iQZTZPFEvsQifmg45uk+oqbzOYRpO+8zVwbBC5HTUBIkhqLHiNUFQhT9119CLVZ6X0
- GbryPU5dK8CM1EHIK1Af95dpGJ7zSOIg+bua7muXjPpjxS78ffjWKnCkjIrNjzrggM7F
- CkoPVYvZa5qTb/k3B9L/asqH+1t41x0AB5yJQItYMzoiSQw6EhZhwMvO0ulM+AA/81+6
- lpCdXhXMMvz1DaZ6eT4aKi5KRIkpDbIYZFJopOOGnt/YCftW07t8KHPwx0qF8Nr2imgP
- uQJfYbUuHtvbWXsY6X79X5MTuBzu03BpYSIB2mZ21JU4Aj0LcSXFtjuyXWI4jNbl3Pow
- zaDQ==
-X-Gm-Message-State: AOJu0YxRZl2lQ+fOtiSwjhmG5ZhlhLsbTCeafw32gEJRdj8HBI34Zlz1
- yvx3HFisW0G7yd3sI+PlzQ++6Ob/pBzf7nVBVBURVaREEKGI3B+jLbwzhY99SiA=
-X-Google-Smtp-Source: AGHT+IGhAbnMJxflCiBtp+4bwFnOlJKhUMcJyLct3XJiZsDnMy/+85DcaL9WkEWUMYSoYRyRiaXxHg==
-X-Received: by 2002:a05:6e02:152a:b0:36b:be7:f2d1 with SMTP id
- i10-20020a056e02152a00b0036b0be7f2d1mr12722463ilu.6.1713259561467; 
- Tue, 16 Apr 2024 02:26:01 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.202])
+ bh=50Dw7as93RN5q6+esv7+ClV6UaVcs+ihqYfNvO3BArE=;
+ b=a7O1tG8Fy3g64M5URW60zK1/msu6GR8cH7U7STvTkFtAymzeBJ9V2N+T/34zKvK7Zk
+ OSUK6jLESFV0T2ZiJl+s6A4+nkEN7Agjo1uMl1tuasbYnD9it127i3voecJ6p80DZgX9
+ y0wGugjfvHmu9TmmYFVVnECrnTBA/uHsQ1ZIN+HoeblftUikHY2YqqRh6qg6Rcsmvswk
+ Vfyis+MHhaiqs57e7PaCACsOwPQugifi1AGIYQRAssiYK4na/4fCTBqpAcN8DZkU2Ksb
+ moUeUJCWGHSwTSNCunmBLoKNxb63B5F2trUl2gs2yQ0wWp6oEHXd7LzW+ykwggbaqEeQ
+ zfPA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW6MDoZS7+zu7XpHKnjFr9FN5VS0TBE3H+X+VznE1p6XBT59+TpQmk2xHjf3U/f1aLw7BSP+Vsexu2WF6OhueWCX8fiLts=
+X-Gm-Message-State: AOJu0YwjOJKDuvZZpYIo0LfDFI5JH/XEHiF+BLvTL3UyYlq+BlLBxKgg
+ DygIO2WWOZQolNaACyNotfvsiV6D4oDI5LI3FeljlnBKdCGPmO7Oz6ZJsOILf/YGV2/jgNIt770
+ mDz8TODvwP7DN1atVStI+REalGhUrOi6t+r0ZYSW49CSQimMtUlG/
+X-Received: by 2002:a17:906:374e:b0:a54:c11b:773d with SMTP id
+ e14-20020a170906374e00b00a54c11b773dmr2244734ejc.73.1713259562794; 
+ Tue, 16 Apr 2024 02:26:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEPLRsHunjwgMKHb/gt3bxpA+PKG3xuCefK6B0bW8n0ELwjfgNbCKhwbm4dmUpIfk+MaF2oIw==
+X-Received: by 2002:a17:906:374e:b0:a54:c11b:773d with SMTP id
+ e14-20020a170906374e00b00a54c11b773dmr2244727ejc.73.1713259562430; 
+ Tue, 16 Apr 2024 02:26:02 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d700:8ef:9484:1fb6:626:824c?
+ (p200300cfd70008ef94841fb60626824c.dip0.t-ipconnect.de.
+ [2003:cf:d700:8ef:9484:1fb6:626:824c])
  by smtp.gmail.com with ESMTPSA id
- u10-20020a63b54a000000b005dca5caed40sm8431575pgo.81.2024.04.16.02.25.57
+ cr19-20020a170906d55300b00a46b4c09670sm6571208ejc.131.2024.04.16.02.26.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
  Tue, 16 Apr 2024 02:26:01 -0700 (PDT)
-Message-ID: <b93f13c4-05a9-4772-8ed9-a74b2f5f9cef@ventanamicro.com>
-Date: Tue, 16 Apr 2024 06:25:55 -0300
+Message-ID: <95399e0a-9ec6-4751-a4a3-83e44dedf8a4@redhat.com>
+Date: Tue, 16 Apr 2024 11:26:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/4] target/riscv/kvm: QEMU support for KVM Guest
- Debug on RISC-V
+Subject: Re: [PATCH for-9.0?] usb-storage: Fix BlockConf defaults
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: peter.maydell@linaro.org, qemu-devel@nongnu.org
+References: <20240412144202.13786-1-kwolf@redhat.com>
 Content-Language: en-US
-To: Chao Du <duchao@eswincomputing.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- alistair23@gmail.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, anup@brainfault.org,
- atishp@atishpatra.org
-References: <20231221094923.7349-1-duchao@eswincomputing.com>
- <846ec319-6026-4b14-b156-9e1f42c6dba1@ventanamicro.com>
- <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <48d413a8.25e8.18ec23d85b9.Coremail.duchao@eswincomputing.com>
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20240412144202.13786-1-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-il1-x12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,90 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12.04.24 16:42, Kevin Wolf wrote:
+> Commit 30896374 started to pass the full BlockConf from usb-storage to
+> scsi-disk, while previously only a few select properties would be
+> forwarded. This enables the user to set more properties, e.g. the block
+> size, that are actually taking effect.
+>
+> However, now the calls to blkconf_apply_backend_options() and
+> blkconf_blocksizes() in usb_msd_storage_realize() that modify some of
+> these properties take effect, too, instead of being silently ignored.
+> This means at least that the block sizes get an unconditional default of
+> 512 bytes before the configuration is passed to scsi-disk.
+>
+> Before commit 30896374, the property wouldn't be set for scsi-disk and
+> therefore the device dependent defaults would apply - 512 for scsi-hd,
+> but 2048 for scsi-cd. The latter default has now become 512, too, which
+> makes at least Windows 11 installation fail when installing from
+> usb-storage.
+>
+> Fix this by simply not calling these functions any more in usb-storage
+> and passing BlockConf on unmodified (except for the BlockBackend). The
+> same functions are called by the SCSI code anyway and it sets the right
+> defaults for the actual media type.
+>
+> Fixes: 308963746169 ('scsi: Don't ignore most usb-storage properties')
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2260
+> Reported-by: Jonas Svensson
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+> Considering this a candidate for 9.0 given that we're already having an
+> rc4, it's a regression from 8.2 and breaks installing Windows from USB
+>
+>   hw/usb/dev-storage-classic.c | 9 ---------
+>   1 file changed, 9 deletions(-)
 
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
 
-On 4/9/24 06:43, Chao Du wrote:
-> Hi Daniel and all,
-> 
-> The KVM patches have been reviewd and are in the queue.
-> https://lore.kernel.org/all/20240402062628.5425-1-duchao@eswincomputing.com/
-> 
-> Could you please review in the QEMU side ?
-> Then I will rebase this series with your comments.
-> 
-> Some Notes:
-> 1. As the first stage, only the software breakpoints is implemented.
-> 2. A 'corner case' in which the debug exception is not inserted by the
-> debugger, need to be re-injected to the guest. This is not handled yet
-> in this series.
-
-Aside from the comments I made in patch 1 w.r.t checks that (perhaps) can be moved
-to kvm-all.c, it looks good to me.
-
-Since you're changing kvm-all.c we'll need Paolo to ack the changes in patch 1, so
-feel free to wait for him to take a look before sending v2.
-
-
-Thanks,
-
-
-Daniel
-
-> 
-> Thanks,
-> Chao
-> 
-> 
-> On 2023-12-22 22:16, Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
->>
->> Hi,
->>
->> It seems that we still need the kernel KVM side to be sorted out first [1],
->> so I believe we should wait a bit until we can review this RFC. Otherwise we
->> might risk reviewing something that has to be changed later.
->>
->>
->> [1] https://lore.kernel.org/kvm/20231221095002.7404-1-duchao@eswincomputing.com/
->>
->>
->> Thanks,
->>
->> Daniel
->>
->> On 12/21/23 06:49, Chao Du wrote:
->>> This series implements QEMU KVM Guest Debug on RISC-V. Currently, we can
->>> debug RISC-V KVM guest from the host side, with software breakpoints.
->>>
->>> A brief test was done on QEMU RISC-V hypervisor emulator.
->>>
->>> A TODO list which will be added later:
->>> 1. HW breakpoints support
->>> 2. Test cases
->>>
->>> This series is based on QEMU 8.2.0-rc4 and is also available at:
->>> https://github.com/Du-Chao/qemu/tree/riscv_gd_sw
->>>
->>> This is dependent on KVM side changes:
->>> https://github.com/Du-Chao/linux/tree/riscv_gd_sw
->>>
->>> Chao Du (4):
->>>     target/riscv/kvm: add software breakpoints support
->>>     target/riscv/kvm: implement kvm_arch_update_guest_debug()
->>>     target/riscv/kvm: handle the exit with debug reason
->>>     linux-headers: enable KVM GUEST DEBUG for RISC-V
->>>
->>>    accel/kvm/kvm-all.c           |   8 +--
->>>    include/sysemu/kvm.h          |   6 +-
->>>    linux-headers/asm-riscv/kvm.h |   1 +
->>>    target/arm/kvm64.c            |   6 +-
->>>    target/i386/kvm/kvm.c         |   6 +-
->>>    target/mips/kvm.c             |   6 +-
->>>    target/ppc/kvm.c              |   6 +-
->>>    target/riscv/kvm/kvm-cpu.c    | 101 ++++++++++++++++++++++++++++++++++
->>>    target/s390x/kvm/kvm.c        |   6 +-
->>>    9 files changed, 130 insertions(+), 16 deletions(-)
->>>
->>> --
->>> 2.17.1
->>>
 
