@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041E2C04FF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3F5C04FF9
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwiuI-0002ex-48; Tue, 16 Apr 2024 09:31:30 -0400
+	id 1rwiuG-0002el-FX; Tue, 16 Apr 2024 09:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rwiuG-0002eK-2f
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rwiuD-0005kn-JB
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713274284;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ay8f3QrmesUuJpr6Xnv/URkLo7BCLLsv36wohgy4hCY=;
- b=Ut5uRPaglBihLjoJ0ROoJSilEQePaNhqKagiXvxYPqTQz1TBCTVYuDE1gK8rsA6LSqvESa
- 753P7ii4KX65Xyg9f2kY5RD9j/up8lUOqQWC/wtbjbZqOcgEVW2sUYTIqYQitxPfpJfXPr
- MKyN1dduw9QWzg7126VWVIYInd9njbQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-2Y5RHPC4OSubIcIo7s8UPQ-1; Tue,
- 16 Apr 2024 09:31:21 -0400
-X-MC-Unique: 2Y5RHPC4OSubIcIo7s8UPQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D05583C0FCAA;
- Tue, 16 Apr 2024 13:31:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.173])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C3F1F1BDAA;
- Tue, 16 Apr 2024 13:31:17 +0000 (UTC)
-Date: Tue, 16 Apr 2024 14:31:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Roy Hopkins <roy.hopkins@suse.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v2 03/10] backends/confidential-guest-support: Add
- functions to support IGVM
-Message-ID: <Zh59n3w5Ijfd2uLs@redhat.com>
-References: <cover.1712141833.git.roy.hopkins@suse.com>
- <1dff8015f9f9cf735de21a16e5dba14371c39155.1712141833.git.roy.hopkins@suse.com>
- <c31dcace-92da-4de7-93e6-631120829a75@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiuE-0002eA-4X
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:26 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiuA-0005jC-An
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:25 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41881bce4b5so12268575e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:31:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713274281; x=1713879081; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IQOUFHHCUDqPSl2g1+bKLAsz+J3VsSPSm9kqWJqyEiA=;
+ b=Rw0ZtNe1SEz10p3Pw5gvpJ2dnWHIrqm2ryJ4PUW3EOH5SmTZR9hLMA67mnEiXxL2pe
+ OLIoTe4ek7qFM2T6/dqheqe8EYvejEPQ/250FZ7bZi043vISddKsFTLSqTNX7F0O9Z/g
+ d6C4S2VQ6M6DHbrxq4d3d/JcyX8g9yHY6FrIYxWnevb8B8GWPAFlyn9aHhbeB4xwp/aA
+ avXYHWYN75rHYTLXeqERXEruakg35a9cAxQN8z7Dc5pbSwQhHaQAcPfXlQRC8GrGf2si
+ p2U/NLc7FokcWZRy/PmsdNu/lIjOK2SK/L3mjAxCkcucKTRowGt5Nd0rbNXjzgkQ81mV
+ CXFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713274281; x=1713879081;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IQOUFHHCUDqPSl2g1+bKLAsz+J3VsSPSm9kqWJqyEiA=;
+ b=ZvSwTHFjiGMXKWwPqA3k5DiN2k1WhyRQ1tnZsUJnrHD6dSeofeeoRl5vd5a25pjbDG
+ hiMk+FmW1F1nxKDXHmvOQKqxsUqam06dW5TKGV3y6pUFk9Or5DYG1TVajPBkV/Gv+iNs
+ X4lJ0s1oZoRNhSlS8E+UtOKiT5LZO8uaWWkINpSz+bRwKLt/2IQnXa2/JETDQOXf7rAx
+ CWMrh3CgQ84UWVKK+voywS53bOLyoQ/qUNzkUtr8/yAtV9fi4wLp5hawyLfmRRAPKTWy
+ EnLJMsXP1/NciDO6pis3CaPEc2BEKgYcyTFkPMl4EZrTmIVhKYANxJD9CavtPpqMPJv7
+ IbnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYj452FxR+/bnXa3V8WOZPFKdDxgr0qlhSWyYZaPik5bZn8V/6netBZ/b9zGcPMUDMQWbGAPv3IOcrOqgK/y0d6eeMjww=
+X-Gm-Message-State: AOJu0YwO62zwzH2wF9VrKDZRxJWJ8IPqfc52W9Uk/SJjN3HgyzUuzxKI
+ B+mODkxg8PBuQjHWuA+D44ifNiDW6Bf7pT2ncNKSg58pkkZIWGwVQI8YLc2lCw8=
+X-Google-Smtp-Source: AGHT+IFr2fTcAtOCG6eR99A6qB3bDuuap9O4gbpWvHobrtiCuNAZzYWW9qP7fWuc8N/rEHC9vKebbQ==
+X-Received: by 2002:a05:600c:a4c:b0:415:6728:a565 with SMTP id
+ c12-20020a05600c0a4c00b004156728a565mr12960812wmq.16.1713274280679; 
+ Tue, 16 Apr 2024 06:31:20 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.155.61])
+ by smtp.gmail.com with ESMTPSA id
+ l9-20020a1c7909000000b004167b0819aasm2036054wme.0.2024.04.16.06.31.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Apr 2024 06:31:20 -0700 (PDT)
+Message-ID: <134a100a-adeb-47d6-b55d-ba8d2afb2969@linaro.org>
+Date: Tue, 16 Apr 2024 15:31:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.1 v2 12/21] hw/i386/pc: Remove
+ PCMachineClass::enforce_aligned_dimm
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ devel@lists.libvirt.org, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Cleber Rosa
+ <crosa@redhat.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+References: <20240327095124.73639-1-philmd@linaro.org>
+ <20240327095124.73639-13-philmd@linaro.org> <ZgTby3L9623ofMWC@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZgTby3L9623ofMWC@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c31dcace-92da-4de7-93e6-631120829a75@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,93 +102,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 04, 2024 at 10:00:53AM +0200, Philippe Mathieu-Daudé wrote:
-> Hi Roy,
-> 
-> On 3/4/24 13:11, Roy Hopkins wrote:
-> > In preparation for supporting the processing of IGVM files to configure
-> > guests, this adds a set of functions to ConfidentialGuestSupport
-> > allowing configuration of secure virtual machines that can be
-> > implemented for each supported isolation platform type such as Intel TDX
-> > or AMD SEV-SNP. These functions will be called by IGVM processing code
-> > in subsequent patches.
-> > 
-> > This commit provides a default implementation of the functions that
-> > either perform no action or generate a warning or error when they are
-> > called. Targets that support ConfidentalGuestSupport should override
-> > these implementations.
-> > 
-> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> > ---
-> >   backends/confidential-guest-support.c     | 32 ++++++++++
-> >   include/exec/confidential-guest-support.h | 74 +++++++++++++++++++++++
-> >   2 files changed, 106 insertions(+)
-> 
-> 
-> >   struct ConfidentialGuestSupport {
-> >       Object parent;
-> > @@ -60,6 +94,46 @@ struct ConfidentialGuestSupport {
-> >        */
-> >       char *igvm_filename;
-> >   #endif
-> > +
-> > +    /*
-> > +     * The following virtual methods need to be implemented by systems that
-> > +     * support confidential guests that can be configured with IGVM and are
-> > +     * used during processing of the IGVM file with process_igvm().
-> > +     */
-> > +
-> > +    /*
-> > +     * Check for to see if this confidential guest supports a particular
-> > +     * platform or configuration
-> > +     */
-> > +    int (*check_support)(ConfidentialGuestPlatformType platform,
-> > +                         uint16_t platform_version, uint8_t highest_vtl,
-> > +                         uint64_t shared_gpa_boundary);
-> > +
-> > +    /*
-> > +     * Configure part of the state of a guest for a particular set of data, page
-> > +     * type and gpa. This can be used for example to pre-populate and measure
-> > +     * guest memory contents, define private ranges or set the initial CPU state
-> > +     * for one or more CPUs.
-> > +     *
-> > +     * If memory_type is CGS_PAGE_TYPE_VMSA then ptr points to the initial CPU
-> > +     * context for a virtual CPU. The format of the data depends on the type of
-> > +     * confidential virtual machine. For example, for SEV-ES ptr will point to a
-> > +     * vmcb_save_area structure that should be copied into guest memory at the
-> > +     * address specified in gpa. The cpu_index parameter contains the index of
-> > +     * the CPU the VMSA applies to.
-> > +     */
-> > +    int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, uint64_t len,
-> > +                           ConfidentialGuestPageType memory_type,
-> > +                           uint16_t cpu_index, Error **errp);
-> > +
-> > +    /*
-> > +     * Iterate the system memory map, getting the entry with the given index
-> > +     * that can be populated into guest memory.
-> > +     *
-> > +     * Returns 0 for ok, 1 if the index is out of range and -1 on error.
-> > +     */
-> > +    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-> > +                             Error **errp);
-> >   };
-> >   typedef struct ConfidentialGuestSupportClass {
-> 
-> Methods are usually a class field, not an instance one. Any
-> reason to diverge from this norm?
-
-Agreed, this should all be against the Class.
+On 28/3/24 03:54, Zhao Liu wrote:
+> On Wed, Mar 27, 2024 at 10:51:14AM +0100, Philippe Mathieu-Daudé wrote:
+>> Date: Wed, 27 Mar 2024 10:51:14 +0100
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Subject: [PATCH-for-9.1 v2 12/21] hw/i386/pc: Remove
+>>   PCMachineClass::enforce_aligned_dimm
+>> X-Mailer: git-send-email 2.41.0
+>>
+>> PCMachineClass::enforce_aligned_dimm was only used by the
+>> pc-i440fx-2.1 machine, which got removed. It is now always
+>> true. Remove it, simplifying pc_get_device_memory_range().
+>> Update the comment in Avocado test_phybits_low_pse36().
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/i386/pc.h                  |  3 ---
+>>   hw/i386/pc.c                          | 14 +++-----------
+>>   tests/avocado/mem-addr-space-check.py |  3 +--
+>>   3 files changed, 4 insertions(+), 16 deletions(-)
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>> --- a/tests/avocado/mem-addr-space-check.py
+>> +++ b/tests/avocado/mem-addr-space-check.py
+>> @@ -31,8 +31,7 @@ def test_phybits_low_pse36(self):
+>>           at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
+>>           we have 0.5 GiB of VM memory, see pc_q35_init()). This means total
+>>           hotpluggable memory size is 60 GiB. Per slot, we reserve 1 GiB of memory
+>> -        for dimm alignment for all newer machines (see enforce_aligned_dimm
+>> -        property for pc machines and pc_get_device_memory_range()). That leaves
+>> +        for dimm alignment for all machines. That leaves
+> 
+> Just nit, better align it here.
+
+Well, I wanted to avoid too much churn, but OK.
+
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+>>           total hotpluggable actual memory size of 59 GiB. If the VM is started
+>>           with 0.5 GiB of memory, maxmem should be set to a maximum value of
+>>           59.5 GiB to ensure that the processor can address all memory directly.
+>> -- 
+>> 2.41.0
+>>
 
 
