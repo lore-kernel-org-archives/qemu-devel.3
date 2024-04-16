@@ -4,53 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D293C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC46C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwh6k-0003Gi-O7; Tue, 16 Apr 2024 07:36:14 -0400
+	id 1rwhKu-0006EP-41; Tue, 16 Apr 2024 07:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sf@sfritsch.de>)
- id 1rwh6i-0003Fx-52; Tue, 16 Apr 2024 07:36:12 -0400
-Received: from manul.sfritsch.de ([2a01:4f8:262:44c1:112::2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sf@sfritsch.de>)
- id 1rwh6f-0000Ey-C6; Tue, 16 Apr 2024 07:36:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sfritsch.de
- ; s=rsa-1;
- h=Content-Type:MIME-Version:References:Message-ID:In-Reply-To:
- Subject:cc:To:From:Date:From:Reply-To:Subject:Content-Transfer-Encoding:
- Content-ID:Content-Description:X-Debbugs-Cc;
- bh=I8JZSlmsSgkrpqmg+8gfsX1319gZHtNd8RIuFWZj0W0=; t=1713267366; x=1714131366; 
- b=Hcz42YrCCgiA20UJ+w2HrmV6Hly2uOSF7OwbZZGEvNWlGDheQqMS5Ct4QwKvZiuo3+UoaNA3aL9
- 7sgTvxD6cK761q7oSbfh3Fs7wq27h+wak79GFk+1In+F7w8r1VXutgc5n92N8uP+nv3szRCpXe3wS
- vl0iU8GHH/q7My9paOwjQBwfZyUM3URb8F0wxH29Nah83a80WfZHKN6dY94USTkTjzh7TtpwOxhEv
- y6OtCOrNzOzZUH4ITdGGnDAMjRD9siIGalk466LVJ95hPH5gbtBRqYvmXJuHDRhX1nx4ExO2jtKJG
- UwbmKXZ+3uUuuzx5SfXpfrCyNOSG/9iY7aHQ==;
-Date: Tue, 16 Apr 2024 13:36:03 +0200 (CEST)
-From: Stefan Fritsch <sf@sfritsch.de>
-To: Eric Blake <eblake@redhat.com>
-cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH] dma-helpers: Fix iovec alignment
-In-Reply-To: <dnqsifhslb7mtidrzadsz6254ykmb4bjz2cenzryonz7wbjz4g@vj56wcuwgx25>
-Message-ID: <1eaf1f92-10f3-0270-a1b4-e95801c367dc@sfritsch.de>
-References: <20240412080617.1299883-1-sf@sfritsch.de>
- <dnqsifhslb7mtidrzadsz6254ykmb4bjz2cenzryonz7wbjz4g@vj56wcuwgx25>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwhKs-0006DW-2y
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:50:50 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwhKp-0002gf-Np
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:50:49 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2da68af6c6fso28243011fa.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 04:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713268246; x=1713873046; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PiQEyFO+4ftP4OAfOPJXJoSKCu2llqwcfZclQYAnCoc=;
+ b=NFH+n14NhHsoB7UoPdWA7tDMTcClYU43Qx5ZhiixYy73aYUnaJeK7dq4TcE6TzPzER
+ qZt/V2qAoL/sfPcCuu9rvHjkt0LyLrYxlYK31gOtf3nepp+EEhk9cfup7lAW0fprycSL
+ TWGOYdNnp5o1Q2N2ysAp07JynhGluVNnaU27R9t2ZTg5h2Qx8HSgabKkDYjzdwo3EwdV
+ fuIveRKMZyw8Ob3jLvDjfntyXZpoMsZH2a1ehuJtGId/QuEOkZX3J31efCpAdP8xqBtT
+ 8aEvMWdQIKPB3wGqBgwf38l6IazpNSkHxovQOa8ARMbpfb3m84KmaJSt8JZiAxXEw41O
+ vAQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713268246; x=1713873046;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PiQEyFO+4ftP4OAfOPJXJoSKCu2llqwcfZclQYAnCoc=;
+ b=qPRpryby1S+sfQTpy5thycCWKdAEX7LPJ5VrFSw8+TmokWHQVz5FI7JRUwo0vbhtjL
+ oN5Ev1Sb7uxV4TwdcgaN03mOirW8+u6BLBLp8IlDgNmfdfr1dTBx2rbxVIqdQvokk0Zc
+ np4z8XCW+hRaG5K5Q8/QmWJ2gsIwIuuKxstCxeEPknl4rGBuRccZ+0rjKvvy3Cm1+9hW
+ J9JLJg27Cl/V311xAMeOTZpn9E6tV0OqUNlrzvMZd+fpaCo88jTawdsk5Spmd6JBYPfh
+ dbzePSszuAnVkX7VkTH9GEjuqWAwiTx5VgT+WCf0T7ZBJoQIUD0uGBzCKNJLvA7YCkNo
+ NUTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7DBOIS8d4klijZDCyrrpf1hvISW/rV53I5nzzo+UV4o79EEv2XNh0Q1S9GUJhFvLo6T25kLVOTY9qJoyVL23kCLx+Qbs=
+X-Gm-Message-State: AOJu0YzZVgLx8kin/VOWPa7cIJYgPnXovWklL6SidZObwgol9xDPDboO
+ mT0NXjbmlLMCiq1avsrK+wieTxnq/9T4i4qEb/sdcA6FXcDG3mycxrzIyqOSgkoRa13DEszSjsY
+ nxfVcJRuUb38ODKkgpd/UAyrbav5dev2VuEOP2g==
+X-Google-Smtp-Source: AGHT+IFtrtmqrwqpvDI2+B3vW6Qm6be1ykch5Ki8+YfeYMCtEfFxSb0RoohZolMFdBWjZTdACqGJJyxayx8f8KNxd98=
+X-Received: by 2002:ac2:46c9:0:b0:516:fe8c:ef9b with SMTP id
+ p9-20020ac246c9000000b00516fe8cef9bmr7279570lfo.57.1713268245610; Tue, 16 Apr
+ 2024 04:50:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2a01:4f8:262:44c1:112::2;
- envelope-from=sf@sfritsch.de; helo=manul.sfritsch.de
+References: <cover.1713178348.git.mst@redhat.com>
+ <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
+ <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
+ <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
+In-Reply-To: <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Apr 2024 12:50:34 +0100
+Message-ID: <CAFEAcA_WxhOpjtZ5r-CfoOaf1aiKeaEV9eX=drb1JaBCiBoDKA@mail.gmail.com>
+Subject: Re: [PULL 1/1] virtio-pci: fix use of a released vector
+To: Cindy Lu <lulu@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, 
+ Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,67 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-adding John Snow to CC because he investigated this in 2020.
+On Tue, 16 Apr 2024 at 12:05, Cindy Lu <lulu@redhat.com> wrote:
+>
+> On Tue, Apr 16, 2024 at 6:01=E2=80=AFPM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+> > Here we pass that through to kvm_virtio_pci_vector_use_one().
+> > In kvm_virtio_pci_vector_use_one()'s error-exit path ("undo")
+> > it does
+> >     vector =3D virtio_queue_vector(vdev, queue_no);
+> > and in virtio_queue_vector() it does:
+> >
+> >     return n < VIRTIO_QUEUE_MAX ? vdev->vq[n].vector :
+> >         VIRTIO_NO_VECTOR;
+> >
+> > where 'n' is an int, so if we can get here with queue_no being
+> > VIRTIO_CONFIG_IRQ_IDX then we'll index off the front of the
+> > vdev->vq[] array.
+> >
+> > Maybe this is a "can't happen" case, but it does seem odd that
+> > virtio_queue_vector() only bounds-checks the "too big" case
+> > for its argument and not the "too small" case and/or it
+> > doesn't have a special case for VIRTIO_CONFIG_IRQ_IDX.
+> >
+> > > +    }
+> > > +}
+> > > +
+> >
+> hi peter
+> I think we can simply remove the part
+>     vector =3D virtio_queue_vector(vdev, queue_no);
+> the vector is get from virtio_pci_get_notifier() and don't need to get it=
+ again
+> I will send the fix soon
 
-On Fri, 12 Apr 2024, Eric Blake wrote:
+The error handling in kvm_virtio_pci_vector_use_one() looks
+a bit odd in other ways, too. The only bit of "undoing"
+it does as far as I can see is calling kvm_virtio_pci_irqfd_release(),
+but there is no code path that gets to there where the
+main codepath's call to kvm_virtio-pci_irqfd_use() succeeded
+and needs to be undone. So perhaps the entire "undo" code
+block should be deleted, and the "goto undo" lines
+replaced by simple "return ret;" ?  (The codepath
+for "kvm_virtio_pci_irqfd_use() failed" already does the
+"kvm_virtio_pci_vq_vector_release()" by hand there.)
 
-> On Fri, Apr 12, 2024 at 10:06:17AM +0200, Stefan Fritsch wrote:
-> > Commit 99868af3d0 changed the hardcoded constant BDRV_SECTOR_SIZE to a
-> > dynamic field 'align' but introduced a bug. qemu_iovec_discard_back()
-> > is now passed the wanted iov length instead of the actually required
-> > amount that should be removed from the end of the iov.
-> > 
-> > The bug can likely only be hit in uncommon configurations, e.g. with
-> > icount enabled or when reading from disk directly to device memory.
-> > 
-> > Fixes: 99868af3d0a75cf6 ("dma-helpers: explicitly pass alignment into DMA helpers")
-> > Signed-off-by: Stefan Fritsch <sf@sfritsch.de>
-> > ---
-> >  system/dma-helpers.c | 3 +--
-> >  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> Wow, that bug has been latent for a while (2016, v2.8.0).  As such, I
-> don't think it's worth holding up 9.0 for, but it is definitely worth
-> cc'ing qemu-stable (done now).
-
-we had some more internal discussions and did some more googling, and it 
-turns out that this is actually part of a known issue:
-
-https://lists.nongnu.org/archive/html/qemu-block/2020-07/msg01866.html
-https://gitlab.com/qemu-project/qemu/-/issues/259
-
-In the above mail to qemu-block, John Snow listed 4 problems in the code 
-but my patch only fixes the first one. Considering that the code may also 
-write data to the wrong place (problem 2), I wonder if an assert in the 
-same place would be better until the underlying issues have been fixed?
-
-
-> > 
-> > diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-> > index 9b221cf94e..c9677fd39b 100644
-> > --- a/system/dma-helpers.c
-> > +++ b/system/dma-helpers.c
-> > @@ -174,8 +174,7 @@ static void dma_blk_cb(void *opaque, int ret)
-> >      }
-> >  
-> >      if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
-> > -        qemu_iovec_discard_back(&dbs->iov,
-> > -                                QEMU_ALIGN_DOWN(dbs->iov.size, dbs->align));
-> > +        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size % dbs->align);
-> 
-> Before the regression, it was:
-> 
-> -    if (dbs->iov.size & ~BDRV_SECTOR_MASK) {
-> -        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size & ~BDRV_SECTOR_MASK);
-> +    if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
-> +        qemu_iovec_discard_back(&dbs->iov,
-> 
-> If dbs->align is always a power of two, we can use '& (dbs->align -
-> 1)' to avoid a hardware division, to match the original code; bug
-> QEMU_IS_ALIGNED does not require a power of two, so your choice of '%
-> dbs->align' seems reasonable.
-> 
-> Reviewed-by: Eric Blake <eblake@redhat.com>
-> 
-> 
+thanks
+-- PMM
 
