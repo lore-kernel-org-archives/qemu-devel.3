@@ -4,84 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F9AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51A09C04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwl0D-0007A8-0W; Tue, 16 Apr 2024 11:45:45 -0400
+	id 1rwl0f-0007Cv-EY; Tue, 16 Apr 2024 11:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rwl0A-00077x-F1
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:45:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rwl0d-0007CP-Ti
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:46:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rwl08-0004jy-9u
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:45:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rwl0c-0004uU-C4
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:46:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713282338;
+ s=mimecast20190719; t=1713282369;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HfcwtyepsIHaTuh6vym4Xo0wlmsk6hlXkxxmY1fgLBo=;
- b=cBpevChqYtlh2VSb95x1Q+SG0jmLZFraboB/ksKei95hfCnt+NceSEtvuCCtGBU3W9rorc
- D4V006UxBRwvv0KDA+4ByJ1YDOzjhHTR3SNr7Ngmqk/9BkZ4VVZ3qV1HoD54oByFA6v1Tg
- JA3RaIUut4e/j3y9GnVxizorhRFDRd0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=CbrHrGWSaFnYbXbRl4ZPwxuZUaIbMRXVg3R0Ctc+dq4=;
+ b=HxN/ZAxEjy4HCsxN83UlrNQvPQkp3RlP3bhI95G8n/3uSOTdWM7FaMtqfUhbXPwrKJRbIK
+ mDUFpo7kvWcx7NtZlbbPzQ/zDcU5shuSxDRgQWEW0gvYYXCTfcOP89fjFZM6FRBLXtER9S
+ Cujuu2+BB8vWPJK4Y+NXv5QJbDiJMKo=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-OEviaK-0NJC7_JKJlNRTZw-1; Tue, 16 Apr 2024 11:45:35 -0400
-X-MC-Unique: OEviaK-0NJC7_JKJlNRTZw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-343c86edeb7so2981186f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 08:45:35 -0700 (PDT)
+ us-mta-617-Ocb13104M2qcU-qXTWzXbg-1; Tue, 16 Apr 2024 11:46:07 -0400
+X-MC-Unique: Ocb13104M2qcU-qXTWzXbg-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2d883dab079so43341611fa.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 08:46:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713282334; x=1713887134;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HfcwtyepsIHaTuh6vym4Xo0wlmsk6hlXkxxmY1fgLBo=;
- b=VgNL1eXwgY5yabGAJTB8OiWYLOrqLfwqfaYMLr+YVS1Oe1bXzNETd5NFFEQhmAf9aI
- 0VC3XoMYW9mYCDLk1xlBbsimRlOY5GdWi/6a6ygxc5xQ2e/NbgOnSNy9aifuOfq95w/H
- sGm6tN2ZQF7Nmpc0zLPQtATxsirZXxGIiyR6ntvKayqeuUj/CQ2K13jb4H52BgJNsnRu
- /ayNhS2/gLuI1rwT3S2AjXL+l3LlpACUdFdgP5DX/so+zLu83aXffwZ5mZ/ESz863Xx+
- IfKGnHwvT2ZO/YOGmscjf5LohSiPSMF1ZmKdm8qcFrjuN1aesJKct+uaohH/LJqclu81
- yVGQ==
+ d=1e100.net; s=20230601; t=1713282366; x=1713887166;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CbrHrGWSaFnYbXbRl4ZPwxuZUaIbMRXVg3R0Ctc+dq4=;
+ b=Mz+mkCHZq4EA1nnIqmSGlJmhPPUgggi/7Hvt/v4R/+x7ivVwXdH7eZhWdJnTi3UAOQ
+ T/VysmO2D16abzPWbkNP+5bFIl5kknbDJj50ZBAKf+Ev4ayLsdl8FlAnvh50qj5tk6Zy
+ mIAJmRVOvCa+qrVc5BFDzJU5lEFwyK3R2aRV4oNy8AqXWVayIKLKWBAntIUMeKY8pGEm
+ yDqs83m1gO9w+n7uICOOSf2EFwNeP1PnFdkSfdYwzE2G+xFYfID/ZjYla8DVIDgwF1f2
+ kemycoucvzgLx6WJJB9etFRCsmFDGNAoiybllVzYvZgTmuYsYEEykPF9lm9lvYZlIG7T
+ zDpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW30d8PXtA45m9NBvUvz29rWSgbwGh9ALt+OQDVeMZqxwj//ojBhcCRzdq+0BzWAZ539x26HkJHQ7p4V01JJJ4tMhwF2ws=
-X-Gm-Message-State: AOJu0YwZyO9aD6kqdGIOCP79D5GvGYsr1R0nR7aDeVh6xRB2iA8tTRfS
- 8XQohGqz3yGebWqmp632htbgBBlZPRUxdL7NMfZQWsSoD/a/XIx9FC6mtxT0/kYNp6CpELDey3P
- zpj85ITU80JT6/X4ODq8NFrsPlhDKkIoJDBLpvOQBr1w6UU1+gGw3
-X-Received: by 2002:adf:f90d:0:b0:348:4519:15b8 with SMTP id
- b13-20020adff90d000000b00348451915b8mr1606943wrr.40.1713282334528; 
- Tue, 16 Apr 2024 08:45:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELztI1pGgiMUQC/0li9Nfrwed3KZ2gelKZLdr9peaZaeWkqmn4SgozwXXngkpeRQcXo/iQSw==
-X-Received: by 2002:adf:f90d:0:b0:348:4519:15b8 with SMTP id
- b13-20020adff90d000000b00348451915b8mr1606926wrr.40.1713282334114; 
- Tue, 16 Apr 2024 08:45:34 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- s4-20020adfe004000000b00349a6af3da5sm131962wrh.51.2024.04.16.08.45.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Apr 2024 08:45:33 -0700 (PDT)
-Date: Tue, 16 Apr 2024 17:45:31 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jiqian Chen <Jiqian.Chen@amd.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, Jason
- Wang <jasowang@redhat.com>, Huang Rui <Ray.Huang@amd.com>
-Subject: Re: [RFC QEMU PATCH v9 2/2] virtio-pci: implement No_Soft_Reset bit
-Message-ID: <20240416174531.6573af25@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240416070127.116922-3-Jiqian.Chen@amd.com>
-References: <20240416070127.116922-1-Jiqian.Chen@amd.com>
- <20240416070127.116922-3-Jiqian.Chen@amd.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ AJvYcCVyJ6KrY3GZ+gVdl29qaBFIKIpxXnX+krEwTOWktPXrq45gKE+X0odde7jOfb59y0ZFgHAUOuWNz5MIigKMvr3nKuoY4lE=
+X-Gm-Message-State: AOJu0Yy6wNArXe47B9/VZ5hnz5bWezxZzS9rLok+lhRkYgykjkExkjep
+ XlbQC116gKJN/Ph2DUpWVTotrZO0zjDw9jcv1LV6YIIY0gPToe+dplqzOp62W+MiqoFoN2Xe6BD
+ vTpeoHKbflVKMTQwtqv4W+EwMGJQqd8lWZfdV6kCQWM0pE1lY/OBO
+X-Received: by 2002:a2e:b0e5:0:b0:2d8:81fb:fffe with SMTP id
+ h5-20020a2eb0e5000000b002d881fbfffemr10530848ljl.39.1713282366322; 
+ Tue, 16 Apr 2024 08:46:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjRqCI1tYkcJCxXV1I/t6CxZqcO+EZLAtiQLlYWPf9EsOXXEOFAp6XWIWSei/AyuahGmbkAA==
+X-Received: by 2002:a2e:b0e5:0:b0:2d8:81fb:fffe with SMTP id
+ h5-20020a2eb0e5000000b002d881fbfffemr10530831ljl.39.1713282365926; 
+ Tue, 16 Apr 2024 08:46:05 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-179-50.web.vodafone.de.
+ [109.43.179.50]) by smtp.gmail.com with ESMTPSA id
+ h6-20020a05600c350600b004163321790esm20386338wmq.19.2024.04.16.08.46.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Apr 2024 08:46:05 -0700 (PDT)
+Message-ID: <d7797096-d094-4401-8239-2af37f250cbe@redhat.com>
+Date: Tue, 16 Apr 2024 17:46:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/22] hw/i386/pc: Deprecate 2.4 to 2.7 pc-i440fx
+ machines
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ devel@lists.libvirt.org, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240416135252.8384-1-philmd@linaro.org>
+ <20240416135252.8384-2-philmd@linaro.org>
+ <15834b55-8226-4355-91f2-9d5df4d3bc9b@redhat.com>
+ <68336e9f-7a30-47f7-b4c7-ad8afc2c16f3@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <68336e9f-7a30-47f7-b4c7-ad8afc2c16f3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -38
 X-Spam_score: -3.9
@@ -89,7 +140,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,123 +156,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Apr 2024 15:01:27 +0800
-Jiqian Chen <Jiqian.Chen@amd.com> wrote:
+On 16/04/2024 16.49, Philippe Mathieu-Daudé wrote:
+> On 16/4/24 16:23, Thomas Huth wrote:
+>> On 16/04/2024 15.52, Philippe Mathieu-Daudé wrote:
+>>> Similarly to the commit c7437f0ddb "docs/about: Mark the
+>>> old pc-i440fx-2.0 - 2.3 machine types as deprecated",
+>>> deprecate the 2.4 to 2.7 machines.
+>>>
+>>> Suggested-by: Thomas Huth <thuth@redhat.com>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   docs/about/deprecated.rst | 4 ++--
+>>>   hw/i386/pc_piix.c         | 2 +-
+>>>   2 files changed, 3 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>>> index 7b548519b5..967ee34267 100644
+>>> --- a/docs/about/deprecated.rst
+>>> +++ b/docs/about/deprecated.rst
+>>> @@ -219,8 +219,8 @@ deprecated; use the new name ``dtb-randomness`` 
+>>> instead. The new name
+>>>   better reflects the way this property affects all random data within
+>>>   the device tree blob, not just the ``kaslr-seed`` node.
+>>> -``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2)
+>>> -'''''''''''''''''''''''''''''''''''''''''''''''''''''
+>>> +``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2) and 
+>>> ``pc-i440fx-2.4`` up to ``pc-i440fx-2.7`` (since 9.1)
+>>> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>>
+>> Didn't we want to mark everything up to 2.12 as deprecated?
+> 
+> I took your suggestion:
+> https://lore.kernel.org/qemu-devel/2a01baa6-b6a3-4572-94cd-63b2eaab7b38@redhat.com/
+> I am happy to go up to 2.12 :)
 
-> In current code, when guest does S3, virtio-gpu are reset due to the
-> bit No_Soft_Reset is not set. After resetting, the display resources
-> of virtio-gpu are destroyed, then the display can't come back and only
-> show blank after resuming.
+I thought we discussed deprecating all machine types up to 2.12 on all 
+targets when we discussed the ppc spapr machine type deprecation later ... 
+but I cannot find that discussion anymore, maybe it was just on IRC ...
 
-Just a high level question.
-Typically when system goes into S3 all devices (modulo RAM) loose context
-(aka powered off), and then it's upto device driver to recover whatever
-was lost.
-So why should we implement hw(qemu) workaround for a driver problem?
+Anyway, let's go with up to 2.12 if nobody complains!
 
-> 
-> Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
-> this bit, if this bit is set, the devices resetting will not be done, and
-> then the display can work after resuming.
-> 
-> No_Soft_Reset bit is implemented for all virtio devices, and was tested
-> only on virtio-gpu device. Set it false by default for safety.
-> 
-> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-> ---
->  hw/virtio/virtio-pci.c         | 37 ++++++++++++++++++++++++++++++++++
->  include/hw/virtio/virtio-pci.h |  5 +++++
->  2 files changed, 42 insertions(+)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index a1b61308e7a0..82fa4defe5cd 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -2230,6 +2230,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
->              pcie_cap_lnkctl_init(pci_dev);
->          }
->  
-> +        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
-> +            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
-> +                         PCI_PM_CTRL_NO_SOFT_RESET);
-> +        }
-> +
->          if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
->              /* Init Power Management Control Register */
->              pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
-> @@ -2292,11 +2297,37 @@ static void virtio_pci_reset(DeviceState *qdev)
->      }
->  }
->  
-> +static bool virtio_pci_no_soft_reset(PCIDevice *dev)
-> +{
-> +    uint16_t pmcsr;
-> +
-> +    if (!pci_is_express(dev) || !dev->exp.pm_cap) {
-> +        return false;
-> +    }
-> +
-> +    pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
-> +
-> +    /*
-> +     * When No_Soft_Reset bit is set and the device
-> +     * is in D3hot state, don't reset device
-> +     */
-> +    return (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
-> +           (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3;
-> +}
-> +
->  static void virtio_pci_bus_reset_hold(Object *obj)
->  {
->      PCIDevice *dev = PCI_DEVICE(obj);
->      DeviceState *qdev = DEVICE(obj);
->  
-> +    /*
-> +     * Note that: a proposal to add SUSPEND bit is being discussed,
-> +     * may need to consider the state of SUSPEND bit in future
-> +     */
-> +    if (virtio_pci_no_soft_reset(dev)) {
-> +        return;
-> +    }
-> +
->      virtio_pci_reset(qdev);
->  
->      if (pci_is_express(dev)) {
-> @@ -2336,6 +2367,12 @@ static Property virtio_pci_properties[] = {
->                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
->      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
->                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
-> +    /*
-> +     * for safety, set this false by default, if change it to true,
-> +     * need to consider compatible for old machine
-> +     */
-> +    DEFINE_PROP_BIT("pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
-> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
->      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
->                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
->      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
-> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-> index 59d88018c16a..9e67ba38c748 100644
-> --- a/include/hw/virtio/virtio-pci.h
-> +++ b/include/hw/virtio/virtio-pci.h
-> @@ -43,6 +43,7 @@ enum {
->      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
->      VIRTIO_PCI_FLAG_AER_BIT,
->      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
-> +    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
->  };
->  
->  /* Need to activate work-arounds for buggy guests at vmstate load. */
-> @@ -79,6 +80,10 @@ enum {
->  /* Init Power Management */
->  #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
->  
-> +/* Init The No_Soft_Reset bit of Power Management */
-> +#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
-> +  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
-> +
->  /* Init Function Level Reset capability */
->  #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
->  
+  Thomas
 
 
