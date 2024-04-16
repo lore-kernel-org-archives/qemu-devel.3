@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CD7C41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCF4C05023
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwo3N-0001VP-0o; Tue, 16 Apr 2024 15:01:13 -0400
+	id 1rwo3L-0001PT-JO; Tue, 16 Apr 2024 15:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2e-0000yo-7G
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:32 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2K-0000sH-Tq
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:09 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2a-0005dG-BJ
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:26 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a5224dfa9adso14291366b.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2H-0005Ng-Lf
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:08 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a450bedffdfso607564966b.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713294022; x=1713898822; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713294003; x=1713898803; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cesSegXMr71Lpaal5FJBOqynS/3X0jmvbPzoIKbt5l0=;
- b=DqLoAIsma2JFVv5BRASUhNqanaclwMJ6WPOEf+f2GuKRJOnfJQUbPI6TLm84MSUg0K
- +eBgLa2FDDzeCoR3ne2rN7gmKxKzQDQn2UpHfxCspzJCO1RhpOxrZm3WIaJdGGO+Ir7w
- SJrH4gx6dNmDyn45pRcaWp8K3D5ydvwqbT5E3P6zHQ45/6IKJ3HKi+PaNzPGd0UQ25Mn
- aiTXaiErQ6pXCy/16szjHw9eWOUSmUnjk/TmfDbi5Uvol6CAmENUL0t3QAMB0hz/iEfb
- mxj6OdCuFCMKOTxJVJV+hwaqSqCaOzNq3J2/f3nDtT+lnhtRiwXVOcDKq355D2I9OYNo
- IDSg==
+ bh=r/B5UTN+VVzZIBHg8vuvzaIXLhoLwQMP7eYF+iW6nSk=;
+ b=Jze8/bBAz2nKIkvy50C8jGwBrYzQ9Wd2QPeZdCZutEzvLy8JT2N3p1FbjqsvJR7PIr
+ wzVqS70L2dvbBOMi1ZvzcO0wMObfh5t/f1QPZZkVxL/gadbEfwyK7ljoNmWinOrRc99n
+ 2KIRfe9tT0FTDL2dqfXS8iApq/0m+IOziWW1FKgqgdUw7tGgDoMWT5YJE4pBTKIWZRbn
+ wTv1G88mR89e7rwwiL+lKM1KCSW6TnMXV/KC48L+ILX+z93nU3uAMFUpTQWA4smlYvq8
+ 1WeEJrAWduwZIJQEhNH6Td1IinBDpHS7Tol+JHeYLMwNnwBOG+wBqm0tnuHP63vkiJ3e
+ SZwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713294022; x=1713898822;
+ d=1e100.net; s=20230601; t=1713294003; x=1713898803;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cesSegXMr71Lpaal5FJBOqynS/3X0jmvbPzoIKbt5l0=;
- b=a2K/eScw+i14HTcgPveG8pNEM9C/X8jAZn5P0iukClU0DI0ZL2HrsZlEvsJ2LrXs1D
- pfgqYTf5VnhRL4NBZNO4Zo+1DFvdgOm19JBErzX6Coq2eXHp3xOvyIsQUIWUL8CTcGKs
- u/FQp3GwIjX+Qmp0l2O0xDFegLfnOvY/A7b5x7OqfFCZwGDolC38zmhrGuPgHfAnfj72
- xRBpkUJ87JOtHs6ORvF1giEOqPBk2TP5KLeoAi6G86/oaj2kcYn41zDbh6WySvQOgfeR
- 4kDaqlbD5xZ6RKEY08WDj9DLQgmEC6HG86aZZm3M7XyoRfMPkMzilWMmeEME2K8H8jsm
- l3ng==
-X-Gm-Message-State: AOJu0YwF2DD2nkptUKWRdtC/0v0ExfmdPjmptIHOpMBP2oIQUslYFW5v
- CQerQFx/BKNaL9yS0vLmpUrbZrXV2VwZtPGe4phtSl/gzPYF8pjPh8zTf8Kr/ISmCyIN1F1pVNM
- P
-X-Google-Smtp-Source: AGHT+IH5BOnyXnn72Ltuk21ppetjbOqt3E7UuzCKXeGkk/xw3+Vi5Lw88kwgqxO3CIw5JIxDda7Syw==
-X-Received: by 2002:a17:906:cec8:b0:a51:ee80:bae9 with SMTP id
- si8-20020a170906cec800b00a51ee80bae9mr3007893ejb.17.1713294022679; 
- Tue, 16 Apr 2024 12:00:22 -0700 (PDT)
+ bh=r/B5UTN+VVzZIBHg8vuvzaIXLhoLwQMP7eYF+iW6nSk=;
+ b=YPou23S67jGhIIzAnjcPxXU8hYekJ6uqBqajtNke7Zb2AtNqwKQ3pAUF8tyQLJMHBG
+ 9oFr4R7E0zl8m1umlELNuRtOf1actcFoJjS84gVe+4ktzEsmYiXNN0f6409TdP/ktHP/
+ 6MWMR4Lx8nEAL5MJyeSIcaP/iC/VXqd7/4E1FwsWthx5UTm26qlJtHig/7PUqtUiHYAA
+ AIsqAvAeJEvF0RU7U90cxW+aogeLEq8LA2jMvIUZYK3JF4Y9MEIDumvVxcxGshFfW3ok
+ IvzoCvukrIew3A0cg3su6zsiJhyLhCEYavqCZ8zEG2XLtHj5a7hqW6H1jl8uW0Kng5EJ
+ jAUg==
+X-Gm-Message-State: AOJu0YyyTMYvGecWRa63k/qnBKzpQn7XDzQoLC4J0sqx101LZTBDWkMb
+ wrHNbljmD/IPBQ5kqAkM+2T03UBIWdck/Qq3p6pWRA8W6nfTTGdEZNTFOr2He06awEEKg+N0atu
+ 6
+X-Google-Smtp-Source: AGHT+IFYPRtucDga6LKg9OYiy7Lp1H1gYO0dq5T1mdbxUJVv5BVKlYTRGjoZPSqqHynS6LcsQRYSwQ==
+X-Received: by 2002:a17:906:bb17:b0:a51:98df:f664 with SMTP id
+ jz23-20020a170906bb1700b00a5198dff664mr8257297ejb.76.1713294003357; 
+ Tue, 16 Apr 2024 12:00:03 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- d3-20020a170906640300b00a4e379ac57fsm7099907ejm.30.2024.04.16.12.00.20
+ ne33-20020a1709077ba100b00a51b26ba6c5sm7137906ejc.219.2024.04.16.12.00.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 12:00:22 -0700 (PDT)
+ Tue, 16 Apr 2024 12:00:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,21 +65,19 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v4 06/22] hw/acpi/ich9: Remove 'memory-hotplug-support'
- property
-Date: Tue, 16 Apr 2024 20:59:22 +0200
-Message-ID: <20240416185939.37984-7-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v4 03/22] hw/usb/hcd-xhci: Remove XHCI_FLAG_FORCE_PCIE_ENDCAP
+ flag
+Date: Tue, 16 Apr 2024 20:59:19 +0200
+Message-ID: <20240416185939.37984-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 References: <20240416185939.37984-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,52 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No external code sets the 'memory-hotplug-support'
-property, remove it.
+XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
+pc-i440fx-2.0 machine, which got removed. Remove it
+and simplify usb_xhci_pci_realize().
 
-Suggested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/acpi/ich9.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ hw/usb/hcd-xhci.h     | 1 -
+ hw/usb/hcd-xhci-nec.c | 2 --
+ hw/usb/hcd-xhci-pci.c | 3 +--
+ 3 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 573d032e8e..9b605af21a 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -351,21 +351,6 @@ static void ich9_pm_get_gpe0_blk(Object *obj, Visitor *v, const char *name,
-     visit_type_uint32(v, name, &value, errp);
- }
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index 98f598382a..1efa4858fb 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -37,7 +37,6 @@ typedef struct XHCIEPContext XHCIEPContext;
  
--static bool ich9_pm_get_memory_hotplug_support(Object *obj, Error **errp)
--{
--    ICH9LPCState *s = ICH9_LPC_DEVICE(obj);
--
--    return s->pm.acpi_memory_hotplug.is_enabled;
--}
--
--static void ich9_pm_set_memory_hotplug_support(Object *obj, bool value,
--                                               Error **errp)
--{
--    ICH9LPCState *s = ICH9_LPC_DEVICE(obj);
--
--    s->pm.acpi_memory_hotplug.is_enabled = value;
--}
--
- static bool ich9_pm_get_cpu_hotplug_legacy(Object *obj, Error **errp)
- {
-     ICH9LPCState *s = ICH9_LPC_DEVICE(obj);
-@@ -445,9 +430,6 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
-                         NULL, NULL, pm);
-     object_property_add_uint32_ptr(obj, ACPI_PM_PROP_GPE0_BLK_LEN,
-                                    &gpe0_len, OBJ_PROP_FLAG_READ);
--    object_property_add_bool(obj, "memory-hotplug-support",
--                             ich9_pm_get_memory_hotplug_support,
--                             ich9_pm_set_memory_hotplug_support);
-     object_property_add_bool(obj, "cpu-hotplug-legacy",
-                              ich9_pm_get_cpu_hotplug_legacy,
-                              ich9_pm_set_cpu_hotplug_legacy);
+ enum xhci_flags {
+     XHCI_FLAG_SS_FIRST = 1,
+-    XHCI_FLAG_FORCE_PCIE_ENDCAP,
+     XHCI_FLAG_ENABLE_STREAMS,
+ };
+ 
+diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
+index 328e5bfe7c..5d5b069cf9 100644
+--- a/hw/usb/hcd-xhci-nec.c
++++ b/hw/usb/hcd-xhci-nec.c
+@@ -43,8 +43,6 @@ static Property nec_xhci_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
+                     XHCI_FLAG_SS_FIRST, true),
+-    DEFINE_PROP_BIT("force-pcie-endcap", XHCINecState, flags,
+-                    XHCI_FLAG_FORCE_PCIE_ENDCAP, false),
+     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
+     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index 4423983308..cbad96f393 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -148,8 +148,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+                      PCI_BASE_ADDRESS_MEM_TYPE_64,
+                      &s->xhci.mem);
+ 
+-    if (pci_bus_is_express(pci_get_bus(dev)) ||
+-        xhci_get_flag(&s->xhci, XHCI_FLAG_FORCE_PCIE_ENDCAP)) {
++    if (pci_bus_is_express(pci_get_bus(dev))) {
+         ret = pcie_endpoint_cap_init(dev, 0xa0);
+         assert(ret > 0);
+     }
 -- 
 2.41.0
 
