@@ -4,94 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4E9C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 06:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD9EC04FF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 07:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwciX-00042u-J9; Tue, 16 Apr 2024 02:54:57 -0400
+	id 1rwcuC-0005q2-Ez; Tue, 16 Apr 2024 03:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rwciV-00042j-J5
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 02:54:55 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rwciT-0008Ud-BL
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 02:54:55 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-5cedfc32250so2370133a12.0
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 23:54:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1713250491; x=1713855291;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=c/6i0q+KF6i84lPj9V5TkSfBiTsGMyqFUJ7yR3p9N+8=;
- b=sjkgR+RcCMhBw4uqzigJEG9tVsjV0jiOJO711KiA2MQFsVGqPIrO0sFBjhm2/kNmom
- M8UrbQhfAjsRx/gDSgrDJ9EhCKALPn0jupsGtzFcQGchBg7QLMxFVbeebV6UBSLjAGpr
- f5GqUhX1zt4iXW10yv+ZBefNgWAekxKAKXnJ6OShhFiQGt9uQZNbxw8k/8zp0v+XB/FQ
- FlkVDJqn4WDkM4vVM8fLneat7gmY7sRQmmO/GLB0mTqm1fLtjhDJkDVX7n6G9FRPL4Pm
- hMr0i1rnIn+D96gpJDZtQzELF8CV4hCONLz8mXbsunrM4EvP4SaSG5/qyRYZuK1pssyd
- DcFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713250491; x=1713855291;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c/6i0q+KF6i84lPj9V5TkSfBiTsGMyqFUJ7yR3p9N+8=;
- b=ml9Z+/0nMD/qS4Vgs1SmaUTolEu7uTCc6HUFfITVufwAeatfIk7a4I90SgIfOMmHQz
- EiR/xoUdTi7eJV48vBhQKM5Wdj8OVO8VDQqwEHCcUCsNKaA0wFacgDzXasGoUfhy3r3q
- XDSFAPkfz+OzKEeZGJfTuXUzjJtk1ag3lpNE+AYPIU83q76vWVYw68wAq5Oh8coPPW4q
- M69wbXSWKARxz/UXfGdmw/HqZM7UmkyCaZ8kmDJHQ+AhQbu0DjjIjIAHEh50cqRLVVD4
- HRGic/jAI/Fvx6IaVVPCKkce7qva/Ho8mXhw7cebF1cfKCs6hQlLW/FC0mIAyp7wHqan
- 2J2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpt1j4Ld70YrhyE8nDh37Hhr/ThzJFtKKgC8iotGZMWGDq66k+XymwtNUIJ+BGhtiYoXh+tZooFM3j4rHOcmQ4q6YfMgQ=
-X-Gm-Message-State: AOJu0Yz3w8itT1X3SgVLMOSwbm3jBnY1Fnf+8YGr0H0vsYg5pVZXYX62
- rxr0IJohrHC32vPYqkUiB3cop0RdsobtTMRcVYZwxXnxhzOb0+vIvxTB5xJldBo=
-X-Google-Smtp-Source: AGHT+IFIOEaygbwPz1Z9bx41sjRAuQ9f4bU9KKG6HY0RZM52nFA8dq/dPgsAwD5Uk5Ejxva3nSWnUw==
-X-Received: by 2002:a05:6a20:9717:b0:1a9:8861:9e77 with SMTP id
- hr23-20020a056a20971700b001a988619e77mr9464736pzc.28.1713250491417; 
- Mon, 15 Apr 2024 23:54:51 -0700 (PDT)
-Received: from [157.82.206.17] ([157.82.206.17])
- by smtp.gmail.com with ESMTPSA id
- h9-20020a170902f7c900b001e42bb057b9sm9014847plw.105.2024.04.15.23.54.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Apr 2024 23:54:50 -0700 (PDT)
-Message-ID: <dabf20e9-1002-469e-b255-d3954bf8cf3d@daynix.com>
-Date: Tue, 16 Apr 2024 15:54:47 +0900
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rwcu9-0005pS-Ol
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 03:06:58 -0400
+Received: from mail-bn8nam12on2049.outbound.protection.outlook.com
+ ([40.107.237.49] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rwcu5-0001xS-3l
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 03:06:57 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=RVmo0ng+jRIxSD9r9U+VBPBahJjVHt/me0o4cSryOS0lfPgxrw30wMJvodajNQY/T88zZR08kkWgAPQPimAUjtQdXO3lIaD8Sdk5/93+wqtNh0ZlqxPJCNAWfNYvWHnMxmJam4qOqzgISQBUC3kroSENhi7ecoT81aPADzz1d7LRvN9VdQs6yirdHFzENXFRfNr6LxUBidVbWYT+dUbircvjqwrvYX2pAtnrh9PoK3T/H0a4Vad/V4HlUNIa0teXVWM64FMMGZraoSBgdG3WABAqt49KX3Exd3pNdrBTp2C9XUKLGCo+2+aDHGh2Mn5106ebeUViQhrI9xiiaq0QEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rnuYZeft8lRoIAh9JYSRaNy5fv79TAicnXTxruyEvQc=;
+ b=Cwo8KdUOgyR1BXJMa/wGsi/wSWXFjY6d2pgQR8IBPpnV0oqqng1KJlMGkv9VrxxDoYRJpdXd/Vuj/kZoeSyBy/JD865boj6nPiGgc4kxQSf8kvIjkM7jltoiLgcaPZwO/PVESlWDJeZ2yWU4eOCsIgzaZShOevPDCvyyEtOxfZW4WoxMuIEOs+O5FDtqYsyE3pL4/JiL8GNwEJYkpX3kfN77n98S7HIHwAl6wkhOWrjcT5ZQgEiHf9B3NTWx4vQ1xeymyam/0OrrBFktyQRbJCZ515eDjEKPJ2dmSWEbU5zky0Yf3kfu54cBFINJe1NWOrUQs7wyLEXjYGFn4k6pdQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rnuYZeft8lRoIAh9JYSRaNy5fv79TAicnXTxruyEvQc=;
+ b=Hog1pjgTzusxcSSTIaXaxUMIkGWJ2wNv6WY/hleMq5C9DGtaCulGb9BRZNz8JBNyytpF2TawKzpV+mJKVqf/MI+XidhSLcioOPxq5FvvAFnoESskx7KZ8wRx8d4ytkI+q3w0x6TEhzr7KEVg1/Qzee6/ibTD7tz9LeuRJ8wjKo4=
+Received: from CH2PR16CA0016.namprd16.prod.outlook.com (2603:10b6:610:50::26)
+ by CH2PR12MB4263.namprd12.prod.outlook.com (2603:10b6:610:a6::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Tue, 16 Apr
+ 2024 07:01:44 +0000
+Received: from DS3PEPF000099DB.namprd04.prod.outlook.com
+ (2603:10b6:610:50:cafe::5e) by CH2PR16CA0016.outlook.office365.com
+ (2603:10b6:610:50::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.33 via Frontend
+ Transport; Tue, 16 Apr 2024 07:01:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ DS3PEPF000099DB.mail.protection.outlook.com (10.167.17.197) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7452.22 via Frontend Transport; Tue, 16 Apr 2024 07:01:43 +0000
+Received: from cjq-desktop.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 16 Apr
+ 2024 02:01:41 -0500
+From: Jiqian Chen <Jiqian.Chen@amd.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>, Huang Rui
+ <Ray.Huang@amd.com>, Jiqian Chen <Jiqian.Chen@amd.com>
+Subject: [RFC QEMU PATCH v9 0/1] S3 support
+Date: Tue, 16 Apr 2024 15:01:25 +0800
+Message-ID: <20240416070127.116922-1-Jiqian.Chen@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 13/20] virtio-net: Return an error when vhost cannot
- enable RSS
-Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
-References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
- <20240403-rss-v9-13-c6d87e69d38b@daynix.com>
- <CAOEp5OeXLFTUsH5egdMfsEPACM0O2XODOeYbpggD0T2Zv6ceYQ@mail.gmail.com>
- <CACGkMEuG5mDzU-UwHvrZ3TWvZ9rpDWN-Vuw0GPE+_9nEkr6jdw@mail.gmail.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CACGkMEuG5mDzU-UwHvrZ3TWvZ9rpDWN-Vuw0GPE+_9nEkr6jdw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::531;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DB:EE_|CH2PR12MB4263:EE_
+X-MS-Office365-Filtering-Correlation-Id: cebb4f15-1cb8-4442-e097-08dc5de31316
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: F3Uai1mju8Z4xp+wahWfILNqlnVnk5OQavnozHqxRlTkhWMIm7lNlhhpewX62JrlxX5uPZzJkQK8w6kpzIE7Ij8CM30Xb1VDWIRz3RXQ+P1RZC3jvqH4raxN4QhbsYIMJnAPMxZqqpa37H+1j2U5DVYpZkdxL9UZkfCG4ZdKyko/alLOrJBm5vFuJHyZ/lz1Yil/Mn4kiG4/6tJeRCPIEHT+1U7MqmRMQoAqha7+j50QC2qsZ2NiauY+YCe150U/kzF8BNjh0KhkkgdtghOVOOef/CgerscYs4hXcrPx+WuIiRUaY+a9iFCDpG5mKkOROWlCKc/MNpvB2qhDZhn5NPtY3gdCyvcsuwAidT/mc7jSTKg5V6/43cvXD4vdg3qyAhNKkmQ/RZE+cih0d0/YnydB+kZQVH00MZQJpp+0nFGst9d0UbuiQkDNdXrWlTybYcb5SLZCIvbHptxAthdl8KsmtwLyuKSbVMEbusvmjrO65fKVDPsEKllG8EZKqvbpmha1XqmC3zmVy6BZi7ZQVYvoAucWjlh50QAAhIYtcJdohCM3cmfnpaX40AG98tZVn4T5zA9L6huwuYNojLvFEfxmfu13/SBYc2XhnD58j0EYgaFDxhOfugtz57U6+G1bKngUSFfzznI1J8fTRHk2DBruhk59zOZYHYAQJOLJ4zicm0O3xqTW48GZG7oOLxL1w8WMfQ8MLwoJJn/ONbcrMg==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(1800799015)(376005)(82310400014)(36860700004); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 07:01:43.8212 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cebb4f15-1cb8-4442-e097-08dc5de31316
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099DB.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4263
+Received-SPF: permerror client-ip=40.107.237.49;
+ envelope-from=Jiqian.Chen@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,136 +121,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/04/16 13:00, Jason Wang wrote:
-> On Mon, Apr 15, 2024 at 10:05 PM Yuri Benditovich
-> <yuri.benditovich@daynix.com> wrote:
->>
->> On Wed, Apr 3, 2024 at 2:11 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>
->>> vhost requires eBPF for RSS. When eBPF is not available, virtio-net
->>> implicitly disables RSS even if the user explicitly requests it. Return
->>> an error instead of implicitly disabling RSS if RSS is requested but not
->>> available.
->>>
->>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> ---
->>>   hw/net/virtio-net.c | 97 ++++++++++++++++++++++++++---------------------------
->>>   1 file changed, 48 insertions(+), 49 deletions(-)
->>>
->>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->>> index 61b49e335dea..3d53eba88cfc 100644
->>> --- a/hw/net/virtio-net.c
->>> +++ b/hw/net/virtio-net.c
->>> @@ -793,9 +793,6 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
->>>           return features;
->>>       }
->>>
->>> -    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
->>> -        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
->>> -    }
->>>       features = vhost_net_get_features(get_vhost_net(nc->peer), features);
->>>       vdev->backend_features = features;
->>>
->>> @@ -3591,6 +3588,50 @@ static bool failover_hide_primary_device(DeviceListener *listener,
->>>       return qatomic_read(&n->failover_primary_hidden);
->>>   }
->>>
->>> +static void virtio_net_device_unrealize(DeviceState *dev)
->>> +{
->>> +    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->>> +    VirtIONet *n = VIRTIO_NET(dev);
->>> +    int i, max_queue_pairs;
->>> +
->>> +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
->>> +        virtio_net_unload_ebpf(n);
->>> +    }
->>> +
->>> +    /* This will stop vhost backend if appropriate. */
->>> +    virtio_net_set_status(vdev, 0);
->>> +
->>> +    g_free(n->netclient_name);
->>> +    n->netclient_name = NULL;
->>> +    g_free(n->netclient_type);
->>> +    n->netclient_type = NULL;
->>> +
->>> +    g_free(n->mac_table.macs);
->>> +    g_free(n->vlans);
->>> +
->>> +    if (n->failover) {
->>> +        qobject_unref(n->primary_opts);
->>> +        device_listener_unregister(&n->primary_listener);
->>> +        migration_remove_notifier(&n->migration_state);
->>> +    } else {
->>> +        assert(n->primary_opts == NULL);
->>> +    }
->>> +
->>> +    max_queue_pairs = n->multiqueue ? n->max_queue_pairs : 1;
->>> +    for (i = 0; i < max_queue_pairs; i++) {
->>> +        virtio_net_del_queue(n, i);
->>> +    }
->>> +    /* delete also control vq */
->>> +    virtio_del_queue(vdev, max_queue_pairs * 2);
->>> +    qemu_announce_timer_del(&n->announce_timer, false);
->>> +    g_free(n->vqs);
->>> +    qemu_del_nic(n->nic);
->>> +    virtio_net_rsc_cleanup(n);
->>> +    g_free(n->rss_data.indirections_table);
->>> +    net_rx_pkt_uninit(n->rx_pkt);
->>> +    virtio_cleanup(vdev);
->>> +}
->>> +
->>>   static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->>>   {
->>>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->>> @@ -3760,53 +3801,11 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->>>
->>>       net_rx_pkt_init(&n->rx_pkt);
->>>
->>> -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
->>> -        virtio_net_load_ebpf(n);
->>> -    }
->>> -}
->>> -
->>> -static void virtio_net_device_unrealize(DeviceState *dev)
->>> -{
->>> -    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->>> -    VirtIONet *n = VIRTIO_NET(dev);
->>> -    int i, max_queue_pairs;
->>> -
->>> -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
->>> -        virtio_net_unload_ebpf(n);
->>> +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS) &&
->>> +        !virtio_net_load_ebpf(n) && get_vhost_net(nc->peer)) {
->>> +        virtio_net_device_unrealize(dev);
->>> +        error_setg(errp, "Can't load eBPF RSS for vhost");
->>>       }
->>
->> As I already mentioned, I think this is an extremely bad idea to
->> fail to run qemu due to such a reason as .absence of one feature.
->> What I suggest is:
->> 1. Redefine rss as tri-state (off|auto|on)
->> 2. Fail to run only if rss is on and not available via ebpf
->> 3. On auto - silently drop it
-> 
-> "Auto" might be promatic for migration compatibility which is hard to
-> be used by management layers like libvirt. The reason is that there's
-> no way for libvirt to know if it is supported by device or not.
+Hi all,
+This is the v9 patch to support S3.
+v9 makes below changes:
+* patch#1 no changes
+* patch#2 remove unnecessary parentheses.
+          add some comments to remind we may need to consider SUSPEND bit in future.
+          change the commit message to describe which virtio device was tested.
+          keep No_Soft_Reset bit false by default for safety.
 
-Certainly auto is not good for migration, but it is useful in the other 
-situations. You can still set "on" or "off" if you care migration. I'll 
-add "auto" support in the next version.
 
-> 
-> Thanks
-> 
->> 4. The same with 'hash' option - it is not compatible with vhost (at
->> least at the moment)
->> 5. Reformat the patch as it is hard to review it due to replacing
->> entire procedures, i.e. one patch with replacing without changes,
->> another one - with real changes. >> If this is hard to review only for me - please ignore that.
+Best regards,
+Jiqian Chen
 
-I'll split this patch accordingly in the next version.
 
-Regards,
-Akihiko Odak
+v8 makes below changes:
+* Add a new patch#1 to fix a problem import by 27ce0f3afc9dd25d21b43bbce505157afd93d111,
+  the right action is that only the state of PM_CTRL can be clear when resetting.
+* patch#2 is the original patch to implement No_Soft_Reset bit, and in this version, I
+  rename function and change some condition sequence.
+
+
+v7 makes below changes:
+* Tested this patch with Qemu on Xen hypervisor. Depending on kernel
+  patch (virtio: Add support for no-reset virtio PCI PM:
+  https://lore.kernel.org/lkml/20231208070754.3132339-1-stevensd@chromium.org/)
+* Changed the default value of flag VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT to false
+* Fixed coding style violation
+* Modified the content of the comments.
+* Removed useless flag PCI_PM_CTRL_DATA_SCALE_MASK.
+
+
+V6:
+In current code, when guest does S3, virtio devices are reset during that process, that
+causes the display resources of virtio-gpu are destroyed, then the display can't come
+back after resuming.
+This v6 patch implement the No_Soft_Reset bit of PCI_PM_CTRL register, when this bit is
+set, the resetting will not be done, so that the display can work after resuming.
+This version abandons all previous version implementations and is a new different
+solution according to the outcome of the discussion and suggestions in the mailing
+thread of virtio-spec.
+(https://lists.oasis-open.org/archives/virtio-comment/202401/msg00077.html)
+
+
+V5:
+v5 makes below changes:
+* Since this series patches add a new mechanism that let virtgpu and Qemu can negotiate
+  their reset behavior, and other guys hope me can improve this mechanism to virtio pci
+  level, so that other virtio devices can also benefit from it. So instead of adding
+  new feature flag VIRTIO_GPU_F_FREEZE_S3 only serves for virtgpu, v5 add a new parameter
+  named freeze_mode to struct VirtIODevice, when guest begin suspending, set freeze_mode
+  to VIRTIO_PCI_FREEZE_MODE_FREEZE_S3, and then all virtio devices can get this status,
+  and notice that guest is suspending, then they can change their reset behavior . See
+  the new commit "virtio-pci: Add freeze_mode case for virtio pci"
+* The second commit is just for virtgpu, when freeze_mode is VIRTIO_PCI_FREEZE_MODE_FREEZE_S3,
+  prevent Qemu destroying render resources, so that the display can come back after resuming.
+V5 of kernel patch:
+https://lore.kernel.org/lkml/20230919104607.2282248-1-Jiqian.Chen@amd.com/T/#t
+The link to trace this issue:
+https://gitlab.com/qemu-project/qemu/-/issues/1860
+
+
+v4:
+Thanks for Gerd Hoffmann's advice. V4 makes below changes:
+* Use enum for freeze mode, so this can be extended with more
+  modes in the future.
+* Rename functions and paratemers with "_S3" postfix.
+And no functional changes.
+Link:
+https://lore.kernel.org/qemu-devel/20230720120816.8751-1-Jiqian.Chen@amd.com/
+No v4 patch on kernel side.
+
+
+v3:
+Thanks for Michael S. Tsirkin's advice. V3 makes below changes:
+* Remove changes in file include/standard-headers/linux/virtio_gpu.h
+  I am not supposed to edit this file and it will be imported after
+  the patches of linux kernel was merged.
+Link:
+https://lore.kernel.org/qemu-devel/20230719074726.1613088-1-Jiqian.Chen@amd.com/T/#t
+V3 of kernel patch:
+https://lore.kernel.org/lkml/20230720115805.8206-1-Jiqian.Chen@amd.com/T/#t
+
+
+v2:
+makes below changes:
+* Change VIRTIO_CPU_CMD_STATUS_FREEZING to 0x0400 (<0x1000)
+* Add virtio_gpu_device_unrealize to destroy resources to solve
+  potential memory leak problem. This also needs hot-plug support.
+* Add a new feature flag VIRTIO_GPU_F_FREEZING, so that guest and
+  host can negotiate whenever freezing is supported or not.
+Link:
+https://lore.kernel.org/qemu-devel/20230630070016.841459-1-Jiqian.Chen@amd.com/T/#t
+V2 of kernel patch:
+https://lore.kernel.org/lkml/20230630073448.842767-1-Jiqian.Chen@amd.com/T/#t
+
+
+v1:
+Hi all,
+I am working to implement virtgpu S3 function on Xen.
+
+Currently on Xen, if we start a guest who enables virtgpu, and then run
+"echo mem > /sys/power/state" to suspend guest. And run "sudo xl trigger <guest id> s3resume"
+to resume guest. We can find that the guest kernel comes back, but the display doesn't.
+It just shown a black screen.
+
+Through reading codes, I founded that when guest was during suspending, it called into Qemu
+to call virtio_gpu_gl_reset. In virtio_gpu_gl_reset, it destroyed all resources and reset
+renderer. This made the display gone after guest resumed.
+
+I think we should keep resources or prevent they being destroyed when guest is suspending.
+So, I add a new status named freezing to virtgpu, and add a new ctrl message
+VIRTIO_GPU_CMD_STATUS_FREEZING to get notification from guest. If freezing is set to true,
+and then Qemu will realize that guest is suspending, it will not destroy resources and will
+not reset renderer. If freezing is set to false, Qemu will do its origin actions, and has no
+other impaction.
+
+And now, display can come back and applications can continue their status after guest resumes.
+Link:
+https://lore.kernel.org/qemu-devel/20230608025655.1674357-1-Jiqian.Chen@amd.com/
+V1 of kernel patch:
+https://lore.kernel.org/lkml/20230608063857.1677973-1-Jiqian.Chen@amd.com/
+
+Jiqian Chen (2):
+  virtio-pci: only reset pm state during resetting
+  virtio-pci: implement No_Soft_Reset bit
+
+ hw/virtio/virtio-pci.c         | 45 +++++++++++++++++++++++++++++++++-
+ include/hw/virtio/virtio-pci.h |  5 ++++
+ 2 files changed, 49 insertions(+), 1 deletion(-)
+
+-- 
+2.34.1
+
 
