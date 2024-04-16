@@ -4,88 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84049C04FF9
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:57:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74CA7C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwjHA-0005gO-EU; Tue, 16 Apr 2024 09:55:11 -0400
+	id 1rwiqv-00008E-TC; Tue, 16 Apr 2024 09:28:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGl-000582-UY
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:45 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwiqt-0008WQ-Kj
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:27:59 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGh-0001xC-W6
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:43 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a523dad53e0so577762566b.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:54:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwiqs-000519-2s
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:27:59 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-516cbf3fe68so5517200e87.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713275678; x=1713880478; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=niCnoAX1/IoHq/fW8NTYGu+tVPbyTFDmTrJEBLORM4w=;
- b=BISGUhwZNSyAAjQ6ZaIUAOqjaDkJK/dYKiQbAdGKsjhSnqBm4x9PqdWtfU5Plu1u5i
- HS6qyb3YMfDZoFnhAaNjyzwaSCSMHWrwE9o5jambQFWF1jtlY3mwTFTfjwpdCbKpvbhI
- RkBcpiByO007eEiz/Aw2Mrfrq7jo1e7b0jkHBVCn/ZOd+4MYA8By4cPFKOmdYimTW0ZP
- Eg49U2AZVryyMjPShRqj9f+H8iQ0HCJLbQW56jS8aymdiEwoRKA+ZpZVP+1m2oyJOexK
- u6MKMjunPG7V0faCwV/rqA6OyEY6qSyC2NUi5ovXpAACoAaDKZx3tC4KWOh2DISWDNYX
- V/qQ==
+ d=linaro.org; s=google; t=1713274076; x=1713878876; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3F7bJ8nbnYbDWR3CYPhpYslCgWCxAo0NClKpbkxjhpg=;
+ b=tbmmCGAWsINEyS7km9yOQl4EMDCwajI197kVZpVJmF6FE7MYucJ3iMzXT77/JffA9b
+ 7Cu/HfuITEAFrGEgKzVdrOcF/9DWPtZs/wZDb1MPgqZRkTfkL/8+lE6A5dtQdNn+8Byq
+ +jPfuRngFt5hWfuOSe/S4Ta3m9hiobEf72Bs750ZOUf5v+4jVmuykA00zF69y+owuxjF
+ ZGew8bVddO5Wf/hYkv3xQtD3FTPSRv1WlG96QrRrK1Yd5QeTz+Lxv4BpYLiCG0z4XcpI
+ KkISgnQFKtiKho8OrcPDSPzExEccwB7yt5kC6CwwnzS5wqp+En/6OwaYEiDpnaQvTaj+
+ wk0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713275678; x=1713880478;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=niCnoAX1/IoHq/fW8NTYGu+tVPbyTFDmTrJEBLORM4w=;
- b=eiEqkdQ1s5fJedXwYNh1xWDXqACe+4D43HueZtRLuiAlznqVMkGfz3zYqE9Or6WwmI
- Q9NO4fK6ZOpxorP3zgkP+KICIUeFxIVtgmUuvhx4Hs3m7G91xL+ZLn3qPTXe/9VG1TYK
- eGdeXxPo8wlF9yprNzOHik5Wb0IYtVhaXI9vLieOdV9fkI6VLdYwlKuV9+FnjbnZ8d/a
- vcLndJ6jRc7Kfse5SNx9tS/aYXvH9mbU250ToU7TnV6V5k03B7I/vsyR5HJuUBShjlK6
- z/FWb57uZin0EFe/a0k+itpwI7/mtYDi2Z55OC/6rEoeTPK0msAAvFrILy1WYTxyuS6m
- VviA==
-X-Gm-Message-State: AOJu0YzNj/YbveMYRydBjJ+DaYlI0kV0NN7Jvivtl/NWn6ZVN1UqvxSe
- tk2OFcSMtlVyYr/tlp1QADBOOy63Vc8uVEhMuoQodBBWqpBE9VPn/wtTW9I4ev8laykiwqASVEE
- l
-X-Google-Smtp-Source: AGHT+IHbRPXAeF1BWH/B4tIZ1JRviM9QnaVYXhLd2cjnwk5yQUeudL8GfmYw5GIrQejQFhB0g4qdlg==
-X-Received: by 2002:a17:906:b892:b0:a51:8672:66e4 with SMTP id
- hb18-20020a170906b89200b00a51867266e4mr2515645ejb.22.1713275678090; 
- Tue, 16 Apr 2024 06:54:38 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.155.61])
- by smtp.gmail.com with ESMTPSA id
- 23-20020a170906319700b00a543e6e1c47sm2010767ejy.72.2024.04.16.06.54.36
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 06:54:37 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Thomas Huth <thuth@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- devel@lists.libvirt.org, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v3 16/22] hw/i386/pc: Remove deprecated pc-i440fx-2.2 machine
-Date: Tue, 16 Apr 2024 15:52:45 +0200
-Message-ID: <20240416135252.8384-17-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240416135252.8384-1-philmd@linaro.org>
-References: <20240416135252.8384-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1713274076; x=1713878876;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3F7bJ8nbnYbDWR3CYPhpYslCgWCxAo0NClKpbkxjhpg=;
+ b=F6RUZ7AaAolrzKLw9LuqeK04xkVCDDicz40+PGA8hDfCF+wZIIjTTwSSHV23VmxSWR
+ J5DRNTAlUR/OqqUomAlAJ6Wvt1Hl/3g0erlMK32ifgM3LUojOM27ldp1Uxvx1KCd+Zxe
+ 0lDWRO3v9VaiFNIpml4sWusqlANwthNMMS/lCSORqa9FNbEXxQXanMwfpEJ/Fy1ACfJ3
+ 2wVjhannLPNksiQPD5rQWJo68frOOaPTtDG2DFxo5eg9xKXHOR8SyJzRxv9kDEJGqCCp
+ qB8LNnf9JW5mFygtaSbiOaxhyN/UJop4HMPTF9kb8XCotfkRzQbeACNaKooAxF/E/qlh
+ eGCQ==
+X-Gm-Message-State: AOJu0YwDkoONI68Kps3OBbRi1jw+6Tqbn9RqgLLV9NELcOO2y8AqJ9tF
+ If4O4Z6DVWoB6y6saOfOa6lGNOHUXc/ChFGRLY/4IMvqcm5gZKiFmzlcsSoBVs1Rubrzn8PTqLV
+ LfzPCyszxxW2tO3tzobrSMFSONnRP1oWE3vf2Eb1zkd+6LA6x
+X-Google-Smtp-Source: AGHT+IFOuLT33dfq8u6EYkimuPP4K0Etp3obeZvptHLXV55rP3MGfazaOIvg/2TZWFcLZy+zw5Tq7+inbvPQrLFzxhg=
+X-Received: by 2002:a05:6512:3f10:b0:516:d126:719a with SMTP id
+ y16-20020a0565123f1000b00516d126719amr10462205lfa.9.1713274076125; Tue, 16
+ Apr 2024 06:27:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+References: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
+In-Reply-To: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Apr 2024 14:27:45 +0100
+Message-ID: <CAFEAcA_D1+BUk01mXNwRehxYqyXQU+Zu98sWBujauk5L2tHh3w@mail.gmail.com>
+Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
+To: Peter Dave Hello <hsu@peterdavehello.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,139 +87,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pc-i440fx-2.2 machine was deprecated for the 8.2
-release (see commit c7437f0ddb "docs/about: Mark the
-old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-time to remove it.
+On Tue, 16 Apr 2024 at 14:00, Peter Dave Hello <hsu@peterdavehello.org> wrote:
+>
+> From: Peter Dave Hello <hsu@peterdavehello.org>
+> Date: Tue, 16 Apr 2024 00:43:29 +0800
+> Subject: [PATCH] Add a simple zh_TW Traditional Chinese translation
+>
+> This patch adds a basic zh_TW translation file for Taiwan Traditional
+> Chinese users.
+>
+> Signed-off-by: Peter Dave Hello <hsu@peterdavehello.org>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240305134221.30924-13-philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
----
- docs/about/deprecated.rst       |  4 ++--
- docs/about/removed-features.rst |  2 +-
- include/hw/i386/pc.h            |  3 ---
- hw/i386/pc.c                    | 23 -----------------------
- hw/i386/pc_piix.c               | 21 ---------------------
- 5 files changed, 3 insertions(+), 50 deletions(-)
+This name in your Signed-off-by line doesn't match the
+name you use in the .po file...
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 689cf3cead..707455c817 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -219,8 +219,8 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
- better reflects the way this property affects all random data within
- the device tree blob, not just the ``kaslr-seed`` node.
- 
--``pc-i440fx-2.2`` and ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.7`` (since 9.1)
--'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.7`` (since 9.1)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
- These old machine types are quite neglected nowadays and thus might have
- various pitfalls with regards to live migration. Use a newer machine type
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 01c55103d3..4664974a8b 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -816,7 +816,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
- 
- This machine has been renamed ``fuloong2e``.
- 
--``pc-0.10`` up to ``pc-i440fx-2.1`` (removed in 4.0 up to 9.0)
-+``pc-0.10`` up to ``pc-i440fx-2.2`` (removed in 4.0 up to 9.0)
- ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
- These machine types were very old and likely could not be used for live
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 231aae92ed..df97df6ca7 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -274,9 +274,6 @@ extern const size_t pc_compat_2_4_len;
- extern GlobalProperty pc_compat_2_3[];
- extern const size_t pc_compat_2_3_len;
- 
--extern GlobalProperty pc_compat_2_2[];
--extern const size_t pc_compat_2_2_len;
--
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
-     { \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 633724f177..18bef7c85e 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -281,29 +281,6 @@ GlobalProperty pc_compat_2_3[] = {
- };
- const size_t pc_compat_2_3_len = G_N_ELEMENTS(pc_compat_2_3);
- 
--GlobalProperty pc_compat_2_2[] = {
--    PC_CPU_MODEL_IDS("2.2.0")
--    { "kvm64" "-" TYPE_X86_CPU, "vme", "off" },
--    { "kvm32" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Conroe" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Penryn" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Nehalem" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Westmere" "-" TYPE_X86_CPU, "vme", "off" },
--    { "SandyBridge" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Haswell" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Broadwell" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Opteron_G1" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Opteron_G2" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Opteron_G3" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Opteron_G4" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Opteron_G5" "-" TYPE_X86_CPU, "vme", "off" },
--    { "Haswell" "-" TYPE_X86_CPU, "f16c", "off" },
--    { "Haswell" "-" TYPE_X86_CPU, "rdrand", "off" },
--    { "Broadwell" "-" TYPE_X86_CPU, "f16c", "off" },
--    { "Broadwell" "-" TYPE_X86_CPU, "rdrand", "off" },
--};
--const size_t pc_compat_2_2_len = G_N_ELEMENTS(pc_compat_2_2);
--
- GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
- {
-     GSIState *s;
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 2f28b4e329..d32acb5634 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -429,11 +429,6 @@ static void pc_compat_2_3_fn(MachineState *machine)
-     }
- }
- 
--static void pc_compat_2_2_fn(MachineState *machine)
--{
--    pc_compat_2_3_fn(machine);
--}
--
- #ifdef CONFIG_ISAPC
- static void pc_init_isa(MachineState *machine)
- {
-@@ -828,22 +823,6 @@ static void pc_i440fx_2_3_machine_options(MachineClass *m)
- DEFINE_I440FX_MACHINE(v2_3, "pc-i440fx-2.3", pc_compat_2_3_fn,
-                       pc_i440fx_2_3_machine_options);
- 
--static void pc_i440fx_2_2_machine_options(MachineClass *m)
--{
--    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
--
--    pc_i440fx_2_3_machine_options(m);
--    m->hw_version = "2.2.0";
--    m->default_machine_opts = "firmware=bios-256k.bin,suppress-vmdesc=on";
--    compat_props_add(m->compat_props, hw_compat_2_2, hw_compat_2_2_len);
--    compat_props_add(m->compat_props, pc_compat_2_2, pc_compat_2_2_len);
--    pcmc->rsdp_in_ram = false;
--    pcmc->resizable_acpi_blob = false;
--}
--
--DEFINE_I440FX_MACHINE(v2_2, "pc-i440fx-2.2", pc_compat_2_2_fn,
--                      pc_i440fx_2_2_machine_options);
--
- #ifdef CONFIG_ISAPC
- static void isapc_machine_options(MachineClass *m)
- {
--- 
-2.41.0
+> ---
+>  po/LINGUAS  |  1 +
+>  po/zh_TW.po | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 94 insertions(+)
+>  create mode 100644 po/zh_TW.po
+>
+> diff --git a/po/LINGUAS b/po/LINGUAS
+> index 9b33a36..08163e8 100644
+> --- a/po/LINGUAS
+> +++ b/po/LINGUAS
+> @@ -7,3 +7,4 @@ sv
+>  tr
+>  uk
+>  zh_CN
+> +zh_TW
+> diff --git a/po/zh_TW.po b/po/zh_TW.po
+> new file mode 100644
+> index 0000000..d25557e
+> --- /dev/null
+> +++ b/po/zh_TW.po
+> @@ -0,0 +1,93 @@
+> +# Chinese translations for PACKAGE package.
+> +# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+> +# This file is distributed under the same license as the PACKAGE package.
 
+Can you replace all these placeholder ALLCAPS items
+with the right values, please?
+
+> +# Peter Hsu <hsu@peterdavehello.org>, 2024.
+> +#
+> +msgid ""
+> +msgstr ""
+> +"Project-Id-Version: PACKAGE VERSION\n"
+
+There's another one here.
+
+> +"Report-Msgid-Bugs-To: \n"
+> +"POT-Creation-Date: 2024-04-16 17:52+0800\n"
+> +"PO-Revision-Date: 2024-04-16 17:52+0800\n"
+> +"Last-Translator: Peter Hsu <hsu@peterdavehello.org>\n"
+> +"Language-Team: Chinese (traditional)\n"
+> +"Language: zh_TW\n"
+> +"MIME-Version: 1.0\n"
+> +"Content-Type: text/plain; charset=ASCII\n"
+> +"Content-Transfer-Encoding: 8bit\n"
+
+thanks
+-- PMM
 
