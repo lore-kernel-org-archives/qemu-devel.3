@@ -4,91 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6E3C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 16:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 952A6C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 16:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwloI-0005kF-HH; Tue, 16 Apr 2024 12:37:30 -0400
+	id 1rwlvp-0007g3-KN; Tue, 16 Apr 2024 12:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rwlo5-0005jr-91
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 12:37:17 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rwlo3-0005cV-Aa
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 12:37:17 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1e3e84a302eso31390795ad.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 09:37:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713285433; x=1713890233; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tNkzCRV02na/4jpDqu06Tw7UMHfd7rDdiAUaQoNz8M8=;
- b=DcI/pZwnPpb6VbcZn66xyv4k9O2E2LmNwOAEAL4J4YYXngLfuNtt5VMlu3zpv4jY4D
- RuneheNUE4EVIAK6JZjqdd3a0tjPUowzBLaN+oRIdx9Y3dEdzb/IZWljpZJVExkj9+EK
- Me0fGTlY8gx7V/RpiI+SSlqJfD/0+U9+ZzEiBrqY4zoCJvHNVNB9YPIa+C+AuxPra+CL
- S3WM0/sBgHCtFPCEzbYBcaIHVdcA/pe4nIJV5QZIvLOLyXRwPoBqJODfjiBUAMEolRdi
- JMLY+y+hSLburridYEwvM/Chw6nH+6nXqUcuopBAxCnEHbZarE0za0eLOK58Hle0kQVj
- IT9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713285433; x=1713890233;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tNkzCRV02na/4jpDqu06Tw7UMHfd7rDdiAUaQoNz8M8=;
- b=WKxcCNludjphwe05FrO4p1vOdFLRUcPerfJKQJmsLzD/OzI/Qhf7XECtetkxS84Z8e
- CkhDt0Q6Uxl+2/UriweIVaXqDfh+CPSPkK3ZdcRb9TyBVEj5jdj++Gi6qzjhDEqkBIh8
- dOX3Xli1vD5OkJZ+5GXo/2xC4Om8nwt6Um1ztvptbPquPYOJcUbhvZo0BzPew4BTLsux
- /SGhdGZKQWI4DflQtMpLE0SlnWOPlwZC5dZz0v5Xg93PlDQg89UUevQQsaRcjdA/hVtA
- /7CreoQ+Nr2/LBo9QhMEwZ/UI6mBCVXrB3UnX/jU/O3TQoH/ieAHpQDupe3C/RVL6KZb
- OHKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWSaUSUWLJyRrt8ZUCKS5S/bMfqEu8eDTS9oqjR5NMY6nYQmY7eh2/1ur9DoxkuPk5CWGvLoOBaWsSMIiyjmB2WXiQCBA=
-X-Gm-Message-State: AOJu0YzipwEHauzmGhJxhidHCy6RXoMrQlh7Sp/00v+gmPvtA01jBoix
- YE8iC3zI8OBbRem9/kVqK6yxQmpg/VnavIgXl4PHaEIZy9TD1rba
-X-Google-Smtp-Source: AGHT+IE6czJgFucFxlf98LtQLm/wnevBndiZG+W6ku5aN3q6n//IjyvcR38HWN26CadSJffuQxJZPw==
-X-Received: by 2002:a17:902:650a:b0:1e4:360:d926 with SMTP id
- b10-20020a170902650a00b001e40360d926mr10848241plk.5.1713285433106; 
- Tue, 16 Apr 2024 09:37:13 -0700 (PDT)
-Received: from debian ([2601:641:300:14de:b278:701:b83f:cdc])
- by smtp.gmail.com with ESMTPSA id
- d7-20020a170902654700b001e20afa1038sm10207300pln.8.2024.04.16.09.37.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Apr 2024 09:37:12 -0700 (PDT)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Tue, 16 Apr 2024 09:37:09 -0700
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: fan <nifan.cxl@gmail.com>, Gregory Price <gregory.price@memverge.com>,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net,
- nmtadam.samsung@gmail.com, jim.harris@samsung.com,
- Jorgen.Hansen@wdc.com, wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v6 10/12] hw/mem/cxl_type3: Add dpa range validation for
- accesses to DC regions
-Message-ID: <Zh6pNVIZFMQadmOm@debian>
-References: <20240325190339.696686-1-nifan.cxl@gmail.com>
- <20240325190339.696686-11-nifan.cxl@gmail.com>
- <Zhm7ssKVGdGlR9Iq@memverge.com> <Zh1lk8FWmf0oI7RM@debian>
- <20240416160056.0000325c@Huawei.com>
+ (Exim 4.90_1) (envelope-from <SRS0=29bf=LV=kaod.org=clg@ozlabs.org>)
+ id 1rwlve-0007dM-Vy; Tue, 16 Apr 2024 12:45:08 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=29bf=LV=kaod.org=clg@ozlabs.org>)
+ id 1rwlvZ-0006xY-OL; Tue, 16 Apr 2024 12:45:04 -0400
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VJqdh1jZtz4wx5;
+ Wed, 17 Apr 2024 02:44:56 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VJqdb37cYz4wcC;
+ Wed, 17 Apr 2024 02:44:31 +1000 (AEST)
+Message-ID: <7dd9b7b1-4e89-46bd-8027-0342780bc9f7@kaod.org>
+Date: Tue, 16 Apr 2024 18:44:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240416160056.0000325c@Huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 15/16] test/avocado/machine_aspeed.py: Add AST2700 test
+ case
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
+ <20240416091904.935283-16-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240416091904.935283-16-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=29bf=LV=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,90 +75,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 16, 2024 at 04:00:56PM +0100, Jonathan Cameron wrote:
-> On Mon, 15 Apr 2024 10:37:00 -0700
-> fan <nifan.cxl@gmail.com> wrote:
+On 4/16/24 11:19, Jamin Lin wrote:
+> Add a test case to test Aspeed OpenBMC SDK v09.01 on AST2700 board.
 > 
-> > On Fri, Apr 12, 2024 at 06:54:42PM -0400, Gregory Price wrote:
-> > > On Mon, Mar 25, 2024 at 12:02:28PM -0700, nifan.cxl@gmail.com wrote:  
-> > > > From: Fan Ni <fan.ni@samsung.com>
-> > > > 
-> > > > All dpa ranges in the DC regions are invalid to access until an extent
-> > > > covering the range has been added. Add a bitmap for each region to
-> > > > record whether a DC block in the region has been backed by DC extent.
-> > > > For the bitmap, a bit in the bitmap represents a DC block. When a DC
-> > > > extent is added, all the bits of the blocks in the extent will be set,
-> > > > which will be cleared when the extent is released.
-> > > > 
-> > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > Signed-off-by: Fan Ni <fan.ni@samsung.com>
-> > > > ---
-> > > >  hw/cxl/cxl-mailbox-utils.c  |  6 +++
-> > > >  hw/mem/cxl_type3.c          | 76 +++++++++++++++++++++++++++++++++++++
-> > > >  include/hw/cxl/cxl_device.h |  7 ++++
-> > > >  3 files changed, 89 insertions(+)
-> > > > 
-> > > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > > > index 7094e007b9..a0d2239176 100644
-> > > > --- a/hw/cxl/cxl-mailbox-utils.c
-> > > > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > > > @@ -1620,6 +1620,7 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
-> > > >  
-> > > >          cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
-> > > >          ct3d->dc.total_extent_count += 1;
-> > > > +        ct3_set_region_block_backed(ct3d, dpa, len);
-> > > >  
-> > > >          ent = QTAILQ_FIRST(&ct3d->dc.extents_pending);
-> > > >          cxl_remove_extent_from_extent_list(&ct3d->dc.extents_pending, ent);  
-> > > 
-> > > while looking at the MHD code, we had decided to "reserve" the blocks in
-> > > the bitmap in the call to `qmp_cxl_process_dynamic_capacity` in order to
-> > > prevent a potential double-allocation (basically we need to sanity check
-> > > that two hosts aren't reserving the region PRIOR to the host being
-> > > notified).
-> > > 
-> > > I did not see any checks in the `qmp_cxl_process_dynamic_capacity` path
-> > > to prevent pending extents from being double-allocated.  Is this an
-> > > explicit choice?
-> > > 
-> > > I can see, for example, why you may want to allow the following in the
-> > > pending list: [Add X, Remove X, Add X].  I just want to know if this is
-> > > intentional or not. If not, you may consider adding a pending check
-> > > during the sanity check phase of `qmp_cxl_process_dynamic_capacity`
-> > > 
-> > > ~Gregory  
-> > 
-> > First, for remove request, pending list is not involved. See cxl r3.1,
-> > 9.13.3.3. Pending basically means "pending to add". 
-> > So for the above example, in the pending list, you can see [Add x, add x] if the
-> > event is not processed in time.
-> > Second, from the spec, I cannot find any text saying we cannot issue
-> > another add extent X if it is still pending.
+> It loads u-boot-nodtb.bin, u-boot.dtb, tfa and optee-os
+> images to dram first which base address is 0x400000000.
+> Then, boot and launch 4 cpu cores.
 > 
-> I think there is text saying that the capacity is not released for reuse
-> by the device until it receives a response from the host.   Whilst
-> it's not explicit on offers to the same host, I'm not sure that matters.
-> So I don't think it is suppose to queue multiple extents...
+> ```
+> qemu-system-aarch64 -machine ast2700-evb
+>      -device loader,force-raw=on,addr=0x400000000,file=workdir/u-boot-nodtb.bin \
+>      -device loader,force-raw=on,addr=uboot_dtb_load_addr,file=u-boot.dtb\
+>      -device loader,force-raw=on,addr=0x430000000,file=workdir/bl31.bin\
+>      -device loader,force-raw=on,addr=0x430080000,file=workdir/optee/tee-raw.bin\
+>      -device loader,cpu-num=0,addr=0x430000000 \
+>      -device loader,cpu-num=1,addr=0x430000000 \
+>      -device loader,cpu-num=2,addr=0x430000000 \
+>      -device loader,cpu-num=3,addr=0x430000000 \
+>      -smp 4 \
+>      -drive file=workdir/image-bmc,format=raw,if=mtd
+> ```
+> 
+> A test image is downloaded from the ASPEED Forked OpenBMC GitHub release repository :
+> https://github.com/AspeedTech-BMC/openbmc/releases/
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Are you suggesting we add a check here to reject the second add when the
-first one is still pending?
 
-Currently, we do not allow releasing an extent when it is still pending,
-which aligns with the case you mentioned above "not release for reuse", I
-think.
-Can the second add mean a retry instead of reuse? 
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Fan
+Thanks,
 
+C.
+
+
+> ---
+>   tests/avocado/machine_aspeed.py | 62 +++++++++++++++++++++++++++++++++
+>   1 file changed, 62 insertions(+)
 > 
-> 
-> > From the kernel side, if the first one is accepted, the second one will
-> > get rejected, and there is no issue there.
-> > If the first is reject for some reason, the second one can get
-> > accepted or rejected and do not need to worry about the first one.
-> > 
-> > 
-> > Fan
-> > 
-> 
+> diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
+> index cec0181424..3a20644fb2 100644
+> --- a/tests/avocado/machine_aspeed.py
+> +++ b/tests/avocado/machine_aspeed.py
+> @@ -311,6 +311,17 @@ def do_test_arm_aspeed_sdk_start(self, image):
+>               self, 'boot', '## Loading kernel from FIT Image')
+>           self.wait_for_console_pattern('Starting kernel ...')
+>   
+> +    def do_test_aarch64_aspeed_sdk_start(self, image):
+> +        self.vm.set_console()
+> +        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw')
+> +
+> +        self.vm.launch()
+> +
+> +        self.wait_for_console_pattern('U-Boot 2023.10')
+> +        self.wait_for_console_pattern('## Loading kernel from FIT Image')
+> +        self.wait_for_console_pattern('Starting kernel ...')
+> +        self.wait_for_console_pattern("systemd[1]: Hostname set to")
+> +
+>       @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+>   
+>       def test_arm_ast2500_evb_sdk(self):
+> @@ -375,3 +386,54 @@ def test_arm_ast2600_evb_sdk(self):
+>                'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32');
+>           year = time.strftime("%Y")
+>           self.ssh_command_output_contains('/sbin/hwclock -f /dev/rtc1', year);
+> +
+> +    def test_aarch64_ast2700_evb_sdk_v09_01(self):
+> +        """
+> +        :avocado: tags=arch:aarch64
+> +        :avocado: tags=machine:ast2700-evb
+> +        """
+> +
+> +        image_url = ('https://github.com/AspeedTech-BMC/openbmc/releases/'
+> +                     'download/v09.01/ast2700-default-obmc.tar.gz')
+> +        image_hash = 'b1cc0fd73c7650d34c9c8459a243f52a91e9e27144b8608b2645ab19461d1e07'
+> +        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+> +                                      algorithm='sha256')
+> +        archive.extract(image_path, self.workdir)
+> +
+> +        num_cpu = 4
+> +        image_dir = self.workdir + '/ast2700-default/'
+> +        uboot_size = os.path.getsize(image_dir + 'u-boot-nodtb.bin')
+> +        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
+> +
+> +        load_images_list = [
+> +            {
+> +                'addr': '0x400000000',
+> +                'file': image_dir + 'u-boot-nodtb.bin'
+> +            },
+> +            {
+> +                'addr': str(uboot_dtb_load_addr),
+> +                'file': image_dir + 'u-boot.dtb'
+> +            },
+> +            {
+> +                'addr': '0x430000000',
+> +                'file': image_dir + 'bl31.bin'
+> +            },
+> +            {
+> +                'addr': '0x430080000',
+> +                'file': image_dir + 'optee/tee-raw.bin'
+> +            }
+> +        ]
+> +
+> +        for load_image in load_images_list:
+> +            addr = load_image['addr']
+> +            file = load_image['file']
+> +            self.vm.add_args('-device',
+> +                             f'loader,force-raw=on,addr={addr},file={file}')
+> +
+> +        for i in range(num_cpu):
+> +            self.vm.add_args('-device',
+> +                             f'loader,addr=0x430000000,cpu-num={i}')
+> +
+> +        self.vm.add_args('-smp', str(num_cpu))
+> +        self.do_test_aarch64_aspeed_sdk_start(image_dir + 'image-bmc')
+> +
+
 
