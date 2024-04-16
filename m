@@ -4,117 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD701C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AB33C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwetC-0000gh-Md; Tue, 16 Apr 2024 05:14:07 -0400
+	id 1rwewB-0001gJ-LA; Tue, 16 Apr 2024 05:17:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1rwet9-0000gE-Px
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:14:03 -0400
-Received: from mail-mw2nam10on2059.outbound.protection.outlook.com
- ([40.107.94.59] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rwew1-0001g4-BB
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:17:02 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1rwet7-0006dh-Sz
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:14:03 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IgiZWbOyQESB/jtX7Ml7MErPxN99SfONUvUWCzcv7OSGJPPo2/BGuBa/BqH0w139SEAyberuclE0F+/Nb0Og3OL8SAmhwrznSVMR8a32oHs4Lxqtcahz/8dU47iaQ0SKwImbH/d/hRcZmke3X4/4empjJhANknFBfrkbkt3z7lKz/0dhfNhIi5h50TC4RSBXPBXHtK1XuWEhqho8AOQi2gfNF3XSkSApXh3v9HQoGnlD+y39/Hg92quCy8daxq+h74yr67rWgr+uRhm5H8pCYRoWelfTtDR++yC7jKf/dybaxNjmj8I2QK2NF3UMZaF9/KsIqMMl3Nsd/kCuf0P5lA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fukoz7ybWeI2GJfy/mfbXFbs/r8SS3uuv7XbeuzrHUo=;
- b=Y/IE+TIR8ZJ8rZKkA6X2kh2ZlBOH9TH8ZcAvFAg1g7tep7lpawftCsBVY6Y8bTrOLeO5kt6PfytVmcEhInTWt0sHiCYQxblJHsJyrCc/hOyGthrkFXsMdWAFmYT0r/kCgMw2Cup8+MXp0XFbw9lcG1R+cHt8rzQr1xHIfYAwLqu9WtWdToRtkWNDFEzawBrY3YGhdDayLBBZpUhC0BVPs2MpFAE9MvkFC2lfwcCHmr1sX97ZWeIXpdhDKlsmXXvkSBpmk6BT3J0P+MAdy4FDlu8TP5WUScFaL1I7XsIk12bmjOr4/E57rv5MXNfbMNly9oH5B60LRUMDPNkbdtTtlw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fukoz7ybWeI2GJfy/mfbXFbs/r8SS3uuv7XbeuzrHUo=;
- b=Asq0cpejEe6/sBwU8X0DVELU+LFjBs2eYyRx5Vztmybj/OSTD93sCgUS08dBKtZda553LCKlA5qR2afpo7kXzgrm+b8heWajuYQ9SU+PndnMGpkxGQJu7KIkPi1nuD8OsBijeMSfgxLHO3cZkfZXicU2ZkesS90mMQT4b3SXkvw=
-Received: from CH0PR03CA0431.namprd03.prod.outlook.com (2603:10b6:610:10e::22)
- by DS0PR12MB8270.namprd12.prod.outlook.com (2603:10b6:8:fe::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Tue, 16 Apr
- 2024 09:08:56 +0000
-Received: from CH1PEPF0000AD78.namprd04.prod.outlook.com
- (2603:10b6:610:10e:cafe::62) by CH0PR03CA0431.outlook.office365.com
- (2603:10b6:610:10e::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.33 via Frontend
- Transport; Tue, 16 Apr 2024 09:08:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CH1PEPF0000AD78.mail.protection.outlook.com (10.167.244.56) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7452.22 via Frontend Transport; Tue, 16 Apr 2024 09:08:56 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 16 Apr
- 2024 04:08:56 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 16 Apr
- 2024 04:08:56 -0500
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Tue, 16 Apr 2024 04:08:55 -0500
-Date: Tue, 16 Apr 2024 11:08:53 +0200
-From: Luc Michel <luc.michel@amd.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 1/6] hw/misc: Don't special case RESET_TYPE_COLD in
- npcm7xx_clk, gcr
-Message-ID: <Zh5AJezjcFwa30Vz@XFR-LUMICHEL-L2.amd.com>
-References: <20240412160809.1260625-1-peter.maydell@linaro.org>
- <20240412160809.1260625-2-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rwevy-0007Dx-7C
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 05:17:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713259019; x=1744795019;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=rGESZD5to/uHjCTIQFvFwD5Mht8FA4fFRUkemtgPMhw=;
+ b=j9WG8QyqLlerxVUWLRU7nLfoVNw0ZKal3cCQgstbuU2RzzXEY23Tq8mH
+ 1uS1lVPnsR/H18dWFGR1bH8sX5tewHST3i32kHGRE5nIpuChloXRtnKmC
+ BhGrP+lZQU1CG251oENhli4pl1LRvpU20y5DtexX6qwfQu0oiajVUkJPw
+ xD+ytGmNIwGX8/KrCMCNh24+W0VlcJo1LLIy/IlUFpM4GgeMTV+TOtOdS
+ UrtNXrS4JEDlajDSMBt5OnarU5rYg6wPDcmg1L/D/jDXSJ/PwOk7wiQuv
+ YyqyPZ08pOEE2cKGdRtVmONGhdcNuZ56PaTC1+AO+hONCVfK3YnoTYWcu Q==;
+X-CSE-ConnectionGUID: uAo/KQl0ToCQ0K0as9CAww==
+X-CSE-MsgGUID: nj0fQ6S1TtmfP74XyQwtxA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11045"; a="26140218"
+X-IronPort-AV: E=Sophos;i="6.07,205,1708416000"; d="scan'208";a="26140218"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Apr 2024 02:16:55 -0700
+X-CSE-ConnectionGUID: gl9h4XypTCG3fBW0kHRlzA==
+X-CSE-MsgGUID: V5Wwy0oJSpO/7yJgh7/T4Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,205,1708416000"; d="scan'208";a="22272463"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa009.fm.intel.com with ESMTP; 16 Apr 2024 02:16:50 -0700
+Date: Tue, 16 Apr 2024 17:30:54 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v10 00/21] i386: Introduce smp.modules and clean up cache
+ topology
+Message-ID: <Zh5FTpiYdkCuFZRZ@intel.com>
+References: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240412160809.1260625-2-peter.maydell@linaro.org>
-Received-SPF: None (SATLEXMB05.amd.com: luc.michel@amd.com does not designate
- permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD78:EE_|DS0PR12MB8270:EE_
-X-MS-Office365-Filtering-Correlation-Id: 86e105a5-dfbe-49fd-41ec-08dc5df4d8aa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ruUNlsqw71UCONBnTUbv65t2rdKvINcNgABkO1J5+qEPwcVfpOOC8OgTOD0dBiYwqPyzkC2+0C4SO6ltd1w1z8eDJKbjpIL4FQXONtGMyM5E2KLxVBKbV8fbk0vigHJOr6lHpLd0dMuZ53ZhNP/3QzosgN+BaZ2dr4IN1jn7dSIrl5jjcnY6zWCXdPajAePR6LVHThRgGkwtoPaAMP7Lb5OH4y5RK1NCuhRGqdlOrylYVWr1NW44OgJ+nHU1+f+4uAln4Gf3TpNGVp7Y8B8EK50uMZpWrWN+aHmhMBQ661/gGlTU16NzdmzOtACsx2KZ/zEIDnsCYLENO/+m3memR9rjmiP3v7pkXaoH41SaZW3HUvHIckmVtXnMf4LQfeUsseBj+fk/mOKGOPGGZIhjmaw85bKKypUT7dFtfqAeTK7tVZDOeg/6uf1j5kXZjexWGqzRv9jCsX8h8gq0CjTwaBbnhVQO7TXyF8skCISyqEWDWMFx1JJYDS6prHcH1NZBJKU95XU2mK6psG9NnXyw5BvsdWP7MShEVClQaB7B7qMgHBDxhkKt0RhYWB4fQTco/G6CiadTe8cn3J40vE1sAPXVvbED6hHI1R52aDi5wtOpJXvExFROAjY12Fd3ZYxQmC/YNwKoJ2YT+qVj2PrrNgyVhA3hKyT8o4hwklbIW4E1wxkWjK8wBZs4GwkJCtUuVnbOFs87MIfYw9pmfW31P9qaw3J5tyS02bAuY6BWgMow0CR61PwwSriUAw3wVJ9y
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(82310400014)(376005)(36860700004)(1800799015); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 09:08:56.7582 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86e105a5-dfbe-49fd-41ec-08dc5df4d8aa
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD78.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8270
-Received-SPF: permerror client-ip=40.107.94.59;
- envelope-from=Luc.Michel@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
+In-Reply-To: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
+Received-SPF: none client-ip=198.175.65.10;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
 X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,86 +94,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17:08 Fri 12 Apr     , Peter Maydell wrote:
-> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
-> 
-> 
-> The npcm7xx_clk and npcm7xx_gcr device reset methods look at
-> the ResetType argument and only handle RESET_TYPE_COLD,
-> producing a warning if another reset type is passed. This
-> is different from how every other three-phase-reset method
-> we have works, and makes it difficult to add new reset types.
-> 
-> A better pattern is "assume that any reset type you don't know
-> about should be handled like RESET_TYPE_COLD"; switch these
-> devices to do that. Then adding a new reset type will only
-> need to touch those devices where its behaviour really needs
-> to be different from the standard cold reset.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Hi Paolo,
 
-Reviewed-by: Luc Michel <luc.michel@amd.com>
+Just a friendly ping. Hope this series could get your review!
 
+Thanks,
+Zhao
+
+On Thu, Mar 21, 2024 at 10:40:27PM +0800, Zhao Liu wrote:
+> Date: Thu, 21 Mar 2024 22:40:27 +0800
+> From: Zhao Liu <zhao1.liu@linux.intel.com>
+> Subject: [PATCH v10 00/21] i386: Introduce smp.modules and clean up cache
+>  topology
+> X-Mailer: git-send-email 2.34.1
+> 
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> Hi,
+> 
+> This is the our v10 patch series, rebased on the master branch at the
+> commit 54294b23e16d ("Merge tag 'ui-pull-request' of
+> https://gitlab.com/marcandre.lureau/qemu into staging").
+> 
+> Compared with v9 [1], v10 mainly contains minor cleanups, without
+> significant code changes.
+> 
+> Intel's hybrid Client platform and E core server platform introduce
+> module level and share L2 cache on the module level, in order to
+> configure the CPU/cache topology for the Guest to be consistent with
+> Host's, this series did the following work:
+>  * Add now "module" CPU topology level for x86 CPU.
+>  * Refacter cache topology encoding for x86 CPU (This is base to
+>    support the L2 per module).
+> 
+> So, this series is also necessary to support subsequent user
+> configurations of cache topology (via -smp, [2]) and Intel heterogeneous
+> CPU topology ([3] and [4]).
+> 
+> 
+> Background
+> ==========
+> 
+> At present, x86 defaults L2 cache is shared in one core, but this is
+> not enough. There're some platforms that multiple cores share the
+> same L2 cache, e.g., Alder Lake-P shares L2 cache for one module of
+> Atom cores, that is, every four Atom cores shares one L2 cache. On
+> E core server platform, there's the similar L2 per module topology.
+> Therefore, we need the new CPU topology level.
+> 
+> Another reason is that Intel client hybrid architectures organize P
+> cores and E cores via module, so a new CPU topology level is necessary
+> to support hybrid CPU topology!
+> 
+> 
+> Why We Introduce Module Instead of Reusing Cluster
+> --------------------------------------------------
+> 
+> For the discussion in v7 about whether we should reuse current
+> smp.clusters for x86 module, the core point is what's the essential
+> differences between x86 module and general cluster.
+> 
+> Since, cluster (for ARM/riscv) lacks a comprehensive and rigorous
+> hardware definition, and judging from the description of smp.clusters
+> [5] when it was introduced by QEMU, x86 module is very similar to
+> general smp.clusters: they are all a layer above existing core level
+> to organize the physical cores and share L2 cache.
+> 
+> But there are following reasons that drive us to introduce the new
+> smp.modules:
+> 
+>   * As the CPU topology abstraction in device tree [6], cluster supports
+>     nesting (though currently QEMU hasn't support that). In contrast,
+>     (x86) module does not support nesting.
+> 
+>   * Due to nesting, there is great flexibility in sharing resources
+>     on cluster, rather than narrowing cluster down to sharing L2 (and
+>     L3 tags) as the lowest topology level that contains cores.
+> 
+>   * Flexible nesting of cluster allows it to correspond to any level
+>     between the x86 package and core.
+> 
+>   * In Linux kernel, x86's cluster only represents the L2 cache domain
+>     but QEMU's smp.clusters is the CPU topology level. Linux kernel will
+>     also expose module level topology information in sysfs for x86. To
+>     avoid cluster ambiguity and keep a consistent CPU topology naming
+>     style with the Linux kernel, we introduce module level for x86.
+> 
+> Based on the above considerations, and in order to eliminate the naming
+> confusion caused by the mapping between general cluster and x86 module,
+> we now formally introduce smp.modules as the new topology level.
+> 
+> 
+> Where to Place Module in Existing Topology Levels
+> -------------------------------------------------
+> 
+> The module is, in existing hardware practice, the lowest layer that
+> contains the core, while the cluster is able to have a higher topological
+> scope than the module due to its nesting.
+> 
+> Therefore, we place the module between the cluster and the core:
+> 
+>     drawer/book/socket/die/cluster/module/core/thread
+> 
+> 
+> Patch Series Overview
+> =====================
+> 
+> Introduction of Module Level in -smp
+> ------------------------------------
+> 
+> First, a new module level is introduced in the -smp related code to
+> support the module topology in subsequent x86 parts.
+> 
+> Users can specify the number of modules (in one die) for a PC machine
+> with "-smp modules=*".
+> 
+> 
+> Why not Share L2 Cache in Module Directly
+> -----------------------------------------
+> 
+> Though one of module's goals is to implement L2 cache per module,
+> directly using module to define x86's L2 cache topology will cause the
+> compatibility problem:
+> 
+> Currently, x86 defaults that the L2 cache is shared in one core, which
+> actually implies a default setting "cores per L2 cache is 1" and
+> therefore implicitly defaults to having as many L2 caches as cores.
+> 
+> For example (i386 PC machine):
+> -smp 16,sockets=2,dies=2,cores=2,threads=2,maxcpus=16 (*)
+> 
+> Considering the topology of the L2 cache, this (*) implicitly means "1
+> core per L2 cache" and "2 L2 caches per die".
+> 
+> If we use module to configure L2 cache topology with the new default
+> setting "modules per L2 cache is 1", the above semantics will change
+> to "2 cores per module" and "1 module per L2 cache", that is, "2
+> cores per L2 cache".
+> 
+> So the same command (*) will cause changes in the L2 cache topology,
+> further affecting the performance of the virtual machine.
+> 
+> Therefore, x86 should only treat module as a cpu topology level and
+> avoid using it to change L2 cache by default for compatibility.
+> 
+> Thereby, we need another way to allow user to configure cache topology,
+> this is anther RFC [2].
+> 
+> 
+> Module Level in CPUID
+> ---------------------
+> 
+> Linux kernel (from v6.4, with commit edc0a2b595765 ("x86/topology: Fix
+> erroneous smp_num_siblings on Intel Hybrid platforms") is able to
+> handle platforms with Module level enumerated via CPUID.1F.
+> 
+> Expose the module level in CPUID[0x1F] (for Intel CPUs) if the machine
+> has more than 1 modules since v3.
+> 
+> 
+> New Cache Topology Info in CPUCacheInfo
+> ---------------------------------------
+> 
+> (This is in preparation for users being able to configure cache topology
+> from the command line later on.)
+> 
+> Currently, by default, the cache topology is encoded as:
+> 1. i/d cache is shared in one core.
+> 2. L2 cache is shared in one core.
+> 3. L3 cache is shared in one die.
+> 
+> This default general setting has caused a misunderstanding, that is, the
+> cache topology is completely equated with a specific CPU topology, such
+> as the connection between L2 cache and core level, and the connection
+> between L3 cache and die level.
+> 
+> In fact, the settings of these topologies depend on the specific
+> platform and are not static. For example, on Alder Lake-P, every
+> four Atom cores share the same L2 cache [3].
+> 
+> Thus, in this patch set, we explicitly define the corresponding cache
+> topology for different cache models and this has two benefits:
+> 1. Easy to expand to new cache models with different topology in the
+>    future.
+> 2. It can easily support custom cache topology by some command.
+> 
+> 
+> Patch Description
+> =================
+> 
+> Patch 01-04: Add module support in -smp.
+> 
+> Patch    05: Fix Intel L1 cache topology.
+> 
+> Patch 06-08: Clean up cache topology related CPUID encoding and QEMU
+>              topology variables.
+> 
+> Patch 09-11: Refactor CPUID[0x1F] (CPU topology) encoding to prepare to
+>              introduce module level.
+> 
+> Patch 12-18: Add the module as the new CPU topology level in x86.
+> 
+> Patch 19-21: Refactor cache topology encoding for Intel and AMD.
+> 
+> 
+> Reference
+> =========
+> 
+> [1]: https://lore.kernel.org/qemu-devel/20240227103231.1556302-1-zhao1.liu@linux.intel.com/
+> [2]: https://lore.kernel.org/qemu-devel/20240220092504.726064-1-zhao1.liu@linux.intel.com/
+> [3]: https://lore.kernel.org/qemu-devel/20230213095035.158240-1-zhao1.liu@linux.intel.com/
+> [4]: https://lore.kernel.org/qemu-devel/20231130144203.2307629-1-zhao1.liu@linux.intel.com/
+> 
+> 
+> Thanks and Best Regards,
+> Zhao
 > ---
->  hw/misc/npcm7xx_clk.c | 13 +++----------
->  hw/misc/npcm7xx_gcr.c | 12 ++++--------
->  2 files changed, 7 insertions(+), 18 deletions(-)
+> Changelog:
 > 
-> diff --git a/hw/misc/npcm7xx_clk.c b/hw/misc/npcm7xx_clk.c
-> index ac1622c38aa..2098c85ee01 100644
-> --- a/hw/misc/npcm7xx_clk.c
-> +++ b/hw/misc/npcm7xx_clk.c
-> @@ -873,20 +873,13 @@ static void npcm7xx_clk_enter_reset(Object *obj, ResetType type)
+> Changes since v9:
+>  * Collected a/b, t/b and r/b tags.
+>  * Fixed typos.
+>  * Minor cleanup of code.
+>  * Added more comments and polished commit message.
 > 
->      QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
+> Changes since v8:
+>  * Added the reason of why a new module level is needed in commit
+>    message. (Markus).
+>  * Added the description about how Linux kernel supports x86 module
+>    level in commit message. (Daniel)
+>  * Added module description in qemu_smp_opts.
+>  * Added missing "modules" parameter of -smp example in documentation.
+>  * Added Philippe's reviewed-by tag.
 > 
-> -    switch (type) {
-> -    case RESET_TYPE_COLD:
-> -        memcpy(s->regs, cold_reset_values, sizeof(cold_reset_values));
-> -        s->ref_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-> -        npcm7xx_clk_update_all_clocks(s);
-> -        return;
-> -    }
-> -
-> +    memcpy(s->regs, cold_reset_values, sizeof(cold_reset_values));
-> +    s->ref_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-> +    npcm7xx_clk_update_all_clocks(s);
->      /*
->       * A small number of registers need to be reset on a core domain reset,
->       * but no such reset type exists yet.
->       */
-> -    qemu_log_mask(LOG_UNIMP, "%s: reset type %d not implemented.",
-> -                  __func__, type);
->  }
+> Changes since v7 (main changes):
+>  * Introduced smp.modules as a new CPU topology level. (Xiaoyao)
+>  * Fixed calculations of cache_info_passthrough case in the
+>    patch "i386/cpu: Use APIC ID info to encode cache topo in
+>    CPUID[4]". (Xiaoyao)
+>  * Moved the patch "i386/cpu: Use APIC ID info get NumSharingCache
+>    for CPUID[0x8000001D].EAX[bits 25:14]" after CPUID[4]'s similar
+>    change ("i386/cpu: Use APIC ID offset to encode cache topo in
+>    CPUID[4]"). (Xiaoyao)
+>  * Introduced a bitmap in CPUX86State to cache available CPU topology
+>    levels.
+>  * Refactored the encode_topo_cpuid1f() to use traversal to search the
+>    encoded level and avoid using static variables.
+>  * Mapped x86 module to smp module instead of cluster.
+>  * Dropped Michael/Babu's ACKed/Tested tags for most patches since the
+>    code change.
 > 
->  static void npcm7xx_clk_init_clock_hierarchy(NPCM7xxCLKState *s)
-> diff --git a/hw/misc/npcm7xx_gcr.c b/hw/misc/npcm7xx_gcr.c
-> index 9252f9d1488..c4c4e246d7e 100644
-> --- a/hw/misc/npcm7xx_gcr.c
-> +++ b/hw/misc/npcm7xx_gcr.c
-> @@ -159,14 +159,10 @@ static void npcm7xx_gcr_enter_reset(Object *obj, ResetType type)
+> Changes since v6:
+>  * Updated the comment when check cluster-id. Since there's no
+>    v8.2, the cluster-id support should at least start from v9.0.
+>  * Rebased on commit d328fef93ae7 ("Merge tag 'pull-20231230' of
+>    https://gitlab.com/rth7680/qemu into staging").
 > 
->      QEMU_BUILD_BUG_ON(sizeof(s->regs) != sizeof(cold_reset_values));
+> Changes since v5:
+>  * The first four patches of v5 [1] have been merged, v6 contains
+>    the remaining patches.
+>  * Reabsed on the latest master.
+>  * Updated the comment when check cluster-id. Since current QEMU is
+>    v8.2, the cluster-id support should at least start from v8.3.
 > 
-> -    switch (type) {
-> -    case RESET_TYPE_COLD:
-> -        memcpy(s->regs, cold_reset_values, sizeof(s->regs));
-> -        s->regs[NPCM7XX_GCR_PWRON] = s->reset_pwron;
-> -        s->regs[NPCM7XX_GCR_MDLR] = s->reset_mdlr;
-> -        s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
-> -        break;
-> -    }
-> +    memcpy(s->regs, cold_reset_values, sizeof(s->regs));
-> +    s->regs[NPCM7XX_GCR_PWRON] = s->reset_pwron;
-> +    s->regs[NPCM7XX_GCR_MDLR] = s->reset_mdlr;
-> +    s->regs[NPCM7XX_GCR_INTCR3] = s->reset_intcr3;
->  }
+> Changes since v4:
+>  * Dropped the "x-l2-cache-topo" option. (Michael)
+>  * Added A/R/T tags.
 > 
->  static void npcm7xx_gcr_realize(DeviceState *dev, Error **errp)
-> --
+> Changes since v3 (main changes):
+>  * Exposed module level in CPUID[0x1F].
+>  * Fixed compile warnings. (Babu)
+>  * Fixed cache topology uninitialization bugs for some AMD CPUs. (Babu)
+> 
+> Changes since v2:
+>  * Added "Tested-by", "Reviewed-by" and "ACKed-by" tags.
+>  * Used newly added wrapped helper to get cores per socket in
+>    qemu_init_vcpu().
+> 
+> Changes since v1:
+>  * Reordered patches. (Yanan)
+>  * Deprecated the patch to fix comment of machine_parse_smp_config().
+>    (Yanan)
+>  * Renamed test-x86-cpuid.c to test-x86-topo.c. (Yanan)
+>  * Split the intel's l1 cache topology fix into a new separate patch.
+>    (Yanan)
+>  * Combined module_id and APIC ID for module level support into one
+>    patch. (Yanan)
+>  * Made cache_into_passthrough case of cpuid 0x04 leaf in
+>  * cpu_x86_cpuid() used max_processor_ids_for_cache() and
+>    max_core_ids_in_package() to encode CPUID[4]. (Yanan)
+>  * Added the prefix "CPU_TOPO_LEVEL_*" for CPU topology level names.
+>    (Yanan)
+> ---
+> Zhao Liu (20):
+>   hw/core/machine: Introduce the module as a CPU topology level
+>   hw/core/machine: Support modules in -smp
+>   hw/core: Introduce module-id as the topology subindex
+>   hw/core: Support module-id in numa configuration
+>   i386/cpu: Fix i/d-cache topology to core level for Intel CPU
+>   i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]
+>   i386/cpu: Use APIC ID info get NumSharingCache for
+>     CPUID[0x8000001D].EAX[bits 25:14]
+>   i386/cpu: Consolidate the use of topo_info in cpu_x86_cpuid()
+>   i386/cpu: Introduce bitmap to cache available CPU topology levels
+>   i386: Split topology types of CPUID[0x1F] from the definitions of
+>     CPUID[0xB]
+>   i386/cpu: Decouple CPUID[0x1F] subleaf with specific topology level
+>   i386: Introduce module level cpu topology to CPUX86State
+>   i386: Support modules_per_die in X86CPUTopoInfo
+>   i386: Expose module level in CPUID[0x1F]
+>   i386: Support module_id in X86CPUTopoIDs
+>   i386/cpu: Introduce module-id to X86CPU
+>   hw/i386/pc: Support smp.modules for x86 PC machine
+>   i386: Add cache topology info in CPUCacheInfo
+>   i386/cpu: Use CPUCacheInfo.share_level to encode CPUID[4]
+>   i386/cpu: Use CPUCacheInfo.share_level to encode
+>     CPUID[0x8000001D].EAX[bits 25:14]
+> 
+> Zhuocheng Ding (1):
+>   tests: Add test case of APIC ID for module level parsing
+> 
+>  hw/core/machine-hmp-cmds.c |   4 +
+>  hw/core/machine-smp.c      |  41 ++++-
+>  hw/core/machine.c          |  18 +++
+>  hw/i386/pc.c               |   1 +
+>  hw/i386/x86.c              |  67 +++++++--
+>  include/hw/boards.h        |   4 +
+>  include/hw/i386/topology.h |  60 +++++++-
+>  qapi/machine.json          |   7 +
+>  qemu-options.hx            |  18 ++-
+>  system/vl.c                |   3 +
+>  target/i386/cpu.c          | 301 +++++++++++++++++++++++++++++--------
+>  target/i386/cpu.h          |  29 +++-
+>  target/i386/kvm/kvm.c      |   3 +-
+>  tests/unit/test-x86-topo.c |  56 ++++---
+>  14 files changed, 490 insertions(+), 122 deletions(-)
+> 
+> -- 
 > 2.34.1
 > 
-> 
-
--- 
 
