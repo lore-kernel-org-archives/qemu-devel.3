@@ -4,56 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9465EC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 983B7C04FF6
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwjaA-0004my-K2; Tue, 16 Apr 2024 10:14:47 -0400
+	id 1rwjZg-0004iX-7D; Tue, 16 Apr 2024 10:14:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rwja5-0004mW-9Q
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:14:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwjZc-0004i9-6z
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:14:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rwja2-0005c7-Se
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:14:40 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rwjZa-0005Xp-Cx
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:14:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713276876;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=7YpE1eEq60PPyPPGLOLzheBER822cSy7TAfjKqgTugw=;
- b=bM0c/ZXLOnz0HZBEI9Nve1fyG88IfHTdfHbTwKeudmdI4ySmJAh4Ug38tBgbWcQmZjum8J
- 2rZgrslqEIJm7Mc4uHOJagkUIwY1p/xe5PRZz1EsKNTsphaCrIzJFAkaoxTGISjjll5yUx
- O3BHTi9/DdC+4d2zwQaCN2D2oCv1HXg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-660-dBMF9b63OTCv3rC4_5XKSA-1; Tue, 16 Apr 2024 10:14:34 -0400
-X-MC-Unique: dBMF9b63OTCv3rC4_5XKSA-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
+ s=mimecast20190719; t=1713276848;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=vTfY+ty4nwNxKXecpSglhqjGE9Md6CDnFq+SzqH+5kI=;
+ b=Pfjw2qmUU1xfojjHIQ3x4rtQzSnGJan7JAo34m92EgRRxEIQpbPvs0N9GHVuXj1a4P+FY6
+ VPPL5ixJmqANyyeX0CBzlsEj8tXd0QErDSl8wMUfnG5xJXHfCMKHRsHsqL505sk/DdkPKk
+ A88Gi9xVzU9xeo5H52PysjzjQxXu2Eo=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-s04pzW6WNl-tCxf1xk85AA-1; Tue,
+ 16 Apr 2024 10:14:04 -0400
+X-MC-Unique: s04pzW6WNl-tCxf1xk85AA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 587341802A04
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 14:14:34 +0000 (UTC)
-Received: from t14s.redhat.com (unknown [10.39.194.131])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 91EE0C13FA2;
- Tue, 16 Apr 2024 14:14:32 +0000 (UTC)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Liang Cong <lcong@redhat.com>,
- Mario Casquero <mcasquer@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v1] virtio-mem: improve error message when unplug of device
- fails due to plugged memory
-Date: Tue, 16 Apr 2024 16:14:26 +0200
-Message-ID: <20240416141426.588544-1-david@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 51D41382C46B;
+ Tue, 16 Apr 2024 14:14:04 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.173])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6F0CC40C6CB2;
+ Tue, 16 Apr 2024 14:14:00 +0000 (UTC)
+Date: Tue, 16 Apr 2024 15:13:38 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v2 01/10] meson: Add optional dependency on IGVM library
+Message-ID: <Zh6HkspE45lh8Dvu@redhat.com>
+References: <cover.1712141833.git.roy.hopkins@suse.com>
+ <0da76c3956bf776a9bbb0e18a1813b8dc5e20bf8.1712141833.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0da76c3956bf776a9bbb0e18a1813b8dc5e20bf8.1712141833.git.roy.hopkins@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -38
 X-Spam_score: -3.9
@@ -74,41 +90,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error message is actually expressive, considering QEMU only. But
-when called from Libvirt, talking about "size" can be confusing, because
-in Libvirt "size" translates to the memory backend size in QEMU (maximum
-size) and "current" translates to the QEMU "size" property.
+On Wed, Apr 03, 2024 at 12:11:32PM +0100, Roy Hopkins wrote:
+> The IGVM library allows Independent Guest Virtual Machine files to be
+> parsed and processed. IGVM files are used to configure guest memory
+> layout, initial processor state and other configuration pertaining to
+> secure virtual machines.
 
-Let's simply avoid talking about the "size" property and spell out that
-some device memory is still plugged.
+Looking at the generated header file for the IGVM library, I see
+some quite bad namespace pollution. eg igvm_defs.h has:
 
-Cc: Liang Cong <lcong@redhat.com>
-Cc: Mario Casquero <mcasquer@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- hw/virtio/virtio-mem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+typedef uint64_t u64_le;
+typedef uint32_t u32_le;
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index ffd119ebac..ef64bf1b4a 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -1832,8 +1832,8 @@ static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
-     }
- 
-     if (vmem->size) {
--        error_setg(errp, "virtio-mem device cannot get unplugged while"
--                   " '" VIRTIO_MEM_SIZE_PROP "' != '0'");
-+        error_setg(errp, "virtio-mem device cannot get unplugged while some"
-+                   " of its memory is still plugged");
-         return;
-     }
-     if (vmem->requested_size) {
+#define UINT32_FLAGS_VALUE(x) *((uint32_t*)&(x))
+
+#define MAKE_INVALID_IMPL(x, y) x##y
+#define MAKE_INVALID(x, y) MAKE_INVALID_IMPL(x, y)
+#define INVALID MAKE_INVALID(INVALID_, __COUNTER__)
+
+enum IgvmPageDataType {
+  NORMAL = 0,
+  SECRETS = 1,
+  CPUID_DATA = 2,
+  CPUID_XF = 3,
+};
+
+enum IgvmPlatformType {
+  NATIVE = 0,
+  VSM_ISOLATION = 1,
+  SEV_SNP = 2,
+  TDX = 3,
+};
+
+
+
+enum IgvmVariableHeaderType {
+  INVALID = 0,
+  ...
+}
+
+There are soo many more examples in igvm_defs.h that I won't
+list them all here.
+
+
+These are all way too generic as names to be exposing in library
+header file. We may be lucky right now that these definitions
+don't clash with anything else defined in the compilation namespace
+of the consuming application, but that's a bad bet to make long
+term.
+
+IMHO this really needs fixing before there's any use of this igvm
+library, since fixing it will be a backwards-incompatible change.
+
+Essentially everything in the header needs to have an 'IGVM/Igvm/igvm'
+prefix on it.
+
+With regards,
+Daniel
 -- 
-2.44.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
