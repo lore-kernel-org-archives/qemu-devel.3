@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BCAC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0FCC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwirh-0001CO-R1; Tue, 16 Apr 2024 09:28:49 -0400
+	id 1rwjIE-0007FY-1Q; Tue, 16 Apr 2024 09:56:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgross@suse.com>) id 1rwirf-0001Bz-Ju
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:28:47 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGz-0005WB-U7
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:59 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jgross@suse.com>) id 1rwird-00057j-0i
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:28:47 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-56e78970853so8360020a12.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:28:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGu-0001yt-Uz
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:55 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-34782453ffdso2549102f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:54:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1713274123; x=1713878923; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nrphme9PznmU4fpqJRprcUnPzNkG0J1sP+MgqiS0S5M=;
- b=SWCLk4TErsmseLx4AQGZlIDLcAFbO5kWi/qsTi4RRry/5fRiOVx6lWys/5yoc2o77L
- uR2tE7vh+pEqqlGwgHgp6anuAvv/q5sy0wj6qxl/91ZmB0H8TmWqmzGL7C5YSb/KuWOB
- HekJp2qD6zBjMbZ5RmqViHsUaVi0wVVBt//+6G87iHv+9T3izY3yioLix126Snx8Tx5R
- vkhPLL05kP26z3lDDqZMoKpbKbOGO+G9qiOd4tdjHD/N7mRC6PZnV/3u7MvD6EH3mcm8
- Zf9eLkKDAzmKtFPfCruMoQ+gD3aF9w41eZQ36PQO14GAeQxGJCyIISkOW9d96m4X9yI3
- DJUw==
+ d=linaro.org; s=google; t=1713275690; x=1713880490; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yRuCmU9cf0HsIcr2DFvli4GpYMIaf8UUti4fhCeSnNc=;
+ b=qezkKTuHEPCFC4CgpalAcegtB7SbW5pAcgcGjdZ/q29HLN8mlpNuzNz68vzpkh42it
+ JevJ8JN6lGh8pNt0tZ6QOImLSLXczRCcrZbTInfwMjHDEHYlP3QgB1ZbLiE7OT6L7TXQ
+ 6RGGO7HsTqh/o72u31YETt9Te54oQ6yNVH41hbhX70t4zyB+sBhOAZFLT0kB8C2QM9O7
+ 8UVNxUrsVbVWwRMmWy2VGIiMI5miH7WTp70wIHXLwfbWlvdHWOWEgWwpnvxS+A2xgO6y
+ IjcIrOab0UQ3f1tIDQwKqETYMJAVE/sK2nwzC0A8JDWKHHzxZEz/bNEloWMiYW7iFLWh
+ 8N2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713274123; x=1713878923;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nrphme9PznmU4fpqJRprcUnPzNkG0J1sP+MgqiS0S5M=;
- b=TLv7sb1HoS5Ruc1NHuFsX2HoGs3CR2vbW6vmPL2o7qOLUCkqkMKM+MlC1FqeN3AEtM
- dI1mnljRpnVP5acXfYK8co6pKBU+o0WRcFaOTZH/03qyMhN7rdqK8Yd8ShqbV0EmzCeH
- 5YoKcrNlJxQFxuSMqCJEE1Et8vRsagRk24OelBr1IJaKDsMR9s5zBY259M1a0s9U9tSj
- glBii84xH8lwdxdKQCT+2BPA6yQtFo8Vat69jnSCrt/ZqmIjFWoZwmzbT4WnSA65Wh5B
- IVKTwV4r9BYAHDmQsvZjCHysvOpM0s8XEyKAL4DSEvb5rFyrnBV4H5dKcq/LjRcyQQdQ
- GnjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZ6Adrx2s/WhtK8BT4fGFeNZLLrnFREKJfUP6LcSYaD2TBkMQkJD4FVajEvP7CCEdjMb8Hy0ugtMvr5Gu/U5iNHSM4ztM=
-X-Gm-Message-State: AOJu0YzBthIgRP954PYVoj6l5unCi5DpS0XcjBBNEXWNZFvEloUffdYa
- fCukZJ+o2eFoqAp7PBUrH8zF3Nci+6Lj6+cJ4IBE2U5aAMmCJbv/VB9nag8jAb4=
-X-Google-Smtp-Source: AGHT+IHXSil6iGM6aIAJri9H2bj+eAIeOIagFpUAsZhEZmsYACgqQPvL6cvnxG+8VvSFUGCisyzZYw==
-X-Received: by 2002:a17:906:3b13:b0:a52:71d6:d605 with SMTP id
- g19-20020a1709063b1300b00a5271d6d605mr1597846ejf.23.1713274122736; 
- Tue, 16 Apr 2024 06:28:42 -0700 (PDT)
-Received: from ?IPV6:2003:e5:8705:9b00:4df1:9dd5:4f97:24a?
- (p200300e587059b004df19dd54f97024a.dip0.t-ipconnect.de.
- [2003:e5:8705:9b00:4df1:9dd5:4f97:24a])
+ d=1e100.net; s=20230601; t=1713275690; x=1713880490;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yRuCmU9cf0HsIcr2DFvli4GpYMIaf8UUti4fhCeSnNc=;
+ b=FgCeQuy7W29pyexYJmiim8INZ/lfSKcSJUIww6K4Vunp7v6FdbAQWmA1zd+Om6Wb/9
+ SqJtQIQtQeFEWeFJVw/inUzMYcsFVoMxQH0be9JXsLReFD2cNPX17SrbQcMB6Xv8LFx7
+ 1UPU/86PDj4EkEP15TZiLpIEBL94kTlOHcs5zfBlLcURQkZIkO9zF3xF8Zp45Dn2S6Ht
+ oUGtV439DQxU+u6QdzAXYj/DRz6LhWD/DvUJBt+eyc5gg96ft3S3JLPw44GGJ8E5Dh7s
+ rYIzfMf95wVjK8WoqvsFye2w6VmxgMlpdqL1Lt79gXt20oQtM40aTrkN4jYTVRIoONUs
+ daAg==
+X-Gm-Message-State: AOJu0Yz83tS48nd01J1ctH/Gpf4b3oEDA3cwpIdK+uXPJHTB3Ng2XJc7
+ fxXWH8w6qJLTU8gJLKTA2lUJCt1Z1UF4FDf3eFJFJcWGLNxGQNR6FDjRIuBmSDnj75DK0+5KI/p
+ g
+X-Google-Smtp-Source: AGHT+IGVN22N0EsiFa4ZpRTULhNjAQipMCrQPE+zSjsBFO9e/Y+jdUwVFZKFsPsF4sFDPjIWHOqisg==
+X-Received: by 2002:a05:6000:1d86:b0:347:e6ef:ea97 with SMTP id
+ bk6-20020a0560001d8600b00347e6efea97mr4905335wrb.24.1713275690221; 
+ Tue, 16 Apr 2024 06:54:50 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- x13-20020a170906b08d00b00a51d073da7esm6813015ejy.82.2024.04.16.06.28.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 06:28:42 -0700 (PDT)
-Message-ID: <3abfdbdd-ee70-4b61-a652-c7b2490732d6@suse.com>
-Date: Tue, 16 Apr 2024 15:28:41 +0200
+ jw9-20020a170906e94900b00a52241b823esm6640542ejb.109.2024.04.16.06.54.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 16 Apr 2024 06:54:49 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Thomas Huth <thuth@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v3 18/22] hw/i386/pc: Remove PCMachineClass::rsdp_in_ram
+Date: Tue, 16 Apr 2024 15:52:47 +0200
+Message-ID: <20240416135252.8384-19-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240416135252.8384-1-philmd@linaro.org>
+References: <20240416135252.8384-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [QEMU][PATCH v3 5/7] memory: add MemoryRegion map and unmap
- callbacks
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Xu <peterx@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
- <david@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org, sstabellini@kernel.org,
- vikram.garhwal@amd.com
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-6-vikram.garhwal@amd.com>
- <CAJy5ezpCWkOqthGR1c5Nsfyi_W_yGL_d17Jcp0VckaCEwx9z3Q@mail.gmail.com>
- <Zhbg9alYH1-J9poU@x1n>
- <CAJy5ezpfNGDC4Q=eMcQ-df_xZVYnc-CR5wfn4izW2CT532PbAA@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?B?SsO8cmdlbiBHcm/Dnw==?= <jgross@suse.com>
-In-Reply-To: <CAJy5ezpfNGDC4Q=eMcQ-df_xZVYnc-CR5wfn4izW2CT532PbAA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:20::531;
- envelope-from=jgross@suse.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,118 +101,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.04.24 13:32, Edgar E. Iglesias wrote:
-> On Wed, Apr 10, 2024 at 8:56 PM Peter Xu <peterx@redhat.com> wrote:
->>
->> On Wed, Apr 10, 2024 at 06:44:38PM +0200, Edgar E. Iglesias wrote:
->>> On Tue, Feb 27, 2024 at 11:37 PM Vikram Garhwal <vikram.garhwal@amd.com>
->>> wrote:
->>>
->>>> From: Juergen Gross <jgross@suse.com>
->>>>
->>>> In order to support mapping and unmapping guest memory dynamically to
->>>> and from qemu during address_space_[un]map() operations add the map()
->>>> and unmap() callbacks to MemoryRegionOps.
->>>>
->>>> Those will be used e.g. for Xen grant mappings when performing guest
->>>> I/Os.
->>>>
->>>> Signed-off-by: Juergen Gross <jgross@suse.com>
->>>> Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
->>>>
->>>
->>>
->>> Paolo, Peter, David, Phiippe, do you guys have any concerns with this patch?
->>
-> 
-> Thanks for your comments Peter,
-> 
-> 
->> This introduces a 3rd memory type afaict, neither direct nor !direct.
->>
->> What happens if someone does address_space_write() to it?  I didn't see it
->> covered here..
-> 
-> You're right, that won't work, the memory needs to be mapped before it
-> can be used.
-> At minimum there should be some graceful failure, right now this will crash.
-> 
->>
->> OTOH, the cover letter didn't mention too much either on the big picture:
->>
->> https://lore.kernel.org/all/20240227223501.28475-1-vikram.garhwal@amd.com/
->>
->> I want to have a quick grasp on whether it's justified worthwhile we should
->> introduce this complexity to qemu memory core.
->>
->> Could I request a better cover letter when repost?  It'll be great to
->> mention things like:
-> 
-> I'll do that, but also answer inline in the meantime since we should
-> perhaps change the approach.
-> 
->>
->>    - what is grant mapping, why it needs to be used, when it can be used (is
->>      it only relevant to vIOMMU=on)?  Some more information on the high
->>      level design using this type or MR would be great.
-> 
-> https://github.com/xen-project/xen/blob/master/docs/misc/grant-tables.txt
-> 
-> Xen VM's that use QEMU's VirtIO have a QEMU instance running in a separate VM.
-> 
-> There's basically two mechanisms for QEMU's Virtio backends to access
-> the guest's RAM.
-> 1. Foreign mappings. This gives the VM running QEMU access to the
-> entire RAM of the guest VM.
+PCMachineClass::rsdp_in_ram was only used by the
+pc-i440fx-2.2 machine, which got removed. It is
+now always true. Remove it, simplifying acpi_setup().
 
-Additionally it requires qemu to run in dom0, while in general Xen allows
-to run backends in less privileged "driver domains", which are usually not
-allowed to perform foreign mappings.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240305134221.30924-15-philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ include/hw/i386/pc.h |  1 -
+ hw/i386/acpi-build.c | 35 ++++-------------------------------
+ hw/i386/pc.c         |  1 -
+ 3 files changed, 4 insertions(+), 33 deletions(-)
 
-> 2. Grant mappings. This allows the guest to dynamically grant and
-> remove access to pages as needed.
-> So the VM running QEMU, cannot map guest RAM unless it's been
-> instructed to do so by the guest.
-> 
-> #2 is desirable because if QEMU gets compromised it has a smaller
-> attack surface onto the guest.
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 10a8ffa0de..96ccb4583f 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -100,7 +100,6 @@ struct PCMachineClass {
+ 
+     /* ACPI compat: */
+     bool has_acpi_build;
+-    bool rsdp_in_ram;
+     unsigned acpi_data_size;
+     int pci_root_uid;
+ 
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index ab2d4d8dcb..ed0adb0e82 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -2495,7 +2495,6 @@ static
+ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+ {
+     PCMachineState *pcms = PC_MACHINE(machine);
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(machine);
+     DeviceState *iommu = pcms->iommu;
+     GArray *table_offsets;
+@@ -2667,16 +2666,6 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+             .rsdt_tbl_offset = &rsdt,
+         };
+         build_rsdp(tables->rsdp, tables->linker, &rsdp_data);
+-        if (!pcmc->rsdp_in_ram) {
+-            /* We used to allocate some extra space for RSDP revision 2 but
+-             * only used the RSDP revision 0 space. The extra bytes were
+-             * zeroed out and not used.
+-             * Here we continue wasting those extra 16 bytes to make sure we
+-             * don't break migration for machine types 2.2 and older due to
+-             * RSDP blob size mismatch.
+-             */
+-            build_append_int_noprefix(tables->rsdp, 0, 16);
+-        }
+     }
+ 
+     /* We'll expose it all to Guest so we want to reduce
+@@ -2755,7 +2744,6 @@ static const VMStateDescription vmstate_acpi_build = {
+ void acpi_setup(void)
+ {
+     PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(pcms);
+     AcpiBuildTables tables;
+     AcpiBuildState *build_state;
+@@ -2817,25 +2805,10 @@ void acpi_setup(void)
+                            tables.vmgenid);
+     }
+ 
+-    if (!pcmc->rsdp_in_ram) {
+-        /*
+-         * Keep for compatibility with old machine types.
+-         * Though RSDP is small, its contents isn't immutable, so
+-         * we'll update it along with the rest of tables on guest access.
+-         */
+-        uint32_t rsdp_size = acpi_data_len(tables.rsdp);
+-
+-        build_state->rsdp = g_memdup(tables.rsdp->data, rsdp_size);
+-        fw_cfg_add_file_callback(x86ms->fw_cfg, ACPI_BUILD_RSDP_FILE,
+-                                 acpi_build_update, NULL, build_state,
+-                                 build_state->rsdp, rsdp_size, true);
+-        build_state->rsdp_mr = NULL;
+-    } else {
+-        build_state->rsdp = NULL;
+-        build_state->rsdp_mr = acpi_add_rom_blob(acpi_build_update,
+-                                                 build_state, tables.rsdp,
+-                                                 ACPI_BUILD_RSDP_FILE);
+-    }
++    build_state->rsdp = NULL;
++    build_state->rsdp_mr = acpi_add_rom_blob(acpi_build_update,
++                                             build_state, tables.rsdp,
++                                             ACPI_BUILD_RSDP_FILE);
+ 
+     qemu_register_reset(acpi_build_reset, build_state);
+     acpi_build_reset(build_state);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index c4a7885a3b..a1b0e94523 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1745,7 +1745,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+ 
+     pcmc->pci_enabled = true;
+     pcmc->has_acpi_build = true;
+-    pcmc->rsdp_in_ram = true;
+     pcmc->smbios_defaults = true;
+     pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
+-- 
+2.41.0
 
-And it allows to run the virtio backend in a less privileged VM.
-
-> 
->>
->>    - why a 3rd memory type is required?  Do we have other alternatives?
-> 
-> Yes, there are alternatives.
-> 
-> 1. It was suggested by Stefano to try to handle this in existing qemu/hw/xen/*.
-> This would be less intrusive but perhaps also less explicit.
-> Concerns about touching the Memory API have been raised before, so
-> perhaps we should try this.
-> I'm a little unsure how we would deal with unmapping when the guest
-> removes our grants and we're using models that don't map but use
-> address_space_read/write().
-
-Those would either need to use grant-copy hypercalls, or they'd need to map,
-read/write, unmap.
-
-> 
-> 2. Another approach could be to change the Xen grant-iommu in the
-> Linux kernel to work with a grant vIOMMU in QEMU.
-> Linux could explicitly ask QEMU's grant vIOMMU to map/unmap granted regions.
-> This would have the benefit that we wouldn't need to allocate
-> address-bit 63 for grants.
-> A drawback is that it may be slower since we're going to need to
-> bounce between guest/qemu a bit more.
-
-It would be a _lot_ slower, unless virtio-iommu and grants are both modified
-to match. I have looked into that, but the needed effort is rather large. At
-the last Xen summit I have suggested to introduce a new grant format which
-would work more like a normal page table structure. Using the same format
-for virtio-iommu would allow to avoid the additional bounces between qemu and
-the guest (and in fact that was one of the motivations to suggest the new
-grant format).
-
-
-Juergen
 
