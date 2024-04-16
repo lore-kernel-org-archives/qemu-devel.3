@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8977AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 18:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80125C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 18:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwnT3-0003fq-Tb; Tue, 16 Apr 2024 14:23:42 -0400
+	id 1rwnVJ-00057U-CA; Tue, 16 Apr 2024 14:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rwnT1-0003fL-VT; Tue, 16 Apr 2024 14:23:39 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rwnT0-0007OG-3y; Tue, 16 Apr 2024 14:23:39 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EEB085F40C;
- Tue, 16 Apr 2024 21:23:25 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C20BDB5D58;
- Tue, 16 Apr 2024 21:23:24 +0300 (MSK)
-Message-ID: <6009787a-c43f-4225-98ee-f41d1bc10ce8@tls.msk.ru>
-Date: Tue, 16 Apr 2024 21:23:24 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rwnVF-00057B-72
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:25:57 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rwnVC-00088Y-Hd
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:25:55 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1e2232e30f4so35966325ad.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 11:25:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713291953; x=1713896753; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YCjOhPevdVnXeModLi+0kxOBLVTda9Mh7LViDOjEitU=;
+ b=P1JlALbYKRgQeqjn4eogRzkIf9GZUl/0ocbIVxdgz0G57QlEjhFXsBzEdaIF2J/E5g
+ 7AXe6ZeP66Y/n4seGL4ueETLspVHl+3BCJX/MgAf7ASuhiMC1ofGeALYrCwxq8hBB+Y3
+ iiv4xPK6kgK3E4VBq5K2TJiA0fmEKAjO2r7ZWy7tBvBNiXNFuU7CRHKhmZTm9Iz4HN1S
+ vZlaYKAkO4flpShOJJUdI+YDvQHOPbkP+SnnJDGgJpIdFrlA4YJ4+/RrHenccNr0C7Cf
+ T8hkjfSdGHgnQshrumRF20Jq26aOKP/6EaZLIjgxptl2U0z108UcHnQW7kb4diCu5YgI
+ 9+9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713291953; x=1713896753;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YCjOhPevdVnXeModLi+0kxOBLVTda9Mh7LViDOjEitU=;
+ b=LLKk6pSd6uEXxMP5MkvZ3qK9eaVPh77WsmtXy/YXnW1t4S8ZLbyYRh9TyGgumkEy5O
+ jVT5sX6izioyc9mnd33rbhK16QJ8xezweB1ZV08CcjgDdEyEYzh3eIDQmzyUQvTxNKTc
+ eaYmAswaPJuTG60T4CNX44JNubAekqYfwDldzKAXLXj0fFJPmouyOIKgY4ElAEseqj9l
+ l9dJGzi+C2dJXMSzlXO7lYNm5TF9uiTMbkviVIo181SnR/41usdo5j6Es6eg6kUbO8Vo
+ hV7dipcUTZCo5OaLPN10AkTEFmpqzUKXpvRy52oM1IKEGW3g8IHdaWoNWIW8ZUeTZEji
+ ra7A==
+X-Gm-Message-State: AOJu0Yw4MG1Dae5HoksqmnXxHpovL0yQHJVWeoOAzq20FK5am6p1M2vp
+ XFDI++y+8Cmpp3KbGKxSE8kwM8m2nstXdm/4BzArcwTAz6iq7QRBc5Cpe/qKEFA=
+X-Google-Smtp-Source: AGHT+IGgWhS5zKjSQuhU3eBLNlDPyPMCCj8Uq7fN6HUOqY+aMFiieuWE1w828jb3IbF0q3QgZtwYfw==
+X-Received: by 2002:a17:902:b688:b0:1e5:5bd7:87b4 with SMTP id
+ c8-20020a170902b68800b001e55bd787b4mr10677185pls.18.1713291952891; 
+ Tue, 16 Apr 2024 11:25:52 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ kw14-20020a170902f90e00b001e249903b0fsm10105615plb.256.2024.04.16.11.25.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Apr 2024 11:25:52 -0700 (PDT)
+Message-ID: <00d9243d-bc6b-44c8-a53c-15ca702058de@linaro.org>
+Date: Tue, 16 Apr 2024 11:25:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-8.2.3 00/87] Patch Round-up for stable 8.2.3, freeze on
- 2024-04-20
-To: Cole Robinson <crobinso@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
- <5b8db53e-e073-4159-9f77-f9856ffce94e@redhat.com>
+Subject: Re: [PATCH 4/8] target/ppc: Move neg, darn, mod{sw, uw} to decodetree.
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240416063927.99428-1-rathc@linux.ibm.com>
+ <20240416063927.99428-5-rathc@linux.ibm.com>
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <5b8db53e-e073-4159-9f77-f9856ffce94e@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240416063927.99428-5-rathc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,33 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-16.04.2024 20:34, Cole Robinson wrote:
-
-> We have a couple patches in f40 that are bug fixes, avoids a crash on
-> invalid maxcpus for ppc64 guests. First is a prep patch. bug details in
-> patch 2
+On 4/15/24 23:39, Chinmay Rath wrote:
+> Moving the below instructions to decodetree specification :
 > 
-> commit 2df5c1f5b014126595a26c6797089d284a3b211c
-> Author: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Date:   Wed Jan 24 10:30:55 2024 +1000
+> 	neg[o][.]       	: XO-form
+> 	mod{sw, uw}, darn	: X-form
 > 
->      ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer IRQ range for CPU IPIs.
+> The changes were verified by validating that the tcg ops generated by those
+> instructions remain the same, which were captured with the '-d in_asm,op' flag.
 > 
-> commit c4f91d7b7be76c47015521ab0109c6e998a369b0
-> Author: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Date:   Wed Jan 24 10:30:55 2024 +1000
-> 
->      ppc/spapr: Initialize max_cpus limit to SPAPR_IRQ_NR_IPIS.
+> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+> ---
+>   target/ppc/helper.h                        |  4 +-
+>   target/ppc/insn32.decode                   |  8 ++++
+>   target/ppc/int_helper.c                    |  4 +-
+>   target/ppc/translate.c                     | 56 ----------------------
+>   target/ppc/translate/fixedpoint-impl.c.inc | 44 +++++++++++++++++
+>   5 files changed, 56 insertions(+), 60 deletions(-)
 
-Aha!
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-It's fun I noticed these two at the time but forgot to include them.
-
-Queued up now.
-
-Thanks,
-
-/mjt
-
-
+r~
 
