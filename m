@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D97C05023
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7AAC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:01:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwo2z-00014U-Dd; Tue, 16 Apr 2024 15:00:52 -0400
+	id 1rwo39-0001CI-WA; Tue, 16 Apr 2024 15:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2D-0000pS-N8
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:01 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2R-0000to-6B
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:15 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2A-0005Lv-Fn
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:01 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a46ea03c2a5so12079566b.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 11:59:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2O-0005Zs-Dy
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:14 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-5171a529224so6094340e87.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713293997; x=1713898797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713294010; x=1713898810; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1V0kAA/eWhoS7zcrOVou3w7pilpSrG0y1cYXN1Lr2Pg=;
- b=s2fFESgvWxTMisur7RCsHW6Z8c0evl7N7e/ygquF8ikAU53I0YV+byEf/UVrLwzfX/
- Ht94Fah2cJuxgZVoiSRVQfVePY/z4NyKAQy1CzuujNPh+Eh0bwSJ2rGDUe1xKzZjwAr7
- tpXg/IfG+gE6oHsuLy96KnB/5VgScshKTzopnHWO4DWmE9kxcsivHdiscGZpIjznpfA0
- qYOTDS4dJ4swZonJLOQzSQb4w6eFMQDH/v5RiKWip6HPviEvcEPXP52O0XVPcdg6D96e
- lQyI1rcI2MV7slN5hPU+s79/r2YahUY6Cym+iRRkON1SCxsC6FEsV6BqOgMdmFKVNSdr
- 3+eA==
+ bh=r03IbH4Q5jukHMDYRNDrIPnxYvDkdnR4utG+Rvdo7L0=;
+ b=hLqgxtpEB5H4QcbmOK6mXxPG3N0D5AabwrCTq8kBJaeDVVzcw1VaVQmOW31GV3PXOt
+ LtM8t2umMYJ1Ld6mNPxA6qSFpLbf08ZJtiSYmcReQIANih0P5loxPyGoiijrl5JUqung
+ 32McCauMNVBLSKLS+ylf5jVpbavxCL6C1hWbXTcWlHa9VvvUdCOt2aSQuoywGzCrIiVj
+ ygGco1zN89jWwnyDAURbjq8jEOTJlY9qJYxNpOtcc1IZTqwCXH7cW/6l5De9Nrwxo1Wq
+ RcCJz9tYmTpkvvh2ETmN3+UNAsInhenC/nPeLDaylUaFnNj/8iqMveMIkmR3TWqsa43w
+ DD+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713293997; x=1713898797;
+ d=1e100.net; s=20230601; t=1713294010; x=1713898810;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1V0kAA/eWhoS7zcrOVou3w7pilpSrG0y1cYXN1Lr2Pg=;
- b=QmhBFxM51r5678/Ah8kDaq2ks7hMfAjFYDgevcNYpzX7T3QBIaip+Clyp03MhSUS6W
- Hj5j2qWo4v7jOIB7ZjCkfSjipsQVFIBkFqNWfg6QSffqcUYlsKt5s4iGL81Rb9LH2LLG
- ZapL6B1QvLRJkuJmQU5R4av+DLEkDIz0laUM4FYviSygamK3ELx/On+ii6xU570CtHlq
- 2dtePIzGDiqVtVjNdN491fmJoYVxro/R0Y7WUkrNXAHs/h/uSkzv0e3nmEkEOnWaFRvy
- e1Gj55WQd2jrzsrZRjpbvMPz8ndICWUikvBdbazuZnw1Mc26FNYZtwVzsJRHSsGAcebs
- gEdQ==
-X-Gm-Message-State: AOJu0YwEU3Io8+8U0miunk+Xjj2bcHqL8Fns2klccOjhD4lTW03LWmTy
- DkvJj2WyPI2XWPchU/TYnSulN9w2lxIudKBk8pYCz2AZHVxh5Qo4x6xRdjwxabXrinK/O2h4e/e
- F
-X-Google-Smtp-Source: AGHT+IHlrz7w1jeNA/Qttm4+X6hFJQqGDdbM0y2U1/FZjg7zMV3JYiO/NIWax6hq1GaxHfHR3Y3EwA==
-X-Received: by 2002:a17:907:6d1a:b0:a51:f823:f4b4 with SMTP id
- sa26-20020a1709076d1a00b00a51f823f4b4mr3051283ejc.17.1713293996667; 
- Tue, 16 Apr 2024 11:59:56 -0700 (PDT)
+ bh=r03IbH4Q5jukHMDYRNDrIPnxYvDkdnR4utG+Rvdo7L0=;
+ b=TM7x80OzTmfsf77QLETnajuKI3H5sCW7FWRDDR9RAbagv7/3AtrmrzT9y61jlLMrTH
+ +yLEGZdmbp1Zcon0KhIeI79+Aj5FNZSnv1BrR/JGA+keMhVz55HCDC0j2MTchujOl+MR
+ n+tcIlbtXP20KzTg4K6b7KHnZeVmXeix2l9h8R/+WhK8X6iKXoCnIIcMv+QX9lUj33kt
+ DAopxj0PCro2emotRhOHGgqEtGctCXD583ih+4+BW6fH1eiAViDVBsiMyusorTNVESnc
+ 9Satv+lNu+2RYoYPPBTJwLACDc62ADuBlnIBYZQuemOXMXAaHzTOkvV7W1Y99Zpa9+DH
+ GmVw==
+X-Gm-Message-State: AOJu0YyBt5SQ2rF0eWeZMdEjJkhsaG1BbuCx9ySIf37UXzxbrMznUTx/
+ Ta5NXUUsEWxT2hK0pnBzmqrG2Lr6EOlAV6/63xF/qakBzaUqRuJBRzf0IxZYGAo4QeAp+hjyzDk
+ W
+X-Google-Smtp-Source: AGHT+IHRsiss2Z7S14JYdvY6Yt6YrgQ0OojgolVzH0Nx8AY7SPkGC1icvBRPX09j77zZ7WWRP2L3sQ==
+X-Received: by 2002:ac2:5544:0:b0:515:bee6:5e8c with SMTP id
+ l4-20020ac25544000000b00515bee65e8cmr7857295lfk.40.1713294009690; 
+ Tue, 16 Apr 2024 12:00:09 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- qb11-20020a1709077e8b00b00a51ab065bf0sm7129332ejc.202.2024.04.16.11.59.54
+ ae12-20020a17090725cc00b00a529aeb4eccsm2558072ejc.140.2024.04.16.12.00.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 11:59:56 -0700 (PDT)
+ Tue, 16 Apr 2024 12:00:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,21 +65,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, devel@lists.libvirt.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v4 02/22] hw/i386/pc: Remove deprecated pc-i440fx-2.0 machine
-Date: Tue, 16 Apr 2024 20:59:18 +0200
-Message-ID: <20240416185939.37984-3-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v4 04/22] hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST flag
+Date: Tue, 16 Apr 2024 20:59:20 +0200
+Message-ID: <20240416185939.37984-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 References: <20240416185939.37984-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,143 +99,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pc-i440fx-2.0 machine was deprecated for the 8.2
-release (see commit c7437f0ddb "docs/about: Mark the
-old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-time to remove it.
+XHCI_FLAG_SS_FIRST was only used by the pc-i440fx-2.0 machine,
+which got removed. Remove it and simplify various functions in
+hcd-xhci.c.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- docs/about/deprecated.rst       |  2 +-
- docs/about/removed-features.rst |  2 +-
- include/hw/i386/pc.h            |  3 ---
- hw/i386/pc.c                    | 15 -------------
- hw/i386/pc_piix.c               | 37 ---------------------------------
- 5 files changed, 2 insertions(+), 57 deletions(-)
+ hw/usb/hcd-xhci.h     |  3 +--
+ hw/usb/hcd-xhci-nec.c |  2 --
+ hw/usb/hcd-xhci-pci.c |  1 -
+ hw/usb/hcd-xhci.c     | 42 ++++++++----------------------------------
+ 4 files changed, 9 insertions(+), 39 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 47234da329..b09ae3d55d 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -219,7 +219,7 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
- better reflects the way this property affects all random data within
- the device tree blob, not just the ``kaslr-seed`` node.
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index 1efa4858fb..fe16d7ad05 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -36,8 +36,7 @@ typedef struct XHCIStreamContext XHCIStreamContext;
+ typedef struct XHCIEPContext XHCIEPContext;
  
--``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
-+``pc-i440fx-2.1`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
- ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
- These old machine types are quite neglected nowadays and thus might have
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index f9cf874f7b..51119e623f 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -816,7 +816,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
- 
- This machine has been renamed ``fuloong2e``.
- 
--``pc-0.10`` up to ``pc-i440fx-1.7`` (removed in 4.0 up to 8.2)
-+``pc-0.10`` up to ``pc-i440fx-2.0`` (removed in 4.0 up to 9.0)
- ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
- These machine types were very old and likely could not be used for live
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 27a68071d7..67856f54c3 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -285,9 +285,6 @@ extern const size_t pc_compat_2_2_len;
- extern GlobalProperty pc_compat_2_1[];
- extern const size_t pc_compat_2_1_len;
- 
--extern GlobalProperty pc_compat_2_0[];
--extern const size_t pc_compat_2_0_len;
--
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
-     { \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 5c21b0c4db..172814f604 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -311,21 +311,6 @@ GlobalProperty pc_compat_2_1[] = {
+ enum xhci_flags {
+-    XHCI_FLAG_SS_FIRST = 1,
+-    XHCI_FLAG_ENABLE_STREAMS,
++    XHCI_FLAG_ENABLE_STREAMS = 1,
  };
- const size_t pc_compat_2_1_len = G_N_ELEMENTS(pc_compat_2_1);
  
--GlobalProperty pc_compat_2_0[] = {
--    PC_CPU_MODEL_IDS("2.0.0")
--    { "virtio-scsi-pci", "any_layout", "off" },
--    { "PIIX4_PM", "memory-hotplug-support", "off" },
--    { "apic", "version", "0x11" },
--    { "nec-usb-xhci", "superspeed-ports-first", "off" },
--    { "nec-usb-xhci", "force-pcie-endcap", "on" },
--    { "pci-serial", "prog_if", "0" },
--    { "pci-serial-2x", "prog_if", "0" },
--    { "pci-serial-4x", "prog_if", "0" },
--    { "virtio-net-pci", "guest_announce", "off" },
--    { "ICH9-LPC", "memory-hotplug-support", "off" },
--};
--const size_t pc_compat_2_0_len = G_N_ELEMENTS(pc_compat_2_0);
--
- GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
- {
-     GSIState *s;
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 817d99c0ce..9e1bca7b17 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -441,11 +441,6 @@ static void pc_compat_2_1_fn(MachineState *machine)
-     x86_cpu_change_kvm_default("svm", NULL);
+ typedef enum TRBType {
+diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
+index 5d5b069cf9..0c063b3697 100644
+--- a/hw/usb/hcd-xhci-nec.c
++++ b/hw/usb/hcd-xhci-nec.c
+@@ -41,8 +41,6 @@ struct XHCINecState {
+ static Property nec_xhci_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
+-    DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
+-                    XHCI_FLAG_SS_FIRST, true),
+     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
+     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index cbad96f393..264d7ebb77 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -242,7 +242,6 @@ static void qemu_xhci_instance_init(Object *obj)
+     s->msix     = ON_OFF_AUTO_AUTO;
+     xhci->numintrs = XHCI_MAXINTRS;
+     xhci->numslots = XHCI_MAXSLOTS;
+-    xhci_set_flag(xhci, XHCI_FLAG_SS_FIRST);
  }
  
--static void pc_compat_2_0_fn(MachineState *machine)
--{
--    pc_compat_2_1_fn(machine);
--}
--
- #ifdef CONFIG_ISAPC
- static void pc_init_isa(MachineState *machine)
- {
-@@ -872,38 +867,6 @@ static void pc_i440fx_2_1_machine_options(MachineClass *m)
- DEFINE_I440FX_MACHINE(v2_1, "pc-i440fx-2.1", pc_compat_2_1_fn,
-                       pc_i440fx_2_1_machine_options);
- 
--static void pc_i440fx_2_0_machine_options(MachineClass *m)
--{
--    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
--
--    pc_i440fx_2_1_machine_options(m);
--    m->hw_version = "2.0.0";
--    compat_props_add(m->compat_props, pc_compat_2_0, pc_compat_2_0_len);
--    pcmc->smbios_legacy_mode = true;
--    pcmc->has_reserved_memory = false;
--    /* This value depends on the actual DSDT and SSDT compiled into
--     * the source QEMU; unfortunately it depends on the binary and
--     * not on the machine type, so we cannot make pc-i440fx-1.7 work on
--     * both QEMU 1.7 and QEMU 2.0.
--     *
--     * Large variations cause migration to fail for more than one
--     * consecutive value of the "-smp" maxcpus option.
--     *
--     * For small variations of the kind caused by different iasl versions,
--     * the 4k rounding usually leaves slack.  However, there could be still
--     * one or two values that break.  For QEMU 1.7 and QEMU 2.0 the
--     * slack is only ~10 bytes before one "-smp maxcpus" value breaks!
--     *
--     * 6652 is valid for QEMU 2.0, the right value for pc-i440fx-1.7 on
--     * QEMU 1.7 it is 6414.  For RHEL/CentOS 7.0 it is 6418.
--     */
--    pcmc->legacy_acpi_table_size = 6652;
--    pcmc->acpi_data_size = 0x10000;
--}
--
--DEFINE_I440FX_MACHINE(v2_0, "pc-i440fx-2.0", pc_compat_2_0_fn,
--                      pc_i440fx_2_0_machine_options);
--
- #ifdef CONFIG_ISAPC
- static void isapc_machine_options(MachineClass *m)
- {
+ static const TypeInfo qemu_xhci_info = {
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index ad40232eb6..b6411f0bda 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -541,18 +541,10 @@ static XHCIPort *xhci_lookup_port(XHCIState *xhci, struct USBPort *uport)
+     case USB_SPEED_LOW:
+     case USB_SPEED_FULL:
+     case USB_SPEED_HIGH:
+-        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+-            index = uport->index + xhci->numports_3;
+-        } else {
+-            index = uport->index;
+-        }
++        index = uport->index + xhci->numports_3;
+         break;
+     case USB_SPEED_SUPER:
+-        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+-            index = uport->index;
+-        } else {
+-            index = uport->index + xhci->numports_2;
+-        }
++        index = uport->index;
+         break;
+     default:
+         return NULL;
+@@ -2779,11 +2771,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
+         ret = 0x20425355; /* "USB " */
+         break;
+     case 0x28: /* Supported Protocol:08 */
+-        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+-            ret = (xhci->numports_2<<8) | (xhci->numports_3+1);
+-        } else {
+-            ret = (xhci->numports_2<<8) | 1;
+-        }
++        ret = (xhci->numports_2 << 8) | (xhci->numports_3 + 1);
+         break;
+     case 0x2c: /* Supported Protocol:0c */
+         ret = 0x00000000; /* reserved */
+@@ -2795,11 +2783,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
+         ret = 0x20425355; /* "USB " */
+         break;
+     case 0x38: /* Supported Protocol:08 */
+-        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+-            ret = (xhci->numports_3<<8) | 1;
+-        } else {
+-            ret = (xhci->numports_3<<8) | (xhci->numports_2+1);
+-        }
++        ret = (xhci->numports_3 << 8) | 1;
+         break;
+     case 0x3c: /* Supported Protocol:0c */
+         ret = 0x00000000; /* reserved */
+@@ -3349,13 +3333,8 @@ static void usb_xhci_init(XHCIState *xhci)
+     for (i = 0; i < usbports; i++) {
+         speedmask = 0;
+         if (i < xhci->numports_2) {
+-            if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+-                port = &xhci->ports[i + xhci->numports_3];
+-                port->portnr = i + 1 + xhci->numports_3;
+-            } else {
+-                port = &xhci->ports[i];
+-                port->portnr = i + 1;
+-            }
++            port = &xhci->ports[i + xhci->numports_3];
++            port->portnr = i + 1 + xhci->numports_3;
+             port->uport = &xhci->uports[i];
+             port->speedmask =
+                 USB_SPEED_MASK_LOW  |
+@@ -3366,13 +3345,8 @@ static void usb_xhci_init(XHCIState *xhci)
+             speedmask |= port->speedmask;
+         }
+         if (i < xhci->numports_3) {
+-            if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
+-                port = &xhci->ports[i];
+-                port->portnr = i + 1;
+-            } else {
+-                port = &xhci->ports[i + xhci->numports_2];
+-                port->portnr = i + 1 + xhci->numports_2;
+-            }
++            port = &xhci->ports[i];
++            port->portnr = i + 1;
+             port->uport = &xhci->uports[i];
+             port->speedmask = USB_SPEED_MASK_SUPER;
+             assert(i < XHCI_MAXPORTS);
 -- 
 2.41.0
 
