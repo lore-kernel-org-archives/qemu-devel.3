@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454EFC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 18:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329F4C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 18:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwnhJ-0001EE-GZ; Tue, 16 Apr 2024 14:38:25 -0400
+	id 1rwnhP-0001Il-55; Tue, 16 Apr 2024 14:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwnhH-0001Dh-Cq
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:38:23 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwnhF-0001ZU-OE
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:38:23 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2a502547460so3243610a91.2
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 11:38:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713292700; x=1713897500; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=g+8L5vRcq2GfZePBd13B3hozGsk2If6c5j0b1z7yzlU=;
- b=hk/5Vvv+sIJQXQ9vKk1+JWhUmfz0F+QK6a7kVtrT6I3Ob/o9jehU4AEyj/GWpv7HOm
- 7eMRMC0QOao9Tuh11ahv8iS6gOkq/13mL6rSNinoBrV69FLdXypVMO//C7Dm4GvchrUS
- zDTh5eqNERfM15J4guyRGWP8/VBja2yEUwAh8oUD0b7f29mJME3IUI8kjTzqXSuvynVZ
- jsq11WG6NEtMmJS++KTNxcRo+B/diTsiA60vSL9cmORxnywT3qFDcZ2fpT+lAlUYuRnn
- RyI7POQeJ0lt5JlFgns0xFZ7RMVc6WLmcX1J2LXbvc6ydmrs1dAOGA1tvY1vU+L08QN3
- R+EQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rwnhN-0001Fc-Hm
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:38:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rwnhL-0001Zs-GV
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:38:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713292706;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xl8KL0MDjsH//7OgfngyqJ4zPZHNPgr3uFd/YoWB0Bg=;
+ b=U38r85+7fKVS3Zt/ULdcJoMFLY7n1p9pW/SE1Q/BZF9AS6O0z/5BQeZYBtOJZ7DWAy3YPC
+ S/fYkLsnXaRmdca5XxZx1ioB54jkHFvkpOWfYFWoCh5m9Lx7Y+XSkh4erDEHPXqBqZDeso
+ CPLQXgDFSYBCjtwkXXH7ri+iRXzEhoo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-169-R9ClZzvlOS-_QxUobHTb1g-1; Tue, 16 Apr 2024 14:38:24 -0400
+X-MC-Unique: R9ClZzvlOS-_QxUobHTb1g-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-416612274e7so20183025e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 11:38:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713292700; x=1713897500;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1713292703; x=1713897503;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g+8L5vRcq2GfZePBd13B3hozGsk2If6c5j0b1z7yzlU=;
- b=taXK1RgeMk2n6bUG+dMCl1uBHExdIPwcN0S7fJoslc7Cc8FfV37qSqCmZRezaw6cCM
- D55QzzYiVN1MVOQzBh8ndN4Ngv01gFj7sAxVo7BPGhnbL9y2GvO9g/O8iu2+tdAwczz8
- QBlHN3kBEHeXqowOg8t/TR8saP9CZBTBgDwc77bGRWWvnaqdY1ZNT4Cv5vsk5PbXKBEz
- 1Al9xTZdQkhdHcm4k7F4g7pmvqHxWLTSTlxZR3XkpZshVHjsfqYrS4guPoB6721vmgPM
- qpLqYAMcMFxjoZqZOpDv77ACAGBq5RTWEtrBksRz/2bAzrIwf6ttGE4jG2WcieBQwlRw
- EFqA==
-X-Gm-Message-State: AOJu0Yz1oSUF+hPOtLsIKvfcoD+NGXDsGaHjF69r9sFjLJPGaCTDckvx
- /5VTgfLKCQrkn607uW6mE7NbK9dpl7fMVu7RclJiAop2U7jK1dB0ZuSkMHGnQ4w=
-X-Google-Smtp-Source: AGHT+IETqUuPRSZ0g5rVdFOxh90qWd0B06MPwIja9L6TXKP0SbIG5MGmZjLMsEx1YivnYDPXntXojw==
-X-Received: by 2002:a17:90b:1107:b0:2a5:3310:89d6 with SMTP id
- gi7-20020a17090b110700b002a5331089d6mr12340234pjb.31.1713292700189; 
- Tue, 16 Apr 2024 11:38:20 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- 42-20020a17090a09ad00b002a2a3aebb38sm10099692pjo.48.2024.04.16.11.38.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 11:38:18 -0700 (PDT)
-Message-ID: <a5ed5846-7a8c-48fb-b84e-2ae285cd1b2c@linaro.org>
-Date: Tue, 16 Apr 2024 11:38:16 -0700
+ bh=xl8KL0MDjsH//7OgfngyqJ4zPZHNPgr3uFd/YoWB0Bg=;
+ b=k+/+Vre3w1A9GE7m+6kLSjTx8wpUir5nYQ+D5kRGPw8tqjHbWJ5/YrO4LiE4T1eW1y
+ ZfJnU2BHO8voiTo6dGtukdxLDPmwEte3dyiNRV5IHOcmpUKfaxwwgetQHJkpB8uJEw8Y
+ Dnv8/99T9nLatS3l1xm/FHe/WUhkcq3ItR3KLFALHa6Ow2kebu6i85cUUyRcL2ZUzk3X
+ oi/5JN8rKLnw8R45ogUEurtfne9x0eVrIfi2CoyWcSLOQmJR+mI+iu25O8WD4GJj237c
+ Gd5E2QHzteD3+mAsPmFBg36xN1vEcYGVzU7vDT+WDMWqmIzoPTuXCN3AtbxwzXJdTCFs
+ w/ZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXKNwHY/wt6mKVgQZNyHvHN/9phtGdzSPth4jQ3M74ZdYt/QYeEpnj0BbqoV0ELyK5syyD2gDxqVcpBQJcQMNIXkDPhcqI=
+X-Gm-Message-State: AOJu0YzZTa6YGeLdXkdLw9Qsg+OAY7VCTXkW0LGpQQmPanxVuVqSgCc/
+ 8u1S9lA++2HHX3xApTMQbgeN74VNxtXeP3+Yyx7XSZwbglRTNZttGAGiVCDZ8pKRTy+tKG3bPqr
+ iqJuyGrmzJu/R+pso8mD6rmpw+U8w0V6GOJ6b2ltnwJtr1GJeRjlu
+X-Received: by 2002:a05:600c:4586:b0:417:c5cc:77a7 with SMTP id
+ r6-20020a05600c458600b00417c5cc77a7mr8921644wmo.13.1713292703065; 
+ Tue, 16 Apr 2024 11:38:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEgOOh4KhbfjNcSjuEnPmjOGShXOyVkb9cqBzkms0Q7TNVU1YfiEf52qEAZP/bd6I7FX+Jd2g==
+X-Received: by 2002:a05:600c:4586:b0:417:c5cc:77a7 with SMTP id
+ r6-20020a05600c458600b00417c5cc77a7mr8921628wmo.13.1713292702532; 
+ Tue, 16 Apr 2024 11:38:22 -0700 (PDT)
+Received: from redhat.com ([2.52.136.49]) by smtp.gmail.com with ESMTPSA id
+ gw7-20020a05600c850700b004146e58cc35sm24471232wmb.46.2024.04.16.11.38.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Apr 2024 11:38:21 -0700 (PDT)
+Date: Tue, 16 Apr 2024 14:38:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Cindy Lu <lulu@redhat.com>, jasowang@redhat.com, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] virtio-pci: Fix the failure process in
+ kvm_virtio_pci_vector_use_one()
+Message-ID: <20240416143608-mutt-send-email-mst@kernel.org>
+References: <20240416122919.597819-1-lulu@redhat.com>
+ <CAFEAcA-PbZd9vjyux_HqDKf9y6PxgBXJ9W21zLheE0hJOrLEFw@mail.gmail.com>
+ <CACLfguXs-YkMBZK9cNkuaG9dQzvUDY-znMGQN6JL8VR8ci8yng@mail.gmail.com>
+ <CAFEAcA-bXhCqTCiT5NshAzDb17c8+jqdmtOigfSbJ5ozckAUQg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] target/ppc: Move div/mod fixed-point insns (64 bits
- operands) to decodetree.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240416063927.99428-1-rathc@linux.ibm.com>
- <20240416063927.99428-7-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240416063927.99428-7-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA-bXhCqTCiT5NshAzDb17c8+jqdmtOigfSbJ5ozckAUQg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,29 +105,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/24 23:39, Chinmay Rath wrote:
-> Moving the below instructions to decodetree specification :
-> 
-> 	divd[u, e, eu][o][.]	: XO-form
-> 	mod{sd, ud}		: X-form
-> 
-> With this patch, all the fixed-point arithmetic instructions have been
-> moved to decodetree.
-> The changes were verified by validating that the tcg ops generated by those
-> instructions remain the same, which were captured using the '-d in_asm,op' flag.
-> Also, remaned do_divwe method in fixedpoint-impl.c.inc to do_dive because it is
-> now used to divide doubleword operands as well, and not just words.
-> 
-> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
-> ---
->   target/ppc/helper.h                        |  4 +-
->   target/ppc/insn32.decode                   |  8 +++
->   target/ppc/int_helper.c                    |  4 +-
->   target/ppc/translate.c                     | 65 ++--------------------
->   target/ppc/translate/fixedpoint-impl.c.inc | 29 +++++++++-
->   5 files changed, 42 insertions(+), 68 deletions(-)
+On Tue, Apr 16, 2024 at 02:14:57PM +0100, Peter Maydell wrote:
+> On Tue, 16 Apr 2024 at 13:41, Cindy Lu <lulu@redhat.com> wrote:
+> >
+> > On Tue, Apr 16, 2024 at 8:30 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+> > >
+> > > On Tue, 16 Apr 2024 at 13:29, Cindy Lu <lulu@redhat.com> wrote:
+> > > >
+> > > > In function kvm_virtio_pci_vector_use_one(), in the undo label,
+> > > > the function will get the vector incorrectly while using
+> > > > VIRTIO_CONFIG_IRQ_IDX
+> > > > To fix this, we remove this label and simplify the failure process
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+And then what happens?  It's unclear whether it's a real or
+theoretical issue.
 
-r~
+> > > > Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
+> > > > Cc: qemu-stable@nongnu.org
+> > > > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > > > ---
+> > > >  hw/virtio/virtio-pci.c | 19 +++----------------
+> > > >  1 file changed, 3 insertions(+), 16 deletions(-)
+> > > >
+> > > > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > > > index b138fa127a..565bdb0897 100644
+> > > > --- a/hw/virtio/virtio-pci.c
+> > > > +++ b/hw/virtio/virtio-pci.c
+> > > > @@ -892,7 +892,7 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
+> > > >      }
+> > > >      ret = kvm_virtio_pci_vq_vector_use(proxy, vector);
+> > > >      if (ret < 0) {
+> > > > -        goto undo;
+> > > > +        return ret;
+> > > >      }
+> > > >      /*
+> > > >       * If guest supports masking, set up irqfd now.
+> > > > @@ -902,25 +902,12 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
+> > > >          ret = kvm_virtio_pci_irqfd_use(proxy, n, vector);
+> > > >          if (ret < 0) {
+> > > >              kvm_virtio_pci_vq_vector_release(proxy, vector);
+> > > > -            goto undo;
+> > > > +            kvm_virtio_pci_irqfd_release(proxy, n, vector);
+> > >
+> > > Are you sure this is right? The kvm_virtio_pci_irqfd_use()
+> > > just failed, so why do we need to call
+> > > kvm_virtio_pci_irqfd_release() ?
+> 
+> > This version should be correct.  when kvm_virtio_pci_irqfd_use() fail
+> > we need to call kvm_virtio_pci_vq_vector_release() and
+> > kvm_virtio_pci_irqfd_release()
+> > but for kvm_virtio_pci_vq_vector_use fail we can simple return,
+> 
+> But *why* do we need to call kvm_virtio_pci_irqfd_release()?
+> 
+> In most API designs, this kind of pairing of "get/use/allocate
+> something" and "free/release something" function only
+> requires you to do the "release" if the "get" succeeded,
+> because if the "get" fails it's supposed to fail in way that
+> means "I didn't do anything". Is this API not following that
+> standard pattern ?
+
+
+I am just as puzzled.
+
+> > in old version there is a error in failure process.
+> > while the kvm_virtio_pci_vq_vector_use fail it  call the
+> > kvm_virtio_pci_irqfd_release,but at this time this is irqfd
+> > is not using now
+> 
+> thanks
+> -- PMM
+
 
