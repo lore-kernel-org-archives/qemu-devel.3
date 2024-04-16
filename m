@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A680C04FF9
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91887C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk3N-0005uY-H2; Tue, 16 Apr 2024 10:45:02 -0400
+	id 1rwk3N-0005vS-GY; Tue, 16 Apr 2024 10:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk36-0005ZT-Gp
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:40 -0400
+ id 1rwk3C-0005mr-3V
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:47 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk34-0002JT-Ug
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:40 -0400
+ id 1rwk3A-0002M6-Mc
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:45 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk2y-0002gt-7k; Tue, 16 Apr 2024 16:44:32 +0200
+ id 1rwk33-0002hJ-Fs; Tue, 16 Apr 2024 16:44:37 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,10 +32,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 15/26] migration/multifd: Zero p->flags before starting
- filling a packet
-Date: Tue, 16 Apr 2024 16:42:54 +0200
-Message-ID: <dd9cda42b95b621279c9d1c7b6b511a7f1f68c56.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 16/26] migration: Add save_live_complete_precopy_async{,
+ wait} handlers
+Date: Tue, 16 Apr 2024 16:42:55 +0200
+Message-ID: <5a11fbbd197f08d45e61da40124c86ae8f761a27.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -65,34 +65,114 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This way there aren't stale flags there.
+These SaveVMHandlers allow device to provide its own asynchronous
+transmission of the remaining data at the end of a precopy phase.
 
-p->flags can't contain SYNC to be sent at the next RAM packet since syncs
-are now handled separately in multifd_send_thread.
+The save_live_complete_precopy_async handler is supposed to start such
+transmission (for example, by launching appropriate threads) while the
+save_live_complete_precopy_async_wait handler is supposed to wait until
+such transfer has finished (for example, until the sending threads
+have exited).
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/multifd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/migration/register.h | 31 +++++++++++++++++++++++++++++++
+ migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index c2575e3d6dbf..7118c69a4d49 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -933,6 +933,7 @@ static void *multifd_send_thread(void *opaque)
-         if (qatomic_load_acquire(&p->pending_job)) {
-             MultiFDPages_t *pages = p->pages;
+diff --git a/include/migration/register.h b/include/migration/register.h
+index d7b70a8be68c..9d36e35bd612 100644
+--- a/include/migration/register.h
++++ b/include/migration/register.h
+@@ -102,6 +102,37 @@ typedef struct SaveVMHandlers {
+      */
+     int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
  
-+            p->flags = 0;
-             p->iovs_num = 0;
-             assert(pages->num);
++    /**
++     * @save_live_complete_precopy_async
++     *
++     * Arranges for handler-specific asynchronous transmission of the
++     * remaining data at the end of a precopy phase. When postcopy is
++     * enabled, devices that support postcopy will skip this step.
++     *
++     * @f: QEMUFile where the handler can synchronously send data before returning
++     * @idstr: this device section idstr
++     * @instance_id: this device section instance_id
++     * @opaque: data pointer passed to register_savevm_live()
++     *
++     * Returns zero to indicate success and negative for error
++     */
++    int (*save_live_complete_precopy_async)(QEMUFile *f,
++                                            char *idstr, uint32_t instance_id,
++                                            void *opaque);
++    /**
++     * @save_live_complete_precopy_async_wait
++     *
++     * Waits for the asynchronous transmission started by the of the
++     * @save_live_complete_precopy_async handler to complete.
++     * When postcopy is enabled, devices that support postcopy will skip this step.
++     *
++     * @f: QEMUFile where the handler can synchronously send data before returning
++     * @opaque: data pointer passed to register_savevm_live()
++     *
++     * Returns zero to indicate success and negative for error
++     */
++    int (*save_live_complete_precopy_async_wait)(QEMUFile *f, void *opaque);
++
+     /* This runs both outside and inside the BQL.  */
  
-@@ -986,7 +987,6 @@ static void *multifd_send_thread(void *opaque)
-                 }
-                 /* p->next_packet_size will always be zero for a SYNC packet */
-                 stat64_add(&mig_stats.multifd_bytes, p->packet_len);
--                p->flags = 0;
-             }
+     /**
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 388d7af7cdd8..fa35504678bf 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1497,6 +1497,27 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
+     SaveStateEntry *se;
+     int ret;
  
-             qatomic_set(&p->pending_sync, false);
++    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
++        if (!se->ops || (in_postcopy && se->ops->has_postcopy &&
++             se->ops->has_postcopy(se->opaque)) ||
++            !se->ops->save_live_complete_precopy_async) {
++            continue;
++        }
++
++        save_section_header(f, se, QEMU_VM_SECTION_END);
++
++        ret = se->ops->save_live_complete_precopy_async(f,
++                                                        se->idstr, se->instance_id,
++                                                        se->opaque);
++
++        save_section_footer(f, se);
++
++        if (ret < 0) {
++            qemu_file_set_error(f, ret);
++            return -1;
++        }
++    }
++
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+         if (!se->ops ||
+             (in_postcopy && se->ops->has_postcopy &&
+@@ -1528,6 +1549,20 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
+                                     end_ts_each - start_ts_each);
+     }
+ 
++    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
++        if (!se->ops || (in_postcopy && se->ops->has_postcopy &&
++             se->ops->has_postcopy(se->opaque)) ||
++            !se->ops->save_live_complete_precopy_async_wait) {
++            continue;
++        }
++
++        ret = se->ops->save_live_complete_precopy_async_wait(f, se->opaque);
++        if (ret < 0) {
++            qemu_file_set_error(f, ret);
++            return -1;
++        }
++    }
++
+     trace_vmstate_downtime_checkpoint("src-iterable-saved");
+ 
+     return 0;
 
