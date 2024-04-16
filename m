@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67832C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D27C4C04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwo4D-0003Lb-96; Tue, 16 Apr 2024 15:02:05 -0400
+	id 1rwo3O-0001Zl-MJ; Tue, 16 Apr 2024 15:01:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo42-0002XR-HV
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:01:56 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo37-0001Cw-DN
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:59 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo3y-0005ry-BB
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:01:54 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a51a7d4466bso543572466b.2
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:01:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo31-0005fx-Qn
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:56 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-516cbf3fd3dso5982707e87.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713294108; x=1713898908; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713294049; x=1713898849; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DC2xHT4tK3V/eBcSroqFKTXibEqMvehvouzWEl1ZI6k=;
- b=Vw0qqSforRQa8b8XeeRigOAuP82+FE3k52mrDXI27fKw2FiHNLOORUQ5EBxz+Qu473
- ijU4lQdt2iTYzULIMQU9NsSrXsjWEjfHivjtkCHrQU6GNmY0UekaLGKZ10feQLkIIegb
- INBQX4Txjh9Suy+sH6Q+GxSmfi2VWiq7fzvrY5mq40vRfsH6MZY+SUr38y4m182BWqRy
- ztEHWCJoGF56VgM1/1eXqMrRDWVLtDqCxw0dIus287gvgjTwoFdI6FPYXtG2ppMwlT/8
- Ib0gHKCKiG8zCwJtdRQSeSXoW4qbva9niIammY2eyYU6xOxPxvKR1REd2pQ8RrlHO4NY
- 51NQ==
+ bh=0cSOUYBAUJgDyQn/Z100iE3+Sgt5Cj+78hNwZltzxNs=;
+ b=WWc+gDkXmB/FHCwWPSOUAQP2rx4wMRhKrR+82tLpnhncn5GGnheWvS5Sssb+PbvF7i
+ lUaaKTW9l/qSu+S//u4d4hQXZRVamzTdabW9e2D11p9bR2upz7RAe+s7In+B2F8eyI6K
+ Ca2kqlBPpFRsPRmPE3RZKEkCzvdDNnXK+l8QjJH0Fp12koXAHtViY+kaQGMSVk4AWvWs
+ e51l1hqx4apYZnGhEGZTsBCfSYZezI1rf5UgE273Mq0FWCm/imH928mU5iNN3wggz2fz
+ oMGcVgyjWKXvuvYu62teqWhEDgFqxXMB8mg/ZEuVJOL4t7oLEITpEsiB7T+U8YlP06CO
+ ybPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713294108; x=1713898908;
+ d=1e100.net; s=20230601; t=1713294049; x=1713898849;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DC2xHT4tK3V/eBcSroqFKTXibEqMvehvouzWEl1ZI6k=;
- b=tiL7rUk7CkS210v46K0jQQW6YOlr9Xi+XodFHqI8nIvjmwPQ8Ykarcyo66dMQSWODU
- CEjOYq/xwmMqs+x0Uu3YrOGj31a619eFOVRX9Xi+u65yu0jJsLbBRZq2vjt4tHHTN2pz
- dC0hDPj4/yD6OEOrE+qpze+YKQkcsQcjAsh4mNYlgwD6B+l/caCZHse/RHGP26U9ZdEH
- anETqV2ECvuVd3qxGrQoo4C6gDxCCXNPn0tcae50+wwuBRM/NobvpojL7/ORXT2UIkSF
- lxrEM+rBhXci7lDm2L5lKxvibGnpKHbEtf3YZB1xtMqtPHZLr8YSkoqCe1xAnjoeljsV
- pfDg==
-X-Gm-Message-State: AOJu0Yxs92bjBPdqCuCUg9cGK6cffwqWpAg390PCUm2PmnsVGzqk2srY
- iu/Y25VuRKwiPKvuVbUYXrQ1zoePw3Fv/JyOO+mt3KjS00aip3otJS+alpfwadAdsKIUXdocEKl
- K
-X-Google-Smtp-Source: AGHT+IEweZwN1XzO84AS/y9gMjvEcIKlXa10QZ5mIlzXvdKEUrwDWOrz4pI3PLDYD5OPCMFQHnZ4uw==
-X-Received: by 2002:a17:907:724c:b0:a54:e183:6249 with SMTP id
- ds12-20020a170907724c00b00a54e1836249mr4000170ejc.56.1713294107715; 
- Tue, 16 Apr 2024 12:01:47 -0700 (PDT)
+ bh=0cSOUYBAUJgDyQn/Z100iE3+Sgt5Cj+78hNwZltzxNs=;
+ b=oiCdjJ5PMlENXCbSZkF9q8toCQ95xG8DZF1MTA6hju/v1z5xr+0vTwn/YKrJMxD1kX
+ zdtb5ZHUfZbnIlhSBP8XbZdCJewba57QfIvNqYHwihTLMwxlCz7bWyot8b6Q7cy+8Om2
+ f59m9IPxkBS/uPsDyLoNh3a7ctqcroLARj9hMzqh+3LGAB+oz1unNnOlxVR7c3KyoLL9
+ 6dS3jOpDbxjhuexio/aeOoNjIAmhmhpLAuUyF2mD0pLZfd9i8x97+RB0hvfiOq4ST7Ev
+ LVlzdd4FDNwKfAr3TgOUic+nlHV9ZxEtYLvdJbfyaxKvhhkOpamytwdZX6KotE8tXn0B
+ pf4Q==
+X-Gm-Message-State: AOJu0Yzmm0VoCRAMU9aNO8+BmteKRPMsywj/3ADPnzE8OcyOMDcU12RP
+ Se+6F9r84LXOxarCBJreYyN6aQZtYah2ugns9UIAOL8fLQ+T9EiBD472YkgH9scL/n1i0ChAlxc
+ u
+X-Google-Smtp-Source: AGHT+IHGTBCSVJo2t7yAUY9UWwABae+zuiW472THcqCnHvQ3bUekN+LNwbNpJnex0bMnOpxnGv/ltw==
+X-Received: by 2002:a05:6512:3c9e:b0:517:866a:117e with SMTP id
+ h30-20020a0565123c9e00b00517866a117emr12821425lfv.7.1713294049051; 
+ Tue, 16 Apr 2024 12:00:49 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- v13-20020a17090606cd00b00a526562de1fsm3471599ejb.73.2024.04.16.12.01.45
+ du2-20020a17090772c200b00a52299d8eecsm6710577ejc.135.2024.04.16.12.00.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 12:01:47 -0700 (PDT)
+ Tue, 16 Apr 2024 12:00:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,28 +65,29 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v4 19/22] hw/i386/acpi: Remove AcpiBuildState::rsdp field
-Date: Tue, 16 Apr 2024 20:59:35 +0200
-Message-ID: <20240416185939.37984-20-philmd@linaro.org>
+Subject: [PATCH v4 10/22] hw/i386/pc: Remove
+ PCMachineClass::smbios_uuid_encoded
+Date: Tue, 16 Apr 2024 20:59:26 +0200
+Message-ID: <20240416185939.37984-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 References: <20240416185939.37984-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,49 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AcpiBuildState::rsdp is always NULL, remove it,
-simplifying acpi_build_update().
+PCMachineClass::smbios_uuid_encoded was only used by the
+pc-i440fx-2.1 machine, which got removed. It is now always
+true, remove it.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/i386/acpi-build.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ include/hw/i386/pc.h | 1 -
+ hw/i386/fw_cfg.c     | 3 +--
+ hw/i386/pc.c         | 1 -
+ 3 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index ed0adb0e82..6f9925d176 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -2459,7 +2459,6 @@ struct AcpiBuildState {
-     MemoryRegion *table_mr;
-     /* Is table patched? */
-     uint8_t patched;
--    void *rsdp;
-     MemoryRegion *rsdp_mr;
-     MemoryRegion *linker_mr;
- } AcpiBuildState;
-@@ -2715,11 +2714,7 @@ static void acpi_build_update(void *build_opaque)
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index b528f17904..c2d9af36b2 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -109,7 +109,6 @@ struct PCMachineClass {
+     /* SMBIOS compat: */
+     bool smbios_defaults;
+     bool smbios_legacy_mode;
+-    bool smbios_uuid_encoded;
+     SmbiosEntryPointType default_smbios_ep_type;
  
-     acpi_ram_update(build_state->table_mr, tables.table_data);
+     /* RAM / address space compat: */
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index d802d2787f..f7c2501161 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -63,8 +63,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
  
--    if (build_state->rsdp) {
--        memcpy(build_state->rsdp, tables.rsdp->data, acpi_data_len(tables.rsdp));
--    } else {
--        acpi_ram_update(build_state->rsdp_mr, tables.rsdp);
--    }
-+    acpi_ram_update(build_state->rsdp_mr, tables.rsdp);
- 
-     acpi_ram_update(build_state->linker_mr, tables.linker->cmd_blob);
-     acpi_build_tables_cleanup(&tables, true);
-@@ -2805,7 +2800,6 @@ void acpi_setup(void)
-                            tables.vmgenid);
+     if (pcmc->smbios_defaults) {
+         /* These values are guest ABI, do not change */
+-        smbios_set_defaults("QEMU", mc->desc, mc->name,
+-                            pcmc->smbios_uuid_encoded);
++        smbios_set_defaults("QEMU", mc->desc, mc->name, true);
      }
  
--    build_state->rsdp = NULL;
-     build_state->rsdp_mr = acpi_add_rom_blob(acpi_build_update,
-                                              build_state, tables.rsdp,
-                                              ACPI_BUILD_RSDP_FILE);
+     /* tell smbios about cpuid version and features */
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index cd6335d6b4..2bf1bfd5b2 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1778,7 +1778,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     pcmc->has_acpi_build = true;
+     pcmc->rsdp_in_ram = true;
+     pcmc->smbios_defaults = true;
+-    pcmc->smbios_uuid_encoded = true;
+     pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_aligned_dimm = true;
 -- 
 2.41.0
 
