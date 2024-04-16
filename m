@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69550C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8A2C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwoLq-0006m4-0n; Tue, 16 Apr 2024 15:20:18 -0400
+	id 1rwoaR-0001tc-Qa; Tue, 16 Apr 2024 15:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwoLo-0006kD-Jv
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:20:16 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rwoaQ-0001sm-2j
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:35:22 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwoLm-0000Ye-Gs
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:20:16 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6effe9c852eso2025439b3a.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:20:13 -0700 (PDT)
+ id 1rwoaO-0003FV-ED
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:35:21 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e65a1370b7so26635115ad.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:35:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713295212; x=1713900012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713296118; x=1713900918; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WLQ/HcsoX9exGFJ0ckMYMcf7iU4Fld6gbQdibbI56Qc=;
- b=IknN/i+ib7Cd7F4M7qEb6iE7lS9T9DEniMJH91y2On3IwIAs0G8/qJvKESzoY9xWSV
- UdGNTNzF1Ic8WifE0I7KgyozrKL63GWdod5ncJZ1o6/0EwpYo5qlkSzh1Je3f40d6NMJ
- T322bWcZrtRhMIWOn54DoM12OOVRPjwlskg/XTZfLobhewWEGBM7rPPUOsHii5UYl0fP
- zZ/Wnr0JFecwWRLQxKIo9MkR9b0/i+5QY+pHmcDuKOAfxfmJwHztjrlaAsxTACmF4njx
- KRL63yB4kTVCeYntm9cKR67AqiVlCO7b/X0f/FUyxkLNt0sXzxVzV/gPZ9PaYpiETWHO
- uwWg==
+ bh=DlgNTpyu9f9vo0Cy0xOg8PrUP+sW5dmO7a+Bb5bs+Hk=;
+ b=Ca0bAMMQ16imIxNY4iGQHtXpDBd+BAUD1PtF0hYwDRMWip2YKF3n6oBs0/LB3UATXB
+ ntbfvPs+UNqnAIiXLEkpgrkZd1wq1SUsHEzSRNWlTu6e55ajrzarUyW4rnAWfe9EbeBN
+ dviYVnkOSagFhKIctBdTIAJ08GfxtCJNMvbib2NfAGVdNHw5ncSyRV7OHlBBlpttxr7q
+ GrEyfqtvKoO+Lixed3agHAA9V+1BnUXjA5FgGUUEyDufeAjPyY8jYi/aTA5l88XaeQXW
+ qc26xaHO3pmU9pEKyB3qWS3CfxvD1QcfP/s3ijNk25tv3aY+M2sb2XIslT8Q7/BvPl+u
+ ZJRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713295212; x=1713900012;
+ d=1e100.net; s=20230601; t=1713296118; x=1713900918;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WLQ/HcsoX9exGFJ0ckMYMcf7iU4Fld6gbQdibbI56Qc=;
- b=fcUoSt4MqBSiOJzgNKPAqJ9yjsix0c+EpFlQPUjY0a/tRojibREj+6/uBe8hMBuJ3C
- 7vdGfWdceljrahSwGIsbEXS5EeGJs7PD/1h8QSgeaoCSElUmG9qFiho99CDyo3jVYmgc
- xhpD6ndYE+hHUwFbDdfrsRcQXUtr9x/NzklaWepEr+FbV6jv06Ln7fYzYqHD4zzhBGAe
- +EMST0f/19Hehed4BBYZ4Cmr1sC35cOcaCGYeiG9voiidDvgiCxeh2fRe3Qu/Rk7hOV9
- QwOUvI0oesdEZ9Kf7bogoiqZtv5L5uxsVOwMJD2/ScQXaqDgzXZVU+lVSPKoSdR6QuaU
- T63w==
-X-Gm-Message-State: AOJu0YxOGf7oYhEq0lyjDBIujsXlqBcU2anS1hl90eu01o7qH06VNtTR
- 8XHa574SaiWj3xqNjeJhfu24Deg2NDnHGoY/M7J1FTZAlo8AH5RNUXyuhSsGdbE=
-X-Google-Smtp-Source: AGHT+IG6SmVExnOQXvlPEdNf0ZXSUbLWH+A1b3iObQo1JEANUj/IKNmA4B5aZqLpTiOiQzfdcCqlFg==
-X-Received: by 2002:a05:6a21:3a42:b0:1aa:14a1:e5ef with SMTP id
- zu2-20020a056a213a4200b001aa14a1e5efmr6290137pzb.38.1713295211883; 
- Tue, 16 Apr 2024 12:20:11 -0700 (PDT)
+ bh=DlgNTpyu9f9vo0Cy0xOg8PrUP+sW5dmO7a+Bb5bs+Hk=;
+ b=appGNfp87HyPovKf82sNrQs3Bz1/PQs7zP35fBfGXMVCJVgii55jXwRSN86D9Amhx1
+ EYzsbP0LIuCDsICHKbGzvrAI/edDWqVexB5Rv1qZkdfrELmT9BZ2slLkJoWzufnmuXie
+ KZ7I1BBJw77WA3kDwyZ7QICOQjhNe9KaYrOAyk5oVVYUanru3VC5actX3cRWxwJUPKTQ
+ p7xHZeYfL0WJML8L77dtCLBPaLUO9tauIoII+DaWKhAbluTP0FCELoZaWyKKv0al3IKP
+ Cw3i7dVhtXFamyrjy2xlYcjs89TVfTgV4ns3SFsA2pzxmol49IjWExhGuUDw9Bo6IjYL
+ HaiA==
+X-Gm-Message-State: AOJu0YzCoawKBO7Q6EdJuf/c2iNMYc1P/HUXAEICiYNlfi+MDlLgZehr
+ q+IhYyyrlKY7bb/1Rxz62rWoxorR5Rg1Qy25sZmHCNf/r+J0QYJN1GWivTYnajM=
+X-Google-Smtp-Source: AGHT+IGpmgGtXko/+a3J0wTvBW1KiIiPqXMMZiiD+sBdnB/0VYay0VqMrF3T3g6BMxIoUvStdPD+nA==
+X-Received: by 2002:a17:902:a384:b0:1e2:b4ce:4f8a with SMTP id
+ x4-20020a170902a38400b001e2b4ce4f8amr13096862pla.53.1713296118618; 
+ Tue, 16 Apr 2024 12:35:18 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- f22-20020a056a000b1600b006ecfb733248sm9678441pfu.13.2024.04.16.12.20.11
+ l5-20020a170903120500b001e4458831afsm10148809plh.227.2024.04.16.12.35.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 12:20:11 -0700 (PDT)
-Message-ID: <1f39a25e-6c64-4ff2-8521-7059c5ed2214@linaro.org>
-Date: Tue, 16 Apr 2024 12:20:09 -0700
+ Tue, 16 Apr 2024 12:35:18 -0700 (PDT)
+Message-ID: <3be7fc22-b181-4b0a-bf80-d2011da1a437@linaro.org>
+Date: Tue, 16 Apr 2024 12:35:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] target/ppc: Move cmp{rb, eqb}, tw[i], td[i], isel
- instructions to decodetree.
+Subject: Re: [PATCH 8/8] target/ppc: Move logical fixed-point instructions to
+ decodetree.
 To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
  harshpb@linux.ibm.com
 References: <20240416063927.99428-1-rathc@linux.ibm.com>
- <20240416063927.99428-8-rathc@linux.ibm.com>
+ <20240416063927.99428-9-rathc@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240416063927.99428-8-rathc@linux.ibm.com>
+In-Reply-To: <20240416063927.99428-9-rathc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,171 +99,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/15/24 23:39, Chinmay Rath wrote:
-> Moving the following instructions to decodetree specification :
+> Moving the below instructions to decodetree specification :
 > 
-> 	cmp{rb, eqb}, t{w, d}	: X-form
-> 	t{w, d}i		: D-form
-> 	isel			: A-form
+> 	andi[s]., {ori, xori}[s]			: D-form
 > 
+> 	{and, andc, nand, or, orc, nor, xor, eqv}[.],
+> 	exts{b, h, w}[.],  cnt{l, t}z{w, d}[.],
+> 	popcnt{b, w, d},  prty{w, d}, cmp, bpermd	: X-form
+> 
+> With this patch, all the fixed-point logical instructions have been
+> moved to decodetree.
 > The changes were verified by validating that the tcg ops generated by those
-> instructions remain the same, which were captured using the '-d in_asm,op' flag.
+> instructions remain the same, which were captured with the '-d in_asm,op' flag.
 > 
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+> ---
+>   target/ppc/helper.h                        |   8 +-
+>   target/ppc/insn32.decode                   |  38 +++
+>   target/ppc/int_helper.c                    |  10 +-
+>   target/ppc/translate.c                     | 359 ---------------------
+>   target/ppc/translate/fixedpoint-impl.c.inc | 269 +++++++++++++++
+>   5 files changed, 316 insertions(+), 368 deletions(-)
 
-A faithful reorg of the existing code, so,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-Notes for improvement:
-
-> +static bool trans_CMPRB(DisasContext *ctx, arg_CMPRB *a)
-> +{
-> +    TCGv_i32 src1 = tcg_temp_new_i32();
-> +    TCGv_i32 src2 = tcg_temp_new_i32();
-> +    TCGv_i32 src2lo = tcg_temp_new_i32();
-> +    TCGv_i32 src2hi = tcg_temp_new_i32();
-> +    TCGv_i32 crf = cpu_crf[a->bf];
-> +
-> +    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
-> +    tcg_gen_trunc_tl_i32(src1, cpu_gpr[a->ra]);
-> +    tcg_gen_trunc_tl_i32(src2, cpu_gpr[a->rb]);
-> +
-> +    tcg_gen_andi_i32(src1, src1, 0xFF);
-> +    tcg_gen_ext8u_i32(src2lo, src2);
-> +    tcg_gen_shri_i32(src2, src2, 8);
-> +    tcg_gen_ext8u_i32(src2hi, src2);
-
-tcg_gen_extract_i32(src2hi, src2, 8, 8);
-
-> +
-> +    tcg_gen_setcond_i32(TCG_COND_LEU, src2lo, src2lo, src1);
-> +    tcg_gen_setcond_i32(TCG_COND_LEU, src2hi, src1, src2hi);
-> +    tcg_gen_and_i32(crf, src2lo, src2hi);
-> +
-> +    if (a->l) {
-> +        tcg_gen_shri_i32(src2, src2, 8);
-> +        tcg_gen_ext8u_i32(src2lo, src2);
-
-tcg_gen_extract_i32(src2lo, src2, 16, 8);
-
-> +        tcg_gen_shri_i32(src2, src2, 8);
-> +        tcg_gen_ext8u_i32(src2hi, src2);
-
-tcg_gen_extract_i32(src2hi, src2, 24, 8);
-
-> +/*
-> + * Fixed-Point Trap Instructions
-> + */
-> +
-> +static bool trans_TW(DisasContext *ctx, arg_TW *a)
-> +{
-> +    TCGv_i32 t0;
-> +
-> +    if (check_unconditional_trap(ctx, a->rt)) {
-> +        return true;
-> +    }
-> +    t0 = tcg_constant_i32(a->rt);
-> +    gen_helper_TW(tcg_env, cpu_gpr[a->ra], cpu_gpr[a->rb], t0);
-> +    return true;
-> +}
-> +
-> +static bool trans_TWI(DisasContext *ctx, arg_TWI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1;
-> +
-> +    if (check_unconditional_trap(ctx, a->rt)) {
-> +        return true;
-> +    }
-> +    t0 = tcg_constant_tl(a->si);
-> +    t1 = tcg_constant_i32(a->rt);
-> +    gen_helper_TW(tcg_env, cpu_gpr[a->ra], t0, t1);
-> +    return true;
-> +}
-> +
-> +static bool trans_TD(DisasContext *ctx, arg_TD *a)
-> +{
-> +    TCGv_i32 t0;
-> +
-> +    REQUIRE_64BIT(ctx);
-> +    if (check_unconditional_trap(ctx, a->rt)) {
-> +        return true;
-> +    }
-> +    t0 = tcg_constant_i32(a->rt);
-> +    gen_helper_TD(tcg_env, cpu_gpr[a->ra], cpu_gpr[a->rb], t0);
-> +    return true;
-> +}
-> +
-> +static bool trans_TDI(DisasContext *ctx, arg_TDI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1;
-> +
-> +    REQUIRE_64BIT(ctx);
-> +    if (check_unconditional_trap(ctx, a->rt)) {
-> +        return true;
-> +    }
-> +    t0 = tcg_constant_tl(a->si);
-> +    t1 = tcg_constant_i32(a->rt);
-> +    gen_helper_TD(tcg_env, cpu_gpr[a->ra], t0, t1);
-> +    return true;
-> +}
-
-See target/sparc/translate.c, delay_exception, for a method of implementing 
-compare-and-trap inline with no inline branch penalty.
-
-static void do_conditional_trap(DisasContext *ctx, unsigned to, TCGv a, TCGv b)
-{
-     static const TCGCond ucond[8] = {
-         TCG_COND_NEVER, TCG_COND_GTU, TCG_COND_LTU, TCG_COND_NE,
-         TCG_COND_EQ,    TCG_COND_GEU, TCG_COND_LEU, TCG_COND_ALWAYS,
-     };
-     static const TCGCond scond[8] = {
-         TCG_COND_NEVER, TCG_COND_EQ,  TCG_COND_GT,  TCG_COND_GE,
-         TCG_COND_LT,    TCG_COND_LE,  TCG_COND_NE,  TCG_COND_ALWAYS,
-     };
-
-     TCGCond uc = ucond[to & 7];
-     TCGCond sc = scond[to >> 2];
-
-     /* There is overlap with EQ; we may not need both comparisons. */
-     if (!(to & 0x18)) {
-         sc = TCG_COND_NEVER;
-     } else if (!(to & 0x03)) {
-         uc = TCG_COND_NEVER;
-     }
-
-     if (uc == TCG_COND_ALWAYS || sc == TCG_COND_ALWAYS) {
-         unconditional trap;
-         return true;
-     }
-     if (uc == TCG_COND_NEVER && sc == TCG_COND_NEVER) {
-         return true;
-     }
-
-     e = delay_exception(ctx, POWERPC_EXCP_TRAP);
-
-     if (uc != TCG_COND_NEVER) {
-         tcg_gen_brcond_tl(uc, a, b, e->lab);
-     }
-     if (sc != TCG_COND_NEVER) {
-         tcg_gen_brcond_tl(sc, a, b, e->lab);
-     }
-     return true;
-}
-
-bool trans_TW(...)
-{
-     TCGv a = tcg_temp_new();
-     TCGv b = tcg_temp_new();
-
-     /* Note that consistent sign extensions work for unsigned comparisons. */
-     tcg_gen_exts_i32_tl(a, ra);
-     tcg_gen_exts_i32_tl(b, rb);
-     return do_conditional_trap(ctx, to, a, b);
-}
-
-etc.
-
 
 r~
 
