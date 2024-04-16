@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027DEC04FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABC52C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk37-0005f2-Sp; Tue, 16 Apr 2024 10:44:41 -0400
+	id 1rwk2o-00053S-2z; Tue, 16 Apr 2024 10:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk32-0005FX-RA
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:37 -0400
+ id 1rwk2m-00052T-9w
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:20 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk31-0002HE-1l
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:36 -0400
+ id 1rwk2k-0002FW-S9
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:20 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk2s-0002gP-W7; Tue, 16 Apr 2024 16:44:27 +0200
+ id 1rwk2Y-0002fG-4V; Tue, 16 Apr 2024 16:44:06 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,9 +32,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 14/26] migration/ram: Add load start trace event
-Date: Tue, 16 Apr 2024 16:42:53 +0200
-Message-ID: <1fad7a367dc657bd7436e30271178a0a1a649335.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 10/26] migration: Add send/receive header for multifd
+ channel
+Date: Tue, 16 Apr 2024 16:42:49 +0200
+Message-ID: <ee0bbaa7e7e9147a96f60a1a3a228fddc958c990.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -62,38 +63,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-There's a RAM load complete trace event but there wasn't its start equivalent.
+Add send and receive migration channel header for multifd channel.
 
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+[MSS: Adapt to rewritten migration header passing commit]
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/ram.c        | 1 +
- migration/trace-events | 1 +
- 2 files changed, 2 insertions(+)
+ migration/channel.h   |  1 +
+ migration/migration.c | 16 ++++++++++++++++
+ migration/multifd.c   |  4 +++-
+ 3 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 8deb84984f4a..cebb06480d6f 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4223,6 +4223,7 @@ static int ram_load_precopy(QEMUFile *f)
-                           RAM_SAVE_FLAG_ZERO);
-     }
+diff --git a/migration/channel.h b/migration/channel.h
+index c59ccedc7b6b..4232ee649939 100644
+--- a/migration/channel.h
++++ b/migration/channel.h
+@@ -32,6 +32,7 @@ int migration_channel_read_peek(QIOChannel *ioc,
+ typedef enum {
+     MIG_CHANNEL_TYPE_MAIN,
+     MIG_CHANNEL_TYPE_POSTCOPY_PREEMPT,
++    MIG_CHANNEL_TYPE_MULTIFD,
+ } MigChannelTypes;
  
-+    trace_ram_load_start();
-     while (!ret && !(flags & RAM_SAVE_FLAG_EOS)) {
-         ram_addr_t addr;
-         void *host = NULL, *host_bak = NULL;
-diff --git a/migration/trace-events b/migration/trace-events
-index e48607d5a6a2..396c0233cb8c 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -115,6 +115,7 @@ colo_flush_ram_cache_end(void) ""
- save_xbzrle_page_skipping(void) ""
- save_xbzrle_page_overflow(void) ""
- ram_save_iterate_big_wait(uint64_t milliconds, int iterations) "big wait: %" PRIu64 " milliseconds, %d iterations"
-+ram_load_start(void) ""
- ram_load_complete(int ret, uint64_t seq_iter) "exit_code %d seq iteration %" PRIu64
- ram_write_tracking_ramblock_start(const char *block_id, size_t page_size, void *addr, size_t length) "%s: page_size: %zu addr: %p length: %zu"
- ram_write_tracking_ramblock_stop(const char *block_id, size_t page_size, void *addr, size_t length) "%s: page_size: %zu addr: %p length: %zu"
+ typedef struct QEMU_PACKED {
+diff --git a/migration/migration.c b/migration/migration.c
+index ac9ecf1f4f22..8fe8be71a0e3 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1024,6 +1024,22 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+         f = qemu_file_new_input(ioc);
+         postcopy_preempt_new_channel(migration_incoming_get_current(), f);
+         break;
++    case MIG_CHANNEL_TYPE_MULTIFD:
++    {
++        Error *local_err = NULL;
++
++        assert(migrate_multifd());
++        if (multifd_recv_setup(errp) != 0) {
++            return;
++        }
++
++        multifd_recv_new_channel(ioc, &local_err);
++        if (local_err) {
++            error_propagate(errp, local_err);
++            return;
++        }
++        break;
++    }
+     default:
+         error_setg(errp, "Received unknown migration channel type %u",
+                    header.channel_type);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 8eecda68ac0f..c2575e3d6dbf 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1191,8 +1191,10 @@ out:
+ static bool multifd_new_send_channel_create(MultiFDSendParams *p, Error **errp)
+ {
+     g_autoptr(MFDSendChannelConnectData) data = NULL;
++    MigChannelHeader header = {};
+ 
+-    data = mfd_send_channel_connect_data_new(p, NULL);
++    header.channel_type = MIG_CHANNEL_TYPE_MULTIFD;
++    data = mfd_send_channel_connect_data_new(p, &header);
+ 
+     if (!multifd_use_packets()) {
+         return file_send_channel_create(data, errp);
 
