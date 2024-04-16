@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66313C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E61C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwgd8-0004cq-Ih; Tue, 16 Apr 2024 07:05:38 -0400
+	id 1rwglT-0006V2-Ky; Tue, 16 Apr 2024 07:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rwgd5-0004cS-46
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:05:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rwgd1-0002br-1y
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:05:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713265529;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ecN54dKkqsw7AnQsLPMI4Iso2OaDkBffOwSVm/BLkCE=;
- b=ecuYmkOAbLXeAQQIpOlqIVyoA+cjKyjsPx2VN2mkIHOval78/xxkF5iYa9pXRGkMkS0e2H
- 7qyDoSOMTJvK6YSKYW5BnDdiYhmFtFaw9K94+HuwtG3lAniCHmJ250n8cw/pz5KNLRScZZ
- iTduQKjKugJhg21eZiuO1oKQcH/yMGw=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-APkvr9dPPneUOyai_iNvmQ-1; Tue, 16 Apr 2024 07:05:27 -0400
-X-MC-Unique: APkvr9dPPneUOyai_iNvmQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a53ed147aa3so99626366b.2
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 04:05:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwglQ-0006UG-Q3
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:14:14 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwglH-0003wJ-Kv
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:14:10 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-56e37503115so3416043a12.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 04:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713266041; x=1713870841; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AZOGFdgRZOC1Pr2vakghfyPj0cm3QvLf9Bvtml3l8p4=;
+ b=R9z8L+6GXPfDnVgk+MKwwZK5o+ke9g6hvE31c+skAkRcMjdXGFlOG+SGcGJJcfvEKh
+ JFyTCTLy1J1TSOX3FVeQF84mf9HGKnHupilSi4W+4a+EotSfFUXK2VHPYqm1qKxk7wzE
+ mDZFzVX89jew1kzSmHK66ED/SaGJJIltb2a18D33o0hz3H5bsoWib6YUiaf1J3t407c5
+ AX95+l6rRTMs1SUzJU+gbpNbOUINSIBrfZkPGGqwbdD1DsD0pFzCsT+N7sgR6zq/QpTG
+ bmVZc3uhNAyjA8xPUpkZDS7NTCNlzZiDFmsKfr0ZvxRdio5fAqX/5Iaf0o1RtlJYMNi9
+ usHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713265526; x=1713870326;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ecN54dKkqsw7AnQsLPMI4Iso2OaDkBffOwSVm/BLkCE=;
- b=Kf9ebCGr/7OH6yDzCHOwqD0ZaJ0s6ADlEX9ao50WwCUYtJHMq42bv+G4ofkfVUGad3
- zW1fi96BylZVVC70LGX4+OTK69XNkCwR9/LoMVlebaknXRwCJRwV6hJBpzKoo6DYmfoz
- jZvV1LR25Ffu09mznRscV+25H6XsF1/2Q/1/VYeicbPan6ELmztVTEJmuKu52UnB2x6w
- oYkcA4zBuVjKB+aLipocsMt+Y4JKSPeduQhrjX/EzOwinQKVLyrsS2RgPrw300u+kgRm
- vvXjdASsjt12N/ul40PYQZDfCsf7X5aLQMOkOfdld6JJaj3TNkZjNmQ742ZzY8yRAXun
- zeKg==
+ d=1e100.net; s=20230601; t=1713266041; x=1713870841;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AZOGFdgRZOC1Pr2vakghfyPj0cm3QvLf9Bvtml3l8p4=;
+ b=Ygf8J0iuFssw/KKNyRqdvgcEUgQ1Hm7zmCSymA1HvlnjaIrZPxURP3SeTW9LsPXnyw
+ KS5b8SvEPGEnpGRWCSvKtj3eE4T2al+BaCGei9pAdXscyrw+h2RNaLg7xlEPsnaRO+vH
+ Ls3mCjUTbPb/haX6SOk1d6cS0ohzu65Z+qyWDE1+DIi/tCZpp1cKjfTdBZEVlvqBrPbt
+ 7zkRPVg//zz5c2+KIM7Z6yULu9llIF2TjV1HoqcJaetvoV/oXdM6Kn98zHNq2URkbY6B
+ 98dToZvFG2qBHrWLV5VF/y2NewAmcB4L48fYUeQA0adrfW8+1pjAjmXmZSdPtdrJRlBx
+ OZfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZzv/4GIVXDzyrpX2YzBTOtpp/Fb8cKlGkeskEszPYPhB1Aszani9pGzsDtQnChaKCs2cAMm9zK/+zmT2OHpbvgEwxnbw=
-X-Gm-Message-State: AOJu0YyZJcqfYQhG1pgR5uxzUm/oVKlDLtU0sOAsbgnVsNyi28KZOO7d
- U4PlYWC/h+IcTdiJ4FN1YCK8YJrQoPL5oWc4FTG8OLNc1dIIhKg1G3vPiHBWv11u8kzePYNdhnw
- Myl2dDw8YhZum9m/L6P7SZBJ6CXlFvs8Ryb9ifWsha7y14Ia603ocmufmulX6zFemMBbWNXq94t
- CboZSoZBGNQGgTZwvIXpmVaoXtrc0=
-X-Received: by 2002:a17:906:2a85:b0:a52:6e3b:fcf1 with SMTP id
- l5-20020a1709062a8500b00a526e3bfcf1mr3521587eje.17.1713265526594; 
- Tue, 16 Apr 2024 04:05:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsYvz2Xy8GSGcofH7v0sNbTuok2OQ/pVymmptj87Ospb8aVr4sJw2fpe7k7JZQB+in+Tqk+KdJ092oRV/Xp10=
-X-Received: by 2002:a17:906:2a85:b0:a52:6e3b:fcf1 with SMTP id
- l5-20020a1709062a8500b00a526e3bfcf1mr3521571eje.17.1713265526258; Tue, 16 Apr
- 2024 04:05:26 -0700 (PDT)
+ AJvYcCVvYrbUMn+1lE9Q5HSXH4QUzqBYb4vwIzBaMocpElrGFg2QtJ165g/Z7E160usV+sXYaeVfkYETvEyXvrsN8Rh5HQniAs8=
+X-Gm-Message-State: AOJu0Yz1W6xiX5c1kD1kpvXaeECLJB/SWMmwuWtdU0UfNhA8mABLLzYI
+ 9RA892AjC9KKZtfaUbj+qc3iQOYhvFgWinclZi1WdRVUawBZlkp4vKZ5E5g+9Tw=
+X-Google-Smtp-Source: AGHT+IE6ydb+klzGU7dZsqc4yrgdWRcCEuUfGuIG2l9wb1RB9Ce/c5SQ9I7RKOPdTGKlSoncJtCVzQ==
+X-Received: by 2002:a50:9e0b:0:b0:570:d50:e7d8 with SMTP id
+ z11-20020a509e0b000000b005700d50e7d8mr6165282ede.22.1713266041428; 
+ Tue, 16 Apr 2024 04:14:01 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.155.61])
+ by smtp.gmail.com with ESMTPSA id
+ em8-20020a056402364800b00570439141a0sm732273edb.3.2024.04.16.04.14.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Apr 2024 04:14:01 -0700 (PDT)
+Message-ID: <9c5666a3-e4ae-4be0-bf1f-be7d36fa80a6@linaro.org>
+Date: Tue, 16 Apr 2024 13:13:58 +0200
 MIME-Version: 1.0
-References: <cover.1713178348.git.mst@redhat.com>
- <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
- <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Tue, 16 Apr 2024 19:04:48 +0800
-Message-ID: <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
-Subject: Re: [PULL 1/1] virtio-pci: fix use of a released vector
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, 
- Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qemu-options: Deprecate "-runas" and introduce "-run-with
+ user=..." instead
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240415183942.195781-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240415183942.195781-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,119 +97,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 16, 2024 at 6:01=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Mon, 15 Apr 2024 at 11:52, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > From: Cindy Lu <lulu@redhat.com>
-> >
-> > During the booting process of the non-standard image, the behavior of t=
-he
-> > called function in qemu is as follows:
-> >
-> > 1. vhost_net_stop() was triggered by guest image. This will call the fu=
-nction
-> > virtio_pci_set_guest_notifiers() with assgin=3D false,
-> > virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vec=
-tor 0
-> >
-> > 2. virtio_reset() was triggered, this will set configure vector to VIRT=
-IO_NO_VECTOR
-> >
-> > 3.vhost_net_start() was called (at this time, the configure vector is
-> > still VIRTIO_NO_VECTOR) and then call virtio_pci_set_guest_notifiers() =
-with
-> > assgin=3Dtrue, so the irqfd for vector 0 is still not "init" during thi=
-s process
-> >
-> > 4. The system continues to boot and sets the vector back to 0. After th=
-at
-> > msix_fire_vector_notifier() was triggered to unmask the vector 0 and  m=
-eet the crash
-> >
-> > To fix the issue, we need to support changing the vector after VIRTIO_C=
-ONFIG_S_DRIVER_OK is set.
-> >
->
-> Hi; Coverity points out what it thinks is a problem in this commit
-> (CID 1543938):
->
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index cb6940fc0e..cb159fd078 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -1424,6 +1424,38 @@ static int virtio_pci_add_mem_cap(VirtIOPCIProxy=
- *proxy,
-> >      return offset;
-> >  }
-> >
-> > +static void virtio_pci_set_vector(VirtIODevice *vdev,
-> > +                                  VirtIOPCIProxy *proxy,
-> > +                                  int queue_no, uint16_t old_vector,
-> > +                                  uint16_t new_vector)
-> > +{
-> > +    bool kvm_irqfd =3D (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> > +        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
-> > +
-> > +    if (new_vector =3D=3D old_vector) {
-> > +        return;
-> > +    }
-> > +
-> > +    /*
-> > +     * If the device uses irqfd and the vector changes after DRIVER_OK=
- is
-> > +     * set, we need to release the old vector and set up the new one.
-> > +     * Otherwise just need to set the new vector on the device.
-> > +     */
-> > +    if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR) {
-> > +        kvm_virtio_pci_vector_release_one(proxy, queue_no);
-> > +    }
-> > +    /* Set the new vector on the device. */
-> > +    if (queue_no =3D=3D VIRTIO_CONFIG_IRQ_IDX) {
-> > +        vdev->config_vector =3D new_vector;
-> > +    } else {
-> > +        virtio_queue_set_vector(vdev, queue_no, new_vector);
-> > +    }
->
-> Here queue_no can be VIRTIO_CONFIG_IRQ_IDX, which is -1.
->
-> > +    /* If the new vector changed need to set it up. */
-> > +    if (kvm_irqfd && new_vector !=3D VIRTIO_NO_VECTOR) {
-> > +        kvm_virtio_pci_vector_use_one(proxy, queue_no);
->
-> Here we pass that through to kvm_virtio_pci_vector_use_one().
-> In kvm_virtio_pci_vector_use_one()'s error-exit path ("undo")
-> it does
->     vector =3D virtio_queue_vector(vdev, queue_no);
-> and in virtio_queue_vector() it does:
->
->     return n < VIRTIO_QUEUE_MAX ? vdev->vq[n].vector :
->         VIRTIO_NO_VECTOR;
->
-> where 'n' is an int, so if we can get here with queue_no being
-> VIRTIO_CONFIG_IRQ_IDX then we'll index off the front of the
-> vdev->vq[] array.
->
-> Maybe this is a "can't happen" case, but it does seem odd that
-> virtio_queue_vector() only bounds-checks the "too big" case
-> for its argument and not the "too small" case and/or it
-> doesn't have a special case for VIRTIO_CONFIG_IRQ_IDX.
->
-> > +    }
-> > +}
-> > +
->
-hi peter
-I think we can simply remove the part
-    vector =3D virtio_queue_vector(vdev, queue_no);
-the vector is get from virtio_pci_get_notifier() and don't need to get it a=
-gain
-I will send the fix soon
-thanks
-cindy
-> thanks
-> -- PMM
->
+On 15/4/24 20:39, Thomas Huth wrote:
+> The old "-runas" option has the disadvantage that it is not visible
+> in the QAPI schema, so it is not available via the normal introspection
+> mechanisms. We've recently introduced the "-run-with" option for exactly
+> this purpose, which is meant to handle the options that affect the
+> runtime behavior. Thus let's introduce a "user=..." parameter here now
+> and deprecate the old "-runas" option.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   docs/about/deprecated.rst |  6 ++++++
+>   system/vl.c               | 15 +++++++++++++++
+>   qemu-options.hx           | 11 +++++++++--
+>   3 files changed, 30 insertions(+), 2 deletions(-)
+
+
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 8ce85d4559..50912c7dab 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -4824,7 +4824,8 @@ DEF("runas", HAS_ARG, QEMU_OPTION_runas, \
+>   SRST
+>   ``-runas user``
+>       Immediately before starting guest execution, drop root privileges,
+> -    switching to the specified user.
+> +    switching to the specified user. This option is deprecated, use
+> +    ``-run-with user=...`` instead.
+>   ERST
+>   
+>   DEF("prom-env", HAS_ARG, QEMU_OPTION_prom_env,
+> @@ -4993,7 +4994,9 @@ DEF("run-with", HAS_ARG, QEMU_OPTION_run_with,
+>       "-run-with [async-teardown=on|off][,chroot=dir]\n"
+
+"-run-with [async-teardown=on|off][,chroot=dir][user=username|uid:gid]\n"
+
+>       "                Set miscellaneous QEMU process lifecycle options:\n"
+>       "                async-teardown=on enables asynchronous teardown (Linux only)\n"
+> -    "                chroot=dir chroot to dir just before starting the VM\n",
+> +    "                chroot=dir chroot to dir just before starting the VM\n"
+> +    "                user=username switch to the specified user before starting the VM\n"
+> +    "                user=uid:gid dito, but use specified user-ID and group-ID instead\n",
+>       QEMU_ARCH_ALL)
+>   SRST
+>   ``-run-with [async-teardown=on|off][,chroot=dir]``
+
+Ditto.
+
+> @@ -5013,6 +5016,10 @@ SRST
+>       ``chroot=dir`` can be used for doing a chroot to the specified directory
+>       immediately before starting the guest execution. This is especially useful
+>       in combination with -runas.
+> +
+> +    ``user=username`` or ``user=uid:gid`` can be used to drop root privileges
+> +    by switching to the specified user (via username) or user and group
+> +    (via uid:gid) immediately before starting guest execution.
+>   ERST
+>   #endif
+>   
 
 
