@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BEDDC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC52C04FF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 09:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwf0l-0005DK-CA; Tue, 16 Apr 2024 05:21:55 -0400
+	id 1rwf0R-0004Mb-25; Tue, 16 Apr 2024 05:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rwezN-0003Em-KS; Tue, 16 Apr 2024 05:20:32 -0400
+ id 1rwez5-0002zg-1k; Tue, 16 Apr 2024 05:20:13 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rwez9-0007iy-Mf; Tue, 16 Apr 2024 05:20:28 -0400
+ id 1rwez2-0007iy-Ci; Tue, 16 Apr 2024 05:20:10 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 16 Apr
- 2024 17:19:10 +0800
+ 2024 17:19:09 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 16 Apr 2024 17:19:10 +0800
+ Transport; Tue, 16 Apr 2024 17:19:08 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -35,9 +35,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 11/16] aspeed/intc: Add AST2700 support
-Date: Tue, 16 Apr 2024 17:18:58 +0800
-Message-ID: <20240416091904.935283-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 09/16] aspeed/smc: Add AST2700 support
+Date: Tue, 16 Apr 2024 17:18:56 +0800
+Message-ID: <20240416091904.935283-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
 References: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
@@ -68,382 +68,271 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AST2700 interrupt controller(INTC) provides hardware interrupt interfaces
-to interrupt of processors PSP, SSP and TSP. In INTC, each interrupt of
-INT 128 to INT136 combines 32 interrupts.
-
-Introduce a new aspeed_intc class with instance_init and realize handlers.
-
-So far, this model only supports GICINT128 to GICINT136.
-It creates 9 GICINT or-gates to connect 32 interrupts sources
-from GICINT128 to GICINT136 as IRQ GPIO-OUTPUT pins.
-Then, this model registers IRQ handler with its IRQ GPIO-INPUT pins which
-connect to GICINT or-gates. And creates 9 GICINT IRQ GPIO-OUTPUT pins which
-connect to GIC device with GIC IRQ 128 to 136.
-
-If one interrupt source from GICINT128 to GICINT136
-set irq, the OR-GATE irq callback function is called and set irq to INTC by
-OR-GATE GPIO-OUTPUT pins. Then, the INTC irq callback function is called and
-set irq to GIC by its GICINT IRQ GPIO-OUTPUT pins. Finally, the GIC irq
-callback function is called and set irq to CPUs and
-CPUs execute Interrupt Service Routine (ISR).
+AST2700 fmc/spi controller's address decoding unit is 64KB
+and only bits [31:16] are used for decoding. Introduce seg_to_reg
+and reg_to_seg handlers for ast2700 fmc/spi controller.
+In addition, adds ast2700 fmc, spi0, spi1, and spi2 class init handler.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/intc/aspeed_intc.c         | 269 ++++++++++++++++++++++++++++++++++
- hw/intc/meson.build           |   1 +
- hw/intc/trace-events          |   6 +
- include/hw/intc/aspeed_intc.h |  35 +++++
- 4 files changed, 311 insertions(+)
- create mode 100644 hw/intc/aspeed_intc.c
- create mode 100644 include/hw/intc/aspeed_intc.h
+ hw/ssi/aspeed_smc.c | 222 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 220 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-new file mode 100644
-index 0000000000..df31900d56
---- /dev/null
-+++ b/hw/intc/aspeed_intc.c
-@@ -0,0 +1,269 @@
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+index a67cac3d0f..e768e5463c 100644
+--- a/hw/ssi/aspeed_smc.c
++++ b/hw/ssi/aspeed_smc.c
+@@ -185,7 +185,7 @@
+  *   0: 4 bytes
+  *   0x7FFFFF: 32M bytes
+  *
+- * DMA length is from 1 byte to 32MB (AST2600, AST10x0)
++ * DMA length is from 1 byte to 32MB (AST2600, AST10x0 and AST2700)
+  *   0: 1 byte
+  *   0x1FFFFFF: 32M bytes
+  */
+@@ -670,7 +670,7 @@ static const MemoryRegionOps aspeed_smc_flash_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+-        .max_access_size = 4,
++        .max_access_size = 8,
+     },
+ };
+ 
+@@ -1951,6 +1951,220 @@ static const TypeInfo aspeed_1030_spi2_info = {
+     .class_init = aspeed_1030_spi2_class_init,
+ };
+ 
 +/*
-+ * ASPEED INTC Controller
-+ *
-+ * Copyright (C) 2024 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * The FMC Segment Registers of the AST2700 have a 64KB unit.
++ * Only bits [31:16] are used for decoding.
 + */
++#define AST2700_SEG_ADDR_MASK 0xffff0000
 +
-+#include "qemu/osdep.h"
-+#include "hw/intc/aspeed_intc.h"
-+#include "hw/irq.h"
-+#include "migration/vmstate.h"
-+#include "qemu/bitops.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "hw/intc/arm_gicv3.h"
-+#include "trace.h"
-+#include "hw/registerfields.h"
-+#include "qapi/error.h"
-+
-+/* INTC Registers */
-+REG32(GICINT128_EN,         0x1000)
-+REG32(GICINT128_STATUS,     0x1004)
-+REG32(GICINT129_EN,         0x1100)
-+REG32(GICINT129_STATUS,     0x1104)
-+REG32(GICINT130_EN,         0x1200)
-+REG32(GICINT130_STATUS,     0x1204)
-+REG32(GICINT131_EN,         0x1300)
-+REG32(GICINT131_STATUS,     0x1304)
-+REG32(GICINT132_EN,         0x1400)
-+REG32(GICINT132_STATUS,     0x1404)
-+REG32(GICINT133_EN,         0x1500)
-+REG32(GICINT133_STATUS,     0x1504)
-+REG32(GICINT134_EN,         0x1600)
-+REG32(GICINT134_STATUS,     0x1604)
-+REG32(GICINT135_EN,         0x1700)
-+REG32(GICINT135_STATUS,     0x1704)
-+REG32(GICINT136_EN,         0x1800)
-+REG32(GICINT136_STATUS,     0x1804)
-+
-+#define GICINT_EN_BASE     R_GICINT128_EN
-+
-+/*
-+ * The address of GICINT128 to GICINT136 are from 0x1000 to 0x1804.
-+ * Utilize "address & 0x0f00" to get the gicint_out index and
-+ * its gic irq.
-+ */
-+static void aspeed_intc_update(AspeedINTCState *s, int irq, int level)
++static uint32_t aspeed_2700_smc_segment_to_reg(const AspeedSMCState *s,
++                                               const AspeedSegments *seg)
 +{
-+    uint32_t gicint_enable_addr = GICINT_EN_BASE + ((0x100 * irq) >> 2);
-+    uint32_t gicint_status_addr = gicint_enable_addr + (0x4 >> 2);
++    uint32_t reg = 0;
 +
-+    if (s->trigger[irq]) {
-+        if (!level && !s->regs[gicint_status_addr]) {
-+            /* clear irq */
-+            trace_aspeed_intc_update_irq(irq, 0);
-+            qemu_set_irq(s->gicint_out[irq], 0);
-+            s->trigger[irq] = false;
-+        }
-+    } else {
-+        if (s->new_gicint_status[irq]) {
-+            /* set irq */
-+            trace_aspeed_intc_update_irq(irq, 1);
-+            s->regs[gicint_status_addr] = s->new_gicint_status[irq];
-+            s->new_gicint_status[irq] = 0;
-+            qemu_set_irq(s->gicint_out[irq], 1);
-+            s->trigger[irq] = true;
-+        }
-+    }
-+}
-+
-+/*
-+ * The value of irq should be 0 to ASPEED_INTC_NR_GICS.
-+ * The irq 0 indicates GICINT128, irq 1 indicates GICINT129 and so on.
-+ */
-+static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-+{
-+    AspeedINTCState *s = (AspeedINTCState *)opaque;
-+    uint32_t gicint_enable_addr = GICINT_EN_BASE + ((0x100 * irq) >> 2);
-+    uint32_t enable = s->regs[gicint_enable_addr];
-+    int i;
-+
-+    if (irq > ASPEED_INTC_NR_GICS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid interrupt number: %d\n",
-+                      __func__, irq);
-+        return;
-+    }
-+
-+    trace_aspeed_intc_set_irq(irq, level);
-+
-+    for (i = 0; i < 32; i++) {
-+        if (s->gicint_orgate[irq].levels[i]) {
-+            if (enable & BIT(i)) {
-+                s->new_gicint_status[irq] |= BIT(i);
-+            }
-+        }
-+    }
-+
-+    aspeed_intc_update(s, irq, level);
-+}
-+
-+static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned int size)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    uint32_t addr = offset >> 2;
-+    uint32_t value = 0;
-+
-+    if (addr >= ASPEED_INTC_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, offset);
++    /* Disabled segments have a nil register */
++    if (!seg->size) {
 +        return 0;
 +    }
 +
-+    switch (addr) {
-+    case R_GICINT128_EN:
-+    case R_GICINT129_EN:
-+    case R_GICINT130_EN:
-+    case R_GICINT131_EN:
-+    case R_GICINT132_EN:
-+    case R_GICINT133_EN:
-+    case R_GICINT134_EN:
-+    case R_GICINT135_EN:
-+    case R_GICINT136_EN:
-+    case R_GICINT128_STATUS:
-+    case R_GICINT129_STATUS:
-+    case R_GICINT130_STATUS:
-+    case R_GICINT131_STATUS:
-+    case R_GICINT132_STATUS:
-+    case R_GICINT133_STATUS:
-+    case R_GICINT134_STATUS:
-+    case R_GICINT135_STATUS:
-+    case R_GICINT136_STATUS:
-+        value = s->regs[addr];
-+        break;
-+    default:
-+        value = s->regs[addr];
-+        break;
-+    }
-+
-+    trace_aspeed_intc_read(offset, size, value);
-+
-+    return value;
++    reg |= (seg->addr & AST2700_SEG_ADDR_MASK) >> 16; /* start offset */
++    reg |= (seg->addr + seg->size - 1) & AST2700_SEG_ADDR_MASK; /* end offset */
++    return reg;
 +}
 +
-+static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-+                                        unsigned size)
++static void aspeed_2700_smc_reg_to_segment(const AspeedSMCState *s,
++                                           uint32_t reg, AspeedSegments *seg)
 +{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    uint32_t irq = (offset & 0x0f00) >> 8;
-+    uint32_t addr = offset >> 2;
++    uint32_t start_offset = (reg << 16) & AST2700_SEG_ADDR_MASK;
++    uint32_t end_offset = reg & AST2700_SEG_ADDR_MASK;
++    AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
 +
-+
-+    if (addr >= ASPEED_INTC_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, offset);
-+        return;
++    if (reg) {
++        seg->addr = asc->flash_window_base + start_offset;
++        seg->size = end_offset + (64 * KiB) - start_offset;
++    } else {
++        seg->addr = asc->flash_window_base;
++        seg->size = 0;
 +    }
-+
-+    trace_aspeed_intc_write(offset, size, data);
-+
-+    switch (addr) {
-+    case R_GICINT128_EN:
-+    case R_GICINT129_EN:
-+    case R_GICINT130_EN:
-+    case R_GICINT131_EN:
-+    case R_GICINT132_EN:
-+    case R_GICINT133_EN:
-+    case R_GICINT134_EN:
-+    case R_GICINT135_EN:
-+    case R_GICINT136_EN:
-+        s->regs[addr] = data;
-+        break;
-+    case R_GICINT128_STATUS:
-+    case R_GICINT129_STATUS:
-+    case R_GICINT130_STATUS:
-+    case R_GICINT131_STATUS:
-+    case R_GICINT132_STATUS:
-+    case R_GICINT133_STATUS:
-+    case R_GICINT134_STATUS:
-+    case R_GICINT135_STATUS:
-+    case R_GICINT136_STATUS:
-+        /* clear status */
-+        s->regs[addr] &= ~data;
-+        if (!s->regs[addr]) {
-+            aspeed_intc_update(s, irq, 0);
-+        }
-+        break;
-+    default:
-+        s->regs[addr] = data;
-+        break;
-+    }
-+
-+    return;
 +}
 +
-+static const MemoryRegionOps aspeed_intc_ops = {
-+    .read = aspeed_intc_read,
-+    .write = aspeed_intc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    }
++static const uint32_t aspeed_2700_fmc_resets[ASPEED_SMC_R_MAX] = {
++    [R_CONF] = (CONF_FLASH_TYPE_SPI << CONF_FLASH_TYPE0 |
++            CONF_FLASH_TYPE_SPI << CONF_FLASH_TYPE1),
++    [R_CE_CTRL] = 0x0000aa00,
++    [R_CTRL0] = 0x406b0641,
++    [R_CTRL1] = 0x00000400,
++    [R_CTRL2] = 0x00000400,
++    [R_CTRL3] = 0x00000400,
++    [R_SEG_ADDR0] = 0x08000000,
++    [R_SEG_ADDR1] = 0x10000800,
++    [R_SEG_ADDR2] = 0x00000000,
++    [R_SEG_ADDR3] = 0x00000000,
++    [R_DUMMY_DATA] = 0x00010000,
++    [R_DMA_DRAM_ADDR_HIGH] = 0x00000000,
++    [R_TIMINGS] = 0x007b0000,
 +};
 +
-+static void aspeed_intc_instance_init(Object *obj)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(obj);
-+    int i;
++static const AspeedSegments aspeed_2700_fmc_segments[] = {
++    { 0x0, 128 * MiB }, /* start address is readonly */
++    { 128 * MiB, 128 * MiB }, /* default is disabled but needed for -kernel */
++    { 256 * MiB, 128 * MiB }, /* default is disabled but needed for -kernel */
++    { 0x0, 0 }, /* disabled */
++};
 +
-+    for (i = 0; i < ASPEED_INTC_NR_GICS; i++) {
-+        object_initialize_child(obj, "gic-orgate[*]", &s->gicint_orgate[i],
-+                                TYPE_OR_IRQ);
-+        object_property_set_int(OBJECT(&s->gicint_orgate[i]), "num-lines",
-+                                32, &error_abort);
-+    }
-+}
-+
-+static void aspeed_intc_reset(DeviceState *dev)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(dev);
-+    memset(s->regs, 0, sizeof(s->regs));
-+    memset(s->trigger, 0, sizeof(s->trigger));
-+    memset(s->new_gicint_status, 0, sizeof(s->new_gicint_status));
-+}
-+
-+static void aspeed_intc_realize(DeviceState *dev, Error **errp)
-+{
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AspeedINTCState *s = ASPEED_INTC(dev);
-+    int i;
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-+                          TYPE_ASPEED_INTC ".regs", ASPEED_INTC_NR_REGS << 2);
-+
-+    sysbus_init_mmio(sbd, &s->iomem);
-+    qdev_init_gpio_in(dev, aspeed_intc_set_irq, ASPEED_INTC_NR_GICS);
-+
-+    for (i = 0; i < ASPEED_INTC_NR_GICS; i++) {
-+        sysbus_init_irq(sbd, &s->gicint_out[i]);
-+    }
-+}
-+
-+static void aspeed_intc_class_init(ObjectClass *klass, void *data)
++static void aspeed_2700_fmc_class_init(ObjectClass *klass, void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSMCClass *asc = ASPEED_SMC_CLASS(klass);
 +
-+    dc->realize = aspeed_intc_realize;
-+    dc->reset = aspeed_intc_reset;
-+    dc->desc = "ASPEED INTC Controller";
-+    dc->vmsd = NULL;
++    dc->desc               = "Aspeed 2700 FMC Controller";
++    asc->r_conf            = R_CONF;
++    asc->r_ce_ctrl         = R_CE_CTRL;
++    asc->r_ctrl0           = R_CTRL0;
++    asc->r_timings         = R_TIMINGS;
++    asc->nregs_timings     = 3;
++    asc->conf_enable_w0    = CONF_ENABLE_W0;
++    asc->cs_num_max        = 3;
++    asc->segments          = aspeed_2700_fmc_segments;
++    asc->segment_addr_mask = 0xffffffff;
++    asc->resets            = aspeed_2700_fmc_resets;
++    asc->flash_window_base = 0x100000000;
++    asc->flash_window_size = 1 * GiB;
++    asc->features          = ASPEED_SMC_FEATURE_DMA |
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;
++    asc->dma_flash_mask    = 0x2FFFFFFC;
++    asc->dma_dram_mask     = 0xFFFFFFFC;
++    asc->dma_start_length  = 1;
++    asc->nregs             = ASPEED_SMC_R_MAX;
++    asc->segment_to_reg    = aspeed_2700_smc_segment_to_reg;
++    asc->reg_to_segment    = aspeed_2700_smc_reg_to_segment;
++    asc->dma_ctrl          = aspeed_2600_smc_dma_ctrl;
 +}
 +
-+static const TypeInfo aspeed_intc_info = {
-+    .name = TYPE_ASPEED_INTC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_init = aspeed_intc_instance_init,
-+    .instance_size = sizeof(AspeedINTCState),
-+    .class_init = aspeed_intc_class_init,
++static const TypeInfo aspeed_2700_fmc_info = {
++    .name =  "aspeed.fmc-ast2700",
++    .parent = TYPE_ASPEED_SMC,
++    .class_init = aspeed_2700_fmc_class_init,
 +};
 +
-+static void aspeed_intc_register_types(void)
++static const AspeedSegments aspeed_2700_spi0_segments[] = {
++    { 0x0, 128 * MiB }, /* start address is readonly */
++    { 128 * MiB, 128 * MiB }, /* start address is readonly */
++    { 0x0, 0 }, /* disabled */
++};
++
++static void aspeed_2700_spi0_class_init(ObjectClass *klass, void *data)
 +{
-+    type_register_static(&aspeed_intc_info);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSMCClass *asc = ASPEED_SMC_CLASS(klass);
++
++    dc->desc               = "Aspeed 2700 SPI0 Controller";
++    asc->r_conf            = R_CONF;
++    asc->r_ce_ctrl         = R_CE_CTRL;
++    asc->r_ctrl0           = R_CTRL0;
++    asc->r_timings         = R_TIMINGS;
++    asc->nregs_timings     = 2;
++    asc->conf_enable_w0    = CONF_ENABLE_W0;
++    asc->cs_num_max        = 2;
++    asc->segments          = aspeed_2700_spi0_segments;
++    asc->segment_addr_mask = 0xffffffff;
++    asc->flash_window_base = 0x180000000;
++    asc->flash_window_size = 1 * GiB;
++    asc->features          = ASPEED_SMC_FEATURE_DMA |
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;
++    asc->dma_flash_mask    = 0x2FFFFFFC;
++    asc->dma_dram_mask     = 0xFFFFFFFC;
++    asc->dma_start_length  = 1;
++    asc->nregs             = ASPEED_SMC_R_MAX;
++    asc->segment_to_reg    = aspeed_2700_smc_segment_to_reg;
++    asc->reg_to_segment    = aspeed_2700_smc_reg_to_segment;
++    asc->dma_ctrl          = aspeed_2600_smc_dma_ctrl;
 +}
 +
-+type_init(aspeed_intc_register_types);
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index ed355941d1..f5c574f584 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -14,6 +14,7 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
-+system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
- system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index 1ef29d0256..30b9dd2a96 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -79,6 +79,12 @@ aspeed_vic_update_fiq(int flags) "Raising FIQ: %d"
- aspeed_vic_update_irq(int flags) "Raising IRQ: %d"
- aspeed_vic_read(uint64_t offset, unsigned size, uint32_t value) "From 0x%" PRIx64 " of size %u: 0x%" PRIx32
- aspeed_vic_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-+# aspeed_intc.c
-+aspeed_intc_read(uint64_t offset, unsigned size, uint32_t value) "From 0x%" PRIx64 " of size %u: 0x%" PRIx32
-+aspeed_intc_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-+aspeed_intc_set_irq(int irq, int level) "Set IRQ %d: %d"
-+aspeed_intc_update_irq(int irq, int level) "Update IRQ: %d: %d"
-+aspeed_intc_debug(uint32_t offset, uint32_t value) "Debug 0x%x: 0x%x"
- 
- # arm_gic.c
- gic_enable_irq(int irq) "irq %d enabled"
-diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-new file mode 100644
-index 0000000000..0d2fbbda8f
---- /dev/null
-+++ b/include/hw/intc/aspeed_intc.h
-@@ -0,0 +1,35 @@
-+/*
-+ * ASPEED INTC Controller
-+ *
-+ * Copyright (C) 2024 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ASPEED_INTC_H
-+#define ASPEED_INTC_H
-+
-+#include "hw/sysbus.h"
-+#include "qom/object.h"
-+#include "hw/or-irq.h"
-+
-+#define TYPE_ASPEED_INTC "aspeed.intc"
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedINTCState, ASPEED_INTC)
-+
-+#define ASPEED_INTC_NR_REGS (0x2000 >> 2)
-+#define ASPEED_INTC_NR_GICS 9
-+
-+struct AspeedINTCState {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
-+    DeviceState *gic;
-+
-+    /*< public >*/
-+    MemoryRegion iomem;
-+    uint32_t regs[ASPEED_INTC_NR_REGS];
-+    OrIRQState gicint_orgate[ASPEED_INTC_NR_GICS];
-+    qemu_irq gicint_out[ASPEED_INTC_NR_GICS];
-+    bool trigger[ASPEED_INTC_NR_GICS];
-+    uint32_t new_gicint_status[ASPEED_INTC_NR_GICS];
++static const TypeInfo aspeed_2700_spi0_info = {
++    .name =  "aspeed.spi0-ast2700",
++    .parent = TYPE_ASPEED_SMC,
++    .class_init = aspeed_2700_spi0_class_init,
 +};
 +
-+#endif /* ASPEED_INTC_H */
++static const AspeedSegments aspeed_2700_spi1_segments[] = {
++    { 0x0, 128 * MiB }, /* start address is readonly */
++    { 0x0, 0 }, /* disabled */
++};
++
++static void aspeed_2700_spi1_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSMCClass *asc = ASPEED_SMC_CLASS(klass);
++
++    dc->desc               = "Aspeed 2700 SPI1 Controller";
++    asc->r_conf            = R_CONF;
++    asc->r_ce_ctrl         = R_CE_CTRL;
++    asc->r_ctrl0           = R_CTRL0;
++    asc->r_timings         = R_TIMINGS;
++    asc->nregs_timings     = 2;
++    asc->conf_enable_w0    = CONF_ENABLE_W0;
++    asc->cs_num_max        = 2;
++    asc->segments          = aspeed_2700_spi1_segments;
++    asc->segment_addr_mask = 0xffffffff;
++    asc->flash_window_base = 0x200000000;
++    asc->flash_window_size = 1 * GiB;
++    asc->features          = ASPEED_SMC_FEATURE_DMA |
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;
++    asc->dma_flash_mask    = 0x2FFFFFFC;
++    asc->dma_dram_mask     = 0xFFFFFFFC;
++    asc->dma_start_length  = 1;
++    asc->nregs             = ASPEED_SMC_R_MAX;
++    asc->segment_to_reg    = aspeed_2700_smc_segment_to_reg;
++    asc->reg_to_segment    = aspeed_2700_smc_reg_to_segment;
++    asc->dma_ctrl          = aspeed_2600_smc_dma_ctrl;
++}
++
++static const TypeInfo aspeed_2700_spi1_info = {
++        .name =  "aspeed.spi1-ast2700",
++        .parent = TYPE_ASPEED_SMC,
++        .class_init = aspeed_2700_spi1_class_init,
++};
++
++static const AspeedSegments aspeed_2700_spi2_segments[] = {
++    { 0x0, 128 * MiB }, /* start address is readonly */
++    { 0x0, 0 }, /* disabled */
++};
++
++static void aspeed_2700_spi2_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSMCClass *asc = ASPEED_SMC_CLASS(klass);
++
++    dc->desc               = "Aspeed 2700 SPI2 Controller";
++    asc->r_conf            = R_CONF;
++    asc->r_ce_ctrl         = R_CE_CTRL;
++    asc->r_ctrl0           = R_CTRL0;
++    asc->r_timings         = R_TIMINGS;
++    asc->nregs_timings     = 2;
++    asc->conf_enable_w0    = CONF_ENABLE_W0;
++    asc->cs_num_max        = 2;
++    asc->segments          = aspeed_2700_spi2_segments;
++    asc->segment_addr_mask = 0xffffffff;
++    asc->flash_window_base = 0x280000000;
++    asc->flash_window_size = 1 * GiB;
++    asc->features          = ASPEED_SMC_FEATURE_DMA |
++                             ASPEED_SMC_FEATURE_DMA_DRAM_ADDR_HIGH;
++    asc->dma_flash_mask    = 0x0FFFFFFC;
++    asc->dma_dram_mask     = 0xFFFFFFFC;
++    asc->dma_start_length  = 1;
++    asc->nregs             = ASPEED_SMC_R_MAX;
++    asc->segment_to_reg    = aspeed_2700_smc_segment_to_reg;
++    asc->reg_to_segment    = aspeed_2700_smc_reg_to_segment;
++    asc->dma_ctrl          = aspeed_2600_smc_dma_ctrl;
++}
++
++static const TypeInfo aspeed_2700_spi2_info = {
++        .name =  "aspeed.spi2-ast2700",
++        .parent = TYPE_ASPEED_SMC,
++        .class_init = aspeed_2700_spi2_class_init,
++};
++
+ static void aspeed_smc_register_types(void)
+ {
+     type_register_static(&aspeed_smc_flash_info);
+@@ -1967,6 +2181,10 @@ static void aspeed_smc_register_types(void)
+     type_register_static(&aspeed_1030_fmc_info);
+     type_register_static(&aspeed_1030_spi1_info);
+     type_register_static(&aspeed_1030_spi2_info);
++    type_register_static(&aspeed_2700_fmc_info);
++    type_register_static(&aspeed_2700_spi0_info);
++    type_register_static(&aspeed_2700_spi1_info);
++    type_register_static(&aspeed_2700_spi2_info);
+ }
+ 
+ type_init(aspeed_smc_register_types)
 -- 
 2.25.1
 
