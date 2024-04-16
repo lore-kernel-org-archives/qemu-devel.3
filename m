@@ -4,102 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00526C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 12:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D930C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 12:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwhlI-00042a-5G; Tue, 16 Apr 2024 08:18:08 -0400
+	id 1rwhpX-000585-9q; Tue, 16 Apr 2024 08:22:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rwhlB-00040M-Bu
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 08:18:04 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwhpV-00057g-Mn
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 08:22:29 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rwhl8-0007Me-3A
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 08:18:00 -0400
-Received: from [134.155.50.234] (dock02.bib.uni-mannheim.de [134.155.50.234])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 7C515DA092F;
- Tue, 16 Apr 2024 14:17:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim;
- t=1713269873;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AjfgHpJUa53rAkYdnS37elIXud/HBdiYV5n8HeNP/9s=;
- b=qY+1mkXjpIND6FqMCxaHaU3TeBk2YRhehTTAOqnggFHfIhJhzPAUEJGMoytztOmVj3RLQ+
- XYiN0qoXWWSYl0rNF5Yn5eNLqcAE6OriVLpJCaCOTHkgvhQg1LWoE2djPlwcep/EfdaHBU
- Mhq8e1SCqRWzwrixqjw7OmAnXgeoi/2AfGdcDzYGm50i9bBpa+RKeKZdAydVspLFLRB/s0
- +AHIrOSzML3lmgCcSUvW9H3SzmQT2DciuNsDoapLjX0bTSQ05087XdOyx3CXTytNboOJXe
- RYYRFnlnsLIqAPDuAd9mMcO4cYsVKh0szMiW3dhFYSpKwNJe21c7QFLimgzhPA==
-Message-ID: <f5926850-670b-43fa-8011-c33ba45d8fc3@weilnetz.de>
-Date: Tue, 16 Apr 2024 14:17:53 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rwhpT-0008S2-Pb
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 08:22:29 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2dac77cdf43so13165741fa.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 05:22:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713270146; x=1713874946; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x6Yhr+Ohk/AD3RKmAt5+G0M6SctMsd2O74f1TeTspDk=;
+ b=T2p5CfUodvOkOk0uGedwJuSQ2EbJani2DBMmkZ5flK/zJxnSTjxa/G3+hD21PomnFE
+ pHG0emb0rlR3oSHGsjAn52I2TeH7trpSmK2QTAZDBXq3iC9ZcGkRf+m5CigZx0mwk4sk
+ YkZklMqhMBEotZt5iSN+RuxlMTLxHjI3yd5vXqS2pDW/fg6XLQFBNu+Vt+4LZnKoRFIU
+ jLaOzIcAE7QyuC/urJwrprens0jlNHVHbHuIeN8X5HB4UOTlGTnvmyOswDJ6klVUPWGW
+ urh5o8NHzbtGVyTLEGqMMnN/feIgGN7Fqrv12rmlSEaGx9rcmYWxcmRRM3Iub5sdmD0L
+ 7aeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713270146; x=1713874946;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=x6Yhr+Ohk/AD3RKmAt5+G0M6SctMsd2O74f1TeTspDk=;
+ b=OimtyuzMjJ9BC0FkK17vGkmLqTymZsv2XtK3Gu+uOnhTPWxWgr/7fu+qxdggMMxPst
+ CN+SLIidqcOpVZOZCYmQdAINFr3D8qfOtfg7Wo69N9GV/WIsaJThKrMFtAVxai1AkiAc
+ etYXI2kXvggMpulIWTuImkbDjtJtt4eSbojfy+bu0kcFYpElz4JmJS4jJ0Z6gyckkQmC
+ yV/tirtVwJWgN+P+C5C7herX5CYXH8dqIh5L2uOMrqYr/DpwSnoFneQNwyEtpLmao5gZ
+ ZWbA4DOTxJPVIfdjSaM4doB09AwLCJWhm29KzasWCgPoPJk9RoPMugKD0NkCrRVOAcxN
+ qX1g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwz+3W6ToILsJIXD1Yd6+3mk2dvckwaMsTYAkj5/i0UZuybW7e++ByJDmYGQ+MdUxp7CEgY4BIX1sc7FRh0LqHfmlWQN0=
+X-Gm-Message-State: AOJu0Yx3jvId8VHn/NstIsyCG+63HzUVsldbqVQqTPNiPhB2UIYVbFVz
+ DFw59RezoK1YF7K9uxdAYszk46g/VMjdwAk3+dXYv2HEA8HZJN5urOomOgLvRoQdeq3pUHt3ybS
+ CKQd6byzhReCYqtfqd8yK60p24uQpiultBteHiw==
+X-Google-Smtp-Source: AGHT+IFOOzbyY+bwtXBjnLZf/cvbNQlTTK8SQQnVlPV3etuAUR1J6SSFh2Ztbhnv3olJVVsYQiguIwzB7x9lvuSTa+A=
+X-Received: by 2002:a2e:9dc5:0:b0:2d9:f7f8:3e87 with SMTP id
+ x5-20020a2e9dc5000000b002d9f7f83e87mr8976870ljj.32.1713270145512; Tue, 16 Apr
+ 2024 05:22:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: cross-i686-tci CI job is flaky again (timeouts): can somebody who
- cares about TCI investigate?
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <CAFEAcA92aivDF-LjSrtZH6o4UtgrtcWnM2wuPZA5VOiN6j7KMA@mail.gmail.com>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <CAFEAcA92aivDF-LjSrtZH6o4UtgrtcWnM2wuPZA5VOiN6j7KMA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <cover.1713178348.git.mst@redhat.com>
+ <2ce6cff94df2650c460f809e5ad263f1d22507c0.1713178348.git.mst@redhat.com>
+ <CAFEAcA9Hs+05ux3SkJqZQ5RyAkwbgmDGMm5gn+GYZL76CJCYkQ@mail.gmail.com>
+ <CACLfguX73rN77rK92xboF6hxERoO2F7kdqUgBohrURt7-38C2A@mail.gmail.com>
+ <CAFEAcA_WxhOpjtZ5r-CfoOaf1aiKeaEV9eX=drb1JaBCiBoDKA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_WxhOpjtZ5r-CfoOaf1aiKeaEV9eX=drb1JaBCiBoDKA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Apr 2024 13:22:14 +0100
+Message-ID: <CAFEAcA_AcKdOXO3+ez6J+hQ4NmGoUa+fBUNK3XL_YSvRk09Gcg@mail.gmail.com>
+Subject: Re: [PULL 1/1] virtio-pci: fix use of a released vector
+To: Cindy Lu <lulu@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, 
+ Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,28 +95,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 16.04.24 um 14:10 schrieb Peter Maydell:
-
-> The cross-i686-tci job is flaky again, with persistent intermittent
-> failures due to jobs timing out.
-[...]
-> Some of these timeouts are very high -- no test should be taking
-> 10 minutes, even given TCI and a slowish CI runner -- which suggests
-> to me that there's some kind of intermittent deadlock going on.
+On Tue, 16 Apr 2024 at 12:50, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
 >
-> Can somebody who cares about TCI investigate, please, and track
-> down whatever this is?
+> On Tue, 16 Apr 2024 at 12:05, Cindy Lu <lulu@redhat.com> wrote:
+> >
+> > On Tue, Apr 16, 2024 at 6:01=E2=80=AFPM Peter Maydell <peter.maydell@li=
+naro.org> wrote:
+> > > Hi; Coverity points out what it thinks is a problem in
+> > > this commit (CID 1543938):
 
+> > > Here we pass that through to kvm_virtio_pci_vector_use_one().
+> > > In kvm_virtio_pci_vector_use_one()'s error-exit path ("undo")
+> > > it does
+> > >     vector =3D virtio_queue_vector(vdev, queue_no);
+> > > and in virtio_queue_vector() it does:
+> > >
+> > >     return n < VIRTIO_QUEUE_MAX ? vdev->vq[n].vector :
+> > >         VIRTIO_NO_VECTOR;
+> > >
+> > > where 'n' is an int, so if we can get here with queue_no being
+> > > VIRTIO_CONFIG_IRQ_IDX then we'll index off the front of the
+> > > vdev->vq[] array.
+> > >
+> > > Maybe this is a "can't happen" case, but it does seem odd that
+> > > virtio_queue_vector() only bounds-checks the "too big" case
+> > > for its argument and not the "too small" case and/or it
+> > > doesn't have a special case for VIRTIO_CONFIG_IRQ_IDX.
+> > >
+> > > > +    }
+> > > > +}
+> > > > +
+> > >
+> > hi peter
+> > I think we can simply remove the part
+> >     vector =3D virtio_queue_vector(vdev, queue_no);
+> > the vector is get from virtio_pci_get_notifier() and don't need to get =
+it again
+> > I will send the fix soon
+>
+> The error handling in kvm_virtio_pci_vector_use_one() looks
+> a bit odd in other ways, too. The only bit of "undoing"
+> it does as far as I can see is calling kvm_virtio_pci_irqfd_release(),
+> but there is no code path that gets to there where the
+> main codepath's call to kvm_virtio-pci_irqfd_use() succeeded
+> and needs to be undone. So perhaps the entire "undo" code
+> block should be deleted, and the "goto undo" lines
+> replaced by simple "return ret;" ?  (The codepath
+> for "kvm_virtio_pci_irqfd_use() failed" already does the
+> "kvm_virtio_pci_vq_vector_release()" by hand there.)
 
-I'll have a look.
+In any case since the error handling in kvm_virtio_pci_vector_use_one()
+isn't new in this commit (you can get the same problem via
+kvm_virtio_pci_vector_config_use(), which is CID 1468940
+first detected in 2022), I think this is not something we need
+to rush to fix before we release 9.0. If anybody disagrees now
+would be a good time to say so :-)
 
-Regards
+Paolo's comment on CID 1468940 was to suggest "virtio_queue_vector
+should check VIRTIO_CONFIG_IRQ_IDX just like virtio_pci_get_notifier",
+incidentally.
 
-Stefan
-
+thanks
+-- PMM
 
