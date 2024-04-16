@@ -4,88 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AA3C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 07:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7486C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 08:27:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwdKj-0004ot-T2; Tue, 16 Apr 2024 03:34:25 -0400
+	id 1rwe9O-0005WE-BA; Tue, 16 Apr 2024 04:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwdKi-0004oQ-1U
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 03:34:24 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwdKg-0006QX-BL
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 03:34:23 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-570423c4f80so479010a12.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 00:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713252860; x=1713857660; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7LYAs7izQsVLWruu/9Fs3Ifo3+Ewv93g3NBlVCtDbEk=;
- b=mNyFbTO9Kmhqj7miHWxXuM6YQavk7EJxdWug61jSwhFRZp1dynv4sWfd3PeyJV27fy
- JsMpXtNL12d8GlT9Th8kw1RYnrpVub2fBRVfA6mHZ5z8ENLXQ8RZn3jECDyuuWaTyc6Z
- Q+17tEentqWu9eSoXsyhNHM4zpXt+LojIhyS6u7YTFnxwjEtLimi4gZ2l7zzs+bg+ddA
- x7Lanc/8pZSOBfwqI7AJta0314r/m+sa2oROMFk27+uECyekbhy/73tcKK42C7vy/luJ
- L9lrlXqlisqkg+CESq1lwgHsvZzhPQ0SDxGP8c0UlPum0TBkk5b9lpl95vBAaNYhKQCR
- yOZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713252860; x=1713857660;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7LYAs7izQsVLWruu/9Fs3Ifo3+Ewv93g3NBlVCtDbEk=;
- b=NbZSU8DTj5b9+1BS+dvVWSBgtdd++bOUAWSpsfCtdpCE+kSfOPDgp+2m3PMRMN7xfz
- RF2Xjy4AC/YSezs/7MtTgGOSNFE+FxgI1zzzfUbd2xqIfmdnn8JwVd8I8kUpjGigsa7p
- x6U5fMtmUDjFtVp4sNlvs6NISEg/2zxm7WZRsDSkZneTjwNJZB4YhTu/2N6jmSbIVzQt
- hV3VTJSR7YkIm7Hu2QMhZAnjwbjFcrTuxtS1G7CFpW26vk5HoFNurJ7NWk2de72Mqc1l
- f6yJWmsPAimX2auwpIU7E3pIbR6e+nYwy/G5htoYiERdu+aAH6v+x2yWXc8R6zpFEDfS
- NlxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHAZ3Ugoecu+0BnWBuU8PtEeoP/QzgbsDXIc98/gPd52jBo9+HYj262vS+yn+aQhLQDDY6D0dcl0LEX9W0Phskmf57mmU=
-X-Gm-Message-State: AOJu0YzOTNaFTrVde0VygnjiHLkhTEklOsYNf8aLzyNS4Go5HqW98u0e
- qRHj/qqZ2PDLxAiA2s3/kiU3ISSDrHadfgooi6+hcM5NOFjZZPZ0fxf/AOe+w4c=
-X-Google-Smtp-Source: AGHT+IG9GJ72eqZ1qxi7lrT2Ecp9MNbBfxh/tgIQV98k8ra1Lfko1AUHDQ4Go1r2ZusUlmoILlKBNQ==
-X-Received: by 2002:a50:9b1a:0:b0:56e:2464:7c41 with SMTP id
- o26-20020a509b1a000000b0056e24647c41mr9143342edi.19.1713252860520; 
- Tue, 16 Apr 2024 00:34:20 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.155.61])
- by smtp.gmail.com with ESMTPSA id
- d3-20020a056402000300b005702c757af2sm2059791edu.30.2024.04.16.00.34.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 00:34:20 -0700 (PDT)
-Message-ID: <17e59f9a-444e-43d3-af02-d036f90a036a@linaro.org>
-Date: Tue, 16 Apr 2024 09:34:17 +0200
+ (Exim 4.90_1) (envelope-from <artem.chernyshev@red-soft.ru>)
+ id 1rwe9K-0005VZ-UJ; Tue, 16 Apr 2024 04:26:42 -0400
+Received: from red-soft.ru ([188.246.186.2] helo=gw.red-soft.ru)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <artem.chernyshev@red-soft.ru>)
+ id 1rwe9I-0007OQ-3Q; Tue, 16 Apr 2024 04:26:42 -0400
+Received: from localhost.biz (unknown [10.81.100.48])
+ by gw.red-soft.ru (Postfix) with ESMTPA id 483E33E1CE7;
+ Tue, 16 Apr 2024 11:26:34 +0300 (MSK)
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, Oleg Sviridov <oleg.sviridov@red-soft.ru>
+Subject: [PATCH] hw/nvram: Make (len + offset) check more strict
+Date: Tue, 16 Apr 2024 11:26:31 +0300
+Message-Id: <20240416082631.2417370-1-artem.chernyshev@red-soft.ru>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Improvements for switches in hw/cpu/Kconfig
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-References: <20240415065655.130099-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240415065655.130099-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-KLMS-Rule-ID: 1
+X-KLMS-Message-Action: clean
+X-KLMS-AntiSpam-Lua-Profiles: 184729 [Apr 16 2024]
+X-KLMS-AntiSpam-Version: 6.1.0.4
+X-KLMS-AntiSpam-Envelope-From: artem.chernyshev@red-soft.ru
+X-KLMS-AntiSpam-Rate: 0
+X-KLMS-AntiSpam-Status: not_detected
+X-KLMS-AntiSpam-Method: none
+X-KLMS-AntiSpam-Auth: dkim=none
+X-KLMS-AntiSpam-Info: LuaCore: 17 0.3.17
+ f2153f38d75b12894d9cf445f96cd15c9ef63a9d,
+ {Tracking_from_domain_doesnt_match_to}, localhost.biz:7.1.1; red-soft.ru:7.1.1;
+ d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;
+ 127.0.0.199:7.1.2, FromAlignment: s
+X-MS-Exchange-Organization-SCL: -1
+X-KLMS-AntiSpam-Interceptor-Info: scan successful
+X-KLMS-AntiPhishing: Clean, bases: 2024/04/16 06:38:00
+X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30,
+ bases: 2024/04/16 06:04:00 #24816272
+X-KLMS-AntiVirus-Status: Clean, skipped
+Received-SPF: pass client-ip=188.246.186.2;
+ envelope-from=artem.chernyshev@red-soft.ru; helo=gw.red-soft.ru
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_VALIDITY_RPBL=1.31,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,20 +76,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/4/24 08:56, Thomas Huth wrote:
-> First patch fixes the problem that the file hw/cpu/Kconfig is
-> currently ignored and the switches there are duplicated in hw/arm/.
-> 
-> The second patch introduces a proper config switch for the cpu-cluster
-> device.
-> 
-> v2:
-> - Don't make core.c depend on the CPU_CLUSTER switch
-> - Added Philippe's Reviewed-bys
-> 
-> Thomas Huth (2):
->    hw: Fix problem with the A*MPCORE switches in the Kconfig files
->    hw: Add a Kconfig switch for the TYPE_CPU_CLUSTER device
+In rtas_nvram_fetch() and rtas_nvram_store() if len is equal
+to zero, result of a cpu_physical_memory_map() will be NULL. 
+It will lead to NULL dereference, since return value using 
+without check. It could be avoided by making IF condition 
+more strict.
 
-Thanks, series queued.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+---
+ hw/nvram/spapr_nvram.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/nvram/spapr_nvram.c b/hw/nvram/spapr_nvram.c
+index bfd8aa367e..bf0a7d05df 100644
+--- a/hw/nvram/spapr_nvram.c
++++ b/hw/nvram/spapr_nvram.c
+@@ -79,7 +79,7 @@ static void rtas_nvram_fetch(PowerPCCPU *cpu, SpaprMachineState *spapr,
+     buffer = rtas_ld(args, 1);
+     len = rtas_ld(args, 2);
+ 
+-    if (((offset + len) < offset)
++    if (((offset + len) <= offset)
+         || ((offset + len) > nvram->size)) {
+         rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
+         rtas_st(rets, 1, 0);
+@@ -120,7 +120,7 @@ static void rtas_nvram_store(PowerPCCPU *cpu, SpaprMachineState *spapr,
+     buffer = rtas_ld(args, 1);
+     len = rtas_ld(args, 2);
+ 
+-    if (((offset + len) < offset)
++    if (((offset + len) <= offset)
+         || ((offset + len) > nvram->size)) {
+         rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
+         return;
+-- 
+2.37.3
+
 
