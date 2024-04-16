@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E61C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC3F1C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 11:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwglT-0006V2-Ky; Tue, 16 Apr 2024 07:14:15 -0400
+	id 1rwh3C-0001s1-BT; Tue, 16 Apr 2024 07:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwglQ-0006UG-Q3
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:14:14 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rwh39-0001ri-Je
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:32:31 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwglH-0003wJ-Kv
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:14:10 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-56e37503115so3416043a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 04:14:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rwh36-0007u4-3c
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 07:32:30 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56e69888a36so6178426a12.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 04:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713266041; x=1713870841; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AZOGFdgRZOC1Pr2vakghfyPj0cm3QvLf9Bvtml3l8p4=;
- b=R9z8L+6GXPfDnVgk+MKwwZK5o+ke9g6hvE31c+skAkRcMjdXGFlOG+SGcGJJcfvEKh
- JFyTCTLy1J1TSOX3FVeQF84mf9HGKnHupilSi4W+4a+EotSfFUXK2VHPYqm1qKxk7wzE
- mDZFzVX89jew1kzSmHK66ED/SaGJJIltb2a18D33o0hz3H5bsoWib6YUiaf1J3t407c5
- AX95+l6rRTMs1SUzJU+gbpNbOUINSIBrfZkPGGqwbdD1DsD0pFzCsT+N7sgR6zq/QpTG
- bmVZc3uhNAyjA8xPUpkZDS7NTCNlzZiDFmsKfr0ZvxRdio5fAqX/5Iaf0o1RtlJYMNi9
- usHA==
+ d=gmail.com; s=20230601; t=1713267145; x=1713871945; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Nu/3wVGY8Fqls2x1RXw8qQlUl/eeMliHAS9I4CFDM9o=;
+ b=MURYHPr/bHgQcpFT/B4ogHj3T4GTSz/HjbYBlp/WADQVMsIAkNL/eij9RndnXjuQEp
+ bZIcB7Wo2g4G/s1fe61eIFcheDEI6XQzxLpxNFS7H08H/bxl/kRSx+uI6uMqazI9tomp
+ E59r+ZWTsZ9beRvOPySNmISQFEOoKjZdHrSE4tBuZ+kqxzYAzPGzIJACTevHeXEb88xw
+ XABe6xciPXasW9iUwXsNgl2pVf/R++k0AatJFHEfAYj14lNC9iXs3TnjDPwx/kuNFyfM
+ 4R7ts44jHgU3p+9HeWQ8IaCWyuSdy1MuEXiMq0eGi3CMe0ZdKQ77aOhq1X7RsMbuGwfX
+ j/lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713266041; x=1713870841;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AZOGFdgRZOC1Pr2vakghfyPj0cm3QvLf9Bvtml3l8p4=;
- b=Ygf8J0iuFssw/KKNyRqdvgcEUgQ1Hm7zmCSymA1HvlnjaIrZPxURP3SeTW9LsPXnyw
- KS5b8SvEPGEnpGRWCSvKtj3eE4T2al+BaCGei9pAdXscyrw+h2RNaLg7xlEPsnaRO+vH
- Ls3mCjUTbPb/haX6SOk1d6cS0ohzu65Z+qyWDE1+DIi/tCZpp1cKjfTdBZEVlvqBrPbt
- 7zkRPVg//zz5c2+KIM7Z6yULu9llIF2TjV1HoqcJaetvoV/oXdM6Kn98zHNq2URkbY6B
- 98dToZvFG2qBHrWLV5VF/y2NewAmcB4L48fYUeQA0adrfW8+1pjAjmXmZSdPtdrJRlBx
- OZfw==
+ d=1e100.net; s=20230601; t=1713267145; x=1713871945;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Nu/3wVGY8Fqls2x1RXw8qQlUl/eeMliHAS9I4CFDM9o=;
+ b=HXSdgus1EQIWzCiiugnfY/dXevZ4RUMm/83PoqUBOWLUJeLHq8jcg656Z9UsT7EJLz
+ qVBDpwN1b+Wogalu2B1OCqKLxky++93QdiVAmfYHF7zcVnpfBV1nay+fho0lC2d6OhRD
+ T7ysXd12WZr8IuH6ZJJ+RaWRiZTzxgn4yzy3/eFDKgDMCSf7ZgW260sbUTh3IrU8kH4D
+ vjqVfrhtrtlffKz7ctHKkVeW+nGhppomrlE4gBK26tAvSYHaA7zR2pM650QABSnc6WIt
+ OgR3OoFaIWrAWC2uLZ0IHfDx5kARzJgIg539AtHUcGQvqjPZX7+ZhGOv4f7+Y0RnNPZ/
+ hCQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvYrbUMn+1lE9Q5HSXH4QUzqBYb4vwIzBaMocpElrGFg2QtJ165g/Z7E160usV+sXYaeVfkYETvEyXvrsN8Rh5HQniAs8=
-X-Gm-Message-State: AOJu0Yz1W6xiX5c1kD1kpvXaeECLJB/SWMmwuWtdU0UfNhA8mABLLzYI
- 9RA892AjC9KKZtfaUbj+qc3iQOYhvFgWinclZi1WdRVUawBZlkp4vKZ5E5g+9Tw=
-X-Google-Smtp-Source: AGHT+IE6ydb+klzGU7dZsqc4yrgdWRcCEuUfGuIG2l9wb1RB9Ce/c5SQ9I7RKOPdTGKlSoncJtCVzQ==
-X-Received: by 2002:a50:9e0b:0:b0:570:d50:e7d8 with SMTP id
- z11-20020a509e0b000000b005700d50e7d8mr6165282ede.22.1713266041428; 
- Tue, 16 Apr 2024 04:14:01 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.155.61])
- by smtp.gmail.com with ESMTPSA id
- em8-20020a056402364800b00570439141a0sm732273edb.3.2024.04.16.04.14.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 04:14:01 -0700 (PDT)
-Message-ID: <9c5666a3-e4ae-4be0-bf1f-be7d36fa80a6@linaro.org>
-Date: Tue, 16 Apr 2024 13:13:58 +0200
+ AJvYcCX3eLszDWYjPAaPpRsSRSo5ZUwiR6Ea+e6DY8Wirps3/RhjQHm2adgYJycR/CnSmdhwIpyWVAbDq0w3hVxSwtB/2obnsD8=
+X-Gm-Message-State: AOJu0YyrHu0O1sJJxmHEsFQLs4E0DWLnJx7P1HCF7OuF7Oh+HOraZGjC
+ o9UoYP5kXqjD0/152TpJMDzJ5xlLFV3+pB6XYAjc8F+IaNUAIS3X3Yj30H6f2Ror+FrxgQNeytQ
+ LaQBnB7Zu5oy56LHDoPBGj0z458M=
+X-Google-Smtp-Source: AGHT+IF8ZwyyV3OhxscQE9v9s7r/V/D6iWPYpN64d2i1cPRA+TFAjYYEDq0Iakd4mTsKsWoPBJtcm5CSuD1/LzHr7Gc=
+X-Received: by 2002:a50:d594:0:b0:56e:c16:fbf2 with SMTP id
+ v20-20020a50d594000000b0056e0c16fbf2mr9192595edi.23.1713267144870; Tue, 16
+ Apr 2024 04:32:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-options: Deprecate "-runas" and introduce "-run-with
- user=..." instead
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240415183942.195781-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240415183942.195781-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+References: <20240227223501.28475-1-vikram.garhwal@amd.com>
+ <20240227223501.28475-6-vikram.garhwal@amd.com>
+ <CAJy5ezpCWkOqthGR1c5Nsfyi_W_yGL_d17Jcp0VckaCEwx9z3Q@mail.gmail.com>
+ <Zhbg9alYH1-J9poU@x1n>
+In-Reply-To: <Zhbg9alYH1-J9poU@x1n>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Tue, 16 Apr 2024 13:32:13 +0200
+Message-ID: <CAJy5ezpfNGDC4Q=eMcQ-df_xZVYnc-CR5wfn4izW2CT532PbAA@mail.gmail.com>
+Subject: Re: [QEMU][PATCH v3 5/7] memory: add MemoryRegion map and unmap
+ callbacks
+To: Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, sstabellini@kernel.org, vikram.garhwal@amd.com, 
+ jgross@suse.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,63 +98,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/4/24 20:39, Thomas Huth wrote:
-> The old "-runas" option has the disadvantage that it is not visible
-> in the QAPI schema, so it is not available via the normal introspection
-> mechanisms. We've recently introduced the "-run-with" option for exactly
-> this purpose, which is meant to handle the options that affect the
-> runtime behavior. Thus let's introduce a "user=..." parameter here now
-> and deprecate the old "-runas" option.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   docs/about/deprecated.rst |  6 ++++++
->   system/vl.c               | 15 +++++++++++++++
->   qemu-options.hx           | 11 +++++++++--
->   3 files changed, 30 insertions(+), 2 deletions(-)
+On Wed, Apr 10, 2024 at 8:56=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Wed, Apr 10, 2024 at 06:44:38PM +0200, Edgar E. Iglesias wrote:
+> > On Tue, Feb 27, 2024 at 11:37=E2=80=AFPM Vikram Garhwal <vikram.garhwal=
+@amd.com>
+> > wrote:
+> >
+> > > From: Juergen Gross <jgross@suse.com>
+> > >
+> > > In order to support mapping and unmapping guest memory dynamically to
+> > > and from qemu during address_space_[un]map() operations add the map()
+> > > and unmap() callbacks to MemoryRegionOps.
+> > >
+> > > Those will be used e.g. for Xen grant mappings when performing guest
+> > > I/Os.
+> > >
+> > > Signed-off-by: Juergen Gross <jgross@suse.com>
+> > > Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
+> > >
+> >
+> >
+> > Paolo, Peter, David, Phiippe, do you guys have any concerns with this p=
+atch?
+>
+
+Thanks for your comments Peter,
 
 
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 8ce85d4559..50912c7dab 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -4824,7 +4824,8 @@ DEF("runas", HAS_ARG, QEMU_OPTION_runas, \
->   SRST
->   ``-runas user``
->       Immediately before starting guest execution, drop root privileges,
-> -    switching to the specified user.
-> +    switching to the specified user. This option is deprecated, use
-> +    ``-run-with user=...`` instead.
->   ERST
->   
->   DEF("prom-env", HAS_ARG, QEMU_OPTION_prom_env,
-> @@ -4993,7 +4994,9 @@ DEF("run-with", HAS_ARG, QEMU_OPTION_run_with,
->       "-run-with [async-teardown=on|off][,chroot=dir]\n"
+> This introduces a 3rd memory type afaict, neither direct nor !direct.
+>
+> What happens if someone does address_space_write() to it?  I didn't see i=
+t
+> covered here..
 
-"-run-with [async-teardown=on|off][,chroot=dir][user=username|uid:gid]\n"
+You're right, that won't work, the memory needs to be mapped before it
+can be used.
+At minimum there should be some graceful failure, right now this will crash=
+.
 
->       "                Set miscellaneous QEMU process lifecycle options:\n"
->       "                async-teardown=on enables asynchronous teardown (Linux only)\n"
-> -    "                chroot=dir chroot to dir just before starting the VM\n",
-> +    "                chroot=dir chroot to dir just before starting the VM\n"
-> +    "                user=username switch to the specified user before starting the VM\n"
-> +    "                user=uid:gid dito, but use specified user-ID and group-ID instead\n",
->       QEMU_ARCH_ALL)
->   SRST
->   ``-run-with [async-teardown=on|off][,chroot=dir]``
+>
+> OTOH, the cover letter didn't mention too much either on the big picture:
+>
+> https://lore.kernel.org/all/20240227223501.28475-1-vikram.garhwal@amd.com=
+/
+>
+> I want to have a quick grasp on whether it's justified worthwhile we shou=
+ld
+> introduce this complexity to qemu memory core.
+>
+> Could I request a better cover letter when repost?  It'll be great to
+> mention things like:
 
-Ditto.
+I'll do that, but also answer inline in the meantime since we should
+perhaps change the approach.
 
-> @@ -5013,6 +5016,10 @@ SRST
->       ``chroot=dir`` can be used for doing a chroot to the specified directory
->       immediately before starting the guest execution. This is especially useful
->       in combination with -runas.
-> +
-> +    ``user=username`` or ``user=uid:gid`` can be used to drop root privileges
-> +    by switching to the specified user (via username) or user and group
-> +    (via uid:gid) immediately before starting guest execution.
->   ERST
->   #endif
->   
+>
+>   - what is grant mapping, why it needs to be used, when it can be used (=
+is
+>     it only relevant to vIOMMU=3Don)?  Some more information on the high
+>     level design using this type or MR would be great.
 
+https://github.com/xen-project/xen/blob/master/docs/misc/grant-tables.txt
+
+Xen VM's that use QEMU's VirtIO have a QEMU instance running in a separate =
+VM.
+
+There's basically two mechanisms for QEMU's Virtio backends to access
+the guest's RAM.
+1. Foreign mappings. This gives the VM running QEMU access to the
+entire RAM of the guest VM.
+2. Grant mappings. This allows the guest to dynamically grant and
+remove access to pages as needed.
+So the VM running QEMU, cannot map guest RAM unless it's been
+instructed to do so by the guest.
+
+#2 is desirable because if QEMU gets compromised it has a smaller
+attack surface onto the guest.
+
+>
+>   - why a 3rd memory type is required?  Do we have other alternatives?
+
+Yes, there are alternatives.
+
+1. It was suggested by Stefano to try to handle this in existing qemu/hw/xe=
+n/*.
+This would be less intrusive but perhaps also less explicit.
+Concerns about touching the Memory API have been raised before, so
+perhaps we should try this.
+I'm a little unsure how we would deal with unmapping when the guest
+removes our grants and we're using models that don't map but use
+address_space_read/write().
+
+2. Another approach could be to change the Xen grant-iommu in the
+Linux kernel to work with a grant vIOMMU in QEMU.
+Linux could explicitly ask QEMU's grant vIOMMU to map/unmap granted regions=
+.
+This would have the benefit that we wouldn't need to allocate
+address-bit 63 for grants.
+A drawback is that it may be slower since we're going to need to
+bounce between guest/qemu a bit more.
+
+
+>     So it's all based on my very limited understanding of reading this:
+>     https://xenbits.xenproject.org/docs/4.3-testing/misc/grant-tables.txt
+>
+>     If it's about cross-vm sharing memory, does it mean that in reality
+>     there are RAMs allocated, but it's only about permission management?
+>     In that case, is there any option we implement it with direct access
+>     mode (however with some extra dynamic permissions applied on top usin=
+g
+>     some mechanism)?
+
+Yes, I think the grant vIOMMU approach would fall into this category.
+
+>
+>   - perhaps sold old links would be great too so people can read about th=
+e
+>     context when it's not obvious, without a need to copy-paste.
+
+https://wiki.xenproject.org/wiki/Virtio_On_Xen
+https://lwn.net/Articles/896938/
+
+Cheers,
+Edgar
 
