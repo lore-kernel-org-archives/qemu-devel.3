@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A48FC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 18:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8977AC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 18:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwnPJ-0002Lo-CS; Tue, 16 Apr 2024 14:19:49 -0400
+	id 1rwnT3-0003fq-Tb; Tue, 16 Apr 2024 14:23:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwnPH-0002LP-Rs
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:19:47 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwnPF-0006k6-ND
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:19:47 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6ecf3943040so3809902b3a.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 11:19:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713291584; x=1713896384; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R2odyEPYb0dluu1bEYvaxRiwdXOkoNYTG6BbOmky59E=;
- b=lSUrCNltAaoPZg6YLaJYNo5lfco2ehrex6etnUyILjR0ujU6ZMw7WyDFSMCL8n3yj5
- dbNvgBjgX9cD19Lz1H7Dzz3D2OmNAMakJcVd7LvIxne0fopDwynoB3SFab5B26uqCw6X
- Ic8c83KKSM3SyY3pCAtFpZxTMiGlec/8MwMVbHYkslgGVICYB0w1g6UexhyNsdlXEbd+
- l544m6Wdc4uOBoZCyXrH65fYCLFKfsPk+auHugIUQgAThqGFdBgIey3AkDS7fVNENsjk
- R5zU8hEGqw7nTDX+bEJWe1gVuceLSokf8kVqK7c38x1/LG9WjLYBaFhKUZegyw30nthD
- YMMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713291584; x=1713896384;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R2odyEPYb0dluu1bEYvaxRiwdXOkoNYTG6BbOmky59E=;
- b=htsEjMnr6D1yDiBxM5ucsYxH4eUigufD8fYB0/MpjFUXhOsCGLlz6KrZOzzNxVRL9D
- /MpEv5pRCpPjfquIgPGyahWb22Yvw7GE3LMxgZVVCiOUbb3PV6EuJoHcC9k4HTsI/dgu
- 7ulVoBAuZALBy3HJhmpWfGGhdR8UPuEeRNChHYEnB9Xv06tUZFwECPI07Gh4lVBP3wap
- TpFc/CuyPQXWA2CCpQ8+ci5Y33pSoeHnvXq3n4CV8Jc5HoJdqb/KalUvnczg5gEIXHVp
- 01MFxyD628uJR9KCcuKa1gSHrLPcb4MBE0SHI+05SOicS5HxsKIYUAfEA2AQECSFxaAM
- 5cnw==
-X-Gm-Message-State: AOJu0YwrW5FXPpkZBDooePy2tYcaj/DYXBaiAEUfZMO/VCO6cmkI6I3A
- wsfxpSb/3YHLV/aOGB/d2mCQYZOZQpA6+PJLu9CDRUnVQIH4QByK5SDsTH3Zn80=
-X-Google-Smtp-Source: AGHT+IEpo4eEdLPbs62TmdV3ZvfXf4xDfQppexfNd/XwRGqS/qvjferTtw/d9JVXdzLVoSE2j5WrYA==
-X-Received: by 2002:a05:6a00:1312:b0:6ea:d7b6:f4b4 with SMTP id
- j18-20020a056a00131200b006ead7b6f4b4mr14147663pfu.21.1713291584213; 
- Tue, 16 Apr 2024 11:19:44 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- fa30-20020a056a002d1e00b006ed0f719a5fsm9182226pfb.81.2024.04.16.11.19.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 11:19:43 -0700 (PDT)
-Message-ID: <45204f85-3eb9-40f4-9f2a-3a3f0e75929e@linaro.org>
-Date: Tue, 16 Apr 2024 11:19:42 -0700
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rwnT1-0003fL-VT; Tue, 16 Apr 2024 14:23:39 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rwnT0-0007OG-3y; Tue, 16 Apr 2024 14:23:39 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id EEB085F40C;
+ Tue, 16 Apr 2024 21:23:25 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C20BDB5D58;
+ Tue, 16 Apr 2024 21:23:24 +0300 (MSK)
+Message-ID: <6009787a-c43f-4225-98ee-f41d1bc10ce8@tls.msk.ru>
+Date: Tue, 16 Apr 2024 21:23:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] target/ppc: Move divw[u, e, eu] instructions to
- decodetree.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240416063927.99428-1-rathc@linux.ibm.com>
- <20240416063927.99428-4-rathc@linux.ibm.com>
+Subject: Re: [Stable-8.2.3 00/87] Patch Round-up for stable 8.2.3, freeze on
+ 2024-04-20
+To: Cole Robinson <crobinso@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <qemu-stable-8.2.3-20240410085155@cover.tls.msk.ru>
+ <5b8db53e-e073-4159-9f77-f9856ffce94e@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240416063927.99428-4-rathc@linux.ibm.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <5b8db53e-e073-4159-9f77-f9856ffce94e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,24 +85,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/24 23:39, Chinmay Rath wrote:
-> Moving the following instructions to decodetree specification :
-> 	 divw[u, e, eu][o][.] 	: XO-form
+16.04.2024 20:34, Cole Robinson wrote:
+
+> We have a couple patches in f40 that are bug fixes, avoids a crash on
+> invalid maxcpus for ppc64 guests. First is a prep patch. bug details in
+> patch 2
 > 
-> The changes were verified by validating that the tcg ops generated by those
-> instructions remain the same, which were captured with the '-d in_asm,op' flag.
+> commit 2df5c1f5b014126595a26c6797089d284a3b211c
+> Author: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Date:   Wed Jan 24 10:30:55 2024 +1000
 > 
-> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
-> ---
->   target/ppc/helper.h                        |  4 +--
->   target/ppc/insn32.decode                   |  5 ++++
->   target/ppc/int_helper.c                    |  4 +--
->   target/ppc/translate.c                     | 31 ----------------------
->   target/ppc/translate/fixedpoint-impl.c.inc | 24 +++++++++++++++++
->   5 files changed, 33 insertions(+), 35 deletions(-)
+>      ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer IRQ range for CPU IPIs.
+> 
+> commit c4f91d7b7be76c47015521ab0109c6e998a369b0
+> Author: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Date:   Wed Jan 24 10:30:55 2024 +1000
+> 
+>      ppc/spapr: Initialize max_cpus limit to SPAPR_IRQ_NR_IPIS.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Aha!
+
+It's fun I noticed these two at the time but forgot to include them.
+
+Queued up now.
+
+Thanks,
+
+/mjt
 
 
-r~
 
