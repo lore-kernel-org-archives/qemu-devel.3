@@ -4,60 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C881AC04FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 17:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E714C04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 17:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwn2t-0005FA-5N; Tue, 16 Apr 2024 13:56:39 -0400
+	id 1rwn40-0006o1-8N; Tue, 16 Apr 2024 13:57:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rwn2r-0005DV-Av; Tue, 16 Apr 2024 13:56:37 -0400
-Received: from new-mail.astralinux.ru ([51.250.53.244])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
- id 1rwn2o-0002uI-Kf; Tue, 16 Apr 2024 13:56:37 -0400
-Received: from [10.177.234.15] (unknown [10.177.234.15])
- by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VJsD34k7hzlVtD;
- Tue, 16 Apr 2024 20:56:19 +0300 (MSK)
-Message-ID: <69dffcb3-6424-420d-97b5-7aa72522ee98@astralinux.ru>
-Date: Tue, 16 Apr 2024 20:56:19 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rwn3z-0006lm-4y
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 13:57:47 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rwn3x-0002zf-FW
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 13:57:46 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6ed0e9ccca1so4308965b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 10:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713290264; x=1713895064; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9j5Aa5kQHfNkiS7J85/SNg8RYloSJgTx37Iq1bH2Ipw=;
+ b=Aaf3GUN3nWc23CxqzbHeRU/PO6f5+XO0VRLXfiarAWrfH52xXXcFg7SPWKqc2vE4Ir
+ qUFxs2dQxVrYNgxDEuSVf/VSzj5LaJJxLEV1O/eIknXGwFMK+rEwVcPUKfLpaDjTitgH
+ A3NDOwFwTrtHSCU2HGuOHQjX6nh0Iuojh7d782sEoK8VFCBsLjV75YyAb3itJGj8j1iQ
+ rumwsEL0eBLb1b74QCsXoQuxkRN+lZ04OvUbhX3gekjwUEIrr6s6rfcpYpaMf+zoBOG5
+ NqQ++e6+OqyeHqV73qSFpjC26MIBqHpwhtEFXwcla7WFzvgs+0WVVbgAufGsnWGk2Hjc
+ FF3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713290264; x=1713895064;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9j5Aa5kQHfNkiS7J85/SNg8RYloSJgTx37Iq1bH2Ipw=;
+ b=BxJSf2EX/6Q3C+X43Cz47htMnLhJ2sajs7oXBgz2Pe8L1wHzLdvRWSk4c09DwiVOQM
+ K+9Ib33k9uSgDXQgkJWMLLT0GPiFOR2AkY0wUfpw5zKB8kX/oP08HNqZVhLx6cmZzwtS
+ q1JW+UXWp4baQrV6YXdLctu04wKAGY/rq/pUpm7Yo7e9vknM0CMNeV5ljcjSAJYCJHXq
+ FsGf070aUpxF2x2Sbso9oZCXyjIbZ+1KXjM6Ee9hXahR2uwIzkUsXOsN+7CKQkPn+UUn
+ ZVkizVNZHr4AM5l4Gwke2QeX/Bb5uckmZUhn+8IVezV6xKCVqH9hUPj/qn4804GMG6k7
+ UTnw==
+X-Gm-Message-State: AOJu0YwDaDLj/7p45Pz04e56TGk2CVRxG7zFF3EhUbvZLiF+mDobhvzx
+ SlbJYTD5Ierne8aNfLDciidXojBFtRlpB3lP5TZWTyylYgJpzBpL2GkYB50oAeXghUGUF7WkXdx
+ w
+X-Google-Smtp-Source: AGHT+IEw7fGVVDbnE2QtoQNHpxtkRIMApR+GQpgwXWkCn6ULO1AExtZkcbDbjYyBhgtEC/hCntbugQ==
+X-Received: by 2002:a17:90b:4f82:b0:2a5:3343:28bb with SMTP id
+ qe2-20020a17090b4f8200b002a5334328bbmr11184247pjb.20.1713290263876; 
+ Tue, 16 Apr 2024 10:57:43 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ w23-20020a17090a461700b002a04eef22c5sm9006219pjg.44.2024.04.16.10.57.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Apr 2024 10:57:43 -0700 (PDT)
+Message-ID: <be3dd6e4-2e9f-4a75-a744-327fb5f8e262@linaro.org>
+Date: Tue, 16 Apr 2024 10:57:40 -0700
 MIME-Version: 1.0
-User-Agent: RuPost Desktop
-Subject: Re: [PATCH RFC] prevent overflow in
- xlnx_dpdma_desc_get_source_address()
-Content-Language: ru
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Alistair Francis <alistair@alistair23.me>,
- Alistair Francis <alistair.francis@xilinx.com>, edgar.iglesias@gmail.com,
- edgar.iglesias@xilinx.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- KONRAD Frederic <fred.konrad@greensocs.com>, Hyun Kwon
- <hyun.kwon@xilinx.com>, crosthwaitepeter@gmail.com, hyunk@xilinx.com,
- guillaume.delbergue@greensocs.com, mark.burton@greensocs.com,
- sdl.qemu@linuxtesting.org
-References: <20240412081328.11183-1-adiupina@astralinux.ru>
- <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
-From: Alexandra Diupina <adiupina@astralinux.ru>
-In-Reply-To: <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/8] target/ppc: Make divw[u] handler method decodetree
+ compatible.
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240416063927.99428-1-rathc@linux.ibm.com>
+ <20240416063927.99428-3-rathc@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240416063927.99428-3-rathc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-DrWeb-SpamScore: -100
-X-DrWeb-SpamState: legit
-X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttderjeenucfhrhhomheptehlvgigrghnughrrgcuffhiuhhpihhnrgcuoegrughiuhhpihhnrgesrghsthhrrghlihhnuhigrdhruheqnecuggftrfgrthhtvghrnhepvddtfeekhfegtdehfeektdeivdejgfduudfhffdulefhtddtjeehleevvddvieeknecuffhomhgrihhnpegrmhgurdgtohhmpdhlihhnuhigthgvshhtihhnghdrohhrghenucfkphepuddtrddujeejrddvfeegrdduheenucfrrghrrghmpehhvghloheplgdutddrudejjedrvdefgedrudehngdpihhnvghtpedutddrudejjedrvdefgedrudehmeegjeejkedvpdhmrghilhhfrhhomheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopedugedprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopegrlhhishhtrghirhesrghlihhsthgrihhrvdefrdhmvgdprhgtphhtthhopegrlhhishhtrghirhdrfhhrrghntghishesgihilhhinhigrdgtohhmpdhrtghpthhtohepvggughgrrhdrihhglhgvshhirghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepvg
- gughgrrhdrihhglhgvshhirghsseigihhlihhngidrtghomhdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrhgvugdrkhhonhhrrggusehgrhgvvghnshhotghsrdgtohhmpdhrtghpthhtohephhihuhhnrdhkfihonhesgihilhhinhigrdgtohhmpdhrtghpthhtoheptghrohhsthhhfigrihhtvghpvghtvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohephhihuhhnkhesgihilhhinhigrdgtohhmpdhrtghpthhtohepghhuihhllhgruhhmvgdruggvlhgsvghrghhuvgesghhrvggvnhhsohgtshdrtghomhdprhgtphhtthhopehmrghrkhdrsghurhhtohhnsehgrhgvvghnshhotghsrdgtohhmpdhrtghpthhtohepshgulhdrqhgvmhhusehlihhnuhigthgvshhtihhnghdrohhrgh
-X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
- Bailout: 300
-X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
- SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12602275,
- Updated: 2024-Apr-16 15:52:41 UTC]
-Received-SPF: pass client-ip=51.250.53.244;
- envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,129 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter, thank you! I agree with you that
-as mentioned in the documentation
-https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/ADDR_EXT-Field,
-we should take 32 bits of the address from one field
-(for example, case 1, SRC_ADDR2_EXT - in code it is desc->source_address2)
-and 16 bits (high or low) of the address from another field
-(ADDR_EXT_23 - in code it is desc->address_extension_23, we need [15:0] 
-bits)
-and combine them to make a 48 bit address.
+On 4/15/24 23:39, Chinmay Rath wrote:
+> The handler methods for divw[u] instructions internally use Rc(ctx->opcode),
+> for extraction of Rc field of instructions, which poses a problem if we move
+> the above said instructions to decodetree, as the ctx->opcode field is not
+> popluated in decodetree. Hence, making it decodetree compatible, so that the
+> mentioned insns can be safely move to decodetree specs.
+> 
+> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+> ---
+>   target/ppc/translate.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 
-Therefore, I suggest making the following changes to the code
-so that it matches the documentation:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
-                                                      uint8_t frag)
-{
-     uint64_t addr = 0;
-     assert(frag < 5);
+> +static inline void gen_op_arith_divw(DisasContext *ctx, TCGv ret,
+> +                                     TCGv arg1, TCGv arg2, bool sign,
+> +                                     bool compute_ov, bool compute_rc0)
 
-     switch (frag) {
-     case 0:
-         addr = (uint64_t)desc->source_address
-             + (extract64(desc->address_extension, 16, 16) << 32);
-         break;
-     case 1:
-         addr = (uint64_t)desc->source_address2
-             + (extract64(desc->address_extension_23, 0, 16) << 32);
-         break;
-     case 2:
-         addr = (uint64_t)desc->source_address3
-             + (extract64(desc->address_extension_23, 16, 16) << 32);
-         break;
-     case 3:
-         addr = (uint64_t)desc->source_address4
-             + (extract64(desc->address_extension_45, 0, 16) << 32);
-         break;
-     case 4:
-         addr = (uint64_t)desc->source_address5
-             + (extract64(desc->address_extension_45, 16, 16) << 32);
-         break;
-     default:
-         addr = 0;
-         break;
-     }
-
-     return addr;
-}
+Could drop the inline at the same time.
+Let the compiler decide.
 
 
-This change adds a type cast and also uses extract64() instead of 
-extract32()
-to avoid integer overflow on addition (there was a typo in the previous 
-letter).
-Also in extract64() extracts a bit field with a length of 16 bits 
-instead of 12,
-the shift is changed to 32 so that the extracted field fits into bits 
-[47:32] of the final address.
-
-if this calculation is correct, I'm ready to create a second version of 
-the patch.
-
-
-
-
-12/04/24 13:06, Peter Maydell пишет:
-> On Fri, 12 Apr 2024 at 09:13, Alexandra Diupina <adiupina@astralinux.ru> wrote:
->> Overflow can occur in a situation where desc->source_address
->> has a maximum value (pow(2, 32) - 1), so add a cast to a
->> larger type before the assignment.
->>
->> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->>
->> Fixes: d3c6369a96 ("introduce xlnx-dpdma")
->> Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
->> ---
->>   hw/dma/xlnx_dpdma.c | 20 ++++++++++----------
->>   1 file changed, 10 insertions(+), 10 deletions(-)
->>
->> diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
->> index 1f5cd64ed1..224259225c 100644
->> --- a/hw/dma/xlnx_dpdma.c
->> +++ b/hw/dma/xlnx_dpdma.c
->> @@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
->>
->>       switch (frag) {
->>       case 0:
->> -        addr = desc->source_address
->> -            + (extract32(desc->address_extension, 16, 12) << 20);
->> +        addr = (uint64_t)(desc->source_address
->> +            + (extract32(desc->address_extension, 16, 12) << 20));
-> Unless I'm confused, this cast doesn't help, because we
-> will have already done a 32-bit addition of desc->source_address
-> and the value from the address_extension part, so it doesn't
-> change the result.
->
-> If we want to do the addition at 64 bits then using extract64()
-> would be the simplest way to arrange for that.
->
-> However, I can't figure out what this code is trying to do and
-> make that line up with the data sheet; maybe this isn't the
-> right datasheet for this device?
->
-> https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/ADDR_EXT-Field
->
-> The datasheet suggests that we should take 32 bits of the address
-> from one field (here desc->source_address) and 16 bits of the
-> address from another (here desc->address_extension's high bits)
-> and combine them to make a 48 bit address. But this code is only
-> looking at 12 bits of the high 16 in address_extension, and it
-> doesn't shift them right enough to put them into bits [47:32]
-> of the final address.
->
-> Xilinx folks: what hardware is this modelling, and is it
-> really the right behaviour?
->
-> Also, this device looks like it has a host-endianness bug: the
-> DPDMADescriptor struct is read directly from guest memory in
-> dma_memory_read(), but the device never does anything to swap
-> the fields from guest memory order to host memory order. So
-> this is likely broken on big-endian hosts.
->
-> thanks
-> -- PMM
-
-
+r~
 
