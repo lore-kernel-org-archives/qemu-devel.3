@@ -4,79 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD83C04FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FCAC04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:31:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwkZT-0005oa-Jq; Tue, 16 Apr 2024 11:18:07 -0400
+	id 1rwklh-0000W8-DI; Tue, 16 Apr 2024 11:30:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1rwkZP-0005o3-GO
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:18:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=29bf=LV=kaod.org=clg@ozlabs.org>)
+ id 1rwklP-0000UZ-4M; Tue, 16 Apr 2024 11:30:30 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1rwkZN-0007p9-3p
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:18:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713280679;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tPtRVTsXis21eVmAj2j9npZRV3GxwQ/AaRJo8gVEatg=;
- b=FfTmTon9WAn8JAkwFKVmbBGIHKsgnxMu8hVg2v4iC7hdApd+x9O19mfcEmhcbJKtLVpwDG
- to934dnDQP32eb/dq4JmCPcSTR15kI25s09FuzRgby+Lksb0KN1wvMq8nA6SxN/6xUJs41
- H6lQaytpeeWLlTq0G1HP/vBXDYnydEk=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-Gxm3JAxfNWyzzrw3LARPug-1; Tue, 16 Apr 2024 11:17:56 -0400
-X-MC-Unique: Gxm3JAxfNWyzzrw3LARPug-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ (Exim 4.90_1) (envelope-from <SRS0=29bf=LV=kaod.org=clg@ozlabs.org>)
+ id 1rwklM-0001cE-QP; Tue, 16 Apr 2024 11:30:26 -0400
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VJnzf1dfmz4wyl;
+ Wed, 17 Apr 2024 01:30:22 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A6AC7104B507;
- Tue, 16 Apr 2024 15:17:55 +0000 (UTC)
-Received: from localhost (dhcp-192-239.str.redhat.com [10.33.192.239])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 597DB2026D1F;
- Tue, 16 Apr 2024 15:17:55 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
- qemu-arm@nongnu.org
-Cc: Eric Auger <eauger@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v9] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
-In-Reply-To: <227c96c8-4f17-4f79-9378-a15c9dce8d46@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20240409024940.180107-1-shahuang@redhat.com>
- <d1a76e23-e361-46a9-9baf-6ab51db5d7ba@redhat.com>
- <47e0c03b-0a6f-4a58-8dd7-6f1b85bcf71c@redhat.com>
- <227c96c8-4f17-4f79-9378-a15c9dce8d46@redhat.com>
-User-Agent: Notmuch/0.37 (https://notmuchmail.org)
-Date: Tue, 16 Apr 2024 17:17:54 +0200
-Message-ID: <875xwhjpzx.fsf@redhat.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VJnzY1GZ3z4wyY;
+ Wed, 17 Apr 2024 01:30:16 +1000 (AEST)
+Message-ID: <382a8ea3-a2bc-406c-9655-a1e82cd64b97@kaod.org>
+Date: Tue, 16 Apr 2024 17:30:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/16] aspeed/sdmc: remove redundant macros
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
+ <20240416091904.935283-4-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240416091904.935283-4-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=29bf=LV=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,59 +72,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10 2024, Thomas Huth <thuth@redhat.com> wrote:
+On 4/16/24 11:18, Jamin Lin wrote:
+> These macros are no longer used for ASPEED SOCs, so removes them.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-> On 09/04/2024 09.47, Shaoqin Huang wrote:
->> Hi Thmoas,
->>=20
->> On 4/9/24 13:33, Thomas Huth wrote:
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 assert_has_feature(qts, "h=
-ost", "kvm-pmu-filter");
->>>
->>> So you assert here that the feature is available ...
->>>
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 assert_has_feat=
-ure(qts, "host", "kvm-steal-time");
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 assert_has_feat=
-ure(qts, "host", "sve");
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 resp =3D do_que=
-ry_no_props(qts, "host");
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_supports_pmu_filter =
-=3D resp_get_feature_str(resp,=20
->>>> "kvm-pmu-filter");
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_supports_st=
-eal_time =3D resp_get_feature(resp,=20
->>>> "kvm-steal-time");
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_supports_sv=
-e =3D resp_get_feature(resp, "sve");
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 vls =3D resp_ge=
-t_sve_vls(resp);
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qobject_unref(r=
-esp);
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (kvm_supports_pmu_filte=
-r) { >
->>> ... why do you then need to check for its availability here again?
->>> I either don't understand this part of the code, or you could drop the=
-=20
->>> kvm_supports_pmu_filter variable and simply always execute the code bel=
-ow.
->>=20
->> Thanks for your reviewing. I did so because all other feature like=20
->> "kvm-steal-time" check its availability again. I don't know the original=
-=20
->> reason why they did that. I just followed it.
->>=20
->> Do you think we should delete all the checking?
->
-> resp_get_feature() seems to return a boolean value, so though these featu=
-re=20
-> could be there, they still could be disabled, I assume? Thus we likely ne=
-ed=20
-> to keep the check for those.
 
-This had confused me as well when I looked at it the last time -- one
-thing is to check whether we have a certain prop in the cpu model, the
-other one whether we actually support it. Maybe this needs some
-comments?
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/misc/aspeed_sdmc.c | 15 ---------------
+>   1 file changed, 15 deletions(-)
+> 
+> diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
+> index 64cd1a81dc..74279bbe8e 100644
+> --- a/hw/misc/aspeed_sdmc.c
+> +++ b/hw/misc/aspeed_sdmc.c
+> @@ -76,10 +76,6 @@
+>   #define     ASPEED_SDMC_VGA_32MB            0x2
+>   #define     ASPEED_SDMC_VGA_64MB            0x3
+>   #define ASPEED_SDMC_DRAM_SIZE(x)        (x & 0x3)
+> -#define     ASPEED_SDMC_DRAM_64MB           0x0
+> -#define     ASPEED_SDMC_DRAM_128MB          0x1
+> -#define     ASPEED_SDMC_DRAM_256MB          0x2
+> -#define     ASPEED_SDMC_DRAM_512MB          0x3
+>   
+>   #define ASPEED_SDMC_READONLY_MASK                       \
+>       (ASPEED_SDMC_RESERVED | ASPEED_SDMC_VGA_COMPAT |    \
+> @@ -100,17 +96,6 @@
+>   #define ASPEED_SDMC_CACHE_ENABLE        (1 << 10) /* differs from AST2400 */
+>   #define ASPEED_SDMC_DRAM_TYPE           (1 << 4)  /* differs from AST2400 */
+>   
+> -/* DRAM size definitions differs */
+> -#define     ASPEED_SDMC_AST2500_128MB       0x0
+> -#define     ASPEED_SDMC_AST2500_256MB       0x1
+> -#define     ASPEED_SDMC_AST2500_512MB       0x2
+> -#define     ASPEED_SDMC_AST2500_1024MB      0x3
+> -
+> -#define     ASPEED_SDMC_AST2600_256MB       0x0
+> -#define     ASPEED_SDMC_AST2600_512MB       0x1
+> -#define     ASPEED_SDMC_AST2600_1024MB      0x2
+> -#define     ASPEED_SDMC_AST2600_2048MB      0x3
+> -
+>   #define ASPEED_SDMC_AST2500_READONLY_MASK                               \
+>       (ASPEED_SDMC_HW_VERSION(0xf) | ASPEED_SDMC_CACHE_INITIAL_DONE |     \
+>        ASPEED_SDMC_AST2500_RESERVED | ASPEED_SDMC_VGA_COMPAT |            \
 
 
