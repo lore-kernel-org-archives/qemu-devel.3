@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64782C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027DEC04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk3s-0006J1-LI; Tue, 16 Apr 2024 10:45:31 -0400
+	id 1rwk37-0005f2-Sp; Tue, 16 Apr 2024 10:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3I-0005xs-1Z
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:53 -0400
+ id 1rwk32-0005FX-RA
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:37 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3G-0002Qd-Gb
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:51 -0400
+ id 1rwk31-0002HE-1l
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:36 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk38-0002hj-MB; Tue, 16 Apr 2024 16:44:42 +0200
+ id 1rwk2s-0002gP-W7; Tue, 16 Apr 2024 16:44:27 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,10 +32,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 17/26] migration: Add qemu_loadvm_load_state_buffer() and
- its handler
-Date: Tue, 16 Apr 2024 16:42:56 +0200
-Message-ID: <5482f99c572d339070127cf658968195dd85436e.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 14/26] migration/ram: Add load start trace event
+Date: Tue, 16 Apr 2024 16:42:53 +0200
+Message-ID: <1fad7a367dc657bd7436e30271178a0a1a649335.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -65,89 +64,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-qemu_loadvm_load_state_buffer() and its load_state_buffer
-SaveVMHandler allow providing device state buffer to explicitly
-specified device via its idstr and instance id.
+There's a RAM load complete trace event but there wasn't its start equivalent.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/migration/register.h | 15 +++++++++++++++
- migration/savevm.c           | 25 +++++++++++++++++++++++++
- migration/savevm.h           |  3 +++
- 3 files changed, 43 insertions(+)
+ migration/ram.c        | 1 +
+ migration/trace-events | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index 9d36e35bd612..7d29b7e0b559 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -257,6 +257,21 @@ typedef struct SaveVMHandlers {
-      */
-     int (*load_state)(QEMUFile *f, void *opaque, int version_id);
+diff --git a/migration/ram.c b/migration/ram.c
+index 8deb84984f4a..cebb06480d6f 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4223,6 +4223,7 @@ static int ram_load_precopy(QEMUFile *f)
+                           RAM_SAVE_FLAG_ZERO);
+     }
  
-+    /**
-+     * @load_state_buffer
-+     *
-+     * Load device state buffer provided to qemu_loadvm_load_state_buffer().
-+     *
-+     * @opaque: data pointer passed to register_savevm_live()
-+     * @data: the data buffer to load
-+     * @data_size: the data length in buffer
-+     * @errp: pointer to Error*, to store an error if it happens.
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-+    int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
-+                             Error **errp);
-+
-     /**
-      * @load_setup
-      *
-diff --git a/migration/savevm.c b/migration/savevm.c
-index fa35504678bf..2e4d63faca06 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3073,6 +3073,31 @@ int qemu_loadvm_approve_switchover(void)
-     return migrate_send_rp_switchover_ack(mis);
- }
- 
-+int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-+                                  char *buf, size_t len, Error **errp)
-+{
-+    SaveStateEntry *se;
-+
-+    se = find_se(idstr, instance_id);
-+    if (!se) {
-+        error_setg(errp, "Unknown idstr %s or instance id %u for load state buffer",
-+                   idstr, instance_id);
-+        return -1;
-+    }
-+
-+    if (!se->ops || !se->ops->load_state_buffer) {
-+        error_setg(errp, "idstr %s / instance %u has no load state buffer operation",
-+                   idstr, instance_id);
-+        return -1;
-+    }
-+
-+    if (se->ops->load_state_buffer(se->opaque, buf, len, errp) != 0) {
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- bool save_snapshot(const char *name, bool overwrite, const char *vmstate,
-                   bool has_devices, strList *devices, Error **errp)
- {
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 74669733dd63..c879ba8c970e 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -70,4 +70,7 @@ int qemu_loadvm_approve_switchover(void);
- int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-         bool in_postcopy, bool inactivate_disks);
- 
-+int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
-+                                  char *buf, size_t len, Error **errp);
-+
- #endif
++    trace_ram_load_start();
+     while (!ret && !(flags & RAM_SAVE_FLAG_EOS)) {
+         ram_addr_t addr;
+         void *host = NULL, *host_bak = NULL;
+diff --git a/migration/trace-events b/migration/trace-events
+index e48607d5a6a2..396c0233cb8c 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -115,6 +115,7 @@ colo_flush_ram_cache_end(void) ""
+ save_xbzrle_page_skipping(void) ""
+ save_xbzrle_page_overflow(void) ""
+ ram_save_iterate_big_wait(uint64_t milliconds, int iterations) "big wait: %" PRIu64 " milliseconds, %d iterations"
++ram_load_start(void) ""
+ ram_load_complete(int ret, uint64_t seq_iter) "exit_code %d seq iteration %" PRIu64
+ ram_write_tracking_ramblock_start(const char *block_id, size_t page_size, void *addr, size_t length) "%s: page_size: %zu addr: %p length: %zu"
+ ram_write_tracking_ramblock_stop(const char *block_id, size_t page_size, void *addr, size_t length) "%s: page_size: %zu addr: %p length: %zu"
 
