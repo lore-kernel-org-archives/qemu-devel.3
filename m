@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52AA4C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 16:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC05C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 16:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwlYK-0000nO-FY; Tue, 16 Apr 2024 12:21:00 -0400
+	id 1rwleX-0002Gv-OR; Tue, 16 Apr 2024 12:27:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rwlYI-0000nF-V8
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 12:20:59 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ id 1rwleT-0002GS-09
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 12:27:21 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rwlYG-0002g3-Bs
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 12:20:58 -0400
+ id 1rwleQ-0003Qw-Bg
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 12:27:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713284456; x=1744820456;
+ t=1713284838; x=1744820838;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=dyF/XYekO/o8VEsr3ra3iXg8GX4AS25PMxHbmLR5Dl0=;
- b=iQqbGzh9KmgeDXpq9HtlgAlQu6fHApxLlIIkN+TDGKqRo9X7rYK2d4kv
- o1lo5z7jiMjhi843dox1S8q9DqKCMX/AEra6FF6bUTZzL+j3lUDtHRVjG
- vMzxoQjbfKL93tcUwkcM9OvRiqQevSmHMfN8H3lSABOVyW5aVuzaSs3ZM
- kge1oI3xs/KDu+j3JToRo1G6oFesdjkcQXS4FpffdoWyIv3bAU1nMct58
- dO/ziN9cxRUA2TZYHegHZ8jP+V31cD+0LdB+96YK7oQSaTmWZPM6g1d2q
- W+ws6CNa1wJJhch5aZHGed9BC+N78Ft/XYXckAZaqe8cX++mOql72rrI5 Q==;
-X-CSE-ConnectionGUID: 0AICSEqHTqylIPSMWBA7bw==
-X-CSE-MsgGUID: VUgOudN2QcuuKbm+87Qw/A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="34123820"
-X-IronPort-AV: E=Sophos;i="6.07,206,1708416000"; d="scan'208";a="34123820"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Apr 2024 09:20:53 -0700
-X-CSE-ConnectionGUID: 6GCGrLzSScyQhM8Kn4S54g==
-X-CSE-MsgGUID: ySvIzbeiSYua+qoit0oiag==
+ bh=ng9OTjejOyw+pwithlGzX2/iCS0eu7Mo2R60EBJqeA0=;
+ b=CFDNFe9PuVT2NrVsqc1TZ9KaT0qCLiyovQZrC5hx2uP1luAR3UHCnEN+
+ 2AVoTz2FZapsKROJHr0AgdElAyHFtG2+NvFZZs87YM4s2our0omU4U61F
+ zgXPWoqSS2P+e0rgVeqar6e3DEntUF7CttWKSr9WDR0Dl/WDvkA5CsFu5
+ /g4XaNzvnHQHXSZHHQTVXhfONZ7tp0GN6UwYmxF+hGfw6JrCqniEcmcCO
+ Br4WAWIvsdMF1Huz2N33IKkKxFDK9o8zT2xF5D7/sgoB9n3fjMFcWFWP8
+ TesTil5W6Qah1fy/h5MZJ9vslY+MPKVuM8+oTKX/DNdeMgV+wvhusI3sP A==;
+X-CSE-ConnectionGUID: WGP02pW+TWakTxEvE2FlcA==
+X-CSE-MsgGUID: /FqaZiepSouakef65kXxFg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="20124633"
+X-IronPort-AV: E=Sophos;i="6.07,206,1708416000"; d="scan'208";a="20124633"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Apr 2024 09:27:14 -0700
+X-CSE-ConnectionGUID: jQ12t00OS2aDnxn8dSR7IA==
+X-CSE-MsgGUID: Ntvm5KODRLePodukWvgG0Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,206,1708416000"; d="scan'208";a="22377349"
+X-IronPort-AV: E=Sophos;i="6.07,206,1708416000"; d="scan'208";a="22199490"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 16 Apr 2024 09:20:52 -0700
-Date: Wed, 17 Apr 2024 00:34:56 +0800
+ by orviesa010.jf.intel.com with ESMTP; 16 Apr 2024 09:27:13 -0700
+Date: Wed, 17 Apr 2024 00:41:16 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Peter Dave Hello <hsu@peterdavehello.org>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Peter Dave Hello <hsu@peterdavehello.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
-Message-ID: <Zh6osLjy89W+Xhvj@intel.com>
+Message-ID: <Zh6qLCvyiSk6YkVy@intel.com>
 References: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
+ <CAFEAcA_D1+BUk01mXNwRehxYqyXQU+Zu98sWBujauk5L2tHh3w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <CAFEAcA_D1+BUk01mXNwRehxYqyXQU+Zu98sWBujauk5L2tHh3w@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -45
 X-Spam_score: -4.6
@@ -81,73 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 16, 2024 at 11:31:24AM +0000, Peter Dave Hello wrote:
-> Date: Tue, 16 Apr 2024 11:31:24 +0000
-> From: Peter Dave Hello <hsu@peterdavehello.org>
-> Subject: [PATCH] Add zh_TW Traditional Chinese translation
+Hi Peter,
+
+On Tue, Apr 16, 2024 at 02:27:45PM +0100, Peter Maydell wrote:
+> Date: Tue, 16 Apr 2024 14:27:45 +0100
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
 > 
-> From: Peter Dave Hello <hsu@peterdavehello.org>
-> Date: Tue, 16 Apr 2024 00:43:29 +0800
-> Subject: [PATCH] Add a simple zh_TW Traditional Chinese translation
+> On Tue, 16 Apr 2024 at 14:00, Peter Dave Hello <hsu@peterdavehello.org> wrote:
+> >
+> > From: Peter Dave Hello <hsu@peterdavehello.org>
+> > Date: Tue, 16 Apr 2024 00:43:29 +0800
+> > Subject: [PATCH] Add a simple zh_TW Traditional Chinese translation
+> >
+> > This patch adds a basic zh_TW translation file for Taiwan Traditional
+> > Chinese users.
+> >
+> > Signed-off-by: Peter Dave Hello <hsu@peterdavehello.org>
 > 
-> This patch adds a basic zh_TW translation file for Taiwan Traditional
-> Chinese users.
+> This name in your Signed-off-by line doesn't match the
+> name you use in the .po file...
 > 
-> Signed-off-by: Peter Dave Hello <hsu@peterdavehello.org>
-> ---
->  po/LINGUAS  |  1 +
->  po/zh_TW.po | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 94 insertions(+)
->  create mode 100644 po/zh_TW.po
+> > ---
+> >  po/LINGUAS  |  1 +
+> >  po/zh_TW.po | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 94 insertions(+)
+> >  create mode 100644 po/zh_TW.po
+> >
+> > diff --git a/po/LINGUAS b/po/LINGUAS
+> > index 9b33a36..08163e8 100644
+> > --- a/po/LINGUAS
+> > +++ b/po/LINGUAS
+> > @@ -7,3 +7,4 @@ sv
+> >  tr
+> >  uk
+> >  zh_CN
+> > +zh_TW
+> > diff --git a/po/zh_TW.po b/po/zh_TW.po
+> > new file mode 100644
+> > index 0000000..d25557e
+> > --- /dev/null
+> > +++ b/po/zh_TW.po
+> > @@ -0,0 +1,93 @@
+> > +# Chinese translations for PACKAGE package.
+> > +# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+> > +# This file is distributed under the same license as the PACKAGE package.
 > 
-> diff --git a/po/LINGUAS b/po/LINGUAS
-> index 9b33a36..08163e8 100644
-> --- a/po/LINGUAS
-> +++ b/po/LINGUAS
-> @@ -7,3 +7,4 @@ sv
->  tr
->  uk
->  zh_CN
-> +zh_TW
-> diff --git a/po/zh_TW.po b/po/zh_TW.po
-> new file mode 100644
-> index 0000000..d25557e
-> --- /dev/null
-> +++ b/po/zh_TW.po
-> @@ -0,0 +1,93 @@
-> +# Chinese translations for PACKAGE package.
-> +# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
-> +# This file is distributed under the same license as the PACKAGE package.
-> +# Peter Hsu <hsu@peterdavehello.org>, 2024.
-> +#
-> +msgid ""
-> +msgstr ""
-> +"Project-Id-Version: PACKAGE VERSION\n"
+> Can you replace all these placeholder ALLCAPS items
+> with the right values, please?
+> 
+> > +# Peter Hsu <hsu@peterdavehello.org>, 2024.
+> > +#
 
-"Project-Id-Version: QEMU 9.1 \n"
+Open source license is missing here.
 
-(Now the target version should be v9.1.)
+And I checked the other .po files and found that none of them declare
+the open source license, are they missing it? Or does this case default
+to "GPL-2.0-or-later"?
 
-> +"Report-Msgid-Bugs-To: \n"
-
-"Report-Msgid-Bugs-To: qemu-devel@nongnu.org\n"
-
-> +"POT-Creation-Date: 2024-04-16 17:52+0800\n"
-> +"PO-Revision-Date: 2024-04-16 17:52+0800\n"
-> +"Last-Translator: Peter Hsu <hsu@peterdavehello.org>\n"
-> +"Language-Team: Chinese (traditional)\n"
-> +"Language: zh_TW\n"
-> +"MIME-Version: 1.0\n"
-> +"Content-Type: text/plain; charset=ASCII\n"
-> +"Content-Transfer-Encoding: 8bit\n"
-> +
-> +#: ui/gtk.c:231
-
-Referring to the support of other languages, the comment here can be
-deleted. The lineno related comments in the following text can be
-similarly deleted.
-
-Regards,
+Thanks,
 Zhao
 
 
