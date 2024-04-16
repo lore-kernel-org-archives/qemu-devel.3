@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7AAC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79123C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwo39-0001CI-WA; Tue, 16 Apr 2024 15:01:01 -0400
+	id 1rwo3W-0001uD-HW; Tue, 16 Apr 2024 15:01:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2R-0000to-6B
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:15 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo3U-0001nr-82
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:01:20 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2O-0005Zs-Dy
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:14 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5171a529224so6094340e87.0
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo3R-0005mi-Vf
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:01:19 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-518d98b9620so3460459e87.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713294010; x=1713898810; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713294076; x=1713898876; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r03IbH4Q5jukHMDYRNDrIPnxYvDkdnR4utG+Rvdo7L0=;
- b=hLqgxtpEB5H4QcbmOK6mXxPG3N0D5AabwrCTq8kBJaeDVVzcw1VaVQmOW31GV3PXOt
- LtM8t2umMYJ1Ld6mNPxA6qSFpLbf08ZJtiSYmcReQIANih0P5loxPyGoiijrl5JUqung
- 32McCauMNVBLSKLS+ylf5jVpbavxCL6C1hWbXTcWlHa9VvvUdCOt2aSQuoywGzCrIiVj
- ygGco1zN89jWwnyDAURbjq8jEOTJlY9qJYxNpOtcc1IZTqwCXH7cW/6l5De9Nrwxo1Wq
- RcCJz9tYmTpkvvh2ETmN3+UNAsInhenC/nPeLDaylUaFnNj/8iqMveMIkmR3TWqsa43w
- DD+g==
+ bh=3tX6emDsZqVY2muZJRjyArm9SgC2+2SHZUCWPsCYUO0=;
+ b=XXkoo01wgJLcqx5MY3t7zg2on2TS+GzJ4CNGIwNhj6FTy44qflnA8ViNLoi0aI9xPJ
+ i/UplER4f38P4niTFDIk1jFf8O+pgS00KIKxl/QhPLTcXEo1zOf53GzSjOJcMUvMsY3B
+ 0PsG18DhOjGWi2W3OX6l6ErPTZa6Dy5fhAgJjZ6BuG4qpPh9NyKh73t9Pbza7tOS80e8
+ kG2JzOHKySJ+fHEn+2CuCHNN6g35p1K4DinwzU6BQoHW/ksL7uoY++0QCCu/qJdW9yBB
+ a5f24vFk1NkPQZVbW/Iy3Hr73xVlkEft+fSgoNZOZh+q4h+isQG+sHR9FcV8ExkHQJKd
+ fmmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713294010; x=1713898810;
+ d=1e100.net; s=20230601; t=1713294076; x=1713898876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r03IbH4Q5jukHMDYRNDrIPnxYvDkdnR4utG+Rvdo7L0=;
- b=TM7x80OzTmfsf77QLETnajuKI3H5sCW7FWRDDR9RAbagv7/3AtrmrzT9y61jlLMrTH
- +yLEGZdmbp1Zcon0KhIeI79+Aj5FNZSnv1BrR/JGA+keMhVz55HCDC0j2MTchujOl+MR
- n+tcIlbtXP20KzTg4K6b7KHnZeVmXeix2l9h8R/+WhK8X6iKXoCnIIcMv+QX9lUj33kt
- DAopxj0PCro2emotRhOHGgqEtGctCXD583ih+4+BW6fH1eiAViDVBsiMyusorTNVESnc
- 9Satv+lNu+2RYoYPPBTJwLACDc62ADuBlnIBYZQuemOXMXAaHzTOkvV7W1Y99Zpa9+DH
- GmVw==
-X-Gm-Message-State: AOJu0YyBt5SQ2rF0eWeZMdEjJkhsaG1BbuCx9ySIf37UXzxbrMznUTx/
- Ta5NXUUsEWxT2hK0pnBzmqrG2Lr6EOlAV6/63xF/qakBzaUqRuJBRzf0IxZYGAo4QeAp+hjyzDk
- W
-X-Google-Smtp-Source: AGHT+IHRsiss2Z7S14JYdvY6Yt6YrgQ0OojgolVzH0Nx8AY7SPkGC1icvBRPX09j77zZ7WWRP2L3sQ==
-X-Received: by 2002:ac2:5544:0:b0:515:bee6:5e8c with SMTP id
- l4-20020ac25544000000b00515bee65e8cmr7857295lfk.40.1713294009690; 
- Tue, 16 Apr 2024 12:00:09 -0700 (PDT)
+ bh=3tX6emDsZqVY2muZJRjyArm9SgC2+2SHZUCWPsCYUO0=;
+ b=JuhMUiPD+DhdiwnZEp90yhnIVRboC3TVtOJWxK+thmaxoSXsAwQM8frxd4LRyq/zlV
+ OirYLa3J3Stly7xRf1/+KsfSZ0f8d5OP4KHEualaE92SQw29g3blgtUO0EcMI+kA9FO/
+ yIGYKqvmiHVwC7TDe5ZXmbLC8WMF65TJWYt44EoXHm4di6gHk2YACdM82kje6dnFrR50
+ 2JOk41LJVXH/zDgptkYcox/8Ok2gBEyY1MRSLE9MutN3bny3nAeF5f9Zl8QGbZFppoGb
+ ZOUVpWVFpEA5I1TOw2OQL8qn/2c8NswfeRlP931abDfJzR4SlxuLUmhJjc/u90981MuH
+ Fx3A==
+X-Gm-Message-State: AOJu0Yzu0pGkk5VRn63ukvd40z0zG8CjyHsQnwDUMiu2NM31RbZH04Mi
+ V56fIBOvzuYEDcKwbEhvVEf3nZwdO0t8RXKg3lV84gVEmrYa850RlYW4ipTREag2bR6g3C7H85e
+ g
+X-Google-Smtp-Source: AGHT+IGAeJUk9j1vWHyak+lS5xvi7WZDRHJdtrfadkYcSMrcnN5S5wA21dkShPt8sipozRTysqPPHA==
+X-Received: by 2002:ac2:4c25:0:b0:515:c102:c825 with SMTP id
+ u5-20020ac24c25000000b00515c102c825mr7947381lfq.19.1713294075893; 
+ Tue, 16 Apr 2024 12:01:15 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- ae12-20020a17090725cc00b00a529aeb4eccsm2558072ejc.140.2024.04.16.12.00.07
+ gs39-20020a1709072d2700b00a46f95f5849sm7167635ejc.106.2024.04.16.12.01.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 12:00:09 -0700 (PDT)
+ Tue, 16 Apr 2024 12:01:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,18 +65,28 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v4 04/22] hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST flag
-Date: Tue, 16 Apr 2024 20:59:20 +0200
-Message-ID: <20240416185939.37984-5-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Song Gao <gaosong@loongson.cn>,
+ Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH v4 14/22] hw/mem/pc-dimm: Remove legacy_align argument from
+ pc_dimm_pre_plug()
+Date: Tue, 16 Apr 2024 20:59:30 +0200
+Message-ID: <20240416185939.37984-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 References: <20240416185939.37984-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,142 +109,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XHCI_FLAG_SS_FIRST was only used by the pc-i440fx-2.0 machine,
-which got removed. Remove it and simplify various functions in
-hcd-xhci.c.
+'legacy_align' is always NULL, remove it.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/usb/hcd-xhci.h     |  3 +--
- hw/usb/hcd-xhci-nec.c |  2 --
- hw/usb/hcd-xhci-pci.c |  1 -
- hw/usb/hcd-xhci.c     | 42 ++++++++----------------------------------
- 4 files changed, 9 insertions(+), 39 deletions(-)
+ include/hw/mem/pc-dimm.h | 3 +--
+ hw/arm/virt.c            | 2 +-
+ hw/i386/pc.c             | 2 +-
+ hw/loongarch/virt.c      | 2 +-
+ hw/mem/pc-dimm.c         | 6 ++----
+ hw/ppc/spapr.c           | 2 +-
+ 6 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
-index 1efa4858fb..fe16d7ad05 100644
---- a/hw/usb/hcd-xhci.h
-+++ b/hw/usb/hcd-xhci.h
-@@ -36,8 +36,7 @@ typedef struct XHCIStreamContext XHCIStreamContext;
- typedef struct XHCIEPContext XHCIEPContext;
- 
- enum xhci_flags {
--    XHCI_FLAG_SS_FIRST = 1,
--    XHCI_FLAG_ENABLE_STREAMS,
-+    XHCI_FLAG_ENABLE_STREAMS = 1,
+diff --git a/include/hw/mem/pc-dimm.h b/include/hw/mem/pc-dimm.h
+index 322bebe555..fe0f3ea963 100644
+--- a/include/hw/mem/pc-dimm.h
++++ b/include/hw/mem/pc-dimm.h
+@@ -66,8 +66,7 @@ struct PCDIMMDeviceClass {
+     void (*unrealize)(PCDIMMDevice *dimm);
  };
  
- typedef enum TRBType {
-diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
-index 5d5b069cf9..0c063b3697 100644
---- a/hw/usb/hcd-xhci-nec.c
-+++ b/hw/usb/hcd-xhci-nec.c
-@@ -41,8 +41,6 @@ struct XHCINecState {
- static Property nec_xhci_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
--    DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
--                    XHCI_FLAG_SS_FIRST, true),
-     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
-     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-index cbad96f393..264d7ebb77 100644
---- a/hw/usb/hcd-xhci-pci.c
-+++ b/hw/usb/hcd-xhci-pci.c
-@@ -242,7 +242,6 @@ static void qemu_xhci_instance_init(Object *obj)
-     s->msix     = ON_OFF_AUTO_AUTO;
-     xhci->numintrs = XHCI_MAXINTRS;
-     xhci->numslots = XHCI_MAXSLOTS;
--    xhci_set_flag(xhci, XHCI_FLAG_SS_FIRST);
+-void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine,
+-                      const uint64_t *legacy_align, Error **errp);
++void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine, Error **errp);
+ void pc_dimm_plug(PCDIMMDevice *dimm, MachineState *machine);
+ void pc_dimm_unplug(PCDIMMDevice *dimm, MachineState *machine);
+ #endif
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index a55ef916cb..7af05a6a2d 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2736,7 +2736,7 @@ static void virt_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         return;
+     }
+ 
+-    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
++    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), errp);
  }
  
- static const TypeInfo qemu_xhci_info = {
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index ad40232eb6..b6411f0bda 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -541,18 +541,10 @@ static XHCIPort *xhci_lookup_port(XHCIState *xhci, struct USBPort *uport)
-     case USB_SPEED_LOW:
-     case USB_SPEED_FULL:
-     case USB_SPEED_HIGH:
--        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
--            index = uport->index + xhci->numports_3;
--        } else {
--            index = uport->index;
--        }
-+        index = uport->index + xhci->numports_3;
-         break;
-     case USB_SPEED_SUPER:
--        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
--            index = uport->index;
--        } else {
--            index = uport->index + xhci->numports_2;
--        }
-+        index = uport->index;
-         break;
-     default:
-         return NULL;
-@@ -2779,11 +2771,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
-         ret = 0x20425355; /* "USB " */
-         break;
-     case 0x28: /* Supported Protocol:08 */
--        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
--            ret = (xhci->numports_2<<8) | (xhci->numports_3+1);
--        } else {
--            ret = (xhci->numports_2<<8) | 1;
--        }
-+        ret = (xhci->numports_2 << 8) | (xhci->numports_3 + 1);
-         break;
-     case 0x2c: /* Supported Protocol:0c */
-         ret = 0x00000000; /* reserved */
-@@ -2795,11 +2783,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
-         ret = 0x20425355; /* "USB " */
-         break;
-     case 0x38: /* Supported Protocol:08 */
--        if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
--            ret = (xhci->numports_3<<8) | 1;
--        } else {
--            ret = (xhci->numports_3<<8) | (xhci->numports_2+1);
--        }
-+        ret = (xhci->numports_3 << 8) | 1;
-         break;
-     case 0x3c: /* Supported Protocol:0c */
-         ret = 0x00000000; /* reserved */
-@@ -3349,13 +3333,8 @@ static void usb_xhci_init(XHCIState *xhci)
-     for (i = 0; i < usbports; i++) {
-         speedmask = 0;
-         if (i < xhci->numports_2) {
--            if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
--                port = &xhci->ports[i + xhci->numports_3];
--                port->portnr = i + 1 + xhci->numports_3;
--            } else {
--                port = &xhci->ports[i];
--                port->portnr = i + 1;
--            }
-+            port = &xhci->ports[i + xhci->numports_3];
-+            port->portnr = i + 1 + xhci->numports_3;
-             port->uport = &xhci->uports[i];
-             port->speedmask =
-                 USB_SPEED_MASK_LOW  |
-@@ -3366,13 +3345,8 @@ static void usb_xhci_init(XHCIState *xhci)
-             speedmask |= port->speedmask;
-         }
-         if (i < xhci->numports_3) {
--            if (xhci_get_flag(xhci, XHCI_FLAG_SS_FIRST)) {
--                port = &xhci->ports[i];
--                port->portnr = i + 1;
--            } else {
--                port = &xhci->ports[i + xhci->numports_2];
--                port->portnr = i + 1 + xhci->numports_2;
--            }
-+            port = &xhci->ports[i];
-+            port->portnr = i + 1;
-             port->uport = &xhci->uports[i];
-             port->speedmask = USB_SPEED_MASK_SUPER;
-             assert(i < XHCI_MAXPORTS);
+ static void virt_memory_plug(HotplugHandler *hotplug_dev,
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index c7bfdfc1e1..9ba21b9967 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1309,7 +1309,7 @@ static void pc_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         return;
+     }
+ 
+-    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
++    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), errp);
+ }
+ 
+ static void pc_memory_plug(HotplugHandler *hotplug_dev,
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 00d3005e54..af71bd2a99 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -1025,7 +1025,7 @@ static bool memhp_type_supported(DeviceState *dev)
+ static void virt_mem_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+                                  Error **errp)
+ {
+-    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
++    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), errp);
+ }
+ 
+ static void virt_machine_device_pre_plug(HotplugHandler *hotplug_dev,
+diff --git a/hw/mem/pc-dimm.c b/hw/mem/pc-dimm.c
+index 37f1f4ccfd..836384a90f 100644
+--- a/hw/mem/pc-dimm.c
++++ b/hw/mem/pc-dimm.c
+@@ -44,8 +44,7 @@ static MemoryRegion *pc_dimm_get_memory_region(PCDIMMDevice *dimm, Error **errp)
+     return host_memory_backend_get_memory(dimm->hostmem);
+ }
+ 
+-void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine,
+-                      const uint64_t *legacy_align, Error **errp)
++void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine, Error **errp)
+ {
+     Error *local_err = NULL;
+     int slot;
+@@ -70,8 +69,7 @@ void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine,
+                             &error_abort);
+     trace_mhp_pc_dimm_assigned_slot(slot);
+ 
+-    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, legacy_align,
+-                           errp);
++    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, NULL, errp);
+ }
+ 
+ void pc_dimm_plug(PCDIMMDevice *dimm, MachineState *machine)
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index e9bc97fee0..f147876dc9 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3668,7 +3668,7 @@ static void spapr_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         return;
+     }
+ 
+-    pc_dimm_pre_plug(dimm, MACHINE(hotplug_dev), NULL, errp);
++    pc_dimm_pre_plug(dimm, MACHINE(hotplug_dev), errp);
+ }
+ 
+ struct SpaprDimmState {
 -- 
 2.41.0
 
