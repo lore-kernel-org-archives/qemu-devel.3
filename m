@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91887C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FA5C04FF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk3N-0005vS-GY; Tue, 16 Apr 2024 10:45:02 -0400
+	id 1rwk2G-0004vL-Uc; Tue, 16 Apr 2024 10:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3C-0005mr-3V
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:47 -0400
+ id 1rwk2E-0004td-KM
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:43:46 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3A-0002M6-Mc
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:45 -0400
+ id 1rwk2B-0001zN-T5
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:43:46 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk33-0002hJ-Fs; Tue, 16 Apr 2024 16:44:37 +0200
+ id 1rwk1s-0002ci-5r; Tue, 16 Apr 2024 16:43:24 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,10 +32,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 16/26] migration: Add save_live_complete_precopy_async{,
- wait} handlers
-Date: Tue, 16 Apr 2024 16:42:55 +0200
-Message-ID: <5a11fbbd197f08d45e61da40124c86ae8f761a27.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 02/26] migration: Add migration channel header send/receive
+Date: Tue, 16 Apr 2024 16:42:41 +0200
+Message-ID: <636cec92eb801f13ba893de79d4872f5d8342097.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -63,116 +62,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-These SaveVMHandlers allow device to provide its own asynchronous
-transmission of the remaining data at the end of a precopy phase.
+Add functions to send and receive migration channel header.
 
-The save_live_complete_precopy_async handler is supposed to start such
-transmission (for example, by launching appropriate threads) while the
-save_live_complete_precopy_async_wait handler is supposed to wait until
-such transfer has finished (for example, until the sending threads
-have exited).
-
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+[MSS: Mark MigChannelHeader as packed, remove device id from it]
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/migration/register.h | 31 +++++++++++++++++++++++++++++++
- migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+)
+ migration/channel.c    | 59 ++++++++++++++++++++++++++++++++++++++++++
+ migration/channel.h    | 14 ++++++++++
+ migration/trace-events |  2 ++
+ 3 files changed, 75 insertions(+)
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index d7b70a8be68c..9d36e35bd612 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -102,6 +102,37 @@ typedef struct SaveVMHandlers {
-      */
-     int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+diff --git a/migration/channel.c b/migration/channel.c
+index f9de064f3b13..a72e85f5791c 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -21,6 +21,7 @@
+ #include "io/channel-socket.h"
+ #include "qemu/yank.h"
+ #include "yank_functions.h"
++#include "options.h"
  
-+    /**
-+     * @save_live_complete_precopy_async
-+     *
-+     * Arranges for handler-specific asynchronous transmission of the
-+     * remaining data at the end of a precopy phase. When postcopy is
-+     * enabled, devices that support postcopy will skip this step.
-+     *
-+     * @f: QEMUFile where the handler can synchronously send data before returning
-+     * @idstr: this device section idstr
-+     * @instance_id: this device section instance_id
-+     * @opaque: data pointer passed to register_savevm_live()
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-+    int (*save_live_complete_precopy_async)(QEMUFile *f,
-+                                            char *idstr, uint32_t instance_id,
-+                                            void *opaque);
-+    /**
-+     * @save_live_complete_precopy_async_wait
-+     *
-+     * Waits for the asynchronous transmission started by the of the
-+     * @save_live_complete_precopy_async handler to complete.
-+     * When postcopy is enabled, devices that support postcopy will skip this step.
-+     *
-+     * @f: QEMUFile where the handler can synchronously send data before returning
-+     * @opaque: data pointer passed to register_savevm_live()
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-+    int (*save_live_complete_precopy_async_wait)(QEMUFile *f, void *opaque);
-+
-     /* This runs both outside and inside the BQL.  */
+ /**
+  * @migration_channel_process_incoming - Create new incoming migration channel
+@@ -93,6 +94,64 @@ void migration_channel_connect(MigrationState *s,
+     error_free(error);
+ }
  
-     /**
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 388d7af7cdd8..fa35504678bf 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1497,6 +1497,27 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
-     SaveStateEntry *se;
-     int ret;
- 
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-+        if (!se->ops || (in_postcopy && se->ops->has_postcopy &&
-+             se->ops->has_postcopy(se->opaque)) ||
-+            !se->ops->save_live_complete_precopy_async) {
-+            continue;
-+        }
++int migration_channel_header_recv(QIOChannel *ioc, MigChannelHeader *header,
++                                  Error **errp)
++{
++    uint64_t header_size;
++    int ret;
 +
-+        save_section_header(f, se, QEMU_VM_SECTION_END);
-+
-+        ret = se->ops->save_live_complete_precopy_async(f,
-+                                                        se->idstr, se->instance_id,
-+                                                        se->opaque);
-+
-+        save_section_footer(f, se);
-+
-+        if (ret < 0) {
-+            qemu_file_set_error(f, ret);
-+            return -1;
-+        }
++    ret = qio_channel_read_all_eof(ioc, (char *)&header_size,
++                                   sizeof(header_size), errp);
++    if (ret == 0 || ret == -1) {
++        return -1;
 +    }
 +
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (!se->ops ||
-             (in_postcopy && se->ops->has_postcopy &&
-@@ -1528,6 +1549,20 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
-                                     end_ts_each - start_ts_each);
-     }
- 
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-+        if (!se->ops || (in_postcopy && se->ops->has_postcopy &&
-+             se->ops->has_postcopy(se->opaque)) ||
-+            !se->ops->save_live_complete_precopy_async_wait) {
-+            continue;
-+        }
-+
-+        ret = se->ops->save_live_complete_precopy_async_wait(f, se->opaque);
-+        if (ret < 0) {
-+            qemu_file_set_error(f, ret);
-+            return -1;
-+        }
++    header_size = be64_to_cpu(header_size);
++    if (header_size > sizeof(*header)) {
++        error_setg(errp,
++                   "Received header of size %lu bytes which is greater than "
++                   "max header size of %lu bytes",
++                   header_size, sizeof(*header));
++        return -EINVAL;
 +    }
 +
-     trace_vmstate_downtime_checkpoint("src-iterable-saved");
++    ret = qio_channel_read_all_eof(ioc, (char *)header, header_size, errp);
++    if (ret == 0 || ret == -1) {
++        return -1;
++    }
++
++    header->channel_type = be32_to_cpu(header->channel_type);
++
++    trace_migration_channel_header_recv(header->channel_type,
++                                        header_size);
++
++    return 0;
++}
++
++int migration_channel_header_send(QIOChannel *ioc, MigChannelHeader *header,
++                                  Error **errp)
++{
++    uint64_t header_size = sizeof(*header);
++    int ret;
++
++    if (!migrate_channel_header()) {
++        return 0;
++    }
++
++    trace_migration_channel_header_send(header->channel_type,
++                                        header_size);
++
++    header_size = cpu_to_be64(header_size);
++    ret = qio_channel_write_all(ioc, (char *)&header_size, sizeof(header_size),
++                                errp);
++    if (ret) {
++        return ret;
++    }
++
++    header->channel_type = cpu_to_be32(header->channel_type);
++
++    return qio_channel_write_all(ioc, (char *)header, sizeof(*header), errp);
++}
  
-     return 0;
+ /**
+  * @migration_channel_read_peek - Peek at migration channel, without
+diff --git a/migration/channel.h b/migration/channel.h
+index 5bdb8208a744..95d281828aaa 100644
+--- a/migration/channel.h
++++ b/migration/channel.h
+@@ -29,4 +29,18 @@ int migration_channel_read_peek(QIOChannel *ioc,
+                                 const char *buf,
+                                 const size_t buflen,
+                                 Error **errp);
++typedef enum {
++    MIG_CHANNEL_TYPE_MAIN,
++} MigChannelTypes;
++
++typedef struct QEMU_PACKED {
++    uint32_t channel_type;
++} MigChannelHeader;
++
++int migration_channel_header_send(QIOChannel *ioc, MigChannelHeader *header,
++                                  Error **errp);
++
++int migration_channel_header_recv(QIOChannel *ioc, MigChannelHeader *header,
++                                  Error **errp);
++
+ #endif
+diff --git a/migration/trace-events b/migration/trace-events
+index f0e1cb80c75b..e48607d5a6a2 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -198,6 +198,8 @@ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma)
+ # channel.c
+ migration_set_incoming_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
+ migration_set_outgoing_channel(void *ioc, const char *ioctype, const char *hostname, void *err)  "ioc=%p ioctype=%s hostname=%s err=%p"
++migration_channel_header_send(uint32_t channel_type, uint64_t header_size) "Migration channel header send: channel_type=%u, header_size=%lu"
++migration_channel_header_recv(uint32_t channel_type, uint64_t header_size) "Migration channel header recv: channel_type=%u, header_size=%lu"
+ 
+ # global_state.c
+ migrate_state_too_big(void) ""
 
