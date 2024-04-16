@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E13CC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 00:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8ECCC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 02:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwWzX-0002pG-W8; Mon, 15 Apr 2024 20:48:08 -0400
+	id 1rwYXC-00012n-LX; Mon, 15 Apr 2024 22:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1rwWzS-0002nB-RW
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 20:48:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1rwWzR-0001SH-A0
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 20:48:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713228479;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=997gQ0EC64A1IFQr7b9ClHckWVuOZOzu8dRw7fYVG2c=;
- b=e8Qt8Q4lB6XZIfEUktEK3riJBJvPosJOZ/h6b94i6w8+Q9WKcVu4Nf4US1HQ3bRfa7mGk9
- ngd3Eo3WJB0R6g03ySp9LkWl0IIXavkhLbqP9KS08ARDiOx7c4em4te14zZz+yGVrHcc5y
- xumdwczVqlXPUZ2Q2j6pCQO6tRN4i/8=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-385-VQtrshzHMJ-UkQRBAdDYeQ-1; Mon, 15 Apr 2024 20:47:56 -0400
-X-MC-Unique: VQtrshzHMJ-UkQRBAdDYeQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a4455ae71fcso287476566b.3
- for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 17:47:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rwYXB-000125-2r; Mon, 15 Apr 2024 22:26:57 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rwYX9-0008RY-Fx; Mon, 15 Apr 2024 22:26:56 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6eaf9565e6bso2402495b3a.2; 
+ Mon, 15 Apr 2024 19:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713234404; x=1713839204; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zivetNqQUIMh9KPd0WEwnV76B5YyiKzZ3E3y1dMd3Q0=;
+ b=OnTWB7kfLuYdpAjjj8PLhbifdt80P0aosmgvVqy3aAcEohF0EM89LH4MWsJmQurwy/
+ V2kcuxi71Q78scrUn/C1rgTp3EZBMt7zH2Sau9C7F9GLCL7SbiUlGNY08J84v10U5F16
+ TPkmb072M+joWSm0qonbwEHcRi1HpILJB2FlOhgph4d26x5wyCF5Fvcz0S69wNNIsQfR
+ AyjHdxSKDwcQO1rqc2rx2wFaBkIhzHLr04pA2k3ySX3TFN/QdLvGPiKMMm5ws00whkTQ
+ pbbakpGL4tXJwm3mR9zI5RvOWNR83pOtzpDGIi6UCb5eT7JHy8yTS8EO5Xw3WoXBtQZ+
+ Xukg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713228475; x=1713833275;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=997gQ0EC64A1IFQr7b9ClHckWVuOZOzu8dRw7fYVG2c=;
- b=st96PCB5S6OpjAQYZGqsiVoLJlmXcxBm1r21AJAQ8BphpVQe7N9zFp1Bny9awm4jzm
- YbEWC1i3I94Z7vn90+iY1vfudgflIMy7kl+kPEiTZDIqt6Qqaz4RYoJAKaX2FMAlVR9u
- P1Z/HrjJa8C8QuBeBTdfMwgzge39x5V984s1KWmp3kDw7Z4fawmrYN0jqra+7teYR734
- ulUOkx+cZKZmt9yyNhKyE5sueVTRFEQ55kC47SJEOAhUY9VGU1FprujuOPbC18XF4Vsa
- el+bIR9S19K2zNas9UammlbDm4sGMygXtaDJltvYU3mgACweNVAymOefXMjdlYIDvp4R
- 0a/w==
-X-Gm-Message-State: AOJu0Yye5ttN77YrDI0OoAJSXnqr1ntwX0wbzs/TYggn51duNd8iHNjk
- Uo3+pyxvfXM3Gt1tWfztYEL/L08df7pVilDtE/0QRiapw0F7u3nRU+wrCB+BQlwDV5k2EFifeRW
- p6uGYlvHpAx6IOXqVuNq7ea4RpWH4b6+MybVH6+Z4Hyk2HxtBLTy1zefWjtHbFIvfuvGikRRVrc
- X+65wWsv8bcMw0a7KH5CpiK6OSiJs=
-X-Received: by 2002:a17:907:972a:b0:a51:827d:c99b with SMTP id
- jg42-20020a170907972a00b00a51827dc99bmr9051231ejc.14.1713228475032; 
- Mon, 15 Apr 2024 17:47:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHpeVQr9oYRUmNPe4+JyA6CSwp2Lae4DDkx8dqE5KYybKeOsdpAWhFNCR2NnUP093EGYCi3/FSTR5igpSY95Bk=
-X-Received: by 2002:a17:907:972a:b0:a51:827d:c99b with SMTP id
- jg42-20020a170907972a00b00a51827dc99bmr9051211ejc.14.1713228474641; Mon, 15
- Apr 2024 17:47:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240408153408.3527586-1-jonah.palmer@oracle.com>
-In-Reply-To: <20240408153408.3527586-1-jonah.palmer@oracle.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Tue, 16 Apr 2024 08:47:17 +0800
-Message-ID: <CAPpAL=yBZqQuRbv6W_7o11+KgMyLHfqix2AyA8By7f7oZvgB4Q@mail.gmail.com>
-Subject: Re: [RFC v3 0/6] virtio,vhost: Add VIRTIO_F_IN_ORDER support
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
- fam@euphon.net, eperezma@redhat.com, stefanha@redhat.com, 
- qemu-block@nongnu.org, schalla@marvell.com, virtio-fs@lists.linux.dev, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20230601; t=1713234404; x=1713839204;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zivetNqQUIMh9KPd0WEwnV76B5YyiKzZ3E3y1dMd3Q0=;
+ b=qPMdBr3KlhgiZL1Ee5XvcDJP6TdUrU1CI5A9f006b/ZalXCkZA0SSlPcawU7MVbVg8
+ KuLrrXeCxtEDyBmSVMz2yrVwRRWTLzoGVGW+WEAlnuTwEe9sQH7GHwjOryJyYjiF3LL6
+ l7fIZUcCvGMUuexJzcLGLAP+f9Ut5d3V/2bKqikX/oyBNPAmX2OqrQuyhDMCRsdnNZmi
+ UcSxpXUWNQMHQk8T6rkhA9Lmweo65I1uKD0j8pnEyz8H61CSXGeKhFMNYVDPDB2GSkdL
+ 5OKzkvjdNZbikAJXi7BztKCMvHbcD+qamqMzQ7PNLFpRuEUexRpxqOI9zpzdVmJglUEy
+ CBMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+ZYVFlvrG8NaokMCqUhsO1BcvTMScBEfRxhhAjVz1FZZXbP6bZqr5SM1uLO4bYM0vKGk8Rnm73hOGVqdc6Hdb2jLz
+X-Gm-Message-State: AOJu0YxEwve55ao6tcZgh0aOR+CIVeCaUIZW8hFA2w8dJZck2HLxDL98
+ whuYqUB74E3/1pOhKizxX+3gqT+IWHJwi2IbdZejX0negxpIygrB
+X-Google-Smtp-Source: AGHT+IFUypA0WiIMMpmPuxfSCCxcKd4vEBOLDhtiSf03eUBHYVhjk8wGwDk3lxMpEFo2ieIyh1SqmQ==
+X-Received: by 2002:a05:6a21:78a7:b0:1a7:6918:9e96 with SMTP id
+ bf39-20020a056a2178a700b001a769189e96mr12327422pzc.3.1713234403915; 
+ Mon, 15 Apr 2024 19:26:43 -0700 (PDT)
+Received: from localhost ([1.146.24.97]) by smtp.gmail.com with ESMTPSA id
+ n4-20020a17090a5a8400b002a5d684a6a7sm8603158pji.10.2024.04.15.19.26.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Apr 2024 19:26:43 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 16 Apr 2024 12:26:38 +1000
+Message-Id: <D0L6WPE1ASIP.2KG5P0WQ86AM6@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Peter Maydell"
+ <peter.maydell@linaro.org>, <philmd@linaro.org>
+Subject: Re: [PATCH for-9.0] ppc440_pcix: Do not expose a bridge device on
+ PCI bus
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+X-Mailer: aerc 0.17.0
+References: <20240409235543.0E0C34E601C@zero.eik.bme.hu>
+ <D0G5YFXXNK98.3NO5536V5LC8N@gmail.com>
+ <887fc804-54a6-8f00-1b62-afcf247ba319@eik.bme.hu>
+In-Reply-To: <887fc804-54a6-8f00-1b62-afcf247ba319@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,80 +97,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QE tested this series with packed=3Don/off, in_order=3Dtrue and vhost=3Doff
-under regression tests, everything are works fine.
+On Wed Apr 10, 2024 at 9:03 PM AEST, BALATON Zoltan wrote:
+> On Wed, 10 Apr 2024, Nicholas Piggin wrote:
+> > On Wed Apr 10, 2024 at 9:55 AM AEST, BALATON Zoltan wrote:
+> >> Real 460EX SoC apparently does not expose a bridge device and having
+> >> it appear on PCI bus confuses an AmigaOS file system driver that uses
+> >> this to detect which machine it is running on. Since values written
+> >> here by firmware are never read, just ignore these writes and drop the
+> >> bridge device.
+> >>
+> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >> ---
+> >> This is only used by sam460ex and this fixes an issue with AmigaOS on
+> >> this machine so I'd like this to be merged for 9.0 please.
+> >
+> > Is it a regression? Does it have a fixes: or resolves: tag?
+> >
+> > Unless we broke it in this cycle, I would be inclined to wait,
+> > and we can ask to put it in stable.
+>
+> It's not something that broke in this cycle but since this does not affec=
+t=20
+> anything else than sam460ex I think it's OK to change this for 9.0. The=
+=20
+> changes to 440 tlb in this cycle made sam460ex more useful to run AmigaOS=
+=20
+> and this fixes the file system driver on it so it would make 9.0 really=
+=20
+> usable. Otherwise people would have to wait longer until August or instal=
+l=20
+> a stable update. Since this has low chance to break anything (tested with=
+=20
+> AmogaOS and Linux and MorphOS does not boot due to do_io changes anyway) =
+I=20
+> don't think we have to wait with this.
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+Hey, travelling / at a conference / on vacation for the next couple of
+weeks.
 
-On Mon, Apr 8, 2024 at 11:34=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
-> The goal of these patches is to add support to a variety of virtio and
-> vhost devices for the VIRTIO_F_IN_ORDER transport feature. This feature
-> indicates that all buffers are used by the device in the same order in
-> which they were made available by the driver.
->
-> These patches attempt to implement a generalized, non-device-specific
-> solution to support this feature.
->
-> The core feature behind this solution is a buffer mechanism in the form
-> of a VirtQueue's used_elems VirtQueueElement array. This allows devices
-> who always use buffers in-order by default to have a minimal overhead
-> impact. Devices that may not always use buffers in-order likely will
-> experience a performance hit. How large that performance hit is will
-> depend on how frequent elements are completed out-of-order.
->
-> A VirtQueue whose device who uses this feature will use its used_elems
-> VirtQueueElement array to hold used VirtQueueElements. The index that
-> used elements are placed in used_elems is the same index on the
-> used/descriptor ring that would satisfy the in-order requirement. In
-> other words, used elements are placed in their in-order locations on
-> used_elems and are only written to the used/descriptor ring once the
-> elements on used_elems are able to continue their expected order.
->
-> To differentiate between a "used" and "unused" element on the used_elems
-> array (a "used" element being an element that has returned from
-> processing and an "unused" element being an element that has not yet
-> been processed), we added a boolean 'filled' member to the
-> VirtQueueElement struct. This flag is set to true when the element comes
-> back from processing (virtqueue_ordered_fill) and then set back to false
-> once it's been written to the used/descriptor ring
-> (virtqueue_ordered_flush).
->
-> ---
-> v3: Add elements to used_elems during virtqueue_split/packed_pop
->     Replace current_seq_idx usage with vq->last_avail_idx
->     Remove used_seq_idx, leverage used_idx and last_avail_idx for
->     searching used_elems
->     Remove seq_idx in VirtQueueElement
->     Add boolean to VirtQueueElement to signal element status
->     Add virtqueue_ordered_fill/flush functions for ordering
->
-> v2: Use a VirtQueue's used_elems array as a buffer mechanism
->
-> v1: Implement custom GLib GHashTable as a buffer mechanism
->
-> Jonah Palmer (6):
->   virtio: Add bool to VirtQueueElement
->   virtio: virtqueue_pop - VIRTIO_F_IN_ORDER support
->   virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support
->   virtio: virtqueue_ordered_flush - VIRTIO_F_IN_ORDER support
->   vhost,vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
->   virtio: Add VIRTIO_F_IN_ORDER property definition
->
->  hw/block/vhost-user-blk.c    |   1 +
->  hw/net/vhost_net.c           |   2 +
->  hw/scsi/vhost-scsi.c         |   1 +
->  hw/scsi/vhost-user-scsi.c    |   1 +
->  hw/virtio/vhost-user-fs.c    |   1 +
->  hw/virtio/vhost-user-vsock.c |   1 +
->  hw/virtio/virtio.c           | 118 ++++++++++++++++++++++++++++++++++-
->  include/hw/virtio/virtio.h   |   5 +-
->  net/vhost-vdpa.c             |   1 +
->  9 files changed, 127 insertions(+), 4 deletions(-)
->
-> --
-> 2.39.3
->
+It's just a bit late for hard freeze IMO, since we didn't break it
+before the prior release or a bad security / crash bug. Will put it in
+9.1.
 
+Thanks,
+Nick
 
