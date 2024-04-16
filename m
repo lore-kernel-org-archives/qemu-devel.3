@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C96C04FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C5CC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk4T-0008Ie-9j; Tue, 16 Apr 2024 10:46:05 -0400
+	id 1rwk4Q-0007rK-G0; Tue, 16 Apr 2024 10:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk4C-00070c-MN
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:56 -0400
+ id 1rwk3T-0006CO-Fa
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:22 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk49-0002pf-Pf
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:48 -0400
+ id 1rwk3R-0002RA-2X
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:03 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk3t-0002kV-HG; Tue, 16 Apr 2024 16:45:29 +0200
+ id 1rwk3J-0002iN-2a; Tue, 16 Apr 2024 16:44:53 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,10 +32,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 26/26] vfio/migration: Multifd device state transfer
- support - send side
-Date: Tue, 16 Apr 2024 16:43:05 +0200
-Message-ID: <3c31f4da5165c64a7f0aa9cd74f95dbe397942ec.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 19/26] migration: Add x-multifd-channels-device-state
+ parameter
+Date: Tue, 16 Apr 2024 16:42:58 +0200
+Message-ID: <4b4c859f9fc937bc19010814f81ead98a9b17c3e.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -65,315 +65,227 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Implement the multifd device state transfer via additional per-device
-thread spawned from save_live_complete_precopy_async handler.
+This parameter allows specifying how many multifd channels are dedicated
+to sending device state in parallel.
 
-Switch between doing the data transfer in the new handler and doing it
-in the old save_state handler depending on the
-migration_has_device_state_support() return value.
+It is ignored on the receive side.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration.c           | 195 ++++++++++++++++++++++++++++++++++
- hw/vfio/trace-events          |   3 +
- include/hw/vfio/vfio-common.h |   8 ++
- 3 files changed, 206 insertions(+)
+ migration/migration-hmp-cmds.c |  7 +++++
+ migration/options.c            | 51 ++++++++++++++++++++++++++++++++++
+ migration/options.h            |  1 +
+ qapi/migration.json            | 16 ++++++++++-
+ 4 files changed, 74 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 3af62dea6899..6177431a0cd3 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -608,11 +608,15 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
-     return qemu_file_get_error(f);
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 7e96ae6ffdae..37d71422fdc3 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -341,6 +341,9 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "%s: %u\n",
+             MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_CHANNELS),
+             params->multifd_channels);
++        monitor_printf(mon, "%s: %u\n",
++            MigrationParameter_str(MIGRATION_PARAMETER_X_MULTIFD_CHANNELS_DEVICE_STATE),
++            params->x_multifd_channels_device_state);
+         monitor_printf(mon, "%s: %s\n",
+             MigrationParameter_str(MIGRATION_PARAMETER_MULTIFD_COMPRESSION),
+             MultiFDCompression_str(params->multifd_compression));
+@@ -626,6 +629,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+         p->has_multifd_channels = true;
+         visit_type_uint8(v, param, &p->multifd_channels, &err);
+         break;
++    case MIGRATION_PARAMETER_X_MULTIFD_CHANNELS_DEVICE_STATE:
++        p->has_x_multifd_channels_device_state = true;
++        visit_type_uint8(v, param, &p->x_multifd_channels_device_state, &err);
++        break;
+     case MIGRATION_PARAMETER_MULTIFD_COMPRESSION:
+         p->has_multifd_compression = true;
+         visit_type_MultiFDCompression(v, param, &p->multifd_compression,
+diff --git a/migration/options.c b/migration/options.c
+index 949d8a6c0b62..a7f09570b04e 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -59,6 +59,7 @@
+ /* The delay time (in ms) between two COLO checkpoints */
+ #define DEFAULT_MIGRATE_X_CHECKPOINT_DELAY (200 * 100)
+ #define DEFAULT_MIGRATE_MULTIFD_CHANNELS 2
++#define DEFAULT_MIGRATE_MULTIFD_CHANNELS_DEVICE_STATE 0
+ #define DEFAULT_MIGRATE_MULTIFD_COMPRESSION MULTIFD_COMPRESSION_NONE
+ /* 0: means nocompress, 1: best speed, ... 9: best compress ratio */
+ #define DEFAULT_MIGRATE_MULTIFD_ZLIB_LEVEL 1
+@@ -138,6 +139,9 @@ Property migration_properties[] = {
+     DEFINE_PROP_UINT8("multifd-channels", MigrationState,
+                       parameters.multifd_channels,
+                       DEFAULT_MIGRATE_MULTIFD_CHANNELS),
++    DEFINE_PROP_UINT8("x-multifd-channels-device-state", MigrationState,
++                      parameters.x_multifd_channels_device_state,
++                      DEFAULT_MIGRATE_MULTIFD_CHANNELS_DEVICE_STATE),
+     DEFINE_PROP_MULTIFD_COMPRESSION("multifd-compression", MigrationState,
+                       parameters.multifd_compression,
+                       DEFAULT_MIGRATE_MULTIFD_COMPRESSION),
+@@ -885,6 +889,13 @@ int migrate_multifd_channels(void)
+     return s->parameters.multifd_channels;
  }
  
-+static void vfio_save_complete_precopy_async_thread_thread_terminate(VFIODevice *vbasedev);
++int migrate_multifd_channels_device_state(void)
++{
++    MigrationState *s = migrate_get_current();
 +
- static void vfio_save_cleanup(void *opaque)
++    return s->parameters.x_multifd_channels_device_state;
++}
++
+ MultiFDCompression migrate_multifd_compression(void)
  {
-     VFIODevice *vbasedev = opaque;
-     VFIOMigration *migration = vbasedev->migration;
- 
-+    vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
-+
-     /*
-      * Changing device state from STOP_COPY to STOP can take time. Do it here,
-      * after migration has completed, so it won't increase downtime.
-@@ -621,6 +625,7 @@ static void vfio_save_cleanup(void *opaque)
-         vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_STOP);
+     MigrationState *s = migrate_get_current();
+@@ -1032,6 +1043,8 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+     params->block_incremental = s->parameters.block_incremental;
+     params->has_multifd_channels = true;
+     params->multifd_channels = s->parameters.multifd_channels;
++    params->has_x_multifd_channels_device_state = true;
++    params->x_multifd_channels_device_state = s->parameters.x_multifd_channels_device_state;
+     params->has_multifd_compression = true;
+     params->multifd_compression = s->parameters.multifd_compression;
+     params->has_multifd_zlib_level = true;
+@@ -1091,6 +1104,7 @@ void migrate_params_init(MigrationParameters *params)
+     params->has_x_checkpoint_delay = true;
+     params->has_block_incremental = true;
+     params->has_multifd_channels = true;
++    params->has_x_multifd_channels_device_state = true;
+     params->has_multifd_compression = true;
+     params->has_multifd_zlib_level = true;
+     params->has_multifd_zstd_level = true;
+@@ -1198,6 +1212,37 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+         return false;
      }
  
-+    g_clear_pointer(&migration->idstr, g_free);
-     g_free(migration->data_buffer);
-     migration->data_buffer = NULL;
-     migration->precopy_init_size = 0;
-@@ -735,6 +740,12 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
-     ssize_t data_size;
-     int ret;
- 
-+    if (migration_has_device_state_support()) {
-+        /* Emit dummy NOP data */
-+        qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
-+        return 0;
++    if (params->has_multifd_channels &&
++        params->has_x_multifd_channels_device_state &&
++        params->x_multifd_channels_device_state > 0 &&
++        !migrate_channel_header()) {
++        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
++                   "x_multifd_channels_device_state",
++                   "0 without channel header");
++        return false;
 +    }
 +
-     trace_vfio_save_complete_precopy_started(vbasedev->name);
- 
-     /* We reach here with device state STOP or STOP_COPY only */
-@@ -762,11 +773,186 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
-     return ret;
- }
- 
-+static int vfio_save_complete_precopy_async_thread_config_state(VFIODevice *vbasedev, uint32_t idx)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+    g_autoptr(QIOChannelBuffer) bioc = NULL;
-+    QEMUFile *f = NULL;
-+    int ret;
-+    g_autofree VFIODeviceStatePacket *packet = NULL;
-+    size_t packet_len;
-+
-+    bioc = qio_channel_buffer_new(0);
-+    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-save");
-+
-+    f = qemu_file_new_output(QIO_CHANNEL(bioc));
-+
-+    ret = vfio_save_device_config_state(f, vbasedev);
-+    if (ret) {
-+        return ret;
++    if (params->has_multifd_channels &&
++        params->has_x_multifd_channels_device_state &&
++        params->x_multifd_channels_device_state > 0 &&
++        params->has_multifd_compression &&
++        params->multifd_compression != MULTIFD_COMPRESSION_NONE) {
++        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
++                   "x_multifd_channels_device_state",
++                   "0 with compression");
++        return false;
 +    }
 +
-+    ret = qemu_fflush(f);
-+    if (ret) {
-+        goto ret_close_file;
++    /* At least one multifd channel is needed for RAM data */
++    if (params->has_multifd_channels &&
++        params->has_x_multifd_channels_device_state &&
++        params->x_multifd_channels_device_state >= params->multifd_channels) {
++        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
++                   "x_multifd_channels_device_state",
++                   "a value less than multifd_channels");
++        return false;
 +    }
 +
-+    packet_len = sizeof(*packet) + bioc->usage;
-+    packet = g_malloc0(packet_len);
-+    packet->idx = idx;
-+    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
-+    memcpy(&packet->data, bioc->data, bioc->usage);
-+
-+    ret = multifd_queue_device_state(migration->idstr, migration->instance_id,
-+                                     (char *)packet, packet_len);
-+
-+    bytes_transferred += packet_len;
-+
-+ret_close_file:
-+    g_clear_pointer(&f, qemu_fclose);
-+    return ret;
-+}
-+
-+static void *vfio_save_complete_precopy_async_thread(void *opaque)
-+{
-+    VFIODevice *vbasedev = opaque;
-+    VFIOMigration *migration = vbasedev->migration;
-+    int *ret = &migration->save_complete_precopy_thread_ret;
-+    g_autofree VFIODeviceStatePacket *packet = NULL;
-+    uint32_t idx;
-+
-+    /* We reach here with device state STOP or STOP_COPY only */
-+    *ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
-+                                    VFIO_DEVICE_STATE_STOP);
-+    if (*ret) {
-+        return NULL;
+     if (params->has_multifd_zlib_level &&
+         (params->multifd_zlib_level > 9)) {
+         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "multifd_zlib_level",
+@@ -1381,6 +1426,9 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+     if (params->has_multifd_channels) {
+         dest->multifd_channels = params->multifd_channels;
+     }
++    if (params->has_x_multifd_channels_device_state) {
++        dest->x_multifd_channels_device_state = params->x_multifd_channels_device_state;
 +    }
-+
-+    packet = g_malloc0(sizeof(*packet) + migration->data_buffer_size);
-+
-+    for (idx = 0; ; idx++) {
-+        ssize_t data_size;
-+        size_t packet_size;
-+
-+        data_size = read(migration->data_fd, &packet->data,
-+                         migration->data_buffer_size);
-+        if (data_size < 0) {
-+            if (errno != ENOMSG) {
-+                *ret = -errno;
-+                return NULL;
-+            }
-+
-+            /*
-+             * Pre-copy emptied all the device state for now. For more information,
-+             * please refer to the Linux kernel VFIO uAPI.
-+             */
-+            data_size = 0;
-+        }
-+
-+        if (data_size == 0)
-+            break;
-+
-+        packet->idx = idx;
-+        packet_size = sizeof(*packet) + data_size;
-+
-+        *ret = multifd_queue_device_state(migration->idstr, migration->instance_id,
-+                                          (char *)packet, packet_size);
-+        if (*ret) {
-+            return NULL;
-+        }
-+
-+        bytes_transferred += packet_size;
+     if (params->has_multifd_compression) {
+         dest->multifd_compression = params->multifd_compression;
+     }
+@@ -1526,6 +1574,9 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+     if (params->has_multifd_channels) {
+         s->parameters.multifd_channels = params->multifd_channels;
+     }
++    if (params->has_x_multifd_channels_device_state) {
++        s->parameters.x_multifd_channels_device_state = params->x_multifd_channels_device_state;
 +    }
-+
-+    *ret = vfio_save_complete_precopy_async_thread_config_state(vbasedev, idx);
-+    if (*ret) {
-+        return NULL;
-+    }
-+
-+    trace_vfio_save_complete_precopy_async_finished(vbasedev->name);
-+
-+    return NULL;
-+}
-+
-+static int vfio_save_complete_precopy_async(QEMUFile *f,
-+                                            char *idstr, uint32_t instance_id,
-+                                            void *opaque)
-+{
-+    VFIODevice *vbasedev = opaque;
-+    VFIOMigration *migration = vbasedev->migration;
-+    int ret;
-+
-+    migration->save_complete_precopy_thread_ret = 0;
-+
-+    if (!migration_has_device_state_support()) {
-+        /* Emit dummy NOP data */
-+        qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
-+        return 0;
-+    }
-+
-+    qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE_COMPLETE);
-+    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
-+
-+    ret = qemu_fflush(f);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    assert(!migration->save_complete_precopy_thread_started);
-+
-+    assert(!migration->idstr);
-+    migration->idstr = g_strdup(idstr);
-+    migration->instance_id = instance_id;
-+
-+    qemu_thread_create(&migration->save_complete_precopy_thread,
-+                       "vfio-save_complete_precopy",
-+                       vfio_save_complete_precopy_async_thread,
-+                       opaque, QEMU_THREAD_JOINABLE);
-+
-+    migration->save_complete_precopy_thread_started = true;
-+
-+    trace_vfio_save_complete_precopy_async_started(vbasedev->name, idstr, instance_id);
-+
-+    return 0;
-+}
-+
-+static void vfio_save_complete_precopy_async_thread_thread_terminate(VFIODevice *vbasedev)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+
-+    if (!migration->save_complete_precopy_thread_started) {
-+        return;
-+    }
-+
-+    qemu_thread_join(&migration->save_complete_precopy_thread);
-+
-+    migration->save_complete_precopy_thread_started = false;
-+
-+    trace_vfio_save_complete_precopy_async_joined(vbasedev->name,
-+                                                  migration->save_complete_precopy_thread_ret);
-+}
-+
-+static int vfio_save_complete_precopy_async_wait(QEMUFile *f, void *opaque)
-+{
-+    VFIODevice *vbasedev = opaque;
-+    VFIOMigration *migration = vbasedev->migration;
-+
-+    vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
-+
-+    return migration->save_complete_precopy_thread_ret;
-+}
-+
- static void vfio_save_state(QEMUFile *f, void *opaque)
- {
-     VFIODevice *vbasedev = opaque;
-     int ret;
- 
-+    if (migration_has_device_state_support()) {
-+        /* Emit dummy NOP data */
-+        qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
-+        return;
-+    }
-+
-     ret = vfio_save_device_config_state(f, opaque);
-     if (ret) {
-         error_report("%s: Failed to save device config space",
-@@ -1014,6 +1200,8 @@ static const SaveVMHandlers savevm_vfio_handlers = {
-     .state_pending_exact = vfio_state_pending_exact,
-     .is_active_iterate = vfio_is_active_iterate,
-     .save_live_iterate = vfio_save_iterate,
-+    .save_live_complete_precopy_async = vfio_save_complete_precopy_async,
-+    .save_live_complete_precopy_async_wait = vfio_save_complete_precopy_async_wait,
-     .save_live_complete_precopy = vfio_save_complete_precopy,
-     .save_state = vfio_save_state,
-     .load_setup = vfio_load_setup,
-@@ -1034,6 +1222,10 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
-     enum vfio_device_mig_state new_state;
-     int ret;
- 
-+    if (running) {
-+        vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
-+    }
-+
-     new_state = migration->device_state == VFIO_DEVICE_STATE_PRE_COPY ?
-                     VFIO_DEVICE_STATE_PRE_COPY_P2P :
-                     VFIO_DEVICE_STATE_RUNNING_P2P;
-@@ -1059,6 +1251,9 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
-     int ret;
- 
-     if (running) {
-+        /* In case "prepare" callback wasn't registered */
-+        vfio_save_complete_precopy_async_thread_thread_terminate(vbasedev);
-+
-         new_state = VFIO_DEVICE_STATE_RUNNING;
-     } else {
-         new_state =
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 569bb6897b66..44c7bb01a004 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -165,6 +165,9 @@ vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
- vfio_save_cleanup(const char *name) " (%s)"
- vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
- vfio_save_complete_precopy_started(const char *name) " (%s)"
-+vfio_save_complete_precopy_async_started(const char *name, const char *idstr, uint32_t instance_id) " (%s) idstr %s instance %"PRIu32
-+vfio_save_complete_precopy_async_finished(const char *name) " (%s)"
-+vfio_save_complete_precopy_async_joined(const char *name, int ret) " (%s) ret %d"
- vfio_save_device_config_state(const char *name) " (%s)"
- vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
- vfio_save_iterate_started(const char *name) " (%s)"
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index f861cbd13384..0c51b8bf4d9a 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -74,12 +74,20 @@ typedef struct VFIOMigration {
- 
-     bool save_iterate_run;
-     bool save_iterate_empty_hit;
-+
-+    QemuThread save_complete_precopy_thread;
-+    int save_complete_precopy_thread_ret;
-+    bool save_complete_precopy_thread_started;
-+
-     QemuThread load_bufs_thread;
-     Error *load_bufs_thread_errp;
-     bool load_bufs_thread_started;
-     bool load_bufs_thread_finished;
-     bool load_bufs_thread_want_exit;
- 
-+    char *idstr;
-+    uint32_t instance_id;
-+
-     GArray *load_bufs;
-     bool load_bufs_device_ready;
-     GCond load_bufs_device_ready_cond;
+     if (params->has_multifd_compression) {
+         s->parameters.multifd_compression = params->multifd_compression;
+     }
+diff --git a/migration/options.h b/migration/options.h
+index 1144d72ec0db..453999b0d28e 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -83,6 +83,7 @@ uint64_t migrate_max_bandwidth(void);
+ uint64_t migrate_avail_switchover_bandwidth(void);
+ uint64_t migrate_max_postcopy_bandwidth(void);
+ int migrate_multifd_channels(void);
++int migrate_multifd_channels_device_state(void);
+ MultiFDCompression migrate_multifd_compression(void);
+ int migrate_multifd_zlib_level(void);
+ int migrate_multifd_zstd_level(void);
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8c65b9032886..0578375cfcfd 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -858,6 +858,10 @@
+ #     parallel.  This is the same number that the number of sockets
+ #     used for migration.  The default value is 2 (since 4.0)
+ #
++# @x-multifd-channels-device-state: Number of multifd channels dedicated
++#     to sending device state in parallel (ignored on the receive side).
++#     The default value is 0 (since TBD)
++#
+ # @xbzrle-cache-size: cache size to be used by XBZRLE migration.  It
+ #     needs to be a multiple of the target page size and a power of 2
+ #     (Since 2.11)
+@@ -940,7 +944,7 @@
+            'avail-switchover-bandwidth', 'downtime-limit',
+            { 'name': 'x-checkpoint-delay', 'features': [ 'unstable' ] },
+            { 'name': 'block-incremental', 'features': [ 'deprecated' ] },
+-           'multifd-channels',
++           'multifd-channels', 'x-multifd-channels-device-state',
+            'xbzrle-cache-size', 'max-postcopy-bandwidth',
+            'max-cpu-throttle', 'multifd-compression',
+            'multifd-zlib-level', 'multifd-zstd-level',
+@@ -1066,6 +1070,10 @@
+ #     parallel.  This is the same number that the number of sockets
+ #     used for migration.  The default value is 2 (since 4.0)
+ #
++# @x-multifd-channels-device-state: Number of multifd channels dedicated
++#     to sending device state in parallel (ignored on the receive side).
++#     The default value is 0 (since TBD)
++#
+ # @xbzrle-cache-size: cache size to be used by XBZRLE migration.  It
+ #     needs to be a multiple of the target page size and a power of 2
+ #     (Since 2.11)
+@@ -1165,6 +1173,7 @@
+             '*block-incremental': { 'type': 'bool',
+                                     'features': [ 'deprecated' ] },
+             '*multifd-channels': 'uint8',
++            '*x-multifd-channels-device-state': 'uint8',
+             '*xbzrle-cache-size': 'size',
+             '*max-postcopy-bandwidth': 'size',
+             '*max-cpu-throttle': 'uint8',
+@@ -1298,6 +1307,10 @@
+ #     parallel.  This is the same number that the number of sockets
+ #     used for migration.  The default value is 2 (since 4.0)
+ #
++# @x-multifd-channels-device-state: Number of multifd channels dedicated
++#     to sending device state in parallel (ignored on the receive side).
++#     The default value is 0 (since TBD)
++#
+ # @xbzrle-cache-size: cache size to be used by XBZRLE migration.  It
+ #     needs to be a multiple of the target page size and a power of 2
+ #     (Since 2.11)
+@@ -1394,6 +1407,7 @@
+             '*block-incremental': { 'type': 'bool',
+                                     'features': [ 'deprecated' ] },
+             '*multifd-channels': 'uint8',
++            '*x-multifd-channels-device-state': 'uint8',
+             '*xbzrle-cache-size': 'size',
+             '*max-postcopy-bandwidth': 'size',
+             '*max-cpu-throttle': 'uint8',
 
