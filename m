@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCF4C05023
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3616C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwo3L-0001PT-JO; Tue, 16 Apr 2024 15:01:11 -0400
+	id 1rwo2A-0000on-18; Tue, 16 Apr 2024 14:59:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2K-0000sH-Tq
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:09 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo27-0000ml-1C
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:59:55 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo2H-0005Ng-Lf
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:00:08 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a450bedffdfso607564966b.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:00:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwo24-0005LB-9i
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 14:59:54 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56e6a1edecfso7613126a12.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 11:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713294003; x=1713898803; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713293990; x=1713898790; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r/B5UTN+VVzZIBHg8vuvzaIXLhoLwQMP7eYF+iW6nSk=;
- b=Jze8/bBAz2nKIkvy50C8jGwBrYzQ9Wd2QPeZdCZutEzvLy8JT2N3p1FbjqsvJR7PIr
- wzVqS70L2dvbBOMi1ZvzcO0wMObfh5t/f1QPZZkVxL/gadbEfwyK7ljoNmWinOrRc99n
- 2KIRfe9tT0FTDL2dqfXS8iApq/0m+IOziWW1FKgqgdUw7tGgDoMWT5YJE4pBTKIWZRbn
- wTv1G88mR89e7rwwiL+lKM1KCSW6TnMXV/KC48L+ILX+z93nU3uAMFUpTQWA4smlYvq8
- 1WeEJrAWduwZIJQEhNH6Td1IinBDpHS7Tol+JHeYLMwNnwBOG+wBqm0tnuHP63vkiJ3e
- SZwQ==
+ bh=+xDdgtYhdKYRWfSSiojdSyo8J+LTMwwnUVOciC/4kns=;
+ b=hY9ZuXyusK9LwCIKW04b4dG3D2tYhUUA7+xkhvYtAMsnOdScgzLGEmrFno6Vi4/8mH
+ 8LPZ4Swcy9tZs+oCYB/5OTrUWL/H7WVRezp4u78wGe6UnOMsP6u5ul63IOhqV6GlkT/m
+ yGVgrZFI44gECWZDhFVpE3+DiPmfR1QykVwVASagzfdvl2TaVL9D7w74JGMbQbP07gX2
+ iz+daiX3x1nWDIcN2g56UP6GR4iPsq9Y9SkqF9/asWGWnorGkoM9Exvm/DNSMf01eLgg
+ 3UYX21VLoErXcW4gRvzo9pVVFaFDrrXM8F4D1sBnf25wTQlfszaaluuhYC0MofMIIwIw
+ lZOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713294003; x=1713898803;
+ d=1e100.net; s=20230601; t=1713293990; x=1713898790;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r/B5UTN+VVzZIBHg8vuvzaIXLhoLwQMP7eYF+iW6nSk=;
- b=YPou23S67jGhIIzAnjcPxXU8hYekJ6uqBqajtNke7Zb2AtNqwKQ3pAUF8tyQLJMHBG
- 9oFr4R7E0zl8m1umlELNuRtOf1actcFoJjS84gVe+4ktzEsmYiXNN0f6409TdP/ktHP/
- 6MWMR4Lx8nEAL5MJyeSIcaP/iC/VXqd7/4E1FwsWthx5UTm26qlJtHig/7PUqtUiHYAA
- AIsqAvAeJEvF0RU7U90cxW+aogeLEq8LA2jMvIUZYK3JF4Y9MEIDumvVxcxGshFfW3ok
- IvzoCvukrIew3A0cg3su6zsiJhyLhCEYavqCZ8zEG2XLtHj5a7hqW6H1jl8uW0Kng5EJ
- jAUg==
-X-Gm-Message-State: AOJu0YyyTMYvGecWRa63k/qnBKzpQn7XDzQoLC4J0sqx101LZTBDWkMb
- wrHNbljmD/IPBQ5kqAkM+2T03UBIWdck/Qq3p6pWRA8W6nfTTGdEZNTFOr2He06awEEKg+N0atu
- 6
-X-Google-Smtp-Source: AGHT+IFYPRtucDga6LKg9OYiy7Lp1H1gYO0dq5T1mdbxUJVv5BVKlYTRGjoZPSqqHynS6LcsQRYSwQ==
-X-Received: by 2002:a17:906:bb17:b0:a51:98df:f664 with SMTP id
- jz23-20020a170906bb1700b00a5198dff664mr8257297ejb.76.1713294003357; 
- Tue, 16 Apr 2024 12:00:03 -0700 (PDT)
+ bh=+xDdgtYhdKYRWfSSiojdSyo8J+LTMwwnUVOciC/4kns=;
+ b=SGC6PbZbpRD9GoOq6voBFeMpL3ELq8jNy1LIou0RQDUvbuIWrvGIVGycBbz9XHnf1a
+ 60z3yoSgwX+gbGqAR3nlWryV9L5A5oBBnVikPpv/RP94xNp2umjfGClMdGxTYSl3d+Ps
+ L6jNNjsVqvEbxUVwISRIgU//mXstbilf4SyUGbJhlH5SyA0rkSlJWQGen9l+iYX/MZze
+ 3CZ2Sw3NU2n70+870c+J3Z3ECBv3iBNCu0yKs/g3xXtY+iQF9cVZukaq08+60TMSUkcz
+ BWHIAakCQuNCtKPfpDBNQAtxBmQg6Zj9fcfxGf4WGt8OwwmHzbIPmfoUGsj+im5DaqnV
+ Qc1Q==
+X-Gm-Message-State: AOJu0YwEZgTTi/lNwUstBwEZraPX5TBdgfOqOaO3hMi7gw2IP8p5Sgo5
+ thf2aTfvV+0/3wPw9bf4EaAIB0v49lOijJb9wV5PJEqUj2synCly7JV0cBm1GRnN2xsyKo0bQtn
+ x
+X-Google-Smtp-Source: AGHT+IEDNy9nz2o8/rgG8dWOKTg8TwpSrw8fZ0OTvZcdzdz1ruK9kl5BqonIaZQSNdgaf9AzfUmw8A==
+X-Received: by 2002:a17:907:9803:b0:a51:d204:d69e with SMTP id
+ ji3-20020a170907980300b00a51d204d69emr12935641ejc.7.1713293989842; 
+ Tue, 16 Apr 2024 11:59:49 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- ne33-20020a1709077ba100b00a51b26ba6c5sm7137906ejc.219.2024.04.16.12.00.01
+ gc21-20020a170906c8d500b00a53e0db2f29sm2313701ejb.182.2024.04.16.11.59.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 12:00:02 -0700 (PDT)
+ Tue, 16 Apr 2024 11:59:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,19 +65,21 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
  kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v4 03/22] hw/usb/hcd-xhci: Remove XHCI_FLAG_FORCE_PCIE_ENDCAP
- flag
-Date: Tue, 16 Apr 2024 20:59:19 +0200
-Message-ID: <20240416185939.37984-4-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>, devel@lists.libvirt.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v4 01/22] hw/i386/pc: Deprecate 2.4 to 2.12 pc-i440fx machines
+Date: Tue, 16 Apr 2024 20:59:17 +0200
+Message-ID: <20240416185939.37984-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416185939.37984-1-philmd@linaro.org>
 References: <20240416185939.37984-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,58 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
-pc-i440fx-2.0 machine, which got removed. Remove it
-and simplify usb_xhci_pci_realize().
+Similarly to the commit c7437f0ddb "docs/about: Mark the
+old pc-i440fx-2.0 - 2.3 machine types as deprecated",
+deprecate the 2.4 to 2.12 machines.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/usb/hcd-xhci.h     | 1 -
- hw/usb/hcd-xhci-nec.c | 2 --
- hw/usb/hcd-xhci-pci.c | 3 +--
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ docs/about/deprecated.rst | 4 ++--
+ hw/i386/pc_piix.c         | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
-index 98f598382a..1efa4858fb 100644
---- a/hw/usb/hcd-xhci.h
-+++ b/hw/usb/hcd-xhci.h
-@@ -37,7 +37,6 @@ typedef struct XHCIEPContext XHCIEPContext;
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 7b548519b5..47234da329 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -219,8 +219,8 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+ better reflects the way this property affects all random data within
+ the device tree blob, not just the ``kaslr-seed`` node.
  
- enum xhci_flags {
-     XHCI_FLAG_SS_FIRST = 1,
--    XHCI_FLAG_FORCE_PCIE_ENDCAP,
-     XHCI_FLAG_ENABLE_STREAMS,
- };
+-``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''
++``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
  
-diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
-index 328e5bfe7c..5d5b069cf9 100644
---- a/hw/usb/hcd-xhci-nec.c
-+++ b/hw/usb/hcd-xhci-nec.c
-@@ -43,8 +43,6 @@ static Property nec_xhci_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
-                     XHCI_FLAG_SS_FIRST, true),
--    DEFINE_PROP_BIT("force-pcie-endcap", XHCINecState, flags,
--                    XHCI_FLAG_FORCE_PCIE_ENDCAP, false),
-     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
-     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-index 4423983308..cbad96f393 100644
---- a/hw/usb/hcd-xhci-pci.c
-+++ b/hw/usb/hcd-xhci-pci.c
-@@ -148,8 +148,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
-                      PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &s->xhci.mem);
- 
--    if (pci_bus_is_express(pci_get_bus(dev)) ||
--        xhci_get_flag(&s->xhci, XHCI_FLAG_FORCE_PCIE_ENDCAP)) {
-+    if (pci_bus_is_express(pci_get_bus(dev))) {
-         ret = pcie_endpoint_cap_init(dev, 0xa0);
-         assert(ret > 0);
-     }
+ These old machine types are quite neglected nowadays and thus might have
+ various pitfalls with regards to live migration. Use a newer machine type
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 18ba076609..817d99c0ce 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -727,6 +727,7 @@ DEFINE_I440FX_MACHINE(v3_0, "pc-i440fx-3.0", NULL,
+ static void pc_i440fx_2_12_machine_options(MachineClass *m)
+ {
+     pc_i440fx_3_0_machine_options(m);
++    m->deprecation_reason = "old and unattended - use a newer version instead";
+     compat_props_add(m->compat_props, hw_compat_2_12, hw_compat_2_12_len);
+     compat_props_add(m->compat_props, pc_compat_2_12, pc_compat_2_12_len);
+ }
+@@ -832,7 +833,6 @@ static void pc_i440fx_2_3_machine_options(MachineClass *m)
+ {
+     pc_i440fx_2_4_machine_options(m);
+     m->hw_version = "2.3.0";
+-    m->deprecation_reason = "old and unattended - use a newer version instead";
+     compat_props_add(m->compat_props, hw_compat_2_3, hw_compat_2_3_len);
+     compat_props_add(m->compat_props, pc_compat_2_3, pc_compat_2_3_len);
+ }
 -- 
 2.41.0
 
