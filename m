@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B0BC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 426D0C04FF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk2y-0005Cx-7Z; Tue, 16 Apr 2024 10:44:32 -0400
+	id 1rwk2J-0004vq-24; Tue, 16 Apr 2024 10:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk2v-00055k-4G
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:29 -0400
+ id 1rwk2H-0004vO-62
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:43:49 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk2r-0002GQ-NE
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:44:26 -0400
+ id 1rwk2F-00020J-Pc
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:43:48 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk2d-0002fX-CV; Tue, 16 Apr 2024 16:44:11 +0200
+ id 1rwk22-0002dA-Jl; Tue, 16 Apr 2024 16:43:34 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,10 +32,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 11/26] migration/options: Mapped-ram is not channel header
- compatible
-Date: Tue, 16 Apr 2024 16:42:50 +0200
-Message-ID: <dc4bb55715e0cf079cc59f013a4a0680f0c53c5c.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 04/26] multifd: change multifd_new_send_channel_create()
+ param type
+Date: Tue, 16 Apr 2024 16:42:43 +0200
+Message-ID: <5c3960379819c9617755c97785844b840c616057.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -65,30 +65,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Mapped-ram is only available for multifd migration without channel
-header - add an appropriate check to migration options.
+This function is called only with MultiFDSendParams type param so use this
+type explicitly instead of using an opaque pointer.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- migration/options.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ migration/multifd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 8fd871cd956d..abb5b485badd 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1284,6 +1284,13 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-         return false;
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 2802afe79d0d..039c0de40af5 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1132,13 +1132,13 @@ out:
+     error_free(local_err);
+ }
+ 
+-static bool multifd_new_send_channel_create(gpointer opaque, Error **errp)
++static bool multifd_new_send_channel_create(MultiFDSendParams *p, Error **errp)
+ {
+     if (!multifd_use_packets()) {
+-        return file_send_channel_create(opaque, errp);
++        return file_send_channel_create(p, errp);
      }
  
-+    if (migrate_mapped_ram() &&
-+        params->has_multifd_channels && migrate_channel_header()) {
-+        error_setg(errp,
-+                   "Mapped-ram only available for multifd migration without channel header");
-+        return false;
-+    }
-+
-     if (params->has_x_vcpu_dirty_limit_period &&
-         (params->x_vcpu_dirty_limit_period < 1 ||
-          params->x_vcpu_dirty_limit_period > 1000)) {
+-    socket_send_channel_create(multifd_new_send_channel_async, opaque);
++    socket_send_channel_create(multifd_new_send_channel_async, p);
+     return true;
+ }
+ 
 
