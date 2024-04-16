@@ -4,84 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6811C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C881AC04FF6
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 17:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwn2h-0005BL-TT; Tue, 16 Apr 2024 13:56:27 -0400
+	id 1rwn2t-0005FA-5N; Tue, 16 Apr 2024 13:56:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwn2g-0005B6-OZ
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 13:56:26 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rwn2f-0002uW-2B
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 13:56:26 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1e2b1cd446fso37016035ad.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 10:56:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713290183; x=1713894983; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vDtJTWxXcB+3oWxvZ6SPWEWZvWHsfQJWMABQ+ZSLGtw=;
- b=aSCxjKbHSYxc148MwWPR/P9zSLIfeNuPej4VwCiNC5SSrve8c5P5wdhXTR5ylKd1/5
- ewlZz9ziZ18FbF892R1mPOnXAr1OffbE9Y06PyRwKOfF45XNrh+O4FsSZ5dxCz8GElw5
- a8ock27lMjybLHmMg0I9+/cFbrqFZeAaffsCT+Flsda0vkihdJGZfNNQKUfMrIUTjflI
- UvysnoiwXmApmuQgf2J23A0753QXZLHDheYxSFUutDWxBT33VahIrlT6MsFZPWZExQXR
- bYfDtfTYMRjIqPZ5VE9fI/OxGPz+Gc4L1mLobFQcBUFEZCbLxPP/sHKvQkkoLY/VXl0R
- kjtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713290183; x=1713894983;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vDtJTWxXcB+3oWxvZ6SPWEWZvWHsfQJWMABQ+ZSLGtw=;
- b=O9xK0bKSDbKgLlg88lVo8/BKbVlb5ObgRdJEoeu/e2+ccrYc0Z9IIXp7cO61El1Tzi
- VqGQxJlBG34rYtjsDLIP/jBYL08X7OkTwMT+r/Ly3rjc43oONqfnL/qzvTTI4IMwLAXY
- RJIe6chiRyXJ854tW7sUYkespeSZ4LKlG/jgZLDacoY+FMOu9eZRlne+NPLnWGm6zW4f
- ZaBO+24A8xcbr/2p9PxZt5iQVVZDIH2mADck1d/mNha0MmhBZvJgC/1PARpGvJsA+p3Q
- a12FHnWZDqdAZsW2pu2YuoGEArPzC2WrLVyRZQjBT3e6pVRWXKF0lodQQn6CWn4cOp4c
- HnCQ==
-X-Gm-Message-State: AOJu0YyrVSaHiKwy8H8YxJS2yqrwuEvfNLBgmQeqY+LtuAgcxxSFfc+y
- OpJ6aiaIdkij+ddWSl1gth+6FNWspytaBVKB/PPrbUVhyDtdTdQOCShDtUOtCRQ=
-X-Google-Smtp-Source: AGHT+IEcon8NUZmDyUB8FB90GIzzmGr6VCVlxVQImairKR1pyltNMyBE4UU5a2cjfEHcvoPmeKM7GQ==
-X-Received: by 2002:a17:903:8c3:b0:1e3:f4f1:a2c4 with SMTP id
- lk3-20020a17090308c300b001e3f4f1a2c4mr18882267plb.64.1713290183461; 
- Tue, 16 Apr 2024 10:56:23 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- f24-20020a170902ab9800b001e0c5be4e2esm10039236plr.48.2024.04.16.10.56.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 10:56:22 -0700 (PDT)
-Message-ID: <1cb63686-bbb1-4c7a-89ad-51f5da248029@linaro.org>
-Date: Tue, 16 Apr 2024 10:56:20 -0700
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1rwn2r-0005DV-Av; Tue, 16 Apr 2024 13:56:37 -0400
+Received: from new-mail.astralinux.ru ([51.250.53.244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adiupina@astralinux.ru>)
+ id 1rwn2o-0002uI-Kf; Tue, 16 Apr 2024 13:56:37 -0400
+Received: from [10.177.234.15] (unknown [10.177.234.15])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4VJsD34k7hzlVtD;
+ Tue, 16 Apr 2024 20:56:19 +0300 (MSK)
+Message-ID: <69dffcb3-6424-420d-97b5-7aa72522ee98@astralinux.ru>
+Date: Tue, 16 Apr 2024 20:56:19 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] target/ppc: Move mul{li, lw, lwo, hw, hwu}
- instructions to decodetree.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240416063927.99428-1-rathc@linux.ibm.com>
- <20240416063927.99428-2-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240416063927.99428-2-rathc@linux.ibm.com>
+User-Agent: RuPost Desktop
+Subject: Re: [PATCH RFC] prevent overflow in
+ xlnx_dpdma_desc_get_source_address()
+Content-Language: ru
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ Alistair Francis <alistair.francis@xilinx.com>, edgar.iglesias@gmail.com,
+ edgar.iglesias@xilinx.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ KONRAD Frederic <fred.konrad@greensocs.com>, Hyun Kwon
+ <hyun.kwon@xilinx.com>, crosthwaitepeter@gmail.com, hyunk@xilinx.com,
+ guillaume.delbergue@greensocs.com, mark.burton@greensocs.com,
+ sdl.qemu@linuxtesting.org
+References: <20240412081328.11183-1-adiupina@astralinux.ru>
+ <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
+From: Alexandra Diupina <adiupina@astralinux.ru>
+In-Reply-To: <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-DrWeb-SpamScore: -100
+X-DrWeb-SpamState: legit
+X-DrWeb-SpamDetail: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehuddgtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfftfghgfeunecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttderjeenucfhrhhomheptehlvgigrghnughrrgcuffhiuhhpihhnrgcuoegrughiuhhpihhnrgesrghsthhrrghlihhnuhigrdhruheqnecuggftrfgrthhtvghrnhepvddtfeekhfegtdehfeektdeivdejgfduudfhffdulefhtddtjeehleevvddvieeknecuffhomhgrihhnpegrmhgurdgtohhmpdhlihhnuhigthgvshhtihhnghdrohhrghenucfkphepuddtrddujeejrddvfeegrdduheenucfrrghrrghmpehhvghloheplgdutddrudejjedrvdefgedrudehngdpihhnvghtpedutddrudejjedrvdefgedrudehmeegjeejkedvpdhmrghilhhfrhhomheprgguihhuphhinhgrsegrshhtrhgrlhhinhhugidrrhhupdhnsggprhgtphhtthhopedugedprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopegrlhhishhtrghirhesrghlihhsthgrihhrvdefrdhmvgdprhgtphhtthhopegrlhhishhtrghirhdrfhhrrghntghishesgihilhhinhigrdgtohhmpdhrtghpthhtohepvggughgrrhdrihhglhgvshhirghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepvg
+ gughgrrhdrihhglhgvshhirghsseigihhlihhngidrtghomhdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrhgvugdrkhhonhhrrggusehgrhgvvghnshhotghsrdgtohhmpdhrtghpthhtohephhihuhhnrdhkfihonhesgihilhhinhigrdgtohhmpdhrtghpthhtoheptghrohhsthhhfigrihhtvghpvghtvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohephhihuhhnkhesgihilhhinhigrdgtohhmpdhrtghpthhtohepghhuihhllhgruhhmvgdruggvlhgsvghrghhuvgesghhrvggvnhhsohgtshdrtghomhdprhgtphhtthhopehmrghrkhdrsghurhhtohhnsehgrhgvvghnshhotghsrdgtohhmpdhrtghpthhtohepshgulhdrqhgvmhhusehlihhnuhigthgvshhtihhnghdrohhrgh
+X-DrWeb-SpamVersion: Vade Retro 01.423.251#02 AS+AV+AP Profile: DRWEB;
+ Bailout: 300
+X-AntiVirus: Checked by Dr.Web [MailD: 11.1.19.2307031128,
+ SE: 11.1.12.2210241838, Core engine: 7.00.62.01180, Virus records: 12602275,
+ Updated: 2024-Apr-16 15:52:41 UTC]
+Received-SPF: pass client-ip=51.250.53.244;
+ envelope-from=adiupina@astralinux.ru; helo=new-mail.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,107 +73,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/24 23:39, Chinmay Rath wrote:
-> Moving the following instructions to decodetree specification :
-> 	mulli                   	: D-form
-> 	mul{lw, lwo, hw, hwu}[.]	: XO-form
-> 
-> The changes were verified by validating that the tcg ops generated by those
-> instructions remain the same, which were captured with the '-d in_asm,op' flag.
-> 
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   target/ppc/insn32.decode                   |  9 +++
->   target/ppc/translate.c                     | 89 ----------------------
->   target/ppc/translate/fixedpoint-impl.c.inc | 71 +++++++++++++++++
->   3 files changed, 80 insertions(+), 89 deletions(-)
+Peter, thank you! I agree with you that
+as mentioned in the documentation
+https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/ADDR_EXT-Field,
+we should take 32 bits of the address from one field
+(for example, case 1, SRC_ADDR2_EXT - in code it is desc->source_address2)
+and 16 bits (high or low) of the address from another field
+(ADDR_EXT_23 - in code it is desc->address_extension_23, we need [15:0] 
+bits)
+and combine them to make a 48 bit address.
 
-This is an accurate reorg of the current code, so
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Therefore, I suggest making the following changes to the code
+so that it matches the documentation:
 
-However, as follow-up, the code generation could be cleaned up:
+static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+                                                      uint8_t frag)
+{
+     uint64_t addr = 0;
+     assert(frag < 5);
 
+     switch (frag) {
+     case 0:
+         addr = (uint64_t)desc->source_address
+             + (extract64(desc->address_extension, 16, 16) << 32);
+         break;
+     case 1:
+         addr = (uint64_t)desc->source_address2
+             + (extract64(desc->address_extension_23, 0, 16) << 32);
+         break;
+     case 2:
+         addr = (uint64_t)desc->source_address3
+             + (extract64(desc->address_extension_23, 16, 16) << 32);
+         break;
+     case 3:
+         addr = (uint64_t)desc->source_address4
+             + (extract64(desc->address_extension_45, 0, 16) << 32);
+         break;
+     case 4:
+         addr = (uint64_t)desc->source_address5
+             + (extract64(desc->address_extension_45, 16, 16) << 32);
+         break;
+     default:
+         addr = 0;
+         break;
+     }
 
-> +static bool trans_MULLW(DisasContext *ctx, arg_MULLW *a)
-> +{
-> +#if defined(TARGET_PPC64)
-> +    TCGv_i64 t0, t1;
-> +    t0 = tcg_temp_new_i64();
-> +    t1 = tcg_temp_new_i64();
-> +    tcg_gen_ext32s_tl(t0, cpu_gpr[a->ra]);
-> +    tcg_gen_ext32s_tl(t1, cpu_gpr[a->rb]);
-> +    tcg_gen_mul_i64(cpu_gpr[a->rt], t0, t1);
-> +#else
-> +    tcg_gen_mul_i32(cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb]);
-> +#endif
-> +    if (unlikely(a->rc)) {
-> +        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
-> +    }
-> +    return true;
-> +}
-
-Without ifdefs:
-
-     TCGv t0 = tcg_temp_new();
-     TCGv t1 = tcg_temp_new();
-
-     tcg_gen_ext32s_tl(t0, ra);
-     tcg_gen_ext32s_tl(t1, rb);
-     tcg_gen_mul_tl(rt, t0, t1);
-
-For ppc32, ext32s_tl will turn into a mov, which will be optimized away.  So ideal code 
-generation for both modes.
+     return addr;
+}
 
 
-> +static bool trans_MULLWO(DisasContext *ctx, arg_MULLWO *a)
-> +{
-> +    TCGv_i32 t0 = tcg_temp_new_i32();
-> +    TCGv_i32 t1 = tcg_temp_new_i32();
-> +
-> +    tcg_gen_trunc_tl_i32(t0, cpu_gpr[a->ra]);
-> +    tcg_gen_trunc_tl_i32(t1, cpu_gpr[a->rb]);
-> +    tcg_gen_muls2_i32(t0, t1, t0, t1);
-> +#if defined(TARGET_PPC64)
-> +    tcg_gen_concat_i32_i64(cpu_gpr[a->rt], t0, t1);
-> +#else
-> +    tcg_gen_mov_i32(cpu_gpr[a->rt], t0);
-> +#endif
-> +
-> +    tcg_gen_sari_i32(t0, t0, 31);
-> +    tcg_gen_setcond_i32(TCG_COND_NE, t0, t0, t1);
-> +    tcg_gen_extu_i32_tl(cpu_ov, t0);
+This change adds a type cast and also uses extract64() instead of 
+extract32()
+to avoid integer overflow on addition (there was a typo in the previous 
+letter).
+Also in extract64() extracts a bit field with a length of 16 bits 
+instead of 12,
+the shift is changed to 32 so that the extracted field fits into bits 
+[47:32] of the final address.
 
-Usually hosts need to create the full 64-bit product and then break it apart for 
-tcg_gen_muls2_i32, so split followed immediately by concatenate isn't great.
+if this calculation is correct, I'm ready to create a second version of 
+the patch.
 
 
-     TCGv t0 = tcg_temp_new();
-     TCGv t1 = tcg_temp_new();
-
-#ifdef TARGET_PPC64
-     tcg_gen_ext32s_i64(t0, ra);
-     tcg_gen_ext32s_i64(t1, rb);
-     tcg_gen_mul_i64(rt, t0, t1);
-     tcg_gen_sextract_i64(t0, rt, 31, 1);
-     tcg_gen_sari_i64(t1, rt, 32);
-#else
-     tcg_gen_muls2_i32(rt, t1, ra, rb);
-     tcg_gen_sari_i32(t0, rt, 31);
-#endif
-     tcg_gen_setcond_tl(TCG_COND_NE, cpu_ov, t0, t1);
 
 
-> +    if (is_isa300(ctx)) {
-> +        tcg_gen_mov_tl(cpu_ov32, cpu_ov);
-> +    }
-> +    tcg_gen_or_tl(cpu_so, cpu_so, cpu_ov);
-> +
-> +    if (unlikely(a->rc)) {
-> +        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
-> +    }
-> +    return true;
-> +}
+12/04/24 13:06, Peter Maydell пишет:
+> On Fri, 12 Apr 2024 at 09:13, Alexandra Diupina <adiupina@astralinux.ru> wrote:
+>> Overflow can occur in a situation where desc->source_address
+>> has a maximum value (pow(2, 32) - 1), so add a cast to a
+>> larger type before the assignment.
+>>
+>> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>>
+>> Fixes: d3c6369a96 ("introduce xlnx-dpdma")
+>> Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+>> ---
+>>   hw/dma/xlnx_dpdma.c | 20 ++++++++++----------
+>>   1 file changed, 10 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+>> index 1f5cd64ed1..224259225c 100644
+>> --- a/hw/dma/xlnx_dpdma.c
+>> +++ b/hw/dma/xlnx_dpdma.c
+>> @@ -175,24 +175,24 @@ static uint64_t xlnx_dpdma_desc_get_source_address(DPDMADescriptor *desc,
+>>
+>>       switch (frag) {
+>>       case 0:
+>> -        addr = desc->source_address
+>> -            + (extract32(desc->address_extension, 16, 12) << 20);
+>> +        addr = (uint64_t)(desc->source_address
+>> +            + (extract32(desc->address_extension, 16, 12) << 20));
+> Unless I'm confused, this cast doesn't help, because we
+> will have already done a 32-bit addition of desc->source_address
+> and the value from the address_extension part, so it doesn't
+> change the result.
+>
+> If we want to do the addition at 64 bits then using extract64()
+> would be the simplest way to arrange for that.
+>
+> However, I can't figure out what this code is trying to do and
+> make that line up with the data sheet; maybe this isn't the
+> right datasheet for this device?
+>
+> https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/ADDR_EXT-Field
+>
+> The datasheet suggests that we should take 32 bits of the address
+> from one field (here desc->source_address) and 16 bits of the
+> address from another (here desc->address_extension's high bits)
+> and combine them to make a 48 bit address. But this code is only
+> looking at 12 bits of the high 16 in address_extension, and it
+> doesn't shift them right enough to put them into bits [47:32]
+> of the final address.
+>
+> Xilinx folks: what hardware is this modelling, and is it
+> really the right behaviour?
+>
+> Also, this device looks like it has a host-endianness bug: the
+> DPDMADescriptor struct is read directly from guest memory in
+> dma_memory_read(), but the device never does anything to swap
+> the fields from guest memory order to host memory order. So
+> this is likely broken on big-endian hosts.
+>
+> thanks
+> -- PMM
 
 
-r~
 
