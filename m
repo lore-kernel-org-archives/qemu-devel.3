@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3F5C04FF9
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2342C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwiuG-0002el-FX; Tue, 16 Apr 2024 09:31:28 -0400
+	id 1rwiwY-0004Bt-Qh; Tue, 16 Apr 2024 09:33:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiuE-0002eA-4X
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:26 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiwE-00046j-0m
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:33:34 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiuA-0005jC-An
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:31:25 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-41881bce4b5so12268575e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:31:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwiwA-0006DP-W1
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:33:29 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3498c7d4473so349277f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713274281; x=1713879081; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713274405; x=1713879205; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IQOUFHHCUDqPSl2g1+bKLAsz+J3VsSPSm9kqWJqyEiA=;
- b=Rw0ZtNe1SEz10p3Pw5gvpJ2dnWHIrqm2ryJ4PUW3EOH5SmTZR9hLMA67mnEiXxL2pe
- OLIoTe4ek7qFM2T6/dqheqe8EYvejEPQ/250FZ7bZi043vISddKsFTLSqTNX7F0O9Z/g
- d6C4S2VQ6M6DHbrxq4d3d/JcyX8g9yHY6FrIYxWnevb8B8GWPAFlyn9aHhbeB4xwp/aA
- avXYHWYN75rHYTLXeqERXEruakg35a9cAxQN8z7Dc5pbSwQhHaQAcPfXlQRC8GrGf2si
- p2U/NLc7FokcWZRy/PmsdNu/lIjOK2SK/L3mjAxCkcucKTRowGt5Nd0rbNXjzgkQ81mV
- CXFQ==
+ bh=8ejCkE3cYY+5NHE0dWEkXgBRP4mtgFRv6mrQVJe9Kjo=;
+ b=XAjHLgabfnZOzzaKrKG2a1y+Ld787QKVj/JxAuNHiFRsJLH4dvuIfH/tomy425KivL
+ SVSiTID3OI+0GhZG+52rFVImvngM/xTCvq3foazEcxhgGCpMrKPgo1lcN3PwNnCr9nym
+ Ai89O5wp1mEHcjvupshjy5tN1AzO/n79wWqv2pAyrZUG0QxT8j/hapckfiaPkF3p2oVE
+ GWyuUFfjHRsYHePxnINoBh9aPAGlRy76Hrp4DEOedn9unRdM6z17mFSZGAaZLQ9q44ab
+ 7Q/HDVw/3QoQVkmgPO1kTAz15bRE6Wm++Gos5ozm0ATNr7aRIwPY1RkIUnbtQPmGx1Tv
+ Cw2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713274281; x=1713879081;
+ d=1e100.net; s=20230601; t=1713274405; x=1713879205;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IQOUFHHCUDqPSl2g1+bKLAsz+J3VsSPSm9kqWJqyEiA=;
- b=ZvSwTHFjiGMXKWwPqA3k5DiN2k1WhyRQ1tnZsUJnrHD6dSeofeeoRl5vd5a25pjbDG
- hiMk+FmW1F1nxKDXHmvOQKqxsUqam06dW5TKGV3y6pUFk9Or5DYG1TVajPBkV/Gv+iNs
- X4lJ0s1oZoRNhSlS8E+UtOKiT5LZO8uaWWkINpSz+bRwKLt/2IQnXa2/JETDQOXf7rAx
- CWMrh3CgQ84UWVKK+voywS53bOLyoQ/qUNzkUtr8/yAtV9fi4wLp5hawyLfmRRAPKTWy
- EnLJMsXP1/NciDO6pis3CaPEc2BEKgYcyTFkPMl4EZrTmIVhKYANxJD9CavtPpqMPJv7
- IbnA==
+ bh=8ejCkE3cYY+5NHE0dWEkXgBRP4mtgFRv6mrQVJe9Kjo=;
+ b=rV3Cijaazzx9lbJG2HfcXsRIGq5QrAUjKp1HaGGJxFSflVgELz6kPrikzqQSO1xPGk
+ sMxNKcTHqGmUqLIF61tvAQi2J/r8kc2MYKougFntoD2qOVEnc3GGGvUvsNdL/tHntyRJ
+ TBIdECO1Oc6W2+pC+TFITfDFe2M4PAU5XO5c8lk6ZxHo8GhYAg308t6b8cLlnQQ2ZnCN
+ prDUHDZMSDGndyZrvVhYvayR3FAae3klU5CL/Z54K9G3e5U8pb3C090DwfOQWDjrpBIh
+ Tc2CvG7qk7n5EOIS0lUclRVSGtD86pRwJTDYyCQ73i9EoUMglvPQ7yF9GWB3v9+6sPxj
+ E4Kg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYj452FxR+/bnXa3V8WOZPFKdDxgr0qlhSWyYZaPik5bZn8V/6netBZ/b9zGcPMUDMQWbGAPv3IOcrOqgK/y0d6eeMjww=
-X-Gm-Message-State: AOJu0YwO62zwzH2wF9VrKDZRxJWJ8IPqfc52W9Uk/SJjN3HgyzUuzxKI
- B+mODkxg8PBuQjHWuA+D44ifNiDW6Bf7pT2ncNKSg58pkkZIWGwVQI8YLc2lCw8=
-X-Google-Smtp-Source: AGHT+IFr2fTcAtOCG6eR99A6qB3bDuuap9O4gbpWvHobrtiCuNAZzYWW9qP7fWuc8N/rEHC9vKebbQ==
-X-Received: by 2002:a05:600c:a4c:b0:415:6728:a565 with SMTP id
- c12-20020a05600c0a4c00b004156728a565mr12960812wmq.16.1713274280679; 
- Tue, 16 Apr 2024 06:31:20 -0700 (PDT)
+ AJvYcCXTrHzRBqmIXRCHllaTNdFPuivJKtw/SmVCDjl7DmM9jfHPrNF5o3IJyE5GeCm5BOWbcHl9PAbH2Dr2IWYqxxaUq5o4Yxw=
+X-Gm-Message-State: AOJu0Ywjq9JO2RS8DvFhVml4HZLOiqQKc7UKzPA7vGTsCv4XJ/vC5ZP8
+ tyDxCMKn8RqVmPasG/Vr3OhGMG4PtWDPmRDaHkVznNEvNK95vK/QV30yIcqi7as=
+X-Google-Smtp-Source: AGHT+IH92HJHUuNl6TyR7RfHKXIxtrZrX9UW/aYad8LjNwOFRn7nCyGMUtWcnxl8fGtGuf+eLBlrtw==
+X-Received: by 2002:a5d:54c8:0:b0:345:c169:8808 with SMTP id
+ x8-20020a5d54c8000000b00345c1698808mr9106697wrv.4.1713274405201; 
+ Tue, 16 Apr 2024 06:33:25 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- l9-20020a1c7909000000b004167b0819aasm2036054wme.0.2024.04.16.06.31.18
+ dd15-20020a0560001e8f00b003436cb45f7esm14924652wrb.90.2024.04.16.06.33.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 06:31:20 -0700 (PDT)
-Message-ID: <134a100a-adeb-47d6-b55d-ba8d2afb2969@linaro.org>
-Date: Tue, 16 Apr 2024 15:31:17 +0200
+ Tue, 16 Apr 2024 06:33:24 -0700 (PDT)
+Message-ID: <b2c237b5-9dc4-4557-ab00-0c19a5be0366@linaro.org>
+Date: Tue, 16 Apr 2024 15:33:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2 12/21] hw/i386/pc: Remove
- PCMachineClass::enforce_aligned_dimm
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- devel@lists.libvirt.org, Gerd Hoffmann <kraxel@redhat.com>,
+Subject: Re: [PATCH-for-9.1 v2 13/21] hw/mem/pc-dimm: Remove legacy_align
+ argument from pc_dimm_pre_plug()
+To: David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Cleber Rosa
- <crosa@redhat.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
+ Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>,
+ Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org
 References: <20240327095124.73639-1-philmd@linaro.org>
- <20240327095124.73639-13-philmd@linaro.org> <ZgTby3L9623ofMWC@intel.com>
+ <20240327095124.73639-14-philmd@linaro.org>
+ <5efe6309-2c7e-404c-9674-2221606b35ac@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZgTby3L9623ofMWC@intel.com>
+In-Reply-To: <5efe6309-2c7e-404c-9674-2221606b35ac@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,48 +111,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/24 03:54, Zhao Liu wrote:
-> On Wed, Mar 27, 2024 at 10:51:14AM +0100, Philippe Mathieu-Daudé wrote:
->> Date: Wed, 27 Mar 2024 10:51:14 +0100
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: [PATCH-for-9.1 v2 12/21] hw/i386/pc: Remove
->>   PCMachineClass::enforce_aligned_dimm
->> X-Mailer: git-send-email 2.41.0
->>
->> PCMachineClass::enforce_aligned_dimm was only used by the
->> pc-i440fx-2.1 machine, which got removed. It is now always
->> true. Remove it, simplifying pc_get_device_memory_range().
->> Update the comment in Avocado test_phybits_low_pse36().
+On 27/3/24 12:32, David Hildenbrand wrote:
+> On 27.03.24 10:51, Philippe Mathieu-Daudé wrote:
+>> 'legacy_align' is always NULL, remove it.
 >>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Message-Id: <20240305134221.30924-11-philmd@linaro.org>
 >> ---
->>   include/hw/i386/pc.h                  |  3 ---
->>   hw/i386/pc.c                          | 14 +++-----------
->>   tests/avocado/mem-addr-space-check.py |  3 +--
->>   3 files changed, 4 insertions(+), 16 deletions(-)
-
-
->> --- a/tests/avocado/mem-addr-space-check.py
->> +++ b/tests/avocado/mem-addr-space-check.py
->> @@ -31,8 +31,7 @@ def test_phybits_low_pse36(self):
->>           at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
->>           we have 0.5 GiB of VM memory, see pc_q35_init()). This means total
->>           hotpluggable memory size is 60 GiB. Per slot, we reserve 1 GiB of memory
->> -        for dimm alignment for all newer machines (see enforce_aligned_dimm
->> -        property for pc machines and pc_get_device_memory_range()). That leaves
->> +        for dimm alignment for all machines. That leaves
 > 
-> Just nit, better align it here.
-
-Well, I wanted to avoid too much churn, but OK.
-
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> I was really confused for a second until I saw that this series is 
+> dependent on another one.
 > 
->>           total hotpluggable actual memory size of 59 GiB. If the VM is started
->>           with 0.5 GiB of memory, maxmem should be set to a maximum value of
->>           59.5 GiB to ensure that the processor can address all memory directly.
->> -- 
->> 2.41.0
->>
+> Please make sure to CC people you CC on patches to also CC on the cover 
+> letter.
+
+Oops, sorry. I really should patch that on git-publish...
+
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+
+Thanks!
 
 
