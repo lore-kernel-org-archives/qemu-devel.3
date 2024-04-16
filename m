@@ -4,69 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 350C4C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525C4C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:19:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwkTa-0003Q5-TI; Tue, 16 Apr 2024 11:12:02 -0400
+	id 1rwkZe-0005rj-HG; Tue, 16 Apr 2024 11:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rwkTW-0003PN-UT; Tue, 16 Apr 2024 11:11:58 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ id 1rwkZc-0005pn-LY
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:18:16 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rwkTU-0006sj-4i; Tue, 16 Apr 2024 11:11:58 -0400
+ id 1rwkZa-0007q2-T7
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:18:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713280316; x=1744816316;
+ t=1713280695; x=1744816695;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=EUtChf+ZT+k+KZQmMIjUdoCZtm/enqYV7iJUgl/8+Tw=;
- b=J20wpkzD/d9WccQ87A6BXo5XGHbeznlu6D1ZMYYeE1pgYTZJILGB+LcJ
- +RbM5ImvqqRgzQ80xJqRSk4N+6eWyRYg76abepjmOZOgdaVu9LRgGMCnH
- jd4MFrebLPCGB45JvLxTID91oUo2rOe2xlWblWjsW5+LIsHtritkOPNAV
- Por/4EfVBLJdwYXXZVBMpLznmLKHfkgZZ5rhJCios5l30vIdCvbMxQkjV
- 12mP4z9gr136AwV3f7Y3PlrTFXTWeDkm7T6NdY7AhOUdOhkAmxEig61AO
- 3Oit4nmryFAx03goFRN3tu+MNuCa4RANcpwm0aNcmyKS1XqL2EodVog/k g==;
-X-CSE-ConnectionGUID: HCF6OgVuTwSGV4keRtzxuQ==
-X-CSE-MsgGUID: mP9DiAl/SI6EgsgugfETJA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="8588950"
+ mime-version:in-reply-to;
+ bh=b/UybqY1T85zLNnDTCZ3ZriqBdkKyGPWMleRZOWNCAM=;
+ b=BwQwpeoxZeNgroj4MDxv+FBll2v0jHw5hN19JdTA5Vu76XxUTxqaIqjd
+ BzySEJzjObjOCpNj9gl9qDo32SwTAt2Kg6xwi+b9uRi02Gi7qKu3RbJUw
+ dQYG15BuKSwYnBm/ypNZZ+hfZ8v47e43ZOg3Pc+/nY0GXtzKeIkOLjHDY
+ 1FHhOysWs3psgHOpo2hy/CEKppildJdqHa01Zr1vlOBuEge/Kx8XNTwvx
+ 3caAAZCKcQYoT18OA9oH+dDQ2PXIkNLhzaGBGH1tkuLroLOCq7BuBURaD
+ DG5vvSsGh6LWyW8nAP9OkXC8XrtjUJ6lNqFBCz857Hv13g9dDkb+Ij7b0 w==;
+X-CSE-ConnectionGUID: epCBYQwdR8WUHYoH95E4mA==
+X-CSE-MsgGUID: m6pqJwGnQXyw1p5zN6Yd3A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="8946304"
 X-IronPort-AV: E=Sophos;i="6.07,206,1708416000"; 
-   d="scan'208";a="8588950"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Apr 2024 08:10:14 -0700
-X-CSE-ConnectionGUID: y8EfDANkS62Od8/S5tuWYw==
-X-CSE-MsgGUID: w6G+Jkn/SAaWkThb1NHYtQ==
+   d="scan'208";a="8946304"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Apr 2024 08:18:13 -0700
+X-CSE-ConnectionGUID: PBNSXj+cS0y0c9jqOHpPmg==
+X-CSE-MsgGUID: tfzGw2DwQYK09lV4J6PN3g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,206,1708416000"; d="scan'208";a="26868609"
+X-IronPort-AV: E=Sophos;i="6.07,206,1708416000"; d="scan'208";a="53494933"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 16 Apr 2024 08:10:11 -0700
-Date: Tue, 16 Apr 2024 23:24:15 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 16 Apr 2024 08:18:12 -0700
+Date: Tue, 16 Apr 2024 23:32:15 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, devel@lists.libvirt.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v3 20/22] hw/i386/pc: Remove deprecated pc-i440fx-2.3
- machine
-Message-ID: <Zh6YHzRr8uPgoQds@intel.com>
-References: <20240416135252.8384-1-philmd@linaro.org>
- <20240416135252.8384-21-philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 27/27] target/i386/kvm: Improve KVM_EXIT_NOTIFY warnings
+Message-ID: <Zh6Z/7kdfFxCTi14@intel.com>
+References: <20240412073346.458116-1-richard.henderson@linaro.org>
+ <20240412073346.458116-28-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240416135252.8384-21-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240412073346.458116-28-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -45
 X-Spam_score: -4.6
@@ -90,25 +83,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 16, 2024 at 03:52:49PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Tue, 16 Apr 2024 15:52:49 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 20/22] hw/i386/pc: Remove deprecated pc-i440fx-2.3
->  machine
-> X-Mailer: git-send-email 2.41.0
+On Fri, Apr 12, 2024 at 12:33:46AM -0700, Richard Henderson wrote:
+> Date: Fri, 12 Apr 2024 00:33:46 -0700
+> From: Richard Henderson <richard.henderson@linaro.org>
+> Subject: [PATCH v3 27/27] target/i386/kvm: Improve KVM_EXIT_NOTIFY warnings
+> X-Mailer: git-send-email 2.34.1
 > 
-> The pc-i440fx-2.3 machine was deprecated for the 8.2
-> release (see commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-> time to remove it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  docs/about/deprecated.rst       |  4 ++--
->  docs/about/removed-features.rst |  2 +-
->  hw/i386/pc.c                    | 25 -------------------------
->  hw/i386/pc_piix.c               | 19 -------------------
->  4 files changed, 3 insertions(+), 47 deletions(-)
+>  target/i386/kvm/kvm.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
