@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55894C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84049C04FF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 13:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwjGO-00037k-KS; Tue, 16 Apr 2024 09:54:20 -0400
+	id 1rwjHA-0005gO-EU; Tue, 16 Apr 2024 09:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGF-0002ok-Ul
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:12 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGl-000582-UY
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:45 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGC-0001r0-G9
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:11 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56e69a51a33so4328417a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:54:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rwjGh-0001xC-W6
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 09:54:43 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a523dad53e0so577762566b.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 06:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713275646; x=1713880446; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713275678; x=1713880478; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UuGQRWMqmr6ruVhTw3v1+AueGwovFmnNusAak3fPiJU=;
- b=eKE+BoUebL5WjsIkKju9B9igNMd8zk94zRmWT9YlQ1bQcklpByc2mQ3Jpghr+bumm4
- 4PGzTW8yFFL+PfGYZstYO6J8J9Vwx0gvo4gQxFnc+b85dVAP2t8QRGFFNjXp6z6wrAdM
- KGLn3RMrMIyly+hpWHDC7lgJZvB6gBKqT7HePnN+RYWHKqkFPwBJaUClmV4N+LitzM0i
- OU+w4V4Y1bmZK14aDs4Y/Wv0WzREcXOn4ABoUSAeKKhQVQOupzZ/Z/sMezmMnnOJinrT
- Br8KKSzKqwmlwc0dv8Pgr5h9yAf1QDABmvNxUjq9zFMaZpQ4dg5111OVp8vMHCusTMO9
- Z2Iw==
+ bh=niCnoAX1/IoHq/fW8NTYGu+tVPbyTFDmTrJEBLORM4w=;
+ b=BISGUhwZNSyAAjQ6ZaIUAOqjaDkJK/dYKiQbAdGKsjhSnqBm4x9PqdWtfU5Plu1u5i
+ HS6qyb3YMfDZoFnhAaNjyzwaSCSMHWrwE9o5jambQFWF1jtlY3mwTFTfjwpdCbKpvbhI
+ RkBcpiByO007eEiz/Aw2Mrfrq7jo1e7b0jkHBVCn/ZOd+4MYA8By4cPFKOmdYimTW0ZP
+ Eg49U2AZVryyMjPShRqj9f+H8iQ0HCJLbQW56jS8aymdiEwoRKA+ZpZVP+1m2oyJOexK
+ u6MKMjunPG7V0faCwV/rqA6OyEY6qSyC2NUi5ovXpAACoAaDKZx3tC4KWOh2DISWDNYX
+ V/qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713275646; x=1713880446;
+ d=1e100.net; s=20230601; t=1713275678; x=1713880478;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UuGQRWMqmr6ruVhTw3v1+AueGwovFmnNusAak3fPiJU=;
- b=JS/H7zkYuapZ7ejnsvLirFTJeCBziP/QDT2S0sFVrzwTyHaQSmIVyZrk5VahhS38Ns
- JIxtPv+Y+WqCN8/tJUmCxxwpZFvJIid3C3aowFeDHmMhVVwKQWv35/k6OHjZNQCr41Ou
- /eoUosVixi2TCZFmhtmGWc4HIbuP2MdQ6kjUwDKtFvqZWwlQkb2PqJI2LBmV1DxLn6bb
- vNzsSe5qv5pj5gEReeop7KbQy80SLgYrDUCyQ9Z7P/mfMBiQ/zjZL/evCmMz6XamUmzp
- m4lQiIdyT9t3UgSdhGLc2rS3T8jM0P44TdVFKO/Cul6yeU9rDFQmXEy7S940e7ayzXNg
- qPtQ==
-X-Gm-Message-State: AOJu0YzUOLhB65uta5biDre0ayZ2M7F/K73F968imd9oOI93WT+ULzAP
- xluXF8ehqQwxg9isqxK0mokiQ85Cms4pU0v2rpAT6ki7Nlv5XnEQCV58g/e7ovjrWLN8rUTJB70
- Q
-X-Google-Smtp-Source: AGHT+IE6IYmo1VuVUOK6xZ/1XIADaz45DMu2bPe10Ti/wKiNWf8jwKdKozqu/pKdUXNHfmZznGGeng==
-X-Received: by 2002:a50:d55d:0:b0:566:d333:45e8 with SMTP id
- f29-20020a50d55d000000b00566d33345e8mr8949322edj.20.1713275646553; 
- Tue, 16 Apr 2024 06:54:06 -0700 (PDT)
+ bh=niCnoAX1/IoHq/fW8NTYGu+tVPbyTFDmTrJEBLORM4w=;
+ b=eiEqkdQ1s5fJedXwYNh1xWDXqACe+4D43HueZtRLuiAlznqVMkGfz3zYqE9Or6WwmI
+ Q9NO4fK6ZOpxorP3zgkP+KICIUeFxIVtgmUuvhx4Hs3m7G91xL+ZLn3qPTXe/9VG1TYK
+ eGdeXxPo8wlF9yprNzOHik5Wb0IYtVhaXI9vLieOdV9fkI6VLdYwlKuV9+FnjbnZ8d/a
+ vcLndJ6jRc7Kfse5SNx9tS/aYXvH9mbU250ToU7TnV6V5k03B7I/vsyR5HJuUBShjlK6
+ z/FWb57uZin0EFe/a0k+itpwI7/mtYDi2Z55OC/6rEoeTPK0msAAvFrILy1WYTxyuS6m
+ VviA==
+X-Gm-Message-State: AOJu0YzNj/YbveMYRydBjJ+DaYlI0kV0NN7Jvivtl/NWn6ZVN1UqvxSe
+ tk2OFcSMtlVyYr/tlp1QADBOOy63Vc8uVEhMuoQodBBWqpBE9VPn/wtTW9I4ev8laykiwqASVEE
+ l
+X-Google-Smtp-Source: AGHT+IHbRPXAeF1BWH/B4tIZ1JRviM9QnaVYXhLd2cjnwk5yQUeudL8GfmYw5GIrQejQFhB0g4qdlg==
+X-Received: by 2002:a17:906:b892:b0:a51:8672:66e4 with SMTP id
+ hb18-20020a170906b89200b00a51867266e4mr2515645ejb.22.1713275678090; 
+ Tue, 16 Apr 2024 06:54:38 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.61])
  by smtp.gmail.com with ESMTPSA id
- ee42-20020a056402292a00b005701550ddc5sm3802566edb.90.2024.04.16.06.54.04
+ 23-20020a170906319700b00a543e6e1c47sm2010767ejy.72.2024.04.16.06.54.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Apr 2024 06:54:06 -0700 (PDT)
+ Tue, 16 Apr 2024 06:54:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -65,27 +65,20 @@ Cc: Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-arm@nongnu.org
-Subject: [PATCH v3 11/22] hw/smbios: Remove 'uuid_encoded' argument from
- smbios_set_defaults()
-Date: Tue, 16 Apr 2024 15:52:40 +0200
-Message-ID: <20240416135252.8384-12-philmd@linaro.org>
+ devel@lists.libvirt.org, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v3 16/22] hw/i386/pc: Remove deprecated pc-i440fx-2.2 machine
+Date: Tue, 16 Apr 2024 15:52:45 +0200
+Message-ID: <20240416135252.8384-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240416135252.8384-1-philmd@linaro.org>
 References: <20240416135252.8384-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,112 +101,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'uuid_encoded' is always true, remove it.
+The pc-i440fx-2.2 machine was deprecated for the 8.2
+release (see commit c7437f0ddb "docs/about: Mark the
+old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
+time to remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240305134221.30924-13-philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/hw/firmware/smbios.h | 3 +--
- hw/arm/virt.c                | 3 +--
- hw/i386/fw_cfg.c             | 2 +-
- hw/loongarch/virt.c          | 2 +-
- hw/riscv/virt.c              | 2 +-
- hw/smbios/smbios.c           | 6 ++----
- 6 files changed, 7 insertions(+), 11 deletions(-)
+ docs/about/deprecated.rst       |  4 ++--
+ docs/about/removed-features.rst |  2 +-
+ include/hw/i386/pc.h            |  3 ---
+ hw/i386/pc.c                    | 23 -----------------------
+ hw/i386/pc_piix.c               | 21 ---------------------
+ 5 files changed, 3 insertions(+), 50 deletions(-)
 
-diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-index 8d3fb2fb3b..f066ab7262 100644
---- a/include/hw/firmware/smbios.h
-+++ b/include/hw/firmware/smbios.h
-@@ -331,8 +331,7 @@ void smbios_add_usr_blob_size(size_t size);
- void smbios_entry_add(QemuOpts *opts, Error **errp);
- void smbios_set_cpuid(uint32_t version, uint32_t features);
- void smbios_set_defaults(const char *manufacturer, const char *product,
--                         const char *version,
--                         bool uuid_encoded);
-+                         const char *version);
- void smbios_set_default_processor_family(uint16_t processor_family);
- uint8_t *smbios_get_table_legacy(size_t *length, Error **errp);
- void smbios_get_tables(MachineState *ms,
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a9a913aead..a55ef916cb 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1650,8 +1650,7 @@ static void virt_build_smbios(VirtMachineState *vms)
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 689cf3cead..707455c817 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -219,8 +219,8 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+ better reflects the way this property affects all random data within
+ the device tree blob, not just the ``kaslr-seed`` node.
+ 
+-``pc-i440fx-2.2`` and ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.7`` (since 9.1)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.7`` (since 9.1)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ These old machine types are quite neglected nowadays and thus might have
+ various pitfalls with regards to live migration. Use a newer machine type
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 01c55103d3..4664974a8b 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -816,7 +816,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
+ 
+ This machine has been renamed ``fuloong2e``.
+ 
+-``pc-0.10`` up to ``pc-i440fx-2.1`` (removed in 4.0 up to 9.0)
++``pc-0.10`` up to ``pc-i440fx-2.2`` (removed in 4.0 up to 9.0)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ These machine types were very old and likely could not be used for live
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 231aae92ed..df97df6ca7 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -274,9 +274,6 @@ extern const size_t pc_compat_2_4_len;
+ extern GlobalProperty pc_compat_2_3[];
+ extern const size_t pc_compat_2_3_len;
+ 
+-extern GlobalProperty pc_compat_2_2[];
+-extern const size_t pc_compat_2_2_len;
+-
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
+     { \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 633724f177..18bef7c85e 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -281,29 +281,6 @@ GlobalProperty pc_compat_2_3[] = {
+ };
+ const size_t pc_compat_2_3_len = G_N_ELEMENTS(pc_compat_2_3);
+ 
+-GlobalProperty pc_compat_2_2[] = {
+-    PC_CPU_MODEL_IDS("2.2.0")
+-    { "kvm64" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "kvm32" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Conroe" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Penryn" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Nehalem" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Westmere" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "SandyBridge" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Haswell" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Broadwell" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Opteron_G1" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Opteron_G2" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Opteron_G4" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Opteron_G5" "-" TYPE_X86_CPU, "vme", "off" },
+-    { "Haswell" "-" TYPE_X86_CPU, "f16c", "off" },
+-    { "Haswell" "-" TYPE_X86_CPU, "rdrand", "off" },
+-    { "Broadwell" "-" TYPE_X86_CPU, "f16c", "off" },
+-    { "Broadwell" "-" TYPE_X86_CPU, "rdrand", "off" },
+-};
+-const size_t pc_compat_2_2_len = G_N_ELEMENTS(pc_compat_2_2);
+-
+ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
+ {
+     GSIState *s;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 2f28b4e329..d32acb5634 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -429,11 +429,6 @@ static void pc_compat_2_3_fn(MachineState *machine)
      }
- 
-     smbios_set_defaults("QEMU", product,
--                        vmc->smbios_old_sys_ver ? "1.0" : mc->name,
--                        true);
-+                        vmc->smbios_old_sys_ver ? "1.0" : mc->name);
- 
-     /* build the array of physical mem area from base_memmap */
-     mem_array.address = vms->memmap[VIRT_MEM].base;
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index f7c2501161..ecc4047a4b 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -63,7 +63,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
- 
-     if (pcmc->smbios_defaults) {
-         /* These values are guest ABI, do not change */
--        smbios_set_defaults("QEMU", mc->desc, mc->name, true);
-+        smbios_set_defaults("QEMU", mc->desc, mc->name);
-     }
- 
-     /* tell smbios about cpuid version and features */
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 441d764843..00d3005e54 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -355,7 +355,7 @@ static void virt_build_smbios(LoongArchMachineState *lams)
-         return;
-     }
- 
--    smbios_set_defaults("QEMU", product, mc->name, true);
-+    smbios_set_defaults("QEMU", product, mc->name);
- 
-     smbios_get_tables(ms, SMBIOS_ENTRY_POINT_TYPE_64,
-                       NULL, 0,
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d171e74f7b..1ed9b0552e 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1277,7 +1277,7 @@ static void virt_build_smbios(RISCVVirtState *s)
-         product = "KVM Virtual Machine";
-     }
- 
--    smbios_set_defaults("QEMU", product, mc->name, true);
-+    smbios_set_defaults("QEMU", product, mc->name);
- 
-     if (riscv_is_32bit(&s->soc[0])) {
-         smbios_set_default_processor_family(0x200);
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index eed5787b15..8261eb716f 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -30,7 +30,7 @@
- #include "hw/pci/pci_device.h"
- #include "smbios_build.h"
- 
--static bool smbios_uuid_encoded = true;
-+static const bool smbios_uuid_encoded = true;
- /*
-  * SMBIOS tables provided by user with '-smbios file=<foo>' option
-  */
-@@ -1017,11 +1017,9 @@ void smbios_set_default_processor_family(uint16_t processor_family)
  }
  
- void smbios_set_defaults(const char *manufacturer, const char *product,
--                         const char *version,
--                         bool uuid_encoded)
-+                         const char *version)
+-static void pc_compat_2_2_fn(MachineState *machine)
+-{
+-    pc_compat_2_3_fn(machine);
+-}
+-
+ #ifdef CONFIG_ISAPC
+ static void pc_init_isa(MachineState *machine)
  {
-     smbios_have_defaults = true;
--    smbios_uuid_encoded = uuid_encoded;
+@@ -828,22 +823,6 @@ static void pc_i440fx_2_3_machine_options(MachineClass *m)
+ DEFINE_I440FX_MACHINE(v2_3, "pc-i440fx-2.3", pc_compat_2_3_fn,
+                       pc_i440fx_2_3_machine_options);
  
-     SMBIOS_SET_DEFAULT(smbios_type1.manufacturer, manufacturer);
-     SMBIOS_SET_DEFAULT(smbios_type1.product, product);
+-static void pc_i440fx_2_2_machine_options(MachineClass *m)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_i440fx_2_3_machine_options(m);
+-    m->hw_version = "2.2.0";
+-    m->default_machine_opts = "firmware=bios-256k.bin,suppress-vmdesc=on";
+-    compat_props_add(m->compat_props, hw_compat_2_2, hw_compat_2_2_len);
+-    compat_props_add(m->compat_props, pc_compat_2_2, pc_compat_2_2_len);
+-    pcmc->rsdp_in_ram = false;
+-    pcmc->resizable_acpi_blob = false;
+-}
+-
+-DEFINE_I440FX_MACHINE(v2_2, "pc-i440fx-2.2", pc_compat_2_2_fn,
+-                      pc_i440fx_2_2_machine_options);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
+ {
 -- 
 2.41.0
 
