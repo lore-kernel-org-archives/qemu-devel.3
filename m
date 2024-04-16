@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A298C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE6FC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 14:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwk2G-0004us-5w; Tue, 16 Apr 2024 10:43:48 -0400
+	id 1rwk4S-00088f-C3; Tue, 16 Apr 2024 10:46:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk2D-0004sl-3E
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:43:45 -0400
+ id 1rwk3x-0006ku-6m
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:35 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk2A-0001yc-5Q
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:43:44 -0400
+ id 1rwk3u-0002cV-9S
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 10:45:32 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1rwk1m-0002ca-MS; Tue, 16 Apr 2024 16:43:18 +0200
+ id 1rwk3T-0002iz-F7; Tue, 16 Apr 2024 16:45:03 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -32,9 +32,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH RFC 01/26] migration: Add x-channel-header pseudo-capability
-Date: Tue, 16 Apr 2024 16:42:40 +0200
-Message-ID: <9994e4a41a0c893eec312baf1ef705ac42dafbc0.1713269378.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH RFC 21/26] migration/multifd: Device state transfer support -
+ receive side
+Date: Tue, 16 Apr 2024 16:43:00 +0200
+Message-ID: <a7a20b0de049b53d27b4ce8363fc68e601155104.1713269378.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1713269378.git.maciej.szmigiero@oracle.com>
 References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
@@ -62,96 +63,429 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Avihai Horon <avihaih@nvidia.com>
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Add x-channel-header pseudo-capability which indicates that a header
-should be sent through migration channels.
+Add a basic support for receiving device state via multifd channels -
+both dedicated ones or shared with RAM transfer.
 
-The header is the first thing to be sent through a migration channel and
-it allows the destination to differentiate between the various channels
-(main, multifd and preempt).
+To differentiate between a device state and a RAM packet the packet
+header is read first.
 
-This eliminates the need to deduce the channel type by peeking in the
-channel's content, which can be done only on a best-effort basis. It
-will also allow other devices to create their own channels in the
-future.
+Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
+packet header either device state  (MultiFDPacketDeviceState_t) or RAM
+data (existing MultiFDPacket_t) is then read.
 
-This patch only adds the pseudo-capability and sets it to false always.
-The following patches will add the actual functionality, after which it
-will be enabled..
+The received device state data is provided to
+qemu_loadvm_load_state_buffer() function for processing in the
+device's load_state_buffer handler.
 
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/core/machine.c     | 1 +
- migration/migration.h | 3 +++
- migration/options.c   | 9 +++++++++
- migration/options.h   | 1 +
- 4 files changed, 14 insertions(+)
+ migration/migration.c |   7 +-
+ migration/multifd.c   | 146 ++++++++++++++++++++++++++++++++++++------
+ migration/multifd.h   |  34 +++++++++-
+ 3 files changed, 163 insertions(+), 24 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 37ede0e7d4fd..fa28c49f55b7 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -37,6 +37,7 @@ GlobalProperty hw_compat_8_2[] = {
-     { "migration", "zero-page-detection", "legacy"},
-     { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
-+    { "migration", "channel_header", "off" },
- };
- const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
+diff --git a/migration/migration.c b/migration/migration.c
+index e4f82695a338..ea2c8a043a77 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -987,7 +987,7 @@ static void migration_ioc_process_incoming_no_header(QIOChannel *ioc,
+         /* Multiple connections */
+         assert(migration_needs_multiple_sockets());
+         if (migrate_multifd()) {
+-            multifd_recv_new_channel(ioc, &local_err);
++            multifd_recv_new_channel(ioc, false, &local_err);
+         } else {
+             assert(migrate_postcopy_preempt());
+             f = qemu_file_new_input(ioc);
+@@ -1031,6 +1031,7 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+         postcopy_preempt_new_channel(migration_incoming_get_current(), f);
+         break;
+     case MIG_CHANNEL_TYPE_MULTIFD:
++    case MIG_CHANNEL_TYPE_MULTIFD_DEVICE_STATE:
+     {
+         Error *local_err = NULL;
  
-diff --git a/migration/migration.h b/migration/migration.h
-index 8045e39c26fa..a6114405917f 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -450,6 +450,9 @@ struct MigrationState {
-      */
-     uint8_t clear_bitmap_shift;
+@@ -1039,7 +1040,9 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+             return;
+         }
  
-+    /* Whether a header is sent in migration channels */
-+    bool channel_header;
+-        multifd_recv_new_channel(ioc, &local_err);
++        multifd_recv_new_channel(ioc,
++                                 header.channel_type == MIG_CHANNEL_TYPE_MULTIFD_DEVICE_STATE,
++                                 &local_err);
+         if (local_err) {
+             error_propagate(errp, local_err);
+             return;
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 7118c69a4d49..a26418d87485 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -22,6 +22,7 @@
+ #include "file.h"
+ #include "migration.h"
+ #include "migration-stats.h"
++#include "savevm.h"
+ #include "socket.h"
+ #include "tls.h"
+ #include "qemu-file.h"
+@@ -404,7 +405,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+     uint32_t zero_num = pages->num - pages->normal_num;
+     int i;
+ 
+-    packet->flags = cpu_to_be32(p->flags);
++    packet->hdr.flags = cpu_to_be32(p->flags);
+     packet->pages_alloc = cpu_to_be32(p->pages->allocated);
+     packet->normal_pages = cpu_to_be32(pages->normal_num);
+     packet->zero_pages = cpu_to_be32(zero_num);
+@@ -432,28 +433,44 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+                        p->flags, p->next_packet_size);
+ }
+ 
+-static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
++static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p, MultiFDPacketHdr_t *hdr,
++                                             Error **errp)
+ {
+-    MultiFDPacket_t *packet = p->packet;
+-    int i;
+-
+-    packet->magic = be32_to_cpu(packet->magic);
+-    if (packet->magic != MULTIFD_MAGIC) {
++    hdr->magic = be32_to_cpu(hdr->magic);
++    if (hdr->magic != MULTIFD_MAGIC) {
+         error_setg(errp, "multifd: received packet "
+                    "magic %x and expected magic %x",
+-                   packet->magic, MULTIFD_MAGIC);
++                   hdr->magic, MULTIFD_MAGIC);
+         return -1;
+     }
+ 
+-    packet->version = be32_to_cpu(packet->version);
+-    if (packet->version != MULTIFD_VERSION) {
++    hdr->version = be32_to_cpu(hdr->version);
++    if (hdr->version != MULTIFD_VERSION) {
+         error_setg(errp, "multifd: received packet "
+                    "version %u and expected version %u",
+-                   packet->version, MULTIFD_VERSION);
++                   hdr->version, MULTIFD_VERSION);
+         return -1;
+     }
+ 
+-    p->flags = be32_to_cpu(packet->flags);
++    p->flags = be32_to_cpu(hdr->flags);
 +
-     /*
-      * This save hostname when out-going migration starts
-      */
-diff --git a/migration/options.c b/migration/options.c
-index bfd7753b69a5..8fd871cd956d 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -100,6 +100,7 @@ Property migration_properties[] = {
-                       clear_bitmap_shift, CLEAR_BITMAP_SHIFT_DEFAULT),
-     DEFINE_PROP_BOOL("x-preempt-pre-7-2", MigrationState,
-                      preempt_pre_7_2, false),
-+    DEFINE_PROP_BOOL("x-channel-header", MigrationState, channel_header, true),
- 
-     /* Migration parameters */
-     DEFINE_PROP_UINT8("x-compress-level", MigrationState,
-@@ -381,6 +382,14 @@ bool migrate_zero_copy_send(void)
- 
- /* pseudo capabilities */
- 
-+bool migrate_channel_header(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+
-+    return false;
-+    return s->channel_header;
++    return 0;
 +}
 +
- bool migrate_multifd_flush_after_each_section(void)
- {
-     MigrationState *s = migrate_get_current();
-diff --git a/migration/options.h b/migration/options.h
-index ab8199e20784..1144d72ec0db 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -52,6 +52,7 @@ bool migrate_zero_copy_send(void);
-  * check, but they are not a capability.
-  */
++static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p, Error **errp)
++{
++    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
++
++    packet->instance_id = be32_to_cpu(packet->instance_id);
++    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
++
++    return 0;
++}
++
++static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
++{
++    MultiFDPacket_t *packet = p->packet;
++    int i;
  
-+bool migrate_channel_header(void);
- bool migrate_multifd_flush_after_each_section(void);
- bool migrate_postcopy(void);
- bool migrate_rdma(void);
+     packet->pages_alloc = be32_to_cpu(packet->pages_alloc);
+     /*
+@@ -485,7 +502,6 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+ 
+     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+     p->packet_num = be64_to_cpu(packet->packet_num);
+-    p->packets_recved++;
+     p->total_normal_pages += p->normal_num;
+     p->total_zero_pages += p->zero_num;
+ 
+@@ -533,6 +549,19 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+     return 0;
+ }
+ 
++static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
++{
++    p->packets_recved++;
++
++    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
++        return multifd_recv_unfill_packet_device_state(p, errp);
++    } else {
++        return multifd_recv_unfill_packet_ram(p, errp);
++    }
++
++    g_assert_not_reached();
++}
++
+ static bool multifd_send_should_exit(void)
+ {
+     return qatomic_read(&multifd_send_state->exiting);
+@@ -1239,8 +1268,8 @@ bool multifd_send_setup(void)
+             p->packet_len = sizeof(MultiFDPacket_t)
+                           + sizeof(uint64_t) * page_count;
+             p->packet = g_malloc0(p->packet_len);
+-            p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+-            p->packet->version = cpu_to_be32(MULTIFD_VERSION);
++            p->packet->hdr.magic = cpu_to_be32(MULTIFD_MAGIC);
++            p->packet->hdr.version = cpu_to_be32(MULTIFD_VERSION);
+ 
+             /* We need one extra place for the packet header */
+             p->iov = g_new0(struct iovec, page_count + 1);
+@@ -1415,6 +1444,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
+     p->packet_len = 0;
+     g_free(p->packet);
+     p->packet = NULL;
++    g_clear_pointer(&p->packet_dev_state, g_free);
+     g_free(p->iov);
+     p->iov = NULL;
+     g_free(p->normal);
+@@ -1474,6 +1504,8 @@ void multifd_recv_sync_main(void)
+         for (i = 0; i < thread_count; i++) {
+             MultiFDRecvParams *p = &multifd_recv_state->params[i];
+ 
++            assert(!p->is_device_state_dedicated);
++
+             trace_multifd_recv_sync_main_signal(p->id);
+             qemu_sem_post(&p->sem);
+         }
+@@ -1489,6 +1521,12 @@ void multifd_recv_sync_main(void)
+      * the work (pending_job=false).
+      */
+     for (i = 0; i < thread_count; i++) {
++        MultiFDRecvParams *p = &multifd_recv_state->params[i];
++
++        if (p->is_device_state_dedicated) {
++            continue;
++        }
++
+         trace_multifd_recv_sync_main_wait(i);
+         qemu_sem_wait(&multifd_recv_state->sem_sync);
+     }
+@@ -1507,6 +1545,10 @@ void multifd_recv_sync_main(void)
+     for (i = 0; i < thread_count; i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
+ 
++        if (p->is_device_state_dedicated) {
++            continue;
++        }
++
+         WITH_QEMU_LOCK_GUARD(&p->mutex) {
+             if (multifd_recv_state->packet_num < p->packet_num) {
+                 multifd_recv_state->packet_num = p->packet_num;
+@@ -1529,8 +1571,13 @@ static void *multifd_recv_thread(void *opaque)
+     rcu_register_thread();
+ 
+     while (true) {
++        MultiFDPacketHdr_t hdr;
+         uint32_t flags = 0;
++        bool is_device_state = false;
+         bool has_data = false;
++        uint8_t *pkt_buf;
++        size_t pkt_len;
++
+         p->normal_num = 0;
+ 
+         if (use_packets) {
+@@ -1538,8 +1585,27 @@ static void *multifd_recv_thread(void *opaque)
+                 break;
+             }
+ 
+-            ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
+-                                           p->packet_len, &local_err);
++            ret = qio_channel_read_all_eof(p->c, (void *)&hdr,
++                                           sizeof(hdr), &local_err);
++            if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
++                break;
++            }
++
++            ret = multifd_recv_unfill_packet_header(p, &hdr, &local_err);
++            if (ret) {
++                break;
++            }
++
++            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
++            if (is_device_state) {
++                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
++                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
++            } else {
++                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
++                pkt_len = p->packet_len - sizeof(hdr);
++            }
++
++            ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len, &local_err);
+             if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
+                 break;
+             }
+@@ -1582,8 +1648,39 @@ static void *multifd_recv_thread(void *opaque)
+             has_data = !!p->data->size;
+         }
+ 
+-        if (has_data) {
+-            ret = multifd_recv_state->ops->recv(p, &local_err);
++        if (!is_device_state) {
++            if (p->is_device_state_dedicated) {
++                error_setg(&local_err,
++                           "multifd: received non-device-state packet on device-state-dedicated thread");
++                break;
++            }
++
++            if (has_data) {
++                ret = multifd_recv_state->ops->recv(p, &local_err);
++                if (ret != 0) {
++                    break;
++                }
++            }
++        } else {
++            g_autofree char *idstr = NULL;
++            g_autofree char *dev_state_buf = NULL;
++
++            assert(use_packets);
++
++            if (p->next_packet_size > 0) {
++                dev_state_buf = g_malloc(p->next_packet_size);
++
++                ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, &local_err);
++                if (ret != 0) {
++                    break;
++                }
++            }
++
++            idstr = g_strndup(p->packet_dev_state->idstr, sizeof(p->packet_dev_state->idstr));
++            ret = qemu_loadvm_load_state_buffer(idstr,
++                                                p->packet_dev_state->instance_id,
++                                                dev_state_buf, p->next_packet_size,
++                                                &local_err);
+             if (ret != 0) {
+                 break;
+             }
+@@ -1591,6 +1688,11 @@ static void *multifd_recv_thread(void *opaque)
+ 
+         if (use_packets) {
+             if (flags & MULTIFD_FLAG_SYNC) {
++                if (is_device_state) {
++                    error_setg(&local_err, "multifd: received SYNC device state packet");
++                    break;
++                }
++
+                 qemu_sem_post(&multifd_recv_state->sem_sync);
+                 qemu_sem_wait(&p->sem_sync);
+             }
+@@ -1662,6 +1764,7 @@ int multifd_recv_setup(Error **errp)
+             p->packet_len = sizeof(MultiFDPacket_t)
+                 + sizeof(uint64_t) * page_count;
+             p->packet = g_malloc0(p->packet_len);
++            p->packet_dev_state = g_malloc0(sizeof(*p->packet_dev_state));
+         }
+         p->name = g_strdup_printf("multifdrecv_%d", i);
+         p->iov = g_new0(struct iovec, page_count);
+@@ -1703,7 +1806,9 @@ bool multifd_recv_all_channels_created(void)
+  * Try to receive all multifd channels to get ready for the migration.
+  * Sets @errp when failing to receive the current channel.
+  */
+-void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
++void multifd_recv_new_channel(QIOChannel *ioc,
++                              bool is_device_state_dedicated,
++                              Error **errp)
+ {
+     MultiFDRecvParams *p;
+     Error *local_err = NULL;
+@@ -1733,6 +1838,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+         error_propagate(errp, local_err);
+         return;
+     }
++    p->is_device_state_dedicated = is_device_state_dedicated;
+     p->c = ioc;
+     object_ref(OBJECT(ioc));
+ 
+diff --git a/migration/multifd.h b/migration/multifd.h
+index fd0cd29104c1..b5fa56b791af 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -24,7 +24,7 @@ int multifd_recv_setup(Error **errp);
+ void multifd_recv_cleanup(void);
+ void multifd_recv_shutdown(void);
+ bool multifd_recv_all_channels_created(void);
+-void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
++void multifd_recv_new_channel(QIOChannel *ioc, bool is_device_state_dedicated, Error **errp);
+ void multifd_recv_sync_main(void);
+ int multifd_send_sync_main(void);
+ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
+@@ -41,6 +41,12 @@ MultiFDRecvData *multifd_get_recv_data(void);
+ #define MULTIFD_FLAG_ZLIB (1 << 1)
+ #define MULTIFD_FLAG_ZSTD (2 << 1)
+ 
++/*
++ * If set it means that this packet contains device state
++ * (MultiFDPacketDeviceState_t), not RAM data (MultiFDPacket_t).
++ */
++#define MULTIFD_FLAG_DEVICE_STATE (1 << 4)
++
+ /* This value needs to be a multiple of qemu_target_page_size() */
+ #define MULTIFD_PACKET_SIZE (512 * 1024)
+ 
+@@ -48,6 +54,11 @@ typedef struct {
+     uint32_t magic;
+     uint32_t version;
+     uint32_t flags;
++} __attribute__((packed)) MultiFDPacketHdr_t;
++
++typedef struct {
++    MultiFDPacketHdr_t hdr;
++
+     /* maximum number of allocated pages */
+     uint32_t pages_alloc;
+     /* non zero pages */
+@@ -68,6 +79,16 @@ typedef struct {
+     uint64_t offset[];
+ } __attribute__((packed)) MultiFDPacket_t;
+ 
++typedef struct {
++    MultiFDPacketHdr_t hdr;
++
++    char idstr[256] QEMU_NONSTRING;
++    uint32_t instance_id;
++
++    /* size of the next packet that contains the actual data */
++    uint32_t next_packet_size;
++} __attribute__((packed)) MultiFDPacketDeviceState_t;
++
+ typedef struct {
+     /* number of used pages */
+     uint32_t num;
+@@ -87,6 +108,13 @@ struct MultiFDRecvData {
+     off_t file_offset;
+ };
+ 
++typedef struct {
++    char *idstr;
++    uint32_t instance_id;
++    char *buf;
++    size_t buf_len;
++} MultiFDDeviceState_t;
++
+ typedef struct {
+     /* Fields are only written at creating/deletion time */
+     /* No lock required for them, they are read only */
+@@ -175,6 +203,7 @@ typedef struct {
+     uint32_t page_size;
+     /* number of pages in a full packet */
+     uint32_t page_count;
++    bool is_device_state_dedicated;
+ 
+     /* syncs main thread and channels */
+     QemuSemaphore sem_sync;
+@@ -194,8 +223,9 @@ typedef struct {
+ 
+     /* thread local variables. No locking required */
+ 
+-    /* pointer to the packet */
++    /* pointers to the possible packet types */
+     MultiFDPacket_t *packet;
++    MultiFDPacketDeviceState_t *packet_dev_state;
+     /* size of the next packet that contains pages */
+     uint32_t next_packet_size;
+     /* packets received through this channel */
 
