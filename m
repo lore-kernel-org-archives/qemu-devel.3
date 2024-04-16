@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBA6C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 23:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C70C04FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 23:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwrrG-00034S-8X; Tue, 16 Apr 2024 19:04:58 -0400
+	id 1rws2A-00061Z-J7; Tue, 16 Apr 2024 19:16:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwrrE-00033g-57
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 19:04:56 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1rws26-00061A-Or
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 19:16:10 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwrrB-0007Py-FI
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 19:04:55 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6ece8991654so4478492b3a.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 16:04:53 -0700 (PDT)
+ id 1rws23-0000ZN-Gi
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 19:16:09 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1e3ca546d40so36665725ad.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 16:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713308692; x=1713913492; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=s7toiwGiMFJ8d0S7eID2dFSemOPb731HeAM6DXT2dsY=;
- b=Kdu0BPjvbxVgaqrO5RmSpqLrDlzweTnzxk6XQ9mEIofUx+oNBllCfzOBxje4ZU3g2e
- 5j7rPg83lsy9laaryd7t89BvyxjpUkV4QEnGTkeKq2s++Ht9OzxZHsVDp8V27WNCSoFv
- iFbbp+/FmtFtq1KF+TWbBPTZYAwCb8OkFKQajsm0NxYQ+6gjf1pXlCX5bo3CXfuErdIn
- /IrZzqmHB1h7JPb7M/wahsCa6jUdevsKbRalB5bGe4kKW9/3W2UiKWwZ2KgjFwG2DXdJ
- yYc6pKezfPPjz2Csq5MioIQxg91edlZQq3fZPShx9Hk6vMm9xZHMX5RNSs7iCI4sb98F
- m5Jg==
+ d=ventanamicro.com; s=google; t=1713309366; x=1713914166; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=C9WhiVlQMH7+nQDIJtGcV0zepCzHR0okzVyp5RsCYbk=;
+ b=KET/AlpgUVis5Z0H7Ex24xK1LmnEIQXUszChISaoRbMQiU7qvdWh+EGota9mrfTrzy
+ L3rSE2Q6Yl+3oI3X3GCEHAyUamOIrwtVg1ETn9b5uwbqcUlItuvHx8EC3fvuWDjHKhnl
+ nHb2WGlRtlMztaUMip6OlviIOgVhQbHT45SZ4r0x273yN5tz97qUri6qMcqrwZMMQxuH
+ cJ0uMuo1PT6wQ1m2rU7HtE8OHKJ9idU6Mdf2j1hb7/MRzzQSThT4WDTiQM+EwMUMTUkp
+ KK4cJwRuRgKwnbO8GyRMCF2M8s+/Op+gDYeGemN4k4bwdKuj/KAZzi5IHqwZ39uCq3lf
+ GGOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713308692; x=1713913492;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=s7toiwGiMFJ8d0S7eID2dFSemOPb731HeAM6DXT2dsY=;
- b=WEoSr46tM9kVexv2CRcKxeebgjbEHpNsbdGfzFO/3VieB8rb1RUytukCrpuZeXyuC7
- 2lRBVg7kiSND5tu25FgEf1mtEIt9D88WyTQAief+qfhslb6AqQZ0X8DscphtveU23B6m
- W5J/akRo9xr7STpw69jMuIJbfCGRA2gWeAQw7+eCWeAmzT2tJVaTFIDAgPamqjMkLxFd
- vxHQ9OuHTFdu53gbWsdMkTYqcpY4DyVEVAZE/Yf4Sw8MsKKE+Xbfg5BTW2RB6UMAyJzF
- Li9J8xoJ6WR8xjusuixnw9Mwnnl/RnqpoN4xZF8BgJB5kEyLODAetC0/ftJhmKdUPWdf
- uPtQ==
-X-Gm-Message-State: AOJu0YzEVfnUevWmU0Pps2GiX5+s5FCyzLt7Ju7weDqfY1PlQdrtCYvi
- Wun8mnDn5kiYeg9pvNjan4+Jou5RO//Xt9+eJM8McbRz+UR+eZksTqr4vnb7bPJFJkCpWhSl9Xu
- A
-X-Google-Smtp-Source: AGHT+IHpam/HBLJmBOioxukgZ3F5MlNnSsMX7hH5WAG90QLBd3qr5H26reLoYwhJrK79vYYCnd0gfg==
-X-Received: by 2002:a05:6a21:328d:b0:1a9:694b:e1f with SMTP id
- yt13-20020a056a21328d00b001a9694b0e1fmr19706081pzb.2.1713308691833; 
- Tue, 16 Apr 2024 16:04:51 -0700 (PDT)
-Received: from grind.. ([177.45.186.202]) by smtp.gmail.com with ESMTPSA id
- g10-20020a63374a000000b005e4666261besm9399555pgn.50.2024.04.16.16.04.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Apr 2024 16:04:51 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-9.1 v3 2/2] trans_privileged.c.inc: set (m|s)tval on
- ebreak breakpoint
-Date: Tue, 16 Apr 2024 20:04:37 -0300
-Message-ID: <20240416230437.1869024-3-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240416230437.1869024-1-dbarboza@ventanamicro.com>
-References: <20240416230437.1869024-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1713309366; x=1713914166;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C9WhiVlQMH7+nQDIJtGcV0zepCzHR0okzVyp5RsCYbk=;
+ b=PEbaLg4jQlnAdjiSFsC3tYS4tabRsuzTEUlq3n+Q84MD+Q2wk6/EDYv6VTB10L2R2U
+ TE21dVPjYzf4yDc0EtEBOXFmaLNAolX2TBgMiqfGxaL4zQ+vScxequ/P9dkikAijHBB5
+ ULyRsOLMRlrLerQoYaK0vpueA5MeLu+fPOUs0PmeyLInHCi0pQx59DFw1iksbKv7E8E+
+ JAOy+ZAC81sN64PsKj+iH2qlN+hxLcPwzMozN/wfADpwXVi/H5RsW+I2bV6cdOti/Y8R
+ Q6pp6zJdfhLYnnXr/doPmyWtjBIgp3wxq4ftpu1rBjxHA/7RPPLev9t0qbQ94FfmCkVi
+ PEHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBF/e90pNn9Mn0tcFuvwWjn6VfrwFvcaQX+en897rlCuwoZvp7h1fNY9ztIPKFf+cPiqyPHRAjQHOe+HlrPlWlC6zVbXY=
+X-Gm-Message-State: AOJu0YzFQS2gmGsp86kSQLR3D5KLxGY0ro+yefdZYe297/A/ZjoknUpz
+ u7jN5z1K7IN1awqCneWsf7KoLxm0eaMfFUEhRbHvaglDj67xZXBmkBVLK1aVj2g=
+X-Google-Smtp-Source: AGHT+IHJkbNuKdhoMb++xw99Fz5uHzEY7L78LlIyh1/Mao3Vge829ra2WPaN/Mvc7l46hfoIu0FC/Q==
+X-Received: by 2002:a17:902:ec90:b0:1e2:616a:9c31 with SMTP id
+ x16-20020a170902ec9000b001e2616a9c31mr14444576plg.39.1713309365885; 
+ Tue, 16 Apr 2024 16:16:05 -0700 (PDT)
+Received: from [192.168.68.110] ([177.45.186.202])
+ by smtp.gmail.com with ESMTPSA id
+ i5-20020a17090332c500b001e546a10c50sm10294646plr.286.2024.04.16.16.16.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Apr 2024 16:16:05 -0700 (PDT)
+Message-ID: <6dc065e2-81d8-4562-84c0-8a697c58ef71@ventanamicro.com>
+Date: Tue, 16 Apr 2024 20:16:02 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0 v3 2/2] qtest/virtio-9p-test.c: remove
+ g_test_slow() gate
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
+ peter.maydell@linaro.org, qemu_oss@crudebyte.com
+References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
+ <20240327142011.805728-3-dbarboza@ventanamicro.com>
+ <a6b402b9-9f84-4d72-a631-09f04bb31450@tls.msk.ru>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <a6b402b9-9f84-4d72-a631-09f04bb31450@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,44 +101,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Privileged spec section 4.1.9 mentions:
 
-"When a trap is taken into S-mode, stval is written with
-exception-specific information to assist software in handling the trap.
-(...)
 
-If stval is written with a nonzero value when a breakpoint,
-address-misaligned, access-fault, or page-fault exception occurs on an
-instruction fetch, load, or store, then stval will contain the faulting
-virtual address."
+On 4/16/24 16:54, Michael Tokarev wrote:
+> 27.03.2024 17:20, Daniel Henrique Barboza :
+>> Commit 558f5c42ef gated the local tests with g_test_slow() to skip them
+>> in 'make check'. The reported issue back then was this following CI
+>> problem:
+>>
+>> https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
+>>
+>> This problem ended up being fixed after it was detected with the
+>> recently added risc-v machine nodes [1]. virtio-9p-test.c is now
+>> creating and removing temporary dirs for each test run, instead of
+>> creating a single dir for the entire qos-test scope.
+>>
+>> We're now able to run these tests with 'make check' in the CI, so let's
+>> go ahead and re-enable them.
+>>
+>> This reverts commit 558f5c42efded3e0d0b20a90bce2a9a14580d824.
+>>
+>> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
+> 
+> This makes tests being unable to complete on a tmpfs.  It looks like
+> 9pfs tests needs another tweak here.
+> 
+> # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-798502.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-798502.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M pc  -fsdev local,id=fsdev0,path='/tmp/q/master/qtest-9p-local-9LHRL2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
+> Received response 7 (RLERROR) instead of 73 (RMKDIR)
+> Rlerror has errno 95 (Operation not supported)
+> **
+> ERROR:../../../build/qemu/master/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+> 
+> This is when I build it on /tmp/ which is a tmpfs.  When I build
+> it on a real filesystem, it works fine.
+> 
+> Apparently xattrs aren't supported on a tmpfs.
 
-A similar text is found for mtval in section 3.1.16.
+Hmmm not sure how to proceed here since I'm not a 9p expert by any means. I'll
+let Christian decide what to do.
 
-Setting mtval/stval in this scenario is optional, but some softwares read
-these regs when handling ebreaks.
+If we can't figure it out we might need to re-introduce the gate again. Thanks,
 
-Write 'badaddr' in all ebreak breakpoints to write the appropriate
-'tval' during riscv_do_cpu_interrrupt().
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/insn_trans/trans_privileged.c.inc | 2 ++
- 1 file changed, 2 insertions(+)
+Daniel
 
-diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-index 620ab54eb0..bc5263a4e0 100644
---- a/target/riscv/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/insn_trans/trans_privileged.c.inc
-@@ -62,6 +62,8 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
-     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
-         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
-     } else {
-+        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
-+                      offsetof(CPURISCVState, badaddr));
-         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
-     }
-     return true;
--- 
-2.44.0
-
+> 
+> /mjt
 
