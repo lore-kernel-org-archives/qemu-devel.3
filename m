@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A87C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385BFC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 19:43:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwogb-0003HU-Hn; Tue, 16 Apr 2024 15:41:45 -0400
+	id 1rwogf-0003J2-Fn; Tue, 16 Apr 2024 15:41:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwogX-0003GR-UW
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:41:42 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1rwoge-0003IJ-41
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:41:48 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rwogW-00044Z-6J
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:41:41 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-5f415fd71f8so3699184a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:41:39 -0700 (PDT)
+ id 1rwogb-00045I-P9
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 15:41:47 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1e3c3aa8938so30540625ad.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 12:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713296498; x=1713901298; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sWe0xGQAzLFs6qcsuly0iwDcWHfMJGE1xVTMwHI5cEI=;
- b=S6LHlUdASFmoPTcL80550tXJ4PoHZFmUZWo9tk4N+bpMojyuKhd3x+dAO1GamEyLPV
- BOXOoh10U+HF+mohKC8Tqb24NaPBgHdT2CL5Y+Y2RsdYgXgBEzuvjoVN7HYlGtERUuhp
- AyTa/wdc12IPgZjSgiejMu7E5QZBn85zWZXv0xZgGdx3z1FcFVDt+yRzYS0EnwuGv5V1
- R4zyJJWNcOGU9r08IaOpLwLFsVViz5w1ySQxWSuh1/5CskVRr3OThiKzLFIaGZJbXoi3
- 5RlTv/GWfv1CR4hcomzlqveqHE8zyALEOOTyePuwnpWwsoGPjDazOlRWiiP2L4a/8dDu
- +zOA==
+ d=ventanamicro.com; s=google; t=1713296504; x=1713901304; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nIXT4Ow0ePHNvQiW4c64R7S9d8m6CFTE0ZLlfQRIw4w=;
+ b=LJdXHhydNUPcBG2bNgcTSMO6VhAkgYelybgq/ziVH+dYgRo9CFM9osjaUx1Ti+vGtm
+ IXOE7Ac5w9O0fLz9HCOuWaM0e2XI7KBD2X17YY8hSvqZNvnmRnaWCEg4WZBAbZuFs+11
+ 4M6hTGf0TKrWPKb0F0FQJrtGyfMFVUnJ7S8SzraocNYfCTlOrKZa+tR4akko1UHKQ633
+ ppKdSDITAQNP4C1zLnQhSLHAhoe1czw3s5qAsqhzVms8imjbTx/nO7+RrGTJna0OVACS
+ dOUqq0tIi2lerxMIwl1qfhxL8dVvFsSUQrUXQsytMLr+dKj3hz6EgSIWVYuwJug5kfp/
+ A03w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713296498; x=1713901298;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sWe0xGQAzLFs6qcsuly0iwDcWHfMJGE1xVTMwHI5cEI=;
- b=RxgJRGdAva/KEYmjMJPGk3cKkoIriAABJaG9Xz/KYiykvbiCknbDae8rFd3K6NZiu8
- VBgnkrQ0ENC9KnoiNS+P8vaaP2fh1yqQ2ugU3QJkcp4NIViLIOgG6odp3IowTSOTzbDt
- 0dM1bigcbSBzY5yH+is3P0XL77AWpG/zlI3cBEcBThqe7yuHd8ppiBC4uEDTuHRsWVNz
- HmDI0htivbGYldBGrlUW956skit2zcxbRskrac1f6XnPqRLmcMZ5DXRAJ+VXTteXTR7c
- La1y6ImTBaUnT0PwmU0+TJ7sQenUNXp+BCcOeqQoECPTa3MZQnVexhE5NRtA8IYcSu+N
- l+vg==
-X-Gm-Message-State: AOJu0Yy7ge0v1rJOHoIPEDL71WFMx6FsReKaCtdbjBv6k/5ZmoTkHomW
- 2q+rfWJpQyFXMImWhz5Hbjei5hNm+nMm4H6VQPI3bIAS84L8fH7SdZhVqkklIsml7n0zyyiZX4N
- 1
-X-Google-Smtp-Source: AGHT+IEJZd2rXXHUftD19FIYBBl2kFF9RqrndLtpBVdiBi8JlCerOZzp6wY5IaHH+D+DfvZCTiB4Pw==
-X-Received: by 2002:a17:902:ce92:b0:1e3:f27c:4577 with SMTP id
- f18-20020a170902ce9200b001e3f27c4577mr17237121plg.44.1713296498179; 
- Tue, 16 Apr 2024 12:41:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1713296504; x=1713901304;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nIXT4Ow0ePHNvQiW4c64R7S9d8m6CFTE0ZLlfQRIw4w=;
+ b=Wz7cOoRexefj/2G1wj9/3DQRJmWosrq4BE9teHCpLeU67A7WmxcA3/BUZknVvDp1QA
+ wqvWpEqPJnW1GKctlFjBK1sXPEguo8lR+QftXjzqyJmrJa1Hau1CccV7+hWSqn5DPR8a
+ vmQh3kejhYjC8Eu617KnU/68DCx4yqIke2LKtw4pV80E2T3CdPtRUkyuN4ptN9fIwyUo
+ D7kGhaLZNHS/rfngqcUBEWdGDwhWwZO0GlJRNSvRbsN/skLKGat+bM9cl6hluajvkpS0
+ yWOk0U8kV5FaSrbEMVH5eLPid4wp4RmdigvngIupBB+FrXoDoI4j4FRPIUuOYNlBdIbm
+ /ogg==
+X-Gm-Message-State: AOJu0YwjyayxMe03E+V0zNyIDhcHBnvXS0irBOAooaOUwXOwdY9NLjvd
+ 4yWwvSbyEpjE2jMl2oU8dmC3gDwx9EMhzxKnq1FPnGpPBzmZoI5U9BmMVVKws2UCWvyerF71Sl2
+ N
+X-Google-Smtp-Source: AGHT+IG8lFONKE0bYSTjNnlkDB7gNgi017CmjRe3W4duWlr6iOdbUDUUvjfpZ2s8TRwDLnvAVmQAKQ==
+X-Received: by 2002:a17:903:26c3:b0:1e5:62:7aaa with SMTP id
+ jg3-20020a17090326c300b001e500627aaamr10843183plb.20.1713296503815; 
+ Tue, 16 Apr 2024 12:41:43 -0700 (PDT)
 Received: from grind.. ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
  by smtp.gmail.com with ESMTPSA id
- h5-20020a170902704500b001e3c972c83bsm10160586plt.76.2024.04.16.12.41.35
+ h5-20020a170902704500b001e3c972c83bsm10160586plt.76.2024.04.16.12.41.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Apr 2024 12:41:37 -0700 (PDT)
+ Tue, 16 Apr 2024 12:41:43 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-9.1 v2 0/2] target/riscv: set (m|s)tval on
-Date: Tue, 16 Apr 2024 16:41:30 -0300
-Message-ID: <20240416194132.1843699-1-dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.1 v2 2/2] trans_privileged.c.inc: set (m|s)tval on
+ ebreak breakpoint
+Date: Tue, 16 Apr 2024 16:41:32 -0300
+Message-ID: <20240416194132.1843699-3-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240416194132.1843699-1-dbarboza@ventanamicro.com>
+References: <20240416194132.1843699-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,30 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Privileged spec section 4.1.9 mentions:
 
-This is a re-send of the patch sent as a 9.0 bugfix in [1], now reframed
-as a non-bug fix chabge,
+"When a trap is taken into S-mode, stval is written with
+exception-specific information to assist software in handling the trap.
+(...)
 
-A new patch (2) was added to handle a similar scenario with ebreak and tval.
+If stval is written with a nonzero value when a breakpoint,
+address-misaligned, access-fault, or page-fault exception occurs on an
+instruction fetch, load, or store, then stval will contain the faulting
+virtual address."
 
-Changes from v1:
-- patch 1:
-  - rewrite commit msg to make it clear that this is a non-bug
-    fix change
-- new patch (2):
-  -  set mtval/stval during ebreak
-- v1 link: https://lore.kernel.org/qemu-riscv/20240320093221.220854-1-dbarboza@ventanamicro.com/
+A similar text is found for mtval in section 3.1.16.
 
-Daniel Henrique Barboza (2):
-  target/riscv/debug: set tval=pc in breakpoint exceptions
-  trans_privileged.c.inc: set (m|s)tval on ebreak breakpoint
+Setting mtval/stval in this scenario is optional, but some softwares read
+these regs when handling ebreaks.
 
- target/riscv/cpu_helper.c                      | 1 +
- target/riscv/debug.c                           | 3 +++
+Write 'badaddr' in all ebreak breakpoints to write the appropriate
+'tval' during riscv_do_cpu_interrrupt().
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
  target/riscv/insn_trans/trans_privileged.c.inc | 4 ++++
- 3 files changed, 8 insertions(+)
+ 1 file changed, 4 insertions(+)
 
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 620ab54eb0..b89e3bd5b5 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -62,6 +62,10 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
+     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
+         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
+     } else {
++        TCGv temp = tcg_temp_new();
++        tcg_gen_movi_tl(temp, ebreak_addr);
++        tcg_gen_st_tl(temp, tcg_env, offsetof(CPURISCVState, badaddr));
++
+         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
+     }
+     return true;
 -- 
 2.44.0
 
