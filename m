@@ -4,178 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561B8C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 03:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E2BFC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 04:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwZhv-0004CW-46; Mon, 15 Apr 2024 23:42:07 -0400
+	id 1rwZzl-0006kL-HV; Tue, 16 Apr 2024 00:00:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rwZht-0004CL-Pc
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 23:42:05 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rwZzj-0006kB-Cc
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 00:00:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rwZhq-00035k-P5
- for qemu-devel@nongnu.org; Mon, 15 Apr 2024 23:42:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713238922; x=1744774922;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=qzBg0mNdQA5o8F0AaNWIn1TUTBskZBk588zKjGJ+dZs=;
- b=WJskn9ePsmiCrDDGvQJgjah9xV/c5ugZUCh92O/6Qae54eIu6b2nY3xa
- 6clOdS7hFL0mTZxS3+TkzCKUS5CYe8WOEOJSTBgzMs/etnzUXrYpjHGWT
- 4wUszSvznPyMUa0Q2MVAfoRWEG5NvJRsQWfs8aKZUB4jdu2aeTyOOoXe7
- t5MbRx6R5bZ6BWS10RPbaT0rRgS3DsgHhcp05wmgpSD2oBgltRdw72RCU
- BqGHVRgBJq7MNtWOdGMFgC8T396jpvWdKeZSUD21kzNenpgOFxE+sB/N0
- Op/H8X9MapcL56LeF4eHZeTbwVS7Y6GH1NyQruqE+W3ew4RKcrxLfBJRl g==;
-X-CSE-ConnectionGUID: e2rE5ArtSb6ffjuO6KOvww==
-X-CSE-MsgGUID: M+yLwlUWTkOwAfSXVmbBnw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11045"; a="19364700"
-X-IronPort-AV: E=Sophos;i="6.07,204,1708416000"; d="scan'208";a="19364700"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Apr 2024 20:41:59 -0700
-X-CSE-ConnectionGUID: 3DEIYecqSIeqceZZWddcDQ==
-X-CSE-MsgGUID: lsZWtl7aQ1KMupEpXRKl4g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,204,1708416000"; d="scan'208";a="59571096"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
- by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 15 Apr 2024 20:41:59 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 15 Apr 2024 20:41:58 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 15 Apr 2024 20:41:58 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 15 Apr 2024 20:41:58 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 15 Apr 2024 20:41:57 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EaSxWVbZ0F2kPjZvkUhJoVCE/URpCLjgJcTVFK7dBczUX6uYWHmAOABrA6Fd1PJKQvWYnPXFhHQgYAm9txQNIzyXl80WZIZxJWRQh2DAz05vNzY6ucKK9oA8FoGG5joP8lyhO5ItidTI3wbsbE2+XJyZ6bVmOkVQqg0PSIH3Md3vNcVlnEA3wYtkW9bWdwvlzwXnl5yuxobOfgrWRm4cT0u25jPe9V2MdWDXna3N/OTtyH+1Zg5NRdDDEAB+EvE0MtVK9W55islqbRTDfA2w7B3DFRq35toCrTCtRZFGzdsbr0AoQHAguoLgLL/xBVuPza1Z4ZgNZfMBbEtN6k8zGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qzBg0mNdQA5o8F0AaNWIn1TUTBskZBk588zKjGJ+dZs=;
- b=JESn4MvatuJVYrh99M9JRAkDHOmxHU8PezAYTmPhs5Ty2D08PFTYswc14UyCYZ/BFmHK6RW0BxLIPDFi0ZsV9qPtzgeiwsEI7R64AtnsIOYauTNq7HDwi0hFWibUNRvfsHdiyP74hbgOacdwhsJtSFzqdfpglYHMby0X8eczSzYTZo6mxDGw7w8ES6PsA+oL6z9kgfkZhbVl3XJN7pMCjSg2kxg/bzR3hR/zLmMpOhdDveQj2V/Mn7iaJ+Mprj0U8SJXqUD2TYvGwcJ2ZSKpv75Eni25AIZyODKkXL7b9wVaTB90KyUjXARSi38Yw1IeBf1pFeAHFgHt0YmyVtSNCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by SA0PR11MB4685.namprd11.prod.outlook.com (2603:10b6:806:9e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.31; Tue, 16 Apr
- 2024 03:41:55 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129%7]) with mapi id 15.20.7472.025; Tue, 16 Apr 2024
- 03:41:55 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
- L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
-Subject: RE: [PATCH v2 02/10] vfio: Introduce HIODLegacyVFIO device
-Thread-Topic: [PATCH v2 02/10] vfio: Introduce HIODLegacyVFIO device
-Thread-Index: AQHaiYzptKOfpLfFEUmXEx9ocl3VJrFpUwqAgADyPPA=
-Date: Tue, 16 Apr 2024 03:41:55 +0000
-Message-ID: <SJ0PR11MB67448DE106AEE894D080D3F492082@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240408081230.1030078-1-zhenzhong.duan@intel.com>
- <20240408081230.1030078-3-zhenzhong.duan@intel.com>
- <9869ac57-56c6-41b7-a2c6-d42a5ba475ee@redhat.com>
-In-Reply-To: <9869ac57-56c6-41b7-a2c6-d42a5ba475ee@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SA0PR11MB4685:EE_
-x-ms-office365-filtering-correlation-id: 7e3bafdf-eb07-4599-64b2-08dc5dc729a2
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 2+XtOM84uPoO/8UxpzQJXNUZ6VyAG0RBeiogBm/42tkooyNLcCHWgInVIZMawJsPV4h3hVU4elRPDOGaTsUkcnefaRx4e7mNdeisShCQ5GI8/6naQ5QWtbzrKQTMK8HshlFrJOOrxN0op3GaxwgD0kmmbyuTv/94eX46sPDN2HwpAHKUUiWpvEoTupzZ8ZCZ8ILNjI9wPD3BUb89I5FRQckQyA70fohfYfq0W1+FdUZsklL8l8Qo+CXkTVIYseRIpwSNYJsY6rJkurTFgMbihCkYVtSpos1Ko659roINgDYDHLqDQ8BvxScwqmDRVEbW0zd0yxBkXCKLUutOMU4mqvTaxSrW4jfoP4xCwafppAD8ozffqAI5C6K1vRSwRwfUSRNWKvbI1XIt6Vx3iI3dwS/voR+AqfvzgmS6f2H9gi/xA612Bn1Orf6xtxNNbXrS2mykAW9aV6HBRATd6UbvNw8N1nTPhf0eYt16svvnIcYgu51Kipw7TUdxov3I47it4iZf6winu1MOh66Z/gkNwXo/B0fL4cg0zUUNIFCuWvcqNe0z8rnOaKA2+hWqgHZP5gOsWbeqQJG4l/x/oFw9pCDDgLHcJV49KiRvO62ZCj+yaMUGP2994OjWyd9lKDLr6XwYbHKL4zOWZbQplUIkNrixhLpmDB9CWBsukTmOJR8zAy8wnHwtYSFUkDn/qtVQvmHs/2GfuG7Mh5hWOfTp0w==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(7416005)(1800799015)(366007)(38070700009); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZTlueWw1NXZnaFlERStIVmVxbzVHNkpYMHdhSFgyVXlWOStNUVhzQTBuT2t2?=
- =?utf-8?B?a0hnaXlBOWdabVhpTWEyVGpWSTEydWpwcmVkbnJzcm1tQklmMkZhRktPbncx?=
- =?utf-8?B?TjdGNU4zcjhPUVVscFFzS1NrbjUyclA4c1IwMnpFSWVJMjV5MERwMUw0ZGI1?=
- =?utf-8?B?bHpCWUxHLy9TZDJVNjl4YXZDenVDWTBXR3VNUjVqVVZ4UXJQQnJkWkV1WXph?=
- =?utf-8?B?Q3RUditTSWNVREdLZnNyS1o2UzhtMzBoYWpNUHRxSE1XM3lUejdMMktKRkFV?=
- =?utf-8?B?SjJzT0ZONWk3dlFNK1ZnMzNOcEp5LzJpUkFiNHcrdWlNYzZ4Wmg0Z0NmRmV6?=
- =?utf-8?B?UnRrWEliaDM0LzA4VXhOZTY5U2NsZ2VXQkU4L21EbzBoaDV6L04wQWt0K0dE?=
- =?utf-8?B?YWE0NUlqcldBN0xPMkxISEVURm5ETUowWitGb21vTW9EQTR3T04xME5aNjVj?=
- =?utf-8?B?Tmo4Z2F1c01lODFpVjVYY3RwSTRZSUczRC90dzJGdDR0MDFNTXpXVlRjc2Q1?=
- =?utf-8?B?a3FIcFE5L2tpbnhDdDVOdXBqK1d6bitkeEdCNUtVUVFFNDkrU0pTeDZySWZ3?=
- =?utf-8?B?U0kxUkNWWWNNSzdYcVl1OFR6MitiQTE4T1hTOFVJZHdjU0k2WTcwU1hidmx6?=
- =?utf-8?B?RHp3dWgyY0hIU1o3ZEs3SWF2ZWNlZVJ4ZFhNUzIxZ2p6a1hCS1pQNnFsVUdY?=
- =?utf-8?B?V3V0dDQrSGZ2T3dOak1tZ3ZKMkVEQ1ZRUFhld2w3cFZhZERjUXpvTCtLTHUw?=
- =?utf-8?B?QVBUUGJSRlczR2I4TGFTYjg1TDk2Vm4wL0FXZ0NEY1lMTUE0L1V3N3FPcUk3?=
- =?utf-8?B?dHZid05jb0tmK0dqLzJ5Z003b0J5aVF0cFEzd1duVXJKbXk5am9Sa1BvcklD?=
- =?utf-8?B?ZlZUV08rMWR6T2RnK3NiVlV5RmFmbHJGdklLVUVtQXJBanB4UjU4aVhpbGVx?=
- =?utf-8?B?YmhIaDgxeEFWenJWM3VVTW9MbDlFREJzaWNvdG5WZ0lycHFBVzd5SUg1aC9H?=
- =?utf-8?B?OHAyMFJkc3JCOFMyL0pnUk4xaWR0WGhLVjhjQUJZdkYza2syMlp6T1l1all0?=
- =?utf-8?B?R3lxdXBaMUdEUjgxaiswU3dXTUJxSDRadkFQVDVpT2t2TkdQQUZvSklDOUUz?=
- =?utf-8?B?aGJwMG5FaHBCd1lhTjgwa3I2bDRVdHNMTmthb2IrbndKRUIxSnc0UUs4Mnpk?=
- =?utf-8?B?ZzhzYUwvZ0xaQSs0eTlNalBWQVVQb1d6NEtSNytqQWZBNTBDS2hsdVF4bmpP?=
- =?utf-8?B?ZmJDVXUySnpOVWpMaDhod25YUmYrZUxaTVBjNzRaUE9LRjdFWE1DWHZnY092?=
- =?utf-8?B?d3puNlYvaFNJMElUYTlJU1N6YlU0ZWRhamJlcGx4dUxQckNvaXBCbzVHM1lG?=
- =?utf-8?B?dW5UdDZ2QVlFSEc1YlJuV0VsOVY5UHVybVk2N2poMWRnL3dkS2I1WTcwY1VG?=
- =?utf-8?B?WUNYZkd1NHlOWit6ZWJKS2g2YUhQZm90NTFGSFhNQk1QMVNqUS8xTWZqbWtq?=
- =?utf-8?B?L3Y4RWRIYXdGNFNzNXZCRkRtWUhaRXA3ZWVqdXI1dEoySUFOaGFKbVdRTjFh?=
- =?utf-8?B?V3E1cm1nSmZVOVlCOHkrMnlzUmJpTmpvNGFCWVdsYkozWW9tODhVTkhhMmxR?=
- =?utf-8?B?V3NoRmg5RnNJZFZHdXloQllCSHpIZTJ6ekNXODhBSDJMRHlLNjhXQldvbngz?=
- =?utf-8?B?QWdxYWplVmQwTXJtdThDMnJnUUFoYWx6S2VMTjJyNTJYZjBqUUZjTFV6bWl1?=
- =?utf-8?B?N2l2clRUcnNWbnhrQXdVNlBqdi9vZldNdXVWNnhrQkJTcXcwYlFUT3pLVklT?=
- =?utf-8?B?VE9aQ1hZUXpFeXdWaU5ia0lVWjFlS09reTVxVlAxRzhOend0Z09DN213RjBy?=
- =?utf-8?B?VStrN3NncHlocVArRVhJcG9OcENyNjQxbkhvdGFTcHpHbzZhODI4dUVpRldX?=
- =?utf-8?B?SlJnemJLWE5pZDJzL0VhYUNGVTMwbzdRNDVQcDQ2N1VqbDFWa1ZXRDM4QW9n?=
- =?utf-8?B?WERTN2JBeFc0TVU3YkRyNk9JUEtxVW4yTjhEYktDaUNVdERsU2orVTBrelhB?=
- =?utf-8?B?TnBXUytab1AzWGN0eGVBMlhaZGE0WCtaQzd5a1I5Q3lMbEQyRlZXMElxNmcw?=
- =?utf-8?Q?L+WJuq4cB4d3HaQVv8HAwmlg2?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rwZzh-0005zs-Db
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 00:00:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713240028;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S620PDxaog88g389vkszhBhnmo9nEZjvdMMPa0mftDg=;
+ b=LmfXoO8bZEAQxIuQKDJ/GNK+FjyTw+miEROxCa7tE1qghlc8T+6i7XMagfvOUELXOW7dsB
+ nixeoBRQjnqJoCHNQ+UOx4qnO9HMP92sAZVjJtz+cOmrJUXD3ncUCAwAO0DyWugQ6vdmD2
+ J8ILjqWrmvA3BdcQhDjCYkwMl+H7aIg=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-269-Y0ypEryuMqalHi75cNTeiQ-1; Tue, 16 Apr 2024 00:00:23 -0400
+X-MC-Unique: Y0ypEryuMqalHi75cNTeiQ-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2a537ab9d7eso3726050a91.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Apr 2024 21:00:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713240022; x=1713844822;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=S620PDxaog88g389vkszhBhnmo9nEZjvdMMPa0mftDg=;
+ b=NXNfUDlW5bXaEyqxvh9fH9ZVOHqqMGQLgXOOkLMSU1II2i2xHyJgsWcnpLvipAfHN5
+ THMWlsrVzUvE2TGImvxVLmEK71l7WKEHbJ62g929FFi4ZZchJhWcNjrAfDCsXxdzQLOj
+ nhK9iuNDS3uTqLO0s3MkZUIIYP7gm23OaTezkGBf71RssyucMqRGpMnZGoMMynT8NcVB
+ Bzmw+VR1kmDB7l5tiaP2m3m5flGvpOXTjNT/3Ao/klOWY8zGS6W11CxAlrDA9lzDXq/H
+ UDkOa6Nn+bTt33I23U8FKydRpbI4dYrqCqoyMu8bOi1oRPutQYGKu4Iqst0lYXb9wvk8
+ 4AEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPJQQ8SPI3j3K23RibSMK7KEI6r+T6dZg7O3RYp9f8b4AV6wD+vvzEJDWz1SI2o1UOkEKx6w4MerTDuo/BtD4InK64g4o=
+X-Gm-Message-State: AOJu0YzJn0I2AwKX2V6yX8eig0/e36zhCDUE6NRDCWOXJKWfBjS4/fqQ
+ fgn1HmoPM9Sk6MqkAxjgEZKbIfQeTHAE1Moehi5oE9kkWUbdJsmIQ776aGMKO90whjT7mVki1Mn
+ 0PqS4fwigvFyOkbBcwOkcsLRx6VntCHvupLUMvf+1VxZ13Ccp5vqBaGBfQ6M0bfjoQhhbhAjkFl
+ qpsCmmVN5Yl8nwLo7/LALGBB6tmpA=
+X-Received: by 2002:a17:90b:4b8e:b0:2a5:3f9a:97ae with SMTP id
+ lr14-20020a17090b4b8e00b002a53f9a97aemr9155235pjb.38.1713240022001; 
+ Mon, 15 Apr 2024 21:00:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFtCPsXNo7XP1o3J5pUQhePv5jvAMZs9xIE23uPMtGVxd4L7P8982djQz4zhlgEkO5eQplOEtKmFZCdo7P3Lk0=
+X-Received: by 2002:a17:90b:4b8e:b0:2a5:3f9a:97ae with SMTP id
+ lr14-20020a17090b4b8e00b002a53f9a97aemr9155209pjb.38.1713240021288; Mon, 15
+ Apr 2024 21:00:21 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7e3bafdf-eb07-4599-64b2-08dc5dc729a2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Apr 2024 03:41:55.7598 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AGhmwmVo8rDn6UGXdHfkYsDxqSlvVZQClBK77XowFSlHto6kXz/Wss5RQ1HgGX4mSlfV8OviGHIClLJ34SFM0/YlHwxxUT68UYzTOiupqNk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4685
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.9;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
+References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
+ <20240403-rss-v9-13-c6d87e69d38b@daynix.com>
+ <CAOEp5OeXLFTUsH5egdMfsEPACM0O2XODOeYbpggD0T2Zv6ceYQ@mail.gmail.com>
+In-Reply-To: <CAOEp5OeXLFTUsH5egdMfsEPACM0O2XODOeYbpggD0T2Zv6ceYQ@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 16 Apr 2024 12:00:10 +0800
+Message-ID: <CACGkMEuG5mDzU-UwHvrZ3TWvZ9rpDWN-Vuw0GPE+_9nEkr6jdw@mail.gmail.com>
+Subject: Re: [PATCH v9 13/20] virtio-net: Return an error when vhost cannot
+ enable RSS
+To: Yuri Benditovich <yuri.benditovich@daynix.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.185,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,82 +107,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogQ8OpZHJp
-YyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMDIv
-MTBdIHZmaW86IEludHJvZHVjZSBISU9ETGVnYWN5VkZJTyBkZXZpY2UNCj4NCj5PbiA0LzgvMjQg
-MTA6MTIsIFpoZW56aG9uZyBEdWFuIHdyb3RlOg0KPj4gSElPRExlZ2FjeVZGSU8gcmVwcmVzZW50
-cyBhIGhvc3QgSU9NTVUgZGV2aWNlIHVuZGVyIFZGSU8gbGVnYWN5DQo+PiBjb250YWluZXIgYmFj
-a2VuZC4NCj4+DQo+PiBJdCBpbmNsdWRlcyBhIGxpbmsgdG8gVkZJT0RldmljZS4NCj4+DQo+PiBT
-dWdnZXN0ZWQtYnk6IEVyaWMgQXVnZXIgPGVyaWMuYXVnZXJAcmVkaGF0LmNvbT4NCj4+IFN1Z2dl
-c3RlZC1ieTogQ8OpZHJpYyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPj4gU2lnbmVkLW9m
-Zi1ieTogWmhlbnpob25nIER1YW4gPHpoZW56aG9uZy5kdWFuQGludGVsLmNvbT4NCj4+IC0tLQ0K
-Pj4gICBpbmNsdWRlL2h3L3ZmaW8vdmZpby1jb21tb24uaCB8IDExICsrKysrKysrKysrDQo+PiAg
-IGh3L3ZmaW8vY29udGFpbmVyLmMgICAgICAgICAgIHwgMTEgKysrKysrKysrKy0NCj4+ICAgMiBm
-aWxlcyBjaGFuZ2VkLCAyMSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQo+Pg0KPj4gZGlm
-ZiAtLWdpdCBhL2luY2x1ZGUvaHcvdmZpby92ZmlvLWNvbW1vbi5oIGIvaW5jbHVkZS9ody92Zmlv
-L3ZmaW8tDQo+Y29tbW9uLmgNCj4+IGluZGV4IGI5ZGE2YzA4ZWYuLmYzMDc3MmY1MzQgMTAwNjQ0
-DQo+PiAtLS0gYS9pbmNsdWRlL2h3L3ZmaW8vdmZpby1jb21tb24uaA0KPj4gKysrIGIvaW5jbHVk
-ZS9ody92ZmlvL3ZmaW8tY29tbW9uLmgNCj4+IEBAIC0zMSw2ICszMSw3IEBADQo+PiAgICNlbmRp
-Zg0KPj4gICAjaW5jbHVkZSAic3lzZW11L3N5c2VtdS5oIg0KPj4gICAjaW5jbHVkZSAiaHcvdmZp
-by92ZmlvLWNvbnRhaW5lci1iYXNlLmgiDQo+PiArI2luY2x1ZGUgInN5c2VtdS9ob3N0X2lvbW11
-X2RldmljZS5oIg0KPj4NCj4+ICAgI2RlZmluZSBWRklPX01TR19QUkVGSVggInZmaW8gJXM6ICIN
-Cj4+DQo+PiBAQCAtMTQ3LDYgKzE0OCwxNiBAQCB0eXBlZGVmIHN0cnVjdCBWRklPR3JvdXAgew0K
-Pj4gICAgICAgYm9vbCByYW1fYmxvY2tfZGlzY2FyZF9hbGxvd2VkOw0KPj4gICB9IFZGSU9Hcm91
-cDsNCj4+DQo+PiArI2RlZmluZSBUWVBFX0hJT0RfTEVHQUNZX1ZGSU8gVFlQRV9IT1NUX0lPTU1V
-X0RFVklDRSAiLWxlZ2FjeS0NCj52ZmlvIg0KPg0KPkkgd291bGQgcHJlZmVyIHRvIGtlZXAgdGhl
-IHByZWZpeCBUWVBFX0hPU1RfSU9NTVVfREVWSUNFLg0KDQpXaWxsIGRvLg0KDQo+DQo+PiArT0JK
-RUNUX0RFQ0xBUkVfU0lNUExFX1RZUEUoSElPRExlZ2FjeVZGSU8sIEhJT0RfTEVHQUNZX1ZGSU8p
-DQo+PiArDQo+PiArLyogQWJzdHJhY3Rpb24gb2YgVkZJTyBsZWdhY3kgaG9zdCBJT01NVSBkZXZp
-Y2UgKi8NCj4+ICtzdHJ1Y3QgSElPRExlZ2FjeVZGSU8gew0KPg0KPnNhbWUgaGVyZQ0KDQpTaG91
-bGQgSSBkbyB0aGUgc2FtZSBmb3IgYWxsIHRoZSBIb3N0SU9NTVVEZXZpY2UgYW5kIEhvc3RJT01N
-VURldmljZUNsYXNzIHN1Yi1zdHJ1Y3R1cmVzPw0KDQpUaGUgcmVhc29uIEkgdXNlZCAnSElPRCcg
-YWJicmV2aWF0aW9uIGlzIHNvbWUgZnVuY3Rpb24gbmFtZXMgYmVjb21lIGV4dHJlbWVseSBsb25n
-DQphbmQgZXhjZWVkIDgwIGNoYXJhY3RlcnMuIEUuZy46DQoNCkBAIC0xMTQ4LDkgKzExNDgsOSBA
-QCBzdGF0aWMgdm9pZCB2ZmlvX2lvbW11X2xlZ2FjeV9jbGFzc19pbml0KE9iamVjdENsYXNzICpr
-bGFzcywgdm9pZCAqZGF0YSkNCiAgICAgdmlvYy0+cGNpX2hvdF9yZXNldCA9IHZmaW9fbGVnYWN5
-X3BjaV9ob3RfcmVzZXQ7DQogfTsNCg0KLXN0YXRpYyBpbnQgaGlvZF9sZWdhY3lfdmZpb19nZXRf
-aG9zdF9pb21tdV9pbmZvKEhvc3RJT01NVURldmljZSAqaGlvZCwNCi0gICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2b2lkICpkYXRhLCB1aW50MzJfdCBsZW4s
-DQotICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3Ig
-KiplcnJwKQ0KK3N0YXRpYyBpbnQgaG9zdF9pb21tdV9kZXZpY2VfbGVnYWN5X3ZmaW9fZ2V0X2hv
-c3RfaW9tbXVfaW5mbyhIb3N0SU9NTVVEZXZpY2UgKmhpb2QsDQorICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZvaWQgKmRhdGEsIHVp
-bnQzMl90IGxlbiwNCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKQ0KIHsNCiAgICAgVkZJT0RldmljZSAqdmJh
-c2VkZXYgPSBISU9EX0xFR0FDWV9WRklPKGhpb2QpLT52ZGV2Ow0KICAgICAvKiBpb3ZhX3Jhbmdl
-cyBpcyBhIHNvcnRlZCBsaXN0ICovDQpAQCAtMTE3Myw3ICsxMTczLDcgQEAgc3RhdGljIHZvaWQg
-aGlvZF9sZWdhY3lfdmZpb19jbGFzc19pbml0KE9iamVjdENsYXNzICpvYywgdm9pZCAqZGF0YSkN
-CiB7DQogICAgIEhvc3RJT01NVURldmljZUNsYXNzICpoaW9jID0gSE9TVF9JT01NVV9ERVZJQ0Vf
-Q0xBU1Mob2MpOw0KDQotICAgIGhpb2MtPmdldF9ob3N0X2lvbW11X2luZm8gPSBoaW9kX2xlZ2Fj
-eV92ZmlvX2dldF9ob3N0X2lvbW11X2luZm87DQorICAgIGhpb2MtPmdldF9ob3N0X2lvbW11X2lu
-Zm8gPSBob3N0X2lvbW11X2RldmljZV9sZWdhY3lfdmZpb19nZXRfaG9zdF9pb21tdV9pbmZvOw0K
-IH07DQoNCkkgZGlkbid0IGZpbmQgb3RoZXIgd2F5IHRvIG1ha2UgaXQgbWVldCB0aGUgODAgY2hh
-cnMgbGltaXRhdGlvbi4gQW55IHN1Z2dlc3Rpb25zIG9uIHRoaXM/DQoNCj4NCj4+ICsgICAgLyo8
-IHByaXZhdGUgPiovDQo+PiArICAgIEhvc3RJT01NVURldmljZSBwYXJlbnQ7DQo+PiArICAgIFZG
-SU9EZXZpY2UgKnZkZXY7DQo+DQo+SXQgc2VlbXMgdG8gbWUgdGhhdCB0aGUgYmFjayBwb2ludGVy
-IHNob3VsZCBiZSBvbiB0aGUgY29udGFpbmVyIGluc3RlYWQuDQo+TG9va3MgbW9yZSBjb3JyZWN0
-IGNvbmNlcHR1YWxseS4NCg0KWWVzLCB0aGF0IG1ha2VzIHNlbnNlIGZvciBsZWdhY3kgVkZJTywg
-YXMgaW92YV9yYW5nZXMsIHBnc2l6ZXMgZXRjIGFyZSBhbGwgc2F2ZWQgaW4gYmNvbnRhaW5lci4N
-Cg0KPg0KPg0KPj4gK307DQo+PiArDQo+PiAgIHR5cGVkZWYgc3RydWN0IFZGSU9ETUFCdWYgew0K
-Pj4gICAgICAgUWVtdURtYUJ1ZiBidWY7DQo+PiAgICAgICB1aW50MzJfdCBwb3NfeCwgcG9zX3ks
-IHBvc191cGRhdGVzOw0KPj4gZGlmZiAtLWdpdCBhL2h3L3ZmaW8vY29udGFpbmVyLmMgYi9ody92
-ZmlvL2NvbnRhaW5lci5jDQo+PiBpbmRleCA3N2JkZWMyNzZlLi40NDAxOGVmMDg1IDEwMDY0NA0K
-Pj4gLS0tIGEvaHcvdmZpby9jb250YWluZXIuYw0KPj4gKysrIGIvaHcvdmZpby9jb250YWluZXIu
-Yw0KPj4gQEAgLTExNDMsMTIgKzExNDMsMjEgQEAgc3RhdGljIHZvaWQNCj52ZmlvX2lvbW11X2xl
-Z2FjeV9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgdm9pZCAqZGF0YSkNCj4+ICAgICAg
-IHZpb2MtPnBjaV9ob3RfcmVzZXQgPSB2ZmlvX2xlZ2FjeV9wY2lfaG90X3Jlc2V0Ow0KPj4gICB9
-Ow0KPj4NCj4+ICtzdGF0aWMgdm9pZCBoaW9kX2xlZ2FjeV92ZmlvX2NsYXNzX2luaXQoT2JqZWN0
-Q2xhc3MgKm9jLCB2b2lkICpkYXRhKQ0KPj4gK3sNCj4+ICt9Ow0KPg0KPklzIGl0IHByZWZlcmFi
-bGUgdG8gaW50cm9kdWNlIHJvdXRpbmVzIHdoZW4gdGhleSBhcmUgYWN0dWFsbHkgdXNlZnVsLg0K
-PlBsZWFzZSBkcm9wIHRoZSAuY2xhc3NfaW5pdCBkZWZpbml0aW9uLg0KDQpTdXJlLg0KDQpUaGFu
-a3MNClpoZW56aG9uZw0KDQo+DQo+VGhhbmtzLA0KPg0KPkMuDQo+DQo+DQo+PiArDQo+PiAgIHN0
-YXRpYyBjb25zdCBUeXBlSW5mbyB0eXBlc1tdID0gew0KPj4gICAgICAgew0KPj4gICAgICAgICAg
-IC5uYW1lID0gVFlQRV9WRklPX0lPTU1VX0xFR0FDWSwNCj4+ICAgICAgICAgICAucGFyZW50ID0g
-VFlQRV9WRklPX0lPTU1VLA0KPj4gICAgICAgICAgIC5jbGFzc19pbml0ID0gdmZpb19pb21tdV9s
-ZWdhY3lfY2xhc3NfaW5pdCwNCj4+IC0gICAgfSwNCj4+ICsgICAgfSwgew0KPj4gKyAgICAgICAg
-Lm5hbWUgPSBUWVBFX0hJT0RfTEVHQUNZX1ZGSU8sDQo+PiArICAgICAgICAucGFyZW50ID0gVFlQ
-RV9IT1NUX0lPTU1VX0RFVklDRSwNCj4+ICsgICAgICAgIC5pbnN0YW5jZV9zaXplID0gc2l6ZW9m
-KEhJT0RMZWdhY3lWRklPKSwNCj4+ICsgICAgICAgIC5jbGFzc19pbml0ID0gaGlvZF9sZWdhY3lf
-dmZpb19jbGFzc19pbml0LA0KPj4gKyAgICB9DQo+PiAgIH07DQo+Pg0KPj4gICBERUZJTkVfVFlQ
-RVModHlwZXMpDQoNCg==
+On Mon, Apr 15, 2024 at 10:05=E2=80=AFPM Yuri Benditovich
+<yuri.benditovich@daynix.com> wrote:
+>
+> On Wed, Apr 3, 2024 at 2:11=E2=80=AFPM Akihiko Odaki <akihiko.odaki@dayni=
+x.com> wrote:
+> >
+> > vhost requires eBPF for RSS. When eBPF is not available, virtio-net
+> > implicitly disables RSS even if the user explicitly requests it. Return
+> > an error instead of implicitly disabling RSS if RSS is requested but no=
+t
+> > available.
+> >
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > ---
+> >  hw/net/virtio-net.c | 97 ++++++++++++++++++++++++++-------------------=
+--------
+> >  1 file changed, 48 insertions(+), 49 deletions(-)
+> >
+> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > index 61b49e335dea..3d53eba88cfc 100644
+> > --- a/hw/net/virtio-net.c
+> > +++ b/hw/net/virtio-net.c
+> > @@ -793,9 +793,6 @@ static uint64_t virtio_net_get_features(VirtIODevic=
+e *vdev, uint64_t features,
+> >          return features;
+> >      }
+> >
+> > -    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
+> > -        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
+> > -    }
+> >      features =3D vhost_net_get_features(get_vhost_net(nc->peer), featu=
+res);
+> >      vdev->backend_features =3D features;
+> >
+> > @@ -3591,6 +3588,50 @@ static bool failover_hide_primary_device(DeviceL=
+istener *listener,
+> >      return qatomic_read(&n->failover_primary_hidden);
+> >  }
+> >
+> > +static void virtio_net_device_unrealize(DeviceState *dev)
+> > +{
+> > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > +    VirtIONet *n =3D VIRTIO_NET(dev);
+> > +    int i, max_queue_pairs;
+> > +
+> > +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
+> > +        virtio_net_unload_ebpf(n);
+> > +    }
+> > +
+> > +    /* This will stop vhost backend if appropriate. */
+> > +    virtio_net_set_status(vdev, 0);
+> > +
+> > +    g_free(n->netclient_name);
+> > +    n->netclient_name =3D NULL;
+> > +    g_free(n->netclient_type);
+> > +    n->netclient_type =3D NULL;
+> > +
+> > +    g_free(n->mac_table.macs);
+> > +    g_free(n->vlans);
+> > +
+> > +    if (n->failover) {
+> > +        qobject_unref(n->primary_opts);
+> > +        device_listener_unregister(&n->primary_listener);
+> > +        migration_remove_notifier(&n->migration_state);
+> > +    } else {
+> > +        assert(n->primary_opts =3D=3D NULL);
+> > +    }
+> > +
+> > +    max_queue_pairs =3D n->multiqueue ? n->max_queue_pairs : 1;
+> > +    for (i =3D 0; i < max_queue_pairs; i++) {
+> > +        virtio_net_del_queue(n, i);
+> > +    }
+> > +    /* delete also control vq */
+> > +    virtio_del_queue(vdev, max_queue_pairs * 2);
+> > +    qemu_announce_timer_del(&n->announce_timer, false);
+> > +    g_free(n->vqs);
+> > +    qemu_del_nic(n->nic);
+> > +    virtio_net_rsc_cleanup(n);
+> > +    g_free(n->rss_data.indirections_table);
+> > +    net_rx_pkt_uninit(n->rx_pkt);
+> > +    virtio_cleanup(vdev);
+> > +}
+> > +
+> >  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+> >  {
+> >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > @@ -3760,53 +3801,11 @@ static void virtio_net_device_realize(DeviceSta=
+te *dev, Error **errp)
+> >
+> >      net_rx_pkt_init(&n->rx_pkt);
+> >
+> > -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
+> > -        virtio_net_load_ebpf(n);
+> > -    }
+> > -}
+> > -
+> > -static void virtio_net_device_unrealize(DeviceState *dev)
+> > -{
+> > -    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > -    VirtIONet *n =3D VIRTIO_NET(dev);
+> > -    int i, max_queue_pairs;
+> > -
+> > -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
+> > -        virtio_net_unload_ebpf(n);
+> > +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS) &&
+> > +        !virtio_net_load_ebpf(n) && get_vhost_net(nc->peer)) {
+> > +        virtio_net_device_unrealize(dev);
+> > +        error_setg(errp, "Can't load eBPF RSS for vhost");
+> >      }
+>
+> As I already mentioned, I think this is an extremely bad idea to
+> fail to run qemu due to such a reason as .absence of one feature.
+> What I suggest is:
+> 1. Redefine rss as tri-state (off|auto|on)
+> 2. Fail to run only if rss is on and not available via ebpf
+> 3. On auto - silently drop it
+
+"Auto" might be promatic for migration compatibility which is hard to
+be used by management layers like libvirt. The reason is that there's
+no way for libvirt to know if it is supported by device or not.
+
+Thanks
+
+> 4. The same with 'hash' option - it is not compatible with vhost (at
+> least at the moment)
+> 5. Reformat the patch as it is hard to review it due to replacing
+> entire procedures, i.e. one patch with replacing without changes,
+> another one - with real changes.
+> If this is hard to review only for me - please ignore that.
+>
+> > -
+> > -    /* This will stop vhost backend if appropriate. */
+> > -    virtio_net_set_status(vdev, 0);
+> > -
+> > -    g_free(n->netclient_name);
+> > -    n->netclient_name =3D NULL;
+> > -    g_free(n->netclient_type);
+> > -    n->netclient_type =3D NULL;
+> > -
+> > -    g_free(n->mac_table.macs);
+> > -    g_free(n->vlans);
+> > -
+> > -    if (n->failover) {
+> > -        qobject_unref(n->primary_opts);
+> > -        device_listener_unregister(&n->primary_listener);
+> > -        migration_remove_notifier(&n->migration_state);
+> > -    } else {
+> > -        assert(n->primary_opts =3D=3D NULL);
+> > -    }
+> > -
+> > -    max_queue_pairs =3D n->multiqueue ? n->max_queue_pairs : 1;
+> > -    for (i =3D 0; i < max_queue_pairs; i++) {
+> > -        virtio_net_del_queue(n, i);
+> > -    }
+> > -    /* delete also control vq */
+> > -    virtio_del_queue(vdev, max_queue_pairs * 2);
+> > -    qemu_announce_timer_del(&n->announce_timer, false);
+> > -    g_free(n->vqs);
+> > -    qemu_del_nic(n->nic);
+> > -    virtio_net_rsc_cleanup(n);
+> > -    g_free(n->rss_data.indirections_table);
+> > -    net_rx_pkt_uninit(n->rx_pkt);
+> > -    virtio_cleanup(vdev);
+> >  }
+> >
+> >  static void virtio_net_reset(VirtIODevice *vdev)
+> >
+> > --
+> > 2.44.0
+> >
+>
+
 
