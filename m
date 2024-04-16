@@ -4,59 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794B7C04FF9
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F9AC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 15:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwkpV-0003qZ-Cr; Tue, 16 Apr 2024 11:34:41 -0400
+	id 1rwl0D-0007A8-0W; Tue, 16 Apr 2024 11:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=29bf=LV=kaod.org=clg@ozlabs.org>)
- id 1rwkpS-0003pk-Pu; Tue, 16 Apr 2024 11:34:38 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rwl0A-00077x-F1
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:45:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=29bf=LV=kaod.org=clg@ozlabs.org>)
- id 1rwkpQ-0002UN-DG; Tue, 16 Apr 2024 11:34:38 -0400
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VJp4V0Vcbz4x1t;
- Wed, 17 Apr 2024 01:34:34 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VJp4N51T5z4wx5;
- Wed, 17 Apr 2024 01:34:28 +1000 (AEST)
-Message-ID: <965df006-7689-4e9d-b30f-39a4566388ae@kaod.org>
-Date: Tue, 16 Apr 2024 17:34:25 +0200
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rwl08-0004jy-9u
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 11:45:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713282338;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HfcwtyepsIHaTuh6vym4Xo0wlmsk6hlXkxxmY1fgLBo=;
+ b=cBpevChqYtlh2VSb95x1Q+SG0jmLZFraboB/ksKei95hfCnt+NceSEtvuCCtGBU3W9rorc
+ D4V006UxBRwvv0KDA+4ByJ1YDOzjhHTR3SNr7Ngmqk/9BkZ4VVZ3qV1HoD54oByFA6v1Tg
+ JA3RaIUut4e/j3y9GnVxizorhRFDRd0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-605-OEviaK-0NJC7_JKJlNRTZw-1; Tue, 16 Apr 2024 11:45:35 -0400
+X-MC-Unique: OEviaK-0NJC7_JKJlNRTZw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-343c86edeb7so2981186f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 08:45:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713282334; x=1713887134;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HfcwtyepsIHaTuh6vym4Xo0wlmsk6hlXkxxmY1fgLBo=;
+ b=VgNL1eXwgY5yabGAJTB8OiWYLOrqLfwqfaYMLr+YVS1Oe1bXzNETd5NFFEQhmAf9aI
+ 0VC3XoMYW9mYCDLk1xlBbsimRlOY5GdWi/6a6ygxc5xQ2e/NbgOnSNy9aifuOfq95w/H
+ sGm6tN2ZQF7Nmpc0zLPQtATxsirZXxGIiyR6ntvKayqeuUj/CQ2K13jb4H52BgJNsnRu
+ /ayNhS2/gLuI1rwT3S2AjXL+l3LlpACUdFdgP5DX/so+zLu83aXffwZ5mZ/ESz863Xx+
+ IfKGnHwvT2ZO/YOGmscjf5LohSiPSMF1ZmKdm8qcFrjuN1aesJKct+uaohH/LJqclu81
+ yVGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW30d8PXtA45m9NBvUvz29rWSgbwGh9ALt+OQDVeMZqxwj//ojBhcCRzdq+0BzWAZ539x26HkJHQ7p4V01JJJ4tMhwF2ws=
+X-Gm-Message-State: AOJu0YwZyO9aD6kqdGIOCP79D5GvGYsr1R0nR7aDeVh6xRB2iA8tTRfS
+ 8XQohGqz3yGebWqmp632htbgBBlZPRUxdL7NMfZQWsSoD/a/XIx9FC6mtxT0/kYNp6CpELDey3P
+ zpj85ITU80JT6/X4ODq8NFrsPlhDKkIoJDBLpvOQBr1w6UU1+gGw3
+X-Received: by 2002:adf:f90d:0:b0:348:4519:15b8 with SMTP id
+ b13-20020adff90d000000b00348451915b8mr1606943wrr.40.1713282334528; 
+ Tue, 16 Apr 2024 08:45:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELztI1pGgiMUQC/0li9Nfrwed3KZ2gelKZLdr9peaZaeWkqmn4SgozwXXngkpeRQcXo/iQSw==
+X-Received: by 2002:adf:f90d:0:b0:348:4519:15b8 with SMTP id
+ b13-20020adff90d000000b00348451915b8mr1606926wrr.40.1713282334114; 
+ Tue, 16 Apr 2024 08:45:34 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ s4-20020adfe004000000b00349a6af3da5sm131962wrh.51.2024.04.16.08.45.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Apr 2024 08:45:33 -0700 (PDT)
+Date: Tue, 16 Apr 2024 17:45:31 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jiqian Chen <Jiqian.Chen@amd.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, Jason
+ Wang <jasowang@redhat.com>, Huang Rui <Ray.Huang@amd.com>
+Subject: Re: [RFC QEMU PATCH v9 2/2] virtio-pci: implement No_Soft_Reset bit
+Message-ID: <20240416174531.6573af25@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240416070127.116922-3-Jiqian.Chen@amd.com>
+References: <20240416070127.116922-1-Jiqian.Chen@amd.com>
+ <20240416070127.116922-3-Jiqian.Chen@amd.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/16] aspeed/sdmc: Add AST2700 support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
- <20240416091904.935283-6-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240416091904.935283-6-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=29bf=LV=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,317 +105,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/16/24 11:18, Jamin Lin wrote:
-> The SDRAM memory controller(DRAMC) controls the access to external
-> DDR4 and DDR5 SDRAM and power up to DDR4 and DDR5 PHY.
+On Tue, 16 Apr 2024 15:01:27 +0800
+Jiqian Chen <Jiqian.Chen@amd.com> wrote:
+
+> In current code, when guest does S3, virtio-gpu are reset due to the
+> bit No_Soft_Reset is not set. After resetting, the display resources
+> of virtio-gpu are destroyed, then the display can't come back and only
+> show blank after resuming.
+
+Just a high level question.
+Typically when system goes into S3 all devices (modulo RAM) loose context
+(aka powered off), and then it's upto device driver to recover whatever
+was lost.
+So why should we implement hw(qemu) workaround for a driver problem?
+
 > 
-> The DRAM memory controller of AST2700 is not backward compatible
-> to previous chips such AST2600, AST2500 and AST2400.
+> Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
+> this bit, if this bit is set, the devices resetting will not be done, and
+> then the display can work after resuming.
 > 
-> Max memory is now 8GiB on the AST2700. Introduce new
-> aspeed_2700_sdmc and class with read/write operation and
-> reset handlers.
+> No_Soft_Reset bit is implemented for all virtio devices, and was tested
+> only on virtio-gpu device. Set it false by default for safety.
 > 
-> Define DRAMC necessary protected registers and
-> unprotected registers for AST2700 and increase
-> the register set to 0x1000.
-> 
-> Add unlocked property to change controller protected status.
-> 
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-
-Thanks,
-
-C.
-
-
+> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
 > ---
->   hw/misc/aspeed_sdmc.c         | 190 +++++++++++++++++++++++++++++++++-
->   include/hw/misc/aspeed_sdmc.h |   5 +-
->   2 files changed, 193 insertions(+), 2 deletions(-)
+>  hw/virtio/virtio-pci.c         | 37 ++++++++++++++++++++++++++++++++++
+>  include/hw/virtio/virtio-pci.h |  5 +++++
+>  2 files changed, 42 insertions(+)
 > 
-> diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
-> index 873d67c592..69a34903db 100644
-> --- a/hw/misc/aspeed_sdmc.c
-> +++ b/hw/misc/aspeed_sdmc.c
-> @@ -27,6 +27,7 @@
->   #define   PROT_SOFTLOCKED    0x00
->   
->   #define   PROT_KEY_UNLOCK     0xFC600309
-> +#define   PROT_2700_KEY_UNLOCK  0x1688A8A8
->   #define   PROT_KEY_HARDLOCK   0xDEADDEAD /* AST2600 */
->   
->   /* Configuration Register */
-> @@ -54,6 +55,46 @@
->   #define R_DRAM_TIME       (0x8c / 4)
->   #define R_ECC_ERR_INJECT  (0xb4 / 4)
->   
-> +/* AST2700 Register */
-> +#define R_2700_PROT                 (0x00 / 4)
-> +#define R_INT_STATUS                (0x04 / 4)
-> +#define R_INT_CLEAR                 (0x08 / 4)
-> +#define R_INT_MASK                  (0x0c / 4)
-> +#define R_MAIN_CONF                 (0x10 / 4)
-> +#define R_MAIN_CONTROL              (0x14 / 4)
-> +#define R_MAIN_STATUS               (0x18 / 4)
-> +#define R_ERR_STATUS                (0x1c / 4)
-> +#define R_ECC_FAIL_STATUS           (0x78 / 4)
-> +#define R_ECC_FAIL_ADDR             (0x7c / 4)
-> +#define R_ECC_TESTING_CONTROL       (0x80 / 4)
-> +#define R_PROT_REGION_LOCK_STATUS   (0x94 / 4)
-> +#define R_TEST_FAIL_ADDR            (0xd4 / 4)
-> +#define R_TEST_FAIL_D0              (0xd8 / 4)
-> +#define R_TEST_FAIL_D1              (0xdc / 4)
-> +#define R_TEST_FAIL_D2              (0xe0 / 4)
-> +#define R_TEST_FAIL_D3              (0xe4 / 4)
-> +#define R_DBG_STATUS                (0xf4 / 4)
-> +#define R_PHY_INTERFACE_STATUS      (0xf8 / 4)
-> +#define R_GRAPHIC_MEM_BASE_ADDR     (0x10c / 4)
-> +#define R_PORT0_INTERFACE_MONITOR0  (0x240 / 4)
-> +#define R_PORT0_INTERFACE_MONITOR1  (0x244 / 4)
-> +#define R_PORT0_INTERFACE_MONITOR2  (0x248 / 4)
-> +#define R_PORT1_INTERFACE_MONITOR0  (0x2c0 / 4)
-> +#define R_PORT1_INTERFACE_MONITOR1  (0x2c4 / 4)
-> +#define R_PORT1_INTERFACE_MONITOR2  (0x2c8 / 4)
-> +#define R_PORT2_INTERFACE_MONITOR0  (0x340 / 4)
-> +#define R_PORT2_INTERFACE_MONITOR1  (0x344 / 4)
-> +#define R_PORT2_INTERFACE_MONITOR2  (0x348 / 4)
-> +#define R_PORT3_INTERFACE_MONITOR0  (0x3c0 / 4)
-> +#define R_PORT3_INTERFACE_MONITOR1  (0x3c4 / 4)
-> +#define R_PORT3_INTERFACE_MONITOR2  (0x3c8 / 4)
-> +#define R_PORT4_INTERFACE_MONITOR0  (0x440 / 4)
-> +#define R_PORT4_INTERFACE_MONITOR1  (0x444 / 4)
-> +#define R_PORT4_INTERFACE_MONITOR2  (0x448 / 4)
-> +#define R_PORT5_INTERFACE_MONITOR0  (0x4c0 / 4)
-> +#define R_PORT5_INTERFACE_MONITOR1  (0x4c4 / 4)
-> +#define R_PORT5_INTERFACE_MONITOR2  (0x4c8 / 4)
-> +
->   /*
->    * Configuration register Ox4 (for Aspeed AST2400 SOC)
->    *
-> @@ -101,6 +142,19 @@
->        ASPEED_SDMC_AST2500_RESERVED | ASPEED_SDMC_VGA_COMPAT |            \
->        ASPEED_SDMC_VGA_APERTURE(ASPEED_SDMC_VGA_64MB))
->   
-> +/*
-> + * Main Configuration register Ox10 (for Aspeed AST2700 SOC and higher)
-> + *
-> + */
-> +#define ASPEED_SDMC_AST2700_RESERVED        0xFFFF2082 /* 31:16, 13, 7, 1 */
-> +#define ASPEED_SDMC_AST2700_DATA_SCRAMBLE           (1 << 8)
-> +#define ASPEED_SDMC_AST2700_ECC_ENABLE              (1 << 6)
-> +#define ASPEED_SDMC_AST2700_PAGE_MATCHING_ENABLE    (1 << 5)
-> +#define ASPEED_SDMC_AST2700_DRAM_SIZE(x)            ((x & 0x7) << 2)
-> +
-> +#define ASPEED_SDMC_AST2700_READONLY_MASK   \
-> +     (ASPEED_SDMC_AST2700_RESERVED)
-> +
->   static uint64_t aspeed_sdmc_read(void *opaque, hwaddr addr, unsigned size)
->   {
->       AspeedSDMCState *s = ASPEED_SDMC(opaque);
-> @@ -216,7 +270,7 @@ static void aspeed_sdmc_realize(DeviceState *dev, Error **errp)
->       AspeedSDMCState *s = ASPEED_SDMC(dev);
->       AspeedSDMCClass *asc = ASPEED_SDMC_GET_CLASS(s);
->   
-> -    assert(asc->max_ram_size < 4 * GiB); /* 32-bit address bus */
-> +    assert(asc->max_ram_size < 4 * GiB || asc->is_bus64bit);
->       s->max_ram_size = asc->max_ram_size;
->   
->       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sdmc_ops, s,
-> @@ -236,6 +290,7 @@ static const VMStateDescription vmstate_aspeed_sdmc = {
->   
->   static Property aspeed_sdmc_properties[] = {
->       DEFINE_PROP_UINT64("max-ram-size", AspeedSDMCState, max_ram_size, 0),
-> +    DEFINE_PROP_BOOL("unlocked", AspeedSDMCState, unlocked, false),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
-> @@ -500,12 +555,145 @@ static const TypeInfo aspeed_2600_sdmc_info = {
->       .class_init = aspeed_2600_sdmc_class_init,
->   };
->   
-> +static void aspeed_2700_sdmc_reset(DeviceState *dev)
-> +{
-> +    AspeedSDMCState *s = ASPEED_SDMC(dev);
-> +    AspeedSDMCClass *asc = ASPEED_SDMC_GET_CLASS(s);
-> +
-> +    memset(s->regs, 0, sizeof(s->regs));
-> +
-> +    /* Set ram size bit and defaults values */
-> +    s->regs[R_MAIN_CONF] = asc->compute_conf(s, 0);
-> +
-> +    if (s->unlocked) {
-> +        s->regs[R_2700_PROT] = PROT_UNLOCKED;
-> +    }
-> +}
-> +
-> +static uint32_t aspeed_2700_sdmc_compute_conf(AspeedSDMCState *s, uint32_t data)
-> +{
-> +    uint32_t fixed_conf = ASPEED_SDMC_AST2700_PAGE_MATCHING_ENABLE |
-> +        ASPEED_SDMC_AST2700_DRAM_SIZE(aspeed_sdmc_get_ram_bits(s));
-> +
-> +    /* Make sure readonly bits are kept */
-> +    data &= ~ASPEED_SDMC_AST2700_READONLY_MASK;
-> +
-> +    return data | fixed_conf;
-> +}
-> +
-> +static void aspeed_2700_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-> +                                   uint32_t data)
-> +{
-> +    /* Unprotected registers */
-> +    switch (reg) {
-> +    case R_INT_STATUS:
-> +    case R_INT_CLEAR:
-> +    case R_INT_MASK:
-> +    case R_MAIN_STATUS:
-> +    case R_ERR_STATUS:
-> +    case R_ECC_FAIL_STATUS:
-> +    case R_ECC_FAIL_ADDR:
-> +    case R_PROT_REGION_LOCK_STATUS:
-> +    case R_TEST_FAIL_ADDR:
-> +    case R_TEST_FAIL_D0:
-> +    case R_TEST_FAIL_D1:
-> +    case R_TEST_FAIL_D2:
-> +    case R_TEST_FAIL_D3:
-> +    case R_DBG_STATUS:
-> +    case R_PHY_INTERFACE_STATUS:
-> +    case R_GRAPHIC_MEM_BASE_ADDR:
-> +    case R_PORT0_INTERFACE_MONITOR0:
-> +    case R_PORT0_INTERFACE_MONITOR1:
-> +    case R_PORT0_INTERFACE_MONITOR2:
-> +    case R_PORT1_INTERFACE_MONITOR0:
-> +    case R_PORT1_INTERFACE_MONITOR1:
-> +    case R_PORT1_INTERFACE_MONITOR2:
-> +    case R_PORT2_INTERFACE_MONITOR0:
-> +    case R_PORT2_INTERFACE_MONITOR1:
-> +    case R_PORT2_INTERFACE_MONITOR2:
-> +    case R_PORT3_INTERFACE_MONITOR0:
-> +    case R_PORT3_INTERFACE_MONITOR1:
-> +    case R_PORT3_INTERFACE_MONITOR2:
-> +    case R_PORT4_INTERFACE_MONITOR0:
-> +    case R_PORT4_INTERFACE_MONITOR1:
-> +    case R_PORT4_INTERFACE_MONITOR2:
-> +    case R_PORT5_INTERFACE_MONITOR0:
-> +    case R_PORT5_INTERFACE_MONITOR1:
-> +    case R_PORT5_INTERFACE_MONITOR2:
-> +        s->regs[reg] = data;
-> +        return;
-> +    }
-> +
-> +    if (s->regs[R_2700_PROT] == PROT_HARDLOCKED) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: SDMC is locked until system reset!\n",
-> +                      __func__);
-> +        return;
-> +    }
-> +
-> +    if (reg != R_2700_PROT && s->regs[R_2700_PROT] == PROT_SOFTLOCKED) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: SDMC is locked! (write to MCR%02x blocked)\n",
-> +                      __func__, reg * 4);
-> +        return;
-> +    }
-> +
-> +    switch (reg) {
-> +    case R_2700_PROT:
-> +        if (data == PROT_2700_KEY_UNLOCK)  {
-> +            data = PROT_UNLOCKED;
-> +        } else if (data == PROT_KEY_HARDLOCK) {
-> +            data = PROT_HARDLOCKED;
-> +        } else {
-> +            data = PROT_SOFTLOCKED;
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index a1b61308e7a0..82fa4defe5cd 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -2230,6 +2230,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+>              pcie_cap_lnkctl_init(pci_dev);
+>          }
+>  
+> +        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
+> +            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
+> +                         PCI_PM_CTRL_NO_SOFT_RESET);
 > +        }
-> +        break;
-> +    case R_MAIN_CONF:
-> +        data = aspeed_2700_sdmc_compute_conf(s, data);
-> +        break;
-> +    case R_MAIN_STATUS:
-> +        /* Will never return 'busy'. */
-> +        data &= ~PHY_BUSY_STATE;
-> +        break;
-> +    default:
-> +        break;
+> +
+>          if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
+>              /* Init Power Management Control Register */
+>              pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
+> @@ -2292,11 +2297,37 @@ static void virtio_pci_reset(DeviceState *qdev)
+>      }
+>  }
+>  
+> +static bool virtio_pci_no_soft_reset(PCIDevice *dev)
+> +{
+> +    uint16_t pmcsr;
+> +
+> +    if (!pci_is_express(dev) || !dev->exp.pm_cap) {
+> +        return false;
 > +    }
 > +
-> +    s->regs[reg] = data;
+> +    pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
+> +
+> +    /*
+> +     * When No_Soft_Reset bit is set and the device
+> +     * is in D3hot state, don't reset device
+> +     */
+> +    return (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
+> +           (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3;
 > +}
 > +
-> +static const uint64_t
-> +    aspeed_2700_ram_sizes[] = { 256 * MiB, 512 * MiB, 1024 * MiB,
-> +                                2048 * MiB, 4096 * MiB, 8192 * MiB, 0};
+>  static void virtio_pci_bus_reset_hold(Object *obj)
+>  {
+>      PCIDevice *dev = PCI_DEVICE(obj);
+>      DeviceState *qdev = DEVICE(obj);
+>  
+> +    /*
+> +     * Note that: a proposal to add SUSPEND bit is being discussed,
+> +     * may need to consider the state of SUSPEND bit in future
+> +     */
+> +    if (virtio_pci_no_soft_reset(dev)) {
+> +        return;
+> +    }
 > +
-> +static void aspeed_2700_sdmc_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedSDMCClass *asc = ASPEED_SDMC_CLASS(klass);
+>      virtio_pci_reset(qdev);
+>  
+>      if (pci_is_express(dev)) {
+> @@ -2336,6 +2367,12 @@ static Property virtio_pci_properties[] = {
+>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
+> +    /*
+> +     * for safety, set this false by default, if change it to true,
+> +     * need to consider compatible for old machine
+> +     */
+> +    DEFINE_PROP_BIT("pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
+> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
+>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+> index 59d88018c16a..9e67ba38c748 100644
+> --- a/include/hw/virtio/virtio-pci.h
+> +++ b/include/hw/virtio/virtio-pci.h
+> @@ -43,6 +43,7 @@ enum {
+>      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+>      VIRTIO_PCI_FLAG_AER_BIT,
+>      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
+> +    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
+>  };
+>  
+>  /* Need to activate work-arounds for buggy guests at vmstate load. */
+> @@ -79,6 +80,10 @@ enum {
+>  /* Init Power Management */
+>  #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
+>  
+> +/* Init The No_Soft_Reset bit of Power Management */
+> +#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
+> +  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
 > +
-> +    dc->desc = "ASPEED 2700 SDRAM Memory Controller";
-> +    dc->reset = aspeed_2700_sdmc_reset;
-> +
-> +    asc->is_bus64bit = true;
-> +    asc->max_ram_size = 8 * GiB;
-> +    asc->compute_conf = aspeed_2700_sdmc_compute_conf;
-> +    asc->write = aspeed_2700_sdmc_write;
-> +    asc->valid_ram_sizes = aspeed_2700_ram_sizes;
-> +}
-> +
-> +static const TypeInfo aspeed_2700_sdmc_info = {
-> +    .name = TYPE_ASPEED_2700_SDMC,
-> +    .parent = TYPE_ASPEED_SDMC,
-> +    .class_init = aspeed_2700_sdmc_class_init,
-> +};
-> +
->   static void aspeed_sdmc_register_types(void)
->   {
->       type_register_static(&aspeed_sdmc_info);
->       type_register_static(&aspeed_2400_sdmc_info);
->       type_register_static(&aspeed_2500_sdmc_info);
->       type_register_static(&aspeed_2600_sdmc_info);
-> +    type_register_static(&aspeed_2700_sdmc_info);
->   }
->   
->   type_init(aspeed_sdmc_register_types);
-> diff --git a/include/hw/misc/aspeed_sdmc.h b/include/hw/misc/aspeed_sdmc.h
-> index ec2d59a14f..61c979583a 100644
-> --- a/include/hw/misc/aspeed_sdmc.h
-> +++ b/include/hw/misc/aspeed_sdmc.h
-> @@ -17,6 +17,7 @@ OBJECT_DECLARE_TYPE(AspeedSDMCState, AspeedSDMCClass, ASPEED_SDMC)
->   #define TYPE_ASPEED_2400_SDMC TYPE_ASPEED_SDMC "-ast2400"
->   #define TYPE_ASPEED_2500_SDMC TYPE_ASPEED_SDMC "-ast2500"
->   #define TYPE_ASPEED_2600_SDMC TYPE_ASPEED_SDMC "-ast2600"
-> +#define TYPE_ASPEED_2700_SDMC TYPE_ASPEED_SDMC "-ast2700"
->   
->   /*
->    * SDMC has 174 documented registers. In addition the u-boot device tree
-> @@ -29,7 +30,7 @@ OBJECT_DECLARE_TYPE(AspeedSDMCState, AspeedSDMCClass, ASPEED_SDMC)
->    * time, and the other is in the DDR-PHY IP which is used during DDR-PHY
->    * training.
->    */
-> -#define ASPEED_SDMC_NR_REGS (0x500 >> 2)
-> +#define ASPEED_SDMC_NR_REGS (0x1000 >> 2)
->   
->   struct AspeedSDMCState {
->       /*< private >*/
-> @@ -41,6 +42,7 @@ struct AspeedSDMCState {
->       uint32_t regs[ASPEED_SDMC_NR_REGS];
->       uint64_t ram_size;
->       uint64_t max_ram_size;
-> +    bool unlocked;
->   };
->   
->   
-> @@ -51,6 +53,7 @@ struct AspeedSDMCClass {
->       const uint64_t *valid_ram_sizes;
->       uint32_t (*compute_conf)(AspeedSDMCState *s, uint32_t data);
->       void (*write)(AspeedSDMCState *s, uint32_t reg, uint32_t data);
-> +    bool is_bus64bit;
->   };
->   
->   #endif /* ASPEED_SDMC_H */
+>  /* Init Function Level Reset capability */
+>  #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
+>  
 
 
