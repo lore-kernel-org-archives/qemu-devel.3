@@ -4,94 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A110BC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 12:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F64C001CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 12:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx48v-0004V7-AW; Wed, 17 Apr 2024 08:12:01 -0400
+	id 1rx4Gz-00067b-Gn; Wed, 17 Apr 2024 08:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rx48t-0004Ut-33
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:11:59 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rx4Gw-00066R-LL
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:20:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rx48n-0007Ru-MH
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:11:58 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1rx48c-0006kY-P1; Wed, 17 Apr 2024 14:11:42 +0200
-Message-ID: <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
-Date: Wed, 17 Apr 2024 14:11:37 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rx4Gt-0000DS-I9
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:20:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713356413;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=rA3DEF4RaDau+mPX9J/9QhM0xk/Q7+LBRMlKwWpj92U=;
+ b=KC0AsZDGK09XMQzzr+6rTBOKVNncNdCWrikFrZfaOywhN9sPf01rY9uFTjrblcWAnRVvfV
+ rFF1ll25a79JEZSzEGZBYjQHrY48ERkZuhEG8uQISJVSi4LyeNcbjo8KseYRt+B90Zf9q4
+ rAev5GABP7UonKftGZvLWSuW/91feas=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-m9hERg89PI-_7i60cnXKiQ-1; Wed,
+ 17 Apr 2024 08:20:10 -0400
+X-MC-Unique: m9hERg89PI-_7i60cnXKiQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E707E1C4C39B;
+ Wed, 17 Apr 2024 12:20:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.142])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6A6542026964;
+ Wed, 17 Apr 2024 12:20:08 +0000 (UTC)
+Date: Wed, 17 Apr 2024 13:20:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
+ peter.maydell@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH for-9.0 v3 2/2] qtest/virtio-9p-test.c: remove
+ g_test_slow() gate
+Message-ID: <Zh--cggRnFMswR4F@redhat.com>
+References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
+ <a6b402b9-9f84-4d72-a631-09f04bb31450@tls.msk.ru>
+ <6dc065e2-81d8-4562-84c0-8a697c58ef71@ventanamicro.com>
+ <4211163.r9FPef4uHI@silver>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_RFC_00/26=5D_Multifd_=F0=9F=94=80_device_s?=
- =?UTF-8?Q?tate_transfer_support_with_VFIO_consumer?=
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
- <Zh-KF72Fe9oV6tfT@redhat.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Zh-KF72Fe9oV6tfT@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4211163.r9FPef4uHI@silver>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,102 +85,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.04.2024 10:36, Daniel P. Berrangé wrote:
-> On Tue, Apr 16, 2024 at 04:42:39PM +0200, Maciej S. Szmigiero wrote:
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> VFIO device state transfer is currently done via the main migration channel.
->> This means that transfers from multiple VFIO devices are done sequentially
->> and via just a single common migration channel.
->>
->> Such way of transferring VFIO device state migration data reduces
->> performance and severally impacts the migration downtime (~50%) for VMs
->> that have multiple such devices with large state size - see the test
->> results below.
->>
->> However, we already have a way to transfer migration data using multiple
->> connections - that's what multifd channels are.
->>
->> Unfortunately, multifd channels are currently utilized for RAM transfer
->> only.
->> This patch set adds a new framework allowing their use for device state
->> transfer too.
->>
->> The wire protocol is based on Avihai's x-channel-header patches, which
->> introduce a header for migration channels that allow the migration source
->> to explicitly indicate the migration channel type without having the
->> target deduce the channel type by peeking in the channel's content.
->>
->> The new wire protocol can be switch on and off via migration.x-channel-header
->> option for compatibility with older QEMU versions and testing.
->> Switching the new wire protocol off also disables device state transfer via
->> multifd channels.
->>
->> The device state transfer can happen either via the same multifd channels
->> as RAM data is transferred, mixed with RAM data (when
->> migration.x-multifd-channels-device-state is 0) or exclusively via
->> dedicated device state transfer channels (when
->> migration.x-multifd-channels-device-state > 0).
->>
->> Using dedicated device state transfer multifd channels brings further
->> performance benefits since these channels don't need to participate in
->> the RAM sync process.
+On Wed, Apr 17, 2024 at 01:52:24PM +0200, Christian Schoenebeck wrote:
+> On Wednesday, April 17, 2024 1:16:02 AM CEST Daniel Henrique Barboza wrote:
+> > 
+> > On 4/16/24 16:54, Michael Tokarev wrote:
+> > > 27.03.2024 17:20, Daniel Henrique Barboza :
+> > >> Commit 558f5c42ef gated the local tests with g_test_slow() to skip them
+> > >> in 'make check'. The reported issue back then was this following CI
+> > >> problem:
+> > >>
+> > >> https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
+> > >>
+> > >> This problem ended up being fixed after it was detected with the
+> > >> recently added risc-v machine nodes [1]. virtio-9p-test.c is now
+> > >> creating and removing temporary dirs for each test run, instead of
+> > >> creating a single dir for the entire qos-test scope.
+> > >>
+> > >> We're now able to run these tests with 'make check' in the CI, so let's
+> > >> go ahead and re-enable them.
+> > >>
+> > >> This reverts commit 558f5c42efded3e0d0b20a90bce2a9a14580d824.
+> > >>
+> > >> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
+> > > 
+> > > This makes tests being unable to complete on a tmpfs.  It looks like
+> > > 9pfs tests needs another tweak here.
+> > > 
+> > > # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-798502.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-798502.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M pc  -fsdev local,id=fsdev0,path='/tmp/q/master/qtest-9p-local-9LHRL2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
+> > > Received response 7 (RLERROR) instead of 73 (RMKDIR)
+> > > Rlerror has errno 95 (Operation not supported)
+> > > **
+> > > ERROR:../../../build/qemu/master/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+> > > 
+> > > This is when I build it on /tmp/ which is a tmpfs.  When I build
+> > > it on a real filesystem, it works fine.
+> > > 
+> > > Apparently xattrs aren't supported on a tmpfs.
+> > 
+> > Hmmm not sure how to proceed here since I'm not a 9p expert by any means. I'll
+> > let Christian decide what to do.
+> > 
+> > If we can't figure it out we might need to re-introduce the gate again. Thanks,
 > 
-> I'm not convinced there's any need to introduce the new "channel header"
-> protocol messages. The multifd channels already have an initialization
-> message that is extensible to allow extra semantics to be indicated.
-> So if we want some of the multifd channels to be reserved for device
-> state, we could indicate that via some data in the MultiFDInit_t
-> message struct.
-
-The reason for introducing x-channel-header was to avoid having to deduce
-the channel type by peeking in the channel's content - where any channel
-that does not start with QEMU_VM_FILE_MAGIC is currently treated as a
-multifd one.
-
-But if this isn't desired then, as you say, the multifd channel type can
-be indicated by using some unused field of the MultiFDInit_t message.
-
-Of course, this would still keep the QEMU_VM_FILE_MAGIC heuristic then.
-
-> That said, the idea of reserving channels specifically for VFIO doesn't
-> make a whole lot of sense to me either.
+> It's not that tmpfs exactly doesn't support xattrs. It supports the trusted.*
+> and security.* namespaces since 2011, so tmpfs was limited to those two. For
+> the 9p 'local' backend however we also need the user.* namespace which was
+> just added in Linux 6.6 last year (commit 2daf18a).
 > 
-> Once we've done the RAM transfer, and are in the switchover phase
-> doing device state transfer, all the multifd channels are idle.
-> We should just use all those channels to transfer the device state,
-> in parallel.  Reserving channels just guarantees many idle channels
-> during RAM transfer, and further idle channels during vmstate
-> transfer.
+> Unfortunately the respective kernel option TMPFS_XATTR is still off by default
+> (linux/fs/Kconfig).
 > 
-> IMHO it is more flexible to just use all available multifd channel
-> resources all the time.
+> Back then, when we added that 'slow' gate for the 9p 'local' tests, things
+> were a bit different. They simply did not run in the gitlab pipeline (for
+> reasons described above). Now they do.
+> 
+> So obviously it would make sense to preserve these tests for the gitlab
+> pipeline this time, e.g. by skipping these tests only if the underlying test
+> directory does not support *.user xattrs. I'm just not sure yet where exactly
+> such kind of *active* check would fit best into the glib test layout, as this
+> can be a bit tricky with glib
 
-The reason for having dedicated device state channels is that they
-provide lower downtime in my tests.
+You should run a method which checks ability to use '.user' xattrs, and
+if it reports failure, then skip calling g_test_add. IOW, you can put
+the xattr test in the same place as the old g_test_slow() check was.
 
-With either 15 or 11 mixed multifd channels (no dedicated device state
-channels) I get a downtime of about 1250 msec.
 
-Comparing that with 15 total multifd channels / 4 dedicated device
-state channels that give downtime of about 1100 ms it means that using
-dedicated channels gets about 14% downtime improvement.
-
-> Again the 'MultiFDPacket_t' struct has
-> both 'flags' and unused fields, so it is extensible to indicate
-> that is it being used for new types of data.
-
-Yeah, that's what MULTIFD_FLAG_DEVICE_STATE in packet header already
-does in this patch set - it indicates that the packet contains device
-state, not RAM data.
-  
-> With regards,
-> Daniel
-
-Best regards,
-Maciej
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
