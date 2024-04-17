@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 795E8C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 08:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7678DC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 09:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx13S-0000Cb-1e; Wed, 17 Apr 2024 04:54:10 -0400
+	id 1rx1H3-0002cj-Dk; Wed, 17 Apr 2024 05:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
- id 1rx13O-0000CM-A5
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 04:54:06 -0400
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
- id 1rx13K-0004aj-Pe
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 04:54:05 -0400
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-dcc80d6004bso5300400276.0
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 01:53:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1713344036; x=1713948836; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OGwSiMzvAKR+bq3SRViWE8ZoGbeuRmJT21WPOyLk3/o=;
- b=FmBykNi0rQHiwyzA0RBQ1iieTMhYaSFT+vbHpyO8kN9obX/C/ypb/OwJOgFZK68rDu
- 7gzAfZMC9obZ/AdtQdS8jd1u9memSvEZ7r/n0JVOGSiqQgwI4IqvGMMdmiAhTGSr/lzV
- LHrMOC2xKuggXrO6bjCZUKqMr2Oai3Ieh6RWgRjxRH7sdAeWBYpr9vY7rDNA1t85gra6
- viubhve2wXy1tm4t1mIUVbOjDBY3dUc8MOdgZUKBYLBFUS6ZyZDth8Qe8CZdwj4pMX2R
- cya3nrpzvQTqR5qsNuGBLcsnhnH24Tz2iieg0sqz1CPO0GlXUydqWnSephMQ6Xdwqwac
- Eb2Q==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rx1H2-0002bb-1g
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 05:08:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rx1Gy-0007E6-9O
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 05:08:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713344886;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=KAXOhBwjfVJcEAlUtSSuh7fjgs08OegDzUnYkLo4w1/CfnmyhAYFFD/3zvVGpyxzNYmwWv
+ SjUyR/Tg5MZhP8BFYFSa40nbcpc2HQvAFNPzWhGrDtKr7d0E1QI8HZP8watkjTVgOhPC/A
+ 9bop5akSNTGT1odhzFi85pxM69um6kc=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-161-QrID9b5fN6Kjn5HXMJZgBg-1; Wed, 17 Apr 2024 05:08:04 -0400
+X-MC-Unique: QrID9b5fN6Kjn5HXMJZgBg-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-516da5d2043so5035903e87.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 02:08:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713344036; x=1713948836;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1713344883; x=1713949683;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OGwSiMzvAKR+bq3SRViWE8ZoGbeuRmJT21WPOyLk3/o=;
- b=deUnD21yTphgsn8lUReLaJJQitf8nFxeG6wH4fqvz02DsSN4Dlydd0dSp3GCaC9MpA
- I86VN0LqB6Bjc4My7BYqz3tgzdgnVC7kLdIYV+05qyxFvNHqidApDbnZp/MmWgq0Cznd
- d2Oq/k18Dtg1fcTeRbIYcyx//QnBuGdYCucF1BAE62hL9WeOj4TvO7GW4xviR3u4Tkkj
- fWDtwArD58HRCJqU4QvTc/UuPGUqz/sYruxt0HST6K35Ndl+1swLhEFRGApKvnWM04K7
- fq/y6cwP8loJ+HuYGrduKXzT+Sn/W4pfr0mGIs84QfKTnKbZLRckkWT1I3lgN7TFMkU3
- 1/AQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2hpeOygSM4MByOTJs9+Ug8LlWzNSlLbX22eoS38E7wvyFyBLlyRnZlzDDQZJuO3dajrm/H71ls1CVu7cFXTYwQLARlo4=
-X-Gm-Message-State: AOJu0YzEXu1ZngeTs/IMCHn7KhioLwAo+2QJW+cmA4jPugi0yPtC0Z+8
- zA6Lty8/ejEbRh0IFizZu4004aRddwEbeHPYD0u/SVYQV9E/NfaFd6can3wXMTVifEfWQy1yBzx
- TNMkE40nTzVbyvWoynyDFYFsBMgXYX04AmiYgjg==
-X-Google-Smtp-Source: AGHT+IFZRZdQbGM2QETddK5D0uyMD/72MA62SJVOkINntmHAAG+laCqSBzT6nP80eg1XWB0b95YnHzUb7Sadw2HRYNM=
-X-Received: by 2002:a25:ac42:0:b0:de4:2bc:c715 with SMTP id
- r2-20020a25ac42000000b00de402bcc715mr4797289ybd.8.1713344036496; Wed, 17 Apr
- 2024 01:53:56 -0700 (PDT)
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=i6a3N0nyKoGYSQgYz9kUx0mr3M6JMBE0z1FYtDYXOVNzGcfCdAu47sove8V+9BoJbU
+ QyNF7B4GDDGYFVbpGE1YFcAdZTT4lTHBh3OCEfE3+E/kk3c0MuUtQciU593MRYT58F0j
+ HxkabzHqd9MrrZnHik3DTNckqvCsojCw+7KaxnzZgJsVaKgSt/0obZpe53IYh8HI4hfg
+ zcFE9IH4d/4rgFkxwMgCGZcUXEnpg1a17u9JBQUW4ZQHD4P/EUBR5YgjYldv6WXUyqYk
+ ETLwd9TkdWjOgWkKisWm98rVNDRplLi88ai1iMVDH1oHEVpnrp4+H+DI+UBt5h2ALUgv
+ 4mqQ==
+X-Gm-Message-State: AOJu0YyfUoerLmOAOCDd4CELz4wQScyTKN2+D1P0GbwfHz5rXyF5bAfQ
+ lNxueM8r2ENNos8+KgVNY5pdoNUkI3A4Y/k04W3JPUcAmqZibUJ71YlPNRA2pvsWS5o5QOfyerj
+ de0OGY7d13vsczq7xUGQhtfdDkOcbkPUrElYn6N3RUQUXR0KMMNTSwGWTKq+k
+X-Received: by 2002:a05:6512:694:b0:518:e2db:4f8b with SMTP id
+ t20-20020a056512069400b00518e2db4f8bmr9027469lfe.37.1713344883120; 
+ Wed, 17 Apr 2024 02:08:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGsJ1esffExV5sRtYhfBw0kNL/l6z5eV0McRGdahjcSD/GfBoDpjsI/5RVqpp79VgP9f9f5ug==
+X-Received: by 2002:a05:6512:694:b0:518:e2db:4f8b with SMTP id
+ t20-20020a056512069400b00518e2db4f8bmr9027446lfe.37.1713344882724; 
+ Wed, 17 Apr 2024 02:08:02 -0700 (PDT)
+Received: from avogadro.local ([176.206.84.58])
+ by smtp.gmail.com with ESMTPSA id
+ jw10-20020a170906e94a00b00a523be5897bsm6476812ejb.103.2024.04.17.02.08.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Apr 2024 02:08:01 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: qemu-devel@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 0/3] target/i386/cpu: Misc cleanup for warning message
+Date: Wed, 17 Apr 2024 10:34:06 +0200
+Message-ID: <20240417083407.1811888-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240327103951.3853425-1-zhao1.liu@linux.intel.com>
+References: 
 MIME-Version: 1.0
-References: <20240405000707.2670063-1-horenchuang@bytedance.com>
- <20240405000707.2670063-3-horenchuang@bytedance.com>
- <20240405150244.00004b49@Huawei.com>
- <CAKPbEqpGM_nR+LKbsoFTviBZaKUKYqJ3zbJp9EOCJAGvuPy6aQ@mail.gmail.com>
- <20240409171204.00001710@Huawei.com>
- <CAKPbEqry55fc51hQ8oUC8so=PD_wWoJMEPiR-eq03BgB5q86Yw@mail.gmail.com>
- <20240410175114.00001e1e@Huawei.com>
-In-Reply-To: <20240410175114.00001e1e@Huawei.com>
-From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Date: Wed, 17 Apr 2024 01:53:45 -0700
-Message-ID: <CAKPbEqqbTdyGy_q4P9QeB0x6qzx_XZvnP-oED=A1VW407JabDw@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v11 2/2] memory tier: create CPUless memory
- tiers after obtaining HMAT info
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>,
- Gregory Price <gourry.memverge@gmail.com>, 
- aneesh.kumar@linux.ibm.com, mhocko@suse.com, tj@kernel.org, 
- john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
- Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
- Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
- Alistair Popple <apopple@nvidia.com>,
- Srinivasulu Thanneeru <sthanneeru@micron.com>, 
- SeongJae Park <sj@kernel.org>, Dan Williams <dan.j.williams@intel.com>, 
- Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, 
- Andrew Morton <akpm@linux-foundation.org>, nvdimm@lists.linux.dev, 
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Linux Memory Management List <linux-mm@kvack.org>,
- "Ho-Ren (Jack) Chuang" <horenc@vt.edu>, 
- "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org, 
- Hao Xiang <hao.xiang@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,149 +101,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 10, 2024 at 9:51=E2=80=AFAM Jonathan Cameron
-<Jonathan.Cameron@huawei.com> wrote:
->
-> On Tue, 9 Apr 2024 12:02:31 -0700
-> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
->
-> > Hi Jonathan,
-> >
-> > On Tue, Apr 9, 2024 at 9:12=E2=80=AFAM Jonathan Cameron
-> > <Jonathan.Cameron@huawei.com> wrote:
-> > >
-> > > On Fri, 5 Apr 2024 15:43:47 -0700
-> > > "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
-> > >
-> > > > On Fri, Apr 5, 2024 at 7:03=E2=80=AFAM Jonathan Cameron
-> > > > <Jonathan.Cameron@huawei.com> wrote:
-> > > > >
-> > > > > On Fri,  5 Apr 2024 00:07:06 +0000
-> > > > > "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> wrote:
-> > > > >
-> > > > > > The current implementation treats emulated memory devices, such=
- as
-> > > > > > CXL1.1 type3 memory, as normal DRAM when they are emulated as n=
-ormal memory
-> > > > > > (E820_TYPE_RAM). However, these emulated devices have different
-> > > > > > characteristics than traditional DRAM, making it important to
-> > > > > > distinguish them. Thus, we modify the tiered memory initializat=
-ion process
-> > > > > > to introduce a delay specifically for CPUless NUMA nodes. This =
-delay
-> > > > > > ensures that the memory tier initialization for these nodes is =
-deferred
-> > > > > > until HMAT information is obtained during the boot process. Fin=
-ally,
-> > > > > > demotion tables are recalculated at the end.
-> > > > > >
-> > > > > > * late_initcall(memory_tier_late_init);
-> > > > > > Some device drivers may have initialized memory tiers between
-> > > > > > `memory_tier_init()` and `memory_tier_late_init()`, potentially=
- bringing
-> > > > > > online memory nodes and configuring memory tiers. They should b=
-e excluded
-> > > > > > in the late init.
-> > > > > >
-> > > > > > * Handle cases where there is no HMAT when creating memory tier=
-s
-> > > > > > There is a scenario where a CPUless node does not provide HMAT =
-information.
-> > > > > > If no HMAT is specified, it falls back to using the default DRA=
-M tier.
-> > > > > >
-> > > > > > * Introduce another new lock `default_dram_perf_lock` for adist=
- calculation
-> > > > > > In the current implementation, iterating through CPUlist nodes =
-requires
-> > > > > > holding the `memory_tier_lock`. However, `mt_calc_adistance()` =
-will end up
-> > > > > > trying to acquire the same lock, leading to a potential deadloc=
-k.
-> > > > > > Therefore, we propose introducing a standalone `default_dram_pe=
-rf_lock` to
-> > > > > > protect `default_dram_perf_*`. This approach not only avoids de=
-adlock
-> > > > > > but also prevents holding a large lock simultaneously.
-> > > > > >
-> > > > > > * Upgrade `set_node_memory_tier` to support additional cases, i=
-ncluding
-> > > > > >   default DRAM, late CPUless, and hot-plugged initializations.
-> > > > > > To cover hot-plugged memory nodes, `mt_calc_adistance()` and
-> > > > > > `mt_find_alloc_memory_type()` are moved into `set_node_memory_t=
-ier()` to
-> > > > > > handle cases where memtype is not initialized and where HMAT in=
-formation is
-> > > > > > available.
-> > > > > >
-> > > > > > * Introduce `default_memory_types` for those memory types that =
-are not
-> > > > > >   initialized by device drivers.
-> > > > > > Because late initialized memory and default DRAM memory need to=
- be managed,
-> > > > > > a default memory type is created for storing all memory types t=
-hat are
-> > > > > > not initialized by device drivers and as a fallback.
-> > > > > >
-> > > > > > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> > > > > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > > > > > Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
-> > > > >
-> > > > > Hi - one remaining question. Why can't we delay init for all node=
-s
-> > > > > to either drivers or your fallback late_initcall code.
-> > > > > It would be nice to reduce possible code paths.
-> > > >
-> > > > I try not to change too much of the existing code structure in
-> > > > this patchset.
-> > > >
-> > > > To me, postponing/moving all memory tier registrations to
-> > > > late_initcall() is another possible action item for the next patchs=
-et.
-> > > >
-> > > > After tier_mem(), hmat_init() is called, which requires registering
-> > > > `default_dram_type` info. This is when `default_dram_type` is neede=
-d.
-> > > > However, it is indeed possible to postpone the latter part,
-> > > > set_node_memory_tier(), to `late_init(). So, memory_tier_init() can
-> > > > indeed be split into two parts, and the latter part can be moved to
-> > > > late_initcall() to be processed together.
-> > > >
-> > > > Doing this all memory-type drivers have to call late_initcall() to
-> > > > register a memory tier. I=E2=80=99m not sure how many they are?
-> > > >
-> > > > What do you guys think?
-> > >
-> > > Gut feeling - if you are going to move it for some cases, move it for
-> > > all of them.  Then we only have to test once ;)
-> > >
-> > > J
-> >
-> > Thank you for your reminder! I agree~ That's why I'm considering
-> > changing them in the next patchset because of the amount of changes.
-> > And also, this patchset already contains too many things.
->
-> Makes sense.  (Interestingly we are reaching the same conclusion
-> for the thread that motivated suggesting bringing them all together
-> in the first place!)
->
-> Get things work in a clean fashion, then consider moving everything to
-> happen at the same time to simplify testing etc.
-Hi Jonathan,
+Queued, thanks.
 
-Thank you and I will do! Could you please take another look and see if
-there are any further changes needed for this patchset? If everything
-looks good to you, could you please also provide a 'Reviewed-by' for
-this patch?
+Paolo
 
-Per discussion, I'm going to prepare another patchset "memory tier
-initialization path optimization" and will send it out once ready.
-
->
-> Jonathan
-
---=20
-Best regards,
-Ho-Ren (Jack) Chuang
-=E8=8E=8A=E8=B3=80=E4=BB=BB
 
