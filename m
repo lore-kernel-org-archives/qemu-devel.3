@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552FBC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 19:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9735C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 19:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxAmw-0005pS-9z; Wed, 17 Apr 2024 15:17:46 -0400
+	id 1rxAnZ-0006AG-EE; Wed, 17 Apr 2024 15:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rxAms-0005p0-2s
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:17:43 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1rxAnW-00068S-8N
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:18:22 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rxAmq-0004vx-Gw
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:17:41 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2a28b11db68so101316a91.2
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 12:17:40 -0700 (PDT)
+ id 1rxAnU-000507-G2
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:18:21 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1e834159f40so815285ad.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 12:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713381459; x=1713986259; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713381499; x=1713986299; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Wkrau5uvSUE0y2z0MWLdblr7U2jCAsGg7QRkrScPcUY=;
- b=tqzU8MmWtzOfEIf7ro3wjPRnVVctK+S7WRAr881ES6tkf4s7SqYSbEwkGdcDvpv2U1
- LzCOmLGJy1aPnQ7C3i15bLTq14UFAeVxYtMtEta/mmBfW23mTHy4AZ0LZLw+Pwd6GZ+z
- 0aScuGqVR16AogyMzoqURydilCOi2LIvAwcR9cfqEz50NK7odoYPRmD+N9yPjnhR3599
- h0bKBVQg5z3UAHUuArXakg39q9DFv4Cx51zyaKnQaWmTQl9Gh8Sd4T5IYdZ1B8s5mC8t
- qtBxb8YLHy3+XlGfeJhfJkn4DXpAwJyHyXH+Ydzt8EB6nGw/TopukV3SeFoH98hUqn7M
- fXzA==
+ bh=PonsRkuxnlAlm/OvJIsuXhpZ2JhdJmFVpt9gNl1w0GQ=;
+ b=OM5VOsKzwh+WyFo2L65qnaus4B5hDXdb1AAmvD3Rlop/CIxmrtM0cSTDVJ7RV2LfBY
+ f/GDHkxQs+PY5Lb+qK/YnQIc0YS5/e72lu48KfWIGMhPuAF5RYAaUCcQGk7Zcqfh9lw2
+ vzaF56xNhjQ5Fc6QfmJOZn+BWPCngT5uWdnkm8lnz7nIezrjCnFXvSvks7VsLXECGDYR
+ /sRGy4kGyrfX8tDfCYE/kwRO6wzX+ZB1wc03fzL5cd/p6q+dQtqLETrD+8DvgLPeNVLp
+ t0v54+ToYw+YvF20uUD3i/MHcyExQVlhXw9LLS3TcdCI1aIyUTfRwOutvZ2baymn65zg
+ YwqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713381459; x=1713986259;
+ d=1e100.net; s=20230601; t=1713381499; x=1713986299;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Wkrau5uvSUE0y2z0MWLdblr7U2jCAsGg7QRkrScPcUY=;
- b=Bs+8qrhZlZW13zWNhc4Ma3OAyJwOYURKil7SUTQUC/lda0HCXzhTzKYYw7U3wkREbx
- dUt0NuZ5YfpKFBACPfob/cXtIYOI+z01aoSec3wJzMBwglwr09ufNtvE7NzpNdKpWiqr
- fVM5mjP2geVle+2S0iR4tarXoOSJc7pqmnMNag4rA48fG9XRjgJmHMQ4GHrFBOB0mCtX
- ve77dXBowXY7+krnEEC/r2kFnDZSjMl3lwBoLqdAhQJxO4rHkvIVWoyF1xW7knoySxYH
- cFkC2gtg8EyK7yV2xnVc8PXW8lqYlfW0czDgJVv2e6ZJ/zHNDAUOqy1gTrbM+oQT6hYP
- X8fw==
+ bh=PonsRkuxnlAlm/OvJIsuXhpZ2JhdJmFVpt9gNl1w0GQ=;
+ b=Y1+fuJltc5+8+H1UluWvZnexUGOmFw6C4MmKB59945+WOCMv9w6CIcovdDg9jZE78A
+ KvMvMU6Vra3E/Qk4JX4LVKTGrR+c8HXnGF2f1nDv6KULkJ6nEmNdFTsiHWaRUuymN/HS
+ qZgpyqGaWvk7TYrBlCbvuKNfKVf/bLBakWSXBNf1HkvLENq4IBH974f/w/etAOtEHdgu
+ Z53+bfrS4jfuWVK68DOKOwv2eHhtp4Fwn4sAYNwvAjdNkAwQr0ym5J6nqQVPd6k+2WIe
+ oxKBYkZmbqDU/rLEToiQh4T8aJzSERDJXSLNHcu9pQsuNzDJPqWlPIwohfb4CWmVNyar
+ iN6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8O7ipvx8BdcCyU5DmDYOK66vgUCqOO/A8OiXBpgRRuJL+YhFInnCmE/k5/e3bECezJyVRgDAht7GXbM4hSzzAfadVnAg=
-X-Gm-Message-State: AOJu0YzNM69BsORphkiN8Z9aToxqnnB8v7EJa1DLLbmpGo5uGUMZwX0+
- j3buMmWlldXLDfk64C5dUp/mifixTgxlmh/dcHXqrRwzY4IuT4gs0gnLMPqug20=
-X-Google-Smtp-Source: AGHT+IHz9nXKPCKN5hphbQrrDKmr0fzJLUo9MHAdWsLFZrwTiCcNy0nra6s82VASePPCd3xSmbnNsQ==
-X-Received: by 2002:a17:90a:6b07:b0:2a2:579e:652f with SMTP id
- v7-20020a17090a6b0700b002a2579e652fmr312563pjj.27.1713381459137; 
- Wed, 17 Apr 2024 12:17:39 -0700 (PDT)
+ AJvYcCWl2VzR6ez7J08z04gZbfOtosLGKH4w2a0E0gcYSQtCgxKMv1TI24U3iie0TItIEdlKqrS/QN+DuaACS05Orur4zIWuHi4=
+X-Gm-Message-State: AOJu0Yyd/W6ViajrMD5GB7I8I2UbGEbGoO5r8ZGEGq16RdlcdGiINcp0
+ hJ4c9/pP/mNb6zNYJP7X1hhumx1l2ybwR4Dk7RoefbGn77S59BerabYEd7m5ZNg=
+X-Google-Smtp-Source: AGHT+IE6OgvZe4+QRg4y4g+/VT3yImd715QCTa0e3y5DvQw4Wl1sr3TpckpwWB3vgmQc2ob6ySLmTg==
+X-Received: by 2002:a17:903:8c3:b0:1e0:b9d0:f6b with SMTP id
+ lk3-20020a17090308c300b001e0b9d00f6bmr540501plb.68.1713381499023; 
+ Wed, 17 Apr 2024 12:18:19 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- bt19-20020a17090af01300b002a2b06cbe46sm9467pjb.22.2024.04.17.12.17.38
+ d16-20020a170903231000b001e4881fbec8sm11956811plh.36.2024.04.17.12.18.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Apr 2024 12:17:38 -0700 (PDT)
-Message-ID: <490e0a75-b8d5-48a4-950d-594a33eb950a@linaro.org>
-Date: Wed, 17 Apr 2024 12:17:36 -0700
+ Wed, 17 Apr 2024 12:18:18 -0700 (PDT)
+Message-ID: <cc6159f4-e51b-4ed7-bcf3-9ab179b53565@linaro.org>
+Date: Wed, 17 Apr 2024 12:18:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/21] semihosting/guestfd: Remove unused
- 'semihosting/uaccess.h' header
+Subject: Re: [PATCH 12/21] target/ppc/excp_helper: Avoid 'abi_ptr' in system
+ emulation
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
+Cc: Nicholas Piggin <npiggin@gmail.com>, Thomas Huth <thuth@redhat.com>
 References: <20240417182806.69446-1-philmd@linaro.org>
- <20240417182806.69446-11-philmd@linaro.org>
+ <20240417182806.69446-13-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240417182806.69446-11-philmd@linaro.org>
+In-Reply-To: <20240417182806.69446-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,14 +101,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/17/24 11:27, Philippe Mathieu-Daudé wrote:
-> Nothing in guestfd.c requires "semihosting/uaccess.h" nor "qemu.h".
+> 'abi_ptr' is a user specific type. The system emulation
+> equivalent is 'target_ulong'. Use it in ppc_ldl_code()
+> to emphasis this is not an user emulation function.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Anton Johansson<anjo@rev.ng>
-> Message-Id:<20231212123401.37493-8-philmd@linaro.org>
+> Acked-by: Nicholas Piggin<npiggin@gmail.com>
+> Reviewed-by: Thomas Huth<thuth@redhat.com>
+> Message-Id:<20231211212003.21686-18-philmd@linaro.org>
 > ---
->   semihosting/guestfd.c | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
+>   target/ppc/excp_helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
