@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4FBBC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 11:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C76E9C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 11:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx33m-0002sj-Uy; Wed, 17 Apr 2024 07:02:38 -0400
+	id 1rx36I-0005Ce-GJ; Wed, 17 Apr 2024 07:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rx33h-0002rf-M5; Wed, 17 Apr 2024 07:02:33 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rx33d-0002Xh-GK; Wed, 17 Apr 2024 07:02:33 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-2331bef249eso2343122fac.3; 
- Wed, 17 Apr 2024 04:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713351747; x=1713956547; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2JpUOIgzA1JTzV1HLr3vRQ74H0aTEGvYnf1DNk7+YIM=;
- b=UCcOe9wsfBksJwegnJMATZnhRar2nKzNUUEyPVr9+QoiHS8h4KrHFxMowFKX6eM9iZ
- PDJbnkLj4d8vqVACmS8pczC3lwveNy0KxqQZaRU13kd9Op8bBmiQfcbrPPu7LzsOjOq4
- 5I0che+CLHMU5A/PDDngpwkFXHn4tFpFsMPIfYGA5+HPuxIxjbgo3kBEHfV+YQTQ9lDD
- vTgxiYa3RycIiW87VPNfAl/ud65thBJnx8kpL1DGLaktdNfjSyexNDHaqbpIeB5qgO4O
- LK7fDwwKwOyxYgHEM6N/TM2NLZL9OeLplIg90U/7Z3Y2JNuK6Yy4oZkg9ECC0iVODGKh
- ktNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713351747; x=1713956547;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2JpUOIgzA1JTzV1HLr3vRQ74H0aTEGvYnf1DNk7+YIM=;
- b=wMU6oDlaJ0revPJK8x+iKpZBo2zgKt6BV6rEwlXSDv0D7k73ihXb3OYrtSeaDRxVBd
- 9eywrw7c/XclZxPdMrBkwRsC3uGuNisr63ikToNrBY21QIUDIGi2gD+CNfTmwFjDiXqm
- Kki28Sj1/QXpvhY5SIMUZfjze20PeHb2jI0nO6rkTG9MeT7KLRJiC+ZDK/pti5sQPJG8
- JN7Nqzz1H94eyaFP0UBbRBzBKQ58dSv2xG8jO35HMX6Ubn7F4VG6WelzPXQHI4IuGhji
- 04cK+mvcOtmSqV3NCng/OHo6ST/DMc1Q9AUPkkTD2HZ6PWkCxXHlGqN2XwWxIMXTVbzq
- 3OJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7DwgAICHczfGn33MmJ87h9dULzFKz5jibZDhohhLRnOYmaBg6toNRu/rTlZiTMxNRCZS6Sf92qk2GlH35oJMeB6IR5WI=
-X-Gm-Message-State: AOJu0Yw0I7K3Q1O2No7vSK5V90YGkd6UWcaQwQRg/9DVMlcKIn0aC8PQ
- sSaI7ReWigOdu0ACXqTY3A7ltXaEbsk9K9y66pZ+wD7rV46abUCJ7MY1TQ==
-X-Google-Smtp-Source: AGHT+IHZN5LfnglmlFHPfuymlkVc0MJD8hZZ0bXeBnbYy/b2NeTAREQ/CDMAE6f6NUJ5afdRfVlCeA==
-X-Received: by 2002:a05:6870:b28e:b0:22e:b736:786d with SMTP id
- c14-20020a056870b28e00b0022eb736786dmr18095403oao.31.1713351747476; 
- Wed, 17 Apr 2024 04:02:27 -0700 (PDT)
-Received: from wheely.local0.net ([1.146.62.55])
- by smtp.gmail.com with ESMTPSA id
- g5-20020a056a0023c500b006e6be006637sm10407787pfc.135.2024.04.17.04.02.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Apr 2024 04:02:26 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Subject: [PATCH 1/2] ppc/pnv: Begin a more complete ADU LPC model for POWER9/10
-Date: Wed, 17 Apr 2024 21:02:12 +1000
-Message-ID: <20240417110215.808926-2-npiggin@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240417110215.808926-1-npiggin@gmail.com>
-References: <20240417110215.808926-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rx36H-0005AS-2K
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 07:05:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rx36D-00033h-3P
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 07:05:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713351906;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gHDT09jvq4Sqx8QCUj80x2oWpDK6JpnDqdrPxJNy9so=;
+ b=L5wj28e/hsGVzI5FZbsAtR+NWlO7WFRP6nNv04KmXgRIvCbcz8dNMBboxxsGyuB91cpJ32
+ FPr/1crO7uYLUTpqwxNlFaAaOf6CVwC8c4HY5PTbAqFodOmdGZrwcln3+oyG/xTblf/sWw
+ 1l4W3Mf9J4geqousQVqSVSiJ6PF/GXA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-522-ABCuWk7iNdyIgpvx56Fkhw-1; Wed, 17 Apr 2024 07:05:03 -0400
+X-MC-Unique: ABCuWk7iNdyIgpvx56Fkhw-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0189F88CE84;
+ Wed, 17 Apr 2024 11:05:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.142])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 12A1140C5C7;
+ Wed, 17 Apr 2024 11:05:01 +0000 (UTC)
+Date: Wed, 17 Apr 2024 12:04:55 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com
+Subject: Re: [PATCH v6 1/3] ui/console: Introduce dpy_gl_qemu_dmabuf_get_..()
+ helpers
+Message-ID: <Zh-s1wqWU8c0GHS8@redhat.com>
+References: <20240417040954.55641-1-dongwon.kim@intel.com>
+ <20240417040954.55641-2-dongwon.kim@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20240417040954.55641-2-dongwon.kim@intel.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,348 +83,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This implements a framework for an ADU unit model.
+On Tue, Apr 16, 2024 at 09:09:52PM -0700, dongwon.kim@intel.com wrote:
+> From: Dongwon Kim <dongwon.kim@intel.com>
+> 
+> This commit introduces dpy_gl_qemu_dmabuf_get_... helpers to extract
+> specific fields from the QemuDmaBuf struct. It also updates all instances
+> where fields within the QemuDmaBuf struct are directly accessed, replacing
+> them with calls to these new helper functions.
+> 
+> v6: fix typos in helper names in ui/spice-display.c
+> 
+> Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> ---
+>  include/ui/console.h            |  17 +++++
+>  hw/display/vhost-user-gpu.c     |   6 +-
+>  hw/display/virtio-gpu-udmabuf.c |   7 +-
+>  hw/vfio/display.c               |  15 +++--
+>  ui/console.c                    | 116 +++++++++++++++++++++++++++++++-
+>  ui/dbus-console.c               |   9 ++-
+>  ui/dbus-listener.c              |  43 +++++++-----
+>  ui/egl-headless.c               |  23 +++++--
+>  ui/egl-helpers.c                |  47 +++++++------
+>  ui/gtk-egl.c                    |  48 ++++++++-----
+>  ui/gtk-gl-area.c                |  37 ++++++----
+>  ui/gtk.c                        |   6 +-
+>  ui/spice-display.c              |  50 ++++++++------
+>  13 files changed, 316 insertions(+), 108 deletions(-)
+> 
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index 0bc7a00ac0..6292943a82 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -358,6 +358,23 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
+>                            bool have_hot, uint32_t hot_x, uint32_t hot_y);
+>  void dpy_gl_cursor_position(QemuConsole *con,
+>                              uint32_t pos_x, uint32_t pos_y);
+> +
+> +int32_t dpy_gl_qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf);
+> +uint64_t dpy_gl_qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_x(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
+> +uint32_t dpy_gl_qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
+> +bool dpy_gl_qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
+> +void *dpy_gl_qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
+> +int32_t dpy_gl_qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
+> +bool dpy_gl_qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
+> +bool dpy_gl_qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
 
-The ADU unit actually implements XSCOM, which is the bridge between MMIO
-and PIB. However it also includes control and status registers and other
-functions that are exposed as PIB (xscom) registers.
+IMHO these method names don't need a "dpy_gl_" prefix on
+them. Since they're accessors for the "QemuDmaBuf" struct,
+I think its sufficient to just have "qemu_dmabuf_" as the
+name prefix, making names more compact.
 
-To keep things simple, pnv_xscom.c remains the XSCOM bridge
-implementation, and pnv_adu.c implements the ADU registers and other
-functions.
+The console.{h,c} files are a bit of a dumping ground for
+UI code. While QemuDmaBuf was just a struct with direct
+field access that's OK.
 
-So far, just the ADU no-op registers in the pnv_xscom.c default handler
-are moved over to the adu model.
+With turning this into a more of an object with accessors,
+I think it would also be desirable to move the struct
+definition and all its methods into separate ui/dmabuf.{c,h}
+files, so its fully self-contained.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- include/hw/ppc/pnv_adu.h   |  34 ++++++++++++
- include/hw/ppc/pnv_chip.h  |   3 +
- include/hw/ppc/pnv_xscom.h |   6 ++
- hw/ppc/pnv.c               |  16 ++++++
- hw/ppc/pnv_adu.c           | 111 +++++++++++++++++++++++++++++++++++++
- hw/ppc/pnv_xscom.c         |   9 ---
- hw/ppc/meson.build         |   1 +
- hw/ppc/trace-events        |   4 ++
- 8 files changed, 175 insertions(+), 9 deletions(-)
- create mode 100644 include/hw/ppc/pnv_adu.h
- create mode 100644 hw/ppc/pnv_adu.c
-
-diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
-new file mode 100644
-index 0000000000..9dc91857a9
---- /dev/null
-+++ b/include/hw/ppc/pnv_adu.h
-@@ -0,0 +1,34 @@
-+/*
-+ * QEMU PowerPC PowerNV Emulation of some ADU behaviour
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
-+
-+#ifndef PPC_PNV_ADU_H
-+#define PPC_PNV_ADU_H
-+
-+#include "hw/ppc/pnv.h"
-+#include "hw/qdev-core.h"
-+
-+#define TYPE_PNV_ADU "pnv-adu"
-+
-+OBJECT_DECLARE_TYPE(PnvADU, PnvADUClass, PNV_ADU)
-+
-+struct PnvADU {
-+    DeviceState xd;
-+
-+    MemoryRegion xscom_regs;
-+};
-+
-+struct PnvADUClass {
-+    DeviceClass parent_class;
-+
-+    int xscom_ctrl_size;
-+    int xscom_mbox_size;
-+    const MemoryRegionOps *xscom_ctrl_ops;
-+    const MemoryRegionOps *xscom_mbox_ops;
-+};
-+
-+#endif /* PPC_PNV_ADU_H */
-diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-index 8589f3291e..96e50a2983 100644
---- a/include/hw/ppc/pnv_chip.h
-+++ b/include/hw/ppc/pnv_chip.h
-@@ -2,6 +2,7 @@
- #define PPC_PNV_CHIP_H
- 
- #include "hw/pci-host/pnv_phb4.h"
-+#include "hw/ppc/pnv_adu.h"
- #include "hw/ppc/pnv_chiptod.h"
- #include "hw/ppc/pnv_core.h"
- #include "hw/ppc/pnv_homer.h"
-@@ -77,6 +78,7 @@ struct Pnv9Chip {
-     PnvChip      parent_obj;
- 
-     /*< public >*/
-+    PnvADU       adu;
-     PnvXive      xive;
-     Pnv9Psi      psi;
-     PnvLpcController lpc;
-@@ -110,6 +112,7 @@ struct Pnv10Chip {
-     PnvChip      parent_obj;
- 
-     /*< public >*/
-+    PnvADU       adu;
-     PnvXive2     xive;
-     Pnv9Psi      psi;
-     PnvLpcController lpc;
-diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
-index 6209e18492..e93d310e79 100644
---- a/include/hw/ppc/pnv_xscom.h
-+++ b/include/hw/ppc/pnv_xscom.h
-@@ -82,6 +82,9 @@ struct PnvXScomInterfaceClass {
- #define PNV_XSCOM_PBCQ_SPCI_BASE  0x9013c00
- #define PNV_XSCOM_PBCQ_SPCI_SIZE  0x5
- 
-+#define PNV9_XSCOM_ADU_BASE       0x0090000
-+#define PNV9_XSCOM_ADU_SIZE       0x55
-+
- /*
-  * Layout of the XSCOM PCB addresses (POWER 9)
-  */
-@@ -128,6 +131,9 @@ struct PnvXScomInterfaceClass {
- #define PNV9_XSCOM_PEC_PCI_STK1   0x140
- #define PNV9_XSCOM_PEC_PCI_STK2   0x180
- 
-+#define PNV10_XSCOM_ADU_BASE      0x0090000
-+#define PNV10_XSCOM_ADU_SIZE      0x55
-+
- /*
-  * Layout of the XSCOM PCB addresses (POWER 10)
-  */
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 6e3a5ccdec..5869aac89a 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1530,6 +1530,7 @@ static void pnv_chip_power9_instance_init(Object *obj)
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
-     int i;
- 
-+    object_initialize_child(obj, "adu",  &chip9->adu, TYPE_PNV_ADU);
-     object_initialize_child(obj, "xive", &chip9->xive, TYPE_PNV_XIVE);
-     object_property_add_alias(obj, "xive-fabric", OBJECT(&chip9->xive),
-                               "xive-fabric");
-@@ -1640,6 +1641,13 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /* ADU */
-+    if (!qdev_realize(DEVICE(&chip9->adu), NULL, errp)) {
-+        return;
-+    }
-+    pnv_xscom_add_subregion(chip, PNV9_XSCOM_ADU_BASE,
-+                            &chip9->adu.xscom_regs);
-+
-     pnv_chip_quad_realize(chip9, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-@@ -1806,6 +1814,7 @@ static void pnv_chip_power10_instance_init(Object *obj)
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(obj);
-     int i;
- 
-+    object_initialize_child(obj, "adu",  &chip10->adu, TYPE_PNV_ADU);
-     object_initialize_child(obj, "xive", &chip10->xive, TYPE_PNV_XIVE2);
-     object_property_add_alias(obj, "xive-fabric", OBJECT(&chip10->xive),
-                               "xive-fabric");
-@@ -1898,6 +1907,13 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /* ADU */
-+    if (!qdev_realize(DEVICE(&chip10->adu), NULL, errp)) {
-+        return;
-+    }
-+    pnv_xscom_add_subregion(chip, PNV10_XSCOM_ADU_BASE,
-+                            &chip10->adu.xscom_regs);
-+
-     pnv_chip_power10_quad_realize(chip10, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-diff --git a/hw/ppc/pnv_adu.c b/hw/ppc/pnv_adu.c
-new file mode 100644
-index 0000000000..5bd33a3841
---- /dev/null
-+++ b/hw/ppc/pnv_adu.c
-@@ -0,0 +1,111 @@
-+/*
-+ * QEMU PowerPC PowerNV ADU unit
-+ *
-+ * The ADU unit actually implements XSCOM, which is the bridge between MMIO
-+ * and PIB. However it also includes control and status registers and other
-+ * functions that are exposed as PIB (xscom) registers.
-+ *
-+ * To keep things simple, pnv_xscom.c remains the XSCOM bridge
-+ * implementation, and pnv_adu.c implements the ADU registers and other
-+ * functions.
-+ *
-+ * Copyright (c) 2024, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+
-+#include "hw/qdev-properties.h"
-+#include "hw/ppc/pnv.h"
-+#include "hw/ppc/pnv_adu.h"
-+#include "hw/ppc/pnv_chip.h"
-+#include "hw/ppc/pnv_xscom.h"
-+#include "trace.h"
-+
-+static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
-+{
-+    PnvADU *adu = PNV_ADU(opaque);
-+    uint32_t offset = addr >> 3;
-+    uint64_t val = 0;
-+
-+    switch (offset) {
-+    case 0x18:     /* Receive status reg */
-+    case 0x12:     /* log register */
-+    case 0x13:     /* error register */
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "ADU Unimplemented read register: Ox%08x\n",
-+                                                                     offset);
-+    }
-+
-+    trace_pnv_adu_xscom_read(addr, val);
-+
-+    return val;
-+}
-+
-+static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
-+                                unsigned width)
-+{
-+    PnvADU *adu = PNV_ADU(opaque);
-+    uint32_t offset = addr >> 3;
-+
-+    trace_pnv_adu_xscom_write(addr, val);
-+
-+    switch (offset) {
-+    case 0x18:     /* Receive status reg */
-+    case 0x12:     /* log register */
-+    case 0x13:     /* error register */
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "ADU Unimplemented write register: Ox%08x\n",
-+                                                                     offset);
-+    }
-+}
-+
-+const MemoryRegionOps pnv_adu_xscom_ops = {
-+    .read = pnv_adu_xscom_read,
-+    .write = pnv_adu_xscom_write,
-+    .valid.min_access_size = 8,
-+    .valid.max_access_size = 8,
-+    .impl.min_access_size = 8,
-+    .impl.max_access_size = 8,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static void pnv_adu_realize(DeviceState *dev, Error **errp)
-+{
-+    PnvADU *adu = PNV_ADU(dev);
-+
-+    /* XScom regions for ADU registers */
-+    pnv_xscom_region_init(&adu->xscom_regs, OBJECT(dev),
-+                          &pnv_adu_xscom_ops, adu, "xscom-adu",
-+                          PNV9_XSCOM_ADU_SIZE);
-+}
-+
-+static void pnv_adu_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = pnv_adu_realize;
-+    dc->desc = "PowerNV ADU";
-+    dc->user_creatable = false;
-+}
-+
-+static const TypeInfo pnv_adu_type_info = {
-+    .name          = TYPE_PNV_ADU,
-+    .parent        = TYPE_DEVICE,
-+    .instance_size = sizeof(PnvADU),
-+    .class_init    = pnv_adu_class_init,
-+    .class_size    = sizeof(PnvADUClass),
-+};
-+
-+static void pnv_adu_register_types(void)
-+{
-+    type_register_static(&pnv_adu_type_info);
-+}
-+
-+type_init(pnv_adu_register_types);
-diff --git a/hw/ppc/pnv_xscom.c b/hw/ppc/pnv_xscom.c
-index a17816d072..d192bbe2c2 100644
---- a/hw/ppc/pnv_xscom.c
-+++ b/hw/ppc/pnv_xscom.c
-@@ -75,11 +75,6 @@ static uint64_t xscom_read_default(PnvChip *chip, uint32_t pcba)
-     case PRD_P9_IPOLL_REG_MASK:
-     case PRD_P9_IPOLL_REG_STATUS:
- 
--        /* P9 xscom reset */
--    case 0x0090018:     /* Receive status reg */
--    case 0x0090012:     /* log register */
--    case 0x0090013:     /* error register */
--
-         /* P8 xscom reset */
-     case 0x2020007:     /* ADU stuff, log register */
-     case 0x2020009:     /* ADU stuff, error register */
-@@ -119,10 +114,6 @@ static bool xscom_write_default(PnvChip *chip, uint32_t pcba, uint64_t val)
-     case 0x1010c03:     /* PIBAM FIR MASK */
-     case 0x1010c04:     /* PIBAM FIR MASK */
-     case 0x1010c05:     /* PIBAM FIR MASK */
--        /* P9 xscom reset */
--    case 0x0090018:     /* Receive status reg */
--    case 0x0090012:     /* log register */
--    case 0x0090013:     /* error register */
- 
-         /* P8 xscom reset */
-     case 0x2020007:     /* ADU stuff, log register */
-diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
-index d096636ee7..932ade7b21 100644
---- a/hw/ppc/meson.build
-+++ b/hw/ppc/meson.build
-@@ -44,6 +44,7 @@ endif
- ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
-   'pnv.c',
-   'pnv_xscom.c',
-+  'pnv_adu.c',
-   'pnv_core.c',
-   'pnv_i2c.c',
-   'pnv_lpc.c',
-diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
-index bf29bbfd4b..1f125ce841 100644
---- a/hw/ppc/trace-events
-+++ b/hw/ppc/trace-events
-@@ -95,6 +95,10 @@ vof_write(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
- vof_avail(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
- vof_claimed(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
- 
-+# pnv_adu.c
-+pnv_adu_xscom_read(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
-+pnv_adu_xscom_write(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
-+
- # pnv_chiptod.c
- pnv_chiptod_xscom_read(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
- pnv_chiptod_xscom_write(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 0x%" PRIx64
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
