@@ -4,62 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F47EC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 12:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A110BC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 12:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx3xM-0001Zt-Rt; Wed, 17 Apr 2024 08:00:05 -0400
+	id 1rx48v-0004V7-AW; Wed, 17 Apr 2024 08:12:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rx3xK-0001ZZ-Hi
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:00:02 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rx48t-0004Ut-33
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:11:59 -0400
+Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rx3xH-00055A-Ef
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:00:02 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VKKD05Wb7z6H6mb;
- Wed, 17 Apr 2024 19:57:52 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id A0CE41406AC;
- Wed, 17 Apr 2024 19:59:52 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 17 Apr
- 2024 12:59:52 +0100
-Date: Wed, 17 Apr 2024 12:59:51 +0100
-To: fan <nifan.cxl@gmail.com>
-CC: Gregory Price <gregory.price@memverge.com>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>, <ira.weiny@intel.com>,
- <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
- <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>,
- <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v6 10/12] hw/mem/cxl_type3: Add dpa range validation for
- accesses to DC regions
-Message-ID: <20240417125951.00001db1@Huawei.com>
-In-Reply-To: <Zh6pNVIZFMQadmOm@debian>
-References: <20240325190339.696686-1-nifan.cxl@gmail.com>
- <20240325190339.696686-11-nifan.cxl@gmail.com>
- <Zhm7ssKVGdGlR9Iq@memverge.com> <Zh1lk8FWmf0oI7RM@debian>
- <20240416160056.0000325c@Huawei.com> <Zh6pNVIZFMQadmOm@debian>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rx48n-0007Ru-MH
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:11:58 -0400
+Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rx48c-0006kY-P1; Wed, 17 Apr 2024 14:11:42 +0200
+Message-ID: <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
+Date: Wed, 17 Apr 2024 14:11:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_RFC_00/26=5D_Multifd_=F0=9F=94=80_device_s?=
+ =?UTF-8?Q?tate_transfer_support_with_VFIO_consumer?=
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
+ <Zh-KF72Fe9oV6tfT@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <Zh-KF72Fe9oV6tfT@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=37.28.154.113;
+ envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,158 +104,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Apr 2024 09:37:09 -0700
-fan <nifan.cxl@gmail.com> wrote:
+On 17.04.2024 10:36, Daniel P. Berrangé wrote:
+> On Tue, Apr 16, 2024 at 04:42:39PM +0200, Maciej S. Szmigiero wrote:
+>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>
+>> VFIO device state transfer is currently done via the main migration channel.
+>> This means that transfers from multiple VFIO devices are done sequentially
+>> and via just a single common migration channel.
+>>
+>> Such way of transferring VFIO device state migration data reduces
+>> performance and severally impacts the migration downtime (~50%) for VMs
+>> that have multiple such devices with large state size - see the test
+>> results below.
+>>
+>> However, we already have a way to transfer migration data using multiple
+>> connections - that's what multifd channels are.
+>>
+>> Unfortunately, multifd channels are currently utilized for RAM transfer
+>> only.
+>> This patch set adds a new framework allowing their use for device state
+>> transfer too.
+>>
+>> The wire protocol is based on Avihai's x-channel-header patches, which
+>> introduce a header for migration channels that allow the migration source
+>> to explicitly indicate the migration channel type without having the
+>> target deduce the channel type by peeking in the channel's content.
+>>
+>> The new wire protocol can be switch on and off via migration.x-channel-header
+>> option for compatibility with older QEMU versions and testing.
+>> Switching the new wire protocol off also disables device state transfer via
+>> multifd channels.
+>>
+>> The device state transfer can happen either via the same multifd channels
+>> as RAM data is transferred, mixed with RAM data (when
+>> migration.x-multifd-channels-device-state is 0) or exclusively via
+>> dedicated device state transfer channels (when
+>> migration.x-multifd-channels-device-state > 0).
+>>
+>> Using dedicated device state transfer multifd channels brings further
+>> performance benefits since these channels don't need to participate in
+>> the RAM sync process.
+> 
+> I'm not convinced there's any need to introduce the new "channel header"
+> protocol messages. The multifd channels already have an initialization
+> message that is extensible to allow extra semantics to be indicated.
+> So if we want some of the multifd channels to be reserved for device
+> state, we could indicate that via some data in the MultiFDInit_t
+> message struct.
 
-> On Tue, Apr 16, 2024 at 04:00:56PM +0100, Jonathan Cameron wrote:
-> > On Mon, 15 Apr 2024 10:37:00 -0700
-> > fan <nifan.cxl@gmail.com> wrote:
-> >  =20
-> > > On Fri, Apr 12, 2024 at 06:54:42PM -0400, Gregory Price wrote: =20
-> > > > On Mon, Mar 25, 2024 at 12:02:28PM -0700, nifan.cxl@gmail.com wrote=
-:   =20
-> > > > > From: Fan Ni <fan.ni@samsung.com>
-> > > > >=20
-> > > > > All dpa ranges in the DC regions are invalid to access until an e=
-xtent
-> > > > > covering the range has been added. Add a bitmap for each region to
-> > > > > record whether a DC block in the region has been backed by DC ext=
-ent.
-> > > > > For the bitmap, a bit in the bitmap represents a DC block. When a=
- DC
-> > > > > extent is added, all the bits of the blocks in the extent will be=
- set,
-> > > > > which will be cleared when the extent is released.
-> > > > >=20
-> > > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > > Signed-off-by: Fan Ni <fan.ni@samsung.com>
-> > > > > ---
-> > > > >  hw/cxl/cxl-mailbox-utils.c  |  6 +++
-> > > > >  hw/mem/cxl_type3.c          | 76 +++++++++++++++++++++++++++++++=
-++++++
-> > > > >  include/hw/cxl/cxl_device.h |  7 ++++
-> > > > >  3 files changed, 89 insertions(+)
-> > > > >=20
-> > > > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-util=
-s.c
-> > > > > index 7094e007b9..a0d2239176 100644
-> > > > > --- a/hw/cxl/cxl-mailbox-utils.c
-> > > > > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > > > > @@ -1620,6 +1620,7 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(c=
-onst struct cxl_cmd *cmd,
-> > > > > =20
-> > > > >          cxl_insert_extent_to_extent_list(extent_list, dpa, len, =
-NULL, 0);
-> > > > >          ct3d->dc.total_extent_count +=3D 1;
-> > > > > +        ct3_set_region_block_backed(ct3d, dpa, len);
-> > > > > =20
-> > > > >          ent =3D QTAILQ_FIRST(&ct3d->dc.extents_pending);
-> > > > >          cxl_remove_extent_from_extent_list(&ct3d->dc.extents_pen=
-ding, ent);   =20
-> > > >=20
-> > > > while looking at the MHD code, we had decided to "reserve" the bloc=
-ks in
-> > > > the bitmap in the call to `qmp_cxl_process_dynamic_capacity` in ord=
-er to
-> > > > prevent a potential double-allocation (basically we need to sanity =
-check
-> > > > that two hosts aren't reserving the region PRIOR to the host being
-> > > > notified).
-> > > >=20
-> > > > I did not see any checks in the `qmp_cxl_process_dynamic_capacity` =
-path
-> > > > to prevent pending extents from being double-allocated.  Is this an
-> > > > explicit choice?
-> > > >=20
-> > > > I can see, for example, why you may want to allow the following in =
-the
-> > > > pending list: [Add X, Remove X, Add X].  I just want to know if thi=
-s is
-> > > > intentional or not. If not, you may consider adding a pending check
-> > > > during the sanity check phase of `qmp_cxl_process_dynamic_capacity`
-> > > >=20
-> > > > ~Gregory   =20
-> > >=20
-> > > First, for remove request, pending list is not involved. See cxl r3.1,
-> > > 9.13.3.3. Pending basically means "pending to add".=20
-> > > So for the above example, in the pending list, you can see [Add x, ad=
-d x] if the
-> > > event is not processed in time.
-> > > Second, from the spec, I cannot find any text saying we cannot issue
-> > > another add extent X if it is still pending. =20
-> >=20
-> > I think there is text saying that the capacity is not released for reuse
-> > by the device until it receives a response from the host.   Whilst
-> > it's not explicit on offers to the same host, I'm not sure that matters.
-> > So I don't think it is suppose to queue multiple extents... =20
->=20
-> Are you suggesting we add a check here to reject the second add when the
-> first one is still pending?
+The reason for introducing x-channel-header was to avoid having to deduce
+the channel type by peeking in the channel's content - where any channel
+that does not start with QEMU_VM_FILE_MAGIC is currently treated as a
+multifd one.
 
-Yes.  The capacity is not back with the device to reissue.
-On an MH-MLD/SLD we'd need to prevent it being added (not shared) to multip=
-le hosts,
-this is kind of the temporal equivalent of that.
+But if this isn't desired then, as you say, the multifd channel type can
+be indicated by using some unused field of the MultiFDInit_t message.
 
->=20
-> Currently, we do not allow releasing an extent when it is still pending,
-> which aligns with the case you mentioned above "not release for reuse", I
-> think.
-> Can the second add mean a retry instead of reuse?=20
-No - or at least the device should not be doing that.  The FM might try
-again, but only once it knows try 1 failed. For reasons of this aligning
-with MHD case where you definitely can't offer it to more than one host,
-I think we should not do it.  Whether we should put any effort into blocking
-it is a different question.  User error :)
+Of course, this would still keep the QEMU_VM_FILE_MAGIC heuristic then.
 
-Note, the host must not remove a log entry until it has dealt with it
-(sent a response) so there is no obvious reason to bother with a retry.
-Maybe a booting host would reject all offered extents (because it's not rea=
-dy
-for them yet), but then I'd want the FM to explicitly decide to tell the de=
-vice
-to offer gain.
+> That said, the idea of reserving channels specifically for VFIO doesn't
+> make a whole lot of sense to me either.
+> 
+> Once we've done the RAM transfer, and are in the switchover phase
+> doing device state transfer, all the multifd channels are idle.
+> We should just use all those channels to transfer the device state,
+> in parallel.  Reserving channels just guarantees many idle channels
+> during RAM transfer, and further idle channels during vmstate
+> transfer.
+> 
+> IMHO it is more flexible to just use all available multifd channel
+> resources all the time.
 
-Whilst this is a custom interface, the equivalent FM API does say.
+The reason for having dedicated device state channels is that they
+provide lower downtime in my tests.
 
-"The command, with selection policy Enable Shared Access, shall also fail w=
-ith Invalid
-Input under the following conditions:
-=E2=80=A2 When the specified region is not Sharable
-=E2=80=A2 When the tagged capacity is already mapped to any Host ID via a n=
-on-Sharable
-region
-=E2=80=A2 When the tagged capacity cannot be added to the requested region =
-due to deviceimposed
-restrictions
-=E2=80=A2 When the same tagged capacity is currently accessible by the same=
- LD"
+With either 15 or 11 mixed multifd channels (no dedicated device state
+channels) I get a downtime of about 1250 msec.
 
-Little fuzzy because of the whole pending vs 'mapped / accessible' wording =
-but
-I think intent is you can't send again until first one is dealt with.
+Comparing that with 15 total multifd channels / 4 dedicated device
+state channels that give downtime of about 1100 ms it means that using
+dedicated channels gets about 14% downtime improvement.
 
-Jonathan
+> Again the 'MultiFDPacket_t' struct has
+> both 'flags' and unused fields, so it is extensible to indicate
+> that is it being used for new types of data.
 
->=20
-> Fan
->=20
-> >=20
-> >  =20
-> > > From the kernel side, if the first one is accepted, the second one wi=
-ll
-> > > get rejected, and there is no issue there.
-> > > If the first is reject for some reason, the second one can get
-> > > accepted or rejected and do not need to worry about the first one.
-> > >=20
-> > >=20
-> > > Fan
-> > >  =20
-> >  =20
+Yeah, that's what MULTIFD_FLAG_DEVICE_STATE in packet header already
+does in this patch set - it indicates that the packet contains device
+state, not RAM data.
+  
+> With regards,
+> Daniel
+
+Best regards,
+Maciej
 
 
