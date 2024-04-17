@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F13C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 19:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18569C001CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 20:06:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxB4a-0005t2-9v; Wed, 17 Apr 2024 15:36:00 -0400
+	id 1rxBXo-00059D-Bd; Wed, 17 Apr 2024 16:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rxB4W-0005s3-SF
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:35:56 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <nadav.amit@gmail.com>)
+ id 1rxBXm-00058p-UU
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 16:06:10 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rxB4U-0003Us-Cp
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:35:56 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e857e571f3so1205145ad.0
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 12:35:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nadav.amit@gmail.com>)
+ id 1rxBXl-0000Wr-6k
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 16:06:10 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a53f131d9deso1994966b.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 13:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713382552; x=1713987352; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zrPNVHFTcKs6Px5fsftAPHY2pCBoKGkUMoZFiNY5rTs=;
- b=CS+jal4JfSXdZy8uql1CTUcU/qo0CsaFfITwyJ9dJNmLrsHyeFghB40SsyBLjcYSc+
- 052Y8t7acn1GB/KZ6TjjCCvSqfgGQFG0+vP9MOFPFaSvIqdP8GIY4RAG6iMV0APyyoBy
- XKwYxXEAyxkcBsWMgcViNvV9MvVLuJH0TfRBg1N4+SYcmPWaVnjGyuxgkD8W1mJdPr3r
- nQm3TQPfvDV3RlKw5ZLsbihZmGWfa792nW0CJyf5mKjWn5QMRpd5Af/Pdnef7IwRfxSc
- 19YwBEJ0rWHCQKKZtQrxKkREXvg/HjV8xb7qmIyJJGDgk+H1z9ktJBd9ecsMTmL5KWfl
- Vdlw==
+ d=gmail.com; s=20230601; t=1713384367; x=1713989167; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uKiKitg2sB72IethOtqoFcn2jOyCOSOHkFwh1FSKSjQ=;
+ b=cWdWO7PDsDfF4xAtzvv8ZwgquaxW6LkdHvtuVf9hmidbtuXN1fYMzQxjwRoi/Z5Ci3
+ vKvFKd4cPNAJFVfGF9pSxGoqLfxx60ZslV4RRXDTNJipND1lqkGszwvrxjRHJ6+fR/po
+ dN/AY3Nvphc2ZhXWJnXmLkeCrSPj55Ln7+97wsVeZ+Fg3qGf4NqndzuNLbw9ABdmVSva
+ fR9y/Xd1gYwsm3ZPBU6c3RxBW455W5omw3Epui0xNfKKMsmIu/Rv0sWC8UPY/rn5ey2m
+ e5npREqFyxAFMDwiEVdNTNf8cwtlc10dmXPfHSBMlq7G1kWT0hb/DT4uRS5O68I3Xjxq
+ DSSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713382552; x=1713987352;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zrPNVHFTcKs6Px5fsftAPHY2pCBoKGkUMoZFiNY5rTs=;
- b=vtLIFostv7kVhxsvnzEBEVOOC0sRA3b/I4omX8sl2vhn7ejKMPhoyHqRSYngJ71mOY
- iJsrbTjg/YW3OR5EqOsb2ZR3hefZHdPnX15qZ+HhD/RUaXSrxHaPkb/LuSkKe326oFu2
- BkOWFeqY7eThJqDT33omws+mrFTXbgim19jfZPPpURE2I6erqGQZj+AMI2yYu75/OKyy
- 2PJaVE6Jnx5CkHY8fRp/J7RTGrWjyxvPh/wWt8qXZFs41AS7XahNWnqlYp68uQC1MWH8
- zlmdreWJhPmgyqCLHf5n11Iwh4NPqd8WQbdRelqSBFCGa8p3w6/uu884GflP/5DJJeu0
- r1DQ==
+ d=1e100.net; s=20230601; t=1713384367; x=1713989167;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uKiKitg2sB72IethOtqoFcn2jOyCOSOHkFwh1FSKSjQ=;
+ b=Gx9DKuPbqSYXAJjMhFVTGr8fMwfXea4Oz7v/g8dtTcsS+Dr+u8bIP0oL8Skwlddn8z
+ o88KSjAVGfNE6lZs7iMNoPnjHq+29YifekERmbrO97I36ItoXJ+qW/OKrfpEBFvXr9EX
+ 2+pZiwV+GC2I3NObvwDw0mbrke0G8vELTuZgUEyiFFgevfgsH4Z4OZSr3D2LHm9JSDHO
+ oKovIiX13JMYuB1GtVkPWT4gBh9YWpChs5hpH/cWwu2cXsIHx7bSHx+TqUXzWbF4buFR
+ Xvp1KgoG5XkYnYeiff91IH35I+oFUsQyN4uyOcEHvah0p62DZoNNAqwzy4ACSg49dUne
+ 10/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXR84JVskAUYGrrUzTKpf9OCJ6MpznGo+NVbMEO9pEeHa+qGasnq9P1490Yl9Dde3Px4FeASIsRAzPZZoJgdBq0njen4ss=
-X-Gm-Message-State: AOJu0YwT+V5PGsptrBOijMlSwem7sem6+WV7S6pTOcPozotrPpRTaAUh
- iAWpCHOdeMFe8ZJCGqaQy40whAHpLewOY778q9vsnnUMwM+F51ej4SYODD9dIBaqJDaU1OK2IcB
- A
-X-Google-Smtp-Source: AGHT+IGvpTWDsVy6FzbF/W47q73axLBhH4+qotPRFCHdr2Nd/lcCf4hQ2cpfTc2WCmvKJ2Q1Aq2sWQ==
-X-Received: by 2002:a17:903:25d4:b0:1e2:a467:1b6b with SMTP id
- jc20-20020a17090325d400b001e2a4671b6bmr485012plb.16.1713382552454; 
- Wed, 17 Apr 2024 12:35:52 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ AJvYcCVNN37cOX1S3UxyZGZnRYrhnLhKj02yukKE0H0XGixZUo6+VswJchZgc9qqO6nXr3kgqtSlq78CawJUKodWCaRtND9/j3c=
+X-Gm-Message-State: AOJu0Yz0fgcyLMUXN3Hoha0k4QYDbChQ6uGh4DEoTpSKTdPuWPpKcaTg
+ stVFK3lWZFPdYDv9MXpokOClOImAmhM4e6xCVLqMlkhk3AKpO6Zb
+X-Google-Smtp-Source: AGHT+IGHaJ9Mbj8imP80Jh0I8YVQH3u7LRivoczvBAiJ90GsAwWyxPDS5onDP02DwngG3kfdHyvbZg==
+X-Received: by 2002:a17:906:36d1:b0:a52:4edb:6db7 with SMTP id
+ b17-20020a17090636d100b00a524edb6db7mr318508ejc.54.1713384367027; 
+ Wed, 17 Apr 2024 13:06:07 -0700 (PDT)
+Received: from smtpclient.apple ([132.69.239.36])
  by smtp.gmail.com with ESMTPSA id
- e7-20020a170902784700b001e797d47ee5sm5263882pln.235.2024.04.17.12.35.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Apr 2024 12:35:52 -0700 (PDT)
-Message-ID: <4be3aeb4-17a4-435b-86b6-b37216618f56@linaro.org>
-Date: Wed, 17 Apr 2024 12:35:50 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 20/21] exec/user: Do not include 'cpu.h' in 'abitypes.h'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-References: <20240417182806.69446-1-philmd@linaro.org>
- <20240417182806.69446-21-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240417182806.69446-21-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ q23-20020a170906a09700b00a519ec0a965sm8446140ejy.49.2024.04.17.13.06.05
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 17 Apr 2024 13:06:06 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
+Subject: Re: Add 'info pg' command to monitor
+From: Nadav Amit <nadav.amit@gmail.com>
+In-Reply-To: <6D6FB5C3-D73F-427B-93F1-BFD3311F2697@gmail.com>
+Date: Wed, 17 Apr 2024 23:05:51 +0300
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, dave@treblig.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <78AA0AA8-3ACA-4B8E-BC36-A0B939F3FF22@gmail.com>
+References: <20240415160818.2316599-1-porter@cs.unc.edu>
+ <CAFEAcA88myOeQwZ212q9R4EHBPpJbQ1qZYjuz6SS=HZbqS+NCQ@mail.gmail.com>
+ <fadb288a-4c44-42c9-b706-f5595d97f952@cs.unc.edu>
+ <CAFEAcA9Fe8TerNSrg_AfmpFZNL_4B9WV0OccFdLakJhtCN+m4A@mail.gmail.com>
+ <bff71578-42ad-4af0-9ba6-e0962dd73710@cs.unc.edu>
+ <6D6FB5C3-D73F-427B-93F1-BFD3311F2697@gmail.com>
+To: Don Porter <porter@cs.unc.edu>
+X-Mailer: Apple Mail (2.3774.500.171.1.1)
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=nadav.amit@gmail.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,25 +103,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/24 11:28, Philippe Mathieu-Daudé wrote:
-> "exec/user/abitypes.h" requires:
-> 
->   - "exec/cpu-defs.h"           (TARGET_LONG_BITS)
->   - "exec/tswap.h"              (tswap32)
-> 
-> In order to avoid "cpu.h", pick the minimum required headers.
-> 
-> Assert this user-specific header is only included from user
-> emulation.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Thomas Huth<thuth@redhat.com>
-> Message-Id:<20231212123401.37493-20-philmd@linaro.org>
-> ---
->   include/exec/user/abitypes.h | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+> On 17 Apr 2024, at 11:30, Nadav Amit <nadav.amit@gmail.com> wrote:
+>=20
+>=20
+>=20
+>> On 16 Apr 2024, at 21:11, Don Porter <porter@cs.unc.edu> wrote:
+>>=20
+>> On 4/16/24 13:03, Peter Maydell wrote:
+>>> On Tue, 16 Apr 2024 at 17:53, Don Porter <porter@cs.unc.edu> wrote:
+>>>> There is still a lot I am learning about the code base, but it =
+seems
+>>>> that qemu_get_guest_memory_mapping() does most of what one would =
+need.
+>>>> It currently only returns the "leaves" of the page table tree in a =
+list.
+>>>>=20
+>>>> What if I extend this function with an optional argument to either
+>>>> 1) return the interior nodes of the page table in additional lists =
+(and
+>>>> then parse+print in the monitor code), or
+>>>> 2) inline the monitor printing in the arch-specific hook, and pass =
+a
+>>>> flag to get_guest_memory_mapping() that turns on/off the statements =
+that
+>>>> pretty print the page tables?
+>>>>=20
+>>>> It looks like most CPUs implement this function as part of =
+checkpointing.
+>>> As far as I can see only x86 implements the get_memory_mapping
+>>> function, so once again somebody has added some bit of
+>>> functionality that does a walk of the page tables that is
+>>> x86 only and that shares no code with any of the other
+>>> page table walking code :-(
+>>=20
+>> My mistake - get_memory_mappings() is only implemented in x86.
+>>=20
+>=20
+> Hi Don,
+>=20
+> Your email popped up, so I just drop my 2 cents.
+>=20
+> If you are only interested in x86, you can just build a gdb script =
+that would
+> parse the page tables and present the data. It might be less =
+efficient, but
+> easier to maintain.
+
+Actually, I think I was wrong. It might not be easily done with GDB, but =
+I did
+something similar with QMP.
+
+You can have a look at some related code I once wrote for similar =
+purpose:
+https://nadav.amit.zone/downloads/pti_test.py
+
 
