@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2049DC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 16:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5E0C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 16:33:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx7ws-0007R1-0d; Wed, 17 Apr 2024 12:15:50 -0400
+	id 1rx8Df-0004YX-UR; Wed, 17 Apr 2024 12:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rx7wk-0007QJ-Pn
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 12:15:44 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rx8De-0004Xd-0Y
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 12:33:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rx7wh-0002pI-64
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 12:15:42 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rx8Da-0005t5-JI
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 12:33:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713370532;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=tLMaeaBGfoPn6e1LP2X1xxgGs+uDX+Uy+KNnrSE8u0A=;
- b=TXxWKHVMaJaloTpFMJ88cGOJI0eF3Nqatk+Xk4Gn/NWife66IwLcbyXK2XJL6tr65nASG0
- iJ6DCBVdzc9awctjMz+WgBIE3McJuRDeSddbR4oTHrgC/MNy6BdfGoXSNO/YqmrYAeJF+Z
- yBOxSGq/iz35bPrheCQPfujejXvZ5lE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1713371585;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fi4ZpGXmlYij7zH2evT0UvHnWnLyb71KaqbmQhjls6s=;
+ b=WkDZomaGOMK1CEmlLTIPXEFhHp+yTP02xMNU03Z0BmR83HLeGDwBjGKGOpGcEJfcpVSfpE
+ C9yjEA2cAAc4834Ty0U38OBic5BErj8APoq2dFE+5sBcaRaL+exniaRqc08hMjk3tWlo1v
+ 9Iw4Kwnwa9ZjrS95EtIDbWngGm5kYZk=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-I6PpvmjgMCqYOv7PFPV-Og-1; Wed, 17 Apr 2024 12:15:28 -0400
-X-MC-Unique: I6PpvmjgMCqYOv7PFPV-Og-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 404291049BCA;
- Wed, 17 Apr 2024 16:15:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.142])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0CBC62026962;
- Wed, 17 Apr 2024 16:15:24 +0000 (UTC)
-Date: Wed, 17 Apr 2024 17:15:19 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 04/13] tests: Update our CI to use CentOS Stream 9
- instead of 8
-Message-ID: <Zh_1l1v13QG6fNF3@redhat.com>
-References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-5-thuth@redhat.com>
+ us-mta-495-ZiluvimsOA2SqH4LbvYmkA-1; Wed, 17 Apr 2024 12:33:03 -0400
+X-MC-Unique: ZiluvimsOA2SqH4LbvYmkA-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-61ab173fe00so69252827b3.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 09:33:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713371583; x=1713976383;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fi4ZpGXmlYij7zH2evT0UvHnWnLyb71KaqbmQhjls6s=;
+ b=Yo2yxlzy0Mt6vuIfqAOgSgPfjHt1UAoe3QUzoGLZUkGAWEGlCG6Mej5N65kMUXFpMW
+ Rdc2+zpvR04oiZBXqSbFG3Bp+V0tNShQCwmuj6dXbzVIrYjT7vGkeaGIEYTWwqpmv0Q6
+ IMcARqZZCu5f+1rAQYjIofHRJp6M95OQQKZ+Lz/qeO49NqB4+Z2yNBODzzygCVaMfWFf
+ 6GwQSOCHbrvRzm/6MGjMSoVALf2c75+7aTbiPHiqw3DAjkE2lsiHqLS+Dnezx9ASxZk2
+ hD08MjZGTweNdiuHoAsGQs9nCu2Z/UX8eKef+F4zGDgFa3BNOX9P4fuma/jChW0g7OQ8
+ RjeQ==
+X-Gm-Message-State: AOJu0Yw80FandY7uTli808kM4aFfZQm14Y6rv2nBX+ldTzwSYnxdtd60
+ h/J+KMi0THxVppHdpY8gRL7gkBqb9KE+PvxZwaehzfiuAymfpEzm7gER3qQb0BfjI/i7SHg4fuI
+ A0PIpLNwX2Y8JN5h/Pi+DPhEMPaIVsyC+m9fqbnGL+PJo8A8ManPP0YJF4BJozVSDzXKJZlnvzP
+ h3HnXdDwERNbCoRGcu8QtAnRZJa4M=
+X-Received: by 2002:a05:690c:806:b0:615:a86:f77b with SMTP id
+ bx6-20020a05690c080600b006150a86f77bmr17004751ywb.26.1713371581352; 
+ Wed, 17 Apr 2024 09:33:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFWBHnRxh2hA+SlgG4N1eWtpb8iK4SSNT2DdI4GBC2RFnW/05hNlWLBAZ5iWrJP6D9ZXFJ+NZ1u5DYMaE0RVE=
+X-Received: by 2002:a05:690c:806:b0:615:a86:f77b with SMTP id
+ bx6-20020a05690c080600b006150a86f77bmr17004733ywb.26.1713371581007; Wed, 17
+ Apr 2024 09:33:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240412132415.282354-5-thuth@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20240329153155.17840-1-aidan_leuck@selinc.com>
+ <LV8PR22MB4551BA53C529BBFB006CF581E3082@LV8PR22MB4551.namprd22.prod.outlook.com>
+In-Reply-To: <LV8PR22MB4551BA53C529BBFB006CF581E3082@LV8PR22MB4551.namprd22.prod.outlook.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Wed, 17 Apr 2024 19:32:50 +0300
+Message-ID: <CAPMcbCrh8=gfOipGF+z_yHt_tng4KcqBaGoYH_jcFpVoU2n-8w@mail.gmail.com>
+Subject: Re: [PATCH v6 0/2] Implement SSH commands in QEMU GA for Windows
+To: Aidan Leuck <aidan_leuck@selinc.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000745fd406164d6814"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
+X-Spam_score_int: -36
+X-Spam_score: -3.7
 X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,354 +94,243 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 12, 2024 at 03:24:06PM +0200, Thomas Huth wrote:
-> RHEL 9 (and thus also the derivatives) are available since two years
-> now, so according to QEMU's support policy, we can drop the active
-> support for the previous major version 8 now.
-> Thus upgrade our CentOS Stream container to major version 9 now.
+--000000000000745fd406164d6814
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The second reason for doing this is that Centos Stream 8
-will go EOL in about 1 month:
+ Hi Aidan,
 
-https://blog.centos.org/2023/04/end-dates-are-coming-for-centos-stream-8-and-centos-linux-7/
+Thank you for these patches. Currently, I don't have any comments.
+I asked QE from my team to test this patch and wait for feedback.
+Also, QEMU is in the code freeze stage now, so I plan to merge all QGA
+patches after release.
 
-  "After May 31, 2024, CentOS Stream 8 will be archived
-   and no further updates will be provided."
-
-I'm seeking confirmation, but I suspect after that date we
-will be unable to build centos8 containers, as the package
-repos will likely be archived.
-
-RHEL-8 and other derivatives (Alma Linux, Rocky Linux,
-etc) remain actively supported by their respective vendors
-/ communities. Only CentOS Stream EOLs.
+Best Regards,
+Konstantin Kostiuk.
 
 
-This has implications for our CI on stable branches. It is
-valid for our stable branches to continue targetting the
-RHEL-8 family of distros, as a 2 year cutoff in our support
-policy is evaluated at time of each given major release.
+On Tue, Apr 16, 2024 at 5:46=E2=80=AFPM Aidan Leuck <aidan_leuck@selinc.com=
+> wrote:
 
-IOW, cherry-picking this change to switch to CentOS Stream
-9 is possibly inappropriate for stable branches.
+> Hello Konstantin,
+>
+> Is there anything you would like to see addresses in this patch before it
+> merges? This patch has been up for a bit and there hasn't been any activi=
+ty
+> in a while. Our team is motivated to get this merged, so let me know if
+> there is anything I can do on my end to make the review easier for you. I
+> understand as a maintainer your position is voluntary and unpaid so if yo=
+u
+> just haven't had time to look it over and validate it, I completely
+> understand.
+>
+> Thank you,
+> Aidan Leuck
+>
+> -----Original Message-----
+> From: aidan_leuck@selinc.com <aidan_leuck@selinc.com>
+> Sent: Friday, March 29, 2024 9:32 AM
+> To: qemu-devel@nongnu.org
+> Cc: kkostiuk@redhat.com; philmd@linaro.org; Aidan Leuck <
+> aidan_leuck@selinc.com>
+> Subject: [PATCH v6 0/2] Implement SSH commands in QEMU GA for Windows
+>
+> From: aidaleuc <aidan_leuck@selinc.com>
+>
+> This patch aims to implement guest-ssh-add-authorized-keys,
+> guest-ssh-remove-authorized-keys, and guest-ssh-get-authorized-keys for
+> Windows. This PR is based on Microsoft's OpenSSH implementation
+> https://github.com/PowerShell/Win32-OpenSSH. The guest agents will
+> support Kubevirt and allow guest agent propagation to be used to
+> dynamically inject SSH keys.
+>
+> https://kubevirt.io/user-guide/virtual_machines/accessing_virtual_machine=
+s/#dynamic-ssh-public-key-injection-via-qemu-guest-agent
+>
+> Changes since v5
+> * Fixed spurious formatting
+>
+> Changes since v4
+> * Moved qapi/error.h to commands-common-ssh.c
+> * Changed <qga-qapi-types.h> to "qapi/qapi-builtin-types.h"
+> * Removed stbool.h from commands-common-ssh.h
+>
+> Changes since v3
+> * Renamed commands-ssh-core.c/h to commands-common-ssh.c/h
+> * Fixed styling errors discovered by checkpatch.pl
+> * Moved some header includes to the commands-common-ssh.h
+>
+> Changes since v2
+> * Set indent to 4 spaces
+> * Moved all comments to C style comments
+> * Fixed a segfault bug in get_user_info function related to non zeroed
+> memory when a user did not exist.
+> * Used g_new0 instead of g_malloc where applicable
+> * Modified newlines in qapi-schema.json
+> * Added newlines at the end of all files
+> * GError functions now use g_autoptr instead of being freed manually.
+> * Refactored get_ssh_folder to remove goto error statement
+> * Fixed uninitialized variable pgDataW
+> * Modified patch order so that the generalization patch is the first patc=
+h
+> * Removed unnecssary ZeroMemory calls
+>
+> Changes since v1
+> * Fixed styling errors
+> * Moved from wcstombs to g_utf functions
+> * Removed unnecessary if checks on calls to free
+> * Fixed copyright headers
+> * Refactored create_acl functions into base function, admin function and
+> user function
+> * Removed unused user count function
+> * Split up refactor of existing code into a separate patch
+>
+> aidaleuc (2):
+>   Refactor common functions between POSIX and Windows implementation
+>   Implement SSH commands in QEMU GA for Windows
+>
+>  qga/commands-common-ssh.c  |  50 +++
+>  qga/commands-common-ssh.h  |  10 +
+>  qga/commands-posix-ssh.c   |  47 +--
+>  qga/commands-windows-ssh.c | 789 +++++++++++++++++++++++++++++++++++++
+>  qga/commands-windows-ssh.h |  26 ++
+>  qga/meson.build            |  12 +-
+>  qga/qapi-schema.json       |  17 +-
+>  7 files changed, 893 insertions(+), 58 deletions(-)  create mode 100644
+> qga/commands-common-ssh.c  create mode 100644 qga/commands-common-ssh.h
+> create mode 100644 qga/commands-windows-ssh.c  create mode 100644
+> qga/commands-windows-ssh.h
+>
+> --
+> 2.34.1
+>
+>
 
-lcitool supports Alma Linux as target, so we could switch
-stable branches to Alma Linux 8 if desired to keep CI
-coverage of RHEL-8 family.
+--000000000000745fd406164d6814
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thoughts ?
+<div dir=3D"ltr"><div>=C2=A0Hi Aidan,</div><div><br></div><div>Thank you fo=
+r these patches. Currently, I don&#39;t have any comments.</div>I asked QE =
+from my team to test this patch and wait for feedback.<div>Also, QEMU is in=
+ the code freeze stage now, so I plan to merge all QGA</div><div>patches af=
+ter release. <br></div><div><br></div><div><div><div><div><div><div><div di=
+r=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div=
+ dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</div></div></=
+div></div><br></div></div></div></div></div></div><br><div class=3D"gmail_q=
+uote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Apr 16, 2024 at 5:46=E2=
+=80=AFPM Aidan Leuck &lt;<a href=3D"mailto:aidan_leuck@selinc.com">aidan_le=
+uck@selinc.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">Hello Konstantin, <br>
+<br>
+Is there anything you would like to see addresses in this patch before it m=
+erges? This patch has been up for a bit and there hasn&#39;t been any activ=
+ity in a while. Our team is motivated to get this merged, so let me know if=
+ there is anything I can do on my end to make the review easier for you. I =
+understand as a maintainer your position is voluntary and unpaid so if you =
+just haven&#39;t had time to look it over and validate it, I completely und=
+erstand. <br>
+<br>
+Thank you,<br>
+Aidan Leuck<br>
+<br>
+-----Original Message-----<br>
+From: <a href=3D"mailto:aidan_leuck@selinc.com" target=3D"_blank">aidan_leu=
+ck@selinc.com</a> &lt;<a href=3D"mailto:aidan_leuck@selinc.com" target=3D"_=
+blank">aidan_leuck@selinc.com</a>&gt; <br>
+Sent: Friday, March 29, 2024 9:32 AM<br>
+To: <a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_blank">qemu-devel@n=
+ongnu.org</a><br>
+Cc: <a href=3D"mailto:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redha=
+t.com</a>; <a href=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@li=
+naro.org</a>; Aidan Leuck &lt;<a href=3D"mailto:aidan_leuck@selinc.com" tar=
+get=3D"_blank">aidan_leuck@selinc.com</a>&gt;<br>
+Subject: [PATCH v6 0/2] Implement SSH commands in QEMU GA for Windows<br>
+<br>
+From: aidaleuc &lt;<a href=3D"mailto:aidan_leuck@selinc.com" target=3D"_bla=
+nk">aidan_leuck@selinc.com</a>&gt;<br>
+<br>
+This patch aims to implement guest-ssh-add-authorized-keys, guest-ssh-remov=
+e-authorized-keys, and guest-ssh-get-authorized-keys for Windows. This PR i=
+s based on Microsoft&#39;s OpenSSH implementation <a href=3D"https://github=
+.com/PowerShell/Win32-OpenSSH" rel=3D"noreferrer" target=3D"_blank">https:/=
+/github.com/PowerShell/Win32-OpenSSH</a>. The guest agents will support Kub=
+evirt and allow guest agent propagation to be used to dynamically inject SS=
+H keys. <br>
+<a href=3D"https://kubevirt.io/user-guide/virtual_machines/accessing_virtua=
+l_machines/#dynamic-ssh-public-key-injection-via-qemu-guest-agent" rel=3D"n=
+oreferrer" target=3D"_blank">https://kubevirt.io/user-guide/virtual_machine=
+s/accessing_virtual_machines/#dynamic-ssh-public-key-injection-via-qemu-gue=
+st-agent</a><br>
+<br>
+Changes since v5<br>
+* Fixed spurious formatting <br>
+<br>
+Changes since v4<br>
+* Moved qapi/error.h to commands-common-ssh.c<br>
+* Changed &lt;qga-qapi-types.h&gt; to &quot;qapi/qapi-builtin-types.h&quot;=
+ <br>
+* Removed stbool.h from commands-common-ssh.h<br>
+<br>
+Changes since v3<br>
+* Renamed commands-ssh-core.c/h to commands-common-ssh.c/h<br>
+* Fixed styling errors discovered by <a href=3D"http://checkpatch.pl" rel=
+=3D"noreferrer" target=3D"_blank">checkpatch.pl</a><br>
+* Moved some header includes to the commands-common-ssh.h<br>
+<br>
+Changes since v2<br>
+* Set indent to 4 spaces<br>
+* Moved all comments to C style comments<br>
+* Fixed a segfault bug in get_user_info function related to non zeroed memo=
+ry when a user did not exist.<br>
+* Used g_new0 instead of g_malloc where applicable<br>
+* Modified newlines in qapi-schema.json<br>
+* Added newlines at the end of all files<br>
+* GError functions now use g_autoptr instead of being freed manually.<br>
+* Refactored get_ssh_folder to remove goto error statement<br>
+* Fixed uninitialized variable pgDataW<br>
+* Modified patch order so that the generalization patch is the first patch<=
+br>
+* Removed unnecssary ZeroMemory calls<br>
+<br>
+Changes since v1<br>
+* Fixed styling errors<br>
+* Moved from wcstombs to g_utf functions<br>
+* Removed unnecessary if checks on calls to free<br>
+* Fixed copyright headers<br>
+* Refactored create_acl functions into base function, admin function and us=
+er function<br>
+* Removed unused user count function<br>
+* Split up refactor of existing code into a separate patch<br>
+<br>
+aidaleuc (2):<br>
+=C2=A0 Refactor common functions between POSIX and Windows implementation<b=
+r>
+=C2=A0 Implement SSH commands in QEMU GA for Windows<br>
+<br>
+=C2=A0qga/commands-common-ssh.c=C2=A0 |=C2=A0 50 +++<br>
+=C2=A0qga/commands-common-ssh.h=C2=A0 |=C2=A0 10 +<br>
+=C2=A0qga/commands-posix-ssh.c=C2=A0 =C2=A0|=C2=A0 47 +--<br>
+=C2=A0qga/commands-windows-ssh.c | 789 ++++++++++++++++++++++++++++++++++++=
++<br>
+=C2=A0qga/commands-windows-ssh.h |=C2=A0 26 ++<br>
+=C2=A0qga/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 12 +=
+-<br>
+=C2=A0qga/qapi-schema.json=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 17 +-<br>
+=C2=A07 files changed, 893 insertions(+), 58 deletions(-)=C2=A0 create mode=
+ 100644 qga/commands-common-ssh.c=C2=A0 create mode 100644 qga/commands-com=
+mon-ssh.h=C2=A0 create mode 100644 qga/commands-windows-ssh.c=C2=A0 create =
+mode 100644 qga/commands-windows-ssh.h<br>
+<br>
+--<br>
+2.34.1<br>
+<br>
+</blockquote></div>
 
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  .gitlab-ci.d/buildtest.yml                    | 16 ++++-----
->  .gitlab-ci.d/container-core.yml               |  4 +--
->  .../{centos8.docker => centos9.docker}        | 34 +++++++------------
->  tests/lcitool/mappings.yml                    | 20 -----------
->  tests/lcitool/refresh                         |  2 +-
->  tests/vm/centos                               |  4 +--
->  6 files changed, 26 insertions(+), 54 deletions(-)
->  rename tests/docker/dockerfiles/{centos8.docker => centos9.docker} (82%)
-> 
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index cfdff175c3..9f34c650d6 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -158,9 +158,9 @@ build-system-centos:
->      - .native_build_job_template
->      - .native_build_artifact_template
->    needs:
-> -    job: amd64-centos8-container
-> +    job: amd64-centos9-container
->    variables:
-> -    IMAGE: centos8
-> +    IMAGE: centos9
->      CONFIGURE_ARGS: --disable-nettle --enable-gcrypt --enable-vfio-user-server
->        --enable-modules --enable-trace-backends=dtrace --enable-docs
->      TARGETS: ppc64-softmmu or1k-softmmu s390x-softmmu
-> @@ -242,7 +242,7 @@ check-system-centos:
->      - job: build-system-centos
->        artifacts: true
->    variables:
-> -    IMAGE: centos8
-> +    IMAGE: centos9
->      MAKE_CHECK_ARGS: check
->  
->  avocado-system-centos:
-> @@ -251,7 +251,7 @@ avocado-system-centos:
->      - job: build-system-centos
->        artifacts: true
->    variables:
-> -    IMAGE: centos8
-> +    IMAGE: centos9
->      MAKE_CHECK_ARGS: check-avocado
->      AVOCADO_TAGS: arch:ppc64 arch:or1k arch:s390x arch:x86_64 arch:rx
->        arch:sh4 arch:nios2
-> @@ -327,9 +327,9 @@ avocado-system-flaky:
->  build-tcg-disabled:
->    extends: .native_build_job_template
->    needs:
-> -    job: amd64-centos8-container
-> +    job: amd64-centos9-container
->    variables:
-> -    IMAGE: centos8
-> +    IMAGE: centos9
->    script:
->      - mkdir build
->      - cd build
-> @@ -651,9 +651,9 @@ build-tci:
->  build-without-defaults:
->    extends: .native_build_job_template
->    needs:
-> -    job: amd64-centos8-container
-> +    job: amd64-centos9-container
->    variables:
-> -    IMAGE: centos8
-> +    IMAGE: centos9
->      CONFIGURE_ARGS:
->        --without-default-devices
->        --without-default-features
-> diff --git a/.gitlab-ci.d/container-core.yml b/.gitlab-ci.d/container-core.yml
-> index 08f8450fa1..5459447676 100644
-> --- a/.gitlab-ci.d/container-core.yml
-> +++ b/.gitlab-ci.d/container-core.yml
-> @@ -1,10 +1,10 @@
->  include:
->    - local: '/.gitlab-ci.d/container-template.yml'
->  
-> -amd64-centos8-container:
-> +amd64-centos9-container:
->    extends: .container_job_template
->    variables:
-> -    NAME: centos8
-> +    NAME: centos9
->  
->  amd64-fedora-container:
->    extends: .container_job_template
-> diff --git a/tests/docker/dockerfiles/centos8.docker b/tests/docker/dockerfiles/centos9.docker
-> similarity index 82%
-> rename from tests/docker/dockerfiles/centos8.docker
-> rename to tests/docker/dockerfiles/centos9.docker
-> index ea618bf352..6cf47ce786 100644
-> --- a/tests/docker/dockerfiles/centos8.docker
-> +++ b/tests/docker/dockerfiles/centos9.docker
-> @@ -1,15 +1,14 @@
->  # THIS FILE WAS AUTO-GENERATED
->  #
-> -#  $ lcitool dockerfile --layers all centos-stream-8 qemu
-> +#  $ lcitool dockerfile --layers all centos-stream-9 qemu
->  #
->  # https://gitlab.com/libvirt/libvirt-ci
->  
-> -FROM quay.io/centos/centos:stream8
-> +FROM quay.io/centos/centos:stream9
->  
->  RUN dnf distro-sync -y && \
->      dnf install 'dnf-command(config-manager)' -y && \
-> -    dnf config-manager --set-enabled -y powertools && \
-> -    dnf install -y centos-release-advanced-virtualization && \
-> +    dnf config-manager --set-enabled -y crb && \
->      dnf install -y epel-release && \
->      dnf install -y epel-next-release && \
->      dnf install -y \
-> @@ -42,7 +41,6 @@ RUN dnf distro-sync -y && \
->          glib2-static \
->          glibc-langpack-en \
->          glibc-static \
-> -        glusterfs-api-devel \
->          gnutls-devel \
->          gtk3-devel \
->          hostname \
-> @@ -82,6 +80,7 @@ RUN dnf distro-sync -y && \
->          lzo-devel \
->          make \
->          mesa-libgbm-devel \
-> +        meson \
->          mtools \
->          ncurses-devel \
->          nettle-devel \
-> @@ -95,25 +94,25 @@ RUN dnf distro-sync -y && \
->          pixman-devel \
->          pkgconfig \
->          pulseaudio-libs-devel \
-> -        python38 \
-> -        python38-PyYAML \
-> -        python38-numpy \
-> -        python38-pip \
-> -        python38-setuptools \
-> -        python38-wheel \
-> +        python3 \
-> +        python3-PyYAML \
-> +        python3-numpy \
-> +        python3-pillow \
-> +        python3-pip \
-> +        python3-sphinx \
-> +        python3-sphinx_rtd_theme \
-> +        python3-tomli \
->          rdma-core-devel \
->          sed \
->          snappy-devel \
->          socat \
->          spice-protocol \
-> -        spice-server-devel \
->          swtpm \
->          systemd-devel \
->          systemtap-sdt-devel \
->          tar \
->          usbredir-devel \
->          util-linux \
-> -        virglrenderer-devel \
->          vte291-devel \
->          which \
->          xfsprogs-devel \
-> @@ -132,18 +131,11 @@ RUN dnf distro-sync -y && \
->      ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
->      ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
->  
-> -RUN /usr/bin/pip3.8 install \
-> -                    meson==0.63.2 \
-> -                    pillow \
-> -                    sphinx \
-> -                    sphinx-rtd-theme \
-> -                    tomli
-> -
->  ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
->  ENV LANG "en_US.UTF-8"
->  ENV MAKE "/usr/bin/make"
->  ENV NINJA "/usr/bin/ninja"
-> -ENV PYTHON "/usr/bin/python3.8"
-> +ENV PYTHON "/usr/bin/python3"
->  # As a final step configure the user (if env is defined)
->  ARG USER
->  ARG UID
-> diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-> index 407c03301b..03b974ad02 100644
-> --- a/tests/lcitool/mappings.yml
-> +++ b/tests/lcitool/mappings.yml
-> @@ -1,66 +1,50 @@
->  mappings:
->    flake8:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    meson:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3:
-> -    CentOSStream8: python38
->      OpenSUSELeap15: python311-base
->  
->    python3-PyYAML:
-> -    CentOSStream8: python38-PyYAML
->      OpenSUSELeap15:
->  
->    python3-devel:
-> -    CentOSStream8: python38-devel
->      OpenSUSELeap15: python311-devel
->  
->    python3-docutils:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3-numpy:
-> -    CentOSStream8: python38-numpy
->      OpenSUSELeap15:
->  
->    python3-opencv:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3-pillow:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3-pip:
-> -    CentOSStream8: python38-pip
->      OpenSUSELeap15: python311-pip
->  
->    python3-pillow:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3-selinux:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3-setuptools:
-> -    CentOSStream8: python38-setuptools
->      OpenSUSELeap15: python311-setuptools
->  
->    python3-sphinx:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3-sphinx-rtd-theme:
-> -    CentOSStream8:
->      OpenSUSELeap15:
->  
->    python3-sqlite3:
-> -    CentOSStream8: python38
->      OpenSUSELeap15: python311
->  
->    python3-tomli:
-> @@ -69,15 +53,11 @@ mappings:
->      Fedora:
->      Debian12:
->      OpenSUSELeap15:
-> -    # Not available for Python 3.8
-> -    CentOSStream8:
->  
->    python3-venv:
-> -    CentOSStream8: python38
->      OpenSUSELeap15: python311-base
->  
->    python3-wheel:
-> -    CentOSStream8: python38-wheel
->      OpenSUSELeap15: python311-pip
->  
->  pypi_mappings:
-> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-> index 692752a3df..24a735a3f2 100755
-> --- a/tests/lcitool/refresh
-> +++ b/tests/lcitool/refresh
-> @@ -125,7 +125,7 @@ try:
->      # Standard native builds
->      #
->      generate_dockerfile("alpine", "alpine-318")
-> -    generate_dockerfile("centos8", "centos-stream-8")
-> +    generate_dockerfile("centos9", "centos-stream-9")
->      generate_dockerfile("debian", "debian-12",
->                          trailer="".join(debian12_extras))
->      generate_dockerfile("fedora", "fedora-38")
-> diff --git a/tests/vm/centos b/tests/vm/centos
-> index 097a9ca14d..d25c8f8b5b 100755
-> --- a/tests/vm/centos
-> +++ b/tests/vm/centos
-> @@ -26,8 +26,8 @@ class CentosVM(basevm.BaseVM):
->          export SRC_ARCHIVE=/dev/vdb;
->          sudo chmod a+r $SRC_ARCHIVE;
->          tar -xf $SRC_ARCHIVE;
-> -        make docker-test-block@centos8 {verbose} J={jobs} NETWORK=1;
-> -        make docker-test-quick@centos8 {verbose} J={jobs} NETWORK=1;
-> +        make docker-test-block@centos9 {verbose} J={jobs} NETWORK=1;
-> +        make docker-test-quick@centos9 {verbose} J={jobs} NETWORK=1;
->      """
->  
->      def build_image(self, img):
-> -- 
-> 2.44.0
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+--000000000000745fd406164d6814--
 
 
