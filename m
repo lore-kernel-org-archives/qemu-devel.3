@@ -4,70 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C2DC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 09:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CB0C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 10:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx1ya-0003wZ-H9; Wed, 17 Apr 2024 05:53:12 -0400
+	id 1rx2Aa-00067l-Pu; Wed, 17 Apr 2024 06:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rx1yW-0003wG-P5
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 05:53:10 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <Frederic.Konrad@amd.com>)
+ id 1rx2AY-00067U-Fa; Wed, 17 Apr 2024 06:05:34 -0400
+Received: from mail-bn8nam12on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::601]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rx1yT-0006bv-Me
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 05:53:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713347585; x=1744883585;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Gmiv8CJvAfsyeWL890oM0jANwqJ7IahMpJswBixOBTI=;
- b=clDw7BVqdccAOfHAfB97yDbiiixfl/BTZKu+k++8LL6018uMtL+oJRmH
- ZoRHwQph2f8V/zsXL2F/AGFKVbgxduGwmVvcHr4HnXj39DerUKbA99EMZ
- dLuSjXAr7AsrAOFgfN6LZM2oCaXy+ubgRz+JT6vqhw63e1Yn0IjF+cqUQ
- 1gEf+b/HIht7fXv/YYKWYDSbbn4xBldFONj5sSWHGlsj0bHYylQTFXRuz
- Fh0BuH2syWsQo1jB6aofmMuKu+XkVyuZ04Tl9Ugal5n/LO40+JdpJy1pO
- tmlDa3+jmTdkO9kaUkdRhJ32gKPwf5dueGMyzvWwTvmHHqntTPLQuKC50 w==;
-X-CSE-ConnectionGUID: LXDdg7rESJmkdC0k2iqa7g==
-X-CSE-MsgGUID: EZlXO1h8RqK7Y3957UFT2w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="34215618"
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; d="scan'208";a="34215618"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Apr 2024 02:53:01 -0700
-X-CSE-ConnectionGUID: jkQv68NbTdWldSCFn9gYNA==
-X-CSE-MsgGUID: egQfIvcNSjqw1H4CIkS1Uw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; d="scan'208";a="27213075"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 17 Apr 2024 02:52:59 -0700
-Date: Wed, 17 Apr 2024 18:07:02 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Anthony Harivel <aharivel@redhat.com>
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, berrange@redhat.com,
- qemu-devel@nongnu.org, vchundur@redhat.com, rjarry@redhat.com
-Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
-Message-ID: <Zh+fRliUJ8sPcOpD@intel.com>
-References: <20240411121434.253353-1-aharivel@redhat.com>
- <20240411121434.253353-4-aharivel@redhat.com>
+ (Exim 4.90_1) (envelope-from <Frederic.Konrad@amd.com>)
+ id 1rx2AS-0000Up-2P; Wed, 17 Apr 2024 06:05:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IJkpkI6SsLFQ7YzdcnNAPefqAdCCxqM4jwqFJTxEUlmNb6NNaWRt14mHsmII0oH5lfxu9t4fBPTR1fvUNRFDbJx2KOZaQJkDAEGtbhttCTlLNE55OdS3hAHKNnWrZr4JLgUWKSGHD6laa7QhX9qUQ+xuGLwaa5Zdj+NPT/0Kqk84QbkPNXpM2xX7Pf4ZNeCyNDdcOcBXVZJUfYOK5A+OTg5sjKcWu8Nlu2jVEqgVlcDUkXEQGiPWX8tKOLAINfELLfDTWN+fied+TDrmcDT/A0UYG8V6CAAohjvHxQuoKRMstcqRkgxVjvLCK31t28/np1ovOZq4H1KCm3Rv0B+FAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LyY6LmOjawdAknZTNl6Cpf8/jm8c/JnuI+FHDcCXnOg=;
+ b=iI+cWQxaYVbcj9RGrVSHWNIXqTrib+Om2ebC/jqiuptxfpSPnUmPWsUIV3KmzbmIsqBxrFsh+RJux30DgKy3187M5QWO1R6YMWK2wUQZQK0GHBD0alnvfOazcJveTM5jrCIxqDCv9dWoRGuDW/NKqIMyUpdkDZJHPVvNEthe846tAKCL+MAgdVgLYdk6u0UgTxTTQK34bPNe2r0ICg0F8VOY4kChwvPnlZRqjhf99SOUcUTjWoHWOBa38s8Fcx7vvIhqlvolBCZcrUPKm5iMGtNQoctJ/DKb/ahRu7e5CJbLmGtnTVloZb32Z8ROkQAn4X1X4sTRl3Efk92r5u9lEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LyY6LmOjawdAknZTNl6Cpf8/jm8c/JnuI+FHDcCXnOg=;
+ b=h6BajUf3xg5D3AVNgubbylVv5M3wl/+DQNbZZfyH7rGfhpVW8pL5zGmXyPtxN8+5DSsQN6h5Qk38HLm0db9GdGMNE94g0EPPRn0zz2uoywKdTegy1qROjBOkRSVouwRmM+bRLMSJqQOwoYePQeir0xS1jpwwOrfOA0PTe7XGGx4=
+Received: from CY8PR12MB8411.namprd12.prod.outlook.com (2603:10b6:930:6e::6)
+ by LV8PR12MB9081.namprd12.prod.outlook.com (2603:10b6:408:188::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Wed, 17 Apr
+ 2024 10:05:22 +0000
+Received: from CY8PR12MB8411.namprd12.prod.outlook.com
+ ([fe80::b636:ea75:6169:bcef]) by CY8PR12MB8411.namprd12.prod.outlook.com
+ ([fe80::b636:ea75:6169:bcef%4]) with mapi id 15.20.7452.049; Wed, 17 Apr 2024
+ 10:05:22 +0000
+From: "Konrad, Frederic" <Frederic.Konrad@amd.com>
+To: Peter Maydell <peter.maydell@linaro.org>, Alexandra Diupina
+ <adiupina@astralinux.ru>
+CC: Alistair Francis <alistair@alistair23.me>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "sdl.qemu@linuxtesting.org"
+ <sdl.qemu@linuxtesting.org>
+Subject: RE: [PATCH RFC] prevent overflow in
+ xlnx_dpdma_desc_get_source_address()
+Thread-Topic: [PATCH RFC] prevent overflow in
+ xlnx_dpdma_desc_get_source_address()
+Thread-Index: AQHajLF1oJmPIDGPOkGnLE2+wkwuzLFkaOcAgAfZqrA=
+Date: Wed, 17 Apr 2024 10:05:22 +0000
+Message-ID: <CY8PR12MB8411CAB26257B5974DAE2CA2E60F2@CY8PR12MB8411.namprd12.prod.outlook.com>
+References: <20240412081328.11183-1-adiupina@astralinux.ru>
+ <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
+In-Reply-To: <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CY8PR12MB8411:EE_|LV8PR12MB9081:EE_
+x-ms-office365-filtering-correlation-id: 2a7bc9ed-99d2-419b-d486-08dc5ec5e51e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ryUWzbTDPVjMAlb9ZT+qnt4QFQGjL03+y0bR6gs5ErCvXgdzOCNfRGjUT1eK9egSJgDjI143G2aRypkjL97oYClvaYYfV1Fb+2k8hqIoN38c+N6VukKapyrLkPYd7rHGF1GfC2doW8FD0HY2GeXQNxAb7tKQofGXJe/o+48BJbduqM5W949XRM3olVkuFKkufC2ej5okpBXPG4x/+CDeLjXPmeBgpXNbDs7waKL2ILKW4Txo5f0gqSJHBWnu1ThRb2uhYold8i+MiCVn775xkGgz/TJ3rCi2TCif3XzFWdw1EEaCFQ148ZRvhA0nbmpIvGBvWETzzxo/3rVpGr6SfVtLWR0UbsNJtsih25nqpIMgwrKZOnpWvsvawNiIVEFAhw8fy7FHPTdLs3UDqcB8DOVBf/EkAEt6icaU0ucPb6loKtUKFPUYvK6hymnzh9SvVQxMfguOzBO8M/YMH002jaZeYgL6m3VkaFFRnOXvYMwPve/+8YS+QcOld6nBAIyne4UeX9I+Fz2X3uCoZqtHex4QtuOeG3ApRv75/C0Xeq4LUU54Zqga9HrSBQTmSWfePk0llohoznJxw4MAO5zQV6e8DW3JFVzqtGRXUosba2r5xMrWJg2Sz/UUSGXyeaH0VKwFAV9JysR7QTSvo7s3N3QiUjSoMFZqV2eu9JXP1f4bK7DtA1sEWQTOmAx++KTU4uHT55FcJ8wlE4jaJqIjrjhvwlOwiGIbSk2SF3zWLdo=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CY8PR12MB8411.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(366007)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cEh6VHFTTUMvTDZvaExycnhNYkZ3bWpkb0IyNXVPc3JZRzVxZWx0MlNxU3pV?=
+ =?utf-8?B?NnB4U2ttRWZQNURrc0Rtd0dVQnlCNFZ2cXlMWFMrQ2xrWkFiUUR0UTFjTUor?=
+ =?utf-8?B?ekUvRFY3T2ZLWnVkUDErMXhzU0N4SzlIQWFPYzE0dWVmdjdPVlRrVDQ1bXpq?=
+ =?utf-8?B?YzVYREV2eUtyR3NvRm9WODRSN1gwQzh1ZTVVZTMybStVeWNDVjZlUGtjZjMv?=
+ =?utf-8?B?aWkvdWVxMGtCQ0xJL1hjWStkbFQ4RXFxMFR6VCtiL3JsbWo2cWRhWEdIUGdk?=
+ =?utf-8?B?UE1YbE9rbEFyWnEwdC9uYlZ2c0pOcEFiOUJrZ2dTZE5tTXUvdHRnMEU2TDVk?=
+ =?utf-8?B?eDV6T29nVzVjRGtzNFM2RU5UZlNXb0VLZ1JIcTk4MERDUDJvMVM3SktqWUdy?=
+ =?utf-8?B?bllHeDk1dlhOdlJYSmFsQ2g5Um5oaE52ZXAvNjN2dWhkSzFxZlRxcjJMQUFO?=
+ =?utf-8?B?SnhUTjczZWQ0QXY5aTI3WVBNWHluR3Q0SEI5N01MQTZoczRENXZxeWliVnlK?=
+ =?utf-8?B?QU9nb0hacWZUbUMzK1pKYXNCbDRrVjljYWx2Nnp6NVFrZHZkVzlCa0ZlMzJm?=
+ =?utf-8?B?NXlTd0QxSVpFN0dkc3pwMjdSaFF1aDhoYjBudkRCWlMxRjc2Wm9KRXpYakR3?=
+ =?utf-8?B?OVdSaTBFbVEwczl2YWNSbTdiK1lUYWM0ZjhhM0ZRZ3N6M0x5TW14V1BCTHlS?=
+ =?utf-8?B?S3pwcmtyc1lyUmNJQlhiSm1RZDFnSzRlWUdHMnFiMFRIcDliZjNrcEtydlhl?=
+ =?utf-8?B?KzVUYUkySHE5S2NmUUJjYlQ3UktvbDBoZ0wzL2JXREhRVTVNSGFFdkM5N2tG?=
+ =?utf-8?B?RnlreEZTRFpTZ1dpV3UwN1VPbCtTYlpEQnNycE9Db2doc21DRzMzT3AxMFF2?=
+ =?utf-8?B?RW9odFlCYnh6KzA0VDlndkEzalJjZGhCSjVSbVUxclVRNnp6VmFpL05Ickov?=
+ =?utf-8?B?clpkUjNTTE9OSGtqUFdabXg1WWxEYTVrb0dRZm5lTEM1WjhOWVNSUlptMXR4?=
+ =?utf-8?B?OWgwU3ZzdEhscFdqMUJRQlAzRG93alNaUVRkK2RvWkxnUGNvNVVFMjRuYnpN?=
+ =?utf-8?B?eVhzY3g5OTFldUt4bm9vTW9qdUpqVVN6c1l4K0phMHBjbGRIR3pXSlRQakJG?=
+ =?utf-8?B?U0pmRU85VmhaeWNMUGZablp3UkMveDFQOGF6QktSTDc4bU5PakI2L2VZbFdJ?=
+ =?utf-8?B?L3dMYUcvZDV0WitjRTRPQWFsdnlhRG50MTZwV2NYRkEyNElsY0VNSzRRUWsy?=
+ =?utf-8?B?dUc4dmFVbm92YThLNyt5aDE4N0J2Y01IZ1BkMlFvWi9ibGwzeWsxaDdRN3hQ?=
+ =?utf-8?B?bm43clhpQjZNcjNNZHJIamJNdDQ3ZjNJTWlianZqWDlncEN0UlNJUy9ET1hj?=
+ =?utf-8?B?RHVSdUtFMzhKdGd4UTBPdEhHeUJMRnpkU0x4cHhNb1JUOEp0Mkt1eng2V3BV?=
+ =?utf-8?B?UVBQOWNLKzJRVDFSeEY1bmdmbG50MEpvUnU2WEFNcGY5eVpyKzMvdWNLYlV2?=
+ =?utf-8?B?eUZETEFURU81UEJEWThDTnBINUVodEJOWk5xbk9OM0hYSkFHOHlvdDY1NjU1?=
+ =?utf-8?B?amRmb1FaYmhJeHY2cjJYVG0vNmlsbWVYYnR1TEVkMk9ZZnJMSWV0aWZORXNw?=
+ =?utf-8?B?cng2RnNiR083Q243MkROZVpIaGpWRldFVndnb1ZQUkNJNzVZaVdNZ3R4MGl5?=
+ =?utf-8?B?UmczMUhGZ2dmWS9GUi9QdkpOMXZQc3ZvWlM3TVdiTUJLN0pkazN1eSsvaUtC?=
+ =?utf-8?B?cmFxYkdCQ2hlOWZpeXNDVVJGUzlQY0dSR1hIVUdTU1I3L2xnbit2ZE9tVnE4?=
+ =?utf-8?B?QlgzdTJkYXFCTCtOckFzSElud1NyN2U1blVSV05LWHoxTXk3Q0laQWtWc014?=
+ =?utf-8?B?R29NRE5MTSsycWc0VGlhMUI1ZWtYUVBJcUhRTE8xNS9vZ0QyWVVxZWJFWm1M?=
+ =?utf-8?B?YjJwK2xUekJmL1VHV1hNazhHQkk4NUthRVJOUHNBTjV6dGpQUFErZ25XSkNS?=
+ =?utf-8?B?RXVMUXBBVVdpR1JTM2g2OXNsa2dxc0t4VStSQS9rMHBRMElUVVRsWG9ZSmxh?=
+ =?utf-8?B?WG1NcjEzWjV1TGNEUW9keCtjZXgyM3gxalQzOUFjTWpPVkhKV3JCNVFZVlBN?=
+ =?utf-8?Q?WCR8=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240411121434.253353-4-aharivel@redhat.com>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CY8PR12MB8411.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2a7bc9ed-99d2-419b-d486-08dc5ec5e51e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2024 10:05:22.5125 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: AqES0pPCDzmtr4x1UzlihQBnbRcYRXGSdJBAiFGct8ezTtoXEC9L4LqCKMAkxrdZ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9081
+Received-SPF: permerror client-ip=2a01:111:f403:2418::601;
+ envelope-from=Frederic.Konrad@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,320 +150,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Anthony,
-
-May I ask what your usage scenario is? Is it to measure Guest's energy
-consumption and to charged per watt consumed? ;-)
-
-On Thu, Apr 11, 2024 at 02:14:34PM +0200, Anthony Harivel wrote:
-> Date: Thu, 11 Apr 2024 14:14:34 +0200
-> From: Anthony Harivel <aharivel@redhat.com>
-> Subject: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
-> 
-> Starting with the "Sandy Bridge" generation, Intel CPUs provide a RAPL
-> interface (Running Average Power Limit) for advertising the accumulated
-> energy consumption of various power domains (e.g. CPU packages, DRAM,
-> etc.).
->
-> The consumption is reported via MSRs (model specific registers) like
-> MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are
-> 64 bits registers that represent the accumulated energy consumption in
-> micro Joules. They are updated by microcode every ~1ms.
-
-What is your current target platform?
-
-On future Xeon platforms (EMR and beyond) RAPL will support TPMI (an MMIO
-interface) and the TPMI based RAPL will be preferred in the future as
-well:
-* TPMI doc: https://github.com/intel/tpmi_power_management
-* TPMI based RAPL driver: drivers/powercap/intel_rapl_tpmi.c
-
-So do you have the plan to support RAPL-TPMI?
- 
-> For now, KVM always returns 0 when the guest requests the value of
-> these MSRs. Use the KVM MSR filtering mechanism to allow QEMU handle
-> these MSRs dynamically in userspace.
-> 
-> To limit the amount of system calls for every MSR call, create a new
-> thread in QEMU that updates the "virtual" MSR values asynchronously.
-> 
-> Each vCPU has its own vMSR to reflect the independence of vCPUs. The
-> thread updates the vMSR values with the ratio of energy consumed of
-> the whole physical CPU package the vCPU thread runs on and the
-> thread's utime and stime values.
-> 
-> All other non-vCPU threads are also taken into account. Their energy
-> consumption is evenly distributed among all vCPUs threads running on
-> the same physical CPU package.
-
-The package energy consumption includes core part and uncore part, where
-uncore part consumption may not be able to be scaled based on vCPU
-runtime ratio.
-
-When the uncore part consumption is small, the error in this part is
-small, but if it is large, then the error generated by scaling by vCPU
-runtime will be large.
-
-May I ask what your usage scenario is? Is there significant uncore
-consumption (e.g. GPU)?
-
-Also, I think of a generic question is whether the error in this
-calculation is measurable? Like comparing the RAPL status of the same
-workload on Guest and bare metal to check the error.
-
-IIUC, this calculation is highly affected by native/sibling Guests,
-especially in cloud scenarios where there are multiple Guests, the
-accuracy of this algorithm needs to be checked.
-
-> To overcome the problem that reading the RAPL MSR requires priviliged
-> access, a socket communication between QEMU and the qemu-vmsr-helper is
-> mandatory. You can specified the socket path in the parameter.
-> 
-> This feature is activated with -accel kvm,rapl=true,path=/path/sock.sock
-
-Based on the above comment, I suggest to rename this option as "rapl-msr"
-to distinguish it from rapl-tpmi.
-
-In addition, RAPL is basically a CPU feature, I think it would be more
-appropriate to make it as a x86 CPU's property.
-
-Your RAPL support actually provides a framework for assisting KVM
-emulation in userspace, so this informs other feature support (maybe model
-specific, or architectural) in the future. Enabling/disabling CPU features
-via -cpu looks more natural.
-
-[snip]
-
-> +High level implementation
-> +-------------------------
-> +
-> +In order to update the value of the virtual MSR, a QEMU thread is created.
-> +The thread is basically just an infinity loop that does:
-> +
-> +1. Snapshot of the time metrics of all QEMU threads (Time spent scheduled in
-> +   Userspace and System)
->
-> +2. Snapshot of the actual MSR_PKG_ENERGY_STATUS counter of all packages where
-> +   the QEMU threads are running on.
-> +
-> +3. Sleep for 1 second - During this pause the vcpu and other non-vcpu threads
-> +   will do what they have to do and so the energy counter will increase.
-> +
-> +4. Repeat 2. and 3. and calculate the delta of every metrics representing the
-> +   time spent scheduled for each QEMU thread *and* the energy spent by the
-> +   packages during the pause.
-> +
-> +5. Filter the vcpu threads and the non-vcpu threads.
-> +
-> +6. Retrieve the topology of the Virtual Machine. This helps identify which
-> +   vCPU is running on which virtual package.
-> +
-> +7. The total energy spent by the non-vcpu threads is divided by the number
-> +   of vcpu threads so that each vcpu thread will get an equal part of the
-> +   energy spent by the QEMU workers.
-> +
-> +8. Calculate the ratio of energy spent per vcpu threads.
-> +
-> +9. Calculate the energy for each virtual package.
-> +
-> +10. The virtual MSRs are updated for each virtual package. Each vCPU that
-> +    belongs to the same package will return the same value when accessing the
-> +    the MSR.
-> +
-> +11. Loop back to 1.
-> +
-> +Ratio calculation
-> +-----------------
-> +
-> +In Linux, a process has an execution time associated with it. The scheduler is
-> +dividing the time in clock ticks. The number of clock ticks per second can be
-> +found by the sysconf system call. A typical value of clock ticks per second is
-> +100. So a core can run a process at the maximum of 100 ticks per second. If a
-> +package has 4 cores, 400 ticks maximum can be scheduled on all the cores
-> +of the package for a period of 1 second.
-> +
-> +The /proc/[pid]/stat [#b]_ is a sysfs file that can give the executed time of a
-> +process with the [pid] as the process ID. It gives the amount of ticks the
-> +process has been scheduled in userspace (utime) and kernel space (stime).
-> +
-
-I understand tick would ignore frequency changes, e.g., HWP's auto-pilot
-or turbo boost. All these CPU frequency change would impact on core energy
-consumption.
-
-I think the better way would be to use APERF counter, but unfortunately it
-lacks virtualization support (for Intel).
-
-Due to such considerations, it may be more worthwhile to evaluate the
-accuracy of this tick-based algorithm.
-
-[snip]
-
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index e68cbe929302..3de69caa229e 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-
-[snip]
-
-> +static void *kvm_msr_energy_thread(void *data)
-> +{
-> +    KVMState *s = data;
-> +    struct KVMMsrEnergy *vmsr = &s->msr_energy;
-> +
-> +    g_autofree package_energy_stat *pkg_stat = NULL;
-> +    g_autofree thread_stat *thd_stat = NULL;
-> +    g_autofree pid_t *thread_ids = NULL;
-> +    g_autofree CPUState *cpu = NULL;
-> +    g_autofree unsigned int *vpkgs_energy_stat = NULL;
-> +    unsigned int num_threads = 0;
-> +    unsigned int tmp_num_threads = 0;
-
-[snip]
-
-> +        /* Sleep a short period while the other threads are working */
-> +        usleep(MSR_ENERGY_THREAD_SLEEP_US);
-
-Is it possible to passively read the energy status? i.e. access the Host
-MSR and calculate the energy consumption for the Guest when the Guest
-triggers the relevant exit.
-
-I think this might make the error larger, but not sure the error would
-be so large as to be unacceptable.
-
-[snip]
-
-> +        /* Retrieve the virtual package number of each vCPU */
-> +        for (int i = 0; i < vmsr->x86_cpu_list->len; i++) {
-> +            for (int j = 0; j < num_threads; j++) {
-> +                if ((thd_stat[j].acpi_id == vmsr->x86_cpu_list->cpus[i].arch_id)
-> +                    && (thd_stat[j].is_vcpu == true)) {
-> +                    x86_topo_ids_from_apicid(thd_stat[j].acpi_id,
-> +                        &vmsr->topo_info, &topo_ids);
-> +                    thd_stat[j].vpkg_id = topo_ids.pkg_id;
-> +                }
-> +            }
-> +        }
-
-We lack package instances as well as MSR topology, so we have to deal
-with this pain...
-
-Similarly, my attempt at other package/die level MSRs [1] is to only
-allow Guest to set a package/die.
-
-But I think that in the future with QOM-topo [2] (i.e. creating package/
-die instances), MSR topology can have an easier implementation, though,
-looks there's a long way to go!
-
-[1]: https://lore.kernel.org/qemu-devel/20240203093054.412135-4-zhao1.liu@linux.intel.com/
-[2]: https://lore.kernel.org/qemu-devel/20231130144203.2307629-1-zhao1.liu@linux.intel.com/
-
-> +        /* Calculate the total energy of all non-vCPU thread */
-> +        for (int i = 0; i < num_threads; i++) {
-> +            double temp;
-> +            if ((thd_stat[i].is_vcpu != true) &&
-> +                (thd_stat[i].delta_ticks > 0)) {
-> +                temp = vmsr_get_ratio(pkg_stat[thd_stat[i].pkg_id].e_delta,
-> +                    thd_stat[i].delta_ticks,
-> +                    vmsr->host_topo.maxticks[thd_stat[i].pkg_id]);
-> +                pkg_stat[thd_stat[i].pkg_id].e_ratio
-> +                    += (uint64_t)lround(temp);
-> +            }
-> +        }
-> +
-
-[snip]
-
-> +static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-> +{
-> +    struct KVMMsrEnergy *r = &s->msr_energy;
-> +    int ret = 0;
-> +
-
-[snip]
-
-> +    /* Retrieve the number of virtual sockets */
-> +    r->vsockets = ms->smp.sockets;
-
-RAPL's package domain is special:
- * When there's no die, it's package-scope.
- * When there's die level, it's die-scope.
-
-In SDM vol.3, char 15.10 PLATFORM SPECIFIC POWER MANAGEMENT SUPPORT, it
-said: Package domain is the processor die.
-
-So if a Guest has die level, thers MSRs should be shared in a die. Thus
-I guess the energy consumption status should also be distributed based on
-the die number.
-
-> +    /* Allocate register memory (MSR_PKG_STATUS) for each vcpu */
-> +    r->msr_value = g_new0(uint64_t, r->vcpus);
-> +
-> +    /* Retrieve the CPUArchIDlist */
-> +    r->x86_cpu_list = x86_possible_cpu_arch_ids(ms);
-> +
-
-[snip]
-
-> +int is_rapl_enabled(void)
-> +{
-> +    const char *path = "/sys/class/powercap/intel-rapl/enabled";
-
-This field does not ensure the existence of RAPL MSRs since TPMI would
-also enable this field. (See powercap_register_control_type() in
-drivers/powercap/intel_rapl_{msr,tpmi}.c)
-
-We can read RAPL MSRs directly. If we get 0 or failure, then there's no
-RAPL MSRs on Host.
-
-> +    FILE *file = fopen(path, "r");
-> +    int value = 0;
-> +
-> +    if (file != NULL) {
-> +        if (fscanf(file, "%d", &value) != 1) {
-> +            error_report("INTEL RAPL not enabled");
-> +        }
-> +        fclose(file);
-> +    } else {
-> +        error_report("Error opening %s", path);
-> +    }
-> +
-> +    return value;
-> +}
-
-[snip]
-
-> +/* Get the physical package id from a given cpu id */
-> +int vmsr_get_physical_package_id(int cpu_id)
-> +{
-> +    g_autofree char *file_contents = NULL;
-> +    g_autofree char *file_path = NULL;
-> +    int package_id = -1;
-> +    gsize length;
-> +
-> +    file_path = g_strdup_printf("/sys/devices/system/cpu/cpu%d\
-> +        /topology/physical_package_id", cpu_id);
-
-Similarly, based on the topological properties of RAPL, it is more
-accurate to also consider the die_id.
-
-Currently, only CLX-AP has multiple dies. So, we either have to put a
-limit on the Host's CPU model or consider the topology of the die here
-as well. I think the latter is a more general approach.
-
-> +
-> +    if (!g_file_get_contents(file_path, &file_contents, &length, NULL)) {
-> +        goto out;
-> +    }
-> +
-> +    package_id = atoi(file_contents);
-> +
-> +out:
-> +    return package_id;
-> +}
-> +
-
-Regards,
-Zhao
-
+SGksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogcWVtdS1kZXZlbC1i
+b3VuY2VzK2Zrb25yYWQ9YW1kLmNvbUBub25nbnUub3JnIDxxZW11LWRldmVsLWJvdW5jZXMrZmtv
+bnJhZD1hbWQuY29tQG5vbmdudS5vcmc+IE9uIEJlaGFsZiBPZg0KPiBQZXRlciBNYXlkZWxsDQo+
+IFNlbnQ6IEZyaWRheSwgQXByaWwgMTIsIDIwMjQgMTI6MDcgUE0NCj4gVG86IEFsZXhhbmRyYSBE
+aXVwaW5hIDxhZGl1cGluYUBhc3RyYWxpbnV4LnJ1Pg0KPiBDYzogQWxpc3RhaXIgRnJhbmNpcyA8
+YWxpc3RhaXJAYWxpc3RhaXIyMy5tZT47IEVkZ2FyIEUuIElnbGVzaWFzIDxlZGdhci5pZ2xlc2lh
+c0BnbWFpbC5jb20+OyBxZW11LWFybUBub25nbnUub3JnOyBxZW11LQ0KPiBkZXZlbEBub25nbnUu
+b3JnOyBzZGwucWVtdUBsaW51eHRlc3Rpbmcub3JnDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggUkZD
+XSBwcmV2ZW50IG92ZXJmbG93IGluIHhsbnhfZHBkbWFfZGVzY19nZXRfc291cmNlX2FkZHJlc3Mo
+KQ0KPiANCj4gT24gRnJpLCAxMiBBcHIgMjAyNCBhdCAwOToxMywgQWxleGFuZHJhIERpdXBpbmEg
+PGFkaXVwaW5hQGFzdHJhbGludXgucnU+IHdyb3RlOg0KPiA+DQo+ID4gT3ZlcmZsb3cgY2FuIG9j
+Y3VyIGluIGEgc2l0dWF0aW9uIHdoZXJlIGRlc2MtPnNvdXJjZV9hZGRyZXNzDQo+ID4gaGFzIGEg
+bWF4aW11bSB2YWx1ZSAocG93KDIsIDMyKSAtIDEpLCBzbyBhZGQgYSBjYXN0IHRvIGENCj4gPiBs
+YXJnZXIgdHlwZSBiZWZvcmUgdGhlIGFzc2lnbm1lbnQuDQo+ID4NCj4gPiBGb3VuZCBieSBMaW51
+eCBWZXJpZmljYXRpb24gQ2VudGVyIChsaW51eHRlc3Rpbmcub3JnKSB3aXRoIFNWQUNFLg0KPiA+
+DQo+ID4gRml4ZXM6IGQzYzYzNjlhOTYgKCJpbnRyb2R1Y2UgeGxueC1kcGRtYSIpDQo+ID4gU2ln
+bmVkLW9mZi1ieTogQWxleGFuZHJhIERpdXBpbmEgPGFkaXVwaW5hQGFzdHJhbGludXgucnU+DQo+
+ID4gLS0tDQo+ID4gIGh3L2RtYS94bG54X2RwZG1hLmMgfCAyMCArKysrKysrKysrLS0tLS0tLS0t
+LQ0KPiA+ICAxIGZpbGUgY2hhbmdlZCwgMTAgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0p
+DQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvZG1hL3hsbnhfZHBkbWEuYyBiL2h3L2RtYS94bG54
+X2RwZG1hLmMNCj4gPiBpbmRleCAxZjVjZDY0ZWQxLi4yMjQyNTkyMjVjIDEwMDY0NA0KPiA+IC0t
+LSBhL2h3L2RtYS94bG54X2RwZG1hLmMNCj4gPiArKysgYi9ody9kbWEveGxueF9kcGRtYS5jDQo+
+ID4gQEAgLTE3NSwyNCArMTc1LDI0IEBAIHN0YXRpYyB1aW50NjRfdCB4bG54X2RwZG1hX2Rlc2Nf
+Z2V0X3NvdXJjZV9hZGRyZXNzKERQRE1BRGVzY3JpcHRvciAqZGVzYywNCj4gPg0KPiA+ICAgICAg
+c3dpdGNoIChmcmFnKSB7DQo+ID4gICAgICBjYXNlIDA6DQo+ID4gLSAgICAgICAgYWRkciA9IGRl
+c2MtPnNvdXJjZV9hZGRyZXNzDQo+ID4gLSAgICAgICAgICAgICsgKGV4dHJhY3QzMihkZXNjLT5h
+ZGRyZXNzX2V4dGVuc2lvbiwgMTYsIDEyKSA8PCAyMCk7DQo+ID4gKyAgICAgICAgYWRkciA9ICh1
+aW50NjRfdCkoZGVzYy0+c291cmNlX2FkZHJlc3MNCj4gPiArICAgICAgICAgICAgKyAoZXh0cmFj
+dDMyKGRlc2MtPmFkZHJlc3NfZXh0ZW5zaW9uLCAxNiwgMTIpIDw8IDIwKSk7DQo+IA0KPiBVbmxl
+c3MgSSdtIGNvbmZ1c2VkLCB0aGlzIGNhc3QgZG9lc24ndCBoZWxwLCBiZWNhdXNlIHdlDQo+IHdp
+bGwgaGF2ZSBhbHJlYWR5IGRvbmUgYSAzMi1iaXQgYWRkaXRpb24gb2YgZGVzYy0+c291cmNlX2Fk
+ZHJlc3MNCj4gYW5kIHRoZSB2YWx1ZSBmcm9tIHRoZSBhZGRyZXNzX2V4dGVuc2lvbiBwYXJ0LCBz
+byBpdCBkb2Vzbid0DQo+IGNoYW5nZSB0aGUgcmVzdWx0Lg0KPiANCj4gSWYgd2Ugd2FudCB0byBk
+byB0aGUgYWRkaXRpb24gYXQgNjQgYml0cyB0aGVuIHVzaW5nIGV4dHJhY3Q2NCgpDQo+IHdvdWxk
+IGJlIHRoZSBzaW1wbGVzdCB3YXkgdG8gYXJyYW5nZSBmb3IgdGhhdC4NCj4gDQo+IEhvd2V2ZXIs
+IEkgY2FuJ3QgZmlndXJlIG91dCB3aGF0IHRoaXMgY29kZSBpcyB0cnlpbmcgdG8gZG8gYW5kDQo+
+IG1ha2UgdGhhdCBsaW5lIHVwIHdpdGggdGhlIGRhdGEgc2hlZXQ7IG1heWJlIHRoaXMgaXNuJ3Qg
+dGhlDQo+IHJpZ2h0IGRhdGFzaGVldCBmb3IgdGhpcyBkZXZpY2U/DQo+IA0KPiBodHRwczovL2Rv
+Y3MuYW1kLmNvbS9yL2VuLVVTL3VnMTA4NS16eW5xLXVsdHJhc2NhbGUtdHJtL0FERFJfRVhULUZp
+ZWxkDQo+IA0KPiBUaGUgZGF0YXNoZWV0IHN1Z2dlc3RzIHRoYXQgd2Ugc2hvdWxkIHRha2UgMzIg
+Yml0cyBvZiB0aGUgYWRkcmVzcw0KPiBmcm9tIG9uZSBmaWVsZCAoaGVyZSBkZXNjLT5zb3VyY2Vf
+YWRkcmVzcykgYW5kIDE2IGJpdHMgb2YgdGhlDQo+IGFkZHJlc3MgZnJvbSBhbm90aGVyIChoZXJl
+IGRlc2MtPmFkZHJlc3NfZXh0ZW5zaW9uJ3MgaGlnaCBiaXRzKQ0KPiBhbmQgY29tYmluZSB0aGVt
+IHRvIG1ha2UgYSA0OCBiaXQgYWRkcmVzcy4gQnV0IHRoaXMgY29kZSBpcyBvbmx5DQo+IGxvb2tp
+bmcgYXQgMTIgYml0cyBvZiB0aGUgaGlnaCAxNiBpbiBhZGRyZXNzX2V4dGVuc2lvbiwgYW5kIGl0
+DQo+IGRvZXNuJ3Qgc2hpZnQgdGhlbSByaWdodCBlbm91Z2ggdG8gcHV0IHRoZW0gaW50byBiaXRz
+IFs0NzozMl0NCj4gb2YgdGhlIGZpbmFsIGFkZHJlc3MuDQo+IA0KPiBYaWxpbnggZm9sa3M6IHdo
+YXQgaGFyZHdhcmUgaXMgdGhpcyBtb2RlbGxpbmcsIGFuZCBpcyBpdA0KPiByZWFsbHkgdGhlIHJp
+Z2h0IGJlaGF2aW91cj8NCg0KTG9va3MgbGlrZSB0aGlzIGlzIHRoZSByaWdodCBkb2N1bWVudGF0
+aW9uLiAgTW9zdCBwcm9iYWJseSB0aGUgZGVzY3JpcHRvciBmaWVsZCBjaGFuZ2VkDQpzaW5jZSBJ
+IGRpZCB0aGF0IG1vZGVsLCBvciBJIGdvdCByZWFsbHkgY29uZnVzZWQuDQoNCj4gDQo+IEFsc28s
+IHRoaXMgZGV2aWNlIGxvb2tzIGxpa2UgaXQgaGFzIGEgaG9zdC1lbmRpYW5uZXNzIGJ1ZzogdGhl
+DQo+IERQRE1BRGVzY3JpcHRvciBzdHJ1Y3QgaXMgcmVhZCBkaXJlY3RseSBmcm9tIGd1ZXN0IG1l
+bW9yeSBpbg0KPiBkbWFfbWVtb3J5X3JlYWQoKSwgYnV0IHRoZSBkZXZpY2UgbmV2ZXIgZG9lcyBh
+bnl0aGluZyB0byBzd2FwDQo+IHRoZSBmaWVsZHMgZnJvbSBndWVzdCBtZW1vcnkgb3JkZXIgdG8g
+aG9zdCBtZW1vcnkgb3JkZXIuIFNvDQo+IHRoaXMgaXMgbGlrZWx5IGJyb2tlbiBvbiBiaWctZW5k
+aWFuIGhvc3RzLg0KPiANCg0KWWVzIGluZGVlZC4NCg0KQmVzdCBSZWdhcmRzLA0KRnJlZA0KDQo+
+IHRoYW5rcw0KPiAtLSBQTU0NCg0K
 
