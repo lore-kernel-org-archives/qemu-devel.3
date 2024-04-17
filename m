@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D819C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 18:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAB7C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 18:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxA1r-0008Fc-Mv; Wed, 17 Apr 2024 14:29:07 -0400
+	id 1rxA1t-0008Tr-8W; Wed, 17 Apr 2024 14:29:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA1k-0007x6-RO
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:01 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA1o-0008EK-LM
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:05 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA1h-0003O4-Id
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:00 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-343c2f5b50fso4284247f8f.2
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 11:28:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA1n-0003P8-0Y
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:04 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-418c0d83d18so421295e9.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 11:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713378535; x=1713983335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713378541; x=1713983341; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E03TQ0GvhSAU3PvcwPGXVXyQZvjAqNweStAhT2Ncf1c=;
- b=JQ/NRJMt1Vn60L8+lh7elzkyOF784pD/goOS0QjxO+lEPxMsiallW1zC368ZuBL0t5
- 7GSYuAZHIyeLjcHJyrQmkgmAqzynD+OUsANYNJ+2TTt4ScK3MmuzuqWnf/t8EB5WnV9i
- L6Wp2vLBYFY2G2zTqcuYyAc/OjIdVDpbpQjgdl3sN/ZNmrEDEvnNVAy/3uiByDLVY8DJ
- VdVJ1Dp0OoooYn4NQUXzJH+1REVfOivLz9zj/CnqUpj7EkeNF6yITvYGoAJLFKKsKu8G
- aPu/uH5B+XsZRs4dfPFeJRfw2kyeJfxe42kszf4XwsWpsgGn53qdOWM8iFNFTLOgiPli
- Gj+Q==
+ bh=mlDIlSZfoByeUVHG5RjMJLlAMS8788/zBZZra99rGV8=;
+ b=qfjEnzYi7aD1ajqa5SACCtHgCz0qE8UouotLgHvRT/xOwEDdHgLIaOD+fI9zN+Yqul
+ NItBd80J+vKnZfH6L9Xy3eY+qZH58EjdzB+4HCNoqF6r59UXpM2MxbuNJYTixY3L4lCQ
+ gl2AbxK3iLqXOkLj+q+KNLRVyi6ij3cpoz6KlN8JWJ3A/jf8uvhhLNFMwL8pN9GwoyfH
+ vFF2IqmkOBnUgzWP4Awr0GaY11hSxJ7sjyWCtHdgoNbE9GrivA6+5cCw55O600ho6v8n
+ sn5EQrFdnrq0wKxaf/G680jqxOPH8qQdDl6iXXUK6NrI7cg2iy/paJRTQ+fzOrZ+a7xo
+ DGPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713378535; x=1713983335;
+ d=1e100.net; s=20230601; t=1713378541; x=1713983341;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E03TQ0GvhSAU3PvcwPGXVXyQZvjAqNweStAhT2Ncf1c=;
- b=pEx9TjrenEeXXMP4cuIG6EHsIgKEVzx1t5ayuduLDuwFA8iWHp3nGySZIgE4/n7TXq
- LyXM1kFoIVIWyDWhJOCUYN3A+0gXeJB/jXNlNoODowapmXOjKxfjDAn3hWisYm4weKs+
- sebjQLSbfdNaCa1ucRyPKh9KrrgdRF7rnU1f2i5I+PfwxvFLkIBNjP8ZSv6RS5QKjfFQ
- 8YA9TGuZTQc0aKH/abhVaM1Hs4SGJv0y4rsous6Oh9KCGetYYzdEQFNZAlS5gQAgQ+gx
- 1Mb2CxoKtLjxPTH5ihUMeuewY2GplqjpAJIYSO+Y28gEMO4NOCt4hGWsVv6t6Gty5pkC
- pFFQ==
-X-Gm-Message-State: AOJu0YyG9LzT/LSbwQGdPemK8IHmRpxNzL3c0A8XDB5ATLhX6bBsaAVF
- +4LKpxS0n2dJfV0NXhtTaQznwDlYD2ivjaehQK9sUOGwBH0P4U5T87m/LHg1lkrVd74Jqk44xgu
- s
-X-Google-Smtp-Source: AGHT+IHQT5JABvlpfstGQxICNpYddTBTYsS9dZ9iGC+h6RZKGXZArF1Omn5GFmdpW+M+DOEg5uEEyw==
-X-Received: by 2002:adf:f943:0:b0:349:bd11:1bea with SMTP id
- q3-20020adff943000000b00349bd111beamr97629wrr.11.1713378535418; 
- Wed, 17 Apr 2024 11:28:55 -0700 (PDT)
+ bh=mlDIlSZfoByeUVHG5RjMJLlAMS8788/zBZZra99rGV8=;
+ b=qZhSQ8rOGNsW+AWzBYDJX5yLjzO/d4mCKB++5zK7xeAuQkQKHiw5RcvYj72WwOdKER
+ XUQGF/LPGP1w+9HU7F+lLrj3Cv9f424OZFdAnBMCt4112xYBpL2VSMpsILwbkS5d2sMB
+ mBtKkBBhO13Oh94/yokyGbPOKntJA7vnTbRO8kxRpUup9Zt6WP/mpVJLW9Z/iGokHpbm
+ sjTjNz6hNV8Atnsx8wVbAl0vSM8e+BcSwwzNNo7aMzQekMA46xbGptQ1sohjP+VyBP1n
+ 6qHjXpSutfibbPUr2VoDhm3kSBGhaZjMWbAjINFZzp6cxmLOZHzB88QOnltnMZDljVCJ
+ RYrA==
+X-Gm-Message-State: AOJu0YwqagPYVRTFkN06RHmuJvUht5vExKueWoakhGuJO+MshIgLT3GG
+ 2dR8S+pKVFIDHNpZhiTRo/96c5zI7UwX5LQeepeKwrUAjsoF15+RIklAKuUoFhxqJGoSQdITsKV
+ /
+X-Google-Smtp-Source: AGHT+IFpCDR1im0pL8miSE+XAVlwllAQsWIrDhZaXJ777ZA8z3G2y+sw1Da52CKJfR8A6Tr50eGtlg==
+X-Received: by 2002:a5d:4049:0:b0:347:f7fe:135d with SMTP id
+ w9-20020a5d4049000000b00347f7fe135dmr74713wrp.18.1713378540796; 
+ Wed, 17 Apr 2024 11:29:00 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.201.23])
  by smtp.gmail.com with ESMTPSA id
- k9-20020adff289000000b0033e45930f35sm18185709wro.6.2024.04.17.11.28.54
+ g4-20020adfa484000000b0034330c9eccasm18314606wrb.79.2024.04.17.11.28.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Apr 2024 11:28:55 -0700 (PDT)
+ Wed, 17 Apr 2024 11:29:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Warner Losh <imp@bsdimp.com>
-Subject: [PATCH 08/21] gdbstub: Include missing 'hw/core/cpu.h' header
-Date: Wed, 17 Apr 2024 20:27:53 +0200
-Message-ID: <20240417182806.69446-9-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 09/21] semihosting/uaccess: Avoid including 'cpu.h'
+Date: Wed, 17 Apr 2024 20:27:54 +0200
+Message-ID: <20240417182806.69446-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240417182806.69446-1-philmd@linaro.org>
 References: <20240417182806.69446-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,34 +94,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Functions such gdb_get_cpu_pid() dereference CPUState so
-require the structure declaration from "hw/core/cpu.h":
-
-  static uint32_t gdb_get_cpu_pid(CPUState *cpu)
-  {
-    ...
-    return cpu->cluster_index + 1;
-  }
+"semihosting/uaccess.h" only requires declarations
+from "exec/cpu-defs.h". Avoid including the huge "cpu.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Message-Id: <20231211212003.21686-15-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20231211212003.21686-6-philmd@linaro.org>
 ---
- gdbstub/gdbstub.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/semihosting/uaccess.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 9c23d44baf..9c2b8b5d0a 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -37,6 +37,7 @@
- #include "hw/cpu/cluster.h"
- #include "hw/boards.h"
+diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
+index 3963eafc3e..6c8835fbcb 100644
+--- a/include/semihosting/uaccess.h
++++ b/include/semihosting/uaccess.h
+@@ -14,7 +14,7 @@
+ #error Cannot include semihosting/uaccess.h from user emulation
  #endif
-+#include "hw/core/cpu.h"
  
- #include "sysemu/hw_accel.h"
- #include "sysemu/runstate.h"
+-#include "cpu.h"
++#include "exec/cpu-defs.h"
+ 
+ #define get_user_u64(val, addr)                                         \
+     ({ uint64_t val_ = 0;                                               \
 -- 
 2.41.0
 
