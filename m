@@ -4,140 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78DB0C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 03:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534B4C04FFE
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 04:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwvip-0006Hu-AE; Tue, 16 Apr 2024 23:12:31 -0400
+	id 1rwwgg-0007CG-4p; Wed, 17 Apr 2024 00:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
- id 1rwvin-0006HP-EW
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 23:12:29 -0400
-Received: from mail-bn7nam10on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2009::600]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1rwwgd-0007Bn-9z
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 00:14:19 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
- id 1rwvik-0004a7-NP
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 23:12:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ddCGcZR8lHDyisqnykWmzVck3PJS/g46DPnZZYRbm87YUu5erqm6ymonIqj20VLNNAWw+vZIdF9GWgMDVGvk7Pt03taVfhlhCd5H1kjFW+WnBhvSgI+EFKVoHhT9r6YG/4GIjVXWDxfByVbXWjohILIDqlA0RJ8u52Y2QQyItn5KYOcmR7ZcdIQshIjv/VHZMlWQOwVTmu4ouIqsKPADdL6YfEvE4OrxPMebknnsLHWszQ6O6wo0ZS5upf/TPzQxDYV3u0s1hvNkPOS95C0h8s/81cwfuPpJsH0qPAPJ3FopULPHmpWRuDq8aT920MkAtzr9RjeZFKZRs5gmaVXn5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Udm0ZU72JiKawgWBICCrtICrP06UJGin0g6FQekFLsE=;
- b=XJwc906hfW4hZ0BCRYR/0u86Sjw94wp+Q17pTQ7Im5alLjUOIWs+4A14iEGHlEfj6GDhbS4XBrnrnfyBHOh5FhnzeRrQEkZoF8nUIMtepbJrmckZ7sfz+B1WAzT8d12JOosdENp+gqde+adTxf7zr0uRv89au3w6Jw0/io7XFTjWBxmBh5h7ep8mwg8b74THDIssr1jzfUTZXssg5anjK8YEuUULbl9JFu5SquU5Owq0J0ZSweAx3cJAVtvQ6uy3Dtj/rOVFtD2onTVLH97coFB2ENvx3MSs5weXC3BiMi9QEfvcuOoHOKcVwfZh7mitcZazEPshHksbL73ndfYt4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Udm0ZU72JiKawgWBICCrtICrP06UJGin0g6FQekFLsE=;
- b=nZxsvMLi4etnD2wEXY8HoGYNnr1IqoT/w70K6egwRbykrcrxvxHhRIj6CkFFoobitldC2eFbvVV9mQjhOX5RO/oZ2N3LetwcQxuAbP+NZLSzjgMy7r9RBpHLfkHLdM8XUENhLTXIySa8PZRyfvdySfjNcQLRbK4pDJwfTjhqcDI=
-Received: from BL1PR12MB5849.namprd12.prod.outlook.com (2603:10b6:208:384::18)
- by MN2PR12MB4078.namprd12.prod.outlook.com (2603:10b6:208:1de::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Wed, 17 Apr
- 2024 03:12:19 +0000
-Received: from BL1PR12MB5849.namprd12.prod.outlook.com
- ([fe80::b77f:9333:3a5a:d285]) by BL1PR12MB5849.namprd12.prod.outlook.com
- ([fe80::b77f:9333:3a5a:d285%6]) with mapi id 15.20.7452.049; Wed, 17 Apr 2024
- 03:12:19 +0000
-From: "Chen, Jiqian" <Jiqian.Chen@amd.com>
-To: Igor Mammedov <imammedo@redhat.com>
-CC: "Michael S . Tsirkin" <mst@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>, "Huang, Ray"
- <Ray.Huang@amd.com>, "Chen, Jiqian" <Jiqian.Chen@amd.com>
-Subject: Re: [RFC QEMU PATCH v9 2/2] virtio-pci: implement No_Soft_Reset bit
-Thread-Topic: [RFC QEMU PATCH v9 2/2] virtio-pci: implement No_Soft_Reset bit
-Thread-Index: AQHaj8v0vhbSJoQeWk+O1EoAWaQkZLFrCqGAgAE6pwA=
-Date: Wed, 17 Apr 2024 03:12:19 +0000
-Message-ID: <BL1PR12MB5849B0755AE7DFD07A9B253FE70F2@BL1PR12MB5849.namprd12.prod.outlook.com>
-References: <20240416070127.116922-1-Jiqian.Chen@amd.com>
- <20240416070127.116922-3-Jiqian.Chen@amd.com>
- <20240416174531.6573af25@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240416174531.6573af25@imammedo.users.ipa.redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-imapappendstamp: BL3PR12MB6428.namprd12.prod.outlook.com
- (15.20.7495.000)
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BL1PR12MB5849:EE_|MN2PR12MB4078:EE_
-x-ms-office365-filtering-correlation-id: fd7f3094-bc74-42d1-3752-08dc5e8c317a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Qc78Ok6XEa8jAJuAm2lUK/rBb+DIVLc0NMZW5MkE98MB6P4cTRQ678o1MkEbKdPK4dtcERI0nbbEo0Dr5XWnupdzRFM++7ee+JZUVI1f6yRt4P1hFbkjB7fup6V5oCrKXlDBX5aoG7BIU5NyVPoJBpITpFD+PQi9B2ufL0340aWObiGQZ8VSqioqQjM5V0jJRI/O4lFMHBcn0efO0Ey1e7MQpsZkiKvJXZ745MsGGHwINEv9GFpZe7uRu5L+hczm9ZWcaVAZrdAxhoLrFYMsuTFTqZH6ITc5Y1tq+8KHps2IaK+OHG5A0AMP5VEtS9jGfv80wrqzmIVy1kfw1lCzG1eHDYSM84JLCl92XDi6bh8UvAJ2APOF4cj8yeNFqdun+PUqfANWMD9xJvLEj08s+ej39eLRlM4H0lKwUaOhqUJgxJWVECbymx3PW3G1+4YL7oygQRbwCNpxh1YWFN/P9S6UHh3DvaVlicyVNUqO78AfpfwcXIdRhma13Civ1BgVoD9oGagPC0lt8PoUyD37HGNKRlSYn8osQ2GyZSMOSa40MjEtHBIWnqNC8MZ2kN1AGbe9gvE/1h6Oy+X3+QfEsECRk9GUN2rKbr8SnrKXRAPQQ6mAEOI5sEMK+XRjzv0M4Msnzs5VHPG3DkBLpkgcjWfxWnD4dlSDWv6hROutr4hhBBRHU/cQQbj3zZ9kf7hZkSdu4t8Ejd5alNvPebpRBCrLAMBjaj15m5nHrkF90A8=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5849.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dmNGL09TZ0dkSVloYWh0TU1SY3ZyVVQvZlNGWi9HUTE3K0lpU0swTWJTSmg4?=
- =?utf-8?B?cElWcDFndktERjVFNzhpd1g5eUtWUCtjLzRyQmxMOEVpYS9acWxkVUhpSVBt?=
- =?utf-8?B?MGl2Vm9JZnJ2WStmVWhQM1dhQnQvVHdMb2NPYWlEejdOVzFheEd4YUt2Vysy?=
- =?utf-8?B?ajR0S2JPWXR5TFNSMlh3VU5UZG1sMFBvVFJhanhVSmlscGJBd1gxRzUralZB?=
- =?utf-8?B?WkhFc3owVmh6OUE2WExyaTQ1K2JGMFliVDNlNFYxWHlZd3hLR3VtVEhUM1hO?=
- =?utf-8?B?ako1M1JsOTlNaG9LZGhyWTFiWkdOd2VVbmVQcURZbDY0bW5scmNBYkxBRWF6?=
- =?utf-8?B?SUswUm45VHYzalNIR01icHAyTDFnWUdldDVEVlJ3dVVzUWxSRHN6RUVKS2Yy?=
- =?utf-8?B?c2NQZUFnZzNaUk1TdkNLN3VVVjJsMlpNUkdOb1YxNmoxN0ZaK3BiRkpxbFpQ?=
- =?utf-8?B?R3Bmb3RFQm5HT2xmV21hbW9TZUEyK0dZUVNzSG5Kc0lqVEFabHZhaTZVZmNj?=
- =?utf-8?B?VkVweEtQZkZnOUVTQ29KZnVBSjNTRWtFOStaSlVpb1dFeHV4dVZjWW1GS0dN?=
- =?utf-8?B?QkcwME9vYng0cGl6NVJJVDFkRUxRYS9XTHNKQy9kTFN0SmNWTEFsOUhzYlpj?=
- =?utf-8?B?cTJyVktlb2lWMXRKTmIzN3NRb0I4SkJBdC9UaGxoZ2grcnhlNjdzRkowbTlh?=
- =?utf-8?B?MjRJSEZHK2lweTFyaGd6M1JPcTcralFlZjJyWHRGUXRVcTB3UFl5QVFPNHJq?=
- =?utf-8?B?MmJHL01JUGYxQUI2ZXBQdnZCUklqMHZmZlQvKzlvUTV3Mk8yRTdORUxaMWlB?=
- =?utf-8?B?Zi9yUGFJQXNtY250eklXdDMzcE41SkMwUUJza3FoQjF1MWo5UmhEM3FGRXk3?=
- =?utf-8?B?ZG9rV3NzUHExbWcrVjFkYktZUVRUOUFGSVNyQ2ZTcXFoNWdmL2pITThaKzVh?=
- =?utf-8?B?Y3JWZi92NFJlSW1VbGtYeDZINllndFpvM3ZXYS9DKzRlVy81WjNrUGdzcjQ5?=
- =?utf-8?B?KzE2aEFDM3hxV012QmlsWlBaQkdTS1NPdlBKQ0JiMlpQOStjNGEvSGYweVN5?=
- =?utf-8?B?T25uamhxbDlzclpSS3E3NFZDRFNQK3puUDJiZy82QVpHbGc2ZHdXQXJWcEZW?=
- =?utf-8?B?ZUMwNzEvdmJ5TWdOQjVYWXVPRXJiRHpVR0J4RW5nSS9mVXB4eHdMemRKSGZw?=
- =?utf-8?B?NGJGZlRLN1k5cDhRK0RMdnpZV0V3dDZJVjRyalIzSTBqSkMxQjNGalRJSmVa?=
- =?utf-8?B?dUpLWTFXZDVLTXlmams0L0huOXpMZTVKa0U3bG9KS2k2YWNOL2FzeFZpTlho?=
- =?utf-8?B?UE1Ka3hvaHExTlFLSlB5ZkUycUZvWG8xUkY2M1JCbE10bFU0aXc5cjVjL0pV?=
- =?utf-8?B?ZTFJak9tK09XaVI4a0tDQXBTcE56eklvWTZJKytTMmY0VGt1MWhZeFVpQUNV?=
- =?utf-8?B?UnQ2Vkh0Zkx5bVA4ajBiWW10bUxWdThZU25iRm9rOUZhZDkvcDJqYUpHZ3BY?=
- =?utf-8?B?QjdKandHQmpEbXRUbWUzYndlNGNCdEcwQ0tYOEVDcnBXT0xiWjNjS0ZGMHFN?=
- =?utf-8?B?RGFPNCs2K1NJclFJeTBGZ0I4MHNCejdLSmI2Y05nSHN0R1VicWs4akptREcv?=
- =?utf-8?B?TVpGZ3N0YUNBakg4eVBtN2grbTdLMk1lRHU4OTBIaHg2TGNhWEk1M3pabjh3?=
- =?utf-8?B?VndIcTdCcVgzNUtrNnJGUmx1UWVzY2VMQ25FMzVLcHdBRFY2RVQyUElHQXpp?=
- =?utf-8?B?bjFueGN2Q0puT2QvWlNWeHJMVU8rMXIwS2FnaTB6dlRjeWhZbFRZb3drQVpS?=
- =?utf-8?B?U1c0VkoyWGpNWUJNeVBPZGVrd0RTY1NJR2R5SExlQXphK3hFV3EzaS9Ta3px?=
- =?utf-8?B?TUNJQWlOeUE3RlZFV2sxZmY0aXlEaWZJa3Q2MEJGUkdwYVVLenprMllsSVBa?=
- =?utf-8?B?TlQyWG1ZaGdqTFFBMWF0N3NPL01wcTRTTmZaUnlCc1JMUE1KZUNoQmNOd2Uz?=
- =?utf-8?B?V3hPZWtPbFNoOXU2U2p2R0dVSzZjZXF2Lzl0U0tBM2s4YkFHRU9LOUJRaEsv?=
- =?utf-8?B?QjhrdVVjMjM3ZmFsK3V6SDFHVHpnZmdXZG9GZmRYQTRxOW51UVgvYm4vRGJm?=
- =?utf-8?Q?URBI=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <09D9AF10D91164479D19847C88923A1C@amdcloud.onmicrosoft.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1rwwgb-0006J8-1D
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 00:14:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713327257; x=1744863257;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=RT/BH3qg8Jmw7tZPJXCSDX0TBSe2uO95fK+KjIqEghc=;
+ b=Nl008IfYr93azhGjoaVH3c5cB/dcpLxbG1GNqXbvK5KFDuWZB36u4U8T
+ SmbmVgv/wtcEIjN7UAj8XpEgDqwkudvqkZdQqlqHyKArvVSSsQX53v8/b
+ sPM4pOzhgok/fC/0glAmuC+SL+szQhEo5gSthne9+e1DH6L5w9XfFHnAM
+ lVT5VroLvY3R63Zzz+djJi5QtrQ+QbnLEPPLQJBnASBMOkOvFF6jWtdRC
+ 9Xd3nAThGBenocuejDK3gFR7k+ialL1FrVP3m9g9feWfvGU/Jh3mpyRN3
+ zjC35esF6i2AzA8mCS/mbv+ozHkACRUyl/NtpZZ9uOA8cDgq2pJG4BwFl g==;
+X-CSE-ConnectionGUID: VdjZfTCmSEOwVJwQbhHrsA==
+X-CSE-MsgGUID: geiyAaXnS82Yl+fwocEoGA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="12582853"
+X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; d="scan'208";a="12582853"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Apr 2024 21:14:06 -0700
+X-CSE-ConnectionGUID: qYvQ8VtSSZWVg5gHnG8jMQ==
+X-CSE-MsgGUID: VQWymTIWRmGTTVEmnD8kzQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; d="scan'208";a="22491575"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by orviesa009.jf.intel.com with ESMTP; 16 Apr 2024 21:14:07 -0700
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com
+Subject: [PATCH v6 3/3] ui/console: Introduce dpy_gl_qemu_dmabuf_new() and
+ free() helpers
+Date: Tue, 16 Apr 2024 21:09:54 -0700
+Message-Id: <20240417040954.55641-4-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240417040954.55641-1-dongwon.kim@intel.com>
+References: <20240417040954.55641-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd7f3094-bc74-42d1-3752-08dc5e8c317a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2024 03:12:19.8240 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: dPNzI1R9DgtoWfKUbWjZYy89B3KEVJ3YsSVskO7qH75fQfoJSqsOJmmdFhQ+T6dZe85NcMZRLJ9ko/BVeAu6sQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4078
-Received-SPF: permerror client-ip=2a01:111:f403:2009::600;
- envelope-from=Jiqian.Chen@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.12;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,115 +82,346 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMjAyNC80LzE2IDIzOjQ1LCBJZ29yIE1hbW1lZG92IHdyb3RlOg0KPiBPbiBUdWUsIDE2IEFw
-ciAyMDI0IDE1OjAxOjI3ICswODAwDQo+IEppcWlhbiBDaGVuIDxKaXFpYW4uQ2hlbkBhbWQuY29t
-PiB3cm90ZToNCj4gDQo+PiBJbiBjdXJyZW50IGNvZGUsIHdoZW4gZ3Vlc3QgZG9lcyBTMywgdmly
-dGlvLWdwdSBhcmUgcmVzZXQgZHVlIHRvIHRoZQ0KPj4gYml0IE5vX1NvZnRfUmVzZXQgaXMgbm90
-IHNldC4gQWZ0ZXIgcmVzZXR0aW5nLCB0aGUgZGlzcGxheSByZXNvdXJjZXMNCj4+IG9mIHZpcnRp
-by1ncHUgYXJlIGRlc3Ryb3llZCwgdGhlbiB0aGUgZGlzcGxheSBjYW4ndCBjb21lIGJhY2sgYW5k
-IG9ubHkNCj4+IHNob3cgYmxhbmsgYWZ0ZXIgcmVzdW1pbmcuDQo+IA0KPiBKdXN0IGEgaGlnaCBs
-ZXZlbCBxdWVzdGlvbi4NCj4gVHlwaWNhbGx5IHdoZW4gc3lzdGVtIGdvZXMgaW50byBTMyBhbGwg
-ZGV2aWNlcyAobW9kdWxvIFJBTSkgbG9vc2UgY29udGV4dA0KPiAoYWthIHBvd2VyZWQgb2ZmKSwg
-YW5kIHRoZW4gaXQncyB1cHRvIGRldmljZSBkcml2ZXIgdG8gcmVjb3ZlciB3aGF0ZXZlcg0KPiB3
-YXMgbG9zdC4NCk5vLCB3aGF0IHlvdSBzYWlkIGlzIGp1c3Qgb25lIHNpdHVhdGlvbiB0aGF0IHdo
-ZW4gc3lzdGVtIGdvZXMgaW50byBTMyBkZXZpY2VzIGxvb3NlIGNvbnRleHQgYW5kIGZ1bGx5IHJl
-aW5pdGlhbGl6ZWQgYW5kIGJlIEQwLXVuaW5pdGlhbGl6ZWQgc3RhdGUuDQpUaGUgb3RoZXIgc2l0
-dWF0aW9uIGlzIHRoZSBjb250ZXh0IG11c3QgYmUgbWFpbnRhaW5lZCBzbyB0aGF0IHRoZSBkZXZp
-Y2VzIGNhbiBxdWlja2x5IGJlIEQwLWFjdGl2ZSBzdGF0ZSBhZnRlciByZXN1bWluZy4NClRoZXJl
-IGFyZSBzb21lIGRlc2NyaXB0aW9ucyBpbiBQQ0llIHNwZWNpZmljYXRpb24gaW4gQ2hhcHRlciA1
-LjMuMS40IEQzIHN0YXRlOg0KIiBGdW5jdGlvbmFsIGNvbnRleHQgaXMgcmVxdWlyZWQgdG8gYmUg
-bWFpbnRhaW5lZCBieSBGdW5jdGlvbnMgaW4gdGhlIEQzSG90IHN0YXRlIGlmIHRoZSBOb19Tb2Z0
-X1Jlc2V0IGZpZWxkIGluIHRoZSBQTUNTUiBpcw0KU2V0LiBJbiB0aGlzIGNhc2UsIFN5c3RlbSBT
-b2Z0d2FyZSBpcyBub3QgcmVxdWlyZWQgdG8gcmUtaW5pdGlhbGl6ZSB0aGUgRnVuY3Rpb24gYWZ0
-ZXIgYSB0cmFuc2l0aW9uIGZyb20gRDNIb3QgdG8gRDAgKHRoZQ0KRnVuY3Rpb24gd2lsbCBiZSBp
-biB0aGUgRDBhY3RpdmUgc3RhdGUpLiBJZiB0aGUgTm9fU29mdF9SZXNldCBiaXQgaXMgQ2xlYXIs
-IGZ1bmN0aW9uYWwgY29udGV4dCBpcyBub3QgcmVxdWlyZWQgdG8gYmUNCm1haW50YWluZWQgYnkg
-dGhlIEZ1bmN0aW9uIGluIHRoZSBEM0hvdCBzdGF0ZSwgaG93ZXZlciBpdCBpcyBub3QgZ3VhcmFu
-dGVlZCB0aGF0IGZ1bmN0aW9uYWwgY29udGV4dCB3aWxsIGJlIGNsZWFyZWQgYW5kDQpzb2Z0d2Fy
-ZSBtdXN0IG5vdCBkZXBlbmQgb24gc3VjaCBiZWhhdmlvci4gQXMgYSByZXN1bHQsIGluIHRoaXMg
-Y2FzZSBTeXN0ZW0gU29mdHdhcmUgaXMgcmVxdWlyZWQgdG8gZnVsbHkgcmUtaW5pdGlhbGl6ZSB0
-aGUNCkZ1bmN0aW9uIGFmdGVyIGEgdHJhbnNpdGlvbiB0byBEMCBhcyB0aGUgRnVuY3Rpb24gd2ls
-bCBiZSBpbiB0aGUgRDB1bmluaXRpYWxpemVkIHN0YXRlLiINCg0KV2hhdCdzIG1vcmUsIG5vdCBh
-bGwgdmlydGlvIGRldmljZXMnIGNvbnRleHQgY2FuIGJlIHJlY292ZXJlZCBieSBkcml2ZXIgYWZ0
-ZXIgcmVzdW1pbmcsIGxpa2UgdmlydGlvLWdwdSwgd2UgaGF2ZSBub3QgZW5vdWdoIGluZm9ybWF0
-aW9uIHRvIHJlLWNyZWF0ZSBhbGwNCmRpc3BsYXkgcmVzb3VyY2VzLCB0aGF0IGlzIGRpc2N1c3Nl
-ZCBpbiBteSBwcmV2aW91cyB2ZXJzaW9uIGVtYWlsIHRocmVhZC4NCg0KPiBTbyB3aHkgc2hvdWxk
-IHdlIGltcGxlbWVudCBodyhxZW11KSB3b3JrYXJvdW5kIGZvciBhIGRyaXZlciBwcm9ibGVtPw0K
-SSB0aGluayB0aGlzIGlzIG5vdCBhIHdvcmthcm91bmQsIE5vX1NvZnRfUmVzZXQgYml0IGlzIGFs
-c28gZGVzY3JpYmVkIGluIFBDSWUgc3BlY2lmaWNhdGlvbiwgaXQgY2FuIGJlIHNldCBvciBub3Qu
-DQpBbmQgd2UgY2FuIHNldCB0aGlzIGJpdCBmb3IgdGhlIHNwZWNpZmljIGRldmljZSB3aGljaCB3
-ZSB3YW50IHRvIG1haW50YWluIGNvbnRleHQgZHVyaW5nIFMzLg0KDQo+IA0KPj4NCj4+IEltcGxl
-bWVudCBOb19Tb2Z0X1Jlc2V0IGJpdCBvZiBQQ0lfUE1fQ1RSTCByZWdpc3RlciwgdGhlbiBndWVz
-dCBjYW4gY2hlY2sNCj4+IHRoaXMgYml0LCBpZiB0aGlzIGJpdCBpcyBzZXQsIHRoZSBkZXZpY2Vz
-IHJlc2V0dGluZyB3aWxsIG5vdCBiZSBkb25lLCBhbmQNCj4+IHRoZW4gdGhlIGRpc3BsYXkgY2Fu
-IHdvcmsgYWZ0ZXIgcmVzdW1pbmcuDQo+Pg0KPj4gTm9fU29mdF9SZXNldCBiaXQgaXMgaW1wbGVt
-ZW50ZWQgZm9yIGFsbCB2aXJ0aW8gZGV2aWNlcywgYW5kIHdhcyB0ZXN0ZWQNCj4+IG9ubHkgb24g
-dmlydGlvLWdwdSBkZXZpY2UuIFNldCBpdCBmYWxzZSBieSBkZWZhdWx0IGZvciBzYWZldHkuDQo+
-Pg0KPj4gU2lnbmVkLW9mZi1ieTogSmlxaWFuIENoZW4gPEppcWlhbi5DaGVuQGFtZC5jb20+DQo+
-PiAtLS0NCj4+ICBody92aXJ0aW8vdmlydGlvLXBjaS5jICAgICAgICAgfCAzNyArKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrDQo+PiAgaW5jbHVkZS9ody92aXJ0aW8vdmlydGlvLXBj
-aS5oIHwgIDUgKysrKysNCj4+ICAyIGZpbGVzIGNoYW5nZWQsIDQyIGluc2VydGlvbnMoKykNCj4+
-DQo+PiBkaWZmIC0tZ2l0IGEvaHcvdmlydGlvL3ZpcnRpby1wY2kuYyBiL2h3L3ZpcnRpby92aXJ0
-aW8tcGNpLmMNCj4+IGluZGV4IGExYjYxMzA4ZTdhMC4uODJmYTRkZWZlNWNkIDEwMDY0NA0KPj4g
-LS0tIGEvaHcvdmlydGlvL3ZpcnRpby1wY2kuYw0KPj4gKysrIGIvaHcvdmlydGlvL3ZpcnRpby1w
-Y2kuYw0KPj4gQEAgLTIyMzAsNiArMjIzMCwxMSBAQCBzdGF0aWMgdm9pZCB2aXJ0aW9fcGNpX3Jl
-YWxpemUoUENJRGV2aWNlICpwY2lfZGV2LCBFcnJvciAqKmVycnApDQo+PiAgICAgICAgICAgICAg
-cGNpZV9jYXBfbG5rY3RsX2luaXQocGNpX2Rldik7DQo+PiAgICAgICAgICB9DQo+PiAgDQo+PiAr
-ICAgICAgICBpZiAocHJveHktPmZsYWdzICYgVklSVElPX1BDSV9GTEFHX1BNX05PX1NPRlRfUkVT
-RVQpIHsNCj4+ICsgICAgICAgICAgICBwY2lfc2V0X3dvcmQocGNpX2Rldi0+Y29uZmlnICsgcG9z
-ICsgUENJX1BNX0NUUkwsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgIFBDSV9QTV9DVFJM
-X05PX1NPRlRfUkVTRVQpOw0KPj4gKyAgICAgICAgfQ0KPj4gKw0KPj4gICAgICAgICAgaWYgKHBy
-b3h5LT5mbGFncyAmIFZJUlRJT19QQ0lfRkxBR19JTklUX1BNKSB7DQo+PiAgICAgICAgICAgICAg
-LyogSW5pdCBQb3dlciBNYW5hZ2VtZW50IENvbnRyb2wgUmVnaXN0ZXIgKi8NCj4+ICAgICAgICAg
-ICAgICBwY2lfc2V0X3dvcmQocGNpX2Rldi0+d21hc2sgKyBwb3MgKyBQQ0lfUE1fQ1RSTCwNCj4+
-IEBAIC0yMjkyLDExICsyMjk3LDM3IEBAIHN0YXRpYyB2b2lkIHZpcnRpb19wY2lfcmVzZXQoRGV2
-aWNlU3RhdGUgKnFkZXYpDQo+PiAgICAgIH0NCj4+ICB9DQo+PiAgDQo+PiArc3RhdGljIGJvb2wg
-dmlydGlvX3BjaV9ub19zb2Z0X3Jlc2V0KFBDSURldmljZSAqZGV2KQ0KPj4gK3sNCj4+ICsgICAg
-dWludDE2X3QgcG1jc3I7DQo+PiArDQo+PiArICAgIGlmICghcGNpX2lzX2V4cHJlc3MoZGV2KSB8
-fCAhZGV2LT5leHAucG1fY2FwKSB7DQo+PiArICAgICAgICByZXR1cm4gZmFsc2U7DQo+PiArICAg
-IH0NCj4+ICsNCj4+ICsgICAgcG1jc3IgPSBwY2lfZ2V0X3dvcmQoZGV2LT5jb25maWcgKyBkZXYt
-PmV4cC5wbV9jYXAgKyBQQ0lfUE1fQ1RSTCk7DQo+PiArDQo+PiArICAgIC8qDQo+PiArICAgICAq
-IFdoZW4gTm9fU29mdF9SZXNldCBiaXQgaXMgc2V0IGFuZCB0aGUgZGV2aWNlDQo+PiArICAgICAq
-IGlzIGluIEQzaG90IHN0YXRlLCBkb24ndCByZXNldCBkZXZpY2UNCj4+ICsgICAgICovDQo+PiAr
-ICAgIHJldHVybiAocG1jc3IgJiBQQ0lfUE1fQ1RSTF9OT19TT0ZUX1JFU0VUKSAmJg0KPj4gKyAg
-ICAgICAgICAgKHBtY3NyICYgUENJX1BNX0NUUkxfU1RBVEVfTUFTSykgPT0gMzsNCj4+ICt9DQo+
-PiArDQo+PiAgc3RhdGljIHZvaWQgdmlydGlvX3BjaV9idXNfcmVzZXRfaG9sZChPYmplY3QgKm9i
-aikNCj4+ICB7DQo+PiAgICAgIFBDSURldmljZSAqZGV2ID0gUENJX0RFVklDRShvYmopOw0KPj4g
-ICAgICBEZXZpY2VTdGF0ZSAqcWRldiA9IERFVklDRShvYmopOw0KPj4gIA0KPj4gKyAgICAvKg0K
-Pj4gKyAgICAgKiBOb3RlIHRoYXQ6IGEgcHJvcG9zYWwgdG8gYWRkIFNVU1BFTkQgYml0IGlzIGJl
-aW5nIGRpc2N1c3NlZCwNCj4+ICsgICAgICogbWF5IG5lZWQgdG8gY29uc2lkZXIgdGhlIHN0YXRl
-IG9mIFNVU1BFTkQgYml0IGluIGZ1dHVyZQ0KPj4gKyAgICAgKi8NCj4+ICsgICAgaWYgKHZpcnRp
-b19wY2lfbm9fc29mdF9yZXNldChkZXYpKSB7DQo+PiArICAgICAgICByZXR1cm47DQo+PiArICAg
-IH0NCj4+ICsNCj4+ICAgICAgdmlydGlvX3BjaV9yZXNldChxZGV2KTsNCj4+ICANCj4+ICAgICAg
-aWYgKHBjaV9pc19leHByZXNzKGRldikpIHsNCj4+IEBAIC0yMzM2LDYgKzIzNjcsMTIgQEAgc3Rh
-dGljIFByb3BlcnR5IHZpcnRpb19wY2lfcHJvcGVydGllc1tdID0gew0KPj4gICAgICAgICAgICAg
-ICAgICAgICAgVklSVElPX1BDSV9GTEFHX0lOSVRfTE5LQ1RMX0JJVCwgdHJ1ZSksDQo+PiAgICAg
-IERFRklORV9QUk9QX0JJVCgieC1wY2llLXBtLWluaXQiLCBWaXJ0SU9QQ0lQcm94eSwgZmxhZ3Ms
-DQo+PiAgICAgICAgICAgICAgICAgICAgICBWSVJUSU9fUENJX0ZMQUdfSU5JVF9QTV9CSVQsIHRy
-dWUpLA0KPj4gKyAgICAvKg0KPj4gKyAgICAgKiBmb3Igc2FmZXR5LCBzZXQgdGhpcyBmYWxzZSBi
-eSBkZWZhdWx0LCBpZiBjaGFuZ2UgaXQgdG8gdHJ1ZSwNCj4+ICsgICAgICogbmVlZCB0byBjb25z
-aWRlciBjb21wYXRpYmxlIGZvciBvbGQgbWFjaGluZQ0KPj4gKyAgICAgKi8NCj4+ICsgICAgREVG
-SU5FX1BST1BfQklUKCJwY2llLXBtLW5vLXNvZnQtcmVzZXQiLCBWaXJ0SU9QQ0lQcm94eSwgZmxh
-Z3MsDQo+PiArICAgICAgICAgICAgICAgICAgICBWSVJUSU9fUENJX0ZMQUdfUE1fTk9fU09GVF9S
-RVNFVF9CSVQsIGZhbHNlKSwNCj4+ICAgICAgREVGSU5FX1BST1BfQklUKCJ4LXBjaWUtZmxyLWlu
-aXQiLCBWaXJ0SU9QQ0lQcm94eSwgZmxhZ3MsDQo+PiAgICAgICAgICAgICAgICAgICAgICBWSVJU
-SU9fUENJX0ZMQUdfSU5JVF9GTFJfQklULCB0cnVlKSwNCj4+ICAgICAgREVGSU5FX1BST1BfQklU
-KCJhZXIiLCBWaXJ0SU9QQ0lQcm94eSwgZmxhZ3MsDQo+PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9o
-dy92aXJ0aW8vdmlydGlvLXBjaS5oIGIvaW5jbHVkZS9ody92aXJ0aW8vdmlydGlvLXBjaS5oDQo+
-PiBpbmRleCA1OWQ4ODAxOGMxNmEuLjllNjdiYTM4Yzc0OCAxMDA2NDQNCj4+IC0tLSBhL2luY2x1
-ZGUvaHcvdmlydGlvL3ZpcnRpby1wY2kuaA0KPj4gKysrIGIvaW5jbHVkZS9ody92aXJ0aW8vdmly
-dGlvLXBjaS5oDQo+PiBAQCAtNDMsNiArNDMsNyBAQCBlbnVtIHsNCj4+ICAgICAgVklSVElPX1BD
-SV9GTEFHX0lOSVRfRkxSX0JJVCwNCj4+ICAgICAgVklSVElPX1BDSV9GTEFHX0FFUl9CSVQsDQo+
-PiAgICAgIFZJUlRJT19QQ0lfRkxBR19BVFNfUEFHRV9BTElHTkVEX0JJVCwNCj4+ICsgICAgVklS
-VElPX1BDSV9GTEFHX1BNX05PX1NPRlRfUkVTRVRfQklULA0KPj4gIH07DQo+PiAgDQo+PiAgLyog
-TmVlZCB0byBhY3RpdmF0ZSB3b3JrLWFyb3VuZHMgZm9yIGJ1Z2d5IGd1ZXN0cyBhdCB2bXN0YXRl
-IGxvYWQuICovDQo+PiBAQCAtNzksNiArODAsMTAgQEAgZW51bSB7DQo+PiAgLyogSW5pdCBQb3dl
-ciBNYW5hZ2VtZW50ICovDQo+PiAgI2RlZmluZSBWSVJUSU9fUENJX0ZMQUdfSU5JVF9QTSAoMSA8
-PCBWSVJUSU9fUENJX0ZMQUdfSU5JVF9QTV9CSVQpDQo+PiAgDQo+PiArLyogSW5pdCBUaGUgTm9f
-U29mdF9SZXNldCBiaXQgb2YgUG93ZXIgTWFuYWdlbWVudCAqLw0KPj4gKyNkZWZpbmUgVklSVElP
-X1BDSV9GTEFHX1BNX05PX1NPRlRfUkVTRVQgXA0KPj4gKyAgKDEgPDwgVklSVElPX1BDSV9GTEFH
-X1BNX05PX1NPRlRfUkVTRVRfQklUKQ0KPj4gKw0KPj4gIC8qIEluaXQgRnVuY3Rpb24gTGV2ZWwg
-UmVzZXQgY2FwYWJpbGl0eSAqLw0KPj4gICNkZWZpbmUgVklSVElPX1BDSV9GTEFHX0lOSVRfRkxS
-ICgxIDw8IFZJUlRJT19QQ0lfRkxBR19JTklUX0ZMUl9CSVQpDQo+PiAgDQo+IA0KDQotLSANCkJl
-c3QgcmVnYXJkcywNCkppcWlhbiBDaGVuLg0K
+From: Dongwon Kim <dongwon.kim@intel.com>
+
+This commit introduces utility functions for the creation and deallocation
+of QemuDmaBuf instances. Additionally, it updates all relevant sections
+of the codebase to utilize these new utility functions.
+
+Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ include/hw/vfio/vfio-common.h   |  2 +-
+ include/hw/virtio/virtio-gpu.h  |  4 ++--
+ include/ui/console.h            |  8 +++++++-
+ hw/display/vhost-user-gpu.c     | 32 +++++++++++++++++--------------
+ hw/display/virtio-gpu-udmabuf.c | 24 +++++++++--------------
+ hw/vfio/display.c               | 26 ++++++++++++-------------
+ ui/console.c                    | 34 +++++++++++++++++++++++++++++++++
+ ui/dbus-listener.c              | 28 ++++++++++++---------------
+ 8 files changed, 95 insertions(+), 63 deletions(-)
+
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index b9da6c08ef..d66e27db02 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -148,7 +148,7 @@ typedef struct VFIOGroup {
+ } VFIOGroup;
+ 
+ typedef struct VFIODMABuf {
+-    QemuDmaBuf buf;
++    QemuDmaBuf *buf;
+     uint32_t pos_x, pos_y, pos_updates;
+     uint32_t hot_x, hot_y, hot_updates;
+     int dmabuf_id;
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index ed44cdad6b..56d6e821bf 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
+     DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+ 
+ typedef struct VGPUDMABuf {
+-    QemuDmaBuf buf;
++    QemuDmaBuf *buf;
+     uint32_t scanout_id;
+     QTAILQ_ENTRY(VGPUDMABuf) next;
+ } VGPUDMABuf;
+@@ -238,7 +238,7 @@ struct VhostUserGPU {
+     VhostUserBackend *vhost;
+     int vhost_gpu_fd; /* closed by the chardev */
+     CharBackend vhost_chr;
+-    QemuDmaBuf dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
++    QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
+     bool backend_blocked;
+ };
+ 
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 3d9d8b9fce..6d7c03b7c5 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -358,7 +358,13 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
+                           bool have_hot, uint32_t hot_x, uint32_t hot_y);
+ void dpy_gl_cursor_position(QemuConsole *con,
+                             uint32_t pos_x, uint32_t pos_y);
+-
++QemuDmaBuf *dpy_gl_qemu_dmabuf_new(uint32_t width, uint32_t height,
++                                   uint32_t stride, uint32_t x,
++                                   uint32_t y, uint32_t backing_width,
++                                   uint32_t backing_height, uint32_t fourcc,
++                                   uint64_t modifier, uint32_t dmabuf_fd,
++                                   bool allow_fences, bool y0_top);
++void dpy_gl_qemu_dmabuf_free(QemuDmaBuf *dmabuf);
+ int32_t dpy_gl_qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
+ uint32_t dpy_gl_qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
+ uint32_t dpy_gl_qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 87dcfbca10..4d8461e94a 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -250,6 +250,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+         VhostUserGpuDMABUFScanout *m = &msg->payload.dmabuf_scanout;
+         int fd = qemu_chr_fe_get_msgfd(&g->vhost_chr);
+         int old_fd;
++        uint64_t modifier = 0;
+         QemuDmaBuf *dmabuf;
+ 
+         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
+@@ -262,31 +263,34 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+ 
+         g->parent_obj.enable = 1;
+         con = g->parent_obj.scanout[m->scanout_id].con;
+-        dmabuf = &g->dmabuf[m->scanout_id];
+-        old_fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
+-        if (old_fd >= 0) {
+-            close(old_fd);
+-            dmabuf->fd = -1;
++        dmabuf = g->dmabuf[m->scanout_id];
++        if (dmabuf) {
++            old_fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
++            if (old_fd >= 0) {
++                close(old_fd);
++                dpy_gl_qemu_dmabuf_set_fd(dmabuf, -1);
++            }
+         }
+         dpy_gl_release_dmabuf(con, dmabuf);
++        g_clear_pointer(&dmabuf, dpy_gl_qemu_dmabuf_free);
+         if (fd == -1) {
+             dpy_gl_scanout_disable(con);
+             break;
+         }
+-        *dmabuf = (QemuDmaBuf) {
+-            .fd = fd,
+-            .width = m->fd_width,
+-            .height = m->fd_height,
+-            .stride = m->fd_stride,
+-            .fourcc = m->fd_drm_fourcc,
+-            .y0_top = m->fd_flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
+-        };
++
+         if (msg->request == VHOST_USER_GPU_DMABUF_SCANOUT2) {
+             VhostUserGpuDMABUFScanout2 *m2 = &msg->payload.dmabuf_scanout2;
+-            dmabuf->modifier = m2->modifier;
++            modifier = m2->modifier;
+         }
+ 
++        dmabuf = dpy_gl_qemu_dmabuf_new(m->fd_width, m->fd_height,
++                                        m->fd_stride, 0, 0, 0, 0,
++                                        m->fd_drm_fourcc, modifier,
++                                        fd, false, m->fd_flags &
++                                        VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
++
+         dpy_gl_scanout_dmabuf(con, dmabuf);
++        g->dmabuf[m->scanout_id] = dmabuf;
+         break;
+     }
+     case VHOST_USER_GPU_DMABUF_UPDATE: {
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index e3f358b575..79eafc7289 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -162,7 +162,8 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
+     struct virtio_gpu_scanout *scanout;
+ 
+     scanout = &g->parent_obj.scanout[dmabuf->scanout_id];
+-    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
++    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
++    g_clear_pointer(&dmabuf->buf, dpy_gl_qemu_dmabuf_free);
+     QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
+     g_free(dmabuf);
+ }
+@@ -181,17 +182,10 @@ static VGPUDMABuf
+     }
+ 
+     dmabuf = g_new0(VGPUDMABuf, 1);
+-    dmabuf->buf.width = r->width;
+-    dmabuf->buf.height = r->height;
+-    dmabuf->buf.stride = fb->stride;
+-    dmabuf->buf.x = r->x;
+-    dmabuf->buf.y = r->y;
+-    dmabuf->buf.backing_width = fb->width;
+-    dmabuf->buf.backing_height = fb->height;
+-    dmabuf->buf.fourcc = qemu_pixman_to_drm_format(fb->format);
+-    dmabuf->buf.fd = res->dmabuf_fd;
+-    dmabuf->buf.allow_fences = true;
+-    dmabuf->buf.draw_submitted = false;
++    dmabuf->buf = dpy_gl_qemu_dmabuf_new(r->width, r->height, fb->stride,
++                                         r->x, r->y, fb->width, fb->height,
++                                         qemu_pixman_to_drm_format(fb->format),
++                                         0, res->dmabuf_fd, false, 0);
+     dmabuf->scanout_id = scanout_id;
+     QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
+ 
+@@ -217,11 +211,11 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+         old_primary = g->dmabuf.primary[scanout_id];
+     }
+ 
+-    width = dpy_gl_qemu_dmabuf_get_width(&new_primary->buf);
+-    height = dpy_gl_qemu_dmabuf_get_height(&new_primary->buf);
++    width = dpy_gl_qemu_dmabuf_get_width(new_primary->buf);
++    height = dpy_gl_qemu_dmabuf_get_height(new_primary->buf);
+     g->dmabuf.primary[scanout_id] = new_primary;
+     qemu_console_resize(scanout->con, width, height);
+-    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
++    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
+ 
+     if (old_primary) {
+         virtio_gpu_free_dmabuf(g, old_primary);
+diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+index f9c39cbd51..7e26d9667f 100644
+--- a/hw/vfio/display.c
++++ b/hw/vfio/display.c
+@@ -241,14 +241,11 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDevice *vdev,
+ 
+     dmabuf = g_new0(VFIODMABuf, 1);
+     dmabuf->dmabuf_id  = plane.dmabuf_id;
+-    dmabuf->buf.width  = plane.width;
+-    dmabuf->buf.height = plane.height;
+-    dmabuf->buf.backing_width = plane.width;
+-    dmabuf->buf.backing_height = plane.height;
+-    dmabuf->buf.stride = plane.stride;
+-    dmabuf->buf.fourcc = plane.drm_format;
+-    dmabuf->buf.modifier = plane.drm_format_mod;
+-    dmabuf->buf.fd     = fd;
++    dmabuf->buf = dpy_gl_qemu_dmabuf_new(plane.width, plane.height,
++                                         plane.stride, 0, 0, plane.width,
++                                         plane.height, plane.drm_format,
++                                         plane.drm_format_mod, fd, false, 0);
++
+     if (plane_type == DRM_PLANE_TYPE_CURSOR) {
+         vfio_display_update_cursor(dmabuf, &plane);
+     }
+@@ -263,8 +260,9 @@ static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
+ 
+     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
+ 
+-    fd = dpy_gl_qemu_dmabuf_get_fd(&dmabuf->buf);
+-    dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
++    fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf->buf);
++    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
++    g_clear_pointer(&dmabuf->buf, dpy_gl_qemu_dmabuf_free);
+     close(fd);
+     g_free(dmabuf);
+ }
+@@ -301,13 +299,13 @@ static void vfio_display_dmabuf_update(void *opaque)
+         return;
+     }
+ 
+-    width = dpy_gl_qemu_dmabuf_get_width(&primary->buf);
+-    height = dpy_gl_qemu_dmabuf_get_height(&primary->buf);
++    width = dpy_gl_qemu_dmabuf_get_width(primary->buf);
++    height = dpy_gl_qemu_dmabuf_get_height(primary->buf);
+ 
+     if (dpy->dmabuf.primary != primary) {
+         dpy->dmabuf.primary = primary;
+         qemu_console_resize(dpy->con, width, height);
+-        dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
++        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
+         free_bufs = true;
+     }
+ 
+@@ -321,7 +319,7 @@ static void vfio_display_dmabuf_update(void *opaque)
+     if (cursor && (new_cursor || cursor->hot_updates)) {
+         bool have_hot = (cursor->hot_x != 0xffffffff &&
+                          cursor->hot_y != 0xffffffff);
+-        dpy_gl_cursor_dmabuf(dpy->con, &cursor->buf, have_hot,
++        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
+                              cursor->hot_x, cursor->hot_y);
+         cursor->hot_updates = 0;
+     } else if (!cursor && new_cursor) {
+diff --git a/ui/console.c b/ui/console.c
+index d4ca9e6e0f..ea23fd8af6 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -1132,6 +1132,40 @@ void dpy_gl_cursor_position(QemuConsole *con,
+     }
+ }
+ 
++QemuDmaBuf *dpy_gl_qemu_dmabuf_new(uint32_t width, uint32_t height,
++                                   uint32_t stride, uint32_t x,
++                                   uint32_t y, uint32_t backing_width,
++                                   uint32_t backing_height, uint32_t fourcc,
++                                   uint64_t modifier, uint32_t dmabuf_fd,
++                                   bool allow_fences, bool y0_top) {
++    QemuDmaBuf *dmabuf;
++
++    dmabuf = g_new0(QemuDmaBuf, 1);
++
++    dmabuf->width = width;
++    dmabuf->height = height;
++    dmabuf->stride = stride;
++    dmabuf->x = x;
++    dmabuf->y = y;
++    dmabuf->backing_width = backing_width;
++    dmabuf->backing_height = backing_height;
++    dmabuf->fourcc = fourcc;
++    dmabuf->modifier = modifier;
++    dmabuf->fd = dmabuf_fd;
++    dmabuf->allow_fences = allow_fences;
++    dmabuf->y0_top = y0_top;
++    dmabuf->fence_fd = -1;
++
++    return dmabuf;
++}
++
++void dpy_gl_qemu_dmabuf_free(QemuDmaBuf *dmabuf)
++{
++    assert(dmabuf != NULL);
++
++    g_free(dmabuf);
++}
++
+ int32_t dpy_gl_qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
+ {
+     assert(dmabuf != NULL);
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index c6c7d93753..85d779a45c 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -442,28 +442,24 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
+     trace_dbus_scanout_texture(tex_id, backing_y_0_top,
+                                backing_width, backing_height, x, y, w, h);
+ #ifdef CONFIG_GBM
+-    QemuDmaBuf dmabuf = {
+-        .width = w,
+-        .height = h,
+-        .y0_top = backing_y_0_top,
+-        .x = x,
+-        .y = y,
+-        .backing_width = backing_width,
+-        .backing_height = backing_height,
+-    };
++    int32_t fd;
++    uint32_t stride, fourcc;
++    uint64_t modifier;
++    QemuDmaBuf *dmabuf;
+ 
+     assert(tex_id);
+-    dmabuf.fd = egl_get_fd_for_texture(
+-        tex_id, (EGLint *)&dmabuf.stride,
+-        (EGLint *)&dmabuf.fourcc,
+-        &dmabuf.modifier);
+-    if (dmabuf.fd < 0) {
++    fd = egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&fourcc,
++                                &modifier);
++    if (fd < 0) {
+         error_report("%s: failed to get fd for texture", __func__);
+         return;
+     }
++    dmabuf = dpy_gl_qemu_dmabuf_new(w, h, stride, x, y, backing_width,
++                                    backing_height, fourcc, modifier, fd,
++                                    false, backing_y_0_top);
+ 
+-    dbus_scanout_dmabuf(dcl, &dmabuf);
+-    close(dmabuf.fd);
++    dbus_scanout_dmabuf(dcl, dmabuf);
++    close(fd);
+ #endif
+ 
+ #ifdef WIN32
+-- 
+2.34.1
+
 
