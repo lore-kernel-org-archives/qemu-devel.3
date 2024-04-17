@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C70C04FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Apr 2024 23:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC99C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 00:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rws2A-00061Z-J7; Tue, 16 Apr 2024 19:16:14 -0400
+	id 1rwtHE-0008CR-7U; Tue, 16 Apr 2024 20:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rws26-00061A-Or
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 19:16:10 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rwtHA-0008C2-Gs
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 20:35:49 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rws23-0000ZN-Gi
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 19:16:09 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e3ca546d40so36665725ad.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 16:16:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rwtH8-0005D3-Gv
+ for qemu-devel@nongnu.org; Tue, 16 Apr 2024 20:35:48 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-5d3912c9a83so3179347a12.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 17:35:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713309366; x=1713914166; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C9WhiVlQMH7+nQDIJtGcV0zepCzHR0okzVyp5RsCYbk=;
- b=KET/AlpgUVis5Z0H7Ex24xK1LmnEIQXUszChISaoRbMQiU7qvdWh+EGota9mrfTrzy
- L3rSE2Q6Yl+3oI3X3GCEHAyUamOIrwtVg1ETn9b5uwbqcUlItuvHx8EC3fvuWDjHKhnl
- nHb2WGlRtlMztaUMip6OlviIOgVhQbHT45SZ4r0x273yN5tz97qUri6qMcqrwZMMQxuH
- cJ0uMuo1PT6wQ1m2rU7HtE8OHKJ9idU6Mdf2j1hb7/MRzzQSThT4WDTiQM+EwMUMTUkp
- KK4cJwRuRgKwnbO8GyRMCF2M8s+/Op+gDYeGemN4k4bwdKuj/KAZzi5IHqwZ39uCq3lf
- GGOg==
+ d=linaro.org; s=google; t=1713314142; x=1713918942; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zmX4cVH0tVfyV2GWZ5kBMxrZNdNp4L35gzxUJU0zvu8=;
+ b=At12zf6zeZfyptc2soingrYIuLckL6qGjy8HplRdCdcgrvf9vhx6+vh6iKWg2TFL7R
+ M6Kch9IQzlisC5cvUcSjsetQ253KbPNQreUmMUqm2s7Ka47uvv/hkPcY5N/uXLAPyzs2
+ zLNkUv/HcVfTU5KGhwF0y/H2I4AEjWIvC18624H2yGIb7eD03xER36bbbgNu7Ac1odcT
+ 5kh2MGUnRUnxLniYB8YLd+Yv1EYuAS1fyxtoOM5q6oDIpOk0e5l94pnfqy82B7TKdaxF
+ 5Fc5qY9bsSb/j743pZKGIjkK+aoT0l9xSdC5Q0TW/zxTN/NBdvVymxXeukHvsyYsYACz
+ zfHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713309366; x=1713914166;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1713314142; x=1713918942;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C9WhiVlQMH7+nQDIJtGcV0zepCzHR0okzVyp5RsCYbk=;
- b=PEbaLg4jQlnAdjiSFsC3tYS4tabRsuzTEUlq3n+Q84MD+Q2wk6/EDYv6VTB10L2R2U
- TE21dVPjYzf4yDc0EtEBOXFmaLNAolX2TBgMiqfGxaL4zQ+vScxequ/P9dkikAijHBB5
- ULyRsOLMRlrLerQoYaK0vpueA5MeLu+fPOUs0PmeyLInHCi0pQx59DFw1iksbKv7E8E+
- JAOy+ZAC81sN64PsKj+iH2qlN+hxLcPwzMozN/wfADpwXVi/H5RsW+I2bV6cdOti/Y8R
- Q6pp6zJdfhLYnnXr/doPmyWtjBIgp3wxq4ftpu1rBjxHA/7RPPLev9t0qbQ94FfmCkVi
- PEHQ==
+ bh=zmX4cVH0tVfyV2GWZ5kBMxrZNdNp4L35gzxUJU0zvu8=;
+ b=O1MhKJv3UzgXYkhIVPSErapKu0QZ3N2u9JeaIATlk8+kPaPNtOZntkd8K9Ieua8iqA
+ 2kIHvWmA+c/83bNCIs7qNMJpucQsoyYT8l+SuS6MsC3UlW2RDRCj2fWbbRvpA9YuWAef
+ 8yaogQl9du9Nk7Hfv1asdgg7cuvpBpYMpuasANYlP8bUZhD7UFEyGy6gf4oBV2hs0DSl
+ wu931Ygs0yCiPA7a/I/hL1kD3ZFohW9/D1LDJNKBxH3w1jpt5yxAL03wcTJkj8OffgpI
+ fDpLs9rijvKZhidBASGUWRMxYvrnzElNySnOb4cmT1thN0w/sEt/Vp/S4YRIESZtIly8
+ QZaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBF/e90pNn9Mn0tcFuvwWjn6VfrwFvcaQX+en897rlCuwoZvp7h1fNY9ztIPKFf+cPiqyPHRAjQHOe+HlrPlWlC6zVbXY=
-X-Gm-Message-State: AOJu0YzFQS2gmGsp86kSQLR3D5KLxGY0ro+yefdZYe297/A/ZjoknUpz
- u7jN5z1K7IN1awqCneWsf7KoLxm0eaMfFUEhRbHvaglDj67xZXBmkBVLK1aVj2g=
-X-Google-Smtp-Source: AGHT+IHJkbNuKdhoMb++xw99Fz5uHzEY7L78LlIyh1/Mao3Vge829ra2WPaN/Mvc7l46hfoIu0FC/Q==
-X-Received: by 2002:a17:902:ec90:b0:1e2:616a:9c31 with SMTP id
- x16-20020a170902ec9000b001e2616a9c31mr14444576plg.39.1713309365885; 
- Tue, 16 Apr 2024 16:16:05 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.202])
+ AJvYcCWTJGYAuzIrJ7pU1VyjDnmvSm9Rdu97mET56LFbjNwlUvJ/xJnByXvtPu9eexnv+METpaL37AX42kfpTpJEIUkHCfwZJeo=
+X-Gm-Message-State: AOJu0YyYocXgrA7JVdtzApeUjmBVUQegVYRX9Q11Vws7KvSAHpZJ5N7W
+ slYfitWu2hslcMU2+E1y+QmOnkX3Q1wDh3hhVoTlYRQEQ+A4ub6BuDMKAHqi8fw=
+X-Google-Smtp-Source: AGHT+IFFz1g/ejUpqjyXHVroCJGnQjH41zYJO4IHdF4SrIciTkyEYJzhfpyot8fE6mUCPkkKUshfXQ==
+X-Received: by 2002:a17:90b:1d07:b0:2a1:f455:c3d7 with SMTP id
+ on7-20020a17090b1d0700b002a1f455c3d7mr12558398pjb.16.1713314142279; 
+ Tue, 16 Apr 2024 17:35:42 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:937d:c610::fc11? ([2604:3d08:937d:c610::fc11])
  by smtp.gmail.com with ESMTPSA id
- i5-20020a17090332c500b001e546a10c50sm10294646plr.286.2024.04.16.16.16.03
+ jb20-20020a17090b409400b002a22ddac1a1sm205144pjb.24.2024.04.16.17.35.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 16:16:05 -0700 (PDT)
-Message-ID: <6dc065e2-81d8-4562-84c0-8a697c58ef71@ventanamicro.com>
-Date: Tue, 16 Apr 2024 20:16:02 -0300
+ Tue, 16 Apr 2024 17:35:41 -0700 (PDT)
+Message-ID: <c55a1d2c-bae0-44b5-9cd8-3df1b33c31ad@linaro.org>
+Date: Tue, 16 Apr 2024 17:35:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 v3 2/2] qtest/virtio-9p-test.c: remove
- g_test_slow() gate
+Subject: Re: [PATCH 0/7] plugins: Use unwind info for special gdb registers
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240416040609.1313605-1-richard.henderson@linaro.org>
 Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
- peter.maydell@linaro.org, qemu_oss@crudebyte.com
-References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
- <20240327142011.805728-3-dbarboza@ventanamicro.com>
- <a6b402b9-9f84-4d72-a631-09f04bb31450@tls.msk.ru>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <a6b402b9-9f84-4d72-a631-09f04bb31450@tls.msk.ru>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240416040609.1313605-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,50 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/16/24 16:54, Michael Tokarev wrote:
-> 27.03.2024 17:20, Daniel Henrique Barboza :
->> Commit 558f5c42ef gated the local tests with g_test_slow() to skip them
->> in 'make check'. The reported issue back then was this following CI
->> problem:
->>
->> https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
->>
->> This problem ended up being fixed after it was detected with the
->> recently added risc-v machine nodes [1]. virtio-9p-test.c is now
->> creating and removing temporary dirs for each test run, instead of
->> creating a single dir for the entire qos-test scope.
->>
->> We're now able to run these tests with 'make check' in the CI, so let's
->> go ahead and re-enable them.
->>
->> This reverts commit 558f5c42efded3e0d0b20a90bce2a9a14580d824.
->>
->> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
+On 4/15/24 21:06, Richard Henderson wrote:
+> Based-on: 20240404230611.21231-1-richard.henderson@linaro.org
+> ("[PATCH v2 00/21] Rewrite plugin code generation")
 > 
-> This makes tests being unable to complete on a tmpfs.  It looks like
-> 9pfs tests needs another tweak here.
+> This is an attempt to fix
+> https://gitlab.com/qemu-project/qemu/-/issues/2208
+> ("PC is not updated for each instruction in TCG plugins")
 > 
-> # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-798502.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-798502.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M pc  -fsdev local,id=fsdev0,path='/tmp/q/master/qtest-9p-local-9LHRL2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
-> Received response 7 (RLERROR) instead of 73 (RMKDIR)
-> Rlerror has errno 95 (Operation not supported)
-> **
-> ERROR:../../../build/qemu/master/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
-> 
-> This is when I build it on /tmp/ which is a tmpfs.  When I build
-> it on a real filesystem, it works fine.
-> 
-> Apparently xattrs aren't supported on a tmpfs.
+> I have only updated target/i386 so far, but basically all targets
+> need updating for the new callbacks.  Extra points to anyone who
+> sees how to avoid the extra code duplication.  :-)
+>
 
-Hmmm not sure how to proceed here since I'm not a 9p expert by any means. I'll
-let Christian decide what to do.
+Thanks for the series Richard. It looks good to me.
 
-If we can't figure it out we might need to re-introduce the gate again. Thanks,
+Besides reviewing individual commits, I have a more general question.
+ From some discussions we had, it seems like that previously gdb stub 
+was correctly updating all register values, and that it has been dropped 
+at some point.
 
+Was it for performance reasons, or an architectural change in QEMU?
+Is gdb stub the right way to poke register values for plugins?
 
-Daniel
+I don't know exactly why some registers are not updated correctly in 
+this context, but it seems like we are trying to fix this afterward, 
+instead of identifying root cause.
+
+Sorry if my question is irrelevant, I'm trying to understand the full 
+context here.
+
+Thanks,
+Pierrick
 
 > 
-> /mjt
+> r~
+> 
+> 
+> Richard Henderson (7):
+>    tcg: Introduce INDEX_op_plugin_pc
+>    accel/tcg: Set CPUState.plugin_ra before all plugin callbacks
+>    accel/tcg: Return the TranslationBlock from cpu_unwind_state_data
+>    plugins: Introduce TCGCPUOps callbacks for mid-tb register reads
+>    target/i386: Split out gdb-internal.h
+>    target/i386: Introduce cpu_compute_eflags_ccop
+>    target/i386: Implement TCGCPUOps for plugin register reads
+> 
+>   include/exec/cpu-common.h     |  9 +++--
+>   include/hw/core/cpu.h         |  1 +
+>   include/hw/core/tcg-cpu-ops.h | 13 +++++++
+>   include/tcg/tcg-op-common.h   |  1 +
+>   include/tcg/tcg-opc.h         |  1 +
+>   target/i386/cpu.h             |  2 +
+>   target/i386/gdb-internal.h    | 65 +++++++++++++++++++++++++++++++
+>   accel/tcg/plugin-gen.c        | 50 +++++++++++++++++++++---
+>   accel/tcg/translate-all.c     |  9 +++--
+>   plugins/api.c                 | 36 +++++++++++++++++-
+>   target/i386/gdbstub.c         |  1 +
+>   target/i386/helper.c          |  6 ++-
+>   target/i386/tcg/cc_helper.c   | 10 +++++
+>   target/i386/tcg/tcg-cpu.c     | 72 +++++++++++++++++++++++++++--------
+>   tcg/tcg-op.c                  |  5 +++
+>   tcg/tcg.c                     | 10 +++++
+>   16 files changed, 258 insertions(+), 33 deletions(-)
+>   create mode 100644 target/i386/gdb-internal.h
+> 
 
