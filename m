@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF74C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 14:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA33C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 15:00:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx6Sg-0007IN-Tn; Wed, 17 Apr 2024 10:40:34 -0400
+	id 1rx6lQ-0003bM-Bh; Wed, 17 Apr 2024 10:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1rx5lr-0004d0-63
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 09:56:19 -0400
-Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1rx5lp-0001sx-1G
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 09:56:18 -0400
-Received: by mail-qt1-x836.google.com with SMTP id
- d75a77b69052e-437846c4ceaso1404781cf.3
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 06:56:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1713362175; x=1713966975; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SjbPWBfINnOGzcvMdN5Bg4vOl+6PWZ3hUAroJs1C7pk=;
- b=T+xkuawp3wWaONUoflC+83dE6oZoSa3ox2PuC+Y27TT9r2+HuL6WqzodfZFOVHYsUm
- 3XBlhXsOG4AmUoT/CyronbMhjfaGJ+O8V8a3oDFgwvg1AgY3rkLM+64blwCw0W1Kaa0g
- fSj5xxChgk8SnOgxhW1MUeOp2UYiFNULDD/ns=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713362175; x=1713966975;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SjbPWBfINnOGzcvMdN5Bg4vOl+6PWZ3hUAroJs1C7pk=;
- b=OA55+x6T35LRYSs+PgfYGCAA9imTAJkYJIu4ahCeGUs5S5OX7clZubUnhkAF9g+nsi
- RnLV4qqdZ1MMspyXd45W6MUFH+n3nUDTQ7d3XiupoMq/Xha+cDQTVWxHBf7GdJVKQHYS
- jTbvjD4Z5FVemDyUn7jES2JGuIj/u1gKpOlegDTidzy7VPlOEHpMpQWPvBwpwnvrPX5G
- VghiFa9zTyo+Bg52JEEAPyBYD5HKvNREx+XW8AS7Hkqcl++k99Cy44GQmfaCCG14P4WI
- bglepO1ZVGHnRK6RQNQwbvpHpqrIQqvTZ8Q44gkkU8BdeZKo+UWjum+1MV1LEEsUiEzq
- UoEQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHo0lsmwGnzZvcs7g7CNs4qSuSgtCkLm2H0r8mZfwwZs96vFUVnR1ZXv6fgbJWrH6UcpzUC8+7itLqLHd3Gq253YD23ZY=
-X-Gm-Message-State: AOJu0YzvwbFPTUiA2r6mJFIkY9wKeEDOKWX7WDKMByTLQ56vCVquj4tr
- nTPPnzVUHej6nYW/0SDEIUGNuN9f24lz2xP5FDWnpgc5xgXocrOR8AmhMfV4sg==
-X-Google-Smtp-Source: AGHT+IH6TvE8n404S9zTQJP1CVxoAgrlQ+3mwMF4pbruZXFcH+WheIpEyhz6vjJu255/hE36YesffA==
-X-Received: by 2002:a05:622a:678c:b0:436:aad9:6b65 with SMTP id
- hz12-20020a05622a678c00b00436aad96b65mr11707428qtb.25.1713362175234; 
- Wed, 17 Apr 2024 06:56:15 -0700 (PDT)
-Received: from denia.c.googlers.com.com
- (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
- by smtp.gmail.com with ESMTPSA id
- t12-20020ac8588c000000b00436e193f408sm4466973qta.28.2024.04.17.06.56.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Apr 2024 06:56:14 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-Cc: Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH] hw/i386/acpi-build: Return a pre-computed _PRT table
-Date: Wed, 17 Apr 2024 13:53:46 +0000
-Message-ID: <20240417135608.2613586-1-ribalda@chromium.org>
-X-Mailer: git-send-email 2.44.0.683.g7961c838ac-goog
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rx6lP-0003bD-2s
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 10:59:55 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rx6lM-00061E-UE
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 10:59:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713365993; x=1744901993;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=hFxoYz8OFTAduk1qJEadGSlqTNmbCwLMPN3rP4CIP5o=;
+ b=NlL/E5C80KacKdpxJOWORmXnosppldaR69X7g9suhuoKWKUimI6ah5uo
+ TxCB08xRoQcAzpf7uJ/j+X2FwD40inTOaW5yUEYUfh1/0E34QReDc9TUf
+ UdAf8EcsLburMGbK6MTMgnMrtH5iLZ3k9YlI52cRg3FrIOdYhvzBDpq1Q
+ Afy0ZIFZBOZfy1E2x01rFermD0LspNb/GFhjsLmD+wNhayRkeSzrd92IN
+ Ky+vyAXqnmSKtYrMV4/qa4vzJ6LWh2uBISUhs9fdQzJNwWkmd49hPUrCY
+ kbZpxh03Akb1Q8ZbTWT4fwImFsPSBeFOmnoqzcI9fnXLvibaCCTFczQ7A Q==;
+X-CSE-ConnectionGUID: b8bD35rIQbSihiMNAKYbMg==
+X-CSE-MsgGUID: VOU7+BaMQQi0GSNtpxYckw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="9032428"
+X-IronPort-AV: E=Sophos;i="6.07,209,1708416000"; 
+   d="scan'208";a="9032428"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Apr 2024 07:59:49 -0700
+X-CSE-ConnectionGUID: B14wT2GaSUWREF7EScVLeQ==
+X-CSE-MsgGUID: TKzeaDAlTtmRZfY7S3vkXA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,209,1708416000"; d="scan'208";a="27084276"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa005.fm.intel.com with ESMTP; 17 Apr 2024 07:59:48 -0700
+Date: Wed, 17 Apr 2024 23:13:52 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Anthony Harivel <aharivel@redhat.com>, pbonzini@redhat.com,
+ mtosatti@redhat.com, qemu-devel@nongnu.org, vchundur@redhat.com,
+ rjarry@redhat.com
+Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
+Message-ID: <Zh/nMFpfKIORYW97@intel.com>
+References: <20240411121434.253353-1-aharivel@redhat.com>
+ <20240411121434.253353-4-aharivel@redhat.com>
+ <Zh+fRliUJ8sPcOpD@intel.com> <Zh_AF3YfiZeIAkCU@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
- envelope-from=ribalda@chromium.org; helo=mail-qt1-x836.google.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
+In-Reply-To: <Zh_AF3YfiZeIAkCU@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 17 Apr 2024 10:40:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,232 +87,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When qemu runs without kvm acceleration the ACPI executions take a great
-amount of time. If they take more than the default time (30sec), the
-ACPI calls fail and the system might not behave correctly.
+Hi Daniel,
 
-Now the _PRT table is computed on the fly. We can drastically reduce the
-execution of the _PRT method if we return a pre-computed table.
+On Wed, Apr 17, 2024 at 01:27:03PM +0100, Daniel P. Berrangé wrote:
+> Date: Wed, 17 Apr 2024 13:27:03 +0100
+> From: "Daniel P. Berrangé" <berrange@redhat.com>
+> Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
+> 
+> On Wed, Apr 17, 2024 at 06:07:02PM +0800, Zhao Liu wrote:
+> > Hi Anthony,
+> > 
+> > May I ask what your usage scenario is? Is it to measure Guest's energy
+> > consumption and to charged per watt consumed? ;-)
+> > 
+> > On Thu, Apr 11, 2024 at 02:14:34PM +0200, Anthony Harivel wrote:
+> > > Date: Thu, 11 Apr 2024 14:14:34 +0200
+> > > From: Anthony Harivel <aharivel@redhat.com>
+> > > Subject: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
+> > > 
+> > > Starting with the "Sandy Bridge" generation, Intel CPUs provide a RAPL
+> > > interface (Running Average Power Limit) for advertising the accumulated
+> > > energy consumption of various power domains (e.g. CPU packages, DRAM,
+> > > etc.).
+> > >
+> > > The consumption is reported via MSRs (model specific registers) like
+> > > MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are
+> > > 64 bits registers that represent the accumulated energy consumption in
+> > > micro Joules. They are updated by microcode every ~1ms.
+> > 
+> > What is your current target platform?
+> 
+> I think we can assume /all/ future CPUs are conceptially in scope
+> for this.
+> 
+> The use case is to allow guest owners to monitor the power consumption
+> of their workloads, so they can take steps to optimize their guest VM
+> workloads to reduce power consumed.
 
-Without this patch:
-[   51.343484] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[   51.527032] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[   51.530049] virtio-pci 0000:00:02.0: can't derive routing for PCI INT A
-[   51.530797] virtio-pci 0000:00:02.0: PCI INT A: no GSI
-[   81.922901] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[   82.103534] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[   82.106088] virtio-pci 0000:00:04.0: can't derive routing for PCI INT A
-[   82.106761] virtio-pci 0000:00:04.0: PCI INT A: no GSI
-[  112.192568] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[  112.486687] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[  112.489554] virtio-pci 0000:00:05.0: can't derive routing for PCI INT A
-[  112.490027] virtio-pci 0000:00:05.0: PCI INT A: no GSI
-[  142.559448] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[  142.718596] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[  142.722889] virtio-pci 0000:00:06.0: can't derive routing for PCI INT A
-[  142.724578] virtio-pci 0000:00:06.0: PCI INT A: no GSI
+Thanks for the explanation! 
 
-With this patch:
-[   22.938076] ACPI: \_SB_.LNKB: Enabled at IRQ 10
-[   24.214002] ACPI: \_SB_.LNKD: Enabled at IRQ 11
-[   25.465170] ACPI: \_SB_.LNKA: Enabled at IRQ 10
-[   27.944920] ACPI: \_SB_.LNKC: Enabled at IRQ 11
+> > On future Xeon platforms (EMR and beyond) RAPL will support TPMI (an MMIO
+> > interface) and the TPMI based RAPL will be preferred in the future as
+> > well:
+> 
+> Is the MSR based interface likely to be removed in future silicon,
+> or it will be remain for back compat ?
 
-ACPI disassembly:
-        Scope (PCI0)
-        {
-            Method (_PRT, 0, NotSerialized)  // _PRT: PCI Routing Table
-            {
-                Return (Package (0x80)
-                {
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        Zero,
-                        LNKD,
-                        Zero
-                    },
+For Xeon, GNR will have both TMPI & MSR RAPL, but eventually MSR RAPL
+will be removed. Therefore, if RAPL support is desired for all future
+Xeons, then it's necessary to consider TMPI as the next plan.
 
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        One,
-                        LNKA,
-                        Zero
-                    },
+Alternatively, the whole RAPL scope can be split into rapl-msr and
+rapl-tpmi features.
 
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        0x02,
-                        LNKB,
-                        Zero
-                    },
+> > * TPMI doc: https://github.com/intel/tpmi_power_management
+> > * TPMI based RAPL driver: drivers/powercap/intel_rapl_tpmi.c
+> >
 
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        0x03,
-                        LNKC,
-                        Zero
-                    },
-
-                    Package (0x04)
-                    {
-                        0x0001FFFF,
-                        Zero,
-                        LNKS,
-                        Zero
-                    },
-Context: https://lore.kernel.org/virtualization/20240417145544.38d7b482@imammedo.users.ipa.redhat.com/T/#t
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
----
- hw/i386/acpi-build.c | 118 ++++++++-----------------------------------
- 1 file changed, 21 insertions(+), 97 deletions(-)
-
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 53f804ac16..4c14d39173 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -725,40 +725,7 @@ static Aml *aml_pci_pdsm(void)
-     return method;
- }
- 
--/**
-- * build_prt_entry:
-- * @link_name: link name for PCI route entry
-- *
-- * build AML package containing a PCI route entry for @link_name
-- */
--static Aml *build_prt_entry(const char *link_name)
--{
--    Aml *a_zero = aml_int(0);
--    Aml *pkg = aml_package(4);
--    aml_append(pkg, a_zero);
--    aml_append(pkg, a_zero);
--    aml_append(pkg, aml_name("%s", link_name));
--    aml_append(pkg, a_zero);
--    return pkg;
--}
--
--/*
-- * initialize_route - Initialize the interrupt routing rule
-- * through a specific LINK:
-- *  if (lnk_idx == idx)
-- *      route using link 'link_name'
-- */
--static Aml *initialize_route(Aml *route, const char *link_name,
--                             Aml *lnk_idx, int idx)
--{
--    Aml *if_ctx = aml_if(aml_equal(lnk_idx, aml_int(idx)));
--    Aml *pkg = build_prt_entry(link_name);
--
--    aml_append(if_ctx, aml_store(pkg, route));
--
--    return if_ctx;
--}
--
-+#define N_ROUTES 128
- /*
-  * build_prt - Define interrupt rounting rules
-  *
-@@ -771,74 +738,31 @@ static Aml *initialize_route(Aml *route, const char *link_name,
-  */
- static Aml *build_prt(bool is_pci0_prt)
- {
--    Aml *method, *while_ctx, *pin, *res;
-+    Aml *rt_pkg, *method;
-+    const char link_name[][2] = {"D", "A", "B", "C"};
-+    int i;
- 
-     method = aml_method("_PRT", 0, AML_NOTSERIALIZED);
--    res = aml_local(0);
--    pin = aml_local(1);
--    aml_append(method, aml_store(aml_package(128), res));
--    aml_append(method, aml_store(aml_int(0), pin));
-+    rt_pkg = aml_varpackage(N_ROUTES);
- 
--    /* while (pin < 128) */
--    while_ctx = aml_while(aml_lless(pin, aml_int(128)));
--    {
--        Aml *slot = aml_local(2);
--        Aml *lnk_idx = aml_local(3);
--        Aml *route = aml_local(4);
--
--        /* slot = pin >> 2 */
--        aml_append(while_ctx,
--                   aml_store(aml_shiftright(pin, aml_int(2), NULL), slot));
--        /* lnk_idx = (slot + pin) & 3 */
--        aml_append(while_ctx,
--            aml_store(aml_and(aml_add(pin, slot, NULL), aml_int(3), NULL),
--                      lnk_idx));
--
--        /* route[2] = "LNK[D|A|B|C]", selection based on pin % 3  */
--        aml_append(while_ctx, initialize_route(route, "LNKD", lnk_idx, 0));
--        if (is_pci0_prt) {
--            Aml *if_device_1, *if_pin_4, *else_pin_4;
--
--            /* device 1 is the power-management device, needs SCI */
--            if_device_1 = aml_if(aml_equal(lnk_idx, aml_int(1)));
--            {
--                if_pin_4 = aml_if(aml_equal(pin, aml_int(4)));
--                {
--                    aml_append(if_pin_4,
--                        aml_store(build_prt_entry("LNKS"), route));
--                }
--                aml_append(if_device_1, if_pin_4);
--                else_pin_4 = aml_else();
--                {
--                    aml_append(else_pin_4,
--                        aml_store(build_prt_entry("LNKA"), route));
--                }
--                aml_append(if_device_1, else_pin_4);
--            }
--            aml_append(while_ctx, if_device_1);
--        } else {
--            aml_append(while_ctx, initialize_route(route, "LNKA", lnk_idx, 1));
-+    for (i = 0; i < N_ROUTES; i++) {
-+        Aml *pkg = aml_package(4);
-+        const char *name;
-+
-+        name = link_name[((i >> 2) + i) & 3];
-+
-+        if (is_pci0_prt && i == 4) {
-+            name = "S";
-         }
--        aml_append(while_ctx, initialize_route(route, "LNKB", lnk_idx, 2));
--        aml_append(while_ctx, initialize_route(route, "LNKC", lnk_idx, 3));
--
--        /* route[0] = 0x[slot]FFFF */
--        aml_append(while_ctx,
--            aml_store(aml_or(aml_shiftleft(slot, aml_int(16)), aml_int(0xFFFF),
--                             NULL),
--                      aml_index(route, aml_int(0))));
--        /* route[1] = pin & 3 */
--        aml_append(while_ctx,
--            aml_store(aml_and(pin, aml_int(3), NULL),
--                      aml_index(route, aml_int(1))));
--        /* res[pin] = route */
--        aml_append(while_ctx, aml_store(route, aml_index(res, pin)));
--        /* pin++ */
--        aml_append(while_ctx, aml_increment(pin));
-+
-+        aml_append(pkg, aml_int((i << 14) | 0xFFFF));
-+        aml_append(pkg, aml_int(i & 3));
-+        aml_append(pkg, aml_name("LNK%s", name));
-+        aml_append(pkg, aml_int(0));
-+        aml_append(rt_pkg, pkg);
-     }
--    aml_append(method, while_ctx);
--    /* return res*/
--    aml_append(method, aml_return(res));
-+
-+    aml_append(method, aml_return(rt_pkg));
- 
-     return method;
- }
--- 
-2.44.0.683.g7961c838ac-goog
+Regards,
+Zhao
 
 
