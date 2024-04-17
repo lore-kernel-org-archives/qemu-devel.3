@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC99C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 00:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36E6C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 02:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwtHE-0008CR-7U; Tue, 16 Apr 2024 20:35:52 -0400
+	id 1rwujb-0002j8-Cx; Tue, 16 Apr 2024 22:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rwtHA-0008C2-Gs
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 20:35:49 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rwujZ-0002iu-TV; Tue, 16 Apr 2024 22:09:13 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rwtH8-0005D3-Gv
- for qemu-devel@nongnu.org; Tue, 16 Apr 2024 20:35:48 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-5d3912c9a83so3179347a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 17:35:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rwujY-0002t5-9u; Tue, 16 Apr 2024 22:09:13 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1e4c4fb6af3so2648635ad.0; 
+ Tue, 16 Apr 2024 19:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713314142; x=1713918942; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zmX4cVH0tVfyV2GWZ5kBMxrZNdNp4L35gzxUJU0zvu8=;
- b=At12zf6zeZfyptc2soingrYIuLckL6qGjy8HplRdCdcgrvf9vhx6+vh6iKWg2TFL7R
- M6Kch9IQzlisC5cvUcSjsetQ253KbPNQreUmMUqm2s7Ka47uvv/hkPcY5N/uXLAPyzs2
- zLNkUv/HcVfTU5KGhwF0y/H2I4AEjWIvC18624H2yGIb7eD03xER36bbbgNu7Ac1odcT
- 5kh2MGUnRUnxLniYB8YLd+Yv1EYuAS1fyxtoOM5q6oDIpOk0e5l94pnfqy82B7TKdaxF
- 5Fc5qY9bsSb/j743pZKGIjkK+aoT0l9xSdC5Q0TW/zxTN/NBdvVymxXeukHvsyYsYACz
- zfHg==
+ d=gmail.com; s=20230601; t=1713319750; x=1713924550; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tW0F8yVnPEfd4Z5ofuot2760kNLGK+RDe9+v58xLv8Q=;
+ b=h0O0EwKCdhXjTEF8Oli+yN/IDfb4iUUnzHHqSXpKrObVPxOKPqPA9wWJO+v2WAHHVs
+ LrkYcmjFajLvE6SnXPpmnMN23LVqMUi1eFPOqtlmAlW3oB90kKqiTAfPlz5DYPn5exni
+ ktma3Tcr2VMsdv1Y5DnH+J1T7OAePBBihwaUA0ADaQdX8h4HrF2c6WXs6OfDxktH/2kO
+ djk5jVYqPIPOX5ZdWtW4ssx7GpwXTdXlBkBLyMQ5hRhKPD4f4OD9PTvHYB4lPw/jA6Zh
+ ik63hxlX3Qlpu1XMXviNODReCwLt+K/j09a1beoWOGzfGNXq3NPFQYhPS/UEqJKaSLzE
+ Abjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713314142; x=1713918942;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zmX4cVH0tVfyV2GWZ5kBMxrZNdNp4L35gzxUJU0zvu8=;
- b=O1MhKJv3UzgXYkhIVPSErapKu0QZ3N2u9JeaIATlk8+kPaPNtOZntkd8K9Ieua8iqA
- 2kIHvWmA+c/83bNCIs7qNMJpucQsoyYT8l+SuS6MsC3UlW2RDRCj2fWbbRvpA9YuWAef
- 8yaogQl9du9Nk7Hfv1asdgg7cuvpBpYMpuasANYlP8bUZhD7UFEyGy6gf4oBV2hs0DSl
- wu931Ygs0yCiPA7a/I/hL1kD3ZFohW9/D1LDJNKBxH3w1jpt5yxAL03wcTJkj8OffgpI
- fDpLs9rijvKZhidBASGUWRMxYvrnzElNySnOb4cmT1thN0w/sEt/Vp/S4YRIESZtIly8
- QZaQ==
+ d=1e100.net; s=20230601; t=1713319750; x=1713924550;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tW0F8yVnPEfd4Z5ofuot2760kNLGK+RDe9+v58xLv8Q=;
+ b=tYqCliIH6fQUqm5D0W90UBm6q0RYvU/l7nL947aO3suhWWxdQVr+E4+IC6vyoGN/x6
+ irsAtxQB8+FVWT1BVWxMl4QSCw1OGMS775B6gB8bqNbvXfRAheMEgXxtbl6G9pir8hDg
+ Ug2jpLaanWgWolNvQVdJ7ob8vqz6VnEu01SDHlEgMrGJ/5QkB+FBswEoOL3zK3ujF/Kj
+ P+ajK/Yq4cKXIAfnhduqO1/0/ab4TR40en4UG3AtQbS4KUFLEluYPCmpIBnsXl9aiOUT
+ Ur/oBp9pJviBouG2rcZVQcxXtB2k9alcEv+41uEwEDda+SKJmX2wCnBNqcP6SVPiqH6S
+ XosA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTJGYAuzIrJ7pU1VyjDnmvSm9Rdu97mET56LFbjNwlUvJ/xJnByXvtPu9eexnv+METpaL37AX42kfpTpJEIUkHCfwZJeo=
-X-Gm-Message-State: AOJu0YyYocXgrA7JVdtzApeUjmBVUQegVYRX9Q11Vws7KvSAHpZJ5N7W
- slYfitWu2hslcMU2+E1y+QmOnkX3Q1wDh3hhVoTlYRQEQ+A4ub6BuDMKAHqi8fw=
-X-Google-Smtp-Source: AGHT+IFFz1g/ejUpqjyXHVroCJGnQjH41zYJO4IHdF4SrIciTkyEYJzhfpyot8fE6mUCPkkKUshfXQ==
-X-Received: by 2002:a17:90b:1d07:b0:2a1:f455:c3d7 with SMTP id
- on7-20020a17090b1d0700b002a1f455c3d7mr12558398pjb.16.1713314142279; 
- Tue, 16 Apr 2024 17:35:42 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:937d:c610::fc11? ([2604:3d08:937d:c610::fc11])
+ AJvYcCVLf54UW8H6DkIXJNFKCjbJaeAe0JJLH9XkOHzzaDzcCR+zH7g1m1+8Mc1Nc6WiSSkpy7kYnlfR0BBD6AMrmd5d5x4w
+X-Gm-Message-State: AOJu0Yz1csuT1j/c9QN5Iw6Sa0m/fQH/WYKl9agYb7/yOhHfBaqUr3BN
+ QAPzFbqd4G/bHR9BTJdjSyIOKmwnpoPBuagb01O5KA1bR+Nhh7LQ
+X-Google-Smtp-Source: AGHT+IH5P0YWB3u5h5sVLG9Io8HbPq+w+ItWTrVHH+VxV8UEcWlCrUR+swwq3k/ljL7ZuhA8cwap9w==
+X-Received: by 2002:a17:903:190:b0:1e2:36d1:33fd with SMTP id
+ z16-20020a170903019000b001e236d133fdmr7029594plg.27.1713319750343; 
+ Tue, 16 Apr 2024 19:09:10 -0700 (PDT)
+Received: from localhost (gla2734477.lnk.telstra.net. [110.145.172.154])
  by smtp.gmail.com with ESMTPSA id
- jb20-20020a17090b409400b002a22ddac1a1sm205144pjb.24.2024.04.16.17.35.41
+ w23-20020a1709026f1700b001e5c6c399d7sm5217944plk.180.2024.04.16.19.09.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Apr 2024 17:35:41 -0700 (PDT)
-Message-ID: <c55a1d2c-bae0-44b5-9cd8-3df1b33c31ad@linaro.org>
-Date: Tue, 16 Apr 2024 17:35:40 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] plugins: Use unwind info for special gdb registers
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240416040609.1313605-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240416040609.1313605-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
+ Tue, 16 Apr 2024 19:09:09 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 17 Apr 2024 12:09:05 +1000
+Message-Id: <D0M15TBEVI61.39GZJJCEYK1L5@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Peter Maydell"
+ <peter.maydell@linaro.org>, <philmd@linaro.org>
+Subject: Re: [PATCH for-9.0] ppc440_pcix: Do not expose a bridge device on
+ PCI bus
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+X-Mailer: aerc 0.17.0
+References: <20240409235543.0E0C34E601C@zero.eik.bme.hu>
+ <D0G5YFXXNK98.3NO5536V5LC8N@gmail.com>
+ <887fc804-54a6-8f00-1b62-afcf247ba319@eik.bme.hu>
+ <D0L6WPE1ASIP.2KG5P0WQ86AM6@gmail.com>
+ <adb592cb-f58d-1eff-56a7-70fa11339fb7@eik.bme.hu>
+In-Reply-To: <adb592cb-f58d-1eff-56a7-70fa11339fb7@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,69 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/24 21:06, Richard Henderson wrote:
-> Based-on: 20240404230611.21231-1-richard.henderson@linaro.org
-> ("[PATCH v2 00/21] Rewrite plugin code generation")
-> 
-> This is an attempt to fix
-> https://gitlab.com/qemu-project/qemu/-/issues/2208
-> ("PC is not updated for each instruction in TCG plugins")
-> 
-> I have only updated target/i386 so far, but basically all targets
-> need updating for the new callbacks.  Extra points to anyone who
-> sees how to avoid the extra code duplication.  :-)
+On Tue Apr 16, 2024 at 7:43 PM AEST, BALATON Zoltan wrote:
+> On Tue, 16 Apr 2024, Nicholas Piggin wrote:
+> > On Wed Apr 10, 2024 at 9:03 PM AEST, BALATON Zoltan wrote:
+> >> On Wed, 10 Apr 2024, Nicholas Piggin wrote:
+> >>> On Wed Apr 10, 2024 at 9:55 AM AEST, BALATON Zoltan wrote:
+> >>>> Real 460EX SoC apparently does not expose a bridge device and having
+> >>>> it appear on PCI bus confuses an AmigaOS file system driver that use=
+s
+> >>>> this to detect which machine it is running on. Since values written
+> >>>> here by firmware are never read, just ignore these writes and drop t=
+he
+> >>>> bridge device.
+> >>>>
+> >>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >>>> ---
+> >>>> This is only used by sam460ex and this fixes an issue with AmigaOS o=
+n
+> >>>> this machine so I'd like this to be merged for 9.0 please.
+> >>>
+> >>> Is it a regression? Does it have a fixes: or resolves: tag?
+> >>>
+> >>> Unless we broke it in this cycle, I would be inclined to wait,
+> >>> and we can ask to put it in stable.
+> >>
+> >> It's not something that broke in this cycle but since this does not af=
+fect
+> >> anything else than sam460ex I think it's OK to change this for 9.0. Th=
+e
+> >> changes to 440 tlb in this cycle made sam460ex more useful to run Amig=
+aOS
+> >> and this fixes the file system driver on it so it would make 9.0 reall=
+y
+> >> usable. Otherwise people would have to wait longer until August or ins=
+tall
+> >> a stable update. Since this has low chance to break anything (tested w=
+ith
+> >> AmogaOS and Linux and MorphOS does not boot due to do_io changes anywa=
+y) I
+> >> don't think we have to wait with this.
+> >
+> > Hey, travelling / at a conference / on vacation for the next couple of
+> > weeks.
+> >
+> > It's just a bit late for hard freeze IMO, since we didn't break it
+> > before the prior release or a bad security / crash bug. Will put it in
+> > 9.1.
 >
+> Philippe already queued this (and another) patch. This fixes AmigaOS on=
+=20
+> sam460ex which became usable with the tlbwe changes in this cycle but it'=
+s=20
+> not really usable without a file system driver that this patch fixes.=20
+> Please allow this in 9.0 so users who want to try it don't have to wait a=
+=20
+> few months more. Sorry for sending it this late but it was reported late=
+=20
+> and took time to debug it.
 
-Thanks for the series Richard. It looks good to me.
-
-Besides reviewing individual commits, I have a more general question.
- From some discussions we had, it seems like that previously gdb stub 
-was correctly updating all register values, and that it has been dropped 
-at some point.
-
-Was it for performance reasons, or an architectural change in QEMU?
-Is gdb stub the right way to poke register values for plugins?
-
-I don't know exactly why some registers are not updated correctly in 
-this context, but it seems like we are trying to fix this afterward, 
-instead of identifying root cause.
-
-Sorry if my question is irrelevant, I'm trying to understand the full 
-context here.
+No worries, I don't have a problem with the patch so if Philippe
+thinks it's okay then I'm fine with that.
 
 Thanks,
-Pierrick
-
-> 
-> r~
-> 
-> 
-> Richard Henderson (7):
->    tcg: Introduce INDEX_op_plugin_pc
->    accel/tcg: Set CPUState.plugin_ra before all plugin callbacks
->    accel/tcg: Return the TranslationBlock from cpu_unwind_state_data
->    plugins: Introduce TCGCPUOps callbacks for mid-tb register reads
->    target/i386: Split out gdb-internal.h
->    target/i386: Introduce cpu_compute_eflags_ccop
->    target/i386: Implement TCGCPUOps for plugin register reads
-> 
->   include/exec/cpu-common.h     |  9 +++--
->   include/hw/core/cpu.h         |  1 +
->   include/hw/core/tcg-cpu-ops.h | 13 +++++++
->   include/tcg/tcg-op-common.h   |  1 +
->   include/tcg/tcg-opc.h         |  1 +
->   target/i386/cpu.h             |  2 +
->   target/i386/gdb-internal.h    | 65 +++++++++++++++++++++++++++++++
->   accel/tcg/plugin-gen.c        | 50 +++++++++++++++++++++---
->   accel/tcg/translate-all.c     |  9 +++--
->   plugins/api.c                 | 36 +++++++++++++++++-
->   target/i386/gdbstub.c         |  1 +
->   target/i386/helper.c          |  6 ++-
->   target/i386/tcg/cc_helper.c   | 10 +++++
->   target/i386/tcg/tcg-cpu.c     | 72 +++++++++++++++++++++++++++--------
->   tcg/tcg-op.c                  |  5 +++
->   tcg/tcg.c                     | 10 +++++
->   16 files changed, 258 insertions(+), 33 deletions(-)
->   create mode 100644 target/i386/gdb-internal.h
-> 
+Nick
 
