@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18569C001CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 20:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30EBC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 20:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxBXo-00059D-Bd; Wed, 17 Apr 2024 16:06:12 -0400
+	id 1rxBZH-00063a-W3; Wed, 17 Apr 2024 16:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nadav.amit@gmail.com>)
- id 1rxBXm-00058p-UU
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 16:06:10 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rxBZF-000635-J5
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 16:07:41 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nadav.amit@gmail.com>)
- id 1rxBXl-0000Wr-6k
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 16:06:10 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a53f131d9deso1994966b.3
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 13:06:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rxBZD-0000fq-Lj
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 16:07:41 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6eff9dc1821so182449b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 13:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713384367; x=1713989167; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uKiKitg2sB72IethOtqoFcn2jOyCOSOHkFwh1FSKSjQ=;
- b=cWdWO7PDsDfF4xAtzvv8ZwgquaxW6LkdHvtuVf9hmidbtuXN1fYMzQxjwRoi/Z5Ci3
- vKvFKd4cPNAJFVfGF9pSxGoqLfxx60ZslV4RRXDTNJipND1lqkGszwvrxjRHJ6+fR/po
- dN/AY3Nvphc2ZhXWJnXmLkeCrSPj55Ln7+97wsVeZ+Fg3qGf4NqndzuNLbw9ABdmVSva
- fR9y/Xd1gYwsm3ZPBU6c3RxBW455W5omw3Epui0xNfKKMsmIu/Rv0sWC8UPY/rn5ey2m
- e5npREqFyxAFMDwiEVdNTNf8cwtlc10dmXPfHSBMlq7G1kWT0hb/DT4uRS5O68I3Xjxq
- DSSg==
+ d=linaro.org; s=google; t=1713384458; x=1713989258; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8tcTq2KpScTlws07ObRAiC//XPp8pHFLk1BZM5ydL3M=;
+ b=h8QzEhvsradVqDq+vVXw7W+nYcnBd73teAsfOqTBiAn0dZd3mlecFwHFUoYXcx6oak
+ MevkqV/V2JdTHye9ARyYMIFgbXJp9y31ulj8CvZvUFokpANW3iKvpidOQOEJ2A5ZuZiQ
+ 3R98p203cB5kiQM9G3Otua7SMXZEpOsVR9t6yVEQyZj0MTNylm0hjdyTdEZ13gdHi22Z
+ 1xDTn4ezQNJnc0+xvBoRYTqTtu/un7Dbub/nj2fuuzzvOOWZi05D+fciJNbVxkUtHcEO
+ oHKnY7mybbp8vfSwMslEDpgrFk+CwGxuaQUNUuTqGGgQwwbWZPKJue/faQ/XaqLT/s0r
+ Jn3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713384367; x=1713989167;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uKiKitg2sB72IethOtqoFcn2jOyCOSOHkFwh1FSKSjQ=;
- b=Gx9DKuPbqSYXAJjMhFVTGr8fMwfXea4Oz7v/g8dtTcsS+Dr+u8bIP0oL8Skwlddn8z
- o88KSjAVGfNE6lZs7iMNoPnjHq+29YifekERmbrO97I36ItoXJ+qW/OKrfpEBFvXr9EX
- 2+pZiwV+GC2I3NObvwDw0mbrke0G8vELTuZgUEyiFFgevfgsH4Z4OZSr3D2LHm9JSDHO
- oKovIiX13JMYuB1GtVkPWT4gBh9YWpChs5hpH/cWwu2cXsIHx7bSHx+TqUXzWbF4buFR
- Xvp1KgoG5XkYnYeiff91IH35I+oFUsQyN4uyOcEHvah0p62DZoNNAqwzy4ACSg49dUne
- 10/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNN37cOX1S3UxyZGZnRYrhnLhKj02yukKE0H0XGixZUo6+VswJchZgc9qqO6nXr3kgqtSlq78CawJUKodWCaRtND9/j3c=
-X-Gm-Message-State: AOJu0Yz0fgcyLMUXN3Hoha0k4QYDbChQ6uGh4DEoTpSKTdPuWPpKcaTg
- stVFK3lWZFPdYDv9MXpokOClOImAmhM4e6xCVLqMlkhk3AKpO6Zb
-X-Google-Smtp-Source: AGHT+IGHaJ9Mbj8imP80Jh0I8YVQH3u7LRivoczvBAiJ90GsAwWyxPDS5onDP02DwngG3kfdHyvbZg==
-X-Received: by 2002:a17:906:36d1:b0:a52:4edb:6db7 with SMTP id
- b17-20020a17090636d100b00a524edb6db7mr318508ejc.54.1713384367027; 
- Wed, 17 Apr 2024 13:06:07 -0700 (PDT)
-Received: from smtpclient.apple ([132.69.239.36])
+ d=1e100.net; s=20230601; t=1713384458; x=1713989258;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8tcTq2KpScTlws07ObRAiC//XPp8pHFLk1BZM5ydL3M=;
+ b=ginSWZ8bY+YgrAJrnpZH0V8+qLP8jffUg8rCiNhS7y0IjkvvZDNw7K+01E+zpDvITe
+ BWUQWEMXSfgXPlvP/7n3OAglBAK+2elYi3KLdE/rpSxQfypXQ1AJoN4BNkqKe91wUvCM
+ GwDPLojkpuxmXIQ5RPuGp994ASbHSmEi52L0xtL8sGXNv6TI9mQwVt4UZrJhcfGLZRiL
+ sY90EANfpfp7IG0CHx8oShpMFFVa+USa/6MAFQDXMA9+XdGOdh49juszGMYKNFBQWzCc
+ sEc9yzYmp9VO7MKLFB7ug13JhWw4CygKVbldy7uGS+zs2hhR+fX0l6+89AEdna1MoL9M
+ cKfQ==
+X-Gm-Message-State: AOJu0YxgP/qpl5vIRMcjw2IWmxNuyzuBiwYp3fn15q2/w1tMZUgzMHdc
+ JNzuf9sOQO/XBgi4kGglObGteztTf9kBYw95Tj3uVqrXKeipJJMmTHOL3g9j9wk=
+X-Google-Smtp-Source: AGHT+IGd/Lf0BXKayVixwkXklJn2/801rj5nxuRCrFw0NLBzqPMVL6xjMgD/T1SdmRW/IUXz0QsWow==
+X-Received: by 2002:a05:6a00:198e:b0:6ed:e1c:1035 with SMTP id
+ d14-20020a056a00198e00b006ed0e1c1035mr688575pfl.28.1713384458019; 
+ Wed, 17 Apr 2024 13:07:38 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
  by smtp.gmail.com with ESMTPSA id
- q23-20020a170906a09700b00a519ec0a965sm8446140ejy.49.2024.04.17.13.06.05
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 17 Apr 2024 13:06:06 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Re: Add 'info pg' command to monitor
-From: Nadav Amit <nadav.amit@gmail.com>
-In-Reply-To: <6D6FB5C3-D73F-427B-93F1-BFD3311F2697@gmail.com>
-Date: Wed, 17 Apr 2024 23:05:51 +0300
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, dave@treblig.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <78AA0AA8-3ACA-4B8E-BC36-A0B939F3FF22@gmail.com>
-References: <20240415160818.2316599-1-porter@cs.unc.edu>
- <CAFEAcA88myOeQwZ212q9R4EHBPpJbQ1qZYjuz6SS=HZbqS+NCQ@mail.gmail.com>
- <fadb288a-4c44-42c9-b706-f5595d97f952@cs.unc.edu>
- <CAFEAcA9Fe8TerNSrg_AfmpFZNL_4B9WV0OccFdLakJhtCN+m4A@mail.gmail.com>
- <bff71578-42ad-4af0-9ba6-e0962dd73710@cs.unc.edu>
- <6D6FB5C3-D73F-427B-93F1-BFD3311F2697@gmail.com>
-To: Don Porter <porter@cs.unc.edu>
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=nadav.amit@gmail.com; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+ fb33-20020a056a002da100b006ed14fed3a5sm52917pfb.154.2024.04.17.13.07.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Apr 2024 13:07:37 -0700 (PDT)
+Message-ID: <0c878d25-3fbb-4f0b-bc9e-ca638f8c4f1e@linaro.org>
+Date: Wed, 17 Apr 2024 13:07:35 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/6] target/arm: Do memory type alignment check when
+ translation disabled
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Idan Horowitz <idan.horowitz@gmail.com>, linuxarm@huawei.com
+References: <20240301204110.656742-1-richard.henderson@linaro.org>
+ <20240301204110.656742-6-richard.henderson@linaro.org>
+ <20240416161111.0000607c@huawei.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240416161111.0000607c@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,60 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/16/24 08:11, Jonathan Cameron wrote:
+> On Fri,  1 Mar 2024 10:41:09 -1000
+> Richard Henderson <richard.henderson@linaro.org> wrote:
+> 
+>> If translation is disabled, the default memory type is Device, which
+>> requires alignment checking.  This is more optimally done early via
+>> the MemOp given to the TCG memory operation.
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reported-by: Idan Horowitz <idan.horowitz@gmail.com>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1204
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> Hi Richard.
+> 
+> I noticed some tests I was running stopped booting with master.
+> (it's a fun and complex stack of QEMU + kvm on QEMU for vCPU Hotplug kernel work,
+> but this is the host booting)
+> 
+> EDK2 build from upstream as of somepoint last week.
+> 
+> Bisects to this patch.
+> 
+>   qemu-system-aarch64 -M virt,gic-version=3,virtualization=true -m 4g,maxmem=8G,slots=8 -cpu cortex-a76 -smp cpus=4,threads=2,clusters=2,sockets=1 \
+>   -kernel Image \
+>   -drive if=none,file=full.qcow2,format=qcow2,id=hd \
+>   -device ioh3420,id=root_port1 -device virtio-blk-pci,drive=hd \
+>   -netdev user,id=mynet,hostfwd=tcp::5555-:22 -device virtio-net-pci,netdev=mynet,id=bob \
+>   -nographic -no-reboot -append 'earlycon root=/dev/vda2 fsck.mode=skip tp_printk' \
+>   -monitor telnet:127.0.0.1:1235,server,nowait -bios QEMU_EFI.fd \
+>   -object memory-backend-ram,size=4G,id=mem0 \
+>   -numa node,nodeid=0,cpus=0-3,memdev=mem0
+> 
+> Symptoms: Nothing on console from edk2 which is built in debug mode so is normally very noisy.
+>            No sign of anything much happening at all :(
+
+This isn't a fantastic bug report.
+
+(1) If it doesn't boot efi, then none of the -kernel parameters are necessary.
+(2) I'd be surprised if the full.qcow2 drive parameters are necessary either.
+     But if they are, what contents?  Is a new empty drive sufficient, just
+     enough to send the bios through the correct device initialization?
+(3) edk2 build from ...
+     Well, this is partly edk2's fault, as the build documentation is awful.
+     I spent an entire afternoon trying to figure it out and gave up.
+
+I will say that the edk2 shipped with qemu does work, so... are you absolutely
+certain that it isn't a bug in edk2 since then?  Firmware bugs are exactly what
+that patch is supposed to expose, as requested by issue #1204.
+
+I'd say you should boot with "-d int" and see what kind of interrupts you're getting very 
+early on.  I suspect that you'll see data aborts with ESR xx/yy where the last 6 bits of 
+yy are 0x21 (alignment fault).
 
 
-> On 17 Apr 2024, at 11:30, Nadav Amit <nadav.amit@gmail.com> wrote:
->=20
->=20
->=20
->> On 16 Apr 2024, at 21:11, Don Porter <porter@cs.unc.edu> wrote:
->>=20
->> On 4/16/24 13:03, Peter Maydell wrote:
->>> On Tue, 16 Apr 2024 at 17:53, Don Porter <porter@cs.unc.edu> wrote:
->>>> There is still a lot I am learning about the code base, but it =
-seems
->>>> that qemu_get_guest_memory_mapping() does most of what one would =
-need.
->>>> It currently only returns the "leaves" of the page table tree in a =
-list.
->>>>=20
->>>> What if I extend this function with an optional argument to either
->>>> 1) return the interior nodes of the page table in additional lists =
-(and
->>>> then parse+print in the monitor code), or
->>>> 2) inline the monitor printing in the arch-specific hook, and pass =
-a
->>>> flag to get_guest_memory_mapping() that turns on/off the statements =
-that
->>>> pretty print the page tables?
->>>>=20
->>>> It looks like most CPUs implement this function as part of =
-checkpointing.
->>> As far as I can see only x86 implements the get_memory_mapping
->>> function, so once again somebody has added some bit of
->>> functionality that does a walk of the page tables that is
->>> x86 only and that shares no code with any of the other
->>> page table walking code :-(
->>=20
->> My mistake - get_memory_mappings() is only implemented in x86.
->>=20
->=20
-> Hi Don,
->=20
-> Your email popped up, so I just drop my 2 cents.
->=20
-> If you are only interested in x86, you can just build a gdb script =
-that would
-> parse the page tables and present the data. It might be less =
-efficient, but
-> easier to maintain.
-
-Actually, I think I was wrong. It might not be easily done with GDB, but =
-I did
-something similar with QMP.
-
-You can have a look at some related code I once wrote for similar =
-purpose:
-https://nadav.amit.zone/downloads/pti_test.py
-
+r~
 
