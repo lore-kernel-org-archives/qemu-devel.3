@@ -4,137 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CB0C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 10:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063A3C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 10:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx2Aa-00067l-Pu; Wed, 17 Apr 2024 06:05:36 -0400
+	id 1rx2cZ-0002yI-Dm; Wed, 17 Apr 2024 06:34:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Frederic.Konrad@amd.com>)
- id 1rx2AY-00067U-Fa; Wed, 17 Apr 2024 06:05:34 -0400
-Received: from mail-bn8nam12on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2418::601]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Frederic.Konrad@amd.com>)
- id 1rx2AS-0000Up-2P; Wed, 17 Apr 2024 06:05:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IJkpkI6SsLFQ7YzdcnNAPefqAdCCxqM4jwqFJTxEUlmNb6NNaWRt14mHsmII0oH5lfxu9t4fBPTR1fvUNRFDbJx2KOZaQJkDAEGtbhttCTlLNE55OdS3hAHKNnWrZr4JLgUWKSGHD6laa7QhX9qUQ+xuGLwaa5Zdj+NPT/0Kqk84QbkPNXpM2xX7Pf4ZNeCyNDdcOcBXVZJUfYOK5A+OTg5sjKcWu8Nlu2jVEqgVlcDUkXEQGiPWX8tKOLAINfELLfDTWN+fied+TDrmcDT/A0UYG8V6CAAohjvHxQuoKRMstcqRkgxVjvLCK31t28/np1ovOZq4H1KCm3Rv0B+FAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LyY6LmOjawdAknZTNl6Cpf8/jm8c/JnuI+FHDcCXnOg=;
- b=iI+cWQxaYVbcj9RGrVSHWNIXqTrib+Om2ebC/jqiuptxfpSPnUmPWsUIV3KmzbmIsqBxrFsh+RJux30DgKy3187M5QWO1R6YMWK2wUQZQK0GHBD0alnvfOazcJveTM5jrCIxqDCv9dWoRGuDW/NKqIMyUpdkDZJHPVvNEthe846tAKCL+MAgdVgLYdk6u0UgTxTTQK34bPNe2r0ICg0F8VOY4kChwvPnlZRqjhf99SOUcUTjWoHWOBa38s8Fcx7vvIhqlvolBCZcrUPKm5iMGtNQoctJ/DKb/ahRu7e5CJbLmGtnTVloZb32Z8ROkQAn4X1X4sTRl3Efk92r5u9lEw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LyY6LmOjawdAknZTNl6Cpf8/jm8c/JnuI+FHDcCXnOg=;
- b=h6BajUf3xg5D3AVNgubbylVv5M3wl/+DQNbZZfyH7rGfhpVW8pL5zGmXyPtxN8+5DSsQN6h5Qk38HLm0db9GdGMNE94g0EPPRn0zz2uoywKdTegy1qROjBOkRSVouwRmM+bRLMSJqQOwoYePQeir0xS1jpwwOrfOA0PTe7XGGx4=
-Received: from CY8PR12MB8411.namprd12.prod.outlook.com (2603:10b6:930:6e::6)
- by LV8PR12MB9081.namprd12.prod.outlook.com (2603:10b6:408:188::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Wed, 17 Apr
- 2024 10:05:22 +0000
-Received: from CY8PR12MB8411.namprd12.prod.outlook.com
- ([fe80::b636:ea75:6169:bcef]) by CY8PR12MB8411.namprd12.prod.outlook.com
- ([fe80::b636:ea75:6169:bcef%4]) with mapi id 15.20.7452.049; Wed, 17 Apr 2024
- 10:05:22 +0000
-From: "Konrad, Frederic" <Frederic.Konrad@amd.com>
-To: Peter Maydell <peter.maydell@linaro.org>, Alexandra Diupina
- <adiupina@astralinux.ru>
-CC: Alistair Francis <alistair@alistair23.me>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "sdl.qemu@linuxtesting.org"
- <sdl.qemu@linuxtesting.org>
-Subject: RE: [PATCH RFC] prevent overflow in
- xlnx_dpdma_desc_get_source_address()
-Thread-Topic: [PATCH RFC] prevent overflow in
- xlnx_dpdma_desc_get_source_address()
-Thread-Index: AQHajLF1oJmPIDGPOkGnLE2+wkwuzLFkaOcAgAfZqrA=
-Date: Wed, 17 Apr 2024 10:05:22 +0000
-Message-ID: <CY8PR12MB8411CAB26257B5974DAE2CA2E60F2@CY8PR12MB8411.namprd12.prod.outlook.com>
-References: <20240412081328.11183-1-adiupina@astralinux.ru>
- <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
-In-Reply-To: <CAFEAcA9wfzpc74iA_2G-YbtQtwGCA9VPQuXagg-Q0FwC92tg+w@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CY8PR12MB8411:EE_|LV8PR12MB9081:EE_
-x-ms-office365-filtering-correlation-id: 2a7bc9ed-99d2-419b-d486-08dc5ec5e51e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: ryUWzbTDPVjMAlb9ZT+qnt4QFQGjL03+y0bR6gs5ErCvXgdzOCNfRGjUT1eK9egSJgDjI143G2aRypkjL97oYClvaYYfV1Fb+2k8hqIoN38c+N6VukKapyrLkPYd7rHGF1GfC2doW8FD0HY2GeXQNxAb7tKQofGXJe/o+48BJbduqM5W949XRM3olVkuFKkufC2ej5okpBXPG4x/+CDeLjXPmeBgpXNbDs7waKL2ILKW4Txo5f0gqSJHBWnu1ThRb2uhYold8i+MiCVn775xkGgz/TJ3rCi2TCif3XzFWdw1EEaCFQ148ZRvhA0nbmpIvGBvWETzzxo/3rVpGr6SfVtLWR0UbsNJtsih25nqpIMgwrKZOnpWvsvawNiIVEFAhw8fy7FHPTdLs3UDqcB8DOVBf/EkAEt6icaU0ucPb6loKtUKFPUYvK6hymnzh9SvVQxMfguOzBO8M/YMH002jaZeYgL6m3VkaFFRnOXvYMwPve/+8YS+QcOld6nBAIyne4UeX9I+Fz2X3uCoZqtHex4QtuOeG3ApRv75/C0Xeq4LUU54Zqga9HrSBQTmSWfePk0llohoznJxw4MAO5zQV6e8DW3JFVzqtGRXUosba2r5xMrWJg2Sz/UUSGXyeaH0VKwFAV9JysR7QTSvo7s3N3QiUjSoMFZqV2eu9JXP1f4bK7DtA1sEWQTOmAx++KTU4uHT55FcJ8wlE4jaJqIjrjhvwlOwiGIbSk2SF3zWLdo=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CY8PR12MB8411.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(366007)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cEh6VHFTTUMvTDZvaExycnhNYkZ3bWpkb0IyNXVPc3JZRzVxZWx0MlNxU3pV?=
- =?utf-8?B?NnB4U2ttRWZQNURrc0Rtd0dVQnlCNFZ2cXlMWFMrQ2xrWkFiUUR0UTFjTUor?=
- =?utf-8?B?ekUvRFY3T2ZLWnVkUDErMXhzU0N4SzlIQWFPYzE0dWVmdjdPVlRrVDQ1bXpq?=
- =?utf-8?B?YzVYREV2eUtyR3NvRm9WODRSN1gwQzh1ZTVVZTMybStVeWNDVjZlUGtjZjMv?=
- =?utf-8?B?aWkvdWVxMGtCQ0xJL1hjWStkbFQ4RXFxMFR6VCtiL3JsbWo2cWRhWEdIUGdk?=
- =?utf-8?B?UE1YbE9rbEFyWnEwdC9uYlZ2c0pOcEFiOUJrZ2dTZE5tTXUvdHRnMEU2TDVk?=
- =?utf-8?B?eDV6T29nVzVjRGtzNFM2RU5UZlNXb0VLZ1JIcTk4MERDUDJvMVM3SktqWUdy?=
- =?utf-8?B?bllHeDk1dlhOdlJYSmFsQ2g5Um5oaE52ZXAvNjN2dWhkSzFxZlRxcjJMQUFO?=
- =?utf-8?B?SnhUTjczZWQ0QXY5aTI3WVBNWHluR3Q0SEI5N01MQTZoczRENXZxeWliVnlK?=
- =?utf-8?B?QU9nb0hacWZUbUMzK1pKYXNCbDRrVjljYWx2Nnp6NVFrZHZkVzlCa0ZlMzJm?=
- =?utf-8?B?NXlTd0QxSVpFN0dkc3pwMjdSaFF1aDhoYjBudkRCWlMxRjc2Wm9KRXpYakR3?=
- =?utf-8?B?OVdSaTBFbVEwczl2YWNSbTdiK1lUYWM0ZjhhM0ZRZ3N6M0x5TW14V1BCTHlS?=
- =?utf-8?B?S3pwcmtyc1lyUmNJQlhiSm1RZDFnSzRlWUdHMnFiMFRIcDliZjNrcEtydlhl?=
- =?utf-8?B?KzVUYUkySHE5S2NmUUJjYlQ3UktvbDBoZ0wzL2JXREhRVTVNSGFFdkM5N2tG?=
- =?utf-8?B?RnlreEZTRFpTZ1dpV3UwN1VPbCtTYlpEQnNycE9Db2doc21DRzMzT3AxMFF2?=
- =?utf-8?B?RW9odFlCYnh6KzA0VDlndkEzalJjZGhCSjVSbVUxclVRNnp6VmFpL05Ickov?=
- =?utf-8?B?clpkUjNTTE9OSGtqUFdabXg1WWxEYTVrb0dRZm5lTEM1WjhOWVNSUlptMXR4?=
- =?utf-8?B?OWgwU3ZzdEhscFdqMUJRQlAzRG93alNaUVRkK2RvWkxnUGNvNVVFMjRuYnpN?=
- =?utf-8?B?eVhzY3g5OTFldUt4bm9vTW9qdUpqVVN6c1l4K0phMHBjbGRIR3pXSlRQakJG?=
- =?utf-8?B?U0pmRU85VmhaeWNMUGZablp3UkMveDFQOGF6QktSTDc4bU5PakI2L2VZbFdJ?=
- =?utf-8?B?L3dMYUcvZDV0WitjRTRPQWFsdnlhRG50MTZwV2NYRkEyNElsY0VNSzRRUWsy?=
- =?utf-8?B?dUc4dmFVbm92YThLNyt5aDE4N0J2Y01IZ1BkMlFvWi9ibGwzeWsxaDdRN3hQ?=
- =?utf-8?B?bm43clhpQjZNcjNNZHJIamJNdDQ3ZjNJTWlianZqWDlncEN0UlNJUy9ET1hj?=
- =?utf-8?B?RHVSdUtFMzhKdGd4UTBPdEhHeUJMRnpkU0x4cHhNb1JUOEp0Mkt1eng2V3BV?=
- =?utf-8?B?UVBQOWNLKzJRVDFSeEY1bmdmbG50MEpvUnU2WEFNcGY5eVpyKzMvdWNLYlV2?=
- =?utf-8?B?eUZETEFURU81UEJEWThDTnBINUVodEJOWk5xbk9OM0hYSkFHOHlvdDY1NjU1?=
- =?utf-8?B?amRmb1FaYmhJeHY2cjJYVG0vNmlsbWVYYnR1TEVkMk9ZZnJMSWV0aWZORXNw?=
- =?utf-8?B?cng2RnNiR083Q243MkROZVpIaGpWRldFVndnb1ZQUkNJNzVZaVdNZ3R4MGl5?=
- =?utf-8?B?UmczMUhGZ2dmWS9GUi9QdkpOMXZQc3ZvWlM3TVdiTUJLN0pkazN1eSsvaUtC?=
- =?utf-8?B?cmFxYkdCQ2hlOWZpeXNDVVJGUzlQY0dSR1hIVUdTU1I3L2xnbit2ZE9tVnE4?=
- =?utf-8?B?QlgzdTJkYXFCTCtOckFzSElud1NyN2U1blVSV05LWHoxTXk3Q0laQWtWc014?=
- =?utf-8?B?R29NRE5MTSsycWc0VGlhMUI1ZWtYUVBJcUhRTE8xNS9vZ0QyWVVxZWJFWm1M?=
- =?utf-8?B?YjJwK2xUekJmL1VHV1hNazhHQkk4NUthRVJOUHNBTjV6dGpQUFErZ25XSkNS?=
- =?utf-8?B?RXVMUXBBVVdpR1JTM2g2OXNsa2dxc0t4VStSQS9rMHBRMElUVVRsWG9ZSmxh?=
- =?utf-8?B?WG1NcjEzWjV1TGNEUW9keCtjZXgyM3gxalQzOUFjTWpPVkhKV3JCNVFZVlBN?=
- =?utf-8?Q?WCR8=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rx2cR-0002y0-Gn
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 06:34:23 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rx2cP-0005ZU-8O
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 06:34:23 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1bbdb362so6048727a12.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 03:34:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713350059; x=1713954859; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Qm5pBiCcWu2bvI6QpENykFEcaXV2hAay7NCqajzhITQ=;
+ b=ZPK1DPjq9mHCmwvviwOp3wG9qO3eocTbbzJ64PKtxtPXBFajm5n4sloAltw12lqArh
+ O8zoSVx0v4QPrj9BwIcTcNzndDVIL7IaIqC8gs1WSaEdd9b2R7ABQJMbEVS9DfDvGYw7
+ pQxShNh+KpiZYJoD9ANfbkWtOf8poI1Owcn+plm10mUebJnfjqyJKxz1L4cxlKPoLEYX
+ eeUPK8GaQGTij1pgBD1pmnTiwRnhELDG/IUqyNaNB2vlonQqPgfbBJiVg7e2YAN0E4V1
+ oJVsG48B33WSUpqUIvV7hgGjoN0TIwjs43BqIU3na3n5ysCj/anQ3ogR81EWqn/c6DTl
+ Ifdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713350059; x=1713954859;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Qm5pBiCcWu2bvI6QpENykFEcaXV2hAay7NCqajzhITQ=;
+ b=Tzz4440tI82AUao+asKO+bZCxs2he5zlT7Bwj2VsS0Oi3qzJDrVTdWXFVQLyOT+S2D
+ JaC/BPlTtJNsYcg9tsRRFtuICsfbk/oZNW8mCaIRQymDcuuP706jTh8jQCzmKc6GDM+x
+ qBljrDw7BbcZg/JAlXvhAGteqFYh3lCPz2QQwDQ5EIFY/tJUPmP3wHDAZde1v62gX3wS
+ IcuhExVrk01ai75HIAJNEqtKdJ0FL+9/t5bzdYfDCycj+T1wGWnGSr457wAZC/p2JOUl
+ CuiQbkiDHky/6KRU81YHOWkyT8NXvkxt/AizrCI6xM15yShCrxFBpA2vutYvvCQoWNg+
+ CKEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXONh0CRKsFFG0yySOBKDhThvBnnZCer3OFlW1Jy9CJYKJgbPbe5hezNPmXDKG0nUMHhsMmsCprzYdUPOblj+0A7m6q1fo=
+X-Gm-Message-State: AOJu0YwuXtdC6Ago5jMY+c/XpCD0/qbdavvVQwfLogwB3i9BmhG1O1cW
+ LpKnTIIH8ZGe8uRZMhxjTJM2zfUJMUoFCY5kMNcKAZbM8CSDf5kpD63Y58ZWh3eEeFAcw9Av3Ju
+ b7ECs0fwg3AmboqBEGveCNn4GfYi2In7PtZ0=
+X-Google-Smtp-Source: AGHT+IHj3EmPB2DpsvqLsxi4Gsj+dIEl5lGWYAwncV6YbTn1jFTr3UCLWbFzewC0MTayhtblDYUBGf6GgG93m8LOeaY=
+X-Received: by 2002:a50:d55e:0:b0:570:2418:3607 with SMTP id
+ f30-20020a50d55e000000b0057024183607mr8185797edj.36.1713350058607; Wed, 17
+ Apr 2024 03:34:18 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CY8PR12MB8411.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2a7bc9ed-99d2-419b-d486-08dc5ec5e51e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Apr 2024 10:05:22.5125 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AqES0pPCDzmtr4x1UzlihQBnbRcYRXGSdJBAiFGct8ezTtoXEC9L4LqCKMAkxrdZ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9081
-Received-SPF: permerror client-ip=2a01:111:f403:2418::601;
- envelope-from=Frederic.Konrad@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240227223501.28475-1-vikram.garhwal@amd.com>
+ <20240227223501.28475-6-vikram.garhwal@amd.com>
+ <CAJy5ezpCWkOqthGR1c5Nsfyi_W_yGL_d17Jcp0VckaCEwx9z3Q@mail.gmail.com>
+ <Zhbg9alYH1-J9poU@x1n>
+ <CAJy5ezpfNGDC4Q=eMcQ-df_xZVYnc-CR5wfn4izW2CT532PbAA@mail.gmail.com>
+ <3abfdbdd-ee70-4b61-a652-c7b2490732d6@suse.com> <Zh6fcLzbm4cpknbT@x1n>
+In-Reply-To: <Zh6fcLzbm4cpknbT@x1n>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Wed, 17 Apr 2024 12:34:06 +0200
+Message-ID: <CAJy5ezrJz9TKMjvcBY-=oPkWkbUZG1khTmWa5=JCJQm2-vd7tQ@mail.gmail.com>
+Subject: Re: [QEMU][PATCH v3 5/7] memory: add MemoryRegion map and unmap
+ callbacks
+To: Peter Xu <peterx@redhat.com>
+Cc: =?UTF-8?B?SsO8cmdlbiBHcm/Dnw==?= <jgross@suse.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, sstabellini@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,62 +100,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogcWVtdS1kZXZlbC1i
-b3VuY2VzK2Zrb25yYWQ9YW1kLmNvbUBub25nbnUub3JnIDxxZW11LWRldmVsLWJvdW5jZXMrZmtv
-bnJhZD1hbWQuY29tQG5vbmdudS5vcmc+IE9uIEJlaGFsZiBPZg0KPiBQZXRlciBNYXlkZWxsDQo+
-IFNlbnQ6IEZyaWRheSwgQXByaWwgMTIsIDIwMjQgMTI6MDcgUE0NCj4gVG86IEFsZXhhbmRyYSBE
-aXVwaW5hIDxhZGl1cGluYUBhc3RyYWxpbnV4LnJ1Pg0KPiBDYzogQWxpc3RhaXIgRnJhbmNpcyA8
-YWxpc3RhaXJAYWxpc3RhaXIyMy5tZT47IEVkZ2FyIEUuIElnbGVzaWFzIDxlZGdhci5pZ2xlc2lh
-c0BnbWFpbC5jb20+OyBxZW11LWFybUBub25nbnUub3JnOyBxZW11LQ0KPiBkZXZlbEBub25nbnUu
-b3JnOyBzZGwucWVtdUBsaW51eHRlc3Rpbmcub3JnDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggUkZD
-XSBwcmV2ZW50IG92ZXJmbG93IGluIHhsbnhfZHBkbWFfZGVzY19nZXRfc291cmNlX2FkZHJlc3Mo
-KQ0KPiANCj4gT24gRnJpLCAxMiBBcHIgMjAyNCBhdCAwOToxMywgQWxleGFuZHJhIERpdXBpbmEg
-PGFkaXVwaW5hQGFzdHJhbGludXgucnU+IHdyb3RlOg0KPiA+DQo+ID4gT3ZlcmZsb3cgY2FuIG9j
-Y3VyIGluIGEgc2l0dWF0aW9uIHdoZXJlIGRlc2MtPnNvdXJjZV9hZGRyZXNzDQo+ID4gaGFzIGEg
-bWF4aW11bSB2YWx1ZSAocG93KDIsIDMyKSAtIDEpLCBzbyBhZGQgYSBjYXN0IHRvIGENCj4gPiBs
-YXJnZXIgdHlwZSBiZWZvcmUgdGhlIGFzc2lnbm1lbnQuDQo+ID4NCj4gPiBGb3VuZCBieSBMaW51
-eCBWZXJpZmljYXRpb24gQ2VudGVyIChsaW51eHRlc3Rpbmcub3JnKSB3aXRoIFNWQUNFLg0KPiA+
-DQo+ID4gRml4ZXM6IGQzYzYzNjlhOTYgKCJpbnRyb2R1Y2UgeGxueC1kcGRtYSIpDQo+ID4gU2ln
-bmVkLW9mZi1ieTogQWxleGFuZHJhIERpdXBpbmEgPGFkaXVwaW5hQGFzdHJhbGludXgucnU+DQo+
-ID4gLS0tDQo+ID4gIGh3L2RtYS94bG54X2RwZG1hLmMgfCAyMCArKysrKysrKysrLS0tLS0tLS0t
-LQ0KPiA+ICAxIGZpbGUgY2hhbmdlZCwgMTAgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0p
-DQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvZG1hL3hsbnhfZHBkbWEuYyBiL2h3L2RtYS94bG54
-X2RwZG1hLmMNCj4gPiBpbmRleCAxZjVjZDY0ZWQxLi4yMjQyNTkyMjVjIDEwMDY0NA0KPiA+IC0t
-LSBhL2h3L2RtYS94bG54X2RwZG1hLmMNCj4gPiArKysgYi9ody9kbWEveGxueF9kcGRtYS5jDQo+
-ID4gQEAgLTE3NSwyNCArMTc1LDI0IEBAIHN0YXRpYyB1aW50NjRfdCB4bG54X2RwZG1hX2Rlc2Nf
-Z2V0X3NvdXJjZV9hZGRyZXNzKERQRE1BRGVzY3JpcHRvciAqZGVzYywNCj4gPg0KPiA+ICAgICAg
-c3dpdGNoIChmcmFnKSB7DQo+ID4gICAgICBjYXNlIDA6DQo+ID4gLSAgICAgICAgYWRkciA9IGRl
-c2MtPnNvdXJjZV9hZGRyZXNzDQo+ID4gLSAgICAgICAgICAgICsgKGV4dHJhY3QzMihkZXNjLT5h
-ZGRyZXNzX2V4dGVuc2lvbiwgMTYsIDEyKSA8PCAyMCk7DQo+ID4gKyAgICAgICAgYWRkciA9ICh1
-aW50NjRfdCkoZGVzYy0+c291cmNlX2FkZHJlc3MNCj4gPiArICAgICAgICAgICAgKyAoZXh0cmFj
-dDMyKGRlc2MtPmFkZHJlc3NfZXh0ZW5zaW9uLCAxNiwgMTIpIDw8IDIwKSk7DQo+IA0KPiBVbmxl
-c3MgSSdtIGNvbmZ1c2VkLCB0aGlzIGNhc3QgZG9lc24ndCBoZWxwLCBiZWNhdXNlIHdlDQo+IHdp
-bGwgaGF2ZSBhbHJlYWR5IGRvbmUgYSAzMi1iaXQgYWRkaXRpb24gb2YgZGVzYy0+c291cmNlX2Fk
-ZHJlc3MNCj4gYW5kIHRoZSB2YWx1ZSBmcm9tIHRoZSBhZGRyZXNzX2V4dGVuc2lvbiBwYXJ0LCBz
-byBpdCBkb2Vzbid0DQo+IGNoYW5nZSB0aGUgcmVzdWx0Lg0KPiANCj4gSWYgd2Ugd2FudCB0byBk
-byB0aGUgYWRkaXRpb24gYXQgNjQgYml0cyB0aGVuIHVzaW5nIGV4dHJhY3Q2NCgpDQo+IHdvdWxk
-IGJlIHRoZSBzaW1wbGVzdCB3YXkgdG8gYXJyYW5nZSBmb3IgdGhhdC4NCj4gDQo+IEhvd2V2ZXIs
-IEkgY2FuJ3QgZmlndXJlIG91dCB3aGF0IHRoaXMgY29kZSBpcyB0cnlpbmcgdG8gZG8gYW5kDQo+
-IG1ha2UgdGhhdCBsaW5lIHVwIHdpdGggdGhlIGRhdGEgc2hlZXQ7IG1heWJlIHRoaXMgaXNuJ3Qg
-dGhlDQo+IHJpZ2h0IGRhdGFzaGVldCBmb3IgdGhpcyBkZXZpY2U/DQo+IA0KPiBodHRwczovL2Rv
-Y3MuYW1kLmNvbS9yL2VuLVVTL3VnMTA4NS16eW5xLXVsdHJhc2NhbGUtdHJtL0FERFJfRVhULUZp
-ZWxkDQo+IA0KPiBUaGUgZGF0YXNoZWV0IHN1Z2dlc3RzIHRoYXQgd2Ugc2hvdWxkIHRha2UgMzIg
-Yml0cyBvZiB0aGUgYWRkcmVzcw0KPiBmcm9tIG9uZSBmaWVsZCAoaGVyZSBkZXNjLT5zb3VyY2Vf
-YWRkcmVzcykgYW5kIDE2IGJpdHMgb2YgdGhlDQo+IGFkZHJlc3MgZnJvbSBhbm90aGVyIChoZXJl
-IGRlc2MtPmFkZHJlc3NfZXh0ZW5zaW9uJ3MgaGlnaCBiaXRzKQ0KPiBhbmQgY29tYmluZSB0aGVt
-IHRvIG1ha2UgYSA0OCBiaXQgYWRkcmVzcy4gQnV0IHRoaXMgY29kZSBpcyBvbmx5DQo+IGxvb2tp
-bmcgYXQgMTIgYml0cyBvZiB0aGUgaGlnaCAxNiBpbiBhZGRyZXNzX2V4dGVuc2lvbiwgYW5kIGl0
-DQo+IGRvZXNuJ3Qgc2hpZnQgdGhlbSByaWdodCBlbm91Z2ggdG8gcHV0IHRoZW0gaW50byBiaXRz
-IFs0NzozMl0NCj4gb2YgdGhlIGZpbmFsIGFkZHJlc3MuDQo+IA0KPiBYaWxpbnggZm9sa3M6IHdo
-YXQgaGFyZHdhcmUgaXMgdGhpcyBtb2RlbGxpbmcsIGFuZCBpcyBpdA0KPiByZWFsbHkgdGhlIHJp
-Z2h0IGJlaGF2aW91cj8NCg0KTG9va3MgbGlrZSB0aGlzIGlzIHRoZSByaWdodCBkb2N1bWVudGF0
-aW9uLiAgTW9zdCBwcm9iYWJseSB0aGUgZGVzY3JpcHRvciBmaWVsZCBjaGFuZ2VkDQpzaW5jZSBJ
-IGRpZCB0aGF0IG1vZGVsLCBvciBJIGdvdCByZWFsbHkgY29uZnVzZWQuDQoNCj4gDQo+IEFsc28s
-IHRoaXMgZGV2aWNlIGxvb2tzIGxpa2UgaXQgaGFzIGEgaG9zdC1lbmRpYW5uZXNzIGJ1ZzogdGhl
-DQo+IERQRE1BRGVzY3JpcHRvciBzdHJ1Y3QgaXMgcmVhZCBkaXJlY3RseSBmcm9tIGd1ZXN0IG1l
-bW9yeSBpbg0KPiBkbWFfbWVtb3J5X3JlYWQoKSwgYnV0IHRoZSBkZXZpY2UgbmV2ZXIgZG9lcyBh
-bnl0aGluZyB0byBzd2FwDQo+IHRoZSBmaWVsZHMgZnJvbSBndWVzdCBtZW1vcnkgb3JkZXIgdG8g
-aG9zdCBtZW1vcnkgb3JkZXIuIFNvDQo+IHRoaXMgaXMgbGlrZWx5IGJyb2tlbiBvbiBiaWctZW5k
-aWFuIGhvc3RzLg0KPiANCg0KWWVzIGluZGVlZC4NCg0KQmVzdCBSZWdhcmRzLA0KRnJlZA0KDQo+
-IHRoYW5rcw0KPiAtLSBQTU0NCg0K
+On Tue, Apr 16, 2024 at 5:55=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Tue, Apr 16, 2024 at 03:28:41PM +0200, J=C3=BCrgen Gro=C3=9F wrote:
+> > On 16.04.24 13:32, Edgar E. Iglesias wrote:
+> > > On Wed, Apr 10, 2024 at 8:56=E2=80=AFPM Peter Xu <peterx@redhat.com> =
+wrote:
+> > > >
+> > > > On Wed, Apr 10, 2024 at 06:44:38PM +0200, Edgar E. Iglesias wrote:
+> > > > > On Tue, Feb 27, 2024 at 11:37=E2=80=AFPM Vikram Garhwal <vikram.g=
+arhwal@amd.com>
+> > > > > wrote:
+> > > > >
+> > > > > > From: Juergen Gross <jgross@suse.com>
+> > > > > >
+> > > > > > In order to support mapping and unmapping guest memory dynamica=
+lly to
+> > > > > > and from qemu during address_space_[un]map() operations add the=
+ map()
+> > > > > > and unmap() callbacks to MemoryRegionOps.
+> > > > > >
+> > > > > > Those will be used e.g. for Xen grant mappings when performing =
+guest
+> > > > > > I/Os.
+> > > > > >
+> > > > > > Signed-off-by: Juergen Gross <jgross@suse.com>
+> > > > > > Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
+> > > > > >
+> > > > >
+> > > > >
+> > > > > Paolo, Peter, David, Phiippe, do you guys have any concerns with =
+this patch?
+> > > >
+> > >
+> > > Thanks for your comments Peter,
+> > >
+> > >
+> > > > This introduces a 3rd memory type afaict, neither direct nor !direc=
+t.
+> > > >
+> > > > What happens if someone does address_space_write() to it?  I didn't=
+ see it
+> > > > covered here..
+> > >
+> > > You're right, that won't work, the memory needs to be mapped before i=
+t
+> > > can be used.
+> > > At minimum there should be some graceful failure, right now this will=
+ crash.
+> > >
+> > > >
+> > > > OTOH, the cover letter didn't mention too much either on the big pi=
+cture:
+> > > >
+> > > > https://lore.kernel.org/all/20240227223501.28475-1-vikram.garhwal@a=
+md.com/
+> > > >
+> > > > I want to have a quick grasp on whether it's justified worthwhile w=
+e should
+> > > > introduce this complexity to qemu memory core.
+> > > >
+> > > > Could I request a better cover letter when repost?  It'll be great =
+to
+> > > > mention things like:
+> > >
+> > > I'll do that, but also answer inline in the meantime since we should
+> > > perhaps change the approach.
+> > >
+> > > >
+> > > >    - what is grant mapping, why it needs to be used, when it can be=
+ used (is
+> > > >      it only relevant to vIOMMU=3Don)?  Some more information on th=
+e high
+> > > >      level design using this type or MR would be great.
+> > >
+> > > https://github.com/xen-project/xen/blob/master/docs/misc/grant-tables=
+.txt
+> > >
+> > > Xen VM's that use QEMU's VirtIO have a QEMU instance running in a sep=
+arate VM.
+> > >
+> > > There's basically two mechanisms for QEMU's Virtio backends to access
+> > > the guest's RAM.
+> > > 1. Foreign mappings. This gives the VM running QEMU access to the
+> > > entire RAM of the guest VM.
+> >
+> > Additionally it requires qemu to run in dom0, while in general Xen allo=
+ws
+> > to run backends in less privileged "driver domains", which are usually =
+not
+> > allowed to perform foreign mappings.
+> >
+> > > 2. Grant mappings. This allows the guest to dynamically grant and
+> > > remove access to pages as needed.
+> > > So the VM running QEMU, cannot map guest RAM unless it's been
+> > > instructed to do so by the guest.
+> > >
+> > > #2 is desirable because if QEMU gets compromised it has a smaller
+> > > attack surface onto the guest.
+> >
+> > And it allows to run the virtio backend in a less privileged VM.
+> >
+> > >
+> > > >
+> > > >    - why a 3rd memory type is required?  Do we have other alternati=
+ves?
+> > >
+> > > Yes, there are alternatives.
+> > >
+> > > 1. It was suggested by Stefano to try to handle this in existing qemu=
+/hw/xen/*.
+> > > This would be less intrusive but perhaps also less explicit.
+> > > Concerns about touching the Memory API have been raised before, so
+> > > perhaps we should try this.
+> > > I'm a little unsure how we would deal with unmapping when the guest
+> > > removes our grants and we're using models that don't map but use
+> > > address_space_read/write().
+> >
+> > Those would either need to use grant-copy hypercalls, or they'd need to=
+ map,
+> > read/write, unmap.
+> >
+> > >
+> > > 2. Another approach could be to change the Xen grant-iommu in the
+> > > Linux kernel to work with a grant vIOMMU in QEMU.
+> > > Linux could explicitly ask QEMU's grant vIOMMU to map/unmap granted r=
+egions.
+> > > This would have the benefit that we wouldn't need to allocate
+> > > address-bit 63 for grants.
+> > > A drawback is that it may be slower since we're going to need to
+> > > bounce between guest/qemu a bit more.
+> >
+> > It would be a _lot_ slower, unless virtio-iommu and grants are both mod=
+ified
+> > to match. I have looked into that, but the needed effort is rather larg=
+e. At
+> > the last Xen summit I have suggested to introduce a new grant format wh=
+ich
+> > would work more like a normal page table structure. Using the same form=
+at
+> > for virtio-iommu would allow to avoid the additional bounces between qe=
+mu and
+> > the guest (and in fact that was one of the motivations to suggest the n=
+ew
+> > grant format).
+>
+> I have a better picture now, thanks both.
+>
+> It really looks like an vIOMMU already to me, perhaps with a special refI=
+D
+> mapping playing similar roles as IOVAs in the rest IOMMU worlds.
+>
+> I can't yet tell what's the best way for Xen - as of now QEMU's memory AP=
+I
+> does provide such translations via IOMMUMemoryRegionClass.translate(), bu=
+t
+> only from that.  So far it works for all vIOMMU emulations in QEMU, and I=
+'d
+> hope we don't need to hack another memory type if possible for this,
+> especially if for performance's sake; more on below.
+>
+> QEMU also suffers from similar issues with other kind of DMA protections,
+> at least that's what I'm aware with using either VT-d, SMMU, etc.. where
+> dynamic DMA mappings will slow the IOs down to a degree that it may not b=
+e
+> usable in real production.  We kept it like that and so far AFAIK we don'=
+t
+> yet have a solution for that simply because of the nature on how DMA
+> buffers are mapped and managed within a guest OS no matter Linux or not.
+>
+> For Linux as a guest we basically suggest enabling iommu=3Dpt so that ker=
+nel
+> drivers are trusted, and kernel driven devices can have full access to
+> guest RAMs by using the vIOMMU's passthrough mode. Perhaps similar to
+> foreign mappings for Xen, but maybe still different, as Xen's topology is
+> definitely special as a hypervisor here.
+>
+> While for userspace drivers within the guest OS it'll always go through
+> vfio-pci now, which will enforce effective DMA mappings not the passthrou=
+gh
+> mode. Then it's suggested to only map as less as possible, e.g. DPDK only
+> maps at the start of the user driver so it's mostly not affected by the
+> slowness of frequently changing DMA mappings.
+>
+> I'm not sure whether above ideas would even be applicable for Xen, but I
+> just to share the status quo regarding to how we manage protected DMAs wh=
+en
+> without Xen, just in case there's anything useful to help route the path
+> forward.
+>
+> Thanks,
+>
+> --
+> Peter Xu
+>
+
+Thanks for the suggestions Peter and for your comments Jurgen.
+We'll have to evaluate the different approaches a little more and see
+where we go from here.
+
+Best regards,
+Edgar
 
