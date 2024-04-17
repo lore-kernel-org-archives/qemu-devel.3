@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2660C001CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 18:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE114C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 18:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxA2g-00040F-OY; Wed, 17 Apr 2024 14:30:00 -0400
+	id 1rxA2V-0003bE-FL; Wed, 17 Apr 2024 14:29:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA2Z-0003pe-AF
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:53 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA2R-0003UT-ND
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:43 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA2V-0003iu-KO
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:49 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-570423c4f80so36972a12.0
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 11:29:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA2P-0003gd-Ty
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:29:43 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-571b1434592so25440a12.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 11:29:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713378585; x=1713983385; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713378580; x=1713983380; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NHZqwbv+wjH/HmWZ9HfsbsxWvnOGugUAYDu3jydEASY=;
- b=UWShZDhtgBhQH/+qCwmmIrsBli8sr8QxxH+AEfAMXYABQRgb3F32P4NcgSb/vPOJjP
- So83dk2p0P1LUQUvlirJ0dGJbzQORxC4bcpHBhCrbdqLL62J1m/XIl4I1rtEdaPk6T9A
- Ln8/6E1KfKoVaXXesz5UtSlhwflHe8Heu8oYzN3W73BkdkyQm80MUpWj95r/hP/UBerx
- zLcSJrbncanMtPJsJPQUSTNkgl72X5fuc+/t7jrv5tRkTOjxW45/KsSUeQS5SWprmzcs
- xLW/qqL4Aeo5JhwpLSnVtdI7Pul/GIGb51zbK2Wc6m+KDjKpa3v2HAi51t9newIfKtS4
- ArSQ==
+ bh=ksGtnbhVlkkzbu1KHQ/46hqlmcPyNdFy0jfCVGKxgOI=;
+ b=tedQrk27GJnZiElldQ0Kl7ShTmWk9A6VKz61Xg5pHp7s2JJKlpT1Kz37Pwmz75IHQF
+ LtW1LuezB4uIEv0Jbt0g07yvE8cNQnKlOVCZUnTV413aDr0cLPLw2/K9UFLQkZ8Hwuuc
+ VFgnlaTMOEA0B8A9QLF8kpzfbk2d4znSscjm3hlzJudAQs+JnDtzqI973yqajLVSyBQo
+ ypjQjgF02vkwPGKo9Rz1JC9Zxp0bm0kLVwfC09WglS+WeuUmYjEyip/xv97Sv+S54qQK
+ ZfNceJyUUaqGmRpVS5sRy3nacSaOrXNDx+Er5RZxFEpEXxdfLM2Xq5l/1vrZUK7Xv/xi
+ RKyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713378585; x=1713983385;
+ d=1e100.net; s=20230601; t=1713378580; x=1713983380;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NHZqwbv+wjH/HmWZ9HfsbsxWvnOGugUAYDu3jydEASY=;
- b=ZHbwM+OkUTdhiZ3ngJGKcIxW4gnvMpdH+F/3PgJ+Q5tEvvXEsy+uCcUBD86Md0J2xn
- UMsjdazs/leeBJfN5tciV5h2MJpxfmqintW2d2isvkifN2LZKZV9awSXeDp+YEkCOXbD
- +6fY/Ryca7SFTkLWuS8fusQW+WzyAV3IGjan9K3HkO4r4gLlGdpEYxQYx1ZuMeUgvkch
- YGiQ260Ba+s13ZucDpWHlX5ZF1psSlufz1pZeRgMWE77PuX/3/XEPsoCy9ov2wI2Nbjk
- pEyVGVmKpSu4DOoMNiwfYDg3ulJ7h0toFs4m/CajdQn3BIIEQEujz8U5o5CrYDqQ77mp
- SPJA==
-X-Gm-Message-State: AOJu0Yzb1sQ0dvkjqVvSEjnG326Iy8eSEj+3P7ahFM8c/95PLezCTVI5
- BNdEXjZTRlUNE6OfLA+2bcA+KxRTNRfWMSEiL4OHcLNwn+UknUan/bN79kiWMN5r9cqLSf6AmfB
- G
-X-Google-Smtp-Source: AGHT+IHt210+SU5PvtLJuGRrjHHbWPU1NbMi+AZRdW04Mb9m8nhAqkIg80h3jRtnIsEedIoQlIUdyg==
-X-Received: by 2002:a17:906:2a89:b0:a52:671a:aaf2 with SMTP id
- l9-20020a1709062a8900b00a52671aaaf2mr179854eje.72.1713378585444; 
- Wed, 17 Apr 2024 11:29:45 -0700 (PDT)
+ bh=ksGtnbhVlkkzbu1KHQ/46hqlmcPyNdFy0jfCVGKxgOI=;
+ b=G5UDGFNWtDKdTt2hYCSSvXGEuzUe9z7cCbgk/ypTJGnqIBDBZxaPjPvzXCdhbH4/Re
+ 0yjmkX7p+rfBaq58qPBlmn4GEBqVshH/4OZsgXUE9Qj7G0MNn47EIa7utWBubABrI64C
+ k2j7fqZRzaZVVE+SMMCtL+WfwG9/iaaLDJp/lpJ3Oog/CAmjsYGuwTe4y6LDiZf+1X2+
+ JfX+yUOgM+C9UPeqOU86cNSy0TxaE0g8tDgeP5mS9RWmW9X767+x69fDFAXzts4qZAnb
+ +DhaIBggcamkSR79dFRcTdgyODXVmTzwfrIfy7HI8SNoLdIhyDAwizP29G6sCHXcaSGa
+ ENpQ==
+X-Gm-Message-State: AOJu0Yz0Hy+pIGH7CCgXrdbV1kyac84VuxaZOg6bSMT7AvrIo5TTVksU
+ GDVizqsoZLt+9DY+Z6Wc65L2K19rd/R3X5QMxXj5QGVye/wXiDh1WqytqjH7kXAmcYMfSy2PqwI
+ M
+X-Google-Smtp-Source: AGHT+IHIzCzepga96ak97IGhu63EH7tHHuEds0s/CDY9YCUJF2OWBF8l4ROsD8aNLo+Eyybg0PAO+Q==
+X-Received: by 2002:a17:906:f0c8:b0:a4d:fc83:70e1 with SMTP id
+ dk8-20020a170906f0c800b00a4dfc8370e1mr191938ejb.56.1713378579838; 
+ Wed, 17 Apr 2024 11:29:39 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.201.23])
  by smtp.gmail.com with ESMTPSA id
- rh4-20020a17090720e400b00a5255afc856sm5615193ejb.84.2024.04.17.11.29.44
+ la12-20020a170907780c00b00a5561456fa8sm724253ejc.21.2024.04.17.11.29.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Apr 2024 11:29:45 -0700 (PDT)
+ Wed, 17 Apr 2024 11:29:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 17/21] exec/cpu-all: Remove unused tswapls() definitions
-Date: Wed, 17 Apr 2024 20:28:02 +0200
-Message-ID: <20240417182806.69446-18-philmd@linaro.org>
+Subject: [PATCH 16/21] exec/cpu-all: Remove unused 'qemu/thread.h' header
+Date: Wed, 17 Apr 2024 20:28:01 +0200
+Message-ID: <20240417182806.69446-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240417182806.69446-1-philmd@linaro.org>
 References: <20240417182806.69446-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,32 +95,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Last use of tswapls() was removed 2 years ago in commit
-aee14c77f4 ("linux-user: Rewrite do_getdents, do_getdents64").
+Nothing is required from "qemu/thread.h" in "exec/cpu-all.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20231212123401.37493-15-philmd@linaro.org>
+Message-Id: <20231212123401.37493-13-philmd@linaro.org>
 ---
- include/exec/cpu-all.h | 2 --
- 1 file changed, 2 deletions(-)
+ include/exec/cpu-all.h | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 4de0d5a0d7..7c44ffb3af 100644
+index 586dc56d9e..4de0d5a0d7 100644
 --- a/include/exec/cpu-all.h
 +++ b/include/exec/cpu-all.h
-@@ -38,11 +38,9 @@
+@@ -22,7 +22,6 @@
+ #include "exec/cpu-common.h"
+ #include "exec/memory.h"
+ #include "exec/tswap.h"
+-#include "qemu/thread.h"
+ #include "hw/core/cpu.h"
  
- #if TARGET_LONG_SIZE == 4
- #define tswapl(s) tswap32(s)
--#define tswapls(s) tswap32s((uint32_t *)(s))
- #define bswaptls(s) bswap32s(s)
- #else
- #define tswapl(s) tswap64(s)
--#define tswapls(s) tswap64s((uint64_t *)(s))
- #define bswaptls(s) bswap64s(s)
- #endif
- 
+ /* some important defines:
 -- 
 2.41.0
 
