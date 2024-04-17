@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0033C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 18:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E2AC4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 18:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxA18-0007a2-VS; Wed, 17 Apr 2024 14:28:22 -0400
+	id 1rxA1K-0007cf-9A; Wed, 17 Apr 2024 14:28:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA17-0007Zs-MS
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:28:21 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA1H-0007cE-Ii
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:28:31 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA15-0003GO-4h
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:28:20 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4187c47405aso261875e9.3
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 11:28:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxA1F-0003IP-AS
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:28:31 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4187981999fso459665e9.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 11:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713378495; x=1713983295; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713378507; x=1713983307; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GXSzECYTToI5yG00Nu/fEQEka/0Hmt5e5edwX0HsJB4=;
- b=hS22Pnlo6JPfnRRjInc5jTfb/KhHFpCuxJEjkRS5ayDoVioPvTSm0SXu6nGPFYQDTp
- w7GMtboIUZ2yYOUFUfA7BGE467eZUtq7f1JM9Nuz0ootiNpgS9vL3+sQNJ9OIyFhE+mY
- gBWCnqxh5vdy8SeAth15+/BP/uy/HOZzktMfZIK2sejlaelvZFPKirnWUTa7Fughl86i
- UT6QwTeorpdhpVxNf3wVkuPbHQrnG4Qv2lQIM9kvX1VQtvQo31AogAD+ium83Gjoetp7
- dcz5F9A7uAXgiU/5hiHQm8qM/jhCIP2su4wq2El5YRrvAdwfX1aW+oUJeUhqpsAYHfAF
- a43Q==
+ bh=u1xvIMY6HGx0bbX9xwwNC0zjHJ2ZBSfkq9UJ9n//aGE=;
+ b=BTjdy4WYyhyy+Jh+NlsePHB7A9f46XmIbHxsgB+81O2BWwygtfTyzqSwFtKYFm/zTx
+ i1PnOkCItXnn2ohh5+JzffaYg1OixBbPs648J50VG2lU1SzsGvY1z2ShYB+bKVW8tD+h
+ YNy8Osfn6j6HJWZ0f5Xhi3Uj4FY5IkpyOAmn0hy7pLAY0fieQHNMhd/BbqtZfoJP1A0l
+ +EEgl0qXrJNbZ7b9Qg5NL83CPKQokXiytMtb7+ecFmDl7FGHEOyFFKcnK7/OCNiqDy9Q
+ LkDKFBOmd+r+/ARRe/QNPf8fVwM0NW2lUnj7q+r+nknfR05mjyXvwGbQ7qzWIyVJno34
+ rW1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713378495; x=1713983295;
+ d=1e100.net; s=20230601; t=1713378507; x=1713983307;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GXSzECYTToI5yG00Nu/fEQEka/0Hmt5e5edwX0HsJB4=;
- b=nrsHYHmF6bl9ktGfeCdRrSPr/q0xE+9uIBfxAzyv0FGrmcsHlncQz/1K7gn45QrA/p
- Agh0sUWtaQU1QKcltN1YJdhDIa79OuOyKBXT/WJZkwwMLY+otdV5sJXbzomTwzdL0Fxi
- 5xQlSp7+OBv4iD8AxOpMKiRGxamAzcxQ7cgiMKz0K+ePWgFxBOr+pym3syzeU/oOpAOi
- fviZKYBsZVZarWLDYgoPgmLzc5NIBJeXyTTMwdQxOx2gRz2Tm2uAzEkK/x+WDZbKmXie
- 9V8CI2xBsYc5ge8uUHJoMgbjxuwLhKoyZX96r+hx/rB06r5BuGYUQPGFHKVewmYkJqgA
- Qdjg==
-X-Gm-Message-State: AOJu0Yyp643HOwTPToBgbtH+Ttqj1hNjfPIksCRihBuop2Q7IQfosy3T
- 5WxwHw4tBmWsRWtgptyaXEVzFNQjAz+iMl+W/Ch00Lw+x711Z4W1Ayn+8Wym+YpG+bCpfKCrdCA
- 4
-X-Google-Smtp-Source: AGHT+IEeh7ccTtHKsN1NYAZ+Tqqia38G0hVrDEgAAhyLJoy0beTmHggJMEwEepp+gD3Kz8x/52msSQ==
-X-Received: by 2002:a05:600c:3581:b0:418:41a7:d032 with SMTP id
- p1-20020a05600c358100b0041841a7d032mr328663wmq.13.1713378495644; 
- Wed, 17 Apr 2024 11:28:15 -0700 (PDT)
+ bh=u1xvIMY6HGx0bbX9xwwNC0zjHJ2ZBSfkq9UJ9n//aGE=;
+ b=TwBUmoTZCAPssi/BfqaxvGwmTzGoEVANgcXfYmad5Sj3oKc7an8d3V1ape9zKCwMO3
+ d1IVkVE+c8vzlA9KGp1X7sCeFcVej8FH7vgwG5NTsYOPJrSAnNsKjfV1QNXcUgFR8cCK
+ DiIzWaytfPIlMWCjhMzk+qQbLAtZZicNbs+whhpXm829NrBTRiaN/0rEUtjX/s9/YMM8
+ EE51M1AtAQP9d8FeUDUi+zMyxrJNc13pwmF70ACX9SeY4fQrK2tFULWSK+aMB4wjreaa
+ ylWTJZnMi/xxpLNl5Sw1SPp6SwNlremIpgqppe3c3ZJSw0RV/oCCf6zge9L++yb4lUI1
+ YVfw==
+X-Gm-Message-State: AOJu0Yy1Hz4tdFDyYr+gkNdf6j9VWkYuJrv0ZxlRO2ZY4NvaqBu5agYN
+ TRC1rfStvqfIX/IzDHZsYcbwf8G6hb6z5Q+KLSY9nnc+DF6PariDsScDMSLWme58BTyOluAmRvD
+ L
+X-Google-Smtp-Source: AGHT+IHLYUKmUSv9xBzYw/wuICVYuzAREZ7KYVYVLDca6wp3WXC81r8hx3MRzK53cyOKwtcvgoHowQ==
+X-Received: by 2002:a05:600c:3548:b0:418:23d7:816f with SMTP id
+ i8-20020a05600c354800b0041823d7816fmr287268wmq.17.1713378507387; 
+ Wed, 17 Apr 2024 11:28:27 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.201.23])
  by smtp.gmail.com with ESMTPSA id
- d15-20020a05600c34cf00b0041897c6171dsm3648880wmq.16.2024.04.17.11.28.14
+ h14-20020a05600c260e00b004188a8369d9sm3608393wma.47.2024.04.17.11.28.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Apr 2024 11:28:15 -0700 (PDT)
+ Wed, 17 Apr 2024 11:28:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 01/21] gdbstub: Simplify #ifdef'ry in helpers.h
-Date: Wed, 17 Apr 2024 20:27:46 +0200
-Message-ID: <20240417182806.69446-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 03/21] exec: Rename NEED_CPU_H -> COMPILING_PER_TARGET
+Date: Wed, 17 Apr 2024 20:27:48 +0200
+Message-ID: <20240417182806.69446-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240417182806.69446-1-philmd@linaro.org>
 References: <20240417182806.69446-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,40 +95,374 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Slightly simplify by checking NEED_CPU_H definition in header.
+'NEED_CPU_H' guard target-specific code; it is defined by meson
+altogether with the 'CONFIG_TARGET' definition. Rename NEED_CPU_H
+as COMPILING_PER_TARGET to clarify its meaning.
 
+Mechanical change running:
+
+ $ sed -i s/NEED_CPU_H/COMPILING_PER_TARGET/g $(git grep -l NEED_CPU_H)
+
+then manually add a /* COMPILING_PER_TARGET */ comment
+after the '#endif' when the block is large.
+
+Inspired-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240322161439.6448-2-philmd@linaro.org>
+Message-Id: <20240322161439.6448-4-philmd@linaro.org>
 ---
- include/gdbstub/helpers.h | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ meson.build                | 4 ++--
+ include/exec/cpu-defs.h    | 2 +-
+ include/exec/helper-head.h | 4 ++--
+ include/exec/memop.h       | 4 ++--
+ include/exec/memory.h      | 4 ++--
+ include/exec/tswap.h       | 4 ++--
+ include/gdbstub/helpers.h  | 2 +-
+ include/hw/core/cpu.h      | 4 ++--
+ include/qemu/osdep.h       | 2 +-
+ include/sysemu/hvf.h       | 8 ++++----
+ include/sysemu/kvm.h       | 6 +++---
+ include/sysemu/nvmm.h      | 4 ++--
+ include/sysemu/whpx.h      | 4 ++--
+ include/sysemu/xen.h       | 4 ++--
+ target/arm/kvm-consts.h    | 4 ++--
+ scripts/analyze-inclusions | 6 +++---
+ 16 files changed, 33 insertions(+), 33 deletions(-)
 
+diff --git a/meson.build b/meson.build
+index 91a0aa64c6..da8295b405 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3641,7 +3641,7 @@ foreach d, list : target_modules
+         if target.endswith('-softmmu')
+           config_target = config_target_mak[target]
+           target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
+-          c_args = ['-DNEED_CPU_H',
++          c_args = ['-DCOMPILING_PER_TARGET',
+                     '-DCONFIG_TARGET="@0@-config-target.h"'.format(target),
+                     '-DCONFIG_DEVICES="@0@-config-devices.h"'.format(target)]
+           target_module_ss = module_ss.apply(config_target, strict: false)
+@@ -3824,7 +3824,7 @@ foreach target : target_dirs
+   target_base_arch = config_target['TARGET_BASE_ARCH']
+   arch_srcs = [config_target_h[target]]
+   arch_deps = []
+-  c_args = ['-DNEED_CPU_H',
++  c_args = ['-DCOMPILING_PER_TARGET',
+             '-DCONFIG_TARGET="@0@-config-target.h"'.format(target),
+             '-DCONFIG_DEVICES="@0@-config-devices.h"'.format(target)]
+   link_args = emulator_link_args
+diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
+index 3915438b83..0dbef3010c 100644
+--- a/include/exec/cpu-defs.h
++++ b/include/exec/cpu-defs.h
+@@ -19,7 +19,7 @@
+ #ifndef CPU_DEFS_H
+ #define CPU_DEFS_H
+ 
+-#ifndef NEED_CPU_H
++#ifndef COMPILING_PER_TARGET
+ #error cpu.h included from common code
+ #endif
+ 
+diff --git a/include/exec/helper-head.h b/include/exec/helper-head.h
+index 28ceab0a46..5ef467a79d 100644
+--- a/include/exec/helper-head.h
++++ b/include/exec/helper-head.h
+@@ -43,7 +43,7 @@
+ #define dh_ctype_noreturn G_NORETURN void
+ #define dh_ctype(t) dh_ctype_##t
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ # ifdef TARGET_LONG_BITS
+ #  if TARGET_LONG_BITS == 32
+ #   define dh_alias_tl i32
+@@ -54,7 +54,7 @@
+ #  endif
+ # endif
+ # define dh_ctype_tl target_ulong
+-#endif
++#endif /* COMPILING_PER_TARGET */
+ 
+ /* We can't use glue() here because it falls foul of C preprocessor
+    recursive expansion rules.  */
+diff --git a/include/exec/memop.h b/include/exec/memop.h
+index a86dc6743a..06417ff361 100644
+--- a/include/exec/memop.h
++++ b/include/exec/memop.h
+@@ -35,7 +35,7 @@ typedef enum MemOp {
+     MO_LE    = 0,
+     MO_BE    = MO_BSWAP,
+ #endif
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ #if TARGET_BIG_ENDIAN
+     MO_TE    = MO_BE,
+ #else
+@@ -135,7 +135,7 @@ typedef enum MemOp {
+     MO_BESL  = MO_BE | MO_SL,
+     MO_BESQ  = MO_BE | MO_SQ,
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+     MO_TEUW  = MO_TE | MO_UW,
+     MO_TEUL  = MO_TE | MO_UL,
+     MO_TEUQ  = MO_TE | MO_UQ,
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 8626a355b3..bb51e90fe1 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3087,7 +3087,7 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
+ MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
+                               uint8_t c, hwaddr len, MemTxAttrs attrs);
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ /* enum device_endian to MemOp.  */
+ static inline MemOp devend_memop(enum device_endian end)
+ {
+@@ -3105,7 +3105,7 @@ static inline MemOp devend_memop(enum device_endian end)
+     return (end == non_host_endianness) ? MO_BSWAP : 0;
+ #endif
+ }
+-#endif
++#endif /* COMPILING_PER_TARGET */
+ 
+ /*
+  * Inhibit technologies that require discarding of pages in RAM blocks, e.g.,
+diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+index 68944a880b..5089cd6a4c 100644
+--- a/include/exec/tswap.h
++++ b/include/exec/tswap.h
+@@ -15,11 +15,11 @@
+  * If we're in target-specific code, we can hard-code the swapping
+  * condition, otherwise we have to do (slower) run-time checks.
+  */
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ #define target_needs_bswap()  (HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN)
+ #else
+ #define target_needs_bswap()  (target_words_bigendian() != HOST_BIG_ENDIAN)
+-#endif
++#endif /* COMPILING_PER_TARGET */
+ 
+ static inline uint16_t tswap16(uint16_t s)
+ {
 diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
-index c573aef2dc..53e88d807c 100644
+index 53e88d807c..6277a858a1 100644
 --- a/include/gdbstub/helpers.h
 +++ b/include/gdbstub/helpers.h
-@@ -12,7 +12,10 @@
+@@ -12,7 +12,7 @@
  #ifndef _GDBSTUB_HELPERS_H_
  #define _GDBSTUB_HELPERS_H_
  
--#ifdef NEED_CPU_H
-+#ifndef NEED_CPU_H
-+#error "gdbstub helpers should only be included by target specific code"
-+#endif
-+
- #include "cpu.h"
- 
- /*
-@@ -96,8 +99,4 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
- #define ldtul_p(addr) ldl_p(addr)
+-#ifndef NEED_CPU_H
++#ifndef COMPILING_PER_TARGET
+ #error "gdbstub helpers should only be included by target specific code"
  #endif
  
--#else
--#error "gdbstub helpers should only be included by target specific code"
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index ec14f74ce5..7f037b158e 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -1182,7 +1182,7 @@ bool target_words_bigendian(void);
+ 
+ const char *target_name(void);
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ 
+ #ifndef CONFIG_USER_ONLY
+ 
+@@ -1197,7 +1197,7 @@ extern const VMStateDescription vmstate_cpu_common;
+ }
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-#endif /* NEED_CPU_H */
++#endif /* COMPILING_PER_TARGET */
+ 
+ #define UNASSIGNED_CPU_INDEX -1
+ #define UNASSIGNED_CLUSTER_INDEX -1
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index c7053cdc2b..f61edcfdc2 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -32,7 +32,7 @@
+ #endif
+ 
+ #include "config-host.h"
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ #include CONFIG_TARGET
+ #else
+ #include "exec/poison.h"
+diff --git a/include/sysemu/hvf.h b/include/sysemu/hvf.h
+index 4a7c6af3a5..730f927f03 100644
+--- a/include/sysemu/hvf.h
++++ b/include/sysemu/hvf.h
+@@ -16,7 +16,7 @@
+ #include "qemu/accel.h"
+ #include "qom/object.h"
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ #include "cpu.h"
+ 
+ #ifdef CONFIG_HVF
+@@ -26,7 +26,7 @@ extern bool hvf_allowed;
+ #define hvf_enabled() 0
+ #endif /* !CONFIG_HVF */
+ 
+-#endif /* NEED_CPU_H */
++#endif /* COMPILING_PER_TARGET */
+ 
+ #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
+ 
+@@ -34,7 +34,7 @@ typedef struct HVFState HVFState;
+ DECLARE_INSTANCE_CHECKER(HVFState, HVF_STATE,
+                          TYPE_HVF_ACCEL)
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ struct hvf_sw_breakpoint {
+     vaddr pc;
+     vaddr saved_insn;
+@@ -66,6 +66,6 @@ void hvf_arch_update_guest_debug(CPUState *cpu);
+  * Return whether the guest supports debugging.
+  */
+ bool hvf_arch_supports_guest_debug(void);
+-#endif /* NEED_CPU_H */
++#endif /* COMPILING_PER_TARGET */
+ 
+ #endif
+diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+index fad9a7e8ff..c618a59ba6 100644
+--- a/include/sysemu/kvm.h
++++ b/include/sysemu/kvm.h
+@@ -20,7 +20,7 @@
+ #include "qemu/accel.h"
+ #include "qom/object.h"
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ # ifdef CONFIG_KVM
+ #  include <linux/kvm.h>
+ #  define CONFIG_KVM_IS_POSSIBLE
+@@ -210,7 +210,7 @@ bool kvm_arm_supports_user_irq(void);
+ int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
+ int kvm_on_sigbus(int code, void *addr);
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ #include "cpu.h"
+ 
+ void kvm_flush_coalesced_mmio_buffer(void);
+@@ -435,7 +435,7 @@ void kvm_set_sigmask_len(KVMState *s, unsigned int sigmask_len);
+ int kvm_physical_memory_addr_from_host(KVMState *s, void *ram_addr,
+                                        hwaddr *phys_addr);
+ 
+-#endif /* NEED_CPU_H */
++#endif /* COMPILING_PER_TARGET */
+ 
+ void kvm_cpu_synchronize_state(CPUState *cpu);
+ 
+diff --git a/include/sysemu/nvmm.h b/include/sysemu/nvmm.h
+index be7bc9a62d..6971ddb3a5 100644
+--- a/include/sysemu/nvmm.h
++++ b/include/sysemu/nvmm.h
+@@ -12,7 +12,7 @@
+ #ifndef QEMU_NVMM_H
+ #define QEMU_NVMM_H
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ 
+ #ifdef CONFIG_NVMM
+ 
+@@ -24,6 +24,6 @@ int nvmm_enabled(void);
+ 
+ #endif /* CONFIG_NVMM */
+ 
+-#endif /* NEED_CPU_H */
++#endif /* COMPILING_PER_TARGET */
+ 
+ #endif /* QEMU_NVMM_H */
+diff --git a/include/sysemu/whpx.h b/include/sysemu/whpx.h
+index 781ca5b2b6..00ff409b68 100644
+--- a/include/sysemu/whpx.h
++++ b/include/sysemu/whpx.h
+@@ -15,7 +15,7 @@
+ #ifndef QEMU_WHPX_H
+ #define QEMU_WHPX_H
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ 
+ #ifdef CONFIG_WHPX
+ 
+@@ -29,6 +29,6 @@ bool whpx_apic_in_platform(void);
+ 
+ #endif /* CONFIG_WHPX */
+ 
+-#endif /* NEED_CPU_H */
++#endif /* COMPILING_PER_TARGET */
+ 
+ #endif /* QEMU_WHPX_H */
+diff --git a/include/sysemu/xen.h b/include/sysemu/xen.h
+index a9f591f26d..754ec2e6cb 100644
+--- a/include/sysemu/xen.h
++++ b/include/sysemu/xen.h
+@@ -16,13 +16,13 @@
+ 
+ #include "exec/cpu-common.h"
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ # ifdef CONFIG_XEN
+ #  define CONFIG_XEN_IS_POSSIBLE
+ # endif
+ #else
+ # define CONFIG_XEN_IS_POSSIBLE
 -#endif
--
- #endif /* _GDBSTUB_HELPERS_H_ */
++#endif /* COMPILING_PER_TARGET */
+ 
+ #ifdef CONFIG_XEN_IS_POSSIBLE
+ 
+diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
+index 7c6adc14f6..c44d23dbe7 100644
+--- a/target/arm/kvm-consts.h
++++ b/target/arm/kvm-consts.h
+@@ -14,13 +14,13 @@
+ #ifndef ARM_KVM_CONSTS_H
+ #define ARM_KVM_CONSTS_H
+ 
+-#ifdef NEED_CPU_H
++#ifdef COMPILING_PER_TARGET
+ #ifdef CONFIG_KVM
+ #include <linux/kvm.h>
+ #include <linux/psci.h>
+ #define MISMATCH_CHECK(X, Y) QEMU_BUILD_BUG_ON(X != Y)
+ #endif
+-#endif
++#endif /* COMPILING_PER_TARGET */
+ 
+ #ifndef MISMATCH_CHECK
+ #define MISMATCH_CHECK(X, Y) QEMU_BUILD_BUG_ON(0)
+diff --git a/scripts/analyze-inclusions b/scripts/analyze-inclusions
+index 45c821de32..b6280f25c8 100644
+--- a/scripts/analyze-inclusions
++++ b/scripts/analyze-inclusions
+@@ -92,7 +92,7 @@ echo trace/generated-tracers.h:
+ analyze -include ../include/qemu/osdep.h trace/generated-tracers.h
+ 
+ echo target/i386/cpu.h:
+-analyze -DNEED_CPU_H -I../target/i386 -Ii386-softmmu -include ../include/qemu/osdep.h ../target/i386/cpu.h
++analyze -DCOMPILING_PER_TARGET -I../target/i386 -Ii386-softmmu -include ../include/qemu/osdep.h ../target/i386/cpu.h
+ 
+-echo hw/hw.h + NEED_CPU_H:
+-analyze -DNEED_CPU_H -I../target/i386 -Ii386-softmmu -include ../include/qemu/osdep.h ../include/hw/hw.h
++echo hw/hw.h + COMPILING_PER_TARGET:
++analyze -DCOMPILING_PER_TARGET -I../target/i386 -Ii386-softmmu -include ../include/qemu/osdep.h ../include/hw/hw.h
 -- 
 2.41.0
 
