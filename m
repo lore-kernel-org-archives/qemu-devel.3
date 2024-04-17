@@ -4,75 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F64C001CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 12:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 908A6C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 12:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rx4Gz-00067b-Gn; Wed, 17 Apr 2024 08:20:21 -0400
+	id 1rx4Mx-0000Mp-QN; Wed, 17 Apr 2024 08:26:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rx4Gw-00066R-LL
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:20:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=26d5=LW=kaod.org=clg@ozlabs.org>)
+ id 1rx4Mg-0000ME-Tk; Wed, 17 Apr 2024 08:26:16 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rx4Gt-0000DS-I9
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 08:20:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713356413;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=rA3DEF4RaDau+mPX9J/9QhM0xk/Q7+LBRMlKwWpj92U=;
- b=KC0AsZDGK09XMQzzr+6rTBOKVNncNdCWrikFrZfaOywhN9sPf01rY9uFTjrblcWAnRVvfV
- rFF1ll25a79JEZSzEGZBYjQHrY48ERkZuhEG8uQISJVSi4LyeNcbjo8KseYRt+B90Zf9q4
- rAev5GABP7UonKftGZvLWSuW/91feas=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-m9hERg89PI-_7i60cnXKiQ-1; Wed,
- 17 Apr 2024 08:20:10 -0400
-X-MC-Unique: m9hERg89PI-_7i60cnXKiQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ (Exim 4.90_1) (envelope-from <SRS0=26d5=LW=kaod.org=clg@ozlabs.org>)
+ id 1rx4Mc-0001Df-A1; Wed, 17 Apr 2024 08:26:12 -0400
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VKKrX0Hc0z4wx5;
+ Wed, 17 Apr 2024 22:26:04 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E707E1C4C39B;
- Wed, 17 Apr 2024 12:20:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.142])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6A6542026964;
- Wed, 17 Apr 2024 12:20:08 +0000 (UTC)
-Date: Wed, 17 Apr 2024 13:20:02 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
- peter.maydell@linaro.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: Re: [PATCH for-9.0 v3 2/2] qtest/virtio-9p-test.c: remove
- g_test_slow() gate
-Message-ID: <Zh--cggRnFMswR4F@redhat.com>
-References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
- <a6b402b9-9f84-4d72-a631-09f04bb31450@tls.msk.ru>
- <6dc065e2-81d8-4562-84c0-8a697c58ef71@ventanamicro.com>
- <4211163.r9FPef4uHI@silver>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VKKrT2bnMz4wxf;
+ Wed, 17 Apr 2024 22:26:01 +1000 (AEST)
+Message-ID: <f8b689f4-50b0-4f96-bd64-21b9eda6862e@kaod.org>
+Date: Wed, 17 Apr 2024 14:25:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4211163.r9FPef4uHI@silver>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] ppc/pnv: Implement ADU access to LPC space
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+References: <20240417110215.808926-1-npiggin@gmail.com>
+ <20240417110215.808926-3-npiggin@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240417110215.808926-3-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=26d5=LW=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,80 +63,284 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 17, 2024 at 01:52:24PM +0200, Christian Schoenebeck wrote:
-> On Wednesday, April 17, 2024 1:16:02 AM CEST Daniel Henrique Barboza wrote:
-> > 
-> > On 4/16/24 16:54, Michael Tokarev wrote:
-> > > 27.03.2024 17:20, Daniel Henrique Barboza :
-> > >> Commit 558f5c42ef gated the local tests with g_test_slow() to skip them
-> > >> in 'make check'. The reported issue back then was this following CI
-> > >> problem:
-> > >>
-> > >> https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
-> > >>
-> > >> This problem ended up being fixed after it was detected with the
-> > >> recently added risc-v machine nodes [1]. virtio-9p-test.c is now
-> > >> creating and removing temporary dirs for each test run, instead of
-> > >> creating a single dir for the entire qos-test scope.
-> > >>
-> > >> We're now able to run these tests with 'make check' in the CI, so let's
-> > >> go ahead and re-enable them.
-> > >>
-> > >> This reverts commit 558f5c42efded3e0d0b20a90bce2a9a14580d824.
-> > >>
-> > >> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
-> > > 
-> > > This makes tests being unable to complete on a tmpfs.  It looks like
-> > > 9pfs tests needs another tweak here.
-> > > 
-> > > # starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-798502.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-798502.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M pc  -fsdev local,id=fsdev0,path='/tmp/q/master/qtest-9p-local-9LHRL2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
-> > > Received response 7 (RLERROR) instead of 73 (RMKDIR)
-> > > Rlerror has errno 95 (Operation not supported)
-> > > **
-> > > ERROR:../../../build/qemu/master/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
-> > > 
-> > > This is when I build it on /tmp/ which is a tmpfs.  When I build
-> > > it on a real filesystem, it works fine.
-> > > 
-> > > Apparently xattrs aren't supported on a tmpfs.
-> > 
-> > Hmmm not sure how to proceed here since I'm not a 9p expert by any means. I'll
-> > let Christian decide what to do.
-> > 
-> > If we can't figure it out we might need to re-introduce the gate again. Thanks,
+On 4/17/24 13:02, Nicholas Piggin wrote:
+> One of the functions of the ADU is indirect memory access engines that
+> send and receive data via ADU registers.
 > 
-> It's not that tmpfs exactly doesn't support xattrs. It supports the trusted.*
-> and security.* namespaces since 2011, so tmpfs was limited to those two. For
-> the 9p 'local' backend however we also need the user.* namespace which was
-> just added in Linux 6.6 last year (commit 2daf18a).
+> This implements the ADU LPC memory access functionality sufficiently
+> for IBM proprietary firmware to access the UART and print characters
+> to the serial port as it does on real hardware.
 > 
-> Unfortunately the respective kernel option TMPFS_XATTR is still off by default
-> (linux/fs/Kconfig).
+> This requires a linkage between adu and lpc, which allows adu to
+> perform memory access in the lpc space.
 > 
-> Back then, when we added that 'slow' gate for the 9p 'local' tests, things
-> were a bit different. They simply did not run in the gitlab pipeline (for
-> reasons described above). Now they do.
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   include/hw/ppc/pnv_adu.h |  7 ++++
+>   include/hw/ppc/pnv_lpc.h |  5 +++
+>   hw/ppc/pnv.c             |  4 ++
+>   hw/ppc/pnv_adu.c         | 91 ++++++++++++++++++++++++++++++++++++++++
+>   hw/ppc/pnv_lpc.c         | 12 +++---
+>   5 files changed, 113 insertions(+), 6 deletions(-)
 > 
-> So obviously it would make sense to preserve these tests for the gitlab
-> pipeline this time, e.g. by skipping these tests only if the underlying test
-> directory does not support *.user xattrs. I'm just not sure yet where exactly
-> such kind of *active* check would fit best into the glib test layout, as this
-> can be a bit tricky with glib
+> diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
+> index 9dc91857a9..b7b5d1bb21 100644
+> --- a/include/hw/ppc/pnv_adu.h
+> +++ b/include/hw/ppc/pnv_adu.h
+> @@ -10,6 +10,7 @@
+>   #define PPC_PNV_ADU_H
+>   
+>   #include "hw/ppc/pnv.h"
+> +#include "hw/ppc/pnv_lpc.h"
+>   #include "hw/qdev-core.h"
+>   
+>   #define TYPE_PNV_ADU "pnv-adu"
+> @@ -19,6 +20,12 @@ OBJECT_DECLARE_TYPE(PnvADU, PnvADUClass, PNV_ADU)
+>   struct PnvADU {
+>       DeviceState xd;
+>   
+> +    /* LPCMC (LPC Master Controller) access engine */
+> +    PnvLpcController *lpc;
+> +    uint64_t     lpc_base_reg;
+> +    uint64_t     lpc_cmd_reg;
+> +    uint64_t     lpc_data_reg;
 
-You should run a method which checks ability to use '.user' xattrs, and
-if it reports failure, then skip calling g_test_add. IOW, you can put
-the xattr test in the same place as the old g_test_slow() check was.
+I don't see reset values for these registers. Is that ok ?
 
+>       MemoryRegion xscom_regs;
+>   };
+>   
+> diff --git a/include/hw/ppc/pnv_lpc.h b/include/hw/ppc/pnv_lpc.h
+> index 5d22c45570..016e2998a8 100644
+> --- a/include/hw/ppc/pnv_lpc.h
+> +++ b/include/hw/ppc/pnv_lpc.h
+> @@ -94,6 +94,11 @@ struct PnvLpcClass {
+>       DeviceRealize parent_realize;
+>   };
+>   
+> +bool pnv_opb_lpc_read(PnvLpcController *lpc, uint32_t addr,
+> +                      uint8_t *data, int sz);
+> +bool pnv_opb_lpc_write(PnvLpcController *lpc, uint32_t addr,
+> +                       uint8_t *data, int sz);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+May be rename to pnv_lpc_opb_read/write ?
+
+>   ISABus *pnv_lpc_isa_create(PnvLpcController *lpc, bool use_cpld, Error **errp);
+>   int pnv_dt_lpc(PnvChip *chip, void *fdt, int root_offset,
+>                  uint64_t lpcm_addr, uint64_t lpcm_size);
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 5869aac89a..eb9dbc62dd 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1642,6 +1642,8 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       /* ADU */
+> +    object_property_set_link(OBJECT(&chip9->adu), "lpc", OBJECT(&chip9->lpc),
+> +                             &error_abort);
+
+I would add an assert on the lpc pointer in the ADU realize routine.
+
+Thanks,
+
+C.
+
+>       if (!qdev_realize(DEVICE(&chip9->adu), NULL, errp)) {
+>           return;
+>       }
+> @@ -1908,6 +1910,8 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       /* ADU */
+> +    object_property_set_link(OBJECT(&chip10->adu), "lpc", OBJECT(&chip10->lpc),
+> +                             &error_abort);
+>       if (!qdev_realize(DEVICE(&chip10->adu), NULL, errp)) {
+>           return;
+>       }
+> diff --git a/hw/ppc/pnv_adu.c b/hw/ppc/pnv_adu.c
+> index 5bd33a3841..d5570c23e2 100644
+> --- a/hw/ppc/pnv_adu.c
+> +++ b/hw/ppc/pnv_adu.c
+> @@ -21,9 +21,15 @@
+>   #include "hw/ppc/pnv.h"
+>   #include "hw/ppc/pnv_adu.h"
+>   #include "hw/ppc/pnv_chip.h"
+> +#include "hw/ppc/pnv_lpc.h"
+>   #include "hw/ppc/pnv_xscom.h"
+>   #include "trace.h"
+>   
+> +#define ADU_LPC_BASE_REG     0x40
+> +#define ADU_LPC_CMD_REG      0x41
+> +#define ADU_LPC_DATA_REG     0x42
+> +#define ADU_LPC_STATUS_REG   0x43
+> +
+>   static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
+>   {
+>       PnvADU *adu = PNV_ADU(opaque);
+> @@ -35,6 +41,24 @@ static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
+>       case 0x12:     /* log register */
+>       case 0x13:     /* error register */
+>           break;
+> +    case ADU_LPC_BASE_REG:
+> +        /*
+> +         * LPC Address Map in Pervasive ADU Workbook
+> +         *
+> +         * return PNV10_LPCM_BASE(chip) & PPC_BITMASK(8, 31);
+> +         * XXX: implement as class property, or get from LPC?
+> +         */
+> +        qemu_log_mask(LOG_UNIMP, "ADU: LPC_BASE_REG is not implemented\n");
+> +        break;
+> +    case ADU_LPC_CMD_REG:
+> +        val = adu->lpc_cmd_reg;
+> +        break;
+> +    case ADU_LPC_DATA_REG:
+> +        val = adu->lpc_data_reg;
+> +        break;
+> +    case ADU_LPC_STATUS_REG:
+> +        val = PPC_BIT(0); /* ack / done */
+> +        break;
+>   
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "ADU Unimplemented read register: Ox%08x\n",
+> @@ -46,6 +70,26 @@ static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
+>       return val;
+>   }
+>   
+> +static bool lpc_cmd_read(PnvADU *adu)
+> +{
+> +    return !!(adu->lpc_cmd_reg & PPC_BIT(0));
+> +}
+> +
+> +static bool lpc_cmd_write(PnvADU *adu)
+> +{
+> +    return !lpc_cmd_read(adu);
+> +}
+> +
+> +static uint32_t lpc_cmd_addr(PnvADU *adu)
+> +{
+> +    return (adu->lpc_cmd_reg & PPC_BITMASK(32, 63)) >> PPC_BIT_NR(63);
+> +}
+> +
+> +static uint32_t lpc_cmd_size(PnvADU *adu)
+> +{
+> +    return (adu->lpc_cmd_reg & PPC_BITMASK(5, 11)) >> PPC_BIT_NR(11);
+> +}
+> +
+>   static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
+>                                   unsigned width)
+>   {
+> @@ -60,6 +104,47 @@ static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
+>       case 0x13:     /* error register */
+>           break;
+>   
+> +    case ADU_LPC_BASE_REG:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "ADU: Changing LPC_BASE_REG is not implemented\n");
+> +        break;
+> +
+> +    case ADU_LPC_CMD_REG:
+> +        adu->lpc_cmd_reg = val;
+> +        if (lpc_cmd_read(adu)) {
+> +            uint32_t lpc_addr = lpc_cmd_addr(adu);
+> +            uint32_t lpc_size = lpc_cmd_size(adu);
+> +            uint64_t data = 0;
+> +
+> +            pnv_opb_lpc_read(adu->lpc, lpc_addr, (void *)&data, lpc_size);
+> +
+> +            /*
+> +             * ADU access is performed within 8-byte aligned sectors. Smaller
+> +             * access sizes don't get formatted to the least significant byte,
+> +             * but rather appear in the data reg at the same offset as the
+> +             * address in memory. This shifts them into that position.
+> +             */
+> +            adu->lpc_data_reg = be64_to_cpu(data) >> ((lpc_addr & 7) * 8);
+> +        }
+> +        break;
+> +
+> +    case ADU_LPC_DATA_REG:
+> +        adu->lpc_data_reg = val;
+> +        if (lpc_cmd_write(adu)) {
+> +            uint32_t lpc_addr = lpc_cmd_addr(adu);
+> +            uint32_t lpc_size = lpc_cmd_size(adu);
+> +            uint64_t data;
+> +
+> +            data = cpu_to_be64(val) >> ((lpc_addr & 7) * 8); /* See above */
+> +            pnv_opb_lpc_write(adu->lpc, lpc_addr, (void *)&data, lpc_size);
+> +        }
+> +        break;
+> +
+> +    case ADU_LPC_STATUS_REG:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "ADU: Changing LPC_STATUS_REG is not implemented\n");
+> +        break;
+> +
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "ADU Unimplemented write register: Ox%08x\n",
+>                                                                        offset);
+> @@ -86,12 +171,18 @@ static void pnv_adu_realize(DeviceState *dev, Error **errp)
+>                             PNV9_XSCOM_ADU_SIZE);
+>   }
+>   
+> +static Property pnv_adu_properties[] = {
+> +    DEFINE_PROP_LINK("lpc", PnvADU, lpc, TYPE_PNV_LPC, PnvLpcController *),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+>   static void pnv_adu_class_init(ObjectClass *klass, void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>   
+>       dc->realize = pnv_adu_realize;
+>       dc->desc = "PowerNV ADU";
+> +    device_class_set_props(dc, pnv_adu_properties);
+>       dc->user_creatable = false;
+>   }
+>   
+> diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+> index d692858bee..743bd66fc0 100644
+> --- a/hw/ppc/pnv_lpc.c
+> +++ b/hw/ppc/pnv_lpc.c
+> @@ -235,16 +235,16 @@ int pnv_dt_lpc(PnvChip *chip, void *fdt, int root_offset, uint64_t lpcm_addr,
+>    * TODO: rework to use address_space_stq() and address_space_ldq()
+>    * instead.
+>    */
+> -static bool opb_read(PnvLpcController *lpc, uint32_t addr, uint8_t *data,
+> -                     int sz)
+> +bool pnv_opb_lpc_read(PnvLpcController *lpc, uint32_t addr,
+> +                      uint8_t *data, int sz)
+>   {
+>       /* XXX Handle access size limits and FW read caching here */
+>       return !address_space_read(&lpc->opb_as, addr, MEMTXATTRS_UNSPECIFIED,
+>                                  data, sz);
+>   }
+>   
+> -static bool opb_write(PnvLpcController *lpc, uint32_t addr, uint8_t *data,
+> -                      int sz)
+> +bool pnv_opb_lpc_write(PnvLpcController *lpc, uint32_t addr,
+> +                       uint8_t *data, int sz)
+>   {
+>       /* XXX Handle access size limits here */
+>       return !address_space_write(&lpc->opb_as, addr, MEMTXATTRS_UNSPECIFIED,
+> @@ -276,7 +276,7 @@ static void pnv_lpc_do_eccb(PnvLpcController *lpc, uint64_t cmd)
+>       }
+>   
+>       if (cmd & ECCB_CTL_READ) {
+> -        success = opb_read(lpc, opb_addr, data, sz);
+> +        success = pnv_opb_lpc_read(lpc, opb_addr, data, sz);
+>           if (success) {
+>               lpc->eccb_stat_reg = ECCB_STAT_OP_DONE |
+>                       (((uint64_t)data[0]) << 24 |
+> @@ -293,7 +293,7 @@ static void pnv_lpc_do_eccb(PnvLpcController *lpc, uint64_t cmd)
+>           data[2] = lpc->eccb_data_reg >>  8;
+>           data[3] = lpc->eccb_data_reg;
+>   
+> -        success = opb_write(lpc, opb_addr, data, sz);
+> +        success = pnv_opb_lpc_write(lpc, opb_addr, data, sz);
+>           lpc->eccb_stat_reg = ECCB_STAT_OP_DONE;
+>       }
+>       /* XXX Which error bit (if any) to signal OPB error ? */
 
 
