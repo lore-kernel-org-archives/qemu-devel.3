@@ -4,52 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 772E3C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 18:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB44C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 19:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxA6s-00044w-Vz; Wed, 17 Apr 2024 14:34:19 -0400
+	id 1rxAfl-00039s-NF; Wed, 17 Apr 2024 15:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rxA6r-00044X-4n
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:34:17 -0400
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rxA6m-0004qw-Ol
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 14:34:16 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 12E9460B0D;
- Wed, 17 Apr 2024 21:34:06 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b58f::1:2c])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ZXJAD70If4Y0-82BNRhce; Wed, 17 Apr 2024 21:34:05 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1713378845;
- bh=znaRLD9fB/1boWuMdchXq2LTMHx2NjDn0dXBdwcCIbc=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=j9BKwLrCFCjKzmBZ7ftVqbV5TK5vgWELOLewkFWf8R0ptn/2Mbu15takTjiGGN61j
- GVlIUCgVxj22iyaThaKjmHirrFuLQhfC/0i+w21jttzaIeg//RaLzKt8sQkNVf/wqR
- NBwxhHB735+yjK+lPAao+eV+qdG5hYmYBty1Wrl0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: vsementsov@yandex-team.ru, pbonzini@redhat.com,
- richard.henderson@linaro.org, stefanha@redhat.com, groug@kaod.org
-Subject: [PATCH for-9.1] util/log: add cleanup function
-Date: Wed, 17 Apr 2024 21:33:33 +0300
-Message-Id: <20240417183333.39256-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rxAfg-00036E-Ng
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:10:17 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rxAfe-0003a8-HN
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 15:10:16 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1e2c725e234so9550205ad.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 12:10:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713381012; x=1713985812; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BggGVu6/f1Re++yYFbTbGyQ11OQ/IC8mulLj0TbbAtQ=;
+ b=sUliQe3//l+YajrQMUWqBGUZLwDHEFOjDPBBPl0S/j6x8VydvkuNcQVQOyS8XyVJBI
+ n+LzccbC2Yvz3mjopKuPNunLGiTMSuMzT+QiixlOOUCuVRn3g8261/XgX4CWnoD2tdHc
+ 05wRdIfVrFF8cY//R56gHkYUz32MmpLJMqFVhQO6vVk2LhWAjTaZB8QEKuQLYoD4b9et
+ E9O85iWsswPipIJG9oju9LQM6272BtPf3rJr6w0cE/wHNleX/TuSxDLL3ucAhxc1l+Mf
+ cVZbz2TUqy70lFywsGxcfifwEl02jrlofIARe+mU1jYcTmVLKJxvbJ0at25i1GlYPsxl
+ nDbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713381012; x=1713985812;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BggGVu6/f1Re++yYFbTbGyQ11OQ/IC8mulLj0TbbAtQ=;
+ b=j3kWDlgjDThRGUjQZ5PgPUf/+OqazbEiPkfX9GjHuA/fO7+i7OxEBw831YlEdxhgtg
+ s/G8Osi/ook7R0IeV3D2wUckZVdT5UNYSZLKxle4Zs95L6bRH0ucOvYHHOE2hDO/8fZO
+ JoAFcZEyZqJQwLjQAgtVAnvpDSjWmWDZia3ty6fYI3P8R7TvmV0eJEL7t/yaebdHc2VV
+ CWKWNfvm10Qe9nRYmny7THn1WlxlxaYxwvQt3oK1agcmnlo14o1imoV2d4Rf9ykNeeq2
+ JoGLNO0DoLe4wK9Wl9E8yzI9xB2ln1zHiMLsOSkYf9jJDw5hqJNUwTXTxTf7ez7L+P9+
+ VbSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWWW8e+iUSWF/nHeyRS+RyVzakPWV55mG+O+O/vHGnPynmumCoN33cyisNHqmhpYFyXheJgZdg1dfDdNnwQoVB//AlmCI=
+X-Gm-Message-State: AOJu0Yzt1I7P5SFtfhCT1/966+oJovA7PXx1/245D7ywoqMaWa+yWZ9n
+ tsg/1hC6fZjKWNCHP5y4zBLDUsW4/pB87JKKfkNk1AF2yiP7HiokOl2Jhib42fQ=
+X-Google-Smtp-Source: AGHT+IE6RsmUEfbCu1MB4ErXmsS2Okbia9Z1u9A0hpYAYk5d37SW1X4SZr0S/FCV+d/9thixujBbRg==
+X-Received: by 2002:a17:903:120e:b0:1e5:5760:a6c1 with SMTP id
+ l14-20020a170903120e00b001e55760a6c1mr14768plh.21.1713381012341; 
+ Wed, 17 Apr 2024 12:10:12 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
+ by smtp.gmail.com with ESMTPSA id
+ be10-20020a170902aa0a00b001e5df38994dsm8890589plb.248.2024.04.17.12.10.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Apr 2024 12:10:11 -0700 (PDT)
+Message-ID: <613adbd5-9454-4f0a-93b2-5a3d7d85287a@linaro.org>
+Date: Wed, 17 Apr 2024 12:10:09 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/21] gdbstub: Include missing 'hw/core/cpu.h' header
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>
+References: <20240417182806.69446-1-philmd@linaro.org>
+ <20240417182806.69446-9-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240417182806.69446-9-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,37 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We leak global_filename, and do not close global_file. Let's fix that.
+On 4/17/24 11:27, Philippe Mathieu-Daudé wrote:
+> Functions such gdb_get_cpu_pid() dereference CPUState so
+> require the structure declaration from "hw/core/cpu.h":
+> 
+>    static uint32_t gdb_get_cpu_pid(CPUState *cpu)
+>    {
+>      ...
+>      return cpu->cluster_index + 1;
+>    }
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Reviewed-by: Warner Losh<imp@bsdimp.com>
+> Message-Id:<20231211212003.21686-15-philmd@linaro.org>
+> ---
+>   gdbstub/gdbstub.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Interesting: seems, nobody is maintainer of util/log.c
-
- util/log.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/util/log.c b/util/log.c
-index d36c98da0b..30de209210 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -85,6 +85,15 @@ static void qemu_log_thread_cleanup(Notifier *n, void *unused)
-     }
- }
- 
-+static void __attribute__((__destructor__)) cleanup(void)
-+{
-+    g_free(global_filename);
-+    if (global_file && global_file != stderr) {
-+        fclose(global_file);
-+        global_file = NULL;
-+    }
-+}
-+
- /* Lock/unlock output. */
- 
- static FILE *qemu_log_trylock_with_err(Error **errp)
--- 
-2.34.1
-
+r~
 
