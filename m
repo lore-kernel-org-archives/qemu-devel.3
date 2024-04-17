@@ -4,83 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8EB7C4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 21:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A44C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 22:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxCnf-0002dS-6B; Wed, 17 Apr 2024 17:26:39 -0400
+	id 1rxDXq-0001Zp-1h; Wed, 17 Apr 2024 18:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rxCnd-0002cy-Ip
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 17:26:37 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rxCnb-0005s8-OJ
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 17:26:37 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1e2c725e234so10446165ad.1
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 14:26:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713389194; x=1713993994; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=POm+hN+GZP65g9vRln1Kz3H/USW28OR3gDj/pS/CQso=;
- b=Pv3L0d9UmIWUJD5GgseErIKqYuvZtamUCgQRfGp4PbjgDQP/ZmUIlCGSiEWmZx7jyI
- dtvWub4patffAZirQPPOqlIJXZdf8NTssSNaaJWuglDbN5Obw5CQ7+zjdbyGF0INCLGL
- cmAmfpdqRODW9GO2WH6zDs8HhgXeAQvihIe0ijkWvbsBXr2tbYOIEY7mGvc6AWCvpfAc
- GdUR1IxiLAx65NQyPgEBtYhjhW+RuXH10Qy5x8FlFLmB+rKySsdz2hJsYxeCyUvJixDz
- eG05nz8Wi/krHEPtx0N4oIkgAwpQohn2+rjb7cjIcsEX0uy6HfkNYgCeAWAzA3+xS1as
- pG3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713389194; x=1713993994;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=POm+hN+GZP65g9vRln1Kz3H/USW28OR3gDj/pS/CQso=;
- b=c8hE9ypwU8haVmQqmsu5Monap/Hcj4bJGkf76LxZDCYUeImPK8eeZPbR9XR+daKzS7
- o5JvmKVJPvOiCLCZc0wv2UyGvxuostklOx5NM0g8sMtOU6aSjJnzFkiNYlcJJpGCJL3R
- NLIKtSJFuofcRfdk31iADVE1Xxf4iZUz0maMEAqXDqHdrcLdZI1eIV5IfCebftDctAUg
- 5YRs76rM/RwtieU4DYfT5r7+UlKgzPGCSs88Wznj0SQLvND4A6AiEC5Lnf9V3bv8qudI
- O8xtlWan0ezgwsq0KyRxdFINkIZ6BDlCX5WpIn8wmUKWOiiB2OJCbfblL0BNCmj0TB5g
- 3jvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGdB5UwS3454RgLaQROrTXm/NeNZopPWS5mKHN8AL+rGCshYPb7GtRi5HuNjmAG1nDlm0prwRwFX9pK3fxTBOQexm9xjE=
-X-Gm-Message-State: AOJu0Yz9Snk0VnblMQ4qLz2V1bf3V83s10CSclrCHIFuK0luFcxp1kWg
- yahZBKhfAfGtn5R5DCZw9/7YFWQyvmxcoB4nn2ON7QhrLJnQWao/o0qg71LwK8E=
-X-Google-Smtp-Source: AGHT+IFeda13EeLTyo9KJ6DnjOwok/eRftCXa89xJjV1jB65JeaiYS65rJiR/vvo4WW00Aalbk0l9w==
-X-Received: by 2002:a17:902:d507:b0:1e4:6253:2f15 with SMTP id
- b7-20020a170902d50700b001e462532f15mr370299plg.16.1713389194051; 
- Wed, 17 Apr 2024 14:26:34 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-72-5.tukw.qwest.net. [174.21.72.5])
- by smtp.gmail.com with ESMTPSA id
- f21-20020a170902ab9500b001e5119c1923sm96932plr.71.2024.04.17.14.26.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Apr 2024 14:26:33 -0700 (PDT)
-Message-ID: <1144287d-da14-40aa-bb43-05e27f47340c@linaro.org>
-Date: Wed, 17 Apr 2024 14:26:31 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rxDXn-0001ZP-F5
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 18:14:19 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rxDXj-0005SI-8r
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 18:14:19 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 8DFCA60A9B;
+ Thu, 18 Apr 2024 01:14:07 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b58f::1:2c])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id XDN2JB0IW0U0-kbk7cGeA; Thu, 18 Apr 2024 01:14:06 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1713392046;
+ bh=FQjW2JABBoz6njABOJV/+vzRR1pd5nmxRBXMhpsKZi8=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=VVequCZ3Hz+dTQTtgznSl2KgNEK56JrXSI1FdEDQIVEK7HJzBqAdZxGebDT87+bno
+ 0tpHomSXS9iDuW6c+RWEheK3bqCqH2ItxdCvwvOG+KbiwcY/B3RILc+CX52cAUIwu6
+ rdiXLyMdDUsL/vu6026VDzvO2vpZvlk/7XNBQWgY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: peterx@redhat.com,
+	farosas@suse.de
+Cc: vsementsov@yandex-team.ru, yc-core@yandex-team.ru, thuth@redhat.com,
+ lvivier@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org,
+ pkrempa@redhat.com
+Subject: [PATCH] migration: do not exit on incoming failure
+Date: Thu, 18 Apr 2024 01:13:29 +0300
+Message-Id: <20240417221329.248803-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Add 'info pg' command to monitor
-To: "Dr. David Alan Gilbert" <dave@treblig.org>, Don Porter <porter@cs.unc.edu>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- pbonzini@redhat.com
-References: <20240415160818.2316599-1-porter@cs.unc.edu>
- <CAFEAcA88myOeQwZ212q9R4EHBPpJbQ1qZYjuz6SS=HZbqS+NCQ@mail.gmail.com>
- <fadb288a-4c44-42c9-b706-f5595d97f952@cs.unc.edu>
- <CAFEAcA9Fe8TerNSrg_AfmpFZNL_4B9WV0OccFdLakJhtCN+m4A@mail.gmail.com>
- <bff71578-42ad-4af0-9ba6-e0962dd73710@cs.unc.edu>
- <ZiA5JZ5jzsjrv9Bu@gallifrey>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ZiA5JZ5jzsjrv9Bu@gallifrey>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,7 +63,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,28 +74,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/24 14:03, Dr. David Alan Gilbert wrote:
->> In looking at x86 code, I see the following places where there is page table
->> walking code to
->> potentially merge:
->>
->> * target/i386/monitor.c - existing info commands
->>
->> * target/i386/helper.c - get_phys_page_attrs_debug
->>
->> * target/i386/arch_memory_mapping.c - implements get_memory_mapping
->>
->> * tcg/sysemu/excp_helper.c: implements mmu_translate() and
->> get_physical_address()
-> 
-> One thing to keep in mind (although I don't know the x86 code) is that
-> you want the monitor command not to change any state, nor to fail if
-> there's a particularly screwy page table; so no flagging exceptions
-> or flagging accessed bits or changing the state of the tcg.
+We do set MIGRATION_FAILED state, but don't give a chance to
+orchestrator to query migration state and get the error.
 
-Indeed, the only one of the 4 that *is* allowed to change state is excp_helper.c.
+Let's report an error through QAPI like we do on outgoing migration.
 
+migration-test is updated correspondingly.
 
-r~
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+
+Doubt: is exiting on failure a contract? Will this commit break
+something in Libvirt? Finally, could we just change the logic, or I need
+and additional migration-parameter for new behavior?
+
+ migration/migration.c           | 22 +++++++---------------
+ tests/qtest/migration-helpers.c | 13 ++++++++++---
+ tests/qtest/migration-helpers.h |  3 ++-
+ tests/qtest/migration-test.c    | 14 +++++++-------
+ 4 files changed, 26 insertions(+), 26 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index 86bf76e925..3c203e767d 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -738,11 +738,12 @@ process_incoming_migration_co(void *opaque)
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     PostcopyState ps;
+     int ret;
++    Error *local_err = NULL;
+ 
+     assert(mis->from_src_file);
+ 
+     if (compress_threads_load_setup(mis->from_src_file)) {
+-        error_report("Failed to setup decompress threads");
++        error_setg(&local_err, "Failed to setup decompress threads");
+         goto fail;
+     }
+ 
+@@ -779,32 +780,23 @@ process_incoming_migration_co(void *opaque)
+     }
+ 
+     if (ret < 0) {
+-        MigrationState *s = migrate_get_current();
+-
+-        if (migrate_has_error(s)) {
+-            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+-                error_report_err(s->error);
+-            }
+-        }
+-        error_report("load of migration failed: %s", strerror(-ret));
++        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
+         goto fail;
+     }
+ 
+     if (colo_incoming_co() < 0) {
++        error_setg(&local_err, "colo incoming failed");
+         goto fail;
+     }
+ 
+     migration_bh_schedule(process_incoming_migration_bh, mis);
+     return;
+ fail:
++    migrate_set_error(migrate_get_current(), local_err);
++    error_report_err(local_err);
+     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+                       MIGRATION_STATUS_FAILED);
+-    qemu_fclose(mis->from_src_file);
+-
+-    multifd_recv_cleanup();
+-    compress_threads_load_cleanup();
+-
+-    exit(EXIT_FAILURE);
++    migration_incoming_state_destroy();
+ }
+ 
+ /**
+diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+index e451dbdbed..91c13bd566 100644
+--- a/tests/qtest/migration-helpers.c
++++ b/tests/qtest/migration-helpers.c
+@@ -211,7 +211,8 @@ void wait_for_migration_complete(QTestState *who)
+     wait_for_migration_status(who, "completed", NULL);
+ }
+ 
+-void wait_for_migration_fail(QTestState *from, bool allow_active)
++void wait_for_migration_fail(QTestState *from, bool allow_active,
++                             bool is_incoming)
+ {
+     g_test_timer_start();
+     QDict *rsp_return;
+@@ -236,8 +237,14 @@ void wait_for_migration_fail(QTestState *from, bool allow_active)
+     /* Is the machine currently running? */
+     rsp_return = qtest_qmp_assert_success_ref(from,
+                                               "{ 'execute': 'query-status' }");
+-    g_assert(qdict_haskey(rsp_return, "running"));
+-    g_assert(qdict_get_bool(rsp_return, "running"));
++    if (is_incoming) {
++        if (qdict_haskey(rsp_return, "running")) {
++            g_assert(!qdict_get_bool(rsp_return, "running"));
++        }
++    } else {
++        g_assert(qdict_haskey(rsp_return, "running"));
++        g_assert(qdict_get_bool(rsp_return, "running"));
++    }
+     qobject_unref(rsp_return);
+ }
+ 
+diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+index 3bf7ded1b9..7bd07059ae 100644
+--- a/tests/qtest/migration-helpers.h
++++ b/tests/qtest/migration-helpers.h
+@@ -46,7 +46,8 @@ void wait_for_migration_status(QTestState *who,
+ 
+ void wait_for_migration_complete(QTestState *who);
+ 
+-void wait_for_migration_fail(QTestState *from, bool allow_active);
++void wait_for_migration_fail(QTestState *from, bool allow_active,
++                             bool is_incoming);
+ 
+ char *find_common_machine_version(const char *mtype, const char *var1,
+                                   const char *var2);
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 1d2cee87ea..e00b755f05 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1670,7 +1670,7 @@ static void test_baddest(void)
+         return;
+     }
+     migrate_qmp(from, "tcp:127.0.0.1:0", "{}");
+-    wait_for_migration_fail(from, false);
++    wait_for_migration_fail(from, false, false);
+     test_migrate_end(from, to, false);
+ }
+ 
+@@ -1781,10 +1781,10 @@ static void test_precopy_common(MigrateCommon *args)
+ 
+     if (args->result != MIG_TEST_SUCCEED) {
+         bool allow_active = args->result == MIG_TEST_FAIL;
+-        wait_for_migration_fail(from, allow_active);
++        wait_for_migration_fail(from, allow_active, false);
+ 
+         if (args->result == MIG_TEST_FAIL_DEST_QUIT_ERR) {
+-            qtest_set_expected_status(to, EXIT_FAILURE);
++            wait_for_migration_fail(to, true, true);
+         }
+     } else {
+         if (args->live) {
+@@ -2571,8 +2571,8 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+     migrate_qmp(from, uri, "{}");
+ 
+     if (should_fail) {
+-        qtest_set_expected_status(to, EXIT_FAILURE);
+-        wait_for_migration_fail(from, true);
++        wait_for_migration_fail(to, true, true);
++        wait_for_migration_fail(from, true, false);
+     } else {
+         wait_for_migration_complete(from);
+     }
+@@ -3047,8 +3047,8 @@ static void test_multifd_tcp_cancel(void)
+     migrate_cancel(from);
+ 
+     /* Make sure QEMU process "to" exited */
+-    qtest_set_expected_status(to, EXIT_FAILURE);
+-    qtest_wait_qemu(to);
++    wait_for_migration_fail(to, true, true);
++    qtest_quit(to);
+ 
+     args = (MigrateStart){
+         .only_target = true,
+-- 
+2.34.1
 
 
