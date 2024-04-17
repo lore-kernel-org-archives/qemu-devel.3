@@ -4,69 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F4BC4345F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 04:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F603C4345F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Apr 2024 04:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rwwgd-0007Bp-JS; Wed, 17 Apr 2024 00:14:19 -0400
+	id 1rwwks-0001dW-2J; Wed, 17 Apr 2024 00:18:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rwwgb-0007BG-3d
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 00:14:17 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rwwkq-0001dN-SB
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 00:18:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rwwgX-0006Id-If
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 00:14:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713327253; x=1744863253;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=lf5QU+T0VBcLTXm3q+nXt6Uj7SN0RHq62HtS/fuWF5s=;
- b=BnfxlFo4L6l/TSohynFsxWkiJiL/FQ4ogFqtMIiU4UfO+0X9lZDVdT40
- rK/HMlM5IK+1iqYLsZtpZCsvbC0HrAzeZcdXjlco8L/BQ6Qy7VFoOH+bz
- UxqCXTNsTs8JhwBd+C3jd715dsCS/LTHM8jADUzqakBCdbe/oRvA5CIxc
- km4Mn3B9Ly3lUKaIkK8xkN8xOOLK6HBHIQVmfiCtQqZfJ8pGDXK5soPwR
- TSnknpKRK39y3PGbokN1HlqqOksyIexuh4xKJAEBFz8Bch0/OYhKeWyaK
- J1sFIeB4yPmJtj8Zuq3ZYbcAoAN/O7Oed1mt4RCVfKTZhdDRxRbXw+CsG Q==;
-X-CSE-ConnectionGUID: 5xGGflw7RMyDQSCNznF+4A==
-X-CSE-MsgGUID: xi/MhnJtS/KugF1TZ4yc2g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="12582849"
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; d="scan'208";a="12582849"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Apr 2024 21:14:06 -0700
-X-CSE-ConnectionGUID: 4zLZiSgSRWyzUBkD80Z6mg==
-X-CSE-MsgGUID: NdNequlcRHyR7O81bbP5WQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; d="scan'208";a="22491571"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa009.jf.intel.com with ESMTP; 16 Apr 2024 21:14:06 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com
-Subject: [PATCH v6 1/3] ui/console: Introduce dpy_gl_qemu_dmabuf_get_..()
- helpers
-Date: Tue, 16 Apr 2024 21:09:52 -0700
-Message-Id: <20240417040954.55641-2-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240417040954.55641-1-dongwon.kim@intel.com>
-References: <20240417040954.55641-1-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rwwko-0006xd-Fq
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 00:18:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713327517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UYMq2u5CVajln3iU/tO1HQiUX1L8QQoXAuxu8HlFvP4=;
+ b=PZZOfHzKd3RP9vcbPmqkXz5S8HeMR6qTSmYJI7HNM8hI4MHdsqE0OgAy7CQdKzVpmTx2A/
+ LBnGNZo3PM6hDwUpjMqQtWEDzAokHdTcEmiIW41dZWZm36vsOMWfkcCJT6Jmff1FiY9rHw
+ beQ+eijMRNkJVesA92kRHD1WcvI8+T8=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-179-HG4a3qF2M6qYNM_qmUEqPA-1; Wed, 17 Apr 2024 00:18:35 -0400
+X-MC-Unique: HG4a3qF2M6qYNM_qmUEqPA-1
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-6ed5a1724b2so2399105b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Apr 2024 21:18:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713327514; x=1713932314;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UYMq2u5CVajln3iU/tO1HQiUX1L8QQoXAuxu8HlFvP4=;
+ b=UAobsuyi4nIgMtp0rraA/8fGQe8Mj58QGHIbKkJFSGW8GRbTLzTb99yk5hH9szLxvx
+ 5pzpgvRW14kgH55bW2DDskcEgzUPMLOIbmvhtouf5Fw0gyp51s1tcTr8whAwHKjuefcO
+ 7SyKfCM/P+YufR4agsVyZqTYwZIvK1YvjyLf5IcQSI7G8Thgb13Ca6rzUVsBxfe/Gscp
+ 7DG0Pk4X/CwIpak0Z0zdFKJ0lyqPSKjQyyrUdtYXg05EQ7n5UWp3Nmj/6QH/uW0E1S9x
+ aAqpeH/e3E3VcN8HPe6uf6fIypbjM05PBKrVWYCMCS3Lj/hik/SBCzqaftiApJzBhrWl
+ ZbNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwBZYy8lI3RoqKKgvFnk9++5EB0UIjlkKGjNwLCp/OhBM4Uqd/8bnCvnPynqqbn2GzWaCfmN7E4Lbl3yBcjfyZcRhFuQc=
+X-Gm-Message-State: AOJu0YyZ/6D7lZiRtku1cmeR+Z723df5IhkM+Svyyhs9zwJN8cBLyuSw
+ 1E6TsDWFVV0SY0UD1tENjFOkj+DzN9VATtefvrPT/bXdw8qL+RmfUfZRSWZDS3Pzi71Fkk4bbBG
+ 9poBQjsGnBqSl+HVGJ1IYBIzpJwln8rWJHRQ4VCTguLcrlViPW4Gkk30n5JYLlTHdry2m6c+c06
+ nB+0j3SAUEv9pEt/9eO3LW2v0FzbE=
+X-Received: by 2002:a05:6a21:3985:b0:1a9:a32d:17cc with SMTP id
+ ad5-20020a056a21398500b001a9a32d17ccmr16838903pzc.18.1713327514093; 
+ Tue, 16 Apr 2024 21:18:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEC6vMynwZ4Snah7LIm2y8DKVzPhi9XeVBikhOycHn8iFjNia0OL+K/IeIBW/uYC5ubq6YexQqbHQE7oQC9/3M=
+X-Received: by 2002:a05:6a21:3985:b0:1a9:a32d:17cc with SMTP id
+ ad5-20020a056a21398500b001a9a32d17ccmr16838886pzc.18.1713327513751; Tue, 16
+ Apr 2024 21:18:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.12;
- envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
+References: <20240403-rss-v9-0-c6d87e69d38b@daynix.com>
+ <20240403-rss-v9-13-c6d87e69d38b@daynix.com>
+ <CAOEp5OeXLFTUsH5egdMfsEPACM0O2XODOeYbpggD0T2Zv6ceYQ@mail.gmail.com>
+ <CACGkMEuG5mDzU-UwHvrZ3TWvZ9rpDWN-Vuw0GPE+_9nEkr6jdw@mail.gmail.com>
+ <CAOEp5OcsP+-wtbJcinAXE=We_52HwmpHxX93FUsAFrjVNPge_Q@mail.gmail.com>
+ <CACGkMEuT7Dw4p-gKTefrw4LwmXv2cKde_gKxVb0TF7PHA+63MA@mail.gmail.com>
+ <CAOEp5OdNGmCbmrqPCW4Pp3boOVxF+JGMPaVM3utjV0gC0emY2g@mail.gmail.com>
+In-Reply-To: <CAOEp5OdNGmCbmrqPCW4Pp3boOVxF+JGMPaVM3utjV0gC0emY2g@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 17 Apr 2024 12:18:21 +0800
+Message-ID: <CACGkMEvNVCVsQVM_meeW9eAZwuUvzX8Jir3TcBS2t_uk9_O+vQ@mail.gmail.com>
+Subject: Re: [PATCH v9 13/20] virtio-net: Return an error when vhost cannot
+ enable RSS
+To: Yuri Benditovich <yuri.benditovich@daynix.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Andrew Melnychenko <andrew@daynix.com>, qemu-devel@nongnu.org, 
+ Jonathon Jongsma <jjongsma@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.844,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,881 +112,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+On Tue, Apr 16, 2024 at 5:51=E2=80=AFPM Yuri Benditovich
+<yuri.benditovich@daynix.com> wrote:
+>
+> On Tue, Apr 16, 2024 at 10:14=E2=80=AFAM Jason Wang <jasowang@redhat.com>=
+ wrote:
+> >
+> > On Tue, Apr 16, 2024 at 1:43=E2=80=AFPM Yuri Benditovich
+> > <yuri.benditovich@daynix.com> wrote:
+> > >
+> > > On Tue, Apr 16, 2024 at 7:00=E2=80=AFAM Jason Wang <jasowang@redhat.c=
+om> wrote:
+> > > >
+> > > > On Mon, Apr 15, 2024 at 10:05=E2=80=AFPM Yuri Benditovich
+> > > > <yuri.benditovich@daynix.com> wrote:
+> > > > >
+> > > > > On Wed, Apr 3, 2024 at 2:11=E2=80=AFPM Akihiko Odaki <akihiko.oda=
+ki@daynix.com> wrote:
+> > > > > >
+> > > > > > vhost requires eBPF for RSS. When eBPF is not available, virtio=
+-net
+> > > > > > implicitly disables RSS even if the user explicitly requests it=
+. Return
+> > > > > > an error instead of implicitly disabling RSS if RSS is requeste=
+d but not
+> > > > > > available.
+> > > > > >
+> > > > > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > > > > ---
+> > > > > >  hw/net/virtio-net.c | 97 ++++++++++++++++++++++++++-----------=
+----------------
+> > > > > >  1 file changed, 48 insertions(+), 49 deletions(-)
+> > > > > >
+> > > > > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > > > > > index 61b49e335dea..3d53eba88cfc 100644
+> > > > > > --- a/hw/net/virtio-net.c
+> > > > > > +++ b/hw/net/virtio-net.c
+> > > > > > @@ -793,9 +793,6 @@ static uint64_t virtio_net_get_features(Vir=
+tIODevice *vdev, uint64_t features,
+> > > > > >          return features;
+> > > > > >      }
+> > > > > >
+> > > > > > -    if (!ebpf_rss_is_loaded(&n->ebpf_rss)) {
+> > > > > > -        virtio_clear_feature(&features, VIRTIO_NET_F_RSS);
+> > > > > > -    }
+> > > > > >      features =3D vhost_net_get_features(get_vhost_net(nc->peer=
+), features);
+> > > > > >      vdev->backend_features =3D features;
+> > > > > >
+> > > > > > @@ -3591,6 +3588,50 @@ static bool failover_hide_primary_device=
+(DeviceListener *listener,
+> > > > > >      return qatomic_read(&n->failover_primary_hidden);
+> > > > > >  }
+> > > > > >
+> > > > > > +static void virtio_net_device_unrealize(DeviceState *dev)
+> > > > > > +{
+> > > > > > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > > > > > +    VirtIONet *n =3D VIRTIO_NET(dev);
+> > > > > > +    int i, max_queue_pairs;
+> > > > > > +
+> > > > > > +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)=
+) {
+> > > > > > +        virtio_net_unload_ebpf(n);
+> > > > > > +    }
+> > > > > > +
+> > > > > > +    /* This will stop vhost backend if appropriate. */
+> > > > > > +    virtio_net_set_status(vdev, 0);
+> > > > > > +
+> > > > > > +    g_free(n->netclient_name);
+> > > > > > +    n->netclient_name =3D NULL;
+> > > > > > +    g_free(n->netclient_type);
+> > > > > > +    n->netclient_type =3D NULL;
+> > > > > > +
+> > > > > > +    g_free(n->mac_table.macs);
+> > > > > > +    g_free(n->vlans);
+> > > > > > +
+> > > > > > +    if (n->failover) {
+> > > > > > +        qobject_unref(n->primary_opts);
+> > > > > > +        device_listener_unregister(&n->primary_listener);
+> > > > > > +        migration_remove_notifier(&n->migration_state);
+> > > > > > +    } else {
+> > > > > > +        assert(n->primary_opts =3D=3D NULL);
+> > > > > > +    }
+> > > > > > +
+> > > > > > +    max_queue_pairs =3D n->multiqueue ? n->max_queue_pairs : 1=
+;
+> > > > > > +    for (i =3D 0; i < max_queue_pairs; i++) {
+> > > > > > +        virtio_net_del_queue(n, i);
+> > > > > > +    }
+> > > > > > +    /* delete also control vq */
+> > > > > > +    virtio_del_queue(vdev, max_queue_pairs * 2);
+> > > > > > +    qemu_announce_timer_del(&n->announce_timer, false);
+> > > > > > +    g_free(n->vqs);
+> > > > > > +    qemu_del_nic(n->nic);
+> > > > > > +    virtio_net_rsc_cleanup(n);
+> > > > > > +    g_free(n->rss_data.indirections_table);
+> > > > > > +    net_rx_pkt_uninit(n->rx_pkt);
+> > > > > > +    virtio_cleanup(vdev);
+> > > > > > +}
+> > > > > > +
+> > > > > >  static void virtio_net_device_realize(DeviceState *dev, Error =
+**errp)
+> > > > > >  {
+> > > > > >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > > > > > @@ -3760,53 +3801,11 @@ static void virtio_net_device_realize(D=
+eviceState *dev, Error **errp)
+> > > > > >
+> > > > > >      net_rx_pkt_init(&n->rx_pkt);
+> > > > > >
+> > > > > > -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)=
+) {
+> > > > > > -        virtio_net_load_ebpf(n);
+> > > > > > -    }
+> > > > > > -}
+> > > > > > -
+> > > > > > -static void virtio_net_device_unrealize(DeviceState *dev)
+> > > > > > -{
+> > > > > > -    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > > > > > -    VirtIONet *n =3D VIRTIO_NET(dev);
+> > > > > > -    int i, max_queue_pairs;
+> > > > > > -
+> > > > > > -    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)=
+) {
+> > > > > > -        virtio_net_unload_ebpf(n);
+> > > > > > +    if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)=
+ &&
+> > > > > > +        !virtio_net_load_ebpf(n) && get_vhost_net(nc->peer)) {
+> > > > > > +        virtio_net_device_unrealize(dev);
+> > > > > > +        error_setg(errp, "Can't load eBPF RSS for vhost");
+> > > > > >      }
+> > > > >
+> > > > > As I already mentioned, I think this is an extremely bad idea to
+> > > > > fail to run qemu due to such a reason as .absence of one feature.
+> > > > > What I suggest is:
+> > > > > 1. Redefine rss as tri-state (off|auto|on)
+> > > > > 2. Fail to run only if rss is on and not available via ebpf
+> > > > > 3. On auto - silently drop it
+> > > >
+> > > > "Auto" might be promatic for migration compatibility which is hard =
+to
+> > > > be used by management layers like libvirt. The reason is that there=
+'s
+> > > > no way for libvirt to know if it is supported by device or not.
+> > >
+> > > In terms of migration every feature that somehow depends on the kerne=
+l
+> > > is problematic, not only RSS.
+> >
+> > True, but if we can avoid more, it would still be better.
+> >
+> > > Last time we added the USO feature - is
+> > > it different?
+> >
+> > I may miss something but we never define tristate for USO?
+> >
+> >     DEFINE_PROP_BIT64("guest_uso4", VirtIONet, host_features,
+> >                       VIRTIO_NET_F_GUEST_USO4, true),
+> >     DEFINE_PROP_BIT64("guest_uso6", VirtIONet, host_features,
+> >                       VIRTIO_NET_F_GUEST_USO6, true),
+> >     DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
+> >                       VIRTIO_NET_F_HOST_USO, true),
+> >
+> When I've added USO feature I followed the existing approach of virtio-ne=
+t.
+> On get_features - check what was "requested" including those that were "o=
+n"
+> by default and drop those that aren't supported (vhost by itself also
+> can drop some of features).
+>
+> Still if we have on source machine kernel that supports USO (visible
+> on TAP flags)
+> and on dest we have older kernel without such support, the migration
+> will probably fail.
 
-This commit introduces dpy_gl_qemu_dmabuf_get_... helpers to extract
-specific fields from the QemuDmaBuf struct. It also updates all instances
-where fields within the QemuDmaBuf struct are directly accessed, replacing
-them with calls to these new helper functions.
+I may miss something, do we have something USO specific to migrate? If
+not, the migration won't fail. And even if migration fails, it's still
+not good.
 
-v6: fix typos in helper names in ui/spice-display.c
+Kernel intends to remove UFO support from 2016, but it breaks the
+migration so there's no other choice by introducing UFO (via
+emulation) back.
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- include/ui/console.h            |  17 +++++
- hw/display/vhost-user-gpu.c     |   6 +-
- hw/display/virtio-gpu-udmabuf.c |   7 +-
- hw/vfio/display.c               |  15 +++--
- ui/console.c                    | 116 +++++++++++++++++++++++++++++++-
- ui/dbus-console.c               |   9 ++-
- ui/dbus-listener.c              |  43 +++++++-----
- ui/egl-headless.c               |  23 +++++--
- ui/egl-helpers.c                |  47 +++++++------
- ui/gtk-egl.c                    |  48 ++++++++-----
- ui/gtk-gl-area.c                |  37 ++++++----
- ui/gtk.c                        |   6 +-
- ui/spice-display.c              |  50 ++++++++------
- 13 files changed, 316 insertions(+), 108 deletions(-)
+>
+> The available solution today is to reduce machine generation in
+> libvirt profile (as an example),
+> aligning the generation over all the machines that are expected to
+> participate in migration.
+>
+> IMO we should think on some _generic_ solution, for example feature
+> negotiation between
+> machines before the migration - if the driver receives notification
+> from the device it
+> can negotiate the change of hardware features to OS (at least for most of=
+ them).
+> Not trivial, but IMO better than just failing the execution.
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 0bc7a00ac0..6292943a82 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -358,6 +358,23 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
-                           bool have_hot, uint32_t hot_x, uint32_t hot_y);
- void dpy_gl_cursor_position(QemuConsole *con,
-                             uint32_t pos_x, uint32_t pos_y);
-+
-+int32_t dpy_gl_qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf);
-+uint64_t dpy_gl_qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_x(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
-+bool dpy_gl_qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
-+void *dpy_gl_qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
-+int32_t dpy_gl_qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
-+bool dpy_gl_qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
-+bool dpy_gl_qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
- void dpy_gl_release_dmabuf(QemuConsole *con,
-                            QemuDmaBuf *dmabuf);
- void dpy_gl_update(QemuConsole *con,
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 709c8a02a1..87dcfbca10 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -249,6 +249,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-     case VHOST_USER_GPU_DMABUF_SCANOUT: {
-         VhostUserGpuDMABUFScanout *m = &msg->payload.dmabuf_scanout;
-         int fd = qemu_chr_fe_get_msgfd(&g->vhost_chr);
-+        int old_fd;
-         QemuDmaBuf *dmabuf;
- 
-         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
-@@ -262,8 +263,9 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         g->parent_obj.enable = 1;
-         con = g->parent_obj.scanout[m->scanout_id].con;
-         dmabuf = &g->dmabuf[m->scanout_id];
--        if (dmabuf->fd >= 0) {
--            close(dmabuf->fd);
-+        old_fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
-+        if (old_fd >= 0) {
-+            close(old_fd);
-             dmabuf->fd = -1;
-         }
-         dpy_gl_release_dmabuf(con, dmabuf);
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index d51184d658..e3f358b575 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -206,6 +206,7 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
- {
-     struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
-     VGPUDMABuf *new_primary, *old_primary = NULL;
-+    uint32_t width, height;
- 
-     new_primary = virtio_gpu_create_dmabuf(g, scanout_id, res, fb, r);
-     if (!new_primary) {
-@@ -216,10 +217,10 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-         old_primary = g->dmabuf.primary[scanout_id];
-     }
- 
-+    width = dpy_gl_qemu_dmabuf_get_width(&new_primary->buf);
-+    height = dpy_gl_qemu_dmabuf_get_height(&new_primary->buf);
-     g->dmabuf.primary[scanout_id] = new_primary;
--    qemu_console_resize(scanout->con,
--                        new_primary->buf.width,
--                        new_primary->buf.height);
-+    qemu_console_resize(scanout->con, width, height);
-     dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
- 
-     if (old_primary) {
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 1aa440c663..f9c39cbd51 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -259,9 +259,13 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDevice *vdev,
- 
- static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
- {
-+    int fd;
-+
-     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
-+
-+    fd = dpy_gl_qemu_dmabuf_get_fd(&dmabuf->buf);
-     dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
--    close(dmabuf->buf.fd);
-+    close(fd);
-     g_free(dmabuf);
- }
- 
-@@ -286,6 +290,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-     VFIOPCIDevice *vdev = opaque;
-     VFIODisplay *dpy = vdev->dpy;
-     VFIODMABuf *primary, *cursor;
-+    uint32_t width, height;
-     bool free_bufs = false, new_cursor = false;
- 
-     primary = vfio_display_get_dmabuf(vdev, DRM_PLANE_TYPE_PRIMARY);
-@@ -296,10 +301,12 @@ static void vfio_display_dmabuf_update(void *opaque)
-         return;
-     }
- 
-+    width = dpy_gl_qemu_dmabuf_get_width(&primary->buf);
-+    height = dpy_gl_qemu_dmabuf_get_height(&primary->buf);
-+
-     if (dpy->dmabuf.primary != primary) {
-         dpy->dmabuf.primary = primary;
--        qemu_console_resize(dpy->con,
--                            primary->buf.width, primary->buf.height);
-+        qemu_console_resize(dpy->con, width, height);
-         dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
-         free_bufs = true;
-     }
-@@ -328,7 +335,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-         cursor->pos_updates = 0;
-     }
- 
--    dpy_gl_update(dpy->con, 0, 0, primary->buf.width, primary->buf.height);
-+    dpy_gl_update(dpy->con, 0, 0, width, height);
- 
-     if (free_bufs) {
-         vfio_display_free_dmabufs(vdev);
-diff --git a/ui/console.c b/ui/console.c
-index 43226c5c14..5d5635f783 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1132,6 +1132,118 @@ void dpy_gl_cursor_position(QemuConsole *con,
-     }
- }
- 
-+int32_t dpy_gl_qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fd;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_width(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->width;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_height(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->height;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->stride;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fourcc;
-+}
-+
-+uint64_t dpy_gl_qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->modifier;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->texture;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_x(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->x;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_y(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->y;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->backing_width;
-+}
-+
-+uint32_t dpy_gl_qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->backing_height;
-+}
-+
-+bool dpy_gl_qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->y0_top;
-+}
-+
-+void *dpy_gl_qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->sync;
-+}
-+
-+int32_t dpy_gl_qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fence_fd;
-+}
-+
-+bool dpy_gl_qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->allow_fences;
-+}
-+
-+bool dpy_gl_qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->draw_submitted;
-+}
-+
- void dpy_gl_release_dmabuf(QemuConsole *con,
-                           QemuDmaBuf *dmabuf)
- {
-@@ -1459,7 +1571,7 @@ int qemu_console_get_width(QemuConsole *con, int fallback)
-     }
-     switch (con->scanout.kind) {
-     case SCANOUT_DMABUF:
--        return con->scanout.dmabuf->width;
-+        return dpy_gl_qemu_dmabuf_get_width(con->scanout.dmabuf);
-     case SCANOUT_TEXTURE:
-         return con->scanout.texture.width;
-     case SCANOUT_SURFACE:
-@@ -1476,7 +1588,7 @@ int qemu_console_get_height(QemuConsole *con, int fallback)
-     }
-     switch (con->scanout.kind) {
-     case SCANOUT_DMABUF:
--        return con->scanout.dmabuf->height;
-+        return dpy_gl_qemu_dmabuf_get_height(con->scanout.dmabuf);
-     case SCANOUT_TEXTURE:
-         return con->scanout.texture.height;
-     case SCANOUT_SURFACE:
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 49da9ccc83..124fe16253 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -110,11 +110,14 @@ static void
- dbus_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-                        QemuDmaBuf *dmabuf)
- {
-+    uint32_t width, height;
-+
-     DBusDisplayConsole *ddc = container_of(dcl, DBusDisplayConsole, dcl);
- 
--    dbus_display_console_set_size(ddc,
--                                  dmabuf->width,
--                                  dmabuf->height);
-+    width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+    height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+
-+    dbus_display_console_set_size(ddc, width, height);
- }
- 
- static void
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 4a0a5d78f9..c6c7d93753 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -278,29 +278,33 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
-     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
-     g_autoptr(GError) err = NULL;
-     g_autoptr(GUnixFDList) fd_list = NULL;
-+    int fd;
-+    uint32_t width, height, stride, fourcc;
-+    uint64_t modifier;
-+    bool y0_top;
- 
-+    fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
-     fd_list = g_unix_fd_list_new();
--    if (g_unix_fd_list_append(fd_list, dmabuf->fd, &err) != 0) {
-+    if (g_unix_fd_list_append(fd_list, fd, &err) != 0) {
-         error_report("Failed to setup dmabuf fdlist: %s", err->message);
-         return;
-     }
- 
-     ddl_discard_pending_messages(ddl);
- 
-+    width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+    height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+    stride = dpy_gl_qemu_dmabuf_get_stride(dmabuf);
-+    fourcc = dpy_gl_qemu_dmabuf_get_fourcc(dmabuf);
-+    modifier = dpy_gl_qemu_dmabuf_get_modifier(dmabuf);
-+    y0_top = dpy_gl_qemu_dmabuf_get_y0_top(dmabuf);
-+
-     /* FIXME: add missing x/y/w/h support */
-     qemu_dbus_display1_listener_call_scanout_dmabuf(
--        ddl->proxy,
--        g_variant_new_handle(0),
--        dmabuf->width,
--        dmabuf->height,
--        dmabuf->stride,
--        dmabuf->fourcc,
--        dmabuf->modifier,
--        dmabuf->y0_top,
--        G_DBUS_CALL_FLAGS_NONE,
--        -1,
--        fd_list,
--        NULL, NULL, NULL);
-+        ddl->proxy, g_variant_new_handle(0),
-+        width, height, stride, fourcc, modifier,
-+        y0_top, G_DBUS_CALL_FLAGS_NONE,
-+        -1, fd_list, NULL, NULL, NULL);
- }
- #endif /* GBM */
- #endif /* OPENGL */
-@@ -488,6 +492,7 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
-     DisplaySurface *ds;
-     GVariant *v_data = NULL;
-     egl_fb cursor_fb = EGL_FB_INIT;
-+    uint32_t width, height, texture;
- 
-     if (!dmabuf) {
-         qemu_dbus_display1_listener_call_mouse_set(
-@@ -497,12 +502,16 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
-     }
- 
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
--    egl_fb_setup_for_tex(&cursor_fb, dmabuf->width, dmabuf->height,
--                         dmabuf->texture, false);
--    ds = qemu_create_displaysurface(dmabuf->width, dmabuf->height);
-+
-+    width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+    height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+
-+    egl_fb_setup_for_tex(&cursor_fb, width, height, texture, false);
-+    ds = qemu_create_displaysurface(width, height);
-     egl_fb_read(ds, &cursor_fb);
- 
-     v_data = g_variant_new_from_data(
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index d5637dadb2..158924379b 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -85,29 +85,38 @@ static void egl_scanout_texture(DisplayChangeListener *dcl,
- static void egl_scanout_dmabuf(DisplayChangeListener *dcl,
-                                QemuDmaBuf *dmabuf)
- {
-+    uint32_t width, height, texture;
-+
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    egl_scanout_texture(dcl, dmabuf->texture,
--                        false, dmabuf->width, dmabuf->height,
--                        0, 0, dmabuf->width, dmabuf->height, NULL);
-+    width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+    height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+
-+    egl_scanout_texture(dcl, texture, false, width, height, 0, 0,
-+                        width, height, NULL);
- }
- 
- static void egl_cursor_dmabuf(DisplayChangeListener *dcl,
-                               QemuDmaBuf *dmabuf, bool have_hot,
-                               uint32_t hot_x, uint32_t hot_y)
- {
-+    uint32_t width, height, texture;
-     egl_dpy *edpy = container_of(dcl, egl_dpy, dcl);
- 
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&edpy->cursor_fb, dmabuf->width, dmabuf->height,
--                             dmabuf->texture, false);
-+
-+        width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+        height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+        egl_fb_setup_for_tex(&edpy->cursor_fb, width, height, texture, false);
-     } else {
-         egl_fb_destroy(&edpy->cursor_fb);
-     }
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 3d19dbe382..86d64c68ce 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -146,10 +146,10 @@ void egl_fb_blit(egl_fb *dst, egl_fb *src, bool flip)
-     glViewport(0, 0, dst->width, dst->height);
- 
-     if (src->dmabuf) {
--        x1 = src->dmabuf->x;
--        y1 = src->dmabuf->y;
--        w = src->dmabuf->width;
--        h = src->dmabuf->height;
-+        x1 = dpy_gl_qemu_dmabuf_get_x(src->dmabuf);
-+        y1 = dpy_gl_qemu_dmabuf_get_y(src->dmabuf);
-+        w = dpy_gl_qemu_dmabuf_get_width(src->dmabuf);
-+        h = dpy_gl_qemu_dmabuf_get_height(src->dmabuf);
-     }
- 
-     w = (x1 + w) > src->width ? src->width - x1 : w;
-@@ -308,30 +308,33 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     EGLImageKHR image = EGL_NO_IMAGE_KHR;
-     EGLint attrs[64];
-     int i = 0;
-+    uint64_t modifier;
-+    uint32_t texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
- 
--    if (dmabuf->texture != 0) {
-+    if (texture != 0) {
-         return;
-     }
- 
-     attrs[i++] = EGL_WIDTH;
--    attrs[i++] = dmabuf->backing_width;
-+    attrs[i++] = dpy_gl_qemu_dmabuf_get_backing_width(dmabuf);
-     attrs[i++] = EGL_HEIGHT;
--    attrs[i++] = dmabuf->backing_height;
-+    attrs[i++] = dpy_gl_qemu_dmabuf_get_backing_height(dmabuf);
-     attrs[i++] = EGL_LINUX_DRM_FOURCC_EXT;
--    attrs[i++] = dmabuf->fourcc;
-+    attrs[i++] = dpy_gl_qemu_dmabuf_get_fourcc(dmabuf);
- 
-     attrs[i++] = EGL_DMA_BUF_PLANE0_FD_EXT;
--    attrs[i++] = dmabuf->fd;
-+    attrs[i++] = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
-     attrs[i++] = EGL_DMA_BUF_PLANE0_PITCH_EXT;
--    attrs[i++] = dmabuf->stride;
-+    attrs[i++] = dpy_gl_qemu_dmabuf_get_stride(dmabuf);
-     attrs[i++] = EGL_DMA_BUF_PLANE0_OFFSET_EXT;
-     attrs[i++] = 0;
- #ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
--    if (dmabuf->modifier) {
-+    modifier = dpy_gl_qemu_dmabuf_get_modifier(dmabuf);
-+    if (modifier) {
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT;
--        attrs[i++] = (dmabuf->modifier >>  0) & 0xffffffff;
-+        attrs[i++] = (modifier >>  0) & 0xffffffff;
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT;
--        attrs[i++] = (dmabuf->modifier >> 32) & 0xffffffff;
-+        attrs[i++] = (modifier >> 32) & 0xffffffff;
-     }
- #endif
-     attrs[i++] = EGL_NONE;
-@@ -346,7 +349,8 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     }
- 
-     glGenTextures(1, &dmabuf->texture);
--    glBindTexture(GL_TEXTURE_2D, dmabuf->texture);
-+    texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+    glBindTexture(GL_TEXTURE_2D, texture);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
- 
-@@ -356,11 +360,14 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
- 
- void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
- {
--    if (dmabuf->texture == 0) {
-+    uint32_t texture;
-+
-+    texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+    if (texture == 0) {
-         return;
-     }
- 
--    glDeleteTextures(1, &dmabuf->texture);
-+    glDeleteTextures(1, &texture);
-     dmabuf->texture = 0;
- }
- 
-@@ -382,10 +389,12 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
- 
- void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
- {
--    if (dmabuf->sync) {
-+    void *sync = dpy_gl_qemu_dmabuf_get_sync(dmabuf);
-+
-+    if (sync) {
-         dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
--                                                      dmabuf->sync);
--        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
-+                                                      sync);
-+        eglDestroySyncKHR(qemu_egl_display, sync);
-         dmabuf->sync = NULL;
-     }
- }
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 3af5ac5bcf..c9469af9ed 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -70,6 +70,7 @@ void gd_egl_draw(VirtualConsole *vc)
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
- #endif
-     int ww, wh, ws;
-+    int fence_fd;
- 
-     if (!vc->gfx.gls) {
-         return;
-@@ -83,7 +84,7 @@ void gd_egl_draw(VirtualConsole *vc)
-     if (vc->gfx.scanout_mode) {
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            if (!dmabuf->draw_submitted) {
-+            if (!dpy_gl_qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
-                 dmabuf->draw_submitted = false;
-@@ -99,8 +100,9 @@ void gd_egl_draw(VirtualConsole *vc)
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd > 0) {
--                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-+            fence_fd = dpy_gl_qemu_dmabuf_get_fence_fd(dmabuf);
-+            if (fence_fd > 0) {
-+                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-             graphic_hw_gl_block(vc->gfx.dcl.con, false);
-@@ -149,7 +151,8 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
-     gd_update_monitor_refresh_rate(
-             vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        dpy_gl_qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         return;
-     }
- 
-@@ -264,22 +267,30 @@ void gd_egl_scanout_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t x, y, width, height, backing_width, backing_height, texture;
-+    bool y0_top;
- 
-     eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-                    vc->gfx.esurface, vc->gfx.ectx);
- 
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    gd_egl_scanout_texture(dcl, dmabuf->texture,
--                           dmabuf->y0_top,
--                           dmabuf->backing_width, dmabuf->backing_height,
--                           dmabuf->x, dmabuf->y, dmabuf->width,
--                           dmabuf->height, NULL);
-+    x = dpy_gl_qemu_dmabuf_get_x(dmabuf);
-+    y = dpy_gl_qemu_dmabuf_get_y(dmabuf);
-+    width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+    height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+    backing_width = dpy_gl_qemu_dmabuf_get_backing_width(dmabuf);
-+    backing_height = dpy_gl_qemu_dmabuf_get_backing_height(dmabuf);
-+    y0_top = dpy_gl_qemu_dmabuf_get_y0_top(dmabuf);
- 
--    if (dmabuf->allow_fences) {
-+    gd_egl_scanout_texture(dcl, texture, y0_top, backing_width, backing_height,
-+                           x, y, width, height, NULL);
-+
-+    if (dpy_gl_qemu_dmabuf_get_allow_fences(dmabuf)) {
-         vc->gfx.guest_fb.dmabuf = dmabuf;
-     }
- #endif
-@@ -291,15 +302,19 @@ void gd_egl_cursor_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t backing_width, backing_height, texture;
- 
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&vc->gfx.cursor_fb,
--                             dmabuf->backing_width, dmabuf->backing_height,
--                             dmabuf->texture, false);
-+
-+        backing_width = dpy_gl_qemu_dmabuf_get_backing_width(dmabuf);
-+        backing_height = dpy_gl_qemu_dmabuf_get_backing_height(dmabuf);
-+        egl_fb_setup_for_tex(&vc->gfx.cursor_fb, backing_width, backing_height,
-+                             texture, false);
-     } else {
-         egl_fb_destroy(&vc->gfx.cursor_fb);
-     }
-@@ -363,7 +378,8 @@ void gd_egl_flush(DisplayChangeListener *dcl,
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-     GtkWidget *area = vc->gfx.drawing_area;
- 
--    if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        !dpy_gl_qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-         gtk_egl_set_scanout_mode(vc, true);
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 52dcac161e..193862ecc2 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -60,7 +60,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
- 
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            if (!dmabuf->draw_submitted) {
-+            if (!dpy_gl_qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
-                 dmabuf->draw_submitted = false;
-@@ -85,9 +85,11 @@ void gd_gl_area_draw(VirtualConsole *vc)
-         glFlush();
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-+            int fence_fd;
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd > 0) {
--                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-+            fence_fd = dpy_gl_qemu_dmabuf_get_fence_fd(dmabuf);
-+            if (fence_fd > 0) {
-+                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-             graphic_hw_gl_block(vc->gfx.dcl.con, false);
-@@ -125,7 +127,8 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
- 
-     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        dpy_gl_qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         return;
-     }
- 
-@@ -285,7 +288,8 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- {
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
- 
--    if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        !dpy_gl_qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-         gtk_gl_area_set_scanout_mode(vc, true);
-@@ -298,20 +302,29 @@ void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t x, y, width, height, backing_width, backing_height, texture;
-+    bool y0_top;
- 
-     gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    gd_gl_area_scanout_texture(dcl, dmabuf->texture,
--                               dmabuf->y0_top,
--                               dmabuf->backing_width, dmabuf->backing_height,
--                               dmabuf->x, dmabuf->y, dmabuf->width,
--                               dmabuf->height, NULL);
-+    x = dpy_gl_qemu_dmabuf_get_x(dmabuf);
-+    y = dpy_gl_qemu_dmabuf_get_y(dmabuf);
-+    width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+    height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+    backing_width = dpy_gl_qemu_dmabuf_get_backing_width(dmabuf);
-+    backing_height = dpy_gl_qemu_dmabuf_get_backing_height(dmabuf);
-+    y0_top = dpy_gl_qemu_dmabuf_get_y0_top(dmabuf);
- 
--    if (dmabuf->allow_fences) {
-+    gd_gl_area_scanout_texture(dcl, texture, y0_top,
-+                               backing_width, backing_height,
-+                               x, y, width, height, NULL);
-+
-+    if (dpy_gl_qemu_dmabuf_get_allow_fences(dmabuf)) {
-         vc->gfx.guest_fb.dmabuf = dmabuf;
-     }
- #endif
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 810d7fc796..2c054a42ba 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -596,9 +596,11 @@ void gd_hw_gl_flushed(void *vcon)
- {
-     VirtualConsole *vc = vcon;
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
-+    int fence_fd;
- 
--    qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
--    close(dmabuf->fence_fd);
-+    fence_fd = dpy_gl_qemu_dmabuf_get_fence_fd(dmabuf);
-+    qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
-+    close(fence_fd);
-     dmabuf->fence_fd = -1;
-     graphic_hw_gl_block(vc->gfx.dcl.con, false);
- }
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 6eb98a5a5c..1bbce4974b 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -976,6 +976,7 @@ static void qemu_spice_gl_cursor_dmabuf(DisplayChangeListener *dcl,
-                                         uint32_t hot_x, uint32_t hot_y)
- {
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
-+    uint32_t width, height, texture;
- 
-     ssd->have_hot = have_hot;
-     ssd->hot_x = hot_x;
-@@ -984,11 +985,13 @@ static void qemu_spice_gl_cursor_dmabuf(DisplayChangeListener *dcl,
-     trace_qemu_spice_gl_cursor(ssd->qxl.id, dmabuf != NULL, have_hot);
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&ssd->cursor_fb, dmabuf->width, dmabuf->height,
--                             dmabuf->texture, false);
-+        width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+        height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+        egl_fb_setup_for_tex(&ssd->cursor_fb, width, height, texture, false);
-     } else {
-         egl_fb_destroy(&ssd->cursor_fb);
-     }
-@@ -1026,6 +1029,7 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     bool y_0_top = false; /* FIXME */
-     uint64_t cookie;
-     int fd;
-+    uint32_t width, height, texture;
- 
-     if (!ssd->have_scanout) {
-         return;
-@@ -1042,41 +1046,45 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
- 
-     if (ssd->guest_dmabuf_refresh) {
-         QemuDmaBuf *dmabuf = ssd->guest_dmabuf;
-+        width = dpy_gl_qemu_dmabuf_get_width(dmabuf);
-+        height = dpy_gl_qemu_dmabuf_get_height(dmabuf);
-+
-         if (render_cursor) {
-             egl_dmabuf_import_texture(dmabuf);
--            if (!dmabuf->texture) {
-+            texture = dpy_gl_qemu_dmabuf_get_texture(dmabuf);
-+            if (!texture) {
-                 return;
-             }
- 
-             /* source framebuffer */
--            egl_fb_setup_for_tex(&ssd->guest_fb,
--                                 dmabuf->width, dmabuf->height,
--                                 dmabuf->texture, false);
-+            egl_fb_setup_for_tex(&ssd->guest_fb, width, height,
-+                                 texture, false);
- 
-             /* dest framebuffer */
--            if (ssd->blit_fb.width  != dmabuf->width ||
--                ssd->blit_fb.height != dmabuf->height) {
--                trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, dmabuf->width,
--                                                  dmabuf->height);
-+            if (ssd->blit_fb.width  != width ||
-+                ssd->blit_fb.height != height) {
-+                trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, width,
-+                                                  height);
-                 egl_fb_destroy(&ssd->blit_fb);
-                 egl_fb_setup_new_tex(&ssd->blit_fb,
--                                     dmabuf->width, dmabuf->height);
-+                                     width, height);
-                 fd = egl_get_fd_for_texture(ssd->blit_fb.texture,
-                                             &stride, &fourcc, NULL);
--                spice_qxl_gl_scanout(&ssd->qxl, fd,
--                                     dmabuf->width, dmabuf->height,
-+                spice_qxl_gl_scanout(&ssd->qxl, fd, width, height,
-                                      stride, fourcc, false);
-             }
-         } else {
--            trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id,
--                                               dmabuf->width, dmabuf->height);
-+            stride = dpy_gl_qemu_dmabuf_get_stride(dmabuf);
-+            fourcc = dpy_gl_qemu_dmabuf_get_fourcc(dmabuf);
-+            y_0_top = dpy_gl_qemu_dmabuf_get_y0_top(dmabuf);
-+            fd = dpy_gl_qemu_dmabuf_get_fd(dmabuf);
-+
-+            trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id, width, height);
-             /* note: spice server will close the fd, so hand over a dup */
--            spice_qxl_gl_scanout(&ssd->qxl, dup(dmabuf->fd),
--                                 dmabuf->width, dmabuf->height,
--                                 dmabuf->stride, dmabuf->fourcc,
--                                 dmabuf->y0_top);
-+            spice_qxl_gl_scanout(&ssd->qxl, dup(fd), width, height,
-+                                 stride, fourcc, y_0_top);
-         }
--        qemu_spice_gl_monitor_config(ssd, 0, 0, dmabuf->width, dmabuf->height);
-+        qemu_spice_gl_monitor_config(ssd, 0, 0, width, height);
-         ssd->guest_dmabuf_refresh = false;
-     }
- 
--- 
-2.34.1
+Adding Jonathon.
+
+Yes, technically libvirt can detect the support for USO/RSS and
+generate the correct qemu command line.
+
+But what I want to say is, failing the launching is still better than
+failing the workload running in the guest.
+
+>
+> > ?
+> > > And in terms of migration "rss=3Don" is problematic the same way as "=
+rss=3Dauto".
+> >
+> > Failing early when launching Qemu is better than failing silently as a
+> > guest after a migration.
+>
+> Do I understand correctly - you mean fail qemu initialization on the
+> destination machine?
+
+Yes, it's a hint for the management layer that the migration
+compatibility check is wrong.
+
+>
+> >
+> > > Can you please show one scenario of migration where they will behave
+> > > differently?
+> >
+> > If you mean the problem of "auto", here's one:
+> >
+> > Assuming auto is used in both src and dst. On source, rss is enabled
+> > but not destination. RSS failed to work after migration.
+>
+> I think in this case the migration will fail when set_feature is
+> called on destination.
+> The same way as with "on". Am I mistaken?
+
+See above.
+
+>
+> >
+> > > And in terms of regular experience there is a big advantage.
+> >
+> > Similarly, silent clearing a feature is also not good:
+> >
+> >     if (!peer_has_vnet_hdr(n)) {
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_CSUM);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO4);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO6);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_HOST_ECN);
+> >
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_CSUM);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO4);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO6);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ECN);
+> >
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
+> >
+> >         virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
+> >     }
+> >
+> > The reason we never see complaints is probably because vhost/TAP are
+> > the only backend that supports migration where vnet support there has
+> > been more than a decade.
+>
+> I think we never see complaints because we did not add new features
+> for a long time.
+
+Probably but I basically meant peer_has_vnet_hdr() is always true for
+the cases we support. So Qemu won't silently clear them even if they
+were turned on explicitly by qemu command line.
+
+Thanks
+
+>
+> >
+> > Thanks
+> >
+> >
+> > >
+> > >
+> > > >
+> > > > Thanks
+> > > >
+> > > > > 4. The same with 'hash' option - it is not compatible with vhost =
+(at
+> > > > > least at the moment)
+> > > > > 5. Reformat the patch as it is hard to review it due to replacing
+> > > > > entire procedures, i.e. one patch with replacing without changes,
+> > > > > another one - with real changes.
+> > > > > If this is hard to review only for me - please ignore that.
+> > > > >
+> > > > > > -
+> > > > > > -    /* This will stop vhost backend if appropriate. */
+> > > > > > -    virtio_net_set_status(vdev, 0);
+> > > > > > -
+> > > > > > -    g_free(n->netclient_name);
+> > > > > > -    n->netclient_name =3D NULL;
+> > > > > > -    g_free(n->netclient_type);
+> > > > > > -    n->netclient_type =3D NULL;
+> > > > > > -
+> > > > > > -    g_free(n->mac_table.macs);
+> > > > > > -    g_free(n->vlans);
+> > > > > > -
+> > > > > > -    if (n->failover) {
+> > > > > > -        qobject_unref(n->primary_opts);
+> > > > > > -        device_listener_unregister(&n->primary_listener);
+> > > > > > -        migration_remove_notifier(&n->migration_state);
+> > > > > > -    } else {
+> > > > > > -        assert(n->primary_opts =3D=3D NULL);
+> > > > > > -    }
+> > > > > > -
+> > > > > > -    max_queue_pairs =3D n->multiqueue ? n->max_queue_pairs : 1=
+;
+> > > > > > -    for (i =3D 0; i < max_queue_pairs; i++) {
+> > > > > > -        virtio_net_del_queue(n, i);
+> > > > > > -    }
+> > > > > > -    /* delete also control vq */
+> > > > > > -    virtio_del_queue(vdev, max_queue_pairs * 2);
+> > > > > > -    qemu_announce_timer_del(&n->announce_timer, false);
+> > > > > > -    g_free(n->vqs);
+> > > > > > -    qemu_del_nic(n->nic);
+> > > > > > -    virtio_net_rsc_cleanup(n);
+> > > > > > -    g_free(n->rss_data.indirections_table);
+> > > > > > -    net_rx_pkt_uninit(n->rx_pkt);
+> > > > > > -    virtio_cleanup(vdev);
+> > > > > >  }
+> > > > > >
+> > > > > >  static void virtio_net_reset(VirtIODevice *vdev)
+> > > > > >
+> > > > > > --
+> > > > > > 2.44.0
+> > > > > >
+> > > > >
+> > > >
+> > >
+> >
+>
 
 
