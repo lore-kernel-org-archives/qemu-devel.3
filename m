@@ -4,94 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5908EC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 438AFC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxYOY-0007xl-Vb; Thu, 18 Apr 2024 16:30:11 -0400
+	id 1rxYXx-000315-T1; Thu, 18 Apr 2024 16:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxYOX-0007xU-LE
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:30:09 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <raphael.poggi@lynxleap.co.uk>)
+ id 1rxYXv-00030i-Dg
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:39:51 -0400
+Received: from 2.mo582.mail-out.ovh.net ([46.105.76.65])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxYOV-0001xa-Sc
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:30:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:References:Cc:To:From:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=w6eienrKkKiPJMOF6qiMqTZCRGy7rq6JvPfrFkOC/8w=; b=BJCRsJRKXnaZcbfgutVMR8c+vy
- s50tBt9B82qqwrfNKQOXaMMPxXjb+BsmTK64ubGZEXAC9XpR79dt8qRTeUbvWIwK66acbfTisRXPN
- 4htThaC+afKWzIbXTxcQRWpf8gHmGPv9wM2sU4FUm/CatPTDWPjhVOI29q1SDPY2jY95G6HEgyZcL
- xlpC6q9tdT5/KcBTNY7gv9Apg7Sz6FMQ6M/bJQm0/6FzPX3oVz/q5RuY2qWcNIdfz50dKTpRGzASQ
- mkklVlqqk11Z+0YvMiKXJgxnNwVi9sOajqzpyIMR+jGS9BlUCULGLIdlNwch8dXjkWlQC+I2LjdLE
- 9OzfnYCb/YSBW3KDpCYBj+qM1sdGcCeYoz00k/eSKssUKTWWM0iLXVXTh6BGBi5PzvdEegHod0RpC
- gtSymS0v+K5qRNX6iCLNHtN1C8f99c326DGQQQPM0XxUdWqB9RAboVxk+WA1UPBJ3VfmOu1MtN/7W
- YNkq8vAnfaz7FOt25c7r/CXBgC+A64PvPkIYN7zI1XjeHhv1ot9csbFfLK6go9xGQdSn8bpSk9ECj
- /qafW3QCIM4OrmLI6085TlWg7/3sG1qIVOR/jKIZ0isHwHmyKeYZZQTcO7SqdbklrbBmZlJTArY0e
- UUcbQlYeFK6pAtbILMTGZvAqIPka8NtHtUPSrrQrQ=;
-Received: from [2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxYNV-0006Jx-GR; Thu, 18 Apr 2024 21:29:05 +0100
-Message-ID: <f6c7ddc5-2671-4e2c-bad4-9850c2bb52f4@ilande.co.uk>
-Date: Thu, 18 Apr 2024 21:30:04 +0100
+ (Exim 4.90_1) (envelope-from <raphael.poggi@lynxleap.co.uk>)
+ id 1rxYXt-0003Io-8M
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:39:51 -0400
+Received: from director1.ghost.mail-out.ovh.net (unknown [10.108.2.78])
+ by mo582.mail-out.ovh.net (Postfix) with ESMTP id 4VL8lh6ncHz1F9h
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 20:39:44 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-5hgvh (unknown [10.110.96.193])
+ by director1.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 765C11FD20
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 20:39:43 +0000 (UTC)
+Received: from lynxleap.co.uk ([37.59.142.107])
+ by ghost-submission-6684bf9d7b-5hgvh with ESMTPSA
+ id hmhpARCFIWZXlgQAcGzEYw
+ (envelope-from <raphael.poggi@lynxleap.co.uk>)
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 20:39:44 +0000
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-107S001540b2b82-e8d0-476a-a08c-09626303b0ba,
+ 7D36A28102BF8EA446AFB9278237F9F63EFFF5A1)
+ smtp.auth=raphael.poggi@lynxleap.co.uk
+X-OVh-ClientIp: 209.85.217.52
+Received: by mail-vs1-f52.google.com with SMTP id
+ ada2fe7eead31-47b6ac9745eso444617137.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 13:39:43 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJyz+L+MXvbIQjovnGoC0EOiQRnGJbcZU96I3WoEc66RdINMKeyf7QJ+AYB3Yu517A0GYHeSTaa+LgTb0AjW0Sox819I4=
+X-Gm-Message-State: AOJu0Yx/yHn+Dy7iD9gYmN5j6A7iDaOmLDM4RVk9ggBxAPqCnEzW8fXy
+ QCM/Li0xWMaLQfPvu7hFDNRdq9UrSejXnhGSP4LVuQgJTKhe8smcr4a/Ljd6AOYi6ynx5ELfqkK
+ dPcfmejwfTpCTkV2JjYzOQIqUO7w=
+X-Google-Smtp-Source: AGHT+IFH1aWXS+VjI8UqlQc8tD4ex7rbmOPU3Rb1wh4FAFf72dVWALIGPsLPAyCh7iGIyrYq/GoBfUfZPeAbuJtFzlg=
+X-Received: by 2002:a05:6102:b0b:b0:47b:b782:e216 with SMTP id
+ b11-20020a0561020b0b00b0047bb782e216mr130372vst.13.1713472782709; Thu, 18 Apr
+ 2024 13:39:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240307174334.130407-1-thuth@redhat.com>
- <bdd66aac-4de5-44a1-a1d1-86825d337d12@redhat.com>
- <df3d121a-b9cc-469e-ae7a-ded6b7705fe8@ilande.co.uk>
-Content-Language: en-US
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <df3d121a-b9cc-469e-ae7a-ded6b7705fe8@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/5] Sparc CPU naming and help text improvements
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+References: <20240418191602.2017-1-raphael.poggi@lynxleap.co.uk>
+ <5b8ce05b-62c6-4362-aa16-a9e845eb4df7@linaro.org>
+In-Reply-To: <5b8ce05b-62c6-4362-aa16-a9e845eb4df7@linaro.org>
+From: Raphael Poggi <raphael.poggi@lynxleap.co.uk>
+Date: Thu, 18 Apr 2024 21:39:09 +0100
+X-Gmail-Original-Message-ID: <CACqcpZCubN0Bnmht03TRCWdtYUd4aOpitcx31J+NiMEe2vWhSA@mail.gmail.com>
+Message-ID: <CACqcpZCubN0Bnmht03TRCWdtYUd4aOpitcx31J+NiMEe2vWhSA@mail.gmail.com>
+Subject: Re: [PATCH] hw/core/clock: always iterate through childs in
+ clock_propagate_period
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Raphael Poggi <raphael.poggi@lynxleap.co.uk>, qemu-devel@nongnu.org,
+ luc@lmichel.fr, 
+ damien.hedde@dahe.fr, Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Ovh-Tracer-Id: 9588163608518532735
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrudektddgudehtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeggfhgjhfffkffuvfevtgfgsehtqhertddttdejnecuhfhrohhmpeftrghphhgrvghlucfrohhgghhiuceorhgrphhhrggvlhdrphhoghhgiheslhihnhiglhgvrghprdgtohdruhhkqeenucggtffrrghtthgvrhhnpedtheeivdehvddugfejueffhfegkedthfekieetvefhgeefleejvefggeefvdevffenucfkphepuddvjedrtddrtddruddpvddtledrkeehrddvudejrdehvddpfeejrdehledrudegvddruddtjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomheprhgrphhhrggvlhdrphhoghhgiheslhihnhiglhgvrghprdgtohdruhhkpdhnsggprhgtphhtthhopedupdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhoheekvddpmhhouggvpehsmhhtphhouhht
+Received-SPF: pass client-ip=46.105.76.65;
+ envelope-from=raphael.poggi@lynxleap.co.uk; helo=2.mo582.mail-out.ovh.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,44 +91,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/04/2024 21:08, Mark Cave-Ayland wrote:
+Hi Philippe,
 
-> On 15/04/2024 08:26, Thomas Huth wrote:
-> 
->> On 07/03/2024 18.43, Thomas Huth wrote:
->>> The Sparc CPU naming and the corresponding help text is somewhat
->>> confusing for the users. We should avoid spaces in the Names and
->>> provide clear information to the users what can be passed to the
->>> "-cpu" option.
->>> While we're at it, also remove the "+" from two of the CPU names
->>> since this character is now not allowed in device names anymore
->>> (and was worked around with an ugly hack in qom/object.c so far).
->>>
->>> Thomas Huth (5):
->>>    target/sparc/cpu: Rename the CPU models with a "+" in their names
->>>    target/sparc/cpu: Avoid spaces by default in the CPU names
->>>    target/sparc/cpu: Improve the CPU help text
->>>    docs/system/target-sparc: Improve the Sparc documentation
->>>    docs/about: Deprecate the old "UltraSparc" CPU names that contain a
->>>      "+"
->>
->> Ping!
->>
->> Mark, Aryom, could you please comment on this patch series, too?
->>
->> Thanks,
->>   Thomas
-> 
-> Done! I didn't realise that it was only patches 1 and 2 that were still outstanding 
-> until I tested the series, so I've replied to those separately.
+Le jeu. 18 avr. 2024 =C3=A0 20:43, Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> a =C3=A9crit :
+>
+> Hi Raphael,
+>
+> On 18/4/24 21:16, Raphael Poggi wrote:
+> > When dealing with few clocks depending with each others, sometimes
+> > we might only want to update the multiplier/diviser on a specific clock
+> > (cf clockB in drawing below) and call "clock_propagate(clockA)" to
+> > update the childs period according to the potential new multiplier/divi=
+ser values.
+> >
+> > +--------+     +--------+      +--------+
+> > | clockA | --> | clockB |  --> | clockC |
+> > +--------+     +--------+      +--------+
+> >
+> > The actual code would not allow that because, since we cannot call
+> > "clock_propagate" directly on a child, it would exit on the
+> > first child has the period has not changed for clockB, only clockC is
+>
+> Typo "as the period has not changed"?
 
-Oops actually that's not quite right: looks like my git-am failed on patch 3 because 
-it was already applied, but the remaining 2 patches are still relevant. I've just 
-replied to those too.
+That's a typo indeed, thanks!
 
+>
+> Why can't you call clock_propagate() on a child?
 
-ATB,
+There is an assert "assert(clk->source =3D=3D NULL);" in clock_propagate().
+If I am not wrong, clk->source is set when the clock has a parent.
 
-Mark.
-
+>
+> > impacted in our example.
+> >
+> > Signed-off-by: Raphael Poggi <raphael.poggi@lynxleap.co.uk>
+> > ---
+> >   hw/core/clock.c | 3 ++-
+> >   1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/core/clock.c b/hw/core/clock.c
+> > index a19c7db7df..85421f8b55 100644
+> > --- a/hw/core/clock.c
+> > +++ b/hw/core/clock.c
+> > @@ -101,8 +101,9 @@ static void clock_propagate_period(Clock *clk, bool=
+ call_callbacks)
+> >               if (call_callbacks) {
+> >                   clock_call_callback(child, ClockUpdate);
+> >               }
+> > -            clock_propagate_period(child, call_callbacks);
+> >           }
+> > +
+> > +        clock_propagate_period(child, call_callbacks);
+> >       }
+> >   }
+> >
+>
 
