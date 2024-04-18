@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F2CDC05023
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAF8C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXxw-0001W9-Mj; Thu, 18 Apr 2024 16:02:40 -0400
+	id 1rxXxx-0001WB-Ic; Thu, 18 Apr 2024 16:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXxu-0001Vb-US; Thu, 18 Apr 2024 16:02:39 -0400
+ id 1rxXxq-0001Ur-S2; Thu, 18 Apr 2024 16:02:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXxs-0005H2-Kx; Thu, 18 Apr 2024 16:02:38 -0400
+ id 1rxXxo-0005GT-Uj; Thu, 18 Apr 2024 16:02:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 818E55FE0D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 45E395FE0A;
  Thu, 18 Apr 2024 23:02:27 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E07E2B93F3;
+ by tsrv.corpit.ru (Postfix) with SMTP id A59BBB93F0;
  Thu, 18 Apr 2024 23:02:24 +0300 (MSK)
-Received: (nullmailer pid 952854 invoked by uid 1000);
+Received: (nullmailer pid 952845 invoked by uid 1000);
  Thu, 18 Apr 2024 20:02:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alex Fan <alex.fan.q@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 46/59] hw/char/virtio-serial-bus: Protect from DMA
- re-entrancy bugs
-Date: Thu, 18 Apr 2024 23:02:06 +0300
-Message-Id: <20240418200224.952785-5-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 43/59] linux-user: Fix waitid return of siginfo_t and
+ rusage
+Date: Thu, 18 Apr 2024 23:02:03 +0300
+Message-Id: <20240418200224.952785-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
@@ -64,37 +64,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Replace qemu_bh_new_guarded() by virtio_bh_new_guarded()
-so the bus and device use the same guard. Otherwise the
-DMA-reentrancy protection can be bypassed.
+The copy back to siginfo_t should be conditional only on arg3,
+not the specific values that might have been written.
+The copy back to rusage was missing entirely.
 
-Fixes: CVE-2024-3446
-Cc: qemu-stable@nongnu.org
-Suggested-by: Alexander Bulekov <alxndr@bu.edu>
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20240409105537.18308-4-philmd@linaro.org>
-(cherry picked from commit b4295bff25f7b50de1d9cc94a9c6effd40056bca)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2262
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Alex Fan <alex.fan.q@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit f0907ff4cae743f1a4ef3d0a55a047029eed06ff)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index dd619f0731..1221fb7f15 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -985,8 +985,7 @@ static void virtser_port_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    port->bh = qemu_bh_new_guarded(flush_queued_data_bh, port,
--                                   &dev->mem_reentrancy_guard);
-+    port->bh = virtio_bh_new_guarded(dev, flush_queued_data_bh, port);
-     port->elem = NULL;
- }
- 
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index aead0f6ac9..41017b0df2 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8759,14 +8759,24 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+ #ifdef TARGET_NR_waitid
+     case TARGET_NR_waitid:
+         {
++            struct rusage ru;
+             siginfo_t info;
+-            info.si_pid = 0;
+-            ret = get_errno(safe_waitid(arg1, arg2, &info, arg4, NULL));
+-            if (!is_error(ret) && arg3 && info.si_pid != 0) {
+-                if (!(p = lock_user(VERIFY_WRITE, arg3, sizeof(target_siginfo_t), 0)))
++
++            ret = get_errno(safe_waitid(arg1, arg2, (arg3 ? &info : NULL),
++                                        arg4, (arg5 ? &ru : NULL)));
++            if (!is_error(ret)) {
++                if (arg3) {
++                    p = lock_user(VERIFY_WRITE, arg3,
++                                  sizeof(target_siginfo_t), 0);
++                    if (!p) {
++                        return -TARGET_EFAULT;
++                    }
++                    host_to_target_siginfo(p, &info);
++                    unlock_user(p, arg3, sizeof(target_siginfo_t));
++                }
++                if (arg5 && host_to_target_rusage(arg5, &ru)) {
+                     return -TARGET_EFAULT;
+-                host_to_target_siginfo(p, &info);
+-                unlock_user(p, arg3, sizeof(target_siginfo_t));
++                }
+             }
+         }
+         return ret;
 -- 
 2.39.2
 
