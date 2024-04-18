@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D70C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E2DC41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVvG-0002zn-T9; Thu, 18 Apr 2024 13:51:49 -0400
+	id 1rxVuJ-0000RE-1L; Thu, 18 Apr 2024 13:50:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVv9-0002eB-Tn; Thu, 18 Apr 2024 13:51:40 -0400
+ id 1rxVuH-0000Q0-0J; Thu, 18 Apr 2024 13:50:45 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVv7-0007fS-I4; Thu, 18 Apr 2024 13:51:39 -0400
+ id 1rxVuF-0007aF-Bg; Thu, 18 Apr 2024 13:50:44 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 472705FD75;
- Thu, 18 Apr 2024 20:50:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8853B5FD6D;
+ Thu, 18 Apr 2024 20:50:02 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8F1E0B934F;
- Thu, 18 Apr 2024 20:50:01 +0300 (MSK)
-Received: (nullmailer pid 947866 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id F1404B9343;
+ Thu, 18 Apr 2024 20:49:59 +0300 (MSK)
+Received: (nullmailer pid 947842 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Yuquan Wang <wangyuquan1236@phytium.com.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>, Chuhong Yuan <hslester96@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 108/116] hw/sd/sdhci: Do not update TRNMOD when Command
- Inhibit (DAT) is set
-Date: Thu, 18 Apr 2024 20:49:38 +0300
-Message-Id: <20240418174955.947730-21-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 100/116] qemu-options: Fix CXL Fixed Memory Window
+ interleave-granularity typo
+Date: Thu, 18 Apr 2024 20:49:30 +0300
+Message-Id: <20240418174955.947730-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
@@ -64,130 +63,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
 
-Per "SD Host Controller Standard Specification Version 3.00":
+Fix the unit typo of interleave-granularity of CXL Fixed Memory
+Window in qemu-option.hx.
 
-  * 2.2.5 Transfer Mode Register (Offset 00Ch)
-
-    Writes to this register shall be ignored when the Command
-    Inhibit (DAT) in the Present State register is 1.
-
-Do not update the TRNMOD register when Command Inhibit (DAT)
-bit is set to avoid the present-status register going out of
-sync, leading to malicious guest using DMA mode and overflowing
-the FIFO buffer:
-
-  $ cat << EOF | qemu-system-i386 \
-                     -display none -nographic -nodefaults \
-                     -machine accel=qtest -m 512M \
-                     -device sdhci-pci,sd-spec-version=3 \
-                     -device sd-card,drive=mydrive \
-                     -drive if=none,index=0,file=null-co://,format=raw,id=mydrive \
-                     -qtest stdio
-  outl 0xcf8 0x80001013
-  outl 0xcfc 0x91
-  outl 0xcf8 0x80001001
-  outl 0xcfc 0x06000000
-  write 0x9100002c 0x1 0x05
-  write 0x91000058 0x1 0x16
-  write 0x91000005 0x1 0x04
-  write 0x91000028 0x1 0x08
-  write 0x16 0x1 0x21
-  write 0x19 0x1 0x20
-  write 0x9100000c 0x1 0x01
-  write 0x9100000e 0x1 0x20
-  write 0x9100000f 0x1 0x00
-  write 0x9100000c 0x1 0x00
-  write 0x91000020 0x1 0x00
-  EOF
-
-Stack trace (part):
-=================================================================
-==89993==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x615000029900 at pc 0x55d5f885700d bp 0x7ffc1e1e9470 sp 0x7ffc1e1e9468
-WRITE of size 1 at 0x615000029900 thread T0
-    #0 0x55d5f885700c in sdhci_write_dataport hw/sd/sdhci.c:564:39
-    #1 0x55d5f8849150 in sdhci_write hw/sd/sdhci.c:1223:13
-    #2 0x55d5fa01db63 in memory_region_write_accessor system/memory.c:497:5
-    #3 0x55d5fa01d245 in access_with_adjusted_size system/memory.c:573:18
-    #4 0x55d5fa01b1a9 in memory_region_dispatch_write system/memory.c:1521:16
-    #5 0x55d5fa09f5c9 in flatview_write_continue system/physmem.c:2711:23
-    #6 0x55d5fa08f78b in flatview_write system/physmem.c:2753:12
-    #7 0x55d5fa08f258 in address_space_write system/physmem.c:2860:18
-    ...
-0x615000029900 is located 0 bytes to the right of 512-byte region
-[0x615000029700,0x615000029900) allocated by thread T0 here:
-    #0 0x55d5f7237b27 in __interceptor_calloc
-    #1 0x7f9e36dd4c50 in g_malloc0
-    #2 0x55d5f88672f7 in sdhci_pci_realize hw/sd/sdhci-pci.c:36:5
-    #3 0x55d5f844b582 in pci_qdev_realize hw/pci/pci.c:2092:9
-    #4 0x55d5fa2ee74b in device_set_realized hw/core/qdev.c:510:13
-    #5 0x55d5fa325bfb in property_set_bool qom/object.c:2358:5
-    #6 0x55d5fa31ea45 in object_property_set qom/object.c:1472:5
-    #7 0x55d5fa332509 in object_property_set_qobject om/qom-qobject.c:28:10
-    #8 0x55d5fa31f6ed in object_property_set_bool qom/object.c:1541:15
-    #9 0x55d5fa2e2948 in qdev_realize hw/core/qdev.c:292:12
-    #10 0x55d5f8eed3f1 in qdev_device_add_from_qdict system/qdev-monitor.c:719:10
-    #11 0x55d5f8eef7ff in qdev_device_add system/qdev-monitor.c:738:11
-    #12 0x55d5f8f211f0 in device_init_func system/vl.c:1200:11
-    #13 0x55d5fad0877d in qemu_opts_foreach util/qemu-option.c:1135:14
-    #14 0x55d5f8f0df9c in qemu_create_cli_devices system/vl.c:2638:5
-    #15 0x55d5f8f0db24 in qmp_x_exit_preconfig system/vl.c:2706:5
-    #16 0x55d5f8f14dc0 in qemu_init system/vl.c:3737:9
-    ...
-SUMMARY: AddressSanitizer: heap-buffer-overflow hw/sd/sdhci.c:564:39
-in sdhci_write_dataport
-
-Add assertions to ensure the fifo_buffer[] is not overflowed by
-malicious accesses to the Buffer Data Port register.
-
-Fixes: CVE-2024-3447
-Cc: qemu-stable@nongnu.org
-Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
-Buglink: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=58813
-Reported-by: Alexander Bulekov <alxndr@bu.edu>
-Reported-by: Chuhong Yuan <hslester96@gmail.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <CAFEAcA9iLiv1XGTGKeopgMa8Y9+8kvptvsb8z2OBeuy+5=NUfg@mail.gmail.com>
+Fixes: 03b39fcf64 ("hw/cxl: Make the CFMW a machine parameter.")
+Signed-off-by: Yuquan Wang wangyuquan1236@phytium.com.cn
+Message-ID: <20240407083539.1488172-2-wangyuquan1236@phytium.com.cn>
+[PMD: Reworded]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240409145524.27913-1-philmd@linaro.org>
-(cherry picked from commit 9e4b27ca6bf4974f169bbca7f3dca117b1208b6f)
+(cherry picked from commit aa88f99c87c0e5d195d6d96190374650553ea61f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 40473b0db0..e95ea34895 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -473,6 +473,7 @@ static uint32_t sdhci_read_dataport(SDHCIState *s, unsigned size)
-     }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index b6b4ad9e67..8f9d54a06b 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -149,14 +149,14 @@ SRST
+         platform and configuration dependent.
  
-     for (i = 0; i < size; i++) {
-+        assert(s->data_count < s->buf_maxsz);
-         value |= s->fifo_buffer[s->data_count] << i * 8;
-         s->data_count++;
-         /* check if we've read all valid data (blksize bytes) from buffer */
-@@ -561,6 +562,7 @@ static void sdhci_write_dataport(SDHCIState *s, uint32_t value, unsigned size)
-     }
+         ``interleave-granularity=granularity`` sets the granularity of
+-        interleave. Default 256KiB. Only 256KiB, 512KiB, 1024KiB, 2048KiB
+-        4096KiB, 8192KiB and 16384KiB granularities supported.
++        interleave. Default 256 (bytes). Only 256, 512, 1k, 2k,
++        4k, 8k and 16k granularities supported.
  
-     for (i = 0; i < size; i++) {
-+        assert(s->data_count < s->buf_maxsz);
-         s->fifo_buffer[s->data_count] = value & 0xFF;
-         s->data_count++;
-         value >>= 8;
-@@ -1208,6 +1210,12 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-         if (!(s->capareg & R_SDHC_CAPAB_SDMA_MASK)) {
-             value &= ~SDHC_TRNS_DMA;
-         }
-+
-+        /* TRNMOD writes are inhibited while Command Inhibit (DAT) is true */
-+        if (s->prnsts & SDHC_DATA_INHIBIT) {
-+            mask |= 0xffff;
-+        }
-+
-         MASKED_WRITE(s->trnmod, mask, value & SDHC_TRNMOD_MASK);
-         MASKED_WRITE(s->cmdreg, mask >> 16, value >> 16);
+         Example:
  
+         ::
+ 
+-            -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512k
++            -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
+ ERST
+ 
+ DEF("M", HAS_ARG, QEMU_OPTION_M,
 -- 
 2.39.2
 
