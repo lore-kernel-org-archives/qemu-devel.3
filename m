@@ -4,51 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B9BC04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2356C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXyY-0001jW-Pq; Thu, 18 Apr 2024 16:03:19 -0400
+	id 1rxXzL-0004Ac-FQ; Thu, 18 Apr 2024 16:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXyG-0001ac-DD; Thu, 18 Apr 2024 16:03:05 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxXzJ-00040t-Rz
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:04:05 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXyD-0005PR-6K; Thu, 18 Apr 2024 16:03:00 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 079295FE14;
- Thu, 18 Apr 2024 23:02:28 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 67541B93FA;
- Thu, 18 Apr 2024 23:02:25 +0300 (MSK)
-Received: (nullmailer pid 952875 invoked by uid 1000);
- Thu, 18 Apr 2024 20:02:24 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>, zhenwei pi <pizhenwei@bytedance.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 53/59] backends/cryptodev: Do not abort for invalid
- session ID
-Date: Thu, 18 Apr 2024 23:02:13 +0300
-Message-Id: <20240418200224.952785-12-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
-References: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxXzH-0005WW-Od
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:04:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=zh6bwDMg9wSO13XE1xlNhBYynGq63LizwSUV97VeoZA=; b=vM407O4paQHzqS2t0kK99U5JYK
+ UjwkXl5HHJy2qmhgRalHsD4ZfCII2fp2AaTDpoXLgimypjqXsUOPGX3lB1udH/b2yVlTEUp7bpoW6
+ +JwWRLAYVo83tF+9cwHiu+Kf3dJAzyWk1o4w5UREBsMM8MZMElgHQHYLarG0MxakjqCHZ+/3HKt3P
+ jeDaqyY6iGqP2yBKZ30HymKRmTqvPW3zqTaNKew6fuek+5p9Dnt4TeEED8CCnSrUUDjbdkwUAn6HJ
+ MVeMZvhwmJgK1GfRCBv5B8rrC+SKkYeeFUZSo0FhADBQ+ubeDM5iBwF6Lz+yZdm6XEHIZGZnlM0oO
+ /N7ThiW52D04ji2Ds4G527d6AkOcqylSKmDvL9m6TwPuHpCev05yaniKj2UeG7jBW7uYr4qH99+kr
+ Nn5B05nxx2/r2wks+wStcxaPzmOq5Yj6EDCH1lbzPZIVrBi8ZOY8lJPs7FNIN+TbnUVBo/uihIaJy
+ 7SLiVV/MUjeaj39iAtyouycvH5BuVQSIRFtGQaGMBkQucwba7BPTwEkEAAMPzPCyg96WTp22pyMwM
+ fEHvsx6RtuLaTIxmZ1/GI1Nmwc1sAMioKWRTPH5GUltlEUchS2Ixcql6lDTf1PJn6SVyZVImokRAe
+ ui91SI8edDWUweDoFgcYlRYSMpldZmYMJsBC0rgKY=;
+Received: from [2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxXyA-00067w-UU; Thu, 18 Apr 2024 21:02:59 +0100
+Message-ID: <91bc6db9-7270-4bfb-a0e6-22988dbfcd9f@ilande.co.uk>
+Date: Thu, 18 Apr 2024 21:03:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240307174334.130407-1-thuth@redhat.com>
+ <20240307174334.130407-2-thuth@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240307174334.130407-2-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 1/5] target/sparc/cpu: Rename the CPU models with a "+" in
+ their names
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,65 +109,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 07/03/2024 17:43, Thomas Huth wrote:
 
-Instead of aborting when a session ID is invalid,
-return VIRTIO_CRYPTO_INVSESS ("Invalid session id").
+> Commit b447378e12 ("qom/object: Limit type names to alphanumerical ...")
+> cut down the amount of allowed characters for QOM types to a saner set.
+> The "+" character was not meant to be included in this set, so we had
+> to add a hack there to still allow the legacy names of POWER and Sparc64
+> CPUs. However, instead of putting such a hack in the common QOM code,
+> there is a much better place to do this: The sparc_cpu_class_by_name()
+> function which is used to look up the names of all Sparc CPUs.
+> Thus let's finally get rid of the "+" in the Sparc CPU names, and provide
+> backward compatibility for the old names via some simple checks in the
+> sparc_cpu_class_by_name() function.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   qom/object.c       |  8 --------
+>   target/sparc/cpu.c | 14 ++++++++++++--
+>   2 files changed, 12 insertions(+), 10 deletions(-)
+> 
+> diff --git a/qom/object.c b/qom/object.c
+> index d4a001cf41..759e194972 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -158,14 +158,6 @@ static bool type_name_is_valid(const char *name)
+>                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+>                           "0123456789-_.");
+>   
+> -    /* Allow some legacy names with '+' in it for compatibility reasons */
+> -    if (name[plen] == '+') {
+> -        if (plen >= 17 && g_str_has_prefix(name, "Sun-UltraSparc-I")) {
+> -            /* Allow "Sun-UltraSparc-IV+" and "Sun-UltraSparc-IIIi+" */
+> -            return true;
+> -        }
+> -    }
+> -
+>       return plen == slen;
+>   }
+>   
+> diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+> index 313ebc4c11..651e49bfeb 100644
+> --- a/target/sparc/cpu.c
+> +++ b/target/sparc/cpu.c
+> @@ -316,7 +316,7 @@ static const sparc_def_t sparc_defs[] = {
+>           .features = CPU_DEFAULT_FEATURES,
+>       },
+>       {
+> -        .name = "Sun UltraSparc IV+",
+> +        .name = "Sun UltraSparc IVp",
+>           .iu_version = ((0x3eULL << 48) | (0x19ULL << 32) | (0x22ULL << 24)),
+>           .fpu_version = 0x00000000,
+>           .mmu_version = mmu_us_12,
+> @@ -325,7 +325,7 @@ static const sparc_def_t sparc_defs[] = {
+>           .features = CPU_DEFAULT_FEATURES | CPU_FEATURE_CMT,
+>       },
+>       {
+> -        .name = "Sun UltraSparc IIIi+",
+> +        .name = "Sun UltraSparc IIIip",
+>           .iu_version = ((0x3eULL << 48) | (0x22ULL << 32) | (0ULL << 24)),
+>           .fpu_version = 0x00000000,
+>           .mmu_version = mmu_us_3,
+> @@ -767,6 +767,16 @@ static ObjectClass *sparc_cpu_class_by_name(const char *cpu_model)
+>       char *typename;
+>   
+>       typename = sparc_cpu_type_name(cpu_model);
+> +
+> +    /* Fix up legacy names with '+' in it */
+> +    if (g_str_equal(typename, SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IV+"))) {
+> +        g_free(typename);
+> +        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IVp"));
+> +    } else if (g_str_equal(typename, SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIi+"))) {
+> +        g_free(typename);
+> +        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIip"));
+> +    }
+> +
+>       oc = object_class_by_name(typename);
+>       g_free(typename);
+>       return oc;
 
-Reproduced using:
+I've seen some references in Sun documentation to processors in the form "UltraSparc 
+IIIi plus" so I'd be inclined to use that form for the new type names e.g. 
+"UltraSparc-IIIi-plus".
 
-  $ cat << EOF | qemu-system-i386 -display none \
-     -machine q35,accel=qtest -m 512M -nodefaults \
-     -object cryptodev-backend-builtin,id=cryptodev0 \
-     -device virtio-crypto-pci,id=crypto0,cryptodev=cryptodev0 \
-     -qtest stdio
-  outl 0xcf8 0x80000804
-  outw 0xcfc 0x06
-  outl 0xcf8 0x80000820
-  outl 0xcfc 0xe0008000
-  write 0x10800e 0x1 0x01
-  write 0xe0008016 0x1 0x01
-  write 0xe0008020 0x4 0x00801000
-  write 0xe0008028 0x4 0x00c01000
-  write 0xe000801c 0x1 0x01
-  write 0x110000 0x1 0x05
-  write 0x110001 0x1 0x04
-  write 0x108002 0x1 0x11
-  write 0x108008 0x1 0x48
-  write 0x10800c 0x1 0x01
-  write 0x108018 0x1 0x10
-  write 0x10801c 0x1 0x02
-  write 0x10c002 0x1 0x01
-  write 0xe000b005 0x1 0x00
-  EOF
-  Assertion failed: (session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]),
-  function cryptodev_builtin_close_session, file cryptodev-builtin.c, line 430.
+Otherwise looks good to me, thanks for having a look at this!
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2274
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: zhenwei pi <pizhenwei@bytedance.com>
-Message-Id: <20240409094757.9127-1-philmd@linaro.org>
-(cherry picked from commit eaf2bd29538d039df80bb4b1584de33a61312bc6)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-index cda6ca3b71..2e792be756 100644
---- a/backends/cryptodev-builtin.c
-+++ b/backends/cryptodev-builtin.c
-@@ -416,7 +416,9 @@ static int cryptodev_builtin_close_session(
-                       CRYPTODEV_BACKEND_BUILTIN(backend);
-     CryptoDevBackendBuiltinSession *session;
- 
--    assert(session_id < MAX_NUM_SESSIONS && builtin->sessions[session_id]);
-+    if (session_id >= MAX_NUM_SESSIONS || !builtin->sessions[session_id]) {
-+        return -VIRTIO_CRYPTO_INVSESS;
-+    }
- 
-     session = builtin->sessions[session_id];
-     if (session->cipher) {
--- 
-2.39.2
+
+ATB,
+
+Mark.
 
 
