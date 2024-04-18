@@ -4,94 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D98C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 18:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60598C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:01:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxWht-00053K-CF; Thu, 18 Apr 2024 14:42:01 -0400
+	id 1rxX0j-0003v7-0y; Thu, 18 Apr 2024 15:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnd@arndb.de>) id 1rxWhr-00052v-Br
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:41:59 -0400
-Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rxX0b-0003t3-FL
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:01:21 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnd@arndb.de>) id 1rxWhp-0007kC-GX
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:41:59 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id C28561140094;
- Thu, 18 Apr 2024 14:41:51 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
- by compute5.internal (MEProxy); Thu, 18 Apr 2024 14:41:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm2; t=1713465711; x=1713552111; bh=WYona33Oi0
- 91DmN3yevCSRN9ewoDtBHoqopr8VTRAnM=; b=gVLvCxMIpcQ+HMquC6K/n1sHMJ
- GdZPYyzlKf6w6OJUhXoVhtdz0r3qgYSSRcEGZD7rNCBlmpd2aZ2VCaqD1EQgn4bO
- eEWxCbte0LES0O3a79A2E84rXJUjpFtaarXRLFsOYIT6D5UBZ9WP3iq7Cj50wzmr
- nOdSUrAZ809gbZCqeMNSRCd4wTvY9adVvssUEBjyeVIMaZzS2XKXcob6knLBWTHi
- ccXkf28c64Gip381CGkWt7JYNHpuI7z/eqnGRLE6PkbrjsQWkNpyVJYAq0Stv5lL
- F5VNG+g4mkcYqNMco70937f7jpCsnWtfwFRkgvAhQi09IwyG1GVcY3qzU67A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1713465711; x=1713552111; bh=WYona33Oi091DmN3yevCSRN9ewoD
- tBHoqopr8VTRAnM=; b=P5hlAXkwi7ODwwNHH8mGFota2lxmlcL8dyjn19Lgz0Qo
- rvv4QxCON/6NLayy0jHW94UAqJd72XxAcugHQxoqNWhPz0PDu6e6e7w0jcGwG/m7
- RJAYzOYNqojB16P0wsefXsP0oWugipemGdZi3+aWPOyD6dQPMxrwx7BL8+tyh4pf
- HBiEZUpGUeOaZRjK/L0euvkCtKva/i5SPMfI8YTvfBfAWqMTpmvb5iEU4wOUq8Z9
- gbCuXp1QHn4nOybr9lC0K1XxodLkASgW2Qs/jKn0VrW53Zh05RVrjKct0ddXAl97
- yxrubCJ0CYM/57f/12S09Kjbq2WJY4dY5NfHlLby1A==
-X-ME-Sender: <xms:b2khZiuNJNjhd1upEA6hRgg5IOsWQNB1Zc9T_vqt5CgTRFRRy97qvw>
- <xme:b2khZnfZ_pPDxQZhSFHQKveKsW7Hhce076MRjppp-jegNt5F00S5mptOQAC3G8hFG
- _ULb4-ucTU7r8cySrE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudektddguddvjecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
- rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
- htthgvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedt
- keetffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grrhhnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:b2khZtzZ952xaa1RjxYuUIlqgZbN6igB3jxwdoJP7xSVNqjzKeZXtg>
- <xmx:b2khZtPW9tMjTI7BsNG9syTDd6kiBbnmKBO3Yw9RL0cLzSG9YTjdzQ>
- <xmx:b2khZi_O4kXQi-CTFpPBJeWLbrx1kynZd_2pMnNiR-0gzc50taSZnw>
- <xmx:b2khZlWgCt2RzWmw9HWfWTpdgqCTq9nnTqV5gKhKOf6Q0jQ3R4BleQ>
- <xmx:b2khZmU0dU692nswnxkOv7NuXrZyCPS4D-xMDWWcv0KZfQKX_XFGG0qY>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 4D343B6008D; Thu, 18 Apr 2024 14:41:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rxX0Z-0002zd-24
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:01:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1713466878;
+ bh=aZYA/bQW3htg5nfm+UqfKgrjpTYDzPmZLdYEJ2tmekU=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=U3T7nQcpIE/6fdLQ5e/gbzqZTj9L9EARnkhpeWKMXEwb9NIOUIC/gYWLzO6uqQ4fn
+ DwGz6PzANRK1YR1UtrRPbk24DrhgMbWS0A0a7ne+MRyviC0VU5cQ+VLRWc2mlPihO1
+ UHsvAk+9RJ8zoAbpQVlrnfKuv5ih+aiBhIKbtnckXYhWGZ9LDjXbu7a59bvCntYplq
+ pjyiWlOgF8gfZ2OmYMHd9s9HZc6j5NRKNf/vli/qZ2XOkN6ZZHyZI5pNvLxqs9scsP
+ ljioPpqp4dMZH9uPkxUyxq7MCPEqy31TKDSaoR7DABbfTHSbKGf3TeeiptufueokYl
+ sQlXqkcAfQP5Q==
+Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 16CB03782137;
+ Thu, 18 Apr 2024 19:01:16 +0000 (UTC)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+Subject: [PATCH v8 10/11] virtio-gpu: Register capsets dynamically
+Date: Thu, 18 Apr 2024 22:00:39 +0300
+Message-ID: <20240418190040.1110210-11-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Message-Id: <320677a6-1c3a-477c-95fc-b74cb5a4c5c6@app.fastmail.com>
-In-Reply-To: <b5d375ed-283-974a-febf-892760ff855@redhat.com>
-References: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
- <b5d375ed-283-974a-febf-892760ff855@redhat.com>
-Date: Thu, 18 Apr 2024 20:41:30 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Joseph Myers" <josmyers@redhat.com>,
- "Sandra Loosemore" <sloosemore@baylibre.com>
-Cc: gcc@gcc.gnu.org, binutils@sourceware.org, gdb-patches@sourceware.org,
- "Xi Ruoyao" <libc-alpha@sourceware.org>,
- "Chung-Lin Tang" <cltang@baylibre.com>, andrew@reenigne.org,
- "Yao Qi" <qiyaoltc@gmail.com>, "Dinh Nguyen" <dinguyen@kernel.org>,
- qemu-devel@nongnu.org, newlib@sourceware.org,
- "Andreas Oetken" <andreas.oetken@siemens.com>,
- "Bernd Weiberg" <bernd.weiberg@siemens.com>, "Marek Vasut" <marex@denx.de>
-Subject: Re: Deprecation/removal of nios2 target support
-Content-Type: text/plain
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=arnd@arndb.de;
- helo=fhigh8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=46.235.227.194;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,33 +90,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024, at 17:44, Joseph Myers wrote:
-> On Wed, 17 Apr 2024, Sandra Loosemore wrote:
->
->> Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and remove
->> support from all toolchain components after the release is made.  I'm not sure
->> there is an established process for obsoleting/removing support in other
->> components; besides binutils, GDB, and GLIBC, there's QEMU, newlib/libgloss,
->> and the Linux kernel.  But, we need to get the ball rolling somewhere.
->
-> CC:ing Arnd Bergmann regarding the obsolescence in the Linux kernel.
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-We have not yet marked nios2 as deprecated in the kernel, but that
-is mostly because the implementation does not get in the way too
-much and Dinh Nguyen is still around as a maintainer and merging
-bugfixes.
+virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
+assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
+like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
 
-Almost all nios2 kernel changes I see in the past decade have been
-done blindly without testing on hardware, either for treewide
-changes, or by code inspection. The only notable exceptions I could
-find are from Andreas Oetken and Bernd Weiberg at Siemens and
-from Marek Vasut (all added to Cc in case they have something to add).
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ hw/display/virtio-gpu-virgl.c  | 37 ++++++++++++++++++++++------------
+ include/hw/virtio/virtio-gpu.h |  3 +++
+ 2 files changed, 27 insertions(+), 13 deletions(-)
 
-We should probably remove nios2 from the kernel in the near future,
-but even if we decide not to, I think deprecating it from gcc is the
-right idea: If there are a few remaining users that still plan
-to update their kernels, gcc-14 will still be able to build new
-kernels for several years.
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index eee3816b987f..c0e1ca3ff339 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -558,19 +558,12 @@ static void virgl_cmd_get_capset_info(VirtIOGPU *g,
+     VIRTIO_GPU_FILL_CMD(info);
+ 
+     memset(&resp, 0, sizeof(resp));
+-    if (info.capset_index == 0) {
+-        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL;
+-        virgl_renderer_get_cap_set(resp.capset_id,
+-                                   &resp.capset_max_version,
+-                                   &resp.capset_max_size);
+-    } else if (info.capset_index == 1) {
+-        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL2;
++
++    if (info.capset_index < g->num_capsets) {
++        resp.capset_id = g->capset_ids[info.capset_index];
+         virgl_renderer_get_cap_set(resp.capset_id,
+                                    &resp.capset_max_version,
+                                    &resp.capset_max_size);
+-    } else {
+-        resp.capset_max_version = 0;
+-        resp.capset_max_size = 0;
+     }
+     resp.hdr.type = VIRTIO_GPU_RESP_OK_CAPSET_INFO;
+     virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
+@@ -1120,12 +1113,30 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     return 0;
+ }
+ 
++static void virtio_gpu_virgl_add_capset(VirtIOGPU *g, uint32_t capset_id)
++{
++    g->capset_ids = g_realloc_n(g->capset_ids, g->num_capsets + 1,
++                                sizeof(*g->capset_ids));
++    g->capset_ids[g->num_capsets++] = capset_id;
++}
++
+ int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
+ {
+     uint32_t capset2_max_ver, capset2_max_size;
++
++    if (g->num_capsets) {
++        return g->num_capsets;
++    }
++
++    /* VIRGL is always supported. */
++    virtio_gpu_virgl_add_capset(g, VIRTIO_GPU_CAPSET_VIRGL);
++
+     virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
+-                              &capset2_max_ver,
+-                              &capset2_max_size);
++                               &capset2_max_ver,
++                               &capset2_max_size);
++    if (capset2_max_ver) {
++        virtio_gpu_virgl_add_capset(g, VIRTIO_GPU_CAPSET_VIRGL2);
++    }
+ 
+-    return capset2_max_ver ? 2 : 1;
++    return g->num_capsets;
+ }
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index d2a0d542fbb3..3d7d001a85c5 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -218,6 +218,9 @@ struct VirtIOGPU {
+         QTAILQ_HEAD(, VGPUDMABuf) bufs;
+         VGPUDMABuf *primary[VIRTIO_GPU_MAX_SCANOUTS];
+     } dmabuf;
++
++    uint32_t *capset_ids;
++    uint32_t num_capsets;
+ };
+ 
+ struct VirtIOGPUClass {
+-- 
+2.44.0
 
-     Arnd
 
