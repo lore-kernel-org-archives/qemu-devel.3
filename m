@@ -4,68 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA81C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 22:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CC4C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 23:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxZxI-0001Pn-JF; Thu, 18 Apr 2024 18:10:08 -0400
+	id 1rxawG-00006K-Qb; Thu, 18 Apr 2024 19:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rxZxG-0001P4-Bd
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 18:10:06 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rxZxD-0001zY-V5
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 18:10:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713478204; x=1745014204;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Ju/ajOLbMJ/ugY8uBwxjZnjn1MIfogCm+EE5YZ9aQXg=;
- b=OVXsbFH+1DioEDsJNjMqK89eQc3SJ1zcXhXB7AMjAfN7b3Khf6fBPzBN
- KAvTjuBMwGw/q9VMrSRxIk8nXE6+ARQ8z95G9ULuc8svUGA8Osfre6FaQ
- qfCJ0wyIKfNoUXYvtgw4WJnNA0MUT75kFQEpUi47ZZP7qeZlbN4BzmZd7
- mvW/lJAhp02s8Zy4r2pf7GbyP0Pv8uSF46W+I25AwPJHhngi2mQF4I3j2
- vP2VPuGXiDLKvEQPQTMb4DRgSO9Spsu5wQ9ymMtxG/gCOxd85/fQNDCJP
- Nf/TfgbYS3+/Z/rnS4Q19BX2Nfp/4fPHLM9S1GNygDN5p4ZlybGbDQK9M w==;
-X-CSE-ConnectionGUID: fdDwCwJfSceMj8yhA1J3jw==
-X-CSE-MsgGUID: Sn++HQTeRXmpnNyvu4gLuQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="12002030"
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="12002030"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Apr 2024 15:09:55 -0700
-X-CSE-ConnectionGUID: Kgwhgyc+TIG5grIbkrPDrQ==
-X-CSE-MsgGUID: vhdK6QHMRF6/bdPlblirAw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="60559330"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa001.jf.intel.com with ESMTP; 18 Apr 2024 15:09:56 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	berrange@redhat.com
-Subject: [PATCH v7 3/5] ui/console: Introduce qemu_dmabuf_set_..() helpers
-Date: Thu, 18 Apr 2024 15:05:39 -0700
-Message-Id: <20240418220541.931134-4-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240418220541.931134-1-dongwon.kim@intel.com>
-References: <20240418220541.931134-1-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1rxawF-000068-Hl
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 19:13:07 -0400
+Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1rxawD-0003Hm-Kz
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 19:13:07 -0400
+Received: by mail-io1-xd2b.google.com with SMTP id
+ ca18e2360f4ac-7da4373f850so22254139f.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 16:13:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713481983; x=1714086783; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0echXWymO1qCOzsNTL55kwNLt6HeSSpMUSWl9KxIRrg=;
+ b=GYakNZMduIHfrBZyocDw2Cnxn22KWXNTxEi0aFDYPfQhYl/jRALU5x6CFNI9/5k0VP
+ p0ht8JoKNYsKGCp70WWAf3SxWKq3gfZG/0RLAFNed6fPVQwgtSc5eBl2zpxiv584tnq3
+ 9MyKABYz5o8ltpMTzEBV169bpLqnYRVHVMehqr0OYHcVxXLObLdwslJ1UrnrggUZkZ3h
+ Oi2qygQUH7DbzK8QMSq8PuimIZk9j2hSslcShS2vP7/0O18vjUBKobjBxoDb1MmdM7gw
+ s/vFFUeK8WtNWquakkjI5zQ7jaaTsEN2T6pmfO0I+EYmmOvFLJXhYzD4bXDE37HRiRT5
+ AEng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713481983; x=1714086783;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0echXWymO1qCOzsNTL55kwNLt6HeSSpMUSWl9KxIRrg=;
+ b=P748JjgQS3cmyGTnmiGwaZuFC1XsVidfIlXGHEkpBT9HBRnAoLGSeqGyvnpX3nzyYk
+ F7c2ty0SejHMitGNDwXd3VCNSFvaxskWMcgk/1VfpZUNMOUJXj7Mr5BI5VvqjFgTbbsN
+ 8yKchmckZK0SB7WnDaJocUjpjs8hXsVTcnARNXiuzWZD4PnKB7jTj+X1tpHVZG3as5bm
+ eRmzZxAs5jza+pPb+DIR6Yc6+2yXODIV91e0tANCHFgaMfH4TZBj3baiEkdyvy03ePul
+ wzT0e65GWW6XX36atjzwPS7s0rCHKg2Fxoj9fi8kGrorhFPxcQPLNbfQoPaqJGrWcVsg
+ KJAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVo2QYZUZQIi/8Zz9lJncrApMyePTbdIeOEdZxPTquh6DujDmPzTnZg+0gi617uN9rjeSzegmKhmjxouFw5ZjbM7dDl7hE=
+X-Gm-Message-State: AOJu0Yy8jx4Cf340gzeSMUzJKGyPYyuyGxUXewF4VVfWoSpUap19VkwN
+ m+5Q5BAx3o9PpuenVYAhrFxFpR+b8lqOL6WsHPGCaLqejI+lhasI6eY4uk7l0YmwEfQ0xFbp3fq
+ XgXyGGiTzSAZ5oNSRc4wRwp4I+dA=
+X-Google-Smtp-Source: AGHT+IETR25e2pOFZAh9x9cZdSfQF5OGCrVzkSUHVT893A0LznTLu4RdCRnb6qJby4Zp04bKKS2Vb/iStvdKFlSOL94=
+X-Received: by 2002:a6b:e016:0:b0:7da:1a9f:cabc with SMTP id
+ z22-20020a6be016000000b007da1a9fcabcmr793762iog.3.1713481983431; Thu, 18 Apr
+ 2024 16:13:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -64
-X-Spam_score: -6.5
-X-Spam_bar: ------
-X-Spam_report: (-6.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+References: <20240113012741.54664-1-masscry@gmail.com>
+ <20240113012741.54664-2-masscry@gmail.com>
+ <ZiEmbvuzbpy-ERDh@redhat.com>
+In-Reply-To: <ZiEmbvuzbpy-ERDh@redhat.com>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Thu, 18 Apr 2024 16:12:52 -0700
+Message-ID: <CAFubqFtpTsivh08V0MkHGJO11g62dUU7kq01yBB=aJ6VVEC-9A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] libvhost-user: Fix pointer arithmetic in indirect read
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Temir Zharaspayev <masscry@gmail.com>, qemu-devel@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Xie Yongji <xieyongji@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2b;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,201 +94,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+The change looks right to me. As is, it looks like the code is
+skipping over descriptors when the intent should be to bounce data
+into a single descriptor.
 
-To enhance security in accessing the QemuDmaBuf struct, new helper
-functions for setting specific fields within the struct were introduced.
-And all occurrences where these fields were previously set directly
-have been updated to utilize these helper functions.
+I agree the variable rename should go in as a separate change.
 
-v7: removed prefix, "dpy_gl_" from all helpers
+On Thu, Apr 18, 2024 at 6:56=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Sat, Jan 13, 2024 at 04:27:40AM +0300, Temir Zharaspayev wrote:
+> > When zero-copy usage of indirect descriptors buffer table isn't
+> > possible, library gather scattered memory chunks in a local copy.
+> > This commit fixes the issue with pointer arithmetic for the local copy
+> > buffer.
+> >
+> > Signed-off-by: Temir Zharaspayev <masscry@gmail.com>
+> > ---
+> >  subprojects/libvhost-user/libvhost-user.c | 11 ++++++-----
+> >  1 file changed, 6 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/li=
+bvhost-user/libvhost-user.c
+> > index 6684057370..e952c098a3 100644
+> > --- a/subprojects/libvhost-user/libvhost-user.c
+> > +++ b/subprojects/libvhost-user/libvhost-user.c
+> > @@ -2307,7 +2307,7 @@ static int
+> >  virtqueue_read_indirect_desc(VuDev *dev, struct vring_desc *desc,
+> >                               uint64_t addr, size_t len)
+> >  {
+> > -    struct vring_desc *ori_desc;
+> > +    uint8_t *src_cursor, *dst_cursor;
+> >      uint64_t read_len;
+> >
+> >      if (len > (VIRTQUEUE_MAX_SIZE * sizeof(struct vring_desc))) {
+> > @@ -2318,17 +2318,18 @@ virtqueue_read_indirect_desc(VuDev *dev, struct=
+ vring_desc *desc,
+> >          return -1;
+> >      }
+> >
+> > +    dst_cursor =3D (uint8_t *) desc;
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- include/ui/console.h |  5 +++++
- ui/console.c         | 30 ++++++++++++++++++++++++++++++
- ui/egl-helpers.c     | 16 +++++++++-------
- ui/gtk-egl.c         |  4 ++--
- ui/gtk-gl-area.c     |  4 ++--
- ui/gtk.c             |  6 +++---
- 6 files changed, 51 insertions(+), 14 deletions(-)
+Nit - no space on cast
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index d845f67182..92a7d0d468 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -375,6 +375,11 @@ void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
- int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
-+void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
-+void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
-+void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
-+void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted);
-+void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
- void dpy_gl_release_dmabuf(QemuConsole *con,
-                            QemuDmaBuf *dmabuf);
- void dpy_gl_update(QemuConsole *con,
-diff --git a/ui/console.c b/ui/console.c
-index 1bba3324d5..bd16ea7a4a 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1244,6 +1244,36 @@ bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf)
-     return dmabuf->draw_submitted;
- }
- 
-+void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->texture = texture;
-+}
-+
-+void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->fence_fd = fence_fd;
-+}
-+
-+void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->sync = sync;
-+}
-+
-+void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->draw_submitted = draw_submitted;
-+}
-+
-+void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->fd = fd;
-+}
-+
- void dpy_gl_release_dmabuf(QemuConsole *con,
-                           QemuDmaBuf *dmabuf)
- {
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 3f96e63d25..99b2ebbe23 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -348,8 +348,8 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-         return;
-     }
- 
--    glGenTextures(1, &dmabuf->texture);
--    texture = qemu_dmabuf_get_texture(dmabuf);
-+    glGenTextures(1, &texture);
-+    qemu_dmabuf_set_texture(dmabuf, texture);
-     glBindTexture(GL_TEXTURE_2D, texture);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-@@ -368,7 +368,7 @@ void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
-     }
- 
-     glDeleteTextures(1, &texture);
--    dmabuf->texture = 0;
-+    qemu_dmabuf_set_texture(dmabuf, 0);
- }
- 
- void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
-@@ -382,7 +382,7 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
-         sync = eglCreateSyncKHR(qemu_egl_display,
-                                 EGL_SYNC_NATIVE_FENCE_ANDROID, NULL);
-         if (sync != EGL_NO_SYNC_KHR) {
--            dmabuf->sync = sync;
-+            qemu_dmabuf_set_sync(dmabuf, sync);
-         }
-     }
- }
-@@ -390,12 +390,14 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
- void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
- {
-     void *sync = qemu_dmabuf_get_sync(dmabuf);
-+    int fence_fd;
- 
-     if (sync) {
--        dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
--                                                      sync);
-+        fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
-+                                              sync);
-+        qemu_dmabuf_set_fence_fd(dmabuf, fence_fd);
-         eglDestroySyncKHR(qemu_egl_display, sync);
--        dmabuf->sync = NULL;
-+        qemu_dmabuf_set_sync(dmabuf, NULL);
-     }
- }
- 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 7a45daefa1..ec0bf45482 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -87,7 +87,7 @@ void gd_egl_draw(VirtualConsole *vc)
-             if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
--                dmabuf->draw_submitted = false;
-+                qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-         }
- #endif
-@@ -381,7 +381,7 @@ void gd_egl_flush(DisplayChangeListener *dcl,
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
--        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-+        qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_egl_set_scanout_mode(vc, true);
-         gtk_widget_queue_draw_area(area, x, y, w, h);
-         return;
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 2d70280803..9a3f3d0d71 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -63,7 +63,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
-             if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
--                dmabuf->draw_submitted = false;
-+                qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-         }
- #endif
-@@ -291,7 +291,7 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
--        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-+        qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_gl_area_set_scanout_mode(vc, true);
-     }
-     gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 237c913b26..3a6832eb1b 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -598,11 +598,11 @@ void gd_hw_gl_flushed(void *vcon)
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
-     int fence_fd;
- 
--    if (dmabuf->fence_fd >= 0) {
--        fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+    fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+    if (fence_fd >= 0) {
-         qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
-         close(fence_fd);
--        dmabuf->fence_fd = -1;
-+        qemu_dmabuf_set_fence_fd(dmabuf, -1);
-         graphic_hw_gl_block(vc->gfx.dcl.con, false);
-     }
- }
--- 
-2.34.1
-
+> >      while (len) {
+> >          read_len =3D len;
+> > -        ori_desc =3D vu_gpa_to_va(dev, &read_len, addr);
+> > -        if (!ori_desc) {
+> > +        src_cursor =3D vu_gpa_to_va(dev, &read_len, addr);
+> > +        if (!src_cursor) {
+> >              return -1;
+> >          }
+> >
+> > -        memcpy(desc, ori_desc, read_len);
+> > +        memcpy(dst_cursor, src_cursor, read_len);
+> >          len -=3D read_len;
+> >          addr +=3D read_len;
+> > -        desc +=3D read_len;
+> > +        dst_cursor +=3D read_len;
+>
+> The ori_desc -> src_cursor changes don't look to have any functional
+> effect. Having that change present obscures the functional part of
+> the patch, which is this line. FWIW, it is generally preferrable to
+> not mix functional and non-functional changes in the same patch
+>
+> It now interprets 'read_len' as the number of bytes to increment the
+> address by, rather than incrementing by the number of elements of
+> size 'sizeof(struct vring_desc)'.
+>
+> I don't know enough about this area of QEMU code to say which
+> semantics were desired, so I'll defer to the Michael as maintainer
+> to give a formal review.
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
+>
 
