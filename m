@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8985C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A89BDC04FF8
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 16:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxUKp-0000lJ-Bk; Thu, 18 Apr 2024 12:10:03 -0400
+	id 1rxUKi-0000kb-Vd; Thu, 18 Apr 2024 12:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKn-0000kv-2S
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:10:01 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKh-0000k1-CC
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:09:55 -0400
 Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKl-0006YY-26
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:10:00 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKf-0006Xy-IK
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:09:55 -0400
 Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3476dcd9c46so718458f8f.0
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 09:09:57 -0700 (PDT)
+ ffacd0b85a97d-349c4505058so724082f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 09:09:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713456597; x=1714061397; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713456591; x=1714061391; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RC3I7eEuU1Vrf2ad1mlMtTC053sX+mHPqI7q34t9+Ao=;
- b=iLe/mHvHZ3DmAiEZCSMcWExrF96RqQZXTGRfz6y5119Jne/1epHOw7X+HcbNuQZcgP
- trjepu6BoKan6rLTeh2OvPS0NMwmbNoqTLdL2lJCnN1Ty0TOh7jSbIgsGRN4CRACncVH
- dzhzt3SUVeIGwezkt9YH4/eei008A7FDKGxmS8XP8of9La7+sExwyBr/y2HVqjhI2Lda
- ew+4Z2S8YQDQzZ1quTyx5fa/uePE9NspQxVngZhc06TZASWg2mNInohNl6Qz+esBOBDb
- uqs187/ouJ/X8hCXQ2fhsoABWN8sUGtCtGAQrRRfkogHTLzTMk1SZWl5n5qX3D0wwuul
- vCjw==
+ bh=kpo0HdL0eHYUdshcZ/Szyn4EYxCkR3M8RtXPhI8xpmY=;
+ b=gDyw2IUB9oyeQit2OBqvwUO/HeOmEegMTgm14PN/h+5515A7MpBzSK9YQrwdeqbriC
+ e+cOjto9L5mUTWYnAKdXubEvU8S1HHkxsdw+4PXWePSoML3VWzh6K9fWA7c/6uqH6Ah8
+ wCMEqIPxxqnEJfWKpMokXn/Ier8YkDxtHadNUhu/tBROR+mQEulxBvHgVodQYREe/OTm
+ 0j93j+6tjl/ZFB8MCfNDIp12MwinZ+qupI2G8TZhjMM9fPPVlx9QwWUvlJtunDp4n9K0
+ 7ihwQRCJ8mkZ3ZwkYmz2A9oiC/iqxgAL5MgmEdvDis9+seJlW0o9RmJ5SSzzWQp/rHCo
+ HaEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713456597; x=1714061397;
+ d=1e100.net; s=20230601; t=1713456591; x=1714061391;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RC3I7eEuU1Vrf2ad1mlMtTC053sX+mHPqI7q34t9+Ao=;
- b=vPEQ702/xy2kXoBfANky9F1Ja+Ig/JhJoV2a7izHntdcctgNbxlEj3MSiDG+B1nw5m
- TGuUvOW8D861gub2J7fPESyHpzLfbP6yTKlVP9hX4NCSAOQaYhBtLj2b+L4aebZum7d4
- Cn1G251yTMQS+V5xiyHwTdeq+IpcstVJGVqS95ql+A+Q/1zQotY/v6V71AfQTsX6Trs3
- npxnDD521PGzPIgLwtvatQN14XpA215YPWMS1a251wp4GFSflqif7svBzh3/WkJ3P0QT
- 7v5lIjkKTNm4TxQSLv62tY7XJge5CXgVZXeEaOm8SLXzhmB2dsHqTvVP3ogVA4e0TGfM
- wMcg==
-X-Gm-Message-State: AOJu0Yxf7yVkfB4nxEAWsVGdSxuNyf5wQbNrRAHgZV0R+cs8y2kOl3yt
- HoTw6PDCYpa9GaVc/HHWmIrl8tsclR05cno8PHPb5h11sO5GuihPjzkJK6ICouSg0ALCfjNVJkr
- +
-X-Google-Smtp-Source: AGHT+IFqQr1grcS6Vv0q2R8fNpGw+sUBkGr/sEJtqbVYxP3cv0SlnpNkBVS/32q5ifVtO3wIYSRCxw==
-X-Received: by 2002:adf:e6cb:0:b0:349:cbaa:3bfd with SMTP id
- y11-20020adfe6cb000000b00349cbaa3bfdmr2071143wrm.14.1713456596692; 
- Thu, 18 Apr 2024 09:09:56 -0700 (PDT)
+ bh=kpo0HdL0eHYUdshcZ/Szyn4EYxCkR3M8RtXPhI8xpmY=;
+ b=rlUeyYX70hYdsvA96TNKNzIbgdUGWOCQvtnO6xCKTtLzzcM214FgBEjzQQZrPc6B3+
+ JOdq3036fIZc3qE3kasMCqXxNRBdzu3odpt6OX2JIZkFxU68LFBRNqJ/v6wDKsxV1l8d
+ yfEz03JcUvmX4HyTxsryE/OokspnUA7iwtAXhg3CuM+xao1mxBys+IEEltk5T1eVTM89
+ PpEmlb3FZ8+IkCTY3F/QlRxlNh43zPaQ4zB12ifVQI8z1uymwaunGkOG3ClBuD1PR9dM
+ aTsk5hjRn75peEWSs9l+9KldEYI8PuThD/tjn7/MPAHgf9kKj3I3HsyPSPhQXGtqmBiw
+ ZHOQ==
+X-Gm-Message-State: AOJu0YyxXcfHSfu6NiHSlfls8c+gK/FZXU0DFY6DBMdmU+ihJRjtdnUE
+ RVFowOYug6CQneC9RUoCQEHPPvX2oS9iQxwPYTMAMcOQyDFK89M+xobuL7O+jDJpGUT4prs3MsX
+ t
+X-Google-Smtp-Source: AGHT+IGp851teTyDhT7ce6yV0euRvN2T15mAVI/VygshimM9xVF5c30IkH2EWd3i0VEwFqqEBKLGEg==
+X-Received: by 2002:a5d:4004:0:b0:343:7e98:e73e with SMTP id
+ n4-20020a5d4004000000b003437e98e73emr2034591wrp.40.1713456591518; 
+ Thu, 18 Apr 2024 09:09:51 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.151.213])
  by smtp.gmail.com with ESMTPSA id
- v10-20020a5d590a000000b003437ad152f9sm2145991wrd.105.2024.04.18.09.09.55
+ h16-20020adffd50000000b00346d3a626b8sm2210100wrs.3.2024.04.18.09.09.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Apr 2024 09:09:56 -0700 (PDT)
+ Thu, 18 Apr 2024 09:09:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] accel/tcg: Rename load-extract/store-insert headers using
- .h.inc suffix
-Date: Thu, 18 Apr 2024 18:09:43 +0200
-Message-ID: <20240418160943.95047-3-philmd@linaro.org>
+Subject: [PATCH 1/2] hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
+Date: Thu, 18 Apr 2024 18:09:42 +0200
+Message-ID: <20240418160943.95047-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240418160943.95047-1-philmd@linaro.org>
 References: <20240418160943.95047-1-philmd@linaro.org>
@@ -107,71 +106,69 @@ about includes") this is documented in the Coding Style:
   the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
   being included for expansion.
 
-Therefore rename 'store-insert-al16.h' as 'store-insert-al16.h.inc'
-and 'load-extract-al16-al8.h' as 'load-extract-al16-al8.h.inc'.
+Therefore rename "hw/elf_ops.h" as "hw/elf_ops.h.inc".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
- .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
- accel/tcg/ldst_atomicity.c.inc                                | 4 ++--
- 8 files changed, 2 insertions(+), 2 deletions(-)
- rename host/include/aarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
- rename host/include/aarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
- rename host/include/generic/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
- rename host/include/generic/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
- rename host/include/loongarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
- rename host/include/loongarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
- rename host/include/x86_64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ include/hw/{elf_ops.h => elf_ops.h.inc} | 0
+ bsd-user/elfload.c                      | 2 +-
+ hw/core/loader.c                        | 4 ++--
+ linux-user/elfload.c                    | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+ rename include/hw/{elf_ops.h => elf_ops.h.inc} (100%)
 
-diff --git a/host/include/aarch64/host/load-extract-al16-al8.h b/host/include/aarch64/host/load-extract-al16-al8.h.inc
+diff --git a/include/hw/elf_ops.h b/include/hw/elf_ops.h.inc
 similarity index 100%
-rename from host/include/aarch64/host/load-extract-al16-al8.h
-rename to host/include/aarch64/host/load-extract-al16-al8.h.inc
-diff --git a/host/include/aarch64/host/store-insert-al16.h b/host/include/aarch64/host/store-insert-al16.h.inc
-similarity index 100%
-rename from host/include/aarch64/host/store-insert-al16.h
-rename to host/include/aarch64/host/store-insert-al16.h.inc
-diff --git a/host/include/generic/host/load-extract-al16-al8.h b/host/include/generic/host/load-extract-al16-al8.h.inc
-similarity index 100%
-rename from host/include/generic/host/load-extract-al16-al8.h
-rename to host/include/generic/host/load-extract-al16-al8.h.inc
-diff --git a/host/include/generic/host/store-insert-al16.h b/host/include/generic/host/store-insert-al16.h.inc
-similarity index 100%
-rename from host/include/generic/host/store-insert-al16.h
-rename to host/include/generic/host/store-insert-al16.h.inc
-diff --git a/host/include/loongarch64/host/load-extract-al16-al8.h b/host/include/loongarch64/host/load-extract-al16-al8.h.inc
-similarity index 100%
-rename from host/include/loongarch64/host/load-extract-al16-al8.h
-rename to host/include/loongarch64/host/load-extract-al16-al8.h.inc
-diff --git a/host/include/loongarch64/host/store-insert-al16.h b/host/include/loongarch64/host/store-insert-al16.h.inc
-similarity index 100%
-rename from host/include/loongarch64/host/store-insert-al16.h
-rename to host/include/loongarch64/host/store-insert-al16.h.inc
-diff --git a/host/include/x86_64/host/load-extract-al16-al8.h b/host/include/x86_64/host/load-extract-al16-al8.h.inc
-similarity index 100%
-rename from host/include/x86_64/host/load-extract-al16-al8.h
-rename to host/include/x86_64/host/load-extract-al16-al8.h.inc
-diff --git a/accel/tcg/ldst_atomicity.c.inc b/accel/tcg/ldst_atomicity.c.inc
-index 97dae70d53..134da3c1da 100644
---- a/accel/tcg/ldst_atomicity.c.inc
-+++ b/accel/tcg/ldst_atomicity.c.inc
-@@ -9,8 +9,8 @@
-  * See the COPYING file in the top-level directory.
-  */
+rename from include/hw/elf_ops.h
+rename to include/hw/elf_ops.h.inc
+diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
+index baf2f63d2f..833fa3bd05 100644
+--- a/bsd-user/elfload.c
++++ b/bsd-user/elfload.c
+@@ -383,7 +383,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
+     return "";
+ }
  
--#include "host/load-extract-al16-al8.h"
--#include "host/store-insert-al16.h"
-+#include "host/load-extract-al16-al8.h.inc"
-+#include "host/store-insert-al16.h.inc"
+-/* FIXME: This should use elf_ops.h  */
++/* FIXME: This should use elf_ops.h.inc  */
+ static int symcmp(const void *s0, const void *s1)
+ {
+     struct elf_sym *sym0 = (struct elf_sym *)s0;
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index b8e52f3fb0..2f8105d7de 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -305,7 +305,7 @@ static void *load_at(int fd, off_t offset, size_t size)
+ #define elf_word        uint32_t
+ #define elf_sword       int32_t
+ #define bswapSZs        bswap32s
+-#include "hw/elf_ops.h"
++#include "hw/elf_ops.h.inc"
  
- #ifdef CONFIG_ATOMIC64
- # define HAVE_al8          true
+ #undef elfhdr
+ #undef elf_phdr
+@@ -327,7 +327,7 @@ static void *load_at(int fd, off_t offset, size_t size)
+ #define elf_sword       int64_t
+ #define bswapSZs        bswap64s
+ #define SZ              64
+-#include "hw/elf_ops.h"
++#include "hw/elf_ops.h.inc"
+ 
+ const char *load_elf_strerror(ssize_t error)
+ {
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 28d9e8a9a5..fc60c01d57 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3672,7 +3672,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
+     return "";
+ }
+ 
+-/* FIXME: This should use elf_ops.h  */
++/* FIXME: This should use elf_ops.h.inc  */
+ static int symcmp(const void *s0, const void *s1)
+ {
+     struct elf_sym *sym0 = (struct elf_sym *)s0;
 -- 
 2.41.0
 
