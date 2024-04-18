@@ -4,79 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F891C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 09:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84B0FC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 09:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxNtM-0002rf-3F; Thu, 18 Apr 2024 05:17:16 -0400
+	id 1rxOAX-0005zK-Tf; Thu, 18 Apr 2024 05:35:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rxNtB-0002qk-Ba
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:17:09 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rxOAU-0005xX-7q
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:34:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rxNt8-0003C9-Qr
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:17:04 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rxOAR-00065L-8m
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:34:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713431820;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=cD18UsUIow33eqJYZAW24in/f0iGSZfeTKN2Rye6MnU=;
- b=Qh7270Az6B99JbvLkzmumHC4LhuIOnNWa3mnfor6ImnBKsehvPzl4UKXegHELKrmXFrt0c
- YXd78xsSwHDbfdOZd7SJ9wtUh5Js1nsrHDupEnX/IDo/oVXE8S2bOz+/rOtmSKVh0VY28C
- RHMUwTaQ/J3pS3+s5LSIeIhzVtqzWr0=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1713432893;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=d4dZ2y/rP13ikzS1vcqBvFNTPdOo5WlT9AAmnAC/V9Y=;
+ b=Eq6h44A0yPxJPxroiauNBbksJfXCOSJstpRUFp5wVHNeisl5880d1TVPOy/B6TWfrPIbKf
+ UYoeDH28H+ScAyjeTwHLpV86gKn5Ne7BuJPxA8haBaai3G7+SSDHuth8/mw3A7x6XsytiJ
+ 8/Ez5rIvvCa5UqGkcy3YVEdKqfLj6DA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-151-QsN0VPGLNV6HwkeAOaKUpg-1; Thu, 18 Apr 2024 05:16:58 -0400
-X-MC-Unique: QsN0VPGLNV6HwkeAOaKUpg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a5563ef10d4so34432066b.2
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 02:16:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713431816; x=1714036616;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cD18UsUIow33eqJYZAW24in/f0iGSZfeTKN2Rye6MnU=;
- b=FO0V/AEiLB9ZLvq5hU/3BJhhMPowhKZUOTg+hP9+9QIzQ8Cv0ByEKvEGIIls5DxuUQ
- XgUCRc7yYT3KKzTSvkgfol5BmB1t+Y59LUcCfNana8dhkuGuOhpQAtaRmYHT116daKmI
- 1ZmKWZK9Rvia3Z9ApaDY1jB8lyc1NwT06mxGutw5Z1SitF2G0+FbyCRf6ygiiJQizirO
- LCJl4WHgzz/PUC2LAU1pVJDUaCSQ/AZRyktKSa1fCzx3TlNb4Uiie6P7piAgnv6NiHZ5
- mO9KPdHb8ipVq1ZsJxPpJ0DAaPSK5D91IJ00WgJh4uCthHPMZSzh5mOp0FSgUZViZYqy
- FrVA==
-X-Gm-Message-State: AOJu0Yzz8oGvMRI3Ao0kj3AJjlkLSzOS9ggPjwxl6Mb2YFP35G+mhIZl
- /ItkmBKj08mXRZG2Jnc+VM6BIvReNgGaAWAgBbK/WX1KFLpOiNT1xmQg3jY9vFK6A8zdVLejE6/
- pAwvDzxzr9ppc9DgFyvcS+tFOEK2ZSmXSuE6yn+5FBAimmVQbc7z/62s0ylchKh0eEfWYuisGK5
- Uutr0o85jf2f2wUB4zzwQj5dU3cLWm7JZzZZ6O
-X-Received: by 2002:a17:906:3108:b0:a52:6a31:a9f2 with SMTP id
- 8-20020a170906310800b00a526a31a9f2mr1099765ejx.70.1713431816202; 
- Thu, 18 Apr 2024 02:16:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFp9OATuQf0bHzxcrNCHB6bjSyu0q7fLskqB2NCbgslFU1gAycPHRqykQFVnldsNYnTbIzCnA==
-X-Received: by 2002:a17:906:3108:b0:a52:6a31:a9f2 with SMTP id
- 8-20020a170906310800b00a526a31a9f2mr1099756ejx.70.1713431815854; 
- Thu, 18 Apr 2024 02:16:55 -0700 (PDT)
-Received: from avogadro.local ([176.206.84.58])
- by smtp.gmail.com with ESMTPSA id
- lk19-20020a170906cb1300b00a526418d0ebsm630477ejb.74.2024.04.18.02.16.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Apr 2024 02:16:55 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org
-Subject: [PATCH] pythondeps.toml: warn about updates needed to
- docs/requirements.txt
-Date: Thu, 18 Apr 2024 11:16:54 +0200
-Message-ID: <20240418091654.16878-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ us-mta-433-SaXS7SrWMuaST_awqHQu1Q-1; Thu, 18 Apr 2024 05:34:47 -0400
+X-MC-Unique: SaXS7SrWMuaST_awqHQu1Q-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4DB111044574;
+ Thu, 18 Apr 2024 09:34:47 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.72])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A5B7B492BC7;
+ Thu, 18 Apr 2024 09:34:45 +0000 (UTC)
+Date: Thu, 18 Apr 2024 10:34:43 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roman Kiryanov <rkir@google.com>, Stefano Garzarella <sgarzare@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, alex.bennee@linaro.org,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ JP Cottin <jpcottin@google.com>, Erwin Jansen <jansene@google.com>,
+ Mehdi Alizadeh <mett@google.com>
+Subject: Re: Hermetic virtio-vsock in QEMU
+Message-ID: <ZiDpM7ZusU0SvH7K@redhat.com>
+References: <CAOGAQeqOVAHJ4VxQNKqO43hmLJdxpA6E_JEQrfL380SwT4Y73w@mail.gmail.com>
+ <Zh0NiI9ZfS5uzs5Z@redhat.com>
+ <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOGAQerx0DmHvJNf05wuJFOtXVwDFTt7fy0-GmBZ7xKoLAHTKQ@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -97,41 +83,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-docs/requirements.txt is expected by readthedocs and should be in sync
-with pythondeps.toml.  Add a comment to both.
+On Wed, Apr 17, 2024 at 12:31:41PM -0700, Roman Kiryanov wrote:
+> Hi Daniel,
+> 
+> thank you for looking into this. I checked how VHOST_USER_VSOCK and it
+> refers to the vhost-user protocol. It is implemented in the
+> subprojects/libvhost-user library, but this library depends on poll.h
+> and linux/vhost.h files. Do you know if it builds/works on Windows?
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/requirements.txt | 3 +++
- pythondeps.toml       | 1 +
- 2 files changed, 4 insertions(+)
+Stefano recently ported it to work on any POSIX platform,
+but obviously that still excludes Windows:
 
-diff --git a/docs/requirements.txt b/docs/requirements.txt
-index 691e5218ec7..02583f209aa 100644
---- a/docs/requirements.txt
-+++ b/docs/requirements.txt
-@@ -1,2 +1,5 @@
-+# Used by readthedocs.io
-+# Should be in sync with the "installed" key of pythondeps.toml
-+
- sphinx==5.3.0
- sphinx_rtd_theme==1.1.1
-diff --git a/pythondeps.toml b/pythondeps.toml
-index 0e884159993..9c16602d303 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -22,6 +22,7 @@
- meson = { accepted = ">=0.63.0", installed = "1.2.3", canary = "meson" }
- 
- [docs]
-+# Please keep the installed versions in sync with docs/requirements.txt
- sphinx = { accepted = ">=1.6", installed = "5.3.0", canary = "sphinx-build" }
- sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
- 
+  https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg00388.html
+
+I'm unclear what blockers there are wrt Windows, but perhaps
+Stefano (CC'd) can advise.
+
+Personally, while I think vhost-user is a good option for the
+vast majority of cases, I believe QEMU ought to natively
+implement a simple self contained AF_UNIX backend for vsock,
+avoiding need to depend on 3rd party software for its use.
+
+With regards,
+Daniel
 -- 
-2.44.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
