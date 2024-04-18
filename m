@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DC5C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4882DC04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVtm-0008DV-EK; Thu, 18 Apr 2024 13:50:14 -0400
+	id 1rxVtg-0008AL-T3; Thu, 18 Apr 2024 13:50:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVtj-0008Bf-Dr; Thu, 18 Apr 2024 13:50:11 -0400
+ id 1rxVte-00089K-OL; Thu, 18 Apr 2024 13:50:07 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVtg-0007WI-L3; Thu, 18 Apr 2024 13:50:11 -0400
+ id 1rxVtc-0007NA-Qv; Thu, 18 Apr 2024 13:50:06 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5D4AF5FD65;
- Thu, 18 Apr 2024 20:50:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 04BAD5FD62;
+ Thu, 18 Apr 2024 20:49:59 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7862DB933B;
- Thu, 18 Apr 2024 20:49:57 +0300 (MSK)
-Received: (nullmailer pid 947818 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4FB95B9338;
+ Thu, 18 Apr 2024 20:49:56 +0300 (MSK)
+Received: (nullmailer pid 947809 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zack Buhman <zack@buhman.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alex Fan <alex.fan.q@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 092/116] target/sh4: Fix mac.l with saturation enabled
-Date: Thu, 18 Apr 2024 20:49:22 +0300
-Message-Id: <20240418174955.947730-5-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 089/116] linux-user: Fix waitid return of siginfo_t and
+ rusage
+Date: Thu, 18 Apr 2024 20:49:19 +0300
+Message-Id: <20240418174955.947730-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
@@ -63,156 +64,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zack Buhman <zack@buhman.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The saturation arithmetic logic in helper_macl is not correct.
-I tested and verified this behavior on a SH7091.
+The copy back to siginfo_t should be conditional only on arg3,
+not the specific values that might have been written.
+The copy back to rusage was missing entirely.
 
-Signed-off-by: Zack Buhman <zack@buhman.org>
-Message-Id: <20240404162641.27528-2-zack@buhman.org>
-[rth: Reformat helper_macl, add a test case.]
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2262
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Alex Fan <alex.fan.q@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit c97e8977dcacb3fa8362ee28bcee75ceb01fceaa)
+(cherry picked from commit f0907ff4cae743f1a4ef3d0a55a047029eed06ff)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/sh4/helper.h b/target/sh4/helper.h
-index 8d792f6b55..64056e4a39 100644
---- a/target/sh4/helper.h
-+++ b/target/sh4/helper.h
-@@ -11,7 +11,7 @@ DEF_HELPER_3(movcal, void, env, i32, i32)
- DEF_HELPER_1(discard_movcal_backup, void, env)
- DEF_HELPER_2(ocbi, void, env, i32)
- 
--DEF_HELPER_3(macl, void, env, i32, i32)
-+DEF_HELPER_3(macl, void, env, s32, s32)
- DEF_HELPER_3(macw, void, env, i32, i32)
- 
- DEF_HELPER_2(ld_fpscr, void, env, i32)
-diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
-index 54d390fe1f..c96c6008a1 100644
---- a/target/sh4/op_helper.c
-+++ b/target/sh4/op_helper.c
-@@ -160,20 +160,23 @@ void helper_ocbi(CPUSH4State *env, uint32_t address)
-     }
- }
- 
--void helper_macl(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
-+void helper_macl(CPUSH4State *env, int32_t arg0, int32_t arg1)
- {
-+    const int64_t min = -(1ll << 47);
-+    const int64_t max = (1ll << 47) - 1;
-+    int64_t mul = (int64_t)arg0 * arg1;
-+    int64_t mac = env->mac;
-     int64_t res;
- 
--    res = ((uint64_t) env->mach << 32) | env->macl;
--    res += (int64_t) (int32_t) arg0 *(int64_t) (int32_t) arg1;
--    env->mach = (res >> 32) & 0xffffffff;
--    env->macl = res & 0xffffffff;
--    if (env->sr & (1u << SR_S)) {
--        if (res < 0)
--            env->mach |= 0xffff0000;
--        else
--            env->mach &= 0x00007fff;
-+    if (!(env->sr & (1u << SR_S))) {
-+        res = mac + mul;
-+    } else if (sadd64_overflow(mac, mul, &res)) {
-+        res = mac < 0 ? min : max;
-+    } else {
-+        res = MIN(MAX(res, min), max);
-     }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e384e14248..834a254895 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -9154,14 +9154,24 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+ #ifdef TARGET_NR_waitid
+     case TARGET_NR_waitid:
+         {
++            struct rusage ru;
+             siginfo_t info;
+-            info.si_pid = 0;
+-            ret = get_errno(safe_waitid(arg1, arg2, &info, arg4, NULL));
+-            if (!is_error(ret) && arg3 && info.si_pid != 0) {
+-                if (!(p = lock_user(VERIFY_WRITE, arg3, sizeof(target_siginfo_t), 0)))
 +
-+    env->mac = res;
- }
- 
- void helper_macw(CPUSH4State *env, uint32_t arg0, uint32_t arg1)
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index 47c39a44b6..3c0695c7ca 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -12,3 +12,8 @@ run-signals: signals
- 	$(call skip-test, $<, "BROKEN")
- run-plugin-signals-with-%:
- 	$(call skip-test, $<, "BROKEN")
-+
-+VPATH += $(SRC_PATH)/tests/tcg/sh4
-+
-+test-macl: CFLAGS += -O -g
-+TESTS += test-macl
-diff --git a/tests/tcg/sh4/test-macl.c b/tests/tcg/sh4/test-macl.c
-new file mode 100644
-index 0000000000..b66c854365
---- /dev/null
-+++ b/tests/tcg/sh4/test-macl.c
-@@ -0,0 +1,67 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include <stdint.h>
-+#include <stdlib.h>
-+#include <stdio.h>
-+
-+#define MACL_S_MIN  (-(1ll << 47))
-+#define MACL_S_MAX  ((1ll << 47) - 1)
-+
-+int64_t mac_l(int64_t mac, const int32_t *a, const int32_t *b)
-+{
-+    register uint32_t macl __asm__("macl") = mac;
-+    register uint32_t mach __asm__("mach") = mac >> 32;
-+
-+    asm volatile("mac.l @%0+,@%1+"
-+                 : "+r"(a), "+r"(b), "+x"(macl), "+x"(mach));
-+
-+    return ((uint64_t)mach << 32) | macl;
-+}
-+
-+typedef struct {
-+    int64_t mac;
-+    int32_t a, b;
-+    int64_t res[2];
-+} Test;
-+
-+__attribute__((noinline))
-+void test(const Test *t, int sat)
-+{
-+    int64_t res;
-+
-+    if (sat) {
-+        asm volatile("sets");
-+    } else {
-+        asm volatile("clrs");
-+    }
-+    res = mac_l(t->mac, &t->a, &t->b);
-+
-+    if (res != t->res[sat]) {
-+        fprintf(stderr, "%#llx + (%#x * %#x) = %#llx -- got %#llx\n",
-+                t->mac, t->a, t->b, t->res[sat], res);
-+        abort();
-+    }
-+}
-+
-+int main()
-+{
-+    static const Test tests[] = {
-+        { 0x00007fff12345678ll, INT32_MAX, INT32_MAX,
-+          { 0x40007ffe12345679ll, MACL_S_MAX } },
-+        { MACL_S_MIN, -1, 1,
-+          { 0xffff7fffffffffffll, MACL_S_MIN } },
-+        { INT64_MIN, -1, 1,
-+          { INT64_MAX, MACL_S_MIN } },
-+        { 0x00007fff00000000ll, INT32_MAX, INT32_MAX,
-+          { 0x40007ffe00000001ll, MACL_S_MAX } },
-+        { 4, 1, 2, { 6, 6 } },
-+        { -4, -1, -2, { -2, -2 } },
-+    };
-+
-+    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); ++i) {
-+        for (int j = 0; j < 2; ++j) {
-+            test(&tests[i], j);
-+        }
-+    }
-+    return 0;
-+}
++            ret = get_errno(safe_waitid(arg1, arg2, (arg3 ? &info : NULL),
++                                        arg4, (arg5 ? &ru : NULL)));
++            if (!is_error(ret)) {
++                if (arg3) {
++                    p = lock_user(VERIFY_WRITE, arg3,
++                                  sizeof(target_siginfo_t), 0);
++                    if (!p) {
++                        return -TARGET_EFAULT;
++                    }
++                    host_to_target_siginfo(p, &info);
++                    unlock_user(p, arg3, sizeof(target_siginfo_t));
++                }
++                if (arg5 && host_to_target_rusage(arg5, &ru)) {
+                     return -TARGET_EFAULT;
+-                host_to_target_siginfo(p, &info);
+-                unlock_user(p, arg3, sizeof(target_siginfo_t));
++                }
+             }
+         }
+         return ret;
 -- 
 2.39.2
 
