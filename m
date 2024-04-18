@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EBB7C04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D9DFC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXyl-0001y8-Kf; Thu, 18 Apr 2024 16:03:31 -0400
+	id 1rxXyg-0001ok-0n; Thu, 18 Apr 2024 16:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXyj-0001qi-Dy; Thu, 18 Apr 2024 16:03:29 -0400
+ id 1rxXyA-0001ZT-Jq; Thu, 18 Apr 2024 16:02:59 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXyh-0005TV-Rc; Thu, 18 Apr 2024 16:03:29 -0400
+ id 1rxXy6-0005LK-Nt; Thu, 18 Apr 2024 16:02:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5FC3F5FE19;
- Thu, 18 Apr 2024 23:02:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EAF275FE13;
+ Thu, 18 Apr 2024 23:02:27 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id BD79CB93FF;
+ by tsrv.corpit.ru (Postfix) with SMTP id 5668CB93F9;
  Thu, 18 Apr 2024 23:02:25 +0300 (MSK)
-Received: (nullmailer pid 952891 invoked by uid 1000);
+Received: (nullmailer pid 952872 invoked by uid 1000);
  Thu, 18 Apr 2024 20:02:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Cedric Le Goater <clg@kaod.org>, Kowshik Jois <kowsjois@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 58/59] ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer
- IRQ range for CPU IPIs.
-Date: Thu, 18 Apr 2024 23:02:18 +0300
-Message-Id: <20240418200224.952785-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zheyu Ma <zheyuma97@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 52/59] hw/misc/applesmc: Fix memory leak in reset()
+ handler
+Date: Thu, 18 Apr 2024 23:02:12 +0300
+Message-Id: <20240418200224.952785-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
@@ -63,79 +64,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-spapr_irq_init currently uses existing macro SPAPR_XIRQ_BASE to refer to
-the range of CPU IPIs during initialization of nr-irqs property.
-It is more appropriate to have its own define which can be further
-reused as appropriate for correct interpretation.
+AppleSMCData is allocated with g_new0() in applesmc_add_key():
+release it with g_free().
 
-Suggested-by: Cedric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Tested-by: Kowshik Jois <kowsjois@linux.ibm.com>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 2df5c1f5b014126595a26c6797089d284a3b211c)
+Leaked since commit 1ddda5cd36 ("AppleSMC device emulation").
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2272
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20240408095217.57239-3-philmd@linaro.org>
+(cherry picked from commit fc09ff2979defdcf8d00c2db94022d5d610e36ba)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
-index a0d1e1298e..97b2fc42ab 100644
---- a/hw/ppc/spapr_irq.c
-+++ b/hw/ppc/spapr_irq.c
-@@ -23,6 +23,8 @@
- 
- #include "trace.h"
- 
-+QEMU_BUILD_BUG_ON(SPAPR_IRQ_NR_IPIS > SPAPR_XIRQ_BASE);
-+
- static const TypeInfo spapr_intc_info = {
-     .name = TYPE_SPAPR_INTC,
-     .parent = TYPE_INTERFACE,
-@@ -329,7 +331,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-         int i;
- 
-         dev = qdev_new(TYPE_SPAPR_XIVE);
--        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
-         /*
-          * 8 XIVE END structures per CPU. One for each available
-          * priority
-@@ -356,7 +358,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
+diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
+index 5f9c742e50..80642efc57 100644
+--- a/hw/misc/applesmc.c
++++ b/hw/misc/applesmc.c
+@@ -273,6 +273,7 @@ static void qdev_applesmc_isa_reset(DeviceState *dev)
+     /* Remove existing entries */
+     QLIST_FOREACH_SAFE(d, &s->data_def, node, next) {
+         QLIST_REMOVE(d, node);
++        g_free(d);
      }
- 
-     spapr->qirqs = qemu_allocate_irqs(spapr_set_irq, spapr,
--                                      smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+                                      smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
- 
-     /*
-      * Mostly we don't actually need this until reset, except that not
-diff --git a/include/hw/ppc/spapr_irq.h b/include/hw/ppc/spapr_irq.h
-index c22a72c9e2..4fd2d5853d 100644
---- a/include/hw/ppc/spapr_irq.h
-+++ b/include/hw/ppc/spapr_irq.h
-@@ -14,9 +14,21 @@
- #include "qom/object.h"
- 
- /*
-- * IRQ range offsets per device type
-+ * The XIVE IRQ backend uses the same layout as the XICS backend but
-+ * covers the full range of the IRQ number space. The IRQ numbers for
-+ * the CPU IPIs are allocated at the bottom of this space, below 4K,
-+ * to preserve compatibility with XICS which does not use that range.
-+ */
-+
-+/*
-+ * CPU IPI range (XIVE only)
-  */
- #define SPAPR_IRQ_IPI        0x0
-+#define SPAPR_IRQ_NR_IPIS    0x1000
-+
-+/*
-+ * IRQ range offsets per device type
-+ */
- 
- #define SPAPR_XIRQ_BASE      XICS_IRQ_BASE /* 0x1000 */
- #define SPAPR_IRQ_EPOW       (SPAPR_XIRQ_BASE + 0x0000)
+     s->status = 0x00;
+     s->status_1e = 0x00;
 -- 
 2.39.2
 
