@@ -4,40 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F815C04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A2EC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVuv-0001kY-C0; Thu, 18 Apr 2024 13:51:25 -0400
+	id 1rxVtd-00089G-UW; Thu, 18 Apr 2024 13:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVum-0001T2-46; Thu, 18 Apr 2024 13:51:16 -0400
+ id 1rxVtb-000881-R2; Thu, 18 Apr 2024 13:50:03 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVuj-0007ef-VC; Thu, 18 Apr 2024 13:51:15 -0400
+ id 1rxVtY-0007Hz-UX; Thu, 18 Apr 2024 13:50:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB6FA5FD73;
- Thu, 18 Apr 2024 20:50:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 68D7D5FD60;
+ Thu, 18 Apr 2024 20:49:58 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 3BE41B934D;
- Thu, 18 Apr 2024 20:50:01 +0300 (MSK)
-Received: (nullmailer pid 947860 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id AFE67B9336;
+ Thu, 18 Apr 2024 20:49:55 +0300 (MSK)
+Received: (nullmailer pid 947801 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 106/116] hw/net/lan9118: Replace magic '2048' value by
- MIL_TXFIFO_SIZE definition
-Date: Thu, 18 Apr 2024 20:49:36 +0300
-Message-Id: <20240418174955.947730-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 v2 000/116] Patch Round-up for stable 8.2.3,
+ freeze on 2024-04-20
+Date: Thu, 18 Apr 2024 20:49:17 +0300
+Message-Id: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
-References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,69 +59,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The following patches are queued for QEMU stable v8.2.3:
 
-The magic 2048 is explained in the LAN9211 datasheet (DS00002414A)
-in chapter 1.4, "10/100 Ethernet MAC":
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2
 
-  The MAC Interface Layer (MIL), within the MAC, contains a
-  2K Byte transmit and a 128 Byte receive FIFO which is separate
-  from the TX and RX FIFOs. [...]
+Patch freeze is 2024-04-20, and the release is planned for 2024-04-22:
 
-Note, the use of the constant in lan9118_receive() reveals that
-our implementation is using the same buffer for both tx and rx.
+  https://wiki.qemu.org/Planning/8.2
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20240409133801.23503-2-philmd@linaro.org>
-(cherry picked from commit a45223467e4e185fff1c76a6483784fa379ded77)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
-diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index cf7b8c897a..f0a8a3fa10 100644
---- a/hw/net/lan9118.c
-+++ b/hw/net/lan9118.c
-@@ -150,6 +150,12 @@ do { printf("lan9118: " fmt , ## __VA_ARGS__); } while (0)
- 
- #define GPT_TIMER_EN    0x20000000
- 
-+/*
-+ * The MAC Interface Layer (MIL), within the MAC, contains a 2K Byte transmit
-+ * and a 128 Byte receive FIFO which is separate from the TX and RX FIFOs.
-+ */
-+#define MIL_TXFIFO_SIZE         2048
-+
- enum tx_state {
-     TX_IDLE,
-     TX_B,
-@@ -166,7 +172,7 @@ typedef struct {
-     int32_t pad;
-     int32_t fifo_used;
-     int32_t len;
--    uint8_t data[2048];
-+    uint8_t data[MIL_TXFIFO_SIZE];
- } LAN9118Packet;
- 
- static const VMStateDescription vmstate_lan9118_packet = {
-@@ -182,7 +188,7 @@ static const VMStateDescription vmstate_lan9118_packet = {
-         VMSTATE_INT32(pad, LAN9118Packet),
-         VMSTATE_INT32(fifo_used, LAN9118Packet),
-         VMSTATE_INT32(len, LAN9118Packet),
--        VMSTATE_UINT8_ARRAY(data, LAN9118Packet, 2048),
-+        VMSTATE_UINT8_ARRAY(data, LAN9118Packet, MIL_TXFIFO_SIZE),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -544,7 +550,7 @@ static ssize_t lan9118_receive(NetClientState *nc, const uint8_t *buf,
-         return -1;
-     }
- 
--    if (size >= 2048 || size < 14) {
-+    if (size >= MIL_TXFIFO_SIZE || size < 14) {
-         return -1;
-     }
- 
--- 
-2.39.2
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* eae7509be9 Michael Tokarev:
+   Revert "configure: run plugin TCG tests again"
+02* 15cc10336249 Paolo Bonzini:
+   configure: run plugin TCG tests again
+03* 7f89fdf8ebe6 Richard Henderson:
+   tcg/aarch64: Apple does not align __int128_t in even registers
+04* b816e1b5ba58 Richard Henderson:
+   linux-user: Remove pgb_dynamic alignment assertion
+05* 9ea920dc2825 Daniel P. Berrangé:
+   gitlab: update FreeBSD Cirrus CI image to 13.3
+06* f5af80271aad David Parsons:
+   ui/cocoa: Fix window clipping on macOS 14
+07* d572bcb22201 Richard Henderson:
+   target/arm: Fix 32-bit SMOPA
+08* fd7f95f23d6f Peter Maydell:
+   hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
+09* 012b170173bc Dmitrii Gavrilov:
+   system/qdev-monitor: move drain_call_rcu call under if (!dev) in 
+   qmp_device_add()
+10* a9198b3132d8 Sven Schnelle:
+   hw/scsi/lsi53c895a: stop script on phase mismatch
+11* 9876359990dd Sven Schnelle:
+   hw/scsi/lsi53c895a: add timer to scripts processing
+12* 9bc9e9511944 Michael Tokarev:
+   make-release: switch to .xz format by default
+13* 69f7b00d057f Yu Zhang:
+   migration/rdma: Fix a memory issue for migration
+14* 65c2ab808571 Laurent Vivier:
+   igb: fix link state on resume
+15* 4cadf1023498 Laurent Vivier:
+   e1000e: fix link state on resume
+16* 6a5287ce8047 Nick Briggs:
+   Avoid unaligned fetch in ladr_match()
+17* 9253d8306226 Peng Fan:
+   xen: Drop out of coroutine context xen_invalidate_map_cache_entry
+18* 4f0a4a3d5854 Minwoo Im:
+   hw/nvme: separate 'serial' property for VFs
+19* 8c78015a55d8 Klaus Jensen:
+   hw/nvme: fix invalid check on mcl
+20* ee7bda4d38cd Klaus Jensen:
+   hw/nvme: generalize the mbar size helper
+21* fa905f65c554 Klaus Jensen:
+   hw/nvme: add machine compatibility parameter to enable msix exclusive bar
+22* 91bb64a8d201 Akihiko Odaki:
+   hw/nvme: Use pcie_sriov_num_vfs()
+23* 6081b4243cd6 Akihiko Odaki:
+   pcie_sriov: Validate NumVFs
+24* 74e2845c5f95 Jonathan Cameron:
+   hmat acpi: Fix out of bounds access due to missing use of indirection
+25* 633487df8d30 Volker Rümelin:
+   hw/audio/virtio-sound: return correct command response size
+26* 2e128776dc56 Cédric Le Goater:
+   migration: Skip only empty block devices
+27* ae5a40e85811 Kevin Wolf:
+   mirror: Don't call job_pause_point() under graph lock
+28* f816310d0c32 Stefan Hajnoczi:
+   nbd/server: only traverse NBDExport->clients from main loop thread
+29* 7075d235114b Stefan Hajnoczi:
+   nbd/server: introduce NBDClient->lock to protect fields
+30* 9c707525cbb1 Kevin Wolf:
+   nbd/server: Fix race in draining the export
+31* e8fce34eccf6 Kevin Wolf:
+   iotests: Add test for reset/AioContext switches with NBD exports
+32* c45f8f1aef35 Thomas Huth:
+   tests/unit: Bump test-aio-multithread test timeout to 2 minutes
+33* e1b363e328d5 Thomas Huth:
+   tests/unit: Bump test-crypto-block test timeout to 5 minutes
+34* 63b18312d14a Kevin Wolf:
+   tests/unit: Bump test-replication timeout to 60 seconds
+35* 5f97afe2543f Paolo Bonzini:
+   target/i386: introduce function to query MMU indices
+36* 90f641531c78 Paolo Bonzini:
+   target/i386: use separate MMU indexes for 32-bit accesses
+37* 2cc68629a6fc Paolo Bonzini:
+   target/i386: fix direction of "32-bit MMU" test
+38* e8ee827ffdb8 Daniel P. Berrangé:
+   Revert "chardev/char-socket: Fix TLS io channels sending too much data to 
+   the backend"
+39* d4069a84a338 Marc-André Lureau:
+   ui: compile dbus-display1.c with -fPIC as necessary
+40* 7fd226b04746 Tao Su:
+   target/i386: Revert monitor_puts() in do_inject_x86_mce()
+41* 72bace2d13cb Richard Henderson:
+   target/hppa: Fix assemble_16 insns for wide mode
+42* 4768c28edd40 Richard Henderson:
+   target/hppa: Fix assemble_11a insns for wide mode
+43* 46174e140d27 Richard Henderson:
+   target/hppa: Fix assemble_12a insns for wide mode
+44* c3ea1996a14d Sven Schnelle:
+   target/hppa: ldcw,s uses static shift of 3
+45* d37fad0ae5bd Sven Schnelle:
+   target/hppa: fix shrp for wide mode
+46* ae157fc25053 Sven Schnelle:
+   target/hppa: fix access_id check
+47* ad1fdacd1b93 Sven Schnelle:
+   target/hppa: exit tb on flush cache instructions
+48* b5e0b3a53c98 Sven Schnelle:
+   target/hppa: mask privilege bits in mfia
+49* 518d2f4300e5 Sven Schnelle:
+   target/hppa: fix do_stdby_e()
+50* 77642f92c0b7 Song Gao:
+   target/loongarch: Fix qemu-loongarch64 hang when executing 'll.d $t0, 
+   $t0, 0'
+51* eb844330bd36 Thomas Huth:
+   docs/conf.py: Remove usage of distutils
+52* 1590154ee437 Song Gao:
+   target/loongarch: Fix qemu-system-loongarch64 assert failed with the 
+   option '-d int'
+53* 272fba9779af Ido Plat:
+   target/s390x: Use mutable temporary value for op_ts
+54* 2c66de61f88d Kevin Wolf:
+   vdpa-dev: Fix initialisation order to restore VDUSE compatibility
+55* 3f934817c82c Stefan Reiter:
+   block/io: accept NULL qiov in bdrv_pad_request
+56* f6d38c9f6dae Fiona Ebner:
+   block-backend: fix edge case in bdrv_next() where BDS associated to BB 
+   changes
+57* bac09b093ebb Fiona Ebner:
+   block-backend: fix edge case in bdrv_next_cleanup() where BDS associated 
+   to BB changes
+58* 12d7b3bbd333 Fiona Ebner:
+   iotests: add test for stream job with an unaligned prefetch read
+59* 9dab7bbb017d Gregory Price:
+   target/i386/tcg: Enable page walking from MMIO memory
+60* 7c7a9f578e4f Lorenz Brun:
+   hw/scsi/scsi-generic: Fix io_timeout property not applying
+61* a158c63b3ba1 Yao Xingtao:
+   monitor/hmp-cmds-target: Append a space in error message in gpa2hva()
+62* d3646e31ce6d Daniel Henrique Barboza:
+   target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+63* 0848f7c18ef5 Daniel Henrique Barboza:
+   trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+64* 768e7b329c0b Daniel Henrique Barboza:
+   target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
+65* 7e53e3ddf6df Daniel Henrique Barboza:
+   target/riscv: always clear vstart in whole vec move insns
+66* df4252b2ecaf Daniel Henrique Barboza:
+   target/riscv/vector_helpers: do early exit when vstart >= vl
+67* 0a11629c915f Daniel Henrique Barboza:
+   target/riscv/vector_helper.c: optimize loops in ldst helpers
+68* 078189b327ae Frank Chang:
+   hw/intc: Update APLIC IDC after claiming iforce register
+69* c9b07fe14d35 Max Chou:
+   target/riscv: rvv: Remove the dependency of Zvfbfmin to Zfbfmin
+70* e06adebb0832 Irina Ryapolova:
+   target/riscv: Fix mode in riscv_tlb_fill
+71* 385e575cd5ab Yong-Xuan Wang:
+   target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+72* 1c188fc8cbff Akihiko Odaki:
+   virtio-net: Fix vhost virtqueue notifiers for RSS
+73* 89a8de364b51 Akihiko Odaki:
+   hw/net/net_tx_pkt: Fix virtio header without checksum offloading
+74* 2911e9b95f3b Richard Henderson:
+   tcg/optimize: Fix sign_mask for logical right-shift
+75* 4a3aa11e1fb2 Richard Henderson:
+   target/hppa: Clear psw_n for BE on use_nullify_skip path
+76* d0ad271a7613 Avihai Horon:
+   migration/postcopy: Ensure postcopy_start() sets errp if it fails
+77* 1d2f2b35bc86 Michael Tokarev:
+   gitlab-ci/cirrus: switch from 'master' to 'latest'
+78* 44e25fbc1900 Peter Maydell:
+   hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int group is disabled
+79* fbe5ac5671a9 Peter Maydell:
+   target/arm: take HSTR traps of cp15 accesses to EL2, not EL1
+80* 4c54f5bc8e1d Yajun Wu:
+   hw/net/virtio-net: fix qemu set used ring flag even vhost started
+81* bbdf9023665f Zheyu Ma:
+   block/virtio-blk: Fix memory leak from virtio_blk_zone_report
+82* 7afbdada7eff Wei Wang:
+   migration/postcopy: ensure preempt channel is ready before loading states
+83* 19b254e86a90 Peter Maydell:
+   target/arm: Use correct SecuritySpace for AArch64 AT ops at EL3
+84* 2d9a31b3c273 Wafer:
+   hw/virtio: Fix packed virtqueue flush used_idx
+85* 6ae72f609a21 lyx634449800:
+   vdpa-dev: Fix the issue of device status not updating when configuration 
+   interruption is triggered
+86* a45f09935c88 Zheyu Ma:
+   virtio-snd: Enhance error handling for invalid transfers
+87* 731655f87f31 Manos Pitsidianakis:
+   virtio-snd: rewrite invalid tx/rx message handling
+88 e25fe886b89a Richard Henderson:
+   tcg/optimize: Do not attempt to constant fold neg_vec
+89 f0907ff4cae7 Richard Henderson:
+   linux-user: Fix waitid return of siginfo_t and rusage
+90 b0f2f2976b4d Zack Buhman:
+   target/sh4: mac.w: memory accesses are 16-bit words
+91 7d95db5e78a2 Richard Henderson:
+   target/sh4: Merge mach and macl into a union
+92 c97e8977dcac Zack Buhman:
+   target/sh4: Fix mac.l with saturation enabled
+93 7227c0cd506e Zack Buhman:
+   target/sh4: Fix mac.w with saturation enabled
+94 b754cb2dcde2 Zack Buhman:
+   target/sh4: add missing CHECK_NOT_DELAY_SLOT
+95 5888357942da Keith Packard:
+   target/m68k: Map FPU exceptions to FPSR register
+96 ec0504b989ca Philippe Mathieu-Daudé:
+   hw/virtio: Introduce virtio_bh_new_guarded() helper
+97 ba28e0ff4d95 Philippe Mathieu-Daudé:
+   hw/display/virtio-gpu: Protect from DMA re-entrancy bugs
+98 b4295bff25f7 Philippe Mathieu-Daudé:
+   hw/char/virtio-serial-bus: Protect from DMA re-entrancy bugs
+99 f4729ec39ad9 Philippe Mathieu-Daudé:
+   hw/virtio/virtio-crypto: Protect from DMA re-entrancy bugs
+100 aa88f99c87c0 Yuquan Wang:
+   qemu-options: Fix CXL Fixed Memory Window interleave-granularity typo
+101 7a86544f286d Philippe Mathieu-Daudé:
+   hw/block/nand: Factor nand_load_iolen() method out
+102 2e3e09b36800 Philippe Mathieu-Daudé:
+   hw/block/nand: Have blk_load() take unsigned offset and return boolean
+103 d39fdfff348f Philippe Mathieu-Daudé:
+   hw/block/nand: Fix out-of-bound access in NAND block buffer
+104 fc09ff2979de Philippe Mathieu-Daudé:
+   hw/misc/applesmc: Fix memory leak in reset() handler
+105 eaf2bd29538d Philippe Mathieu-Daudé:
+   backends/cryptodev: Do not abort for invalid session ID
+106 a45223467e4e Philippe Mathieu-Daudé:
+   hw/net/lan9118: Replace magic '2048' value by MIL_TXFIFO_SIZE definition
+107 ad766d603f39 Philippe Mathieu-Daudé:
+   hw/net/lan9118: Fix overflow in MIL TX FIFO
+108 9e4b27ca6bf4 Philippe Mathieu-Daudé:
+   hw/sd/sdhci: Do not update TRNMOD when Command Inhibit (DAT) is set
+109 83ddb3dbba2e Philippe Mathieu-Daudé:
+   hw/net/net_tx_pkt: Fix overrun in update_sctp_checksum()
+110 dcb0a1ac03d6 Philippe Mathieu-Daudé:
+   hw/audio/virtio-snd: Remove unused assignment
+111 4ef1f559f270 Richard Henderson:
+   linux-user/x86_64: Handle the vsyscall page in open_self_maps_{2,4}
+112 2ce6cff94df2 Cindy Lu:
+   virtio-pci: fix use of a released vector
+113 f33274265a24 BALATON Zoltan:
+   hw/isa/vt82c686: Keep track of PIRQ/PINT pins separately
+114 6e4aceba2079 BALATON Zoltan:
+   hw/pci-host/ppc440_pcix: Do not expose a bridge device on PCI bus
+115 2df5c1f5b014 Harsh Prateek Bora:
+   ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer IRQ range for CPU IPIs.
+116 c4f91d7b7be7 Harsh Prateek Bora:
+   ppc/spapr: Initialize max_cpus limit to SPAPR_IRQ_NR_IPIS.
+
+(commit(s) marked with * were in previous series and are not resent)
 
