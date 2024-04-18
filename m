@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29FFC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01896C04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxTt0-0004QA-3a; Thu, 18 Apr 2024 11:41:18 -0400
+	id 1rxTva-00065X-Ba; Thu, 18 Apr 2024 11:43:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rxTsy-0004Ku-G9
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:41:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rxTvY-000658-2D
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:43:56 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rxTsw-0000pX-Iw
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:41:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713454866;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3uJcuA8FSOvZeR+LohFdLOJ7K3BM1wnMOQsbcnznqN4=;
- b=IQ5nokjBTHgNQAno3GLUWT49TaUahWfLy19uGKs+Glr9xEcJrzaoY4RYGbqdXX1mJ0WTKv
- MJWBLffx4/P+zapXz/UfdJoWc6OFs/aDQUnaxilKjuXCCf+7d/fJKlKj4RTBomnz9E6Xjv
- C9h/qnQDJ9EXBCWgpHxwJ5twMj5Odd0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-132-GS3HCiy4PDqRaGcv3ZLRCQ-1; Thu, 18 Apr 2024 11:41:03 -0400
-X-MC-Unique: GS3HCiy4PDqRaGcv3ZLRCQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-418f3082647so2843325e9.0
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 08:41:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713454862; x=1714059662;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3uJcuA8FSOvZeR+LohFdLOJ7K3BM1wnMOQsbcnznqN4=;
- b=n8QzXAeR1VwODZbHfUej0bStwex/OPgcSinDL8VeK8/3cC9jf0UMrdfYH/D8j7rt8N
- Ys6rKMn8x8pT/BILRio+I8UEg1TKYRzSedPtOLnDsNfvy0Iy7G2aIA0oYNi3PlMGalOa
- 01eLP8J1V2WggJsFlEYnQfm17lRXRbZIfWf8yfnS5T4aNOQqgA8UGzBxOvdbfXwpeeBL
- Zrx76CgQr0uo+fFI8c3ld6YFVVMpDVzDRVVEtBbYB/Q/sFzawmw7N5bSj5p2+MNevbsG
- 0XI1Pef26JeyBT9+ncqK3+lAYccIyGsGj+xlzYxHUlgok/o38mjXiQD3Wt1lTPxYwgkZ
- Z5Qw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUiQEkSZK6GhIoje0y3OnEUzV+ulOFei+/O2NT4LD6UYRMJLD7jx5+59xSb4yBPMV54z1CTCTK89Wbxan7O1e+eylhgnU=
-X-Gm-Message-State: AOJu0YyCTK0e/WUgGF0Di1XSfhOhNIGqWa7yS0Nb8E80CNbdf2Sw56dg
- AbWuZNwLX3zAXAg2RrBcf+TnrGBIrmQ0V/NjzxBPMTxLj6RNxkuLWQeIQCnY/YhrYgPUIgip2L6
- YZO1SpeD5a4H9Tr02m66aI9knZrqjhPpLs1GD4HkN6f3prBX25GTg
-X-Received: by 2002:a05:600c:524a:b0:416:8091:a39e with SMTP id
- fc10-20020a05600c524a00b004168091a39emr2550333wmb.10.1713454861817; 
- Thu, 18 Apr 2024 08:41:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGztL+5SjQ/4Lgp6StwjAaL4ZYzuTJlipRBc12V2M8yM4kfS0dveD7ObjeyOPiYX8RqhltqCA==
-X-Received: by 2002:a05:600c:524a:b0:416:8091:a39e with SMTP id
- fc10-20020a05600c524a00b004168091a39emr2550313wmb.10.1713454861235; 
- Thu, 18 Apr 2024 08:41:01 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1fc:1e9b:54cd:34ea:3dbb:5a75])
- by smtp.gmail.com with ESMTPSA id
- e2-20020adfc842000000b00346cc85c821sm2099551wrh.89.2024.04.18.08.40.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Apr 2024 08:41:00 -0700 (PDT)
-Date: Thu, 18 Apr 2024 11:40:56 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Yuxue Liu yuxue.liu@jaguarmicro.com" <yuxue.liu@jaguarmicro.com>
-Cc: pbonzini@redhat.com, lvivier@redhat.com, thuth@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] vhost-user-test: no set non-blocking for cal fd less
- than 0.
-Message-ID: <20240418114037-mutt-send-email-mst@kernel.org>
-References: <20240411073555.1357-1-yuxue.liu@jaguarmicro.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rxTvU-0001DG-5y
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:43:54 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 33BC75FD22;
+ Thu, 18 Apr 2024 18:43:45 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A45F7B9273;
+ Thu, 18 Apr 2024 18:43:42 +0300 (MSK)
+Message-ID: <dcaed5da-5e94-4cb6-b5b8-0a571eac371b@tls.msk.ru>
+Date: Thu, 18 Apr 2024 18:43:42 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240411073555.1357-1-yuxue.liu@jaguarmicro.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+To: Cord Amfmgm <dmamfmgm@gmail.com>, qemu-devel@nongnu.org,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,46 +83,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 11, 2024 at 03:35:55PM +0800, Yuxue Liu yuxue.liu@jaguarmicro.com wrote:
-> From: Yuxue Liu <yuxue.liu@jaguarmicro.com>
+06.02.2024 10:13, Cord Amfmgm wrote:
+> This changes the ohci validation to not assert if invalid
+> data is fed to the ohci controller. The poc suggested in
+> https://bugs.launchpad.net/qemu/+bug/1907042
+> and then migrated to bug #303 does the following to
+> feed it a SETUP pid and EndPt of 1:
 > 
-> In the scenario where vhost-user sets eventfd to -1,
-> qemu_chr_fe_get_msgfds retrieves fd as -1. When vhost_user_read
-> receives, it does not perform blocking operations on the descriptor
-> with fd=-1, so non-blocking operations should not be performed here
-> either.This is a normal use case. Calling g_unix_set_fd_nonblocking
-> at this point will cause the test to interrupt.
+>          uint32_t MaxPacket = 64;
+>          uint32_t TDFormat = 0;
+>          uint32_t Skip = 0;
+>          uint32_t Speed = 0;
+>          uint32_t Direction = 0;  /* #define OHCI_TD_DIR_SETUP 0 */
+>          uint32_t EndPt = 1;
+>          uint32_t FuncAddress = 0;
+>          ed->attr = (MaxPacket << 16) | (TDFormat << 15) | (Skip << 14)
+>                     | (Speed << 13) | (Direction << 11) | (EndPt << 7)
+>                     | FuncAddress;
+>          ed->tailp = /*TDQTailPntr= */ 0;
+>          ed->headp = ((/*TDQHeadPntr= */ &td[0]) & 0xfffffff0)
+>                     | (/* ToggleCarry= */ 0 << 1);
+>          ed->next_ed = (/* NextED= */ 0 & 0xfffffff0)
 > 
-> When vhost_user_write sets the call fd to -1, it sets the number of
-> fds to 0, so the fds obtained by qemu_chr_fe_get_msgfds will also
-> be 0.
+> qemu-fuzz also caught the same issue in #1510. They are
+> both fixed by this patch.
 > 
-> Signed-off-by: Yuxue Liu <yuxue.liu@jaguarmicro.com>
+> The if (td.cbp > td.be) logic in ohci_service_td() causes an
+> ohci_die(). My understanding of the OHCI spec 4.3.1.2
+> Table 4-2 allows td.cbp to be one byte more than td.be to
+> signal the buffer has zero length. The new check in qemu
+> appears to have been added since qemu-4.2. This patch
+> includes both fixes since they are located very close
+> together.
+> 
+> Signed-off-by: David Hubbard <dmamfmgm@gmail.com>
 
-A bit more detail here please.
-When does all this happen?
+Wonder if this got lost somehow.  Or is it not needed?
 
-> ---
->  tests/qtest/vhost-user-test.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-> index d4e437265f..7c8ef6268d 100644
-> --- a/tests/qtest/vhost-user-test.c
-> +++ b/tests/qtest/vhost-user-test.c
-> @@ -458,7 +458,10 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
->      case VHOST_USER_SET_VRING_KICK:
->      case VHOST_USER_SET_VRING_CALL:
->          /* consume the fd */
-> -        qemu_chr_fe_get_msgfds(chr, &fd, 1);
-> +        if (!qemu_chr_fe_get_msgfds(chr, &fd, 1) && fd < 0) {
-> +            qos_printf("call fd :%d, no set non-blocking\n", fd);
-> +            break;
+Thanks,
+
+/mjt
+
+> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+> index d73b53f33c..a53808126f 100644
+> --- a/hw/usb/hcd-ohci.c
+> +++ b/hw/usb/hcd-ohci.c
+> @@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci,
+> struct ohci_ed *ed)
+>       case OHCI_TD_DIR_SETUP:
+>           str = "setup";
+>           pid = USB_TOKEN_SETUP;
+> +        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only allowed to ep 0 */
+> +            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
+> +            ohci_die(ohci);
+> +            return 1;
 > +        }
->          /*
->           * This is a non-blocking eventfd.
->           * The receive function forces it to be blocking,
-> -- 
-> 2.43.0
+>           break;
+>       default:
+>           trace_usb_ohci_td_bad_direction(dir);
+> @@ -936,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct
+> ohci_ed *ed)
+>           if ((td.cbp & 0xfffff000) != (td.be & 0xfffff000)) {
+>               len = (td.be & 0xfff) + 0x1001 - (td.cbp & 0xfff);
+>           } else {
+> -            if (td.cbp > td.be) {
+> -                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp, td.be);
+> +            if (td.cbp > td.be + 1) {
+> +                trace_usb_ohci_td_bad_buf(td.cbp, td.be);
+>                   ohci_die(ohci);
+>                   return 1;
+>               }
+> diff --git a/hw/usb/trace-events b/hw/usb/trace-events
+> index ed7dc210d3..b47d082fa3 100644
+> --- a/hw/usb/trace-events
+> +++ b/hw/usb/trace-events
+> @@ -28,6 +28,8 @@ usb_ohci_iso_td_data_overrun(int ret, ssize_t len)
+> "DataOverrun %d > %zu"
+>   usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
+>   usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
+>   usb_ohci_iso_td_bad_response(int ret) "Bad device response %d"
+> +usb_ohci_td_bad_buf(uint32_t cbp, uint32_t be) "Bad cbp = 0x%x > be = 0x%x"
+> +usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t tdf) "Bad
+> pid %s: ed.flags 0x%x td.flags 0x%x"
+>   usb_ohci_port_attach(int index) "port #%d"
+>   usb_ohci_port_detach(int index) "port #%d"
+>   usb_ohci_port_wakeup(int index) "port #%d"
+> 
 
 
