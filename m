@@ -4,74 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506C7C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 13:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9402DC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 14:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxSGh-00052v-Kj; Thu, 18 Apr 2024 09:57:39 -0400
+	id 1rxSjk-00030p-ES; Thu, 18 Apr 2024 10:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxSGg-00052d-1O
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 09:57:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxSGd-0005ex-ES
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 09:57:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713448654;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X63vAHuOYtBv6KJgkpOpLHzW1WmO5uoDLUFKoFZ4WIA=;
- b=gUjpzARO2YoqkxzKxoegZNMZM5qBbRQHhNzVcAZUMoGrrFW1HfMkasLSxKMY5EhvLsZsOk
- 5OSMz0jXjFKNUpJ0tdyGaDemUVwrvnupbVGvgJHPMq/9vB/P+3Guo2lGquaAM1UUWpGrX+
- cYZv288UYXCOAwwC4KRiE2O5hgYNnnk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-6uj3DSdqPKWH-sPsy8E-dg-1; Thu,
- 18 Apr 2024 09:57:32 -0400
-X-MC-Unique: 6uj3DSdqPKWH-sPsy8E-dg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rxSjf-00030R-Vp
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 10:27:37 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rxSjd-0002Iz-MU
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 10:27:35 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6FBC31C0AF4B;
- Thu, 18 Apr 2024 13:57:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.72])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8C93B112132A;
- Thu, 18 Apr 2024 13:57:31 +0000 (UTC)
-Date: Thu, 18 Apr 2024 14:57:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?B?0KLQuNC80YPRgA==?= <masscry@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/2] Fix pointer arithmetic in indirect read for
- libvhost-user and libvduse
-Message-ID: <ZiEmyYlUAIhypob7@redhat.com>
-References: <20240113012741.54664-1-masscry@gmail.com>
- <CABH+J_76pW0-XQVUsJ+7faK-gCVaoa7DScDcdHmcZxdc25GC5g@mail.gmail.com>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6AFD221BCE;
+ Thu, 18 Apr 2024 14:27:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1713450448; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oEAy1X93BN8dJ4qYwoeSpoKRP8AxPnrwKi41VlVQJ0Y=;
+ b=uqlnpJAjzelpui4NycyYdvMeMtgiQYCVw6ctmQVQaEF7YWpEC70AgfFNFZUsL9nl0LL4+E
+ oaCWtBoi5m8uOFj+oNrUpd+fgGae+YWA1ZfI7SO07GLb33qKa9iarQWAmlL6xVGuSp8v8X
+ kwl0FPl2mOIC0lIYTnVjrInntsOtYJk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1713450448;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oEAy1X93BN8dJ4qYwoeSpoKRP8AxPnrwKi41VlVQJ0Y=;
+ b=8wOjXsUpV8kSGMqjxkR3DaugcsaiMRA5vTSPP33aWLAfdC1/gKEZnViPv7Jv6yCdiHzJyM
+ itGxwL+oTHjtbuDg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=uqlnpJAj;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8wOjXsUp
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1713450448; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oEAy1X93BN8dJ4qYwoeSpoKRP8AxPnrwKi41VlVQJ0Y=;
+ b=uqlnpJAjzelpui4NycyYdvMeMtgiQYCVw6ctmQVQaEF7YWpEC70AgfFNFZUsL9nl0LL4+E
+ oaCWtBoi5m8uOFj+oNrUpd+fgGae+YWA1ZfI7SO07GLb33qKa9iarQWAmlL6xVGuSp8v8X
+ kwl0FPl2mOIC0lIYTnVjrInntsOtYJk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1713450448;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oEAy1X93BN8dJ4qYwoeSpoKRP8AxPnrwKi41VlVQJ0Y=;
+ b=8wOjXsUpV8kSGMqjxkR3DaugcsaiMRA5vTSPP33aWLAfdC1/gKEZnViPv7Jv6yCdiHzJyM
+ itGxwL+oTHjtbuDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EAA6F13687;
+ Thu, 18 Apr 2024 14:27:27 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id U3/FK88tIWaVJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 18 Apr 2024 14:27:27 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
+Cc: vsementsov@yandex-team.ru, yc-core@yandex-team.ru, thuth@redhat.com,
+ lvivier@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org,
+ pkrempa@redhat.com
+Subject: Re: [PATCH] migration: do not exit on incoming failure
+In-Reply-To: <20240417221329.248803-1-vsementsov@yandex-team.ru>
+References: <20240417221329.248803-1-vsementsov@yandex-team.ru>
+Date: Thu, 18 Apr 2024 11:27:25 -0300
+Message-ID: <87ttjyiw4y.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABH+J_76pW0-XQVUsJ+7faK-gCVaoa7DScDcdHmcZxdc25GC5g@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 6AFD221BCE
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[9]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,69 +123,205 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding Michael back to the CC, since he's the designated
-maintainer for libvhost-user/
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Michael, could you give these patches a review since
-they've been pending for many months now.
+> We do set MIGRATION_FAILED state, but don't give a chance to
+> orchestrator to query migration state and get the error.
+>
+> Let's report an error through QAPI like we do on outgoing migration.
+>
+> migration-test is updated correspondingly.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>
+> Doubt: is exiting on failure a contract? Will this commit break
+> something in Libvirt? Finally, could we just change the logic, or I need
+> and additional migration-parameter for new behavior?
 
-On Sun, Feb 04, 2024 at 12:41:31PM +0300, Тимур wrote:
-> Hello, I am very sorry for bothering community on a such minor problem
-> again, but I got no response for a few weeks, so maybe I have started
-> thread on a wrong mailing list, so I made an issue in gitlab issue tracker:
-> https://gitlab.com/qemu-project/qemu/-/issues/2149 referencing this thread.
-> 
-> Maybe, it would help attract proper eyes to such a simple problem, so no
-> one bothers in trying to fix it, albeit it lives in the codebase for some
-> time already and is being copied around.
-> 
-> Sincerely,
-> Temir.
-> 
-> сб, 13 янв. 2024 г. в 04:28, Temir Zharaspayev <masscry@gmail.com>:
-> 
-> > Hello! I have found a problem with virtqueue_read_indirect_desc function,
-> > which
-> > was advancing pointer to struct as it was a byte pointer, so every element
-> > comming after first chunk would be copied somewhere out of buffer.
-> >
-> > As I understand this is cold path, but nevertheless worth fixing.
-> >
-> > Also, exacly same problem in vduse_queue_read_indirect_desc function,
-> > because
-> > as I understand it is a copy of virtqueue_read_indirect_desc with vduse
-> > backend.
-> >
-> > I was not sure if element of scattered buffer may end in the middle of
-> > vring_desc struct data, so instead of writing
-> > desc += read_len/sizeof(struct vring_desc)
-> > have implemented fix with proper byte pointer arithmetic.
-> >
-> > Sincerely,
-> > Temir.
-> >
-> > Temir Zharaspayev (2):
-> >   libvhost-user: Fix pointer arithmetic in indirect read
-> >   libvduse: Fix pointer arithmetic in indirect read
-> >
-> >  subprojects/libvduse/libvduse.c           | 11 ++++++-----
-> >  subprojects/libvhost-user/libvhost-user.c | 11 ++++++-----
-> >  2 files changed, 12 insertions(+), 10 deletions(-)
-> >
-> > --
-> > 2.34.1
-> >
-> >
+It seems we depend on the non-zero value:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+  4aead69241 ("migration: reflect incoming failure to shell")
+  Author: Eric Blake <eblake@redhat.com>
+  Date:   Tue Apr 16 15:50:41 2013 -0600
+  
+      migration: reflect incoming failure to shell
+      
+      Management apps like libvirt don't know to pay attention to
+      stderr unless there is a non-zero exit status.
+      
+      * migration.c (process_incoming_migration_co): Exit with non-zero
+      status on failure.
+      
+      Signed-off-by: Eric Blake <eblake@redhat.com>
+      Message-id: 1366149041-626-1-git-send-email-eblake@redhat.com
+      Signed-off-by: Anthony Liguori <aliguori@us.ibm.com>
 
+One idea would be to plumb the s->error somehow through
+migration_shutdown() and allow qemu_cleanup() to change the status
+value.
+
+>  migration/migration.c           | 22 +++++++---------------
+>  tests/qtest/migration-helpers.c | 13 ++++++++++---
+>  tests/qtest/migration-helpers.h |  3 ++-
+>  tests/qtest/migration-test.c    | 14 +++++++-------
+>  4 files changed, 26 insertions(+), 26 deletions(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 86bf76e925..3c203e767d 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -738,11 +738,12 @@ process_incoming_migration_co(void *opaque)
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+>      PostcopyState ps;
+>      int ret;
+> +    Error *local_err = NULL;
+>  
+>      assert(mis->from_src_file);
+>  
+>      if (compress_threads_load_setup(mis->from_src_file)) {
+> -        error_report("Failed to setup decompress threads");
+> +        error_setg(&local_err, "Failed to setup decompress threads");
+>          goto fail;
+>      }
+>  
+> @@ -779,32 +780,23 @@ process_incoming_migration_co(void *opaque)
+>      }
+>  
+>      if (ret < 0) {
+> -        MigrationState *s = migrate_get_current();
+> -
+> -        if (migrate_has_error(s)) {
+> -            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+> -                error_report_err(s->error);
+> -            }
+> -        }
+> -        error_report("load of migration failed: %s", strerror(-ret));
+> +        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
+>          goto fail;
+>      }
+>  
+>      if (colo_incoming_co() < 0) {
+> +        error_setg(&local_err, "colo incoming failed");
+>          goto fail;
+>      }
+>  
+>      migration_bh_schedule(process_incoming_migration_bh, mis);
+>      return;
+>  fail:
+> +    migrate_set_error(migrate_get_current(), local_err);
+> +    error_report_err(local_err);
+
+This will report an different error from the QMP one if s->error happens
+to be already set. Either use s->error here or prepend the "load of
+migration..." error to the s->error above.
+
+>      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>                        MIGRATION_STATUS_FAILED);
+> -    qemu_fclose(mis->from_src_file);
+> -
+> -    multifd_recv_cleanup();
+> -    compress_threads_load_cleanup();
+> -
+> -    exit(EXIT_FAILURE);
+> +    migration_incoming_state_destroy();
+>  }
+>  
+>  /**
+> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+> index e451dbdbed..91c13bd566 100644
+> --- a/tests/qtest/migration-helpers.c
+> +++ b/tests/qtest/migration-helpers.c
+> @@ -211,7 +211,8 @@ void wait_for_migration_complete(QTestState *who)
+>      wait_for_migration_status(who, "completed", NULL);
+>  }
+>  
+> -void wait_for_migration_fail(QTestState *from, bool allow_active)
+> +void wait_for_migration_fail(QTestState *from, bool allow_active,
+> +                             bool is_incoming)
+>  {
+>      g_test_timer_start();
+>      QDict *rsp_return;
+> @@ -236,8 +237,14 @@ void wait_for_migration_fail(QTestState *from, bool allow_active)
+>      /* Is the machine currently running? */
+>      rsp_return = qtest_qmp_assert_success_ref(from,
+>                                                "{ 'execute': 'query-status' }");
+> -    g_assert(qdict_haskey(rsp_return, "running"));
+> -    g_assert(qdict_get_bool(rsp_return, "running"));
+> +    if (is_incoming) {
+> +        if (qdict_haskey(rsp_return, "running")) {
+> +            g_assert(!qdict_get_bool(rsp_return, "running"));
+> +        }
+> +    } else {
+> +        g_assert(qdict_haskey(rsp_return, "running"));
+> +        g_assert(qdict_get_bool(rsp_return, "running"));
+> +    }
+>      qobject_unref(rsp_return);
+>  }
+>  
+> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+> index 3bf7ded1b9..7bd07059ae 100644
+> --- a/tests/qtest/migration-helpers.h
+> +++ b/tests/qtest/migration-helpers.h
+> @@ -46,7 +46,8 @@ void wait_for_migration_status(QTestState *who,
+>  
+>  void wait_for_migration_complete(QTestState *who);
+>  
+> -void wait_for_migration_fail(QTestState *from, bool allow_active);
+> +void wait_for_migration_fail(QTestState *from, bool allow_active,
+> +                             bool is_incoming);
+>  
+>  char *find_common_machine_version(const char *mtype, const char *var1,
+>                                    const char *var2);
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index 1d2cee87ea..e00b755f05 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -1670,7 +1670,7 @@ static void test_baddest(void)
+>          return;
+>      }
+>      migrate_qmp(from, "tcp:127.0.0.1:0", "{}");
+> -    wait_for_migration_fail(from, false);
+> +    wait_for_migration_fail(from, false, false);
+>      test_migrate_end(from, to, false);
+>  }
+>  
+> @@ -1781,10 +1781,10 @@ static void test_precopy_common(MigrateCommon *args)
+>  
+>      if (args->result != MIG_TEST_SUCCEED) {
+>          bool allow_active = args->result == MIG_TEST_FAIL;
+> -        wait_for_migration_fail(from, allow_active);
+> +        wait_for_migration_fail(from, allow_active, false);
+>  
+>          if (args->result == MIG_TEST_FAIL_DEST_QUIT_ERR) {
+> -            qtest_set_expected_status(to, EXIT_FAILURE);
+> +            wait_for_migration_fail(to, true, true);
+>          }
+>      } else {
+>          if (args->live) {
+> @@ -2571,8 +2571,8 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+>      migrate_qmp(from, uri, "{}");
+>  
+>      if (should_fail) {
+> -        qtest_set_expected_status(to, EXIT_FAILURE);
+> -        wait_for_migration_fail(from, true);
+> +        wait_for_migration_fail(to, true, true);
+> +        wait_for_migration_fail(from, true, false);
+>      } else {
+>          wait_for_migration_complete(from);
+>      }
+> @@ -3047,8 +3047,8 @@ static void test_multifd_tcp_cancel(void)
+>      migrate_cancel(from);
+>  
+>      /* Make sure QEMU process "to" exited */
+> -    qtest_set_expected_status(to, EXIT_FAILURE);
+> -    qtest_wait_qemu(to);
+> +    wait_for_migration_fail(to, true, true);
+> +    qtest_quit(to);
+>  
+>      args = (MigrateStart){
+>          .only_target = true,
 
