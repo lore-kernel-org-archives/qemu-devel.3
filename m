@@ -4,62 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2607CC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 16:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59229C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 16:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxUqU-0005Jn-QF; Thu, 18 Apr 2024 12:42:46 -0400
+	id 1rxUrZ-0005ws-0N; Thu, 18 Apr 2024 12:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxUqJ-0005HH-VB
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:42:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rxUrX-0005wG-JD
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:43:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxUqH-0003uD-Ue
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:42:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rxUrV-0003z7-T6
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:43:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713458549;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=0mqkYMfD1nly8dYRIAknhG6DxWIVujhqX2MkNyMuYWs=;
- b=Gt15ZngZU/xwOtGi9D0vTEZAxQiqibeMeBMFXq0lTyC0Ha0lcySFeFeb0QPSHTWnXlQgZA
- +GyFnu0gUrIo67/QTQgv9LW7Mwb7166rKDvBl16WiNkjylvNhJlfp/jaGrFV9BL1ctk2it
- yGhEzE/af7sUddCkyhyFI1PgKXtGZLA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1713458628;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oHDPDrocqsRK8z1RWNdzPDSvqCOb/uGRruZi9B8v1IM=;
+ b=YnywTbreryJVC65udMLV/7k4mkr9PRpm+AJYWbBS6RfCN4tjVzyfjm1Dru/sqfDeqlBrPO
+ gp4VyN3QM8orD1QclXwhnZ5GctSlGmT42L18/nJJ7hhIiO8j2er8FXPzO4lmS6H08RpoK2
+ /HjClvM7a0HpljU1qIqQ2kNn5XiYjlc=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-WJp2aOgZO8Wt3bb3AJpmAg-1; Thu, 18 Apr 2024 12:42:28 -0400
-X-MC-Unique: WJp2aOgZO8Wt3bb3AJpmAg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B89A618065AE
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 16:42:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.72])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id DE50040357A7;
- Thu, 18 Apr 2024 16:42:26 +0000 (UTC)
-Date: Thu, 18 Apr 2024 17:42:24 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Anthony Harivel <aharivel@redhat.com>
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
- vchundur@redhat.com, rjarry@redhat.com
-Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
-Message-ID: <ZiFNcLYyha3_teDT@redhat.com>
-References: <20240411121434.253353-1-aharivel@redhat.com>
- <20240411121434.253353-4-aharivel@redhat.com>
+ us-mta-637-qaI3lmCGMuuHMkbtJRKvFg-1; Thu, 18 Apr 2024 12:43:47 -0400
+X-MC-Unique: qaI3lmCGMuuHMkbtJRKvFg-1
+Received: by mail-oo1-f69.google.com with SMTP id
+ 006d021491bc7-5acdbfb49daso419572eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 09:43:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713458626; x=1714063426;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oHDPDrocqsRK8z1RWNdzPDSvqCOb/uGRruZi9B8v1IM=;
+ b=NXS8x1w20QnD1xSX3YSqKFi8tEi+e/GyQ834/YioqDAz7jOPS9T/idIemV2ZY+6bWo
+ lXdzQzLkBK/MSOL/pbDyElfnwoa3gh1kmJlPWpczU4ez66+pdtPjCGFMVStY8InD/Wcg
+ szK8pG1h09F6uOx6F9naObWcUVEukGfagQAVYeLTLRfQSASwg/N4hY/GkiRqJiK6+1JT
+ OEpsG1/zFk8MHkTjPaEk4aVA0AKy6aPQ/saP/+veTHbCWqSOFhhZjkRLsW/1XrgyF9SC
+ w1RjIvzXSx2QR1gKD1VwS6++o8stwy/blF2olZ//8Res6UWz6y5dTA6pHMXEc+XZnqhH
+ OtdQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU5pWgmuKz2jlX0h/s4z7xGm/uDbi0aNsVspJgWhHq+LpPYpSMfRxA8ddYt/mzQOnsLFxXdemLpCgWsbSLXCYmpleiFlxA=
+X-Gm-Message-State: AOJu0Yyhwx8X9/u/aNQ1LoR1Fz1fyU2YFgYJ2SQ9F+mf/Ehg65NnY1dO
+ 3/WoEKuuHzziahi8IE+X5pXcTYtaVyJ6RinNVSFDfmuclFNHhw67GWAQpPkA0CR61LEHUe/EEGO
+ VWxAdlooynukojbQxZW/wNLu+3O6DE+UvMc6nRVbyjxbFu2qYihUh
+X-Received: by 2002:a05:6358:338c:b0:186:6b7e:d2dd with SMTP id
+ i12-20020a056358338c00b001866b7ed2ddmr3958536rwd.1.1713458626092; 
+ Thu, 18 Apr 2024 09:43:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSKVx+ylTTL3YgU3WHKVll/PL+DSUMtluty1mXSJyNHxBZFAlPvNmDj17b7/IIMcx7TKyW1A==
+X-Received: by 2002:a05:6358:338c:b0:186:6b7e:d2dd with SMTP id
+ i12-20020a056358338c00b001866b7ed2ddmr3958508rwd.1.1713458625494; 
+ Thu, 18 Apr 2024 09:43:45 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ g23-20020ac84dd7000000b00436e0eb2346sm804146qtw.55.2024.04.18.09.43.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Apr 2024 09:43:45 -0700 (PDT)
+Date: Thu, 18 Apr 2024 12:43:42 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ farosas@suse.de, yc-core@yandex-team.ru, thuth@redhat.com,
+ lvivier@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org,
+ pkrempa@redhat.com
+Subject: Re: [PATCH] migration: do not exit on incoming failure
+Message-ID: <ZiFNvgf0sDwC1Zkv@x1n>
+References: <20240417221329.248803-1-vsementsov@yandex-team.ru>
+ <ZiEwF0rWlLaKMzqw@redhat.com>
+ <0a1d8984-bc01-41bf-9099-0ef426e848ca@yandex-team.ru>
+ <ZiE_n7qwvRCz3vjE@redhat.com>
+ <985d47bb-3c14-4576-95fa-28649710686b@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240411121434.253353-4-aharivel@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <985d47bb-3c14-4576-95fa-28649710686b@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -80,128 +105,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 11, 2024 at 02:14:34PM +0200, Anthony Harivel wrote:
-> Starting with the "Sandy Bridge" generation, Intel CPUs provide a RAPL
-> interface (Running Average Power Limit) for advertising the accumulated
-> energy consumption of various power domains (e.g. CPU packages, DRAM,
-> etc.).
+On Thu, Apr 18, 2024 at 06:47:31PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 18.04.24 18:43, Daniel P. Berrangé wrote:
+> > On Thu, Apr 18, 2024 at 06:40:38PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > On 18.04.24 17:37, Daniel P. Berrangé wrote:
+> > > > On Thu, Apr 18, 2024 at 01:13:29AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > > We do set MIGRATION_FAILED state, but don't give a chance to
+> > > > > orchestrator to query migration state and get the error.
+> > > > > 
+> > > > > Let's report an error through QAPI like we do on outgoing migration.
+> > > > > 
+> > > > > migration-test is updated correspondingly.
+> > > > > 
+> > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > > > > ---
+> > > > > 
+> > > > > Doubt: is exiting on failure a contract? Will this commit break
+> > > > > something in Libvirt? Finally, could we just change the logic, or I need
+> > > > > and additional migration-parameter for new behavior?
+> > > > 
+> > > > There's a decent risk that this could break apps, whether
+> > > > libvirt or something else, especially if the app is just
+> > > > launching QEMU with '-incoming URI', rather than using
+> > > > '-incoming defer' and then explicitly using QMP to start the
+> > > > incoming migration.
+> > > > 
+> > > > I'd say that with '-incoming defer' we should *not* exit on
+> > > > migration error, because that arg implies the app explicitly
+> > > > wants to be using QMP to control migration.
+> > > > 
+> > > > With the legacy '-incoming URI' it is probably best to keep
+> > > > exit on error, as that's comparatively more likely to be used
+> > > > in adhoc scenarios where the app/user is ignoring QMP on the
+> > > > dst side.
+> > > > 
+> > > > None the less, I think we need to check how libvirt behaves
+> > > > with this patch to be sure of no surprises.
+> > > > 
+> > > 
+> > > Sounds reasonable, thanks! I'll rework it to behave the new
+> > > way only with "-incoming defer", and check how libvirt behave with it.
+> > 
+> > If there are problems and/or we want to be super safe wrt
+> > backcompat, we could add a new  '-incoming managed' as
+> > being equivalent to '-incoming defer' but without the
+> > implicit exit.
+> > 
 > 
-> The consumption is reported via MSRs (model specific registers) like
-> MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are
-> 64 bits registers that represent the accumulated energy consumption in
-> micro Joules. They are updated by microcode every ~1ms.
-> 
-> For now, KVM always returns 0 when the guest requests the value of
-> these MSRs. Use the KVM MSR filtering mechanism to allow QEMU handle
-> these MSRs dynamically in userspace.
-> 
-> To limit the amount of system calls for every MSR call, create a new
-> thread in QEMU that updates the "virtual" MSR values asynchronously.
-> 
-> Each vCPU has its own vMSR to reflect the independence of vCPUs. The
-> thread updates the vMSR values with the ratio of energy consumed of
-> the whole physical CPU package the vCPU thread runs on and the
-> thread's utime and stime values.
-> 
-> All other non-vCPU threads are also taken into account. Their energy
-> consumption is evenly distributed among all vCPUs threads running on
-> the same physical CPU package.
-> 
-> To overcome the problem that reading the RAPL MSR requires priviliged
-> access, a socket communication between QEMU and the qemu-vmsr-helper is
-> mandatory. You can specified the socket path in the parameter.
-> 
-> This feature is activated with -accel kvm,rapl=true,path=/path/sock.sock
-> 
-> Actual limitation:
-> - Works only on Intel host CPU because AMD CPUs are using different MSR
->   adresses.
-> 
-> - Only the Package Power-Plane (MSR_PKG_ENERGY_STATUS) is reported at
->   the moment.
-> 
-> Signed-off-by: Anthony Harivel <aharivel@redhat.com>
-> ---
->  accel/kvm/kvm-all.c           |  27 +++
->  docs/specs/index.rst          |   1 +
->  docs/specs/rapl-msr.rst       | 155 ++++++++++++
->  include/sysemu/kvm.h          |   2 +
->  include/sysemu/kvm_int.h      |  32 +++
->  target/i386/cpu.h             |   8 +
->  target/i386/kvm/kvm-cpu.c     |   9 +
->  target/i386/kvm/kvm.c         | 428 ++++++++++++++++++++++++++++++++++
->  target/i386/kvm/meson.build   |   1 +
->  target/i386/kvm/vmsr_energy.c | 335 ++++++++++++++++++++++++++
->  target/i386/kvm/vmsr_energy.h |  99 ++++++++
->  11 files changed, 1097 insertions(+)
->  create mode 100644 docs/specs/rapl-msr.rst
->  create mode 100644 target/i386/kvm/vmsr_energy.c
->  create mode 100644 target/i386/kvm/vmsr_energy.h
-> 
+> Probably, that's the best variant. As I can check libvirt in some case, but not at all cases. And libvirt is not the only vm manager finally.
+> And we can in the same time deprecate "-incoming defer" in favor of new behavior.
 
-> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-> index 9c791b7b0520..eafb625839b8 100644
-> --- a/target/i386/kvm/kvm-cpu.c
-> +++ b/target/i386/kvm/kvm-cpu.c
-> @@ -50,6 +50,15 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
->                                                     MSR_IA32_UCODE_REV);
->          }
->      }
-> +
-> +    if (kvm_is_rapl_feat_enable(cs)) {
-> +        if (!IS_INTEL_CPU(env)) {
-> +            error_setg(errp, "RAPL feature can only be\
-> +                              enabled with Intel CPU models");
-> +                return false;
-> +        }
-> +    }
+Or just make it a new migration parameter?  Then we keep all existing
+interfaces untouched, no risk of breaking anyone, and then it'll also apply
+to anyone who uses things like -incoming tcp but still wants to keep the
+qemu instance alive?
 
-I see a crash in kvm_is_rapl_feat_enable() from this caller,
-when I run with this kind of command line:
+Thanks,
 
- $ qemu-system-x86_64 \
-      -kernel /lib/modules/6.6.9-100.fc38.x86_64/vmlinuz \
-      -initrd tiny-initrd.img  -m 2000 -serial stdio -nodefaults \
-      -display none -accel kvm -append "console=ttyS0 quiet"
-
-
-#0  0x0000555555bc14b7 in kvm_is_rapl_feat_enable (cs=cs@entry=0x555557b83470) at ../target/i386/kvm/kvm.c:2531
-#1  0x0000555555bc7534 in kvm_cpu_realizefn (cs=0x555557b83470, errp=0x7fffffffd2a0) at ../target/i386/kvm/kvm-cpu.c:54
-#2  0x0000555555d2432a in accel_cpu_common_realize (cpu=0x555557b83470, errp=0x7fffffffd2a0) at ../accel/accel-target.c:130
-#3  0x0000555555cdd955 in cpu_exec_realizefn (cpu=cpu@entry=0x555557b83470, errp=errp@entry=0x7fffffffd2a0) at ../cpu-target.c:137
-#4  0x0000555555c14b89 in x86_cpu_realizefn (dev=0x555557b83470, errp=0x7fffffffd310) at ../target/i386/cpu.c:7320
-#5  0x0000555555d58f4b in device_set_realized (obj=<optimized out>, value=<optimized out>, errp=0x7fffffffd390) at ../hw/core/qdev.c:510
-#6  0x0000555555d5d78d in property_set_bool (obj=0x555557b83470, v=<optimized out>, name=<optimized out>, opaque=0x5555578558e0, errp=0x7fffffffd390)
-    at ../qom/object.c:2358
-#7  0x0000555555d60b0b in object_property_set (obj=obj@entry=0x555557b83470, name=name@entry=0x55555607c799 "realized", v=v@entry=0x555557b8ccb0, errp=0x7fffffffd390, 
-    errp@entry=0x555556e210d8 <error_fatal>) at ../qom/object.c:1472
-#8  0x0000555555d6444f in object_property_set_qobject
-    (obj=obj@entry=0x555557b83470, name=name@entry=0x55555607c799 "realized", value=value@entry=0x555557854800, errp=errp@entry=0x555556e210d8 <error_fatal>)
-    at ../qom/qom-qobject.c:28
-#9  0x0000555555d61174 in object_property_set_bool
-    (obj=0x555557b83470, name=name@entry=0x55555607c799 "realized", value=value@entry=true, errp=errp@entry=0x555556e210d8 <error_fatal>) at ../qom/object.c:1541
-#10 0x0000555555d59a3c in qdev_realize (dev=<optimized out>, bus=bus@entry=0x0, errp=errp@entry=0x555556e210d8 <error_fatal>) at ../hw/core/qdev.c:292
-#11 0x0000555555bd51e0 in x86_cpu_new (x86ms=<optimized out>, apic_id=0, errp=0x555556e210d8 <error_fatal>) at ../hw/i386/x86.c:105
-#12 0x0000555555bd52ce in x86_cpus_init (x86ms=x86ms@entry=0x555557aaed30, default_cpu_version=<optimized out>) at ../hw/i386/x86.c:156
-#13 0x0000555555bdc1a7 in pc_init1 (machine=0x555557aaed30, pci_type=0x55555604aa61 "i440FX") at ../hw/i386/pc_piix.c:185
-#14 0x0000555555947a11 in machine_run_board_init (machine=0x555557aaed30, mem_path=<optimized out>, errp=<optimized out>, errp@entry=0x555556e210d8 <error_fatal>)
-    at ../hw/core/machine.c:1547
-#15 0x0000555555b020ed in qemu_init_board () at ../system/vl.c:2613
-#16 qmp_x_exit_preconfig (errp=0x555556e210d8 <error_fatal>) at ../system/vl.c:2705
-#17 0x0000555555b0611e in qemu_init (argc=<optimized out>, argv=<optimized out>) at ../system/vl.c:3739
-#18 0x0000555555897ca9 in main (argc=<optimized out>, argv=<optimized out>) at ../system/main.c:47
-
-The problem is that 'cs->kvm_state' is NULL here
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
