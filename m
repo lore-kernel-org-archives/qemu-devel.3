@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387EFC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D65C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVun-0001W3-FF; Thu, 18 Apr 2024 13:51:17 -0400
+	id 1rxVtd-00088P-6b; Thu, 18 Apr 2024 13:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVui-0001NN-K1; Thu, 18 Apr 2024 13:51:12 -0400
+ id 1rxVtb-00087l-8R; Thu, 18 Apr 2024 13:50:03 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVug-0007bW-HA; Thu, 18 Apr 2024 13:51:12 -0400
+ id 1rxVtY-0007I4-VE; Thu, 18 Apr 2024 13:50:02 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F8465FD71;
- Thu, 18 Apr 2024 20:50:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B29495FD61;
+ Thu, 18 Apr 2024 20:49:58 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CF003B934B;
- Thu, 18 Apr 2024 20:50:00 +0300 (MSK)
-Received: (nullmailer pid 947854 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 16EC1B9337;
+ Thu, 18 Apr 2024 20:49:56 +0300 (MSK)
+Received: (nullmailer pid 947806 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 104/116] hw/misc/applesmc: Fix memory leak in reset()
- handler
-Date: Thu, 18 Apr 2024 20:49:34 +0300
-Message-Id: <20240418174955.947730-17-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 088/116] tcg/optimize: Do not attempt to constant fold
+ neg_vec
+Date: Thu, 18 Apr 2024 20:49:18 +0300
+Message-Id: <20240418174955.947730-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,34 +61,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-AppleSMCData is allocated with g_new0() in applesmc_add_key():
-release it with g_free().
+Split out the tail of fold_neg to fold_neg_no_const so that we
+can avoid attempting to constant fold vector negate.
 
-Leaked since commit 1ddda5cd36 ("AppleSMC device emulation").
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2272
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20240408095217.57239-3-philmd@linaro.org>
-(cherry picked from commit fc09ff2979defdcf8d00c2db94022d5d610e36ba)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2150
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit e25fe886b89a396bae5847520b70c148587d490a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index 72300d0cbc..a77fb93e7f 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -274,6 +274,7 @@ static void qdev_applesmc_isa_reset(DeviceState *dev)
-     /* Remove existing entries */
-     QLIST_FOREACH_SAFE(d, &s->data_def, node, next) {
-         QLIST_REMOVE(d, node);
-+        g_free(d);
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 6fcdda68ef..5ead14972a 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1830,16 +1830,10 @@ static bool fold_nand(OptContext *ctx, TCGOp *op)
+     return false;
+ }
+ 
+-static bool fold_neg(OptContext *ctx, TCGOp *op)
++static bool fold_neg_no_const(OptContext *ctx, TCGOp *op)
+ {
+-    uint64_t z_mask;
+-
+-    if (fold_const1(ctx, op)) {
+-        return true;
+-    }
+-
+     /* Set to 1 all bits to the left of the rightmost.  */
+-    z_mask = arg_info(op->args[1])->z_mask;
++    uint64_t z_mask = arg_info(op->args[1])->z_mask;
+     ctx->z_mask = -(z_mask & -z_mask);
+ 
+     /*
+@@ -1850,6 +1844,11 @@ static bool fold_neg(OptContext *ctx, TCGOp *op)
+     return true;
+ }
+ 
++static bool fold_neg(OptContext *ctx, TCGOp *op)
++{
++    return fold_const1(ctx, op) || fold_neg_no_const(ctx, op);
++}
++
+ static bool fold_nor(OptContext *ctx, TCGOp *op)
+ {
+     if (fold_const2_commutative(ctx, op) ||
+@@ -2165,7 +2164,7 @@ static bool fold_sub_to_neg(OptContext *ctx, TCGOp *op)
+     if (have_neg) {
+         op->opc = neg_op;
+         op->args[1] = op->args[2];
+-        return fold_neg(ctx, op);
++        return fold_neg_no_const(ctx, op);
      }
-     s->status = 0x00;
-     s->status_1e = 0x00;
+     return false;
+ }
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 0efd565f05..70d728ae9a 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -10,7 +10,7 @@ VPATH 		+= $(AARCH64_SRC)
+ 
+ # Base architecture tests
+ AARCH64_TESTS=fcvt pcalign-a64 lse2-fault
+-AARCH64_TESTS += test-2248
++AARCH64_TESTS += test-2248 test-2150
+ 
+ fcvt: LDFLAGS+=-lm
+ 
+diff --git a/tests/tcg/aarch64/test-2150.c b/tests/tcg/aarch64/test-2150.c
+new file mode 100644
+index 0000000000..fb86c11958
+--- /dev/null
++++ b/tests/tcg/aarch64/test-2150.c
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* See https://gitlab.com/qemu-project/qemu/-/issues/2150 */
++
++int main()
++{
++    asm volatile(
++        "movi     v6.4s, #1\n"
++        "movi     v7.4s, #0\n"
++        "sub      v6.2d, v7.2d, v6.2d\n"
++        : : : "v6", "v7");
++    return 0;
++}
 -- 
 2.39.2
 
