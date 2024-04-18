@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED007C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DD8C04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVuL-0000Sr-90; Thu, 18 Apr 2024 13:50:49 -0400
+	id 1rxVvQ-0003Nw-96; Thu, 18 Apr 2024 13:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVuJ-0000RO-Ql; Thu, 18 Apr 2024 13:50:47 -0400
+ id 1rxVvB-0002s3-VS; Thu, 18 Apr 2024 13:51:43 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVuI-0007ad-02; Thu, 18 Apr 2024 13:50:47 -0400
+ id 1rxVv9-0007gi-WB; Thu, 18 Apr 2024 13:51:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BA3B95FD6E;
- Thu, 18 Apr 2024 20:50:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A0A825FD76;
+ Thu, 18 Apr 2024 20:50:04 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 21462B9348;
- Thu, 18 Apr 2024 20:50:00 +0300 (MSK)
-Received: (nullmailer pid 947845 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id DE7F2B9350;
+ Thu, 18 Apr 2024 20:50:01 +0300 (MSK)
+Received: (nullmailer pid 947869 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 101/116] hw/block/nand: Factor nand_load_iolen() method
- out
-Date: Thu, 18 Apr 2024 20:49:31 +0300
-Message-Id: <20240418174955.947730-14-mjt@tls.msk.ru>
+ Zheyu Ma <zheyuma97@gmail.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 109/116] hw/net/net_tx_pkt: Fix overrun in
+ update_sctp_checksum()
+Date: Thu, 18 Apr 2024 20:49:39 +0300
+Message-Id: <20240418174955.947730-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
@@ -66,75 +66,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+If a fragmented packet size is too short, do not try to
+calculate its checksum.
+
+Reproduced using:
+
+  $ cat << EOF | qemu-system-i386 -display none -nodefaults \
+                                  -machine q35,accel=qtest -m 32M \
+                                  -device igb,netdev=net0 \
+                                  -netdev user,id=net0 \
+                                  -qtest stdio
+  outl 0xcf8 0x80000810
+  outl 0xcfc 0xe0000000
+  outl 0xcf8 0x80000804
+  outw 0xcfc 0x06
+  write 0xe0000403 0x1 0x02
+  writel 0xe0003808 0xffffffff
+  write 0xe000381a 0x1 0x5b
+  write 0xe000381b 0x1 0x00
+  EOF
+  Assertion failed: (offset == 0), function iov_from_buf_full, file util/iov.c, line 39.
+  #1 0x5575e81e952a in iov_from_buf_full qemu/util/iov.c:39:5
+  #2 0x5575e6500768 in net_tx_pkt_update_sctp_checksum qemu/hw/net/net_tx_pkt.c:144:9
+  #3 0x5575e659f3e1 in igb_setup_tx_offloads qemu/hw/net/igb_core.c:478:11
+  #4 0x5575e659f3e1 in igb_tx_pkt_send qemu/hw/net/igb_core.c:552:10
+  #5 0x5575e659f3e1 in igb_process_tx_desc qemu/hw/net/igb_core.c:671:17
+  #6 0x5575e659f3e1 in igb_start_xmit qemu/hw/net/igb_core.c:903:9
+  #7 0x5575e659f3e1 in igb_set_tdt qemu/hw/net/igb_core.c:2812:5
+  #8 0x5575e657d6a4 in igb_core_write qemu/hw/net/igb_core.c:4248:9
+
+Fixes: CVE-2024-3567
+Cc: qemu-stable@nongnu.org
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Fixes: f199b13bc1 ("igb: Implement Tx SCTP CSO")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2273
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240409135944.24997-2-philmd@linaro.org>
-(cherry picked from commit 7a86544f286d8af4fa5251101c1026ddae92cc3d)
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20240410070459.49112-1-philmd@linaro.org>
+(cherry picked from commit 83ddb3dbba2ee0f1767442ae6ee665058aeb1093)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/nand.c b/hw/block/nand.c
-index 9c1b89cfa6..58ef547c5a 100644
---- a/hw/block/nand.c
-+++ b/hw/block/nand.c
-@@ -243,9 +243,28 @@ static inline void nand_pushio_byte(NANDFlashState *s, uint8_t value)
-     }
- }
+diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+index 2134a18c4c..b7b1de816d 100644
+--- a/hw/net/net_tx_pkt.c
++++ b/hw/net/net_tx_pkt.c
+@@ -141,6 +141,10 @@ bool net_tx_pkt_update_sctp_checksum(struct NetTxPkt *pkt)
+     uint32_t csum = 0;
+     struct iovec *pl_start_frag = pkt->vec + NET_TX_PKT_PL_START_FRAG;
  
-+/*
-+ * nand_load_block: Load block containing (s->addr + @offset).
-+ * Returns length of data available at @offset in this block.
-+ */
-+static unsigned nand_load_block(NANDFlashState *s, unsigned offset)
-+{
-+    unsigned iolen;
-+
-+    s->blk_load(s, s->addr, offset);
-+
-+    iolen = (1 << s->page_shift);
-+    if (s->gnd) {
-+        iolen += 1 << s->oob_shift;
++    if (iov_size(pl_start_frag, pkt->payload_frags) < 8 + sizeof(csum)) {
++        return false;
 +    }
-+    assert(offset <= iolen);
-+    iolen -= offset;
 +
-+    return iolen;
-+}
-+
- static void nand_command(NANDFlashState *s)
- {
--    unsigned int offset;
-     switch (s->cmd) {
-     case NAND_CMD_READ0:
-         s->iolen = 0;
-@@ -271,12 +290,7 @@ static void nand_command(NANDFlashState *s)
-     case NAND_CMD_NOSERIALREAD2:
-         if (!(nand_flash_ids[s->chip_id].options & NAND_SAMSUNG_LP))
-             break;
--        offset = s->addr & ((1 << s->addr_shift) - 1);
--        s->blk_load(s, s->addr, offset);
--        if (s->gnd)
--            s->iolen = (1 << s->page_shift) - offset;
--        else
--            s->iolen = (1 << s->page_shift) + (1 << s->oob_shift) - offset;
-+        s->iolen = nand_load_block(s, s->addr & ((1 << s->addr_shift) - 1));
-         break;
- 
-     case NAND_CMD_RESET:
-@@ -597,12 +611,7 @@ uint32_t nand_getio(DeviceState *dev)
-     if (!s->iolen && s->cmd == NAND_CMD_READ0) {
-         offset = (int) (s->addr & ((1 << s->addr_shift) - 1)) + s->offset;
-         s->offset = 0;
--
--        s->blk_load(s, s->addr, offset);
--        if (s->gnd)
--            s->iolen = (1 << s->page_shift) - offset;
--        else
--            s->iolen = (1 << s->page_shift) + (1 << s->oob_shift) - offset;
-+        s->iolen = nand_load_block(s, offset);
+     if (iov_from_buf(pl_start_frag, pkt->payload_frags, 8, &csum, sizeof(csum)) < sizeof(csum)) {
+         return false;
      }
- 
-     if (s->ce || s->iolen <= 0) {
 -- 
 2.39.2
 
