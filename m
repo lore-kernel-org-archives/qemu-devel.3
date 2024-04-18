@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7844EC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 02:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 972C6C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 05:37:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxHC9-0004vy-B8; Wed, 17 Apr 2024 22:08:13 -0400
+	id 1rxKRQ-0005nb-1j; Thu, 18 Apr 2024 01:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rxHC7-0004vl-NT
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 22:08:11 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rxHC5-0008Oz-Ef
- for qemu-devel@nongnu.org; Wed, 17 Apr 2024 22:08:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713406089; x=1744942089;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=nPa7z7P+/kV+o3o1F2EpfWOBiZZBN4sSPisnsk9f8cM=;
- b=Ex2YG4M1wOgfgnrCUZ7LdMQA+RE0IEUF+b/XYJ7lR+izQp0zd7LyHEME
- TZeYCdTKoFfqK4llxwBzXpNY1eBz3D4SozKIk4HCpydyQs4ryq/cb5J0q
- 3b4kMfwOlhxptFasj2MuDldFJrARR56dI9qY5WgCXzqVLEyhNI1tO3/Nm
- vC29lwyITkI5Ra/yQQoJYu/rFoqYjEfLlemlNYv21D1PsfReB8MBMPvxi
- AKWHEzPS/W/TIpyOOKsN9ExOJs7npu7M/3YAy3y/58bejj0oJxHYH3lqx
- /Sk8Ve62/Z3tSAcI9/GXAAi2sV3V1JvR1WMoCP03nwGiOkTIVy1EqZuVU w==;
-X-CSE-ConnectionGUID: kOTlI5tNSGejtLTnfJYHdA==
-X-CSE-MsgGUID: WaraJnD1RweITlZRzGFjhw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="9479383"
-X-IronPort-AV: E=Sophos;i="6.07,210,1708416000"; 
-   d="scan'208";a="9479383"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Apr 2024 19:08:04 -0700
-X-CSE-ConnectionGUID: B5T2YtylTX6j7DiYgdAXvg==
-X-CSE-MsgGUID: QanWG84pSzGpOF4sszSrfA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,210,1708416000"; d="scan'208";a="53755946"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa002.jf.intel.com with ESMTP; 17 Apr 2024 19:08:03 -0700
-Date: Thu, 18 Apr 2024 10:22:07 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Peter Dave Hello <hsu@peterdavehello.org>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
-Message-ID: <ZiCDzzFDRmQGPtDD@intel.com>
-References: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
- <CAFEAcA_D1+BUk01mXNwRehxYqyXQU+Zu98sWBujauk5L2tHh3w@mail.gmail.com>
- <Zh6qLCvyiSk6YkVy@intel.com> <Zh6oIH8Ihyn-9RwT@redhat.com>
- <pTgk5-fHZzZe_qQn7RdevQ7Dg9Yz_-I4jWPpYknkgbiStJvLCRlTj9EpfRY_K9GCqdSABB_s_xzuGBCxxRqDfzDIoO6AVcvP-onYk8yRiWI=@peterdavehello.org>
+ (Exim 4.90_1) (envelope-from <sloosemore@baylibre.com>)
+ id 1rxIQs-0007sa-NA
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 23:27:30 -0400
+Received: from mail-il1-x129.google.com ([2607:f8b0:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sloosemore@baylibre.com>)
+ id 1rxIQq-0003Xj-DG
+ for qemu-devel@nongnu.org; Wed, 17 Apr 2024 23:27:30 -0400
+Received: by mail-il1-x129.google.com with SMTP id
+ e9e14a558f8ab-36aff02f998so1145655ab.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 20:27:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1713410845; x=1714015645;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5gA8QUGQOdrLso3TDqnwOuHMmqkm0XVXDlJnV949G7o=;
+ b=v3q1YwUyV9tpX1jawaW6QabqMIJ0PK/0rdMssXmndjGHn9irCiz/NwrqlJv6hoUeFt
+ fw/mSL/O70VbKv8SdqGj5GspD22DqJKlQjnDfhDNEkBbzaYKXxGmihgtQtY2syA/Ch81
+ QpLBshUXk5AZMp1z8qRkCSrRYmMe0Rw0q3a8zhWkhrytHUWimso2p5RdeB7wMSSbgjG4
+ OloGFzsjb4NvnJctWiSbFma6JSBQm8n+AvkDizdl9PtcHb3/oQXTk2bZUrR1zz3OEA0D
+ kA2c6BjorZXyJDlP4dFUaftIQ6JQWqzwHvWq278uh5IcujXVwEPsTsxO9odYZE4QSUAC
+ fP1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713410845; x=1714015645;
+ h=content-transfer-encoding:cc:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=5gA8QUGQOdrLso3TDqnwOuHMmqkm0XVXDlJnV949G7o=;
+ b=QX5CQlUC9N6xcFVQjH/glhIwZQFEe3ORJR8UOIUBq5i6Jdv54BAMgz7CvZ7L9F7Rlt
+ A7r9hr/bnY9H56vu5B7AzrNFbIbISznFc9+G0DjzmeHA9e2ov9Hn+9Tgfdc0Neq2uW1w
+ lRkjxOV3M430voHlZgChi4yNXEP0RYWrfHFEvD/sT5MOZhyGQNQodiOLfOHCFXAdo6NJ
+ JCdxusjyRgpxPwkMapgnG7ESXmaHTvWjHMm3FW3lMnl9EAiLulVNwnnTijrmsKilMx8l
+ rh467VkHV+zprTZz6AjTe6wSjWbtXTTCqvXsRzjp73AfmrSa0UE2zKNqWhQRU9a92BXq
+ muRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVUfX/+5oNF7cwYSgIk2Zso6a0Gx7EqQRzF1B4m4p0dNOuOPogkwXBI3DkIgJRr1y96jHzUz9QXSw+aGpODzCdfHe4debc=
+X-Gm-Message-State: AOJu0YzDVaYI5Y7kiXEjCcYr8kTKhfHG6ZlvstAKx9RhA6DfXP0UpDv7
+ BC9tDTRYK7oDO7/1R14MkTIPr6AOaxC3DBcCqxwUMnT9Mn2Ht+YX6TgpPQ1jGpc=
+X-Google-Smtp-Source: AGHT+IFrhLQQ6SkzsTzhCTAnWXrX4IwidvUebTMZszp5I7p08/L82L+EGlf+0MnzJgH4gJU6jIlUmQ==
+X-Received: by 2002:a05:6e02:13a3:b0:36a:1725:e123 with SMTP id
+ h3-20020a056e0213a300b0036a1725e123mr1810227ilo.14.1713410844838; 
+ Wed, 17 Apr 2024 20:27:24 -0700 (PDT)
+Received: from ?IPV6:2601:281:d901:5620:837d:e339:1ac5:3222?
+ ([2601:281:d901:5620:837d:e339:1ac5:3222])
+ by smtp.gmail.com with ESMTPSA id
+ kw23-20020a056638931700b00482f40d1024sm173661jab.139.2024.04.17.20.27.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Apr 2024 20:27:24 -0700 (PDT)
+Message-ID: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
+Date: Wed, 17 Apr 2024 21:27:23 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pTgk5-fHZzZe_qQn7RdevQ7Dg9Yz_-I4jWPpYknkgbiStJvLCRlTj9EpfRY_K9GCqdSABB_s_xzuGBCxxRqDfzDIoO6AVcvP-onYk8yRiWI=@peterdavehello.org>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: gcc@gcc.gnu.org, binutils@sourceware.org, gdb-patches@sourceware.org,
+ libc-alpha@sourceware.org, Chung-Lin Tang <cltang@baylibre.com>,
+ andrew@reenigne.org, Yao Qi <qiyaoltc@gmail.com>
+From: Sandra Loosemore <sloosemore@baylibre.com>
+Subject: Deprecation/removal of nios2 target support
+Cc: Dinh Nguyen <dinguyen@kernel.org>, qemu-devel@nongnu.org,
+ newlib@sourceware.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::129;
+ envelope-from=sloosemore@baylibre.com; helo=mail-il1-x129.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 18 Apr 2024 01:36:08 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,69 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Perter HSU,
+Tomorrow I plan to push patches to mark the nios2 target as obsolete in 
+GCC 14.
 
-On Wed, Apr 17, 2024 at 01:07:17PM +0000, Peter Dave Hello wrote:
-> Date: Wed, 17 Apr 2024 13:07:17 +0000
-> From: Peter Dave Hello <hsu@peterdavehello.org>
-> Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
-> 
-> Hi all,
-> 
-> Thank you all for the feedback. I've updated the patch to address most of the suggestions, but only the copyright part. I'm not sure how to deal with it. BTW, should I directly paste the revised patch below? Sorry that I'm not familiar with the process here. Thanks for your help again.
+Background: Intel has EOL'ed the Nios II processor IP and is now 
+directing their FPGA customers to a RISC-V platform instead.
 
-New patch should be sent separately to avoid replying directly to
-previous mail thread. And the tag of the SUBJECT for your v2 patch needs
-to be changed to "[PATCH v2]".
+https://www.intel.com/content/www/us/en/content-details/781327/intel-is-discontinuing-ip-ordering-codes-listed-in-pdn2312-for-nios-ii-ip.html
 
-> From: Peter Dave Hello <hsu@peterdavehello.org>
-> Date: Tue, 16 Apr 2024 00:43:29 +0800
-> Subject: [PATCH] Add a simple zh_TW Traditional Chinese translation
-> 
-> This patch adds a basic zh_TW translation file for Taiwan Traditional
-> Chinese users.
-> 
-> Signed-off-by: Peter Dave Hello <hsu@peterdavehello.org>
-> ---
->  po/LINGUAS  |  1 +
->  po/zh_TW.po | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 75 insertions(+)
->  create mode 100644 po/zh_TW.po
-> 
-> diff --git a/po/LINGUAS b/po/LINGUAS
-> index 9b33a36..08163e8 100644
-> --- a/po/LINGUAS
-> +++ b/po/LINGUAS
-> @@ -7,3 +7,4 @@ sv
->  tr
->  uk
->  zh_CN
-> +zh_TW
-> diff --git a/po/zh_TW.po b/po/zh_TW.po
-> new file mode 100644
-> index 0000000..e6d2c07
-> --- /dev/null
-> +++ b/po/zh_TW.po
-> @@ -0,0 +1,74 @@
-> +# Chinese translations for QEMU package.
-> +# Copyright (C) 2024 THE QEMU'S COPYRIGHT HOLDER
+The Nios II hardware on loan from Intel that we were using for testing 
+at Mentor Graphics/Siemens was returned around the first of the year. 
+For some time we had been using QEMU to test the nios2-elf target, but 
+we never had a QEMU test harness set up that would boot the Linux 
+kernel, and user-mode QEMU on this target is too buggy/unmaintained to 
+use for primary testing.  So the current situation is that none of the 
+listed maintainers for any of the GNU toolchain components have access 
+to a fully working test configuration any more, we have all moved on to 
+new jobs and different projects, Intel has also moved on to a different 
+platform, and our former contacts on Intel's Nios II team have moved on 
+as well.  It seems like it's time to pull the plug.
 
-Refer to this file /po/bg.po or any other source code of QEMU, copyright
-belongs to you or your company.
+Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and remove 
+support from all toolchain components after the release is made.  I'm 
+not sure there is an established process for obsoleting/removing support 
+in other components; besides binutils, GDB, and GLIBC, there's QEMU, 
+newlib/libgloss, and the Linux kernel.  But, we need to get the ball 
+rolling somewhere.
 
-> +# This file is distributed under the same license as the QEMU package.
+I did do some GCC testing on both ELF and Linux Nios II targets around 
+the end of December and another round about a month ago, so I believe 
+GCC 14 will pretty much be in working order.  Beyond that, though, I 
+think it would be better to remove support promptly, rather than having 
+it hang around in an unmaintained/untestable zombie state, getting ever 
+more bit-rotten.
 
-You can declare the license by:
-"SPDX-License-Identifier: GPL-2.0-or-later".
-
-And put this license under the author line.
-
-> +# Peter Dave Hello <hsu@peterdavehello.org>, 2024.
-> +#
-
-Others look good to me. Pls go ahead and respin your v2.
-
-Thanks,
-Zhao
-
+-Sandra
 
