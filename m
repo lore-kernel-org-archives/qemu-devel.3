@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A1BC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38EC6C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXRJ-0003Ui-C6; Thu, 18 Apr 2024 15:28:57 -0400
+	id 1rxXRZ-0005kd-CC; Thu, 18 Apr 2024 15:29:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXPJ-0008JO-Sw
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:26:59 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXP2-00089X-EK
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:26:39 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXPH-0007Xh-57
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:26:52 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a52223e004dso121561966b.2
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:26:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXOz-0007VL-De
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:26:35 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-516db2214e6so1664845e87.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:26:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713468408; x=1714073208; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713468390; x=1714073190; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KYZzt8h+xfLtt/f9EJkGkN8nzUXLIiHe8tAqM2sJg8A=;
- b=AkYNy8cZkrIeC2UlaNyVYL+Dl8CmRsdJxbOf0Q5Ja1NxpWPTEkYuiKXG8fK/Y1Exoa
- 5e30y84zHPVWK/RXqc3HZ7SUFrkbZtEPIh5CxObnd51HaSdvEzbSmhSnp7ONtRsoIUZs
- Zy0tR+inQKdLuFafn6WVW8P8jRpjihOX8SYJGj/TKrH8obeaNiQXGdZ3Gs0XkuWB8zwc
- orthIHWxjlnsCUGGzSLgaNwMndfXyMslvlCtUvkxHYTJ8ijR1SGtAvfkamqIkpeDTMOE
- Hd42Lf6YK2QY7Kmq0hZ5X2h7EewqNBwQHzQ/1ZvHTqbqlDfueNPlShMhdeeRVmaFpKhD
- Y0bw==
+ bh=3p8Qs3F8jC3emGpbq1YTEbHVimCbjmiYVCccpiO4GlE=;
+ b=l6XJj1qe8VBY4jrF6BnIYaBg1AZu9OvyIfJD48OAGLmANCcO1rhrkC05Q9IQo78mPl
+ XE1ZA0h1h+zQXBqauPdX0ackVXtdbEoJ7/18OrxCKs44Q+dKCgDdkVsLuY0+CL5DZBZF
+ finkyr1zD+WmcefH3/KSWPryCHp1BiBiFXDUpaajv7jVj0l0ToFtwNJHUs8uLmAcqOT9
+ Ibn6KrhTSzJhoet94eUFR6kTCLJGGQX3nCURcUBLRE0v56p+Ha8F1qJXsSK8bVxo0Z+T
+ NxFSlbtbNsZJVgsYAHHHOFYg+MeQjqNkz/KVA06nINvI1tIJ37DE3SClCbRS8yZZVC6P
+ vShQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713468408; x=1714073208;
+ d=1e100.net; s=20230601; t=1713468390; x=1714073190;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KYZzt8h+xfLtt/f9EJkGkN8nzUXLIiHe8tAqM2sJg8A=;
- b=CLq5yL3sR8jwEOJZ1doB9ob1Ffkure3+yEAhhposOyH+bPHlv+rjlbeyE8s5+B8Cqz
- PE3uV9YQjNaQhv06wgpcWBB5uch7b+AG4R0kl8uGTSY2EhH/sZfzk/1NkOhAC2LHFd6+
- NCfdTeNbk06JRIFe2+/SgAnlfe/nGkEbF+AfA/OSEE/tYHIZ8qSB96TiU7fBc/FPfac5
- G2qhTu9EGb5rHon+e8w4GWzZ0cDUD6RHbVdXQ+D2/RkyJlafCyb/dlyMrYZ3lkfqSzzc
- S2TTBmQfjvH+wPsH38hNYQiBknOV9lVEzDRGBjYA7I+wjGvpkbiA5yq6CAn0MVuX55ii
- E+aA==
-X-Gm-Message-State: AOJu0YzPgueeqEUPIx1kzWBstYMijfb4jCfq20zLUqdKenzPCB3zsAVx
- Q188RehoyKAXf2A02HSmk02ZazSPsDAnQ+qsKALjhQuS2dGuVA1ZGW8sqZ2XS91t9QLNE2n0i36
- R
-X-Google-Smtp-Source: AGHT+IGGSoNOPuz4j2WvvNGODM+4AEJcNNx0Thxm9FrMRXdYVHLgsSyAWa6ZsVOCsEkdfnN1Xh2oBQ==
-X-Received: by 2002:a17:906:34da:b0:a52:2e08:207e with SMTP id
- h26-20020a17090634da00b00a522e08207emr43995ejb.77.1713468408261; 
- Thu, 18 Apr 2024 12:26:48 -0700 (PDT)
+ bh=3p8Qs3F8jC3emGpbq1YTEbHVimCbjmiYVCccpiO4GlE=;
+ b=T2ntpl+oQDmtV/aZ/h0rHfBEjMqQZ3wgwmB+Ki95rYYDJ2J59TEkt3tC4ULm/Rpwws
+ u9ui65Xo7bb9AzapJUjFQoOKUth44eIygZloJMTRSLLpcsQ0Z1LxfYGWQTG+WX0SAP3G
+ jLVEVZbHMC4CVZk9kmx3TQWxMClmlJue7JMn7GPoCa6nvvV2RXXls4sbQVPl57Gv4HR7
+ wIJKj8BO82pLK8L0gyMVp/o5q11wrVxtZnej5Xz+l2jjXnotyjQYw2BE4QfVaDxE6zmU
+ dQnErhP6ewvLDavo/rWqcZQt5a0feEK/WnFGiSIWzxEeYmvsY0gGdqmMrIBnDCOQ6Bog
+ AJcQ==
+X-Gm-Message-State: AOJu0YyNvRfF0HglLW42JSbgr3JuYWJivV3tWrPkcF4p0h/uqXDOt6o1
+ OU0eYnRy2oVoUvq028CR4eFQwfTARB27Xp3pNGKy0b0uh8fjfG2vJV6zgaSrV+1cAQ6NGJduEO0
+ U
+X-Google-Smtp-Source: AGHT+IGc0qRkEMLMTGegLV4EypFFITOzOda0O4GHRkc0UB5yO1McHeMMwCZLkgpZNT6hPX4mXdod/A==
+X-Received: by 2002:a05:6512:34c3:b0:51a:affe:2526 with SMTP id
+ w3-20020a05651234c300b0051aaffe2526mr460238lfr.62.1713468390092; 
+ Thu, 18 Apr 2024 12:26:30 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.151.213])
  by smtp.gmail.com with ESMTPSA id
- u21-20020a1709064ad500b00a47423b4c33sm1255791ejt.128.2024.04.18.12.26.46
+ es13-20020a056402380d00b0056c249798absm1211244edb.71.2024.04.18.12.26.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Apr 2024 12:26:47 -0700 (PDT)
+ Thu, 18 Apr 2024 12:26:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -65,21 +65,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH 13/24] target/sparc: Replace abi_ulong by uint32_t for
- TARGET_ABI32
-Date: Thu, 18 Apr 2024 21:25:12 +0200
-Message-ID: <20240418192525.97451-14-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 10/24] exec: Reduce tlb_set_dirty() declaration scope
+Date: Thu, 18 Apr 2024 21:25:09 +0200
+Message-ID: <20240418192525.97451-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240418192525.97451-1-philmd@linaro.org>
 References: <20240418192525.97451-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,28 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have abi_ulong == uint32_t for the 32-bit ABI.
-Use the generic type to avoid to depend on the
-"exec/user/abitypes.h" header.
+tlb_set_dirty() is only used in accel/tcg/cputlb.c,
+where it is defined. Declare it statically, removing
+the stub.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/exec/exec-all.h | 1 -
+ accel/stubs/tcg-stub.c  | 4 ----
+ accel/tcg/cputlb.c      | 2 +-
+ 3 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
-index 07ea81ab5f..ec0036e9ef 100644
---- a/target/sparc/gdbstub.c
-+++ b/target/sparc/gdbstub.c
-@@ -108,7 +108,7 @@ int sparc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     SPARCCPU *cpu = SPARC_CPU(cs);
-     CPUSPARCState *env = &cpu->env;
- #if defined(TARGET_ABI32)
--    abi_ulong tmp;
-+    uint32_t tmp;
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index e4cff08db4..778c82ba8e 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -641,7 +641,6 @@ static inline void mmap_unlock(void) {}
+ #define WITH_MMAP_LOCK_GUARD()
  
-     tmp = ldl_p(mem_buf);
- #else
+ void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
+-void tlb_set_dirty(CPUState *cpu, vaddr addr);
+ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+ 
+ #endif
+diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
+index 8a496a2a6f..dd890d6cf6 100644
+--- a/accel/stubs/tcg-stub.c
++++ b/accel/stubs/tcg-stub.c
+@@ -18,10 +18,6 @@ void tb_flush(CPUState *cpu)
+ {
+ }
+ 
+-void tlb_set_dirty(CPUState *cpu, vaddr vaddr)
+-{
+-}
+-
+ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
+                        MMUAccessType access_type, int mmu_idx,
+                        bool nonfault, void **phost, uintptr_t retaddr)
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 93b1ca810b..e16d02a62c 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1039,7 +1039,7 @@ static inline void tlb_set_dirty1_locked(CPUTLBEntry *tlb_entry,
+ 
+ /* update the TLB corresponding to virtual page vaddr
+    so that it is no longer dirty */
+-void tlb_set_dirty(CPUState *cpu, vaddr addr)
++static void tlb_set_dirty(CPUState *cpu, vaddr addr)
+ {
+     int mmu_idx;
+ 
 -- 
 2.41.0
 
