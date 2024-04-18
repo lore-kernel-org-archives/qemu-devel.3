@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A89BDC04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 16:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5A2C04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 16:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxUKi-0000kb-Vd; Thu, 18 Apr 2024 12:09:57 -0400
+	id 1rxUKg-0000jk-Ba; Thu, 18 Apr 2024 12:09:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKh-0000k1-CC
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:09:55 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKf-0000jV-2c
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:09:53 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKf-0006Xy-IK
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:09:55 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-349c4505058so724082f8f.3
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 09:09:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUKd-0006WL-1y
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:09:52 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-418a02562b3so8304905e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 09:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713456591; x=1714061391; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kpo0HdL0eHYUdshcZ/Szyn4EYxCkR3M8RtXPhI8xpmY=;
- b=gDyw2IUB9oyeQit2OBqvwUO/HeOmEegMTgm14PN/h+5515A7MpBzSK9YQrwdeqbriC
- e+cOjto9L5mUTWYnAKdXubEvU8S1HHkxsdw+4PXWePSoML3VWzh6K9fWA7c/6uqH6Ah8
- wCMEqIPxxqnEJfWKpMokXn/Ier8YkDxtHadNUhu/tBROR+mQEulxBvHgVodQYREe/OTm
- 0j93j+6tjl/ZFB8MCfNDIp12MwinZ+qupI2G8TZhjMM9fPPVlx9QwWUvlJtunDp4n9K0
- 7ihwQRCJ8mkZ3ZwkYmz2A9oiC/iqxgAL5MgmEdvDis9+seJlW0o9RmJ5SSzzWQp/rHCo
- HaEQ==
+ d=linaro.org; s=google; t=1713456586; x=1714061386; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=93hTUdpdVQVz2mwhRuR30HtwAJmbmwEUW0z1fU9NWLE=;
+ b=c+z0uM8e9IC1HZJYkImTkryyNVqBnwLe9dyM6v35Jk0SvpRcky0/cdb9a+oUIJXLXo
+ WFnZMYxoCq3BCPJnJdkuSWYKvuz7KjMMrjAdWqxV8dvvX+iiNebKs1MyxrXB9+V7Z5VO
+ MeotOmkuNT8aBUAKMVY04iqJZAwBICwpGqwWBp21TcmdIxdahRPTfyqQA+66dDGzGzse
+ W9fW4n8rMMcx+UsaH3PDzAUmGWPGS2DbmSKs6v/WtYpC1i0awjYsJxkJZy2d/KMsk9Ej
+ ka+QGy/qjMAM+sSEQYbbbLVPj8M7qSR9tBtDOSn+ExfCBcR7G/05XeemO/3Aapd6iDjw
+ Cp8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713456591; x=1714061391;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kpo0HdL0eHYUdshcZ/Szyn4EYxCkR3M8RtXPhI8xpmY=;
- b=rlUeyYX70hYdsvA96TNKNzIbgdUGWOCQvtnO6xCKTtLzzcM214FgBEjzQQZrPc6B3+
- JOdq3036fIZc3qE3kasMCqXxNRBdzu3odpt6OX2JIZkFxU68LFBRNqJ/v6wDKsxV1l8d
- yfEz03JcUvmX4HyTxsryE/OokspnUA7iwtAXhg3CuM+xao1mxBys+IEEltk5T1eVTM89
- PpEmlb3FZ8+IkCTY3F/QlRxlNh43zPaQ4zB12ifVQI8z1uymwaunGkOG3ClBuD1PR9dM
- aTsk5hjRn75peEWSs9l+9KldEYI8PuThD/tjn7/MPAHgf9kKj3I3HsyPSPhQXGtqmBiw
- ZHOQ==
-X-Gm-Message-State: AOJu0YyxXcfHSfu6NiHSlfls8c+gK/FZXU0DFY6DBMdmU+ihJRjtdnUE
- RVFowOYug6CQneC9RUoCQEHPPvX2oS9iQxwPYTMAMcOQyDFK89M+xobuL7O+jDJpGUT4prs3MsX
+ d=1e100.net; s=20230601; t=1713456586; x=1714061386;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=93hTUdpdVQVz2mwhRuR30HtwAJmbmwEUW0z1fU9NWLE=;
+ b=BJxQcRdqMF0dGF2JGRtXx/MbXZROYmY03nHKFRzrXDhfRGAS6EPYZeiyIM/ZSjm12d
+ ylLeksOiErmvA3fNzGO0uCiv3SN0qXGbAOr9MB63eS/NheLDVkjtsxW2zdhzCGXLEyK3
+ ak/vftWrLNyB2fFek0vw5L2ky9txW/SN48ErZktu/FxobjXhfp2k+LJ5FvwhwPdkbe+X
+ RV53qpDjB7+Q11ghWpoVAt+dgB32ph5hsZezw2Od1ZpUha0aV0ir1KHbz3wBykpda9bI
+ 4Ej9r0DonVeSYSNFYbUetFG8blzFnH1bHOg3Ynrnhq3/I3i7sdywQyzDPC3gRq0lFLPo
+ l+mA==
+X-Gm-Message-State: AOJu0YwNYjSYoYGFJ6E8zrJK9UgUW6cMoV58HJ9bUJslDQUTDe/1pgmN
+ mmLALD5E8bdImt/dy/ipreofeEvfrx0IQXm3gDnJWLk2XFFKXGRd0JhPox9RTo8z2gHP4pJhwCd
  t
-X-Google-Smtp-Source: AGHT+IGp851teTyDhT7ce6yV0euRvN2T15mAVI/VygshimM9xVF5c30IkH2EWd3i0VEwFqqEBKLGEg==
-X-Received: by 2002:a5d:4004:0:b0:343:7e98:e73e with SMTP id
- n4-20020a5d4004000000b003437e98e73emr2034591wrp.40.1713456591518; 
- Thu, 18 Apr 2024 09:09:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEG/bFvqOODWpVwK2MENVO6DgQgYo0mEPwdC9DCeoEMQGOc08gZMzy3vx/dhUqbkBDfhbERWw==
+X-Received: by 2002:a05:600c:444a:b0:418:49ad:6fd3 with SMTP id
+ v10-20020a05600c444a00b0041849ad6fd3mr2226857wmn.19.1713456586220; 
+ Thu, 18 Apr 2024 09:09:46 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.151.213])
  by smtp.gmail.com with ESMTPSA id
- h16-20020adffd50000000b00346d3a626b8sm2210100wrs.3.2024.04.18.09.09.50
+ m25-20020a05600c3b1900b0041816c3049csm3138163wms.11.2024.04.18.09.09.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Apr 2024 09:09:50 -0700 (PDT)
+ Thu, 18 Apr 2024 09:09:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/2] hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
-Date: Thu, 18 Apr 2024 18:09:42 +0200
-Message-ID: <20240418160943.95047-2-philmd@linaro.org>
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/2] include: Rename some expanded headers using '.h.inc'
+ suffix
+Date: Thu, 18 Apr 2024 18:09:41 +0200
+Message-ID: <20240418160943.95047-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240418160943.95047-1-philmd@linaro.org>
-References: <20240418160943.95047-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,80 +93,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 139c1837db ("meson: rename included C source files
-to .c.inc"), QEMU standard procedure for included C files is to
-use *.c.inc.
-
-Besides, since commit 6a0057aa22 ("docs/devel: make a statement
-about includes") this is documented in the Coding Style:
+Per our Coding Style:
 
   If you do use template header files they should be named with
   the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
   being included for expansion.
 
-Therefore rename "hw/elf_ops.h" as "hw/elf_ops.h.inc".
+Rename elf_ops.h and host/load-extract/store-insert headers.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/{elf_ops.h => elf_ops.h.inc} | 0
- bsd-user/elfload.c                      | 2 +-
- hw/core/loader.c                        | 4 ++--
- linux-user/elfload.c                    | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+Philippe Mathieu-Daudé (2):
+  hw/elf_ops: Rename elf_ops.h -> elf_ops.h.inc
+  accel/tcg: Rename load-extract/store-insert headers using .h.inc
+    suffix
+
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ .../host/{store-insert-al16.h => store-insert-al16.h.inc}     | 0
+ .../{load-extract-al16-al8.h => load-extract-al16-al8.h.inc}  | 0
+ include/hw/{elf_ops.h => elf_ops.h.inc}                       | 0
+ bsd-user/elfload.c                                            | 2 +-
+ hw/core/loader.c                                              | 4 ++--
+ linux-user/elfload.c                                          | 2 +-
+ accel/tcg/ldst_atomicity.c.inc                                | 4 ++--
+ 12 files changed, 6 insertions(+), 6 deletions(-)
+ rename host/include/aarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ rename host/include/aarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
+ rename host/include/generic/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ rename host/include/generic/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
+ rename host/include/loongarch64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
+ rename host/include/loongarch64/host/{store-insert-al16.h => store-insert-al16.h.inc} (100%)
+ rename host/include/x86_64/host/{load-extract-al16-al8.h => load-extract-al16-al8.h.inc} (100%)
  rename include/hw/{elf_ops.h => elf_ops.h.inc} (100%)
 
-diff --git a/include/hw/elf_ops.h b/include/hw/elf_ops.h.inc
-similarity index 100%
-rename from include/hw/elf_ops.h
-rename to include/hw/elf_ops.h.inc
-diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-index baf2f63d2f..833fa3bd05 100644
---- a/bsd-user/elfload.c
-+++ b/bsd-user/elfload.c
-@@ -383,7 +383,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
-     return "";
- }
- 
--/* FIXME: This should use elf_ops.h  */
-+/* FIXME: This should use elf_ops.h.inc  */
- static int symcmp(const void *s0, const void *s1)
- {
-     struct elf_sym *sym0 = (struct elf_sym *)s0;
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index b8e52f3fb0..2f8105d7de 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -305,7 +305,7 @@ static void *load_at(int fd, off_t offset, size_t size)
- #define elf_word        uint32_t
- #define elf_sword       int32_t
- #define bswapSZs        bswap32s
--#include "hw/elf_ops.h"
-+#include "hw/elf_ops.h.inc"
- 
- #undef elfhdr
- #undef elf_phdr
-@@ -327,7 +327,7 @@ static void *load_at(int fd, off_t offset, size_t size)
- #define elf_sword       int64_t
- #define bswapSZs        bswap64s
- #define SZ              64
--#include "hw/elf_ops.h"
-+#include "hw/elf_ops.h.inc"
- 
- const char *load_elf_strerror(ssize_t error)
- {
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 28d9e8a9a5..fc60c01d57 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3672,7 +3672,7 @@ static const char *lookup_symbolxx(struct syminfo *s, uint64_t orig_addr)
-     return "";
- }
- 
--/* FIXME: This should use elf_ops.h  */
-+/* FIXME: This should use elf_ops.h.inc  */
- static int symcmp(const void *s0, const void *s1)
- {
-     struct elf_sym *sym0 = (struct elf_sym *)s0;
 -- 
 2.41.0
 
