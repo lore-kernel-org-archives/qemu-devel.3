@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD22C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5DFC04FF8
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:51:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVtq-0008Gp-DL; Thu, 18 Apr 2024 13:50:18 -0400
+	id 1rxVu3-0008LE-GO; Thu, 18 Apr 2024 13:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVtm-0008Ep-TD; Thu, 18 Apr 2024 13:50:14 -0400
+ id 1rxVtq-0008H2-OD; Thu, 18 Apr 2024 13:50:18 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVtl-0007XY-2K; Thu, 18 Apr 2024 13:50:14 -0400
+ id 1rxVto-0007Xy-VL; Thu, 18 Apr 2024 13:50:18 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 204315FD67;
+ by isrv.corpit.ru (Postfix) with ESMTP id A5BD35FD69;
  Thu, 18 Apr 2024 20:50:01 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7ED1CB933D;
- Thu, 18 Apr 2024 20:49:58 +0300 (MSK)
-Received: (nullmailer pid 947824 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 0B78BB933F;
+ Thu, 18 Apr 2024 20:49:59 +0300 (MSK)
+Received: (nullmailer pid 947830 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zack Buhman <zack@buhman.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 094/116] target/sh4: add missing CHECK_NOT_DELAY_SLOT
-Date: Thu, 18 Apr 2024 20:49:24 +0300
-Message-Id: <20240418174955.947730-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 096/116] hw/virtio: Introduce virtio_bh_new_guarded()
+ helper
+Date: Thu, 18 Apr 2024 20:49:26 +0300
+Message-Id: <20240418174955.947730-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,52 +64,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zack Buhman <zack@buhman.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-CHECK_NOT_DELAY_SLOT is correctly applied to the branch-related
-instructions, but not to the PC-relative mov* instructions.
+Introduce virtio_bh_new_guarded(), similar to qemu_bh_new_guarded()
+but using the transport memory guard, instead of the device one
+(there can only be one virtio device per virtio bus).
 
-I verified the existence of an illegal slot exception on a SH7091 when
-any of these instructions are attempted inside a delay slot.
-
-This also matches the behavior described in the SH-4 ISA manual.
-
-Signed-off-by: Zack Buhman <zack@buhman.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240407150705.5965-1-zack@buhman.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewd-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-(cherry picked from commit b754cb2dcde26a7bc8a9d17bb6900a0ac0dd38e2)
+Inspired-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20240409105537.18308-2-philmd@linaro.org>
+(cherry picked from commit ec0504b989ca61e03636384d3602b7bf07ffe4da)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index f3e08028f2..5aa10d3946 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -524,6 +524,7 @@ static void _decode_opc(DisasContext * ctx)
-         tcg_gen_movi_i32(REG(B11_8), B7_0s);
-         return;
-     case 0x9000: /* mov.w @(disp,PC),Rn */
-+        CHECK_NOT_DELAY_SLOT
-         {
-             TCGv addr = tcg_constant_i32(ctx->base.pc_next + 4 + B7_0 * 2);
-             tcg_gen_qemu_ld_i32(REG(B11_8), addr, ctx->memidx,
-@@ -531,6 +532,7 @@ static void _decode_opc(DisasContext * ctx)
-         }
-         return;
-     case 0xd000: /* mov.l @(disp,PC),Rn */
-+        CHECK_NOT_DELAY_SLOT
-         {
-             TCGv addr = tcg_constant_i32((ctx->base.pc_next + 4 + B7_0 * 4) & ~3);
-             tcg_gen_qemu_ld_i32(REG(B11_8), addr, ctx->memidx,
-@@ -1237,6 +1239,7 @@ static void _decode_opc(DisasContext * ctx)
-         }
-         return;
-     case 0xc700: /* mova @(disp,PC),R0 */
-+        CHECK_NOT_DELAY_SLOT
-         tcg_gen_movi_i32(REG(0), ((ctx->base.pc_next & 0xfffffffc) +
-                                   4 + B7_0 * 4) & ~3);
-         return;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index aa02c4937c..c177c31ca0 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -4145,3 +4145,13 @@ static void virtio_register_types(void)
+ }
+ 
+ type_init(virtio_register_types)
++
++QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
++                                   QEMUBHFunc *cb, void *opaque,
++                                   const char *name)
++{
++    DeviceState *transport = qdev_get_parent_bus(dev)->parent;
++
++    return qemu_bh_new_full(cb, opaque, name,
++                            &transport->mem_reentrancy_guard);
++}
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index c8f72850bc..7d5ffdc145 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -22,6 +22,7 @@
+ #include "standard-headers/linux/virtio_config.h"
+ #include "standard-headers/linux/virtio_ring.h"
+ #include "qom/object.h"
++#include "block/aio.h"
+ 
+ /*
+  * A guest should never accept this. It implies negotiation is broken
+@@ -508,4 +509,10 @@ static inline bool virtio_device_disabled(VirtIODevice *vdev)
+ bool virtio_legacy_allowed(VirtIODevice *vdev);
+ bool virtio_legacy_check_disabled(VirtIODevice *vdev);
+ 
++QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
++                                   QEMUBHFunc *cb, void *opaque,
++                                   const char *name);
++#define virtio_bh_new_guarded(dev, cb, opaque) \
++    virtio_bh_new_guarded_full((dev), (cb), (opaque), (stringify(cb)))
++
+ #endif
 -- 
 2.39.2
 
