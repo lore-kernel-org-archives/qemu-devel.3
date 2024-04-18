@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D904C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F77DC05023
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxTYo-0003HM-71; Thu, 18 Apr 2024 11:20:26 -0400
+	id 1rxTZ4-0003Me-23; Thu, 18 Apr 2024 11:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxTYk-0003Fo-TF
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:23 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxTYg-0004XL-Qo
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:21 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-346b96f1483so597190f8f.1
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 08:20:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713453608; x=1714058408; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LjzFedX8f7dPOTCE2RgQfLW6VZSYCvlcrFVxlukFK5w=;
- b=h/c9CpRD8tVhvI+wzfQwbDVAq2aX8pu8nnHQp4OKp9vOF456TckJPuzkfk4l93oQzu
- j4iPN/vWFL8sQuwDxI8ggmMGW1enE2lRxxO3jBNZrc4d6bfxwvmnYXOCpRdsG98NG2TL
- AX9Fr378wRVF6sBG9oY8YNJgvgZFAuYBLajBZ9L1deD+VT37jFYF3IaF9FmdYxMQh8uk
- 3DPQYEKDCzU1gPvJi70R3guCvENMCKPvY5+rwlZn/mSb2iEa5X+1UG0rzuFOzald3zgD
- vt+gzRhLn3PS9GKEorez1RlgnUC1V4VBeuioSAfEXYGW1bEx9yoAFTz7Tf7Jhm/kfYlQ
- o0MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713453608; x=1714058408;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LjzFedX8f7dPOTCE2RgQfLW6VZSYCvlcrFVxlukFK5w=;
- b=MhKTigXyDW5fybpzuSQii2QvCzGuMEJeksIXncWQ6F7nrZRiMmJvnn0Kz2YInEAU84
- 0CuysQFERumN9ob1q0rJ/bV5lhbU96sBRyapasGkpOpiN3eSAokRPXsLQwdCBOCutJHN
- CYmLPQKLQ8/cZ0vx8HJmX7FkJzr6bcin6ZJ3QdGwsJFWAJyarVXYjWFaFkLQAa0BOHP7
- utbfBXW+QbEwsXxv5+6FWEcc/dMVZk+2QA6XiP6HPfiq3cN2NeaQS09JkRnS6Z5DpEMz
- nUKS1dk7J9q5UO6HKtTiv72hqIuyJdB/OJt5hjaP1AQXoAEiDdj0CrENjwyUMMMis/Jj
- bNCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTWf6sKQeMVRvHI1N9ihGPxPbeYu/URP/V5JSOWPWuVmPIP/lB5A9QcE50XEASEkAnsoiuuoXIHHU37j8f8ZL31omFRTU=
-X-Gm-Message-State: AOJu0YwgSK0Pr8Ay2ER2qF2sA1zVtow913fSUvPbPeTh6/FtDAXkXND4
- jeQSj+S6g6Sqq74p3ojoUucN7bKSqeROvJIsxGRDmppkeSKxz0hYeRjGNY7DMOc=
-X-Google-Smtp-Source: AGHT+IGLlh3H1wSS698OPf8AjA3BZ0333CRKF86zqQiqJWwum82AyWEx4ucY1c3aFsnN+lsajDLR7w==
-X-Received: by 2002:a5d:595e:0:b0:343:d7fe:96f8 with SMTP id
- e30-20020a5d595e000000b00343d7fe96f8mr2154243wri.19.1713453608118; 
- Thu, 18 Apr 2024 08:20:08 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- w17-20020a05600c475100b004162d06768bsm6886839wmo.21.2024.04.18.08.20.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Apr 2024 08:20:07 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 5/5] target/arm: Enable FEAT_Spec_FPACC for -cpu max
-Date: Thu, 18 Apr 2024 16:20:04 +0100
-Message-Id: <20240418152004.2106516-6-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240418152004.2106516-1-peter.maydell@linaro.org>
-References: <20240418152004.2106516-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rxTZ1-0003LH-Nr
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:40 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rxTZ0-0004ta-1Q
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1713453631;
+ bh=EiAuudDgstcvn9E/vSNNH/dpfPFMZhFN6EpCRvLSr0I=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=Z6ncbRCXYomdTrNqDBQEd76Ofz+pDnJdNvXbefEmgcFBY1UfswYj8vUjU7DJ2bxpR
+ swO7zkvWQh57farc3NZEqpwGCaAkSu5qHncRfe3QIEUAqZnP2Ogyyz0Rjk7JOiw7CT
+ 7MDZyyfv7G4mSGvkbkQUIbLgdgGDqb3I2K68sc+zYBtA02Nx2iAktVh2l+f+oNqNNV
+ p4yuWwu6N+FlHZ6ddcamH8rU9epcWup+KIOtIQ/9t5pkrM92EejvhxnfdEME1VygUY
+ 36S6XW2bO0ozmkkp70mjae4ihA3nmOPEHlYlxV67WlQu/i1Qpn9vdFnFS30QWZEykp
+ j1zKprcrJlP8Q==
+Received: from [IPV6:fd00::1:f0c8] (cola.collaboradmins.com
+ [IPv6:2a01:4f8:1c1c:5717::1])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 943663782117;
+ Thu, 18 Apr 2024 15:20:29 +0000 (UTC)
+Message-ID: <2858607a-9ac4-4be9-a2fd-515c8e5d9884@collabora.com>
+Date: Thu, 18 Apr 2024 18:20:26 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 07/10] virtio-gpu: Handle resource blob commands
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>
+References: <20240411102002.240536-1-dmitry.osipenko@collabora.com>
+ <20240411102002.240536-8-dmitry.osipenko@collabora.com>
+ <29a55f63-593e-46d0-8dfe-f55e2b2de7ac@daynix.com>
+ <918fb26b-72e9-446a-841b-810eb983dabe@collabora.com>
+ <83e4454f-98d5-4e7d-b8d0-46d3d52442b1@daynix.com>
+ <68c33b13-83ea-4ea4-b219-43a930a6ad10@collabora.com>
+ <1fc1d55d-7eb7-49f4-9ed1-f52fe34cc876@daynix.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <1fc1d55d-7eb7-49f4-9ed1-f52fe34cc876@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,51 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_Spec_FPACC is a feature describing speculative behaviour in the
-event of a PAC authontication failure when FEAT_FPACCOMBINE is
-implemented.  FEAT_Spec_FPACC means that the speculative use of
-pointers processed by a PAC Authentication is not materially
-different in terms of the impact on cached microarchitectural state
-(caches, TLBs, etc) between passing and failing of the PAC
-Authentication.
+On 4/15/24 13:05, Akihiko Odaki wrote:
+...
+>> Do you have example of a legit use-case where hostmem MR could outlive
+>> resource mapping?
+> 
+> MR outliving after memory_region_del_subregion() is not a use-case, but
+> a situation that occurs due to the limitation of the memory subsystem.
+> It is not easy to answer how often such a situation happens.
+> 
+>>
+>> Turning it into a error condition is much more reasonable to do than to
+>> to worry about edge case that nobody cares about, which can't be tested
+>> easily and that not trivial to support, IMO.
+>>
+> I'm not sure what you mean by turning into an error condition. I doubt
+> it's possible to emit errors when someone touches an unmapped region.
 
-QEMU doesn't do speculative execution, so we can advertise
-this feature.
+My idea was about failing in virtio_gpu_virgl_unmap_resource_blob()
+where we could check whether MR has external reference and fail if it has.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/system/arm/emulation.rst | 1 +
- target/arm/tcg/cpu64.c        | 4 ++++
- 2 files changed, 5 insertions(+)
+> Reproducing this issue is not easy as it's often cases for
+> use-after-free bugs, but fixing it is not that complicated in my opinion
+> since you already have an implementation which asynchronously unmaps the
+> region in v6. I write my suggestions to fix problems in v6:
+> 
+> - Remove ref member in virgl_gpu_resource, vres_get_ref(),
+> vres_put_ref(), and virgl_resource_unmap().
+> 
+> - Change virtio_gpu_virgl_process_cmd(),
+> virgl_cmd_resource_unmap_blob(), and virgl_cmd_resource_unref() to
+> return a bool, which tells if the command was processed or suspended.
+> 
+> - In virtio_gpu_process_cmdq(), break if the command was suspended.
+> 
+> - In virgl_resource_blob_async_unmap(), call virtio_gpu_gl_block(g, false).
+> 
+> - In virgl_cmd_resource_unmap_blob() and virgl_cmd_resource_unref(),
+> call memory_region_del_subregion() and virtio_gpu_gl_block(g, true), and
+> tell that the command was suspended if the reference counter of
+> MemoryRegion > 0. Free and unmap the MR otherwise.
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index de39110692b..fc616e48d30 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -60,6 +60,7 @@ the following architecture extensions:
- - FEAT_FP16 (Half-precision floating-point data processing)
- - FEAT_FPAC (Faulting on AUT* instructions)
- - FEAT_FPACCOMBINE (Faulting on combined pointer authentication instructions)
-+- FEAT_FPACC_SPEC (Speculative behavior of combined pointer authentication instructions)
- - FEAT_FRINTTS (Floating-point to integer instructions)
- - FEAT_FlagM (Flag manipulation instructions v2)
- - FEAT_FlagM2 (Enhancements to flag manipulation instructions)
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index da15182595b..c3369f40824 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1216,6 +1216,10 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64MMFR2, E0PD, 1);     /* FEAT_E0PD */
-     cpu->isar.id_aa64mmfr2 = t;
- 
-+    t = cpu->isar.id_aa64mmfr3;
-+    t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
-+    cpu->isar.id_aa64mmfr3 = t;
-+
-     t = cpu->isar.id_aa64zfr0;
-     t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 1);
-     t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* FEAT_SVE_PMULL128 */
+Your suggestion works, I'll proceed with it in v8.
+
+Thanks for the review
+
 -- 
-2.34.1
+Best regards,
+Dmitry
 
 
