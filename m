@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5245EC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0967FC05023
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXyh-0001p6-UB; Thu, 18 Apr 2024 16:03:28 -0400
+	id 1rxXyh-0001p7-UL; Thu, 18 Apr 2024 16:03:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXye-0001nf-HK; Thu, 18 Apr 2024 16:03:25 -0400
+ id 1rxXya-0001lY-Lv; Thu, 18 Apr 2024 16:03:21 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXyc-0005Sq-7Q; Thu, 18 Apr 2024 16:03:24 -0400
+ id 1rxXyY-0005QJ-Te; Thu, 18 Apr 2024 16:03:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B8D65FE17;
+ by isrv.corpit.ru (Postfix) with ESMTP id 199E65FE15;
  Thu, 18 Apr 2024 23:02:28 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 98A83B93FD;
+ by tsrv.corpit.ru (Postfix) with SMTP id 784EBB93FB;
  Thu, 18 Apr 2024 23:02:25 +0300 (MSK)
-Received: (nullmailer pid 952885 invoked by uid 1000);
+Received: (nullmailer pid 952878 invoked by uid 1000);
  Thu, 18 Apr 2024 20:02:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>, Chuhong Yuan <hslester96@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 56/59] hw/sd/sdhci: Do not update TRNMOD when Command
- Inhibit (DAT) is set
-Date: Thu, 18 Apr 2024 23:02:16 +0300
-Message-Id: <20240418200224.952785-15-mjt@tls.msk.ru>
+ Chuhong Yuan <hslester96@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 54/59] hw/net/lan9118: Fix overflow in MIL TX FIFO
+Date: Thu, 18 Apr 2024 23:02:14 +0300
+Message-Id: <20240418200224.952785-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
@@ -66,128 +65,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Per "SD Host Controller Standard Specification Version 3.00":
+When the MAC Interface Layer (MIL) transmit FIFO is full,
+truncate the packet, and raise the Transmitter Error (TXE)
+flag.
 
-  * 2.2.5 Transfer Mode Register (Offset 00Ch)
+Broken since model introduction in commit 2a42499017
+("LAN9118 emulation").
 
-    Writes to this register shall be ignored when the Command
-    Inhibit (DAT) in the Present State register is 1.
+When using the reproducer from
+https://gitlab.com/qemu-project/qemu/-/issues/2267 we get:
 
-Do not update the TRNMOD register when Command Inhibit (DAT)
-bit is set to avoid the present-status register going out of
-sync, leading to malicious guest using DMA mode and overflowing
-the FIFO buffer:
-
-  $ cat << EOF | qemu-system-i386 \
-                     -display none -nographic -nodefaults \
-                     -machine accel=qtest -m 512M \
-                     -device sdhci-pci,sd-spec-version=3 \
-                     -device sd-card,drive=mydrive \
-                     -drive if=none,index=0,file=null-co://,format=raw,id=mydrive \
-                     -qtest stdio
-  outl 0xcf8 0x80001013
-  outl 0xcfc 0x91
-  outl 0xcf8 0x80001001
-  outl 0xcfc 0x06000000
-  write 0x9100002c 0x1 0x05
-  write 0x91000058 0x1 0x16
-  write 0x91000005 0x1 0x04
-  write 0x91000028 0x1 0x08
-  write 0x16 0x1 0x21
-  write 0x19 0x1 0x20
-  write 0x9100000c 0x1 0x01
-  write 0x9100000e 0x1 0x20
-  write 0x9100000f 0x1 0x00
-  write 0x9100000c 0x1 0x00
-  write 0x91000020 0x1 0x00
-  EOF
-
-Stack trace (part):
-=================================================================
-==89993==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x615000029900 at pc 0x55d5f885700d bp 0x7ffc1e1e9470 sp 0x7ffc1e1e9468
-WRITE of size 1 at 0x615000029900 thread T0
-    #0 0x55d5f885700c in sdhci_write_dataport hw/sd/sdhci.c:564:39
-    #1 0x55d5f8849150 in sdhci_write hw/sd/sdhci.c:1223:13
-    #2 0x55d5fa01db63 in memory_region_write_accessor system/memory.c:497:5
-    #3 0x55d5fa01d245 in access_with_adjusted_size system/memory.c:573:18
-    #4 0x55d5fa01b1a9 in memory_region_dispatch_write system/memory.c:1521:16
-    #5 0x55d5fa09f5c9 in flatview_write_continue system/physmem.c:2711:23
-    #6 0x55d5fa08f78b in flatview_write system/physmem.c:2753:12
-    #7 0x55d5fa08f258 in address_space_write system/physmem.c:2860:18
+  hw/net/lan9118.c:798:17: runtime error:
+  index 2048 out of bounds for type 'uint8_t[2048]' (aka 'unsigned char[2048]')
+    #0 0x563ec9a057b1 in tx_fifo_push hw/net/lan9118.c:798:43
+    #1 0x563ec99fbb28 in lan9118_writel hw/net/lan9118.c:1042:9
+    #2 0x563ec99f2de2 in lan9118_16bit_mode_write hw/net/lan9118.c:1205:9
+    #3 0x563ecbf78013 in memory_region_write_accessor system/memory.c:497:5
+    #4 0x563ecbf776f5 in access_with_adjusted_size system/memory.c:573:18
+    #5 0x563ecbf75643 in memory_region_dispatch_write system/memory.c:1521:16
+    #6 0x563ecc01bade in flatview_write_continue_step system/physmem.c:2713:18
+    #7 0x563ecc01b374 in flatview_write_continue system/physmem.c:2743:19
+    #8 0x563ecbff1c9b in flatview_write system/physmem.c:2774:12
+    #9 0x563ecbff1768 in address_space_write system/physmem.c:2894:18
     ...
-0x615000029900 is located 0 bytes to the right of 512-byte region
-[0x615000029700,0x615000029900) allocated by thread T0 here:
-    #0 0x55d5f7237b27 in __interceptor_calloc
-    #1 0x7f9e36dd4c50 in g_malloc0
-    #2 0x55d5f88672f7 in sdhci_pci_realize hw/sd/sdhci-pci.c:36:5
-    #3 0x55d5f844b582 in pci_qdev_realize hw/pci/pci.c:2092:9
-    #4 0x55d5fa2ee74b in device_set_realized hw/core/qdev.c:510:13
-    #5 0x55d5fa325bfb in property_set_bool qom/object.c:2358:5
-    #6 0x55d5fa31ea45 in object_property_set qom/object.c:1472:5
-    #7 0x55d5fa332509 in object_property_set_qobject om/qom-qobject.c:28:10
-    #8 0x55d5fa31f6ed in object_property_set_bool qom/object.c:1541:15
-    #9 0x55d5fa2e2948 in qdev_realize hw/core/qdev.c:292:12
-    #10 0x55d5f8eed3f1 in qdev_device_add_from_qdict system/qdev-monitor.c:719:10
-    #11 0x55d5f8eef7ff in qdev_device_add system/qdev-monitor.c:738:11
-    #12 0x55d5f8f211f0 in device_init_func system/vl.c:1200:11
-    #13 0x55d5fad0877d in qemu_opts_foreach util/qemu-option.c:1135:14
-    #14 0x55d5f8f0df9c in qemu_create_cli_devices system/vl.c:2638:5
-    #15 0x55d5f8f0db24 in qmp_x_exit_preconfig system/vl.c:2706:5
-    #16 0x55d5f8f14dc0 in qemu_init system/vl.c:3737:9
-    ...
-SUMMARY: AddressSanitizer: heap-buffer-overflow hw/sd/sdhci.c:564:39
-in sdhci_write_dataport
 
-Add assertions to ensure the fifo_buffer[] is not overflowed by
-malicious accesses to the Buffer Data Port register.
+[*] LAN9118 DS00002266B.pdf, Table 5.3.3 "INTERRUPT STATUS REGISTER"
 
-Fixes: CVE-2024-3447
 Cc: qemu-stable@nongnu.org
-Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
-Buglink: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=58813
-Reported-by: Alexander Bulekov <alxndr@bu.edu>
+Reported-by: Will Lester
 Reported-by: Chuhong Yuan <hslester96@gmail.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <CAFEAcA9iLiv1XGTGKeopgMa8Y9+8kvptvsb8z2OBeuy+5=NUfg@mail.gmail.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2267
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240409145524.27913-1-philmd@linaro.org>
-(cherry picked from commit 9e4b27ca6bf4974f169bbca7f3dca117b1208b6f)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20240409133801.23503-3-philmd@linaro.org>
+(cherry picked from commit ad766d603f39888309cfb1433ba2de1d0e9e4f58)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index ef60badc6b..abd503d168 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -473,6 +473,7 @@ static uint32_t sdhci_read_dataport(SDHCIState *s, unsigned size)
-     }
- 
-     for (i = 0; i < size; i++) {
-+        assert(s->data_count < s->buf_maxsz);
-         value |= s->fifo_buffer[s->data_count] << i * 8;
-         s->data_count++;
-         /* check if we've read all valid data (blksize bytes) from buffer */
-@@ -561,6 +562,7 @@ static void sdhci_write_dataport(SDHCIState *s, uint32_t value, unsigned size)
-     }
- 
-     for (i = 0; i < size; i++) {
-+        assert(s->data_count < s->buf_maxsz);
-         s->fifo_buffer[s->data_count] = value & 0xFF;
-         s->data_count++;
-         value >>= 8;
-@@ -1208,6 +1210,12 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-         if (!(s->capareg & R_SDHC_CAPAB_SDMA_MASK)) {
-             value &= ~SDHC_TRNS_DMA;
-         }
-+
-+        /* TRNMOD writes are inhibited while Command Inhibit (DAT) is true */
-+        if (s->prnsts & SDHC_DATA_INHIBIT) {
-+            mask |= 0xffff;
-+        }
-+
-         MASKED_WRITE(s->trnmod, mask, value & SDHC_TRNMOD_MASK);
-         MASKED_WRITE(s->cmdreg, mask >> 16, value >> 16);
- 
+diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+index 00a6d82efb..bf81c84984 100644
+--- a/hw/net/lan9118.c
++++ b/hw/net/lan9118.c
+@@ -798,8 +798,22 @@ static void tx_fifo_push(lan9118_state *s, uint32_t val)
+             /* Documentation is somewhat unclear on the ordering of bytes
+                in FIFO words.  Empirical results show it to be little-endian.
+                */
+-            /* TODO: FIFO overflow checking.  */
+             while (n--) {
++                if (s->txp->len == MIL_TXFIFO_SIZE) {
++                    /*
++                     * No more space in the FIFO. The datasheet is not
++                     * precise about this case. We choose what is easiest
++                     * to model: the packet is truncated, and TXE is raised.
++                     *
++                     * Note, it could be a fragmented packet, but we currently
++                     * do not handle that (see earlier TX_B case).
++                     */
++                    qemu_log_mask(LOG_GUEST_ERROR,
++                                  "MIL TX FIFO overrun, discarding %u byte%s\n",
++                                  n, n > 1 ? "s" : "");
++                    s->int_sts |= TXE_INT;
++                    break;
++                }
+                 s->txp->data[s->txp->len] = val & 0xff;
+                 s->txp->len++;
+                 val >>= 8;
 -- 
 2.39.2
 
