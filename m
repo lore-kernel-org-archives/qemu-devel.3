@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0325C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66689C04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXRQ-0004cW-PT; Thu, 18 Apr 2024 15:29:04 -0400
+	id 1rxXXO-0003ss-P5; Thu, 18 Apr 2024 15:35:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXPh-0000Fm-Rh
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:27:19 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXXM-0003rr-AE
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:35:12 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXPf-0007bM-5r
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:27:17 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a5200202c1bso150501666b.0
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:27:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXXJ-0000vA-TL
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:35:12 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-418c0d83e61so13542695e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713468433; x=1714073233; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Dml4vJCRKxCVY1uFtRIPG5lLzhQacgo/ZMSZt5sIQXk=;
- b=s0GWNpWbxlSuPx0vJ7p9ynQSeHaNOyYRX7Amfsgw8O4d/p11qNn2v5a4XpEuS1JXGo
- rQWrWIlD16vjIGqjWJzeUbh3WObU3OVpVG6L9bUAIz29fbNXfsb7MBnClZveoINehthx
- xook377/S9V4/YkCOrRrp73n4JJfenHHvrFyA+UYrCJ+uSXE1JKF7pKSJctNw1oPMznt
- EsMdeygEerSsbqmjmXfuZj5LmdF+A13jUx8gYLHLQ+ULwKAdGpuIXbvDUyKAzjZpB1PT
- yNsMmi2MhmmN1NFmITn8rHiSXZgUh3ViMW4tzD5j70brvYrIftV89SE+dgrAkkoWczax
- suuQ==
+ d=linaro.org; s=google; t=1713468906; x=1714073706; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W3POXLkXOEegSIr+CiLoNV+e6nPI439irSo27x6wQYk=;
+ b=GXs9f9ThV+NrUmNdSx1K8B1hoxIVf9iE20OsYGJQUhkvW8cSK9lD47oPhhIKIPu0jh
+ OEXfNBKaY271IdiEaXrcGFXYnzp18T/EwiP6XRaCngdUQ6GEFmYDXtTJRyihhVcZR6iq
+ iDMAYxHxVdqM0fghhZ/5jOsDk0HCexp0516BWRA+T4+IQ3+tTDPp3j39JIctbwn2Gl8m
+ 2UekLebE/rYEWa7d9gJAUQ8mDxG/3X6ao80o90ie/s6KhBVLP0GDpnuk4GVej0XECNSY
+ nRvtESjN7pHjzYXhYt13e8jIKovPwS6W413r/9QRmy42EK0wBjsXPLi4UlLoFgyHBLjz
+ 4lVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713468433; x=1714073233;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Dml4vJCRKxCVY1uFtRIPG5lLzhQacgo/ZMSZt5sIQXk=;
- b=hu0bSmXfOnxGLCHCmgJ5MLBvXDndbZFodRaF1ULyE3DxVAOTCTjDJVjCAaYPhTFD4W
- tyeiPPvFBsBRNrRdI9NlKy6H98u2JcUFKR5U6UM0EFlB6+ILtTd4eixXpZVQwJaw6Anj
- Fx6PW1hBEPNdYIRr+ZGBfG+8xM0KQfUDpSmu8z4XmfOsYyae/Pib1So0L6T9rjNxaQL5
- cy6A/RYi7owsswtWKI3jqLqnfGMAFTfpbWZxUdiLvbxpYQ4cy0IzUgl51JgzyKYpwQvH
- hRM9ChqqM6FZjrq+sNAPHFkaJk/1GevkmGn+aJtaWNk1f1hab4jM0zA6GkFg2yeimkAd
- 94hA==
-X-Gm-Message-State: AOJu0YyHHCDYuAKLz7LKUH1DgKKt0Z39tVR08C2iby464vcoMbt+Q//T
- kiXRve/gb1sEhlZQj6xIWzKmrMuAMgAsZIkvefXs740KJ6O6whrdLTJCLRZRqli0MqQKBxvGd9N
- D
-X-Google-Smtp-Source: AGHT+IErWPr/zfg0WmvCw3RKPanQkeAYRatbBUwaG2fx37IV0JpOFdDvX+lUOlTZSWvTHHNC9ulpZw==
-X-Received: by 2002:a17:906:6bc7:b0:a52:13ee:8124 with SMTP id
- t7-20020a1709066bc700b00a5213ee8124mr59241ejs.35.1713468433364; 
- Thu, 18 Apr 2024 12:27:13 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.151.213])
+ d=1e100.net; s=20230601; t=1713468906; x=1714073706;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=W3POXLkXOEegSIr+CiLoNV+e6nPI439irSo27x6wQYk=;
+ b=KHdPMDjEWvLAsptmO9lNPPcSMIZVHR3dnH7fLX18FP94IafgOX5bD/It5njLixx0VK
+ L4OTEBfFmjzfvFuncSWyB0ZAzYEnYydhjfeUsQZhftdlIP3pFZ5yIXGf7/Q80vwAHbtX
+ hBTk9QsDI/ozjXtcLEKFbGxYvxyYfn7MB1Kozs246Kcz7jOM23oiy70d0dVb508MvKeP
+ 714fEJhZAnLGu8ME05TykRG54WUxXNO+UO7pvsKYZE4GBQMyfR2hvShnI+U5+DAPYgpy
+ qS+Suh3JhfHkN/Q/5smFZ4MGBv0USD9gwRV6GneeLwqPw8CE4xmW7WV+vw9lGo5qtIvP
+ 76kA==
+X-Gm-Message-State: AOJu0Yz6udC4hlCgnaLutqXeSJrAfKkBaDW92/SzjqB6spMMeKU4ow8z
+ ttVnbPX5WY+cCsNHxjAh8CqLGTiDwl/CcOrac+XuPA5d2/tqUbvDKHmlBYvszJQh/+CJwxlOdSq
+ C
+X-Google-Smtp-Source: AGHT+IGMCzmEnXnVD4o31/C0VmlviDxbH19sLaVnp9L+a0G+U6wowTv37MaEj2AIuCUCXbCDxujMhg==
+X-Received: by 2002:a05:600c:3511:b0:417:f527:21d0 with SMTP id
+ h17-20020a05600c351100b00417f52721d0mr3869169wmq.0.1713468906643; 
+ Thu, 18 Apr 2024 12:35:06 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.151.213])
  by smtp.gmail.com with ESMTPSA id
- x16-20020a1709060a5000b00a5575c9d5b4sm967734ejf.63.2024.04.18.12.27.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Apr 2024 12:27:12 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ v11-20020a05600c444b00b00418d5b16f85sm3747438wmn.21.2024.04.18.12.35.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Apr 2024 12:35:05 -0700 (PDT)
+Message-ID: <a75b20b5-995c-4de6-81f8-78a6f58d12b8@linaro.org>
+Date: Thu, 18 Apr 2024 21:35:03 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/24] include/exec: Rework (part 2)
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 15/24] exec: Restrict inclusion of 'user/guest-base.h'
-Date: Thu, 18 Apr 2024 21:25:14 +0200
-Message-ID: <20240418192525.97451-16-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240418192525.97451-1-philmd@linaro.org>
+ David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
 References: <20240418192525.97451-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240418192525.97451-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,108 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Declare 'have_guest_base' in "user/guest-base.h".
+On 18/4/24 21:24, Philippe Mathieu-Daudé wrote:
+> Reordering exec/, second round. Mostly splitting:
+> - TCG LDST API (to "exec/cpu_ldst.h")
+> - CPU TLB APIs (to "exec/cputlb.h")
+> from "exec/cpu-all.h" and "exec/exec-all.h", and
+> reducing inclusions of "hw/core/cpu.h".
+> 
+> Based-on: <20240417182806.69446-1-philmd@linaro.org>
+> or https://gitlab.com/philmd/qemu/-/commits/exec-next
 
-Very few files require this header, so explicitly include
-it there instead of "exec/cpu-all.h" which is used in many
-source files.
+And this series is available as
+https://gitlab.com/philmd/qemu/-/commits/exec-rework-part2/
 
-Assert this user-specific header is only included from user
-emulation.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20231211212003.21686-23-philmd@linaro.org>
----
- include/exec/cpu-all.h    | 3 ---
- include/exec/cpu_ldst.h   | 2 ++
- include/user/guest-base.h | 6 ++++++
- bsd-user/main.c           | 1 +
- linux-user/elfload.c      | 1 +
- linux-user/main.c         | 1 +
- 6 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 027f19e052..e75ec13cd0 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -65,9 +65,6 @@
- 
- #if defined(CONFIG_USER_ONLY)
- #include "exec/user/abitypes.h"
--#include "user/guest-base.h"
--
--extern bool have_guest_base;
- 
- /*
-  * If non-zero, the guest virtual address space is a contiguous subset
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 2c5a0a5c81..6d47d3114a 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -73,6 +73,8 @@
- 
- #if defined(CONFIG_USER_ONLY)
- 
-+#include "user/guest-base.h"
-+
- #ifndef TARGET_TAGGED_ADDRESSES
- static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
- {
-diff --git a/include/user/guest-base.h b/include/user/guest-base.h
-index 1e42bca5db..055c1d14fe 100644
---- a/include/user/guest-base.h
-+++ b/include/user/guest-base.h
-@@ -7,6 +7,12 @@
- #ifndef USER_GUEST_BASE_H
- #define USER_GUEST_BASE_H
- 
-+#ifndef CONFIG_USER_ONLY
-+#error Cannot include this header from system emulation
-+#endif
-+
- extern uintptr_t guest_base;
- 
-+extern bool have_guest_base;
-+
- #endif
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 01b313756e..29a629d877 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -36,6 +36,7 @@
- #include "qemu/help_option.h"
- #include "qemu/module.h"
- #include "exec/exec-all.h"
-+#include "user/guest-base.h"
- #include "tcg/startup.h"
- #include "qemu/timer.h"
- #include "qemu/envlist.h"
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index fc60c01d57..9ed4baa2ac 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -8,6 +8,7 @@
- 
- #include "qemu.h"
- #include "user/tswap-target.h"
-+#include "user/guest-base.h"
- #include "user-internals.h"
- #include "signal-common.h"
- #include "loader.h"
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 149e35432e..94e4c47f05 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -38,6 +38,7 @@
- #include "qemu/help_option.h"
- #include "qemu/module.h"
- #include "qemu/plugin.h"
-+#include "user/guest-base.h"
- #include "exec/exec-all.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/user.h"
--- 
-2.41.0
+> Philippe Mathieu-Daudé (24):
+>    exec: Declare MMUAccessType type in 'mmu-access-type.h' header
+>    exec: Declare CPUBreakpoint/CPUWatchpoint type in 'breakpoint.h'
+>      header
+>    hw/core: Avoid including the full 'hw/core/cpu.h' in 'tcg-cpu-ops.h'
+>    exec: Restrict TCG specific declarations of 'cputlb.h'
+>    exec: Restrict 'cpu_ldst.h' to TCG accelerator
+>    exec: Have guest_addr_valid() methods take abi_ptr/size_t arguments
+>    exec: Un-inline tlb_vaddr_to_host() and declare it in 'exec/cputlb.h'
+>    physmem: Move TCG CPU IOTLB methods around
+>    physmem: Restrict TCG CPU IOTLB code to TCG accel
+>    exec: Reduce tlb_set_dirty() declaration scope
+>    exec: Move tlb_reset_dirty*() declarations to 'exec/cputlb.h'
+>    exec: Move CPUTLBEntry helpers to cputlb.c
+>    target/sparc: Replace abi_ulong by uint32_t for TARGET_ABI32
+>    exec: Rename 'exec/user/guest-base.h' as 'user/guest-base.h'
+>    exec: Restrict inclusion of 'user/guest-base.h'
+>    exec: Move GUEST_ADDR_MAX definition to 'cpu_ldst.h'
+>    exec: Include missing 'qemu/log-for-trace.h' header in 'exec/log.h'
+>    plugins: Include missing 'qemu/bitmap.h' header
+>    gdbstub: Avoid including 'cpu.h' in 'gdbstub/helpers.h'
+>    hw/xtensa: Include missing 'exec/cpu-common.h' in 'bootparam.h'
+>    plugins: Un-inline qemu_plugin_disable_mem_helpers()
+>    exec: Remove 'exec/tswap.h' from 'exec/cpu-all.h'
+>    exec: Remove 'disas/disas.h' from 'exec/log.h'
+>    exec: Remove unnecessary inclusions of 'hw/core/cpu.h'
 
 
