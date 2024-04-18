@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31D85C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 18:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE98C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 18:15:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxWED-0006eo-Lf; Thu, 18 Apr 2024 14:11:21 -0400
+	id 1rxWHX-0007oh-9g; Thu, 18 Apr 2024 14:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rxWE9-0006cV-Ty
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:11:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rxWHL-0007lv-Rq
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:14:37 -0400
+Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rxWE6-0002t6-I5
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:11:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713463872;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=27eefg414On2YawNE62Pu8XoXMQ46Ze1X2uuQSi8kn4=;
- b=YBMKAtXBmhFuOtm62aAYqbakwokodLqFwdxFKa+P3F9nhStgaYNTt2jP6TS78LPchw4T4Q
- 6s6KBqs5LCwDT/C+30NRReT6P+XtlvZlgmvtQiGEojh2tenXVD0UWYNDdI9tkPvmqu40zP
- zR91T/+Ot8beEAgszdfYw+XcE/Ndmzg=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-6kN9GQlRPeysIXTYs-wLLQ-1; Thu, 18 Apr 2024 14:11:11 -0400
-X-MC-Unique: 6kN9GQlRPeysIXTYs-wLLQ-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-69b31b7df0dso17050246d6.3
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 11:11:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713463871; x=1714068671;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=27eefg414On2YawNE62Pu8XoXMQ46Ze1X2uuQSi8kn4=;
- b=IP846YNmZPlICgfirV+jI0z9OLTlSyO0AiTd5ULGPCPtpbpxQKUihKa62QmozM8yHw
- Rd7YB/OlKvWOrUbw3I0enLQNdsfZzKNOYraXuFZBotW4PljzpJKlQQN782o2Cu8eefTr
- QJwGAzOqOb6b7jTRreswqKxZLfzpYNMvLiw8xYziQrsJZ4Z3MBKgqZO+RW93eBDE1cvx
- 1QRomkilynGKTQR7VvgYCHG8zl3udW9EBtxI29GpV3uCEe7PInWhunsGZ44LzLXH3BLi
- AWqfvmX1vHQPWXcatpJKX7VUKomdecfCvE9RaDzlue8ouqw6MONT5tdZ7svlNcsh3llN
- t0NA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDRMGy9wK5xvmUE5v/Y86p6tacnUCMWqZYOHg29F74acj4yyrhhfqTJnmNtvZ09nMJ2mgKo4+oC3dS6rkknuEKKTEIu18=
-X-Gm-Message-State: AOJu0YzQXE9zLKyCLOdRHpg9U3p0gUw4APxip2LOmMnY6IyF3hAZPXGL
- F9lazPEW9WkYYv7r45LQ4U1qFuHKl0Pg70RPTZnt26EnqoyiFYMB9YDABJushQ4wANVg1/9Stus
- amxV/a3urDxFh9+XtKkZlyDR8ujlBUs7X60DqlPhIJLxsZxMdA8M6
-X-Received: by 2002:ad4:4482:0:b0:69b:6fb4:f0d1 with SMTP id
- m2-20020ad44482000000b0069b6fb4f0d1mr3965684qvt.62.1713463870675; 
- Thu, 18 Apr 2024 11:11:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEX/ldINzN2k368Ig1Fz+BtRu1Hoq4G0BNNSTxALVbLp8cnRbLK55fB+BPJHDnxhc3TP7UtdA==
-X-Received: by 2002:ad4:4482:0:b0:69b:6fb4:f0d1 with SMTP id
- m2-20020ad44482000000b0069b6fb4f0d1mr3965648qvt.62.1713463870250; 
- Thu, 18 Apr 2024 11:11:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- o6-20020a0ce406000000b0069b534fb8b0sm845480qvl.59.2024.04.18.11.11.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Apr 2024 11:11:09 -0700 (PDT)
-Message-ID: <14a6fbf1-4f05-42a7-a59b-7195e95aed6f@redhat.com>
-Date: Thu, 18 Apr 2024 20:11:06 +0200
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rxWHI-0003KO-39
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:14:34 -0400
+Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mail@maciej.szmigiero.name>)
+ id 1rxWH7-0004RH-BZ; Thu, 18 Apr 2024 20:14:21 +0200
+Message-ID: <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
+Date: Thu, 18 Apr 2024 20:14:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 00/13] SMMUv3 nested translation support
-Content-Language: en-US
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-References: <20240408140818.3799590-1-smostafa@google.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240408140818.3799590-1-smostafa@google.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_RFC_00/26=5D_Multifd_=F0=9F=94=80_device_s?=
+ =?UTF-8?Q?tate_transfer_support_with_VFIO_consumer?=
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
+ <Zh-KF72Fe9oV6tfT@redhat.com>
+ <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
+ <Zh_6W8u3H4FmGS49@redhat.com>
+ <71ede5c8-857c-418b-9e37-b8d343ddfa06@maciej.szmigiero.name>
+ <ZiD4aLSre6qubuHr@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <ZiD4aLSre6qubuHr@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=37.28.154.113;
+ envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,167 +108,227 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
+On 18.04.2024 12:39, Daniel P. Berrangé wrote:
+> On Thu, Apr 18, 2024 at 11:50:12AM +0200, Maciej S. Szmigiero wrote:
+>> On 17.04.2024 18:35, Daniel P. Berrangé wrote:
+>>> On Wed, Apr 17, 2024 at 02:11:37PM +0200, Maciej S. Szmigiero wrote:
+>>>> On 17.04.2024 10:36, Daniel P. Berrangé wrote:
+>>>>> On Tue, Apr 16, 2024 at 04:42:39PM +0200, Maciej S. Szmigiero wrote:
+>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+(..)
+>>>>> That said, the idea of reserving channels specifically for VFIO doesn't
+>>>>> make a whole lot of sense to me either.
+>>>>>
+>>>>> Once we've done the RAM transfer, and are in the switchover phase
+>>>>> doing device state transfer, all the multifd channels are idle.
+>>>>> We should just use all those channels to transfer the device state,
+>>>>> in parallel.  Reserving channels just guarantees many idle channels
+>>>>> during RAM transfer, and further idle channels during vmstate
+>>>>> transfer.
+>>>>>
+>>>>> IMHO it is more flexible to just use all available multifd channel
+>>>>> resources all the time.
+>>>>
+>>>> The reason for having dedicated device state channels is that they
+>>>> provide lower downtime in my tests.
+>>>>
+>>>> With either 15 or 11 mixed multifd channels (no dedicated device state
+>>>> channels) I get a downtime of about 1250 msec.
+>>>>
+>>>> Comparing that with 15 total multifd channels / 4 dedicated device
+>>>> state channels that give downtime of about 1100 ms it means that using
+>>>> dedicated channels gets about 14% downtime improvement.
+>>>
+>>> Hmm, can you clarify. /when/ is the VFIO vmstate transfer taking
+>>> place ? Is is transferred concurrently with the RAM ? I had thought
+>>> this series still has the RAM transfer iterations running first,
+>>> and then the VFIO VMstate at the end, simply making use of multifd
+>>> channels for parallelism of the end phase. your reply though makes
+>>> me question my interpretation though.
+>>>
+>>> Let me try to illustrate channel flow in various scenarios, time
+>>> flowing left to right:
+>>>
+>>> 1. serialized RAM, then serialized VM state  (ie historical migration)
+>>>
+>>>         main: | Init | RAM iter 1 | RAM iter 2 | ... | RAM iter N | VM State |
+>>>
+>>>
+>>> 2. parallel RAM, then serialized VM state (ie today's multifd)
+>>>
+>>>         main: | Init |                                            | VM state |
+>>>     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>
+>>>
+>>> 3. parallel RAM, then parallel VM state
+>>>
+>>>         main: | Init |                                            | VM state |
+>>>     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd4:                                                     | VFIO VM state |
+>>>     multifd5:                                                     | VFIO VM state |
+>>>
+>>>
+>>> 4. parallel RAM and VFIO VM state, then remaining VM state
+>>>
+>>>         main: | Init |                                            | VM state |
+>>>     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+>>>     multifd4:        | VFIO VM state                                         |
+>>>     multifd5:        | VFIO VM state                                         |
+>>>
+>>>
+>>> I thought this series was implementing approx (3), but are you actually
+>>> implementing (4), or something else entirely ?
+>>
+>> You are right that this series operation is approximately implementing
+>> the schema described as numer 3 in your diagrams.
+> 
+>> However, there are some additional details worth mentioning:
+>> * There's some but relatively small amount of VFIO data being
+>> transferred from the "save_live_iterate" SaveVMHandler while the VM is
+>> still running.
+>>
+>> This is still happening via the main migration channel.
+>> Parallelizing this transfer in the future might make sense too,
+>> although obviously this doesn't impact the downtime.
+>>
+>> * After the VM is stopped and downtime starts the main (~ 400 MiB)
+>> VFIO device state gets transferred via multifd channels.
+>>
+>> However, these multifd channels (if they are not dedicated to device
+>> state transfer) aren't idle during that time.
+>> Rather they seem to be transferring the residual RAM data.
+>>
+>> That's most likely what causes the additional observed downtime
+>> when dedicated device state transfer multifd channels aren't used.
+> 
+> Ahh yes, I forgot about the residual dirty RAM, that makes sense as
+> an explanation. Allow me to work through the scenarios though, as I
+> still think my suggestion to not have separate dedicate channels is
+> better....
+> 
+> 
+> Lets say hypothetically we have an existing deployment today that
+> uses 6 multifd channels for RAM. ie:
+>   
+>          main: | Init |                                            | VM state |
+>      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> 
+> That value of 6 was chosen because that corresponds to the amount
+> of network & CPU utilization the admin wants to allow, for this
+> VM to migrate. All 6 channels are fully utilized at all times.
+> 
+> 
+> If we now want to parallelize VFIO VM state, the peak network
+> and CPU utilization the admin wants to reserve for the VM should
+> not change. Thus the admin will still wants to configure only 6
+> channels total.
+> 
+> With your proposal the admin has to reduce RAM transfer to 4 of the
+> channels, in order to then reserve 2 channels for VFIO VM state, so we
+> get a flow like:
+> 
+>   
+>          main: | Init |                                            | VM state |
+>      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd5:                                                     | VFIO VM state |
+>      multifd6:                                                     | VFIO VM state |
+> 
+> This is bad, as it reduces performance of RAM transfer. VFIO VM
+> state transfer is better, but that's not a net win overall.
+> 
+> 
+> 
+> So lets say the admin was happy to increase the number of multifd
+> channels from 6 to 8.
+> 
+> This series proposes that they would leave RAM using 6 channels as
+> before, and now reserve the 2 extra ones for VFIO VM state:
+> 
+>          main: | Init |                                            | VM state |
+>      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+>      multifd7:                                                     | VFIO VM state |
+>      multifd8:                                                     | VFIO VM state |
+> 
+> 
+> RAM would perform as well as it did historically, and VM state would
+> improve due to the 2 parallel channels, and not competing with the
+> residual RAM transfer.
+> 
+> This is what your latency comparison numbers show as a benefit for
+> this channel reservation design.
+> 
+> I believe this comparison is inappropriate / unfair though, as it is
+> comparing a situation with 6 total channels against a situation with
+> 8 total channels.
+> 
+> If the admin was happy to increase the total channels to 8, then they
+> should allow RAM to use all 8 channels, and then VFIO VM state +
+> residual RAM to also use the very same set of 8 channels:
+> 
+>          main: | Init |                                            | VM state |
+>      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>      multifd7:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+>      multifd8:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> 
+> This will speed up initial RAM iters still further & the final switch
+> over phase even more. If residual RAM is larger than VFIO VM state,
+> then it will dominate the switchover latency, so having VFIO VM state
+> compete is not a problem. If VFIO VM state is larger than residual RAM,
+> then allowing it acces to all 8 channels instead of only 2 channels
+> will be a clear win.
 
-On 4/8/24 16:08, Mostafa Saleh wrote:
-> Currently, QEMU supports emulating either stage-1 or stage-2 SMMUs
-> but not nested instances.
-> This patch series adds support for nested translation in SMMUv3,
-> this is controlled by property “arm-smmuv3.stage=nested”, and
-> advertised to guests as (IDR0.S1P == 1 && IDR0.S2P == 2)
->
-> Main changes(architecture):
-> ============================
-> 1) CDs are considered IPA and translated with stage-2.
-> 2) TTBx and tables for stage-1 are considered IPA and translated
->    with stage-2.
-> 3) Translate the IPA address with stage-2.
->
-> TLBs:
-> ======
-> TLBs are the most tricky part.
->
-> 1) General design
->    Unified(Combined) design is used, where entries with ASID=-1 are
->    IPAs(cached from stage-2 config)
->
->    TLBs are also modified to cache 2 permissions, a new permission added
->    "parent_perm."
->
->    For non-nested configuration, perm == parent_perm and nothing
->    changes. This is used to know which stage to use in case there is
->    a permission fault from a TLB entry.
->
-> 2) Caching in TLB
->    Stage-1 and stage-2 are inserted in the TLB as is.
->    For nested translation, both entries are combined into one TLB
->    entry. The size (level and granule) are chosen from the smallest entries.
->    That means that a stage-1 translation can be cached with sage-2
->    granule in key, this is take into account lookup.
-is that a correct understanding that with the current implementation, in
-nested mode, you end up with combined S1 + S2 entries (IOVA -> PA) and
-S2 entries (IPA -> PA)?
-Out of cusiosity, how did you end up with that choice? Have you made
-some perf assessment compared to separate S1 and S2 entries? I guess it
-is a complex topic and choice.
+I re-did the measurement with increased the number of multifd channels,
+first to (total count/dedicated count) 25/0, then to 100/0.
 
-Thanks
+The results did not improve:
+With 25/0 multifd mixed channels config I still get around 1250 msec
+downtime - the same as with 15/0 or 11/0 mixed configs I measured
+earlier.
 
-Eric
->
-> 3) TLB Lookup
->    TLB lookup already uses ASID in key, so it can distinguish between
->    stage-1 and stage-2.
->    And as mentioned above, the granule for stage-1 can be different,
->    If stage-1 lookup failed, we try again with the stage-2 granule.
->
-> 4) TLB invalidation
->    - Address invalidation is split, for IOVA(CMD_TLBI_NH_VA
->      /CMD_TLBI_NH_VAA) and IPA(CMD_TLBI_S2_IPA) based on ASID value
->    - CMD_TLBI_NH_ASID/CMD_TLBI_NH_ALL: Consider VMID if stage-2 is
->      supported, and invalidate stage-1 only by VMIDs
->
-> As far as I understand, this is compliant with the ARM architecture:
-> - ARM ARM DDI 0487J.a: RLGSCG, RTVTYQ, RGNJPZ
-> - ARM IHI 0070F.b: 16.2 Caching
->
-> An alternative approach would be to instantiate 2 TLBs, one per each
-> stage. I haven’t investigated that.
->
-> Others
-> =======
-> - Advertise SMMUv3.2-S2FWB, it is NOP for QEMU as it doesn’t support
->   attributes.
->
-> - OAS: A typical setup with nesting is to share CPU stage-2 with the
->   SMMU, and according to the user manual, SMMU OAS must match the
->   system physical address.
->
->   This was discussed before in
->   https://lore.kernel.org/all/20230226220650.1480786-11-smostafa@google.com/
->   The implementation here, follows the discussion, where migration is
->   added and oas is set up from the board (virt). However, the OAS is
->   chosen based on the CPU PARANGE as there is no fixed one.
->
-> - For nested configuration, IOVA notifier only notifies for stage-1
->   invalidations (as far as I understand this is the intended
->   behaviour as it notifies for IOVA)
->
-> - Stop ignoring VMID for stage-1 if stage-2 is also supported.
->
->
-> Future improvements:
-> =====================
-> 1) One small improvement, that I don’t think it’s worth the extra
->    complexity, is in case of Stage-1 TLB miss for nested translation,
->    we can do stage-1 walk and lookup for stage-2 TLBs, instead of
->    doing the full walk.
->
-> 2) Patch 0006 (hw/arm/smmuv3: Translate CD and TT using stage-2 table)
->    introduces a macro to use functions that rely on cfg for stage-2,
->    I don’t like it. However, I didn’t find a simple way around it,
->    either we change many functions to have a separate stage argument,
->    or add another arg in config, which is probably more code.
->
-> Testing
-> ========
-> 1) IOMMUFD + VFIO
->    Kernel: https://lore.kernel.org/all/cover.1683688960.git.nicolinc@nvidia.com/
->    VMM: https://qemu-devel.nongnu.narkive.com/o815DqpI/rfc-v5-0-8-arm-smmuv3-emulation-support
->
->    By assigning “virtio-net-pci,netdev=net0,disable-legacy=on,iommu_platform=on,ats=on”,
->    to a guest VM (on top of QEMU guest) with VIFO and IOMMUFD.
->
-> 2) Work in progress prototype I am hacking on for nesting on KVM
->    (this is nowhere near complete, and misses many stuff but it
->    doesn't require VMs/VFIO) also with virtio-net-pci and git
->    cloning a bunch of stuff and also observing traces.
->    https://android-kvm.googlesource.com/linux/+log/refs/heads/smostafa/android15-6.6-smmu-nesting-wip
->
-> I also modified the Linux driver to test with mixed granules/levels.
->
-> hw/arm/smmuv3: Split smmuv3_translate() better viewed with --color-moved
->
-> Changes in v2:
-> v1: https://lore.kernel.org/qemu-devel/20240325101442.1306300-1-smostafa@google.com/
-> - Collected Eric Rbs
-> - Rework TLB to rely on VMID/ASID instead of an extra key.
-> - Fixed TLB issue with large stage-1 reported by Julian.
-> - Cap the OAS to 48 bits as PTW doesn’t support 52 bits.
-> - Fix ASID/VMID representation in some contexts as 16 bits while
->   they can be -1
-> - Increase visibility in trace points
->
->
-> Mostafa Saleh (13):
->   hw/arm/smmu: Use enum for SMMU stage
->   hw/arm/smmu: Split smmuv3_translate()
->   hw/arm/smmu: Consolidate ASID and VMID types
->   hw/arm/smmuv3: Translate CD and TT using stage-2 table
->   hw/arm/smmu-common: Support nested translation
->   hw/arm/smmu: Support nesting in smmuv3_range_inval()
->   hw/arm/smmu: Support nesting in the rest of commands
->   hw/arm/smmuv3: Support nested SMMUs in smmuv3_notify_iova()
->   hw/arm/smmuv3: Support and advertise nesting
->   hw/arm/smmuv3: Advertise S2FWB
->   hw/arm/smmu: Refactor SMMU OAS
->   hw/arm/smmuv3: Add property for OAS
->   hw/arm/virt: Set SMMU OAS based on CPU PARANGE
->
->  hw/arm/smmu-common.c         | 306 +++++++++++++++++++++----
->  hw/arm/smmuv3-internal.h     |  16 +-
->  hw/arm/smmuv3.c              | 418 ++++++++++++++++++++++-------------
->  hw/arm/trace-events          |  18 +-
->  hw/arm/virt.c                |  14 +-
->  include/hw/arm/smmu-common.h |  57 ++++-
->  include/hw/arm/smmuv3.h      |   1 +
->  target/arm/cpu.h             |   2 +
->  target/arm/cpu64.c           |   5 +
->  9 files changed, 608 insertions(+), 229 deletions(-)
->
+But with the (pretty insane) 100/0 mixed channel config the whole setup
+gets so for into the law of diminishing returns that the results actually
+get worse: the downtime is now about 1450 msec.
+I guess that's from all the extra overhead from switching between 100
+multifd channels.
+
+I think one of the reasons for these results is that mixed (RAM + device
+state) multifd channels participate in the RAM sync process
+(MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
+
+It is possible that there are other subtle performance interactions too,
+but I am not 100% sure about that.
+
+> With regards,
+> Daniel
+
+Best regards,
+Maciej
 
 
