@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B444BC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B725CC04FFE
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVhI-0003Yy-JJ; Thu, 18 Apr 2024 13:37:20 -0400
+	id 1rxVhG-0003Wv-3u; Thu, 18 Apr 2024 13:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeffreyalaw@gmail.com>)
- id 1rxUHl-0000MV-Gi
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:06:53 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeffreyalaw@gmail.com>)
- id 1rxUHj-0005q9-U3
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:06:53 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1e857e571f3so8898465ad.0
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 09:06:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713456409; x=1714061209; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wWhFiy9waCNyj1AGdQMOBe4rcIvg87i7FEy838sypFY=;
- b=Lf3060NrKWOEI1OTehSKQyn+kaGJxfevaL3QDJUXvHWQVbeYYBRrjBUfWJNwkNtQ8c
- nlrs4yH00f9/PwnV2ver+OAn/FFdFLSRk1DUvRF7j9r/+kgDXiXj1Cy2kJf2iSzOuYS4
- ezgILGZTECURnj0ae5FTGi9a2NZPvF6FsXSUgS/lUL4MOr39hfdb1EovkxIzlGYLfmq9
- 2m26zl9oSIlcGZWFTTm7rDai7cHtIspKmUu3njqpZGQMRPfpBLmGAqa9Kw4sLeLMep1C
- Km5+cUl7XjjKZl1b5jPMWhkq21FWP2kscPl8JVSOTN+LHkTv/SNnQFR14ESiiEQ69bRU
- hhYg==
+ (Exim 4.90_1) (envelope-from <josmyers@redhat.com>)
+ id 1rxTyE-0000U2-42
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:46:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <josmyers@redhat.com>)
+ id 1rxTyC-0001uQ-Lo
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:46:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713455199;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ov1WXLnemUYaSKFkvhIDkT/3e4WgdUo/19ew4snWUJc=;
+ b=bEvVp6i8yvNtmjxelx25rJ2iCWIuBwszmuHng1Zf2Reelz2IDY3p2/MZCXk8jyXmXn7t0P
+ v+uA2Km7ChRH6+Z1HA52cBwioYsH96ryWp4pSX+MQb4INu6Gu+mYP/jtrnLEW1DmxoJhYR
+ vQS6n0Bc0nf2J7yJHJcU41aODgfrSWU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-29-_uw_aMFBNnKw0jrOZJLUtA-1; Thu, 18 Apr 2024 11:45:30 -0400
+X-MC-Unique: _uw_aMFBNnKw0jrOZJLUtA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3497e65c31bso338889f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 08:45:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713456409; x=1714061209;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wWhFiy9waCNyj1AGdQMOBe4rcIvg87i7FEy838sypFY=;
- b=VOaRSTVtkn+0HJHaQXUvT6gjfx5oYUNbeRKNY1bFucSyjK3gfszC90wcBgcO/bac3U
- ynzrPOwaiF3j/nBkIfy3fH8+qh6cHhUb/9TtkdOzJ/xKRjwb3dEu9oWZM36ZW8+rFhSw
- CH/JLtuD5wqt+MTE3Ki2BI4jZZ2olG+UGzKoEhpQzunV2bgk5db1IbA9XiFqgYGCJVUY
- djCVpRFNLkFHHzrSjw3yF2OEM+67yxiYEZa7z4/TsK36LsSaH/emiODJFPZap8aYODl7
- 7EIoT9k/TTjvgAMKJNdul2rrmIu0thdEvPjnb3nIe/yFMfJ6wnevYnp/TPjZ2zjf0Muq
- d0Mw==
+ d=1e100.net; s=20230601; t=1713455129; x=1714059929;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ov1WXLnemUYaSKFkvhIDkT/3e4WgdUo/19ew4snWUJc=;
+ b=cWDnCDOrNB0A245xU4+rO2n2cjkq2vJYcB0W8hZDXt8D0VYIY4UgRil4LdS8zBBLg+
+ LNXHw7n3keIIe7Qkoyw6UsB4gNaZmzQMrpEpIWF64ZWp/UpdfuBIAsAy8eljOr4Hx14V
+ TMZ90QLteEwf0NzyTeZhXpsPsRBwI8gjdaLEGoyatiZZwHOelavyRj+BL8UDvmKvOuo/
+ GcomfhsFJtcBpv/spVCjDtd3fFlNhh9DHQNSLRmY5QYYHRTLj9tCt43bM4RWZZnT4fZd
+ Ma8S+7CGLJ9usJ28+J84To7k+BOdvpsLvX9I1KGk1Dis/4HMcdUXa+oipE8lnDI/iGS+
+ JA6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUa1oD5wM1ydsuZIuTYc3mncMgf+nb7DdaX6ZebB3cOvu1x59THXHm167Bwo6IA+NzWm3qb1uCscI7imX4YrP2XE69Mrgo=
-X-Gm-Message-State: AOJu0Yx8om5jSsCq5NE/AJFgvIcSFXG209Ctk/HdDMn/IYXHzrE1T1Ti
- L3y+Bb09J9GgEE38E79U/wGth1Oe1WFeHWxa/7NpqEQfkdZTT1qF
-X-Google-Smtp-Source: AGHT+IGFIfWQS14v+ymlR1xvsWZNzQ4A+jyTvavCi/O8emBEF0BOdJyApx0eESyXa9d6hA6sI0m/pQ==
-X-Received: by 2002:a17:902:a505:b0:1e3:e39a:2e49 with SMTP id
- s5-20020a170902a50500b001e3e39a2e49mr3016519plq.18.1713456408659; 
- Thu, 18 Apr 2024 09:06:48 -0700 (PDT)
-Received: from [172.31.0.109] ([136.36.72.243])
- by smtp.gmail.com with ESMTPSA id
- y4-20020a170902864400b001e49428f313sm1688515plt.261.2024.04.18.09.06.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Apr 2024 09:06:48 -0700 (PDT)
-Message-ID: <1fc9fdd9-bbb7-4506-bfe5-b31e9331eb90@gmail.com>
-Date: Thu, 18 Apr 2024 10:06:39 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: Deprecation/removal of nios2 target support
-Content-Language: en-US
-To: joel@rtems.org, Joseph Myers <josmyers@redhat.com>
-Cc: Sandra Loosemore <sloosemore@baylibre.com>, gcc@gcc.gnu.org,
- binutils@sourceware.org, gdb-patches@sourceware.org,
- libc-alpha@sourceware.org, Chung-Lin Tang <cltang@baylibre.com>,
- andrew@reenigne.org, Yao Qi <qiyaoltc@gmail.com>,
- Dinh Nguyen <dinguyen@kernel.org>, qemu-devel@nongnu.org,
+ AJvYcCVhSp00BjN6HYw6iWfUOs6trNf8ajAfi3AMteiBTqsuMMqZU1kDHkfCWXNfMN6VV2U6P+cHYqugLBkStjJahnU/WDqgpsA=
+X-Gm-Message-State: AOJu0YxyQyuqI9yxGt+B6zLT03+UV6A3OOJLAOS7UCnn9KwhV/PDi57G
+ 2mpQgZgqb0lufEjPNhY0hDuwi88jE4bpog0SF8dmZSI7g8QqTQnGY+WMK1W2z55BTHA8koghuOI
+ Y4DEkzwspAtwANEhXcuPTspeqapNqh3Ce7K3VImViQm0ii8IbIFaM
+X-Received: by 2002:adf:f450:0:b0:343:78da:9817 with SMTP id
+ f16-20020adff450000000b0034378da9817mr2402183wrp.68.1713455129568; 
+ Thu, 18 Apr 2024 08:45:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEIA835ZoskMaOmxABRMTTi65uy+ZkxlzbTtSQMldO0m9a8qnHQQ62p/Xg8s87wIXaX3dhFgA==
+X-Received: by 2002:adf:f450:0:b0:343:78da:9817 with SMTP id
+ f16-20020adff450000000b0034378da9817mr2402166wrp.68.1713455129140; 
+ Thu, 18 Apr 2024 08:45:29 -0700 (PDT)
+Received: from digraph.polyomino.org.uk (digraph.polyomino.org.uk.
+ [2001:8b0:bf73:93f7::51bb:e332]) by smtp.gmail.com with ESMTPSA id
+ d21-20020adfa415000000b00347cf86dee6sm577194wra.71.2024.04.18.08.45.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Apr 2024 08:45:28 -0700 (PDT)
+Received: from jsm28 (helo=localhost)
+ by digraph.polyomino.org.uk with local-esmtp (Exim 4.95)
+ (envelope-from <josmyers@redhat.com>) id 1rxTwK-00EFDZ-HH;
+ Thu, 18 Apr 2024 15:44:44 +0000
+Date: Thu, 18 Apr 2024 15:44:44 +0000 (UTC)
+From: Joseph Myers <josmyers@redhat.com>
+To: Sandra Loosemore <sloosemore@baylibre.com>
+cc: gcc@gcc.gnu.org, binutils@sourceware.org, gdb-patches@sourceware.org, 
+ libc-alpha@sourceware.org, Chung-Lin Tang <cltang@baylibre.com>, 
+ andrew@reenigne.org, Yao Qi <qiyaoltc@gmail.com>, 
+ Dinh Nguyen <dinguyen@kernel.org>, qemu-devel@nongnu.org, 
  newlib@sourceware.org, Arnd Bergmann <arnd@arndb.de>
+Subject: Re: Deprecation/removal of nios2 target support
+In-Reply-To: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
+Message-ID: <b5d375ed-283-974a-febf-892760ff855@redhat.com>
 References: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
- <b5d375ed-283-974a-febf-892760ff855@redhat.com>
- <CAF9ehCVZddmGe0emH8H6ChjuUxia-NOpxa0dCA=5+2PAnvytZA@mail.gmail.com>
-From: Jeff Law <jeffreyalaw@gmail.com>
-In-Reply-To: <CAF9ehCVZddmGe0emH8H6ChjuUxia-NOpxa0dCA=5+2PAnvytZA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=jeffreyalaw@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=josmyers@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 18 Apr 2024 13:37:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,40 +108,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 17 Apr 2024, Sandra Loosemore wrote:
 
+> Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and remove
+> support from all toolchain components after the release is made.  I'm not sure
+> there is an established process for obsoleting/removing support in other
+> components; besides binutils, GDB, and GLIBC, there's QEMU, newlib/libgloss,
+> and the Linux kernel.  But, we need to get the ball rolling somewhere.
 
-On 4/18/24 9:57 AM, Joel Sherrill wrote:
-> 
-> 
-> On Thu, Apr 18, 2024 at 10:46 AM Joseph Myers <josmyers@redhat.com 
-> <mailto:josmyers@redhat.com>> wrote:
-> 
->     On Wed, 17 Apr 2024, Sandra Loosemore wrote:
-> 
->      > Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and
->     remove
->      > support from all toolchain components after the release is made. 
->     I'm not sure
->      > there is an established process for obsoleting/removing support
->     in other
->      > components; besides binutils, GDB, and GLIBC, there's QEMU,
->     newlib/libgloss,
->      > and the Linux kernel.  But, we need to get the ball rolling
->     somewhere.
-> 
->     CC:ing Arnd Bergmann regarding the obsolescence in the Linux kernel.
-> 
-> 
-> Just an FYI that the RTEMS Project plans to drop NIOS II support based
-> on what happens with the tooling.
-ACK.  Just one more note to the wider audience.  I looked at QEMU's user 
-mode support for nios2 on/off over the last couple years.  It never 
-seemed to work well enough be able to run the GCC testsuite reliably.
+CC:ing Arnd Bergmann regarding the obsolescence in the Linux kernel.
 
-As a result, my tester builds nios2 and will run the testsuite, but all 
-the execution tests are only built, they're not actually run.  It's been 
-fairly stable, but its not doing in-depth testing.
-
-jeff
+-- 
+Joseph S. Myers
+josmyers@redhat.com
 
 
