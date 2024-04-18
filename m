@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D569C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 10:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7151FC04FFF
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 10:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxOk5-0001eW-KE; Thu, 18 Apr 2024 06:11:45 -0400
+	id 1rxOkP-0002K5-Nt; Thu, 18 Apr 2024 06:12:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOk3-0001df-TP
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOkJ-0002CD-LS
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOk0-0004tO-F3
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOkH-0004wZ-VW
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713435099;
+ s=mimecast20190719; t=1713435117;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RjMb3Pg6/OUNtybxhe3hrJ32jglibhNx5G1TDCLq18w=;
- b=gU9j9VMdNS7CzeeHoAjF+wIvP4TBtNxT6lVdnxfdq9tHlWYbF841dJ3gOjsCxzR+5+TLJb
- BquzLSG3sRLoshpZiVIY3Bq4JZrAxCjCuTUu3RzONTsYjTSUQZCg4pz/t7q9KQcsClo5eW
- 4jHWvD3eY403tsw0bns8z7xr50X8Ijk=
+ bh=rX7+cvgh6mTv2GGjvcuMBspd3CHW2j02F6bNL0p6I3s=;
+ b=B04ztudY4VUGefgXIIhT9JW1559gIiLS+zDlJShQn5YMDZglnHKNQ40QVnU6rGI6S9beaU
+ Q22XsiMsG1fQOaaOYfZXnwoV6n7vgvi73E22mbctH/8/psVVstoSdMa3s+AVn3Bflxjixr
+ MOUV/T+mLs230V2bQdmd1WnfBBYCWUg=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-670--D6wjPEqO8irBQzwtj3Rjw-1; Thu, 18 Apr 2024 06:11:36 -0400
-X-MC-Unique: -D6wjPEqO8irBQzwtj3Rjw-1
+ us-mta-655-bXYQvhGVPBWnNNtKfUdiZQ-1; Thu, 18 Apr 2024 06:11:53 -0400
+X-MC-Unique: bXYQvhGVPBWnNNtKfUdiZQ-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F07561049C9B;
- Thu, 18 Apr 2024 10:11:34 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 93B3180021A;
+ Thu, 18 Apr 2024 10:11:52 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.223])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A5A57C1A225;
- Thu, 18 Apr 2024 10:11:18 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7C9A4C271A4;
+ Thu, 18 Apr 2024 10:11:49 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -53,17 +53,15 @@ To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v3 06/13] ci: move external build environment setups to CentOS
- Stream 9
-Date: Thu, 18 Apr 2024 12:10:49 +0200
-Message-ID: <20240418101056.302103-7-thuth@redhat.com>
+Subject: [PATCH v3 12/13] block/ssh: Use URI parsing code from glib
+Date: Thu, 18 Apr 2024 12:10:55 +0200
+Message-ID: <20240418101056.302103-13-thuth@redhat.com>
 In-Reply-To: <20240418101056.302103-1-thuth@redhat.com>
 References: <20240418101056.302103-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -71,8 +69,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,256 +85,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+Since version 2.66, glib has useful URI parsing functions, too.
+Use those instead of the QEMU-internal ones to be finally able
+to get rid of the latter.
 
-RHEL 9 (and thus also the derivatives) are available since two years
-now, so according to QEMU's support policy, we can drop the active
-support for the previous major version 8 now.
+While we're at it, also emit a warning when encountering unknown
+parameters in the URI, so that the users have a chance to detect
+their typos or other mistakes.
 
-Thus upgrade our CentOS Stream build environment playbooks to major
-version 9 now.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240412103708.27650-1-pbonzini@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- .../stream/{8 => 9}/build-environment.yml     | 31 ++++++-------
- .../stream/{8 => 9}/x86_64/configure          |  4 +-
- .../stream/{8 => 9}/x86_64/test-avocado       |  0
- scripts/ci/setup/build-environment.yml        | 44 +++++++------------
- 4 files changed, 34 insertions(+), 45 deletions(-)
- rename scripts/ci/org.centos/stream/{8 => 9}/build-environment.yml (75%)
- rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/configure (98%)
- rename scripts/ci/org.centos/stream/{8 => 9}/x86_64/test-avocado (100%)
+ block/ssh.c | 75 ++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 40 insertions(+), 35 deletions(-)
 
-diff --git a/scripts/ci/org.centos/stream/8/build-environment.yml b/scripts/ci/org.centos/stream/9/build-environment.yml
-similarity index 75%
-rename from scripts/ci/org.centos/stream/8/build-environment.yml
-rename to scripts/ci/org.centos/stream/9/build-environment.yml
-index 1ead77e2cb..cd29fe6f27 100644
---- a/scripts/ci/org.centos/stream/8/build-environment.yml
-+++ b/scripts/ci/org.centos/stream/9/build-environment.yml
-@@ -2,32 +2,32 @@
- - name: Installation of extra packages to build QEMU
-   hosts: all
-   tasks:
--    - name: Extra check for CentOS Stream 8
-+    - name: Extra check for CentOS Stream 9
-       lineinfile:
-         path: /etc/redhat-release
--        line: CentOS Stream release 8
-+        line: CentOS Stream release 9
-         state: present
-       check_mode: yes
--      register: centos_stream_8
-+      register: centos_stream_9
+diff --git a/block/ssh.c b/block/ssh.c
+index 2748253d4a..a88171d4b5 100644
+--- a/block/ssh.c
++++ b/block/ssh.c
+@@ -37,7 +37,6 @@
+ #include "qemu/ctype.h"
+ #include "qemu/cutils.h"
+ #include "qemu/sockets.h"
+-#include "qemu/uri.h"
+ #include "qapi/qapi-visit-sockets.h"
+ #include "qapi/qapi-visit-block-core.h"
+ #include "qapi/qmp/qdict.h"
+@@ -181,65 +180,71 @@ static void sftp_error_trace(BDRVSSHState *s, const char *op)
  
--    - name: Enable EPEL repo on CentOS Stream 8
-+    - name: Enable EPEL repo on CentOS Stream 9
-       dnf:
-         name:
-           - epel-release
-         state: present
-       when:
--        - centos_stream_8
-+        - centos_stream_9
+ static int parse_uri(const char *filename, QDict *options, Error **errp)
+ {
+-    URI *uri = NULL;
+-    QueryParams *qp;
++    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
++    const char *uri_host, *uri_path, *uri_user, *uri_query;
+     char *port_str;
+-    int i;
++    int port;
++    g_autoptr(GError) gerror = NULL;
++    char *qp_name, *qp_value;
++    GUriParamsIter qp;
  
--    - name: Enable PowerTools repo on CentOS Stream 8
-+    - name: Enable CRB repo on CentOS Stream 9
-       ini_file:
--        path: /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
--        section: powertools
-+        path: /etc/yum.repos.d/centos.repo
-+        section: crb
-         option: enabled
-         value: "1"
-       when:
--        - centos_stream_8
-+        - centos_stream_9
+-    uri = uri_parse(filename);
+     if (!uri) {
+         return -EINVAL;
+     }
  
--    - name: Install basic packages to build QEMU on CentOS Stream 8
-+    - name: Install basic packages to build QEMU on CentOS Stream 9
-       dnf:
-         name:
-           - bzip2
-@@ -42,7 +42,6 @@
-           - gettext
-           - git
-           - glib2-devel
--          - glusterfs-api-devel
-           - gnutls-devel
-           - libaio-devel
-           - libcap-ng-devel
-@@ -61,22 +60,24 @@
-           - lzo-devel
-           - make
-           - mesa-libEGL-devel
-+          - meson
-           - nettle-devel
-           - ninja-build
-           - nmap-ncat
-           - numactl-devel
-           - pixman-devel
--          - python38
-+          - python3
-+          - python3-pip
-           - python3-sphinx
-+          - python3-sphinx_rtd_theme
-+          - python3-tomli
-           - rdma-core-devel
-           - redhat-rpm-config
-           - snappy-devel
--          - spice-glib-devel
--          - spice-server-devel
-           - systemd-devel
-           - systemtap-sdt-devel
-           - tar
-           - zlib-devel
-         state: present
-       when:
--        - centos_stream_8
-+        - centos_stream_9
-diff --git a/scripts/ci/org.centos/stream/8/x86_64/configure b/scripts/ci/org.centos/stream/9/x86_64/configure
-similarity index 98%
-rename from scripts/ci/org.centos/stream/8/x86_64/configure
-rename to scripts/ci/org.centos/stream/9/x86_64/configure
-index 76781f17f4..1b6f40fd78 100755
---- a/scripts/ci/org.centos/stream/8/x86_64/configure
-+++ b/scripts/ci/org.centos/stream/9/x86_64/configure
-@@ -16,7 +16,7 @@
- # that patches adding downstream specific devices are not available.
- #
- ../configure \
----python=/usr/bin/python3.8 \
-+--python=/usr/bin/python3.9 \
- --prefix="/usr" \
- --libdir="/usr/lib64" \
- --datadir="/usr/share" \
-@@ -157,7 +157,6 @@
- --enable-docs \
- --enable-fdt \
- --enable-gcrypt \
----enable-glusterfs \
- --enable-gnutls \
- --enable-guest-agent \
- --enable-iconv \
-@@ -180,7 +179,6 @@
- --enable-seccomp \
- --enable-snappy \
- --enable-smartcard \
----enable-spice \
- --enable-system \
- --enable-tcg \
- --enable-tools \
-diff --git a/scripts/ci/org.centos/stream/8/x86_64/test-avocado b/scripts/ci/org.centos/stream/9/x86_64/test-avocado
-similarity index 100%
-rename from scripts/ci/org.centos/stream/8/x86_64/test-avocado
-rename to scripts/ci/org.centos/stream/9/x86_64/test-avocado
-diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/build-environment.yml
-index f344d1a850..9b7d96c01b 100644
---- a/scripts/ci/setup/build-environment.yml
-+++ b/scripts/ci/setup/build-environment.yml
-@@ -174,26 +174,26 @@
-         - ansible_facts['distribution_version'] == '22.04'
-         - ansible_facts['architecture'] == 'aarch64'
+-    if (g_strcmp0(uri->scheme, "ssh") != 0) {
++    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
+         error_setg(errp, "URI scheme must be 'ssh'");
+-        goto err;
++        return -EINVAL;
+     }
  
--    - name: Enable EPEL repo on EL8
-+    - name: Enable EPEL repo on EL9
-       dnf:
-         name:
-           - epel-release
-         state: present
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_major_version'] == '8'
-+        - ansible_facts['distribution_major_version'] == '9'
+-    if (!uri->server || strcmp(uri->server, "") == 0) {
++    uri_host = g_uri_get_host(uri);
++    if (!uri_host || g_str_equal(uri_host, "")) {
+         error_setg(errp, "missing hostname in URI");
+-        goto err;
++        return -EINVAL;
+     }
  
--    - name: Enable PowerTools repo on CentOS 8
-+    - name: Enable CRB repo on CentOS 9
-       ini_file:
--        path: /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
--        section: powertools
-+        path: /etc/yum.repos.d/centos.repo
-+        section: crb
-         option: enabled
-         value: "1"
-       when:
-         - ansible_facts['distribution_file_variety'] == 'CentOS'
--        - ansible_facts['distribution_major_version'] == '8'
-+        - ansible_facts['distribution_major_version'] == '9'
- 
--    - name: Install basic packages to build QEMU on EL8
-+    - name: Install basic packages to build QEMU on EL9
-       dnf:
-         # This list of packages start with tests/docker/dockerfiles/centos8.docker
-         # but only include files that are common to all distro variants and present
-@@ -211,7 +211,6 @@
-           - gettext
-           - git
-           - glib2-devel
--          - glusterfs-api-devel
-           - gnutls-devel
-           - libaio-devel
-           - libcap-ng-devel
-@@ -229,17 +228,20 @@
-           - lzo-devel
-           - make
-           - mesa-libEGL-devel
-+          - meson
-           - nettle-devel
-           - ninja-build
-           - nmap-ncat
-           - numactl-devel
-           - pixman-devel
--          - python38
-+          - python3
-+          - python3-pip
-           - python3-sphinx
-+          - python3-sphinx_rtd_theme
-+          - python3-tomli
-           - rdma-core-devel
-           - redhat-rpm-config
-           - snappy-devel
--          - spice-glib-devel
-           - systemd-devel
-           - systemtap-sdt-devel
-           - tar
-@@ -247,28 +249,16 @@
-         state: present
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
+-    if (!uri->path || strcmp(uri->path, "") == 0) {
++    uri_path = g_uri_get_path(uri);
++    if (!uri_path || g_str_equal(uri_path, "")) {
+         error_setg(errp, "missing remote path in URI");
+-        goto err;
+-    }
 -
--    - name: Install packages only available on x86 and aarch64
--      dnf:
--        # Spice server not available in ppc64le
--        name:
--          - spice-server
--          - spice-server-devel
--        state: present
--      when:
--        - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
-+        - ansible_facts['distribution_version'] == '9'
+-    qp = query_params_parse(uri->query);
+-    if (!qp) {
+-        error_setg(errp, "could not parse query parameters");
+-        goto err;
++        return -EINVAL;
+     }
  
-     - name: Check whether the Python runtime version is managed by alternatives
-       stat:
-         path: /etc/alternatives/python3
-       register: python3
+-    if(uri->user && strcmp(uri->user, "") != 0) {
+-        qdict_put_str(options, "user", uri->user);
++    uri_user = g_uri_get_user(uri);
++    if (uri_user && !g_str_equal(uri_user, "")) {
++        qdict_put_str(options, "user", uri_user);
+     }
  
--    - name: Set default Python runtime to 3.8 on EL8
--      command: alternatives --set python3 /usr/bin/python3.8
-+    - name: Set default Python runtime to 3.9 on EL9
-+      command: alternatives --set python3 /usr/bin/python3.9
-       when:
-         - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - python3.stat.islnk and python3.stat.lnk_target != '/usr/bin/python3.8'
-+        - ansible_facts['distribution_version'] == '9'
-+        - python3.stat.exists and python3.stat.islnk and python3.stat.lnk_target != '/usr/bin/python3.9'
+-    qdict_put_str(options, "server.host", uri->server);
++    qdict_put_str(options, "server.host", uri_host);
+ 
+-    port_str = g_strdup_printf("%d", uri->port ?: 22);
++    port = g_uri_get_port(uri);
++    port_str = g_strdup_printf("%d", port > 0 ? port : 22);
+     qdict_put_str(options, "server.port", port_str);
+     g_free(port_str);
+ 
+-    qdict_put_str(options, "path", uri->path);
+-
+-    /* Pick out any query parameters that we understand, and ignore
+-     * the rest.
+-     */
+-    for (i = 0; i < qp->n; ++i) {
+-        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
+-            qdict_put_str(options, "host_key_check", qp->p[i].value);
++    qdict_put_str(options, "path", uri_path);
++
++    uri_query = g_uri_get_query(uri);
++    if (uri_query) {
++        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
++        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
++            if (!qp_name || !qp_value || gerror) {
++                warn_report("Failed to parse SSH URI parameters '%s'",
++                            uri_query);
++                break;
++            }
++            /*
++             * Pick out the query parameters that we understand, and ignore
++             * (or rather warn about) the rest.
++             */
++            if (g_str_equal(qp_name, "host_key_check")) {
++                qdict_put_str(options, "host_key_check", qp_value);
++            } else {
++                warn_report("Unsupported parameter '%s' in URI", qp_name);
++            }
+         }
+     }
+ 
+-    query_params_free(qp);
+-    uri_free(uri);
+     return 0;
+-
+- err:
+-    uri_free(uri);
+-    return -EINVAL;
+ }
+ 
+ static bool ssh_has_filename_options_conflict(QDict *options, Error **errp)
 -- 
 2.44.0
 
