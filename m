@@ -4,70 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1567DC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 14:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01860C04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 14:47:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxStB-00050i-4S; Thu, 18 Apr 2024 10:37:25 -0400
+	id 1rxT2J-00080J-MI; Thu, 18 Apr 2024 10:46:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxSt9-00050Y-Ng
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 10:37:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rxT25-0007wV-Fx
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 10:46:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxSt7-0003w0-Ko
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 10:37:23 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rxT21-0006Ct-UT
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 10:46:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713451040;
+ s=mimecast20190719; t=1713451592;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=VnSMWbK9DeK22WngUTCoLZXhTnibhJJYyTsvCJDzMcg=;
- b=caWvf1IJtfUxQyXN74lV+qkp3dmPpZgobrG6d0eMSbptkmnXURo+4QgJXmuQxfSHBfaKCk
- GKSIxjmM4vxcETvtaJBRCK+NflOEHuesmFHk7CgA9kKf93aKaU/9LpHziG8nFhOtE2Bdk2
- rk1lBaTgW97tYEhDb11ExyNY4ZFpnho=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Tt1H6YHE3uANqLlb5H/WW66779er0jWqNwBP9uLtL1s=;
+ b=Rztj//AWBwRDP/Vcnudne1dyBrmZb4J7FS1Uu1DLe1lRv8sDoVCKVW5GXA+N5YOgSdSlqp
+ SQJZofVOmgImA4305pG32MQLckQOyZ+acU6YF5tNFCCbNnzyvHKHdKG8W6j+hWuYH9V+lP
+ D8dTBfyz/5u9t+zuQyyqsSgcDaSuFkg=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-6kwzdfiuP_aZlmQAfp4OvA-1; Thu, 18 Apr 2024 10:37:17 -0400
-X-MC-Unique: 6kwzdfiuP_aZlmQAfp4OvA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D55F31049883;
- Thu, 18 Apr 2024 14:37:16 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.72])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 400A149103;
- Thu, 18 Apr 2024 14:37:14 +0000 (UTC)
-Date: Thu, 18 Apr 2024 15:37:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: peterx@redhat.com, farosas@suse.de, yc-core@yandex-team.ru,
- thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, pkrempa@redhat.com
-Subject: Re: [PATCH] migration: do not exit on incoming failure
-Message-ID: <ZiEwF0rWlLaKMzqw@redhat.com>
-References: <20240417221329.248803-1-vsementsov@yandex-team.ru>
+ us-mta-416-rPUmb8PiNpulUdTzPPDWJw-1; Thu, 18 Apr 2024 10:46:30 -0400
+X-MC-Unique: rPUmb8PiNpulUdTzPPDWJw-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-56865619070so417799a12.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 07:46:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713451590; x=1714056390;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Tt1H6YHE3uANqLlb5H/WW66779er0jWqNwBP9uLtL1s=;
+ b=Z8sMPpgQyVNL69Js3I8R7mD4trTpjUwMGE4kjj8u+Zx8KFie479XYTbRnt3xY7fOhV
+ k+Q6FsSWVVu8DyXY86ajw0+nPlsyYv5cV3FnjDOs3iI484oPrklfreKduTNWncSOh6U+
+ PAAUmrlW2oGtwo3XvYAmUeflTkQiE60pSTwfb1Ylem6JbqdE8WAJwt5IAiIfFxPDMIEs
+ dK30JMQ1fOAEpYSaAetrrMZ+R7u9kj3Z09gptMaF/gtiyi1oCQsQ1vcYIPYxNSWCxaHD
+ JvdwK21+aebHAvnF8H1UKTqwqRjAKWFtC8A0Brm6a2rcpaFGiLWdTt47XvfpOYJUM5Fb
+ WPig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrQpCgYb4rVoPZPBIzXCinh15eQq5shsswbA4w4SmrynukOCvVipDP2BL3msDDbbLuPyh1pcetrJ67DTQOP4nHVJD9xkw=
+X-Gm-Message-State: AOJu0Yy7TxQ0Jug77TH+5LJDRyLyFIwQ6WpDoXxdieDCkr4BfpgP/ZK7
+ EBlvTi3VmF/E4mYAZhl55SwRTAfcfXTlbLU/HtFKtrznNiIkCi3VbB8gN139bWM4eClaJSQj/9z
+ DNHdHrX4ykqxjmfaapyNnpXz7K2z9eovmMyRs/NNawtgdAqa+tLcD
+X-Received: by 2002:a17:906:415a:b0:a55:66d2:95dc with SMTP id
+ l26-20020a170906415a00b00a5566d295dcmr1844842ejk.48.1713451589803; 
+ Thu, 18 Apr 2024 07:46:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMgYJ4G7jqPGfhbSTYYA7iozDB97Cx2FI91E6YZHzVQjKxJz+K7sqZZ+wq+zAjkR9Qq0yErQ==
+X-Received: by 2002:a17:906:415a:b0:a55:66d2:95dc with SMTP id
+ l26-20020a170906415a00b00a5566d295dcmr1844824ejk.48.1713451589375; 
+ Thu, 18 Apr 2024 07:46:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ k14-20020a17090627ce00b00a525669000csm989065ejc.154.2024.04.18.07.46.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Apr 2024 07:46:29 -0700 (PDT)
+Message-ID: <7053fa09-a942-45b0-b8e8-5003107a6f32@redhat.com>
+Date: Thu, 18 Apr 2024 16:46:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240417221329.248803-1-vsementsov@yandex-team.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 06/13] hw/arm/smmu: Support nesting in
+ smmuv3_range_inval()
+Content-Language: en-US
+To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, qemu-devel@nongnu.org
+Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
+ marcin.juszkiewicz@linaro.org
+References: <20240408140818.3799590-1-smostafa@google.com>
+ <20240408140818.3799590-7-smostafa@google.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240408140818.3799590-7-smostafa@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,209 +109,192 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024 at 01:13:29AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> We do set MIGRATION_FAILED state, but don't give a chance to
-> orchestrator to query migration state and get the error.
-> 
-> Let's report an error through QAPI like we do on outgoing migration.
-> 
-> migration-test is updated correspondingly.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Hi Mostafa,
+
+On 4/8/24 16:08, Mostafa Saleh wrote:
+> With nesting, we would need to invalidate IPAs without
+> over-invalidating stage-1 IOVAs. This can be done by
+> distinguishing IPAs in the TLBs by having ASID=-1.
+> To achieve that, rework the invalidation for IPAs to have a
+> separate function, while for IOVA invalidation ASID=-1 means
+> invalidate for all ASIDs.
+>
+> Signed-off-by: Mostafa Saleh <smostafa@google.com>
 > ---
-> 
-> Doubt: is exiting on failure a contract? Will this commit break
-> something in Libvirt? Finally, could we just change the logic, or I need
-> and additional migration-parameter for new behavior?
-
-There's a decent risk that this could break apps, whether
-libvirt or something else, especially if the app is just
-launching QEMU with '-incoming URI', rather than using
-'-incoming defer' and then explicitly using QMP to start the
-incoming migration.
-
-I'd say that with '-incoming defer' we should *not* exit on
-migration error, because that arg implies the app explicitly
-wants to be using QMP to control migration.
-
-With the legacy '-incoming URI' it is probably best to keep
-exit on error, as that's comparatively more likely to be used
-in adhoc scenarios where the app/user is ignoring QMP on the
-dst side.
-
-None the less, I think we need to check how libvirt behaves
-with this patch to be sure of no surprises.
-
-> 
->  migration/migration.c           | 22 +++++++---------------
->  tests/qtest/migration-helpers.c | 13 ++++++++++---
->  tests/qtest/migration-helpers.h |  3 ++-
->  tests/qtest/migration-test.c    | 14 +++++++-------
->  4 files changed, 26 insertions(+), 26 deletions(-)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 86bf76e925..3c203e767d 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -738,11 +738,12 @@ process_incoming_migration_co(void *opaque)
->      MigrationIncomingState *mis = migration_incoming_get_current();
->      PostcopyState ps;
->      int ret;
-> +    Error *local_err = NULL;
->  
->      assert(mis->from_src_file);
->  
->      if (compress_threads_load_setup(mis->from_src_file)) {
-> -        error_report("Failed to setup decompress threads");
-> +        error_setg(&local_err, "Failed to setup decompress threads");
->          goto fail;
->      }
->  
-> @@ -779,32 +780,23 @@ process_incoming_migration_co(void *opaque)
->      }
->  
->      if (ret < 0) {
-> -        MigrationState *s = migrate_get_current();
-> -
-> -        if (migrate_has_error(s)) {
-> -            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
-> -                error_report_err(s->error);
-> -            }
-> -        }
-> -        error_report("load of migration failed: %s", strerror(-ret));
-> +        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
->          goto fail;
->      }
->  
->      if (colo_incoming_co() < 0) {
-> +        error_setg(&local_err, "colo incoming failed");
->          goto fail;
->      }
->  
->      migration_bh_schedule(process_incoming_migration_bh, mis);
->      return;
->  fail:
-> +    migrate_set_error(migrate_get_current(), local_err);
-> +    error_report_err(local_err);
->      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
->                        MIGRATION_STATUS_FAILED);
-> -    qemu_fclose(mis->from_src_file);
-> -
-> -    multifd_recv_cleanup();
-> -    compress_threads_load_cleanup();
-> -
-> -    exit(EXIT_FAILURE);
-> +    migration_incoming_state_destroy();
+>  hw/arm/smmu-common.c         | 47 ++++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3.c              | 23 ++++++++++++------
+>  hw/arm/trace-events          |  2 +-
+>  include/hw/arm/smmu-common.h |  3 ++-
+>  4 files changed, 66 insertions(+), 9 deletions(-)
+>
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index 2cf27b490b..8b9e59b24b 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -184,6 +184,25 @@ static gboolean smmu_hash_remove_by_asid_vmid_iova(gpointer key, gpointer value,
+>             ((entry->iova & ~info->mask) == info->iova);
 >  }
 >  
->  /**
-> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-> index e451dbdbed..91c13bd566 100644
-> --- a/tests/qtest/migration-helpers.c
-> +++ b/tests/qtest/migration-helpers.c
-> @@ -211,7 +211,8 @@ void wait_for_migration_complete(QTestState *who)
->      wait_for_migration_status(who, "completed", NULL);
->  }
->  
-> -void wait_for_migration_fail(QTestState *from, bool allow_active)
-> +void wait_for_migration_fail(QTestState *from, bool allow_active,
-> +                             bool is_incoming)
->  {
->      g_test_timer_start();
->      QDict *rsp_return;
-> @@ -236,8 +237,14 @@ void wait_for_migration_fail(QTestState *from, bool allow_active)
->      /* Is the machine currently running? */
->      rsp_return = qtest_qmp_assert_success_ref(from,
->                                                "{ 'execute': 'query-status' }");
-> -    g_assert(qdict_haskey(rsp_return, "running"));
-> -    g_assert(qdict_get_bool(rsp_return, "running"));
-> +    if (is_incoming) {
-> +        if (qdict_haskey(rsp_return, "running")) {
-> +            g_assert(!qdict_get_bool(rsp_return, "running"));
-> +        }
-> +    } else {
-> +        g_assert(qdict_haskey(rsp_return, "running"));
-> +        g_assert(qdict_get_bool(rsp_return, "running"));
+> +static gboolean smmu_hash_remove_by_vmid_ipa(gpointer key, gpointer value,
+> +                                             gpointer user_data)
+> +{
+> +    SMMUTLBEntry *iter = (SMMUTLBEntry *)value;
+> +    IOMMUTLBEntry *entry = &iter->entry;
+> +    SMMUIOTLBPageInvInfo *info = (SMMUIOTLBPageInvInfo *)user_data;
+> +    SMMUIOTLBKey iotlb_key = *(SMMUIOTLBKey *)key;
+> +
+> +    /* This is a stage-1 address. */
+> +    if (info->asid >= 0) {
+nit: I am rather used to have the comment associated to the condition
+after the condition check
+> +        return false;
 > +    }
->      qobject_unref(rsp_return);
+> +    if (info->vmid != SMMU_IOTLB_VMID(iotlb_key)) {
+> +        return false;
+> +    }
+> +    return ((info->iova & ~entry->addr_mask) == entry->iova) ||
+> +           ((entry->iova & ~info->mask) == info->iova);
+> +}
+> +
+>  void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
+>                           uint8_t tg, uint64_t num_pages, uint8_t ttl)
+>  {
+> @@ -212,6 +231,34 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
+>                                  &info);
 >  }
 >  
-> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
-> index 3bf7ded1b9..7bd07059ae 100644
-> --- a/tests/qtest/migration-helpers.h
-> +++ b/tests/qtest/migration-helpers.h
-> @@ -46,7 +46,8 @@ void wait_for_migration_status(QTestState *who,
+> +/*
+> + * Similar to smmu_iotlb_inv_iova(), but for Stage-2, ASID is always -1,
+> + * in Stage-1 invalidation ASID = -1, means don't care.
+> + */
+> +void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
+> +                        uint64_t num_pages, uint8_t ttl)
+> +{
+> +    uint8_t granule = tg ? tg * 2 + 10 : 12;
+> +    int asid = -1;
+> +
+> +   if (ttl && (num_pages == 1)) {
+> +        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, ipa, tg, ttl);
+> +
+> +        if (g_hash_table_remove(s->iotlb, &key)) {
+> +            return;
+> +        }
+> +    }
+> +
+> +    SMMUIOTLBPageInvInfo info = {
+> +        .iova = ipa,
+> +        .vmid = vmid,
+> +        .mask = (num_pages * 1 << granule) - 1};
+> +
+> +    g_hash_table_foreach_remove(s->iotlb,
+> +                                smmu_hash_remove_by_vmid_ipa,
+> +                                &info);
+> +}
+> +
+>  void smmu_iotlb_inv_asid(SMMUState *s, int asid)
+>  {
+>      trace_smmu_iotlb_inv_asid(asid);
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index a7cf543acc..17bbd43c13 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1095,7 +1095,7 @@ static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
+>      }
+>  }
 >  
->  void wait_for_migration_complete(QTestState *who);
+> -static void smmuv3_range_inval(SMMUState *s, Cmd *cmd)
+> +static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
+>  {
+>      dma_addr_t end, addr = CMD_ADDR(cmd);
+>      uint8_t type = CMD_TYPE(cmd);
+> @@ -1120,9 +1120,13 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd)
+>      }
 >  
-> -void wait_for_migration_fail(QTestState *from, bool allow_active);
-> +void wait_for_migration_fail(QTestState *from, bool allow_active,
-> +                             bool is_incoming);
->  
->  char *find_common_machine_version(const char *mtype, const char *var1,
->                                    const char *var2);
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 1d2cee87ea..e00b755f05 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -1670,7 +1670,7 @@ static void test_baddest(void)
+>      if (!tg) {
+> -        trace_smmuv3_range_inval(vmid, asid, addr, tg, 1, ttl, leaf);
+> +        trace_smmuv3_range_inval(vmid, asid, addr, tg, 1, ttl, leaf, stage);
+>          smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1);
+> -        smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl);
+> +        if (stage == SMMU_STAGE_1) {
+> +            smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl);
+> +        } else {
+> +            smmu_iotlb_inv_ipa(s, vmid, addr, tg, 1, ttl);
+> +        }
 >          return;
 >      }
->      migrate_qmp(from, "tcp:127.0.0.1:0", "{}");
-> -    wait_for_migration_fail(from, false);
-> +    wait_for_migration_fail(from, false, false);
->      test_migrate_end(from, to, false);
->  }
 >  
-> @@ -1781,10 +1781,10 @@ static void test_precopy_common(MigrateCommon *args)
+> @@ -1138,9 +1142,14 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd)
+>          uint64_t mask = dma_aligned_pow2_mask(addr, end, 64);
 >  
->      if (args->result != MIG_TEST_SUCCEED) {
->          bool allow_active = args->result == MIG_TEST_FAIL;
-> -        wait_for_migration_fail(from, allow_active);
-> +        wait_for_migration_fail(from, allow_active, false);
->  
->          if (args->result == MIG_TEST_FAIL_DEST_QUIT_ERR) {
-> -            qtest_set_expected_status(to, EXIT_FAILURE);
-> +            wait_for_migration_fail(to, true, true);
->          }
->      } else {
->          if (args->live) {
-> @@ -2571,8 +2571,8 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
->      migrate_qmp(from, uri, "{}");
->  
->      if (should_fail) {
-> -        qtest_set_expected_status(to, EXIT_FAILURE);
-> -        wait_for_migration_fail(from, true);
-> +        wait_for_migration_fail(to, true, true);
-> +        wait_for_migration_fail(from, true, false);
->      } else {
->          wait_for_migration_complete(from);
+>          num_pages = (mask + 1) >> granule;
+> -        trace_smmuv3_range_inval(vmid, asid, addr, tg, num_pages, ttl, leaf);
+> +        trace_smmuv3_range_inval(vmid, asid, addr, tg, num_pages,
+> +                                 ttl, leaf, stage);
+>          smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, num_pages);
+> -        smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, num_pages, ttl);
+> +        if (stage == SMMU_STAGE_1) {
+> +            smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, num_pages, ttl);
+> +        } else {
+> +            smmu_iotlb_inv_ipa(s, vmid, addr, tg, num_pages, ttl);
+> +        }
+>          addr += mask + 1;
 >      }
-> @@ -3047,8 +3047,8 @@ static void test_multifd_tcp_cancel(void)
->      migrate_cancel(from);
->  
->      /* Make sure QEMU process "to" exited */
-> -    qtest_set_expected_status(to, EXIT_FAILURE);
-> -    qtest_wait_qemu(to);
-> +    wait_for_migration_fail(to, true, true);
-> +    qtest_quit(to);
->  
->      args = (MigrateStart){
->          .only_target = true,
-> -- 
-> 2.34.1
-> 
-> 
+>  }
+> @@ -1299,7 +1308,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>                  cmd_error = SMMU_CERROR_ILL;
+>                  break;
+>              }
+> -            smmuv3_range_inval(bs, &cmd);
+> +            smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1);
+>              break;
+>          case SMMU_CMD_TLBI_S12_VMALL:
+>          {
+> @@ -1324,7 +1333,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>               * As currently only either s1 or s2 are supported
+>               * we can reuse same function for s2.
+>               */
+> -            smmuv3_range_inval(bs, &cmd);
+> +            smmuv3_range_inval(bs, &cmd, SMMU_STAGE_2);
+>              break;
+>          case SMMU_CMD_TLBI_EL3_ALL:
+>          case SMMU_CMD_TLBI_EL3_VA:
+> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+> index 5f23f0b963..f5c361d96e 100644
+> --- a/hw/arm/trace-events
+> +++ b/hw/arm/trace-events
+> @@ -46,7 +46,7 @@ smmuv3_cmdq_cfgi_ste_range(int start, int end) "start=0x%x - end=0x%x"
+>  smmuv3_cmdq_cfgi_cd(uint32_t sid) "sid=0x%x"
+>  smmuv3_config_cache_hit(uint32_t sid, uint32_t hits, uint32_t misses, uint32_t perc) "Config cache HIT for sid=0x%x (hits=%d, misses=%d, hit rate=%d)"
+>  smmuv3_config_cache_miss(uint32_t sid, uint32_t hits, uint32_t misses, uint32_t perc) "Config cache MISS for sid=0x%x (hits=%d, misses=%d, hit rate=%d)"
+> -smmuv3_range_inval(int vmid, int asid, uint64_t addr, uint8_t tg, uint64_t num_pages, uint8_t ttl, bool leaf) "vmid=%d asid=%d addr=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" ttl=%d leaf=%d"
+> +smmuv3_range_inval(int vmid, int asid, uint64_t addr, uint8_t tg, uint64_t num_pages, uint8_t ttl, bool leaf, int stage) "vmid=%d asid=%d addr=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" ttl=%d leaf=%d stage=%d"
+>  smmuv3_cmdq_tlbi_nh(void) ""
+>  smmuv3_cmdq_tlbi_nh_asid(uint16_t asid) "asid=%d"
+>  smmuv3_cmdq_tlbi_s12_vmid(uint16_t vmid) "vmid=%d"
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index 03ff0f02ba..df166d8477 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -230,7 +230,8 @@ void smmu_iotlb_inv_asid(SMMUState *s, int asid);
+>  void smmu_iotlb_inv_vmid(SMMUState *s, int vmid);
+>  void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
+>                           uint8_t tg, uint64_t num_pages, uint8_t ttl);
+> -
+> +void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
+> +                        uint64_t num_pages, uint8_t ttl);
+>  /* Unmap the range of all the notifiers registered to any IOMMU mr */
+>  void smmu_inv_notifiers_all(SMMUState *s);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Besides looks good to me
+smmu_hash_remove_by_vmid_ipa
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+
+>  
 
 
