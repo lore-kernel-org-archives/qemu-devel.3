@@ -4,69 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D04C04FFE
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29FFC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxTsX-00046D-8j; Thu, 18 Apr 2024 11:40:49 -0400
+	id 1rxTt0-0004QA-3a; Thu, 18 Apr 2024 11:41:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rxTsV-000463-9I
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:40:47 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rxTsy-0004Ku-G9
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:41:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rxTsS-0000ge-GR
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:40:47 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:c10a:0:640:882f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 30F7460CBE;
- Thu, 18 Apr 2024 18:40:40 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8814::1:9] (unknown
- [2a02:6b8:b081:8814::1:9])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ceHJIU0IYGk0-HJVfZp4G; Thu, 18 Apr 2024 18:40:39 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1713454839;
- bh=ewlBnD+6kGD3VyQTpDwscTPj3UrNDKyHRJ5+ZWmNE+4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=XOVEHET+ytotVES/oD1mGc7WmzlJKAa4Fcoy5aV840AR5KuGYkMgdu4JbJNzMEJbd
- PTNvt7RPPrVeM2DZs+7jvjnBP6huoNp5fvPF/C08PGyI6MHg9fYz9X6D7mNOdKVA3k
- C/Y7d8o42O9Ul6wDpQcqFz8RZLSj98bypCXEXC3U=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0a1d8984-bc01-41bf-9099-0ef426e848ca@yandex-team.ru>
-Date: Thu, 18 Apr 2024 18:40:38 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rxTsw-0000pX-Iw
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:41:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713454866;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3uJcuA8FSOvZeR+LohFdLOJ7K3BM1wnMOQsbcnznqN4=;
+ b=IQ5nokjBTHgNQAno3GLUWT49TaUahWfLy19uGKs+Glr9xEcJrzaoY4RYGbqdXX1mJ0WTKv
+ MJWBLffx4/P+zapXz/UfdJoWc6OFs/aDQUnaxilKjuXCCf+7d/fJKlKj4RTBomnz9E6Xjv
+ C9h/qnQDJ9EXBCWgpHxwJ5twMj5Odd0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-132-GS3HCiy4PDqRaGcv3ZLRCQ-1; Thu, 18 Apr 2024 11:41:03 -0400
+X-MC-Unique: GS3HCiy4PDqRaGcv3ZLRCQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-418f3082647so2843325e9.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 08:41:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713454862; x=1714059662;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3uJcuA8FSOvZeR+LohFdLOJ7K3BM1wnMOQsbcnznqN4=;
+ b=n8QzXAeR1VwODZbHfUej0bStwex/OPgcSinDL8VeK8/3cC9jf0UMrdfYH/D8j7rt8N
+ Ys6rKMn8x8pT/BILRio+I8UEg1TKYRzSedPtOLnDsNfvy0Iy7G2aIA0oYNi3PlMGalOa
+ 01eLP8J1V2WggJsFlEYnQfm17lRXRbZIfWf8yfnS5T4aNOQqgA8UGzBxOvdbfXwpeeBL
+ Zrx76CgQr0uo+fFI8c3ld6YFVVMpDVzDRVVEtBbYB/Q/sFzawmw7N5bSj5p2+MNevbsG
+ 0XI1Pef26JeyBT9+ncqK3+lAYccIyGsGj+xlzYxHUlgok/o38mjXiQD3Wt1lTPxYwgkZ
+ Z5Qw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUiQEkSZK6GhIoje0y3OnEUzV+ulOFei+/O2NT4LD6UYRMJLD7jx5+59xSb4yBPMV54z1CTCTK89Wbxan7O1e+eylhgnU=
+X-Gm-Message-State: AOJu0YyCTK0e/WUgGF0Di1XSfhOhNIGqWa7yS0Nb8E80CNbdf2Sw56dg
+ AbWuZNwLX3zAXAg2RrBcf+TnrGBIrmQ0V/NjzxBPMTxLj6RNxkuLWQeIQCnY/YhrYgPUIgip2L6
+ YZO1SpeD5a4H9Tr02m66aI9knZrqjhPpLs1GD4HkN6f3prBX25GTg
+X-Received: by 2002:a05:600c:524a:b0:416:8091:a39e with SMTP id
+ fc10-20020a05600c524a00b004168091a39emr2550333wmb.10.1713454861817; 
+ Thu, 18 Apr 2024 08:41:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGztL+5SjQ/4Lgp6StwjAaL4ZYzuTJlipRBc12V2M8yM4kfS0dveD7ObjeyOPiYX8RqhltqCA==
+X-Received: by 2002:a05:600c:524a:b0:416:8091:a39e with SMTP id
+ fc10-20020a05600c524a00b004168091a39emr2550313wmb.10.1713454861235; 
+ Thu, 18 Apr 2024 08:41:01 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1fc:1e9b:54cd:34ea:3dbb:5a75])
+ by smtp.gmail.com with ESMTPSA id
+ e2-20020adfc842000000b00346cc85c821sm2099551wrh.89.2024.04.18.08.40.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Apr 2024 08:41:00 -0700 (PDT)
+Date: Thu, 18 Apr 2024 11:40:56 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: "Yuxue Liu yuxue.liu@jaguarmicro.com" <yuxue.liu@jaguarmicro.com>
+Cc: pbonzini@redhat.com, lvivier@redhat.com, thuth@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user-test: no set non-blocking for cal fd less
+ than 0.
+Message-ID: <20240418114037-mutt-send-email-mst@kernel.org>
+References: <20240411073555.1357-1-yuxue.liu@jaguarmicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: do not exit on incoming failure
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: peterx@redhat.com, farosas@suse.de, yc-core@yandex-team.ru,
- thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, pkrempa@redhat.com
-References: <20240417221329.248803-1-vsementsov@yandex-team.ru>
- <ZiEwF0rWlLaKMzqw@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <ZiEwF0rWlLaKMzqw@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240411073555.1357-1-yuxue.liu@jaguarmicro.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -78,209 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.04.24 17:37, Daniel P. Berrangé wrote:
-> On Thu, Apr 18, 2024 at 01:13:29AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> We do set MIGRATION_FAILED state, but don't give a chance to
->> orchestrator to query migration state and get the error.
->>
->> Let's report an error through QAPI like we do on outgoing migration.
->>
->> migration-test is updated correspondingly.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>
->> Doubt: is exiting on failure a contract? Will this commit break
->> something in Libvirt? Finally, could we just change the logic, or I need
->> and additional migration-parameter for new behavior?
+On Thu, Apr 11, 2024 at 03:35:55PM +0800, Yuxue Liu yuxue.liu@jaguarmicro.com wrote:
+> From: Yuxue Liu <yuxue.liu@jaguarmicro.com>
 > 
-> There's a decent risk that this could break apps, whether
-> libvirt or something else, especially if the app is just
-> launching QEMU with '-incoming URI', rather than using
-> '-incoming defer' and then explicitly using QMP to start the
-> incoming migration.
+> In the scenario where vhost-user sets eventfd to -1,
+> qemu_chr_fe_get_msgfds retrieves fd as -1. When vhost_user_read
+> receives, it does not perform blocking operations on the descriptor
+> with fd=-1, so non-blocking operations should not be performed here
+> either.This is a normal use case. Calling g_unix_set_fd_nonblocking
+> at this point will cause the test to interrupt.
 > 
-> I'd say that with '-incoming defer' we should *not* exit on
-> migration error, because that arg implies the app explicitly
-> wants to be using QMP to control migration.
+> When vhost_user_write sets the call fd to -1, it sets the number of
+> fds to 0, so the fds obtained by qemu_chr_fe_get_msgfds will also
+> be 0.
 > 
-> With the legacy '-incoming URI' it is probably best to keep
-> exit on error, as that's comparatively more likely to be used
-> in adhoc scenarios where the app/user is ignoring QMP on the
-> dst side.
-> 
-> None the less, I think we need to check how libvirt behaves
-> with this patch to be sure of no surprises.
-> 
+> Signed-off-by: Yuxue Liu <yuxue.liu@jaguarmicro.com>
 
-Sounds reasonable, thanks! I'll rework it to behave the new way only with "-incoming defer", and check how libvirt behave with it.
+A bit more detail here please.
+When does all this happen?
 
->>
->>   migration/migration.c           | 22 +++++++---------------
->>   tests/qtest/migration-helpers.c | 13 ++++++++++---
->>   tests/qtest/migration-helpers.h |  3 ++-
->>   tests/qtest/migration-test.c    | 14 +++++++-------
->>   4 files changed, 26 insertions(+), 26 deletions(-)
->>
->> diff --git a/migration/migration.c b/migration/migration.c
->> index 86bf76e925..3c203e767d 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -738,11 +738,12 @@ process_incoming_migration_co(void *opaque)
->>       MigrationIncomingState *mis = migration_incoming_get_current();
->>       PostcopyState ps;
->>       int ret;
->> +    Error *local_err = NULL;
->>   
->>       assert(mis->from_src_file);
->>   
->>       if (compress_threads_load_setup(mis->from_src_file)) {
->> -        error_report("Failed to setup decompress threads");
->> +        error_setg(&local_err, "Failed to setup decompress threads");
->>           goto fail;
->>       }
->>   
->> @@ -779,32 +780,23 @@ process_incoming_migration_co(void *opaque)
->>       }
->>   
->>       if (ret < 0) {
->> -        MigrationState *s = migrate_get_current();
->> -
->> -        if (migrate_has_error(s)) {
->> -            WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
->> -                error_report_err(s->error);
->> -            }
->> -        }
->> -        error_report("load of migration failed: %s", strerror(-ret));
->> +        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
->>           goto fail;
->>       }
->>   
->>       if (colo_incoming_co() < 0) {
->> +        error_setg(&local_err, "colo incoming failed");
->>           goto fail;
->>       }
->>   
->>       migration_bh_schedule(process_incoming_migration_bh, mis);
->>       return;
->>   fail:
->> +    migrate_set_error(migrate_get_current(), local_err);
->> +    error_report_err(local_err);
->>       migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
->>                         MIGRATION_STATUS_FAILED);
->> -    qemu_fclose(mis->from_src_file);
->> -
->> -    multifd_recv_cleanup();
->> -    compress_threads_load_cleanup();
->> -
->> -    exit(EXIT_FAILURE);
->> +    migration_incoming_state_destroy();
->>   }
->>   
->>   /**
->> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
->> index e451dbdbed..91c13bd566 100644
->> --- a/tests/qtest/migration-helpers.c
->> +++ b/tests/qtest/migration-helpers.c
->> @@ -211,7 +211,8 @@ void wait_for_migration_complete(QTestState *who)
->>       wait_for_migration_status(who, "completed", NULL);
->>   }
->>   
->> -void wait_for_migration_fail(QTestState *from, bool allow_active)
->> +void wait_for_migration_fail(QTestState *from, bool allow_active,
->> +                             bool is_incoming)
->>   {
->>       g_test_timer_start();
->>       QDict *rsp_return;
->> @@ -236,8 +237,14 @@ void wait_for_migration_fail(QTestState *from, bool allow_active)
->>       /* Is the machine currently running? */
->>       rsp_return = qtest_qmp_assert_success_ref(from,
->>                                                 "{ 'execute': 'query-status' }");
->> -    g_assert(qdict_haskey(rsp_return, "running"));
->> -    g_assert(qdict_get_bool(rsp_return, "running"));
->> +    if (is_incoming) {
->> +        if (qdict_haskey(rsp_return, "running")) {
->> +            g_assert(!qdict_get_bool(rsp_return, "running"));
->> +        }
->> +    } else {
->> +        g_assert(qdict_haskey(rsp_return, "running"));
->> +        g_assert(qdict_get_bool(rsp_return, "running"));
->> +    }
->>       qobject_unref(rsp_return);
->>   }
->>   
->> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
->> index 3bf7ded1b9..7bd07059ae 100644
->> --- a/tests/qtest/migration-helpers.h
->> +++ b/tests/qtest/migration-helpers.h
->> @@ -46,7 +46,8 @@ void wait_for_migration_status(QTestState *who,
->>   
->>   void wait_for_migration_complete(QTestState *who);
->>   
->> -void wait_for_migration_fail(QTestState *from, bool allow_active);
->> +void wait_for_migration_fail(QTestState *from, bool allow_active,
->> +                             bool is_incoming);
->>   
->>   char *find_common_machine_version(const char *mtype, const char *var1,
->>                                     const char *var2);
->> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> index 1d2cee87ea..e00b755f05 100644
->> --- a/tests/qtest/migration-test.c
->> +++ b/tests/qtest/migration-test.c
->> @@ -1670,7 +1670,7 @@ static void test_baddest(void)
->>           return;
->>       }
->>       migrate_qmp(from, "tcp:127.0.0.1:0", "{}");
->> -    wait_for_migration_fail(from, false);
->> +    wait_for_migration_fail(from, false, false);
->>       test_migrate_end(from, to, false);
->>   }
->>   
->> @@ -1781,10 +1781,10 @@ static void test_precopy_common(MigrateCommon *args)
->>   
->>       if (args->result != MIG_TEST_SUCCEED) {
->>           bool allow_active = args->result == MIG_TEST_FAIL;
->> -        wait_for_migration_fail(from, allow_active);
->> +        wait_for_migration_fail(from, allow_active, false);
->>   
->>           if (args->result == MIG_TEST_FAIL_DEST_QUIT_ERR) {
->> -            qtest_set_expected_status(to, EXIT_FAILURE);
->> +            wait_for_migration_fail(to, true, true);
->>           }
->>       } else {
->>           if (args->live) {
->> @@ -2571,8 +2571,8 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
->>       migrate_qmp(from, uri, "{}");
->>   
->>       if (should_fail) {
->> -        qtest_set_expected_status(to, EXIT_FAILURE);
->> -        wait_for_migration_fail(from, true);
->> +        wait_for_migration_fail(to, true, true);
->> +        wait_for_migration_fail(from, true, false);
->>       } else {
->>           wait_for_migration_complete(from);
->>       }
->> @@ -3047,8 +3047,8 @@ static void test_multifd_tcp_cancel(void)
->>       migrate_cancel(from);
->>   
->>       /* Make sure QEMU process "to" exited */
->> -    qtest_set_expected_status(to, EXIT_FAILURE);
->> -    qtest_wait_qemu(to);
->> +    wait_for_migration_fail(to, true, true);
->> +    qtest_quit(to);
->>   
->>       args = (MigrateStart){
->>           .only_target = true,
->> -- 
->> 2.34.1
->>
->>
+> ---
+>  tests/qtest/vhost-user-test.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
-> With regards,
-> Daniel
-
--- 
-Best regards,
-Vladimir
+> diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+> index d4e437265f..7c8ef6268d 100644
+> --- a/tests/qtest/vhost-user-test.c
+> +++ b/tests/qtest/vhost-user-test.c
+> @@ -458,7 +458,10 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+>      case VHOST_USER_SET_VRING_KICK:
+>      case VHOST_USER_SET_VRING_CALL:
+>          /* consume the fd */
+> -        qemu_chr_fe_get_msgfds(chr, &fd, 1);
+> +        if (!qemu_chr_fe_get_msgfds(chr, &fd, 1) && fd < 0) {
+> +            qos_printf("call fd :%d, no set non-blocking\n", fd);
+> +            break;
+> +        }
+>          /*
+>           * This is a non-blocking eventfd.
+>           * The receive function forces it to be blocking,
+> -- 
+> 2.43.0
 
 
