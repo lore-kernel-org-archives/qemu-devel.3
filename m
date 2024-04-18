@@ -4,51 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DD8C04FF8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D9CC4345F
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVvQ-0003Nw-96; Thu, 18 Apr 2024 13:51:56 -0400
+	id 1rxVxC-0004Pb-Ft; Thu, 18 Apr 2024 13:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVvB-0002s3-VS; Thu, 18 Apr 2024 13:51:43 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVv9-0007gi-WB; Thu, 18 Apr 2024 13:51:41 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A0A825FD76;
- Thu, 18 Apr 2024 20:50:04 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id DE7F2B9350;
- Thu, 18 Apr 2024 20:50:01 +0300 (MSK)
-Received: (nullmailer pid 947869 invoked by uid 1000);
- Thu, 18 Apr 2024 17:49:55 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 109/116] hw/net/net_tx_pkt: Fix overrun in
- update_sctp_checksum()
-Date: Thu, 18 Apr 2024 20:49:39 +0300
-Message-Id: <20240418174955.947730-22-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
-References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rxVx6-000449-Ky
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 13:53:40 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rxVx4-0007xF-Oc
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 13:53:40 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-3c70ef25e19so582325b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 10:53:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713462816; x=1714067616; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mbcSiwrgv0MtL78cnFJJ4ARfr4Y9GjjcXT1C15oFZRM=;
+ b=QVQKQvfPaqCj/5U30AnA8nW4VeOD6bInq+hnZI96Obmwe24w2KSLeQ6isuwYXi4X5W
+ ZElXYhgqyzQL/mp8bCDhZmXtkGDGCEWP6qvPLZf2Kk6/9xbOo832dEc0lyju1qRFC5pL
+ xaFPOPi6Q9reIC3HsB2HORnRQYyU2EGwflXdBhyDsnw2yVRLKTVx9/1PFzE2hmtj+iMx
+ PuOu7J542/AvkQWEAqejZFB6XXoCdRdcYR4BmtrcLx1jiIMFiho8Fb5HvkOBJ4vz+26c
+ P/rsyyC+6cpJe4eVq2Dg5BxY7HExp0bYbelVuTv63VSg5c4hqpqCBAKdE91cigfhC8ax
+ t6Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713462816; x=1714067616;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mbcSiwrgv0MtL78cnFJJ4ARfr4Y9GjjcXT1C15oFZRM=;
+ b=Gcjg/NrkqW7KzfZ28Yeu5fXly9JePrDgDpWX0wEXrKpGfonyN/hAV+g7mrmv3uXd02
+ 1c+/EfvI64ub/Y33MW2l0uKIs6zbD/zmrbKfRgeIsd3b6vwDPx9k1SOiGUD8+oowPMRK
+ qhG06ab+N8MJAI/XNk+wAbjSoy1Nqf5DVShBMSU45b23LeQULDbz6Q9YLxZ9P9zkGnVK
+ HIlpdyZEnXD9XyukYjpl+QQul4tn7otgICHYuGJY/TPaIcW8C7uRKj98NyGShl7pb4Em
+ YICRMhzg21Urulgdxljv4F+F+k0HWVOGjrU8pNzkqZXuO/yBXPCSmIMyXvWEYsnsj1t8
+ ZH+g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVj4OFnm6gvdZ80lWDDyLYo6SLkRlxt4SgagODSAB9ftY8pDHA5aZvLRfzSCJ5XgDrK20qGGAzEcO4ebbiYe3+ZTlFgzy8=
+X-Gm-Message-State: AOJu0Yyp1h40DHWRPZfSMFhQ1EZwVd2e6dElT+SK6SGz1QI8OpUub27y
+ QIUCx5Nn3AGCDCWEy9hdJapU9l1wDYUt7FbmAaYJYmCyZumfQ9Ga8obUOf98kKg=
+X-Google-Smtp-Source: AGHT+IHV/hGfEXQpYSyenoBFq+ttVM3EWMJXtyftbuEaZNLxhSEbXAcv134GPeG6L0G+ebPkYG/osQ==
+X-Received: by 2002:a05:6808:98:b0:3c6:900:17a with SMTP id
+ s24-20020a056808009800b003c60900017amr3904472oic.9.1713462815027; 
+ Thu, 18 Apr 2024 10:53:35 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:937d:c610::fc11? ([2604:3d08:937d:c610::fc11])
+ by smtp.gmail.com with ESMTPSA id
+ x14-20020a63db4e000000b005f750f36968sm1703213pgi.42.2024.04.18.10.53.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Apr 2024 10:53:34 -0700 (PDT)
+Message-ID: <600a8262-ecd6-4205-bdca-c858cac538a1@linaro.org>
+Date: Thu, 18 Apr 2024 10:53:33 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] tcg: Introduce INDEX_op_plugin_pc
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240416040609.1313605-1-richard.henderson@linaro.org>
+ <20240416040609.1313605-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240416040609.1313605-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-oi1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,65 +97,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 4/15/24 21:06, Richard Henderson wrote:
+> Add an opcode to find a code address within the current insn,
+> for later use with unwinding.  Generate the code generically
+> using tcg_reg_alloc_do_movi.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-op-common.h |  1 +
+>   include/tcg/tcg-opc.h       |  1 +
+>   tcg/tcg-op.c                |  5 +++++
+>   tcg/tcg.c                   | 10 ++++++++++
+>   4 files changed, 17 insertions(+)
+> 
+> diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+> index 009e2778c5..a32c88a182 100644
+> --- a/include/tcg/tcg-op-common.h
+> +++ b/include/tcg/tcg-op-common.h
+> @@ -76,6 +76,7 @@ void tcg_gen_lookup_and_goto_ptr(void);
+>   
+>   void tcg_gen_plugin_cb(unsigned from);
+>   void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+> +void tcg_gen_plugin_pc(TCGv_ptr);
+>   
+>   /* 32 bit ops */
+>   
+> diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+> index 546eb49c11..087d1b82da 100644
+> --- a/include/tcg/tcg-opc.h
+> +++ b/include/tcg/tcg-opc.h
+> @@ -199,6 +199,7 @@ DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+>   
+>   DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
+>   DEF(plugin_mem_cb, 0, 1, 1, TCG_OPF_NOT_PRESENT)
+> +DEF(plugin_pc, 1, 0, 0, TCG_OPF_NOT_PRESENT)
+>   
+>   /* Replicate ld/st ops for 32 and 64-bit guest addresses. */
+>   DEF(qemu_ld_a32_i32, 1, 1, 1,
+> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+> index eff3728622..b8ca78cbe4 100644
+> --- a/tcg/tcg-op.c
+> +++ b/tcg/tcg-op.c
+> @@ -322,6 +322,11 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo)
+>       tcg_gen_op2(INDEX_op_plugin_mem_cb, tcgv_i64_arg(addr), meminfo);
+>   }
+>   
+> +void tcg_gen_plugin_pc(TCGv_ptr arg)
+> +{
+> +    tcg_gen_op1(INDEX_op_plugin_pc, tcgv_ptr_arg(arg));
+> +}
+> +
+>   /* 32 bit ops */
+>   
+>   void tcg_gen_discard_i32(TCGv_i32 arg)
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index d248c52e96..42e2b53729 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -4701,6 +4701,13 @@ static void tcg_reg_alloc_mov(TCGContext *s, const TCGOp *op)
+>       }
+>   }
+>   
+> +static void tcg_reg_alloc_plugin_pc(TCGContext *s, const TCGOp *op)
+> +{
+> +    tcg_reg_alloc_do_movi(s, arg_temp(op->args[0]),
+> +                          (uintptr_t)tcg_splitwx_to_rx(s->code_ptr),
+> +                          op->life, output_pref(op, 0));
+> +}
+> +
+>   /*
+>    * Specialized code generation for INDEX_op_dup_vec.
+>    */
+> @@ -6208,6 +6215,9 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+>           case INDEX_op_mov_vec:
+>               tcg_reg_alloc_mov(s, op);
+>               break;
+> +        case INDEX_op_plugin_pc:
+> +            tcg_reg_alloc_plugin_pc(s, op);
+> +            break;
+>           case INDEX_op_dup_vec:
+>               tcg_reg_alloc_dup(s, op);
+>               break;
 
-If a fragmented packet size is too short, do not try to
-calculate its checksum.
-
-Reproduced using:
-
-  $ cat << EOF | qemu-system-i386 -display none -nodefaults \
-                                  -machine q35,accel=qtest -m 32M \
-                                  -device igb,netdev=net0 \
-                                  -netdev user,id=net0 \
-                                  -qtest stdio
-  outl 0xcf8 0x80000810
-  outl 0xcfc 0xe0000000
-  outl 0xcf8 0x80000804
-  outw 0xcfc 0x06
-  write 0xe0000403 0x1 0x02
-  writel 0xe0003808 0xffffffff
-  write 0xe000381a 0x1 0x5b
-  write 0xe000381b 0x1 0x00
-  EOF
-  Assertion failed: (offset == 0), function iov_from_buf_full, file util/iov.c, line 39.
-  #1 0x5575e81e952a in iov_from_buf_full qemu/util/iov.c:39:5
-  #2 0x5575e6500768 in net_tx_pkt_update_sctp_checksum qemu/hw/net/net_tx_pkt.c:144:9
-  #3 0x5575e659f3e1 in igb_setup_tx_offloads qemu/hw/net/igb_core.c:478:11
-  #4 0x5575e659f3e1 in igb_tx_pkt_send qemu/hw/net/igb_core.c:552:10
-  #5 0x5575e659f3e1 in igb_process_tx_desc qemu/hw/net/igb_core.c:671:17
-  #6 0x5575e659f3e1 in igb_start_xmit qemu/hw/net/igb_core.c:903:9
-  #7 0x5575e659f3e1 in igb_set_tdt qemu/hw/net/igb_core.c:2812:5
-  #8 0x5575e657d6a4 in igb_core_write qemu/hw/net/igb_core.c:4248:9
-
-Fixes: CVE-2024-3567
-Cc: qemu-stable@nongnu.org
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Fixes: f199b13bc1 ("igb: Implement Tx SCTP CSO")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2273
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240410070459.49112-1-philmd@linaro.org>
-(cherry picked from commit 83ddb3dbba2ee0f1767442ae6ee665058aeb1093)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-index 2134a18c4c..b7b1de816d 100644
---- a/hw/net/net_tx_pkt.c
-+++ b/hw/net/net_tx_pkt.c
-@@ -141,6 +141,10 @@ bool net_tx_pkt_update_sctp_checksum(struct NetTxPkt *pkt)
-     uint32_t csum = 0;
-     struct iovec *pl_start_frag = pkt->vec + NET_TX_PKT_PL_START_FRAG;
- 
-+    if (iov_size(pl_start_frag, pkt->payload_frags) < 8 + sizeof(csum)) {
-+        return false;
-+    }
-+
-     if (iov_from_buf(pl_start_frag, pkt->payload_frags, 8, &csum, sizeof(csum)) < sizeof(csum)) {
-         return false;
-     }
--- 
-2.39.2
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
