@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE98C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 18:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D98C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 18:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxWHX-0007oh-9g; Thu, 18 Apr 2024 14:14:47 -0400
+	id 1rxWht-00053K-CF; Thu, 18 Apr 2024 14:42:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rxWHL-0007lv-Rq
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:14:37 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
+ (Exim 4.90_1) (envelope-from <arnd@arndb.de>) id 1rxWhr-00052v-Br
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:41:59 -0400
+Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1rxWHI-0003KO-39
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:14:34 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1rxWH7-0004RH-BZ; Thu, 18 Apr 2024 20:14:21 +0200
-Message-ID: <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
-Date: Thu, 18 Apr 2024 20:14:15 +0200
+ (Exim 4.90_1) (envelope-from <arnd@arndb.de>) id 1rxWhp-0007kC-GX
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 14:41:59 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id C28561140094;
+ Thu, 18 Apr 2024 14:41:51 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+ by compute5.internal (MEProxy); Thu, 18 Apr 2024 14:41:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm2; t=1713465711; x=1713552111; bh=WYona33Oi0
+ 91DmN3yevCSRN9ewoDtBHoqopr8VTRAnM=; b=gVLvCxMIpcQ+HMquC6K/n1sHMJ
+ GdZPYyzlKf6w6OJUhXoVhtdz0r3qgYSSRcEGZD7rNCBlmpd2aZ2VCaqD1EQgn4bO
+ eEWxCbte0LES0O3a79A2E84rXJUjpFtaarXRLFsOYIT6D5UBZ9WP3iq7Cj50wzmr
+ nOdSUrAZ809gbZCqeMNSRCd4wTvY9adVvssUEBjyeVIMaZzS2XKXcob6knLBWTHi
+ ccXkf28c64Gip381CGkWt7JYNHpuI7z/eqnGRLE6PkbrjsQWkNpyVJYAq0Stv5lL
+ F5VNG+g4mkcYqNMco70937f7jpCsnWtfwFRkgvAhQi09IwyG1GVcY3qzU67A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1713465711; x=1713552111; bh=WYona33Oi091DmN3yevCSRN9ewoD
+ tBHoqopr8VTRAnM=; b=P5hlAXkwi7ODwwNHH8mGFota2lxmlcL8dyjn19Lgz0Qo
+ rvv4QxCON/6NLayy0jHW94UAqJd72XxAcugHQxoqNWhPz0PDu6e6e7w0jcGwG/m7
+ RJAYzOYNqojB16P0wsefXsP0oWugipemGdZi3+aWPOyD6dQPMxrwx7BL8+tyh4pf
+ HBiEZUpGUeOaZRjK/L0euvkCtKva/i5SPMfI8YTvfBfAWqMTpmvb5iEU4wOUq8Z9
+ gbCuXp1QHn4nOybr9lC0K1XxodLkASgW2Qs/jKn0VrW53Zh05RVrjKct0ddXAl97
+ yxrubCJ0CYM/57f/12S09Kjbq2WJY4dY5NfHlLby1A==
+X-ME-Sender: <xms:b2khZiuNJNjhd1upEA6hRgg5IOsWQNB1Zc9T_vqt5CgTRFRRy97qvw>
+ <xme:b2khZnfZ_pPDxQZhSFHQKveKsW7Hhce076MRjppp-jegNt5F00S5mptOQAC3G8hFG
+ _ULb4-ucTU7r8cySrE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudektddguddvjecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
+ rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
+ htthgvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedt
+ keetffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grrhhnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:b2khZtzZ952xaa1RjxYuUIlqgZbN6igB3jxwdoJP7xSVNqjzKeZXtg>
+ <xmx:b2khZtPW9tMjTI7BsNG9syTDd6kiBbnmKBO3Yw9RL0cLzSG9YTjdzQ>
+ <xmx:b2khZi_O4kXQi-CTFpPBJeWLbrx1kynZd_2pMnNiR-0gzc50taSZnw>
+ <xmx:b2khZlWgCt2RzWmw9HWfWTpdgqCTq9nnTqV5gKhKOf6Q0jQ3R4BleQ>
+ <xmx:b2khZmU0dU692nswnxkOv7NuXrZyCPS4D-xMDWWcv0KZfQKX_XFGG0qY>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 4D343B6008D; Thu, 18 Apr 2024 14:41:51 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_RFC_00/26=5D_Multifd_=F0=9F=94=80_device_s?=
- =?UTF-8?Q?tate_transfer_support_with_VFIO_consumer?=
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
- <Zh-KF72Fe9oV6tfT@redhat.com>
- <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
- <Zh_6W8u3H4FmGS49@redhat.com>
- <71ede5c8-857c-418b-9e37-b8d343ddfa06@maciej.szmigiero.name>
- <ZiD4aLSre6qubuHr@redhat.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <ZiD4aLSre6qubuHr@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Message-Id: <320677a6-1c3a-477c-95fc-b74cb5a4c5c6@app.fastmail.com>
+In-Reply-To: <b5d375ed-283-974a-febf-892760ff855@redhat.com>
+References: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
+ <b5d375ed-283-974a-febf-892760ff855@redhat.com>
+Date: Thu, 18 Apr 2024 20:41:30 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Joseph Myers" <josmyers@redhat.com>,
+ "Sandra Loosemore" <sloosemore@baylibre.com>
+Cc: gcc@gcc.gnu.org, binutils@sourceware.org, gdb-patches@sourceware.org,
+ "Xi Ruoyao" <libc-alpha@sourceware.org>,
+ "Chung-Lin Tang" <cltang@baylibre.com>, andrew@reenigne.org,
+ "Yao Qi" <qiyaoltc@gmail.com>, "Dinh Nguyen" <dinguyen@kernel.org>,
+ qemu-devel@nongnu.org, newlib@sourceware.org,
+ "Andreas Oetken" <andreas.oetken@siemens.com>,
+ "Bernd Weiberg" <bernd.weiberg@siemens.com>, "Marek Vasut" <marex@denx.de>
+Subject: Re: Deprecation/removal of nios2 target support
+Content-Type: text/plain
+Received-SPF: pass client-ip=103.168.172.159; envelope-from=arnd@arndb.de;
+ helo=fhigh8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,224 +108,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.04.2024 12:39, Daniel P. Berrangé wrote:
-> On Thu, Apr 18, 2024 at 11:50:12AM +0200, Maciej S. Szmigiero wrote:
->> On 17.04.2024 18:35, Daniel P. Berrangé wrote:
->>> On Wed, Apr 17, 2024 at 02:11:37PM +0200, Maciej S. Szmigiero wrote:
->>>> On 17.04.2024 10:36, Daniel P. Berrangé wrote:
->>>>> On Tue, Apr 16, 2024 at 04:42:39PM +0200, Maciej S. Szmigiero wrote:
->>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-(..)
->>>>> That said, the idea of reserving channels specifically for VFIO doesn't
->>>>> make a whole lot of sense to me either.
->>>>>
->>>>> Once we've done the RAM transfer, and are in the switchover phase
->>>>> doing device state transfer, all the multifd channels are idle.
->>>>> We should just use all those channels to transfer the device state,
->>>>> in parallel.  Reserving channels just guarantees many idle channels
->>>>> during RAM transfer, and further idle channels during vmstate
->>>>> transfer.
->>>>>
->>>>> IMHO it is more flexible to just use all available multifd channel
->>>>> resources all the time.
->>>>
->>>> The reason for having dedicated device state channels is that they
->>>> provide lower downtime in my tests.
->>>>
->>>> With either 15 or 11 mixed multifd channels (no dedicated device state
->>>> channels) I get a downtime of about 1250 msec.
->>>>
->>>> Comparing that with 15 total multifd channels / 4 dedicated device
->>>> state channels that give downtime of about 1100 ms it means that using
->>>> dedicated channels gets about 14% downtime improvement.
->>>
->>> Hmm, can you clarify. /when/ is the VFIO vmstate transfer taking
->>> place ? Is is transferred concurrently with the RAM ? I had thought
->>> this series still has the RAM transfer iterations running first,
->>> and then the VFIO VMstate at the end, simply making use of multifd
->>> channels for parallelism of the end phase. your reply though makes
->>> me question my interpretation though.
->>>
->>> Let me try to illustrate channel flow in various scenarios, time
->>> flowing left to right:
->>>
->>> 1. serialized RAM, then serialized VM state  (ie historical migration)
->>>
->>>         main: | Init | RAM iter 1 | RAM iter 2 | ... | RAM iter N | VM State |
->>>
->>>
->>> 2. parallel RAM, then serialized VM state (ie today's multifd)
->>>
->>>         main: | Init |                                            | VM state |
->>>     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>
->>>
->>> 3. parallel RAM, then parallel VM state
->>>
->>>         main: | Init |                                            | VM state |
->>>     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd4:                                                     | VFIO VM state |
->>>     multifd5:                                                     | VFIO VM state |
->>>
->>>
->>> 4. parallel RAM and VFIO VM state, then remaining VM state
->>>
->>>         main: | Init |                                            | VM state |
->>>     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
->>>     multifd4:        | VFIO VM state                                         |
->>>     multifd5:        | VFIO VM state                                         |
->>>
->>>
->>> I thought this series was implementing approx (3), but are you actually
->>> implementing (4), or something else entirely ?
->>
->> You are right that this series operation is approximately implementing
->> the schema described as numer 3 in your diagrams.
-> 
->> However, there are some additional details worth mentioning:
->> * There's some but relatively small amount of VFIO data being
->> transferred from the "save_live_iterate" SaveVMHandler while the VM is
->> still running.
->>
->> This is still happening via the main migration channel.
->> Parallelizing this transfer in the future might make sense too,
->> although obviously this doesn't impact the downtime.
->>
->> * After the VM is stopped and downtime starts the main (~ 400 MiB)
->> VFIO device state gets transferred via multifd channels.
->>
->> However, these multifd channels (if they are not dedicated to device
->> state transfer) aren't idle during that time.
->> Rather they seem to be transferring the residual RAM data.
->>
->> That's most likely what causes the additional observed downtime
->> when dedicated device state transfer multifd channels aren't used.
-> 
-> Ahh yes, I forgot about the residual dirty RAM, that makes sense as
-> an explanation. Allow me to work through the scenarios though, as I
-> still think my suggestion to not have separate dedicate channels is
-> better....
-> 
-> 
-> Lets say hypothetically we have an existing deployment today that
-> uses 6 multifd channels for RAM. ie:
->   
->          main: | Init |                                            | VM state |
->      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> 
-> That value of 6 was chosen because that corresponds to the amount
-> of network & CPU utilization the admin wants to allow, for this
-> VM to migrate. All 6 channels are fully utilized at all times.
-> 
-> 
-> If we now want to parallelize VFIO VM state, the peak network
-> and CPU utilization the admin wants to reserve for the VM should
-> not change. Thus the admin will still wants to configure only 6
-> channels total.
-> 
-> With your proposal the admin has to reduce RAM transfer to 4 of the
-> channels, in order to then reserve 2 channels for VFIO VM state, so we
-> get a flow like:
-> 
->   
->          main: | Init |                                            | VM state |
->      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd5:                                                     | VFIO VM state |
->      multifd6:                                                     | VFIO VM state |
-> 
-> This is bad, as it reduces performance of RAM transfer. VFIO VM
-> state transfer is better, but that's not a net win overall.
-> 
-> 
-> 
-> So lets say the admin was happy to increase the number of multifd
-> channels from 6 to 8.
-> 
-> This series proposes that they would leave RAM using 6 channels as
-> before, and now reserve the 2 extra ones for VFIO VM state:
-> 
->          main: | Init |                                            | VM state |
->      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
->      multifd7:                                                     | VFIO VM state |
->      multifd8:                                                     | VFIO VM state |
-> 
-> 
-> RAM would perform as well as it did historically, and VM state would
-> improve due to the 2 parallel channels, and not competing with the
-> residual RAM transfer.
-> 
-> This is what your latency comparison numbers show as a benefit for
-> this channel reservation design.
-> 
-> I believe this comparison is inappropriate / unfair though, as it is
-> comparing a situation with 6 total channels against a situation with
-> 8 total channels.
-> 
-> If the admin was happy to increase the total channels to 8, then they
-> should allow RAM to use all 8 channels, and then VFIO VM state +
-> residual RAM to also use the very same set of 8 channels:
-> 
->          main: | Init |                                            | VM state |
->      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
->      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
->      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
->      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
->      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
->      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
->      multifd7:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
->      multifd8:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> 
-> This will speed up initial RAM iters still further & the final switch
-> over phase even more. If residual RAM is larger than VFIO VM state,
-> then it will dominate the switchover latency, so having VFIO VM state
-> compete is not a problem. If VFIO VM state is larger than residual RAM,
-> then allowing it acces to all 8 channels instead of only 2 channels
-> will be a clear win.
+On Thu, Apr 18, 2024, at 17:44, Joseph Myers wrote:
+> On Wed, 17 Apr 2024, Sandra Loosemore wrote:
+>
+>> Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and remove
+>> support from all toolchain components after the release is made.  I'm not sure
+>> there is an established process for obsoleting/removing support in other
+>> components; besides binutils, GDB, and GLIBC, there's QEMU, newlib/libgloss,
+>> and the Linux kernel.  But, we need to get the ball rolling somewhere.
+>
+> CC:ing Arnd Bergmann regarding the obsolescence in the Linux kernel.
 
-I re-did the measurement with increased the number of multifd channels,
-first to (total count/dedicated count) 25/0, then to 100/0.
+We have not yet marked nios2 as deprecated in the kernel, but that
+is mostly because the implementation does not get in the way too
+much and Dinh Nguyen is still around as a maintainer and merging
+bugfixes.
 
-The results did not improve:
-With 25/0 multifd mixed channels config I still get around 1250 msec
-downtime - the same as with 15/0 or 11/0 mixed configs I measured
-earlier.
+Almost all nios2 kernel changes I see in the past decade have been
+done blindly without testing on hardware, either for treewide
+changes, or by code inspection. The only notable exceptions I could
+find are from Andreas Oetken and Bernd Weiberg at Siemens and
+from Marek Vasut (all added to Cc in case they have something to add).
 
-But with the (pretty insane) 100/0 mixed channel config the whole setup
-gets so for into the law of diminishing returns that the results actually
-get worse: the downtime is now about 1450 msec.
-I guess that's from all the extra overhead from switching between 100
-multifd channels.
+We should probably remove nios2 from the kernel in the near future,
+but even if we decide not to, I think deprecating it from gcc is the
+right idea: If there are a few remaining users that still plan
+to update their kernels, gcc-14 will still be able to build new
+kernels for several years.
 
-I think one of the reasons for these results is that mixed (RAM + device
-state) multifd channels participate in the RAM sync process
-(MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
-
-It is possible that there are other subtle performance interactions too,
-but I am not 100% sure about that.
-
-> With regards,
-> Daniel
-
-Best regards,
-Maciej
-
+     Arnd
 
