@@ -4,93 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB47C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 08:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8281BC04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 08:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxMor-0008Gq-Rp; Thu, 18 Apr 2024 04:08:33 -0400
+	id 1rxMwK-0001uj-AB; Thu, 18 Apr 2024 04:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rxMoq-0008GR-Fj
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 04:08:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rxMwI-0001uL-1h; Thu, 18 Apr 2024 04:16:14 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rxMol-0005AL-PN
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 04:08:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713427706;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Jkl93earccohRsZfy8Bq8byUvMRjDs8r5QCezC1z+K4=;
- b=TZM9HQLcg0FYIGumrIBC+nV1BVCplJ18eC/s3C4qJzoN8eGTamxFfxTnPNb4REcXjaFnoH
- fUDLPNhMN2QYChf7ZNcQgeFN+oC2TZhshT89V8kuw72agIE1uV4mKGJig7DSTk0glLkHTq
- hFFH5eyzI+wSHiuGn4oxopx1lYp+n5Y=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-QnAFO0ZONGigvIbEMlpsUQ-1; Thu, 18 Apr 2024 04:08:22 -0400
-X-MC-Unique: QnAFO0ZONGigvIbEMlpsUQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-349d779625eso465840f8f.2
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 01:08:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713427701; x=1714032501;
- h=in-reply-to:references:user-agent:from:subject:cc:to:message-id
- :date:content-transfer-encoding:mime-version:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Jkl93earccohRsZfy8Bq8byUvMRjDs8r5QCezC1z+K4=;
- b=HsvmWrO5x6gNCyTqP9ZO8dUrzGgI1EG0/cvYtSqwctCmzE7getd2bAKE2Wu/0bNi6A
- 986lS7meh5NWKitxlTgxzNrQ2H0W+Cny8zLqaCbe3aHPSrKBNNfBBVlPc2iq2v1VhEFe
- wY+Z+HI+6uUYpGHonEipG+sY9MhEqZnhOzkjFDsCCPB26BsMJ1SrLmQSrUg8IuSDZW00
- ksuHMqJUhhhqLyygmQ3HHoGert5SXOMoG6ISxNIbO7DGMEpd0liRwxOiOEtmxO1h7zDN
- /gtGfG4ir6nX+72IQam93jySdTKY9pemqYFWdIIpRRNpNxu0XLi1qxDy6YSkIplLIycG
- RE/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8TuF+TiVynGWyfCvvBaxXFj4kgRJx2g22HcE4n9Tet64e2T30EPGibrnEN0wVaYJnDKelULHUTFQoPejua5gFcdZP/o0=
-X-Gm-Message-State: AOJu0Yzya5ox/rX1Lo4jGNWyce4TyCFYWiwlvwoX1zWHvBSjT7L7gq3P
- nowpVEI+eBIejrz20/oBAG9HJvTJI2P5DkysfTnftZ3WlQxwYuYfwl6UXXiPx9QCjxUHGWFOW0U
- JVl1mm54SUS+tKGC0TQnv9K6Kzx5ct6/R74sBcdVvAGvGK6KfxnYI
-X-Received: by 2002:adf:e882:0:b0:343:7032:7283 with SMTP id
- d2-20020adfe882000000b0034370327283mr1374294wrm.8.1713427701584; 
- Thu, 18 Apr 2024 01:08:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrZtx7Px6SQOfXQxRkYUbfKeqekYPVmcqAEx7HYzoYPqm5XJ0eLx9zUyy60/IhXlbd6ZvemA==
-X-Received: by 2002:adf:e882:0:b0:343:7032:7283 with SMTP id
- d2-20020adfe882000000b0034370327283mr1374274wrm.8.1713427701209; 
- Thu, 18 Apr 2024 01:08:21 -0700 (PDT)
-Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
- by smtp.gmail.com with ESMTPSA id
- j6-20020adff006000000b00349856b640bsm1170729wro.67.2024.04.18.01.08.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Apr 2024 01:08:20 -0700 (PDT)
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rxMwE-0006Tn-Ms; Thu, 18 Apr 2024 04:16:13 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VKrC36F1mz6K5qR;
+ Thu, 18 Apr 2024 16:13:51 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id D8A22140684;
+ Thu, 18 Apr 2024 16:15:54 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 18 Apr
+ 2024 09:15:54 +0100
+Date: Thu, 18 Apr 2024 09:15:55 +0100
+To: Richard Henderson <richard.henderson@linaro.org>
+CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Philippe
+ =?ISO-8859-1?Q?Ma?= =?ISO-8859-1?Q?thieu-Daud=E9?= <philmd@linaro.org>, Idan
+ Horowitz <idan.horowitz@gmail.com>, <linuxarm@huawei.com>
+Subject: Re: [PATCH v3 5/6] target/arm: Do memory type alignment check when
+ translation disabled
+Message-ID: <20240418091555.00006666@Huawei.com>
+In-Reply-To: <0c878d25-3fbb-4f0b-bc9e-ca638f8c4f1e@linaro.org>
+References: <20240301204110.656742-1-richard.henderson@linaro.org>
+ <20240301204110.656742-6-richard.henderson@linaro.org>
+ <20240416161111.0000607c@huawei.com>
+ <0c878d25-3fbb-4f0b-bc9e-ca638f8c4f1e@linaro.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+MIME-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 18 Apr 2024 10:08:20 +0200
-Message-Id: <D0N3FEXCT47P.1GGY1XRK5JZMO@fedora>
-To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
- <vchundur@redhat.com>, <rjarry@redhat.com>
-Subject: Re: [PATCH v5 0/3] Add support for the RAPL MSRs series
-From: "Anthony Harivel" <aharivel@redhat.com>
-User-Agent: aerc/0.15.2-111-g39195000e213
-References: <20240411121434.253353-1-aharivel@redhat.com>
- <ZiAFd5GMcQV1yZhU@redhat.com>
-In-Reply-To: <ZiAFd5GMcQV1yZhU@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.719,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,61 +69,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 17 Apr 2024 13:07:35 -0700
+Richard Henderson <richard.henderson@linaro.org> wrote:
 
-Hi Daniel,
-
-Daniel P. Berrang=C3=A9, Apr 17, 2024 at 19:23:
-> On Thu, Apr 11, 2024 at 02:14:31PM +0200, Anthony Harivel wrote:
-> > Dear maintainers,=20
+> On 4/16/24 08:11, Jonathan Cameron wrote:
+> > On Fri,  1 Mar 2024 10:41:09 -1000
+> > Richard Henderson <richard.henderson@linaro.org> wrote:
+> >  =20
+> >> If translation is disabled, the default memory type is Device, which
+> >> requires alignment checking.  This is more optimally done early via
+> >> the MemOp given to the TCG memory operation.
+> >>
+> >> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+> >> Reported-by: Idan Horowitz <idan.horowitz@gmail.com>
+> >> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1204
+> >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org> =20
 > >=20
-> > First of all, thank you very much for your review of my patch=20
-> > [1].
+> > Hi Richard.
 > >=20
-> > In this version (v5), I have attempted to address all the problems=20
-> > addressed by Daniel during the last review. I've been more careful with=
-=20
-> > all the remarks made.
->
-> I'm wondering if you had tips for testing this functionality ?
->
-> Is there any nice app to run in the host/guest to report the
-> power usage, to see that it is working as desired ?
->
+> > I noticed some tests I was running stopped booting with master.
+> > (it's a fun and complex stack of QEMU + kvm on QEMU for vCPU Hotplug ke=
+rnel work,
+> > but this is the host booting)
+> >=20
+> > EDK2 build from upstream as of somepoint last week.
+> >=20
+> > Bisects to this patch.
+> >=20
+> >   qemu-system-aarch64 -M virt,gic-version=3D3,virtualization=3Dtrue -m =
+4g,maxmem=3D8G,slots=3D8 -cpu cortex-a76 -smp cpus=3D4,threads=3D2,clusters=
+=3D2,sockets=3D1 \
+> >   -kernel Image \
+> >   -drive if=3Dnone,file=3Dfull.qcow2,format=3Dqcow2,id=3Dhd \
+> >   -device ioh3420,id=3Droot_port1 -device virtio-blk-pci,drive=3Dhd \
+> >   -netdev user,id=3Dmynet,hostfwd=3Dtcp::5555-:22 -device virtio-net-pc=
+i,netdev=3Dmynet,id=3Dbob \
+> >   -nographic -no-reboot -append 'earlycon root=3D/dev/vda2 fsck.mode=3D=
+skip tp_printk' \
+> >   -monitor telnet:127.0.0.1:1235,server,nowait -bios QEMU_EFI.fd \
+> >   -object memory-backend-ram,size=3D4G,id=3Dmem0 \
+> >   -numa node,nodeid=3D0,cpus=3D0-3,memdev=3Dmem0
+> >=20
+> > Symptoms: Nothing on console from edk2 which is built in debug mode so =
+is normally very noisy.
+> >            No sign of anything much happening at all :( =20
+>=20
+> This isn't a fantastic bug report.
+>=20
+> (1) If it doesn't boot efi, then none of the -kernel parameters are neces=
+sary.
+> (2) I'd be surprised if the full.qcow2 drive parameters are necessary eit=
+her.
+>      But if they are, what contents?  Is a new empty drive sufficient, ju=
+st
+>      enough to send the bios through the correct device initialization?
+> (3) edk2 build from ...
+>      Well, this is partly edk2's fault, as the build documentation is awf=
+ul.
+>      I spent an entire afternoon trying to figure it out and gave up.
+>=20
+> I will say that the edk2 shipped with qemu does work, so... are you absol=
+utely
+> certain that it isn't a bug in edk2 since then?  Firmware bugs are exactl=
+y what
+> that patch is supposed to expose, as requested by issue #1204.
+>=20
+> I'd say you should boot with "-d int" and see what kind of interrupts you=
+'re getting very=20
+> early on.  I suspect that you'll see data aborts with ESR xx/yy where the=
+ last 6 bits of=20
+> yy are 0x21 (alignment fault).
 
-Great question. Unfortunately, there isn't an easy-to-use,=20
-out-of-the-box app that can assist you.
+Hi Richard,
 
-The 'cpupower' tool in linux/tools/power/ or 'turbostat' in=20
-linux/tools/power/x86/ require some modifications as they fail the=20
-sanity check inside a VM. It is on my agenda to work on a proposal patch=20
-for these tools if the vmsr patch lands in QEMU. These are the excellent=20
-apps that everyone should use IMO.
+Sorry for lack of details, I was aware it wasn't great and should have stat=
+ed I planned
+to come back with more details when I had time to debug.  Snowed under so f=
+or now I've
+just dropped back to 8.2 and will get back to this perhaps next week.
 
-So how do I test my patch ?=20
-I'm using a slightly more complex tool called Kepler [1]. Since a patch=20
-that has been merged [2], it can also report VM consumption.
-The installation is easy on RPM based distribution [3].
-But indeed, this tools is a Prometheus exporter so you need=20
-a Prometheus/Grafana stack for the observation which make the test more=20
-complex than the 2 previous tools mentioned.
+Jonathan
 
-Last month, I conducted a test with Kepler tools on both a host and=20
-within VMs. I was pleased to observe that the power graph trends were=20
-identical both outside and inside the VMs, albeit with a slight=20
-variation in terms of 1:1 Watt comparison.
-
-If Kepler isn't the tool you're looking for, I'm open to any suggestions=20
-regarding cpupower/turbostat. I can work on a temporary patch that would=20
-enable us to utilize them.
-
-Regards,
-Anthony
-
-[1]: https://sustainable-computing.io/
-[2]: https://github.com/sustainable-computing-io/kepler/pull/931
-[3]: https://sustainable-computing.io/installation/kepler-rpm/
+>=20
+>=20
+> r~
 
 
