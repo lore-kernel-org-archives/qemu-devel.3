@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A655C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4024CC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVw8-0005Jr-0y; Thu, 18 Apr 2024 13:52:40 -0400
+	id 1rxVw8-0005MN-JN; Thu, 18 Apr 2024 13:52:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVvg-0004Qz-Oo; Thu, 18 Apr 2024 13:52:15 -0400
+ id 1rxVw2-000529-PJ; Thu, 18 Apr 2024 13:52:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVve-0007l9-Ty; Thu, 18 Apr 2024 13:52:12 -0400
+ id 1rxVw0-0007lQ-T4; Thu, 18 Apr 2024 13:52:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 77FC05FD7C;
+ by isrv.corpit.ru (Postfix) with ESMTP id ADA565FD7D;
  Thu, 18 Apr 2024 20:50:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D54CCB9356;
- Thu, 18 Apr 2024 20:50:03 +0300 (MSK)
-Received: (nullmailer pid 947887 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 0D6F5B9357;
+ Thu, 18 Apr 2024 20:50:04 +0300 (MSK)
+Received: (nullmailer pid 947890 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Cedric Le Goater <clg@kaod.org>, Kowshik Jois <kowsjois@linux.ibm.com>,
+ Kowshik Jois <kowsjois@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Nicholas Piggin <npiggin@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 115/116] ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to
- refer IRQ range for CPU IPIs.
-Date: Thu, 18 Apr 2024 20:49:45 +0300
-Message-Id: <20240418174955.947730-28-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 116/116] ppc/spapr: Initialize max_cpus limit to
+ SPAPR_IRQ_NR_IPIS.
+Date: Thu, 18 Apr 2024 20:49:46 +0300
+Message-Id: <20240418174955.947730-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
@@ -65,77 +66,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-spapr_irq_init currently uses existing macro SPAPR_XIRQ_BASE to refer to
-the range of CPU IPIs during initialization of nr-irqs property.
-It is more appropriate to have its own define which can be further
-reused as appropriate for correct interpretation.
+Initialize the machine specific max_cpus limit as per the maximum range
+of CPU IPIs available. Keeping between 4096 to 8192 will throw IRQ not
+free error due to XIVE/XICS limitation and keeping beyond 8192 will hit
+assert in tcg_region_init or spapr_xive_claim_irq.
 
-Suggested-by: Cedric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Logs:
+
+Without patch fix:
+
+[root@host build]# qemu-system-ppc64 -accel tcg -smp 10,maxcpus=4097
+qemu-system-ppc64: IRQ 4096 is not free
+[root@host build]#
+
+On LPAR:
+[root@host build]# qemu-system-ppc64 -accel tcg -smp 10,maxcpus=8193
+**
+ERROR:../tcg/region.c:774:tcg_region_init: assertion failed:
+(region_size >= 2 * page_size)
+Bail out! ERROR:../tcg/region.c:774:tcg_region_init: assertion failed:
+(region_size >= 2 * page_size)
+Aborted (core dumped)
+[root@host build]#
+
+On x86:
+[root@host build]# qemu-system-ppc64 -accel tcg -smp 10,maxcpus=8193
+qemu-system-ppc64: ../hw/intc/spapr_xive.c:596: spapr_xive_claim_irq:
+Assertion `lisn < xive->nr_irqs' failed.
+Aborted (core dumped)
+[root@host build]#
+
+With patch fix:
+[root@host build]# qemu-system-ppc64 -accel tcg -smp 10,maxcpus=4097
+qemu-system-ppc64: Invalid SMP CPUs 4097. The max CPUs supported by
+machine 'pseries-8.2' is 4096
+[root@host build]#
+
+Reported-by: Kowshik Jois <kowsjois@linux.ibm.com>
 Tested-by: Kowshik Jois <kowsjois@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-(cherry picked from commit 2df5c1f5b014126595a26c6797089d284a3b211c)
+(cherry picked from commit c4f91d7b7be76c47015521ab0109c6e998a369b0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
-index a0d1e1298e..97b2fc42ab 100644
---- a/hw/ppc/spapr_irq.c
-+++ b/hw/ppc/spapr_irq.c
-@@ -23,6 +23,8 @@
- 
- #include "trace.h"
- 
-+QEMU_BUILD_BUG_ON(SPAPR_IRQ_NR_IPIS > SPAPR_XIRQ_BASE);
-+
- static const TypeInfo spapr_intc_info = {
-     .name = TYPE_SPAPR_INTC,
-     .parent = TYPE_INTERFACE,
-@@ -329,7 +331,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-         int i;
- 
-         dev = qdev_new(TYPE_SPAPR_XIVE);
--        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
-         /*
-          * 8 XIVE END structures per CPU. One for each available
-          * priority
-@@ -356,7 +358,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-     }
- 
-     spapr->qirqs = qemu_allocate_irqs(spapr_set_irq, spapr,
--                                      smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+                                      smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index df09aa9d6a..222d926f46 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4647,13 +4647,10 @@ static void spapr_machine_class_init(ObjectClass *oc, void *data)
+     mc->block_default_type = IF_SCSI;
  
      /*
-      * Mostly we don't actually need this until reset, except that not
-diff --git a/include/hw/ppc/spapr_irq.h b/include/hw/ppc/spapr_irq.h
-index c22a72c9e2..4fd2d5853d 100644
---- a/include/hw/ppc/spapr_irq.h
-+++ b/include/hw/ppc/spapr_irq.h
-@@ -14,9 +14,21 @@
- #include "qom/object.h"
+-     * Setting max_cpus to INT32_MAX. Both KVM and TCG max_cpus values
+-     * should be limited by the host capability instead of hardcoded.
+-     * max_cpus for KVM guests will be checked in kvm_init(), and TCG
+-     * guests are welcome to have as many CPUs as the host are capable
+-     * of emulate.
++     * While KVM determines max cpus in kvm_init() using kvm_max_vcpus(),
++     * In TCG the limit is restricted by the range of CPU IPIs available.
+      */
+-    mc->max_cpus = INT32_MAX;
++    mc->max_cpus = SPAPR_IRQ_NR_IPIS;
  
- /*
-- * IRQ range offsets per device type
-+ * The XIVE IRQ backend uses the same layout as the XICS backend but
-+ * covers the full range of the IRQ number space. The IRQ numbers for
-+ * the CPU IPIs are allocated at the bottom of this space, below 4K,
-+ * to preserve compatibility with XICS which does not use that range.
-+ */
-+
-+/*
-+ * CPU IPI range (XIVE only)
-  */
- #define SPAPR_IRQ_IPI        0x0
-+#define SPAPR_IRQ_NR_IPIS    0x1000
-+
-+/*
-+ * IRQ range offsets per device type
-+ */
- 
- #define SPAPR_XIRQ_BASE      XICS_IRQ_BASE /* 0x1000 */
- #define SPAPR_IRQ_EPOW       (SPAPR_XIRQ_BASE + 0x0000)
+     mc->no_parallel = 1;
+     mc->default_boot_order = "";
 -- 
 2.39.2
 
