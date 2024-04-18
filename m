@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7151FC04FFF
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 10:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68906C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 10:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxOkP-0002K5-Nt; Thu, 18 Apr 2024 06:12:06 -0400
+	id 1rxOk4-0001dh-12; Thu, 18 Apr 2024 06:11:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOkJ-0002CD-LS
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOk2-0001cf-3A
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOkH-0004wZ-VW
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOk0-0004tH-EJ
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713435117;
+ s=mimecast20190719; t=1713435099;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rX7+cvgh6mTv2GGjvcuMBspd3CHW2j02F6bNL0p6I3s=;
- b=B04ztudY4VUGefgXIIhT9JW1559gIiLS+zDlJShQn5YMDZglnHKNQ40QVnU6rGI6S9beaU
- Q22XsiMsG1fQOaaOYfZXnwoV6n7vgvi73E22mbctH/8/psVVstoSdMa3s+AVn3Bflxjixr
- MOUV/T+mLs230V2bQdmd1WnfBBYCWUg=
+ bh=MhtouUqqye7q6PlBmUe1x2ANsRy3/FjDuF8x6a48zZQ=;
+ b=e2us3JLL4SUGxEQxlltSvtmtvk6TMfMJEWwN62Wyu7wezAaWHRhsTtFjTt6HRlcCPwMsKe
+ VNXEOaThaO6sA3Jwl5JQ0tQWb5cR+wdzAxYhrS5eOGTIlNfmrNOGS3ya3whYWTWZc0Aurz
+ YK7lTIlaDbyPrzv6oyZ+A9u8jzfl7GA=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-bXYQvhGVPBWnNNtKfUdiZQ-1; Thu, 18 Apr 2024 06:11:53 -0400
-X-MC-Unique: bXYQvhGVPBWnNNtKfUdiZQ-1
+ us-mta-346-V0E_OjYjNFO5Nbm02hDYXw-1; Thu, 18 Apr 2024 06:11:36 -0400
+X-MC-Unique: V0E_OjYjNFO5Nbm02hDYXw-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 93B3180021A;
- Thu, 18 Apr 2024 10:11:52 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AA40F81384D;
+ Thu, 18 Apr 2024 10:11:35 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.223])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7C9A4C271A4;
- Thu, 18 Apr 2024 10:11:49 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 3A9FDC271B7;
+ Thu, 18 Apr 2024 10:11:27 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -53,15 +53,16 @@ To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v3 12/13] block/ssh: Use URI parsing code from glib
-Date: Thu, 18 Apr 2024 12:10:55 +0200
-Message-ID: <20240418101056.302103-13-thuth@redhat.com>
+Subject: [PATCH v3 07/13] Bump minimum glib version to v2.66
+Date: Thu, 18 Apr 2024 12:10:50 +0200
+Message-ID: <20240418101056.302103-8-thuth@redhat.com>
 In-Reply-To: <20240418101056.302103-1-thuth@redhat.com>
 References: <20240418101056.302103-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -85,138 +86,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since version 2.66, glib has useful URI parsing functions, too.
-Use those instead of the QEMU-internal ones to be finally able
-to get rid of the latter.
+Now that we dropped support for CentOS 8 and Ubuntu 20.04, we can
+look into bumping the glib version to a new minimum for further
+clean-ups. According to repology.org, available versions are:
 
-While we're at it, also emit a warning when encountering unknown
-parameters in the URI, so that the users have a chance to detect
-their typos or other mistakes.
+ CentOS Stream 9:       2.66.7
+ Debian 11:             2.66.8
+ Fedora 38:             2.74.1
+ Freebsd:               2.78.4
+ Homebrew:              2.80.0
+ Openbsd:               2.78.4
+ OpenSuse leap 15.5:    2.70.5
+ pkgsrc_current:        2.78.4
+ Ubuntu 22.04:          2.72.1
 
-Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
+Thus it should be safe to bump the minimum glib version to 2.66 now.
+Version 2.66 comes with new functions for URI parsing which will
+allow further clean-ups in the following patches.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- block/ssh.c | 75 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 40 insertions(+), 35 deletions(-)
+ meson.build              | 16 +---------------
+ include/glib-compat.h    | 27 ++-------------------------
+ qga/commands-posix-ssh.c |  4 ++--
+ 3 files changed, 5 insertions(+), 42 deletions(-)
 
-diff --git a/block/ssh.c b/block/ssh.c
-index 2748253d4a..a88171d4b5 100644
---- a/block/ssh.c
-+++ b/block/ssh.c
-@@ -37,7 +37,6 @@
- #include "qemu/ctype.h"
- #include "qemu/cutils.h"
- #include "qemu/sockets.h"
--#include "qemu/uri.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qapi/qapi-visit-block-core.h"
- #include "qapi/qmp/qdict.h"
-@@ -181,65 +180,71 @@ static void sftp_error_trace(BDRVSSHState *s, const char *op)
+diff --git a/meson.build b/meson.build
+index 91a0aa64c6..142bafab61 100644
+--- a/meson.build
++++ b/meson.build
+@@ -869,7 +869,7 @@ have_xen_pci_passthrough = get_option('xen_pci_passthrough') \
  
- static int parse_uri(const char *filename, QDict *options, Error **errp)
- {
--    URI *uri = NULL;
--    QueryParams *qp;
-+    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
-+    const char *uri_host, *uri_path, *uri_user, *uri_query;
-     char *port_str;
+ # When bumping glib minimum version, please check also whether to increase
+ # the _WIN32_WINNT setting in osdep.h according to the value from glib
+-glib_req_ver = '>=2.56.0'
++glib_req_ver = '>=2.66.0'
+ glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
+                     method: 'pkg-config')
+ glib_cflags = []
+@@ -910,20 +910,6 @@ if not cc.compiles('''
+         to the right pkg-config files for your build target.''')
+ endif
+ 
+-# Silence clang warnings triggered by glib < 2.57.2
+-if not cc.compiles('''
+-  #include <glib.h>
+-  typedef struct Foo {
 -    int i;
-+    int port;
-+    g_autoptr(GError) gerror = NULL;
-+    char *qp_name, *qp_value;
-+    GUriParamsIter qp;
+-  } Foo;
+-  static void foo_free(Foo *f)
+-  {
+-    g_free(f);
+-  }
+-  G_DEFINE_AUTOPTR_CLEANUP_FUNC(Foo, foo_free)
+-  int main(void) { return 0; }''', dependencies: glib_pc, args: ['-Wunused-function', '-Werror'])
+-  glib_cflags += cc.get_supported_arguments('-Wno-unused-function')
+-endif
+ glib = declare_dependency(dependencies: [glib_pc, gmodule],
+                           compile_args: glib_cflags,
+                           version: glib_pc.version())
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 43a562974d..86be439ba0 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -19,12 +19,12 @@
+ /* Ask for warnings for anything that was marked deprecated in
+  * the defined version, or before. It is a candidate for rewrite.
+  */
+-#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_56
++#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_66
  
--    uri = uri_parse(filename);
-     if (!uri) {
-         return -EINVAL;
-     }
+ /* Ask for warnings if code tries to use function that did not
+  * exist in the defined version. These risk breaking builds
+  */
+-#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_56
++#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_66
  
--    if (g_strcmp0(uri->scheme, "ssh") != 0) {
-+    if (g_strcmp0(g_uri_get_scheme(uri), "ssh") != 0) {
-         error_setg(errp, "URI scheme must be 'ssh'");
--        goto err;
-+        return -EINVAL;
-     }
+ #pragma GCC diagnostic push
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+@@ -105,29 +105,6 @@ static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
+ }
+ #define g_memdup2(m, s) g_memdup2_qemu(m, s)
  
--    if (!uri->server || strcmp(uri->server, "") == 0) {
-+    uri_host = g_uri_get_host(uri);
-+    if (!uri_host || g_str_equal(uri_host, "")) {
-         error_setg(errp, "missing hostname in URI");
--        goto err;
-+        return -EINVAL;
-     }
- 
--    if (!uri->path || strcmp(uri->path, "") == 0) {
-+    uri_path = g_uri_get_path(uri);
-+    if (!uri_path || g_str_equal(uri_path, "")) {
-         error_setg(errp, "missing remote path in URI");
--        goto err;
+-#if defined(G_OS_UNIX)
+-/*
+- * Note: The fallback implementation is not MT-safe, and it returns a copy of
+- * the libc passwd (must be g_free() after use) but not the content. Because of
+- * these important differences the caller must be aware of, it's not #define for
+- * GLib API substitution.
+- */
+-static inline struct passwd *
+-g_unix_get_passwd_entry_qemu(const gchar *user_name, GError **error)
+-{
+-#if GLIB_CHECK_VERSION(2, 64, 0)
+-    return g_unix_get_passwd_entry(user_name, error);
+-#else
+-    struct passwd *p = getpwnam(user_name);
+-    if (!p) {
+-        g_set_error_literal(error, G_UNIX_ERROR, 0, g_strerror(errno));
+-        return NULL;
 -    }
+-    return (struct passwd *)g_memdup(p, sizeof(*p));
+-#endif
+-}
+-#endif /* G_OS_UNIX */
 -
--    qp = query_params_parse(uri->query);
--    if (!qp) {
--        error_setg(errp, "could not parse query parameters");
--        goto err;
-+        return -EINVAL;
-     }
- 
--    if(uri->user && strcmp(uri->user, "") != 0) {
--        qdict_put_str(options, "user", uri->user);
-+    uri_user = g_uri_get_user(uri);
-+    if (uri_user && !g_str_equal(uri_user, "")) {
-+        qdict_put_str(options, "user", uri_user);
-     }
- 
--    qdict_put_str(options, "server.host", uri->server);
-+    qdict_put_str(options, "server.host", uri_host);
- 
--    port_str = g_strdup_printf("%d", uri->port ?: 22);
-+    port = g_uri_get_port(uri);
-+    port_str = g_strdup_printf("%d", port > 0 ? port : 22);
-     qdict_put_str(options, "server.port", port_str);
-     g_free(port_str);
- 
--    qdict_put_str(options, "path", uri->path);
--
--    /* Pick out any query parameters that we understand, and ignore
--     * the rest.
--     */
--    for (i = 0; i < qp->n; ++i) {
--        if (strcmp(qp->p[i].name, "host_key_check") == 0) {
--            qdict_put_str(options, "host_key_check", qp->p[i].value);
-+    qdict_put_str(options, "path", uri_path);
-+
-+    uri_query = g_uri_get_query(uri);
-+    if (uri_query) {
-+        g_uri_params_iter_init(&qp, uri_query, -1, "&", G_URI_PARAMS_NONE);
-+        while (g_uri_params_iter_next(&qp, &qp_name, &qp_value, &gerror)) {
-+            if (!qp_name || !qp_value || gerror) {
-+                warn_report("Failed to parse SSH URI parameters '%s'",
-+                            uri_query);
-+                break;
-+            }
-+            /*
-+             * Pick out the query parameters that we understand, and ignore
-+             * (or rather warn about) the rest.
-+             */
-+            if (g_str_equal(qp_name, "host_key_check")) {
-+                qdict_put_str(options, "host_key_check", qp_value);
-+            } else {
-+                warn_report("Unsupported parameter '%s' in URI", qp_name);
-+            }
-         }
-     }
- 
--    query_params_free(qp);
--    uri_free(uri);
-     return 0;
--
-- err:
--    uri_free(uri);
--    return -EINVAL;
+ static inline bool
+ qemu_g_test_slow(void)
+ {
+diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
+index 236f80de44..b0e0b1d674 100644
+--- a/qga/commands-posix-ssh.c
++++ b/qga/commands-posix-ssh.c
+@@ -35,7 +35,7 @@ test_get_passwd_entry(const gchar *user_name, GError **error)
+     return p;
  }
  
- static bool ssh_has_filename_options_conflict(QDict *options, Error **errp)
+-#define g_unix_get_passwd_entry_qemu(username, err) \
++#define g_unix_get_passwd_entry(username, err) \
+    test_get_passwd_entry(username, err)
+ #endif
+ 
+@@ -45,7 +45,7 @@ get_passwd_entry(const char *username, Error **errp)
+     g_autoptr(GError) err = NULL;
+     struct passwd *p;
+ 
+-    p = g_unix_get_passwd_entry_qemu(username, &err);
++    p = g_unix_get_passwd_entry(username, &err);
+     if (p == NULL) {
+         error_setg(errp, "failed to lookup user '%s': %s",
+                    username, err->message);
 -- 
 2.44.0
 
