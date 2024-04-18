@@ -4,47 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A31C04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 13:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8E6C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 13:25:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxRNu-000429-I2; Thu, 18 Apr 2024 09:01:05 -0400
+	id 1rxRl7-0001WH-Ff; Thu, 18 Apr 2024 09:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiangzw@tecorigin.com>)
- id 1rxP52-00060l-2B
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:33:24 -0400
-Received: from out28-148.mail.aliyun.com ([115.124.28.148])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rxRl4-0001Vs-Ia
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 09:24:58 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiangzw@tecorigin.com>)
- id 1rxP4x-0000eE-F9
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:33:23 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.1101409|-1; CH=green; DM=|CONTINUE|false|;
- DS=CONTINUE|ham_system_inform|0.00147396-2.70649e-05-0.998499;
- FP=0|0|0|0|0|-1|-1|-1; HT=ay29a033018047209; MF=jiangzw@tecorigin.com; NM=1;
- PH=DS; RN=4; RT=4; SR=0; TI=SMTPD_---.XEijZRr_1713436069; 
-Received: from localhost.localdomain(mailfrom:jiangzw@tecorigin.com
- fp:SMTPD_---.XEijZRr_1713436069) by smtp.aliyun-inc.com;
- Thu, 18 Apr 2024 18:27:56 +0800
-From: Zhiwei Jiang <jiangzw@tecorigin.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com,
- Zhiwei Jiang <jiangzw@tecorigin.com>
-Subject: [PATCH] tcg: Fix the overflow in indexing tcg_ctx->temps
-Date: Thu, 18 Apr 2024 10:27:47 +0000
-Message-Id: <20240418102747.27703-1-jiangzw@tecorigin.com>
-X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=115.124.28.148;
- envelope-from=jiangzw@tecorigin.com; helo=out28-148.mail.aliyun.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rxRl2-0007u5-JU
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 09:24:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713446697; x=1744982697;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=uDt0ypVwqt15fqs2rxgaI31ylg2kn4nX3adYrJPhYQk=;
+ b=SldPYhOwSm1gOP+sm6QLohTq/6o40Lz/AK+f/nIZEJBPTLMSSbAMF9iC
+ zsTrDXvoMWe0BEkj5l7hyB6L/TbjWgHxpYweBtWhzjbbtfmDv26TPsf5/
+ 2aQOKFTUwGiS+F/PdQQvEVagkTwtBhMb7EtExGvLb7nDW0pIFO/yUB/fi
+ XjrfVMXFbS2HaN5LgcpM6srkeTp6Nz05TGkUZ+5haFmxr/R4xOgPPIcCy
+ TN0krBqDhOfg5GDmcwDOEgR2LGd92bH55J9duXhf+uwawEUXrKmCyxpoI
+ 5QUEbaPjoU59jTNIk0WbVqkxzFgQpekibbdnNTh7p3pDMHkns/jO973Mo g==;
+X-CSE-ConnectionGUID: X3PeSh9OR+uLVb0D86qxxw==
+X-CSE-MsgGUID: mbQ5Ew4wQ1O/+rmrt2Vm7Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="31474403"
+X-IronPort-AV: E=Sophos;i="6.07,212,1708416000"; d="scan'208";a="31474403"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Apr 2024 06:24:53 -0700
+X-CSE-ConnectionGUID: yVOK9IIfQy2q3lL4h9pOBQ==
+X-CSE-MsgGUID: 9+qOKqpkQRuW3yJr+867KA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,212,1708416000"; d="scan'208";a="23070748"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa007.fm.intel.com with ESMTP; 18 Apr 2024 06:24:50 -0700
+Date: Thu, 18 Apr 2024 21:38:54 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 3/3] hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return
+ boolean
+Message-ID: <ZiEibgRPOE1RYNke@intel.com>
+References: <20240418100433.1085447-1-zhao1.liu@linux.intel.com>
+ <20240418100433.1085447-4-zhao1.liu@linux.intel.com>
+ <619e668a-67e0-4d25-aec8-9cc13a5c15de@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <619e668a-67e0-4d25-aec8-9cc13a5c15de@linaro.org>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -64
+X-Spam_score: -6.5
+X-Spam_bar: ------
+X-Spam_report: (-6.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 18 Apr 2024 09:00:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,46 +89,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sometimes, when the address of the passed TCGTemp *ts variable is the same as tcg_ctx,
-the index calculated in the temp_idx function, i.e., ts - tcg_ctx->temps,
-can result in a particularly large value, causing overflow in the subsequent array access.
+Hi Philippe,
 
-0  0x00007f79590132ac in test_bit (addr=<optimized out>, nr=<optimized out>)
-    at /data/system/jiangzw/release_version/qemu8.2/include/qemu/bitops.h:135
-1  init_ts_info (ctx=ctx@entry=0x7f794bffe460, ts=0x7f76fc000e00) at ../tcg/optimize.c:148
-2  0x00007f7959014b50 in init_arguments (nb_args=2, op=0x7f76fc0101f8, ctx=0x7f794bffe460) at ../tcg/optimize.c:792
-3  fold_call (op=0x7f76fc0101f8, ctx=0x7f794bffe460) at ../tcg/optimize.c:1348
-4  tcg_optimize (s=<optimized out>) at ../tcg/optimize.c:2369
-5  0x00007f7958ffa136 in tcg_gen_code (s=0x7f76fc000e00, tb=0x7f7904202380, pc_start=140741246462840) at ../tcg/tcg.c:6066
+On Thu, Apr 18, 2024 at 02:06:15PM +0200, Philippe Mathieu-Daudé wrote:
 
-Signed-off-by: Zhiwei Jiang <jiangzw@tecorigin.com>
----
- include/tcg/tcg.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+[snip]
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 05a1912f8a..4b38d2702d 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -629,7 +629,7 @@ static inline size_t temp_idx(TCGTemp *ts)
-  */
- static inline TCGTemp *tcgv_i32_temp(TCGv_i32 v)
- {
--    return (void *)tcg_ctx + (uintptr_t)v;
-+    return (void *)tcg_ctx->temps + (uintptr_t)v;
- }
- #endif
- 
-@@ -681,7 +681,7 @@ static inline TCGArg tcgv_vec_arg(TCGv_vec v)
- static inline TCGv_i32 temp_tcgv_i32(TCGTemp *t)
- {
-     (void)temp_idx(t); /* trigger embedded assert */
--    return (TCGv_i32)((void *)t - (void *)tcg_ctx);
-+    return (TCGv_i32)((void *)t - (void *)tcg_ctx->temps);
- }
- 
- static inline TCGv_i64 temp_tcgv_i64(TCGTemp *t)
--- 
-2.17.1
+> > diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+> > index 5012fab6f763..945ee6ffd045 100644
+> > --- a/include/hw/cxl/cxl_component.h
+> > +++ b/include/hw/cxl/cxl_component.h
+> > @@ -273,7 +273,7 @@ hwaddr cxl_decode_ig(int ig);
+> >   CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb);
+> >   bool cxl_get_hb_passthrough(PCIHostState *hb);
+> > -void cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp);
+> > +bool cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp);
+> >   void cxl_doe_cdat_release(CXLComponentState *cxl_cstate);
+> >   void cxl_doe_cdat_update(CXLComponentState *cxl_cstate, Error **errp);
+> 
+> Another candidate ;)
+> 
+
+I guess you mean cxl_doe_cdat_update()? ;-)
+
+It's a special case since it has only one use case and in that case,
+&error_fatal is passed as @errp. So then it doesn't need to check the
+return value.
+
+Thanks,
+Zhao
 
 
