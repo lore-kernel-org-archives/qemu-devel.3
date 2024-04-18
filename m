@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE578C04FF8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB72EC4345F
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 10:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxOkF-00029T-Nm; Thu, 18 Apr 2024 06:11:57 -0400
+	id 1rxOjp-0001Rb-Sk; Thu, 18 Apr 2024 06:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOkE-00025V-23
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:54 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOjm-0001Ow-Cf
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOkC-0004vM-8z
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxOjk-0004r0-A8
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 06:11:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713435111;
+ s=mimecast20190719; t=1713435082;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/QmaLNO+vWcQUA3/Xd3140OA+g8DYfYtPvpMzRzcvdo=;
- b=MJhRb8zIjYIoom9myVG74wQvjnf14bMS5agkcuuLmV1h9vtc5nq4zpztrLpShZalmyYLSH
- ghhAtMApTqipW+j5lFxCO9ZEoyx//YNbvJbBIpRS048TFgC4I94zUH7nWKvFAfGkMDIaa7
- FHsu6r2gw8nm/3lxKrRXs0DxazO/69k=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-RpaFvfnvMLSVkBeQhup6YQ-1; Thu, 18 Apr 2024 06:11:46 -0400
-X-MC-Unique: RpaFvfnvMLSVkBeQhup6YQ-1
+ bh=v9r89ohkoXF9DDwUHGdT4Vb5jaDUA+Tx0fVSXQhVyfc=;
+ b=J2lL0ezgkXI0r2HfAb9TAyzaQi03Dvi8PxMbU/BnFaiSEQX3uWiefb7KrO7lK4CNkIsf+G
+ +nmK2M887qcp73ur0HlibiHqF+pRpXrD2N4Ha7aoi964+YPaE0iOMNszYqyCFdhxaVjuFr
+ kZQTxww6zI+Lj+ZhddK68gO0SVEL8KQ=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-o_z8MgvPM9WNbIlLEtiN4g-1; Thu,
+ 18 Apr 2024 06:11:18 -0400
+X-MC-Unique: o_z8MgvPM9WNbIlLEtiN4g-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1EF961800222;
- Thu, 18 Apr 2024 10:11:46 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 43C221C3F0E3;
+ Thu, 18 Apr 2024 10:11:18 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.223])
- by smtp.corp.redhat.com (Postfix) with ESMTP id BE942C271AB;
- Thu, 18 Apr 2024 10:11:42 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 31106C1A225;
+ Thu, 18 Apr 2024 10:11:14 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -53,12 +53,13 @@ To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v3 10/13] block/nbd: Use URI parsing code from glib
-Date: Thu, 18 Apr 2024 12:10:53 +0200
-Message-ID: <20240418101056.302103-11-thuth@redhat.com>
+Subject: [PATCH v3 05/13] .travis.yml: Update the jobs to Ubuntu 22.04
+Date: Thu, 18 Apr 2024 12:10:48 +0200
+Message-ID: <20240418101056.302103-6-thuth@redhat.com>
 In-Reply-To: <20240418101056.302103-1-thuth@redhat.com>
 References: <20240418101056.302103-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -85,152 +86,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since version 2.66, glib has useful URI parsing functions, too.
-Use those instead of the QEMU-internal ones to be finally able
-to get rid of the latter. The g_uri_get_host() also takes care
-of removing the square brackets from IPv6 addresses, so we can
-drop that part of the QEMU code now, too.
+According to our support policy, we'll soon drop our official support
+for Ubuntu 20.04 ("Focal Fossa") in QEMU. Thus we should update the
+Travis jobs now to a newer release (Ubuntu 22.04 - "Jammy Jellyfish")
+for future testing. Since all jobs are using this release now, we
+can drop the entries from the individual jobs and use the global
+setting again.
 
-Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- block/nbd.c | 76 ++++++++++++++++++++++++++---------------------------
- 1 file changed, 37 insertions(+), 39 deletions(-)
+ .travis.yml | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/block/nbd.c b/block/nbd.c
-index ef05f7cdfd..589d28af83 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -31,7 +31,6 @@
- #include "qemu/osdep.h"
+diff --git a/.travis.yml b/.travis.yml
+index 8a3ae76a7c..56a2a01e14 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -1,5 +1,5 @@
+ os: linux
+-dist: focal
++dist: jammy
+ language: c
+ compiler:
+   - gcc
+@@ -7,7 +7,7 @@ cache:
+   # There is one cache per branch and compiler version.
+   # characteristics of each job are used to identify the cache:
+   # - OS name (currently only linux)
+-  # - OS distribution (for Linux, bionic or focal)
++  # - OS distribution (e.g. "jammy" for Linux)
+   # - Names and values of visible environment variables set in .travis.yml or Settings panel
+   timeout: 1200
+   ccache: true
+@@ -83,7 +83,6 @@ jobs:
  
- #include "trace.h"
--#include "qemu/uri.h"
- #include "qemu/option.h"
- #include "qemu/cutils.h"
- #include "qemu/main-loop.h"
-@@ -1514,30 +1513,31 @@ static void nbd_client_close(BlockDriverState *bs)
+     - name: "[aarch64] GCC check-tcg"
+       arch: arm64
+-      dist: focal
+       addons:
+         apt_packages:
+           - libaio-dev
+@@ -119,7 +118,6 @@ jobs:
  
- static int nbd_parse_uri(const char *filename, QDict *options)
- {
--    URI *uri;
-+    g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
-+    g_autoptr(GHashTable) qp = NULL;
-     const char *p;
--    QueryParams *qp = NULL;
--    int ret = 0;
-+    int qp_n;
-     bool is_unix;
-+    const char *uri_scheme, *uri_query, *uri_server;
-+    int uri_port;
+     - name: "[ppc64] GCC check-tcg"
+       arch: ppc64le
+-      dist: focal
+       addons:
+         apt_packages:
+           - libaio-dev
+@@ -154,7 +152,6 @@ jobs:
  
--    uri = uri_parse(filename);
-     if (!uri) {
-         return -EINVAL;
-     }
+     - name: "[s390x] GCC check-tcg"
+       arch: s390x
+-      dist: focal
+       addons:
+         apt_packages:
+           - libaio-dev
+@@ -199,7 +196,6 @@ jobs:
  
-     /* transport */
--    if (!g_strcmp0(uri->scheme, "nbd")) {
-+    uri_scheme = g_uri_get_scheme(uri);
-+    if (!g_strcmp0(uri_scheme, "nbd")) {
-         is_unix = false;
--    } else if (!g_strcmp0(uri->scheme, "nbd+tcp")) {
-+    } else if (!g_strcmp0(uri_scheme, "nbd+tcp")) {
-         is_unix = false;
--    } else if (!g_strcmp0(uri->scheme, "nbd+unix")) {
-+    } else if (!g_strcmp0(uri_scheme, "nbd+unix")) {
-         is_unix = true;
-     } else {
--        ret = -EINVAL;
--        goto out;
-+        return -EINVAL;
-     }
+     - name: "[s390x] GCC (other-system)"
+       arch: s390x
+-      dist: focal
+       addons:
+         apt_packages:
+           - libaio-dev
+@@ -229,7 +225,6 @@ jobs:
  
--    p = uri->path ? uri->path : "";
-+    p = g_uri_get_path(uri) ?: "";
-     if (p[0] == '/') {
-         p++;
-     }
-@@ -1545,52 +1545,50 @@ static int nbd_parse_uri(const char *filename, QDict *options)
-         qdict_put_str(options, "export", p);
-     }
+     - name: "[s390x] GCC (user)"
+       arch: s390x
+-      dist: focal
+       addons:
+         apt_packages:
+           - libgcrypt20-dev
+@@ -244,8 +239,7 @@ jobs:
  
--    qp = query_params_parse(uri->query);
--    if (qp->n > 1 || (is_unix && !qp->n) || (!is_unix && qp->n)) {
--        ret = -EINVAL;
--        goto out;
-+    uri_query = g_uri_get_query(uri);
-+    if (uri_query) {
-+        qp = g_uri_parse_params(uri_query, -1, "&", G_URI_PARAMS_NONE, NULL);
-+        if (!qp) {
-+            return -EINVAL;
-+        }
-+        qp_n = g_hash_table_size(qp);
-+        if (qp_n > 1 || (is_unix && !qp_n) || (!is_unix && qp_n)) {
-+            return -EINVAL;
-+        }
-+     }
-+
-+    uri_server = g_uri_get_host(uri);
-+    if (uri_server && !uri_server[0]) {
-+        uri_server = NULL;
-     }
-+    uri_port = g_uri_get_port(uri);
- 
-     if (is_unix) {
-         /* nbd+unix:///export?socket=path */
--        if (uri->server || uri->port || strcmp(qp->p[0].name, "socket")) {
--            ret = -EINVAL;
--            goto out;
-+        const char *uri_socket = g_hash_table_lookup(qp, "socket");
-+        if (uri_server || uri_port != -1 || !uri_socket) {
-+            return -EINVAL;
-         }
-         qdict_put_str(options, "server.type", "unix");
--        qdict_put_str(options, "server.path", qp->p[0].value);
-+        qdict_put_str(options, "server.path", uri_socket);
-     } else {
--        QString *host;
-         char *port_str;
- 
-         /* nbd[+tcp]://host[:port]/export */
--        if (!uri->server) {
--            ret = -EINVAL;
--            goto out;
--        }
--
--        /* strip braces from literal IPv6 address */
--        if (uri->server[0] == '[') {
--            host = qstring_from_substr(uri->server, 1,
--                                       strlen(uri->server) - 1);
--        } else {
--            host = qstring_from_str(uri->server);
-+        if (!uri_server) {
-+            return -EINVAL;
-         }
- 
-         qdict_put_str(options, "server.type", "inet");
--        qdict_put(options, "server.host", host);
-+        qdict_put_str(options, "server.host", uri_server);
- 
--        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
-+        port_str = g_strdup_printf("%d", uri_port > 0 ? uri_port
-+                                                      : NBD_DEFAULT_PORT);
-         qdict_put_str(options, "server.port", port_str);
-         g_free(port_str);
-     }
- 
--out:
--    if (qp) {
--        query_params_free(qp);
--    }
--    uri_free(uri);
--    return ret;
-+    return 0;
- }
- 
- static bool nbd_has_filename_options_conflict(QDict *options, Error **errp)
+     - name: "[s390x] Clang (disable-tcg)"
+       arch: s390x
+-      dist: focal
+-      compiler: clang-10
++      compiler: clang
+       addons:
+         apt_packages:
+           - libaio-dev
+@@ -271,7 +265,6 @@ jobs:
+           - libvdeplug-dev
+           - libvte-2.91-dev
+           - ninja-build
+-          - clang-10
+       env:
+         - TEST_CMD="make check-unit"
+         - CONFIG="--disable-containers --disable-tcg --enable-kvm --disable-tools
 -- 
 2.44.0
 
