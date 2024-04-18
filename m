@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01896C04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C192C04FFE
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxTva-00065X-Ba; Thu, 18 Apr 2024 11:43:58 -0400
+	id 1rxTvJ-0005wU-BB; Thu, 18 Apr 2024 11:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rxTvY-000658-2D
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:43:56 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rxTvH-0005vd-KY
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:43:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rxTvU-0001DG-5y
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:43:54 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 33BC75FD22;
- Thu, 18 Apr 2024 18:43:45 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A45F7B9273;
- Thu, 18 Apr 2024 18:43:42 +0300 (MSK)
-Message-ID: <dcaed5da-5e94-4cb6-b5b8-0a571eac371b@tls.msk.ru>
-Date: Thu, 18 Apr 2024 18:43:42 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rxTvE-0001BT-Sk
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:43:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713455016;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6wF57Na8KP12SJ8r7qxg+aDEgUr4iFUQCEQLjjJSbSs=;
+ b=PC9UeRla0JfxXmHvkP3DtN+9yfDBJ+tKk7XQ6JuphoGUkHh/ty15zHZxgcKQRRw5n/PlNj
+ 5dqsMq7MmaoTsFpBipy9nwZII2CgysQwJTThFEPZ/YUPR+kLkkBQ62x+uUNXm1v4uzQN39
+ E383uvEmoBVu6oGlbhJ0FIDcbHwIQKk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-Q10jWELUN-OxzJ5qX0pO7Q-1; Thu,
+ 18 Apr 2024 11:43:32 -0400
+X-MC-Unique: Q10jWELUN-OxzJ5qX0pO7Q-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1A16F1C07F3B;
+ Thu, 18 Apr 2024 15:43:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.72])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C262940357A7;
+ Thu, 18 Apr 2024 15:43:29 +0000 (UTC)
+Date: Thu, 18 Apr 2024 16:43:27 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: peterx@redhat.com, farosas@suse.de, yc-core@yandex-team.ru,
+ thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, pkrempa@redhat.com
+Subject: Re: [PATCH] migration: do not exit on incoming failure
+Message-ID: <ZiE_n7qwvRCz3vjE@redhat.com>
+References: <20240417221329.248803-1-vsementsov@yandex-team.ru>
+ <ZiEwF0rWlLaKMzqw@redhat.com>
+ <0a1d8984-bc01-41bf-9099-0ef426e848ca@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
-To: Cord Amfmgm <dmamfmgm@gmail.com>, qemu-devel@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CACBuX0To1QWpOTE-HfbXv=tUVWVL0=pvn-+E28EL_mWuqfZ-sw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0a1d8984-bc01-41bf-9099-0ef426e848ca@yandex-team.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,94 +85,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-06.02.2024 10:13, Cord Amfmgm wrote:
-> This changes the ohci validation to not assert if invalid
-> data is fed to the ohci controller. The poc suggested in
-> https://bugs.launchpad.net/qemu/+bug/1907042
-> and then migrated to bug #303 does the following to
-> feed it a SETUP pid and EndPt of 1:
+On Thu, Apr 18, 2024 at 06:40:38PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 18.04.24 17:37, Daniel P. Berrangé wrote:
+> > On Thu, Apr 18, 2024 at 01:13:29AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > We do set MIGRATION_FAILED state, but don't give a chance to
+> > > orchestrator to query migration state and get the error.
+> > > 
+> > > Let's report an error through QAPI like we do on outgoing migration.
+> > > 
+> > > migration-test is updated correspondingly.
+> > > 
+> > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > > ---
+> > > 
+> > > Doubt: is exiting on failure a contract? Will this commit break
+> > > something in Libvirt? Finally, could we just change the logic, or I need
+> > > and additional migration-parameter for new behavior?
+> > 
+> > There's a decent risk that this could break apps, whether
+> > libvirt or something else, especially if the app is just
+> > launching QEMU with '-incoming URI', rather than using
+> > '-incoming defer' and then explicitly using QMP to start the
+> > incoming migration.
+> > 
+> > I'd say that with '-incoming defer' we should *not* exit on
+> > migration error, because that arg implies the app explicitly
+> > wants to be using QMP to control migration.
+> > 
+> > With the legacy '-incoming URI' it is probably best to keep
+> > exit on error, as that's comparatively more likely to be used
+> > in adhoc scenarios where the app/user is ignoring QMP on the
+> > dst side.
+> > 
+> > None the less, I think we need to check how libvirt behaves
+> > with this patch to be sure of no surprises.
+> > 
 > 
->          uint32_t MaxPacket = 64;
->          uint32_t TDFormat = 0;
->          uint32_t Skip = 0;
->          uint32_t Speed = 0;
->          uint32_t Direction = 0;  /* #define OHCI_TD_DIR_SETUP 0 */
->          uint32_t EndPt = 1;
->          uint32_t FuncAddress = 0;
->          ed->attr = (MaxPacket << 16) | (TDFormat << 15) | (Skip << 14)
->                     | (Speed << 13) | (Direction << 11) | (EndPt << 7)
->                     | FuncAddress;
->          ed->tailp = /*TDQTailPntr= */ 0;
->          ed->headp = ((/*TDQHeadPntr= */ &td[0]) & 0xfffffff0)
->                     | (/* ToggleCarry= */ 0 << 1);
->          ed->next_ed = (/* NextED= */ 0 & 0xfffffff0)
-> 
-> qemu-fuzz also caught the same issue in #1510. They are
-> both fixed by this patch.
-> 
-> The if (td.cbp > td.be) logic in ohci_service_td() causes an
-> ohci_die(). My understanding of the OHCI spec 4.3.1.2
-> Table 4-2 allows td.cbp to be one byte more than td.be to
-> signal the buffer has zero length. The new check in qemu
-> appears to have been added since qemu-4.2. This patch
-> includes both fixes since they are located very close
-> together.
-> 
-> Signed-off-by: David Hubbard <dmamfmgm@gmail.com>
+> Sounds reasonable, thanks! I'll rework it to behave the new
+> way only with "-incoming defer", and check how libvirt behave with it.
 
-Wonder if this got lost somehow.  Or is it not needed?
+If there are problems and/or we want to be super safe wrt
+backcompat, we could add a new  '-incoming managed' as
+being equivalent to '-incoming defer' but without the
+implicit exit.
 
-Thanks,
-
-/mjt
-
-> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index d73b53f33c..a53808126f 100644
-> --- a/hw/usb/hcd-ohci.c
-> +++ b/hw/usb/hcd-ohci.c
-> @@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci,
-> struct ohci_ed *ed)
->       case OHCI_TD_DIR_SETUP:
->           str = "setup";
->           pid = USB_TOKEN_SETUP;
-> +        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only allowed to ep 0 */
-> +            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
-> +            ohci_die(ohci);
-> +            return 1;
-> +        }
->           break;
->       default:
->           trace_usb_ohci_td_bad_direction(dir);
-> @@ -936,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct
-> ohci_ed *ed)
->           if ((td.cbp & 0xfffff000) != (td.be & 0xfffff000)) {
->               len = (td.be & 0xfff) + 0x1001 - (td.cbp & 0xfff);
->           } else {
-> -            if (td.cbp > td.be) {
-> -                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp, td.be);
-> +            if (td.cbp > td.be + 1) {
-> +                trace_usb_ohci_td_bad_buf(td.cbp, td.be);
->                   ohci_die(ohci);
->                   return 1;
->               }
-> diff --git a/hw/usb/trace-events b/hw/usb/trace-events
-> index ed7dc210d3..b47d082fa3 100644
-> --- a/hw/usb/trace-events
-> +++ b/hw/usb/trace-events
-> @@ -28,6 +28,8 @@ usb_ohci_iso_td_data_overrun(int ret, ssize_t len)
-> "DataOverrun %d > %zu"
->   usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
->   usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
->   usb_ohci_iso_td_bad_response(int ret) "Bad device response %d"
-> +usb_ohci_td_bad_buf(uint32_t cbp, uint32_t be) "Bad cbp = 0x%x > be = 0x%x"
-> +usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t tdf) "Bad
-> pid %s: ed.flags 0x%x td.flags 0x%x"
->   usb_ohci_port_attach(int index) "port #%d"
->   usb_ohci_port_detach(int index) "port #%d"
->   usb_ohci_port_wakeup(int index) "port #%d"
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
