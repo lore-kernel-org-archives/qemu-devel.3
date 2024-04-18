@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D5BC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 06:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09182C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 06:20:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxL1u-0000bo-Qh; Thu, 18 Apr 2024 02:13:54 -0400
+	id 1rxL7H-0004YN-MP; Thu, 18 Apr 2024 02:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxL1s-0000aj-VS
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 02:13:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxL7G-0004XO-9P
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 02:19:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxL1p-0000Cr-NP
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 02:13:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxL7C-0001gb-2C
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 02:19:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713420827;
+ s=mimecast20190719; t=1713421159;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yADguTo6OtHbKXGyfe5pHI1kNjPau0SNSmuCZPAYh4c=;
- b=RWgIdcnhZn9Il6tQw0hY/c0cLYeRNDXV0YS4K8jfJgIhO2kIJQCfpKtKNqu0oablbQ4jDR
- AHYxd4HTGjLM0FXCUPr20DNTvc6VfgJzDNj1SOXtmTcpRmA5OPUFdNGXxQXLfpNHgczGp4
- 5yz/mVP5cQrkR9VyXj/b67BKoHomj3A=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+qq/ir9YB40T0v8/pT/1m6Y63ECIfPcYJYr7zEV2ht0=;
+ b=HGdU45wtORr9EGdOAG5LpM35igJOxUjoyRH4w42a21vR/WoDNAeM+RU66fwubBePAAXsxJ
+ ajX3lsYyDkXF/hOomvTpf7/6EDusrfnG9Kg/cf3271mWaSm/2+JQsDi8ytavus9n7064pg
+ JXZOj5K5CXe4Rg3lOX8cPwOv/b5weIc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-mxuHy2YvMxekGizAPDpKKg-1; Thu, 18 Apr 2024 02:13:45 -0400
-X-MC-Unique: mxuHy2YvMxekGizAPDpKKg-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2db6acacdacso4569201fa.0
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 23:13:45 -0700 (PDT)
+ us-mta-216-VdOEjmY_NoqWbWeDnkV7Yw-1; Thu, 18 Apr 2024 02:19:17 -0400
+X-MC-Unique: VdOEjmY_NoqWbWeDnkV7Yw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-349e1effeb5so542987f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 23:19:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713420824; x=1714025624;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yADguTo6OtHbKXGyfe5pHI1kNjPau0SNSmuCZPAYh4c=;
- b=LEY/wqmzl5jseDcO90J/w+Y5cryqizU5cKDLduHnYkcwgDJD6N7j+Olw/2Q2AcGS/+
- iWn8kVBcUbSrbmfj/lMqpB9FFiD7JmozkOPX6a/QqMwjrCUMF4sHt4lBE/wLOA7F9tNO
- +lVpzeBq243gAdRpxUTLaNPWjvm4k/17U0Gk9g+fG7i+O8TuKnasRnzIawq4pPbUPutj
- QOB9gpuoczPhd8H76Kpsi3q8BRCOZXQvoLUfWJB/ESAZFZX+xcFvodTcXO5swj5LOzEg
- c5wmsXzsj5IG0E0NXHBS9ea+XJvnDs94qOvd+my9tKqQ4wOCE3p9B6Zph7zylDTSmaQV
- xWZA==
+ d=1e100.net; s=20230601; t=1713421156; x=1714025956;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+qq/ir9YB40T0v8/pT/1m6Y63ECIfPcYJYr7zEV2ht0=;
+ b=QYNbeq/2JZHUwL7rr3fWJNlmubJtqAd0/fkp97NNsccuvum5XjgZMiyazzhXKH9cno
+ r3+eL4b+YRLcd04DgV6eDLEi2QBiQsc047Udwv58b1wlF9HWat8lfkFHbpp6qlbzZcOm
+ KSc3RdgQW00G/dp36HWY8F3TEmi99//fmmPjvYyBI1PmcY9FZ/xqzEqZchdR9N9OvKai
+ HyB3f5oGiy1Nxvz4BWirGBVDFyZuFazOQv/ii5I0Gba2b5HFAdLIPFYc83LmXuqV2IeZ
+ 1iyPx95RuLX7PQezLIan1fQ3gz47uQD7bVMAB9ZHYf3My43ncjmV4FXmItCWIeO31IJF
+ IB5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWh7LBKUTOfXSsD0eABW8ZJExI9agxeAwsIrWFKU7nmUqPMdliHvyLoAddUhY5ANhxb4ZCdaWPVVif3Be+dO83qv+8uJ94=
-X-Gm-Message-State: AOJu0YytEP9gpapRLrT2otadKVzasK17JGs/U1yvJ/yvciOGDsdKIGVe
- Ls0kprgsiyT2WsRug12siLqJAVspSbc32pz5AAEpNIL7OKy6JBkdMQvtQl6pcxVVTqSFMx7pEWs
- 2yEVs1QR1Pwm50jw1/mUx+prai4DVVnI5ighcbiBgjiqyO3zYMjGk
-X-Received: by 2002:a2e:868c:0:b0:2d6:c252:27fa with SMTP id
- l12-20020a2e868c000000b002d6c25227famr1249440lji.37.1713420824007; 
- Wed, 17 Apr 2024 23:13:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+R3BW4u8kfEGbt2X/fHtp1w0iCFrUZxzTkXOofOvwoAGdx3m6/V9idjT5OKW5PR04kt61+Q==
-X-Received: by 2002:a2e:868c:0:b0:2d6:c252:27fa with SMTP id
- l12-20020a2e868c000000b002d6c25227famr1249404lji.37.1713420823512; 
- Wed, 17 Apr 2024 23:13:43 -0700 (PDT)
+ AJvYcCUxBacTWh2OkiC6wZwnzM7qsAT5nLO7juirpxqBv9uPVe88X7rRV77MJ80wJcZ94HMvlo8N3/kq89y+FahBnpnA5u5Jl7Y=
+X-Gm-Message-State: AOJu0YxufoiKC/ox9k+AmpIYvgDaQkaYeA6c1X7Apwq5pzy0lNo/SmS+
+ RFEfyyJpT9rvvLmDU/5DMPCp4e+MIZox0vfX1sWvXx6VK3xx5BEScDC/kT2Ecdpu0ZdWpiHv9VP
+ srZz3cPVXdQiJGeSA/E/r+URUvcz8o5C9/29UaYWl5Lg1eq8NXGyybSkOztq1
+X-Received: by 2002:a5d:4083:0:b0:349:bb17:6e60 with SMTP id
+ o3-20020a5d4083000000b00349bb176e60mr783214wrp.2.1713421156381; 
+ Wed, 17 Apr 2024 23:19:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzXul00931VO1aUPDJWx0G0phcreMsTJGcbWtEbGlefrxaJ64sejmPyP3EIzWELr3Vj8/auA==
+X-Received: by 2002:a5d:4083:0:b0:349:bb17:6e60 with SMTP id
+ o3-20020a5d4083000000b00349bb176e60mr783202wrp.2.1713421156044; 
+ Wed, 17 Apr 2024 23:19:16 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-117.web.vodafone.de.
  [109.43.177.117]) by smtp.gmail.com with ESMTPSA id
- t15-20020adfeb8f000000b00349ff2e0345sm934172wrn.70.2024.04.17.23.13.42
+ z2-20020adff742000000b00343ca138924sm945232wrp.39.2024.04.17.23.19.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Apr 2024 23:13:43 -0700 (PDT)
-Message-ID: <c623e08e-d18a-4bf9-bb20-8dcb84ab6bbf@redhat.com>
-Date: Thu, 18 Apr 2024 08:13:41 +0200
+ Wed, 17 Apr 2024 23:19:15 -0700 (PDT)
+Message-ID: <d2daac8b-0a89-423b-9bf3-6ec93af04c3c@redhat.com>
+Date: Thu, 18 Apr 2024 08:19:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/13] block/gluster: Use URI parsing code from glib
-To: Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v2 04/13] tests: Update our CI to use CentOS Stream 9
+ instead of 8
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
 References: <20240412132415.282354-1-thuth@redhat.com>
- <20240412132415.282354-10-thuth@redhat.com>
- <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
-Content-Language: en-US
+ <20240412132415.282354-5-thuth@redhat.com> <Zh_1l1v13QG6fNF3@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -127,10 +128,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
+In-Reply-To: <Zh_1l1v13QG6fNF3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -4
 X-Spam_score: -0.5
@@ -155,66 +156,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/04/2024 16.40, Eric Blake wrote:
-> On Fri, Apr 12, 2024 at 03:24:11PM +0200, Thomas Huth wrote:
->> Since version 2.66, glib has useful URI parsing functions, too.
->> Use those instead of the QEMU-internal ones to be finally able
->> to get rid of the latter.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   block/gluster.c | 71 ++++++++++++++++++++++++-------------------------
->>   1 file changed, 35 insertions(+), 36 deletions(-)
->>
->> diff --git a/block/gluster.c b/block/gluster.c
->> index cc74af06dc..1c9505f8bb 100644
->> --- a/block/gluster.c
->> +++ b/block/gluster.c
->> @@ -17,7 +17,6 @@
->>   #include "qapi/error.h"
->>   #include "qapi/qmp/qdict.h"
->>   #include "qapi/qmp/qerror.h"
->> -#include "qemu/uri.h"
->>   #include "qemu/error-report.h"
->>   #include "qemu/module.h"
->>   #include "qemu/option.h"
->> @@ -289,9 +288,9 @@ static void glfs_clear_preopened(glfs_t *fs)
->>       }
->>   }
->>   
->> -static int parse_volume_options(BlockdevOptionsGluster *gconf, char *path)
->> +static int parse_volume_options(BlockdevOptionsGluster *gconf, const char *path)
+On 17/04/2024 18.15, Daniel P. Berrangé wrote:
+> On Fri, Apr 12, 2024 at 03:24:06PM +0200, Thomas Huth wrote:
+>> RHEL 9 (and thus also the derivatives) are available since two years
+>> now, so according to QEMU's support policy, we can drop the active
+>> support for the previous major version 8 now.
+>> Thus upgrade our CentOS Stream container to major version 9 now.
 > 
-> Is it worth mentioning in the commit message that this includes a
-> const-correctness tweak?
-
-I can add something like:
-
-"Since g_uri_get_path() returns a const pointer, we also need to tweak the 
-parameter of parse_volume_options() (where we use the result of 
-g_uri_get_path() as input)"
-
->> @@ -364,57 +363,57 @@ static int qemu_gluster_parse_uri(BlockdevOptionsGluster *gconf,
->>       QAPI_LIST_PREPEND(gconf->server, gsconf);
->>   
->>       /* transport */
->> -    if (!uri->scheme || !strcmp(uri->scheme, "gluster")) {
->> +    uri_scheme = g_uri_get_scheme(uri);
->> +    if (!uri_scheme || !strcmp(uri_scheme, "gluster")) {
+> The second reason for doing this is that Centos Stream 8
+> will go EOL in about 1 month:
 > 
-> Pre-existing, but per RFC 3986, we should probably be using strcasecmp
-> for scheme comparisons (I'm not sure if g_uri_parse guarantees a
-> lower-case return, even when the user passed in upper case).  That can
-> be a separate patch.
+> https://blog.centos.org/2023/04/end-dates-are-coming-for-centos-stream-8-and-centos-linux-7/
+> 
+>    "After May 31, 2024, CentOS Stream 8 will be archived
+>     and no further updates will be provided."
+> 
+> I'm seeking confirmation, but I suspect after that date we
+> will be unable to build centos8 containers, as the package
+> repos will likely be archived.
+> 
+> RHEL-8 and other derivatives (Alma Linux, Rocky Linux,
+> etc) remain actively supported by their respective vendors
+> / communities. Only CentOS Stream EOLs.
+> 
+> 
+> This has implications for our CI on stable branches. It is
+> valid for our stable branches to continue targetting the
+> RHEL-8 family of distros, as a 2 year cutoff in our support
+> policy is evaluated at time of each given major release.
+> 
+> IOW, cherry-picking this change to switch to CentOS Stream
+> 9 is possibly inappropriate for stable branches.
+> 
+> lcitool supports Alma Linux as target, so we could switch
+> stable branches to Alma Linux 8 if desired to keep CI
+> coverage of RHEL-8 family.
+> 
+> Thoughts ?
 
-As Daniel mentioned, g_uri_get_scheme() returns a lowercase string, so we 
-should be fine.
-
-> Reviewed-by: Eric Blake <eblake@redhat.com>
-
-Thanks!
+Either use AlmaLinux for the stable branches, or drop the EL 8 testing in 
+the stable CI completely ... I assume that the probability will be rather 
+low that we break something there by backporting some few patches (and if 
+so, people can still complain by opening a bug ticket, then we can fix it in 
+the following stable release).
 
   Thomas
-
 
 
