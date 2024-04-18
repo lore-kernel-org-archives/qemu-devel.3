@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDE0C04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FB1C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxX0L-0003oM-Ie; Thu, 18 Apr 2024 15:01:05 -0400
+	id 1rxX0g-0003tm-9j; Thu, 18 Apr 2024 15:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rxX0H-0003ng-Ee
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:01:01 -0400
-Received: from madrid.collaboradmins.com ([46.235.227.194])
+ id 1rxX0N-0003pN-7O
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:01:12 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rxX0D-0002wi-Hu
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:01:01 -0400
+ id 1rxX0L-0002xs-Ch
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:01:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1713466855;
- bh=ntV8AMAxwSVviMTSTSO8OBDrYNxZ6+aOr758qIkpS0w=;
- h=From:To:Cc:Subject:Date:From;
- b=aktcQtcg4cKn7CSM9nPCVzQaORJ7aDHveAjdyIig1tflgnge43VfFH1inwyo9EjrN
- N7fsRDvxvhRV9gLSURcDY6vqwt6WokbX3lACDGnUmtZazrX6bAEHYQ9c3FJZc98bJK
- oDCMkd0plrp/9YTWU3ULdthzDptciseWdCcJxkR1eWESZpWljXzkzSkR3ilb+tYWHu
- GUx2DOR+OrMEcYhcgo1GE8BV++aArjjA4g/isK5Obw3GaaK0d+OwakD8WMFlEx8LjN
- sYPyBY5vzPIqu22MoPQ1ZG9qvK282HVbjclxGPR0H4IRJK4VNmLXdpb6pHkc1w9cQR
- qIdBSkaM5Orpw==
+ s=mail; t=1713466864;
+ bh=7hQjZuTzsym0fJcq9f9wiRPViw9PtWDp0tZMJQ+M5NU=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=N4f8ToBAH3KexRDRseYtCK7pv55igHlliWeIGBgak62XNBKGbtFqiaJ+nlaw4xE9E
+ 2D/42MyACD75SIX27exLtUwoC+pMYfn1w75QvX1IU6leBKkWKUhhF/dNbcOnQ2JuuE
+ UPk19uSmgImoFbnLcV2g8W2C18dAAL+L/9UTGUvE79Aq0MxKfMCDql9jg/2RR138bI
+ ugaaNJiC6ZwEiwAaO+GrPvw5MXLXSYo/UlA4MVgkExRNfiexMGVYQESD6vnk9Pf7ya
+ t2bM2wlZVipxdvpSD/gh/KE7RZsh2/0kwjTOiHL9xaEJrYehQ8M9s0W/T0RH2vcRDs
+ FXSkdLZjGOC1A==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 786233782017;
- Thu, 18 Apr 2024 19:00:53 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 71410378214B;
+ Thu, 18 Apr 2024 19:01:02 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -59,14 +59,17 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v8 00/11] Support blob memory and venus on qemu
-Date: Thu, 18 Apr 2024 22:00:29 +0300
-Message-ID: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+Subject: [PATCH v8 04/11] virtio-gpu: Don't require udmabuf when blobs and
+ virgl are enabled
+Date: Thu, 18 Apr 2024 22:00:33 +0300
+Message-ID: <20240418190040.1110210-5-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=46.235.227.194;
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,222 +92,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+The udmabuf usage is mandatory when virgl is disabled and blobs feature
+enabled in the Qemu machine configuration. If virgl and blobs are enabled,
+then udmabuf requirement is optional. Since udmabuf isn't widely supported
+by a popular Linux distros today, let's relax the udmabuf requirement for
+blobs=on,virgl=on. Now, a full-featured virtio-gpu acceleration is
+available to Qemu users without a need to have udmabuf available in the
+system.
 
-This series enables Vulkan Venus context support on virtio-gpu.
+Reviewed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ hw/display/virtio-gpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-All virglrender and almost all Linux kernel prerequisite changes
-needed by Venus are already in upstream. For kernel there is a pending
-KVM patchset that fixes mapping of compound pages needed for DRM drivers
-using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
-from Qemu.
-
-[1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
-
-Example Qemu cmdline that enables Venus for virtio-gpu:
-
-  qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=true,vulkan=true
-
-
-Changes from V7 to V8
-
-- Supported suspension of virtio-gpu commands processing and made
-  unmapping of hostmem region asynchronous by blocking/suspending
-  cmd processing until region is unmapped. Suggested by Akihiko Odaki.
-
-- Fixed arm64 building of x86 targets using updated linux-headers.
-  Corrected the update script. Thanks to Rob Clark for reporting
-  the issue.
-
-- Added new patch that makes registration of virgl capsets dynamic.
-  Requested by Antonio Caggiano and Pierre-Eric Pelloux-Prayer.
-
-- Venus capset now isn't advertised if Vulkan is disabled with vulkan=false
-
-Changes from V6 to V7
-
-- Used scripts/update-linux-headers.sh to update Qemu headers based
-  on Linux v6.8-rc3 that adds Venus capset definition to virtio-gpu
-  protocol, was requested by Peter Maydel
-
-- Added r-bs that were given to v6 patches. Corrected missing s-o-bs
-
-- Dropped context_init Qemu's virtio-gpu device configuration flag,
-  was suggested by Marc-André Lureau
-
-- Added missing error condition checks spotted by Marc-André Lureau
-  and Akihiko Odaki, and few more
-
-- Returned back res->mr referencing to memory_region_init_ram_ptr() like
-  was suggested by Akihiko Odaki. Incorporated fix suggested by Pierre-Eric
-  to specify the MR name
-
-- Dropped the virgl_gpu_resource wrapper, cleaned up and simplified
-  patch that adds blob-cmd support
-
-- Fixed improper blob resource removal from resource list on resource_unref
-  that was spotted by Akihiko Odaki
-
-- Change order of the blob patches, was suggested by Akihiko Odaki.
-  The cmd_set_scanout_blob support is enabled first
-
-- Factored out patch that adds resource management support to virtio-gpu-gl,
-  was requested by Marc-André Lureau
-
-- Simplified and improved the UUID support patch, dropped the hash table
-  as we don't need it for now. Moved QemuUUID to virtio_gpu_simple_resource.
-  This all was suggested by Akihiko Odaki and Marc-André Lureau
-
-- Dropped console_has_gl() check, suggested by Akihiko Odaki
-
-- Reworked Meson cheking of libvirglrender features, made new features
-  available based on virglrender pkgconfig version instead of checking
-  symbols in header. This should fix build error using older virglrender
-  version, reported by Alex Bennée
-
-- Made enabling of Venus context configrable via new virtio-gpu device
-  "vulkan=true" flag, suggested by Marc-André Lureau. The flag is disabled
-  by default because it requires blob and hostmem options to be enabled
-  and configured
-
-Changes from V5 to V6
-
-- Move macros configurations under virgl.found() and rename
-  HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS.
-
-- Handle the case while context_init is disabled.
-
-- Enable context_init by default.
-
-- Move virtio_gpu_virgl_resource_unmap() into
-  virgl_cmd_resource_unmap_blob().
-
-- Introduce new struct virgl_gpu_resource to store virgl specific members.
-
-- Remove erro handling of g_new0, because glib will abort() on OOM.
-
-- Set resource uuid as option.
-
-- Implement optional subsection of vmstate_virtio_gpu_resource_uuid_state
-  for virtio live migration.
-
-- Use g_int_hash/g_int_equal instead of the default
-
-- Add scanout_blob function for virtio-gpu-virgl
-
-- Resolve the memory leak on virtio-gpu-virgl
-
-- Remove the unstable API flags check because virglrenderer is already 1.0
-
-- Squash the render server flag support into "Initialize Venus"
-
-Changes from V4 (virtio gpu V4) to V5
-
-- Inverted patch 5 and 6 because we should configure
-  HAVE_VIRGL_CONTEXT_INIT firstly.
-
-- Validate owner of memory region to avoid slowing down DMA.
-
-- Use memory_region_init_ram_ptr() instead of
-  memory_region_init_ram_device_ptr().
-
-- Adjust sequence to allocate gpu resource before virglrender resource
-  creation
-
-- Add virtio migration handling for uuid.
-
-- Send kernel patch to define VIRTIO_GPU_CAPSET_VENUS.
-  https://lore.kernel.org/lkml/20230915105918.3763061-1-ray.huang@amd.com/
-
-- Add meson check to make sure unstable APIs defined from 0.9.0.
-
-Changes from V1 to V2 (virtio gpu V4)
-
-- Remove unused #include "hw/virtio/virtio-iommu.h"
-
-- Add a local function, called virgl_resource_destroy(), that is used
-  to release a vgpu resource on error paths and in resource_unref.
-
-- Remove virtio_gpu_virgl_resource_unmap from
-  virtio_gpu_cleanup_mapping(),
-  since this function won't be called on blob resources and also because
-  blob resources are unmapped via virgl_cmd_resource_unmap_blob().
-
-- In virgl_cmd_resource_create_blob(), do proper cleanup in error paths
-  and move QTAILQ_INSERT_HEAD(&g->reslist, res, next) after the resource
-  has been fully initialized.
-
-- Memory region has a different life-cycle from virtio gpu resources
-  i.e. cannot be released synchronously along with the vgpu resource.
-  So, here the field "region" was changed to a pointer and is allocated
-  dynamically when the blob is mapped.
-  Also, since the pointer can be used to indicate whether the blob
-  is mapped, the explicite field "mapped" was removed.
-
-- In virgl_cmd_resource_map_blob(), add check on the value of
-  res->region, to prevent beeing called twice on the same resource.
-
-- Add a patch to enable automatic deallocation of memory regions to resolve
-  use-after-free memory corruption with a reference.
-
-Antonio Caggiano (3):
-  virtio-gpu: Handle resource blob commands
-  virtio-gpu: Resource UUID
-  virtio-gpu: Support Venus context
-
-Dmitry Osipenko (4):
-  linux-headers: Update to Linux v6.9-rc3
-  virtio-gpu: Use pkgconfig version to decide which virgl features are
-    available
-  virtio-gpu: Don't require udmabuf when blobs and virgl are enabled
-  virtio-gpu: Support suspension of commands processing
-
-Huang Rui (2):
-  virtio-gpu: Support context-init feature with virglrenderer
-  virtio-gpu: Add virgl resource management
-
-Pierre-Eric Pelloux-Prayer (1):
-  virtio-gpu: Register capsets dynamically
-
-Robert Beckett (1):
-  virtio-gpu: Support blob scanout using dmabuf fd
-
- hw/display/trace-events                       |   1 +
- hw/display/virtio-gpu-base.c                  |   1 +
- hw/display/virtio-gpu-gl.c                    |   5 +
- hw/display/virtio-gpu-rutabaga.c              |   1 +
- hw/display/virtio-gpu-virgl.c                 | 519 ++++++++++++-
- hw/display/virtio-gpu.c                       |  42 +-
- hw/i386/x86.c                                 |   8 -
- include/hw/virtio/virtio-gpu.h                |  21 +
- include/standard-headers/asm-x86/bootparam.h  |  17 +-
- include/standard-headers/asm-x86/kvm_para.h   |   3 +-
- include/standard-headers/asm-x86/setup_data.h |  83 +++
- include/standard-headers/linux/ethtool.h      |  48 ++
- include/standard-headers/linux/fuse.h         |  39 +-
- .../linux/input-event-codes.h                 |   1 +
- include/standard-headers/linux/virtio_gpu.h   |   2 +
- include/standard-headers/linux/virtio_pci.h   |  10 +-
- include/standard-headers/linux/virtio_snd.h   | 154 ++++
- linux-headers/asm-arm64/kvm.h                 |  15 +-
- linux-headers/asm-arm64/sve_context.h         |  11 +
- linux-headers/asm-generic/bitsperlong.h       |   4 +
- linux-headers/asm-loongarch/kvm.h             |   2 -
- linux-headers/asm-mips/kvm.h                  |   2 -
- linux-headers/asm-powerpc/kvm.h               |  45 +-
- linux-headers/asm-riscv/kvm.h                 |   3 +-
- linux-headers/asm-s390/kvm.h                  | 315 +++++++-
- linux-headers/asm-x86/kvm.h                   | 308 +++++++-
- linux-headers/linux/bits.h                    |  15 +
- linux-headers/linux/kvm.h                     | 689 +-----------------
- linux-headers/linux/psp-sev.h                 |  59 ++
- linux-headers/linux/vhost.h                   |   7 +
- meson.build                                   |  10 +-
- scripts/update-linux-headers.sh               |   5 +-
- 32 files changed, 1679 insertions(+), 766 deletions(-)
- create mode 100644 include/standard-headers/asm-x86/setup_data.h
- create mode 100644 linux-headers/linux/bits.h
-
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index ae831b6b3e3e..dac272ecadb1 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1472,6 +1472,7 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+ 
+     if (virtio_gpu_blob_enabled(g->parent_obj.conf)) {
+         if (!virtio_gpu_rutabaga_enabled(g->parent_obj.conf) &&
++            !virtio_gpu_virgl_enabled(g->parent_obj.conf) &&
+             !virtio_gpu_have_udmabuf()) {
+             error_setg(errp, "need rutabaga or udmabuf for blob resources");
+             return;
 -- 
 2.44.0
 
