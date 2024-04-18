@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734FAC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCA4C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 17:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxVw3-00054E-ME; Thu, 18 Apr 2024 13:52:35 -0400
+	id 1rxVvA-0002f1-EX; Thu, 18 Apr 2024 13:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVve-0004Oj-TU; Thu, 18 Apr 2024 13:52:12 -0400
+ id 1rxVv8-0002UP-Bl; Thu, 18 Apr 2024 13:51:38 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxVvc-0007kw-Ux; Thu, 18 Apr 2024 13:52:10 -0400
+ id 1rxVv6-0007f9-E7; Thu, 18 Apr 2024 13:51:38 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 446B75FD7B;
- Thu, 18 Apr 2024 20:50:06 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A1D47B9355;
+ by isrv.corpit.ru (Postfix) with ESMTP id F1C835FD74;
  Thu, 18 Apr 2024 20:50:03 +0300 (MSK)
-Received: (nullmailer pid 947884 invoked by uid 1000);
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 5F98DB934E;
+ Thu, 18 Apr 2024 20:50:01 +0300 (MSK)
+Received: (nullmailer pid 947863 invoked by uid 1000);
  Thu, 18 Apr 2024 17:49:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chuhong Yuan <hslester96@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.3 114/116] hw/pci-host/ppc440_pcix: Do not expose a
- bridge device on PCI bus
-Date: Thu, 18 Apr 2024 20:49:44 +0300
-Message-Id: <20240418174955.947730-27-mjt@tls.msk.ru>
+Subject: [Stable-8.2.3 107/116] hw/net/lan9118: Fix overflow in MIL TX FIFO
+Date: Thu, 18 Apr 2024 20:49:37 +0300
+Message-Id: <20240418174955.947730-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
 References: <qemu-stable-8.2.3-20240418204921@cover.tls.msk.ru>
@@ -63,63 +63,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Real 460EX SoC apparently does not expose a bridge device and having
-it appear on PCI bus confuses an AmigaOS file system driver that uses
-this to detect which machine it is running on.
+When the MAC Interface Layer (MIL) transmit FIFO is full,
+truncate the packet, and raise the Transmitter Error (TXE)
+flag.
+
+Broken since model introduction in commit 2a42499017
+("LAN9118 emulation").
+
+When using the reproducer from
+https://gitlab.com/qemu-project/qemu/-/issues/2267 we get:
+
+  hw/net/lan9118.c:798:17: runtime error:
+  index 2048 out of bounds for type 'uint8_t[2048]' (aka 'unsigned char[2048]')
+    #0 0x563ec9a057b1 in tx_fifo_push hw/net/lan9118.c:798:43
+    #1 0x563ec99fbb28 in lan9118_writel hw/net/lan9118.c:1042:9
+    #2 0x563ec99f2de2 in lan9118_16bit_mode_write hw/net/lan9118.c:1205:9
+    #3 0x563ecbf78013 in memory_region_write_accessor system/memory.c:497:5
+    #4 0x563ecbf776f5 in access_with_adjusted_size system/memory.c:573:18
+    #5 0x563ecbf75643 in memory_region_dispatch_write system/memory.c:1521:16
+    #6 0x563ecc01bade in flatview_write_continue_step system/physmem.c:2713:18
+    #7 0x563ecc01b374 in flatview_write_continue system/physmem.c:2743:19
+    #8 0x563ecbff1c9b in flatview_write system/physmem.c:2774:12
+    #9 0x563ecbff1768 in address_space_write system/physmem.c:2894:18
+    ...
+
+[*] LAN9118 DS00002266B.pdf, Table 5.3.3 "INTERRUPT STATUS REGISTER"
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240411192443.B4D644E6026@zero.eik.bme.hu>
+Reported-by: Will Lester
+Reported-by: Chuhong Yuan <hslester96@gmail.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2267
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 6e4aceba2079e3df42edc89d44f4ee02343bb09e)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20240409133801.23503-3-philmd@linaro.org>
+(cherry picked from commit ad766d603f39888309cfb1433ba2de1d0e9e4f58)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/ppc440_pcix.c b/hw/ppc/ppc440_pcix.c
-index df4ee374d0..0468b22080 100644
---- a/hw/ppc/ppc440_pcix.c
-+++ b/hw/ppc/ppc440_pcix.c
-@@ -53,7 +53,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PPC440PCIXState, PPC440_PCIX_HOST)
- struct PPC440PCIXState {
-     PCIHostState parent_obj;
- 
--    PCIDevice *dev;
-+    uint8_t config[PCI_CONFIG_SPACE_SIZE];
-     struct PLBOutMap pom[PPC440_PCIX_NR_POMS];
-     struct PLBInMap pim[PPC440_PCIX_NR_PIMS];
-     uint32_t sts;
-@@ -172,7 +172,7 @@ static void ppc440_pcix_reg_write4(void *opaque, hwaddr addr,
-     trace_ppc440_pcix_reg_write(addr, val, size);
-     switch (addr) {
-     case PCI_VENDOR_ID ... PCI_MAX_LAT:
--        stl_le_p(s->dev->config + addr, val);
-+        stl_le_p(s->config + addr, val);
-         break;
- 
-     case PCIX0_POM0LAL:
-@@ -303,7 +303,7 @@ static uint64_t ppc440_pcix_reg_read4(void *opaque, hwaddr addr,
- 
-     switch (addr) {
-     case PCI_VENDOR_ID ... PCI_MAX_LAT:
--        val = ldl_le_p(s->dev->config + addr);
-+        val = ldl_le_p(s->config + addr);
-         break;
- 
-     case PCIX0_POM0LAL:
-@@ -499,10 +499,7 @@ static void ppc440_pcix_realize(DeviceState *dev, Error **errp)
-     memory_region_init(&s->iomem, OBJECT(dev), "pci-io", 64 * KiB);
-     h->bus = pci_register_root_bus(dev, NULL, ppc440_pcix_set_irq,
-                          ppc440_pcix_map_irq, &s->irq, &s->busmem, &s->iomem,
--                         PCI_DEVFN(0, 0), 1, TYPE_PCI_BUS);
--
--    s->dev = pci_create_simple(h->bus, PCI_DEVFN(0, 0),
--                               TYPE_PPC4xx_HOST_BRIDGE);
-+                         PCI_DEVFN(1, 0), 1, TYPE_PCI_BUS);
- 
-     memory_region_init(&s->bm, OBJECT(s), "bm-ppc440-pcix", UINT64_MAX);
-     memory_region_add_subregion(&s->bm, 0x0, &s->busmem);
+diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+index f0a8a3fa10..4b081cc827 100644
+--- a/hw/net/lan9118.c
++++ b/hw/net/lan9118.c
+@@ -799,8 +799,22 @@ static void tx_fifo_push(lan9118_state *s, uint32_t val)
+             /* Documentation is somewhat unclear on the ordering of bytes
+                in FIFO words.  Empirical results show it to be little-endian.
+                */
+-            /* TODO: FIFO overflow checking.  */
+             while (n--) {
++                if (s->txp->len == MIL_TXFIFO_SIZE) {
++                    /*
++                     * No more space in the FIFO. The datasheet is not
++                     * precise about this case. We choose what is easiest
++                     * to model: the packet is truncated, and TXE is raised.
++                     *
++                     * Note, it could be a fragmented packet, but we currently
++                     * do not handle that (see earlier TX_B case).
++                     */
++                    qemu_log_mask(LOG_GUEST_ERROR,
++                                  "MIL TX FIFO overrun, discarding %u byte%s\n",
++                                  n, n > 1 ? "s" : "");
++                    s->int_sts |= TXE_INT;
++                    break;
++                }
+                 s->txp->data[s->txp->len] = val & 0xff;
+                 s->txp->len++;
+                 val >>= 8;
 -- 
 2.39.2
 
