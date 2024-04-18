@@ -4,66 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25CAC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 12:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C4BFC04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 12:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxRGh-00013Q-Lj; Thu, 18 Apr 2024 08:53:41 -0400
+	id 1rxRL2-0002sO-JH; Thu, 18 Apr 2024 08:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marex@denx.de>) id 1rxRGU-0000zg-DI
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 08:53:23 -0400
-Received: from phobos.denx.de ([85.214.62.61])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marex@denx.de>) id 1rxRGS-0000r5-2d
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 08:53:21 -0400
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
- (No client certificate requested)
- (Authenticated sender: marex@denx.de)
- by phobos.denx.de (Postfix) with ESMTPSA id DFC0C8863F;
- Thu, 18 Apr 2024 14:53:15 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
- s=phobos-20191101; t=1713444796;
- bh=qiauDGd5nvpF0uqMxoHBcAQllVXTs/3t5gRKxCiSPsw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=QjIaOZK4WVMwTBiMJYC7kfxxKho2FLGrqBFbV0jDftN3+6vQsTv8JrvlTIJyTbuPX
- bNxdJp6r8dCsXTmnJlxVArJP3IfE16mpYu577obEBMWSc+xWDhB0d70XmnU+OhjGBK
- PMJoyWmbSGhq1o/gda61JxidMk5wRtc0izYiH5Vw6V8EOjMY7YWhQoxUtHAiT3Pt5G
- E5MKiUM4ZXfSz3+MAVxazFoEbsQLek8wnOI5vWFMiJyWwORUXyE/8JSYAXF5QwOCNO
- 2nQRFr+KiqZQDxVVW6QczSnbXfqcHBnt+H14E9CnDR5D78URLjDwlmcDJ4ULhji9yW
- lgqJWA3SrOkVQ==
-Message-ID: <65d43669-d4d1-44eb-870e-7a20af64e14a@denx.de>
-Date: Thu, 18 Apr 2024 14:49:04 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rxRKw-0002pK-Kp
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 08:57:58 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rxRKt-0001hC-Ix
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 08:57:58 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VKySM2BgHz6K6Bt;
+ Thu, 18 Apr 2024 20:55:47 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 78ABB140D26;
+ Thu, 18 Apr 2024 20:57:50 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 18 Apr
+ 2024 13:57:50 +0100
+Date: Thu, 18 Apr 2024 13:57:49 +0100
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+CC: Zhao Liu <zhao1.liu@linux.intel.com>, Fan Ni <fan.ni@samsung.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>, Markus Armbruster
+ <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 0/3] hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return
+ boolean
+Message-ID: <20240418135749.000056ac@Huawei.com>
+In-Reply-To: <54117bfd-644a-479a-a477-e0bedcc837b3@linaro.org>
+References: <20240418100433.1085447-1-zhao1.liu@linux.intel.com>
+ <54117bfd-644a-479a-a477-e0bedcc837b3@linaro.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Deprecation/removal of nios2 target support
-To: Thomas Huth <thuth@redhat.com>, Sandra Loosemore
- <sloosemore@baylibre.com>, gcc@gcc.gnu.org, binutils@sourceware.org,
- gdb-patches@sourceware.org, libc-alpha@sourceware.org,
- Chung-Lin Tang <cltang@baylibre.com>, andrew@reenigne.org,
- Yao Qi <qiyaoltc@gmail.com>
-Cc: Dinh Nguyen <dinguyen@kernel.org>, qemu-devel@nongnu.org,
- newlib@sourceware.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <f4bug@amsat.org>, Chris Wulff <crwulff@gmail.com>
-References: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
- <6b7e61bb-edd3-42ee-a39c-f77fd43aa7df@redhat.com>
-Content-Language: en-US
-From: Marek Vasut <marex@denx.de>
-In-Reply-To: <6b7e61bb-edd3-42ee-a39c-f77fd43aa7df@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
-X-Virus-Status: Clean
-Received-SPF: pass client-ip=85.214.62.61; envelope-from=marex@denx.de;
- helo=phobos.denx.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,41 +70,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/18/24 7:53 AM, Thomas Huth wrote:
-> On 18/04/2024 05.27, Sandra Loosemore wrote:
->> Tomorrow I plan to push patches to mark the nios2 target as obsolete 
->> in GCC 14.
->>
->> Background: Intel has EOL'ed the Nios II processor IP and is now 
->> directing their FPGA customers to a RISC-V platform instead.
->>
->> https://www.intel.com/content/www/us/en/content-details/781327/intel-is-discontinuing-ip-ordering-codes-listed-in-pdn2312-for-nios-ii-ip.html
->>
->> The Nios II hardware on loan from Intel that we were using for testing 
->> at Mentor Graphics/Siemens was returned around the first of the year. 
->> For some time we had been using QEMU to test the nios2-elf target, but 
->> we never had a QEMU test harness set up that would boot the Linux 
->> kernel, and user-mode QEMU on this target is too buggy/unmaintained to 
->> use for primary testing. So the current situation is that none of the 
->> listed maintainers for any of the GNU toolchain components have access 
->> to a fully working test configuration any more, we have all moved on 
->> to new jobs and different projects, Intel has also moved on to a 
->> different platform, and our former contacts on Intel's Nios II team 
->> have moved on as well.  It seems like it's time to pull the plug.
->>
->> Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and 
->> remove support from all toolchain components after the release is 
->> made.  I'm not sure there is an established process for 
->> obsoleting/removing support in other components; besides binutils, 
->> GDB, and GLIBC, there's QEMU, newlib/libgloss, and the Linux kernel.  
->> But, we need to get the ball rolling somewhere.
-> 
-> Thanks for the heads-up, Sandra! FWIW: QEMU already marked the nios2 
-> target as deprecated, too, and plans to remove it in version 9.1 (in 
-> autumn this year).
+On Thu, 18 Apr 2024 14:06:39 +0200
+Philippe Mathieu-Daud=E9 <philmd@linaro.org> wrote:
 
-Thank you and sorry for being inactive for so long around nios2.
+> On 18/4/24 12:04, Zhao Liu wrote:
+> > From: Zhao Liu <zhao1.liu@intel.com> =20
+>=20
+>=20
+> > ---
+> > Zhao Liu (3):
+> >    hw/cxl/cxl-cdat: Make ct3_load_cdat() return boolean
+> >    hw/cxl/cxl-cdat: Make ct3_build_cdat() return boolean
+> >    hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return boolean =20
+>=20
+> Series:
+> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+>=20
+
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
