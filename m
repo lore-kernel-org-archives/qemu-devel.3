@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A198BC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C481C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxY3o-0000qB-Lu; Thu, 18 Apr 2024 16:08:44 -0400
+	id 1rxYM0-0005qN-7M; Thu, 18 Apr 2024 16:27:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxY3k-0000pd-KV
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:08:42 -0400
+ id 1rxYLy-0005q8-DS
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:27:30 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxY3j-0006Is-3h
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:08:40 -0400
+ id 1rxYLw-0001Oe-MZ
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:27:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=+iz+jUQEjrZ/2uCpiyH8HVuRVVo++1XYCTMxdYHEJ7g=; b=r2k8MccsykcrqZBxfQf2inp+x1
- O32yqzih6ckUyGqUyuK8zgQ33/R69Lm4R9ZMlvYPzF0dpKLgKIi9HB6UmfPnEIEpAZWZW0tgRordQ
- EgYQms7Im+nX3nWq02r+xWWCYe6jiyYGnF+moQvL4gfF1mXdP6ZDgT2e6zj0FJORzs1OTfJESqmoS
- WL2lu9svy9KHk531IgR1bo91rD//4VPGSNlsjDGz4F3ApP8mjY0+0B+PWULOltBxUfzGyjv7cEY8z
- JD4CF9dTz3BREuZd346i3+oXJyqFijpsZPsRYsyNY6FG4muVoRDd9CeN1tiUdnHLmZ26zYlC08ode
- oFzZ4CkFy0h0a4/pJgcn1gBwhSYy8fBb+IiYTkDclMKhwFtx6RMiM4g48ncAMrBHrC0qFYiK3sli9
- WTDXJJrz2ItcLMGsNnRbEsF222m3uenwFMgjUO4rzC/02hr7wUjYrIlaWBfjkiF6Xz6jl8VHzjuVN
- hurGCfzrmpkScPnQ52P9BRYuqfjtjK9mN1v4G6nXVSnxmdpPnm/e6hbfQ+y1KR9WoNagmW8B2ZImf
- nIibK0GJNLl4ANPx0m0NVnn9zfUPF/5fU+u37qtYuWcY/AYMKInhiHDrKbVWTz15JuUMPjOl31icx
- Zvb4on8EwbY/9bTxYJ3EnrbkDTT1W3B1kqP+yE85o=;
+ bh=MDNHTJtG9p9jIO+y/J/bOaznN6Dkf3B3EZdFYNND8nU=; b=02DnjE3zxLHpTu4Q2sT1lHCpHI
+ KE8q0fUqGM4+oGbrKpB+6m7yRDZ2decRtrIFUoQAwOUAyOhQp/e0kE88F0KKccvYjDiNlHLTR3jnr
+ ckQcPBv/GRgoWKJAmb/SzIgWY8uSBBu+gKG7RNpG7qVWDHhHYycR6NmBbQWhmZwHIjGfZoONBpo1K
+ yMVMUeFH6uy3Om59c4XkMij5+abXF1KxRX0udenZ3PDluVqn40/PxhXF1Q5LAzVdVfSfJn17Jx0ex
+ Wc2O8Cg2e3mrh68bWz9XMh5np9oZa09WYpCHTmYRbaPWKRbUd0XS1qqzkdayVJGCRDdrp8seyvwZJ
+ i5wc/n67pR41FDztAP8Xcs35Z0kx5wCkIJ9aKKkmo5ZhY9F9cEeV6q03mq6Ih7FtvCNgfk4O18KVs
+ P90+vcNy71V+ixMR6y05bwQ5OTRvGguYIMxcwMAKO70tojHZ3A/knnzBG8lYynM1VkWMM0JbrFHRF
+ GPhAfb3eSgQFGUSkmhP+sRDl0PvO77mN+B062hoUdna0YxttFptLsSca5pmqEsZ9f4CaM1gN+3BtC
+ ZCCEzfzyWZKkBN95K2uz8TVVO4xHr6agrITY0zYIjYArya6cAlAk9lkTddXAT+l3phExVyD5Vao8p
+ 0v1O/0DlKT7P65S2ijF4HPc3RDO6UYmfpKonfAq20=;
 Received: from [2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxY2i-0006Bz-MM; Thu, 18 Apr 2024 21:07:37 +0100
-Message-ID: <df3d121a-b9cc-469e-ae7a-ded6b7705fe8@ilande.co.uk>
-Date: Thu, 18 Apr 2024 21:08:35 +0100
+ id 1rxYKw-0006IR-5Q; Thu, 18 Apr 2024 21:26:26 +0100
+Message-ID: <529ece4e-1de6-4941-bb75-c10997aad13c@ilande.co.uk>
+Date: Thu, 18 Apr 2024 21:27:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
  Artyom Tarasenko <atar4qemu@gmail.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20240307174334.130407-1-thuth@redhat.com>
- <bdd66aac-4de5-44a1-a1d1-86825d337d12@redhat.com>
+ <20240307174334.130407-5-thuth@redhat.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -76,12 +77,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <bdd66aac-4de5-44a1-a1d1-86825d337d12@redhat.com>
+In-Reply-To: <20240307174334.130407-5-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/5] Sparc CPU naming and help text improvements
+Subject: Re: [PATCH 4/5] docs/system/target-sparc: Improve the Sparc
+ documentation
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,34 +109,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/04/2024 08:26, Thomas Huth wrote:
+On 07/03/2024 17:43, Thomas Huth wrote:
 
-> On 07/03/2024 18.43, Thomas Huth wrote:
->> The Sparc CPU naming and the corresponding help text is somewhat
->> confusing for the users. We should avoid spaces in the Names and
->> provide clear information to the users what can be passed to the
->> "-cpu" option.
->> While we're at it, also remove the "+" from two of the CPU names
->> since this character is now not allowed in device names anymore
->> (and was worked around with an ugly hack in qom/object.c so far).
->>
->> Thomas Huth (5):
->>    target/sparc/cpu: Rename the CPU models with a "+" in their names
->>    target/sparc/cpu: Avoid spaces by default in the CPU names
->>    target/sparc/cpu: Improve the CPU help text
->>    docs/system/target-sparc: Improve the Sparc documentation
->>    docs/about: Deprecate the old "UltraSparc" CPU names that contain a
->>      "+"
+> Add some words about how to enable or disable boolean features,
+> and remove the note about a Linux kernel being available on the
+> QEMU website (they have been removed long ago already).
 > 
-> Ping!
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   docs/system/target-sparc.rst | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> Mark, Aryom, could you please comment on this patch series, too?
-> 
-> Thanks,
->   Thomas
+> diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.rst
+> index 9ec8c90c14..9f418b9d3e 100644
+> --- a/docs/system/target-sparc.rst
+> +++ b/docs/system/target-sparc.rst
+> @@ -27,6 +27,11 @@ architecture machines:
+>   The emulation is somewhat complete. SMP up to 16 CPUs is supported, but
+>   Linux limits the number of usable CPUs to 4.
+>   
+> +The list of available CPUs can be viewed by starting QEMU with ``-cpu help``.
+> +Optional boolean features can be added with a "+" in front of the feature name,
+> +or disabled with a "-" in front of the name, for example
+> +``-cpu TI-SuperSparc-II,+float128``.
+> +
+>   QEMU emulates the following sun4m peripherals:
+>   
+>   -  IOMMU
+> @@ -55,8 +60,7 @@ OpenBIOS is a free (GPL v2) portable firmware implementation. The goal
+>   is to implement a 100% IEEE 1275-1994 (referred to as Open Firmware)
+>   compliant firmware.
+>   
+> -A sample Linux 2.6 series kernel and ram disk image are available on the
+> -QEMU web site. There are still issues with NetBSD and OpenBSD, but most
+> +There are still issues with NetBSD and OpenBSD, but most
+>   kernel versions work. Please note that currently older Solaris kernels
+>   don't work probably due to interface issues between OpenBIOS and
+>   Solaris.
 
-Done! I didn't realise that it was only patches 1 and 2 that were still outstanding 
-until I tested the series, so I've replied to those separately.
+Just curious as to what current issues exist with NetBSD and OpenBSD? At least both 
+my NetBSD and OpenBSD test images survive a casual boot test here with latest git.
 
 
 ATB,
