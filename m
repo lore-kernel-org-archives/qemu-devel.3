@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAF8C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6670C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXxx-0001WB-Ic; Thu, 18 Apr 2024 16:02:43 -0400
+	id 1rxXyk-0001vX-QG; Thu, 18 Apr 2024 16:03:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXxq-0001Ur-S2; Thu, 18 Apr 2024 16:02:35 -0400
+ id 1rxXyh-0001pE-IZ; Thu, 18 Apr 2024 16:03:27 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXxo-0005GT-Uj; Thu, 18 Apr 2024 16:02:34 -0400
+ id 1rxXyf-0005TH-Vx; Thu, 18 Apr 2024 16:03:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 45E395FE0A;
- Thu, 18 Apr 2024 23:02:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4CE0C5FE18;
+ Thu, 18 Apr 2024 23:02:28 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A59BBB93F0;
- Thu, 18 Apr 2024 23:02:24 +0300 (MSK)
-Received: (nullmailer pid 952845 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id AC012B93FE;
+ Thu, 18 Apr 2024 23:02:25 +0300 (MSK)
+Received: (nullmailer pid 952888 invoked by uid 1000);
  Thu, 18 Apr 2024 20:02:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Alex Fan <alex.fan.q@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 43/59] linux-user: Fix waitid return of siginfo_t and
- rusage
-Date: Thu, 18 Apr 2024 23:02:03 +0300
-Message-Id: <20240418200224.952785-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zack Buhman <zack@buhman.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 57/59] target/sh4: add missing CHECK_NOT_DELAY_SLOT
+Date: Thu, 18 Apr 2024 23:02:17 +0300
+Message-Id: <20240418200224.952785-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,54 +61,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Zack Buhman <zack@buhman.org>
 
-The copy back to siginfo_t should be conditional only on arg3,
-not the specific values that might have been written.
-The copy back to rusage was missing entirely.
+CHECK_NOT_DELAY_SLOT is correctly applied to the branch-related
+instructions, but not to the PC-relative mov* instructions.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2262
+I verified the existence of an illegal slot exception on a SH7091 when
+any of these instructions are attempted inside a delay slot.
+
+This also matches the behavior described in the SH-4 ISA manual.
+
+Signed-off-by: Zack Buhman <zack@buhman.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240407150705.5965-1-zack@buhman.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Alex Fan <alex.fan.q@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit f0907ff4cae743f1a4ef3d0a55a047029eed06ff)
+Reviewd-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+(cherry picked from commit b754cb2dcde26a7bc8a9d17bb6900a0ac0dd38e2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: trivial context (whitespace before comments) fixup)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index aead0f6ac9..41017b0df2 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8759,14 +8759,24 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #ifdef TARGET_NR_waitid
-     case TARGET_NR_waitid:
-         {
-+            struct rusage ru;
-             siginfo_t info;
--            info.si_pid = 0;
--            ret = get_errno(safe_waitid(arg1, arg2, &info, arg4, NULL));
--            if (!is_error(ret) && arg3 && info.si_pid != 0) {
--                if (!(p = lock_user(VERIFY_WRITE, arg3, sizeof(target_siginfo_t), 0)))
-+
-+            ret = get_errno(safe_waitid(arg1, arg2, (arg3 ? &info : NULL),
-+                                        arg4, (arg5 ? &ru : NULL)));
-+            if (!is_error(ret)) {
-+                if (arg3) {
-+                    p = lock_user(VERIFY_WRITE, arg3,
-+                                  sizeof(target_siginfo_t), 0);
-+                    if (!p) {
-+                        return -TARGET_EFAULT;
-+                    }
-+                    host_to_target_siginfo(p, &info);
-+                    unlock_user(p, arg3, sizeof(target_siginfo_t));
-+                }
-+                if (arg5 && host_to_target_rusage(arg5, &ru)) {
-                     return -TARGET_EFAULT;
--                host_to_target_siginfo(p, &info);
--                unlock_user(p, arg3, sizeof(target_siginfo_t));
-+                }
-             }
-         }
-         return ret;
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 7db3468b01..8d6eae7ddf 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -528,6 +528,7 @@ static void _decode_opc(DisasContext * ctx)
+ 	tcg_gen_movi_i32(REG(B11_8), B7_0s);
+ 	return;
+     case 0x9000:		/* mov.w @(disp,PC),Rn */
++        CHECK_NOT_DELAY_SLOT
+ 	{
+             TCGv addr = tcg_const_i32(ctx->base.pc_next + 4 + B7_0 * 2);
+             tcg_gen_qemu_ld_i32(REG(B11_8), addr, ctx->memidx, MO_TESW);
+@@ -535,6 +536,7 @@ static void _decode_opc(DisasContext * ctx)
+ 	}
+ 	return;
+     case 0xd000:		/* mov.l @(disp,PC),Rn */
++        CHECK_NOT_DELAY_SLOT
+ 	{
+             TCGv addr = tcg_const_i32((ctx->base.pc_next + 4 + B7_0 * 4) & ~3);
+             tcg_gen_qemu_ld_i32(REG(B11_8), addr, ctx->memidx, MO_TESL);
+@@ -1295,6 +1297,7 @@ static void _decode_opc(DisasContext * ctx)
+ 	}
+ 	return;
+     case 0xc700:		/* mova @(disp,PC),R0 */
++        CHECK_NOT_DELAY_SLOT
+         tcg_gen_movi_i32(REG(0), ((ctx->base.pc_next & 0xfffffffc) +
+                                   4 + B7_0 * 4) & ~3);
+ 	return;
 -- 
 2.39.2
 
