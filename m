@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2356C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A52C04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXzL-0004Ac-FQ; Thu, 18 Apr 2024 16:04:07 -0400
+	id 1rxXyf-0001ol-QM; Thu, 18 Apr 2024 16:03:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxXzJ-00040t-Rz
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:04:05 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rxXyK-0001bH-Mg
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:03:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxXzH-0005WW-Od
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:04:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=zh6bwDMg9wSO13XE1xlNhBYynGq63LizwSUV97VeoZA=; b=vM407O4paQHzqS2t0kK99U5JYK
- UjwkXl5HHJy2qmhgRalHsD4ZfCII2fp2AaTDpoXLgimypjqXsUOPGX3lB1udH/b2yVlTEUp7bpoW6
- +JwWRLAYVo83tF+9cwHiu+Kf3dJAzyWk1o4w5UREBsMM8MZMElgHQHYLarG0MxakjqCHZ+/3HKt3P
- jeDaqyY6iGqP2yBKZ30HymKRmTqvPW3zqTaNKew6fuek+5p9Dnt4TeEED8CCnSrUUDjbdkwUAn6HJ
- MVeMZvhwmJgK1GfRCBv5B8rrC+SKkYeeFUZSo0FhADBQ+ubeDM5iBwF6Lz+yZdm6XEHIZGZnlM0oO
- /N7ThiW52D04ji2Ds4G527d6AkOcqylSKmDvL9m6TwPuHpCev05yaniKj2UeG7jBW7uYr4qH99+kr
- Nn5B05nxx2/r2wks+wStcxaPzmOq5Yj6EDCH1lbzPZIVrBi8ZOY8lJPs7FNIN+TbnUVBo/uihIaJy
- 7SLiVV/MUjeaj39iAtyouycvH5BuVQSIRFtGQaGMBkQucwba7BPTwEkEAAMPzPCyg96WTp22pyMwM
- fEHvsx6RtuLaTIxmZ1/GI1Nmwc1sAMioKWRTPH5GUltlEUchS2Ixcql6lDTf1PJn6SVyZVImokRAe
- ui91SI8edDWUweDoFgcYlRYSMpldZmYMJsBC0rgKY=;
-Received: from [2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rxXyA-00067w-UU; Thu, 18 Apr 2024 21:02:59 +0100
-Message-ID: <91bc6db9-7270-4bfb-a0e6-22988dbfcd9f@ilande.co.uk>
-Date: Thu, 18 Apr 2024 21:03:51 +0100
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rxXyE-0005QX-MP
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 16:03:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713470576;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=53dRql9jLlaFSxsD8Ya0HxzAp18wd1HGL/9pFfJo4Eg=;
+ b=J/4of3+oAPYkqYxBbhcfxcluyBn2QTqU24sPuAFMtuf/OjM+F4XI69rhMtC16V2dvT8zj0
+ BrVj77FpfhDzcpTiAw+Ws9RxJJ/swzm6ChW40gAWxw2MjYVK7oafrtLGrJL84+0qY0JP8o
+ ceErl0lAOK9OyX3zYl+i0a7c1c4/cv4=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-369-ITm5A-u5Pm2fAHPgOHMkdg-1; Thu, 18 Apr 2024 16:02:54 -0400
+X-MC-Unique: ITm5A-u5Pm2fAHPgOHMkdg-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6a0587a6bd1so1912636d6.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 13:02:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713470574; x=1714075374;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=53dRql9jLlaFSxsD8Ya0HxzAp18wd1HGL/9pFfJo4Eg=;
+ b=nHl7Y83vLemLDGSBmP/kmKiXDYHJuTTMqEOWx++2I9ZOn7J/m619Wiy2AC2Ipa+9AQ
+ 5uwvXGWyCpfww/J011O0824MbjVCGDNtQxMy9vKJ69EHvanEMOZqzc4EmhiOZ2WIy6TZ
+ /vR1jIiPyXII4jGs6H+SycVZMSPdaH4/DUX0/ZGIbTHrtLWeGCllnA4Yl4bjPjdZ9Ny0
+ wTS/hvK+JPBvOfUJu/J9DkSAA4SryKMwrEg16AjH9BceE3T1ZGA4M40f7h0cvEeny4de
+ 38a3HoBUgxQOYFQRkgEiFQsm61bPCs3s8Av9QZIZaPYFqCA2lTwsFkNXKwURZuL5Lo42
+ C+fw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcF0HfJK1jSOLpttlMpIL3wBYQNYYGl0KIA08gk/Sk0Ctwa6y3c+eoc9VUn95xApLERq2b+mnyCUVU6auF05nVu+O2FnA=
+X-Gm-Message-State: AOJu0YxmASvA9NAYe0LT48a5YkQiAntUjjfNuQ1+wDlzAItoyvQ7asJ3
+ 2kc3GXPeTKIKp5AHMSkmlCefMSRjYhc7vNO1FdW6lUlPe9mY1g0eK3KqsuRlVZRu9iWFgrgQ+WC
+ WBas3blSHtmdyw/80oU3tiznQkymm/zTV8vn+m7efYCmL5Kl/lXEc
+X-Received: by 2002:a05:6214:194a:b0:69b:1833:59a7 with SMTP id
+ q10-20020a056214194a00b0069b183359a7mr26179qvk.6.1713470572873; 
+ Thu, 18 Apr 2024 13:02:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRFlxfKHgOfJNmjqy9+xpj1+yTDUO/gDlNd2TeQ1KKYyNIfGRHFWzzy/Dg17tnNaJt+3A/ag==
+X-Received: by 2002:a05:6214:194a:b0:69b:1833:59a7 with SMTP id
+ q10-20020a056214194a00b0069b183359a7mr26136qvk.6.1713470572207; 
+ Thu, 18 Apr 2024 13:02:52 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ w2-20020a0cb542000000b00698f01a958asm929033qvd.77.2024.04.18.13.02.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Apr 2024 13:02:51 -0700 (PDT)
+Date: Thu, 18 Apr 2024 16:02:49 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH RFC 00/26] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
+ device state transfer support with VFIO consumer
+Message-ID: <ZiF8aWVfW7kPuOtn@x1n>
+References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
+ <Zh-KF72Fe9oV6tfT@redhat.com>
+ <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
+ <Zh_6W8u3H4FmGS49@redhat.com>
+ <71ede5c8-857c-418b-9e37-b8d343ddfa06@maciej.szmigiero.name>
+ <ZiD4aLSre6qubuHr@redhat.com>
+ <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240307174334.130407-1-thuth@redhat.com>
- <20240307174334.130407-2-thuth@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240307174334.130407-2-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:aae1:b0e7:6998:7ece
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/5] target/sparc/cpu: Rename the CPU models with a "+" in
- their names
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,95 +115,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/03/2024 17:43, Thomas Huth wrote:
-
-> Commit b447378e12 ("qom/object: Limit type names to alphanumerical ...")
-> cut down the amount of allowed characters for QOM types to a saner set.
-> The "+" character was not meant to be included in this set, so we had
-> to add a hack there to still allow the legacy names of POWER and Sparc64
-> CPUs. However, instead of putting such a hack in the common QOM code,
-> there is a much better place to do this: The sparc_cpu_class_by_name()
-> function which is used to look up the names of all Sparc CPUs.
-> Thus let's finally get rid of the "+" in the Sparc CPU names, and provide
-> backward compatibility for the old names via some simple checks in the
-> sparc_cpu_class_by_name() function.
+On Thu, Apr 18, 2024 at 08:14:15PM +0200, Maciej S. Szmigiero wrote:
+> On 18.04.2024 12:39, Daniel P. Berrangé wrote:
+> > On Thu, Apr 18, 2024 at 11:50:12AM +0200, Maciej S. Szmigiero wrote:
+> > > On 17.04.2024 18:35, Daniel P. Berrangé wrote:
+> > > > On Wed, Apr 17, 2024 at 02:11:37PM +0200, Maciej S. Szmigiero wrote:
+> > > > > On 17.04.2024 10:36, Daniel P. Berrangé wrote:
+> > > > > > On Tue, Apr 16, 2024 at 04:42:39PM +0200, Maciej S. Szmigiero wrote:
+> > > > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> (..)
+> > > > > > That said, the idea of reserving channels specifically for VFIO doesn't
+> > > > > > make a whole lot of sense to me either.
+> > > > > > 
+> > > > > > Once we've done the RAM transfer, and are in the switchover phase
+> > > > > > doing device state transfer, all the multifd channels are idle.
+> > > > > > We should just use all those channels to transfer the device state,
+> > > > > > in parallel.  Reserving channels just guarantees many idle channels
+> > > > > > during RAM transfer, and further idle channels during vmstate
+> > > > > > transfer.
+> > > > > > 
+> > > > > > IMHO it is more flexible to just use all available multifd channel
+> > > > > > resources all the time.
+> > > > > 
+> > > > > The reason for having dedicated device state channels is that they
+> > > > > provide lower downtime in my tests.
+> > > > > 
+> > > > > With either 15 or 11 mixed multifd channels (no dedicated device state
+> > > > > channels) I get a downtime of about 1250 msec.
+> > > > > 
+> > > > > Comparing that with 15 total multifd channels / 4 dedicated device
+> > > > > state channels that give downtime of about 1100 ms it means that using
+> > > > > dedicated channels gets about 14% downtime improvement.
+> > > > 
+> > > > Hmm, can you clarify. /when/ is the VFIO vmstate transfer taking
+> > > > place ? Is is transferred concurrently with the RAM ? I had thought
+> > > > this series still has the RAM transfer iterations running first,
+> > > > and then the VFIO VMstate at the end, simply making use of multifd
+> > > > channels for parallelism of the end phase. your reply though makes
+> > > > me question my interpretation though.
+> > > > 
+> > > > Let me try to illustrate channel flow in various scenarios, time
+> > > > flowing left to right:
+> > > > 
+> > > > 1. serialized RAM, then serialized VM state  (ie historical migration)
+> > > > 
+> > > >         main: | Init | RAM iter 1 | RAM iter 2 | ... | RAM iter N | VM State |
+> > > > 
+> > > > 
+> > > > 2. parallel RAM, then serialized VM state (ie today's multifd)
+> > > > 
+> > > >         main: | Init |                                            | VM state |
+> > > >     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > > 
+> > > > 
+> > > > 3. parallel RAM, then parallel VM state
+> > > > 
+> > > >         main: | Init |                                            | VM state |
+> > > >     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd4:                                                     | VFIO VM state |
+> > > >     multifd5:                                                     | VFIO VM state |
+> > > > 
+> > > > 
+> > > > 4. parallel RAM and VFIO VM state, then remaining VM state
+> > > > 
+> > > >         main: | Init |                                            | VM state |
+> > > >     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
+> > > >     multifd4:        | VFIO VM state                                         |
+> > > >     multifd5:        | VFIO VM state                                         |
+> > > > 
+> > > > 
+> > > > I thought this series was implementing approx (3), but are you actually
+> > > > implementing (4), or something else entirely ?
+> > > 
+> > > You are right that this series operation is approximately implementing
+> > > the schema described as numer 3 in your diagrams.
+> > 
+> > > However, there are some additional details worth mentioning:
+> > > * There's some but relatively small amount of VFIO data being
+> > > transferred from the "save_live_iterate" SaveVMHandler while the VM is
+> > > still running.
+> > > 
+> > > This is still happening via the main migration channel.
+> > > Parallelizing this transfer in the future might make sense too,
+> > > although obviously this doesn't impact the downtime.
+> > > 
+> > > * After the VM is stopped and downtime starts the main (~ 400 MiB)
+> > > VFIO device state gets transferred via multifd channels.
+> > > 
+> > > However, these multifd channels (if they are not dedicated to device
+> > > state transfer) aren't idle during that time.
+> > > Rather they seem to be transferring the residual RAM data.
+> > > 
+> > > That's most likely what causes the additional observed downtime
+> > > when dedicated device state transfer multifd channels aren't used.
+> > 
+> > Ahh yes, I forgot about the residual dirty RAM, that makes sense as
+> > an explanation. Allow me to work through the scenarios though, as I
+> > still think my suggestion to not have separate dedicate channels is
+> > better....
+> > 
+> > 
+> > Lets say hypothetically we have an existing deployment today that
+> > uses 6 multifd channels for RAM. ie:
+> >          main: | Init |                                            | VM state |
+> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> > 
+> > That value of 6 was chosen because that corresponds to the amount
+> > of network & CPU utilization the admin wants to allow, for this
+> > VM to migrate. All 6 channels are fully utilized at all times.
+> > 
+> > 
+> > If we now want to parallelize VFIO VM state, the peak network
+> > and CPU utilization the admin wants to reserve for the VM should
+> > not change. Thus the admin will still wants to configure only 6
+> > channels total.
+> > 
+> > With your proposal the admin has to reduce RAM transfer to 4 of the
+> > channels, in order to then reserve 2 channels for VFIO VM state, so we
+> > get a flow like:
+> > 
+> >          main: | Init |                                            | VM state |
+> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd5:                                                     | VFIO VM state |
+> >      multifd6:                                                     | VFIO VM state |
+> > 
+> > This is bad, as it reduces performance of RAM transfer. VFIO VM
+> > state transfer is better, but that's not a net win overall.
+> > 
+> > 
+> > 
+> > So lets say the admin was happy to increase the number of multifd
+> > channels from 6 to 8.
+> > 
+> > This series proposes that they would leave RAM using 6 channels as
+> > before, and now reserve the 2 extra ones for VFIO VM state:
+> > 
+> >          main: | Init |                                            | VM state |
+> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
+> >      multifd7:                                                     | VFIO VM state |
+> >      multifd8:                                                     | VFIO VM state |
+> > 
+> > 
+> > RAM would perform as well as it did historically, and VM state would
+> > improve due to the 2 parallel channels, and not competing with the
+> > residual RAM transfer.
+> > 
+> > This is what your latency comparison numbers show as a benefit for
+> > this channel reservation design.
+> > 
+> > I believe this comparison is inappropriate / unfair though, as it is
+> > comparing a situation with 6 total channels against a situation with
+> > 8 total channels.
+> > 
+> > If the admin was happy to increase the total channels to 8, then they
+> > should allow RAM to use all 8 channels, and then VFIO VM state +
+> > residual RAM to also use the very same set of 8 channels:
+> > 
+> >          main: | Init |                                            | VM state |
+> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> >      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> >      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> >      multifd7:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> >      multifd8:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
+> > 
+> > This will speed up initial RAM iters still further & the final switch
+> > over phase even more. If residual RAM is larger than VFIO VM state,
+> > then it will dominate the switchover latency, so having VFIO VM state
+> > compete is not a problem. If VFIO VM state is larger than residual RAM,
+> > then allowing it acces to all 8 channels instead of only 2 channels
+> > will be a clear win.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   qom/object.c       |  8 --------
->   target/sparc/cpu.c | 14 ++++++++++++--
->   2 files changed, 12 insertions(+), 10 deletions(-)
+> I re-did the measurement with increased the number of multifd channels,
+> first to (total count/dedicated count) 25/0, then to 100/0.
 > 
-> diff --git a/qom/object.c b/qom/object.c
-> index d4a001cf41..759e194972 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -158,14 +158,6 @@ static bool type_name_is_valid(const char *name)
->                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
->                           "0123456789-_.");
->   
-> -    /* Allow some legacy names with '+' in it for compatibility reasons */
-> -    if (name[plen] == '+') {
-> -        if (plen >= 17 && g_str_has_prefix(name, "Sun-UltraSparc-I")) {
-> -            /* Allow "Sun-UltraSparc-IV+" and "Sun-UltraSparc-IIIi+" */
-> -            return true;
-> -        }
-> -    }
-> -
->       return plen == slen;
->   }
->   
-> diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-> index 313ebc4c11..651e49bfeb 100644
-> --- a/target/sparc/cpu.c
-> +++ b/target/sparc/cpu.c
-> @@ -316,7 +316,7 @@ static const sparc_def_t sparc_defs[] = {
->           .features = CPU_DEFAULT_FEATURES,
->       },
->       {
-> -        .name = "Sun UltraSparc IV+",
-> +        .name = "Sun UltraSparc IVp",
->           .iu_version = ((0x3eULL << 48) | (0x19ULL << 32) | (0x22ULL << 24)),
->           .fpu_version = 0x00000000,
->           .mmu_version = mmu_us_12,
-> @@ -325,7 +325,7 @@ static const sparc_def_t sparc_defs[] = {
->           .features = CPU_DEFAULT_FEATURES | CPU_FEATURE_CMT,
->       },
->       {
-> -        .name = "Sun UltraSparc IIIi+",
-> +        .name = "Sun UltraSparc IIIip",
->           .iu_version = ((0x3eULL << 48) | (0x22ULL << 32) | (0ULL << 24)),
->           .fpu_version = 0x00000000,
->           .mmu_version = mmu_us_3,
-> @@ -767,6 +767,16 @@ static ObjectClass *sparc_cpu_class_by_name(const char *cpu_model)
->       char *typename;
->   
->       typename = sparc_cpu_type_name(cpu_model);
-> +
-> +    /* Fix up legacy names with '+' in it */
-> +    if (g_str_equal(typename, SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IV+"))) {
-> +        g_free(typename);
-> +        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IVp"));
-> +    } else if (g_str_equal(typename, SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIi+"))) {
-> +        g_free(typename);
-> +        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIip"));
-> +    }
-> +
->       oc = object_class_by_name(typename);
->       g_free(typename);
->       return oc;
+> The results did not improve:
+> With 25/0 multifd mixed channels config I still get around 1250 msec
+> downtime - the same as with 15/0 or 11/0 mixed configs I measured
+> earlier.
+> 
+> But with the (pretty insane) 100/0 mixed channel config the whole setup
+> gets so for into the law of diminishing returns that the results actually
+> get worse: the downtime is now about 1450 msec.
+> I guess that's from all the extra overhead from switching between 100
+> multifd channels.
 
-I've seen some references in Sun documentation to processors in the form "UltraSparc 
-IIIi plus" so I'd be inclined to use that form for the new type names e.g. 
-"UltraSparc-IIIi-plus".
+100 threads are probably too much indeed.
 
-Otherwise looks good to me, thanks for having a look at this!
+However I agree with Dan's question raised, and I'd like to second that.
+It so far looks better if the multifd channels can be managed just like a
+pool of workers without assignments to specific jobs.  It looks like this
+series is already getting there, it's a pity we lose that genericity only
+because some other side effects on the ram sync semantics.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> 
+> I think one of the reasons for these results is that mixed (RAM + device
+> state) multifd channels participate in the RAM sync process
+> (MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
 
+Firstly, I'm wondering whether we can have better names for these new
+hooks.  Currently (only comment on the async* stuff):
 
-ATB,
+  - complete_precopy_async
+  - complete_precopy
+  - complete_precopy_async_wait
 
-Mark.
+But perhaps better:
+
+  - complete_precopy_begin
+  - complete_precopy
+  - complete_precopy_end
+
+?
+
+As I don't see why the device must do something with async in such hook.
+To me it's more like you're splitting one process into multiple, then
+begin/end sounds more generic.
+
+Then, if with that in mind, IIUC we can already split ram_save_complete()
+into >1 phases too. For example, I would be curious whether the performance
+will go back to normal if we offloading multifd_send_sync_main() into the
+complete_precopy_end(), because we really only need one shot of that, and I
+am quite surprised it already greatly affects VFIO dumping its own things.
+
+I would even ask one step further as what Dan was asking: have you thought
+about dumping VFIO states via multifd even during iterations?  Would that
+help even more than this series (which IIUC only helps during the blackout
+phase)?
+
+It could mean that the "async*" hooks can be done differently, and I'm not
+sure whether they're needed at all, e.g. when threads are created during
+save_setup but cleaned up in save_cleanup.
+
+Thanks,
+
+> 
+> It is possible that there are other subtle performance interactions too,
+> but I am not 100% sure about that.
+> 
+> > With regards,
+> > Daniel
+> 
+> Best regards,
+> Maciej
+> 
+
+-- 
+Peter Xu
 
 
