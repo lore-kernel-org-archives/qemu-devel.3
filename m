@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED54DC04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D904C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 15:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxTYo-0003HP-M8; Thu, 18 Apr 2024 11:20:28 -0400
+	id 1rxTYo-0003HM-71; Thu, 18 Apr 2024 11:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxTYi-0003Ez-EV
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:20 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1rxTYk-0003Fo-TF
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:23 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxTYY-0004Tz-04
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:20 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-418ee51e280so4160995e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 08:20:07 -0700 (PDT)
+ id 1rxTYg-0004XL-Qo
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 11:20:21 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-346b96f1483so597190f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 08:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713453606; x=1714058406; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713453608; x=1714058408; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0P6oj7AmfsCZVKQvdoWgcGwUbb8SNKqdN7n9HIoro0g=;
- b=RSLtQ96jmBoS+yGnPLMIB+rQ/8V1u5mhsyatRW8/gBgOmcGuMkYHYmAZZocIyXN31+
- Qscc8IoACFc1bA6sLAhv/LK9+Zg46tBYAmIB9BnUbkO7rVjW+Im8lzWuUCHa08th1zOE
- j4+jRXQ+kliQ1ZgyniuJozzKMHGHcgzQORr/75LAHAfg1mUacPNgmdNvhG+S8EgNfpSs
- kZYVGAxLMkab85Btjaz5qSAKRlCbbdXOwtkpM0WkzEZeCo7AeADEh5Ut2I+P29jyyGC1
- Kc8Do7FxxpvaRdHlOlXEeUCNzNYyFVyCk2PaMAHa2CCyQS7Pw6OvuF88Y+Jkt+e9B3xT
- yIeA==
+ :reply-to; bh=LjzFedX8f7dPOTCE2RgQfLW6VZSYCvlcrFVxlukFK5w=;
+ b=h/c9CpRD8tVhvI+wzfQwbDVAq2aX8pu8nnHQp4OKp9vOF456TckJPuzkfk4l93oQzu
+ j4iPN/vWFL8sQuwDxI8ggmMGW1enE2lRxxO3jBNZrc4d6bfxwvmnYXOCpRdsG98NG2TL
+ AX9Fr378wRVF6sBG9oY8YNJgvgZFAuYBLajBZ9L1deD+VT37jFYF3IaF9FmdYxMQh8uk
+ 3DPQYEKDCzU1gPvJi70R3guCvENMCKPvY5+rwlZn/mSb2iEa5X+1UG0rzuFOzald3zgD
+ vt+gzRhLn3PS9GKEorez1RlgnUC1V4VBeuioSAfEXYGW1bEx9yoAFTz7Tf7Jhm/kfYlQ
+ o0MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713453606; x=1714058406;
+ d=1e100.net; s=20230601; t=1713453608; x=1714058408;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0P6oj7AmfsCZVKQvdoWgcGwUbb8SNKqdN7n9HIoro0g=;
- b=uK+iwrgIOLjG4W3XQeH9b6ZdrlADAenCkNoYhzmCK48eIK72EdcvKM+sHT5+F8B5fc
- 6VxRao7hR5ItDlPXO+6EQhlBY8hqQ0B1wcU4y54/Aca6j+jy5p0DjPIProNOe+f9zstf
- ne+HS4TCiKRuMxcz2xMTybWiopWopWcnDAv69uB9ysnFCtyIuBfmuDFCCbpzjutTq4p1
- MS1PC2pC9f2p3Bf/YkWAfsz9YPv/lEA8sb7QT+lSTg5Pcc5IFGI/kRfFhdHXWTb6bbkP
- +rzpOu1wJ4AQXtx/38WrUBDFL2rx2TeeqGy0raPEYrFcjQV4r79kW1IkXwiQ2WC9oghs
- Sg9w==
+ bh=LjzFedX8f7dPOTCE2RgQfLW6VZSYCvlcrFVxlukFK5w=;
+ b=MhKTigXyDW5fybpzuSQii2QvCzGuMEJeksIXncWQ6F7nrZRiMmJvnn0Kz2YInEAU84
+ 0CuysQFERumN9ob1q0rJ/bV5lhbU96sBRyapasGkpOpiN3eSAokRPXsLQwdCBOCutJHN
+ CYmLPQKLQ8/cZ0vx8HJmX7FkJzr6bcin6ZJ3QdGwsJFWAJyarVXYjWFaFkLQAa0BOHP7
+ utbfBXW+QbEwsXxv5+6FWEcc/dMVZk+2QA6XiP6HPfiq3cN2NeaQS09JkRnS6Z5DpEMz
+ nUKS1dk7J9q5UO6HKtTiv72hqIuyJdB/OJt5hjaP1AQXoAEiDdj0CrENjwyUMMMis/Jj
+ bNCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHoM/ksGM86uv67rsv2MyujAFZqUXfh90q78H7Jrxl7Aq1rQ9m1jQnAPccyvq9VEHgiTxI//5wSVfou6N2sJ29Jec6qfE=
-X-Gm-Message-State: AOJu0YwjjKxE6MTLFvq7TmsnVNJSCAevdk+EhKmRuWSguoLf9hxWyr9f
- ovITkKLQkWw8jUcm/tJK6rKYeMbbiEf+kbk5M5SOXFezL6yNuXounrDs/aUAuBU=
-X-Google-Smtp-Source: AGHT+IE2bBMQHCz1TEs9CPCI2t5aDb0YMFFkji4nStoqzpBoQjtDA+BHItJFrHQhDaZc1jogKfi9bg==
-X-Received: by 2002:a05:600c:a10:b0:418:9713:866c with SMTP id
- z16-20020a05600c0a1000b004189713866cmr1950176wmp.5.1713453606120; 
- Thu, 18 Apr 2024 08:20:06 -0700 (PDT)
+ AJvYcCWTWf6sKQeMVRvHI1N9ihGPxPbeYu/URP/V5JSOWPWuVmPIP/lB5A9QcE50XEASEkAnsoiuuoXIHHU37j8f8ZL31omFRTU=
+X-Gm-Message-State: AOJu0YwgSK0Pr8Ay2ER2qF2sA1zVtow913fSUvPbPeTh6/FtDAXkXND4
+ jeQSj+S6g6Sqq74p3ojoUucN7bKSqeROvJIsxGRDmppkeSKxz0hYeRjGNY7DMOc=
+X-Google-Smtp-Source: AGHT+IGLlh3H1wSS698OPf8AjA3BZ0333CRKF86zqQiqJWwum82AyWEx4ucY1c3aFsnN+lsajDLR7w==
+X-Received: by 2002:a5d:595e:0:b0:343:d7fe:96f8 with SMTP id
+ e30-20020a5d595e000000b00343d7fe96f8mr2154243wri.19.1713453608118; 
+ Thu, 18 Apr 2024 08:20:08 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- w17-20020a05600c475100b004162d06768bsm6886839wmo.21.2024.04.18.08.20.05
+ w17-20020a05600c475100b004162d06768bsm6886839wmo.21.2024.04.18.08.20.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Apr 2024 08:20:05 -0700 (PDT)
+ Thu, 18 Apr 2024 08:20:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 1/5] docs/system/arm/emulation.rst: Add missing implemented
- features
-Date: Thu, 18 Apr 2024 16:20:00 +0100
-Message-Id: <20240418152004.2106516-2-peter.maydell@linaro.org>
+Subject: [PATCH 5/5] target/arm: Enable FEAT_Spec_FPACC for -cpu max
+Date: Thu, 18 Apr 2024 16:20:04 +0100
+Message-Id: <20240418152004.2106516-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240418152004.2106516-1-peter.maydell@linaro.org>
 References: <20240418152004.2106516-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,128 +94,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As of version DDI0487K.a of the Arm ARM, some architectural features
-which previously didn't have official names have been named.  Add
-these to the list of features which QEMU's TCG emulation supports.
-Mostly these are features which we thought of as part of baseline 8.0
-support.  For SVE and SVE2, the names have been brought into line
-with the FEAT_* naming convention of other extensions, and some
-sub-components split into separate FEAT_ items.  In a few cases (eg
-FEAT_CCIDX, FEAT_DPB2) the omission from our list was just an oversight.
+FEAT_Spec_FPACC is a feature describing speculative behaviour in the
+event of a PAC authontication failure when FEAT_FPACCOMBINE is
+implemented.  FEAT_Spec_FPACC means that the speculative use of
+pointers processed by a PAC Authentication is not materially
+different in terms of the impact on cached microarchitectural state
+(caches, TLBs, etc) between passing and failing of the PAC
+Authentication.
+
+QEMU doesn't do speculative execution, so we can advertise
+this feature.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/emulation.rst | 37 +++++++++++++++++++++++++++++++++--
- 1 file changed, 35 insertions(+), 2 deletions(-)
+ docs/system/arm/emulation.rst | 1 +
+ target/arm/tcg/cpu64.c        | 4 ++++
+ 2 files changed, 5 insertions(+)
 
 diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 2a7bbb82dc4..9388c7dd553 100644
+index de39110692b..fc616e48d30 100644
 --- a/docs/system/arm/emulation.rst
 +++ b/docs/system/arm/emulation.rst
-@@ -8,13 +8,25 @@ Armv8 versions of the A-profile architecture. It also has support for
- the following architecture extensions:
- 
- - FEAT_AA32BF16 (AArch32 BFloat16 instructions)
-+- FEAT_AA32EL0 (Support for AArch32 at EL0)
-+- FEAT_AA32EL1 (Support for AArch32 at EL1)
-+- FEAT_AA32EL2 (Support for AArch32 at EL2)
-+- FEAT_AA32EL3 (Support for AArch32 at EL3)
- - FEAT_AA32HPD (AArch32 hierarchical permission disables)
- - FEAT_AA32I8MM (AArch32 Int8 matrix multiplication instructions)
-+- FEAT_AA64EL0 (Support for AArch64 at EL0)
-+- FEAT_AA64EL1 (Support for AArch64 at EL1)
-+- FEAT_AA64EL2 (Support for AArch64 at EL2)
-+- FEAT_AA64EL3 (Support for AArch64 at EL3)
-+- FEAT_AdvSIMD (Advanced SIMD Extension)
- - FEAT_AES (AESD and AESE instructions)
-+- FEAT_ASID16 (16 bit ASID)
- - FEAT_BBM at level 2 (Translation table break-before-make levels)
- - FEAT_BF16 (AArch64 BFloat16 instructions)
- - FEAT_BTI (Branch Target Identification)
-+- FEAT_CCIDX (Extended cache index)
- - FEAT_CRC32 (CRC32 instructions)
-+- FEAT_Crypto (Cryptographic Extension)
- - FEAT_CSV2 (Cache speculation variant 2)
- - FEAT_CSV2_1p1 (Cache speculation variant 2, version 1.1)
- - FEAT_CSV2_1p2 (Cache speculation variant 2, version 1.2)
-@@ -23,18 +35,27 @@ the following architecture extensions:
- - FEAT_DGH (Data gathering hint)
- - FEAT_DIT (Data Independent Timing instructions)
- - FEAT_DPB (DC CVAP instruction)
-+- FEAT_DPB2 (DC CVADP instruction)
-+- FEAT_Debugv8p1 (Debug with VHE)
- - FEAT_Debugv8p2 (Debug changes for v8.2)
- - FEAT_Debugv8p4 (Debug changes for v8.4)
- - FEAT_DotProd (Advanced SIMD dot product instructions)
- - FEAT_DoubleFault (Double Fault Extension)
- - FEAT_E0PD (Preventing EL0 access to halves of address maps)
- - FEAT_ECV (Enhanced Counter Virtualization)
-+- FEAT_EL0 (Support for execution at EL0)
-+- FEAT_EL1 (Support for execution at EL1)
-+- FEAT_EL2 (Support for execution at EL2)
-+- FEAT_EL3 (Support for execution at EL3)
- - FEAT_EPAC (Enhanced pointer authentication)
- - FEAT_ETS (Enhanced Translation Synchronization)
- - FEAT_EVT (Enhanced Virtualization Traps)
-+- FEAT_F32MM (Single-precision Matrix Multiplication)
-+- FEAT_F64MM (Double-precision Matrix Multiplication)
- - FEAT_FCMA (Floating-point complex number instructions)
- - FEAT_FGT (Fine-Grained Traps)
- - FEAT_FHM (Floating-point half-precision multiplication instructions)
-+- FEAT_FP (Floating Point extensions)
+@@ -60,6 +60,7 @@ the following architecture extensions:
  - FEAT_FP16 (Half-precision floating-point data processing)
  - FEAT_FPAC (Faulting on AUT* instructions)
  - FEAT_FPACCOMBINE (Faulting on combined pointer authentication instructions)
-@@ -60,10 +81,13 @@ the following architecture extensions:
- - FEAT_LSE (Large System Extensions)
- - FEAT_LSE2 (Large System Extensions v2)
- - FEAT_LVA (Large Virtual Address space)
-+- FEAT_MixedEnd (Mixed-endian support)
-+- FEAT_MixdEndEL0 (Mixed-endian support at EL0)
- - FEAT_MOPS (Standardization of memory operations)
- - FEAT_MTE (Memory Tagging Extension)
- - FEAT_MTE2 (Memory Tagging Extension)
- - FEAT_MTE3 (MTE Asymmetric Fault Handling)
-+- FEAT_MTE_ASYM_FAULT (Memory tagging asymmetric faults)
- - FEAT_NV (Nested Virtualization)
- - FEAT_NV2 (Enhanced nested virtualization support)
- - FEAT_PACIMP (Pointer authentication - IMPLEMENTATION DEFINED algorithm)
-@@ -75,6 +99,7 @@ the following architecture extensions:
- - FEAT_PAuth (Pointer authentication)
- - FEAT_PAuth2 (Enhancements to pointer authentication)
- - FEAT_PMULL (PMULL, PMULL2 instructions)
-+- FEAT_PMUv3 (PMU extension version 3)
- - FEAT_PMUv3p1 (PMU Extensions v3.1)
- - FEAT_PMUv3p4 (PMU Extensions v3.4)
- - FEAT_PMUv3p5 (PMU Extensions v3.5)
-@@ -96,8 +121,18 @@ the following architecture extensions:
- - FEAT_SME_FA64 (Full A64 instruction set in Streaming SVE mode)
- - FEAT_SME_F64F64 (Double-precision floating-point outer product instructions)
- - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
-+- FEAT_SVE (Scalable Vector Extension)
-+- FEAT_SVE_AES (Scalable Vector AES instructions)
-+- FEAT_SVE_BitPerm (Scalable Vector Bit Permutes instructions)
-+- FEAT_SVE_PMULL128 (Scalable Vector PMULL instructions)
-+- FEAT_SVE_SHA3 (Scalable Vector SHA3 instructions)
-+- FEAT_SVE_SM4 (Scalable Vector SM4 instructions)
-+- FEAT_SVE2 (Scalable Vector Extension version 2)
- - FEAT_SPECRES (Speculation restriction instructions)
- - FEAT_SSBS (Speculative Store Bypass Safe)
-+- FEAT_TGran16K (Support for 16KB memory translation granule size at stage 1)
-+- FEAT_TGran4K (Support for 4KB memory translation granule size at stage 1)
-+- FEAT_TGran64K (Support for 64KB memory translation granule size at stage 1)
- - FEAT_TIDCP1 (EL0 use of IMPLEMENTATION DEFINED functionality)
- - FEAT_TLBIOS (TLB invalidate instructions in Outer Shareable domain)
- - FEAT_TLBIRANGE (TLB invalidate range instructions)
-@@ -108,8 +143,6 @@ the following architecture extensions:
- - FEAT_VHE (Virtualization Host Extensions)
- - FEAT_VMID16 (16-bit VMID)
- - FEAT_XNX (Translation table stage 2 Unprivileged Execute-never)
--- SVE (The Scalable Vector Extension)
--- SVE2 (The Scalable Vector Extension v2)
++- FEAT_FPACC_SPEC (Speculative behavior of combined pointer authentication instructions)
+ - FEAT_FRINTTS (Floating-point to integer instructions)
+ - FEAT_FlagM (Flag manipulation instructions v2)
+ - FEAT_FlagM2 (Enhancements to flag manipulation instructions)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index da15182595b..c3369f40824 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1216,6 +1216,10 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64MMFR2, E0PD, 1);     /* FEAT_E0PD */
+     cpu->isar.id_aa64mmfr2 = t;
  
- For information on the specifics of these extensions, please refer
- to the `Armv8-A Arm Architecture Reference Manual
++    t = cpu->isar.id_aa64mmfr3;
++    t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
++    cpu->isar.id_aa64mmfr3 = t;
++
+     t = cpu->isar.id_aa64zfr0;
+     t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 1);
+     t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* FEAT_SVE_PMULL128 */
 -- 
 2.34.1
 
