@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCA5C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 05:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D5BC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 06:14:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxKi9-0003JC-NY; Thu, 18 Apr 2024 01:53:29 -0400
+	id 1rxL1u-0000bo-Qh; Thu, 18 Apr 2024 02:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxKi8-0003Ic-7Y
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 01:53:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxL1s-0000aj-VS
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 02:13:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxKi6-0004AQ-CG
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 01:53:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxL1p-0000Cr-NP
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 02:13:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713419605;
+ s=mimecast20190719; t=1713420827;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DZyce+2XNxQJ8DDfB+hCemEGnSegwR7XjQnSZ2Kh1vo=;
- b=HbxEZ+8gU0kqH0aX67ICFBd2wIBoPS9FMvHJDzR8SxsRI8pBlXaOisEBbdWIkbI58zTmJJ
- lBL3mwTuo9k0j/aylQvhBRCv/grWsMyk3rXdEPsCABt6MeLvrl2BGUOtkiQOubH9C4cHHw
- I/RxvHNRgtkqXAfkJvAB5VijN5NYlSA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yADguTo6OtHbKXGyfe5pHI1kNjPau0SNSmuCZPAYh4c=;
+ b=RWgIdcnhZn9Il6tQw0hY/c0cLYeRNDXV0YS4K8jfJgIhO2kIJQCfpKtKNqu0oablbQ4jDR
+ AHYxd4HTGjLM0FXCUPr20DNTvc6VfgJzDNj1SOXtmTcpRmA5OPUFdNGXxQXLfpNHgczGp4
+ 5yz/mVP5cQrkR9VyXj/b67BKoHomj3A=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-274-t4EVnEs4O6yiJYrAP9jldQ-1; Thu, 18 Apr 2024 01:53:22 -0400
-X-MC-Unique: t4EVnEs4O6yiJYrAP9jldQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-349cafdc8f0so281392f8f.1
- for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 22:53:21 -0700 (PDT)
+ us-mta-435-mxuHy2YvMxekGizAPDpKKg-1; Thu, 18 Apr 2024 02:13:45 -0400
+X-MC-Unique: mxuHy2YvMxekGizAPDpKKg-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2db6acacdacso4569201fa.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Apr 2024 23:13:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713419601; x=1714024401;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DZyce+2XNxQJ8DDfB+hCemEGnSegwR7XjQnSZ2Kh1vo=;
- b=Tlcrp87eKTG3iiPV0F9gzMsc9exCgadH6+7RpQh5YrwkcwZK1ec6TSkrI/KowTw8eM
- 2VkAPaSm0ZrQjKI36U38PT5X2ijB13GjtJ4UA3iM3a0BDTXYAbD3YFNIPEh8gXez/q2C
- MnzeaFV+qdIrOKHZ198Zncu7ftk6RrBEuRFDyG9CNoCtUNNL6Cgg0RpobvOdRAD4/EMW
- Sau+OpNopqdOYFMsMuh80M8IcTgX+KnrAO44YVGfBEr7AVMPglWf7aKmXU831+HPs4cv
- 3QATLfhkJCAI5u04RbqyDcHpgnCefhC9iZENJfjIXvEsL4Th+zN5ceMpASvqdxJXQZ+I
- 6/eg==
+ d=1e100.net; s=20230601; t=1713420824; x=1714025624;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yADguTo6OtHbKXGyfe5pHI1kNjPau0SNSmuCZPAYh4c=;
+ b=LEY/wqmzl5jseDcO90J/w+Y5cryqizU5cKDLduHnYkcwgDJD6N7j+Olw/2Q2AcGS/+
+ iWn8kVBcUbSrbmfj/lMqpB9FFiD7JmozkOPX6a/QqMwjrCUMF4sHt4lBE/wLOA7F9tNO
+ +lVpzeBq243gAdRpxUTLaNPWjvm4k/17U0Gk9g+fG7i+O8TuKnasRnzIawq4pPbUPutj
+ QOB9gpuoczPhd8H76Kpsi3q8BRCOZXQvoLUfWJB/ESAZFZX+xcFvodTcXO5swj5LOzEg
+ c5wmsXzsj5IG0E0NXHBS9ea+XJvnDs94qOvd+my9tKqQ4wOCE3p9B6Zph7zylDTSmaQV
+ xWZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwDMBEVl6l8sHTn0BGiSbXZJfe2YsJZ3O1oupDia4JYnBfqrmEWy4VNnO8ey2YhZexbU7ZSzE0DRIVvhz6vScwmiVmJOk=
-X-Gm-Message-State: AOJu0YwBrXw/XjLiZszyfUL5G2RI1qd3bVj0N34Cjy4aCbCXU3RJbUw3
- rFFj0Mkabj5CZglkIj0TFIQIrjmCNt3PMfcjq3k+g/FlfEw1w9WQyN0LywsG9jcaX2ELSCJCAGZ
- +TVnByS+zavh2hYnsPEFm1mY5aCe1fRVqb1QdiWY7dV5AbodJdh2B
-X-Received: by 2002:adf:ead1:0:b0:347:9e5a:3078 with SMTP id
- o17-20020adfead1000000b003479e5a3078mr1035967wrn.1.1713419600945; 
- Wed, 17 Apr 2024 22:53:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFScIO0XPM4ysDpy7846JgiTFm4d0EQ82OrBlswTTq8AxJmpYzttU/XffNL0OimtAl8IEHfEA==
-X-Received: by 2002:adf:ead1:0:b0:347:9e5a:3078 with SMTP id
- o17-20020adfead1000000b003479e5a3078mr1035951wrn.1.1713419600539; 
- Wed, 17 Apr 2024 22:53:20 -0700 (PDT)
+ AJvYcCWh7LBKUTOfXSsD0eABW8ZJExI9agxeAwsIrWFKU7nmUqPMdliHvyLoAddUhY5ANhxb4ZCdaWPVVif3Be+dO83qv+8uJ94=
+X-Gm-Message-State: AOJu0YytEP9gpapRLrT2otadKVzasK17JGs/U1yvJ/yvciOGDsdKIGVe
+ Ls0kprgsiyT2WsRug12siLqJAVspSbc32pz5AAEpNIL7OKy6JBkdMQvtQl6pcxVVTqSFMx7pEWs
+ 2yEVs1QR1Pwm50jw1/mUx+prai4DVVnI5ighcbiBgjiqyO3zYMjGk
+X-Received: by 2002:a2e:868c:0:b0:2d6:c252:27fa with SMTP id
+ l12-20020a2e868c000000b002d6c25227famr1249440lji.37.1713420824007; 
+ Wed, 17 Apr 2024 23:13:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+R3BW4u8kfEGbt2X/fHtp1w0iCFrUZxzTkXOofOvwoAGdx3m6/V9idjT5OKW5PR04kt61+Q==
+X-Received: by 2002:a2e:868c:0:b0:2d6:c252:27fa with SMTP id
+ l12-20020a2e868c000000b002d6c25227famr1249404lji.37.1713420823512; 
+ Wed, 17 Apr 2024 23:13:43 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-117.web.vodafone.de.
  [109.43.177.117]) by smtp.gmail.com with ESMTPSA id
- e7-20020a5d65c7000000b00349eb6eae3esm907156wrw.4.2024.04.17.22.53.19
+ t15-20020adfeb8f000000b00349ff2e0345sm934172wrn.70.2024.04.17.23.13.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Apr 2024 22:53:20 -0700 (PDT)
-Message-ID: <6b7e61bb-edd3-42ee-a39c-f77fd43aa7df@redhat.com>
-Date: Thu, 18 Apr 2024 07:53:18 +0200
+ Wed, 17 Apr 2024 23:13:43 -0700 (PDT)
+Message-ID: <c623e08e-d18a-4bf9-bb20-8dcb84ab6bbf@redhat.com>
+Date: Thu, 18 Apr 2024 08:13:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Deprecation/removal of nios2 target support
-To: Sandra Loosemore <sloosemore@baylibre.com>, gcc@gcc.gnu.org,
- binutils@sourceware.org, gdb-patches@sourceware.org,
- libc-alpha@sourceware.org, Chung-Lin Tang <cltang@baylibre.com>,
- andrew@reenigne.org, Yao Qi <qiyaoltc@gmail.com>
-Cc: Dinh Nguyen <dinguyen@kernel.org>, qemu-devel@nongnu.org,
- newlib@sourceware.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <f4bug@amsat.org>, Chris Wulff <crwulff@gmail.com>,
- Marek Vasut <marex@denx.de>
-References: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2 09/13] block/gluster: Use URI parsing code from glib
+To: Eric Blake <eblake@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
+References: <20240412132415.282354-1-thuth@redhat.com>
+ <20240412132415.282354-10-thuth@redhat.com>
+ <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -124,10 +127,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
+In-Reply-To: <zrdtuxegb3kyrp6qobgpygmoydiigpc6tv5e4jk7w7fi7cwvr3@pivj5d3df5uj>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -4
 X-Spam_score: -0.5
@@ -152,35 +155,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/04/2024 05.27, Sandra Loosemore wrote:
-> Tomorrow I plan to push patches to mark the nios2 target as obsolete in GCC 14.
+On 12/04/2024 16.40, Eric Blake wrote:
+> On Fri, Apr 12, 2024 at 03:24:11PM +0200, Thomas Huth wrote:
+>> Since version 2.66, glib has useful URI parsing functions, too.
+>> Use those instead of the QEMU-internal ones to be finally able
+>> to get rid of the latter.
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   block/gluster.c | 71 ++++++++++++++++++++++++-------------------------
+>>   1 file changed, 35 insertions(+), 36 deletions(-)
+>>
+>> diff --git a/block/gluster.c b/block/gluster.c
+>> index cc74af06dc..1c9505f8bb 100644
+>> --- a/block/gluster.c
+>> +++ b/block/gluster.c
+>> @@ -17,7 +17,6 @@
+>>   #include "qapi/error.h"
+>>   #include "qapi/qmp/qdict.h"
+>>   #include "qapi/qmp/qerror.h"
+>> -#include "qemu/uri.h"
+>>   #include "qemu/error-report.h"
+>>   #include "qemu/module.h"
+>>   #include "qemu/option.h"
+>> @@ -289,9 +288,9 @@ static void glfs_clear_preopened(glfs_t *fs)
+>>       }
+>>   }
+>>   
+>> -static int parse_volume_options(BlockdevOptionsGluster *gconf, char *path)
+>> +static int parse_volume_options(BlockdevOptionsGluster *gconf, const char *path)
 > 
-> Background: Intel has EOL'ed the Nios II processor IP and is now directing 
-> their FPGA customers to a RISC-V platform instead.
-> 
-> https://www.intel.com/content/www/us/en/content-details/781327/intel-is-discontinuing-ip-ordering-codes-listed-in-pdn2312-for-nios-ii-ip.html
-> 
-> The Nios II hardware on loan from Intel that we were using for testing at 
-> Mentor Graphics/Siemens was returned around the first of the year. For some 
-> time we had been using QEMU to test the nios2-elf target, but we never had a 
-> QEMU test harness set up that would boot the Linux kernel, and user-mode 
-> QEMU on this target is too buggy/unmaintained to use for primary testing.  
-> So the current situation is that none of the listed maintainers for any of 
-> the GNU toolchain components have access to a fully working test 
-> configuration any more, we have all moved on to new jobs and different 
-> projects, Intel has also moved on to a different platform, and our former 
-> contacts on Intel's Nios II team have moved on as well.  It seems like it's 
-> time to pull the plug.
-> 
-> Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and remove 
-> support from all toolchain components after the release is made.  I'm not 
-> sure there is an established process for obsoleting/removing support in 
-> other components; besides binutils, GDB, and GLIBC, there's QEMU, 
-> newlib/libgloss, and the Linux kernel.  But, we need to get the ball rolling 
-> somewhere.
+> Is it worth mentioning in the commit message that this includes a
+> const-correctness tweak?
 
-Thanks for the heads-up, Sandra! FWIW: QEMU already marked the nios2 target 
-as deprecated, too, and plans to remove it in version 9.1 (in autumn this year).
+I can add something like:
+
+"Since g_uri_get_path() returns a const pointer, we also need to tweak the 
+parameter of parse_volume_options() (where we use the result of 
+g_uri_get_path() as input)"
+
+>> @@ -364,57 +363,57 @@ static int qemu_gluster_parse_uri(BlockdevOptionsGluster *gconf,
+>>       QAPI_LIST_PREPEND(gconf->server, gsconf);
+>>   
+>>       /* transport */
+>> -    if (!uri->scheme || !strcmp(uri->scheme, "gluster")) {
+>> +    uri_scheme = g_uri_get_scheme(uri);
+>> +    if (!uri_scheme || !strcmp(uri_scheme, "gluster")) {
+> 
+> Pre-existing, but per RFC 3986, we should probably be using strcasecmp
+> for scheme comparisons (I'm not sure if g_uri_parse guarantees a
+> lower-case return, even when the user passed in upper case).  That can
+> be a separate patch.
+
+As Daniel mentioned, g_uri_get_scheme() returns a lowercase string, so we 
+should be fine.
+
+> Reviewed-by: Eric Blake <eblake@redhat.com>
+
+Thanks!
 
   Thomas
 
