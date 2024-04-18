@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EB9C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858A1C05023
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXRP-0004Ma-BZ; Thu, 18 Apr 2024 15:29:03 -0400
+	id 1rxXSJ-0007h8-9f; Thu, 18 Apr 2024 15:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXPn-0000RQ-8g
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:27:25 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXQo-0002wc-Ak
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:28:32 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXPl-0007cD-Ap
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:27:22 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a519e1b0e2dso125156766b.2
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:27:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXQl-0007lQ-5o
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:28:25 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-418d1edcd4cso9435345e9.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713468439; x=1714073239; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713468501; x=1714073301; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=koVgyajCEgUVl/LMvNKONPGr1ZhJ2eug5WfoAqRNjUs=;
- b=zqKavEvUwmpktzeC+ZkyMOS6iqmafM6qsXVAEzNYS8OxOXD0h7Li/SUtH2QlGSV42v
- gtGr1aErMgYhJG8t6ttnlJYHRlT5s6csBUSDJvKUUgKwztK9bgxfoht0Jo8n566f9xw5
- WJCPSisaHKLFFhBiVCqkCZGHBtCeSRgWZo/nc6Va/Nx+1SGtZ3etaTNi0SHVMgrMNSd5
- jZTvmsADsT/EuGy7blU6vJQ1I46vFsxOrstT972mzuA6rwqIh7SOEPKHLLGWIo1TYQ6o
- /W9EqRv6gjsOqagQZSxouEan0y/1CtFQ/QmvNJhe7Oz7fTIPkMAVefFne69uufMQ5WuQ
- XPJA==
+ bh=/Yz7aRuiYxkABVdFEv0r+XjMMhiAPKgmd2KiD0xHfQg=;
+ b=X7vURuSvQT07cVgIi989oUl+bZhnHoK29CgeeFQxYymNaWLK5OblSHmRF7Tjg51WnB
+ zPhuB/xUeh58Z3cFClgBHDZdfXm7Y22Sk3JtlAlHTQ1c9Yh7El2odjwatSrrZIxmEgwn
+ 2br76v9t3LeU4lzGfIr0l2mrqtqlG+w7ZLmcS8mFSt37dyfcDtlskn5YXqrH9cUB97vB
+ D6cT0QmeYMqGNrPOmDGhzyFs/bFcpKGl02M0qCOMil47F0Zo+kguv0rSefT25UtDH7ex
+ Z0bT17Ga/g3rFh3+2gUVgrVugdXzkszACplAFYd63RIvyRWj9j/Rfy/to+KSq41I0e5L
+ MuYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713468439; x=1714073239;
+ d=1e100.net; s=20230601; t=1713468501; x=1714073301;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=koVgyajCEgUVl/LMvNKONPGr1ZhJ2eug5WfoAqRNjUs=;
- b=KrDZl11Lzdq6Kcy4g4p5NpVVE11McaWcxMo+sSqb1Rgh3ZynCVn7apahSwH/F8Anal
- eRjsWjlQuKr6eB7uqIYakKc/Mj87BacPKQz2d+69tvi4GQDWwju7il2UWSfmnLPMpP4x
- ILJIeig1ojS/h3XkJ1k4yCqEXg7wa2MDwJ60kl5WAXdOI8xyMax2FZrBAZ1ZFZakXSOT
- CtlNQlW2sHksUwHrjCQyutqdcuL+eemvbpYo24SBvHzlg+Sdi+OA6OkIY8zreS8tUHRz
- ae3LMgAnToMfkx9qs8IkS3TtLFHrGZIcfOtKMUUw5C+rrcmhuqRu8XeX4DmYKLqp9cjX
- bhUw==
-X-Gm-Message-State: AOJu0YyseKuP//XSVJRCk9DGCQrw8bd5GstV++uslcggRF7CgZLoxVvw
- h45V2Z7GQeypX0OlDSCFxJAazcXT4GG2oH07lUnxbFV1vB1VzDH0hyzfsehxpFk97U1epqFGJSo
- a
-X-Google-Smtp-Source: AGHT+IGUKx1BaAucoqEBkcKvR0ggaq6VcW3+/vbLpdXj+U90uCMnnNyN02Af7LhJb66dZ9m1Y8QZCA==
-X-Received: by 2002:a17:906:6013:b0:a52:ec:a87d with SMTP id
- o19-20020a170906601300b00a5200eca87dmr48021ejj.74.1713468439142; 
- Thu, 18 Apr 2024 12:27:19 -0700 (PDT)
+ bh=/Yz7aRuiYxkABVdFEv0r+XjMMhiAPKgmd2KiD0xHfQg=;
+ b=pJ9lySGIBvxK5tbnl2TkhTCj9Yf3+8K7fkWlo48+YVdGDO4GzBOq6LzbHAjadyTm4c
+ 4vBU+62rx7gqT36k3+MYWEuF7BdPrCPD6Srcb4Z5kY+c25EosF7+U2/rgayhl/sPyO+D
+ abhNcNr/jk7vU0fqhV9NxRqkZTvsvCzyCzQKkq1ZCFehdJgMGRPGIEfMkFKQ8zC33Jr3
+ K6nlO8AW+BGzZj//YiyrHf6CSXXMQ4yLSe/oWGkUCcJSEUdUVnTKGJ23Ui7FRxRtisCB
+ paGnnfxqrZGvcjt5TQWa8SDa5bJWCxG0HtIbuHClNxvvM2hFGcGarM7RWTrZWTVhtfsh
+ ZGng==
+X-Gm-Message-State: AOJu0YzWN3YqOiNGziBspbmZ0CjGCSY0MYgeMR6+j+GNgXEACojn8Xz9
+ jQlBuPoD9XlYtNPtNAv3h7v6LykVXmgv5itzhL+HUEmJ/KdD9CCHEze7qPMz7nrcQHrt6mVzP0U
+ b
+X-Google-Smtp-Source: AGHT+IE562H6bYcdnvQhGKG5MNuVHbGU/S9+AnWWXJN4YRjw79fzPiSU1R9hf/G0jjN+LtZRXHV9Vw==
+X-Received: by 2002:a5d:64ca:0:b0:346:44:3910 with SMTP id
+ f10-20020a5d64ca000000b0034600443910mr2930235wri.49.1713468501071; 
+ Thu, 18 Apr 2024 12:28:21 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.151.213])
  by smtp.gmail.com with ESMTPSA id
- n22-20020a170906119600b00a51a9d87570sm1269573eja.17.2024.04.18.12.27.17
+ u21-20020a1709064ad500b00a47423b4c33sm1256988ejt.128.2024.04.18.12.28.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Apr 2024 12:27:18 -0700 (PDT)
+ Thu, 18 Apr 2024 12:28:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -65,18 +65,20 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 16/24] exec: Move GUEST_ADDR_MAX definition to 'cpu_ldst.h'
-Date: Thu, 18 Apr 2024 21:25:15 +0200
-Message-ID: <20240418192525.97451-17-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
+ Song Gao <gaosong@loongson.cn>, Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH 23/24] exec: Remove 'disas/disas.h' from 'exec/log.h'
+Date: Thu, 18 Apr 2024 21:25:22 +0200
+Message-ID: <20240418192525.97451-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240418192525.97451-1-philmd@linaro.org>
 References: <20240418192525.97451-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,118 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GUEST_ADDR_MAX is only used in accel/tcg/user-exec.c
-and "exec/cpu_ldst.h". Move it from "exec/cpu-all.h"
-to "exec/cpu_ldst.h" so we can avoid including
-"exec/cpu-all.h" in accel/tcg/user-exec.c.
+"exec/log.h" doesn't require "disas/disas.h". Remove it,
+including it in the sources when required.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/cpu-all.h  | 34 +---------------------------------
- include/exec/cpu_ldst.h | 30 ++++++++++++++++++++++++++++++
- accel/tcg/cpu-exec.c    |  1 -
- 3 files changed, 31 insertions(+), 34 deletions(-)
+ include/exec/log.h               | 1 -
+ target/avr/translate.c           | 1 +
+ target/hexagon/translate.c       | 1 +
+ target/loongarch/tcg/translate.c | 1 +
+ target/rx/translate.c            | 1 +
+ tcg/tcg.c                        | 1 +
+ 6 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index e75ec13cd0..554b937ddb 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -63,39 +63,7 @@
+diff --git a/include/exec/log.h b/include/exec/log.h
+index e0ff778a10..ee33981aab 100644
+--- a/include/exec/log.h
++++ b/include/exec/log.h
+@@ -4,7 +4,6 @@
+ #include "qemu/log.h"
+ #include "qemu/log-for-trace.h"
+ #include "hw/core/cpu.h"
+-#include "disas/disas.h"
  
- /* MMU memory access macros */
- 
--#if defined(CONFIG_USER_ONLY)
--#include "exec/user/abitypes.h"
--
--/*
-- * If non-zero, the guest virtual address space is a contiguous subset
-- * of the host virtual address space, i.e. '-R reserved_va' is in effect
-- * either from the command-line or by default.  The value is the last
-- * byte of the guest address space e.g. UINT32_MAX.
-- *
-- * If zero, the host and guest virtual address spaces are intermingled.
-- */
--extern unsigned long reserved_va;
--
--/*
-- * Limit the guest addresses as best we can.
-- *
-- * When not using -R reserved_va, we cannot really limit the guest
-- * to less address space than the host.  For 32-bit guests, this
-- * acts as a sanity check that we're not giving the guest an address
-- * that it cannot even represent.  For 64-bit guests... the address
-- * might not be what the real kernel would give, but it is at least
-- * representable in the guest.
-- *
-- * TODO: Improve address allocation to avoid this problem, and to
-- * avoid setting bits at the top of guest addresses that might need
-- * to be used for tags.
-- */
--#define GUEST_ADDR_MAX_                                                 \
--    ((MIN_CONST(TARGET_VIRT_ADDR_SPACE_BITS, TARGET_ABI_BITS) <= 32) ?  \
--     UINT32_MAX : ~0ul)
--#define GUEST_ADDR_MAX    (reserved_va ? : GUEST_ADDR_MAX_)
--
--#else
-+#if !defined(CONFIG_USER_ONLY)
- 
- #include "exec/hwaddr.h"
- 
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 6d47d3114a..07649a01c1 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -73,8 +73,38 @@
- 
- #if defined(CONFIG_USER_ONLY)
- 
-+#include "user/abitypes.h"
- #include "user/guest-base.h"
- 
-+/*
-+ * If non-zero, the guest virtual address space is a contiguous subset
-+ * of the host virtual address space, i.e. '-R reserved_va' is in effect
-+ * either from the command-line or by default.  The value is the last
-+ * byte of the guest address space e.g. UINT32_MAX.
-+ *
-+ * If zero, the host and guest virtual address spaces are intermingled.
-+ */
-+extern unsigned long reserved_va;
-+
-+/*
-+ * Limit the guest addresses as best we can.
-+ *
-+ * When not using -R reserved_va, we cannot really limit the guest
-+ * to less address space than the host.  For 32-bit guests, this
-+ * acts as a sanity check that we're not giving the guest an address
-+ * that it cannot even represent.  For 64-bit guests... the address
-+ * might not be what the real kernel would give, but it is at least
-+ * representable in the guest.
-+ *
-+ * TODO: Improve address allocation to avoid this problem, and to
-+ * avoid setting bits at the top of guest addresses that might need
-+ * to be used for tags.
-+ */
-+#define GUEST_ADDR_MAX_                                                 \
-+    ((MIN_CONST(TARGET_VIRT_ADDR_SPACE_BITS, TARGET_ABI_BITS) <= 32) ?  \
-+     UINT32_MAX : ~0ul)
-+#define GUEST_ADDR_MAX    (reserved_va ? : GUEST_ADDR_MAX_)
-+
- #ifndef TARGET_TAGGED_ADDRESSES
- static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
- {
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 225e5fbd3e..7bfd558027 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -31,7 +31,6 @@
+ /* cpu_dump_state() logging functions: */
+ /**
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index 87e2bd5ef1..b2005f3cbe 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -29,6 +29,7 @@
+ #include "exec/helper-gen.h"
  #include "exec/log.h"
- #include "qemu/main-loop.h"
- #include "sysemu/cpus.h"
--#include "exec/cpu-all.h"
- #include "sysemu/cpu-timers.h"
- #include "exec/replay-core.h"
- #include "sysemu/tcg.h"
+ #include "exec/translator.h"
++#include "disas/disas.h"
+ 
+ #define HELPER_H "helper.h"
+ #include "exec/helper-info.c.inc"
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 47a870f42d..6bec38404e 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -25,6 +25,7 @@
+ #include "exec/translation-block.h"
+ #include "exec/cpu_ldst.h"
+ #include "exec/log.h"
++#include "disas/disas.h"
+ #include "internal.h"
+ #include "attribs.h"
+ #include "insn.h"
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 7567712655..ae87a68c69 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -14,6 +14,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/helper-gen.h"
+ #include "exec/log.h"
++#include "disas/disas.h"
+ #include "qemu/qemu-print.h"
+ #include "fpu/softfloat.h"
+ #include "translate.h"
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index f6e9e0ec90..4259ad6d74 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -27,6 +27,7 @@
+ #include "exec/helper-gen.h"
+ #include "exec/translator.h"
+ #include "exec/log.h"
++#include "disas/disas.h"
+ 
+ #define HELPER_H "helper.h"
+ #include "exec/helper-info.c.inc"
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 6a32656cd4..e7e0ab6846 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -51,6 +51,7 @@
+ #endif
+ 
+ #include "elf.h"
++#include "disas/disas.h"
+ #include "exec/log.h"
+ #include "tcg/tcg-ldst.h"
+ #include "tcg/tcg-temp-internal.h"
 -- 
 2.41.0
 
