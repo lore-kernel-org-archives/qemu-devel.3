@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858A1C05023
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE20C04FF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 19:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXSJ-0007h8-9f; Thu, 18 Apr 2024 15:29:59 -0400
+	id 1rxXS3-00070H-CI; Thu, 18 Apr 2024 15:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXQo-0002wc-Ak
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:28:32 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXP9-0008D7-A3
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:26:48 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXQl-0007lQ-5o
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:28:25 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-418d1edcd4cso9435345e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:28:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxXP6-0007W7-7d
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 15:26:42 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a51a7d4466bso134059566b.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 12:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713468501; x=1714073301; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713468396; x=1714073196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/Yz7aRuiYxkABVdFEv0r+XjMMhiAPKgmd2KiD0xHfQg=;
- b=X7vURuSvQT07cVgIi989oUl+bZhnHoK29CgeeFQxYymNaWLK5OblSHmRF7Tjg51WnB
- zPhuB/xUeh58Z3cFClgBHDZdfXm7Y22Sk3JtlAlHTQ1c9Yh7El2odjwatSrrZIxmEgwn
- 2br76v9t3LeU4lzGfIr0l2mrqtqlG+w7ZLmcS8mFSt37dyfcDtlskn5YXqrH9cUB97vB
- D6cT0QmeYMqGNrPOmDGhzyFs/bFcpKGl02M0qCOMil47F0Zo+kguv0rSefT25UtDH7ex
- Z0bT17Ga/g3rFh3+2gUVgrVugdXzkszACplAFYd63RIvyRWj9j/Rfy/to+KSq41I0e5L
- MuYg==
+ bh=Jio+r+AEUkjjrU5gDZl4zBsemaqAFeHzEWFaXnqFrOQ=;
+ b=H9ay9pzyZ3ABmD/RWdVRSmHZJ7NF0E3NBJrceLHGEJzh6D7hJPH+8f2V1ryKITt3ud
+ /B3wppTVSXUgTFlvB63p+1EKTKSIGLDYekYP/JSXjD5ogQiuK89yM44cC6X0kRqw8VMq
+ dPP4gljVL+cBnfA8M4m3V67fVvUoorMzwLr3wSy4Wg9JOhVtV8WbmGtvc/rN1bn4rP94
+ IfkdTDv83Dfn+TueCEwTIv5uOmw7J30z3m9GIha/9F5lkqNUyooZOiYbjS0Y81TSqkC7
+ qD+ALB49Pq+ZT8OnjAnk4roeyzf99jWE4yIgwVTFCCDLa+0kj5jnEdP6ueDv9/pMbc+l
+ RIag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713468501; x=1714073301;
+ d=1e100.net; s=20230601; t=1713468396; x=1714073196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/Yz7aRuiYxkABVdFEv0r+XjMMhiAPKgmd2KiD0xHfQg=;
- b=pJ9lySGIBvxK5tbnl2TkhTCj9Yf3+8K7fkWlo48+YVdGDO4GzBOq6LzbHAjadyTm4c
- 4vBU+62rx7gqT36k3+MYWEuF7BdPrCPD6Srcb4Z5kY+c25EosF7+U2/rgayhl/sPyO+D
- abhNcNr/jk7vU0fqhV9NxRqkZTvsvCzyCzQKkq1ZCFehdJgMGRPGIEfMkFKQ8zC33Jr3
- K6nlO8AW+BGzZj//YiyrHf6CSXXMQ4yLSe/oWGkUCcJSEUdUVnTKGJ23Ui7FRxRtisCB
- paGnnfxqrZGvcjt5TQWa8SDa5bJWCxG0HtIbuHClNxvvM2hFGcGarM7RWTrZWTVhtfsh
- ZGng==
-X-Gm-Message-State: AOJu0YzWN3YqOiNGziBspbmZ0CjGCSY0MYgeMR6+j+GNgXEACojn8Xz9
- jQlBuPoD9XlYtNPtNAv3h7v6LykVXmgv5itzhL+HUEmJ/KdD9CCHEze7qPMz7nrcQHrt6mVzP0U
- b
-X-Google-Smtp-Source: AGHT+IE562H6bYcdnvQhGKG5MNuVHbGU/S9+AnWWXJN4YRjw79fzPiSU1R9hf/G0jjN+LtZRXHV9Vw==
-X-Received: by 2002:a5d:64ca:0:b0:346:44:3910 with SMTP id
- f10-20020a5d64ca000000b0034600443910mr2930235wri.49.1713468501071; 
- Thu, 18 Apr 2024 12:28:21 -0700 (PDT)
+ bh=Jio+r+AEUkjjrU5gDZl4zBsemaqAFeHzEWFaXnqFrOQ=;
+ b=UNSryEvuL1M2h/S/JQ5TaX97fJ0gFNcBq7/VUenXCGh8aChnqPugU3zT2r98E5zttV
+ WJvD7sO/fGJ3WRBp6w0HQHuuR08BG+Tn5pnwRtkeJLJUJSfUsqrR8rRT9Djriix8v0Fn
+ n25PtbQbwItqcAunJKx6Sbjzm7ubsMMNSnFGApPl1iaQN5giAeE36XbEZbt6rAyL6UTw
+ IDtHpP/BHdctdrsp+mDlLAP8lCSiFeFh7VqVSeJYOL6kUJ+Xu0V1Pv1FcPXVpgI9xqq/
+ TK65o9ijcrRdKGzq8AhkSFbUUE2OQohghg/zPZG/mz327ev0XJLwfqQp7KCm2mKO9Dvk
+ A7bQ==
+X-Gm-Message-State: AOJu0YwvxZZN6r716yNkvVCCqyafFK3wQgyWxQLhKZ5DhDCks/AiQW+4
+ 7qedQ4IkFL9bdVFZ8ojm3+sGIemSx4S9oEHECxH3KWiTtPrJ7nkbnKMFprwgFgTk+wdKnJZy4rq
+ V
+X-Google-Smtp-Source: AGHT+IGvos0mZIxaTBgDhPQVJFUlHPzRnRLeB+2FoZuf4Lvw2zFvFjAnSJwEUd4r5lLo33Y0Jgv61A==
+X-Received: by 2002:a17:906:1f48:b0:a4e:cd5c:da72 with SMTP id
+ d8-20020a1709061f4800b00a4ecd5cda72mr43114ejk.63.1713468396179; 
+ Thu, 18 Apr 2024 12:26:36 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.151.213])
  by smtp.gmail.com with ESMTPSA id
- u21-20020a1709064ad500b00a47423b4c33sm1256988ejt.128.2024.04.18.12.28.19
+ lu10-20020a170906faca00b00a52299d8eecsm1238430ejb.135.2024.04.18.12.26.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Apr 2024 12:28:20 -0700 (PDT)
+ Thu, 18 Apr 2024 12:26:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -66,19 +66,19 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
- Song Gao <gaosong@loongson.cn>, Yoshinori Sato <ysato@users.sourceforge.jp>
-Subject: [PATCH 23/24] exec: Remove 'disas/disas.h' from 'exec/log.h'
-Date: Thu, 18 Apr 2024 21:25:22 +0200
-Message-ID: <20240418192525.97451-24-philmd@linaro.org>
+ Peter Xu <peterx@redhat.com>
+Subject: [PATCH 11/24] exec: Move tlb_reset_dirty*() declarations to
+ 'exec/cputlb.h'
+Date: Thu, 18 Apr 2024 21:25:10 +0200
+Message-ID: <20240418192525.97451-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240418192525.97451-1-philmd@linaro.org>
 References: <20240418192525.97451-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,91 +101,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"exec/log.h" doesn't require "disas/disas.h". Remove it,
-including it in the sources when required.
+Declare tlb_reset_dirty() and tlb_reset_dirty_range_all()
+in "exec/cputlb.h". Restrict tlb_reset_dirty_range_all()
+to TCG accel.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/log.h               | 1 -
- target/avr/translate.c           | 1 +
- target/hexagon/translate.c       | 1 +
- target/loongarch/tcg/translate.c | 1 +
- target/rx/translate.c            | 1 +
- tcg/tcg.c                        | 1 +
- 6 files changed, 5 insertions(+), 1 deletion(-)
+ include/exec/cputlb.h   | 12 +++++++++++-
+ include/exec/exec-all.h |  3 ---
+ include/exec/ram_addr.h |  1 +
+ system/physmem.c        |  2 ++
+ 4 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/include/exec/log.h b/include/exec/log.h
-index e0ff778a10..ee33981aab 100644
---- a/include/exec/log.h
-+++ b/include/exec/log.h
-@@ -4,7 +4,6 @@
- #include "qemu/log.h"
- #include "qemu/log-for-trace.h"
- #include "hw/core/cpu.h"
--#include "disas/disas.h"
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index 3594f904b4..dc92befb93 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -49,6 +49,9 @@ void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
+ void tlb_protect_code(ram_addr_t ram_addr);
+ void tlb_unprotect_code(ram_addr_t ram_addr);
  
- /* cpu_dump_state() logging functions: */
++void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
++void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
++
  /**
-diff --git a/target/avr/translate.c b/target/avr/translate.c
-index 87e2bd5ef1..b2005f3cbe 100644
---- a/target/avr/translate.c
-+++ b/target/avr/translate.c
-@@ -29,6 +29,7 @@
- #include "exec/helper-gen.h"
- #include "exec/log.h"
- #include "exec/translator.h"
-+#include "disas/disas.h"
+  * iotlb_to_section:
+  * @cpu: CPU performing the access
+@@ -69,6 +72,13 @@ hwaddr memory_region_section_get_iotlb(CPUState *cpu,
  
- #define HELPER_H "helper.h"
- #include "exec/helper-info.c.inc"
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 47a870f42d..6bec38404e 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -25,6 +25,7 @@
- #include "exec/translation-block.h"
- #include "exec/cpu_ldst.h"
- #include "exec/log.h"
-+#include "disas/disas.h"
- #include "internal.h"
- #include "attribs.h"
- #include "insn.h"
-diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-index 7567712655..ae87a68c69 100644
---- a/target/loongarch/tcg/translate.c
-+++ b/target/loongarch/tcg/translate.c
-@@ -14,6 +14,7 @@
- #include "exec/helper-proto.h"
- #include "exec/helper-gen.h"
- #include "exec/log.h"
-+#include "disas/disas.h"
- #include "qemu/qemu-print.h"
- #include "fpu/softfloat.h"
- #include "translate.h"
-diff --git a/target/rx/translate.c b/target/rx/translate.c
-index f6e9e0ec90..4259ad6d74 100644
---- a/target/rx/translate.c
-+++ b/target/rx/translate.c
-@@ -27,6 +27,7 @@
- #include "exec/helper-gen.h"
- #include "exec/translator.h"
- #include "exec/log.h"
-+#include "disas/disas.h"
+ #endif /* CONFIG_USER_ONLY */
  
- #define HELPER_H "helper.h"
- #include "exec/helper-info.c.inc"
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 6a32656cd4..e7e0ab6846 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -51,6 +51,7 @@
+-#endif /* CONFIG_TCG */
++#else /* !CONFIG_TCG */
++
++static inline void tlb_reset_dirty_range_all(ram_addr_t start,
++                                             ram_addr_t length)
++{
++}
++
++#endif /* !CONFIG_TCG */
+ 
+ #endif
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 778c82ba8e..6f46015ab4 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -640,9 +640,6 @@ static inline void mmap_lock(void) {}
+ static inline void mmap_unlock(void) {}
+ #define WITH_MMAP_LOCK_GUARD()
+ 
+-void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
+-void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+-
  #endif
  
- #include "elf.h"
-+#include "disas/disas.h"
- #include "exec/log.h"
- #include "tcg/tcg-ldst.h"
- #include "tcg/tcg-temp-internal.h"
+ #endif
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index 3fc83587c0..f06ae9b516 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -26,6 +26,7 @@
+ #include "exec/ramlist.h"
+ #include "exec/ramblock.h"
+ #include "exec/exec-all.h"
++#include "cputlb.h"
+ #include "qemu/rcu.h"
+ 
+ extern uint64_t total_dirty_pages;
+diff --git a/system/physmem.c b/system/physmem.c
+index 38d3ede9f9..7a7876a375 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -850,6 +850,7 @@ found:
+     return block;
+ }
+ 
++#ifdef CONFIG_TCG
+ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
+ {
+     CPUState *cpu;
+@@ -869,6 +870,7 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
+         tlb_reset_dirty(cpu, start1, length);
+     }
+ }
++#endif
+ 
+ /* Note: start and end must be within the same ram block.  */
+ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
 -- 
 2.41.0
 
