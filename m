@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793CAC4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 09:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2CCC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 09:52:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxOPk-0002Nb-C6; Thu, 18 Apr 2024 05:50:44 -0400
+	id 1rxOPk-0002Nh-ID; Thu, 18 Apr 2024 05:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxOPg-0002Kt-5M
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:50:40 -0400
+ id 1rxOPi-0002MI-6o
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:50:42 -0400
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxOPe-0000aD-62
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:50:39 -0400
+ id 1rxOPg-0000aD-Il
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 05:50:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713433838; x=1744969838;
+ t=1713433840; x=1744969840;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=y+y8pbPG6aAYtksMSfCcD9zV1UGDITyzpAQD1vynnmE=;
- b=fRXx/ICByeYSmqj/oAAeKDjx4RL2tH/P4TYnf4WgdOLiJS2oH6z8lbgx
- tECGoZK3g1+josO/jazG14z3I2g8dvrYQJE/988SyWBXWC3WlhxEbhUrG
- EK3v2yyCjLkqOPcezJSiu5USej1uPl/e9I0g3Ca5lyj7jnvqriwt2q7I4
- G/nTCw5ZJGGAeHUOJbR2s+QZDTe3+vGSQzDoQ2nwsOPpQhWa1ZfzuOnZP
- 8QpQZj1PoExwqr3/mwMeA/kh49UGWVyIAIVx7/GjAZ6B1/4O/ooGX+9nU
- WjLHqmFifrj+62fvcoYjLYL5IXldJ5h4ia4qceVI7F8sZda7RDgpmc2jz g==;
-X-CSE-ConnectionGUID: HwwD7+3BTqKkQN0CCMoNvQ==
-X-CSE-MsgGUID: 1nNLKCs+T++axV5oVPRslg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="8837592"
+ bh=lbPQJi6mKHN3eHLyUnR9ZyEzQusJyhNv4/DgxwHqZeo=;
+ b=V29vtrMqXPuxDfuVvrwM7600EmyIosl9Mywy7KG85cnrfq4wD6czEjeS
+ GGSJBM7LsoNoAbTICrhpFByjJIdxQ9ar1COtlGODRnE3Kk4nteb49jc04
+ 6CjVFyD9c6EdeMXGUlJNZnu30mI3KVMU09YBu/lqTNQfVhVRDBhb4tfGz
+ 3HtPIMjDqxGOfgDrufPyxu93niu4D/xN6Cqbp0jtRnlGcuOYLKwWVLNAG
+ OCv8X39RR6UmNvqXyy20IbuQv4/kQj/2lQNlNcCQX8Izqu6yD7lIQ4H+R
+ Z4In7bDOanuUS7Xv1rl8Noh+pWIBYt5Tlu/hImt7gU5J3sUUI/6trb38m g==;
+X-CSE-ConnectionGUID: T4gF78TiQ7+r20Q5XAQLWA==
+X-CSE-MsgGUID: e0MKVOHoTZ2pAnR4vnFOjA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="8837609"
 X-IronPort-AV: E=Sophos;i="6.07,211,1708416000"; 
-   d="scan'208";a="8837592"
+   d="scan'208";a="8837609"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Apr 2024 02:50:34 -0700
-X-CSE-ConnectionGUID: KzSb7/g4SSS6AvmZ8ThkqQ==
-X-CSE-MsgGUID: 7xwLRKhYSEWwrkZYpW+52g==
+ 18 Apr 2024 02:50:38 -0700
+X-CSE-ConnectionGUID: SLTL1c/PQsKDo57QFAAwZA==
+X-CSE-MsgGUID: weLucs5dT8ScFG3wHcvIQg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,211,1708416000"; d="scan'208";a="27507000"
+X-IronPort-AV: E=Sophos;i="6.07,211,1708416000"; d="scan'208";a="27507038"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 18 Apr 2024 02:50:32 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 18 Apr 2024 02:50:36 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Fan Ni <fan.ni@samsung.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 1/3] hw/cxl/cxl-cdat: Make ct3_load_cdat() return boolean
-Date: Thu, 18 Apr 2024 18:04:31 +0800
-Message-Id: <20240418100433.1085447-2-zhao1.liu@linux.intel.com>
+Subject: [PATCH 3/3] hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return boolean
+Date: Thu, 18 Apr 2024 18:04:33 +0800
+Message-Id: <20240418100433.1085447-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240418100433.1085447-1-zhao1.liu@linux.intel.com>
 References: <20240418100433.1085447-1-zhao1.liu@linux.intel.com>
@@ -88,73 +88,81 @@ From: Zhao Liu <zhao1.liu@intel.com>
 As error.h suggested, the best practice for callee is to return
 something to indicate success / failure.
 
-So make ct3_load_cdat() return boolean, and this is the preparation for
-cxl_doe_cdat_init() returning boolean.
+With returned boolean, there's no need to dereference @errp to check
+failure case.
 
 Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/cxl/cxl-cdat.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ hw/cxl/cxl-cdat.c              | 6 +++---
+ hw/mem/cxl_type3.c             | 3 +--
+ hw/pci-bridge/cxl_upstream.c   | 3 +--
+ include/hw/cxl/cxl_component.h | 2 +-
+ 4 files changed, 6 insertions(+), 8 deletions(-)
 
 diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
-index 551545f7823b..b3e496857a77 100644
+index e7bc1380bfbf..959a55518e65 100644
 --- a/hw/cxl/cxl-cdat.c
 +++ b/hw/cxl/cxl-cdat.c
-@@ -111,7 +111,7 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
-     cdat->entry = g_steal_pointer(&cdat_st);
+@@ -189,14 +189,14 @@ static bool ct3_load_cdat(CDATObject *cdat, Error **errp)
+     return true;
  }
  
--static void ct3_load_cdat(CDATObject *cdat, Error **errp)
-+static bool ct3_load_cdat(CDATObject *cdat, Error **errp)
+-void cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp)
++bool cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp)
  {
-     g_autofree CDATEntry *cdat_st = NULL;
-     g_autofree uint8_t *buf = NULL;
-@@ -127,11 +127,11 @@ static void ct3_load_cdat(CDATObject *cdat, Error **errp)
-                              &file_size, &error)) {
-         error_setg(errp, "CDAT: File read failed: %s", error->message);
-         g_error_free(error);
--        return;
-+        return false;
-     }
-     if (file_size < sizeof(CDATTableHeader)) {
-         error_setg(errp, "CDAT: File too short");
--        return;
-+        return false;
-     }
-     i = sizeof(CDATTableHeader);
-     num_ent = 1;
-@@ -139,19 +139,19 @@ static void ct3_load_cdat(CDATObject *cdat, Error **errp)
-         hdr = (CDATSubHeader *)(buf + i);
-         if (i + sizeof(CDATSubHeader) > file_size) {
-             error_setg(errp, "CDAT: Truncated table");
--            return;
-+            return false;
-         }
-         cdat_len_check(hdr, errp);
-         i += hdr->length;
-         if (i > file_size) {
-             error_setg(errp, "CDAT: Truncated table");
--            return;
-+            return false;
-         }
-         num_ent++;
-     }
-     if (i != file_size) {
-         error_setg(errp, "CDAT: File length mismatch");
--        return;
-+        return false;
-     }
+     CDATObject *cdat = &cxl_cstate->cdat;
  
-     cdat_st = g_new0(CDATEntry, num_ent);
-@@ -185,6 +185,7 @@ static void ct3_load_cdat(CDATObject *cdat, Error **errp)
-     cdat->entry_len = num_ent;
-     cdat->entry = g_steal_pointer(&cdat_st);
-     cdat->buf = g_steal_pointer(&buf);
-+    return true;
+     if (cdat->filename) {
+-        ct3_load_cdat(cdat, errp);
++        return ct3_load_cdat(cdat, errp);
+     } else {
+-        ct3_build_cdat(cdat, errp);
++        return ct3_build_cdat(cdat, errp);
+     }
  }
  
- void cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp)
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index b0a7e9f11b64..3e42490b6ce8 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -705,8 +705,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+     cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
+     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
+     cxl_cstate->cdat.private = ct3d;
+-    cxl_doe_cdat_init(cxl_cstate, errp);
+-    if (*errp) {
++    if (!cxl_doe_cdat_init(cxl_cstate, errp)) {
+         goto err_free_special_ops;
+     }
+ 
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index 783fa6adac19..e51221a5f334 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -338,8 +338,7 @@ static void cxl_usp_realize(PCIDevice *d, Error **errp)
+     cxl_cstate->cdat.build_cdat_table = build_cdat_table;
+     cxl_cstate->cdat.free_cdat_table = free_default_cdat_table;
+     cxl_cstate->cdat.private = d;
+-    cxl_doe_cdat_init(cxl_cstate, errp);
+-    if (*errp) {
++    if (!cxl_doe_cdat_init(cxl_cstate, errp)) {
+         goto err_cap;
+     }
+ 
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index 5012fab6f763..945ee6ffd045 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -273,7 +273,7 @@ hwaddr cxl_decode_ig(int ig);
+ CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb);
+ bool cxl_get_hb_passthrough(PCIHostState *hb);
+ 
+-void cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp);
++bool cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp);
+ void cxl_doe_cdat_release(CXLComponentState *cxl_cstate);
+ void cxl_doe_cdat_update(CXLComponentState *cxl_cstate, Error **errp);
+ 
 -- 
 2.34.1
 
