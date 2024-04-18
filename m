@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91687C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C94C4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 20:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxXyT-0001fX-74; Thu, 18 Apr 2024 16:03:14 -0400
+	id 1rxXyj-0001qV-8W; Thu, 18 Apr 2024 16:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXy1-0001YM-6o; Thu, 18 Apr 2024 16:02:45 -0400
+ id 1rxXyg-0001p5-Ei; Thu, 18 Apr 2024 16:03:26 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rxXxx-0005HW-Eb; Thu, 18 Apr 2024 16:02:44 -0400
+ id 1rxXye-0005R2-Qf; Thu, 18 Apr 2024 16:03:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A530E5FE0F;
- Thu, 18 Apr 2024 23:02:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 285545FE16;
+ Thu, 18 Apr 2024 23:02:28 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 10E25B93F5;
+ by tsrv.corpit.ru (Postfix) with SMTP id 894A2B93FC;
  Thu, 18 Apr 2024 23:02:25 +0300 (MSK)
-Received: (nullmailer pid 952860 invoked by uid 1000);
+Received: (nullmailer pid 952882 invoked by uid 1000);
  Thu, 18 Apr 2024 20:02:24 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.11 48/59] qemu-options: Fix CXL Fixed Memory Window
- interleave-granularity typo
-Date: Thu, 18 Apr 2024 23:02:08 +0300
-Message-Id: <20240418200224.952785-7-mjt@tls.msk.ru>
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.11 55/59] hw/net/lan9118: Replace magic '2048' value by
+ MIL_TXFIFO_SIZE definition
+Date: Thu, 18 Apr 2024 23:02:15 +0300
+Message-Id: <20240418200224.952785-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
 References: <qemu-stable-7.2.11-20240418230159@cover.tls.msk.ru>
@@ -63,41 +63,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Fix the unit typo of interleave-granularity of CXL Fixed Memory
-Window in qemu-option.hx.
+The magic 2048 is explained in the LAN9211 datasheet (DS00002414A)
+in chapter 1.4, "10/100 Ethernet MAC":
 
-Fixes: 03b39fcf64 ("hw/cxl: Make the CFMW a machine parameter.")
-Signed-off-by: Yuquan Wang wangyuquan1236@phytium.com.cn
-Message-ID: <20240407083539.1488172-2-wangyuquan1236@phytium.com.cn>
-[PMD: Reworded]
+  The MAC Interface Layer (MIL), within the MAC, contains a
+  2K Byte transmit and a 128 Byte receive FIFO which is separate
+  from the TX and RX FIFOs. [...]
+
+Note, the use of the constant in lan9118_receive() reveals that
+our implementation is using the same buffer for both tx and rx.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit aa88f99c87c0e5d195d6d96190374650553ea61f)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20240409133801.23503-2-philmd@linaro.org>
+(cherry picked from commit a45223467e4e185fff1c76a6483784fa379ded77)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 7f798ce47e..2c00ceac83 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -149,14 +149,14 @@ SRST
-         platform and configuration dependent.
+diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+index bf81c84984..f269d72d9e 100644
+--- a/hw/net/lan9118.c
++++ b/hw/net/lan9118.c
+@@ -155,6 +155,12 @@ do { fprintf(stderr, "lan9118: error: " fmt , ## __VA_ARGS__);} while (0)
  
-         ``interleave-granularity=granularity`` sets the granularity of
--        interleave. Default 256KiB. Only 256KiB, 512KiB, 1024KiB, 2048KiB
--        4096KiB, 8192KiB and 16384KiB granularities supported.
-+        interleave. Default 256 (bytes). Only 256, 512, 1k, 2k,
-+        4k, 8k and 16k granularities supported.
+ #define GPT_TIMER_EN    0x20000000
  
-         Example:
++/*
++ * The MAC Interface Layer (MIL), within the MAC, contains a 2K Byte transmit
++ * and a 128 Byte receive FIFO which is separate from the TX and RX FIFOs.
++ */
++#define MIL_TXFIFO_SIZE         2048
++
+ enum tx_state {
+     TX_IDLE,
+     TX_B,
+@@ -171,7 +177,7 @@ typedef struct {
+     int32_t pad;
+     int32_t fifo_used;
+     int32_t len;
+-    uint8_t data[2048];
++    uint8_t data[MIL_TXFIFO_SIZE];
+ } LAN9118Packet;
  
-         ::
+ static const VMStateDescription vmstate_lan9118_packet = {
+@@ -187,7 +193,7 @@ static const VMStateDescription vmstate_lan9118_packet = {
+         VMSTATE_INT32(pad, LAN9118Packet),
+         VMSTATE_INT32(fifo_used, LAN9118Packet),
+         VMSTATE_INT32(len, LAN9118Packet),
+-        VMSTATE_UINT8_ARRAY(data, LAN9118Packet, 2048),
++        VMSTATE_UINT8_ARRAY(data, LAN9118Packet, MIL_TXFIFO_SIZE),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -549,7 +555,7 @@ static ssize_t lan9118_receive(NetClientState *nc, const uint8_t *buf,
+         return -1;
+     }
  
--            -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512k
-+            -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
- ERST
+-    if (size >= 2048 || size < 14) {
++    if (size >= MIL_TXFIFO_SIZE || size < 14) {
+         return -1;
+     }
  
- DEF("M", HAS_ARG, QEMU_OPTION_M,
 -- 
 2.39.2
 
