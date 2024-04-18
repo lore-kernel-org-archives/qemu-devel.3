@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22FB4C4345F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 16:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2607CC4345F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 16:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxUQ1-0005Mq-4b; Thu, 18 Apr 2024 12:15:26 -0400
+	id 1rxUqU-0005Jn-QF; Thu, 18 Apr 2024 12:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUPs-0005MJ-Nk
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:15:16 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxUPr-0007UY-7x
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:15:16 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-344047ac7e4so1397356f8f.0
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 09:15:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713456913; x=1714061713; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ekEUSCI5vTjMceAsk5YD9S59yiatOF5vG/4pwpsjwao=;
- b=ZaIcq+RO34HpR2ZmzxNXr91uJD1JIeLZTqzYd7KCHok/EPoOXqbMy1aGr+UJMbXp73
- lLWn0ZMgAkAOuM6xxkjfMKECqWX8nH/EwF687tnHMGXc2YQBvF0UPmydDTVR31yZZa4p
- 4TTPp5LDinS+XZfd23g1gZIeSLq8otxYrPvqyR+nmp9wpD+9meTG391MMCUKag0ckjIW
- NyPwxD1/WnilA4ITbiVxsCQpMbbeCSVpY6lQx8fe/nSUAfbYd+mR1HWXY6wIRGS2meYX
- eaApXVsk+PijplphCOOPUt8hxr2Nt41H6Oij0CfM38g04qntsbBc6uV8s1AzQ0EXtr67
- n7gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713456913; x=1714061713;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ekEUSCI5vTjMceAsk5YD9S59yiatOF5vG/4pwpsjwao=;
- b=Mg/NObzvmYIhISJc/t0kYw7hEI3KIyzpyACcpO3ujt8XcMkniLd6g2sbF8csTvWgUy
- P8IpCPY5E0/NBxh4FkrErnCqqtHMZFOM2bfiT0fZrRwwvCm4KhjTk2ah6UNNmpvUZ+KV
- vcUSjSvBXoqHArJBtgT0W042eHWjkjLl2wSgKULyzHIgYrU0wG2VSTFMKMbnlr9OVGGp
- 8b/mcDqbu5jY9F+eJGCbXtEznmdvmX4MtFPLV2o7FiUJAcmh9X0dwLmRmq7Bh6xknoR4
- 4ZctwksaZzxdVI7etlboZ+GnYSBhI5afn+E56QebAcVV313VFLuN63nF6N0vO0a0LvgZ
- LtdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPBnuXaSb8SGzFvMUWnjNSbOcz1ZBoc5B6XwL9j2ZgQ5pWKf4bJSgRHtrusGtk2wRR/ldys/d9YKfTeYQI/tZKkLMMOzA=
-X-Gm-Message-State: AOJu0YzNpVpF2umlzyXchnA/SIsUkNZsOIVPMf+p6Ahcxm2BLigJKLS3
- VbHxWfHlrq44vxAl/EYi4H3vKFOBBPJ7E3lEu84XANOu+38jhpEweyQVb4nRrYg=
-X-Google-Smtp-Source: AGHT+IEfINRze5BpluZ0jQ+KVlqHVNerHiaaIWhm7OgzgXsIq5E+noR56U7jECeQ8BW79g3IAU0lhQ==
-X-Received: by 2002:a05:6000:1a45:b0:33d:754c:8daf with SMTP id
- t5-20020a0560001a4500b0033d754c8dafmr1992738wry.10.1713456913405; 
- Thu, 18 Apr 2024 09:15:13 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.151.213])
- by smtp.gmail.com with ESMTPSA id
- u17-20020adfeb51000000b00347321735a6sm2154572wrn.66.2024.04.18.09.15.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Apr 2024 09:15:12 -0700 (PDT)
-Message-ID: <4999f974-ea60-4c6e-b3bb-32fab39f06bc@linaro.org>
-Date: Thu, 18 Apr 2024 18:15:11 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rxUqJ-0005HH-VB
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:42:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rxUqH-0003uD-Ue
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 12:42:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713458549;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=0mqkYMfD1nly8dYRIAknhG6DxWIVujhqX2MkNyMuYWs=;
+ b=Gt15ZngZU/xwOtGi9D0vTEZAxQiqibeMeBMFXq0lTyC0Ha0lcySFeFeb0QPSHTWnXlQgZA
+ +GyFnu0gUrIo67/QTQgv9LW7Mwb7166rKDvBl16WiNkjylvNhJlfp/jaGrFV9BL1ctk2it
+ yGhEzE/af7sUddCkyhyFI1PgKXtGZLA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-WJp2aOgZO8Wt3bb3AJpmAg-1; Thu, 18 Apr 2024 12:42:28 -0400
+X-MC-Unique: WJp2aOgZO8Wt3bb3AJpmAg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B89A618065AE
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 16:42:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.72])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id DE50040357A7;
+ Thu, 18 Apr 2024 16:42:26 +0000 (UTC)
+Date: Thu, 18 Apr 2024 17:42:24 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Anthony Harivel <aharivel@redhat.com>
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
+ vchundur@redhat.com, rjarry@redhat.com
+Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
+Message-ID: <ZiFNcLYyha3_teDT@redhat.com>
+References: <20240411121434.253353-1-aharivel@redhat.com>
+ <20240411121434.253353-4-aharivel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] target/arm: Enable FEAT_Spec_FPACC for -cpu max
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240418152004.2106516-1-peter.maydell@linaro.org>
- <20240418152004.2106516-6-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240418152004.2106516-6-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240411121434.253353-4-aharivel@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,27 +80,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/4/24 17:20, Peter Maydell wrote:
-> FEAT_Spec_FPACC is a feature describing speculative behaviour in the
-> event of a PAC authontication failure when FEAT_FPACCOMBINE is
-> implemented.  FEAT_Spec_FPACC means that the speculative use of
-> pointers processed by a PAC Authentication is not materially
-> different in terms of the impact on cached microarchitectural state
-> (caches, TLBs, etc) between passing and failing of the PAC
-> Authentication.
+On Thu, Apr 11, 2024 at 02:14:34PM +0200, Anthony Harivel wrote:
+> Starting with the "Sandy Bridge" generation, Intel CPUs provide a RAPL
+> interface (Running Average Power Limit) for advertising the accumulated
+> energy consumption of various power domains (e.g. CPU packages, DRAM,
+> etc.).
 > 
-> QEMU doesn't do speculative execution, so we can advertise
-> this feature.
+> The consumption is reported via MSRs (model specific registers) like
+> MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are
+> 64 bits registers that represent the accumulated energy consumption in
+> micro Joules. They are updated by microcode every ~1ms.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> For now, KVM always returns 0 when the guest requests the value of
+> these MSRs. Use the KVM MSR filtering mechanism to allow QEMU handle
+> these MSRs dynamically in userspace.
+> 
+> To limit the amount of system calls for every MSR call, create a new
+> thread in QEMU that updates the "virtual" MSR values asynchronously.
+> 
+> Each vCPU has its own vMSR to reflect the independence of vCPUs. The
+> thread updates the vMSR values with the ratio of energy consumed of
+> the whole physical CPU package the vCPU thread runs on and the
+> thread's utime and stime values.
+> 
+> All other non-vCPU threads are also taken into account. Their energy
+> consumption is evenly distributed among all vCPUs threads running on
+> the same physical CPU package.
+> 
+> To overcome the problem that reading the RAPL MSR requires priviliged
+> access, a socket communication between QEMU and the qemu-vmsr-helper is
+> mandatory. You can specified the socket path in the parameter.
+> 
+> This feature is activated with -accel kvm,rapl=true,path=/path/sock.sock
+> 
+> Actual limitation:
+> - Works only on Intel host CPU because AMD CPUs are using different MSR
+>   adresses.
+> 
+> - Only the Package Power-Plane (MSR_PKG_ENERGY_STATUS) is reported at
+>   the moment.
+> 
+> Signed-off-by: Anthony Harivel <aharivel@redhat.com>
 > ---
->   docs/system/arm/emulation.rst | 1 +
->   target/arm/tcg/cpu64.c        | 4 ++++
->   2 files changed, 5 insertions(+)
+>  accel/kvm/kvm-all.c           |  27 +++
+>  docs/specs/index.rst          |   1 +
+>  docs/specs/rapl-msr.rst       | 155 ++++++++++++
+>  include/sysemu/kvm.h          |   2 +
+>  include/sysemu/kvm_int.h      |  32 +++
+>  target/i386/cpu.h             |   8 +
+>  target/i386/kvm/kvm-cpu.c     |   9 +
+>  target/i386/kvm/kvm.c         | 428 ++++++++++++++++++++++++++++++++++
+>  target/i386/kvm/meson.build   |   1 +
+>  target/i386/kvm/vmsr_energy.c | 335 ++++++++++++++++++++++++++
+>  target/i386/kvm/vmsr_energy.h |  99 ++++++++
+>  11 files changed, 1097 insertions(+)
+>  create mode 100644 docs/specs/rapl-msr.rst
+>  create mode 100644 target/i386/kvm/vmsr_energy.c
+>  create mode 100644 target/i386/kvm/vmsr_energy.h
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+> index 9c791b7b0520..eafb625839b8 100644
+> --- a/target/i386/kvm/kvm-cpu.c
+> +++ b/target/i386/kvm/kvm-cpu.c
+> @@ -50,6 +50,15 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>                                                     MSR_IA32_UCODE_REV);
+>          }
+>      }
+> +
+> +    if (kvm_is_rapl_feat_enable(cs)) {
+> +        if (!IS_INTEL_CPU(env)) {
+> +            error_setg(errp, "RAPL feature can only be\
+> +                              enabled with Intel CPU models");
+> +                return false;
+> +        }
+> +    }
+
+I see a crash in kvm_is_rapl_feat_enable() from this caller,
+when I run with this kind of command line:
+
+ $ qemu-system-x86_64 \
+      -kernel /lib/modules/6.6.9-100.fc38.x86_64/vmlinuz \
+      -initrd tiny-initrd.img  -m 2000 -serial stdio -nodefaults \
+      -display none -accel kvm -append "console=ttyS0 quiet"
+
+
+#0  0x0000555555bc14b7 in kvm_is_rapl_feat_enable (cs=cs@entry=0x555557b83470) at ../target/i386/kvm/kvm.c:2531
+#1  0x0000555555bc7534 in kvm_cpu_realizefn (cs=0x555557b83470, errp=0x7fffffffd2a0) at ../target/i386/kvm/kvm-cpu.c:54
+#2  0x0000555555d2432a in accel_cpu_common_realize (cpu=0x555557b83470, errp=0x7fffffffd2a0) at ../accel/accel-target.c:130
+#3  0x0000555555cdd955 in cpu_exec_realizefn (cpu=cpu@entry=0x555557b83470, errp=errp@entry=0x7fffffffd2a0) at ../cpu-target.c:137
+#4  0x0000555555c14b89 in x86_cpu_realizefn (dev=0x555557b83470, errp=0x7fffffffd310) at ../target/i386/cpu.c:7320
+#5  0x0000555555d58f4b in device_set_realized (obj=<optimized out>, value=<optimized out>, errp=0x7fffffffd390) at ../hw/core/qdev.c:510
+#6  0x0000555555d5d78d in property_set_bool (obj=0x555557b83470, v=<optimized out>, name=<optimized out>, opaque=0x5555578558e0, errp=0x7fffffffd390)
+    at ../qom/object.c:2358
+#7  0x0000555555d60b0b in object_property_set (obj=obj@entry=0x555557b83470, name=name@entry=0x55555607c799 "realized", v=v@entry=0x555557b8ccb0, errp=0x7fffffffd390, 
+    errp@entry=0x555556e210d8 <error_fatal>) at ../qom/object.c:1472
+#8  0x0000555555d6444f in object_property_set_qobject
+    (obj=obj@entry=0x555557b83470, name=name@entry=0x55555607c799 "realized", value=value@entry=0x555557854800, errp=errp@entry=0x555556e210d8 <error_fatal>)
+    at ../qom/qom-qobject.c:28
+#9  0x0000555555d61174 in object_property_set_bool
+    (obj=0x555557b83470, name=name@entry=0x55555607c799 "realized", value=value@entry=true, errp=errp@entry=0x555556e210d8 <error_fatal>) at ../qom/object.c:1541
+#10 0x0000555555d59a3c in qdev_realize (dev=<optimized out>, bus=bus@entry=0x0, errp=errp@entry=0x555556e210d8 <error_fatal>) at ../hw/core/qdev.c:292
+#11 0x0000555555bd51e0 in x86_cpu_new (x86ms=<optimized out>, apic_id=0, errp=0x555556e210d8 <error_fatal>) at ../hw/i386/x86.c:105
+#12 0x0000555555bd52ce in x86_cpus_init (x86ms=x86ms@entry=0x555557aaed30, default_cpu_version=<optimized out>) at ../hw/i386/x86.c:156
+#13 0x0000555555bdc1a7 in pc_init1 (machine=0x555557aaed30, pci_type=0x55555604aa61 "i440FX") at ../hw/i386/pc_piix.c:185
+#14 0x0000555555947a11 in machine_run_board_init (machine=0x555557aaed30, mem_path=<optimized out>, errp=<optimized out>, errp@entry=0x555556e210d8 <error_fatal>)
+    at ../hw/core/machine.c:1547
+#15 0x0000555555b020ed in qemu_init_board () at ../system/vl.c:2613
+#16 qmp_x_exit_preconfig (errp=0x555556e210d8 <error_fatal>) at ../system/vl.c:2705
+#17 0x0000555555b0611e in qemu_init (argc=<optimized out>, argv=<optimized out>) at ../system/vl.c:3739
+#18 0x0000555555897ca9 in main (argc=<optimized out>, argv=<optimized out>) at ../system/main.c:47
+
+The problem is that 'cs->kvm_state' is NULL here
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
