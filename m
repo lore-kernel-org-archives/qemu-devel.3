@@ -4,106 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B42C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF057C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxkEa-0004ns-2e; Fri, 19 Apr 2024 05:08:40 -0400
+	id 1rxkLe-00079Y-6O; Fri, 19 Apr 2024 05:15:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rxkEY-0004nb-72; Fri, 19 Apr 2024 05:08:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rxkEU-0002dC-U0; Fri, 19 Apr 2024 05:08:37 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43J8wQNn021656; Fri, 19 Apr 2024 09:08:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=Iv+VUdJnEGYL4hSB3Jr6IiU6aynMxMDI8jThlvJXoGM=;
- b=PNwKiYactYEnyfgN8QnidDH6/mYk0h6nL84OwCDToGH7s585RjPNfOoq1VrbBuCQm+B1
- CqZMhIrC8H1SaJcbRgULkQrHf19PvZMzJOd9gpQv9CHUngiQJ6hgAzHNyRYG48zcGewI
- vu/iWMpa3vSX41ba7T4o+2eDJDwWgiZNWUU9MjSq/XQJhJdyMIV9c1Rzl0kO5ulUPsep
- GnmttkbJnq6kRQl+1HaJL6h56i4Zbpm3ePRiPHikB3gnnYiOkH7wOxvYN5gLGvj7EcsR
- 5Jx6KiJeMmmIgOPMf+xMb8Z5PCotzS+mdb7JXV8GrQHCWS7DDk5F6DHJo7TpsJAOTdk+ Wg== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xknje80s2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:08:27 +0000
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43J97lMP003132;
- Fri, 19 Apr 2024 09:08:27 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xknje80s0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:08:27 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43J8f4Fc030331; Fri, 19 Apr 2024 09:08:26 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xkbmcjpy8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:08:26 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43J98LuD10158478
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Apr 2024 09:08:23 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D64052006C;
- Fri, 19 Apr 2024 09:08:19 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A08320067;
- Fri, 19 Apr 2024 09:08:18 +0000 (GMT)
-Received: from [9.171.89.59] (unknown [9.171.89.59])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 19 Apr 2024 09:08:18 +0000 (GMT)
-Message-ID: <2203447f-0e3d-4f75-abba-7b8e061783e6@linux.vnet.ibm.com>
-Date: Fri, 19 Apr 2024 14:38:16 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxkLN-00071q-VF
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:15:47 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxkLL-0003tJ-Tb
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:15:41 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-56e1bbdb362so2110021a12.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 02:15:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713518136; x=1714122936; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eM6Em04Ss5ln22i1SG+Frrt6JidlwXF8K+KF+gQPcS4=;
+ b=GXgcpHs32+0/8O/Oxsu+sGv4RO1NDabOUGErzAEOMh3GjzYy2X9vNvieQQU1a87Oxr
+ /yO2/6FYFt+JXt6lirwbYjgZou+gpUHQEP7C2IuTFf+OXnTO2dgRit9hukun/kzhMHyv
+ S9YnZnttowRphNPL1KGTaULHKOlAu1En6Fap6dA32HY4aLsSLAfEZ2BdKiSawPVCzWQP
+ NiLu5AA7cMaQ0UgNvleDk1laXUybjheig/C3zh9LY3xY3RjKaEFUS5WI1sGbCBp1J/xX
+ k105ay6uVEVHJwfxk1AHeXPIJwObxWrHqdisqJ4wmgbToDvOt5dxaHHMWv0oWkFlbtAl
+ XPMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713518136; x=1714122936;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eM6Em04Ss5ln22i1SG+Frrt6JidlwXF8K+KF+gQPcS4=;
+ b=pTN5b8jsomkS4lvPEM8QDTnx/aYwvSM2moMWzBUDn5ZkxscqJ6mQ4oQWsLIEfUffub
+ DGDkN4pYvf4vnGQyrcFNzCLbssI3+246+CqkSkdWnhgsJ8BGjkmcLYWgdZX84NQJ11O2
+ BbNjp5hAKn82pZM9tc20nEFUMwHsKscR0M/oecTsDuDlZo++cwcseHMkLdvWF/+hs1pn
+ CnCicc80VxF8ovBaX8V/aTKHY3Z7IbL6dLscefQ0Bjxg2D0CLNlCpcbdI2Y6yG39anjM
+ XIAtVEQ9fCE0cmuByHiX9On7b3PKUlz4oQFllPSxzXqaMSBFJtum1WP9XaXnvma+9edw
+ sDfA==
+X-Gm-Message-State: AOJu0YzwOLA/tI6PL1I4zrO0pbEUf8vFLTwKCS4zvXyxmqnJrloulhki
+ v5zJZjG6XdeZ1BNxcijM5EVEWKLxIG7kkKy701J3pZ5tejPOMmUA3Gqa9R89+LI3S3vMsfghOAi
+ 53Qk=
+X-Google-Smtp-Source: AGHT+IHLZoXnAlKh6xWv1odAX+RLt1nPoTB9Qkt8sXGzkG1xjY/57yU67eeQP0gZDRuKMN/4E3riZQ==
+X-Received: by 2002:a17:906:2819:b0:a52:2c4f:7957 with SMTP id
+ r25-20020a170906281900b00a522c4f7957mr1314373ejc.66.1713518136252; 
+ Fri, 19 Apr 2024 02:15:36 -0700 (PDT)
+Received: from [192.168.235.175] ([176.176.143.233])
+ by smtp.gmail.com with ESMTPSA id
+ e7-20020a170906c00700b00a51bf97e63esm1929181ejz.190.2024.04.19.02.15.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Apr 2024 02:15:35 -0700 (PDT)
+Message-ID: <d0f6628e-fbc3-4e82-a08e-cb72f4585e8a@linaro.org>
+Date: Fri, 19 Apr 2024 11:15:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] target/ppc: Move mul{li, lw, lwo, hw, hwu}
- instructions to decodetree.
-To: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240416063927.99428-1-rathc@linux.ibm.com>
- <20240416063927.99428-2-rathc@linux.ibm.com>
- <1cb63686-bbb1-4c7a-89ad-51f5da248029@linaro.org>
+Subject: Re: [PATCH] target/s390x: Remove KVM stubs in cpu_models.h
+To: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ qemu-s390x@nongnu.org
+References: <20240419090631.48055-1-philmd@linaro.org>
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <1cb63686-bbb1-4c7a-89ad-51f5da248029@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240419090631.48055-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: tPgPl8FfSu-KiAxfhpW_zIVpgulApja4
-X-Proofpoint-ORIG-GUID: 83vYfzaCzICbqjfz9p4DVzfHhXNb7rYd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-19_06,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0
- phishscore=0 clxscore=1011 spamscore=0 adultscore=0 mlxlogscore=966
- impostorscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404190067
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,120 +97,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+On 19/4/24 11:06, Philippe Mathieu-Daudé wrote:
+> Since the calls are elided when KVM is not available,
+> we can remove the stubs (which are never compiled).
+> 
+> Inspired-by: Thomas Huth <thuth@redhat.com>>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> RFC: untested =)
 
-On 4/16/24 23:26, Richard Henderson wrote:
-> On 4/15/24 23:39, Chinmay Rath wrote:
->> Moving the following instructions to decodetree specification :
->>     mulli                       : D-form
->>     mul{lw, lwo, hw, hwu}[.]    : XO-form
->>
->> The changes were verified by validating that the tcg ops generated by 
->> those
->> instructions remain the same, which were captured with the '-d 
->> in_asm,op' flag.
->>
->> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
->> ---
->>   target/ppc/insn32.decode                   |  9 +++
->>   target/ppc/translate.c                     | 89 ----------------------
->>   target/ppc/translate/fixedpoint-impl.c.inc | 71 +++++++++++++++++
->>   3 files changed, 80 insertions(+), 89 deletions(-)
->
-> This is an accurate reorg of the current code, so
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Now tested!
 
-Thank you.
->
-> However, as follow-up, the code generation could be cleaned up:
->
->
->> +static bool trans_MULLW(DisasContext *ctx, arg_MULLW *a)
->> +{
->> +#if defined(TARGET_PPC64)
->> +    TCGv_i64 t0, t1;
->> +    t0 = tcg_temp_new_i64();
->> +    t1 = tcg_temp_new_i64();
->> +    tcg_gen_ext32s_tl(t0, cpu_gpr[a->ra]);
->> +    tcg_gen_ext32s_tl(t1, cpu_gpr[a->rb]);
->> +    tcg_gen_mul_i64(cpu_gpr[a->rt], t0, t1);
->> +#else
->> +    tcg_gen_mul_i32(cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb]);
->> +#endif
->> +    if (unlikely(a->rc)) {
->> +        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
->> +    }
->> +    return true;
->> +}
->
-> Without ifdefs:
->
->     TCGv t0 = tcg_temp_new();
->     TCGv t1 = tcg_temp_new();
->
->     tcg_gen_ext32s_tl(t0, ra);
->     tcg_gen_ext32s_tl(t1, rb);
->     tcg_gen_mul_tl(rt, t0, t1);
->
-> For ppc32, ext32s_tl will turn into a mov, which will be optimized 
-> away.  So ideal code generation for both modes.
->
->
->> +static bool trans_MULLWO(DisasContext *ctx, arg_MULLWO *a)
->> +{
->> +    TCGv_i32 t0 = tcg_temp_new_i32();
->> +    TCGv_i32 t1 = tcg_temp_new_i32();
->> +
->> +    tcg_gen_trunc_tl_i32(t0, cpu_gpr[a->ra]);
->> +    tcg_gen_trunc_tl_i32(t1, cpu_gpr[a->rb]);
->> +    tcg_gen_muls2_i32(t0, t1, t0, t1);
->> +#if defined(TARGET_PPC64)
->> +    tcg_gen_concat_i32_i64(cpu_gpr[a->rt], t0, t1);
->> +#else
->> +    tcg_gen_mov_i32(cpu_gpr[a->rt], t0);
->> +#endif
->> +
->> +    tcg_gen_sari_i32(t0, t0, 31);
->> +    tcg_gen_setcond_i32(TCG_COND_NE, t0, t0, t1);
->> +    tcg_gen_extu_i32_tl(cpu_ov, t0);
->
-> Usually hosts need to create the full 64-bit product and then break it 
-> apart for tcg_gen_muls2_i32, so split followed immediately by 
-> concatenate isn't great.
->
->
->     TCGv t0 = tcg_temp_new();
->     TCGv t1 = tcg_temp_new();
->
-> #ifdef TARGET_PPC64
->     tcg_gen_ext32s_i64(t0, ra);
->     tcg_gen_ext32s_i64(t1, rb);
->     tcg_gen_mul_i64(rt, t0, t1);
->     tcg_gen_sextract_i64(t0, rt, 31, 1);
->     tcg_gen_sari_i64(t1, rt, 32);
-> #else
->     tcg_gen_muls2_i32(rt, t1, ra, rb);
->     tcg_gen_sari_i32(t0, rt, 31);
-> #endif
->     tcg_gen_setcond_tl(TCG_COND_NE, cpu_ov, t0, t1);
->
-Sure, will update in v2.
-Thanks,
-Chinmay
->
->> +    if (is_isa300(ctx)) {
->> +        tcg_gen_mov_tl(cpu_ov32, cpu_ov);
->> +    }
->> +    tcg_gen_or_tl(cpu_so, cpu_so, cpu_ov);
->> +
->> +    if (unlikely(a->rc)) {
->> +        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
->> +    }
->> +    return true;
->> +}
->
->
-> r~
->
+Inspired by
+> https://lore.kernel.org/qemu-devel/0ae778e1-b4aa-4021-bdbc-4c6a663db41a@redhat.com/
+> ---
+>   target/s390x/cpu_models.h | 15 ---------------
+>   1 file changed, 15 deletions(-)
 
 
