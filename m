@@ -4,70 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD0DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 15:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9760C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 15:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxqFM-0002gi-4G; Fri, 19 Apr 2024 11:33:52 -0400
+	id 1rxqLZ-0004vK-Km; Fri, 19 Apr 2024 11:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rxqFJ-0002gO-Gh
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:33:49 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rxqFG-00050B-PJ
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:33:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713540827; x=1745076827;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=OjL9zuSBepPcGKGulHFLf8EQXC8Vuo7eSuUhldPlItw=;
- b=IAmgOVkSe7wndRFTQj88o9/oZBGPHMAHLMakmhbYTjCko+8lHBdP/jPP
- 62xiuFz2hlGwmaxUg06CXqXB76cP4eMrh3BihuQqw66BpPlWNzTIvRpI/
- fajDVhxpO6kB1wG3EOfHb14nHv+r6cT440UF1kfXI4npKxWxI2G0uPcZL
- jiLXFrkUihEt/uWnyeoe35ZE/M8w8+IUNCEBp/TZQ+XbmpHMGtVyswv3b
- k4h4YqdHxUYwY7wY0YGqIOruPIZ8RikK+O/5i/vVWDVdjRlrLbDIhlPRT
- mPf5MYnN9rAg49rS00+XemRqhhRC4o+EdZxh4am9IjFNNBgOxarMUFbTx g==;
-X-CSE-ConnectionGUID: 1IpnBtGRTtqLIbcDqvuLCA==
-X-CSE-MsgGUID: H5WjZ4M3TS2VsJ/nmtAQLg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11049"; a="20539146"
-X-IronPort-AV: E=Sophos;i="6.07,214,1708416000"; d="scan'208";a="20539146"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Apr 2024 08:33:44 -0700
-X-CSE-ConnectionGUID: o1h8OHf+SgW3/a/vV8806Q==
-X-CSE-MsgGUID: hsfeakOJQWyeirNqkdpPig==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,214,1708416000"; d="scan'208";a="23435683"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 19 Apr 2024 08:33:41 -0700
-Date: Fri, 19 Apr 2024 23:47:46 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Anthony Harivel <aharivel@redhat.com>
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, berrange@redhat.com,
- qemu-devel@nongnu.org, vchundur@redhat.com, rjarry@redhat.com
-Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
-Message-ID: <ZiKSIkQQnIBQU4pV@intel.com>
-References: <20240411121434.253353-1-aharivel@redhat.com>
- <20240411121434.253353-4-aharivel@redhat.com>
- <Zh+fRliUJ8sPcOpD@intel.com> <D0N6WWRR5VKO.29E6AQDHW1X6A@fedora>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxqLX-0004v2-3t
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:40:15 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxqLV-00063v-05
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:40:14 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-571e3f84196so3909a12.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:40:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713541210; x=1714146010; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WTdCviGZ9qHem6s3wrKSV2QtNAZIjVwEKrNnz+ytkqw=;
+ b=F0cH8w2ZKXPGeZSq/xQ/Si1z4i7jp2n+ZAIS5AtFoGh3UjRhAhyfeg1HOifDOZMyes
+ xekcpJkN4fBYxWBeQPL62w+WeJ9HLR6J2n5E+TNXv+0S6fen2ZVghSM6sxiaiBEob0uK
+ 6gBwlDweuIpt46cwaNSaZDzdRH7988+KL8Ld+rDKtfBAjn/EXQ7yeKZQTco7/LMPiYIR
+ wex4MsWTwHGFfKQBb9QS2wpsYBS5KV9nwSOD0RR2lVJ7ehvwUoIk4ds5wglalQyQFckO
+ 44FoxUCZowa4jJv+4GH9IZu+Kw2iPHwW4U+poQJPD8cC1qYNjreM2K2yxljf2xbzW9A+
+ 1rjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713541210; x=1714146010;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WTdCviGZ9qHem6s3wrKSV2QtNAZIjVwEKrNnz+ytkqw=;
+ b=HfS+Gm4O8cS7zX590feGF2cEVSOJcHyWUc0c6GDOmmTrJsYJrOPJdeW7ZUKJ0sTApI
+ xTTSTMOUyZaTwNykCIZfQb0lRg4jqUPynFRixz0ab2M9rZ5UdJKNLuUkqBvD6YtfHjHR
+ RinA3AuaruJV/JwOAILUD1Tu2dhCFOv/8dx2kPRr+ZrNbMVuHR31RwSC34yrueh/XqQ3
+ ot7hdJVSpuSDX/lJ5utESNrxQHjYC+BsV9rRQWvSZA8NTjk2Behuwt6vXqE9m/ZdmLWc
+ H9Jn/d2R6oZV2nnTednSYXS2CS3Dtq8SPQKN+AqlxjwCNMvbC23baWWWT45vqSOdb04Z
+ gZjw==
+X-Gm-Message-State: AOJu0Yzy0xrImjaFjeZZl+WfuE13Jun3Ye3MB3XkHhWhcVjLt+CgE6vZ
+ iPg3ZkRKNdY3M8up8Xucc3/TcicMmdI7ky1sEY5vDejrQfzt+PuQHwj1PF8+OqM=
+X-Google-Smtp-Source: AGHT+IECQY/OIXi/enPj97SN60GdfFSdJGck6jFsMNaIzhUqGsiRffsS3Muyyt3hB9v/KfFjJpmGDQ==
+X-Received: by 2002:aa7:df07:0:b0:571:bbad:32b7 with SMTP id
+ c7-20020aa7df07000000b00571bbad32b7mr5166450edy.4.1713541210174; 
+ Fri, 19 Apr 2024 08:40:10 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.199.54])
+ by smtp.gmail.com with ESMTPSA id
+ 15-20020a0564021f4f00b00571d74c6074sm629514edz.46.2024.04.19.08.40.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Apr 2024 08:40:09 -0700 (PDT)
+Message-ID: <75fff51d-3786-40fa-bf2f-bae99afe5628@linaro.org>
+Date: Fri, 19 Apr 2024 17:40:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D0N6WWRR5VKO.29E6AQDHW1X6A@fedora>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -66
-X-Spam_score: -6.7
-X-Spam_bar: ------
-X-Spam_report: (-6.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return
+ boolean
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20240418100433.1085447-1-zhao1.liu@linux.intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240418100433.1085447-1-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,203 +98,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Anthony,
+On 18/4/24 12:04, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 
-On Thu, Apr 18, 2024 at 12:52:14PM +0200, Anthony Harivel wrote:
-> Date: Thu, 18 Apr 2024 12:52:14 +0200
-> From: Anthony Harivel <aharivel@redhat.com>
-> Subject: Re: [PATCH v5 3/3] Add support for RAPL MSRs in KVM/Qemu
-> 
-> > The package energy consumption includes core part and uncore part, where
-> > uncore part consumption may not be able to be scaled based on vCPU
-> > runtime ratio.
-> >
-> > When the uncore part consumption is small, the error in this part is
-> > small, but if it is large, then the error generated by scaling by vCPU
-> > runtime will be large.
-> >
-> 
-> So far we can only work with what Intel is giving us i.e Package power 
-> plane and DRAM power plane on server, which is the main target of 
-> this feature. Maybe in the future, Intel will expand the core power 
-> plane and the uncore power plane to server class CPU ?
 
-Not future features, I'd like to illustrate the impact of the uncore
-part (iGPU/NPU on Client or various accelerators on Server) on this
-algorithm. Because the consumption of the uncore part is complex and not
-necessarily linearly related to the vCPU task running time.
+> ---
+> Zhao Liu (3):
+>    hw/cxl/cxl-cdat: Make ct3_load_cdat() return boolean
+>    hw/cxl/cxl-cdat: Make ct3_build_cdat() return boolean
+>    hw/cxl/cxl-cdat: Make cxl_doe_cdat_init() return boolean
 
-It might be worth to state potential impact on accuracy of uncore parts
-to doc (I doubt that heavy uncore consumption will even affect the
-consistency of the energy trend as you said).
-
-Anyway, clearer scenarios help this feature get used.
-
-> > May I ask what your usage scenario is? Is there significant uncore
-> > consumption (e.g. GPU)?
-> >
-> 
-> Same answer as above: uncore/graphics power plane is only available on 
-> client class CPU. 
-
-Yes, iGPU is, but server may have other accelerators, e.g., DSA/IAA/QAT
-on SPR.
-
-> > Also, I think of a generic question is whether the error in this
-> > calculation is measurable? Like comparing the RAPL status of the same
-> > workload on Guest and bare metal to check the error.
-> >
-> > IIUC, this calculation is highly affected by native/sibling Guests,
-> > especially in cloud scenarios where there are multiple Guests, the
-> > accuracy of this algorithm needs to be checked.
-> >
-> 
-> Indeed, depending on where your vCPUs are running within the package (on 
-> the native or sibling CPU), you might observe different power 
-> consumption levels. However, I don't consider this to be a problem, as 
-> the ratio calculation takes into account the vCPU's location.
-> 
-> We also need to approach the measurement differently. Due to the 
-> complexity of factors influencing power consumption, we must compare 
-> what is comparable. If you require precise power consumption data, 
-> use a power meter on the PSU of the server.It will provide the 
-> ultimate judgment. However, if you need an estimation to optimize 
-> software workloads in a guest, then this feature could be useful. All my 
-> tests have consistently shown reproducible output in terms of power 
-> consumption, which has convinced me that we can effectively work with 
-> it.
-
-Thanks, another mail in which you illustrated that the trend is
-consistent.
-
-[snip]
-
-> >
-> > In addition, RAPL is basically a CPU feature, I think it would be more
-> > appropriate to make it as a x86 CPU's property.
-> >
-> > Your RAPL support actually provides a framework for assisting KVM
-> > emulation in userspace, so this informs other feature support (maybe model
-> > specific, or architectural) in the future. Enabling/disabling CPU features
-> > via -cpu looks more natural.
-> 
-> This is totally dependant of KVM because it used the KVM MSR Filtering 
-> to access userspace when a specific MSR is required.
-
-Yes, but in other words, other KVM based features (completely hardware
-virtualization) are also configured by -cpu. This RAPL is still a CPU
-feature and just need KVM's help.
- 
-> I can try to find a way to use -cpu for this feature and check if KVM is 
-> activated or not. 
->
-
-[snip]
-
-> >
-> > I understand tick would ignore frequency changes, e.g., HWP's auto-pilot
-> > or turbo boost. All these CPU frequency change would impact on core energy
-> > consumption.
-> >
-> > I think the better way would be to use APERF counter, but unfortunately it
-> > lacks virtualization support (for Intel).
-> >
-> > Due to such considerations, it may be more worthwhile to evaluate the
-> > accuracy of this tick-based algorithm.
-> >
-> 
-> I've evaluated such things with another tool called Kepler [1]. This 
-> tool calculate the power ratio with metrics from RAPL and uses either 
-> eBPF or the tick based systems for time metrics.
-
-Thanks for this information! I understand current tick based algorithm
-is a common approximation in the industry (like Kepler), right?
-
-> The eBPF part [2] is 
-> triggered on each 'finish_task_switch' of Thread and calculate the delta 
-> of cpu cycle, cache miss, cpu time, etc. Very complex. My tests showed 
-> that the difference between using eBPF and tick based ratio is really 
-> not that important. Maybe on some special cases, using eBPF would show 
-> a way better accuracy but I'm not aware of that.
-
-Good to know!
-
-Just curious, so for using Kepler in Guest to optimize the task (your
-use case), is it only necessary that the trends are similar and there
-is no requirement for accuracy of the values?
- 
-> [1]: https://github.com/sustainable-computing-io/kepler
-> [2]: https://github.com/sustainable-computing-io/kepler/blob/main/bpfassets/libbpf/src/kepler.bpf.c
-> 
-
-[snip]
-
-> >
-> > > +        /* Sleep a short period while the other threads are working */
-> > > +        usleep(MSR_ENERGY_THREAD_SLEEP_US);
-> >
-> > Is it possible to passively read the energy status? i.e. access the Host
-> > MSR and calculate the energy consumption for the Guest when the Guest
-> > triggers the relevant exit.
-> >
-> 
-> Yes it could be possible. But what I wanted to avoid with my approach is 
-> the overhead it could take when accessing a RAPL MSR in the Guest.
-> The value is always available and return very quickly. 
-> I'm not sure about the overhead if we have to have to access the MSR, 
-> then do the calculation and so on.
-> 
-> > I think this might make the error larger, but not sure the error would
-> > be so large as to be unacceptable.
-> >
-> 
-> I'm a bit concerned about the potential overflow in calculation if the 
-> time in between is too big. 
-
-Okay.
-
-[snip]
-
-> > > +int is_rapl_enabled(void)
-> > > +{
-> > > +    const char *path = "/sys/class/powercap/intel-rapl/enabled";
-> >
-> > This field does not ensure the existence of RAPL MSRs since TPMI would
-> > also enable this field. (See powercap_register_control_type() in
-> > drivers/powercap/intel_rapl_{msr,tpmi}.c)
-> >
-> 
-> But this is exactly what it is intended to do. Wether it is MSR of TPMI, 
-> checking this, tell me that RAPL is activated or not. If it is 
-> activated...
->
-> > We can read RAPL MSRs directly. If we get 0 or failure, then there's no
-> > RAPL MSRs on Host.
-> >
-> 
-> ... then it is safe to access the RAPL MSR. I would not like to access 
-> this on a XYZ cpu without knowing I can !
-
-RAPL will disappear and this field can't ease your concern. ;-)
-
-Even if there are no commercially available machines yet, the logic of
-the linux driver has shown that relying on this item is unreliable.
-
-For model specific features, either use the CPU model ID to know if it
-is supported, or to access the relevant MSR directly. Even if the
-feature is not supported, the register address should not be used for
-other purposes, so I don't think there is information leak problem here.
-
-[snip]
-> 
-> Thanks a lot for all your feedback Zhao !
->
-
-You're welcome! I've also been thinking about how to support the
-emulation of other thermal features in user space in QEMU, as you did
-with RAPL.
-
-Regards,
-Zhao
+Since Jonathan Ack'ed the series, I'm queuing it via my hw-misc tree.
 
 
