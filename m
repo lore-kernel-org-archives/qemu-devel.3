@@ -4,102 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F44C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDADAC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxknI-0003h8-8y; Fri, 19 Apr 2024 05:44:32 -0400
+	id 1rxkr8-0004is-Lg; Fri, 19 Apr 2024 05:48:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rxknH-0003gz-9c
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:44:31 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rxknE-0000hD-PN
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:44:30 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1e2c725e234so22901955ad.1
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 02:44:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1713519866; x=1714124666;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F9LOB0c1ualbirFbVvIYp136xfZdYGqKSG3cKAuwQvU=;
- b=nagrOF2Utu+wct/f9y8v2xpOEcXfcfJ48mSUWrHoST+nYCmS3D6AcGIcJ+Uop0j8jZ
- rddW8V/FeXbxnhZ5olj9SznACNTTn7Ek/DJ9UnzwCxVk336d8lw/Ef8wnbx43afpM6U0
- d1CeiTWXKOWBxD5SJFPkQJvAmvfrgI7m0knouqBOcxykIlT2Lnpf6BOw/mzvgBcb2vOP
- TtQgbw7A1UIrQZt8VVFOBZFE/0AI5RUjLwSJ2MXYV29lhctSNtmUBaNVQk+oyXyqT6hf
- l+hzIYoOAIiSSt6phjLIMFQ56tlHTbEo2jvanM+zVUGuh6ePOh2L3Nz9OjQReeJprVXM
- 8v9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713519866; x=1714124666;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F9LOB0c1ualbirFbVvIYp136xfZdYGqKSG3cKAuwQvU=;
- b=l5FUWKOwQ/SsLr9X2zHpiEZy12KdeSM8LPmhSL2mZUZkKl5aFsZcUhW7s7OJLtMNLV
- AdqgZYf6dggS/11clkqGU/ggoM7U5tBpfW71N7odvPhiY4j4oOWeut+tdhA+YoU4Bit5
- DV1huNNjhUewitk1Tj1EMh4UtC9XInJnm0KiCnCO6/uIrLnwuwThP6CiK0W64JBkUJ82
- lS1s+zCIf2d4U20UIItjnXTj6d4TqIbEjhfcTz+JL6ebNA6mt5a03t1ckk7F5Fx6N4y0
- GSwpbNeyE1reM0YBZI6Xzhyjm3VCvkjW8m2JVEHwUdUV0RYdwbmbAwYSGCDsIxlF9NJX
- 5UCA==
-X-Gm-Message-State: AOJu0YxieIuiGYdfpXjsPxr8h+ZiCQitA3wt2SmLCRedYi946iAniNbd
- u05jnDfx+4wwaf0TFnbmSN3+Klx9Ok/eBN7VBp3RB/z1lMJsEXpBoMbG9eM/Pbo=
-X-Google-Smtp-Source: AGHT+IGXZY2AAgWI9LhummlEclBlBv4pYRPCWalSq0G9HXA5unmPuo7W9Ym18hMAO5Q3N1cOTJWzZA==
-X-Received: by 2002:a17:902:e750:b0:1e2:c350:b46a with SMTP id
- p16-20020a170902e75000b001e2c350b46amr2398853plf.27.1713519866384; 
- Fri, 19 Apr 2024 02:44:26 -0700 (PDT)
-Received: from [157.82.207.134] ([157.82.207.134])
- by smtp.gmail.com with ESMTPSA id
- y16-20020a17090264d000b001e3e409722csm3000323pli.5.2024.04.19.02.44.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Apr 2024 02:44:26 -0700 (PDT)
-Message-ID: <52a14554-b839-4be7-8101-fd8563371b36@daynix.com>
-Date: Fri, 19 Apr 2024 18:44:20 +0900
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rxkr6-0004ig-UK; Fri, 19 Apr 2024 05:48:29 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rxkr4-00017u-LE; Fri, 19 Apr 2024 05:48:28 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43J9RkpM026105; Fri, 19 Apr 2024 09:48:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=0WhHmNbS+fO/Ks9FD4MFzkzM31078QoV/o3ii6geQ/A=;
+ b=g6YvJ7Az0fAswJdguPQ0ApBAOyjJN/92/Y3DJHfXsuuSWcHjsIN/WaSLSN1HQAsXpWt9
+ AGqIVODpflLOeO12PdS2IRDl3T9LTFOLAm1b0D0X9bTpDmG/PwOXeD4Z4qhKvcuCSCGj
+ xo3r4NaX/H/ifaNiNEtOV2APT1VyHGxBmLp7XfSz89FLQU0zOfFc7sMiKTkum45tax+i
+ xaxy1eR8S7XErrMQP0bcxc6LER3gyywSUEs4pgXLaQRNS8f1FJyKz3MHNn2C42+r+LHi
+ LIU0BMdrsvrPBwLmsLpaRV9kROUXwaabNxBlFDd1JFeC201PPcWWgWdMdGnboHIUOGIK 0g== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xkp0er1em-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:48:24 +0000
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43J9mNoG027630;
+ Fri, 19 Apr 2024 09:48:23 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xkp0er1ej-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:48:23 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43J8jIpu030287; Fri, 19 Apr 2024 09:26:20 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xkbmcjs4j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:26:19 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43J9QERV14352806
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Apr 2024 09:26:16 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8C4BE20043;
+ Fri, 19 Apr 2024 09:26:14 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 981FD2004B;
+ Fri, 19 Apr 2024 09:26:12 +0000 (GMT)
+Received: from [9.171.89.59] (unknown [9.171.89.59])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 19 Apr 2024 09:26:12 +0000 (GMT)
+Message-ID: <ca6718a8-13dc-4b00-b18a-8a2b6882b3c6@linux.vnet.ibm.com>
+Date: Fri, 19 Apr 2024 14:56:12 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 11/11] virtio-gpu: Support Venus context
+Subject: Re: [PATCH 6/8] target/ppc: Move div/mod fixed-point insns (64 bits
+ operands) to decodetree.
 Content-Language: en-US
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-12-dmitry.osipenko@collabora.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240418190040.1110210-12-dmitry.osipenko@collabora.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240416063927.99428-1-rathc@linux.ibm.com>
+ <20240416063927.99428-7-rathc@linux.ibm.com>
+ <a5ed5846-7a8c-48fb-b84e-2ae285cd1b2c@linaro.org>
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <a5ed5846-7a8c-48fb-b84e-2ae285cd1b2c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 6eh3p_YXcIkXbqAgat05z7grL7Ie6Kpv
+X-Proofpoint-ORIG-GUID: cB1cZpMLmYPRgdvwcF44hOEwKl3xri-V
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-19_06,2024-04-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999
+ clxscore=1015 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2404010000 definitions=main-2404190071
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,88 +119,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/04/19 4:00, Dmitry Osipenko wrote:
-> From: Antonio Caggiano <antonio.caggiano@collabora.com>
-> 
-> Request Venus when initializing VirGL and if vulkan=true flag is set for
-> virtio-gpu device.
-> 
-> Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-> Signed-off-by: Huang Rui <ray.huang@amd.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->   hw/display/virtio-gpu-virgl.c  | 14 ++++++++++++++
->   hw/display/virtio-gpu.c        | 15 +++++++++++++++
->   include/hw/virtio/virtio-gpu.h |  3 +++
->   meson.build                    |  1 +
->   4 files changed, 33 insertions(+)
-> 
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index c0e1ca3ff339..2eac09370b84 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -1095,6 +1095,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->           flags |= VIRGL_RENDERER_D3D11_SHARE_TEXTURE;
->       }
->   #endif
-> +#ifdef VIRGL_RENDERER_VENUS
-> +    if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-> +        flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
-> +    }
-> +#endif
->   
->       ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
->       if (ret != 0) {
-> @@ -1138,5 +1143,14 @@ int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
->           virtio_gpu_virgl_add_capset(g, VIRTIO_GPU_CAPSET_VIRGL2);
->       }
->   
-> +    if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-> +        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VENUS,
-> +                                   &capset2_max_ver,
-> +                                   &capset2_max_size);
-> +        if (capset2_max_size) {
 
-Now capset2_max_ver and capset2_max_size are misnomers as they are used 
-not only for VIRTIO_GPU_CAPSET_VIRGL2 but also VIRTIO_GPU_CAPSET_VENUS. 
-Just removing the "capset2_" prefix would be fine.
 
-> +            virtio_gpu_virgl_add_capset(g, VIRTIO_GPU_CAPSET_VENUS);
-> +        }
-> +    }
-> +
->       return g->num_capsets;
->   }
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index fbf5c0e6b8b7..a811a86dd600 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1496,6 +1496,19 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
->   #endif
->       }
->   
-> +    if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-> +#ifdef HAVE_VIRGL_VENUS
-> +        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
-> +            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-> +            error_setg(errp, "venus requires enabled blob and hostmem options");
-> +            return;
-> +        }
-> +#else
-> +        error_setg(errp, "old virglrenderer, venus unsupported");
-> +        return;
-> +#endif
-> +    }
-> + >       if (!virtio_gpu_base_device_realize(qdev,
->                                           virtio_gpu_handle_ctrl_cb,
->                                           virtio_gpu_handle_cursor_cb,
-> @@ -1672,6 +1685,8 @@ static Property virtio_gpu_properties[] = {
->       DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
->                       VIRTIO_GPU_FLAG_BLOB_ENABLED, false),
->       DEFINE_PROP_SIZE("hostmem", VirtIOGPU, parent_obj.conf.hostmem, 0),
-> +    DEFINE_PROP_BIT("vulkan", VirtIOGPU, parent_obj.conf.flags,
-> +                    VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
+On 4/17/24 00:08, Richard Henderson wrote:
+> On 4/15/24 23:39, Chinmay Rath wrote:
+>> Moving the below instructions to decodetree specification :
+>>
+>>     divd[u, e, eu][o][.]    : XO-form
+>>     mod{sd, ud}        : X-form
+>>
+>> With this patch, all the fixed-point arithmetic instructions have been
+>> moved to decodetree.
+>> The changes were verified by validating that the tcg ops generated by 
+>> those
+>> instructions remain the same, which were captured using the '-d 
+>> in_asm,op' flag.
+>> Also, remaned do_divwe method in fixedpoint-impl.c.inc to do_dive 
+>> because it is
+>> now used to divide doubleword operands as well, and not just words.
+>>
+>> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+>> ---
+>>   target/ppc/helper.h                        |  4 +-
+>>   target/ppc/insn32.decode                   |  8 +++
+>>   target/ppc/int_helper.c                    |  4 +-
+>>   target/ppc/translate.c                     | 65 ++--------------------
+>>   target/ppc/translate/fixedpoint-impl.c.inc | 29 +++++++++-
+>>   5 files changed, 42 insertions(+), 68 deletions(-)
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+Thanks,
+Chinmay
+> r~
 
-This property shouldn't be added here because it is specific to 
-virtio-gpu-gl.
 
