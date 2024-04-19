@@ -4,128 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C10C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 16:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 320E8C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 17:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxrZ3-0007XS-Op; Fri, 19 Apr 2024 12:58:17 -0400
+	id 1rxraZ-0000gw-CR; Fri, 19 Apr 2024 12:59:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rxrYz-0007Tx-Mv
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:58:13 -0400
-Received: from mail-bn7nam10on20701.outbound.protection.outlook.com
- ([2a01:111:f403:2009::701]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxra1-0008Sp-R2
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:59:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rxrYu-00037C-QC
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:58:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bjY5fM37SyR+u30tGJcKbrwoDU+MHa1fL+CzO/RBmxbgCNyXv/UnVTxzPXO1dPb3cGxWF362TN5wHicZrNg9erwyV37zVzECZCo+dA6AMeAZCdu8AI6e+6aQRPf4xlbiB+e957jXG6cy7MR451e5ZHa87YOWHUYqLZS6XiizQcCrs8QOsQ3A3+7RyKX+iY8IM7xyTN4Djkd7mtBk8RW7obXZ9yJrohNTv+Wwej30r6Xmkw8WpdR5aV5CPIBjizfHzkGj463PD1pmP9X+R8fISglbp8cUgU1jQG7oWduy47AumkX2yKKDUM70BjZzcCOwsB3BgG71M5DbBRayzFcPag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PWwT+bP1AOazP5FRFoMz1TxIfNw7y8T+LeVM2hgWEz8=;
- b=eTwdVFE6n206+3Pyfzd3gDWMpFbWU/B2mlGiDhvNRDGneehtMyE5kVmhSUodE8ZpMV2MqCLjd0yC94A7cCDHRBMQd/KbhtmSAs4zeHOTN86+Y+HOsVnV+qqai/JEl94yrM8sznvyINUG1l6bk+UfjQu1wqeXBlTfyp5GPk3Sf97IzsUu56rkrsGWTey+DAtxSoz6NsyhI1dJB55tUYFroX+6ZuXgrKgnlwrnj+m2xDH5kpY7SdL1hPhmvhm6E/z+QfhO+goP2VUWomXV+sIndonVUKFE4lUcCgyh6R0sCF2e388IkdrG0zZQScuHRyffA0FibuQQxdCJ0sheu38yXA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
- dkim=pass header.d=memverge.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PWwT+bP1AOazP5FRFoMz1TxIfNw7y8T+LeVM2hgWEz8=;
- b=gI03RCOKwCwbKolRh1k9h4WWmpNnBxUpA69vxYSx1PgTdnjt/8MEdfXn6m48Ie9r/QVqiWJKiKc6nx6SrmqqspYtPRm7/StQFOmxaEiTo0XxSj40lS6VlvaAsZQ7ZEJJKcneyPY53iwMrJklBGbEW75AFVOH/OLlF/5DjjkiBNs=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=memverge.com;
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
- by PH0PR17MB4720.namprd17.prod.outlook.com (2603:10b6:510:88::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Fri, 19 Apr
- 2024 16:58:04 +0000
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::5d53:b947:4cab:2cc8]) by SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::5d53:b947:4cab:2cc8%4]) with mapi id 15.20.7472.042; Fri, 19 Apr 2024
- 16:58:03 +0000
-Date: Fri, 19 Apr 2024 12:57:59 -0400
-From: Gregory Price <gregory.price@memverge.com>
-To: nifan.cxl@gmail.com
-Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- linux-cxl@vger.kernel.org, ira.weiny@intel.com,
- dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com,
- jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
- Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v7 10/12] hw/mem/cxl_type3: Add DPA range validation for
- accesses to DC regions
-Message-ID: <ZiKil1/fqBesVO4b@memverge.com>
-References: <20240418232902.583744-1-fan.ni@samsung.com>
- <20240418232902.583744-11-fan.ni@samsung.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240418232902.583744-11-fan.ni@samsung.com>
-X-ClientProxiedBy: PH8PR15CA0004.namprd15.prod.outlook.com
- (2603:10b6:510:2d2::15) To SJ0PR17MB5512.namprd17.prod.outlook.com
- (2603:10b6:a03:394::19)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxrZv-0003u1-Q4
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:59:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713545949;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VSPgAWa85pqiz7SGlA4eXoq9LBUCsEG6NGfsKqGUs+k=;
+ b=dHB9Zv2Y+MGkoPjfVBDZBLrVcrI1rPx4R5N3a2N68spRnIKQofUezo/Mi63/0JvRDCSy+C
+ QoMYxA/kYpCqgMUICO2YOZ0z9CwL5xPmKAWbQOaliyX7uM6j5xOMlCN94/4vAEgsY/uMD2
+ hbb+OIAIPBwCaPa05xDcOLd4r+aAIUw=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-yh6y0s07NXCWxnM8uWcBEQ-1; Fri, 19 Apr 2024 12:59:08 -0400
+X-MC-Unique: yh6y0s07NXCWxnM8uWcBEQ-1
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-5cec090b2bdso2280484a12.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 09:59:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713545947; x=1714150747;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VSPgAWa85pqiz7SGlA4eXoq9LBUCsEG6NGfsKqGUs+k=;
+ b=BqcoMEXuf9f0ydkb9n9bmbMvD1heqkNd7cQDAhJh16vECLwtsp9ErmT1gS+ZOTbINE
+ nIQ6/RMWnsdxht0KezZI6MVFP6rir8/VNIvjHvYoxiHm/Kw+QyKd8cRcLtbssUlno2et
+ LkPBdBZ7JS3mCVe5IhZ0rgWVpgOlY5OMrt8U/bbodzOScuAxhNdwoGXVK25YABwN0gsy
+ A9J4RjznamkvlxvFxX9ZvhXyegKSx2y2EI2o+4VFRVLliifrOBdRM6J1DA/i/BhDTA3p
+ DX/LhEmqkkoqwY0CKUvfVzr6WKI1ziR5W1xOnTUId1rCyWlj/P3TwnK5uKckSx41Imfb
+ yWlg==
+X-Gm-Message-State: AOJu0Yx0BwQQMeBrYM0M3R6hGFyj/3uIP8WkLawwZITy4xvllMJeZAQ2
+ 5+0F/4CNfq5Hp37vFvljI/3TAyDn7UuQZAdfwnm9fOMUStjG0H5ZYKkWCG+GHSwiCj4KdLgELw5
+ tbzbitE8WS0vbxKr+vkp1fVosGLKsqyxFw51GL8IhL897W5Dn0jw8aT1hEHml2awWSHI8oB1WKU
+ DsEb5ghrVaphVtPaJ1LutF5qZaUh6yYQPjGHY=
+X-Received: by 2002:a17:90a:6389:b0:2ab:a53a:6e52 with SMTP id
+ f9-20020a17090a638900b002aba53a6e52mr2876086pjj.37.1713545947032; 
+ Fri, 19 Apr 2024 09:59:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpFg/9l3GFuwtEkrBNfHjEk2d3416JnvvpZbayWqjLmzA/SY74Uv95mFZaTdSEWhAhgqEMHDf2MPW3mbSzAHs=
+X-Received: by 2002:a17:90a:6389:b0:2ab:a53a:6e52 with SMTP id
+ f9-20020a17090a638900b002aba53a6e52mr2876064pjj.37.1713545946581; Fri, 19 Apr
+ 2024 09:59:06 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|PH0PR17MB4720:EE_
-X-MS-Office365-Filtering-Correlation-Id: b50dda78-9df0-40d5-b8f0-08dc6091e0ab
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: rnol2o/PbbCaniq4xCKAr7RACFVaQZlFsNmfki41nhX0N+8YTOnL7sh7wy01nlbNovhl+v/lFl1BmFuNMcylKSG1AJ28L6c/k3xvDvN8yMtgvtycsletDVH0qdtVLXNJaE4JRiKAHsYkF7+kp2zVQvgTuLeOJSQbQpr46ocvvYv61nnWwxY3hCBRnda7umpnJlAv4PvQttzOUXahQL4VGmyrRoSc+VqwdVehOlR8SXmwzauhKAVL7wYj5IJKxNMACS/spGylE1S9FYo6bFfTi+tgJOlTr6l73TxeZVtczpywQXFAICIsrZ8nJdZPsUawlaeC6z+9ejGDramHT/BPfzKyTFclkytu6DfExjCSmwZjeVFBWOyhByizAhPOrMyQ1fjDgwwb2sXwxvzR2wmAj2IHcSTjM8u3Rp52ELUABdEKjWPovsir2Auy2BVGq2vRbV65Z8vCaIhvisvTKLuULr/rQZDMCMnolXQjrSEGunsxdg+3fssXsLdM5j6q17IF4Z9xEeXE7sgUVoeuhAGm81XAPDb+LqeIaJrdy7D0jW4F3sMcTfjESVLFufTWO1qVGUOYoBK3LJmjuRWYEnKgl1SqDZMAhn8n5RPo59ZG1pvFMbwMJ7ozgyzEIHy5M4RMae71IAv9fDadxJow6vEV8QdxWGo9EpI/W7vLEvWUNCg=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(1800799015)(7416005)(376005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?8iKXvhRvvbb5Zg7z4vAu0Kj+aETM99smPSAkeax+lnA/1DNM4aAgETZqH/7m?=
- =?us-ascii?Q?MPeNjcLQO6eaeDC2ekaf9w2EycZCqYY1mR40dQnODbCpT2sB7HIrVHuzp6du?=
- =?us-ascii?Q?SF3qlkmMOv7Q6zMeX6zlb3hJfHQn/Ks3eE2HbLc8lbMb1II+00fUjRtfm78X?=
- =?us-ascii?Q?SfXkvz9Fl+0o47v9MFeMsdNdTW6KTybAQ1bHvXXqaspmhqYeMnEV2xM1w21I?=
- =?us-ascii?Q?i8PsRS26FhHfyZd6K+6YIoT6nyK+jgM8n7iLHA8gkiVKVnB6JjdsP6pL0IZM?=
- =?us-ascii?Q?pnzS1GNX+sLDqZ639Jcp6jiefWblTo045HFMMIz8J9PcALT8oizt2kbs3sa6?=
- =?us-ascii?Q?qyfLyp88KZowpg9PphyG8zJSCiZ+W5E9N/dBcYnNIPIRAPdapmO/MJs72tsy?=
- =?us-ascii?Q?WBh9C0LO5dWd4GetskPblBurapShcNlxNi2YFF8Jv+NUrsSawsX6MoSU8Jx+?=
- =?us-ascii?Q?NxtC5moS+rFaoBmDyzisi0y3aPiveFfE+B0NzvqPWU6iPgw9uqNhN2FpSwXX?=
- =?us-ascii?Q?td/G71A9auTi1Y8ZSWnikcSah0xaau1fsfKm3Feg0PzYL8XfkKPtG1sDJ24x?=
- =?us-ascii?Q?Ma44p+Qox2hrTkUPz3KQY9zJWUzazP7F0HMPMKnUAFSowNO/lWICStS9HHJX?=
- =?us-ascii?Q?k0O9j+XJjRaK01tMsz8tiVe+UUCR8/dstY/OZMsSUpuRc5raQPMm22doag3B?=
- =?us-ascii?Q?0ajbJnhT410UDPuE+YlEcfNxX1h/aQZwULKQroA/g5u6bL+Wqhujh5Zv0Qgg?=
- =?us-ascii?Q?o8l2vY3BJ31XYlN5Hg297anU1njPMzRJAccA/65fksPZk/7gZzyPTipszObv?=
- =?us-ascii?Q?DfSC5epG6zWnRHuW32u0wkxHyPlpDW75bdvIVC2NiW8kcw/PYyzUv6Z6RiKF?=
- =?us-ascii?Q?y5b7HN5xDUKONW+dR9Jhr9Wuhu6QISg3U9xtWQWXK83D5HBSV4zfkhqLRhdg?=
- =?us-ascii?Q?bF0y0eDS1A+jf2T2RuMW29AqhwJ8CaUWmk1Ka8qkHWgSjRs7JoxxrBj0XSLz?=
- =?us-ascii?Q?cbmOzumwjGQUtgDXVTnzPMT73vgtyuruB0kPn0wV4aiQNshz2k7PemPe2sXg?=
- =?us-ascii?Q?EntaZUApMXHJc0Y17ziMfOzSRmODAB8bU0Dgah/smueCypZ+MdmpdK3y/PS1?=
- =?us-ascii?Q?p6csaLc7RiQf0ROwppbBnG+KV35rSeVZ+UM7dkOmAYi9trjYmkTw7qeG48QD?=
- =?us-ascii?Q?z48hWkf80gnticm3pyCiIa9Pl5cjC/uAr0xuiqOPJhuoX9jBvIZYLm7hFgLY?=
- =?us-ascii?Q?mPWcTIZ3JGEXJDlMFJimgrSHfHR7vPGeTO2w9W/fFLDraFF5pcXgPdQQvITo?=
- =?us-ascii?Q?4Fb7cVySI/BurWKB4ot9ZcimennctdTXNr0cqYAmg551mX+9SSVtlB6buSFt?=
- =?us-ascii?Q?KAyLhI1Tyr9hzABYovm9DVHv7NW7qWiHtYrMtSQGeia215sSr7aFu6vhvMZF?=
- =?us-ascii?Q?RK+z5b5Pf4zgtU6RqVYzsj6By1GDqTl+dmuDJLlEzIf02iOzWZfLM5n5t0ru?=
- =?us-ascii?Q?4/rMOK9tyY2gk+50WPslQ41lDdW7zJ9/5tYeK3m3/55Bt+/RnavugL2fBWET?=
- =?us-ascii?Q?zU+p7NVHQyPRUa6HqE3DKyTkkKdtkPlg+IKBxBbSzCH3hM4FjIpwpVAAvpqu?=
- =?us-ascii?Q?Aw=3D=3D?=
-X-OriginatorOrg: memverge.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b50dda78-9df0-40d5-b8f0-08dc6091e0ab
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2024 16:58:03.6665 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DADHwhGh+MnflnL1bM3x95gHIJU2A58kG2UW7jByOBRfPXFIOwmbPNbprnYREYIwsD5NUGys/Fmw6OPzfsW1QocUhmzgKKF8keR6+supkgI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR17MB4720
-Received-SPF: pass client-ip=2a01:111:f403:2009::701;
- envelope-from=gregory.price@memverge.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240419043820.178731-1-jsnow@redhat.com>
+ <20240419043820.178731-25-jsnow@redhat.com>
+In-Reply-To: <20240419043820.178731-25-jsnow@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Fri, 19 Apr 2024 12:58:55 -0400
+Message-ID: <CAFn=p-Y=e=AjJADij=8aj_W5GB0X3z6tyeiwHmL20SKBDQ4z5A@mail.gmail.com>
+Subject: Re: [PATCH 24/27] docs/qapi-domain: add type cross-refs to field lists
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Victor Toso de Carvalho <victortoso@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,25 +99,308 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024 at 04:11:01PM -0700, nifan.cxl@gmail.com wrote:
-> From: Fan Ni <fan.ni@samsung.com>
-> 
-> All DPA ranges in the DC regions are invalid to access until an extent
-> covering the range has been successfully accepted by the host. A bitmap
-> is added to each region to record whether a DC block in the region has
-> been backed by a DC extent. Each bit in the bitmap represents a DC block.
-> When a DC extent is accepted, all the bits representing the blocks in the
-> extent are set, which will be cleared when the extent is released.
-> 
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+On Fri, Apr 19, 2024 at 12:38=E2=80=AFAM John Snow <jsnow@redhat.com> wrote=
+:
+>
+> This commit, finally, adds cross-referencing support to various field
+> lists; modeled tightly after Sphinx's own Python domain code.
+>
+> Cross-referencing support is added to type names provided to :arg:,
+> :memb:, :returns: and :choice:.
+>
+> :feat:, :error: and :value:, which do not take type names, do not
+> support this syntax.
+>
+> The general syntax is simple:
+>
+> :arg TypeName ArgName: Lorem Ipsum ...
+>
+> The domain will transform TypeName into :qapi:type:`TypeName` in this
+> basic case, and also apply the ``literal`` decoration to indicate that
+> this is a type cross-reference.
+>
+> For Optional arguments, the special "?" suffix is used. Because "*" has
+> special meaning in ReST that would cause parsing errors, we elect to use
+> "?" instead. The special syntax processing in QAPIXrefMixin strips this
+> character from the end of any type name argument and will append ",
+> Optional" to the rendered output, applying the cross-reference only to
+> the actual type name.
+>
+> The intent here is that the actual syntax in doc-blocks need not change;
+> but e.g. qapidoc.py will need to process and transform "@arg foo lorem
+> ipsum" into ":arg type? foo: lorem ipsum" based on the schema
+> information. Therefore, nobody should ever actually witness this
+> intermediate syntax unless they are writing manual documentation or the
+> doc transmogrifier breaks.
+>
+> For array arguments, type names can similarly be surrounded by "[]",
+> which are stripped off and then re-appended outside of the
+> cross-reference.
+>
+> Note: The mixin pattern here (borrowed from Sphinx) confuses mypy
+> because it cannot tell that it will be mixed into a descendent of
+> Field. Doing that instead causes more errors, because many versions of
+> Sphinx erroneously did not mark various arguments as Optional, so we're
+> a bit hosed either way. Do the simpler thing.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  hw/cxl/cxl-mailbox-utils.c  |  3 ++
->  hw/mem/cxl_type3.c          | 76 +++++++++++++++++++++++++++++++++++++
->  include/hw/cxl/cxl_device.h |  7 ++++
->  3 files changed, 86 insertions(+)
-> 
+>  docs/qapi/index.rst        |  34 ++++++++++++
+>  docs/sphinx/qapi-domain.py | 110 +++++++++++++++++++++++++++++++++++--
+>  2 files changed, 138 insertions(+), 6 deletions(-)
+>
+> diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
+> index 8352a27d4a5..6e85ea5280d 100644
+> --- a/docs/qapi/index.rst
+> +++ b/docs/qapi/index.rst
+> @@ -105,6 +105,11 @@ Explicit cross-referencing syntax for QAPI modules i=
+s available with
+>     :arg str bar: Another normal parameter description.
+>     :arg baz: Missing a type.
+>     :arg no-descr:
+> +   :arg int? oof: Testing optional argument parsing.
+> +   :arg [XDbgBlockGraphNode] rab: Testing array argument parsing.
+> +   :arg [BitmapSyncMode]? zab: Testing optional array argument parsing,
+> +      even though Markus said this should never happen. I believe him,
+> +      but I didn't *forbid* the syntax either.
+>     :arg BitmapSyncMode discrim: How about branches in commands?
+>
+>     .. qapi:branch:: discrim on-success
+> @@ -261,3 +266,32 @@ Explicit cross-referencing syntax for QAPI modules i=
+s available with
+>
+>        :memb str key-secret: ID of a QCryptoSecret object providing a
+>           passphrase for unlocking the encryption
+> +
+> +.. qapi:command:: x-debug-query-block-graph
+> +   :since: 4.0
+> +   :unstable:
+> +
+> +   Get the block graph.
+> +
+> +   :feat unstable: This command is meant for debugging.
+> +   :return XDbgBlockGraph: lorem ipsum ...
+> +
+> +.. qapi:struct:: XDbgBlockGraph
+> +   :since: 4.0
+> +
+> +   Block Graph - list of nodes and list of edges.
+> +
+> +   :memb [XDbgBlockGraphNode] nodes:
+> +   :memb [XDbgBlockGraphEdge] edges:
+> +
+> +.. qapi:struct:: XDbgBlockGraphNode
+> +   :since: 4.0
+> +
+> +   :memb uint64 id: Block graph node identifier.  This @id is generated =
+only for
+> +      x-debug-query-block-graph and does not relate to any other
+> +      identifiers in Qemu.
+> +   :memb XDbgBlockGraphNodeType type: Type of graph node.  Can be one of
+> +      block-backend, block-job or block-driver-state.
+> +   :memb str name: Human readable name of the node.  Corresponds to
+> +      node-name for block-driver-state nodes; is not guaranteed to be
+> +      unique in the whole graph (with block-jobs and block-backends).
+> diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
+> index bf8bb933345..074453193ce 100644
+> --- a/docs/sphinx/qapi-domain.py
+> +++ b/docs/sphinx/qapi-domain.py
+> @@ -50,11 +50,12 @@
+>
+>  if TYPE_CHECKING:
+>      from docutils.nodes import Element, Node
+> +    from docutils.parsers.rst.states import Inliner
+>
+>      from sphinx.application import Sphinx
+>      from sphinx.builders import Builder
+>      from sphinx.environment import BuildEnvironment
+> -    from sphinx.util.typing import OptionSpec
+> +    from sphinx.util.typing import OptionSpec, TextlikeNode
+>
+>  logger =3D logging.getLogger(__name__)
+>
+> @@ -68,6 +69,90 @@ class ObjectEntry(NamedTuple):
+>      aliased: bool
+>
+>
+> +class QAPIXrefMixin:
+> +    def make_xref(
+> +        self,
+> +        rolename: str,
+> +        domain: str,
+> +        target: str,
+> +        innernode: type[TextlikeNode] =3D nodes.literal,
+> +        contnode: Optional[Node] =3D None,
+> +        env: Optional[BuildEnvironment] =3D None,
+> +        inliner: Optional[Inliner] =3D None,
+> +        location: Optional[Node] =3D None,
+> +    ) -> Node:
+> +        result =3D super().make_xref(  # type: ignore[misc]
+> +            rolename,
+> +            domain,
+> +            target,
+> +            innernode=3Dinnernode,
+> +            contnode=3Dcontnode,
+> +            env=3Denv,
+> +            inliner=3DNone,
+> +            location=3DNone,
+> +        )
+> +        if isinstance(result, pending_xref):
+> +            assert env is not None
+> +            result["refspecific"] =3D True
+> +            result["qapi:module"] =3D env.ref_context.get("qapi:module")
+> +
+> +        assert isinstance(result, Node)
 
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
+A bug snuck in because I made edits after I published to GitLab; this
+line should be:
+
+assert isinstance(result, nodes.Node)
+
+> +        return result
+> +
+> +    def make_xrefs(
+> +        self,
+> +        rolename: str,
+> +        domain: str,
+> +        target: str,
+> +        innernode: type[TextlikeNode] =3D nodes.literal,
+> +        contnode: Optional[Node] =3D None,
+> +        env: Optional[BuildEnvironment] =3D None,
+> +        inliner: Optional[Inliner] =3D None,
+> +        location: Optional[Node] =3D None,
+> +    ) -> list[Node]:
+> +        # Note: this function is called on up to three fields of text:
+> +        # (1) The field name argument (e.g. member/arg name)
+> +        # (2) The field name type (e.g. member/arg type)
+> +        # (3) The field *body* text, for Fields that do not take argumen=
+ts.
+> +
+> +        list_type =3D False
+> +        optional =3D False
+> +
+> +        # If the rolename is qapi:type, we know we are processing a type
+> +        # and not an arg/memb name or field body text.
+> +        if rolename =3D=3D "type":
+> +            # force the innernode class to be a literal.
+> +            innernode =3D nodes.literal
+> +
+> +            # Type names that end with "?" are considered Optional
+> +            # arguments and should be documented as such, but it's not
+> +            # part of the xref itself.
+> +            if target.endswith("?"):
+> +                optional =3D True
+> +                target =3D target[:-1]
+> +
+> +            # Type names wrapped in brackets denote lists. strip the
+> +            # brackets and remember to add them back later.
+> +            if target.startswith("[") and target.endswith("]"):
+> +                list_type =3D True
+> +                target =3D target[1:-1]
+> +
+> +        results =3D []
+> +        result =3D self.make_xref(
+> +            rolename, domain, target, innernode, contnode, env, inliner,=
+ location
+> +        )
+> +        results.append(result)
+> +
+> +        if list_type:
+> +            results.insert(0, nodes.literal("[", "["))
+> +            results.append(nodes.literal("]", "]"))
+> +        if optional:
+> +            results.append(nodes.Text(", "))
+> +            results.append(nodes.emphasis("?", "Optional"))
+> +
+> +        return results
+> +
+> +
+>  class QAPIXRefRole(XRefRole):
+>      def process_link(
+>          self,
+> @@ -96,6 +181,14 @@ def process_link(
+>          return title, target
+>
+>
+> +class QAPIGroupedField(QAPIXrefMixin, GroupedField):
+> +    pass
+> +
+> +
+> +class QAPITypedField(QAPIXrefMixin, TypedField):
+> +    pass
+> +
+> +
+>  def since_validator(param: str) -> str:
+>      """
+>      Validate the `:since: X.Y` option field.
+> @@ -416,10 +509,11 @@ class QAPICommand(QAPIObject):
+>      doc_field_types =3D QAPIObject.doc_field_types.copy()
+>      doc_field_types.extend(
+>          [
+> -            TypedField(
+> +            QAPITypedField(
+>                  "argument",
+>                  label=3D_("Arguments"),
+>                  names=3D("arg",),
+> +                typerolename=3D"type",
+>                  can_collapse=3DTrue,
+>              ),
+>              GroupedField(
+> @@ -428,9 +522,10 @@ class QAPICommand(QAPIObject):
+>                  names=3D("error",),
+>                  can_collapse=3DTrue,
+>              ),
+> -            GroupedField(
+> +            QAPIGroupedField(
+>                  "returnvalue",
+>                  label=3D_("Returns"),
+> +                rolename=3D"type",
+>                  names=3D("return", "returns"),
+>                  can_collapse=3DTrue,
+>              ),
+> @@ -460,10 +555,11 @@ class QAPIAlternate(QAPIObject):
+>      doc_field_types =3D QAPIObject.doc_field_types.copy()
+>      doc_field_types.extend(
+>          [
+> -            TypedField(
+> +            QAPITypedField(
+>                  "choice",
+>                  label=3D_("Choices"),
+>                  names=3D("choice",),
+> +                typerolename=3D"type",
+>                  can_collapse=3DTrue,
+>              ),
+>          ]
+> @@ -476,10 +572,11 @@ class QAPIObjectWithMembers(QAPIObject):
+>      doc_field_types =3D QAPIObject.doc_field_types.copy()
+>      doc_field_types.extend(
+>          [
+> -            TypedField(
+> +            QAPITypedField(
+>                  "member",
+>                  label=3D_("Members"),
+>                  names=3D("memb",),
+> +                typerolename=3D"type",
+>                  can_collapse=3DTrue,
+>              ),
+>          ]
+> @@ -629,12 +726,13 @@ def run(self) -> list[Node]:
+>          # of per-class to incorporate the branch conditions as a label
+>          # name.
+>          self.doc_field_types =3D [
+> -            TypedField(
+> +            QAPITypedField(
+>                  "branch-arg-or-memb",
+>                  label=3Df"[{discrim} =3D {value}]",
+>                  # In a branch, we don't actually use the name of the
+>                  # field name to generate the label; so allow either-or.
+>                  names=3D("arg", "memb"),
+> +                typerolename=3D"type",
+>              ),
+>          ]
+>
+> --
+> 2.44.0
+>
 
 
