@@ -4,106 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B5CC04FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D188BC04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxkOX-0000Lw-Cd; Fri, 19 Apr 2024 05:18:57 -0400
+	id 1rxkPK-0002bP-BC; Fri, 19 Apr 2024 05:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rxkOR-00005Z-9g; Fri, 19 Apr 2024 05:18:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rxkOO-0004F9-Am; Fri, 19 Apr 2024 05:18:51 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43J91s1T019798; Fri, 19 Apr 2024 09:18:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=IcaB+qRQfb1ue02VK2GrsHPtrzOxmaEWCOoaUzZYt08=;
- b=kCbk9t7SKJySNZdn/j5ucLJpam9MwG8EK9BScxCDZU+bG9De9WQcZaWsAozJhCOpLvbi
- MnLL+u+OwhGilmu6k5BkOh5cU4woBLX5hW5q5uLWM6UU7ffgHi7Lzmx55LI6lJj19nvU
- LGAwTMekrk+qDgnhB4YfXYG5MTiFJBNNZICVvcSxH4OG4GeJ8sAtAQuZZ6W7nFDIngOI
- IHSDpReMEYmXiJGk9MGmRAy4mN+fg6BJ3HtTCO2YMbat9CvSMhkz/S+jbxe3wxTXY9w/
- c+w+PjokeR1A409SS2hZQK1mXi9O+pvByD5a6RfSq+0PRelTJfHeKjZXjNN4Ww5Irlp4 Kg== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xknmc014p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:18:45 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43J9Iihe013636;
- Fri, 19 Apr 2024 09:18:44 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xknmc014n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:18:44 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43J8uACJ027929; Fri, 19 Apr 2024 09:18:44 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xkbmpaqp4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:18:43 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43J9Ic1O48890138
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Apr 2024 09:18:40 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8ADAB2004F;
- Fri, 19 Apr 2024 09:18:38 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 033532004D;
- Fri, 19 Apr 2024 09:18:37 +0000 (GMT)
-Received: from [9.171.89.59] (unknown [9.171.89.59])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 19 Apr 2024 09:18:36 +0000 (GMT)
-Message-ID: <5cd6ec0b-1c60-48cb-9659-f0247c5ad608@linux.vnet.ibm.com>
-Date: Fri, 19 Apr 2024 14:48:36 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rxkPI-0002X0-2j
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:19:44 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rxkPG-0004PW-9t
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:19:43 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-56fffb1d14bso3100003a12.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 02:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713518380; x=1714123180; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U4yR/ixG2Bqx+rd+yot+dvg+2eECU92Q+kJ9MbSDjVw=;
+ b=YyVLfIRYi41v8yFgrKS9Xh1xM9nRBUZqN9j9fmc4PLyQpxM9CexeuDHY1PFiv7sbjl
+ W9A+DL7Rb/zntqofZxa544saHuI7j46DKhi4RrLX+voDzZoxKMbz8Al8a9DP+wX1zraL
+ Z4ASvdQE8nVdLT968dYWJpcH0dEW2SI0v41fKdLJM5yvIZihpIy2021jsvKaRZaudU9i
+ wH4SEwC3tF4JXA6IzrusCw9K5xHrRNFX1gzEoyR5AX6SQ0rhig3ZMoaBF4NVQLNYUWpq
+ K05J+wfEsiIh5QXHNSgqoiIc3GEeE46HpaoNQesoNvsV8qnqYrSicN0e17JQGpoppCCG
+ VdBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713518380; x=1714123180;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=U4yR/ixG2Bqx+rd+yot+dvg+2eECU92Q+kJ9MbSDjVw=;
+ b=okjJ/+nEDTBll32KT1SqgK2NpyoyJ5rRhB2LyR+qsgyZs/ooLwhWgPxjwonl+L9ki8
+ OVrDHWtSZG5BDvukyUbENSC/54wAX7h7CMwXXIw3BHTBCsu2BhfQGbNozYwm6RI4SMxP
+ lIlU8NfRu323VFMZDyGuGXODlmgEwC/lff+37Hh1CT9UtdS6yXCmDMVUKoa1AMOYeJtk
+ oRWyn5h7ddxkiu6raPlgfr9yURL1B5Fd1SZe/NFIsAkXVaQhfdJKIV9Edv3Pbm0C7jyp
+ 6kFmL4xhtMUxDuZr5AN06eqlIomnGY7HJYREVcjv2yR6s0EzgDgrFT1RDRndrs/zXylv
+ rV0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBlr+NZi/e/jlMdHt/28lifgWTq/EE4KbdexD8FYsV7S3u54ZcvuJIMrUHpDf9qoTpkSKWWs2KSTriqCF3LUVZIKM8I7w=
+X-Gm-Message-State: AOJu0YyDt1Q68T81KQc9UMo8qowvawiQ85wNkND9Y1uqn8ZAdMM5uTqS
+ 8tolFM3vml4DOEjRJdDI7KwoXQdqP2lRrz7PZuXo6tYENvHtXiZz4b8fGJHPhGBIMR0+DlyD+WZ
+ dItMb7dtd29zNc83xMHIbdLuv16qguO6ggnsauj6FIAlq705y
+X-Google-Smtp-Source: AGHT+IG65jIqKk4rEH/xvHUKuxFW93vW6uRbPHc+jpyTMoiAoqBJTmPP6njprImap+ne0FyOE7M6jRlUJbpU+DN6YiU=
+X-Received: by 2002:a05:6402:b53:b0:570:3490:c9d0 with SMTP id
+ bx19-20020a0564020b5300b005703490c9d0mr4006458edb.12.1713518380403; Fri, 19
+ Apr 2024 02:19:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] target/ppc: Move divw[u, e, eu] instructions to
- decodetree.
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240416063927.99428-1-rathc@linux.ibm.com>
- <20240416063927.99428-4-rathc@linux.ibm.com>
- <45204f85-3eb9-40f4-9f2a-3a3f0e75929e@linaro.org>
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <45204f85-3eb9-40f4-9f2a-3a3f0e75929e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dBNxT17Gp0HrTLO1DOOjnMRXrxACBN5S
-X-Proofpoint-ORIG-GUID: FiFqrfrNy3k6WZWrZ8UHTwQ7Ay5dxE8Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-19_06,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxscore=0
- mlxlogscore=777 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2404010000 definitions=main-2404190068
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <7c3b9a13-b503-47dc-ae02-ac9da8142605@linaro.org>
+ <19458f9d-5833-418a-8665-80ab786102d7.jiangzw@tecorigin.com>
+In-Reply-To: <19458f9d-5833-418a-8665-80ab786102d7.jiangzw@tecorigin.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 19 Apr 2024 10:19:29 +0100
+Message-ID: <CAFEAcA_Q86TH19xZMT=gtRwL-ABook5NAFTgcGjfnfcqhgnwCw@mail.gmail.com>
+Subject: Re: [PATCH] tcg: Fix the overflow in indexing tcg_ctx->temps
+To: =?UTF-8?B?5aec5pm65Lyf?= <jiangzw@tecorigin.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, pbonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,30 +93,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/16/24 23:49, Richard Henderson wrote:
-> On 4/15/24 23:39, Chinmay Rath wrote:
->> Moving the following instructions to decodetree specification :
->>      divw[u, e, eu][o][.]     : XO-form
->>
->> The changes were verified by validating that the tcg ops generated by 
->> those
->> instructions remain the same, which were captured with the '-d 
->> in_asm,op' flag.
->>
->> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
->> ---
->>   target/ppc/helper.h                        |  4 +--
->>   target/ppc/insn32.decode                   |  5 ++++
->>   target/ppc/int_helper.c                    |  4 +--
->>   target/ppc/translate.c                     | 31 ----------------------
->>   target/ppc/translate/fixedpoint-impl.c.inc | 24 +++++++++++++++++
->>   5 files changed, 33 insertions(+), 35 deletions(-)
+On Fri, 19 Apr 2024 at 04:49, =E5=A7=9C=E6=99=BA=E4=BC=9F <jiangzw@tecorigi=
+n.com> wrote:
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > On 4/18/24 03:27, Zhiwei Jiang wrote:
+> > > Sometimes, when the address of the passed TCGTemp *ts variable is the=
+ same as tcg_ctx,
+> >
+> > Pardon?  When would TCGTemp *ts =3D=3D TCGContext *tcg_ctx?
+> >
+> >
+> > > the index calculated in the temp_idx function, i.e., ts - tcg_ctx->te=
+mps,
+> > > can result in a particularly large value, causing overflow in the sub=
+sequent array access.
+> >
+> > Or, assert:
+> >
+> > size_t temp_idx(TCGTemp *ts)
+> > {
+> >      ptrdiff_t n =3D ts - tcg_ctx->temps;
+> >      assert(n >=3D 0 && n < tcg_ctx->nb_temps);
+> >      return n;
+> > }
+> >
+> > >   static inline TCGTemp *tcgv_i32_temp(TCGv_i32 v)
+> > >   {
+> > > -    return (void *)tcg_ctx + (uintptr_t)v;
+> > > +    return (void *)tcg_ctx->temps + (uintptr_t)v;
+> > >   }
+> >
+> > This will generate 0 for the first temp, which will test as NULL.
 >
-Thanks,
-Chinmay
+> Hi Richard:
+> You can reproduce this issue on the latest upstream QEMU version. Using t=
+he RISC-V QEMU version,
+> if we compile a test program with the first instruction being '.insn r 0x=
+f, 2, 0, x0, x0, x0',that is a RISC-V CBO instruction,
+> qemu will crash with a segmentation fault upon execution.
 >
-> r~
+> When the first instruction in the program is a CBO instruction,  temp_idx=
+ in init_ts_info func returns a very large value,
+> causing the subsequent test_bit function to access out-of-bounds memory.
 
+I feel like this might be a bug elsewhere. Can you provide
+a repro binary and command line?
+
+thanks
+-- PMM
 
