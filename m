@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF9FC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 10:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45437C04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 11:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxlvD-0008HV-HP; Fri, 19 Apr 2024 06:56:47 -0400
+	id 1rxm0b-0001mI-9w; Fri, 19 Apr 2024 07:02:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1rxlvB-0008H1-UW
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 06:56:45 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxm0Y-0001ly-UD
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 07:02:18 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1rxlv9-0007MV-NV
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 06:56:45 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-41699bbfb91so51505e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 03:56:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxm0W-0000MV-Lf
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 07:02:18 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56e37503115so1683829a12.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 04:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1713524200; x=1714129000; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Vn6JiMl4zrHUKjgNBj59H2lkepqikhr5ZPOEGsYcT9A=;
- b=qDA8TEgEUG0LS+LFTHgD1jwuIFjmIKB3AEv4bRGux3MyVC0G4V2KTC9c4rHskjkhQ2
- b0JMQgLvW7yIHsH53stDDHIpYt1zP0/E7+xg3ejDFxW05ZzgPcd+DwZ8j5SYB43DgTId
- C46FS3vyS4p0CWIEVmueLa7H42KwRv+IPPaQUiMtZwMSjMARN3bPNpc75b3B0N7XyQ/2
- aLoJUx6I47eatMWvRcjzX/RIxUCfoywqR5VskKNi5UaSRxRLOQtZCMRTGuqdARr5Un3s
- I7aIo/R4xw+f7MA3h4J/+AKGOfHWs7UYGFnaJdDOIAMtMpHILxZyLCvy7CO3hAdgQaHs
- aRnA==
+ d=linaro.org; s=google; t=1713524534; x=1714129334; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZiXQsPQ9dWjSb4Y/GecdNlQyuKBTABOytO02l3aZ6ts=;
+ b=HnOsQXlHpuTZMzxzfmCzKlPYicDVnlWcyoOC0bQAyNEESRj6Jmub3OwlTpJrJYLKFz
+ I37HnWB3KVudLVUz9moEe1POUO2WnvbBIaSRKgSXm46RBDUvx2suRLowyZGmYvoRNpdI
+ QyDj7ihGUECoA2rprNyndNs9d1zOkZ5H6Dq25cO5iiNTpr7Ko7Ky2Sd0Vtosu/OAXXpJ
+ XaxBo7ToT6kVfrkXjrkSDA73qDYfgAt721ZKmnDHpkrkG/yfhdcJNtdu0XSJTnmAfOAj
+ WdFQtOkp2zBLwgsKFp2bvYx6gw0gvdulPlX8rclHpUgs2FCpcnv6PmDz8al8jgG79uv4
+ qpHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713524200; x=1714129000;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vn6JiMl4zrHUKjgNBj59H2lkepqikhr5ZPOEGsYcT9A=;
- b=xVK+i1ep5ihTciKzsWOwsCJqKaJG6r+CYsjqesn5NXx6L2Sq8NTWvx4hN92dkN50E7
- F1ColJra9+zod2/fJY/JycEOMbDRBro7mw0VAAl6M1VGkA4wVY/Pq3+xQmcSRRGW4ksG
- RD6vX9GIldYnw3R7uvLJz0ptAM54Z5SWo8JqQkOH/fPyLv7X2v4QVOe59LNY4MhK6Bpu
- SJ9OVK85+iaJroypSHv4gAjwYNioiFRgUPI5HuCxJvhxtS4gLqsleUiJbXAeZMZJFNP1
- 2usKad1xr9T2ARI4Sq5r9rw7HficZgdtjDlmkw4Z0mliChh18k+d7tVk6PVXmU502PEX
- CSsw==
+ d=1e100.net; s=20230601; t=1713524534; x=1714129334;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZiXQsPQ9dWjSb4Y/GecdNlQyuKBTABOytO02l3aZ6ts=;
+ b=QNMM7qhrIBZajJVpLSCpQgUDJzF5K/NS81nlWZmR4ugV5NhP0xWaI0slaR+01yI2IU
+ 6cAcxAPbv7urTRikLigmGA+EQa7wqlvqfz30IQrWutoBs29Kk7YZlCMmOAdZr6W+XLO/
+ OLg1OiDpR2EUDbo1gFyPYKvu71j73T4NwbOchpiOg5hNe4oweRMW9OkAmSFZhG6stIWw
+ 34kGcNCu9KThNXZrFHlBypzErYcAYl55wfwTT0xsyqN7q8oaMibdJjvU4agcKKokn8Jy
+ GALm6nE+SXJcRi2rf+Ot3Z2Gp1xDVGSNAP6AFTemj7YPruMRok5VtiWZG9G02FnQnncy
+ TJlg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8dpJWxrjYG4zpHIOGnxeNTwmlp5pzqlxgFCUyw5l499RwBQAjs1zJnAgnVcQlBdpnhGMWuphPuDp+4efNRqHHizv1Mbc=
-X-Gm-Message-State: AOJu0YyKbkJMmhbxih51BeTFbuRp6eOy4VvPtsiRrZQF7gL5UQzHYkRa
- vQQZHuH2prtNq3ItR2UUFhazeSVlpAKhClzTh/sOTD75XcFfSiigT7naXb2fEA==
-X-Google-Smtp-Source: AGHT+IEExGVRPnQLjJi4jYbVSqdpM5by59bS570RPwLR/+HBg1+MV6yVt4BanzsSyCObw6kyO8eq7g==
-X-Received: by 2002:a05:600c:1d13:b0:418:5aaa:7db1 with SMTP id
- l19-20020a05600c1d1300b004185aaa7db1mr127384wms.1.1713524200382; 
- Fri, 19 Apr 2024 03:56:40 -0700 (PDT)
-Received: from google.com (180.232.140.34.bc.googleusercontent.com.
- [34.140.232.180]) by smtp.gmail.com with ESMTPSA id
- f18-20020adff592000000b00343a0e2375esm4114611wro.27.2024.04.19.03.56.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Apr 2024 03:56:39 -0700 (PDT)
-Date: Fri, 19 Apr 2024 10:56:36 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-Subject: Re: [RFC PATCH v2 07/13] hw/arm/smmu: Support nesting in the rest of
- commands
-Message-ID: <ZiJN5AG4lgOU8Mg4@google.com>
-References: <20240408140818.3799590-1-smostafa@google.com>
- <20240408140818.3799590-8-smostafa@google.com>
- <cfb5e002-26d4-437a-91d5-7c2eb49a75b6@redhat.com>
+ AJvYcCXg3xV+zXyXs2yBIa2RkUJLOx//a0AEYxassxgGZ8J4UZkCLI0rLWwCzf9lRRb/+LleFLi3xCrEO+47m9GUq0a4oUv+YTs=
+X-Gm-Message-State: AOJu0YwkSReG4AiozKn89UKt/k8xEUkpRfXGZTTZeLH+EtPYRZGHrJtc
+ sglonyV/2JddtjhO/9O3PNQELlBtvj8XjuCC17X1IIVnIl+Xkhf+IEhTsvCEfLU=
+X-Google-Smtp-Source: AGHT+IEUuluAOL8Abbo56LkdYbT1ngZf7d0sGzniG+VKyI3NAc/HC3CZ0KohDqvAdWLAt1xLD2F08A==
+X-Received: by 2002:a50:9b50:0:b0:571:bd88:e832 with SMTP id
+ a16-20020a509b50000000b00571bd88e832mr1053557edj.41.1713524533818; 
+ Fri, 19 Apr 2024 04:02:13 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.143.233])
+ by smtp.gmail.com with ESMTPSA id
+ h25-20020a0564020e9900b0056bc0c44f02sm1963768eda.96.2024.04.19.04.02.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Apr 2024 04:02:13 -0700 (PDT)
+Message-ID: <ac907ce8-a91d-402f-ad30-2c0962d86f6c@linaro.org>
+Date: Fri, 19 Apr 2024 13:02:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cfb5e002-26d4-437a-91d5-7c2eb49a75b6@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=smostafa@google.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg: Fix the overflow in indexing tcg_ctx->temps
+To: Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?B?5aec5pm65Lyf?=
+ <jiangzw@tecorigin.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, pbonzini <pbonzini@redhat.com>
+References: <CAFEAcA_Q86TH19xZMT=gtRwL-ABook5NAFTgcGjfnfcqhgnwCw@mail.gmail.com>
+ <5b29a661-1e37-4a90-8871-983d07094b69.jiangzw@tecorigin.com>
+ <CAFEAcA82fjAT7Dh2x4i+UM3bvkWJpSCH8a-tH4KJc82_hfA-_A@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA82fjAT7Dh2x4i+UM3bvkWJpSCH8a-tH4KJc82_hfA-_A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,212 +99,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On 19/4/24 12:21, Peter Maydell wrote:
+> On Fri, 19 Apr 2024 at 10:37, 姜智伟 <jiangzw@tecorigin.com> wrote:
+>> Peter Maydell wrote:
+>>> I feel like this might be a bug elsewhere. Can you provide
+>>> a repro binary and command line?
+>>
+>> The test file has been attached with RISCV CBO instruction as the first instruction to execute, with command-line arguments as
+>> ./build/qemu-system-riscv64 -M virt -smp 1 -nographic -bios crash_test.bin
+> 
+> It looks like you're building without --enable-debug. If you do
+> that then you'll find that we hit an assert in the debug version
+> of the function, which your patch doesn't touch:
+> 
+> #6  0x00007ffff4b90e96 in __GI___assert_fail
+>      (assertion=0x55555639a508 "o < sizeof(TCGTemp) *
+> tcg_ctx->nb_temps", file=0x5555563995d5 "../../tcg/tcg.c", line=1940,
+> function=0x55555639c000 <__PRETTY_FUNCTION__.60> "tcgv_i32_temp") at
+> ./assert/assert.c:101
+> #7  0x000055555613104c in tcgv_i32_temp (v=0x0) at ../../tcg/tcg.c:1940
+> #8  0x0000555555d0882b in tcgv_i64_temp (v=0x0) at
+> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/tcg/tcg.h:638
+> #9  0x0000555555d0c17b in gen_helper_cbo_inval (arg1=0x2a8, arg2=0x0)
+> at ../../target/riscv/helper.h:121
+> #10 0x0000555555d7be65 in trans_cbo_inval (ctx=0x7fffef1c8e50,
+> a=0x7fffef1c8cf0) at
+> ../../target/riscv/insn_trans/trans_rvzicbo.c.inc:48
+> #11 0x0000555555d41f4f in decode_insn32 (ctx=0x7fffef1c8e50,
+> insn=8207) at libqemu-riscv64-softmmu.fa.p/decode-insn32.c.inc:2332
+> #12 0x0000555555d925f1 in decode_opc (env=0x555556d53e30,
+> ctx=0x7fffef1c8e50, opcode=8207) at
+> ../../target/riscv/translate.c:1165
+> #13 0x0000555555d92ab4 in riscv_tr_translate_insn
+> (dcbase=0x7fffef1c8e50, cpu=0x555556d51670) at
+> ../../target/riscv/translate.c:1236
+> 
+> This happens because we've been passed in 0 as our TCGv,
+> which isn't valid. That in turn is because trans_cbo_inval()
+> does:
+>             gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
+> but a->rs1 is 0.
+> 
+> The comment in riscv_translate_init() says:
+>      /*
+>       * cpu_gpr[0] is a placeholder for the zero register. Do not use it.
+>       * Use the gen_set_gpr and get_gpr helper functions when accessing regs,
+>       * unless you specifically block reads/writes to reg 0.
+>       */
+> 
+> trans_cbo_inval() doesn't do either of those things, so that is
+> where your bug is.
 
-On Thu, Apr 18, 2024 at 04:48:39PM +0200, Eric Auger wrote:
-> Hi Mostafa,
-> 
-> On 4/8/24 16:08, Mostafa Saleh wrote:
-> > Some commands need rework for nesting, as they used to assume S1
-> > and S2 are mutually exclusive:
-> >
-> > - CMD_TLBI_NH_ASID: Consider VMID if stage-2 is supported
-> > - CMD_TLBI_NH_ALL: Consider VMID if stage-2 is supported, otherwise
-> >   invalidate everything, this required a new vmid invalidation
-> >   function for stage-1 only (ASID >= 0)
-> >
-> > Also, rework trace events to reflect the new implementation.
-> 
-> This does not apply for me. Could you share a branch or respin?
+Our minds crossed =)
 
-Oh, Sorry about that. I will address the previous comments and respin.
+We need to use get_address() to get an address from cpu_gpr[],
+since $zero is "special" (NULL).
 
-Thanks,
-Mostafa
+I'm about to post this fix:
 
-> 
-> Thank you in advance
-> 
-> Eric
-> >
-> > Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> > ---
-> >  hw/arm/smmu-common.c         | 36 +++++++++++++++++++++++++++++-------
-> >  hw/arm/smmuv3.c              | 31 +++++++++++++++++++++++++++++--
-> >  hw/arm/trace-events          |  6 ++++--
-> >  include/hw/arm/smmu-common.h |  3 ++-
-> >  4 files changed, 64 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> > index 8b9e59b24b..b1cf1303c6 100644
-> > --- a/hw/arm/smmu-common.c
-> > +++ b/hw/arm/smmu-common.c
-> > @@ -148,13 +148,14 @@ void smmu_iotlb_inv_all(SMMUState *s)
-> >      g_hash_table_remove_all(s->iotlb);
-> >  }
-> >  
-> > -static gboolean smmu_hash_remove_by_asid(gpointer key, gpointer value,
-> > -                                         gpointer user_data)
-> > +static gboolean smmu_hash_remove_by_asid_vmid(gpointer key, gpointer value,
-> > +                                              gpointer user_data)
-> >  {
-> > -    int asid = *(int *)user_data;
-> > +    SMMUIOTLBPageInvInfo *info = (SMMUIOTLBPageInvInfo *)user_data;
-> >      SMMUIOTLBKey *iotlb_key = (SMMUIOTLBKey *)key;
-> >  
-> > -    return SMMU_IOTLB_ASID(*iotlb_key) == asid;
-> > +    return (SMMU_IOTLB_ASID(*iotlb_key) == info->asid) &&
-> > +           (SMMU_IOTLB_VMID(*iotlb_key) == info->vmid);
-> >  }
-> >  
-> >  static gboolean smmu_hash_remove_by_vmid(gpointer key, gpointer value,
-> > @@ -166,6 +167,16 @@ static gboolean smmu_hash_remove_by_vmid(gpointer key, gpointer value,
-> >      return SMMU_IOTLB_VMID(*iotlb_key) == vmid;
-> >  }
-> >  
-> > +static gboolean smmu_hash_remove_by_vmid_s1(gpointer key, gpointer value,
-> > +                                            gpointer user_data)
-> > +{
-> > +    int vmid = *(int *)user_data;
-> > +    SMMUIOTLBKey *iotlb_key = (SMMUIOTLBKey *)key;
-> > +
-> > +    return (SMMU_IOTLB_VMID(*iotlb_key) == vmid) &&
-> > +           (SMMU_IOTLB_ASID(*iotlb_key) >= 0);
-> > +}
-> > +
-> >  static gboolean smmu_hash_remove_by_asid_vmid_iova(gpointer key, gpointer value,
-> >                                                gpointer user_data)
-> >  {
-> > @@ -259,10 +270,15 @@ void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
-> >                                  &info);
-> >  }
-> >  
-> > -void smmu_iotlb_inv_asid(SMMUState *s, int asid)
-> > +void smmu_iotlb_inv_asid_vmid(SMMUState *s, int asid, int vmid)
-> >  {
-> > -    trace_smmu_iotlb_inv_asid(asid);
-> > -    g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_asid, &asid);
-> > +    SMMUIOTLBPageInvInfo info = {
-> > +        .asid = asid,
-> > +        .vmid = vmid,
-> > +    };
-> > +
-> > +    trace_smmu_iotlb_inv_asid_vmid(asid, vmid);
-> > +    g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_asid_vmid, &info);
-> >  }
-> >  
-> >  inline void smmu_iotlb_inv_vmid(SMMUState *s, int vmid)
-> > @@ -271,6 +287,12 @@ inline void smmu_iotlb_inv_vmid(SMMUState *s, int vmid)
-> >      g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid, &vmid);
-> >  }
-> >  
-> > +inline void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
-> > +{
-> > +    trace_smmu_iotlb_inv_vmid_s1(vmid);
-> > +    g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid_s1, &vmid);
-> > +}
-> > +
-> >  /* VMSAv8-64 Translation */
-> >  
-> >  /**
-> > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> > index 17bbd43c13..ece647b8bf 100644
-> > --- a/hw/arm/smmuv3.c
-> > +++ b/hw/arm/smmuv3.c
-> > @@ -1280,25 +1280,52 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
-> >          case SMMU_CMD_TLBI_NH_ASID:
-> >          {
-> >              int asid = CMD_ASID(&cmd);
-> > +            int vmid = -1;
-> >  
-> >              if (!STAGE1_SUPPORTED(s)) {
-> >                  cmd_error = SMMU_CERROR_ILL;
-> >                  break;
-> >              }
-> >  
-> > +            /*
-> > +             * VMID is only matched when stage 2 is supported for the Security
-> > +             * state corresponding to the command queue that the command was
-> > +             * issued in.
-> > +             * QEMU ignores the field by setting to -1, similarly to what STE
-> > +             * decoding does. And invalidation commands ignore VMID < 0.
-> > +             */
-> > +            if (STAGE2_SUPPORTED(s)) {
-> > +                vmid = CMD_VMID(&cmd);
-> > +            }
-> > +
-> >              trace_smmuv3_cmdq_tlbi_nh_asid(asid);
-> >              smmu_inv_notifiers_all(&s->smmu_state);
-> > -            smmu_iotlb_inv_asid(bs, asid);
-> > +            smmu_iotlb_inv_asid_vmid(bs, asid, vmid);
-> >              break;
-> >          }
-> >          case SMMU_CMD_TLBI_NH_ALL:
-> > +        {
-> > +            int vmid = -1;
-> > +
-> >              if (!STAGE1_SUPPORTED(s)) {
-> >                  cmd_error = SMMU_CERROR_ILL;
-> >                  break;
-> >              }
-> > +
-> > +            /*
-> > +             * If stage-2 is supported, invalidate for this VMID only, otherwise
-> > +             * invalidate the whole thing, see SMMU_CMD_TLBI_NH_ASID()
-> > +             */
-> > +            if (STAGE2_SUPPORTED(s)) {
-> > +                vmid = CMD_VMID(&cmd);
-> > +                trace_smmuv3_cmdq_tlbi_nh(vmid);
-> > +                smmu_iotlb_inv_vmid_s1(bs, vmid);
-> > +                break;
-> > +            }
-> >              QEMU_FALLTHROUGH;
-> > +        }
-> >          case SMMU_CMD_TLBI_NSNH_ALL:
-> > -            trace_smmuv3_cmdq_tlbi_nh();
-> > +            trace_smmuv3_cmdq_tlbi_nsnh();
-> >              smmu_inv_notifiers_all(&s->smmu_state);
-> >              smmu_iotlb_inv_all(bs);
-> >              break;
-> > diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> > index f5c361d96e..2556f4721a 100644
-> > --- a/hw/arm/trace-events
-> > +++ b/hw/arm/trace-events
-> > @@ -11,8 +11,9 @@ smmu_ptw_page_pte(int stage, int level,  uint64_t iova, uint64_t baseaddr, uint6
-> >  smmu_ptw_block_pte(int stage, int level, uint64_t baseaddr, uint64_t pteaddr, uint64_t pte, uint64_t iova, uint64_t gpa, int bsize_mb) "stage=%d level=%d base@=0x%"PRIx64" pte@=0x%"PRIx64" pte=0x%"PRIx64" iova=0x%"PRIx64" block address = 0x%"PRIx64" block size = %d MiB"
-> >  smmu_get_pte(uint64_t baseaddr, int index, uint64_t pteaddr, uint64_t pte) "baseaddr=0x%"PRIx64" index=0x%x, pteaddr=0x%"PRIx64", pte=0x%"PRIx64
-> >  smmu_iotlb_inv_all(void) "IOTLB invalidate all"
-> > -smmu_iotlb_inv_asid(uint16_t asid) "IOTLB invalidate asid=%d"
-> > +smmu_iotlb_inv_asid_vmid(int asid, uint16_t vmid) "IOTLB invalidate asid=%d vmid=%d"
-> >  smmu_iotlb_inv_vmid(uint16_t vmid) "IOTLB invalidate vmid=%d"
-> > +smmu_iotlb_inv_vmid_s1(uint16_t vmid) "IOTLB invalidate vmid=%d"
-> >  smmu_iotlb_inv_iova(uint16_t asid, uint64_t addr) "IOTLB invalidate asid=%d addr=0x%"PRIx64
-> >  smmu_inv_notifiers_mr(const char *name) "iommu mr=%s"
-> >  smmu_iotlb_lookup_hit(int asid, uint16_t vmid, uint64_t addr, uint64_t mask, uint32_t hit, uint32_t miss, uint32_t p) "IOTLB cache HIT asid=%d vmid=%d addr=0x%"PRIx64" mask=0x%"PRIx64" hit=%d miss=%d hit rate=%d"
-> > @@ -47,7 +48,8 @@ smmuv3_cmdq_cfgi_cd(uint32_t sid) "sid=0x%x"
-> >  smmuv3_config_cache_hit(uint32_t sid, uint32_t hits, uint32_t misses, uint32_t perc) "Config cache HIT for sid=0x%x (hits=%d, misses=%d, hit rate=%d)"
-> >  smmuv3_config_cache_miss(uint32_t sid, uint32_t hits, uint32_t misses, uint32_t perc) "Config cache MISS for sid=0x%x (hits=%d, misses=%d, hit rate=%d)"
-> >  smmuv3_range_inval(int vmid, int asid, uint64_t addr, uint8_t tg, uint64_t num_pages, uint8_t ttl, bool leaf, int stage) "vmid=%d asid=%d addr=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" ttl=%d leaf=%d stage=%d"
-> > -smmuv3_cmdq_tlbi_nh(void) ""
-> > +smmuv3_cmdq_tlbi_nh(int vmid) "vmid=%d"
-> > +smmuv3_cmdq_tlbi_nsnh(void) ""
-> >  smmuv3_cmdq_tlbi_nh_asid(uint16_t asid) "asid=%d"
-> >  smmuv3_cmdq_tlbi_s12_vmid(uint16_t vmid) "vmid=%d"
-> >  smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
-> > diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> > index df166d8477..67db30e85b 100644
-> > --- a/include/hw/arm/smmu-common.h
-> > +++ b/include/hw/arm/smmu-common.h
-> > @@ -226,8 +226,9 @@ void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *entry);
-> >  SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
-> >                                  uint8_t tg, uint8_t level);
-> >  void smmu_iotlb_inv_all(SMMUState *s);
-> > -void smmu_iotlb_inv_asid(SMMUState *s, int asid);
-> > +void smmu_iotlb_inv_asid_vmid(SMMUState *s, int asid, int vmid);
-> >  void smmu_iotlb_inv_vmid(SMMUState *s, int vmid);
-> > +void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid);
-> >  void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-> >                           uint8_t tg, uint64_t num_pages, uint8_t ttl);
-> >  void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
-> 
+-- >8 --
+diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc 
+b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+index d5d7095903..6f6b29598d 100644
+--- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+@@ -31,27 +31,27 @@
+  static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
+  {
+      REQUIRE_ZICBOM(ctx);
+-    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
++    gen_helper_cbo_clean_flush(tcg_env, get_address(ctx, a->rs1, 0));
+      return true;
+  }
+
+  static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
+  {
+      REQUIRE_ZICBOM(ctx);
+-    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
++    gen_helper_cbo_clean_flush(tcg_env, get_address(ctx, a->rs1, 0));
+      return true;
+  }
+
+  static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
+  {
+      REQUIRE_ZICBOM(ctx);
+-    gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
++    gen_helper_cbo_inval(tcg_env, get_address(ctx, a->rs1, 0));
+      return true;
+  }
+
+  static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
+  {
+      REQUIRE_ZICBOZ(ctx);
+-    gen_helper_cbo_zero(tcg_env, cpu_gpr[a->rs1]);
++    gen_helper_cbo_zero(tcg_env, get_address(ctx, a->rs1, 0));
+      return true;
+  }
+---
+
 
