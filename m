@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 248A3C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFBCC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxtFZ-00086V-V4; Fri, 19 Apr 2024 14:46:18 -0400
+	id 1rxtFd-00087m-8s; Fri, 19 Apr 2024 14:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxtFX-00085Q-6K
+ id 1rxtFX-00085x-QC
  for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:46:15 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxtFT-00011c-H1
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:46:14 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-344047ac7e4so2125700f8f.0
+ id 1rxtFU-00011n-0P
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:46:15 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-418c0d83e61so24867255e9.3
  for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 11:46:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1713552370; x=1714157170; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=djhs4NFUqKq4Lo08iH8CrnfsBuX4hY+1rW2X0lQGRRM=;
- b=vqY+95Uoub2w03NMnjQtV/pfUMsdDCnomLESRDt9DWgJsjJDGj69FfajHXsIK/dVSr
- zVNKC3zRzGSVVUG5fPkAXI78r9VTM+OzozajFIJin7G6TuGPzqT5XbDepvKD9vz07jGS
- guW6A9CRsQfgYlXxDWWQBtpzRuKHwybK02PTZLL2zpQtQO3nGXP6T7QE2VAJ3hWP+hfC
- ocAAChqL2ZNrHNdkHVOPakGp019TRhYLC/DE5mp0+XNCxmvZl+Ip5KyL0OlMSwCcazc4
- V3hX/S+UI73t2u+PKO519GsAvm991F4aDdxRax8/hciCzw3J7leOf3jsMtq5FkVuqcjt
- LiaQ==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=bNLgiABY8b7+IQBpZ1mbekpvWukM6LJ8k/VAeslhvt8=;
+ b=p6q9aGGT0OfnFggQs5ZYta0rltpIHgIHwf4/Zhe3OD5Bzar4AzY1I/GaJk+xOgdwOd
+ oxMC3GiHt7n0YnmErIJeeqE082+G+RfoJU7X7mR0yQJQTBXhJwFVE6hPm1UlXIObQQFi
+ X60Bb4Lfml9MuU5qZbMNliA8KMX2ZX5DOiOimi9yXO1FGL6X7YJg+JD3KVRWyh5TJjvW
+ kdw88PkQah2kHo2ZwSvLblI++5w30G3V5t/kdPMD3cc2fdxgyo2yHD55M0iaUh+1mxSw
+ nk9Yh0T/pqsxrNqPv/J6YH/dqAt4+v7ygmHaPeB+qhV57CEu3nN8GQZLoZsK2pe+fd/C
+ xemw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1713552370; x=1714157170;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=djhs4NFUqKq4Lo08iH8CrnfsBuX4hY+1rW2X0lQGRRM=;
- b=uViN6YS15zKGfoQYGuW8twitRx3T7A0fx/xji3UM8OOpHfZtS6a30k7Aae29JVHkYg
- biyX2drMdmV3vj2/ekRc3MUeT0jzYNTut/4Pa8ep5C6Z0p5vBWvIUwTePRQmGS//UwAb
- h+9/lBw6jyuWGsexRIq7X4mq6VrEfv3s0boWrfVN1kkDBM1zAVcX93FwRon4hjhbax5n
- 5/jtewPEnJRm8Aw0BPj8bpAOqRxBKpTi+m7eOWO3Yr5DcwBp32qIxPMKuyfE2hYIbE9W
- lsGbvjCLhNVYmaYCrUNUZCBMtabVprZCG+qk0jttqlw5BZ/EnuN6TrexJA7PTVyWpIHR
- Pumg==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bNLgiABY8b7+IQBpZ1mbekpvWukM6LJ8k/VAeslhvt8=;
+ b=Ey4m1Yw1ZRwzT/NVs1gO7c+TLMF7G2rkZgqFQ9cxY/MyTPSIF6MgByyAPLreaV5iMF
+ cLJzNT9gJrEGeFPBYkDenyo4kMtPOAQnZk3JNuDDOZBusDivCOsKsLVV5lHwypnr6Bvl
+ GH+gI/xAvvq34ASSwa6EAHBDGwUg+mltKawBxXS+TVEe5+kHP9rGjwdjXA7BUe/mqcJ2
+ YhcCzaxsjLNes6zPvsDWjtN4r1wW22XCyJRzi6waSu1UWvbz6h+RGNN34GUPhaFVvofY
+ PJB/UWOy7cxOsIfwrf5NR0FFF0GR6UOzoT/rY9TvHZdCXOm3S2rpRJDIVecvGaelULpw
+ i3eQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgmLjwyksY6Y+KgmkIFgBCqQt9IbwWBndZGpOO65wYsybj6W6AquBQAmJddlYjp51TIcoK7YAKnHQO1sdg27j0xqMmfhU=
-X-Gm-Message-State: AOJu0YxJLXf8DmNeNeSzJ0oZ1IIym2QypH5XMjM3yrHlAYqvxYlh3HUG
- VWyouSYQ0rS0Ys7mUDNduNFzXtsXJsnk1iZpq0/W87UhfgYR9PeO8hywikk+KnP7iQW+AaFsdFB
- 8
-X-Google-Smtp-Source: AGHT+IFXopL9amoP5EH0zmuIYgBReT8lnFxUFS7XCbnOMkE5EGQH9tFUYqZTwjquwA3PU+o6OQepyQ==
-X-Received: by 2002:a05:6000:156b:b0:347:2b42:a39c with SMTP id
- 11-20020a056000156b00b003472b42a39cmr2955387wrz.29.1713552369828; 
- Fri, 19 Apr 2024 11:46:09 -0700 (PDT)
+ AJvYcCUhJNT1wsG06Mz5z83DHIYwXyePjUTEt20l6t8PBwO1z4A31Umx//WtoubJnGk4lDup/A+bm5srMDATOZx83YJs3GsegMo=
+X-Gm-Message-State: AOJu0YzvAsLpvpnAPQ+x0buDlIHeWV35dUkHFq5d2EfrctNJXn9HRnlJ
+ XMBFueVNg8THmHrzFIuYGKxgWL6ySHB9eYGL9pXWVoVYZjwK++qCPGmuRMKb4638fEhfYT6kcFw
+ s
+X-Google-Smtp-Source: AGHT+IGkBQi1KoTbFiUXtUkdqkGKikvChTYHMGIgvN0Oszx5vIQZcazzMdXZPU7Gpd8wSutyhgtaPA==
+X-Received: by 2002:a05:600c:1f81:b0:418:5e80:a722 with SMTP id
+ je1-20020a05600c1f8100b004185e80a722mr2224718wmb.24.1713552370303; 
+ Fri, 19 Apr 2024 11:46:10 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  cs18-20020a056000089200b003437799a373sm5108718wrb.83.2024.04.19.11.46.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Apr 2024 11:46:09 -0700 (PDT)
+ Fri, 19 Apr 2024 11:46:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 0/3] target/arm: Make the counter frequency default 1GHz for
- new CPUs, machines
-Date: Fri, 19 Apr 2024 19:46:05 +0100
-Message-Id: <20240419184608.2675213-1-peter.maydell@linaro.org>
+Subject: [PATCH 1/3] hw: Add compat machines for 9.1
+Date: Fri, 19 Apr 2024 19:46:06 +0100
+Message-Id: <20240419184608.2675213-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240419184608.2675213-1-peter.maydell@linaro.org>
+References: <20240419184608.2675213-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,66 +95,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In previous versions of the Arm architecture, the frequency of the
-generic timers as reported in CNTFRQ_EL0 could be any IMPDEF value,
-and for QEMU we picked 62.5MHz, giving a timer tick period of 16ns.
-In Armv8.6, the architecture standardized this frequency to 1GHz.
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Because there is no ID register feature field that indicates whether a
-CPU is v8.6 or that it ought to have this counter frequency, we
-implement this by changing our default CNTFRQ value for all CPUs, with
-exceptions for backwards compatibility:
+Add 9.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
 
- * CPU types which we already implement will retain the old
-   default value. None of these are v8.6 CPUs, so this is
-   architecturally OK.
- * CPUs used in versioned machine types with a version of 9.0
-   or earlier will retain the old default value.
-
-The upshot is that the only CPU type that changes is 'max'; but any
-new type we add in future (whether v8.6 or not) will also get the new
-1GHz default (assuming we spot in code review any attempts to set
-the ARM_FEATURE_BACKCOMPAT_CNTFRQ flag on new CPU types as a result
-of cut-n-paste from an older CPU initfn ;-)).
-
-It remains the case that the machine model can override the default
-value via the 'cntfrq' QOM property (regardless of the CPU type).
-
-Patch 1 is Paolo's "add the new versioned machine types" patch that
-he sent out last month; patch 2 is some preliminary cleanup so that
-we set the default cntfrq value in exactly one place, and patch 3
-is the mechanics to set the default appropriately for the two
-back-compat scenarios.
-
-thanks
--- PMM
-
-Paolo Bonzini (1):
-  hw: Add compat machines for 9.1
-
-Peter Maydell (2):
-  target/arm: Refactor default generic timer frequency handling
-  target/arm: Default to 1GHz cntfrq for 'max' and new CPUs
-
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Acked-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+[PMM: fixed the typos Zhao Liu found in the s390 changes]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
  include/hw/boards.h        |  3 +++
  include/hw/i386/pc.h       |  3 +++
- target/arm/cpu.h           | 11 +++++++++
- target/arm/internals.h     | 15 +++++++++---
- hw/arm/virt.c              | 11 +++++++--
- hw/core/machine.c          |  5 ++++
+ hw/arm/virt.c              | 11 +++++++++--
+ hw/core/machine.c          |  3 +++
  hw/i386/pc.c               |  3 +++
- hw/i386/pc_piix.c          | 17 +++++++++++---
- hw/i386/pc_q35.c           | 14 ++++++++++--
- hw/m68k/virt.c             | 11 +++++++--
- hw/ppc/spapr.c             | 17 +++++++++++---
- hw/s390x/s390-virtio-ccw.c | 14 +++++++++++-
- target/arm/cpu.c           | 47 ++++++++++++++++++++++++++------------
- target/arm/cpu64.c         |  2 ++
- target/arm/helper.c        | 16 ++++++-------
- target/arm/tcg/cpu32.c     |  4 ++++
- target/arm/tcg/cpu64.c     | 18 +++++++++++++++
- 17 files changed, 173 insertions(+), 38 deletions(-)
+ hw/i386/pc_piix.c          | 17 ++++++++++++++---
+ hw/i386/pc_q35.c           | 14 ++++++++++++--
+ hw/m68k/virt.c             | 11 +++++++++--
+ hw/ppc/spapr.c             | 17 ++++++++++++++---
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+ 10 files changed, 83 insertions(+), 13 deletions(-)
 
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 8b8f6d5c00d..50e0cf4278e 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -425,6 +425,9 @@ struct MachineState {
+     } \
+     type_init(machine_initfn##_register_types)
+ 
++extern GlobalProperty hw_compat_9_0[];
++extern const size_t hw_compat_9_0_len;
++
+ extern GlobalProperty hw_compat_8_2[];
+ extern const size_t hw_compat_8_2_len;
+ 
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 27a68071d77..349f79df086 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -198,6 +198,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
+ 
++extern GlobalProperty pc_compat_9_0[];
++extern const size_t pc_compat_9_0_len;
++
+ extern GlobalProperty pc_compat_8_2[];
+ extern const size_t pc_compat_8_2_len;
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index a9a913aeadb..c9119ef3847 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3223,10 +3223,17 @@ static void machvirt_machine_init(void)
+ }
+ type_init(machvirt_machine_init);
+ 
+-static void virt_machine_9_0_options(MachineClass *mc)
++static void virt_machine_9_1_options(MachineClass *mc)
+ {
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(9, 0)
++DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
++
++static void virt_machine_9_0_options(MachineClass *mc)
++{
++    virt_machine_9_1_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++}
++DEFINE_VIRT_MACHINE(9, 0)
+ 
+ static void virt_machine_8_2_options(MachineClass *mc)
+ {
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 37ede0e7d4f..a92bec23147 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -33,6 +33,9 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "audio/audio.h"
+ 
++GlobalProperty hw_compat_9_0[] = {};
++const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
++
+ GlobalProperty hw_compat_8_2[] = {
+     { "migration", "zero-page-detection", "legacy"},
+     { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 5c21b0c4dbf..b0d818b2094 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -78,6 +78,9 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
++GlobalProperty pc_compat_9_0[] = {};
++const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
++
+ GlobalProperty pc_compat_8_2[] = {};
+ const size_t pc_compat_8_2_len = G_N_ELEMENTS(pc_compat_8_2);
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 18ba0766092..8850c49c66a 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -513,13 +513,26 @@ static void pc_i440fx_machine_options(MachineClass *m)
+                                      "Use a different south bridge than PIIX3");
+ }
+ 
+-static void pc_i440fx_9_0_machine_options(MachineClass *m)
++static void pc_i440fx_9_1_machine_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+     m->alias = "pc";
+     m->is_default = true;
+ }
+ 
++DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1", NULL,
++                      pc_i440fx_9_1_machine_options);
++
++static void pc_i440fx_9_0_machine_options(MachineClass *m)
++{
++    pc_i440fx_9_1_machine_options(m);
++    m->alias = NULL;
++    m->is_default = false;
++
++    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
++}
++
+ DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
+                       pc_i440fx_9_0_machine_options);
+ 
+@@ -528,8 +541,6 @@ static void pc_i440fx_8_2_machine_options(MachineClass *m)
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+     pc_i440fx_9_0_machine_options(m);
+-    m->alias = NULL;
+-    m->is_default = false;
+ 
+     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index c7bc8a2041f..6e1180d4b60 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -365,12 +365,23 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_9_0_machine_options(MachineClass *m)
++static void pc_q35_9_1_machine_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+     m->alias = "q35";
+ }
+ 
++DEFINE_Q35_MACHINE(v9_1, "pc-q35-9.1", NULL,
++                   pc_q35_9_1_machine_options);
++
++static void pc_q35_9_0_machine_options(MachineClass *m)
++{
++    pc_q35_9_1_machine_options(m);
++    m->alias = NULL;
++    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
++}
++
+ DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
+                    pc_q35_9_0_machine_options);
+ 
+@@ -378,7 +389,6 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_9_0_machine_options(m);
+-    m->alias = NULL;
+     m->max_cpus = 1024;
+     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index b8e5e102e6b..09bc9bdfefb 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -357,10 +357,17 @@ type_init(virt_machine_register_types)
+     } \
+     type_init(machvirt_machine_##major##_##minor##_init);
+ 
+-static void virt_machine_9_0_options(MachineClass *mc)
++static void virt_machine_9_1_options(MachineClass *mc)
+ {
+ }
+-DEFINE_VIRT_MACHINE(9, 0, true)
++DEFINE_VIRT_MACHINE(9, 1, true)
++
++static void virt_machine_9_0_options(MachineClass *mc)
++{
++    virt_machine_9_1_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++}
++DEFINE_VIRT_MACHINE(9, 0, false)
+ 
+ static void virt_machine_8_2_options(MachineClass *mc)
+ {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index e9bc97fee08..36ada4d0baf 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4806,14 +4806,25 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+     type_init(spapr_machine_register_##suffix)
+ 
+ /*
+- * pseries-9.0
++ * pseries-9.1
+  */
+-static void spapr_machine_9_0_class_options(MachineClass *mc)
++static void spapr_machine_9_1_class_options(MachineClass *mc)
+ {
+     /* Defaults for the latest behaviour inherited from the base class */
+ }
+ 
+-DEFINE_SPAPR_MACHINE(9_0, "9.0", true);
++DEFINE_SPAPR_MACHINE(9_1, "9.1", true);
++
++/*
++ * pseries-9.0
++ */
++static void spapr_machine_9_0_class_options(MachineClass *mc)
++{
++    spapr_machine_9_1_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++}
++
++DEFINE_SPAPR_MACHINE(9_0, "9.0", false);
+ 
+ /*
+  * pseries-8.2
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index b1dcb3857f0..7cebbf6c02a 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -859,14 +859,26 @@ bool css_migration_enabled(void)
+     }                                                                         \
+     type_init(ccw_machine_register_##suffix)
+ 
++static void ccw_machine_9_1_instance_options(MachineState *machine)
++{
++}
++
++static void ccw_machine_9_1_class_options(MachineClass *mc)
++{
++}
++DEFINE_CCW_MACHINE(9_1, "9.1", true);
++
+ static void ccw_machine_9_0_instance_options(MachineState *machine)
+ {
++    ccw_machine_9_1_instance_options(machine);
+ }
+ 
+ static void ccw_machine_9_0_class_options(MachineClass *mc)
+ {
++    ccw_machine_9_1_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+ }
+-DEFINE_CCW_MACHINE(9_0, "9.0", true);
++DEFINE_CCW_MACHINE(9_0, "9.0", false);
+ 
+ static void ccw_machine_8_2_instance_options(MachineState *machine)
+ {
 -- 
 2.34.1
 
