@@ -4,84 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF057C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF60C04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxkLe-00079Y-6O; Fri, 19 Apr 2024 05:15:58 -0400
+	id 1rxkNg-0008Cm-Vc; Fri, 19 Apr 2024 05:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxkLN-00071q-VF
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:15:47 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxkLL-0003tJ-Tb
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:15:41 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-56e1bbdb362so2110021a12.1
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 02:15:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713518136; x=1714122936; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eM6Em04Ss5ln22i1SG+Frrt6JidlwXF8K+KF+gQPcS4=;
- b=GXgcpHs32+0/8O/Oxsu+sGv4RO1NDabOUGErzAEOMh3GjzYy2X9vNvieQQU1a87Oxr
- /yO2/6FYFt+JXt6lirwbYjgZou+gpUHQEP7C2IuTFf+OXnTO2dgRit9hukun/kzhMHyv
- S9YnZnttowRphNPL1KGTaULHKOlAu1En6Fap6dA32HY4aLsSLAfEZ2BdKiSawPVCzWQP
- NiLu5AA7cMaQ0UgNvleDk1laXUybjheig/C3zh9LY3xY3RjKaEFUS5WI1sGbCBp1J/xX
- k105ay6uVEVHJwfxk1AHeXPIJwObxWrHqdisqJ4wmgbToDvOt5dxaHHMWv0oWkFlbtAl
- XPMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713518136; x=1714122936;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eM6Em04Ss5ln22i1SG+Frrt6JidlwXF8K+KF+gQPcS4=;
- b=pTN5b8jsomkS4lvPEM8QDTnx/aYwvSM2moMWzBUDn5ZkxscqJ6mQ4oQWsLIEfUffub
- DGDkN4pYvf4vnGQyrcFNzCLbssI3+246+CqkSkdWnhgsJ8BGjkmcLYWgdZX84NQJ11O2
- BbNjp5hAKn82pZM9tc20nEFUMwHsKscR0M/oecTsDuDlZo++cwcseHMkLdvWF/+hs1pn
- CnCicc80VxF8ovBaX8V/aTKHY3Z7IbL6dLscefQ0Bjxg2D0CLNlCpcbdI2Y6yG39anjM
- XIAtVEQ9fCE0cmuByHiX9On7b3PKUlz4oQFllPSxzXqaMSBFJtum1WP9XaXnvma+9edw
- sDfA==
-X-Gm-Message-State: AOJu0YzwOLA/tI6PL1I4zrO0pbEUf8vFLTwKCS4zvXyxmqnJrloulhki
- v5zJZjG6XdeZ1BNxcijM5EVEWKLxIG7kkKy701J3pZ5tejPOMmUA3Gqa9R89+LI3S3vMsfghOAi
- 53Qk=
-X-Google-Smtp-Source: AGHT+IHLZoXnAlKh6xWv1odAX+RLt1nPoTB9Qkt8sXGzkG1xjY/57yU67eeQP0gZDRuKMN/4E3riZQ==
-X-Received: by 2002:a17:906:2819:b0:a52:2c4f:7957 with SMTP id
- r25-20020a170906281900b00a522c4f7957mr1314373ejc.66.1713518136252; 
- Fri, 19 Apr 2024 02:15:36 -0700 (PDT)
-Received: from [192.168.235.175] ([176.176.143.233])
- by smtp.gmail.com with ESMTPSA id
- e7-20020a170906c00700b00a51bf97e63esm1929181ejz.190.2024.04.19.02.15.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Apr 2024 02:15:35 -0700 (PDT)
-Message-ID: <d0f6628e-fbc3-4e82-a08e-cb72f4585e8a@linaro.org>
-Date: Fri, 19 Apr 2024 11:15:33 +0200
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rxkNb-0008Bt-82; Fri, 19 Apr 2024 05:17:59 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rxkNZ-0004B5-9b; Fri, 19 Apr 2024 05:17:58 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43J9EuSt018664; Fri, 19 Apr 2024 09:17:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Mlu+qLuym7zPjp3367tjSQ7Zhn9dbqTt5gPP/xG30zQ=;
+ b=RNj2WpMdhlYo57eXrBwvsFObbQZYSsllOvJXRVRv/lQy7NPzIjZhsaBqzjPEvU5KXkTv
+ walFah9IFHRXohJCjuvpebqYwpE0+RiqezzeW0oB+MgK2km7bH07L8ARr5f0u4uoDcG4
+ ViEQ99NnzMRpWcQNlhRz8+nb/i/tkoKBNNsU6BhWrCXu4BWYIpz1+/dt91Y1ENo/wOK1
+ xcgAkwGU9WLFFt4eBS0OUA8ybI3DxpNlRpDQQI3jMDY0x3dU5rAVqSmiBBo4v2XG/yKc
+ gZ7Aqu3b95uAh1aibaTyyQezJfOTqgGFuNl4wGuIVuS2X4ckrv35BMYcVqWNdYcLiDTy gg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xknsjg08g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:17:54 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43J9HriB023797;
+ Fri, 19 Apr 2024 09:17:53 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xknsjg08f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:17:53 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43J8cNUC022019; Fri, 19 Apr 2024 09:17:53 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xkbk92ra8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:17:53 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43J9HleN42795416
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Apr 2024 09:17:49 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2966820040;
+ Fri, 19 Apr 2024 09:17:47 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 956042004B;
+ Fri, 19 Apr 2024 09:17:45 +0000 (GMT)
+Received: from [9.171.89.59] (unknown [9.171.89.59])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 19 Apr 2024 09:17:45 +0000 (GMT)
+Message-ID: <02e342b0-2e25-4b77-b932-611b06576ed5@linux.vnet.ibm.com>
+Date: Fri, 19 Apr 2024 14:47:39 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: Remove KVM stubs in cpu_models.h
-To: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-s390x@nongnu.org
-References: <20240419090631.48055-1-philmd@linaro.org>
+Subject: Re: [PATCH 2/8] target/ppc: Make divw[u] handler method decodetree
+ compatible.
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240419090631.48055-1-philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240416063927.99428-1-rathc@linux.ibm.com>
+ <20240416063927.99428-3-rathc@linux.ibm.com>
+ <be3dd6e4-2e9f-4a75-a744-327fb5f8e262@linaro.org>
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <be3dd6e4-2e9f-4a75-a744-327fb5f8e262@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -CNB9WZ_DU_GeJfmCDZYcR1yd19jtkj7
+X-Proofpoint-GUID: S7mGG3DuznqfYS-rdsZxNcDPP-OxGlaz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-19_06,2024-04-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ phishscore=0 suspectscore=0 mlxscore=0 malwarescore=0 spamscore=0
+ adultscore=0 clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=729 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404190068
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,21 +119,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/4/24 11:06, Philippe Mathieu-Daudé wrote:
-> Since the calls are elided when KVM is not available,
-> we can remove the stubs (which are never compiled).
-> 
-> Inspired-by: Thomas Huth <thuth@redhat.com>>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> RFC: untested =)
+Hi Richard,
 
-Now tested!
+On 4/16/24 23:27, Richard Henderson wrote:
+> On 4/15/24 23:39, Chinmay Rath wrote:
+>> The handler methods for divw[u] instructions internally use 
+>> Rc(ctx->opcode),
+>> for extraction of Rc field of instructions, which poses a problem if 
+>> we move
+>> the above said instructions to decodetree, as the ctx->opcode field 
+>> is not
+>> popluated in decodetree. Hence, making it decodetree compatible, so 
+>> that the
+>> mentioned insns can be safely move to decodetree specs.
+>>
+>> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+>> ---
+>>   target/ppc/translate.c | 9 +++++----
+>>   1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+Thank you.
+>> +static inline void gen_op_arith_divw(DisasContext *ctx, TCGv ret,
+>> +                                     TCGv arg1, TCGv arg2, bool sign,
+>> +                                     bool compute_ov, bool compute_rc0)
+>
+> Could drop the inline at the same time.
+> Let the compiler decide.
+>
+I kept inline as is, as there are multiple gen_op_* routines with inline and
+if necessary we could consider removing inline for all of them together 
+in a separate patch :
 
-Inspired by
-> https://lore.kernel.org/qemu-devel/0ae778e1-b4aa-4021-bdbc-4c6a663db41a@redhat.com/
-> ---
->   target/s390x/cpu_models.h | 15 ---------------
->   1 file changed, 15 deletions(-)
+grep inline target/ppc/translate.c | grep gen_op
+
+static inline void gen_op_cmp(TCGv arg0, TCGv arg1, int s, int crf)
+static inline void gen_op_cmpi(TCGv arg0, target_ulong arg1, int s, int crf)
+static inline void gen_op_cmp32(TCGv arg0, TCGv arg1, int s, int crf)
+static inline void gen_op_cmpi32(TCGv arg0, target_ulong arg1, int s, 
+int crf)
+static inline void gen_op_arith_compute_ov(DisasContext *ctx, TCGv arg0,
+static inline void gen_op_arith_compute_ca32(DisasContext *ctx,
+static inline void gen_op_arith_add(DisasContext *ctx, TCGv ret, TCGv arg1,
+static inline void gen_op_arith_divw(DisasContext *ctx, TCGv ret,
+static inline void gen_op_arith_divd(DisasContext *ctx, TCGv ret,
+static inline void gen_op_arith_modw(DisasContext *ctx, TCGv ret, TCGv arg1,
+static inline void gen_op_arith_modd(DisasContext *ctx, TCGv ret, TCGv arg1,
+static inline void gen_op_arith_subf(DisasContext *ctx, TCGv ret, TCGv arg1,
+static inline void gen_op_mfspr(DisasContext *ctx)
+
+Thanks,
+Chinmay
+>
+> r~
 
 
