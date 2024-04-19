@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B067CC04FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A72C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxg1Z-0007ed-M7; Fri, 19 Apr 2024 00:38:57 -0400
+	id 1rxg1W-0007aH-Il; Fri, 19 Apr 2024 00:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1Q-0007WL-Dg
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1L-0007UO-CO
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1O-0004FH-NT
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1J-0004EN-LH
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713501526;
+ s=mimecast20190719; t=1713501521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5abJCU0h5aF3vdT6HE6N8xKGQV3SNeJnkpXl7YahGbw=;
- b=gd4g84OjNxJFhF15NkycTENp/9EnYtpATFBqnFRv0+FJ9Pib1IiH2M9MYM4UDUq3Y2dHpj
- Uj4O8MeArnSX37BmPcPfPfTE74jER9xmsnRIoHnHGuk7CJD0tob1/4KQgEjIRxH2wvbLhN
- Emes/eZjwpcbpjzmj5jpMWbPdZbZtiw=
+ bh=VGse/02Q0gYpHJXH+gJ0nNA2UseR1liYR+1bHBVp6ag=;
+ b=JxSQUJJaZC8JxkXDDoX4rf3wcPdIczC5koFJpKgfhJ1I01nNHJLOhfqvlADewUnekN2BwN
+ EAl6XX30ILOSQRHYeg5rFOj/+XyXHtWjyO49BYrhbX5lvNSpydhRCbVDEh0cv5hkWUC0pU
+ NSc/8z1CuZB2nO/2NTE+XDKh6+9z0iM=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-169-Qv6s_TVfNCiNXHLVTS8sbQ-1; Fri, 19 Apr 2024 00:38:42 -0400
-X-MC-Unique: Qv6s_TVfNCiNXHLVTS8sbQ-1
+ us-mta-295-ghUg9HZkPbySjCO8vzBQuw-1; Fri, 19 Apr 2024 00:38:39 -0400
+X-MC-Unique: ghUg9HZkPbySjCO8vzBQuw-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 035B918065AF;
- Fri, 19 Apr 2024 04:38:42 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 13B22811002;
+ Fri, 19 Apr 2024 04:38:39 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.7])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4E8C540829C5;
- Fri, 19 Apr 2024 04:38:41 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 62E3740829C3;
+ Fri, 19 Apr 2024 04:38:38 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Harmonie Snow <harmonie@gmail.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH 27/27] docs/qapi-domain: add CSS styling
-Date: Fri, 19 Apr 2024 00:38:15 -0400
-Message-ID: <20240419043820.178731-28-jsnow@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: [PATCH 23/27] docs/qapi-domain: RFC patch - delete malformed field
+ lists
+Date: Fri, 19 Apr 2024 00:38:11 -0400
+Message-ID: <20240419043820.178731-24-jsnow@redhat.com>
 In-Reply-To: <20240419043820.178731-1-jsnow@redhat.com>
 References: <20240419043820.178731-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,91 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harmonie Snow <harmonie@gmail.com>
+Cleanup of the last patch to fix the build before closing out this RFC
+series.
 
-Improve the general look and feel of generated QAPI docs.
-
-Attempt to limit line lengths to offer a more comfortable measure on
-maximized windows, and improve some margin and spacing for field lists.
-
-Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx-static/theme_overrides.css | 50 ++++++++++++++++++++++++--
- 1 file changed, 48 insertions(+), 2 deletions(-)
+ docs/qapi/index.rst | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
-index b239a762a9e..9a58cf86b5c 100644
---- a/docs/sphinx-static/theme_overrides.css
-+++ b/docs/sphinx-static/theme_overrides.css
-@@ -18,8 +18,8 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
- 
- .rst-content dl:not(.docutils) dt {
-     border-top: none;
--    border-left: solid 3px #ccc;
--    background-color: #f0f0f0;
-+    border-left: solid 5px #bcc6d2;
-+    background-color: #eaedf1;
-     color: black;
- }
- 
-@@ -162,6 +162,18 @@ div[class^="highlight"] pre {
- 
- /* QAPI domain theming */
- 
-+/* most content in a qapi object definition should not eclipse about
-+   80ch, but nested field lists are explicitly exempt due to their
-+   two-column nature */
-+.qapi dd *:not(dl) {
-+    max-width: 80ch;
-+}
-+
-+/* but the content column itself should still be less than ~80ch. */
-+.qapi .field-list dd {
-+    max-width: 80ch;
-+}
-+
- .qapi-infopips {
-     margin-bottom: 1em;
- }
-@@ -201,3 +213,37 @@ div[class^="highlight"] pre {
-     border-radius: 15px;
-     margin: 5px;
- }
-+
-+/* code blocks */
-+.qapi div[class^="highlight"] {
-+    width: fit-content;
-+    background-color: #fffafd;
-+    border: 2px solid #ffe1f3;
-+}
-+
-+/* note, warning, etc. */
-+.qapi .admonition {
-+    width: fit-content;
-+}
-+
-+/* pad the top of the field-list so the text doesn't start directly at
-+   the top border; primarily for the field list labels, but adjust the
-+   field bodies as well for parity. */
-+dl.field-list > dt:first-of-type, dl.field-list > dd:first-of-type {
-+    padding-top: 0.3em;
-+}
-+
-+dl.field-list > dt:last-of-type, dl.field-list > dd:last-of-type {
-+    padding-bottom: 0.3em;
-+}
-+
-+/* pad the field list labels so they don't crash into the border */
-+dl.field-list > dt {
-+    padding-left: 0.5em;
-+    padding-right: 0.5em;
-+}
-+
-+/* Add a little padding between field list sections */
-+dl.field-list > dd:not(:last-child) {
-+    padding-bottom: 1em;
-+}
+diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
+index ef58dfc4bcd..8352a27d4a5 100644
+--- a/docs/qapi/index.rst
++++ b/docs/qapi/index.rst
+@@ -129,10 +129,6 @@ Explicit cross-referencing syntax for QAPI modules is available with
+       argument values. It's very temperamental.
+    :return SomeTypeName: An esoteric collection of mystical nonsense to
+       both confound and delight.
+-   :arg: this is malformed.
+-   :memb: this is malformed and unrecognized.
+-   :choice type name: This is unrecognized.
+-   :errors FooError: Also malformed.
+    :example: This isn't a "semantic" field, but it's been added to the
+       allowed field names list. you can use whatever field names you'd
+       like; but to prevent accidental typos, there is an allow list of
 -- 
 2.44.0
 
