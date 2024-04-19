@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C5DBC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 248A3C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxtD5-0006lp-Ne; Fri, 19 Apr 2024 14:43:43 -0400
+	id 1rxtFZ-00086V-V4; Fri, 19 Apr 2024 14:46:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rxtD3-0006k4-Bp
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:43:41 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rxtFX-00085Q-6K
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:46:15 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rxtD1-0000Dr-FX
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:43:41 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6ecec796323so2432939b3a.3
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 11:43:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rxtFT-00011c-H1
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:46:14 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-344047ac7e4so2125700f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 11:46:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713552217; x=1714157017; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=y3SGJdTiCbneZQ9xF1P/4L3glY2bSj97aScmfRfKL+g=;
- b=drWq6KajwKu2xvgDhJhsk822jmZT8bGCd/BUwuR+1VDBuoFOr2r+35sNImOju4gIos
- SgJxSvCYzk+rd5K2lcCI3CVQ8MNL/dkPqXg+WHFcO8jPHV6DSkM4wfnl0fJQmLnrfFA2
- u3+N+FZtEkieWeOfMZEKzEt6WIy8rnIHisxm8ZjYO14cd3LvbVQEFsCX6u+DF4ma8YWn
- EyrylH9Z+sTeWO0cEmaiJ92B+pjHG+b7Z987FoPsOGAw18/8LlNeHVsTNhIZ7Qs3b645
- 3D2iPrjJboQ6Xsgpbd7BT131Pr0YPtLpmO9Nl2tzk71pM3lz2+iHgJTAefL2Io4GauH+
- /SuQ==
+ d=linaro.org; s=google; t=1713552370; x=1714157170; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=djhs4NFUqKq4Lo08iH8CrnfsBuX4hY+1rW2X0lQGRRM=;
+ b=vqY+95Uoub2w03NMnjQtV/pfUMsdDCnomLESRDt9DWgJsjJDGj69FfajHXsIK/dVSr
+ zVNKC3zRzGSVVUG5fPkAXI78r9VTM+OzozajFIJin7G6TuGPzqT5XbDepvKD9vz07jGS
+ guW6A9CRsQfgYlXxDWWQBtpzRuKHwybK02PTZLL2zpQtQO3nGXP6T7QE2VAJ3hWP+hfC
+ ocAAChqL2ZNrHNdkHVOPakGp019TRhYLC/DE5mp0+XNCxmvZl+Ip5KyL0OlMSwCcazc4
+ V3hX/S+UI73t2u+PKO519GsAvm991F4aDdxRax8/hciCzw3J7leOf3jsMtq5FkVuqcjt
+ LiaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713552217; x=1714157017;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y3SGJdTiCbneZQ9xF1P/4L3glY2bSj97aScmfRfKL+g=;
- b=sQNeEy4cgWJfVQpOkmoQ/V9S033k1/saSEPOwsyRB3zvin8eKDkv86LzTiL4Y2Fg5a
- Acq2HLSTAo1ExdzNT6L5oMxf3rqjLjFyLOZus7jihdQoHPLGr75C2ZxQ5z+YYMq5F78z
- 2EEHHUUQnaagZq683TPyzXSiD1z4WDVfATC+PmGLQYTsWgJwMn0A2VNbRBjgWxIBFsDK
- iPW8GiQ5kjFh9cu5rBXRho2O9CgZEA/9DFan4PYq38Fij7zoFFBRN8Flyh9/Dq6UL79c
- AdIyK5rVlnZ5jVTHsZekZ97Ht5YYkW5S/TqQFj56YVKsjwNinYGfzLmF7XSIMiqe/Kjp
- 11sA==
+ d=1e100.net; s=20230601; t=1713552370; x=1714157170;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=djhs4NFUqKq4Lo08iH8CrnfsBuX4hY+1rW2X0lQGRRM=;
+ b=uViN6YS15zKGfoQYGuW8twitRx3T7A0fx/xji3UM8OOpHfZtS6a30k7Aae29JVHkYg
+ biyX2drMdmV3vj2/ekRc3MUeT0jzYNTut/4Pa8ep5C6Z0p5vBWvIUwTePRQmGS//UwAb
+ h+9/lBw6jyuWGsexRIq7X4mq6VrEfv3s0boWrfVN1kkDBM1zAVcX93FwRon4hjhbax5n
+ 5/jtewPEnJRm8Aw0BPj8bpAOqRxBKpTi+m7eOWO3Yr5DcwBp32qIxPMKuyfE2hYIbE9W
+ lsGbvjCLhNVYmaYCrUNUZCBMtabVprZCG+qk0jttqlw5BZ/EnuN6TrexJA7PTVyWpIHR
+ Pumg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnUb9Uv3CIgTWiUyX8/b6kGyFZ0tcNm7Z/WsR/QRRSMDX4ukbBIHmiP8oK1npgJLGbhjLKIyGhJE6kCAy9DcsXIAVaOy4=
-X-Gm-Message-State: AOJu0YxqkLEL10VRiOVcwlWvcBMoIxXt1dWoPvXLcDDfAkpkpt3pK0X8
- vJ3Uj+xcyIjgoCsmqdB/rV9nwPflfCk5Dl31jYrV/VeLVoGp51jd
-X-Google-Smtp-Source: AGHT+IEt0rYHHfLtoYwUigOXzCd9ynf0M/YgxLHlr/sd4dfyIGeWRMQ4jzueIoH7XMv3/wp0wSy0og==
-X-Received: by 2002:a05:6a20:551a:b0:1a7:7d2f:6c01 with SMTP id
- ko26-20020a056a20551a00b001a77d2f6c01mr2992182pzb.48.1713552217279; 
- Fri, 19 Apr 2024 11:43:37 -0700 (PDT)
-Received: from debian ([2601:641:300:14de:df9a:a0db:2922:7fe6])
+ AJvYcCUgmLjwyksY6Y+KgmkIFgBCqQt9IbwWBndZGpOO65wYsybj6W6AquBQAmJddlYjp51TIcoK7YAKnHQO1sdg27j0xqMmfhU=
+X-Gm-Message-State: AOJu0YxJLXf8DmNeNeSzJ0oZ1IIym2QypH5XMjM3yrHlAYqvxYlh3HUG
+ VWyouSYQ0rS0Ys7mUDNduNFzXtsXJsnk1iZpq0/W87UhfgYR9PeO8hywikk+KnP7iQW+AaFsdFB
+ 8
+X-Google-Smtp-Source: AGHT+IFXopL9amoP5EH0zmuIYgBReT8lnFxUFS7XCbnOMkE5EGQH9tFUYqZTwjquwA3PU+o6OQepyQ==
+X-Received: by 2002:a05:6000:156b:b0:347:2b42:a39c with SMTP id
+ 11-20020a056000156b00b003472b42a39cmr2955387wrz.29.1713552369828; 
+ Fri, 19 Apr 2024 11:46:09 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n56-20020a056a000d7800b006e6b7124b33sm3551497pfv.209.2024.04.19.11.43.33
+ cs18-20020a056000089200b003437799a373sm5108718wrb.83.2024.04.19.11.46.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Apr 2024 11:43:36 -0700 (PDT)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Fri, 19 Apr 2024 11:43:14 -0700
-To: Gregory Price <gregory.price@memverge.com>
-Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- linux-cxl@vger.kernel.org, ira.weiny@intel.com,
- dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com,
- jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
- fan.ni@samsung.com
-Subject: Re: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
-Message-ID: <ZiK7QtVxutwDys4K@debian>
-References: <20240418232902.583744-1-fan.ni@samsung.com>
- <ZiK25Log7LmtBffa@memverge.com>
+ Fri, 19 Apr 2024 11:46:09 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 0/3] target/arm: Make the counter frequency default 1GHz for
+ new CPUs, machines
+Date: Fri, 19 Apr 2024 19:46:05 +0100
+Message-Id: <20240419184608.2675213-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZiK25Log7LmtBffa@memverge.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,99 +93,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 19, 2024 at 02:24:36PM -0400, Gregory Price wrote:
-> On Thu, Apr 18, 2024 at 04:10:51PM -0700, nifan.cxl@gmail.com wrote:
-> > A git tree of this series can be found here (with one extra commit on top
-> > for printing out accepted/pending extent list): 
-> > https://github.com/moking/qemu/tree/dcd-v7
-> > 
-> > v6->v7:
-> > 
-> > 1. Fixed the dvsec range register issue mentioned in the the cover letter in v6.
-> >    Only relevant bits are set to mark the device ready (Patch 6). (Jonathan)
-> > 2. Moved the if statement in cxl_setup_memory from Patch 6 to Patch 4. (Jonathan)
-> > 3. Used MIN instead of if statement to get record_count in Patch 7. (Jonathan)
-> > 4. Added "Reviewed-by" tag to Patch 7.
-> > 5. Modified cxl_dc_extent_release_dry_run so the updated extent list can be
-> >    reused in cmd_dcd_release_dyn_cap to simplify the process in Patch 8. (Jørgen) 
-> > 6. Added comments to indicate further "TODO" items in cmd_dcd_add_dyn_cap_rsp.
-> >     (Jonathan)
-> > 7. Avoided irrelevant code reformat in Patch 8. (Jonathan)
-> > 8. Modified QMP interfaces for adding/releasing DC extents to allow passing
-> >    tags, selection policy, flags in the interface. (Jonathan, Gregory)
-> > 9. Redesigned the pending list so extents in the same requests are grouped
-> >     together. A new data structure is introduced to represent "extent group"
-> >     in pending list.  (Jonathan)
-> > 10. Added support in QMP interface for "More" flag. 
-> > 11. Check "Forced removal" flag for release request and not let it pass through.
-> > 12. Removed the dynamic capacity log type from CxlEventLog definition in cxl.json
-> >    to avoid the side effect it may introduce to inject error to DC event log.
-> >    (Jonathan)
-> > 13. Hard coded the event log type to dynamic capacity event log in QMP
-> >     interfaces. (Jonathan)
-> > 14. Adding space in between "-1]". (Jonathan)
-> > 15. Some minor comment fixes.
-> > 
-> > The code is tested with similar setup and has passed similar tests as listed
-> > in the cover letter of v5[1] and v6[2].
-> > Also, the code is tested with the latest DCD kernel patchset[3].
-> > 
-> > [1] Qemu DCD patchset v5: https://lore.kernel.org/linux-cxl/20240304194331.1586191-1-nifan.cxl@gmail.com/T/#t
-> > [2] Qemu DCD patchset v6: https://lore.kernel.org/linux-cxl/20240325190339.696686-1-nifan.cxl@gmail.com/T/#t
-> > [3] DCD kernel patches: https://lore.kernel.org/linux-cxl/20240324-dcd-type2-upstream-v1-0-b7b00d623625@intel.com/T/#m11c571e21c4fe17c7d04ec5c2c7bc7cbf2cd07e3
-> >
-> 
-> added review to all patches, will hopefully be able to add a Tested-by
-> tag early next week, along with a v1 RFC for MHD bit-tracking.
-> 
-> We've been testing v5/v6 for a bit, so I expect as soon as we get the
-> MHD code ported over to v7 i'll ship a tested-by tag pretty quick.
-> 
-> The super-set release will complicate a few things but this doesn't
-> look like a blocker on our end, just a change to how we track bits in a
-> shared bit/bytemap.
-> 
+In previous versions of the Arm architecture, the frequency of the
+generic timers as reported in CNTFRQ_EL0 could be any IMPDEF value,
+and for QEMU we picked 62.5MHz, giving a timer tick period of 16ns.
+In Armv8.6, the architecture standardized this frequency to 1GHz.
 
-Hi Gregory,
-Thanks for reviewing the patches so quickly. 
+Because there is no ID register feature field that indicates whether a
+CPU is v8.6 or that it ought to have this counter frequency, we
+implement this by changing our default CNTFRQ value for all CPUs, with
+exceptions for backwards compatibility:
 
-No pressure, but look forward to your MHD work. :)
+ * CPU types which we already implement will retain the old
+   default value. None of these are v8.6 CPUs, so this is
+   architecturally OK.
+ * CPUs used in versioned machine types with a version of 9.0
+   or earlier will retain the old default value.
 
-Fan
+The upshot is that the only CPU type that changes is 'max'; but any
+new type we add in future (whether v8.6 or not) will also get the new
+1GHz default (assuming we spot in code review any attempts to set
+the ARM_FEATURE_BACKCOMPAT_CNTFRQ flag on new CPU types as a result
+of cut-n-paste from an older CPU initfn ;-)).
 
-> > 
-> > Fan Ni (12):
-> >   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
-> >     payload of identify memory device command
-> >   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
-> >     and mailbox command support
-> >   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
-> >     type3 memory devices
-> >   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
-> >     devices
-> >   hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
-> >     size instead of mr as argument
-> >   hw/mem/cxl_type3: Add host backend and address space handling for DC
-> >     regions
-> >   hw/mem/cxl_type3: Add DC extent list representative and get DC extent
-> >     list mailbox support
-> >   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
-> >     dynamic capacity response
-> >   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
-> >     extents
-> >   hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
-> >   hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
-> >   hw/mem/cxl_type3: Allow to release extent superset in QMP interface
-> > 
-> >  hw/cxl/cxl-mailbox-utils.c  | 620 ++++++++++++++++++++++++++++++++++-
-> >  hw/mem/cxl_type3.c          | 633 +++++++++++++++++++++++++++++++++---
-> >  hw/mem/cxl_type3_stubs.c    |  20 ++
-> >  include/hw/cxl/cxl_device.h |  81 ++++-
-> >  include/hw/cxl/cxl_events.h |  18 +
-> >  qapi/cxl.json               |  69 ++++
-> >  6 files changed, 1396 insertions(+), 45 deletions(-)
-> > 
-> > -- 
-> > 2.43.0
-> > 
+It remains the case that the machine model can override the default
+value via the 'cntfrq' QOM property (regardless of the CPU type).
+
+Patch 1 is Paolo's "add the new versioned machine types" patch that
+he sent out last month; patch 2 is some preliminary cleanup so that
+we set the default cntfrq value in exactly one place, and patch 3
+is the mechanics to set the default appropriately for the two
+back-compat scenarios.
+
+thanks
+-- PMM
+
+Paolo Bonzini (1):
+  hw: Add compat machines for 9.1
+
+Peter Maydell (2):
+  target/arm: Refactor default generic timer frequency handling
+  target/arm: Default to 1GHz cntfrq for 'max' and new CPUs
+
+ include/hw/boards.h        |  3 +++
+ include/hw/i386/pc.h       |  3 +++
+ target/arm/cpu.h           | 11 +++++++++
+ target/arm/internals.h     | 15 +++++++++---
+ hw/arm/virt.c              | 11 +++++++--
+ hw/core/machine.c          |  5 ++++
+ hw/i386/pc.c               |  3 +++
+ hw/i386/pc_piix.c          | 17 +++++++++++---
+ hw/i386/pc_q35.c           | 14 ++++++++++--
+ hw/m68k/virt.c             | 11 +++++++--
+ hw/ppc/spapr.c             | 17 +++++++++++---
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++-
+ target/arm/cpu.c           | 47 ++++++++++++++++++++++++++------------
+ target/arm/cpu64.c         |  2 ++
+ target/arm/helper.c        | 16 ++++++-------
+ target/arm/tcg/cpu32.c     |  4 ++++
+ target/arm/tcg/cpu64.c     | 18 +++++++++++++++
+ 17 files changed, 173 insertions(+), 38 deletions(-)
+
+-- 
+2.34.1
+
 
