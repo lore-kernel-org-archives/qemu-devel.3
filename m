@@ -4,87 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61414C04FF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Apr 2024 23:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67EC6C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 03:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxbDg-0003hJ-Vj; Thu, 18 Apr 2024 19:31:09 -0400
+	id 1rxfEy-0006N0-1i; Thu, 18 Apr 2024 23:48:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rxbDM-0003AQ-V0
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 19:30:58 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rxbDI-0005wA-7J
- for qemu-devel@nongnu.org; Thu, 18 Apr 2024 19:30:47 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6ed0e9ccca1so1465490b3a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 16:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713483042; x=1714087842; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KdtJQ2//BvaL+ED8X5UWARoz6dYMy43pJ3SbcFIRv9I=;
- b=EgH+/cmaSFRkdqukNxTET0//HAFZdb90phY+af7ut5dy8syHxw/gAps1mOEr4tPMOP
- hzmUDnaCTCW4D5V+wc4nHBJKloyyKhhmYukpQdqw0mmAEpwMGT5ZS9OVM+YXgZHpuieU
- 2qFISI+StyInxG2uXbvpe0P5wtrl//EkYRyFqWcXZSJFKGI4WBz8TOfwLUKv1QNn6uyr
- Dmra5yDTYz5tnfZoTdiaSkO6dYpahh2qXTRmnwaq+VvkA6GbYXEU5/3epqaWoKgbe+X7
- brHZk/X629B7RzrbDZmhVx6y9EXmAHrVQZSo0WLxxmG+9UA1xvNYN7bvZRdcfqHBtQ6x
- 5Cdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713483042; x=1714087842;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KdtJQ2//BvaL+ED8X5UWARoz6dYMy43pJ3SbcFIRv9I=;
- b=cuNRzSLstxUZ6lqW/Kzv2SGWjE0HR78qeAMnY6C0NhHmwxt3rCXwLnS7jc5kSUJL3G
- srb6MuYVEfOVn6C3ua5zYLUjXcJxjz+e8AU4g71vne452SbX1W6BovA40LN6iC4YDLDS
- JO6MuAzH0XXSS82p6+9mGBp9z3hWKynIxVM16QejhQ0YCl3DY/YHVz6OMet5Gjhor1IQ
- DOxXdfSC57ZLmfGCahNJpWeHJewgPpultdTQCPXOS5P9nWf3Hj6cOYPY1CM3pPKMM9KQ
- +XV8+3mhHaupiLJ//MfTBK35iTYKfiCBRiX3TWleM/e+YXkvhu/UW1RWsrlZt6PP3y+x
- VNbA==
-X-Gm-Message-State: AOJu0Yyx80UKbHrbrU99K4EO4Nmug3RuxgPgzooL62iM6TT7RKMVexSA
- Kdw4MgzyppfRHG0GjLFczXXwXPsPxNyGeYVGB7cyA1g9fW09+ELIi+KiCQ==
-X-Google-Smtp-Source: AGHT+IHGuUAdd1A/hFHKB74AL5T6aGZ9tFOxeEB/HZhO5eI3UqC99l2TIAslMMUB9EHdcx6813y6bg==
-X-Received: by 2002:a62:81c6:0:b0:6f0:c78f:75e1 with SMTP id
- t189-20020a6281c6000000b006f0c78f75e1mr498855pfd.0.1713483041813; 
- Thu, 18 Apr 2024 16:30:41 -0700 (PDT)
-Received: from localhost.localdomain ([2601:641:300:14de:ed8b:f40f:7543:e9ea])
- by smtp.gmail.com with ESMTPSA id
- h3-20020a056a00230300b006e6be006637sm2040783pfh.135.2024.04.18.16.30.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Apr 2024 16:30:41 -0700 (PDT)
-From: nifan.cxl@gmail.com
-X-Google-Original-From: fan.ni@samsung.com
-To: qemu-devel@nongnu.org
-Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
- gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
- nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
- wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v7 12/12] hw/mem/cxl_type3: Allow to release extent superset
- in QMP interface
-Date: Thu, 18 Apr 2024 16:11:03 -0700
-Message-ID: <20240418232902.583744-13-fan.ni@samsung.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240418232902.583744-1-fan.ni@samsung.com>
-References: <20240418232902.583744-1-fan.ni@samsung.com>
+ (Exim 4.90_1) (envelope-from <jiangzw@tecorigin.com>)
+ id 1rxfEw-0006Mq-DU
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 23:48:42 -0400
+Received: from out28-52.mail.aliyun.com ([115.124.28.52])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiangzw@tecorigin.com>)
+ id 1rxfEu-0004Em-99
+ for qemu-devel@nongnu.org; Thu, 18 Apr 2024 23:48:42 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.08387199|-1; CH=green;
+ DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.00814468-0.00040141-0.991454;
+ FP=0|0|0|0|0|-1|-1|-1; HT=ay29a033018047188; MF=jiangzw@tecorigin.com; NM=1;
+ PH=DW; RN=3; RT=3; SR=0; TI=W4_0.2.3_21200A17_1713497077835_o7001c51n; 
+Received: from WS-web
+ (jiangzw@tecorigin.com[W4_0.2.3_21200A17_1713497077835_o7001c51n]) at Fri,
+ 19 Apr 2024 11:48:29 +0800
+Date: Fri, 19 Apr 2024 11:48:29 +0800
+From: "=?UTF-8?B?5aec5pm65Lyf?=" <jiangzw@tecorigin.com>
+To: "Richard Henderson" <richard.henderson@linaro.org>,
+ "qemu-devel" <qemu-devel@nongnu.org>
+Cc: "pbonzini" <pbonzini@redhat.com>
+Message-ID: <19458f9d-5833-418a-8665-80ab786102d7.jiangzw@tecorigin.com>
+Subject: =?UTF-8?B?5Zue5aSN77yaW1BBVENIXSB0Y2c6IEZpeCB0aGUgb3ZlcmZsb3cgaW4gaW5kZXhpbmcgdGNn?=
+ =?UTF-8?B?X2N0eC0+dGVtcHM=?=
+X-Mailer: [Alimail-Mailagent][W4_0.2.3][null][Chrome]
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+x-aliyun-im-through: {"mailThroughImNew":true}
+References: <7c3b9a13-b503-47dc-ae02-ac9da8142605@linaro.org>
+x-aliyun-mail-creator: W4_0.2.3_null_13aTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzkxLjAuNDQ3Mi4xNjQgU2FmYXJpLzUzNy4zNiBkaW5ndGFsay13aW4vMS4wLjAgbncoMC4xNC43KSBEaW5nVGFsayg3LjUuMTEtUmVsZWFzZS4zMTc5MTA2KSBNb2pvLzEuMC4wIE5hdGl2ZSBBcHBUeXBlKHJlbGVhc2UpIENoYW5uZWwvMjAxMjAwIEFyY2hpdGVjdHVyZS94ODZfNjQ=sa
+In-Reply-To: <7c3b9a13-b503-47dc-ae02-ac9da8142605@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=115.124.28.52; envelope-from=jiangzw@tecorigin.com;
+ helo=out28-52.mail.aliyun.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,38 +63,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: =?UTF-8?B?5aec5pm65Lyf?= <jiangzw@tecorigin.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
-
-Before the change, the QMP interface used for add/release DC extents
-only allows to release an extent whose DPA range is contained by a single
-accepted extent in the device.
-
-With the change, we relax the constraints.  As long as the DPA range of
-the extent is covered by accepted extents, we allow the release.
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
----
- hw/mem/cxl_type3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index a3e1a5de25..9e725647f1 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1941,7 +1941,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-                            "cannot release extent with pending DPA range");
-                 return;
-             }
--            if (!cxl_extents_contains_dpa_range(&dcd->dc.extents, dpa, len)) {
-+            if (!ct3_test_region_block_backed(dcd, dpa, len)) {
-                 error_setg(errp,
-                            "cannot release extent with non-existing DPA range");
-                 return;
--- 
-2.43.0
-
+PiBPbiA0LzE4LzI0IDAzOjI3LCBaaGl3ZWkgSmlhbmcgd3JvdGU6Cj4gPiBTb21ldGltZXMsIHdo
+ZW4gdGhlIGFkZHJlc3Mgb2YgdGhlIHBhc3NlZCBUQ0dUZW1wICp0cyB2YXJpYWJsZSBpcyB0aGUg
+c2FtZSBhcyB0Y2dfY3R4LAo+IAo+IFBhcmRvbj/CoCBXaGVuIHdvdWxkIFRDR1RlbXAgKnRzID09
+IFRDR0NvbnRleHQgKnRjZ19jdHg/Cj4gCj4gCj4gPiB0aGUgaW5kZXggY2FsY3VsYXRlZCBpbiB0
+aGUgdGVtcF9pZHggZnVuY3Rpb24sIGkuZS4sIHRzIC0gdGNnX2N0eC0+dGVtcHMsCj4gPiBjYW4g
+cmVzdWx0IGluIGEgcGFydGljdWxhcmx5IGxhcmdlIHZhbHVlLCBjYXVzaW5nIG92ZXJmbG93IGlu
+IHRoZSBzdWJzZXF1ZW50IGFycmF5IGFjY2Vzcy4KPiAKPiBPciwgYXNzZXJ0Ogo+IAo+IHNpemVf
+dCB0ZW1wX2lkeChUQ0dUZW1wICp0cykKPiB7Cj4gIMKgIMKgIHB0cmRpZmZfdCBuID0gdHMgLSB0
+Y2dfY3R4LT50ZW1wczsKPiAgwqAgwqAgYXNzZXJ0KG4gPj0gMCAmJiBuIDwgdGNnX2N0eC0+bmJf
+dGVtcHMpOwo+ICDCoCDCoCByZXR1cm4gbjsKPiB9Cj4gCj4gPiDCoCBzdGF0aWMgaW5saW5lIFRD
+R1RlbXAgKnRjZ3ZfaTMyX3RlbXAoVENHdl9pMzIgdikKPiA+IMKgIHsKPiA+IC3CoCDCoCByZXR1
+cm4gKHZvaWQgKil0Y2dfY3R4ICsgKHVpbnRwdHJfdCl2Owo+ID4gK8KgIMKgIHJldHVybiAodm9p
+ZCAqKXRjZ19jdHgtPnRlbXBzICsgKHVpbnRwdHJfdCl2Owo+ID4gwqAgfQo+IAo+IFRoaXMgd2ls
+bCBnZW5lcmF0ZSAwIGZvciB0aGUgZmlyc3QgdGVtcCwgd2hpY2ggd2lsbCB0ZXN0IGFzIE5VTEwu
+CgpIaSBSaWNoYXJkOgpZb3UgY2FuIHJlcHJvZHVjZSB0aGlzIGlzc3VlIG9uIHRoZSBsYXRlc3Qg
+dXBzdHJlYW0gUUVNVSB2ZXJzaW9uLiBVc2luZyB0aGUgUklTQy1WIFFFTVUgdmVyc2lvbiwgCmlm
+IHdlIGNvbXBpbGUgYSB0ZXN0IHByb2dyYW0gd2l0aCB0aGUgZmlyc3QgaW5zdHJ1Y3Rpb24gYmVp
+bmcgJy5pbnNuIHIgMHhmLCAyLCAwLCB4MCwgeDAsIHgwJyx0aGF0IGlzIGEgUklTQy1WIENCTyBp
+bnN0cnVjdGlvbiwgCnFlbXUgd2lsbCBjcmFzaCB3aXRoIGEgc2VnbWVudGF0aW9uIGZhdWx0IHVw
+b24gZXhlY3V0aW9uLgoKV2hlbiB0aGUgZmlyc3QgaW5zdHJ1Y3Rpb24gaW4gdGhlIHByb2dyYW0g
+aXMgYSBDQk8gaW5zdHJ1Y3Rpb24sICB0ZW1wX2lkeCBpbiBpbml0X3RzX2luZm8gZnVuYyByZXR1
+cm5zIGEgdmVyeSBsYXJnZSB2YWx1ZSwgCmNhdXNpbmcgdGhlIHN1YnNlcXVlbnQgdGVzdF9iaXQg
+ZnVuY3Rpb24gdG8gYWNjZXNzIG91dC1vZi1ib3VuZHMgbWVtb3J5LgoKc3RhdGljIHZvaWQgaW5p
+dF90c19pbmZvKE9wdENvbnRleHQgKmN0eCwgVENHVGVtcCAqdHMpCnsKICAgIHNpemVfdCBpZHgg
+PSB0ZW1wX2lkeCh0cyk7CiAgICBUZW1wT3B0SW5mbyAqdGk7CgogICAgaWYgKHRlc3RfYml0KGlk
+eCwgY3R4LT50ZW1wc191c2VkLmwpKSB7CiAgICAgICAgcmV0dXJuOwogICAgfQouLi4KSSBjYW4g
+Zml4IHRoaXMgc2VnbWVudGF0aW9uIGZhdWx0IGJ5IGFwcGx5aW5nIHRoZSBtb2RpZmljYXRpb24g
+YWJvdmUsIAphbmQgaXQgc2VlbXMgbW9yZSBsb2dpY2FsIGluIHRlcm1zIG9mIGNvZGUgbG9naWMg
+dG8gbWF0Y2ggdGhlIGFsbG9jYXRpb24gYW5kIGluZGV4aW5nIG9mIFRDR1RlbXAuCgpUaHMK
 
