@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA39C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 08:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128C1C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 08:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxjeT-0000In-5h; Fri, 19 Apr 2024 04:31:23 -0400
+	id 1rxjhU-0005OR-RF; Fri, 19 Apr 2024 04:34:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxje4-00008M-1f; Fri, 19 Apr 2024 04:30:57 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ id 1rxjhE-0005AN-R3; Fri, 19 Apr 2024 04:34:14 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxjdx-0003Pe-TT; Fri, 19 Apr 2024 04:30:53 -0400
+ id 1rxjhB-0004Np-F6; Fri, 19 Apr 2024 04:34:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713515451; x=1745051451;
+ t=1713515650; x=1745051650;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=+yYx2sWsMD6lkFSsuh3wolXlVNvWzT7nEUBQt0r5Eiw=;
- b=durqBlUT1iDo8hhBoOhYNSulCyu6z+oNknB9sRzFh/2d/F0xdkifxeeN
- AT6w8P5609Y+OZ2NbN+GgwyGxMRL0To/qM/0FMxY6bCYztKwK11Vqw//Z
- 6U6pH0j9LxJhdYAuuJl4PF4d1PibqzUWBrMSuPJ9w9b4Iic2UQUKXDmms
- xSa8vMKhaK5qf90g4TtwNdeMTKi5975Nb9IRl8+t8tLuEBbECA1rMLsxO
- wvKdO6sS/EmKJzCKozHplY3VFK4MDAw+Hg3nzzjEZ912MraJ1/OnryLF+
- 1pnQO9NSZHcl97Xelo72JcWn9QdNZix4F5VScSTWovLLSGOi0iG/MW2TI g==;
-X-CSE-ConnectionGUID: Idgtz2g4SgusuD4AWn7ZkQ==
-X-CSE-MsgGUID: wULu3lYlSRqIYyoP/Av40A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="31589874"
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="31589874"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Apr 2024 01:30:48 -0700
-X-CSE-ConnectionGUID: 0Zu9lRIRR++O18xk4EUMvg==
-X-CSE-MsgGUID: RjzTa16oQwKHt/JqOV0seA==
+ bh=hserpj6q14WZ6B3U/Wc1hUKv25yTQ7nE6LIyJ+kOzis=;
+ b=icWZwcbV4VBXdboP3itRY5vh6VwxRUpyrnCV0Rm0CiOMjrKvM3AEYcks
+ gGC2zUY+qTGf1YMBZddXTftlWHZsyI6R0YUfwpaXvauPajM3o9oyTb/rH
+ C5URSeoHQ+vOwGs2kcvWZNma6FR/8vCbZZ9hQMhhM14/m69h/mq8Et1j6
+ G7TzFz/V2IpmKXEbNfi+V7f1X8nzZJlA/WBPUEsfabS+H/sxNIIcLfC67
+ UKTwI9Ri0Eq6LnqtCTpLw0M+ToIXqiupOY70WWFhUXkqPLz44/VOHWWhh
+ qe8RnIrYsf+6MxO9Cq8ra/EzDaJJoF5arB6YR/9/QuffIN6DmtbyvbFgb Q==;
+X-CSE-ConnectionGUID: 3lKFCrK6QYelplEUZfQVhQ==
+X-CSE-MsgGUID: cFRcYC5tSi+/j/XXTGD6mQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="20248505"
+X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="20248505"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Apr 2024 01:34:06 -0700
+X-CSE-ConnectionGUID: 05K86+1lSJKd7C5LvwGpPQ==
+X-CSE-MsgGUID: ASActitdR3GaF2rqDQz7KA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="23323817"
+X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="27887496"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 19 Apr 2024 01:30:44 -0700
-Date: Fri, 19 Apr 2024 16:44:49 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 19 Apr 2024 01:34:02 -0700
+Date: Fri, 19 Apr 2024 16:48:07 +0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: David Hildenbrand <david@redhat.com>,
@@ -53,17 +53,17 @@ Cc: David Hildenbrand <david@redhat.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 3/6] target/s390x/cpu_models: Make
- kvm_s390_get_host_cpu_model() return boolean
-Message-ID: <ZiIvAXd6wFQ2pwoM@intel.com>
+Subject: Re: [PATCH 2/6] target/s390x/cpu_model: Drop local @err in
+ s390_realize_cpu_model()
+Message-ID: <ZiIvx+r/O8tt4sl7@intel.com>
 References: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
- <20240419065712.1225038-4-zhao1.liu@linux.intel.com>
- <0ae778e1-b4aa-4021-bdbc-4c6a663db41a@redhat.com>
+ <20240419065712.1225038-3-zhao1.liu@linux.intel.com>
+ <a71e2142-9e83-4fa5-b605-7d73b04693d8@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0ae778e1-b4aa-4021-bdbc-4c6a663db41a@redhat.com>
-Received-SPF: none client-ip=198.175.65.9;
+In-Reply-To: <a71e2142-9e83-4fa5-b605-7d73b04693d8@redhat.com>
+Received-SPF: none client-ip=198.175.65.13;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -63
 X-Spam_score: -6.4
@@ -86,39 +86,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
-
-On Fri, Apr 19, 2024 at 09:50:46AM +0200, Thomas Huth wrote:
-> Date: Fri, 19 Apr 2024 09:50:46 +0200
+On Fri, Apr 19, 2024 at 09:39:53AM +0200, Thomas Huth wrote:
+> Date: Fri, 19 Apr 2024 09:39:53 +0200
 > From: Thomas Huth <thuth@redhat.com>
-> Subject: Re: [PATCH 3/6] target/s390x/cpu_models: Make
->  kvm_s390_get_host_cpu_model() return boolean
+> Subject: Re: [PATCH 2/6] target/s390x/cpu_model: Drop local @err in
+>  s390_realize_cpu_model()
 > 
 > On 19/04/2024 08.57, Zhao Liu wrote:
 > > From: Zhao Liu <zhao1.liu@intel.com>
 > > 
-> > As error.h suggested, the best practice for callee is to return
-> > something to indicate success / failure.
-> > 
-> > So make kvm_s390_get_host_cpu_model() return boolean and check the
-> > returned boolean in get_max_cpu_model() instead of accessing @err.
-> > 
-> > Additionally, since now get_max_cpu_model() returns directly if
-> > kvm_s390_get_host_cpu_model() fills @err, so make
-> > kvm_s390_get_host_cpu_model() return true by default for the non-KVM
-> > case in target/s390x/cpu_models.h.
+> > Use @errp to fetech error information directly and drop the local
 > 
-> You could also argue the other way round that there should be something in
-> *model if it returns "true" ... anyway, the stub should never be executed,
-> so it likely doesn't matter too much, but I'd still prefer if we'd rather
-> return "false" in the non-KVM stub instead.
+> s/fetech/fetch/
+> 
+> > virable @err.
+> 
+> s/virable/variable/
+> 
+> > Suggested-by: Thomas Huth <thuth@redhat.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >   target/s390x/cpu_models.c | 4 +---
+> >   1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> With the typos fixed:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>
 
-I see, since this interface in wrapped in kvm_enabled() condition, so
-the non-kvm sutb wouldn't be called.
-
-Thanks! Will change to return false.
+Thanks! --codespell check also missed them. Will fix!
 
 Regards,
 Zhao
+
 
 
