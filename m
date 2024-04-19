@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E9EC04FF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AAB5C4345F
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxg1U-0007Yu-W4; Fri, 19 Apr 2024 00:38:53 -0400
+	id 1rxg1Q-0007WK-EA; Fri, 19 Apr 2024 00:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1K-0007UL-W5
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1C-0007SK-MJ
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1J-0004EH-5z
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:42 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg16-00049b-RX
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713501520;
+ s=mimecast20190719; t=1713501507;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7jjLauuGCciQkrLfyUwiXsCrDWKAvSteSgJzJEAZUE8=;
- b=JYw/KNo4uWj9ZCw5Djqe7k6NyVXMFtSNa9OwWfU3ABZ0ZWl5+xTAkgDURhOWZfLaJfuVTK
- fjuzL42GYOVHaGmcRc0s7sRytNRnXGiG85Rx3JdyL0Q4kKzCqAGI+W/dF8Mh2LXu9drIck
- nnmDXA+siKV8CLPQJsh1Szn2vv5vVsc=
+ bh=nj35h2WAXeTMyr3hnl2WAc6btn9ZnHTwGwLAP2BhYio=;
+ b=RswWdNoDryF9Kw/DThevsWBNRlmd3hXvpONAlhJTcMyEeNWPObDQcapWjzkZndjjF+x9l4
+ yJBufLQKgS7E5JNATzhFOq4DX0uoMXdTiGqvu1uKyk0yryA8rBfxlKN64G3hFQNrPfNt1E
+ /qz/dV9lZ8x1QUpen6P0LtK1C8dGXt8=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-3ztlf7YMP8C0syRqoqQUPw-1; Fri,
- 19 Apr 2024 00:38:38 -0400
-X-MC-Unique: 3ztlf7YMP8C0syRqoqQUPw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-400-wLCbpNe7NWaM-CKB29iYqA-1; Fri,
+ 19 Apr 2024 00:38:23 -0400
+X-MC-Unique: wLCbpNe7NWaM-CKB29iYqA-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5473D29AA38E;
- Fri, 19 Apr 2024 04:38:38 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2559E3CBDF66;
+ Fri, 19 Apr 2024 04:38:23 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.7])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A331C40C1233;
- Fri, 19 Apr 2024 04:38:37 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 741F54011FF7;
+ Fri, 19 Apr 2024 04:38:22 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -50,15 +50,15 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 22/27] docs/qapi-domain: add warnings for malformed field lists
-Date: Fri, 19 Apr 2024 00:38:10 -0400
-Message-ID: <20240419043820.178731-23-jsnow@redhat.com>
+Subject: [PATCH 02/27] docs/qapi-domain: add qapi:module directive
+Date: Fri, 19 Apr 2024 00:37:50 -0400
+Message-ID: <20240419043820.178731-3-jsnow@redhat.com>
 In-Reply-To: <20240419043820.178731-1-jsnow@redhat.com>
 References: <20240419043820.178731-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -82,192 +82,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Normally, Sphinx will silently fall back to its standard field list
-processing if it doesn't match one of your defined fields. A lot of the
-time, that's not what we want - we want to be warned if we goof
-something up.
+This adds a qapi:module directive, which just notes the current module
+being documented and performs a nested parse of the content block, if
+present.
 
-For instance, the canonical argument field list form is:
+This code is based pretty heavily on Sphinx's PyModule directive, but
+with the modindex functionality excised.
 
-:arg type name: descr
+This commit also adds the _nested_parse helper, which adds cross-version
+compatibility for nested parsing while preserving proper line context
+information.
 
-This form is captured by Sphinx and transformed so that the field label
-will become "Arguments:". It's possible to omit the type name and descr
-and still have it be processed correctly. However, if you omit the type
-name, Sphinx no longer recognizes it:
+For example:
 
-:arg: this is not recognized.
+.. qapi:module:: block-core
 
-This will turn into an arbitrary field list entry whose label is "Arg:",
-and it otherwise silently fails. You may also see failures for doing
-things like using :values: instead of :value:, or :errors: instead of
-:error:, and so on. It's also case sensitive, and easy to trip up.
+   Hello, and welcome to block-core!
+   =================================
 
-Add a validator that guarantees all field list entries that are the
-direct child of an ObjectDescription use only recognized forms of field
-lists, and emit a warning (treated as error by default in most build
-configurations) whenever we detect one that is goofed up.
+   lorem ipsum, dolor sit amet ...
 
-However, there's still benefit to allowing arbitrary fields -- they are
-after all not a Sphinx invention, but perfectly normal docutils
-syntax. Create an allow list for known spellings we don't mind letting
-through, but warn against anything else.
-
--
-
-RFC: Yes, this patch breaks the build! I thought it'd be helpful for you
-to see the error checking in action. The next commit drops the erroneous
-fields.
+(For RFC purposes, this commit also adds a test document that
+demonstrates the functionality-so-far to allow reviewers to easily test
+and experiment with each commit. The eventual submission for inclusion
+will remove this playground file.)
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/conf.py               | 12 ++++++++
- docs/qapi/index.rst        | 27 +++++++++++++++++
- docs/sphinx/qapi-domain.py | 59 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 98 insertions(+)
+ docs/index.rst             |   1 +
+ docs/qapi/index.rst        |  38 +++++++++++
+ docs/sphinx/qapi-domain.py | 128 ++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 166 insertions(+), 1 deletion(-)
+ create mode 100644 docs/qapi/index.rst
 
-diff --git a/docs/conf.py b/docs/conf.py
-index b15665d956d..7a7d7005780 100644
---- a/docs/conf.py
-+++ b/docs/conf.py
-@@ -148,6 +148,18 @@
- with open(os.path.join(qemu_docdir, 'defs.rst.inc')) as f:
-     rst_epilog += f.read()
- 
-+
-+# Normally, the QAPI domain is picky about what field lists you use to
-+# describe a QAPI entity. If you'd like to use arbitrary additional
-+# fields in source documentation, add them here.
-+qapi_allowed_fields = {
-+    "example",
-+    "note",
-+    "see also",
-+    "TODO",
-+}
-+
-+
- # -- Options for HTML output ----------------------------------------------
- 
- # The theme to use for HTML and HTML Help pages.  See the documentation for
+diff --git a/docs/index.rst b/docs/index.rst
+index 0b9ee9901d9..11c18c598a8 100644
+--- a/docs/index.rst
++++ b/docs/index.rst
+@@ -18,3 +18,4 @@ Welcome to QEMU's documentation!
+    interop/index
+    specs/index
+    devel/index
++   qapi/index
 diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
-index 5bb1c37a5ed..ef58dfc4bcd 100644
---- a/docs/qapi/index.rst
+new file mode 100644
+index 00000000000..880fd17c709
+--- /dev/null
 +++ b/docs/qapi/index.rst
-@@ -133,6 +133,33 @@ Explicit cross-referencing syntax for QAPI modules is available with
-    :memb: this is malformed and unrecognized.
-    :choice type name: This is unrecognized.
-    :errors FooError: Also malformed.
-+   :example: This isn't a "semantic" field, but it's been added to the
-+      allowed field names list. you can use whatever field names you'd
-+      like; but to prevent accidental typos, there is an allow list of
-+      "arbitrary" section names.
+@@ -0,0 +1,38 @@
++----------------
++QAPI Domain Test
++----------------
 +
-+      You can nestle code-blocks in here, too, by using the ``::``
-+      syntax::
++.. qapi:module:: foo-module
++   :no-index:
 +
-+         -> { [ "bidirectional QMP example" ] }
-+         <- { [ "hello world!"] }
++   This starts a hypothetical module named ``foo-module``, but it
++   doesn't create a cross-reference target and it isn't added to the
++   index.
 +
-+      Or use explicit ``.. code-block:: QMP`` syntax, but it must start
-+      on its own line with a blank line both before and after the
-+      directive to render correctly:
++   Check out the `genindex` for proof that foo-module is not present.
 +
-+      .. code-block:: QMP
++.. qapi:module:: bar-module
++   :no-typesetting:
 +
-+         -> "Hello friend!"
++   This starts a hypothetical module named ``bar-module``, but the
++   contents of the body here will not be rendered in the
++   output. However, any link targets created here or in nested
++   directives will be preserved and functional.
 +
-+      Note that the QMP highlighter is merely garden-variety JSON, but
-+      with the addition of ``->``, ``<-`` and ``...`` symbols to help
-+      denote bidirectionality and elided segments. Eduardo Habkost and I
-+      wrote this lexer many moons ago to support the
-+      :doc:`/interop/bitmaps` documentation.
-+   :see also: This is also not a "semantic" field. The only limit is
-+      your imagination and what you can convince others to let you check
-+      into conf.py.
- 
-    Field lists can appear anywhere in the directive block, but any field
-    list entries in the same list block that are recognized as special
++   Check out the `genindex` for proof that bar-module is present in two
++   places! (under both "bar-module" and "QAPI module".)
++
++.. qapi:module:: block-core
++
++   Block core (VM unrelated)
++   =========================
++
++   This starts the documentation section for the ``block-core`` module.
++   All documentation objects that follow belong to the block-core module
++   until another ``qapi:module:`` directive is encountered.
++
++   This directive does not create an entry in the sidebar or the TOC
++   *unless* you create a nested section title within the directive.
++
++   The ``block-core`` module will have two entries in the `genindex`,
++   under both "block-core" and "QAPI module".
 diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
-index e44db10488f..bf8bb933345 100644
+index 163b9ff21c3..7c5e4407bc1 100644
 --- a/docs/sphinx/qapi-domain.py
 +++ b/docs/sphinx/qapi-domain.py
-@@ -334,10 +334,63 @@ def _merge_adjoining_field_lists(self, contentnode: addnodes.desc_content) -> No
-         for child in delete_queue:
-             contentnode.remove(child)
+@@ -7,21 +7,141 @@
+ from typing import (
+     TYPE_CHECKING,
+     Any,
++    ClassVar,
+     Dict,
++    Iterable,
+     List,
+     Tuple,
++    cast,
+ )
  
-+    def _validate_field(self, field: nodes.field) -> None:
-+        field_name = field.children[0]
-+        assert isinstance(field_name, nodes.field_name)
-+        allowed_fields = set(self.env.app.config.qapi_allowed_fields)
++from docutils import nodes
++from docutils.parsers.rst import directives
 +
-+        field_label = field_name.astext()
-+        if re.match(r"\[\S+ = \S+\]", field_label) or field_label in allowed_fields:
-+            # okie-dokey. branch entry or known good allowed name.
-+            return
++from sphinx import addnodes
+ from sphinx.domains import Domain, ObjType
+ from sphinx.util import logging
++from sphinx.util.docutils import SphinxDirective, switch_source_input
++from sphinx.util.nodes import make_id, nested_parse_with_titles
+ 
+ 
+ if TYPE_CHECKING:
++    from docutils.nodes import Element, Node
 +
-+        try:
-+            # split into field type and argument
-+            field_type, fieldarg = field_label.split(None, 1)
-+        except ValueError:
-+            # No arguments provided
-+            field_type = field_label
-+            fieldarg = ""
+     from sphinx.application import Sphinx
++    from sphinx.util.typing import OptionSpec
+ 
+ logger = logging.getLogger(__name__)
+ 
+ 
++def _nested_parse(directive: SphinxDirective, content_node: Element) -> None:
++    """
++    This helper preserves error parsing context across sphinx versions.
++    """
 +
-+        typemap = self.get_field_type_map()
-+        if field_type in typemap:
-+            # This is a semantic field, yet-to-be-processed. Catch
-+            # correct names, but incorrect arguments (which WILL fail to
-+            # process correctly).
-+            typedesc = typemap[field_type][0]
-+            if typedesc.has_arg != bool(fieldarg):
-+                msg = f"semantic field list type {field_type!r} "
-+                if typedesc.has_arg:
-+                    msg += "requires an argument."
-+                else:
-+                    msg += "takes no arguments."
-+                logger.warning(msg, location=field)
-+        else:
-+            # This is unrecognized entirely.
-+            valid = ", ".join(sorted(set(typemap) | allowed_fields))
-+            msg = (
-+                f"Unrecognized field list name {field_label!r}.\n"
-+                f"Valid fields for qapi:{self.objtype} are: {valid}\n"
-+                "\n"
-+                "If this usage is intentional, please add it to "
-+                "'qapi_allowed_fields' in docs/conf.py."
++    # necessary so that the child nodes get the right source/line set
++    content_node.document = directive.state.document
++
++    try:
++        # Modern sphinx (6.2.0+) supports proper offsetting for
++        # nested parse error context management
++        nested_parse_with_titles(
++            directive.state,
++            directive.content,
++            content_node,
++            content_offset=directive.content_offset,  # type: ignore[call-arg]
++        )
++    except TypeError:
++        # No content_offset argument. Fall back to SSI method.
++        with switch_source_input(directive.state, directive.content):
++            nested_parse_with_titles(directive.state, directive.content, content_node)
++
++
++class QAPIModule(SphinxDirective):
++    """
++    Directive to mark description of a new module.
++
++    This directive doesn't generate any special formatting, and is just
++    a pass-through for the content body. Named section titles are
++    allowed in the content body.
++
++    Use this directive to associate subsequent definitions with the
++    module they are defined in for purposes of search and QAPI index
++    organization.
++
++    :arg: The name of the module.
++    :opt no-index: Don't add cross-reference targets or index entries.
++    :opt no-typesetting: Don't render the content body (but preserve any
++       cross-reference target IDs in the squelched output.)
++
++    Example::
++
++       .. qapi:module:: block-core
++          :no-index:
++          :no-typesetting:
++
++          Lorem ipsum, dolor sit amet ...
++
++    """
++
++    has_content = True
++    required_arguments = 1
++    optional_arguments = 0
++    final_argument_whitespace = False
++
++    option_spec: ClassVar[OptionSpec] = {
++        # These are universal "Basic" options;
++        # https://www.sphinx-doc.org/en/master/usage/domains/index.html#basic-markup
++        "no-index": directives.flag,
++        "no-typesetting": directives.flag,
++        "no-contents-entry": directives.flag,  # NB: No effect
++        # Deprecated aliases; to be removed in Sphinx 9.0
++        "noindex": directives.flag,
++        "nocontentsentry": directives.flag,  # NB: No effect
++    }
++
++    def run(self) -> List[Node]:
++        modname = self.arguments[0].strip()
++        no_index = "no-index" in self.options or "noindex" in self.options
++
++        self.env.ref_context["qapi:module"] = modname
++
++        content_node: Element = nodes.section()
++        _nested_parse(self, content_node)
++
++        ret: List[Node] = []
++        inode = addnodes.index(entries=[])
++
++        if not no_index:
++            node_id = make_id(self.env, self.state.document, "module", modname)
++            target = nodes.target("", "", ids=[node_id], ismod=True)
++            self.set_source_info(target)
++            self.state.document.note_explicit_target(target)
++
++            indextext = f"QAPI module; {modname}"
++            inode = addnodes.index(
++                entries=[
++                    ("pair", indextext, node_id, "", None),
++                ]
 +            )
-+            logger.warning(msg, location=field)
++            ret.append(inode)
++            content_node.insert(0, target)
 +
-     def transform_content(self, contentnode: addnodes.desc_content) -> None:
-         self._add_infopips(contentnode)
-         self._merge_adjoining_field_lists(contentnode)
- 
-+        # Validate field lists. Note that this hook runs after any
-+        # branch directives have processed and transformed their field
-+        # lists, but before the main object directive has had a chance
-+        # to do so.
-+        for child in contentnode:
-+            if isinstance(child, nodes.field_list):
-+                for field in child.children:
-+                    assert isinstance(field, nodes.field)
-+                    self._validate_field(field)
++        if "no-typesetting" in self.options:
++            if node_ids := [
++                node_id
++                for el in content_node.findall(nodes.Element)
++                for node_id in cast(Iterable[str], el.get("ids", ()))
++            ]:
++                target = nodes.target(ids=node_ids)
++                self.set_source_info(target)
++                ret.append(target)
++        else:
++            ret.extend(content_node.children)
 +
-     def _toc_entry_name(self, sig_node: desc_signature) -> str:
-         # This controls the name in the TOC and on the sidebar.
++        return ret
++
++
+ class QAPIDomain(Domain):
+     """QAPI language domain."""
  
-@@ -872,6 +925,12 @@ def resolve_any_xref(
+@@ -29,7 +149,13 @@ class QAPIDomain(Domain):
+     label = "QAPI"
  
- def setup(app: Sphinx) -> Dict[str, Any]:
-     app.setup_extension("sphinx.directives")
-+    app.add_config_value(
-+        "qapi_allowed_fields",
-+        set(),
-+        "env",  # Setting impacts parsing phase
-+        types=set,
-+    )
-     app.add_domain(QAPIDomain)
- 
-     return {
+     object_types: Dict[str, ObjType] = {}
+-    directives = {}
++
++    # Each of these provides a ReST directive,
++    # e.g. .. qapi:module:: block-core
++    directives = {
++        "module": QAPIModule,
++    }
++
+     roles = {}
+     initial_data: Dict[str, Dict[str, Tuple[Any]]] = {}
+     indices = []
 -- 
 2.44.0
 
