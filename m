@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 345ACC05023
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E13DC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxg1Z-0007eZ-4c; Fri, 19 Apr 2024 00:38:57 -0400
+	id 1rxg1Q-0007W7-2S; Fri, 19 Apr 2024 00:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1P-0007W8-Vo
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1G-0007TO-MZ
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1N-0004FC-C0
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:47 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1E-0004DM-V7
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713501524;
+ s=mimecast20190719; t=1713501516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h9ivFynH+DrIyxyCrgkjda0tH5zkdVzYPlc+LqwrpBU=;
- b=YQJhgU9r0EVfzxFvVgDMx25Cb2sboJA/Xo4aElzHw0+2gsreFYWnOcqBB/prtYCHuSN2yO
- 9hOUx2XlFDW2rAAPKoUXYNN5y9Y5XmJ2UOf8ed63r4OiweOXPVjU0mS1R1QDn9HFViCzfE
- 1dbgKtF9Y/nDJ69K9JUa6TSXBmaMIpI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-548-SWjDAIYJOgWopWUA_tmK-g-1; Fri,
- 19 Apr 2024 00:38:41 -0400
-X-MC-Unique: SWjDAIYJOgWopWUA_tmK-g-1
+ bh=aT7Zt+MnqDBeB3Aa1m9yjVj+44B/I2Lh5VoQCq7rSj8=;
+ b=gmnTtJkNLUCOUBl5JdFTECCgtxW2hes5fceUHYbcIx20Et3P+1Qf/FcAcCuwxAYKIsfeQ2
+ jnpZhbrR2Q0NS9/ysRtfVjdMaFBqzMjLxXTm43TESwpobLJxvJ+g5dfUfj/fARR+shM1kW
+ LNjQkQyj4b//snts9DjOTJMB+Ozxjos=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-260-mNEPjwTxN4-f2B3iwoVt8g-1; Fri, 19 Apr 2024 00:38:32 -0400
+X-MC-Unique: mNEPjwTxN4-f2B3iwoVt8g-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3EBD63CBDF61;
- Fri, 19 Apr 2024 04:38:41 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EF6A8810602;
+ Fri, 19 Apr 2024 04:38:31 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.7])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8F8614011FF7;
- Fri, 19 Apr 2024 04:38:40 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4AC424011FF7;
+ Fri, 19 Apr 2024 04:38:31 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -50,14 +50,12 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 26/27] docs/qapi-domain: RFC patch - Add one last sample
- command
-Date: Fri, 19 Apr 2024 00:38:14 -0400
-Message-ID: <20240419043820.178731-27-jsnow@redhat.com>
+Subject: [PATCH 14/27] docs/qapi-domain: add qapi:alternate directive
+Date: Fri, 19 Apr 2024 00:38:02 -0400
+Message-ID: <20240419043820.178731-15-jsnow@redhat.com>
 In-Reply-To: <20240419043820.178731-1-jsnow@redhat.com>
 References: <20240419043820.178731-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
@@ -84,92 +82,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just to have a bit more to look at in the generated doc, here's a fairly
-complex command with a lot of bells and whistles.
+Add the .. qapi:alternate:: directive, object, and qapi:alt:`name`
+cross-reference role.
+
+Add the "Choices:" field list for describing alternate choices. Like
+other field lists that reference QAPI types, a forthcoming commit will
+add cross-referencing support to this field.
+
+RFC: In the future, it would be nice to directly inline Alternates as
+part of the type information in the containing object (i.e. directly in
+arguments/members) - but that's a task for another series. For now, the
+branch "names" are documented just like qapidoc.py does, even though
+this information is superfluous for user documentation. Room for future
+improvement, but not now.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/qapi/index.rst | 67 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 67 insertions(+)
+ docs/qapi/index.rst        |  7 +++++++
+ docs/sphinx/qapi-domain.py | 19 +++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
 diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
-index 6e85ea5280d..4562e755d21 100644
+index cf794e6e739..9bfe4d9f454 100644
 --- a/docs/qapi/index.rst
 +++ b/docs/qapi/index.rst
-@@ -267,6 +267,73 @@ Explicit cross-referencing syntax for QAPI modules is available with
-       :memb str key-secret: ID of a QCryptoSecret object providing a
-          passphrase for unlocking the encryption
+@@ -127,3 +127,10 @@ Explicit cross-referencing syntax for QAPI modules is available with
+       is treated solely as a read-only manifest of blocks to copy.
+    :value always: The bitmap is always synchronized with the operation,
+       regardless of whether or not the operation was successful.
++
++.. qapi:alternate:: BlockDirtyBitmapOrStr
++   :since: 4.1
++
++   :choice str local: name of the bitmap, attached to the same node as
++      target bitmap.
++   :choice BlockDirtyBitmap external: bitmap with specified node
+diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
+index 6759c39290d..c6eb6324594 100644
+--- a/docs/sphinx/qapi-domain.py
++++ b/docs/sphinx/qapi-domain.py
+@@ -305,6 +305,22 @@ class QAPIEnum(QAPIObject):
+     )
  
-+.. qapi:command:: blockdev-backup
-+   :since: 4.2
+ 
++class QAPIAlternate(QAPIObject):
++    """Description of a QAPI Alternate."""
 +
-+   Start a point-in-time copy of a block device to a new
-+   destination. The status of ongoing blockdev-backup operations can be
-+   checked with query-block-jobs where the BlockJobInfo.type field has
-+   the value ‘backup’. The operation can be stopped before it has
-+   completed using the block-job-cancel command.
++    doc_field_types = QAPIObject.doc_field_types.copy()
++    doc_field_types.extend(
++        [
++            TypedField(
++                "choice",
++                label=_("Choices"),
++                names=("choice",),
++                can_collapse=True,
++            ),
++        ]
++    )
 +
-+   :arg str target:
-+      the device name or node-name of the backup target node.
-+   :arg str? job-id:
-+      identifier for the newly-created block job. If omitted, the device
-+      name will be used. (Since 2.7)
-+   :arg str device:
-+      the device name or node-name of a root node which should be copied.
-+   :arg MirrorSyncMode sync:
-+      what parts of the disk image should be copied to the destination
-+      (all the disk, only the sectors allocated in the topmost image,
-+      from a dirty bitmap, or only new I/O).
-+   :arg int? speed:
-+      the maximum speed, in bytes per second. The default is 0, for unlimited.
-+   :arg str? bitmap:
-+      The name of a dirty bitmap to use. Must be present if sync is
-+      ``bitmap`` or ``incremental``. Can be present if sync is ``full`` or
-+      ``top``. Must not be present otherwise. (Since 2.4 (drive-backup),
-+      3.1 (blockdev-backup))
-+   :arg BitmapSyncMode? bitmap-mode:
-+      Specifies the type of data the bitmap should contain after the
-+      operation concludes. Must be present if a bitmap was provided,
-+      Must NOT be present otherwise. (Since 4.2)
-+   :arg bool? compress:
-+      true to compress data, if the target format supports it. (default:
-+      false) (since 2.8)
-+   :arg BlockdevOnError? on-source-error:
-+      the action to take on an error on the source, default
-+      ``report``. ``stop`` and ``enospc`` can only be used if the block device
-+      supports io-status (see BlockInfo).
-+   :arg BlockdevOnError? on-target-error:
-+      the action to take on an error on the target, default ``report`` (no
-+      limitations, since this applies to a different block device than
-+      device).
-+   :arg bool? auto-finalize:
-+      When false, this job will wait in a ``PENDING`` state after it has
-+      finished its work, waiting for block-job-finalize before making
-+      any block graph changes. When true, this job will automatically
-+      perform its abort or commit actions. Defaults to true. (Since
-+      2.12)
-+   :arg bool? auto-dismiss:
-+      When false, this job will wait in a ``CONCLUDED`` state after it has
-+      completely ceased all work, and awaits block-job-dismiss. When
-+      true, this job will automatically disappear from the query list
-+      without user intervention. Defaults to true. (Since 2.12)
-+   :arg str? filter-node-name:
-+      the node name that should be assigned to the filter driver that
-+      the backup job inserts into the graph above node specified by
-+      drive. If this option is not given, a node name is
-+      autogenerated. (Since: 4.2)
-+   :arg BackupPerf? x-perf:
-+      Performance options. (Since 6.0)
-+   :feat unstable: Member ``x-perf`` is experimental.
-+   :error DeviceNotFound: if ``device`` is not a valid block device.
 +
-+   .. note:: ``on-source-error`` and ``on-target-error only`` affect
-+             background I/O. If an error occurs during a guest write
-+             request, the device's rerror/werror actions will be used.
-+
- .. qapi:command:: x-debug-query-block-graph
-    :since: 4.0
-    :unstable:
+ class QAPIModule(SphinxDirective):
+     """
+     Directive to mark description of a new module.
+@@ -458,6 +474,7 @@ class QAPIDomain(Domain):
+         "module": ObjType(_("module"), "mod", "obj"),
+         "command": ObjType(_("command"), "cmd", "obj"),
+         "enum": ObjType(_("enum"), "enum", "obj", "type"),
++        "alternate": ObjType(_("alternate"), "alt", "obj", "type"),
+     }
+ 
+     # Each of these provides a ReST directive,
+@@ -466,6 +483,7 @@ class QAPIDomain(Domain):
+         "module": QAPIModule,
+         "command": QAPICommand,
+         "enum": QAPIEnum,
++        "alternate": QAPIAlternate,
+     }
+ 
+     # These are all cross-reference roles; e.g.
+@@ -475,6 +493,7 @@ class QAPIDomain(Domain):
+         "mod": QAPIXRefRole(),
+         "cmd": QAPIXRefRole(),
+         "enum": QAPIXRefRole(),
++        "alt": QAPIXRefRole(),
+         "type": QAPIXRefRole(),  # reference any data type (excludes modules, commands, events)
+         "obj": QAPIXRefRole(),  # reference *any* type of QAPI object.
+     }
 -- 
 2.44.0
 
