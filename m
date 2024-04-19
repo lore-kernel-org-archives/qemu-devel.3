@@ -4,77 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC22C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 11:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F320CC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 12:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxmnN-0007In-DC; Fri, 19 Apr 2024 07:52:48 -0400
+	id 1rxnhe-0007e8-9O; Fri, 19 Apr 2024 08:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rxmmy-0007Fb-BI
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 07:52:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dinguyen@kernel.org>)
+ id 1rxmzW-0004FF-18
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:05:21 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rxmmu-0001dd-RH
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 07:52:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713527534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OxoQ873H7iOSTFVIdgsyHNlTk6QLM+SBF/xfBDJbLcs=;
- b=eBJYKm6mdR4VkeLhRD5lZvziKhm3yWmYfWtjIWQw+2GCjQXb3JYSHRA0ebw/0YGqfSt6EY
- 8K8ZOTSKI1jEb2yyBVM9UqGFJa8N3oIlOYF3yypd5Fq8KkNrCFUrP3GlqFBTMlsPxH3+8M
- zXtuPsURz/JDwaAf3UIcLYyviKK3r1U=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-jxL5RIEbPxyPtlKzq3f_Rw-1; Fri,
- 19 Apr 2024 07:52:09 -0400
-X-MC-Unique: jxL5RIEbPxyPtlKzq3f_Rw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 481C3382C46F;
- Fri, 19 Apr 2024 11:52:09 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.157])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BBEDB40C1233;
- Fri, 19 Apr 2024 11:52:08 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id AC3861800DFD; Fri, 19 Apr 2024 13:52:07 +0200 (CEST)
-Date: Fri, 19 Apr 2024 13:52:07 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: devel@edk2.groups.io, jonathan.cameron@huawei.com
-Cc: Jonathan Cameron via <qemu-devel@nongnu.org>, linuxarm@huawei.com, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Idan Horowitz <idan.horowitz@gmail.com>
-Subject: Re: [edk2-devel] [PATCH v3 5/6] target/arm: Do memory type alignment
- check when translation disabled
-Message-ID: <kjpkyoux2xcegrqshde5ddhicf33jnlelobuzuo4uj4svvlzdn@rilun7dz6776>
-References: <20240301204110.656742-1-richard.henderson@linaro.org>
- <20240301204110.656742-6-richard.henderson@linaro.org>
- <20240416161111.0000607c@huawei.com>
- <0c878d25-3fbb-4f0b-bc9e-ca638f8c4f1e@linaro.org>
- <20240418091555.00006666@Huawei.com>
- <20240418183600.00000345@huawei.com>
+ (Exim 4.90_1) (envelope-from <dinguyen@kernel.org>)
+ id 1rxmzU-0004KF-2U
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:05:17 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id 88757CE1A9C;
+ Fri, 19 Apr 2024 12:05:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E45AC072AA;
+ Fri, 19 Apr 2024 12:05:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1713528307;
+ bh=JjhfgGKDvS+BVkDg6yV/bx1++/VQqZcxH99bfPJLXFA=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=ZRi/Twb2b25FmwmLZzpZoGNmcAmcD4Zwai1c+o6wgMdl6hlcBYFiGmTNh3GxgxkQl
+ sH2Np8vgm99LX/UJMrhAReObqzK8Hruz3WxGRxlFBc3GVfhuMm+RXTFdRIzfF3jrcD
+ 9aC27k87ZVh75j4BfLP1Y4jTfqH0WPIKnZwoJRuoMwd9udxr+2z/djqk4Z7dO4RNLp
+ qgfUIcD0ybqIFBT7/DqYGVY8grI9QIDJR1I4uzKDvRua3EyPfg4oWxYWWcHmFsjHpj
+ yHYKuRSWxZXFSp+91xML8nK2fu0FUqxtr2ypjnwPehOyasprDZxnBUl37C8yza8E12
+ 5424pPP/9b6tQ==
+Message-ID: <975c8ed9-e0b0-4b5e-8a4c-0970c98fa3e6@kernel.org>
+Date: Fri, 19 Apr 2024 07:05:04 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240418183600.00000345@huawei.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
+User-Agent: Mozilla Thunderbird
+Subject: Re: Deprecation/removal of nios2 target support
+Content-Language: en-US
+To: Arnd Bergmann <arnd@arndb.de>, Joseph Myers <josmyers@redhat.com>,
+ Sandra Loosemore <sloosemore@baylibre.com>
+Cc: gcc@gcc.gnu.org, binutils@sourceware.org, gdb-patches@sourceware.org,
+ Xi Ruoyao <libc-alpha@sourceware.org>, Chung-Lin Tang <cltang@baylibre.com>,
+ andrew@reenigne.org, Yao Qi <qiyaoltc@gmail.com>, qemu-devel@nongnu.org,
+ newlib@sourceware.org, Andreas Oetken <andreas.oetken@siemens.com>,
+ Bernd Weiberg <bernd.weiberg@siemens.com>, Marek Vasut <marex@denx.de>
+References: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
+ <b5d375ed-283-974a-febf-892760ff855@redhat.com>
+ <320677a6-1c3a-477c-95fc-b74cb5a4c5c6@app.fastmail.com>
+From: Dinh Nguyen <dinguyen@kernel.org>
+In-Reply-To: <320677a6-1c3a-477c-95fc-b74cb5a4c5c6@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=dinguyen@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -66
+X-Spam_score: -6.7
+X-Spam_bar: ------
+X-Spam_report: (-6.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 19 Apr 2024 08:50:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,34 +80,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
 
-> Gerd, any ideas?  Maybe I needs something subtly different in my
-> edk2 build?  I've not looked at this bit of the qemu infrastructure
-> before - is there a document on how that image is built?
 
-There is roms/Makefile for that.
+On 4/18/24 13:41, Arnd Bergmann wrote:
+> On Thu, Apr 18, 2024, at 17:44, Joseph Myers wrote:
+>> On Wed, 17 Apr 2024, Sandra Loosemore wrote:
+>>
+>>> Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and remove
+>>> support from all toolchain components after the release is made.  I'm not sure
+>>> there is an established process for obsoleting/removing support in other
+>>> components; besides binutils, GDB, and GLIBC, there's QEMU, newlib/libgloss,
+>>> and the Linux kernel.  But, we need to get the ball rolling somewhere.
+>>
+>> CC:ing Arnd Bergmann regarding the obsolescence in the Linux kernel.
+> 
+> We have not yet marked nios2 as deprecated in the kernel, but that
+> is mostly because the implementation does not get in the way too
+> much and Dinh Nguyen is still around as a maintainer and merging
+> bugfixes.
+> 
+> Almost all nios2 kernel changes I see in the past decade have been
+> done blindly without testing on hardware, either for treewide
+> changes, or by code inspection. The only notable exceptions I could
+> find are from Andreas Oetken and Bernd Weiberg at Siemens and
+> from Marek Vasut (all added to Cc in case they have something to add).
+> 
+> We should probably remove nios2 from the kernel in the near future,
+> but even if we decide not to, I think deprecating it from gcc is the
+> right idea: If there are a few remaining users that still plan
+> to update their kernels, gcc-14 will still be able to build new
+> kernels for several years.
+> 
 
-make -C roms help
-make -C roms efi
+I'm planning to do this soon.
 
-So easiest would be to just update the edk2 submodule to what you
-need, then rebuild.
-
-The build is handled by the roms/edk2-build.py script,
-with the build configuration being in roms/edk2-build.config.
-That is usable outside the qemu source tree too, i.e. like this:
-
-  python3 /path/to/qemu.git/roms/edk2-build.py \
-    --config /path/to/qemu.git/roms/edk2-build.config \
-    --core /path/to/edk2.git \
-    --match armvirt \
-    --silent --no-logs
-
-That'll try to place the images build in "../pc-bios", so maybe better
-work with a copy of the config file where you adjust this.
-
-HTH,
-  Gerd
-
+Dinh
 
