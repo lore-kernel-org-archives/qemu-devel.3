@@ -4,130 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF824C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 08:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32FDBC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 08:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxjAu-0000Ee-Kf; Fri, 19 Apr 2024 04:00:48 -0400
+	id 1rxjdP-0008St-Up; Fri, 19 Apr 2024 04:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjAs-0000Cv-Tf
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:00:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rxjdM-0008SV-Ey
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:30:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjAr-0006ug-EE
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:00:46 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rxjdK-0003KT-Ex
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:30:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713513644;
+ s=mimecast20190719; t=1713515408;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OVFYRtpTl5iQzdMbB/J5cNlvLVvFnvlu+hkp73QBasU=;
- b=fPW1GzLi/nJ/vSTSsa7KbHSpqHhDNBMsX3kGUNLMt5GRTFp+xxuYJbHAjR13neew+eow/n
- /FrYJimLqPfcmEbTaE/WkA4AUSlv+rJygsA99KqrefZi7iY4xrS/gZI/sat2nESqczZhxJ
- JPPnudeyeCCghLQa+9eYgsHeYS2DdK0=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=uO/75dY4OO2pU71VawrGz4vHheV1aGlKspLfQqOFlxQ=;
+ b=Awl9KTaab/UTwVrEH2cVRoJBPUifqmCWIibZNqSaSlQiNdKLfV79V+VSLWym0W5+huqpd5
+ qRYrPjVReBPszshT/eJjbU0lobNBP93wSxWh2eJsRy+LxSJ7a8KLv/stm6eeBAwuWeoM9f
+ 7wZJLpLbyxldkJRBRBqzd5Kvu9QMPho=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-333-znU-s7SgOEGUrvnywKVS9Q-1; Fri, 19 Apr 2024 04:00:43 -0400
-X-MC-Unique: znU-s7SgOEGUrvnywKVS9Q-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5705ef052d2so905386a12.3
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 01:00:43 -0700 (PDT)
+ us-mta-640-gzJfcbsjPPufihNo4bjVRg-1; Fri, 19 Apr 2024 04:30:07 -0400
+X-MC-Unique: gzJfcbsjPPufihNo4bjVRg-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-de45d36b049so2997561276.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 01:30:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713513642; x=1714118442;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OVFYRtpTl5iQzdMbB/J5cNlvLVvFnvlu+hkp73QBasU=;
- b=hACvMtFa/bcxIVr5Dt6bTT+Iqwa7DPHi3t7RA7oAjjKZ/3LZUalH9qvUyp6gXbRYtV
- pj6NBrQWqUjp4AALJmJgSBnl0Zem0zK20PaYw5jFMfM8Of8MMh6CCSk2Ukh/BrHu1SQt
- cmWG+8JrR5fJbnGKvbq8/WBYuhaFJl9+wYRf5rXXhJNv7+7C2NC7cxScDCid0YkgoH35
- 7z7fa+VvE7CUQX/kfpiUcqji+JJNL+ZGoewMgg5lJbTg4oenrRCLHxJzDVGwpysJclgz
- 92fdln48w1EezG5itMeYwBHmXXVnehx4MYkmORi0GvOt6Q1R/avBSVLJIHG3FWBUeoIa
- 7ZmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDN41Ihcm9C+PK/6BtlxaNSNUVIGOaHNDxzxaqPTsRjSM5cokdF2/QiAYlBLAxCnMK3w6vdMQWThwFXKOjPj33e7r0Pcs=
-X-Gm-Message-State: AOJu0Yxs0IDKlnliZTZ0AxX9vDqjbfwmdW6P5DOSnf/GCXPyV3aM0CNE
- 9CKOcvRlSvjD1WgsnvnHLDexmIyIzX3lMabxCuJ5N4apzVS8D4VPuf9iA9a4D18mrNagWQ5uKoo
- mJxbNJTtnrwQYHUz2g0fnFrjiyOmNw/g7Wn9tr67PND/XlZQiRtuW
-X-Received: by 2002:a05:6402:2c1:b0:56c:3dfb:a1f5 with SMTP id
- b1-20020a05640202c100b0056c3dfba1f5mr569527edx.22.1713513642092; 
- Fri, 19 Apr 2024 01:00:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDG4p+1zFjSVVAeuyf5B+n0p7wk6uKTZp0YpIwFu5ZnjuS3rAGqXVKTrDZYPyCVwiTpqwoIg==
-X-Received: by 2002:a05:6402:2c1:b0:56c:3dfb:a1f5 with SMTP id
- b1-20020a05640202c100b0056c3dfba1f5mr569504edx.22.1713513641711; 
- Fri, 19 Apr 2024 01:00:41 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-177-117.web.vodafone.de.
- [109.43.177.117]) by smtp.gmail.com with ESMTPSA id
- ef9-20020a05640228c900b00571bde3b0a4sm1554949edb.34.2024.04.19.01.00.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Apr 2024 01:00:41 -0700 (PDT)
-Message-ID: <95c3de27-62df-4240-bfee-1e99d8673435@redhat.com>
-Date: Fri, 19 Apr 2024 10:00:40 +0200
+ d=1e100.net; s=20230601; t=1713515406; x=1714120206;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uO/75dY4OO2pU71VawrGz4vHheV1aGlKspLfQqOFlxQ=;
+ b=tcjhaKw4JTawVw29hZ8q6gVLhV1cyJNcpmaZ6srgibLzeBhS+dYaj901iSkXAMaKxc
+ mQ2eyxWtQc8sarDxMvqjckC7GYnyUmmLuUAsXKFHR2hG2FOwVv6p960Q4Qkuo7IPColE
+ 0YbSTLVxwnqsO9Zr+8Z6Su3qtMXWlAy92nny/Iznu5bnvVtPfHHdjCEEEbyR0EXDZAYy
+ rNgRyv7HpB7XhZfPYeOcLie+/SZj5qmZ+Uy0aYVcfM6wNfGCMHDXKj1a3jNQoN91zu5B
+ eMt4P3Juw6RhknpeJzQnwZEiuC2OzqUxZwwZTGSMI7/yx1DkvJpkk0rz2HIiLqlbynbY
+ Jr/Q==
+X-Gm-Message-State: AOJu0YxysFTWBz3uYnvX4IjpBnbqi8axXemW+ziVvwkcdEHQdqxqeh0X
+ JGruMQBrwdo5qe5OkRgyzO6NpbxufT8ZgwjOzYXQkHVAGqO6qZ6xajlw/sf12hIwVzJDe/sd/yb
+ 0O6AvHoEsm1DPokMd0cZ1SaiGw4gr0edDcuEQNBSxF0ZyT2YaWRAdlh5jW8ITXzkTGSyNDx2Gt2
+ hgB0Tv5PMCtmcqZJSocfyuEMdSJzY=
+X-Received: by 2002:a5b:74f:0:b0:dcd:b76f:36de with SMTP id
+ s15-20020a5b074f000000b00dcdb76f36demr1218206ybq.1.1713515406515; 
+ Fri, 19 Apr 2024 01:30:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/DrjBMhPhBgUP3VVYVTYfKrbBWousaOd8ksAZQS7UbI7S5IoGBJPYQ3A5ndvveT0Y2gVe3ONuMyiQ23MhjXg=
+X-Received: by 2002:a5b:74f:0:b0:dcd:b76f:36de with SMTP id
+ s15-20020a5b074f000000b00dcdb76f36demr1218190ybq.1.1713515406241; Fri, 19 Apr
+ 2024 01:30:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] target/s390x/cpu_models_sysemu: Drop local @err in
- apply_cpu_model()
-To: Zhao Liu <zhao1.liu@linux.intel.com>, David Hildenbrand
- <david@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
- <20240419065712.1225038-7-zhao1.liu@linux.intel.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240419065712.1225038-7-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+References: <20240410100345.389462-1-eperezma@redhat.com>
+ <20240410100345.389462-2-eperezma@redhat.com>
+ <558124df-be44-47ae-85b9-0f282fc3889c@oracle.com>
+In-Reply-To: <558124df-be44-47ae-85b9-0f282fc3889c@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Fri, 19 Apr 2024 10:29:30 +0200
+Message-ID: <CAJaqyWeE3kfgN5Y0=Kj6oCOFwg0H-gQEr4g3TM+3_+5N7mfd=A@mail.gmail.com>
+Subject: Re: [RFC 1/2] iova_tree: add an id member to DMAMap
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>, 
+ Dragos Tatulea <dtatulea@nvidia.com>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -151,14 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/04/2024 08.57, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Use @errp to fetech error information directly and drop the local
-> virable @err.
+On Thu, Apr 18, 2024 at 10:46=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.com>=
+ wrote:
+>
+>
+>
+> On 4/10/2024 3:03 AM, Eugenio P=C3=A9rez wrote:
+> > IOVA tree is also used to track the mappings of virtio-net shadow
+> > virtqueue.  This mappings may not match with the GPA->HVA ones.
+> >
+> > This causes a problem when overlapped regions (different GPA but same
+> > translated HVA) exists in the tree, as looking them by HVA will return
+> > them twice.  To solve this, create an id member so we can assign unique
+> > identifiers (GPA) to the maps.
+> >
+> > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > ---
+> >   include/qemu/iova-tree.h | 5 +++--
+> >   util/iova-tree.c         | 3 ++-
+> >   2 files changed, 5 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
+> > index 2a10a7052e..34ee230e7d 100644
+> > --- a/include/qemu/iova-tree.h
+> > +++ b/include/qemu/iova-tree.h
+> > @@ -36,6 +36,7 @@ typedef struct DMAMap {
+> >       hwaddr iova;
+> >       hwaddr translated_addr;
+> >       hwaddr size;                /* Inclusive */
+> > +    uint64_t id;
+> >       IOMMUAccessFlags perm;
+> >   } QEMU_PACKED DMAMap;
+> >   typedef gboolean (*iova_tree_iterator)(DMAMap *map);
+> > @@ -100,8 +101,8 @@ const DMAMap *iova_tree_find(const IOVATree *tree, =
+const DMAMap *map);
+> >    * @map: the mapping to search
+> >    *
+> >    * Search for a mapping in the iova tree that translated_addr overlap=
+s with the
+> > - * mapping range specified.  Only the first found mapping will be
+> > - * returned.
+> > + * mapping range specified and map->id is equal.  Only the first found
+> > + * mapping will be returned.
+> >    *
+> >    * Return: DMAMap pointer if found, or NULL if not found.  Note that
+> >    * the returned DMAMap pointer is maintained internally.  User should
+> > diff --git a/util/iova-tree.c b/util/iova-tree.c
+> > index 536789797e..0863e0a3b8 100644
+> > --- a/util/iova-tree.c
+> > +++ b/util/iova-tree.c
+> > @@ -97,7 +97,8 @@ static gboolean iova_tree_find_address_iterator(gpoin=
+ter key, gpointer value,
+> >
+> >       needle =3D args->needle;
+> >       if (map->translated_addr + map->size < needle->translated_addr ||
+> > -        needle->translated_addr + needle->size < map->translated_addr)=
+ {
+> > +        needle->translated_addr + needle->size < map->translated_addr =
+||
+> > +        needle->id !=3D map->id) {
+>
+> It looks this iterator can also be invoked by SVQ from
+> vhost_svq_translate_addr() -> iova_tree_find_iova(), where guest GPA
+> space will be searched on without passing in the ID (GPA), and exact
+> match for the same GPA range is not actually needed unlike the mapping
+> removal case. Could we create an API variant, for the SVQ lookup case
+> specifically? Or alternatively, add a special flag, say skip_id_match to
+> DMAMap, and the id match check may look like below:
+>
+> (!needle->skip_id_match && needle->id !=3D map->id)
+>
+> I think vhost_svq_translate_addr() could just call the API variant or
+> pass DMAmap with skip_id_match set to true to svq_iova_tree_find_iova().
+>
 
-With the typos fixed:
+I think you're totally right. But I'd really like to not complicate
+the API of the iova_tree more.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I think we can look for the hwaddr using memory_region_from_host and
+then get the hwaddr. It is another lookup though...
+
+> Thanks,
+> -Siwei
+> >           return false;
+> >       }
+> >
+>
 
 
