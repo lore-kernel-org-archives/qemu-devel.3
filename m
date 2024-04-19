@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25A2C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 16:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55FD1C071FD
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 16:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxqgY-0002zk-Nf; Fri, 19 Apr 2024 12:01:58 -0400
+	id 1rxqgW-0002nf-Cz; Fri, 19 Apr 2024 12:01:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rxqej-0001Fn-Bd
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:07 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1rxqem-0001HM-CR
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:09 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rxqeb-00019N-AH
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:02 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-346b09d474dso2032878f8f.2
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:59:56 -0700 (PDT)
+ id 1rxqeb-00019n-Gs
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:03 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-343f62d8124so1671013f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713542395; x=1714147195; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713542396; x=1714147196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6nYDbfiehTdxZ4oKQVaAYQN5jvjqz012O7hP4xktYbg=;
- b=ZjRQcMD3Xx0BKMjZrbWgFtTm0A5ycbuKX+djZhe4EAASdcr0A6pTcZlaZoAQ0iOPTE
- rSytwbC1zKg0Ii1k1KcVb75dg0A1TdIAvT0+bt40Xcl+qAGGCRWGRFeeHBc6nwy4v+fi
- KuexClAQ/zo9gAz2JuEA4RN4dcx9mcvEYDgIh7ixyQDh/wfMe/+MW7XUS55q2yoVaYoA
- KE1KuUnE8Ux0GjjWJpurdYOjBoc70IHCr6wEWtzNBGq9HCJ02cLZ88TVruAgREm7vsH3
- TFkCXBzfL03rMPIAtvRyEOz7s6gCPquZ3ZmKx5KLdiXwT7DxlSLc8Ql67aqafEvO4mhY
- 3GpA==
+ bh=NGiNId90k9KX3SXTPJi6tPTMfWtWfQF5tgGXpkmGlP0=;
+ b=FrqCxC/NjLQLs/Gbie6xtXVMdAz7dcs83qPHEWSN4OR83iPUZL9ag+YDW+ffW+Dv5I
+ n0XijXanJMjHoA0TaaqbzH3vd1fxZz/Cd7+Gjqbp/LHrIG3epytgYhzyz3JOGKRks+RL
+ 6fnvREsC+FzRpPFG4knSjNgT6mlAWxJ0ZnDhA015tgon8SIvfX11cVJw1WGmripldQwp
+ BVc34e7ERoUd4IygyN3+sZTQPPSVvqC2zsvlaWOrmPHdlgeMdJ58PgyJ6SXvdtddGJfG
+ dHezuNjg+20aFNoPBX8kAb0Jii9zZlno7EVYArvSIbmbmtmikW0wqtXMZiJHFOxtlppQ
+ VVFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713542395; x=1714147195;
+ d=1e100.net; s=20230601; t=1713542396; x=1714147196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6nYDbfiehTdxZ4oKQVaAYQN5jvjqz012O7hP4xktYbg=;
- b=enjKn9yl0G4X9i34j/oulqfm/vYvtdmxJgs+hSpRmPy6vXoeBOLG9m+y49t3Qdb03S
- Afz6DtLdY96a4QDjdr6ofcEsyAY6LBreIrIYKDD2UQHACnUbMQbtPhvK6xnii8vkCgRh
- hpmGTiRleSnNmwtoUmhO0CCYbY/8GimNr0dzeyDe8NYsANf4eynjt9wK0c1zmdiu8a8H
- j1s8dEepF4pg8oV4kZ8UBQJ+lgyK46G0nfkLes9weiHJpprS90ID40nePQ3jpHrZxh8W
- Xu1CJmRjEzj0rOQuGnpOT1P/zA9TuFH4LOUuzgNNW2yvyeVJVKGJUflLekxC42xSlNv+
- bG+A==
+ bh=NGiNId90k9KX3SXTPJi6tPTMfWtWfQF5tgGXpkmGlP0=;
+ b=dPx+JsXuc1KeZhDtpmWX7CtGVQDbucWNfHvYsynGcurKN18NorKPFreziTdG7fyclZ
+ wKrwTlYTSgcVtRodl/5jRLHEYyaUXH5kRqbRQCjVfcuWbO7PvxDktY4eJtoz3FXuww4s
+ nln6Z0FRKXqG858b8rBwnaRh/AK/slawIhme1SnQztIbtG7HuVc9dmDmIEWdlXn5O2ni
+ vNO1ePSg4DfWBIw0hq6C9VSs2HZlYcvmhUmZbgLfb0SWoJZWoHEhDQFD49Sjz8dClwUF
+ KmxyzVySmMtDVuEQg0Pyuws2Qaqlhhx5MXMAGFjwWcLBmm8y+JoiPgnOkCYzQWx4bDyW
+ qCCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURIuWTYg1/2xLgApiuuazL/WPtmma+LC9KU/ksASTx5thcfStQXcXkqghY2zBRrC1ckdyZoFlU18KNVIM7bpwxcnesqnQ=
-X-Gm-Message-State: AOJu0YyTLF+HATMqwFfWeAqt7RAcoDtVgJwd+QCBJw8HWDCLB/oOH9yH
- xhZ8X4bCZHRTCi/XyL4LO3wy241bqeCSH0viorh5pJpHC2aEaSqVvuPJ/qYJIhY=
-X-Google-Smtp-Source: AGHT+IENd+TeX2PBr9ChBBd+ruacRcP4c4TYBzXGQ3ipRL9oc1orolv3f+o8CLX8XZE/mgXca1Ufaw==
-X-Received: by 2002:a5d:6da8:0:b0:343:7032:7283 with SMTP id
- u8-20020a5d6da8000000b0034370327283mr2695209wrs.8.1713542395421; 
- Fri, 19 Apr 2024 08:59:55 -0700 (PDT)
+ AJvYcCUjskbTYkf09xQMSWXufyOkroyda7G8XAwPpV4j1pFkV1Y/abQjLxTysN0MDSMC29j6M/aAlM7V3/mTRON7CtHGfRkcWWE=
+X-Gm-Message-State: AOJu0YzyUXi00NNrtSbSiT1we1f0w6elRHA1DAxPD//SaMq2jVJw48oU
+ 5dTZ5hcNfiR5xslq3NWRyuTB75M8L+mzjytw9pPSnBwxKKqX6+Yf9CfnPSquZbY=
+X-Google-Smtp-Source: AGHT+IEhdxtppP9kmHLrBdgwLon9GtWvTfBqcoN9AEI8D9tYjvYBXXyC8l70AMes/yWD0DhD/oFlrA==
+X-Received: by 2002:adf:e68d:0:b0:34a:4eac:2e43 with SMTP id
+ r13-20020adfe68d000000b0034a4eac2e43mr1716233wrm.68.1713542396105; 
+ Fri, 19 Apr 2024 08:59:56 -0700 (PDT)
 Received: from localhost.localdomain ([2.221.137.100])
  by smtp.gmail.com with ESMTPSA id
- p13-20020adfe60d000000b00349b73143e7sm4793089wrm.75.2024.04.19.08.59.54
+ p13-20020adfe60d000000b00349b73143e7sm4793089wrm.75.2024.04.19.08.59.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 19 Apr 2024 08:59:55 -0700 (PDT)
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
@@ -65,18 +65,22 @@ To: peter.maydell@linaro.org,
 	richard.henderson@linaro.org
 Cc: philmd@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Jean-Philippe Brucker <jean-philippe@linaro.org>
-Subject: [PATCH v2 13/22] hw/arm/boot: Register Linux BSS section for
- confidential guests
-Date: Fri, 19 Apr 2024 16:57:01 +0100
-Message-ID: <20240419155709.318866-15-jean-philippe@linaro.org>
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 14/22] target/arm/kvm-rme: Add Realm Personalization Value
+ parameter
+Date: Fri, 19 Apr 2024 16:57:02 +0100
+Message-ID: <20240419155709.318866-16-jean-philippe@linaro.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240419155709.318866-2-jean-philippe@linaro.org>
 References: <20240419155709.318866-2-jean-philippe@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,111 +103,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although the BSS section is not currently part of the kernel blob, it
-needs to be registered as guest RAM for confidential guest support,
-because the kernel needs to access it before it is able to setup its RAM
-regions.
+The Realm Personalization Value (RPV) is provided by the user to
+distinguish Realms that have the same initial measurement.
 
-It would be tempting to simply add the BSS as part of the ROM blob (ie
-pass kernel_size as max_len argument to rom_add_blob()) and let the ROM
-loader notifier deal with the full image size generically, but that
-would add zero-initialization of the BSS region by the loader, which
-adds a significant overhead. For a 40MB kernel with a 17MB BSS, I
-measured an average boot time regression of 2.8ms on a fast desktop,
-5.7% of the QEMU setup time). On a slower host, the regression could be
-much larger.
+The user provides up to 64 hexadecimal bytes. They are stored into the
+RPV in the same order, zero-padded on the right.
 
-Instead, add a special case to initialize the kernel's BSS IPA range.
-
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 ---
-v1->v2: new
+v1->v2: Move parsing early, store as-is rather than reverted
 ---
- target/arm/kvm_arm.h |  5 +++++
- hw/arm/boot.c        | 11 +++++++++++
- target/arm/kvm-rme.c | 10 ++++++++++
- 3 files changed, 26 insertions(+)
+ qapi/qom.json        |  15 +++++-
+ target/arm/kvm-rme.c | 111 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 125 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 47777386b0..4b787dd628 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -218,6 +218,7 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 623ec8071f..91654aa267 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -931,6 +931,18 @@
+   'data': { '*cpu-affinity': ['uint16'],
+             '*node-affinity': ['uint16'] } }
  
- int kvm_arm_rme_init(MachineState *ms);
- int kvm_arm_rme_vm_type(MachineState *ms);
-+void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size);
++##
++# @RmeGuestProperties:
++#
++# Properties for rme-guest objects.
++#
++# @personalization-value: Realm personalization value, as a 64-byte hex string
++#     (default: 0)
++#
++# Since: FIXME
++##
++{ 'struct': 'RmeGuestProperties',
++  'data': { '*personalization-value': 'str' } }
  
- bool kvm_arm_rme_enabled(void);
- int kvm_arm_rme_vcpu_init(CPUState *cs);
-@@ -243,6 +244,10 @@ static inline bool kvm_arm_sve_supported(void)
-     return false;
- }
+ ##
+ # @ObjectType:
+@@ -1066,7 +1078,8 @@
+       'tls-creds-x509':             'TlsCredsX509Properties',
+       'tls-cipher-suites':          'TlsCredsProperties',
+       'x-remote-object':            'RemoteObjectProperties',
+-      'x-vfio-user-server':         'VfioUserServerProperties'
++      'x-vfio-user-server':         'VfioUserServerProperties',
++      'rme-guest':                  'RmeGuestProperties'
+   } }
  
-+static inline void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
-+{
-+}
-+
- /*
-  * These functions should never actually be called without KVM support.
-  */
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 84ea6a807a..9f522e332b 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -26,6 +26,7 @@
- #include "qemu/config-file.h"
- #include "qemu/option.h"
- #include "qemu/units.h"
-+#include "kvm_arm.h"
- 
- /* Kernel boot protocol is specified in the kernel docs
-  * Documentation/arm/Booting and Documentation/arm64/booting.txt
-@@ -850,6 +851,7 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
- {
-     hwaddr kernel_load_offset = KERNEL64_LOAD_ADDR;
-     uint64_t kernel_size = 0;
-+    uint64_t page_size;
-     uint8_t *buffer;
-     int size;
- 
-@@ -916,6 +918,15 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
-     *entry = mem_base + kernel_load_offset;
-     rom_add_blob_fixed_as(filename, buffer, size, *entry, as);
- 
-+    /*
-+     * Register the kernel BSS as realm resource, so the kernel can use it right
-+     * away. Align up to skip the last page, which still contains kernel
-+     * data.
-+     */
-+    page_size = qemu_real_host_page_size();
-+    kvm_arm_rme_init_guest_ram(QEMU_ALIGN_UP(*entry + size, page_size),
-+                               QEMU_ALIGN_DOWN(kernel_size - size, page_size));
-+
-     g_free(buffer);
- 
-     return kernel_size;
+ ##
 diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-index bee6694d6d..b2ad10ef6d 100644
+index b2ad10ef6d..cb5c3f7a22 100644
 --- a/target/arm/kvm-rme.c
 +++ b/target/arm/kvm-rme.c
-@@ -203,6 +203,16 @@ int kvm_arm_rme_init(MachineState *ms)
+@@ -23,10 +23,13 @@ OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
+ 
+ #define RME_PAGE_SIZE qemu_real_host_page_size()
+ 
++#define RME_MAX_CFG         1
++
+ struct RmeGuest {
+     ConfidentialGuestSupport parent_obj;
+     Notifier rom_load_notifier;
+     GSList *ram_regions;
++    uint8_t *personalization_value;
+ };
+ 
+ typedef struct {
+@@ -54,6 +57,48 @@ static int rme_create_rd(Error **errp)
+     return ret;
+ }
+ 
++static int rme_configure_one(RmeGuest *guest, uint32_t cfg, Error **errp)
++{
++    int ret;
++    const char *cfg_str;
++    struct kvm_cap_arm_rme_config_item args = {
++        .cfg = cfg,
++    };
++
++    switch (cfg) {
++    case KVM_CAP_ARM_RME_CFG_RPV:
++        if (!guest->personalization_value) {
++            return 0;
++        }
++        memcpy(args.rpv, guest->personalization_value, KVM_CAP_ARM_RME_RPV_SIZE);
++        cfg_str = "personalization value";
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
++                            KVM_CAP_ARM_RME_CONFIG_REALM, (intptr_t)&args);
++    if (ret) {
++        error_setg_errno(errp, -ret, "RME: failed to configure %s", cfg_str);
++    }
++    return ret;
++}
++
++static int rme_configure(void)
++{
++    int ret;
++    int cfg;
++
++    for (cfg = 0; cfg < RME_MAX_CFG; cfg++) {
++        ret = rme_configure_one(rme_guest, cfg, &error_abort);
++        if (ret) {
++            return ret;
++        }
++    }
++    return 0;
++}
++
+ static void rme_populate_realm(gpointer data, gpointer unused)
+ {
+     int ret;
+@@ -98,6 +143,11 @@ static void rme_vm_state_change(void *opaque, bool running, RunState state)
+         return;
+     }
+ 
++    ret = rme_configure();
++    if (ret) {
++        return;
++    }
++
+     ret = rme_create_rd(&error_abort);
+     if (ret) {
+         return;
+@@ -231,8 +281,69 @@ int kvm_arm_rme_vm_type(MachineState *ms)
      return 0;
  }
  
-+/*
-+ * kvm_arm_rme_init_guest_ram - Initialize a Realm IPA range
-+ */
-+void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
++static char *rme_get_rpv(Object *obj, Error **errp)
 +{
-+    if (rme_guest) {
-+        rme_add_ram_region(base, size, /* populate */ false);
++    RmeGuest *guest = RME_GUEST(obj);
++    GString *s;
++    int i;
++
++    if (!guest->personalization_value) {
++        return NULL;
++    }
++
++    s = g_string_sized_new(KVM_CAP_ARM_RME_RPV_SIZE * 2 + 1);
++
++    for (i = 0; i < KVM_CAP_ARM_RME_RPV_SIZE; i++) {
++        g_string_append_printf(s, "%02x", guest->personalization_value[i]);
++    }
++
++    return g_string_free(s, /* free_segment */ false);
++}
++
++static void rme_set_rpv(Object *obj, const char *value, Error **errp)
++{
++    RmeGuest *guest = RME_GUEST(obj);
++    size_t len = strlen(value);
++    uint8_t *out;
++    int i = 1;
++    int ret;
++
++    g_free(guest->personalization_value);
++    guest->personalization_value = out = g_malloc0(KVM_CAP_ARM_RME_RPV_SIZE);
++
++    /* Two chars per byte */
++    if (len > KVM_CAP_ARM_RME_RPV_SIZE * 2) {
++        error_setg(errp, "Realm Personalization Value is too large");
++        return;
++    }
++
++    /* First byte may have a single char */
++    if (len % 2) {
++        ret = sscanf(value, "%1hhx", out++);
++    } else {
++        ret = sscanf(value, "%2hhx", out++);
++        i++;
++    }
++    if (ret != 1) {
++        error_setg(errp, "Invalid Realm Personalization Value");
++        return;
++    }
++
++    for (; i < len; i += 2) {
++        ret = sscanf(value + i, "%2hhx", out++);
++        if (ret != 1) {
++            error_setg(errp, "Invalid Realm Personalization Value");
++            return;
++        }
 +    }
 +}
 +
- int kvm_arm_rme_vcpu_init(CPUState *cs)
+ static void rme_guest_class_init(ObjectClass *oc, void *data)
  {
-     ARMCPU *cpu = ARM_CPU(cs);
++    object_class_property_add_str(oc, "personalization-value", rme_get_rpv,
++                                  rme_set_rpv);
++    object_class_property_set_description(oc, "personalization-value",
++            "Realm personalization value (512-bit hexadecimal number)");
+ }
+ 
+ static void rme_guest_instance_init(Object *obj)
 -- 
 2.44.0
 
