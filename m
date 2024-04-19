@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33327C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A181BC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxg1P-0007Vp-Jm; Fri, 19 Apr 2024 00:38:47 -0400
+	id 1rxg1T-0007Xq-QS; Fri, 19 Apr 2024 00:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1B-0007Qi-N4
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1I-0007UF-M0
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg19-0004Bk-TC
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1G-0004De-JM
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713501511;
+ s=mimecast20190719; t=1713501518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jeEOPzwkWscQq9TY4wDhSicoLO1pGuzMnN5NiFEv/iQ=;
- b=HjjeNFcSpImehL7mhi7CKmt/yhLMFs1HpYO60X+a2i+p+X7IYW1yMvVEmL9EWNlpCKYi6p
- Kc2fOvoVbh3u2NP2LF8dk41fSSLQHNH/J8vLhpW9gxl9wggQWHgZd2yQLEd3SCsiV93jSy
- n6i04x422dMWwy8n9AwUJDIGdZjCsqw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-MID9YDE6MWGELDINiLZMew-1; Fri, 19 Apr 2024 00:38:27 -0400
-X-MC-Unique: MID9YDE6MWGELDINiLZMew-1
+ bh=CoSqUgSzEsMb4xXZdgb8ytZiYXh2CE2Rj6nvlRqURIo=;
+ b=IIs/4bkCql31VMRimLC2HW9XPsiFgpjQm90LF6+3odLf2gn264zr28bCjfONaURR2HWzaX
+ cMMfNatjO3+b0T94YFzjm/6m19HIbQDZHVYBCGPEU7ojjU6HKZAKfECZV41n0jjVXJP9m+
+ qwPvV295QrXTk6WxbfMxFMpO6PQJwdc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-Ycmgmc0nOHGfdZP06g2IUQ-1; Fri,
+ 19 Apr 2024 00:38:34 -0400
+X-MC-Unique: Ycmgmc0nOHGfdZP06g2IUQ-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8F9CC104B501;
- Fri, 19 Apr 2024 04:38:27 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2C415286A9C8;
+ Fri, 19 Apr 2024 04:38:34 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.7])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DF95B407F3D4;
- Fri, 19 Apr 2024 04:38:26 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7BF0F40829C5;
+ Fri, 19 Apr 2024 04:38:33 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -50,9 +50,10 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 08/27] docs/qapi-domain: add :since: directive option
-Date: Fri, 19 Apr 2024 00:37:56 -0400
-Message-ID: <20240419043820.178731-9-jsnow@redhat.com>
+Subject: [PATCH 17/27] docs/qapi-domain: add qapi:union and qapi:branch
+ directives
+Date: Fri, 19 Apr 2024 00:38:05 -0400
+Message-ID: <20240419043820.178731-18-jsnow@redhat.com>
 In-Reply-To: <20240419043820.178731-1-jsnow@redhat.com>
 References: <20240419043820.178731-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -82,88 +83,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a little special markup for registering "Since:" information. Adding
-it as an option instead of generic content lets us hoist the information
-into the Signature bar, optionally put it in the index, etc.
+Adds the .. qapi:union:: directive, object, and :qapi:union:`name`
+cross-referencing role.
+
+In order to support discriminated branches of unions, a new qapi:branch
+directive is created whose only purpose is to create a dynamically named
+field list section based on the name of the branch key and value.
+
+Because the label for these branch sections is dynamically generated,
+this patch allows the use of either :memb: or :arg: in branches; they
+are simply aliases and do not do anything different.
+
+(This is to allow the directive to be used for either Commands or Unions
+as needed; i.e. for commands whose argument type is a discriminated
+union.)
+
+For example:
+
+.. qapi:union:: foo-union
+
+   :memb foo-enum key: Discriminator field
+   :memb foo-type fieldname: Some base type field that is always present
+
+   .. qapi:branch:: key value1
+
+      :memb type name: lorem ipsum ...
+
+   .. qapi:branch:: key value2
+
+      :memb type2 name2: dolor sit amet ...
+
+In order to support this syntax, the root QAPIObject class needs to
+perform some post-processing on field lists to merge adjecent field
+lists. because each branch directive will return a separate field list,
+and we want to combine them into one unified list for proper rendering.
+
+NOTE: Technically, the branch directive will allow you to put arbitrary
+ReST besides field lists inside of it, but it almost certainly won't do
+anything you'd consider useful. I don't recommend it, but
+programmatically forbidding it is expensive. Recommendation: "Don't!"
+
+... and now ...
+
+RFC: The branches abuse the field list system to create new categories
+of field list entries that are dynamically generated. At the moment, I
+do not have code to apply appropriate formatting to these headings, but
+would like to apply ``literal`` syntax at a minimum to the enum values.
+
+The other idea I have is to create a "blank" members value that doesn't
+add a "title" (field label) on the left column and instead adds a
+horizontal info bar into the arguments list in the right, but the
+problem with this approach is that I won't be able to get rid of the "*
+..." list bullet syntax, so it may look odd. Otherwise, a benefit to
+this syntax is that it would allow us to write a longer explanation,
+e.g. "When ``{key}`` is ``{value}``".
+
+It's possible I could split the argument list into several nested lists,
+but I haven't experimented in that direction yet - it's also likely that
+Sphinx will want to append a ":" even to blank section titles, so this
+may prove tricky to do within the constraints of Sphinx's existing Field
+list system. (I believe the HTML formatter is responsible for appending
+the colons.)
+
+I'm open to suggestions, but wrestling with Sphinx, html and css is time
+consuming (for me, at least), so ultimately, I'm afraid I must say:
+***PATCHES WELCOME***.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/qapi/index.rst        |  1 +
- docs/sphinx/qapi-domain.py | 27 +++++++++++++++++++++++++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ docs/qapi/index.rst        | 37 ++++++++++++++
+ docs/sphinx/qapi-domain.py | 98 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 134 insertions(+), 1 deletion(-)
 
 diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
-index 5516f762a24..33b9349a3ee 100644
+index b07e6e9e2e3..d37ceac497f 100644
 --- a/docs/qapi/index.rst
 +++ b/docs/qapi/index.rst
-@@ -54,6 +54,7 @@ Explicit cross-referencing syntax for QAPI modules is available with
- 
- 
- .. qapi:command:: example-command
-+   :since: 42.0
- 
-    This directive creates a QAPI command named `example-command` that
-    appears in both the `genindex` and the `qapi-index`. As of this
+@@ -103,6 +103,18 @@ Explicit cross-referencing syntax for QAPI modules is available with
+    :arg baz: Missing a type.
+    :feat unstable: More than unstable, this command doesn't even exist!
+    :arg no-descr:
++   :arg BitmapSyncMode discrim: How about branches in commands?
++
++   .. qapi:branch:: discrim on-success
++
++      :arg str foobar: This is an argument that belongs to a tagged union branch.
++      :arg int? foobaz: This is another argument belonging to the same branch.
++
++   .. qapi:branch:: discrim never
++
++      :arg str barfoo: This is an argument that belongs to a *different* tagged union branch.
++      :arg int64 zzxyz: And this is another argument belonging to that same branch.
++
+    :feat hallucination: This command is a figment of your imagination.
+    :error CommandNotFound: When you try to use this command, because it
+       isn't real.
+@@ -190,3 +202,28 @@ Explicit cross-referencing syntax for QAPI modules is available with
+      operations.  0 means unlimited.  If max-chunk is non-zero then it
+      should not be less than job cluster size which is calculated as
+      maximum of target image cluster size and 64k.  Default 0.
++
++.. qapi:union:: RbdEncryptionOptions
++   :since: 6.1
++
++   :memb RbdImageEncryptionFormat format: Encryption format.
++   :memb RbdEncryptionOptions? parent: Parent image encryption options
++      (for cloned images).  Can be left unspecified if this cloned image
++      is encrypted using the same format and secret as its parent image
++      (i.e. not explicitly formatted) or if its parent image is not
++      encrypted.  (Since 8.0)
++
++   .. qapi:branch:: format luks
++
++      :memb str key-secret: ID of a QCryptoSecret object providing a
++         passphrase for unlocking the encryption
++
++   .. qapi:branch:: format luks2
++
++      :memb str key-secret: ID of a QCryptoSecret object providing a
++         passphrase for unlocking the encryption
++
++   .. qapi:branch:: format luks-any
++
++      :memb str key-secret: ID of a QCryptoSecret object providing a
++         passphrase for unlocking the encryption
 diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
-index 2c1e60290d9..38a50318d08 100644
+index b46faeaceef..f0094300c03 100644
 --- a/docs/sphinx/qapi-domain.py
 +++ b/docs/sphinx/qapi-domain.py
-@@ -4,6 +4,7 @@
+@@ -33,7 +33,12 @@
+ from sphinx.locale import _, __
+ from sphinx.roles import XRefRole
+ from sphinx.util import logging
+-from sphinx.util.docfields import GroupedField, TypedField
++from sphinx.util.docfields import (
++    DocFieldTransformer,
++    Field,
++    GroupedField,
++    TypedField,
++)
+ from sphinx.util.docutils import SphinxDirective, switch_source_input
+ from sphinx.util.nodes import (
+     make_id,
+@@ -52,6 +57,8 @@
  
- from __future__ import annotations
+ logger = logging.getLogger(__name__)
  
-+import re
- from typing import (
-     TYPE_CHECKING,
-     Any,
-@@ -86,6 +87,18 @@ def process_link(
-         return title, target
++quack = cast  # O:-)
++
+ 
+ class ObjectEntry(NamedTuple):
+     docname: str
+@@ -242,6 +249,30 @@ def add_target_and_index(
+                     ("single", indextext, node_id, "", None)
+                 )
+ 
++    def _merge_adjoining_field_lists(self, contentnode: addnodes.desc_content) -> None:
++        # Take any adjacent field lists and glue them together into
++        # one list for further processing by Sphinx. This is done so
++        # that field lists declared in nested directives can be
++        # flattened into non-nested field lists.
++
++        first_list = None
++        delete_queue: List[nodes.field_list] = []
++        for child in contentnode:
++            if isinstance(child, nodes.field_list):
++                if not first_list:
++                    first_list = child
++                else:
++                    first_list += child.children
++                    delete_queue.append(child)
++            else:
++                first_list = None
++
++        for child in delete_queue:
++            contentnode.remove(child)
++
++    def transform_content(self, contentnode: addnodes.desc_content) -> None:
++        self._merge_adjoining_field_lists(contentnode)
++
+     def _toc_entry_name(self, sig_node: desc_signature) -> str:
+         # This controls the name in the TOC and on the sidebar.
+ 
+@@ -349,6 +380,12 @@ class QAPIStruct(QAPIObjectWithMembers):
+     pass
  
  
-+def since_validator(param: str) -> str:
-+    """
-+    Validate the `:since: X.Y` option field.
-+    """
-+    match = re.match(r"[0-9]+\.[0-9]+", param)
-+    if not match:
-+        raise ValueError(
-+            f":since: requires a version number in X.Y format; not {param!r}"
-+        )
-+    return param
++class QAPIUnion(QAPIObjectWithMembers):
++    """Description of a QAPI Union."""
++
++    pass
 +
 +
- def _nested_parse(directive: SphinxDirective, content_node: Element) -> None:
+ class QAPIModule(SphinxDirective):
      """
-     This helper preserves error parsing context across sphinx versions.
-@@ -127,6 +140,8 @@ class QAPIObject(ObjectDescription[Signature]):
-         {
-             # Borrowed from the Python domain:
-             "module": directives.unchanged,  # Override contextual module name
-+            # These are QAPI originals:
-+            "since": since_validator,
-         }
-     )
+     Directive to mark description of a new module.
+@@ -439,6 +476,59 @@ def run(self) -> List[Node]:
+         return ret
  
-@@ -138,9 +153,17 @@ def get_signature_prefix(self, sig: str) -> List[nodes.Node]:
-             addnodes.desc_sig_space(),
-         ]
  
--    def get_signature_suffix(self, sig: str) -> list[nodes.Node]:
-+    def get_signature_suffix(self, sig: str) -> List[nodes.Node]:
-         """Returns a suffix to put after the object name in the signature."""
--        return []
-+        ret: List[nodes.Node] = []
++class Branch(SphinxDirective):
++    """
++    Nested directive which only serves to introduce temporary
++    metadata but return its parsed content nodes unaltered otherwise.
 +
-+        if "since" in self.options:
-+            ret += [
-+                addnodes.desc_sig_space(),
-+                addnodes.desc_sig_element("", f"(Since: {self.options['since']})"),
-+            ]
++    Technically, you can put whatever you want in here, but doing so may
++    prevent proper merging of adjacent field lists.
++    """
 +
++    doc_field_types: List[Field] = []
++    has_content = True
++    required_arguments = 2
++    optional_arguments = 0
++    domain = "qapi"
++
++    def get_field_type_map(self) -> Dict[str, Tuple[Field, bool]]:
++        ret = {}
++        for field in self.doc_field_types:
++            for name in field.names:
++                ret[name] = (field, False)
++
++            if field.is_typed:
++                typed_field = cast(TypedField, field)
++                for name in typed_field.typenames:
++                    ret[name] = (field, True)
 +        return ret
++
++    def run(self) -> list[Node]:
++        discrim = self.arguments[0].strip()
++        value = self.arguments[1].strip()
++
++        # The label name is dynamically generated per-instance instead
++        # of per-class to incorporate the branch conditions as a label
++        # name.
++        self.doc_field_types = [
++            TypedField(
++                "branch-arg-or-memb",
++                label=f"[{discrim} = {value}]",
++                # In a branch, we don't actually use the name of the
++                # field name to generate the label; so allow either-or.
++                names=("arg", "memb"),
++            ),
++        ]
++
++        content_node: addnodes.desc_content = addnodes.desc_content()
++        _nested_parse(self, content_node)
++        # DocFieldTransformer usually expects ObjectDescription, but... quack!
++        transformer = DocFieldTransformer(quack(ObjectDescription, self))
++        transformer.transform_all(content_node)
++
++        return content_node.children
++
++
+ class QAPIIndex(Index):
+     """
+     Index subclass to provide the QAPI definition index.
+@@ -505,6 +595,7 @@ class QAPIDomain(Domain):
+         "enum": ObjType(_("enum"), "enum", "obj", "type"),
+         "struct": ObjType(_("struct"), "struct", "obj", "type"),
+         "alternate": ObjType(_("alternate"), "alt", "obj", "type"),
++        "union": ObjType(_("union"), "union", "obj", "type"),
+     }
  
-     def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
-         """
+     # Each of these provides a ReST directive,
+@@ -516,6 +607,10 @@ class QAPIDomain(Domain):
+         "enum": QAPIEnum,
+         "struct": QAPIStruct,
+         "alternate": QAPIAlternate,
++        "union": QAPIUnion,
++        # This is not an object in its own right;
++        # It's a directive for documenting branch members of Union types.
++        "branch": Branch,
+     }
+ 
+     # These are all cross-reference roles; e.g.
+@@ -528,6 +623,7 @@ class QAPIDomain(Domain):
+         "enum": QAPIXRefRole(),
+         "struct": QAPIXRefRole(),
+         "alt": QAPIXRefRole(),
++        "union": QAPIXRefRole(),
+         "type": QAPIXRefRole(),  # reference any data type (excludes modules, commands, events)
+         "obj": QAPIXRefRole(),  # reference *any* type of QAPI object.
+     }
 -- 
 2.44.0
 
