@@ -4,80 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E09C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95BDC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxsrW-0001B7-RN; Fri, 19 Apr 2024 14:21:26 -0400
+	id 1rxsun-0002jN-T1; Fri, 19 Apr 2024 14:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxsrU-00016u-2Q
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:21:25 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxsrS-0005Zv-7d
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:21:23 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2da08b06e0dso27997481fa.2
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 11:21:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713550878; x=1714155678; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=msuRc3wT3zWdh9DnVbFEZvZWCLNg4p0fNJLQnwnpS3Q=;
- b=aIuL4JhITdKtrEMyOfYhTbJ0TE7gvOBFNhc+BmYabDiHxEZscprUuu3ErYPjiXlhtx
- /OEAWKMkgOol6zY3dcX8O8Q7WN2+FzJSQAg1N+i6KreNF3DR+c3kK2XpcW+FC8YT9tP2
- h8+vtpy/hHXx+c+6WqP8kmnfGMFPcFUcHLZQX3jTrfTcYyv9ey7/x2Jj/a6zc3YKQaKN
- 0CDxbA27/0lg1F7nHGn8DbmqcEPOFr2jZgLDYc8O1I+VXNiq2mntPDLzrCy0n9Iq0r6h
- ey/ZWATuYrOuKpirnNQTGQOTiQdpx9MB2qJr/qaf+Iue54ywf09OQVyRZ4cswVOn2hT2
- ohbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713550878; x=1714155678;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=msuRc3wT3zWdh9DnVbFEZvZWCLNg4p0fNJLQnwnpS3Q=;
- b=iMlezdNS2AHqofNi57cCSW403XOkmnWT1uWl+oZM4lMaAzGsJzalKyWkURjGE1muyi
- e39odej2jbNOGTvusVTMzpuIV4HUdb+an6gGlerxf143/g+c8n9fLVIXHrSP2Fl8/8/u
- y+zE9JunwaoqhKovULnmV+alAF+0/RJaNsdqaB56Tfoss/dlYvG/fbUWSPJULKeOdN6N
- 3K0wgAXOUaJvvhsWhQGKxVjDo47tWkTE5+F5Zf1baoTNPG9MZR/bG74JLc1qwlZi530t
- 5oO9JEjpcJ3fITETnMB/267oK6sm+bDdstRvA7J5AfwZoAEhOM0+KusQ9ar+7U6Jqcbq
- vk6Q==
-X-Gm-Message-State: AOJu0YySDbn4sPhgHcx1zm/NjjRtCmuWaLY0g+mbwjDruQJOkuNZMGVl
- 1OX7K0hMD+quewgoBFmi46RgDpXDRAwkkz91+cLawKWQQ151y8rlzRaC5ZiBe94sZbgg5CczrwN
- NgQy4BwJd0BdLQ2yBjF5NIjPpZXUlGt7WXtf7Gg==
-X-Google-Smtp-Source: AGHT+IEQ5TjlPgBFMN8SmUtxQ4+uXbJ4cZXCjWjMdghQNj/7sOm3GiPIZjp2PfL13zBLFj6IggMF23pqwksX2WGo8nk=
-X-Received: by 2002:a2e:9b41:0:b0:2da:bbb5:2839 with SMTP id
- o1-20020a2e9b41000000b002dabbb52839mr1725847ljj.11.1713550878493; Fri, 19 Apr
- 2024 11:21:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1rxsum-0002iy-Ez
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:24:48 -0400
+Received: from mail-bn7nam10on20700.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::700]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1rxsuj-0005q3-Go
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:24:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Iu2ZPTKvANOZcWIGVvEPEWo2/ustoBV7wQ/awKrU+p6HLd0jJneoMTWbpROwKVSClfIVN9CbxP9/SNP02UbOPZkuWmvbju02g8r0BeilPSXk7s0QI33xHFLJTxOksRzKDn95viMUvx9cr/CrQrrmvHZFFdGr1RCEheSzDIT88wgEfl3BCDihMq0Suwlj6/FlesZnjPm3uVVi0R4O+iOmJG3/lsiHWuFatfKkyZQmXssyf1RMSXgih2xgSU51GJxmB+uhNmhkRWL7L0TEW4Q0LiqglGSDuq5tPu8ZaeiCk3ZbcMP+HAfVoDC+ZxKhVGCR2vxWXrkx4NlETZ75FV7Gqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=J6H133nsgGGKX+c5F0sd3BLCiokggDt9PWTT+n1Y18k=;
+ b=EePj4/qYk5L/+wC31hgwxgnTyyRy8lqvJZbFhhKUpX7mvuDxlYGbp8LYwI/pWWtqVdgaLs10oo6XlWscao7kbA8hDHzZ7Swo3NoDgtR2zdZBqxqA+l7PIco7h6o94I/LPG2CIKez2F4bjC1GI7n0WlsS56kv4FpKq0Qk1Bd53nciVppKGmKW9v6XeyLoZ68nSrV/HaOx9fcWLb7IYa679klIoLIDcpf4nh8SSEOnj/r7RYF+6Kf2ptr12mlIjzFGeKB7rEmhUnnKprBBBEULL1/nQK8HU3qNz8Rgo+qezmsl/jy7ODMZpQ/O5iBRkmgklltOBFWnraklqXxL6g3+Tg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
+ dkim=pass header.d=memverge.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=J6H133nsgGGKX+c5F0sd3BLCiokggDt9PWTT+n1Y18k=;
+ b=iN/d6Kcf3agvL7aj6W15Y1P13u+7Otq6XNQmjNI5nziCdaTvdy+Kgxxk1GyqP6B8ErbBE8ooVPqpVWnLvBLPXL8p/jOwRDMmcWJQT8MozD5VYDFhS4bRzI/+aR2diCgLlKPiueEs46IntRH3fOxMcFb8SlDO6SJN3xRmibc/0DY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=memverge.com;
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
+ by SJ0PR17MB6431.namprd17.prod.outlook.com (2603:10b6:a03:4d5::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.43; Fri, 19 Apr
+ 2024 18:24:40 +0000
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::5d53:b947:4cab:2cc8]) by SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::5d53:b947:4cab:2cc8%4]) with mapi id 15.20.7472.042; Fri, 19 Apr 2024
+ 18:24:40 +0000
+Date: Fri, 19 Apr 2024 14:24:36 -0400
+From: Gregory Price <gregory.price@memverge.com>
+To: nifan.cxl@gmail.com
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ linux-cxl@vger.kernel.org, ira.weiny@intel.com,
+ dan.j.williams@intel.com, a.manzanares@samsung.com,
+ dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
+ fan.ni@samsung.com
+Subject: Re: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
+Message-ID: <ZiK25Log7LmtBffa@memverge.com>
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240418232902.583744-1-fan.ni@samsung.com>
+X-ClientProxiedBy: PH8PR22CA0016.namprd22.prod.outlook.com
+ (2603:10b6:510:2d1::9) To SJ0PR17MB5512.namprd17.prod.outlook.com
+ (2603:10b6:a03:394::19)
 MIME-Version: 1.0
-References: <20240419084812.504779-1-thuth@redhat.com>
- <20240419084812.504779-4-thuth@redhat.com>
-In-Reply-To: <20240419084812.504779-4-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Apr 2024 19:21:07 +0100
-Message-ID: <CAFEAcA9c=wEn4sS+Aeasnkp36Wx6F19QXc2xOtzryUWKkMXZWw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] docs/system/target-sparc: Improve the Sparc
- documentation
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Eduardo Habkost <eduardo@habkost.net>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|SJ0PR17MB6431:EE_
+X-MS-Office365-Filtering-Correlation-Id: 105e80b1-269c-48fb-d5a6-08dc609dfa4e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: ZJG4LXtlMWBH9lmJKhpQxIvySMM/aGJgAzmTR0DdD6nDskMqANXuGSdP3NNXfpbTlCsFrNqx1hI4kMn0EqlUscqJwgCN1M7VFBDXICQuMLWSpVEjQqZtx9QDi67FARBjfxEUQKEPEvefJdg+KH3HZu/cID9fUKwWZGhac6Eju6V9lLnEoaWANmvfIwWM9OKEWw9O62JN3a1I7+L2bF8Lsja+3nwEU1bT52ngs/CPikPqyTCvejXQvPfqcdgO0z3FywcEZURN0osfAbUACgwx0gx7L6vNHp9CkeXMA+oC3ViCSb0z0aELWqyBCBgO6DD9CwTBTLnhFsL5j5C5Sobx3WQRqpBiLWuSae/vmDU955KabKZD3d+7gDgfSx2E2A3PJFDyetbpyihtInlIkLgqZhYMlL5n7BEBvN2HkS9lfWl/yc58GOdcNyEanDa/bpSMmXB4Q7FAy9DDN+NUoB0DQmqutSlmsEEFnA4kv6fTfqPSK2XXD6K06h61gW1V5PBsDk2Im92jSB73RHcGlURcAGbsj/yNtbtsVXxXLQm8yx1WpAq/eFcFGlal5jJQ98H0b1gOZNvntRkxSSOVwtS+PbfBUm00XxyLbD5LGZOunoU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(376005)(1800799015)(7416005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?VUr8XbR9U6+zvDD9lyl85Y4CbFgEKu3NjWPaHACTRHkzwyFqDLF7dgPwEZ?=
+ =?iso-8859-1?Q?uvBaTjeTbtxU7mrMpO8x2EVSnmZfF+gwn2UinmOBqnTB/wvP5bubaW9Q7k?=
+ =?iso-8859-1?Q?f6Lo+KVJ4eR3b/1xCpqO601CGMVf0n0MAXjyRL5ZOETKclGJutUGeiawTS?=
+ =?iso-8859-1?Q?faaNNlFxANjPuoncIYVk+X7MtTS6z3ysWIqDbqmqK4vDKWPKlzNU0p7sbR?=
+ =?iso-8859-1?Q?/LVQdWuH84AzXzHITcjLlx5EfWFH+BNHr/rbb4hrBh3eCoQPdECNwPFuvQ?=
+ =?iso-8859-1?Q?mUvRPVeuehpJeljiQheJGtxUwcrUSphvRTN+5jOLwBXD74IBr7A66JUVcN?=
+ =?iso-8859-1?Q?chHsV4gow/s2/LrgpxP/r0DIM8RfnDK4zkuNJz3ZJu1rvrphuSUEHgnKss?=
+ =?iso-8859-1?Q?G4fdDy/cVawdGAV4EqyPpFR2Cp8W4Zd5Cll9TznjfR8j7huqXeN29jtGaC?=
+ =?iso-8859-1?Q?MSnU/XeZvtGMEzVV4JrXltzm36pIKitUyy/sfeJIZkpQYRI/r1gp0tRz5M?=
+ =?iso-8859-1?Q?trwyjQ/0b+BaTPNs+g6F5RL49733Gmatqyq1oHA/2axgZbDt7QL/JI6lgV?=
+ =?iso-8859-1?Q?nZQRRfvvzYYJuxkMZI215dfu/2WBkydRNIhI3ff58XP3KU9E//8H3jDoUX?=
+ =?iso-8859-1?Q?WKU9r/WK3TTOFMsNPRZ6vadx1gk3VFoLM6UJeWIGh7zLKGXzP+mziDkZaS?=
+ =?iso-8859-1?Q?I6Ksh5XbtMXoReE2orkWcdl0PoRztj4cmqy6WBT9Ovg7MytcNydXkr5dYH?=
+ =?iso-8859-1?Q?dK2u79GN04tqIAeXEB5ydd9nkRo9ANiQwJpDGEeUV40Iwr5eMSrwnXqiVE?=
+ =?iso-8859-1?Q?JnPkiyhkOhmSc1lLy4dhR06s5wVU+wYK+dFB4+HL/Y3iPTeIagMPsL0am4?=
+ =?iso-8859-1?Q?xK1gOvxp6LJKvCnjiFb52kNAUuOpjIxV6FlixyeuedM47lxQRm1cThb3ii?=
+ =?iso-8859-1?Q?D84hSjSM0bYPWeIv2IcklWSS6VE0Cnxge8ZqlJefJzT8ZBqpqlp+Z6CXhs?=
+ =?iso-8859-1?Q?NCrWLs/q6l8F0tyOZCKtWdyF/jYnGiBHY8KIEvmbXeyKVGFcsFOng1GIDN?=
+ =?iso-8859-1?Q?cY05j+fCGiUoO8h1Cnsqh9KoMvCkuOPg3pSCSd2qB1hQhy+FLUdzuovQyq?=
+ =?iso-8859-1?Q?dcH/ZUtEqRPsAQmivFUiJTycTly8lq7dqcI7d8WTGLuxm5QteiA8d6ky3B?=
+ =?iso-8859-1?Q?nRlfYSA74tw4rty9Yz36ywkufwbIOuXXHbn9R/3Y2shab6vHzFBPFb3KyM?=
+ =?iso-8859-1?Q?WixOpD6kuAH7uT8+PzNFrI8vmjRh8Eb++Iga6N5jrEz2eqpfcVN1EAFObC?=
+ =?iso-8859-1?Q?LEBWVkxFHBnCahCtmXw8EG1OEKskE5XuER//wTiuW8ZPze+7cJzbiy8/2G?=
+ =?iso-8859-1?Q?pC0iV1psyjnJ9ObYebmHChfJZgf2g3s8sVHoingBC4Z9SU55c2DGXmTp3y?=
+ =?iso-8859-1?Q?rFqv64eOlzXMLs9PyvsfqPOFowHEO/3DmW4M++f1jNKMWmckNnB896qe6Y?=
+ =?iso-8859-1?Q?irqiZgbihwvYezO59bwDeXeQDKbN3+gODfS3sZIvJm5YzHybBF+uzbglvk?=
+ =?iso-8859-1?Q?jAF4PaajS1Pr4bINCE/Prr6/I+d4Hrz9Fj978FVnMh8o6EYzr8YjPr9aVs?=
+ =?iso-8859-1?Q?eYOUT5czHq7C6mQNvYXv7uLPLW5pJNHYI2d2fa49EHllWOSBJ8bOw6UA?=
+ =?iso-8859-1?Q?=3D=3D?=
+X-OriginatorOrg: memverge.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 105e80b1-269c-48fb-d5a6-08dc609dfa4e
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2024 18:24:40.6905 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: k0PPjffeylsqZdkbRaikVurnKUI/0UmonLUA3EmxA5swRk30UjZAAC5+ysCbRqWlxg+aKkVN0MkJSmcfXGpeiFI1KM0Jg5C1LLANQWC8MBQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR17MB6431
+Received-SPF: pass client-ip=2a01:111:f403:2009::700;
+ envelope-from=gregory.price@memverge.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,51 +142,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Apr 2024 at 09:49, Thomas Huth <thuth@redhat.com> wrote:
+On Thu, Apr 18, 2024 at 04:10:51PM -0700, nifan.cxl@gmail.com wrote:
+> A git tree of this series can be found here (with one extra commit on top
+> for printing out accepted/pending extent list): 
+> https://github.com/moking/qemu/tree/dcd-v7
+> 
+> v6->v7:
+> 
+> 1. Fixed the dvsec range register issue mentioned in the the cover letter in v6.
+>    Only relevant bits are set to mark the device ready (Patch 6). (Jonathan)
+> 2. Moved the if statement in cxl_setup_memory from Patch 6 to Patch 4. (Jonathan)
+> 3. Used MIN instead of if statement to get record_count in Patch 7. (Jonathan)
+> 4. Added "Reviewed-by" tag to Patch 7.
+> 5. Modified cxl_dc_extent_release_dry_run so the updated extent list can be
+>    reused in cmd_dcd_release_dyn_cap to simplify the process in Patch 8. (Jørgen) 
+> 6. Added comments to indicate further "TODO" items in cmd_dcd_add_dyn_cap_rsp.
+>     (Jonathan)
+> 7. Avoided irrelevant code reformat in Patch 8. (Jonathan)
+> 8. Modified QMP interfaces for adding/releasing DC extents to allow passing
+>    tags, selection policy, flags in the interface. (Jonathan, Gregory)
+> 9. Redesigned the pending list so extents in the same requests are grouped
+>     together. A new data structure is introduced to represent "extent group"
+>     in pending list.  (Jonathan)
+> 10. Added support in QMP interface for "More" flag. 
+> 11. Check "Forced removal" flag for release request and not let it pass through.
+> 12. Removed the dynamic capacity log type from CxlEventLog definition in cxl.json
+>    to avoid the side effect it may introduce to inject error to DC event log.
+>    (Jonathan)
+> 13. Hard coded the event log type to dynamic capacity event log in QMP
+>     interfaces. (Jonathan)
+> 14. Adding space in between "-1]". (Jonathan)
+> 15. Some minor comment fixes.
+> 
+> The code is tested with similar setup and has passed similar tests as listed
+> in the cover letter of v5[1] and v6[2].
+> Also, the code is tested with the latest DCD kernel patchset[3].
+> 
+> [1] Qemu DCD patchset v5: https://lore.kernel.org/linux-cxl/20240304194331.1586191-1-nifan.cxl@gmail.com/T/#t
+> [2] Qemu DCD patchset v6: https://lore.kernel.org/linux-cxl/20240325190339.696686-1-nifan.cxl@gmail.com/T/#t
+> [3] DCD kernel patches: https://lore.kernel.org/linux-cxl/20240324-dcd-type2-upstream-v1-0-b7b00d623625@intel.com/T/#m11c571e21c4fe17c7d04ec5c2c7bc7cbf2cd07e3
 >
-> Add some words about how to enable or disable boolean features,
-> and remove the note about a Linux kernel being available on the
-> QEMU website (they have been removed long ago already), and the
-> note about NetBSD and OpenBSD still having issues (they should
-> work fine nowadays).
->
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2141
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  docs/system/target-sparc.rst | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.rst
-> index 9ec8c90c14..54bd8b6ead 100644
-> --- a/docs/system/target-sparc.rst
-> +++ b/docs/system/target-sparc.rst
-> @@ -27,6 +27,11 @@ architecture machines:
->  The emulation is somewhat complete. SMP up to 16 CPUs is supported, but
->  Linux limits the number of usable CPUs to 4.
->
-> +The list of available CPUs can be viewed by starting QEMU with ``-cpu help``.
-> +Optional boolean features can be added with a "+" in front of the feature name,
-> +or disabled with a "-" in front of the name, for example
-> +``-cpu TI-SuperSparc-II,+float128``.
-> +
->  QEMU emulates the following sun4m peripherals:
->
->  -  IOMMU
-> @@ -55,8 +60,5 @@ OpenBIOS is a free (GPL v2) portable firmware implementation. The goal
->  is to implement a 100% IEEE 1275-1994 (referred to as Open Firmware)
->  compliant firmware.
->
-> -A sample Linux 2.6 series kernel and ram disk image are available on the
-> -QEMU web site. There are still issues with NetBSD and OpenBSD, but most
-> -kernel versions work. Please note that currently older Solaris kernels
-> -don't work probably due to interface issues between OpenBIOS and
-> -Solaris.
-> +Please note that currently older Solaris kernels don't work probably due
-> +to interface issues between OpenBIOS and Solaris.
 
-If we're touching this text anyway I guess we could clean up the
-grammar: "don't work; this is probably due to".
+added review to all patches, will hopefully be able to add a Tested-by
+tag early next week, along with a v1 RFC for MHD bit-tracking.
 
-thanks
--- PMM
+We've been testing v5/v6 for a bit, so I expect as soon as we get the
+MHD code ported over to v7 i'll ship a tested-by tag pretty quick.
+
+The super-set release will complicate a few things but this doesn't
+look like a blocker on our end, just a change to how we track bits in a
+shared bit/bytemap.
+
+> 
+> Fan Ni (12):
+>   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
+>     payload of identify memory device command
+>   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
+>     and mailbox command support
+>   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
+>     type3 memory devices
+>   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
+>     devices
+>   hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
+>     size instead of mr as argument
+>   hw/mem/cxl_type3: Add host backend and address space handling for DC
+>     regions
+>   hw/mem/cxl_type3: Add DC extent list representative and get DC extent
+>     list mailbox support
+>   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
+>     dynamic capacity response
+>   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
+>     extents
+>   hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
+>   hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
+>   hw/mem/cxl_type3: Allow to release extent superset in QMP interface
+> 
+>  hw/cxl/cxl-mailbox-utils.c  | 620 ++++++++++++++++++++++++++++++++++-
+>  hw/mem/cxl_type3.c          | 633 +++++++++++++++++++++++++++++++++---
+>  hw/mem/cxl_type3_stubs.c    |  20 ++
+>  include/hw/cxl/cxl_device.h |  81 ++++-
+>  include/hw/cxl/cxl_events.h |  18 +
+>  qapi/cxl.json               |  69 ++++
+>  6 files changed, 1396 insertions(+), 45 deletions(-)
+> 
+> -- 
+> 2.43.0
+> 
 
