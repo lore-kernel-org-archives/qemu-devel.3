@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 935D3C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 21:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61744C05023
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 23:15:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxvOU-0001ve-3M; Fri, 19 Apr 2024 17:03:38 -0400
+	id 1rxxRH-0006vs-EZ; Fri, 19 Apr 2024 19:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
- id 1rxtq4-00049I-Ig; Fri, 19 Apr 2024 15:24:00 -0400
-Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vilhelmgyda@gmail.com>)
- id 1rxtq2-0007D5-Tc; Fri, 19 Apr 2024 15:24:00 -0400
-Received: by mail-io1-xd2b.google.com with SMTP id
- ca18e2360f4ac-7d6230233f9so74172739f.2; 
- Fri, 19 Apr 2024 12:23:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713554637; x=1714159437; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=uJUxi9tsBykObmLhNkXt9AkdhoGWi4TZIDvAKqsWtAw=;
- b=mPQiJTAjEa1oMKDn0tDsAiVAtQ+YYu7QougqTjRgn56uHIA5mQy/v2uFxezyXmmo0j
- 5n+k0F/IJLWBOXul9KHaTBljyiOERVnS0m35T8GMDxVPfLsaah8IvKD2N7zUuu9Ti9g/
- ox5Hn59Bi/c3kgl/txwrNbP1LvPACYG0S2En/mm/yfOLl8ceIsEjZOt/ZJHge8Qe314D
- ccd5QlNyKqD3zmhazlTegaCNaOwwF0gGHMuXchiw7xmRkyIV4EooaWbenX7CnYjWJRWu
- AFhJpwo6HnQKviM5h1uw687h0bZGDPtvV6kMXQfGz8jbrm9vuZ0eMIx1rAi8DQyzHGY7
- surA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713554637; x=1714159437;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uJUxi9tsBykObmLhNkXt9AkdhoGWi4TZIDvAKqsWtAw=;
- b=RyDIajDFQvwbp2oaF8XJyZtq7Rx0biLCbIOLxuxa03C61dCjwQIA9EYQz5dwwHYa9B
- ypIAeyyUagm0uQFmr1Z+UX8Dg4lTe7sxwghb/ccck/+CXJOyuD2xZuxwgjI4YaPaTwpT
- /rREtlUeHzI4xwtqf46H4Uv1xfG+qjlzVvIWmGhFQFWAtv9BZ2eXVc2ggl+lgGSWCJRA
- cWUEqrB0IK30DbWVZjm8ELlv2mu3ApPBmx6WHKrbehH43E17N97TZQzjAD7KFsmJoMfY
- 6elxgavw3yjL5ercOcAShArPymmryO4bXeO1Ug28g2ophbOsS5LNGpJQng8bcUWeMX4t
- tcBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUyfMjmn41RSp2jsl54Ub3MlubqSM99+hT7IINra0xAyJPj6D3h/x4AWpBOFHqHicZTVbAVg3SJC6vrLUevKCL1lvspWLhrVg==
-X-Gm-Message-State: AOJu0Yw1W3mDh3Ccq4K8bjUW1yjHb+U06ARswMxI8NWClW7gc60HGQLD
- H+3+njwanPRlZdTY5Ghu6OCX8gjiEurX7hn5indas8DjqmCnNsSjXWtXgpYa7pGE0jpVYmR+bCn
- SjF1QvsgRqd4CIIvs0dxA2WyV15i82MXlpHyJuD8S
-X-Google-Smtp-Source: AGHT+IFj03IyUHw5iRx1QaD1dsphTATHaQm9ALf9MYpMXMiLUlpNdiNAFuwgE1N2HPli148KTa7xL5pisnxekQlnl6s=
-X-Received: by 2002:a05:6602:1485:b0:7da:4645:4703 with SMTP id
- a5-20020a056602148500b007da46454703mr4569830iow.20.1713554636698; Fri, 19 Apr
- 2024 12:23:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1rxxRF-0006vW-N6
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 19:14:37 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1rxxRE-0003IB-38
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 19:14:37 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4VLr7m4MRsz8PbP;
+ Fri, 19 Apr 2024 19:14:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=comstyle.com; h=message-id
+ :date:mime-version:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding; s=default; bh=mxvbNq4zX
+ 4ON0WTAwlg9N2dYkJ0=; b=ZHBkEU1KITc315wuKZkj/yy9fe14URNqk972gsFjL
+ lO3+DsL5r2K239S0yEciFpyvyCCBnZbQeSZsoc56wIdCC5BF/xY3HZVu8y8Tyqc/
+ QEuKA6XJiRwmNg2Qf6miqkcpcF1ggDgqY/+iSFFOfpMD3to2tyRrhm3MLjQTvyIv
+ ZA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
+ :date:mime-version:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding; q=dns; s=default; b=XqQ
+ WkXZTSBeh4BNG/sBn+3Ve/7aH0tjSbTKTpEYmIAbDKycVQfVj4Bd9DJgMiyWfRBi
+ lSiV4YASnvHGRPYXXlLKh0q4h7n0he1YR+SZft/tC1BXd2i+bvaZMgeKxnUDtxmd
+ Jda+Pl1inYDGmyElQu3vQ+HDx4JB4mHZSZnTCiZM=
+Received: from [IPV6:2001:470:b050:6:cc31:46d5:f26a:a82b] (unknown
+ [IPv6:2001:470:b050:6:cc31:46d5:f26a:a82b])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4VLr7m3fsMz8PbN;
+ Fri, 19 Apr 2024 19:14:28 -0400 (EDT)
+Message-ID: <59c90771-3bef-4f35-bd3f-0cbf9d7551c5@comstyle.com>
+Date: Fri, 19 Apr 2024 19:14:27 -0400
 MIME-Version: 1.0
-From: Vilhelm Gyda <vilhelmgyda@gmail.com>
-Date: Sat, 20 Apr 2024 00:53:45 +0530
-Message-ID: <CADe4k3LvHf5j+nedOq_4w0QrRWz60kBRxJ7W+fW6dyM7_invqg@mail.gmail.com>
-Subject: Issue#414 and qemu_mutex_lock() API Conversion
-To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, jsnow@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2b;
- envelope-from=vilhelmgyda@gmail.com; helo=mail-io1-xd2b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] docs/system/target-sparc: Improve the Sparc
+ documentation
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240307174334.130407-1-thuth@redhat.com>
+ <20240307174334.130407-5-thuth@redhat.com>
+ <529ece4e-1de6-4941-bb75-c10997aad13c@ilande.co.uk>
+Content-Language: en-US
+From: Brad Smith <brad@comstyle.com>
+In-Reply-To: <529ece4e-1de6-4941-bb75-c10997aad13c@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 19 Apr 2024 17:03:36 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,32 +85,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 2024-04-18 4:27 p.m., Mark Cave-Ayland wrote:
+> On 07/03/2024 17:43, Thomas Huth wrote:
+>
+>> Add some words about how to enable or disable boolean features,
+>> and remove the note about a Linux kernel being available on the
+>> QEMU website (they have been removed long ago already).
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>> =C2=A0 docs/system/target-sparc.rst | 8 ++++++--
+>> =C2=A0 1 file changed, 6 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.r=
+st
+>> index 9ec8c90c14..9f418b9d3e 100644
+>> --- a/docs/system/target-sparc.rst
+>> +++ b/docs/system/target-sparc.rst
+>> @@ -27,6 +27,11 @@ architecture machines:
+>> =C2=A0 The emulation is somewhat complete. SMP up to 16 CPUs is suppor=
+ted,=20
+>> but
+>> =C2=A0 Linux limits the number of usable CPUs to 4.
+>> =C2=A0 +The list of available CPUs can be viewed by starting QEMU with=
+=20
+>> ``-cpu help``.
+>> +Optional boolean features can be added with a "+" in front of the=20
+>> feature name,
+>> +or disabled with a "-" in front of the name, for example
+>> +``-cpu TI-SuperSparc-II,+float128``.
+>> +
+>> =C2=A0 QEMU emulates the following sun4m peripherals:
+>> =C2=A0 =C2=A0 -=C2=A0 IOMMU
+>> @@ -55,8 +60,7 @@ OpenBIOS is a free (GPL v2) portable firmware=20
+>> implementation. The goal
+>> =C2=A0 is to implement a 100% IEEE 1275-1994 (referred to as Open Firm=
+ware)
+>> =C2=A0 compliant firmware.
+>> =C2=A0 -A sample Linux 2.6 series kernel and ram disk image are availa=
+ble=20
+>> on the
+>> -QEMU web site. There are still issues with NetBSD and OpenBSD, but mo=
+st
+>> +There are still issues with NetBSD and OpenBSD, but most
+>> =C2=A0 kernel versions work. Please note that currently older Solaris =
+kernels
+>> =C2=A0 don't work probably due to interface issues between OpenBIOS an=
+d
+>> =C2=A0 Solaris.
+>
+> Just curious as to what current issues exist with NetBSD and OpenBSD?=20
+> At least both my NetBSD and OpenBSD test images survive a casual boot=20
+> test here with latest git.
 
-I am new here, so I found some issues suitable for beginners at [1]. I
-am currently looking at the API Conversion task of replacing
-`qemu_mutex_lock()` and `qemu_mutex_unlock()` with `QEMU_LOCK_GUARD()`
+I was just trying OpenBSD/sparc64 with 8.2 recently and found hme(4) does
+not work. I tried with the NE2k driver as I remember adding the driver=20
+to the
+OpenBSD kernel before an hme driver existed and it sort of worked, but th=
+ere
+were still issues.
 
-After reading the macro definition of `QEMU_LOCK_GUARD()` and
-`WITH_QEMU_LOCK_GUARD()`, I think I can replace an instance of
-`qemu_mutex_(un)lock` at line 1065[2] and 1072[3] with
-`WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {}`
-
-Will this be an acceptable patch? Do I need to do anything else before
-submitting(other than the checkpatch script)? How and what should I
-test before submitting? This page[4] has some tests, but will running
-all these be too much for a change this trivial?
-
-Also, about this bite-sized issue[5]. @jsnow has commented to get in
-touch about it. So, what should be my next step for working on this
-issue?
-
-Thanks,
-Will
-
-[1]: https://wiki.qemu.org/Contribute/BiteSizedTasks
-[2]: https://gitlab.com/qemu-project/qemu/-/blob/master/migration/ram.c?ref_type=heads#L1065
-[3]: https://gitlab.com/qemu-project/qemu/-/blob/master/migration/ram.c?ref_type=heads#L1072
-[4]: https://wiki.qemu.org/Testing
-[5]: https://gitlab.com/qemu-project/qemu/-/issues/414
+I'll re-test with 9 now and see what happens.
 
