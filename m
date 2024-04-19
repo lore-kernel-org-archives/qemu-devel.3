@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65304C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 15:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CADA8C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 15:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxprO-0002fI-No; Fri, 19 Apr 2024 11:09:06 -0400
+	id 1rxptC-0003Py-Ny; Fri, 19 Apr 2024 11:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxprH-0002eo-8n
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:09:00 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rxprD-00085g-Bw
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:08:57 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-571c25a329eso2503635a12.0
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:08:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713539332; x=1714144132; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VD67OE+c1MW2Nrl9j1vYfQSom4Wr5fQZfhvS6Thwdi8=;
- b=OkiiXj3t0ryQAC3tKqfBG1CCzzna/XTUdza3tmrfPLMC1rima27cdaJ2I32Oml9m8t
- 4FHCe6Nq/QEaEJUTiMeQhDOjZWjof+UqyTqfSFguAMDEfGaDEfpvW2TzwwLuekCSI3ta
- tyPSZza0PswJzWlr6G8T4sjMRWMx9cezNy0MaiEv1jJ7HKH6JeR65+RfenH+GaTIPyhq
- nEEEwmApxc1KxwLfLKAwz4Pi7I8HBlNAzLqmByCsmIfTjRMKyZbVgORFrUnyLmOvlKJ/
- 9E2qIi4hgZHpunC18ZDmLkH6veBdA4BxfckcvuPvUcrTZ2NyFlw34y/HQIyZeeVeoJS3
- YKAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713539332; x=1714144132;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VD67OE+c1MW2Nrl9j1vYfQSom4Wr5fQZfhvS6Thwdi8=;
- b=VcUAvTno3+/vpvFidveZWheRmknm8cT+ZNQUu47UDBgPcq6bTPwvWBDb4U4xUhV/jJ
- 5Ap0/Z8eHTg8igTMIU0J9WF+y80USN8sDz4wpnRr9J+uO9Ww/4Kt7aliiUEeDw/94IeD
- PefW8TxNd0X7zkU/mjRHoLFsYLcHOVK81gM7ZLDU/lPv5Dr3pmOOGVogyuVHKVF3o3EU
- ndgaAvo4o/ocm4+KPBeXu3cESubXEJSu2qO7CAv4BfyJFOhTiocrusVUdMMy68XIf/J1
- L+v85ennY64nQvhwSbz+wZiFFx3Ay9FvEAq5RcSLwSzcIP00ip2st/wdETRIVkaLzfAl
- 5y8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtH0N4SvYgvAMQ0DyKsv3g6S8iQD9tQovg1QohQkxc+C8lW1lW8qpRhLEC3Te69a8EuWlQsHP+KtjUDAmGW17NHymMhgo=
-X-Gm-Message-State: AOJu0YyDJLWUx/Hvw9+7y57Mg/EKIxgj7eD1LtjyWUVb9Nkh7Wrn4gRM
- Wcdcenzt1rQZtWRTcP00oReT3mtCDcRw5MoqOrYllXuKdH6DtyIZ/0alXluU9uHvJkI04eEaVfs
- foMziW6CACPSkVc/KX93KNyW1ZohVWyzbKmvMqw==
-X-Google-Smtp-Source: AGHT+IEdytZSbGMpHHgJ8vK4E+HFEmNiFG14IDEulQHbF+szMqVqBMxnNAEF3WhY+UrooIRiA1Wx/inZE5iRDwTR8gc=
-X-Received: by 2002:a50:8716:0:b0:570:5e98:64b7 with SMTP id
- i22-20020a508716000000b005705e9864b7mr2357302edb.17.1713539331508; Fri, 19
- Apr 2024 08:08:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rxpt4-0003N3-PB
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:10:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rxpss-0000Fz-2i
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:10:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713539436;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=797g1e+/d8qvTxCJqjjsQP4+vz2jNRk3dmP0OYu0HUI=;
+ b=Fh8YUgrnZqVFMNjtm1OKALcybu2bs7uYIEsxq3ROImO2kbI0/FjKdKgUapcBsLK+ok56zR
+ uKFSoEhKqzm7ze48nzn26LzOJxjtEGXdrB7xg/FIU9/DvsWiI99qMKzkCvGJPGcTD+hEqf
+ c7WdQgIcjAVtOAUJNwAS9SBJ/KvK3gI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-26-LDBTb6T1P32lC1kWKApHzA-1; Fri, 19 Apr 2024 11:10:35 -0400
+X-MC-Unique: LDBTb6T1P32lC1kWKApHzA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 49C9B8140A8;
+ Fri, 19 Apr 2024 15:10:35 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 2A05E1C060D0;
+ Fri, 19 Apr 2024 15:10:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2792D21E6811; Fri, 19 Apr 2024 17:10:29 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Victor Toso de Carvalho
+ <victortoso@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Paolo
+ Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 00/27] Add qapi-domain Sphinx extension
+In-Reply-To: <87msppl8c8.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Fri, 19 Apr 2024 16:45:27 +0200")
+References: <20240419043820.178731-1-jsnow@redhat.com>
+ <87msppl8c8.fsf@pond.sub.org>
+Date: Fri, 19 Apr 2024 17:10:29 +0200
+Message-ID: <87y199jsm2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240418191602.2017-1-raphael.poggi@lynxleap.co.uk>
- <5b8ce05b-62c6-4362-aa16-a9e845eb4df7@linaro.org>
- <CACqcpZCubN0Bnmht03TRCWdtYUd4aOpitcx31J+NiMEe2vWhSA@mail.gmail.com>
-In-Reply-To: <CACqcpZCubN0Bnmht03TRCWdtYUd4aOpitcx31J+NiMEe2vWhSA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Apr 2024 16:08:40 +0100
-Message-ID: <CAFEAcA9wcaptrL5LHWah0MeKP1CV-WbfwsS65kibLwJ4TpvjTg@mail.gmail.com>
-Subject: Re: [PATCH] hw/core/clock: always iterate through childs in
- clock_propagate_period
-To: Raphael Poggi <raphael.poggi@lynxleap.co.uk>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, luc@lmichel.fr, damien.hedde@dahe.fr
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,58 +85,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Apr 2024 at 21:39, Raphael Poggi
-<raphael.poggi@lynxleap.co.uk> wrote:
->
-> Hi Philippe,
->
-> Le jeu. 18 avr. 2024 =C3=A0 20:43, Philippe Mathieu-Daud=C3=A9
-> <philmd@linaro.org> a =C3=A9crit :
-> >
-> > Hi Raphael,
-> >
-> > On 18/4/24 21:16, Raphael Poggi wrote:
-> > > When dealing with few clocks depending with each others, sometimes
-> > > we might only want to update the multiplier/diviser on a specific clo=
-ck
-> > > (cf clockB in drawing below) and call "clock_propagate(clockA)" to
-> > > update the childs period according to the potential new multiplier/di=
-viser values.
-> > >
-> > > +--------+     +--------+      +--------+
-> > > | clockA | --> | clockB |  --> | clockC |
-> > > +--------+     +--------+      +--------+
-> > >
-> > > The actual code would not allow that because, since we cannot call
-> > > "clock_propagate" directly on a child, it would exit on the
-> > > first child has the period has not changed for clockB, only clockC is
-> >
-> > Typo "as the period has not changed"?
->
-> That's a typo indeed, thanks!
->
-> >
-> > Why can't you call clock_propagate() on a child?
->
-> There is an assert "assert(clk->source =3D=3D NULL);" in clock_propagate(=
-).
-> If I am not wrong, clk->source is set when the clock has a parent.
+Markus Armbruster <armbru@redhat.com> writes:
 
-I think that assertion is probably there because we didn't
-originally have the idea of a clock having a multiplier/divider
-setting. So the idea was that calling clock_propagate() on a
-clock with a parent would always be wrong, because the only
-reason for its period to change would be if the parent had
-changed, and if the parent changes then clock_propagate()
-should be called on the parent.
+[...]
 
-We added mul/div later, and we (I) didn't think through all
-the consequences. If you change the mul/div settings on
-clockB in this example then you need to call clock_propagate()
-on it, so we should remove that assert(). Then when you change
-the mul/div on clockB you can directly clock_propagate(clockB),
-and I don't think you need this patch at that point.
+>> The purpose of sending this series in its current form is largely to
+>> solicit feedback on general aesthetics, layout, and features. Sphinx is
+>> a wily beast, and feedback at this stage will dictate how and where
+>> certain features are implemented.
+>
+> I'd appreciate help with that.  Opinions?
 
-thanks
--- PMM
+Less than clear, let me try again: I'm soliciting opinions on the new
+look.  Check it out...
+
+[...]
+
+>> This RFC series includes a "sandbox" .rst document that showcases the
+>> features of this domain by writing QAPI directives by hand; this
+>> document will be removed from the series before final inclusion. It's
+>> here to serve as a convenient test-bed for y'all to give feedback.
+
+... here:
+
+>> All that said, here's the sandbox document fully rendered:
+>> https://jsnow.gitlab.io/qemu/qapi/index.html
+>>
+>> And here's the new QAPI index page created by that sandbox document:
+>> https://jsnow.gitlab.io/qemu/qapi-index.html
+
+[...]
+
 
