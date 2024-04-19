@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B843FC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BE9C04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxsnr-0007ir-O5; Fri, 19 Apr 2024 14:17:40 -0400
+	id 1rxsql-0000QL-Qr; Fri, 19 Apr 2024 14:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rxsnp-0007iK-OU
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:17:37 -0400
-Received: from mail-mw2nam04on2120.outbound.protection.outlook.com
- ([40.107.101.120] helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ id 1rxsqc-0000Pv-Kw
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:20:31 -0400
+Received: from mail-bn8nam04on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:2408::701]
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rxsnl-0004iU-AU
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:17:35 -0400
+ id 1rxsqV-0005FZ-H7
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:20:28 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=APJRp6V1YIp/LHsLQFwRzws5IuI+Z8+QR/r867bEfIqa9D0iOgnQylkUQeN6Ypk5P1eeCqMxXFOVdARpsCCXVaOmlcy/Af+HHrtXPHl5ixrpjTeHztm+u/VFFdc5jtQqzJOe0MKpd1Im09op62ekF/UQwD63DN/3CgBzWU8RGZVRO4WBFS4rMbkwm7mD1DMVdKx7qdXDTOabjxL2hHCBXbuvQiwwAMvhW3LlGfxCsVspiMRXt9m3Yzkw4lP4EPhJp73zEgc1o5v1sE5l/tjA+3YZ8TsBOQ0bKgv9vtdCzZ1YjCk9imN3EzeNnbpiEMD5VN9D4K1L0TZjqTNtQzWelQ==
+ b=e6E2QezGOpvUjlfgOPAfMOMnc3AH9U1gfuwutVBGViMcUJVBKjzE+J54225V2gO2Ue1Q+N+vEvmHBtgTz4ROYgcVCADCxNmsL8yA7pVCMUCwGjE/GDwdhmCmUXxtTlOPYnOZK+VfvnIUY+vrNEkPy4Joq7+G3ITE2AnLly3WH9g+aFfcFp/KfgJM1Aunj/C0tWAkOrfqbYW5W6jd6zvCnEFKjoQqyvMD6jp7Rz3Rzf+ErRra92t7/B2K8xRF3y3e5p5VRhqcab0sPeeG5buvAnPPIvGXKeo0j3WqBpxWLzSBnYtXhg798haRHGpCYsa1qVMYWC9dJe+Zp68hPzQeeg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9QSUq8fEngG2ytREEJvBapmEPDGy6fjOpqznaiQhMGI=;
- b=QoMlTG54s0a0bdmiO3b0zq4AH2UtaraPVGp7TnHAqNHXIzbSetvpya11xZLWg4yu5eSUAW1wBFop6LHRN++iW+f1CJYrlbLkAGQSF0u2nYBc3KHwxjgkmBn/ynPEugqNWA6cywFOF/lK4tAnQLSL9TbDb8bkzQ+RrHKkauZX+xlLlGLgV4oUfSm2L7arbTSDJvsNpoVlwUi9306EmCOjz/foUnKz/x1tHEm2ytDU0Vf+HSmvZE4SMRqYLbdLPXLLvrPT9BBnydC2ATAvpwKWV1S5DlgaWLwQ6nNsWrM0E2IrC+M0916BBGSizabi7lp3IG4wTuBnQQtE7/yh6nrl1Q==
+ bh=NNUbVNZ89yvRJuY4igJTchbqwHKeFWAomGkTOW/jPVE=;
+ b=VU0AkqJJWAf4/cn64WJ+5m8eo1XeZmt0SZqYjx2/GvWTqyejbhZ6+Zfj5pm3zy97SHvCjlV0wGfsdZ/wyJvwS4S+pbrp4R4/S8RX7l5i1OcWKh+GpkQy8J0ET69fymDU7SmpC7gQEZZ6VUHRSXgi/gMC+qPZ4rVEVTYafWoazf+NQqF2nX0ZL9qPzQ1DDflicFUYoXlHFzOLGY1mJHFZ6w4yplapzJw3J9DTfP5sDcD780Er/FH2qEoHa83mXMJ77WlIlQAMbzH2KFhKjm6Yi5dndTpr2ahV4DIRoctg7E5UAG1Tz/Eb3EribLLI3GwHcPZI+7ZGGAjxTUkHc11Hrg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
  dkim=pass header.d=memverge.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9QSUq8fEngG2ytREEJvBapmEPDGy6fjOpqznaiQhMGI=;
- b=oAiGEsuau/maWBEXEuiVDOaQcBYctqq6dI/+FKfhwgTESjfoaZ4kjslz7F+nVIIKcUXRhCCh4e7tomgIhbuQmn5zUpb7U1sq5bRHkuARvitXh8upJS82QVEQ2+HZTastoEv+xmGXatn6wkoSafuoneCN9bSSgpXh2Z/AqD6RLJI=
+ bh=NNUbVNZ89yvRJuY4igJTchbqwHKeFWAomGkTOW/jPVE=;
+ b=UauoCir0xmbJhH2CMnH2ovif+drR7dlPWv/bnIapybWK/vJ+Vdnu+Fv3BKikSX8+0zk3ExgG8SmyNfzTpQGwvlt6Cfhro9A+lhEiEIj5/3/BamEb4whJsJrvwoGnY1dkczcFLO4SUtGw1SbN7niyMnYuQBQxnnjgOX3iM9FVZsM=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=memverge.com;
 Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
- by SA1PR17MB4691.namprd17.prod.outlook.com (2603:10b6:806:19a::20)
+ by SA1PR17MB5569.namprd17.prod.outlook.com (2603:10b6:806:1c8::19)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.43; Fri, 19 Apr
- 2024 18:12:24 +0000
+ 2024 18:20:19 +0000
 Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
  ([fe80::5d53:b947:4cab:2cc8]) by SJ0PR17MB5512.namprd17.prod.outlook.com
  ([fe80::5d53:b947:4cab:2cc8%4]) with mapi id 15.20.7472.042; Fri, 19 Apr 2024
- 18:12:24 +0000
-Date: Fri, 19 Apr 2024 14:12:16 -0400
+ 18:20:19 +0000
+Date: Fri, 19 Apr 2024 14:20:15 -0400
 From: Gregory Price <gregory.price@memverge.com>
 To: nifan.cxl@gmail.com
 Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
@@ -56,97 +57,96 @@ Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
  dave@stgolabs.net, nmtadam.samsung@gmail.com,
  jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
  Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v7 08/12] hw/cxl/cxl-mailbox-utils: Add mailbox commands
- to support add/release dynamic capacity response
-Message-ID: <ZiK0ADOsUMtX1GAK@memverge.com>
+Subject: Re: [PATCH v7 11/12] hw/cxl/cxl-mailbox-utils: Add superset extent
+ release mailbox support
+Message-ID: <ZiK136P4/tNU2AZZ@memverge.com>
 References: <20240418232902.583744-1-fan.ni@samsung.com>
- <20240418232902.583744-9-fan.ni@samsung.com>
+ <20240418232902.583744-12-fan.ni@samsung.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240418232902.583744-9-fan.ni@samsung.com>
-X-ClientProxiedBy: BYAPR08CA0049.namprd08.prod.outlook.com
- (2603:10b6:a03:117::26) To SJ0PR17MB5512.namprd17.prod.outlook.com
+In-Reply-To: <20240418232902.583744-12-fan.ni@samsung.com>
+X-ClientProxiedBy: PH1PEPF00013304.namprd07.prod.outlook.com
+ (2603:10b6:518:1::16) To SJ0PR17MB5512.namprd17.prod.outlook.com
  (2603:10b6:a03:394::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|SA1PR17MB4691:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5d831e21-6f95-4805-3ea4-08dc609c4363
+X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|SA1PR17MB5569:EE_
+X-MS-Office365-Filtering-Correlation-Id: e533d1bc-bbde-4030-3786-08dc609d5e83
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?/wDY+WMDAcC057qJ3nbFaKVMn/UgnsEecqnjBlot0QtV6T2R5hBfZzx3CySs?=
- =?us-ascii?Q?ay6DJncYXPyTHXbIfexhDRl/bXYZhQ0fNiuUtPBBOIFDDxix8mbAoAOLK/3J?=
- =?us-ascii?Q?R4+sjRx50m3+a/kpmdifm1dha3BIl2L9WnFxZKc5cL3JczUtrz0CFtEJro32?=
- =?us-ascii?Q?1c3xv7cMPkO5YsrjJsX57RkJSrphJac1/n59fVoEkD0OPsMhbI0ruGSb3tnG?=
- =?us-ascii?Q?j05SZPXSDPY7/zi+Ngpn0NIJupTgF8hmqFMpCqZaSbNPMnQJ8PNf0H0pNpLf?=
- =?us-ascii?Q?Wr/+otHRR813FTfWORYU53Igr16DLpQ5rdOfKU2upH+20nD4eRMtZwoZq7iE?=
- =?us-ascii?Q?SYHt/rB9fpST2vZhtfFHvkgSffKinN58PzhKwTLZtx0E2fOgG1C0XVIErQY0?=
- =?us-ascii?Q?N2AK7Vl7goZHAZphZZ/EyGK0CWkPDiYeH5caeFhU3QgP+ftlMEc3dfANMjun?=
- =?us-ascii?Q?Xsd5CcGKof5BCXV3RWJsotkGB/wiwVDUhcqRXGkcb894uvziU7oyh56uSnhS?=
- =?us-ascii?Q?E0H5bd7ZRufxC76hxR0ytPL5vzemqlA/iRovJoYOsyBdbhD4RQjGpYonLL7a?=
- =?us-ascii?Q?0YLmrG3r8u7fj39PvtDpuchCWX1KsL3Eiz2zCcUzH9FLuPZYcbEaluCf6ZEA?=
- =?us-ascii?Q?NIGFYPw3jkPIy6LZRpSGGDg5CD6NZ/fcw4rK+UgKyLXrDmN2fvbZgCmkIhva?=
- =?us-ascii?Q?QBoM8jIWzJpOah/F1XgSO1RrAsBal03oexFpGM85ehmHBR1OMfo1KupQC2x2?=
- =?us-ascii?Q?t8sdQlMgMvhos1punCbVYzAzskAHAm3krrgz6oRLtRHQ/ON8rztCXyzCFyto?=
- =?us-ascii?Q?guYweQl+ZgjuM3J7r/Dq5zdKF3dsh3sfX6g92j2VWX0W9x62StmyjnmWZ3yp?=
- =?us-ascii?Q?oUWQV7zdsgYAoGJX3Qmj63R/GVXKME9nl/gOGwqZlENxMef94Aiw26pR6d3Q?=
- =?us-ascii?Q?+C4CSuIgIPX8lfALtK64oJ+WrF5zu5YeJeyxBuM2ArzaqIbae+qcM7CAvXBC?=
- =?us-ascii?Q?ZCL+LXbtEMwQzo/EJC4xQRDwjWQgFS1hsKZQ88fj9BFhlsuvQDjN6og4ZgAL?=
- =?us-ascii?Q?331H8R+bO7qyQmw/qUfEEj/VXloqODW+m7RBgzDIBTWL6VfahUgqZrg8zN6e?=
- =?us-ascii?Q?3Gs/lyUorvyNSjXMW7blz3PxdNtd9BqhhOAAfXAoH80lKmvutB7DS6xMkKHl?=
- =?us-ascii?Q?0zJ2YUVKue/srpe7FQs/20v26sOcehLdYKxwZmpbKqr0LmA80R7wQYHEg5Zl?=
- =?us-ascii?Q?FT3ALP2QoO0PjQVmWj9eauVu2ly2O36OHW54iYNGsA=3D=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?kMR5pboNNzFRmrX/s7KgHpua5caBkCyH0zMmT2jZtz066NEsSfMDkZKu2UEj?=
+ =?us-ascii?Q?hhzdH30GCkwx8ufrinh7XMGHIgu+MMpQi6nLrgcjYOs9jwKkMPCB+t8Orj2x?=
+ =?us-ascii?Q?k/en9y4BHolpVNPA0u1IIIGBUQsTtaC8O0VDhlp1WuXtoCrmPt1iWila7nL1?=
+ =?us-ascii?Q?W1tLc3saMhonfVCC3Nq30weatXGGXiBxupgehtDqDY5cXc5DBMk7hUOgyNJW?=
+ =?us-ascii?Q?CNpwVP1mFVPgy7/X03juFDEjxeZY+roQldY0SpQDwKDeWbUPESeMhtqn0gT/?=
+ =?us-ascii?Q?5qBXYtAnjwYPBUMDmKLwjPtI74hCqoyGG04BgCcTaO+jm0u3U0yy8T4U/U5a?=
+ =?us-ascii?Q?USYczkGne0QI/DDVHdRz0Ek6RQQduGEEj16lINfNS3y4Q9auaNBKxmBj/iPu?=
+ =?us-ascii?Q?kP5/w2Te/LxgJcOomWXe7pnmbLNpwOOCdg/dz5VjN6xq85AXVihjQTWfDEwZ?=
+ =?us-ascii?Q?Hp8gI7i91xTEzz7kCqwawcFbH8oBCWWYR8CARWjUYjgZYRq1/Br4SXuGJ1vX?=
+ =?us-ascii?Q?JP09qwbQsksogZVxnQVMpfqvoAbh7Vf/yAEXIDFXX713w8NobRIGZZ0na6Ix?=
+ =?us-ascii?Q?LqEfKWdRP/gLwyC/V3hsvmAtReZdR/F9i3OGBgD7OIqyWebM6SnALuA1z+Fp?=
+ =?us-ascii?Q?zW5tIQ5bOT6ZLXpvZ9Iz6bp+Ukz8YLqV5OKf3UiW5o45KSE+L5RCRv+DaPgQ?=
+ =?us-ascii?Q?kjbTLurksxs8HzFnp0CpJU8jVmpWPIUx52TImzzYgF/dgabuyDhGNGVWQKnJ?=
+ =?us-ascii?Q?EZE5Bv9AyzNTCrOzPMOkU/aeKrOe61EbOwrbGAvCDEkFTWEsnBWs0V/+2+I7?=
+ =?us-ascii?Q?OF1HusZx5bDhxgKsHSnZXJCJ7Xd/w+DqYg2AZ8Ta3KwoG+O8KVaG6J/4qarI?=
+ =?us-ascii?Q?5O4X7p+7wZMYIrWo2SKQYocpu05Es4CtxZmDLpKS5YSKB/Gldz3w6x+RaQgY?=
+ =?us-ascii?Q?vafz0V/W8GkwD7ELzvfDFEN3u78sb7gyp5kyXD8RW/AR97S6mHs3ZUkhRoQF?=
+ =?us-ascii?Q?lfVzt3Gkl24C0j+8T5buGE8g/O2+Och12RCQW8Y5owucS1ajT32EoU1edWqd?=
+ =?us-ascii?Q?8AonWm6AsYuMgrv5IFpbvN404cS1vnvdyQ48z0QZPt4GGiuwhkzKIQv0HFw9?=
+ =?us-ascii?Q?KXk5o18YY2uIc1sl6eimi06rwPNepp+ICyxoezJFLdSkZDntpWNhhxl/idvX?=
+ =?us-ascii?Q?6Ws4z3ChdnLv4Sz2iQEWum1vXygvD4QGBdrdkVGgl/G5p0G0wzeYO4QQRZVH?=
+ =?us-ascii?Q?rjzmsk2qozUsqCxgc2dlCmsc7EOOsVBzLLkafGmcSw=3D=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(7416005)(376005)(1800799015); DIR:OUT; SFP:1102; 
+ SFS:(13230031)(7416005)(376005)(1800799015)(366007); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gO3ZxG/zqfQRdidJw8JAQwOsahW5DHQ46inE1f5C+L84ljXTXMpF0w4BMYN8?=
- =?us-ascii?Q?8Z/3hMe847Zxzn1kPeK3oOpWhquTuH4WvnpH3GRUk9kJ5fJqD4UXFUxUlizp?=
- =?us-ascii?Q?a7w+36tIJNQnVWS0a/cYSIMS6AQ7yeLVIXFkBxOXqM9+03Sb0wT31F3ZQyjR?=
- =?us-ascii?Q?STKZAJ/Mr27mABztj7NRbeCmZVZ/1dicNkRONrD4S/tqyeFlnYByTO0+3HfA?=
- =?us-ascii?Q?AfHcTkzZgR2+idovf4x+lYc8q0jUWKWaJeuBpD68gNiy2blatH5RC+/Fk7ue?=
- =?us-ascii?Q?pk0lj/LmkJyukyDy0UUzlUkcCmtCDyHOWmy/lYNdGOZh6NZl8xUbVvnKpx/C?=
- =?us-ascii?Q?wAFT7HXqRSCwssJmotS5BNncnsdSOvSN/uVuxZJR1ZJl4l0km5NQE4EL6X1g?=
- =?us-ascii?Q?XiSkklxIGsJ4AlCYfkERoonmDKvZ0630wQ1N6iLpQHD+i3oByMpYxmXIaZve?=
- =?us-ascii?Q?9e+7mE+HVC6p5Lu6ED3doFb7Xajb6rJOaoi8Iffy6i53edEfFJlwCP0SPlnN?=
- =?us-ascii?Q?M9tX72/w5c8uUN3f1Abnuv+y5ckrk7BgtUUV+uAfEg8GQf5yiTJ9ZBveDFvC?=
- =?us-ascii?Q?6RZ+Jsrgoa9vdsuEI2KWUNSVnjkFDxTsuHC30AhwWLeUo/UuiRHq0NUYKAgR?=
- =?us-ascii?Q?Tkl5xC0gHiMb3JCFOfdu3FH/NKYw/jplU96WkUNymcyY1DXflLGHIl87PHyZ?=
- =?us-ascii?Q?ffSDWZoYYfW5PbWYSavdtZZgl+G98n/yauwkWm3Rih3ihREMjzyUEMKP6Nki?=
- =?us-ascii?Q?C+Ja5QUPnO9wX1FOxBe5qosp/kvpWTxVE45cv0t7cO9l3YJ2J6teSPyqktHy?=
- =?us-ascii?Q?aIOg07STdpeKdzQQMtQ3aiWvXJzxeOpTYega1A0r/dkGSPD8Ao9N/UKPxiPl?=
- =?us-ascii?Q?Lx9w2Dq62curf4FpXaT6uloKmN5u56iHIDmCxOSvvECqv4YT1l0e0zW2sPff?=
- =?us-ascii?Q?uTgSHPjku+TVGoX9zxGRSxabtobTbNvCHVQIeP23fhW7n7w9OCEZvoiIR602?=
- =?us-ascii?Q?eismeohlql963Tq30jizRcWVPCt/TlISnztDsjWKId9ujhHp4/MLrskOEzEg?=
- =?us-ascii?Q?J+UO5s39cXr7BD/z8pAJtAR2zRDAqBkciBhGSgPJivtoToW59Uz7FHIJ+8/L?=
- =?us-ascii?Q?JAhRLtaIQarJ3KM9GZXM+FzO9AafFBIA3WgCGG/b8AkOHkNFmN9QN5C5JT8a?=
- =?us-ascii?Q?gs/nOj922Bs6yA5jJaXZ2mUkaZQNh+qFKsXswZnjgMVpQgr7dx7/AwGmWrEK?=
- =?us-ascii?Q?k+MYtmYtp5bBy5AuyX4ZRuzKIFhOGdF5wqrS/yYz+bLK60oYLGJNK10JLexf?=
- =?us-ascii?Q?qp7ibfuCQaIh170tfyWacz/RJ99NhBuc4+KIM2nvTp/LmcdbedxjykCU17AR?=
- =?us-ascii?Q?aupvpTseNETQBe7wwD3DfPtKpSsqYHDMCqqD82BuBqVMDQe7imvtako66Yle?=
- =?us-ascii?Q?dCsU4HEowRsPdwMy3uwsbi9smcAwgfjk0WZk3aH2oBQTHDciAd8pEjZ+iLVb?=
- =?us-ascii?Q?emBastP6RpIalvy5PeInRIGpysfk6K4aOb+OKn6md+6pNhkyz7U8TA0Ojv3u?=
- =?us-ascii?Q?OZ9ESdc69MNCS0XE/5G4rfqrMN6G6RAT1CqCANoM4yi98Oa3S+6maqBx0++L?=
- =?us-ascii?Q?wQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?sKR1kTXQB0jfJDLItDwHKEiRRz4szjl6YgK74CYWbqISdV+ZOeGIaXJQQ/ZB?=
+ =?us-ascii?Q?rg/pGIj2OI46x0sJPT4+Xsw9Wtn2wOIeZIfhrcSk48lmuXpNCp75POQKRE34?=
+ =?us-ascii?Q?T1fduEQgrK1Ir2UcZiZvA8cpRwj+bL9oVmeynPM1HR8+WRKXeUo7Urw/ODLn?=
+ =?us-ascii?Q?frgJd+6N6AbuVgPOj0UGVt55v+urj/h/Mh//MSSPzsIj/vsmOR1XXE/R+toJ?=
+ =?us-ascii?Q?NH891wzrhK4dpHnCo6lG0ZQx78o8+uLbb6Qntc1/+S6UxLDFdZ74gbZBkAtX?=
+ =?us-ascii?Q?2Njl2sjAmFCCRr9qMRvY3GqvgQF9ImaREycb/PR6wfoGIL9ot9rLv+C+WS5a?=
+ =?us-ascii?Q?g3EuSVGtEJg4H4UvwhkSq3degj8AW+46Zj+QREKwixoHM5QkeJ5K/W/seM3/?=
+ =?us-ascii?Q?C6oPHVPUmZWdXHEDH+dwLvoCVUcoS8WheHhhSwBNfZe3v4TquimtRkarpP14?=
+ =?us-ascii?Q?0tBNXpsZZUe2RFUXbp/g6lMtuUYZ7aHULgtNlKwW2dz6wB7QptqmwlzmXAqq?=
+ =?us-ascii?Q?RUGZ/FqFOELks9TkwUFbG81ylZJzykHvXWjxOs9ZjUWTO6oO+doxjnHf+e7g?=
+ =?us-ascii?Q?I5H5qMPai+Hpl4ZmZwvPMvByrM2ImAoxCCzhiekUZX+YuY3dAdEerrBoZ7ya?=
+ =?us-ascii?Q?1mgOPjP2Cpzb8D1xNwKa09yDOgJAXqlvy2+AxqBs0QsG7CiBPMl4t4YLQkE3?=
+ =?us-ascii?Q?xC3QaHK1ZpwWT+7g50/p1BdHMtURy0+ZHHvbQRD1ndkkNy4YbSGJ2KbYeVqh?=
+ =?us-ascii?Q?kLPdC0UNOmsON5inFgL/WR2IAuJ+sbglriDzpPeAnEDyiUzgqhWjJGmpkR1o?=
+ =?us-ascii?Q?EmOMnbsGmcGkdNxtBwbQTdnnsxNj3mXT0P2jdyNAFqPgDc6lsQ28hwXGEl4b?=
+ =?us-ascii?Q?LzgUxZ93lY53/mbvkdWNqUrLF2rWd7q/792xMSfdRuFeR/MwMiDG2gbw3Eny?=
+ =?us-ascii?Q?wmK9cWp0Oxvz9bKPqINEvk9jcKzGWJgt1ePX1iB2aiqcGiUcPIkEMWZcpp4k?=
+ =?us-ascii?Q?SVcwjrVdPvjfiTiIt5ZP3h8b5Daoj8yauhB/YH1cLL+eRBapNhw2QXWwZg0Y?=
+ =?us-ascii?Q?xgOlibfCHnWuOXUhgiKT+n8qjl41AN3kpshtcclFwlI8Eo/ZGNnfzTbhwJtC?=
+ =?us-ascii?Q?7mylcWNhApmLvBInidRq6a/tK9gdKrjtUprMGMUVtIRRaA52pkJeISRu1ukl?=
+ =?us-ascii?Q?DZLcJ/2AvaTwzFg5WVybfxuMpAa/KyA4LUgi8NpaCiLENn2Jd1ZdjyH6nBK4?=
+ =?us-ascii?Q?5QGXxNOiAG4b1Lt/0Z8+GzN5O3dePivgHyi59mOHdH3sV8XsQhw7ARr+ftW8?=
+ =?us-ascii?Q?acZ9B1bJEL+3v2MHfDDFiJPl1oCr/4NvRDrURKqWxANSH6F8lvjfE2wZUCgJ?=
+ =?us-ascii?Q?XWzQX11e6UNC7sCvWFRXDx6b0AdJYHOfYQ5a8cLrN5b8QGJzZ9A74PdIHXmj?=
+ =?us-ascii?Q?ThejQ7MpdoB1t3HJmKqchIbpYfyKA1uMbBbDxCfNl/vsWtAHj2W4yt9m/PZg?=
+ =?us-ascii?Q?4hT7yr5YCRk8dhnQBHLGAlWtQtQcr8dVjbUyKKnn876+jIyY0Vrn/Gb9rl5R?=
+ =?us-ascii?Q?jAHphpkrhCjAdE78CAVboyhZ+v3F1lrcKr4aFrxWoC+gml0oXDvIKqMNQjS3?=
+ =?us-ascii?Q?Kg=3D=3D?=
 X-OriginatorOrg: memverge.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5d831e21-6f95-4805-3ea4-08dc609c4363
+X-MS-Exchange-CrossTenant-Network-Message-Id: e533d1bc-bbde-4030-3786-08dc609d5e83
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2024 18:12:24.3444 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2024 18:20:19.2420 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: g+eWBULsbPddnZPE6tjRuFU4sdLpX2qQdUY1LTWDh4KuvmL8PlVZ75FhvzBwc7EOcFv4Gha1jvppABEqx5vTOPAS2q/e0d1/wWviBR3qSMA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR17MB4691
-Received-SPF: pass client-ip=40.107.101.120;
+X-MS-Exchange-CrossTenant-UserPrincipalName: GdxhWH1FrX4EanOA+9dOWSAqDtp0MIqwSRKxCpQFvzzDTg5CsNuJ7Pc8uzC6KDuZ3vBXNQAumGbocYVX7DHZb3Ws4jK9XHjja3BBE0phDhM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR17MB5569
+Received-SPF: pass client-ip=2a01:111:f403:2408::701;
  envelope-from=gregory.price@memverge.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,25 +163,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024 at 04:10:59PM -0700, nifan.cxl@gmail.com wrote:
+On Thu, Apr 18, 2024 at 04:11:02PM -0700, nifan.cxl@gmail.com wrote:
 > From: Fan Ni <fan.ni@samsung.com>
 > 
-> Per CXL spec 3.1, two mailbox commands are implemented:
-> Add Dynamic Capacity Response (Opcode 4802h) 8.2.9.9.9.3, and
-> Release Dynamic Capacity (Opcode 4803h) 8.2.9.9.9.4.
-> 
-> For the process of the above two commands, we use two-pass approach.
-> Pass 1: Check whether the input payload is valid or not; if not, skip
->         Pass 2 and return mailbox process error.
-> Pass 2: Do the real work--add or release extents, respectively.
+> With the change, we extend the extent release mailbox command processing
+> to allow more flexible release. As long as the DPA range of the extent to
+> release is covered by accepted extent(s) in the device, the release can be
+> performed.
 > 
 > Signed-off-by: Fan Ni <fan.ni@samsung.com>
 > ---
->  hw/cxl/cxl-mailbox-utils.c  | 394 ++++++++++++++++++++++++++++++++++++
->  hw/mem/cxl_type3.c          |  11 +
->  include/hw/cxl/cxl_device.h |   4 +
->  3 files changed, 409 insertions(+)
-> 
+>  hw/cxl/cxl-mailbox-utils.c | 21 ++++++++-------------
+>  1 file changed, 8 insertions(+), 13 deletions(-)
+>
+
+Hmmm.  This will complicate MHD accounting, but it looks ok to me as-is.
 
 Reviewed-by: Gregory Price <gregory.price@memverge.com>
+
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 57f1ce9cce..89f0ab8116 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -1704,6 +1704,13 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
+>          dpa = in->updated_entries[i].start_dpa;
+>          len = in->updated_entries[i].len;
+>  
+> +        /* Check if the DPA range is not fully backed with valid extents */
+> +        if (!ct3_test_region_block_backed(ct3d, dpa, len)) {
+> +            ret = CXL_MBOX_INVALID_PA;
+> +            goto free_and_exit;
+> +        }
+> +
+> +        /* After this point, extent overflow is the only error can happen */
+>          while (len > 0) {
+>              QTAILQ_FOREACH(ent, updated_list, node) {
+>                  range_init_nofail(&range, ent->start_dpa, ent->len);
+> @@ -1718,14 +1725,7 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
+>                      if (range_contains(&range, dpa + len - 1)) {
+>                          len2 = ent_start_dpa + ent_len - dpa - len;
+>                      } else {
+> -                        /*
+> -                         * TODO: we reject the attempt to remove an extent
+> -                         * that overlaps with multiple extents in the device
+> -                         * for now. We will allow it once superset release
+> -                         * support is added.
+> -                         */
+> -                        ret = CXL_MBOX_INVALID_PA;
+> -                        goto free_and_exit;
+> +                        dpa = ent_start_dpa + ent_len;
+>                      }
+>                      len_done = ent_len - len1 - len2;
+>  
+> @@ -1752,14 +1752,9 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
+>                      }
+>  
+>                      len -= len_done;
+> -                    /* len == 0 here until superset release is added */
+>                      break;
+>                  }
+>              }
+> -            if (len) {
+> -                ret = CXL_MBOX_INVALID_PA;
+> -                goto free_and_exit;
+> -            }
+>          }
+>      }
+>  free_and_exit:
+> -- 
+> 2.43.0
+> 
 
