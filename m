@@ -4,59 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748A9C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 17:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF68C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 17:29:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxrg9-0003T2-Og; Fri, 19 Apr 2024 13:05:37 -0400
+	id 1rxs28-0000X5-8A; Fri, 19 Apr 2024 13:28:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1rxrg8-0003St-D0
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 13:05:36 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1rxs26-0000WS-41
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 13:28:18 -0400
+Received: from mail-bn7nam10on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::701]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1rxrg6-00062V-5M
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 13:05:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=Z/bviJe+05iK8FCnwT25jYhJ2U8j8pAOtYayFutz8T0=; b=aeC26RZ5ZB8AvKyh
- gVixGkwigAJwBJ3FHt3r2jvaSORglVXVJKvYMWxIS5e/q0g2KT3K8ua3rgFqXa7p7lrwVb90A3N3B
- v+kkoF7nYmmIH2kR5rYbYNHdDDVNh88VE3PBE056GYIefr1BygNgC8kDmq5jUEO95ucCJV2fYUqub
- JA4Ko4i252TRj9Jy+rJUS/rlLJF9bhbyDph1YAAE/v+gHSDdFH/+KzZ97dOskTbYAk34kDn+sCsxd
- AtuTXjKe8FrfEWoUcO5rHPpH+cgZN9OtpKDC5CFdUvThFW43pc8DgvFyVrDdtg3R6k9FP759yaspV
- wxF4H9gjKICRkDbS/g==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1rxrg0-0026lA-14;
- Fri, 19 Apr 2024 17:05:28 +0000
-Date: Fri, 19 Apr 2024 17:05:28 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Don Porter <porter@cs.unc.edu>, qemu-devel@nongnu.org, pbonzini@redhat.com
-Subject: Re: Add 'info pg' command to monitor
-Message-ID: <ZiKkWCjreGOMFX5p@gallifrey>
-References: <20240415160818.2316599-1-porter@cs.unc.edu>
- <CAFEAcA88myOeQwZ212q9R4EHBPpJbQ1qZYjuz6SS=HZbqS+NCQ@mail.gmail.com>
- <fadb288a-4c44-42c9-b706-f5595d97f952@cs.unc.edu>
- <CAFEAcA9Fe8TerNSrg_AfmpFZNL_4B9WV0OccFdLakJhtCN+m4A@mail.gmail.com>
- <bff71578-42ad-4af0-9ba6-e0962dd73710@cs.unc.edu>
- <CAFEAcA-nLjJoqujX-4kW4kWrrWbaQ037jGCNG75OB+KJybe8Ng@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1rxs24-0001py-6A
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 13:28:17 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dYCt5n/0Jiqnc03OL642c0KijzAcXvePYm5aVnVWiiIyUB5GmNnc5zLKDAfQePd0l5hf6olpyWrdXBhattzx6EcjChjcGKGF4U1L7rJhtfZb61Me4wrsIGqTCm71jMKTN27JI4JFmSux94bmixBmft0Qmjlt0MTopmFvpZgQvtJ+WAD4gfSRlW3hvkBCYhGbSP9Y1wdaABmFPBkmhONH2jKpFvP7S+uqi3fSIEstO+l46E8mn9uyWigtDueh6IOlpGzFqRduXQFPfElx2Wnti/4FO67FmVhVAJ5lzLZ5pvlbHP0OcJkTjWdcl5zhLGnbiS8UZpAnoZ4oUjWBlBWFxg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0N1YQmNCqZRA/rk4VmBx6brleX65waCc/OFDkiDYkDU=;
+ b=mBikYOjHW5VIVpRfNEB4l3e4f4uo9YNAO69WNc29EjtGIfCD3xVydI3JJdbMhU8HIPpBft54TdTKPJxLJjipXLdDjfnW9Arfpi3vQEswPsJzFcub0gttMjBBjAyPTuHqIOalhzWac3Gj1AhUiQnlUZ+x0Ald+M59V+52rwlcoem8MFqKv33OtxnLA9/FJvKj3ulqrmQNdrr1yJAwOL8Eeo47e60w9ODlgUzm7mc/molehmNL+yoQfmlwvcSoQpTCMnkmUFIO6slECuSnIQ5Nj3muZShKYASBBJTRpC0ZSC0kF82qejQrE2UANxIU0YU6vfbAtySj1ffSKzR8YMkp6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
+ dkim=pass header.d=memverge.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0N1YQmNCqZRA/rk4VmBx6brleX65waCc/OFDkiDYkDU=;
+ b=OBNWjentJaznxPn7Gnk6Fiqkz6syacC6SA1cesGtQaDY8NZskN81xvLfjPFL0DkRG9wDTFX0qUpOZ3K/TRpXTW17fWlAunjmX5puP5B009d28uzvTMBqNlPCX3UEAwqoYHFoMX0gVm6cvAyYiIDYHVN+u+45Kt8T6czOfhhLjbE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=memverge.com;
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
+ by DS0PR17MB6824.namprd17.prod.outlook.com (2603:10b6:8:115::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.39; Fri, 19 Apr
+ 2024 17:28:08 +0000
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::5d53:b947:4cab:2cc8]) by SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::5d53:b947:4cab:2cc8%4]) with mapi id 15.20.7472.042; Fri, 19 Apr 2024
+ 17:28:08 +0000
+Date: Fri, 19 Apr 2024 13:27:59 -0400
+From: Gregory Price <gregory.price@memverge.com>
+To: nifan.cxl@gmail.com
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ linux-cxl@vger.kernel.org, ira.weiny@intel.com,
+ dan.j.williams@intel.com, a.manzanares@samsung.com,
+ dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
+ Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v7 06/12] hw/mem/cxl_type3: Add host backend and address
+ space handling for DC regions
+Message-ID: <ZiKpn7oSQWKkywwx@memverge.com>
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+ <20240418232902.583744-7-fan.ni@samsung.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA-nLjJoqujX-4kW4kWrrWbaQ037jGCNG75OB+KJybe8Ng@mail.gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-17-amd64 (x86_64)
-X-Uptime: 17:00:42 up 107 days, 19:50,  1 user,  load average: 0.14, 0.07, 0.01
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+In-Reply-To: <20240418232902.583744-7-fan.ni@samsung.com>
+X-ClientProxiedBy: SJ0PR05CA0085.namprd05.prod.outlook.com
+ (2603:10b6:a03:332::30) To SJ0PR17MB5512.namprd17.prod.outlook.com
+ (2603:10b6:a03:394::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|DS0PR17MB6824:EE_
+X-MS-Office365-Filtering-Correlation-Id: 68ae92d2-3d2e-4b4e-bd0a-08dc60961459
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: P7BMCuK3PFJWrH/gObrDO+jzmFcW6stGFncb/RlZc15vIUUclXrcyvqq28b1bJx7yAVh6+ECC8WEHz2gXe1ySrUiaQScnWjWC3kUjcB08kX7q6ZNci91iOvg+D9Jb5XmqiOKooZw4t9HBYBPwrrGVH5tbmW+fclf/o5AibaQr3PuY8+gnKbDRcM7UedQKhm/pV5G2ScXqe70w3ah9C5tI93SHED5GH+GlRn9DKSkeMzkQctIbHBTn/jHmW7bZYas6s6MvbkAq9LlnnrGNZREn692LH9wZKa4V3Fsp+2Gpi2rEKKjWSXkAR67Ut/XJWi3/Joy03l0WN55lJvkge+kLlp3PEX9bOz+O2DMmYRSU8Q2vTvv/g3N6jfVUc84dFnD1a3UDmnZGzQthAOuKGDsL4gEnmfPIXb12XKadI69ebduw6BEAArSChLSYn/zvIMejMG3XLGMpZuimPvg0W/64NYlgsHWIjJNqqP3Sla7IUMUEIuaZz7OkSc8NpHfYdpqxwDYoqSlO1y5tXNFk40EFGdq1FR61IrbkLyFNsYGYTkIo2DVxYZAZOOHcmEUe5dQjONJKexiWmVGu+nVpzIu1fpKRa+xsfTt/gb05z2eYJmfQvfPQzmoen6nb5NMQPdALJbY4TSRFXSR2Tjax1LhyMuB60r2eyTAZXFymL622kc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(366007)(7416005)(376005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?T73PH2whzBIfL26nLNXNI2MLtH3M4ihycflpOD09aew20fR2d6o1d4Mknb9J?=
+ =?us-ascii?Q?CAb4OcTmQvtBb1zmiNiDjee+5AprLsaqOPTXNUBW7coeJW2fpzhbDR5Jv8t5?=
+ =?us-ascii?Q?iDsVd+EWQ1RbXhBaVRgWrYjg0iZCcASKXqCpaFh1Rgg4QYg/nwDTKGp+A+wJ?=
+ =?us-ascii?Q?wWqH+3neZRvMTLHg0vDkS7C198kaS9nlBGykOHcBhCXxI8rKY7Sgt67Ok2Qb?=
+ =?us-ascii?Q?r1BtaTWGSW5uuMaQavbCp8f8q8Sc+3MTScXmv0H7OzFa5qsVT9lRuDFoIXNM?=
+ =?us-ascii?Q?D21aMtS0TlNKyEBEeGrdKwB05tyasxBUeTGPug7ncxm/QgHI9G0A7adO/j7a?=
+ =?us-ascii?Q?/jfsYfp/4pXqQFrs94hgTvpxCN4lRH9Uj4eCgfGJ16pZW1z4ZA46YBe2wW+z?=
+ =?us-ascii?Q?LEw9bRk0PQKVlIARlCj7742WUgvUKL+Pjixn8FLFNtyTEaPmeyWuwTkccj8I?=
+ =?us-ascii?Q?D2vnRq9a3cCwGzw0ICUCBvEZXd06b4DBIou74M/OXaT9m21X9WvdQFay4hbd?=
+ =?us-ascii?Q?oGnMcf2SgDjF6XZ+O3Sf0H+Al24mojssBfiF860GClGc+wJG1uVDoS/5HT7J?=
+ =?us-ascii?Q?LbmvIb52zLbU6yBxBJ62Duqm+LfQFhgT+ISbg2a3t2ejv2iR0mgBw749lJVF?=
+ =?us-ascii?Q?mwCmB9PHAlApbc/yaQ3hxPkxToBBbUNvhszyxGW1t962ltPRAI/YhVPbKJeS?=
+ =?us-ascii?Q?gIYJ9/lCfmrnFjWhVyDi5g62Amaynw0d0VIHrCPFMkXbhc8henhJwvDfHhew?=
+ =?us-ascii?Q?UmoIzkxKjDRwphAuMfnmF4eYMiZ5IQqU8qXbmMBTN7pK7Wx16dHINR6noEur?=
+ =?us-ascii?Q?e08MejxrkpSDl1YQUw9vNLDk2pKUGt1lnOiFBL9Z1K3rhE+rgj4ok328/hEm?=
+ =?us-ascii?Q?UMadtHj8ApOr26O3SqUnWQiuu06AepNnEeQ8umscOZ6yDliLxA8w0XaQswaI?=
+ =?us-ascii?Q?fr0VPJk/xPrxDIGud1NDnUfyVC5/buqWotk/OlAclDxvscOn+ozehyLcoZW9?=
+ =?us-ascii?Q?rcMeA95f4SB5OwwhwwwepBsa747aMhW8OxKBhmhp4rJFov2BFRjvExusHJWH?=
+ =?us-ascii?Q?lpb801ImMcAcwZhQxrvjyc6AOJmB2+0dlsCvUa0pVr/Sp7WmNqnh4B+6dRl4?=
+ =?us-ascii?Q?n3zY1Y0kNi9deDkmId8kxO4jjnsbgg8NwUL/EKBoxxevcQSRlimwDhjS/Ysw?=
+ =?us-ascii?Q?dWYT4AJ0Fcq4yD4ZZYPLan3i7bQbZ29Vy6xj34qgzrIWkJwOEH/1Dflxtj3c?=
+ =?us-ascii?Q?hJ/D/pok1ZQZRCovgmud4zeNjbMgwsAX94dJY5aPZOiX4xCwWUNYCjdUlBK6?=
+ =?us-ascii?Q?KZHJMaB0x5cf4s26p5XEdhhob/UKMngsVqlp7b23OlQ38nKw2BSpFfqJVS0m?=
+ =?us-ascii?Q?poEHaxK+uNTC9Wlq0/AREnbBoomBiFoNEvmZIhaF/OB7FUBF76Z4Larkfqin?=
+ =?us-ascii?Q?c/ougmXH8+Eslaurb7eStHs3+5Nre35IDXL3ZltARH68Bogx8hh3vpepn1xP?=
+ =?us-ascii?Q?dxACXb2y9ITVtAnyTgrcUUc+vVCl7fRFwYZCe9COCpH/5AXrQMGFIh96Y7oa?=
+ =?us-ascii?Q?R51xaHTchRv6pTDMY2qr6okUXDeiBghSKy2njXCDM1BdcL1qOkkoAMv4GjNX?=
+ =?us-ascii?Q?iA=3D=3D?=
+X-OriginatorOrg: memverge.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68ae92d2-3d2e-4b4e-bd0a-08dc60961459
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2024 17:28:08.4501 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0CHxacneV4nt4x+az/nx4jugCav/gPwh4e0LClTAzwaSrdsYyvNVPzqrF4bjXoVUC3JsYBGBj6A+Fr7D9UqQRgpPsOMK9HGIhX1Y9xxPg8Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR17MB6824
+Received-SPF: pass client-ip=2a01:111:f403:2009::701;
+ envelope-from=gregory.price@memverge.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,70 +142,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Maydell (peter.maydell@linaro.org) wrote:
-> On Tue, 16 Apr 2024 at 19:11, Don Porter <porter@cs.unc.edu> wrote:
-> >
-> > On 4/16/24 13:03, Peter Maydell wrote:
-> > > On Tue, 16 Apr 2024 at 17:53, Don Porter <porter@cs.unc.edu> wrote:
-> > >> There is still a lot I am learning about the code base, but it seems
-> > >> that qemu_get_guest_memory_mapping() does most of what one would need.
-> > >> It currently only returns the "leaves" of the page table tree in a list.
-> > >>
-> > >> What if I extend this function with an optional argument to either
-> > >> 1) return the interior nodes of the page table in additional lists (and
-> > >> then parse+print in the monitor code), or
-> > >> 2) inline the monitor printing in the arch-specific hook, and pass a
-> > >> flag to get_guest_memory_mapping() that turns on/off the statements that
-> > >> pretty print the page tables?
-> > >>
-> > >> It looks like most CPUs implement this function as part of checkpointing.
-> > > As far as I can see only x86 implements the get_memory_mapping
-> > > function, so once again somebody has added some bit of
-> > > functionality that does a walk of the page tables that is
-> > > x86 only and that shares no code with any of the other
-> > > page table walking code :-(
-> >
-> > My mistake - get_memory_mappings() is only implemented in x86.
-> >
-> > In doing some searching of the code, many architectures implement
-> > mmu_translate() and
-> > get_physical_address() functions, but they are not standardized. I also
-> > see your larger point
-> > about replicating page walking code in x86.
-> >
-> > I imagine you have something in mind that abstracts things like the
-> > height of the radix tree,
-> > entries per node, checking permissions, printing the contents, etc.
-> >
-> > Perhaps I should start by trying to merge the x86 page walking code into
-> > one set of common
-> > helper functions, get more feedback (perhaps on a new patch thread?),
-> > and then consider
-> > how to abstract across architectures after getting feedback on this?
+On Thu, Apr 18, 2024 at 04:10:57PM -0700, nifan.cxl@gmail.com wrote:
+> From: Fan Ni <fan.ni@samsung.com>
 > 
-> I think the cross-architecture abstraction is probably the
-> trickiest part. I would actually be happy for us to drop
-> 'info tlb' and 'info mem' entirely if we have a cross-arch
-> command that gives basically the same information -- we don't
-> IMHO need more than one command for this, and we only have
-> multiple commands for basically legacy reasons. And for the
-> human monitor (HMP) we don't need to keep things around
-> for backwards compatibility.
+> Add (file/memory backed) host backend for DCD. All the dynamic capacity
+> regions will share a single, large enough host backend. Set up address
+> space for DC regions to support read/write operations to dynamic capacity
+> for DCD.
+> 
+> With the change, the following support is added:
+> 1. Add a new property to type3 device "volatile-dc-memdev" to point to host
+>    memory backend for dynamic capacity. Currently, all DC regions share one
+>    host backend;
+> 2. Add namespace for dynamic capacity for read/write support;
+> 3. Create cdat entries for each dynamic capacity region.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> ---
+>  hw/cxl/cxl-mailbox-utils.c  |  16 ++--
+>  hw/mem/cxl_type3.c          | 172 +++++++++++++++++++++++++++++-------
+>  include/hw/cxl/cxl_device.h |   8 ++
+>  3 files changed, 160 insertions(+), 36 deletions(-)
+> 
 
-I'm not sure what happens for the (MIPS/SPARC ?) where it's not
-a traditional table hierarchy.
+A couple general comments in line for discussion, but patch looks good
+otherwise. Notes are mostly on improvements we could make that should
+not block this patch.
 
-The other thing you might want (and I'm not sure how it interacts
-with any of this) is to specify the root of the MMU tree (i.e. CR3
-value for those in Intel thinking) to dump different processes etc.
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
 
-Dave
+>  
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index a1fe268560..ac87398089 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -45,7 +45,8 @@ enum {
+>  
+>  static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
+>                                            int dsmad_handle, uint64_t size,
+> -                                          bool is_pmem, uint64_t dpa_base)
+> +                                          bool is_pmem, bool is_dynamic,
+> +                                          uint64_t dpa_base)
 
-> thanks
-> -- PMM
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+We should probably change the is_* fields into a flags field and do some
+error checking on the combination of flags.
+
+>  {
+>      CDATDsmas *dsmas;
+>      CDATDslbis *dslbis0;
+> @@ -61,7 +62,8 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
+>              .length = sizeof(*dsmas),
+>          },
+>          .DSMADhandle = dsmad_handle,
+> -        .flags = is_pmem ? CDAT_DSMAS_FLAG_NV : 0,
+> +        .flags = (is_pmem ? CDAT_DSMAS_FLAG_NV : 0) |
+> +                 (is_dynamic ? CDAT_DSMAS_FLAG_DYNAMIC_CAP : 0),
+
+For example, as noted elsewhere in the code, is_pmem+is_dynamic is not
+presently supported, so this shouldn't even be allowed in this function.
+
+> +    if (dc_mr) {
+> +        int i;
+> +        uint64_t region_base = vmr_size + pmr_size;
+> +
+> +        /*
+> +         * TODO: we assume the dynamic capacity to be volatile for now.
+> +         * Non-volatile dynamic capacity will be added if needed in the
+> +         * future.
+> +         */
+
+Probably don't need to mark this TODO, can just leave it as a note.
+
+Non-volatile dynamic capacity will coincide with shared memory, so it'll
+end up handled.  So this isn't really a TODO for this current work, and
+should read more like:
+
+"Dynamic Capacity is always volatile, until shared memory is
+implemented"
+
+> +    } else if (ct3d->hostpmem) {
+>          range1_size_hi = ct3d->hostpmem->size >> 32;
+>          range1_size_lo = (2 << 5) | (2 << 2) | 0x3 |
+>                           (ct3d->hostpmem->size & 0xF0000000);
+> +    } else {
+> +        /*
+> +         * For DCD with no static memory, set memory active, memory class bits.
+> +         * No range is set.
+> +         */
+> +        range1_size_lo = (2 << 5) | (2 << 2) | 0x3;
+
+We should probably add defs for these fields at some point. Can be
+tabled for later work though.
+
+> +        /*
+> +         * TODO: set dc as volatile for now, non-volatile support can be added
+> +         * in the future if needed.
+> +         */
+> +        memory_region_set_nonvolatile(dc_mr, false);
+
+Again can probably drop the TODO and just leave a statement.
+
+~Gregory
 
