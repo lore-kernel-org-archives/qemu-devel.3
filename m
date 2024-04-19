@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73AEFC04FF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B45AC4345F
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 08:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxjv0-0002eB-8n; Fri, 19 Apr 2024 04:48:26 -0400
+	id 1rxjvD-0002gO-AS; Fri, 19 Apr 2024 04:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjuy-0002db-SN
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjv6-0002fS-Ae
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjux-0007YB-2f
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjv3-0007ZC-Sm
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713516502;
+ s=mimecast20190719; t=1713516509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=aTBKyYNbDHWjTOtutkCNcrbryR65acR/RnkNo7OyK2M=;
- b=Ondy32ZdA4qh2DAf3dnN0CDUyE9s6yFREVnke5f2aBe+A73WYkG0rH8MKaP1c/3XD62Fp9
- fyl0Sk8UtMDm8M9LTR7uPvJxZINh2TI4R4szn0zi6GumYLJvFQh+coQKN7APnW4sX7GQy8
- 4iBQZZaE951DExJ5EmbqffiZ9jLpUXw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-LCha1Sg8Mkui2E3YpfeHnw-1; Fri, 19 Apr 2024 04:48:16 -0400
-X-MC-Unique: LCha1Sg8Mkui2E3YpfeHnw-1
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2kHEYBckbAZWVsxVOv9Z20aD6o0POU9kFay7g0bMsXY=;
+ b=EXSCnurc/4GYCaBYl8j96vtkiHbsRBRXkehGGdU5onfmSsxmsWxW0oOP9qo8yxcrs73uCY
+ X9/1zovHEdZ+oMYS9ddF8Yd0vBpOv5qKpfvyWKpim7T3jAg5SVwKck2QAph7/p4znEn0FW
+ gqV+hzDqRW+2Ks5pQONAbi9dRW2tHMQ=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-k_ExXMzVMBSZH_x6cekDsw-1; Fri,
+ 19 Apr 2024 04:48:25 -0400
+X-MC-Unique: k_ExXMzVMBSZH_x6cekDsw-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0E0F6800CA2;
- Fri, 19 Apr 2024 08:48:16 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CDF2E380670D;
+ Fri, 19 Apr 2024 08:48:24 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.170])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AD6501121306;
- Fri, 19 Apr 2024 08:48:13 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id ADCCF1121306;
+ Fri, 19 Apr 2024 08:48:22 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 0/4] Sparc CPU naming and help text improvements
-Date: Fri, 19 Apr 2024 10:48:08 +0200
-Message-ID: <20240419084812.504779-1-thuth@redhat.com>
+Subject: [PATCH v2 4/4] docs/about: Deprecate the old "UltraSparc" CPU names
+ that contain a "+"
+Date: Fri, 19 Apr 2024 10:48:12 +0200
+Message-ID: <20240419084812.504779-5-thuth@redhat.com>
+In-Reply-To: <20240419084812.504779-1-thuth@redhat.com>
+References: <20240419084812.504779-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -78,35 +82,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Sparc CPU naming and the corresponding help text is somewhat
-confusing for the users. We should avoid spaces in the Names and
-provide clear information to the users what can be passed to the
-"-cpu" option.
-While we're at it, also remove the "+" from two of the CPU names
-since this character is now not allowed in device names anymore
-(and was worked around with an ugly hack in qom/object.c so far).
+For consistency we should drop the names with a "+" in it in the
+long run.
 
-v2:
-- Use "Sun-UltraSparc-IIIi-plus" and "Sun-UltraSparc-IV-plus"
-  instead of just adding a "p" at the end
-- Drop the sentence about NetBSD and OpenBSD in the docs since
-  these problems are likely fixed since a long time already
-- Added Reviewed-bys from earlier series and updated the patch
-  descriptions a little bit
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ docs/about/deprecated.rst | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Thomas Huth (4):
-  target/sparc/cpu: Rename the CPU models with a "+" in their names
-  target/sparc/cpu: Avoid spaces by default in the CPU names
-  docs/system/target-sparc: Improve the Sparc documentation
-  docs/about: Deprecate the old "UltraSparc" CPU names that contain a
-    "+"
-
- docs/about/deprecated.rst    |  9 +++++
- docs/system/target-sparc.rst | 12 ++++---
- qom/object.c                 |  8 -----
- target/sparc/cpu.c           | 66 +++++++++++++++++++++---------------
- 4 files changed, 54 insertions(+), 41 deletions(-)
-
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 6b932961bc..70026c3c11 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -206,6 +206,15 @@ in the QEMU object model anymore. ``power5+``, ``power5+_v2.1``,
+ an alias, but for consistency these will get removed in a future
+ release, too. Use ``power5p_v2.1`` and ``power7p_v2.1`` instead.
+ 
++``Sun-UltraSparc-IIIi+`` and ``Sun-UltraSparc-IV+`` CPU names (since 9.1)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The character "+" in device (and thus also CPU) names is not allowed
++in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
++``Sun-UltraSparc-IV+`` are currently still supported via a workaround,
++but for consistency these will get removed in a future release, too.
++Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
++
+ CRIS CPU architecture (since 9.0)
+ '''''''''''''''''''''''''''''''''
+ 
 -- 
 2.44.0
 
