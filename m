@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F066CC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 07:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5700CC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 07:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxihk-00083R-Pm; Fri, 19 Apr 2024 03:30:40 -0400
+	id 1rxiqp-0001Rm-Va; Fri, 19 Apr 2024 03:40:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxihb-000814-8Z
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 03:30:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxiqo-0001R0-1G
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 03:40:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxihX-0001G7-7R
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 03:30:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxiqm-0002gh-0c
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 03:40:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713511824;
+ s=mimecast20190719; t=1713512398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lubdMIzxCJInsqlGa7YGoTID4nFSZfCFgMHW6NNNUQs=;
- b=J4lBhyvOBhW0NvIpGa85eNUNTki3iHmr91Oaps086W07T8oCfmHO9EhvN/fhU++KqJEQPL
- JJbjxK3bksWEXHOrQO6YRfp+qsKvOLHBjmZzcdelOSAkJPt+6zjtO4cJph4/DuVmvTTPeG
- lQ9WJrvl0HfDPDGGFfXbXGS6jfyvqP4=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lu14YwwC5p0TBXKkOpwzkhvVAIM3kNV8Q1JLledUuJ0=;
+ b=S1m0gy64nIViP/PYSCdz9Aig6aCHMGndNXhgWV9ut/tuY5/R9DUcbPagSNDtsG/+nwcrVs
+ w7avatGZgSQu9C4p9eWUXvleagFAlSz6ZLB6tqiveDSrkEfLarOWi84i82R/1nDGc7PInn
+ LBTP8jeLKc4rhzun7XXGt7eBChoCUJw=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-r-ShOvWUPgmWwO1c1jyAbw-1; Fri, 19 Apr 2024 03:30:22 -0400
-X-MC-Unique: r-ShOvWUPgmWwO1c1jyAbw-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d87257c610so17294801fa.2
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 00:30:22 -0700 (PDT)
+ us-mta-656-IwjNcSo7PIKpmaqBtxZO9g-1; Fri, 19 Apr 2024 03:39:56 -0400
+X-MC-Unique: IwjNcSo7PIKpmaqBtxZO9g-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-51aaee20733so741761e87.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 00:39:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713511821; x=1714116621;
+ d=1e100.net; s=20230601; t=1713512395; x=1714117195;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lubdMIzxCJInsqlGa7YGoTID4nFSZfCFgMHW6NNNUQs=;
- b=WP5SC2jIBZ5L4SG+vr1lPs754owrffL+cvLZUe9gXrtOI8UWiNOMCgLY0vMItC6CrI
- VPHoWjOFTK8HhvW0ymFArXVkkbi0Td+SvOKeKmToRLmieSAmaFsL4YLqwc3qzeU29p3N
- KSHHIJIAyne+wk5B5ZYqEzvsikfLZbnwk6RLGoyEkiLAZlosMGsNobFBKdzYlKTu8xih
- oUXtjVcoKxGV2JQkTtGDINm+JZX/39cfBxJptLr/367kTo/idZrczW2CDJmv5IxwT8tg
- FN3p4uOVbkVChVv+eS3y5P68mYTj1wSWvXM9vMTQU/MUI4yaGqqR2nWiJGOIpqPi4xmV
- qrKw==
+ bh=lu14YwwC5p0TBXKkOpwzkhvVAIM3kNV8Q1JLledUuJ0=;
+ b=hoRaq752xt/Lk6nLvL/gBwYU9Ypd7uE7jrLZkKDwqL2mVXpcau26bIw/qn/EJpi19o
+ Xn98UrZgjyOEEKdCaoL5GgzDK9uCiqImNukMJDj0XDucLYdBZP4IDI8nLpgzQhilSh+N
+ 4DWkg2Vz4t7t1iXYzLoYA3MaC0egeywZCy0dOClx+kt5TqQI8oplGyaJcifvNZHVj43m
+ FnbYcyb/zkkt3Pb0eas2ogc9euZ/D9lgMEDOiRwEOPIJP/5nvy5JC5kkvZ0QfQDBPQzG
+ 50M93Kg5T8hPHAo17cCrhQHgfGKp0UAmePrwJ5GttzR22E2Be0hPpguNYd6UGmt5VrUE
+ vNzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAb/mKDtfCUlfIn0yoEAB2Blu6j83iioxdaIPFrIIfbbn8d2SbW3O6qPTW5rF9fGnXdWgSoxy8Htoa0ackD6vQ9Rij2dI=
-X-Gm-Message-State: AOJu0YzGgorbk3ab4M246PRz9s6n3NvBLkj3iYY6+A1hvc24/oPRu3WM
- LG/imio5orzrNpf6QN9Z0BDO89TYXyGuoo/Mjbr2mBWya7TtyW3+jOgiPoePG1I9iW/3rmlxhnI
- b1l+gza4PsoEQct/4vgMqznmOFGoCDVlT4/RuqtT5xhri5EiKBZ9r
-X-Received: by 2002:a2e:9c56:0:b0:2d8:39cf:5368 with SMTP id
- t22-20020a2e9c56000000b002d839cf5368mr843327ljj.29.1713511820998; 
- Fri, 19 Apr 2024 00:30:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCFtCYZaS/D5M4z+Xj8bYasqCOg8aBql+FeD5HZLJzrVLoaf5URaFkBIGkGvxRc1a+m+4Qcg==
-X-Received: by 2002:a2e:9c56:0:b0:2d8:39cf:5368 with SMTP id
- t22-20020a2e9c56000000b002d839cf5368mr843314ljj.29.1713511820592; 
- Fri, 19 Apr 2024 00:30:20 -0700 (PDT)
+ AJvYcCVzQspMXi4rZ3BQr8AHJAlANNZsrjmkp/OqRTKMd6bt3To1pTGQKlS3+/KOSiOrNDn7FEYb5c9Ku84gnn8gVznAMGuCkEo=
+X-Gm-Message-State: AOJu0YyyUWTfvlI4tZy9U/j1gPFvdS9RlofyA4sd2WmS+yCyZoozRBc6
+ mapFceValL0VdKBilr6PqrrOtpMnb5NqFtDdLEJP2XBM34dV7AvRoQU82K8k9uIjMUdrddV4RlZ
+ QdfOJNtVGHwcyywems2uMGflZ2ChPZLyq4MRqcfNdbiJqrmmkI23w
+X-Received: by 2002:ac2:58d4:0:b0:519:ab33:5a36 with SMTP id
+ u20-20020ac258d4000000b00519ab335a36mr939431lfo.10.1713512395421; 
+ Fri, 19 Apr 2024 00:39:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAdnU0Bw/5MmKY3OXLalfGYkbh05r+V3BtOqK9VR7pNRHNB0741BWziWXSV03+4FTm6099qQ==
+X-Received: by 2002:ac2:58d4:0:b0:519:ab33:5a36 with SMTP id
+ u20-20020ac258d4000000b00519ab335a36mr939419lfo.10.1713512395075; 
+ Fri, 19 Apr 2024 00:39:55 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-117.web.vodafone.de.
  [109.43.177.117]) by smtp.gmail.com with ESMTPSA id
- kt18-20020a170906aad200b00a5268203c85sm1842799ejb.107.2024.04.19.00.30.19
+ f25-20020a170906139900b00a5546604a5asm1844417ejc.104.2024.04.19.00.39.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Apr 2024 00:30:20 -0700 (PDT)
-Message-ID: <8c9991e6-ab73-4adb-9ef3-ddcad84266ae@redhat.com>
-Date: Fri, 19 Apr 2024 09:30:18 +0200
+ Fri, 19 Apr 2024 00:39:54 -0700 (PDT)
+Message-ID: <a71e2142-9e83-4fa5-b605-7d73b04693d8@redhat.com>
+Date: Fri, 19 Apr 2024 09:39:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] target/s390x/cpu_model: Make check_compatibility()
- return boolean
+Subject: Re: [PATCH 2/6] target/s390x/cpu_model: Drop local @err in
+ s390_realize_cpu_model()
 To: Zhao Liu <zhao1.liu@linux.intel.com>, David Hildenbrand
  <david@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
@@ -79,7 +79,7 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>, David Hildenbrand
 Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
 References: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
- <20240419065712.1225038-2-zhao1.liu@linux.intel.com>
+ <20240419065712.1225038-3-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -124,7 +124,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240419065712.1225038-2-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240419065712.1225038-3-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -135,7 +135,7 @@ X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,18 +154,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 19/04/2024 08.57, Zhao Liu wrote:
 > From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> As error.h suggested, the best practice for callee is to return
-> something to indicate success / failure.
-> 
-> With returned boolean, there's no need to check @err.
-> 
+> Use @errp to fetech error information directly and drop the local
+
+s/fetech/fetch/
+
+> virable @err.
+
+s/virable/variable/
+
 > Suggested-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   target/s390x/cpu_models.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
+>   target/s390x/cpu_models.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 
+With the typos fixed:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-
 
 
