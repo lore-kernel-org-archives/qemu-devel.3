@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51702C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 17:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C5EC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxsCK-0004bV-5Z; Fri, 19 Apr 2024 13:38:52 -0400
+	id 1rxsYh-0002EG-9e; Fri, 19 Apr 2024 14:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1rxsCH-0004a1-1G; Fri, 19 Apr 2024 13:38:49 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxsXB-0001Un-7l
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:00:26 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1rxsCC-0003zh-6v; Fri, 19 Apr 2024 13:38:48 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 80526CE1B60;
- Fri, 19 Apr 2024 17:38:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FEAC072AA;
- Fri, 19 Apr 2024 17:38:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1713548319;
- bh=xFMTjOU9FaSmOc2TGsUAJWnbrTmxvTQIzUny4ULRBDQ=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=adCfsPE4xUZ++eve9Tnr2rWu3ZZhm/ZQMD/wb8Fl/tuN/OtpMWO/S6zNDEKjoYop9
- 0RLJXJXVeZnstgr4E706sHTqpse6kaWwcKRZuiUiwvppmE0fQCptyxvSaihTdEYtSK
- KPfx/L/75Have8ks28ZjcY7/reR93pU+XwF/kZIdG2nTU2vfSuIPg4ZTcp0LFTmXBq
- 5ahSCuNH0M7kH+ok4N7OJ8ILuMPYLb8CDLREntSmY+j4kNM0SGwwO+sX6SyuH3mucC
- jTZwrMqpKsHUL+SVLAT8JAeLtZ5Mfa0hst5nv4fmJ2mhuHyAjCz9XSevLpMpUGVSqA
- VUC5f9qw+Zt+w==
-Received: by mail-lj1-f171.google.com with SMTP id
- 38308e7fff4ca-2d8a2cbe1baso30207581fa.0; 
- Fri, 19 Apr 2024 10:38:39 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcftqTDb6eNpHTv6PnPJrVAdN3J5YhHT9WovVQJyvJCLvqqP68cHfWe9Y90aCBQVoyJkRSc3ikG6sJWOlbglpC8Mzb/rhrAReAtRw1HWDwkUXSOJn3apX5owE=
-X-Gm-Message-State: AOJu0YxVrJYM6C7u9sY6JgU346CBuG9dcjRPmW3Fw0E34hIRE9eV+BKw
- YwVhz/eMMktrckAn0LfLwsnIsPXB951OqJLc+NDFtuDpE9OCLpO8FNvOxhi/FxQkcmndotUBG58
- 14l86kZ9YBqi8tv01uFtU8S7RMgA=
-X-Google-Smtp-Source: AGHT+IFi5z5fnH8BG2u+jRYH1xTrUkI8887vezK/4uwcjOxEWZjSnalD1oK952RGvlZ7fU8YtTRGHWmyw4kk0qiFreA=
-X-Received: by 2002:a05:6512:159:b0:518:b283:1078 with SMTP id
- m25-20020a056512015900b00518b2831078mr2445253lfo.26.1713548318060; Fri, 19
- Apr 2024 10:38:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxsWv-0008RN-1F
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:00:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=8H00RKYrD7GHuBFs3C5JTE5gBpRbC5sKoFu7ikfj1Uk=; b=EnWpC8keQmqz+v5VOcvIytZZrA
+ 2Ko8v+JWXceJSsinKFZzMJHlWIoHg4wvzjgwnM9/Tp5dbTMvpnstWlMIh1Ri0Fuw7672MrWEeLTp+
+ pgajrGHCBUhFT/n8Ne3KCfw6oBZ/RQHQW7aOlvB5+DIlI31r+PUfOaQTgrHBjdFgsF3Y76/5UvBnW
+ zPq8BoaH7hA50njenPFRG7t+1mkzR9lPzSDlOtLeIDu9OSXHuCrnceKgPVuZ2q1dwodlygBA04HwT
+ +Zp7YQo4aOQqOrHQjkVINBr2NvbLkSXEPN+m6vVeOJ/53VlEThyJHn6k7MR/ZNP9gnQq5Qx10UTKr
+ ay13KKH+NAgG5+b9FEDCNaI4ra7s3TzpmxmlznHfUEeOVFmO5ULRfD99aURddKGnsM1bi4V8JTUaZ
+ Z7F8/q7ZAaNNucVsyUgMbFQ8+PcGriiSA92xkGH9EfXkDuU/sDYqbgieH60nszOjeFDSLaESGtn6I
+ bjZDSNJtiME6UWagY9/2saaVSVW4709JrdqVf8TgSCbbuTvyuwm8Z9N1dYv0KhLLDtldX1nT0nRfF
+ zdvPsq8t0Kj7qrW/19iGWVa2JcXcKIJEf0xUCOLSyHrqUhhM34cDv2yP0jJfeGLrgpVkmr7aIU7E3
+ S8b7NhNGd5NRJLqpOS8EzC+r4CajCLM2u/rEGiWl4=;
+Received: from [2a00:23c4:8bb4:4000:a36d:d178:601a:c356]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxsVp-0003sJ-A9; Fri, 19 Apr 2024 18:59:05 +0100
+Message-ID: <46d1e7b8-fb98-4f48-92be-f55085d3da72@ilande.co.uk>
+Date: Fri, 19 Apr 2024 18:59:57 +0100
 MIME-Version: 1.0
-References: <20240301204110.656742-1-richard.henderson@linaro.org>
- <20240301204110.656742-6-richard.henderson@linaro.org>
- <20240416161111.0000607c@huawei.com>
- <0c878d25-3fbb-4f0b-bc9e-ca638f8c4f1e@linaro.org>
- <20240418091555.00006666@Huawei.com>
- <20240418183600.00000345@huawei.com>
- <kjpkyoux2xcegrqshde5ddhicf33jnlelobuzuo4uj4svvlzdn@rilun7dz6776>
- <20240419170938.00000551@huawei.com>
- <CAMj1kXE+0mUfFq_FrhZT0m_YOJkWiuPndWt3GsRn1eMyCVrmMw@mail.gmail.com>
-In-Reply-To: <CAMj1kXE+0mUfFq_FrhZT0m_YOJkWiuPndWt3GsRn1eMyCVrmMw@mail.gmail.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Fri, 19 Apr 2024 19:38:26 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXFMT=rM=2ivrcUXEtZYEqSbTG6ZokJgDcpd4ufwYm34Xw@mail.gmail.com>
-Message-ID: <CAMj1kXFMT=rM=2ivrcUXEtZYEqSbTG6ZokJgDcpd4ufwYm34Xw@mail.gmail.com>
-Subject: Re: [edk2-devel] [PATCH v3 5/6] target/arm: Do memory type alignment
- check when translation disabled
-To: devel@edk2.groups.io, jonathan.cameron@huawei.com
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Jonathan Cameron via <qemu-devel@nongnu.org>, linuxarm@huawei.com, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Idan Horowitz <idan.horowitz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=ardb@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -66
-X-Spam_score: -6.7
-X-Spam_bar: ------
-X-Spam_report: (-6.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20240419084812.504779-1-thuth@redhat.com>
+ <20240419084812.504779-4-thuth@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240419084812.504779-4-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:a36d:d178:601a:c356
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 3/4] docs/system/target-sparc: Improve the Sparc
+ documentation
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,135 +109,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Apr 2024 at 18:36, Ard Biesheuvel <ardb@kernel.org> wrote:
->
-> On Fri, 19 Apr 2024 at 18:09, Jonathan Cameron via groups.io
-> <jonathan.cameron=huawei.com@groups.io> wrote:
-> >
-> > On Fri, 19 Apr 2024 13:52:07 +0200
-> > Gerd Hoffmann <kraxel@redhat.com> wrote:
-> >
-> > >   Hi,
-> > >
-> > > > Gerd, any ideas?  Maybe I needs something subtly different in my
-> > > > edk2 build?  I've not looked at this bit of the qemu infrastructure
-> > > > before - is there a document on how that image is built?
-> > >
-> > > There is roms/Makefile for that.
-> > >
-> > > make -C roms help
-> > > make -C roms efi
-> > >
-> > > So easiest would be to just update the edk2 submodule to what you
-> > > need, then rebuild.
-> > >
-> > > The build is handled by the roms/edk2-build.py script,
-> > > with the build configuration being in roms/edk2-build.config.
-> > > That is usable outside the qemu source tree too, i.e. like this:
-> > >
-> > >   python3 /path/to/qemu.git/roms/edk2-build.py \
-> > >     --config /path/to/qemu.git/roms/edk2-build.config \
-> > >     --core /path/to/edk2.git \
-> > >     --match armvirt \
-> > >     --silent --no-logs
-> > >
-> > > That'll try to place the images build in "../pc-bios", so maybe better
-> > > work with a copy of the config file where you adjust this.
-> > >
-> > > HTH,
-> > >   Gerd
-> > >
-> >
-> > Thanks Gerd!
-> >
-> > So the builds are very similar via the two method...
-> > However - the QEMU build sets -D CAVIUM_ERRATUM_27456=TRUE
-> >
-> > And that's the difference - with that set for my other builds the alignment
-> > problems go away...
-> >
-> > Any idea why we have that set in roms/edk2-build.config?
-> > Superficially it seems rather unlikely anyone cares about thunderx1
-> > (if they do we need to get them some new hardware with fresh bugs)
-> > bugs now and this config file was only added last year.
-> >
-> >
-> > However, the last comment in Ard's commit message below seems
-> > highly likely to be relevant!
-> >
-> > Chasing through Ard's patch it has the side effect of dropping
-> > an override of a requirement for strict alignment.
-> > So with out the errata
-> > DEFINE GCC_AARCH64_CC_XIPFLAGS     = -mstrict-align -mgeneral-regs-only
-> > is replaced with
-> >  [BuildOptions]
-> > +!if $(CAVIUM_ERRATUM_27456) == TRUE^M
-> > +  GCC:*_*_AARCH64_PP_FLAGS = -DCAVIUM_ERRATUM_27456^M
-> > +!else^M
-> >    GCC:*_*_AARCH64_CC_XIPFLAGS ==
-> > +!endif^M
-> >
-> > The edk2 commit that added this was the following +CC Ard.
-> >
-> > Given I wasn't sure of the syntax of that file I set it
-> > manually to the original value and indeed it works.
-> >
-> >
-> > commit ec54ce1f1ab41b92782b37ae59e752fff0ef9c41
-> > Author: Ard Biesheuvel <ardb@kernel.org>
-> > Date:   Wed Jan 4 16:51:35 2023 +0100
-> >
-> >     ArmVirtPkg/ArmVirtQemu: Avoid early ID map on ThunderX
-> >
-> >     The early ID map used by ArmVirtQemu uses ASID scoped non-global
-> >     mappings, as this allows us to switch to the permanent ID map seamlessly
-> >     without the need for explicit TLB maintenance.
-> >
-> >     However, this triggers a known erratum on ThunderX, which does not
-> >     tolerate non-global mappings that are executable at EL1, as this appears
-> >     to result in I-cache corruption. (Linux disables the KPTI based Meltdown
-> >     mitigation on ThunderX for the same reason)
-> >
-> >     So work around this, by detecting the CPU implementor and part number,
-> >     and proceeding without the early ID map if a ThunderX CPU is detected.
-> >
-> >     Note that this requires the C code to be built with strict alignment
-> >     again, as we may end up executing it with the MMU and caches off.
-> >
-> >     Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-> >     Acked-by: Laszlo Ersek <lersek@redhat.com>
-> >     Tested-by: dann frazier <dann.frazier@canonical.com>
-> >
-> > Test case is
-> > qemu-system-aarch64 -M virt,virtualization=true, -m 4g -cpu cortex-a76 \
-> > -bios QEMU_EFI.fd -d int
-> >
-> > Which gets alignment faults since:
-> > https://lore.kernel.org/all/20240301204110.656742-6-richard.henderson@linaro.org/
-> >
-> > So my feeling here is EDK2 should either have yet another config for QEMU as a host
-> > or should always set the alignment without needing to pick the CAVIUM 27456 errata
-> > which I suspect will get dropped soonish anyway if anyone ever cleans up
-> > old errata.
-> >
->
-> This code was never really intended for execution at EL2, but it
-> happened to work, partially because TCG's lack of strict alignment
-> checking when the MMU is off.
->
-> Those assumptions no longer hold, so yes, let's get this fixed properly.
->
-> Given VHE and nested virt (which will likely imply VHE in practice), I
-> would like to extend this functionality (i.e., the use of preliminary
-> page tables in NOR flash) to EL2 as well, but with VHE enabled. This
-> means we can still elide TLB maintenance (and BBM checks) by using
-> different ASIDs, and otherwise, fall back to entering with the MMU off
-> if VHE is not available. In that case, we should enforce strict
-> alignment too, so that needs to be fixed regardless.
->
-> I'll try to code something up and send it round. In the mean time,
-> feel free to propose a minimal patch that reinstates the strict
-> alignment if you are pressed for time, and I'll merge it right away.
+On 19/04/2024 09:48, Thomas Huth wrote:
 
-Actually, let's just so that first - I'll send out a patch.
+> Add some words about how to enable or disable boolean features,
+> and remove the note about a Linux kernel being available on the
+> QEMU website (they have been removed long ago already), and the
+> note about NetBSD and OpenBSD still having issues (they should
+> work fine nowadays).
+> 
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2141
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   docs/system/target-sparc.rst | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.rst
+> index 9ec8c90c14..54bd8b6ead 100644
+> --- a/docs/system/target-sparc.rst
+> +++ b/docs/system/target-sparc.rst
+> @@ -27,6 +27,11 @@ architecture machines:
+>   The emulation is somewhat complete. SMP up to 16 CPUs is supported, but
+>   Linux limits the number of usable CPUs to 4.
+>   
+> +The list of available CPUs can be viewed by starting QEMU with ``-cpu help``.
+> +Optional boolean features can be added with a "+" in front of the feature name,
+> +or disabled with a "-" in front of the name, for example
+> +``-cpu TI-SuperSparc-II,+float128``.
+> +
+>   QEMU emulates the following sun4m peripherals:
+>   
+>   -  IOMMU
+> @@ -55,8 +60,5 @@ OpenBIOS is a free (GPL v2) portable firmware implementation. The goal
+>   is to implement a 100% IEEE 1275-1994 (referred to as Open Firmware)
+>   compliant firmware.
+>   
+> -A sample Linux 2.6 series kernel and ram disk image are available on the
+> -QEMU web site. There are still issues with NetBSD and OpenBSD, but most
+> -kernel versions work. Please note that currently older Solaris kernels
+> -don't work probably due to interface issues between OpenBIOS and
+> -Solaris.
+> +Please note that currently older Solaris kernels don't work probably due
+> +to interface issues between OpenBIOS and Solaris.
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+
+ATB,
+
+Mark.
+
 
