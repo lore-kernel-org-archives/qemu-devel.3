@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDABCC04FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 16:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25A2C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 16:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxqfJ-0001fe-QD; Fri, 19 Apr 2024 12:00:41 -0400
+	id 1rxqgY-0002zk-Nf; Fri, 19 Apr 2024 12:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rxqec-00018J-Ic
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:59:59 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1rxqej-0001Fn-Bd
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:07 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rxqeY-00016C-RV
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:59:58 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-34a3e0b31e6so1235173f8f.1
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:59:51 -0700 (PDT)
+ id 1rxqeb-00019N-AH
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:02 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-346b09d474dso2032878f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713542390; x=1714147190; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713542395; x=1714147195; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CRM3PMgf67soEHO0QvvaQBhnswxt2iC+13Xw/Jq7gQ4=;
- b=JH4yNFKAhI5kc7APS5ixtFXVaBFysa1VbCN0yA7EYams+nU6rgTLNR/SQAUmnk6aEf
- KShv145l1kgaW6hQVQ9E/XyrbiW+uLeFtDbbT0iwRbCawTVZrdFsM2uCrT8s2pRP+yhU
- JeqI+ffj+gh6e7Zy6tZl2WDiEtpc0KMzkAiEBW/HLVnm+FIo+Axk8UuO8H4um+aue7kU
- ivo7pYt6xVpkybSg6FuR3hveyRRkSeBq/971x0ylgisExZyyJYZXaIOX8ow05esYRFWP
- N1uL6viH495hYylNFZRPk2vaj/FquyChNJdzUSHdYESxVPiWWBf4wMeiDT1QLGSXJOtR
- 41bA==
+ bh=6nYDbfiehTdxZ4oKQVaAYQN5jvjqz012O7hP4xktYbg=;
+ b=ZjRQcMD3Xx0BKMjZrbWgFtTm0A5ycbuKX+djZhe4EAASdcr0A6pTcZlaZoAQ0iOPTE
+ rSytwbC1zKg0Ii1k1KcVb75dg0A1TdIAvT0+bt40Xcl+qAGGCRWGRFeeHBc6nwy4v+fi
+ KuexClAQ/zo9gAz2JuEA4RN4dcx9mcvEYDgIh7ixyQDh/wfMe/+MW7XUS55q2yoVaYoA
+ KE1KuUnE8Ux0GjjWJpurdYOjBoc70IHCr6wEWtzNBGq9HCJ02cLZ88TVruAgREm7vsH3
+ TFkCXBzfL03rMPIAtvRyEOz7s6gCPquZ3ZmKx5KLdiXwT7DxlSLc8Ql67aqafEvO4mhY
+ 3GpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713542390; x=1714147190;
+ d=1e100.net; s=20230601; t=1713542395; x=1714147195;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CRM3PMgf67soEHO0QvvaQBhnswxt2iC+13Xw/Jq7gQ4=;
- b=o0F2eLcRcZYD2KA/nqSFjnxOdafqCAQYyhfTKuDgHkUMVsbtrwQs78hGtD+quQt2Oc
- AN4M50wfbTYqyeIdpdMO4fbIGFk6Z3BNANv0vg1v5miVL/l0Sp2zPaHRkn9y8ex2lHcI
- cNVZe02ocKgxOa+h5hgLMb1SHN9xsvhAckGDqSHTbLguEjBNKlHK0xm6cr8foAr4EScH
- jY6fP53OoNManfC9sSBAqeE/GWjzBhSgT+VSqe8VKppW9Yq3lKWPcTv7FlKK9C0u/2lN
- IKoI3eZn5wZ9FRK4ACdNgbzVcVZQ10lCNEPTLxnP/H0Pv5jp4N4XKSj730pOOV1GfDgE
- Y08Q==
+ bh=6nYDbfiehTdxZ4oKQVaAYQN5jvjqz012O7hP4xktYbg=;
+ b=enjKn9yl0G4X9i34j/oulqfm/vYvtdmxJgs+hSpRmPy6vXoeBOLG9m+y49t3Qdb03S
+ Afz6DtLdY96a4QDjdr6ofcEsyAY6LBreIrIYKDD2UQHACnUbMQbtPhvK6xnii8vkCgRh
+ hpmGTiRleSnNmwtoUmhO0CCYbY/8GimNr0dzeyDe8NYsANf4eynjt9wK0c1zmdiu8a8H
+ j1s8dEepF4pg8oV4kZ8UBQJ+lgyK46G0nfkLes9weiHJpprS90ID40nePQ3jpHrZxh8W
+ Xu1CJmRjEzj0rOQuGnpOT1P/zA9TuFH4LOUuzgNNW2yvyeVJVKGJUflLekxC42xSlNv+
+ bG+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/v89Aa8oyZFYRfjB0yeuxmPOG5uxgtZrIcLip7ctR8o8FRibseYsqst66KWewjsVqTvXPdRyE3QM4ualAhs2pNzmfisY=
-X-Gm-Message-State: AOJu0YzzLp5mjTFav/8yAJPllVJ4k5BlAqJzPWh5tocfWDhIc2ACBQv3
- cY2cG+0Zb1R/hXo72ROAmKEak/dIJCrMWLnh5F15kCOXq7S5AI8lgA21YES0psc=
-X-Google-Smtp-Source: AGHT+IGVICopAXm0pEWgBvrgks5IfxQpCLgDaJmm8g+T7HOdc7+HvF5tidjUIpsGKu7caC1zxuWLOg==
-X-Received: by 2002:adf:ff8a:0:b0:345:5f6a:cbf7 with SMTP id
- j10-20020adfff8a000000b003455f6acbf7mr1681426wrr.29.1713542390205; 
- Fri, 19 Apr 2024 08:59:50 -0700 (PDT)
+ AJvYcCURIuWTYg1/2xLgApiuuazL/WPtmma+LC9KU/ksASTx5thcfStQXcXkqghY2zBRrC1ckdyZoFlU18KNVIM7bpwxcnesqnQ=
+X-Gm-Message-State: AOJu0YyTLF+HATMqwFfWeAqt7RAcoDtVgJwd+QCBJw8HWDCLB/oOH9yH
+ xhZ8X4bCZHRTCi/XyL4LO3wy241bqeCSH0viorh5pJpHC2aEaSqVvuPJ/qYJIhY=
+X-Google-Smtp-Source: AGHT+IENd+TeX2PBr9ChBBd+ruacRcP4c4TYBzXGQ3ipRL9oc1orolv3f+o8CLX8XZE/mgXca1Ufaw==
+X-Received: by 2002:a5d:6da8:0:b0:343:7032:7283 with SMTP id
+ u8-20020a5d6da8000000b0034370327283mr2695209wrs.8.1713542395421; 
+ Fri, 19 Apr 2024 08:59:55 -0700 (PDT)
 Received: from localhost.localdomain ([2.221.137.100])
  by smtp.gmail.com with ESMTPSA id
- p13-20020adfe60d000000b00349b73143e7sm4793089wrm.75.2024.04.19.08.59.49
+ p13-20020adfe60d000000b00349b73143e7sm4793089wrm.75.2024.04.19.08.59.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Apr 2024 08:59:49 -0700 (PDT)
+ Fri, 19 Apr 2024 08:59:55 -0700 (PDT)
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: peter.maydell@linaro.org,
 	richard.henderson@linaro.org
 Cc: philmd@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Jean-Philippe Brucker <jean-philippe@linaro.org>
-Subject: [PATCH v2 05/22] hw/arm/virt: Add support for Arm RME
-Date: Fri, 19 Apr 2024 16:56:53 +0100
-Message-ID: <20240419155709.318866-7-jean-philippe@linaro.org>
+Subject: [PATCH v2 13/22] hw/arm/boot: Register Linux BSS section for
+ confidential guests
+Date: Fri, 19 Apr 2024 16:57:01 +0100
+Message-ID: <20240419155709.318866-15-jean-philippe@linaro.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240419155709.318866-2-jean-philippe@linaro.org>
 References: <20240419155709.318866-2-jean-philippe@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,68 +99,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When confidential-guest-support is enabled for the virt machine, call
-the RME init function, and add the RME flag to the VM type.
+Although the BSS section is not currently part of the kernel blob, it
+needs to be registered as guest RAM for confidential guest support,
+because the kernel needs to access it before it is able to setup its RAM
+regions.
+
+It would be tempting to simply add the BSS as part of the ROM blob (ie
+pass kernel_size as max_len argument to rom_add_blob()) and let the ROM
+loader notifier deal with the full image size generically, but that
+would add zero-initialization of the BSS region by the loader, which
+adds a significant overhead. For a 40MB kernel with a 17MB BSS, I
+measured an average boot time regression of 2.8ms on a fast desktop,
+5.7% of the QEMU setup time). On a slower host, the regression could be
+much larger.
+
+Instead, add a special case to initialize the kernel's BSS IPA range.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 ---
-v1->v2:
-* Don't explicitly disable steal_time, it's now done through KVM capabilities
-* Split patch
+v1->v2: new
 ---
- hw/arm/virt.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ target/arm/kvm_arm.h |  5 +++++
+ hw/arm/boot.c        | 11 +++++++++++
+ target/arm/kvm-rme.c | 10 ++++++++++
+ 3 files changed, 26 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a9a913aead..07ad31876e 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -224,6 +224,11 @@ static const int a15irqmap[] = {
-     [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
- };
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 47777386b0..4b787dd628 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -218,6 +218,7 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
  
-+static bool virt_machine_is_confidential(VirtMachineState *vms)
-+{
-+    return MACHINE(vms)->cgs;
-+}
-+
- static void create_randomness(MachineState *ms, const char *node)
- {
-     struct {
-@@ -2111,10 +2116,11 @@ static void machvirt_init(MachineState *machine)
-      * if the guest has EL2 then we will use SMC as the conduit,
-      * and otherwise we will use HVC (for backwards compatibility and
-      * because if we're using KVM then we must use HVC).
-+     * Realm guests must also use SMC.
-      */
-     if (vms->secure && firmware_loaded) {
-         vms->psci_conduit = QEMU_PSCI_CONDUIT_DISABLED;
--    } else if (vms->virt) {
-+    } else if (vms->virt || virt_machine_is_confidential(vms)) {
-         vms->psci_conduit = QEMU_PSCI_CONDUIT_SMC;
-     } else {
-         vms->psci_conduit = QEMU_PSCI_CONDUIT_HVC;
-@@ -2917,6 +2923,7 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
- static int virt_kvm_type(MachineState *ms, const char *type_str)
- {
-     VirtMachineState *vms = VIRT_MACHINE(ms);
-+    int rme_vm_type = kvm_arm_rme_vm_type(ms);
-     int max_vm_pa_size, requested_pa_size;
-     bool fixed_ipa;
+ int kvm_arm_rme_init(MachineState *ms);
+ int kvm_arm_rme_vm_type(MachineState *ms);
++void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size);
  
-@@ -2946,7 +2953,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-      * the implicit legacy 40b IPA setting, in which case the kvm_type
-      * must be 0.
-      */
--    return fixed_ipa ? 0 : requested_pa_size;
-+    if (fixed_ipa) {
-+        return 0;
-+    }
-+
-+    return requested_pa_size | rme_vm_type;
+ bool kvm_arm_rme_enabled(void);
+ int kvm_arm_rme_vcpu_init(CPUState *cs);
+@@ -243,6 +244,10 @@ static inline bool kvm_arm_sve_supported(void)
+     return false;
  }
  
- static void virt_machine_class_init(ObjectClass *oc, void *data)
++static inline void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
++{
++}
++
+ /*
+  * These functions should never actually be called without KVM support.
+  */
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 84ea6a807a..9f522e332b 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -26,6 +26,7 @@
+ #include "qemu/config-file.h"
+ #include "qemu/option.h"
+ #include "qemu/units.h"
++#include "kvm_arm.h"
+ 
+ /* Kernel boot protocol is specified in the kernel docs
+  * Documentation/arm/Booting and Documentation/arm64/booting.txt
+@@ -850,6 +851,7 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
+ {
+     hwaddr kernel_load_offset = KERNEL64_LOAD_ADDR;
+     uint64_t kernel_size = 0;
++    uint64_t page_size;
+     uint8_t *buffer;
+     int size;
+ 
+@@ -916,6 +918,15 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
+     *entry = mem_base + kernel_load_offset;
+     rom_add_blob_fixed_as(filename, buffer, size, *entry, as);
+ 
++    /*
++     * Register the kernel BSS as realm resource, so the kernel can use it right
++     * away. Align up to skip the last page, which still contains kernel
++     * data.
++     */
++    page_size = qemu_real_host_page_size();
++    kvm_arm_rme_init_guest_ram(QEMU_ALIGN_UP(*entry + size, page_size),
++                               QEMU_ALIGN_DOWN(kernel_size - size, page_size));
++
+     g_free(buffer);
+ 
+     return kernel_size;
+diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+index bee6694d6d..b2ad10ef6d 100644
+--- a/target/arm/kvm-rme.c
++++ b/target/arm/kvm-rme.c
+@@ -203,6 +203,16 @@ int kvm_arm_rme_init(MachineState *ms)
+     return 0;
+ }
+ 
++/*
++ * kvm_arm_rme_init_guest_ram - Initialize a Realm IPA range
++ */
++void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
++{
++    if (rme_guest) {
++        rme_add_ram_region(base, size, /* populate */ false);
++    }
++}
++
+ int kvm_arm_rme_vcpu_init(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
 -- 
 2.44.0
 
