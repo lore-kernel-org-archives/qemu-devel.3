@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA787C41513
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 06:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDDFBC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 06:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxhy2-0007nN-EZ; Fri, 19 Apr 2024 02:43:26 -0400
+	id 1rxhyH-0007tS-TR; Fri, 19 Apr 2024 02:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxhxu-0007mY-UH; Fri, 19 Apr 2024 02:43:19 -0400
+ id 1rxhy6-0007ov-7v; Fri, 19 Apr 2024 02:43:31 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxhxs-0001Bi-5o; Fri, 19 Apr 2024 02:43:18 -0400
+ id 1rxhy4-0001CX-L9; Fri, 19 Apr 2024 02:43:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713508996; x=1745044996;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=QWsH8X043CyL5FL8ehlMa2OTGKdkZs5vyPPwCis1ErQ=;
- b=T6c8IxG9xjtFRtIFlekdUBz3dM+H6CLRs3N7CWV5tK9/shlI782r6jgm
- MB/swauybyDxxOv0Uyq20rDZxKZzzn7tFdbQbdoH27Z6MqEf3VKwggg0U
- 8uhHwd7v8hGnxeNBwxp5o98ppUo4xcCxSh1FQjLE8/4/HqRRg6HdjkS5a
- w93dMFedIstawR64SCKPdBjhBnR+rSdm9lPgQ89Qoo6BFslSCZQA9QY28
- 4nQbXdpR1JQMBzkUyz9XLFR6V87GeunKeRBh9fF1BB1PqQtNTu5deIqAz
- L8fk4xvpkjlU+Iuy8T4Jto9M/CSo9x/5wJtXo8AACugiOEbUyyRhm7S1H Q==;
-X-CSE-ConnectionGUID: KHzZodo/R+2VM3D3e+pM3A==
-X-CSE-MsgGUID: ZlQyB5+xQ76TDWmzm0Bjiw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="19659912"
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="19659912"
+ t=1713509008; x=1745045008;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=QW0U6rqEdHhhrUN6J4GUhhbNLR4rcAUCgpYyl5CCOUg=;
+ b=gYHtscWrXwtPsmRzhGd4kG+Y8Ha2X4SstYd/iU06D8CmlW+Ya57KK2TD
+ eg27vY++KSAO55p7bSwfA4ldu97mXkUh/REA60QsPPXe2IOfLzuIi/lML
+ jMV4vsjp4Afa13eJNyUCyCkKGVE1bgi1rkZvumkJdm3HJIiimrr75IjYC
+ V7jVvy38eS1SxRJLZe+C4pivaZFwFKndkD07UJqJDaS9tnFRyBmdIAkaX
+ lddsdqabr1e/LlE46W2buIvlSqVJonzfzRFsCKrnXIMAJ8XI2uiv6HNhl
+ ttIsWzdK8zaqF85F2eSztV58GprpLlnxSMl/9NX/EV1JCywCod4XafoOZ g==;
+X-CSE-ConnectionGUID: jq94hL5bT920tJDdBRd1hg==
+X-CSE-MsgGUID: noKV8yJbTCGXUlO0TY2Htw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="19659959"
+X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="19659959"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Apr 2024 23:43:11 -0700
-X-CSE-ConnectionGUID: o/If1bwiT4eeyTGuCH36ww==
-X-CSE-MsgGUID: 49hMbLV0T3yT5Gr7UOA4NA==
+ 18 Apr 2024 23:43:27 -0700
+X-CSE-ConnectionGUID: DWmkPqKvR1eDdtP7gcRgIg==
+X-CSE-MsgGUID: cokQpEhZSsWGHwmJ33GhqQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="28071832"
+X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="28071927"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 18 Apr 2024 23:43:09 -0700
+ by orviesa004.jf.intel.com with ESMTP; 18 Apr 2024 23:43:24 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -50,11 +50,13 @@ To: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
 Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 0/6] s390x/cpu_models: Misc cleanup on returned error code and
- local @err variables
-Date: Fri, 19 Apr 2024 14:57:06 +0800
-Message-Id: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
+Subject: [PATCH 6/6] target/s390x/cpu_models_sysemu: Drop local @err in
+ apply_cpu_model()
+Date: Fri, 19 Apr 2024 14:57:12 +0800
+Message-Id: <20240419065712.1225038-7-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
+References: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.11;
@@ -82,33 +84,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Hi list,
+Use @errp to fetech error information directly and drop the local
+virable @err.
 
-This series is the followup of Thomas' suggestion in previous
-ERRP_GUARD() cleanup[1]. And based on Thomas' thoughts, I tried to clean
-up as many of the other related places (in s390x/cpu_models.c).
-
-[1]: https://lore.kernel.org/qemu-devel/6e7eff95-cfd3-46f9-9937-7597b2e4f3ee@redhat.com/
-
-Regards,
-Zhao
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Zhao Liu (6):
-  target/s390x/cpu_model: Make check_compatibility() return boolean
-  target/s390x/cpu_model: Drop local @err in s390_realize_cpu_model()
-  target/s390x/cpu_models: Make kvm_s390_get_host_cpu_model() return
-    boolean
-  target/s390x/cpu_models: Drop local @err in get_max_cpu_model()
-  target/s390x/cpu_models: Make kvm_s390_apply_cpu_model() return
-    boolean
-  target/s390x/cpu_models_sysemu: Drop local @err in apply_cpu_model()
+ target/s390x/cpu_models_sysemu.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
- target/s390x/cpu_models.c        | 25 ++++++++++---------------
- target/s390x/cpu_models.h        | 10 ++++++----
- target/s390x/cpu_models_sysemu.c |  5 +----
- target/s390x/kvm/kvm.c           | 28 +++++++++++++++-------------
- 4 files changed, 32 insertions(+), 36 deletions(-)
-
+diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
+index bf855c659d5e..15be729c3d48 100644
+--- a/target/s390x/cpu_models_sysemu.c
++++ b/target/s390x/cpu_models_sysemu.c
+@@ -389,7 +389,6 @@ CpuModelBaselineInfo *qmp_query_cpu_model_baseline(CpuModelInfo *infoa,
+ 
+ void apply_cpu_model(const S390CPUModel *model, Error **errp)
+ {
+-    Error *err = NULL;
+     static S390CPUModel applied_model;
+     static bool applied;
+ 
+@@ -405,8 +404,7 @@ void apply_cpu_model(const S390CPUModel *model, Error **errp)
+     }
+ 
+     if (kvm_enabled()) {
+-        if (!kvm_s390_apply_cpu_model(model, &err)) {
+-            error_propagate(errp, err);
++        if (!kvm_s390_apply_cpu_model(model, errp)) {
+             return;
+         }
+     }
 -- 
 2.34.1
 
