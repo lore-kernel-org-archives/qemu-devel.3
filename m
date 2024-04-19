@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1AB9C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 06:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8ABDC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 06:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxhy7-0007oZ-GU; Fri, 19 Apr 2024 02:43:31 -0400
+	id 1rxhy3-0007nh-0E; Fri, 19 Apr 2024 02:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxhxv-0007mv-VV; Fri, 19 Apr 2024 02:43:22 -0400
+ id 1rxhxv-0007mZ-DX; Fri, 19 Apr 2024 02:43:19 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rxhxu-0001C1-9C; Fri, 19 Apr 2024 02:43:19 -0400
+ id 1rxhxt-0001Bv-Ce; Fri, 19 Apr 2024 02:43:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713508998; x=1745044998;
+ t=1713508997; x=1745044997;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=UkzcgPrX7JhPfDWYAR9t1jT+HmH8Ih9TbuBc2w9snTU=;
- b=Thh8p90paUwISuCL9RBg9/ZBu5OL620AzLhMXyksVvKVHbPEXzGSEFhz
- hk2psyg34Ix8Itu5Qu2mPd1slj/lMe5xltDHZYsINH1nnyyDrmoPDjuwj
- N4igtfBv9F4cbpQtjgndNl5AtY8HYqG5eLWUnHi55mgZMz/Tam1i2eDrU
- pwAPpDTuNOt3tsR6IWSFruGsg0PVJQlgsxYVwWv60AWlE8xMXllsCNN0q
- D4v0a3ecCL5tD4+pQwwdxZuD4SKSNsIvPiLMD+BIqY+7cn7BO6SxjKXAw
- eq8fufI/fZ2hQJ7Rwf5cIOKonVXv2Cx+U4RcZXID/zU5cpELQrsezKcVX w==;
-X-CSE-ConnectionGUID: mywXvmwSQWaKgpeEB6s+Pw==
-X-CSE-MsgGUID: hENosOE/RVu789S1fHoyWA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="19659924"
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="19659924"
+ bh=iWKKaHfg5cqYfoIHDCIm+pcw/eQF/WdGOSbon8iw0RM=;
+ b=el2QQQEYpRFW1ZCJYflrLob1JdWP3qpoTgpfGY8DplZzeOKhuogauvO6
+ awM9WN4VmqLJh0vKx/lYznk/xrY7KYkNxp5Lx6vkuSDOr7/5o+NGQDniF
+ Zaeyk6xsSRaAl1NzuWiwjgd40JvkD1SIuGyP91Os3ljKRulZemoJbAz+t
+ 6JbeEDi1qmDCN9GDf61VIDQCRUfr55AiWcIU/5hdUpJekUqzHu51HW24o
+ lUtZy1rXCEoY2X22rqJ4zECpFAQOnj5Ry8bM2jWxJojGRNCHmacMnL0ec
+ nVEH/CLOsFGd+o+RCz3VQjC7FpqJbPAHqvwhEJ25dxDcTGdo94HRII4s1 Q==;
+X-CSE-ConnectionGUID: DuSyXQ1/RaCzf2q0dlWeXw==
+X-CSE-MsgGUID: 2itpKq9jRgqYJOYlZnw0Zg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11047"; a="19659918"
+X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="19659918"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Apr 2024 23:43:16 -0700
-X-CSE-ConnectionGUID: GDKasGoYTKaAuq9XzRk/6Q==
-X-CSE-MsgGUID: 7yRWAzbTQEukKOq5RH76+A==
+ 18 Apr 2024 23:43:14 -0700
+X-CSE-ConnectionGUID: joRA+eebTfWnqvk/AuGOPw==
+X-CSE-MsgGUID: s9AhufdzQTGPrt2bpVtnxA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="28071850"
+X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; d="scan'208";a="28071842"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 18 Apr 2024 23:43:14 -0700
+ by orviesa004.jf.intel.com with ESMTP; 18 Apr 2024 23:43:11 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -50,10 +50,10 @@ To: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
 Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 2/6] target/s390x/cpu_model: Drop local @err in
- s390_realize_cpu_model()
-Date: Fri, 19 Apr 2024 14:57:08 +0800
-Message-Id: <20240419065712.1225038-3-zhao1.liu@linux.intel.com>
+Subject: [PATCH 1/6] target/s390x/cpu_model: Make check_compatibility() return
+ boolean
+Date: Fri, 19 Apr 2024 14:57:07 +0800
+Message-Id: <20240419065712.1225038-2-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
 References: <20240419065712.1225038-1-zhao1.liu@linux.intel.com>
@@ -84,37 +84,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Use @errp to fetech error information directly and drop the local
-virable @err.
+As error.h suggested, the best practice for callee is to return
+something to indicate success / failure.
+
+With returned boolean, there's no need to check @err.
 
 Suggested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/s390x/cpu_models.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ target/s390x/cpu_models.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index 8cb47d905fb4..052540a866ac 100644
+index 8ed3bb6a27b3..8cb47d905fb4 100644
 --- a/target/s390x/cpu_models.c
 +++ b/target/s390x/cpu_models.c
-@@ -577,7 +577,6 @@ S390CPUModel *get_max_cpu_model(Error **errp)
- void s390_realize_cpu_model(CPUState *cs, Error **errp)
+@@ -510,7 +510,7 @@ static void check_compat_model_failed(Error **errp,
+     return;
+ }
+ 
+-static void check_compatibility(const S390CPUModel *max_model,
++static bool check_compatibility(const S390CPUModel *max_model,
+                                 const S390CPUModel *model, Error **errp)
  {
      ERRP_GUARD();
--    Error *err = NULL;
-     S390CPUClass *xcc = S390_CPU_GET_CLASS(cs);
-     S390CPU *cpu = S390_CPU(cs);
-     const S390CPUModel *max_model;
-@@ -606,8 +605,7 @@ void s390_realize_cpu_model(CPUState *cs, Error **errp)
+@@ -518,11 +518,11 @@ static void check_compatibility(const S390CPUModel *max_model,
+ 
+     if (model->def->gen > max_model->def->gen) {
+         check_compat_model_failed(errp, max_model, "Selected CPU generation is too new");
+-        return;
++        return false;
+     } else if (model->def->gen == max_model->def->gen &&
+                model->def->ec_ga > max_model->def->ec_ga) {
+         check_compat_model_failed(errp, max_model, "Selected CPU GA level is too new");
+-        return;
++        return false;
+     }
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -530,14 +530,14 @@ static void check_compatibility(const S390CPUModel *max_model,
+         error_setg(errp, "The unpack facility is not compatible with "
+                    "the --only-migratable option. You must remove either "
+                    "the 'unpack' facility or the --only-migratable option");
+-        return;
++        return false;
+     }
+ #endif
+ 
+     /* detect the missing features to properly report them */
+     bitmap_andnot(missing, model->features, max_model->features, S390_FEAT_MAX);
+     if (bitmap_empty(missing, S390_FEAT_MAX)) {
+-        return;
++        return true;
+     }
+ 
+     error_setg(errp, " ");
+@@ -546,6 +546,7 @@ static void check_compatibility(const S390CPUModel *max_model,
+                   "available in the current configuration: ");
+     error_append_hint(errp,
+                       "Consider a different accelerator, QEMU, or kernel version\n");
++    return false;
+ }
+ 
+ S390CPUModel *get_max_cpu_model(Error **errp)
+@@ -605,8 +606,7 @@ void s390_realize_cpu_model(CPUState *cs, Error **errp)
      cpu->model->cpu_ver = max_model->cpu_ver;
  
      check_consistency(cpu->model);
--    if (!check_compatibility(max_model, cpu->model, &err)) {
--        error_propagate(errp, err);
-+    if (!check_compatibility(max_model, cpu->model, errp)) {
+-    check_compatibility(max_model, cpu->model, &err);
+-    if (err) {
++    if (!check_compatibility(max_model, cpu->model, &err)) {
+         error_propagate(errp, err);
          return;
      }
- 
 -- 
 2.34.1
 
