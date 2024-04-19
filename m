@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E13DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B18DC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxg1Q-0007W7-2S; Fri, 19 Apr 2024 00:38:48 -0400
+	id 1rxg1N-0007Uy-6w; Fri, 19 Apr 2024 00:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1G-0007TO-MZ
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1C-0007R7-0W
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1E-0004DM-V7
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:38 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg19-0004Bi-W7
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713501516;
+ s=mimecast20190719; t=1713501511;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aT7Zt+MnqDBeB3Aa1m9yjVj+44B/I2Lh5VoQCq7rSj8=;
- b=gmnTtJkNLUCOUBl5JdFTECCgtxW2hes5fceUHYbcIx20Et3P+1Qf/FcAcCuwxAYKIsfeQ2
- jnpZhbrR2Q0NS9/ysRtfVjdMaFBqzMjLxXTm43TESwpobLJxvJ+g5dfUfj/fARR+shM1kW
- LNjQkQyj4b//snts9DjOTJMB+Ozxjos=
+ bh=ZtfPOVc2sq5gvEb2kNhiQ+7sghfVmy34SoiYv6DOq5U=;
+ b=ZEHmPehC4yr9WVeruMDn3iWIvyy0G8TxFWb+iby6vAGEhWJVw5HZU4iDYXwqV+5Btxz9TW
+ Ydm73k2+h6OJs3IwyxGqCI8L9BXrZ3pWdpoemPTxr9k1G5TZP6auvhCX7Uzhavyy0gxNXF
+ GvlmDMU+nC4RAtKH32VcDshcJ0vgfbI=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-260-mNEPjwTxN4-f2B3iwoVt8g-1; Fri, 19 Apr 2024 00:38:32 -0400
-X-MC-Unique: mNEPjwTxN4-f2B3iwoVt8g-1
+ us-mta-209-_gerOnxrMACSfH8DytaZbQ-1; Fri, 19 Apr 2024 00:38:29 -0400
+X-MC-Unique: _gerOnxrMACSfH8DytaZbQ-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EF6A8810602;
- Fri, 19 Apr 2024 04:38:31 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0D7CD834FB1;
+ Fri, 19 Apr 2024 04:38:29 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.7])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4AC424011FF7;
- Fri, 19 Apr 2024 04:38:31 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 5D1B140357A7;
+ Fri, 19 Apr 2024 04:38:28 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -50,15 +50,15 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 14/27] docs/qapi-domain: add qapi:alternate directive
-Date: Fri, 19 Apr 2024 00:38:02 -0400
-Message-ID: <20240419043820.178731-15-jsnow@redhat.com>
+Subject: [PATCH 10/27] docs/qapi-domain: add "Features:" field lists
+Date: Fri, 19 Apr 2024 00:37:58 -0400
+Message-ID: <20240419043820.178731-11-jsnow@redhat.com>
 In-Reply-To: <20240419043820.178731-1-jsnow@redhat.com>
 References: <20240419043820.178731-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -82,92 +82,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the .. qapi:alternate:: directive, object, and qapi:alt:`name`
-cross-reference role.
+Add support for Features field lists. There is no QAPI-specific
+functionality here, but this could be changed if desired (if we wanted
+the feature names to link somewhere, for instance.)
 
-Add the "Choices:" field list for describing alternate choices. Like
-other field lists that reference QAPI types, a forthcoming commit will
-add cross-referencing support to this field.
-
-RFC: In the future, it would be nice to directly inline Alternates as
-part of the type information in the containing object (i.e. directly in
-arguments/members) - but that's a task for another series. For now, the
-branch "names" are documented just like qapidoc.py does, even though
-this information is superfluous for user documentation. Room for future
-improvement, but not now.
+This feature list doesn't have any restrictions, so it can be used to
+document object-wide features or per-member features as deemed
+appropriate. It's essentially free-form text.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/qapi/index.rst        |  7 +++++++
- docs/sphinx/qapi-domain.py | 19 +++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ docs/qapi/index.rst        |  6 ++++++
+ docs/sphinx/qapi-domain.py | 11 ++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
-index cf794e6e739..9bfe4d9f454 100644
+index 197587bbc81..a570c37abb2 100644
 --- a/docs/qapi/index.rst
 +++ b/docs/qapi/index.rst
-@@ -127,3 +127,10 @@ Explicit cross-referencing syntax for QAPI modules is available with
-       is treated solely as a read-only manifest of blocks to copy.
-    :value always: The bitmap is always synchronized with the operation,
-       regardless of whether or not the operation was successful.
+@@ -95,9 +95,15 @@ Explicit cross-referencing syntax for QAPI modules is available with
+    :arg int foo: normal parameter documentation.
+    :arg str bar: Another normal parameter description.
+    :arg baz: Missing a type.
++   :feat unstable: More than unstable, this command doesn't even exist!
+    :arg no-descr:
++   :feat hallucination: This command is a figment of your imagination.
+ 
+    Field lists can appear anywhere in the directive block, but any field
+    list entries in the same list block that are recognized as special
+    ("arg") will be reformatted and grouped accordingly for rendered
+    output.
 +
-+.. qapi:alternate:: BlockDirtyBitmapOrStr
-+   :since: 4.1
-+
-+   :choice str local: name of the bitmap, attached to the same node as
-+      target bitmap.
-+   :choice BlockDirtyBitmap external: bitmap with specified node
++   At the moment, the order of grouped sections is based on the order in
++   which each group was encountered. This example will render Arguments
++   first, and then Features; but the order can be any that you choose.
 diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
-index 6759c39290d..c6eb6324594 100644
+index 853bd91b7a8..c0dc6482204 100644
 --- a/docs/sphinx/qapi-domain.py
 +++ b/docs/sphinx/qapi-domain.py
-@@ -305,6 +305,22 @@ class QAPIEnum(QAPIObject):
+@@ -33,7 +33,7 @@
+ from sphinx.locale import _, __
+ from sphinx.roles import XRefRole
+ from sphinx.util import logging
+-from sphinx.util.docfields import TypedField
++from sphinx.util.docfields import GroupedField, TypedField
+ from sphinx.util.docutils import SphinxDirective, switch_source_input
+ from sphinx.util.nodes import (
+     make_id,
+@@ -146,6 +146,15 @@ class QAPIObject(ObjectDescription[Signature]):
+         }
      )
  
- 
-+class QAPIAlternate(QAPIObject):
-+    """Description of a QAPI Alternate."""
++    doc_field_types = [
++        GroupedField(
++            "feature",
++            label=_("Features"),
++            names=("feat",),
++            can_collapse=True,
++        ),
++    ]
 +
-+    doc_field_types = QAPIObject.doc_field_types.copy()
-+    doc_field_types.extend(
-+        [
-+            TypedField(
-+                "choice",
-+                label=_("Choices"),
-+                names=("choice",),
-+                can_collapse=True,
-+            ),
-+        ]
-+    )
-+
-+
- class QAPIModule(SphinxDirective):
-     """
-     Directive to mark description of a new module.
-@@ -458,6 +474,7 @@ class QAPIDomain(Domain):
-         "module": ObjType(_("module"), "mod", "obj"),
-         "command": ObjType(_("command"), "cmd", "obj"),
-         "enum": ObjType(_("enum"), "enum", "obj", "type"),
-+        "alternate": ObjType(_("alternate"), "alt", "obj", "type"),
-     }
- 
-     # Each of these provides a ReST directive,
-@@ -466,6 +483,7 @@ class QAPIDomain(Domain):
-         "module": QAPIModule,
-         "command": QAPICommand,
-         "enum": QAPIEnum,
-+        "alternate": QAPIAlternate,
-     }
- 
-     # These are all cross-reference roles; e.g.
-@@ -475,6 +493,7 @@ class QAPIDomain(Domain):
-         "mod": QAPIXRefRole(),
-         "cmd": QAPIXRefRole(),
-         "enum": QAPIXRefRole(),
-+        "alt": QAPIXRefRole(),
-         "type": QAPIXRefRole(),  # reference any data type (excludes modules, commands, events)
-         "obj": QAPIXRefRole(),  # reference *any* type of QAPI object.
-     }
+     def get_signature_prefix(self, sig: str) -> List[nodes.Node]:
+         """Returns a prefix to put before the object name in the signature."""
+         assert self.objtype
 -- 
 2.44.0
 
