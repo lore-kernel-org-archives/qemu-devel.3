@@ -4,129 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95BDC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17DDBC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 18:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxsun-0002jN-T1; Fri, 19 Apr 2024 14:24:49 -0400
+	id 1rxt1l-0004em-8F; Fri, 19 Apr 2024 14:32:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rxsum-0002iy-Ez
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:24:48 -0400
-Received: from mail-bn7nam10on20700.outbound.protection.outlook.com
- ([2a01:111:f403:2009::700]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rxsuj-0005q3-Go
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:24:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Iu2ZPTKvANOZcWIGVvEPEWo2/ustoBV7wQ/awKrU+p6HLd0jJneoMTWbpROwKVSClfIVN9CbxP9/SNP02UbOPZkuWmvbju02g8r0BeilPSXk7s0QI33xHFLJTxOksRzKDn95viMUvx9cr/CrQrrmvHZFFdGr1RCEheSzDIT88wgEfl3BCDihMq0Suwlj6/FlesZnjPm3uVVi0R4O+iOmJG3/lsiHWuFatfKkyZQmXssyf1RMSXgih2xgSU51GJxmB+uhNmhkRWL7L0TEW4Q0LiqglGSDuq5tPu8ZaeiCk3ZbcMP+HAfVoDC+ZxKhVGCR2vxWXrkx4NlETZ75FV7Gqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=J6H133nsgGGKX+c5F0sd3BLCiokggDt9PWTT+n1Y18k=;
- b=EePj4/qYk5L/+wC31hgwxgnTyyRy8lqvJZbFhhKUpX7mvuDxlYGbp8LYwI/pWWtqVdgaLs10oo6XlWscao7kbA8hDHzZ7Swo3NoDgtR2zdZBqxqA+l7PIco7h6o94I/LPG2CIKez2F4bjC1GI7n0WlsS56kv4FpKq0Qk1Bd53nciVppKGmKW9v6XeyLoZ68nSrV/HaOx9fcWLb7IYa679klIoLIDcpf4nh8SSEOnj/r7RYF+6Kf2ptr12mlIjzFGeKB7rEmhUnnKprBBBEULL1/nQK8HU3qNz8Rgo+qezmsl/jy7ODMZpQ/O5iBRkmgklltOBFWnraklqXxL6g3+Tg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
- dkim=pass header.d=memverge.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J6H133nsgGGKX+c5F0sd3BLCiokggDt9PWTT+n1Y18k=;
- b=iN/d6Kcf3agvL7aj6W15Y1P13u+7Otq6XNQmjNI5nziCdaTvdy+Kgxxk1GyqP6B8ErbBE8ooVPqpVWnLvBLPXL8p/jOwRDMmcWJQT8MozD5VYDFhS4bRzI/+aR2diCgLlKPiueEs46IntRH3fOxMcFb8SlDO6SJN3xRmibc/0DY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=memverge.com;
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
- by SJ0PR17MB6431.namprd17.prod.outlook.com (2603:10b6:a03:4d5::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.43; Fri, 19 Apr
- 2024 18:24:40 +0000
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::5d53:b947:4cab:2cc8]) by SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::5d53:b947:4cab:2cc8%4]) with mapi id 15.20.7472.042; Fri, 19 Apr 2024
- 18:24:40 +0000
-Date: Fri, 19 Apr 2024 14:24:36 -0400
-From: Gregory Price <gregory.price@memverge.com>
-To: nifan.cxl@gmail.com
-Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- linux-cxl@vger.kernel.org, ira.weiny@intel.com,
- dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com,
- jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
- fan.ni@samsung.com
-Subject: Re: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
-Message-ID: <ZiK25Log7LmtBffa@memverge.com>
-References: <20240418232902.583744-1-fan.ni@samsung.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240418232902.583744-1-fan.ni@samsung.com>
-X-ClientProxiedBy: PH8PR22CA0016.namprd22.prod.outlook.com
- (2603:10b6:510:2d1::9) To SJ0PR17MB5512.namprd17.prod.outlook.com
- (2603:10b6:a03:394::19)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1rxt1e-0004cj-6Y
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:31:58 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1rxt1b-0006vp-Ro
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 14:31:53 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6eff2be3b33so2276047b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 11:31:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713551505; x=1714156305; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EYyrvnlUjvt2kEOB2soFLgTGCQVq2lt5b64oZ27QOVo=;
+ b=LUMV0i2ZCvH7lBNzf4o9cTjPaufGLfAQvvLJ4WQgQ2Pk9ypwe0UX06gzFw+5tySn3P
+ EJVTOvZeFref+5EIa/ch8Jz09fmTZcOQshHCAvD6CM2tY5I4gg62y6p56/QCvpREHdT+
+ HojsYkJ7DfC2JpLkouCCaRaTH8B/TXcJWtWEGAyjZfKI2XRZ3UZPFpZ9PzMoDNzakXeD
+ V/Weyr/6s9pz5H6DPrqGtYQg8ygcO02cEk9YJPRQX7NVTId12e9IjIFS0tXatNMIsuv+
+ 8R0zcJYIYFWg/yn1/d9rdFRkv93IbxirL7TB6DBGXbuKnPbwA5esRWBrtJ0vSQQIoKqI
+ iHug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713551505; x=1714156305;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EYyrvnlUjvt2kEOB2soFLgTGCQVq2lt5b64oZ27QOVo=;
+ b=JwCcpsxta44v0OBYPDnUetCmlDFVigbUM6UfElLljWsg3VD7SHNO/GH3AIks806Fmo
+ mA3uLIkywC5KkZM9xEC5jGvuoIshtaJdYeC3a1PdoRguEH7weyewmdbNTZA9+Hng/nG6
+ aey5nMkXKpiY6afgxw3UFzU6s0kHgMDP1wbnwlbv9T4gzv6x1CMa7cRqwVuZcUS090yz
+ NYTXE4L9tzefuN/QGXTiopl5Jw/MgPNk1MT0cEbV130L+SeGHriqjVJOdpAZcJ9GzYSJ
+ pLUeNV7RUvZ337OFk8fJcxQwfdqINGiV6k07NN5OL6uqHGO3eoUiB79acvYF5HQl4COM
+ DHDQ==
+X-Gm-Message-State: AOJu0YzOLbf9YfrSwOj/kovzNVmH49SuAJ1hkJpQ6WXDgUD+Ri5RYqd8
+ bmU2HqLBANFnF27yKJgCx0SJY+Bav9B1e/80zyklDIsnShbAbguK99GG4Q==
+X-Google-Smtp-Source: AGHT+IFFWRxBMwtIiwv3hvPfP2PqLWy8PiVeNCvAjmeYpLWtHbfE1tGc/HKWyJbtX7lyU2QLt0RZ9A==
+X-Received: by 2002:a05:6a00:22c3:b0:6ec:da6c:fc2d with SMTP id
+ f3-20020a056a0022c300b006ecda6cfc2dmr3378783pfj.23.1713551504987; 
+ Fri, 19 Apr 2024 11:31:44 -0700 (PDT)
+Received: from localhost.localdomain ([103.197.153.228])
+ by smtp.gmail.com with ESMTPSA id
+ r18-20020aa79892000000b006ed0c9751d0sm3641788pfl.98.2024.04.19.11.31.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Apr 2024 11:31:44 -0700 (PDT)
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+Date: Sat, 20 Apr 2024 00:31:35 +0600
+Message-Id: <20240419183135.12276-1-dorjoychy111@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|SJ0PR17MB6431:EE_
-X-MS-Office365-Filtering-Correlation-Id: 105e80b1-269c-48fb-d5a6-08dc609dfa4e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ZJG4LXtlMWBH9lmJKhpQxIvySMM/aGJgAzmTR0DdD6nDskMqANXuGSdP3NNXfpbTlCsFrNqx1hI4kMn0EqlUscqJwgCN1M7VFBDXICQuMLWSpVEjQqZtx9QDi67FARBjfxEUQKEPEvefJdg+KH3HZu/cID9fUKwWZGhac6Eju6V9lLnEoaWANmvfIwWM9OKEWw9O62JN3a1I7+L2bF8Lsja+3nwEU1bT52ngs/CPikPqyTCvejXQvPfqcdgO0z3FywcEZURN0osfAbUACgwx0gx7L6vNHp9CkeXMA+oC3ViCSb0z0aELWqyBCBgO6DD9CwTBTLnhFsL5j5C5Sobx3WQRqpBiLWuSae/vmDU955KabKZD3d+7gDgfSx2E2A3PJFDyetbpyihtInlIkLgqZhYMlL5n7BEBvN2HkS9lfWl/yc58GOdcNyEanDa/bpSMmXB4Q7FAy9DDN+NUoB0DQmqutSlmsEEFnA4kv6fTfqPSK2XXD6K06h61gW1V5PBsDk2Im92jSB73RHcGlURcAGbsj/yNtbtsVXxXLQm8yx1WpAq/eFcFGlal5jJQ98H0b1gOZNvntRkxSSOVwtS+PbfBUm00XxyLbD5LGZOunoU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(1800799015)(7416005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?VUr8XbR9U6+zvDD9lyl85Y4CbFgEKu3NjWPaHACTRHkzwyFqDLF7dgPwEZ?=
- =?iso-8859-1?Q?uvBaTjeTbtxU7mrMpO8x2EVSnmZfF+gwn2UinmOBqnTB/wvP5bubaW9Q7k?=
- =?iso-8859-1?Q?f6Lo+KVJ4eR3b/1xCpqO601CGMVf0n0MAXjyRL5ZOETKclGJutUGeiawTS?=
- =?iso-8859-1?Q?faaNNlFxANjPuoncIYVk+X7MtTS6z3ysWIqDbqmqK4vDKWPKlzNU0p7sbR?=
- =?iso-8859-1?Q?/LVQdWuH84AzXzHITcjLlx5EfWFH+BNHr/rbb4hrBh3eCoQPdECNwPFuvQ?=
- =?iso-8859-1?Q?mUvRPVeuehpJeljiQheJGtxUwcrUSphvRTN+5jOLwBXD74IBr7A66JUVcN?=
- =?iso-8859-1?Q?chHsV4gow/s2/LrgpxP/r0DIM8RfnDK4zkuNJz3ZJu1rvrphuSUEHgnKss?=
- =?iso-8859-1?Q?G4fdDy/cVawdGAV4EqyPpFR2Cp8W4Zd5Cll9TznjfR8j7huqXeN29jtGaC?=
- =?iso-8859-1?Q?MSnU/XeZvtGMEzVV4JrXltzm36pIKitUyy/sfeJIZkpQYRI/r1gp0tRz5M?=
- =?iso-8859-1?Q?trwyjQ/0b+BaTPNs+g6F5RL49733Gmatqyq1oHA/2axgZbDt7QL/JI6lgV?=
- =?iso-8859-1?Q?nZQRRfvvzYYJuxkMZI215dfu/2WBkydRNIhI3ff58XP3KU9E//8H3jDoUX?=
- =?iso-8859-1?Q?WKU9r/WK3TTOFMsNPRZ6vadx1gk3VFoLM6UJeWIGh7zLKGXzP+mziDkZaS?=
- =?iso-8859-1?Q?I6Ksh5XbtMXoReE2orkWcdl0PoRztj4cmqy6WBT9Ovg7MytcNydXkr5dYH?=
- =?iso-8859-1?Q?dK2u79GN04tqIAeXEB5ydd9nkRo9ANiQwJpDGEeUV40Iwr5eMSrwnXqiVE?=
- =?iso-8859-1?Q?JnPkiyhkOhmSc1lLy4dhR06s5wVU+wYK+dFB4+HL/Y3iPTeIagMPsL0am4?=
- =?iso-8859-1?Q?xK1gOvxp6LJKvCnjiFb52kNAUuOpjIxV6FlixyeuedM47lxQRm1cThb3ii?=
- =?iso-8859-1?Q?D84hSjSM0bYPWeIv2IcklWSS6VE0Cnxge8ZqlJefJzT8ZBqpqlp+Z6CXhs?=
- =?iso-8859-1?Q?NCrWLs/q6l8F0tyOZCKtWdyF/jYnGiBHY8KIEvmbXeyKVGFcsFOng1GIDN?=
- =?iso-8859-1?Q?cY05j+fCGiUoO8h1Cnsqh9KoMvCkuOPg3pSCSd2qB1hQhy+FLUdzuovQyq?=
- =?iso-8859-1?Q?dcH/ZUtEqRPsAQmivFUiJTycTly8lq7dqcI7d8WTGLuxm5QteiA8d6ky3B?=
- =?iso-8859-1?Q?nRlfYSA74tw4rty9Yz36ywkufwbIOuXXHbn9R/3Y2shab6vHzFBPFb3KyM?=
- =?iso-8859-1?Q?WixOpD6kuAH7uT8+PzNFrI8vmjRh8Eb++Iga6N5jrEz2eqpfcVN1EAFObC?=
- =?iso-8859-1?Q?LEBWVkxFHBnCahCtmXw8EG1OEKskE5XuER//wTiuW8ZPze+7cJzbiy8/2G?=
- =?iso-8859-1?Q?pC0iV1psyjnJ9ObYebmHChfJZgf2g3s8sVHoingBC4Z9SU55c2DGXmTp3y?=
- =?iso-8859-1?Q?rFqv64eOlzXMLs9PyvsfqPOFowHEO/3DmW4M++f1jNKMWmckNnB896qe6Y?=
- =?iso-8859-1?Q?irqiZgbihwvYezO59bwDeXeQDKbN3+gODfS3sZIvJm5YzHybBF+uzbglvk?=
- =?iso-8859-1?Q?jAF4PaajS1Pr4bINCE/Prr6/I+d4Hrz9Fj978FVnMh8o6EYzr8YjPr9aVs?=
- =?iso-8859-1?Q?eYOUT5czHq7C6mQNvYXv7uLPLW5pJNHYI2d2fa49EHllWOSBJ8bOw6UA?=
- =?iso-8859-1?Q?=3D=3D?=
-X-OriginatorOrg: memverge.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 105e80b1-269c-48fb-d5a6-08dc609dfa4e
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2024 18:24:40.6905 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: k0PPjffeylsqZdkbRaikVurnKUI/0UmonLUA3EmxA5swRk30UjZAAC5+ysCbRqWlxg+aKkVN0MkJSmcfXGpeiFI1KM0Jg5C1LLANQWC8MBQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR17MB6431
-Received-SPF: pass client-ip=2a01:111:f403:2009::700;
- envelope-from=gregory.price@memverge.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,90 +90,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024 at 04:10:51PM -0700, nifan.cxl@gmail.com wrote:
-> A git tree of this series can be found here (with one extra commit on top
-> for printing out accepted/pending extent list): 
-> https://github.com/moking/qemu/tree/dcd-v7
-> 
-> v6->v7:
-> 
-> 1. Fixed the dvsec range register issue mentioned in the the cover letter in v6.
->    Only relevant bits are set to mark the device ready (Patch 6). (Jonathan)
-> 2. Moved the if statement in cxl_setup_memory from Patch 6 to Patch 4. (Jonathan)
-> 3. Used MIN instead of if statement to get record_count in Patch 7. (Jonathan)
-> 4. Added "Reviewed-by" tag to Patch 7.
-> 5. Modified cxl_dc_extent_release_dry_run so the updated extent list can be
->    reused in cmd_dcd_release_dyn_cap to simplify the process in Patch 8. (Jørgen) 
-> 6. Added comments to indicate further "TODO" items in cmd_dcd_add_dyn_cap_rsp.
->     (Jonathan)
-> 7. Avoided irrelevant code reformat in Patch 8. (Jonathan)
-> 8. Modified QMP interfaces for adding/releasing DC extents to allow passing
->    tags, selection policy, flags in the interface. (Jonathan, Gregory)
-> 9. Redesigned the pending list so extents in the same requests are grouped
->     together. A new data structure is introduced to represent "extent group"
->     in pending list.  (Jonathan)
-> 10. Added support in QMP interface for "More" flag. 
-> 11. Check "Forced removal" flag for release request and not let it pass through.
-> 12. Removed the dynamic capacity log type from CxlEventLog definition in cxl.json
->    to avoid the side effect it may introduce to inject error to DC event log.
->    (Jonathan)
-> 13. Hard coded the event log type to dynamic capacity event log in QMP
->     interfaces. (Jonathan)
-> 14. Adding space in between "-1]". (Jonathan)
-> 15. Some minor comment fixes.
-> 
-> The code is tested with similar setup and has passed similar tests as listed
-> in the cover letter of v5[1] and v6[2].
-> Also, the code is tested with the latest DCD kernel patchset[3].
-> 
-> [1] Qemu DCD patchset v5: https://lore.kernel.org/linux-cxl/20240304194331.1586191-1-nifan.cxl@gmail.com/T/#t
-> [2] Qemu DCD patchset v6: https://lore.kernel.org/linux-cxl/20240325190339.696686-1-nifan.cxl@gmail.com/T/#t
-> [3] DCD kernel patches: https://lore.kernel.org/linux-cxl/20240324-dcd-type2-upstream-v1-0-b7b00d623625@intel.com/T/#m11c571e21c4fe17c7d04ec5c2c7bc7cbf2cd07e3
->
+Some ARM CPUs advertise themselves as SMT by having the MT[24] bit set
+to 1 in the MPIDR register. These CPUs have the thread id in Aff0[7:0]
+bits, CPU id in Aff1[15:8] bits and cluster id in Aff2[23:16] bits in
+MPIDR.
 
-added review to all patches, will hopefully be able to add a Tested-by
-tag early next week, along with a v1 RFC for MHD bit-tracking.
+On the other hand, ARM CPUs without SMT have the MT[24] bit set to 0,
+CPU id in Aff0[7:0] bits and cluster id in Aff1[15:8] bits in MPIDR.
 
-We've been testing v5/v6 for a bit, so I expect as soon as we get the
-MHD code ported over to v7 i'll ship a tested-by tag pretty quick.
+The mpidr_read_val() function always reported non-SMT i.e., MT=0 style
+MPIDR value which means it was wrong for the following CPUs with SMT
+supported by QEMU:
+    - cortex-a55
+    - cortex-a76
+    - cortex-a710
+    - neoverse-v1
+    - neoverse-n1
+    - neoverse-n2
 
-The super-set release will complicate a few things but this doesn't
-look like a blocker on our end, just a change to how we track bits in a
-shared bit/bytemap.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1608
+Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+---
+ hw/arm/npcm7xx.c       |  2 +-
+ hw/arm/sbsa-ref.c      | 21 ++++++++++++++++-----
+ hw/arm/virt.c          | 18 +++++++++++++++---
+ target/arm/cpu.c       | 14 ++++++++++++--
+ target/arm/cpu.h       |  5 ++++-
+ target/arm/helper.c    |  4 ++++
+ target/arm/tcg/cpu64.c | 12 ++++++++++++
+ 7 files changed, 64 insertions(+), 12 deletions(-)
 
-> 
-> Fan Ni (12):
->   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
->     payload of identify memory device command
->   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
->     and mailbox command support
->   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
->     type3 memory devices
->   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
->     devices
->   hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
->     size instead of mr as argument
->   hw/mem/cxl_type3: Add host backend and address space handling for DC
->     regions
->   hw/mem/cxl_type3: Add DC extent list representative and get DC extent
->     list mailbox support
->   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
->     dynamic capacity response
->   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
->     extents
->   hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
->   hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
->   hw/mem/cxl_type3: Allow to release extent superset in QMP interface
-> 
->  hw/cxl/cxl-mailbox-utils.c  | 620 ++++++++++++++++++++++++++++++++++-
->  hw/mem/cxl_type3.c          | 633 +++++++++++++++++++++++++++++++++---
->  hw/mem/cxl_type3_stubs.c    |  20 ++
->  include/hw/cxl/cxl_device.h |  81 ++++-
->  include/hw/cxl/cxl_events.h |  18 +
->  qapi/cxl.json               |  69 ++++
->  6 files changed, 1396 insertions(+), 45 deletions(-)
-> 
-> -- 
-> 2.43.0
-> 
+diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+index cc68b5d8f1..9d5dcf1a3f 100644
+--- a/hw/arm/npcm7xx.c
++++ b/hw/arm/npcm7xx.c
+@@ -487,7 +487,7 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
+     /* CPUs */
+     for (i = 0; i < nc->num_cpus; i++) {
+         object_property_set_int(OBJECT(&s->cpu[i]), "mp-affinity",
+-                                arm_build_mp_affinity(i, NPCM7XX_MAX_NUM_CPUS),
++                                arm_build_mp_affinity(ARM_CPU(&s->cpu[i]), i, NPCM7XX_MAX_NUM_CPUS),
+                                 &error_abort);
+         object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+                                 NPCM7XX_GIC_CPU_IF_ADDR, &error_abort);
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index f5709d6c14..dd42788f23 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -147,10 +147,10 @@ static const int sbsa_ref_irqmap[] = {
+     [SBSA_GWDT_WS0] = 16,
+ };
+ 
+-static uint64_t sbsa_ref_cpu_mp_affinity(SBSAMachineState *sms, int idx)
++static uint64_t sbsa_ref_cpu_mp_affinity(ARMCPU *cpu, int idx)
+ {
+     uint8_t clustersz = ARM_DEFAULT_CPUS_PER_CLUSTER;
+-    return arm_build_mp_affinity(idx, clustersz);
++    return arm_build_mp_affinity(cpu, idx, clustersz);
+ }
+ 
+ static void sbsa_fdt_add_gic_node(SBSAMachineState *sms)
+@@ -254,7 +254,7 @@ static void create_fdt(SBSAMachineState *sms)
+         char *nodename = g_strdup_printf("/cpus/cpu@%d", cpu);
+         ARMCPU *armcpu = ARM_CPU(qemu_get_cpu(cpu));
+         CPUState *cs = CPU(armcpu);
+-        uint64_t mpidr = sbsa_ref_cpu_mp_affinity(sms, cpu);
++        uint64_t mpidr = sbsa_ref_cpu_mp_affinity(armcpu, cpu);
+ 
+         qemu_fdt_add_subnode(sms->fdt, nodename);
+         qemu_fdt_setprop_u64(sms->fdt, nodename, "reg", mpidr);
+@@ -816,8 +816,9 @@ static void sbsa_ref_init(MachineState *machine)
+ static const CPUArchIdList *sbsa_ref_possible_cpu_arch_ids(MachineState *ms)
+ {
+     unsigned int max_cpus = ms->smp.max_cpus;
+-    SBSAMachineState *sms = SBSA_MACHINE(ms);
+     int n;
++    Object *cpuobj;
++    ARMCPU *armcpu;
+ 
+     if (ms->possible_cpus) {
+         assert(ms->possible_cpus->len == max_cpus);
+@@ -827,13 +828,23 @@ static const CPUArchIdList *sbsa_ref_possible_cpu_arch_ids(MachineState *ms)
+     ms->possible_cpus = g_malloc0(sizeof(CPUArchIdList) +
+                                   sizeof(CPUArchId) * max_cpus);
+     ms->possible_cpus->len = max_cpus;
++
++    /*
++     * Instantiate a temporary CPU object to build mp_affinity
++     * of the possible CPUs.
++     */
++    cpuobj = object_new(ms->cpu_type);
++    armcpu = ARM_CPU(cpuobj);
++
+     for (n = 0; n < ms->possible_cpus->len; n++) {
+         ms->possible_cpus->cpus[n].type = ms->cpu_type;
+         ms->possible_cpus->cpus[n].arch_id =
+-            sbsa_ref_cpu_mp_affinity(sms, n);
++            sbsa_ref_cpu_mp_affinity(armcpu, n);
+         ms->possible_cpus->cpus[n].props.has_thread_id = true;
+         ms->possible_cpus->cpus[n].props.thread_id = n;
+     }
++
++    object_unref(cpuobj);
+     return ms->possible_cpus;
+ }
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index a9a913aead..fe6d13c08f 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1703,7 +1703,7 @@ void virt_machine_done(Notifier *notifier, void *data)
+     virt_build_smbios(vms);
+ }
+ 
+-static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
++static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, ARMCPU *cpu, int idx)
+ {
+     uint8_t clustersz = ARM_DEFAULT_CPUS_PER_CLUSTER;
+     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+@@ -1723,7 +1723,7 @@ static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
+             clustersz = GICV3_TARGETLIST_BITS;
+         }
+     }
+-    return arm_build_mp_affinity(idx, clustersz);
++    return arm_build_mp_affinity(cpu, idx, clustersz);
+ }
+ 
+ static inline bool *virt_get_high_memmap_enabled(VirtMachineState *vms,
+@@ -2683,6 +2683,8 @@ static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
+     unsigned int max_cpus = ms->smp.max_cpus;
+     VirtMachineState *vms = VIRT_MACHINE(ms);
+     MachineClass *mc = MACHINE_GET_CLASS(vms);
++    Object *cpuobj;
++    ARMCPU *armcpu;
+ 
+     if (ms->possible_cpus) {
+         assert(ms->possible_cpus->len == max_cpus);
+@@ -2692,10 +2694,18 @@ static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
+     ms->possible_cpus = g_malloc0(sizeof(CPUArchIdList) +
+                                   sizeof(CPUArchId) * max_cpus);
+     ms->possible_cpus->len = max_cpus;
++
++    /*
++     * Instantiate a temporary CPU object to build mp_affinity
++     * of the possible CPUs.
++     */
++    cpuobj = object_new(ms->cpu_type);
++    armcpu = ARM_CPU(cpuobj);
++
+     for (n = 0; n < ms->possible_cpus->len; n++) {
+         ms->possible_cpus->cpus[n].type = ms->cpu_type;
+         ms->possible_cpus->cpus[n].arch_id =
+-            virt_cpu_mp_affinity(vms, n);
++            virt_cpu_mp_affinity(vms, armcpu, n);
+ 
+         assert(!mc->smp_props.dies_supported);
+         ms->possible_cpus->cpus[n].props.has_socket_id = true;
+@@ -2711,6 +2721,8 @@ static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
+         ms->possible_cpus->cpus[n].props.thread_id =
+             n % ms->smp.threads;
+     }
++
++    object_unref(cpuobj);
+     return ms->possible_cpus;
+ }
+ 
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index ab8d007a86..34ee98f5f9 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1314,8 +1314,18 @@ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     }
+ }
+ 
+-uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
++uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz)
+ {
++    if (cpu->has_smt) {
++        /*
++         * Right now, the ARM CPUs with SMT supported by QEMU only have
++         * one thread per core. So Aff0 is always 0.
++         */
++        uint32_t Aff2 = idx / clustersz;
++        uint32_t Aff1 = idx % clustersz;
++        uint32_t Aff0 = 0;
++        return (Aff2 << ARM_AFF2_SHIFT) | (Aff1 << ARM_AFF1_SHIFT) | Aff0;
++    }
+     uint32_t Aff1 = idx / clustersz;
+     uint32_t Aff0 = idx % clustersz;
+     return (Aff1 << ARM_AFF1_SHIFT) | Aff0;
+@@ -2136,7 +2146,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+      * so these bits always RAZ.
+      */
+     if (cpu->mp_affinity == ARM64_AFFINITY_INVALID) {
+-        cpu->mp_affinity = arm_build_mp_affinity(cs->cpu_index,
++        cpu->mp_affinity = arm_build_mp_affinity(cpu, cs->cpu_index,
+                                                  ARM_DEFAULT_CPUS_PER_CLUSTER);
+     }
+ 
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index bc0c84873f..57343c7e24 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -948,6 +948,9 @@ struct ArchCPU {
+     /* Uniprocessor system with MP extensions */
+     bool mp_is_up;
+ 
++    /* Arm cores with SMT support */
++    bool has_smt;
++
+     /* True if we tried kvm_arm_host_cpu_features() during CPU instance_init
+      * and the probe failed (so we need to report the error in realize)
+      */
+@@ -1140,7 +1143,7 @@ void arm_cpu_post_init(Object *obj);
+     (ARM_AFF0_MASK | ARM_AFF1_MASK | ARM_AFF2_MASK | ARM_AFF3_MASK)
+ #define ARM64_AFFINITY_INVALID (~ARM64_AFFINITY_MASK)
+ 
+-uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz);
++uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz);
+ 
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_arm_cpu;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index a620481d7c..3e09bc950b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4676,6 +4676,10 @@ static uint64_t mpidr_read_val(CPUARMState *env)
+             mpidr |= (1u << 30);
+         }
+     }
++
++    if (cpu->has_smt) {
++        mpidr |= (1U << 24);
++    }
+     return mpidr;
+ }
+ 
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 9f7a9f3d2c..8807809842 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -289,6 +289,8 @@ static void aarch64_a55_initfn(Object *obj)
+ 
+     /* From D5.4 AArch64 PMU register summary */
+     cpu->isar.reset_pmcr_el0 = 0x410b3000;
++
++    cpu->has_smt = true;
+ }
+ 
+ static void aarch64_a72_initfn(Object *obj)
+@@ -413,6 +415,8 @@ static void aarch64_a76_initfn(Object *obj)
+ 
+     /* From D5.1 AArch64 PMU register summary */
+     cpu->isar.reset_pmcr_el0 = 0x410b3000;
++
++    cpu->has_smt = true;
+ }
+ 
+ static void aarch64_a64fx_initfn(Object *obj)
+@@ -652,6 +656,8 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     /* From D5.1 AArch64 PMU register summary */
+     cpu->isar.reset_pmcr_el0 = 0x410c3000;
+ 
++    cpu->has_smt = true;
++
+     define_neoverse_n1_cp_reginfo(cpu);
+ }
+ 
+@@ -740,6 +746,8 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+     /* From 5.5.1 AArch64 PMU register summary */
+     cpu->isar.reset_pmcr_el0 = 0x41213000;
+ 
++    cpu->has_smt = true;
++
+     define_neoverse_v1_cp_reginfo(cpu);
+ 
+     aarch64_add_pauth_properties(obj);
+@@ -958,6 +966,8 @@ static void aarch64_a710_initfn(Object *obj)
+     /* FIXME: Not documented -- copied from neoverse-v1 */
+     cpu->reset_sctlr = 0x30c50838;
+ 
++    cpu->has_smt = true;
++
+     define_arm_cp_regs(cpu, cortex_a710_cp_reginfo);
+ 
+     aarch64_add_pauth_properties(obj);
+@@ -1055,6 +1065,8 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+     /* FIXME: Not documented -- copied from neoverse-v1 */
+     cpu->reset_sctlr = 0x30c50838;
+ 
++    cpu->has_smt = true;
++
+     /*
+      * The Neoverse N2 has all of the Cortex-A710 IMPDEF registers,
+      * and a few more RNG related ones.
+-- 
+2.39.2
+
 
