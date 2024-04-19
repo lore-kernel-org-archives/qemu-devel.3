@@ -4,72 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9186FC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 08:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5344AC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxk4i-0000BG-SZ; Fri, 19 Apr 2024 04:58:28 -0400
+	id 1rxk6G-00015c-Pk; Fri, 19 Apr 2024 05:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxk4h-0000As-JW
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:58:27 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxk6C-00013q-Oz
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:00:01 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxk4f-0000x7-Tc
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:58:27 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4196c62bb41so1601195e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 01:58:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxk6A-00013x-Tt
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:00:00 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-516d2b9cd69so2105905e87.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 01:59:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713517103; x=1714121903; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BKGnDSSkETE4kYg5rHuJqJW6r4gB+zCGK3fj66YrvhQ=;
- b=Zy0bHAt22Nu1nhFzRatLyZ2oYj+YCp5g4KF+C425E+gBoCsSK+Fb/CXd0VhVKu+o8r
- 5+q1PWTzT/YwYZaEGkQyBawsv1wha6FrRY05lLLlX3SiRTixULUacQpOYk+z76bnmaRd
- HO76lGn/wBnFj6MuH9PsfQS8ZoTRQn05EniegjssdymCuoG+QCWDV8bBSYbFw4TSiruB
- yoSVxm8Vn0grrIlmQbq3nuO10ae0wcFRwxvMon6nxzmA9adzwX6FhodRNfofxNCdZOO1
- 5DR+UzNoxoRDpEwIiaw9WswMBc17wQT9czO2V4lGwX1g96tUuMBpUADAyg+xdHl4tG7I
- Wisg==
+ d=linaro.org; s=google; t=1713517197; x=1714121997; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MPxQjJovGEeaH5jw9xR5fgdvdZ8dPd3Q6lvUVJ/TSf0=;
+ b=A3mVFz6DXCpmcI9FaOAV4D+a1vWrEBRmVvRTYHBI/uHpNQYBhAIhzj9GC3upw67TDF
+ gvB+T+FNea4IhPqtOF8Ekx0dKCh1wuU7Ke0rG0qmyoCZehg0Uss66zfdCXbxGuBM1hH1
+ Ww+6Z0beZIkOyv9LlD7LYJlxbApE1AJ8ZGS8HsEIy3HVGIPGepYv4S5pRqbqx73xXMhr
+ ZqCuoEWa+qBphrix2VOxI7pZCyk/He0gbgRAmV0zudlYbQsGLHMjxx+fL2t15v5fOyt4
+ ZIspgtps4pixiDOWKskeypFdNwLivmZ1QTUv2Y3+9nf0fq6XZvhOLmmsLr1ZT0CXRZ6H
+ 9UEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713517103; x=1714121903;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BKGnDSSkETE4kYg5rHuJqJW6r4gB+zCGK3fj66YrvhQ=;
- b=QBUXYC07/VfsAwDgkVACdZOSG7M/JaUqBEpaE0c8tc2YnpRMoJUQLHsTfGWpyqj17O
- JZoSkmBxsGfj4oByQTEC/HtEjAlACokO6k3y3lILgnpPd6pIkc6Q900dFsAskfogpAz/
- 3r05Xq9zUy8i+e16X/f+/S5RiSqJMCtVXdwHaEIEwDIIDBMaSrCkc/niIFExJzmOHrFb
- roA02h+LM8aNQA01fyr5EnM3GJQ+e1qGscvHteh7F5yWFkRF0sqtxGS3GSjVWW6g4EJ2
- VvasmYN0Et/WqoUuh7GmgTOMVq05AwqzoCuTycOIT7Q4wf+UPA/MGDUBE3genRILxbQ+
- 8gJA==
-X-Gm-Message-State: AOJu0Yx8pXfZnSV/KC18+UPKcdByTW3T+9g3zjEVyZBartUDsY+XoguS
- B4p+gjOZ7z3T/XrUNMnvfXioXMGTz3p9Tfc+wUN5/ngHSIXzw2vKLoWs3vGZyGEE8nCLjVM1Gg1
- L/W4=
-X-Google-Smtp-Source: AGHT+IHE5qTGHzxoM7dYmmCZgebYbEQvbGkNhwpoq5tXeR6JCDeLitZDsRb5RPq+Lx3epFiMpg1GiQ==
-X-Received: by 2002:a05:600c:154f:b0:417:fbc2:caf8 with SMTP id
- f15-20020a05600c154f00b00417fbc2caf8mr965221wmg.23.1713517103161; 
- Fri, 19 Apr 2024 01:58:23 -0700 (PDT)
-Received: from localhost.localdomain ([176.176.143.233])
+ d=1e100.net; s=20230601; t=1713517197; x=1714121997;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MPxQjJovGEeaH5jw9xR5fgdvdZ8dPd3Q6lvUVJ/TSf0=;
+ b=CwLKW1DTf6/Z+sh0HQ5CdKbfWFsQ1lB6te7Fh76mYDjBHrw/89Oa9kGEaLZO78rhkM
+ QeAZZVdD+FhIs0MCGv3QT+3Wz1+8m++Rtof/N0eCCWju9r1zqEeesuhBoD7YKX1UKgXD
+ fjegXRCHGxTNw8U8p+tQwvEIQLt0zopstAGhaa993Hnv7DPMwIu4plKyoHCA9EpDqgPA
+ 7L64Q6WhTYx+lCdFwrTyedZ6B5p7UGM0IXyMAYqzACwK+29Yhu2RPQ5ky01KrEI+ix2x
+ hC4ENlTk8Zu9vw3b8DUCFfdqGcEWEiJlhdaMl+QSh3sGV+NEsz3WOaf5FmUB2zlrS14q
+ /Z1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCs22N9GW2EJ4f3ndRYjsItCeU/II2HXXNO57jIroRXdrvJu7AhoiJ/wSJyfQr+4GpBziyYwNfu83QKxNNLNYCyoHXu6U=
+X-Gm-Message-State: AOJu0Yx0FNtA3gu/T5cyqQ6+ms902dv9fnG7gj0FakCboatIfUgzEnD4
+ a2YMs7xlrsjb+96RPtneXYxuINevEKRyt7SOKiNbcwLk/1kiWS2EZuikrv4EUxg=
+X-Google-Smtp-Source: AGHT+IEhhwXKufSqxS7JFyOBMhmGPik/7Vl+rTTfHBd3LuYnz0NFsE1bgtj4Urho2VUCeMCncwzUyA==
+X-Received: by 2002:a19:e041:0:b0:51a:c3f2:69a8 with SMTP id
+ g1-20020a19e041000000b0051ac3f269a8mr537141lfj.53.1713517197094; 
+ Fri, 19 Apr 2024 01:59:57 -0700 (PDT)
+Received: from [192.168.235.175] ([176.176.143.233])
  by smtp.gmail.com with ESMTPSA id
- f7-20020a05600c154700b004190d7126c0sm1248827wmg.38.2024.04.19.01.58.21
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Apr 2024 01:58:22 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- qemu-trivial@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/unit: Remove debug statements in test-nested-aio-poll.c
-Date: Fri, 19 Apr 2024 10:58:19 +0200
-Message-ID: <20240419085819.47606-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ m6-20020ac24246000000b00516c8826719sm608275lfl.197.2024.04.19.01.59.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Apr 2024 01:59:56 -0700 (PDT)
+Message-ID: <6be5d4b2-443c-4a51-9910-c4862c33501e@linaro.org>
+Date: Fri, 19 Apr 2024 10:59:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] docs/about: Deprecate the old "UltraSparc" CPU
+ names that contain a "+"
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20240419084812.504779-1-thuth@redhat.com>
+ <20240419084812.504779-5-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240419084812.504779-5-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,80 +101,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are running this test since almost a year; it is
-safe to remove its debug statements, which clutter
-CI jobs output:
+On 19/4/24 10:48, Thomas Huth wrote:
+> For consistency we should drop the names with a "+" in it in the
+> long run.
+> 
+> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   docs/about/deprecated.rst | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 
-  ▶  88/100 /nested-aio-poll                      OK
-  io_read 0x16bb26158
-  io_poll_true 0x16bb26158
-  > io_poll_ready
-  io_read 0x16bb26164
-  < io_poll_ready
-  io_poll_true 0x16bb26158
-  io_poll_false 0x16bb26164
-  > io_poll_ready
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_read 0x16bb26164
-  < io_poll_ready
-  88/100 qemu:unit / test-nested-aio-poll        OK
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/unit/test-nested-aio-poll.c | 7 -------
- 1 file changed, 7 deletions(-)
-
-diff --git a/tests/unit/test-nested-aio-poll.c b/tests/unit/test-nested-aio-poll.c
-index db33742af3..d8fd92c43b 100644
---- a/tests/unit/test-nested-aio-poll.c
-+++ b/tests/unit/test-nested-aio-poll.c
-@@ -30,19 +30,16 @@ typedef struct {
- 
- static void io_read(EventNotifier *notifier)
- {
--    fprintf(stderr, "%s %p\n", __func__, notifier);
-     event_notifier_test_and_clear(notifier);
- }
- 
- static bool io_poll_true(void *opaque)
- {
--    fprintf(stderr, "%s %p\n", __func__, opaque);
-     return true;
- }
- 
- static bool io_poll_false(void *opaque)
- {
--    fprintf(stderr, "%s %p\n", __func__, opaque);
-     return false;
- }
- 
-@@ -50,8 +47,6 @@ static void io_poll_ready(EventNotifier *notifier)
- {
-     TestData *td = container_of(notifier, TestData, poll_notifier);
- 
--    fprintf(stderr, "> %s\n", __func__);
--
-     g_assert(!td->nested);
-     td->nested = true;
- 
-@@ -62,8 +57,6 @@ static void io_poll_ready(EventNotifier *notifier)
-     g_assert(aio_poll(td->ctx, true));
- 
-     td->nested = false;
--
--    fprintf(stderr, "< %s\n", __func__);
- }
- 
- /* dummy_notifier never triggers */
--- 
-2.41.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
