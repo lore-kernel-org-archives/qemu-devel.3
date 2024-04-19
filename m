@@ -4,142 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E93EC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 06:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF8BC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 06:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxhIj-0005OZ-92; Fri, 19 Apr 2024 02:00:45 -0400
+	id 1rxhc0-0003Km-5a; Fri, 19 Apr 2024 02:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rxhId-0005Ne-IQ; Fri, 19 Apr 2024 02:00:39 -0400
-Received: from mail-eastasiaazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c400::3] helo=HK3PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rxhby-0003KF-Ey
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 02:20:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rxhIZ-0001iZ-0A; Fri, 19 Apr 2024 02:00:38 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=czX2xP+C+MBdg00grdK0uTiGeo/k6ggIIBIO1k0MSyb/1BQRuSUtN8u9aRoaIwFSiYDvOcP53u/rxbe1sIzfPsN/YmIGMCPMymhANSsL/zPkX3QfmesT35PvYSJKSVGZ2olpZVUzRnYK34n+Wdeynk4ZdgQQf2fVoC29ZqghMPc+vu9hvw0zPlvtNqhhvcLfUmcr1UrJXQhn7zkiDDPDZiX3Ih1GOOgASZzI6JIjz9IskoQXN/xa74OGXOFvsOiPb6F1tQnXqT33kyc9BcRTbk0praQMH+2FKoAUaQFGeQRXAopkA85jptbCWw0Tj/PF4BGGWXXo0qDNXmPpPYAJTw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RJ78d1Zs20QSJdm9S3hLtJyebeS7YYNPoH91kwdk0Q8=;
- b=cHsRH5dOMWEeEyzGhSMV8O+jigo107YLiile3tsZgJwXma7lVoKUAIOzSQTgIeh0WnyFeW9vOpUpA/dDtyFfMkImlQtVM16lrQHpM+GM0Zjmn+mrA7Aje5OLv0HckuIWNk5oZrFWsmMpVUWBnRarJ0uyny29h0lURNIT2tn7/SGsMdns33qFVUs32B2BgW5zHZO6X9IP1Znd9Gss6fdNvGvZb02j8DHCnsgpFllaXY96EfNZ3Kqhm8WW6Gl5LAWeeIkPkNsjYRXcu+022G2PAeF2o0r/FnwqO6TWQarSoPWsGq4l1aYofltnEr8Efn4gckTymTwORpODDkQYY3d5pg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RJ78d1Zs20QSJdm9S3hLtJyebeS7YYNPoH91kwdk0Q8=;
- b=M6fnYz0PFZjbcIjMXp6Dyj0BlXKwR0/7EOApEHOgKzy3p4UlhgdnKZl0md254kjsDrw8IBsExX0vqEIndFvkWQ1T5fYQyUbwpbuP+nTo7mkNX3iG7bITj2SfEWaq06Gqk5o6hePD1AQqxA+kAHhchdCdMLqvD4yUGZIJjePrHy0evdfP8J2DY0lsX4l9hHWwRQb0boVWZtr+vglYKOL1tR4fj8YsXHOfJCEm3TeT3VOKG0Neb0yTYI50f3CEJ9ZbKpGM+dQMaUK0fJAP5mc1JrrqSMYkkWPpkyyVHC5lhuukMKajoh5G0TsnCr4UOhJ9qmfBJCXLTkiOey0kf8tBAw==
-Received: from SEYPR06MB5037.apcprd06.prod.outlook.com (2603:1096:101:51::5)
- by TYUPR06MB6002.apcprd06.prod.outlook.com (2603:1096:400:346::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.39; Fri, 19 Apr
- 2024 06:00:23 +0000
-Received: from SEYPR06MB5037.apcprd06.prod.outlook.com
- ([fe80::7149:7e4b:3b9a:e0f8]) by SEYPR06MB5037.apcprd06.prod.outlook.com
- ([fe80::7149:7e4b:3b9a:e0f8%5]) with mapi id 15.20.7472.042; Fri, 19 Apr 2024
- 06:00:22 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
- Cleber Rosa <crosa@redhat.com>, =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
- <yunlin.tang@aspeedtech.com>
-Subject: RE: [PATCH v3 08/16] aspeed/smc: support 64 bits dma dram address
-Thread-Topic: [PATCH v3 08/16] aspeed/smc: support 64 bits dma dram address
-Thread-Index: AQHaj98p56K772t3mE66L/jhh9S5M7FuNfkAgADfxFA=
-Date: Fri, 19 Apr 2024 06:00:22 +0000
-Message-ID: <SEYPR06MB50377414AEA2C2CAEF28A5E8FC0D2@SEYPR06MB5037.apcprd06.prod.outlook.com>
-References: <20240416091904.935283-1-jamin_lin@aspeedtech.com>
- <20240416091904.935283-9-jamin_lin@aspeedtech.com>
- <9b6d5078-121d-4370-86fc-4bb25ad4e72f@kaod.org>
-In-Reply-To: <9b6d5078-121d-4370-86fc-4bb25ad4e72f@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEYPR06MB5037:EE_|TYUPR06MB6002:EE_
-x-ms-office365-filtering-correlation-id: dc994b60-3ac5-4388-a774-08dc6035ffdf
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: XJ3ZhXwEeNnL5odBJINOFTUY49TufTMriMZkeXh62ZxuWOQxPeh3wDHHT6izr/jMC+YLnL4BR/Vk+47hyPEfzYKVrrxiRYzicB9EZUER1qYOU1fLuenf6t8uMix40TAwe/WTVJ+vPyw37FtUEzZD3n83NDI8QrM8XtY8yrVBmqvAd0XXRhG1w2nVLnnJwnpW+MopGyR+13A+mdf4Jo7iKljzgg9kbtXlbzEtl6oWQLOPkD229cYjcHOnHAFlzDpDTs/N9GLxUxmIT6xgw2jkuR//GqoY8vqMa/SRXjRbHHdqX1RD6Czb2AXiVrHRFtKBxIR3GNbf42Pk182BaAwAZUefoaUw4PRTOUMD4owTLxqxq0McSRep3OljQprfd8khXAD2qxsNmB2ef0Q3H0ARICz8X4nC28T2KXaHeoTCvA0MfkzryrPjEkNCO7VycFAL6hlB8yqPKwMvZNV8rUPtQbNYksFgT7cMUCQC4riE5j0oGxpRJGTbOyol1HRKZA6lO4gAu48k6kzpgqnt5vZKp/kW+h/30MgmPE/tdmsk6OBlmTH7Kj2UgHpV8jVuT4VnP6aMHILgjt5f2OCCy0DGXlBRGg4rxClB/yCioLQVpuzT8rmy+zQZGudPjOVvNGjhojxDz/lspVYH7shbCcouszjexqzDaXDWp4zZLT3SruKRL0oZDGv46O6p3Kq/MQG7Rfu59N7IjPXQrnDLFgKdW/Zyz3hC6HRjRcLdgn5M0Fk=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SEYPR06MB5037.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230031)(7416005)(376005)(1800799015)(366007)(38070700009)(921011);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Z24wRy9EMVoyKzE2QkwxRGNGQzZ1NTVGajJSczlwd2FPR0pPRUxZa2ZMdmlN?=
- =?utf-8?B?R2l5amp6eFhJTFAraGVteGZGUTVmR05GVEQ5T2JiZGdvbTJpYXdFLytNVEwz?=
- =?utf-8?B?THpWNGpBTUhydG9TZ1NPQjJ4ZE5xTnl1a2NWK1U4ZnBZYUhUWkRHeHE1TjVQ?=
- =?utf-8?B?aEFEYWZsYjdsNmlMa1drckd6eERpSE1TaDBtQU02MDNoanhpNHlPUUQ0ZmZT?=
- =?utf-8?B?WGN4dnZyenFSV0YwMVJUZTIyQjZ5cWp5UVVWQ1hETTFqWCtZZ2N1VGZyQlht?=
- =?utf-8?B?R0NuWGRwMnFoOFhRY0V5MHUxV0c0eHpGMGRjR0NUUFYyVklQck5ocTM5NG9S?=
- =?utf-8?B?Ty9iZVUvOUhtK2JOZUM4b0dQMThmdVVybEJyZVZwK2pvQk94TVppYnZQWFNa?=
- =?utf-8?B?Q0l6RVVZSUR2Vm5BbG92cjRHSFV3WGtXdTlGQTRrQ3NCQk1sRnczZ2U2YUw5?=
- =?utf-8?B?SkQ0SEhMSnJXQnBwSUFlK1dWTEpZZWxGdURhenU2dDRrb2NTc3Z4UkVGS3ZN?=
- =?utf-8?B?ZTkwZlZHRTFOVG9RUnE2UUl6eUQ1dkFISUlvWnFyNkNQZDFjVFBhZXcxdWZz?=
- =?utf-8?B?T1BGOUlrOG1oZ0FlVlU3Rjh1eVpTREpjRFNoTHlGSFA0TDFOT0ZoTUU0STFU?=
- =?utf-8?B?eENxZ0NUMlo5Wms2ajdKNzRrSDVwOVMrR0pBL2p3elFieldXOUFQTGcwTFdD?=
- =?utf-8?B?ZnpBdkdlV09wRS8xa2hBMGIyMjkyQ1RDM3pFeUpucnUvazRWaVA2enIrQWlr?=
- =?utf-8?B?ZjJFTzlzc2ZQcThlc244SUdSeEdnb0o1U0JOOXhrYzFBbFRrR2d6UFlmSkkz?=
- =?utf-8?B?YmNiUU10R2YyUVlSMHNHMkRTb1BKaDVBOWJ1THYrOEJMOTB3VThoSlFsKzNO?=
- =?utf-8?B?TmtsNVQ2aExzQWJLVHRHNGFjbkhZckxrQjA3T2lYYm1uZzl0WFoweUprMGZH?=
- =?utf-8?B?N3NiSk84QmpjRWpQU090UnNjM0JnQkM5TkJBdmZURzkrZ1JTdlBacHVOcnNT?=
- =?utf-8?B?WVEwMncveHRxdVFDVGVTVm0yMUJXWnl6V2Z3ZHhjeVVKalZuQWc1eVk2SnUx?=
- =?utf-8?B?UjlNQXNEdEJ0alU5eFRkOE55NkZjcEJCekJTcnVpVHE2RTlPR3psOVpnS05Y?=
- =?utf-8?B?a0NQSVRQUzdsTklISk5NWWk5OHJtZGdYM3VpTk84dC9EcURkcUYxaXBXWWVL?=
- =?utf-8?B?N3dJYTJPQUg5WitmdWJsYzJwOEVtOU1UZHNEcS9WMEsrZmR0eXlCdGNPWEtV?=
- =?utf-8?B?bWNkZVMyNGVEME9YUVRaeHpOSU9vdUVIeWF2MFlvV3AxRnRaZTJkZU50aUxW?=
- =?utf-8?B?TWxidWZsc1B1M1ROU01JU3M3ckIyWGR0MGZVV3Z2V2JmZVNzaFZJdkZvV0VG?=
- =?utf-8?B?VXA4aGt6L0dldm0yeGwvNmVGL3M2MStQck4ydDVpaStzN2NxdGJyQm0vYmM2?=
- =?utf-8?B?SEhhSHp1WU9QazJDRHM2YlBhOTQ1QkYra1Jma2pySmpaZUw4emJLWlhTUUI1?=
- =?utf-8?B?SFk0dEtDZUZDMGJ0Snprd1RWSjFBUXBEN1B0bTQ2bGRnUy85QVFBbE9tRWly?=
- =?utf-8?B?QWtIT0htczJ6Uk1qNkEzOWgrMHh2OFFNcFZPQTY5K1RicStkc0dTVmZNOHlv?=
- =?utf-8?B?QzFpcEtGaXJPM0o4MDB2RkgyRG9uTVQ0dnFhZ1M0eW9WbXJkRW05QUhydkgw?=
- =?utf-8?B?SERjWVlxZUQ4R1g3c0ZiMGw4c0tQZXViQjIrY29TaEdpRlUvUm1OVUl3c3V6?=
- =?utf-8?B?YllmUVBaT0s2TlVoL0NOenZNVDRFcDJZUmRERzJuSkhHVUpjeDljOHZCOHRn?=
- =?utf-8?B?cW5SWGRVdVh4M3NPWkFnTXJhNDhxMEh2ZzdTT1p3WmRRdHREaXczaUhaWTRu?=
- =?utf-8?B?eUMrVXQ0KzI3eG12M1VDTVViQWlEWkp1ZU1QTEtkUlprRFV3bkROOGpCS3Y5?=
- =?utf-8?B?ako0WTZJUTRaU09tWm01QXY3dWNocjg2R3lyeVR3YU9wdWhnY0tuM1FMVEdy?=
- =?utf-8?B?WEdRTytEeHpJV2EzOUw3cG1LTUFxT215YU92M0VnMzIvWWR4aUpMMGNmMzVo?=
- =?utf-8?B?Q2NzYUpYTDhwLzFCRG5ITHBZU2t2NCt3SnE0MnMyMjlxYmlmNWxLbjRoQlJx?=
- =?utf-8?Q?AsRpNFixLGQ6LAxtBplm33X5J?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rxhbw-0005wu-6M
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 02:20:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713507634;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SNsXdbh5JRmV3JN71Y8UFfXWKlcgEy4Q1cXLoEVrQWU=;
+ b=e0nMdeZAg6MHj0xjL6XavgP3Rgj+wkfg6+aVCV/0WY86pzzJvCcEDwDJ+j8XvnFfwkZDP7
+ S0BpaBPh24Pp+adp6GykIFpjb412HdP2SYqumqRnT4E0LbjrIyKtLPHn5pMR+0AFt7xkVJ
+ GPq50+F6MGucdHvFYpXIWjEcKr4s5U0=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-613-YUxlV1q_MsWiBaOQaCokpQ-1; Fri, 19 Apr 2024 02:20:32 -0400
+X-MC-Unique: YUxlV1q_MsWiBaOQaCokpQ-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-515d139f285so1215736e87.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Apr 2024 23:20:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713507630; x=1714112430;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SNsXdbh5JRmV3JN71Y8UFfXWKlcgEy4Q1cXLoEVrQWU=;
+ b=bR1vsW6PEk1NxU0MADlZ6VSMfHCSjJfpxkzu2j06AfZ++ncANUvzybIggwUSDFL9Yn
+ sLVEr3CQZHa+LeBjlpeo+dIUalkH7hjgEZXhiN5nhnUjnOiS+KPXxr7RuNkcJlCUF5nT
+ q7x1IPMO5k55U7eHyKmj6E2DCQHD8+YS1mqqdtF2ZVKSkm2PK84r0XVElSoSOwtjoOIP
+ NdBb2dZotGPhu9acjXqGEa90v25P/e5wAa2yNKrfY6M+iKzolwoLpzbhsvhERmZ/ZdIi
+ UoJV3F2Ql03VjjrYng6k69qxjovqY5J+jfM4g1lmHDbtdwvGezgwOt5qrjOwct4oti1n
+ PZOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDwPILCQ6f8+/qyPb2RYeGHz5vXRkiNvztaG/2dvMiAHhtO58TSLK3SjEWXfkJKTZnqHcxB0tY5H9U0EziAVeL9YQkYnA=
+X-Gm-Message-State: AOJu0Yw9gje5kFEsKAJPJ1v2x9kMMiSP7fR7zRw3/6E5/Fij8mo9Nwz3
+ 8G4uytIDd8PS0dOumiLRLfjom/yrmOXudamSy0rpLEZls0cpf7a/+8V2Bcs1SxweVJsRcHnwz05
+ SfA7mIFcHmPIkwkOLN4Tphg4B9OgaEJbaToYsJVEXcUGimVgBm/SP
+X-Received: by 2002:ac2:430b:0:b0:51a:a400:785e with SMTP id
+ l11-20020ac2430b000000b0051aa400785emr620143lfh.43.1713507630603; 
+ Thu, 18 Apr 2024 23:20:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvm3ea1j6vzqtNr8YPYtO2x9HFFDOjDwIdrUjkBeL8novU5KqkzDpmBblojDW5BdduYOrgzA==
+X-Received: by 2002:ac2:430b:0:b0:51a:a400:785e with SMTP id
+ l11-20020ac2430b000000b0051aa400785emr620112lfh.43.1713507630170; 
+ Thu, 18 Apr 2024 23:20:30 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
+ ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
+ by smtp.gmail.com with ESMTPSA id
+ d8-20020a170906344800b00a4e2dc1283asm1765576ejb.50.2024.04.18.23.20.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Apr 2024 23:20:29 -0700 (PDT)
+Message-ID: <6d607d16-fe5e-4be2-bea3-f286c78ada53@redhat.com>
+Date: Fri, 19 Apr 2024 08:20:27 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEYPR06MB5037.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc994b60-3ac5-4388-a774-08dc6035ffdf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Apr 2024 06:00:22.1758 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OXVBNpvzkoMgQDv+70f1j9K8Yjob/2fo6JE+JuFVC0UdRMheCah5QJSWDv9vzuKJz/WI09pok88jQBKkNnac4+AGxJSZz639dMDHxg2ZgVA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYUPR06MB6002
-Received-SPF: pass client-ip=2a01:111:f403:c400::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=HK3PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: [PATCH v2 3/5] intel_iommu: Add a framework to do compatibility
+ check with host IOMMU cap/ecap
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20240408084404.1111628-1-zhenzhong.duan@intel.com>
+ <20240408084404.1111628-4-zhenzhong.duan@intel.com>
+ <251715ae-5378-4dfb-bc14-47ba2e62f83a@redhat.com>
+ <SJ0PR11MB67443BF6BC7CABCE28F482A392082@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <5eb6c665-df8f-4c5e-8426-4678d8433a0c@redhat.com>
+ <SJ0PR11MB6744F7A99B9303C8A3699EE9920F2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <b67b6ba8-b506-4865-9ab0-e9107cd5b12a@redhat.com>
+ <SJ0PR11MB67442AA733CF06B144D33934920F2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <afac1b03-11ea-4bb9-ab79-92cff2c0ea20@redhat.com>
+ <SJ0PR11MB6744455DBE4D52AF635403C1920E2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Language: en-US, fr
+In-Reply-To: <SJ0PR11MB6744455DBE4D52AF635403C1920E2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,195 +126,327 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLA0KPiANCj4gSGVsbG8gSmFtaW4sDQo+IA0KPiBPbiA0LzE2LzI0IDExOjE4LCBK
-YW1pbiBMaW4gd3JvdGU6DQo+ID4gQVNUMjcwMCBzdXBwb3J0IHRoZSBtYXhpbXVtIGRyYW0gc2l6
-ZSBpcyA4R2lCIGFuZCBoYXMgYSAiRE1BIERSQU0NCj4gU2lkZQ0KPiA+IEFkZHJlc3MgSGlnaCBQ
-YXJ0KDB4N0MpIg0KPiA+IHJlZ2lzdGVyIHRvIHN1cHBvcnQgNjQgYml0cyBkbWEgZHJhbSBhZGRy
-ZXNzLg0KPiA+IEFkZCBoZWxwZXIgcm91dGluZXMgZnVuY3Rpb25zIHRvIGNvbXB1dGUgdGhlIGRt
-YSBkcmFtIGFkZHJlc3MsIG5ldw0KPiA+IGZlYXR1cmVzIGFuZCB1cGRhdGUgdHJhY2UtZXZlbnQg
-dG8gc3VwcG9ydCA2NCBiaXRzIGRyYW0gYWRkcmVzcy4NCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6
-IFRyb3kgTGVlIDx0cm95X2xlZUBhc3BlZWR0ZWNoLmNvbT4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBK
-YW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT4NCj4gPiAtLS0NCj4gPiAgIGh3L3Nz
-aS9hc3BlZWRfc21jLmMgfCA2Ng0KPiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKystLS0tLS0NCj4gPiAgIGh3L3NzaS90cmFjZS1ldmVudHMgfCAgMiArLQ0KPiA+ICAgMiBm
-aWxlcyBjaGFuZ2VkLCA1OSBpbnNlcnRpb25zKCspLCA5IGRlbGV0aW9ucygtKQ0KPiA+DQo+ID4g
-ZGlmZiAtLWdpdCBhL2h3L3NzaS9hc3BlZWRfc21jLmMgYi9ody9zc2kvYXNwZWVkX3NtYy5jIGlu
-ZGV4DQo+ID4gNzFhYmM3YTJkOC4uYTY3Y2FjM2QwZiAxMDA2NDQNCj4gPiAtLS0gYS9ody9zc2kv
-YXNwZWVkX3NtYy5jDQo+ID4gKysrIGIvaHcvc3NpL2FzcGVlZF9zbWMuYw0KPiA+IEBAIC0xMzIs
-NiArMTMyLDkgQEANCj4gPiAgICNkZWZpbmUgICBGTUNfV0RUMl9DVFJMX0JPT1RfU09VUkNFICAg
-ICAgQklUKDQpIC8qIE86IHByaW1hcnkNCj4gMTogYWx0ZXJuYXRlICovDQo+ID4gICAjZGVmaW5l
-ICAgRk1DX1dEVDJfQ1RSTF9FTiAgICAgICAgICAgICAgIEJJVCgwKQ0KPiA+DQo+ID4gKy8qIERN
-QSBEUkFNIFNpZGUgQWRkcmVzcyBIaWdoIFBhcnQgKEFTVDI3MDApICovDQo+ID4gKyNkZWZpbmUg
-Ul9ETUFfRFJBTV9BRERSX0hJR0ggICAoMHg3YyAvIDQpDQo+ID4gKw0KPiA+ICAgLyogRE1BIENv
-bnRyb2wvU3RhdHVzIFJlZ2lzdGVyICovDQo+ID4gICAjZGVmaW5lIFJfRE1BX0NUUkwgICAgICAg
-ICgweDgwIC8gNCkNCj4gPiAgICNkZWZpbmUgICBETUFfQ1RSTF9SRVFVRVNUICAgICAgKDEgPDwg
-MzEpDQo+ID4gQEAgLTE4Nyw2ICsxOTAsNyBAQA0KPiA+ICAgICogICAweDFGRkZGRkY6IDMyTSBi
-eXRlcw0KPiA+ICAgICovDQo+ID4gICAjZGVmaW5lIERNQV9EUkFNX0FERFIoYXNjLCB2YWwpICAg
-KCh2YWwpICYgKGFzYyktPmRtYV9kcmFtX21hc2spDQo+ID4gKyNkZWZpbmUgRE1BX0RSQU1fQURE
-Ul9ISUdIKHZhbCkgICAoKHZhbCkgJiAweGYpDQo+ID4gICAjZGVmaW5lIERNQV9GTEFTSF9BRERS
-KGFzYywgdmFsKSAgKCh2YWwpICYgKGFzYyktPmRtYV9mbGFzaF9tYXNrKQ0KPiA+ICAgI2RlZmlu
-ZSBETUFfTEVOR1RIKHZhbCkgICAgICAgICAoKHZhbCkgJiAweDAxRkZGRkZGKQ0KPiA+DQo+ID4g
-QEAgLTIwNyw2ICsyMTEsNyBAQCBzdGF0aWMgY29uc3QgQXNwZWVkU2VnbWVudHMNCj4gYXNwZWVk
-XzI1MDBfc3BpMl9zZWdtZW50c1tdOw0KPiA+ICAgI2RlZmluZSBBU1BFRURfU01DX0ZFQVRVUkVf
-RE1BICAgICAgIDB4MQ0KPiA+ICAgI2RlZmluZSBBU1BFRURfU01DX0ZFQVRVUkVfRE1BX0dSQU5U
-IDB4Mg0KPiA+ICAgI2RlZmluZSBBU1BFRURfU01DX0ZFQVRVUkVfV0RUX0NPTlRST0wgMHg0DQo+
-ID4gKyNkZWZpbmUgQVNQRUVEX1NNQ19GRUFUVVJFX0RNQV9EUkFNX0FERFJfSElHSCAweDA4DQo+
-ID4NCj4gPiAgIHN0YXRpYyBpbmxpbmUgYm9vbCBhc3BlZWRfc21jX2hhc19kbWEoY29uc3QgQXNw
-ZWVkU01DQ2xhc3MgKmFzYykNCj4gPiAgIHsNCj4gPiBAQCAtMjE4LDYgKzIyMywxMSBAQCBzdGF0
-aWMgaW5saW5lIGJvb2wNCj4gYXNwZWVkX3NtY19oYXNfd2R0X2NvbnRyb2woY29uc3QgQXNwZWVk
-U01DQ2xhc3MgKmFzYykNCj4gPiAgICAgICByZXR1cm4gISEoYXNjLT5mZWF0dXJlcyAmIEFTUEVF
-RF9TTUNfRkVBVFVSRV9XRFRfQ09OVFJPTCk7DQo+ID4gICB9DQo+ID4NCj4gPiArc3RhdGljIGlu
-bGluZSBib29sIGFzcGVlZF9zbWNfaGFzX2RtYV9kcmFtX2FkZHJfaGlnaChjb25zdA0KPiA+ICtB
-c3BlZWRTTUNDbGFzcyAqYXNjKQ0KPiANCj4gVG8gZWFzZSB0aGUgcmVhZGluZywgSSB3b3VsZCBj
-YWxsIHRoZSBoZWxwZXIgYXNwZWVkX3NtY19oYXNfZG1hNjQoKQ0KV2lsbCBmaXggaXQNCj4gDQo+
-ID4gK3sNCj4gPiArICAgIHJldHVybiAhIShhc2MtPmZlYXR1cmVzICYNCj4gQVNQRUVEX1NNQ19G
-RUFUVVJFX0RNQV9EUkFNX0FERFJfSElHSCk7DQo+ID4gK30NCj4gPiArDQo+ID4gICAjZGVmaW5l
-IGFzcGVlZF9zbWNfZXJyb3IoZm10LCAuLi4pDQo+IFwNCj4gPiAgICAgICBxZW11X2xvZ19tYXNr
-KExPR19HVUVTVF9FUlJPUiwgIiVzOiAiIGZtdCAiXG4iLCBfX2Z1bmNfXywgIyMNCj4gPiBfX1ZB
-X0FSR1NfXykNCj4gPg0KPiA+IEBAIC03NDcsNiArNzU3LDkgQEAgc3RhdGljIHVpbnQ2NF90IGFz
-cGVlZF9zbWNfcmVhZCh2b2lkICpvcGFxdWUsDQo+IGh3YWRkciBhZGRyLCB1bnNpZ25lZCBpbnQg
-c2l6ZSkNCj4gPiAgICAgICAgICAgKGFzcGVlZF9zbWNfaGFzX2RtYShhc2MpICYmIGFkZHIgPT0g
-Ul9ETUFfQ1RSTCkgfHwNCj4gPiAgICAgICAgICAgKGFzcGVlZF9zbWNfaGFzX2RtYShhc2MpICYm
-IGFkZHIgPT0gUl9ETUFfRkxBU0hfQUREUikNCj4gfHwNCj4gPiAgICAgICAgICAgKGFzcGVlZF9z
-bWNfaGFzX2RtYShhc2MpICYmIGFkZHIgPT0gUl9ETUFfRFJBTV9BRERSKQ0KPiB8fA0KPiA+ICsg
-ICAgICAgIChhc3BlZWRfc21jX2hhc19kbWEoYXNjKSAmJg0KPiA+ICsgICAgICAgICBhc3BlZWRf
-c21jX2hhc19kbWFfZHJhbV9hZGRyX2hpZ2goYXNjKSAmJg0KPiA+ICsgICAgICAgICBhZGRyID09
-IFJfRE1BX0RSQU1fQUREUl9ISUdIKSB8fA0KPiA+ICAgICAgICAgICAoYXNwZWVkX3NtY19oYXNf
-ZG1hKGFzYykgJiYgYWRkciA9PSBSX0RNQV9MRU4pIHx8DQo+ID4gICAgICAgICAgIChhc3BlZWRf
-c21jX2hhc19kbWEoYXNjKSAmJiBhZGRyID09IFJfRE1BX0NIRUNLU1VNKQ0KPiB8fA0KPiA+ICAg
-ICAgICAgICAoYWRkciA+PSBSX1NFR19BRERSMCAmJg0KPiA+IEBAIC04NDcsNiArODYwLDIzIEBA
-IHN0YXRpYyBib29sDQo+IGFzcGVlZF9zbWNfaW5qZWN0X3JlYWRfZmFpbHVyZShBc3BlZWRTTUNT
-dGF0ZSAqcykNCj4gPiAgICAgICB9DQo+ID4gICB9DQo+ID4NCj4gPiArc3RhdGljIHVpbnQ2NF90
-IGFzcGVlZF9zbWNfZG1hX2RyYW1fYWRkcihBc3BlZWRTTUNTdGF0ZSAqcykgew0KPiA+ICsgICAg
-QXNwZWVkU01DQ2xhc3MgKmFzYyA9IEFTUEVFRF9TTUNfR0VUX0NMQVNTKHMpOw0KPiA+ICsgICAg
-dWludDY0X3QgZHJhbV9hZGRyX2hpZ2g7DQo+ID4gKyAgICB1aW50NjRfdCBkbWFfZHJhbV9hZGRy
-Ow0KPiA+ICsNCj4gPiArICAgIGlmIChhc3BlZWRfc21jX2hhc19kbWFfZHJhbV9hZGRyX2hpZ2go
-YXNjKSkgew0KPiA+ICsgICAgICAgIGRyYW1fYWRkcl9oaWdoID0gcy0+cmVnc1tSX0RNQV9EUkFN
-X0FERFJfSElHSF07DQo+ID4gKyAgICAgICAgZHJhbV9hZGRyX2hpZ2ggPDw9IDMyOw0KPiA+ICsg
-ICAgICAgIGRtYV9kcmFtX2FkZHIgPSBkcmFtX2FkZHJfaGlnaCB8DQo+IHMtPnJlZ3NbUl9ETUFf
-RFJBTV9BRERSXTsNCj4gDQo+IEhlcmUgaXMgYSBwcm9wb3NhbCB0byBzaG9ydGVuIHRoZSByb3V0
-aW5lIDoNCj4gDQo+ICAgICAgICAgIHJldHVybiAoKHVpbnQ2NF90KSBzLT5yZWdzW1JfRE1BX0RS
-QU1fQUREUl9ISUdIXSA8PCAzMikgfA0KPiAgICAgICAgICAgICAgcy0+cmVnc1tSX0RNQV9EUkFN
-X0FERFJdOw0KPiANCj4gDQo+ID4gKyAgICB9IGVsc2Ugew0KPiA+ICsgICAgICAgIGRtYV9kcmFt
-X2FkZHIgPSBzLT5yZWdzW1JfRE1BX0RSQU1fQUREUl07DQo+IA0KPiBhbmQNCj4gICAgICAgICAg
-cmV0dXJuIHMtPnJlZ3NbUl9ETUFfRFJBTV9BRERSXTsNCj4gDQo+ID4gKyAgICB9DQo+ID4gKw0K
-PiA+ICsgICAgcmV0dXJuIGRtYV9kcmFtX2FkZHI7DQo+ID4gK30NCj4gPiArDQpUaGFua3MgZm9y
-IHlvdXIgc3VnZ2VzdGlvbi4gV2lsbCBmaXguDQo+ID4gICBzdGF0aWMgdWludDMyX3QgYXNwZWVk
-X3NtY19kbWFfbGVuKEFzcGVlZFNNQ1N0YXRlICpzKQ0KPiA+ICAgew0KPiA+ICAgICAgIEFzcGVl
-ZFNNQ0NsYXNzICphc2MgPSBBU1BFRURfU01DX0dFVF9DTEFTUyhzKTsgQEAgLTkxNCwyNA0KPiA+
-ICs5NDQsMzQgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3NtY19kbWFfY2hlY2tzdW0oQXNwZWVkU01D
-U3RhdGUgKnMpDQo+ID4NCj4gPiAgIHN0YXRpYyB2b2lkIGFzcGVlZF9zbWNfZG1hX3J3KEFzcGVl
-ZFNNQ1N0YXRlICpzKQ0KPiA+ICAgew0KPiA+ICsgICAgQXNwZWVkU01DQ2xhc3MgKmFzYyA9IEFT
-UEVFRF9TTUNfR0VUX0NMQVNTKHMpOw0KPiA+ICsgICAgdWludDY0X3QgZHJhbV9hZGRyX2hpZ2g7
-DQo+IA0KPiBUaGlzIHZhcmlhYmxlIGRvZXNuJ3QgbG9vayB2ZXJ5IHVzZWZ1bA0KV2lsbCB0cnkg
-dG8gcmVtb3ZlIGl0Lg0KPiANCj4gPiArICAgIHVpbnQ2NF90IGRtYV9kcmFtX2FkZHI7DQo+ID4g
-KyAgICB1aW50NjRfdCBkcmFtX2FkZHI7DQo+IA0KPiBhbmQgZHJhbV9hZGRyIGlzIHJlZHVuZGFu
-dCB3aXRoIGRtYV9kcmFtX2FkZHIuIFBsZWFzZSB1c2Ugb25seSBvbmUuDQpQbGVhc2Ugc2VlIG15
-IGJlbG93IGRlc2NyaXB0aW9uIGFuZCBwbGVhc2UgZ2l2ZSB1cyBhbnkgc3VnZ2VzdGlvbi4NCj4g
-DQo+IA0KPiA+ICAgICAgIE1lbVR4UmVzdWx0IHJlc3VsdDsNCj4gPiAgICAgICB1aW50MzJfdCBk
-bWFfbGVuOw0KPiA+ICAgICAgIHVpbnQzMl90IGRhdGE7DQo+ID4NCj4gPiAgICAgICBkbWFfbGVu
-ID0gYXNwZWVkX3NtY19kbWFfbGVuKHMpOw0KPiA+ICsgICAgZG1hX2RyYW1fYWRkciA9IGFzcGVl
-ZF9zbWNfZG1hX2RyYW1fYWRkcihzKTsNCj4gPiArDQo+ID4gKyAgICBpZiAoYXNwZWVkX3NtY19o
-YXNfZG1hX2RyYW1fYWRkcl9oaWdoKGFzYykpIHsNCj4gPiArICAgICAgICBkcmFtX2FkZHIgPSBk
-bWFfZHJhbV9hZGRyIC0gcy0+ZHJhbV9tci0+Y29udGFpbmVyLT5hZGRyOw0KPiANCj4gV2h5IGRv
-IHlvdSB0cnVuY2F0ZSB0aGUgYWRkcmVzcyBhZ2FpbiA/IEl0IHNob3VsZCBhbHJlYWR5IGJlIGRv
-bmUgd2l0aA0KPiANCj4gI2RlZmluZSBETUFfRFJBTV9BRERSX0hJR0godmFsKSAgICgodmFsKSAm
-IDB4ZikNCj4gDQpUaGUgcmVhc29uIGlzIHRoYXQgb3VyIGZpcm13YXJlIHNldCB0aGUgcmVhbCBh
-ZGRyZXNzIGluIFNNQyByZWdpc3RlcnMuDQpGb3IgZXhhbXBsZTogSWYgdXNlcnMgd2FudCB0byBt
-b3ZlIGRhdGEgZnJvbSBmbGFzaCB0byB0aGUgRFJBTSBhdCBhZGRyZXNzIDAsDQpJdCBzZXQgUl9E
-TUFfRFJBTV9BRERSX0hJR0ggNCBhbmQgUl9ETUFfRFJBTV9BRERSIDAgYmVjYXVzZSB0aGUNCmRy
-YW0gYmFzZSBhZGRyZXNzIGlzIDB4IDQgMDAwMDAwMDAgZm9yIEFTVDI3MDAuDQoNCkFjY29yZGlu
-ZyB0byB0aGUgZGVzaWduIG9mIFFFTVUsIHRoZSBkcmFtIGNvbnRhaW5lciBiYXNlIGFkZHJlc3Mg
-aXMgMHg0IDAwMDAwMDAwKHMtPmRyYW1fbXIpLg0KVGhlcmVmb3JlLCBpbiB0aGUgYWJvdmUgZXhh
-bXBsZSwgdGhlIGRhdGEgc2hvdWxkIGJlIG1vdmVkIHRvIHRoZSBkcmFtIGNvbnRhaW5lciBhdCBh
-ZGRyZXNzIDAuDQoNCkkgY3JlYXRlZCB0d28gdmFyaWFibGVzIHRvIHNhdmUgdGhlIGRpZmZlcmVu
-dCBiYXNlIGFkZHJlc3MuDQpBIGRtYV9kcmFtX2FkZHIgaXMgdXNlZCB0byBzYXZlIHRoZSByZWFs
-IGFkZHJlc3MuDQpBIGRyYW1fYWRkciBpcyB1c2VkIHRvIHNhdmUgdGhlIGFkZHJlc3MgZm9yIGRy
-YW0gY29udGFpbmVyKHMtPmRyYW1fYXMpDQoNCkV4YW1wbGU6DQpkbWFfZHJhbV9hZGRyIGlzIDB4
-NCAwMDAwMDAwMCAgDQoodWludDY0KSBzLT5yZWdzW1JfRE1BX0RSQU1fQUREUl9ISUdIXSA8PCAz
-MikgfHMtPnJlZ3NbUl9ETUFfRFJBTV9BRERSXQ0KZHJhbV9hZGRyIGlzIDANCmRyYW1fYWRkciA9
-IDB4NDAwMDAwMDAwKHJlYWwgYWRkcmVzcykgLSAweDQwMDAwMDAwMChkcmFtIGNvbnRhaW5lciBi
-YXNlIGFkZHJlc3MpIHRvIGdldCB0aGUgYWRkcmVzcyBmb3IgZHJhbSBjb250YWluZWQgZm9yIG1v
-dmluZw0KZHJhbV9hZGRyID0gZG1hX2RyYW1fYWRkciAtIHMtPmRyYW1fbXItPmNvbnRhaW5lci0+
-YWRkcjsNCg0KRmluYWxseSwgdGhlIGZvbGxvd2luZyBBUElzIGNvdWxkIHdvcmsgcHJvcGVybHku
-DQpkYXRhID0gYWRkcmVzc19zcGFjZV9sZGxfbGUoJnMtPmRyYW1fYXMsIGRyYW1fYWRkciwNCiAg
-ICAgICAgICAgICAgICAgICAgICAgTUVNVFhBVFRSU19VTlNQRUNJRklFRCwgJnJlc3VsdCk7DQpU
-aGFua3MtSmFtaW4NCj4gPiArICAgIH0gZWxzZSB7DQo+ID4gKyAgICAgICAgZHJhbV9hZGRyID0g
-ZG1hX2RyYW1fYWRkcjsNCj4gPiArICAgIH0NCj4gPg0KPiA+ICAgICAgIHRyYWNlX2FzcGVlZF9z
-bWNfZG1hX3J3KHMtPnJlZ3NbUl9ETUFfQ1RSTF0gJg0KPiBETUFfQ1RSTF9XUklURSA/DQo+ID4g
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIndyaXRlIiA6ICJyZWFkIiwNCj4gPiAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICBzLT5yZWdzW1JfRE1BX0ZMQVNIX0FERFJdLA0KPiA+
-IC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgcy0+cmVnc1tSX0RNQV9EUkFNX0FERFJdLA0K
-PiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgZHJhbV9hZGRyLA0KPiA+ICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIGRtYV9sZW4pOw0KPiA+ICAgICAgIHdoaWxlIChkbWFfbGVu
-KSB7DQo+ID4gICAgICAgICAgIGlmIChzLT5yZWdzW1JfRE1BX0NUUkxdICYgRE1BX0NUUkxfV1JJ
-VEUpIHsNCj4gPiAtICAgICAgICAgICAgZGF0YSA9IGFkZHJlc3Nfc3BhY2VfbGRsX2xlKCZzLT5k
-cmFtX2FzLA0KPiBzLT5yZWdzW1JfRE1BX0RSQU1fQUREUl0sDQo+ID4gKyAgICAgICAgICAgIGRh
-dGEgPSBhZGRyZXNzX3NwYWNlX2xkbF9sZSgmcy0+ZHJhbV9hcywgZHJhbV9hZGRyLA0KPiA+DQo+
-IE1FTVRYQVRUUlNfVU5TUEVDSUZJRUQsICZyZXN1bHQpOw0KPiA+ICAgICAgICAgICAgICAgaWYg
-KHJlc3VsdCAhPSBNRU1UWF9PSykgew0KPiA+IC0gICAgICAgICAgICAgICAgYXNwZWVkX3NtY19l
-cnJvcigiRFJBTSByZWFkIGZhaWxlZCBAJTA4eCIsDQo+ID4gLSAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHMtPnJlZ3NbUl9ETUFfRFJBTV9BRERSXSk7DQo+ID4gKyAgICAgICAgICAg
-ICAgICBhc3BlZWRfc21jX2Vycm9yKCJEUkFNIHJlYWQgZmFpbGVkIEAlIiBQUkl4NjQsDQo+ID4g
-KyBkcmFtX2FkZHIpOw0KPiA+ICAgICAgICAgICAgICAgICAgIHJldHVybjsNCj4gPiAgICAgICAg
-ICAgICAgIH0NCj4gPg0KPiA+IEBAIC05NTEsMTEgKzk5MSwxMCBAQCBzdGF0aWMgdm9pZCBhc3Bl
-ZWRfc21jX2RtYV9ydyhBc3BlZWRTTUNTdGF0ZQ0KPiAqcykNCj4gPiAgICAgICAgICAgICAgICAg
-ICByZXR1cm47DQo+ID4gICAgICAgICAgICAgICB9DQo+ID4NCj4gPiAtICAgICAgICAgICAgYWRk
-cmVzc19zcGFjZV9zdGxfbGUoJnMtPmRyYW1fYXMsDQo+IHMtPnJlZ3NbUl9ETUFfRFJBTV9BRERS
-XSwNCj4gPiArICAgICAgICAgICAgYWRkcmVzc19zcGFjZV9zdGxfbGUoJnMtPmRyYW1fYXMsIGRy
-YW1fYWRkciwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRhdGEsDQo+
-IE1FTVRYQVRUUlNfVU5TUEVDSUZJRUQsICZyZXN1bHQpOw0KPiA+ICAgICAgICAgICAgICAgaWYg
-KHJlc3VsdCAhPSBNRU1UWF9PSykgew0KPiA+IC0gICAgICAgICAgICAgICAgYXNwZWVkX3NtY19l
-cnJvcigiRFJBTSB3cml0ZSBmYWlsZWQgQCUwOHgiLA0KPiA+IC0gICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBzLT5yZWdzW1JfRE1BX0RSQU1fQUREUl0pOw0KPiA+ICsgICAgICAgICAg
-ICAgICAgYXNwZWVkX3NtY19lcnJvcigiRFJBTSB3cml0ZSBmYWlsZWQgQCUiIFBSSXg2NCwNCj4g
-PiArIGRyYW1fYWRkcik7DQo+ID4gICAgICAgICAgICAgICAgICAgcmV0dXJuOw0KPiA+ICAgICAg
-ICAgICAgICAgfQ0KPiA+ICAgICAgICAgICB9DQo+ID4gQEAgLTk2NCw4ICsxMDAzLDE1IEBAIHN0
-YXRpYyB2b2lkIGFzcGVlZF9zbWNfZG1hX3J3KEFzcGVlZFNNQ1N0YXRlDQo+ICpzKQ0KPiA+ICAg
-ICAgICAgICAgKiBXaGVuIHRoZSBETUEgaXMgb24tZ29pbmcsIHRoZSBETUEgcmVnaXN0ZXJzIGFy
-ZSB1cGRhdGVkDQo+ID4gICAgICAgICAgICAqIHdpdGggdGhlIGN1cnJlbnQgd29ya2luZyBhZGRy
-ZXNzZXMgYW5kIGxlbmd0aC4NCj4gPiAgICAgICAgICAgICovDQo+ID4gKyAgICAgICAgZHJhbV9h
-ZGRyICs9IDQ7DQo+ID4gKyAgICAgICAgZG1hX2RyYW1fYWRkciArPSA0Ow0KPiA+ICsgICAgICAg
-IGlmIChhc3BlZWRfc21jX2hhc19kbWFfZHJhbV9hZGRyX2hpZ2goYXNjKSkgew0KPiA+ICsgICAg
-ICAgICAgICBkcmFtX2FkZHJfaGlnaCA9IGRtYV9kcmFtX2FkZHIgPj4gMzI7DQo+ID4gKyAgICAg
-ICAgICAgIHMtPnJlZ3NbUl9ETUFfRFJBTV9BRERSX0hJR0hdID0gZHJhbV9hZGRyX2hpZ2g7DQo+
-IA0KPiAgICAgICAgICAgICAgcy0+cmVnc1tSX0RNQV9EUkFNX0FERFJfSElHSF0gPSBkbWFfZHJh
-bV9hZGRyID4+DQo+IDMyOw0KPiANCj4gPiArICAgICAgICB9DQo+ID4gKw0KPiA+ICsgICAgICAg
-IHMtPnJlZ3NbUl9ETUFfRFJBTV9BRERSXSA9IGRtYV9kcmFtX2FkZHIgJiAweGZmZmZmZmZmOw0K
-PiANCj4gdXNlIERNQV9EUkFNX0FERFIoKSBtYXkgYmUgaW5zdGVhZC4NCj4gDQo+ID4gICAgICAg
-ICAgIHMtPnJlZ3NbUl9ETUFfRkxBU0hfQUREUl0gKz0gNDsNCj4gPiAtICAgICAgICBzLT5yZWdz
-W1JfRE1BX0RSQU1fQUREUl0gKz0gNDsNCj4gPiAgICAgICAgICAgZG1hX2xlbiAtPSA0Ow0KPiA+
-ICAgICAgICAgICBzLT5yZWdzW1JfRE1BX0xFTl0gPSBkbWFfbGVuOw0KPiA+ICAgICAgICAgICBz
-LT5yZWdzW1JfRE1BX0NIRUNLU1VNXSArPSBkYXRhOyBAQCAtMTExOCw2ICsxMTY0LDEwDQo+IEBA
-DQo+ID4gc3RhdGljIHZvaWQgYXNwZWVkX3NtY193cml0ZSh2b2lkICpvcGFxdWUsIGh3YWRkciBh
-ZGRyLCB1aW50NjRfdCBkYXRhLA0KPiA+ICAgICAgIH0gZWxzZSBpZiAoYXNwZWVkX3NtY19oYXNf
-ZG1hKGFzYykgJiYgYWRkciA9PSBSX0RNQV9MRU4gJiYNCj4gPiAgICAgICAgICAgICAgICAgIGFz
-cGVlZF9zbWNfZG1hX2dyYW50ZWQocykpIHsNCj4gPiAgICAgICAgICAgcy0+cmVnc1thZGRyXSA9
-IERNQV9MRU5HVEgodmFsdWUpOw0KPiA+ICsgICAgfSBlbHNlIGlmIChhc3BlZWRfc21jX2hhc19k
-bWEoYXNjKSAmJg0KPiA+ICsgICAgICAgICAgICAgICBhc3BlZWRfc21jX2hhc19kbWFfZHJhbV9h
-ZGRyX2hpZ2goYXNjKSAmJg0KPiA+ICsgICAgICAgICAgICAgICBhZGRyID09IFJfRE1BX0RSQU1f
-QUREUl9ISUdIKSB7DQo+ID4gKyAgICAgICAgcy0+cmVnc1thZGRyXSA9IERNQV9EUkFNX0FERFJf
-SElHSCh2YWx1ZSk7DQo+ID4gICAgICAgfSBlbHNlIHsNCj4gPiAgICAgICAgICAgcWVtdV9sb2df
-bWFzayhMT0dfVU5JTVAsICIlczogbm90IGltcGxlbWVudGVkOiAweCUiDQo+IEhXQUREUl9QUkl4
-ICJcbiIsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgX19mdW5jX18sIGFkZHIpOyBkaWZm
-IC0tZ2l0DQo+ID4gYS9ody9zc2kvdHJhY2UtZXZlbnRzIGIvaHcvc3NpL3RyYWNlLWV2ZW50cyBp
-bmRleA0KPiA+IDJkNWJkMmI4M2QuLjdiNWFkNmE5MzkgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvc3Np
-L3RyYWNlLWV2ZW50cw0KPiA+ICsrKyBiL2h3L3NzaS90cmFjZS1ldmVudHMNCj4gPiBAQCAtNiw3
-ICs2LDcgQEAgYXNwZWVkX3NtY19kb19zbm9vcChpbnQgY3MsIGludCBpbmRleCwgaW50IGR1bW1p
-ZXMsIGludA0KPiBkYXRhKSAiQ1MlZCBpbmRleDoweCV4IGQNCj4gPiAgIGFzcGVlZF9zbWNfZmxh
-c2hfd3JpdGUoaW50IGNzLCB1aW50NjRfdCBhZGRyLCAgdWludDMyX3Qgc2l6ZSwgdWludDY0X3QN
-Cj4gZGF0YSwgaW50IG1vZGUpICJDUyVkIEAweCUiIFBSSXg2NCAiIHNpemUgJXU6IDB4JSIgUFJJ
-eDY0IiBtb2RlOiVkIg0KPiA+ICAgYXNwZWVkX3NtY19yZWFkKHVpbnQ2NF90IGFkZHIsICB1aW50
-MzJfdCBzaXplLCB1aW50NjRfdCBkYXRhKSAiQDB4JSINCj4gUFJJeDY0ICIgc2l6ZSAldTogMHgl
-IiBQUkl4NjQNCj4gPiAgIGFzcGVlZF9zbWNfZG1hX2NoZWNrc3VtKHVpbnQzMl90IGFkZHIsIHVp
-bnQzMl90IGRhdGEpICIweCUwOHg6DQo+IDB4JTA4eCINCj4gPiAtYXNwZWVkX3NtY19kbWFfcnco
-Y29uc3QgY2hhciAqZGlyLCB1aW50MzJfdCBmbGFzaF9hZGRyLCB1aW50MzJfdA0KPiBkcmFtX2Fk
-ZHIsIHVpbnQzMl90IHNpemUpICIlcyBmbGFzaDpAMHglMDh4IGRyYW06QDB4JTA4eCBzaXplOjB4
-JTA4eCINCj4gPiArYXNwZWVkX3NtY19kbWFfcncoY29uc3QgY2hhciAqZGlyLCB1aW50MzJfdCBm
-bGFzaF9hZGRyLCB1aW50NjRfdA0KPiBkcmFtX2FkZHIsIHVpbnQzMl90IHNpemUpICIlcyBmbGFz
-aDpAMHglMDh4IGRyYW06QDB4JSIgUFJJeDY0ICINCj4gc2l6ZToweCUwOHgiDQo+ID4gICBhc3Bl
-ZWRfc21jX3dyaXRlKHVpbnQ2NF90IGFkZHIsICB1aW50MzJfdCBzaXplLCB1aW50NjRfdCBkYXRh
-KSAiQDB4JSINCj4gUFJJeDY0ICIgc2l6ZSAldTogMHglIiBQUkl4NjQNCj4gPiAgIGFzcGVlZF9z
-bWNfZmxhc2hfc2VsZWN0KGludCBjcywgY29uc3QgY2hhciAqcHJlZml4KSAiQ1MlZCAlc3NlbGVj
-dCINCj4gPg0KDQo=
+Hello Zhenzhong,
+
+On 4/18/24 10:42, Duan, Zhenzhong wrote:
+> Hi Cédric,
+> 
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@redhat.com>
+>> Subject: Re: [PATCH v2 3/5] intel_iommu: Add a framework to do
+>> compatibility check with host IOMMU cap/ecap
+>>
+>> Hello Zhenzhong
+>>
+>> On 4/17/24 11:24, Duan, Zhenzhong wrote:
+>>>
+>>>
+>>>> -----Original Message-----
+>>>> From: Cédric Le Goater <clg@redhat.com>
+>>>> Subject: Re: [PATCH v2 3/5] intel_iommu: Add a framework to do
+>>>> compatibility check with host IOMMU cap/ecap
+>>>>
+>>>> On 4/17/24 06:21, Duan, Zhenzhong wrote:
+>>>>>
+>>>>>
+>>>>>> -----Original Message-----
+>>>>>> From: Cédric Le Goater <clg@redhat.com>
+>>>>>> Subject: Re: [PATCH v2 3/5] intel_iommu: Add a framework to do
+>>>>>> compatibility check with host IOMMU cap/ecap
+>>>>>>
+>>>>>> Hello,
+>>>>>>
+>>>>>> On 4/16/24 09:09, Duan, Zhenzhong wrote:
+>>>>>>> Hi Cédric,
+>>>>>>>
+>>>>>>>> -----Original Message-----
+>>>>>>>> From: Cédric Le Goater <clg@redhat.com>
+>>>>>>>> Subject: Re: [PATCH v2 3/5] intel_iommu: Add a framework to do
+>>>>>>>> compatibility check with host IOMMU cap/ecap
+>>>>>>>>
+>>>>>>>> On 4/8/24 10:44, Zhenzhong Duan wrote:
+>>>>>>>>> From: Yi Liu <yi.l.liu@intel.com>
+>>>>>>>>>
+>>>>>>>>> If check fails, the host side device(either vfio or vdpa device) should
+>>>> not
+>>>>>>>>> be passed to guest.
+>>>>>>>>>
+>>>>>>>>> Implementation details for different backends will be in following
+>>>>>> patches.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+>>>>>>>>> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+>>>>>>>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>>>>>>>> ---
+>>>>>>>>>       hw/i386/intel_iommu.c | 35
+>>>>>>>> +++++++++++++++++++++++++++++++++++
+>>>>>>>>>       1 file changed, 35 insertions(+)
+>>>>>>>>>
+>>>>>>>>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+>>>>>>>>> index 4f84e2e801..a49b587c73 100644
+>>>>>>>>> --- a/hw/i386/intel_iommu.c
+>>>>>>>>> +++ b/hw/i386/intel_iommu.c
+>>>>>>>>> @@ -35,6 +35,7 @@
+>>>>>>>>>       #include "sysemu/kvm.h"
+>>>>>>>>>       #include "sysemu/dma.h"
+>>>>>>>>>       #include "sysemu/sysemu.h"
+>>>>>>>>> +#include "sysemu/iommufd.h"
+>>>>>>>>>       #include "hw/i386/apic_internal.h"
+>>>>>>>>>       #include "kvm/kvm_i386.h"
+>>>>>>>>>       #include "migration/vmstate.h"
+>>>>>>>>> @@ -3819,6 +3820,32 @@ VTDAddressSpace
+>>>>>>>> *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>>>>>>>>>           return vtd_dev_as;
+>>>>>>>>>       }
+>>>>>>>>>
+>>>>>>>>> +static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+>>>>>>>>> +                                 HostIOMMUDevice *hiod,
+>>>>>>>>> +                                 Error **errp)
+>>>>>>>>> +{
+>>>>>>>>> +    return 0;
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>> +static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+>>>>>>>>> +                                  HostIOMMUDevice *hiod,
+>>>>>>>>> +                                  Error **errp)
+>>>>>>>>> +{
+>>>>>>>>> +    return 0;
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>> +static int vtd_check_hdev(IntelIOMMUState *s,
+>>>>>> VTDHostIOMMUDevice
+>>>>>>>> *vtd_hdev,
+>>>>>>>>> +                          Error **errp)
+>>>>>>>>> +{
+>>>>>>>>> +    HostIOMMUDevice *hiod = vtd_hdev->dev;
+>>>>>>>>> +
+>>>>>>>>> +    if (object_dynamic_cast(OBJECT(hiod), TYPE_HIOD_IOMMUFD))
+>> {
+>>>>>>>>> +        return vtd_check_iommufd_hdev(s, hiod, errp);
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>> +    return vtd_check_legacy_hdev(s, hiod, errp);
+>>>>>>>>> +}
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> I think we should be using the .get_host_iommu_info() class handler
+>>>>>>>> instead. Can we refactor the code slightly to avoid this check on
+>>>>>>>> the type ?
+>>>>>>>
+>>>>>>> There is some difficulty ini avoiding this check, the behavior of
+>>>>>> vtd_check_legacy_hdev
+>>>>>>> and vtd_check_iommufd_hdev are different especially after nesting
+>>>>>> support introduced.
+>>>>>>> vtd_check_iommufd_hdev() has much wider check over cap/ecap bits
+>>>>>> besides aw_bits.
+>>>>>>
+>>>>>> I think it is important to fully separate the vIOMMU model from the
+>>>>>> host IOMMU backing device.
+>>
+>> This comment is true for the structures also.
+>>
+>>>>>> Could we introduce a new HostIOMMUDeviceClass
+>>>>>> handler .check_hdev() handler, which would
+>> call .get_host_iommu_info() ?
+>>
+>> This means that HIOD_LEGACY_INFO and HIOD_IOMMUFD_INFO should be
+>> a common structure 'HostIOMMUDeviceInfo' holding all attributes
+>> for the different backends. Each .get_host_iommu_info() implementation
+>> would translate the specific host iommu device data presentation
+>> into the common 'HostIOMMUDeviceInfo', this is true for host_aw_bits.
+> 
+> I see, it's just not easy to define the unified elements in HostIOMMUDeviceInfo
+> so that they maps to bits or fields in host return IOMMU info.
+
+The proposal is adding a vIOMMU <-> HostIOMMUDevice interface and a new
+API needs to be completely defined for it. The IOMMU backend implementation
+could be anything, legacy, iommufd, iommufd v2, some other framework and
+the vIOMMU shouldn't be aware of its implementation.
+
+Exposing the kernel structures as done below should be avoided because
+they are part of the QEMU <-> kernel IOMMUFD interface.
+
+
+> Different platform returned host IOMMU info is platform specific.
+> For vtd and siommu:
+> 
+> struct iommu_hw_info_vtd {
+>          __u32 flags;
+>          __u32 __reserved;
+>          __aligned_u64 cap_reg;
+>          __aligned_u64 ecap_reg;
+> };
+> 
+> struct iommu_hw_info_arm_smmuv3 {
+>         __u32 flags;
+>         __u32 __reserved;
+>         __u32 idr[6];
+>         __u32 iidr;
+>         __u32 aidr;
+> };
+> 
+> I can think of two kinds of declaration of HostIOMMUDeviceInfo:
+> 
+> struct HostIOMMUDeviceInfo {
+>      uint8_t aw_bits;
+>      enum iommu_hw_info_type type;
+>      union {
+>          struct iommu_hw_info_vtd vtd;
+>          struct iommu_hw_info_arm_smmuv3;
+>          ......
+>      } data;
+> }
+> 
+> or
+> 
+> struct HostIOMMUDeviceInfo {
+>      uint8_t aw_bits;
+>      enum iommu_hw_info_type type;
+>      __u32 flags;
+>      __aligned_u64 cap_reg;
+>      __aligned_u64 ecap_reg;
+>      __u32 idr[6];
+>      __u32 iidr;
+>      __u32 aidr;
+>     ......
+> }
+> 
+> Not clear if any is your expected format.
+>
+>> 'type' could be handled the same way, with a 'HostIOMMUDeviceInfo'
+>> type attribute and host iommu device type definitions, or as you
+>> suggested with a QOM interface. This is more complex however. In
+>> this case, I would suggest to implement a .compatible() handler to
+>> compare the host iommu device type with the vIOMMU type.
+>>
+>> The resulting check_hdev routine would look something like :
+>>
+>> static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice
+>> *vtd_hdev,
+>>                            Error **errp)
+>> {
+>>      HostIOMMUDevice *hiod = vtd_hdev->dev;
+>>      HostIOMMUDeviceClass *hiodc =
+>> HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+>>      HostIOMMUDevice info;
+>>      int host_aw_bits, ret;
+>>
+>>      ret = hiodc->get_host_iommu_info(hiod, &info, sizeof(info), errp);
+>>      if (ret) {
+>>          return ret;
+>>      }
+>>
+>>      ret = hiodc->is_compatible(hiod, VIOMMU_INTERFACE(s));
+>>      if (ret) {
+>>          return ret;
+>>      }
+>>
+>>      if (s->aw_bits > info.aw_bits) {
+>>          error_setg(errp, "aw-bits %d > host aw-bits %d",
+>>                     s->aw_bits, info.aw_bits);
+>>          return -EINVAL;
+>>      }
+>> }
+>>
+>> and the HostIOMMUDeviceClass::is_compatible() handler would call a
+>> vIOMMUInterface::compatible() handler simply returning
+>> IOMMU_HW_INFO_TYPE_INTEL_VTD. How does that sound ?
+> 
+> Not quite get what HostIOMMUDeviceClass::is_compatible() does.
+
+HostIOMMUDeviceClass::is_compatible() calls in the host IOMMU backend
+to determine which IOMMU types are exposed by the host, then calls the
+vIOMMUInterface::compatible() handler to do the compare. API is to be
+defined.
+
+As a refinement, we could introduce in the vIOMMU <-> HostIOMMUDevice
+interface capabilities, or features, to check more precisely the level
+of compatibility between the vIOMMU and the host IOMMU device. This is
+similar to what is done between QEMU and KVM.
+
+If you think this is too complex, include type in HostIOMMUDeviceInfo.
+
+> Currently legacy and IOMMUFD host device has different check logic, how it can help
+> in merging vtd_check_legacy_hdev() and vtd_check_iommufd_hdev() into a single vtd_check_hdev()?
+
+IMHO, IOMMU shouldn't be aware of the IOMMU backend implementation, but
+if you think the Intel vIOMMU should access directly the iommufd backend
+when available, then we should drop this proposal and revisit the design
+to take a different approach.
+
+> Below is the two functions after nesting series, for your easy reference:
+> 
+> static int vtd_check_legacy_hdev()
+> {
+>      if (s->scalable_modern) {
+>          /* Modern vIOMMU and legacy backend */
+>          error_setg(errp, "Need IOMMUFD backend in scalable modern mode");
+>          return -EINVAL;
+>      }
+
+This part would typically go in the compatible() handler.
+
+> 
+>      ret = hiodc->get_host_iommu_info(hiod, &info, sizeof(info), errp);
+>      if (ret) {
+>          return ret;
+>      }
+> 
+>      if (s->aw_bits > info.aw_bits) {
+>          error_setg(errp, "aw-bits %d > host aw-bits %d",
+>                     s->aw_bits, info.aw_bits);
+>          return -EINVAL;
+>      }
+> 
+>      return 0;
+> }
+> 
+> static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+>                                    VTDHostIOMMUDevice *vtd_hdev,
+>                                    Error **errp)
+> {
+>      ret = hiodc->get_host_iommu_info(hiod, &info, sizeof(info), errp);
+>      if (ret) {
+>          return ret;
+>      }
+> 
+>      if (info.type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
+>          error_setg(errp, "IOMMU hardware is not compatible");
+>          return -EINVAL;
+>      }
+> 
+>      vtd = &info.data.vtd;
+>      host_aw_bits = VTD_MGAW_FROM_CAP(vtd->cap_reg) + 1;
+>      if (s->aw_bits > host_aw_bits) {
+>          error_setg(errp, "aw-bits %d > host aw-bits %d",
+>                     s->aw_bits, host_aw_bits);
+>          return -EINVAL;
+>      }
+> 
+>      if (!s->scalable_modern) {
+>          goto done;
+>      }
+> 
+>      if (!(vtd->ecap_reg & VTD_ECAP_NEST)) {
+>          error_setg(errp, "Host IOMMU doesn't support nested translation");
+>          return -EINVAL;
+>      }
+> 
+>      if (s->fl1gp && !(vtd->cap_reg & VTD_CAP_FL1GP)) {
+>          error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
+>          return -EINVAL;
+>      }
+
+These checks above would typically go in the compatible() handler also.
+
+Now, the question is how useful will that framework be if hotplugging
+devices always fail because the vIOMMU and host IOMMU devices have
+incompatible settings/capabilities ? Shouldn't we also add properties
+at the vIOMMU level ?
+
+
+Thanks,
+
+C.
+
 
