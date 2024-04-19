@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE8FC05023
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059A1C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 04:42:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxg1V-0007ZX-Rq; Fri, 19 Apr 2024 00:38:53 -0400
+	id 1rxg1V-0007Yv-1I; Fri, 19 Apr 2024 00:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1H-0007TY-RN
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:40 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1L-0007UQ-GO
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1G-0004DW-0u
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:39 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rxg1J-0004EK-HT
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 00:38:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713501517;
+ s=mimecast20190719; t=1713501520;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5IjAMj3TcxONzH6juApwTygBs9hbOUIr24XnNgh7nRc=;
- b=eM1Zq5v09q8OvCN6ulC/aKe2hvAXy/TIsXuOx6ExvNVA6mPltJvpNRvtN4tFFGTuKd5XaZ
- RJQnzJkRHiaFLAxGnNZPaTHcHV9+7lI9SToH+rQQ7uxVooKf4ju47YXSR+J3mHEGDeHjRE
- x8aQtjRn5hfzJSjTOnIzZb5apt07TBI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-pDANlRLQNfuFMp5rcCVxRg-1; Fri,
- 19 Apr 2024 00:38:35 -0400
-X-MC-Unique: pDANlRLQNfuFMp5rcCVxRg-1
+ bh=AF5xLvH/7kUiAUGkLwfvULf0scJbtE7oAdCJfc0wnYA=;
+ b=b3qnFF05XfKh8cuvOc52Hi50D1knh/1BEl4WiIOZTYOPcdmEtIXxI54gQmt2KVEb2wtTc7
+ AZ1siT4uSHUxcQ6QdCTvrry7Tp4vNm953+2kwj4vHLEstLI2ViFMxNxQmNXgoZmASLNVcq
+ mGy9D23NqiBuGl4a/6xPBSHUyfXiZqA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-53-t2rsuqBpMReC0fC-FFKYmg-1; Fri, 19 Apr 2024 00:38:37 -0400
+X-MC-Unique: t2rsuqBpMReC0fC-FFKYmg-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E6E261C0C644;
- Fri, 19 Apr 2024 04:38:34 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CD240830E76;
+ Fri, 19 Apr 2024 04:38:36 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.7])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 3A1D84011FF7;
- Fri, 19 Apr 2024 04:38:34 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1D2C14011FF7;
+ Fri, 19 Apr 2024 04:38:36 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -51,9 +51,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  Harmonie Snow <harmonie@gmail.com>
-Subject: [PATCH 18/27] docs/qapi-domain: add :deprecated: directive option
-Date: Fri, 19 Apr 2024 00:38:06 -0400
-Message-ID: <20240419043820.178731-19-jsnow@redhat.com>
+Subject: [PATCH 20/27] docs/qapi-domain: add :ifcond: directive option
+Date: Fri, 19 Apr 2024 00:38:08 -0400
+Message-ID: <20240419043820.178731-21-jsnow@redhat.com>
 In-Reply-To: <20240419043820.178731-1-jsnow@redhat.com>
 References: <20240419043820.178731-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -84,152 +84,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although "deprecated" is a feature (and *will* appear in the features
-list), add a special :deprecated: option to generate an eye-catch that
-makes this information very hard to miss.
+Add a special :ifcond: option that allows us to annotate the
+definition-level conditionals.
 
-(The intent is to modify qapidoc.py to add this option whenever it
-detects that the features list attached to a definition contains the
-"deprecated" entry.)
+RFC: This patch renders IFCOND information in two places, because I'm
+undecided about how to style this information. One option is in the
+signature bar, and another option is in an eye-catch, like :deprecated:
+or :unstable:.
 
--
+A benefit to having this be a directive option is that we can put it in
+the signature bar, the QAPI index, etc. However, if we merely want it in
+the content section, a directive would work just as well,
+e.g. ".. qapi:ifcond:: CONFIG_LINUX".
 
-RFC: Technically, this object-level option is un-needed and could be
-replaced with a standard content-level directive that e.g. qapidoc.py
-could insert at the beginning of the content block. I've done it here as
-an option to demonstrate how it would be possible to do.
+(Though, having it be in the same containing box as the unstable/ifcond
+boxes might require some extra fiddling/post-processing to
+achieve. Generally, the less docutils tree muddling I have to do, the
+happier I am.)
 
-It's a matter of taste for "where" we feel like implementing it.
+The syntax of the argument is currently undefined, but it is possible to
+parse it back down into constituent parts to avoid applying literal
+formatting to "AND" or "&&" or whichever syntax we formalize. (Or, in
+the future, applying cross-reference links to the config values for
+additional reading on some of those build options. Not for this series.)
 
-One benefit of doing it this way is that we can create a single
-containing box to set CSS style options controlling the flow of multiple
-infoboxes. The other way to achieve that would be to create a directive
-that allows us to set multiple options instead, e.g.:
-
-.. qapi:infoboxes:: deprecated unstable
-
-or possibly:
-
-.. qapi:infoboxes::
-   :deprecated:
-   :unstable:
-
-For now, I've left these as top-level QAPI object options. "Hey, it works."
-
-P.S., I outsourced the CSS ;)
+"Vote now on your phones!"
 
 Signed-off-by: Harmonie Snow <harmonie@gmail.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/qapi/index.rst                    |  4 ++++
- docs/sphinx-static/theme_overrides.css | 25 +++++++++++++++++++++++++
- docs/sphinx/qapi-domain.py             | 24 ++++++++++++++++++++++++
- 3 files changed, 53 insertions(+)
+ docs/qapi/index.rst                    |  1 +
+ docs/sphinx-static/theme_overrides.css | 13 +++++++++
+ docs/sphinx/qapi-domain.py             | 37 ++++++++++++++++++++++++--
+ 3 files changed, 49 insertions(+), 2 deletions(-)
 
 diff --git a/docs/qapi/index.rst b/docs/qapi/index.rst
-index d37ceac497f..b9a69f6bd17 100644
+index 6350791a3ed..c68e2044890 100644
 --- a/docs/qapi/index.rst
 +++ b/docs/qapi/index.rst
-@@ -95,6 +95,7 @@ Explicit cross-referencing syntax for QAPI modules is available with
- 
- .. qapi:command:: fake-command
+@@ -97,6 +97,7 @@ Explicit cross-referencing syntax for QAPI modules is available with
     :since: 13.37
-+   :deprecated:
+    :deprecated:
+    :unstable:
++   :ifcond: CONFIG_LINUX
  
     This is a fake command, it's not real. It can't hurt you.
  
-@@ -116,6 +117,9 @@ Explicit cross-referencing syntax for QAPI modules is available with
-       :arg int64 zzxyz: And this is another argument belonging to that same branch.
- 
-    :feat hallucination: This command is a figment of your imagination.
-+   :feat deprecated: Although this command is fake, you should know that
-+      it's also deprecated. That's great news! Maybe it will go away and
-+      stop haunting you someday.
-    :error CommandNotFound: When you try to use this command, because it
-       isn't real.
-    :error GenericError: If the system decides it doesn't like the
 diff --git a/docs/sphinx-static/theme_overrides.css b/docs/sphinx-static/theme_overrides.css
-index c70ef951286..97b8c1c60e6 100644
+index acdf11675db..b239a762a9e 100644
 --- a/docs/sphinx-static/theme_overrides.css
 +++ b/docs/sphinx-static/theme_overrides.css
-@@ -159,3 +159,28 @@ div[class^="highlight"] pre {
-         color: inherit;
-     }
+@@ -188,3 +188,16 @@ div[class^="highlight"] pre {
+ .qapi-deprecated::before {
+     content: '⚠️ ';
  }
 +
-+/* QAPI domain theming */
-+
-+.qapi-infopips {
-+    margin-bottom: 1em;
++.qapi-ifcond::before {
++    /* gaze ye into the crystal ball to determine feature availability */
++    content: '🔮 ';
 +}
 +
-+.qapi-infopip {
-+    display: inline-block;
-+    padding: 0em 0.5em 0em 0.5em;
-+    margin: 0.25em;
-+}
-+
-+.qapi-deprecated {
-+    background-color: #fffef5;
-+    border: solid #fff176 6px;
-+    font-weight: bold;
++.qapi-ifcond {
++    background-color: #f9f5ff;
++    border: solid #dac2ff 6px;
 +    padding: 8px;
 +    border-radius: 15px;
 +    margin: 5px;
 +}
-+
-+.qapi-deprecated::before {
-+    content: '⚠️ ';
-+}
 diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
-index f0094300c03..065ad501960 100644
+index 76157476e02..e44db10488f 100644
 --- a/docs/sphinx/qapi-domain.py
 +++ b/docs/sphinx/qapi-domain.py
-@@ -150,6 +150,7 @@ class QAPIObject(ObjectDescription[Signature]):
+@@ -15,6 +15,7 @@
+     NamedTuple,
+     Optional,
+     Tuple,
++    Union,
+     cast,
+ )
+ 
+@@ -150,6 +151,7 @@ class QAPIObject(ObjectDescription[Signature]):
              "module": directives.unchanged,  # Override contextual module name
              # These are QAPI originals:
              "since": since_validator,
-+            "deprecated": directives.flag,
++            "ifcond": directives.unchanged,
+             "deprecated": directives.flag,
+             "unstable": directives.flag,
          }
-     )
+@@ -176,6 +178,20 @@ def get_signature_suffix(self, sig: str) -> List[nodes.Node]:
+         """Returns a suffix to put after the object name in the signature."""
+         ret: List[nodes.Node] = []
  
-@@ -249,6 +250,28 @@ def add_target_and_index(
-                     ("single", indextext, node_id, "", None)
-                 )
++        if "ifcond" in self.options:
++            ret += [
++                addnodes.desc_sig_space(),
++                nodes.inline(
++                    self.options["ifcond"],
++                    "",
++                    nodes.Text("["),
++                    nodes.literal("", "#if"),
++                    addnodes.desc_sig_space(),
++                    nodes.literal(self.options["ifcond"], self.options["ifcond"]),
++                    nodes.Text("]"),
++                ),
++            ]
++
+         if "since" in self.options:
+             ret += [
+                 addnodes.desc_sig_space(),
+@@ -257,9 +273,14 @@ def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
+         infopips = nodes.container()
+         infopips.attributes["classes"].append("qapi-infopips")
  
-+    def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
-+        # Add various eye-catches and things that go below the signature
-+        # bar, but precede the user-defined content.
-+        infopips = nodes.container()
-+        infopips.attributes["classes"].append("qapi-infopips")
-+
-+        def _add_pip(source: str, content: str, classname: str) -> None:
-+            node = nodes.container(source)
-+            node.append(nodes.Text(content))
-+            node.attributes["classes"].extend(["qapi-infopip", classname])
-+            infopips.append(node)
-+
-+        if "deprecated" in self.options:
+-        def _add_pip(source: str, content: str, classname: str) -> None:
++        def _add_pip(
++            source: str, content: Union[str, List[nodes.Node]], classname: str
++        ) -> None:
+             node = nodes.container(source)
+-            node.append(nodes.Text(content))
++            if isinstance(content, str):
++                node.append(nodes.Text(content))
++            else:
++                node.extend(content)
+             node.attributes["classes"].extend(["qapi-infopip", classname])
+             infopips.append(node)
+ 
+@@ -277,6 +298,18 @@ def _add_pip(source: str, content: str, classname: str) -> None:
+                 "qapi-unstable",
+             )
+ 
++        if self.options.get("ifcond", ""):
++            ifcond = self.options["ifcond"]
 +            _add_pip(
-+                ":deprecated:",
-+                f"This {self.objtype} is deprecated.",
-+                "qapi-deprecated",
++                f":ifcond: {ifcond}",
++                [
++                    nodes.emphasis("", "Availability"),
++                    nodes.Text(": "),
++                    nodes.literal(ifcond, ifcond),
++                ],
++                "qapi-ifcond",
 +            )
 +
-+        if infopips.children:
-+            contentnode.insert(0, infopips)
-+
-     def _merge_adjoining_field_lists(self, contentnode: addnodes.desc_content) -> None:
-         # Take any adjacent field lists and glue them together into
-         # one list for further processing by Sphinx. This is done so
-@@ -271,6 +294,7 @@ def _merge_adjoining_field_lists(self, contentnode: addnodes.desc_content) -> No
-             contentnode.remove(child)
+         if infopips.children:
+             contentnode.insert(0, infopips)
  
-     def transform_content(self, contentnode: addnodes.desc_content) -> None:
-+        self._add_infopips(contentnode)
-         self._merge_adjoining_field_lists(contentnode)
- 
-     def _toc_entry_name(self, sig_node: desc_signature) -> str:
 -- 
 2.44.0
 
