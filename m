@@ -4,68 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F320CC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 12:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72B9C04FF6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 12:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxnhe-0007e8-9O; Fri, 19 Apr 2024 08:50:54 -0400
+	id 1rxnoE-0000nx-ES; Fri, 19 Apr 2024 08:57:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dinguyen@kernel.org>)
- id 1rxmzW-0004FF-18
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:05:21 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rxnoC-0000nZ-Rn
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:57:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dinguyen@kernel.org>)
- id 1rxmzU-0004KF-2U
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:05:17 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 88757CE1A9C;
- Fri, 19 Apr 2024 12:05:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E45AC072AA;
- Fri, 19 Apr 2024 12:05:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1713528307;
- bh=JjhfgGKDvS+BVkDg6yV/bx1++/VQqZcxH99bfPJLXFA=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=ZRi/Twb2b25FmwmLZzpZoGNmcAmcD4Zwai1c+o6wgMdl6hlcBYFiGmTNh3GxgxkQl
- sH2Np8vgm99LX/UJMrhAReObqzK8Hruz3WxGRxlFBc3GVfhuMm+RXTFdRIzfF3jrcD
- 9aC27k87ZVh75j4BfLP1Y4jTfqH0WPIKnZwoJRuoMwd9udxr+2z/djqk4Z7dO4RNLp
- qgfUIcD0ybqIFBT7/DqYGVY8grI9QIDJR1I4uzKDvRua3EyPfg4oWxYWWcHmFsjHpj
- yHYKuRSWxZXFSp+91xML8nK2fu0FUqxtr2ypjnwPehOyasprDZxnBUl37C8yza8E12
- 5424pPP/9b6tQ==
-Message-ID: <975c8ed9-e0b0-4b5e-8a4c-0970c98fa3e6@kernel.org>
-Date: Fri, 19 Apr 2024 07:05:04 -0500
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rxnoB-0006Pg-Em
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:57:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713531458;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YZzWQxK8i52XK1eJ7ZYgf31waI1fdZpDaWtAIl74qLc=;
+ b=XnfKUH6WpF++K7LAaY0VwbrjeyhPLxB2kerIGaypJvVaH2CM2VZ8FVLARQbdaufwKisxfU
+ k4Zb13cPvHC+O60RVLsJPHsGomn9js/KNeXcnvszcE/pyO6maHqoEGVoBp1W+uYCcFCvgF
+ A/jx3OCpHBOoxJSYoAn4aHbPXVgd7cI=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-85-UetrVPf2NQeHyrLKcAeOEA-1; Fri,
+ 19 Apr 2024 08:57:35 -0400
+X-MC-Unique: UetrVPf2NQeHyrLKcAeOEA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B1B743C3D0E3;
+ Fri, 19 Apr 2024 12:57:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.239])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C3480492BC7;
+ Fri, 19 Apr 2024 12:57:32 +0000 (UTC)
+Date: Fri, 19 Apr 2024 07:57:31 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Peter Lieven <pl@dlhnet.de>, "Richard W.M. Jones" <rjones@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH v3 01/13] tests: Remove Ubuntu 20.04 container
+Message-ID: <py2jhbopc7gjuv3ygwrtpgttycvflqnet7qaccasq545jg63wd@g6wxtgt22u6c>
+References: <20240418101056.302103-1-thuth@redhat.com>
+ <20240418101056.302103-2-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Deprecation/removal of nios2 target support
-Content-Language: en-US
-To: Arnd Bergmann <arnd@arndb.de>, Joseph Myers <josmyers@redhat.com>,
- Sandra Loosemore <sloosemore@baylibre.com>
-Cc: gcc@gcc.gnu.org, binutils@sourceware.org, gdb-patches@sourceware.org,
- Xi Ruoyao <libc-alpha@sourceware.org>, Chung-Lin Tang <cltang@baylibre.com>,
- andrew@reenigne.org, Yao Qi <qiyaoltc@gmail.com>, qemu-devel@nongnu.org,
- newlib@sourceware.org, Andreas Oetken <andreas.oetken@siemens.com>,
- Bernd Weiberg <bernd.weiberg@siemens.com>, Marek Vasut <marex@denx.de>
-References: <55a1bc52-b435-463e-8be1-4b23e44393a0@baylibre.com>
- <b5d375ed-283-974a-febf-892760ff855@redhat.com>
- <320677a6-1c3a-477c-95fc-b74cb5a4c5c6@app.fastmail.com>
-From: Dinh Nguyen <dinguyen@kernel.org>
-In-Reply-To: <320677a6-1c3a-477c-95fc-b74cb5a4c5c6@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=dinguyen@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -66
-X-Spam_score: -6.7
-X-Spam_bar: ------
-X-Spam_report: (-6.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240418101056.302103-2-thuth@redhat.com>
+User-Agent: NeoMutt/20240201
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 19 Apr 2024 08:50:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,39 +89,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Apr 18, 2024 at 12:10:44PM +0200, Thomas Huth wrote:
+> Since Ubuntu 22.04 is now available since two years, we can stop
 
+Grammar suggestion:
 
-On 4/18/24 13:41, Arnd Bergmann wrote:
-> On Thu, Apr 18, 2024, at 17:44, Joseph Myers wrote:
->> On Wed, 17 Apr 2024, Sandra Loosemore wrote:
->>
->>> Therefore I'd like to mark Nios II as obsolete in GCC 14 now, and remove
->>> support from all toolchain components after the release is made.  I'm not sure
->>> there is an established process for obsoleting/removing support in other
->>> components; besides binutils, GDB, and GLIBC, there's QEMU, newlib/libgloss,
->>> and the Linux kernel.  But, we need to get the ball rolling somewhere.
->>
->> CC:ing Arnd Bergmann regarding the obsolescence in the Linux kernel.
-> 
-> We have not yet marked nios2 as deprecated in the kernel, but that
-> is mostly because the implementation does not get in the way too
-> much and Dinh Nguyen is still around as a maintainer and merging
-> bugfixes.
-> 
-> Almost all nios2 kernel changes I see in the past decade have been
-> done blindly without testing on hardware, either for treewide
-> changes, or by code inspection. The only notable exceptions I could
-> find are from Andreas Oetken and Bernd Weiberg at Siemens and
-> from Marek Vasut (all added to Cc in case they have something to add).
-> 
-> We should probably remove nios2 from the kernel in the near future,
-> but even if we decide not to, I think deprecating it from gcc is the
-> right idea: If there are a few remaining users that still plan
-> to update their kernels, gcc-14 will still be able to build new
-> kernels for several years.
-> 
+Since Ubuntu 22.04 has now been available for more than two years,
 
-I'm planning to do this soon.
+> actively supporting the previous LTS version of Ubuntu now.
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
 
-Dinh
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
