@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A738CC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 16:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D142BC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 16:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxqfH-0001aR-Ng; Fri, 19 Apr 2024 12:00:39 -0400
+	id 1rxqiC-0007rk-54; Fri, 19 Apr 2024 12:03:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rxqec-00018L-QE
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:59:59 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1rxqem-0001H9-7w
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:09 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rxqeY-00016R-Rf
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 11:59:58 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-346b09d474dso2032823f8f.2
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:59:52 -0700 (PDT)
+ id 1rxqec-0001A6-D4
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 12:00:04 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-349c4505058so1530454f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 08:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713542391; x=1714147191; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713542397; x=1714147197; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wGSOG2AohVyB+YklCc4A6nr7dY+0+hbY8R/nFstjWpI=;
- b=l2+0XBA/G2YDY3NTWoz+FL2Wn3d+k+kuN++ZJqy+mJIbJKNpd8B7vOX6e0SkeQTQEo
- Ik7J+1/FPJvtVQ0c0NXF8A6vp6OkgzTrj4uH/QjPkSa/iCdHGE96PyK+Q1ANgi7cQdHR
- ym9U4SG9o+D3ExNx2I4kfEqAe8vqkjeidH7N9G8Ddei5VMQFXW6rwwZ+lkkp2NVVHzzw
- ap1vMGYq0qjB9ZxGMQjaWNoaQzZzBQokc5u1mh5cKHgsx1SxPtw+QQFmrCwVz6wUMYTQ
- a0NIsppr5sTFp0rL7v7Q3UEdzxMczQ1HJR2BQ9Ik7DWm+48LwJI0esv9epMkqAfGYtnp
- ziiQ==
+ bh=+TiMKcfhWWVprWCCg72qipd7OlTmHhGexnpkTMCgpYM=;
+ b=ohvELi5kF2Z7//dporjkfMKx3eCNpH+Ju7hR9pSWRsUEMZMnViZLx2Qg0Gzv6DhTOl
+ NwHAiSAiSzG2dO3GiuSLVaiF8gqRRo3FQC3Rq0BJ+tnp0/s8K8/PlUxIOd8wQ1wN9VNT
+ dkm/Xl0rwOpThzIlkDss+bk4d7219VZryM01odhu++5HpZCJB76DHHIkx4I56Nv/Uqep
+ zzsz0J1eolpO38MSbwJXc2q8x4cypfAW916zQeIA0fpMLI9yFFqfXukyC1hSHuX3k3NB
+ blCqMPyjM66BymljfgGYlwMCoaKlpg6U/2Yu/DOmoBU/IKug1/DEp98XcY8qofPW1Be2
+ YzQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713542391; x=1714147191;
+ d=1e100.net; s=20230601; t=1713542397; x=1714147197;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wGSOG2AohVyB+YklCc4A6nr7dY+0+hbY8R/nFstjWpI=;
- b=W2Ikrq6mS3gvKgsIszq7vWGbBqz6L/i3pjXZ5lQV7lfFUp6nK0xRlqp24xPv8DOWYa
- 3NiG7hCFCzcVYlsvs/NHfjZuQCyvTcpS/2Omb0cfRCpghiERurQXvCPJZBzXl/leMxrp
- 89P+atbSKiTwM7vvIwP7HNLd8h9bn2EdsLRZqBowEyj5tqyHtacd5KTowElQTGtAFfg0
- Vn9GRy6c0X6uNhukQy+T29I7xjMZlpQC8VbRfZwScLEz04D5hGoPuBvi9W86BcRd3e00
- fZu1txkNltDft8zMS+iOJPZ1yvAMhSb31q8z5zB8ZRuf5e3dlY5rtPlDh8MrEJoBWvRo
- Nteg==
+ bh=+TiMKcfhWWVprWCCg72qipd7OlTmHhGexnpkTMCgpYM=;
+ b=CLEsiwOQ07uOTjaK6pRchtSgpoVy8W406PrNh4wAz2hB8pE+GVwobkqyBEw2b9KVco
+ Djk8vcxdc6cALOs/VdWdZQfw4WS+Ar/ERgNBGKgCG2thd9jI0o2hp+qwt9p68rv/wZuJ
+ mDXGMvt88l99IVEjqsDyMgp/J8ZYGYlAfJnwpu3BXmzFMC2yqxJwF4pH7yjl42coHLNn
+ KED1AIrtrLUkHQ7V2dtZmomoJ3mCiL2zi6KtEKSTqWA3uMT4QY0G/we9aSjhS81eeYHM
+ azwO27vtxbstE809uk8SJCP36du8R8M3aIA75oOaDCehbyKBYC0msCr2O+5ODr68s6Jw
+ aZYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1Heqj9JVYh17U5w/2lztWm51tJfOzmPnBXyJzYoc/TFq7nhO95yPjHYBoiy7+hqi9p5rmXcOPJ15NHCv2aw00iSI3aYE=
-X-Gm-Message-State: AOJu0Yw3D3WGZox7gUnU6ZYfO3Hc8d/SbySK0dKib/swoDL3D3UYPdb3
- nGgxl64etStrisjjc173OuRzWUtzTDC0/Lvi1Vzb+U7V0nf4jXMzQ2ZKi8dTbRU=
-X-Google-Smtp-Source: AGHT+IFXWXZ2doR638dGx4gpYpEI6Czh03A8U4tqNaQVQjbA9rRJGDe2do9bDxtdVxSSCJ0+axOIjQ==
-X-Received: by 2002:a5d:4f90:0:b0:347:4484:4498 with SMTP id
- d16-20020a5d4f90000000b0034744844498mr1910461wru.59.1713542391579; 
- Fri, 19 Apr 2024 08:59:51 -0700 (PDT)
+ AJvYcCVb0TGUAx0ptp+RF9YA4clAZ8JnNkoA9uWqA3cWoce01m1STsrPBQfIBbNk6kQaRcdBr9RVKEBD2rRIDxigujADITs1Fbs=
+X-Gm-Message-State: AOJu0Yxbzvak+YB5BgLL9JU5uvf5jth9LmbwiEM8es9hLeIgqY0dwEKU
+ HmUrVqTfFGIaG0UTglUWojjm6V633qJZDfQ1CZcDXNDwmPjn5+vsRBcMwxI4XG0=
+X-Google-Smtp-Source: AGHT+IEwMNMLMdwWzlmJIUijREc2Qf1Prq2dWY2hHTVBkRybeXPJsUyb6aSDemSmIpD+IWAfnVHXvQ==
+X-Received: by 2002:adf:ce11:0:b0:343:3db9:6602 with SMTP id
+ p17-20020adfce11000000b003433db96602mr1749385wrn.66.1713542396911; 
+ Fri, 19 Apr 2024 08:59:56 -0700 (PDT)
 Received: from localhost.localdomain ([2.221.137.100])
  by smtp.gmail.com with ESMTPSA id
- p13-20020adfe60d000000b00349b73143e7sm4793089wrm.75.2024.04.19.08.59.51
+ p13-20020adfe60d000000b00349b73143e7sm4793089wrm.75.2024.04.19.08.59.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Apr 2024 08:59:51 -0700 (PDT)
+ Fri, 19 Apr 2024 08:59:56 -0700 (PDT)
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: peter.maydell@linaro.org,
 	richard.henderson@linaro.org
 Cc: philmd@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Jean-Philippe Brucker <jean-philippe@linaro.org>
-Subject: [PATCH v2 07/22] hw/arm/virt: Reserve one bit of guest-physical
- address for RME
-Date: Fri, 19 Apr 2024 16:56:55 +0100
-Message-ID: <20240419155709.318866-9-jean-philippe@linaro.org>
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 15/22] target/arm/kvm-rme: Add measurement algorithm
+ property
+Date: Fri, 19 Apr 2024 16:57:03 +0100
+Message-ID: <20240419155709.318866-17-jean-philippe@linaro.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240419155709.318866-2-jean-philippe@linaro.org>
 References: <20240419155709.318866-2-jean-philippe@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,48 +103,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When RME is enabled, the upper GPA bit is used to distinguish protected
-from unprotected addresses. Reserve it when setting up the guest memory
-map.
+This option selects which measurement algorithm to use for attestation.
+Supported values are SHA256 and SHA512. Default to SHA512 arbitrarily.
 
+SHA512 is generally faster on 64-bit architectures. On a few arm64 CPUs
+I tested SHA256 is much faster, but that's most likely because they only
+support acceleration via FEAT_SHA256 (Armv8.0) and not FEAT_SHA512
+(Armv8.2). Future CPUs supporting RME are likely to also support
+FEAT_SHA512.
+
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 ---
-v1->v2: separate patch
+v1->v2: use enum, pick default
 ---
- hw/arm/virt.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ qapi/qom.json        | 18 +++++++++++++++++-
+ target/arm/kvm-rme.c | 39 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 55 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index f300f100b5..eca9a96b5a 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2939,14 +2939,24 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-     VirtMachineState *vms = VIRT_MACHINE(ms);
-     int rme_vm_type = kvm_arm_rme_vm_type(ms);
-     int max_vm_pa_size, requested_pa_size;
-+    int rme_reserve_bit = 0;
-     bool fixed_ipa;
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 91654aa267..84dce666b2 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -931,18 +931,34 @@
+   'data': { '*cpu-affinity': ['uint16'],
+             '*node-affinity': ['uint16'] } }
  
--    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
-+    if (rme_vm_type) {
-+        /*
-+         * With RME, the upper GPA bit differentiates Realm from NS memory.
-+         * Reserve the upper bit to ensure that highmem devices will fit.
-+         */
-+        rme_reserve_bit = 1;
-+    }
++##
++# @RmeGuestMeasurementAlgo:
++#
++# @sha256: Use the SHA256 algorithm
++# @sha512: Use the SHA512 algorithm
++#
++# Algorithm to use for realm measurements
++#
++# Since: FIXME
++##
++{ 'enum': 'RmeGuestMeasurementAlgo',
++  'data': ['sha256', 'sha512'] }
 +
-+    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa) -
-+                     rme_reserve_bit;
+ ##
+ # @RmeGuestProperties:
+ #
+ # Properties for rme-guest objects.
+ #
++# @measurement-algo: Realm measurement algorithm (default: sha512)
++#
+ # @personalization-value: Realm personalization value, as a 64-byte hex string
+ #     (default: 0)
+ #
+ # Since: FIXME
+ ##
+ { 'struct': 'RmeGuestProperties',
+-  'data': { '*personalization-value': 'str' } }
++  'data': { '*personalization-value': 'str',
++            '*measurement-algo': 'RmeGuestMeasurementAlgo' } }
  
-     /* we freeze the memory map to compute the highest gpa */
-     virt_set_memmap(vms, max_vm_pa_size);
+ ##
+ # @ObjectType:
+diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+index cb5c3f7a22..8f39e54aaa 100644
+--- a/target/arm/kvm-rme.c
++++ b/target/arm/kvm-rme.c
+@@ -23,13 +23,14 @@ OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
  
--    requested_pa_size = 64 - clz64(vms->highest_gpa);
-+    requested_pa_size = 64 - clz64(vms->highest_gpa) + rme_reserve_bit;
+ #define RME_PAGE_SIZE qemu_real_host_page_size()
  
-     /*
-      * KVM requires the IPA size to be at least 32 bits.
+-#define RME_MAX_CFG         1
++#define RME_MAX_CFG         2
+ 
+ struct RmeGuest {
+     ConfidentialGuestSupport parent_obj;
+     Notifier rom_load_notifier;
+     GSList *ram_regions;
+     uint8_t *personalization_value;
++    RmeGuestMeasurementAlgo measurement_algo;
+ };
+ 
+ typedef struct {
+@@ -73,6 +74,19 @@ static int rme_configure_one(RmeGuest *guest, uint32_t cfg, Error **errp)
+         memcpy(args.rpv, guest->personalization_value, KVM_CAP_ARM_RME_RPV_SIZE);
+         cfg_str = "personalization value";
+         break;
++    case KVM_CAP_ARM_RME_CFG_HASH_ALGO:
++        switch (guest->measurement_algo) {
++        case RME_GUEST_MEASUREMENT_ALGO_SHA256:
++            args.hash_algo = KVM_CAP_ARM_RME_MEASUREMENT_ALGO_SHA256;
++            break;
++        case RME_GUEST_MEASUREMENT_ALGO_SHA512:
++            args.hash_algo = KVM_CAP_ARM_RME_MEASUREMENT_ALGO_SHA512;
++            break;
++        default:
++            g_assert_not_reached();
++        }
++        cfg_str = "hash algorithm";
++        break;
+     default:
+         g_assert_not_reached();
+     }
+@@ -338,12 +352,34 @@ static void rme_set_rpv(Object *obj, const char *value, Error **errp)
+     }
+ }
+ 
++static int rme_get_measurement_algo(Object *obj, Error **errp)
++{
++    RmeGuest *guest = RME_GUEST(obj);
++
++    return guest->measurement_algo;
++}
++
++static void rme_set_measurement_algo(Object *obj, int algo, Error **errp)
++{
++    RmeGuest *guest = RME_GUEST(obj);
++
++    guest->measurement_algo = algo;
++}
++
+ static void rme_guest_class_init(ObjectClass *oc, void *data)
+ {
+     object_class_property_add_str(oc, "personalization-value", rme_get_rpv,
+                                   rme_set_rpv);
+     object_class_property_set_description(oc, "personalization-value",
+             "Realm personalization value (512-bit hexadecimal number)");
++
++    object_class_property_add_enum(oc, "measurement-algo",
++                                   "RmeGuestMeasurementAlgo",
++                                   &RmeGuestMeasurementAlgo_lookup,
++                                   rme_get_measurement_algo,
++                                   rme_set_measurement_algo);
++    object_class_property_set_description(oc, "measurement-algo",
++            "Realm measurement algorithm ('sha256', 'sha512')");
+ }
+ 
+ static void rme_guest_instance_init(Object *obj)
+@@ -353,6 +389,7 @@ static void rme_guest_instance_init(Object *obj)
+         exit(1);
+     }
+     rme_guest = RME_GUEST(obj);
++    rme_guest->measurement_algo = RME_GUEST_MEASUREMENT_ALGO_SHA512;
+ }
+ 
+ static const TypeInfo rme_guest_info = {
 -- 
 2.44.0
 
