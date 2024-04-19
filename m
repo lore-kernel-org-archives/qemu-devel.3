@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC8DC4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 10:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73C0C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 10:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxlLz-0003VU-52; Fri, 19 Apr 2024 06:20:23 -0400
+	id 1rxlNQ-0004b6-CV; Fri, 19 Apr 2024 06:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxlLw-0003UH-8O
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 06:20:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rxlLt-0006yT-Nb
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 06:20:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713522016;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=esdjpP/6ZIZCUdYlGWi+u+iN74GkIVJE91Tt0svDOvY=;
- b=L3K+9lo3Ftj1xQT2iZgEF3VwQt6RL53HBqws8bOkLzgL+5BFzHRKMcHoql22Lqe8xX2PW7
- 3toOBRdrqddm91JJQSpSKisjuHoOXN+80/SlZPvhUlxEOdd5plWemh7p6CseJ52Vdum5d7
- EZsBiicEIgTFefVoSuEseih7GyLXvXY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-Sudp4MP_OdyyhBWrZ9KlOQ-1; Fri, 19 Apr 2024 06:20:13 -0400
-X-MC-Unique: Sudp4MP_OdyyhBWrZ9KlOQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 27A56803CA4;
- Fri, 19 Apr 2024 10:20:08 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.112])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5EC772166B32;
- Fri, 19 Apr 2024 10:20:05 +0000 (UTC)
-Date: Fri, 19 Apr 2024 11:20:03 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH RFC 00/26] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
- device state transfer support with VFIO consumer
-Message-ID: <ZiJFU_QrOHVvwe4W@redhat.com>
-References: <cover.1713269378.git.maciej.szmigiero@oracle.com>
- <Zh-KF72Fe9oV6tfT@redhat.com>
- <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
- <Zh_6W8u3H4FmGS49@redhat.com>
- <71ede5c8-857c-418b-9e37-b8d343ddfa06@maciej.szmigiero.name>
- <ZiD4aLSre6qubuHr@redhat.com>
- <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rxlNL-0004aP-3b
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 06:21:49 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rxlNG-0007Ur-De
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 06:21:44 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56e69888a36so2034105a12.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 03:21:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713522098; x=1714126898; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QCZAOLBvSmklkFZaOqYrqhu+QHELLWX95ASqLLV8uxA=;
+ b=nZpxTf6bbV5MgeBj7Ji9VqmsgcsxKD2kGkCSPF01fbQ8cVlFkMFvaQqIiQWxQRkW8r
+ +xVeb1O2err6yNnWoZmiy8uiCtmDrsLL0PAcZVw15JpGPafpOgHS4UncZOtQVBUpkpHx
+ rkqUZnThHpAJELMsN7eK7GNZZYpju6ePSU28ezmFwxm7q4smI3FHDk5+g9ZHrJ7oRHGr
+ UEcmy4D3HmN58domrZOoGyBDcVNHvT+FzIyTDHB/dUI5Jxr2NGnJUyFsh6rOsF4tV8TE
+ zIcsOKLD8YsyWpAHoT/rA9XC3tqHdZ95DVYqVUfp21D/r0XAPEX5zkMLlNhOlVZ1dl/d
+ ZKwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713522098; x=1714126898;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QCZAOLBvSmklkFZaOqYrqhu+QHELLWX95ASqLLV8uxA=;
+ b=gQsPoCdq16XUVZxLsrb9GLhKeVpi93jefd0SbpoOTewECmjvbtWA7aIiw4lJ5vBRo1
+ dFro8bNIC+EevJh3DO3mJWoSIKiPr8m3zyxoHmkdhh4oDT9q2hmSueduaW8AAkpfdFQP
+ 7u18pRabE+JIiSus0Eutu5Mhg2jyrY/9ijRngjJ/wAKptogPL8De1424+JQvep3crbBB
+ WGyO29xqF2ULIGaTG34JNlnh8Mu7IPYPnWHaulZoWsUqRTqti00u0QaQkWWrHxvDe/8y
+ 9w2igqrhqFv6sBRsYZe63HF6x9vQysDP18ddEAO117NUs0sWKvhzh9J4mhROiDmXiMd1
+ dvTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCFHWI8MS+2MG/wIBhmrgQG3OPVwZWwhXBRiCcfSMdZVJWU0O/i7V1sgd+JQUKPw1pMkofgK9JNsQFdigHoIcGpxgN89I=
+X-Gm-Message-State: AOJu0YwmzFBiWQ3Bk9AxOznWH1I485bT9eR6F3o2hJ0we7fjodEQC6OI
+ qAp+4Wx7NM0IxGqgmsaWcTnkgVUsIpaTIuzSR0qV1WXi0+JTL/j1Hk2fjQlm27i192l5h9sxa2l
+ 65w/84LVGC1N4NL3gQ0bHafcj8hS1bQ7YHTR8WA==
+X-Google-Smtp-Source: AGHT+IGCltBe0h4IXI8qKT3rtDdXXzmixgwNo0FgcWGWnZxoPPz5e738jLRaDnq6iMWILAZq96d6a61z7LuDNTgJW0g=
+X-Received: by 2002:a50:d781:0:b0:56e:22b6:d924 with SMTP id
+ w1-20020a50d781000000b0056e22b6d924mr1254676edi.13.1713522098154; Fri, 19 Apr
+ 2024 03:21:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.067,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAFEAcA_Q86TH19xZMT=gtRwL-ABook5NAFTgcGjfnfcqhgnwCw@mail.gmail.com>
+ <5b29a661-1e37-4a90-8871-983d07094b69.jiangzw@tecorigin.com>
+In-Reply-To: <5b29a661-1e37-4a90-8871-983d07094b69.jiangzw@tecorigin.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 19 Apr 2024 11:21:26 +0100
+Message-ID: <CAFEAcA82fjAT7Dh2x4i+UM3bvkWJpSCH8a-tH4KJc82_hfA-_A@mail.gmail.com>
+Subject: Re: [PATCH] tcg: Fix the overflow in indexing tcg_ctx->temps
+To: =?UTF-8?B?5aec5pm65Lyf?= <jiangzw@tecorigin.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, pbonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,255 +90,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024 at 08:14:15PM +0200, Maciej S. Szmigiero wrote:
-> On 18.04.2024 12:39, Daniel P. Berrangé wrote:
-> > On Thu, Apr 18, 2024 at 11:50:12AM +0200, Maciej S. Szmigiero wrote:
-> > > On 17.04.2024 18:35, Daniel P. Berrangé wrote:
-> > > > On Wed, Apr 17, 2024 at 02:11:37PM +0200, Maciej S. Szmigiero wrote:
-> > > > > On 17.04.2024 10:36, Daniel P. Berrangé wrote:
-> > > > > > On Tue, Apr 16, 2024 at 04:42:39PM +0200, Maciej S. Szmigiero wrote:
-> > > > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> (..)
-> > > > > > That said, the idea of reserving channels specifically for VFIO doesn't
-> > > > > > make a whole lot of sense to me either.
-> > > > > > 
-> > > > > > Once we've done the RAM transfer, and are in the switchover phase
-> > > > > > doing device state transfer, all the multifd channels are idle.
-> > > > > > We should just use all those channels to transfer the device state,
-> > > > > > in parallel.  Reserving channels just guarantees many idle channels
-> > > > > > during RAM transfer, and further idle channels during vmstate
-> > > > > > transfer.
-> > > > > > 
-> > > > > > IMHO it is more flexible to just use all available multifd channel
-> > > > > > resources all the time.
-> > > > > 
-> > > > > The reason for having dedicated device state channels is that they
-> > > > > provide lower downtime in my tests.
-> > > > > 
-> > > > > With either 15 or 11 mixed multifd channels (no dedicated device state
-> > > > > channels) I get a downtime of about 1250 msec.
-> > > > > 
-> > > > > Comparing that with 15 total multifd channels / 4 dedicated device
-> > > > > state channels that give downtime of about 1100 ms it means that using
-> > > > > dedicated channels gets about 14% downtime improvement.
-> > > > 
-> > > > Hmm, can you clarify. /when/ is the VFIO vmstate transfer taking
-> > > > place ? Is is transferred concurrently with the RAM ? I had thought
-> > > > this series still has the RAM transfer iterations running first,
-> > > > and then the VFIO VMstate at the end, simply making use of multifd
-> > > > channels for parallelism of the end phase. your reply though makes
-> > > > me question my interpretation though.
-> > > > 
-> > > > Let me try to illustrate channel flow in various scenarios, time
-> > > > flowing left to right:
-> > > > 
-> > > > 1. serialized RAM, then serialized VM state  (ie historical migration)
-> > > > 
-> > > >         main: | Init | RAM iter 1 | RAM iter 2 | ... | RAM iter N | VM State |
-> > > > 
-> > > > 
-> > > > 2. parallel RAM, then serialized VM state (ie today's multifd)
-> > > > 
-> > > >         main: | Init |                                            | VM state |
-> > > >     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > > 
-> > > > 
-> > > > 3. parallel RAM, then parallel VM state
-> > > > 
-> > > >         main: | Init |                                            | VM state |
-> > > >     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd4:                                                     | VFIO VM state |
-> > > >     multifd5:                                                     | VFIO VM state |
-> > > > 
-> > > > 
-> > > > 4. parallel RAM and VFIO VM state, then remaining VM state
-> > > > 
-> > > >         main: | Init |                                            | VM state |
-> > > >     multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N |
-> > > >     multifd4:        | VFIO VM state                                         |
-> > > >     multifd5:        | VFIO VM state                                         |
-> > > > 
-> > > > 
-> > > > I thought this series was implementing approx (3), but are you actually
-> > > > implementing (4), or something else entirely ?
-> > > 
-> > > You are right that this series operation is approximately implementing
-> > > the schema described as numer 3 in your diagrams.
-> > 
-> > > However, there are some additional details worth mentioning:
-> > > * There's some but relatively small amount of VFIO data being
-> > > transferred from the "save_live_iterate" SaveVMHandler while the VM is
-> > > still running.
-> > > 
-> > > This is still happening via the main migration channel.
-> > > Parallelizing this transfer in the future might make sense too,
-> > > although obviously this doesn't impact the downtime.
-> > > 
-> > > * After the VM is stopped and downtime starts the main (~ 400 MiB)
-> > > VFIO device state gets transferred via multifd channels.
-> > > 
-> > > However, these multifd channels (if they are not dedicated to device
-> > > state transfer) aren't idle during that time.
-> > > Rather they seem to be transferring the residual RAM data.
-> > > 
-> > > That's most likely what causes the additional observed downtime
-> > > when dedicated device state transfer multifd channels aren't used.
-> > 
-> > Ahh yes, I forgot about the residual dirty RAM, that makes sense as
-> > an explanation. Allow me to work through the scenarios though, as I
-> > still think my suggestion to not have separate dedicate channels is
-> > better....
-> > 
-> > 
-> > Lets say hypothetically we have an existing deployment today that
-> > uses 6 multifd channels for RAM. ie:
-> >          main: | Init |                                            | VM state |
-> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> > 
-> > That value of 6 was chosen because that corresponds to the amount
-> > of network & CPU utilization the admin wants to allow, for this
-> > VM to migrate. All 6 channels are fully utilized at all times.
-> > 
-> > 
-> > If we now want to parallelize VFIO VM state, the peak network
-> > and CPU utilization the admin wants to reserve for the VM should
-> > not change. Thus the admin will still wants to configure only 6
-> > channels total.
-> > 
-> > With your proposal the admin has to reduce RAM transfer to 4 of the
-> > channels, in order to then reserve 2 channels for VFIO VM state, so we
-> > get a flow like:
-> > 
-> >          main: | Init |                                            | VM state |
-> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd5:                                                     | VFIO VM state |
-> >      multifd6:                                                     | VFIO VM state |
-> > 
-> > This is bad, as it reduces performance of RAM transfer. VFIO VM
-> > state transfer is better, but that's not a net win overall.
-> > 
-> > 
-> > 
-> > So lets say the admin was happy to increase the number of multifd
-> > channels from 6 to 8.
-> > 
-> > This series proposes that they would leave RAM using 6 channels as
-> > before, and now reserve the 2 extra ones for VFIO VM state:
-> > 
-> >          main: | Init |                                            | VM state |
-> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM |
-> >      multifd7:                                                     | VFIO VM state |
-> >      multifd8:                                                     | VFIO VM state |
-> > 
-> > 
-> > RAM would perform as well as it did historically, and VM state would
-> > improve due to the 2 parallel channels, and not competing with the
-> > residual RAM transfer.
-> > 
-> > This is what your latency comparison numbers show as a benefit for
-> > this channel reservation design.
-> > 
-> > I believe this comparison is inappropriate / unfair though, as it is
-> > comparing a situation with 6 total channels against a situation with
-> > 8 total channels.
-> > 
-> > If the admin was happy to increase the total channels to 8, then they
-> > should allow RAM to use all 8 channels, and then VFIO VM state +
-> > residual RAM to also use the very same set of 8 channels:
-> > 
-> >          main: | Init |                                            | VM state |
-> >      multifd1:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> >      multifd2:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> >      multifd3:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> >      multifd4:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> >      multifd5:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> >      multifd6:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> >      multifd7:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> >      multifd8:        | RAM iter 1 | RAM iter 2 | ... | RAM iter N | Residual RAM + VFIO VM state|
-> > 
-> > This will speed up initial RAM iters still further & the final switch
-> > over phase even more. If residual RAM is larger than VFIO VM state,
-> > then it will dominate the switchover latency, so having VFIO VM state
-> > compete is not a problem. If VFIO VM state is larger than residual RAM,
-> > then allowing it acces to all 8 channels instead of only 2 channels
-> > will be a clear win.
-> 
-> I re-did the measurement with increased the number of multifd channels,
-> first to (total count/dedicated count) 25/0, then to 100/0.
-> 
-> The results did not improve:
-> With 25/0 multifd mixed channels config I still get around 1250 msec
-> downtime - the same as with 15/0 or 11/0 mixed configs I measured
-> earlier.
-> 
-> But with the (pretty insane) 100/0 mixed channel config the whole setup
-> gets so for into the law of diminishing returns that the results actually
-> get worse: the downtime is now about 1450 msec.
-> I guess that's from all the extra overhead from switching between 100
-> multifd channels.
-> 
-> I think one of the reasons for these results is that mixed (RAM + device
-> state) multifd channels participate in the RAM sync process
-> (MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
+On Fri, 19 Apr 2024 at 10:37, =E5=A7=9C=E6=99=BA=E4=BC=9F <jiangzw@tecorigi=
+n.com> wrote:
+> Peter Maydell wrote:
+> > I feel like this might be a bug elsewhere. Can you provide
+> > a repro binary and command line?
+>
+> The test file has been attached with RISCV CBO instruction as the first i=
+nstruction to execute, with command-line arguments as
+> ./build/qemu-system-riscv64 -M virt -smp 1 -nographic -bios crash_test.bi=
+n
 
-Hmm, I wouldn't have expected the sync packets to have a signicant
-overhead on the wire. Looking at the code though I guess the issue
-is that we're blocking I/O in /all/ threads, until all threads have
-seen the sync packet.
+It looks like you're building without --enable-debug. If you do
+that then you'll find that we hit an assert in the debug version
+of the function, which your patch doesn't touch:
 
-eg in multifd_recv_sync_main
+#6  0x00007ffff4b90e96 in __GI___assert_fail
+    (assertion=3D0x55555639a508 "o < sizeof(TCGTemp) *
+tcg_ctx->nb_temps", file=3D0x5555563995d5 "../../tcg/tcg.c", line=3D1940,
+function=3D0x55555639c000 <__PRETTY_FUNCTION__.60> "tcgv_i32_temp") at
+./assert/assert.c:101
+#7  0x000055555613104c in tcgv_i32_temp (v=3D0x0) at ../../tcg/tcg.c:1940
+#8  0x0000555555d0882b in tcgv_i64_temp (v=3D0x0) at
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/tcg/tcg.h:638
+#9  0x0000555555d0c17b in gen_helper_cbo_inval (arg1=3D0x2a8, arg2=3D0x0)
+at ../../target/riscv/helper.h:121
+#10 0x0000555555d7be65 in trans_cbo_inval (ctx=3D0x7fffef1c8e50,
+a=3D0x7fffef1c8cf0) at
+../../target/riscv/insn_trans/trans_rvzicbo.c.inc:48
+#11 0x0000555555d41f4f in decode_insn32 (ctx=3D0x7fffef1c8e50,
+insn=3D8207) at libqemu-riscv64-softmmu.fa.p/decode-insn32.c.inc:2332
+#12 0x0000555555d925f1 in decode_opc (env=3D0x555556d53e30,
+ctx=3D0x7fffef1c8e50, opcode=3D8207) at
+../../target/riscv/translate.c:1165
+#13 0x0000555555d92ab4 in riscv_tr_translate_insn
+(dcbase=3D0x7fffef1c8e50, cpu=3D0x555556d51670) at
+../../target/riscv/translate.c:1236
 
-    for (i = 0; i < thread_count; i++) {
+This happens because we've been passed in 0 as our TCGv,
+which isn't valid. That in turn is because trans_cbo_inval()
+does:
+           gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
+but a->rs1 is 0.
 
-        qemu_sem_wait(&multifd_recv_state->sem_sync);
-    }
+The comment in riscv_translate_init() says:
+    /*
+     * cpu_gpr[0] is a placeholder for the zero register. Do not use it.
+     * Use the gen_set_gpr and get_gpr helper functions when accessing regs=
+,
+     * unless you specifically block reads/writes to reg 0.
+     */
 
-    for (i = 0; i < thread_count; i++) {
-        qemu_sem_post(&p->sem_sync);
-    }
+trans_cbo_inval() doesn't do either of those things, so that is
+where your bug is.
 
-and then in the recv thread is 
-
-    qemu_sem_post(&multifd_recv_state->sem_sync);
-    qemu_sem_wait(&p->sem_sync);
-
-so if any 1 of the recv threads is slow to recv the sync packet on
-the wire, then its qemu_sem_post is delayed, and all other recv
-threads are kept idle until the sync packet arrives.
-
-I'm not sure how much this all matters during the final switchover
-phase though. We send syncs at the end of each iteration, and then
-after sending the residual RAM. I'm not sure how that orders wrt
-sending of the parallel VFIO state
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
