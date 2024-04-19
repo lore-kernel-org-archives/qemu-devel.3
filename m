@@ -4,106 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87495C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5FAAC4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:31:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxkZ2-0006vJ-Cz; Fri, 19 Apr 2024 05:29:50 -0400
+	id 1rxkaD-0008QB-1e; Fri, 19 Apr 2024 05:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rxkYt-0006ma-O8; Fri, 19 Apr 2024 05:29:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rxkYr-00063v-Gx; Fri, 19 Apr 2024 05:29:38 -0400
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43J9Dhxg030281; Fri, 19 Apr 2024 09:29:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=AF2IJnqzJXGzRsfog9I7xmkbGnUtvJAa08bLldZgNEw=;
- b=kHm7zFB+OnqaVv6E4u7x8hwohKaD0eEBZZLlzCh7HxgZ0RdAvNEEWUSMufgPWu23JB0S
- OAsi9MWS5y7W//+/tlyGh3ldx/cg5HCtOsxX0mV1wK36e3Nvlb9AipBe9G2zRuR8T0U0
- sqTSK/vgws58g9SJKG9WWOmLA1j0KK7GF0ZbLqDKKqVqixXNfRWtoyW2cPqyEbbViLza
- v0hpGaOH9F/10OZ/+sd2fDW4M0o0wuBOeJyD/ani6R2FZzmSIbFj0w3fDXJn4jDD59TO
- QkVitbAGUrKyvjTJDJLRxuiu+gZQBqvd4iANdhPBhs6X9yWAoKfoJ3tLXlBr2EaDJCYR Ng== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xkns7g191-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:29:34 +0000
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43J9ROld020373;
- Fri, 19 Apr 2024 09:29:33 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xkns7g18y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:29:33 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43J8pU3X027847; Fri, 19 Apr 2024 09:29:32 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xkbmpas11-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Apr 2024 09:29:32 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43J9TRji49480100
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Apr 2024 09:29:29 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 85ECC2004D;
- Fri, 19 Apr 2024 09:29:27 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79D4B2004B;
- Fri, 19 Apr 2024 09:29:25 +0000 (GMT)
-Received: from [9.171.89.59] (unknown [9.171.89.59])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 19 Apr 2024 09:29:25 +0000 (GMT)
-Message-ID: <42302364-328a-4358-8923-a53a3222ba2d@linux.vnet.ibm.com>
-Date: Fri, 19 Apr 2024 14:59:25 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxkZw-0008Lj-IQ
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:30:53 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rxkZq-0006VN-JS
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:30:41 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-346b09d474dso1694529f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 02:30:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713519037; x=1714123837; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i6qhPXL4PnQS82mTIgagr2m5JZBSAsT6rdH2okAy89c=;
+ b=qsNJms8K4F+E7xA4xMRiFaqnBkGQs9iG7kSel65dpsNQdId2TwWZg6cZ4oUETTWMgY
+ m05dxEZXaMW0cw0cWn0NLQAE8PcyCh41RtnzuGFdBC6pg3cis+/0e1XHDYBNclM4o1MS
+ +7vl4dzg2ZkAGIHcIhwYnJhZB+xpQbZuFttigw6cjzixhiBUZ7fwgAxQ8ZipFT2V74JX
+ HOeBIwmrRKlVyrloMKCcEMQIALA6pwC/C/utD9qIAyqtW2W9gWLDPkE1QrwqCcc85Uzm
+ BWy+AzGRKtXFJyH1DWuVxpuD/iUk5Ey5GEbS6Ig9XUFaGghCgU5WOrvsFLWEsvgCw78F
+ DHZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713519037; x=1714123837;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=i6qhPXL4PnQS82mTIgagr2m5JZBSAsT6rdH2okAy89c=;
+ b=WwrO9IYcpJufV3HO7CyY1nvsy8uDy3AE6y57feOb7T5wRLP72tO3aIfgwpapW1eaTg
+ iZ0+f2rf/dyawrkmolduaI84DtGb+3TaXNZmOBUlGBTlnBlVTbhZbICmMh+7S8+fwXEH
+ 4TpWMnWQYs3PWq3BaRMv+dDWWAW+nP2NL2sqElzwfqyx6OzF9F8uLbelCqgzJH1DXhm9
+ yizcSftmlu8cBUJ+OplCEBa/3RgdiwuACWtYqR6eRcSN9A2/6xbWMdSIZ0PsIhdWgXSl
+ 0j/jg2g2XOHaqCWtDpNAPV4gvTWUnUD4nmi560wtLi5Rs7wVXSVzstHlk6K2iY7DRcbK
+ OIfQ==
+X-Gm-Message-State: AOJu0YyEM1Huc8Wc1YC28GqJNe7kH3442IfMW1Fx01jfs+gcf/He9+Cd
+ 85bmIw6XdCS+gQqBzxfm16bXFw995/3DSRnyj4O0R7Jx0CyqoC2Q98sKdy4CewM=
+X-Google-Smtp-Source: AGHT+IFqGQVLSxUeT406OGtW85TBADrHqAiWjbfpmA0jyh/fC9efzPPjoMkQUXIqjjp/Zcx/b4W13Q==
+X-Received: by 2002:adf:e542:0:b0:349:fa94:ef18 with SMTP id
+ z2-20020adfe542000000b00349fa94ef18mr1268139wrm.50.1713519036926; 
+ Fri, 19 Apr 2024 02:30:36 -0700 (PDT)
+Received: from [192.168.235.175] ([176.176.143.233])
+ by smtp.gmail.com with ESMTPSA id
+ k14-20020a17090627ce00b00a525669000csm1956997ejc.154.2024.04.19.02.30.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Apr 2024 02:30:36 -0700 (PDT)
+Message-ID: <5e020420-f18d-4536-82a0-f53bf0f498f2@linaro.org>
+Date: Fri, 19 Apr 2024 11:30:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] target/ppc: Move logical fixed-point instructions to
- decodetree.
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240416063927.99428-1-rathc@linux.ibm.com>
- <20240416063927.99428-9-rathc@linux.ibm.com>
- <3be7fc22-b181-4b0a-bf80-d2011da1a437@linaro.org>
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <3be7fc22-b181-4b0a-bf80-d2011da1a437@linaro.org>
+To: Li Qiang <liq3ea@163.com>, Alexander Bulekov <alxndr@bu.edu>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: hw/virtio: qtest failure in virtio_init_region_cache() on macOS
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: XoCBEYTqZJfg-5IoGxOszTUuxEtBwtv1
-X-Proofpoint-GUID: ndUylHwThJ3NgisLegdyGgtTwgCsXxHW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-04-19_06,2024-04-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=872 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
- definitions=main-2404190070
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,39 +93,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
+On macOS, the fuzz-virtio-scsi-test triggers
+virtio_error(vdev, "Cannot map used") from
+virtio_init_region_cache():
 
-On 4/17/24 01:05, Richard Henderson wrote:
-> On 4/15/24 23:39, Chinmay Rath wrote:
->> Moving the below instructions to decodetree specification :
->>
->>     andi[s]., {ori, xori}[s]            : D-form
->>
->>     {and, andc, nand, or, orc, nor, xor, eqv}[.],
->>     exts{b, h, w}[.],  cnt{l, t}z{w, d}[.],
->>     popcnt{b, w, d},  prty{w, d}, cmp, bpermd    : X-form
->>
->> With this patch, all the fixed-point logical instructions have been
->> moved to decodetree.
->> The changes were verified by validating that the tcg ops generated by 
->> those
->> instructions remain the same, which were captured with the '-d 
->> in_asm,op' flag.
->>
->> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
->> ---
->>   target/ppc/helper.h                        |   8 +-
->>   target/ppc/insn32.decode                   |  38 +++
->>   target/ppc/int_helper.c                    |  10 +-
->>   target/ppc/translate.c                     | 359 ---------------------
->>   target/ppc/translate/fixedpoint-impl.c.inc | 269 +++++++++++++++
->>   5 files changed, 316 insertions(+), 368 deletions(-)
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+QTEST_QEMU_BINARY=./qemu-system-x86_64 tests/qtest/fuzz-virtio-scsi-test
+# Start of x86_64 tests
+# Start of fuzz tests
+# starting QEMU: exec ./qemu-system-x86_64 ...
+   -M pc-q35-5.2 -m 512M
+   -device virtio-scsi,num_queues=8,addr=03.0  -accel qtest
+qemu-system-x86_64: Cannot map used
+                     ^^^^^^^^^^^^^^^
+ok 1 /x86_64/fuzz/test_mmio_oob_from_memory_region_cache
+# End of fuzz tests
+# End of x86_64 tests
+
+virtio_init_region_cache() is not documented, is it OK to ignore
+failures that way?
+
 Thanks,
-Chinmay
->
-> r~
->
 
+Phil.
 
