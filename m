@@ -4,102 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DD1C4345F
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87495C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 09:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxkZ7-00071G-Rq; Fri, 19 Apr 2024 05:29:53 -0400
+	id 1rxkZ2-0006vJ-Cz; Fri, 19 Apr 2024 05:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rxkYr-0006mD-G7
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:29:41 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rxkYp-00063l-85
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 05:29:36 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5c6bd3100fcso1140527a12.3
- for <qemu-devel@nongnu.org>; Fri, 19 Apr 2024 02:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1713518973; x=1714123773;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=H6fE9CuDo1fBdkRXcytKrDDysxsdzdFMOMAWNIyYGbQ=;
- b=csQJmRjZ4nlhcTucNo2M6An8aaci0SI7P0AIYz9Z6e1XsUDMshLxqvfJAy3+2syFoE
- ViX27zjolsECEXZzdWdbwidvJ7XQuuGPtZpw7AuoJjnTuBFSuXCczC7rthwDFN4ORlIU
- 88WGMdaPni7Wa5pwvOM4hpVLbqeXzmASHzsktuTOXB0OAdkx8vXyZIFfsDwA/5yvZrKJ
- 13V/AdHnxOnQb8rK+E4F1hAnTe4XSFu98/10HoX5wu/SvrAO6T5Vi/I7Uh4G5OFiHxZP
- IRIigzmgSAtWofE0f04metbjJjY1sbsZgqbh2aKC2Ngp6383rWXibf+q25brndaMIJHE
- frRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713518973; x=1714123773;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H6fE9CuDo1fBdkRXcytKrDDysxsdzdFMOMAWNIyYGbQ=;
- b=AawZRRo2qEUf5r4WdRuzZoyGGl5EdG7Cwl5fEEgIltELibnHHm9PSKZ48A5S23Or6e
- CHuSNM0J2e7hYm5h1TzDT3OqxMzgNFZynXNUraklqR95R50Y4zbQCRUdUFx2SOdIDdqG
- mDe8w1i15F/n3Iu+juX+SO9+cKuEPB7ML/yEiptincVSdnGSIBkImDt2Swl/0ReCnC8h
- /VqlBc1WURjnQUEE9WyNA7QntqGUpvLGgM3Q+LYswlrdwO9a0pEzzJiVAnpnpVPszTtq
- 4JFu2GBvHI4gWqKLS9qZecAVfOwwZ2LH9XV1TNACp0lBBYK/v8ks9/g4lyXXq9Z9liSJ
- SsOQ==
-X-Gm-Message-State: AOJu0YwfBx7F1msGhC9DwiZDZ31alncnu1W9Ao/AU5HkN9tzzwIbISWF
- /adIr49bxHX2oAuHDyiMr1fO8UxzRvqm9i6DqIC60/9cEUBiFap3l/muIBdQO9c=
-X-Google-Smtp-Source: AGHT+IEEBf1vvnH9cxOYtVq/DOvMDShO9NXD6Zy+UTA4Px7fjPoWj5qkT3nK2cUzNOIb/0waDQcNww==
-X-Received: by 2002:a05:6a20:12ce:b0:1aa:590a:9668 with SMTP id
- v14-20020a056a2012ce00b001aa590a9668mr1864051pzg.51.1713518972816; 
- Fri, 19 Apr 2024 02:29:32 -0700 (PDT)
-Received: from [157.82.207.134] ([157.82.207.134])
- by smtp.gmail.com with ESMTPSA id
- fj33-20020a056a003a2100b006ef97508163sm2832286pfb.37.2024.04.19.02.29.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Apr 2024 02:29:32 -0700 (PDT)
-Message-ID: <ad215124-6a02-4bc7-8cee-c6865bfff768@daynix.com>
-Date: Fri, 19 Apr 2024 18:29:26 +0900
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rxkYt-0006ma-O8; Fri, 19 Apr 2024 05:29:41 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rxkYr-00063v-Gx; Fri, 19 Apr 2024 05:29:38 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43J9Dhxg030281; Fri, 19 Apr 2024 09:29:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=AF2IJnqzJXGzRsfog9I7xmkbGnUtvJAa08bLldZgNEw=;
+ b=kHm7zFB+OnqaVv6E4u7x8hwohKaD0eEBZZLlzCh7HxgZ0RdAvNEEWUSMufgPWu23JB0S
+ OAsi9MWS5y7W//+/tlyGh3ldx/cg5HCtOsxX0mV1wK36e3Nvlb9AipBe9G2zRuR8T0U0
+ sqTSK/vgws58g9SJKG9WWOmLA1j0KK7GF0ZbLqDKKqVqixXNfRWtoyW2cPqyEbbViLza
+ v0hpGaOH9F/10OZ/+sd2fDW4M0o0wuBOeJyD/ani6R2FZzmSIbFj0w3fDXJn4jDD59TO
+ QkVitbAGUrKyvjTJDJLRxuiu+gZQBqvd4iANdhPBhs6X9yWAoKfoJ3tLXlBr2EaDJCYR Ng== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xkns7g191-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:29:34 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43J9ROld020373;
+ Fri, 19 Apr 2024 09:29:33 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xkns7g18y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:29:33 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43J8pU3X027847; Fri, 19 Apr 2024 09:29:32 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xkbmpas11-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Apr 2024 09:29:32 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43J9TRji49480100
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Apr 2024 09:29:29 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 85ECC2004D;
+ Fri, 19 Apr 2024 09:29:27 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 79D4B2004B;
+ Fri, 19 Apr 2024 09:29:25 +0000 (GMT)
+Received: from [9.171.89.59] (unknown [9.171.89.59])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 19 Apr 2024 09:29:25 +0000 (GMT)
+Message-ID: <42302364-328a-4358-8923-a53a3222ba2d@linux.vnet.ibm.com>
+Date: Fri, 19 Apr 2024 14:59:25 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 09/11] virtio-gpu: Resource UUID
+Subject: Re: [PATCH 8/8] target/ppc: Move logical fixed-point instructions to
+ decodetree.
 Content-Language: en-US
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-10-dmitry.osipenko@collabora.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240418190040.1110210-10-dmitry.osipenko@collabora.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240416063927.99428-1-rathc@linux.ibm.com>
+ <20240416063927.99428-9-rathc@linux.ibm.com>
+ <3be7fc22-b181-4b0a-bf80-d2011da1a437@linaro.org>
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <3be7fc22-b181-4b0a-bf80-d2011da1a437@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::536;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: XoCBEYTqZJfg-5IoGxOszTUuxEtBwtv1
+X-Proofpoint-GUID: ndUylHwThJ3NgisLegdyGgtTwgCsXxHW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-19_06,2024-04-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 mlxscore=0 priorityscore=1501 mlxlogscore=872 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
+ definitions=main-2404190070
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,19 +119,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/04/19 4:00, Dmitry Osipenko wrote:
-> From: Antonio Caggiano <antonio.caggiano@collabora.com>
-> 
-> Enable resource UUID feature and implement command resource assign UUID.
-> UUID feature availability is mandatory for Vulkan Venus context.
-> 
-> UUID is intended for sharing dmabufs between virtio devices on host. Qemu
-> doesn't have second virtio device for sharing, thus a simple stub UUID
-> implementation is enough. More complete implementation using global UUID
-> resource table might become interesting for a multi-gpu cases.
 
-Isn't it possible to add two virtio-gpu devices even now?
 
-A new subsection should also be added for migration compatibility; see: 
-docs/devel/migration/main.rst
+On 4/17/24 01:05, Richard Henderson wrote:
+> On 4/15/24 23:39, Chinmay Rath wrote:
+>> Moving the below instructions to decodetree specification :
+>>
+>>     andi[s]., {ori, xori}[s]            : D-form
+>>
+>>     {and, andc, nand, or, orc, nor, xor, eqv}[.],
+>>     exts{b, h, w}[.],  cnt{l, t}z{w, d}[.],
+>>     popcnt{b, w, d},  prty{w, d}, cmp, bpermd    : X-form
+>>
+>> With this patch, all the fixed-point logical instructions have been
+>> moved to decodetree.
+>> The changes were verified by validating that the tcg ops generated by 
+>> those
+>> instructions remain the same, which were captured with the '-d 
+>> in_asm,op' flag.
+>>
+>> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+>> ---
+>>   target/ppc/helper.h                        |   8 +-
+>>   target/ppc/insn32.decode                   |  38 +++
+>>   target/ppc/int_helper.c                    |  10 +-
+>>   target/ppc/translate.c                     | 359 ---------------------
+>>   target/ppc/translate/fixedpoint-impl.c.inc | 269 +++++++++++++++
+>>   5 files changed, 316 insertions(+), 368 deletions(-)
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks,
+Chinmay
+>
+> r~
+>
+
 
