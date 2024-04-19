@@ -4,67 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72B9C04FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 12:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662F3C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 13:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxnoE-0000nx-ES; Fri, 19 Apr 2024 08:57:42 -0400
+	id 1rxnqQ-0002EI-4D; Fri, 19 Apr 2024 08:59:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rxnoC-0000nZ-Rn
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:57:40 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rxnqO-0002Dx-WF
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:59:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rxnoB-0006Pg-Em
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:57:40 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rxnqN-0006ri-E3
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 08:59:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713531458;
+ s=mimecast20190719; t=1713531594;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YZzWQxK8i52XK1eJ7ZYgf31waI1fdZpDaWtAIl74qLc=;
- b=XnfKUH6WpF++K7LAaY0VwbrjeyhPLxB2kerIGaypJvVaH2CM2VZ8FVLARQbdaufwKisxfU
- k4Zb13cPvHC+O60RVLsJPHsGomn9js/KNeXcnvszcE/pyO6maHqoEGVoBp1W+uYCcFCvgF
- A/jx3OCpHBOoxJSYoAn4aHbPXVgd7cI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-85-UetrVPf2NQeHyrLKcAeOEA-1; Fri,
- 19 Apr 2024 08:57:35 -0400
-X-MC-Unique: UetrVPf2NQeHyrLKcAeOEA-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ bh=KG351djTjx2PkJp+FNyrxCUZSA8+D2z9wHbn1nf+5Qo=;
+ b=UfWiT58ivdkGT5YqTIWLI6NY+4PP640BLTUWNG6Z3/i1ssBnwZgtjwtnEOf5ylpt7Rs1re
+ QHHoo3jVFlUv7DrZQLJrr0PPhcAuD9IKdhW1OQizxhkENh3wR00/Lp3+dfTxUUN+iEfw7Q
+ qVPHi+vsiET5dWMJ2uZoBZAXgCU+KO4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-sYlXzKmvNaqWajrhatUcgA-1; Fri, 19 Apr 2024 08:59:51 -0400
+X-MC-Unique: sYlXzKmvNaqWajrhatUcgA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B1B743C3D0E3;
- Fri, 19 Apr 2024 12:57:34 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C672580021A;
+ Fri, 19 Apr 2024 12:59:50 +0000 (UTC)
 Received: from redhat.com (unknown [10.2.16.239])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C3480492BC7;
- Fri, 19 Apr 2024 12:57:32 +0000 (UTC)
-Date: Fri, 19 Apr 2024 07:57:31 -0500
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id E1C35112131D;
+ Fri, 19 Apr 2024 12:59:48 +0000 (UTC)
+Date: Fri, 19 Apr 2024 07:59:47 -0500
 From: Eric Blake <eblake@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- Peter Lieven <pl@dlhnet.de>, "Richard W.M. Jones" <rjones@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v3 01/13] tests: Remove Ubuntu 20.04 container
-Message-ID: <py2jhbopc7gjuv3ygwrtpgttycvflqnet7qaccasq545jg63wd@g6wxtgt22u6c>
-References: <20240418101056.302103-1-thuth@redhat.com>
- <20240418101056.302103-2-thuth@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ qemu-block@nongnu.org, qemu-trivial@nongnu.org
+Subject: Re: [PATCH] tests/unit: Remove debug statements in
+ test-nested-aio-poll.c
+Message-ID: <zg6iz2vzomgnje7m3yqhwlfuv6ugha7u5xbarz3rl24jeyv7iz@nj24kj3prj7h>
+References: <20240419085819.47606-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240418101056.302103-2-thuth@redhat.com>
+In-Reply-To: <20240419085819.47606-1-philmd@linaro.org>
 User-Agent: NeoMutt/20240201
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -43
@@ -89,18 +83,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 18, 2024 at 12:10:44PM +0200, Thomas Huth wrote:
-> Since Ubuntu 22.04 is now available since two years, we can stop
+On Fri, Apr 19, 2024 at 10:58:19AM +0200, Philippe Mathieu-Daudé wrote:
+> We are running this test since almost a year; it is
 
 Grammar suggestion:
 
-Since Ubuntu 22.04 has now been available for more than two years,
+We have been running this test for almost a year;
 
-> actively supporting the previous LTS version of Ubuntu now.
+> safe to remove its debug statements, which clutter
+> CI jobs output:
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>   ▶  88/100 /nested-aio-poll                      OK
+>   io_read 0x16bb26158
+>   io_poll_true 0x16bb26158
+>   > io_poll_ready
+>   io_read 0x16bb26164
+>   < io_poll_ready
+>   io_poll_true 0x16bb26158
+>   io_poll_false 0x16bb26164
+>   > io_poll_ready
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_poll_false 0x16bb26164
+>   io_read 0x16bb26164
+>   < io_poll_ready
+>   88/100 qemu:unit / test-nested-aio-poll        OK
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
+>  tests/unit/test-nested-aio-poll.c | 7 -------
+>  1 file changed, 7 deletions(-)
+
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
 -- 
 Eric Blake, Principal Software Engineer
