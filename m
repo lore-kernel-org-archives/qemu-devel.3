@@ -4,69 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C89C04FF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 19:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940D2C4345F
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 19:53:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxtX0-0005tB-Rt; Fri, 19 Apr 2024 15:04:18 -0400
+	id 1rxuHG-0004U5-Nb; Fri, 19 Apr 2024 15:52:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rxtWy-0005sb-Ux
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 15:04:17 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxuHF-0004Tb-0e
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 15:52:05 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rxtWx-0004Dj-5I
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 15:04:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713553455; x=1745089455;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=67NgeQ/kFsPNIg8m3af1zHaTrIuCCnTfBkPGdpoYPQc=;
- b=EPG464vtFn0KXoEMlSJE1SxnJjmRgIT9dierlNQHPbGgXQwONNXljVh5
- iaqnu2KWLxxOsXq0qUbNbBwf7JJVCBMH2K3wEvc4KJ1PDuhDOhvUEkZ+b
- U1VYY1eqSfPDvIaDAhGUUJH8T/25qEbVtmceRPUX+lq0wLFa6gUY9TKN4
- 9f/d+AT6GtSIBTcIhuisi18n2JXsW2w27kIMNflX7XHIqJpD9Ev1C3acM
- /De3drpf2fg595cv6Es2g05zuMGS6ilN1TuyIDEi609Genkj8TnkQ711g
- 28w0BsgekDhcDaPD5u6eTO19inYsJlYTyq9hi7cl57SC78ilytp14RHlr w==;
-X-CSE-ConnectionGUID: iG1j5A+XS3SO0UpGK5MIGg==
-X-CSE-MsgGUID: SQ0nMwBGSZiaq57lM4c/Rg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11049"; a="20564985"
-X-IronPort-AV: E=Sophos;i="6.07,214,1708416000"; d="scan'208";a="20564985"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Apr 2024 12:04:07 -0700
-X-CSE-ConnectionGUID: silkh8tkTJymh0GZtsDDtA==
-X-CSE-MsgGUID: 1jItd2arQvShSbYioY4Zvg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,214,1708416000"; d="scan'208";a="54346785"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa002.jf.intel.com with ESMTP; 19 Apr 2024 12:04:07 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	berrange@redhat.com,
-	philmd@linaro.org
-Subject: [PATCH v8 1/6] ui/gtk: Check if fence_fd is equal to or greater than 0
-Date: Fri, 19 Apr 2024 11:59:47 -0700
-Message-Id: <20240419185952.991930-2-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240419185952.991930-1-dongwon.kim@intel.com>
-References: <20240419185952.991930-1-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxuHA-0004q4-Lp
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 15:52:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=ORrWk6OZBCnrD3OWSoi1f9pNjLtL8H1wx40T95LWl4Q=; b=1goBwYmGmEpxUAOzeAAyVaSUGS
+ Hclesiz4r7Owp2ndb0RGXzA1cqUzIz6Xv7OvRmngvJhVGEMymV/Hw+xB/gCThGtHNzXkqyQO/O6R8
+ u9/8J7T5AnQsYScfip8dZYBqarPbyKZQhNUZkilENZ6IGHT3vf95/Tu2jUg2C1Yg9kFCY38RsV6qN
+ m9IAS2DViTtdXWmI5ePPOTfrC1ABOjb+a7ppxzKazHtEz2+YIecw4xTVkmgwyrEayHSKa0rWGwIrp
+ 93HxbZu3cTwfIdkfoiRXkaP+m/Bss3RYguwolwbjmjzzVbDkNATJPod7q2eU93WBfw6jzA4+g7q5r
+ lxe3oJqZMIQw3qMYoOpYdt51Bmim9YG069Pq1RDYLkzJ/IayDkNMXgkPpjtxTt7aLUaG5eRYup9nQ
+ ZlYLs7D250HFIA4LwKlY3gosea2scIi3zWIjPK95/KY1by//EGLjowc9VKPz1KSjSbinWNEDgDh0H
+ KV5rr8aW2RhOQby4AJnrNwZc8C8owrrtA3lC/aCe6B9f1pmFWsHA20RY7VDWOoOlKAe49fU9jRumY
+ 8qBN2+CJD+9/pAEXa9wFKyGG39I7faeulnxhz76BwRm0IzRMoD8rzW+MMgOhzUlVtZmhmcHqY2Oxa
+ ARWvqs6qE1PlC//19Wb9eUIWVqr2ouYMd0MmF5qnE=;
+Received: from [2a00:23c4:8bb4:4000:a36d:d178:601a:c356]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rxuG3-00050p-7H; Fri, 19 Apr 2024 20:50:55 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ qemu-devel@nongnu.org
+Date: Fri, 19 Apr 2024 20:51:47 +0100
+Message-Id: <20240419195147.434894-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -66
-X-Spam_score: -6.7
-X-Spam_bar: ------
-X-Spam_report: (-6.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.313,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:a36d:d178:601a:c356
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH] target/i386/translate.c: always write 32-bits for SGDT and
+ SIDT
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,71 +78,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+The various Intel CPU manuals claim that SGDT and SIDT can write either 24-bits
+or 32-bits depending upon the operand size, but this is incorrect. Not only do
+the Intel CPU manuals give contradictory information between processor
+revisions, but this information doesn't even match real-life behaviour.
 
-'fence_fd' needs to be validated always before being referenced
-And the passing condition should include '== 0' as 0 is a valid
-value for the file descriptor.
+In fact, tests on real hardware show that the CPU always writes 32-bits for SGDT
+and SIDT, and this behaviour is required for at least OS/2 Warp and WFW 3.11 with
+Win32s to function correctly. Remove the masking applied due to the operand size
+for SGDT and SIDT so that the TCG behaviour matches the behaviour on real
+hardware.
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2198
+
+--
+MCA: Whilst I don't have a copy of OS/2 Warp handy, I've confirmed that this
+patch fixes the issue in WFW 3.11 with Win32s. For more technical information I
+highly recommend the excellent write-up at
+https://www.os2museum.com/wp/sgdtsidt-fiction-and-reality/.
 ---
- ui/gtk-egl.c     |  2 +-
- ui/gtk-gl-area.c |  2 +-
- ui/gtk.c         | 10 ++++++----
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ target/i386/tcg/translate.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 3af5ac5bcf..955234429d 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -99,7 +99,7 @@ void gd_egl_draw(VirtualConsole *vc)
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd > 0) {
-+            if (dmabuf->fence_fd >= 0) {
-                 qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 52dcac161e..7fffd0544e 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -86,7 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd > 0) {
-+            if (dmabuf->fence_fd >= 0) {
-                 qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 810d7fc796..7819a86321 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -597,10 +597,12 @@ void gd_hw_gl_flushed(void *vcon)
-     VirtualConsole *vc = vcon;
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 76a42c679c..3026eb6774 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -5846,9 +5846,10 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+             gen_op_st_v(s, MO_16, s->T0, s->A0);
+             gen_add_A0_im(s, 2);
+             tcg_gen_ld_tl(s->T0, tcg_env, offsetof(CPUX86State, gdt.base));
+-            if (dflag == MO_16) {
+-                tcg_gen_andi_tl(s->T0, s->T0, 0xffffff);
+-            }
++            /*
++             * NB: Despite claims to the contrary in Intel CPU documentation,
++             *     all 32-bits are written regardless of operand size.
++             */
+             gen_op_st_v(s, CODE64(s) + MO_32, s->T0, s->A0);
+             break;
  
--    qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
--    close(dmabuf->fence_fd);
--    dmabuf->fence_fd = -1;
--    graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+    if (dmabuf->fence_fd >= 0) {
-+        qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
-+        close(dmabuf->fence_fd);
-+        dmabuf->fence_fd = -1;
-+        graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+    }
- }
+@@ -5901,9 +5902,10 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
+             gen_op_st_v(s, MO_16, s->T0, s->A0);
+             gen_add_A0_im(s, 2);
+             tcg_gen_ld_tl(s->T0, tcg_env, offsetof(CPUX86State, idt.base));
+-            if (dflag == MO_16) {
+-                tcg_gen_andi_tl(s->T0, s->T0, 0xffffff);
+-            }
++            /*
++             * NB: Despite claims to the contrary in Intel CPU documentation,
++             *     all 32-bits are written regardless of operand size.
++             */
+             gen_op_st_v(s, CODE64(s) + MO_32, s->T0, s->A0);
+             break;
  
- /** DisplayState Callbacks (opengl version) **/
 -- 
-2.34.1
+2.39.2
 
 
