@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B45AC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BEDAC05052
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Apr 2024 08:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rxjvD-0002gO-AS; Fri, 19 Apr 2024 04:48:39 -0400
+	id 1rxjv2-0002eq-34; Fri, 19 Apr 2024 04:48:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjv6-0002fS-Ae
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjv0-0002eQ-ST
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjv3-0007ZC-Sm
- for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rxjuz-0007YT-7n
+ for qemu-devel@nongnu.org; Fri, 19 Apr 2024 04:48:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713516509;
+ s=mimecast20190719; t=1713516504;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2kHEYBckbAZWVsxVOv9Z20aD6o0POU9kFay7g0bMsXY=;
- b=EXSCnurc/4GYCaBYl8j96vtkiHbsRBRXkehGGdU5onfmSsxmsWxW0oOP9qo8yxcrs73uCY
- X9/1zovHEdZ+oMYS9ddF8Yd0vBpOv5qKpfvyWKpim7T3jAg5SVwKck2QAph7/p4znEn0FW
- gqV+hzDqRW+2Ks5pQONAbi9dRW2tHMQ=
+ bh=pjHqJKJAYlMpX924z0U0Cp6GUUtCDMf6NG/thlD52Gs=;
+ b=G5scpgKDEhMxs+livqcw2JzqzURdi4H4RzLTVlfVB3WJsFiSvg09bcjv7R675unw3hlYKl
+ qa+4bm/ZQGm5KlN+cg5UfZayhlXfRaixRxG7LOdj1n9FT0lOs1QF5e9W0veeoR4BaAZmN4
+ syt7ij6ClNsxddxLqivFGLawDa7PJEc=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-k_ExXMzVMBSZH_x6cekDsw-1; Fri,
- 19 Apr 2024 04:48:25 -0400
-X-MC-Unique: k_ExXMzVMBSZH_x6cekDsw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329--HGkZNnrNKyleWJhZL8N0Q-1; Fri,
+ 19 Apr 2024 04:48:22 -0400
+X-MC-Unique: -HGkZNnrNKyleWJhZL8N0Q-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CDF2E380670D;
- Fri, 19 Apr 2024 08:48:24 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.170])
- by smtp.corp.redhat.com (Postfix) with ESMTP id ADCCF1121306;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 69B603C02B6E;
  Fri, 19 Apr 2024 08:48:22 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.170])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id D981D1121306;
+ Fri, 19 Apr 2024 08:48:20 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 4/4] docs/about: Deprecate the old "UltraSparc" CPU names
- that contain a "+"
-Date: Fri, 19 Apr 2024 10:48:12 +0200
-Message-ID: <20240419084812.504779-5-thuth@redhat.com>
+Subject: [PATCH v2 3/4] docs/system/target-sparc: Improve the Sparc
+ documentation
+Date: Fri, 19 Apr 2024 10:48:11 +0200
+Message-ID: <20240419084812.504779-4-thuth@redhat.com>
 In-Reply-To: <20240419084812.504779-1-thuth@redhat.com>
 References: <20240419084812.504779-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -82,35 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For consistency we should drop the names with a "+" in it in the
-long run.
+Add some words about how to enable or disable boolean features,
+and remove the note about a Linux kernel being available on the
+QEMU website (they have been removed long ago already), and the
+note about NetBSD and OpenBSD still having issues (they should
+work fine nowadays).
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2141
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/about/deprecated.rst | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ docs/system/target-sparc.rst | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 6b932961bc..70026c3c11 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -206,6 +206,15 @@ in the QEMU object model anymore. ``power5+``, ``power5+_v2.1``,
- an alias, but for consistency these will get removed in a future
- release, too. Use ``power5p_v2.1`` and ``power7p_v2.1`` instead.
+diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.rst
+index 9ec8c90c14..54bd8b6ead 100644
+--- a/docs/system/target-sparc.rst
++++ b/docs/system/target-sparc.rst
+@@ -27,6 +27,11 @@ architecture machines:
+ The emulation is somewhat complete. SMP up to 16 CPUs is supported, but
+ Linux limits the number of usable CPUs to 4.
  
-+``Sun-UltraSparc-IIIi+`` and ``Sun-UltraSparc-IV+`` CPU names (since 9.1)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++The list of available CPUs can be viewed by starting QEMU with ``-cpu help``.
++Optional boolean features can be added with a "+" in front of the feature name,
++or disabled with a "-" in front of the name, for example
++``-cpu TI-SuperSparc-II,+float128``.
 +
-+The character "+" in device (and thus also CPU) names is not allowed
-+in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
-+``Sun-UltraSparc-IV+`` are currently still supported via a workaround,
-+but for consistency these will get removed in a future release, too.
-+Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
-+
- CRIS CPU architecture (since 9.0)
- '''''''''''''''''''''''''''''''''
+ QEMU emulates the following sun4m peripherals:
  
+ -  IOMMU
+@@ -55,8 +60,5 @@ OpenBIOS is a free (GPL v2) portable firmware implementation. The goal
+ is to implement a 100% IEEE 1275-1994 (referred to as Open Firmware)
+ compliant firmware.
+ 
+-A sample Linux 2.6 series kernel and ram disk image are available on the
+-QEMU web site. There are still issues with NetBSD and OpenBSD, but most
+-kernel versions work. Please note that currently older Solaris kernels
+-don't work probably due to interface issues between OpenBIOS and
+-Solaris.
++Please note that currently older Solaris kernels don't work probably due
++to interface issues between OpenBIOS and Solaris.
 -- 
 2.44.0
 
