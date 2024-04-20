@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA8CDC4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Apr 2024 16:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D977EC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Apr 2024 16:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryDB4-00063V-JY; Sat, 20 Apr 2024 12:02:58 -0400
+	id 1ryDYN-0002Wl-4v; Sat, 20 Apr 2024 12:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryDB2-00061M-OL
- for qemu-devel@nongnu.org; Sat, 20 Apr 2024 12:02:57 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1ryDYK-0002VU-Uw
+ for qemu-devel@nongnu.org; Sat, 20 Apr 2024 12:27:00 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryDB0-00071u-CP
- for qemu-devel@nongnu.org; Sat, 20 Apr 2024 12:02:55 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6effe9c852eso2523687b3a.3
- for <qemu-devel@nongnu.org>; Sat, 20 Apr 2024 09:02:53 -0700 (PDT)
+ id 1ryDYI-0002Xz-Bg
+ for qemu-devel@nongnu.org; Sat, 20 Apr 2024 12:27:00 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1e3f17c64daso21593625ad.3
+ for <qemu-devel@nongnu.org>; Sat, 20 Apr 2024 09:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713628973; x=1714233773; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713630415; x=1714235215; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BoLqovIXCbHb2a5suK0j+Byhloar9ib+IoAnUpwn3T4=;
- b=jSxPGrfjpkkW+3HpPhGunf4QhgAVox31L3HdQNhSPz8yVoqtQP0vUkjPFieBCIDhOY
- Q1gy0KYht+XTVt8/mqfrGmV5VgfV/hHjKQPpEecOFsRtGQsZ3l4xvt0LoLolg4rpx1d9
- OCnZhkGbd4rGmJ0R4Wzwb8dQA3jG10q8aZp4usgifJ5ws8MY2a7I4WRUvm/0opLjfnNG
- DV7Y4C+xDGs+prbngBBN63uVCMXVsrIZdoMfAyB7nuHf1RZIw+JVzh9XbHBT/cdg583g
- PHAg1Ms5a4xMrarbfoWdVSymzjA77c/K/H1tCd+VtofCe/0AdLtb59hRJJMGHHLBV8uz
- mzyQ==
+ bh=EVi/ltbTByuAJWQrsYjkR9v6uxtGhW8cPtv5rMnf9/4=;
+ b=AzkXf+0/wBewU9ypJtL8fyiz+0sj9xMloWodT75v5bhPTf3zo7YOZUFBel3cBCJ+jp
+ uqmzOdfsn0GGSMgXea6SVJ0wTPPaRVGqpMCypDgOaItbCLbeC50WUuhX5386VWjfJdio
+ K8T+TR0Aq/Nx5JB/SnmOO3JW54f9l5xhOQT7hUl7l+E9PUBVNH0GG4oHos/yW6N+WdJ/
+ pQHr+lm0wDSKWr+UhJBzZFJ16/lNOux25RIVKJrz1hjVYOJOs43lzVl1odGec2w9S/a8
+ 7fzbwbQ2puj6dLF+dslO4QMzgZQ2g9Q6hg97HDNHZCJq+MXWrWYZY2ddyRf6hQm/SOJi
+ mAOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713628973; x=1714233773;
+ d=1e100.net; s=20230601; t=1713630415; x=1714235215;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BoLqovIXCbHb2a5suK0j+Byhloar9ib+IoAnUpwn3T4=;
- b=cn2PePBie1lFZ6fLXs/b6gVmnmFK6yRJDnWgyx+f6rDm6JnmwbRQw1I7pfjdvT6f9u
- oMl/OdJpa7sUcEZ7y2bRb6phoplPNgO32op532uz5Kpw2BRo/6DTQc8HbgMB/s54gEBy
- rXpB2CPTSalJYefnyFS8QdCSjBN5s9MfzJ2TsjGDTtPBjy9nukcDrGfJBlhwbL3ipDHh
- 5Zd3qFeGOuoEQF2igNxDssFvTCVYdPzGVIuXoyjzFGNkFch0PHbt52Ve+RM0Mp88jgqi
- H8OJIIHlDtMb7OamAkiXPSaOEq8JG7c8poBNWLAss8ty7PXcb0YybmmoDfOUAd0fc38x
- sPZQ==
+ bh=EVi/ltbTByuAJWQrsYjkR9v6uxtGhW8cPtv5rMnf9/4=;
+ b=i5tE4dGgIOtXPtGo3b1XJ1YgWKz0+iuV+mQkQ12XOH3MBZ5qWtjv4jQAKwRcnuI+Nc
+ qpC+MobWboURClLD7o+q47Awxbup5XjUa2wVCeXzTc9hWmqAzrg5YVaeEj5fVxPqy2sJ
+ c6P2IxYgrHh/jH0b58EcKzOST1MLff96Y2l2TZNKP0A2vZT94v2nuPEvLs//Dp7q6cF7
+ iUQd020APOVMTkkhyXiIbfetDHJQmpn9/1Og7h9C8HIXQKRlwroDKpRw/ztOh9fLmeyQ
+ fOssrB0uP81caa4G9pUlg+fxKs8wolUMS/EPGCfSzuNtU8b5Szo7fYl8SdqPJRQcVXJR
+ mSdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsVgpy1J0pF6ewZw4kwUYXE6w5ytcKXkq1Wkx6sO1Y8/CI0pHhj623BAQbyV3A6xk9NJ5jTVcnXo08R807ZXXFc3jI0ig=
-X-Gm-Message-State: AOJu0YwFlWV28nTYMexRsu/RrpJu55CLLFyVMc5tNB4oBQqUAiCRNMTM
- tn8+Dfu6okHKKHS+jeYPvvnTmHJU4YX7Oh9FZRmAPoPyvPQMx7SNWkzCUq9XJX4=
-X-Google-Smtp-Source: AGHT+IHSA0BNzMTqDegyYFzJd9vF7Ag4vBVrCxEwrCtchtZTsOrZeoooOiGO6jrqIEDrNkQA9TpXCg==
-X-Received: by 2002:a05:6a00:4b0f:b0:6ed:4203:bdd2 with SMTP id
- kq15-20020a056a004b0f00b006ed4203bdd2mr6926404pfb.9.1713628972818; 
- Sat, 20 Apr 2024 09:02:52 -0700 (PDT)
+ AJvYcCU7qasUiXYgPj8m6aepkUnxLPYZ4KHkjblU6rY1/T+NrORbwY21P3nq0jxXkh20euWuj6eAYxW6jrutcJwiY+tYylLVDaI=
+X-Gm-Message-State: AOJu0YzzKWSE1gNTBk0jJwNuf+fwAV5hCHhIffZP9RyguJv/jY9VnTFj
+ Er2L1/okhCwu8QtLuD4K0gkyKSyYR0ZMGR0eU0959T93Ivmg74daC4Qr6u5AcWc=
+X-Google-Smtp-Source: AGHT+IHW0BqT5Us8+nu0ykOG3l6uhkSYOtoTNjPLWkSFAxzfea/JIYKheJ9Cm5h83zQ7Qy1OZXwO8Q==
+X-Received: by 2002:a17:902:8210:b0:1e5:c0ee:a7f5 with SMTP id
+ x16-20020a170902821000b001e5c0eea7f5mr5104451pln.24.1713630415398; 
+ Sat, 20 Apr 2024 09:26:55 -0700 (PDT)
 Received: from [192.168.91.227] ([156.19.246.23])
  by smtp.gmail.com with ESMTPSA id
- 4-20020a056a00070400b006eab9ef5d4esm5031192pfl.50.2024.04.20.09.02.51
+ j12-20020a170903024c00b001db66f3748fsm5235821plh.182.2024.04.20.09.26.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 20 Apr 2024 09:02:52 -0700 (PDT)
-Message-ID: <abbc49c7-3ba4-4a7b-a707-b777bf2782c7@linaro.org>
-Date: Sat, 20 Apr 2024 09:02:49 -0700
+ Sat, 20 Apr 2024 09:26:54 -0700 (PDT)
+Message-ID: <1b4a11e8-3752-4bfb-b8c2-8c273f13bc6b@linaro.org>
+Date: Sat, 20 Apr 2024 09:26:51 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Use get_address() to get address with
- Zicbom extensions
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Bin Meng <bin.meng@windriver.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <cmuellner@linux.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
- Palmer Dabbelt <palmer@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Zhiwei Jiang <jiangzw@tecorigin.com>
-References: <20240419110514.69697-1-philmd@linaro.org>
+Subject: Re: [PATCH 0/3] Remove useless architecture prefix from the CPU list
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, qemu-trivial@nongnu.org
+References: <20240420054606.13353-1-thuth@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240419110514.69697-1-philmd@linaro.org>
+In-Reply-To: <20240420054606.13353-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,16 +101,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/19/24 04:05, Philippe Mathieu-Daudé wrote:
-> We need to use get_address() to get an address from cpu_gpr[],
-> since $zero is "special" (NULL).
-> 
-> Fixes: e05da09b7c ("target/riscv: implement Zicbom extension")
-> Reported-by: Zhiwei Jiang (姜智伟)<jiangzw@tecorigin.com>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/riscv/insn_trans/trans_rvzicbo.c.inc | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+On 4/19/24 22:46, Thomas Huth wrote:
+> Thomas Huth (3):
+>    target/i386/cpu: Remove "x86" prefix from the CPU list
+>    target/s390x/cpu_models: Rework the output of "-cpu help"
+>    target/ppc/cpu_init: Remove "PowerPC" prefix from the CPU list
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
