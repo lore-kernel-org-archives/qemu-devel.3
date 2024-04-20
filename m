@@ -4,50 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9453C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Apr 2024 05:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AA08C4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Apr 2024 05:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ry3TG-0000Zm-CC; Sat, 20 Apr 2024 01:41:06 -0400
+	id 1ry3Wj-00022T-3h; Sat, 20 Apr 2024 01:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ry3TD-0000ZN-Ny
- for qemu-devel@nongnu.org; Sat, 20 Apr 2024 01:41:03 -0400
+ id 1ry3We-000226-EU
+ for qemu-devel@nongnu.org; Sat, 20 Apr 2024 01:44:36 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ry3TB-0006DH-Ak
- for qemu-devel@nongnu.org; Sat, 20 Apr 2024 01:41:03 -0400
+ id 1ry3WX-0006kJ-Dt
+ for qemu-devel@nongnu.org; Sat, 20 Apr 2024 01:44:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=RXUypNSkmuM02VRjuGXGQo976lIsAavvkoiHouJ2WRM=; b=1cJV/DM+Nmk7Cuj8UtZl6XLDFe
- LMZ1d0mAyRu1svGB8vkDlCWP0BeH76H4FgwckyG+AtJILXGDnWE3e0XDPdryr029oFGoD+YC7SJxB
- zl4f3nse7laCjdrlUqqsWytXXWD/bVTDkXUj5BNCH2W+AImkeTYDm456SQgx6hskxtXG7cHpw8/oX
- my56Xj6GiokrPctGOCutqTbLuLDWFpwLQyKV++yxZgTEsNL9RLw66Lx342f8l8nGThNCV3Q6cQk0E
- c/qXePEtFizA5NUi5lIKxkM69kl2BTB2On7gEf7zdtkti5F0S4OCr66yqx5VYPLOm2ev+KbIod1cv
- JXPTe113U7yygLlIOgTsgQhiiscPONNe+fWUqWtJl+Op/KO2TEZOIK56AgxTY+5VZzzIOQO0B0sOI
- yduc/ymQNtZz1xYaHEWO6XwnS9wnzoRFrjaTrK1eSloiz0h4xGoDFiHlxLAqhSNrgG9JAf2kNh8oQ
- 51WdxuqE1YfRpW4FeWKsPv8inbJCjHTGjUzuhwHrbMg49IJEsefYg+4rwjIGkwyTadqn1xSW060+J
- 5A876lscawNL182gl1DnLMcnOJ9zdINbMawqdt5NBO1qQAAAxsuTzN7qLK3+T3l1Dh5J8MFujRpRe
- AVDvEH5d2wAFGoijzYWXGCTdL0Gh8NRjFWRSiZhb0=;
+ bh=XQpP0z0b/Q9IEMaUHkGQ/i8GmmgdTwzU+LBaEm+dNtg=; b=KRASrN21SL0bPoppuissr8TcA3
+ QOSiZQWOGVaJ03/K6grB7qN3NkcncSC+gWYlqgV0Ys56b5O9gqcadZduigfvVzfHk9QLtpJfEVaok
+ x7LxOMIrIbamUDJNagH0LeacoJKi0sUMUAH42ZfcTCtO/YaDIL1k4wN6ZBa/iBzPCSWrsrUCD1Q0M
+ KxsvhKmXe52p56qTmQnCiLQdg7GQYES2JG8eCAlRz52XJEaCgwYR5unMcoXZzlxss8ksaACSityjd
+ RcGdWkAMr6FsOiWajMRzPKsboR18viDsSGxesbl2dRuzp4LBtEcQrk3gdMKOyI/9On0OL6u0+lBtA
+ b/AQbQ/1bOjz+Oy7JlPgN1irqznUnX90UaGAZVQTTdi0Un//VUYOQbDmcWFVc4a311BrhQf7oPcF0
+ EwAPHG3fW6+GbRkMOQp56LJm5V9VXKVieeMz+DaOl5kxboRSbnmHOXhJVqMcltaRWrlcBIS/pebPb
+ pMhwgu3fxFQlvuLjt+XV8Nsqx0SeGcEbGQMtjdEW0OApI9IDh7KFrdQJ2YVCk8H4ly/YgSpn+yX3e
+ YU+UsT7XrU1cyTSHgjiv4ktnYzZxTgdBngmBEGwqqKIXr6yGefqbYD90QqxT4BO7bc4sk2GHK0AFa
+ HwA5VijBbNmlNXBksRPR3BHJxAD60AQyTc+ShbVbg=;
 Received: from [2a00:23c4:8bb4:4000:a36d:d178:601a:c356]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ry3S2-000Atp-Rt; Sat, 20 Apr 2024 06:39:54 +0100
-Message-ID: <3ff9df0d-6465-45a3-bb62-0db17ed9210c@ilande.co.uk>
-Date: Sat, 20 Apr 2024 06:40:45 +0100
+ id 1ry3VU-000Aul-R8; Sat, 20 Apr 2024 06:43:25 +0100
+Message-ID: <c9a9d060-a7e1-415f-a9a5-6b559d1fd32a@ilande.co.uk>
+Date: Sat, 20 Apr 2024 06:44:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Richard Henderson <richard.henderson@linaro.org>, pbonzini@redhat.com,
- eduardo@habkost.net, qemu-devel@nongnu.org
-References: <20240419195147.434894-1-mark.cave-ayland@ilande.co.uk>
- <fefb7b6b-29fc-42ee-b62e-059512e881e4@linaro.org>
+To: Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240307174334.130407-1-thuth@redhat.com>
+ <20240307174334.130407-5-thuth@redhat.com>
+ <529ece4e-1de6-4941-bb75-c10997aad13c@ilande.co.uk>
+ <59c90771-3bef-4f35-bd3f-0cbf9d7551c5@comstyle.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +79,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <fefb7b6b-29fc-42ee-b62e-059512e881e4@linaro.org>
+In-Reply-To: <59c90771-3bef-4f35-bd3f-0cbf9d7551c5@comstyle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:a36d:d178:601a:c356
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/i386/translate.c: always write 32-bits for SGDT
- and SIDT
+Subject: Re: [PATCH 4/5] docs/system/target-sparc: Improve the Sparc
+ documentation
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,69 +111,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/04/2024 02:21, Richard Henderson wrote:
+On 20/04/2024 00:14, Brad Smith wrote:
 
-> On 4/19/24 12:51, Mark Cave-Ayland wrote:
->> The various Intel CPU manuals claim that SGDT and SIDT can write either 24-bits
->> or 32-bits depending upon the operand size, but this is incorrect. Not only do
->> the Intel CPU manuals give contradictory information between processor
->> revisions, but this information doesn't even match real-life behaviour.
+> On 2024-04-18 4:27 p.m., Mark Cave-Ayland wrote:
+>> On 07/03/2024 17:43, Thomas Huth wrote:
 >>
->> In fact, tests on real hardware show that the CPU always writes 32-bits for SGDT
->> and SIDT, and this behaviour is required for at least OS/2 Warp and WFW 3.11 with
->> Win32s to function correctly. Remove the masking applied due to the operand size
->> for SGDT and SIDT so that the TCG behaviour matches the behaviour on real
->> hardware.
+>>> Add some words about how to enable or disable boolean features,
+>>> and remove the note about a Linux kernel being available on the
+>>> QEMU website (they have been removed long ago already).
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   docs/system/target-sparc.rst | 8 ++++++--
+>>>   1 file changed, 6 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.rst
+>>> index 9ec8c90c14..9f418b9d3e 100644
+>>> --- a/docs/system/target-sparc.rst
+>>> +++ b/docs/system/target-sparc.rst
+>>> @@ -27,6 +27,11 @@ architecture machines:
+>>>   The emulation is somewhat complete. SMP up to 16 CPUs is supported, but
+>>>   Linux limits the number of usable CPUs to 4.
+>>>   +The list of available CPUs can be viewed by starting QEMU with ``-cpu help``.
+>>> +Optional boolean features can be added with a "+" in front of the feature name,
+>>> +or disabled with a "-" in front of the name, for example
+>>> +``-cpu TI-SuperSparc-II,+float128``.
+>>> +
+>>>   QEMU emulates the following sun4m peripherals:
+>>>     -  IOMMU
+>>> @@ -55,8 +60,7 @@ OpenBIOS is a free (GPL v2) portable firmware implementation. 
+>>> The goal
+>>>   is to implement a 100% IEEE 1275-1994 (referred to as Open Firmware)
+>>>   compliant firmware.
+>>>   -A sample Linux 2.6 series kernel and ram disk image are available on the
+>>> -QEMU web site. There are still issues with NetBSD and OpenBSD, but most
+>>> +There are still issues with NetBSD and OpenBSD, but most
+>>>   kernel versions work. Please note that currently older Solaris kernels
+>>>   don't work probably due to interface issues between OpenBIOS and
+>>>   Solaris.
 >>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2198
->>
->> -- 
->> MCA: Whilst I don't have a copy of OS/2 Warp handy, I've confirmed that this
->> patch fixes the issue in WFW 3.11 with Win32s. For more technical information I
->> highly recommend the excellent write-up at
->> https://www.os2museum.com/wp/sgdtsidt-fiction-and-reality/.
->> ---
->>   target/i386/tcg/translate.c | 14 ++++++++------
->>   1 file changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
->> index 76a42c679c..3026eb6774 100644
->> --- a/target/i386/tcg/translate.c
->> +++ b/target/i386/tcg/translate.c
->> @@ -5846,9 +5846,10 @@ static bool disas_insn(DisasContext *s, CPUState *cpu)
->>               gen_op_st_v(s, MO_16, s->T0, s->A0);
->>               gen_add_A0_im(s, 2);
->>               tcg_gen_ld_tl(s->T0, tcg_env, offsetof(CPUX86State, gdt.base));
->> -            if (dflag == MO_16) {
->> -                tcg_gen_andi_tl(s->T0, s->T0, 0xffffff);
->> -            }
->> +            /*
->> +             * NB: Despite claims to the contrary in Intel CPU documentation,
->> +             *     all 32-bits are written regardless of operand size.
->> +             */
+>> Just curious as to what current issues exist with NetBSD and OpenBSD? At least both 
+>> my NetBSD and OpenBSD test images survive a casual boot test here with latest git.
 > 
-> Current documentation agrees that all 32 bits are written, so I don't think you need 
-> this comment:
-
-Ah that's good to know the docs are now correct. I added the comment as there was a 
-lot of conflicting information around for older CPUs so I thought it was worth an 
-explicit mention.
-
-If everyone agrees a version without comments is preferable, I can re-send an updated 
-version without them included.
-
->    IF OperandSize =16 or OperandSize = 32 (* Legacy or Compatibility Mode *)
->      THEN
->        DEST[0:15] := GDTR(Limit);
->        DEST[16:47] := GDTR(Base); (* Full 32-bit base address stored *)
->    FI;
+> I was just trying OpenBSD/sparc64 with 8.2 recently and found hme(4) does
+> not work. I tried with the NE2k driver as I remember adding the driver to the
+> OpenBSD kernel before an hme driver existed and it sort of worked, but there
+> were still issues.
 > 
-> 
-> Anyway,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> I'll re-test with 9 now and see what happens.
 
-Thanks!
+Thanks for the update: my local tests for SPARC changes are boot tests, so it's 
+entirely possible I could miss an issue with the hme device.
+
+Feel free to open a GitLab issue with the relevant information and I'll take a look 
+as time allows.
 
 
 ATB,
