@@ -4,103 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F992C4345F
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Apr 2024 20:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8490DC4345F
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Apr 2024 20:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryHHN-0006S5-TO; Sat, 20 Apr 2024 16:25:46 -0400
+	id 1ryHWC-0001tj-95; Sat, 20 Apr 2024 16:41:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1ryHH4-0006Pa-Rj
- for qemu-devel@nongnu.org; Sat, 20 Apr 2024 16:25:29 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1ryHH1-0005K5-0k
- for qemu-devel@nongnu.org; Sat, 20 Apr 2024 16:25:25 -0400
-Received: from [192.168.178.59] (p5b151e52.dip0.t-ipconnect.de [91.21.30.82])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id CD626DA0C18;
- Sat, 20 Apr 2024 22:25:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim;
- t=1713644718;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CHRjOFzroHE1fwaFVLCDJPiqoi5GbkGSATHcvcPwUQ0=;
- b=YDBho6XzJntxIoBq/mVlZDzVUX7GBKabHIAstBzlR5ZEP2OW4MXSUvJtOU3NfHbrvAkVH8
- QmghoCEh032zC8Zbu0KffT6p+LNjT4A+l1CtEJlQL3hHUxd8dCDOQevuINy1UAEKuOnzjq
- Mznwym74Zov6QMlngDFZrCisxnKGreYBDv4DzV+nAUN1a8YoM3ojbboENiJcxenizBV/9i
- L+fu8Xl+7NPjsNUmVWGcffrlFUIh89eBNeJ6RuYf1OzGEKc0JOyOKHRcJOmQB9ZgWH2uLR
- ab4AkmAjFvxGxUSnOHAiEFW+b+kzHHBKTQIGebbQxgPX9CGr8dHM6SBbBuKEaQ==
-Message-ID: <9692cfcb-ef59-4cec-8452-8bfb859e8a6c@weilnetz.de>
-Date: Sat, 20 Apr 2024 22:25:18 +0200
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1ryHW7-0001t7-Tw
+ for qemu-devel@nongnu.org; Sat, 20 Apr 2024 16:41:00 -0400
+Received: from mail-bn7nam10on2131.outbound.protection.outlook.com
+ ([40.107.92.131] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1ryHW5-0008To-J4
+ for qemu-devel@nongnu.org; Sat, 20 Apr 2024 16:40:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ahWWNS7Tg99peCzbxquHJpNREpKuual7uI56Wy1veGZA8luC5Vn4gAFbfXjvJ+QWVhXQUTBhii01hyrBYE/OQahr8LPJRwhMgBm8lqOLqyAJx2eJ9SX099Us7SH41RmtThKeNKgh/JUy6oENcl6+e6gXQeupg/DR3y+jOWpwmSmQeW7/U2lr6lqkxT8TeuhyhfxY9Xn/+DRR2Z//T9kyB64n+idRUpnNjUlbdTJsp/6gsvgTPb5kkjZtRZoiEska+5SQXymZPe+ZA3y8BzD7F3sj7jkxWOXdKns/C/IAaxPm5WUK4KAYv5aRZ7DzdulUJxTVvU0ed2Q22yxbvZ2+Ew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=I5HAht4It66XfuUGp2JkLgdLwwdbtZ4fnKgCyfnPbo4=;
+ b=etc/Bs149H1CA34/Z/xFGecCuljanMdjmKFwwsDv3P4IT/we83VJvKi3jH4vJbgVcrQPpOcJZQr04UpEIBjGtKvjMAAaInMunA+u7OLcS5epJuhzHea54EbUZAawtMqvTf/kSAiCH+xA86L/rC/CVQUSantko9rhH969e4FY+GIeFhsqKGyRt1e1jctl8nz9cM6uvJjBPmfjWAHETglv7Kaz2oGzOkHABN4H1zIdaC0PyRoL4X3aVrOY/cv9FLVWh+kUH+T4jm5uc6oqhooHvQTm7im0/tVdZefGpquAZaU0MopBz4NZcogBysS58xVdjQTYpNwub/f7+iEIvknY6A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
+ dkim=pass header.d=memverge.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=I5HAht4It66XfuUGp2JkLgdLwwdbtZ4fnKgCyfnPbo4=;
+ b=UHW6+sYVVPdEh4NrcUH4+c1J+pFk6a+pCNGmi0yHKkZTd+NOpwMV/KxyPRYAsXpMP5z9w83kmv/uoS4E0klIRT4cwX3+8lVLAyYXCYes3OB+ftn0qyN1vWZzX9lNyVDD5kboKv+cA5kO8C1id33MWr9zG8SYlVforWLlXafS1+0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=memverge.com;
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
+ by MW4PR17MB4809.namprd17.prod.outlook.com (2603:10b6:303:10a::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.43; Sat, 20 Apr
+ 2024 20:35:50 +0000
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::5d53:b947:4cab:2cc8]) by SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::5d53:b947:4cab:2cc8%4]) with mapi id 15.20.7472.042; Sat, 20 Apr 2024
+ 20:35:50 +0000
+Date: Sat, 20 Apr 2024 16:35:46 -0400
+From: Gregory Price <gregory.price@memverge.com>
+To: fan <nifan.cxl@gmail.com>
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ linux-cxl@vger.kernel.org, ira.weiny@intel.com,
+ dan.j.williams@intel.com, a.manzanares@samsung.com,
+ dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
+ fan.ni@samsung.com
+Subject: Re: [PATCH v7 00/12] Enabling DCD emulation support in Qemu
+Message-ID: <ZiQnIkYjY3ngRLAi@memverge.com>
+References: <20240418232902.583744-1-fan.ni@samsung.com>
+ <ZiK25Log7LmtBffa@memverge.com> <ZiK7QtVxutwDys4K@debian>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZiK7QtVxutwDys4K@debian>
+X-ClientProxiedBy: SJ0PR03CA0283.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::18) To SJ0PR17MB5512.namprd17.prod.outlook.com
+ (2603:10b6:a03:394::19)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: cross-i686-tci CI job is flaky again (timeouts): can somebody who
- cares about TCI investigate?
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <CAFEAcA92aivDF-LjSrtZH6o4UtgrtcWnM2wuPZA5VOiN6j7KMA@mail.gmail.com>
- <f5926850-670b-43fa-8011-c33ba45d8fc3@weilnetz.de>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- xsFNBFXCNBcBEACUbHx9FWsS1ATrhLGAS+Nc6bFQHPR3CpUQ4v++RiMg25bF6Ov1RsYEcovI
- 0DXGh6Ma+l6dRlvUXV8tMvNwqghDUr5KY7LN6tgcFKjBbXdv9VlKiWiMLKBrARcFKxx1sfLp
- 1P8RiaUdKsgy2Hq4T1PPy9ENTL1/FBG6P/Rw0rO9zOB+yNHcRJ5diDnERbi3x7qoaPUra2Ig
- lmQk/uxXKC0aNIhpNLNiQ+YpwTUN9q3eG6B9/3CG8RGtFzH9vDPlLvtUX+01a2gCifTi3iH3
- 8EEK8ACXIRs2dszlxMneKTvflXfvyCM1O+59wGcICQxltxLLhHSCJjOQyWdR2JUtn//XjVWM
- mf6bBT7Imx3DhhfFRlA+/Lw9Zah66DJrZgiV0LqoN/2f031TzD3FCBiGQEMC072MvSQ1DdJN
- OiRE1iWO0teLOxaFSbvJS9ij8CFSQQTnSVZs0YXGBal+1kMeaKo9sO4tkaAR2190IlMNanig
- CTJfeFqxzZkoki378grSHdGUTGKfwNPflTOA6Pw6xuUcxW55LB3lBsPqb0289P8o9dTR7582
- e6XTkpzqe/z/fYmfI9YXIjGY8WBMRbsuQA30JLq1/n/zwxAOr2P9y4nqTMMgFOtQS8w4G46K
- UMY/5IspZp2VnPwvazUo2zpYiUSLo1hFHx2jrePYNu2KLROXpwARAQABzRxTdGVmYW4gV2Vp
- bCA8c3dAd2VpbG5ldHouZGU+wsF6BBMBCAAkAhsDBQsJCAcDBRUKCQgLBRYCAwEAAh4BAheA
- BQJV04LlAhkBAAoJEOCMIdVndFCtP5QP/1U8yWZzHeHufRFxtMsK1PERiLuKyGRH2oE5NWVc
- 5QQHZZ2ypXu53o2ZbZxmdy8+4lXiPWWwYVqto3V7bPaMTvQhIT0I3c3ZEZsvwyEEE6QdRs52
- haZwX+TzNMQ5mOePdM2m4WqO0oU7YHU2WFf54MBmAGtj3FAQEAlZAaMiJs2aApw/4t35ICL1
- Sb0FY8d8lKBbIFOAaFfrlQTC3y8eMTk1QxOVtdXpRrOl6OE0alWn97NRqeZlBm0P+BEvdgTP
- Qt+9rxbe4ulgKME2LkbDhLqf0m2+xMXb7T4LiHbQYnnWKGZyogpFaw3PuRVd9m8uxx1F8b4U
- jNzI9x2Ez5LDv8NHpSY0LGwvVmkgELYbcbyiftbuw81gJuM7k4IW5GR85kTH6y/Sq6JNaI4p
- 909IK8X4eeoCkAqEVmDOo1D5DytgxIV/PErrin82OIDXLENzOWfPPtUTO+H7qUe80NS2HLPG
- IveYSjuYKBB6n2JhPkUD7xxMEdh5Ukqi1WIBSV4Tuk3/ubHajP5bqg4QP3Wo1AyICX09A1QQ
- DajtMkyxXhYxr826EGcRD2WUUprGNYwaks4YiPuvOAJxSYprKWT6UDHzE3S8u4uZZm9H8cyg
- Fa3pysJwTmbmrBAP1lMolwXHky60dPnKPmFyArGC0utAH7QELXzBybnE/vSNttNT1D+HzsFN
- BFXcnj0BEAC32cCu2MWeqZEcvShjkoKsXk42mHrGbeuh/viVn8JOQbTO706GZtazoww2weAz
- uVEYhwqi7u9RATz9MReHf7R5F0KIRhc/2NhNNeixT/7L+E5jffH1LD+0IQdeLPoz6unvg7U/
- 7OpdKWbHzPM3Lfd0N1dRP5sXULpjtYQKEgiOU58sc4F5rM10KoPFEMz8Ip4j9RbH/CbTPUM0
- S4PxytRciB3Fjd0ECbVsErTjX7cZc/yBgs3ip7BPVWgbflhrc+utML/MwC6ZqCOIXf/U0ICY
- fp5I7PDbUSWgMFHvorWegMYJ9EzZ2nTvytL8E75C2U3j5RZAuQH5ysfGpdaTS76CRrYDtkEc
- ViTL+hRUgrX9qvqzCdNEePbQZr6u6TNx3FBEnaTAZ5GuosfUk7ynvam2+zAzLNU+GTywTZL2
- WU+tvOePp9z1/mbLnH2LkWHgy3bPu77AFJ1yTbBXl5OEQ/PtTOJeC1urvgeNru26hDFSFyk4
- gFcqXxswu2PGU7tWYffXZXN+IFipCS718eDcT8eL66ifZ8lqJ8Vu5WJmp9mr1spP9RYbT7Rw
- pzZ3iiz7e7AZyOtpSMIVJeYZTbtiqJbyN4zukhrTdCgCFYgf0CkA5UGpYXp2sXPr+gVxKX2p
- tj/gid4n95vR7KMeWV6DJ0YS4hKGtdhkuJCpJfjKP/e8TwARAQABwsFfBBgBCAAJBQJV3J49
- AhsMAAoJEOCMIdVndFCtYRoQAJOu3RZTEvUBPoFqsnd849VmOKKg77cs+HD3xyLtp95JwQrz
- hwa/4ouDFrC86jt1vARfpVx5C8nQtNnWhg+5h5kyOIbtB1/27CCTdXAd/hL2k3GyrJXEc+i0
- 31E9bCqgf2KGY7+aXu4LeAfRIWJT9FGVzdz1f+77pJuRIRRmtSs8VAond2l+OcDdEI9Mjd9M
- qvyPJwDkDkDvsNptrcv4xeNzvX+2foxkJmYru6dJ+leritsasiAxacUowGB5E41RZEUg6bmV
- F4SMseIAEKWLy3hPGvYBOzADhq2YLgnM/wn9Y9Z7bEMy+w5e75saBbkFI7TncxDPUnIl/UTE
- KU1ORi5WWbvXYkUTtfNzZyD0/v3oojcIoZvK1OlpOtXHdlqOodjXF9nLe8eiVHyl8ZnzFxhe
- EW2QPvX8FLKqmSs9W9saQtk6bhv9LNYIYINjH3EEH/+bbmV+ln4O7a73Wm8L3tnpC3LmdGn2
- Rm8B6J2ZK6ci1TRDiMpCUWefpnIuE+TibC5VJR5zx0Yh11rxxBFob8mWktRmLZyeEoCcZoBo
- sbJxD80QxWO03zPpkcJ7d4BrVsQ/BJkBtEe4Jn4iqHqA/OcrzwuEZSv+/MdgoqfblBZhDusm
- LYfVy7wFDeVClG6eQIiK2EnmDChLRkVIQzbkV0iG+NJVVJHLGK7/OsO47+zq
-In-Reply-To: <f5926850-670b-43fa-8011-c33ba45d8fc3@weilnetz.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|MW4PR17MB4809:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3634ceb7-a272-45e6-51a5-08dc6179775c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?rUaxBuyn0THTp4hyW7MrfYHOKUqNpKb4Sdm5Lgx0p6PQF1b1kXDgobOdHQ5C?=
+ =?us-ascii?Q?k63FjsaxTqe1RyvJ3go4D7kfkOjOM2TMxV5Gsyf48ez3kFoeJZySY3nJb2H9?=
+ =?us-ascii?Q?3l+7eLLUXNV3M4RNYwlQl18SibLYO81dCr/C/ACm5ALe3mpL0pA6uyeK0iTz?=
+ =?us-ascii?Q?HDf+41Uln+cfSOkspD3Ay3OkfPDBaJf6Q/2CDTtu5rDViUNv1U2ZSHpMpz1N?=
+ =?us-ascii?Q?ur7zSXe7HehiS2+Fy6Kj20WgSTjeSRo8E29PQN8ugNWnuTa7or6gBHOt5pWw?=
+ =?us-ascii?Q?Ybj+mxqjfYg6T/88p2l6IWEoMeK/9nSpisnsi1uGqPJfik79KcXGUtMUlpl+?=
+ =?us-ascii?Q?QRAH9Ctg+hlEJb9HPbbNujqbCw6nUBf60+MdAYy7WdZWNmNjjWNSLuoz+kF0?=
+ =?us-ascii?Q?kQ8mATGOdLDly7tME1yMVL+ffP1Jhm1SUVtChQLJtu5Iu9VlhBKIpZTaerNF?=
+ =?us-ascii?Q?VDulOIsXJMhRtdERRY70NMw4IMVF/dpj1nfJTxl+44JbGs92igbiRX8pKUBt?=
+ =?us-ascii?Q?rBP9R/9ZGnTTYP26RpxrZtvH5vzs/mc/BlhM69jkvp26nwdFpieYiDwvv9Fc?=
+ =?us-ascii?Q?8JZ2i6cLdSWqj05FgXTSTA1mtixToBvY+VSkSS0kEGKs5/WZwyK53AQXCJ5n?=
+ =?us-ascii?Q?0Y/hYPlRwoydnJsybn32+7ob6fSN+WVwFuYHXZpvArUvfypk2bbaJnW//zz8?=
+ =?us-ascii?Q?wMaYwHes/NK47qm+MBvfIn4s7rz/w+HQ9Hqxtl43aU/KzayzLGZMZIR7rtUZ?=
+ =?us-ascii?Q?IvUOYwZ94nOV0z9Ye6DF2P0q1rBQycYuKAIc7r+3bqeXoAxDLdNH89S3mkRF?=
+ =?us-ascii?Q?qU2Rh3jHUp6gv0RxsEfX90x0GfjQsIjI1+F5o7R6TrFaVnA/bMcJ+AUqxZ95?=
+ =?us-ascii?Q?n51xdLYDLsKela2U/tinE3rDarUsHw1EDXSRdTgOBe20nY0BAo8s8QiGKxFC?=
+ =?us-ascii?Q?W+A8IOQdZwf5NGLKyoQvQnSA5yfYmA5ueA/j88hddACZDQxzSUunOCZ5fgpU?=
+ =?us-ascii?Q?2SaJXiCSWZwCascfx4TBhDgBMSB6di5sXQytFcf+HmxpLnEBNDlEMJdXUthI?=
+ =?us-ascii?Q?8PlJC8YKVVxL2zry2YgXNA1eehl/PbR+opwo99ZkG4AxiKclEdbpQK5JgYER?=
+ =?us-ascii?Q?ZKnuJTPWo4iCI1rZfUBi86y8a44U4lyCvpNwsP5Zdj+Nqcg44jWyXoctJp/7?=
+ =?us-ascii?Q?lT8BFlHlDvzQ2pE1oiWlb4Mpp6RP6FOr699a4P1O0Rt7E4qm/ck+Fiew8Nk2?=
+ =?us-ascii?Q?ml/IRG3wzu9ZSUxNjXDf/eftKe19Zh0tHAbTUe2qpg=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(7416005)(1800799015)(376005)(366007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?h2JVhmbN06qArieLHIaZS/+5pESAJJDqaMNhbvQCFwcybRZWakOxJmFoJ0ci?=
+ =?us-ascii?Q?x4NeDyw2RSwyVoK6oI/8q5t+R2Djuk8R5vcJVhQXCRV64utPbqqBP1IVhXQs?=
+ =?us-ascii?Q?uACFPbPPpkRmRR8WOiIKwEZ64Ojcw46DN65Wo3Y9bwE6y4JaWjJaMQWeXhtb?=
+ =?us-ascii?Q?uMT0tHGJxGCnywhbbmwCuxApMqMeTMrr0AzS4DirM+DaUxSA4gU20uW97JT/?=
+ =?us-ascii?Q?8vaS1pHDhD7h62TsikbcwaBe1npiXEl2xvRzTbnGYOE93WSfv6C0KqsdM9vk?=
+ =?us-ascii?Q?9OASx+eFLGFU/FASpyROpWwzO5rZswE/qKwGyWwYYA42epGBvuP2eaumRwSz?=
+ =?us-ascii?Q?OsB6UgNvi4ubLqRljGj5BOHuNJsXNJ1oddIBtR5EW8jlK9TaHfWsK/qgRlXj?=
+ =?us-ascii?Q?DoCi6Mba4DnqAAbAPl17DJzHwL59Ax7JtkvnRDbH7xp+8A9HHgFphtmuRK8B?=
+ =?us-ascii?Q?qwj59fRziXbKQgMAWAdOtPwNDtvLD6dRNWQovpjYbRv2dBj2wPNkvu21cAtd?=
+ =?us-ascii?Q?szPnpBdBM70fMe+GhQiSfPEKjc9eFbwjXOjBiscbAJxKDE0BjBaZ/4ZrSa5L?=
+ =?us-ascii?Q?J7wNnzjVRojxtc7rJQiwL7p2MpjHS08fdcwkDONiI7ks74vWmkviKpmvHbQv?=
+ =?us-ascii?Q?9XQdRGF1+Uv0+b0perjxY45Obt++ftxNMiE3lRELI0N5509F/Ko9MCKCqhSZ?=
+ =?us-ascii?Q?cGKGLnyS8GVWFtQcPL2/NRZ6D/EnKJfVcqZky5lvyVA2soibhNQCm/bZaQUk?=
+ =?us-ascii?Q?Q4IpBpvfBlj6iZf4bW3VipJymUGHVUTpJvxlTJg3eJbelWoxAaG2HSfYaLdC?=
+ =?us-ascii?Q?KMXDEslkBpDhWEHiW2gbTdwsYibvPeGyOVTksbJ1rQ8qE/5kYevaf3mQMhT8?=
+ =?us-ascii?Q?1S37Izcb5iLG2X6Ah4XIKhDLHp1r+FYCoDGjlHQ3N+1QF9eNHK1FKK01Y6nW?=
+ =?us-ascii?Q?uFjgEaRZEZsPhdVIpR2n+K0mEo/86ixZdGFsiznxIxxTYCBYIWsJ9E2jhryK?=
+ =?us-ascii?Q?4FN2rL5G9OxpkdKI0zX/k8lUNxrZfXaAYNMAduncvFs6Mk63WtI7py0/IyGm?=
+ =?us-ascii?Q?hi73RZBEoTGNifk673a071u8W26pt1cdTWD2oA+hw3k2+M7ifUzVi3vPhWVP?=
+ =?us-ascii?Q?umrTnVL8LTc4V2Yf4BPiIrG8JjQemjhZMl75ouzvAgzGBJkdUvlyjTrQQeUx?=
+ =?us-ascii?Q?zilWwRbpDFe4JlvCKdxgp7NGcwUG7Bv66aOkKp08jo1wQ6VfjtSEsn+r81bc?=
+ =?us-ascii?Q?2Yb18DHsWATW2SF/GR/j0kaAfsm9mySLI8ndLIXSKk1wG+TyLTXeK2MWoY12?=
+ =?us-ascii?Q?Smt9N1uRv5J+zIuIKGkXzRi+gQgdkr6X40P5smMNgMdyjHb+e42HDs7Ufk8j?=
+ =?us-ascii?Q?GXheaMF51s+RuZO9BKferq3JPUkh9a+BrQB76zyAZcr4XqD2BQ4O0x8fXY4C?=
+ =?us-ascii?Q?N6Ng1Vg64kXK6xcla6lluNcMTH/IRdllcZGcbsWP3mZ7Igw2N0aJedKRZ7fh?=
+ =?us-ascii?Q?vYekJoRkV66frgZHuCHpr1YCmjg7X5tFDtNqoXDMp4mz3M6goka3TOx67e0p?=
+ =?us-ascii?Q?D+gQzw8FAx0fuuskD6bvOKRsQQoqIBOZXJzGmh2+eZNz9nV96gNz9KlTYCR1?=
+ =?us-ascii?Q?Lg=3D=3D?=
+X-OriginatorOrg: memverge.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3634ceb7-a272-45e6-51a5-08dc6179775c
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Apr 2024 20:35:50.2882 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NtCQ/iL8TqxYj56Kg/1zkLK6ohDpgOSK8iTl8a/XH2FMSlUail40qIg4qfzYvcW0pU3rBrhePt1LRfhOpB9Fe84TFR6HmHthBRLGrGBJtJs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR17MB4809
+Received-SPF: pass client-ip=40.107.92.131;
+ envelope-from=gregory.price@memverge.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,251 +159,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 16.04.24 um 14:17 schrieb Stefan Weil:
-> Am 16.04.24 um 14:10 schrieb Peter Maydell:
+On Fri, Apr 19, 2024 at 11:43:14AM -0700, fan wrote:
+> On Fri, Apr 19, 2024 at 02:24:36PM -0400, Gregory Price wrote:
+> > 
+> > added review to all patches, will hopefully be able to add a Tested-by
+> > tag early next week, along with a v1 RFC for MHD bit-tracking.
+> > 
+> > We've been testing v5/v6 for a bit, so I expect as soon as we get the
+> > MHD code ported over to v7 i'll ship a tested-by tag pretty quick.
+> > 
+> > The super-set release will complicate a few things but this doesn't
+> > look like a blocker on our end, just a change to how we track bits in a
+> > shared bit/bytemap.
+> > 
 > 
->> The cross-i686-tci job is flaky again, with persistent intermittent
->> failures due to jobs timing out.
-> [...]
->> Some of these timeouts are very high -- no test should be taking
->> 10 minutes, even given TCI and a slowish CI runner -- which suggests
->> to me that there's some kind of intermittent deadlock going on.
->>
->> Can somebody who cares about TCI investigate, please, and track
->> down whatever this is?
+> Hi Gregory,
+> Thanks for reviewing the patches so quickly. 
 > 
-> I'll have a look.
+> No pressure, but look forward to your MHD work. :)
+> 
+> Fan
 
-Short summary:
+Starting to get into versioniong hell a bit, since the Niagara work was
+based off of jonathan's branch and the mhd-dcd work needs some of the
+extentions from that branch - while this branch is based on master.
 
-The "persistent intermittent failures due to jobs timing out" are not 
-related to TCI: they also occur if the same tests are run with the 
-normal TCG. I suggest that the CI tests should run single threaded.
+Probably we'll need to wait for a new cxl dated branch to try and sus
+out the pain points before we push an RFC.  I would not want to have
+conflicting commits for something like this for example:
 
-But let's have a look on details of my results.
+https://lore.kernel.org/qemu-devel/20230901012914.226527-2-gregory.price@memverge.com/
 
-I have run `time make test` using different scenarios on the rather old 
-and not so performant VM which I typically use for QEMU builds. I did 
-not restrict the tests to selected architectures like it is done in the 
-QEMU CI tests. Therefore I had more tests which all ended successfully:
+We get merge conflicts here because this is behind that patch. So
+pushing up an RFC in this state would be mostly useless to everyone.
 
-Ok:                 848
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            68
-Timeout:            0
-
----
-
-1st test with normal TCG
-
-`nohup time ../configure --enable-modules --disable-werror && nohup time 
-make -j4 && nohup time make test`
-[...]
-Full log written to 
-/home/stefan/src/gitlab/qemu-project/qemu/bin/ndebug/x86_64-linux-gnu/meson-logs/testlog.txt
-2296.08user 1525.02system 21:49.78elapsed 291%CPU (0avgtext+0avgdata 
-633476maxresident)k
-1730448inputs+14140528outputs (11668major+56827263minor)pagefaults 0swaps
-
----
-
-2nd test with TCI
-
-`nohup time ../configure --enable-modules --disable-werror 
---enable-tcg-interpreter && nohup time make -j4 && nohup time make test`
-[...]
-Full log written to 
-/home/stefan/src/gitlab/qemu-project/qemu/bin/ndebug/x86_64-linux-gnu/meson-logs/testlog.txt
-3766.74user 1521.38system 26:50.51elapsed 328%CPU (0avgtext+0avgdata 
-633012maxresident)k
-32768inputs+14145080outputs (3033major+56121586minor)pagefaults 0swaps
-
----
-
-So the total test time with TCI was 26:50.51 minutes while for the 
-normal test it was 21:49.78 minutes.
-
-These 10 single tests had the longest duration:
-
-1st test with normal TCG
-
-   94/916 qtest-arm / qtest-arm/qom-test                 373.41s
-   99/916 qtest-aarch64 / qtest-aarch64/qom-test         398.43s
-100/916 qtest-i386 / qtest-i386/bios-tables-test       188.06s
-103/916 qtest-x86_64 / qtest-x86_64/bios-tables-test   228.33s
-106/916 qtest-aarch64 / qtest-aarch64/migration-test   201.15s
-119/916 qtest-i386 / qtest-i386/migration-test         253.58s
-126/916 qtest-x86_64 / qtest-x86_64/migration-test     266.66s
-143/916 qtest-arm / qtest-arm/test-hmp                 101.72s
-144/916 qtest-aarch64 / qtest-aarch64/test-hmp         113.10s
-163/916 qtest-arm / qtest-arm/aspeed_smc-test          256.92s
-
-2nd test with TCI
-
-   68/916 qtest-arm / qtest-arm/qom-test                 375.35s
-   82/916 qtest-aarch64 / qtest-aarch64/qom-test         403.50s
-   93/916 qtest-i386 / qtest-i386/bios-tables-test       192.22s
-   99/916 qtest-aarch64 / qtest-aarch64/bios-tables-test 379.92s
-100/916 qtest-x86_64 / qtest-x86_64/bios-tables-test   240.19s
-103/916 qtest-aarch64 / qtest-aarch64/migration-test   223.49s
-106/916 qtest-ppc64 / qtest-ppc64/pxe-test             418.42s
-113/916 qtest-i386 / qtest-i386/migration-test         284.96s
-118/916 qtest-arm / qtest-arm/aspeed_smc-test          271.10s
-119/916 qtest-x86_64 / qtest-x86_64/migration-test     287.36s
-
----
-
-Summary:
-
-TCI is not much slower than the normal TCG. Surprisingly it was even 
-faster for the tests 99 and 103. For other tests like test 106 TCI was 
-about half as fast as normal TCG, but in summary it is not "factors" 
-slower. A total test time of 26:50 minutes is also not so bad compared 
-with the 21:49 minutes of the normal TCG.
-
-No single test (including subtests) with TCI exceeded 10 minutes, the 
-longest one was well below that margin with 418 seconds.
-
----
-
-The tests above were running with x86_64, and I could not reproduce 
-timeouts. The Gitlab CI tests were running with i686 and used different 
-configure options. Therefore I made additional tests with 32 bit builds 
-in a chroot environment (Debian GNU Linux bullseye i386) with the 
-original configure options. As expected that reduced the number of tests 
-to 250. All tests passed with `make test`:
-
-3rd test with normal TCG
-
-Ok:                 250
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            8
-Timeout:            0
-
-Full log written to 
-/root/qemu/bin/ndebug/i586-linux-gnu/meson-logs/testlog.txt
-855.30user 450.53system 6:45.57elapsed 321%CPU (0avgtext+0avgdata 
-609180maxresident)k
-28232inputs+4772968outputs (64944major+8328814minor)pagefaults 0swaps
-
-
-4th test with TCI
-
-Ok:                 250
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            8
-Timeout:            0
-
-Full log written to /root/qemu/build/meson-logs/testlog.txt
-make[1]: Leaving directory '/root/qemu/build'
-1401.64user 483.55system 9:03.25elapsed 347%CPU (0avgtext+0avgdata 
-609244maxresident)k
-24inputs+4690040outputs (70405major+7972385minor)pagefaults 0swaps
-
----
-
-Summary:
-
-Again TCI is not much slower than the normal TCG. The total test time 
-for all 250 tests is below 10 minutes, even with TCI!
-
----
-
-Could it be that the timeouts in Gitlab CI are caused by wrongly 
-configured multithreading? Those tests are not started with `make test` 
-which would run single threaded, but with meson and an argument 
-`--num-processes 9`. I tested that with the normal TCG on my VM which 
-only can run 4 threads simultaneously:
-
-5th test with TCG
-
-pyvenv/bin/meson test  --no-rebuild -t 1  --num-processes 9 
---print-errorlogs
-Summary of Failures:
-
-254/258 qemu:softfloat+softfloat-ops / fp-test-mul 
-   TIMEOUT         30.12s   killed by signal 15 SIGTERM
-
-Ok:                 249
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            8
-Timeout:            1
-
-Full log written to 
-/root/qemu/bin/ndebug/i586-linux-gnu/meson-logs/testlog.txt
-
-Repeating that test again fails, this time with 2 timeouts:
-
-time pyvenv/bin/meson test  --no-rebuild -t 1  --num-processes 9 
---print-errorlogs
-Summary of Failures:
-
-253/258 qemu:softfloat+softfloat-ops / fp-test-mul 
-   TIMEOUT         30.14s   killed by signal 15 SIGTERM
-254/258 qemu:softfloat+softfloat-ops / fp-test-div 
-   TIMEOUT         30.18s   killed by signal 15 SIGTERM
-
-Ok:                 248
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            8
-Timeout:            2
-
-Full log written to 
-/root/qemu/bin/ndebug/i586-linux-gnu/meson-logs/testlog.txt
-
-real	7m51.102s
-user	14m0.470s
-sys	7m58.427s
-
-Now I reduced the number of threads to 4:
-
-time pyvenv/bin/meson test  --no-rebuild -t 1  --num-processes 4 
---print-errorlogs
-Ok:                 250
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            8
-Timeout:            0
-
-Full log written to 
-/root/qemu/bin/ndebug/i586-linux-gnu/meson-logs/testlog.txt
-
-real	6m42.648s
-user	13m52.271s
-sys	7m35.643s
-
----
-
-Summary:
-
-I could reproduce persistent intermittent failures due to jobs timing 
-out without TCI when I tried to run the tests with more threads than my 
-machine supports. This result is expected because not all single tests 
-can not run 100% of the time. They are interrupted because of 
-scheduling, and it's normal that some (random) tests will have a longer 
-duration. Some will even raise a timeout.
-
-The final test shows that adjusting the number of threads to the hosts 
-capabilities fixes the problem. But it also shows that 4 threads don't 
-accelerate the whole test job compared to a single thread. Using 
-multithreading obviously wastes a lot of user and sys CPU time.
-
-Regards
-Stefan
+~Gregory
 
