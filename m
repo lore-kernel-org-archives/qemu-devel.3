@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77897C05023
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 05:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D445BC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 05:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryPl5-0005uU-TW; Sun, 21 Apr 2024 01:28:59 -0400
+	id 1ryPvz-0000fg-HN; Sun, 21 Apr 2024 01:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryPl4-0005tu-7a
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 01:28:58 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1ryPvx-0000ZG-EY
+ for qemu-devel@nongnu.org; Sun, 21 Apr 2024 01:40:13 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryPl0-0000bC-LH
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 01:28:56 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6f07de6ab93so3342094b3a.2
- for <qemu-devel@nongnu.org>; Sat, 20 Apr 2024 22:28:54 -0700 (PDT)
+ id 1ryPvs-0002Tj-L6
+ for qemu-devel@nongnu.org; Sun, 21 Apr 2024 01:40:10 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6f0b9f943cbso1946116b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 20 Apr 2024 22:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713677333; x=1714282133; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713678007; x=1714282807; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eZi0Zl+eRrtJlZBV9jASoIvGganpcphdcyn/Bgxey5I=;
- b=cG6OvNw8Ttlr+rQv+p3PuCN9nt5oOrpfgODxL1WdHxfyKWAySRCQOSmuBgM4EAarjG
- SX1VyyOoG04dbvE2MAbvuQzTV6KvNlIwpRp7EngyVejjjE0oWnOYIayCXC5btNWJZoeW
- 6pLeJrEUui7hS4m1bcOlI9F2jud/CbriNIaiAXwHQCxzs8CLYnEmHLKwd+CQ98SiV7Sx
- CJIUu8jf+7zMRAGN1uoXdJMyd45zDNsHlPVED6R+JSJt88n5jwzY281tvt1OD1feIvbM
- QWEiCJBYnzBfAry8zLIvuNdwUssdj9pjKJ3uWkj96cGTkaLC1UG9Uce9rPlrBz6lcIHq
- eHYg==
+ bh=PwQBYwQawxFNJhePCzL9r4GMXMMI39MpWNvRJNu5+7c=;
+ b=Hay0hmg4n3xvTbiROgzLC/4jdFD8jQF/1OFI71Q0a+79bADcHoAFNV9+aVYPCqKwkF
+ 5aEpzJfBkI6vIi3IVJxeb6jxnTzGCCuUvTDjoPrRkfDCvXRAOj40BZ0UZKfQTL5zRMfY
+ QKyWL5XrPOE+fPbjcFNKeOuwZhkiSC81mseW711AqgvcNUCANrUVXiF6H3cDZia+V+57
+ lwATN0bpkkuuUYI3FMud1lQUcTh+iQ864375FhyWEO/ZNgaiWb3q1648BQyxhAc6VOZ7
+ 6XaE7mJ2yKMU0xnVefuOrbFpvacVidEG9AhIuUW5E0wtrB0XfuMppZTkfe6iVFRaI9ky
+ oNfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713677333; x=1714282133;
+ d=1e100.net; s=20230601; t=1713678007; x=1714282807;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eZi0Zl+eRrtJlZBV9jASoIvGganpcphdcyn/Bgxey5I=;
- b=iZbcx0nVfKc2XRY+mkDdMgWodZUHV+vVj4w9QjkHRljY6m2Kx0z1/SgRKo4z1nMSC3
- lF+yMyLwypuk/sEdDmw0Hj0ej9pXi6t/5O0qk+Oi7dmZcI7emmlw+F1oGMVDRdjwVISp
- oWqj+EKWErXSF9ATLKobNXmY6qcqFnl+MTKNUAF+zk24OxO8u7Jo2H7wJSA7ptk9Ol3O
- JIcVf4H5a5PjNUyu3Hu+W8+L2eXkqNV8E7Ld8/G7tewQ7gOSeCr2DKhMV+zmcoI8+6XI
- YbH0JEX+P59xIm8PQPRwRNWEwo9EjcvohIsgiEKnliyAdKLmywus+hJcL4jBmSIir/MS
- dvwQ==
+ bh=PwQBYwQawxFNJhePCzL9r4GMXMMI39MpWNvRJNu5+7c=;
+ b=UtSquF/APSUm36SxoRtXNPs+6gdpDCXutiqcZZh6hDLhnp2RTmTMbHrdfBSqpOL2/L
+ R0SNuSEMdvoxT5KsHE4jxbvNdDjjrHugn0fbjppP6itTuZ/M9tJ0PymOHXRyn++t6/9S
+ cq3l8n9vBowyQefTSWY+QeabcG7RBMHxn26YZhnK8OwjW0m+KJbMEbPZ553xI3fwDclw
+ NBLdlblnbWBsBTcnQP3sNNA/zfChGBA+/y2iWfc4dOyyGU1GBE/b3gd/+ODx64Kd8bAE
+ JKJuf4E0FbRuX433CE1NpQ45Qpu57labfrr/9isFIzUNGHor4/CY7v2Uv4xvfjzyx8Ri
+ +e1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3xNKRa3cipyqjYAw4S6fWRRYNZhYoUC0KePrfrfkxVLLzhdn1uq/VJTNnjqXzQeOUyvrsW5qHGALm5bsO5OpDtgqE+Hg=
-X-Gm-Message-State: AOJu0Ywftv/qsP8NEfpx9r9LPqBgFZs6AB5qAPioijuoK32frqFvDMqn
- rH0Iub3+Tq7qL3AxpfYjmCQpWB9M712HC9rjolbgzasKdG9YagZF3Po1C3dF7C8=
-X-Google-Smtp-Source: AGHT+IEDvY3nuWe1lMygP4ouBTDUeAn+/ljzuHiY3IePX6mA7sRzsOVcnyQdb08HLEFin9X90te+Jw==
-X-Received: by 2002:a05:6a20:7290:b0:1a7:53f5:4e01 with SMTP id
- o16-20020a056a20729000b001a753f54e01mr7162273pzk.22.1713677333069; 
- Sat, 20 Apr 2024 22:28:53 -0700 (PDT)
+ AJvYcCX9j3zDDQTEM+dwImKwScAEWt5OwnmabOX6zWcMaGe7+4WGthoow5BcLt0o9/eBV+RxTI7NH/FvmlTiAN9yq1nNW7mHeSI=
+X-Gm-Message-State: AOJu0Ywd53cDADLrGHZ1EzeN8hmayPzf3LiEHWBPj11YIs2NLFhCnNSZ
+ yptPVgZlZ7VFbNda6F2Iy0t4a0O+xemHprY46mMUIV2e8pQCMQl1ad/fwkTabPg=
+X-Google-Smtp-Source: AGHT+IHWEZvvxWISddT1VLSJQvFFHKIikRucpofRAHsOBEeua4xTjfPzshOsCGiQqau3fB18e3wX0Q==
+X-Received: by 2002:a05:6a00:10d5:b0:6ed:cd4c:cc11 with SMTP id
+ d21-20020a056a0010d500b006edcd4ccc11mr9276668pfu.25.1713678007020; 
+ Sat, 20 Apr 2024 22:40:07 -0700 (PDT)
 Received: from [192.168.91.227] ([156.19.246.23])
  by smtp.gmail.com with ESMTPSA id
- g3-20020a17090a828300b002abf2057cefsm4988327pjn.0.2024.04.20.22.28.51
+ j9-20020a056a00130900b006eae2d9298esm5639126pfu.194.2024.04.20.22.40.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 20 Apr 2024 22:28:52 -0700 (PDT)
-Message-ID: <126e2988-cde2-4eb8-b423-6a4de637b316@linaro.org>
-Date: Sat, 20 Apr 2024 22:28:50 -0700
+ Sat, 20 Apr 2024 22:40:06 -0700 (PDT)
+Message-ID: <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
+Date: Sat, 20 Apr 2024 22:40:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/24] exec: Restrict TCG specific declarations of
- 'cputlb.h'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
-References: <20240418192525.97451-1-philmd@linaro.org>
- <20240418192525.97451-5-philmd@linaro.org>
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240418192525.97451-5-philmd@linaro.org>
+In-Reply-To: <20240419183135.12276-1-dorjoychy111@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,15 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/18/24 12:25, Philippe Mathieu-Daudé wrote:
-> Avoid TCG specific declarations being used from non-TCG accelerators.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/exec/cputlb.h | 5 +++++
->   1 file changed, 5 insertions(+)
+On 4/19/24 11:31, Dorjoy Chowdhury wrote:
+> +
+> +    /*
+> +     * Instantiate a temporary CPU object to build mp_affinity
+> +     * of the possible CPUs.
+> +     */
+> +    cpuobj = object_new(ms->cpu_type);
+> +    armcpu = ARM_CPU(cpuobj);
+> +
+>       for (n = 0; n < ms->possible_cpus->len; n++) {
+>           ms->possible_cpus->cpus[n].type = ms->cpu_type;
+>           ms->possible_cpus->cpus[n].arch_id =
+> -            sbsa_ref_cpu_mp_affinity(sms, n);
+> +            sbsa_ref_cpu_mp_affinity(armcpu, n);
+>           ms->possible_cpus->cpus[n].props.has_thread_id = true;
+>           ms->possible_cpus->cpus[n].props.thread_id = n;
+>       }
+> +
+> +    object_unref(cpuobj);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Why is this instantiation necessary?
+
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1314,8 +1314,18 @@ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>       }
+>   }
+>   
+> -uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
+> +uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz)
+>   {
+> +    if (cpu->has_smt) {
+> +        /*
+> +         * Right now, the ARM CPUs with SMT supported by QEMU only have
+> +         * one thread per core. So Aff0 is always 0.
+> +         */
+
+Well, this isn't true.
+
+     -smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]
+                    [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]
+
+I would expect all of Aff[0-3] to be settable with the proper topology parameters.
+
 
 r~
 
