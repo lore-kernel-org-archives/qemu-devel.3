@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F724C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 16:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C5CC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 16:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryaNT-0004ck-Jy; Sun, 21 Apr 2024 12:49:19 -0400
+	id 1ryaQt-00062b-5v; Sun, 21 Apr 2024 12:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryaNR-0004bs-GV
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 12:49:17 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1ryaQq-00061a-Ia
+ for qemu-devel@nongnu.org; Sun, 21 Apr 2024 12:52:48 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryaNO-0002Xc-Pv
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 12:49:17 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1e9320c2ef6so5585825ad.2
- for <qemu-devel@nongnu.org>; Sun, 21 Apr 2024 09:49:14 -0700 (PDT)
+ id 1ryaQn-00034V-1o
+ for qemu-devel@nongnu.org; Sun, 21 Apr 2024 12:52:48 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1e9320c2ef6so5598475ad.2
+ for <qemu-devel@nongnu.org>; Sun, 21 Apr 2024 09:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713718153; x=1714322953; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713718363; x=1714323163; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/C8hv0IOFd/awOPzjrquTue1IcmbsUX9nXzs73BETrg=;
- b=lilpE5GSFh5FpOWcy5lIahghjv5a11zxgRkgtY+Vn5et80PtuL9ekfmem1MnKuMBJ2
- Be51uvrWrpxMSlRvbFr+Hkfp5Abj9ivphLovBDxluu1Zm7UWmYxNTKQj0vHEsGhjQtKN
- NQq5uxLCNoeFAbO0LeQ5nepbTFlTCfXPmz4ZW5k8Qj0UD48zZSIsuTX/MpForf8jZwyM
- xwaJft+aXxEtXawLmqR5s4KbHn8G2JDZonZLVdq2z+/XvrbuL8IWqYa52KTInPMD4kZW
- FIJQvzdSHTuDoqURnUPyYVpdj0MF1KL6v2jGLsU9ByqXj3lwRjYNpG37Rik40bgNFD2U
- LywQ==
+ bh=S5TVtZGaltNicInXlF3zmRiIbJyeBcFpWjIy6Br2PL4=;
+ b=xniz1hIOJCLOsK6H4gZueLVShUsojm0KbGD4QiWwdNz/uEPAKxeODRcI8ADNX+35mw
+ tJEZuAAS0cxLtdiGS29KiRLW+Cw91ANdInely8W8lU4fY0U8jwaynqT+CPAQzcn51zbr
+ ++NodNRViAHTMypPFfVDfTGadqChryFS/6wJFv9ThAQjTfc6QpGIqpN1HAq6HXtfjOFV
+ QmV9WNVWwHx0TlSEpSHmMIGqMTuLcF+SwMvwhiIL0y/WJOGEVVen6u9z2FUGc9AcMDgQ
+ Ba6zxBu5D0xZ0wFohnVXa+IJ8ES2f3+gDhZAzkjESssZnISZutnNffq4BALSFpbwuzwE
+ FLww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713718153; x=1714322953;
+ d=1e100.net; s=20230601; t=1713718363; x=1714323163;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/C8hv0IOFd/awOPzjrquTue1IcmbsUX9nXzs73BETrg=;
- b=FLnSLVTBGcjFKQwDTEWh/qKjqzSMBh/AJGLqTbxDi5O1J1zFH8COAJqexAtbQzHLD9
- EcOIKvhnUbNrNv3qNpB5UH1rxWhfj3yY4RFLY9l6JSSQafmWA04l2lrBwN+QPq2mQnGO
- 9UmPBvDfwfV7BrX0YqHNwaKE1LXnOl8antUwzPn572hRS4AFpTBoXBYD5BFLTW5Brx9Q
- OtF74yJPAO4O+z3Yn293OADGZ0ycF4lsVf4EqMXPGoXzsLmkjADFMXa+Y9/4ACHw6EH4
- OsJCrIzdE6o/Vacy3PmsZpejLOc5AbAdw8bXA37E/rmAq6awQ1xGjvHn9J+U9yosecvn
- fVXA==
+ bh=S5TVtZGaltNicInXlF3zmRiIbJyeBcFpWjIy6Br2PL4=;
+ b=JcqYeJ8f2gy+6DZBnWnKR9K4e3R3E5BACaFl3jEpr+iAulQoaTyZ5dVs9E1++pCr2g
+ 7u6Ghh0pgmpCKGJXSyJ7q0Y0U3m+DPRzruu8U/OIhAf+J9M65dUh5bCCP0+NETai6UJP
+ CY9wY3W2o8fL/ibyymYWNoMv3hR9M4JX7rbTWITs+2+0ryVcxHd76HWcKb7iF/qipgC2
+ EGsnrtJfFLIx5zv6cRTBgj1pBYmd7cSusG/Ijst5ysoRVEHXkLgWgpFkzLd6e36jvMAq
+ o48vqEdpA7UE3vkmuRSqNG0HhpYLfJZ8FZG4OJd6uAvukvexRfNCguR6/k1iu/2538lF
+ VwDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcCNKPn+xvVGs3Lia1GvMIATHk4dp1Q+0MrlHoS5qjg3OXBPK2pfg6d3YAeRhZNBzGP/3tIFl0aERmCCkRU+pb/YI7hYU=
-X-Gm-Message-State: AOJu0YySjFA6pchdnD97Ko+S/D70CsLRlwj9xfhFm5kFcxVWUaqwziNh
- LNAKx/iUiNwV0DwEEwNW+iXPxFXQ048rw8vU45YwK41tXaF7knMPxMrhAakmmzM=
-X-Google-Smtp-Source: AGHT+IHtYrEaKSQb0pIMA7tUJm/1G4nF1gQ3bdx26rUJeKYeIVxZkY6OmPxhhvIYkAhIe/WUwQYjyg==
-X-Received: by 2002:a17:903:32cf:b0:1e2:23b9:eb24 with SMTP id
- i15-20020a17090332cf00b001e223b9eb24mr9181869plr.33.1713718153276; 
- Sun, 21 Apr 2024 09:49:13 -0700 (PDT)
+ AJvYcCWwH7Y+RqOhDoHUUlQXY4NCC2KFKzfTf3cJC4DEDc4tMTch0iWUOOlx0zMNOsTXm9wQzmIgsW7mPZEv3HRoPM6VbZDlpsw=
+X-Gm-Message-State: AOJu0Yyyo54s7ZXD6cWZsC/KfhsmS6igl+dMjwKDHEI8l/Vz6Bct/dxx
+ gA7HQa+cQDoPoUjWLyp6AakFJ3m16nGZ7CZ2YRoytDJ+ToWnzrXC3KZiZj90JYU=
+X-Google-Smtp-Source: AGHT+IGgeaVwECaFewtI1rsLqV5j/Iz2o7W4fP9LzR76Gt1hdSJdo8Nrs4odSu3pN3cbYKZ1ed0buA==
+X-Received: by 2002:a17:902:e887:b0:1e2:9ddc:f72d with SMTP id
+ w7-20020a170902e88700b001e29ddcf72dmr10084005plg.26.1713718363485; 
+ Sun, 21 Apr 2024 09:52:43 -0700 (PDT)
 Received: from [192.168.91.227] ([156.19.246.23])
  by smtp.gmail.com with ESMTPSA id
- l15-20020a170903120f00b001e45b3539dbsm6523586plh.41.2024.04.21.09.49.12
+ y5-20020a17090322c500b001e2461c52c6sm6505421plg.149.2024.04.21.09.52.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 21 Apr 2024 09:49:12 -0700 (PDT)
-Message-ID: <777db3c8-30cc-460d-875d-cf25ab873ca0@linaro.org>
-Date: Sun, 21 Apr 2024 09:49:09 -0700
+ Sun, 21 Apr 2024 09:52:43 -0700 (PDT)
+Message-ID: <5d092e5a-6999-49f5-988b-f54bbc318d80@linaro.org>
+Date: Sun, 21 Apr 2024 09:52:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/24] gdbstub: Avoid including 'cpu.h' in
- 'gdbstub/helpers.h'
+Subject: Re: [PATCH 21/24] plugins: Un-inline qemu_plugin_disable_mem_helpers()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>,
- Michael Rolnik <mrolnik@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20240418192525.97451-1-philmd@linaro.org>
- <20240418192525.97451-20-philmd@linaro.org>
+ <20240418192525.97451-22-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240418192525.97451-20-philmd@linaro.org>
+In-Reply-To: <20240418192525.97451-22-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,17 +105,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/18/24 12:25, Philippe Mathieu-Daudé wrote:
-> We only need the "exec/tswap.h" and "cpu-param.h" headers.
-> Only include "cpu.h" in the target gdbstub.c source files.
+> "qemu/plugin.h" only include the huge "hw/core/cpu.h"
+> because qemu_plugin_disable_mem_helpers() accesses
+> CPUState::plugin_mem_cbs. In order to avoid including
+> it, un-inline qemu_plugin_disable_mem_helpers().
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/gdbstub/helpers.h | 3 ++-
->   target/avr/gdbstub.c      | 1 +
->   target/tricore/gdbstub.c  | 1 +
->   3 files changed, 4 insertions(+), 1 deletion(-)
+>   include/qemu/plugin.h | 6 +-----
+>   plugins/core.c        | 5 +++++
+>   2 files changed, 6 insertions(+), 5 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+I don't see how this helps.
+All of the places that use qemu_plugin_disable_mem_helpers also have cpu.h.
+
 
 r~
 
