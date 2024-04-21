@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AC01C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 12:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34F8C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 14:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryW67-00030E-7N; Sun, 21 Apr 2024 08:15:07 -0400
+	id 1ryXps-0001Qe-1d; Sun, 21 Apr 2024 10:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1ryW63-0002zr-7j
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 08:15:03 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1ryXpm-0001PI-TV; Sun, 21 Apr 2024 10:06:22 -0400
+Received: from zproxy4.enst.fr ([2001:660:330f:2::df])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1ryW60-0003Kd-0c
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 08:15:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713701701; x=1745237701;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=LPPVp3JalpchXXn5VxkxWYPZ6dKa11QDpIhFan31a8w=;
- b=A8Wc89H69uMR9V4sS0dulcMz+LtKja30qdYqVxRojZzGEGNuLIaObqqM
- /fqMNuxwAAX2TK/b51pGcYysRFwsvMX1Q1RfOtpg9wOgn2zE2k3vAKGoe
- MBOli9JQ1AmqJmDGXjkIFCxEDynxLJc55JOgCLHvWfmloEvEp+QJebOdv
- 4ACQiGAmwKooFu+3z5pWZm3HQSo2IBSpsiUNtcZISBNRtqE/Dcott5YcZ
- gm7fXotzrMHCQ88AW0YREl2SSYvYyUhdZDUtBDwgKg0UjrBWChtAqALgQ
- LC8PNHzmJZTONPMnVbD6TTvHFp83/D+K+HLpDPG8cbAJkxWW4Qp1J3mj0 g==;
-X-CSE-ConnectionGUID: EtlUePbAS3Gm2lUHv9ym+w==
-X-CSE-MsgGUID: uT30yN2wRjq9DMDBNlXb8w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11050"; a="20386907"
-X-IronPort-AV: E=Sophos;i="6.07,218,1708416000"; d="scan'208";a="20386907"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Apr 2024 05:14:56 -0700
-X-CSE-ConnectionGUID: C0Jeq7A3RpiqZCcgLkMW0w==
-X-CSE-MsgGUID: Vu8TxWsvR5ONSzipf1pQHg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,218,1708416000"; d="scan'208";a="61205258"
-Received: from unknown (HELO 23c141fc0fd8) ([10.239.97.151])
- by orviesa001.jf.intel.com with ESMTP; 21 Apr 2024 05:14:53 -0700
-Received: from kbuild by 23c141fc0fd8 with local (Exim 4.96)
- (envelope-from <lkp@intel.com>) id 1ryW5q-000Bu2-15;
- Sun, 21 Apr 2024 12:14:50 +0000
-Date: Sun, 21 Apr 2024 20:14:21 +0800
-From: kernel test robot <lkp@intel.com>
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, Jonathan.Cameron@huawei.com,
- dan.j.williams@intel.com, dave@stgolabs.net, ira.weiny@intel.com,
- alison.schofield@intel.com
-Subject: Re: [PATCH v3 2/2] cxl/core: add poison creation event handler
-Message-ID: <202404212044.uSxtGRtL-lkp@intel.com>
-References: <20240417075053.3273543-3-ruansy.fnst@fujitsu.com>
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1ryXpk-0008KR-DC; Sun, 21 Apr 2024 10:06:22 -0400
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy4.enst.fr (Postfix) with ESMTP id 9FB7E2066A;
+ Sun, 21 Apr 2024 16:06:14 +0200 (CEST)
+Received: from zproxy4.enst.fr ([IPv6:::1])
+ by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id 09e0s9xG2QB5; Sun, 21 Apr 2024 16:06:13 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy4.enst.fr (Postfix) with ESMTP id 91E5B2061F;
+ Sun, 21 Apr 2024 16:06:13 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 91E5B2061F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1713708373;
+ bh=bLqPec3FceI5R9NLnnSodI+Knv8HoQGLvkpWNn2IWV4=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=YtPDNzaJl+46hexN1Ggds/fW9sqDpTkeZDiAT9+8fOPefJv4h/PYi1H47+arUskZU
+ D5/iIbeCSiyaC31nmxh9cku+NU104Us9Yq4pq+vf33qpW9Di/eASvPmUiY185+comB
+ OTmB9PUSa40JqE2oHz9dueetyK8yq+AsdxDA/R9k=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy4.enst.fr ([IPv6:::1])
+ by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id lbi1dKfJn23E; Sun, 21 Apr 2024 16:06:13 +0200 (CEST)
+Received: from inesv-Inspiron-3501.. (unknown
+ [IPv6:2a02:1808:204:e56c:d081:2a7:415b:bbbd])
+ by zproxy4.enst.fr (Postfix) with ESMTPSA id 4918820600;
+ Sun, 21 Apr 2024 16:06:12 +0200 (CEST)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Samuel Tardieu <sam@rfc1149.net>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-arm@nongnu.org,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 0/5] Add device DM163 (led driver,
+ matrix colors shield & display)
+Date: Sun, 21 Apr 2024 16:02:43 +0200
+Message-ID: <20240421140604.111262-1-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240417075053.3273543-3-ruansy.fnst@fujitsu.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=lkp@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.42,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:660:330f:2::df;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy4.enst.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,42 +84,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shiyang,
+This device implements the IM120417002 colors shield v1.1 for Arduino
+(which relies on the DM163 8x3-channel led driving logic) and features
+a simple display of an 8x8 RGB matrix. This color shield can be plugged
+on the Arduino board (or the B-L475E-IOT01A board) to drive an 8x8
+RGB led matrix. This RGB led matrix takes advantage of retinal persistanc=
+e
+to seemingly display different colors in each row.
 
-kernel test robot noticed the following build errors:
+Hello,
 
-[auto build test ERROR on cxl/next]
-[also build test ERROR on linus/master v6.9-rc4 next-20240419]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+I'm planning to add a more thorough test of the display functionality
+in a later patch, based on the avocado test  `machine_m68k_nextcube.py`.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Shiyang-Ruan/cxl-core-correct-length-of-DPA-field-masks/20240417-155443
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git next
-patch link:    https://lore.kernel.org/r/20240417075053.3273543-3-ruansy.fnst%40fujitsu.com
-patch subject: [PATCH v3 2/2] cxl/core: add poison creation event handler
-config: csky-randconfig-002-20240421 (https://download.01.org/0day-ci/archive/20240421/202404212044.uSxtGRtL-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240421/202404212044.uSxtGRtL-lkp@intel.com/reproduce)
+Thank you for the reviews.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202404212044.uSxtGRtL-lkp@intel.com/
+Changes from v4 :
+dm163
+- redefine `DM163_NUM_LEDS` for clarity
+- change definition of `COLOR_BUFFER_SIZE`
+- rename `age_of_row` to `row_persistance_delay`
+- remove unnecessary QOM cast macro in GPIO handlers
+- remove unnecessary inline of `dm163_bank0` and `dm163_bank1`
+- replace occurrences of number 8 by the right define macro
+- use unsigned type to print GPIO input `new_stateq`
+STM32L4x5 qtests
+- add comment to explain GPIO forwarding to SoC
+B-L475E-IOT01A
+- correct formatting
+- use unsigned for gpio pins' indices
+DM163 qtest
+- use an enum for dm163 inputs
+- inline ['dm163-test'] in meson.build (I don't plan on adding qtests)
+OTHER
+- update copyrights to 2023-2024
 
-All errors (new ones prefixed by >>):
+Changes from v3 (review of the 1st commit by Peter Maydell) :
+- dm163.c : instead of redrawing the entire console each frame,
+only redraw the rows that changed using a new variable `redraw`
+- reset all the fields in `dm163_reset_hold`
+- correcting typos : persistance -> persistence
+- b-l475e-iot01a.rst : correcting typo
 
-   `.exit.text' referenced in section `__jump_table' of fs/ceph/super.o: defined in discarded section `.exit.text' of fs/ceph/super.o
-   `.exit.text' referenced in section `__jump_table' of fs/ceph/super.o: defined in discarded section `.exit.text' of fs/ceph/super.o
-   csky-linux-ld: drivers/cxl/core/mbox.o: in function `__cxl_report_poison':
-   mbox.c:(.text+0xa12): undefined reference to `cxl_trace_hpa'
->> csky-linux-ld: mbox.c:(.text+0xa44): undefined reference to `cxl_trace_hpa'
-   `.exit.text' referenced in section `__jump_table' of drivers/target/target_core_configfs.o: defined in discarded section `.exit.text' of drivers/target/target_core_configfs.o
-   `.exit.text' referenced in section `__jump_table' of drivers/target/target_core_configfs.o: defined in discarded section `.exit.text' of drivers/target/target_core_configfs.o
-   `.exit.text' referenced in section `__jump_table' of net/ceph/ceph_common.o: defined in discarded section `.exit.text' of net/ceph/ceph_common.o
-   `.exit.text' referenced in section `__jump_table' of net/ceph/ceph_common.o: defined in discarded section `.exit.text' of net/ceph/ceph_common.o
+Changes from v2 : Corrected typo in the Based-on message id
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Changes from v1 :
+- moving the DM163 from the SoC to the B-L475E-IOT01A machine
+(changing config files and tests accordingly)
+- restricting DM163 test to ARM & DM163 availability
+- using `object_class_by_name()` to check for DM163 presence at run-time
+- exporting SYSCFG inputs to the SoC (and adapting tests accordingly)
+
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+
+In=C3=A8s Varhol (5):
+  hw/display : Add device DM163
+  hw/arm : Pass STM32L4x5 SYSCFG gpios to STM32L4x5 SoC
+  hw/arm : Create Bl475eMachineState
+  hw/arm : Connect DM163 to B-L475E-IOT01A
+  tests/qtest : Add testcase for DM163
+
+ docs/system/arm/b-l475e-iot01a.rst  |   3 +-
+ include/hw/display/dm163.h          |  59 +++++
+ hw/arm/b-l475e-iot01a.c             | 105 +++++++--
+ hw/arm/stm32l4x5_soc.c              |   6 +-
+ hw/display/dm163.c                  | 334 ++++++++++++++++++++++++++++
+ tests/qtest/dm163-test.c            | 194 ++++++++++++++++
+ tests/qtest/stm32l4x5_gpio-test.c   |  13 +-
+ tests/qtest/stm32l4x5_syscfg-test.c |  17 +-
+ hw/arm/Kconfig                      |   1 +
+ hw/display/Kconfig                  |   3 +
+ hw/display/meson.build              |   1 +
+ hw/display/trace-events             |  14 ++
+ tests/qtest/meson.build             |   2 +
+ 13 files changed, 721 insertions(+), 31 deletions(-)
+ create mode 100644 include/hw/display/dm163.h
+ create mode 100644 hw/display/dm163.c
+ create mode 100644 tests/qtest/dm163-test.c
+
+--=20
+2.43.2
+
 
