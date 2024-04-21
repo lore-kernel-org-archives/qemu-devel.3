@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34F8C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 14:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824B8C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 14:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryXps-0001Qe-1d; Sun, 21 Apr 2024 10:06:28 -0400
+	id 1ryXq0-0001UH-5u; Sun, 21 Apr 2024 10:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1ryXpm-0001PI-TV; Sun, 21 Apr 2024 10:06:22 -0400
+ id 1ryXpo-0001Pt-Di; Sun, 21 Apr 2024 10:06:25 -0400
 Received: from zproxy4.enst.fr ([2001:660:330f:2::df])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1ryXpk-0008KR-DC; Sun, 21 Apr 2024 10:06:22 -0400
+ id 1ryXpl-0008KY-D2; Sun, 21 Apr 2024 10:06:24 -0400
 Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 9FB7E2066A;
- Sun, 21 Apr 2024 16:06:14 +0200 (CEST)
+ by zproxy4.enst.fr (Postfix) with ESMTP id A140620642;
+ Sun, 21 Apr 2024 16:06:16 +0200 (CEST)
 Received: from zproxy4.enst.fr ([IPv6:::1])
  by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id 09e0s9xG2QB5; Sun, 21 Apr 2024 16:06:13 +0200 (CEST)
+ id opCqgdwTej2g; Sun, 21 Apr 2024 16:06:15 +0200 (CEST)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 91E5B2061F;
- Sun, 21 Apr 2024 16:06:13 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 91E5B2061F
+ by zproxy4.enst.fr (Postfix) with ESMTP id 5954D20616;
+ Sun, 21 Apr 2024 16:06:15 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 5954D20616
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1713708373;
- bh=bLqPec3FceI5R9NLnnSodI+Knv8HoQGLvkpWNn2IWV4=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1713708375;
+ bh=X/wpbm0EC8rqlm8d0E5vAn6rjNtyNNeDQK76DQ2iaCs=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=YtPDNzaJl+46hexN1Ggds/fW9sqDpTkeZDiAT9+8fOPefJv4h/PYi1H47+arUskZU
- D5/iIbeCSiyaC31nmxh9cku+NU104Us9Yq4pq+vf33qpW9Di/eASvPmUiY185+comB
- OTmB9PUSa40JqE2oHz9dueetyK8yq+AsdxDA/R9k=
+ b=WLLsDXNvD5GJqBbJj3SK5HEX45JTE+bfXumyalFJ6p6Xwc5sz6fRENfOS/S5H/Jvk
+ X/lbpLcKtTgH6wC8mxq0z8EiDT59kgLo6GAUxZWywSUmskzIRbvCMSvM1rYfMJ9Xhu
+ T4N0pJ/EYAmTxHDRHVn1ZUXGfTdcKnmsSBmiMQXE=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy4.enst.fr ([IPv6:::1])
  by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id lbi1dKfJn23E; Sun, 21 Apr 2024 16:06:13 +0200 (CEST)
+ id Pw817ZzTc0g1; Sun, 21 Apr 2024 16:06:15 +0200 (CEST)
 Received: from inesv-Inspiron-3501.. (unknown
  [IPv6:2a02:1808:204:e56c:d081:2a7:415b:bbbd])
- by zproxy4.enst.fr (Postfix) with ESMTPSA id 4918820600;
- Sun, 21 Apr 2024 16:06:12 +0200 (CEST)
+ by zproxy4.enst.fr (Postfix) with ESMTPSA id 6A34920600;
+ Sun, 21 Apr 2024 16:06:14 +0200 (CEST)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -53,11 +53,12 @@ Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-arm@nongnu.org,
  =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 0/5] Add device DM163 (led driver,
- matrix colors shield & display)
-Date: Sun, 21 Apr 2024 16:02:43 +0200
-Message-ID: <20240421140604.111262-1-ines.varhol@telecom-paris.fr>
+Subject: [PATCH v5 2/5] hw/arm : Pass STM32L4x5 SYSCFG gpios to STM32L4x5 SoC
+Date: Sun, 21 Apr 2024 16:02:45 +0200
+Message-ID: <20240421140604.111262-3-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240421140604.111262-1-ines.varhol@telecom-paris.fr>
+References: <20240421140604.111262-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -84,85 +85,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This device implements the IM120417002 colors shield v1.1 for Arduino
-(which relies on the DM163 8x3-channel led driving logic) and features
-a simple display of an 8x8 RGB matrix. This color shield can be plugged
-on the Arduino board (or the B-L475E-IOT01A board) to drive an 8x8
-RGB led matrix. This RGB led matrix takes advantage of retinal persistanc=
-e
-to seemingly display different colors in each row.
+Exposing SYSCFG inputs to the SoC is practical in order to wire the SoC
+to the optional DM163 display from the board code (GPIOs outputs need
+to be connected to both SYSCFG inputs and DM163 inputs).
 
-Hello,
-
-I'm planning to add a more thorough test of the display functionality
-in a later patch, based on the avocado test  `machine_m68k_nextcube.py`.
-
-Thank you for the reviews.
-
-Changes from v4 :
-dm163
-- redefine `DM163_NUM_LEDS` for clarity
-- change definition of `COLOR_BUFFER_SIZE`
-- rename `age_of_row` to `row_persistance_delay`
-- remove unnecessary QOM cast macro in GPIO handlers
-- remove unnecessary inline of `dm163_bank0` and `dm163_bank1`
-- replace occurrences of number 8 by the right define macro
-- use unsigned type to print GPIO input `new_stateq`
-STM32L4x5 qtests
-- add comment to explain GPIO forwarding to SoC
-B-L475E-IOT01A
-- correct formatting
-- use unsigned for gpio pins' indices
-DM163 qtest
-- use an enum for dm163 inputs
-- inline ['dm163-test'] in meson.build (I don't plan on adding qtests)
-OTHER
-- update copyrights to 2023-2024
-
-Changes from v3 (review of the 1st commit by Peter Maydell) :
-- dm163.c : instead of redrawing the entire console each frame,
-only redraw the rows that changed using a new variable `redraw`
-- reset all the fields in `dm163_reset_hold`
-- correcting typos : persistance -> persistence
-- b-l475e-iot01a.rst : correcting typo
-
-Changes from v2 : Corrected typo in the Based-on message id
-
-Changes from v1 :
-- moving the DM163 from the SoC to the B-L475E-IOT01A machine
-(changing config files and tests accordingly)
-- restricting DM163 test to ARM & DM163 availability
-- using `object_class_by_name()` to check for DM163 presence at run-time
-- exporting SYSCFG inputs to the SoC (and adapting tests accordingly)
+STM32L4x5 SYSCFG in-irq interception needed to be changed accordingly.
 
 Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+---
+ hw/arm/stm32l4x5_soc.c              |  6 ++++--
+ tests/qtest/stm32l4x5_gpio-test.c   | 13 ++++++++-----
+ tests/qtest/stm32l4x5_syscfg-test.c | 17 ++++++++++-------
+ 3 files changed, 22 insertions(+), 14 deletions(-)
 
-In=C3=A8s Varhol (5):
-  hw/display : Add device DM163
-  hw/arm : Pass STM32L4x5 SYSCFG gpios to STM32L4x5 SoC
-  hw/arm : Create Bl475eMachineState
-  hw/arm : Connect DM163 to B-L475E-IOT01A
-  tests/qtest : Add testcase for DM163
-
- docs/system/arm/b-l475e-iot01a.rst  |   3 +-
- include/hw/display/dm163.h          |  59 +++++
- hw/arm/b-l475e-iot01a.c             | 105 +++++++--
- hw/arm/stm32l4x5_soc.c              |   6 +-
- hw/display/dm163.c                  | 334 ++++++++++++++++++++++++++++
- tests/qtest/dm163-test.c            | 194 ++++++++++++++++
- tests/qtest/stm32l4x5_gpio-test.c   |  13 +-
- tests/qtest/stm32l4x5_syscfg-test.c |  17 +-
- hw/arm/Kconfig                      |   1 +
- hw/display/Kconfig                  |   3 +
- hw/display/meson.build              |   1 +
- hw/display/trace-events             |  14 ++
- tests/qtest/meson.build             |   2 +
- 13 files changed, 721 insertions(+), 31 deletions(-)
- create mode 100644 include/hw/display/dm163.h
- create mode 100644 hw/display/dm163.c
- create mode 100644 tests/qtest/dm163-test.c
-
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index 40e294f838..0332b67701 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -1,8 +1,8 @@
+ /*
+  * STM32L4x5 SoC family
+  *
+- * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
+- * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
++ * Copyright (c) 2023-2024 Arnaud Minier <arnaud.minier@telecom-paris.fr=
+>
++ * Copyright (c) 2023-2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
+r>
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  *
+@@ -221,6 +221,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+         }
+     }
+=20
++    qdev_pass_gpios(DEVICE(&s->syscfg), dev_soc, NULL);
++
+     /* EXTI device */
+     busdev =3D SYS_BUS_DEVICE(&s->exti);
+     if (!sysbus_realize(busdev, errp)) {
+diff --git a/tests/qtest/stm32l4x5_gpio-test.c b/tests/qtest/stm32l4x5_gp=
+io-test.c
+index 0f6bda54d3..72a7823406 100644
+--- a/tests/qtest/stm32l4x5_gpio-test.c
++++ b/tests/qtest/stm32l4x5_gpio-test.c
+@@ -43,6 +43,9 @@
+ #define OTYPER_PUSH_PULL 0
+ #define OTYPER_OPEN_DRAIN 1
+=20
++/* SoC forwards GPIOs to SysCfg */
++#define SYSCFG "/machine/soc"
++
+ const uint32_t moder_reset[NUM_GPIOS] =3D {
+     0xABFFFFFF,
+     0xFFFFFEBF,
+@@ -284,7 +287,7 @@ static void test_gpio_output_mode(const void *data)
+     uint32_t gpio =3D test_gpio_addr(data);
+     unsigned int gpio_id =3D get_gpio_id(gpio);
+=20
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
++    qtest_irq_intercept_in(global_qtest, SYSCFG);
+=20
+     /* Set a bit in ODR and check nothing happens */
+     gpio_set_bit(gpio, ODR, pin, 1);
+@@ -319,7 +322,7 @@ static void test_gpio_input_mode(const void *data)
+     uint32_t gpio =3D test_gpio_addr(data);
+     unsigned int gpio_id =3D get_gpio_id(gpio);
+=20
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
++    qtest_irq_intercept_in(global_qtest, SYSCFG);
+=20
+     /* Configure a line as input, raise it, and check that the pin is hi=
+gh */
+     gpio_set_2bits(gpio, MODER, pin, MODER_INPUT);
+@@ -348,7 +351,7 @@ static void test_pull_up_pull_down(const void *data)
+     uint32_t gpio =3D test_gpio_addr(data);
+     unsigned int gpio_id =3D get_gpio_id(gpio);
+=20
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
++    qtest_irq_intercept_in(global_qtest, SYSCFG);
+=20
+     /* Configure a line as input with pull-up, check the line is set hig=
+h */
+     gpio_set_2bits(gpio, MODER, pin, MODER_INPUT);
+@@ -378,7 +381,7 @@ static void test_push_pull(const void *data)
+     uint32_t gpio =3D test_gpio_addr(data);
+     uint32_t gpio2 =3D GPIO_BASE_ADDR + (GPIO_H - gpio);
+=20
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
++    qtest_irq_intercept_in(global_qtest, SYSCFG);
+=20
+     /* Setting a line high externally, configuring it in push-pull outpu=
+t */
+     /* And checking the pin was disconnected */
+@@ -425,7 +428,7 @@ static void test_open_drain(const void *data)
+     uint32_t gpio =3D test_gpio_addr(data);
+     uint32_t gpio2 =3D GPIO_BASE_ADDR + (GPIO_H - gpio);
+=20
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/syscfg");
++    qtest_irq_intercept_in(global_qtest, SYSCFG);
+=20
+     /* Setting a line high externally, configuring it in open-drain outp=
+ut */
+     /* And checking the pin was disconnected */
+diff --git a/tests/qtest/stm32l4x5_syscfg-test.c b/tests/qtest/stm32l4x5_=
+syscfg-test.c
+index ed4801798d..733b42df55 100644
+--- a/tests/qtest/stm32l4x5_syscfg-test.c
++++ b/tests/qtest/stm32l4x5_syscfg-test.c
+@@ -1,8 +1,8 @@
+ /*
+  * QTest testcase for STM32L4x5_SYSCFG
+  *
+- * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
+- * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
++ * Copyright (c) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
++ * Copyright (c) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+  *
+  * This work is licensed under the terms of the GNU GPL, version 2 or la=
+ter.
+  * See the COPYING file in the top-level directory.
+@@ -25,6 +25,10 @@
+ #define SYSCFG_SWPR2 0x28
+ #define INVALID_ADDR 0x2C
+=20
++/* SoC forwards GPIOs to SysCfg */
++#define SYSCFG "/machine/soc"
++#define EXTI "/machine/soc/exti"
++
+ static void syscfg_writel(unsigned int offset, uint32_t value)
+ {
+     writel(SYSCFG_BASE_ADDR + offset, value);
+@@ -37,8 +41,7 @@ static uint32_t syscfg_readl(unsigned int offset)
+=20
+ static void syscfg_set_irq(int num, int level)
+ {
+-   qtest_set_irq_in(global_qtest, "/machine/soc/syscfg",
+-                    NULL, num, level);
++   qtest_set_irq_in(global_qtest, SYSCFG, NULL, num, level);
+ }
+=20
+ static void system_reset(void)
+@@ -197,7 +200,7 @@ static void test_interrupt(void)
+      * Test that GPIO rising lines result in an irq
+      * with the right configuration
+      */
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/exti");
++    qtest_irq_intercept_in(global_qtest, EXTI);
+=20
+     /* GPIOA is the default source for EXTI lines 0 to 15 */
+=20
+@@ -230,7 +233,7 @@ static void test_irq_pin_multiplexer(void)
+      * Test that syscfg irq sets the right exti irq
+      */
+=20
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/exti");
++    qtest_irq_intercept_in(global_qtest, EXTI);
+=20
+     syscfg_set_irq(0, 1);
+=20
+@@ -257,7 +260,7 @@ static void test_irq_gpio_multiplexer(void)
+      * Test that an irq is generated only by the right GPIO
+      */
+=20
+-    qtest_irq_intercept_in(global_qtest, "/machine/soc/exti");
++    qtest_irq_intercept_in(global_qtest, EXTI);
+=20
+     /* GPIOA is the default source for EXTI lines 0 to 15 */
+=20
 --=20
 2.43.2
 
