@@ -4,78 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EFA2C4345F
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 08:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C78CAC4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 10:19:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rySkx-0006v4-7c; Sun, 21 Apr 2024 04:41:03 -0400
+	id 1ryUH2-0005C4-F6; Sun, 21 Apr 2024 06:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1rySku-0006ui-1g
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 04:41:00 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1rySks-0005ZM-50
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 04:40:59 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2dd6a7ae2dcso2864781fa.1
- for <qemu-devel@nongnu.org>; Sun, 21 Apr 2024 01:40:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713688855; x=1714293655; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EYw+oymiOaoOYHHgiSaU0Ta6laFDOAwqfTQrddQlKT4=;
- b=Lz9DIYXjAw0+spwv42t6l6Z4v6gn9gx5olWDlK/Zn0JkrIwnayhRj7aCKX33zWwBzY
- TQmrX6A8MpgJiTyl65DE4XGt2J2qFvZgDiSkYDKkDnhdcdOclo7p/NaaPoZllFKuThKv
- ZoMuvxTgZGjtIqqciUauT+TPLDYPbgAIe6qrjcbVBuwYYMJ44UsgdPwA6SNT+tRImh2H
- Dc/gkGbanHYh5Z2KOpWlMgMPn23XG2bqEq/1h1kcMYEOcsrnSvXBJU35UWjx5L6Jf7SC
- Uj1oSNIPkrXFGMcMVpNLHDfL5O6mehCyRBiqkbDvPb7rsxhcCYWMdqPzc7MYYFUK9xdg
- 9Y5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713688855; x=1714293655;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EYw+oymiOaoOYHHgiSaU0Ta6laFDOAwqfTQrddQlKT4=;
- b=PfMRqFHSbGcjJSrFgzxjiA8kjphYPiFt8+qostIDL3mitCDxKBlhEP/IlC2V7eQ5gD
- Kk6KZ/ItTnuz9yQ3H7cWpebVDxB/I71lj+xXC1y46GAp205UR88/ZlAED0w6BAMrCi/b
- I+bn0mp2Uj1b/n8BEJHzmNMZtRcUTXFc664ToX0SKq/+d/BFXcvaGKZZGFOY4Llw+MDz
- szQE+z6NhOHrKZ+VbaP7vWey69/5fTS5s9AtH8IKmiIWCqj2hzOMJGFllWubhcS0U9Fr
- 8Z+Q0SuYCXRu0oMn4mMPAO9eU6zBHQU5xlMYPuNEJbKqbcxW5Sx70tlRuMurL8AtxPfi
- 5Dhg==
-X-Gm-Message-State: AOJu0Ywpr1xIQOcHCO0q+JQyCj9KP725+KI94OT1io6PqvhoQg2iGSBa
- gbusE1dEYfq4Nd1+O4RDFBj1YaKQYURFEN6joaV51n0UtUspNt5vcC12Xy78pzUmW4tAjB2YwTz
- Hyi5tic+vDX+IIxoYyOvno1HueJc=
-X-Google-Smtp-Source: AGHT+IGR9ZQq3eVBnsdzgC8K+QUTGH9xoW0jCR82J4l+z7eeo1ZF7swFwrND7r1ZN4As/BgCOpW7LQ//EFeAQuxLzpA=
-X-Received: by 2002:a05:651c:1414:b0:2da:16fd:5c9b with SMTP id
- u20-20020a05651c141400b002da16fd5c9bmr4978757lje.9.1713688854943; Sun, 21 Apr
- 2024 01:40:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1ryUGx-0005BU-NI; Sun, 21 Apr 2024 06:18:12 -0400
+Received: from collins.uni-paderborn.de ([2001:638:502:c003::14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1ryUGv-0008Ah-0t; Sun, 21 Apr 2024 06:18:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=mail.uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
+ Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=MuXmqVNk9vriirjyGts6Av5MAaDQTHLX4oeBi0sv69E=; b=bSiK/XIwthDT/beAA/7xoSmu90
+ 956cRvEdQbTFomP5RCpec5KYk50JeOZ2eGLhzweAWlJ72v9eENGtBQm0z4WHQ7KLfSvuiLlW7Wj8o
+ 4AQOlgp6HLUqB41teXPMQPBFT3bJdZWbqjjQ3tlt0zj3SwS3Z7tuIfmu0douTr2B0MCE=;
+Date: Sun, 21 Apr 2024 12:17:58 +0200
+From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+To: Sameer Kalliadan Poyil <sameer.kp.in@gmail.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ qemu-discuss@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: Qemu for TC377
+Message-ID: <2dmeztro45uitfbbpjlpekwv6zai2wntvvyfbggx2ps5ds2ye3@ij7eygqpw4x7>
+References: <CAAA2AK8p=RtqeNZXfnqprw+kqEBTvrQo1Va81+ctfYAT6k6jnA@mail.gmail.com>
+ <07e79630-7171-4cb5-829d-a87a8165adc5@linaro.org>
+ <gqzmd4roytmeq3hbtb4b4frhomqtcn4aje4wja7bwmbrvb5dfh@oumkvbg3uah3>
+ <CAAA2AK-tMmG079EAuqmZ7QNWiP1yXNbCfk+4FW8ypgB4hmeDsw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240419183135.12276-1-dorjoychy111@gmail.com>
- <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
-In-Reply-To: <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Sun, 21 Apr 2024 14:40:43 +0600
-Message-ID: <CAFfO_h7vUEhqV15epf+_zVrbDhc3JrejkkOVsHzHgCXNk+nDdg@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=dorjoychy111@gmail.com; helo=mail-lj1-x22d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAAA2AK-tMmG079EAuqmZ7QNWiP1yXNbCfk+4FW8ypgB4hmeDsw@mail.gmail.com>
+X-IMT-rspamd-score: -25
+X-IMT-Spam-Score: 0.0 ()
+X-Sophos-SenderHistory: ip=84.184.54.226, fs=512765, da=201303745, mc=1, sc=0,
+ hc=1, sp=0, fso=512765, re=0, sd=0, hd=0
+X-PMX-Version: 6.4.9.2830568, Antispam-Engine: 2.7.2.2107409,
+ Antispam-Data: 2024.1.27.235115, AntiVirus-Engine: 6.0.2,
+ AntiVirus-Data: 2024.1.26.602001
+X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
+Received-SPF: pass client-ip=2001:638:502:c003::14;
+ envelope-from=kbastian@mail.uni-paderborn.de; helo=collins.uni-paderborn.de
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,94 +74,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 21, 2024 at 11:40=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 4/19/24 11:31, Dorjoy Chowdhury wrote:
-> > +
-> > +    /*
-> > +     * Instantiate a temporary CPU object to build mp_affinity
-> > +     * of the possible CPUs.
-> > +     */
-> > +    cpuobj =3D object_new(ms->cpu_type);
-> > +    armcpu =3D ARM_CPU(cpuobj);
-> > +
-> >       for (n =3D 0; n < ms->possible_cpus->len; n++) {
-> >           ms->possible_cpus->cpus[n].type =3D ms->cpu_type;
-> >           ms->possible_cpus->cpus[n].arch_id =3D
-> > -            sbsa_ref_cpu_mp_affinity(sms, n);
-> > +            sbsa_ref_cpu_mp_affinity(armcpu, n);
-> >           ms->possible_cpus->cpus[n].props.has_thread_id =3D true;
-> >           ms->possible_cpus->cpus[n].props.thread_id =3D n;
-> >       }
-> > +
-> > +    object_unref(cpuobj);
->
-> Why is this instantiation necessary?
->
+Hi Sameer,
 
-The instantiation is necessary (like the one in hw/arm/virt.c in
-virt_possible_cpu_arch_ids) because the
-"sbsa_ref_possible_cpu_arch_ids" function is called (via
-possible_cpu_arch_ids) before the CPUs are created in the
-"sbsa_ref_init" function. There was some related discussion here
-(qemu-devel archive URL):
-https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg02074.html . I
-picked this up from the same thing done in hw/arm/virt.c in the
-"machvirt_init" function in the "if (!vms->memap) {" block.
-
-> > --- a/target/arm/cpu.c
-> > +++ b/target/arm/cpu.c
-> > @@ -1314,8 +1314,18 @@ static void arm_cpu_dump_state(CPUState *cs, FIL=
-E *f, int flags)
-> >       }
-> >   }
-> >
-> > -uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
-> > +uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz=
-)
-> >   {
-> > +    if (cpu->has_smt) {
-> > +        /*
-> > +         * Right now, the ARM CPUs with SMT supported by QEMU only hav=
-e
-> > +         * one thread per core. So Aff0 is always 0.
-> > +         */
+On Tue, Apr 16, 2024 at 02:26:10PM -0400, Sameer Kalliadan Poyil wrote:
+> Hi Bastian,
 >
-> Well, this isn't true.
+> Thanks for the information. I thought that I can do some prototyping before the
+> HW arrives. :)
 >
->      -smp [[cpus=3D]n][,maxcpus=3Dmaxcpus][,drawers=3Ddrawers][,books=3Db=
-ooks][,sockets=3Dsockets]
->                     [,dies=3Ddies][,clusters=3Dclusters][,cores=3Dcores][=
-,threads=3Dthreads]
+>  Yes I am interested for your bare metal program boot_to_main run it on TSIM.  
+> Is Infineon TSIM free? I searched it and I didn't find any download link. Could
+> you please give a link for that if it is from Infineon?
+
+I usually get it from the free entry toolchain [1]
+
 >
-> I would expect all of Aff[0-3] to be settable with the proper topology pa=
-rameters.
+> s it(TSIM)  trace32 simulator ? https://repo.lauterbach.com/download_demo.html
+> ?
 >
+> This page https://wiki.qemu.org/Documentation/Platforms/TriCore shows SCU is
+> under development.
 
-Sorry, maybe I misunderstood. From the gitlab bug ticket (URL:
-https://gitlab.com/qemu-project/qemu/-/issues/1608) and the discussion
-in qemu-devel (URL:
-https://mail.gnu.org/archive/html/qemu-devel/2024-04/msg01964.html) I
-looked at the technical reference manuals of the MPIDR register of the
-a-55, a-76, a-710, neoverse-v1, neoverse-n1, neoverse-n2 CPUs and all
-of them had MT=3D1 and one thread per core so Aff0 is always 0.
+I should change that on the wiki. I was experimenting with a QEMU model for the
+SCU when I was still in University, but nothing usable resulted from that. Now
+my time for such developments is unfortunately limited :(.
 
-I don't know what Aff3 should be set to. I see this comment in the
-target/arm/cpu.c "arm_cpu_realizefn" function
-   /* This cpu-id-to-MPIDR affinity is used only for TCG; KVM will
-override it.=E2=94=82
-     * We don't support setting cluster ID ([16..23]) (known as Aff2
-         =E2=94=82
-     * in later ARM ARM versions), or any of the higher affinity level
-fields,  =E2=94=82
-     * so these bits always RAZ.
-         =E2=94=82
-     */
-Right now we don't seem to set Aff3[39:32] at all in the mp_affinity
-property. Let me know what should be the expected behavior here as I
-don't have enough knowledge here. I will try to fix it. Thanks!
+>
+> Could you let me know who is developing it ? is  it possible to take an
+> existing SCU and modify according to AURIX data sheet? I see that UART is
+> possible to for Tricore like the one developed for ARM versatile platform
+>
+> Here is the link https://mail.gnu.org/archive/html/qemu-devel/2016-10/msg04514.html
 
-Regards,
-Dorjoy
+Sure, you can add a model of the Aurix UART in QEMU. It's "just" a matter of
+putting in the time to implement its registers and functionality.
+
+>
+> I have aurix development trial version and able to compile a UART project using
+> Tasking compiler and tried to run it on qemu, but I don't see any logs in the
+> qemu terminal as you said there is no peripherals implemented
+>
+> qemu-system-tricore -machine KIT_AURIX_TC277_TRB -cpu tc27x -m 6M -nographic
+> -kernel ASCLIN_Shell_UART_1_KIT_TC277_TFT.elf  -serial stdio -append "console=
+> ttyAMA0 console=ttyS0"
+
+I usually add '-d exec,cpu,nochain -D /tmp/exec.log -accel tcg,one-insn-per-tb=on'
+to get an execution trace to see if the binary is executing.
+
+You can also try attaching gdb by adding '-s -S' to the CLI. And then run in
+tricore-gdb 'target remote localhost:1234' see [2]
+
+>
+>
+> Also do you know if there is a virtual UART framework to communicate between
+> two Qemu instances or two TSIM instances running similar OS or different OS? I
+> need to do prototype testing RPMSg communication between  MCU and SOC using
+> external physical UART/SPI which can be tested using vritual UART using two
+> qemu instances. 
+
+No, I don't know of something like this.
+
+Cheers,
+Bastian
+
+[1] https://free-entry-toolchain.hightec-rt.com/
+[2] https://www.qemu.org/docs/master/system/gdb.html
 
