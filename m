@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFA7C07C79
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 17:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3BA0C4345F
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Apr 2024 17:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryaXS-0007MS-LD; Sun, 21 Apr 2024 12:59:38 -0400
+	id 1ryaYs-00081w-33; Sun, 21 Apr 2024 13:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ryaXQ-0007M2-Rl
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 12:59:36 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ryaYm-0007vA-Rh
+ for qemu-devel@nongnu.org; Sun, 21 Apr 2024 13:01:03 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ryaXP-0004LU-7W
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 12:59:36 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6ecf05fd12fso3499954b3a.2
- for <qemu-devel@nongnu.org>; Sun, 21 Apr 2024 09:59:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ryaYh-0004ep-8J
+ for qemu-devel@nongnu.org; Sun, 21 Apr 2024 13:00:59 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1e5aa82d1f6so28105675ad.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Apr 2024 10:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713718772; x=1714323572; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1713718854; x=1714323654; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0E7gtXOh4j0xndetgofvpbevu6Irg/HcGP8IRUZ82cs=;
- b=gmWE+4PBrHjjvrK0ATjqhn3igVV1qBaXEOOMRY70hu1UQ/zOf+T2vtvjBBbvg+GCKP
- oDXYQCO0thpDaXO28EuC8KoReRl/pN1bGN2WCiUS3a7kptv/Dc0u8/nUkJnMZDhR2WIT
- h+l9lh/pmFoj4vZz2eLwDcvbtdgNfIgjRoGpTZOPzkuH8TyRUHrthBhIEiiVK/0kS36Y
- I7zOig9DEDbLbANsgo+jDeW8Z6sn03K10FXZhG+K582DGwy93XkAx41FmxOqluNj3F7/
- 5Y+9xrHjA83IAU6JDCkEnpKNERnqLM3xEarpqVgQNdxxu4NTcH55BjS+WhFwitIYOHNj
- o5bQ==
+ bh=1S3Et/eayL3ikkvtUEAH89f0BM+clQwSc1NOjwOLPvc=;
+ b=FMcDoy2BsUKHk43BYh++CXrknNZgHQvRAtKCznA3TqvbyDIqAoAAvqBNuJI4XvkeBq
+ zqofO1Qvyjs040pGZcC8DERxbDrDt2ZaE7945Ve2NPtrG+5mnnAyYZtBkLTWWmSI9eh1
+ YpflB/cJwZkfruqeKUUz3q5+kMI65gEPle2abch3tKcdsSkpEEWodq48hBPcrA42oSen
+ ZaIeVKKPBqEsIqzSCskyhHt9o64CNP4dh+NcsZLKSmsg7/V4cYslSVa+C7r98OH1leQv
+ qJyLSHJU7r+0xP0YYuLiVEAFAR5ZOAcAWLWz9SinZrF8/OSTGH0l7EZ1piBF5JKQZxju
+ RQMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713718772; x=1714323572;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1713718854; x=1714323654;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0E7gtXOh4j0xndetgofvpbevu6Irg/HcGP8IRUZ82cs=;
- b=Hymr8LK48HKNSI7s9ZAG0I/1RLEwBGbQU68FqAVyDzg4DVApRAQ6M27zRDBunitMZQ
- y8Guxnk1ZgjM1LkRpgKtN86dEUcRxvBgWv1+BRQUKP5VavND4h1zFdmiQcCy8JjlQdWs
- io+36xrJ3lcuwoKUEGFLxyoELFsBRKdzh0m7UiMFU74PvwQmu2ozBMleEXQOmbbopX6M
- KVl8BqgdV7xeWk8r34Mjx/7wOnl3nQUVOEImRVun2uiv8btKB3Udnj5G1+d4IiLw7vg9
- ZNkATiwFdCbKfHs2cGSm8gVRqWbrGVy50l7d8Vr8hPdmJ6KjMNm18Zfy2nK8FrQvcOze
- iI3w==
+ bh=1S3Et/eayL3ikkvtUEAH89f0BM+clQwSc1NOjwOLPvc=;
+ b=PgqB4yVNs/KJ7WhZ+7gjssOWcwghYhMl2LgHk5sYl4fT26zkJR2EBIAGAZwWiP3D5c
+ vKtoFKRs+rZOBz29CNJ6r9y45RHwCMbg5eETO9r5lO7mXKrZ7hzVj2BlP8xtHJIMdC3d
+ hWHPI4qlE7j5XeIe1B/VG0vgsWxRxwxjNTGipW9Wu51yREmXGhE8uoaFQq/KPRGaCLU8
+ BfpxaiY56AtPT6oDYfPOAMEZrhVYSSSmEYHbthvWSpm2Erob+SJXYPxLuWQZvgRyDGyD
+ kwgHFUTHMTPCJiXyBpn3dnqQg5YajSLy1kf4656JxPkPrnJA2KQxaPBgexQ05aTQ/yzv
+ c/XA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhYWCync51V+83zndasaYhD4hzIUMo79mbkVWQoFd+G4/zzO7dungztjKIWQjcy+L+6PpMHJVPJ13dmhfWpD4FuL3B6Ec=
-X-Gm-Message-State: AOJu0Yykn0kWItEAhh37UawbfMVt/PbdleTzOnJe9/cUk19XO/d2VArx
- mUVlgZTaSLdS6i11ikKu9s233sYgXTyRknecMiQNm3cXAIAL+lnKuV7OKs/MnrY=
-X-Google-Smtp-Source: AGHT+IE4QLAEbtRRaytz5C1LdfWn4qK/4PPqoTw/AYbw7pC767UFeSigKSUwut/EQe9z4gaFm+1W/A==
-X-Received: by 2002:a05:6a20:43a0:b0:1ac:f796:963c with SMTP id
- i32-20020a056a2043a000b001acf796963cmr5719964pzl.56.1713718772235; 
- Sun, 21 Apr 2024 09:59:32 -0700 (PDT)
-Received: from [192.168.68.110] ([191.255.35.121])
+ AJvYcCVdeJdyozRtfhtraaain0VpVf2QckSMc6wVgK6zD26+mqTBecY58LFYHWO1tB+FzaN2LSfgZ8kdzxqnjaV+oXL0ZwwTuZw=
+X-Gm-Message-State: AOJu0YxewAggPYsPz08wgOiTIgn9hAE2ZHb68v1Bj8hJ29tK9i8Hm0CK
+ bI00aLcAIir+eSSW+DtR+xipT45a9sh/Mlg7Yh7SsCv9kCxvisBowAyfkTlFLiA=
+X-Google-Smtp-Source: AGHT+IHVhJdAebzZ8pdu3WHMOFSAAIMANoEkZ9vTWfKiATcUc3jo3DYqIlIMEeymUxTDG3FMj4gNCg==
+X-Received: by 2002:a17:903:64d:b0:1e3:c186:8db3 with SMTP id
+ kh13-20020a170903064d00b001e3c1868db3mr11968484plb.15.1713718853623; 
+ Sun, 21 Apr 2024 10:00:53 -0700 (PDT)
+Received: from [192.168.91.227] ([156.19.246.23])
  by smtp.gmail.com with ESMTPSA id
- o4-20020a056a00214400b006ed0f719a5fsm6351141pfk.81.2024.04.21.09.59.28
+ r3-20020a170902be0300b001e27462b988sm6528222pls.61.2024.04.21.10.00.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 21 Apr 2024 09:59:31 -0700 (PDT)
-Message-ID: <eef56ce4-3a57-4ed4-841f-bbe8528ff17b@ventanamicro.com>
-Date: Sun, 21 Apr 2024 13:59:26 -0300
+ Sun, 21 Apr 2024 10:00:53 -0700 (PDT)
+Message-ID: <5f752ab8-c9cb-4357-9f42-c0c76702a9d9@linaro.org>
+Date: Sun, 21 Apr 2024 10:00:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Use get_address() to get address with
- Zicbom extensions
-Content-Language: en-US
+Subject: Re: [PATCH 23/24] exec: Remove 'disas/disas.h' from 'exec/log.h'
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Bin Meng <bin.meng@windriver.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <cmuellner@linux.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
- Palmer Dabbelt <palmer@rivosinc.com>, Zhiwei Jiang <jiangzw@tecorigin.com>
-References: <20240419110514.69697-1-philmd@linaro.org>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240419110514.69697-1-philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ Michael Rolnik <mrolnik@gmail.com>, Brian Cain <bcain@quicinc.com>,
+ Song Gao <gaosong@loongson.cn>, Yoshinori Sato <ysato@users.sourceforge.jp>
+References: <20240418192525.97451-1-philmd@linaro.org>
+ <20240418192525.97451-24-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240418192525.97451-24-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,56 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/19/24 08:05, Philippe Mathieu-Daudé wrote:
-> We need to use get_address() to get an address from cpu_gpr[],
-> since $zero is "special" (NULL).
+On 4/18/24 12:25, Philippe Mathieu-Daudé wrote:
+> "exec/log.h" doesn't require "disas/disas.h". Remove it,
+> including it in the sources when required.
 > 
-> Fixes: e05da09b7c ("target/riscv: implement Zicbom extension")
-> Reported-by: Zhiwei Jiang (姜智伟) <jiangzw@tecorigin.com>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
+>   include/exec/log.h               | 1 -
+>   target/avr/translate.c           | 1 +
+>   target/hexagon/translate.c       | 1 +
+>   target/loongarch/tcg/translate.c | 1 +
+>   target/rx/translate.c            | 1 +
+>   tcg/tcg.c                        | 1 +
+>   6 files changed, 5 insertions(+), 1 deletion(-)
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Most of these additions are obviated by
+https://patchew.org/QEMU/20240405102459.462551-1-richard.henderson@linaro.org/
 
->   target/riscv/insn_trans/trans_rvzicbo.c.inc | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-> index d5d7095903..6f6b29598d 100644
-> --- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-> @@ -31,27 +31,27 @@
->   static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
->   {
->       REQUIRE_ZICBOM(ctx);
-> -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-> +    gen_helper_cbo_clean_flush(tcg_env, get_address(ctx, a->rs1, 0));
->       return true;
->   }
->   
->   static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
->   {
->       REQUIRE_ZICBOM(ctx);
-> -    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-> +    gen_helper_cbo_clean_flush(tcg_env, get_address(ctx, a->rs1, 0));
->       return true;
->   }
->   
->   static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
->   {
->       REQUIRE_ZICBOM(ctx);
-> -    gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
-> +    gen_helper_cbo_inval(tcg_env, get_address(ctx, a->rs1, 0));
->       return true;
->   }
->   
->   static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
->   {
->       REQUIRE_ZICBOZ(ctx);
-> -    gen_helper_cbo_zero(tcg_env, cpu_gpr[a->rs1]);
-> +    gen_helper_cbo_zero(tcg_env, get_address(ctx, a->rs1, 0));
->       return true;
->   }
+
+r~
 
