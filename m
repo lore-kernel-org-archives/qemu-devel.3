@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E69C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 21:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFB5C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 23:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rz13f-0003GF-4z; Mon, 22 Apr 2024 17:18:40 -0400
+	id 1rz3QA-0008AF-CW; Mon, 22 Apr 2024 19:50:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rz13c-0003Fr-0U
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 17:18:37 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <vlad.wing@gmail.com>)
+ id 1ryvQp-0004qm-Cg
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:18:11 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rz13a-0007pE-G3
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 17:18:35 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-41a4f291f80so11970425e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 14:18:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vlad.wing@gmail.com>)
+ id 1ryvQn-0000pM-D4
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:18:11 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-571c2055cb1so892268a12.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 08:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713820712; x=1714425512; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YqPCwvQuGJPWfQyJL1E4FlIJNAyThx9FnbqUDh3L0Zs=;
- b=JLIjyjb4bJDwlxcwWzFYQdNrt5zai8OtvAfiohxdcr6GSGBuVmqXpUWjNm/SB1fy4t
- nvXLUS+H0CU+Rb5F5EP9omJtFtV/wsp5CKnMgohrUZF9BNAJgOevCZoSXHUPBfMUKTLZ
- VQ3a6v5mg71akgSHft41dn1f1H3bps6j6dynQxW7XQWDdP52PDzGqI74TbKxJddGrVTQ
- 1rw1GPBGibt/qdi36IMUWcNQ8WAQVf1NPPdIFHIqsZdxim9bMkaZscSIE0Zm7o/Kdp4d
- ytMUbGlTuEe/bj2g2NiPw48N7imc2K8zWgFw57EuXCs+FeM7Jlssqqhk7d4rCdeOs83c
- fJIg==
+ d=gmail.com; s=20230601; t=1713799086; x=1714403886; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d9xj7HwmwuIRzsMLAZWeyWIJzUgtPFLJ8hFtN2pvdUw=;
+ b=f2pmFmsfFH/cukXxc93EedHb5wsQ74Fhg8tdvlht7YmmLPbQdrjgvE2y3gh6Q1TIO6
+ WIP6u4epi3gTSH39s6TirJdrtRAJ1DowPybtkmU01abnFtkOzC8gRqjysLC412ywOWze
+ 0Fg0QI03W2DS/TWWm+h7EzsSVd/vts4GHs7QzTl7eb8TW1wyTjxDtXfV5upOAzw18E53
+ G3njnAJsL4tQJuWXwKFqAJRI0Yzew1XMJaGF0KcB+00In7yL1tpRdJxyi6+7AuZLEcte
+ NiN5ghnMwgNf7GppWZVnoK9Vxju7hMCmifqLaRziuJh+qYDBIu7AbPkU+00d4wW4D4r9
+ TN3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713820712; x=1714425512;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YqPCwvQuGJPWfQyJL1E4FlIJNAyThx9FnbqUDh3L0Zs=;
- b=tBTtdBLPHMVbDJqTLTB3NWiJRGKpPkU0h4bKBhysyzkRF5r/kTjcb3s8cPA5FOPbSg
- s7T1fvDFvMIe+Qr1ESpnyntm8ujlBoXkxDNP86IUgeHlhD7oFXuIe0GjLZGPm+2YqBpO
- WFqHNcppzBlmYnnSUYQZH0filjxOHcnv9PgbJrPY9WCBOWOMF2XdG1dnh8z78Y+s7TjY
- 6mL3yUiCUmUpcHGz4ymkHSJYB/Rr3r8xc1/ozZQ1eoy71w2YpW+ExOSfrv3/4Lg0O62P
- rXsbPe5UvkVlUXG+LqHQ9YoCCTv5rJQYq574TI9vC++UYyMr9XDUO9sqicZazTNqJQB+
- bmBg==
-X-Gm-Message-State: AOJu0YwBpd8P0wfoWnWeV6Puq2v9dxcbD2E/xYyjxZH5xNrt9PjcpZgN
- MiSikRQ2mlvHpMcameUYt4RodbjO2Vhr7Lt5pOoVsocsy44Njovb4IAPP65252uUGxUClxlphlz
- e
-X-Google-Smtp-Source: AGHT+IGfgTTGUidYvKQOc279RHOW8sKvBDqYNHJWu5gHPOX1+2//QphpyeNxAtF4SbDZ2kj7Eb+UiA==
-X-Received: by 2002:a05:600c:4e8b:b0:418:e2e4:a84c with SMTP id
- f11-20020a05600c4e8b00b00418e2e4a84cmr9047314wmq.30.1713820712032; 
- Mon, 22 Apr 2024 14:18:32 -0700 (PDT)
-Received: from m1.home (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- f11-20020a05600c4e8b00b00417ee886977sm21854328wmq.4.2024.04.22.14.18.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 22 Apr 2024 14:18:31 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH v4] hw/audio/virtio-snd: Always use little endian audio format
-Date: Mon, 22 Apr 2024 23:18:30 +0200
-Message-ID: <20240422211830.25606-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ d=1e100.net; s=20230601; t=1713799086; x=1714403886;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=d9xj7HwmwuIRzsMLAZWeyWIJzUgtPFLJ8hFtN2pvdUw=;
+ b=W2QC2WBgSvqGZonAIgJgsDBCShoLt68GCClL62pq177zNO7XZaq/6ODreMbbBRAv2g
+ U7R6qZ5OjBEDAhHxl2K6ssxql0sLnY7LQVuONLpNyCBiO3+1r7YMGIrouTd6TYwI47o4
+ AZsgY4JXUdraH5JVFdqas4ZcO3ohmFlBd+dkjpHBkHVljUK3sEB4Nsvq0D4s/oI8HwAc
+ upAAHnssqy+hyOxI06O1MBo7vFR9nPp2kDO5Ultm/12CxJj4wMorp7AIh4AhWqp9tkox
+ ODlhRgtPjXI24EyzLS2qhIuCE9qCcJ8YeSuOmtZmhH01PgizRgWCp91BEfePh8O/EZcZ
+ r+Mw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbmrp2UkXIr3wOl3bQEVCzaEtvgux1OO3c9gSdg7fDGjErky12YDScWp3EItViMXB7G4qvhgGb0UWilEo0QG1aRbqzQFI=
+X-Gm-Message-State: AOJu0YwW9jSeb73upBYQvi2C89hYO9WBDsowdJMzTLoU5iv8mObzPmj5
+ XWPcuSIyoq8SmefAZlQnbQxNqATNofxL8tTtFwxsdvn6l1hQgNFy
+X-Google-Smtp-Source: AGHT+IE0xIZcSiuCSsz7uHwpkq02z/02QgEoSLowEQ4mDuOxo6EQH/+kgcM7JeLLwXtgGDXeB3sn2Q==
+X-Received: by 2002:a05:6402:524c:b0:572:1574:2b88 with SMTP id
+ t12-20020a056402524c00b0057215742b88mr1242248edd.40.1713799086256; 
+ Mon, 22 Apr 2024 08:18:06 -0700 (PDT)
+Received: from localhost (fwdproxy-lla-007.fbsv.net.
+ [2a03:2880:30ff:7::face:b00c]) by smtp.gmail.com with ESMTPSA id
+ p8-20020a05640243c800b00571fad0647csm2411769edc.74.2024.04.22.08.18.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Apr 2024 08:18:05 -0700 (PDT)
+From: Vlad Poenaru <vlad.wing@gmail.com>
+To: stable@vger.kernel.org
+Cc: Breno Leitao <leitao@debian.org>, qemu-devel@nongnu.org,
+ Heng Qi <hengqi@linux.alibaba.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Subject: [PATCH 6.6.y] virtio_net: Do not send RSS key if it is not supported
+Date: Mon, 22 Apr 2024 08:18:03 -0700
+Message-ID: <20240422151803.1266071-1-vlad.wing@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <2024041412-subduing-brewing-cd04@gregkh>
+References: <2024041412-subduing-brewing-cd04@gregkh>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=vlad.wing@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 22 Apr 2024 19:50:00 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,44 +97,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VIRTIO Sound Device conforms with the Virtio spec v1.2,
-thus only use little endianness.
+From: Breno Leitao <leitao@debian.org>
 
-Remove the suspicious target_words_bigendian() noticed during
-code review.
+commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
 
-Cc: qemu-stable@nongnu.org
-Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
+
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
+
+    # ethtool -X eth0  hfunc toeplitz
+
+This is how the problem happens:
+
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+scatter-gather
+
+4) Since the command above does not have a key, then the last
+scatter-gatter entry will be zeroed, since rss_key_size == 0.
+sg_buf_size = vi->rss_key_size;
+
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+with zero length, and do the following in virtqueue_map_desc() (QEMU
+function):
+
+  if (!sz) {
+      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+    vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+	     !virtqueue_is_broken(vi->cvq))
+	      cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+loops here forever. Keeping in mind that virtqueue_is_broken() does
+not look at the qemu `vdev->broken`, so, it never realizes that the
+vitio is broken at QEMU side.
+
+Fix it by not sending RSS commands if the feature is not available in
+the device.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Vlad Poenaru <vlad.wing@gmail.com>
 ---
-Supersedes: <20240422142056.3023-1-philmd@linaro.org>
-v4: always LE (MST)
----
- hw/audio/virtio-snd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/virtio_net.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index c80b58bf5d..ba4fff7302 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -24,7 +24,6 @@
- #include "trace.h"
- #include "qapi/error.h"
- #include "hw/audio/virtio-snd.h"
--#include "hw/core/cpu.h"
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 7cb0548d17a3..56cbe00126bb 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3570,19 +3570,34 @@ static int virtnet_get_rxfh(struct net_device *dev, u32 *indir, u8 *key, u8 *hfu
+ static int virtnet_set_rxfh(struct net_device *dev, const u32 *indir, const u8 *key, const u8 hfunc)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
++	bool update = false;
+ 	int i;
  
- #define VIRTIO_SOUND_VM_VERSION 1
- #define VIRTIO_SOUND_JACK_DEFAULT 0
-@@ -401,7 +400,7 @@ static void virtio_snd_get_qemu_audsettings(audsettings *as,
-     as->nchannels = MIN(AUDIO_MAX_CHANNELS, params->channels);
-     as->fmt = virtio_snd_get_qemu_format(params->format);
-     as->freq = virtio_snd_get_qemu_freq(params->rate);
--    as->endianness = target_words_bigendian() ? 1 : 0;
-+    as->endianness = 0; /* Conforming to VIRTIO 1.0: always little endian. */
+ 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
+ 
+ 	if (indir) {
++		if (!vi->has_rss)
++			return -EOPNOTSUPP;
++
+ 		for (i = 0; i < vi->rss_indir_table_size; ++i)
+ 			vi->ctrl->rss.indirection_table[i] = indir[i];
++		update = true;
+ 	}
+-	if (key)
++	if (key) {
++		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
++		 * device provides hash calculation capabilities, that is,
++		 * hash_key is configured.
++		 */
++		if (!vi->has_rss && !vi->has_rss_hash_report)
++			return -EOPNOTSUPP;
++
+ 		memcpy(vi->ctrl->rss.key, key, vi->rss_key_size);
++		update = true;
++	}
+ 
+-	virtnet_commit_rss_command(vi);
++	if (update)
++		virtnet_commit_rss_command(vi);
+ 
+ 	return 0;
  }
+@@ -4491,13 +4506,15 @@ static int virtnet_probe(struct virtio_device *vdev)
+ 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
+ 		vi->has_rss_hash_report = true;
  
- /*
+-	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
++	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
+ 		vi->has_rss = true;
+ 
+-	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_indir_table_size =
+ 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+ 				rss_max_indirection_table_length));
++	}
++
++	if (vi->has_rss || vi->has_rss_hash_report) {
+ 		vi->rss_key_size =
+ 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+ 
 -- 
-2.41.0
+2.43.0
 
 
