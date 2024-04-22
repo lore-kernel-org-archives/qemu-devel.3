@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0F1C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 14:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF5D0C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 14:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryuLj-0006HO-5X; Mon, 22 Apr 2024 10:08:51 -0400
+	id 1ryuUF-0000Bx-Kf; Mon, 22 Apr 2024 10:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ryuLg-0006H3-4K
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:08:48 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1ryuUD-0000BU-EO
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:17:37 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ryuLZ-0004kQ-GN
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:08:44 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1e3c9300c65so37775045ad.0
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 07:08:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1ryuUB-0006kp-8C
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:17:37 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a55b78510bbso110409166b.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 07:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713794916; x=1714399716; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6cFMVmV1V+IsJmWjvHA1Pf92EBcGaU+9cGPfXHv2Dts=;
- b=IOMPIOXs4Dp3AhQV//Ta6KDZoq4+5oawOlHl2ZMt338SWSZtL7CP89MLbRydZQvV4f
- YXOD3gA/tz1ZGk3HCMdvduzpdNyTGmsfDNoXiYgJlRjOx3odznPB3IfCivA750F0uTyX
- AFCHY9jGe1bqEKm0W2P5yz6Nh5bvqjw045XU1ogSumzZMZ6WXvhqHP0d3uikGCwrALvH
- tYdEAXNNkoZW+DP6QVjiO1/vOGySiXA/JJo8cAKlGpcW+hL9amZU+fsq4yqEnPIn29GM
- qg27eR+TBvBFvPmeUGfp4FWH3/O3J7ivwgihwQCzf0pyuQBlWtIYG0GtbS7o/HGpnk7f
- XTog==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1713795453; x=1714400253;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LrDoXa9KP1kc/NGluVGm9K6DF251cRYqD0XD8n1DWXM=;
+ b=jCe7LXfLm/KpN36/xSa7Gh8i3JyP3hdVwymdz01p7xaFbzPaZN8VKy3GxDLjuJL3Yu
+ 5t4ajU3rsbtok9d5aXjc/VC5T7CJxQV9o0gzS8JeQ4AGAincqiX4SgxuiZ+DUXNg1db+
+ cPbeX68T7StECp/t1dqwT5GgFxfOD98emia/1e/XpVtXvu9/tblkssZgu9KIcGXnPSPJ
+ 86o8sihjClrc1IdfqiVw19gNl4lypmzjBrepRmBez6TfizkEIVCUA/BlniEKE0+W8e9R
+ Zz7gHsRBbx+WYQH7SW4rsfxYTAuVwtEs7g7sp4iMzj/qA6u6XFFY0dmdNADy+HH7wHgK
+ /U4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713794916; x=1714399716;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6cFMVmV1V+IsJmWjvHA1Pf92EBcGaU+9cGPfXHv2Dts=;
- b=OlZH5oECZ0kyYy8i8b3eZ05YNGTGhg6Qq8X4VRMV/et3S7cEW5yikPjqvFwqo8hbSh
- 3OyFZ1qIu9YGpDmNzvel0fQfNvqMx4OtZatF1oC1vHvuWqtLXTc2azCxxH5J8WtDLaps
- Eyd4vtGBIkqjDUdqmOvQ2nh1EuPCELazYrcRB1i6oaRUNXN8KEuNcYsB2EmdZHWybygt
- JooBLGmjXMwr7R66l8xjeTfnKt9bspX9h4OoUHUcuEo4nzuN8E2ZMg4arht0AR9Mrovr
- Y2XKa/i8lyUPWMK7RF59EurNz527oim8IvnTunayzFdXYekBZ47rUqNLQ8d918o+pJ3I
- oFGg==
-X-Gm-Message-State: AOJu0YwBwPodPasYlzZtFv2i+3mcB9X/6wZWMeH0Eu/1iD2Bl4OuF8jF
- MMTmt++omskscDjxRYC6RPi0az7nsmjR+dQcjXBTlwOc67/4yZh9Hy1sf4dUsDc=
-X-Google-Smtp-Source: AGHT+IFGj2R7ewFPLB3losamGt3SrThYqax5I20UY+H8ndeqsZ5M3BRHUQo64ytnAEQ2GyBgo5+7RQ==
-X-Received: by 2002:a17:902:aa4a:b0:1e3:1526:77d5 with SMTP id
- c10-20020a170902aa4a00b001e3152677d5mr9631747plr.23.1713794915976; 
- Mon, 22 Apr 2024 07:08:35 -0700 (PDT)
-Received: from [192.168.68.110] ([191.255.35.121])
- by smtp.gmail.com with ESMTPSA id
- s10-20020a170902a50a00b001e0da190a07sm8180072plq.167.2024.04.22.07.08.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 07:08:35 -0700 (PDT)
-Message-ID: <09749ed3-840c-4a47-8cd2-9a50c9951cdb@ventanamicro.com>
-Date: Mon, 22 Apr 2024 11:08:31 -0300
+ d=1e100.net; s=20230601; t=1713795453; x=1714400253;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LrDoXa9KP1kc/NGluVGm9K6DF251cRYqD0XD8n1DWXM=;
+ b=NEysjlmrIbxHHSoBLwqWIVZYn/oIPv1uImmWm5OI3fX7AGzid5+hRlldE04lPm5oop
+ qFPUKlVdwAgi4pCJC6mAhDuL6f30cXYyVH7Gv0yOXjFPzxONhCmoGVVg4jivL08XBuv3
+ e2pnjixKUMto2lnTPBF1QYIgUfF0AU8gs8N3PGHUmCtn6LJnajIW8b4KS75M/dEis7FX
+ jNuHJqnZmp7RolHBWLIm/G43JqNO45YHn9W3e7/vMhJc6RYgQrAjCDoXs5ZQ2bla/eY0
+ l5GmU5SeXSghBtBbydUrOZq6REbbuuCpUZiewoOPV4WU/I77BJuhjKW3qhZVahuhxUZ6
+ LnzA==
+X-Gm-Message-State: AOJu0YxLMGw2sOoW6f+ZkXMW+u8MH0Fu2bzzTKYGKj/s+WotvivTdTxJ
+ D3V0Gp70SLizoLCNC9n37nlea5YNTwptRZAXkzQrONNZOEbH3D8PtAofuo4FWok=
+X-Google-Smtp-Source: AGHT+IGY9rGb3molNvzsXaasBcFOvcBXHE3hE/c06DqOLNJD6oprmd/ygpsgm3vQkI8WGN9smuV0ng==
+X-Received: by 2002:a17:907:86a5:b0:a55:ac7d:af14 with SMTP id
+ qa37-20020a17090786a500b00a55ac7daf14mr3661196ejc.40.1713795453068; 
+ Mon, 22 Apr 2024 07:17:33 -0700 (PDT)
+Received: from localhost.localdomain (91.141.46.84.wireless.dyn.drei.com.
+ [91.141.46.84]) by smtp.gmail.com with ESMTPSA id
+ c19-20020a170906155300b00a526a99ccecsm5758740ejd.42.2024.04.22.07.17.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Apr 2024 07:17:32 -0700 (PDT)
+From: Andrew Melnychenko <andrew@daynix.com>
+To: jasowang@redhat.com,
+	yuri.benditovich@daynix.com
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v2 1/1] ebpf: Added traces back. Changed source set for eBPF
+ to 'system'.
+Date: Mon, 22 Apr 2024 16:51:16 +0300
+Message-ID: <20240422135116.53247-1-andrew@daynix.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/kvm: tolerate KVM disable ext errors
-Content-Language: en-US
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com
-References: <20240422131253.313869-1-dbarboza@ventanamicro.com>
- <20240422-8145ee4f1a24e27ac9dcb1b3@orel>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240422-8145ee4f1a24e27ac9dcb1b3@orel>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2a00:1450:4864:20::62a;
+ envelope-from=andrew@daynix.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,108 +90,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+There was an issue with Qemu build with "--disable-system".
+The traces could be generated and the build fails.
+The traces were 'cut out' for previous patches, and overall,
+the 'system' source set should be used like in pre-'eBPF blob' patches.
 
+Signed-off-by: Andrew Melnychenko <andrew@daynix.com>
+---
+ ebpf/ebpf_rss.c  | 7 +++++++
+ ebpf/meson.build | 2 +-
+ ebpf/trace.h     | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+ create mode 100644 ebpf/trace.h
 
-On 4/22/24 10:43, Andrew Jones wrote:
-> On Mon, Apr 22, 2024 at 10:12:53AM -0300, Daniel Henrique Barboza wrote:
->> Running a KVM guest using a 6.9-rc3 kernel, in a 6.8 host that has zkr
->> enabled, will fail with a kernel oops SIGILL right at the start. The
->> reason is that we can't expose zkr without implementing the SEED CSR.
->> Disabling zkr in the guest would be a workaround, but if the KVM doesn't
->> allow it we'll error out and never boot.
->>
->> In hindsight this is too strict. If we keep proceeding, despite not
->> disabling the extension in the KVM vcpu, we'll not add extension in
->                                                          ^ the
->> riscv,isa. The guest kernel will be unaware of the extension, i.e. it
->   ^ the
-> 
->> doesn't matter if the KVM vcpu has it enabled underneath or not. So it's
->> ok to keep booting in this case.
->>
->> Change our current logic to not error out if we fail to disable an
->> extension in kvm_set_one_reg(): throw an warning instead and keep
->> booting.  We'll keep the existing behavior when we fail to enable an
->> extension in KVM, since adding the extension in riscv,isa at this point
->> will cause a guest malfunction because the extension isn't enabled in
->> the vcpu.
-> 
-> I'd probably add a sentence or two explaining why we still want to warn,
-> which is because KVM is stating that while you may think you're disabling
-> an extension, that extension's behavior (instructions, etc.) will still
-> be exposed to the guest since there's no way not to expose it.  The user
-> should be aware that a guest could use it anyway, since that means the
-> attempt to disable it can't be relied upon for migration compatibility of
-> arbitrary guests. The guest needs to be well behaved, i.e. one that won't
-> try to use any extensions which aren't in the ISA string. So, disabling
-> these types of extensions either shouldn't generally be done (so a noisy
-> warning helps prohibit that) or done for debug purposes (where a noisy
-> warning is fine).
+diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
+index d102f3dd092..87f0714910e 100644
+--- a/ebpf/ebpf_rss.c
++++ b/ebpf/ebpf_rss.c
+@@ -25,6 +25,8 @@
+ #include "ebpf/rss.bpf.skeleton.h"
+ #include "ebpf/ebpf.h"
+ 
++#include "trace.h"
++
+ void ebpf_rss_init(struct EBPFRSSContext *ctx)
+ {
+     if (ctx != NULL) {
+@@ -55,18 +57,21 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_configuration, 0);
+     if (ctx->mmap_configuration == MAP_FAILED) {
++        trace_ebpf_error("eBPF RSS", "can not mmap eBPF configuration array");
+         return false;
+     }
+     ctx->mmap_toeplitz_key = mmap(NULL, qemu_real_host_page_size(),
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_toeplitz_key, 0);
+     if (ctx->mmap_toeplitz_key == MAP_FAILED) {
++        trace_ebpf_error("eBPF RSS", "can not mmap eBPF toeplitz key");
+         goto toeplitz_fail;
+     }
+     ctx->mmap_indirections_table = mmap(NULL, qemu_real_host_page_size(),
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_indirections_table, 0);
+     if (ctx->mmap_indirections_table == MAP_FAILED) {
++        trace_ebpf_error("eBPF RSS", "can not mmap eBPF indirection table");
+         goto indirection_fail;
+     }
+ 
+@@ -108,12 +113,14 @@ bool ebpf_rss_load(struct EBPFRSSContext *ctx)
+ 
+     rss_bpf_ctx = rss_bpf__open();
+     if (rss_bpf_ctx == NULL) {
++        trace_ebpf_error("eBPF RSS", "can not open eBPF RSS object");
+         goto error;
+     }
+ 
+     bpf_program__set_type(rss_bpf_ctx->progs.tun_rss_steering_prog, BPF_PROG_TYPE_SOCKET_FILTER);
+ 
+     if (rss_bpf__load(rss_bpf_ctx)) {
++        trace_ebpf_error("eBPF RSS", "can not load RSS program");
+         goto error;
+     }
+ 
+diff --git a/ebpf/meson.build b/ebpf/meson.build
+index c5bf9295a20..bff6156f518 100644
+--- a/ebpf/meson.build
++++ b/ebpf/meson.build
+@@ -1 +1 @@
+-common_ss.add(when: libbpf, if_true: files('ebpf.c', 'ebpf_rss.c'), if_false: files('ebpf_rss-stub.c'))
++system_ss.add(when: libbpf, if_true: files('ebpf.c', 'ebpf_rss.c'), if_false: files('ebpf_rss-stub.c'))
+diff --git a/ebpf/trace.h b/ebpf/trace.h
+new file mode 100644
+index 00000000000..abefc46ab10
+--- /dev/null
++++ b/ebpf/trace.h
+@@ -0,0 +1 @@
++#include "trace/trace-ebpf.h"
+-- 
+2.44.0
 
-I'll add this in the next version.
-
-> 
->>
->> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/kvm/kvm-cpu.c | 12 ++++++++----
->>   1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
->> index 6a6c6cae80..261ca24504 100644
->> --- a/target/riscv/kvm/kvm-cpu.c
->> +++ b/target/riscv/kvm/kvm-cpu.c
->> @@ -427,10 +427,14 @@ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
->>           reg = kvm_cpu_cfg_get(cpu, multi_ext_cfg);
->>           ret = kvm_set_one_reg(cs, id, &reg);
->>           if (ret != 0) {
->> -            error_report("Unable to %s extension %s in KVM, error %d",
->> -                         reg ? "enable" : "disable",
->> -                         multi_ext_cfg->name, ret);
->> -            exit(EXIT_FAILURE);
->> +            if (reg) {
->> +                error_report("Unable to enable extension %s in KVM, error %d",
->> +                             multi_ext_cfg->name, ret);
->> +                exit(EXIT_FAILURE);
->> +            } else {
-> 
-> Maybe we should check for a specific error. Is it EINVAL? If we do, then
-> the message below would drop the (error %d) part and instead state
-> explicitly that it cannot disable this extension since it's not possible.
-
-It's throwing a 22 (EINVAL).
-
-> 
->> +                warn_report("KVM did not disable extension %s (error %d)",
-> 
-> s/did not/cannot/
-> 
->> +                            multi_ext_cfg->name, ret);
->> +            }
-
-
-I don't mind rephrasing it to "The KVM module is not able to disable extension %s"
-But I'm unsure what we gain from not showing the error code.
-
-Aside EINVAL the other (very unlikely) error code being thrown would be EBUSY. Should
-we handle EBUSY differently in this case? I don't think so. If we're already throwing a
-warning, with error code, the user is well informed about the guest having a flaky
-start and can proceed with discretion. Regardless of the extension disablement failing
-due to EINVAL or EBUSY.
-
-
-Thanks,
-
-Daniel
-
->>           }
->>       }
->>   }
->> -- 
->> 2.44.0
->>
-> 
-> Thanks,
-> drew
 
