@@ -4,76 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0203AC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA0AC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryt02-0005ve-BU; Mon, 22 Apr 2024 08:42:22 -0400
+	id 1ryt3L-0007Ix-QP; Mon, 22 Apr 2024 08:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ryt00-0005uw-F8
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:42:20 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ryt3C-0007D4-PI
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:45:40 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ryszv-00041v-AB
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:42:20 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-5171a529224so5589703e87.0
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:42:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ryt3B-0005Lj-9W
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:45:38 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a55b10bfd30so84997566b.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713789732; x=1714394532; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Z8tunMkN/tO/jeUxNDLWeanK4s9RFq375E0sg1AGANM=;
- b=WjAkbm/WrhuyFapwoRju/dMm+etjYN3q6Qit0ApT2xuV58uuZxB1TsrJhQoAkKS110
- HCncTakfJRYsxSnTZQh2wrSjkUh6FU2ONDwXlqk7+4P9lKSZeDfXt1oP71LyHoAEw7Ni
- CrApRDmyC+aPns4nPm9Jc9o2wtfHLBFVrdFJIbj74ZpADKgmzWuSbVst3gjggIrbhxnk
- PQn2rLCnYH/NkyiPjLsn+FpI42xwRpDklkZalZ+gnYZX1reEOe6uFcmNzl36teI053as
- aATvANWpgVpRapxLKLlH4RcW54dbvzNFjQehw2px+klL6qK2tnRZ0nvT64/VCfWyRP8A
- 3poA==
+ d=linaro.org; s=google; t=1713789934; x=1714394734; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5Gvssde9/xaurWK599MgZqx+vkz5GaGp8TSAAqSjOMw=;
+ b=GyxE8pGfBucj0lBw/e05ZkKM58hQyf7kg1P5vUW15XhThONP4mNd60Sz9wywG6Y70+
+ 5WoHha33wDJ+S2csg6hsQkxYpy/UpUgZlmsSQWizVfqr59WpGl8c3hsJ4cbttltl46vs
+ pGXALDD4DkQUyZPUioHF56Xl3e7x8OtePyJAKWmEVMDpi5iOAhG7Xd2tZ9SxYGGUdUc6
+ LSylJCdsfm1qLU5JnMhWO53uH7PwqLFdRG/VKbv+FWF+Y1OO0XrBBCThsw8oXGTuJx3F
+ Dfqj5oFEcWLmgAk06aEDd9IOHUmuojGwAPNi8R0IwWBa3rQaAKTmmRrx4FKNwmkJwJ1a
+ TK8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713789732; x=1714394532;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1713789934; x=1714394734;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Z8tunMkN/tO/jeUxNDLWeanK4s9RFq375E0sg1AGANM=;
- b=qZPNM4W7CoE1NVa3xUTMe4RTNfsm2gkUkczaS3j48TiPGcBHNCzUCXZH2LZLjK+N7v
- fPk6h4X14tJh8avHEn3DSXhQr74/3FuIPl4nZEyeyLxGmyaWTTYTt/HskG1dYL54eL+P
- b+pW54BzOQ96g2bo1cqOjfoOif64MhgvZgSxBJdNHmw5uzCbT64ouwqRJXx65bjDfqYh
- 5zhCeKtP+LAy32g2oN8RHe2dQZmgblBDrPwiQ8XCnyRRE/U2qKU7Dq8Loko1iw4jTO7k
- jpd9LKp3Idxkd3RX4xYYdNkmVqBD8EofqLe3/1LOtQeghyxUnE3zySfSp05BT2kEOk4F
- WMbQ==
-X-Gm-Message-State: AOJu0YxpwhcjGVW07x5QB0wO4d6Ifzo50ZXC+7X83bfqjwn+c9GYpNh8
- T2lIJX2tNm7sr1IF/WWCH7qzYoNUy0qAraWbRD9/TdAvlN8zNzmV/86RCKyDBkiKCxpWsnp//cO
- o
-X-Google-Smtp-Source: AGHT+IFjgkuEnpQXZ8bxvuUy0vOJzGYS8CeKxE61TzDCiLYFGuUCvXqdI+dAV8gVKbhqTK88cWbfrg==
-X-Received: by 2002:a05:6512:34d8:b0:51b:b7:a14c with SMTP id
- w24-20020a05651234d800b0051b00b7a14cmr2805033lfr.20.1713789732236; 
- Mon, 22 Apr 2024 05:42:12 -0700 (PDT)
-Received: from localhost.localdomain (adsl-53.37.6.0.tellas.gr. [37.6.0.53])
- by smtp.gmail.com with ESMTPSA id
- bb6-20020a1709070a0600b00a55b020a821sm1727233ejc.13.2024.04.22.05.42.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Apr 2024 05:42:11 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] docs/devel: fix minor typo in submitting-a-patch.rst
-Date: Mon, 22 Apr 2024 15:41:28 +0300
-Message-ID: <20240422124128.4034482-1-manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.44.0
+ bh=5Gvssde9/xaurWK599MgZqx+vkz5GaGp8TSAAqSjOMw=;
+ b=KqtEMxHH0s6CIoMG0JtjMXyAweaI37N41mbpHPFsNqX7I4IStIQEOCkk40I2z6+cU/
+ dcb6e5wMzOxTSpqR/R2awj5y8ZqbQMaZr8+7wJE5f9toDXeA1b1uq+3+HgdQ3Go50IXf
+ RCndDkqYC5DPz2xbezubA0nq/1PWUKE2zVYndVU9JEguWjcfX4kj/ge/gVFnBOy1RqgI
+ QqDQj8CwjVQREiw5s7TW1cMUoy3NTHSo7MpwSH+1rInu3e8QeeNsUYcwEY3XkDeH14OF
+ fwB6a0wa/6+gcQ1IDc1FOpnmo/f/RfdvO4PTUbdRLBmCpbOMygjNgEniG5sQzXLez0TI
+ MXhQ==
+X-Gm-Message-State: AOJu0YwVx77+Ys9orSKrGl8wJHRybQkyUcv6C/uyZmqWxIS1lo43Tnc5
+ pXfinQWEMN2juYrC6KAJ3Txj+K5N2H3F2kINdP13mDMZaxBf3c5XIWHgNtr/AzYvynA29h5kGBq
+ lQ9tkr4ACXiyJNjCFPN8qZw7oXj+HgEIzYfWwog==
+X-Google-Smtp-Source: AGHT+IGotxdISTlx1oD6A4f/aljsRACWpwmNSAotUDKFGgabI6UwsdtoR4xXyVi+ljmv6lQ1EAxZqPTujQ5RpBkuK/I=
+X-Received: by 2002:a50:bac6:0:b0:568:d19e:7ab0 with SMTP id
+ x64-20020a50bac6000000b00568d19e7ab0mr8330839ede.36.1713789934271; Mon, 22
+ Apr 2024 05:45:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12f.google.com
+References: <20240422124128.4034482-1-manos.pitsidianakis@linaro.org>
+In-Reply-To: <20240422124128.4034482-1-manos.pitsidianakis@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 22 Apr 2024 13:45:22 +0100
+Message-ID: <CAFEAcA-NgdMgJfWZqWV7khgnEzz8K7NWPg6tgHDKtA+KaP85eQ@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel: fix minor typo in submitting-a-patch.rst
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,30 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-s/Resolved:/Resolves:/
+On Mon, 22 Apr 2024 at 13:43, Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> s/Resolved:/Resolves:/
+>
+> Cc: qemu-trivial@nongnu.org
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  docs/devel/submitting-a-patch.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
+> index c641d948f1..83e9092b8c 100644
+> --- a/docs/devel/submitting-a-patch.rst
+> +++ b/docs/devel/submitting-a-patch.rst
+> @@ -177,7 +177,7 @@ add an additional line with "Fixes: <at-least-12-digits-of-SHA-commit-id>
+>
+>  If your patch fixes a bug in the gitlab bug tracker, please add a line
+>  with "Resolves: <URL-of-the-bug>" to the commit message, too. Gitlab can
+> -close bugs automatically once commits with the "Resolved:" keyword get
+> +close bugs automatically once commits with the "Resolves:" keyword get
+>  merged into the master branch of the project. And if your patch addresses
+>  a bug in another public bug tracker, you can also use a line with
+>  "Buglink: <URL-of-the-bug>" for reference here, too.
+>
+> base-commit: 62dbe54c24dbf77051bafe1039c31ddc8f37602d
+> --
 
-Cc: qemu-trivial@nongnu.org
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- docs/devel/submitting-a-patch.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-index c641d948f1..83e9092b8c 100644
---- a/docs/devel/submitting-a-patch.rst
-+++ b/docs/devel/submitting-a-patch.rst
-@@ -177,7 +177,7 @@ add an additional line with "Fixes: <at-least-12-digits-of-SHA-commit-id>
- 
- If your patch fixes a bug in the gitlab bug tracker, please add a line
- with "Resolves: <URL-of-the-bug>" to the commit message, too. Gitlab can
--close bugs automatically once commits with the "Resolved:" keyword get
-+close bugs automatically once commits with the "Resolves:" keyword get
- merged into the master branch of the project. And if your patch addresses
- a bug in another public bug tracker, you can also use a line with
- "Buglink: <URL-of-the-bug>" for reference here, too.
-
-base-commit: 62dbe54c24dbf77051bafe1039c31ddc8f37602d
--- 
-γαῖα πυρί μιχθήτω
-
+thanks
+-- PMM
 
