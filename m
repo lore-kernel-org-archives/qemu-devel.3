@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09CAAC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 20:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A560C07C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 20:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryzw4-0007Sp-8v; Mon, 22 Apr 2024 16:06:44 -0400
+	id 1rz07q-0003H2-5b; Mon, 22 Apr 2024 16:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ryzw1-0007S9-2b
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:06:41 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rz07o-0003GZ-Bx
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:18:52 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ryzvz-0004hN-GF
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:06:40 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a55911bff66so357185766b.0
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 13:06:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rz07l-0006bt-Kh
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:18:51 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a55b3d57277so188190266b.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 13:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713816397; x=1714421197; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZG/ndfe8xsvdvVaLhadRrtKayU/SCqRwtgihcJ0dO/Y=;
- b=Oo9FUbyoPWuztsGt1U5p3/T9ag+DtQuIzPpTiyQMv1qG1wgkfBPEoy4Dw+jzcvH3oz
- 2FCpI7AiSkPp4iwE60j5ZTU6+/+F5azyFZ7WDYuVobb1xv5taPeWmw1dJQbuchImnAkX
- ADPwTscJjBG1/kMePEjwcGFdX5fzFV+9V4LSwlzBdM/0ka0Y51n9pDAHBtwdsfFMZ7Mf
- uqnyfNdFE7n0N/R572pJ6TQfMwmBbRrHZdYKkcnnqpnJCjieVs185DamiA4CfwPFDtaN
- Boh3oYIzlCANj/3B0cbrPzHBbPDwmnLKh4xj/Hu5ocjX+0jfPpXTMp8mB/hmxBGguKdK
- lV/w==
+ d=linaro.org; s=google; t=1713817124; x=1714421924; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=FoTjUmsI06mXdlRsjSLRmG7j9QE6cwxbcOFwfN5sLnQ=;
+ b=tHwXHwd87Ak6qXYFQrz9GMMG6N7/azpsdteAFBj9yRaZY6IwFNQE7kl6Q00uozH8Dc
+ 6jMDs52xWWgQus0s1AyxiA6FlT53I5/No/Ic+/SXBIrVJNq1+n5H+9MhBQ9dulPF0PFw
+ 1+F034p9RlhULe9hxJbPh/Zj+41RO5yeWtvBQw710m8JoVg8vd6Ez1jIatrshMmnz1lH
+ jKzZ8v36Z8lQFunW6cnDQsV0KkXWfzgAH44v+9j5Z0/lFThwFwpstyKt3vdhg0MyYWSO
+ wtBR644JADyje+GfH3DzsT+gcImTjEYzGkQz/b95PU8Z9Qh/bfb1jqXYOmVdIn9AsbJJ
+ 2faQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713816397; x=1714421197;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZG/ndfe8xsvdvVaLhadRrtKayU/SCqRwtgihcJ0dO/Y=;
- b=PB42QqktVw+rqxHc68v0yD+XVuyORPMaJi1IbyC0KsVGPWzMnzUg/ULI1SrfFY7oFJ
- 2w/H2+LdN86gWWi/0HycmfgV8CzdEmA+WaRdff3ixhUgl4KDYNhPqiBD0bukS7KotTHr
- xyOfnQlDYKD/3PJCurEdX9mV1oFT6oXnb/uxusppHL6F/eHvQBi6Qk+X2K5F32Bg5lW0
- BGHRP6UPPWh1HmOoF/c/zteZxVv9toaTO7Sjklx2mculSCqc02lQZrrbYw8sZ4GswLev
- d3uZUd4q/Z72Z7VjczU1ykNpYUUWzsm0GCFbeOo8JVaxKRHnAFgd4EU/QquY5wSAhaHe
- fFaA==
-X-Gm-Message-State: AOJu0YwuHXaaGmlqNfjtfS4LB2KfHRHLbWAGG9TYcoj5t1HPNhlZb5jA
- FA8Ww7Lw3kgjN1SnR3V+jdxTZZp+FFCA5noXKXyKFKTVgVeaFcD2VidOdw==
-X-Google-Smtp-Source: AGHT+IGwQeOjmolOLnPLCvf+xKdfiluk7k2+Xo1bCo26I6LCGGWFC3qn9AwjYtfJl25ru0eMLNIR9Q==
-X-Received: by 2002:a17:907:e8d:b0:a55:b9c6:bd99 with SMTP id
- ho13-20020a1709070e8d00b00a55b9c6bd99mr2562175ejc.56.1713816396956; 
- Mon, 22 Apr 2024 13:06:36 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-077-188-098-082.77.188.pool.telefonica.de. [77.188.98.82])
+ d=1e100.net; s=20230601; t=1713817124; x=1714421924;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FoTjUmsI06mXdlRsjSLRmG7j9QE6cwxbcOFwfN5sLnQ=;
+ b=QINfHh0fd8mHUXAGbEwj88kMK6hK9duZBj9on6+Z2ZQlFsCJf2FmpsymPbju8sCEe9
+ S+WoVJL0Bt311lqiwG6/3MGoyARztB2+x0Vk2H9ESkc5W0DeuLZb5pKCINLOYDalce9i
+ 3MkkydkPFEBEeH76BEtcnLB2YCv++OWGefORsKFK9KfVv0PoJlRADfWEZwVGl72nC03y
+ uV2nprlRUZ9rwNti3+VMs9A1U5ziAEvEY5odnZ49eGNfLTRw3qe78AhEgteZYuDhRiwz
+ nw7kOtCabvOf3DYhrbsFu/V8Lyu5b+0WGah+bWRUMyzDBKW866UXBdtIa7iQEtjioT6D
+ 9Nkw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhlxAb62YzN2I6/+tHaruuyYUxqzDVjXzByPT0/ChfpycNpzK+IGDY0xL4HbPZN2pM7x8S88wSbRe7ciPRrTn8kP9m7gU=
+X-Gm-Message-State: AOJu0YyUVOHUQS5GGikJRs77WcrmsV3E89zbJD2bAzFKV7103MknC5qU
+ l9a1LBGj9qSpNsGEob0B7n5YGFeQj4DlxKvisDvAoFTQVEpl2qLuuxaWivooDqA=
+X-Google-Smtp-Source: AGHT+IGSTWGMNUBvvfxKQarG0UKGpGW07NUhtmPA+Ts7NRd+Luboe4WkqRu5BCJpSv4hzJY5zeLqHQ==
+X-Received: by 2002:a17:906:3842:b0:a54:4f06:4d00 with SMTP id
+ w2-20020a170906384200b00a544f064d00mr6135641ejc.65.1713817123973; 
+ Mon, 22 Apr 2024 13:18:43 -0700 (PDT)
+Received: from meli-email.org (adsl-53.37.6.0.tellas.gr. [37.6.0.53])
  by smtp.gmail.com with ESMTPSA id
- z2-20020a17090665c200b00a55bbc4fd16sm1209230ejn.48.2024.04.22.13.06.34
+ h3-20020a170906260300b00a559965b896sm3511158ejc.202.2024.04.22.13.18.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Apr 2024 13:06:35 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 2/4] hw/i386/pc_sysfw: Alias rather than copy isa-bios region
-Date: Mon, 22 Apr 2024 22:06:23 +0200
-Message-ID: <20240422200625.2768-3-shentey@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240422200625.2768-1-shentey@gmail.com>
-References: <20240422200625.2768-1-shentey@gmail.com>
+ Mon, 22 Apr 2024 13:18:43 -0700 (PDT)
+Date: Mon, 22 Apr 2024 23:10:51 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
+ target one
+User-Agent: meli 0.8.5-rc.3
+References: <20240422142056.3023-1-philmd@linaro.org>
+In-Reply-To: <20240422142056.3023-1-philmd@linaro.org>
+Message-ID: <cd1r5.n1iglebry01@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x636.google.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,55 +101,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the -bios case the "isa-bios" memory region is an alias to the BIOS mapped
-to the top of the 4G memory boundary. Do the same in the -pflash case to have
-common behavior. This also makes pflash commands work in the "isa-bios" region
-which some real-world legacy bioses rely on.
+On Mon, 22 Apr 2024 17:20, Philippe Mathieu-Daudé <philmd@linaro.org> 
+wrote:
+>Since VirtIO devices can change endianness at runtime,
+>we need to use the device endianness, not the target
+>one.
+>
+>Cc: qemu-stable@nongnu.org
+>Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
+>Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>---
 
-Note that in the sev_enabled() case, the "isa-bios" memory region in the -pflash
-case will now also point to encrypted memory, just like it already does in the
--bios case.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/i386/pc_sysfw.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
-
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 87b5bf59d6..6e89671c26 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -46,27 +46,18 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
-     int isa_bios_size;
-     MemoryRegion *isa_bios;
-     uint64_t flash_size;
--    void *flash_ptr, *isa_bios_ptr;
- 
-     flash_size = memory_region_size(flash_mem);
- 
-     /* map the last 128KB of the BIOS in ISA space */
-     isa_bios_size = MIN(flash_size, 128 * KiB);
-     isa_bios = g_malloc(sizeof(*isa_bios));
--    memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
--                           &error_fatal);
-+    memory_region_init_alias(isa_bios, NULL, "isa-bios", flash_mem,
-+                             flash_size - isa_bios_size, isa_bios_size);
-     memory_region_add_subregion_overlap(rom_memory,
-                                         0x100000 - isa_bios_size,
-                                         isa_bios,
-                                         1);
--
--    /* copy ISA rom image from top of flash memory */
--    flash_ptr = memory_region_get_ram_ptr(flash_mem);
--    isa_bios_ptr = memory_region_get_ram_ptr(isa_bios);
--    memcpy(isa_bios_ptr,
--           ((uint8_t*)flash_ptr) + (flash_size - isa_bios_size),
--           isa_bios_size);
--
-     memory_region_set_readonly(isa_bios, true);
- }
- 
--- 
-2.44.0
-
+Thanks for the explanation on v2 btw. virtio_is_big_endian()'s doc 
+should probably reflect it's not just about legacy devices (virtio sound 
+isn't legacy) but about target originating data streams too
 
