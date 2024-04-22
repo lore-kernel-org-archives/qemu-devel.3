@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A18C10F15
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 20:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5843C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 20:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryzw1-0007SH-OP; Mon, 22 Apr 2024 16:06:41 -0400
+	id 1ryzw7-0007TS-Bx; Mon, 22 Apr 2024 16:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ryzw0-0007Rt-9E
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:06:40 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ryzw3-0007Se-08
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:06:43 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ryzvy-0004h9-6E
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:06:40 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51ae2e37a87so3349729e87.2
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 13:06:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ryzw1-0004he-Ay
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 16:06:42 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a5544fd07easo539900666b.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 13:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713816395; x=1714421195; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1713816398; x=1714421198; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PchXtO8ad4BByoR+U+nzto09/ZkQHiG8u94aXCkO74U=;
- b=N8Um8+2ZtZS2lKm4CKe8dqrEt9AAQey4Glrs5Ma3BSnWiZn93fJ+av6hZjLzLCsik/
- hU03LzfpsHxbPMA55Tq4SazEUZc+fLTxzByx9lGpro+/bdWihqiOmygz0u5YCM8T7+BZ
- nt981XYWBaDWBoYuYyPZiL792ryk1YVGnu8ZTao7a1aHtq81yzn7EFGDmgiws7qATJ+I
- EHtqUrqFa8MjA37YQR8/cVoWG3/gzMoSX2dQG+pymtQf65FUpEPeT1QIkhbZDGVYFlcE
- 2ZmIqUV10HcjQU0BQHhQT/FCgAlVP+PppyGZ+dkQu1ElDVml0QKzhSYofu0F3oF50VES
- ymBg==
+ bh=B3mpE8mPOXIfCN0iys//quAbHTgXlOuPmee5Oc6B/Lo=;
+ b=ZP7jFYbjMim/YjgmzvIyhGM7uqbS32dVqkgqdQfX15TkLJdnzFIZev5OeZ5/au6VdX
+ vyL2TSmpRP2YF7/HqfreAgKFo1g8qo5OIVzikuDF8bwpS4G9GgQ67E1drme/i0q5MG1Y
+ nLzxd1J0j8FHmmcXwX8cHrjO2uEsTpJKDLgRFg4aCPdZNWwFcHlF/fwhMqXgypsFnGEM
+ 0Nz2UMUh/65JW0DrXBzoUAUdL9hRlW+A9EaEk2UQY/68nkC/9znBuA+l4qpkocF4XkQ3
+ Eafiyln7dNmG7j0jJIe2UzjRXSSSgNiTUEUNvoTb0biUdX3zFU1+9M/ReDxfnf2kB6P4
+ MpQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713816395; x=1714421195;
+ d=1e100.net; s=20230601; t=1713816398; x=1714421198;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PchXtO8ad4BByoR+U+nzto09/ZkQHiG8u94aXCkO74U=;
- b=ZYzIwtgTPQeYk5+n9rrG2is5HWBmEvWdpwBeRAkBhnareQ0aCx8nMKiUUOoMPCz+GJ
- 6mmYvdsQlOT2mCtA9yb5wztC+fKvQutUZITESMYuwlwlTXeHaiVG7nX9ybx891hgyhPz
- 0m/pARbKx1jI4E1ha89q4p4LmRkvHoGRM7GBAGJ9w7JVW6WXO/UN2/cQznWWOpS/PUTV
- P65GprSzcp001Pyymld1SHOPv39skOnsO9XaX5LAVWgSuUbJpFFrcUlJKMe8l60885UF
- p9BmJC5xHPLN6LS2OCuaaH1zoMBelUXhxxHcGTmMg1w1Bsm1SX2FaVLg6rAXIUT6VBuc
- EJlw==
-X-Gm-Message-State: AOJu0YxUmwAP8NumyV5IeH8eDactdKxuy2Z3mL0w6OtvfDWh1Xcoc5bP
- 3LsZC4/cIUX5yneGmyCADDKhQPT7ILW4iU7Bc3hXfRuVUlud2ihwvkK69A==
-X-Google-Smtp-Source: AGHT+IHmxnLq8JtJQdoTuWNwb51WI8eX14I4q/TTWOJlR+gnJXZ2LpJe4XdzMGaquhqw9WNDgCRzRQ==
-X-Received: by 2002:a19:5f41:0:b0:516:cd83:a96a with SMTP id
- a1-20020a195f41000000b00516cd83a96amr4014626lfj.37.1713816394816; 
- Mon, 22 Apr 2024 13:06:34 -0700 (PDT)
+ bh=B3mpE8mPOXIfCN0iys//quAbHTgXlOuPmee5Oc6B/Lo=;
+ b=o+2Qu3tzr5DjtW4nDiKld49vW/cfYjBvG6WYAtWXgoNz1d98KDWG23jvRq0QNF/ukg
+ 1te3LX5t+UvwFTrDwF5ZGce7d+RCXoyOQHlbq6RDL4CuW7uaLJJ5KdanHi4PJq4dWIwn
+ zGGDyev3gzlgqWDJjXUC0ZUkAGlmoJyWJg6uwGdZNpaAIcd+J5EIze45dU9vXPYhHG/H
+ Bib5P0FXtOTuqKTr/mLYoDjgah12WoAB91MGmD/hZfP0QC1ABRGXXbsgu8mUb/tlfgh0
+ z/WwkuC9PPaTI/CA8BZ3Bi84HixetsrAe6oa8ghlo05E1i6YccCJRVbWHUJcnZQ+nKCj
+ Qyxw==
+X-Gm-Message-State: AOJu0YwTmqVl4rdWkb/WZUU6t54NACDgmGIWqF+3GX8iTZPRhIugXnVY
+ n8al95zlC4KxrMLEdwVNKT4DdIom+8PqRSzQcRVnnET7eJAhdq4DWz6LwQ==
+X-Google-Smtp-Source: AGHT+IG+1veOecIW/1kYH99vzn3ZTgbrGUQam27XQWVISaczGxRYJS4L9R0vrvLGGMJVWPDQElVlmw==
+X-Received: by 2002:a17:906:2491:b0:a52:6fcb:564a with SMTP id
+ e17-20020a170906249100b00a526fcb564amr6270998ejb.9.1713816398422; 
+ Mon, 22 Apr 2024 13:06:38 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-077-188-098-082.77.188.pool.telefonica.de. [77.188.98.82])
  by smtp.gmail.com with ESMTPSA id
- z2-20020a17090665c200b00a55bbc4fd16sm1209230ejn.48.2024.04.22.13.06.33
+ z2-20020a17090665c200b00a55bbc4fd16sm1209230ejn.48.2024.04.22.13.06.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Apr 2024 13:06:34 -0700 (PDT)
+ Mon, 22 Apr 2024 13:06:37 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -64,17 +64,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 1/4] hw/i386/pc_sysfw: Remove unused parameter from
- pc_isa_bios_init()
-Date: Mon, 22 Apr 2024 22:06:22 +0200
-Message-ID: <20240422200625.2768-2-shentey@gmail.com>
+Subject: [PATCH 3/4] hw/i386/x86: Eliminate two if statements in
+ x86_bios_rom_init()
+Date: Mon, 22 Apr 2024 22:06:24 +0200
+Message-ID: <20240422200625.2768-4-shentey@gmail.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240422200625.2768-1-shentey@gmail.com>
 References: <20240422200625.2768-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=shentey@gmail.com; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,34 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Given that memory_region_set_readonly() is a no-op when the readonlyness is
+already as requested it is possible to simplify the pattern
+
+  if (condition) {
+    foo(true);
+  }
+
+to
+
+  foo(condition);
+
+which is shorter and allows to see the invariant of the code more easily.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/i386/pc_sysfw.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/i386/x86.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 3efabbbab2..87b5bf59d6 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -41,8 +41,7 @@
- #define FLASH_SECTOR_SIZE 4096
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index ffbda48917..32cd22a4a8 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -1171,9 +1171,7 @@ void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
+         load_image_size(filename, ptr, bios_size);
+         x86_firmware_configure(ptr, bios_size);
+     } else {
+-        if (!isapc_ram_fw) {
+-            memory_region_set_readonly(bios, true);
+-        }
++        memory_region_set_readonly(bios, !isapc_ram_fw);
+         ret = rom_add_file_fixed(bios_name, (uint32_t)(-bios_size), -1);
+         if (ret != 0) {
+             goto bios_error;
+@@ -1190,9 +1188,7 @@ void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
+                                         0x100000 - isa_bios_size,
+                                         isa_bios,
+                                         1);
+-    if (!isapc_ram_fw) {
+-        memory_region_set_readonly(isa_bios, true);
+-    }
++    memory_region_set_readonly(isa_bios, !isapc_ram_fw);
  
- static void pc_isa_bios_init(MemoryRegion *rom_memory,
--                             MemoryRegion *flash_mem,
--                             int ram_size)
-+                             MemoryRegion *flash_mem)
- {
-     int isa_bios_size;
-     MemoryRegion *isa_bios;
-@@ -186,7 +185,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
- 
-         if (i == 0) {
-             flash_mem = pflash_cfi01_get_memory(system_flash);
--            pc_isa_bios_init(rom_memory, flash_mem, size);
-+            pc_isa_bios_init(rom_memory, flash_mem);
- 
-             /* Encrypt the pflash boot ROM */
-             if (sev_enabled()) {
+     /* map all the bios at the top of memory */
+     memory_region_add_subregion(rom_memory,
 -- 
 2.44.0
 
