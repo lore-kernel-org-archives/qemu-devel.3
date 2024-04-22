@@ -4,142 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF5F0C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 01:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA2B9C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 02:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryilf-00066d-Eu; Sun, 21 Apr 2024 21:46:51 -0400
+	id 1ryjNe-00044x-O0; Sun, 21 Apr 2024 22:26:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1ryild-00066S-FZ
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 21:46:49 -0400
-Received: from mail-eastasiaazon11021006.outbound.protection.outlook.com
- ([52.101.128.6] helo=HK3PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1ryjNX-00044B-UP; Sun, 21 Apr 2024 22:26:01 -0400
+Received: from szxga02-in.huawei.com ([45.249.212.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1ryilb-0007vS-02
- for qemu-devel@nongnu.org; Sun, 21 Apr 2024 21:46:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JE+riaQIZek/yP3NhIMAstlfh7TPTIHYjWZ/GNK8fIh/tpCBop65i12dKwZ9AMPH949D9zgQ8eWkG35+WtZWtKtvK6RIouKqJ+jXX9RNa5JPcLhVUmYz0XWSJ8j+uX65WBmYQk7fplKZZp3BwGEldHi1S+xUrlS2VjkyiXZpgpk3D9o5FowZMQz5CI0yIpV4UNwwWzGd9BHK/FDb6HaJ+lAl1rpgcFyI/5ebrmEBMElv+Pj24ZFdr2ARxnm7o2CsbSwXIb41UPt2v0TZeA1HFGfA4C8+FIQWkTKoIGBQ3RVIjN2BdEsS700oPZOmlrcPWO+V8fk9UtYhJtTrri/PAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=F4uGrFfxJVn7VlKyBQgVtmViFnv7AWHX4Q256vo99lA=;
- b=SbfvpU8TGed4mLShbigmzFJ/rRWUpFnahRdq6pfvfzLxZ/ofSjr9wMmvvuQJ/4G9AVXB8TclH9gMAJBL90N2JTRzwO2F2S4jMqnhhg2iMIrkeHVaxhhn7Xmq2U7L/uJmV0ADeI77Bd22W7RaOK/DZVkWW8GugYqRx0s4ah0LvQW0n1cQwysM3Ids7aBzV3WBkX3IMN8zXGobY27MmuR8svvbCUeLsSdR7x9tYNmwquMuJKsm4I7Hn2xZ6LDwgln0fx/YzV0Verfb2TDw1XtfpK8VQlIkOY/+irUA/YdXAQgJ5YbHcaZF+pjcKJXpkkyP43caLKnKDg4iEzzCL6tWLw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
- header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=F4uGrFfxJVn7VlKyBQgVtmViFnv7AWHX4Q256vo99lA=;
- b=Jl9qyvBSCa56CewmIsBtMffqziRcHqs3oU9cgbc+faahyhqfFdh5UxIN9VRTkwOYiwH0mTlyly2u8U96kt0Di7prvI40cEPhDpssoigIJWWSMUCDjbKUtbagkoVJDQdJK6Ym7gRUOXHnYyAu3Pjz0A+Rd8b14u6eWVJtlD/soPsV2RS142kNUcoghY93HuaEqtER9MBHSBBJymA9Lk79ulBKypqtNiByUHfJ+2WPltIoVO5zugFRibK8pyLB+cpDsgu8YroNFcQ8LVrDLEkZBjaoFMkRYj2S79FxMmIaw6EituJ6eKNtmLc7Kf0c41ntRNcjEWtbL4sCgYv3g72Zyw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
- by PUZPR06MB5828.apcprd06.prod.outlook.com (2603:1096:301:e8::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Mon, 22 Apr
- 2024 01:41:36 +0000
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::b6f8:321a:6742:9bde]) by PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::b6f8:321a:6742:9bde%6]) with mapi id 15.20.7472.044; Mon, 22 Apr 2024
- 01:41:36 +0000
-From: Wafer <wafer@jaguarmicro.com>
-To: mst@redhat.com
-Cc: eperezma@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org,
- angus.chen@jaguarmicro.com, Wafer <wafer@jaguarmicro.com>
-Subject: [PATCH] hw/virtio: Fix obtain the buffer id from the last descriptor
-Date: Mon, 22 Apr 2024 09:40:41 +0800
-Message-Id: <20240422014041.5706-2-wafer@jaguarmicro.com>
-X-Mailer: git-send-email 2.27.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYAPR01CA0230.jpnprd01.prod.outlook.com
- (2603:1096:404:11e::26) To PUZPR06MB4713.apcprd06.prod.outlook.com
- (2603:1096:301:b4::10)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1ryjNT-00056W-G1; Sun, 21 Apr 2024 22:25:58 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.252])
+ by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4VN8CR0P0XzXlqV;
+ Mon, 22 Apr 2024 10:22:11 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id E6B2E180072;
+ Mon, 22 Apr 2024 10:25:36 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Mon, 22 Apr 2024 10:25:36 +0800
+Message-ID: <b293cb96-bf62-4309-2577-9bc67b251504@huawei.com>
+Date: Mon, 22 Apr 2024 10:25:35 +0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|PUZPR06MB5828:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4c6503d-0508-4792-82eb-08dc626d58b3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?sKjyAeE4FXqgRXnPCzXz+FLi/GzjVb28pjMdBFWd+VNJ2lsXGG2NaqtOM4YX?=
- =?us-ascii?Q?nsNkEqWU9zOag65DCa4PCDRKlC56RZbPHvmUPD1xi7jHO7XcgmCOamXP49RM?=
- =?us-ascii?Q?IFJ1kRDTwwvZmrrqmXLqKA2lq3OCrxeUzL+tiY3/QJ1Hl6yXll0whyDJL7UF?=
- =?us-ascii?Q?ZjOzVH/OWSaljmX2SWz5MSCDfIcLmbbLsS3qE3jyh4PbbnqGpFp38PMEk7Od?=
- =?us-ascii?Q?JNs+kuk2ZHIEofKNIv5wfJxce8YemTKsYzwUjdm6H1m7b3pZcaJ7kv/U9GM5?=
- =?us-ascii?Q?RXTEvOjZZaQjaZaHU3p5Bx+7qPhNUA2Y7jdvYcg7cpLfh1x9vELmHgV7zOQF?=
- =?us-ascii?Q?DOjQOUEPdluXqvxkXwxJKIGz5Q5HgYYifXzS14eBfgorAwW/p1obuTrRrViv?=
- =?us-ascii?Q?gcCdqtQK2sTBBXd3kPSEGwmNgiT8sb9YtiiuZ98umws7EerhpRQiisH4vlw+?=
- =?us-ascii?Q?PagCctEiAdLC/C4MiIMdV6ZkNXkESxLwEKfd20dvRhlZGjJEg2wbC/4bIkDV?=
- =?us-ascii?Q?9jmI8Ck7qPkRwMnBMzcMwBK2eK67zoYOFxFRtbWuC1HhuJPzOPCw7LwrfKl0?=
- =?us-ascii?Q?WwFaEUuEEA3xvQL/QCjI7mtYsHJePAcJem7nBc+Wf3rIfgrqjbsnRnEKIzzQ?=
- =?us-ascii?Q?8u+F67VBRgLQQgOtVJr4pS6vAPerjRW+ASavT6Z3Ze3Au6LauihY9fuzavNG?=
- =?us-ascii?Q?b3Mh8BwBOAcEDPdTuhxFlw5cGxIiBcoVggI9/vCx4DMwQZ6Lj3DJgHfhirF4?=
- =?us-ascii?Q?Fb6LgnRd6czvOlL0k+4nn/+zseCdafrnnMPbk24WHW8G6EwvqueNRMF6B5Zd?=
- =?us-ascii?Q?6a/rep8GKzRab9AYCJL2iovw+8aXcFvujRfLSPeacCOSMABv0fvqM5apxdqS?=
- =?us-ascii?Q?2DXpm51Uk6TJEAqoht+O1Z+3S/TZxM3CyIF1zXJ2gLXSMB/Qx3ZLSZx7AlZa?=
- =?us-ascii?Q?TEdgIs4NnqBZNqv3Z9uN32iPV52/z9EhgxA39nneCiPkF083XmsmyN9/Nwu0?=
- =?us-ascii?Q?dAskGcOQk+fKbPAvNyuzEkb99Z5vJy50YYpjJHLKcNc2Iw05AHqBRc5j7zOy?=
- =?us-ascii?Q?fG6zIcilnLmVKZmv1I/Gthkw1nO5EPwldxcvB4FQWl9plmM7HJi051Iqha5d?=
- =?us-ascii?Q?ZKKh2IilijUcpThe0Be3pP620dJ70EwDBrIHlln7/Gt9iwyAgXbG9RUi+xI0?=
- =?us-ascii?Q?39ktkqAwV6cbcsCxZ4kYq61mUVtJXwzASE6dD4g03W/aWByB1KDQkJ0zkxdo?=
- =?us-ascii?Q?1/yBLi1qgajM9T7kp/K6XE1woHgbDMMZDdVzmRLvDg=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(52116005)(376005)(366007)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?MDle4Cq/uTpo3eQiE6KdAXb9EwXy44bTSa4oedJaLiRRp/T9arpZSVNo6Rnq?=
- =?us-ascii?Q?62NejOQBHbP7Y8wBZbYmnn5G5tgLycyB1zZjdOBMd6UenRhLwHDMRW0H7vKB?=
- =?us-ascii?Q?dKzG4CQgF0Wnd3pfdTQ0OQ/J6vVGoQ44/l7BYz47CKEGwLPdUuwG3Bbps5ay?=
- =?us-ascii?Q?w1lgmxIoo0TUpiCYb6Pe4iU46Fa/p1C+e6/bPA2543Y2JqGjywozEws82pp0?=
- =?us-ascii?Q?OIy5QVrobdzvpk/3zDF26U4VnQz2pwNCrQJBkR9/CTORmX5QrtO9YRsd/+b+?=
- =?us-ascii?Q?s+/sikb8j2gKlX4R78SXgnAErqV4YcIA+kh+8oMu5s1RMnlDV1IHAxtTrL/f?=
- =?us-ascii?Q?fUpJ5Rriqny1Eum43utVkMoMIReJroA6ekE9oxMjyhAbdne44Da3W1izgz5J?=
- =?us-ascii?Q?nq/+pzkvnEQasDlAsW6LtBtte7mYZeH7DS6Jgtvyj72yq1/MTxtTCAYucMEt?=
- =?us-ascii?Q?dHPDfxHP8jHqUTmnjRf6I5XjnAo9wJJGl+EPHciX7a9prOUxBM1gEeNnpCQ3?=
- =?us-ascii?Q?f1RZBapmSXw56vfnaxNCL0c4hWv5b7l+i5Zri1Iqx3zYfcHoLFdpMK+yVxn7?=
- =?us-ascii?Q?QpXM5qA2zOWxP4ds+6q2ulY0kcsP2/0FnAPY5zJmBSwMhNTMaQ0iqxsnyoBz?=
- =?us-ascii?Q?jGLAG3wByZbv2FHpVPevI56eWBYSLsE+LvjzxOvCg3ElcITB2AdKBq96wa4C?=
- =?us-ascii?Q?jwAm9HVRZtj9XZHgNJfRECKbcXl1SmDKcu8NW69CycKi7RTXh8+pI3tCIKvJ?=
- =?us-ascii?Q?jNTK1ffcuLz1eggoYpxtrFc/3vsod4Rc+9mFWOXiMCm7eqITufrjlmNiWQQA?=
- =?us-ascii?Q?Cz+I6jhQ+QMaJ5jwhYDtc2V1NACX1Vv7ZOSZ7Zgb7o7nRPIDQmk7/ah0dQou?=
- =?us-ascii?Q?T8g2RmcyeS8WMrMsCVqZxXnWJCq1QsjbeAsm0OyKMpY+y5qUms5LXVMv4FDr?=
- =?us-ascii?Q?dscMQzCT0Y7mEuB9P4G7GbgvjLERCYNUEszVmsMwJFHOgr6pm9cEdYfeVfKP?=
- =?us-ascii?Q?jORDMJdbr1Cg+UwlwZ1P56R2s0pC/SQtLclCqdw+G2InsWQk2f1XbivA4gkJ?=
- =?us-ascii?Q?rQ3Q6wXf8G9OOPbLKzZ/msOm3+78U7FmCjOaKftPXgFqaHcKLbSUllikAT8A?=
- =?us-ascii?Q?VrUl3cYmkJbT07DpfKMyh6hnAts/o9lnnEcQt3rFoelQq5xKUEzCourV4oNc?=
- =?us-ascii?Q?JF62yKJRsSluz3h5eVLm4ppnmc/NQ1A/I9uPBcHXBVcZa2R4cgUSCfNcnGoU?=
- =?us-ascii?Q?a1TKDjeU04dTlKnXXZfU2HPet4d9SgdYmdLMN8TYRrC8WxcVk0zA0ly5ijmi?=
- =?us-ascii?Q?cNsrvSaPYvMo0XTGNlgiO7/bXg91YzEn6LNKwOoGUSrB8ItQ2NDpHxAG5vbR?=
- =?us-ascii?Q?KHVlq6vVjH2B2mIjSrQgUks90YDBvJrwqmiGakJyyA6nd9FVf9UsqO3qWd45?=
- =?us-ascii?Q?/R0Fe3GiSu49h6fjXbRRMPa6NMv3nD352ORZvHiTMwaQ2SwU3xkUnwm/9aiu?=
- =?us-ascii?Q?7047SMn3RCUIrTwKTJwXeUQ3dBOOQbZgl57+Q4Cz2dJ8tmqFyzLR96jIHSsW?=
- =?us-ascii?Q?jaQ26TVPW58yR2QqsZ4j21BdZRScK5OmbbDd5QYn?=
-X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4c6503d-0508-4792-82eb-08dc626d58b3
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2024 01:41:36.1284 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hs1jXEf71R3uyLnK0ST4+oPN+nkrvgq9TmNO3gJA4QaT6NMj5fhVeSFu1CrnfTWFtGA4po1M9xaBuA5X/zezEg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5828
-Received-SPF: pass client-ip=52.101.128.6; envelope-from=wafer@jaguarmicro.com;
- helo=HK3PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v13 00/24] target/arm: Implement FEAT_NMI and
+ FEAT_GICv3_NMI
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <eduardo@habkost.net>, <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, 
+ <wangyanan55@huawei.com>, <richard.henderson@linaro.org>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+References: <20240407081733.3231820-1-ruanjinjie@huawei.com>
+ <CAFEAcA9Y02am4wfb8Ct9qz7YX_maH4VD+JD+FFc18dBg5+hv7w@mail.gmail.com>
+In-Reply-To: <CAFEAcA9Y02am4wfb8Ct9qz7YX_maH4VD+JD+FFc18dBg5+hv7w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.109.254]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.188;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
+X-Spam_score_int: -54
+X-Spam_score: -5.5
+X-Spam_bar: -----
+X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.237,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,45 +68,230 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio-1.3 specification
-<https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
-2.8.6 Next Flag: Descriptor Chaining
-      Buffer ID is included in the last descriptor in the list.
 
-If the feature (_F_INDIRECT_DESC) has been negotiated, install only
-one descriptor in the virtqueue.
-Therefor the buffer id should be obtained from the first descriptor.
 
-In descriptor chaining scenarios, the buffer id should be obtained
-from the last descriptor.
+On 2024/4/19 21:41, Peter Maydell wrote:
+> On Sun, 7 Apr 2024 at 09:19, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>
+>> This patch set implements FEAT_NMI and FEAT_GICv3_NMI for ARMv8. These
+>> introduce support for a new category of interrupts in the architecture
+>> which we can use to provide NMI like functionality.
+> 
+> I had one last loose end I wanted to tidy up, and I got round
+> to working through reading the spec about it today. This is
+> the question of what the "is NMI enabled?" test should be
+> in the code in arm_gicv3_cpuif.c.
+> 
+> The spec wording isn't always super clear, but there are several
+> things here:
+> 
+>  * FEAT_NMI : the changes to the CPU proper which implement
+>    superpriority for IRQ and FIQ, PSTATE.ALLINT, etc etc.
+>  * FEAT_GICv3_NMI : the changes to the CPU interface for
+>    GICv3 NMI handling. Any CPU with FEAT_NMI and FEAT_GICv3
+>    must have this.
+>  * NMI support in the IRI (Interrupt Routing Infrastructure,
+>    i.e. all the bits of the GIC that aren't the cpuif; the
+>    distributor and redistributors). Table 3-1 in the GIC spec
+>    says that you can have an IRI without NMI support connected
+>    to a CPU which does have NMI support. This is what the ID
+>    register bit GICD_TYPER.NMI reports.
 
-Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+That is right. It seems reasonable for me.
 
-Signed-off-by: Wafer <wafer@jaguarmicro.com>
----
- hw/virtio/virtio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+> 
+> At the moment this patchset conflates FEAT_GICv3_NMI and
+> the NMI support in the IRI. The effect of this is that we
+> allow a machine model to create a CPU with FEAT_NMI but
+> without FEAT_GICv3_NMI in the cpuif, and we don't allow
+> a setup where the CPU and cpuif have NMI support but the
+> IRI does not. (This will actually happen with this patchset
+> with the sbsa-ref machine and -cpu max, because we haven't
+> (yet) made sbsa-ref enable NMI in the GIC device when the
+> CPU has NMI support.)
+> 
+> For a Linux guest this doesn't make much difference, because
+> Linux will only enable NMI support if it finds it in both
+> the IRI and the CPU, but I think it would be better to
+> get the enable-tests right as these can be awkward to change
+> after the fact in a backwards-compatible way.
+> 
+> I think this is easy to fix -- we can add a new bool field
+> GICv3CPUState::nmi_support which we initialize in
+> gicv3_init_cpuif() if the CPU has FEAT_NMI, and make the
+> checks in arm_gicv3_cpuif.c check cs->nmi_support instead
+> of cs->gic->nmi_support. That looks like this squashed into
+> patch 18:
+> 
+> diff --git a/include/hw/intc/arm_gicv3_common.h
+> b/include/hw/intc/arm_gicv3_common.h
+> index 88533749ebb..cd09bee3bc4 100644
+> --- a/include/hw/intc/arm_gicv3_common.h
+> +++ b/include/hw/intc/arm_gicv3_common.h
+> @@ -225,6 +225,13 @@ struct GICv3CPUState {
+> 
+>      /* This is temporary working state, to avoid a malloc in gicv3_update() */
+>      bool seenbetter;
+> +
+> +    /*
+> +     * Whether the CPU interface has NMI support (FEAT_GICv3_NMI). The
+> +     * CPU interface may support NMIs even when the GIC proper (what the
+> +     * spec calls the IRI; the redistributors and distributor) does not.
+> +     */
+> +    bool nmi_support;
+>  };
+> 
+>  /*
+> diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+> index 2457b7bca23..715909d0f7d 100644
+> --- a/hw/intc/arm_gicv3_cpuif.c
+> +++ b/hw/intc/arm_gicv3_cpuif.c
+> @@ -21,6 +21,7 @@
+>  #include "hw/irq.h"
+>  #include "cpu.h"
+>  #include "target/arm/cpregs.h"
+> +#include "target/arm/cpu-features.h"
+>  #include "sysemu/tcg.h"
+>  #include "sysemu/qtest.h"
+> 
+> @@ -839,7 +840,7 @@ static int icc_highest_active_prio(GICv3CPUState *cs)
+>       */
+>      int i;
+> 
+> -    if (cs->gic->nmi_support) {
+> +    if (cs->nmi_support) {
+>          /*
+>           * If an NMI is active this takes precedence over anything else
+>           * for priority purposes; the NMI bit is only in the AP1R0 bit.
+> @@ -1285,7 +1286,7 @@ static void icc_drop_prio(GICv3CPUState *cs, int grp)
+>              continue;
+>          }
+> 
+> -        if (i == 0 && cs->gic->nmi_support && (*papr & ICC_AP1R_EL1_NMI)) {
+> +        if (i == 0 && cs->nmi_support && (*papr & ICC_AP1R_EL1_NMI)) {
+>              *papr &= (~ICC_AP1R_EL1_NMI);
+>              break;
+>          }
+> @@ -1324,7 +1325,7 @@ static int icc_highest_active_group(GICv3CPUState *cs)
+>       */
+>      int i;
+> 
+> -    if (cs->gic->nmi_support) {
+> +    if (cs->nmi_support) {
+>          if (cs->icc_apr[GICV3_G1][0] & ICC_AP1R_EL1_NMI) {
+>              return GICV3_G1;
+>          }
+> @@ -1787,7 +1788,7 @@ static void icc_ap_write(CPUARMState *env, const
+> ARMCPRegInfo *ri,
+>          return;
+>      }
+> 
+> -    if (cs->gic->nmi_support) {
+> +    if (cs->nmi_support) {
+>          cs->icc_apr[grp][regno] = value & (0xFFFFFFFFU | ICC_AP1R_EL1_NMI);
+>      } else {
+>          cs->icc_apr[grp][regno] = value & 0xFFFFFFFFU;
+> @@ -1901,7 +1902,7 @@ static uint64_t icc_rpr_read(CPUARMState *env,
+> const ARMCPRegInfo *ri)
+>          }
+>      }
+> 
+> -    if (cs->gic->nmi_support) {
+> +    if (cs->nmi_support) {
+>          /* NMI info is reported in the high bits of RPR */
+>          if (arm_feature(env, ARM_FEATURE_EL3) && !arm_is_secure(env)) {
+>              if (cs->icc_apr[GICV3_G1NS][0] & ICC_AP1R_EL1_NMI) {
+> @@ -2961,7 +2962,16 @@ void gicv3_init_cpuif(GICv3State *s)
+>           */
+>          define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
+> 
+> -        if (s->nmi_support) {
+> +        /*
+> +         * If the CPU implements FEAT_NMI and FEAT_GICv3 it must also
+> +         * implement FEAT_GICv3_NMI, which is the CPU interface part
+> +         * of NMI support. This is distinct from whether the GIC proper
+> +         * (redistributors and distributor) have NMI support. In QEMU
+> +         * that is a property of the GIC device in s->nmi_support;
+> +         * cs->nmi_support indicates the CPU interface's support.
+> +         */
+> +        if (cpu_isar_feature(aa64_nmi, cpu)) {
+> +            cs->nmi_support = true;
+>              define_arm_cp_regs(cpu, gicv3_cpuif_gicv3_nmi_reginfo);
+>          }
+> 
+> plus this squashed into patch 19:
+> 
+> diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+> index 20a8e1f2fe4..b1f6c16ffef 100644
+> --- a/hw/intc/arm_gicv3_cpuif.c
+> +++ b/hw/intc/arm_gicv3_cpuif.c
+> @@ -566,7 +566,7 @@ static void icv_ap_write(CPUARMState *env, const
+> ARMCPRegInfo *ri,
+> 
+>      trace_gicv3_icv_ap_write(ri->crm & 1, regno,
+> gicv3_redist_affid(cs), value);
+> 
+> -    if (cs->gic->nmi_support) {
+> +    if (cs->nmi_support) {
+>          cs->ich_apr[grp][regno] = value & (0xFFFFFFFFU | ICV_AP1R_EL1_NMI);
+>      } else {
+>          cs->ich_apr[grp][regno] = value & 0xFFFFFFFFU;
+> @@ -1510,7 +1510,7 @@ static int icv_drop_prio(GICv3CPUState *cs, bool *nmi)
+>              continue;
+>          }
+> 
+> -        if (i == 0 && cs->gic->nmi_support && (*papr1 & ICV_AP1R_EL1_NMI)) {
+> +        if (i == 0 && cs->nmi_support && (*papr1 & ICV_AP1R_EL1_NMI)) {
+>              *papr1 &= (~ICV_AP1R_EL1_NMI);
+>              *nmi = true;
+>              return 0xff;
+> @@ -2699,7 +2699,7 @@ static void ich_ap_write(CPUARMState *env, const
+> ARMCPRegInfo *ri,
+> 
+>      trace_gicv3_ich_ap_write(ri->crm & 1, regno,
+> gicv3_redist_affid(cs), value);
+> 
+> -    if (cs->gic->nmi_support) {
+> +    if (cs->nmi_support) {
+>          cs->ich_apr[grp][regno] = value & (0xFFFFFFFFU | ICV_AP1R_EL1_NMI);
+>      } else {
+>          cs->ich_apr[grp][regno] = value & 0xFFFFFFFFU;
+> @@ -2821,7 +2821,7 @@ static void ich_lr_write(CPUARMState *env, const
+> ARMCPRegInfo *ri,
+>      }
+> 
+>      /* Enforce RES0 bit in NMI field when FEAT_GICv3_NMI is not implemented */
+> -    if (!cs->gic->nmi_support) {
+> +    if (!cs->nmi_support) {
+>          value &= ~ICH_LR_EL2_NMI;
+>      }
+> 
+> The comments and commit message for patch 24 also need tweaking,
+> because they are written assuming that FEAT_GICv3_NMI means
+> "NMI support in the GIC proper", not "NMI support in the cpuif".
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 871674f9be..f65d4b4161 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1739,6 +1739,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
-             goto err_undo_map;
-         }
- 
-+        if (desc_cache != &indirect_desc_cache) {
-+            /* Buffer ID is included in the last descriptor in the list. */
-+            id = desc.id;
-+        }
-+
-         rc = virtqueue_packed_read_next_desc(vq, &desc, desc_cache, max, &i,
-                                              desc_cache ==
-                                              &indirect_desc_cache);
--- 
-2.27.0
+Yes, they're different, "FEAT_GICv3_NMI" is something beside PE, that is
+the cpuif.
 
+> 
+> Since those changes are not too complicated, and I made them
+> locally anyway since I wanted to confirm that my plan was
+> workable, my proposal is that I will apply these fixes while
+> I take this series into target-arm.next for 9.1.
+> 
+> So I've applied this series to target-arm.next with the above
+> changes (preparatory to doing a pull request tail end of next
+> week once we release 9.0). Let me know if you'd prefer something
+> else.
+> 
+
+Thank you! I think that is good.
+
+> thanks
+> -- PMM
 
