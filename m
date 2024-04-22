@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C1FC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 14:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA54C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 14:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryuVO-0000nu-C6; Mon, 22 Apr 2024 10:18:50 -0400
+	id 1ryuVQ-0000og-1b; Mon, 22 Apr 2024 10:18:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1ryuVM-0000i4-HA
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:18:48 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ryuVP-0000oM-6S
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:18:51 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1ryuVK-0006q1-9R
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:18:47 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a55b93f5540so117514366b.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 07:18:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ryuVN-0006qI-8I
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 10:18:50 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a55b10bfd30so91678766b.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 07:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1713795524; x=1714400324;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HEjrY/tHBtAmdIxQI2YcasxXeb63ob1ZNEbW9sS8ch0=;
- b=d7IYZeC35l2NM3M1tKq3rOzU3WB3SpQsjQaGcd7lpiN0kX1g62BIe+hx2PFjAXXEiw
- QJHH3+12WkCO3GP9ULDohXRG3r1Db8Y/MpIjTC5m3RHQykI/FwpCYRMICjUPHztuIwU1
- gzpH8lCCUJTg0wO7GukPnhEzu8gOJ6zYxNPA+Dq8bF1kUa0qQg+i81BxSILfRcnuRBxq
- jfjCLhzyZN9Oz2uR1ZRgX1D7P60nP0GkZJt47yEXi2FMjCUfS95uhqXN0qvHDD7HnZd7
- 2ehcjtpLHEt2Jb3BbA/w3V/y9fXQqnt34f2eRTumWjgMamsSAGUmAnV8DDXZLZCUD4j0
- 4stA==
+ d=linaro.org; s=google; t=1713795527; x=1714400327; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xWcMe1r1xfrYk7035Y+Y06ENIVgnk/UML/pGeVuWqME=;
+ b=uzkXmmpTfBtKZwcnZpXzmavU9oaQ9v46n/7HK0HIIVx1iMqeOS4ka3rD72f9YpbuDp
+ mfkFz2RrQxZDxnWLbz95xbct3YO7EfAi5F/Wp5FMUiBHzYTIrOBXobsxwIRN6oZnd8wP
+ CS4+fW4d6qU8YWH0O+bWSjy31SQLLwNxKWL7frgEjNJQ2zCGRnRHA5+qNABPAHVB/Xmy
+ FsEeWGLx+k1XZVobrSU+ZvmWcJEQxkF7Qz0C+aJgY+SZavqq18oDX6M6arLkM8O/+OVH
+ IHCC0G5OH5AaRJtfJ71tRwZJ96GEEwjeRaEzPEIq9fryoUvv71GBRzUZ6i3GWOeib1G1
+ xD4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713795524; x=1714400324;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HEjrY/tHBtAmdIxQI2YcasxXeb63ob1ZNEbW9sS8ch0=;
- b=mjDdMLyXysrRyaGWxSO7VXj0zsB33i8G9MAuybuRse/ZZFxhxwChGm4W0lKg0Zyk/x
- EPtZY4MtMoDdtuYrrkJoNR7twWavVp12tzbzIvnVbyciId8VkEh5tvtIyQlJ6Uw5+6Gu
- omRK5LOh9OfydgQhUuhfjT609q4PXBQKllNN2S4uK1ufc+ByblxBb9vI7h7s1pVGIzJt
- 5HFgxxQ4kJwVmbbveCqPWnTsZ5nLoCi3+rgmsqwvBr6WLRBfb6y9gk4JoP2JrEIOycYK
- 1asaY/d/SprLgdjb1nPYJ1KKHMaAZqCdmXZD5Lt2rCDQkf84mGkldxYHBQb4XL07bRat
- /RaA==
-X-Gm-Message-State: AOJu0YyUTFFFXY50kWeJPNGyYSOszqLF/OPmuVGgvp2n6iz7rdoRPjoQ
- yCQOEnpvqxiYcoD88yVjpxkVYbmnxA8wTIlvKRR+VxCg8OOroUOTLImMcxqw5fRdQLCN8iLPXPY
- lCB7jaNfafX71dBbu2QVznWh9bCVvSe8M2WFvyPZ7eVUkf845
-X-Google-Smtp-Source: AGHT+IEHUxRmNXWelaByC2p51CgLZHa67QGjHRPevG9ItqQ33L/rVhDejF1DVvkYKEAuat/flZIkZsToITcdJD0lY4w=
-X-Received: by 2002:a17:906:fcb1:b0:a58:7239:4cf2 with SMTP id
- qw17-20020a170906fcb100b00a5872394cf2mr374835ejb.52.1713795524280; Mon, 22
- Apr 2024 07:18:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1713795527; x=1714400327;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xWcMe1r1xfrYk7035Y+Y06ENIVgnk/UML/pGeVuWqME=;
+ b=fGG3JJPPlKLGeGCMskDpYNgcPdYc50KQwxLyy0Wiuz9WwG4rnbT/vUZRVpZF1ugRD2
+ ILi+Km8yQI2Us8CJpLsIXD48BoA/JIPCegbJMjWwckRdGRWTln52ad1EFS8fGhh4/ANV
+ Kxa5Uaf6K9adcXrUnt/urCnvHTaul7CQVL4sp/GXc/eBz2cPCV9qw8ovOFxnZU6aIOct
+ tmUigdBn0EyGApq1TCV6MArntlI3uBAnCZ1o94+FOwcFdtEsFnUEswf+dFCmzvubq/+h
+ NYyOJjmhIGxVBv2nt4Wy9icPUjRkzu+z6amP4glW9RjsA0BbQMv2a+AxtnjlWLxMgX+b
+ X75Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUclmv6N1VRUch1E0A6KtBig6jtfprZxkWgpZTrEm6x8tuMP5e3s3Rxa5qj1VZQQuUDfAwrlv1xYtODcVwPzVkTGcFdK+E=
+X-Gm-Message-State: AOJu0Yy35/Pbeg3NeSruyr65DeEqL4JDE2IFmN5HIuO7lELChyyt/JrN
+ VDKmxIgfhFaN807yEN4H0kiu0TSNWGUDPOIRU1Nq70z2V3JNOlx0NyYpJvVv92FC6q6nkF6CVA4
+ B+zP7e6aqMrjlyXw/JItcyDspmlsyIqChhUZMdw==
+X-Google-Smtp-Source: AGHT+IG+oiZYigBpRUgLze0h2VtG7j2k5UWSCshkjqTLb9tK9oLYS+xTqPJVL/B3pCnEk06t12qNTnhAP0Ya5pDC3uA=
+X-Received: by 2002:a50:cdc1:0:b0:568:d7fe:a768 with SMTP id
+ h1-20020a50cdc1000000b00568d7fea768mr8176946edj.25.1713795527342; Mon, 22 Apr
+ 2024 07:18:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240422135116.53247-1-andrew@daynix.com>
-In-Reply-To: <20240422135116.53247-1-andrew@daynix.com>
-From: Andrew Melnichenko <andrew@daynix.com>
-Date: Mon, 22 Apr 2024 16:52:24 +0300
-Message-ID: <CABcq3pG0n81jNV+0RMnrxNFTTXL=BnVq8aEhv9Uu7rOJFauR=A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] ebpf: Added traces back. Changed source set for
- eBPF to 'system'.
-To: jasowang@redhat.com, yuri.benditovich@daynix.com
-Cc: qemu-devel@nongnu.org
+References: <20240419184608.2675213-1-peter.maydell@linaro.org>
+ <CAFEAcA91ZULEjEgTotevp-epgH_azcwrSi9PVnnOSk8gq5j22g@mail.gmail.com>
+ <c84bfac7-5fb5-4fca-90a3-93adb40bcf3c@linaro.org>
+In-Reply-To: <c84bfac7-5fb5-4fca-90a3-93adb40bcf3c@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 22 Apr 2024 15:18:35 +0100
+Message-ID: <CAFEAcA_PWyu=ca-S=qwePDdGqjX95k3oQ+BJUZc541YEyV7i2w@mail.gmail.com>
+Subject: Re: [PATCH 0/3] target/arm: Make the counter frequency default 1GHz
+ for new CPUs, machines
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Radoslaw Biernacki <rad@semihalf.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2a00:1450:4864:20::631;
- envelope-from=andrew@daynix.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,98 +94,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello, everyone.
-Was added missed "trace.h"
+On Mon, 22 Apr 2024 at 14:38, Marcin Juszkiewicz
+<marcin.juszkiewicz@linaro.org> wrote:
+>
+> W dniu 22.04.2024 o 14:56, Peter Maydell pisze:
+> > On Fri, 19 Apr 2024 at 19:46, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> >> The upshot is that the only CPU type that changes is 'max'; but any
+> >> new type we add in future (whether v8.6 or not) will also get the new
+> >> 1GHz default (assuming we spot in code review any attempts to set
+> >> the ARM_FEATURE_BACKCOMPAT_CNTFRQ flag on new CPU types as a result
+> >> of cut-n-paste from an older CPU initfn ;-)).
+> >>
+> >> It remains the case that the machine model can override the default
+> >> value via the 'cntfrq' QOM property (regardless of the CPU type).
+> >
+> > This patchset turns out to break the sbsa-ref board: the
+> > Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef
+> > avocado test both (a) takes rather longer to boot and (b) when
+> > running thinks that time is advancing very fast.
+> >
+> > I suspect this may be because the firmware hard-codes the
+> > generic timer clock frequency it is expecting. I've cc'd the
+> > sbsa-ref maintainers: is that correct?
+> >
+> > If so, we can deal with it by making the sbsa-ref board set the
+> > cntfrq QOM property on its CPUs to force them to the old
+> > frequency. However this will produce a technically-out-of-spec
+> > CPU when used with a v8.6-compliant CPU type, so probably we
+> > should do something to be able to tell the firmware the clock
+> > frequency (if it doesn't want to just read CNTFRQ_EL0 itself).
+>
+>  From what I see in EDK2 code we read CNTFREQ_EL0:
+>
+> GetPlatformTimerFreq() checks for PcdArmArchTimerFreqInHz variable which
+> sbsa-ref has set to 0. So it calls ArmGenericTimerGetTimerFreq() ->
+> ArmReadCntFrq() -> "mrs x0, cntfrq_el0"
 
-Best regards.
+Yeah, it looks like it's TF-A that hardcodes the frequency:
+https://github.com/ARM-software/arm-trusted-firmware/blob/c8be7c08c3b3a2330d54b58651faa9438ff34f6e/plat/qemu/qemu_sbsa/include/platform_def.h#L269
 
-On Mon, Apr 22, 2024 at 5:17=E2=80=AFPM Andrew Melnychenko <andrew@daynix.c=
-om> wrote:
->
-> There was an issue with Qemu build with "--disable-system".
-> The traces could be generated and the build fails.
-> The traces were 'cut out' for previous patches, and overall,
-> the 'system' source set should be used like in pre-'eBPF blob' patches.
->
-> Signed-off-by: Andrew Melnychenko <andrew@daynix.com>
-> ---
->  ebpf/ebpf_rss.c  | 7 +++++++
->  ebpf/meson.build | 2 +-
->  ebpf/trace.h     | 1 +
->  3 files changed, 9 insertions(+), 1 deletion(-)
->  create mode 100644 ebpf/trace.h
->
-> diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
-> index d102f3dd092..87f0714910e 100644
-> --- a/ebpf/ebpf_rss.c
-> +++ b/ebpf/ebpf_rss.c
-> @@ -25,6 +25,8 @@
->  #include "ebpf/rss.bpf.skeleton.h"
->  #include "ebpf/ebpf.h"
->
-> +#include "trace.h"
-> +
->  void ebpf_rss_init(struct EBPFRSSContext *ctx)
->  {
->      if (ctx !=3D NULL) {
-> @@ -55,18 +57,21 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
->                                     PROT_READ | PROT_WRITE, MAP_SHARED,
->                                     ctx->map_configuration, 0);
->      if (ctx->mmap_configuration =3D=3D MAP_FAILED) {
-> +        trace_ebpf_error("eBPF RSS", "can not mmap eBPF configuration ar=
-ray");
->          return false;
->      }
->      ctx->mmap_toeplitz_key =3D mmap(NULL, qemu_real_host_page_size(),
->                                     PROT_READ | PROT_WRITE, MAP_SHARED,
->                                     ctx->map_toeplitz_key, 0);
->      if (ctx->mmap_toeplitz_key =3D=3D MAP_FAILED) {
-> +        trace_ebpf_error("eBPF RSS", "can not mmap eBPF toeplitz key");
->          goto toeplitz_fail;
->      }
->      ctx->mmap_indirections_table =3D mmap(NULL, qemu_real_host_page_size=
-(),
->                                     PROT_READ | PROT_WRITE, MAP_SHARED,
->                                     ctx->map_indirections_table, 0);
->      if (ctx->mmap_indirections_table =3D=3D MAP_FAILED) {
-> +        trace_ebpf_error("eBPF RSS", "can not mmap eBPF indirection tabl=
-e");
->          goto indirection_fail;
->      }
->
-> @@ -108,12 +113,14 @@ bool ebpf_rss_load(struct EBPFRSSContext *ctx)
->
->      rss_bpf_ctx =3D rss_bpf__open();
->      if (rss_bpf_ctx =3D=3D NULL) {
-> +        trace_ebpf_error("eBPF RSS", "can not open eBPF RSS object");
->          goto error;
->      }
->
->      bpf_program__set_type(rss_bpf_ctx->progs.tun_rss_steering_prog, BPF_=
-PROG_TYPE_SOCKET_FILTER);
->
->      if (rss_bpf__load(rss_bpf_ctx)) {
-> +        trace_ebpf_error("eBPF RSS", "can not load RSS program");
->          goto error;
->      }
->
-> diff --git a/ebpf/meson.build b/ebpf/meson.build
-> index c5bf9295a20..bff6156f518 100644
-> --- a/ebpf/meson.build
-> +++ b/ebpf/meson.build
-> @@ -1 +1 @@
-> -common_ss.add(when: libbpf, if_true: files('ebpf.c', 'ebpf_rss.c'), if_f=
-alse: files('ebpf_rss-stub.c'))
-> +system_ss.add(when: libbpf, if_true: files('ebpf.c', 'ebpf_rss.c'), if_f=
-alse: files('ebpf_rss-stub.c'))
-> diff --git a/ebpf/trace.h b/ebpf/trace.h
-> new file mode 100644
-> index 00000000000..abefc46ab10
-> --- /dev/null
-> +++ b/ebpf/trace.h
-> @@ -0,0 +1 @@
-> +#include "trace/trace-ebpf.h"
-> --
-> 2.44.0
->
+I imagine that value gets written into CNTFRQ by TF-A somewhere
+along the line (and then read by EDK2 later), though I haven't
+quite found where. Plus I notice that the TF-A sbsa-watchdog-timer
+assumes that the generic-timer frequency and the watchdog
+timer frequency are the same, which is a bit dubious IMHO.
+
+It also seems to be hardcoded in TF-A's support for the virt
+board too, annoyingly.
+
+thanks
+-- PMM
 
