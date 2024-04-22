@@ -4,80 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B62BCC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 04:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2CD7C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 06:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rylQ6-0001AF-MK; Mon, 22 Apr 2024 00:36:47 -0400
+	id 1rynES-0007E1-LR; Mon, 22 Apr 2024 02:32:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1rylQ3-00018u-Ht; Mon, 22 Apr 2024 00:36:44 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1rylQ1-0000LW-M6; Mon, 22 Apr 2024 00:36:43 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1e2c725e234so37441275ad.1; 
- Sun, 21 Apr 2024 21:36:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713760598; x=1714365398; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=n3at13TXv9A0AngjciclfQQPdiYQczLuI2wXF5rISsg=;
- b=XgJGAXyK1BYq4NxYIQLRF3yThzuvPV9M5Zn0If5gchQbJehDpDmsd4aYqWw6jYsMlu
- +1XurwaRoznxxwRnE64BerhLNU6dy1I4hOPV5A5p0Fs8L2cN/zXKnmV5OePlG4MF6/fU
- GOawFyp1h+ykNaZgxfZxt4Cpth6B3GZBS07yG04Bo/58i4aqMvuc3G6fiehAhcksDI0/
- q3TEV9X8MLzjQ1sUH+tN8B/aYDci6tLNxNC5NKKjfJwdf/vy5vduNwbxb/kZ7TzcYZUw
- /l8Eb0CyWWRjcpUo1OObEPeyFwO+HRe3DE9alz/Z+yGPpRvgE5F6ifl/7FJdGPcZ90gV
- ufRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713760598; x=1714365398;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n3at13TXv9A0AngjciclfQQPdiYQczLuI2wXF5rISsg=;
- b=kzOSFmBNIQ7TJXP19FG6tiRP2rFtO5MwKdNc8r2UaOkbI7WAIedtIt36Cgd5NRJn0B
- y901Trx0IUyT2PEwVCCnnkt+KiOaDgrkGbWd7Fl/uDyX6wLXLQba6/TQyGfHAUfki+bq
- pk3/9AUwvaypDVsA0ODkO0gs+CIhR5YUOlK0vAvOrce4fK7Iy5jm358ptuk4W7KymnqI
- eDb2MM8VDnZAPqYbG2i/j6KF2bAMuAXbUifgQeZR6q577y2IfYa7MEjYdwfNFn8GIqxs
- 3hj25gRot8ztt/8c+pGzSTfaDZ8ySxy2DTPpIWtv8Z25gUbZig4qD3QCTikU68MqFLIT
- tpBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdmlSFMCiI0I+zt1aSRN7tygzq1H3o9Cs2mZXLN8buRpTnyUfoB4ay7Aok37v+sJxJmHiQBQfknorsAdulE8DnAKNHES8=
-X-Gm-Message-State: AOJu0YxLIdl3hYdEWK9uyGtnaP3gIjJoSC9gIBvxKLLFbkteASA8aakY
- /eAk00PzIJhRgZZxhDmfk8zgnChXq3tvrmc5XYccjl8XoWIJwBtd/xjO0g==
-X-Google-Smtp-Source: AGHT+IFzOJ0XRoT7iOsrUK4TIwL46L5ayg/OM2fxzrd6KiAYz7U2KD7sLRHiDznoG/WDhJPfH17Rnw==
-X-Received: by 2002:a17:902:ec84:b0:1e2:bdef:3971 with SMTP id
- x4-20020a170902ec8400b001e2bdef3971mr17437431plg.16.1713760598611; 
- Sun, 21 Apr 2024 21:36:38 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([210.223.46.112])
- by smtp.gmail.com with ESMTPSA id
- c17-20020a170903235100b001dddcfca329sm7066777plh.148.2024.04.21.21.36.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Apr 2024 21:36:38 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: hreitz@redhat.com, jeuk20.kim@samsung.com, kwolf@redhat.com,
- pbonzini@redhat.com, qemu-block@nongnu.org, mcascell@redhat.com,
- zheyuma97@gmail.com, j-young.choi@samsung.com
-Subject: [PATCH] hw/ufs: Fix buffer overflow bug
-Date: Mon, 22 Apr 2024 13:36:30 +0900
-Message-Id: <c136fd237c253393a658dab51cd4904e4ceccddd.1713759623.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rynEJ-0007AB-1W; Mon, 22 Apr 2024 02:32:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rynEH-0003z7-3B; Mon, 22 Apr 2024 02:32:42 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43M5E3ER002441; Mon, 22 Apr 2024 06:32:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=7xyIOWXBe9jSBsLKF70/yc3QLrVv3/sbSoPSSEYHitU=;
+ b=JOoIP1V6raw1YLaqsBalIoaZwUAK52p7TJmF5RxCzhieqA49YtMhCgaAXkbdc8WdfLZr
+ L4OMOf/NPO7pyP/LDbjvw6v2bBDC6PmHblg4H7YhBKZmUmDoTen9OHJou9xVAot2EAJI
+ AloffQ1ar9d72wkWkYqvuCmYkZuzNLLTDnTAqIJS+iDmPR+aHXlg/r3Nnm9GAw9QB08h
+ ERLRnBOYVqVYlR2ojh97UJkNPArd/xmkWTTSk+cHUw7RrzHLuT69CtAd54uOJrYya/Mr
+ IyCFPCLxOEZkAexPg75q0DFER/4Vdmvd1X9vvqjWAVHJRkeH1+DW6wQD3t+RA/LzvUx9 KA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xnhj60481-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Apr 2024 06:32:36 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43M6WZUI022717;
+ Mon, 22 Apr 2024 06:32:35 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xnhj60480-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Apr 2024 06:32:35 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43M4FLs5005373; Mon, 22 Apr 2024 06:32:35 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmx3c4w3m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Apr 2024 06:32:35 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43M6WTck53019124
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Apr 2024 06:32:31 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 63BEA20043;
+ Mon, 22 Apr 2024 06:32:29 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 15FDD20040;
+ Mon, 22 Apr 2024 06:32:28 +0000 (GMT)
+Received: from [9.199.192.140] (unknown [9.199.192.140])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Apr 2024 06:32:27 +0000 (GMT)
+Message-ID: <4b4f7340-815c-4592-91f6-d0b9a68db775@linux.vnet.ibm.com>
+Date: Mon, 22 Apr 2024 12:02:27 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/8] target/ppc: Move multiply fixed-point insns (64-bit
+ operands) to decodetree.
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240416063927.99428-1-rathc@linux.ibm.com>
+ <20240416063927.99428-6-rathc@linux.ibm.com>
+ <87bafba4-7a65-42e9-acf2-d05962ce7186@linaro.org>
+ <fe7001b8-7e81-4634-8e45-3661b790c8b7@linux.vnet.ibm.com>
+ <60632882-1c19-4dd0-aeab-d53d7ffd86f0@linaro.org>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <60632882-1c19-4dd0-aeab-d53d7ffd86f0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: CBPrJ0lBab7LYdXO2ek7nj2Z2CSvrcR6
+X-Proofpoint-ORIG-GUID: 5lPvCiLg9Hsa0dL2v9Oa8kWY1b8a6OW5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-22_03,2024-04-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 suspectscore=0 bulkscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 adultscore=0 clxscore=1015 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404220028
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,59 +121,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It fixes the buffer overflow vulnerability in the ufs device.
-The bug was detected by sanitizers.
+Hi Richard,
 
-You can reproduce it by:
-
-cat << EOF |\
-qemu-system-x86_64 \
--display none -machine accel=qtest -m 512M -M q35 -nodefaults -drive \
-file=null-co://,if=none,id=disk0 -device ufs,id=ufs_bus -device \
-ufs-lu,drive=disk0,bus=ufs_bus -qtest stdio
-outl 0xcf8 0x80000810
-outl 0xcfc 0xe0000000
-outl 0xcf8 0x80000804
-outw 0xcfc 0x06
-write 0xe0000058 0x1 0xa7
-write 0xa 0x1 0x50
-EOF
-
-Resolves: #2299
-Fixes: 329f16624499 ("hw/ufs: Support for Query Transfer Requests")
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
----
- hw/ufs/ufs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index eccdb852a0..bac78a32bb 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -126,6 +126,10 @@ static MemTxResult ufs_dma_read_req_upiu(UfsRequest *req)
-     copy_size = sizeof(UtpUpiuHeader) + UFS_TRANSACTION_SPECIFIC_FIELD_SIZE +
-                 data_segment_length;
- 
-+    if (copy_size > sizeof(req->req_upiu)) {
-+        copy_size = sizeof(req->req_upiu);
-+    }
-+
-     ret = ufs_addr_read(u, req_upiu_base_addr, &req->req_upiu, copy_size);
-     if (ret) {
-         trace_ufs_err_dma_read_req_upiu(req->slot, req_upiu_base_addr);
-@@ -225,6 +229,10 @@ static MemTxResult ufs_dma_write_rsp_upiu(UfsRequest *req)
-         copy_size = rsp_upiu_byte_len;
-     }
- 
-+    if (copy_size > sizeof(req->rsp_upiu)) {
-+        copy_size = sizeof(req->rsp_upiu);
-+    }
-+
-     ret = ufs_addr_write(u, rsp_upiu_base_addr, &req->rsp_upiu, copy_size);
-     if (ret) {
-         trace_ufs_err_dma_write_rsp_upiu(req->slot, rsp_upiu_base_addr);
--- 
-2.34.1
+On 4/20/24 21:21, Richard Henderson wrote:
+> On 4/19/24 02:25, Chinmay Rath wrote:
+>> Hi Richard,
+>>
+>> On 4/17/24 00:06, Richard Henderson wrote:
+>>> On 4/15/24 23:39, Chinmay Rath wrote:
+>>>> +static bool trans_MADDHDU(DisasContext *ctx, arg_MADDHDU *a)
+>>> ...
+>>>> +    tcg_gen_movi_i64(t1, 0);
+>>>
+>>> Drop the movi.
+>>>
+>>>> +    tcg_gen_add2_i64(t1, cpu_gpr[a->vrt], lo, hi, cpu_gpr[a->rc], 
+>>>> t1);
+>>>
+>>> Use tcg_constant_i64(0).
+>>>
+>> Looks like tcg_gen_add2_i64 internally modifies the passed arguments, 
+>> hence constant is not expected.
+>> However, I tried using tcg_constant_i64(0) as suggested but this 
+>> leads to an assert failure :
+>> qemu-system-ppc64: ../tcg/tcg.c:5071: tcg_reg_alloc_op: Assertion 
+>> `!temp_readonly(ts)' failed.
+>
+> You misunderstood my suggestion.
+>
+>   TCGv_i64 t1 = tcg_temp_new_i64();
+>   tcg_gen_add2_i64(t1, cpu_gpr[vrt], lo, hi, cpu_gpr[a->rc], 
+> tcg_constantant_i64(0));
+>
+Thank you for the clarification. Will add this to v2.
+Regards,
+Chinmay
+>
+> r~
+>
 
 
