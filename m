@@ -4,89 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82150C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 13:50:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042E8C07C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 13:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryu3i-0000vh-Ke; Mon, 22 Apr 2024 09:50:14 -0400
+	id 1ryu6E-0002Hv-4y; Mon, 22 Apr 2024 09:52:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ryu3g-0000uq-FU
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:50:12 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ryu3e-00017X-JT
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:50:12 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-56e1bbdb362so4840844a12.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 06:50:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713793808; x=1714398608; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=FT0pNmlLF8T1db8AyoCWX9vXkT6kKYWcAtRC3FBdyVM=;
- b=zGmTvlTD6p610Ikgktovl4G8Oh/Ty1GNJIeXwG9Vtxrh7Gykd1hkDH/vIbodV/BfDx
- oFzk3LgT/AHgYenwxj3SQ1lf/v9iZ8TvPPRUKMCfRinScFdFXDOpYiuuWpWC8QMNh2cn
- m6DaR/h9UeibJU9dV6sbBTalnc1FuELxOdeybJw1uIpOc64f3ZuuaM2sgGL4675Ta/Nb
- Ya6W+g+D8563UH8drUb+aBTt/3vnbd3lev9aqYf/O2eoUdJXQtSagCyyBng03ZVp/ClB
- aoJi8c6ak2kQYLPcMrxayEAX8nSDcdsyFi663tUtXvvO3cMDtYWni+lzYQisO8x8Mqe6
- UpeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713793808; x=1714398608;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FT0pNmlLF8T1db8AyoCWX9vXkT6kKYWcAtRC3FBdyVM=;
- b=sNM0H5JLuuvbTmrqYe84dTSfG9roOaWN60B/tllpG15Aq5TqPktPW6T5nblVP0XEG6
- lG9Sq+CaxyOvBkv4jvcDIeqZl7JNKx/mhYemO5Eevx05hHzcxp3Ye6o6HGnDTft/jugZ
- 0Nz6NuK1eyLCunGeFk2ulCLsZPZuiyr+lw30cBr1i+CagAm7otMa/lQ3V/ITobV3gErw
- 9g9oOSbhN583cgBsAHE7l8eT70GW/5Ajce8UknE5REJWBV+qiFt4uBbVsqtvBazKjASO
- ajLvBMNJ77S3jqBGpgilpoCs1O4485HisKHSQ4DiD4k6tioWP7Hlrqi3LOglQQVnDEzd
- fDFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvmQcORkX3g2rc60goZ/KmPaFnbe5bvi1ixn7niMgqC6jh6FZ/XIeI9eLfapLKZpw/7WRHAmil7CWlXiaXmJPU9QUgqT4=
-X-Gm-Message-State: AOJu0YyRBNWnMhC4Oou9iC7vngvUNcCeEVGQnteW52vQKaC0pTR/2Rs3
- wwi/uj9RZ4DVSQw40gnZHYRKYOlEnNROMgrZluU33/aBpi8xmqMNA3ZUa3SyAfJzoqjhtu8uQfq
- s
-X-Google-Smtp-Source: AGHT+IH1Bgw+w5bFT5OrYFD7LMKXILoSiXr7X1GfMQQX+/SNycH+Nn0r+2HTjbs+HgFosAqEXbeFuw==
-X-Received: by 2002:a50:c345:0:b0:571:bed1:3a36 with SMTP id
- q5-20020a50c345000000b00571bed13a36mr10938598edb.38.1713793808016; 
- Mon, 22 Apr 2024 06:50:08 -0700 (PDT)
-Received: from meli-email.org (adsl-53.37.6.0.tellas.gr. [37.6.0.53])
- by smtp.gmail.com with ESMTPSA id
- k3-20020aa7c383000000b00570439141a0sm5685531edq.3.2024.04.22.06.50.07
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 22 Apr 2024 06:50:07 -0700 (PDT)
-Date: Mon, 22 Apr 2024 16:45:20 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v2] hw/audio/virtio-snd: Use device endianness instead of
- target one
-User-Agent: meli 0.8.5-rc.3
-References: <20240422131355.2264-1-philmd@linaro.org>
-In-Reply-To: <20240422131355.2264-1-philmd@linaro.org>
-Message-ID: <ccjrh.pmmuyk4rntp2@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ryu6C-0002G6-4S
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:52:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ryu69-0001Vt-UQ
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:52:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713793964;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QmRbRu/3cSgah9VfTSsATRVA9ATWppHT1+RcbuEZpdE=;
+ b=eF0sTUWmHl8mxgVIv0yhrJYbBN67nhENqapVuLgPCCVBQtyechrRIhGS4JXiXDVeK/yVcK
+ UPQiNTT7/g/ol/muisASG2QEe+4jJDKlJq+BTYWxtW8fWdCjsw6V+Kj8M+1JKV+Z5/7zij
+ 5cJID2O1GF6X3CuZ8GibejH6ysCq53o=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-33-aEDcwoNEPI-ZoEf8kCoiNQ-1; Mon, 22 Apr 2024 09:52:38 -0400
+X-MC-Unique: aEDcwoNEPI-ZoEf8kCoiNQ-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4AA7981B5AF;
+ Mon, 22 Apr 2024 13:52:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id EE567492BC6;
+ Mon, 22 Apr 2024 13:52:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DEBF021E6811; Mon, 22 Apr 2024 15:52:31 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: <qemu-devel@nongnu.org>,  <kvm@vger.kernel.org>,  Tom Lendacky
+ <thomas.lendacky@amd.com>,  "Paolo Bonzini" <pbonzini@redhat.com>,  Daniel
+ P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Pankaj Gupta
+ <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>,  Isaku Yamahata
+ <isaku.yamahata@linux.intel.com>,  Brijesh Singh <brijesh.singh@amd.com>
+Subject: Re: [PATCH v3 22/49] i386/sev: Introduce 'sev-snp-guest' object
+In-Reply-To: <20240320083945.991426-23-michael.roth@amd.com> (Michael Roth's
+ message of "Wed, 20 Mar 2024 03:39:18 -0500")
+References: <20240320083945.991426-1-michael.roth@amd.com>
+ <20240320083945.991426-23-michael.roth@amd.com>
+Date: Mon, 22 Apr 2024 15:52:31 +0200
+Message-ID: <871q6xec80.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,61 +86,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Apr 2024 16:13, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->Since VirtIO devices can change endianness at runtime,
->we need to use the device endianness, not the target
->one.
+Michael Roth <michael.roth@amd.com> writes:
 
-Hey Philippe, can you clarify what do you mean by they can change 
-endianness at runtime?
-
-The target's one is used because that's the one it will be using to do 
-I/O with its kernel's audio interface.
-
-
-
-
-
+> From: Brijesh Singh <brijesh.singh@amd.com>
 >
->Cc: qemu-stable@nongnu.org
->Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
->Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->---
-> hw/audio/virtio-snd.c | 8 +++++---
-> 1 file changed, 5 insertions(+), 3 deletions(-)
+> SEV-SNP support relies on a different set of properties/state than the
+> existing 'sev-guest' object. This patch introduces the 'sev-snp-guest'
+> object, which can be used to configure an SEV-SNP guest. For example,
+> a default-configured SEV-SNP guest with no additional information
+> passed in for use with attestation:
 >
->diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
->index c80b58bf5d..82c5647660 100644
->--- a/hw/audio/virtio-snd.c
->+++ b/hw/audio/virtio-snd.c
->@@ -395,13 +395,15 @@ static uint32_t virtio_snd_get_qemu_freq(uint32_t rate)
->  * Get QEMU Audiosystem compatible audsettings from virtio based pcm stream
->  * params.
->  */
->-static void virtio_snd_get_qemu_audsettings(audsettings *as,
->+static void virtio_snd_get_qemu_audsettings(VirtIOSound *s, audsettings *as,
->                                             virtio_snd_pcm_set_params *params)
-> {
->+    VirtIODevice *vdev = VIRTIO_DEVICE(s);
->+
->     as->nchannels = MIN(AUDIO_MAX_CHANNELS, params->channels);
->     as->fmt = virtio_snd_get_qemu_format(params->format);
->     as->freq = virtio_snd_get_qemu_freq(params->rate);
->-    as->endianness = target_words_bigendian() ? 1 : 0;
->+    as->endianness = virtio_is_big_endian(vdev) ? 1 : 0;
-> }
-> 
-> /*
->@@ -464,7 +466,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
->         s->pcm->streams[stream_id] = stream;
->     }
-> 
->-    virtio_snd_get_qemu_audsettings(&as, params);
->+    virtio_snd_get_qemu_audsettings(s, &as, params);
->     stream->info.direction = stream_id < s->snd_conf.streams / 2 +
->         (s->snd_conf.streams & 1) ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_INPUT;
->     stream->info.hdr.hda_fn_nid = VIRTIO_SOUND_HDA_FN_NID;
->-- 
->2.41.0
+>   -object sev-snp-guest,id=sev0
 >
+> or a fully-specified SEV-SNP guest where all spec-defined binary
+> blobs are passed in as base64-encoded strings:
+>
+>   -object sev-snp-guest,id=sev0, \
+>     policy=0x30000, \
+>     init-flags=0, \
+>     id-block=YWFhYWFhYWFhYWFhYWFhCg==, \
+>     id-auth=CxHK/OKLkXGn/KpAC7Wl1FSiisWDbGTEKz..., \
+>     auth-key-enabled=on, \
+>     host-data=LNkCWBRC5CcdGXirbNUV1OrsR28s..., \
+>     guest-visible-workarounds=AA==, \
+>
+> See the QAPI schema updates included in this patch for more usage
+> details.
+>
+> In some cases these blobs may be up to 4096 characters, but this is
+> generally well below the default limit for linux hosts where
+> command-line sizes are defined by the sysconf-configurable ARG_MAX
+> value, which defaults to 2097152 characters for Ubuntu hosts, for
+> example.
+>
+> Signed-off-by: Brijesh Singh <brijesh.singh@amd.com>
+> Co-developed-by: Michael Roth <michael.roth@amd.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com> (for QAPI schema)
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+
+[...]
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 66b5781ca6..b25a3043da 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -920,6 +920,55 @@
+>              '*handle': 'uint32',
+>              '*kernel-hashes': 'bool' } }
+>  
+> +##
+> +# @SevSnpGuestProperties:
+> +#
+> +# Properties for sev-snp-guest objects. Most of these are direct arguments
+> +# for the KVM_SNP_* interfaces documented in the linux kernel source
+
+"Linux", please.
+
+> +# under Documentation/virt/kvm/amd-memory-encryption.rst, which are in
+
+Does not seem to exist.  Do you mean
+Documentation/arch/x86/amd-memory-encryption.rst?
+
+> +# turn closely coupled with the SNP_INIT/SNP_LAUNCH_* firmware commands
+> +# documented in the SEV-SNP Firmware ABI Specification (Rev 0.9).
+
+docs/devel/qapi-code-gen.rst:
+
+    For legibility, wrap text paragraphs so every line is at most 70
+    characters long.
+
+    Separate sentences with two spaces.
+
+> +#
+> +# More usage information is also available in the QEMU source tree under
+> +# docs/amd-memory-encryption.
+> +#
+> +# @policy: the 'POLICY' parameter to the SNP_LAUNCH_START command, as
+> +#          defined in the SEV-SNP firmware ABI (default: 0x30000)
+
+docs/devel/qapi-code-gen.rst:
+
+    Descriptions start with '\@name:'.  The description text must be
+    indented like this::
+
+     # @name: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+     #     do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+> +#
+> +# @guest-visible-workarounds: 16-byte, base64-encoded blob to report
+> +#                             hypervisor-defined workarounds, corresponding
+> +#                             to the 'GOSVW' parameter of the
+> +#                             SNP_LAUNCH_START command defined in the
+> +#                             SEV-SNP firmware ABI (default: all-zero)
+> +#
+> +# @id-block: 96-byte, base64-encoded blob to provide the 'ID Block'
+> +#            structure for the SNP_LAUNCH_FINISH command defined in the
+> +#            SEV-SNP firmware ABI (default: all-zero)
+> +#
+> +# @id-auth: 4096-byte, base64-encoded blob to provide the 'ID Authentication
+> +#           Information Structure' for the SNP_LAUNCH_FINISH command defined
+> +#           in the SEV-SNP firmware ABI (default: all-zero)
+> +#
+> +# @auth-key-enabled: true if 'id-auth' blob contains the 'AUTHOR_KEY' field
+> +#                    defined SEV-SNP firmware ABI (default: false)
+> +#
+> +# @host-data: 32-byte, base64-encoded, user-defined blob to provide to the
+> +#             guest, as documented for the 'HOST_DATA' parameter of the
+> +#             SNP_LAUNCH_FINISH command in the SEV-SNP firmware ABI
+> +#             (default: all-zero)
+> +#
+> +# Since: 7.2
+
+9.1
+
+> +##
+
+Together:
+
+    ##
+    # @SevSnpGuestProperties:
+    #
+    # Properties for sev-snp-guest objects.  Most of these are direct
+    # arguments for the KVM_SNP_* interfaces documented in the Linux
+    # kernel source under
+    # Documentation/arch/x86/amd-memory-encryption.rst, which are in turn
+    # closely coupled with the SNP_INIT/SNP_LAUNCH_* firmware commands
+    # documented in the SEV-SNP Firmware ABI Specification (Rev 0.9).
+    #
+    # More usage information is also available in the QEMU source tree
+    # under docs/amd-memory-encryption.
+    #
+    # @policy: the 'POLICY' parameter to the SNP_LAUNCH_START command, as
+    #     defined in the SEV-SNP firmware ABI (default: 0x30000)
+    #
+    # @guest-visible-workarounds: 16-byte, base64-encoded blob to report
+    #     hypervisor-defined workarounds, corresponding to the 'GOSVW'
+    #     parameter of the SNP_LAUNCH_START command defined in the SEV-SNP
+    #     firmware ABI (default: all-zero)
+    #
+    # @id-block: 96-byte, base64-encoded blob to provide the 'ID Block'
+    #     structure for the SNP_LAUNCH_FINISH command defined in the
+    #     SEV-SNP firmware ABI (default: all-zero)
+    #
+    # @id-auth: 4096-byte, base64-encoded blob to provide the 'ID
+    #     Authentication Information Structure' for the SNP_LAUNCH_FINISH
+    #     command defined in the SEV-SNP firmware ABI (default: all-zero)
+    #
+    # @auth-key-enabled: true if 'id-auth' blob contains the 'AUTHOR_KEY'
+    #     field defined SEV-SNP firmware ABI (default: false)
+    #
+    # @host-data: 32-byte, base64-encoded, user-defined blob to provide to
+    #     the guest, as documented for the 'HOST_DATA' parameter of the
+    #     SNP_LAUNCH_FINISH command in the SEV-SNP firmware ABI (default:
+    #     all-zero)
+    #
+    # @certs-path: path to certificate data that can be passed to guests
+    #     via SNP Extended Guest Requests.  File should be in the format
+    #     described in the GHCB specification.  (default: none)
+    #
+    # Since: 9.1
+    ##
+
+We generally prefer symbolic to numeric / binary encoding in QMP.  Can
+you explain briefly why you choose numeric and binary here?
+
+> +{ 'struct': 'SevSnpGuestProperties',
+> +  'base': 'SevCommonProperties',
+> +  'data': {
+> +            '*policy': 'uint64',
+> +            '*guest-visible-workarounds': 'str',
+> +            '*id-block': 'str',
+> +            '*id-auth': 'str',
+> +            '*auth-key-enabled': 'bool',
+> +            '*host-data': 'str' } }
+> +
+>  ##
+>  # @ThreadContextProperties:
+>  #
+> @@ -998,6 +1047,7 @@
+>      { 'name': 'secret_keyring',
+>        'if': 'CONFIG_SECRET_KEYRING' },
+>      'sev-guest',
+> +    'sev-snp-guest',
+>      'thread-context',
+>      's390-pv-guest',
+>      'throttle-group',
+> @@ -1068,6 +1118,7 @@
+>        'secret_keyring':             { 'type': 'SecretKeyringProperties',
+>                                        'if': 'CONFIG_SECRET_KEYRING' },
+>        'sev-guest':                  'SevGuestProperties',
+> +      'sev-snp-guest':              'SevSnpGuestProperties',
+>        'thread-context':             'ThreadContextProperties',
+>        'throttle-group':             'ThrottleGroupProperties',
+>        'tls-creds-anon':             'TlsCredsAnonProperties',
+
+[...]
+
 
