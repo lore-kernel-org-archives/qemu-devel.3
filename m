@@ -4,81 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E9ACC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 15:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51BDC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 15:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryvWj-0006XF-BC; Mon, 22 Apr 2024 11:24:17 -0400
+	id 1ryvZ2-0007Q0-9B; Mon, 22 Apr 2024 11:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryvWh-0006X6-Tk
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:24:15 -0400
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1ryvYy-0007Pb-Tp
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:26:36 -0400
 Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ryvWg-0002Nu-BB
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:24:15 -0400
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1ryvYv-0002xC-8q
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:26:36 -0400
 Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-5d4d15ec7c5so3657112a12.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 08:24:13 -0700 (PDT)
+ 41be03b00d2f7-5ce07cf1e5dso3123854a12.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 08:26:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713799452; x=1714404252; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=wuPcJQup2eopkP1duuuHjqcsoNj8axU1XkE23HZVMiI=;
- b=viUJafmgGspqfoRXaHQtCkwMV6k6h2jK5m55jgbplXV5vnzbLGNNs1XVg8M+H+3VaF
- CHRiraC+UuXnfb40CcloT1HFq/AR2KV4zJ3IL/cqsDdmiSnuVvuNSVebgPXCaJ23F7+z
- bc49lJKX62OynAY+hZXBTDghRtjhK/V5cLf3Wm0UUNG47cDNJtCHQ9USD6F/wkA3b1AQ
- rT3tBoxIEuQ7zFq6ZxURhyRls8RLIhCzBSS0rdrYSswJoLle2B5QI5r59Z3ZKdGN6Zg5
- a7OwcglODWCd0wMNVm/PmP79HHkK3vEuorbU1s+H0GBeRaI9b+kXiyvL9eONcL1sv13y
- CF5Q==
+ d=adacore.com; s=google; t=1713799585; x=1714404385; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U2gdhxX09aD3aiJ5geHa1wVmVIQRH9b8n/G/i79oRUk=;
+ b=DKguKkNf+ruYKY2tlCiZ7FcP11sclr2mXruu36m37G/11PIuuuURieU7TrKw8TrBET
+ 7EaSC6LJ5XPfjQTIfdbAiyWiGCV2fpAyE2SUItepghPOLzmoeb8QjMEKJjceVpFfL5he
+ CIHNmAy7hrHJeBjzh0TQO/2rtshFri4BcFkkDGTgTC55mXXZnq+PTE2jODDuOZeyPrp1
+ zU+NlLIHhjxCBa3otAYGKI7woUD7LADLYUvjEz3eUw99Qok+NViWekNklp2u3Hvkhzz8
+ cKzSujB+09rDyuTZ36PUb90FkTbOUzHEMgjOMQnmneratmLX0j8Z5vDpWINxjw3etrl0
+ pCog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713799452; x=1714404252;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wuPcJQup2eopkP1duuuHjqcsoNj8axU1XkE23HZVMiI=;
- b=SRH8pvDi8300hh9dteQxUzlp+j1Q1ShsEf3/jDUFUmUR5i3WpjRfAU3PzPTYLmd3xn
- DU23p9ubkxRp2TqHJX2ukHOtPGzSznnPtnRzrssmvlr8sjkAPISs7a+ia6SlpAie7Hze
- AXFk59V4c4rkB45g7IwiCB3ZgUEgqxbQVhncFztFt/glvUeVl4hq2zA1jMHvwKNASgQ0
- yA/mwC7ct8qXtWmbmLFOkD0Lml2IjjTwKBTH5Bnv0NYyloooxQpep39n4rcQctKIweOF
- q6ediXwiUaj339PHrg7VPPkOJvt23eak+V6hmyxBU0RBPvqC2pX7+npNQubIvwHbE0bU
- AOUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBM0Hjy4kYsZu2ruQwB095DQ8pkdJRiU2H7GS4UfbDUMorFm04/Y0PRzMk/7KdSD055EhsYDm/P9EWwdB7dzENSpUSt9k=
-X-Gm-Message-State: AOJu0YzlG7WjUlcdeNLS1cgn+oM0Hj+YqE3nMovPpIkMQAPPprRclyGs
- YEtKZ6dGddhwTUc5YoeLFzZZEt8fo21j6VvvyO1RF97sjtDliG+YCZDZ2vNS120=
-X-Google-Smtp-Source: AGHT+IHX8z4mCiFiAJUvWEbTVXkDF5iDTJ0sV2r0ndRfbZGn6pTPb4UFgwjCdSiWHQZJhtyA/v/QZw==
-X-Received: by 2002:a17:90a:f494:b0:2a9:f3d1:c0db with SMTP id
- bx20-20020a17090af49400b002a9f3d1c0dbmr9189353pjb.24.1713799451947; 
- Mon, 22 Apr 2024 08:24:11 -0700 (PDT)
-Received: from [192.168.91.227] ([156.19.246.23])
- by smtp.gmail.com with ESMTPSA id
- s1-20020a17090aba0100b002a7b1c7db84sm9698124pjr.2.2024.04.22.08.24.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 08:24:11 -0700 (PDT)
-Message-ID: <0bab0cf5-0d74-48ff-9977-9f52471b717f@linaro.org>
-Date: Mon, 22 Apr 2024 08:24:08 -0700
+ d=1e100.net; s=20230601; t=1713799585; x=1714404385;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=U2gdhxX09aD3aiJ5geHa1wVmVIQRH9b8n/G/i79oRUk=;
+ b=Pn4G9HaAOpOwW785YkKdRsEbTKmChFauVrsbRFxa464O/JBsZHhka9qbFl96zOxJhs
+ 18JnW3Mrgk3fsu1g7MA0QwCI0opibVAvvF73XZ3l1+07HaAaoJWeIHwCFAlCqpOGAtcD
+ f2jwI5Dt3IB6gwBw8QSumneq2QOEnaWl5My4vlhQy42sVG8N3iLULvtCPkXOi1mJzt/5
+ QVa86UUPb09gYuSmGMhjEolTGQyAmEI3tZBGUmxeHal0YmHY54CcchUeapCymCZvABah
+ 6mufKYHTHi+nT6kibvWTOA4XQ7tZ33ygZLnoofs2NfciSv2d+aoi8M6GYwdu/Mag7Qz7
+ ZTSQ==
+X-Gm-Message-State: AOJu0Ywt7JAoryhHSK59l8WMi1ELzwZX5ON47/dRWoqdBk9+tnl6GocJ
+ gvCN+DPr6emjbdBePBKZTV/S6FCS1OJrEfSKyBPoieyFWsA0t7SRA71NIq6CQuoZrhO+nQtufNr
+ UEV3+VsRZu9a9pnl7dcXd9pC3e1eGo4QNJhav
+X-Google-Smtp-Source: AGHT+IEJblOCEU9YmsAfjJJlsJtpS62iZ+jMvpkK1y8TDtjzZf/ixK0xMWod8T3gAFcAdNXxJY2QKsbTM7/gg3XNRyA=
+X-Received: by 2002:a17:90a:df92:b0:2a5:24ab:1a94 with SMTP id
+ p18-20020a17090adf9200b002a524ab1a94mr7687246pjv.49.1713799584984; Mon, 22
+ Apr 2024 08:26:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
-From: Richard Henderson <richard.henderson@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
-References: <20240419183135.12276-1-dorjoychy111@gmail.com>
- <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
- <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
- <CAFEAcA_kHDGWVic=xRm4xOsi-cQC-fF5Z2FWRCrwe_E35KBmNw@mail.gmail.com>
- <753b3a55-9589-4dcb-b656-8b3025e847df@linaro.org>
-Content-Language: en-US
-In-Reply-To: <753b3a55-9589-4dcb-b656-8b3025e847df@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240301204110.656742-1-richard.henderson@linaro.org>
+ <20240301204110.656742-6-richard.henderson@linaro.org>
+In-Reply-To: <20240301204110.656742-6-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Mon, 22 Apr 2024 17:26:13 +0200
+Message-ID: <CAJ307Egu6951WwbdoTERUVff9cr=2qBK70FWgk3Ck-1DCpDtHA@mail.gmail.com>
+Subject: Re: [PATCH v3 5/6] target/arm: Do memory type alignment check when
+ translation disabled
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Idan Horowitz <idan.horowitz@gmail.com>, 
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>, ardb@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+ envelope-from=chigot@adacore.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,32 +94,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/24 08:21, Richard Henderson wrote:
->>> For Arm's CPUs they fall into two categories:
->>>   * older ones don't set MT in their MPIDR, and the Aff0
->>>     field is effectively the CPU number
->>>   * newer ones do set MT in their MPIDR, but don't have
->>>     SMT, so their Aff0 is always 0 and their Aff1
->>>     is the CPU number
->>>
->>> Of all the CPUs we model, none of them are the
->>> architecturally-permitted "MT is set, CPU implements
->>> actual SMT, Aff0 indicates the thread in the CPU" type.
->>
->> Looking at the TRM, Neoverse-E1 is "MT is set, actual SMT,
->> Aff0 is the thread" (Aff0 can be 0 or 1). We just don't
->> model that CPU type yet. But we should probably make
->> sure we don't block ourselves into a corner where that
->> would be awkward -- I'll have a think about this and
->> look at what x86 does with the topology info.
-> 
-> I'm suggesting that we set things up per -smp, and if the user chooses a -cpu value for 
-> which that topology doesn't make sense, we do it anyway and let them keep both pieces.
+Hi Richard,
 
-... but more practically, it allows experimentation at -cpu max, without having to build 
-in anything cpu-specific.  Good to know about the E1 though...
+While testing the future V9, I've some regressions on a custom board
+using cortex-R5 CPUs.
+Unaligned data accesses are no longer allowed because of that patch.
 
+I've dug into the various documentation and it seems that R-profile
+CPUs don't have the same default memory type as A-profile. It depends
+on a default memory map provided in the R-Profile RM in C1.3 [1], even
+when PMU is disabled.
 
-r~
+> Each PMSAv8-32 MPU has an associated default memory map which is used whe=
+n the MPU is not enabled.
+> ...
+> Table C1-4 and Table C1-5 describe the default memory map defined for the=
+ EL1 MPU.
 
+For our case, Table C1-5 can be simplified as:
+ |  0x00000000 =E2=80=93 0x7FFFFFFF Normal
+ |  0x80000000 =E2=80=93 0xBFFFFFFF Device-nGnRE
+ |  0xC0000000 =E2=80=93 0xFFFFFFFF Device-nGnRnE
+
+Therefore, we can't blindly enable strict alignment checking solely on
+SCTLR bits. We should make it depend on the address targeted. But is
+it possible to know that address in `aprofile_require_alignment` ?
+with `mmu_idx` ?
+
+By the way, are R-Profile CPUs the same as those having the `PMSA`
+feature ? That could mean we can use the `ARM_FEATURE_PMSA` to deal
+with that, instead of create a new `ARM_FEATURE_R`
+
+Note that the RM I've linked is for ARMv8. But this other link [2]
+seems to show a similar behavior for arm-v7.
+
+cc Jonathan and Ard, though not sure this is the same bug you've
+reported earlier.
+
+Thanks,
+Cl=C3=A9ment
+[1] https://developer.arm.com/documentation/ddi0568/a-c/?lang=3Den
+[2] https://developer.arm.com/documentation/ddi0406/cb/System-Level-Archite=
+cture/Protected-Memory-System-Architecture--PMSA-/About-the-PMSA/Enabling-a=
+nd-disabling-the-MPU?lang=3Den#BEIJEFCJ
+
+On Fri, Mar 1, 2024 at 9:43=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> If translation is disabled, the default memory type is Device, which
+> requires alignment checking.  This is more optimally done early via
+> the MemOp given to the TCG memory operation.
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reported-by: Idan Horowitz <idan.horowitz@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1204
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/hflags.c | 34 ++++++++++++++++++++++++++++++++--
+>  1 file changed, 32 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+> index 8e5d35d922..5da1b0fc1d 100644
+> --- a/target/arm/tcg/hflags.c
+> +++ b/target/arm/tcg/hflags.c
+> @@ -26,6 +26,35 @@ static inline bool fgt_svc(CPUARMState *env, int el)
+>          FIELD_EX64(env->cp15.fgt_exec[FGTREG_HFGITR], HFGITR_EL2, SVC_EL=
+1);
+>  }
+>
+> +/* Return true if memory alignment should be enforced. */
+> +static bool aprofile_require_alignment(CPUARMState *env, int el, uint64_=
+t sctlr)
+> +{
+> +#ifdef CONFIG_USER_ONLY
+> +    return false;
+> +#else
+> +    /* Check the alignment enable bit. */
+> +    if (sctlr & SCTLR_A) {
+> +        return true;
+> +    }
+> +
+> +    /*
+> +     * If translation is disabled, then the default memory type is
+> +     * Device(-nGnRnE) instead of Normal, which requires that alignment
+> +     * be enforced.  Since this affects all ram, it is most efficient
+> +     * to handle this during translation.
+> +     */
+> +    if (sctlr & SCTLR_M) {
+> +        /* Translation enabled: memory type in PTE via MAIR_ELx. */
+> +        return false;
+> +    }
+> +    if (el < 2 && (arm_hcr_el2_eff(env) & (HCR_DC | HCR_VM))) {
+> +        /* Stage 2 translation enabled: memory type in PTE. */
+> +        return false;
+> +    }
+> +    return true;
+> +#endif
+> +}
+> +
+>  static CPUARMTBFlags rebuild_hflags_common(CPUARMState *env, int fp_el,
+>                                             ARMMMUIdx mmu_idx,
+>                                             CPUARMTBFlags flags)
+> @@ -121,8 +150,9 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *=
+env, int fp_el,
+>  {
+>      CPUARMTBFlags flags =3D {};
+>      int el =3D arm_current_el(env);
+> +    uint64_t sctlr =3D arm_sctlr(env, el);
+>
+> -    if (arm_sctlr(env, el) & SCTLR_A) {
+> +    if (aprofile_require_alignment(env, el, sctlr)) {
+>          DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
+>      }
+>
+> @@ -223,7 +253,7 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *=
+env, int el, int fp_el,
+>
+>      sctlr =3D regime_sctlr(env, stage1);
+>
+> -    if (sctlr & SCTLR_A) {
+> +    if (aprofile_require_alignment(env, el, sctlr)) {
+>          DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
+>      }
+>
+> --
+> 2.34.1
+>
+>
 
