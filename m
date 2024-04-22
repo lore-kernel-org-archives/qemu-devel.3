@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECDAC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 10:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1F1C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 10:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryqgY-0001jm-1s; Mon, 22 Apr 2024 06:14:06 -0400
+	id 1ryrBo-0007sE-LF; Mon, 22 Apr 2024 06:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryqgW-0001jV-Lh
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 06:14:04 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ryrBm-0007qL-VU
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 06:46:23 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryqgU-0001EB-W0
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 06:14:04 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-41a77836f16so3387255e9.3
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 03:14:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ryrBk-0007y8-UM
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 06:46:22 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-571e3f40e31so1642300a12.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 03:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713780841; x=1714385641; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CLW75xlvsYPL9LJjdoQ8rXDZwMHjs4XLaZaGvz/886E=;
- b=GdJxJK7/LUBC9Pz/7SZasfnwsQtikRW7xQkspu6FLsEXajv1ZB6I0HhlRWkypyxSwo
- 3nK4DFnk8p/k1coCTBVn5vsTVHxP90kIQgDpcxpQIHdbE9jUQz/0mdVV8FKtgDXDO8cf
- wewrn5W3RXKSpqx0U/c2OnRKFdcyhmslrOfrYsT/NT1Jlak9rySbsxPU7nEKHKpMnXP2
- wFShsn+1ofqBMekH9nho2fop8SQK1RLSnrUaEmy9MnRfRvg//X7yVMIHixA3rX7VYgzO
- 6qEyznXCOKWkW1z+WfRf3Uh8858ZpCaRh9ADRcPg8u3br9o1fGHRhjh1P8X3dwes2yFR
- a85g==
+ d=linaro.org; s=google; t=1713782779; x=1714387579; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=aGCfaOEUfbf7RSRB7kCEk2foOuGP6WwLRpCDdNjgc4A=;
+ b=JBnX340UPjFLnXjOht8DkOKXtEx2x4XZj1eT36kdG8wV8eGeQHLhyadpJYTgAVlCfn
+ 32InxZ1T81TesXDeOchdaSYgltO0U7nh3lz9jjsz+2j5Dz5mZGhOn+4vtikyCAg+sWNO
+ JM+Gf/FAaYx8fUhiOCGhm2Q1qy4c7MVHWuzhDMBcA0Xdi0YvqG7GD/G+yarDuFsIYhXO
+ iZ+iwLkLJgZkrZ2DPoj21ujqcElDGN8RjIVNf5M25uk5jwKSES9qyyyUXz7/AftxpWVk
+ SZhJ6PTHfTOIWJwWWKwkiaTNiQHNaObsg+KAjhAfUmGmm3GkqD6L865g/SYMeFMSws8l
+ zbWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713780841; x=1714385641;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CLW75xlvsYPL9LJjdoQ8rXDZwMHjs4XLaZaGvz/886E=;
- b=MGbudCxqEWQwHVQO/GoJn/M/+T5ujQ6rNvpZfJPjaVp0z3CW/KKbjQJdvysnskeHXh
- 10UFdHopzCo9Ba51Q9S3+YqpKDH9Wx+KzMj34hmiXAA0O/vViTeVdVSi44mBZqZHvbLq
- vqNzW+eqjFoD0BK4MiRm1/0tJb7Q0pSsJIBcFrzM1KktYoy4K5QhfnVKlCo30RRWmKBE
- ynFUI9+Xm/PYmLn9MjA7ksiSB4XgaXKT28TqbtFAsWrBYloyA8Z59FFV8+3Y1oF09nsK
- l4tHMlW9asa6ijYC0LxMrqgEnU7EWdiV0NskF+vKG1DfzypYAlJ3dAhGuH1uSn1THa75
- tHFg==
-X-Gm-Message-State: AOJu0YzKVbb39lzk0A9ZMYgS3Jn1a9Care8SU2cjWOtsF6g98tF7LHti
- sA2bj3m2s+D1nRYN1jHvo8X7gzoSNaGdnzHoWi+fNP5K+735zV0mJSDY6vvczGE=
-X-Google-Smtp-Source: AGHT+IEp3/pLKp62Y+aCo5xQp+LU8wxqdTyb7foVv2853vge0c5c4H1kd8VszYshrWudPF7WZ8z5aw==
-X-Received: by 2002:a05:600c:1d26:b0:418:5e80:b7af with SMTP id
- l38-20020a05600c1d2600b004185e80b7afmr6813830wms.36.1713780840990; 
- Mon, 22 Apr 2024 03:14:00 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- hg12-20020a05600c538c00b00415dfa709dasm16001363wmb.15.2024.04.22.03.14.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 03:14:00 -0700 (PDT)
-Message-ID: <361760cb-db04-4ca6-9264-1dba5787c8c0@linaro.org>
-Date: Mon, 22 Apr 2024 12:13:59 +0200
+ d=1e100.net; s=20230601; t=1713782779; x=1714387579;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aGCfaOEUfbf7RSRB7kCEk2foOuGP6WwLRpCDdNjgc4A=;
+ b=s/oECqlrJlt0cmFywF0J9fmnNwCmeyxkCRVKmO0WPcPi0MJpnHWWvajUKYqaRu7Otm
+ 8jl5ewDEsx3qOU9+muL9j3wj3Fwc5YKBtFc2+Np8y1veWFVkH0nb+NJ2M2RPZcTYxMOo
+ pGtW4OgMjL1Mz4NkwoFSjvLl8OcDz9k2GUoqolj4ccNAx/I9bIDKjr9kqB6FMStClUvx
+ RC5Z+1RMdbBjnNRWdU2Z8p6eXGXFDkyxRmyY9MvU1vwdwRGUrW8ymZ3fgXtjguQm+d5K
+ qS3RSIIXBV9hOPk7V01x/TGKxvbUXpqPYaQydMJUOO3BiQ/EjKjkfvtHCt0AKhdrsrX6
+ +8QA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVFqWfBWhesxVvcMOuN8sk1mr3sGS+tSg1bptFcsDnSrCq0/UIMy161vqzttovGSY5eyxwzZNEPz6we1i0tevvm4aw3Xc=
+X-Gm-Message-State: AOJu0Yyirk0lhRiFuliK0N4VOUSjPxE+bjNssI0xHic3hOuHtBgyfzOU
+ bzDoI3gYRnRiNJp4YCd6Is/Q+eZRfw18mwvDwU6bLU3XVp4jqYeYB/OutiOhNlp26pcwlulbVjI
+ G/u1apg4ef8oXDA+dChzPQjxl2tk1ICVvN3uuZQ==
+X-Google-Smtp-Source: AGHT+IFfRJgRUDeINJWgcZk7jSUPQv8ZUHszGL3y92Xd6aHy/514UlDWKq+yNOpY/bgFU3yCuGReTugLD2xFfsBPf00=
+X-Received: by 2002:a50:cd9d:0:b0:56e:7a8:5db8 with SMTP id
+ p29-20020a50cd9d000000b0056e07a85db8mr7200949edi.35.1713782778860; Mon, 22
+ Apr 2024 03:46:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] backends/cryptodev-builtin: Fix local_error leaks
-To: Li Zhijian <lizhijian@fujitsu.com>, arei.gonglei@huawei.com,
- pizhenwei@bytedance.com
-Cc: qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240422085312.1037646-1-lizhijian@fujitsu.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240422085312.1037646-1-lizhijian@fujitsu.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+References: <20240419183135.12276-1-dorjoychy111@gmail.com>
+ <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
+In-Reply-To: <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 22 Apr 2024 11:46:07 +0100
+Message-ID: <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,51 +90,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/24 10:53, Li Zhijian wrote:
-> It seems that this error does not need to be propagated to the upper,
-> directly output the error to avoid the leaks
-> 
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2283
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-> ---
->   backends/cryptodev-builtin.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-> index a514bbb310..940104ee55 100644
-> --- a/backends/cryptodev-builtin.c
-> +++ b/backends/cryptodev-builtin.c
-> @@ -23,6 +23,7 @@
->   
->   #include "qemu/osdep.h"
->   #include "sysemu/cryptodev.h"
-> +#include "qemu/error-report.h"
->   #include "qapi/error.h"
->   #include "standard-headers/linux/virtio_crypto.h"
->   #include "crypto/cipher.h"
-> @@ -396,8 +397,8 @@ static int cryptodev_builtin_create_session(
->       case VIRTIO_CRYPTO_HASH_CREATE_SESSION:
->       case VIRTIO_CRYPTO_MAC_CREATE_SESSION:
->       default:
-> -        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
-> -                   sess_info->op_code);
-> +        error_report("Unsupported opcode :%" PRIu32 "",
-> +                     sess_info->op_code);
->           return -VIRTIO_CRYPTO_NOTSUPP;
->       }
->   
-> @@ -554,8 +555,8 @@ static int cryptodev_builtin_operation(
->   
->       if (op_info->session_id >= MAX_NUM_SESSIONS ||
->                 builtin->sessions[op_info->session_id] == NULL) {
-> -        error_setg(&local_error, "Cannot find a valid session id: %" PRIu64 "",
-> -                   op_info->session_id);
-> +        error_report("Cannot find a valid session id: %" PRIu64 "",
-> +                     op_info->session_id);
->           return -VIRTIO_CRYPTO_INVSESS;
->       }
->   
+On Sun, 21 Apr 2024 at 06:40, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+> > --- a/target/arm/cpu.c
+> > +++ b/target/arm/cpu.c
+> > @@ -1314,8 +1314,18 @@ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+> >       }
+> >   }
+> >
+> > -uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
+> > +uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz)
+> >   {
+> > +    if (cpu->has_smt) {
+> > +        /*
+> > +         * Right now, the ARM CPUs with SMT supported by QEMU only have
+> > +         * one thread per core. So Aff0 is always 0.
+> > +         */
+>
+> Well, this isn't true.
+>
+>      -smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]
+>                     [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]
+>
+> I would expect all of Aff[0-3] to be settable with the proper topology parameters.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+As I understand it the MPIDR value is more or less independent
+of the topology information as presented to the guest OS.
+The options to the -smp command set the firmware topology
+information, which doesn't/shouldn't affect the reported
+MPIDR values, and in particular shouldn't change whether
+the CPU selected has the MT bit set or not.
 
+For Arm's CPUs they fall into two categories:
+ * older ones don't set MT in their MPIDR, and the Aff0
+   field is effectively the CPU number
+ * newer ones do set MT in their MPIDR, but don't have
+   SMT, so their Aff0 is always 0 and their Aff1
+   is the CPU number
+
+Of all the CPUs we model, none of them are the
+architecturally-permitted "MT is set, CPU implements
+actual SMT, Aff0 indicates the thread in the CPU" type.
+
+For TCG all the topology info is pretty irrelevant anyway:
+if the user wants to tell the guest OS that it should
+do NUMA partitioning (assuming threads or otherwise),
+that's up to them.
+
+thanks
+-- PMM
 
