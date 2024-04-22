@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B20C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 11:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F413C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 11:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryrof-0004D8-Pv; Mon, 22 Apr 2024 07:26:33 -0400
+	id 1rys2O-0006rh-Te; Mon, 22 Apr 2024 07:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ryroX-0004CT-5U
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:26:26 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ryroS-0007mo-UQ
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:26:23 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a5224dfa9adso721748266b.0
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 04:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713785178; x=1714389978; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FjgYdEhWvwX0A9jBKVOxo1Q4kgonAvoLXDRpTOE3guk=;
- b=M3c09mxuTDQOVYaT4Gch8VJyPoCxmdFGj7J+IKph0F/MD8uhSvPrlwPeY9YU1sc/wA
- nxbvZpfFtYXutM46NX/oazDt16SSMVWNaNiJuBdAWAMA7fPVQNmfpqsHDuAWnj6FfYul
- 3+DVASkF2pS3LYrA8ki4cp7lWJZxZXsDpnTeReUxwAXz5xB3p+mL2rbaoa6j7RWrdGKe
- aGC6WDbepvy3/C6nC2fG5bpXTWYXtQUMSk53ccjD3NPFh9ne4hna8cAGnpdISWUlA1Vx
- Mb3BOwOUe1uD2Zb7pfMGZtLgtVZHnZZ+CKhgOxylvK8/GWEynDiWqwQ36c6xPtuKDCKp
- ztQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713785178; x=1714389978;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FjgYdEhWvwX0A9jBKVOxo1Q4kgonAvoLXDRpTOE3guk=;
- b=tHHDyF63QXCJwmtIQR1fxDsX6RnC0IEx7pElBdWLUI0uS+r2eAT5Bn6Py8ugoxHfkT
- 25G79lqrtorTTmWbj2RYw/2DqsgdwkpV5KRGNDnoxKsTvoEOii5bX5evNTXQplj2tFr9
- u3u4m8BhNB53x8SLiaS+eKPtCeX7hsRf/snT2MtqiFfiaQiVjw0L/CHgh45j7b43dhdo
- 67+WsL3/KR/jMzVNnHO0j9E6pXcx78nafPqrEdlgvl+Vfj264eBlYafV1JGsrTTVBsRh
- R7SPjsM7o7HWnF7gmOzJWaPXWCjI1kw8CXdb6me7wJBMCyK23oeRlDJk8j40xe+ZITv3
- WApw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIZIpiTHXKS5V8Wc6uassqVSeQ+woCVaFFpORmfn6XZzP5ygf4U+est8o5IEujRQvFjme0bURcRpEUeGeRR7iiz0ASvK4=
-X-Gm-Message-State: AOJu0YzCJTh8Gywf2UdPh2ijrurXzsDeVxAlPr9uOcyfPhfrZYphm8Yi
- 0Kt5y/ImULBYpisLuUo+h5Y8lyoCZjqoWHGH2zvN8pwMxeUdp0cvcvg770GbiKxsin123xiIgF2
- X6hmkgNrEAqBvL+Ht9sDVCEkZ0kS7K/knpkg+d7DFAOlRIu7L
-X-Google-Smtp-Source: AGHT+IHyHFX4hCplPonZWlyRKyp4vn0PtKlMh4C/Dv/y7Fo+UC/d9xxmZIDQl5SV+9JwrNEt9hvCRVHwE8rdsANgewY=
-X-Received: by 2002:a17:906:161a:b0:a55:31e6:dddc with SMTP id
- m26-20020a170906161a00b00a5531e6dddcmr12106855ejd.23.1713785178459; Mon, 22
- Apr 2024 04:26:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1rys2M-0006rJ-KU; Mon, 22 Apr 2024 07:40:42 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1rys2K-0001vU-MI; Mon, 22 Apr 2024 07:40:42 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com AECCEC0004
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1713786036;
+ bh=EuuIssokjsKxqeKF8jpo5+XooGzJXGYbZRbkLXCQAUs=;
+ h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
+ b=kZU+tGee/oI/3HSLtOKGgZ3JQ2cTzzTEsmi1BYCmuHK54Tn8UAXfOQ8oRh2ogSKgu
+ k7VDxkOKJIFhdg0Py/0R0obTGS/dfpFCPeD0L8ceqiPNoSm59rikITktAdFvbD5wNt
+ DfC7jbIhRqBeX2Uw2081gUuoIJCN9kOB4KxeVbt1GzFm3Snm1do73frscAZRgCF7kn
+ te1zMLmLBAKw7LMDWcBvTCf7z/Vyso3xHrM/j8EwSlIGMcIZROG0JOjOyHNx5f3j08
+ ZXnSoDJ4bd86uAyEi6t3nwpNuZe755fDm5271tHjcGnk72EptOBz7aqSc6gs/Y60dP
+ NNrt0ZpeYVB+g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1713786036;
+ bh=EuuIssokjsKxqeKF8jpo5+XooGzJXGYbZRbkLXCQAUs=;
+ h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
+ b=u8e40+Ob7izYrYzkdoWFhiHIF7g/lriFD/rCo5M1Rubh+oEAlbc+tRUs+mz4gxAOa
+ EkMNwdYKtkNs01cmkUodLbfQjhvt6KpRSLU+X+FDJ5CchSaeqxPdPnaK502OPHGqH5
+ Fbl/KvWgX4FWVZCoCax/dycfufxOnhxJISBtE2tZx62IssYUYwx4KNKB04+wBxhZE0
+ /M1UMPPzwS8AGn9RCYLQ2jZiWLpSNn2xiANgB2Ot0OsZ2LELWT8Jzu9bT541Mphdar
+ yyIzj55rQSC7dwpROnKkM6asiutdkomP19Pn4c5/toQ6arYBSo4ngJo36rAbav+SXo
+ 4ZoMZbf09u/EQ==
+Message-ID: <ecbda674-791d-4064-b48e-398cbf34b603@syntacore.com>
+Date: Mon, 22 Apr 2024 14:40:34 +0300
 MIME-Version: 1.0
-References: <20240419183135.12276-1-dorjoychy111@gmail.com>
- <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
- <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
-In-Reply-To: <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Apr 2024 12:26:06 +0100
-Message-ID: <CAFEAcA_kHDGWVic=xRm4xOsi-cQC-fF5Z2FWRCrwe_E35KBmNw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific sbi.
+To: <ajones@ventanamicro.com>
+CC: <alistair.francis@wdc.com>, <alistair23@gmail.com>,
+ <apatel@ventanamicro.com>, <bin.meng@windriver.com>,
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, <palmer@dabbelt.com>,
+ <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
+ <zhiwei_liu@linux.alibaba.com>
+References: <20240422-e78b28f00a168518c5d4937a@orel>
+ <20240422112437.11079-1-alexei.filippov@syntacore.com>
+Content-Language: en-US
+From: Aleksei Filippov <alexei.filippov@syntacore.com>
+Organization: Syntacore
+In-Reply-To: <20240422112437.11079-1-alexei.filippov@syntacore.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: T-Exch-05.corp.yadro.com (172.17.10.109) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SORTED_RECIPS=2.499,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,57 +84,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Apr 2024 at 11:46, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Sun, 21 Apr 2024 at 06:40, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> > > --- a/target/arm/cpu.c
-> > > +++ b/target/arm/cpu.c
-> > > @@ -1314,8 +1314,18 @@ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-> > >       }
-> > >   }
-> > >
-> > > -uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
-> > > +uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz)
-> > >   {
-> > > +    if (cpu->has_smt) {
-> > > +        /*
-> > > +         * Right now, the ARM CPUs with SMT supported by QEMU only have
-> > > +         * one thread per core. So Aff0 is always 0.
-> > > +         */
-> >
-> > Well, this isn't true.
-> >
-> >      -smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]
-> >                     [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]
-> >
-> > I would expect all of Aff[0-3] to be settable with the proper topology parameters.
->
-> As I understand it the MPIDR value is more or less independent
-> of the topology information as presented to the guest OS.
-> The options to the -smp command set the firmware topology
-> information, which doesn't/shouldn't affect the reported
-> MPIDR values, and in particular shouldn't change whether
-> the CPU selected has the MT bit set or not.
->
-> For Arm's CPUs they fall into two categories:
->  * older ones don't set MT in their MPIDR, and the Aff0
->    field is effectively the CPU number
->  * newer ones do set MT in their MPIDR, but don't have
->    SMT, so their Aff0 is always 0 and their Aff1
->    is the CPU number
->
-> Of all the CPUs we model, none of them are the
-> architecturally-permitted "MT is set, CPU implements
-> actual SMT, Aff0 indicates the thread in the CPU" type.
 
-Looking at the TRM, Neoverse-E1 is "MT is set, actual SMT,
-Aff0 is the thread" (Aff0 can be 0 or 1). We just don't
-model that CPU type yet. But we should probably make
-sure we don't block ourselves into a corner where that
-would be awkward -- I'll have a think about this and
-look at what x86 does with the topology info.
 
-thanks
--- PMM
+On 22.04.2024 14:24, Alexei Filippov wrote:
+> kvm_riscv_handle_sbi() may return not supported return code to not
+> trigger qemu abort with vendor-specific sbi.
+> 
+> Add new error path to provide proper error in case of
+> qemu_chr_fe_read_all() may not return sizeof(ch).
+> 
+> Added SBI related return code's defines.
+> 
+> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> ---
+>   target/riscv/kvm/kvm-cpu.c         | 9 +++++----
+>   target/riscv/sbi_ecall_interface.h | 1 +
+>   2 files changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index aeca1e3e83..5bb7b74d03 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1173,17 +1173,18 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>           ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+>           if (ret == sizeof(ch)) {
+>               run->riscv_sbi.ret[0] = ch;
+> -        } else {
+> +            ret = 0;
+> +        } else if (ret == 0) {
+>               run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
+> +        } else {
+> +            ret = -1;
+>           }
+> -        ret = 0;
+>           break;
+>       default:
+>           qemu_log_mask(LOG_UNIMP,
+> -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+> +                      "%s: Unhandled SBI exit with extension-id %lu\n"
+>                         __func__, run->riscv_sbi.extension_id);
+>           run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+> -        ret = 0;
+>           break;
+>       }
+>       return ret;
+> diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+> index 0279e92a36..a2e21d9b8c 100644
+> --- a/target/riscv/sbi_ecall_interface.h
+> +++ b/target/riscv/sbi_ecall_interface.h
+> @@ -79,5 +79,6 @@
+>   #define SBI_ERR_ALREADY_AVAILABLE   -6
+>   #define SBI_ERR_ALREADY_STARTED     -7
+>   #define SBI_ERR_ALREADY_STOPPED     -8
+> +#define SBI_ERR_NO_SHMEM            -9
+>   
+>   #endif
+
+Oh, my bad, wrong patch. Will resend properly.
+-- 
+Sincerely,
+Aleksei Filippov
 
