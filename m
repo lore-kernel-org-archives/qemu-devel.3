@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1F1C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 10:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD93DC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 11:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryrBo-0007sE-LF; Mon, 22 Apr 2024 06:46:24 -0400
+	id 1ryrlG-0001Yk-Js; Mon, 22 Apr 2024 07:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ryrBm-0007qL-VU
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 06:46:23 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrl9-0001Ww-2p
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:22:56 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ryrBk-0007y8-UM
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 06:46:22 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-571e3f40e31so1642300a12.2
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 03:46:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrl5-00075E-0g
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:22:53 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-51ab4ee9df8so3871681e87.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 04:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713782779; x=1714387579; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=aGCfaOEUfbf7RSRB7kCEk2foOuGP6WwLRpCDdNjgc4A=;
- b=JBnX340UPjFLnXjOht8DkOKXtEx2x4XZj1eT36kdG8wV8eGeQHLhyadpJYTgAVlCfn
- 32InxZ1T81TesXDeOchdaSYgltO0U7nh3lz9jjsz+2j5Dz5mZGhOn+4vtikyCAg+sWNO
- JM+Gf/FAaYx8fUhiOCGhm2Q1qy4c7MVHWuzhDMBcA0Xdi0YvqG7GD/G+yarDuFsIYhXO
- iZ+iwLkLJgZkrZ2DPoj21ujqcElDGN8RjIVNf5M25uk5jwKSES9qyyyUXz7/AftxpWVk
- SZhJ6PTHfTOIWJwWWKwkiaTNiQHNaObsg+KAjhAfUmGmm3GkqD6L865g/SYMeFMSws8l
- zbWQ==
+ d=linaro.org; s=google; t=1713784968; x=1714389768; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZcGB7AVbotcMxmI4ZLawBRUBeDiwK/Ghj12lwMkTPi8=;
+ b=NVwW5k++2tvXMc4ku6oLxea1FqVPDMzjlSBJKPyTJ5lIh6hya4tzDR8yS9OC6cdyEL
+ io+4BjmEkysN02+PYwvbPe92V0VTwiTmeh9Zp6qj0J820UfdBA3d+Kb65uA3QNFLZEpb
+ tb1SSinOYOnPYtWnOlHuhBD6P292eexbxio0AqK9mHfBrPs+5fPvxh/k6POqPtHG0LD5
+ JSBBuxhq0kjjwwFjc+zTm9UZUTAqbiOZVGK2rXFO2sS93uKflUSgluCL3s3xWdDLf006
+ aadWWXHXr5gT0AOk9dVhi6CYM1qlrBzeLiBRtjeP4aZutb/h5dBZVetIrD7uDwcs+yFq
+ 6JXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713782779; x=1714387579;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1713784968; x=1714389768;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=aGCfaOEUfbf7RSRB7kCEk2foOuGP6WwLRpCDdNjgc4A=;
- b=s/oECqlrJlt0cmFywF0J9fmnNwCmeyxkCRVKmO0WPcPi0MJpnHWWvajUKYqaRu7Otm
- 8jl5ewDEsx3qOU9+muL9j3wj3Fwc5YKBtFc2+Np8y1veWFVkH0nb+NJ2M2RPZcTYxMOo
- pGtW4OgMjL1Mz4NkwoFSjvLl8OcDz9k2GUoqolj4ccNAx/I9bIDKjr9kqB6FMStClUvx
- RC5Z+1RMdbBjnNRWdU2Z8p6eXGXFDkyxRmyY9MvU1vwdwRGUrW8ymZ3fgXtjguQm+d5K
- qS3RSIIXBV9hOPk7V01x/TGKxvbUXpqPYaQydMJUOO3BiQ/EjKjkfvtHCt0AKhdrsrX6
- +8QA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVFqWfBWhesxVvcMOuN8sk1mr3sGS+tSg1bptFcsDnSrCq0/UIMy161vqzttovGSY5eyxwzZNEPz6we1i0tevvm4aw3Xc=
-X-Gm-Message-State: AOJu0Yyirk0lhRiFuliK0N4VOUSjPxE+bjNssI0xHic3hOuHtBgyfzOU
- bzDoI3gYRnRiNJp4YCd6Is/Q+eZRfw18mwvDwU6bLU3XVp4jqYeYB/OutiOhNlp26pcwlulbVjI
- G/u1apg4ef8oXDA+dChzPQjxl2tk1ICVvN3uuZQ==
-X-Google-Smtp-Source: AGHT+IFfRJgRUDeINJWgcZk7jSUPQv8ZUHszGL3y92Xd6aHy/514UlDWKq+yNOpY/bgFU3yCuGReTugLD2xFfsBPf00=
-X-Received: by 2002:a50:cd9d:0:b0:56e:7a8:5db8 with SMTP id
- p29-20020a50cd9d000000b0056e07a85db8mr7200949edi.35.1713782778860; Mon, 22
- Apr 2024 03:46:18 -0700 (PDT)
+ bh=ZcGB7AVbotcMxmI4ZLawBRUBeDiwK/Ghj12lwMkTPi8=;
+ b=xNBCD4AQvfX/fumUwfmwQzUsAYo244H+9QaOFgV4mV2lhaTIjHtDuis+Qz+QhJ3opC
+ 0FxXGndRWikgWZaTpMRM0ZkTH0YwKR1k6EBfqOTBl8lHpzB9VN+AnEUPWWrVtt/L2EKd
+ FM8cIrTKYE+y6I09ki7BzFtTmLtn7ynPEqnNmzpYX9Czmvd4UprcpzG2YFiyX3pd7IjS
+ sywr2CEHfdRhYtaNRSwiGX+YPI/W74XgKDz0koyaxaeoC0hbYSUHWmOliM3y9KbI2ZOg
+ R0RNXlPIlM2E7ehee72QjYXLaIjV+Bhj9b8I0VPxQF8eq5Smb5ED8Kl+y3bhMJ5kY4FY
+ w7SQ==
+X-Gm-Message-State: AOJu0YxVZwW9K66Nbi+xSInLuD6/f5ryIMRWpGzIDxbTCWjm2umFADcN
+ E+u8CASFDONS3HUSfarIqS+wPdxTuPaBVKakdl2wZipGEM3e9vHlMxAhjg6MuYcZ4nFmcbyNedV
+ /
+X-Google-Smtp-Source: AGHT+IFFI27TJaHZXHu0GwORSa4xa5Jd+mYvKWqp+VGWcjf8pG9NrTAFMxNwiVi+HpxEWekM6+O4XQ==
+X-Received: by 2002:a05:6512:908:b0:516:9fe6:bc91 with SMTP id
+ e8-20020a056512090800b005169fe6bc91mr5418100lft.25.1713784968077; 
+ Mon, 22 Apr 2024 04:22:48 -0700 (PDT)
+Received: from m1.home (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ o14-20020a05600c510e00b00419f572671dsm7983172wms.20.2024.04.22.04.22.47
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 22 Apr 2024 04:22:47 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2] tests/unit: Remove debug statements in
+ test-nested-aio-poll.c
+Date: Mon, 22 Apr 2024 13:22:46 +0200
+Message-ID: <20240422112246.83812-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20240419183135.12276-1-dorjoychy111@gmail.com>
- <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
-In-Reply-To: <f397f267-06d9-46c1-8acc-1c9ebf9c3773@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Apr 2024 11:46:07 +0100
-Message-ID: <CAFEAcA8i_wU+RSRk+D1L8YKy72zHz4YFV20r2Z7m+3ARfzb51w@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: fix MPIDR value for ARM CPUs with SMT
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,53 +95,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 21 Apr 2024 at 06:40, Richard Henderson
-<richard.henderson@linaro.org> wrote:
-> > --- a/target/arm/cpu.c
-> > +++ b/target/arm/cpu.c
-> > @@ -1314,8 +1314,18 @@ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-> >       }
-> >   }
-> >
-> > -uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
-> > +uint64_t arm_build_mp_affinity(ARMCPU *cpu, int idx, uint8_t clustersz)
-> >   {
-> > +    if (cpu->has_smt) {
-> > +        /*
-> > +         * Right now, the ARM CPUs with SMT supported by QEMU only have
-> > +         * one thread per core. So Aff0 is always 0.
-> > +         */
->
-> Well, this isn't true.
->
->      -smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]
->                     [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]
->
-> I would expect all of Aff[0-3] to be settable with the proper topology parameters.
+We have been running this test for almost a year; it
+is safe to remove its debug statements, which clutter
+CI jobs output:
 
-As I understand it the MPIDR value is more or less independent
-of the topology information as presented to the guest OS.
-The options to the -smp command set the firmware topology
-information, which doesn't/shouldn't affect the reported
-MPIDR values, and in particular shouldn't change whether
-the CPU selected has the MT bit set or not.
+  ▶  88/100 /nested-aio-poll                      OK
+  io_read 0x16bb26158
+  io_poll_true 0x16bb26158
+  > io_poll_ready
+  io_read 0x16bb26164
+  < io_poll_ready
+  io_poll_true 0x16bb26158
+  io_poll_false 0x16bb26164
+  > io_poll_ready
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_poll_false 0x16bb26164
+  io_read 0x16bb26164
+  < io_poll_ready
+  88/100 qemu:unit / test-nested-aio-poll        OK
 
-For Arm's CPUs they fall into two categories:
- * older ones don't set MT in their MPIDR, and the Aff0
-   field is effectively the CPU number
- * newer ones do set MT in their MPIDR, but don't have
-   SMT, so their Aff0 is always 0 and their Aff1
-   is the CPU number
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/unit/test-nested-aio-poll.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-Of all the CPUs we model, none of them are the
-architecturally-permitted "MT is set, CPU implements
-actual SMT, Aff0 indicates the thread in the CPU" type.
+diff --git a/tests/unit/test-nested-aio-poll.c b/tests/unit/test-nested-aio-poll.c
+index db33742af3..d8fd92c43b 100644
+--- a/tests/unit/test-nested-aio-poll.c
++++ b/tests/unit/test-nested-aio-poll.c
+@@ -30,19 +30,16 @@ typedef struct {
+ 
+ static void io_read(EventNotifier *notifier)
+ {
+-    fprintf(stderr, "%s %p\n", __func__, notifier);
+     event_notifier_test_and_clear(notifier);
+ }
+ 
+ static bool io_poll_true(void *opaque)
+ {
+-    fprintf(stderr, "%s %p\n", __func__, opaque);
+     return true;
+ }
+ 
+ static bool io_poll_false(void *opaque)
+ {
+-    fprintf(stderr, "%s %p\n", __func__, opaque);
+     return false;
+ }
+ 
+@@ -50,8 +47,6 @@ static void io_poll_ready(EventNotifier *notifier)
+ {
+     TestData *td = container_of(notifier, TestData, poll_notifier);
+ 
+-    fprintf(stderr, "> %s\n", __func__);
+-
+     g_assert(!td->nested);
+     td->nested = true;
+ 
+@@ -62,8 +57,6 @@ static void io_poll_ready(EventNotifier *notifier)
+     g_assert(aio_poll(td->ctx, true));
+ 
+     td->nested = false;
+-
+-    fprintf(stderr, "< %s\n", __func__);
+ }
+ 
+ /* dummy_notifier never triggers */
+-- 
+2.41.0
 
-For TCG all the topology info is pretty irrelevant anyway:
-if the user wants to tell the guest OS that it should
-do NUMA partitioning (assuming threads or otherwise),
-that's up to them.
-
-thanks
--- PMM
 
