@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AF2C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 17:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F584C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 17:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryx52-0004iE-44; Mon, 22 Apr 2024 13:03:48 -0400
+	id 1ryx8f-00067m-7G; Mon, 22 Apr 2024 13:07:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryx4z-0004ew-6D
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 13:03:45 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ryx8b-00067a-3Q
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 13:07:29 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryx4x-0004BA-6d
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 13:03:44 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-34a32ba1962so3291252f8f.2
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 10:03:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ryx8Z-0004lb-0p
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 13:07:28 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1e9ffd3f96eso2644715ad.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 10:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713805421; x=1714410221; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=K/ptvfirRXlecEvnYNl+wTBX9MNZ1X0q77WQnm5CBOU=;
- b=cb+xgOQpw4KTdD9tIn1miqmKQRMCg0txmRdF2OsgxUkW+pbtRwhd7SzsoHvdMeltWJ
- UPM/ZGhoIqEFycREsReZg+I0YztTO1l2jkUTmx1gh4TZMWC/bqbdizUswHiPzKB3H63K
- B0bf5KQ/tRUvkpW8iTpVhexLOJwl6oZD/Aol0N1mTKSOadtTKkU0tfM4anVhPukP7YAV
- WvZYQQy4xa82qo28Y57tOWG2xm6tZgHGimxZaHSrx8pc2+h6+vSQxfRjtb5nCj8Bv89b
- MPR8FBH79RqmSET01p9+w2TfkrrQN/HX+R5rBk5w+gBvJo+L9oBar1n85aZWmQx02HeH
- o1Yg==
+ d=linaro.org; s=google; t=1713805645; x=1714410445; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=39YtgjPga6zni7TyfrRqLQG7p9NAFXqRFglkaRLeOY8=;
+ b=aXr/UAgiaEznS5InwxMHPbjpFh+7YYZ+f5gpIHUkED2Qf/sZYo6Y1UvZDlwKBGVM/D
+ cpp5rPXAQ/BMKxCx5f6Bkh4g10AoP5OQbDfesp3WUgl2PPwSxtz9FaMX+yNEmwoG3fMj
+ KNJLRg+Oy6tmwMCfrBgag4oISXV89zm8GbZlcxCM9IVMd6Ki5PfKL3dwCda82u029aQj
+ nEXTlHxxzzygPeTOcjGeE7HFSWZLcx2btqVLDwmn70ZGpA28o8iXdAi4sTiSPI35nhMS
+ j81LG3d2hwfsIUQRJWwsS6lsf/3fmSU7E6dK3lXQ9Uxvgnd5x1IuLb2RqnUt7hUa76zf
+ 67tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713805421; x=1714410221;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K/ptvfirRXlecEvnYNl+wTBX9MNZ1X0q77WQnm5CBOU=;
- b=PlQwl7FHYLuDzpcHU1T9GPWf9WXFWCW3d10YwKgeqKLNppDMfYsNdP3oBm/W0MVqCh
- Ty8pOUPL2a6gCr7DE6B+ndBRWsJs/EMJAtsMhoA/0EU8XpL/PlG+KBVXgeurMbhp41en
- sZ0uVziPmwmWhWW9FN08NzSbLq+BBxgo2yAy69n8KeipemRpt6uNWqEKEe7mCDb97dem
- wcxsnzec1LqdaHuUjpUY+UQrfHMYlg4GX6LgIEQjkQZMojdY/Y7i/XpAITIbOAAW/mQw
- ZtQIfeR0/cJh6DYeOjEBG0EfxCanMncCuP2/GRtbMfWC4JC5ew5PjQFGS9+NWSVn5/yJ
- nLXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxRAwUgcNdjGdhv3pWTk8ybTF+FhSu+/IWZwTGWDEqN065v9XVQOD1M9nRM6G9vj7qD4qO/I3xsmhanVDVibI17s7q/lg=
-X-Gm-Message-State: AOJu0YzxWiBQafkQnkyreXrhl3iPfq7Q8bfNvjth28Z+Ksu8d3RlZ0D2
- waAkvfVGGqa+I+TauEJMDMr3RjH17ZHyLhl2ph0+B4zSrZwQ2ZrT0priGTle67wNWRLLFbYQLnV
- +
-X-Google-Smtp-Source: AGHT+IH3MxZBYtjTH+Z6CU54x4DaATw9e4Cx9TV46EvGvfx56nlf6NsXKKfl4XuP3MJPcRtfOdfNMA==
-X-Received: by 2002:a5d:6b0d:0:b0:343:edfd:113d with SMTP id
- v13-20020a5d6b0d000000b00343edfd113dmr6446151wrw.71.1713805421477; 
- Mon, 22 Apr 2024 10:03:41 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- r16-20020a5d6950000000b003477d26736dsm12500716wrw.94.2024.04.22.10.03.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 10:03:41 -0700 (PDT)
-Message-ID: <5acf21ec-216b-4d11-a7c1-ecf9a8ddf76f@linaro.org>
-Date: Mon, 22 Apr 2024 19:03:40 +0200
+ d=1e100.net; s=20230601; t=1713805645; x=1714410445;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=39YtgjPga6zni7TyfrRqLQG7p9NAFXqRFglkaRLeOY8=;
+ b=tJ+6arQhikTYJlaPeL2cUPi5l6Zb6wz6PDcA1YCpaQN660wpgjbW3EO86S36SZgryw
+ uhxAlPqAO24LMRDVvvbtaImsfJyGm4hxGgc09OwWdgz9PNHCMK2WLzEJb/HzJWTH575d
+ XNVJiuq/UlrIwsv6xun6o0V+xFTNb9SdT1e3C7yVLw9UN3aqPpDXu+dg5igFZtoqNeA1
+ kOt3cFSycABE6L/98WxoMiwDsOm+uWO6G+F0T05FL32MGskhCdVWIv59dRqizlL5FGlQ
+ 6anv5G/gFNF4GosuL6T3M7Z4U0VhQgPOWq/EsHB+/bVQRZ+ErYARTIym8Skv4oui2jHe
+ 0oTA==
+X-Gm-Message-State: AOJu0YwHTFIQ6mG9rFfBvafUU5a2jUreB6YbNxm8/y4Qq0pVeK1MTMH6
+ 6/q1pXZJhnN6TqIK91lHX+Y521uB10wYpMwMPBxtcKndRNE3bGjSSkV9+pxGmpYP6nClYuAl8En
+ W
+X-Google-Smtp-Source: AGHT+IE0xOE6q1dD+Qg+gGsyihA+x2gaw3WTCTsL0/qfmth/f3tv+C4S9yNAJRUuut1A/nOB53zPQA==
+X-Received: by 2002:a17:902:dac7:b0:1e5:2a20:2d68 with SMTP id
+ q7-20020a170902dac700b001e52a202d68mr13247523plx.47.1713805644975; 
+ Mon, 22 Apr 2024 10:07:24 -0700 (PDT)
+Received: from stoup.. ([156.19.246.23]) by smtp.gmail.com with ESMTPSA id
+ t6-20020a170902e84600b001e604438791sm8350594plg.156.2024.04.22.10.07.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Apr 2024 10:07:24 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] target/arm: Restrict translation disabled alignment check to
+ VMSA
+Date: Mon, 22 Apr 2024 10:07:22 -0700
+Message-Id: <20240422170722.117409-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH intel_iommu 3/7] intel_iommu: make types match
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "jasowang@redhat.com" <jasowang@redhat.com>
-References: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
- <20240422155236.129179-4-clement.mathieu--drif@eviden.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240422155236.129179-4-clement.mathieu--drif@eviden.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,26 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/24 17:52, CLEMENT MATHIEU--DRIF wrote:
-> The 'level' field in vtd_iotlb_key is an uint8_t.
-> We don't need to store level as an int in vtd_lookup_iotlb
-> 
-> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> ---
->   hw/i386/intel_iommu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 6f1364b3fd..ba545590b1 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -333,7 +333,7 @@ static VTDIOTLBEntry *vtd_lookup_iotlb(IntelIOMMUState *s, uint16_t source_id,
->   {
->       struct vtd_iotlb_key key;
->       VTDIOTLBEntry *entry;
-> -    int level;
-> +    uint8_t level;
+For cpus using PMSA, when the MPU is disabled, the default memory
+type is Normal, Non-cachable.
 
-Or simply 'unsigned' up to vtd_slpt_level_shift()?
+Fixes: 59754f85ed3 ("target/arm: Do memory type alignment check when translation disabled")
+Reported-by: Clément Chigot <chigot@adacore.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+
+Since v9 will likely be tagged tomorrow without this fixed,
+Cc: qemu-stable@nongnu.org
+
+---
+ target/arm/tcg/hflags.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index 5da1b0fc1d..66de30b828 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -38,8 +38,16 @@ static bool aprofile_require_alignment(CPUARMState *env, int el, uint64_t sctlr)
+     }
+ 
+     /*
+-     * If translation is disabled, then the default memory type is
+-     * Device(-nGnRnE) instead of Normal, which requires that alignment
++     * With PMSA, when the MPU is disabled, all memory types in the
++     * default map is Normal.
++     */
++    if (arm_feature(env, ARM_FEATURE_PMSA)) {
++        return false;
++    }
++
++    /*
++     * With VMSA, if translation is disabled, then the default memory type
++     * is Device(-nGnRnE) instead of Normal, which requires that alignment
+      * be enforced.  Since this affects all ram, it is most efficient
+      * to handle this during translation.
+      */
+-- 
+2.34.1
 
 
