@@ -4,85 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D48D4C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 11:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD18C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 11:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryrma-0002WF-Sd; Mon, 22 Apr 2024 07:24:24 -0400
+	id 1ryrn4-0003DR-AJ; Mon, 22 Apr 2024 07:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrmY-0002Ro-3U
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:24:22 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrmW-0007IX-Ku
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:24:21 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-349545c3eb8so3195244f8f.2
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 04:24:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713785059; x=1714389859; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4zSmrIlgHV0Vw1AbLT6ZWFHT7n9hH21z64JC62MO0XM=;
- b=dz1xJgrFqcljUFDeDVRxm7oL71Q2uR5iSN/ZjWqStsiWu78ShAEIZaHsT49OIvhHU1
- 8XbGJRjdcwuSbyRbTA8b3HAG+u3xPaL9tb4VUxplLTT8n+zK3C3dHcrAMOpIn1h30TiB
- Y2FVh08gFTIiw8e0GfFAJyXG9H09nehvgR/D1J6oau9c/+2vh8+vbTjF8HbjZcpkvMAR
- 4kItR81CK+eH2PjP0CGymsqzdvb4OC51nQwGwTQRSoJAkK2/G7AmdTJrjmiLvkek4wgO
- qFHO8GF5KZapxtAw2ISyApnyoryVLNU9NSkmJdxVPpypTxyWzV+RHUwgzLz4TcEY+ACu
- JFHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713785059; x=1714389859;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4zSmrIlgHV0Vw1AbLT6ZWFHT7n9hH21z64JC62MO0XM=;
- b=H8IJKLWgO2Kue8qEv7XSDlUQ/cPfapix6c1Qz37+iUxPYIq9J3UWKYMUEgUE0E7qzF
- G0G/Q+XT1XIa1BIPsmGnuFgeG1Yt2PeerQfzuIJf0bWQZB99N2/HlHqhmKL3Zv15yaWF
- m03uT4ALAbXzedbxgzXcchBbImojJQJcHVa/iJ2LFxdtTPXyWUaQ853xNL/sH67leYvi
- WW0mTfqbGmKtQq9dfzGKis6Dddc/k+oGQp3aal1X4FSsChIqw8HQp6elny1d6wwRn9To
- kSj5Vwh35EK4rMZ1d74O2fm5twhClxofCVBUj8W05qDX9MlGNk36gw4xQ+VYTPi2iICH
- pH9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUE+9udxb0gA6Z98bjNG6yo2qTXe457BRfP0LI3dT/0uT0sX3E0ocvSCcA/CMd9RJE3GEOTbUuwub8aPxXsdJmR1Az/k5A=
-X-Gm-Message-State: AOJu0YzIxJPcc5IGsV3FixjMk39UpWsxlXkMSG7cMVwCe0FudOjl08ox
- CFhjM6egOT63Fjz59XbHPk9CNLHiebEvNdA2C30O4To05cBQduxQxziSJ7s8LN6GuUKFgAvvjMr
- w
-X-Google-Smtp-Source: AGHT+IHYZZCA3d6fzzXLMawgId24Ckfnz7efzP+BFGnls7lk0ZuLhUqMsuvh6+G+5Ge17Bmm2jugxg==
-X-Received: by 2002:a5d:6901:0:b0:343:5cc6:647f with SMTP id
- t1-20020a5d6901000000b003435cc6647fmr5601554wru.21.1713785058896; 
- Mon, 22 Apr 2024 04:24:18 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- n12-20020a5d67cc000000b0034a51283404sm9310828wrw.72.2024.04.22.04.24.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 04:24:18 -0700 (PDT)
-Message-ID: <a7763561-62b3-4363-8049-fa4f7bb44047@linaro.org>
-Date: Mon, 22 Apr 2024 13:24:17 +0200
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1ryrn2-000381-QE; Mon, 22 Apr 2024 07:24:52 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1ryrn0-0007L1-SE; Mon, 22 Apr 2024 07:24:52 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 62DEBC0002
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1713785085;
+ bh=knZaCxNyHEEDulzJLlcCVQiRkDfhoJ7zcpyDgfjmZUY=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=ph68UmMhzQPy2w5I92igEJKabBPHJkLR3GcxJhsvzjU8hTsmBZ3O/oK6jem5CCs/O
+ I8zpsFkOq/zuDw+mvYYjeX3wKd4k3D7oAz0prCFQLDJtgEvr3+BlNcaVSCVhaCiHzf
+ 4q1WYNv/3SfBbiN5csrI20tMplMFWPTjE6MZ3Eoxuhhn2Oq0V9DMjnKheHeNI4O3AM
+ l8eOlIa9I1588HFPHUFeGIblLBN4ghHOYzwhLSWCg8PfKSBx7ENgApRQgCzOausocN
+ S19wuX6VLJ63Y0vskVXGm50IPKtvqnHDanzRs2zYZpa+75xn+y8g7cDbMlgPb6y3qi
+ K8q4KjHa1KyfA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1713785085;
+ bh=knZaCxNyHEEDulzJLlcCVQiRkDfhoJ7zcpyDgfjmZUY=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=IFI0ubrFLL8U4/q4N2M2NrKMeZhmjyL5LRegX71aQB/E0123G430NAE1GN4KmdP7Z
+ T2/pupG/XnXFP3UdYYFGGgLrz0JDmhVIfUDS7ji6fdwbjGB/+Cj9vlJ5xwQU8BhWNI
+ pau1IJHzLd4VXBAkvGDswDeVUqrr2weFvhaWXkSodlS6DQ7kO2ceuJAREC7m7rM48j
+ 9s1pcl9x7rEpDhywMzV02mlhB731C+Ecka8ntoZnklNkprT0qTr31AdD6pmxd4uLSd
+ YxaMP0S24pdbyGCN6Dn9nT+bq3fhPw1FZ0BHPd31HL1WDumZ7k+I7hCv3gtWUOheVH
+ AT/qzejRPGcVg==
+From: Alexei Filippov <alexei.filippov@syntacore.com>
+To: <ajones@ventanamicro.com>
+CC: <alexei.filippov@syntacore.com>, <alistair.francis@wdc.com>,
+ <alistair23@gmail.com>, <apatel@ventanamicro.com>, <bin.meng@windriver.com>,
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, <palmer@dabbelt.com>,
+ <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
+ <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v5] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi() fail
+ with vendor-specific sbi.
+Date: Mon, 22 Apr 2024 14:24:37 +0300
+Message-ID: <20240422112437.11079-1-alexei.filippov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240422-e78b28f00a168518c5d4937a@orel>
+References: <20240422-e78b28f00a168518c5d4937a@orel>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc : Correct 5 spaces indents in stm32l4x5_exti
-To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org
-Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-arm@nongnu.org,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>
-References: <20240421141455.116548-1-ines.varhol@telecom-paris.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240421141455.116548-1-ines.varhol@telecom-paris.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: T-Exch-05.corp.yadro.com (172.17.10.109) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SORTED_RECIPS=2.499,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,13 +81,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/4/24 16:14, Inès Varhol wrote:
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-> ---
->   hw/misc/stm32l4x5_exti.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+kvm_riscv_handle_sbi() may return not supported return code to not
+trigger qemu abort with vendor-specific sbi.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add new error path to provide proper error in case of
+qemu_chr_fe_read_all() may not return sizeof(ch).
 
-and queued, thanks!
+Added SBI related return code's defines.
+
+Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+---
+ target/riscv/kvm/kvm-cpu.c         | 9 +++++----
+ target/riscv/sbi_ecall_interface.h | 1 +
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index aeca1e3e83..5bb7b74d03 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1173,17 +1173,18 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+         ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+         if (ret == sizeof(ch)) {
+             run->riscv_sbi.ret[0] = ch;
+-        } else {
++            ret = 0;
++        } else if (ret == 0) {
+             run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
++        } else {
++            ret = -1;
+         }
+-        ret = 0;
+         break;
+     default:
+         qemu_log_mask(LOG_UNIMP,
+-                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
++                      "%s: Unhandled SBI exit with extension-id %lu\n"
+                       __func__, run->riscv_sbi.extension_id);
+         run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+-        ret = 0;
+         break;
+     }
+     return ret;
+diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+index 0279e92a36..a2e21d9b8c 100644
+--- a/target/riscv/sbi_ecall_interface.h
++++ b/target/riscv/sbi_ecall_interface.h
+@@ -79,5 +79,6 @@
+ #define SBI_ERR_ALREADY_AVAILABLE   -6
+ #define SBI_ERR_ALREADY_STARTED     -7
+ #define SBI_ERR_ALREADY_STOPPED     -8
++#define SBI_ERR_NO_SHMEM            -9
+ 
+ #endif
+-- 
+2.34.1
+
 
