@@ -4,71 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA0AC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB0EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:46:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryt3L-0007Ix-QP; Mon, 22 Apr 2024 08:45:47 -0400
+	id 1ryt46-0007Z9-54; Mon, 22 Apr 2024 08:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ryt3C-0007D4-PI
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:45:40 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryt3m-0007WL-GU
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:46:17 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ryt3B-0005Lj-9W
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:45:38 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a55b10bfd30so84997566b.0
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:45:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryt3h-0005Q1-0z
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:46:13 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41a1d2a7b81so7119765e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713789934; x=1714394734; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5Gvssde9/xaurWK599MgZqx+vkz5GaGp8TSAAqSjOMw=;
- b=GyxE8pGfBucj0lBw/e05ZkKM58hQyf7kg1P5vUW15XhThONP4mNd60Sz9wywG6Y70+
- 5WoHha33wDJ+S2csg6hsQkxYpy/UpUgZlmsSQWizVfqr59WpGl8c3hsJ4cbttltl46vs
- pGXALDD4DkQUyZPUioHF56Xl3e7x8OtePyJAKWmEVMDpi5iOAhG7Xd2tZ9SxYGGUdUc6
- LSylJCdsfm1qLU5JnMhWO53uH7PwqLFdRG/VKbv+FWF+Y1OO0XrBBCThsw8oXGTuJx3F
- Dfqj5oFEcWLmgAk06aEDd9IOHUmuojGwAPNi8R0IwWBa3rQaAKTmmRrx4FKNwmkJwJ1a
- TK8g==
+ d=linaro.org; s=google; t=1713789966; x=1714394766; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=39Acx84dTQ3hN2yMfKWcH9znaBkPeHgCHhH+12hyjQ8=;
+ b=Oh457p1C62GQMS0N+Z4dF7Es3EdFOAotZO5sYLavO82PhDsoqo798j3C86oBFUhNC1
+ v2MVhfwGl1s1nnc+W4QAj/0VrYO8cSdohYKer3lvDgBKoVGruUemJS88lrP2lF5B3ama
+ XWTqJ//3wvN5EgwsoWVd5Ik7fDIjmvyF1Yu8NQfPOSKh2p0z7a8orUY9UNN7U02MDCcz
+ s98XefnxYaHM2wKJZcyan9odOqLsE5g0E4JDsXljTi2AnCZ62VdDGPeJ/G7hIXwcMVkH
+ jypuhJ+oD8r9WJUmyl85dVWK5euc8xXLFKZEzEiklQLpWekJmNyyWuBfrPCTwXlWo2/a
+ 3Aqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713789934; x=1714394734;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5Gvssde9/xaurWK599MgZqx+vkz5GaGp8TSAAqSjOMw=;
- b=KqtEMxHH0s6CIoMG0JtjMXyAweaI37N41mbpHPFsNqX7I4IStIQEOCkk40I2z6+cU/
- dcb6e5wMzOxTSpqR/R2awj5y8ZqbQMaZr8+7wJE5f9toDXeA1b1uq+3+HgdQ3Go50IXf
- RCndDkqYC5DPz2xbezubA0nq/1PWUKE2zVYndVU9JEguWjcfX4kj/ge/gVFnBOy1RqgI
- QqDQj8CwjVQREiw5s7TW1cMUoy3NTHSo7MpwSH+1rInu3e8QeeNsUYcwEY3XkDeH14OF
- fwB6a0wa/6+gcQ1IDc1FOpnmo/f/RfdvO4PTUbdRLBmCpbOMygjNgEniG5sQzXLez0TI
- MXhQ==
-X-Gm-Message-State: AOJu0YwVx77+Ys9orSKrGl8wJHRybQkyUcv6C/uyZmqWxIS1lo43Tnc5
- pXfinQWEMN2juYrC6KAJ3Txj+K5N2H3F2kINdP13mDMZaxBf3c5XIWHgNtr/AzYvynA29h5kGBq
- lQ9tkr4ACXiyJNjCFPN8qZw7oXj+HgEIzYfWwog==
-X-Google-Smtp-Source: AGHT+IGotxdISTlx1oD6A4f/aljsRACWpwmNSAotUDKFGgabI6UwsdtoR4xXyVi+ljmv6lQ1EAxZqPTujQ5RpBkuK/I=
-X-Received: by 2002:a50:bac6:0:b0:568:d19e:7ab0 with SMTP id
- x64-20020a50bac6000000b00568d19e7ab0mr8330839ede.36.1713789934271; Mon, 22
- Apr 2024 05:45:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1713789966; x=1714394766;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=39Acx84dTQ3hN2yMfKWcH9znaBkPeHgCHhH+12hyjQ8=;
+ b=tVvRUCAhvchZUYmATmc2xIsyk/6A231smYM6UFCXMkI0u5hyNdRT3sgBvHceFf2q6R
+ drn0te7j3CVJ6OPU+hUwnXgKFzBCOb0saDoTEEC0bCr00a0lmEWYiQD4Iym4n3S+9JYx
+ u1RZ7fGlY6ZVyRhFELytnaG3c97KfN6AaocozbuzgvUXBGWRtAQDE/BLVeglb6NSLlbz
+ A//WjBBT5SYOxmEkOJ4dOfIzhGGJoG3TSg7CPv/dyh3f+JkabEFbFITtenaFshvoR5Iy
+ Rj93KeFVq2w7vHhw6uBuZa7ZKf5NpQhkso7/c0PW+GAjsSk8eQMTG/L7K4QGr7mXGbjg
+ IyZg==
+X-Gm-Message-State: AOJu0YzDsVDVWNC8t9/Lf0nUBCzWu3xrb+GhVOBTJdQ+Dd5/9nOFxcr6
+ 8FUHMs18SZ46PB5QzijB0gTTG196rOWWRGePlb1t4MTv3t+jdXNHfKO8XmtxAd4=
+X-Google-Smtp-Source: AGHT+IF6ekSDYQxE6y/nkKThKaQm3zn/4i7UQcySSVjovWfJ/Lif57cfa79EBDVO51EtY1b9jhV+aw==
+X-Received: by 2002:a05:600c:1e15:b0:41a:7c1d:3326 with SMTP id
+ ay21-20020a05600c1e1500b0041a7c1d3326mr1187471wmb.8.1713789966552; 
+ Mon, 22 Apr 2024 05:46:06 -0700 (PDT)
+Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ bd25-20020a05600c1f1900b00419f7d6879dsm8198662wmb.8.2024.04.22.05.46.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Apr 2024 05:46:05 -0700 (PDT)
+Message-ID: <7492ef2d-1ea1-472d-baf3-ad8236fcf62a@linaro.org>
+Date: Mon, 22 Apr 2024 14:46:04 +0200
 MIME-Version: 1.0
-References: <20240422124128.4034482-1-manos.pitsidianakis@linaro.org>
-In-Reply-To: <20240422124128.4034482-1-manos.pitsidianakis@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Apr 2024 13:45:22 +0100
-Message-ID: <CAFEAcA-NgdMgJfWZqWV7khgnEzz8K7NWPg6tgHDKtA+KaP85eQ@mail.gmail.com>
-Subject: Re: [PATCH] docs/devel: fix minor typo in submitting-a-patch.rst
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-8.0 3/3] hw/net/xilinx_ethlite: Replace tswap32()
+ by be32_to_cpu()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Alistair Francis <alistair@alistair23.me>,
+ David Gibson <david@gibson.dropbear.id.au>, Jason Wang
+ <jasowang@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Greg Kurz <groug@kaod.org>, qemu-arm@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org
+References: <20221213125218.39868-1-philmd@linaro.org>
+ <20221213125218.39868-4-philmd@linaro.org>
+ <CAFEAcA-iouFJgu_2cG2TapxYVr-_ZK1Uuwa4mqSL5zNKg6Jq+Q@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA-iouFJgu_2cG2TapxYVr-_ZK1Uuwa4mqSL5zNKg6Jq+Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,36 +102,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Apr 2024 at 13:43, Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> s/Resolved:/Resolves:/
->
-> Cc: qemu-trivial@nongnu.org
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->  docs/devel/submitting-a-patch.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-> index c641d948f1..83e9092b8c 100644
-> --- a/docs/devel/submitting-a-patch.rst
-> +++ b/docs/devel/submitting-a-patch.rst
-> @@ -177,7 +177,7 @@ add an additional line with "Fixes: <at-least-12-digits-of-SHA-commit-id>
->
->  If your patch fixes a bug in the gitlab bug tracker, please add a line
->  with "Resolves: <URL-of-the-bug>" to the commit message, too. Gitlab can
-> -close bugs automatically once commits with the "Resolved:" keyword get
-> +close bugs automatically once commits with the "Resolves:" keyword get
->  merged into the master branch of the project. And if your patch addresses
->  a bug in another public bug tracker, you can also use a line with
->  "Buglink: <URL-of-the-bug>" for reference here, too.
->
-> base-commit: 62dbe54c24dbf77051bafe1039c31ddc8f37602d
-> --
+On 13/12/22 14:53, Peter Maydell wrote:
+> On Tue, 13 Dec 2022 at 12:52, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> This partly revert commit d48751ed4f ("xilinx-ethlite:
+>> Simplify byteswapping to/from brams") which states the
+>> packet data is stored in big-endian.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>> @@ -102,8 +102,8 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
+>>               D(qemu_log("%s " TARGET_FMT_plx "=%x\n", __func__, addr * 4, r));
+>>               break;
+>>
+>> -        default:
+>> -            r = tswap32(s->regs[addr]);
+>> +        default: /* Packet data */
+>> +            r = be32_to_cpu(s->regs[addr]);
+>>               break;
+>>       }
+>>       return r;
+>> @@ -160,8 +160,8 @@ eth_write(void *opaque, hwaddr addr,
+>>               s->regs[addr] = value;
+>>               break;
+>>
+>> -        default:
+>> -            s->regs[addr] = tswap32(value);
+>> +        default: /* Packet data */
+>> +            s->regs[addr] = cpu_to_be32(value);
+>>               break;
+>>       }
+>>   }
+> 
+> This is a change of behaviour for this device in the
+> qemu-system-microblazeel petalogix-s3adsp1800 board, because
+> previously on that system the bytes of the rx buffer would
+> appear in the registers in little-endian order and now they
+> will appear in big-endian order.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Maybe to simplify we could choose to only model the Big
+Endian variant of this device?
 
-thanks
--- PMM
+-- >8 --
+@@ -169,7 +169,7 @@ eth_write(void *opaque, hwaddr addr,
+  static const MemoryRegionOps eth_ops = {
+      .read = eth_read,
+      .write = eth_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_BIG_ENDIAN,
+      .valid = {
+          .min_access_size = 4,
+          .max_access_size = 4
+---
 
