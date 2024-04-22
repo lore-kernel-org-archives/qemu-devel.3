@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949BAC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9553EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rytDq-0005jf-8j; Mon, 22 Apr 2024 08:56:38 -0400
+	id 1rytFY-0007Qx-2c; Mon, 22 Apr 2024 08:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rytDn-0005gp-Dn
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:56:35 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rytFT-0007QL-Fn
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:58:20 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rytDj-0007B8-Qd
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:56:34 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-56e6acb39d4so5231327a12.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:56:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rytFQ-0007Wc-Ty
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:58:19 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41a7c7abdbbso5688825e9.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713790589; x=1714395389; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nl+sgvBp+w/CT7gP97ti+pDaudI7/Gy87YKtR8NYhBE=;
- b=wa2/BYeoJ9R5HTeut0yT/PJKlKm+AhIKKeAAZJzuj6Y7zL+GNS9y9K0+ctVVs8Anbl
- MR/5s4Yl5wcfNif8k+sX91aYX8XqgDrKQxM/1OtrGksB+iokNsUcgmIQx0z7qRtAX9XB
- ALxKIPSqr4AleuoNSnexbFFX+yBp+JGlHkHIlOPGCxtzQ0Uf94gIKHMZt73auaBMlAJe
- xIAync8XlxMWjPLfGzdeqmKKnTcxdd2Epliq4p/BXJ3avJNZV3YrZeKQkx/aL9a/fs8j
- v4myAooi3dYEewbCxY41zAh/cKY+99o+8za47fqvkdQbtM8dMZc/1XBRjBkA68muAI+f
- RVZg==
+ d=linaro.org; s=google; t=1713790694; x=1714395494; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SEB7rrTLtp3+E0UWx6azHIwaCjR17UZYQGWqmUBhvzw=;
+ b=mOxaxiE1YbQaLIU4pvvpNU4az2GTwO+gwfHQQHRfD2XWsvZNRc22Nx8W5KYupf321H
+ FBw4uQH8zpdCqLzBUQCPhSo6FuqJsE39FEDO/reDhzRaxNNIY5Mjq1Pwr0A1+o6RBmU6
+ UK4FybkYWE3Z+8+mTw6+QhBzFDNsgXc3Wwgryl9Nltf/1lb2xA3ckqdnM/uu4FKmV/Tw
+ 4l4svqzX0KU56vR4kHgve2sAb8FfMEsZgPaZru0ZW7jN6b21GEdk9dosmwMby5dXtFlX
+ h1pu/htsaY8UhgfeAKhZrZx6DzI0rCMK+zOwOlM+nBqmHAYBa9V3qiYXQ8oyss/hAAR7
+ +6zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713790589; x=1714395389;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1713790694; x=1714395494;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nl+sgvBp+w/CT7gP97ti+pDaudI7/Gy87YKtR8NYhBE=;
- b=nFcIiZ1VqN57SOEGnntIHOZ4QhX36eZBxR01aKfINSjd6xetOPYYaI4BXw0OQobZ6T
- c9iMFh1theRRUQ3mGjQkfJYfLTLT88k4hkCUvFdEYjg1BcOs0FiSZPbUVQ3Ye/dkTJXS
- vTdDmXlpPgoIvPsrABN0sb8EY2eZmvNJ7+ohT2gjguSzezZHzRFU6YX5cFK7vj4qd3F/
- wdzkG+gRRDGtPqlrre4cTb6a2Mr7UNbq6mTKID9T+o5M33srHRU7s/wKr7ukHnYrrvKL
- sBKtc6JOBGRreSeTr879/rtRN+ZddJIhl83fb8lSVv3K871iTIQFvv4YxxLjYQOICKM/
- HDyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5DPfiYVdPcD6PmRePRaTl6h8suyMuAz+QBxFTeYtcSNJhPzsm6w6CaNxPKKlk7s6iWmonV1QyeoRaxkKGWkSKW0/XUvI=
-X-Gm-Message-State: AOJu0YyV3BEKhR/i9jYI0gpkkq/qUykTvIWNpKPJYLYwU4WvF1XXCaUt
- fUPjKCV3rgfebV3uzbxNtc6ZH6JsdxHWFk1sDQhHp2vjJJrnTbGV8zEbFcQnzEtcDB8rHYuoZao
- u2Frc9nr2DtwVB9sBphxO4C/nBRiB2AyaH7RLpKIALjva6EP9
-X-Google-Smtp-Source: AGHT+IFUnl+1xZf6WF/Sp3Q2G+R5omXfQcubTdFpj5v/drljRoOcAGkRgoi04hqJ5pviDoEI00aRMuw5/bvLThF07FY=
-X-Received: by 2002:a50:d609:0:b0:56e:418:5559 with SMTP id
- x9-20020a50d609000000b0056e04185559mr6425782edi.3.1713790589501; Mon, 22 Apr
- 2024 05:56:29 -0700 (PDT)
+ bh=SEB7rrTLtp3+E0UWx6azHIwaCjR17UZYQGWqmUBhvzw=;
+ b=Ow1+//3jIeGJzM49pfHih+QbiT/0s99/x08oaiRjEelgRkDSniL0JN9om+we6g3l7F
+ SpikW2oC8VEjgGdJn1hZPpLxjL4tUbF2vCzSXvUaRefyN7o6TULnvFhGFLOdRpf8kFVA
+ xEzusSlvzH/+dKVrD9eGdqxhd4MlI/4sL68+CWDTv+B3GBaPa58yFR7hb97GnPufxiPw
+ pjrEEgJzCIyxzlN768YVtfSUIgfNXQKeZ9semAG8VWzSklIfp0SGFU9HiIUwidC+cb8t
+ Dk7FwAbsrdfB3WcHsyn7VF41rFYVCaNySPMIPPDfWiIG0kouD91D9cUaBdPY61N6uatS
+ nJvA==
+X-Gm-Message-State: AOJu0YyV2uGMYRt0tuqxzJcPAzpVD0JsBg8n1wWVpAYMoAQ105f+3dMb
+ O2RHS/V7NZR4faXnKK3CsxBLresYGCvi8+pQObqcO87aSg9GlMdnbxNXsKALQb7UDzLEK2Hjo5R
+ w
+X-Google-Smtp-Source: AGHT+IFW1UTXXwij4R8Vs3UUpmBBokzINWvRLjKm5S31UNlErxi5tweMFXcAKG6hedqOHPDdi0xYnw==
+X-Received: by 2002:adf:ce06:0:b0:347:f94b:94d8 with SMTP id
+ p6-20020adfce06000000b00347f94b94d8mr8864659wrn.62.1713790694546; 
+ Mon, 22 Apr 2024 05:58:14 -0700 (PDT)
+Received: from m1.home (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ l1-20020a5d4bc1000000b0034ae73a8b25sm4166840wrt.37.2024.04.22.05.58.13
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 22 Apr 2024 05:58:14 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Tyrone Ting <kfting@nuvoton.com>,
+ Havard Skinnemoen <hskinnemoen@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>,
+ qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, Avi Fishman <Avi.Fishman@nuvoton.com>
+Subject: [PATCH] hw/arm/npcm7xx: Store derivative OTP fuse key in little endian
+Date: Mon, 22 Apr 2024 14:58:12 +0200
+Message-ID: <20240422125813.1403-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20240419184608.2675213-1-peter.maydell@linaro.org>
-In-Reply-To: <20240419184608.2675213-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Apr 2024 13:56:18 +0100
-Message-ID: <CAFEAcA91ZULEjEgTotevp-epgH_azcwrSi9PVnnOSk8gq5j22g@mail.gmail.com>
-Subject: Re: [PATCH 0/3] target/arm: Make the counter frequency default 1GHz
- for new CPUs, machines
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Leif Lindholm <quic_llindhol@quicinc.com>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,49 +95,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Apr 2024 at 19:46, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> In previous versions of the Arm architecture, the frequency of the
-> generic timers as reported in CNTFRQ_EL0 could be any IMPDEF value,
-> and for QEMU we picked 62.5MHz, giving a timer tick period of 16ns.
-> In Armv8.6, the architecture standardized this frequency to 1GHz.
->
-> Because there is no ID register feature field that indicates whether a
-> CPU is v8.6 or that it ought to have this counter frequency, we
-> implement this by changing our default CNTFRQ value for all CPUs, with
-> exceptions for backwards compatibility:
->
->  * CPU types which we already implement will retain the old
->    default value. None of these are v8.6 CPUs, so this is
->    architecturally OK.
->  * CPUs used in versioned machine types with a version of 9.0
->    or earlier will retain the old default value.
->
-> The upshot is that the only CPU type that changes is 'max'; but any
-> new type we add in future (whether v8.6 or not) will also get the new
-> 1GHz default (assuming we spot in code review any attempts to set
-> the ARM_FEATURE_BACKCOMPAT_CNTFRQ flag on new CPU types as a result
-> of cut-n-paste from an older CPU initfn ;-)).
->
-> It remains the case that the machine model can override the default
-> value via the 'cntfrq' QOM property (regardless of the CPU type).
+Use little endian for derivative OTP fuse key.
 
-This patchset turns out to break the sbsa-ref board: the
-Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef
-avocado test both (a) takes rather longer to boot and (b) when
-running thinks that time is advancing very fast.
+Cc: qemu-stable@nongnu.org
+Fixes: c752bb079b ("hw/nvram: NPCM7xx OTP device model")
+Suggested-by: Avi Fishman <Avi.Fishman@nuvoton.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/arm/npcm7xx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-I suspect this may be because the firmware hard-codes the
-generic timer clock frequency it is expecting. I've cc'd the
-sbsa-ref maintainers: is that correct?
+diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+index cc68b5d8f1..9f2d96c733 100644
+--- a/hw/arm/npcm7xx.c
++++ b/hw/arm/npcm7xx.c
+@@ -24,6 +24,7 @@
+ #include "hw/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
++#include "qemu/bswap.h"
+ #include "qemu/units.h"
+ #include "sysemu/sysemu.h"
+ #include "target/arm/cpu-qom.h"
+@@ -386,7 +387,7 @@ static void npcm7xx_init_fuses(NPCM7xxState *s)
+      * The initial mask of disabled modules indicates the chip derivative (e.g.
+      * NPCM750 or NPCM730).
+      */
+-    value = tswap32(nc->disabled_modules);
++    value = cpu_to_le32(nc->disabled_modules);
+     npcm7xx_otp_array_write(&s->fuse_array, &value, NPCM7XX_FUSE_DERIVATIVE,
+                             sizeof(value));
+ }
+-- 
+2.41.0
 
-If so, we can deal with it by making the sbsa-ref board set the
-cntfrq QOM property on its CPUs to force them to the old
-frequency. However this will produce a technically-out-of-spec
-CPU when used with a v8.6-compliant CPU type, so probably we
-should do something to be able to tell the firmware the clock
-frequency (if it doesn't want to just read CNTFRQ_EL0 itself).
-
-thanks
--- PMM
 
