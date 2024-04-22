@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DDBC07E8E
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949BAC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rytAI-0001pj-H6; Mon, 22 Apr 2024 08:52:58 -0400
+	id 1rytDq-0005jf-8j; Mon, 22 Apr 2024 08:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rytAA-0001du-3A
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:52:50 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rytDn-0005gp-Dn
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:56:35 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rytA8-0006Pw-CA
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:52:49 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56e69a51a33so3971687a12.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:52:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rytDj-0007B8-Qd
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:56:34 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-56e6acb39d4so5231327a12.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713790366; x=1714395166; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wtIOp9fwmceyQgZZl5DZ5tv3mHejfW4oGwssHFQ9/1A=;
- b=GiuqhOOKYGFyjWJz5kJf8rdUhM3A3dP15lftwyZqeYDYuWIRd5O5XlCF5p+YOtvfd9
- P+9Ca7kcBMRhf1VdNfs4CW6fESpZ0dslkexcYnTV7kAWMrO7zWDoatpBAG2adjKsMfu9
- +EOu/Ke2o5R0tMtGW6bfjTfLTO+Ni8ZKTMqTLkw8hukKUyvDCrTH0C9CreERMSv+Hj7+
- WijlH5mFrepxwjkU4Ns0p0M4tMmeMf7DBxeYd1usKMVLU1+fgDgD6hnSqQgVSVxmrgZ3
- OfdHLb0m2ZMDVqIOesmDYbPVLPnqdRScgstjSeqeFAB9ksNLRuvFsa4eIjS8jkTXE6CJ
- Skfw==
+ d=linaro.org; s=google; t=1713790589; x=1714395389; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nl+sgvBp+w/CT7gP97ti+pDaudI7/Gy87YKtR8NYhBE=;
+ b=wa2/BYeoJ9R5HTeut0yT/PJKlKm+AhIKKeAAZJzuj6Y7zL+GNS9y9K0+ctVVs8Anbl
+ MR/5s4Yl5wcfNif8k+sX91aYX8XqgDrKQxM/1OtrGksB+iokNsUcgmIQx0z7qRtAX9XB
+ ALxKIPSqr4AleuoNSnexbFFX+yBp+JGlHkHIlOPGCxtzQ0Uf94gIKHMZt73auaBMlAJe
+ xIAync8XlxMWjPLfGzdeqmKKnTcxdd2Epliq4p/BXJ3avJNZV3YrZeKQkx/aL9a/fs8j
+ v4myAooi3dYEewbCxY41zAh/cKY+99o+8za47fqvkdQbtM8dMZc/1XBRjBkA68muAI+f
+ RVZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713790366; x=1714395166;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wtIOp9fwmceyQgZZl5DZ5tv3mHejfW4oGwssHFQ9/1A=;
- b=HrvXn+zK3miFt4CBhSPC71pMf6h/Wd7XmEqbtxl2ludsCfOz3eoH1IrqUXE5Xb66q6
- L+Zy+qKRCV6oJlS/FZDMlBG+G+ax0bVu40WwO20+Na5McAiIGS/3CUo0vVSpQbdwyrox
- JUVyp2udKBHUnMyNs5d72pIte9yOXtdj5ObPHy8atibf4UXyyFYJt5YU3Y99VIZEyntu
- 8v1SQnxZeOsJQm5trv3zxPBHl5ARj4X6r16FKvJYlFXzjywHKyvBLeqVStr8TpEvfpFJ
- JMdBJuPV4qRFsEwlkR3uC2YT2ZA/tfs84ygUZIi3od/uRquB5xTEskV/+M1VLH6aMDlI
- BT4w==
-X-Gm-Message-State: AOJu0YxhamQmNybDwkApEDhrUqFNgLVOsSHV8xDBkl6AL/yl55PPmP7v
- y1IyiC7PY0qCBbplhPivHp+8L8mnTyf5lblqn5ZW77UTpGK228RKhhZM2jG4t+IUz1IWzWqinIG
- m
-X-Google-Smtp-Source: AGHT+IHbg2QxQMal/J5vECQD3Nyxycu/iAMpYrikqRSLeFjGXcG1XDwvlf0gdZx2hXB6CVFno2zP4Q==
-X-Received: by 2002:a17:906:b117:b0:a52:671a:aaf2 with SMTP id
- u23-20020a170906b11700b00a52671aaaf2mr7136278ejy.72.1713790365901; 
- Mon, 22 Apr 2024 05:52:45 -0700 (PDT)
-Received: from localhost.localdomain (adsl-53.37.6.0.tellas.gr. [37.6.0.53])
- by smtp.gmail.com with ESMTPSA id
- l10-20020a1709066b8a00b00a55bfb4e3b6sm593574ejr.217.2024.04.22.05.52.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Apr 2024 05:52:45 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org,
-	qemu-stable@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Zheyu Ma <zheyuma97@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v1 2/4] virtio-snd: factor card setup out of realize func
-Date: Mon, 22 Apr 2024 15:52:12 +0300
-Message-ID: <62de737e3320e647454a306bb87c6eb20a2c0cfb.1713789200.git.manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <cover.1713789200.git.manos.pitsidianakis@linaro.org>
-References: <cover.1713789200.git.manos.pitsidianakis@linaro.org>
+ d=1e100.net; s=20230601; t=1713790589; x=1714395389;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nl+sgvBp+w/CT7gP97ti+pDaudI7/Gy87YKtR8NYhBE=;
+ b=nFcIiZ1VqN57SOEGnntIHOZ4QhX36eZBxR01aKfINSjd6xetOPYYaI4BXw0OQobZ6T
+ c9iMFh1theRRUQ3mGjQkfJYfLTLT88k4hkCUvFdEYjg1BcOs0FiSZPbUVQ3Ye/dkTJXS
+ vTdDmXlpPgoIvPsrABN0sb8EY2eZmvNJ7+ohT2gjguSzezZHzRFU6YX5cFK7vj4qd3F/
+ wdzkG+gRRDGtPqlrre4cTb6a2Mr7UNbq6mTKID9T+o5M33srHRU7s/wKr7ukHnYrrvKL
+ sBKtc6JOBGRreSeTr879/rtRN+ZddJIhl83fb8lSVv3K871iTIQFvv4YxxLjYQOICKM/
+ HDyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5DPfiYVdPcD6PmRePRaTl6h8suyMuAz+QBxFTeYtcSNJhPzsm6w6CaNxPKKlk7s6iWmonV1QyeoRaxkKGWkSKW0/XUvI=
+X-Gm-Message-State: AOJu0YyV3BEKhR/i9jYI0gpkkq/qUykTvIWNpKPJYLYwU4WvF1XXCaUt
+ fUPjKCV3rgfebV3uzbxNtc6ZH6JsdxHWFk1sDQhHp2vjJJrnTbGV8zEbFcQnzEtcDB8rHYuoZao
+ u2Frc9nr2DtwVB9sBphxO4C/nBRiB2AyaH7RLpKIALjva6EP9
+X-Google-Smtp-Source: AGHT+IFUnl+1xZf6WF/Sp3Q2G+R5omXfQcubTdFpj5v/drljRoOcAGkRgoi04hqJ5pviDoEI00aRMuw5/bvLThF07FY=
+X-Received: by 2002:a50:d609:0:b0:56e:418:5559 with SMTP id
+ x9-20020a50d609000000b0056e04185559mr6425782edi.3.1713790589501; Mon, 22 Apr
+ 2024 05:56:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
+References: <20240419184608.2675213-1-peter.maydell@linaro.org>
+In-Reply-To: <20240419184608.2675213-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 22 Apr 2024 13:56:18 +0100
+Message-ID: <CAFEAcA91ZULEjEgTotevp-epgH_azcwrSi9PVnnOSk8gq5j22g@mail.gmail.com>
+Subject: Re: [PATCH 0/3] target/arm: Make the counter frequency default 1GHz
+ for new CPUs, machines
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,132 +92,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract audio card setup logic out of the device realize callback so
-that it can be re-used in follow up commits.
+On Fri, 19 Apr 2024 at 19:46, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> In previous versions of the Arm architecture, the frequency of the
+> generic timers as reported in CNTFRQ_EL0 could be any IMPDEF value,
+> and for QEMU we picked 62.5MHz, giving a timer tick period of 16ns.
+> In Armv8.6, the architecture standardized this frequency to 1GHz.
+>
+> Because there is no ID register feature field that indicates whether a
+> CPU is v8.6 or that it ought to have this counter frequency, we
+> implement this by changing our default CNTFRQ value for all CPUs, with
+> exceptions for backwards compatibility:
+>
+>  * CPU types which we already implement will retain the old
+>    default value. None of these are v8.6 CPUs, so this is
+>    architecturally OK.
+>  * CPUs used in versioned machine types with a version of 9.0
+>    or earlier will retain the old default value.
+>
+> The upshot is that the only CPU type that changes is 'max'; but any
+> new type we add in future (whether v8.6 or not) will also get the new
+> 1GHz default (assuming we spot in code review any attempts to set
+> the ARM_FEATURE_BACKCOMPAT_CNTFRQ flag on new CPU types as a result
+> of cut-n-paste from an older CPU initfn ;-)).
+>
+> It remains the case that the machine model can override the default
+> value via the 'cntfrq' QOM property (regardless of the CPU type).
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- hw/audio/virtio-snd.c | 72 ++++++++++++++++++++++++-------------------
- 1 file changed, 41 insertions(+), 31 deletions(-)
+This patchset turns out to break the sbsa-ref board: the
+Aarch64SbsarefMachine.test_sbsaref_alpine_linux_max_pauth_impdef
+avocado test both (a) takes rather longer to boot and (b) when
+running thinks that time is advancing very fast.
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 7ca9ed251c..82dd320ebe 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -1073,27 +1073,21 @@ virtio_snd_is_config_valid(virtio_snd_config snd_conf, Error **errp)
-     return true;
- }
- 
--static void virtio_snd_realize(DeviceState *dev, Error **errp)
-+/* Registers card and sets up streams according to configuration. */
-+static bool virtio_snd_setup(VirtIOSound *vsnd, Error **errp)
- {
-     ERRP_GUARD();
--    VirtIOSound *vsnd = VIRTIO_SND(dev);
--    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     virtio_snd_pcm_set_params default_params = { 0 };
-     uint32_t status;
- 
--    trace_virtio_snd_realize(vsnd);
--
-     if (!virtio_snd_is_config_valid(vsnd->snd_conf, errp)) {
--        return;
-+        return false;
-     }
- 
-     if (!AUD_register_card("virtio-sound", &vsnd->card, errp)) {
--        return;
-+        return false;
-     }
- 
--    vsnd->vmstate =
--        qemu_add_vm_change_state_handler(virtio_snd_vm_state_change, vsnd);
--
-     vsnd->pcm = g_new0(VirtIOSoundPCM, 1);
-     vsnd->pcm->snd = vsnd;
-     vsnd->pcm->streams =
-@@ -1101,9 +1095,6 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
-     vsnd->pcm->pcm_params =
-         g_new0(virtio_snd_pcm_set_params, vsnd->snd_conf.streams);
- 
--    virtio_init(vdev, VIRTIO_ID_SOUND, sizeof(virtio_snd_config));
--    virtio_add_feature(&vsnd->features, VIRTIO_F_VERSION_1);
--
-     /* set default params for all streams */
-     default_params.features = 0;
-     default_params.buffer_bytes = cpu_to_le32(8192);
-@@ -1111,6 +1102,41 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
-     default_params.channels = 2;
-     default_params.format = VIRTIO_SND_PCM_FMT_S16;
-     default_params.rate = VIRTIO_SND_PCM_RATE_48000;
-+
-+    for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
-+        status = virtio_snd_set_pcm_params(vsnd, i, &default_params);
-+        if (status != cpu_to_le32(VIRTIO_SND_S_OK)) {
-+            error_setg(errp,
-+                       "Can't initialize stream params, device responded with %s.",
-+                       print_code(status));
-+            return false;
-+        }
-+        status = virtio_snd_pcm_prepare(vsnd, i);
-+        if (status != cpu_to_le32(VIRTIO_SND_S_OK)) {
-+            error_setg(errp,
-+                       "Can't prepare streams, device responded with %s.",
-+                       print_code(status));
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+static void virtio_snd_realize(DeviceState *dev, Error **errp)
-+{
-+    ERRP_GUARD();
-+    VirtIOSound *vsnd = VIRTIO_SND(dev);
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+
-+    trace_virtio_snd_realize(vsnd);
-+
-+    vsnd->vmstate =
-+        qemu_add_vm_change_state_handler(virtio_snd_vm_state_change, vsnd);
-+
-+    virtio_init(vdev, VIRTIO_ID_SOUND, sizeof(virtio_snd_config));
-+    virtio_add_feature(&vsnd->features, VIRTIO_F_VERSION_1);
-+
-     vsnd->queues[VIRTIO_SND_VQ_CONTROL] =
-         virtio_add_queue(vdev, 64, virtio_snd_handle_ctrl);
-     vsnd->queues[VIRTIO_SND_VQ_EVENT] =
-@@ -1123,26 +1149,10 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
-     QTAILQ_INIT(&vsnd->cmdq);
-     QSIMPLEQ_INIT(&vsnd->invalid);
- 
--    for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
--        status = virtio_snd_set_pcm_params(vsnd, i, &default_params);
--        if (status != cpu_to_le32(VIRTIO_SND_S_OK)) {
--            error_setg(errp,
--                       "Can't initialize stream params, device responded with %s.",
--                       print_code(status));
--            goto error_cleanup;
--        }
--        status = virtio_snd_pcm_prepare(vsnd, i);
--        if (status != cpu_to_le32(VIRTIO_SND_S_OK)) {
--            error_setg(errp,
--                       "Can't prepare streams, device responded with %s.",
--                       print_code(status));
--            goto error_cleanup;
--        }
-+    if (virtio_snd_setup(vsnd, errp)) {
-+        return;
-     }
- 
--    return;
--
--error_cleanup:
-     virtio_snd_unrealize(dev);
- }
- 
--- 
-γαῖα πυρί μιχθήτω
+I suspect this may be because the firmware hard-codes the
+generic timer clock frequency it is expecting. I've cc'd the
+sbsa-ref maintainers: is that correct?
 
+If so, we can deal with it by making the sbsa-ref board set the
+cntfrq QOM property on its CPUs to force them to the old
+frequency. However this will produce a technically-out-of-spec
+CPU when used with a v8.6-compliant CPU type, so probably we
+should do something to be able to tell the firmware the clock
+frequency (if it doesn't want to just read CNTFRQ_EL0 itself).
+
+thanks
+-- PMM
 
