@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B65C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 08:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E1EC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 08:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rypMy-0006Hs-VL; Mon, 22 Apr 2024 04:49:48 -0400
+	id 1rypNA-0006Ju-7R; Mon, 22 Apr 2024 04:50:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rypMw-0006HT-Fg
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:49:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1rypN6-0006J6-Mk
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:49:56 -0400
+Received: from esa6.hc1455-7.c3s2.iphmx.com ([68.232.139.139])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rypMu-0002UO-Qc
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:49:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713775782;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9V2NpJvdJ5fvygMvym+SexihOnhSxoN9/8DLXhzzGdo=;
- b=AnB1bBznhMKkhww6Vurs7/6aIxeUwE7JmyoTZ7oLjhIF/D0jH5ai7GNf8TeZ4xJ0C3MozJ
- ByJWgf3fd8LFr5ruInrt63O7lcgluAvN+JilPkqWcgs1k5594k0yXlS/Lr6lGp4s1uKOHl
- KqvUbdI/TwXnnr1lSlTnCwhX5eXL74E=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-74-rhL8I2MfNY6Tsfk65c6N_A-1; Mon, 22 Apr 2024 04:49:39 -0400
-X-MC-Unique: rhL8I2MfNY6Tsfk65c6N_A-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-61b32e7f94bso61569137b3.2
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 01:49:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713775779; x=1714380579;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9V2NpJvdJ5fvygMvym+SexihOnhSxoN9/8DLXhzzGdo=;
- b=BsYnOVdtvs/PlDL6os2FNXI9UDAXcbnwJqII8Wns6mDnCXHAJiT0mCzd1p4f+4/SqX
- TkV+yX9htDqqWhQpTqOzylZ4p5VcasU8GbLaUbXOsah+yPbFgvz4sWSmFK/mlgGq1NTw
- nia59vHD+XbuEHbbjGJhmrJkTcVGO6gbSBjFzK9zyrVLFs/rfiZ9cREJ1FphuB+AWxwb
- gTOtbOXtbxubYdZkoRFw+FFMXUpizCvILJT0paQlzhNQEyl5lcOL4leuA7iXwHahnejN
- 3clKOz+ZGIqLQPH8IcB2/7MAbqwaSfM8LdR3Bp+xZopnn86xfLQkS9MhP0TcwRZSOlWi
- sKzA==
-X-Gm-Message-State: AOJu0YziM1DhEEWWzV5YDWHm90T6gu0PIxQLa5/1HFNSKtgj2VFzfzQJ
- 41t8sMIPlaoegV0YYOjvZncYp7z15XVueFAh/5M+Ew+BLMkcvRC+OgxkbsJ7K7er6I3ZTKLKXye
- 9S/gw/SKFHkR/a16yKdbZ46dI/18xhx5E2yB8/Lz7Faf0llCwIqmO+1AA7jdednVazuyxDyKKra
- 1Gjdsa2oV8SyVilkQu/38V0RECKE4=
-X-Received: by 2002:a25:7456:0:b0:dcc:9e88:b15 with SMTP id
- p83-20020a257456000000b00dcc9e880b15mr9143616ybc.41.1713775779400; 
- Mon, 22 Apr 2024 01:49:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhYg4/ABKpEdTV4I4ZUyFTePUqVmCHzpzjGpAsd+dYUBXa+mv/f0zpv+21lbocnARZPMY2QRHYfSH8NqLMe8c=
-X-Received: by 2002:a25:7456:0:b0:dcc:9e88:b15 with SMTP id
- p83-20020a257456000000b00dcc9e880b15mr9143609ybc.41.1713775779108; Mon, 22
- Apr 2024 01:49:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1rypN3-0002VL-R7
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:49:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1713775793; x=1745311793;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=gMwAhiXvz+hCU7jh8+LVOt/3ttLUs54lzS9t/ltlvl0=;
+ b=oW9kmZVV1FsdEuyra27YK5CdEYIJBqLCUlu6KF37fabTvDRuzaGyJGyl
+ NBDq2AHubEvwjRTKDWCa2W8eH45XJjbpRE3TMf3XnDjq1jfcN/uFUwZ0V
+ P5bXHZWpW0neqPeIQlWapmcBVwohTcghqq89LI8QUB5QsEmzbOHffklvo
+ icLMy4EWIZi+0NlvTQq+rZIqIHLirhlYX4viSDti0cx53TW4E/ZdeLF3f
+ ZerY7O/PFDlQf8LqiggRaJ2V36qnhWT/5uZyK+UL0HqPEcPe+SzmFZ78s
+ z+qJ5UOcUI5nnWGpIFmyzmeVLjUGZEBDt4V5PyTXHkOuqc8GRYveVSYkb g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11051"; a="158258444"
+X-IronPort-AV: E=Sophos;i="6.07,220,1708354800"; d="scan'208";a="158258444"
+Received: from unknown (HELO oym-r1.gw.nic.fujitsu.com) ([210.162.30.89])
+ by esa6.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2024 17:49:48 +0900
+Received: from oym-m4.gw.nic.fujitsu.com (oym-nat-oym-m4.gw.nic.fujitsu.com
+ [192.168.87.61])
+ by oym-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id 59225161EA
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 17:49:46 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by oym-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id 94BCDD53E8
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 17:49:45 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 319936BC66
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 17:49:45 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.226.45])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 812321A000B;
+ Mon, 22 Apr 2024 16:49:44 +0800 (CST)
+To: arei.gonglei@huawei.com,
+	pizhenwei@bytedance.com
+Cc: philmd@linaro.org, qemu-devel@nongnu.org,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH] backends/cryptodev-builtin: Fix local_error leaks
+Date: Mon, 22 Apr 2024 16:53:12 +0800
+Message-Id: <20240422085312.1037646-1-lizhijian@fujitsu.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <20240410100345.389462-2-eperezma@redhat.com>
- <558124df-be44-47ae-85b9-0f282fc3889c@oracle.com>
- <CAJaqyWeE3kfgN5Y0=Kj6oCOFwg0H-gQEr4g3TM+3_+5N7mfd=A@mail.gmail.com>
- <450d0da1-3d11-428b-bd89-d09a2964cdb1@oracle.com>
-In-Reply-To: <450d0da1-3d11-428b-bd89-d09a2964cdb1@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 22 Apr 2024 10:49:03 +0200
-Message-ID: <CAJaqyWfXNQJQdTcJ9V-mSUrMs9up7rpAMwyK-qB3BuJwbUw+5w@mail.gmail.com>
-Subject: Re: [RFC 1/2] iova_tree: add an id member to DMAMap
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Lei Yang <leiyang@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>, 
- Dragos Tatulea <dtatulea@nvidia.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.42,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28336.006
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28336.006
+X-TMASE-Result: 10-1.961500-10.000000
+X-TMASE-MatchedRID: Rn/6WSM7RsmzVFZ6osYjDtN9TX8X49sztkpWbH/Eii4agfsCivbmXr8F
+ Hrw7frluf146W0iUu2t+VyE0midOQy+3xqQ44pFWxkszn8tNF/8nWEI8uQPVnbwHu+XsbkzRzdl
+ o26al4KF7EgGMXpurEawnY0RVRjvrHxPMjOKY7A8LbigRnpKlKZx+7GyJjhAU+jNUt+S2/MRh+3
+ I0DNknBvdR4epCKUhjfj3GneQohAsSkygLh0q7M762CM2SEcayG9EfUwHYIegFiCyBXpAi2mQM1
+ mEYkV5Hmw0Qaktp+ussz+cQMs/Tnp75MOLIf/j3DF+QsB+Q01JoBmTSwRxjXg==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=68.232.139.139;
+ envelope-from=lizhijian@fujitsu.com; helo=esa6.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,130 +93,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
+From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 20, 2024 at 1:50=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> =
-wrote:
->
->
->
-> On 4/19/2024 1:29 AM, Eugenio Perez Martin wrote:
-> > On Thu, Apr 18, 2024 at 10:46=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.=
-com> wrote:
-> >>
-> >>
-> >> On 4/10/2024 3:03 AM, Eugenio P=C3=A9rez wrote:
-> >>> IOVA tree is also used to track the mappings of virtio-net shadow
-> >>> virtqueue.  This mappings may not match with the GPA->HVA ones.
-> >>>
-> >>> This causes a problem when overlapped regions (different GPA but same
-> >>> translated HVA) exists in the tree, as looking them by HVA will retur=
-n
-> >>> them twice.  To solve this, create an id member so we can assign uniq=
-ue
-> >>> identifiers (GPA) to the maps.
-> >>>
-> >>> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >>> ---
-> >>>    include/qemu/iova-tree.h | 5 +++--
-> >>>    util/iova-tree.c         | 3 ++-
-> >>>    2 files changed, 5 insertions(+), 3 deletions(-)
-> >>>
-> >>> diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
-> >>> index 2a10a7052e..34ee230e7d 100644
-> >>> --- a/include/qemu/iova-tree.h
-> >>> +++ b/include/qemu/iova-tree.h
-> >>> @@ -36,6 +36,7 @@ typedef struct DMAMap {
-> >>>        hwaddr iova;
-> >>>        hwaddr translated_addr;
-> >>>        hwaddr size;                /* Inclusive */
-> >>> +    uint64_t id;
-> >>>        IOMMUAccessFlags perm;
-> >>>    } QEMU_PACKED DMAMap;
-> >>>    typedef gboolean (*iova_tree_iterator)(DMAMap *map);
-> >>> @@ -100,8 +101,8 @@ const DMAMap *iova_tree_find(const IOVATree *tree=
-, const DMAMap *map);
-> >>>     * @map: the mapping to search
-> >>>     *
-> >>>     * Search for a mapping in the iova tree that translated_addr over=
-laps with the
-> >>> - * mapping range specified.  Only the first found mapping will be
-> >>> - * returned.
-> >>> + * mapping range specified and map->id is equal.  Only the first fou=
-nd
-> >>> + * mapping will be returned.
-> >>>     *
-> >>>     * Return: DMAMap pointer if found, or NULL if not found.  Note th=
-at
-> >>>     * the returned DMAMap pointer is maintained internally.  User sho=
-uld
-> >>> diff --git a/util/iova-tree.c b/util/iova-tree.c
-> >>> index 536789797e..0863e0a3b8 100644
-> >>> --- a/util/iova-tree.c
-> >>> +++ b/util/iova-tree.c
-> >>> @@ -97,7 +97,8 @@ static gboolean iova_tree_find_address_iterator(gpo=
-inter key, gpointer value,
-> >>>
-> >>>        needle =3D args->needle;
-> >>>        if (map->translated_addr + map->size < needle->translated_addr=
- ||
-> >>> -        needle->translated_addr + needle->size < map->translated_add=
-r) {
-> >>> +        needle->translated_addr + needle->size < map->translated_add=
-r ||
-> >>> +        needle->id !=3D map->id) {
-> >> It looks this iterator can also be invoked by SVQ from
-> >> vhost_svq_translate_addr() -> iova_tree_find_iova(), where guest GPA
-> >> space will be searched on without passing in the ID (GPA), and exact
-> >> match for the same GPA range is not actually needed unlike the mapping
-> >> removal case. Could we create an API variant, for the SVQ lookup case
-> >> specifically? Or alternatively, add a special flag, say skip_id_match =
-to
-> >> DMAMap, and the id match check may look like below:
-> >>
-> >> (!needle->skip_id_match && needle->id !=3D map->id)
-> >>
-> >> I think vhost_svq_translate_addr() could just call the API variant or
-> >> pass DMAmap with skip_id_match set to true to svq_iova_tree_find_iova(=
-).
-> >>
-> > I think you're totally right. But I'd really like to not complicate
-> > the API of the iova_tree more.
-> >
-> > I think we can look for the hwaddr using memory_region_from_host and
-> > then get the hwaddr. It is another lookup though...
-> Yeah, that will be another means of doing translation without having to
-> complicate the API around iova_tree. I wonder how the lookup through
-> memory_region_from_host() may perform compared to the iova tree one, the
-> former looks to be an O(N) linear search on a linked list while the
-> latter would be roughly O(log N) on an AVL tree?
+It seems that this error does not need to be propagated to the upper,
+directly output the error to avoid the leaks
 
-Even worse, as the reverse lookup (from QEMU vaddr to SVQ IOVA) is
-linear too. It is not even ordered.
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2283
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+---
+ backends/cryptodev-builtin.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-But apart from this detail you're right, I have the same concerns with
-this solution too. If we see a hard performance regression we could go
-to more complicated solutions, like maintaining a reverse IOVATree in
-vhost-iova-tree too. First RFCs of SVQ did that actually.
-
-Thanks!
-
-> Of course,
-> memory_region_from_host() won't search out of the guest memory space for
-> sure. As this could be on the hot data path I have a little bit
-> hesitance over the potential cost or performance regression this change
-> could bring in, but maybe I'm overthinking it too much...
->
-> Thanks,
-> -Siwei
->
-> >
-> >> Thanks,
-> >> -Siwei
-> >>>            return false;
-> >>>        }
-> >>>
->
+diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+index a514bbb310..940104ee55 100644
+--- a/backends/cryptodev-builtin.c
++++ b/backends/cryptodev-builtin.c
+@@ -23,6 +23,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "sysemu/cryptodev.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "standard-headers/linux/virtio_crypto.h"
+ #include "crypto/cipher.h"
+@@ -396,8 +397,8 @@ static int cryptodev_builtin_create_session(
+     case VIRTIO_CRYPTO_HASH_CREATE_SESSION:
+     case VIRTIO_CRYPTO_MAC_CREATE_SESSION:
+     default:
+-        error_setg(&local_error, "Unsupported opcode :%" PRIu32 "",
+-                   sess_info->op_code);
++        error_report("Unsupported opcode :%" PRIu32 "",
++                     sess_info->op_code);
+         return -VIRTIO_CRYPTO_NOTSUPP;
+     }
+ 
+@@ -554,8 +555,8 @@ static int cryptodev_builtin_operation(
+ 
+     if (op_info->session_id >= MAX_NUM_SESSIONS ||
+               builtin->sessions[op_info->session_id] == NULL) {
+-        error_setg(&local_error, "Cannot find a valid session id: %" PRIu64 "",
+-                   op_info->session_id);
++        error_report("Cannot find a valid session id: %" PRIu64 "",
++                     op_info->session_id);
+         return -VIRTIO_CRYPTO_INVSESS;
+     }
+ 
+-- 
+2.31.1
 
 
