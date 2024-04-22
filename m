@@ -4,89 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB0EC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F18C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 12:52:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryt46-0007Z9-54; Mon, 22 Apr 2024 08:46:37 -0400
+	id 1ryt9Y-0001Ka-CB; Mon, 22 Apr 2024 08:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryt3m-0007WL-GU
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:46:17 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ryt9W-0001KP-DB
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:52:10 -0400
+Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryt3h-0005Q1-0z
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:46:13 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-41a1d2a7b81so7119765e9.0
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:46:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1ryt9T-0006LI-IX
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 08:52:09 -0400
+Received: by mail-qt1-x82d.google.com with SMTP id
+ d75a77b69052e-4365c1451d4so25732021cf.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 05:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713789966; x=1714394766; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=39Acx84dTQ3hN2yMfKWcH9znaBkPeHgCHhH+12hyjQ8=;
- b=Oh457p1C62GQMS0N+Z4dF7Es3EdFOAotZO5sYLavO82PhDsoqo798j3C86oBFUhNC1
- v2MVhfwGl1s1nnc+W4QAj/0VrYO8cSdohYKer3lvDgBKoVGruUemJS88lrP2lF5B3ama
- XWTqJ//3wvN5EgwsoWVd5Ik7fDIjmvyF1Yu8NQfPOSKh2p0z7a8orUY9UNN7U02MDCcz
- s98XefnxYaHM2wKJZcyan9odOqLsE5g0E4JDsXljTi2AnCZ62VdDGPeJ/G7hIXwcMVkH
- jypuhJ+oD8r9WJUmyl85dVWK5euc8xXLFKZEzEiklQLpWekJmNyyWuBfrPCTwXlWo2/a
- 3Aqw==
+ d=bytedance.com; s=google; t=1713790323; x=1714395123; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=I5wzfSHgmIzLBtRvgwttMTr9uxSnAajMfCmUr+jteX0=;
+ b=SrYt3Mu0mhg1bq6dodZZufkYjrtHLkk1j8quirSRLcgDBK0B9QrrvB/iPgLn5NiOSA
+ GSRHeOzl0ScA3RaRg7TqJrUtuh/6WArr1Y8fZ8lqmx/j8NjwJyJpDrpAiKJN4lc4SpI4
+ oRq93ADjx9jlh3DNlswSL3aibZzCT3bQIDW0EcHIWOfbW3EoNC0TQoT29iRMOdFnN0YI
+ FI3x1onxQqHG7B2Lza+sFDtF9Z9mmonvUjnuuZkZWPOeFknGGEvM+U2OWTpsh6jQEn2o
+ hU3MQRupaFL9/BIPv76v3jwXyPreTUTtV6w2dY69tz3xf7Etn74AnL9kvae2PRUaLHch
+ VXBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713789966; x=1714394766;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=39Acx84dTQ3hN2yMfKWcH9znaBkPeHgCHhH+12hyjQ8=;
- b=tVvRUCAhvchZUYmATmc2xIsyk/6A231smYM6UFCXMkI0u5hyNdRT3sgBvHceFf2q6R
- drn0te7j3CVJ6OPU+hUwnXgKFzBCOb0saDoTEEC0bCr00a0lmEWYiQD4Iym4n3S+9JYx
- u1RZ7fGlY6ZVyRhFELytnaG3c97KfN6AaocozbuzgvUXBGWRtAQDE/BLVeglb6NSLlbz
- A//WjBBT5SYOxmEkOJ4dOfIzhGGJoG3TSg7CPv/dyh3f+JkabEFbFITtenaFshvoR5Iy
- Rj93KeFVq2w7vHhw6uBuZa7ZKf5NpQhkso7/c0PW+GAjsSk8eQMTG/L7K4QGr7mXGbjg
- IyZg==
-X-Gm-Message-State: AOJu0YzDsVDVWNC8t9/Lf0nUBCzWu3xrb+GhVOBTJdQ+Dd5/9nOFxcr6
- 8FUHMs18SZ46PB5QzijB0gTTG196rOWWRGePlb1t4MTv3t+jdXNHfKO8XmtxAd4=
-X-Google-Smtp-Source: AGHT+IF6ekSDYQxE6y/nkKThKaQm3zn/4i7UQcySSVjovWfJ/Lif57cfa79EBDVO51EtY1b9jhV+aw==
-X-Received: by 2002:a05:600c:1e15:b0:41a:7c1d:3326 with SMTP id
- ay21-20020a05600c1e1500b0041a7c1d3326mr1187471wmb.8.1713789966552; 
- Mon, 22 Apr 2024 05:46:06 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- bd25-20020a05600c1f1900b00419f7d6879dsm8198662wmb.8.2024.04.22.05.46.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 05:46:05 -0700 (PDT)
-Message-ID: <7492ef2d-1ea1-472d-baf3-ad8236fcf62a@linaro.org>
-Date: Mon, 22 Apr 2024 14:46:04 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-8.0 3/3] hw/net/xilinx_ethlite: Replace tswap32()
- by be32_to_cpu()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Alistair Francis <alistair@alistair23.me>,
- David Gibson <david@gibson.dropbear.id.au>, Jason Wang
- <jasowang@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Greg Kurz <groug@kaod.org>, qemu-arm@nongnu.org,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org
-References: <20221213125218.39868-1-philmd@linaro.org>
- <20221213125218.39868-4-philmd@linaro.org>
- <CAFEAcA-iouFJgu_2cG2TapxYVr-_ZK1Uuwa4mqSL5zNKg6Jq+Q@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-iouFJgu_2cG2TapxYVr-_ZK1Uuwa4mqSL5zNKg6Jq+Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+ d=1e100.net; s=20230601; t=1713790323; x=1714395123;
+ h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I5wzfSHgmIzLBtRvgwttMTr9uxSnAajMfCmUr+jteX0=;
+ b=nsKnFuMEQCAZfII97M36GSjGQZ712UUCfd8Rtq2ZFS44dhk07Ml6sV5tNNeixjoCHy
+ wVAOLATUAnbB9gQXOltFoFr9W/uFcszvW4hawB4hoUFLaKA0a7bqOwpy9A8YioLt1vz4
+ kkjtAuWNWyaCTOFL/bauh53RAtxiZ4nXqp/ih4vhaKsOmpyX2IxklHiiyt5CGQYvlWrW
+ kS3cKLSQyohgI5QgjZOTr1Xr3Sicp55gSBS5YHK57+2ZFgmGilJCbNz1swUyXgvm7HOk
+ 1BWbSqvCllm9PFU6IHsvaWSl23dXv1J2YMROwWig/a3O+BqXBYFbU4bEPP8DuGNwmJcw
+ 1Krw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnlYoKPkxE49+Byo7Hg8lyx4neUMqFkH8/o5+DiRHoiM01ZmlYrBoB2PSgaPaWJE3NYNxDz2VgVc0KIUPJZ3rwKRCFyWc=
+X-Gm-Message-State: AOJu0YyveopiBiAAImZnT6ZdpPAuQ2GV2lRuH0Jir40+kG4M97q5+S87
+ FuFrbLpdS1485VKXpW+UAZcsf5Q98fgdfWv2lK4MlN0hNLCvWTW1rWWAVdCp4DRgdFIDkZGZlF4
+ g9a8+8WX79pvgzEku6ZA4k+OwhRrXyao9QpBQUQ==
+X-Google-Smtp-Source: AGHT+IGO6iqCVwTfBy+asamLm7yM96G8bDPOGaBhp8VKuewNclHamoXekHYrVsrT/DNttp0w13aGfjOugnaWLh8wpDk=
+X-Received: by 2002:ac8:5f46:0:b0:439:d06b:331e with SMTP id
+ y6-20020ac85f46000000b00439d06b331emr959995qta.28.1713790323036; Mon, 22 Apr
+ 2024 05:52:03 -0700 (PDT)
+Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
+ Mon, 22 Apr 2024 05:52:02 -0700
+From: =?UTF-8?B?55qu5oyv5Lyf?= <pizhenwei@bytedance.com>
+In-Reply-To: <20240422085312.1037646-1-lizhijian@fujitsu.com>
+References: <20240422085312.1037646-1-lizhijian@fujitsu.com>
+Mime-Version: 1.0
+Date: Mon, 22 Apr 2024 05:52:02 -0700
+Message-ID: <CABoGonL4-htfynDa6gWJaj-VrdUybs_-_EJQT_GZKk97PSp-Rg@mail.gmail.com>
+Subject: Re: [PATCH] backends/cryptodev-builtin: Fix local_error leaks
+To: Li Zhijian <lizhijian@fujitsu.com>
+Cc: "arei.gonglei" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000071f4b90616aee7ce"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-qt1-x82d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,56 +92,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/12/22 14:53, Peter Maydell wrote:
-> On Tue, 13 Dec 2022 at 12:52, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> This partly revert commit d48751ed4f ("xilinx-ethlite:
->> Simplify byteswapping to/from brams") which states the
->> packet data is stored in big-endian.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
->> @@ -102,8 +102,8 @@ eth_read(void *opaque, hwaddr addr, unsigned int size)
->>               D(qemu_log("%s " TARGET_FMT_plx "=%x\n", __func__, addr * 4, r));
->>               break;
->>
->> -        default:
->> -            r = tswap32(s->regs[addr]);
->> +        default: /* Packet data */
->> +            r = be32_to_cpu(s->regs[addr]);
->>               break;
->>       }
->>       return r;
->> @@ -160,8 +160,8 @@ eth_write(void *opaque, hwaddr addr,
->>               s->regs[addr] = value;
->>               break;
->>
->> -        default:
->> -            s->regs[addr] = tswap32(value);
->> +        default: /* Packet data */
->> +            s->regs[addr] = cpu_to_be32(value);
->>               break;
->>       }
->>   }
-> 
-> This is a change of behaviour for this device in the
-> qemu-system-microblazeel petalogix-s3adsp1800 board, because
-> previously on that system the bytes of the rx buffer would
-> appear in the registers in little-endian order and now they
-> will appear in big-endian order.
+--00000000000071f4b90616aee7ce
+Content-Type: text/plain; charset="UTF-8"
 
-Maybe to simplify we could choose to only model the Big
-Endian variant of this device?
+Hi, Please add the following message: Fixes: 2fda101de07("virtio-crypto:
+Support asynchronous mode") LGTM. Reviewed-by: zhenwei pi <
+pizhenwei@bytedance.com> > From:"Li Zhijian"<lizhijian@fujitsu.com> >
+Date:Mon, Apr 22, 2024, 16:50 > Subject:[External] [PATCH]
+backends/cryptodev-builtin: Fix local_error leaks > To:<
+arei.gonglei@huawei.com>,<pizhenwei@bytedance.com> > Cc:<philmd@linaro.org
+>,<qemu-devel@nongnu.org>,"Li Zhijian"<lizhijian@fujitsu.com> > It seems
+that this error does not need to be propagated to the upper, > directly
+output the error to avoid the leaks >  > Closes:
+https://gitlab.com/qemu-project/qemu/-/issues/2283 > Signed-off-by: Li
+Zhijian <lizhijian@fujitsu.com> > --- >  backends/cryptodev-builtin.c | 9
++++++---- >  1 file changed, 5 insertions(+), 4 deletions(-) >  > diff
+--git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c > index
+a514bbb310..940104ee55 100644 > --- a/backends/cryptodev-builtin.c > +++
+b/backends/cryptodev-builtin.c > @@ -23,6 +23,7 @@ >   >  #include
+"qemu/osdep.h" >  #include "sysemu/cryptodev.h" > +#include
+"qemu/error-report.h" >  #include "qapi/error.h" >  #include
+"standard-headers/linux/virtio_crypto.h" >  #include "crypto/cipher.h" > @@
+-396,8 +397,8 @@ static int cryptodev_builtin_create_session( >      case
+VIRTIO_CRYPTO_HASH_CREATE_SESSION: >      case
+VIRTIO_CRYPTO_MAC_CREATE_SESSION: >      default: > -
+error_setg(&local_error, "Unsupported opcode :%" PRIu32 "", > -
+      sess_info->op_code); > +        error_report("Unsupported opcode :%"
+PRIu32 "", > +                     sess_info->op_code); >          return
+-VIRTIO_CRYPTO_NOTSUPP; >      } >   > @@ -554,8 +555,8 @@ static int
+cryptodev_builtin_operation( >   >      if (op_info->session_id >=
+MAX_NUM_SESSIONS || >                builtin->sessions[op_info->session_id]
+== NULL) { > -        error_setg(&local_error, "Cannot find a valid session
+id: %" PRIu64 "", > -                   op_info->session_id); > +
+error_report("Cannot find a valid session id: %" PRIu64 "", > +
+        op_info->session_id); >          return -VIRTIO_CRYPTO_INVSESS; >
+   } >   > --  > 2.31.1
 
--- >8 --
-@@ -169,7 +169,7 @@ eth_write(void *opaque, hwaddr addr,
-  static const MemoryRegionOps eth_ops = {
-      .read = eth_read,
-      .write = eth_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_BIG_ENDIAN,
-      .valid = {
-          .min_access_size = 4,
-          .max_access_size = 4
----
+--00000000000071f4b90616aee7ce
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div style=3D"white-space:pre-wrap"><span>Hi,
+
+Please add the following message:
+Fixes: 2fda101de07(&quot;virtio-crypto: Support asynchronous mode&quot;)
+
+LGTM.
+Reviewed-by: zhenwei pi &lt;<a href=3D"mailto:pizhenwei@bytedance.com" targ=
+et=3D"_blank">pizhenwei@bytedance.com</a>&gt;
+
+&gt; From:&quot;Li Zhijian&quot;&lt;<a href=3D"mailto:lizhijian@fujitsu.com=
+" target=3D"_blank">lizhijian@fujitsu.com</a>&gt;
+&gt; Date:Mon, Apr 22, 2024, 16:50
+&gt; Subject:[External] [PATCH] backends/cryptodev-builtin: Fix local_error=
+ leaks
+&gt; To:&lt;<a href=3D"mailto:arei.gonglei@huawei.com" target=3D"_blank">ar=
+ei.gonglei@huawei.com</a>&gt;,&lt;<a href=3D"mailto:pizhenwei@bytedance.com=
+" target=3D"_blank">pizhenwei@bytedance.com</a>&gt;
+&gt; Cc:&lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@l=
+inaro.org</a>&gt;,&lt;<a href=3D"mailto:qemu-devel@nongnu.org" target=3D"_b=
+lank">qemu-devel@nongnu.org</a>&gt;,&quot;Li Zhijian&quot;&lt;<a href=3D"ma=
+ilto:lizhijian@fujitsu.com" target=3D"_blank">lizhijian@fujitsu.com</a>&gt;
+&gt; It seems that this error does not need to be propagated to the upper,
+&gt; directly output the error to avoid the leaks
+&gt;=C2=A0
+&gt; Closes: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2283"=
+ target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/issues/2283</a>
+&gt; Signed-off-by: Li Zhijian &lt;<a href=3D"mailto:lizhijian@fujitsu.com"=
+ target=3D"_blank">lizhijian@fujitsu.com</a>&gt;
+&gt; ---
+&gt;=C2=A0 backends/cryptodev-builtin.c | 9 +++++----
+&gt;=C2=A0 1 file changed, 5 insertions(+), 4 deletions(-)
+&gt;=C2=A0
+&gt; diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin=
+.c
+&gt; index a514bbb310..940104ee55 100644
+&gt; --- a/backends/cryptodev-builtin.c
+&gt; +++ b/backends/cryptodev-builtin.c
+&gt; @@ -23,6 +23,7 @@
+&gt; =C2=A0
+&gt;=C2=A0 #include &quot;qemu/osdep.h&quot;
+&gt;=C2=A0 #include &quot;sysemu/cryptodev.h&quot;
+&gt; +#include &quot;qemu/error-report.h&quot;
+&gt;=C2=A0 #include &quot;qapi/error.h&quot;
+&gt;=C2=A0 #include &quot;standard-headers/linux/virtio_crypto.h&quot;
+&gt;=C2=A0 #include &quot;crypto/cipher.h&quot;
+&gt; @@ -396,8 +397,8 @@ static int cryptodev_builtin_create_session(
+&gt; =C2=A0 =C2=A0=C2=A0 case VIRTIO_CRYPTO_HASH_CREATE_SESSION:
+&gt; =C2=A0 =C2=A0=C2=A0 case VIRTIO_CRYPTO_MAC_CREATE_SESSION:
+&gt; =C2=A0 =C2=A0=C2=A0 default:
+&gt; - =C2=A0 =C2=A0 =C2=A0=C2=A0 error_setg(&amp;local_error, &quot;Unsupp=
+orted opcode :%&quot; PRIu32 &quot;&quot;,
+&gt; - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sess_=
+info-&gt;op_code);
+&gt; + =C2=A0 =C2=A0 =C2=A0=C2=A0 error_report(&quot;Unsupported opcode :%&=
+quot; PRIu32 &quot;&quot;,
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 sess_info-&gt;op_code);
+&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return -VIRTIO_CRYPTO_NOTSUPP;
+&gt; =C2=A0 =C2=A0=C2=A0 }
+&gt; =C2=A0
+&gt; @@ -554,8 +555,8 @@ static int cryptodev_builtin_operation(
+&gt; =C2=A0
+&gt; =C2=A0 =C2=A0=C2=A0 if (op_info-&gt;session_id &gt;=3D MAX_NUM_SESSION=
+S ||
+&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 builtin-&gt;ses=
+sions[op_info-&gt;session_id] =3D=3D NULL) {
+&gt; - =C2=A0 =C2=A0 =C2=A0=C2=A0 error_setg(&amp;local_error, &quot;Cannot=
+ find a valid session id: %&quot; PRIu64 &quot;&quot;,
+&gt; - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 op_in=
+fo-&gt;session_id);
+&gt; + =C2=A0 =C2=A0 =C2=A0=C2=A0 error_report(&quot;Cannot find a valid se=
+ssion id: %&quot; PRIu64 &quot;&quot;,
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 op_info-&gt;session_id);
+&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return -VIRTIO_CRYPTO_INVSESS;
+&gt; =C2=A0 =C2=A0=C2=A0 }
+&gt; =C2=A0
+&gt; --=C2=A0
+&gt; 2.31.1</span></div></body></html>
+
+--00000000000071f4b90616aee7ce--
 
