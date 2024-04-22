@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64609C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 13:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0559C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 13:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rytJG-0000ZT-QN; Mon, 22 Apr 2024 09:02:15 -0400
+	id 1rytLP-0001Q7-B6; Mon, 22 Apr 2024 09:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1rytJ9-0000YT-Cq
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:02:07 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rytLL-0001PR-Ps
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:04:23 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1rytJ5-0000CB-Qx
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:02:07 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-349bd110614so773478f8f.3
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 06:02:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rytLJ-0000SQ-69
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 09:04:23 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-343c7fae6e4so3932962f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 06:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1713790921; x=1714395721;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=msJIZBAlNSRvum4JVDHS8jLA1sUyfGdrKRHLEguwhEU=;
- b=c3rXlBbmn8fbd5Bzyip3hpplzE1tWZkXPqgOvDFv5xSiXpAK2hCNIm7XLTtWTPqttj
- fNrqEUJZkWsSgUShBzZedPFLJ++gYg0i6keYzHCmRa6gvjnONBzK+arPLOzIBwPyO/kj
- 3+9us/0vjAgqSxU6vhkPSJ2uOZe6B1SWSr+nZPloAScnaFODjjB78SDsNIw6dLsRaDow
- YvbvGSydgHWNRJWH+VEyr+RtCOuC8+D803KZOTLe64HgAp26YvZGnXkIuedizYI+Aniu
- tCVXUShZonps412QogNUj8PoIqdUhOkjNRn4YEqd3dOrB4FFTtlyNp8tSC7oDOWktymg
- 0LuQ==
+ d=linaro.org; s=google; t=1713791058; x=1714395858; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qL0hwwkI7O8dqqIUz2nL3BM8u7vZrcx6Ul9nhARaGhI=;
+ b=Ikv1LYlYdgfRDn/yH45WQadqIeGvYDEQzeco11d08xsds+Bx0OUeKCj2dub1Dz1TIR
+ Ug/r2klGFKk+sPkcnWlnWSfyHvZvIB8WE0DgPGfFUd5bQwB5bR9QQuoS5QkXIJ20QQA0
+ NBqWRzo2dkOxjHf31SpM8ufFARQiRpVlKcphd87dRzmYGfJ5geY6sqxsKN0a/izLFKaf
+ Ph3ZcD8QIkaPiNYV0IbyXyitx2xifUmGSMNfRlNOk3NzwZiBVwCY3j5z5TQDvdj4Iwf4
+ JFCTecrYZJieKTzkbZ/pq47lZcywrDaTTf34jKL6qOlL+lyKwqAQAkK6KFR/OEiZSYXe
+ yapA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713790921; x=1714395721;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=msJIZBAlNSRvum4JVDHS8jLA1sUyfGdrKRHLEguwhEU=;
- b=bFcoGADZwcI/NfZy7+DoZiiLNuvcE5D4bdOCa9pGDMm32lBURy58e2o5Th/DEkrGSU
- mHf+aVMyveTlv8oGnzkhItNca4vbzBS21+EQnmzyGSK3D+ZRqUowyl4ChGxW98vHhCa6
- 1mcu/MgZPlnvwowYHcwRXfl9jGpC6c01/pyuHzDbjcLGv/8LpDszsU9GUTP+LZ1j+gTd
- rYLVUKDy3DBOdv6yUTBf+XsR6IgV51pPS8UI4rQ6ucRuIjbWbNsDJq9ERmQ6jGQ2IaoF
- C7UNStVIgZk61IUlpD5H7ac4qJkkY6yzeA1cfsWtOgFmygoDtv/LWEfeuqLBymTRTzlB
- NBMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnYiBkMXo1R3fH1NzuIftzAiT/5Rjtu2VuhU1wmQf/js4PKDGs+1v+wc3Ld1wXG0SOQC5i/rjYY/AjzDmGeisLCTJ+RPo=
-X-Gm-Message-State: AOJu0YyIh/AOxUIdIHvVDDXp/+FJGwYQGQdgRydBMsEQP68DTEQqD4dA
- G0V+eIlNvruXE/tZhU/wHSYAVMircaV67in5ErKYfZyt8RZ4TB0GcDHWZ9B1jWw=
-X-Google-Smtp-Source: AGHT+IFK81k8uPi2VWArzTS61C9PYgxnGWb72u0mhGETeimKHXhztYOcDgcxHxuBa50U7zhpnWBzHQ==
-X-Received: by 2002:a5d:4a90:0:b0:34a:ce2:e2c9 with SMTP id
- o16-20020a5d4a90000000b0034a0ce2e2c9mr6171329wrq.3.1713790920385; 
- Mon, 22 Apr 2024 06:02:00 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:999:a3a0:9f43:3ca4:162c:d540?
- ([2a01:e0a:999:a3a0:9f43:3ca4:162c:d540])
- by smtp.gmail.com with ESMTPSA id
- w14-20020adfee4e000000b00343d6c7240fsm11925679wro.35.2024.04.22.06.01.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 06:01:59 -0700 (PDT)
-Message-ID: <bdc875c7-4581-4608-a76d-3e3469a8bc9a@rivosinc.com>
-Date: Mon, 22 Apr 2024 15:01:58 +0200
+ d=1e100.net; s=20230601; t=1713791058; x=1714395858;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qL0hwwkI7O8dqqIUz2nL3BM8u7vZrcx6Ul9nhARaGhI=;
+ b=h4NmajY76TMGCPgsNyiE0qoDJHdwVYFb5DQqKAbYV+bZb4cGvWuXpBEr7+eQebz8NX
+ sWIOPdGe+oa625cR+Uvi5hkCOTO8m8YO0evr0wJ5LNKIS+AsA55pGradiWQIlKUtM1tU
+ fRUiXqTVe7MmyyOs4EVbPR1gh/umaVpAeHRTFeNZAZzTr+ava/DqBIdpJcroXHMWitOt
+ reOZ/J7CQc7R6Be3SdV1Ykd+XorTwmwqeDhwI6iGUOl1301SSSn0TJE6EuzVimV0UDPo
+ EeJUFDTERiGnyNS483tLUiTDcWuJMUEBrHoGnRQaBEO5i9VgOo4F8YEsCMJFOtt0SZ8Q
+ k/7w==
+X-Gm-Message-State: AOJu0YwsY42uVNKH1ypcf7R8wZvoDoYuDSFeis1nmUPlmewEsEkt9H03
+ tCGwcAxbgDfPLperGRuAJEVt0e35oGk6K9XHdyKM93xi7XKArzjUqSAKuicTmjWGCis0ZAFvGKB
+ Z
+X-Google-Smtp-Source: AGHT+IHH1SIIt8G/5g7u4HGItuTEd4T4b2rDuK4XiJ2Waq07dK0d+L9Y1iMOHo8coUhQ4LbmQDTT7g==
+X-Received: by 2002:a05:6000:d8b:b0:34a:e884:fd71 with SMTP id
+ dv11-20020a0560000d8b00b0034ae884fd71mr2856729wrb.29.1713791058233; 
+ Mon, 22 Apr 2024 06:04:18 -0700 (PDT)
+Received: from m1.home (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ w15-20020a5d544f000000b00349c63eb484sm11968165wrv.23.2024.04.22.06.04.17
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 22 Apr 2024 06:04:17 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] hw/audio/virtio-snd: Use device endianness instead of target
+ one
+Date: Mon, 22 Apr 2024 15:04:16 +0200
+Message-ID: <20240422130416.1891-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/3] target/riscv: change RISCV_EXCP_SEMIHOST
- exception number
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue
- <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
-References: <20240418133916.1442471-1-cleger@rivosinc.com>
- <20240418133916.1442471-2-cleger@rivosinc.com>
- <CAKmqyKOcYwAgEnV-gyUYu19dLCKx94-rMoaE5m-8FB0fq7AL+g@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-In-Reply-To: <CAKmqyKOcYwAgEnV-gyUYu19dLCKx94-rMoaE5m-8FB0fq7AL+g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=cleger@rivosinc.com; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,50 +94,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Since VirtIO devices can change endianness at runtime,
+we need to use the device endianness, not the target
+one.
 
+Cc: qemu-stable@nongnu.org
+Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/audio/virtio-snd.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-On 22/04/2024 05:25, Alistair Francis wrote:
-> On Thu, Apr 18, 2024 at 11:40 PM Clément Léger <cleger@rivosinc.com> wrote:
->>
->> The double trap specification defines the double trap exception number
->> to be 16 which is actually used by the internal semihosting one. Change
->> it to some other value.
->>
->> Signed-off-by: Clément Léger <cleger@rivosinc.com>
-> 
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index c80b58bf5d..796e0753d6 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -395,13 +395,15 @@ static uint32_t virtio_snd_get_qemu_freq(uint32_t rate)
+  * Get QEMU Audiosystem compatible audsettings from virtio based pcm stream
+  * params.
+  */
+-static void virtio_snd_get_qemu_audsettings(audsettings *as,
++static void virtio_snd_get_qemu_audsettings(VirtIOSound *s, audsettings *as,
+                                             virtio_snd_pcm_set_params *params)
+ {
++    VirtIODevice *vdev = VIRTIO_DEVICE(s);
++
+     as->nchannels = MIN(AUDIO_MAX_CHANNELS, params->channels);
+     as->fmt = virtio_snd_get_qemu_format(params->format);
+     as->freq = virtio_snd_get_qemu_freq(params->rate);
+-    as->endianness = target_words_bigendian() ? 1 : 0;
++    as->endianness = vdev->device_endian ? 1 : 0;
+ }
+ 
+ /*
+@@ -464,7 +466,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+         s->pcm->streams[stream_id] = stream;
+     }
+ 
+-    virtio_snd_get_qemu_audsettings(&as, params);
++    virtio_snd_get_qemu_audsettings(s, &as, params);
+     stream->info.direction = stream_id < s->snd_conf.streams / 2 +
+         (s->snd_conf.streams & 1) ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_INPUT;
+     stream->info.hdr.hda_fn_nid = VIRTIO_SOUND_HDA_FN_NID;
+-- 
+2.41.0
 
-Hi Alistair,
-
-Ved actually told me that even 17 is reserved so I'll move the semihost
-one to 63, which is in a range designated for custom use.
-
-Regards,
-
-Clément
-
-> 
-> Alistair
-> 
->> ---
->>  target/riscv/cpu_bits.h | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
->> index fc2068ee4d..9ade72ff31 100644
->> --- a/target/riscv/cpu_bits.h
->> +++ b/target/riscv/cpu_bits.h
->> @@ -670,7 +670,7 @@ typedef enum RISCVException {
->>      RISCV_EXCP_INST_PAGE_FAULT = 0xc, /* since: priv-1.10.0 */
->>      RISCV_EXCP_LOAD_PAGE_FAULT = 0xd, /* since: priv-1.10.0 */
->>      RISCV_EXCP_STORE_PAGE_FAULT = 0xf, /* since: priv-1.10.0 */
->> -    RISCV_EXCP_SEMIHOST = 0x10,
->> +    RISCV_EXCP_SEMIHOST = 0x11,
->>      RISCV_EXCP_INST_GUEST_PAGE_FAULT = 0x14,
->>      RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT = 0x15,
->>      RISCV_EXCP_VIRT_INSTRUCTION_FAULT = 0x16,
->> --
->> 2.43.0
->>
->>
 
