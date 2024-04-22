@@ -4,78 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B181C07C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 15:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26B98C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 15:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryvCp-0000Dm-8y; Mon, 22 Apr 2024 11:03:43 -0400
+	id 1ryvDR-00012s-1Z; Mon, 22 Apr 2024 11:04:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ryvCf-0008Ud-6F
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:03:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=jzPN=L3=kaod.org=clg@ozlabs.org>)
+ id 1ryvDK-0000x2-FV; Mon, 22 Apr 2024 11:04:15 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ryvCb-0006bN-Sv
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:03:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713798209;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EdDc6WXJuq/j61tE7mxWaOSVj7MV2NeZEPjXCUBwqgo=;
- b=gXhDoCowIbJmzx090JdF1tphtnSGD+GbOcKj7w30BgvagwAYmzThCus6HaYQ2qgtbeSLrS
- jcZEG+gdgH9y1nKpZ8j4WW4cP+YD0RXZKdKzE7VzR9MPWhLfeqfuU7btiM+fqc0/g4wtQN
- /6VmYE1bKum1u0I9+oWPQTAcMnReflI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-rK0zSUoONgOEBjPZ-9xkJQ-1; Mon, 22 Apr 2024 11:03:22 -0400
-X-MC-Unique: rK0zSUoONgOEBjPZ-9xkJQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ (Exim 4.90_1) (envelope-from <SRS0=jzPN=L3=kaod.org=clg@ozlabs.org>)
+ id 1ryvDH-0006cB-OI; Mon, 22 Apr 2024 11:04:13 -0400
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VNT6N1bsYz4x0v;
+ Tue, 23 Apr 2024 01:03:56 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 25B62811008;
- Mon, 22 Apr 2024 15:03:22 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 01B1D2166B32;
- Mon, 22 Apr 2024 15:03:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 151A921E66C8; Mon, 22 Apr 2024 17:03:21 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>,  qemu-devel@nongnu.org,
- kvm@vger.kernel.org,  Tom Lendacky <thomas.lendacky@amd.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Pankaj Gupta <pankaj.gupta@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,  Isaku Yamahata
- <isaku.yamahata@linux.intel.com>,  Dov Murik <dovmurik@linux.ibm.com>
-Subject: Re: [PATCH v3 43/49] qapi, i386: Move kernel-hashes to
- SevCommonProperties
-In-Reply-To: <ZfrUiBlbEVHkMYl0@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 20 Mar 2024 12:20:24 +0000")
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-44-michael.roth@amd.com>
- <ZfrUiBlbEVHkMYl0@redhat.com>
-Date: Mon, 22 Apr 2024 17:03:21 +0200
-Message-ID: <87bk61cudi.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VNT6J5JGSz4wyQ;
+ Tue, 23 Apr 2024 01:03:52 +1000 (AEST)
+Message-ID: <5cd0d411-a723-4324-b706-913ac936f77b@kaod.org>
+Date: Mon, 22 Apr 2024 17:03:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] hw/ppc: SPI controller wiring to P10 chip and
+ create seeprom device
+To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.vnet.ibm.com,
+ dantan@us.ibm.com
+References: <20240409175700.27535-1-chalapathi.v@linux.ibm.com>
+ <20240409175700.27535-6-chalapathi.v@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240409175700.27535-6-chalapathi.v@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=jzPN=L3=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,27 +69,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 4/9/24 19:56, Chalapathi V wrote:
+> In this commit
+> Creates SPI controller on p10 chip.
+> Create the keystore seeprom of type "seeprom-25csm04"
+> Connect the cs of seeprom to PIB_SPIC[2] cs irq.
+> 
+> The QOM tree of spi controller and seeprom are.
+> /machine (powernv10-machine)
+>    /chip[0] (power10_v2.0-pnv-chip)
+>      /pib_spic[2] (pnv-spi-controller)
+>        /bus (pnv-spi-bus)
+>          /pnv-spi-bus.2 (SSI)
+>        /xscom-spi-controller-regs[0] (memory-region)
+> 
+> /machine (powernv10-machine)
+>    /unattached (container)
+>      /device[7] (seeprom-25csm04)
+>        /ssi-gpio-cs[0] (irq)
+> 
+> (qemu) qom-get /machine/unattached/device[7] "parent_bus"
+> "/machine/chip[0]/pib_spic[2]/bus/pnv-spi-bus.2"
+> 
+> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+> ---
+>   include/hw/ppc/pnv_chip.h |  3 +++
+>   hw/ppc/pnv.c              | 36 +++++++++++++++++++++++++++++++++++-
+>   2 files changed, 38 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+> index 8589f3291e..3edf13e8f9 100644
+> --- a/include/hw/ppc/pnv_chip.h
+> +++ b/include/hw/ppc/pnv_chip.h
+> @@ -6,6 +6,7 @@
+>   #include "hw/ppc/pnv_core.h"
+>   #include "hw/ppc/pnv_homer.h"
+>   #include "hw/ppc/pnv_n1_chiplet.h"
+> +#include "hw/ppc/pnv_spi_controller.h"
+>   #include "hw/ppc/pnv_lpc.h"
+>   #include "hw/ppc/pnv_occ.h"
+>   #include "hw/ppc/pnv_psi.h"
+> @@ -118,6 +119,8 @@ struct Pnv10Chip {
+>       PnvSBE       sbe;
+>       PnvHomer     homer;
+>       PnvN1Chiplet     n1_chiplet;
+> +#define PNV10_CHIP_MAX_PIB_SPIC 6
+> +    PnvSpiController pib_spic[PNV10_CHIP_MAX_PIB_SPIC];
+>   
+>       uint32_t     nr_quads;
+>       PnvQuad      *quads;
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 6e3a5ccdec..eeb2d650bd 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -46,6 +46,7 @@
+>   #include "hw/pci-host/pnv_phb.h"
+>   #include "hw/pci-host/pnv_phb3.h"
+>   #include "hw/pci-host/pnv_phb4.h"
+> +#include "hw/ssi/ssi.h"
+>   
+>   #include "hw/ppc/xics.h"
+>   #include "hw/qdev-properties.h"
+> @@ -1829,6 +1830,11 @@ static void pnv_chip_power10_instance_init(Object *obj)
+>       for (i = 0; i < pcc->i2c_num_engines; i++) {
+>           object_initialize_child(obj, "i2c[*]", &chip10->i2c[i], TYPE_PNV_I2C);
+>       }
+> +
+> +    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC ; i++) {
+> +        object_initialize_child(obj, "pib_spic[*]", &chip10->pib_spic[i],
+> +                                TYPE_PNV_SPI_CONTROLLER);
+> +    }
+>   }
+>   
+>   static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
+> @@ -2043,7 +2049,35 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+>                                 qdev_get_gpio_in(DEVICE(&chip10->psi),
+>                                                  PSIHB9_IRQ_SBE_I2C));
+>       }
+> -
+> +    /* PIB SPI Controller */
+> +    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
+> +        object_property_set_int(OBJECT(&chip10->pib_spic[i]), "spic_num",
+> +                                i , &error_fatal);
+> +        /*
+> +         * The TPM attached SPIC needs to reverse the bit order in each byte
+> +         * it sends to the TPM.
+> +         */
+> +        if (i == 4) {
+> +            object_property_set_bool(OBJECT(&chip10->pib_spic[i]),
+> +                    "reverse_bits", true, &error_fatal);
+> +        }
 
-> On Wed, Mar 20, 2024 at 03:39:39AM -0500, Michael Roth wrote:
->> From: Dov Murik <dovmurik@linux.ibm.com>
->>=20
->> In order to enable kernel-hashes for SNP, pull it from
->> SevGuestProperties to its parent SevCommonProperties so
->> it will be available for both SEV and SNP.
->>=20
->> Signed-off-by: Dov Murik <dovmurik@linux.ibm.com>
->> Signed-off-by: Michael Roth <michael.roth@amd.com>
->> ---
->>  qapi/qom.json     | 14 +++++++-------
->>  target/i386/sev.c | 44 ++++++++++++++++++--------------------------
->>  2 files changed, 25 insertions(+), 33 deletions(-)
->
-> This change ought to be squashed into the earlier patch
-> that introduce sev-guest-common.
+or
 
-Concur.
+           object_property_set_bool(OBJECT(&chip10->pib_spic[i]),
+                     "reverse_bits", (i == 4) , &error_fatal);
 
-[...]
+
+That said. This setting looks weird to me.
+
+Why do we need to reverse the bits ? is it an endian issue ?
+
+Are there other SPI devices on the buses ?
+
+> +        if (!qdev_realize(DEVICE(&chip10->pib_spic[i]), NULL, errp)) {
+> +            return;
+> +        }
+> +        pnv_xscom_add_subregion(chip, PNV10_XSCOM_PIB_SPIC_BASE +
+> +                                i * PNV10_XSCOM_PIB_SPIC_SIZE,
+> +                                &chip10->pib_spic[i].xscom_spic_regs);
+> +    }
+
+
+The devices below belong to the rainer machine it seems. We should introduce
+a per-machine handler to create them like it was done for the I2C devices.
+For this purpose, the PnvMachineClass::i2c_init) handler could be changed
+to create all machine specific devices.
+
+> +    /* Primary MEAS/MVPD/Keystore SEEPROM connected to pib_spic[2] */
+> +    DeviceState *seeprom = qdev_new("seeprom-25csm04");
+> +    qdev_prop_set_string(seeprom, "filename",
+> +                         "sbe_measurement_seeprom.bin.ecc");
+
+This should be done differently. Here is a command line example :
+
+$ qemu-system-arm -M ast2600-evb \
+       -blockdev node-name=fmc0,driver=file,filename=/path/to/fmc0.img \
+       -device mx66u51235f,bus=ssi.0,cs=0x0,drive=fmc0 \
+       -blockdev node-name=fmc1,driver=file,filename=/path/to/fmc1.img \
+       -device mx66u51235f,bus=ssi.0,cs=0x1,drive=fmc1 \
+       -blockdev node-name=spi1,driver=file,filename=/path/to/spi1.img \
+       -device mx66u51235f,cs=0x0,bus=ssi.1,drive=spi1 \
+       ...
+
+Please try to rework "seeprom-25csm04" on top of "m25p80". It should help.
+
+
+> +    ssi_realize_and_unref(seeprom, ((&chip10->pib_spic[2])->bus).ssi_bus,
+> +                          &error_fatal);
+> +    qemu_irq seeprom_cs = qdev_get_gpio_in_named(seeprom, SSI_GPIO_CS, 0);
+> +    Object *bus = OBJECT(&(&chip10->pib_spic[2])->bus);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(bus), 0, seeprom_cs);
+
+Could you please slightly change the models to connect the IRQ line using
+qdev_connect_gpio_out instead ?  See pnv_rainier_i2c_init.
+
+Thanks,
+
+C.
+
+>   }
+>   
+>   static void pnv_rainier_i2c_init(PnvMachineState *pnv)
 
 
