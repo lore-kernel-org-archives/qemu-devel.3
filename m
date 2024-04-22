@@ -4,90 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 241CAC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 08:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6ADC4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 08:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryomj-0006Yb-Vp; Mon, 22 Apr 2024 04:12:22 -0400
+	id 1ryowK-00014j-OE; Mon, 22 Apr 2024 04:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1ryomi-0006YG-HJ
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:12:20 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1ryomg-0004XX-9N
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:12:19 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-34a32ba1962so2839603f8f.2
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 01:12:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1713773532; x=1714378332; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fggq9oYCBlIRb5b5tr+qKUNaj5SgLfnkKOtUpB7WGuA=;
- b=j/gqFKh0+L0ARNZYpnX+lC5Z6PZusC6ZUQS48xC0zbkriTQop0KbFDeXLtzNFzNrzE
- YxVO76lKNMOIuR0SY8eKvtM0XhOOVzpIV8K4hieEztwMBniKABOdVHSx7djni8EqPJXw
- YyYydz4A/mslqmQxZD2NvG8TEnXVC7vYiY6UoJkF8CIz5Ho8ynMAjnx5TbXi6pKYkt+S
- WDcM8cvb7vHSlePKT7tPzQYyxEAFdEke8hQHQy2VHOZOFyCtGAe8bT+gK03wPShTiBlO
- wG283oPI1Gb01PpNYQqtiEJZxpkJoVywB9ZjyfQ9zt/zULFWNfAt6rybuEmgdSS8RMIz
- 5l9Q==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ryowI-00012O-Mc
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:22:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ryowF-0006Fp-KW
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 04:22:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713774130;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fN5cgOG5FVT5l4OdKc80KL6Jdx3gVXu2BqIhpQLvSEI=;
+ b=TVfmoioDeAZcRuuI/Gkvs+hTaBXpmhvzZXvQ4SGZdQGJ+DYroEXTQSJBkN7HTx8/FygAn6
+ m1671epmJnplOYAXj88oFoKlLtYaEdStPR15fXKgkAYcoTL7envTHJZxolaCKgglG/5XnD
+ lBpLkLMvYmeL75+6nVgYDNQXwk5OI3U=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-wx1-BN2LP4mF389VQiqmRQ-1; Mon, 22 Apr 2024 04:22:08 -0400
+X-MC-Unique: wx1-BN2LP4mF389VQiqmRQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-343ee356227so2678745f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 01:22:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713773532; x=1714378332;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fggq9oYCBlIRb5b5tr+qKUNaj5SgLfnkKOtUpB7WGuA=;
- b=KI9u9Huh2+8ut1uaAPD9wmmO7QMEtYSuIHgjE2IAAf+S9SmyV0D8HdQmBU6d5CAIJC
- kD5/QulzoOxphkl9FisBwj2FGSVC/jrzgC6SNAagMgu3DRqRa2nLUyNQpE5RUx6GMJpg
- 4DPokWNZ8lBi6NZjxDjtsDnrj4IM4ZJb7cP7smq9075Ut0yPVZxTrZ4pX1lMgLD7oS4C
- gmGJQZkYUz4h+gQSPqDPAHqO6MpeCC8uiKDfSfWEQNsyh2BBQsJ3QTXQc43N98GYw4v3
- eqERn0dm8HHn15D1Wj0HcqKKK35EEl0+1RIXzhgliefenrvuhZEabxqgO3JMCnyD3OJ0
- xNMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVqGnKCHb4yMspOkljUbjE7TAPd9cZ+nLoJP0ihVtGqVG+1klMHsYZxCWl6QwQp457fiasiwSpTG1vBkH8+zjcynDF9rbk=
-X-Gm-Message-State: AOJu0YxLNxSHe9VdclLGy1W270oq40BGTypsYg1TdQnRDhUM3GnUFnNt
- rbgk/OL2zBgjrq7nWQ9yyZ/3RlbulMaqvu4cmm4J9bb7ktzi9EylEdaJjxqLMjM=
-X-Google-Smtp-Source: AGHT+IHjZrUO6GARDJlAs2Q1swQIQ4+FXtOX5Wbs+/tHrcC5FSoAI4gL9cAZWPz6vcOmQU7UmlS1xQ==
-X-Received: by 2002:a05:6000:12c7:b0:34a:3254:23e0 with SMTP id
- l7-20020a05600012c700b0034a325423e0mr5378675wrx.44.1713773532119; 
- Mon, 22 Apr 2024 01:12:12 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- q2-20020adfab02000000b00349d8717feasm11363471wrc.56.2024.04.22.01.12.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Apr 2024 01:12:11 -0700 (PDT)
-Date: Mon, 22 Apr 2024 10:12:10 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Alexei Filippov <alexei.filippov@syntacore.com>, 
- alistair.francis@wdc.com, apatel@ventanamicro.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, palmer@dabbelt.com,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v4] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
- fail with vendor-specific SBI
-Message-ID: <20240422-e78b28f00a168518c5d4937a@orel>
-References: <20240326-672b9d2fa4066ec883a9f037@orel>
- <20240413112526.8748-1-alexei.filippov@syntacore.com>
- <CAKmqyKN1ATWcSqNXXG-81shqRj_XPG0hSVPVtW3gjeOCgNNfuw@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1713774127; x=1714378927;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fN5cgOG5FVT5l4OdKc80KL6Jdx3gVXu2BqIhpQLvSEI=;
+ b=Jm3Osyv3TWPoC1gNwuxpZU1mXjCBzNUtJgVwbbiDX4EuZ4M3WMFODP8neLLVFnZRjb
+ ETD4zeYlJg+ozxrK07BGo4fl5S7MCB4SJ9kcz09n3aYcIw8IbdXC43Wv8x4S6NS5ISNd
+ /ykAeWuRYG9G63VcENxRk/ubCcqd2oo6gL5lDKLDg2oBvE0w+Xnzeq1azTKOTJdR8/0g
+ +byzbpwQSX3tcnHqohLbb9MWVwjSqpqJROQ+KOCG1lZPb8GemDnxjUmCL7umUsm+7Hcs
+ FYCd7VL/atuWy7fltYZSuIQhLxY44E7QSM9hF1RJjta7txlQFWbLENrNNTC8ITwv/h3t
+ J/OQ==
+X-Gm-Message-State: AOJu0YzeJrQRLtNwYkV6jShM8ooRjr2nOYaM5h6EfYuRt77oTlHGAoMk
+ Heg1PjQWfVzx7ttKpFu6Q53CRaxAv7hMHIFAgnje3XVb/4BlIYFRGSw2JL5RqmaWXLiYsxGtKmD
+ qxT+oiII3+xp3CV5SgaHF8jiVSVIrM4ahBL1UhMX2epLZyGJE2bYA
+X-Received: by 2002:a5d:5548:0:b0:343:9feb:25af with SMTP id
+ g8-20020a5d5548000000b003439feb25afmr6660813wrw.56.1713774127182; 
+ Mon, 22 Apr 2024 01:22:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYqxJQGh4DHNc2oEgo4tgHQBT7ec24zdwyDqsuPURKCwKUhZ5y9blAOjz4RLxBvTb0aXV55Q==
+X-Received: by 2002:a5d:5548:0:b0:343:9feb:25af with SMTP id
+ g8-20020a5d5548000000b003439feb25afmr6660795wrw.56.1713774126848; 
+ Mon, 22 Apr 2024 01:22:06 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-172.web.vodafone.de.
+ [109.43.177.172]) by smtp.gmail.com with ESMTPSA id
+ s15-20020adfe00f000000b0034b03d0b94csm2688869wrh.74.2024.04.22.01.22.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Apr 2024 01:22:06 -0700 (PDT)
+Message-ID: <d2786e99-ae33-43a0-8040-8a218bb485f1@redhat.com>
+Date: Mon, 22 Apr 2024 10:22:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] Remove useless architecture prefix from the CPU list
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-trivial@nongnu.org
+References: <20240420054606.13353-1-thuth@redhat.com>
+ <ZiYZyOqeM2tYPcCs@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <ZiYZyOqeM2tYPcCs@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKN1ATWcSqNXXG-81shqRj_XPG0hSVPVtW3gjeOCgNNfuw@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.42,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,123 +149,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 22, 2024 at 01:55:31PM +1000, Alistair Francis wrote:
-> On Sat, Apr 13, 2024 at 9:26 PM Alexei Filippov
-> <alexei.filippov@syntacore.com> wrote:
-> >
-> > kvm_riscv_handle_sbi() may return not supported return code to not trigger
-> > qemu abort with vendor-specific sbi.
-> >
-> > Added SBI related return code's defines.
-> >
-> > Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
-> > Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
-> > ---
-> >
-> > Changes since v3:
-> >         -Clear Reviewed-by tags
-> >  target/riscv/kvm/kvm-cpu.c         | 13 +++++--------
-> >  target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
-> >  2 files changed, 17 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> > index 6a6c6cae80..844942d9ba 100644
-> > --- a/target/riscv/kvm/kvm-cpu.c
-> > +++ b/target/riscv/kvm/kvm-cpu.c
-> > @@ -1392,7 +1392,6 @@ bool kvm_arch_stop_on_emulation_error(CPUState *cs)
-> >
-> >  static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
-> >  {
-> > -    int ret = 0;
-> >      unsigned char ch;
-> >      switch (run->riscv_sbi.extension_id) {
-> >      case SBI_EXT_0_1_CONSOLE_PUTCHAR:
-> > @@ -1400,22 +1399,20 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
-> >          qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
-> >          break;
-> >      case SBI_EXT_0_1_CONSOLE_GETCHAR:
-> > -        ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
-> > -        if (ret == sizeof(ch)) {
-> > +        if (qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch)) == sizeof(ch)) {
-> >              run->riscv_sbi.ret[0] = ch;
-> >          } else {
-> > -            run->riscv_sbi.ret[0] = -1;
-> > +            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
+On 22/04/2024 10.03, Daniel P. Berrangé wrote:
+> On Sat, Apr 20, 2024 at 07:46:03AM +0200, Thomas Huth wrote:
+>> Printing an architecture prefix in front of each CPU name is not helpful
+>> at all: It is confusing for the users since they don't know whether they
+>> have to specify these letters for the "-cpu" parameter, too, and it also
+>> takes some precious space in the dense output of the CPU entries. Let's
+>> simply remove those now.
 > 
-> I'm not sure I follow. This seems like a failure but we report success
-> to the caller of this function?
-> 
-> Can you expand the commit message to explain why we want this change
+> Could it be said that this arch prefix is about to finally become useful
+> with Philippe's patches to add a 'qemu-system-any' command covering
+> multiple arches ?
 
-Looking at this again, I think it would be more clear, and more correct,
-if we only do the SBI_ERR_FAILURE path for a return value of exactly zero.
+I don't think so: In that case we'd rather print it once at the beginning of 
+a list ("Available x86 CPUs:") instead of printing it in each and every line.
 
- ...
- ret = qemu_chr_fe_read_all(...);
- if (ret == sizeof(ch)) {
-   run->riscv_sbi.ret[0] = ch;
-   ret = 0;
- } else if (ret == 0) {
-   run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
- }
- break;
- ...
- return ret;
+  Thomas
 
 
-Exactly zero just means we failed to read input, which can happen, so
-telling the SBI caller we failed to read, but telling the caller of this
-function that we successfully emulated the SBI call, is correct. However,
-anything else, other than sizeof(ch), means something unexpected happened,
-so we should indeed return an error from this function.
-
-Thanks,
-drew
-
-
-> 
-> Alistair
-> 
-> >          }
-> > -        ret = 0;
-> >          break;
-> >      default:
-> >          qemu_log_mask(LOG_UNIMP,
-> > -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
-> > +                      "%s: Unhandled SBI exit with extension-id %lu\n",
-> >                        __func__, run->riscv_sbi.extension_id);
-> > -        ret = -1;
-> > +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
-> >          break;
-> >      }
-> > -    return ret;
-> > +    return 0;
-> >  }
-> >
-> >  int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-> > diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
-> > index 43899d08f6..a2e21d9b8c 100644
-> > --- a/target/riscv/sbi_ecall_interface.h
-> > +++ b/target/riscv/sbi_ecall_interface.h
-> > @@ -69,4 +69,16 @@
-> >  #define SBI_EXT_VENDOR_END              0x09FFFFFF
-> >  /* clang-format on */
-> >
-> > +/* SBI return error codes */
-> > +#define SBI_SUCCESS                  0
-> > +#define SBI_ERR_FAILURE             -1
-> > +#define SBI_ERR_NOT_SUPPORTED       -2
-> > +#define SBI_ERR_INVALID_PARAM       -3
-> > +#define SBI_ERR_DENIED              -4
-> > +#define SBI_ERR_INVALID_ADDRESS     -5
-> > +#define SBI_ERR_ALREADY_AVAILABLE   -6
-> > +#define SBI_ERR_ALREADY_STARTED     -7
-> > +#define SBI_ERR_ALREADY_STOPPED     -8
-> > +#define SBI_ERR_NO_SHMEM            -9
-> > +
-> >  #endif
-> > --
-> > 2.34.1
-> >
-> >
 
