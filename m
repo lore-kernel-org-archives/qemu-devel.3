@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD93DC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 11:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D48D4C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 11:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryrlG-0001Yk-Js; Mon, 22 Apr 2024 07:23:02 -0400
+	id 1ryrma-0002WF-Sd; Mon, 22 Apr 2024 07:24:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrl9-0001Ww-2p
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:22:56 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrmY-0002Ro-3U
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:24:22 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrl5-00075E-0g
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:22:53 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-51ab4ee9df8so3871681e87.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 04:22:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryrmW-0007IX-Ku
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 07:24:21 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-349545c3eb8so3195244f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 04:24:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713784968; x=1714389768; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZcGB7AVbotcMxmI4ZLawBRUBeDiwK/Ghj12lwMkTPi8=;
- b=NVwW5k++2tvXMc4ku6oLxea1FqVPDMzjlSBJKPyTJ5lIh6hya4tzDR8yS9OC6cdyEL
- io+4BjmEkysN02+PYwvbPe92V0VTwiTmeh9Zp6qj0J820UfdBA3d+Kb65uA3QNFLZEpb
- tb1SSinOYOnPYtWnOlHuhBD6P292eexbxio0AqK9mHfBrPs+5fPvxh/k6POqPtHG0LD5
- JSBBuxhq0kjjwwFjc+zTm9UZUTAqbiOZVGK2rXFO2sS93uKflUSgluCL3s3xWdDLf006
- aadWWXHXr5gT0AOk9dVhi6CYM1qlrBzeLiBRtjeP4aZutb/h5dBZVetIrD7uDwcs+yFq
- 6JXg==
+ d=linaro.org; s=google; t=1713785059; x=1714389859; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4zSmrIlgHV0Vw1AbLT6ZWFHT7n9hH21z64JC62MO0XM=;
+ b=dz1xJgrFqcljUFDeDVRxm7oL71Q2uR5iSN/ZjWqStsiWu78ShAEIZaHsT49OIvhHU1
+ 8XbGJRjdcwuSbyRbTA8b3HAG+u3xPaL9tb4VUxplLTT8n+zK3C3dHcrAMOpIn1h30TiB
+ Y2FVh08gFTIiw8e0GfFAJyXG9H09nehvgR/D1J6oau9c/+2vh8+vbTjF8HbjZcpkvMAR
+ 4kItR81CK+eH2PjP0CGymsqzdvb4OC51nQwGwTQRSoJAkK2/G7AmdTJrjmiLvkek4wgO
+ qFHO8GF5KZapxtAw2ISyApnyoryVLNU9NSkmJdxVPpypTxyWzV+RHUwgzLz4TcEY+ACu
+ JFHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713784968; x=1714389768;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZcGB7AVbotcMxmI4ZLawBRUBeDiwK/Ghj12lwMkTPi8=;
- b=xNBCD4AQvfX/fumUwfmwQzUsAYo244H+9QaOFgV4mV2lhaTIjHtDuis+Qz+QhJ3opC
- 0FxXGndRWikgWZaTpMRM0ZkTH0YwKR1k6EBfqOTBl8lHpzB9VN+AnEUPWWrVtt/L2EKd
- FM8cIrTKYE+y6I09ki7BzFtTmLtn7ynPEqnNmzpYX9Czmvd4UprcpzG2YFiyX3pd7IjS
- sywr2CEHfdRhYtaNRSwiGX+YPI/W74XgKDz0koyaxaeoC0hbYSUHWmOliM3y9KbI2ZOg
- R0RNXlPIlM2E7ehee72QjYXLaIjV+Bhj9b8I0VPxQF8eq5Smb5ED8Kl+y3bhMJ5kY4FY
- w7SQ==
-X-Gm-Message-State: AOJu0YxVZwW9K66Nbi+xSInLuD6/f5ryIMRWpGzIDxbTCWjm2umFADcN
- E+u8CASFDONS3HUSfarIqS+wPdxTuPaBVKakdl2wZipGEM3e9vHlMxAhjg6MuYcZ4nFmcbyNedV
- /
-X-Google-Smtp-Source: AGHT+IFFI27TJaHZXHu0GwORSa4xa5Jd+mYvKWqp+VGWcjf8pG9NrTAFMxNwiVi+HpxEWekM6+O4XQ==
-X-Received: by 2002:a05:6512:908:b0:516:9fe6:bc91 with SMTP id
- e8-20020a056512090800b005169fe6bc91mr5418100lft.25.1713784968077; 
- Mon, 22 Apr 2024 04:22:48 -0700 (PDT)
-Received: from m1.home (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ d=1e100.net; s=20230601; t=1713785059; x=1714389859;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4zSmrIlgHV0Vw1AbLT6ZWFHT7n9hH21z64JC62MO0XM=;
+ b=H8IJKLWgO2Kue8qEv7XSDlUQ/cPfapix6c1Qz37+iUxPYIq9J3UWKYMUEgUE0E7qzF
+ G0G/Q+XT1XIa1BIPsmGnuFgeG1Yt2PeerQfzuIJf0bWQZB99N2/HlHqhmKL3Zv15yaWF
+ m03uT4ALAbXzedbxgzXcchBbImojJQJcHVa/iJ2LFxdtTPXyWUaQ853xNL/sH67leYvi
+ WW0mTfqbGmKtQq9dfzGKis6Dddc/k+oGQp3aal1X4FSsChIqw8HQp6elny1d6wwRn9To
+ kSj5Vwh35EK4rMZ1d74O2fm5twhClxofCVBUj8W05qDX9MlGNk36gw4xQ+VYTPi2iICH
+ pH9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUE+9udxb0gA6Z98bjNG6yo2qTXe457BRfP0LI3dT/0uT0sX3E0ocvSCcA/CMd9RJE3GEOTbUuwub8aPxXsdJmR1Az/k5A=
+X-Gm-Message-State: AOJu0YzIxJPcc5IGsV3FixjMk39UpWsxlXkMSG7cMVwCe0FudOjl08ox
+ CFhjM6egOT63Fjz59XbHPk9CNLHiebEvNdA2C30O4To05cBQduxQxziSJ7s8LN6GuUKFgAvvjMr
+ w
+X-Google-Smtp-Source: AGHT+IHYZZCA3d6fzzXLMawgId24Ckfnz7efzP+BFGnls7lk0ZuLhUqMsuvh6+G+5Ge17Bmm2jugxg==
+X-Received: by 2002:a5d:6901:0:b0:343:5cc6:647f with SMTP id
+ t1-20020a5d6901000000b003435cc6647fmr5601554wru.21.1713785058896; 
+ Mon, 22 Apr 2024 04:24:18 -0700 (PDT)
+Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- o14-20020a05600c510e00b00419f572671dsm7983172wms.20.2024.04.22.04.22.47
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 22 Apr 2024 04:22:47 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2] tests/unit: Remove debug statements in
- test-nested-aio-poll.c
-Date: Mon, 22 Apr 2024 13:22:46 +0200
-Message-ID: <20240422112246.83812-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ n12-20020a5d67cc000000b0034a51283404sm9310828wrw.72.2024.04.22.04.24.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Apr 2024 04:24:18 -0700 (PDT)
+Message-ID: <a7763561-62b3-4363-8049-fa4f7bb44047@linaro.org>
+Date: Mon, 22 Apr 2024 13:24:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/misc : Correct 5 spaces indents in stm32l4x5_exti
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-arm@nongnu.org,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>
+References: <20240421141455.116548-1-ines.varhol@telecom-paris.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240421141455.116548-1-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,82 +98,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have been running this test for almost a year; it
-is safe to remove its debug statements, which clutter
-CI jobs output:
+On 21/4/24 16:14, Inès Varhol wrote:
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   hw/misc/stm32l4x5_exti.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
-  ▶  88/100 /nested-aio-poll                      OK
-  io_read 0x16bb26158
-  io_poll_true 0x16bb26158
-  > io_poll_ready
-  io_read 0x16bb26164
-  < io_poll_ready
-  io_poll_true 0x16bb26158
-  io_poll_false 0x16bb26164
-  > io_poll_ready
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_poll_false 0x16bb26164
-  io_read 0x16bb26164
-  < io_poll_ready
-  88/100 qemu:unit / test-nested-aio-poll        OK
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/unit/test-nested-aio-poll.c | 7 -------
- 1 file changed, 7 deletions(-)
-
-diff --git a/tests/unit/test-nested-aio-poll.c b/tests/unit/test-nested-aio-poll.c
-index db33742af3..d8fd92c43b 100644
---- a/tests/unit/test-nested-aio-poll.c
-+++ b/tests/unit/test-nested-aio-poll.c
-@@ -30,19 +30,16 @@ typedef struct {
- 
- static void io_read(EventNotifier *notifier)
- {
--    fprintf(stderr, "%s %p\n", __func__, notifier);
-     event_notifier_test_and_clear(notifier);
- }
- 
- static bool io_poll_true(void *opaque)
- {
--    fprintf(stderr, "%s %p\n", __func__, opaque);
-     return true;
- }
- 
- static bool io_poll_false(void *opaque)
- {
--    fprintf(stderr, "%s %p\n", __func__, opaque);
-     return false;
- }
- 
-@@ -50,8 +47,6 @@ static void io_poll_ready(EventNotifier *notifier)
- {
-     TestData *td = container_of(notifier, TestData, poll_notifier);
- 
--    fprintf(stderr, "> %s\n", __func__);
--
-     g_assert(!td->nested);
-     td->nested = true;
- 
-@@ -62,8 +57,6 @@ static void io_poll_ready(EventNotifier *notifier)
-     g_assert(aio_poll(td->ctx, true));
- 
-     td->nested = false;
--
--    fprintf(stderr, "< %s\n", __func__);
- }
- 
- /* dummy_notifier never triggers */
--- 
-2.41.0
-
+and queued, thanks!
 
