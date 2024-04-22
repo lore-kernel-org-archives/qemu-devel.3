@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC77BC4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 17:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AF2C4345F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 17:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ryx0i-0002pt-88; Mon, 22 Apr 2024 12:59:20 -0400
+	id 1ryx52-0004iE-44; Mon, 22 Apr 2024 13:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryx0f-0002pg-CP
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 12:59:18 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryx4z-0004ew-6D
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 13:03:45 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryx0d-0003PN-Mk
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 12:59:17 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-34782453ffdso4645914f8f.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 09:59:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ryx4x-0004BA-6d
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 13:03:44 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-34a32ba1962so3291252f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 10:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713805152; x=1714409952; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713805421; x=1714410221; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OYKWjO6YEVkxbSi4wBlU5mdC/+w1+5yrePzG+j4mI14=;
- b=ziC2ZNBx/GuIe9l+tAc9E5u2xKI7dtqofFyizrhfNh1skH/DR3Y1JYw0GMfJ2HJCbk
- BBKfifnliF4dIBe9n8qC8+C3Dblv5qAUgF6nbkg4Vnfl9P+sb+1o6MN0O0fP91JuVCOw
- /2tFoGoGeSrQNlaM+D8qDFdc6QvabddkP8Rc+qqvdcYxOezBvuuDNiG8CHrYagtpcvpz
- t4ZGURKHVnnEXqgfjlMYWdKWfcfqE1xJPw77z/gMt55uADjbgNdWgjngIwMi2Bvk2h8s
- 52mgO2S2nGbN71I5yFOHf0/eoVOBdm0xt4HbEBwObyU2Ft9BMf9Z8bMKyHc+stbXkIOL
- OZaw==
+ bh=K/ptvfirRXlecEvnYNl+wTBX9MNZ1X0q77WQnm5CBOU=;
+ b=cb+xgOQpw4KTdD9tIn1miqmKQRMCg0txmRdF2OsgxUkW+pbtRwhd7SzsoHvdMeltWJ
+ UPM/ZGhoIqEFycREsReZg+I0YztTO1l2jkUTmx1gh4TZMWC/bqbdizUswHiPzKB3H63K
+ B0bf5KQ/tRUvkpW8iTpVhexLOJwl6oZD/Aol0N1mTKSOadtTKkU0tfM4anVhPukP7YAV
+ WvZYQQy4xa82qo28Y57tOWG2xm6tZgHGimxZaHSrx8pc2+h6+vSQxfRjtb5nCj8Bv89b
+ MPR8FBH79RqmSET01p9+w2TfkrrQN/HX+R5rBk5w+gBvJo+L9oBar1n85aZWmQx02HeH
+ o1Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713805152; x=1714409952;
+ d=1e100.net; s=20230601; t=1713805421; x=1714410221;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OYKWjO6YEVkxbSi4wBlU5mdC/+w1+5yrePzG+j4mI14=;
- b=lpXC7frumPRTThxvuhqo49hYSdPEYv+y7spI7+qslEimmCYlfRo0Am830Q9XLrEc6+
- z4LTMx/KtB0/iiUA7zTfuURTleHplSdJ6n8QWAvH6+w2GanuB3wmAb/8ij1rJeGWEexw
- RnBVoij4UKyBm4awvKZAq7PM1ohdTfnJJVRu+tazWxdWATi5mXPAtlwgUay7ugarTd1b
- sTlQKPA2jMv8PeD36uXTbc9qqHldAJOnD7Zbsf3iXbRssMPif7b23k/qW7bG4Evj4ZJq
- yO8PLqgG7fPYzx/uXmeLs2vKKo9B3RbnjPZAdQFZK22/2NgdypZ87WTZS3oQl/Ek1vlJ
- n5eA==
+ bh=K/ptvfirRXlecEvnYNl+wTBX9MNZ1X0q77WQnm5CBOU=;
+ b=PlQwl7FHYLuDzpcHU1T9GPWf9WXFWCW3d10YwKgeqKLNppDMfYsNdP3oBm/W0MVqCh
+ Ty8pOUPL2a6gCr7DE6B+ndBRWsJs/EMJAtsMhoA/0EU8XpL/PlG+KBVXgeurMbhp41en
+ sZ0uVziPmwmWhWW9FN08NzSbLq+BBxgo2yAy69n8KeipemRpt6uNWqEKEe7mCDb97dem
+ wcxsnzec1LqdaHuUjpUY+UQrfHMYlg4GX6LgIEQjkQZMojdY/Y7i/XpAITIbOAAW/mQw
+ ZtQIfeR0/cJh6DYeOjEBG0EfxCanMncCuP2/GRtbMfWC4JC5ew5PjQFGS9+NWSVn5/yJ
+ nLXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUl+GOq+Plv5euLmiQ3dpJKrhEKaSWMT8rj9cEEoy/Q0+smec8HXwYzVwQotemik4qnTpb7b+tTy3ewS2BhEmIW0zhXplM=
-X-Gm-Message-State: AOJu0Yze3uWLZFd+AQeMbj0VOwxy0Bg0yMJGauZk2YmGxlJu2IENELLK
- y37+q4eHk8J5DHu+DpUpKj5GYtZM39hqav9PIWXiHMte8B3GWqUqVnjxgDTVjtDcLymKwZDl2TK
+ AJvYcCUxRAwUgcNdjGdhv3pWTk8ybTF+FhSu+/IWZwTGWDEqN065v9XVQOD1M9nRM6G9vj7qD4qO/I3xsmhanVDVibI17s7q/lg=
+X-Gm-Message-State: AOJu0YzxWiBQafkQnkyreXrhl3iPfq7Q8bfNvjth28Z+Ksu8d3RlZ0D2
+ waAkvfVGGqa+I+TauEJMDMr3RjH17ZHyLhl2ph0+B4zSrZwQ2ZrT0priGTle67wNWRLLFbYQLnV
  +
-X-Google-Smtp-Source: AGHT+IEbM1+RQjtZHz59tZFB2O/00PFx+ycQaG7gXccdkt09buMpE6OPayR/hfaGROTr4h1o0Jzwrw==
-X-Received: by 2002:adf:f50b:0:b0:34a:3e3a:a23c with SMTP id
- q11-20020adff50b000000b0034a3e3aa23cmr7691161wro.64.1713805151940; 
- Mon, 22 Apr 2024 09:59:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3MxZBYtjTH+Z6CU54x4DaATw9e4Cx9TV46EvGvfx56nlf6NsXKKfl4XuP3MJPcRtfOdfNMA==
+X-Received: by 2002:a5d:6b0d:0:b0:343:edfd:113d with SMTP id
+ v13-20020a5d6b0d000000b00343edfd113dmr6446151wrw.71.1713805421477; 
+ Mon, 22 Apr 2024 10:03:41 -0700 (PDT)
 Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- d1-20020adfa401000000b0034b4fcb41efsm939496wra.102.2024.04.22.09.59.11
+ r16-20020a5d6950000000b003477d26736dsm12500716wrw.94.2024.04.22.10.03.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 09:59:11 -0700 (PDT)
-Message-ID: <cd254155-71aa-480f-8962-038c71a2f786@linaro.org>
-Date: Mon, 22 Apr 2024 18:59:10 +0200
+ Mon, 22 Apr 2024 10:03:41 -0700 (PDT)
+Message-ID: <5acf21ec-216b-4d11-a7c1-ecf9a8ddf76f@linaro.org>
+Date: Mon, 22 Apr 2024 19:03:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH intel_iommu 5/7] intel_iommu: extract device IOTLB
- invalidation logic
+Subject: Re: [PATCH intel_iommu 3/7] intel_iommu: make types match
 To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: "jasowang@redhat.com" <jasowang@redhat.com>
 References: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
- <20240422155236.129179-6-clement.mathieu--drif@eviden.com>
+ <20240422155236.129179-4-clement.mathieu--drif@eviden.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240422155236.129179-6-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20240422155236.129179-4-clement.mathieu--drif@eviden.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,35 +99,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/4/24 17:52, CLEMENT MATHIEU--DRIF wrote:
-> This piece of code can be shared by both IOTLB invalidation and
-> PASID-based IOTLB invalidation
+> The 'level' field in vtd_iotlb_key is an uint8_t.
+> We don't need to store level as an int in vtd_lookup_iotlb
 > 
 > Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 > ---
->   hw/i386/intel_iommu.c | 57 +++++++++++++++++++++++++------------------
->   1 file changed, 33 insertions(+), 24 deletions(-)
-
-
->   static bool vtd_process_device_iotlb_desc(IntelIOMMUState *s,
->                                             VTDInvDesc *inv_desc)
+>   hw/i386/intel_iommu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 6f1364b3fd..ba545590b1 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -333,7 +333,7 @@ static VTDIOTLBEntry *vtd_lookup_iotlb(IntelIOMMUState *s, uint16_t source_id,
 >   {
->       VTDAddressSpace *vtd_dev_as;
-> -    IOMMUTLBEvent event;
->       hwaddr addr;
-> -    uint64_t sz;
->       uint16_t sid;
->       bool size;
->   
-> @@ -2912,6 +2941,7 @@ static bool vtd_process_device_iotlb_desc(IntelIOMMUState *s,
->           return false;
->       }
->   
-> +
+>       struct vtd_iotlb_key key;
+>       VTDIOTLBEntry *entry;
+> -    int level;
+> +    uint8_t level;
 
-Spurious newline ;)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->       /*
+Or simply 'unsigned' up to vtd_slpt_level_shift()?
 
 
