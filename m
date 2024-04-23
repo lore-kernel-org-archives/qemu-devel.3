@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFB5C4345F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Apr 2024 23:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06DA1C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 01:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rz3QA-0008AF-CW; Mon, 22 Apr 2024 19:50:02 -0400
+	id 1rz5G8-0005IS-Td; Mon, 22 Apr 2024 21:47:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vlad.wing@gmail.com>)
- id 1ryvQp-0004qm-Cg
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:18:11 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rz5G6-0005IK-70
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 21:47:46 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vlad.wing@gmail.com>)
- id 1ryvQn-0000pM-D4
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 11:18:11 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-571c2055cb1so892268a12.1
- for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 08:18:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rz5G3-0004cG-7G
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 21:47:45 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2a526803fccso3308736a91.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Apr 2024 18:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1713799086; x=1714403886; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=d9xj7HwmwuIRzsMLAZWeyWIJzUgtPFLJ8hFtN2pvdUw=;
- b=f2pmFmsfFH/cukXxc93EedHb5wsQ74Fhg8tdvlht7YmmLPbQdrjgvE2y3gh6Q1TIO6
- WIP6u4epi3gTSH39s6TirJdrtRAJ1DowPybtkmU01abnFtkOzC8gRqjysLC412ywOWze
- 0Fg0QI03W2DS/TWWm+h7EzsSVd/vts4GHs7QzTl7eb8TW1wyTjxDtXfV5upOAzw18E53
- G3njnAJsL4tQJuWXwKFqAJRI0Yzew1XMJaGF0KcB+00In7yL1tpRdJxyi6+7AuZLEcte
- NiN5ghnMwgNf7GppWZVnoK9Vxju7hMCmifqLaRziuJh+qYDBIu7AbPkU+00d4wW4D4r9
- TN3g==
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1713836739; x=1714441539;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=SAp0UxNsst5qxLvg7CxbhsUkT1S71gf24H1Rqo80J88=;
+ b=3ZWKmiWmV294HEbxL02Unq0dQ5dsfydDe3yvtQ2jnBdcUQgeBtHbUyXGp7vRF2VqTk
+ lrvHJc0e8JVgLFg8F0aKhFnQABW+hFRXBOP9+6y7+2EFNLTFh9p40wSLjdTLuZG4ikVx
+ XpZIaeubYx6WYjZolRW69ylcokOfjczJRPu8MlS0GRviLyaAFzWt4QLrkjweTULKkjIF
+ e+COBaotDrM7Y8FVBg4PRF7+Z2WenxPLidFfPa+QsJII79gYrIiFuLeqKm7J6Q0fRm4Z
+ 5CV7HhvEv+gx14JAo8TEnqqeVuhHCh8DBq1xQIyq4JItNgjkRkZZv0uW2Q3ddUKyxRTl
+ HJuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713799086; x=1714403886;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=d9xj7HwmwuIRzsMLAZWeyWIJzUgtPFLJ8hFtN2pvdUw=;
- b=W2QC2WBgSvqGZonAIgJgsDBCShoLt68GCClL62pq177zNO7XZaq/6ODreMbbBRAv2g
- U7R6qZ5OjBEDAhHxl2K6ssxql0sLnY7LQVuONLpNyCBiO3+1r7YMGIrouTd6TYwI47o4
- AZsgY4JXUdraH5JVFdqas4ZcO3ohmFlBd+dkjpHBkHVljUK3sEB4Nsvq0D4s/oI8HwAc
- upAAHnssqy+hyOxI06O1MBo7vFR9nPp2kDO5Ultm/12CxJj4wMorp7AIh4AhWqp9tkox
- ODlhRgtPjXI24EyzLS2qhIuCE9qCcJ8YeSuOmtZmhH01PgizRgWCp91BEfePh8O/EZcZ
- r+Mw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbmrp2UkXIr3wOl3bQEVCzaEtvgux1OO3c9gSdg7fDGjErky12YDScWp3EItViMXB7G4qvhgGb0UWilEo0QG1aRbqzQFI=
-X-Gm-Message-State: AOJu0YwW9jSeb73upBYQvi2C89hYO9WBDsowdJMzTLoU5iv8mObzPmj5
- XWPcuSIyoq8SmefAZlQnbQxNqATNofxL8tTtFwxsdvn6l1hQgNFy
-X-Google-Smtp-Source: AGHT+IE0xIZcSiuCSsz7uHwpkq02z/02QgEoSLowEQ4mDuOxo6EQH/+kgcM7JeLLwXtgGDXeB3sn2Q==
-X-Received: by 2002:a05:6402:524c:b0:572:1574:2b88 with SMTP id
- t12-20020a056402524c00b0057215742b88mr1242248edd.40.1713799086256; 
- Mon, 22 Apr 2024 08:18:06 -0700 (PDT)
-Received: from localhost (fwdproxy-lla-007.fbsv.net.
- [2a03:2880:30ff:7::face:b00c]) by smtp.gmail.com with ESMTPSA id
- p8-20020a05640243c800b00571fad0647csm2411769edc.74.2024.04.22.08.18.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Apr 2024 08:18:05 -0700 (PDT)
-From: Vlad Poenaru <vlad.wing@gmail.com>
-To: stable@vger.kernel.org
-Cc: Breno Leitao <leitao@debian.org>, qemu-devel@nongnu.org,
- Heng Qi <hengqi@linux.alibaba.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Subject: [PATCH 6.6.y] virtio_net: Do not send RSS key if it is not supported
-Date: Mon, 22 Apr 2024 08:18:03 -0700
-Message-ID: <20240422151803.1266071-1-vlad.wing@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <2024041412-subduing-brewing-cd04@gregkh>
-References: <2024041412-subduing-brewing-cd04@gregkh>
+ d=1e100.net; s=20230601; t=1713836739; x=1714441539;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SAp0UxNsst5qxLvg7CxbhsUkT1S71gf24H1Rqo80J88=;
+ b=nGljz7MRa4aPAXneofIaN/8rPo0Tv9ZaRUy1pTpFXgt3/7sAl9uM0FLJ3qMPYLlEI/
+ SYpWzmnqNwssiHTYCtx/8C5YIeT7lBG3iHXUyYuPyFImjIrwylif0cpmvYKEtfBiN6jG
+ MLMlP5bUkR61J8uoJAYYK9PE3DWSgib5LnlIUUtxjHh3N/KRrGCYv34XwjuiXHAqGwvI
+ mDz0xqck9AC79TLhnR0S6tOm4dU/i3RyewzPyLSbr51m3mD89CFc0OzADahJU65Xz7/n
+ 8W62X/fTYRYoQSB3ejegXWyfuQ1i7R/iArF08K/98bCFeSazPgCw2XcKkRKBfAvciVPN
+ Dkfw==
+X-Gm-Message-State: AOJu0Yz0N5SJpJvVabSGQuPdIG403+y3HEfHT/vMnwNwZRux0bClZpM4
+ cbRy3L6SRr6VGjOkvcH7vgyiQyTYBngZyi3JHFLwf3F4fYrksGvrnJ2Q3XisZENjd6Lql1PP1Y6
+ b2L++l/8nzTR2vZvbuS08xDDyblvzEfdR7gtyk1oXx8n3beZZcqrM8qNz
+X-Google-Smtp-Source: AGHT+IFS+2yVjSBiyW9ClQN2h4A2qBZj77e+uAg0TzOkDe/pcF0LkeVe3Zx5WtmvvbOFMZSeQkxfSVz3mG6GQq1g6Aw=
+X-Received: by 2002:a17:90a:5784:b0:2ac:7a71:9a26 with SMTP id
+ g4-20020a17090a578400b002ac7a719a26mr8560953pji.47.1713836738745; Mon, 22 Apr
+ 2024 18:45:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=vlad.wing@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1712577715.git.yong.huang@smartx.com>
+In-Reply-To: <cover.1712577715.git.yong.huang@smartx.com>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 23 Apr 2024 09:45:22 +0800
+Message-ID: <CAK9dgmaHJF-JWSRww1raYFYxCZ4b19ydH3nWQzv1-VqzqiJuDA@mail.gmail.com>
+Subject: Re: [PATCH RESEND 0/2] Fix crash of VMs configured with the CDROM
+ device
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Content-Type: multipart/alternative; boundary="0000000000000433bf0616b9b6b2"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=yong.huang@smartx.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 22 Apr 2024 19:50:00 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,133 +88,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Breno Leitao <leitao@debian.org>
+--0000000000000433bf0616b9b6b2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
+Ping.
+I would appreciate comments on this series. Thanks,
 
-There is a bug when setting the RSS options in virtio_net that can break
-the whole machine, getting the kernel into an infinite loop.
+Yong
 
-Running the following command in any QEMU virtual machine with virtionet
-will reproduce this problem:
+On Mon, Apr 8, 2024 at 8:08=E2=80=AFPM Hyman Huang <yong.huang@smartx.com> =
+wrote:
 
-    # ethtool -X eth0  hfunc toeplitz
+> This patchset fixes the crash of VMs configured with the CDROM device
+> on the destination during live migration. See the commit message for
+> details.
+>
+> The previous patchset does not show up at https://patchew.org/QEMU.
+> Just resend it to ensure the email gets to the inbox.
+>
+> Please review.
+>
+> Yong
+>
+> Hyman Huang (2):
+>   scsi-disk: Introduce the migrate_emulate_scsi_request field
+>   scsi-disk: Fix crash of VMs configured with the CDROM device
+>
+>  hw/scsi/scsi-disk.c | 35 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 34 insertions(+), 1 deletion(-)
+>
+> --
+> 2.39.3
+>
+>
 
-This is how the problem happens:
+--=20
+Best regards
 
-1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+--0000000000000433bf0616b9b6b2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:comic sa=
+ns ms,sans-serif">Ping.</div><div class=3D"gmail_default" style=3D"font-fam=
+ily:comic sans ms,sans-serif">I would appreciate comments on this series. T=
+hanks,</div><div class=3D"gmail_default" style=3D"font-family:comic sans ms=
+,sans-serif"><br></div><div class=3D"gmail_default" style=3D"font-family:co=
+mic sans ms,sans-serif">Yong</div></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Mon, Apr 8, 2024 at 8:08=E2=80=AFPM Hy=
+man Huang &lt;<a href=3D"mailto:yong.huang@smartx.com">yong.huang@smartx.co=
+m</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-lef=
+t-color:rgb(204,204,204);padding-left:1ex">This patchset fixes the crash of=
+ VMs configured with the CDROM device<br>
+on the destination during live migration. See the commit message for<br>
+details.<br>
+<br>
+The previous patchset does not show up at <a href=3D"https://patchew.org/QE=
+MU" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU</a>.<br>
+Just resend it to ensure the email gets to the inbox.<br>
+<br>
+Please review.<br>
+<br>
+Yong<br>
+<br>
+Hyman Huang (2):<br>
+=C2=A0 scsi-disk: Introduce the migrate_emulate_scsi_request field<br>
+=C2=A0 scsi-disk: Fix crash of VMs configured with the CDROM device<br>
+<br>
+=C2=A0hw/scsi/scsi-disk.c | 35 ++++++++++++++++++++++++++++++++++-<br>
+=C2=A01 file changed, 34 insertions(+), 1 deletion(-)<br>
+<br>
+-- <br>
+2.39.3<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
+</div></div>
 
-3) virtnet_commit_rss_command() populates 4 entries for the rss
-scatter-gather
-
-4) Since the command above does not have a key, then the last
-scatter-gatter entry will be zeroed, since rss_key_size == 0.
-sg_buf_size = vi->rss_key_size;
-
-5) This buffer is passed to qemu, but qemu is not happy with a buffer
-with zero length, and do the following in virtqueue_map_desc() (QEMU
-function):
-
-  if (!sz) {
-      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
-
-6) virtio_error() (also QEMU function) set the device as broken
-
-    vdev->broken = true;
-
-7) Qemu bails out, and do not repond this crazy kernel.
-
-8) The kernel is waiting for the response to come back (function
-virtnet_send_command())
-
-9) The kernel is waiting doing the following :
-
-      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-	     !virtqueue_is_broken(vi->cvq))
-	      cpu_relax();
-
-10) None of the following functions above is true, thus, the kernel
-loops here forever. Keeping in mind that virtqueue_is_broken() does
-not look at the qemu `vdev->broken`, so, it never realizes that the
-vitio is broken at QEMU side.
-
-Fix it by not sending RSS commands if the feature is not available in
-the device.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Cc: stable@vger.kernel.org
-Cc: qemu-devel@nongnu.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Vlad Poenaru <vlad.wing@gmail.com>
----
- drivers/net/virtio_net.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 7cb0548d17a3..56cbe00126bb 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3570,19 +3570,34 @@ static int virtnet_get_rxfh(struct net_device *dev, u32 *indir, u8 *key, u8 *hfu
- static int virtnet_set_rxfh(struct net_device *dev, const u32 *indir, const u8 *key, const u8 hfunc)
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
-+	bool update = false;
- 	int i;
- 
- 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
- 		return -EOPNOTSUPP;
- 
- 	if (indir) {
-+		if (!vi->has_rss)
-+			return -EOPNOTSUPP;
-+
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
- 			vi->ctrl->rss.indirection_table[i] = indir[i];
-+		update = true;
- 	}
--	if (key)
-+	if (key) {
-+		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
-+		 * device provides hash calculation capabilities, that is,
-+		 * hash_key is configured.
-+		 */
-+		if (!vi->has_rss && !vi->has_rss_hash_report)
-+			return -EOPNOTSUPP;
-+
- 		memcpy(vi->ctrl->rss.key, key, vi->rss_key_size);
-+		update = true;
-+	}
- 
--	virtnet_commit_rss_command(vi);
-+	if (update)
-+		virtnet_commit_rss_command(vi);
- 
- 	return 0;
- }
-@@ -4491,13 +4506,15 @@ static int virtnet_probe(struct virtio_device *vdev)
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
- 		vi->has_rss_hash_report = true;
- 
--	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
-+	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
- 		vi->has_rss = true;
- 
--	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_indir_table_size =
- 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
- 				rss_max_indirection_table_length));
-+	}
-+
-+	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_key_size =
- 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
- 
--- 
-2.43.0
-
+--0000000000000433bf0616b9b6b2--
 
