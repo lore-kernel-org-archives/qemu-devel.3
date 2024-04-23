@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C16AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14CEAC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzOfq-0001CA-J2; Tue, 23 Apr 2024 18:31:38 -0400
+	id 1rzOfr-0001D0-Sh; Tue, 23 Apr 2024 18:31:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfj-00018f-P1; Tue, 23 Apr 2024 18:31:33 -0400
+ id 1rzOfb-00016s-18; Tue, 23 Apr 2024 18:31:25 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfi-0004dI-0Y; Tue, 23 Apr 2024 18:31:31 -0400
+ id 1rzOfY-0004ah-6D; Tue, 23 Apr 2024 18:31:22 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 669BF4E6042;
- Wed, 24 Apr 2024 00:31:28 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B683A4E6040;
+ Wed, 24 Apr 2024 00:31:15 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Ml8MWfTR5fXj; Wed, 24 Apr 2024 00:31:26 +0200 (CEST)
+ with ESMTP id 24oEFHn6xHgW; Wed, 24 Apr 2024 00:31:13 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 775894E6031; Wed, 24 Apr 2024 00:31:26 +0200 (CEST)
-Message-Id: <11cb8b749d64cb1e0ef9e73da101d41a50da8909.1713907038.git.balaton@eik.bme.hu>
+ id CA44D4E6042; Wed, 24 Apr 2024 00:31:13 +0200 (CEST)
+Message-Id: <ff8872bc79859700730cf325cf55741b2511e427.1713907038.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1713907038.git.balaton@eik.bme.hu>
 References: <cover.1713907038.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 15/24] target/ppc/mmu_common.c: Fix misindented
- qemu_log_mask() calls
+Subject: [PATCH 03/24] target/ppc: Simplify syscall exception handlers
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +39,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 24 Apr 2024 00:31:26 +0200 (CEST)
+Date: Wed, 24 Apr 2024 00:31:13 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,101 +62,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix several qemu_log_mask() calls that are misindented.
+After previous changes the hypercall handling in 7xx and 74xx
+exception handlers can be folded into one if statement to simplify
+this code. Also add "unlikely" to mark the less frequently used branch
+for the compiler.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/mmu_common.c | 42 ++++++++++++++++++++---------------------
- 1 file changed, 20 insertions(+), 22 deletions(-)
+ target/ppc/excp_helper.c | 22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 5cb550da7e..80c8fb0bf5 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -297,8 +297,8 @@ static int ppc6xx_tlb_get_bat(CPUPPCState *env, mmu_ctx_t *ctx,
-     int ret = -1;
-     bool ifetch = access_type == MMU_INST_FETCH;
- 
--     qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT v " TARGET_FMT_lx "\n", __func__,
--             ifetch ? 'I' : 'D', virtual);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT v " TARGET_FMT_lx "\n", __func__,
-+                  ifetch ? 'I' : 'D', virtual);
-     if (ifetch) {
-         BATlt = env->IBAT[1];
-         BATut = env->IBAT[0];
-@@ -312,9 +312,9 @@ static int ppc6xx_tlb_get_bat(CPUPPCState *env, mmu_ctx_t *ctx,
-         BEPIu = *BATu & 0xF0000000;
-         BEPIl = *BATu & 0x0FFE0000;
-         bat_size_prot(env, &bl, &valid, &prot, BATu, BATl);
--         qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx " BATu "
--                       TARGET_FMT_lx " BATl " TARGET_FMT_lx "\n", __func__,
--                       ifetch ? 'I' : 'D', i, virtual, *BATu, *BATl);
-+        qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx " BATu "
-+                      TARGET_FMT_lx " BATl " TARGET_FMT_lx "\n", __func__,
-+                      ifetch ? 'I' : 'D', i, virtual, *BATu, *BATl);
-         if ((virtual & 0xF0000000) == BEPIu &&
-             ((virtual & 0x0FFE0000) & ~bl) == BEPIl) {
-             /* BAT matches */
-@@ -346,12 +346,11 @@ static int ppc6xx_tlb_get_bat(CPUPPCState *env, mmu_ctx_t *ctx,
-                 BEPIu = *BATu & 0xF0000000;
-                 BEPIl = *BATu & 0x0FFE0000;
-                 bl = (*BATu & 0x00001FFC) << 15;
--                 qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v "
--                               TARGET_FMT_lx " BATu " TARGET_FMT_lx
--                               " BATl " TARGET_FMT_lx "\n\t" TARGET_FMT_lx " "
--                               TARGET_FMT_lx " " TARGET_FMT_lx "\n",
--                               __func__, ifetch ? 'I' : 'D', i, virtual,
--                               *BATu, *BATl, BEPIu, BEPIl, bl);
-+                qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx
-+                              " BATu " TARGET_FMT_lx " BATl " TARGET_FMT_lx
-+                              "\n\t" TARGET_FMT_lx " " TARGET_FMT_lx " "
-+                              TARGET_FMT_lx "\n", __func__, ifetch ? 'I' : 'D',
-+                              i, virtual, *BATu, *BATl, BEPIu, BEPIl, bl);
-             }
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index fd145200dd..4c1375381d 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -762,26 +762,21 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
+     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+     {
+         int lev = env->error_code;
+-
+-        if (lev == 1 && cpu->vhyp) {
+-            dump_hcall(env);
+-        } else {
+-            dump_syscall(env);
+-        }
+         /*
+          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+          * instruction to communicate with QEMU. The pegasos2 machine
+          * uses VOF and the 7xx CPUs, so although the 7xx don't have
+          * HV mode, we need to keep hypercall support.
+          */
+-        if (lev == 1 && cpu->vhyp) {
++        if (unlikely(lev == 1 && cpu->vhyp)) {
+             PPCVirtualHypervisorClass *vhc =
+                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
++            dump_hcall(env);
+             vhc->hypercall(cpu->vhyp, cpu);
+             powerpc_reset_excp_state(cpu);
+             return;
          }
+-
++        dump_syscall(env);
+         break;
      }
-@@ -400,9 +399,8 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-     hash = vsid ^ pgidx;
-     ctx->ptem = (vsid << 7) | (pgidx >> 10);
- 
--    qemu_log_mask(CPU_LOG_MMU,
--            "pte segment: key=%d ds %d nx %d vsid " TARGET_FMT_lx "\n",
--            ctx->key, ds, ctx->nx, vsid);
-+    qemu_log_mask(CPU_LOG_MMU, "pte segment: key=%d ds %d nx %d vsid "
-+                  TARGET_FMT_lx "\n", ctx->key, ds, ctx->nx, vsid);
-     ret = -1;
-     if (!ds) {
-         /* Check if instruction fetch is allowed, if needed */
-@@ -599,9 +597,9 @@ static int mmu40x_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-             return 0;
+     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+@@ -907,26 +902,21 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
+     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+     {
+         int lev = env->error_code;
+-
+-        if (lev == 1 && cpu->vhyp) {
+-            dump_hcall(env);
+-        } else {
+-            dump_syscall(env);
+-        }
+         /*
+          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+          * instruction to communicate with QEMU. The pegasos2 machine
+          * uses VOF and the 74xx CPUs, so although the 74xx don't have
+          * HV mode, we need to keep hypercall support.
+          */
+-        if (lev == 1 && cpu->vhyp) {
++        if (unlikely(lev == 1 && cpu->vhyp)) {
+             PPCVirtualHypervisorClass *vhc =
+                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
++            dump_hcall(env);
+             vhc->hypercall(cpu->vhyp, cpu);
+             powerpc_reset_excp_state(cpu);
+             return;
          }
+-
++        dump_syscall(env);
+         break;
      }
--     qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
--                   " => " HWADDR_FMT_plx
--                   " %d %d\n", __func__, address, raddr, ctx->prot, ret);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: access refused " TARGET_FMT_lx
-+                  " => " HWADDR_FMT_plx " %d %d\n",
-+                  __func__, address, raddr, ctx->prot, ret);
- 
-     return ret;
- }
-@@ -716,11 +714,11 @@ int ppcmas_tlb_check(CPUPPCState *env, ppcmas_tlb_t *tlb, hwaddr *raddrp,
-     }
- 
-     mask = ~(booke206_tlb_to_page_size(env, tlb) - 1);
--     qemu_log_mask(CPU_LOG_MMU, "%s: TLB ADDR=0x" TARGET_FMT_lx
--                   " PID=0x%x MAS1=0x%x MAS2=0x%" PRIx64 " mask=0x%"
--                   HWADDR_PRIx " MAS7_3=0x%" PRIx64 " MAS8=0x%" PRIx32 "\n",
--                   __func__, address, pid, tlb->mas1, tlb->mas2, mask,
--                   tlb->mas7_3, tlb->mas8);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: TLB ADDR=0x" TARGET_FMT_lx
-+                  " PID=0x%x MAS1=0x%x MAS2=0x%" PRIx64 " mask=0x%"
-+                  HWADDR_PRIx " MAS7_3=0x%" PRIx64 " MAS8=0x%" PRIx32 "\n",
-+                  __func__, address, pid, tlb->mas1, tlb->mas2, mask,
-+                  tlb->mas7_3, tlb->mas8);
- 
-     /* Check PID */
-     tlb_pid = (tlb->mas1 & MAS1_TID_MASK) >> MAS1_TID_SHIFT;
+     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
 -- 
 2.30.9
 
