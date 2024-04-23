@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCF5C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33F6C04FFE
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnS-00068j-Pt; Tue, 23 Apr 2024 11:11:02 -0400
+	id 1rzHnH-000561-Tp; Tue, 23 Apr 2024 11:10:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnC-0004kV-UW
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rzHmo-0004SR-CT
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHn7-0000Hp-VU
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:45 -0400
+ id 1rzHmm-000089-31
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885038;
+ s=mimecast20190719; t=1713885019;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8JOqgK6T21wzwgr87RLBCecRIltf/5dHdAu0xkCFNnw=;
- b=K0nwkbhKqq5F3j6ZbXNMdw1kRZvqdHwQYv2cqU4UhDf6m4NQdDs985OMyFS56ojjvY0o61
- z7/+XThC1kbzgRFe9L9oeYbnqbuxaOgpVyYh/Es0Q16Q0N2bUfwwPRNFQY0sDBvCLZdkjG
- qR2/1SEG6SOUbXHEzClw9wvm062eKKk=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-115-N7QJ5teiOgK963udsg0OQQ-1; Tue, 23 Apr 2024 11:10:37 -0400
-X-MC-Unique: N7QJ5teiOgK963udsg0OQQ-1
+ bh=bUMHGpCVxIHKiN0MLiRHD2ZyHKe2Wcki4o8FSWGa7Ro=;
+ b=Vf2a5JfOeFokpOhEdW2cHDyf0Ajx4g53zRXf72stj5YyABt3xHw0cA89wjV1YYzveN8WwH
+ PEDHqfpTiLUlx1U57tlzMh++DL4BnQdFI2jmlhh3wMG9wGnctv5BGKbDbxxu4tGSCmIssQ
+ ooQ8XEXlpVNYH3wtHz6GnHKmv4i/IDg=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-IcqTNz9HO-6AmkMANVspog-1; Tue,
+ 23 Apr 2024 11:10:15 -0400
+X-MC-Unique: IcqTNz9HO-6AmkMANVspog-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2B44B1827109
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:37 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A079729ABA14;
+ Tue, 23 Apr 2024 15:10:15 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id BABD9200E290
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:36 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7902A20296D2;
+ Tue, 23 Apr 2024 15:10:14 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 44/63] target/i386: SEV: use KVM_SEV_INIT2 if possible
-Date: Tue, 23 Apr 2024 17:09:32 +0200
-Message-ID: <20240423150951.41600-45-pbonzini@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Gavin Shan <gshan@redhat.com>
+Subject: [PULL 22/63] hw: Add compat machines for 9.1
+Date: Tue, 23 Apr 2024 17:09:10 +0200
+Message-ID: <20240423150951.41600-23-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -80,134 +83,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement support for the KVM_X86_SEV_VM and KVM_X86_SEV_ES_VM virtual
-machine types, and the KVM_SEV_INIT2 function of KVM_MEMORY_ENCRYPT_OP.
+Add 9.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
 
-These replace the KVM_SEV_INIT and KVM_SEV_ES_INIT functions, and have
-several advantages:
-
-- sharing the initialization sequence with SEV-SNP and TDX
-
-- allowing arguments including the set of desired VMSA features
-
-- protection against invalid use of KVM_GET/SET_* ioctls for guests
-  with encrypted state
-
-If the KVM_X86_SEV_VM and KVM_X86_SEV_ES_VM types are not supported,
-fall back to KVM_SEV_INIT and KVM_SEV_ES_INIT (which use the
-default x86 VM type).
-
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Acked-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Cc: Gavin Shan <gshan@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c |  2 ++
- target/i386/sev.c     | 41 +++++++++++++++++++++++++++++++++++++----
- 2 files changed, 39 insertions(+), 4 deletions(-)
+ include/hw/boards.h        |  3 +++
+ include/hw/i386/pc.h       |  3 +++
+ hw/arm/virt.c              | 11 +++++++++--
+ hw/core/machine.c          |  3 +++
+ hw/i386/pc.c               |  3 +++
+ hw/i386/pc_piix.c          | 17 ++++++++++++++---
+ hw/i386/pc_q35.c           | 14 ++++++++++++--
+ hw/m68k/virt.c             | 11 +++++++++--
+ hw/ppc/spapr.c             | 17 ++++++++++++++---
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+ 10 files changed, 83 insertions(+), 13 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 974586e57a1..a9e93502734 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -164,6 +164,8 @@ static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 8b8f6d5c00d..50e0cf4278e 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -425,6 +425,9 @@ struct MachineState {
+     } \
+     type_init(machine_initfn##_register_types)
  
- static const char *vm_type_name[] = {
-     [KVM_X86_DEFAULT_VM] = "default",
-+    [KVM_X86_SEV_VM] = "SEV",
-+    [KVM_X86_SEV_ES_VM] = "SEV-ES",
- };
- 
- bool kvm_is_vm_type_supported(int type)
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index ebe36d4c10c..9dab4060b84 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -26,6 +26,7 @@
- #include "qemu/error-report.h"
- #include "crypto/hash.h"
- #include "sysemu/kvm.h"
-+#include "kvm/kvm_i386.h"
- #include "sev.h"
- #include "sysemu/sysemu.h"
- #include "sysemu/runstate.h"
-@@ -56,6 +57,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(SevGuestState, SEV_GUEST)
- struct SevGuestState {
-     X86ConfidentialGuest parent_obj;
- 
-+    int kvm_type;
++extern GlobalProperty hw_compat_9_0[];
++extern const size_t hw_compat_9_0_len;
 +
-     /* configuration parameters */
-     char *sev_device;
-     uint32_t policy;
-@@ -850,6 +853,26 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
-     }
+ extern GlobalProperty hw_compat_8_2[];
+ extern const size_t hw_compat_8_2_len;
+ 
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 27a68071d77..349f79df086 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -198,6 +198,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
+ 
++extern GlobalProperty pc_compat_9_0[];
++extern const size_t pc_compat_9_0_len;
++
+ extern GlobalProperty pc_compat_8_2[];
+ extern const size_t pc_compat_8_2_len;
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index a9a913aeadb..c9119ef3847 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3223,10 +3223,17 @@ static void machvirt_machine_init(void)
+ }
+ type_init(machvirt_machine_init);
+ 
+-static void virt_machine_9_0_options(MachineClass *mc)
++static void virt_machine_9_1_options(MachineClass *mc)
+ {
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(9, 0)
++DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
++
++static void virt_machine_9_0_options(MachineClass *mc)
++{
++    virt_machine_9_1_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++}
++DEFINE_VIRT_MACHINE(9, 0)
+ 
+ static void virt_machine_8_2_options(MachineClass *mc)
+ {
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 37ede0e7d4f..a92bec23147 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -33,6 +33,9 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "audio/audio.h"
+ 
++GlobalProperty hw_compat_9_0[] = {};
++const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
++
+ GlobalProperty hw_compat_8_2[] = {
+     { "migration", "zero-page-detection", "legacy"},
+     { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 5c21b0c4dbf..b0d818b2094 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -78,6 +78,9 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
++GlobalProperty pc_compat_9_0[] = {};
++const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
++
+ GlobalProperty pc_compat_8_2[] = {};
+ const size_t pc_compat_8_2_len = G_N_ELEMENTS(pc_compat_8_2);
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 18ba0766092..8850c49c66a 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -513,13 +513,26 @@ static void pc_i440fx_machine_options(MachineClass *m)
+                                      "Use a different south bridge than PIIX3");
  }
  
-+static int sev_kvm_type(X86ConfidentialGuest *cg)
+-static void pc_i440fx_9_0_machine_options(MachineClass *m)
++static void pc_i440fx_9_1_machine_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+     m->alias = "pc";
+     m->is_default = true;
+ }
+ 
++DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1", NULL,
++                      pc_i440fx_9_1_machine_options);
++
++static void pc_i440fx_9_0_machine_options(MachineClass *m)
 +{
-+    SevGuestState *sev = SEV_GUEST(cg);
-+    int kvm_type;
++    pc_i440fx_9_1_machine_options(m);
++    m->alias = NULL;
++    m->is_default = false;
 +
-+    if (sev->kvm_type != -1) {
-+        goto out;
-+    }
-+
-+    kvm_type = (sev->policy & SEV_POLICY_ES) ? KVM_X86_SEV_ES_VM : KVM_X86_SEV_VM;
-+    if (kvm_is_vm_type_supported(kvm_type)) {
-+        sev->kvm_type = kvm_type;
-+    } else {
-+        sev->kvm_type = KVM_X86_DEFAULT_VM;
-+    }
-+
-+out:
-+    return sev->kvm_type;
++    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
 +}
 +
- static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
+                       pc_i440fx_9_0_machine_options);
+ 
+@@ -528,8 +541,6 @@ static void pc_i440fx_8_2_machine_options(MachineClass *m)
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+     pc_i440fx_9_0_machine_options(m);
+-    m->alias = NULL;
+-    m->is_default = false;
+ 
+     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index c7bc8a2041f..6e1180d4b60 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -365,12 +365,23 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_9_0_machine_options(MachineClass *m)
++static void pc_q35_9_1_machine_options(MachineClass *m)
  {
-     SevGuestState *sev = SEV_GUEST(cgs);
-@@ -929,13 +952,19 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-                          __func__);
-             goto err;
-         }
--        cmd = KVM_SEV_ES_INIT;
--    } else {
--        cmd = KVM_SEV_INIT;
-     }
+     pc_q35_machine_options(m);
+     m->alias = "q35";
+ }
  
-     trace_kvm_sev_init();
--    ret = sev_ioctl(sev->sev_fd, cmd, NULL, &fw_error);
-+    if (sev_kvm_type(X86_CONFIDENTIAL_GUEST(sev)) == KVM_X86_DEFAULT_VM) {
-+        cmd = sev_es_enabled() ? KVM_SEV_ES_INIT : KVM_SEV_INIT;
++DEFINE_Q35_MACHINE(v9_1, "pc-q35-9.1", NULL,
++                   pc_q35_9_1_machine_options);
 +
-+        ret = sev_ioctl(sev->sev_fd, cmd, NULL, &fw_error);
-+    } else {
-+        struct kvm_sev_init args = { 0 };
++static void pc_q35_9_0_machine_options(MachineClass *m)
++{
++    pc_q35_9_1_machine_options(m);
++    m->alias = NULL;
++    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
++}
 +
-+        ret = sev_ioctl(sev->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
-+    }
-+
-     if (ret) {
-         error_setg(errp, "%s: failed to initialize ret=%d fw_error=%d '%s'",
-                    __func__, ret, fw_error, fw_error_to_str(fw_error));
-@@ -1327,8 +1356,10 @@ static void
- sev_guest_class_init(ObjectClass *oc, void *data)
+ DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
+                    pc_q35_9_0_machine_options);
+ 
+@@ -378,7 +389,6 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
  {
-     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-+    X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_9_0_machine_options(m);
+-    m->alias = NULL;
+     m->max_cpus = 1024;
+     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index b8e5e102e6b..09bc9bdfefb 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -357,10 +357,17 @@ type_init(virt_machine_register_types)
+     } \
+     type_init(machvirt_machine_##major##_##minor##_init);
  
-     klass->kvm_init = sev_kvm_init;
-+    x86_klass->kvm_type = sev_kvm_type;
- 
-     object_class_property_add_str(oc, "sev-device",
-                                   sev_guest_get_sev_device,
-@@ -1357,6 +1388,8 @@ sev_guest_instance_init(Object *obj)
+-static void virt_machine_9_0_options(MachineClass *mc)
++static void virt_machine_9_1_options(MachineClass *mc)
  {
-     SevGuestState *sev = SEV_GUEST(obj);
- 
-+    sev->kvm_type = -1;
+ }
+-DEFINE_VIRT_MACHINE(9, 0, true)
++DEFINE_VIRT_MACHINE(9, 1, true)
 +
-     sev->sev_device = g_strdup(DEFAULT_SEV_DEVICE);
-     sev->policy = DEFAULT_GUEST_POLICY;
-     object_property_add_uint32_ptr(obj, "policy", &sev->policy,
++static void virt_machine_9_0_options(MachineClass *mc)
++{
++    virt_machine_9_1_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++}
++DEFINE_VIRT_MACHINE(9, 0, false)
+ 
+ static void virt_machine_8_2_options(MachineClass *mc)
+ {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index e9bc97fee08..36ada4d0baf 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4806,14 +4806,25 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+     type_init(spapr_machine_register_##suffix)
+ 
+ /*
+- * pseries-9.0
++ * pseries-9.1
+  */
+-static void spapr_machine_9_0_class_options(MachineClass *mc)
++static void spapr_machine_9_1_class_options(MachineClass *mc)
+ {
+     /* Defaults for the latest behaviour inherited from the base class */
+ }
+ 
+-DEFINE_SPAPR_MACHINE(9_0, "9.0", true);
++DEFINE_SPAPR_MACHINE(9_1, "9.1", true);
++
++/*
++ * pseries-9.0
++ */
++static void spapr_machine_9_0_class_options(MachineClass *mc)
++{
++    spapr_machine_9_1_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++}
++
++DEFINE_SPAPR_MACHINE(9_0, "9.0", false);
+ 
+ /*
+  * pseries-8.2
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index b1dcb3857f0..7cebbf6c02a 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -859,14 +859,26 @@ bool css_migration_enabled(void)
+     }                                                                         \
+     type_init(ccw_machine_register_##suffix)
+ 
++static void ccw_machine_9_1_instance_options(MachineState *machine)
++{
++}
++
++static void ccw_machine_9_1_class_options(MachineClass *mc)
++{
++}
++DEFINE_CCW_MACHINE(9_1, "9.1", true);
++
+ static void ccw_machine_9_0_instance_options(MachineState *machine)
+ {
++    ccw_machine_9_1_instance_options(machine);
+ }
+ 
+ static void ccw_machine_9_0_class_options(MachineClass *mc)
+ {
++    ccw_machine_9_1_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+ }
+-DEFINE_CCW_MACHINE(9_0, "9.0", true);
++DEFINE_CCW_MACHINE(9_0, "9.0", false);
+ 
+ static void ccw_machine_8_2_instance_options(MachineState *machine)
+ {
 -- 
 2.44.0
 
