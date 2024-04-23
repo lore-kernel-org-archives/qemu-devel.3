@@ -4,69 +4,181 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF05C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 02:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AEB5C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 05:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rz5sa-0002im-G4; Mon, 22 Apr 2024 22:27:32 -0400
+	id 1rz8Lr-0002oT-Va; Tue, 23 Apr 2024 01:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rz5sX-0002hc-B1
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 22:27:29 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1rz8Lq-0002oK-7D
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 01:05:54 -0400
+Received: from smarthost4.eviden.com ([80.78.11.85])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rz5sU-00034P-9D
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 22:27:29 -0400
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1rz8Ln-0005HN-TJ
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 01:05:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713839246; x=1745375246;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=7tsEKp1gSfKouV8beUNT8KhE3do+VRJ093EPXyR5Dzg=;
- b=buEtVC26tIMeDPUS5JCuAe98zQtu1hN88jNjCbr8y+sZbPzbvUycmrOO
- 4WRiwwt5YMoMYwLbe32EefKTdUwR9xmXrz0llgm4GHeTxg5/lENgwtfyv
- pxzOhEOQ8z1OCAdLpo/b3xu0cEQ2GCI4BPcspoV6jNyTiQb//hn4+N/WP
- wMVk7/LGnz0lEnwaX2byiv8B424GYh3skKXJl3aMUqZsj/IeVbEho3Yfb
- ytvllhaFETbO7lSH1vkARBZF/4lQG3eVb77+nqP7Ot9YJ+QuLfimw9xmt
- 0dJFl/BSWZLk5Jla8mLZeMisiDXPEAfFVfZya8ZnHPbSIf/UjLO1GDTiv g==;
-X-CSE-ConnectionGUID: aav48mVlRq6L+7b20tCs1w==
-X-CSE-MsgGUID: uxwd2KRYQ0KMV9OX/v8h8A==
-X-IronPort-AV: E=McAfee;i="6600,9927,11052"; a="26920042"
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="26920042"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2024 19:27:13 -0700
-X-CSE-ConnectionGUID: 1El9h2h7R5SSMNJGXfebpw==
-X-CSE-MsgGUID: 66j2GX3cT+Sywx59NVCcWQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="29009370"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa005.jf.intel.com with ESMTP; 22 Apr 2024 19:27:12 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	berrange@redhat.com,
-	philmd@linaro.org
-Subject: [PATCH v10 3/6] ui/console: Use qemu_dmabuf_get_..() helpers instead
-Date: Mon, 22 Apr 2024 19:22:50 -0700
-Message-Id: <20240423022253.1003295-4-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240423022253.1003295-1-dongwon.kim@intel.com>
-References: <20240423022253.1003295-1-dongwon.kim@intel.com>
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1713848752; x=1745384752;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=31B5TL+pw7mFl2g1dtA6pwZrRwCXcaEWWe1HzTAW4tE=;
+ b=GTNO3fsjf4mMOtz5ZTbpVoGqGyevDP+QWwD7Aza9Jt7sbvxqn8HpnBCi
+ XAUNZp6pSJ1gm7zqjIgxFK9F6TtkhMS5DJRBe/1ndVbkfXmh3ylC/UE7z
+ mRuDubrmpzrMh+sydRUOLHKFVz3BnHe6+p8HbBG4wv5oWDFwazh/omtHZ
+ yKk5N4F/945NUrbLEjWvpuh6ki9pmYb78zVeT/Qv+w6FrimYx8ppEeQbd
+ nqbOVJaqeK0HwzucCHIJZdQ47cfYXa0vRqUDjPN50sSq5AEj+LP1JK/MC
+ 0jQwkby/IXaiTdv58ZAzJcT07f+ICAIvUXcq0moxUj/p1IoFbO4fJ1sLi A==;
+X-IronPort-AV: E=Sophos;i="6.07,222,1708383600"; d="scan'208";a="11056776"
+X-MGA-submission: =?us-ascii?q?MDHVLcVlItrPEafzq7Yn1A5mibAUMay16ici/8?=
+ =?us-ascii?q?Unvb/sdT4avneAIUyEV73TWWAzvB2JaT60gvajkKdG3jjUyvp6XXBG2h?=
+ =?us-ascii?q?34RIEfB0VHIywTEdtNeAYbVHNyYVedEOuH0CAXXIgHBrm0zcMQL8Rs0e?=
+ =?us-ascii?q?lSlkrfHNXguo0P5j+toCWx/w=3D=3D?=
+Received: from mail-vi1eur04lp2050.outbound.protection.outlook.com (HELO
+ EUR04-VI1-obe.outbound.protection.outlook.com) ([104.47.14.50])
+ by smarthost4.eviden.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2024 07:05:43 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EzFMReHS/6UR+Kk4pA/IwDMOJPoX7YGeb1UNcnIlG+BClWk7y7m+tH8V0Q2VEB4WzBxtl3bcNW1JfYzynVTvJwW1dYM+zTKAH+7Bm9BIRamNVzfovKPN0JlXgvBvdDGtcw8M+ASGPhouXmrr44iGd1YOHVsIUmKWABdsvM8gDfzu2wZVAkzhr9Dthata4NC0jmKE1vNuVC4N422Na9PGZfzrQpLVuG+mJOQwyWBrTxY3la0hQMiVW14GqO0o0m5NE2uInWXq/Wv8dDZSPDRGphlI6RojzlavlcQYlpZSbVQlYpdaKL67pKBUEsGKUPPnRcLb/YeeDs5SVcfvzxFkbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=31B5TL+pw7mFl2g1dtA6pwZrRwCXcaEWWe1HzTAW4tE=;
+ b=Uc/e2hYR720Rb/pHxP1X4pfOPkENezcw0VFkKzBLqXYeUTyi/KVtYiEkTvIPuw4OQOIb479Lsbr4pQ2J6icsb1vQQG92kD/n3MpwZgrNSaibn1tozT+Efh176Q1cbyD1cyenFoubK1mg5eE3y2HU7NtMO4Q7qm1UGqZuUlmmKBzffTih21kaQDOQVjcBMYn8RaPcMwbIHNDWr8e8CZqqnxM7mUEDgZBvo2UPjoAV5wdH0JzupJXSktIUyWGQ4FW5TzRdDXdJ5dzGTfe7acWG2mRgczKULE0cE4Hllr6fS0/Ll826F5/h4hq3tqS8AgZ8jxMcyHOLApYpHzduR0zB4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by AS4PR07MB8530.eurprd07.prod.outlook.com (2603:10a6:20b:4e9::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7472.44; Tue, 23 Apr
+ 2024 05:05:41 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%5]) with mapi id 15.20.7472.044; Tue, 23 Apr 2024
+ 05:05:40 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>
+Subject: Re: [PATCH intel_iommu 3/7] intel_iommu: make types match
+Thread-Topic: [PATCH intel_iommu 3/7] intel_iommu: make types match
+Thread-Index: AQHalM0i32KNWd9K4kWnjKS4kUptSrF0hHEAgADJsYA=
+Date: Tue, 23 Apr 2024 05:05:40 +0000
+Message-ID: <2537c79d-60d8-4504-a612-ad5a75e1bd20@eviden.com>
+References: <20240422155236.129179-1-clement.mathieu--drif@eviden.com>
+ <20240422155236.129179-4-clement.mathieu--drif@eviden.com>
+ <5acf21ec-216b-4d11-a7c1-ecf9a8ddf76f@linaro.org>
+In-Reply-To: <5acf21ec-216b-4d11-a7c1-ecf9a8ddf76f@linaro.org>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|AS4PR07MB8530:EE_
+x-ms-office365-filtering-correlation-id: 9e4f5fb2-98cd-49d8-d76c-08dc635305bd
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: =?utf-8?B?U0JuWVpxV2s0aUxIck8xakpzcDdNVXhxbVZFVDk0Zkx1aGZRRWpIZHRGbXFi?=
+ =?utf-8?B?SGMyZFgzRDQxNW5uZ3pZOHpiRWN3R3lsZE9ESkpoZnpKazhZd2puN3NUN1Rm?=
+ =?utf-8?B?V1gwdDFUOFRIOGJBRWE4QVJOQXE2SXU2TFlwR2hoU2cvUzltVWNqNUEyMXRM?=
+ =?utf-8?B?blRqWTNlek9lYmtYQjcyS0c4T0hoL2JmR0tEQ0tJWkNnTExkd1M2Tm9QTE50?=
+ =?utf-8?B?VFdwNlp3MERiMnRiWFZNYVJ2NlZNd3c4OWM1ODR5TC9kSzZuS3FRV1lWalBj?=
+ =?utf-8?B?M2piWU1hU250SzBrNGUwa1c3N0xBZnkzaWtXaG5vNGtwVkQ0MkhhRkxKNy9E?=
+ =?utf-8?B?Y3RDbUh1bUgyQzJjdWJrbzViNld0TEhqbVk4TkJiWTZHTHBxUjN6N1dwcGZO?=
+ =?utf-8?B?T1RJbXNGaCtrVXd6M3NQKy9yNGlYMGI5T0xjL1FvK3p4cTVsRW9jUE14aFdw?=
+ =?utf-8?B?ejZFakRFNFUxdkgzeEZNSEJmS3BOREFrWWVuQ3VFTWFWbzVRdFlrNFprYllY?=
+ =?utf-8?B?bEIvYkxPR0MyeDdkM3pidDl6QWVkQjlRN2V6ZlEyN1hGZjFCV09tVmhUVStL?=
+ =?utf-8?B?SjNqRGdNZmhYWEoyZnFRTDFJUUxDY3AyaDlqOTJtcFhIR3ZPYWd3c09Zc2NL?=
+ =?utf-8?B?R2FYN2ZkSDB2MnU3Q0RnL0duakh5VFJFaVlUSHFmeklTTERwcFpnSm1CbnVT?=
+ =?utf-8?B?ZlFDTnZpUWJLbnVwdHRDWTI3Q29qWlNXTmlBMW52QjZoNmVDRnlRQ2IxR3RF?=
+ =?utf-8?B?eE9CL1pUTGpaenhZSWgvUWhkVGpHcjFOME1pOFBxSURIYm10MVJLNWtvZW0x?=
+ =?utf-8?B?Qk9qdzdwVG1xMnhLNDZ5aEgxS1hYSGtiWGgrVTlyd1N3MnhpcjJXVjRuWnJm?=
+ =?utf-8?B?NFAwNm9Gck5CcFJqUm5kQXIzYkEvV25QdCtWV1VaZ0NXV2U0NHNVL1Q2a0ZP?=
+ =?utf-8?B?RHJQemVHQWMwT0NrQVhYbDlFR0p4VlBBcFk4MmJJelV3bERhZ0wvWkVYZXdy?=
+ =?utf-8?B?NkExOEZySWhvc1V5cXlBRmw5VGY2cjBUNEN0cUNrd0VpYWcwR2dHa1U0OTIw?=
+ =?utf-8?B?S3AvZWpEdmp6SWMzS0F5anRCckR5OUFYRHpQQXp4UDV2cFVkbys4S2c4cjhp?=
+ =?utf-8?B?U3RtaHJ2VStvSTg4UWdYVmtkSWlBTTBRelVVK1F2RjJBbXhVdldVWW1lYWVB?=
+ =?utf-8?B?azQ4KzZGRmtvWDRhcXZoM1I2S0p6UjhuNHB3Q01INncvYlBXczhtb28vbmhQ?=
+ =?utf-8?B?QklJTGFrTFc1NlNJN0NxajdnOE1VdGgvcUdEU01LZ3Qwc0ozMUdBT3hZbEps?=
+ =?utf-8?B?QWdBWDk4SU0zL05HNnRITG55VGx5WEc2THl2eEt0UE9HeE1uaVR2cEN4NlZx?=
+ =?utf-8?B?QnpCUjd0eVZwemVvY0VncGx3RHY4Z0grYy81TDBrRjFTQXFxRXJDcWh3R1VT?=
+ =?utf-8?B?MXFaaEZSZkg3WENMdVBCNkxnOG5iYktHRlNKSUozNHZWVkpSSE9kVUJBemxh?=
+ =?utf-8?B?d2FKNnFNcTgvUTZYZWRDUXVlWTRKOGIzNElQbmVJZUVRTkpYYmRDNTBaNk50?=
+ =?utf-8?B?emdGMGY5OE1HaDdsNEEyaGJ5c3BaZlhiQkFFVFhPSEdZR2liOFE2N1ZqZXVl?=
+ =?utf-8?B?aG1qaHhhNHNpYXNwMnU0SUtVdWd3L1ZXZFN5Y0xMV0JtWjBMMkxTK09IZE5U?=
+ =?utf-8?B?Vnp2WWUwaHlWZWlOYmJWNUQzSS9nbFBCOUw0QTV6dWpaOHV0MEIyb2xScm1j?=
+ =?utf-8?B?ZFAzU2kzeWUyTHZab1c5elljSG9xTnpmRDNITGE1S0JrQmcyUDNpSVc4SVVo?=
+ =?utf-8?B?LzBQZFpubDFGVlpDR0Jldz09?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(366007)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L3NibWpOT0JBWmJiL1NmTVQya1lOa1VORzNDa2NRVVFTRmtpbXp1SXJhMVdR?=
+ =?utf-8?B?MWQwdFJpN2FjaWh4SFBJVXQyaU8veDhYY2U4SDFsZ29hd1JoYlk5WDlMN3lY?=
+ =?utf-8?B?TWorZG1ROGJUNXJHcGZnVUcwd1RRNzZLdW84QjAyVDNHTU9jRGNoV0lKelQv?=
+ =?utf-8?B?RDVBa2lxenkzV1p3WkdDeXBUcC95KzhyT0s4TGdxTTY0ZDRacFMyOVhDbDk3?=
+ =?utf-8?B?N0VCZ3lLalN6Qy84L0gzWVNzY1NqSGFmdnpRR3B1ZnhqQStjZHJEUkdUYTh6?=
+ =?utf-8?B?MERFWDNFckJpTkFCMnlCNzRHdmdFaE1HSGN0RVlpQTVmTVRFVXN4MzhFVTQ2?=
+ =?utf-8?B?MDZJWHVxMk0yK1V0NFpwdHdvR0dabGsyMGZUOE5QVkx0VkhsNVJhMk1WanFo?=
+ =?utf-8?B?VlJxN1k0NTRULzZkWWVGcXB4c0xacWtWMnpmSmllWmpqa1hSTVF4N0pEYVlQ?=
+ =?utf-8?B?Ylk4cHI2dmFqRmhFbnRjcW4vaDByUmYxRjhCQW9DZGdQcCtlSUxqM3FQYUZ4?=
+ =?utf-8?B?RHJWTmw3RUgzSGpWdlNQS2JNaGJKR0kzNTNxOTg5akJMcFYrWnB4Ti8wejJI?=
+ =?utf-8?B?cXMxWjFPYlZ3cVl0YXUxSXptT3Zpd1VYSVRaSVlSM005SGx4WFZ1L2dVaDFQ?=
+ =?utf-8?B?WElTaThFc0pZeW5kYThNVDVybEdQRWNTcnlSNE5GRHlTTG1BZWlQczMyNGl2?=
+ =?utf-8?B?aWt2aERpTk9nWjh5am5xQy9peVo3VHpDU095Wk1pR0wxYXMvUkZ3M2ppTTdY?=
+ =?utf-8?B?MUE3RXhsQ3BoNHRLY0x1dDdxRlZ3M3ZSZ0ZsMXZ2dXpITkZuUy9GMmhxUGMx?=
+ =?utf-8?B?MlJ6TXR4b1lQc092M3V5SXV1M1dBU29yZEZ6OUZaREpTS3MzRU9Ba1JZL2Ew?=
+ =?utf-8?B?YzZJZkgyUDFqQVNZb3F0ZXo2cTdVbVp1dGtLaHhQSG1KaGJZeUo2NFNaTWk2?=
+ =?utf-8?B?cFdtc2Q5UmlZZjZFQTg2Z2c5VkM5b0FOVzkwSWpqVWVLc1BQZStOZVhiZVFu?=
+ =?utf-8?B?Nnp6OGJMTXh2LzhHS2xDeUJ3SklxSUtDSUFnUXBsTjBobzNZV2Q1M1Q4SzBF?=
+ =?utf-8?B?R0RKYVh3eVNMbjBpY1JOaGJqOVMrem9yQWhNTEI3MzlrWm9LZ2ZyTSs2UHRX?=
+ =?utf-8?B?U0ppNXZSQ0Jkc25rSE9UbGpyQ0lKbHgxN2FYSTFiRWxrUnpsYmNSRTBHOXgx?=
+ =?utf-8?B?Vm56YndqR3dyVXZxcEdjRWhWcFIxR0wzZWx2cjFGM1BUL0U1VG1qSzVEMFpB?=
+ =?utf-8?B?TnhRRjVpMVZ6RDhUTmszY01Pd05aNFJhVHZNU1RsQTh1QzlQK290WjRZeDl0?=
+ =?utf-8?B?ZDR3dStqaUVKQkVqTWg5eHIxZExrL216bHdpMXVUUVEzSXpDYXBqTGdaMysv?=
+ =?utf-8?B?dVFVblhudHNWZWFDTmlIK29QSjFaZ05QQjNCa2RjaE1LTWwvcFk2M0FabXBS?=
+ =?utf-8?B?dkFWNFVpZkNsTXduYmkxVkRwUXg0OVdaemI1cVFUajV3RVdlZ2R3R3A5UnBD?=
+ =?utf-8?B?cjBEQkwxejNtSXJ0Vng3Mm9acFhGb25jT0wrY1pCKzdLZ0x0WXpJQ213YWNu?=
+ =?utf-8?B?di9veWRDMVg2aVNMNjlJb0Vlbkt5dDNMaUdKYzk0ck5vcUZxZUY5OHpkMXJ5?=
+ =?utf-8?B?TGJUN0hBSHdVR1YrZkVqbWZBR3hOam9hNE4rVmVQOHlaMUdRY1E3aVVpNnh0?=
+ =?utf-8?B?ajRLdzMxN3kvT1BRam5tcStmMXF4eEVYL1JTYzBaM3NROTBqQXVLK2FkdTdF?=
+ =?utf-8?B?eFBWYlRWQ0VHMUFyZDRFL05JcS9TZTcrRlBGdWtqdzNLZ2didXFMNTFhbzNH?=
+ =?utf-8?B?NFBxTC9OamFxWFEyVGpUQU9YejRsR3doUWhPZC9MQlN5bWFtT1ZDd1p6TVVk?=
+ =?utf-8?B?YVovb25vRU1MbGJYZWV6VHpMNTJnSGRTbGZEN2htMHdYS2hBQTUzRHNLalZo?=
+ =?utf-8?B?Z1o5YUR3ZlV0eFZ0ZEVzV3FJNnVwZ2p3T1dtTlZJZkhHSXZldVkzWEM2QTVS?=
+ =?utf-8?B?U1l0elJHbEFFVnVNd2VqU1VYdHFSL0EzMnpPb0p4THByN3I2eFQ3WE1GRU8z?=
+ =?utf-8?B?cURpbEpzbEkvS3lKemNTbHJTejFDaFIzN29CR3dOV1FmcGJzTmdoQVBPYU1Y?=
+ =?utf-8?B?WmpQd0c3cWJPZVFORU9qN0plb1R0QXo0aFd4Y3J0SnpSanE2Rm1QQXZSOC9P?=
+ =?utf-8?Q?wyvr8mBsN2CocskU0hVZcwg=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <9E2DFDDC9ED1724697CBC2E120D7D44D@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e4f5fb2-98cd-49d8-d76c-08dc635305bd
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2024 05:05:40.9115 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: cFjJIwT6qNZmwfTe1ypfy6cE8iK5t39V7qY3pIlUQdMF8eiO1nt9TYld0dYG5iEZIDFiZvP0IfppPNpO88vuQsiW11DkowhY7JHPV56dPexYxHf48o4++Yf6rld2r33K
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR07MB8530
+Received-SPF: pass client-ip=80.78.11.85;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.eviden.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,740 +195,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
-
-This commit updates all instances where fields within the QemuDmaBuf
-struct are directly accessed, replacing them with calls to these new
-helper functions.
-
-v6: fix typos in helper names in ui/spice-display.c
-
-v7: removed prefix, "dpy_gl_" from all helpers
-
-v8: Introduction of helpers was removed as those were already added
-    by the previous commit
-
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- hw/display/vhost-user-gpu.c     |  6 ++--
- hw/display/virtio-gpu-udmabuf.c |  7 +++--
- hw/vfio/display.c               | 15 +++++++---
- ui/console.c                    |  4 +--
- ui/dbus-console.c               |  9 ++++--
- ui/dbus-listener.c              | 43 +++++++++++++++++-----------
- ui/egl-headless.c               | 23 ++++++++++-----
- ui/egl-helpers.c                | 47 ++++++++++++++++++-------------
- ui/gtk-egl.c                    | 48 ++++++++++++++++++++-----------
- ui/gtk-gl-area.c                | 37 ++++++++++++++++--------
- ui/gtk.c                        |  6 ++--
- ui/spice-display.c              | 50 +++++++++++++++++++--------------
- 12 files changed, 187 insertions(+), 108 deletions(-)
-
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 709c8a02a1..ea9a6c5d10 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -249,6 +249,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-     case VHOST_USER_GPU_DMABUF_SCANOUT: {
-         VhostUserGpuDMABUFScanout *m = &msg->payload.dmabuf_scanout;
-         int fd = qemu_chr_fe_get_msgfd(&g->vhost_chr);
-+        int old_fd;
-         QemuDmaBuf *dmabuf;
- 
-         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
-@@ -262,8 +263,9 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         g->parent_obj.enable = 1;
-         con = g->parent_obj.scanout[m->scanout_id].con;
-         dmabuf = &g->dmabuf[m->scanout_id];
--        if (dmabuf->fd >= 0) {
--            close(dmabuf->fd);
-+        old_fd = qemu_dmabuf_get_fd(dmabuf);
-+        if (old_fd >= 0) {
-+            close(old_fd);
-             dmabuf->fd = -1;
-         }
-         dpy_gl_release_dmabuf(con, dmabuf);
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index d51184d658..c90eba281e 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -206,6 +206,7 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
- {
-     struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
-     VGPUDMABuf *new_primary, *old_primary = NULL;
-+    uint32_t width, height;
- 
-     new_primary = virtio_gpu_create_dmabuf(g, scanout_id, res, fb, r);
-     if (!new_primary) {
-@@ -216,10 +217,10 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-         old_primary = g->dmabuf.primary[scanout_id];
-     }
- 
-+    width = qemu_dmabuf_get_width(&new_primary->buf);
-+    height = qemu_dmabuf_get_height(&new_primary->buf);
-     g->dmabuf.primary[scanout_id] = new_primary;
--    qemu_console_resize(scanout->con,
--                        new_primary->buf.width,
--                        new_primary->buf.height);
-+    qemu_console_resize(scanout->con, width, height);
-     dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
- 
-     if (old_primary) {
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 1aa440c663..4861c8161d 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -259,9 +259,13 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDevice *vdev,
- 
- static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
- {
-+    int fd;
-+
-     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
-+
-+    fd = qemu_dmabuf_get_fd(&dmabuf->buf);
-     dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
--    close(dmabuf->buf.fd);
-+    close(fd);
-     g_free(dmabuf);
- }
- 
-@@ -286,6 +290,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-     VFIOPCIDevice *vdev = opaque;
-     VFIODisplay *dpy = vdev->dpy;
-     VFIODMABuf *primary, *cursor;
-+    uint32_t width, height;
-     bool free_bufs = false, new_cursor = false;
- 
-     primary = vfio_display_get_dmabuf(vdev, DRM_PLANE_TYPE_PRIMARY);
-@@ -296,10 +301,12 @@ static void vfio_display_dmabuf_update(void *opaque)
-         return;
-     }
- 
-+    width = qemu_dmabuf_get_width(&primary->buf);
-+    height = qemu_dmabuf_get_height(&primary->buf);
-+
-     if (dpy->dmabuf.primary != primary) {
-         dpy->dmabuf.primary = primary;
--        qemu_console_resize(dpy->con,
--                            primary->buf.width, primary->buf.height);
-+        qemu_console_resize(dpy->con, width, height);
-         dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
-         free_bufs = true;
-     }
-@@ -328,7 +335,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-         cursor->pos_updates = 0;
-     }
- 
--    dpy_gl_update(dpy->con, 0, 0, primary->buf.width, primary->buf.height);
-+    dpy_gl_update(dpy->con, 0, 0, width, height);
- 
-     if (free_bufs) {
-         vfio_display_free_dmabufs(vdev);
-diff --git a/ui/console.c b/ui/console.c
-index 43226c5c14..1b2cd0c736 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1459,7 +1459,7 @@ int qemu_console_get_width(QemuConsole *con, int fallback)
-     }
-     switch (con->scanout.kind) {
-     case SCANOUT_DMABUF:
--        return con->scanout.dmabuf->width;
-+        return qemu_dmabuf_get_width(con->scanout.dmabuf);
-     case SCANOUT_TEXTURE:
-         return con->scanout.texture.width;
-     case SCANOUT_SURFACE:
-@@ -1476,7 +1476,7 @@ int qemu_console_get_height(QemuConsole *con, int fallback)
-     }
-     switch (con->scanout.kind) {
-     case SCANOUT_DMABUF:
--        return con->scanout.dmabuf->height;
-+        return qemu_dmabuf_get_height(con->scanout.dmabuf);
-     case SCANOUT_TEXTURE:
-         return con->scanout.texture.height;
-     case SCANOUT_SURFACE:
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 49da9ccc83..578b67f62b 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -110,11 +110,14 @@ static void
- dbus_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-                        QemuDmaBuf *dmabuf)
- {
-+    uint32_t width, height;
-+
-     DBusDisplayConsole *ddc = container_of(dcl, DBusDisplayConsole, dcl);
- 
--    dbus_display_console_set_size(ddc,
--                                  dmabuf->width,
--                                  dmabuf->height);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+
-+    dbus_display_console_set_size(ddc, width, height);
- }
- 
- static void
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 4a0a5d78f9..62d1e2d3f9 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -278,29 +278,33 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
-     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
-     g_autoptr(GError) err = NULL;
-     g_autoptr(GUnixFDList) fd_list = NULL;
-+    int fd;
-+    uint32_t width, height, stride, fourcc;
-+    uint64_t modifier;
-+    bool y0_top;
- 
-+    fd = qemu_dmabuf_get_fd(dmabuf);
-     fd_list = g_unix_fd_list_new();
--    if (g_unix_fd_list_append(fd_list, dmabuf->fd, &err) != 0) {
-+    if (g_unix_fd_list_append(fd_list, fd, &err) != 0) {
-         error_report("Failed to setup dmabuf fdlist: %s", err->message);
-         return;
-     }
- 
-     ddl_discard_pending_messages(ddl);
- 
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+    stride = qemu_dmabuf_get_stride(dmabuf);
-+    fourcc = qemu_dmabuf_get_fourcc(dmabuf);
-+    modifier = qemu_dmabuf_get_modifier(dmabuf);
-+    y0_top = qemu_dmabuf_get_y0_top(dmabuf);
-+
-     /* FIXME: add missing x/y/w/h support */
-     qemu_dbus_display1_listener_call_scanout_dmabuf(
--        ddl->proxy,
--        g_variant_new_handle(0),
--        dmabuf->width,
--        dmabuf->height,
--        dmabuf->stride,
--        dmabuf->fourcc,
--        dmabuf->modifier,
--        dmabuf->y0_top,
--        G_DBUS_CALL_FLAGS_NONE,
--        -1,
--        fd_list,
--        NULL, NULL, NULL);
-+        ddl->proxy, g_variant_new_handle(0),
-+        width, height, stride, fourcc, modifier,
-+        y0_top, G_DBUS_CALL_FLAGS_NONE,
-+        -1, fd_list, NULL, NULL, NULL);
- }
- #endif /* GBM */
- #endif /* OPENGL */
-@@ -488,6 +492,7 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
-     DisplaySurface *ds;
-     GVariant *v_data = NULL;
-     egl_fb cursor_fb = EGL_FB_INIT;
-+    uint32_t width, height, texture;
- 
-     if (!dmabuf) {
-         qemu_dbus_display1_listener_call_mouse_set(
-@@ -497,12 +502,16 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
-     }
- 
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
--    egl_fb_setup_for_tex(&cursor_fb, dmabuf->width, dmabuf->height,
--                         dmabuf->texture, false);
--    ds = qemu_create_displaysurface(dmabuf->width, dmabuf->height);
-+
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+
-+    egl_fb_setup_for_tex(&cursor_fb, width, height, texture, false);
-+    ds = qemu_create_displaysurface(width, height);
-     egl_fb_read(ds, &cursor_fb);
- 
-     v_data = g_variant_new_from_data(
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index d5637dadb2..6187249c73 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -85,29 +85,38 @@ static void egl_scanout_texture(DisplayChangeListener *dcl,
- static void egl_scanout_dmabuf(DisplayChangeListener *dcl,
-                                QemuDmaBuf *dmabuf)
- {
-+    uint32_t width, height, texture;
-+
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    egl_scanout_texture(dcl, dmabuf->texture,
--                        false, dmabuf->width, dmabuf->height,
--                        0, 0, dmabuf->width, dmabuf->height, NULL);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+
-+    egl_scanout_texture(dcl, texture, false, width, height, 0, 0,
-+                        width, height, NULL);
- }
- 
- static void egl_cursor_dmabuf(DisplayChangeListener *dcl,
-                               QemuDmaBuf *dmabuf, bool have_hot,
-                               uint32_t hot_x, uint32_t hot_y)
- {
-+    uint32_t width, height, texture;
-     egl_dpy *edpy = container_of(dcl, egl_dpy, dcl);
- 
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&edpy->cursor_fb, dmabuf->width, dmabuf->height,
--                             dmabuf->texture, false);
-+
-+        width = qemu_dmabuf_get_width(dmabuf);
-+        height = qemu_dmabuf_get_height(dmabuf);
-+        egl_fb_setup_for_tex(&edpy->cursor_fb, width, height, texture, false);
-     } else {
-         egl_fb_destroy(&edpy->cursor_fb);
-     }
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 3d19dbe382..3f96e63d25 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -146,10 +146,10 @@ void egl_fb_blit(egl_fb *dst, egl_fb *src, bool flip)
-     glViewport(0, 0, dst->width, dst->height);
- 
-     if (src->dmabuf) {
--        x1 = src->dmabuf->x;
--        y1 = src->dmabuf->y;
--        w = src->dmabuf->width;
--        h = src->dmabuf->height;
-+        x1 = qemu_dmabuf_get_x(src->dmabuf);
-+        y1 = qemu_dmabuf_get_y(src->dmabuf);
-+        w = qemu_dmabuf_get_width(src->dmabuf);
-+        h = qemu_dmabuf_get_height(src->dmabuf);
-     }
- 
-     w = (x1 + w) > src->width ? src->width - x1 : w;
-@@ -308,30 +308,33 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     EGLImageKHR image = EGL_NO_IMAGE_KHR;
-     EGLint attrs[64];
-     int i = 0;
-+    uint64_t modifier;
-+    uint32_t texture = qemu_dmabuf_get_texture(dmabuf);
- 
--    if (dmabuf->texture != 0) {
-+    if (texture != 0) {
-         return;
-     }
- 
-     attrs[i++] = EGL_WIDTH;
--    attrs[i++] = dmabuf->backing_width;
-+    attrs[i++] = qemu_dmabuf_get_backing_width(dmabuf);
-     attrs[i++] = EGL_HEIGHT;
--    attrs[i++] = dmabuf->backing_height;
-+    attrs[i++] = qemu_dmabuf_get_backing_height(dmabuf);
-     attrs[i++] = EGL_LINUX_DRM_FOURCC_EXT;
--    attrs[i++] = dmabuf->fourcc;
-+    attrs[i++] = qemu_dmabuf_get_fourcc(dmabuf);
- 
-     attrs[i++] = EGL_DMA_BUF_PLANE0_FD_EXT;
--    attrs[i++] = dmabuf->fd;
-+    attrs[i++] = qemu_dmabuf_get_fd(dmabuf);
-     attrs[i++] = EGL_DMA_BUF_PLANE0_PITCH_EXT;
--    attrs[i++] = dmabuf->stride;
-+    attrs[i++] = qemu_dmabuf_get_stride(dmabuf);
-     attrs[i++] = EGL_DMA_BUF_PLANE0_OFFSET_EXT;
-     attrs[i++] = 0;
- #ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
--    if (dmabuf->modifier) {
-+    modifier = qemu_dmabuf_get_modifier(dmabuf);
-+    if (modifier) {
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT;
--        attrs[i++] = (dmabuf->modifier >>  0) & 0xffffffff;
-+        attrs[i++] = (modifier >>  0) & 0xffffffff;
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT;
--        attrs[i++] = (dmabuf->modifier >> 32) & 0xffffffff;
-+        attrs[i++] = (modifier >> 32) & 0xffffffff;
-     }
- #endif
-     attrs[i++] = EGL_NONE;
-@@ -346,7 +349,8 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     }
- 
-     glGenTextures(1, &dmabuf->texture);
--    glBindTexture(GL_TEXTURE_2D, dmabuf->texture);
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    glBindTexture(GL_TEXTURE_2D, texture);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
- 
-@@ -356,11 +360,14 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
- 
- void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
- {
--    if (dmabuf->texture == 0) {
-+    uint32_t texture;
-+
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (texture == 0) {
-         return;
-     }
- 
--    glDeleteTextures(1, &dmabuf->texture);
-+    glDeleteTextures(1, &texture);
-     dmabuf->texture = 0;
- }
- 
-@@ -382,10 +389,12 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
- 
- void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
- {
--    if (dmabuf->sync) {
-+    void *sync = qemu_dmabuf_get_sync(dmabuf);
-+
-+    if (sync) {
-         dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
--                                                      dmabuf->sync);
--        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
-+                                                      sync);
-+        eglDestroySyncKHR(qemu_egl_display, sync);
-         dmabuf->sync = NULL;
-     }
- }
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 955234429d..7a45daefa1 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -70,6 +70,7 @@ void gd_egl_draw(VirtualConsole *vc)
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
- #endif
-     int ww, wh, ws;
-+    int fence_fd;
- 
-     if (!vc->gfx.gls) {
-         return;
-@@ -83,7 +84,7 @@ void gd_egl_draw(VirtualConsole *vc)
-     if (vc->gfx.scanout_mode) {
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            if (!dmabuf->draw_submitted) {
-+            if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
-                 dmabuf->draw_submitted = false;
-@@ -99,8 +100,9 @@ void gd_egl_draw(VirtualConsole *vc)
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd >= 0) {
--                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-+            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+            if (fence_fd >= 0) {
-+                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-             graphic_hw_gl_block(vc->gfx.dcl.con, false);
-@@ -149,7 +151,8 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
-     gd_update_monitor_refresh_rate(
-             vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         return;
-     }
- 
-@@ -264,22 +267,30 @@ void gd_egl_scanout_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t x, y, width, height, backing_width, backing_height, texture;
-+    bool y0_top;
- 
-     eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-                    vc->gfx.esurface, vc->gfx.ectx);
- 
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    gd_egl_scanout_texture(dcl, dmabuf->texture,
--                           dmabuf->y0_top,
--                           dmabuf->backing_width, dmabuf->backing_height,
--                           dmabuf->x, dmabuf->y, dmabuf->width,
--                           dmabuf->height, NULL);
-+    x = qemu_dmabuf_get_x(dmabuf);
-+    y = qemu_dmabuf_get_y(dmabuf);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+    backing_width = qemu_dmabuf_get_backing_width(dmabuf);
-+    backing_height = qemu_dmabuf_get_backing_height(dmabuf);
-+    y0_top = qemu_dmabuf_get_y0_top(dmabuf);
- 
--    if (dmabuf->allow_fences) {
-+    gd_egl_scanout_texture(dcl, texture, y0_top, backing_width, backing_height,
-+                           x, y, width, height, NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-         vc->gfx.guest_fb.dmabuf = dmabuf;
-     }
- #endif
-@@ -291,15 +302,19 @@ void gd_egl_cursor_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t backing_width, backing_height, texture;
- 
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&vc->gfx.cursor_fb,
--                             dmabuf->backing_width, dmabuf->backing_height,
--                             dmabuf->texture, false);
-+
-+        backing_width = qemu_dmabuf_get_backing_width(dmabuf);
-+        backing_height = qemu_dmabuf_get_backing_height(dmabuf);
-+        egl_fb_setup_for_tex(&vc->gfx.cursor_fb, backing_width, backing_height,
-+                             texture, false);
-     } else {
-         egl_fb_destroy(&vc->gfx.cursor_fb);
-     }
-@@ -363,7 +378,8 @@ void gd_egl_flush(DisplayChangeListener *dcl,
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-     GtkWidget *area = vc->gfx.drawing_area;
- 
--    if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-         gtk_egl_set_scanout_mode(vc, true);
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 7fffd0544e..2d70280803 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -60,7 +60,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
- 
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            if (!dmabuf->draw_submitted) {
-+            if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
-                 return;
-             } else {
-                 dmabuf->draw_submitted = false;
-@@ -85,9 +85,11 @@ void gd_gl_area_draw(VirtualConsole *vc)
-         glFlush();
- #ifdef CONFIG_GBM
-         if (dmabuf) {
-+            int fence_fd;
-             egl_dmabuf_create_fence(dmabuf);
--            if (dmabuf->fence_fd >= 0) {
--                qemu_set_fd_handler(dmabuf->fence_fd, gd_hw_gl_flushed, NULL, vc);
-+            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+            if (fence_fd >= 0) {
-+                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
-             graphic_hw_gl_block(vc->gfx.dcl.con, false);
-@@ -125,7 +127,8 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
- 
-     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         return;
-     }
- 
-@@ -285,7 +288,8 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- {
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
- 
--    if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+    if (vc->gfx.guest_fb.dmabuf &&
-+        !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-         gtk_gl_area_set_scanout_mode(vc, true);
-@@ -298,20 +302,29 @@ void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
- {
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    uint32_t x, y, width, height, backing_width, backing_height, texture;
-+    bool y0_top;
- 
-     gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-     egl_dmabuf_import_texture(dmabuf);
--    if (!dmabuf->texture) {
-+    texture = qemu_dmabuf_get_texture(dmabuf);
-+    if (!texture) {
-         return;
-     }
- 
--    gd_gl_area_scanout_texture(dcl, dmabuf->texture,
--                               dmabuf->y0_top,
--                               dmabuf->backing_width, dmabuf->backing_height,
--                               dmabuf->x, dmabuf->y, dmabuf->width,
--                               dmabuf->height, NULL);
-+    x = qemu_dmabuf_get_x(dmabuf);
-+    y = qemu_dmabuf_get_y(dmabuf);
-+    width = qemu_dmabuf_get_width(dmabuf);
-+    height = qemu_dmabuf_get_height(dmabuf);
-+    backing_width = qemu_dmabuf_get_backing_width(dmabuf);
-+    backing_height = qemu_dmabuf_get_backing_height(dmabuf);
-+    y0_top = qemu_dmabuf_get_y0_top(dmabuf);
- 
--    if (dmabuf->allow_fences) {
-+    gd_gl_area_scanout_texture(dcl, texture, y0_top,
-+                               backing_width, backing_height,
-+                               x, y, width, height, NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-         vc->gfx.guest_fb.dmabuf = dmabuf;
-     }
- #endif
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 7819a86321..237c913b26 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -596,10 +596,12 @@ void gd_hw_gl_flushed(void *vcon)
- {
-     VirtualConsole *vc = vcon;
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
-+    int fence_fd;
- 
-     if (dmabuf->fence_fd >= 0) {
--        qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
--        close(dmabuf->fence_fd);
-+        fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
-+        qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
-+        close(fence_fd);
-         dmabuf->fence_fd = -1;
-         graphic_hw_gl_block(vc->gfx.dcl.con, false);
-     }
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 6eb98a5a5c..5d607cb830 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -976,6 +976,7 @@ static void qemu_spice_gl_cursor_dmabuf(DisplayChangeListener *dcl,
-                                         uint32_t hot_x, uint32_t hot_y)
- {
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
-+    uint32_t width, height, texture;
- 
-     ssd->have_hot = have_hot;
-     ssd->hot_x = hot_x;
-@@ -984,11 +985,13 @@ static void qemu_spice_gl_cursor_dmabuf(DisplayChangeListener *dcl,
-     trace_qemu_spice_gl_cursor(ssd->qxl.id, dmabuf != NULL, have_hot);
-     if (dmabuf) {
-         egl_dmabuf_import_texture(dmabuf);
--        if (!dmabuf->texture) {
-+        texture = qemu_dmabuf_get_texture(dmabuf);
-+        if (!texture) {
-             return;
-         }
--        egl_fb_setup_for_tex(&ssd->cursor_fb, dmabuf->width, dmabuf->height,
--                             dmabuf->texture, false);
-+        width = qemu_dmabuf_get_width(dmabuf);
-+        height = qemu_dmabuf_get_height(dmabuf);
-+        egl_fb_setup_for_tex(&ssd->cursor_fb, width, height, texture, false);
-     } else {
-         egl_fb_destroy(&ssd->cursor_fb);
-     }
-@@ -1026,6 +1029,7 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     bool y_0_top = false; /* FIXME */
-     uint64_t cookie;
-     int fd;
-+    uint32_t width, height, texture;
- 
-     if (!ssd->have_scanout) {
-         return;
-@@ -1042,41 +1046,45 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
- 
-     if (ssd->guest_dmabuf_refresh) {
-         QemuDmaBuf *dmabuf = ssd->guest_dmabuf;
-+        width = qemu_dmabuf_get_width(dmabuf);
-+        height = qemu_dmabuf_get_height(dmabuf);
-+
-         if (render_cursor) {
-             egl_dmabuf_import_texture(dmabuf);
--            if (!dmabuf->texture) {
-+            texture = qemu_dmabuf_get_texture(dmabuf);
-+            if (!texture) {
-                 return;
-             }
- 
-             /* source framebuffer */
--            egl_fb_setup_for_tex(&ssd->guest_fb,
--                                 dmabuf->width, dmabuf->height,
--                                 dmabuf->texture, false);
-+            egl_fb_setup_for_tex(&ssd->guest_fb, width, height,
-+                                 texture, false);
- 
-             /* dest framebuffer */
--            if (ssd->blit_fb.width  != dmabuf->width ||
--                ssd->blit_fb.height != dmabuf->height) {
--                trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, dmabuf->width,
--                                                  dmabuf->height);
-+            if (ssd->blit_fb.width  != width ||
-+                ssd->blit_fb.height != height) {
-+                trace_qemu_spice_gl_render_dmabuf(ssd->qxl.id, width,
-+                                                  height);
-                 egl_fb_destroy(&ssd->blit_fb);
-                 egl_fb_setup_new_tex(&ssd->blit_fb,
--                                     dmabuf->width, dmabuf->height);
-+                                     width, height);
-                 fd = egl_get_fd_for_texture(ssd->blit_fb.texture,
-                                             &stride, &fourcc, NULL);
--                spice_qxl_gl_scanout(&ssd->qxl, fd,
--                                     dmabuf->width, dmabuf->height,
-+                spice_qxl_gl_scanout(&ssd->qxl, fd, width, height,
-                                      stride, fourcc, false);
-             }
-         } else {
--            trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id,
--                                               dmabuf->width, dmabuf->height);
-+            stride = qemu_dmabuf_get_stride(dmabuf);
-+            fourcc = qemu_dmabuf_get_fourcc(dmabuf);
-+            y_0_top = qemu_dmabuf_get_y0_top(dmabuf);
-+            fd = qemu_dmabuf_get_fd(dmabuf);
-+
-+            trace_qemu_spice_gl_forward_dmabuf(ssd->qxl.id, width, height);
-             /* note: spice server will close the fd, so hand over a dup */
--            spice_qxl_gl_scanout(&ssd->qxl, dup(dmabuf->fd),
--                                 dmabuf->width, dmabuf->height,
--                                 dmabuf->stride, dmabuf->fourcc,
--                                 dmabuf->y0_top);
-+            spice_qxl_gl_scanout(&ssd->qxl, dup(fd), width, height,
-+                                 stride, fourcc, y_0_top);
-         }
--        qemu_spice_gl_monitor_config(ssd, 0, 0, dmabuf->width, dmabuf->height);
-+        qemu_spice_gl_monitor_config(ssd, 0, 0, width, height);
-         ssd->guest_dmabuf_refresh = false;
-     }
- 
--- 
-2.34.1
-
+DQpPbiAyMi8wNC8yMDI0IDE5OjAzLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4g
+T24gMjIvNC8yNCAxNzo1MiwgQ0xFTUVOVCBNQVRISUVVLS1EUklGIHdyb3RlOg0KPj4gVGhlICds
+ZXZlbCcgZmllbGQgaW4gdnRkX2lvdGxiX2tleSBpcyBhbiB1aW50OF90Lg0KPj4gV2UgZG9uJ3Qg
+bmVlZCB0byBzdG9yZSBsZXZlbCBhcyBhbiBpbnQgaW4gdnRkX2xvb2t1cF9pb3RsYg0KPj4NCj4+
+IFNpZ25lZC1vZmYtYnk6IENsw6ltZW50IE1hdGhpZXUtLURyaWYgPGNsZW1lbnQubWF0aGlldS0t
+ZHJpZkBldmlkZW4uY29tPg0KPj4gLS0tDQo+PiDCoCBody9pMzg2L2ludGVsX2lvbW11LmMgfCAy
+ICstDQo+PiDCoCAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkN
+Cj4+DQo+PiBkaWZmIC0tZ2l0IGEvaHcvaTM4Ni9pbnRlbF9pb21tdS5jIGIvaHcvaTM4Ni9pbnRl
+bF9pb21tdS5jDQo+PiBpbmRleCA2ZjEzNjRiM2ZkLi5iYTU0NTU5MGIxIDEwMDY0NA0KPj4gLS0t
+IGEvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQo+PiArKysgYi9ody9pMzg2L2ludGVsX2lvbW11LmMN
+Cj4+IEBAIC0zMzMsNyArMzMzLDcgQEAgc3RhdGljIFZURElPVExCRW50cnkgDQo+PiAqdnRkX2xv
+b2t1cF9pb3RsYihJbnRlbElPTU1VU3RhdGUgKnMsIHVpbnQxNl90IHNvdXJjZV9pZCwNCj4+IMKg
+IHsNCj4+IMKgwqDCoMKgwqAgc3RydWN0IHZ0ZF9pb3RsYl9rZXkga2V5Ow0KPj4gwqDCoMKgwqDC
+oCBWVERJT1RMQkVudHJ5ICplbnRyeTsNCj4+IC3CoMKgwqAgaW50IGxldmVsOw0KPj4gK8KgwqDC
+oCB1aW50OF90IGxldmVsOw0KPg0KPiBPciBzaW1wbHkgJ3Vuc2lnbmVkJyB1cCB0byB2dGRfc2xw
+dF9sZXZlbF9zaGlmdCgpPw0KdnRkX2lvdGxiX2tleS5sZXZlbCBpcyBhbiB1aW50OF90LCBqdXN0
+IGF2b2lkaW5nIGEgd2FybmluZyBoZXJl
 
