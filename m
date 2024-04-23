@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F7BBC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADAF2C04FFE
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHna-0006uw-Af; Tue, 23 Apr 2024 11:11:10 -0400
+	id 1rzHnG-00053d-Uj; Tue, 23 Apr 2024 11:10:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnO-0005k4-OG
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:58 -0400
+ id 1rzHmk-0004Nd-FG
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnM-0000O5-Ro
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:58 -0400
+ id 1rzHmg-00006I-Pb
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885056;
+ s=mimecast20190719; t=1713885011;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MOg9KtNLxd3u1DXDqJr03F3rYuVq7N0n2StxlG1HCJo=;
- b=YQY/P44Bby+ClQsLSoXyObDIGdjqxGwKbrIcXiHEUCyvBLw1q/iLk5IjtvlTUejv5Q5/5e
- rDGrxISYiOKt21EFoSXjmuuyfhVL/iBF1oON6NsSrMRuuLEpuCwMOGhYXknwk3n4x/Xtpe
- mHUZyEvDpG/zKL2t0VXc+m6vmvySt90=
+ bh=PJx1+mH5xrS6gQ0A7UKGWw/5qSH1qjy1pdG+3DFjz6o=;
+ b=Zgg2BEr7/p6rvz+oWl+f4/HlmS+e8LdiQ6ul0rNZEO2tK4aeq60SHa4d2CXy95uCpSg1h6
+ u3sb05eFTbFQq3EFhQDsPIsvdFpjGkoDHQoBHX0gk6OKCOU2ZjxBEnHxTn7Bigxh2Zc9bS
+ rXr56GIlmi1Zr+kM1Z7IlbwoJIUlGOY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-QaltHlzIO9W27Wk5eGIt8g-1; Tue, 23 Apr 2024 11:10:53 -0400
-X-MC-Unique: QaltHlzIO9W27Wk5eGIt8g-1
+ us-mta-640-WbLS_Jb7O-2r7K6EJw0yeA-1; Tue, 23 Apr 2024 11:10:08 -0400
+X-MC-Unique: WbLS_Jb7O-2r7K6EJw0yeA-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E86E981F317;
- Tue, 23 Apr 2024 15:10:52 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 32F3A803505;
+ Tue, 23 Apr 2024 15:10:08 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B37152026D0A;
- Tue, 23 Apr 2024 15:10:51 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7883620296D2;
+ Tue, 23 Apr 2024 15:10:07 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 60/63] target/i386/cpu: Merge the warning and error messages
- for AMD HT check
-Date: Tue, 23 Apr 2024 17:09:48 +0200
-Message-ID: <20240423150951.41600-61-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 13/63] ramfb: move stubs out of stubs/
+Date: Tue, 23 Apr 2024 17:09:01 +0200
+Message-ID: <20240423150951.41600-14-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -82,44 +82,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Since the ramfb stubs are needed exactly when the Kconfig symbols are not
+needed, move them to hw/display/ and compile them when ramfb.c is absent.
 
-Currently, the difference between warn_report_once() and
-error_report_once() is the former has the "warning:" prefix, while the
-latter does not have a similar level prefix.
-
-At the meantime, considering that there is no error handling logic here,
-and the purpose of error_report_once() is only to prompt the user with
-an abnormal message, there is no need to use an error-level message here,
-and instead we can just use a warning.
-
-Therefore, downgrade the message in error_report_once() to warning, and
-merge it into the previous warn_report_once().
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240327103951.3853425-4-zhao1.liu@linux.intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240408155330.522792-14-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ stubs/ramfb.c => hw/display/ramfb-stubs.c | 0
+ hw/display/meson.build                    | 2 +-
+ stubs/meson.build                         | 1 -
+ 3 files changed, 1 insertion(+), 2 deletions(-)
+ rename stubs/ramfb.c => hw/display/ramfb-stubs.c (100%)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 28452983786..fd6af0d7632 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7611,9 +7611,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
-         cs->nr_threads > 1) {
-             warn_report_once("This family of AMD CPU doesn't support "
--                             "hyperthreading(%d).", cs->nr_threads);
--            error_report_once("Please configure -smp options properly"
--                              " or try enabling topoext feature.");
-+                             "hyperthreading(%d). Please configure -smp "
-+                             "options properly or try enabling topoext "
-+                             "feature.", cs->nr_threads);
-     }
+diff --git a/stubs/ramfb.c b/hw/display/ramfb-stubs.c
+similarity index 100%
+rename from stubs/ramfb.c
+rename to hw/display/ramfb-stubs.c
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index f93a69f70f4..4751aab3ba9 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -3,7 +3,7 @@ hw_display_modules = {}
+ system_ss.add(when: 'CONFIG_DDC', if_true: files('i2c-ddc.c'))
+ system_ss.add(when: 'CONFIG_EDID', if_true: files('edid-generate.c', 'edid-region.c'))
  
- #ifndef CONFIG_USER_ONLY
+-system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'))
++system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'), if_false: files('ramfb-stubs.c'))
+ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb-standalone.c'))
+ 
+ system_ss.add(when: 'CONFIG_VGA_CIRRUS', if_true: files('cirrus_vga.c'))
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 84ecaa4daa1..92887660e41 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -36,7 +36,6 @@ stub_ss.add(files('qmp-command-available.c'))
+ stub_ss.add(files('qmp-quit.c'))
+ stub_ss.add(files('qtest.c'))
+ stub_ss.add(files('ram-block.c'))
+-stub_ss.add(files('ramfb.c'))
+ stub_ss.add(files('replay.c'))
+ stub_ss.add(files('runstate-check.c'))
+ stub_ss.add(files('sysbus.c'))
 -- 
 2.44.0
 
