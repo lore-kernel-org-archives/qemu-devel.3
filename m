@@ -4,105 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41C6C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 08:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B666C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 08:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzBXv-0004pG-7t; Tue, 23 Apr 2024 04:30:35 -0400
+	id 1rzBp4-0007O8-Be; Tue, 23 Apr 2024 04:48:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rzBXt-0004or-6H
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:30:33 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rzBp1-0007Ng-TV
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:48:16 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rzBXr-0007Au-3V
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:30:32 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-516d2600569so6687210e87.0
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 01:30:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rzBoz-0001p3-Te
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:48:15 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-518a3e0d2ecso8060506e87.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 01:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713861028; x=1714465828; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1713862092; x=1714466892; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T6KOjnBzdVHg3Y3ZAHXv+65BtE3//7g/7c/W6xeaLoc=;
- b=sp+AN03pSyaBbzl8nvkiDVC8Md0XnUgNa+zL05ypv8Fh+QffVAVZPwvjUExZd9zzQA
- M84KVUQ8nch2gZlPc97imAG2h8PNZf4su2M3M3XGSQyok7f6H7YTscTpiSQ1A3nb1TLX
- PEvRCqInBYZJKBMFpTou4dZmYd/xl+SIjfSklwIz4bztGBmE9Lwi60JK2A3VwkVZI1bb
- dZDD/U1L5ZsjhAYxCbuNv59Uda4/F6wMa7kcru9FTysxNeJ8uvV1y+Te+ZdXOjxSX8XV
- 1FzyUTG08e2+WhJPa8DqW2pU90gD708a6ZnQ/ciNfEPwlFXxXcoI8mhKnKl3naJjOtlM
- VRMg==
+ bh=nZrocSU7E+3pdItMEQM+CJosd1rfJFSkX3lL2CKS0f0=;
+ b=AiQ8/uqkJuXRyJFJTFkXPSWldY+gTcoZowIQIeZwInqXYqchMBW8md2C1g6vrzyjH0
+ AWHA+f52QUCC6Sim/LcegdjG/yZ+PuXOlMlD1OzF+etvA2RDruBALTxm5+GFthR0Oeg4
+ WNmSxYd0T82vtgpC/rWRbkzB8SzcjbAXzsj357SWZbhq/9xQ6bmYmJRaK4WVQAYla23O
+ spHNv/OEJBOx9HNOBwg4Vs3uhIWkJVfjyDmAAw0CRqsZ6DUAf6iFhk1UH8PJECeE2K/9
+ 8avGdgBv2Dsj9wKqT+PF1RLBKD2P2x37NzgpDjTZVlcanfXZa8C/yeCzyqgjY7Z064Cy
+ L9kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713861028; x=1714465828;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=T6KOjnBzdVHg3Y3ZAHXv+65BtE3//7g/7c/W6xeaLoc=;
- b=WiiW4JINX3Gd15Ze8D5QDTQDYyKN8r6f4ocv/nrTU5zsB38bM/GbBV+3kRHm+AvaSD
- NXPqLlnisJhQPL0i781RT5AvDTMDT0TsARZEJWuBwgZjod1iusX6NEu1XHhrxE9bbFvS
- iSf5q+rPbVAwAPP3RNdt9ZFodjMlFM4X7mUm0Mo698T0RTZ7yKAwyBYTbfU75/BU1X29
- keqbtja8C0lmPvhG3m/kHst0CHT5PCoVfy0yzEd0gpFZXV1sm6qPHcqiTcIJABLyCgWu
- jRqClro8F/wz+MbKEYR2PKHOJa1ILB4vFCjKUOxHOgh25KMhRpeg5MG9LoFjzwJ/0oPK
- VM8g==
+ d=1e100.net; s=20230601; t=1713862092; x=1714466892;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nZrocSU7E+3pdItMEQM+CJosd1rfJFSkX3lL2CKS0f0=;
+ b=sMiIgzmFRSKYL69OOABlTqpqNnyvCRHPCxrLVz1sVMTwWDl8EOdHiDRvrz4VXN2iE4
+ JQ9De5DMv3Xg1xQVvy8Nr+RuS+OxSSnyBtwrLFlrZ0ExxnSDg4Asbolc9w3n+Dum73oH
+ JkIgu+6nN1LKdnE49Jn0iugxnBSa+XWH4+s+jucfbG7H+TVvfIOV3X/4Y9zNOVkSKbwr
+ fjyl9GCoYgUpduvAqi/L5J6id0P3OfsMLVZWJ9iLXsv9m2qja1X8/9DHqaymT08kyQZg
+ C6uJhWqjYQWHA0rT+n3kebaiBRtwSsjCSQW8YZRUwNGz78PeYcIv7uaseY3p6ZFxY93+
+ be0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFNgPSGWGoXfi/DzOn7MuoV3rmr8htmvkbaFo9/1ucVNiI6LbbTRy/28eatWext9jyzfOtG37+4cLahI+bsQQ2ZgTVSfA=
-X-Gm-Message-State: AOJu0YwCwIii+NyRSpfBkcNB7NBB1s0WLfaQnYz8vm/ii0QVJKecJgNx
- m3cjiWqHc19EAFE3bjL74xEBYyxCrkPcYEVGCVDc9SE/qf9WLXuWIVu/AKfOJeQ=
-X-Google-Smtp-Source: AGHT+IHiBhwf82EjZWglS/4UA8aHdDly24yYtSm2T5mYk92F7Zf/5Rwi1dS3YeowbLGmGObIiiKnhw==
-X-Received: by 2002:a05:6512:2247:b0:51b:a710:d6c7 with SMTP id
- i7-20020a056512224700b0051ba710d6c7mr872726lfu.14.1713861027999; 
- Tue, 23 Apr 2024 01:30:27 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- q21-20020a170906771500b00a51d408d446sm6765404ejm.26.2024.04.23.01.30.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Apr 2024 01:30:27 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2EC8B5F8C1;
- Tue, 23 Apr 2024 09:30:26 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
- Stabellini <sstabellini@kernel.org>,  Anthony PERARD
- <anthony.perard@citrix.com>,  Antonio Caggiano
- <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
- <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
- Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
- Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
- <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>, Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v8 00/11] Support blob memory and venus on qemu
-In-Reply-To: <20240418190040.1110210-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Thu, 18 Apr 2024 22:00:29 +0300")
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
-User-Agent: mu4e 1.12.4; emacs 29.2
-Date: Tue, 23 Apr 2024 09:30:26 +0100
-Message-ID: <87jzkoqy59.fsf@draig.linaro.org>
+ AJvYcCVDB1IW61EeSyjh9wg0nCPcZ+Dv9e6bkNxbvRWUrL1S8KrIonSKWZxdKNpgNTNOnTWLIGO8RPqZnCClPhpNAQpe1XJyLsY=
+X-Gm-Message-State: AOJu0YyPwxbS57NMLOv2gH1X+bcnuSTy45anUDrbMHp8OUV8Y6KuZvKl
+ cyrH9Gz43rAaEl41fGoKQsM1yL4sh8T+BuVTTCMqEk7BZnQtiJ1pT9vGggIRmSHHNkimTnlqc5b
+ tB0SZVpUo4Relmxf+OvaduwqiC+tYE3a/QNFnKg==
+X-Google-Smtp-Source: AGHT+IFjHnBFeqcWSSvLhtmheqoDY6f9usPDXn+/a0Wl9n2Owuq9DbKPRIuwZYKczheQM5owWYKuOHAajsgrzxYaw6Q=
+X-Received: by 2002:ac2:4bd0:0:b0:516:9f03:6a92 with SMTP id
+ o16-20020ac24bd0000000b005169f036a92mr12403533lfq.43.1713862091677; Tue, 23
+ Apr 2024 01:48:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240422142056.3023-1-philmd@linaro.org>
+ <20240422170056-mutt-send-email-mst@kernel.org>
+ <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
+ <20240422170913-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240422170913-mutt-send-email-mst@kernel.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 23 Apr 2024 11:47:55 +0300
+Message-ID: <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
+ target one
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,37 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-
-> Hello,
+On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> This series enables Vulkan Venus context support on virtio-gpu.
->
-> All virglrender and almost all Linux kernel prerequisite changes
-> needed by Venus are already in upstream. For kernel there is a pending
-> KVM patchset that fixes mapping of compound pages needed for DRM drivers
-> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
-> from Qemu.
->
-> [1]
-> https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
+> On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daud=C3=A9 wro=
+te:
+> > On 22/4/24 23:02, Michael S. Tsirkin wrote:
+> > > On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daud=C3=A9=
+ wrote:
+> > > > Since VirtIO devices can change endianness at runtime,
+> > > > we need to use the device endianness, not the target
+> > > > one.
+> > > >
+> > > > Cc: qemu-stable@nongnu.org
+> > > > Fixes: eb9ad377bb ("virtio-sound: handle control messages and strea=
+ms")
+> > > > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > >
+> > >
+> > >
+> > > This is all completely bogus. Virtio SND is from Virtio 1.0 only.
+> > > It is unconditionally little endian.
 
-Following the link for the TTM/KVM patches on the kernel side points at
-changes for AMD cards getting NAK'ed so I'm a little confused as to what
-parts are needed.
 
-Is this only relevant for ensuring the virtual mappings to the
-underlying hardware aren't moved around when KVM is exporting those
-pages to the guest?
-
-Our interest is in Xen which obviously mediates everything through stage
-2 mappings to from the real PA to the IPA the domains see. However AIUI
-all the blob allocation is managed by the GEM/TTM layer of whichever
-kernel is responsible for driving the GPU. Does this layer work with
-kernel vaddr or the underlying IPA of the resources? We shouldn't
-expect the IPA to change between allocations should we?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+This part of the code is for PCM frames (raw bytes), not virtio spec
+fields (which indeed must be LE in modern VIRTIO).
 
