@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0769EC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 643BAC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzGKY-0000Dg-8I; Tue, 23 Apr 2024 09:37:06 -0400
+	id 1rzGKw-0000jq-Qm; Tue, 23 Apr 2024 09:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzGKW-0000D7-UX
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:37:04 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzGKu-0000gq-LE
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:37:28 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzGKV-0005q0-F3
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:37:04 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-417f5268b12so59298905e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:37:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzGKs-0005ul-1v
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:37:27 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-41a5b68ed4fso17758115e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713879422; x=1714484222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713879444; x=1714484244; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fM3ccpkYJRuskNx0e/VTTw+Z7UBIVonl78ki0TPTKTo=;
- b=rAoljtmKw6jzbCxmmxFQtfQnowTErwWCwSBHDN6vcolTdRXP4QmIqG82Wy69fa3XAt
- rMbFAmGkNsQO5hkK2Ll0hMRfpGrpyybvnT42DahAp1qpUjZrtaXqf4UkS/1INejxt3k+
- bEv8QVArO54D6t+OVS3g7KgB7nhOfZmzB6aDy3bGE5ML2r53tm7xAR0f5iA0KPEWPe3y
- 4B4UWPz26jDaXkfr16BST87p0TDFJjAdmYvUGjvLRJZtYhsuh6hMN18/4TkKUkAxhXso
- AixIJpYT5sVkIVf2V1H2Y00/+Ek5oUKRHvZEPjRaAbFInW7LKUUznd+2krCm27Veebu7
- 9Znw==
+ bh=a96KnJupPRJ7KdLJXyk5fT4u8vAcedof3+AOh4R41iM=;
+ b=tH4YZzLzO3QgiSWxLCuXtmufRTuFm83/RU7qD0EagUPuK4P9NCJDRMJvzSf2fX/6Ey
+ G8N+HqKbk+KxGWLgBef3VXK1OWH++FfRcCv8WJqRR4ohNnwUDNESuVIUcS7ZqlvMzQh1
+ +1iH0pS0ZkRuRNttfVUQvI4VJ5nXOgJRZ6r73vsZf2zs5dH8MAFzZXpKEBAVcoHZbJk0
+ HfEU7f+waGe0rqKShm44Dfxv0BImDi7GgoAey9C8WkM6N9uAkbIu9O3GW4MpX1vBrG+n
+ 1HRy6WiNGcxqL5ZLwIXk2MO9T/KId/T/cXt37Z+ft+ZMOpBMWsBFGFTgSBo4+nrQjK47
+ a+vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713879422; x=1714484222;
+ d=1e100.net; s=20230601; t=1713879444; x=1714484244;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fM3ccpkYJRuskNx0e/VTTw+Z7UBIVonl78ki0TPTKTo=;
- b=Nvkw3CUTxzxIegWI0Ei2uKYRKVIe6X3g/nvlL7KYjv9xtYW5sTQROHMXuaTRlXOVRo
- csjX6qtSIx3MsnsMvUwFh01U9EaclvMZzdH3Ux9V/78I1vWAF5SvoazFi7kHT34xn8xz
- P6lU/ko0ome01+9Rwbr8uEVY5BsQ2jXSTAO9OalEG8Mp6UAa10tnWL+xQXpv42HbFkSg
- dm1ZPgbSrdwhT5kgHRE4XLLeNBsp5pV3g3eGWj069RLs5PCKPu1f+75t6Cb34fCivVHv
- Pks9aDkCP75RPPMCxmECNCJPV1mXJU4h7xa7cQ6UWrOVMIXMNnPIaw5AY7IeM2Gfw3IL
- abuA==
+ bh=a96KnJupPRJ7KdLJXyk5fT4u8vAcedof3+AOh4R41iM=;
+ b=vC/AXy68iqgkH6DXwgFXeOZHeL1ZNOpuVctTYOPM9VunzpWAMBA6+TvEl94DbP0/sA
+ ieHoThdjus30778EoL/yFDenAnoQP1LJgq/VbIhxAGFE+nE+NRJAFQB9B+lZmp6z633M
+ wNo2JNE1Uwyd8dVJPZd54M/aG9h7Y2bKcJfR0N92ogkZPCUlf1JdZv9GYxvPe+7EhxHy
+ KWinUQjOw16npfIttf5pI6je0LnHwZFkwgPTXsC17K3E6x1Yw8wcoXVMhwcXnsaWX5J+
+ WSuXAPYEde2UWd5HVtKLEpbp7am45w67UpDwF1rUwUpw3+thWh/B3j3rSrZ7Waew0mWf
+ jUQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZ+C39bQoHn+pr2PL0nMfqrXnzPViBW+UrRKqBoWvnV6soHeR3icGBExGT59aqnxiRkt7dZ+kQa3nLgqzGYfUAASZiZQQ=
-X-Gm-Message-State: AOJu0YxvZl6nA3iRfMw1t/0tFOHBcML/ECzzhfzO3eASkQN8sTb8gmCF
- KdHhsL5FNiCE4Z82PEG+8C0kD2dHefda8a16u7PGM2IXFfu5gc5/mIsu5ZGekmbBwWBiPp+I0bX
- ClZs=
-X-Google-Smtp-Source: AGHT+IE6GjkP5BKdIlC8BeHKGnaSEddWo8EJg9SiDpSaGiccm80vQbugqDewWqSbxmewh3hLH5oLZw==
-X-Received: by 2002:adf:f343:0:b0:343:5cca:f7c7 with SMTP id
- e3-20020adff343000000b003435ccaf7c7mr10845851wrp.41.1713879421793; 
- Tue, 23 Apr 2024 06:37:01 -0700 (PDT)
+ AJvYcCXYukExDG5vUlaodPJP7mNnQKyDtgM36s11kE3G26Su6cfjKv6Gr5i1yIpEPgAxcMiar/pjhJUN34xKOpb/SKiJLXcCbRo=
+X-Gm-Message-State: AOJu0YyfmGtBZYhsGl+4xD3aqkjGBSYLSKyLNZ4mhkVj1jerLEafg5XD
+ bpU55RsWXC67zi5sjTK0WcDh0pTOqw8vsL+TNPxYkUWkhUGEQRq0ZhUG17G/2uw=
+X-Google-Smtp-Source: AGHT+IFh2FelwXjeCQ3rfT8XC6R1q169NjE4TK6Tx1YUNuf7yy04P+Cty3xLIFZtgIkNZ+h5RkGhCg==
+X-Received: by 2002:a05:600c:1992:b0:418:8df1:ca73 with SMTP id
+ t18-20020a05600c199200b004188df1ca73mr7118608wmq.19.1713879444249; 
+ Tue, 23 Apr 2024 06:37:24 -0700 (PDT)
 Received: from [192.168.175.175] ([92.88.171.241])
  by smtp.gmail.com with ESMTPSA id
- z9-20020a05600c0a0900b00418916f5848sm19856832wmp.43.2024.04.23.06.36.59
+ f18-20020adff592000000b00343a0e2375esm14506328wro.27.2024.04.23.06.37.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Apr 2024 06:37:01 -0700 (PDT)
-Message-ID: <6a19f4eb-866e-4f08-bde8-9ba89b5d0b12@linaro.org>
-Date: Tue, 23 Apr 2024 15:36:57 +0200
+ Tue, 23 Apr 2024 06:37:23 -0700 (PDT)
+Message-ID: <d71df2d9-97f2-4ba7-abb5-860213357ee4@linaro.org>
+Date: Tue, 23 Apr 2024 15:37:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/22] microblaze: switch boards to "default y"
+Subject: Re: [PATCH 09/22] m68k: switch boards to "default y"
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: farosas@suse.de
 References: <20240423131612.28362-1-pbonzini@redhat.com>
- <20240423131612.28362-11-pbonzini@redhat.com>
+ <20240423131612.28362-10-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240423131612.28362-11-pbonzini@redhat.com>
+In-Reply-To: <20240423131612.28362-10-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,18 +96,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/24 15:16, Paolo Bonzini wrote:
+On 23/4/24 15:15, Paolo Bonzini wrote:
 > Some targets use "default y" for boards to filter out those that require
 > TCG.  For consistency we are switching all other targets to do the same.
-> Continue with Microblaze.
+> Continue with m68k.
 > 
 > No changes to generated config-devices.mak file.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   configs/devices/microblaze-softmmu/default.mak | 9 ++++-----
->   hw/microblaze/Kconfig                          | 6 ++++++
->   2 files changed, 10 insertions(+), 5 deletions(-)
+>   configs/devices/m68k-softmmu/default.mak | 13 ++++++-------
+>   hw/m68k/Kconfig                          | 10 ++++++++++
+>   2 files changed, 16 insertions(+), 7 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
