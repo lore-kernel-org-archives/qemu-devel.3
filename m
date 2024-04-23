@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D17CFC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62253C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzFsl-0001HA-76; Tue, 23 Apr 2024 09:08:23 -0400
+	id 1rzFsm-0001IL-CN; Tue, 23 Apr 2024 09:08:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mii@sfc.wide.ad.jp>)
- id 1rzCDf-000356-4O
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:13:43 -0400
+ id 1rzCDl-00035h-Rc
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:13:49 -0400
 Received: from mail1.sfc.wide.ad.jp ([203.178.142.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mii@sfc.wide.ad.jp>)
- id 1rzCDc-0005y9-4E
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:13:42 -0400
+ id 1rzCDj-0005zv-6R
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:13:49 -0400
 Received: from k8s-worker-01.tail4d807.ts.net (unknown
  [IPv6:2400:4051:3e03:2d00:1e98:ecff:fe05:4840])
  (Authenticated sender: mii)
- by mail1.sfc.wide.ad.jp (Postfix) with ESMTPSA id 1AA6173C;
- Tue, 23 Apr 2024 18:13:31 +0900 (JST)
+ by mail1.sfc.wide.ad.jp (Postfix) with ESMTPSA id 0C56F73C;
+ Tue, 23 Apr 2024 18:13:43 +0900 (JST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sfc.wide.ad.jp;
- s=mail1; t=1713863611;
- bh=4rgFMcl4PjAWS04UAp8ksMm7DNH0AzJ3elAESeixJrw=;
- h=From:To:Cc:Subject:Date:From;
- b=KzuWrQCcwJ4FAxc5VAWygao2toZ6/nCgdzWjpb1SSSO5cwB1eWUCdjmBiittc9tnX
- kELj1jB9kaAP0ZHx2exy2XD8ZG7NzZyY9KgJJKONNSgTRAazVgMJy7yxDaDPTx/9fQ
- eqittpQkQv8mw9T8HPJqn0RgSz+Rj0/aCyhMF6+iUh9KK3gJLq8aWWIwiUV9de2YhD
- jFmrV6t2OgEBjZRp60IUQV3ciSgN+U+0qSd3jfgw/93AFVwdpbGuGm0YjhNrZ1UpiW
- 3ydHoAJA6Q5FtoQEaPel6TfT49mhfrzTXSwdhzAla66yQ2zn4rMd/PvUxMkB0uUtsH
- GF//Xa9QbcRvw==
+ s=mail1; t=1713863623;
+ bh=d5MXOmg56bRqxOY0Neg0l85+8q0471wDoEYPcVDKOY8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=sDgFjWFh/0P9e0EpZlbYWGWrXhHIGM+q8vVWiHsvwDaQEEI3rRxdTADN/JPQ2YnGg
+ WsT5PhGBePbDRUApzruKO6FVv5Utvohtzriju/vx23GzprA/nRzOBc/pdDDTmbZvaO
+ ivkCqLDyptIohslrF3j+kgGzk8Dk9ehJd0KQ3wW1UCP0ieCMmE/MYWF1tJA/K/tyJ+
+ I0QDX4IzOdFmrSCa39RWtM+/Wzqflt3HgN90SQYQsgCr1dGubSoiav6TWV9A6hWZ8R
+ hEC2GkERNwayBEysaUkThKiW7WtHKNqhqgykD44Kd7UW1FWm0CjA6ifOiCMy3UL0Pf
+ J1/4MSixVr7nA==
 From: Masato Imai <mii@sfc.wide.ad.jp>
 To: qemu-devel@nongnu.org
-Cc: Masato Imai <mii@sfc.wide.ad.jp>
-Subject: [PATCH v2 0/1] migration/dirtyrate: Fix segmentation fault
-Date: Tue, 23 Apr 2024 09:13:06 +0000
-Message-Id: <20240423091306.754432-1-mii@sfc.wide.ad.jp>
+Cc: Masato Imai <mii@sfc.wide.ad.jp>, Hyman Huang <yong.huang@smartx.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH v2 1/1] migration/dirtyrate: Fix segmentation fault
+Date: Tue, 23 Apr 2024 09:13:08 +0000
+Message-Id: <20240423091306.754432-2-mii@sfc.wide.ad.jp>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240423091306.754432-1-mii@sfc.wide.ad.jp>
+References: <20240423091306.754432-1-mii@sfc.wide.ad.jp>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=203.178.142.133; envelope-from=mii@sfc.wide.ad.jp;
@@ -68,16 +71,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes from v1:
-- fix typo in commit message
-- added an extra check for dirty bitmap mode
+When the KVM acceleration parameter is not set, executing calc_dirty_rate
+with the -r or -b option results in a segmentation fault due to accessing
+a null kvm_state pointer in the kvm_dirty_ring_enabled function.
+This commit adds a check for kvm_enabled to prevent segmentation faults.
 
-Masato Imai (1):
-  migration/dirtyrate: Fix segmentation fault
-
+Signed-off-by: Masato Imai <mii@sfc.wide.ad.jp>
+---
  migration/dirtyrate.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
+diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+index 1d2e85746f..2a7df52519 100644
+--- a/migration/dirtyrate.c
++++ b/migration/dirtyrate.c
+@@ -799,6 +799,13 @@ void qmp_calc_dirty_rate(int64_t calc_time,
+      * dirty ring mode only works when kvm dirty ring is enabled.
+      * on the contrary, dirty bitmap mode is not.
+      */
++    if (!kvm_enabled() &&
++        (mode == DIRTY_RATE_MEASURE_MODE_DIRTY_RING ||
++         mode == DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP)) {
++        error_setg(errp, "mode %s requires kvm to be enabled.",
++                         DirtyRateMeasureMode_str(mode));
++        return;
++    }
+     if (((mode == DIRTY_RATE_MEASURE_MODE_DIRTY_RING) &&
+         !kvm_dirty_ring_enabled()) ||
+         ((mode == DIRTY_RATE_MEASURE_MODE_DIRTY_BITMAP) &&
 -- 
 2.34.1
 
