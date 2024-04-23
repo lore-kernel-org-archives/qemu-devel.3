@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B01CC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F2EC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnN-0005Yi-3L; Tue, 23 Apr 2024 11:10:57 -0400
+	id 1rzHnF-0004vk-K2; Tue, 23 Apr 2024 11:10:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmg-0004NJ-Vd
+ id 1rzHmg-0004NK-Vf
  for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmc-000057-Bl
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:11 -0400
+ id 1rzHmc-00005O-Q5
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1713885009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ne8m0qr+YkU2QhH9qzSBx3LCWqWLyReRad8Mw2vZv4M=;
- b=HG8Na+qF1TDERZ+xpdh7uOf9em3+rcblzoiFU0d0PoVuHTdJsad96TlEzcVbhgugXJqHqq
- VMWIahFCA9+KGqCPC27QwCsFMAE+quUpNF1m/yGdYL85MnDh3ha0yeoM3iBcr2FDOHQ4Tb
- Ly6YEFuqngKRd6CUvrKrzywrxSqUVqw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-dni42PV2N3-oxZeni0uW4Q-1; Tue,
- 23 Apr 2024 11:10:05 -0400
-X-MC-Unique: dni42PV2N3-oxZeni0uW4Q-1
+ bh=jCSaFbKWPsN7IuafQoBh1Uc+SE9mpb4ii6bTyqjUCWk=;
+ b=GL6s5mAOEr5/aAjS3WnGVfzJORtE0T523u64yeGdC2M8GkpQjacPe5D+5zrTC2+jqx29la
+ KcpVPtSzyaUlgx0iChdP16lWgBllx5PwEjbOaya53L7edsw6HjNjSz71FfHDvEfyfi071t
+ zfqz39UkyoRsSpVP8jh2jqstG9oeBlA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-581-Od9HXFmzNzK5D3NFio_3RQ-1; Tue, 23 Apr 2024 11:10:07 -0400
+X-MC-Unique: Od9HXFmzNzK5D3NFio_3RQ-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AC3BF1C0C64F;
- Tue, 23 Apr 2024 15:10:04 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 37B43812C39
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:07 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 05ACB200E290;
- Tue, 23 Apr 2024 15:10:03 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C75E82026D0A
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:06 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 10/63] hw/usb: move stubs out of stubs/
-Date: Tue, 23 Apr 2024 17:08:58 +0200
-Message-ID: <20240423150951.41600-11-pbonzini@redhat.com>
+Subject: [PULL 12/63] semihosting: move stubs out of stubs/
+Date: Tue, 23 Apr 2024 17:09:00 +0200
+Message-ID: <20240423150951.41600-13-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -82,50 +80,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the USB stubs are needed exactly when the Kconfig symbols are not
-enabled, they can be placed in hw/usb/ and conditionalized on CONFIG_USB.
+Since the semihosting stubs are needed exactly when the Kconfig symbols
+are not needed, move them to semihosting/ and conditionalize them
+on CONFIG_SEMIHOSTING and/or CONFIG_SYSTEM_ONLY.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240408155330.522792-11-pbonzini@redhat.com>
+Message-ID: <20240408155330.522792-13-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- stubs/usb-dev-stub.c => hw/usb/bus-stub.c | 0
- hw/usb/meson.build                        | 2 +-
- stubs/meson.build                         | 1 -
- 3 files changed, 1 insertion(+), 2 deletions(-)
- rename stubs/usb-dev-stub.c => hw/usb/bus-stub.c (100%)
+ stubs/semihost-all.c => semihosting/stubs-all.c | 0
+ stubs/semihost.c => semihosting/stubs-system.c  | 0
+ semihosting/meson.build                         | 3 +++
+ stubs/meson.build                               | 2 --
+ 4 files changed, 3 insertions(+), 2 deletions(-)
+ rename stubs/semihost-all.c => semihosting/stubs-all.c (100%)
+ rename stubs/semihost.c => semihosting/stubs-system.c (100%)
 
-diff --git a/stubs/usb-dev-stub.c b/hw/usb/bus-stub.c
+diff --git a/stubs/semihost-all.c b/semihosting/stubs-all.c
 similarity index 100%
-rename from stubs/usb-dev-stub.c
-rename to hw/usb/bus-stub.c
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index aac3bb35f27..23f7f7acb50 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -9,7 +9,7 @@ system_ss.add(when: 'CONFIG_USB', if_true: files(
-   'desc-msos.c',
-   'libhw.c',
-   'pcap.c',
--))
-+), if_false: files('bus-stub.c'))
+rename from stubs/semihost-all.c
+rename to semihosting/stubs-all.c
+diff --git a/stubs/semihost.c b/semihosting/stubs-system.c
+similarity index 100%
+rename from stubs/semihost.c
+rename to semihosting/stubs-system.c
+diff --git a/semihosting/meson.build b/semihosting/meson.build
+index b07cbd980f2..34933e5a195 100644
+--- a/semihosting/meson.build
++++ b/semihosting/meson.build
+@@ -9,5 +9,8 @@ specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: fil
+   'uaccess.c',
+ ))
  
- # usb host adapters
- system_ss.add(when: 'CONFIG_USB_UHCI', if_true: files('hcd-uhci.c'))
++common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_false: files('stubs-all.c'))
++system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: files('stubs-system.c'))
++
+ specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
+ 		if_true: files('arm-compat-semi.c'))
 diff --git a/stubs/meson.build b/stubs/meson.build
-index aa7120f7110..45616afbfaa 100644
+index 60e32d363fa..84ecaa4daa1 100644
 --- a/stubs/meson.build
 +++ b/stubs/meson.build
-@@ -56,7 +56,6 @@ endif
+@@ -55,9 +55,7 @@ if have_block or have_ga
+ endif
  if have_system
    stub_ss.add(files('fw_cfg.c'))
-   stub_ss.add(files('semihost.c'))
--  stub_ss.add(files('usb-dev-stub.c'))
+-  stub_ss.add(files('semihost.c'))
    stub_ss.add(files('xen-hw-stub.c'))
-   stub_ss.add(files('virtio-md-pci.c'))
  else
+   stub_ss.add(files('qdev.c'))
+ endif
+-stub_ss.add(files('semihost-all.c'))
 -- 
 2.44.0
 
