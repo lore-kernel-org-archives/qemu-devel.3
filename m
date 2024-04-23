@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B666C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 08:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287EBC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 09:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzBp4-0007O8-Be; Tue, 23 Apr 2024 04:48:18 -0400
+	id 1rzCIY-0003mg-T2; Tue, 23 Apr 2024 05:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rzBp1-0007Ng-TV
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:48:16 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rzBoz-0001p3-Te
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:48:15 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-518a3e0d2ecso8060506e87.3
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 01:48:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713862092; x=1714466892; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nZrocSU7E+3pdItMEQM+CJosd1rfJFSkX3lL2CKS0f0=;
- b=AiQ8/uqkJuXRyJFJTFkXPSWldY+gTcoZowIQIeZwInqXYqchMBW8md2C1g6vrzyjH0
- AWHA+f52QUCC6Sim/LcegdjG/yZ+PuXOlMlD1OzF+etvA2RDruBALTxm5+GFthR0Oeg4
- WNmSxYd0T82vtgpC/rWRbkzB8SzcjbAXzsj357SWZbhq/9xQ6bmYmJRaK4WVQAYla23O
- spHNv/OEJBOx9HNOBwg4Vs3uhIWkJVfjyDmAAw0CRqsZ6DUAf6iFhk1UH8PJECeE2K/9
- 8avGdgBv2Dsj9wKqT+PF1RLBKD2P2x37NzgpDjTZVlcanfXZa8C/yeCzyqgjY7Z064Cy
- L9kA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rzCIT-0003mJ-8q
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:18:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rzCIQ-0006el-Km
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:18:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713863916;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ughj38E8UToDMogbjiGsui0eSWa3f0Tq87pVHTREbAQ=;
+ b=alZkHVlKF0cD3yQMY/Oc+qMGylE0U5kPq/1P8uMGHglZjHkjrf/JAX8hPWf79wi2nUY35n
+ oHoy6joioGx2AbFUzPC3j8TBfRYy6v4E5KMOGRmVJm170gy+x3nFIKnygjahGZEjBdoogC
+ 2TzVRCgWb7SOjVFbHSqft7ZOVsKLRQk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-403-3XR8GVCJOwuUCXUvGtFkQw-1; Tue, 23 Apr 2024 05:18:35 -0400
+X-MC-Unique: 3XR8GVCJOwuUCXUvGtFkQw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-41a370b6acdso7526415e9.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 02:18:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713862092; x=1714466892;
+ d=1e100.net; s=20230601; t=1713863914; x=1714468714;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nZrocSU7E+3pdItMEQM+CJosd1rfJFSkX3lL2CKS0f0=;
- b=sMiIgzmFRSKYL69OOABlTqpqNnyvCRHPCxrLVz1sVMTwWDl8EOdHiDRvrz4VXN2iE4
- JQ9De5DMv3Xg1xQVvy8Nr+RuS+OxSSnyBtwrLFlrZ0ExxnSDg4Asbolc9w3n+Dum73oH
- JkIgu+6nN1LKdnE49Jn0iugxnBSa+XWH4+s+jucfbG7H+TVvfIOV3X/4Y9zNOVkSKbwr
- fjyl9GCoYgUpduvAqi/L5J6id0P3OfsMLVZWJ9iLXsv9m2qja1X8/9DHqaymT08kyQZg
- C6uJhWqjYQWHA0rT+n3kebaiBRtwSsjCSQW8YZRUwNGz78PeYcIv7uaseY3p6ZFxY93+
- be0Q==
+ bh=Ughj38E8UToDMogbjiGsui0eSWa3f0Tq87pVHTREbAQ=;
+ b=nqHb8OD/BemhibBR987uQv00bU3r4jbFHU/R+TMBrLodwRnL6KzQocoHS2BwZuP694
+ ErFnpB8aKX7J7REVsraW+3fcuBN69tbN0ZJGSirQfAPl2tYYgVPLapo61oau1tk6HXAm
+ 7gmcxHJHUUyl99mGa5vVLPx8NM+wMxzPC3ujoeQ3cv5F9UG0BDEU03GCp15HQ9uil+7C
+ +DuEZW83SlqKzIJHErW/s7Txd/i6I+v38oiqt0pyzIq6VClYCy3dwKxvgRkNZ5M4EriQ
+ nFbh/fOzSnWmAm2nN34OqVyf+Sicoupiu1pBfIlUDOCY6yE633YRgwkm5fI3B0PsSV5o
+ 8Sug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDB1IW61EeSyjh9wg0nCPcZ+Dv9e6bkNxbvRWUrL1S8KrIonSKWZxdKNpgNTNOnTWLIGO8RPqZnCClPhpNAQpe1XJyLsY=
-X-Gm-Message-State: AOJu0YyPwxbS57NMLOv2gH1X+bcnuSTy45anUDrbMHp8OUV8Y6KuZvKl
- cyrH9Gz43rAaEl41fGoKQsM1yL4sh8T+BuVTTCMqEk7BZnQtiJ1pT9vGggIRmSHHNkimTnlqc5b
- tB0SZVpUo4Relmxf+OvaduwqiC+tYE3a/QNFnKg==
-X-Google-Smtp-Source: AGHT+IFjHnBFeqcWSSvLhtmheqoDY6f9usPDXn+/a0Wl9n2Owuq9DbKPRIuwZYKczheQM5owWYKuOHAajsgrzxYaw6Q=
-X-Received: by 2002:ac2:4bd0:0:b0:516:9f03:6a92 with SMTP id
- o16-20020ac24bd0000000b005169f036a92mr12403533lfq.43.1713862091677; Tue, 23
- Apr 2024 01:48:11 -0700 (PDT)
+ AJvYcCX0wYkg8YVvpPjbJ21O4K3/M/iJBQY4GfKYPqjFQy39RZ/C/4L/b0sSCzhLfgONUdOQLqvjY5ZbcFUG0gvEnr/930eINp0=
+X-Gm-Message-State: AOJu0YzCeZUFjzGRTr32ft/agPJAPa5Gjr01QDmsZgjC7mwOsRICIFf8
+ CNq9WoVEWgim1ekmCkYduIL1tGT87ryFzRCWUowyQzSDTxXH4jh14t4qQJbYO2CwdSmK/PGcbMV
+ Pztqu7q84l2lUhuKI77oRBBDA51f/xjbo1TtkjN9hUpVSDTjPxDHBmiNZhYbCagVzMy88rzj0KS
+ blsjJMMRCDYhNaiR2ZoVevkHVrZ08=
+X-Received: by 2002:a5d:498d:0:b0:343:39ef:53b0 with SMTP id
+ r13-20020a5d498d000000b0034339ef53b0mr7673873wrq.24.1713863914088; 
+ Tue, 23 Apr 2024 02:18:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFn7iipzIqc7ATj5GM65H9AJi/cq1Rd2zpcAAX/M9PN/w7yU2g1vilCyBGxAbMTxqpaHrOxjNXz6nYPCMY+5lI=
+X-Received: by 2002:a5d:498d:0:b0:343:39ef:53b0 with SMTP id
+ r13-20020a5d498d000000b0034339ef53b0mr7673860wrq.24.1713863913779; Tue, 23
+ Apr 2024 02:18:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240422142056.3023-1-philmd@linaro.org>
- <20240422170056-mutt-send-email-mst@kernel.org>
- <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
- <20240422170913-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240422170913-mutt-send-email-mst@kernel.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 23 Apr 2024 11:47:55 +0300
-Message-ID: <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
- target one
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-stable@nongnu.org
+References: <20240419195147.434894-1-mark.cave-ayland@ilande.co.uk>
+ <fefb7b6b-29fc-42ee-b62e-059512e881e4@linaro.org>
+ <3ff9df0d-6465-45a3-bb62-0db17ed9210c@ilande.co.uk>
+ <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
+In-Reply-To: <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 23 Apr 2024 11:18:20 +0200
+Message-ID: <CABgObfYsCO-fH1MZQ1=mRUJQHn9h2QBcCfytBnDhhM91iEd4sA@mail.gmail.com>
+Subject: Re: [PATCH] target/i386/translate.c: always write 32-bits for SGDT
+ and SIDT
+To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Richard Henderson <richard.henderson@linaro.org>, eduardo@habkost.net,
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,28 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> wrote:
+On Mon, Apr 22, 2024 at 9:10=E2=80=AFPM Volker R=C3=BCmelin <vr_qemu@t-onli=
+ne.de> wrote:
 >
-> On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > On 22/4/24 23:02, Michael S. Tsirkin wrote:
-> > > On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daud=C3=A9=
- wrote:
-> > > > Since VirtIO devices can change endianness at runtime,
-> > > > we need to use the device endianness, not the target
-> > > > one.
-> > > >
-> > > > Cc: qemu-stable@nongnu.org
-> > > > Fixes: eb9ad377bb ("virtio-sound: handle control messages and strea=
-ms")
-> > > > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > >
-> > >
-> > >
-> > > This is all completely bogus. Virtio SND is from Virtio 1.0 only.
-> > > It is unconditionally little endian.
+> Am 20.04.24 um 07:40 schrieb Mark Cave-Ayland:
+> >> Current documentation agrees that all 32 bits are written, so I don't
+> >> think you need this comment:
+> >
+> > Ah that's good to know the docs are now correct. I added the comment
+> > as there was a lot of conflicting information around for older CPUs so
+> > I thought it was worth an explicit mention.
+>
+> Quote from the Intel=C2=AE 64 and IA-32 Architectures Software Developer=
+=E2=80=99s
+> Manual Volume 2B: Instruction Set Reference, M-U March 2024:
+>
+> IA-32 Architecture Compatibility
+> The 16-bit form of SGDT is compatible with the Intel 286 processor if
+> the upper 8 bits are not referenced. The Intel 286 processor fills these
+> bits with 1s; processor generations later than the Intel 286 processor
+> fill these bits with 0s.
+>
+> Intel still claims the upper 8 bits are filled with 0s, but the
+> Operation pseudo code below is correct. The same is true for SIDT.
 
+I think the claim is that it fills with 0s when the software is
+compatible with the 286, i.e. never uses a 32-bit LIDT or LGDT
+instruction. Software written to target specifically older processors
+typically used the undocumented LOADALL instruction to exit protected
+mode or to set 4GB segment limits, so it won't run on QEMU. You can
+read about the usage here:
 
-This part of the code is for PCM frames (raw bytes), not virtio spec
-fields (which indeed must be LE in modern VIRTIO).
+https://www.os2museum.com/wp/more-on-loadall-and-os2/ (286)
+https://www.os2museum.com/wp/386-loadall/ (386)
+
+and about how it worked here:
+
+https://www.pcjs.org/documents/manuals/intel/80286/loadall/
+https://www.pcjs.org/documents/manuals/intel/80386/loadall/
+
+Interestingly, byte 3 of the GDTR or IDTR on the 286 are documented as
+"should be zeroes" for LOADALL, not all ones.
+
+Let's change "Despite claims to the contrary" with "Despite a
+confusing description".
+
+Paolo
+
 
