@@ -4,84 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28626C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 20:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A751C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 21:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzN3E-0001n8-K4; Tue, 23 Apr 2024 16:47:40 -0400
+	id 1rzNK6-0005cS-Ec; Tue, 23 Apr 2024 17:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzN3C-0001g1-0K
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:47:38 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzN39-0003Jz-73
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:47:37 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-343b7c015a8so5163470f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 13:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713905253; x=1714510053; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uDnKJR4KEV4FBjccEyi75rJnbDh/RRlLX0zRHYW8gCs=;
- b=duQWx3wJYeJKAKnH47RA3rr/oRoAQcyoim6qt+xXgtnrZukolDdolN4skGAlWnJwfe
- 4ufZcFxX05TcGNDfsNtxgaRoihSudmqm6pBORewSD44ra6R3zj6TyV/kcZLt4Vr7X6il
- PF86jFiHoNnQ96k1cgAFe37rAIHRfQOl858w4e4qfiunZbHcYUnVefzcHyfy32NjG6iR
- xaPl+AjcXu11FgCd6HwGufoqSHbIfNTMre+K8cutPE9QCUUHL6YSW07v2hKg3t0AcNLD
- NbOsJS80lmYVkdxPXhvfycHqxO4wuNJ6smbVh4cwqzJbDneWOlv14lJW7/Qhb1qYsqa9
- MsQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713905253; x=1714510053;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uDnKJR4KEV4FBjccEyi75rJnbDh/RRlLX0zRHYW8gCs=;
- b=S/FkTP4uZtt1Zdvj2L36t0jwihf7M1WkDaVXmas9wkARZS4QRlu/FBmMI4sTqGTW0s
- E9FKEa6Y5B9wOCVRaUXbwz0XybU/dI4/GHoI6zExwRLKNpyD62XLxH0KniR+7WVQ7kr5
- 4F+V+bNWUFXag7dRC+v81TJ2MnTQ8wanTh3mg51t3wJZqQHcPSVrdOuWv0dC3mrp3tf+
- e5rqjOJn+Q4V6nymPfd1Gq7kAiCMOMqSpUuKdJ2/lrONWu2yI6mQBpoko6GP9HJMS9vv
- SNS7Upcp9NhWR7ESLk7atZXpmYe1UTD8M/NJOmN83U9IDqoYkgja8hz2AztJqidVE6i0
- onDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdjOiDYLvWZG912s2rDP9mnCvst+buowaagyqFrSozEBgx8MAz0sHWN03Lmvi9TpNKmzwsfHIfxdVocL5NfSppiZU/zog=
-X-Gm-Message-State: AOJu0YyWucsEeupbceHjkDwNvbrwp+EUNnhLL+63euupaicVJ6uZxcPz
- IzFC41rntN7Gj12jD3lP2uvcDgFknesulsrSqLiBnKHUwGdUlkZo4f3iHuzogRA=
-X-Google-Smtp-Source: AGHT+IEg1ZvGZTt76QKtQJaCv4wiNanq8VEeT51M6nKTiqaytUZ69FPkzEZbij5eIfBf46lYuaIukA==
-X-Received: by 2002:adf:b34c:0:b0:349:c573:2535 with SMTP id
- k12-20020adfb34c000000b00349c5732535mr184167wrd.50.1713905252716; 
- Tue, 23 Apr 2024 13:47:32 -0700 (PDT)
-Received: from [192.168.69.100] (pas38-h02-176-184-5-107.dsl.sta.abo.bbox.fr.
- [176.184.5.107]) by smtp.gmail.com with ESMTPSA id
- v11-20020a5d4b0b000000b00349a6af3da5sm15406437wrq.51.2024.04.23.13.47.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Apr 2024 13:47:32 -0700 (PDT)
-Message-ID: <482edb42-95cf-402f-9124-4e0b1f76b91f@linaro.org>
-Date: Tue, 23 Apr 2024 22:47:30 +0200
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1rzNJz-0005c4-Ko
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 17:05:00 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1rzNJx-0006A4-Aw
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 17:04:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1713906297; x=1745442297;
+ h=date:from:to:cc:subject:message-id:references:
+ in-reply-to:mime-version;
+ bh=IX+l8IMKclnKQMx7vfuuzye7QauOnd0GwjsMpnck2uo=;
+ b=lN/gVDpq3zP1AikAoIDWvC+ya2cCBPnD0H2h1Qk1QJby4NhgZB8wbZhr
+ d+xROctTW9uQjGEC+WnxRF4Y0RZ6Cl4dTp+UsS1TqhlEDGygB62A7izOt
+ y5Y9gsRtmdfzyadtOYL/G6z/hYb0c5I9nVEaE3oOQ08lmWWcQCjcYkMYK
+ SUKu/sYvkDs+uvIJiJWAxmqicLNhUjHbZte6B0+1ME/s9I5ZJiu18kxd8
+ Q8o9WPmrBgtskKya+FScNocvnFChicC9A6ew9P0lj35rLQi+OTIZIC6yA
+ z+9kbmWaByH67rz80/oPQa2TFMgoXImGJ9+N4twvyWzJW7lzVYHWVEHor Q==;
+X-CSE-ConnectionGUID: Io1YZQvgQi6FNPmH75SNUg==
+X-CSE-MsgGUID: +0xY9P8wQzqKVKBZF8RL+g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="13347699"
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="13347699"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2024 14:04:50 -0700
+X-CSE-ConnectionGUID: yOSr2pwhS5W6njc5OzpJiA==
+X-CSE-MsgGUID: 4DBetV4GQkWnSu4zllvTgA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="61945286"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+ by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 23 Apr 2024 14:04:49 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 23 Apr 2024 14:04:47 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 23 Apr 2024 14:04:47 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Tue, 23 Apr 2024 14:04:47 -0700
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.41) by
+ edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 23 Apr 2024 14:04:46 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Q/oQjj3WlUFmM0zben3Be8KlHnX1JLVUqdxMjldSfd/bO/wkiLmcvZ0WX6+A1Q8az9lPBcSyn8Dgb0CzMda7lhvgyS4bdlFnoh1F0akUSG8ykahZCjkWSfb5A3Xg0OxerFbdZmefuiVyX73iOt13d/hbTjwWUuePC75zQMTsmKgX5pKmaYbGrbO8d52ABZk9m86QCFlMAT1Uq8SDYqCsoNLN30aYNS2CmfENm8lVqyvi58QYj8neHk8bEdeY4RxRBa+jzjbD4xHBS4pV0hJOE5Zjck+pwM5Pstpe54B15iX4t63WrLMWjvwzcxOFy0GQeFrpnn36FFSSI2jQddSxDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/u3cNWBs8LU8fA8OLpL7YrMWFR5vj/iMQzXhdUIRiq4=;
+ b=Ruh6ZYP2KYnGBG2qPKg6KXVT4bT9vz+Jvc7Rhu6z6MIvbZbxY1L1C3kgQCg05rYQBmcmn1hnE+tHigNj5sWieM8kbhm25j4DLC5TYBBOPWIMeSFVjJtA5DNcaIf5x2tAE6pIZq3sp3OLber6V2wsisscZQbCpZ4cnH6a/BWbGswPPztPrvgWyvlsl+ChH6xtei9D8lj5J6BCQp78urn4FxEyl6hNvlEvfJRec+GqSW9zd2evx57Kulr311zyxwTI2nWb8KwRufni76Of6kvzgO4O6b/y3vxQrHqNMop0MMpDhq6g8czA8/I4HbkBYpisPgAIhg2U78F1gk+HXkgLyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SA1PR11MB6733.namprd11.prod.outlook.com (2603:10b6:806:25c::17)
+ by DM4PR11MB5278.namprd11.prod.outlook.com (2603:10b6:5:389::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7519.21; Tue, 23 Apr
+ 2024 21:04:44 +0000
+Received: from SA1PR11MB6733.namprd11.prod.outlook.com
+ ([fe80::d543:d6c2:6eee:4ec]) by SA1PR11MB6733.namprd11.prod.outlook.com
+ ([fe80::d543:d6c2:6eee:4ec%4]) with mapi id 15.20.7519.020; Tue, 23 Apr 2024
+ 21:04:44 +0000
+Date: Tue, 23 Apr 2024 14:04:41 -0700
+From: Ira Weiny <ira.weiny@intel.com>
+To: Alison Schofield <alison.schofield@intel.com>, Shiyang Ruan
+ <ruansy.fnst@fujitsu.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <Jonathan.Cameron@huawei.com>, <dan.j.williams@intel.com>,
+ <dave@stgolabs.net>, <ira.weiny@intel.com>, <stable@vger.kernel.org>
+Subject: Re: [PATCH v3 1/2] cxl/core: correct length of DPA field masks
+Message-ID: <66282269c8d4e_d2ce22941e@iweiny-mobl.notmuch>
+References: <20240417075053.3273543-1-ruansy.fnst@fujitsu.com>
+ <20240417075053.3273543-2-ruansy.fnst@fujitsu.com>
+ <ZifzF8cXObFiDiIK@aschofie-mobl2>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZifzF8cXObFiDiIK@aschofie-mobl2>
+X-ClientProxiedBy: BYAPR01CA0052.prod.exchangelabs.com (2603:10b6:a03:94::29)
+ To SA1PR11MB6733.namprd11.prod.outlook.com
+ (2603:10b6:806:25c::17)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/arm: Default to 1GHz cntfrq for 'max' and new
- CPUs
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240419184608.2675213-1-peter.maydell@linaro.org>
- <20240419184608.2675213-4-peter.maydell@linaro.org>
-Content-Language: en-US
-Cc: Markus Armbruster <armbru@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240419184608.2675213-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA1PR11MB6733:EE_|DM4PR11MB5278:EE_
+X-MS-Office365-Filtering-Correlation-Id: f2dd04d2-0836-42d0-a8c3-08dc63d90070
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|376005|1800799015;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4efA2ERDxzpgPiM6RDH1jzE2X8BMIodnsVjHVAIMQe4OfckPmABynXzd0alI?=
+ =?us-ascii?Q?886NpnTjUjlxtK6Q/1X8QM5n8XNfTYEmimr7299VZgiO7RnDbU5W8K1wZuBh?=
+ =?us-ascii?Q?fuyzM4rlbIzll1o6W44580j+sD9HzzeDDrSYQDA2Juy/fp4/UrdD969UobtK?=
+ =?us-ascii?Q?R/M99oRmxh1bxx3cpiz6Qfb5SvqWrQgjZ9RgKM9p8RLvHmIN7nrMQsZbEtdc?=
+ =?us-ascii?Q?5PTQEMiuAuHt8usnbIOkECiieERB7jCwuy8xExGNriVs/SpwVWc0qJYtb3XC?=
+ =?us-ascii?Q?dOKxzPDLMfwvFzDHOJL5M44+X4fQ+tqsOSKPlyX64XtiIS02W6TiEFveZEMH?=
+ =?us-ascii?Q?1llYZrvvOZDe8aKiPKVSSknVnx0kgAVon6lVjFzEqMKq2CAOUh/ftMwrOVgg?=
+ =?us-ascii?Q?VzvXcA30b+V67lwkLjff4L+J3B8CrHPtNsFclVejMYy71NJxj6mhVEa+x4JA?=
+ =?us-ascii?Q?2Je8vXU+hGT7qI1XO07BnuoaUyeADatlRwVQuzwTFOz8ijw5fpOUdYOQjx8o?=
+ =?us-ascii?Q?KmiD6qghDRlf5kgdEI9w2m/xa2OBp02VccS9A3QkrUJvx/wyVm1GR7dOcf0y?=
+ =?us-ascii?Q?BSj6IAZSYNR+SK+oFaGtqIq5AgD/fBJ2VkHQGlCX33EOKqeIireIqMh5s68S?=
+ =?us-ascii?Q?gMnVJimRW0pijIRq/IqFQ/M5bceuQVZQFhiNxeAC3eO6IVAiMWTdPJvbe5E5?=
+ =?us-ascii?Q?HS/2RkRUtTql3VdXLMwUzdy9fqzjoXD6iWLh+o/8N9dW4gD0FdXlY4DsU6bN?=
+ =?us-ascii?Q?mBPMZiv7GC9UrlnZQpgiyKnYd3IijbTEN/ChKPKlGFkN1cQacu1FCvR0tZsB?=
+ =?us-ascii?Q?xcfIRAwLnFz8wVrhm/6GiuEuD0uGeDq3RQwn+tIdVDYUky3ZjoVqJ6tWxS2I?=
+ =?us-ascii?Q?iE5Yr6i0YgOSSD1wkEv+mZjBS0AkQSv0sBfCM2tE9ZLuVHesr18NJyC5qnpM?=
+ =?us-ascii?Q?IGX/V1v3C4Bs/DT8p6jUC4kP2KYDDC4fQPGAm/1lsMmqLoYr0JXLfbCCxvay?=
+ =?us-ascii?Q?7dwB49uHOwL1BtP9dFkJJoUSYBTsCteedUPsbjt7b8Z2U860GGukYBerVHyb?=
+ =?us-ascii?Q?D7Wd6M2zULb//SO9Ej62FSqUJ4xHq3jporiJFVkKKC5i7whbUQ3KVt44kNiI?=
+ =?us-ascii?Q?H0OhF/A1sGs3m4a12fxNLrD2mxEOh7325TUsfqjbpo/90qY78Znuwv8i7jl+?=
+ =?us-ascii?Q?ffofwz98d3vfMjnsryfmJ1NdoaXYjO7A/aj0E4cegDNALr/OBm94ZduNJ2Mu?=
+ =?us-ascii?Q?77VxiY9Tpo7+1OUmwVbjvamUkQOVYSJ+pihrWa68HQ=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR11MB6733.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(376005)(1800799015); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?GgkysDc0j8BA9LsbRaGj4AbZEHt2/cnjOKshiiNtmtcvz0pEuuiFPD/9wvE/?=
+ =?us-ascii?Q?FgWp6LIcAtJQTJLBGDHNVzPMXFDSRZzq6KLRlCK/qQLI7Jasdi/cwWxjdZ3a?=
+ =?us-ascii?Q?UOQx1zRDwlhacL2oYAmdvwGEZAiAQr+fh9hQioAhqd6nalzxzB91Yg6S16Eg?=
+ =?us-ascii?Q?vbTKae2JtnABbdazYSS9DBJ1GhkQJ4TrOjJSC0AUeh1SGgFYltPN8YIKSo3s?=
+ =?us-ascii?Q?xkUjkiMzczdP3euQRCiq7o/7aVeVejavg4qsZ10xRXIyRadJQcM2v+Buo62i?=
+ =?us-ascii?Q?nVVTWeNVL10XMUgaZ1SB84ieWepISePjnaeObqPqHaYd+Jwj0PLvEPUcaRo6?=
+ =?us-ascii?Q?AN9MDwou9sip9TW6rEJF/PmCoSJ4rpDr+BnOwQ3EKSx76EbT9AcJAqJDzZvj?=
+ =?us-ascii?Q?FUrMjrTVsa4M+Fqlr8iB2vvQOdZa06AHyNTCS4lLhNlbpoLDGpq4eEF86bzn?=
+ =?us-ascii?Q?ZuHPf4rTSbTi/8Zjg8/1ssfbWlBaFFv4IJLD4Oyawr41SmRtS9qU5N7b58I+?=
+ =?us-ascii?Q?6ARbYJadlV1+2DhHJn8CkGiAoJ8vHScz9jNIYWTyUbS72gyuQ1/DiiAKj1Sa?=
+ =?us-ascii?Q?KyxaXSstSd3mxJviF3FmUOqK/TVcktsESYCasRuNXyKffgQGCLXEr0OUufpn?=
+ =?us-ascii?Q?GjOeBfN0TGdU4MYUcABmAzNNZev7deqCkqv5jqej7tCNLzGef1VcR2amMDaj?=
+ =?us-ascii?Q?NbLwKk+J3w9xMjZbsHo7mPn+IrcOlIWZLCf82/KwyNG7Y3xWQ/PudQ+7py3b?=
+ =?us-ascii?Q?T0yeeuLfh6V8QC5aCdr61jhK5St5rAg3aCZ3WDZT7TkbQXkkUzhDS5xzdIig?=
+ =?us-ascii?Q?tfOn/8e9StOdaVd4n04f7xbJithIYNfftKGpftC3yvAn1wwOBSYECd2tl5Ys?=
+ =?us-ascii?Q?x/RkXz/I51FthJ+1QbsbufxhBzzw9gAT2U5u1QwRKp1YO4ZNJFPfcYqlOKYs?=
+ =?us-ascii?Q?VuUz7bMMjd/9o/YzCQThPncAIaN+AEI93bX2wim7nfggY3JJzdBxslSxd7Fh?=
+ =?us-ascii?Q?NwOaPXusciqjK7Zi0pA7ZAukzsiKlNQynKqTbF+c/WnQ+1DyjTXHwDqh/EhK?=
+ =?us-ascii?Q?vA/p5hREBW11SA4I+7nBEYeFD+3sdI1AdH+jwm67zio3sqjol0GYZLFxf5fn?=
+ =?us-ascii?Q?RqPMCup/GjTczjAm5iGrMiMMpwnLuSGoNdEwHexHMt7ygJV8++K3XbKeLekb?=
+ =?us-ascii?Q?qM1xzGGblmKscFHQb38liCs8rabOVvkw5/cS4HgIt2KZwM2/h3LrGSuHCTrD?=
+ =?us-ascii?Q?8H+tzJ5ThYKGjNBD0A5ULfbaDVzGrdTXLUp4kUQVKtTJhIYbR1LdkyhxTz1O?=
+ =?us-ascii?Q?VXMzmziYT2jAEexd7TdOFo+Anmh/c0dMXRW4iMjaqBwXgeSDJSlO2OmLDRXl?=
+ =?us-ascii?Q?P35X/lh3oOzb6p5fsZPl+My/DFxS1vDAwWsK9Uf3hvhT7xMVyWfguooUxNOp?=
+ =?us-ascii?Q?qPj3ETmlPb57vDGuOE2diLcaJub8ZBA9dU/HyWOCAcHal3IczXfXhEMczXBG?=
+ =?us-ascii?Q?JLLBr5TJhLaHgbLsmDQ5+UgJKaPzeLM4+dm1qcs5MYBtmpvPIoAr8YGX8swR?=
+ =?us-ascii?Q?L1ZiiM0nIHc7dpAlQGxMedc5t53cA2q/iuSNMV0p?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: f2dd04d2-0836-42d0-a8c3-08dc63d90070
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR11MB6733.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2024 21:04:44.8009 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: HhBvsqsfesFhpmbLRZFWrQ8wq8VdHXJ+Da0dpCge7AgkLHbHUP7v/FCo6iLawi93eps3wnCm3s/q8SSuWpaTiQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB5278
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=ira.weiny@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,320 +196,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(+Markus for qdev properties; one inlined comment)
+Alison Schofield wrote:
+> On Wed, Apr 17, 2024 at 03:50:52PM +0800, Shiyang Ruan wrote:
 
-On 19/4/24 20:46, Peter Maydell wrote:
-> In previous versions of the Arm architecture, the frequency of the
-> generic timers as reported in CNTFRQ_EL0 could be any IMPDEF value,
-> and for QEMU we picked 62.5MHz, giving a timer tick period of 16ns.
-> In Armv8.6, the architecture standardized this frequency to 1GHz.
-> 
-> Because there is no ID register feature field that indicates whether
-> a CPU is v8.6 or that it ought to have this counter frequency, we
-> implement this by changing our default CNTFRQ value for all CPUs,
-> with exceptions for backwards compatibility:
-> 
->   * CPU types which we already implement will retain the old
->     default value. None of these are v8.6 CPUs, so this is
->     architecturally OK.
->   * CPUs used in versioned machine types with a version of 9.0
->     or earlier will retain the old default value.
-> 
-> The upshot is that the only CPU type that changes is 'max'; but any
-> new type we add in future (whether v8.6 or not) will also get the new
-> 1GHz default.
-> 
-> It remains the case that the machine model can override the default
-> value via the 'cntfrq' QOM property (regardless of the CPU type).
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/cpu.h       | 11 +++++++++++
->   target/arm/internals.h | 12 ++++++++++--
->   hw/core/machine.c      |  4 +++-
->   target/arm/cpu.c       | 28 ++++++++++++++++++++++------
->   target/arm/cpu64.c     |  2 ++
->   target/arm/tcg/cpu32.c |  4 ++++
->   target/arm/tcg/cpu64.c | 18 ++++++++++++++++++
->   7 files changed, 70 insertions(+), 9 deletions(-)
-> 
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 20d8257c853..4eeeac3fe94 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -953,6 +953,9 @@ struct ArchCPU {
->        */
->       bool host_cpu_probe_failed;
->   
-> +    /* QOM property to indicate we should use the back-compat CNTFRQ default */
-> +    bool backcompat_cntfrq;
-> +
->       /* Specify the number of cores in this CPU cluster. Used for the L2CTLR
->        * register.
->        */
-> @@ -2367,6 +2370,14 @@ enum arm_features {
->       ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
->       ARM_FEATURE_M_MAIN, /* M profile Main Extension */
->       ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
-> +    /*
-> +     * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
-> +     * if the board doesn't set a value, instead of 1GHz. It is for backwards
-> +     * compatibility and used only with CPU definitions that were already
-> +     * in QEMU before we changed the default. It should not be set on any
-> +     * CPU types added in future.
-> +     */
-> +    ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
->   };
->   
->   static inline int arm_feature(CPUARMState *env, int feature)
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index 74d4b1b0990..11d9ff0fc08 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -61,9 +61,17 @@ static inline bool excp_is_internal(int excp)
->   
->   /*
->    * Default frequency for the generic timer, in Hz.
-> - * This is 62.5MHz, which gives a 16 ns tick period.
-> + * ARMv8.6 and later CPUs architecturally must use a 1GHz timer; before
-> + * that it was an IMPDEF choice, and QEMU initially picked 62.5MHz,
-> + * which gives a 16ns tick period.
-> + *
-> + * We will use the back-compat value:
-> + *  - for QEMU CPU types added before we standardized on 1GHz
-> + *  - for versioned machine types with a version of 9.0 or earlier
-> + * In any case, the machine model may override via the cntfrq property.
->    */
-> -#define GTIMER_DEFAULT_HZ 62500000
-> +#define GTIMER_DEFAULT_HZ 1000000000
-> +#define GTIMER_BACKCOMPAT_HZ 62500000
->   
->   /* Bit definitions for the v7M CONTROL register */
->   FIELD(V7M_CONTROL, NPRIV, 0, 1)
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index a92bec23147..bd40483d880 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -33,7 +33,9 @@
->   #include "hw/virtio/virtio-iommu.h"
->   #include "audio/audio.h"
->   
-> -GlobalProperty hw_compat_9_0[] = {};
-> +GlobalProperty hw_compat_9_0[] = {
-> +    {"arm-cpu", "backcompat-cntfrq", "true" },
-> +};
->   const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
->   
->   GlobalProperty hw_compat_8_2[] = {
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index b248b283423..2c8160d6b74 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1388,6 +1388,11 @@ static void arm_cpu_initfn(Object *obj)
->   static Property arm_cpu_gt_cntfrq_property =
->               DEFINE_PROP_UINT64("cntfrq", ARMCPU, gt_cntfrq_hz, 0);
->   
-> +/* True to default to the backwards-compatibility old CNTFRQ rather than 1Ghz */
-> +static Property arm_cpu_backcompat_cntfrq_property =
-> +            DEFINE_PROP_BOOL("backcompat-cntfrq", ARMCPU,
-> +                             backcompat_cntfrq, false);
-> +
->   static Property arm_cpu_reset_cbar_property =
->               DEFINE_PROP_UINT64("reset-cbar", ARMCPU, reset_cbar, 0);
->   
-> @@ -1709,6 +1714,8 @@ void arm_cpu_post_init(Object *obj)
->           qdev_property_add_static(DEVICE(cpu), &arm_cpu_gt_cntfrq_property);
->       }
->   
-> +    qdev_property_add_static(DEVICE(obj), &arm_cpu_backcompat_cntfrq_property);
+[snip]
 
-I'd rather keep the qdev_property_add_static() for "dynamic"
-properties (what a bad function name...) and add this one to
-the static arm_cpu_properties[] array.
+> > diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
+> > index e5f13260fc52..cdfce932d5b1 100644
+> > --- a/drivers/cxl/core/trace.h
+> > +++ b/drivers/cxl/core/trace.h
+> > @@ -253,7 +253,7 @@ TRACE_EVENT(cxl_generic_event,
+> >   * DRAM Event Record
+> >   * CXL rev 3.0 section 8.2.9.2.1.2; Table 8-44
+> >   */
+> > -#define CXL_DPA_FLAGS_MASK			0x3F
+> > +#define CXL_DPA_FLAGS_MASK			0x3FULL
+> >  #define CXL_DPA_MASK				(~CXL_DPA_FLAGS_MASK)
+> >  
+> >  #define CXL_DPA_VOLATILE			BIT(0)
+> 
+> This works but I'm thinking this is the time to convene on one 
+> CXL_EVENT_DPA_MASK for both all CXL events, rather than having
+> cxl_poison event be different.
+> 
+> I prefer how poison defines it:
+> 
+> cxlmem.h:#define CXL_POISON_START_MASK          GENMASK_ULL(63, 6)
+> 
+> Can we rename that CXL_EVENT_DPA_MASK and use for all events?
 
-(Similar comment with arm_cpu_cfgend_property).
+Ah!  Great catch.  I dont' know why I only masked off the 2 used bits.
+That was short sighted of me.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->       if (kvm_enabled()) {
->           kvm_arm_add_vcpu_properties(cpu);
->       }
-> @@ -1834,13 +1841,22 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
->   
->       if (!cpu->gt_cntfrq_hz) {
->           /*
-> -         * 0 means "the board didn't set a value, use the default".
-> -         * The default value of the generic timer frequency (as seen in
-> -         * CNTFRQ_EL0) is 62.5MHz, which corresponds to a period of 16ns.
-> -         * This is what you get (a) for a CONFIG_USER_ONLY CPU (b) if the
-> -         * board doesn't set it.
-> +         * 0 means "the board didn't set a value, use the default". (We also
-> +         * get here for the CONFIG_USER_ONLY case.)
-> +         * ARMv8.6 and later CPUs architecturally must use a 1GHz timer; before
-> +         * that it was an IMPDEF choice, and QEMU initially picked 62.5MHz,
-> +         * which gives a 16ns tick period.
-> +         *
-> +         * We will use the back-compat value:
-> +         *  - for QEMU CPU types added before we standardized on 1GHz
-> +         *  - for versioned machine types with a version of 9.0 or earlier
->            */
-> -        cpu->gt_cntfrq_hz = GTIMER_DEFAULT_HZ;
-> +        if (arm_feature(env, ARM_FEATURE_BACKCOMPAT_CNTFRQ) ||
-> +            cpu->backcompat_cntfrq) {
-> +            cpu->gt_cntfrq_hz = GTIMER_BACKCOMPAT_HZ;
-> +        } else {
-> +            cpu->gt_cntfrq_hz = GTIMER_DEFAULT_HZ;
-> +        }
->       }
->   
->   #ifndef CONFIG_USER_ONLY
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 985b1efe160..c15d086049f 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -599,6 +599,7 @@ static void aarch64_a57_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -656,6 +657,7 @@ static void aarch64_a53_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-> index b5a60682fa6..bdd82d912a2 100644
-> --- a/target/arm/tcg/cpu32.c
-> +++ b/target/arm/tcg/cpu32.c
-> @@ -457,6 +457,7 @@ static void cortex_a7_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_DUMMY_C15_REGS);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -505,6 +506,7 @@ static void cortex_a15_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_DUMMY_C15_REGS);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -696,6 +698,7 @@ static void cortex_r52_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_PMSA);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_AUXCR);
->       cpu->midr = 0x411fd133; /* r1p3 */
-> @@ -924,6 +927,7 @@ static void arm_max_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
->       set_feature(&cpu->env, ARM_FEATURE_EL3);
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index c3369f40824..b0eb7fbb385 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -63,6 +63,7 @@ static void aarch64_a35_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -231,6 +232,7 @@ static void aarch64_a55_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -299,6 +301,7 @@ static void aarch64_a72_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -354,6 +357,7 @@ static void aarch64_a76_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -423,6 +427,7 @@ static void aarch64_a64fx_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
->       set_feature(&cpu->env, ARM_FEATURE_EL3);
-> @@ -592,6 +597,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -663,6 +669,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -885,6 +892,7 @@ static void aarch64_a710_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -982,6 +990,7 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
->       set_feature(&cpu->env, ARM_FEATURE_V8);
->       set_feature(&cpu->env, ARM_FEATURE_NEON);
->       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
-> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
->       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
->       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
->       set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -1077,6 +1086,15 @@ void aarch64_max_tcg_initfn(Object *obj)
->       uint64_t t;
->       uint32_t u;
->   
-> +    /*
-> +     * Unset ARM_FEATURE_BACKCOMPAT_CNTFRQ, which we would otherwise default
-> +     * to because we started with aarch64_a57_initfn(). A 'max' CPU might
-> +     * be a v8.6-or-later one, in which case the cntfrq must be 1GHz; and
-> +     * because it is our "may change" CPU type we are OK with it not being
-> +     * backwards-compatible with how it worked in old QEMU.
-> +     */
-> +    unset_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
-> +
->       /*
->        * Reset MIDR so the guest doesn't mistake our 'max' CPU type for a real
->        * one and try to apply errata workarounds or use impdef features we
-
+Yes we should consolidate these.
+Ira
 
