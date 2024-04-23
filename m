@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B94AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3481C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:11:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnG-00050C-BU; Tue, 23 Apr 2024 11:10:50 -0400
+	id 1rzHnQ-0005pF-Aq; Tue, 23 Apr 2024 11:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmc-0004Mv-CT
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rzHn8-0004e9-64
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmZ-0008VT-VU
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:10 -0400
+ id 1rzHn2-0000Go-9T
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885005;
+ s=mimecast20190719; t=1713885034;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MnI6DCmLAMWxPAP9lwBd3x/oOvf7U/X+eCnp/KlwmH4=;
- b=MpH3vTNmjVQLqxAmLKvPbfDLfshDBSzjLon6N40MdsdBYHCw24EcTrP8MZ8aZtARMilvjO
- kZiqZSvcDzXNJYMv3EGREk5zappJqunzehv7fGcI1mg/sLt7F9xfMrcAd/vrsud1XKT15X
- 17zR6ci+GchUVvjAWsuviVw+kzGXMus=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-363-LMmqroikOaCM9JQzuHBl1w-1; Tue, 23 Apr 2024 11:10:02 -0400
-X-MC-Unique: LMmqroikOaCM9JQzuHBl1w-1
+ bh=n3mpida+7pBeEIwF72SudzUqBOgjk+1wmiY+VpH0hr4=;
+ b=InkxS5U+GsUTEUvLF6xqraL6psuGiX8YL97Xf/hlKbc2nZYqXJi8YPBJFZnvNkGmsgJnuq
+ QMqMra3Tje7m7Jldw4I0wy6fvzCEhFYDQtPCIO+3kIaoga9MGH7XKTd1RudtiVXHH1mB12
+ HHdlWKP/RifVerd3jkQtt2l88cvSovU=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-WtESKvyEPMiKOdSdveQmNQ-1; Tue,
+ 23 Apr 2024 11:10:30 -0400
+X-MC-Unique: WtESKvyEPMiKOdSdveQmNQ-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EA8F9811000;
- Tue, 23 Apr 2024 15:10:01 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 69C7D3C3D0C8;
+ Tue, 23 Apr 2024 15:10:30 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 659AF200AFA2;
- Tue, 23 Apr 2024 15:10:01 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id D686A200E290;
+ Tue, 23 Apr 2024 15:10:29 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 07/63] hw/core: Move system emulation files to system_ss
-Date: Tue, 23 Apr 2024 17:08:55 +0200
-Message-ID: <20240423150951.41600-8-pbonzini@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>
+Subject: [PULL 36/63] scripts/update-linux-headers: Add setup_data.h to import
+ list
+Date: Tue, 23 Apr 2024 17:09:24 +0200
+Message-ID: <20240423150951.41600-37-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -81,84 +82,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hotplug.c, qdev-hotplug.c and reset.c are not used by user emulation
-and need not be included in hwcore_ss.  Move them to system_ss, where
-they belong, by letting the linker pull in the stubs when needed.
+From: Michael Roth <michael.roth@amd.com>
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240408155330.522792-8-pbonzini@redhat.com>
+Data structures like struct setup_data have been moved to a separate
+setup_data.h header which bootparam.h relies on. Add setup_data.h to
+the cp_portable() list and sync it along with the other header files.
+
+Note that currently struct setup_data is stripped away as part of
+generating bootparam.h, but that handling is no currently needed for
+setup_data.h since it doesn't pull in many external
+headers/dependencies. However, QEMU currently redefines struct
+setup_data in hw/i386/x86.c, so that will need to be removed as part of
+any header update that pulls in the new setup_data.h to avoid build
+bisect breakage.
+
+Because <asm/setup_data.h> is the first architecture specific #include
+in include/standard-headers/, add a new sed substitution to rewrite
+asm/ include to the standard-headers/asm-* subdirectory for the current
+architecture.
+
+And while at it, remove asm-generic/kvm_para.h from the list of
+allowed includes: it does not have a matching substitution, and therefore
+it would not be possible to use it on non-Linux systems where there is
+no /usr/include/asm-generic/ directory.
+
+Signed-off-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- {hw/core => stubs}/hotplug-stubs.c |  0
- hw/core/meson.build                | 14 +++-----------
- stubs/meson.build                  |  1 +
- 3 files changed, 4 insertions(+), 11 deletions(-)
- rename {hw/core => stubs}/hotplug-stubs.c (100%)
+ scripts/update-linux-headers.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/hotplug-stubs.c b/stubs/hotplug-stubs.c
-similarity index 100%
-rename from hw/core/hotplug-stubs.c
-rename to stubs/hotplug-stubs.c
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index e26f2e088c3..f20d4143f7a 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -3,7 +3,6 @@ hwcore_ss.add(files(
-   'bus.c',
-   'qdev-properties.c',
-   'qdev.c',
--  'reset.c',
-   'resetcontainer.c',
-   'resettable.c',
-   'vmstate-if.c',
-@@ -12,16 +11,6 @@ hwcore_ss.add(files(
-   'clock.c',
-   'qdev-clock.c',
- ))
--if have_system
--  hwcore_ss.add(files(
--    'hotplug.c',
--    'qdev-hotplug.c',
--  ))
--else
--  hwcore_ss.add(files(
--    'hotplug-stubs.c',
--  ))
--endif
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index a0006eec6fd..d48856f9e24 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -61,7 +61,7 @@ cp_portable() {
+                                      -e 'linux/const' \
+                                      -e 'linux/kernel' \
+                                      -e 'linux/sysinfo' \
+-                                     -e 'asm-generic/kvm_para' \
++                                     -e 'asm/setup_data.h' \
+                                      > /dev/null
+     then
+         echo "Unexpected #include in input file $f".
+@@ -77,6 +77,7 @@ cp_portable() {
+         -e 's/__be\([0-9][0-9]*\)/uint\1_t/g' \
+         -e 's/"\(input-event-codes\.h\)"/"standard-headers\/linux\/\1"/' \
+         -e 's/<linux\/\([^>]*\)>/"standard-headers\/linux\/\1"/' \
++        -e 's/<asm\/\([^>]*\)>/"standard-headers\/asm-'$arch'\/\1"/' \
+         -e 's/__bitwise//' \
+         -e 's/__attribute__((packed))/QEMU_PACKED/' \
+         -e 's/__inline__/inline/' \
+@@ -155,11 +156,14 @@ for arch in $ARCHLIST; do
+                "$tmpdir/include/asm/bootparam.h" > "$tmpdir/bootparam.h"
+         cp_portable "$tmpdir/bootparam.h" \
+                     "$output/include/standard-headers/asm-$arch"
++        cp_portable "$tmpdir/include/asm/setup_data.h" \
++                    "$output/standard-headers/asm-x86"
+     fi
+     if [ $arch = riscv ]; then
+         cp "$tmpdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
+     fi
+ done
++arch=
  
- common_ss.add(files('cpu-common.c'))
- common_ss.add(files('machine-smp.c'))
-@@ -40,6 +29,7 @@ system_ss.add(files(
-   'cpu-sysemu.c',
-   'fw-path-provider.c',
-   'gpio.c',
-+  'hotplug.c',
-   'loader.c',
-   'machine-hmp-cmds.c',
-   'machine-qmp-cmds.c',
-@@ -48,7 +38,9 @@ system_ss.add(files(
-   'null-machine.c',
-   'numa.c',
-   'qdev-fw.c',
-+  'qdev-hotplug.c',
-   'qdev-properties-system.c',
-+  'reset.c',
-   'sysbus.c',
-   'vm-change-state-handler.c',
-   'clock-vmstate.c',
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 0bf25e6ca53..f87f5c1110f 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -14,6 +14,7 @@ stub_ss.add(files('fdset.c'))
- stub_ss.add(files('gdbstub.c'))
- stub_ss.add(files('get-vm-name.c'))
- stub_ss.add(files('graph-lock.c'))
-+stub_ss.add(files('hotplug-stubs.c'))
- if linux_io_uring.found()
-   stub_ss.add(files('io_uring.c'))
- endif
+ rm -rf "$output/linux-headers/linux"
+ mkdir -p "$output/linux-headers/linux"
 -- 
 2.44.0
 
