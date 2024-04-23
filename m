@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0455DC10F15
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BA4C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzOo1-00048P-1k; Tue, 23 Apr 2024 18:40:05 -0400
+	id 1rzOo3-0004FV-T3; Tue, 23 Apr 2024 18:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOmV-0001Qw-Kq
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:33 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOmd-0001Tm-2l
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOmQ-00065j-Ht
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:28 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOma-00066v-5l
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713911905;
+ s=mimecast20190719; t=1713911913;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5Gv2ze+DH5z8/6YTJMF78HsxLvKiWjs9ByVuDww7VIY=;
- b=bQgesmrGZGrQitAE2DLaln5n9y/ULKSvLGi8zH0ud6oJlZbRbIDgpxoAibCN0SGEW8rAcX
- +BQfAvg3csmlHzIXR1FhfyYXceGpP6aoyMRbrhBDHAhvyzmUoWXBOU6zZoEDAC52HmSRpw
- RaS30nRt4EV+E1E5xACSxkEZdy8KBnU=
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=84ysFweDuscU3Eqxmk0s0iRSrIUVg+aQ2rRdiLwQ8r4=;
+ b=g4GesBu7Tdqwr6pWuad7zUHEhwpvZPXrNm7bywTevPxJ5RctdZakjjYdc1iG0cWgJoYhiI
+ RZWheLyJS/cenuGHeGWygCkikTYj8XNszMLoZ/3gGGKSr7SxnWRYwc7YGWYXYySiB+3DnX
+ 5QBtxvEtzschuTVykiuxqUbMQ6km3HM=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-vlnlP7_AOqyVbC9sAyezaw-1; Tue, 23 Apr 2024 18:38:24 -0400
-X-MC-Unique: vlnlP7_AOqyVbC9sAyezaw-1
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-479d52894a3so245037137.0
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:38:24 -0700 (PDT)
+ us-mta-61-mzvCpJQmNnGvmazs20wgiQ-1; Tue, 23 Apr 2024 18:38:32 -0400
+X-MC-Unique: mzvCpJQmNnGvmazs20wgiQ-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c82cfb8913so931335b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:38:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713911904; x=1714516704;
+ d=1e100.net; s=20230601; t=1713911911; x=1714516711;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5Gv2ze+DH5z8/6YTJMF78HsxLvKiWjs9ByVuDww7VIY=;
- b=ouKHwzS8T7rIxXHGUO64W/bBEyuQI20h9n3RgsnKO6triU7o4IYRxyLjvoKNUyRpL5
- ssibnYx0Y1SJyQ92OjQGOeKD25SgqjI04Whl4lSqfGfXRfyGbjN73OUrdKAm0RO0PQS7
- 8U1Yx7nvPyWHZ9VhkGnoP4IqyQiYZWCU66l822UIouGXmJOIpHsY41rQn13ld0+93qSZ
- ZphpCZu5kihQW5R5yrFs/8SpkcPUrrwNNQJYx35CEZrqxgsVB/pZPaLJ+LdBQHXSSUCv
- h0KpXS2CgFrqon6w4etsKiBwVizE8KENUMGXk2lCYhxxfWadPV5uF4BFpEmUZaNZmx/i
- PNQQ==
-X-Gm-Message-State: AOJu0Ywa6Da+Sa6bVvpvJ8MpEJvqTvBWY0LWgNe9uf5SbCguTtVxCLRg
- ypooI7ZEV4vyIi05e4Gc4cDBU3t3SVu8Rj+pDR7MXSGqqenEPs0OLXrtayxkHw2ydMAY2e/8eja
- z43ahdxUnIUiJhCizHjc+GkoCnqXCqN7JTnIAq2MtE4rHOcR0WAnKZsH6D4ANMGYtIqwOGjfEcV
- rwevkAWe2FiZhEJu7Et58D8LGsfSR8/t7BNQ==
-X-Received: by 2002:a05:6122:984:b0:4da:a7fb:67c with SMTP id
- g4-20020a056122098400b004daa7fb067cmr1064598vkd.0.1713911903650; 
- Tue, 23 Apr 2024 15:38:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiMN5ivqcp+spTPgIFiVwFfp7BaGTa+DMJbSZtw4pxb/2QtN+6weW7T6mNDrArZ+l4p3DCAQ==
-X-Received: by 2002:a05:6122:984:b0:4da:a7fb:67c with SMTP id
- g4-20020a056122098400b004daa7fb067cmr1064572vkd.0.1713911903102; 
- Tue, 23 Apr 2024 15:38:23 -0700 (PDT)
+ bh=84ysFweDuscU3Eqxmk0s0iRSrIUVg+aQ2rRdiLwQ8r4=;
+ b=WuGzZcC59qhpBOAtLny5WLIjmVZIbyoEqwSV/oL4AONzdL/+8Zp3UD1200QW9de3px
+ ORKQj6v5p0ViZt0TuXhasGP2nSUr9IkqPdzV/4qFEI0Bi9IKYptTw3a+ikFlYZmDaQHr
+ iVHrIRUtGXmIrgEAU6WaV/p1+S0lDeXsBePUENJuk3cyFAfWLvbtx5QaZ/TzNs9Fo4J7
+ ycfjVkRpew5rEN1Yzg3slWEwSsuC+khpt1is9IHTRY2Nh4m8EJNGjLWiIkAGiFus+l9H
+ 0cRa/YBRNa5gaXN1EBG9zonhTDXc2M/KAEJRt+Y/x459Hn202c33UjqQp6TW8yT5tDDy
+ JydQ==
+X-Gm-Message-State: AOJu0Yzmuw9ygxWAKpE8mEHRgvAJdNF9g0nTbFtK5117MOeFGlKDTCh7
+ 8D0aYx7KF4hm1w/X1NgBX/0Umjls6O+dCpEqS02vBDGhEpVH4TxXvl/TapegKQS78F5DaHOhWwL
+ pjx38tr5obBsowfTC56PqHJMyRvmn2FQcrLDjWxBSuY5zNpEhJEatWxS2z3b+eOtcgFwA0H/pgn
+ unKTejucExSFk36+cf8vJvDc2DVH4VtJDDxw==
+X-Received: by 2002:a05:6808:308a:b0:3c7:4b27:1679 with SMTP id
+ bl10-20020a056808308a00b003c74b271679mr759086oib.2.1713911911143; 
+ Tue, 23 Apr 2024 15:38:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFa7cZpTBGtyR3X9L5H3QKXHNAnWsy1rdXhB4M5oJN+v4ljiOokZvYt1X4BBpYkAQVoo8JKjw==
+X-Received: by 2002:a05:6808:308a:b0:3c7:4b27:1679 with SMTP id
+ bl10-20020a056808308a00b003c74b271679mr759058oib.2.1713911910448; 
+ Tue, 23 Apr 2024 15:38:30 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- c21-20020a05620a11b500b0078d67886632sm5647726qkk.37.2024.04.23.15.38.22
+ c21-20020a05620a11b500b0078d67886632sm5647726qkk.37.2024.04.23.15.38.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Apr 2024 15:38:22 -0700 (PDT)
+ Tue, 23 Apr 2024 15:38:30 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Het Gala <het.gala@nutanix.com>
-Subject: [PULL 03/26] tests/qtest/migration: Replace migrate_get_connect_uri
- inplace of migrate_get_socket_address
-Date: Tue, 23 Apr 2024 18:37:50 -0400
-Message-ID: <20240423223813.3237060-4-peterx@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>
+Subject: [PULL 11/26] vfio: Always report an error in vfio_save_setup()
+Date: Tue, 23 Apr 2024 18:37:58 -0400
+Message-ID: <20240423223813.3237060-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423223813.3237060-1-peterx@redhat.com>
 References: <20240423223813.3237060-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -102,84 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Het Gala <het.gala@nutanix.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-Refactor migrate_get_socket_address to internally utilize 'socket-address'
-parameter, reducing redundancy in the function definition.
+This will prepare ground for future changes adding an Error** argument
+to the save_setup() handler. We need to make sure that on failure,
+vfio_save_setup() always sets a new error.
 
-migrate_get_socket_address implicitly converts SocketAddress into str.
-Move migrate_get_socket_address inside migrate_get_connect_uri which
-should return the uri string instead.
-
-Signed-off-by: Het Gala <het.gala@nutanix.com>
-Suggested-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240312202634.63349-4-het.gala@nutanix.com
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/r/20240320064911.545001-3-clg@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration-helpers.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ hw/vfio/migration.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index 3e8c19c4de..8806dc841e 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -48,28 +48,37 @@ static char *SocketAddress_to_str(SocketAddress *addr)
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 1149c6b374..bf5a29ddc1 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -381,6 +381,7 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+     VFIODevice *vbasedev = opaque;
+     VFIOMigration *migration = vbasedev->migration;
+     uint64_t stop_copy_size = VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE;
++    int ret;
+ 
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_SETUP_STATE);
+ 
+@@ -395,13 +396,13 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
      }
- }
  
--static char *
--migrate_get_socket_address(QTestState *who, const char *parameter)
-+static SocketAddress *migrate_get_socket_address(QTestState *who)
- {
-     QDict *rsp;
--    char *result;
-     SocketAddressList *addrs;
-+    SocketAddress *addr;
-     Visitor *iv = NULL;
-     QObject *object;
- 
-     rsp = migrate_query(who);
--    object = qdict_get(rsp, parameter);
-+    object = qdict_get(rsp, "socket-address");
- 
-     iv = qobject_input_visitor_new(object);
-     visit_type_SocketAddressList(iv, NULL, &addrs, &error_abort);
-+    addr = addrs->value;
-     visit_free(iv);
- 
--    /* we are only using a single address */
--    result = SocketAddress_to_str(addrs->value);
+     if (vfio_precopy_supported(vbasedev)) {
+-        int ret;
 -
--    qapi_free_SocketAddressList(addrs);
-     qobject_unref(rsp);
--    return result;
-+    return addr;
-+}
+         switch (migration->device_state) {
+         case VFIO_DEVICE_STATE_RUNNING:
+             ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
+                                            VFIO_DEVICE_STATE_RUNNING);
+             if (ret) {
++                error_report("%s: Failed to set new PRE_COPY state",
++                             vbasedev->name);
+                 return ret;
+             }
+ 
+@@ -412,6 +413,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+             /* vfio_save_complete_precopy() will go to STOP_COPY */
+             break;
+         default:
++            error_report("%s: Invalid device state %d", vbasedev->name,
++                         migration->device_state);
+             return -EINVAL;
+         }
+     }
+@@ -420,7 +423,13 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+ 
+     qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+ 
+-    return qemu_file_get_error(f);
++    ret = qemu_file_get_error(f);
++    if (ret < 0) {
++        error_report("%s: save setup failed : %s", vbasedev->name,
++                     strerror(-ret));
++    }
 +
-+static char *
-+migrate_get_connect_uri(QTestState *who)
-+{
-+    SocketAddress *addrs;
-+    char *connect_uri;
-+
-+    addrs = migrate_get_socket_address(who);
-+    connect_uri = SocketAddress_to_str(addrs);
-+
-+    qapi_free_SocketAddress(addrs);
-+    return connect_uri;
++    return ret;
  }
  
- bool migrate_watch_for_events(QTestState *who, const char *name,
-@@ -129,7 +138,7 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
- 
-     g_assert(!qdict_haskey(args, "uri"));
-     if (!uri) {
--        connect_uri = migrate_get_socket_address(to, "socket-address");
-+        connect_uri = migrate_get_connect_uri(to);
-     }
-     qdict_put_str(args, "uri", uri ? uri : connect_uri);
- 
+ static void vfio_save_cleanup(void *opaque)
 -- 
 2.44.0
 
