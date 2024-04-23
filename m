@@ -4,59 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8733C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E95C16B13
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnf-0007P9-Bd; Tue, 23 Apr 2024 11:11:15 -0400
+	id 1rzHnO-0005j6-KT; Tue, 23 Apr 2024 11:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmk-0004Nc-Ep
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rzHn0-0004Y2-56
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmg-00006M-QB
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:18 -0400
+ id 1rzHmy-0000Fu-I5
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885012;
+ s=mimecast20190719; t=1713885030;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZSQguZveC9CWehs3CSqV4ojj8hfIHOficnxvbkiw+LQ=;
- b=IvtaF3F5rbhfs7gbgzQ6YYqBHLOjSSh1YX5PoI21QDrWOL9sQ46I+OIR/xXATyWl9diwmH
- MzeLziYtd78U8Cag1QvI/TPAF8EOAuTmWuaoXym7X0HTFraYLntZ5l6r1CfhkwJ6mUCXEC
- nNMsVkh172D5Pk0lTYCJgb0jIIR+K9Q=
+ bh=JPERydqbaBDZuUCv9C5JabcjB73wzXykKHQAmPAuFH0=;
+ b=iV73J1tXEMjfLwL99BTFEOE+ZIDsOZ8eLDkoqPg1OdNeaeFGSfJT0LpN1zt8BMpKvCOhOK
+ SjLohJSfMezeuoRzYVjJYnY+OUDa86ZBHF3RL9miMyxysSIp7fp0365+naSpMb3DivynCC
+ 11FwEpcikeoywXCdbVLrJr9nTMFLvvo=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-4z5rs5hMMj-SouGlBUFTUw-1; Tue, 23 Apr 2024 11:10:10 -0400
-X-MC-Unique: 4z5rs5hMMj-SouGlBUFTUw-1
+ us-mta-269-DQeEPtzXNrq-l9QgXugUzw-1; Tue, 23 Apr 2024 11:10:26 -0400
+X-MC-Unique: DQeEPtzXNrq-l9QgXugUzw-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8C78D1827102
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:10 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 56BD9834FB8;
+ Tue, 23 Apr 2024 15:10:26 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 26A5C200E290
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:10 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B311C20128F3;
+ Tue, 23 Apr 2024 15:10:25 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/63] stubs: split record/replay stubs further
-Date: Tue, 23 Apr 2024 17:09:04 +0200
-Message-ID: <20240423150951.41600-17-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 31/63] hw/i386/acpi: Set PCAT_COMPAT bit only when pic is not
+ disabled
+Date: Tue, 23 Apr 2024 17:09:19 +0200
+Message-ID: <20240423150951.41600-32-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -80,60 +82,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-replay.c symbols are only needed by user mode emulation, with the
-exception of replay_mode that is needed by both user mode emulation
-(by way of qemu_guest_getrandom) and block layer tools (by way of
-util/qemu-timer.c).
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Since it is needed by libqemuutil rather than specific files that
-are part of the tools and emulators, split the replay_mode stub
-into its own file.
+A value 1 of PCAT_COMPAT (bit 0) of MADT.Flags indicates that the system
+also has a PC-AT-compatible dual-8259 setup, i.e., the PIC.  When PIC
+is not enabled (pic=off) for x86 machine, the PCAT_COMPAT bit needs to
+be cleared.  The PIC probe should then print:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20240408155330.522792-17-pbonzini@redhat.com>
+   [    0.155970] Using NULL legacy PIC
+
+However, no such log printed in guest kernel unless PCAT_COMPAT is
+cleared.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Message-ID: <20240403145953.3082491-1-xiaoyao.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- stubs/replay-mode.c | 4 ++++
- stubs/replay.c      | 2 --
- stubs/meson.build   | 1 +
- 3 files changed, 5 insertions(+), 2 deletions(-)
- create mode 100644 stubs/replay-mode.c
+ hw/i386/acpi-common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/stubs/replay-mode.c b/stubs/replay-mode.c
-new file mode 100644
-index 00000000000..264be9d96c9
---- /dev/null
-+++ b/stubs/replay-mode.c
-@@ -0,0 +1,4 @@
-+#include "qemu/osdep.h"
-+#include "sysemu/replay.h"
-+
-+ReplayMode replay_mode;
-diff --git a/stubs/replay.c b/stubs/replay.c
-index 42c92e4acb8..b4dd6a566e8 100644
---- a/stubs/replay.c
-+++ b/stubs/replay.c
-@@ -1,8 +1,6 @@
- #include "qemu/osdep.h"
- #include "exec/replay-core.h"
+diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
+index 20f19269da4..0cc2919bb85 100644
+--- a/hw/i386/acpi-common.c
++++ b/hw/i386/acpi-common.c
+@@ -107,7 +107,9 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
+     acpi_table_begin(&table, table_data);
+     /* Local APIC Address */
+     build_append_int_noprefix(table_data, APIC_DEFAULT_ADDRESS, 4);
+-    build_append_int_noprefix(table_data, 1 /* PCAT_COMPAT */, 4); /* Flags */
++    /* Flags. bit 0: PCAT_COMPAT */
++    build_append_int_noprefix(table_data,
++                              x86ms->pic != ON_OFF_AUTO_OFF ? 1 : 0 , 4);
  
--ReplayMode replay_mode;
--
- void replay_finish(void)
- {
- }
-diff --git a/stubs/meson.build b/stubs/meson.build
-index a252bffad00..4a524f5816b 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -36,6 +36,7 @@ stub_ss.add(files('qmp-quit.c'))
- stub_ss.add(files('qtest.c'))
- stub_ss.add(files('ram-block.c'))
- stub_ss.add(files('replay.c'))
-+stub_ss.add(files('replay-mode.c'))
- stub_ss.add(files('runstate-check.c'))
- stub_ss.add(files('sysbus.c'))
- stub_ss.add(files('target-get-monitor-def.c'))
+     for (i = 0; i < apic_ids->len; i++) {
+         pc_madt_cpu_entry(i, apic_ids, table_data, false);
 -- 
 2.44.0
 
