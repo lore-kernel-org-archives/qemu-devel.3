@@ -4,61 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9AAC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 21:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58651C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzNwN-0008JA-1u; Tue, 23 Apr 2024 17:44:39 -0400
+	id 1rzOV2-0005ZN-P4; Tue, 23 Apr 2024 18:20:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1rzNwE-0008Ib-2o
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 17:44:33 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOV1-0005ZF-P5
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:20:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1rzNw9-0005An-DV
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 17:44:28 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 51FB0CE1302;
- Tue, 23 Apr 2024 21:44:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A239C116B1;
- Tue, 23 Apr 2024 21:44:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1713908660;
- bh=UjoA6V0036zekFPRJZHvdkpX+1cdG39k2bgLXgJFrkk=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=k1L1CPTNKSyXJ8WEyxYmUIw04+7p0v/+Bkl+Io4Fqr7y7Jg5tZ5Rh6csHyUnaQBle
- 5YZVjgoWsGOvUhRX0/zm/d2AzKO9gAAQ8YTcOqzbvXQD1gKS9F5iBllZ/8qMup+DfE
- tEIdqX1xioKzGSQ3pJkQJp+EqleTkGg/pQQ8kEU8=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev,
- qemu-devel@nongnu.org, Breno Leitao <leitao@debian.org>,
- Heng Qi <hengqi@linux.alibaba.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- "David S. Miller" <davem@davemloft.net>, Vlad Poenaru <vlad.wing@gmail.com>
-Subject: [PATCH 6.6 152/158] virtio_net: Do not send RSS key if it is not
- supported
-Date: Tue, 23 Apr 2024 14:39:49 -0700
-Message-ID: <20240423213900.607828253@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240423213855.696477232@linuxfoundation.org>
-References: <20240423213855.696477232@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOUz-0003A1-QZ
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:20:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713910824;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NZouwIY8z9KojD+IupKSFyIF3Zpov/alvLYnLE3kqRE=;
+ b=gRrh22XJquJY9fY1U2We5zd8xApbDnhdHW+img0dj8fiBBViJJsUGsMBgwhfP1nT12Yk7U
+ bjuSmUQSoQv7rqexyqlPHG2KgDzavysLFxuKdqB70JbPpjqU0O+/mEnEOYkNU4SFOhwgFA
+ skzcvyJtMqJpvzO2YHzk3Rsbzm423T8=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-173-n-2CwOMPNzaG3caTmi8yGg-1; Tue, 23 Apr 2024 18:20:23 -0400
+X-MC-Unique: n-2CwOMPNzaG3caTmi8yGg-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6a01116b273so18920726d6.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:20:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713910823; x=1714515623;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NZouwIY8z9KojD+IupKSFyIF3Zpov/alvLYnLE3kqRE=;
+ b=BhPkMw0AOxRc3nowBKVxLV0xk2CekwjSWCC6KneMwm+B6UBhHF/13J5iI91EbY58JD
+ ljr6uw8XvtCTU1Bu/NJZbrAJPpOsr5Io13U+FVzpeDU4tNikb+c2O/2/VhknCdV58GSz
+ MgvwrhX3W4ocg/MNg1gLHBEn/p9gSx9FHDvFjFbipQ63UkdsHqTEsABAi4+mBGoINyjj
+ IY01OGKdggHXZMrOD5pXA9YxQp8APAhA/IH1F68N09JsDlqttDlInS1M4QoLONW8l1pE
+ qRuGCuPDpA+5beXSIfr9Bq9OQBrsYkI69I2nDuEmWDx92M4NtcRRarfpx3VkCO95j6z/
+ LOTw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUz1ZCz9sj1fdKUMGeOVRG6vzlWb8uS4PrQtzM+ax41MW5RECSAaSHvZSb2qE1eP25GtZ5RWBEavoTSyIYNZz3pM7XSmAw=
+X-Gm-Message-State: AOJu0YxkldM/OJlIS03nJgp4rrXZzW5ovMuucYKGi6XUGaNeNVuat6eC
+ 2zPU2t91ALgqtSUPa3eGL17aKpiLdas0JwoIDF7SFDdUvbWBH96ejsrxr8eI0cucFvyTa89HLrv
+ wJH8hmBMt70aIHzFLVkt2lSa4INvaYTjPABlegmWOT1/YT1MqoabM
+X-Received: by 2002:ad4:5ecf:0:b0:6a0:6ffa:c306 with SMTP id
+ jm15-20020ad45ecf000000b006a06ffac306mr724406qvb.6.1713910822630; 
+ Tue, 23 Apr 2024 15:20:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHpw5HKHVeRU8UjyBbLF3xMa1ResAAtYiT4JHQoU6jv0q4061fhJwp5PWVkywKI7Q8fMh0utA==
+X-Received: by 2002:ad4:5ecf:0:b0:6a0:6ffa:c306 with SMTP id
+ jm15-20020ad45ecf000000b006a06ffac306mr724373qvb.6.1713910821955; 
+ Tue, 23 Apr 2024 15:20:21 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ n12-20020a0c8c0c000000b006a050fa22cfsm3047403qvb.145.2024.04.23.15.20.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Apr 2024 15:20:19 -0700 (PDT)
+Date: Tue, 23 Apr 2024 18:20:16 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH RFC 00/26] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
+ device state transfer support with VFIO consumer
+Message-ID: <Zig0IPofMCpJdGsn@x1n>
+References: <Zh-KF72Fe9oV6tfT@redhat.com>
+ <c0b1dbb1-d353-4832-af90-96895b2129fc@maciej.szmigiero.name>
+ <Zh_6W8u3H4FmGS49@redhat.com>
+ <71ede5c8-857c-418b-9e37-b8d343ddfa06@maciej.szmigiero.name>
+ <ZiD4aLSre6qubuHr@redhat.com>
+ <aebcd78e-b8b6-44db-b2be-0bbd5acccf3f@maciej.szmigiero.name>
+ <ZiF8aWVfW7kPuOtn@x1n> <ZiJCSZvsekaO8dzO@redhat.com>
+ <ZiKOTkgEIKo-wj5N@x1n>
+ <d7d59001-0800-4073-9def-08327e904b7b@maciej.szmigiero.name>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=gregkh@linuxfoundation.org; helo=sin.source.kernel.org
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+In-Reply-To: <d7d59001-0800-4073-9def-08327e904b7b@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,135 +116,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Apr 23, 2024 at 06:15:35PM +0200, Maciej S. Szmigiero wrote:
+> On 19.04.2024 17:31, Peter Xu wrote:
+> > On Fri, Apr 19, 2024 at 11:07:21AM +0100, Daniel P. Berrangé wrote:
+> > > On Thu, Apr 18, 2024 at 04:02:49PM -0400, Peter Xu wrote:
+> > > > On Thu, Apr 18, 2024 at 08:14:15PM +0200, Maciej S. Szmigiero wrote:
+> > > > > I think one of the reasons for these results is that mixed (RAM + device
+> > > > > state) multifd channels participate in the RAM sync process
+> > > > > (MULTIFD_FLAG_SYNC) whereas device state dedicated channels don't.
+> > > > 
+> > > > Firstly, I'm wondering whether we can have better names for these new
+> > > > hooks.  Currently (only comment on the async* stuff):
+> > > > 
+> > > >    - complete_precopy_async
+> > > >    - complete_precopy
+> > > >    - complete_precopy_async_wait
+> > > > 
+> > > > But perhaps better:
+> > > > 
+> > > >    - complete_precopy_begin
+> > > >    - complete_precopy
+> > > >    - complete_precopy_end
+> > > > 
+> > > > ?
+> > > > 
+> > > > As I don't see why the device must do something with async in such hook.
+> > > > To me it's more like you're splitting one process into multiple, then
+> > > > begin/end sounds more generic.
+> > > > 
+> > > > Then, if with that in mind, IIUC we can already split ram_save_complete()
+> > > > into >1 phases too. For example, I would be curious whether the performance
+> > > > will go back to normal if we offloading multifd_send_sync_main() into the
+> > > > complete_precopy_end(), because we really only need one shot of that, and I
+> > > > am quite surprised it already greatly affects VFIO dumping its own things.
+> > > > 
+> > > > I would even ask one step further as what Dan was asking: have you thought
+> > > > about dumping VFIO states via multifd even during iterations?  Would that
+> > > > help even more than this series (which IIUC only helps during the blackout
+> > > > phase)?
+> > > 
+> > > To dump during RAM iteration, the VFIO device will need to have
+> > > dirty tracking and iterate on its state, because the guest CPUs
+> > > will still be running potentially changing VFIO state. That seems
+> > > impractical in the general case.
+> > 
+> > We already do such interations in vfio_save_iterate()?
+> > 
+> > My understanding is the recent VFIO work is based on the fact that the VFIO
+> > device can track device state changes more or less (besides being able to
+> > save/load full states).  E.g. I still remember in our QE tests some old
+> > devices report much more dirty pages than expected during the iterations
+> > when we were looking into such issue that a huge amount of dirty pages
+> > reported.  But newer models seem to have fixed that and report much less.
+> > 
+> > That issue was about GPU not NICs, though, and IIUC a major portion of such
+> > tracking used to be for GPU vRAMs.  So maybe I was mixing up these, and
+> > maybe they work differently.
+> 
+> The device which this series was developed against (Mellanox ConnectX-7)
+> is already transferring its live state before the VM gets stopped (via
+> save_live_iterate SaveVMHandler).
+> 
+> It's just that in addition to the live state it has more than 400 MiB
+> of state that cannot be transferred while the VM is still running.
+> And that fact hurts a lot with respect to the migration downtime.
+> 
+> AFAIK it's a very similar story for (some) GPUs.
 
-------------------
+So during iteration phase VFIO cannot yet leverage the multifd channels
+when with this series, am I right?
 
-From: Breno Leitao <leitao@debian.org>
+Is it possible to extend that use case too?
 
-commit 059a49aa2e25c58f90b50151f109dd3c4cdb3a47 upstream.
+Thanks,
 
-There is a bug when setting the RSS options in virtio_net that can break
-the whole machine, getting the kernel into an infinite loop.
-
-Running the following command in any QEMU virtual machine with virtionet
-will reproduce this problem:
-
-    # ethtool -X eth0  hfunc toeplitz
-
-This is how the problem happens:
-
-1) ethtool_set_rxfh() calls virtnet_set_rxfh()
-
-2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
-
-3) virtnet_commit_rss_command() populates 4 entries for the rss
-scatter-gather
-
-4) Since the command above does not have a key, then the last
-scatter-gatter entry will be zeroed, since rss_key_size == 0.
-sg_buf_size = vi->rss_key_size;
-
-5) This buffer is passed to qemu, but qemu is not happy with a buffer
-with zero length, and do the following in virtqueue_map_desc() (QEMU
-function):
-
-  if (!sz) {
-      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
-
-6) virtio_error() (also QEMU function) set the device as broken
-
-    vdev->broken = true;
-
-7) Qemu bails out, and do not repond this crazy kernel.
-
-8) The kernel is waiting for the response to come back (function
-virtnet_send_command())
-
-9) The kernel is waiting doing the following :
-
-      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-	     !virtqueue_is_broken(vi->cvq))
-	      cpu_relax();
-
-10) None of the following functions above is true, thus, the kernel
-loops here forever. Keeping in mind that virtqueue_is_broken() does
-not look at the qemu `vdev->broken`, so, it never realizes that the
-vitio is broken at QEMU side.
-
-Fix it by not sending RSS commands if the feature is not available in
-the device.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Cc: stable@vger.kernel.org
-Cc: qemu-devel@nongnu.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Vlad Poenaru <vlad.wing@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/virtio_net.c |   25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
-
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3570,19 +3570,34 @@ static int virtnet_get_rxfh(struct net_d
- static int virtnet_set_rxfh(struct net_device *dev, const u32 *indir, const u8 *key, const u8 hfunc)
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
-+	bool update = false;
- 	int i;
- 
- 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
- 		return -EOPNOTSUPP;
- 
- 	if (indir) {
-+		if (!vi->has_rss)
-+			return -EOPNOTSUPP;
-+
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
- 			vi->ctrl->rss.indirection_table[i] = indir[i];
-+		update = true;
- 	}
--	if (key)
-+	if (key) {
-+		/* If either _F_HASH_REPORT or _F_RSS are negotiated, the
-+		 * device provides hash calculation capabilities, that is,
-+		 * hash_key is configured.
-+		 */
-+		if (!vi->has_rss && !vi->has_rss_hash_report)
-+			return -EOPNOTSUPP;
-+
- 		memcpy(vi->ctrl->rss.key, key, vi->rss_key_size);
-+		update = true;
-+	}
- 
--	virtnet_commit_rss_command(vi);
-+	if (update)
-+		virtnet_commit_rss_command(vi);
- 
- 	return 0;
- }
-@@ -4491,13 +4506,15 @@ static int virtnet_probe(struct virtio_d
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_HASH_REPORT))
- 		vi->has_rss_hash_report = true;
- 
--	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS))
-+	if (virtio_has_feature(vdev, VIRTIO_NET_F_RSS)) {
- 		vi->has_rss = true;
- 
--	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_indir_table_size =
- 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
- 				rss_max_indirection_table_length));
-+	}
-+
-+	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_key_size =
- 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
- 
-
+-- 
+Peter Xu
 
 
