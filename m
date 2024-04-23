@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93395C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E3FC10F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnT-0006Hb-VA; Tue, 23 Apr 2024 11:11:04 -0400
+	id 1rzHnT-0006Fg-OH; Tue, 23 Apr 2024 11:11:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnC-0004k8-Ik
+ id 1rzHnC-0004k9-K1
  for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHn7-0000HG-TN
+ id 1rzHn7-0000HE-VN
  for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885036;
+ s=mimecast20190719; t=1713885035;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pk99K/zTrVRxPz+P8bURNxdcIAFJCpNOuMmTg+GIdgo=;
- b=dyN9ZqINAUfPQS6DUj6IyuzxWODhlCdipKIM45rQm1ZosgM100pRKCYYoaB3FM4enx7qNw
- SpsFKFuiAs2jP12vmSGLuhBNWj3sFOfyES6l3bWqvB3Rs/appN/EKobOQvJIeJnzpuP7vg
- Xu0bongCXOHrV9bMS4kqNkRsDq7eaQo=
+ bh=/oyq/pYGuo/iu0l7uKUoPfrHl8ZU1WATY9EZskgY+m8=;
+ b=a+VdgUrpp2A/fCcxQyKRcf16DArCG6y74XX7i9casjmLo0cGd/8Y6hz9jPrZp8Xg68cIqS
+ pkvaEcpv8SBWQykpDjAFxuZ1zWnG6XxqfNCBycX3feyBY8VVNiIQdmXOWP9BxRqqfIPByD
+ 6EVu4jhPIS9V+ZCloOsdh/n6VSfrhrc=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-S0GDEyXgO_S0i4n7xsOe1Q-1; Tue,
- 23 Apr 2024 11:10:34 -0400
-X-MC-Unique: S0GDEyXgO_S0i4n7xsOe1Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-0FBpigayPYGn_cDTXQ3Akw-1; Tue,
+ 23 Apr 2024 11:10:31 -0400
+X-MC-Unique: 0FBpigayPYGn_cDTXQ3Akw-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1551829AC013;
- Tue, 23 Apr 2024 15:10:34 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4413638116F1;
+ Tue, 23 Apr 2024 15:10:31 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 80C6820128F3;
- Tue, 23 Apr 2024 15:10:33 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id ADC742026D0A;
+ Tue, 23 Apr 2024 15:10:30 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 40/63] KVM: track whether guest state is encrypted
-Date: Tue, 23 Apr 2024 17:09:28 +0200
-Message-ID: <20240423150951.41600-41-pbonzini@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>
+Subject: [PULL 37/63] scripts/update-linux-headers: Add bits.h to file imports
+Date: Tue, 23 Apr 2024 17:09:25 +0200
+Message-ID: <20240423150951.41600-38-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -81,112 +81,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, KVM has allowed KVM_GET/SET_* ioctls to execute even if the
-guest state is encrypted, in which case they do nothing.  For the new
-API using VM types, instead, the ioctls will fail which is a safer and
-more robust approach.
+From: Michael Roth <michael.roth@amd.com>
 
-The new API will be the only one available for SEV-SNP and TDX, but it
-is also usable for SEV and SEV-ES.  In preparation for that, require
-architecture-specific KVM code to communicate the point at which guest
-state is protected (which must be after kvm_cpu_synchronize_post_init(),
-though that might change in the future in order to suppor migration).
-From that point, skip reading registers so that cpu->vcpu_dirty is
-never true: if it ever becomes true, kvm_arch_put_registers() will
-fail miserably.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/sysemu/kvm.h     |  2 ++
- include/sysemu/kvm_int.h |  1 +
- accel/kvm/kvm-all.c      | 17 ++++++++++++++---
- target/i386/sev.c        |  1 +
- 4 files changed, 18 insertions(+), 3 deletions(-)
+ scripts/update-linux-headers.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index 2cba899270c..14b1ddb3be1 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -539,6 +539,8 @@ bool kvm_dirty_ring_enabled(void);
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index d48856f9e24..5f20434d5c5 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -169,7 +169,7 @@ rm -rf "$output/linux-headers/linux"
+ mkdir -p "$output/linux-headers/linux"
+ for header in const.h stddef.h kvm.h vfio.h vfio_ccw.h vfio_zdev.h vhost.h \
+               psci.h psp-sev.h userfaultfd.h memfd.h mman.h nvme_ioctl.h \
+-              vduse.h iommufd.h; do
++              vduse.h iommufd.h bits.h; do
+     cp "$tmpdir/include/linux/$header" "$output/linux-headers/linux"
+ done
  
- uint32_t kvm_dirty_ring_size(void);
- 
-+void kvm_mark_guest_state_protected(void);
-+
- /**
-  * kvm_hwpoisoned_mem - indicate if there is any hwpoisoned page
-  * reported for the VM.
-diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
-index 94488d2c1a2..227b61fec3d 100644
---- a/include/sysemu/kvm_int.h
-+++ b/include/sysemu/kvm_int.h
-@@ -87,6 +87,7 @@ struct KVMState
-     bool kernel_irqchip_required;
-     OnOffAuto kernel_irqchip_split;
-     bool sync_mmu;
-+    bool guest_state_protected;
-     uint64_t manual_dirty_log_protect;
-     /* The man page (and posix) say ioctl numbers are signed int, but
-      * they're not.  Linux, glibc and *BSD all treat ioctl numbers as
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index d58916e33ae..d6ebadbf386 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2703,7 +2703,7 @@ bool kvm_cpu_check_are_resettable(void)
- 
- static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- {
--    if (!cpu->vcpu_dirty) {
-+    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-         int ret = kvm_arch_get_registers(cpu);
-         if (ret) {
-             error_report("Failed to get registers: %s", strerror(-ret));
-@@ -2717,7 +2717,7 @@ static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- 
- void kvm_cpu_synchronize_state(CPUState *cpu)
- {
--    if (!cpu->vcpu_dirty) {
-+    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-         run_on_cpu(cpu, do_kvm_cpu_synchronize_state, RUN_ON_CPU_NULL);
-     }
- }
-@@ -2752,7 +2752,13 @@ static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
- 
- void kvm_cpu_synchronize_post_init(CPUState *cpu)
- {
--    run_on_cpu(cpu, do_kvm_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
-+    if (!kvm_state->guest_state_protected) {
-+        /*
-+         * This runs before the machine_init_done notifiers, and is the last
-+         * opportunity to synchronize the state of confidential guests.
-+         */
-+        run_on_cpu(cpu, do_kvm_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
-+    }
- }
- 
- static void do_kvm_cpu_synchronize_pre_loadvm(CPUState *cpu, run_on_cpu_data arg)
-@@ -4099,3 +4105,8 @@ void query_stats_schemas_cb(StatsSchemaList **result, Error **errp)
-         query_stats_schema_vcpu(first_cpu, &stats_args);
-     }
- }
-+
-+void kvm_mark_guest_state_protected(void)
-+{
-+    kvm_state->guest_state_protected = true;
-+}
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index b8f79d34d19..c49a8fd55eb 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -755,6 +755,7 @@ sev_launch_get_measure(Notifier *notifier, void *unused)
-         if (ret) {
-             exit(1);
-         }
-+        kvm_mark_guest_state_protected();
-     }
- 
-     /* query the measurement blob length */
 -- 
 2.44.0
 
