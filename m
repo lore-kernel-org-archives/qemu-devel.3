@@ -4,80 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B7C8C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 17:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F118C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 17:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzKBa-0003E1-Qx; Tue, 23 Apr 2024 13:44:06 -0400
+	id 1rzKOd-0006S9-24; Tue, 23 Apr 2024 13:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rzKBZ-0003Db-EW
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 13:44:05 -0400
-Received: from madrid.collaboradmins.com ([46.235.227.194])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1rzKBX-0005kG-PX
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 13:44:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1713894242;
- bh=Y+G1VDdMR6mQrW3FnM/pR6jbUjEy6GsbvqWqUStk7+g=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=b0aKd2ilvOAiBB2EA3tYycjWqxDhfx7DLHj3hZyUj1VewLctnZG+nYboyS7cVvBwQ
- /7IRWUIuHFvNpqvsZJSYyRhVxCqY1jYrZwdDFMzYZXmYmdabR0ywk0dx8ujxiYpJMT
- aFbM1Y4WQ7Y6CugfHqoZ7jz7kwKGuNt80oV2C+bF3JIvD8I5Y1EskeU6jMZxai0JWM
- j3ikPaWtTHBefKrN4+JIW024A6+dKqSDLz9rgidpe2155h3RfRAFtrL0yuB5exJmh9
- EkYiCSiRckXORTRy34jSxRYqvBTYfCpu1zdKQt8OMM+Bj67YyU8iwd/YgORJIgScaB
- JhUN8Lz5Iit3A==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzKOa-0006Rl-Rr
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 13:57:33 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzKOX-0008RA-Fy
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 13:57:31 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 035CB3780BFE;
- Tue, 23 Apr 2024 17:43:59 +0000 (UTC)
-Message-ID: <2caefc71-7ffc-4079-9015-eed9139d127f@collabora.com>
-Date: Tue, 23 Apr 2024 20:43:57 +0300
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B3DA221D91;
+ Tue, 23 Apr 2024 17:57:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1713895043; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Xm5RT+zsiGPnWCJeRdjH3khcWychiTR5ZN35NJGS0k=;
+ b=YtTM8U4Y10yS0Dt66ZwQSwhJ9VM2KhG6YTH8pRFEEwCIeS6rlDsQetu3ItQ+CffvfgWle6
+ mkYGnUJYUp8BRStH6a/c1cN28BtT9/8jZO/lPeiybrwM7ntcPkmfnQeBNnPzQ3Cb1J3zrn
+ 8u3EP9+l6NwJ8veE4kPgWaKVTYhmFj8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1713895043;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Xm5RT+zsiGPnWCJeRdjH3khcWychiTR5ZN35NJGS0k=;
+ b=bwp+dN3VbDaq/N4ywUZjutUdj0p+JHSdxsYjdjV8DjR789T3lFujPnXjUEuWIruis7Fwyy
+ e3I4KuimAqBO68DQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=YtTM8U4Y;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bwp+dN3V
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1713895043; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Xm5RT+zsiGPnWCJeRdjH3khcWychiTR5ZN35NJGS0k=;
+ b=YtTM8U4Y10yS0Dt66ZwQSwhJ9VM2KhG6YTH8pRFEEwCIeS6rlDsQetu3ItQ+CffvfgWle6
+ mkYGnUJYUp8BRStH6a/c1cN28BtT9/8jZO/lPeiybrwM7ntcPkmfnQeBNnPzQ3Cb1J3zrn
+ 8u3EP9+l6NwJ8veE4kPgWaKVTYhmFj8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1713895043;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Xm5RT+zsiGPnWCJeRdjH3khcWychiTR5ZN35NJGS0k=;
+ b=bwp+dN3VbDaq/N4ywUZjutUdj0p+JHSdxsYjdjV8DjR789T3lFujPnXjUEuWIruis7Fwyy
+ e3I4KuimAqBO68DQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 37CD613929;
+ Tue, 23 Apr 2024 17:57:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id n+6BO4L2J2a4OgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 23 Apr 2024 17:57:22 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: Re: [PATCH 00/22] configs: switch boards to "default y"
+In-Reply-To: <20240423131612.28362-1-pbonzini@redhat.com>
+References: <20240423131612.28362-1-pbonzini@redhat.com>
+Date: Tue, 23 Apr 2024 14:57:20 -0300
+Message-ID: <87o7a0hshr.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 09/11] virtio-gpu: Resource UUID
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
- <20240418190040.1110210-10-dmitry.osipenko@collabora.com>
- <ad215124-6a02-4bc7-8cee-c6865bfff768@daynix.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <ad215124-6a02-4bc7-8cee-c6865bfff768@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=46.235.227.194;
- envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: B3DA221D91
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,31 +122,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/19/24 12:29, Akihiko Odaki wrote:
-> On 2024/04/19 4:00, Dmitry Osipenko wrote:
->> From: Antonio Caggiano <antonio.caggiano@collabora.com>
->>
->> Enable resource UUID feature and implement command resource assign UUID.
->> UUID feature availability is mandatory for Vulkan Venus context.
->>
->> UUID is intended for sharing dmabufs between virtio devices on host. Qemu
->> doesn't have second virtio device for sharing, thus a simple stub UUID
->> implementation is enough. More complete implementation using global UUID
->> resource table might become interesting for a multi-gpu cases.
-> 
-> Isn't it possible to add two virtio-gpu devices even now?
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-We can add two virtio-gpu devices, but these devices can't interact with
-each other efficiently. They won't be able to share host blob resources
-without proper UUID implementation.
+> Some boards, notably ARM boards that use TCG, are already using
+> "default y".  This was done to remove TCG-only boards from
+> a KVM-only build in commit 29d9efca16 (2023-04-26).
+>
+> This series converts all other boards to that, so that the requirements
+> of each board are clearer in the Kconfig files.
+>
+> For now, the only such use is MIPS's 64-bit and endianness requirements.
+> In the future, it will be possible to enable/disable boards based
+> on the presence of required libraries, for example libfdt, or
+> their deprecation status.
+>
+> There is an important difference in that Kconfig symbols for boards
+> have to be enabled in a --without-default-devices build, similar to
+> devices.
 
-> A new subsection should also be added for migration compatibility; see:
-> docs/devel/migration/main.rst
+And how do we make that happen?
 
-Will update the docs, thanks.
-
--- 
-Best regards,
-Dmitry
-
+>
+> Paolo
+>
+> Paolo Bonzini (22):
+>   configs: list "implied" device groups in the default configs
+>   alpha: switch boards to "default y"
+>   arm: switch boards to "default y"
+>   avr: switch boards to "default y"
+>   cris: switch boards to "default y"
+>   hppa: switch boards to "default y"
+>   i386: switch boards to "default y"
+>   loongarch: switch boards to "default y"
+>   m68k: switch boards to "default y"
+>   microblaze: switch boards to "default y"
+>   meson: make target endianneess available to Kconfig
+>   mips: switch boards to "default y"
+>   nios2: switch boards to "default y"
+>   openrisc: switch boards to "default y"
+>   ppc: switch boards to "default y"
+>   riscv: switch boards to "default y"
+>   rx: switch boards to "default y"
+>   s390x: switch boards to "default y"
+>   sh4: switch boards to "default y"
+>   sparc: switch boards to "default y"
+>   tricore: switch boards to "default y"
+>   xtensa: switch boards to "default y"
+>
+>  configs/devices/alpha-softmmu/default.mak     |  5 ++--
+>  configs/devices/arm-softmmu/default.mak       |  5 +++-
+>  configs/devices/avr-softmmu/default.mak       |  5 ++--
+>  configs/devices/cris-softmmu/default.mak      |  5 ++--
+>  configs/devices/hppa-softmmu/default.mak      |  5 ++--
+>  configs/devices/i386-softmmu/default.mak      | 11 ++++---
+>  .../devices/loongarch64-softmmu/default.mak   |  6 +++-
+>  configs/devices/m68k-softmmu/default.mak      | 13 ++++----
+>  .../devices/microblaze-softmmu/default.mak    |  9 +++---
+>  configs/devices/mips-softmmu/common.mak       |  5 ++--
+>  configs/devices/mips64-softmmu/default.mak    |  4 ++-
+>  configs/devices/mips64el-softmmu/default.mak  | 10 ++++---
+>  configs/devices/nios2-softmmu/default.mak     |  7 ++---
+>  configs/devices/or1k-softmmu/default.mak      |  9 ++++--
+>  configs/devices/ppc-softmmu/default.mak       | 30 +++++++++++--------
+>  configs/devices/ppc64-softmmu/default.mak     |  8 ++---
+>  configs/devices/riscv32-softmmu/default.mak   | 17 +++++------
+>  configs/devices/riscv64-softmmu/default.mak   | 19 ++++++------
+>  configs/devices/rx-softmmu/default.mak        |  3 +-
+>  configs/devices/s390x-softmmu/default.mak     |  5 ++--
+>  configs/devices/sh4-softmmu/default.mak       |  7 ++---
+>  configs/devices/sparc-softmmu/default.mak     |  7 ++---
+>  configs/devices/sparc64-softmmu/default.mak   |  7 ++---
+>  configs/devices/tricore-softmmu/default.mak   |  7 +++--
+>  configs/devices/xtensa-softmmu/default.mak    | 11 ++++---
+>  meson.build                                   | 12 ++++----
+>  hw/alpha/Kconfig                              |  2 ++
+>  hw/arm/Kconfig                                |  2 ++
+>  hw/avr/Kconfig                                |  3 ++
+>  hw/cris/Kconfig                               |  2 ++
+>  hw/hppa/Kconfig                               |  2 ++
+>  hw/i386/Kconfig                               | 10 ++++++-
+>  hw/loongarch/Kconfig                          |  2 ++
+>  hw/m68k/Kconfig                               | 10 +++++++
+>  hw/microblaze/Kconfig                         |  6 ++++
+>  hw/mips/Kconfig                               | 12 ++++++++
+>  hw/nios2/Kconfig                              |  9 +++---
+>  hw/openrisc/Kconfig                           |  4 +++
+>  hw/ppc/Kconfig                                | 26 ++++++++++++++++
+>  hw/riscv/Kconfig                              | 14 +++++++++
+>  hw/rx/Kconfig                                 |  2 ++
+>  hw/s390x/Kconfig                              |  2 ++
+>  hw/sh4/Kconfig                                |  4 +++
+>  hw/sparc/Kconfig                              |  4 +++
+>  hw/sparc64/Kconfig                            |  4 +++
+>  hw/tricore/Kconfig                            |  4 +++
+>  hw/xtensa/Kconfig                             |  6 ++++
+>  target/Kconfig                                |  3 ++
+>  target/i386/Kconfig                           |  1 +
+>  target/ppc/Kconfig                            |  1 +
+>  50 files changed, 252 insertions(+), 115 deletions(-)
 
