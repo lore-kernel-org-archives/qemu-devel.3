@@ -4,60 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24195C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 18:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DB7C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 18:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzKlI-0004h8-TR; Tue, 23 Apr 2024 14:21:00 -0400
+	id 1rzKn8-0005uN-Aa; Tue, 23 Apr 2024 14:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hsu@peterdavehello.org>)
- id 1rzKlE-0004ew-Tw
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:20:57 -0400
-Received: from mail-40136.proton.ch ([185.70.40.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hsu@peterdavehello.org>)
- id 1rzKlA-00044t-FC
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:20:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=peterdavehello.org;
- s=protonmail; t=1713896447; x=1714155647;
- bh=Nmqe7W0iiWRPbh31RKhRLLfqiStNl+q3lVbiHq3IER4=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=LcAr95FMWpAQEwcDFc+5WwWlyT4BTddwIjFyUHvfqTnjxopOPYyGlqHOoKKeryNrt
- FnQNqKGHE1WFJOpagTaJnmFPkOnHnaeVu5/d2xV3y5JEhrBH7alH49C0b0LjcGWOTD
- nuarllGkeRn5iJDtdX8wbRpIDx1KNHbLh2+KFWPgwUYkVrr3aLkov/m20D7+WFptX4
- IYYjr050B2RIgGU7w3s/h0IngOcj14fjsxy9xrvQksp8fJR+C/q119oKccwmGeq290
- w0mQcnQ9wsWicGWWZCsCL+cSAKPkwYeGKghZaHhhMsZyg9pUi0a4z7L+kkjOj/N0R2
- zO7nX8iQF3A2Q==
-Date: Tue, 23 Apr 2024 18:20:37 +0000
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
-From: Peter Dave Hello <hsu@peterdavehello.org>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
-Message-ID: <Fu0jQm-Z4E7D_J11oxIlfRJ9ZYK_QDKMYOs-9NNVX_jH9_aS5_9cyysois3SaVVtuTqR-H77MiwWLaa5RkPTEnCEdy0NvUmOuwqyirCbdhY=@peterdavehello.org>
-In-Reply-To: <ZiCDzzFDRmQGPtDD@intel.com>
-References: <adPv4goMCNmjeDRUK1LGCAHIZdOxvMoFAqlU1bCnvTCPsCTUFRQnOQnThBC3oIzU9IczdS6aw1vKLQ-w7Zk9CRo5FfvINiaInut_U4VwbeI=@peterdavehello.org>
- <CAFEAcA_D1+BUk01mXNwRehxYqyXQU+Zu98sWBujauk5L2tHh3w@mail.gmail.com>
- <Zh6qLCvyiSk6YkVy@intel.com> <Zh6oIH8Ihyn-9RwT@redhat.com>
- <pTgk5-fHZzZe_qQn7RdevQ7Dg9Yz_-I4jWPpYknkgbiStJvLCRlTj9EpfRY_K9GCqdSABB_s_xzuGBCxxRqDfzDIoO6AVcvP-onYk8yRiWI=@peterdavehello.org>
- <ZiCDzzFDRmQGPtDD@intel.com>
-Feedback-ID: 93059541:user:proton
-X-Pm-Message-ID: a50c03a74a0d4015bd0da03eb8d4e2dd9f60e767
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzKn1-0005s9-St
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:22:50 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzKn0-0004GJ-50
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:22:47 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E8F5D60409;
+ Tue, 23 Apr 2024 18:22:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1713896564; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VtTCY/4lZOi2KGTzGtjXyHJj93NPhjDWnu60RWOUlQY=;
+ b=coo8UrJzp41HZwf+DnUoAWGyKGWYAJOz8qhfrubGgro0UghIrl3qzN8bzIqZVYpjBAXmpz
+ f62eVVY3SdWAfZHeFEAn1eFBxR0kPoWpKCnkIiYGW8C1AsIhuyRg9U+XPau31/ex8PIuCl
+ rGIqqvrX9pkoE1AHZPlOxetnASFW994=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1713896564;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VtTCY/4lZOi2KGTzGtjXyHJj93NPhjDWnu60RWOUlQY=;
+ b=wg4nr8gyOsP4Rai8Uhcx/1SZWb0DkxgsIxw7wxzBQ2/Jw0afH/CUiVd07m7rP7VzOtcnWI
+ PAq3WTb9J8r0NyAQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=kvAHCHFp;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="RlWoZ/GU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1713896562; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VtTCY/4lZOi2KGTzGtjXyHJj93NPhjDWnu60RWOUlQY=;
+ b=kvAHCHFpyj6aIvrb8SznCYE+t9Jr1tLkDdeAqShfxtauM0/Ia8EChP5r5uIaBHl355XUFy
+ ciDEFblLtRDs7/YBOdJhnp5LUeBz5cywYog9AEAfkuX0HmQkBVdcYDSGmMJMGiwbVmZjwa
+ U9jVPsW+YuTj+Oe9WqKE3t5S033E0TE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1713896562;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VtTCY/4lZOi2KGTzGtjXyHJj93NPhjDWnu60RWOUlQY=;
+ b=RlWoZ/GUExI+znKBinovMlL+M8Y7NTTrWFC95G4Ke/uNV48uOOsTMkedf9zX+JRS4g827e
+ zRuOsU9fNCk8vMAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 72CB2139A1;
+ Tue, 23 Apr 2024 18:22:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id b3yqDXL8J2adQQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 23 Apr 2024 18:22:42 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 03/22] arm: switch boards to "default y"
+In-Reply-To: <f37f5b29-256b-4549-90d0-0f41da7788d0@linaro.org>
+References: <20240423131612.28362-1-pbonzini@redhat.com>
+ <20240423131612.28362-4-pbonzini@redhat.com> <87mspkhs8d.fsf@suse.de>
+ <f37f5b29-256b-4549-90d0-0f41da7788d0@linaro.org>
+Date: Tue, 23 Apr 2024 15:22:39 -0300
+Message-ID: <87jzkohrbk.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.40.136;
- envelope-from=hsu@peterdavehello.org; helo=mail-40136.proton.ch
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,linaro.org:email];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: E8F5D60409
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,90 +129,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi PMM, Zhao & Daniel,
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Thank you for all your help; I wonder if the copyright can just belong to t=
-his project because the copyright to me personally in the open source world=
- just to deal with somebody violets the license. Otherwise, I'm more copyle=
-ft. What do you think?
+> Hi Fabiano,
+>
+> On 23/4/24 20:02, Fabiano Rosas wrote:
+>> Paolo Bonzini <pbonzini@redhat.com> writes:
+>>=20
+>>> For ARM targets, boards that require TCG are already using "default y".
+>>> Switch ARM_VIRT to the same selection mechanism.
+>>>
+>>> No changes to generated config-devices.mak file.
+>>>
+>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>> ---
+>>>   configs/devices/arm-softmmu/default.mak | 3 ++-
+>>>   hw/arm/Kconfig                          | 2 ++
+>>>   2 files changed, 4 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/=
+arm-softmmu/default.mak
+>>> index c1cfb3bcf75..31f77c20269 100644
+>>> --- a/configs/devices/arm-softmmu/default.mak
+>>> +++ b/configs/devices/arm-softmmu/default.mak
+>>> @@ -5,7 +5,8 @@
+>>>   # CONFIG_PCI_DEVICES=3Dn
+>>>   # CONFIG_TEST_DEVICES=3Dn
+>>>=20=20=20
+>>> -CONFIG_ARM_VIRT=3Dy
+>>> +# Boards are selected by default, uncomment to keep out of the build.
+>>> +# CONFIG_ARM_VIRT=3Dn
+>>>=20=20=20
+>>>   # These are selected by default when TCG is enabled, uncomment them to
+>>>   # keep out of the build.
+>>> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+>>> index 893a7bff66b..1e7cd01087f 100644
+>>> --- a/hw/arm/Kconfig
+>>> +++ b/hw/arm/Kconfig
+>>> @@ -1,5 +1,7 @@
+>>>   config ARM_VIRT
+>>>       bool
+>>> +    default y
+>>> +    depends on ARM
+>>>       imply PCI_DEVICES
+>>=20
+>> We lose pci.c when building --without-default-devices:
+>>=20
+>> $ arch
+>> aarch64
+>> $ ../configure --target-list=3Daarch64-softmmu,arm-softmmu
+>> --disable-linux-user --without-default-devices
+>> $ make
+>> ...
+>> libqemu-aarch64-softmmu.fa.p/target_arm_kvm.c.o: in function `kvm_arch_f=
+ixup_msi_route':
+>> ../target/arm/kvm.c:1548: undefined reference to `pci_device_iommu_addre=
+ss_space'
+>
+> IIRC QEMU isn't yet ready to be built with --without-default-devices
+> but without any machine, you need to explicit at least one. For
+> example you can use --with-devices-aarch64=3Dminimal, or define a
+> config with only the Virt machine.
 
-Best,
-Peter
+Could we detect this kind of breakage somehow and report it properly to
+the user? As in "you chose an impossible configuration, select a board
+and try again".
 
+I see this comes from kvm.c, perhaps on arm CONFIG_KVM needs to depend
+on VIRT?
 
-On Thursday, April 18th, 2024 at AM 10:08, Zhao Liu <zhao1.liu@intel.com> w=
-rote:
-
-> Hi Perter HSU,
 >
-> On Wed, Apr 17, 2024 at 01:07:17PM +0000, Peter Dave Hello wrote:
+> Regards,
 >
-> > Date: Wed, 17 Apr 2024 13:07:17 +0000
-> > From: Peter Dave Hello hsu@peterdavehello.org
-> > Subject: Re: [PATCH] Add zh_TW Traditional Chinese translation
-> >
-> > Hi all,
-> >
-> > Thank you all for the feedback. I've updated the patch to address most =
-of the suggestions, but only the copyright part. I'm not sure how to deal w=
-ith it. BTW, should I directly paste the revised patch below? Sorry that I'=
-m not familiar with the process here. Thanks for your help again.
->
->
-> New patch should be sent separately to avoid replying directly to
-> previous mail thread. And the tag of the SUBJECT for your v2 patch needs
-> to be changed to "[PATCH v2]".
->
-> > From: Peter Dave Hello hsu@peterdavehello.org
-> > Date: Tue, 16 Apr 2024 00:43:29 +0800
-> > Subject: [PATCH] Add a simple zh_TW Traditional Chinese translation
-> >
-> > This patch adds a basic zh_TW translation file for Taiwan Traditional
-> > Chinese users.
-> >
-> > Signed-off-by: Peter Dave Hello hsu@peterdavehello.org
-> > ---
-> > po/LINGUAS | 1 +
-> > po/zh_TW.po | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++
-> > 2 files changed, 75 insertions(+)
-> > create mode 100644 po/zh_TW.po
-> >
-> > diff --git a/po/LINGUAS b/po/LINGUAS
-> > index 9b33a36..08163e8 100644
-> > --- a/po/LINGUAS
-> > +++ b/po/LINGUAS
-> > @@ -7,3 +7,4 @@ sv
-> > tr
-> > uk
-> > zh_CN
-> > +zh_TW
-> > diff --git a/po/zh_TW.po b/po/zh_TW.po
-> > new file mode 100644
-> > index 0000000..e6d2c07
-> > --- /dev/null
-> > +++ b/po/zh_TW.po
-> > @@ -0,0 +1,74 @@
-> > +# Chinese translations for QEMU package.
-> > +# Copyright (C) 2024 THE QEMU'S COPYRIGHT HOLDER
->
->
-> Refer to this file /po/bg.po or any other source code of QEMU, copyright
-> belongs to you or your company.
->
-> > +# This file is distributed under the same license as the QEMU package.
->
->
-> You can declare the license by:
-> "SPDX-License-Identifier: GPL-2.0-or-later".
->
-> And put this license under the author line.
->
-> > +# Peter Dave Hello hsu@peterdavehello.org, 2024.
-> > +#
->
->
-> Others look good to me. Pls go ahead and respin your v2.
->
-> Thanks,
-> Zhao
+> Phil.
 
