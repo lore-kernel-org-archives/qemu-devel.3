@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5340AC16B13
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A9AC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnf-0007Ql-Pk; Tue, 23 Apr 2024 11:11:15 -0400
+	id 1rzHng-0007S3-FZ; Tue, 23 Apr 2024 11:11:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHml-0004Nl-MG
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:20 -0400
+ id 1rzHn8-0004eB-TK
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmj-000073-T7
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:19 -0400
+ id 1rzHn5-0000H2-SG
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885015;
+ s=mimecast20190719; t=1713885035;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kmfWPYUoXX6bScoUXzhELmYVEYe3YTHOcJQw40qC8FE=;
- b=XYF1/UVyd5ofNjj5zbupO6UfBKLcpTnHYh7lKno9pdYXcZGw62j343eOivOo8QEhc18Vex
- swaaDLuXIN04sbtEuBcXff2xMUd6qo/ZC37VsBWxl0cDE//6mKaygLSi4TnkI0bXWS9ANj
- aHBSli+49jcA9nU1nUdxuM2mdS18EqA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-GqO07TOgN3CR957pJmIVew-1; Tue, 23 Apr 2024 11:10:13 -0400
-X-MC-Unique: GqO07TOgN3CR957pJmIVew-1
+ bh=K3b4NZw12C67fnamLmqGsicV6QSJgJKW9M7T4Bs+Krw=;
+ b=K0UFeoqNRb2oYTp9vlZOuMV26/di4cK+Q3z4xfA93eXOokGtZkhcTr21M7lthfhN7YGQUo
+ 0vkyAk97ldIwWVSmKkSpG6uhD+l4MlsoyGXlo8hdyQRFkqYzF+cmh+rW7Um22XDi1pgFOa
+ 64urgne0Xyb0c4BYu4jB/cIir+nbvlM=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-vEZD-7t_Mtu7tNDSbX1CVA-1; Tue,
+ 23 Apr 2024 11:10:33 -0400
+X-MC-Unique: vEZD-7t_Mtu7tNDSbX1CVA-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 798A2804C61
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:13 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4272F29AC015;
+ Tue, 23 Apr 2024 15:10:33 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 11CBD200E290
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:12 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9DBC8200E290;
+ Tue, 23 Apr 2024 15:10:32 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/63] vga: move dirty memory region code together
-Date: Tue, 23 Apr 2024 17:09:08 +0200
-Message-ID: <20240423150951.41600-21-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 39/63] runstate: skip initial CPU reset if reset is not
+ actually possible
+Date: Tue, 23 Apr 2024 17:09:27 +0200
+Message-ID: <20240423150951.41600-40-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -80,40 +82,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Take into account split screen mode close to wrap around, which is the
-other special case for dirty memory region computation.
+Right now, the system reset is concluded by a call to
+cpu_synchronize_all_post_reset() in order to sync any changes
+that the machine reset callback applied to the CPU state.
 
+However, for VMs with encrypted state such as SEV-ES guests (currently
+the only case of guests with non-resettable CPUs) this cannot be done,
+because guest state has already been finalized by machine-init-done notifiers.
+cpu_synchronize_all_post_reset() does nothing on these guests, and actually
+we would like to make it fail if called once guest has been encrypted.
+So, assume that boards that support non-resettable CPUs do not touch
+CPU state and that all such setup is done before, at the time of
+cpu_synchronize_all_post_init().
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/display/vga.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ system/runstate.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 77d709a3d69..e91a76bf76b 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1596,6 +1596,10 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-         region_end = s->vbe_size;
-         force_shadow = true;
+diff --git a/system/runstate.c b/system/runstate.c
+index d6ab860ecaa..cb4905a40fc 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -501,7 +501,20 @@ void qemu_system_reset(ShutdownCause reason)
+     default:
+         qapi_event_send_reset(shutdown_caused_by_guest(reason), reason);
      }
-+    if (s->params.line_compare < height) {
-+        /* split screen mode */
-+        region_start = 0;
+-    cpu_synchronize_all_post_reset();
++
++    /*
++     * Some boards use the machine reset callback to point CPUs to the firmware
++     * entry point.  Assume that this is not the case for boards that support
++     * non-resettable CPUs (currently used only for confidential guests), in
++     * which case cpu_synchronize_all_post_init() is enough because
++     * it does _more_  than cpu_synchronize_all_post_reset().
++     */
++    if (cpus_are_resettable()) {
++        cpu_synchronize_all_post_reset();
++    } else {
++        assert(runstate_check(RUN_STATE_PRELAUNCH));
 +    }
++
+     vm_set_suspended(false);
+ }
  
-     /*
-      * Check whether we can share the surface with the backend
-@@ -1667,10 +1671,6 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-     y1 = 0;
- 
-     if (!full_update) {
--        if (s->params.line_compare < height) {
--            /* split screen mode */
--            region_start = 0;
--        }
-         snap = memory_region_snapshot_and_clear_dirty(&s->vram, region_start,
-                                                       region_end - region_start,
-                                                       DIRTY_MEMORY_VGA);
 -- 
 2.44.0
 
