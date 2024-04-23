@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1430C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 09:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB033C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 09:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzCJ8-0003rJ-KZ; Tue, 23 Apr 2024 05:19:22 -0400
+	id 1rzChl-0008CR-0V; Tue, 23 Apr 2024 05:44:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rzCIx-0003pW-OK
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:19:13 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1rzChj-0008C9-It
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:44:47 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rzCIv-0006jU-Ti
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:19:11 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-518b9527c60so6235057e87.0
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 02:19:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1rzChh-0002pa-UN
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 05:44:47 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3465921600dso4841766f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 02:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713863947; x=1714468747; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dZo4rpsnvQfm+Oo0XVHWkYgZewv0qBjrbr3g1M7/QoU=;
- b=O2ZJAsZp2fVYgUVE9jHIvQIQsC8mlu3Tfii9aXtYlBYtDRtREA4DQSN0MHVprpZRET
- YS8M0uZVDHhmRzi29hDmINQ1k+XFJRo3Woqs3412+zYi0qGAxntDf9+sGxH82SaEiGLF
- zZ86JoS8R9y2FTMt0RMLVSzHiLa8wJcGWaG6iY/48vKedv4GJwcbv6dIdPVTFRi0qOrd
- CmVjcJK+d5DLIKhtmslCtv/ydsq1zrNWVsHfBdoJoW2EHvMRKE4BtT8rWIh3cj/MBdId
- PSICfLjdbLjnOVZrX1l5J7eljZ61YdjDpOQMZjmVNMSZujQ8XSn3Ewm7Swun9/gBHrTx
- FTlA==
+ d=linaro.org; s=google; t=1713865484; x=1714470284; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=/5YkfIclMRXJBQ10DhHZv4dvYuxXj3Sb02ci8s2G4Ko=;
+ b=D71mxR3VCVVPorBAk18cR6zkg6cWIl+Yuh/Xqt+xapHOSw5grWbxht+yLHueqbqcL5
+ z/JsVtTtyUTVHi3/M0Tv9W1pZDosEJ/SFzoWCP0YDnLBui26Ajnduff3SISjzyBVvG+n
+ jVMaC+UUT6glk9ZxGE0ZwEcumNMk7rJL25ZlXipVWPdQAdlBDzP8bKZ/TtWWp4XUIcCm
+ L10PwjZ+SZXQd5thC+/J7l/hWc3izKkxGMlU1KRVkxnGTCBgoTIvBGL0eYWfXLGz592t
+ IK+b0yresdkyGAs8jhE0Y9loFEkmjJoiAX8Auz2cq90fEoQaM/XcY9tykCisQntCgHfe
+ jsPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713863947; x=1714468747;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dZo4rpsnvQfm+Oo0XVHWkYgZewv0qBjrbr3g1M7/QoU=;
- b=LvcB1MdHPMwe/nIAbiE0c1dP1YnVrb6vlPk8Fr/y/+lJVSHWA0WTL53XCA9BLu3GE9
- actSbffY+TR0KJ+ov64qTBPS8Q4F6VUHRPGaVJ8vvx/NXorD9ohNG8YKg9eZYiR65P8M
- J26WTz2BJkWqKPySK7sAmeQZUwWFcvmudsAQZWAHWJeLF9yoeO3Fb6e2kfTSDjDv6ClN
- 3QYzsMA52dbf7tZD4oX69QOy+nrcSrAd7WgFBtOPkEETRk1hZN6sTAjJ39uOBOajF6oE
- R0t0PoAmniJ1DiJL5aJNXm8FxVjfe6/CzBjseO1Hhoh362itvTvj8ynI6rlN9pjaMr8B
- nXUQ==
+ d=1e100.net; s=20230601; t=1713865484; x=1714470284;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/5YkfIclMRXJBQ10DhHZv4dvYuxXj3Sb02ci8s2G4Ko=;
+ b=PyGIfoYcFnZlGQrgouNglgAdcFvq9s3EfAuvI2AiSSL1WkfNxE7+rCTy9bcpCJu4ZA
+ +3uLQbjcAoTfJgGY0+hwi0F1D9Qf+QxEN+cjXgGNw2KoFdR9VP/+0tFxCysgg5TRn9iF
+ kOmdPh5nOvRqCXLiLAjSOc1hyy1pKZNjrRRabRjlHttEy/dkbnE8RhBIu2xtZKvhw9qd
+ rT2W1pApkYJIM7jsJWclp7IW7A0gXAmylcV7hZE+vUiGjXW2aVS78GpLrj3Gb8ILIUdA
+ qzJly9T7LcFZr/ARut+f0oRoL1E0NC5VDRfJJaNpOzuYOqJ0tM5k11xXYRcLv90XJqlA
+ 2MRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPhbaBjylqIUxESPee8KNbtHiCsBbBLeI7zryof5Oci/fpNmHnvVm5Jq+LfG0T4zXiX2cu6AylD2xGj7eJ5X1sMuLFnUI=
-X-Gm-Message-State: AOJu0YwePloT8oe41hbKFjtC++wnRnCQaaCcEVIdASLntpMx7dJ6p723
- iXiIR+7kMkYiz83T8wzOJx6FtIdsEC/kcimVgVJTgC35SKE43b8BprP2lhnisme1f3HZOyVPO5O
- Dc0w9X1827k5Fuoo+29QuqoubYrna21cOy7VCEw==
-X-Google-Smtp-Source: AGHT+IFoWTzxEoZNLjqb4BPAlGHvrXGLHIeKn2uLtPPK68X2WLUcRkDbBr552gi9VaJLfqnz1B0Q963pHlAvHW1FoeU=
-X-Received: by 2002:a05:6512:683:b0:51b:6366:3459 with SMTP id
- t3-20020a056512068300b0051b63663459mr5002854lfe.67.1713863947028; Tue, 23 Apr
- 2024 02:19:07 -0700 (PDT)
+ AJvYcCWtCFXugkDnstWTTiKuRvzYzhHckL7JM7E3BHW1UK2iCaPvf7XlAw8jcrvnQbAV3Bgy8g+knvOojJdu+ED1I9Pr3JiIGlo=
+X-Gm-Message-State: AOJu0YxzfjHE6p2+BcRxgEX2RML2zQqaWQm6QVpv2v3rgcmy8ADJoB0j
+ IUcoyi2PkItRbWaGTyq79kosMu99fRKG8xCVsbK5b87h1MmxR2m83A2mvgjhF8gIu5cOjIm4kea
+ x
+X-Google-Smtp-Source: AGHT+IGi7Z+UanzUq5fwY8gqpsHzrd+QkdN1eKnnOwNeUb/+PfB33DPIiExmAweOYqtkzOmsoBnSKg==
+X-Received: by 2002:adf:cb83:0:b0:34a:4b5b:a4a with SMTP id
+ q3-20020adfcb83000000b0034a4b5b0a4amr8497772wrh.47.1713865483382; 
+ Tue, 23 Apr 2024 02:44:43 -0700 (PDT)
+Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
+ l37-20020a05600c1d2500b004186f979543sm23576224wms.33.2024.04.23.02.44.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Apr 2024 02:44:43 -0700 (PDT)
+Date: Tue, 23 Apr 2024 10:44:56 +0100
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ philmd@linaro.org, pbonzini@redhat.com, alex.bennee@linaro.org,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v2 02/22] target/arm: Add confidential guest support
+Message-ID: <20240423094456.GA4454@myrica>
+References: <20240419155709.318866-2-jean-philippe@linaro.org>
+ <20240419155709.318866-4-jean-philippe@linaro.org>
+ <ZiKa6MQaujEMlC23@redhat.com>
 MIME-Version: 1.0
-References: <20240422142056.3023-1-philmd@linaro.org>
- <20240422170056-mutt-send-email-mst@kernel.org>
- <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
- <20240422170913-mutt-send-email-mst@kernel.org>
- <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
-In-Reply-To: <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 23 Apr 2024 12:18:50 +0300
-Message-ID: <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
- target one
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x134.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZiKa6MQaujEMlC23@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,36 +102,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daud=C3=A9 w=
-rote:
-> > > On 22/4/24 23:02, Michael S. Tsirkin wrote:
-> > > > On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daud=C3=
-=A9 wrote:
-> > > > > Since VirtIO devices can change endianness at runtime,
-> > > > > we need to use the device endianness, not the target
-> > > > > one.
-> > > > >
-> > > > > Cc: qemu-stable@nongnu.org
-> > > > > Fixes: eb9ad377bb ("virtio-sound: handle control messages and str=
-eams")
-> > > > > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > > >
-> > > >
-> > > >
-> > > > This is all completely bogus. Virtio SND is from Virtio 1.0 only.
-> > > > It is unconditionally little endian.
->
->
-> This part of the code is for PCM frames (raw bytes), not virtio spec
-> fields (which indeed must be LE in modern VIRTIO).
+On Fri, Apr 19, 2024 at 05:25:12PM +0100, Daniel P. Berrangé wrote:
+> On Fri, Apr 19, 2024 at 04:56:50PM +0100, Jean-Philippe Brucker wrote:
+> > Add a new RmeGuest object, inheriting from ConfidentialGuestSupport, to
+> > support the Arm Realm Management Extension (RME). It is instantiated by
+> > passing on the command-line:
+> > 
+> >   -M virt,confidential-guest-support=<id>
+> >   -object guest-rme,id=<id>[,options...]
 
-Thought a little more about it. We should keep the target's endianness
-here, if it's mutable then we should query the machine the device is
-attached to somehow. the virtio device should never change endianness
-like Michael says since it's not legacy.
+Hm, the commit message is wrong, it should say "rme-guest".
+
+> How about either "arm-rme" or merely 'rme' as the object name 
+
+I don't feel strongly about the name, but picked this one to be consistent
+with existing confidential-guest-support objects: sev-guest, pef-guest,
+s390-pv-guest, and upcoming tdx-guest [1]
+
+Thanks,
+Jean
+
+[1] https://lore.kernel.org/qemu-devel/20240229063726.610065-13-xiaoyao.li@intel.com/
+
 
