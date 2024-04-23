@@ -4,98 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59166C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 20:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28626C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 20:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzMyc-0008TF-1V; Tue, 23 Apr 2024 16:42:54 -0400
+	id 1rzN3E-0001n8-K4; Tue, 23 Apr 2024 16:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzMyZ-0008T1-8m
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:42:52 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzMyX-0002Ar-H3
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:42:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=/4B3YdRjJoexzojSJH5xGxeQEiSHaJXgiM8zu7my7N0=; b=Gs2IcPD+AxNsZbAa8oY7bnQbim
- AZkZllgimH0iTRkBAOtgs2EM1v65m/SRkJOA4TdwiPwGX0E5srfxGuMauTg3HVr9BPPQrgZDRdChW
- RKv6VZyhQIrv9y+GYblOEqUDs7DF954squ7vc4/JjXkudPqKDqG8NmJRgsCS7Kga3uxXcTIbrR7u4
- IcsK9yb4g1ldEOv/KAFK+/rLkEJugyjkALuLpn+St2yPofjnYR68P54RoYE3aaLRrhgzFnVxviOm5
- +R65FaDrMUjuDajRtWLPT8qkeUO91ZsWB7gkUUmnw0yOXt4rX67EXTJ+mnX46BbnE9h8c395Hhiv0
- tyEag3AT1dS/xF7cp3CPo4pJrEK76/Evl11TdvVHGV7DOlRKkkXAfYN7tY6Byh5bowQdrWBbIcqpZ
- 3ZobTO+gPT4xOHtloSvm/5jB9epcDIC6SE2hLInrey3t+xFdaIa6YpEZHXr7N59ILzs6gopJdcU3q
- u+tj0LlRl5SRoL8Nr0EwQ/K+sIEhagY/7SdflXXDJGJh+5VQ776ZVnhx44PHq4R38VC7V3rAtZFv2
- 5GYPz0ouohUvalEd8HY+TJbr0vB1omwjveuxBPKxNLWbDFO536F/jIWUIOijdh9u4yDwZd854fZ4H
- Yy2GoH3hqeORq8BZA0RmDXdo24XC95iO1Al1aYcs4=;
-Received: from [2a00:23c4:8bb4:4000:a7b5:de4:dbb6:c9cb]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rzMxM-000846-Gq; Tue, 23 Apr 2024 21:41:40 +0100
-Message-ID: <d2e11eb2-4a4a-4e23-b200-3995ea865052@ilande.co.uk>
-Date: Tue, 23 Apr 2024 21:42:34 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzN3C-0001g1-0K
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:47:38 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzN39-0003Jz-73
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 16:47:37 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-343b7c015a8so5163470f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 13:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713905253; x=1714510053; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uDnKJR4KEV4FBjccEyi75rJnbDh/RRlLX0zRHYW8gCs=;
+ b=duQWx3wJYeJKAKnH47RA3rr/oRoAQcyoim6qt+xXgtnrZukolDdolN4skGAlWnJwfe
+ 4ufZcFxX05TcGNDfsNtxgaRoihSudmqm6pBORewSD44ra6R3zj6TyV/kcZLt4Vr7X6il
+ PF86jFiHoNnQ96k1cgAFe37rAIHRfQOl858w4e4qfiunZbHcYUnVefzcHyfy32NjG6iR
+ xaPl+AjcXu11FgCd6HwGufoqSHbIfNTMre+K8cutPE9QCUUHL6YSW07v2hKg3t0AcNLD
+ NbOsJS80lmYVkdxPXhvfycHqxO4wuNJ6smbVh4cwqzJbDneWOlv14lJW7/Qhb1qYsqa9
+ MsQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713905253; x=1714510053;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uDnKJR4KEV4FBjccEyi75rJnbDh/RRlLX0zRHYW8gCs=;
+ b=S/FkTP4uZtt1Zdvj2L36t0jwihf7M1WkDaVXmas9wkARZS4QRlu/FBmMI4sTqGTW0s
+ E9FKEa6Y5B9wOCVRaUXbwz0XybU/dI4/GHoI6zExwRLKNpyD62XLxH0KniR+7WVQ7kr5
+ 4F+V+bNWUFXag7dRC+v81TJ2MnTQ8wanTh3mg51t3wJZqQHcPSVrdOuWv0dC3mrp3tf+
+ e5rqjOJn+Q4V6nymPfd1Gq7kAiCMOMqSpUuKdJ2/lrONWu2yI6mQBpoko6GP9HJMS9vv
+ SNS7Upcp9NhWR7ESLk7atZXpmYe1UTD8M/NJOmN83U9IDqoYkgja8hz2AztJqidVE6i0
+ onDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdjOiDYLvWZG912s2rDP9mnCvst+buowaagyqFrSozEBgx8MAz0sHWN03Lmvi9TpNKmzwsfHIfxdVocL5NfSppiZU/zog=
+X-Gm-Message-State: AOJu0YyWucsEeupbceHjkDwNvbrwp+EUNnhLL+63euupaicVJ6uZxcPz
+ IzFC41rntN7Gj12jD3lP2uvcDgFknesulsrSqLiBnKHUwGdUlkZo4f3iHuzogRA=
+X-Google-Smtp-Source: AGHT+IEg1ZvGZTt76QKtQJaCv4wiNanq8VEeT51M6nKTiqaytUZ69FPkzEZbij5eIfBf46lYuaIukA==
+X-Received: by 2002:adf:b34c:0:b0:349:c573:2535 with SMTP id
+ k12-20020adfb34c000000b00349c5732535mr184167wrd.50.1713905252716; 
+ Tue, 23 Apr 2024 13:47:32 -0700 (PDT)
+Received: from [192.168.69.100] (pas38-h02-176-184-5-107.dsl.sta.abo.bbox.fr.
+ [176.184.5.107]) by smtp.gmail.com with ESMTPSA id
+ v11-20020a5d4b0b000000b00349a6af3da5sm15406437wrq.51.2024.04.23.13.47.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Apr 2024 13:47:32 -0700 (PDT)
+Message-ID: <482edb42-95cf-402f-9124-4e0b1f76b91f@linaro.org>
+Date: Tue, 23 Apr 2024 22:47:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
- <vr_qemu@t-online.de>
-Cc: Richard Henderson <richard.henderson@linaro.org>, eduardo@habkost.net,
+Subject: Re: [PATCH 3/3] target/arm: Default to 1GHz cntfrq for 'max' and new
+ CPUs
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-References: <20240419195147.434894-1-mark.cave-ayland@ilande.co.uk>
- <fefb7b6b-29fc-42ee-b62e-059512e881e4@linaro.org>
- <3ff9df0d-6465-45a3-bb62-0db17ed9210c@ilande.co.uk>
- <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
- <CABgObfYsCO-fH1MZQ1=mRUJQHn9h2QBcCfytBnDhhM91iEd4sA@mail.gmail.com>
+References: <20240419184608.2675213-1-peter.maydell@linaro.org>
+ <20240419184608.2675213-4-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CABgObfYsCO-fH1MZQ1=mRUJQHn9h2QBcCfytBnDhhM91iEd4sA@mail.gmail.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240419184608.2675213-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:a7b5:de4:dbb6:c9cb
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/i386/translate.c: always write 32-bits for SGDT
- and SIDT
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,59 +98,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/04/2024 10:18, Paolo Bonzini wrote:
+(+Markus for qdev properties; one inlined comment)
 
-> On Mon, Apr 22, 2024 at 9:10 PM Volker Rümelin <vr_qemu@t-online.de> wrote:
->>
->> Am 20.04.24 um 07:40 schrieb Mark Cave-Ayland:
->>>> Current documentation agrees that all 32 bits are written, so I don't
->>>> think you need this comment:
->>>
->>> Ah that's good to know the docs are now correct. I added the comment
->>> as there was a lot of conflicting information around for older CPUs so
->>> I thought it was worth an explicit mention.
->>
->> Quote from the Intel® 64 and IA-32 Architectures Software Developer’s
->> Manual Volume 2B: Instruction Set Reference, M-U March 2024:
->>
->> IA-32 Architecture Compatibility
->> The 16-bit form of SGDT is compatible with the Intel 286 processor if
->> the upper 8 bits are not referenced. The Intel 286 processor fills these
->> bits with 1s; processor generations later than the Intel 286 processor
->> fill these bits with 0s.
->>
->> Intel still claims the upper 8 bits are filled with 0s, but the
->> Operation pseudo code below is correct. The same is true for SIDT.
+On 19/4/24 20:46, Peter Maydell wrote:
+> In previous versions of the Arm architecture, the frequency of the
+> generic timers as reported in CNTFRQ_EL0 could be any IMPDEF value,
+> and for QEMU we picked 62.5MHz, giving a timer tick period of 16ns.
+> In Armv8.6, the architecture standardized this frequency to 1GHz.
 > 
-> I think the claim is that it fills with 0s when the software is
-> compatible with the 286, i.e. never uses a 32-bit LIDT or LGDT
-> instruction. Software written to target specifically older processors
-> typically used the undocumented LOADALL instruction to exit protected
-> mode or to set 4GB segment limits, so it won't run on QEMU. You can
-> read about the usage here:
+> Because there is no ID register feature field that indicates whether
+> a CPU is v8.6 or that it ought to have this counter frequency, we
+> implement this by changing our default CNTFRQ value for all CPUs,
+> with exceptions for backwards compatibility:
 > 
-> https://www.os2museum.com/wp/more-on-loadall-and-os2/ (286)
-> https://www.os2museum.com/wp/386-loadall/ (386)
+>   * CPU types which we already implement will retain the old
+>     default value. None of these are v8.6 CPUs, so this is
+>     architecturally OK.
+>   * CPUs used in versioned machine types with a version of 9.0
+>     or earlier will retain the old default value.
 > 
-> and about how it worked here:
+> The upshot is that the only CPU type that changes is 'max'; but any
+> new type we add in future (whether v8.6 or not) will also get the new
+> 1GHz default.
 > 
-> https://www.pcjs.org/documents/manuals/intel/80286/loadall/
-> https://www.pcjs.org/documents/manuals/intel/80386/loadall/
+> It remains the case that the machine model can override the default
+> value via the 'cntfrq' QOM property (regardless of the CPU type).
 > 
-> Interestingly, byte 3 of the GDTR or IDTR on the 286 are documented as
-> "should be zeroes" for LOADALL, not all ones.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/cpu.h       | 11 +++++++++++
+>   target/arm/internals.h | 12 ++++++++++--
+>   hw/core/machine.c      |  4 +++-
+>   target/arm/cpu.c       | 28 ++++++++++++++++++++++------
+>   target/arm/cpu64.c     |  2 ++
+>   target/arm/tcg/cpu32.c |  4 ++++
+>   target/arm/tcg/cpu64.c | 18 ++++++++++++++++++
+>   7 files changed, 70 insertions(+), 9 deletions(-)
 > 
-> Let's change "Despite claims to the contrary" with "Despite a
-> confusing description".
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 20d8257c853..4eeeac3fe94 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -953,6 +953,9 @@ struct ArchCPU {
+>        */
+>       bool host_cpu_probe_failed;
+>   
+> +    /* QOM property to indicate we should use the back-compat CNTFRQ default */
+> +    bool backcompat_cntfrq;
+> +
+>       /* Specify the number of cores in this CPU cluster. Used for the L2CTLR
+>        * register.
+>        */
+> @@ -2367,6 +2370,14 @@ enum arm_features {
+>       ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
+>       ARM_FEATURE_M_MAIN, /* M profile Main Extension */
+>       ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
+> +    /*
+> +     * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
+> +     * if the board doesn't set a value, instead of 1GHz. It is for backwards
+> +     * compatibility and used only with CPU definitions that were already
+> +     * in QEMU before we changed the default. It should not be set on any
+> +     * CPU types added in future.
+> +     */
+> +    ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
+>   };
+>   
+>   static inline int arm_feature(CPUARMState *env, int feature)
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index 74d4b1b0990..11d9ff0fc08 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -61,9 +61,17 @@ static inline bool excp_is_internal(int excp)
+>   
+>   /*
+>    * Default frequency for the generic timer, in Hz.
+> - * This is 62.5MHz, which gives a 16 ns tick period.
+> + * ARMv8.6 and later CPUs architecturally must use a 1GHz timer; before
+> + * that it was an IMPDEF choice, and QEMU initially picked 62.5MHz,
+> + * which gives a 16ns tick period.
+> + *
+> + * We will use the back-compat value:
+> + *  - for QEMU CPU types added before we standardized on 1GHz
+> + *  - for versioned machine types with a version of 9.0 or earlier
+> + * In any case, the machine model may override via the cntfrq property.
+>    */
+> -#define GTIMER_DEFAULT_HZ 62500000
+> +#define GTIMER_DEFAULT_HZ 1000000000
+> +#define GTIMER_BACKCOMPAT_HZ 62500000
+>   
+>   /* Bit definitions for the v7M CONTROL register */
+>   FIELD(V7M_CONTROL, NPRIV, 0, 1)
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index a92bec23147..bd40483d880 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -33,7 +33,9 @@
+>   #include "hw/virtio/virtio-iommu.h"
+>   #include "audio/audio.h"
+>   
+> -GlobalProperty hw_compat_9_0[] = {};
+> +GlobalProperty hw_compat_9_0[] = {
+> +    {"arm-cpu", "backcompat-cntfrq", "true" },
+> +};
+>   const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
+>   
+>   GlobalProperty hw_compat_8_2[] = {
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index b248b283423..2c8160d6b74 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1388,6 +1388,11 @@ static void arm_cpu_initfn(Object *obj)
+>   static Property arm_cpu_gt_cntfrq_property =
+>               DEFINE_PROP_UINT64("cntfrq", ARMCPU, gt_cntfrq_hz, 0);
+>   
+> +/* True to default to the backwards-compatibility old CNTFRQ rather than 1Ghz */
+> +static Property arm_cpu_backcompat_cntfrq_property =
+> +            DEFINE_PROP_BOOL("backcompat-cntfrq", ARMCPU,
+> +                             backcompat_cntfrq, false);
+> +
+>   static Property arm_cpu_reset_cbar_property =
+>               DEFINE_PROP_UINT64("reset-cbar", ARMCPU, reset_cbar, 0);
+>   
+> @@ -1709,6 +1714,8 @@ void arm_cpu_post_init(Object *obj)
+>           qdev_property_add_static(DEVICE(cpu), &arm_cpu_gt_cntfrq_property);
+>       }
+>   
+> +    qdev_property_add_static(DEVICE(obj), &arm_cpu_backcompat_cntfrq_property);
 
-Thanks for sorting this, Paolo. I suspect that KVM needs a similar patch as per 
-https://gitlab.com/qemu-project/qemu/-/issues/2198#note_1815726425 however the Win32s 
-and OS/2 Warp 4 tests seem to work fine on KVM. Maybe it's because the SGDT and SIDT 
-instructions run natively and don't need to be emulated for these cases?
+I'd rather keep the qdev_property_add_static() for "dynamic"
+properties (what a bad function name...) and add this one to
+the static arm_cpu_properties[] array.
 
+(Similar comment with arm_cpu_cfgend_property).
 
-ATB,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Mark.
+>       if (kvm_enabled()) {
+>           kvm_arm_add_vcpu_properties(cpu);
+>       }
+> @@ -1834,13 +1841,22 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>   
+>       if (!cpu->gt_cntfrq_hz) {
+>           /*
+> -         * 0 means "the board didn't set a value, use the default".
+> -         * The default value of the generic timer frequency (as seen in
+> -         * CNTFRQ_EL0) is 62.5MHz, which corresponds to a period of 16ns.
+> -         * This is what you get (a) for a CONFIG_USER_ONLY CPU (b) if the
+> -         * board doesn't set it.
+> +         * 0 means "the board didn't set a value, use the default". (We also
+> +         * get here for the CONFIG_USER_ONLY case.)
+> +         * ARMv8.6 and later CPUs architecturally must use a 1GHz timer; before
+> +         * that it was an IMPDEF choice, and QEMU initially picked 62.5MHz,
+> +         * which gives a 16ns tick period.
+> +         *
+> +         * We will use the back-compat value:
+> +         *  - for QEMU CPU types added before we standardized on 1GHz
+> +         *  - for versioned machine types with a version of 9.0 or earlier
+>            */
+> -        cpu->gt_cntfrq_hz = GTIMER_DEFAULT_HZ;
+> +        if (arm_feature(env, ARM_FEATURE_BACKCOMPAT_CNTFRQ) ||
+> +            cpu->backcompat_cntfrq) {
+> +            cpu->gt_cntfrq_hz = GTIMER_BACKCOMPAT_HZ;
+> +        } else {
+> +            cpu->gt_cntfrq_hz = GTIMER_DEFAULT_HZ;
+> +        }
+>       }
+>   
+>   #ifndef CONFIG_USER_ONLY
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index 985b1efe160..c15d086049f 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -599,6 +599,7 @@ static void aarch64_a57_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -656,6 +657,7 @@ static void aarch64_a53_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+> index b5a60682fa6..bdd82d912a2 100644
+> --- a/target/arm/tcg/cpu32.c
+> +++ b/target/arm/tcg/cpu32.c
+> @@ -457,6 +457,7 @@ static void cortex_a7_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_DUMMY_C15_REGS);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -505,6 +506,7 @@ static void cortex_a15_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_DUMMY_C15_REGS);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -696,6 +698,7 @@ static void cortex_r52_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_PMSA);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_AUXCR);
+>       cpu->midr = 0x411fd133; /* r1p3 */
+> @@ -924,6 +927,7 @@ static void arm_max_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+>       set_feature(&cpu->env, ARM_FEATURE_EL3);
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index c3369f40824..b0eb7fbb385 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -63,6 +63,7 @@ static void aarch64_a35_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -231,6 +232,7 @@ static void aarch64_a55_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -299,6 +301,7 @@ static void aarch64_a72_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -354,6 +357,7 @@ static void aarch64_a76_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -423,6 +427,7 @@ static void aarch64_a64fx_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+>       set_feature(&cpu->env, ARM_FEATURE_EL3);
+> @@ -592,6 +597,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -663,6 +669,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -885,6 +892,7 @@ static void aarch64_a710_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -982,6 +990,7 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_V8);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+>       set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+>       set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>       set_feature(&cpu->env, ARM_FEATURE_EL2);
+> @@ -1077,6 +1086,15 @@ void aarch64_max_tcg_initfn(Object *obj)
+>       uint64_t t;
+>       uint32_t u;
+>   
+> +    /*
+> +     * Unset ARM_FEATURE_BACKCOMPAT_CNTFRQ, which we would otherwise default
+> +     * to because we started with aarch64_a57_initfn(). A 'max' CPU might
+> +     * be a v8.6-or-later one, in which case the cntfrq must be 1GHz; and
+> +     * because it is our "may change" CPU type we are OK with it not being
+> +     * backwards-compatible with how it worked in old QEMU.
+> +     */
+> +    unset_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+> +
+>       /*
+>        * Reset MIDR so the guest doesn't mistake our 'max' CPU type for a real
+>        * one and try to apply errata workarounds or use impdef features we
 
 
