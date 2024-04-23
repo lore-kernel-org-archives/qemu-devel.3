@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1B4C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 08:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8011C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 08:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzBJv-0000KX-Fj; Tue, 23 Apr 2024 04:16:07 -0400
+	id 1rzBL3-0000y8-4j; Tue, 23 Apr 2024 04:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzBJt-0000KB-14
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:16:05 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzBL0-0000xh-Gy
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:17:14 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzBJp-0004Xo-RQ
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:16:04 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-34a7e47d164so3114461f8f.3
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 01:16:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzBKw-0004f8-CS
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:17:13 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41aa2f6ff2dso6134735e9.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 01:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713860160; x=1714464960; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W5lPLAaje3+CrDLYnS7WWCopE3TtY4vVSEJiivbubqg=;
- b=iP1Fvji48R2BjzuLJBkfNOKrkVKp0XBdzP0MLaZTMS94C7fBO0wRfgZaJfabl0KJ7i
- xCZMK90yLzD0amosd7dBKA2AMZYKyoB0X8KJn1Cj4zSoWjQoSwgpbyg12xWucvvtSdqG
- VsxOHFrUFL7zENRxfZno6sC6OL9kLUqgTOo0wH0JJnBrBHHz568d7oUj/rulW5hsvm8I
- zR/ckX4COrcy+4Zy8BiQex2SIQCdt8qEhEQhxhblx0qe1kW6R2PwdJDbtkvq5H0Pov8e
- PAy+XlwvQahfwsxxI4uRBx7tI0pXeGhuXPil8ZEQgkWpu6TnWhJfGwtA1t6YaWBhDPQB
- Cxhg==
+ d=linaro.org; s=google; t=1713860229; x=1714465029; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=61Q1FjTyktbfFWF8W2XkTRxxdpS0VIpoDTKoCDNwirw=;
+ b=OK3GtZVFnvU3E/GLUPHRL7guAxQZf4yqmvtdGXvEwZTrYNL3eoRVXq9FwMcgRWRCfD
+ lLoFE83jlY0sC90hXcbief36igIPLacUk8PkmmASSh1+eyZW7uyS4stKNZFZV3L6d8Sr
+ B+m02LpaPf9ghc6zM5FgtNw6nmSh0g47YMsePyIzC19a30UzDyVN5yNh146nsH+Ogdnc
+ 16g6hQSezMMnevQzMxESKJRl+0clfQpTLaDareQH71IrEL8LBFQEjUL4R12f7DzXmIy8
+ m1mNQjgxVkSVycICLbaI/H9YsN+kc8FsQxoi2WgsKqJGQ0RSjWA3YANVGz34yTD+dJWz
+ AHJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713860160; x=1714464960;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1713860229; x=1714465029;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W5lPLAaje3+CrDLYnS7WWCopE3TtY4vVSEJiivbubqg=;
- b=bdavCXkLK1SeHU2r5zjLlFeI/JHXnrnSb+2zyhA2HQCOT4aIR2nMuxAbWNBsiosjy2
- FSHmptQS1AWbWNkXHEyDmJSUUyaVzRSoUPUN7GTPx5m81uaKXeSEOOr2G1Tqo+MhzhRB
- tDzE3mBlm3U901gULh1xS11T3G9BQcaul7iCUh23mU8DcDARcU2asawjY3Ss4b2TPPTt
- urKWC+DWhvSWSq2jcnEBuerI69WV4fqzpHdSoYsSdLLo1iiQemep9q4fqJ8XoLoAw/9N
- PPmCAMj8++DaclLPCi6mWw42VEJwo07vHe394QwNseJ7gZZxPtKW9SB969y5Zb9zVMBG
- j4Mg==
+ bh=61Q1FjTyktbfFWF8W2XkTRxxdpS0VIpoDTKoCDNwirw=;
+ b=TW7TTDQdgWGFhTC/6aJYj0MnQzYSh04ewOfJCCDVIVxeu+a5RK60caD3nmHNxVsvwG
+ nS5RJYrSC4XuYZtsM5zSx3maZIiadM/I9d2A2NhzvMIPLyUCcZo0e0XGA7xOfPqY/FEj
+ hUwTOVkJUTXJL2b39bQC3+0aVgOCVvyKfbSLHTk0P8CmjXyRIhlH+wqqEfAcljiyG4vX
+ 4jNwwxjpudU8atKRWdX0dEtuYFv1h6ta0oBdTE6I0YSbKlnc/pxHnm0SFMHUwZfeEa7E
+ NEiVKgK8V8ujOxaAH4OKsfLDhyfR5OKFdf5fGxFhLml48xK2r9Rv4s9Nhfs4zcJA9f5t
+ SXlw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVE7CPeWJy2LPuLT5srE8iCQMGS6GQI4h39Plyrhlpw5AqtkCDNshUEn80Sj93qGjxlp6t+/QpfEkKbvOT55pW4DIUVTD8=
-X-Gm-Message-State: AOJu0YyIXKME//3aNjdwGYucaoW8FRyU53aWFo7DB2oms3yYtmH2TXiO
- cqzgiLggv0Og7JH0aotcUyRQ2ITrLLL6RwjjyP9oESbmOv1qUOCp9L0LNsUmzR4=
-X-Google-Smtp-Source: AGHT+IEzbmDF5LErdLSObnRUqcdInV4BW6yCcLkHf0xrqSA8CKDEDlyN0Ds5eRsEw4FDqsphdEVv0A==
-X-Received: by 2002:a5d:6150:0:b0:346:d7d9:83ae with SMTP id
- y16-20020a5d6150000000b00346d7d983aemr8996968wrt.52.1713860159770; 
- Tue, 23 Apr 2024 01:15:59 -0700 (PDT)
+ AJvYcCXsega/DXrI/l+eYdLfNcC9xGiMdyZI4yE4sScXCWbmiYtiJnq33BXufkjhi9dqGC0dgeyKR2aawq4VjmrGYzS1u7VhPVs=
+X-Gm-Message-State: AOJu0YwvYOvgKkM9+0geADllygD6RnvGg5a0JcoKU8xAmKI5ek56aKmk
+ F8bmkgqjkMGSCtKmM+oZitYLlfGS7KjtrCDhTRdNd8u7LdlR2/8CoueZW2OYPCA=
+X-Google-Smtp-Source: AGHT+IEK7TYRLbsCu58xdkQ0nkS9cG2RRpjCXAMNKPRxgpgpWnh3VNfYDNX7W4AvSVJTGtvZluRqRA==
+X-Received: by 2002:a05:600c:4688:b0:418:a2ce:77ae with SMTP id
+ p8-20020a05600c468800b00418a2ce77aemr9151715wmo.27.1713860228816; 
+ Tue, 23 Apr 2024 01:17:08 -0700 (PDT)
 Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- n2-20020a05600c4f8200b0041884b79b81sm19249824wmq.1.2024.04.23.01.15.58
+ bg11-20020a05600c3c8b00b0041a9c3444a6sm2817287wmb.28.2024.04.23.01.17.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Apr 2024 01:15:59 -0700 (PDT)
-Message-ID: <24c60165-80b6-453b-8fe0-44df563e34be@linaro.org>
-Date: Tue, 23 Apr 2024 10:15:57 +0200
+ Tue, 23 Apr 2024 01:17:08 -0700 (PDT)
+Message-ID: <34e3bbc4-e2ec-4bbc-84c4-ebfb45f7095f@linaro.org>
+Date: Tue, 23 Apr 2024 10:17:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/translate.c: always write 32-bits for SGDT
- and SIDT
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>, pbonzini@redhat.com,
- eduardo@habkost.net, qemu-devel@nongnu.org
-References: <20240419195147.434894-1-mark.cave-ayland@ilande.co.uk>
- <fefb7b6b-29fc-42ee-b62e-059512e881e4@linaro.org>
- <3ff9df0d-6465-45a3-bb62-0db17ed9210c@ilande.co.uk>
- <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
-Content-Language: en-US
+Subject: Re: [PATCH v1 3/4] virtio-snd: factor card removal out of unrealize()
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Zheyu Ma <zheyuma97@gmail.com>
+References: <cover.1713789200.git.manos.pitsidianakis@linaro.org>
+ <2231ee9229ba7259763c9814e6ec119d8954b81c.1713789200.git.manos.pitsidianakis@linaro.org>
+ <2ebc4f49-4d50-4ad8-9d44-eb6ef2ff0066@linaro.org>
+Content-Language: en-US
+In-Reply-To: <2ebc4f49-4d50-4ad8-9d44-eb6ef2ff0066@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,115 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/24 21:03, Volker Rümelin wrote:
-> Am 20.04.24 um 07:40 schrieb Mark Cave-Ayland:
->> On 20/04/2024 02:21, Richard Henderson wrote:
+On 22/4/24 15:27, Philippe Mathieu-Daudé wrote:
+> On 22/4/24 14:52, Manos Pitsidianakis wrote:
+>> Extract audio card removal logic out of the device unrealize callback so
+>> that it can be re-used in follow up commits.
 >>
->>> On 4/19/24 12:51, Mark Cave-Ayland wrote:
->>>> The various Intel CPU manuals claim that SGDT and SIDT can write
->>>> either 24-bits
->>>> or 32-bits depending upon the operand size, but this is incorrect.
->>>> Not only do
->>>> the Intel CPU manuals give contradictory information between processor
->>>> revisions, but this information doesn't even match real-life behaviour.
->>>>
->>>> In fact, tests on real hardware show that the CPU always writes
->>>> 32-bits for SGDT
->>>> and SIDT, and this behaviour is required for at least OS/2 Warp and
->>>> WFW 3.11 with
->>>> Win32s to function correctly. Remove the masking applied due to the
->>>> operand size
->>>> for SGDT and SIDT so that the TCG behaviour matches the behaviour on
->>>> real
->>>> hardware.
->>>>
->>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2198
->>>>
->>>> -- 
->>>> MCA: Whilst I don't have a copy of OS/2 Warp handy, I've confirmed
->>>> that this
->>>> patch fixes the issue in WFW 3.11 with Win32s. For more technical
->>>> information I
->>>> highly recommend the excellent write-up at
->>>> https://www.os2museum.com/wp/sgdtsidt-fiction-and-reality/.
->>>> ---
->>>>    target/i386/tcg/translate.c | 14 ++++++++------
->>>>    1 file changed, 8 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
->>>> index 76a42c679c..3026eb6774 100644
->>>> --- a/target/i386/tcg/translate.c
->>>> +++ b/target/i386/tcg/translate.c
->>>> @@ -5846,9 +5846,10 @@ static bool disas_insn(DisasContext *s,
->>>> CPUState *cpu)
->>>>                gen_op_st_v(s, MO_16, s->T0, s->A0);
->>>>                gen_add_A0_im(s, 2);
->>>>                tcg_gen_ld_tl(s->T0, tcg_env, offsetof(CPUX86State,
->>>> gdt.base));
->>>> -            if (dflag == MO_16) {
->>>> -                tcg_gen_andi_tl(s->T0, s->T0, 0xffffff);
->>>> -            }
->>>> +            /*
->>>> +             * NB: Despite claims to the contrary in Intel CPU
->>>> documentation,
->>>> +             *     all 32-bits are written regardless of operand size.
->>>> +             */
->>>
->>> Current documentation agrees that all 32 bits are written, so I don't
->>> think you need this comment:
->>
->> Ah that's good to know the docs are now correct. I added the comment
->> as there was a lot of conflicting information around for older CPUs so
->> I thought it was worth an explicit mention.
->>
->> If everyone agrees a version without comments is preferable, I can
->> re-send an updated version without them included.
->>
+>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> ---
+>>   hw/audio/virtio-snd.c | 20 ++++++++++++++------
+>>   1 file changed, 14 insertions(+), 6 deletions(-)
 > 
-> Hi Mark,
 > 
-> I wouldn't remove the comment.
+>> -static void virtio_snd_unrealize(DeviceState *dev)
+>> +/* Remove audio card and cleanup streams. */
+>> +static void virtio_snd_unsetup(VirtIOSound *vsnd)
 > 
-> Quote from the Intel® 64 and IA-32 Architectures Software Developer’s
-> Manual Volume 2B: Instruction Set Reference, M-U March 2024:
-> 
-> IA-32 Architecture Compatibility
-> The 16-bit form of SGDT is compatible with the Intel 286 processor if
-> the upper 8 bits are not referenced. The Intel 286 processor fills these
-> bits with 1s; processor generations later than the Intel 286 processor
-> fill these bits with 0s.
+> Maybe s/unsetup/cleanup/?
 
-Is that that OS/2 Warp and WFW 3.11 expect a 286 CPU? QEMU starts
-modelling the 486, do we want to consider down to the 286?
+Or 'teardown'?
 
-> Intel still claims the upper 8 bits are filled with 0s, but the
-> Operation pseudo code below is correct. The same is true for SIDT.
 > 
-> With best regards,
-> Volker
-> 
->>>     IF OperandSize =16 or OperandSize = 32 (* Legacy or Compatibility
->>> Mode *)
->>>       THEN
->>>         DEST[0:15] := GDTR(Limit);
->>>         DEST[16:47] := GDTR(Base); (* Full 32-bit base address stored *)
->>>     FI;
->>>
->>>
->>> Anyway,
->>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>
->> Thanks!
->>
->>
->> ATB,
->>
->> Mark.
->>
->>
->>
-> 
-> 
+>>   {
+>> -    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>> -    VirtIOSound *vsnd = VIRTIO_SND(dev);
+>>       VirtIOSoundPCMStream *stream;
+>> -    qemu_del_vm_change_state_handler(vsnd->vmstate);
+>> -    trace_virtio_snd_unrealize(vsnd);
+>> -
+>>       if (vsnd->pcm) {
+>>           if (vsnd->pcm->streams) {
+>>               for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
+>> @@ -1370,6 +1366,18 @@ static void virtio_snd_unrealize(DeviceState *dev)
+>>           vsnd->pcm = NULL;
+>>       }
+>>       AUD_remove_card(&vsnd->card);
+>> +}
 
 
