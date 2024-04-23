@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531CAC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C5D8C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnJ-0005CA-K0; Tue, 23 Apr 2024 11:10:53 -0400
+	id 1rzHnN-0005YS-3D; Tue, 23 Apr 2024 11:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHn6-0004du-55
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:43 -0400
+ id 1rzHmg-0004NI-VZ
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmy-0000Fk-IE
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:35 -0400
+ id 1rzHmc-000058-JU
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885029;
+ s=mimecast20190719; t=1713885009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qEJ0yKlHrmKhZxiI7OJ9cPT/90ybcJyHoiSWV5zSPBM=;
- b=Ye0Pm3h5JbLXdPS+NiDBwGNI3Hcy4X4qC+eA4tWBbM1+Zx0+7umqDal+Fqfet4h0BI0zy+
- 8r4SuSc0z2YirsvTqhaPIeCYE0v80HNns0HeZsVwMK/gbuNQVSs/KsMqh8S28I4nHKWulw
- OmjqCJZoX75rz/en6YelIsuL8qa9cgc=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-59-2kM03ivqPAWWW3f9iaTLzQ-1; Tue,
- 23 Apr 2024 11:10:27 -0400
-X-MC-Unique: 2kM03ivqPAWWW3f9iaTLzQ-1
+ bh=TCI8G6AGfryz/wVyTdfzVO73x/SIX8rjk25RIz7ksKo=;
+ b=aOZjXsmx8N+gPSC03UAQhr3JJwbCacIHG5JedrxLSuMzitG/TckH43CQvdOTCyvXZqId9L
+ QtSN3x0/ghdAhcCrV71WMxIZji/0CS3MmGk9QPYOnyCHlOLPT2L4WH+VBfZvkmCYZVmEmA
+ wEhCevtapMu1f1OiZWviepaQo3sMknc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-401-FmH_wf9BP_OvZY7ERDx8rg-1; Tue, 23 Apr 2024 11:10:06 -0400
+X-MC-Unique: FmH_wf9BP_OvZY7ERDx8rg-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 26AB429AC00A;
- Tue, 23 Apr 2024 15:10:27 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7DCF28107BD;
+ Tue, 23 Apr 2024 15:10:06 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9573B20128F3;
- Tue, 23 Apr 2024 15:10:26 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id EC6B5200AFA2;
+ Tue, 23 Apr 2024 15:10:04 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 32/63] confidential guest support: Add kvm_init() and
- kvm_reset() in class
-Date: Tue, 23 Apr 2024 17:09:20 +0200
-Message-ID: <20240423150951.41600-33-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 11/63] hw/virtio: move stubs out of stubs/
+Date: Tue, 23 Apr 2024 17:08:59 +0200
+Message-ID: <20240423150951.41600-12-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -82,79 +81,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+Since the virtio memory device stubs are needed exactly when the
+Kconfig symbol is not enabled, they can be placed in hw/virtio/ and
+conditionalized on CONFIG_VIRTIO_MD.
 
-Different confidential VMs in different architectures all have the same
-needs to do their specific initialization (and maybe resetting) stuffs
-with KVM. Currently each of them exposes individual *_kvm_init()
-functions and let machine code or kvm code to call it.
-
-To facilitate the introduction of confidential guest technology from
-different x86 vendors, add two virtual functions, kvm_init() and kvm_reset()
-in ConfidentialGuestSupportClass, and expose two helpers functions for
-invodking them.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-Id: <20240229060038.606591-1-xiaoyao.li@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240408155330.522792-12-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/exec/confidential-guest-support.h | 34 ++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c | 0
+ hw/virtio/meson.build                                | 2 ++
+ stubs/meson.build                                    | 1 -
+ 3 files changed, 2 insertions(+), 1 deletion(-)
+ rename stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c (100%)
 
-diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
-index ba2dd4b5dfc..e5b188cffbf 100644
---- a/include/exec/confidential-guest-support.h
-+++ b/include/exec/confidential-guest-support.h
-@@ -23,7 +23,10 @@
- #include "qom/object.h"
+diff --git a/stubs/virtio-md-pci.c b/hw/virtio/virtio-md-stubs.c
+similarity index 100%
+rename from stubs/virtio-md-pci.c
+rename to hw/virtio/virtio-md-stubs.c
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index d7f18c96e60..621fc65454c 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -87,6 +87,8 @@ specific_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
+ system_ss.add_all(when: 'CONFIG_VIRTIO', if_true: system_virtio_ss)
+ system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('vhost-stub.c'))
+ system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('virtio-stub.c'))
++system_ss.add(when: 'CONFIG_VIRTIO_MD', if_false: files('virtio-md-stubs.c'))
++
+ system_ss.add(files('virtio-hmp-cmds.c'))
  
- #define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-support"
--OBJECT_DECLARE_SIMPLE_TYPE(ConfidentialGuestSupport, CONFIDENTIAL_GUEST_SUPPORT)
-+OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
-+                    ConfidentialGuestSupportClass,
-+                    CONFIDENTIAL_GUEST_SUPPORT)
-+
- 
- struct ConfidentialGuestSupport {
-     Object parent;
-@@ -55,8 +58,37 @@ struct ConfidentialGuestSupport {
- 
- typedef struct ConfidentialGuestSupportClass {
-     ObjectClass parent;
-+
-+    int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
-+    int (*kvm_reset)(ConfidentialGuestSupport *cgs, Error **errp);
- } ConfidentialGuestSupportClass;
- 
-+static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
-+                                              Error **errp)
-+{
-+    ConfidentialGuestSupportClass *klass;
-+
-+    klass = CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs);
-+    if (klass->kvm_init) {
-+        return klass->kvm_init(cgs, errp);
-+    }
-+
-+    return 0;
-+}
-+
-+static inline int confidential_guest_kvm_reset(ConfidentialGuestSupport *cgs,
-+                                               Error **errp)
-+{
-+    ConfidentialGuestSupportClass *klass;
-+
-+    klass = CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs);
-+    if (klass->kvm_reset) {
-+        return klass->kvm_reset(cgs, errp);
-+    }
-+
-+    return 0;
-+}
-+
- #endif /* !CONFIG_USER_ONLY */
- 
- #endif /* QEMU_CONFIDENTIAL_GUEST_SUPPORT_H */
+ specific_ss.add_all(when: 'CONFIG_VIRTIO', if_true: specific_virtio_ss)
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 45616afbfaa..60e32d363fa 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -57,7 +57,6 @@ if have_system
+   stub_ss.add(files('fw_cfg.c'))
+   stub_ss.add(files('semihost.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
+-  stub_ss.add(files('virtio-md-pci.c'))
+ else
+   stub_ss.add(files('qdev.c'))
+ endif
 -- 
 2.44.0
 
