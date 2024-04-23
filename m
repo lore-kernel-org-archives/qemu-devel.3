@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3BFC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C50C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzG1d-0005wz-EI; Tue, 23 Apr 2024 09:17:33 -0400
+	id 1rzG1A-0005Gp-7S; Tue, 23 Apr 2024 09:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG1C-0005HZ-6e
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:17:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rzG14-0005FU-Hs
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG1A-00025T-Pi
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:17:05 -0400
+ id 1rzG12-00024F-Dh
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713878224;
+ s=mimecast20190719; t=1713878215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RSGRxPuU7t+PHA40W2AJKTyVoCXEdGYsJXg3MuWZZfU=;
- b=FEx1UXN1H9PqY8L/iJQoRk+exHqvTNauK/D9MAsSQQSyUDdBY4reNBlsewl+XbvZidw2j4
- 1apzCoELnDYZ6sKQgQYq0dYDZFX39depTZLT53Jx7ffyENBnRi6QvTT9bkvNNma669tclt
- Sz2lG1Tgs6412iLyPZSfArivdXztPr0=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YEcU2s7XM/BrARF/BZZCwORcPazah+ZTI8PrU4iuRoY=;
+ b=FXO0k8wD3n62Y0N6XmWDsE9uMj1o+NLV0QxqGCAsbbO6Ek5hHbrBv+zqrxpGttxYQTr6Uv
+ OiY6Jp9Nrzq7yGZA/xtvl68JgD1wEMsRd3wjt5q0UCrKRnQQEnvmbwYb2IolovZJ7qBNXX
+ shkXGxqksOw72JP5yPKFlJt7+P7qRQk=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-lOiovvu4OgexGcy6oGqfNg-1; Tue, 23 Apr 2024 09:17:02 -0400
-X-MC-Unique: lOiovvu4OgexGcy6oGqfNg-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-51b4790d422so1962925e87.3
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:17:02 -0700 (PDT)
+ us-mta-225-SKvqxo7fOvCSI9BxbG2y3A-1; Tue, 23 Apr 2024 09:16:54 -0400
+X-MC-Unique: SKvqxo7fOvCSI9BxbG2y3A-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-51b1a65c68eso2319557e87.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:16:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713878220; x=1714483020;
+ d=1e100.net; s=20230601; t=1713878212; x=1714483012;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RSGRxPuU7t+PHA40W2AJKTyVoCXEdGYsJXg3MuWZZfU=;
- b=o5x3YWH85Im999Jd8RvYzkVZJhYxX3UJhQ26nQGsW4+dUjfvfXLODdhenW8gGYexrc
- oOVk6Y2icLQdVz20itNqK2vNp0Ef3+fm5MRQnIbWc2HP+c+uqkjArVKm6Au7dtWjWZ6q
- gjddCWYZF0V8meIu4z2VMaxa6tQHex9SlX8ih/yCgoR7DElC3PgMNR0A+DRpZSqdvpUm
- +AXQgWXgBtljEy4xUjvQKwteEVoCerDoDRgAPSXtVRgpYuQSFzOmUbKL/vqApn9ZOMTW
- zD+WUib8a1gi9/fdIU3PybCddzPg1aG44m5BLuH8wv4x6rya7puHLRML8s1zT6pqEL19
- ppmg==
-X-Gm-Message-State: AOJu0YwsuAxe1/v/NB4aeM8U+2UErSlLwm4XSTw59CtDt9xZQJLqhMKd
- FKW3zmRlfwLC/kmnex+NBcU8yBc248vqeFztqNVw959d/6F4LVwm+skuA/bx95U7Uqz/h59ST4e
- bue7Nxg3VK6miTOmzyY6DzZRfUGLJhTEyOe5pBZ3OzKRmEsqpeYphI2zqDPq8grDwAYthJpsAeA
- 0XCuZ8AIVbyMju6DDke4+BcrJkrXQ4DhXyw2Bs
-X-Received: by 2002:a05:6512:38c5:b0:516:a091:db5e with SMTP id
- p5-20020a05651238c500b00516a091db5emr6913672lft.48.1713878220700; 
- Tue, 23 Apr 2024 06:17:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJhC8/AzbD8jqmsqGdCx2APdbbrac7me0v57V2LDVCXZBIZyAmshxkRVC9uFck7+JloJU4tg==
-X-Received: by 2002:a05:6512:38c5:b0:516:a091:db5e with SMTP id
- p5-20020a05651238c500b00516a091db5emr6913655lft.48.1713878220378; 
- Tue, 23 Apr 2024 06:17:00 -0700 (PDT)
+ bh=YEcU2s7XM/BrARF/BZZCwORcPazah+ZTI8PrU4iuRoY=;
+ b=JnHau0gGAWWC/t9Zekd/VsO4flcIUEJoiczL/8WPzZQ48qawROs1G9oRjp7qdBFb3/
+ +EvtHahjAXoKndKtOdr/lMOIAXBkD9dzH0H8KC0nW1Q4BwWfplT3yoO1qhpaG2vOxqWR
+ 4jeZjD1/Yno4LxR43QpNivk+/k0dKBU2SA+G7TJHRQdi+L3cTxavlxhDwenalFMF6Bl2
+ GQXsOk2L1BIK3Rvt17TyIFBF+tO8KEGMovtDpBFuwUW3wPQU3RxRfA6ZaT3Q5k7BiELd
+ +QS62HlzR90wdoVPk2R7gXxVbDqCXDvqsBC8VPffUmPXcE1vYxEzzfwmOw3arwHxwtp8
+ OIrQ==
+X-Gm-Message-State: AOJu0Yy+yG1ng3WAWw37KqhGgUAZTQQVI29ntxxfUB11n0efI94rCQFc
+ w+zHvpnirPdqO9pgstS7XqDszNeahEis2BLzjLYkQ95BUcbLULwl8DPpVYZgTAAOmcHMaoeytlg
+ 0kOAqs9ZckKkf8K571PUVDZ1F9AZ4I4+ugscVleoZ37KMCpsfsPF2VveykXX+9pQSIzHSi15oQF
+ 8XXGrqUxvX86qhcR0OBgFykwriNwc8uB2dVeal
+X-Received: by 2002:a05:6512:38d2:b0:516:9eba:8f2b with SMTP id
+ p18-20020a05651238d200b005169eba8f2bmr8461648lft.12.1713878212093; 
+ Tue, 23 Apr 2024 06:16:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQmVg59PIMWjRe3RoV0rZUpDrUfYurRNbXocFY5hp7gudfU6C3OaEkYDqsGC89RC02TuLS4A==
+X-Received: by 2002:a05:6512:38d2:b0:516:9eba:8f2b with SMTP id
+ p18-20020a05651238d200b005169eba8f2bmr8461634lft.12.1713878211727; 
+ Tue, 23 Apr 2024 06:16:51 -0700 (PDT)
 Received: from avogadro.local ([151.81.119.75])
  by smtp.gmail.com with ESMTPSA id
- k11-20020a17090632cb00b00a46a2779475sm7005937ejk.101.2024.04.23.06.16.58
+ f7-20020a170906c08700b00a51a80028e8sm7052938ejz.65.2024.04.23.06.16.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Apr 2024 06:16:58 -0700 (PDT)
+ Tue, 23 Apr 2024 06:16:50 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	farosas@suse.de
-Subject: [PATCH 18/22] s390x: switch boards to "default y"
-Date: Tue, 23 Apr 2024 15:16:08 +0200
-Message-ID: <20240423131612.28362-19-pbonzini@redhat.com>
+Subject: [PATCH 14/22] openrisc: switch boards to "default y"
+Date: Tue, 23 Apr 2024 15:16:04 +0200
+Message-ID: <20240423131612.28362-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423131612.28362-1-pbonzini@redhat.com>
 References: <20240423131612.28362-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -105,41 +105,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Some targets use "default y" for boards to filter out those that require
 TCG.  For consistency we are switching all other targets to do the same.
-Continue with s390.
+Continue with OpenRISC.
 
 No changes to generated config-devices.mak file.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configs/devices/s390x-softmmu/default.mak | 5 ++---
- hw/s390x/Kconfig                          | 2 ++
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ configs/devices/or1k-softmmu/default.mak | 5 ++---
+ hw/openrisc/Kconfig                      | 4 ++++
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/configs/devices/s390x-softmmu/default.mak b/configs/devices/s390x-softmmu/default.mak
-index 6d87bc8b4b0..340c1092922 100644
---- a/configs/devices/s390x-softmmu/default.mak
-+++ b/configs/devices/s390x-softmmu/default.mak
-@@ -9,6 +9,5 @@
- #CONFIG_WDT_DIAG288=n
- #CONFIG_PCIE_DEVICES=n
+diff --git a/configs/devices/or1k-softmmu/default.mak b/configs/devices/or1k-softmmu/default.mak
+index 3aecdf9d738..efe3bc278bc 100644
+--- a/configs/devices/or1k-softmmu/default.mak
++++ b/configs/devices/or1k-softmmu/default.mak
+@@ -5,6 +5,5 @@
+ # CONFIG_TEST_DEVICES=n
  
--# Boards:
+ # Boards:
 -#
--CONFIG_S390_CCW_VIRTIO=y
-+# Boards are selected by default, uncomment to keep out of the build.
-+# CONFIG_S390_CCW_VIRTIO=n
-diff --git a/hw/s390x/Kconfig b/hw/s390x/Kconfig
-index 26ad1044858..3bbf4ae56e4 100644
---- a/hw/s390x/Kconfig
-+++ b/hw/s390x/Kconfig
+-CONFIG_OR1K_SIM=y
+-CONFIG_OR1K_VIRT=y
++# CONFIG_OR1K_SIM=n
++# CONFIG_OR1K_VIRT=n
+diff --git a/hw/openrisc/Kconfig b/hw/openrisc/Kconfig
+index 97af258b556..9c9015e0a5d 100644
+--- a/hw/openrisc/Kconfig
++++ b/hw/openrisc/Kconfig
 @@ -1,5 +1,7 @@
- config S390_CCW_VIRTIO
+ config OR1K_SIM
      bool
 +    default y
-+    depends on S390X
-     imply VIRTIO_PCI
-     imply TERMINAL3270
-     imply VFIO_AP
++    depends on OPENRISC
+     select SERIAL
+     select OPENCORES_ETH
+     select OMPIC
+@@ -7,6 +9,8 @@ config OR1K_SIM
+ 
+ config OR1K_VIRT
+     bool
++    default y
++    depends on OPENRISC
+     imply PCI_DEVICES
+     imply VIRTIO_VGA
+     imply TEST_DEVICES
 -- 
 2.44.0
 
