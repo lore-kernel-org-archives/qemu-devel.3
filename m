@@ -4,55 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33F6C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A937C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnH-000561-Tp; Tue, 23 Apr 2024 11:10:51 -0400
+	id 1rzHnG-00053U-TA; Tue, 23 Apr 2024 11:10:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmo-0004SR-CT
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:25 -0400
+ id 1rzHmk-0004NS-5p
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHmm-000089-31
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:21 -0400
+ id 1rzHmg-00006P-Ol
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885019;
+ s=mimecast20190719; t=1713885013;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bUMHGpCVxIHKiN0MLiRHD2ZyHKe2Wcki4o8FSWGa7Ro=;
- b=Vf2a5JfOeFokpOhEdW2cHDyf0Ajx4g53zRXf72stj5YyABt3xHw0cA89wjV1YYzveN8WwH
- PEDHqfpTiLUlx1U57tlzMh++DL4BnQdFI2jmlhh3wMG9wGnctv5BGKbDbxxu4tGSCmIssQ
- ooQ8XEXlpVNYH3wtHz6GnHKmv4i/IDg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-IcqTNz9HO-6AmkMANVspog-1; Tue,
- 23 Apr 2024 11:10:15 -0400
-X-MC-Unique: IcqTNz9HO-6AmkMANVspog-1
+ bh=wCSeEIzDnWvUBvWxUzklJfIexfxTGnWOXXLod2ADtIE=;
+ b=VR/sujl/Gy60TyHDbJ/aPQRuB9r4RMYEZH64avUtzfTwYZt+1/gsXupZ4l96VL47e3KkA8
+ pM6C+MoYv+Pmd9X9CvN8iwyJgH58cZqLqdNc6wcwPdPyIj8hRMQAgGBmvINpGfpU8Muiqx
+ rMWJJIeBYNi8qcJZwixnWM2TUy1fHvc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-134-4jHyxC_1ML2oe9smxHAr_A-1; Tue, 23 Apr 2024 11:10:11 -0400
+X-MC-Unique: 4jHyxC_1ML2oe9smxHAr_A-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A079729ABA14;
- Tue, 23 Apr 2024 15:10:15 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 410528107BF
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:11 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7902A20296D2;
- Tue, 23 Apr 2024 15:10:14 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id CC903200E290
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:10 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
- Gavin Shan <gshan@redhat.com>
-Subject: [PULL 22/63] hw: Add compat machines for 9.1
-Date: Tue, 23 Apr 2024 17:09:10 +0200
-Message-ID: <20240423150951.41600-23-pbonzini@redhat.com>
+Subject: [PULL 17/63] stubs: include stubs only if needed
+Date: Tue, 23 Apr 2024 17:09:05 +0200
+Message-ID: <20240423150951.41600-18-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -83,274 +80,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add 9.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+Currently it is not documented anywhere why some functions need to
+be stubbed.
 
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Cc: Gavin Shan <gshan@redhat.com>
+Group the files in stubs/meson.build according to who needs them, both
+to reduce the size of the compilation and to clarify the use of stubs.
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20240408155330.522792-18-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/boards.h        |  3 +++
- include/hw/i386/pc.h       |  3 +++
- hw/arm/virt.c              | 11 +++++++++--
- hw/core/machine.c          |  3 +++
- hw/i386/pc.c               |  3 +++
- hw/i386/pc_piix.c          | 17 ++++++++++++++---
- hw/i386/pc_q35.c           | 14 ++++++++++++--
- hw/m68k/virt.c             | 11 +++++++++--
- hw/ppc/spapr.c             | 17 ++++++++++++++---
- hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
- 10 files changed, 83 insertions(+), 13 deletions(-)
+ stubs/{monitor.c => monitor-internal.c} |   0
+ stubs/meson.build                       | 122 +++++++++++++++---------
+ 2 files changed, 75 insertions(+), 47 deletions(-)
+ rename stubs/{monitor.c => monitor-internal.c} (100%)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 8b8f6d5c00d..50e0cf4278e 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -425,6 +425,9 @@ struct MachineState {
-     } \
-     type_init(machine_initfn##_register_types)
- 
-+extern GlobalProperty hw_compat_9_0[];
-+extern const size_t hw_compat_9_0_len;
+diff --git a/stubs/monitor.c b/stubs/monitor-internal.c
+similarity index 100%
+rename from stubs/monitor.c
+rename to stubs/monitor-internal.c
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 4a524f5816b..8ee1fd57530 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -1,58 +1,86 @@
+-stub_ss.add(files('bdrv-next-monitor-owned.c'))
+-stub_ss.add(files('blk-commit-all.c'))
+-stub_ss.add(files('blk-exp-close-all.c'))
+-stub_ss.add(files('blockdev-close-all-bdrv-states.c'))
+-stub_ss.add(files('change-state-handler.c'))
+-stub_ss.add(files('cmos.c'))
++# If possible, add new files to other directories, by using "if_false".
++# If you need them here, try to add them under one of the if statements
++# below, so that it is clear who needs the stubbed functionality.
 +
- extern GlobalProperty hw_compat_8_2[];
- extern const size_t hw_compat_8_2_len;
- 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 27a68071d77..349f79df086 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -198,6 +198,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
- /* sgx.c */
- void pc_machine_init_sgx_epc(PCMachineState *pcms);
- 
-+extern GlobalProperty pc_compat_9_0[];
-+extern const size_t pc_compat_9_0_len;
+ stub_ss.add(files('cpu-get-clock.c'))
+-stub_ss.add(files('cpus-get-virtual-clock.c'))
+-stub_ss.add(files('qemu-timer-notify-cb.c'))
+-stub_ss.add(files('icount.c'))
+-stub_ss.add(files('dump.c'))
+-stub_ss.add(files('error-printf.c'))
+ stub_ss.add(files('fdset.c'))
+-stub_ss.add(files('gdbstub.c'))
+-stub_ss.add(files('get-vm-name.c'))
+-stub_ss.add(files('graph-lock.c'))
+-stub_ss.add(files('hotplug-stubs.c'))
+-if linux_io_uring.found()
+-  stub_ss.add(files('io_uring.c'))
+-endif
+ stub_ss.add(files('iothread-lock.c'))
+-if have_block
+-  stub_ss.add(files('iothread-lock-block.c'))
+-endif
+ stub_ss.add(files('is-daemonized.c'))
+-if libaio.found()
+-  stub_ss.add(files('linux-aio.c'))
+-endif
+-stub_ss.add(files('migr-blocker.c'))
+-stub_ss.add(files('monitor.c'))
+ stub_ss.add(files('monitor-core.c'))
+-stub_ss.add(files('physmem.c'))
+-stub_ss.add(files('qemu-timer-notify-cb.c'))
+-stub_ss.add(files('qmp-command-available.c'))
+-stub_ss.add(files('qmp-quit.c'))
+-stub_ss.add(files('qtest.c'))
+-stub_ss.add(files('ram-block.c'))
+-stub_ss.add(files('replay.c'))
+ stub_ss.add(files('replay-mode.c'))
+-stub_ss.add(files('runstate-check.c'))
+-stub_ss.add(files('sysbus.c'))
+-stub_ss.add(files('target-get-monitor-def.c'))
+-stub_ss.add(files('target-monitor-defs.c'))
+ stub_ss.add(files('trace-control.c'))
+-stub_ss.add(files('uuid.c'))
+-stub_ss.add(files('vmstate.c'))
+-stub_ss.add(files('vm-stop.c'))
+-stub_ss.add(files('win32-kbd-hook.c'))
+-stub_ss.add(files('cpu-synchronize-state.c'))
+-if have_block or have_ga
 +
- extern GlobalProperty pc_compat_8_2[];
- extern const size_t pc_compat_8_2_len;
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a9a913aeadb..c9119ef3847 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3223,10 +3223,17 @@ static void machvirt_machine_init(void)
- }
- type_init(machvirt_machine_init);
- 
--static void virt_machine_9_0_options(MachineClass *mc)
-+static void virt_machine_9_1_options(MachineClass *mc)
- {
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(9, 0)
-+DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
++if have_block
++  stub_ss.add(files('bdrv-next-monitor-owned.c'))
++  stub_ss.add(files('blk-commit-all.c'))
++  stub_ss.add(files('blk-exp-close-all.c'))
++  stub_ss.add(files('blockdev-close-all-bdrv-states.c'))
++  stub_ss.add(files('change-state-handler.c'))
++  stub_ss.add(files('get-vm-name.c'))
++  stub_ss.add(files('iothread-lock-block.c'))
++  stub_ss.add(files('migr-blocker.c'))
++  stub_ss.add(files('physmem.c'))
++  stub_ss.add(files('ram-block.c'))
+   stub_ss.add(files('replay-tools.c'))
++  stub_ss.add(files('runstate-check.c'))
++  stub_ss.add(files('uuid.c'))
+ endif
+-if have_system
+-  stub_ss.add(files('fw_cfg.c'))
+-  stub_ss.add(files('xen-hw-stub.c'))
+-else
 +
-+static void virt_machine_9_0_options(MachineClass *mc)
-+{
-+    virt_machine_9_1_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+}
-+DEFINE_VIRT_MACHINE(9, 0)
- 
- static void virt_machine_8_2_options(MachineClass *mc)
- {
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 37ede0e7d4f..a92bec23147 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -33,6 +33,9 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
- 
-+GlobalProperty hw_compat_9_0[] = {};
-+const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
++if have_block or have_ga
++  # stubs for hooks in util/main-loop.c, util/async.c etc.
++  stub_ss.add(files('cpus-get-virtual-clock.c'))
++  stub_ss.add(files('icount.c'))
++  stub_ss.add(files('graph-lock.c'))
++  if linux_io_uring.found()
++    stub_ss.add(files('io_uring.c'))
++  endif
++  if libaio.found()
++    stub_ss.add(files('linux-aio.c'))
++  endif
++  stub_ss.add(files('qemu-timer-notify-cb.c'))
 +
- GlobalProperty hw_compat_8_2[] = {
-     { "migration", "zero-page-detection", "legacy"},
-     { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 5c21b0c4dbf..b0d818b2094 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -78,6 +78,9 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
-+GlobalProperty pc_compat_9_0[] = {};
-+const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
++  # stubs for monitor
++  stub_ss.add(files('monitor-internal.c'))
++  stub_ss.add(files('qmp-command-available.c'))
++  stub_ss.add(files('qmp-quit.c'))
++endif
 +
- GlobalProperty pc_compat_8_2[] = {};
- const size_t pc_compat_8_2_len = G_N_ELEMENTS(pc_compat_8_2);
- 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 18ba0766092..8850c49c66a 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -513,13 +513,26 @@ static void pc_i440fx_machine_options(MachineClass *m)
-                                      "Use a different south bridge than PIIX3");
- }
- 
--static void pc_i440fx_9_0_machine_options(MachineClass *m)
-+static void pc_i440fx_9_1_machine_options(MachineClass *m)
- {
-     pc_i440fx_machine_options(m);
-     m->alias = "pc";
-     m->is_default = true;
- }
- 
-+DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1", NULL,
-+                      pc_i440fx_9_1_machine_options);
++if have_block or have_user
++  stub_ss.add(files('qtest.c'))
++  stub_ss.add(files('vm-stop.c'))
++  stub_ss.add(files('vmstate.c'))
 +
-+static void pc_i440fx_9_0_machine_options(MachineClass *m)
-+{
-+    pc_i440fx_9_1_machine_options(m);
-+    m->alias = NULL;
-+    m->is_default = false;
++  # more symbols provided by the monitor
++  stub_ss.add(files('error-printf.c'))
++endif
 +
-+    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
-+}
++if have_user
++  # Symbols that are used by hw/core.
++  stub_ss.add(files('cpu-synchronize-state.c'))
+   stub_ss.add(files('qdev.c'))
+ endif
 +
- DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
-                       pc_i440fx_9_0_machine_options);
- 
-@@ -528,8 +541,6 @@ static void pc_i440fx_8_2_machine_options(MachineClass *m)
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
- 
-     pc_i440fx_9_0_machine_options(m);
--    m->alias = NULL;
--    m->is_default = false;
- 
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index c7bc8a2041f..6e1180d4b60 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -365,12 +365,23 @@ static void pc_q35_machine_options(MachineClass *m)
-                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
- }
- 
--static void pc_q35_9_0_machine_options(MachineClass *m)
-+static void pc_q35_9_1_machine_options(MachineClass *m)
- {
-     pc_q35_machine_options(m);
-     m->alias = "q35";
- }
- 
-+DEFINE_Q35_MACHINE(v9_1, "pc-q35-9.1", NULL,
-+                   pc_q35_9_1_machine_options);
++if have_system
++  # Symbols that are only needed in some configurations.  Try not
++  # adding more of these.  If the symbol is used in specific_ss,
++  # in particular, consider defining a preprocessor macro via
++  # Kconfig or configs/targets/.
++  stub_ss.add(files('dump.c'))
++  stub_ss.add(files('cmos.c'))
++  stub_ss.add(files('fw_cfg.c'))
++  stub_ss.add(files('target-get-monitor-def.c'))
++  stub_ss.add(files('target-monitor-defs.c'))
++  stub_ss.add(files('win32-kbd-hook.c'))
++  stub_ss.add(files('xen-hw-stub.c'))
++endif
 +
-+static void pc_q35_9_0_machine_options(MachineClass *m)
-+{
-+    pc_q35_9_1_machine_options(m);
-+    m->alias = NULL;
-+    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
-+}
++if have_system or have_user
++  stub_ss.add(files('gdbstub.c'))
 +
- DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
-                    pc_q35_9_0_machine_options);
- 
-@@ -378,7 +389,6 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
- {
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     pc_q35_9_0_machine_options(m);
--    m->alias = NULL;
-     m->max_cpus = 1024;
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index b8e5e102e6b..09bc9bdfefb 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -357,10 +357,17 @@ type_init(virt_machine_register_types)
-     } \
-     type_init(machvirt_machine_##major##_##minor##_init);
- 
--static void virt_machine_9_0_options(MachineClass *mc)
-+static void virt_machine_9_1_options(MachineClass *mc)
- {
- }
--DEFINE_VIRT_MACHINE(9, 0, true)
-+DEFINE_VIRT_MACHINE(9, 1, true)
++  # Also included in have_system for --disable-tcg builds
++  stub_ss.add(files('replay.c'))
 +
-+static void virt_machine_9_0_options(MachineClass *mc)
-+{
-+    virt_machine_9_1_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+}
-+DEFINE_VIRT_MACHINE(9, 0, false)
- 
- static void virt_machine_8_2_options(MachineClass *mc)
- {
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index e9bc97fee08..36ada4d0baf 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4806,14 +4806,25 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
-     type_init(spapr_machine_register_##suffix)
- 
- /*
-- * pseries-9.0
-+ * pseries-9.1
-  */
--static void spapr_machine_9_0_class_options(MachineClass *mc)
-+static void spapr_machine_9_1_class_options(MachineClass *mc)
- {
-     /* Defaults for the latest behaviour inherited from the base class */
- }
- 
--DEFINE_SPAPR_MACHINE(9_0, "9.0", true);
-+DEFINE_SPAPR_MACHINE(9_1, "9.1", true);
-+
-+/*
-+ * pseries-9.0
-+ */
-+static void spapr_machine_9_0_class_options(MachineClass *mc)
-+{
-+    spapr_machine_9_1_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+}
-+
-+DEFINE_SPAPR_MACHINE(9_0, "9.0", false);
- 
- /*
-  * pseries-8.2
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index b1dcb3857f0..7cebbf6c02a 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -859,14 +859,26 @@ bool css_migration_enabled(void)
-     }                                                                         \
-     type_init(ccw_machine_register_##suffix)
- 
-+static void ccw_machine_9_1_instance_options(MachineState *machine)
-+{
-+}
-+
-+static void ccw_machine_9_1_class_options(MachineClass *mc)
-+{
-+}
-+DEFINE_CCW_MACHINE(9_1, "9.1", true);
-+
- static void ccw_machine_9_0_instance_options(MachineState *machine)
- {
-+    ccw_machine_9_1_instance_options(machine);
- }
- 
- static void ccw_machine_9_0_class_options(MachineClass *mc)
- {
-+    ccw_machine_9_1_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
- }
--DEFINE_CCW_MACHINE(9_0, "9.0", true);
-+DEFINE_CCW_MACHINE(9_0, "9.0", false);
- 
- static void ccw_machine_8_2_instance_options(MachineState *machine)
- {
++  # Also included in have_system for tests/unit/test-qdev-global-props
++  stub_ss.add(files('hotplug-stubs.c'))
++  stub_ss.add(files('sysbus.c'))
++endif
 -- 
 2.44.0
 
