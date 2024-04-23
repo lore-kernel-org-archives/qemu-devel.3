@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB50EC41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8399BC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzG0c-000587-Rv; Tue, 23 Apr 2024 09:16:30 -0400
+	id 1rzG1B-0005HK-2F; Tue, 23 Apr 2024 09:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG0a-00057K-4D
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:28 -0400
+ id 1rzG18-0005GT-AZ
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:17:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG0X-0001sO-AM
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:27 -0400
+ id 1rzG14-00024Y-L8
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:17:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713878184;
+ s=mimecast20190719; t=1713878218;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x/CfJcUHL0kvBww1bxnnvCI0JFKeWF7v+z/NCC8Exn4=;
- b=Yuk9Qk3qDzZtUOZqpKRtHJcO0CUUZJtIa0injgEylNDvd6PtUNvaarBLuvRTzDwMmwXEz5
- T/gml4v/lIMqo0HfjVt7JhWLsF8vXbLl9ItPSYRBxAKdJF9HOi6RUDH+CrlfyJf1g5QME7
- 6+JQdpotuiw5TJ3N17j65D4QMK8GVeM=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ix972OjlVv+H+RCINGBZg6nWKRaQ1bOVlFizytKWt6E=;
+ b=dveaeeky6rPurAq0pgRtG49Z4C9lI9dOVBjMYH1/NdL2KX3bb8+6Cq66jKeuVKMftkXyWp
+ F+Ei9d7O6Evgftf7+ccgxqlroKEzgfSKW/0nE/jUGRn9IX1FmdDA48VluP3MkcghSu6pm8
+ eBHl631aS56k+/pInUOyQX3nAmNLLqY=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-B9O6G-SjM0aYY-KK8lkwJg-1; Tue, 23 Apr 2024 09:16:22 -0400
-X-MC-Unique: B9O6G-SjM0aYY-KK8lkwJg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a58765c5770so66306066b.1
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:16:22 -0700 (PDT)
+ us-mta-52-h0uWz5pGO-aBIhOiNI4Wrw-1; Tue, 23 Apr 2024 09:16:56 -0400
+X-MC-Unique: h0uWz5pGO-aBIhOiNI4Wrw-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-56bf2d59fceso4069296a12.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:16:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713878180; x=1714482980;
+ d=1e100.net; s=20230601; t=1713878214; x=1714483014;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x/CfJcUHL0kvBww1bxnnvCI0JFKeWF7v+z/NCC8Exn4=;
- b=xK8Ct7gE0rhsoB6WCi5Togk9tF5pKV/xqhdt7OUpe7p69fp84hKvozcpVzo8T5086B
- ZlZ1YITJw0dW7nV1AEkEV3BQraDq4K28bJ7/jswxR+kudr7Nu3ipA1pZe4U2ReNWhmvF
- T72I9QezcO/7APkZb9/0CMGjfv5JxgED5kE1whacWmHzBwI6XSpYCCOJx/BD3oV9MBpS
- gDv40SqkLDh7Jdiav/1ZhxN04igrDdX0JgB2TZpCUXxZ6hxrbgeeUECSsX+IMGWM0T7O
- 6tV15yGeWuCiQxr1RSjzFq4y9Qfrc3ukQHix/jrdBPUrj1veCYuEQAXSkbXxAEafz+P4
- dQXg==
-X-Gm-Message-State: AOJu0YwHsd1gmhZoUoGKlLVW1D/Q2fsd5IQicsFCQEFxoUSvMNqURVtg
- O1usRQP82IU9IoEsipLYvOOhyw3taCfGUs+xNhMwYXFc1tPnIQDbMO8pz7ylxaUN7eYb9HLqHsT
- Ehu97N8LBCeaDDgLIhkeOAq/1HNPl5SP5oev4W9kxpMjMrdWoRscPt/0Hstadmxi5cwrg20o86W
- PRgllekKLgTM4MckgDsUP4iHIh1bV/GJgsx2X3
-X-Received: by 2002:a17:906:3608:b0:a55:612b:cca0 with SMTP id
- q8-20020a170906360800b00a55612bcca0mr8430533ejb.27.1713878180627; 
- Tue, 23 Apr 2024 06:16:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKaNkWhfX4ZOkNJQoWm0DyOPFE7OCU/MR9QscnC3k+DK5HkbE2DcqiJwLT9SKQlmJl0zfn6g==
-X-Received: by 2002:a17:906:3608:b0:a55:612b:cca0 with SMTP id
- q8-20020a170906360800b00a55612bcca0mr8430519ejb.27.1713878180312; 
- Tue, 23 Apr 2024 06:16:20 -0700 (PDT)
+ bh=ix972OjlVv+H+RCINGBZg6nWKRaQ1bOVlFizytKWt6E=;
+ b=aEdBg4lAbu9Pce2JKhw47fxS1niktIHOfv137GjYYiYA5Sob19Mu6iqqoYi6i930BB
+ tk7TeyPJvt+WHkiLT6Kn+lXf6e83HJHxboHps5P4q5dvR29rXVcTXiIvIk9qn086IMV7
+ ekYC3N4xAVA9pIDPZY0rwMSu3U98yD6BWyUWTJqhOfbD5oCATpp82T2n4WjWbHr8vpWn
+ zyoO01LLqjQoVg//scp9W5BXFmjtgArHKfWJ9uCT30EfLaYxDpwxPOGlZNlV8B71nK7a
+ q3lxT5QThqOgjVMVPnfHtXofrO+sdUDaovvHL5ylRD+ii97yqBxO9nxdC1Y9M3qizmmE
+ HwNw==
+X-Gm-Message-State: AOJu0YwZBSdMRZHiAKC4HdR3+1PXj8S7b3CPD9KOwfJZunzOs5pIV2np
+ qIqYxihRCXVvf5kexrI+9OCg1ffQ0zRimXg+c/GuSrq6Maqdu5D1cBxuGXk+Lq3Sieu+7BxKKw+
+ 3bk2mAcA/W+zO1o2KJAtKcM1o3BS3ubnk9agKR3/anXAiCFSJuXJkbKWz+ze6uncR7LNfl2m6XG
+ xiJCZffbCtHHzIF+BQVJ9vM1luPvU5xvcers1z
+X-Received: by 2002:a50:8e1a:0:b0:570:5214:f62 with SMTP id
+ 26-20020a508e1a000000b0057052140f62mr10204847edw.0.1713878214538; 
+ Tue, 23 Apr 2024 06:16:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbL5OHsHA9YlRhIla8gu6FfhnaSGqCb1jfJaxyrcJIpQvgHYCqfUaMPcplFjTrM3HJQKOj0w==
+X-Received: by 2002:a50:8e1a:0:b0:570:5214:f62 with SMTP id
+ 26-20020a508e1a000000b0057052140f62mr10204835edw.0.1713878214225; 
+ Tue, 23 Apr 2024 06:16:54 -0700 (PDT)
 Received: from avogadro.local ([151.81.119.75])
  by smtp.gmail.com with ESMTPSA id
- lv11-20020a170906bc8b00b00a555eaf25c7sm6969928ejb.123.2024.04.23.06.16.18
+ eg13-20020a056402288d00b00572224855b8sm573762edb.27.2024.04.23.06.16.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Apr 2024 06:16:18 -0700 (PDT)
+ Tue, 23 Apr 2024 06:16:52 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	farosas@suse.de
-Subject: [PATCH 02/22] alpha: switch boards to "default y"
-Date: Tue, 23 Apr 2024 15:15:52 +0200
-Message-ID: <20240423131612.28362-3-pbonzini@redhat.com>
+Subject: [PATCH 15/22] ppc: switch boards to "default y"
+Date: Tue, 23 Apr 2024 15:16:05 +0200
+Message-ID: <20240423131612.28362-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423131612.28362-1-pbonzini@redhat.com>
 References: <20240423131612.28362-1-pbonzini@redhat.com>
@@ -105,41 +105,199 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Some targets use "default y" for boards to filter out those that require
 TCG.  For consistency we are switching all other targets to do the same.
-Start with Alpha.
+Continue with PowerPC/POWER.
 
-No changes to generated config-devices.mak file.
+No changes to generated config-devices.mak files, other than
+adding CONFIG_PPC to the ppc64-softmmu target.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configs/devices/alpha-softmmu/default.mak | 5 ++---
- hw/alpha/Kconfig                          | 2 ++
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ configs/devices/ppc-softmmu/default.mak   | 26 ++++++++++++-----------
+ configs/devices/ppc64-softmmu/default.mak |  8 +++----
+ hw/ppc/Kconfig                            | 26 +++++++++++++++++++++++
+ target/ppc/Kconfig                        |  1 +
+ 4 files changed, 44 insertions(+), 17 deletions(-)
 
-diff --git a/configs/devices/alpha-softmmu/default.mak b/configs/devices/alpha-softmmu/default.mak
-index d186fe8e9b1..3de6a9f5779 100644
---- a/configs/devices/alpha-softmmu/default.mak
-+++ b/configs/devices/alpha-softmmu/default.mak
-@@ -5,6 +5,5 @@
- #CONFIG_PCI_DEVICES=n
- #CONFIG_TEST_DEVICES=n
+diff --git a/configs/devices/ppc-softmmu/default.mak b/configs/devices/ppc-softmmu/default.mak
+index 3061b26749a..460d15e676b 100644
+--- a/configs/devices/ppc-softmmu/default.mak
++++ b/configs/devices/ppc-softmmu/default.mak
+@@ -4,22 +4,24 @@
+ # CONFIG_PCI_DEVICES=n
+ # CONFIG_TEST_DEVICES=n
  
--# Boards:
--#
--CONFIG_DP264=y
+-# For embedded PPCs:
+-CONFIG_E500PLAT=y
+-CONFIG_MPC8544DS=y
+-CONFIG_PPC405=y
+-CONFIG_PPC440=y
+-CONFIG_VIRTEX=y
 +# Boards are selected by default, uncomment to keep out of the build.
-+# CONFIG_DP264=n
-diff --git a/hw/alpha/Kconfig b/hw/alpha/Kconfig
-index 9af650c94ec..7f3455ce1e1 100644
---- a/hw/alpha/Kconfig
-+++ b/hw/alpha/Kconfig
++
++# Embedded PPCs:
++# CONFIG_E500PLAT=n
++# CONFIG_MPC8544DS=n
++# CONFIG_PPC405=n
++# CONFIG_PPC440=n
++# CONFIG_VIRTEX=n
+ 
+ # For Sam460ex
+-CONFIG_SAM460EX=y
++# CONFIG_SAM460EX=n
+ 
+ # For Macs
+-CONFIG_MAC_OLDWORLD=y
+-CONFIG_MAC_NEWWORLD=y
++# CONFIG_MAC_OLDWORLD=n
++# CONFIG_MAC_NEWWORLD=n
+ 
+-CONFIG_AMIGAONE=y
+-CONFIG_PEGASOS2=y
++# CONFIG_AMIGAONE=n
++# CONFIG_PEGASOS2=n
+ 
+ # For PReP
+-CONFIG_PREP=y
++# CONFIG_PREP=n
+diff --git a/configs/devices/ppc64-softmmu/default.mak b/configs/devices/ppc64-softmmu/default.mak
+index b90e5bf4558..e8ad2603133 100644
+--- a/configs/devices/ppc64-softmmu/default.mak
++++ b/configs/devices/ppc64-softmmu/default.mak
+@@ -3,8 +3,6 @@
+ # Include all 32-bit boards
+ include ../ppc-softmmu/default.mak
+ 
+-# For PowerNV
+-CONFIG_POWERNV=y
+-
+-# For pSeries
+-CONFIG_PSERIES=y
++# Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_POWERNV=n
++# CONFIG_PSERIES=n
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index 37ccf9cdcaf..78f83e78ce5 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
 @@ -1,5 +1,7 @@
- config DP264
+ config PSERIES
      bool
 +    default y
-+    depends on ALPHA
++    depends on PPC64
+     imply USB_OHCI_PCI
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+@@ -23,6 +25,8 @@ config SPAPR_RNG
+ 
+ config POWERNV
+     bool
++    default y
++    depends on PPC64
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+     select ISA_IPMI_BT
+@@ -38,6 +42,8 @@ config POWERNV
+ 
+ config PPC405
+     bool
++    default y
++    depends on PPC
+     select M48T59
+     select PFLASH_CFI02
+     select PPC4XX
+@@ -45,6 +51,8 @@ config PPC405
+ 
+ config PPC440
+     bool
++    default y
++    depends on PPC
      imply PCI_DEVICES
      imply TEST_DEVICES
      imply E1000_PCI
+@@ -62,6 +70,8 @@ config PPC4XX
+ 
+ config SAM460EX
+     bool
++    default y
++    depends on PPC
+     select PFLASH_CFI01
+     select IDE_SII3112
+     select M41T80
+@@ -75,6 +85,8 @@ config SAM460EX
+ 
+ config AMIGAONE
+     bool
++    default y
++    depends on PPC
+     imply ATI_VGA
+     select ARTICIA
+     select VT82C686
+@@ -82,6 +94,8 @@ config AMIGAONE
+ 
+ config PEGASOS2
+     bool
++    default y
++    depends on PPC
+     imply ATI_VGA
+     select MV64361
+     select VT82C686
+@@ -90,6 +104,8 @@ config PEGASOS2
+ 
+ config PREP
+     bool
++    default y
++    depends on PPC
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+     select CS4231A
+@@ -106,6 +122,8 @@ config RS6000_MC
+ 
+ config MAC_OLDWORLD
+     bool
++    default y
++    depends on PPC
+     imply PCI_DEVICES
+     imply SUNGEM
+     imply TEST_DEVICES
+@@ -117,6 +135,8 @@ config MAC_OLDWORLD
+ 
+ config MAC_NEWWORLD
+     bool
++    default y
++    depends on PPC
+     imply PCI_DEVICES
+     imply SUNGEM
+     imply TEST_DEVICES
+@@ -147,14 +167,20 @@ config E500
+ 
+ config E500PLAT
+     bool
++    default y
++    depends on PPC
+     select E500
+ 
+ config MPC8544DS
+     bool
++    default y
++    depends on PPC
+     select E500
+ 
+ config VIRTEX
+     bool
++    default y
++    depends on PPC
+     select PPC4XX
+     select PFLASH_CFI01
+     select SERIAL
+diff --git a/target/ppc/Kconfig b/target/ppc/Kconfig
+index 3ff152051a3..0283711673e 100644
+--- a/target/ppc/Kconfig
++++ b/target/ppc/Kconfig
+@@ -3,3 +3,4 @@ config PPC
+ 
+ config PPC64
+     bool
++    select PPC
 -- 
 2.44.0
 
