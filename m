@@ -4,64 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965F4C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCF5C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnJ-0005Ab-41; Tue, 23 Apr 2024 11:10:53 -0400
+	id 1rzHnS-00068j-Pt; Tue, 23 Apr 2024 11:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzHn9-0004gF-Fy
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:44 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rzHnC-0004kV-UW
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzHn5-0000HN-Sm
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:43 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rzHn7-0000Hp-VU
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885036;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+qj2Zekoq2Y6RPkbtnbVvyfO9neBSTU7GLx3cEusXR4=;
- b=gLwxMLmOdogme90kP37dPcxMqsPBG0uA1hKAfaIJq2VOhLEEcN/Bty9Bvd+tZAZmpTUjh8
- WtRSbO3dYYru8sBxQtYpkX55sdVM3fA0A5VKXOizp32m83II2MjKA5XJm6QlFxVlEyQKKd
- S9j8s6DJbEsmumPL0MgVwZxlmVV8VpQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-LVNoL3VrOuGxhLJ0Wj4dsQ-1; Tue,
- 23 Apr 2024 11:10:28 -0400
-X-MC-Unique: LVNoL3VrOuGxhLJ0Wj4dsQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ s=mimecast20190719; t=1713885038;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8JOqgK6T21wzwgr87RLBCecRIltf/5dHdAu0xkCFNnw=;
+ b=K0nwkbhKqq5F3j6ZbXNMdw1kRZvqdHwQYv2cqU4UhDf6m4NQdDs985OMyFS56ojjvY0o61
+ z7/+XThC1kbzgRFe9L9oeYbnqbuxaOgpVyYh/Es0Q16Q0N2bUfwwPRNFQY0sDBvCLZdkjG
+ qR2/1SEG6SOUbXHEzClw9wvm062eKKk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-115-N7QJ5teiOgK963udsg0OQQ-1; Tue, 23 Apr 2024 11:10:37 -0400
+X-MC-Unique: N7QJ5teiOgK963udsg0OQQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3C2161C0C64D;
- Tue, 23 Apr 2024 15:10:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 30268406D72E;
- Tue, 23 Apr 2024 15:10:26 +0000 (UTC)
-Date: Tue, 23 Apr 2024 16:10:24 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Helge Deller <deller@gmx.de>
-Cc: Cole Robinson <crobinso@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- "Richard W.M. Jones" <rjones@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: hppa-firmware.img missing build-id
-Message-ID: <ZifPYEXIsELVWmgo@redhat.com>
-References: <6c469c05-1bc5-4fd8-89f1-130f5aba5ff8@redhat.com>
- <d0e87002-ee5e-4a80-b850-1660bc5f2c80@redhat.com>
- <96f04d1a-2470-4118-8e07-b864f58f241e@gmx.de>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2B44B1827109
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:37 +0000 (UTC)
+Received: from avogadro.lan (unknown [10.39.192.70])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id BABD9200E290
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:36 +0000 (UTC)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 44/63] target/i386: SEV: use KVM_SEV_INIT2 if possible
+Date: Tue, 23 Apr 2024 17:09:32 +0200
+Message-ID: <20240423150951.41600-45-pbonzini@redhat.com>
+In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
+References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <96f04d1a-2470-4118-8e07-b864f58f241e@gmx.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -82,50 +77,139 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 23, 2024 at 05:07:17PM +0200, Helge Deller wrote:
-> On 4/23/24 16:58, Cole Robinson wrote:
-> > On 4/23/24 10:11 AM, Cole Robinson wrote:
-> > > Hi,
-> > > 
-> > > hppa-firmware.img and hppa-firmware64.img in qemu.git are missing ELF
-> > > build-id annotations. rpm builds on Fedora will error if an ELF binary
-> > > doesn't have build-id:
-> > > 
-> > > RPM build errors:
-> > >      Missing build-id in
-> > > /tmp/rpmbuild/BUILDROOT/qemu-9.0.0-1.rc2.fc41.x86_64/usr/share/qemu/hppa-firmware.img
-> > >      Missing build-id in
-> > > /tmp/rpmbuild/BUILDROOT/qemu-9.0.0-1.rc2.fc41.x86_64/usr/share/qemu/hppa-firmware64.img
-> > >      Generating build-id links failed
-> > > 
-> > > I didn't hit this with qemu 8.2.* builds FWIW
-> > > 
-> > 
-> > Though checking older bundled hppa-firmware binaries with `readelf` I
-> > don't see build-id either, so now I'm not sure why those RPM builds were
-> > passing.
-> > 
-> > FWIW the RPM check is deep in RPM code:
-> > https://github.com/rpm-software-management/rpm/blob/68d0f3119c3d46b6184f4704edb51749ce9f819e/build/files.c#L1976
-> > 
-> > Maybe something else in hppa-firmware ELF headers caused this check to
-> > be skipped in the past
-> 
-> Maybe Fedora ignores binaries which don't have the executable flag set?
+Implement support for the KVM_X86_SEV_VM and KVM_X86_SEV_ES_VM virtual
+machine types, and the KVM_SEV_INIT2 function of KVM_MEMORY_ENCRYPT_OP.
 
-Yes, that's probably it. qemu 9.0.0 has +x set on the hppa-firmware
-images, while qemu 8.2.0 does not have +x set.
+These replace the KVM_SEV_INIT and KVM_SEV_ES_INIT functions, and have
+several advantages:
 
+- sharing the initialization sequence with SEV-SNP and TDX
 
-With regards,
-Daniel
+- allowing arguments including the set of desired VMSA features
+
+- protection against invalid use of KVM_GET/SET_* ioctls for guests
+  with encrypted state
+
+If the KVM_X86_SEV_VM and KVM_X86_SEV_ES_VM types are not supported,
+fall back to KVM_SEV_INIT and KVM_SEV_ES_INIT (which use the
+default x86 VM type).
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/kvm/kvm.c |  2 ++
+ target/i386/sev.c     | 41 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 39 insertions(+), 4 deletions(-)
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 974586e57a1..a9e93502734 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -164,6 +164,8 @@ static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
+ 
+ static const char *vm_type_name[] = {
+     [KVM_X86_DEFAULT_VM] = "default",
++    [KVM_X86_SEV_VM] = "SEV",
++    [KVM_X86_SEV_ES_VM] = "SEV-ES",
+ };
+ 
+ bool kvm_is_vm_type_supported(int type)
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index ebe36d4c10c..9dab4060b84 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -26,6 +26,7 @@
+ #include "qemu/error-report.h"
+ #include "crypto/hash.h"
+ #include "sysemu/kvm.h"
++#include "kvm/kvm_i386.h"
+ #include "sev.h"
+ #include "sysemu/sysemu.h"
+ #include "sysemu/runstate.h"
+@@ -56,6 +57,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(SevGuestState, SEV_GUEST)
+ struct SevGuestState {
+     X86ConfidentialGuest parent_obj;
+ 
++    int kvm_type;
++
+     /* configuration parameters */
+     char *sev_device;
+     uint32_t policy;
+@@ -850,6 +853,26 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
+     }
+ }
+ 
++static int sev_kvm_type(X86ConfidentialGuest *cg)
++{
++    SevGuestState *sev = SEV_GUEST(cg);
++    int kvm_type;
++
++    if (sev->kvm_type != -1) {
++        goto out;
++    }
++
++    kvm_type = (sev->policy & SEV_POLICY_ES) ? KVM_X86_SEV_ES_VM : KVM_X86_SEV_VM;
++    if (kvm_is_vm_type_supported(kvm_type)) {
++        sev->kvm_type = kvm_type;
++    } else {
++        sev->kvm_type = KVM_X86_DEFAULT_VM;
++    }
++
++out:
++    return sev->kvm_type;
++}
++
+ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     SevGuestState *sev = SEV_GUEST(cgs);
+@@ -929,13 +952,19 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+                          __func__);
+             goto err;
+         }
+-        cmd = KVM_SEV_ES_INIT;
+-    } else {
+-        cmd = KVM_SEV_INIT;
+     }
+ 
+     trace_kvm_sev_init();
+-    ret = sev_ioctl(sev->sev_fd, cmd, NULL, &fw_error);
++    if (sev_kvm_type(X86_CONFIDENTIAL_GUEST(sev)) == KVM_X86_DEFAULT_VM) {
++        cmd = sev_es_enabled() ? KVM_SEV_ES_INIT : KVM_SEV_INIT;
++
++        ret = sev_ioctl(sev->sev_fd, cmd, NULL, &fw_error);
++    } else {
++        struct kvm_sev_init args = { 0 };
++
++        ret = sev_ioctl(sev->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
++    }
++
+     if (ret) {
+         error_setg(errp, "%s: failed to initialize ret=%d fw_error=%d '%s'",
+                    __func__, ret, fw_error, fw_error_to_str(fw_error));
+@@ -1327,8 +1356,10 @@ static void
+ sev_guest_class_init(ObjectClass *oc, void *data)
+ {
+     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
++    X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
+ 
+     klass->kvm_init = sev_kvm_init;
++    x86_klass->kvm_type = sev_kvm_type;
+ 
+     object_class_property_add_str(oc, "sev-device",
+                                   sev_guest_get_sev_device,
+@@ -1357,6 +1388,8 @@ sev_guest_instance_init(Object *obj)
+ {
+     SevGuestState *sev = SEV_GUEST(obj);
+ 
++    sev->kvm_type = -1;
++
+     sev->sev_device = g_strdup(DEFAULT_SEV_DEVICE);
+     sev->policy = DEFAULT_GUEST_POLICY;
+     object_property_add_uint32_ptr(obj, "policy", &sev->policy,
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.44.0
+
 
 
