@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC16C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 06:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4D6BC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 06:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rz9g0-00051z-Lq; Tue, 23 Apr 2024 02:30:48 -0400
+	id 1rz9iJ-0006LF-KT; Tue, 23 Apr 2024 02:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rz9fv-00050r-AP; Tue, 23 Apr 2024 02:30:44 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1rz9iH-0006KO-IO; Tue, 23 Apr 2024 02:33:09 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rz9fs-0002pF-UP; Tue, 23 Apr 2024 02:30:43 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1rz9iF-0003Xh-EX; Tue, 23 Apr 2024 02:33:09 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43N5xIIH021922; Tue, 23 Apr 2024 06:30:39 GMT
+ 43N4X8o8009760; Tue, 23 Apr 2024 06:33:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- subject : from : to : cc : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=ZrZ6v1BsxubdgToDDoKvSknFD+Xq7V5nY4217VZWvHk=;
- b=Y+LMpQCz/bm5Sx+fMWmye1oPYbF7w9R7xIJVixbA8VUPiu9G9yKOBWuYGWyGkCpeUSkf
- umpTaOOzcG8HLkU3exCbwQBLkar0vmemRgKT48etSMOmQtVZyp7xzHNKIAJGcNiPPga/
- Wik758Yd/1rEql/wWhRAjbrPxHZ48FYyG/dmMo1RbTfFQHs/QKOWGPhYkh5ZPHcAyffy
- M6DMRAPW2d1w0haS7TB8JTpdlXpOpiSwlJM7wJXgUO8p//WmWpj8eyXeCaotl+Kik37d
- KE0bcIMCCgZrN3pHQTrzNc+vUgcLrxIuU6VG7yYVqv62MmHO+daysbq4+PiHQYB3K5+k Ig== 
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=yGHMvl1NXZ9zjIlkbh02PaHRi9hWXbX8mPaIkoKJmYY=;
+ b=mXn1Z8aTQYPU27jahl+dY3VkHI1MqCe9JtVWG1wASvEe4g5dTxh9Lfe8X2gV7s8mOivk
+ 8m+W7mVXxSql+W3TEvvxJJXyGqBW/ScDVRoV149o+ieYo325sCrHLT0Va+YMEtn8GWKf
+ YXE1hGeK+/xnvA3Rz048w14+DVmIVb3iRs17VG+CGhEhdCCBWTqkvkt3a7LCfe++gzVw
+ aOR/YTSXQVU3LgvwszRFU6lET2Efn1Uy9Uw+2BaJeqtG21sohVRSXkuMLNuk6DH6A7tx
+ N64OEfJ3Ts/0DovHM/dNB9Ip73R7xMTSZojKNjeDVc7lZTrUt5zgL9+1q2EBP/uYSLpD 3w== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xp4vr86s5-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xp620g80w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Apr 2024 06:30:38 +0000
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43N6UcGb013727;
- Tue, 23 Apr 2024 06:30:38 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xp4vr86s0-1
+ Tue, 23 Apr 2024 06:33:04 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43N6X4cd024947;
+ Tue, 23 Apr 2024 06:33:04 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xp620g80v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Apr 2024 06:30:38 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43N5ZPYM005373; Tue, 23 Apr 2024 06:30:37 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmx3cat11-1
+ Tue, 23 Apr 2024 06:33:04 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 43N5R1UN028319; Tue, 23 Apr 2024 06:33:03 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3xmtr2bky3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Apr 2024 06:30:37 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43N6UYA711600440
+ Tue, 23 Apr 2024 06:33:03 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 43N6WxtY46465396
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Apr 2024 06:30:36 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E2CBD5805D;
- Tue, 23 Apr 2024 06:30:33 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1051958069;
- Tue, 23 Apr 2024 06:30:32 +0000 (GMT)
-Received: from [9.109.243.194] (unknown [9.109.243.194])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Apr 2024 06:30:31 +0000 (GMT)
-Message-ID: <a0f9b2fc-4c8a-4c37-bc36-26bbaa627fec@linux.ibm.com>
-Date: Tue, 23 Apr 2024 12:00:30 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: handle vcpu hotplug failure gracefully
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-ppc@nongnu.org, npiggin@gmail.com, qemu-devel@nongnu.org
-Cc: danielhb413@gmail.com, vaibhav@linux.ibm.com, sbhat@linux.ibm.com
-References: <20240423061058.595674-1-harshpb@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20240423061058.595674-1-harshpb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: JbWTIlGxvJ1_X9-xmrWH6HtV1FIqTXbq
-X-Proofpoint-ORIG-GUID: IsmzfxLxYS62LMI1ZzP5XIwuSwz5i4f_
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ Tue, 23 Apr 2024 06:33:01 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8FB5D20043;
+ Tue, 23 Apr 2024 06:32:59 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 50D2120040;
+ Tue, 23 Apr 2024 06:32:58 +0000 (GMT)
+Received: from localhost.in.ibm.com (unknown [9.199.192.140])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 23 Apr 2024 06:32:58 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ richard.henderson@linaro.org, harshpb@linux.ibm.com
+Subject: [PATCH v2 5/8] target/ppc: Move multiply fixed-point insns (64-bit
+ operands) to decodetree.
+Date: Tue, 23 Apr 2024 12:02:31 +0530
+Message-Id: <20240423063234.76282-6-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240423063234.76282-1-rathc@linux.ibm.com>
+References: <20240423063234.76282-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: yoM70x5L1nkEQDTNPQbUJKWFuGhc7HZQ
+X-Proofpoint-ORIG-GUID: fBKWwLxa4TCzu2VBTl4dEPOcIJvLO_GN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-23_04,2024-04-22_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0
- priorityscore=1501 adultscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
- phishscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
- definitions=main-2404230018
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ malwarescore=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 mlxscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 phishscore=0 mlxlogscore=999
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2404010000 definitions=main-2404230018
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -115,99 +114,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ qemu-devel
+Moving the following instructions to decodetree :
 
-On 4/23/24 11:40, Harsh Prateek Bora wrote:
-> On ppc64, the PowerVM hypervisor runs with limited memory and a VCPU
-> creation during hotplug may fail during kvm_ioctl for KVM_CREATE_VCPU,
-> leading to termination of guest since errp is set to &error_fatal while
-> calling kvm_init_vcpu. This unexpected behaviour can be avoided by
-> pre-creating vcpu and parking it on success or return error otherwise.
-> This enables graceful error delivery for any vcpu hotplug failures while
-> the guest can keep running.
-> 
-> Based on api refactoring to create/park vcpus introduced in 1/8 of patch series:
-> https://lore.kernel.org/qemu-devel/20240312020000.12992-2-salil.mehta@huawei.com/
-> 
-> Tested OK by repeatedly doing a hotplug/unplug of vcpus as below:
-> 
->   #virsh setvcpus hotplug 40
->   #virsh setvcpus hotplug 70
-> error: internal error: unable to execute QEMU command 'device_add':
-> kvmppc_cpu_realize: vcpu hotplug failed with -12
-> 
-> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
-> Suggested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-> Suggested-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-> Signed-off by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> ---
-> ---
->   target/ppc/kvm.c | 42 ++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 42 insertions(+)
-> 
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 8231feb2d4..c887f6dfa0 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -48,6 +48,8 @@
->   #include "qemu/mmap-alloc.h"
->   #include "elf.h"
->   #include "sysemu/kvm_int.h"
-> +#include "sysemu/kvm.h"
-> +#include "hw/core/accel-cpu.h"
->   
->   #define PROC_DEVTREE_CPU      "/proc/device-tree/cpus/"
->   
-> @@ -2339,6 +2341,43 @@ static void alter_insns(uint64_t *word, uint64_t flags, bool on)
->       }
->   }
->   
-> +static int max_cpu_index = 0;
-> +
-> +static bool kvmppc_cpu_realize(CPUState *cs, Error **errp)
-> +{
-> +    int ret;
-> +
-> +    cs->cpu_index = max_cpu_index++;
-> +
-> +    POWERPC_CPU(cs)->vcpu_id = cs->cpu_index;
-> +
-> +    if (cs->parent_obj.hotplugged) {
-> +        /* create and park to fail gracefully in case vcpu hotplug fails */
-> +        ret = kvm_create_vcpu(cs);
-> +        if (!ret) {
-> +            kvm_park_vcpu(cs);
-> +        } else {
-> +            max_cpu_index--;
-> +            error_setg(errp, "%s: vcpu hotplug failed with %d",
-> +                             __func__, ret);
-> +            return false;
-> +        }
-> +    }
-> +    return true;
-> +}
-> +
-> +static void kvmppc_cpu_unrealize(CPUState *cpu)
-> +{
-> +    if (POWERPC_CPU(cpu)->vcpu_id == (max_cpu_index - 1)) {
-> +    /* only reclaim vcpuid if its the last one assigned
-> +     * as reclaiming random vcpuid for parked vcpus may lead
-> +     * to unexpected behaviour due to an existing kernel bug
-> +     * when drc_index doesnt get reclaimed as expected.
-> +     */
-> +        max_cpu_index--;
-> +    }
-> +}
-> +
->   static void kvmppc_host_cpu_class_init(ObjectClass *oc, void *data)
->   {
->       PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-> @@ -2963,4 +3002,7 @@ bool kvm_arch_cpu_check_are_resettable(void)
->   
->   void kvm_arch_accel_class_init(ObjectClass *oc)
->   {
-> +    AccelClass *ac = ACCEL_CLASS(oc);
-> +    ac->cpu_common_realize = kvmppc_cpu_realize;
-> +    ac->cpu_common_unrealize = kvmppc_cpu_unrealize;
->   }
+	mul{ld, ldo, hd, hdu}[.]	: XO-form
+	madd{hd, hdu, ld}		: VA-form
+
+The changes were verified by validating that the tcg ops generated by those
+instructions remain the same, which were captured with the '-d in_asm,op'
+flag.
+
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/ppc/insn32.decode                   |   9 ++
+ target/ppc/translate.c                     | 101 ---------------------
+ target/ppc/translate/fixedpoint-impl.c.inc |  85 +++++++++++++++++
+ 3 files changed, 94 insertions(+), 101 deletions(-)
+
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index 654f55471b..61c59bbde0 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -375,6 +375,15 @@ MODUW           011111 ..... ..... ..... 0100001011 -   @X
+ DARN            011111 ..... --- .. ----- 1011110011 -  @X_tl
+ NEG             011111 ..... ..... ----- . 001101000 .  @XO_ta
+ 
++MULLD           011111 ..... ..... ..... 0 011101001 .  @XO_tab_rc
++MULLDO          011111 ..... ..... ..... 1 011101001 .  @XO_tab_rc
++MULHD           011111 ..... ..... ..... - 001001001 .  @XO_tab_rc
++MULHDU          011111 ..... ..... ..... - 000001001 .  @XO_tab_rc
++
++MADDLD          000100 ..... ..... ..... ..... 110011   @VA
++MADDHD          000100 ..... ..... ..... ..... 110000   @VA
++MADDHDU         000100 ..... ..... ..... ..... 110001   @VA
++
+ ## Fixed-Point Logical Instructions
+ 
+ CFUGED          011111 ..... ..... ..... 0011011100 -   @X
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 436fcfc645..8fa125d0ae 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -1918,62 +1918,6 @@ GEN_INT_ARITH_MODD(modud, 0x08, 0);
+ GEN_INT_ARITH_MODD(modsd, 0x18, 1);
+ #endif
+ 
+-#if defined(TARGET_PPC64)
+-/* mulhd  mulhd. */
+-static void gen_mulhd(DisasContext *ctx)
+-{
+-    TCGv lo = tcg_temp_new();
+-    tcg_gen_muls2_tl(lo, cpu_gpr[rD(ctx->opcode)],
+-                     cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
+-    }
+-}
+-
+-/* mulhdu  mulhdu. */
+-static void gen_mulhdu(DisasContext *ctx)
+-{
+-    TCGv lo = tcg_temp_new();
+-    tcg_gen_mulu2_tl(lo, cpu_gpr[rD(ctx->opcode)],
+-                     cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
+-    }
+-}
+-
+-/* mulld  mulld. */
+-static void gen_mulld(DisasContext *ctx)
+-{
+-    tcg_gen_mul_tl(cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)],
+-                   cpu_gpr[rB(ctx->opcode)]);
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
+-    }
+-}
+-
+-/* mulldo  mulldo. */
+-static void gen_mulldo(DisasContext *ctx)
+-{
+-    TCGv_i64 t0 = tcg_temp_new_i64();
+-    TCGv_i64 t1 = tcg_temp_new_i64();
+-
+-    tcg_gen_muls2_i64(t0, t1, cpu_gpr[rA(ctx->opcode)],
+-                      cpu_gpr[rB(ctx->opcode)]);
+-    tcg_gen_mov_i64(cpu_gpr[rD(ctx->opcode)], t0);
+-
+-    tcg_gen_sari_i64(t0, t0, 63);
+-    tcg_gen_setcond_i64(TCG_COND_NE, cpu_ov, t0, t1);
+-    if (is_isa300(ctx)) {
+-        tcg_gen_mov_tl(cpu_ov32, cpu_ov);
+-    }
+-    tcg_gen_or_tl(cpu_so, cpu_so, cpu_ov);
+-
+-    if (unlikely(Rc(ctx->opcode) != 0)) {
+-        gen_set_Rc0(ctx, cpu_gpr[rD(ctx->opcode)]);
+-    }
+-}
+-#endif
+-
+ /* Common subf function */
+ static inline void gen_op_arith_subf(DisasContext *ctx, TCGv ret, TCGv arg1,
+                                      TCGv arg2, bool add_ca, bool compute_ca,
+@@ -5884,36 +5828,6 @@ static void gen_icbt_440(DisasContext *ctx)
+      */
+ }
+ 
+-#if defined(TARGET_PPC64)
+-static void gen_maddld(DisasContext *ctx)
+-{
+-    TCGv_i64 t1 = tcg_temp_new_i64();
+-
+-    tcg_gen_mul_i64(t1, cpu_gpr[rA(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+-    tcg_gen_add_i64(cpu_gpr[rD(ctx->opcode)], t1, cpu_gpr[rC(ctx->opcode)]);
+-}
+-
+-/* maddhd maddhdu */
+-static void gen_maddhd_maddhdu(DisasContext *ctx)
+-{
+-    TCGv_i64 lo = tcg_temp_new_i64();
+-    TCGv_i64 hi = tcg_temp_new_i64();
+-    TCGv_i64 t1 = tcg_temp_new_i64();
+-
+-    if (Rc(ctx->opcode)) {
+-        tcg_gen_mulu2_i64(lo, hi, cpu_gpr[rA(ctx->opcode)],
+-                          cpu_gpr[rB(ctx->opcode)]);
+-        tcg_gen_movi_i64(t1, 0);
+-    } else {
+-        tcg_gen_muls2_i64(lo, hi, cpu_gpr[rA(ctx->opcode)],
+-                          cpu_gpr[rB(ctx->opcode)]);
+-        tcg_gen_sari_i64(t1, cpu_gpr[rC(ctx->opcode)], 63);
+-    }
+-    tcg_gen_add2_i64(t1, cpu_gpr[rD(ctx->opcode)], lo, hi,
+-                     cpu_gpr[rC(ctx->opcode)], t1);
+-}
+-#endif /* defined(TARGET_PPC64) */
+-
+ static void gen_tbegin(DisasContext *ctx)
+ {
+     if (unlikely(!ctx->tm_enabled)) {
+@@ -6277,9 +6191,6 @@ GEN_HANDLER_E(cmpeqb, 0x1F, 0x00, 0x07, 0x00600000, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(cmpb, 0x1F, 0x1C, 0x0F, 0x00000001, PPC_NONE, PPC2_ISA205),
+ GEN_HANDLER_E(cmprb, 0x1F, 0x00, 0x06, 0x00400001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER(isel, 0x1F, 0x0F, 0xFF, 0x00000001, PPC_ISEL),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER(mulld, 0x1F, 0x09, 0x07, 0x00000000, PPC_64B),
+-#endif
+ GEN_HANDLER2(andi_, "andi.", 0x1C, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER2(andis_, "andis.", 0x1D, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER(cntlzw, 0x1F, 0x1A, 0x00, 0x00000000, PPC_INTEGER),
+@@ -6483,11 +6394,6 @@ GEN_HANDLER(lvsl, 0x1f, 0x06, 0x00, 0x00000001, PPC_ALTIVEC),
+ GEN_HANDLER(lvsr, 0x1f, 0x06, 0x01, 0x00000001, PPC_ALTIVEC),
+ GEN_HANDLER(mfvscr, 0x04, 0x2, 0x18, 0x001ff800, PPC_ALTIVEC),
+ GEN_HANDLER(mtvscr, 0x04, 0x2, 0x19, 0x03ff0000, PPC_ALTIVEC),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER_E(maddhd_maddhdu, 0x04, 0x18, 0xFF, 0x00000000, PPC_NONE,
+-              PPC2_ISA300),
+-GEN_HANDLER_E(maddld, 0x04, 0x19, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA300),
+-#endif
+ 
+ #if defined(TARGET_PPC64)
+ #undef GEN_INT_ARITH_DIVD
+@@ -6504,13 +6410,6 @@ GEN_HANDLER_E(divde, 0x1F, 0x09, 0x0D, 0, PPC_NONE, PPC2_DIVE_ISA206),
+ GEN_HANDLER_E(divdeo, 0x1F, 0x09, 0x1D, 0, PPC_NONE, PPC2_DIVE_ISA206),
+ GEN_HANDLER_E(modsd, 0x1F, 0x09, 0x18, 0x00000001, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(modud, 0x1F, 0x09, 0x08, 0x00000001, PPC_NONE, PPC2_ISA300),
+-
+-#undef GEN_INT_ARITH_MUL_HELPER
+-#define GEN_INT_ARITH_MUL_HELPER(name, opc3)                                  \
+-GEN_HANDLER(name, 0x1F, 0x09, opc3, 0x00000000, PPC_64B)
+-GEN_INT_ARITH_MUL_HELPER(mulhdu, 0x00),
+-GEN_INT_ARITH_MUL_HELPER(mulhd, 0x02),
+-GEN_INT_ARITH_MUL_HELPER(mulldo, 0x17),
+ #endif
+ 
+ #undef GEN_LOGICAL1
+diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+index 1be27150d5..d9a5db83b3 100644
+--- a/target/ppc/translate/fixedpoint-impl.c.inc
++++ b/target/ppc/translate/fixedpoint-impl.c.inc
+@@ -529,6 +529,91 @@ static bool trans_DARN(DisasContext *ctx, arg_DARN *a)
+     return true;
+ }
+ 
++static bool trans_MULLD(DisasContext *ctx, arg_MULLD *a)
++{
++    REQUIRE_64BIT(ctx);
++    tcg_gen_mul_tl(cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb]);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
++    }
++    return true;
++}
++
++static bool trans_MULLDO(DisasContext *ctx, arg_MULLD *a)
++{
++    TCGv_i64 t0 = tcg_temp_new_i64();
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    REQUIRE_64BIT(ctx);
++    tcg_gen_muls2_i64(t0, t1, cpu_gpr[a->ra], cpu_gpr[a->rb]);
++    tcg_gen_mov_i64(cpu_gpr[a->rt], t0);
++
++    tcg_gen_sari_i64(t0, t0, 63);
++    tcg_gen_setcond_i64(TCG_COND_NE, cpu_ov, t0, t1);
++    if (is_isa300(ctx)) {
++        tcg_gen_mov_tl(cpu_ov32, cpu_ov);
++    }
++    tcg_gen_or_tl(cpu_so, cpu_so, cpu_ov);
++
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
++    }
++    return true;
++}
++
++static bool do_mulhd(DisasContext *ctx, arg_XO_tab_rc *a,
++                     void (*helper)(TCGv, TCGv, TCGv, TCGv))
++{
++    TCGv lo = tcg_temp_new();
++    helper(lo, cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb]);
++    if (unlikely(a->rc)) {
++        gen_set_Rc0(ctx, cpu_gpr[a->rt]);
++    }
++    return true;
++}
++
++TRANS64(MULHD, do_mulhd, tcg_gen_muls2_tl);
++TRANS64(MULHDU, do_mulhd, tcg_gen_mulu2_tl);
++
++static bool trans_MADDLD(DisasContext *ctx, arg_MADDLD *a)
++{
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++    tcg_gen_mul_i64(t1, cpu_gpr[a->vra], cpu_gpr[a->vrb]);
++    tcg_gen_add_i64(cpu_gpr[a->vrt], t1, cpu_gpr[a->rc]);
++    return true;
++}
++
++static bool trans_MADDHD(DisasContext *ctx, arg_MADDHD *a)
++{
++    TCGv_i64 lo = tcg_temp_new_i64();
++    TCGv_i64 hi = tcg_temp_new_i64();
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++    tcg_gen_muls2_i64(lo, hi, cpu_gpr[a->vra], cpu_gpr[a->vrb]);
++    tcg_gen_sari_i64(t1, cpu_gpr[a->rc], 63);
++    tcg_gen_add2_i64(t1, cpu_gpr[a->vrt], lo, hi, cpu_gpr[a->rc], t1);
++    return true;
++}
++
++static bool trans_MADDHDU(DisasContext *ctx, arg_MADDHDU *a)
++{
++    TCGv_i64 lo = tcg_temp_new_i64();
++    TCGv_i64 hi = tcg_temp_new_i64();
++    TCGv_i64 t1 = tcg_temp_new_i64();
++
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++    tcg_gen_mulu2_i64(lo, hi, cpu_gpr[a->vra], cpu_gpr[a->vrb]);
++    tcg_gen_add2_i64(t1, cpu_gpr[a->vrt], lo, hi, cpu_gpr[a->rc],
++                     tcg_constant_i64(0));
++    return true;
++}
++
+ static bool trans_INVALID(DisasContext *ctx, arg_INVALID *a)
+ {
+     gen_invalid(ctx);
+-- 
+2.39.3
+
 
