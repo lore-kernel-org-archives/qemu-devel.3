@@ -4,99 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7351DC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 21:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E164EC04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 21:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzNMy-0006Va-M4; Tue, 23 Apr 2024 17:08:05 -0400
+	id 1rzNPC-0000B5-MK; Tue, 23 Apr 2024 17:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1rzNMa-0006RI-M6; Tue, 23 Apr 2024 17:07:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1rzNMY-0006a3-C6; Tue, 23 Apr 2024 17:07:40 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43NKRTwO018024; Tue, 23 Apr 2024 21:07:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=Ln1rPf08cFA+wzdW+6K1pnQBxCrVei0vWQyo2IkFsmM=;
- b=qctq7s3uM/kqsEmPuzTNOAghf195ymFNdQnWDCyOAKQtSel2NK23ZmEO7eUsTIDoLIbG
- esnSqALeFzvcmOPQ5nzMnud2UgqxRuGCVubC9xrcD1Nhewc0/Oy3r59PWUJI9+UyXwm9
- seM0FNHNMo+yjEl4GZXSw0sbUlZUgBi4Y279vFOXbBxbgkxy4vhslaXbmh5kfTz8bbvx
- v/r+QDwxvpJMONyj5F3+oRa1J4+Y2cRTWOmR+AEpDVGgiwSrDlW6EqU9pb1Yn3XNfjwe
- 5iPpFlJrI97hKXWmoivJsZppmZP0s7BLHkFKL+mXyDri3c6Z60fdwiLQpLRx5VrccuqY LQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xpm1mg38x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Apr 2024 21:07:27 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43NL5AUj011102;
- Tue, 23 Apr 2024 21:07:26 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3xpm1mg38u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Apr 2024 21:07:26 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 43NKKoBr023065; Tue, 23 Apr 2024 21:07:25 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3xms1p006k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Apr 2024 21:07:25 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 43NL7M3C36045552
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Apr 2024 21:07:25 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D498F58052;
- Tue, 23 Apr 2024 21:07:22 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 521405805A;
- Tue, 23 Apr 2024 21:07:22 +0000 (GMT)
-Received: from li-d664314c-3171-11b2-a85c-fa8047ef35bd.pok.ibm.com (unknown
- [9.12.68.85]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Apr 2024 21:07:22 +0000 (GMT)
-From: Collin Walling <walling@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, david@redhat.com, wangyanan55@huawei.com,
- philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- armbru@redhat.com, Collin Walling <walling@linux.ibm.com>
-Subject: [PATCH v2 0/3] query-cpu-model-expansion: add
- disable-deprecated-feats arg
-Date: Tue, 23 Apr 2024 17:06:52 -0400
-Message-ID: <20240423210655.66656-1-walling@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rzNPA-0000Aw-PK
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 17:10:20 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rzNP8-0007HZ-EN
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 17:10:20 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1e834159f40so45857265ad.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 14:10:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1713906616; x=1714511416; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=249MlgqyuzBuGlmmyAn0wU6ZuUaezBL9K2jELzRaOig=;
+ b=AuHUpwl7jTWVRVrvqsghxLQPzTtFEt1/Zy9AHYD5KOtEhBZJfMJxY+3WAgaUAlqOPR
+ npRxkMF8We7r4W7pXglKcmLto5ngmExEg7MGGcz6FMtE8RxwiT8c516Fvxa1XzMRUZFs
+ BpsYiSP4iW79CEGLTje4AcNot019X8cNVAFxS05Mk1UTPaRIjnfglkV8rMvUKw57TCFm
+ OXoGZs1pZvXPo4VpAl/nKZXkvMVniGUSQO+iVwSg+eW8ir48k3q+o8DCXdFYmVHlYFgN
+ LounUUlEQwFN/T+q+B2K6RmRotNi6sLRGcCDohRD+8UFStjz9FrlUEfw94/Ru5FkEGER
+ 0ktw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713906616; x=1714511416;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=249MlgqyuzBuGlmmyAn0wU6ZuUaezBL9K2jELzRaOig=;
+ b=wRKjp1kScQREU9rBTtdCbQGkHxzRybWzLdezS/Q82BVpE14SnGvaarHsUXGwD3ZFvb
+ QTGRedEw40GPnqLC660RTW/1qE+vgkenwyN5qwHr/8hGsSdAvrIiI0i0H8I8y8DO81v9
+ wRehrMLVQP26SlIAPoC2QIfGyFUZgn6saBigyCS1JLpnbfNyuhY209JQsMQQ924bwBnN
+ ShzvMas9UgquGLV7TrSqM0lSoWwVsiuwdQU5RgMoKog/3OTWR+6UJEkDU2fQqreHxTDN
+ 1PoJfABLTUnEkCencLPmM+JJG2tDgYgSoHopG0c3NOXhDSLL6h4/5y2/sartgIxRJv9J
+ j8QQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYHqQJU6n3nYIjR809Gjr5159yM06T0t++3TaxTCTU2RsJtOSYP/iCKXEPcRWJ4iC+Acag5XbrkTPvuR8iBcjDQSK9im0=
+X-Gm-Message-State: AOJu0YyjcpPxrNTcqIqaWSdJ4ArOfLEyl0QjKJobK9cqyt+TlmPApVIL
+ eex7tYbPcYEkeJ0XvPATS5ceezEopf4rW3Z5V2ajSeB3xiwn/GWo
+X-Google-Smtp-Source: AGHT+IG/iYwdzLDL/p3fmBHc/L6USifMS1C4Lqng8hREkLbdy93Dz3c9XRzbzT/Ol4IKv8vWXg/xxQ==
+X-Received: by 2002:a17:902:c20d:b0:1e9:9fd4:e62d with SMTP id
+ 13-20020a170902c20d00b001e99fd4e62dmr717357pll.11.1713906615990; 
+ Tue, 23 Apr 2024 14:10:15 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ q4-20020a170902edc400b001e29c4b7bd2sm10506181plk.240.2024.04.23.14.10.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Apr 2024 14:10:14 -0700 (PDT)
+Message-ID: <52bac533-6b22-49b0-8390-ded9c075e72b@roeck-us.net>
+Date: Tue, 23 Apr 2024 14:10:13 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: RhYs_nyUl3QR4XPG1PxG9y3oAwTVc2hJ
-X-Proofpoint-ORIG-GUID: tlvlCInA7z0KZkNl8JkxqpLJBS8krw_D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-23_16,2024-04-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 mlxlogscore=999
- adultscore=0 priorityscore=1501 impostorscore=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2404010000
- definitions=main-2404230053
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Problems (timeouts) when testing usb-ohci with qemu
+To: Alan Stern <stern@rowland.harvard.edu>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ linux-usb@vger.kernel.org, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel@nongnu.org
+References: <4664cf39-5dfe-4557-959d-149640ca36e1@roeck-us.net>
+ <10f44ba3-51a4-42a6-85c7-f8068b56fee1@rowland.harvard.edu>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <10f44ba3-51a4-42a6-85c7-f8068b56fee1@rowland.harvard.edu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=groeck7@gmail.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,71 +144,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current implementation of query-cpu-model-expansion is lacking a way to
-conditionally retrieve CPU models with properties (i.e. features) that are
-flagged as deprecated set to disabled. To remedy this, a new optional boolean
-"disable-deprecated-feats" argument has been added to the query.
+Hi Alan,
 
-Here is a sample QMP command that includes this new argument:
+On 4/23/24 10:30, Alan Stern wrote:
+> On Tue, Apr 23, 2024 at 10:04:17AM -0700, Guenter Roeck wrote:
+>> Hi,
+>>
+>> when testing usb-ohci
+> 
+> What is usb-ohci?  Do you mean ohci-hcd?
+> 
+>>   with qemu's pci-ohci emulation, I keep getting
+>> random usb interface timeouts. Sometimes the usb_hub_wq times out.
+> ...
+> 
+>> Sometimes there is an i/o scheduling timeout such as
+> ...
+> 
+>> This is not a new problem; I have seen it forever. Recently I spent some
+>> time trying to understand the problem and found that the linux driver does
+>> not always handle all ohci interupts.
+> 
+> Please be more specific: _Which_ interrupts aren't being handled?  That
+> is, which flags remain set in the intrstatus register when the handler
+> returns?
+> 
+Sorry, I didn't think it was relevant.
 
-    { "execute": "query-cpu-model-expansion", "arguments": { "type": "full", "model": { "name": "host" }, "disable-deprecated-features": true}}
+Here is the result of repeating the test with the linux patch several times
+and passing the log output through "sort | uniq".
 
-This patchset adds full support for this argument on s390x. A simple interface is
-designed that contains an array of feature bits that are flagged for deprecation.
-This list may be easily populated with more features in the future.
+       1 pending 0x2 mask 0x8000005a
+       9 pending 0x4 mask 0x8000001e
+     208 pending 0x4 mask 0x8000005e
 
-    void s390_get_deprecated_features(S390FeatBitmap features)
-    {
-        static const int feats[] = {
-             /* CSSKE is deprecated on newer generations */
-             S390_FEAT_CONDITIONAL_SSKE,
-             S390_FEAT_BPB,
-             /* Deprecated on z16 */
-             S390_FEAT_CONSTRAINT_TRANSACTIONAL_EXE,
-             S390_FEAT_TRANSACTIONAL_EXE
-        };
-        int i;
+So it is almost always OHCI_INTR_SF and rarely OHCI_INTR_WDH.
+For reference, this is repeatedly running
 
-        for (i = 0; i < ARRAY_SIZE(feats); i++) {
-            set_bit(feats[i], features);
-        }
-    }
+CMDLINE="panic=-1 kunit.stats_enabled=2 kunit.filter=speed>slow root=/dev/sda rootwait console=ttyS0,115200 earlycon=uart8250,mmio,0x10000000,115200"
+qemu-system-riscv32 -M virt -m 512M \
+      -no-reboot -bios default -kernel arch/riscv/boot/Image -snapshot \
+      -device virtio-net-device,netdev=net0 -netdev user,id=net0 -usb \
+      -device pci-ohci,id=ohci -device usb-storage,bus=ohci.0,drive=d0 \
+      -drive file=rootfs.ext2,if=none,id=d0,format=raw \
+      -append "${CMDLINE}" \
+      -nographic -monitor none \
+      --trace 'usb*' -D "/tmp/usb-ohci.$$.${sequence}.trace.log"
 
-For architectures that support model expansion but do not support the new arg,
-an error message will print to stdio if this option is present.
+Tracing isn't really necessary but it changes timing enough that
+the problem is more likely to be seen if it is active. The problem
+is seen with various emulations; I just picked one of them.
 
-Use case example:
+>>   Since the interrupt is shared and
+>> thus level triggered, that means that interrupts are still pending when
+>> ohci_irq() exits. The interrupt core in Linux does not re-enter the
+>> interrupt handler, presumably because it is marked as shared interrupt
+>> and returns that the interrupt has been handled.
+> 
+> Isn't that behavior mistaken?  A level-triggered IRQ that remains set when
+> it is re-enabled (when the various shared handlers return) should cause
+> another interrupt to occur right away.
+> 
+> Edged-triggered interrupts would be a different story, of course.
+> 
 
-Newer s390 machines may signal the end-of-support for particular CPU features,
-rendering guests operating with older CPU models incapable of running on
-said machines. A manual effort to disable certain CPU features would be
-required.
+Maybe I got it wrong; I thought that shared interrupts would have to be
+level triggered. But then you are correct: one would think that level
+triggered interrupts would keep executing interrupt handlers until the
+interrupt is completely handled. I guess that means that I don't really
+understand what is happening. Sorry for jumping to conclusions.
 
-This feature may alleviate this issue by allowing for a query of a CPU model
-with deprecated features listed in the props response paired with false. The
-caller of this query may use this information to explicitly disable these
-features for the guest's CPU model, ensuring a safe migration to the next
-generation if desired.
+>> I found two possible fixes for the problem. One essentially mirrors the
+>> code from ehci_irq(), the other adds a (bad) kludge into qemu. Both "fix"
+>> or work around the problem.
+>>
+>> Question is: What is actually wrong ? Something in the generic interrupt
+>> handling code in Linux, something in the Linux usb-ohci driver, or
+>> something in qemu ? Any idea how a proper fix might look like ?
+> 
+> To answer these questions we need more information.
+> 
+What else would you need ?
 
-I have developed a way for libvirt to make use of this functionality, but I
-will hold back review on those patches until a QEMU interface is agreed upon.
-
-Collin L. Walling (3):
-  cpu-models: add "disable-deprecated-feats" option to cpu model
-    expansion
-  target/s390x: add support for "disable-deprecated-feats" expansion
-    option
-  target/s390x: flag te and cte as deprecated
-
- qapi/machine-target.json         |  7 ++++++-
- target/arm/arm-qmp-cmds.c        |  7 +++++++
- target/i386/cpu-sysemu.c         |  7 +++++++
- target/s390x/cpu_features.c      | 17 +++++++++++++++++
- target/s390x/cpu_features.h      |  1 +
- target/s390x/cpu_models_sysemu.c | 17 ++++++++++++++---
- 6 files changed, 52 insertions(+), 4 deletions(-)
-
--- 
-2.43.0
+Thanks,
+Guenter
 
 
