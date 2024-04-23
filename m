@@ -4,84 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 609BCC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD185C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzGOF-0005BL-AV; Tue, 23 Apr 2024 09:40:55 -0400
+	id 1rzGbG-0001lj-8s; Tue, 23 Apr 2024 09:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzGOC-0005A6-66
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:40:52 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzGO8-0006kY-IL
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:40:50 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-34782453ffdso5738259f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:40:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713879646; x=1714484446; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=u4htS5t1DYpGtgONQg9GpAx9MW23pjRZm5bcKez8yos=;
- b=j8aqz6cr/gi5FbjIE5ItyiLVFYbGXEi0Ys40cKF/M/J8S1XUVGZCedAgkRUzEV8NwW
- 1MkUqyMKIHW/avMJd8OwSjZpBfxqT91WeFRwWUpAEB4yyg3MucK+OEHmqtp34WL2J8RW
- xsJhfict4UjXJaemgC3B0n3XxuqolINxAXi/yQhpGry1IvDFj4I5wZSHasWrkQblRpw5
- BUEEm14NZSoARFrkrOdcMv94u3xz6re9fObkiEj0MV1Kk3PEIbi1GZubIIv1almKTIbm
- XxfPZAxKxZl1/mqGN/27Q35UPildGPNnrdXtQ4OdzlvCW3+O1TXuC0aiR7qNpxusU7B2
- Emwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713879646; x=1714484446;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u4htS5t1DYpGtgONQg9GpAx9MW23pjRZm5bcKez8yos=;
- b=GTRGLv6B2eJdTFe3nlraRNap5ows6cTqbjxBp5Fe4xDwjVu1LaP9fRVXe6SHDhrWJO
- zt4wBabcMuLkvUUMzHg0eQx5T6LAonpxmulqsKXYZ/A/65kw77f2FRUdgrK8l0QH+6cq
- dPVNHShaP2MpoMeKu1byNc7H4DVdJ7vFxBE2DAvw0+a0nGxsDGEvX762vtEQ0Js5pVBu
- zKYFvDIq5W7z5WJmjThdhubMoMm2r32uVDFz2jaeycG6cQx/tPLEaD6BKfrrltmflC5H
- F63p8WR15IuTFcyuB3q01qho7a1q0YFkAtg2u2Fc2FEKbX4Gcwwy8lqClTNjyl0OmFWP
- SvPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW10+OqzRP8qOnA41+P4QupMjyWkRG6R0kYTlpKcONrSu2Lp04CMatFP0rjIOyEUwdyciM0yTWxB7dPNgZdNZBQKNIr0vQ=
-X-Gm-Message-State: AOJu0YzdaBPNNlsIvUuKjcbLni2UgimKZGkdZn4zOWmKC/jmbJIz2Qnb
- mMDO23m3NOYheFHglIJT0nAiUQhkG2wrLjpZnt77PQIUrNH2UGXxzJHt2RfW7uaIxlao3Y7B1ok
- SJIc=
-X-Google-Smtp-Source: AGHT+IFjzc9OlAkOs+jH2ZRJB/tJoGXt2UZ8VkH46OsIZi+tKlF6wa6sbQHYU/kBfFgOPnK9Ohaytg==
-X-Received: by 2002:adf:f308:0:b0:343:8551:8d90 with SMTP id
- i8-20020adff308000000b0034385518d90mr11023822wro.34.1713879646608; 
- Tue, 23 Apr 2024 06:40:46 -0700 (PDT)
-Received: from [192.168.175.175] ([92.88.171.241])
- by smtp.gmail.com with ESMTPSA id
- cg3-20020a5d5cc3000000b00349bd105089sm14569704wrb.47.2024.04.23.06.40.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Apr 2024 06:40:46 -0700 (PDT)
-Message-ID: <82ca72e4-ab57-413b-bbbf-59e16274bf7c@linaro.org>
-Date: Tue, 23 Apr 2024 15:40:44 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzGb4-0001j1-Uy
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:54:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzGb2-0001oB-DC
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:54:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713880446;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EVxXlSH/rtUtiQ8nB97FvB+jqizF8nXIJRDryWD41u0=;
+ b=RZYwa/bb9wYKtt5mjsudwnEysbK9GyFHdsIcUpX2etDmVEHAzLMYJfiBtWNP3gRixh1r97
+ TDjw36dSq8cvaU4dpHKk7dBzk/TE5O2DUbqe/21SHnHTxQ1YEtM3GZ+GAf5NahHvxYvvx7
+ BsdVhLmm2r4cLSKuhA2Hv9YIDoE6cCw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-98-AP8-CuEXOaCWNXv_6Dt5UA-1; Tue, 23 Apr 2024 09:54:04 -0400
+X-MC-Unique: AP8-CuEXOaCWNXv_6Dt5UA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EDE6618065AF;
+ Tue, 23 Apr 2024 13:54:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.127])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8008644047;
+ Tue, 23 Apr 2024 13:54:02 +0000 (UTC)
+Date: Tue, 23 Apr 2024 14:54:00 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, philmd@linaro.org
+Subject: Re: [PATCH v10 1/6] ui/gtk: Check if fence_fd is equal to or greater
+ than 0
+Message-ID: <Zie9eANmXtBWQg24@redhat.com>
+References: <20240423022253.1003295-1-dongwon.kim@intel.com>
+ <20240423022253.1003295-2-dongwon.kim@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/22] nios2: switch boards to "default y"
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: farosas@suse.de
-References: <20240423131612.28362-1-pbonzini@redhat.com>
- <20240423131612.28362-14-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240423131612.28362-14-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20240423022253.1003295-2-dongwon.kim@intel.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,25 +83,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/24 15:16, Paolo Bonzini wrote:
-> Some targets use "default y" for boards to filter out those that require
-> TCG.  For consistency we are switching all other targets to do the same.
-> Continue with Nios2.
+On Mon, Apr 22, 2024 at 07:22:48PM -0700, dongwon.kim@intel.com wrote:
+> From: Dongwon Kim <dongwon.kim@intel.com>
 > 
-> No changes to generated config-devices.mak file.
+> 'fence_fd' needs to be validated always before being referenced
+> And the passing condition should include '== 0' as 0 is a valid
+> value for the file descriptor.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 > ---
->   configs/devices/nios2-softmmu/default.mak | 7 +++----
->   hw/nios2/Kconfig                          | 9 ++++-----
->   2 files changed, 7 insertions(+), 9 deletions(-)
+>  ui/gtk-egl.c     |  2 +-
+>  ui/gtk-gl-area.c |  2 +-
+>  ui/gtk.c         | 10 ++++++----
+>  3 files changed, 8 insertions(+), 6 deletions(-)
 
-Hopefully this gone will be gone before you get a chance
-to merge this commit =)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
