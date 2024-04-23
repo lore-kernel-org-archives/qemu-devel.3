@@ -4,32 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A1BC04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57596C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:34:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzOfo-00019N-4l; Tue, 23 Apr 2024 18:31:36 -0400
+	id 1rzOfq-0001CU-PE; Tue, 23 Apr 2024 18:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfb-00016q-0A; Tue, 23 Apr 2024 18:31:25 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1rzOff-000178-6B; Tue, 23 Apr 2024 18:31:29 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfX-0004aV-3F; Tue, 23 Apr 2024 18:31:22 -0400
+ id 1rzOfc-0004bG-Co; Tue, 23 Apr 2024 18:31:26 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BBCED4E603E;
- Wed, 24 Apr 2024 00:31:12 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D76564E6054;
+ Wed, 24 Apr 2024 00:31:18 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 20qXyZhTjFCM; Wed, 24 Apr 2024 00:31:10 +0200 (CEST)
+ with ESMTP id Ax8IgTfEiaPk; Wed, 24 Apr 2024 00:31:16 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9BBA64E603D; Wed, 24 Apr 2024 00:31:10 +0200 (CEST)
-Message-Id: <cover.1713907038.git.balaton@eik.bme.hu>
+ id EC4D54E6055; Wed, 24 Apr 2024 00:31:16 +0200 (CEST)
+Message-Id: <69f0b11f0dcbc4ed8f9a89e7132c94a2e7e24c62.1713907038.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1713907038.git.balaton@eik.bme.hu>
+References: <cover.1713907038.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 00/24] Misc PPC exception and BookE MMU clean ups
+Subject: [PATCH 06/24] target/ppc/mmu_common.c: Simplify checking for real mode
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -37,9 +39,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 24 Apr 2024 00:31:10 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Wed, 24 Apr 2024 00:31:16 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -60,61 +62,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series does some further clean up mostly around BookE MMU to
-untangle it from other MMU models. It also contains some other changes
-that I've come up with while working on this. The first 3 patches are
-from the last exception handling clean up series that were dropped due
-to some error on CI but I'm not sure if that was because of some CI
-infrastructure problem or some problem with the patches as the error
-did not make much sense. So these patches are only rebased now, I made
-no other change to them until the issue is understood better. The rest
-are new patches I've added since tha last series. Please review.
+In get_physical_address_wtlb() the real_mode flag depends on either
+the MSR[IR] or MSR[DR] bit depending on access_type. Extract just the
+needed bit in a more straight forward way instead of doing unnecessary
+computation.
 
-Regards,
-BALATON Zoltan
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ target/ppc/mmu_common.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-
-BALATON Zoltan (24):
-  target/ppc: Fix gen_sc to use correct nip
-  target/ppc: Move patching nip from exception handler to helper_scv
-  target/ppc: Simplify syscall exception handlers
-  target/ppc: Remove unused helper
-  target/ppc/mmu_common.c: Move calculation of a value closer to its
-    usage
-  target/ppc/mmu_common.c: Simplify checking for real mode
-  target/ppc/mmu_common.c: Drop cases for unimplemented MPC8xx MMU
-  target/ppc/mmu_common.c: Introduce mmu6xx_get_physical_address()
-  target/ppc/mmu_common.c: Rename get_bat_6xx_tlb()
-  target/ppc/mmu_common.c: Split out BookE cases before checking real
-    mode
-  target/ppc/mmu_common.c: Split off real mode cases in
-    get_physical_address_wtlb()
-  target/ppc/mmu_common.c: Inline and remove check_physical()
-  target/ppc/mmu_common.c: Simplify mmubooke_get_physical_address()
-  target/ppc/mmu_common.c: Simplify mmubooke206_get_physical_address()
-  target/ppc/mmu_common.c: Fix misindented qemu_log_mask() calls
-  target/ppc/mmu_common.c: Deindent ppc_jumbo_xlate()
-  target/ppc/mmu_common.c: Replace hard coded constants in
-    ppc_jumbo_xlate()
-  target/ppc/mmu_common.c: Make get_physical_address_wtlb() static
-  target/ppc: Move mmu_ctx_t definition to mmu_common.c
-  target/ppc: Remove ppc_hash32_pp_prot() and reuse common function
-  target/ppc/mmu_common.c: Split off BookE handling from
-    ppc_jumbo_xlate()
-  target/ppc/mmu_common.c: Remove BookE handling from
-    get_physical_address_wtlb()
-  target/ppc/mmu_common.c: Simplify ppc_booke_xlate()
-  target/ppc/mmu_common.c: Move BookE MMU functions together
-
- target/ppc/excp_helper.c |  67 +---
- target/ppc/helper.h      |   2 -
- target/ppc/internal.h    |  19 +-
- target/ppc/mmu-hash32.c  |  47 +--
- target/ppc/mmu_common.c  | 731 +++++++++++++++++++--------------------
- target/ppc/mmu_helper.c  |  24 --
- target/ppc/translate.c   |  12 +-
- 7 files changed, 384 insertions(+), 518 deletions(-)
-
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 168ff842a5..aa01469604 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -1188,8 +1188,10 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+                                      int mmu_idx)
+ {
+     int ret = -1;
+-    bool real_mode = (type == ACCESS_CODE && !FIELD_EX64(env->msr, MSR, IR)) ||
+-                     (type != ACCESS_CODE && !FIELD_EX64(env->msr, MSR, DR));
++    bool real_mode;
++
++    real_mode = (type == ACCESS_CODE) ? !FIELD_EX64(env->msr, MSR, IR)
++                                      : !FIELD_EX64(env->msr, MSR, DR);
+ 
+     switch (env->mmu_model) {
+     case POWERPC_MMU_SOFT_6xx:
 -- 
 2.30.9
 
