@@ -4,77 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B07FC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 12:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06172C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 12:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzFNB-0002cS-6C; Tue, 23 Apr 2024 08:35:45 -0400
+	id 1rzFZV-0005Al-FS; Tue, 23 Apr 2024 08:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzFN5-0002bv-NS
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 08:35:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rzFN3-00037A-IX
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 08:35:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713875736;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4OCGcb/2OSw9wHh3Ls5sXs3Y9oqsKXa+lhRpE4ntXl8=;
- b=VxqOob62L6r5RuGRvCI+9QlJTTUJyWzDE4hJ8h8E5k4Gdj18vdsQWe2kmRAVVNhhF3veoI
- tUbc/KlsuuPLaYVpAzhoevHFTejJ8coUIra/UI3nf6Qi5vZriidOvOmm2VUm1V1kOCZHvc
- 1FO8YPlkIlNt0egOxZXmsv6pcMmE9fI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-fCPgjXdeNrSVBRVXV967Mw-1; Tue, 23 Apr 2024 08:35:32 -0400
-X-MC-Unique: fCPgjXdeNrSVBRVXV967Mw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8D4C3834FBB;
- Tue, 23 Apr 2024 12:35:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.247])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6C6B2C13FA4;
- Tue, 23 Apr 2024 12:35:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5DD3C21E66E5; Tue, 23 Apr 2024 14:35:30 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>,
- richard.henderson@linaro.org,  philmd@linaro.org,  pbonzini@redhat.com,
- alex.bennee@linaro.org,  qemu-devel@nongnu.org,  qemu-arm@nongnu.org,
- Eric Blake <eblake@redhat.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 14/22] target/arm/kvm-rme: Add Realm Personalization
- Value parameter
-In-Reply-To: <CAFEAcA_0wi_Ujt5vjbcUFacNqxktmbF7Kma8uEw+pOUp==W0oA@mail.gmail.com>
- (Peter Maydell's message of "Tue, 23 Apr 2024 13:20:20 +0100")
-References: <20240419155709.318866-2-jean-philippe@linaro.org>
- <20240419155709.318866-16-jean-philippe@linaro.org>
- <CAFEAcA_0wi_Ujt5vjbcUFacNqxktmbF7Kma8uEw+pOUp==W0oA@mail.gmail.com>
-Date: Tue, 23 Apr 2024 14:35:30 +0200
-Message-ID: <871q6wb6jx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1rzFZS-00058G-0Q
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 08:48:26 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1rzFZP-0004xc-NY
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 08:48:25 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-346a5dea2f4so1224449f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 05:48:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1713876501; x=1714481301;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=upmp17IZU71FfVax5a4XTIDXJxQ3I1tlzX3P4AJdJe4=;
+ b=gUqUMUDiVK55BpKFPb/QvliRBZWR891RbsF3e0jqgOrJ4fKt8oVRPOYezs286V/9wG
+ if5G2gkebv1ybcfCQbbYSiErs0/tr+FhZrW7KD6Wb5RirhRmYUL16sOWrgUqZmvYjHdo
+ iwgFK/gTJ44vSepQN21/DOjE55JGbePMWBdaNBuTRmXq8ACmdoUYkYTu1bhrP+XDbhl8
+ SFK49+aiHN1YTuNswPLBgBcPnN7np3h7HMD312TfsgwAnKFzBY4sVq8078i7su1kUq8N
+ 0zUSnd5KgxzzXj5p8nKWh0iAAtyuAXsZLFfA2eh/pAh5DlA4x9XlfpC7GDFlJQWgMTKD
+ FpQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713876501; x=1714481301;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=upmp17IZU71FfVax5a4XTIDXJxQ3I1tlzX3P4AJdJe4=;
+ b=Ng4fH4rlUhbQe5KHnKgDxKvpyJUhb7nEKU2csqNVZPg/uVEqOrbb19ui+07u/Y9AVi
+ SWUwAdjaZfn9wt5tms1/clrfQ2IdmM08XlzH0BrxCv2c0E+WjBwwbGVdH4PhTaLTs7RO
+ dMyHtApzmF/3eGj70+k7Ix0YklpU1TnyYy/f98B3XmscPJDwutr/npnSBwyPx/tWTX0u
+ lyrcKIDMLmCBGrt1PyTFrJ0gC1AsDIIbERJDw2QcwFd9M+kBDg1wqNzah7XrZmwwhNSS
+ NAShlDWX6XQ3Zhhht5cUa/ElGqq7NrmU2/6kWl6Y7I+16WN4t7UzSKIXNL6jYOnmMwiN
+ HoDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAo4sZDCziYFEeO+OAy95n7ZntGXWpXWcvM9MyVRg2/y2JOSmQKsEF2Y18xFxDniahiXckH/0TYpxSl5FHg2I4Q8Hu+UM=
+X-Gm-Message-State: AOJu0YxqiQFYCoJ564cE58VNgVpSAz0yLEw9iN1WhieCKUp1z4KfJuaX
+ LtaNw+SEIbxM7cTIft3QRxFEa0gP+B95iarXihNKuOpBJhWB11+SKKVu0AsaQ04=
+X-Google-Smtp-Source: AGHT+IFM52nFpTIiBtxGX82x28khIr4XteXRd9BeoHvRfr59TX2Ajz7HprGksnHgNFNUs5RFk94OWw==
+X-Received: by 2002:a05:600c:3b09:b0:418:ef65:4b11 with SMTP id
+ m9-20020a05600c3b0900b00418ef654b11mr10129528wms.2.1713876501580; 
+ Tue, 23 Apr 2024 05:48:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:999:a3a0:71cb:1f75:7053:849c?
+ ([2a01:e0a:999:a3a0:71cb:1f75:7053:849c])
+ by smtp.gmail.com with ESMTPSA id
+ i13-20020a05600c354d00b00419fba938d8sm11455806wmq.27.2024.04.23.05.48.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Apr 2024 05:48:20 -0700 (PDT)
+Message-ID: <3cec0ced-b017-4875-99fe-b1222b2f4372@rivosinc.com>
+Date: Tue, 23 Apr 2024 14:48:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: change RISCV_EXCP_SEMIHOST exception number
+ to 63
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, qemu-riscv@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ Anup Patel <apatel@ventanamicro.com>
+References: <20240422135840.1959967-1-cleger@rivosinc.com>
+ <b0fcb589-9217-4d30-8b72-5b0210ea871f@ventanamicro.com>
+ <73af7008-f40a-4861-8826-2de4d5fc0564@linaro.org>
+ <a3b54b5b-005f-46e4-a472-adbbf7d38635@ventanamicro.com>
+Content-Language: en-US
+From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+In-Reply-To: <a3b54b5b-005f-46e4-a472-adbbf7d38635@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=cleger@rivosinc.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,68 +108,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
 
-> On Fri, 19 Apr 2024 at 16:59, Jean-Philippe Brucker
-> <jean-philippe@linaro.org> wrote:
->>
->> The Realm Personalization Value (RPV) is provided by the user to
->> distinguish Realms that have the same initial measurement.
->>
->> The user provides up to 64 hexadecimal bytes. They are stored into the
->> RPV in the same order, zero-padded on the right.
->>
->> Cc: Eric Blake <eblake@redhat.com>
->> Cc: Markus Armbruster <armbru@redhat.com>
->> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> Cc: Eduardo Habkost <eduardo@habkost.net>
->> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
->> ---
->> v1->v2: Move parsing early, store as-is rather than reverted
->> ---
->>  qapi/qom.json        |  15 +++++-
->>  target/arm/kvm-rme.c | 111 +++++++++++++++++++++++++++++++++++++++++++
->>  2 files changed, 125 insertions(+), 1 deletion(-)
->>
->> diff --git a/qapi/qom.json b/qapi/qom.json
->> index 623ec8071f..91654aa267 100644
->> --- a/qapi/qom.json
->> +++ b/qapi/qom.json
->> @@ -931,6 +931,18 @@
->>    'data': { '*cpu-affinity': ['uint16'],
->>              '*node-affinity': ['uint16'] } }
->>
->> +##
->> +# @RmeGuestProperties:
->> +#
->> +# Properties for rme-guest objects.
->> +#
->> +# @personalization-value: Realm personalization value, as a 64-byte hex=
- string
->> +#     (default: 0)
->> +#
->> +# Since: FIXME
->> +##
->> +{ 'struct': 'RmeGuestProperties',
->> +  'data': { '*personalization-value': 'str' } }
->>
->>  ##
->>  # @ObjectType:
->> @@ -1066,7 +1078,8 @@
->>        'tls-creds-x509':             'TlsCredsX509Properties',
->>        'tls-cipher-suites':          'TlsCredsProperties',
->>        'x-remote-object':            'RemoteObjectProperties',
->> -      'x-vfio-user-server':         'VfioUserServerProperties'
->> +      'x-vfio-user-server':         'VfioUserServerProperties',
->> +      'rme-guest':                  'RmeGuestProperties'
->>    } }
->
-> This list is in alphabetical order. Are we obliged to add new
-> items to the end for some compatibility reason, or should this new
 
-Since order does not matter, we should keep it sorted.  Same for enum
-ObjectType.
+On 22/04/2024 21:58, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 4/22/24 16:44, Richard Henderson wrote:
+>> On 4/22/24 10:45, Daniel Henrique Barboza wrote:
+>>> Palmer, Anup,
+>>>
+>>> On 4/22/24 10:58, Clément Léger wrote:
+>>>> The current semihost exception number (16) is a reserved number (range
+>>>> [16-17]). The upcoming double trap specification uses that number for
+>>>> the double trap exception. Since the privileged spec (Table 22) defines
+>>>> ranges for custom uses change the semihosting exception number to 63
+>>>> which belongs to the range [48-63] in order to avoid any future
+>>>> collisions with reserved exception.
+>>>
+>>>
+>>> I didn't find any reference to a number for the SEMIHOST exception here:
+>>>
+>>>
+>>> https://github.com/riscv-non-isa/riscv-semihosting
+>>>
+>>>
+>>> Do we have any potential candidates? I would like to avoid, if
+>>> possible, setting
+>>> RISCV_EXCP_SEMIHOST to 63 as a band-aid just to replace it later on
+>>> by the real
+>>> value.
+>>
+>> RISCV_EXCP_SEMIHOST is internal to the qemu implementation and will
+>> never be delivered to the guest.
+>>
+>> I suggest using a number high in the >64 reserved range which will
+>> (likely) never be used by any implementation, including ones that *do*
+>> define implementation-specific exceptions.  Which seems more likely
+>> than not within the "implementation defined" range.
+>>
+>> E.g. target/i386 uses 0x100+n for qemu internal exceptions.
+> 
+> I'm not sure if we have a range for risc-v qemu internal exceptions
+> only. IIRC we don't.
+> 
+> If that's really the case I believe we could use whatever i386/ARM uses.
+> At least we'll have some
+> standardization.
 
-Thanks!
+The spec also states that numbers >= 64 are reserved which is why using
+a one for custom use was making sense.
 
+Thanks,
+
+Clément
+
+> 
+> 
+> Thanks,
+> 
+> Daniel
+> 
+>>
+>> But in any case, the number can be redefined at will and not cause
+>> compatibility issues.
+>>
+>>
+>> r~
 
