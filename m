@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC46C10F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8733C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnj-0007e0-5h; Tue, 23 Apr 2024 11:11:19 -0400
+	id 1rzHnf-0007P9-Bd; Tue, 23 Apr 2024 11:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHn6-0004dv-5X
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:43 -0400
+ id 1rzHmk-0004Nc-Ep
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHn0-0000Gb-Ic
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:35 -0400
+ id 1rzHmg-00006M-QB
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885033;
+ s=mimecast20190719; t=1713885012;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=47V3oaPt23MbVmGEQPCO7LaPQQrDD/VRYl+nTb/ne1k=;
- b=cJGGueJe1MJmI+W93XGNrp36DhQSpCR5+jxgwzBFcbM7DpttOT/6B1v/WDGAyLube8Q+qU
- 8e4WpE5qNUxCgYf4oOmtlGHKb6d44jVwT/CPXoIxn/UyScB1c0QcunexhFiROGEByqTXUY
- PI6zkBFeUXkU+z1/bss7DLeDkU6wA58=
+ bh=ZSQguZveC9CWehs3CSqV4ojj8hfIHOficnxvbkiw+LQ=;
+ b=IvtaF3F5rbhfs7gbgzQ6YYqBHLOjSSh1YX5PoI21QDrWOL9sQ46I+OIR/xXATyWl9diwmH
+ MzeLziYtd78U8Cag1QvI/TPAF8EOAuTmWuaoXym7X0HTFraYLntZ5l6r1CfhkwJ6mUCXEC
+ nNMsVkh172D5Pk0lTYCJgb0jIIR+K9Q=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-6qW50igZNtaI0w_3oVCHQA-1; Tue, 23 Apr 2024 11:10:29 -0400
-X-MC-Unique: 6qW50igZNtaI0w_3oVCHQA-1
+ us-mta-618-4z5rs5hMMj-SouGlBUFTUw-1; Tue, 23 Apr 2024 11:10:10 -0400
+X-MC-Unique: 4z5rs5hMMj-SouGlBUFTUw-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 96A16834FBB;
- Tue, 23 Apr 2024 15:10:29 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8C78D1827102
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:10 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 0AA47200E290;
- Tue, 23 Apr 2024 15:10:28 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 26A5C200E290
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:10:10 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 35/63] s390: Switch to use confidential_guest_kvm_init()
-Date: Tue, 23 Apr 2024 17:09:23 +0200
-Message-ID: <20240423150951.41600-36-pbonzini@redhat.com>
+Subject: [PULL 16/63] stubs: split record/replay stubs further
+Date: Tue, 23 Apr 2024 17:09:04 +0200
+Message-ID: <20240423150951.41600-17-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -81,99 +80,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+replay.c symbols are only needed by user mode emulation, with the
+exception of replay_mode that is needed by both user mode emulation
+(by way of qemu_guest_getrandom) and block layer tools (by way of
+util/qemu-timer.c).
 
-Use unified confidential_guest_kvm_init() for consistency with
-other architectures.
+Since it is needed by libqemuutil rather than specific files that
+are part of the tools and emulators, split the replay_mode stub
+into its own file.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-Id: <20240229060038.606591-1-xiaoyao.li@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20240408155330.522792-17-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/s390x/kvm/pv.h      | 14 --------------
- hw/s390x/s390-virtio-ccw.c |  5 ++++-
- target/s390x/kvm/pv.c      | 10 +++++++++-
- 3 files changed, 13 insertions(+), 16 deletions(-)
+ stubs/replay-mode.c | 4 ++++
+ stubs/replay.c      | 2 --
+ stubs/meson.build   | 1 +
+ 3 files changed, 5 insertions(+), 2 deletions(-)
+ create mode 100644 stubs/replay-mode.c
 
-diff --git a/target/s390x/kvm/pv.h b/target/s390x/kvm/pv.h
-index 5877d28ff10..4b408174391 100644
---- a/target/s390x/kvm/pv.h
-+++ b/target/s390x/kvm/pv.h
-@@ -80,18 +80,4 @@ static inline int kvm_s390_dump_mem_state(uint64_t addr, size_t len,
- static inline int kvm_s390_dump_completion_data(void *buff) { return 0; }
- #endif /* CONFIG_KVM */
- 
--int s390_pv_kvm_init(ConfidentialGuestSupport *cgs, Error **errp);
--static inline int s390_pv_init(ConfidentialGuestSupport *cgs, Error **errp)
--{
--    if (!cgs) {
--        return 0;
--    }
--    if (kvm_enabled()) {
--        return s390_pv_kvm_init(cgs, errp);
--    }
--
--    error_setg(errp, "Protected Virtualization requires KVM");
--    return -1;
--}
--
- #endif /* HW_S390_PV_H */
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 7cebbf6c02a..4dcc2138200 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -14,6 +14,7 @@
+diff --git a/stubs/replay-mode.c b/stubs/replay-mode.c
+new file mode 100644
+index 00000000000..264be9d96c9
+--- /dev/null
++++ b/stubs/replay-mode.c
+@@ -0,0 +1,4 @@
++#include "qemu/osdep.h"
++#include "sysemu/replay.h"
++
++ReplayMode replay_mode;
+diff --git a/stubs/replay.c b/stubs/replay.c
+index 42c92e4acb8..b4dd6a566e8 100644
+--- a/stubs/replay.c
++++ b/stubs/replay.c
+@@ -1,8 +1,6 @@
  #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "exec/ram_addr.h"
-+#include "exec/confidential-guest-support.h"
- #include "hw/s390x/s390-virtio-hcall.h"
- #include "hw/s390x/sclp.h"
- #include "hw/s390x/s390_flic.h"
-@@ -260,7 +261,9 @@ static void ccw_init(MachineState *machine)
-     s390_init_cpus(machine);
+ #include "exec/replay-core.h"
  
-     /* Need CPU model to be determined before we can set up PV */
--    s390_pv_init(machine->cgs, &error_fatal);
-+    if (machine->cgs) {
-+        confidential_guest_kvm_init(machine->cgs, &error_fatal);
-+    }
- 
-     s390_flic_init();
- 
-diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
-index 7ca7faec73e..dde836d21ae 100644
---- a/target/s390x/kvm/pv.c
-+++ b/target/s390x/kvm/pv.c
-@@ -334,12 +334,17 @@ static bool s390_pv_guest_check(ConfidentialGuestSupport *cgs, Error **errp)
-     return s390_pv_check_cpus(errp);
- }
- 
--int s390_pv_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-+static int s390_pv_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+-ReplayMode replay_mode;
+-
+ void replay_finish(void)
  {
-     if (!object_dynamic_cast(OBJECT(cgs), TYPE_S390_PV_GUEST)) {
-         return 0;
-     }
- 
-+    if (!kvm_enabled()) {
-+        error_setg(errp, "Protected Virtualization requires KVM");
-+        return -1;
-+    }
-+
-     if (!s390_has_feat(S390_FEAT_UNPACK)) {
-         error_setg(errp,
-                    "CPU model does not support Protected Virtualization");
-@@ -364,6 +369,9 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(S390PVGuest,
- 
- static void s390_pv_guest_class_init(ObjectClass *oc, void *data)
- {
-+    ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-+
-+    klass->kvm_init = s390_pv_kvm_init;
  }
- 
- static void s390_pv_guest_init(Object *obj)
+diff --git a/stubs/meson.build b/stubs/meson.build
+index a252bffad00..4a524f5816b 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -36,6 +36,7 @@ stub_ss.add(files('qmp-quit.c'))
+ stub_ss.add(files('qtest.c'))
+ stub_ss.add(files('ram-block.c'))
+ stub_ss.add(files('replay.c'))
++stub_ss.add(files('replay-mode.c'))
+ stub_ss.add(files('runstate-check.c'))
+ stub_ss.add(files('sysbus.c'))
+ stub_ss.add(files('target-get-monitor-def.c'))
 -- 
 2.44.0
 
