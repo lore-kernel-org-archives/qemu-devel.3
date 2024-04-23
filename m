@@ -4,182 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC24AC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 18:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A001C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 18:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzL46-0001XN-Ri; Tue, 23 Apr 2024 14:40:27 -0400
+	id 1rzLDx-0003Xc-9a; Tue, 23 Apr 2024 14:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
- id 1rzL44-0001XE-Fh
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:40:24 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rzLDt-0003XP-Br
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:50:33 -0400
+Received: from mout.gmx.net ([212.227.17.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
- id 1rzL41-0007fa-8g
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:40:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713897621; x=1745433621;
- h=date:from:to:cc:subject:message-id:references:
- in-reply-to:mime-version;
- bh=rPGWuCTAtf1QVLLeu3zYAXsKImg/Lm46DOywgAHmZEQ=;
- b=Tq53HA4XtKvHiUsvXAuDIKIWc9IiR3/6d5lmz0aPP5SvnuN8/9VotG2i
- UU54HyhbiEf3rDEaAIH/fvKpkXThKbz5JMXERBnebim5a2s+bcGXZfdPY
- E7llfF5JvvBdSK3ACclGPq1ecybFT9vvybm2fgD5xkfLGT4TTJEVFbOZH
- qK/92LjlX6Z9pkvXb2sSVnKR5UHr+q+XSei9eJo+IUD8B71jMuTNX7kck
- c9WMG2y1G4i5TMnoHFiLt3KYFa/D+l3c7Vti5opTxNGLbDx+2v6xD/I+I
- jxm0SCrY6RNR+UKRlOL/wBDhcSZFfEGqHmZhi9ylGrb1EDmbs+zl0NGSb g==;
-X-CSE-ConnectionGUID: O1HlsKpUTWuHWtE/O2DtcA==
-X-CSE-MsgGUID: 8BuUcMwJRMq9RC3vu8qIUw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11053"; a="20196550"
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="20196550"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2024 11:40:17 -0700
-X-CSE-ConnectionGUID: Ci/WhGuHRU+W8i3tpkxrYg==
-X-CSE-MsgGUID: 6LekkufzQNuVm0cVKO1oCg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="47729764"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 23 Apr 2024 11:40:17 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 23 Apr 2024 11:40:17 -0700
-Received: from orsmsx602.amr.corp.intel.com (10.22.229.15) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 23 Apr 2024 11:40:16 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Tue, 23 Apr 2024 11:40:16 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.169)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Tue, 23 Apr 2024 11:40:16 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bdgDs4ywRmpiu3ePoyEpaHgvvx81W/4iEgD6Gn0yQudvriJeg/grKucjhqIiClEvM3+qjFghqPByXF+z/891L0BXTwQUxZAnKUaT98qz8qV057v9opkk5DfzUklZ7uwJr5sQ2cU2W3/CrU1WvAqh5XNaqSsbUMwUme6tK+jaZ0okdC2ygSrvb62SHI3rNvnBpXCp+GUPI9kdrCmUMQHg7ZhZoMjO4+pNYnxLC7pqnJTYuCMcd7cF6mHlaKwcdkfO6/4d9oiaMoPi0eS5kc1NbAJmdmhWo2No3+7wtF3J52Kgh++9QioAOKZhi0MhxjNdO1z24FswhougitqRCWehgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pCSQEyE8A8mCAF8oiW3xvfmo+eMGn7hWdBxkiGb+xd4=;
- b=CWxk4X72eTF1MjrmLFXlG+ZlTrm6f5eZrBjwdbYa72SLwljJsr453ZeHC69EfIicuFuZ/VtvFd7tL829uuahf3BhQjW9scmyX4sW+DUsgpuLeTuOvx9o5AVnL1qrgBqAQw76WslvXqWqWscjyH6qminUzEL/k3zuTzyVn4cFp7IxGGGwNkOsKjxe9n8J+uazZg2NKPXCMshqVqSyxL6Vme7gtT1ZmW8xF7XlqllgXkYvVEG+2z4JGyCJ+NWtrZrjpmLoNtgHUFqyF0rFlHwI+nLbJr6ShlonDb8JLZ2K8FutpnWVZJt+RF9PItush/EPuhGk7QYo8NU2EFiiA4RN0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
- by SJ2PR11MB7671.namprd11.prod.outlook.com (2603:10b6:a03:4c4::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7519.22; Tue, 23 Apr
- 2024 18:40:15 +0000
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::82fd:75df:40d7:ed71]) by PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::82fd:75df:40d7:ed71%4]) with mapi id 15.20.7452.046; Tue, 23 Apr 2024
- 18:40:15 +0000
-Date: Tue, 23 Apr 2024 11:40:12 -0700
-From: Dan Williams <dan.j.williams@intel.com>
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>
-CC: <Jonathan.Cameron@huawei.com>, <dan.j.williams@intel.com>,
- <dave@stgolabs.net>, <ira.weiny@intel.com>, <alison.schofield@intel.com>
-Subject: Re: [PATCH v3 2/2] cxl/core: add poison creation event handler
-Message-ID: <6628008c39e80_a96f29415@dwillia2-mobl3.amr.corp.intel.com.notmuch>
-References: <20240417075053.3273543-1-ruansy.fnst@fujitsu.com>
- <20240417075053.3273543-3-ruansy.fnst@fujitsu.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240417075053.3273543-3-ruansy.fnst@fujitsu.com>
-X-ClientProxiedBy: MW4P221CA0013.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:303:8b::18) To PH8PR11MB8107.namprd11.prod.outlook.com
- (2603:10b6:510:256::6)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rzLDr-0000yt-4o
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 14:50:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1713898225; x=1714503025; i=deller@gmx.de;
+ bh=cMdWBvGyYuzWM1qLq5FZHBHlDKjdEw5tP7K87TtHNHk=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=Vs3NGsbmRDvPKezKzzfUz01VRZAq6CHgslxBE9+eXHKjUqO1wsM0yxV8OjgMnMo4
+ KZPgGhHCtLeWs6XCh2xT4KDGCHlPY0U2q03LTbl2RuDEPcZyn1VZ8CeOJLoHopzkh
+ YNr8s7KQjH5D5uWyYYPEa2FwE/gBvjAhtuBkehnFV7pAu70CsmibiZdLU2CrcOoxI
+ R+upPnjk4mSJl6oNcBBwSmI1xgeL3RgkLFPyaZc17UAgzNG2sCztbyL8KkP/AJC4A
+ 9uX7FY/6z7BWUlXrzbLdUVdLj0fyM1z7IK0oUph0ObV0/UW7NSOzPnMHdedfu9SJn
+ 5ZqCakoLur+h5sDsLw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([89.244.177.27]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M89L1-1s4a942zD9-005t4m; Tue, 23
+ Apr 2024 20:50:25 +0200
+Message-ID: <238753eb-ac96-4699-8bf5-5864182f9fa2@gmx.de>
+Date: Tue, 23 Apr 2024 20:50:24 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|SJ2PR11MB7671:EE_
-X-MS-Office365-Filtering-Correlation-Id: 21608bd6-7152-480e-fa64-08dc63c4d09c
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?L8Yw2NAMJsWQuoeoyEInKkat+Y4vqYRGpf6+MaeygacH2TPEQInppPCLciEx?=
- =?us-ascii?Q?GcZSg3s4wRAMdQjIEYxuYjbTd4Tts7whul2MyC6vtrYRztvlgidfAqW8y/Zh?=
- =?us-ascii?Q?Z7ywKSTXos/3lGzEzK93i/lUB/olYJgorzdXVXS1xrUq/KggERpQkOOJo+qE?=
- =?us-ascii?Q?0/dEwi32hCLdL3e0XlMkBoV5t/0Vo87Bkah4z/VhzLFc0DIO+XyIw8VaSUZT?=
- =?us-ascii?Q?RfmKP3Rh5B8rx/OqzoqO6uWpbqnKDPViKZ/RuhWjxEtZjUdef00f1hRiOOdJ?=
- =?us-ascii?Q?PLFggAYdylWY15BmGj9aaEDUrBSoYKl2qAnt1lDh3TP2DAQow+nZ06boeqAl?=
- =?us-ascii?Q?xD3Yg/rBXzt2fciubyHgHmWh5rXdCwGt+ZZ2a36pBoyh87sumGd5E90r7M/o?=
- =?us-ascii?Q?0bd93sGHM++kxt7YyGoFYYM9DHPwsjdNVkzI19fSqlDvWmwsC3jrT30FMzgG?=
- =?us-ascii?Q?neGM5MSOvzrLyyhtjFef6/l+6Z29ekLmVu7xgWVRu2xrXVeodftLg9SJJ6ld?=
- =?us-ascii?Q?G2MtjgPqD4JQHlpIZ6HP84QtMlKsv6RpBn1tc0gwRBZ/dQqomTwu5OIHx91E?=
- =?us-ascii?Q?ngefDoJqGFWrUAREd5QRVvH8lNE4+OlDdMLH4OQXK8s/FnHpsMKzw3uhR66X?=
- =?us-ascii?Q?JofL9AWQWzk7KCY3G344fzi/h4aeKy5Y/TG7cmXBtRCnFgwWCeHaXRr65Iel?=
- =?us-ascii?Q?bGRHxUwiUanjc6OvWN4xIxc1vzpolTZhGQGV8OlTt20u5sHI4hlzh9MPqLn1?=
- =?us-ascii?Q?nHwy+6AEC4VYPgskNe1Sx6cdampQgZRhLQD2o1gIieeE8szN7dcZtzNIRpMS?=
- =?us-ascii?Q?aMlArmzj3Wc/OpvIkUFsrR8Y9gL/1AGADYfS9LN2J3Gu7myhVKoNDHyg8pqq?=
- =?us-ascii?Q?18OgqtyO4j982bKyuXl7vvGq3jJvYdknEZOH+ULEgrs9b+MvLypnIY+w3Rrk?=
- =?us-ascii?Q?nxroSsIkLrQSt8Tne/hdtHLQAociclkdKyM3q6ghsnPdEM3kM5En3BurYFOC?=
- =?us-ascii?Q?yZ1cpsznprB770KkJbpIYzv/20qZSsCpmIFbDJSDDnLb/z+cYMP+rN7onsqW?=
- =?us-ascii?Q?oujRrqFQ3rSbfw6cNeDgzJAJpoy8LRzkEedrfcqwZintvk1MCd4wNa4DadxF?=
- =?us-ascii?Q?BmqclDA4PefahHd/Bh//Mq9sSZgpnzmsUO5ln48mquFew3fChxebL5TerwsO?=
- =?us-ascii?Q?9G6GBfWmbegDNVGM6Y3jdTXCXjAxLJ8hqxU3ac6XPy8m1ikHWxPnosnhOaWp?=
- =?us-ascii?Q?fGnmOXMHt+ABThUGyepuHifRcQBFPoO33SQO7WlyuA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH8PR11MB8107.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(1800799015)(376005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?qCllc5EpZAdri5wDTGsJPCb9xmgVTGRIRGtrxVAaYKDEu135f1W0lKx3rAdx?=
- =?us-ascii?Q?a3SIkekopkGjuXb94csQOldyhHEhqI8NFcDFKBP/7ZFN2C6E2bFuoNrxNvGa?=
- =?us-ascii?Q?vGg0hkuCUNBFe/W2ukSJpMXTDCGTdfCb/nsC3O8233UKvxggnf6n7YHZA/+2?=
- =?us-ascii?Q?YrE7bDs5dQ1iA2nDqLR3pegQJwtHhgQXuGHbZqHXIo78ED0xM5fAeJtPNKSL?=
- =?us-ascii?Q?5vbYg9UERRuwYSfXUPSpO9tx7Zqg4MxFXoegfw89rhoesgEswlu8HJCEB+DY?=
- =?us-ascii?Q?t1TL2Ut0Lsk9tI5pTMZ1feXrbOfMqEPnqeB5q5GUNLwirKuQ1/wk9EstSwiW?=
- =?us-ascii?Q?rFPEEn26uevDlCuPVpiy9DEQZ9m5FpcalaZNNRgQIcbJuBP3EM95UGuj88th?=
- =?us-ascii?Q?0eEK/NcfVn9cFbPfzxgJO7bAdhqL+3AH6GOgDm4ZTBaHoH08WH7qPxd24kvm?=
- =?us-ascii?Q?jvxJ6q0AWjs4vVIqUGgBt0feXwZMOCg+cX2hBAxrQ0f5Rfsj48jMC7ykc+eY?=
- =?us-ascii?Q?HKU694yx3c8LGrYSw1iOJwcUAjT+oPImdj6et0qxcRWtCQU3Mso0nMltdsv3?=
- =?us-ascii?Q?stgZzlIqAglS6tFYaEclCBIJa1DZTaNe1zDtMbQSYgbTqBecpYATQTlaz3zx?=
- =?us-ascii?Q?4iWemjY6qhCEtnbyoaWUpFyJk/l9SgRlVaKfeBrj7LLzf7iplZpLpxQ4ohhl?=
- =?us-ascii?Q?gYvuaoscXs29dWrTXNtkDTJGw5sMrFVRw1poPMiE5Lla7SOQmLJWkwfEP4Gr?=
- =?us-ascii?Q?nclxX68N38OmxIM4KhxKA9MSRFm01fwk83ZoTmuETTSj2mbjPv91tjccUnh8?=
- =?us-ascii?Q?OfHlPgePgMtHP9Bh+ow76XNeGSTF9UM7QHE/rtvwKZYoHqElVdsW787Pf4l+?=
- =?us-ascii?Q?SOltP8Qbe0FW7Vj3q39kvYV1UhmBNS4FTLQBzy4m5+y3Ip5OVlrelgsZWrxp?=
- =?us-ascii?Q?Hn9NhEWmP/WQ5mQju4tzE2w5GU5WPbIDQ5VwTc/c57qh5fAtYaR7MaX2Iix9?=
- =?us-ascii?Q?pKT/K29a5Z4kso+C+QB0p8bokJQyKaVwJ9dwrvumFz+izgilEy964zyFlv6z?=
- =?us-ascii?Q?jBnbfAe+NjBdbdYEAXEEj+0D55fVxW1m4taeYFjfjYueNqOoBfpTpmis1wg1?=
- =?us-ascii?Q?JYSkqOn1NabeDEmuTK2J7+W2lAkJnlw3Fvn6fd3/70YBLyDI7AunYTQ5LiCX?=
- =?us-ascii?Q?T8V/xovTDXXvtFXp9uh7R0um6OhT90CsaSspHCAM6LBICe3In7RpzK2DmR+F?=
- =?us-ascii?Q?FUU6536QbLvl/aAw95h03zZlw9wEDLe4TBbNWXy38qJ+cDa+ZFOewUBg30oP?=
- =?us-ascii?Q?pcXrFVHcCxmlTU48FtkIV4pwF9cAFm+pLxoXtuCdz8u7lILDKAsVDOwHu7XO?=
- =?us-ascii?Q?i9XGsz9pKwEsK+3Nk2fChpqeldymDn31FydWH1hDal28XG9/dN07NMBjSBq9?=
- =?us-ascii?Q?1JRfN1PXhAakn37xffcaotDRgAfa2UbmGLfF5RdUn3cEMe5KQL46kTWsIZnO?=
- =?us-ascii?Q?89fEOvH+Hofq6MDGd01kKpuOFDGLlhh7P8qkbs79Xxtz+nS2KzA+4xd0i5pF?=
- =?us-ascii?Q?UMwUnCeP9ZI5J0M/UPma0QA/appiEN/S+nvQ9PfsqiHPxj/DvKV0SlqXcLZz?=
- =?us-ascii?Q?Cw=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 21608bd6-7152-480e-fa64-08dc63c4d09c
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2024 18:40:14.9505 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: z5MpgyxOaoTNNNjUzF4KFinkSfu2T4uqYhXkJJz/8OxJ8o8RVmTUoLU4LC2jnWYpd6Nv0AnotvLXigQ2OTGbivFm96Tlgyj9eY3VP5r9NZQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7671
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.9;
- envelope-from=dan.j.williams@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: hppa-firmware.img missing build-id
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Cole Robinson <crobinso@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, "Richard W.M. Jones"
+ <rjones@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
+References: <6c469c05-1bc5-4fd8-89f1-130f5aba5ff8@redhat.com>
+ <d0e87002-ee5e-4a80-b850-1660bc5f2c80@redhat.com>
+ <96f04d1a-2470-4118-8e07-b864f58f241e@gmx.de> <ZifPYEXIsELVWmgo@redhat.com>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <ZifPYEXIsELVWmgo@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:vUCqgnz+EmXQhw81iXeGJ9xiG+4dq9+h5nE1LkOONf0Ji6NfgtP
+ dzsvneRDdcNx4DZ2XgqqtG42OSNmCs5DN0Y2KKcYQE1A+AyM1HXpKWEd08rmyXsGstkRNwK
+ f+k/WTUY82XhPiGYRlDNxMFmi02UQapzZTGRi95lbVE5+mpH2L47PZuQ8b8zWGiCLchH+sI
+ 95tEwTMTO88fI1qz/eCgw==
+UI-OutboundReport: notjunk:1;M01:P0:inGJG9w4ILU=;akLVN7T1o3FnYPQU4okZYErjiwV
+ 82ZzeSQg9nBjy7lIU3t5tOkJW3eJfRLod8JGducrrybr+qE+WpILsq2wnH0h1X/TRdF/Fy8lL
+ JUibiVLdn7mRsdJTJb7r1zmvh9CSWofXGKofOdy8zWbgpzqblmReS/luCf/BozzfFIE18nNUx
+ T9eFyZt5wKloJDstmcpJ1egKkO/BEdxbhWir3Cs+ESHdNcd7mS7YjHOLX5NyPC1qqDg+wTpQV
+ 4awW2VWl8QVSD4MMwS195wfQt2JU9Bg8pfuEMMKhsvQSE3lC4XcFnK7E2qWBq6X3vUGweZUUP
+ fvmuMSvEgq3Li8JQyro1AaG7UPiWboZHjDnF1uh25s5cYe2PV6HIDQfVEeWA3O8UJJYk8HGuq
+ qnC0SLvkbqWt72/FwlT5NOdc/aTTPPeYOwvULhHp9MoMmwX4UTiZevIsSPrbQLu5b/n8XZ/hj
+ /EpmCluUP9f/3RHpGuSiZc+CpSmo3kP6hx9XjLXs/4QY8V56b7CjVlwZIcfe7ATTVaAGvLKOh
+ I3lV/KovN1/xx1W6lJdEr8mLgWrKw3t6k65VanBMnUr1K9abpSlHKg6IAz3Mc/VMyl54ES9u5
+ X+AbCEa3ftj9AUGa+WHE0zJQWQsTBR3vgfh6Kyk+klFpoE7seCBxVmz5X0CMMjvfzORha77Me
+ U/D5G3eY2HTkpe8g1DzDiXxCa/WGJpBpuVKHyFAb/oKQ7g7wPcfPGMx9GnRLjMwSE1hPiPmpm
+ DP+JzXTpvzY2DKqGT4B/pfJ7M3j/H70KjoDFB2Vhv3Zc7QSGk8BKPZiNkT/2J0A3mVnaQ/0mk
+ Rfu4SCjNTjr1KFxPsvdtycDJuBaUgFWKPUurE3fFOyVuo=
+Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL=1.31,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,93 +137,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shiyang Ruan wrote:
-> Currently driver only traces cxl events, poison creation (for both vmem
-> and pmem type) on cxl memdev is silent.
+On 4/23/24 17:10, Daniel P. Berrang=C3=A9 wrote:
+> On Tue, Apr 23, 2024 at 05:07:17PM +0200, Helge Deller wrote:
+>> On 4/23/24 16:58, Cole Robinson wrote:
+>>> On 4/23/24 10:11 AM, Cole Robinson wrote:
+>>>> Hi,
+>>>>
+>>>> hppa-firmware.img and hppa-firmware64.img in qemu.git are missing ELF
+>>>> build-id annotations. rpm builds on Fedora will error if an ELF binar=
+y
+>>>> doesn't have build-id:
+>>>>
+>>>> RPM build errors:
+>>>>       Missing build-id in
+>>>> /tmp/rpmbuild/BUILDROOT/qemu-9.0.0-1.rc2.fc41.x86_64/usr/share/qemu/h=
+ppa-firmware.img
+>>>>       Missing build-id in
+>>>> /tmp/rpmbuild/BUILDROOT/qemu-9.0.0-1.rc2.fc41.x86_64/usr/share/qemu/h=
+ppa-firmware64.img
+>>>>       Generating build-id links failed
+>>>>
+>>>> I didn't hit this with qemu 8.2.* builds FWIW
+>>>>
+>>>
+>>> Though checking older bundled hppa-firmware binaries with `readelf` I
+>>> don't see build-id either, so now I'm not sure why those RPM builds we=
+re
+>>> passing.
+>>>
+>>> FWIW the RPM check is deep in RPM code:
+>>> https://github.com/rpm-software-management/rpm/blob/68d0f3119c3d46b618=
+4f4704edb51749ce9f819e/build/files.c#L1976
+>>>
+>>> Maybe something else in hppa-firmware ELF headers caused this check to
+>>> be skipped in the past
+>>
+>> Maybe Fedora ignores binaries which don't have the executable flag set?
+>
+> Yes, that's probably it. qemu 9.0.0 has +x set on the hppa-firmware
+> images, while qemu 8.2.0 does not have +x set.
 
-As it should be.
+I just added a patch to the seabios-hppa Makefile
+to drop the +x flag with upcoming hppa-firmware builds.
 
-> OS needs to be notified then it could handle poison pages in time.
-
-No, it was always the case that latent poison is an "action optional"
-event. I am not understanding the justification for this approach. What
-breaks if the kernel does not forward events to memory_failure_queue()?
-
-Consider that in the CPU consumption case that the firmware first path
-will do its own memory_failure_queue() and in the native case the MCE
-handler will take care of this. So that leaves pages that are accessed
-by DMA or background operation that encounter poison. Those are "action
-optional" scenarios and it is not clear to me how the driver tells the
-difference.
-
-This needs more precision on which agent is repsonsible for what level
-of reporting. The distribution of responsibility between ACPI GHES,
-EDAC, and the CXL driver is messy and I expect this changelog to
-demonstrate it understands all those considerations.
-
-> Per CXL spec, the device error event could be signaled through
-> FW-First and OS-First methods.
-> 
-> So, add poison creation event handler in OS-First method:
->   - Qemu:
-
-Why is QEMU relevant for this patch? QEMU is only a development vehicle
-the upstream enabling should be reference shipping or expected to be
-shipping hardware implementations.
-
->     - CXL device reports POISON creation event to OS by MSI by sending
->       GMER/DER after injecting a poison record;
-
-When you say "inject" here do you mean "add to the poison list if
-present". Because "inject" to me means the "Inject Poison" Memory Device
-Command.
-
->   - CXL driver:
->     a. parse the POISON event from GMER/DER;
->     b. translate poisoned DPA to HPA (PFN);
->     c. enqueue poisoned PFN to memory_failure's work queue;
-> 
-> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
-> ---
->  drivers/cxl/core/mbox.c   | 119 +++++++++++++++++++++++++++++++++-----
->  drivers/cxl/cxlmem.h      |   8 +--
->  include/linux/cxl-event.h |  18 +++++-
->  3 files changed, 125 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-> index f0f54aeccc87..76af0d73859d 100644
-> --- a/drivers/cxl/core/mbox.c
-> +++ b/drivers/cxl/core/mbox.c
-> @@ -837,25 +837,116 @@ int cxl_enumerate_cmds(struct cxl_memdev_state *mds)
->  }
->  EXPORT_SYMBOL_NS_GPL(cxl_enumerate_cmds, CXL);
->  
-> -void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
-> -			    enum cxl_event_log_type type,
-> -			    enum cxl_event_type event_type,
-> -			    const uuid_t *uuid, union cxl_event *evt)
-> +static void cxl_report_poison(struct cxl_memdev *cxlmd, struct cxl_region *cxlr,
-> +			      u64 dpa)
->  {
-> -	if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
-> +	u64 hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
-> +	unsigned long pfn = PHYS_PFN(hpa);
-> +
-> +	if (!IS_ENABLED(CONFIG_MEMORY_FAILURE))
-> +		return;
-
-No need for this check, memory_failure_queue() is already stubbed out in
-the CONFIG_MEMORY_FAILURE=n case.
-
-> +	memory_failure_queue(pfn, MF_ACTION_REQUIRED);
-
-My expectation is MF_ACTION_REQUIRED is not appropriate for CXL event
-reported errors since action is only required for direct consumption
-events and those need not be reported through the device event queue.
-
-It would be useful to collaborate with a BIOS firmware engineer so that
-the kernel ends up with similar logic as is used to set CPER record
-severity, or at least understands why it would want to be different.
-See how ghes_handle_memory_failure() determines the
-memory_failure_queue() flags.
+Helge
 
