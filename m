@@ -4,117 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0E4C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 19:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C1CC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 19:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzLTs-0007LR-PE; Tue, 23 Apr 2024 15:07:04 -0400
+	id 1rzLVE-0008N9-QG; Tue, 23 Apr 2024 15:08:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzLTb-0007Ex-El
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 15:06:49 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rzLTX-0003Rj-0t
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 15:06:47 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzLVD-0008Mh-Hk
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 15:08:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rzLVB-0003Z1-DA
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 15:08:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1713899304;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DfcPSy+mKQRGj3q0tjVZdXNxxVEe7cJ061MkXjhICKo=;
+ b=QvXKs9GXE0piJdcnfRUsVk5xP3g1so70yWLVbY2tAaEfDWjkjwk9vQZsPOVQHjdcaf1K5c
+ gSkF+fGxxLBX0BogRfhTjzyqmjGUwkLdeptXWj/orJ5YDwsAPO+HCP+M16Jo/+MwN82o7X
+ KXnv88mWlyAj3QulHBcQAttg8cPMy20=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-224-E4voSOqGPHmrwHoIn8RoWA-1; Tue, 23 Apr 2024 15:08:22 -0400
+X-MC-Unique: E4voSOqGPHmrwHoIn8RoWA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id EDBEB604C6;
- Tue, 23 Apr 2024 19:06:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1713899199; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NBgkjGMrZRHm9Nyw5OgTzOtwNa1NlMLYx0L8WDvhnGo=;
- b=1jVoicd4ai8YoA6CHKugYk6/SlWUJIjfVq86wpO7sq+l6ZBWTfL/TVKdzSJhlrvEJEmE6u
- sc5mbKTxHoROyOevTJ2Rz3/so++ofUeMSttUaEgtf/WXZAOgk2Dz7REl6zAPbcO2En12d+
- 9y3ZEWv1ElYpB5b8EVIZp+4tEs9yRpk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1713899199;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NBgkjGMrZRHm9Nyw5OgTzOtwNa1NlMLYx0L8WDvhnGo=;
- b=wl4uQfK3rag+edB+WJv8Nnxi8OJltxXZZAxxSGcy4dbM2fKfTgrYYsz1ggIPeUv6YJbEde
- H6VWTZ/wMTbxJyDQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="cv/MjDX9";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Sy50kl8C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1713899198; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NBgkjGMrZRHm9Nyw5OgTzOtwNa1NlMLYx0L8WDvhnGo=;
- b=cv/MjDX9rl5qx/ox61uwnj9krxdpmM0iNrym1+ahF+Ywk9WtKhQUT6X52w/nYhqM3RIZBv
- Y6O0dQz5Y1TQxENGiVUd9E10iZ0IOrFSX/k9c5h4etulq5CGnikvY+HdSR8ItQUdhAwrhQ
- qARRcke4rAyS8HNs0xrb25Yqzma2PVE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1713899198;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NBgkjGMrZRHm9Nyw5OgTzOtwNa1NlMLYx0L8WDvhnGo=;
- b=Sy50kl8Cau1lFCVWjJK8/XhPHgyB//kL/beXehiD7sVnhYL3LccfpIGqkEkpF4I18366zm
- amPDL5UFEkHnxHAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6938413894;
- Tue, 23 Apr 2024 19:06:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id l6djDL4GKGZ2TQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 23 Apr 2024 19:06:38 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Paolo Bonzini <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 03/22] arm: switch boards to "default y"
-In-Reply-To: <CABgObfZ-dUiBhjyL04vz8UoaZvkKCO-a+O63TxxgBEzOrCgt_Q@mail.gmail.com>
-References: <20240423131612.28362-1-pbonzini@redhat.com>
- <20240423131612.28362-4-pbonzini@redhat.com> <87mspkhs8d.fsf@suse.de>
- <f37f5b29-256b-4549-90d0-0f41da7788d0@linaro.org>
- <CABgObfZ-dUiBhjyL04vz8UoaZvkKCO-a+O63TxxgBEzOrCgt_Q@mail.gmail.com>
-Date: Tue, 23 Apr 2024 16:06:35 -0300
-Message-ID: <87h6frj3us.fsf@suse.de>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DC56F1049C93;
+ Tue, 23 Apr 2024 19:08:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.127])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id E1042492BC7;
+ Tue, 23 Apr 2024 19:08:20 +0000 (UTC)
+Date: Tue, 23 Apr 2024 20:08:18 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Kim, Dongwon" <dongwon.kim@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Subject: Re: [PATCH v10 2/6] ui/console: new dmabuf.h and dmabuf.c for
+ QemuDmaBuf struct and helpers
+Message-ID: <ZigHIrEc3Iv9KcdC@redhat.com>
+References: <20240423022253.1003295-1-dongwon.kim@intel.com>
+ <20240423022253.1003295-3-dongwon.kim@intel.com>
+ <ZifAdRBCndQeOAwh@redhat.com>
+ <PH8PR11MB6879DF1DEEF635AC793CE6D6FA112@PH8PR11MB6879.namprd11.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: EDBEB604C6
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email];
- TO_DN_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <PH8PR11MB6879DF1DEEF635AC793CE6D6FA112@PH8PR11MB6879.namprd11.prod.outlook.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,83 +87,187 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Tue, Apr 23, 2024 at 07:05:20PM +0000, Kim, Dongwon wrote:
+> Hi Daniel,
+> 
+> > -----Original Message-----
+> > From: Daniel P. Berrangé <berrange@redhat.com>
+> > Sent: Tuesday, April 23, 2024 7:07 AM
+> > To: Kim, Dongwon <dongwon.kim@intel.com>
+> > Cc: qemu-devel@nongnu.org; marcandre.lureau@redhat.com;
+> > philmd@linaro.org
+> > Subject: Re: [PATCH v10 2/6] ui/console: new dmabuf.h and dmabuf.c for
+> > QemuDmaBuf struct and helpers
+> > 
+> > On Mon, Apr 22, 2024 at 07:22:49PM -0700, dongwon.kim@intel.com wrote:
+> > > From: Dongwon Kim <dongwon.kim@intel.com>
+> > >
+> > > New header and source files are added for containing QemuDmaBuf struct
+> > > definition and newly introduced helpers for creating/freeing the
+> > > struct and accessing its data.
+> > >
+> > > v10: Change the license type for both dmabuf.h and dmabuf.c from MIT to
+> > >      GPL to be in line with QEMU's default license
+> > >      (Daniel P. Berrangé <berrange@redhat.com>)
+> > >
+> > > Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > > Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> > > Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> > > Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> > > ---
+> > >  include/ui/console.h |  20 +----
+> > >  include/ui/dmabuf.h  |  64 +++++++++++++++
+> > >  ui/dmabuf.c          | 189
+> > +++++++++++++++++++++++++++++++++++++++++++
+> > >  ui/meson.build       |   1 +
+> > >  4 files changed, 255 insertions(+), 19 deletions(-)  create mode
+> > > 100644 include/ui/dmabuf.h  create mode 100644 ui/dmabuf.c
+> > >
+> > > diff --git a/include/ui/console.h b/include/ui/console.h index
+> > > 0bc7a00ac0..a208a68b88 100644
+> > > --- a/include/ui/console.h
+> > > +++ b/include/ui/console.h
+> > > @@ -7,6 +7,7 @@
+> > >  #include "qapi/qapi-types-ui.h"
+> > >  #include "ui/input.h"
+> > >  #include "ui/surface.h"
+> > > +#include "ui/dmabuf.h"
+> > >
+> > >  #define TYPE_QEMU_CONSOLE "qemu-console"
+> > >  OBJECT_DECLARE_TYPE(QemuConsole, QemuConsoleClass,
+> > QEMU_CONSOLE) @@
+> > > -185,25 +186,6 @@ struct QEMUGLParams {
+> > >      int minor_ver;
+> > >  };
+> > >
+> > > -typedef struct QemuDmaBuf {
+> > > -    int       fd;
+> > > -    uint32_t  width;
+> > > -    uint32_t  height;
+> > > -    uint32_t  stride;
+> > > -    uint32_t  fourcc;
+> > > -    uint64_t  modifier;
+> > > -    uint32_t  texture;
+> > > -    uint32_t  x;
+> > > -    uint32_t  y;
+> > > -    uint32_t  backing_width;
+> > > -    uint32_t  backing_height;
+> > > -    bool      y0_top;
+> > > -    void      *sync;
+> > > -    int       fence_fd;
+> > > -    bool      allow_fences;
+> > > -    bool      draw_submitted;
+> > > -} QemuDmaBuf;
+> > > -
+> > >  enum display_scanout {
+> > >      SCANOUT_NONE,
+> > >      SCANOUT_SURFACE,
+> > > diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h new file mode
+> > > 100644 index 0000000000..7a60116ee6
+> > > --- /dev/null
+> > > +++ b/include/ui/dmabuf.h
+> > > @@ -0,0 +1,64 @@
+> > > +/*
+> > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > + *
+> > > + * QemuDmaBuf struct and helpers used for accessing its data
+> > > + *
+> > > + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> > > + * See the COPYING file in the top-level directory.
+> > > + */
+> > > +
+> > > +#ifndef DMABUF_H
+> > > +#define DMABUF_H
+> > > +
+> > > +typedef struct QemuDmaBuf {
+> > > +    int       fd;
+> > > +    uint32_t  width;
+> > > +    uint32_t  height;
+> > > +    uint32_t  stride;
+> > > +    uint32_t  fourcc;
+> > > +    uint64_t  modifier;
+> > > +    uint32_t  texture;
+> > > +    uint32_t  x;
+> > > +    uint32_t  y;
+> > > +    uint32_t  backing_width;
+> > > +    uint32_t  backing_height;
+> > > +    bool      y0_top;
+> > > +    void      *sync;
+> > > +    int       fence_fd;
+> > > +    bool      allow_fences;
+> > > +    bool      draw_submitted;
+> > > +} QemuDmaBuf;
+> > > +
+> > > +QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
+> > > +                                   uint32_t stride, uint32_t x,
+> > > +                                   uint32_t y, uint32_t backing_width,
+> > > +                                   uint32_t backing_height, uint32_t fourcc,
+> > > +                                   uint64_t modifier, int32_t
+> > > +dmabuf_fd,
+> > 
+> > Should be 'int' not 'int32_t' for FDs.
+> > 
+> > > +                                   bool allow_fences, bool y0_top);
+> > > +void qemu_dmabuf_free(QemuDmaBuf *dmabuf);
+> > > +
+> > > +G_DEFINE_AUTOPTR_CLEANUP_FUNC(QemuDmaBuf,
+> > qemu_dmabuf_free);
+> > > +
+> > > +int32_t qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
+> > 
+> > Again should be 'int' not 'int42_t'
+> > 
+> > I think there ought to also be a
+> > 
+> >   int qemu_dmabuf_dup_fd(QemuDmaBuf *dmabuf);
+> > 
+> > to do the dup() call in one go too
+> > 
+> > > diff --git a/ui/dmabuf.c b/ui/dmabuf.c new file mode 100644 index
+> > > 0000000000..f447cce4fe
+> > > --- /dev/null
+> > > +++ b/ui/dmabuf.c
+> > 
+> > > +
+> > > +void qemu_dmabuf_free(QemuDmaBuf *dmabuf)
+> > > +{
+> > > +    if (dmabuf == NULL) {
+> > > +        return;
+> > > +    }
+> > > +
+> > 
+> > I think this method should be made to call
+> > 
+> >   qemu_dmabuf_close()
+> > 
+> > to release the FD, if not already released, otherwise
+> > this method could be a resource leak.
+>  
+> [Kim, Dongwon]  So you mean this close call should close all FDs including duped FDs, which implies we should include the list of duped FD and its management?
 
-> Il mar 23 apr 2024, 20:12 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>=
- ha
-> scritto:
->
->> Hi Fabiano,
->>
->> On 23/4/24 20:02, Fabiano Rosas wrote:
->> > Paolo Bonzini <pbonzini@redhat.com> writes:
->> >
->> >> For ARM targets, boards that require TCG are already using "default y=
-".
->> >> Switch ARM_VIRT to the same selection mechanism.
->> >>
->> >> No changes to generated config-devices.mak file.
->> >>
->> >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> >> ---
->> >>   configs/devices/arm-softmmu/default.mak | 3 ++-
->> >>   hw/arm/Kconfig                          | 2 ++
->> >>   2 files changed, 4 insertions(+), 1 deletion(-)
->> >>
->> >> diff --git a/configs/devices/arm-softmmu/default.mak
->> b/configs/devices/arm-softmmu/default.mak
->> >> index c1cfb3bcf75..31f77c20269 100644
->> >> --- a/configs/devices/arm-softmmu/default.mak
->> >> +++ b/configs/devices/arm-softmmu/default.mak
->> >> @@ -5,7 +5,8 @@
->> >>   # CONFIG_PCI_DEVICES=3Dn
->> >>   # CONFIG_TEST_DEVICES=3Dn
->> >>
->> >> -CONFIG_ARM_VIRT=3Dy
->> >> +# Boards are selected by default, uncomment to keep out of the build.
->> >> +# CONFIG_ARM_VIRT=3Dn
->> >>
->> >>   # These are selected by default when TCG is enabled, uncomment them=
- to
->> >>   # keep out of the build.
->> >> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
->> >> index 893a7bff66b..1e7cd01087f 100644
->> >> --- a/hw/arm/Kconfig
->> >> +++ b/hw/arm/Kconfig
->> >> @@ -1,5 +1,7 @@
->> >>   config ARM_VIRT
->> >>       bool
->> >> +    default y
->> >> +    depends on ARM
->> >>       imply PCI_DEVICES
->> >
->> > We lose pci.c when building --without-default-devices:
->> >
->> > $ arch
->> > aarch64
->> > $ ../configure --target-list=3Daarch64-softmmu,arm-softmmu
->> > --disable-linux-user --without-default-devices
->> > $ make
->> > ...
->> > libqemu-aarch64-softmmu.fa.p/target_arm_kvm.c.o: in function
->> `kvm_arch_fixup_msi_route':
->> > ../target/arm/kvm.c:1548: undefined reference to
->> `pci_device_iommu_address_space'
->>
->
-> I guess we can add something like
->
-> config AARCH64
->     select PCI if KVM
+No, only the fd that is stored by the struct.
 
-Yep, that fixes the build. With defaults disabled the tests are all
-kinds of broken, but I guess that's expected. I see issues even in
-master.
+*  qemu_dmabuf_get_fd
 
-With the above included:
+   the returned "fd" remains owned by QemuDmabuf and should be closed
+   by qemu_dmabuf_close() or qemu_dmabuf_free()
 
-Tested-by: Fabiano Rosas <farosas@suse.de> # build-only on aarch64
+* qemu_dmabuf_dup_fd
+
+   the returned "fd" is owned by the caller and it must close it when
+   needed.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
