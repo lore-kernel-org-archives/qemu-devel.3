@@ -4,79 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C82C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 08:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41C6C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 08:31:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzBS1-0003HO-7T; Tue, 23 Apr 2024 04:24:29 -0400
+	id 1rzBXv-0004pG-7t; Tue, 23 Apr 2024 04:30:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzBRz-0003Gt-08
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:24:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rzBRw-0006Gy-I7
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:24:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713860661;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BiWzJ2fPVbJ4Ds1q1Obo5m77pRQgUwWtQfm1xuwNtQI=;
- b=JTgFA5H6gGNvOzdL7hDnPlIo+hHAAAyjAO3gtEK9LTj5fSuCPdbAp85dR9i7KA+fFAxI47
- satmT0SFY+HuszpCX/ZE8iysriVpWC4WW8migy3dWCzhaPGn/DKyFBJgYhuTe6uEMulrK1
- riYq+OW8U5wfCv5xMLL/caad6PQK1pc=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-kaynH772Pl2zOYlQLMNudg-1; Tue,
- 23 Apr 2024 04:24:20 -0400
-X-MC-Unique: kaynH772Pl2zOYlQLMNudg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B4EAB29ABA11;
- Tue, 23 Apr 2024 08:24:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A90F344046;
- Tue, 23 Apr 2024 08:24:18 +0000 (UTC)
-Date: Tue, 23 Apr 2024 09:24:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>,
- pbonzini@redhat.com, eduardo@habkost.net, qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/i386/translate.c: always write 32-bits for SGDT
- and SIDT
-Message-ID: <ZidwMKx7pE1N2yAN@redhat.com>
-References: <20240419195147.434894-1-mark.cave-ayland@ilande.co.uk>
- <fefb7b6b-29fc-42ee-b62e-059512e881e4@linaro.org>
- <3ff9df0d-6465-45a3-bb62-0db17ed9210c@ilande.co.uk>
- <d84e246a-fb43-4bb9-ad61-5ebfea4e323f@t-online.de>
- <24c60165-80b6-453b-8fe0-44df563e34be@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rzBXt-0004or-6H
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:30:33 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rzBXr-0007Au-3V
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 04:30:32 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-516d2600569so6687210e87.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 01:30:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1713861028; x=1714465828; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=T6KOjnBzdVHg3Y3ZAHXv+65BtE3//7g/7c/W6xeaLoc=;
+ b=sp+AN03pSyaBbzl8nvkiDVC8Md0XnUgNa+zL05ypv8Fh+QffVAVZPwvjUExZd9zzQA
+ M84KVUQ8nch2gZlPc97imAG2h8PNZf4su2M3M3XGSQyok7f6H7YTscTpiSQ1A3nb1TLX
+ PEvRCqInBYZJKBMFpTou4dZmYd/xl+SIjfSklwIz4bztGBmE9Lwi60JK2A3VwkVZI1bb
+ dZDD/U1L5ZsjhAYxCbuNv59Uda4/F6wMa7kcru9FTysxNeJ8uvV1y+Te+ZdXOjxSX8XV
+ 1FzyUTG08e2+WhJPa8DqW2pU90gD708a6ZnQ/ciNfEPwlFXxXcoI8mhKnKl3naJjOtlM
+ VRMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1713861028; x=1714465828;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=T6KOjnBzdVHg3Y3ZAHXv+65BtE3//7g/7c/W6xeaLoc=;
+ b=WiiW4JINX3Gd15Ze8D5QDTQDYyKN8r6f4ocv/nrTU5zsB38bM/GbBV+3kRHm+AvaSD
+ NXPqLlnisJhQPL0i781RT5AvDTMDT0TsARZEJWuBwgZjod1iusX6NEu1XHhrxE9bbFvS
+ iSf5q+rPbVAwAPP3RNdt9ZFodjMlFM4X7mUm0Mo698T0RTZ7yKAwyBYTbfU75/BU1X29
+ keqbtja8C0lmPvhG3m/kHst0CHT5PCoVfy0yzEd0gpFZXV1sm6qPHcqiTcIJABLyCgWu
+ jRqClro8F/wz+MbKEYR2PKHOJa1ILB4vFCjKUOxHOgh25KMhRpeg5MG9LoFjzwJ/0oPK
+ VM8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFNgPSGWGoXfi/DzOn7MuoV3rmr8htmvkbaFo9/1ucVNiI6LbbTRy/28eatWext9jyzfOtG37+4cLahI+bsQQ2ZgTVSfA=
+X-Gm-Message-State: AOJu0YwCwIii+NyRSpfBkcNB7NBB1s0WLfaQnYz8vm/ii0QVJKecJgNx
+ m3cjiWqHc19EAFE3bjL74xEBYyxCrkPcYEVGCVDc9SE/qf9WLXuWIVu/AKfOJeQ=
+X-Google-Smtp-Source: AGHT+IHiBhwf82EjZWglS/4UA8aHdDly24yYtSm2T5mYk92F7Zf/5Rwi1dS3YeowbLGmGObIiiKnhw==
+X-Received: by 2002:a05:6512:2247:b0:51b:a710:d6c7 with SMTP id
+ i7-20020a056512224700b0051ba710d6c7mr872726lfu.14.1713861027999; 
+ Tue, 23 Apr 2024 01:30:27 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ q21-20020a170906771500b00a51d408d446sm6765404ejm.26.2024.04.23.01.30.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Apr 2024 01:30:27 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2EC8B5F8C1;
+ Tue, 23 Apr 2024 09:30:26 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
+ Stabellini <sstabellini@kernel.org>,  Anthony PERARD
+ <anthony.perard@citrix.com>,  Antonio Caggiano
+ <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
+ <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
+ Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
+ Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
+ <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>, Manos
+ Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH v8 00/11] Support blob memory and venus on qemu
+In-Reply-To: <20240418190040.1110210-1-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Thu, 18 Apr 2024 22:00:29 +0300")
+References: <20240418190040.1110210-1-dmitry.osipenko@collabora.com>
+User-Agent: mu4e 1.12.4; emacs 29.2
+Date: Tue, 23 Apr 2024 09:30:26 +0100
+Message-ID: <87jzkoqy59.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <24c60165-80b6-453b-8fe0-44df563e34be@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.669,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,102 +115,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 23, 2024 at 10:15:57AM +0200, Philippe Mathieu-Daudé wrote:
-> On 22/4/24 21:03, Volker Rümelin wrote:
-> > Am 20.04.24 um 07:40 schrieb Mark Cave-Ayland:
-> > > On 20/04/2024 02:21, Richard Henderson wrote:
-> > > 
-> > > > On 4/19/24 12:51, Mark Cave-Ayland wrote:
-> > > > > The various Intel CPU manuals claim that SGDT and SIDT can write
-> > > > > either 24-bits
-> > > > > or 32-bits depending upon the operand size, but this is incorrect.
-> > > > > Not only do
-> > > > > the Intel CPU manuals give contradictory information between processor
-> > > > > revisions, but this information doesn't even match real-life behaviour.
-> > > > > 
-> > > > > In fact, tests on real hardware show that the CPU always writes
-> > > > > 32-bits for SGDT
-> > > > > and SIDT, and this behaviour is required for at least OS/2 Warp and
-> > > > > WFW 3.11 with
-> > > > > Win32s to function correctly. Remove the masking applied due to the
-> > > > > operand size
-> > > > > for SGDT and SIDT so that the TCG behaviour matches the behaviour on
-> > > > > real
-> > > > > hardware.
-> > > > > 
-> > > > > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> > > > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2198
-> > > > > 
-> > > > > -- 
-> > > > > MCA: Whilst I don't have a copy of OS/2 Warp handy, I've confirmed
-> > > > > that this
-> > > > > patch fixes the issue in WFW 3.11 with Win32s. For more technical
-> > > > > information I
-> > > > > highly recommend the excellent write-up at
-> > > > > https://www.os2museum.com/wp/sgdtsidt-fiction-and-reality/.
-> > > > > ---
-> > > > >    target/i386/tcg/translate.c | 14 ++++++++------
-> > > > >    1 file changed, 8 insertions(+), 6 deletions(-)
-> > > > > 
-> > > > > diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> > > > > index 76a42c679c..3026eb6774 100644
-> > > > > --- a/target/i386/tcg/translate.c
-> > > > > +++ b/target/i386/tcg/translate.c
-> > > > > @@ -5846,9 +5846,10 @@ static bool disas_insn(DisasContext *s,
-> > > > > CPUState *cpu)
-> > > > >                gen_op_st_v(s, MO_16, s->T0, s->A0);
-> > > > >                gen_add_A0_im(s, 2);
-> > > > >                tcg_gen_ld_tl(s->T0, tcg_env, offsetof(CPUX86State,
-> > > > > gdt.base));
-> > > > > -            if (dflag == MO_16) {
-> > > > > -                tcg_gen_andi_tl(s->T0, s->T0, 0xffffff);
-> > > > > -            }
-> > > > > +            /*
-> > > > > +             * NB: Despite claims to the contrary in Intel CPU
-> > > > > documentation,
-> > > > > +             *     all 32-bits are written regardless of operand size.
-> > > > > +             */
-> > > > 
-> > > > Current documentation agrees that all 32 bits are written, so I don't
-> > > > think you need this comment:
-> > > 
-> > > Ah that's good to know the docs are now correct. I added the comment
-> > > as there was a lot of conflicting information around for older CPUs so
-> > > I thought it was worth an explicit mention.
-> > > 
-> > > If everyone agrees a version without comments is preferable, I can
-> > > re-send an updated version without them included.
-> > > 
-> > 
-> > Hi Mark,
-> > 
-> > I wouldn't remove the comment.
-> > 
-> > Quote from the Intel® 64 and IA-32 Architectures Software Developer’s
-> > Manual Volume 2B: Instruction Set Reference, M-U March 2024:
-> > 
-> > IA-32 Architecture Compatibility
-> > The 16-bit form of SGDT is compatible with the Intel 286 processor if
-> > the upper 8 bits are not referenced. The Intel 286 processor fills these
-> > bits with 1s; processor generations later than the Intel 286 processor
-> > fill these bits with 0s.
-> 
-> Is that that OS/2 Warp and WFW 3.11 expect a 286 CPU? QEMU starts
-> modelling the 486, do we want to consider down to the 286?
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-Depends on the versions you're talking about. From what I can gather,
-OS/2 1.x targetted i286, OS/2 2.x & 3.x targetted i386, and OS/2 4.0
-Warp targetted i486, while WFW 3.11 was i386.
+> Hello,
+>
+> This series enables Vulkan Venus context support on virtio-gpu.
+>
+> All virglrender and almost all Linux kernel prerequisite changes
+> needed by Venus are already in upstream. For kernel there is a pending
+> KVM patchset that fixes mapping of compound pages needed for DRM drivers
+> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
+> from Qemu.
+>
+> [1]
+> https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Following the link for the TTM/KVM patches on the kernel side points at
+changes for AMD cards getting NAK'ed so I'm a little confused as to what
+parts are needed.
 
+Is this only relevant for ensuring the virtual mappings to the
+underlying hardware aren't moved around when KVM is exporting those
+pages to the guest?
+
+Our interest is in Xen which obviously mediates everything through stage
+2 mappings to from the real PA to the IPA the domains see. However AIUI
+all the blob allocation is managed by the GEM/TTM layer of whichever
+kernel is responsible for driving the GPU. Does this layer work with
+kernel vaddr or the underlying IPA of the resources? We shouldn't
+expect the IPA to change between allocations should we?
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
