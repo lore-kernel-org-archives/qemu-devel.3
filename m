@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF846C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3ACC10F16
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 02:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rz5sW-0002hS-TY; Mon, 22 Apr 2024 22:27:28 -0400
+	id 1rz5sY-0002i7-UD; Mon, 22 Apr 2024 22:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rz5sV-0002h4-JM
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 22:27:27 -0400
+ id 1rz5sX-0002hV-2n
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 22:27:29 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rz5sT-00034y-7p
- for qemu-devel@nongnu.org; Mon, 22 Apr 2024 22:27:27 -0400
+ id 1rz5sU-00035E-VW
+ for qemu-devel@nongnu.org; Mon, 22 Apr 2024 22:27:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1713839245; x=1745375245;
+ t=1713839247; x=1745375247;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=wqa28YgZ/bK5Ea3sXfxvWSqiY//Ubcbo1nhvSorpVyg=;
- b=CqDm3JYXhXP+m8TU5GsJT+zTMWhBITgdFhTB5O/LeZbfnRoCC3vHXOTm
- amaxalIt6tdYmEXoWCeDoo+2H/xuKIJgv6xymrbrx/PiFvEKscI4aa8Do
- fp3VlCutyq1QDqAn5cMvP6RNRHO4+am1EE7yOsfdop7kvBt4NZvMrFPRL
- gUZHsnBxIhHpBow3a+ZYlgZwwM3ePPD005MjNH+QwKhm9MsuzJqYyDaqb
- 4puXrH89WTLZ+UG86xVV+IEodIlxxIJY6iNliC3A3tenyaY+qRmnOZG3+
- 7cgP4L59NB9QJ4t3C+hHuUY8ce2OMC37QoHaN5QSd+lQd+fb5E0bzaK4/ A==;
-X-CSE-ConnectionGUID: XNu0aYuGSkedSW1Sg7dBRg==
-X-CSE-MsgGUID: h0CJqxNfR0+sqwJd+dsKYA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11052"; a="26920039"
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="26920039"
+ bh=4Mu1YpsAIPjq/dbYK/pcOXYqsZQcKtqf2Ob/6M7rVpg=;
+ b=js7RCSdjTiCFZI3HiqRGySvGmFqGARFoKO9eYMn2IJmIWkqCxEC64byj
+ 3XigaZIvKmXk9qTCkJpxmCS7n/OkD7i/ATgpYKL5XmmeYIXGDCSCmIF7j
+ Facnxp1rs92+chwOSUAHngJ7Mp8jq9LxYdcEQ/CvJMTjSrTCLE5u9qxdK
+ Cg/pTWW3UsA6N6cBpN1RA8KlmijAmShf2AoBIg1lkN07X/jD2lCkXTGgV
+ N7bYWhDt+iFaTWrZMHFTYfe/wU8numOYDAVXwSStOlShOFs04WuYI4AUa
+ CWLCXGsIARKuDvIXDIlzHaJlbe6J6SRla2wadQRZSgig1Vqwl6/0QlmVH w==;
+X-CSE-ConnectionGUID: P9qUQ7uVTX2rrumbwZwY0g==
+X-CSE-MsgGUID: FU9mgyCwQlmtaySofl4R0w==
+X-IronPort-AV: E=McAfee;i="6600,9927,11052"; a="26920046"
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="26920046"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2024 19:27:12 -0700
-X-CSE-ConnectionGUID: nlt9Q7h/QJ2XKe7ZKZztXQ==
-X-CSE-MsgGUID: 2mOgKdP8Qhm3JILGqwGJZw==
+ 22 Apr 2024 19:27:13 -0700
+X-CSE-ConnectionGUID: DGdPqGhTSU+bsGaUdQGX4g==
+X-CSE-MsgGUID: JywSn7PoS52de3B+VUCyAg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="29009369"
+X-IronPort-AV: E=Sophos;i="6.07,222,1708416000"; d="scan'208";a="29009372"
 Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa005.jf.intel.com with ESMTP; 22 Apr 2024 19:27:12 -0700
+ by orviesa005.jf.intel.com with ESMTP; 22 Apr 2024 19:27:13 -0700
 From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com,
 	berrange@redhat.com,
 	philmd@linaro.org
-Subject: [PATCH v10 2/6] ui/console: new dmabuf.h and dmabuf.c for QemuDmaBuf
- struct and helpers
-Date: Mon, 22 Apr 2024 19:22:49 -0700
-Message-Id: <20240423022253.1003295-3-dongwon.kim@intel.com>
+Subject: [PATCH v10 4/6] ui/console: Use qemu_dmabuf_set_..() helpers instead
+Date: Mon, 22 Apr 2024 19:22:51 -0700
+Message-Id: <20240423022253.1003295-5-dongwon.kim@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240423022253.1003295-1-dongwon.kim@intel.com>
 References: <20240423022253.1003295-1-dongwon.kim@intel.com>
@@ -86,13 +85,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dongwon Kim <dongwon.kim@intel.com>
 
-New header and source files are added for containing QemuDmaBuf struct
-definition and newly introduced helpers for creating/freeing the struct
-and accessing its data.
+This commit updates all occurrences where these fields were
+set directly have been updated to utilize helper functions.
 
-v10: Change the license type for both dmabuf.h and dmabuf.c from MIT to
-     GPL to be in line with QEMU's default license
-     (Daniel P. Berrangé <berrange@redhat.com>)
+v7: removed prefix, "dpy_gl_" from all helpers
+
+v8: Introduction of helpers was removed as those were already added
+    by the previous commit
 
 Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
@@ -100,329 +99,126 @@ Cc: Daniel P. Berrangé <berrange@redhat.com>
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- include/ui/console.h |  20 +----
- include/ui/dmabuf.h  |  64 +++++++++++++++
- ui/dmabuf.c          | 189 +++++++++++++++++++++++++++++++++++++++++++
- ui/meson.build       |   1 +
- 4 files changed, 255 insertions(+), 19 deletions(-)
- create mode 100644 include/ui/dmabuf.h
- create mode 100644 ui/dmabuf.c
+ ui/egl-helpers.c | 16 +++++++++-------
+ ui/gtk-egl.c     |  4 ++--
+ ui/gtk-gl-area.c |  4 ++--
+ ui/gtk.c         |  6 +++---
+ 4 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 0bc7a00ac0..a208a68b88 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -7,6 +7,7 @@
- #include "qapi/qapi-types-ui.h"
- #include "ui/input.h"
- #include "ui/surface.h"
-+#include "ui/dmabuf.h"
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index 3f96e63d25..99b2ebbe23 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -348,8 +348,8 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
+         return;
+     }
  
- #define TYPE_QEMU_CONSOLE "qemu-console"
- OBJECT_DECLARE_TYPE(QemuConsole, QemuConsoleClass, QEMU_CONSOLE)
-@@ -185,25 +186,6 @@ struct QEMUGLParams {
-     int minor_ver;
- };
+-    glGenTextures(1, &dmabuf->texture);
+-    texture = qemu_dmabuf_get_texture(dmabuf);
++    glGenTextures(1, &texture);
++    qemu_dmabuf_set_texture(dmabuf, texture);
+     glBindTexture(GL_TEXTURE_2D, texture);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+@@ -368,7 +368,7 @@ void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
+     }
  
--typedef struct QemuDmaBuf {
--    int       fd;
--    uint32_t  width;
--    uint32_t  height;
--    uint32_t  stride;
--    uint32_t  fourcc;
--    uint64_t  modifier;
--    uint32_t  texture;
--    uint32_t  x;
--    uint32_t  y;
--    uint32_t  backing_width;
--    uint32_t  backing_height;
--    bool      y0_top;
--    void      *sync;
--    int       fence_fd;
--    bool      allow_fences;
--    bool      draw_submitted;
--} QemuDmaBuf;
--
- enum display_scanout {
-     SCANOUT_NONE,
-     SCANOUT_SURFACE,
-diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
-new file mode 100644
-index 0000000000..7a60116ee6
---- /dev/null
-+++ b/include/ui/dmabuf.h
-@@ -0,0 +1,64 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QemuDmaBuf struct and helpers used for accessing its data
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef DMABUF_H
-+#define DMABUF_H
-+
-+typedef struct QemuDmaBuf {
-+    int       fd;
-+    uint32_t  width;
-+    uint32_t  height;
-+    uint32_t  stride;
-+    uint32_t  fourcc;
-+    uint64_t  modifier;
-+    uint32_t  texture;
-+    uint32_t  x;
-+    uint32_t  y;
-+    uint32_t  backing_width;
-+    uint32_t  backing_height;
-+    bool      y0_top;
-+    void      *sync;
-+    int       fence_fd;
-+    bool      allow_fences;
-+    bool      draw_submitted;
-+} QemuDmaBuf;
-+
-+QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-+                                   uint32_t stride, uint32_t x,
-+                                   uint32_t y, uint32_t backing_width,
-+                                   uint32_t backing_height, uint32_t fourcc,
-+                                   uint64_t modifier, int32_t dmabuf_fd,
-+                                   bool allow_fences, bool y0_top);
-+void qemu_dmabuf_free(QemuDmaBuf *dmabuf);
-+
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(QemuDmaBuf, qemu_dmabuf_free);
-+
-+int32_t qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf);
-+uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_x(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
-+uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
-+bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
-+void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
-+int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
-+bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
-+bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
-+void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
-+void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
-+void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
-+void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted);
-+void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
-+
-+#endif
-diff --git a/ui/dmabuf.c b/ui/dmabuf.c
-new file mode 100644
-index 0000000000..f447cce4fe
---- /dev/null
-+++ b/ui/dmabuf.c
-@@ -0,0 +1,189 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QemuDmaBuf struct and helpers used for accessing its data
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "ui/dmabuf.h"
-+
-+QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-+                            uint32_t stride, uint32_t x,
-+                            uint32_t y, uint32_t backing_width,
-+                            uint32_t backing_height, uint32_t fourcc,
-+                            uint64_t modifier, int32_t dmabuf_fd,
-+                            bool allow_fences, bool y0_top) {
-+    QemuDmaBuf *dmabuf;
-+
-+    dmabuf = g_new0(QemuDmaBuf, 1);
-+
-+    dmabuf->width = width;
-+    dmabuf->height = height;
-+    dmabuf->stride = stride;
-+    dmabuf->x = x;
-+    dmabuf->y = y;
-+    dmabuf->backing_width = backing_width;
-+    dmabuf->backing_height = backing_height;
-+    dmabuf->fourcc = fourcc;
-+    dmabuf->modifier = modifier;
-+    dmabuf->fd = dmabuf_fd;
-+    dmabuf->allow_fences = allow_fences;
-+    dmabuf->y0_top = y0_top;
-+    dmabuf->fence_fd = -1;
-+
-+    return dmabuf;
-+}
-+
-+void qemu_dmabuf_free(QemuDmaBuf *dmabuf)
-+{
-+    if (dmabuf == NULL) {
-+        return;
-+    }
-+
-+    g_free(dmabuf);
-+}
-+
-+int32_t qemu_dmabuf_get_fd(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fd;
-+}
-+
-+uint32_t qemu_dmabuf_get_width(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->width;
-+}
-+
-+uint32_t qemu_dmabuf_get_height(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->height;
-+}
-+
-+uint32_t qemu_dmabuf_get_stride(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->stride;
-+}
-+
-+uint32_t qemu_dmabuf_get_fourcc(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fourcc;
-+}
-+
-+uint64_t qemu_dmabuf_get_modifier(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->modifier;
-+}
-+
-+uint32_t qemu_dmabuf_get_texture(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->texture;
-+}
-+
-+uint32_t qemu_dmabuf_get_x(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->x;
-+}
-+
-+uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->y;
-+}
-+
-+uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->backing_width;
-+}
-+
-+uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->backing_height;
-+}
-+
-+bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->y0_top;
-+}
-+
-+void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->sync;
-+}
-+
-+int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->fence_fd;
-+}
-+
-+bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->allow_fences;
-+}
-+
-+bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf)
-+{
-+    assert(dmabuf != NULL);
-+
-+    return dmabuf->draw_submitted;
-+}
-+
-+void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->texture = texture;
-+}
-+
-+void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->fence_fd = fence_fd;
-+}
-+
-+void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->sync = sync;
-+}
-+
-+void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->draw_submitted = draw_submitted;
-+}
-+
-+void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd)
-+{
-+    assert(dmabuf != NULL);
-+    dmabuf->fd = fd;
-+}
-diff --git a/ui/meson.build b/ui/meson.build
-index a5ce22a678..5d89986b0e 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -7,6 +7,7 @@ system_ss.add(files(
-   'clipboard.c',
-   'console.c',
-   'cursor.c',
-+  'dmabuf.c',
-   'input-keymap.c',
-   'input-legacy.c',
-   'input-barrier.c',
+     glDeleteTextures(1, &texture);
+-    dmabuf->texture = 0;
++    qemu_dmabuf_set_texture(dmabuf, 0);
+ }
+ 
+ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+@@ -382,7 +382,7 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+         sync = eglCreateSyncKHR(qemu_egl_display,
+                                 EGL_SYNC_NATIVE_FENCE_ANDROID, NULL);
+         if (sync != EGL_NO_SYNC_KHR) {
+-            dmabuf->sync = sync;
++            qemu_dmabuf_set_sync(dmabuf, sync);
+         }
+     }
+ }
+@@ -390,12 +390,14 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
+ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
+ {
+     void *sync = qemu_dmabuf_get_sync(dmabuf);
++    int fence_fd;
+ 
+     if (sync) {
+-        dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
+-                                                      sync);
++        fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
++                                              sync);
++        qemu_dmabuf_set_fence_fd(dmabuf, fence_fd);
+         eglDestroySyncKHR(qemu_egl_display, sync);
+-        dmabuf->sync = NULL;
++        qemu_dmabuf_set_sync(dmabuf, NULL);
+     }
+ }
+ 
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 7a45daefa1..ec0bf45482 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -87,7 +87,7 @@ void gd_egl_draw(VirtualConsole *vc)
+             if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
+                 return;
+             } else {
+-                dmabuf->draw_submitted = false;
++                qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
+         }
+ #endif
+@@ -381,7 +381,7 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+         graphic_hw_gl_block(vc->gfx.dcl.con, true);
+-        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
++        qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_egl_set_scanout_mode(vc, true);
+         gtk_widget_queue_draw_area(area, x, y, w, h);
+         return;
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 2d70280803..9a3f3d0d71 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -63,7 +63,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+             if (!qemu_dmabuf_get_draw_submitted(dmabuf)) {
+                 return;
+             } else {
+-                dmabuf->draw_submitted = false;
++                qemu_dmabuf_set_draw_submitted(dmabuf, false);
+             }
+         }
+ #endif
+@@ -291,7 +291,7 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
+     if (vc->gfx.guest_fb.dmabuf &&
+         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+         graphic_hw_gl_block(vc->gfx.dcl.con, true);
+-        vc->gfx.guest_fb.dmabuf->draw_submitted = true;
++        qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+         gtk_gl_area_set_scanout_mode(vc, true);
+     }
+     gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 237c913b26..3a6832eb1b 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -598,11 +598,11 @@ void gd_hw_gl_flushed(void *vcon)
+     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+     int fence_fd;
+ 
+-    if (dmabuf->fence_fd >= 0) {
+-        fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
++    fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
++    if (fence_fd >= 0) {
+         qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
+         close(fence_fd);
+-        dmabuf->fence_fd = -1;
++        qemu_dmabuf_set_fence_fd(dmabuf, -1);
+         graphic_hw_gl_block(vc->gfx.dcl.con, false);
+     }
+ }
 -- 
 2.34.1
 
