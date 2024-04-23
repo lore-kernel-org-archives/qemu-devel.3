@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E732C4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C072C10F1A
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:13:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnY-0006gg-Cu; Tue, 23 Apr 2024 11:11:08 -0400
+	id 1rzHnF-0004vm-MU; Tue, 23 Apr 2024 11:10:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnF-0004xS-Oq
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rzHmk-0004Nb-E0
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnE-0000KP-2J
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:49 -0400
+ id 1rzHmg-00006U-Pb
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885047;
+ s=mimecast20190719; t=1713885013;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yjRW8jvWB8Hndk8JS2SA4kR+Ko55Ohf9JH/g49Z2PDM=;
- b=iz6BXGFpdVAWTY4rLN27WkUa++44tzYdV9QKEMVcAzwFaVxCQzlKhRG5HC64JIb6if3xAQ
- FHUp1LsGF308ft8hbs7hd0qUx7wGxz08yZewxL4xByiF8enYFzFHELizyH4URJAYqTfa4I
- OXTzh3mK47+dgosSa7xWAj4NU13i/Lk=
+ bh=fDjSKg9j7/BPCoPR7rAcsTu+bH62iGTdw9jAhjhp9nc=;
+ b=JbtSjMv5vEaaj0w7uhbKbbp2M5JPiXynm39e57jq7VkSulXKRjPSqYvS2+gLjsG9noibxD
+ FvihPLaUwR/MdGEaKNZs/y5ugQrRQUo0KOkbfGqwAW/yMiK2O5Yc05mhewl2Nw3wDxCtEL
+ 9m8pUscxtK3Ajw7D1/x8IsA7A9hT2SI=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-d7NOBaIdOACWXa8wy2FhyA-1; Tue, 23 Apr 2024 11:10:43 -0400
-X-MC-Unique: d7NOBaIdOACWXa8wy2FhyA-1
+ us-mta-648-SpzDhWJoPwOvnN1sRGEUWg-1; Tue, 23 Apr 2024 11:10:09 -0400
+X-MC-Unique: SpzDhWJoPwOvnN1sRGEUWg-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 94483803505;
- Tue, 23 Apr 2024 15:10:43 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 302A48065D2;
+ Tue, 23 Apr 2024 15:10:09 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DD31D20128F3;
- Tue, 23 Apr 2024 15:10:42 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7B451200E290;
+ Tue, 23 Apr 2024 15:10:08 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
-	Michael Roth <michael.roth@amd.com>
-Subject: [PULL 51/63] kvm/memory: Make memory type private by default if it
- has guest memfd backend
-Date: Tue, 23 Apr 2024 17:09:39 +0200
-Message-ID: <20240423150951.41600-52-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 14/63] memory-device: move stubs out of stubs/
+Date: Tue, 23 Apr 2024 17:09:02 +0200
+Message-ID: <20240423150951.41600-15-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -83,45 +82,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+Since the memory-device stubs are needed exactly when the Kconfig symbols are not
+needed, move them to hw/mem/.
 
-KVM side leaves the memory to shared by default, which may incur the
-overhead of paging conversion on the first visit of each page. Because
-the expectation is that page is likely to private for the VMs that
-require private memory (has guest memfd).
-
-Explicitly set the memory to private when memory region has valid
-guest memfd backend.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Message-ID: <20240320083945.991426-16-michael.roth@amd.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240408155330.522792-15-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/kvm/kvm-all.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ stubs/memory_device.c => hw/mem/memory-device-stubs.c | 0
+ hw/mem/meson.build                                    | 1 +
+ stubs/meson.build                                     | 1 -
+ 3 files changed, 1 insertion(+), 1 deletion(-)
+ rename stubs/memory_device.c => hw/mem/memory-device-stubs.c (100%)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0386d4901fa..f49b2b95b54 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1431,6 +1431,16 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-                     strerror(-err));
-             abort();
-         }
-+
-+        if (memory_region_has_guest_memfd(mr)) {
-+            err = kvm_set_memory_attributes_private(start_addr, slot_size);
-+            if (err) {
-+                error_report("%s: failed to set memory attribute private: %s",
-+                             __func__, strerror(-err));
-+                exit(1);
-+            }
-+        }
-+
-         start_addr += slot_size;
-         ram_start_offset += slot_size;
-         ram += slot_size;
+diff --git a/stubs/memory_device.c b/hw/mem/memory-device-stubs.c
+similarity index 100%
+rename from stubs/memory_device.c
+rename to hw/mem/memory-device-stubs.c
+diff --git a/hw/mem/meson.build b/hw/mem/meson.build
+index faee1fe9360..1c1c6da24b5 100644
+--- a/hw/mem/meson.build
++++ b/hw/mem/meson.build
+@@ -6,6 +6,7 @@ mem_ss.add(when: 'CONFIG_NVDIMM', if_true: files('nvdimm.c'))
+ mem_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_true: files('cxl_type3.c'))
+ system_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_false: files('cxl_type3_stubs.c'))
+ 
++system_ss.add(when: 'CONFIG_MEM_DEVICE', if_false: files('memory-device-stubs.c'))
+ system_ss.add_all(when: 'CONFIG_MEM_DEVICE', if_true: mem_ss)
+ 
+ system_ss.add(when: 'CONFIG_SPARSE_MEM', if_true: files('sparse-mem.c'))
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 92887660e41..a4404e765ab 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -31,7 +31,6 @@ stub_ss.add(files('monitor.c'))
+ stub_ss.add(files('monitor-core.c'))
+ stub_ss.add(files('physmem.c'))
+ stub_ss.add(files('qemu-timer-notify-cb.c'))
+-stub_ss.add(files('memory_device.c'))
+ stub_ss.add(files('qmp-command-available.c'))
+ stub_ss.add(files('qmp-quit.c'))
+ stub_ss.add(files('qtest.c'))
 -- 
 2.44.0
 
