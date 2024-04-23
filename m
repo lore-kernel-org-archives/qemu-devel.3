@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6B6C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40B4C04FFE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzOnI-0002Mx-QD; Tue, 23 Apr 2024 18:39:20 -0400
+	id 1rzOna-000376-CK; Tue, 23 Apr 2024 18:39:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOmk-0001bY-Jb
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOmc-0001Tj-Ga
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOmi-0006DH-Ln
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rzOmV-000669-Dp
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 18:38:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713911924;
+ s=mimecast20190719; t=1713911908;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z5r7Q48EGZq0nmpybZG7E24HfIaIjOOcrTLd7aRJaLk=;
- b=GPYAaJaRIUTLyaKm+fMF/mQbX5yZFyEYW5m2+J4fRyIIv5tf8uLcmYQeqY+BKrLbQOcgN6
- Vof3RSCcRfx1Bh2aqZyY/9BZ1M9fje+dFa+wfgUKoCiGFijBFLS/ncSRSnkj9h/Pwnz39R
- uLMmv2d6iiPJHMiaOU0YuPTd9wHTsKU=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7YBtqmlY+NFnoq1aZZtk8n211ngcrE4I+4c0f4YUndA=;
+ b=Zw443XKl+xsod8SsBYyhV9Mt5ig905GnmDnTRfTC+2DM7QNJtjK0Y3Qu79eMcyxorwPorv
+ BisK8JfB6d5pOFoFM5e59aEmyi0TN9gc4waLP1OucYEUXmku0J3qwlZ9QssBnyWyP/zlic
+ xxYVsgVuyx1B3Jy5qCEASV8ySRMCtfY=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-KXEPuyuFNwSvHoqd3l6u7Q-1; Tue, 23 Apr 2024 18:38:42 -0400
-X-MC-Unique: KXEPuyuFNwSvHoqd3l6u7Q-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6a05ab06d96so15361336d6.3
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:38:42 -0700 (PDT)
+ us-mta-605-2Yqw60elPe6Oo8yegC2ZTw-1; Tue, 23 Apr 2024 18:38:27 -0400
+X-MC-Unique: 2Yqw60elPe6Oo8yegC2ZTw-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3c73b31c4e4so1330812b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 15:38:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713911922; x=1714516722;
+ d=1e100.net; s=20230601; t=1713911906; x=1714516706;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z5r7Q48EGZq0nmpybZG7E24HfIaIjOOcrTLd7aRJaLk=;
- b=W6ATF2VCVb/HKiIZD9fA4pmLWvuQj9B0TrdIGasX5lENuEJJ7Bw2SXIKYZSbhyqDTs
- fmTk7Wetdy2YtiezAowrpQVDXyrtahgr7OsxXc39S18Uwug6A+SEHbbs1WPKeAuV48Rq
- b0VTClVzKupEwcGofUH+OgJF+wrOQmEyCFiGzlC+KjwEW1KvmyC/nS3lJc+8EIiXarHD
- yE6Yd7Rc3PCZf7Y2wDK6ThUlKDu7UslruAetDEuOlhVYk7gfuFBGzEoDi60SpptHPSMs
- 2SV7XNDhR91h+hutqMMZIoMnwrp4a8oD+sqeBA36ToYi5sLNXDmK9x+Q6Phl/3uhUyUN
- o5IQ==
-X-Gm-Message-State: AOJu0Yz43J4//Uwl7VJSecV+uMl2heqcQcvFcRaeoPOLhM4ExEUoRkrY
- iQjtzlA7fLreVkosPmIwDAH3jX28j+5PGRAc1goL+lpLXe7WhN9m7wpLwkJov/DSkjH/tHpJdEj
- RSJ5MU9znq4CXUQIfSTUXKiml+jpA/PucSjXuWG/ANHvrpvfR10gl4VGpMLzPHRcOKibAzUDJkf
- Q0299Ha1JCm+/NuFpaeFFzPSH3dxI+JckJuw==
-X-Received: by 2002:a05:620a:3d09:b0:790:8bbb:dd5f with SMTP id
- tq9-20020a05620a3d0900b007908bbbdd5fmr702577qkn.3.1713911921754; 
- Tue, 23 Apr 2024 15:38:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuRtjRDW3iFjHN9Mpuwwzp+wew8ocd2C4OcPgGX0AN+u82lFJtLa9Xv7Derx5JO6xSmP6cMw==
-X-Received: by 2002:a05:620a:3d09:b0:790:8bbb:dd5f with SMTP id
- tq9-20020a05620a3d0900b007908bbbdd5fmr702551qkn.3.1713911920936; 
- Tue, 23 Apr 2024 15:38:40 -0700 (PDT)
+ bh=7YBtqmlY+NFnoq1aZZtk8n211ngcrE4I+4c0f4YUndA=;
+ b=Ky7fd/4mvXgZqmi4eqNcqnXA4HjblQsbBfGZGErlrFaI6+BsL7/34A29uU/ua9cxDU
+ SxC3gXa4Dxqj99q9qanbl0bkMIdxS1foW/nmDCaOkR1wbFeJs5sBHdoK4kSOJQNZO7gY
+ eGji52h9Us66AkcFDu7FoIRe1XNBfEbmMNZx5hvUPUWACfWp+XIx7gdaQSCEo/HrtT5l
+ MRTC4eEqhh0KbJ2sMGqF5qX/9uhp3+ZdwT1nmBFK00LMrkhIE+kUOtmDVSrc5gO4OJjQ
+ tVBsq5OEJ2ax8O1w8DFVRYug7DWHAoQBJ4gK7Mqj6OA/q/x8s+gLEPBj1ZO+C6YpkUkF
+ J9Vw==
+X-Gm-Message-State: AOJu0YyYTzoG1nN/z/sX7Uo2H+fG8SiPrVKhgzIsJF8qFVrmW7Q7i8Gu
+ QJs0Or326I//Owd4Qlc6+0vfmfAERJUpshty7tW6LbPb684u5WhonTZuJvd5NPby4Y77wvyg03O
+ 8aKl5O5k13DIFLmw1GW5Ha5fnNxuJesMG4EgqN+J1uq7f0QQ9GT66GIBhlM3NZ98tLp2VHQ+RHO
+ r3Axudez94+6IzdVnvJ1uNuziF5s4423Q+Uw==
+X-Received: by 2002:a05:6808:201e:b0:3c5:f29a:5fda with SMTP id
+ q30-20020a056808201e00b003c5f29a5fdamr851808oiw.3.1713911906327; 
+ Tue, 23 Apr 2024 15:38:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvQW0QIYEIj8dI3RVrReAv2lJhR1VntR+Vi58JbKU1rhtP9kUEMMR9ZwyIMSZEG9m4wu+0sg==
+X-Received: by 2002:a05:6808:201e:b0:3c5:f29a:5fda with SMTP id
+ q30-20020a056808201e00b003c5f29a5fdamr851769oiw.3.1713911905666; 
+ Tue, 23 Apr 2024 15:38:25 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- c21-20020a05620a11b500b0078d67886632sm5647726qkk.37.2024.04.23.15.38.40
+ c21-20020a05620a11b500b0078d67886632sm5647726qkk.37.2024.04.23.15.38.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Apr 2024 15:38:40 -0700 (PDT)
+ Tue, 23 Apr 2024 15:38:25 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 21/26] migration: Add Error** argument to ram_state_init()
-Date: Tue, 23 Apr 2024 18:38:08 -0400
-Message-ID: <20240423223813.3237060-22-peterx@redhat.com>
+ Het Gala <het.gala@nutanix.com>
+Subject: [PULL 06/26] tests/qtest/migration: Add channels parameter in
+ migrate_qmp
+Date: Tue, 23 Apr 2024 18:37:53 -0400
+Message-ID: <20240423223813.3237060-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423223813.3237060-1-peterx@redhat.com>
 References: <20240423223813.3237060-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.67,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,74 +102,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Het Gala <het.gala@nutanix.com>
 
-Since the return value not exploited, follow the recommendations of
-qapi/error.h and change it to a bool
+Alter migrate_qmp() to allow use of channels parameter, but only
+fill the uri with correct port number if there are no channels.
+Here we don't want to allow the wrong cases of having both or
+none (ex: migrate_qmp_fail).
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Het Gala <het.gala@nutanix.com>
+Suggested-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240320064911.545001-13-clg@redhat.com
+Link: https://lore.kernel.org/r/20240312202634.63349-7-het.gala@nutanix.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ tests/qtest/migration-helpers.h |  4 ++--
+ tests/qtest/migration-helpers.c | 22 +++++++++++++---------
+ tests/qtest/migration-test.c    | 28 ++++++++++++++--------------
+ 3 files changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index bade3e9281..26ce11a337 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2780,13 +2780,13 @@ err_out:
-     return -ENOMEM;
- }
+diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+index 4e664148a5..1339835698 100644
+--- a/tests/qtest/migration-helpers.h
++++ b/tests/qtest/migration-helpers.h
+@@ -25,9 +25,9 @@ typedef struct QTestMigrationState {
+ bool migrate_watch_for_events(QTestState *who, const char *name,
+                               QDict *event, void *opaque);
  
--static int ram_state_init(RAMState **rsp)
-+static bool ram_state_init(RAMState **rsp, Error **errp)
+-G_GNUC_PRINTF(4, 5)
++G_GNUC_PRINTF(5, 6)
+ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+-                 const char *fmt, ...);
++                 const char *channels, const char *fmt, ...);
+ 
+ G_GNUC_PRINTF(3, 4)
+ void migrate_incoming_qmp(QTestState *who, const char *uri,
+diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+index a330ef9c7f..3b72cad6c1 100644
+--- a/tests/qtest/migration-helpers.c
++++ b/tests/qtest/migration-helpers.c
+@@ -133,10 +133,6 @@ static void migrate_set_ports(QTestState *to, QList *channel_list)
+     QListEntry *entry;
+     const char *addr_port = NULL;
+ 
+-    if (channel_list == NULL) {
+-        return;
+-    }
+-
+     addr = migrate_get_connect_qdict(to);
+ 
+     QLIST_FOREACH_ENTRY(channel_list, entry) {
+@@ -208,11 +204,10 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
+  * qobject_from_jsonf_nofail()) with "uri": @uri spliced in.
+  */
+ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+-                 const char *fmt, ...)
++                 const char *channels, const char *fmt, ...)
  {
-     *rsp = g_try_new0(RAMState, 1);
+     va_list ap;
+     QDict *args;
+-    QList *channel_list = NULL;
+     g_autofree char *connect_uri = NULL;
  
-     if (!*rsp) {
--        error_report("%s: Init ramstate fail", __func__);
--        return -1;
-+        error_setg(errp, "%s: Init ramstate fail", __func__);
-+        return false;
-     }
+     va_start(ap, fmt);
+@@ -220,11 +215,20 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+     va_end(ap);
  
-     qemu_mutex_init(&(*rsp)->bitmap_mutex);
-@@ -2802,7 +2802,7 @@ static int ram_state_init(RAMState **rsp)
-     (*rsp)->migration_dirty_pages = (*rsp)->ram_bytes_total >> TARGET_PAGE_BITS;
-     ram_state_reset(*rsp);
- 
--    return 0;
-+    return true;
- }
- 
- static void ram_list_init_bitmaps(void)
-@@ -2897,7 +2897,10 @@ out_unlock:
- 
- static int ram_init_all(RAMState **rsp)
- {
--    if (ram_state_init(rsp)) {
-+    Error *local_err = NULL;
-+
-+    if (!ram_state_init(rsp, &local_err)) {
-+        error_report_err(local_err);
-         return -1;
-     }
- 
-@@ -3624,7 +3627,11 @@ void ram_handle_zero(void *host, uint64_t size)
- 
- static void colo_init_ram_state(void)
- {
--    ram_state_init(&ram_state);
-+    Error *local_err = NULL;
-+
-+    if (!ram_state_init(&ram_state, &local_err)) {
-+        error_report_err(local_err);
+     g_assert(!qdict_haskey(args, "uri"));
+-    if (!uri) {
++    if (uri) {
++        qdict_put_str(args, "uri", uri);
++    } else if (!channels) {
+         connect_uri = migrate_get_connect_uri(to);
++        qdict_put_str(args, "uri", connect_uri);
 +    }
- }
++
++    g_assert(!qdict_haskey(args, "channels"));
++    if (channels) {
++        QObject *channels_obj = qobject_from_json(channels, &error_abort);
++        QList *channel_list = qobject_to(QList, channels_obj);
++        migrate_set_ports(to, channel_list);
++        qdict_put_obj(args, "channels", channels_obj);
+     }
+-    migrate_set_ports(to, channel_list);
+-    qdict_put_str(args, "uri", uri ? uri : connect_uri);
  
- /*
+     qtest_qmp_assert_success(who,
+                              "{ 'execute': 'migrate', 'arguments': %p}", args);
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 763ff27f33..af5e7dc6d6 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1301,7 +1301,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+     wait_for_serial("src_serial");
+     wait_for_suspend(from, &src_state);
+ 
+-    migrate_qmp(from, to, NULL, "{}");
++    migrate_qmp(from, to, NULL, NULL, "{}");
+ 
+     migrate_wait_for_dirty_mem(from, to);
+ 
+@@ -1451,7 +1451,7 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to)
+     g_assert_cmpint(ret, ==, 1);
+ 
+     migrate_recover(to, "fd:fd-mig");
+-    migrate_qmp(from, to, "fd:fd-mig", "{'resume': true}");
++    migrate_qmp(from, to, "fd:fd-mig", NULL, "{'resume': true}");
+ 
+     /*
+      * Make sure both QEMU instances will go into RECOVER stage, then test
+@@ -1539,7 +1539,7 @@ static void test_postcopy_recovery_common(MigrateCommon *args)
+      * Try to rebuild the migration channel using the resume flag and
+      * the newly created channel
+      */
+-    migrate_qmp(from, to, uri, "{'resume': true}");
++    migrate_qmp(from, to, uri, NULL, "{'resume': true}");
+ 
+     /* Restore the postcopy bandwidth to unlimited */
+     migrate_set_parameter_int(from, "max-postcopy-bandwidth", 0);
+@@ -1620,7 +1620,7 @@ static void test_baddest(void)
+     if (test_migrate_start(&from, &to, "tcp:127.0.0.1:0", &args)) {
+         return;
+     }
+-    migrate_qmp(from, to, "tcp:127.0.0.1:0", "{}");
++    migrate_qmp(from, to, "tcp:127.0.0.1:0", NULL, "{}");
+     wait_for_migration_fail(from, false);
+     test_migrate_end(from, to, false);
+ }
+@@ -1659,7 +1659,7 @@ static void test_analyze_script(void)
+     uri = g_strdup_printf("exec:cat > %s", file);
+ 
+     migrate_ensure_converge(from);
+-    migrate_qmp(from, to, uri, "{}");
++    migrate_qmp(from, to, uri, NULL, "{}");
+     wait_for_migration_complete(from);
+ 
+     pid = fork();
+@@ -1721,7 +1721,7 @@ static void test_precopy_common(MigrateCommon *args)
+         goto finish;
+     }
+ 
+-    migrate_qmp(from, to, args->connect_uri, "{}");
++    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
+ 
+     if (args->result != MIG_TEST_SUCCEED) {
+         bool allow_active = args->result == MIG_TEST_FAIL;
+@@ -1816,7 +1816,7 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+         goto finish;
+     }
+ 
+-    migrate_qmp(from, to, args->connect_uri, "{}");
++    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
+     wait_for_migration_complete(from);
+ 
+     /*
+@@ -1972,7 +1972,7 @@ static void test_ignore_shared(void)
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+ 
+-    migrate_qmp(from, to, uri, "{}");
++    migrate_qmp(from, to, uri, NULL, "{}");
+ 
+     migrate_wait_for_dirty_mem(from, to);
+ 
+@@ -2511,7 +2511,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+ 
+-    migrate_qmp(from, to, uri, "{}");
++    migrate_qmp(from, to, uri, NULL, "{}");
+ 
+     if (should_fail) {
+         qtest_set_expected_status(to, EXIT_FAILURE);
+@@ -2614,7 +2614,7 @@ static void test_migrate_auto_converge(void)
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+ 
+-    migrate_qmp(from, to, uri, "{}");
++    migrate_qmp(from, to, uri, NULL, "{}");
+ 
+     /* Wait for throttling begins */
+     percentage = 0;
+@@ -2980,7 +2980,7 @@ static void test_multifd_tcp_cancel(void)
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+ 
+-    migrate_qmp(from, to, NULL, "{}");
++    migrate_qmp(from, to, NULL, NULL, "{}");
+ 
+     migrate_wait_for_dirty_mem(from, to);
+ 
+@@ -3009,7 +3009,7 @@ static void test_multifd_tcp_cancel(void)
+ 
+     migrate_ensure_non_converge(from);
+ 
+-    migrate_qmp(from, to2, NULL, "{}");
++    migrate_qmp(from, to2, NULL, NULL, "{}");
+ 
+     migrate_wait_for_dirty_mem(from, to2);
+ 
+@@ -3342,7 +3342,7 @@ static void test_migrate_dirty_limit(void)
+     migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
+ 
+     /* Start migrate */
+-    migrate_qmp(from, to, args.connect_uri, "{}");
++    migrate_qmp(from, to, args.connect_uri, NULL, "{}");
+ 
+     /* Wait for dirty limit throttle begin */
+     throttle_us_per_full = 0;
+@@ -3383,7 +3383,7 @@ static void test_migrate_dirty_limit(void)
+     }
+ 
+     /* Start migrate */
+-    migrate_qmp(from, to, args.connect_uri, "{}");
++    migrate_qmp(from, to, args.connect_uri, NULL, "{}");
+ 
+     /* Wait for dirty limit throttle begin */
+     throttle_us_per_full = 0;
 -- 
 2.44.0
 
