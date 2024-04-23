@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EAB0C04FFE
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16426C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnW-0006Wu-MS; Tue, 23 Apr 2024 11:11:06 -0400
+	id 1rzHnU-0006IO-5a; Tue, 23 Apr 2024 11:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnD-0004l7-6L
+ id 1rzHnC-0004kJ-RB
  for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHn8-0000IK-7T
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:46 -0400
+ id 1rzHn7-0000IE-Vh
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885041;
+ s=mimecast20190719; t=1713885040;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kKv7TTBo0ShoANH9BNuuNFXwEQDRmEh6JnmdU8vLcGQ=;
- b=VfHC76/M+zALgbcVVAijwgbWFC0xaulhyT7O0p4XgdL8zzJgbFmRLRZ82Z99O9ph/2RNzl
- Lt3MsNFouA2UnDJucwWRJhgNru654IIJWHfNZgsopcZHFAO1kOxd9UMvuteGCO4jql9aWW
- ogDUi+356xnr28AYvlIaAWWSeWZMZfQ=
+ bh=hI2Wfdd4jjbYJ/EcapLaF3fT5yZEYHuVbDtiXsUnZqQ=;
+ b=RcWexdJadBzoX17sDmNuIh3Oz4zvREbXBIR7532UTUmDAvwQdypFUQVNoYfDYr+yLzExQn
+ vaIMR8Auo4t+a53LSY5wjEf9qtH6p5bq2WSn4hUC9KT63i9mLLhoRbedJkCyaMj7Et9Y3l
+ Jt8QMjkRqjrv6Rju7MPr5Xw0Q7kMhSE=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-xioNxp6KMVeBGpyiuwotxw-1; Tue, 23 Apr 2024 11:10:40 -0400
-X-MC-Unique: xioNxp6KMVeBGpyiuwotxw-1
+ us-mta-433-WyqwbiYnP7-6uZYRDFRdWQ-1; Tue, 23 Apr 2024 11:10:39 -0400
+X-MC-Unique: WyqwbiYnP7-6uZYRDFRdWQ-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AA1A9812C39;
- Tue, 23 Apr 2024 15:10:39 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CDCC1834FB8;
+ Tue, 23 Apr 2024 15:10:38 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 1F2472026D0A;
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 3D9772033979;
  Tue, 23 Apr 2024 15:10:38 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 47/63] trace/kvm: Split address space and slot id in
- trace_kvm_set_user_memory()
-Date: Tue, 23 Apr 2024 17:09:35 +0200
-Message-ID: <20240423150951.41600-48-pbonzini@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>
+Subject: [PULL 46/63] hw/i386/sev: Use legacy SEV VM types for older machine
+ types
+Date: Tue, 23 Apr 2024 17:09:34 +0200
+Message-ID: <20240423150951.41600-47-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -82,48 +82,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Michael Roth <michael.roth@amd.com>
 
-The upper 16 bits of kvm_userspace_memory_region::slot are
-address space id. Parse it separately in trace_kvm_set_user_memory().
+Newer 9.1 machine types will default to using the KVM_SEV_INIT2 API for
+creating SEV/SEV-ES going forward. However, this API results in guest
+measurement changes which are generally not expected for users of these
+older guest types and can cause disruption if they switch to a newer
+QEMU/kernel version. Avoid this by continuing to use the older
+KVM_SEV_INIT/KVM_SEV_ES_INIT APIs for older machine types.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-ID: <20240229063726.610065-5-xiaoyao.li@intel.com>
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+Message-ID: <20240409230743.962513-4-michael.roth@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/kvm/kvm-all.c    | 5 +++--
- accel/kvm/trace-events | 2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ hw/i386/pc.c      | 1 +
+ target/i386/sev.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 5a2fbee32a3..ed50c80b1e4 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -303,8 +303,9 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
-     ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
-     slot->old_flags = mem.flags;
- err:
--    trace_kvm_set_user_memory(mem.slot, mem.flags, mem.guest_phys_addr,
--                              mem.memory_size, mem.userspace_addr, ret);
-+    trace_kvm_set_user_memory(mem.slot >> 16, (uint16_t)mem.slot, mem.flags,
-+                              mem.guest_phys_addr, mem.memory_size,
-+                              mem.userspace_addr, ret);
-     if (ret < 0) {
-         error_report("%s: KVM_SET_USER_MEMORY_REGION failed, slot=%d,"
-                      " start=0x%" PRIx64 ", size=0x%" PRIx64 ": %s",
-diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-index a25902597b1..9f599abc172 100644
---- a/accel/kvm/trace-events
-+++ b/accel/kvm/trace-events
-@@ -15,7 +15,7 @@ kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
- kvm_irqchip_release_virq(int virq) "virq %d"
- kvm_set_ioeventfd_mmio(int fd, uint64_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%" PRIx64 " val=0x%x assign: %d size: %d match: %d"
- kvm_set_ioeventfd_pio(int fd, uint16_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%x val=0x%x assign: %d size: %d match: %d"
--kvm_set_user_memory(uint32_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
-+kvm_set_user_memory(uint16_t as, uint16_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "AddrSpace#%d Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
- kvm_clear_dirty_log(uint32_t slot, uint64_t start, uint32_t size) "slot#%"PRId32" start 0x%"PRIx64" size 0x%"PRIx32
- kvm_resample_fd_notify(int gsi) "gsi %d"
- kvm_dirty_ring_full(int id) "vcpu %d"
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 41909f7bd7a..08c7de416fd 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -80,6 +80,7 @@
+ 
+ GlobalProperty pc_compat_9_0[] = {
+     { TYPE_X86_CPU, "guest-phys-bits", "0" },
++    { "sev-guest", "legacy-vm-type", "true" },
+ };
+ const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
+ 
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index f4ee317cb03..d30b68c11e4 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1417,6 +1417,7 @@ sev_guest_instance_init(Object *obj)
+     object_property_add_uint32_ptr(obj, "reduced-phys-bits",
+                                    &sev->reduced_phys_bits,
+                                    OBJ_PROP_FLAG_READWRITE);
++    object_apply_compat_props(obj);
+ }
+ 
+ /* sev guest info */
 -- 
 2.44.0
 
