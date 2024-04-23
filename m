@@ -4,35 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B959BC4345F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A1BC04FFE
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzOfo-00019s-8n; Tue, 23 Apr 2024 18:31:36 -0400
+	id 1rzOfo-00019N-4l; Tue, 23 Apr 2024 18:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOff-000177-6N; Tue, 23 Apr 2024 18:31:29 -0400
+ id 1rzOfb-00016q-0A; Tue, 23 Apr 2024 18:31:25 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfc-0004bI-Ab; Tue, 23 Apr 2024 18:31:26 -0400
+ id 1rzOfX-0004aV-3F; Tue, 23 Apr 2024 18:31:22 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 03CDA4E6056;
- Wed, 24 Apr 2024 00:31:21 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id BBCED4E603E;
+ Wed, 24 Apr 2024 00:31:12 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id DbhUbOu9borS; Wed, 24 Apr 2024 00:31:19 +0200 (CEST)
+ with ESMTP id 20qXyZhTjFCM; Wed, 24 Apr 2024 00:31:10 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 15D614E6057; Wed, 24 Apr 2024 00:31:19 +0200 (CEST)
-Message-Id: <ecd7263cc8a79479c4d85e9c12d1df8524a8b9f0.1713907038.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1713907038.git.balaton@eik.bme.hu>
-References: <cover.1713907038.git.balaton@eik.bme.hu>
+ id 9BBA64E603D; Wed, 24 Apr 2024 00:31:10 +0200 (CEST)
+Message-Id: <cover.1713907038.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 08/24] target/ppc/mmu_common.c: Introduce
- mmu6xx_get_physical_address()
+Subject: [PATCH 00/24] Misc PPC exception and BookE MMU clean ups
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +37,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 24 Apr 2024 00:31:19 +0200 (CEST)
+Date: Wed, 24 Apr 2024 00:31:10 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -63,72 +60,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Repurpose get_segment_6xx_tlb() to do the whole address translation
-for POWERPC_MMU_SOFT_6xx MMU model by moving the BAT check there and
-renaming it to match other similar functions. These are only called
-once together so no need to keep these separate functions and
-combining them simplifies the caller allowing further restructuring.
+This series does some further clean up mostly around BookE MMU to
+untangle it from other MMU models. It also contains some other changes
+that I've come up with while working on this. The first 3 patches are
+from the last exception handling clean up series that were dropped due
+to some error on CI but I'm not sure if that was because of some CI
+infrastructure problem or some problem with the patches as the error
+did not make much sense. So these patches are only rebased now, I made
+no other change to them until the issue is understood better. The rest
+are new patches I've added since tha last series. Please review.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- target/ppc/mmu_common.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+Regards,
+BALATON Zoltan
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index c4fafebbe3..47346adb88 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -359,19 +359,25 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     return ret;
- }
- 
--/* Perform segment based translation */
--static int get_segment_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
--                               target_ulong eaddr, MMUAccessType access_type,
--                               int type)
-+static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-+                                       target_ulong eaddr,
-+                                       MMUAccessType access_type, int type)
- {
-     PowerPCCPU *cpu = env_archcpu(env);
-     hwaddr hash;
--    target_ulong vsid;
--    int ds, target_page_bits;
-+    target_ulong vsid, sr, pgidx;
-     bool pr;
--    int ret;
--    target_ulong sr, pgidx;
-+    int ds, target_page_bits, ret = -1;
- 
-+    /* First try to find a BAT entry if there are any */
-+    if (env->nb_BATs != 0) {
-+        ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
-+    }
-+    if (ret >= 0) {
-+        return ret;
-+    }
-+
-+    /* Perform segment based translation when no BATs matched */
-     pr = FIELD_EX64(env->msr, MSR, PR);
-     ctx->eaddr = eaddr;
- 
-@@ -1198,14 +1204,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
-         if (real_mode) {
-             ret = check_physical(env, ctx, eaddr, access_type);
-         } else {
--            /* Try to find a BAT */
--            if (env->nb_BATs != 0) {
--                ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
--            }
--            if (ret < 0) {
--                /* We didn't match any BAT entry or don't have BATs */
--                ret = get_segment_6xx_tlb(env, ctx, eaddr, access_type, type);
--            }
-+            ret = mmu6xx_get_physical_address(env, ctx, eaddr, access_type,
-+                                              type);
-         }
-         break;
- 
+
+BALATON Zoltan (24):
+  target/ppc: Fix gen_sc to use correct nip
+  target/ppc: Move patching nip from exception handler to helper_scv
+  target/ppc: Simplify syscall exception handlers
+  target/ppc: Remove unused helper
+  target/ppc/mmu_common.c: Move calculation of a value closer to its
+    usage
+  target/ppc/mmu_common.c: Simplify checking for real mode
+  target/ppc/mmu_common.c: Drop cases for unimplemented MPC8xx MMU
+  target/ppc/mmu_common.c: Introduce mmu6xx_get_physical_address()
+  target/ppc/mmu_common.c: Rename get_bat_6xx_tlb()
+  target/ppc/mmu_common.c: Split out BookE cases before checking real
+    mode
+  target/ppc/mmu_common.c: Split off real mode cases in
+    get_physical_address_wtlb()
+  target/ppc/mmu_common.c: Inline and remove check_physical()
+  target/ppc/mmu_common.c: Simplify mmubooke_get_physical_address()
+  target/ppc/mmu_common.c: Simplify mmubooke206_get_physical_address()
+  target/ppc/mmu_common.c: Fix misindented qemu_log_mask() calls
+  target/ppc/mmu_common.c: Deindent ppc_jumbo_xlate()
+  target/ppc/mmu_common.c: Replace hard coded constants in
+    ppc_jumbo_xlate()
+  target/ppc/mmu_common.c: Make get_physical_address_wtlb() static
+  target/ppc: Move mmu_ctx_t definition to mmu_common.c
+  target/ppc: Remove ppc_hash32_pp_prot() and reuse common function
+  target/ppc/mmu_common.c: Split off BookE handling from
+    ppc_jumbo_xlate()
+  target/ppc/mmu_common.c: Remove BookE handling from
+    get_physical_address_wtlb()
+  target/ppc/mmu_common.c: Simplify ppc_booke_xlate()
+  target/ppc/mmu_common.c: Move BookE MMU functions together
+
+ target/ppc/excp_helper.c |  67 +---
+ target/ppc/helper.h      |   2 -
+ target/ppc/internal.h    |  19 +-
+ target/ppc/mmu-hash32.c  |  47 +--
+ target/ppc/mmu_common.c  | 731 +++++++++++++++++++--------------------
+ target/ppc/mmu_helper.c  |  24 --
+ target/ppc/translate.c   |  12 +-
+ 7 files changed, 384 insertions(+), 518 deletions(-)
+
 -- 
 2.30.9
 
