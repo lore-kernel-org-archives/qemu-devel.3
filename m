@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53B2C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 11:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE3DC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 12:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzDxl-0006x0-7j; Tue, 23 Apr 2024 07:05:25 -0400
+	id 1rzF0k-0003cA-2X; Tue, 23 Apr 2024 08:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzDxg-0006wU-Sd
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 07:05:20 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzF0h-0003a4-NW
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 08:12:31 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzDxe-0000uz-0X
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 07:05:19 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-41aa2f6ff01so7086535e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 04:05:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rzF0f-0007Ic-Nf
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 08:12:31 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-345b857d7adso4415665f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 05:12:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1713870316; x=1714475116; darn=nongnu.org;
+ d=linaro.org; s=google; t=1713874348; x=1714479148; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zjNMw4IiDJW5kAd78A6Ym2pSoz7mgUb9vzCrG9W6h0E=;
- b=ASbtjaz2a/+ARdAU45Gm8OrEXWEyXKeyOIL0XRtnF3S3QXqHZsLYJA9aTrheNw7IXy
- fbB7ZW5BiIfLTFpVcBDqMCxdfdubOFtsrFbecchUqZLA157RTRD2Qie4yhS3VS/6MZ07
- 8DTNoT0XRmPZq/1V6KUse+dkd1ncULt22qvbFRE9S5LiXPLn9ydqZ7HeiDhKF6X/UGj8
- IEcr7HdINtsOYsxNvrMAN19zVuu+ZqOp3GGe8ZTtsG80vILbvcTo1Cnkb3cun+H4CsXA
- cehj+1Usg3B8POChmjM+aBGzb5F/h2JMVB/A9VTfP4qZneHrpbQS0aO4bJms1X4tOipp
- W55Q==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2l7PltlWdJDwWp/74Dgpbb8SGt7xm86vms3Vm5cSd1E=;
+ b=n3KDW5RohaLbG+KPOrLw8RMo9/piYC3FBQX5HewKQDrhj2Md42C+UjJFLNHTOCMZCa
+ O8aAyRXee5ZJWyLN25c9coeEQe9sJ2QXkmG2NGgMz8kHBuhzboCIozZxJtZSB6yaWNvk
+ iTkxop8ed2fHpEJU2e7/0dEt5LAL1H6eLZakQskSaJt2u+nvRxhmKUd+t64aj5e7PPdQ
+ bkJhCsc1pQJxLvi3G75n4Tsbz1I2Flu01bud+XBBaRYsczLlwqeCb+eIyaw72We9ZE6D
+ dbwEN6IlBIStHXZmc/XUye4FvofdtLxb7xjKgDQHwYnUuRujVrtBMwCk9ZR3oSAfE4Bu
+ tcAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713870316; x=1714475116;
+ d=1e100.net; s=20230601; t=1713874348; x=1714479148;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zjNMw4IiDJW5kAd78A6Ym2pSoz7mgUb9vzCrG9W6h0E=;
- b=jfmorzUg5A1JKwPzf0mcl+sLSCjOwLO7yLWTcKbeVEoIhJuz+RJiNYaRCc1wEhlnc+
- Lja8kc2j1vELlceNSJtv2dg3zLUVYhWmYtFbH/i3uBM5fSzUSjCsTwn9ND3NhVwhgBO3
- 4nc+YgYzn0Yafg9DXCfl7meDSxuKhIUGWC6yljqRAqIBldvO+AsVjeZl/p/U4UTzksOT
- OY800MFxIeFIa7PO/uXnF4P1ViOFc+Vt8ypOD39Hswm6Ldfng/zOxOfIJOIjZLFIvXpR
- zfc9Lfdzfs/Lxe6zQ6Q9FTkCRgph7Wmrhj0Czzh9QQlrrXvDG/pPlbV+NtIC58Gji3AC
- BwxA==
-X-Gm-Message-State: AOJu0YwF07XBzWV7NWn6FmOU1AdPWfQ8DTM/dTfZw444fUk4dzA0gMxm
- eHEj6omjHQBk1ODO+vJYT4Hp9gRgji7KAgH4luViJa+aXbeS4zp1Q52LPp5WucU=
-X-Google-Smtp-Source: AGHT+IF27WcsZ1koO3O7Ny0pbU0Owm95K3T1hCtUYcp4Jwv0Io/ciN0MhT7t0fMm3PbvkIb8zof6Bw==
-X-Received: by 2002:a05:600c:5020:b0:41a:6441:4f48 with SMTP id
- n32-20020a05600c502000b0041a64414f48mr3888524wmr.38.1713870315922; 
- Tue, 23 Apr 2024 04:05:15 -0700 (PDT)
-Received: from [192.168.1.28] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- t13-20020a05600c198d00b00417da22df18sm23448793wmq.9.2024.04.23.04.05.14
+ bh=2l7PltlWdJDwWp/74Dgpbb8SGt7xm86vms3Vm5cSd1E=;
+ b=TpecB4w77zPKn7QtWRXyTikhZnmPAp1neyNQR+vBDx7/mgstAV/Qs5Z7DkNOhvvi4Y
+ B+v5/D/Wz8zVNjyj6tXE9TNW3ShomZVZjtYWr1SEwPY9elLxF/D0xzGu3pIFMehzkfbi
+ 7VhFGRdtUQ+zbRYgO9rX85E9wG/4vOhn696s41cKAlIt5BMs4gmjiUcJm6OkTMWVdOBD
+ J+50fGqLdSSb9Iugwve1KaUjbF0afLtUVBtH4DhlX+ejgXSs4mamzjfq5pnq4fSrOoRf
+ nKpAt5QqdQ2oPZaUO5DzCc/o1cYxpLqqeuyCBRoBnEyTqyeUVgIKqsc7aOO51p8lP/lI
+ hYgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+EM1e7gEL5iiThWzE9xQLSBr7vgkhwnTzlcFxM+MxcNuaLeyVWKTOPHDCsNPOab2iqtfcL1app9dBpzABaVHQgyyDzGE=
+X-Gm-Message-State: AOJu0YyqPygw7uzCDl4Hmnm9tFbMwB4fYnoiXQJuhHu6EMxpPFPrU/EO
+ RV12BQJ7A95c694rnUG+V+0WPlJBR0ZmfnmsCpZIB72eEZ1zSWl+qGwV+ITXqQo=
+X-Google-Smtp-Source: AGHT+IG1VdM8eYxCFJ3orE14TiA/s99vwVcdpdOZ6YTjSdRjSMGHc0M6la/EcdOA4sH6q7Z0Cr8ThA==
+X-Received: by 2002:a05:6000:11d0:b0:341:ce05:dba5 with SMTP id
+ i16-20020a05600011d000b00341ce05dba5mr8601607wrx.30.1713874348076; 
+ Tue, 23 Apr 2024 05:12:28 -0700 (PDT)
+Received: from [192.168.175.175] (228.53.205.77.rev.sfr.net. [77.205.53.228])
+ by smtp.gmail.com with ESMTPSA id
+ x5-20020a5d6b45000000b003472489d26fsm14517690wrw.19.2024.04.23.05.12.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Apr 2024 04:05:15 -0700 (PDT)
-Message-ID: <f5c67478-4fb9-4fb9-a6b2-286d6372bd0a@linaro.org>
-Date: Tue, 23 Apr 2024 13:05:14 +0200
+ Tue, 23 Apr 2024 05:12:27 -0700 (PDT)
+Message-ID: <69fe13c5-8351-44fe-bde5-88015b4f2523@linaro.org>
+Date: Tue, 23 Apr 2024 14:12:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/audio/virtio-snd: Use device endianness instead of
- target one
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-stable@nongnu.org
-References: <20240422142056.3023-1-philmd@linaro.org>
- <20240422170056-mutt-send-email-mst@kernel.org>
- <1f6447c4-ea4c-4bd3-a879-8efb72448bb8@linaro.org>
- <20240422170913-mutt-send-email-mst@kernel.org>
- <CAAjaMXZxFJtEdJh38_76ZdL82JBM52Ke0+p1K07miiFeQSJtcw@mail.gmail.com>
- <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] target/arm: Refactor default generic timer frequency
+ handling
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240419184608.2675213-1-peter.maydell@linaro.org>
+ <20240419184608.2675213-3-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAAjaMXaoPeCVpd=q-d2GH25SfrNPVqh6hCerMOrQ6payXVMmyA@mail.gmail.com>
+In-Reply-To: <20240419184608.2675213-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,38 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/24 11:18, Manos Pitsidianakis wrote:
-> On Tue, 23 Apr 2024 at 11:47, Manos Pitsidianakis
-> <manos.pitsidianakis@linaro.org> wrote:
->>
->> On Tue, 23 Apr 2024 at 00:11, Michael S. Tsirkin <mst@redhat.com> wrote:
->>>
->>> On Mon, Apr 22, 2024 at 11:07:21PM +0200, Philippe Mathieu-Daudé wrote:
->>>> On 22/4/24 23:02, Michael S. Tsirkin wrote:
->>>>> On Mon, Apr 22, 2024 at 04:20:56PM +0200, Philippe Mathieu-Daudé wrote:
->>>>>> Since VirtIO devices can change endianness at runtime,
->>>>>> we need to use the device endianness, not the target
->>>>>> one.
->>>>>>
->>>>>> Cc: qemu-stable@nongnu.org
->>>>>> Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
->>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>
->>>>>
->>>>>
->>>>> This is all completely bogus. Virtio SND is from Virtio 1.0 only.
->>>>> It is unconditionally little endian.
->>
->>
->> This part of the code is for PCM frames (raw bytes), not virtio spec
->> fields (which indeed must be LE in modern VIRTIO).
+On 19/4/24 20:46, Peter Maydell wrote:
+> The generic timer frequency is settable by board code via a QOM
+> property "cntfrq", but otherwise defaults to 62.5MHz.  The way this
+> is done includes some complication resulting from how this was
+> originally a fixed value with no QOM property.  Clean it up:
 > 
-> Thought a little more about it. We should keep the target's endianness
-> here, if it's mutable then we should query the machine the device is
-> attached to somehow. the virtio device should never change endianness
-> like Michael says since it's not legacy.
+>   * always set cpu->gt_cntfrq_hz to some sensible value, whether
+>     the CPU has the generic timer or not, and whether it's system
+>     or user-only emulation
+>   * this means we can always use gt_cntfrq_hz, and never need
+>     the old GTIMER_SCALE define
+>   * set the default value in exactly one place, in the realize fn
+> 
+> The aim here is to pave the way for handling the ARMv8.6 requirement
+> that the generic timer frequency is always 1GHz.  We're going to do
+> that by having old CPU types keep their legacy-in-QEMU behaviour and
+> having the default for any new CPU types be a 1GHz rather han 62.5MHz
+> cntfrq, so we want the point where the default is decided to be in
+> one place, and in code, not in a DEFINE_PROP_UINT64() initializer.
+> 
+> This commit should have no behavioural changes.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/internals.h |  7 ++++---
+>   target/arm/cpu.c       | 31 +++++++++++++++++--------------
+>   target/arm/helper.c    | 16 ++++++++--------
+>   3 files changed, 29 insertions(+), 25 deletions(-)
 
-Grr. So as Richard suggested, this need to be pass as a device
-property then.
-(https://lore.kernel.org/qemu-devel/ed134c9d-6e6f-465b-900f-e39ca4e09876@linaro.org/)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
