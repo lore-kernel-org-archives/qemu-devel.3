@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A74BC4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39DB0C4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 13:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzG0m-0005Aj-5S; Tue, 23 Apr 2024 09:16:40 -0400
+	id 1rzG0z-0005Cr-Pi; Tue, 23 Apr 2024 09:16:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG0j-00059b-MH
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:37 -0400
+ id 1rzG0w-0005CO-Pq
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzG0i-0001uk-1p
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:37 -0400
+ id 1rzG0u-0001z0-Ex
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 09:16:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713878195;
+ s=mimecast20190719; t=1713878207;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PXHtC2xl9RAtbS0F3QVWIE+OZhVyfPtZyB0bS1TkXQ8=;
- b=eA3SO1L60/+3gcNlVoDAPoWMg/wPaPzM8R8zQ21l19jJO7llWeZ8c2daviUGxKfYGpMqRm
- GNrweDaNDRxGoGVNHOfp0hSchdsEoY6Q9ZhxN6rzdWN91/zgeDzAO/qqeIBuQG9Z0DL2J6
- jeWFAAbzfuoujFZD4rf5aLCVEAO1mZM=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wSgDt6YU7vtcJ/Iy2yUD2TBUH68ZAHXi4ppwE8X5krc=;
+ b=IIsjWsMP/dvm97aw+WatR3cvdn2briaG70Vt00whDBaSNQSdMqcS235OyeKc4TQcghZUpp
+ Dq7HM1FY5/YOMpnmLEq3aEYIy+mKZJUtq951AY0VzCjeFt+HbsrT513EWrbO6FuspUReO3
+ YMWRU60i9b2cEl3xoZu3e4JU8K6QRm4=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-Tqe2qq8nP4aCaxmvJxoVFw-1; Tue, 23 Apr 2024 09:16:34 -0400
-X-MC-Unique: Tqe2qq8nP4aCaxmvJxoVFw-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-571fee4bbcbso1590771a12.3
- for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:16:33 -0700 (PDT)
+ us-mta-648-m1SgMh7LN8-2NPtNvAxdvA-1; Tue, 23 Apr 2024 09:16:46 -0400
+X-MC-Unique: m1SgMh7LN8-2NPtNvAxdvA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a559bc02601so199354466b.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Apr 2024 06:16:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713878192; x=1714482992;
+ d=1e100.net; s=20230601; t=1713878205; x=1714483005;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PXHtC2xl9RAtbS0F3QVWIE+OZhVyfPtZyB0bS1TkXQ8=;
- b=vFf4Z0P0wo+6Phk6xQ2Lw6hxRS9w0Xnc3ezRfP4n9JY9IZWK5+53GFAF7m4PjsMa5/
- TEaB1wouIrlzKarZmRL4lTN1F548jePsQdFeRMQojLUHGyYQIa5uJuZh5Wi/Ja3dneF0
- luWC5PvfdtfisRiWdB2ZCLnN4cupIYVAGFIcO1t7hGOSScFfFg69sOgPLAmNqMKzsAV7
- /5o6dC7qZMJOY6qlMaZl0LGa1nMg1Dl28vSGZXFbL6XwwxizMxFkw9WXYXkFwSdTFtbx
- /4sXEpHOvYfVTRpq44nF0M/abIX5JIVCOBUEeKXxV077mazZ50tdaLP91VFj/WCNBiCs
- 82dw==
-X-Gm-Message-State: AOJu0YwUgcfEnUQ1PHf7GdsZlD7VHcx30QPYUAsqp8LDsxRL70sddSNG
- MqBSlomh7/f5F5q2vDssfc/XZ3I/VZOJzIZM+212d1sSj5v1wBsVCguQHFe6Wh8a9ejKqyeEIaP
- a9Vvo3axueshQneYSNzaZ3Fg9g21Y+xmqqVHPkK0pUsCGxDmL9ulLCxwpHjhmgqghyzyKiModIJ
- z7/KdHTnbImBMx6SZ+2bpBGu4hOFJ3Wd5+H+Bk
-X-Received: by 2002:a50:d6d7:0:b0:56f:e7b9:e67d with SMTP id
- l23-20020a50d6d7000000b0056fe7b9e67dmr11782620edj.12.1713878191037; 
- Tue, 23 Apr 2024 06:16:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9BxWqTy6qR7BOgsV0G2DB2GDNVk7mQu1QvH+VkCm7r+RUts5oHxDbnR60xkQAWd+4JIvJDA==
-X-Received: by 2002:a50:d6d7:0:b0:56f:e7b9:e67d with SMTP id
- l23-20020a50d6d7000000b0056fe7b9e67dmr11782607edj.12.1713878190737; 
- Tue, 23 Apr 2024 06:16:30 -0700 (PDT)
+ bh=wSgDt6YU7vtcJ/Iy2yUD2TBUH68ZAHXi4ppwE8X5krc=;
+ b=eS+QJ6nzHELds6A1rFeKz1n4ZwQmzUeiAmrZm7VPg2Qb8qv/9EvlIN9e5gE9r58VTa
+ ltS3UPbK8MVKVsoJNgnAcvP6IrL+Mgm2ksk7lepauHo6a1m+frjYGV7X5GzUXV36APzW
+ v0v4qmXp0Pm36Sv7aQYYUg861daATL2acn3Qk7+5Vjcssj7hUMbNJCmq7o+QiLbvErkl
+ Uzc5sULTiTaJ2EuvmfYbYFRxTwoiZH5NH2XDglTHrcK2d+S3jPkoR71EEePcbqzybFAF
+ a/BN03//xlE9MyvMYYTTlNAZTP7bufTO8Jj8QynYhfKW5EerGj2wmwbm8silmbDncozL
+ 1sKw==
+X-Gm-Message-State: AOJu0YyXtEE0lf8YZ9Lfugaq03fDaxMTV2Bjp5vy9qPkpVdojF+mDI/9
+ SZhL7UeQCkeAuXMhDNBrz7+wn6YhZ/HO7NNG0uFQux9OZAuNK9Xexp9pQyoRiBZgRZ6hFzRvwiQ
+ LMBguJk9ClrN4Y3143CSTuKMvY0KcW1YfmIQ1X0dDbQnCzayk3GHRE/LEbONaLAW5LYagfS2J6g
+ hvxcH0cI7QG+zxoGnqSnfLJ32SKYE76HFM+Rca
+X-Received: by 2002:a17:906:a386:b0:a55:b25d:9c9e with SMTP id
+ k6-20020a170906a38600b00a55b25d9c9emr4930394ejz.74.1713878204863; 
+ Tue, 23 Apr 2024 06:16:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbluqFc83GyIpO8+qJYoHLN8MN+C368MVGe2XsNZ7IDo+k0kQUV7y71thn8us+Qy+mZQTgZA==
+X-Received: by 2002:a17:906:a386:b0:a55:b25d:9c9e with SMTP id
+ k6-20020a170906a38600b00a55b25d9c9emr4930379ejz.74.1713878204589; 
+ Tue, 23 Apr 2024 06:16:44 -0700 (PDT)
 Received: from avogadro.local ([151.81.119.75])
  by smtp.gmail.com with ESMTPSA id
- be12-20020a0564021a2c00b0056bf7f92346sm6649475edb.50.2024.04.23.06.16.28
+ v19-20020a170906339300b00a5592a12fe2sm4796324eja.128.2024.04.23.06.16.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Apr 2024 06:16:29 -0700 (PDT)
+ Tue, 23 Apr 2024 06:16:42 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	farosas@suse.de
-Subject: [PATCH 06/22] hppa: switch boards to "default y"
-Date: Tue, 23 Apr 2024 15:15:56 +0200
-Message-ID: <20240423131612.28362-7-pbonzini@redhat.com>
+Subject: [PATCH 11/22] meson: make target endianneess available to Kconfig
+Date: Tue, 23 Apr 2024 15:16:01 +0200
+Message-ID: <20240423131612.28362-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240423131612.28362-1-pbonzini@redhat.com>
 References: <20240423131612.28362-1-pbonzini@redhat.com>
@@ -105,41 +105,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Some targets use "default y" for boards to filter out those that require
 TCG.  For consistency we are switching all other targets to do the same.
-Continue with PARISC.
-
-No changes to generated config-devices.mak file.
+MIPS boards may only be available for big-endian or only for
+little-endian emulators, add a symbol so that this can be described
+with a "depends on" clause.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configs/devices/hppa-softmmu/default.mak | 5 ++---
- hw/hppa/Kconfig                          | 2 ++
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ meson.build    | 12 +++++++-----
+ target/Kconfig |  3 +++
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/configs/devices/hppa-softmmu/default.mak b/configs/devices/hppa-softmmu/default.mak
-index b0364bb88f2..059510cdbb7 100644
---- a/configs/devices/hppa-softmmu/default.mak
-+++ b/configs/devices/hppa-softmmu/default.mak
-@@ -4,6 +4,5 @@
- #
- #CONFIG_PCI_DEVICES=n
+diff --git a/meson.build b/meson.build
+index 9af60550753..9c4fb027853 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3037,7 +3037,7 @@ foreach target : target_dirs
+     }
+   endif
  
--# Boards:
--#
--CONFIG_HPPA_B160L=y
-+# Boards are selected by default, uncomment to keep out of the build.
-+# CONFIG_HPPA_B160L=n
-diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
-index ee7ffd2bfb5..d4d457f4ab4 100644
---- a/hw/hppa/Kconfig
-+++ b/hw/hppa/Kconfig
-@@ -1,5 +1,7 @@
- config HPPA_B160L
-     bool
-+    default y
-+    depends on HPPA
-     imply PCI_DEVICES
-     imply E1000_PCI
-     imply USB_OHCI_PCI
+-  accel_kconfig = []
++  target_kconfig = []
+   foreach sym: accelerators
+     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
+       config_target += { sym: 'y' }
+@@ -3047,10 +3047,10 @@ foreach target : target_dirs
+       else
+         config_target += { 'CONFIG_TCG_BUILTIN': 'y' }
+       endif
+-      accel_kconfig += [ sym + '=y' ]
++      target_kconfig += [ sym + '=y' ]
+     endif
+   endforeach
+-  if accel_kconfig.length() == 0
++  if target_kconfig.length() == 0
+     if default_targets
+       continue
+     endif
+@@ -3110,6 +3110,9 @@ foreach target : target_dirs
+                                                configuration: config_target_data)}
+ 
+   if target.endswith('-softmmu')
++    target_kconfig += 'CONFIG_' + config_target['TARGET_ARCH'].to_upper() + '=y'
++    target_kconfig += 'CONFIG_TARGET_BIG_ENDIAN=' + config_target['TARGET_BIG_ENDIAN']
++
+     config_input = meson.get_external_property(target, 'default')
+     config_devices_mak = target + '-config-devices.mak'
+     config_devices_mak = configure_file(
+@@ -3120,8 +3123,7 @@ foreach target : target_dirs
+       command: [minikconf,
+                 get_option('default_devices') ? '--defconfig' : '--allnoconfig',
+                 config_devices_mak, '@DEPFILE@', '@INPUT@',
+-                host_kconfig, accel_kconfig,
+-                'CONFIG_' + config_target['TARGET_ARCH'].to_upper() + '=y'])
++                host_kconfig, target_kconfig])
+ 
+     config_devices_data = configuration_data()
+     config_devices = keyval.load(config_devices_mak)
+diff --git a/target/Kconfig b/target/Kconfig
+index 83da0bd2938..afc00dea30c 100644
+--- a/target/Kconfig
++++ b/target/Kconfig
+@@ -18,3 +18,6 @@ source sh4/Kconfig
+ source sparc/Kconfig
+ source tricore/Kconfig
+ source xtensa/Kconfig
++
++config TARGET_BIG_ENDIAN
++    bool
 -- 
 2.44.0
 
