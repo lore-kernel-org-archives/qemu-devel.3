@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15DA8C10F15
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B959BC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 22:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzOfv-0001EX-K9; Tue, 23 Apr 2024 18:31:43 -0400
+	id 1rzOfo-00019s-8n; Tue, 23 Apr 2024 18:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfn-00019n-SA; Tue, 23 Apr 2024 18:31:35 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1rzOff-000177-6N; Tue, 23 Apr 2024 18:31:29 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rzOfk-0004eE-17; Tue, 23 Apr 2024 18:31:34 -0400
+ id 1rzOfc-0004bI-Ab; Tue, 23 Apr 2024 18:31:26 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 842F74E603E;
- Wed, 24 Apr 2024 00:31:30 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 03CDA4E6056;
+ Wed, 24 Apr 2024 00:31:21 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Vh9asA8xIOua; Wed, 24 Apr 2024 00:31:28 +0200 (CEST)
+ with ESMTP id DbhUbOu9borS; Wed, 24 Apr 2024 00:31:19 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 96F8B4E6040; Wed, 24 Apr 2024 00:31:28 +0200 (CEST)
-Message-Id: <b0aea63d74962179719727b54b9136181e4d3d55.1713907038.git.balaton@eik.bme.hu>
+ id 15D614E6057; Wed, 24 Apr 2024 00:31:19 +0200 (CEST)
+Message-Id: <ecd7263cc8a79479c4d85e9c12d1df8524a8b9f0.1713907038.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1713907038.git.balaton@eik.bme.hu>
 References: <cover.1713907038.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 17/24] target/ppc/mmu_common.c: Replace hard coded constants
- in ppc_jumbo_xlate()
+Subject: [PATCH 08/24] target/ppc/mmu_common.c: Introduce
+ mmu6xx_get_physical_address()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +40,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Date: Wed, 24 Apr 2024 00:31:28 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Wed, 24 Apr 2024 00:31:19 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,38 +63,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "2" in booke206_update_mas_tlb_miss() call corresponds to
-MMU_INST_FETCH which is the value of access_type in this branch;
-mmubooke206_esr() only checks for MMU_DATA_STORE and it's called from
-code access so using MMU_DATA_LOAD here seems wrong so replace it with
-access_type here as well that yields the same result. This also makes
-these calls the same as the data access branch further down.
+Repurpose get_segment_6xx_tlb() to do the whole address translation
+for POWERPC_MMU_SOFT_6xx MMU model by moving the BAT check there and
+renaming it to match other similar functions. These are only called
+once together so no need to keep these separate functions and
+combining them simplifies the caller allowing further restructuring.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/ppc/mmu_common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/ppc/mmu_common.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 34d8576905..b64f8f79c3 100644
+index c4fafebbe3..47346adb88 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -1293,13 +1293,13 @@ static bool ppc_jumbo_xlate(PowerPCCPU *cpu, vaddr eaddr,
-                 env->spr[SPR_40x_ESR] = 0x00000000;
-                 break;
-             case POWERPC_MMU_BOOKE206:
--                booke206_update_mas_tlb_miss(env, eaddr, 2, mmu_idx);
-+                booke206_update_mas_tlb_miss(env, eaddr, access_type, mmu_idx);
-                 /* fall through */
-             case POWERPC_MMU_BOOKE:
-                 cs->exception_index = POWERPC_EXCP_ITLB;
-                 env->error_code = 0;
-                 env->spr[SPR_BOOKE_DEAR] = eaddr;
--                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, MMU_DATA_LOAD);
-+                env->spr[SPR_BOOKE_ESR] = mmubooke206_esr(mmu_idx, access_type);
-                 break;
-             case POWERPC_MMU_REAL:
-                 cpu_abort(cs, "PowerPC in real mode should never raise "
+@@ -359,19 +359,25 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+     return ret;
+ }
+ 
+-/* Perform segment based translation */
+-static int get_segment_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+-                               target_ulong eaddr, MMUAccessType access_type,
+-                               int type)
++static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
++                                       target_ulong eaddr,
++                                       MMUAccessType access_type, int type)
+ {
+     PowerPCCPU *cpu = env_archcpu(env);
+     hwaddr hash;
+-    target_ulong vsid;
+-    int ds, target_page_bits;
++    target_ulong vsid, sr, pgidx;
+     bool pr;
+-    int ret;
+-    target_ulong sr, pgidx;
++    int ds, target_page_bits, ret = -1;
+ 
++    /* First try to find a BAT entry if there are any */
++    if (env->nb_BATs != 0) {
++        ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
++    }
++    if (ret >= 0) {
++        return ret;
++    }
++
++    /* Perform segment based translation when no BATs matched */
+     pr = FIELD_EX64(env->msr, MSR, PR);
+     ctx->eaddr = eaddr;
+ 
+@@ -1198,14 +1204,8 @@ int get_physical_address_wtlb(CPUPPCState *env, mmu_ctx_t *ctx,
+         if (real_mode) {
+             ret = check_physical(env, ctx, eaddr, access_type);
+         } else {
+-            /* Try to find a BAT */
+-            if (env->nb_BATs != 0) {
+-                ret = get_bat_6xx_tlb(env, ctx, eaddr, access_type);
+-            }
+-            if (ret < 0) {
+-                /* We didn't match any BAT entry or don't have BATs */
+-                ret = get_segment_6xx_tlb(env, ctx, eaddr, access_type, type);
+-            }
++            ret = mmu6xx_get_physical_address(env, ctx, eaddr, access_type,
++                                              type);
+         }
+         break;
+ 
 -- 
 2.30.9
 
