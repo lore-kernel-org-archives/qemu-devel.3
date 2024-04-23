@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A80C19F4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB621C10F1A
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnl-0007qq-NE; Tue, 23 Apr 2024 11:11:21 -0400
+	id 1rzHnh-0007Ze-RR; Tue, 23 Apr 2024 11:11:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnC-0004kU-Tm
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rzHms-0004WE-Po
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHn7-0000Hm-Vf
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:45 -0400
+ id 1rzHmo-00009y-Iz
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885038;
+ s=mimecast20190719; t=1713885021;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=stBR5gLSwR4yaQQ6vVFfieE9CwR8cEP2DdSueVz1Lqg=;
- b=B3tY7W+3AQNBsdcAf7TnvhzWDOIdwvfSmAZYpwmbtyW60BqdX0NZKlfUD7FT4yEpkSoyW8
- fCmwBTYsNGf8v3ZHtj7cOuUCTKoisJ/qnwXieDthn+d+efLJWQMkZEXT8JASamhctpCr8i
- 92RVpy8Ykn9wKjdp5o7UtrBTLfHej+8=
+ bh=NTEbc5jgVQXZ/RZv75H5z1eYYw1HNJWbE4/8Ao49CcA=;
+ b=iuM9HzZiadNfGk2f86wLdWt+czUJODq5cgaIZtL4oWBwSrx0Jzy2HmSbWO5O9C7BspRkVR
+ wyAIgFOeMdzaj2Y2iAQgq8lX9ziBWdChcNuKkogrLuq4In/aiHTJ7+igjt30DM4I/RKtRb
+ bZbBVPdzDVRbmlcqO8d24Vj7yoFCe3U=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-1_N_euaMOASGEVPoTDm0kA-1; Tue,
- 23 Apr 2024 11:10:36 -0400
-X-MC-Unique: 1_N_euaMOASGEVPoTDm0kA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-VKMIdX4oP8ucc4A-vMMZ_Q-1; Tue,
+ 23 Apr 2024 11:10:19 -0400
+X-MC-Unique: VKMIdX4oP8ucc4A-vMMZ_Q-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 74D6929AC018;
- Tue, 23 Apr 2024 15:10:36 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3A4423C23FCB;
+ Tue, 23 Apr 2024 15:10:19 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id D28A32026D0A;
- Tue, 23 Apr 2024 15:10:35 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 72DFD2026D0A;
+ Tue, 23 Apr 2024 15:10:18 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 43/63] target/i386: Implement mc->kvm_type() to get VM type
-Date: Tue, 23 Apr 2024 17:09:31 +0200
-Message-ID: <20240423150951.41600-44-pbonzini@redhat.com>
+Cc: Sean Christopherson <sean.j.christopherson@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 25/63] i386/kvm: Move architectural CPUID leaf generation to
+ separate helper
+Date: Tue, 23 Apr 2024 17:09:13 +0200
+Message-ID: <20240423150951.41600-26-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -81,180 +83,504 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM is introducing a new API to create confidential guests, which
-will be used by TDX and SEV-SNP but is also available for SEV and
-SEV-ES.  The API uses the VM type argument to KVM_CREATE_VM to
-identify which confidential computing technology to use.
+From: Sean Christopherson <sean.j.christopherson@intel.com>
 
-Since there are no other expected uses of VM types, delegate
-mc->kvm_type() for x86 boards to the confidential-guest-support
-object pointed to by ms->cgs.
+Move the architectural (for lack of a better term) CPUID leaf generation
+to a separate helper so that the generation code can be reused by TDX,
+which needs to generate a canonical VM-scoped configuration.
 
-For example, if a sev-guest object is specified to confidential-guest-support,
-like,
+For now this is just a cleanup, so keep the function static.
 
-  qemu -machine ...,confidential-guest-support=sev0 \
-       -object sev-guest,id=sev0,...
-
-it will check if a VM type KVM_X86_SEV_VM or KVM_X86_SEV_ES_VM
-is supported, and if so use them together with the KVM_SEV_INIT2
-function of the KVM_MEMORY_ENCRYPT_OP ioctl. If not, it will fall back to
-KVM_SEV_INIT and KVM_SEV_ES_INIT.
-
-This is a preparatory work towards TDX and SEV-SNP support, but it
-will also enable support for VMSA features such as DebugSwap, which
-are only available via KVM_SEV_INIT2.
-
-Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Message-ID: <20240229063726.610065-23-xiaoyao.li@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/confidential-guest.h | 19 ++++++++++++++
- target/i386/kvm/kvm_i386.h       |  2 ++
- hw/i386/x86.c                    | 11 ++++++++
- target/i386/kvm/kvm.c            | 44 ++++++++++++++++++++++++++++++++
- 4 files changed, 76 insertions(+)
+ target/i386/kvm/kvm.c | 449 +++++++++++++++++++++---------------------
+ 1 file changed, 227 insertions(+), 222 deletions(-)
 
-diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
-index ca12d5a8fba..532e172a60b 100644
---- a/target/i386/confidential-guest.h
-+++ b/target/i386/confidential-guest.h
-@@ -36,5 +36,24 @@ struct X86ConfidentialGuest {
- struct X86ConfidentialGuestClass {
-     /* <private> */
-     ConfidentialGuestSupportClass parent;
-+
-+    /* <public> */
-+    int (*kvm_type)(X86ConfidentialGuest *cg);
- };
-+
-+/**
-+ * x86_confidential_guest_kvm_type:
-+ *
-+ * Calls #X86ConfidentialGuestClass.unplug callback of @plug_handler.
-+ */
-+static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
-+{
-+    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
-+
-+    if (klass->kvm_type) {
-+        return klass->kvm_type(cg);
-+    } else {
-+        return 0;
-+    }
-+}
- #endif
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 30fedcffea3..6b44844d95d 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -37,6 +37,7 @@ bool kvm_hv_vpindex_settable(void);
- bool kvm_enable_sgx_provisioning(KVMState *s);
- bool kvm_hyperv_expand_features(X86CPU *cpu, Error **errp);
- 
-+int kvm_get_vm_type(MachineState *ms);
- void kvm_arch_reset_vcpu(X86CPU *cs);
- void kvm_arch_after_reset_vcpu(X86CPU *cpu);
- void kvm_arch_do_init_vcpu(X86CPU *cs);
-@@ -49,6 +50,7 @@ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask);
- 
- #ifdef CONFIG_KVM
- 
-+bool kvm_is_vm_type_supported(int type);
- bool kvm_has_adjust_clock_stable(void);
- bool kvm_has_exception_payload(void);
- void kvm_synchronize_all_tsc(void);
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 84a48019770..3d5b51e92db 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -1381,6 +1381,16 @@ static void machine_set_sgx_epc(Object *obj, Visitor *v, const char *name,
-     qapi_free_SgxEPCList(list);
- }
- 
-+static int x86_kvm_type(MachineState *ms, const char *vm_type)
-+{
-+    /*
-+     * No x86 machine has a kvm-type property.  If one is added that has
-+     * it, it should call kvm_get_vm_type() directly or not use it at all.
-+     */
-+    assert(vm_type == NULL);
-+    return kvm_enabled() ? kvm_get_vm_type(ms) : 0;
-+}
-+
- static void x86_machine_initfn(Object *obj)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
-@@ -1405,6 +1415,7 @@ static void x86_machine_class_init(ObjectClass *oc, void *data)
-     mc->cpu_index_to_instance_props = x86_cpu_index_to_props;
-     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
-     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
-+    mc->kvm_type = x86_kvm_type;
-     x86mc->save_tsc_khz = true;
-     x86mc->fwcfg_dma_enabled = true;
-     nc->nmi_monitor_handler = x86_nmi;
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 7922edfae8e..974586e57a1 100644
+index e68cbe92930..fcf9603d3e6 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -31,6 +31,7 @@
- #include "sysemu/kvm_int.h"
- #include "sysemu/runstate.h"
- #include "kvm_i386.h"
-+#include "../confidential-guest.h"
- #include "sev.h"
- #include "xen-emu.h"
- #include "hyperv.h"
-@@ -161,6 +162,49 @@ static KVMMSRHandlers msr_handlers[KVM_MSR_FILTER_MAX_RANGES];
- static RateLimit bus_lock_ratelimit_ctrl;
- static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
+@@ -1706,6 +1706,231 @@ static void kvm_init_nested_state(CPUX86State *env)
+     }
+ }
  
-+static const char *vm_type_name[] = {
-+    [KVM_X86_DEFAULT_VM] = "default",
-+};
-+
-+bool kvm_is_vm_type_supported(int type)
++static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
++                                    struct kvm_cpuid_entry2 *entries,
++                                    uint32_t cpuid_i)
 +{
-+    uint32_t machine_types;
++    uint32_t limit, i, j;
++    uint32_t unused;
++    struct kvm_cpuid_entry2 *c;
 +
-+    /*
-+     * old KVM doesn't support KVM_CAP_VM_TYPES but KVM_X86_DEFAULT_VM
-+     * is always supported
-+     */
-+    if (type == KVM_X86_DEFAULT_VM) {
-+        return true;
-+    }
++    cpu_x86_cpuid(env, 0, 0, &limit, &unused, &unused, &unused);
 +
-+    machine_types = kvm_check_extension(KVM_STATE(current_machine->accelerator),
-+                                        KVM_CAP_VM_TYPES);
-+    return !!(machine_types & BIT(type));
-+}
-+
-+int kvm_get_vm_type(MachineState *ms)
-+{
-+    int kvm_type = KVM_X86_DEFAULT_VM;
-+
-+    if (ms->cgs) {
-+        if (!object_dynamic_cast(OBJECT(ms->cgs), TYPE_X86_CONFIDENTIAL_GUEST)) {
-+            error_report("configuration type %s not supported for x86 guests",
-+                         object_get_typename(OBJECT(ms->cgs)));
-+            exit(1);
++    for (i = 0; i <= limit; i++) {
++        j = 0;
++        if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++            goto full;
 +        }
-+        kvm_type = x86_confidential_guest_kvm_type(
-+            X86_CONFIDENTIAL_GUEST(ms->cgs));
++        c = &entries[cpuid_i++];
++        switch (i) {
++        case 2: {
++            /* Keep reading function 2 till all the input is received */
++            int times;
++
++            c->function = i;
++            c->flags = KVM_CPUID_FLAG_STATEFUL_FUNC |
++                       KVM_CPUID_FLAG_STATE_READ_NEXT;
++            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
++            times = c->eax & 0xff;
++
++            for (j = 1; j < times; ++j) {
++                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++                    goto full;
++                }
++                c = &entries[cpuid_i++];
++                c->function = i;
++                c->flags = KVM_CPUID_FLAG_STATEFUL_FUNC;
++                cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
++            }
++            break;
++        }
++        case 0x1f:
++            if (env->nr_dies < 2) {
++                cpuid_i--;
++                break;
++            }
++            /* fallthrough */
++        case 4:
++        case 0xb:
++        case 0xd:
++            for (j = 0; ; j++) {
++                if (i == 0xd && j == 64) {
++                    break;
++                }
++
++                c->function = i;
++                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
++                c->index = j;
++                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
++
++                if (i == 4 && c->eax == 0) {
++                    break;
++                }
++                if (i == 0xb && !(c->ecx & 0xff00)) {
++                    break;
++                }
++                if (i == 0x1f && !(c->ecx & 0xff00)) {
++                    break;
++                }
++                if (i == 0xd && c->eax == 0) {
++                    continue;
++                }
++                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++                    goto full;
++                }
++                c = &entries[cpuid_i++];
++            }
++            break;
++        case 0x12:
++            for (j = 0; ; j++) {
++                c->function = i;
++                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
++                c->index = j;
++                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
++
++                if (j > 1 && (c->eax & 0xf) != 1) {
++                    break;
++                }
++
++                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++                    goto full;
++                }
++                c = &entries[cpuid_i++];
++            }
++            break;
++        case 0x7:
++        case 0x14:
++        case 0x1d:
++        case 0x1e: {
++            uint32_t times;
++
++            c->function = i;
++            c->index = 0;
++            c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
++            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
++            times = c->eax;
++
++            for (j = 1; j <= times; ++j) {
++                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++                    goto full;
++                }
++                c = &entries[cpuid_i++];
++                c->function = i;
++                c->index = j;
++                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
++                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
++            }
++            break;
++        }
++        default:
++            c->function = i;
++            c->flags = 0;
++            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
++            if (!c->eax && !c->ebx && !c->ecx && !c->edx) {
++                /*
++                 * KVM already returns all zeroes if a CPUID entry is missing,
++                 * so we can omit it and avoid hitting KVM's 80-entry limit.
++                 */
++                cpuid_i--;
++            }
++            break;
++        }
 +    }
 +
-+    if (!kvm_is_vm_type_supported(kvm_type)) {
-+        error_report("vm-type %s not supported by KVM", vm_type_name[kvm_type]);
-+        exit(1);
++    if (limit >= 0x0a) {
++        uint32_t eax, edx;
++
++        cpu_x86_cpuid(env, 0x0a, 0, &eax, &unused, &unused, &edx);
++
++        has_architectural_pmu_version = eax & 0xff;
++        if (has_architectural_pmu_version > 0) {
++            num_architectural_pmu_gp_counters = (eax & 0xff00) >> 8;
++
++            /* Shouldn't be more than 32, since that's the number of bits
++             * available in EBX to tell us _which_ counters are available.
++             * Play it safe.
++             */
++            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
++                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
++            }
++
++            if (has_architectural_pmu_version > 1) {
++                num_architectural_pmu_fixed_counters = edx & 0x1f;
++
++                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
++                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
++                }
++            }
++        }
 +    }
 +
-+    return kvm_type;
++    cpu_x86_cpuid(env, 0x80000000, 0, &limit, &unused, &unused, &unused);
++
++    for (i = 0x80000000; i <= limit; i++) {
++        j = 0;
++        c = &entries[cpuid_i++];
++        if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++            goto full;
++        }
++
++        switch (i) {
++        case 0x8000001d:
++            /* Query for all AMD cache information leaves */
++            for (j = 0; ; j++) {
++                c->function = i;
++                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
++                c->index = j;
++                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
++
++                if (c->eax == 0) {
++                    break;
++                }
++                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++                    goto full;
++                }
++                c = &entries[cpuid_i++];
++            }
++            break;
++        default:
++            c->function = i;
++            c->flags = 0;
++            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
++            if (!c->eax && !c->ebx && !c->ecx && !c->edx) {
++                /*
++                 * KVM already returns all zeroes if a CPUID entry is missing,
++                 * so we can omit it and avoid hitting KVM's 80-entry limit.
++                 */
++                cpuid_i--;
++            }
++            break;
++        }
++    }
++
++    /* Call Centaur's CPUID instructions they are supported. */
++    if (env->cpuid_xlevel2 > 0) {
++        cpu_x86_cpuid(env, 0xC0000000, 0, &limit, &unused, &unused, &unused);
++
++        for (i = 0xC0000000; i <= limit; i++) {
++            j = 0;
++            if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++                goto full;
++            }
++            c = &entries[cpuid_i++];
++
++            c->function = i;
++            c->flags = 0;
++            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
++        }
++    }
++
++    return cpuid_i;
++
++full:
++    fprintf(stderr, "cpuid_data is full, no space for "
++            "cpuid(eax:0x%x,ecx:0x%x)\n", i, j);
++    abort();
 +}
 +
- bool kvm_has_smm(void)
+ int kvm_arch_init_vcpu(CPUState *cs)
  {
-     return kvm_vm_check_extension(kvm_state, KVM_CAP_X86_SMM);
+     struct {
+@@ -1722,8 +1947,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+ 
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+-    uint32_t limit, i, j, cpuid_i;
+-    uint32_t unused;
++    uint32_t cpuid_i;
+     struct kvm_cpuid_entry2 *c;
+     uint32_t signature[3];
+     int kvm_base = KVM_CPUID_SIGNATURE;
+@@ -1876,8 +2100,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         c->edx = env->features[FEAT_KVM_HINTS];
+     }
+ 
+-    cpu_x86_cpuid(env, 0, 0, &limit, &unused, &unused, &unused);
+-
+     if (cpu->kvm_pv_enforce_cpuid) {
+         r = kvm_vcpu_enable_cap(cs, KVM_CAP_ENFORCE_PV_FEATURE_CPUID, 0, 1);
+         if (r < 0) {
+@@ -1888,224 +2110,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         }
+     }
+ 
+-    for (i = 0; i <= limit; i++) {
+-        if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-            fprintf(stderr, "unsupported level value: 0x%x\n", limit);
+-            abort();
+-        }
+-        c = &cpuid_data.entries[cpuid_i++];
+-
+-        switch (i) {
+-        case 2: {
+-            /* Keep reading function 2 till all the input is received */
+-            int times;
+-
+-            c->function = i;
+-            c->flags = KVM_CPUID_FLAG_STATEFUL_FUNC |
+-                       KVM_CPUID_FLAG_STATE_READ_NEXT;
+-            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-            times = c->eax & 0xff;
+-
+-            for (j = 1; j < times; ++j) {
+-                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-                    fprintf(stderr, "cpuid_data is full, no space for "
+-                            "cpuid(eax:2):eax & 0xf = 0x%x\n", times);
+-                    abort();
+-                }
+-                c = &cpuid_data.entries[cpuid_i++];
+-                c->function = i;
+-                c->flags = KVM_CPUID_FLAG_STATEFUL_FUNC;
+-                cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-            }
+-            break;
+-        }
+-        case 0x1f:
+-            if (env->nr_dies < 2) {
+-                cpuid_i--;
+-                break;
+-            }
+-            /* fallthrough */
+-        case 4:
+-        case 0xb:
+-        case 0xd:
+-            for (j = 0; ; j++) {
+-                if (i == 0xd && j == 64) {
+-                    break;
+-                }
+-
+-                c->function = i;
+-                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
+-                c->index = j;
+-                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-
+-                if (i == 4 && c->eax == 0) {
+-                    break;
+-                }
+-                if (i == 0xb && !(c->ecx & 0xff00)) {
+-                    break;
+-                }
+-                if (i == 0x1f && !(c->ecx & 0xff00)) {
+-                    break;
+-                }
+-                if (i == 0xd && c->eax == 0) {
+-                    continue;
+-                }
+-                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-                    fprintf(stderr, "cpuid_data is full, no space for "
+-                            "cpuid(eax:0x%x,ecx:0x%x)\n", i, j);
+-                    abort();
+-                }
+-                c = &cpuid_data.entries[cpuid_i++];
+-            }
+-            break;
+-        case 0x12:
+-            for (j = 0; ; j++) {
+-                c->function = i;
+-                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
+-                c->index = j;
+-                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-
+-                if (j > 1 && (c->eax & 0xf) != 1) {
+-                    break;
+-                }
+-
+-                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-                    fprintf(stderr, "cpuid_data is full, no space for "
+-                                "cpuid(eax:0x12,ecx:0x%x)\n", j);
+-                    abort();
+-                }
+-                c = &cpuid_data.entries[cpuid_i++];
+-            }
+-            break;
+-        case 0x7:
+-        case 0x14:
+-        case 0x1d:
+-        case 0x1e: {
+-            uint32_t times;
+-
+-            c->function = i;
+-            c->index = 0;
+-            c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
+-            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-            times = c->eax;
+-
+-            for (j = 1; j <= times; ++j) {
+-                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-                    fprintf(stderr, "cpuid_data is full, no space for "
+-                                "cpuid(eax:0x%x,ecx:0x%x)\n", i, j);
+-                    abort();
+-                }
+-                c = &cpuid_data.entries[cpuid_i++];
+-                c->function = i;
+-                c->index = j;
+-                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
+-                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-            }
+-            break;
+-        }
+-        default:
+-            c->function = i;
+-            c->flags = 0;
+-            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-            if (!c->eax && !c->ebx && !c->ecx && !c->edx) {
+-                /*
+-                 * KVM already returns all zeroes if a CPUID entry is missing,
+-                 * so we can omit it and avoid hitting KVM's 80-entry limit.
+-                 */
+-                cpuid_i--;
+-            }
+-            break;
+-        }
+-    }
+-
+-    if (limit >= 0x0a) {
+-        uint32_t eax, edx;
+-
+-        cpu_x86_cpuid(env, 0x0a, 0, &eax, &unused, &unused, &edx);
+-
+-        has_architectural_pmu_version = eax & 0xff;
+-        if (has_architectural_pmu_version > 0) {
+-            num_architectural_pmu_gp_counters = (eax & 0xff00) >> 8;
+-
+-            /* Shouldn't be more than 32, since that's the number of bits
+-             * available in EBX to tell us _which_ counters are available.
+-             * Play it safe.
+-             */
+-            if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
+-                num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
+-            }
+-
+-            if (has_architectural_pmu_version > 1) {
+-                num_architectural_pmu_fixed_counters = edx & 0x1f;
+-
+-                if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
+-                    num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
+-                }
+-            }
+-        }
+-    }
+-
+-    cpu_x86_cpuid(env, 0x80000000, 0, &limit, &unused, &unused, &unused);
+-
+-    for (i = 0x80000000; i <= limit; i++) {
+-        if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-            fprintf(stderr, "unsupported xlevel value: 0x%x\n", limit);
+-            abort();
+-        }
+-        c = &cpuid_data.entries[cpuid_i++];
+-
+-        switch (i) {
+-        case 0x8000001d:
+-            /* Query for all AMD cache information leaves */
+-            for (j = 0; ; j++) {
+-                c->function = i;
+-                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
+-                c->index = j;
+-                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-
+-                if (c->eax == 0) {
+-                    break;
+-                }
+-                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-                    fprintf(stderr, "cpuid_data is full, no space for "
+-                            "cpuid(eax:0x%x,ecx:0x%x)\n", i, j);
+-                    abort();
+-                }
+-                c = &cpuid_data.entries[cpuid_i++];
+-            }
+-            break;
+-        default:
+-            c->function = i;
+-            c->flags = 0;
+-            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-            if (!c->eax && !c->ebx && !c->ecx && !c->edx) {
+-                /*
+-                 * KVM already returns all zeroes if a CPUID entry is missing,
+-                 * so we can omit it and avoid hitting KVM's 80-entry limit.
+-                 */
+-                cpuid_i--;
+-            }
+-            break;
+-        }
+-    }
+-
+-    /* Call Centaur's CPUID instructions they are supported. */
+-    if (env->cpuid_xlevel2 > 0) {
+-        cpu_x86_cpuid(env, 0xC0000000, 0, &limit, &unused, &unused, &unused);
+-
+-        for (i = 0xC0000000; i <= limit; i++) {
+-            if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-                fprintf(stderr, "unsupported xlevel2 value: 0x%x\n", limit);
+-                abort();
+-            }
+-            c = &cpuid_data.entries[cpuid_i++];
+-
+-            c->function = i;
+-            c->flags = 0;
+-            cpu_x86_cpuid(env, i, 0, &c->eax, &c->ebx, &c->ecx, &c->edx);
+-        }
+-    }
+-
++    cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+     cpuid_data.cpuid.nent = cpuid_i;
+ 
+     if (((env->cpuid_version >> 8)&0xF) >= 6
 -- 
 2.44.0
 
