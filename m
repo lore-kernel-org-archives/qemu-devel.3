@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2EF8C4345F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B01CC4345F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Apr 2024 15:15:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rzHnl-0007qb-JC; Tue, 23 Apr 2024 11:11:21 -0400
+	id 1rzHnN-0005Yi-3L; Tue, 23 Apr 2024 11:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnQ-0005sE-2A
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:11:00 -0400
+ id 1rzHmg-0004NJ-Vd
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rzHnO-0000OM-3b
- for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:59 -0400
+ id 1rzHmc-000057-Bl
+ for qemu-devel@nongnu.org; Tue, 23 Apr 2024 11:10:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1713885057;
+ s=mimecast20190719; t=1713885009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MpzSFoRgc3Tz5tG5vbWOuPSV975Dwi5ijRZXKg1roG0=;
- b=MPmF/m5mWgJDS3BcgwP7+TRO5w2E3wP6on/mA4oxteqEp1f1iJ5qzIBAEiQ9MWutW3h0XV
- yRT6aimHmgs8GZqClZZuWtZG8gCEm2ifDyWk4wXZWOF5tSZ81NoOwBu2tjRzhxVyevQ+EW
- RPgk26W3Z5FazSbBEJbyDPsyS5O3D7U=
+ bh=ne8m0qr+YkU2QhH9qzSBx3LCWqWLyReRad8Mw2vZv4M=;
+ b=HG8Na+qF1TDERZ+xpdh7uOf9em3+rcblzoiFU0d0PoVuHTdJsad96TlEzcVbhgugXJqHqq
+ VMWIahFCA9+KGqCPC27QwCsFMAE+quUpNF1m/yGdYL85MnDh3ha0yeoM3iBcr2FDOHQ4Tb
+ Ly6YEFuqngKRd6CUvrKrzywrxSqUVqw=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-pNuJei4rO3Ssh6BgO-jmbA-1; Tue,
- 23 Apr 2024 11:10:54 -0400
-X-MC-Unique: pNuJei4rO3Ssh6BgO-jmbA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-dni42PV2N3-oxZeni0uW4Q-1; Tue,
+ 23 Apr 2024 11:10:05 -0400
+X-MC-Unique: dni42PV2N3-oxZeni0uW4Q-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C580D29AC00D;
- Tue, 23 Apr 2024 15:10:53 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AC3BF1C0C64F;
+ Tue, 23 Apr 2024 15:10:04 +0000 (UTC)
 Received: from avogadro.lan (unknown [10.39.192.70])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 378762033979;
- Tue, 23 Apr 2024 15:10:53 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 05ACB200E290;
+ Tue, 23 Apr 2024 15:10:03 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 61/63] accel/tcg/icount-common: Consolidate the use of
- warn_report_once()
-Date: Tue, 23 Apr 2024 17:09:49 +0200
-Message-ID: <20240423150951.41600-62-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 10/63] hw/usb: move stubs out of stubs/
+Date: Tue, 23 Apr 2024 17:08:58 +0200
+Message-ID: <20240423150951.41600-11-pbonzini@redhat.com>
 In-Reply-To: <20240423150951.41600-1-pbonzini@redhat.com>
 References: <20240423150951.41600-1-pbonzini@redhat.com>
 MIME-Version: 1.0
@@ -82,34 +82,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Since the USB stubs are needed exactly when the Kconfig symbols are not
+enabled, they can be placed in hw/usb/ and conditionalized on CONFIG_USB.
 
-Use warn_report_once() to get rid of the static local variable "notified".
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240418100716.1085491-1-zhao1.liu@linux.intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240408155330.522792-11-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/tcg/icount-common.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ stubs/usb-dev-stub.c => hw/usb/bus-stub.c | 0
+ hw/usb/meson.build                        | 2 +-
+ stubs/meson.build                         | 1 -
+ 3 files changed, 1 insertion(+), 2 deletions(-)
+ rename stubs/usb-dev-stub.c => hw/usb/bus-stub.c (100%)
 
-diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
-index a4a747d1dc9..8d3d3a7e9dc 100644
---- a/accel/tcg/icount-common.c
-+++ b/accel/tcg/icount-common.c
-@@ -336,10 +336,8 @@ void icount_start_warp_timer(void)
-     deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
-                                           ~QEMU_TIMER_ATTR_EXTERNAL);
-     if (deadline < 0) {
--        static bool notified;
--        if (!icount_sleep && !notified) {
--            warn_report("icount sleep disabled and no active timers");
--            notified = true;
-+        if (!icount_sleep) {
-+            warn_report_once("icount sleep disabled and no active timers");
-         }
-         return;
-     }
+diff --git a/stubs/usb-dev-stub.c b/hw/usb/bus-stub.c
+similarity index 100%
+rename from stubs/usb-dev-stub.c
+rename to hw/usb/bus-stub.c
+diff --git a/hw/usb/meson.build b/hw/usb/meson.build
+index aac3bb35f27..23f7f7acb50 100644
+--- a/hw/usb/meson.build
++++ b/hw/usb/meson.build
+@@ -9,7 +9,7 @@ system_ss.add(when: 'CONFIG_USB', if_true: files(
+   'desc-msos.c',
+   'libhw.c',
+   'pcap.c',
+-))
++), if_false: files('bus-stub.c'))
+ 
+ # usb host adapters
+ system_ss.add(when: 'CONFIG_USB_UHCI', if_true: files('hcd-uhci.c'))
+diff --git a/stubs/meson.build b/stubs/meson.build
+index aa7120f7110..45616afbfaa 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -56,7 +56,6 @@ endif
+ if have_system
+   stub_ss.add(files('fw_cfg.c'))
+   stub_ss.add(files('semihost.c'))
+-  stub_ss.add(files('usb-dev-stub.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
+   stub_ss.add(files('virtio-md-pci.c'))
+ else
 -- 
 2.44.0
 
